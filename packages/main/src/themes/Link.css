@@ -13,8 +13,8 @@
 	outline: none;
 	text-decoration: var(--_ui5_link_text_decoration);
 	text-shadow: var(--sapContent_TextShadow);
-	white-space: nowrap;
-	overflow-wrap: normal;
+	white-space: normal;
+	overflow-wrap: break-word;
 }
 
 :host(:hover) {
@@ -53,9 +53,9 @@
 	text-decoration: var(--_ui5_link_subtle_text_decoration_hover);
 }
 
-:host([wrapping-type="Normal"]) {
-	white-space: normal;
-	overflow-wrap: break-word;
+:host([wrapping-type="None"]) {
+	white-space: nowrap;
+	overflow-wrap: normal;
 }
 
 .ui5-link-root {
@@ -71,26 +71,57 @@
 	color: inherit;
 }
 
+/* For cases when the text wraps, the icon should be displayed at the last row */
+:host([wrapping-type="None"][end-icon]) .ui5-link-root {
+	display: inline-flex;
+	align-items: end;
+}
+
 :host .ui5-link-root {
-	border: var(--_ui5_link_border);
+	outline-offset: -0.0625rem;
 	border-radius: var(--_ui5_link_focus_border-radius);
 }
 
-:host([focused]) .ui5-link-root,
-:host([design="Subtle"][focused]) .ui5-link-root {
+.ui5-link-icon, 
+.ui5-link-end-icon {
+	color: inherit;
+	flex-shrink: 0;
+}
+
+.ui5-link-icon {
+	float: inline-start;
+	margin-inline-end: 0.125rem;
+}
+
+.ui5-link-end-icon {
+	margin-inline-start: 0.125rem;
+	vertical-align: bottom;
+}
+
+.ui5-link-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ui5-link-root:focus-visible,
+:host([desktop]) .ui5-link-root:focus-within,
+:host([design="Subtle"]) .ui5-link-root:focus-visible,
+:host([design="Subtle"][desktop]) .ui5-link-root:focus-within {
 	background-color: var(--_ui5_link_focus_background_color);
-	border: var(--_ui5_link_border_focus);
+	outline: var(--_ui5_link_outline);
 	border-radius: var(--_ui5_link_focus_border-radius);
 	text-shadow: none;
+	color: var(--_ui5_link_focus_color);
 }
 
-:host([focused]),
-:host([design="Subtle"][focused]) {
-	color:  var(--_ui5_link_focus_color);
+:host(:not([desktop])) .ui5-link-root:focus-visible,
+:host([desktop]:focus-within),
+:host([design="Subtle"][desktop]:focus-within) {
 	text-decoration: var(--_ui5_link_focus_text_decoration);
 }
 
-:host([focused]:hover:not(:active)) {
+:host([desktop]:hover:not(:active):focus-within),
+:host([design="Subtle"][desktop]:hover:not(:active):focus-within) {
 	color: var(--_ui5_link_focused_hover_text_color);
 	text-decoration: var(--_ui5_link_focused_hover_text_decoration);
 }

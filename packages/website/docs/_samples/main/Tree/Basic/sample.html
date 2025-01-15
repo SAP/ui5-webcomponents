@@ -1,0 +1,42 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+<!-- playground-fold-end -->
+
+<ui5-tree>
+    <ui5-tree-item expanded text="Tree 1" icon="paste" selected>
+		<ui5-tree-item expanded text="Tree 1.1" selected>
+			<ui5-tree-item text="Tree 1.1.1"></ui5-tree-item>
+			<ui5-tree-item text="Tree 1.1.2"></ui5-tree-item>
+		</ui5-tree-item>
+	</ui5-tree-item>
+
+	<ui5-tree-item text="Tree 2" icon="copy">
+		<ui5-tree-item text="Tree 2.1">
+			<ui5-tree-item text="Tree 2.1.1"></ui5-tree-item>
+
+			<ui5-tree-item text="Tree 2.1.2">
+				<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+				<ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
+				<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+				<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+			</ui5-tree-item>
+		</ui5-tree-item>
+
+		<ui5-tree-item text="Tree 2.2"></ui5-tree-item>
+    </ui5-tree-item>
+
+	<ui5-tree-item expanded text="Tree 3 (no icon)"></ui5-tree-item>
+</ui5-tree>
+<!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+</html>
+<!-- playground-fold-end -->
+

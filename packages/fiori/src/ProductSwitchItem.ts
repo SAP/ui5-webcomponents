@@ -1,63 +1,141 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTemplate.lit.js";
+import ProductSwitchItemTemplate from "./ProductSwitchItemTemplate.js";
+import type { IProductSwitchItem } from "./ProductSwitch.js";
 
 // Styles
 import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-product-switch-item</code> web component represents the items displayed in the
- * <code>ui5-product-switch</code> web component.
- * <br><br>
- * <b>Note:</b> <code>ui5-product-switch-item</code> is not supported when used outside of <code>ui5-product-switch</code>.
- * <br><br>
+ * ### Overview
+ * The `ui5-product-switch-item` web component represents the items displayed in the
+ * `ui5-product-switch` web component.
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-product-switch</code> provides advanced keyboard handling.
+ * **Note:** `ui5-product-switch-item` is not supported when used outside of `ui5-product-switch`.
+ *
+ * ### Keyboard Handling
+ * The `ui5-product-switch` provides advanced keyboard handling.
  * When focused, the user can use the following keyboard
  * shortcuts in order to perform a navigation:
- * <br>
- * <ul>
- * <li>[SPACE/ENTER/RETURN] - Trigger <code>ui5-click</code> event</li>
- * </ul>
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code>
+ * - [Space] / [Enter] or [Return] - Trigger `ui5-click` event
  *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.ProductSwitchItem
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-product-switch-item
+ * @extends UI5Element
  * @public
- * @implements sap.ui.webc.fiori.IProductSwitchItem
+ * @implements {IProductSwitchItem}
  * @since 1.0.0-rc.5
  */
 @customElement({
 	tag: "ui5-product-switch-item",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: ProductSwitchItemCss,
 	template: ProductSwitchItemTemplate,
-	dependencies: [Icon],
 })
 /**
- * Fired when the <code>ui5-product-switch-item</code> is activated either with a
+ * Fired when the `ui5-product-switch-item` is activated either with a
  * click/tap or by using the Enter or Space key.
- *
- * @event sap.ui.webc.fiori.ProductSwitchItem#click
  * @public
  */
-@event("click")
-@event("_focused")
-class ProductSwitchItem extends UI5Element implements ITabbable {
+@event("click", {
+	bubbles: true,
+})
+@event("_focused", {
+	bubbles: true,
+})
+class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
+	eventDetails!: {
+		click: { item: ProductSwitchItem },
+		_focused: void,
+	}
+	/**
+	 * Defines the title of the component.
+	 * @default undefined
+	 * @since 1.0.0-rc.15
+	 * @public
+	 */
+	@property()
+	titleText?: string;
+
+	/**
+	 * Defines the subtitle of the component.
+	 * @default undefined
+	 * @since 1.0.0-rc.15
+	 * @public
+	 */
+	@property()
+	subtitleText?: string;
+
+	/**
+	 * Defines the icon to be displayed as a graphical element within the component.
+	 *
+	 * Example:
+	 *
+	 * `<ui5-product-switch-item icon="palette">`
+	 *
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	icon?: string;
+
+	/**
+	 * Defines a target where the `targetSrc` content must be open.
+	 *
+	 * Available options are:
+	 *
+	 * - `_self`
+	 * - `_top`
+	 * - `_blank`
+	 * - `_parent`
+	 * - `_search`
+	 *
+	 * **Note:** By default target will be open in the same frame as it was clicked.
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	target?: string;
+
+	/**
+	 * Defines the component target URI. Supports standard hyperlink behavior.
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	targetSrc?: string;
+
+	/**
+	 * Used to switch the active state (pressed or not) of the component.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	private active = false;
+
+	/**
+	 * Used to set the selected state of the component. Only one selected in a sequence.
+	 * **Note:** Set by the `ProductSwitch`
+	 */
+	@property({ type: Boolean })
+	selected = false;
+
+	/**
+	 * Defines the component tabindex.
+	 */
+	@property({ noAttribute: true })
+	forcedTabIndex?: string;
+
+	_deactivate: () => void;
+
 	constructor() {
 		super();
 
@@ -68,105 +146,12 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 		};
 	}
 
-	/**
-	 * Defines the title of the component.
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.titleText
-	 * @defaultvalue ""
-	 * @since 1.0.0-rc.15
-	 * @public
-	 */
-	@property()
-	titleText!: string;
-
-	/**
-	 * Defines the subtitle of the component.
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.subtitleText
-	 * @defaultvalue ""
-	 * @since 1.0.0-rc.15
-	 * @public
-	 */
-	@property()
-	subtitleText!: string;
-
-	/**
-	 * Defines the icon to be displayed as a graphical element within the component.
-	 * <br><br>
-	 * Example:
-	 * <br>
-	 * <pre>ui5-product-switch-item icon="palette"</pre>
-	 *
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.icon
-	 * @defaultvalue ""
-	 * @public
-	 */
-	@property()
-	icon!: string;
-
-	/**
-	 * Defines a target where the <code>targetSrc</code> content must be open.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>_self</code></li>
-	 * <li><code>_top</code></li>
-	 * <li><code>_blank</code></li>
-	 * <li><code>_parent</code></li>
-	 * <li><code>_search</code></li>
-	 * </ul>
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.target
-	 * @public
-	 */
-	@property({ defaultValue: "_self" })
-	target!: string;
-
-	/**
-	 * Defines the component target URI. Supports standard hyperlink behavior.
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.targetSrc
-	 * @defaultvalue ""
-	 * @public
-	 */
-	@property()
-	targetSrc!: string;
-
-	/**
-	 * Used to switch the active state (pressed or not) of the component.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	private active!: boolean;
-
-	/**
-	 * Indicates whether the element is focused.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	private focused!: boolean;
-
-	/**
-	 * Used to set the selected state of the component. Only one selected in a sequence.
-	 * <b>Note:</b> Set by the <code>ProductSwitch</code>
-	 */
-	@property({ type: Boolean })
-	selected!: boolean;
-
-	/**
-	 * Defines the component tabindex.
-	 */
-	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
-
-	_deactivate: () => void;
-
 	onEnterDOM() {
 		document.addEventListener("mouseup", this._deactivate);
+
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {
@@ -175,6 +160,10 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 
 	_onmousedown() {
 		this.active = true;
+	}
+
+	get _effectiveTarget() {
+		return this.target || "_self";
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -206,17 +195,14 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 
 	_onfocusout() {
 		this.active = false;
-		this.focused = false;
 	}
 
-	_onfocusin(e: FocusEvent) {
-		this.focused = true;
-
-		this.fireEvent("_focused", e);
+	_onfocusin() {
+		this.fireDecoratorEvent("_focused");
 	}
 
 	_fireItemClick() {
-		this.fireEvent("click", { item: this });
+		this.fireDecoratorEvent("click", { item: this });
 	}
 }
 

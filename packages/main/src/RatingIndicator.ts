@@ -1,9 +1,9 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-
+import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isDown,
 	isUp,
@@ -14,23 +14,19 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import {
 	RATING_INDICATOR_TEXT,
 	RATING_INDICATOR_TOOLTIP_TEXT,
 	RATING_INDICATOR_ARIA_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
-import RatingIndicatorTemplate from "./generated/templates/RatingIndicatorTemplate.lit.js";
-import Icon from "./Icon.js";
-import "@ui5/webcomponents-icons/dist/favorite.js";
-import "@ui5/webcomponents-icons/dist/unfavorite.js";
+import RatingIndicatorTemplate from "./RatingIndicatorTemplate.js";
 
 // Styles
 import RatingIndicatorCss from "./generated/themes/RatingIndicator.css.js";
+import type RatingIndicatorSize from "./types/RatingIndicatorSize.js";
 
 type Star = {
 	selected: boolean,
@@ -41,41 +37,34 @@ type Star = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * The Rating Indicator is used to display a specific number of icons that are used to rate an item.
  * Additionally, it is also used to display the average and overall ratings.
  *
- * <h3>Usage</h3>
+ * ### Usage
  * The recommended number of icons is between 5 and 7.
  *
- * <h3>Responsive Behavior</h3>
- * You can change the size of the Rating Indicator by changing its <code>font-size</code> CSS property.
- * <br>
- * Example: <code>&lt;ui5-rating-indicator style="font-size: 3rem;">&lt;/ui5-rating-indicator></code>
+ * ### Responsive Behavior
+ * You can change the size of the Rating Indicator by changing its `font-size` CSS property.
  *
- * <h3>Keyboard Handling</h3>
- * When the <code>ui5-rating-indicator</code> is focused, the user can change the rating
+ * Example: `<ui5-rating-indicator style="font-size: 3rem;"></ui5-rating-indicator>`
+ *
+ * ### Keyboard Handling
+ * When the `ui5-rating-indicator` is focused, the user can change the rating
  * with the following keyboard shortcuts:
- * <br>
  *
- * <ul>
- * <li>[RIGHT/UP] - Increases the value of the rating by one step. If the highest value is reached, does nothing</li>
- * <li>[LEFT/DOWN] - Decreases the value of the rating by one step. If the lowest value is reached, does nothing.</li>
- * <li>[HOME] - Sets the lowest value.</li>
- * <li>[END] - Sets the highest value.</li>
- * <li>[SPACE/ENTER/RETURN] - Increases the value of the rating by one step. If the highest value is reached, sets the rating to the lowest value.</li>
- * <li>Any number - Changes value to the corresponding number. If typed number is larger than the number of values, sets the highest value.</li>
- * </ul>
+ * - [RIGHT/UP] - Increases the value of the rating by one step. If the highest value is reached, does nothing
+ * - [LEFT/DOWN] - Decreases the value of the rating by one step. If the lowest value is reached, does nothing.
+ * - [Home] - Sets the lowest value.
+ * - [End] - Sets the highest value.
+ * - [SPACE/ENTER/RETURN] - Increases the value of the rating by one step. If the highest value is reached, sets the rating to the lowest value.
+ * - Any number - Changes value to the corresponding number. If typed number is larger than the number of values, sets the highest value.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/RatingIndicator.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/RatingIndicator.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.RatingIndicator
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-rating-indicator
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.8
  */
@@ -83,141 +72,127 @@ type Star = {
 @customElement({
 	tag: "ui5-rating-indicator",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: RatingIndicatorCss,
 	template: RatingIndicatorTemplate,
-	dependencies: [Icon],
 })
 /**
  * The event is fired when the value changes.
- *
- * @event sap.ui.webc.main.RatingIndicator#change
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 class RatingIndicator extends UI5Element {
+	eventDetails!: {
+		change: void,
+	}
 	/**
 	 * The indicated value of the rating.
-	 * <br><br>
-	 * <b>Note:</b> If you set a number which is not round, it would be shown as follows:
-	 * <ul>
-	 * <li>1.0 - 1.2 -> 1</li>
-	 * <li>1.3 - 1.7 -> 1.5</li>
-	 * <li>1.8 - 1.9 -> 2</li>
-	 * <ul>
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.value
-	 * @defaultvalue 0
+	 *
+	 * **Note:** If you set a number which is not round, it would be shown as follows:
+	 *
+	 * - 1.0 - 1.2 -> 1
+	 * - 1.3 - 1.7 -> 1.5
+	 * - 1.8 - 1.9 -> 2
+	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
-	value!: number;
+	@property({ type: Number })
+	value: number = 0;
 
 	/**
 	 * The number of displayed rating symbols.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.max
-	 * @defaultvalue 5
+	 * @default 5
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ validator: Integer, defaultValue: 5 })
-	max!: number;
+	@property({ type: Number })
+	max: number = 5;
+
+	/**
+	 * Defines the size of the component.
+	 * @default "M"
+	 * @public
+	 * @since 2.6.0
+	 */
+	@property()
+	size: `${RatingIndicatorSize}` = "M";
 
 	/**
 	 * Defines whether the component is disabled.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is completely noninteractive.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.disabled
-	 * @defaultvalue false
+	 * **Note:** A disabled component is completely noninteractive.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines whether the component is read-only.
-	 * <br><br>
-	 * <b>Note:</b> A read-only component is not editable,
-	 * but still provides visual feedback upon user interaction.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.readonly
-	 * @defaultvalue false
+	 * **Note:** A read-only component is not editable,
+	 * but still provides visual feedback upon user interaction.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.accessibleName
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 * @since 1.15.0
 	 */
-	 @property({ defaultValue: "" })
-	 accessibleNameRef!: string;
+	 @property()
+	 accessibleNameRef?: string;
 
 	 /**
 	 * Defines whether the component is required.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.required
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.15.0
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines the tooltip of the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.tooltip
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 * @since 1.19.0
 	 */
 	@property()
-	tooltip!: string;
+	tooltip?: string;
 
 	/**
 	 * @private
 	 */
-	@property({ type: Object, multiple: true })
-	_stars!: Array<Star>;
+	@property({ type: Array })
+	_stars: Array<Star> = [];
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_focused!: boolean;
+	_focused = false;
 
 	_liveValue?: number;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		RatingIndicator.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	constructor() {
 		super();
@@ -268,7 +243,7 @@ class RatingIndicator extends UI5Element {
 			}
 
 			if (this._liveValue !== this.value) {
-				this.fireEvent("change");
+				this.fireDecoratorEvent("change");
 				this._liveValue = this.value;
 			}
 		}
@@ -276,6 +251,7 @@ class RatingIndicator extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		if (this.disabled || this.readonly) {
+			e.preventDefault();
 			return;
 		}
 
@@ -305,7 +281,7 @@ class RatingIndicator extends UI5Element {
 				this.value = pressedNumber > this.max ? this.max : pressedNumber;
 			}
 
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 	}
 
@@ -324,11 +300,19 @@ class RatingIndicator extends UI5Element {
 
 	get effectiveTabIndex() {
 		const tabindex = this.getAttribute("tabindex");
-		return this.disabled ? "-1" : tabindex || "0";
+
+		if (this.disabled) {
+			return -1;
+		}
+
+		return tabindex ? parseInt(tabindex) : 0;
 	}
 
-	get ratingTooltip() {
-		return this.tooltip || this.defaultTooltip;
+	get ratingTooltip(): string | undefined {
+		if (this.tooltip) {
+			return this.tooltip;
+		}
+		return getEnableDefaultTooltips() ? this.defaultTooltip : undefined;
 	}
 
 	get defaultTooltip() {
@@ -359,3 +343,4 @@ class RatingIndicator extends UI5Element {
 RatingIndicator.define();
 
 export default RatingIndicator;
+export type { Star };

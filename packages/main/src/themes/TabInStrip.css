@@ -7,7 +7,6 @@
 	padding: 0 var(--_ui5_tc_headeritem_padding);
 	font-size: var(--sapFontSmallSize);
 	font-weight: var(--_ui5_tc_headeritem_text_font_weight);
-	text-shadow: var(--sapContent_TextShadow);
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -16,6 +15,11 @@
 	min-width: 2rem;
 	max-width: 100%;
 	box-sizing: border-box;
+	outline: none;
+}
+
+.ui5-tab-strip-item[data-moving] {
+	background-color: var(--ui5_tc_header_active_background_color);
 }
 
 .ui5-tab-strip-itemText {
@@ -79,7 +83,7 @@
 	position: relative;
 	width: 0.0625rem;
 	right: -0.0625rem;
-	height: 1rem;
+	height: 0.625rem;
 	background: var(--sapTextColor);
 	margin-inline-start: 0.0625rem;
 	z-index: 2;
@@ -158,12 +162,10 @@
 	opacity: var(--sapContent_DisabledOpacity);
 }
 
-.ui5-tab-strip-item {
-	outline: none;
-}
-
-.ui5-tab-strip-item--textOnly:focus .ui5-tab-strip-itemText::before,
-.ui5-tab-strip-item--inline.ui5-tab-strip-item--textOnly:focus .ui5-tab-strip-itemText::before {
+:host([desktop]) .ui5-tab-strip-item--textOnly:focus:not([data-moving]) .ui5-tab-strip-itemText::before,
+.ui5-tab-strip-item--textOnly:focus-visible:not([data-moving]) .ui5-tab-strip-itemText::before,
+:host([desktop]) .ui5-tab-strip-item--inline.ui5-tab-strip-item--textOnly:focus:not([data-moving]) .ui5-tab-strip-itemText::before,
+.ui5-tab-strip-item--inline.ui5-tab-strip-item--textOnly:focus-visible:not([data-moving]) .ui5-tab-strip-itemText::before {
 	border-radius: var(--_ui5_tc_headerItem_focus_border_radius);
 	content: "";
 	pointer-events: none;
@@ -175,7 +177,8 @@
 	bottom: var(--_ui5_tc_headerItem_text_focus_border_offset_bottom);
 }
 
-.ui5-tab-strip-item--mixedMode:focus .ui5-tab-strip-itemContent::before {
+:host([desktop]) .ui5-tab-strip-item--mixedMode:focus:not([data-moving]) .ui5-tab-strip-itemContent::before,
+.ui5-tab-strip-item--mixedMode:focus-visible:not([data-moving]) .ui5-tab-strip-itemContent::before {
 	border-radius: var(--_ui5_tc_headerItem_focus_border_radius);
 	content: "";
 	pointer-events: none;
@@ -187,7 +190,8 @@
 	bottom: var(--_ui5_tc_headerItem_mixed_mode_focus_border_offset_bottom);
 }
 
-.ui5-tab-strip-item--withIcon:focus .ui5-tab-strip-item-icon-outer::before {
+:host([desktop]) .ui5-tab-strip-item--withIcon:focus:not([data-moving]) .ui5-tab-strip-item-icon-outer::before,
+.ui5-tab-strip-item--withIcon:focus-visible:not([data-moving]) .ui5-tab-strip-item-icon-outer::before {
 	content: "";
 	pointer-events: none;
 	position: absolute;

@@ -1,25 +1,17 @@
 /**
-* Defines which direction the items of ui5-toolbar will be aligned.
- *
- * @readonly
- * @enum {string}
+ * Defines which direction the items of ui5-toolbar will be aligned.
  * @public
- * @type {string}
- * @author SAP SE
- * @alias sap.ui.webc.main.types.ToolbarAlign
  */
 enum ToolbarAlign {
 	/**
+	 * Toolbar items are situated at the `start` of the Toolbar
 	 * @public
-	 * @type {Start}
-	 * Toolbar items are situated at the <code>start</code> of the Toolbar
 	 */
 	Start = "Start",
 
 	/**
+	 * Toolbar items are situated at the `end` of the Toolbar
 	 * @public
-	 * @type {End}
-	 * Toolbar items are situated at the <code>end</code> of the Toolbar
 	 */
 	End = "End",
 }

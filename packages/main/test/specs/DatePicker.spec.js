@@ -15,7 +15,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await input.isDisplayedInViewport(), "input is rendered");
 		assert.ok(await innerInput.isDisplayedInViewport(), "inner input is rendered");
 		assert.strictEqual(await innerInput.getAttribute("aria-roledescription"), "Date Input", "aria-roledescription attribute is added.");
-		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "Grid", "aria-haspopup attribute is added.");
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "grid", "aria-haspopup attribute is added.");
 		assert.notOk(await innerInput.getAttribute("aria-controls"), "aria-controls attribute isn't rendered.");
 		assert.notOk(await innerInput.getAttribute("aria-expanded"), "aria-expanded attribute isn't rendered.");
 	});
@@ -40,7 +40,8 @@ describe("Date Picker Tests", () => {
 		await setDateButton.click();
 
 		const innerInput = await datepicker.getInnerInput();
-		assert.equal(await innerInput.getValue(), "11 декември 2018 г.");
+		// \u202f is Narrow No-Break Space, coming with latest CLDR updates
+		assert.equal(await innerInput.getValue(), "11 декември 2018\u202fг.");
 	});
 
 	it("custom formatting", async () => {
@@ -55,24 +56,12 @@ describe("Date Picker Tests", () => {
 		const root = await datepicker.getRoot();
 		const input = await datepicker.getInput();
 
-		await root.setAttribute("value-state", "Error");
+		await root.setAttribute("value-state", "Negative");
 
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
 
 		const contentWrapper = await browser.$("#dp3").shadow$("ui5-input").shadow$(".ui5-input-content");
 		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
-	});
-
-	it("Value State Message", async () => {
-		datepicker.id = "#dp17";
-		const input = await datepicker.getInput();
-		await input.click();
-
-		const inputStaticAreaItem = await datepicker.getInputStaticAreaItem();
-		const popover = await inputStaticAreaItem.shadow$("ui5-popover");
-
-		const slot = await popover.$("#coolValueStateMessage");
-		assert.notOk(slot.error, "Value State message slot is working");
 	});
 
 	it("disabled", async () => {
@@ -349,7 +338,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await datepicker.isPickerOpen(), "datepicker is open");
 	});
 
-	it("[Alt] + [UP] toggles the calendar", async () => {
+	it("[Alt] + [Up] toggles the calendar", async () => {
 		datepicker.id = "#dp9";
 
 		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
@@ -365,7 +354,7 @@ describe("Date Picker Tests", () => {
 		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
 	});
 
-	it("[Alt] + [DOWN] toggles the calendar", async () => {
+	it("[Alt] + [Down] toggles the calendar", async () => {
 		datepicker.id = "#dp11";
 
 		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
@@ -393,7 +382,7 @@ describe("Date Picker Tests", () => {
 		await valueHelpIcon.click(); // close the datepicker
 	});
 
-	it("[SHIFT] + [F4] shows year picker after date picker is open", async () => {
+	it("[Shift] + [F4] shows year picker after date picker is open", async () => {
 		datepicker.id = "#dp11";
 
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
@@ -419,7 +408,7 @@ describe("Date Picker Tests", () => {
 	});
 
 
-	it("[SHIFT] + [F4] shows year picker after month picker is open", async () => {
+	it("[Shift] + [F4] shows year picker after month picker is open", async () => {
 		datepicker.id = "#dp11";
 
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
@@ -731,6 +720,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("placeholder, set by the user", async () => {
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		datepicker.id = "#dp15";
 
 		const placeholder = "Delivery date";
@@ -745,6 +735,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Going under the minimum date changes value state", async () => {
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		datepicker.id = "#dp33";
 
 		const innerInput = await datepicker.getInnerInput();
@@ -753,13 +744,14 @@ describe("Date Picker Tests", () => {
 		await innerInput.keys("Enter");
 
 		const input = await datepicker.getInput();
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
 
 		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
 		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
 	it("Going over the maximum date changes value state", async () => {
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		datepicker.id = "#dp33";
 
 		const innerInput = await datepicker.getInnerInput();
@@ -769,11 +761,10 @@ describe("Date Picker Tests", () => {
 		}
 
 		await innerInput.keys("May 5, 2100");
-		const root = await datepicker.getRoot();
-		await root.keys("Enter");
+		await innerInput.keys("Enter");
 
 		const input = await datepicker.getInput();
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
 
 		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
 		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
@@ -820,62 +811,67 @@ describe("Date Picker Tests", () => {
 		await btnYear.click();
 		let displayedYear = await datepicker.getDisplayedYear(11);
 		assert.ok(await displayedYear.hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
+		assert.notOk(await displayedYear.isFocusedDeep(), "Years out of range (2101) can not be reached with keyboard");
+
 		await root.keys("ArrowRight");
 
 		displayedYear = await datepicker.getDisplayedYear(10);
 		assert.ok(await displayedYear.isFocusedDeep(), "Focus remained on year 2100");
 
-		displayedYear = await datepicker.getDisplayedYear(11);
-		assert.notOk(await displayedYear.isFocusedDeep(), "Years out of range (2101) can not be reached with keyboard");
+		await datepicker.closePicker();
 	});
 
 	it("Months are disabled when out of range", async () => {
 		datepicker.id = "#dp33";
 
+		const input = await datepicker.getInput();
+		await input.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 8, 2100");
+		await root.keys("Enter");
+
 		await datepicker.openPicker();
 
 		const btnMonth = await datepicker.getBtnMonth();
 		await btnMonth.click();
+
 		let displayedMonth = await datepicker.getDisplayedMonth(10);
 		assert.ok(await displayedMonth.hasClass("ui5-mp-item--disabled"), "Months out of range are disabled");
 
-		const root = await datepicker.getRoot();
 		await root.keys("ArrowDown");
 
 		displayedMonth = await datepicker.getDisplayedMonth(0);
-		assert.ok(await displayedMonth.isFocusedDeep(), "Months out of range  can not be reached with keyboard");
+		assert.ok(await displayedMonth.isFocusedDeep(), "Months out of range cannot be reached with keyboard");
+
+		await datepicker.closePicker();
 	});
 
 	it("Days are disabled when out of range", async () => {
 		datepicker.id = "#dp33";
 
-		const root = await datepicker.getRoot();
-		await root.keys("Escape");
 		await browser.$("#dp33").scrollIntoView();
 		await datepicker.openPicker();
 
 		const displayedDay = await datepicker.getDisplayedDay(15);
 
 		assert.ok(await displayedDay.hasClass("ui5-dp-item--disabled"), "Days out of range are disabled");
+
+		await datepicker.closePicker();
 	});
 
 	it("Days are enabled when in range", async () => {
-		datepicker.id = "#dp33";
-		const root = await datepicker.getRoot();
-		await root.keys("Escape");
-
 		datepicker.id = "#dp33";
 		await datepicker.openPicker();
 		const displayedDay = await datepicker.getDisplayedDay(12);
 
 		assert.ok(await displayedDay.isFocusedDeep(), "Days in range are enabled");
+
+		await datepicker.closePicker();
 	});
 
 	it("Min and Max date are included in the interval", async () => {
 		datepicker.id = "#dp33";
 
-		const root = await datepicker.getRoot();
-		await root.keys("Escape");
 		await datepicker.openPicker();
 
 		let displayedDay = await datepicker.getDisplayedDay(9);
@@ -883,6 +879,8 @@ describe("Date Picker Tests", () => {
 
 		displayedDay = await datepicker.getDisplayedDay(11);
 		assert.notOk(await displayedDay.hasClass("ui5-dp-item--disabled"), "Max date is included");
+
+		await datepicker.closePicker();
 	});
 
 	it("Tests week numbers column visibility", async () => {
@@ -975,6 +973,8 @@ describe("Date Picker Tests", () => {
 		assert.strictEqual(await lastColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
 		assert.strictEqual(await lastColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
 		assert.strictEqual(await lastColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+
+		await datepicker.closePicker();
 	});
 
 	it("DatePicker dates and week number", async () => {
@@ -991,10 +991,12 @@ describe("Date Picker Tests", () => {
 		await datepicker.openPicker();
 
 		const data = Array.from(await datepicker.getDayPickerDatesRow(2));
-		assert.strictEqual(await data[0].getAttribute("aria-label"), "Calendar Week 18", "First columnheader have Week number aria-label");
+		assert.strictEqual(await data[0].getAttribute("aria-label"), "Calendar Week 19", "First columnheader have Week number aria-label");
 		assert.strictEqual(await data[1].getAttribute("aria-label"), "Non-Working Day May 2, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
 		assert.strictEqual(await data[2].getAttribute("aria-label"), "May 3, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
 		assert.strictEqual(await data[3].getAttribute("aria-label"), "May 4, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+
+		await datepicker.closePicker();
 	});
 
 	it("Tests aria-label", async () => {
@@ -1089,24 +1091,24 @@ describe("Date Picker Tests", () => {
 		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
 
-	// it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
-	// 	datepicker.id = "#dp33";
-	// 	const innerInput = await datepicker.getInnerInput();
-	// 	await innerInput.doubleClick();
-	// 	await browser.keys("Jan 1, 2000");
+	it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
+		datepicker.id = "#dp33";
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.doubleClick();
+		await browser.keys("Jan 1, 2000");
 
-	// 	const valueHelpIcon = await datepicker.getValueHelpIcon();
-	// 	await valueHelpIcon.click();
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-	// 	await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
-	// 	const displayedDay = await datepicker.getDisplayedDay(13);
-	// 	assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
+		const displayedDay = await datepicker.getDisplayedDay(13);
+		assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
 
-	// 	await browser.keys("Escape");
-	// 	await innerInput.doubleClick();
-	// 	await browser.keys("Backspace");
-	// });
+		await browser.keys("Escape");
+		await innerInput.doubleClick();
+		await browser.keys("Backspace");
+	});
 
 	it("Value state changes only on submit", async () => {
 		await browser.url(`test/pages/DatePicker.html?sap-ui-language=en`);
@@ -1121,7 +1123,7 @@ describe("Date Picker Tests", () => {
 
 		await browser.keys("Enter");
 
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
 	});
 
 	it("focusout fires change but doesn't change the value state if the default behaviour is prevented", async () => {
@@ -1163,7 +1165,7 @@ describe("Date Picker Tests", () => {
 		await browser.keys("Jan 60, 2000");
 		await browser.keys("Enter");
 
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
 
 		await innerInput.doubleClick();
 		await browser.keys("Backspace");
@@ -1188,7 +1190,7 @@ describe("Date Picker Tests", () => {
 		await innerInput.keys("asd")
 		await innerInput.keys("Enter");
 
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid (1)");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is not Negative (1)");
 
 		await datepicker.openPicker();
 
@@ -1205,7 +1207,7 @@ describe("Date Picker Tests", () => {
 		await innerInput.keys("Enter");
 
 
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid (3)");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is not valid (3)");
 	});
 
 	it("should open calendar picker in CalendarMode.DAY_MONTH_YEAR mode", async () => {
@@ -1296,7 +1298,7 @@ describe("Date Picker Tests", () => {
 		await Input.click();
 		await browser.keys("Nov 1, 2020");
 		await browser.keys("Enter");
-		assert.equal(await Input.getProperty("valueState"), "Error", "Correct value state");
+		assert.equal(await Input.getProperty("valueState"), "Negative", "Correctly set value state to 'Negative'");
 
 		await datepicker.openPicker();
 		const btnYear = await datepicker.getBtnYear();
@@ -1329,5 +1331,101 @@ describe("Date Picker Tests", () => {
 
 		let displayedYear = await datepicker.getDisplayedYear(11);
 		assert.notOk(await displayedYear.hasClass("ui5-yp-item--disabled"), "Year 2025 is not disabled");
+
+		await datepicker.closePicker();
+	});
+
+	it("Value state is not changed, when value-state-change is prevented", async () => {
+		datepicker.id = "#dpVsChangePrevented";
+
+		const input = await datepicker.getInput();
+
+		const valueState = await input.getProperty("valueState");
+		await input.click();
+		await browser.keys("Jan 29, 2019");
+
+		await browser.$("#dpVsChangePrevented").shadow$("ui5-input").shadow$("input").click(); // click elsewhere to focusout
+
+		assert.strictEqual(await input.getProperty("valueState"), valueState, "value state is not changed");
+	});
+
+	it("should open date picker in daypicker", async () => {
+		datepicker.id = "#dpCalendarModeMonths";
+
+		const calendar = await datepicker.getCalendar();
+		const datepickerRoot = await datepicker.getRoot();
+		await datepicker.openPicker();
+
+		let currentPicker = await calendar.getProperty("_currentPicker");
+		assert.equal(currentPicker, "month", "calendar is opened on months");
+
+		await datepicker.closePicker();
+
+		await datepickerRoot.setAttribute("format-pattern", "yyyy, dd/MM");
+
+		await datepicker.openPicker();
+		currentPicker = await calendar.getProperty("_currentPicker");
+
+		assert.equal(currentPicker, "day", "calendar is opened on days");
+
+		const dayPicker = await calendar.shadow$("ui5-daypicker");
+		const monthPicker = await calendar.shadow$("ui5-monthpicker");
+		const yearPicker = await calendar.shadow$("ui5-yearpicker");
+		assert.notOk(await dayPicker.getAttribute("hidden"));
+		assert.ok(await monthPicker.getAttribute("hidden"));
+		assert.ok(await yearPicker.getAttribute("hidden"));
+
+		await datepicker.closePicker();
+	});
+
+	it("should open day picker view initially when open is triggered via keyboard", async () => {
+		datepicker.id = "#dpCalendarModeMonths";
+
+		const calendar = await datepicker.getCalendar();
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
+		let currentPicker = await calendar.getProperty("_currentPicker");
+
+		assert.ok(await datepicker.isPickerOpen(), "Datepicker is open");
+		assert.equal(currentPicker, "day", "calendar is opened on days");
+
+		await browser.keys("F4");
+		currentPicker = await calendar.getProperty("_currentPicker");
+		assert.equal(currentPicker, "month", "calendar is opened on months");
+
+		await browser.keys("Escape");
+		assert.notOk(await datepicker.isPickerOpen(), "Datepicker is closed");
+
+		await valueHelpIcon.click();
+		currentPicker = await calendar.getProperty("_currentPicker");
+		assert.ok(await datepicker.isPickerOpen(), "Datepicker is open");
+		assert.equal(currentPicker, "day", "calendar is opened on days");
+	});
+
+	it("picker popover should have accessible name", async () => {
+		datepicker.id = "#dp";
+		await datepicker.openPicker();
+
+		const popover = await datepicker.getPopover();
+
+		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date", "Picker popover has an accessible name");
+
+		await datepicker.closePicker();
+	});
+
+	describe("Legacy date customization", () => {
+		it.only("Customization of legacy dates in Islamic calendar", async () => {
+			// According to the Islamic calendar, Rab. I 9, 1446 AH should be displayed on Thursday,
+			// but it needs to be configured using the legacyDateCalendarCustomizing setting.
+			datepicker.page = "test/pages/DatePicker_legacy_test_page.html";
+
+			await datepicker.open();
+
+			datepicker.id = "#dp";
+
+			const currentSelection = await datepicker.getDisplayedDay(11);
+
+			assert.strictEqual(await currentSelection.getText(), "9", "Legacy date customization is applied");
+		});
 	});
 });

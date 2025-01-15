@@ -1,67 +1,73 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { IComboBoxItem } from "./ComboBox.js";
+import ListItemBase from "./ListItemBase.js";
+
+import ComboBoxItemTemplate from "./ComboBoxItemTemplate.js";
+import ComboboxItemCss from "./generated/themes/ComboBoxItem.css.js";
 
 /**
  * @class
- * The <code>ui5-cb-item</code> represents the item for a <code>ui5-combobox</code>.
- *
+ * The `ui5-cb-item` represents the item for a `ui5-combobox`.
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ComboBoxItem
- * @extends sap.ui.webc.base.UI5Element
- * @abstract
- * @tagname ui5-cb-item
- * @implements sap.ui.webc.main.IComboBoxItem
+ * @extends ListItemBase
+ * @implements {IComboBoxItem}
  * @public
  */
-@customElement("ui5-cb-item")
-class ComboBoxItem extends UI5Element implements IComboBoxItem {
+@customElement({
+	tag: "ui5-cb-item",
+	template: ComboBoxItemTemplate,
+	styles: [ListItemBase.styles, ComboboxItemCss],
+})
+class ComboBoxItem extends ListItemBase implements IComboBoxItem {
+	eventDetails!: ListItemBase["eventDetails"];
 	/**
 	 * Defines the text of the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.ComboBoxItem.prototype.text
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string
+	text?: string;
 
 	/**
 	 * Defines the additional text of the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.ComboBoxItem.prototype.additionalText
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @since 1.0.0-rc.11
 	 * @public
 	 */
 	@property()
-	additionalText!: string
+	additionalText?: string;
+
+	/**
+	 * Indicates whether the item is filtered
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_isVisible = false;
 
 	/**
 	 * Indicates whether the item is focssed
 	 * @protected
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * Indicates whether the item is selected
 	 * @protected
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
-	 * Used to avoid tag name checks
-	 * @protected
+	 * Defines the markup text that will be displayed as suggestion.
+	 * Used for highlighting the matching parts of the text.
+	 *
+	 * @since 2.4.0
+	 * @private
 	 */
-	get isGroupItem(): boolean {
-		return false;
-	}
+	@property()
+	markupText = "";
 }
 
 ComboBoxItem.define();

@@ -1,0 +1,7 @@
+.f {
+    display: flex;
+    flex-direction: column;
+}
+.f > :nth-child(2n) {
+    margin-bottom: 1.5rem;
+}

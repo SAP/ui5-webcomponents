@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "1.21.0-rc.1",
+  "version": "2.6.2",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -17,12 +17,27 @@
     "directory": "packages/base"
   },
   "exports": {
-    ".": "./index.js",
-    "./dist/*": "./dist/*",
+    "./jsx-runtime": "./dist/jsx-runtime.js",
+    "./jsx-dev-runtime": "./dist/jsx-dev-runtime.js",
+    "./dist/ssr-dom.js": {
+      "browser": "./dist/ssr-dom.js",
+      "node": "./dist/ssr-dom-shim.js",
+      "default": "./dist/ssr-dom.js"
+    },
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./index.js"
+    },
+    "./dist/*": {
+      "production": "./dist/prod/*",
+      "development": "./dist/*",
+      "default": "./dist/*"
+    },
     "./package.json": "./package.json",
     "./bundle.esm.js": "./bundle.esm.js",
     "./*": "./dist/*"
   },
+  "types": "./dist",
   "scripts": {
     "clean": "nps clean",
     "lint": "nps lint",
@@ -30,24 +45,27 @@
     "build": "nps build",
     "generate": "nps generate",
     "generateAPI": "nps generateAPI",
+    "generateProd": "nps generateProd",
     "bundle": "nps build.bundle",
     "test": "nps test",
-    "prepublishOnly": "tsc"
+    "test:cypress:open": "nps test.test-cy-open",
+    "prepublishOnly": "tsc -b"
   },
   "dependencies": {
+    "@lit-labs/ssr-dom-shim": "^1.1.2",
     "lit-html": "^2.0.1"
   },
   "devDependencies": {
-    "@buxlabs/amd-to-es6": "0.16.1",
-    "@openui5/sap.ui.core": "1.116.0",
-    "@ui5/webcomponents-tools": "1.21.0-rc.1",
-    "chromedriver": "119.0.1",
+    "@openui5/sap.ui.core": "1.120.17",
+    "@ui5/webcomponents-tools": "2.6.2",
+    "chromedriver": "^131.0.0",
     "clean-css": "^5.2.2",
     "copy-and-watch": "^0.1.5",
     "cross-env": "^7.0.3",
     "eslint": "^7.22.0",
     "mkdirp": "^1.0.4",
     "replace-in-file": "^6.3.5",
-    "resolve": "^1.20.0"
+    "resolve": "^1.20.0",
+    "touch": "^3.1.0"
   }
 }

@@ -41,8 +41,8 @@ const copyIconAssetsCommand = (options) => {
 const getScripts = (options) => {
 	const createJSImportsCmd = createIconImportsCommand(options);
 	const copyAssetsCmd = copyIconAssetsCommand(options);
-	const tsCommand = options.typescript ? "tsc --build" : "";
-	const tsCrossEnv = options.typescript ? "cross-env UI5_TS=true" : "";
+	const tsCommand = !options.legacy ? "tsc --build" : "";
+	const tsCrossEnv = !options.legacy ? "cross-env UI5_TS=true" : "";
 
 	const scripts = {
 		clean: "rimraf dist && rimraf src/generated",

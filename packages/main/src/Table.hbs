@@ -1,122 +1,63 @@
-<div
-	class="ui5-table-root"
-	@ui5-selection-requested="{{_handleSelect}}"
-	@ui5-_forward-after="{{_onForwardAfter}}"
-	@ui5-_forward-before="{{_onForwardBefore}}"
-	@focusin="{{_onfocusin}}"
+<div id="before" role="none" tabindex="0" ui5-table-dummy-focus-area></div>
+
+<div id="table" role="grid"
+    style="{{styles.table}}"
+    aria-label="{{_ariaLabel}}"
+    aria-rowcount="{{_ariaRowCount}}"
+    aria-multiselectable="{{_ariaMultiSelectable}}"
 >
-	<div id="{{_id}}-before" tabindex="0" class="ui5-table-focusarea"></div>
+    <slot name="headerRow"></slot>
+    <div id="rows">
+        <div id="spacer" style="{{styles.spacer}}">
+            <slot></slot>
+        </div>
+    </div>
+    {{#unless rows.length}}
+        <ui5-table-row id="nodata-row">
+            <ui5-table-cell id="nodata-cell" excluded-from-navigation horizontal-align="Center">
+            {{#if nodata.length}}
+                <slot name="nodata"></slot>
+            {{else}}
+                {{_effectiveNoDataText}}
+            {{/if}}
+            </ui5-table-cell>
+        </ui5-table-row>
+    {{/unless}}
 
-	{{#if busy}}
-		{{> busyRow}}
-	{{/if}}
+    {{#if _shouldRenderGrowing}}
+        <div id="footer" role="rowgroup">
+            {{> growingRow}}
+        </div>
+    {{/if}}
 
-	<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table" aria-label="{{tableAriaLabelText}}">
-		<thead>
-			<tr
-				id="{{_columnHeader.id}}"
-				class="ui5-table-header-row"
-				aria-label="{{ariaLabelText}}"
-				tabindex="{{_columnHeader._tabIndex}}"
-				@click="{{_onColumnHeaderClick}}"
-				@focusin="{{_onColumnHeaderFocused}}"
-				@keydown="{{_onColumnHeaderKeydown}}"
-			>
-				{{#if isMultiSelect}}
-					<th class="ui5-table-select-all-column" role="presentation" aria-hidden="true">
-						{{#if rows.length}}
-							<ui5-checkbox class="ui5-table-select-all-checkbox"
-								?checked="{{_allRowsSelected}}"
-								@ui5-change="{{_selectAll}}"
-								aria-label="{{ariaLabelSelectAllText}}"
-								tabindex="-1"
-							>
-							</ui5-checkbox>
-						{{/if}}
-					</th>
-				{{/if}}
+    <ui5-drop-indicator
+		orientation="Horizontal"
+		.ownerReference="{{this}}"
+	></ui5-drop-indicator>
 
-				{{#each visibleColumns}}
-					<slot name="{{this._individualSlot}}"></slot>
-				{{/each}}
-				<th class="ui5-table-header-row-navigated" aria-hidden="true"></th>
-			</tr>
-		</thead>
-
-		<tbody>
-			{{#each rows}}
-				<slot name="{{this._individualSlot}}"></slot>
-			{{/each}}
-
-			{{#unless rows.length}}
-				{{#unless hideNoData}}
-					<tr class="ui5-table-no-data-row-root">
-						<td colspan="{{visibleColumnsCount}}" role="cell" style="width: 100%">
-
-							<div class="ui5-table-no-data-row">
-								<span>{{noDataText}}</span>
-							</div>
-						</td>
-					</tr>
-				{{/unless}}
-			{{/unless}}
-
-			{{#if growsWithButton}}
-				{{> moreRow}}
-			{{/if}}
-
-			{{#if growsOnScroll}}
-				{{> tableEndRow}}
-			{{/if}}
-		</tbody>
-	</table>
-
-	<div id="{{_id}}-after" tabindex="0" class="ui5-table-focusarea"></div>
+    {{> tableEndRow}}
 </div>
 
-{{#*inline "moreRow"}}
-<tr>
-	<td colspan="{{visibleColumnsCount}}">
-		<div growing-button>
-			<div
-				id="{{_id}}-growingButton"
-				tabindex="0"
-				role="button"
-				aria-labelledby="{{loadMoreAriaLabelledBy}}"
-				?active="{{_loadMoreActive}}"
-				@click="{{_onLoadMoreClick}}"
-				@keydown="{{_onLoadMoreKeydown}}"
-				@keyup="{{_onLoadMoreKeyup}}"
-				growing-button-inner
-			>
-				<span id="{{_id}}-growingButton-text" growing-button-text>{{_growingButtonText}}</span>
+{{#if loading}}
+    <ui5-busy-indicator id="loading" delay="{{loadingDelay}}" active data-sap-focus-ref></ui5-busy-indicator>
+{{/if}}
 
-				{{#if growingButtonSubtext}}
-					<span id="{{_id}}-growingButton-subtext" growing-button-subtext>{{growingButtonSubtext}}</span>
-				{{/if}}
-			</div>
-		</div>
-	</td>
-</tr>
+<div id="after" role="none" tabindex="0" ui5-table-dummy-focus-area></div>
+
+{{#*inline "growingRow"}}
+    <ui5-table-row id="growing-row" ui5-growing-row>
+        <ui5-table-cell id="growing-cell">
+            <!-- The growing button is a div filling the cell -->
+            <!-- It has a growing text at the top and a growingSubText at the bottom -->
+            <slot name="{{_growing._individualSlot}}"></slot>
+        </ui5-table-cell>
+    </ui5-table-row>
 {{/inline}}
 
 {{#*inline "tableEndRow"}}
-	<tr tabindex="-1" class="ui5-table-end-row">
-		<td tabindex="-1">
-			<span tabindex="-1" aria-hidden="true" class="ui5-table-end-marker"></span>
-		</td>
-	</tr>
-{{/inline}}
-
-{{#*inline "busyRow"}}
-	<div tabindex="-1" class="ui5-table-busy-row">
-		<ui5-busy-indicator
-			delay="{{busyDelay}}"
-			class="ui5-table-busy-ind"
-			style="{{styles.busy}}"
-			active
-			size="Medium"
-			data-sap-focus-ref
-		></ui5-busy-indicator>
-	</div>
+    <div aria-hidden="true" id="table-end-row">
+        <div id="table-end-cell">
+            <div id="table-end" aria-hidden="true" tabindex="-1"></div>
+        </div>
+    </div>
 {{/inline}}

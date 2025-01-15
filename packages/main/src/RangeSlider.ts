@@ -1,22 +1,25 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isEscape,
+	isEnter,
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
-import Icon from "./Icon.js";
-import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
+import RangeSliderTemplate from "./RangeSliderTemplate.js";
+import type Input from "./Input.js";
 
 // Texts
 import {
 	RANGE_SLIDER_ARIA_DESCRIPTION,
 	RANGE_SLIDER_START_HANDLE_DESCRIPTION,
 	RANGE_SLIDER_END_HANDLE_DESCRIPTION,
+	SLIDER_TOOLTIP_INPUT_LABEL,
+	SLIDER_TOOLTIP_INPUT_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -32,110 +35,93 @@ type AffectedValue = "startValue" | "endValue";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * Represents a numerical interval and two handles (grips) to select a sub-range within it.
  * The purpose of the component to enable visual selection of sub-ranges within a given interval.
  *
- * <h3>Structure</h3>
+ * ### Structure
  * The most important properties of the Range Slider are:
- * <ul>
- * <li>min - The minimum value of the slider range.</li>
- * <li>max - The maximum value of the slider range.</li>
- * <li>value - The current value of the slider.</li>
- * <li>step - Determines the increments in which the slider will move.</li>
- * <li>showTooltip - Determines if a tooltip should be displayed above the handle.</li>
- * <li>showTickmarks - Displays a visual divider between the step values.</li>
- * <li>labelInterval - Labels some or all of the tickmarks with their values.</li>
- * </ul>
- * <h4>Notes:</h4>
- * <ul>
- * <li>The right and left handle can be moved individually and their positions could therefore switch.</li>
- * <li>The entire range can be moved along the interval.</li>
- * </ul>
- * <h3>Usage</h3>
+ *
+ * - min - The minimum value of the slider range.
+ * - max - The maximum value of the slider range.
+ * - value - The current value of the slider.
+ * - step - Determines the increments in which the slider will move.
+ * - showTooltip - Determines if a tooltip should be displayed above the handle.
+ * - showTickmarks - Displays a visual divider between the step values.
+ * - labelInterval - Labels some or all of the tickmarks with their values.
+ *
+ * #### Notes:
+ *
+ * - The right and left handle can be moved individually and their positions could therefore switch.
+ * - The entire range can be moved along the interval.
+ *
+ * ### Usage
  * The most common use case is to select and move sub-ranges on a continuous numerical scale.
  *
- * <h3>Responsive Behavior</h3>
+ * ### Responsive Behavior
  * You can move the currently selected range by clicking on it and dragging it along the interval.
  *
- * <h3>CSS Shadow Parts</h3>
+ * ### Keyboard Handling
  *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-range-slider</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>progress-container - Used to style the progress container(the horizontal bar which visually represents the range between the minimum and maximum value) of the <code>ui5-range-slider</code>.</li>
- * <li>progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-range-slider</code>.</li>
- * <li>handle - Used to style the handles of the <code>ui5-range-slider</code>.</li>
- * </ul>
+ * - `Left or Down Arrow` - Moves a component's handle or the entire selection one step to the left;
+ * - `Right or Up Arrow` - Moves a component's handle or the entire selection one step to the right;
+ * - `Left or Down Arrow + Ctrl/Cmd` - Moves a component's handle to the left or the entire range with step equal to 1/10th of the entire range;
+ * - `Right or Up Arrow + Ctrl/Cmd` - Moves a component's handle to the right or the entire range with step equal to 1/10th of the entire range;
+ * - `Plus` - Same as `Right or Up Arrow`;
+ * - `Minus` - Same as `Left or Down Arrow`;
+ * - `Home` - Moves the entire selection or the selected handle to the beginning of the component's range;
+ * - `End` - Moves the entire selection or the selected handle to the end of the component's range;
+ * - `Page Up` - Same as `Right or Up Arrow + Ctrl/Cmd`;
+ * - `Page Down` - Same as `Left or Down Arrow + Ctrl/Cmd`;
+ * - `Escape` - Resets the `startValue` and `endValue` properties to the values prior the component focusing;
  *
- * <h3>Keyboard Handling</h3>
+ * ### ES6 Module Import
  *
- * <ul>
- * <li><code>Left or Down Arrow</code> - Moves a component's handle or the entire selection one step to the left;</li>
- * <li><code>Right or Up Arrow</code> - Moves a component's handle or the entire selection one step to the right;</li>
- * <li><code>Left or Down Arrow + Ctrl/Cmd</code> - Moves a component's handle to the left or the entire range with step equal to 1/10th of the entire range;</li>
- * <li><code>Right or Up Arrow + Ctrl/Cmd</code> - Moves a component's handle to the right or the entire range with step equal to 1/10th of the entire range;</li>
- * <li><code>Plus</code> - Same as <code>Right or Up Arrow</code>;</li>
- * <li><code>Minus</code> - Same as <code>Left or Down Arrow</code>;</li>
- * <li><code>Home</code> - Moves the entire selection or the selected handle to the beginning of the component's range;</li>
- * <li><code>End</code> - Moves the entire selection or the selected handle to the end of the component's range;</li>
- * <li><code>Page Up</code> - Same as <code>Right or Up Arrow + Ctrl/Cmd</code>;</li>
- * <li><code>Page Down</code> - Same as <code>Left or Down Arrow + Ctrl/Cmd</code>;</li>
- * <li><code>Escape</code> - Resets the <code>startValue</code> and <code>endValue</code> properties to the values prior the component focusing;</li>
- * </ul>
- *
- * <h3>ES6 Module Import</h3>
- *
- * <code>import "@ui5/webcomponents/dist/RangeSlider";</code>
- *
- *
+ * `import "@ui5/webcomponents/dist/RangeSlider.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.RangeSlider
- * @extends sap.ui.webc.main.SliderBase
- * @tagname ui5-range-slider
+ * @extends SliderBase
  * @since 1.0.0-rc.11
  * @public
+ * @csspart progress-container - Used to style the progress container, the horizontal bar that visually represents the range between the minimum and maximum values, of the `ui5-range-slider`.
+ * @csspart progress-bar - Used to style the progress bar, which shows the progress of the `ui5-range-slider`.
+ * @csspart handle - Used to style the handles of the `ui5-range-slider`.
  */
 @customElement({
 	tag: "ui5-range-slider",
 	languageAware: true,
+	formAssociated: true,
 	template: RangeSliderTemplate,
-	dependencies: [Icon],
 	styles: [SliderBase.styles, rangeSliderStyles],
 })
-class RangeSlider extends SliderBase {
+class RangeSlider extends SliderBase implements IFormInputElement {
 	/**
 	 * Defines start point of a selection - position of a first handle on the slider.
-	 * <br><br>
-	 *
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.RangeSlider.prototype.startValue
-	 * @defaultvalue 0
+	 * @default 0
 	 * @formEvents change input
 	 * @formProperty
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
-	startValue!: number;
+	@property({ type: Number })
+	startValue = 0;
 
 	/**
 	 * Defines end point of a selection - position of a second handle on the slider.
-	 * <br><br>
-	 *
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.RangeSlider.prototype.endValue
-	 * @defaultvalue 100
+	 * @default 100
 	 * @formEvents change input
 	 * @formProperty
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 100 })
-	endValue!: number;
+	@property({ type: Number })
+	endValue = 100;
 
 	@property({ type: Boolean })
-	rangePressed!: boolean;
+	rangePressed = false;
+
+	@property({ type: Boolean })
+	_isStartValueValid = false;
+
+	@property({ type: Boolean })
+	_isEndValueValid = false;
 
 	_startValueInitial?: number;
 	_endValueInitial?: number;
@@ -150,13 +136,32 @@ class RangeSlider extends SliderBase {
 	_secondHandlePositionFromStart?: number;
 	_selectedRange?: number;
 	_reversedValues = false;
+	_lastValidStartValue: string;
+	_lastValidEndValue: string;
+	_areInputValuesSwapped = false;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
+
+	get formFormattedValue() {
+		const formData = new FormData();
+
+		if (!this.name) {
+			return formData;
+		}
+
+		formData.append(this.name, this.startValue.toString());
+		formData.append(this.name, this.endValue.toString());
+
+		return formData;
+	}
 
 	constructor() {
 		super();
 		this._stateStorage.startValue = undefined;
 		this._stateStorage.endValue = undefined;
+		this._lastValidStartValue = this.min.toString();
+		this._lastValidEndValue = this.max.toString();
 	}
 
 	get tooltipStartValue() {
@@ -218,6 +223,10 @@ class RangeSlider extends SliderBase {
 			this.update(affectedValue, this.startValue, this.endValue);
 		}
 
+		if (this.editableTooltip) {
+			this._saveInputValues();
+		}
+
 		if (!this.isCurrentStateOutdated()) {
 			return;
 		}
@@ -225,6 +234,7 @@ class RangeSlider extends SliderBase {
 		this.notResized = true;
 		this.syncUIAndState();
 		this._updateHandlesAndRange(0);
+		this.update(this._valueAffected, this.startValue, this.endValue);
 	}
 
 	syncUIAndState() {
@@ -285,10 +295,9 @@ class RangeSlider extends SliderBase {
 	 * its inner elements in result of user interactions.
 	 *
 	 * Resets the stored Range Slider's initial values saved when it was first focused
-	 *
 	 * @private
 	 */
-	_onfocusout() {
+	_onfocusout(e: FocusEvent) {
 		if (this._isFocusing()) {
 			this._preventFocusOut();
 			return;
@@ -298,8 +307,41 @@ class RangeSlider extends SliderBase {
 		this._startValueInitial = undefined;
 		this._endValueInitial = undefined;
 
-		if (this.showTooltip) {
+		if (this.showTooltip && !(e.relatedTarget as HTMLInputElement)?.hasAttribute("ui5-input")) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
+		}
+	}
+
+	_onInputFocusOut(e: FocusEvent) {
+		const tooltipInput = e.target as Input;
+		const oppositeTooltipInput: Input = tooltipInput.hasAttribute("data-sap-ui-start-value") ? this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-end-value]")! : this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-start-value]")!;
+		const relatedTarget = e.relatedTarget as HTMLElement;
+
+		if (this.startValue > this.endValue) {
+			this._areInputValuesSwapped = true;
+			oppositeTooltipInput.focus();
+			return;
+		}
+
+		if (tooltipInput.hasAttribute("data-sap-ui-start-value")) {
+			this._setAffectedValue("startValue");
+		} else {
+			this._setAffectedValue("endValue");
+		}
+
+		if (!this._areInputValuesSwapped || !this.shadowRoot!.contains(relatedTarget)) {
+			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
+		}
+
+		this._updateValueFromInput(e);
+		this._updateInputValue();
+		this.update(this._valueAffected, parseFloat(this._lastValidStartValue), parseFloat(this._lastValidEndValue));
+
+		const isTooltipInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
+
+		if (!isTooltipInputValueValid) {
+			tooltipInput.value = tooltipInput.hasAttribute("data-sap-ui-start-value") ? this._lastValidStartValue : this._lastValidEndValue;
+			tooltipInput.valueState = "None";
 		}
 	}
 
@@ -307,15 +349,17 @@ class RangeSlider extends SliderBase {
 	* Handles keyup logic. If one of the handles came across the other
 	* swap the start and end values. Reset the affected value by the finished
 	* user interaction.
-	*
 	* @private
 	*/
-	_onkeyup() {
-		super._onkeyup();
-		this._setAffectedValue(undefined);
+	_onkeyup(e: KeyboardEvent) {
+		super._onKeyupBase();
+
+		if (!isEnter(e)) {
+			this._setAffectedValue(undefined);
+		}
 
 		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 
 		this._startValueAtBeginningOfAction = undefined;
@@ -370,7 +414,6 @@ class RangeSlider extends SliderBase {
 	/**
 	 * Determines affected value (start/end) depending on the currently
 	 * active inner element within the Range Slider - used in the keyboard handling.
-	 *
 	 * @private
 	 */
 	_setAffectedValueByFocusedElement() {
@@ -392,7 +435,6 @@ class RangeSlider extends SliderBase {
 	/**
 	 * Calculates the start and end values when the 'Home" or 'End' keys
 	 * are pressed on the selected range bar.
-	 *
 	 * @private
 	 */
 	_homeEndForSelectedRange(e: KeyboardEvent, affectedValue: string, min: number, max: number) {
@@ -408,7 +450,6 @@ class RangeSlider extends SliderBase {
 	 * Update values, stored inner state and the visual UI representation of the component.
 	 * If no specific type of value property is passed - the range is selected - update both handles,
 	 * otherwise update the handle corresponding to the affected by the user interacton value prop.
-	 *
 	 * @private
 	 */
 	update(affectedValue: string | undefined, startValue: number | undefined, endValue: number | undefined) {
@@ -437,13 +478,16 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * Called when the user starts interacting with the slider
-	 *
 	 * @private
 	 */
 	_onmousedown(e: TouchEvent | MouseEvent) {
+		if ((e as MouseEvent)?.button && (e as MouseEvent)?.button !== 0) {
+			return;
+		}
+
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
-		if (this.disabled || this._effectiveStep === 0) {
+		if (this.disabled || this._effectiveStep === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
 			return;
 		}
 
@@ -472,7 +516,6 @@ class RangeSlider extends SliderBase {
 	 * Initial pageX position of the start handle affected by the interaction;
 	 * Initial pageX value of the pressed postion;
 	 * Affected value property by the action;
-	 *
 	 * @private
 	 */
 	_saveInteractionStartData(e: TouchEvent | MouseEvent, newValue: number) {
@@ -493,14 +536,13 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * Called when the user moves the slider
-	 *
 	 * @private
 	 */
 	_handleMove(e: TouchEvent | MouseEvent) {
 		e.preventDefault();
 
 		// If 'step' is 0 no interaction is available as there is no constant quantitative representation of the value
-		if (this.disabled || this._effectiveStep === 0) {
+		if (this.disabled || this._effectiveStep === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
 			return;
 		}
 
@@ -516,7 +558,6 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * Updates UI and state when dragging a single Range Slider handle
-	 *
 	 * @private
 	 */
 	_updateValueOnHandleDrag(event: TouchEvent | MouseEvent) {
@@ -527,7 +568,6 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * Updates UI and state when dragging of the whole selected range
-	 *
 	 * @private
 	 */
 	_updateValueOnRangeDrag(event: TouchEvent | MouseEvent) {
@@ -543,12 +583,16 @@ class RangeSlider extends SliderBase {
 		this.update(undefined, newValues[0], newValues[1]);
 	}
 
-	_handleUp() {
+	_handleUp(e: MouseEvent) {
+		if ((e.target as HTMLElement).hasAttribute("ui5-input")) {
+			return;
+		}
+
 		this._setAffectedValueByFocusedElement();
 		this._setAffectedValue(undefined);
 
 		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 
 		this._setIsPressInCurrentRange(false);
@@ -557,6 +601,31 @@ class RangeSlider extends SliderBase {
 		this.rangePressed = false;
 		this._startValueAtBeginningOfAction = undefined;
 		this._endValueAtBeginningOfAction = undefined;
+	}
+
+	_updateValueFromInput(e: Event) {
+		if (this._areInputValuesSwapped) {
+			return;
+		}
+
+		const input = e.target as HTMLInputElement;
+		const inputValue = parseFloat(input.value);
+		const isValueValid = inputValue >= this._effectiveMin && inputValue <= this._effectiveMax;
+
+		if (!isValueValid) {
+			return;
+		}
+
+		if (input.hasAttribute("data-sap-ui-start-value")) {
+			this.startValue = inputValue;
+			return;
+		}
+
+		this.endValue = inputValue;
+
+		if (this.startValue > this.endValue) {
+			this._areInputValuesSwapped = true;
+		}
 	}
 
 	/**
@@ -570,7 +639,6 @@ class RangeSlider extends SliderBase {
 	 * Set flags if the press is over a handle or in the selected range,
 	 * in such cases no values are changed on interaction start, but could be
 	 * updated later when dragging.
-	 *
 	 * @private
 	 */
 	_pressTargetAndAffectedValue(clientX: number, value: number) {
@@ -608,8 +676,7 @@ class RangeSlider extends SliderBase {
 	 * by a user action depending on that user action's characteristics
 	 * - mouse press position - cursor coordinates relative to the start/end handles
 	 * - selected inner element via a keyboard navigation
-	 *
-	 * @param {string} affectedValue The value that will get modified by the interaction
+	 * @param affectedValue The value that will get modified by the interaction
 	 * @private
 	 */
 	_setAffectedValue(affectedValue: AffectedValue | undefined) {
@@ -623,8 +690,7 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * Flag if press action is made on the currently selected range of values
-	 *
-	 * @param {boolean} isPressInCurrentRange Did the current press action occur in the current range (between the two handles)
+	 * @param isPressInCurrentRange Did the current press action occur in the current range (between the two handles)
 	 * @private
 	 */
 	_setIsPressInCurrentRange(isPressInCurrentRange: boolean) {
@@ -653,10 +719,13 @@ class RangeSlider extends SliderBase {
 	 * The focusout handler is one and the same for all focusable parts within the
 	 * Range Slider and when is called it checks if it should keep the focus within
 	 * the component and which part of it should get focused if that is the case.
-	 *
 	 * @protected
 	 */
 	focusInnerElement() {
+		if (this.editableTooltip && this._tooltipVisibility === SliderBase.TOOLTIP_VISIBILITY.HIDDEN) {
+			return;
+		}
+
 		const isReversed = this._areValuesReversed();
 		const affectedValue = this._valueAffected;
 
@@ -678,10 +747,8 @@ class RangeSlider extends SliderBase {
 	 *
 	 * Uses the change of the position of the start handle and adds the initially
 	 * selected range to it, to determine the whole range offset.
-	 *
-	 * @param {Integer} currentPageXPos The current horizontal position of the cursor/touch
-	 * @param {Integer} initialStartHandlePageXPos The initial horizontal position of the start handle
-	 *
+	 * @param currentPageXPos The current horizontal position of the cursor/touch
+	 * @param initialStartHandlePageXPos The initial horizontal position of the start handle
 	 * @private
 	 */
 	_calculateRangeOffset(currentPageXPos: number, initialStartHandlePageXPos: number) {
@@ -709,10 +776,8 @@ class RangeSlider extends SliderBase {
 	/**
 	 * Computes the new value based on the difference of the current cursor location from the
 	 * start of the interaction.
-	 *
-	 * @param {Integer} currentPageXPos The current horizontal position of the cursor/touch
-	 * @param {Integer} initialStartHandlePageXPos The initial horizontal position of the start handle
-	 *
+	 * @param currentPageXPos The current horizontal position of the cursor/touch
+	 * @param initialStartHandlePageXPos The initial horizontal position of the start handle
 	 * @private
 	 */
 	_calculateStartValueByOffset(currentPageXPos: number, initialStartHandlePageXPos: number) {
@@ -750,7 +815,6 @@ class RangeSlider extends SliderBase {
 	/**
 	 * Updates the visual representation of the component by calculating
 	 * the styles of the handles and the range selection based on the new state.
-	 *
 	 * @private
 	 */
 	_updateHandlesAndRange(newValue: number) {
@@ -777,6 +841,111 @@ class RangeSlider extends SliderBase {
 		}
 	}
 
+	_onInputKeydown(e: KeyboardEvent): void {
+		const targetedInput = e.target as Input;
+		const startValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-start-value]") as Input;
+		const endValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-end-value]") as Input;
+
+		const startValue = parseFloat(startValueInput.value);
+		const endValue = parseFloat(endValueInput.value);
+		const affectedValue = targetedInput.hasAttribute("data-sap-ui-start-value") ? "startValue" : "endValue";
+
+		super._onInputKeydown(e);
+
+		if (isEnter(e) && startValue > endValue) {
+			const swappedInput = affectedValue === "startValue" ? endValueInput : startValueInput;
+			const isValueValid = parseFloat(targetedInput.value) >= this.min && parseFloat(startValueInput.value) <= this.max;
+
+			if (!isValueValid) {
+				targetedInput.valueState = "Negative";
+				return;
+			}
+
+			this._isEndValueValid = parseFloat(endValueInput.value) >= this.min && parseFloat(endValueInput.value) <= this.max;
+
+			this._areInputValuesSwapped = true;
+			this._setAffectedValue(affectedValue === "startValue" ? "endValue" : "startValue");
+
+			startValueInput.value = this._getFormattedValue(this.endValue.toString());
+			endValueInput.value = this._getFormattedValue(this.startValue.toString());
+			swappedInput.focus();
+
+			return;
+		}
+
+		this._setAffectedValue(affectedValue);
+	}
+
+	_updateInputValue() {
+		const startValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-start-value]") as Input;
+		const endValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-end-value]") as Input;
+
+		if (!startValueInput && !endValueInput) {
+			return;
+		}
+
+		this._isStartValueValid = parseFloat(startValueInput.value) >= this.min && parseFloat(startValueInput.value) <= this.max;
+		this._isEndValueValid = parseFloat(endValueInput.value) >= this.min && parseFloat(endValueInput.value) <= this.max;
+
+		if (!this._isStartValueValid) {
+			startValueInput.valueState = "Negative";
+			return;
+		}
+
+		if (!this._isEndValueValid) {
+			endValueInput.valueState = "Negative";
+			return;
+		}
+
+		this._lastValidStartValue = startValueInput.value;
+		this._lastValidEndValue = endValueInput.value;
+
+		startValueInput.valueState = "None";
+		endValueInput.valueState = "None";
+	}
+
+	_saveInputValues() {
+		const startValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-start-value]") as Input;
+		const endValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-end-value]") as Input;
+
+		if (this.editableTooltip && startValueInput && endValueInput) {
+			const inputStartValue = parseFloat(startValueInput.value);
+			const inputEndValue = parseFloat(endValueInput.value);
+
+			const isStartValueValid = inputStartValue >= this.min && inputStartValue <= this.max;
+			const isEndValueValid = inputEndValue >= this.min && inputEndValue <= this.max;
+
+			if (this._isUserInteraction) {
+				startValueInput.value = isStartValueValid ? this._getFormattedValue(this.startValue.toString()) : this._getFormattedValue(this._lastValidStartValue);
+				endValueInput.value = isEndValueValid ? this._getFormattedValue(this.endValue.toString()) : this._getFormattedValue(this._lastValidEndValue);
+
+				this.startValue = parseFloat(this._getFormattedValue(this.startValue.toString()));
+				this.endValue = parseFloat(this._getFormattedValue(this.endValue.toString()));
+
+				this.syncUIAndState();
+				this._updateHandlesAndRange(0);
+				this.update(this._valueAffected, this.startValue, this.endValue);
+				return;
+			}
+
+			this._lastValidStartValue = isStartValueValid ? this._getFormattedValue(inputStartValue.toString()) : this._getFormattedValue(this._lastValidStartValue);
+			this._lastValidEndValue = isEndValueValid ? this._getFormattedValue(inputEndValue.toString()) : this._getFormattedValue(this._lastValidEndValue);
+
+			if (startValueInput.valueState !== "Negative" && endValueInput.valueState !== "Negative") {
+				startValueInput.value = isStartValueValid ? this._getFormattedValue(inputStartValue.toString()) : this._getFormattedValue(this._lastValidStartValue);
+				endValueInput.value = isEndValueValid ? this._getFormattedValue(inputEndValue.toString()) : this._getFormattedValue(this._lastValidEndValue);
+			}
+		}
+	}
+
+	_getFormattedValue(value: string) {
+		const valueNumber = parseFloat(value);
+		const ctor = this.constructor as typeof RangeSlider;
+		const stepPrecision = ctor._getDecimalPrecisionOfNumber(this._effectiveStep);
+
+		return valueNumber.toFixed(stepPrecision).toString();
+	}
+
 	/**
 	 * Swaps the start and end values of the handles if one came accros the other:
 	 * - If the start value is greater than the endValue swap them and their handles
@@ -786,7 +955,6 @@ class RangeSlider extends SliderBase {
 	 *
 	 * Note: Only the property values are reversed, the DOM elements of the handles
 	 * corresponding to them are never switched.
-	 *
 	 * @private
 	 */
 	_swapValues() {
@@ -809,8 +977,13 @@ class RangeSlider extends SliderBase {
 
 		this._setValuesAreReversed();
 		this._updateHandlesAndRange(this[affectedValue]);
-		this.focusInnerElement();
+
+		if (!this._areInputValuesSwapped) {
+			this.focusInnerElement();
+		}
+
 		this.syncUIAndState();
+		this._areInputValuesSwapped = false;
 	}
 
 	/**
@@ -818,7 +991,6 @@ class RangeSlider extends SliderBase {
 	 * to correctly switch the focus within the component from one handle to another
 	 * when the swapping is finished. As we only swap property values and not
 	 * the handle elements themselves, we must also swap their focus.
-	 *
 	 * @private
 	 */
 	_setValuesAreReversed() {
@@ -859,16 +1031,20 @@ class RangeSlider extends SliderBase {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-slider-progress")!;
 	}
 
-	get _ariaLabelledByStartHandleRefs() {
-		return [`${this._id}-accName`, `${this._id}-startHandleDesc`].join(" ").trim();
+	get _ariaLabelledByStartHandleText() {
+		return this.accessibleName ? ["ui5-slider-accName", "ui5-slider-startHandleDesc"].join(" ").trim() : "ui5-slider-startHandleDesc";
 	}
 
-	get _ariaLabelledByEndHandleRefs() {
-		return [`${this._id}-accName`, `${this._id}-endHandleDesc`].join(" ").trim();
+	get _ariaLabelledByEndHandleText() {
+		return this.accessibleName ? ["ui5-slider-accName", "ui5-slider-endHandleDesc"].join(" ").trim() : "ui5-slider-endHandleDesc";
 	}
 
-	get _ariaLabelledByProgressBarRefs() {
-		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
+	get _ariaLabelledByInputText() {
+		return RangeSlider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_LABEL);
+	}
+
+	get _ariaDescribedByInputText() {
+		return RangeSlider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_DESCRIPTION);
 	}
 
 	get styles() {
@@ -895,10 +1071,6 @@ class RangeSlider extends SliderBase {
 				"visibility": `${this._tooltipVisibility}`,
 			},
 		};
-	}
-
-	static async onDefine() {
-		RangeSlider.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

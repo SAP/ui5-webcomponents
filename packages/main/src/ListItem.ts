@@ -1,21 +1,25 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
-import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import {
+	isSpace, isEnter, isDelete, isF2,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import type { AccessibilityAttributes, AriaRole, AriaHasPopup } from "@ui5/webcomponents-base";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
+import Highlight from "./types/Highlight.js";
 import ListItemType from "./types/ListItemType.js";
-import ListMode from "./types/ListMode.js";
+import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListItemBase from "./ListItemBase.js";
-import RadioButton from "./RadioButton.js";
-import CheckBox from "./CheckBox.js";
-import Button from "./Button.js";
+import type RadioButton from "./RadioButton.js";
+import type CheckBox from "./CheckBox.js";
+import type { IButton } from "./Button.js";
 import {
 	DELETE,
 	ARIA_LABEL_LIST_ITEM_CHECKBOX,
@@ -23,10 +27,11 @@ import {
 	LIST_ITEM_SELECTED,
 	LIST_ITEM_NOT_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
+import type ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
-import HasPopup from "./types/HasPopup.js";
+import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText.css.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -43,228 +48,169 @@ type SelectionRequestEventDetail = {
 	key?: string,
 }
 
-type PressEventDetail = {
-	item: ListItem,
-	selected: boolean,
-	key: string,
-}
-
 type AccInfo = {
-	role: string;
+	role?: AriaRole | undefined;
 	ariaExpanded?: boolean;
 	ariaLevel?: number;
 	ariaLabel: string;
 	ariaLabelRadioButton: string;
 	ariaSelectedText?: string;
-	ariaHaspopup?: `${HasPopup}`;
+	ariaHaspopup?: `${AriaHasPopup}`;
 	posinset?: number;
 	setsize?: number;
 	ariaSelected?: boolean;
 	ariaChecked?: boolean;
 	listItemAriaLabel?: string;
 	ariaOwns?: string;
+	tooltip?: string;
+	ariaKeyShortcuts?: string;
 }
 
-type AccessibilityAttributes = {
-	ariaSetsize: number,
-	ariaPosinset: number,
-}
+type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaSetsize" | "ariaPosinset">;
 
 /**
  * @class
  * A class to serve as a base
- * for the <code>StandardListItem</code> and <code>CustomListItem</code> classes.
- *
+ * for the `ListItemStandard` and `ListItemCustom` classes.
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ListItem
- * @extends sap.ui.webc.main.ListItemBase
+ * @abstract
+ * @extends ListItemBase
  * @public
  */
 @customElement({
 	languageAware: true,
-	styles: [ListItemBase.styles, styles],
-	dependencies: [
-		Button,
-		RadioButton,
-		CheckBox,
+	renderer: jsxRenderer,
+	styles: [
+		ListItemBase.styles,
+		listItemAdditionalTextCss,
+		styles,
 	],
 })
 /**
- * Fired when the user clicks on the detail button when type is <code>Detail</code>.
- *
- * @event sap.ui.webc.main.ListItem#detail-click
+ * Fired when the user clicks on the detail button when type is `Detail`.
  * @public
  */
-@event("detail-click")
-@event("_press")
-@event("_focused")
-@event("_selection-requested")
+@event("detail-click", {
+	bubbles: true,
+})
+@event("selection-requested", {
+	bubbles: true,
+})
 abstract class ListItem extends ListItemBase {
+	eventDetails!: ListItemBase["eventDetails"] & {
+		"detail-click": { item: ListItem, selected: boolean };
+		"selection-requested": SelectionRequestEventDetail,
+	}
 	/**
 	 * Defines the visual indication and behavior of the list items.
-	 * Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>.
-	 * <br><br>
-	 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
-	 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
+	 * Available options are `Active` (by default), `Inactive`, `Detail` and `Navigation`.
 	 *
-	 * @type {sap.ui.webc.main.types.ListItemType}
-	 * @name sap.ui.webc.main.ListItem.prototype.type
-	 * @defaultvalue "Active"
+	 * **Note:** When set to `Active` or `Navigation`, the item will provide visual response upon press and hover,
+	 * while with type `Inactive` and `Detail` - will not.
+	 * @default "Active"
 	 * @public
 	*/
-	@property({ type: ListItemType, defaultValue: ListItemType.Active })
-	type!: `${ListItemType}`;
+	@property()
+	type: `${ListItemType}` = "Active";
 
 	/**
-	 * An object of strings that defines several additional accessibility attribute values
-	 * for customization depending on the use case.
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following fields are supported:
 	 *
-	 *  It supports the following fields:
+	 * - **ariaSetsize**: Defines the number of items in the current set  when not all items in the set are present in the DOM.
+	 * **Note:** The value is an integer reflecting the number of items in the complete set. If the size of the entire set is unknown, set `-1`.
 	 *
-	 * <ul>
-	 * 		<li><code>ariaSetsize</code>: Defines the number of items in the current set of listitems or treeitems when not all items in the set are present in the DOM.
-	 * 		The value of each <code>aria-setsize</code> is an integer reflecting number of items in the complete set.
-	 * 		<b>Note: </b> If the size of the entire set is unknown, set <code>aria-setsize="-1"</code>.
-	 * 		</li>
-	 * 		<li><code>ariaPosinset</code>: Defines an element's number or position in the current set of listitems or treeitems when not all items are present in the DOM.
-	 * 		The value of each <code>aria-posinset</code> is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
-	 * 		</li>
-	 * </ul>
+	 * 	- **ariaPosinset**: Defines an element's number or position in the current set when not all items are present in the DOM.
+	 * 	**Note:** The value is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
 	 *
-	 * @type {object}
-	 * @name sap.ui.webc.main.ListItem.prototype.accessibilityAttributes
+	 * @default {}
 	 * @public
 	 * @since 1.15.0
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: AccessibilityAttributes;
+	accessibilityAttributes: ListItemAccessibilityAttributes = {};
 
 	/**
 	 * The navigated state of the list item.
-	 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
-	 *
+	 * If set to `true`, a navigation indicator is displayed at the end of the list item.
+	 * @default false
 	 * @public
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ListItem.prototype.navigated
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	navigated!: boolean;
+	navigated = false;
+
+	/**
+	 * Defines the text of the tooltip that would be displayed for the list item.
+	 * @default undefined
+	 * @public
+	 * @since 1.23.0
+	 */
+	@property()
+	tooltip?: string;
 
 	/**
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ListItem.prototype.active
 	 * @private
 	*/
 	@property({ type: Boolean })
-	active!: boolean;
+	active = false;
 
 	/**
-	 * Defines the tooltip of the component.
-	 * @type {string}
-	 * @name sap.ui.webc.main.ListItem.prototype.title
-	 * @defaultvalue ""
-	 * @private
-	 * @since 1.0.0-rc.15
+	 * Defines the highlight state of the list items.
+	 * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
+	 * @default "None"
+	 * @public
+	 * @since 1.24
 	 */
 	@property()
-	title!: string;
+	highlight: `${Highlight}` = "None";
 
 	/**
-	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ListItem.prototype.actionable
-	 * @private
-	*/
+	 * Defines the selected state of the component.
+	 * @default false
+	 * @public
+	 */
 	@property({ type: Boolean })
-	actionable!: boolean;
+	declare selected: boolean;
 
 	/**
 	 * Used to define the role of the list item.
-	 *
 	 * @private
-	 * @type {string}
-	 * @name sap.ui.webc.main.ListItem.prototype.role
-	 * @defaultvalue "listitem"
-	 * @since 1.0.0-rc.9
-	 *
-	 */
-	@property({ defaultValue: "listitem" })
-	role!: string;
-
-	/**
-	 * Defines the description for the accessible role of the component.
-	 * @protected
-	 * @type {string}
-	 * @name sap.ui.webc.main.ListItem.prototype.accessibleRoleDescription
-	 * @defaultvalue undefined
-	 * @since 1.10.0
-	 */
-	@property({ defaultValue: undefined, noAttribute: true })
-	accessibleRoleDescription?: string;
-
-	/**
-	 * Used to define the role of the list item.
-	 *
-	 * @private
-	 * @type {string}
-	 * @name sap.ui.webc.main.ListItem.prototype.accessibleRole
-	 * @defaultvalue ""
+	 * @default "ListItem"
 	 * @since 1.3.0
 	 *
 	 */
 	@property()
-	accessibleRole!: string;
+	accessibleRole: `${ListItemAccessibleRole}` = "ListItem";
 
-	@property({ type: ListMode, defaultValue: ListMode.None })
-	_mode!: `${ListMode}`;
+	@property()
+	_forcedAccessibleRole?: string;
 
-	/**
-	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-	 * @type {sap.ui.webc.main.types.HasPopup}
-	 * @name sap.ui.webc.main.ListItem.prototype.ariaHaspopup
-	 * @since 1.10.0
-	 * @private
-	 */
-	@property({ type: HasPopup, noAttribute: true })
-	ariaHaspopup?: `${HasPopup}`;
-
-	@property({ type: Integer })
-	_level?: number;
-
-	/**
-	 * Used in UploadCollectionItem
-	 * @private
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	disableDeleteButton!: boolean;
+	@property()
+	_selectionMode: `${ListSelectionMode}` = "None";
 
 	/**
 	 * Defines the delete button, displayed in "Delete" mode.
-	 * <b>Note:</b> While the slot allows custom buttons, to match
-	 * design guidelines, please use the <code>ui5-button</code> component.
-	 * <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.
-	 * @type {sap.ui.webc.main.IButton}
-	 * @name sap.ui.webc.main.ListItem.prototype.deleteButton
+	 * **Note:** While the slot allows custom buttons, to match
+	 * design guidelines, please use the `ui5-button` component.
+	 * **Note:** When the slot is not present, a built-in delete button will be displayed.
 	 * @since 1.9.0
-	 * @slot
 	 * @public
-	 */
+	*/
 	@slot()
-	deleteButton!: Array<HTMLElement>;
+	deleteButton!: Array<IButton>;
 
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
-	_ontouchstart: PassiveEventListenerObject;
-	// used in template, implemented in TreeItemBase
+	// used in template, implemented in TreeItemBase, ListItemStandard
 	accessibleName?: string;
 	// used in ListItem template but implemented in TreeItemBase
 	indeterminate?: boolean;
+	// Used in UploadCollectionItem
+	disableDeleteButton?: boolean;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -281,22 +227,15 @@ abstract class ListItem extends ListItemBase {
 				this.active = false;
 			}
 		};
-
-		const handleTouchStartEvent = (e: TouchEvent) => {
-			this._onmousedown(e as unknown as MouseEvent);
-		};
-
-		this._ontouchstart = {
-			handleEvent: handleTouchStartEvent,
-			passive: true,
-		};
 	}
 
 	onBeforeRendering() {
-		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._mode !== ListMode.Delete);
+		super.onBeforeRendering();
+		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
 	}
 
 	onEnterDOM() {
+		super.onEnterDOM();
 		document.addEventListener("mouseup", this.deactivate);
 		document.addEventListener("touchend", this.deactivate);
 		document.addEventListener("keyup", this.deactivateByKey);
@@ -308,32 +247,38 @@ abstract class ListItem extends ListItemBase {
 		document.removeEventListener("touchend", this.deactivate);
 	}
 
-	_onkeydown(e: KeyboardEvent) {
+	async _onkeydown(e: KeyboardEvent) {
+		if ((isSpace(e) || isEnter(e)) && this._isTargetSelfFocusDomRef(e)) {
+			return;
+		}
+
 		super._onkeydown(e);
 
 		const itemActive = this.type === ListItemType.Active,
 			itemNavigated = this.typeNavigation;
 
-		if (isSpace(e)) {
-			e.preventDefault();
-		}
-
 		if ((isSpace(e) || isEnter(e)) && (itemActive || itemNavigated)) {
 			this.activate();
 		}
 
-		if (isEnter(e)) {
-			this.fireItemPress(e);
+		if (isF2(e)) {
+			const activeElement = getActiveElement();
+			const focusDomRef = this.getFocusDomRef()!;
+
+			if (activeElement === focusDomRef) {
+				const firstFocusable = await getFirstFocusableElement(focusDomRef);
+				firstFocusable?.focus();
+			} else {
+				focusDomRef.focus();
+			}
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
+		super._onkeyup(e);
+
 		if (isSpace(e) || isEnter(e)) {
 			this.deactivate();
-		}
-
-		if (isSpace(e)) {
-			this.fireItemPress(e);
 		}
 
 		if (this.modeDelete && isDelete(e)) {
@@ -341,54 +286,80 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
-	_onmousedown(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
-			return;
-		}
+	_onmousedown() {
 		this.activate();
 	}
 
-	_onmouseup(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
+	_onmouseup() {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 		this.deactivate();
 	}
 
-	_ontouchend(e: TouchEvent) {
-		this._onmouseup(e as unknown as MouseEvent);
+	_ontouchend() {
+		this._onmouseup();
 	}
 
-	_onfocusout() {
-		super._onfocusout();
+	_onfocusin(e: FocusEvent) {
+		super._onfocusin(e);
+
+		if (e.target !== this.getFocusDomRef()) {
+			this.deactivate();
+		}
+	}
+
+	_onfocusout(e: FocusEvent) {
+		if (e.target !== this.getFocusDomRef()) {
+			return;
+		}
+
 		this.deactivate();
 	}
 
-	_onclick(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
+	_ondragstart(e: DragEvent) {
+		if (!e.dataTransfer) {
 			return;
 		}
-		this.fireItemPress(e);
+
+		if (e.target === this._listItem) {
+			this.setAttribute("data-moving", "");
+			e.dataTransfer.dropEffect = "move";
+			e.dataTransfer.effectAllowed = "move";
+		}
 	}
 
-	/*
+	_ondragend(e: DragEvent) {
+		if (e.target === this._listItem) {
+			this.removeAttribute("data-moving");
+		}
+	}
+
+	_isTargetSelfFocusDomRef(e: KeyboardEvent): boolean {
+		const target = e.target as HTMLElement,
+			focusDomRef = this.getFocusDomRef();
+
+		return target !== focusDomRef;
+	}
+
+	/**
 	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.
 	 */
-	onMultiSelectionComponentPress(e: MouseEvent) {
+	onMultiSelectionComponentPress(e: CustomEvent) {
 		if (this.isInactive) {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent("selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 	}
 
-	onSingleSelectionComponentPress(e: MouseEvent) {
+	onSingleSelectionComponentPress(e: CustomEvent) {
 		if (this.isInactive) {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent("selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -398,21 +369,21 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onDelete() {
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selectionComponentPressed: false });
+		this.fireDecoratorEvent("selection-requested", { item: this, selectionComponentPressed: false });
 	}
 
 	onDetailClick() {
-		this.fireEvent("detail-click", { item: this, selected: this.selected });
+		this.fireDecoratorEvent("detail-click", { item: this, selected: this.selected });
 	}
 
 	fireItemPress(e: Event) {
 		if (this.isInactive) {
 			return;
 		}
-		if (isEnter(e as KeyboardEvent)) {
-			e.preventDefault();
+		super.fireItemPress(e);
+		if (document.activeElement !== this) {
+			this.focus();
 		}
-		this.fireEvent<PressEventDetail>("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
 	}
 
 	get isInactive() {
@@ -420,29 +391,29 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get placeSelectionElementBefore() {
-		return this._mode === ListMode.MultiSelect
-			|| this._mode === ListMode.SingleSelectBegin;
+		return this._selectionMode === ListSelectionMode.Multiple
+			|| this._selectionMode === ListSelectionMode.SingleStart;
 	}
 
 	get placeSelectionElementAfter() {
 		return !this.placeSelectionElementBefore
-			&& (this._mode === ListMode.SingleSelectEnd || this._mode === ListMode.Delete);
+			&& (this._selectionMode === ListSelectionMode.SingleEnd || this._selectionMode === ListSelectionMode.Delete);
 	}
 
 	get modeSingleSelect() {
 		return [
-			ListMode.SingleSelectBegin,
-			ListMode.SingleSelectEnd,
-			ListMode.SingleSelect,
-		].includes(this._mode as ListMode);
+			ListSelectionMode.SingleStart,
+			ListSelectionMode.SingleEnd,
+			ListSelectionMode.Single,
+		].includes(this._selectionMode as ListSelectionMode);
 	}
 
-	get modeMultiSelect() {
-		return this._mode === ListMode.MultiSelect;
+	get modeMultiple() {
+		return this._selectionMode === ListSelectionMode.Multiple;
 	}
 
 	get modeDelete() {
-		return this._mode === ListMode.Delete;
+		return this._selectionMode === ListSelectionMode.Delete;
 	}
 
 	/**
@@ -469,11 +440,15 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get _ariaSelected() {
-		if (this.modeMultiSelect || this.modeSingleSelect) {
+		if (this.modeMultiple || this.modeSingleSelect) {
 			return this.selected;
 		}
 
 		return undefined;
+	}
+
+	get listItemAccessibleRole() {
+		return (this._forcedAccessibleRole || this.accessibleRole.toLowerCase()) as AriaRole | undefined;
 	}
 
 	get ariaSelectedText() {
@@ -510,24 +485,29 @@ abstract class ListItem extends ListItemBase {
 
 	get _accInfo(): AccInfo {
 		return {
-			role: this.accessibleRole || this.role,
+			role: this.listItemAccessibleRole,
 			ariaExpanded: undefined,
-			ariaLevel: this._level || undefined,
+			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
-			ariaHaspopup: this.ariaHaspopup || undefined,
+			ariaHaspopup: this.accessibilityAttributes.hasPopup,
 			setsize: this.accessibilityAttributes.ariaSetsize,
 			posinset: this.accessibilityAttributes.ariaPosinset,
+			tooltip: this.tooltip,
 		};
+	}
+
+	get _hasHighlightColor() {
+		return this.highlight !== Highlight.None;
 	}
 
 	get hasConfigurableMode() {
 		return true;
 	}
 
-	static async onDefine() {
-		ListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	get _listItem() {
+		return this.shadowRoot!.querySelector("li");
 	}
 }
 
@@ -535,6 +515,5 @@ export default ListItem;
 export type {
 	IAccessibleListItem,
 	SelectionRequestEventDetail,
-	PressEventDetail,
-	AccessibilityAttributes,
+	ListItemAccessibilityAttributes,
 };

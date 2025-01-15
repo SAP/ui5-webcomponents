@@ -1,7 +1,4 @@
-![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/main/docs/images/UI5_logo_wide.png)
-
-
-# UI5 Web Components - Fiori
+# ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/main/docs/images/UI5_logo_water.png)UI5 Web Components - Fiori
 
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
@@ -12,14 +9,14 @@ such as a common header (ShellBar).
 
 | Web Component                             | Tag name                       | Module import                                                         |
 |-------------------------------------------|--------------------------------|-----------------------------------------------------------------------|
-| Bar                                       | `ui5-bar`                      | `import "@ui5/webcomponents-fiori/dist/Bar.js";`                      |
 | Barcode Scanner Dialog                    | `ui5-barcode-scanner-dialog`   | `import "@ui5/webcomponents-fiori/dist/BarcodeScannerDialog.js";`     |
 | Dynamic Side Content                      | `ui5-dynamic-side-content`     | `import "@ui5/webcomponents-fiori/dist/DynamicSideContent.js";`       |
 | Flexible Column Layout                    | `ui5-flexible-column-layout`   | `import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";`     |
 | Illustrated Message                       | `ui5-illustrated-message`      | `import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";`       |
 | Media Gallery                             | `ui5-media-gallery`            | `import "@ui5/webcomponents-fiori/dist/MediaGallery.js";`             |
 | Media Gallery Item                        | `ui5-media-gallery-item`       | comes with  `ui5-media-gallery`                                       |
-| Notification List Item                    | `ui5-li-notifcation`           | `import "@ui5/webcomponents-fiori/dist/NotifcationListItem.js";`      |
+| Notification List                         | `ui5-notification-list`        | `import "@ui5/webcomponents-fiori/dist/NotifcationList.js";`          |
+| Notification List Item                    | `ui5-li-notification`          | `import "@ui5/webcomponents-fiori/dist/NotifcationListItem.js";`      |
 | Notification Group List Item              | `ui5-li-notification-group`    | `import "@ui5/webcomponents-fiori/dist/NotifcationListGroupItem.js";` |
 | Notification Action                       | `ui5-notification-action`      | `import "@ui5/webcomponents-fiori/dist/NotificationAction.js";`       |
 | Page                                      | `ui5-page`                     | `import "@ui5/webcomponents-fiori/dist/Page.js";`                     |
@@ -30,10 +27,14 @@ such as a common header (ShellBar).
 | Side Navigation                           | `ui5-side-navigation`          | `import "@ui5/webcomponents-fiori/dist/SideNavigation.js";`           |
 | Side Navigation Item                      | `ui5-side-navigation-item`     | `import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";`       |
 | Side Navigation Sub Item                  | `ui5-side-navigation-sub-item` | `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";`    |
+| Side Navigation Group                     | `ui5-side-navigation-group`    | `import "@ui5/webcomponents-fiori/dist/SideNavigationGroup.js";`      |
 | Timeline                                  | `ui5-timeline`                 | `import "@ui5/webcomponents-fiori/dist/Timeline.js";`                 |
 | Timeline Item                             | `ui5-timeline-item`            | comes with `ui5-timeline`                                             |
 | Upload Collection                         | `ui5-upload-collection`        | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`         |
 | Upload Collection Item                    | `ui5-upload-collection-item`   | `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`     |
+| User Menu                                 | `ui5-user-menu`                | `import "@ui5/webcomponents-fiori/dist/UserMenu.js";`                 |
+| User Menu Account                         | `ui5-user-menu-account`        | `import "@ui5/webcomponents-fiori/dist/UserMenuAccount.js";`          |
+| User Menu Item                            | `ui5-user-menu-item`           | `import "@ui5/webcomponents-fiori/dist/UserMenuItem.js";`             |
 | View Settings Dialog                      | `ui5-view-settings-dialog`     | `import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";`       |
 | View Settings Dialog - Sort Item          | `ui5-sort-item`                | `import "@ui5/webcomponents-fiori/dist/SortItem.js";`                 |
 | View Settings Dialog - Filter Item        | `ui5-filter-item`              | `import "@ui5/webcomponents-fiori/dist/FilterItem.js";`               |
@@ -51,27 +52,10 @@ import "@ui5/webcomponents-fiori/dist/Assets.js";
 |------------------|-------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | `i18n`, `themes` | `@ui5/webcomponents-fiori/dist/Assets.js` | Theming parameters and translations for the components  <br/><br/> *Automatically imports also:<br/> `@ui5/webcomponents/dist/Assets.js`* |
 
-## Provided features
-
-
-| Affects        | Feature Import                                               | Description                                                                                             |
-|----------------|--------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| `ui5-shellbar` | `@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js` | Support for a better (but bigger in size) animation for the "co-pilot" button in the shellbar component |
-
-### Shellbar CoPilot animation
-
-```js
-import "@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js";
-```
-
-By default, the `ui5-shellbar` CoPilot button ships with a simple animation for better performance.
-Importing the module above enables the detailed but more resource-intensive animation instead.
-
-
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/main/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)
-- [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
+- [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/play/)
 
 ## Support
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/main/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://ui5-slack-invite.cfapps.eu10.hana.ondemand.com/).

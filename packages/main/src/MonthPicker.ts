@@ -1,10 +1,12 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import {
 	isEnter,
 	isSpace,
@@ -19,9 +21,7 @@ import {
 	isPageUp,
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	MONTH_PICKER_DESCRIPTION,
@@ -30,29 +30,33 @@ import CalendarPart from "./CalendarPart.js";
 import type { ICalendarPicker } from "./Calendar.js";
 
 // Template
-import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
+import MonthPickerTemplate from "./MonthPickerTemplate.js";
 
 // Styles
 import monthPickerStyles from "./generated/themes/MonthPicker.css.js";
+import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
+const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 const PAGE_SIZE = 12; // total months on a single page
-const ROW_SIZE = 3; // months per row (4 rows of 3 months each)
 
 type Month = {
 	timestamp: string,
 	focusRef: boolean,
-	_tabIndex: string,
+	_tabIndex: number,
 	selected: boolean,
-	ariaSelected: string,
+	ariaSelected: boolean,
 	name: string,
 	nameInSecType: string,
 	disabled: boolean,
+	ariaDisabled: boolean | undefined,
 	classes: string,
+	parts: string,
 }
 
 type MonthInterval = Array<Array<Month>>;
 
 type MonthPickerChangeEventDetail = {
+	dates: Array<number>,
 	timestamp: number,
 }
 
@@ -62,17 +66,12 @@ type MonthPickerNavigateEventDetail = {
 
 /**
  * Month picker component.
- *
  * @class
  *
  * Displays months which can be selected.
- *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.MonthPicker
- * @extends sap.ui.webc.main.CalendarPart
- * @tagname ui5-monthpicker
- * @public
+ * @extends CalendarPart
+ * @private
  */
 @customElement({
 	tag: "ui5-monthpicker",
@@ -81,43 +80,60 @@ type MonthPickerNavigateEventDetail = {
 })
 /**
  * Fired when the user selects a month via "Space", "Enter" or click.
- * @public
- * @event sap.ui.webc.main.MonthPicker#change
  */
- @event("change")
+@event("change", {
+	bubbles: true,
+})
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
- * @public
- * @event sap.ui.webc.main.MonthPicker#navigate
  */
-@event("navigate")
+@event("navigate", {
+	bubbles: true,
+})
 class MonthPicker extends CalendarPart implements ICalendarPicker {
+	eventDetails!: CalendarPart["eventDetails"] & {
+		change: MonthPickerChangeEventDetail,
+		navigate: MonthPickerNavigateEventDetail,
+	}
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
-	 * @type {array}
-	 * @name sap.ui.webc.main.MonthPicker.prototype.selectedDates
-	 * @public
+	 * @default []
 	 */
-	@property({
-		validator: Integer,
-		multiple: true,
-		compareValues: true,
-	})
-	selectedDates!: Array<number>;
+	@property({ type: Array })
+	selectedDates: Array<number> = [];
 
-	@property({ type: Object, multiple: true })
-	_months!: MonthInterval;
+	/**
+	 * Defines the type of selection used in the month picker component.
+	 * Accepted property values are:
+	 *
+	 * - `CalendarSelectionMode.Single` - enables election of a single month.
+	 * - `CalendarSelectionMode.Range` - enables selection of a month range.
+	 *
+	 * Note that 'CalendarSelectionMode.Multiple` is not supported for Month Picker!
+	 * @default "Single"
+	 * @since 2.2.0
+	 */
+	@property()
+	selectionMode: `${CalendarSelectionMode}` = "Single";
+
+	@property({ type: Array })
+	_monthsInterval: MonthInterval = [];
 
 	@property({ type: Boolean, noAttribute: true })
-	_hidden!: boolean;
+	_hidden = false;
 
+	/**
+	 * When selectionMode="Range" and the first month in the range is selected, this is the currently hovered or focused month.
+	 *
+	 * @private
+	 */
+	@property({ type: Number })
+	_secondTimestamp?: number;
+
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		MonthPicker.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	get roleDescription() {
 		return MonthPicker.i18nBundle.getText(MONTH_PICKER_DESCRIPTION);
@@ -131,6 +147,11 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		if (!this._hidden) {
 			this.focus();
 		}
+	}
+
+	get rowSize() {
+		return (this.secondaryCalendarType === CalendarType.Islamic && this.primaryCalendarType !== CalendarType.Islamic)
+			|| (this.secondaryCalendarType === CalendarType.Persian && this.primaryCalendarType !== CalendarType.Persian) ? 2 : 3;
 	}
 
 	_buildMonths() {
@@ -159,28 +180,37 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 			});
 			const isFocused = tempDate.getMonth() === calendarDate.getMonth();
 			const isDisabled = this._isOutOfSelectableRange(tempDate, minDate, maxDate);
+			const isSelectedBetween = this._isMonthInsideSelectionRange(timestamp);
 
 			const month: Month = {
 				timestamp: timestamp.toString(),
 				focusRef: isFocused,
-				_tabIndex: isFocused ? "0" : "-1",
-				selected: isSelected,
-				ariaSelected: isSelected ? "true" : "false",
+				_tabIndex: isFocused ? 0 : -1,
+				selected: isSelected || isSelectedBetween,
+				ariaSelected: isSelected || isSelectedBetween,
 				name: monthsNames[i],
 				nameInSecType: this.hasSecondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp).text,
 				disabled: isDisabled,
+				ariaDisabled: isDisabled,
 				classes: "ui5-mp-item",
+				parts: "month-cell",
 			};
 
 			if (isSelected) {
 				month.classes += " ui5-mp-item--selected";
+				month.parts += " month-cell-selected";
+			}
+
+			if (isSelectedBetween) {
+				month.classes += " ui5-mp-item--selected-between";
+				month.parts += " month-cell-selected-between";
 			}
 
 			if (isDisabled) {
 				month.classes += " ui5-mp-item--disabled";
 			}
 
-			const quarterIndex = Math.floor(i / ROW_SIZE);
+			const quarterIndex = Math.floor(i / this.rowSize);
 
 			if (months[quarterIndex]) {
 				months[quarterIndex].push(month);
@@ -189,12 +219,29 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 			}
 		}
 
-		this._months = months;
+		this._monthsInterval = months;
 	}
 
 	_getDisplayedSecondaryMonthText(timestamp: number) {
 		const monthsName = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp);
 		return convertMonthNumbersToMonthNames(monthsName.firstDate.getMonth(), monthsName.lastDate.getMonth(), this.secondaryCalendarType);
+	}
+
+	/**
+	  * Returns true if month timestamp is inside the selection range.
+	  * @private
+	  */
+	_isMonthInsideSelectionRange(timestamp: number): boolean {
+		if (this.selectionMode !== CalendarSelectionMode.Range || !this.selectedDates.length) {
+			return false;
+		}
+
+		// Only one date selected - second is hovered or focused
+		if (this.selectedDates.length === 1 && this._secondTimestamp) {
+			return isBetween(timestamp, this.selectedDates[0], this._secondTimestamp);
+		}
+
+		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -209,9 +256,9 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isRight(e)) {
 			this._modifyTimestampBy(1);
 		} else if (isUp(e)) {
-			this._modifyTimestampBy(-ROW_SIZE);
+			this._modifyTimestampBy(-this.rowSize);
 		} else if (isDown(e)) {
-			this._modifyTimestampBy(ROW_SIZE);
+			this._modifyTimestampBy(this.rowSize);
 		} else if (isPageUp(e)) {
 			this._modifyTimestampBy(-PAGE_SIZE);
 		} else if (isPageDown(e)) {
@@ -219,9 +266,9 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isHome(e) || isEnd(e)) {
 			this._onHomeOrEnd(isHome(e));
 		} else if (isHomeCtrl(e)) {
-			this._setTimestamp(parseInt(this._months[0][0].timestamp)); // first month of first row
+			this._setTimestamp(parseInt(this._monthsInterval[0][0].timestamp)); // first month of first row
 		} else if (isEndCtrl(e)) {
-			this._setTimestamp(parseInt(this._months[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp)); // last month of last row
+			this._setTimestamp(parseInt(this._monthsInterval[PAGE_SIZE / this.rowSize - 1][this.rowSize - 1].timestamp)); // last month of last row
 		} else {
 			preventDefault = false;
 		}
@@ -232,10 +279,10 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_onHomeOrEnd(homePressed: boolean) {
-		this._months.forEach(row => {
+		this._monthsInterval.forEach(row => {
 			const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getMonth() === this._calendarDate.getMonth());
 			if (indexInRow !== -1) { // The current month is on this row
-				const index = homePressed ? 0 : ROW_SIZE - 1; // select the first (if Home) or last (if End) month on the row
+				const index = homePressed ? 0 : this.rowSize - 1; // select the first (if Home) or last (if End) month on the row
 				this._setTimestamp(parseInt(row[index].timestamp));
 			}
 		});
@@ -243,27 +290,52 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Sets the timestamp to an absolute value.
-	 * @param { number } value
+	 * @param value
 	 * @private
 	 */
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
-		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
+	}
+
+	/**
+	 * In range selection, the currently focused or hovered month is considered the "second day".
+	 * @private
+	 */
+	_updateSecondTimestamp() {
+		if (this.selectionMode === CalendarSelectionMode.Range && (this.selectedDates.length === 1 || this.selectedDates.length === 2)) {
+			this._secondTimestamp = this.timestamp;
+		}
+	}
+
+	/**
+	 * Set the hovered day as the "_secondTimestamp".
+	 *
+	 * @param e
+	 * @private
+	 */
+	_onmouseover(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+		const hoveredItem = target.closest(".ui5-mp-item") as HTMLElement;
+		if (hoveredItem && this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+			this._secondTimestamp = this._getTimestampFromDom(hoveredItem);
+		}
 	}
 
 	/**
 	 * Modifies timestamp by a given amount of months and,
 	 * if necessary, loads the prev/next page.
-	 * @param { number } amount
-	 * @param { boolean } preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
+	 * @param amount
+	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
 	_modifyTimestampBy(amount: number, preserveDate?: boolean) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, "month", preserveDate);
+		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -273,26 +345,41 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	/**
-	 * Selects a month, when the user clicks or presses "Enter" or "Space".
-	 * @param { Event } e
+	 * Selects a month, when user made selection with mouse or using Space/Enter.
+	 * @param e
 	 * @private
 	 */
 	_selectMonth(e: Event) {
 		e.preventDefault();
-
 		const target = e.target as HTMLElement;
 
-		if (target.className.indexOf("ui5-mp-item") > -1) {
-			const timestamp = this._getTimestampFromDom(target);
-			this._safelySetTimestamp(timestamp);
-			this.fireEvent<MonthPickerChangeEventDetail>("change", { timestamp: this.timestamp! });
+		if (!target.classList.contains("ui5-mp-item")) {
+			return;
 		}
+
+		const timestamp = this._getTimestampFromDom(target);
+		this._safelySetTimestamp(timestamp);
+		this._updateSecondTimestamp();
+		this._updateSelectedDates(timestamp);
+
+		this.fireDecoratorEvent("change", {
+			timestamp: this.timestamp!,
+			dates: this.selectedDates,
+		});
+	}
+
+	_updateSelectedDates(timestamp: number) {
+		if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+			this.selectedDates = [this.selectedDates[0], timestamp];
+			return;
+		}
+
+		this.selectedDates = [timestamp];
 	}
 
 	/**
 	 * Called by the Calendar component.
 	 * @protected
-	 * @returns { boolean }
 	 */
 	_hasPreviousPage(): boolean {
 		return this._calendarDate.getYear() !== this._minDate.getYear();
@@ -301,7 +388,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Called by the Calendar component.
 	 * @protected
-	 * @returns { boolean }
 	 */
 	_hasNextPage(): boolean {
 		return this._calendarDate.getYear() !== this._maxDate.getYear();
@@ -309,7 +395,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by Calendar.js.
-	 * <b>Note:</b> when the user presses the "<" button in the calendar header (same as "PageUp")
+	 *
+	 * **Note:** when the user presses the "<" button in the calendar header (same as "PageUp")
 	 * @protected
 	 */
 	_showPreviousPage() {
@@ -318,7 +405,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by Calendar.js
-	 * <b>Note:</b> when the user presses the ">" button in the calendar header (same as "PageDown")
+	 * **Note:** when the user presses the ">" button in the calendar header (same as "PageDown")
 	 * @protected
 	 */
 	_showNextPage() {

@@ -1,0 +1,36 @@
+{
+	"extends": "@ui5/webcomponents-tools/tsconfig.json",
+	"include": [
+		"src/**/*",
+		"global.d.ts"
+	],
+	"compilerOptions": {
+		"outDir": "dist",
+		"experimentalDecorators": true,
+		"verbatimModuleSyntax": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"paths": {
+			"@ui5/webcomponents-base/dist/*": [
+				"../base/src/*"
+			],
+			"@ui5/webcomponents/dist/*": [
+				"../main/src/*"
+			],
+			"@ui5/webcomponents-theming/dist/*": [
+				"../theming/src/*"
+			],
+		},
+	},
+	"references": [
+		{
+			"path": "../base"
+		},
+		{
+			"path": "../main"
+		},
+		{
+			"path": "../theming"
+		},
+	]
+}

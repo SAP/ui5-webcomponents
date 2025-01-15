@@ -1,120 +1,113 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import SliderBase from "./SliderBase.js";
-import Icon from "./Icon.js";
+import type Input from "./Input.js";
 
 // Template
-import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
+import SliderTemplate from "./SliderTemplate.js";
 
 // Texts
 import {
 	SLIDER_ARIA_DESCRIPTION,
+	SLIDER_TOOLTIP_INPUT_DESCRIPTION,
+	SLIDER_TOOLTIP_INPUT_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * The Slider component represents a numerical range and a handle (grip).
  * The purpose of the component is to enable visual selection of a value in
  * a continuous numerical range by moving an adjustable handle.
  *
- * <h3>Structure</h3>
+ * ### Structure
  * The most important properties of the Slider are:
- * <ul>
- * <li>min - The minimum value of the slider range.</li>
- * <li>max - The maximum value of the slider range.</li>
- * <li>value - The current value of the slider range.</li>
- * <li>step - Determines the increments in which the slider will move.</li>
- * <li>showTooltip - Determines if a tooltip should be displayed above the handle.</li>
- * <li>showTickmarks - Displays a visual divider between the step values.</li>
- * <li>labelInterval - Labels some or all of the tickmarks with their values.</li>
- * </ul>
  *
- * <h3>Usage</h3>
+ * - min - The minimum value of the slider range.
+ * - max - The maximum value of the slider range.
+ * - value - The current value of the slider range.
+ * - step - Determines the increments in which the slider will move.
+ * - showTooltip - Determines if a tooltip should be displayed above the handle.
+ * - showTickmarks - Displays a visual divider between the step values.
+ * - labelInterval - Labels some or all of the tickmarks with their values.
+ *
+ * ### Usage
  * The most common use case is to select values on a continuous numerical scale (e.g. temperature, volume, etc. ).
  *
- * <h3>Responsive Behavior</h3>
- * The <code>ui5-slider</code> component adjusts to the size of its parent container by recalculating and
+ * ### Responsive Behavior
+ * The `ui5-slider` component adjusts to the size of its parent container by recalculating and
  * resizing the width of the control. You can move the slider handle in several different ways:
- * <ul>
- * <li>Drag and drop the handle to the desired value.</li>
- * <li>Click/tap on the range bar to move the handle to that location.</li>
- * </ul>
  *
- * <h3>CSS Shadow Parts</h3>
+ * - Drag and drop the handle to the desired value.
+ * - Click/tap on the range bar to move the handle to that location.
  *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-slider</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>progress-container - Used to style the progress container(the horizontal bar which visually represents the range between the minimum and maximum value) of the <code>ui5-slider</code>.</li>
- * <li>progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-slider</code>.</li>
- * <li>handle - Used to style the handle of the <code>ui5-slider</code>.</li>
- * </ul>
+ * ### Keyboard Handling
  *
- * <h3>Keyboard Handling</h3>
+ * - `Left or Down Arrow` - Moves the handle one step to the left, effectively decreasing the component's value by `step` amount;
+ * - `Right or Up Arrow` - Moves the handle one step to the right, effectively increasing the component's value by `step` amount;
+ * - `Left or Down Arrow + Ctrl/Cmd` - Moves the handle to the left with step equal to 1/10th of the entire range, effectively decreasing the component's value by 1/10th of the range;
+ * - `Right or Up Arrow + Ctrl/Cmd` - Moves the handle to the right with step equal to 1/10th of the entire range, effectively increasing the component's value by 1/10th of the range;
+ * - `Plus` - Same as `Right or Up Arrow`;
+ * - `Minus` - Same as `Left or Down Arrow`;
+ * - `Home` - Moves the handle to the beginning of the range;
+ * - `End` - Moves the handle to the end of the range;
+ * - `Page Up` - Same as `Right or Up + Ctrl/Cmd`;
+ * - `Page Down` - Same as `Left or Down + Ctrl/Cmd`;
+ * - `Escape` - Resets the value property after interaction, to the position prior the component's focusing;
  *
- * <ul>
- * <li><code>Left or Down Arrow</code> - Moves the handle one step to the left, effectively decreasing the component's value by <code>step</code> amount;</li>
- * <li><code>Right or Up Arrow</code> - Moves the handle one step to the right, effectively increasing the component's value by <code>step</code> amount;</li>
- * <li><code>Left or Down Arrow + Ctrl/Cmd</code> - Moves the handle to the left with step equal to 1/10th of the entire range, effectively decreasing the component's value by 1/10th of the range;</li>
- * <li><code>Right or Up Arrow + Ctrl/Cmd</code> - Moves the handle to the right with step equal to 1/10th of the entire range, effectively increasing the component's value by 1/10th of the range;</li>
- * <li><code>Plus</code> - Same as <code>Right or Up Arrow</code>;</li>
- * <li><code>Minus</code> - Same as <code>Left or Down Arrow</code>;</li>
- * <li><code>Home</code> - Moves the handle to the beginning of the range;</li>
- * <li><code>End</code> - Moves the handle to the end of the range;</li>
- * <li><code>Page Up</code> - Same as <code>Right or Up + Ctrl/Cmd</code>;</li>
- * <li><code>Page Down</code> - Same as <code>Left or Down + Ctrl/Cmd</code>;</li>
- * <li><code>Escape</code> - Resets the value property after interaction, to the position prior the component's focusing;</li>
- * </ul>
+ * ### ES6 Module Import
  *
- * <h3>ES6 Module Import</h3>
- *
- * <code>import "@ui5/webcomponents/dist/Slider";</code>
- *
+ * `import "@ui5/webcomponents/dist/Slider.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Slider
- * @extends sap.ui.webc.main.SliderBase
- * @tagname ui5-slider
+ * @extends SliderBase
  * @since 1.0.0-rc.11
  * @public
+ * @csspart progress-container - Used to style the progress container, the horizontal bar that visually represents the range between the minimum and maximum values, of the `ui5-slider`.
+ * @csspart progress-bar - Used to style the progress bar, which shows the progress of the `ui5-slider`.
+ * @csspart handle - Used to style the handle of the `ui5-slider`.
  */
 @customElement({
 	tag: "ui5-slider",
 	languageAware: true,
+	formAssociated: true,
 	template: SliderTemplate,
-	dependencies: [Icon],
 })
-class Slider extends SliderBase {
+class Slider extends SliderBase implements IFormInputElement {
 	/**
 	 * Current value of the slider
-	 *
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.Slider.prototype.value
-	 * @defaultvalue 0
+	 * @default 0
 	 * @formEvents change input
 	 * @formProperty
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
-	value!: number;
+	@property({ type: Number })
+	value = 0;
 
 	_valueInitial?: number;
 	_valueOnInteractionStart?: number;
 	_progressPercentage = 0;
 	_handlePositionFromStart = 0;
+	_lastValidInputValue: string;
+	_tooltipInputValue: string = this.value.toString();
+	_tooltipInputValueState: `${ValueState}` = "None";
 
+	get formFormattedValue() {
+		return this.value.toString();
+	}
+
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
 		this._stateStorage.value = undefined;
+		this._lastValidInputValue = this.min.toString();
 	}
 
 	/**
@@ -129,6 +122,10 @@ class Slider extends SliderBase {
 	 *
 	 */
 	onBeforeRendering() {
+		if (this.editableTooltip) {
+			this._updateInputValue();
+		}
+
 		if (!this.isCurrentStateOutdated()) {
 			return;
 		}
@@ -170,13 +167,12 @@ class Slider extends SliderBase {
 
 	/**
 	 * Called when the user starts interacting with the slider
-	 *
 	 * @private
 	 */
 	_onmousedown(e: TouchEvent | MouseEvent) {
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
-		if (this.disabled || this.step === 0) {
+		if (this.disabled || this.step === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
 			return;
 		}
 
@@ -210,7 +206,7 @@ class Slider extends SliderBase {
 		}
 	}
 
-	_onfocusout() {
+	_onfocusout(e: FocusEvent) {
 		// Prevent focusout when the focus is getting set within the slider internal
 		// element (on the handle), before the Slider' customElement itself is finished focusing
 		if (this._isFocusing()) {
@@ -222,17 +218,20 @@ class Slider extends SliderBase {
 		// value that was saved when it was first focused in
 		this._valueInitial = undefined;
 
-		if (this.showTooltip) {
+		if (this.showTooltip && !(e.relatedTarget as HTMLInputElement)?.hasAttribute("ui5-input")) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		}
 	}
 
 	/**
 	 * Called when the user moves the slider
-	 *
 	 * @private
 	 */
 	_handleMove(e: TouchEvent | MouseEvent) {
+		if ((e.target as HTMLElement).hasAttribute("ui5-input")) {
+			return;
+		}
+
 		e.preventDefault();
 
 		// If step is 0 no interaction is available because there is no constant
@@ -250,20 +249,57 @@ class Slider extends SliderBase {
 	}
 
 	/** Called when the user finish interacting with the slider
-	 *
 	 * @private
 	 */
-	_handleUp() {
+	_handleUp(e: TouchEvent | MouseEvent) {
+		if ((e.target as HTMLElement).hasAttribute("ui5-input")) {
+			return;
+		}
+
 		if (this._valueOnInteractionStart !== this.value) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 
 		this.handleUpBase();
 		this._valueOnInteractionStart = undefined;
 	}
 
+	_onInputFocusOut(e: FocusEvent) {
+		const tooltipInput = this.shadowRoot!.querySelector("[ui5-input]") as Input;
+
+		this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
+		this._updateValueFromInput(e);
+
+		if (!this._isInputValueValid) {
+			tooltipInput.value = this._lastValidInputValue;
+			this._isInputValueValid = true;
+			this._tooltipInputValueState = "None";
+		}
+	}
+
+	_updateInputValue() {
+		const tooltipInput = this.shadowRoot!.querySelector("[ui5-input]") as Input;
+
+		if (!tooltipInput) {
+			return;
+		}
+
+		this._isInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
+
+		if (!this._isInputValueValid) {
+			this._tooltipInputValue = this._lastValidInputValue;
+			this._isInputValueValid = true;
+			this._tooltipInputValueState = "Negative";
+
+			return;
+		}
+
+		this._tooltipInputValue = this.value.toString();
+		this._lastValidInputValue = this._tooltipInputValue;
+		this._tooltipInputValueState = "None";
+	}
+
 	/** Determines if the press is over the handle
-	 *
 	 * @private
 	 */
 	_isHandlePressed(clientX: number) {
@@ -272,7 +308,6 @@ class Slider extends SliderBase {
 	}
 
 	/** Updates the UI representation of the progress bar and handle position
-	 *
 	 * @private
 	 */
 	_updateHandleAndProgress(newValue: number) {
@@ -297,6 +332,10 @@ class Slider extends SliderBase {
 			this.value = newValue!;
 			this.updateStateStorageAndFireInputEvent("value");
 		}
+	}
+
+	get inputValue() {
+		return this.value.toString();
 	}
 
 	get styles() {
@@ -339,8 +378,12 @@ class Slider extends SliderBase {
 		return Slider.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION);
 	}
 
-	static async onDefine() {
-		Slider.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	get _ariaDescribedByInputText() {
+		return Slider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_DESCRIPTION);
+	}
+
+	get _ariaLabelledByInputText() {
+		return Slider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_LABEL);
 	}
 
 	get tickmarksObject() {

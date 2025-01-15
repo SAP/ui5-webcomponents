@@ -2,12 +2,12 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
@@ -17,25 +17,36 @@ import {
 	isUp,
 	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
-import ColorPaletteDialogTemplate from "./generated/templates/ColorPaletteDialogTemplate.lit.js";
-import ColorPaletteItem from "./ColorPaletteItem.js";
-import Button from "./Button.js";
+import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import ColorPaletteTemplate from "./ColorPaletteTemplate.js";
+import type ColorPaletteItem from "./ColorPaletteItem.js";
+import type Button from "./Button.js";
 import type Dialog from "./Dialog.js";
 import type ColorPaletteMoreColors from "./features/ColorPaletteMoreColors.js";
 import type ColorPicker from "./ColorPicker.js";
+import "./ColorPaletteItem.js";
 
 import {
 	COLORPALETTE_CONTAINER_LABEL,
 	COLOR_PALETTE_MORE_COLORS_TEXT,
+	COLOR_PALETTE_DEFAULT_COLOR_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import ColorPaletteCss from "./generated/themes/ColorPalette.css.js";
-import ColorPaletteStaticAreaCss from "./generated/themes/ColorPaletteStaticArea.css.js";
+import ColorPaletteDialogCss from "./generated/themes/ColorPaletteDialog.css.js";
 
-type ColorPaletteNavigationItem = ColorPaletteItem | Button;
+/**
+ * Interface for components that may be used inside a `ui5-color-palette` or `ui5-color-palette-popover`
+ * @public
+ */
+interface IColorPaletteItem extends UI5Element, ITabbable {
+	value?: string,
+	index?: number,
+	selected?: boolean,
+}
+
+type ColorPaletteNavigationItem = IColorPaletteItem | Button;
 
 type ColorPaletteItemClickEventDetail = {
 	color: string,
@@ -44,116 +55,102 @@ type ColorPaletteItemClickEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-color-palette</code> provides the users with a range of predefined colors. The colors are fixed and do not change with the theme.
+ * ### Overview
+ * The `ui5-color-palette` provides the users with a range of predefined colors. The colors are fixed and do not change with the theme.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * The <code>ui5-color-palette</code> is meant for users that need to select a color from a predefined set.
- * To define the colors, use the <code>ui5-color-palette-item</code> component inside the default slot of the <code>ui5-color-palette</code>.
+ * The `ui5-color-palette` is meant for users that need to select a color from a predefined set.
+ * To define the colors, use the `ui5-color-palette-item` component inside the default slot of the `ui5-color-palette`.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/ColorPalette.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/ColorPalette.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ColorPalette
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-color-palette
+ * @extends UI5Element
  * @since 1.0.0-rc.12
- * @appenddocs sap.ui.webc.main.ColorPaletteItem
  * @public
  */
 @customElement({
 	tag: "ui5-color-palette",
-	renderer: litRender,
+	renderer: jsxRenderer,
+	features: ["ColorPaletteMoreColors"],
 	template: ColorPaletteTemplate,
-	staticAreaTemplate: ColorPaletteDialogTemplate,
-	styles: ColorPaletteCss,
-	staticAreaStyles: ColorPaletteStaticAreaCss,
-	get dependencies() {
-		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-		return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
-	},
+	styles: [ColorPaletteCss, ColorPaletteDialogCss],
 })
 
 /**
  * Fired when the user selects a color.
- *
- * @event sap.ui.webc.main.ColorPalette#item-click
  * @public
  * @since 1.0.0-rc.15
  * @param {string} color the selected color
  */
-@event("item-click", {
-	detail: {
-		color: {
-			type: String,
-		},
-	},
-})
+@event("item-click")
 class ColorPalette extends UI5Element {
+	eventDetails!: {
+		"item-click": ColorPaletteItemClickEventDetail,
+	}
+
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
-	 * @type {boolean}
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	showRecentColors!: boolean;
+	showRecentColors = false;
 
 	/**
 	 * Defines whether the user can choose a custom color from a color picker
-	 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
-	 * @type {boolean}
+	 *
+	 * **Note:** In order to use this property you need to import the following module: `"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"`
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	showMoreColors!: boolean;
+	showMoreColors = false;
 
 	/**
 	 * Defines whether the user can choose the default color from a button.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 * @since 1.0.0-rc.16
 	 */
 	@property({ type: Boolean })
-	showDefaultColor!: boolean;
+	showDefaultColor = false;
 
 	/**
-	 * Defines the default color of the color palette
-	 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
-	 * @type {sap.ui.webc.base.types.CSSColor}
+	 * Defines the default color of the color palette, only valid CSS color values accepted
+	 *
+	 * **Note:** The default color should be a part of the ColorPalette colors`
 	 * @private
 	 * @since 1.0.0-rc.16
 	 */
-	@property({ validator: CSSColor })
+	@property()
 	defaultColor?: string;
 
 	/**
-	 * Defines the selected color.
-	 * @type {sap.ui.webc.base.types.CSSColor}
+	 * Defines the selected color, only valid CSS color values accepted
 	 * @private
 	 */
-	@property({ validator: CSSColor })
+	@property()
 	_selectedColor?: string;
 
 	/**
 	 * Defines if the palette is in Popup or Embeded mode.
-	 * @type {sap.ui.webc.base.types.CSSColor}
 	 * @private
 	 */
 	@property({ type: Boolean })
-	popupMode!: boolean;
+	popupMode = false;
 
 	/**
-	 * Defines the <code>ui5-color-palette-item</code> elements.
-	 * @type {sap.ui.webc.main.IColorPaletteItem[]}
-	 * @name sap.ui.webc.main.ColorPalette.prototype.default
-	 * @slot colors
+	 * Defines if the palette is rendered on phone.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onPhone = false;
+
+	/**
+	 * Defines the `ui5-color-palette-item` elements.
 	 * @public
 	 */
 	@slot({
@@ -163,23 +160,17 @@ class ColorPalette extends UI5Element {
 		individualSlots: true,
 	})
 
-	colors!: Array<ColorPaletteItem>;
+	colors!: Array<IColorPaletteItem>;
 
 	_itemNavigation: ItemNavigation;
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
 	moreColorsFeature?: ColorPaletteMoreColors;
+	_currentlySelected?: ColorPaletteItem;
+	_shouldFocusRecentColors = false;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-
-		[ColorPalette.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
-			colorPaletteMoreColors ? colorPaletteMoreColors.init() : Promise.resolve(),
-		]);
-	}
 
 	constructor() {
 		super();
@@ -199,17 +190,43 @@ class ColorPalette extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		this._ensureSingleSelectionOrDeselectAll();
+
+		const selectedItem = this.selectedItem;
+
+		if (selectedItem && !this.showRecentColors) {
+			this._selectedColor = selectedItem.value;
+		}
+
 		this.displayedColors.forEach((item, index) => {
 			item.index = index + 1;
 		});
 
 		if (this.showMoreColors) {
-			const ColorPaletteMoreColorsClass = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
+			const ColorPaletteMoreColorsClass = getComponentFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
 			if (ColorPaletteMoreColorsClass) {
+				ColorPaletteMoreColorsClass.i18nBundle = ColorPalette.i18nBundle;
 				this.moreColorsFeature = new ColorPaletteMoreColorsClass();
-			} else {
-				throw new Error(`You have to import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js" module to use the more-colors functionality.`);
 			}
+		}
+
+		this.onPhone = isPhone();
+	}
+
+	get _effectiveShowMoreColors() {
+		return !!(this.showMoreColors && this.moreColorsFeature);
+	}
+
+	onAfterRendering() {
+		if (this.hasRecentColors && this._shouldFocusRecentColors) {
+			if (this.selectedItem) {
+				this.selectedItem.selected = false;
+			}
+			const firstRecentColor = this.recentColorsElements[0];
+			firstRecentColor.selected = true;
+			this._currentlySelected = firstRecentColor;
+			this._currentlySelected.focus();
+			this._shouldFocusRecentColors = false;
 		}
 	}
 
@@ -234,41 +251,107 @@ class ColorPalette extends UI5Element {
 			if (this._recentColors.includes(this._selectedColor)) {
 				this._recentColors.unshift(this._recentColors.splice(this._recentColors.indexOf(this._selectedColor), 1)[0]);
 			} else {
-				this._recentColors.unshift(this._selectedColor);
+				this._addRecentColor(this._selectedColor);
 			}
 		}
 
-		this.fireEvent<ColorPaletteItemClickEventDetail>("item-click", {
+		this.fireDecoratorEvent("item-click", {
 			color: this._selectedColor,
 		});
 	}
 
-	_onclick(e: MouseEvent) {
-		const target = e.target as ColorPaletteItem;
-		if (target.hasAttribute("ui5-color-palette-item")) {
-			this.selectColor(target);
+	get effectiveColorItems() {
+		let colorItems = this.colors;
+
+		if (this.popupMode) {
+			colorItems = this.getSlottedNodes<ColorPaletteItem>("colors");
 		}
+
+		return colorItems;
+	}
+
+	/**
+	 * Ensures that only one item is selected or only the last selected item remains active if more than one are explicitly set as 'selected'.
+	 * @private
+	 */
+	_ensureSingleSelectionOrDeselectAll() {
+		let lastSelectedItem: IColorPaletteItem;
+
+		this.allColorsInPalette.forEach(item => {
+			if (item.selected) {
+				if (lastSelectedItem) {
+					lastSelectedItem.selected = false;
+				}
+				lastSelectedItem = item;
+			}
+		});
+	}
+
+	_onclick(e: MouseEvent) {
+		this.handleSelection(e.target as ColorPaletteItem);
 	}
 
 	_onkeyup(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
-		if (isSpace(e) && target.hasAttribute("ui5-color-palette-item")) {
+		if (isSpace(e)) {
 			e.preventDefault();
-			this.selectColor(target);
+			this.handleSelection(target);
 		}
 	}
 
 	_onkeydown(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
-		if (isEnter(e) && target.hasAttribute("ui5-color-palette-item")) {
-			this.selectColor(target);
+		if (isEnter(e)) {
+			this.handleSelection(target);
+		}
+
+		if (isSpace(e)) {
+			e.preventDefault();
+		}
+	}
+
+	handleSelection(target: ColorPaletteItem) {
+		if (!target.hasAttribute("ui5-color-palette-item") || !target.value) {
+			return;
+		}
+
+		this._shouldFocusRecentColors = false;
+
+		this.selectColor(target);
+
+		// Handle selection for items within the 'recentColorsElements'
+		if (this.recentColorsElements.includes(target)) {
+			this.recentColorsElements[0].selected = true;
+			this.recentColorsElements[0].focus();
+			this._currentlySelected = this.recentColorsElements[0];
+		} else {
+			this.allColorsInPalette.forEach(item => {
+				item.selected = item === target;
+			});
+			this._currentlySelected = target;
+		}
+
+		this._ensureSingleSelectionOrDeselectAll();
+	}
+
+	_handleDefaultColorClick(e: KeyboardEvent) {
+		e.preventDefault();
+		this._onDefaultColorClick();
+	}
+
+	_onDefaultColorKeyUp(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			this._handleDefaultColorClick(e);
 		}
 	}
 
 	_onDefaultColorKeyDown(e: KeyboardEvent) {
 		if (isTabNext(e) && this.popupMode) {
-			e.preventDefault();
-			this._onDefaultColorClick();
+			this._handleDefaultColorClick(e);
+		}
+
+		if (isEnter(e)) {
+			this._handleDefaultColorClick(e);
 		}
 
 		if (isDown(e)) {
@@ -306,16 +389,25 @@ class ColorPalette extends UI5Element {
 			if (this.hasRecentColors) {
 				this.focusColorElement(this.colorPaletteNavigationElements[index + 1], this._itemNavigationRecentColors);
 			} else if (this.showDefaultColor) {
-				this.colorPaletteNavigationElements[0].focus();
+				this.firstFocusableElement.focus();
 			} else {
 				this.focusColorElement(this.displayedColors[0], this._itemNavigation);
 			}
 		}
 	}
 
+	_isUpOrDownNavigatableColorPaletteItem(e: KeyboardEvent) {
+		return (isUp(e) || isDown(e)) && this._currentlySelected && this.colorPaletteNavigationElements.includes(this._currentlySelected);
+	}
+
 	_onColorContainerKeyDown(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
 		const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
+
+		if (this._isUpOrDownNavigatableColorPaletteItem(e)) {
+			this._currentlySelected = undefined;
+		}
+
 		if (isTabNext(e) && this.popupMode) {
 			e.preventDefault();
 			this.selectColor(target);
@@ -324,7 +416,7 @@ class ColorPalette extends UI5Element {
 		if (isUp(e) && target === this.displayedColors[0] && this.colorPaletteNavigationElements.length > 1) {
 			e.stopPropagation();
 			if (this.showDefaultColor) {
-				this.colorPaletteNavigationElements[0].focus();
+				this.firstFocusableElement.focus();
 			} else if (!this.showDefaultColor && this.hasRecentColors) {
 				this.focusColorElement(lastElementInNavigation, this._itemNavigationRecentColors);
 			} else if (!this.showDefaultColor && this.showMoreColors) {
@@ -337,7 +429,7 @@ class ColorPalette extends UI5Element {
 			if (this.showDefaultColor && this.showMoreColors) {
 				this.colorPaletteNavigationElements[2].focus();
 			} else if (this.showDefaultColor && !this.showMoreColors && (!this.showRecentColors || !this.recentColors[0])) {
-				this.colorPaletteNavigationElements[0].focus();
+				this.firstFocusableElement.focus();
 			} else if (isRecentColorsNextElement) {
 				this.focusColorElement(lastElementInNavigation, this._itemNavigationRecentColors);
 			} else if (!this.showDefaultColor && this.showMoreColors) {
@@ -347,6 +439,9 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onRecentColorsContainerKeyDown(e: KeyboardEvent) {
+		if (this._isUpOrDownNavigatableColorPaletteItem(e)) {
+			this._currentlySelected = undefined;
+		}
 		if (isUp(e)) {
 			if (this.showMoreColors) {
 				const navigationElementsIndex = this.showDefaultColor ? 2 : 1;
@@ -359,7 +454,7 @@ class ColorPalette extends UI5Element {
 			}
 		} else if (isDown(e)) {
 			if (this.showDefaultColor) {
-				this.colorPaletteNavigationElements[0].focus();
+				this.firstFocusableElement.focus();
 			} else {
 				e.stopPropagation();
 				this.focusColorElement(this.displayedColors[0], this._itemNavigation);
@@ -372,26 +467,75 @@ class ColorPalette extends UI5Element {
 		itemNavigation._focusCurrentItem();
 	}
 
-	async _chooseCustomColor() {
-		const colorPicker = await this.getColorPicker();
-		this._setColor(colorPicker.color);
+	get firstFocusableElement() {
+		return this.colorPaletteNavigationElements[0];
+	}
+
+	_chooseCustomColor() {
+		const colorPicker = this.getColorPicker();
+		this._setColor(colorPicker.value);
 		this._closeDialog();
+		this._shouldFocusRecentColors = true;
 	}
 
-	async _closeDialog() {
-		const dialog = await this._getDialog();
-		dialog.close();
+	_addRecentColor(color: string) {
+		if (this.showRecentColors && !this._recentColors.includes(color)) {
+			this._recentColors.unshift(color);
+			if (this._recentColors.length > this.rowSize) {
+				this._recentColors.pop();
+			}
+		}
 	}
 
-	async _openMoreColorsDialog() {
-		const dialog = await this._getDialog();
-		dialog.show();
+	_closeDialog() {
+		const dialog = this._getDialog();
+		dialog.open = false;
+	}
+
+	_openMoreColorsDialog() {
+		const dialog = this._getDialog();
+		const colorPicker = this.getColorPicker();
+		const value = this._currentlySelected ? this._currentlySelected.value : undefined;
+
+		if (value) {
+			colorPicker.value = value;
+		}
+		dialog.open = true;
 	}
 
 	_onDefaultColorClick() {
 		if (this.defaultColor) {
 			this._setColor(this.defaultColor);
+			this._addRecentColor(this.defaultColor);
+
+			if (this.selectedItem) {
+				this.selectedItem.selected = false;
+				this._currentlySelected = undefined;
+			}
 		}
+	}
+
+	/**
+	 * Returns the selected item.
+	 */
+	get selectedItem() {
+		return this.allColorsInPalette.find(item => item.selected);
+	}
+
+	get allColorsInPalette() {
+		return [...this.effectiveColorItems, ...this.recentColorsElements];
+	}
+
+	get colorPaletteDialogTitle() {
+		return this.moreColorsFeature?.colorPaletteDialogTitle;
+	}
+
+	get colorPaletteDialogOKButton() {
+		return this.moreColorsFeature?.colorPaletteDialogOKButton;
+	}
+
+	get colorPaletteCancelButton() {
+		return this.moreColorsFeature?.colorPaletteCancelButton;
 	}
 
 	/**
@@ -402,7 +546,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get displayedColors() {
-		const colors = this.getSlottedNodes<ColorPaletteItem>("colors");
+		const colors = this.getSlottedNodes<IColorPaletteItem>("colors");
 		return colors.filter(item => item.value).slice(0, 15);
 	}
 
@@ -410,8 +554,12 @@ class ColorPalette extends UI5Element {
 		return ColorPalette.i18nBundle.getText(COLORPALETTE_CONTAINER_LABEL);
 	}
 
-	get colorPaleteMoreColorsText() {
+	get colorPaletteMoreColorsText() {
 		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_MORE_COLORS_TEXT);
+	}
+
+	get colorPaletteDefaultColorText() {
+		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_DEFAULT_COLOR_TEXT);
 	}
 
 	get _showMoreColors() {
@@ -451,6 +599,10 @@ class ColorPalette extends UI5Element {
 		const navigationElements: Array<ColorPaletteNavigationItem> = [];
 		const rootElement = this.shadowRoot!.querySelector(".ui5-cp-root")!;
 
+		if (this._currentlySelected) {
+			navigationElements.push(this._currentlySelected);
+		}
+
 		if (this.showDefaultColor) {
 			navigationElements.push(rootElement.querySelector<Button>(".ui5-cp-default-color-button")!);
 		}
@@ -469,6 +621,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get classes() {
+		// Remove after deleting the hbs template, it's added in the jsx template
 		return {
 			colorPaletteRoot: {
 				"ui5-cp-root": true,
@@ -477,13 +630,12 @@ class ColorPalette extends UI5Element {
 		};
 	}
 
-	async _getDialog() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Dialog>("[ui5-dialog]")!;
+	_getDialog() {
+		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
 	}
 
-	async getColorPicker() {
-		const dialog = await this._getDialog();
+	getColorPicker() {
+		const dialog = this._getDialog();
 		return dialog.content[0].querySelector<ColorPicker>("[ui5-color-picker]")!;
 	}
 }
@@ -491,4 +643,7 @@ class ColorPalette extends UI5Element {
 ColorPalette.define();
 
 export default ColorPalette;
-export type { ColorPaletteItemClickEventDetail };
+export type {
+	ColorPaletteItemClickEventDetail,
+	IColorPaletteItem,
+};

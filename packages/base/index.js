@@ -12,7 +12,7 @@ import {
 	getDefaultIconCollection,
 } from "./dist/config/Icons.js";
 import { RegisteredIconCollection } from "./dist/asset-registries/util/IconCollectionsByTheme.js";
-import getEffectiveIconCollection from "./dist/asset-registries/util/getIconCollectionsByTheme.js";
+import getEffectiveIconCollection from "./dist/asset-registries/util/getIconCollectionByTheme.js";
 import {
 	getLanguage,
 	setLanguage,
@@ -21,7 +21,6 @@ import {
 	getFetchDefaultLanguage,
 } from "./dist/config/Language.js";
 import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
-import { getRTL } from "./dist/config/RTL.js";
 import {
 	getTheme,
 	setTheme,
@@ -57,13 +56,6 @@ import { registerIconLoader } from "./dist/asset-registries/Icons.js";
 // Boot.ts
 import { attachBoot } from "./dist/Boot.js";
 
-// CSP.ts
-import {
-	setPackageCSSRoot,
-	setUseLinks,
-	setPreloadLinks,
-} from "./dist/CSP.js";
-
 // CustomElementsScope.ts
 import {
 	setCustomElementsScopingSuffix,
@@ -76,7 +68,6 @@ import {
 // Device.ts
 import {
 	supportsTouch,
-	isIE,
 	isSafari,
 	isChrome,
 	isFirefox,
@@ -96,9 +87,6 @@ import I18nBundle, { getI18nBundle, registerCustomI18nBundleGetter } from "./dis
 
 // MediaRange.ts
 import MediaRange from "./dist/MediaRange.js";
-
-// PropertiesFileFormat.ts
-import parseProperties from "./dist/PropertiesFileFormat.js";
 
 // Render.ts
 import {
@@ -138,7 +126,6 @@ export {
 	getFetchDefaultLanguage,
 	getNoConflict,
 	setNoConflict,
-	getRTL,
 	getTheme,
 	setTheme,
 	getDefaultTheme,
@@ -175,11 +162,6 @@ export {
 	// Boot.ts
 	attachBoot,
 
-	// CSP.ts
-	setPackageCSSRoot,
-	setUseLinks,
-	setPreloadLinks,
-
 	// CustomElementsScope.ts
 	setCustomElementsScopingSuffix,
 	getCustomElementsScopingSuffix,
@@ -189,7 +171,6 @@ export {
 
 	// Device.ts
 	supportsTouch,
-	isIE,
 	isSafari,
 	isChrome,
 	isFirefox,
@@ -210,9 +191,6 @@ export {
 
 	// MediaRange.ts
 	MediaRange,
-
-	// PropertiesFileFormat.ts
-	parseProperties,
 
 	// Render.ts
 	renderDeferred,

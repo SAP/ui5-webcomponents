@@ -19,7 +19,7 @@ To build your UI5 Web Components project you can use any bundling tool that supp
  - `.json` imports;
  - dynamic ES6 imports.
 
-This is true of all modern bundlers.  
+This is true for all modern bundlers.  
 
 UI5 Web Components are shipped as ES6 modules and published on NPM. If you are already using a framework that handles bundling of ES6 modules, skip forward to [Installation](#installation) or check the Tutorials section.
 
@@ -35,12 +35,12 @@ npm init vite
 - Select a framework: `vanilla`
 - Select a variant: `JavaScript`
 
-This command will create a project structure under `my-webcomponents-app`. Follow the instructions on the screen to install the initial depenednecies and start a dev server.
+This command will create a project structure under `my-webcomponents-app`. Follow the instructions on the screen to install the initial dependencies and start a dev server.
 
 ```
 cd my-webcomponents-app
 npm install
-npm run dev​
+npm run dev
 ```
 
 You should see a message that a server is running on `Local: http://localhost:3000/`. Launch your favourite IDE and change some code, the browser page will be automatically refreshed.
@@ -59,7 +59,7 @@ This command downloads the published source code of the UI5 Web Components to th
 
 ### Documentation
 
-Take a look at the available UI5 Web Components documentation in the [playground](./playground/docs/).
+Take a look at the available UI5 Web Components documentation in the [playground](https://sap.github.io/ui5-webcomponents/play).
 
 ### Usage
 
@@ -105,8 +105,41 @@ dist/assets/index.4116dceb.js 0.12kb / brotli: 0.09kb
 dist/assets/vendor.c05c7785.js 114.92kb / brotli: 24.30kb
 ```
 
-The contents of the `dist` folder is ready to be deployed for productive usage. The hashes in the file names make them safe for caching and the produced bundle is optimized for production.
+The content of the `dist` folder is ready to be deployed for productive usage. The hashes in the file names make them safe for caching and the produced bundle is optimized for production.
 
 #### 4. Enjoy UI5 Web Components.
 
-Next: [Importing UI5 Web Components](./02-importing-components.md)
+### Code Completion
+
+#### Visual Studio Code (VS Code)
+
+UI5 Web Components packages include a vscode.html-custom-data.json file that describes their custom elements. This enables advanced code completion features, such as “code hinting” or “IntelliSense,” in Visual Studio Code.
+
+Steps to Enable Code Completion in VS Code:
+
+1. Install UI5 Web Components locally
+   Use your package manager to add the required UI5 Web Components packages to your project.
+
+2. Create or update `.vscode/settings.json`:
+   - Ensure a folder named `.vscode` exists at the root of your project.
+   - Inside `.vscode`, create or update a file named `settings.json`.
+
+3. Configure the Settings File:
+   Add the following configuration to `settings.json`:
+
+   ```json
+   {
+     "html.customData": [
+       "./node_modules/@ui5/webcomponents/dist/vscode.html-custom-data.json"
+       // Add entries for other installed @ui5/webcomponents packages as needed
+     ]
+   }
+   ```
+
+   If `settings.json` already exists, append the `html.customData` property to the root object.
+
+4. Restart VS Code:
+   Restart the editor to apply the changes.
+
+#### JetBrains IDEs
+For JetBrains IDEs, such as WebStorm or IntelliJ IDEA, no additional setup is required when using UI5 Web Components installed from your package manager. The IDE will automatically detect the `web-types.json` file provided by the packages, enabling code completion and displaying relevant component information without further configuration.

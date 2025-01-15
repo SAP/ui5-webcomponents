@@ -14,10 +14,26 @@
 <link rel="stylesheet" type="text/css" href="./styles/SplitButton.css">
 </head>
 
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 	<header class="header">
-		<h1 class="header-title">ui5-split-button</h1>
+		<h3 class="header-title">Wrapped Split Buttons</h3>
 	</header>
+
+	<div style="border: 1px solid red; display: inline-block; width: 80px; height: 70px">
+		<ui5-split-button style="width: 100%;" icon="picture">Random Text</ui5-split-button>
+	</div>
+
+	<div style="border: 1px solid red; display: inline-block; width: 80px">
+		<ui5-split-button style="width: 100%" icon="picture">Random Text</ui5-split-button>
+	</div>
+
+	<div style="border: 1px solid red; display: inline-block; width: 120px">
+		<ui5-split-button style="width: 100%" icon="picture">Random Text</ui5-split-button>
+	</div>
+
+	<div style="border: 1px solid red; display: inline-block; width: 160px">
+		<ui5-split-button style="width: 100%" icon="picture">Random Text</ui5-split-button>
+	</div>
 
 	<header class="header">
 		<h3 class="header-title">Button Types</h3>
@@ -48,8 +64,6 @@
 	</header>
 	<div class="samples-margin">
 		<ui5-split-button id="sbTextIcon" icon="add">Icon</ui5-split-button>
-		<ui5-split-button id="sbTextActiveIcon" active-icon="accept">Active Icon</ui5-split-button>
-		<ui5-split-button id="sbTextIconActiveIcon" icon="add" active-icon="accept">Icon + Active Icon</ui5-split-button>
 		<ui5-split-button icon="text-color"></ui5-split-button>
 	</div>
 
@@ -90,22 +104,18 @@
 	</ui5-menu>
 </body>
 <script>
-const splitBtn = document.getElementById("splitBtnWithMenuDefaultActionDefaultAction");
-const menu = document.getElementById("menu");
+	const splitBtn = document.getElementById("splitBtnWithMenuDefaultActionDefaultAction");
+	const menu = document.getElementById("menu");
 
-splitBtn.addEventListener("ui5-arrow-click", function() {
-	if (menu.open) {
-		menu.close();
+	splitBtn.addEventListener("ui5-arrow-click", function() {
+		menu.opener = splitBtn; 
+		menu.open = !menu.open;
+		splitBtn.activeArrowButton = !splitBtn.activeArrowButton;
+	});
+
+	menu.addEventListener("close", function() {
 		splitBtn.activeArrowButton = false;
-	} else {
-		menu.showAt(splitBtn);
-		splitBtn.activeArrowButton = true;
-	}
-});
-
-menu.addEventListener("after-close", function() {
-	splitBtn.activeArrowButton = false;
-});
+	});
 
 	var displayEvent = document.getElementById("displayEvent"),
 		displayElement = document.getElementById("displayElement"),
@@ -118,9 +128,8 @@ menu.addEventListener("after-close", function() {
 
 
 	splitBtnWithMenuWithAssociatedLastAction.addEventListener("ui5-arrow-click", function() {
-		menuInSplitBtnAssociatedLastAction.open ? 
-			menuInSplitBtnAssociatedLastAction.close() :
-			menuInSplitBtnAssociatedLastAction.showAt(splitBtnWithMenuWithAssociatedLastAction)
+		menuInSplitBtnAssociatedLastAction.opener = splitBtnWithMenuWithAssociatedLastAction; 
+		menuInSplitBtnAssociatedLastAction.menuInSplitBtnAssociatedLastAction = !menu.open;
 	})
 
 	menuInSplitBtnAssociatedLastAction.addEventListener("ui5-item-click", function(event) {

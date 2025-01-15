@@ -1,13 +1,4 @@
-import getSharedResource from "../getSharedResource.js";
-import { getFeature } from "../FeaturesRegistry.js";
 import getActiveElement from "./getActiveElement.js";
-import type OpenUI5Support from "../features/OpenUI5Support.js";
-
-type PopupUtilsData = {
-	currentZIndex: number
-};
-
-const popupUtilsData = getSharedResource<PopupUtilsData>("PopupUtilsData", { currentZIndex: 100 });
 
 const getFocusedElement = () => {
 	const element = getActiveElement() as HTMLElement;
@@ -88,25 +79,9 @@ const getClosedPopupParent = (el: HTMLElement): HTMLElement => {
 	return getClosedPopupParent(parent as HTMLElement);
 };
 
-const getNextZIndex = () => {
-	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
-	if (openUI5Support && openUI5Support.isOpenUI5Detected()) { // use OpenUI5 for getting z-index values, if loaded
-		return openUI5Support.getNextZIndex();
-	}
-
-	popupUtilsData.currentZIndex += 2;
-	return popupUtilsData.currentZIndex;
-};
-
-const getCurrentZIndex = () => {
-	return popupUtilsData.currentZIndex;
-};
-
 export {
 	getFocusedElement,
 	isClickInRect,
 	getClosedPopupParent,
-	getNextZIndex,
-	getCurrentZIndex,
 	isFocusedElementWithinNode,
 };

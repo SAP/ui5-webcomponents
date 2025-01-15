@@ -27,8 +27,7 @@ describe("TimePicker on phone - general interactions", () => {
 
 	it("opening of popover with numeric inputs", async () => {
 		const timePicker = await browser.$("#timepicker");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker");
-		const timePickerPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const timePickerPopover = await timePicker.shadow$("ui5-popover");
 		const timeSelectionInputs = await timePickerPopover.$('div.popover-content').$('ui5-time-selection-inputs');
 		const components = await timeSelectionInputs.shadow$$('ui5-input');
 		const hoursInnerInput = await components[0].shadow$("input");
@@ -50,8 +49,7 @@ describe("TimePicker on phone - general interactions", () => {
 
 	it("value change with numeric inputs on OK and Cancel button press", async () => {
 		const timePicker = await browser.$("#timepicker3");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker3");
-		const timePickerPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const timePickerPopover = await timePicker.shadow$("ui5-popover");
 		const timePickerPopoverButtons = await timePickerPopover.$('div.ui5-time-picker-footer').$$("ui5-button");
 		const timeSelectionInputs = await timePickerPopover.$('div.popover-content').$('ui5-time-selection-inputs');
 		const components = await timeSelectionInputs.shadow$$('ui5-input');
@@ -101,8 +99,7 @@ describe("TimePicker on phone - general interactions", () => {
 
 	it("direct number typing", async () => {
 		const timePicker = await browser.$("#timepicker");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker");
-		const timePickerPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const timePickerPopover = await timePicker.shadow$("ui5-popover");
 		const timePickerPopoverButtons = await timePickerPopover.$('div.ui5-time-picker-footer').$$("ui5-button");
 		const timeSelectionInputs = await timePickerPopover.$('div.popover-content').$('ui5-time-selection-inputs');
 		const components = await timeSelectionInputs.shadow$$('ui5-input');
@@ -176,8 +173,7 @@ describe("TimePicker on phone - accessibility and other input attributes", () =>
 
 	it("accessibility attributes of numeric inputs", async () => {
 		const timePicker = await browser.$("#timepicker");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker");
-		const timePickerPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const timePickerPopover = await timePicker.shadow$("ui5-popover");
 		const timeSelectionInputs = await timePickerPopover.$('div.popover-content').$('ui5-time-selection-inputs');
 		const components = await timeSelectionInputs.shadow$$('ui5-input');
 		const hoursInnerInput = await components[0].shadow$("input");
@@ -213,8 +209,7 @@ describe("TimePicker on phone - accessibility and other input attributes", () =>
 
 	it("other important attributes of numeric inputs", async () => {
 		const timePicker = await browser.$("#timepicker");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker");
-		const timePickerPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const timePickerPopover = await timePicker.shadow$("ui5-popover");
 		const timeSelectionInputs = await timePickerPopover.$('div.popover-content').$('ui5-time-selection-inputs');
 		const components = await timeSelectionInputs.shadow$$('ui5-input');
 		const hoursInnerInput = await components[0].shadow$("input");

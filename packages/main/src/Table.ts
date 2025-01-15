@@ -1,1275 +1,688 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import {
-	isTabNext,
-	isTabPrevious,
-	isSpace,
-	isEnter,
-	isCtrlA,
-	isUpAlt,
-	isDownAlt,
-	isUpShift,
-	isDownShift,
-	isHomeCtrl,
-	isEndCtrl,
-	isHomeShift,
-	isEndShift,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
-import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
-import { getLastTabbableElement, getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
-import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
-import TableGrowingMode from "./types/TableGrowingMode.js";
-import BusyIndicator from "./BusyIndicator.js";
-import type {
-	TableRowClickEventDetail,
-	TableRowSelectionRequestedEventDetail,
-	TableRowF7PressEventDetail,
-	TableRowForwardBeforeEventDetail,
-	TableRowForwardAfterEventDetail,
-} from "./TableRow.js";
-import type TableCell from "./TableCell.js";
-import type TableColumn from "./TableColumn.js";
-import type TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
-import TableMode from "./types/TableMode.js";
-import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being used in the renderer
-
-// Texts
-import {
-	LOAD_MORE_TEXT,
-	ARIA_LABEL_SELECT_ALL_CHECKBOX,
-	TABLE_HEADER_ROW_INFORMATION,
-	TABLE_ROW_POSITION,
-} from "./generated/i18n/i18n-defaults.js";
-
-// Template
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
+import TableStyles from "./generated/themes/Table.css.js";
+import TableRow from "./TableRow.js";
+import TableHeaderRow from "./TableHeaderRow.js";
+import type TableHeaderCell from "./TableHeaderCell.js";
+import TableExtension from "./TableExtension.js";
+import type TableSelection from "./TableSelection.js";
+import TableOverflowMode from "./types/TableOverflowMode.js";
+import TableNavigation from "./TableNavigation.js";
+import DropIndicator from "./DropIndicator.js";
+import {
+	TABLE_NO_DATA,
+} from "./generated/i18n/i18n-defaults.js";
+import BusyIndicator from "./BusyIndicator.js";
+import TableCell from "./TableCell.js";
+import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
+import TableDragAndDrop from "./TableDragAndDrop.js";
+import type TableRowActionBase from "./TableRowActionBase.js";
+import type TableVirtualizer from "./TableVirtualizer.js";
 
-// Styles
-import tableStyles from "./generated/themes/Table.css.js";
-
-const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
-
-const PAGE_UP_DOWN_SIZE = 20;
-
-interface ITableRow extends UI5Element {
-	mode: `${TableMode}`,
-	selected: boolean,
-	_busy: boolean,
-	_tabIndex: string,
-	_ariaPosition: string,
-	_columnsInfoString: string,
-	_columnsInfo: Array<TableColumnInfo>,
-	_tabbables: Array<HTMLElement>,
+/**
+ * Interface for components that can be slotted inside the `features` slot of the `ui5-table`.
+ *
+ * @public
+ * @experimental
+ */
+interface ITableFeature extends UI5Element {
+	readonly identifier: string;
+	/**
+	 * Called when the table is activated.
+	 * @param table table instance
+	 */
+	onTableActivate?(table: Table): void;
+	/**
+	 * Called when the table finished rendering.
+	 */
+	onTableAfterRendering?(table?: Table): void;
 }
 
-type TableColumnInfo = {
-	cell?: TableCell,
-	index?: number,
-	text?: string | null,
-	visible?: boolean,
-	demandPopin?: boolean,
-	popinText?: string,
-	popinDisplay?: `${TableColumnPopinDisplay}`,
-	popinDisplayInline?: boolean,
-	classes?: string,
-	minWidth?: number,
+/**
+ * Interface for components that can be slotted inside the `features` slot of the `ui5-table`
+ * and provide growing/data loading functionality.
+ * @public
+ * @experimental
+ */
+interface ITableGrowing extends ITableFeature {
+	/**
+	 * Called when the table needs to load more data.
+	 */
+	loadMore(): void;
+	/**
+	 * Determines whether the table has a growing control, that should be rendered in the table.
+	 */
+	hasGrowingComponent(): boolean;
+	_individualSlot?: string;
 }
 
-type TableColumnHeaderInfo = ITabbable;
+/**
+ * Fired when an interactive row is clicked.
+ * @param {TableRow} row The clicked row instance
+ * @public
+ */
+type TableRowClickEventDetail = {
+	row: TableRow,
+};
 
-type TableSelectionChangeEventDetail = {
-	selectedRows: Array<ITableRow>,
-	previouslySelectedRows: Array<ITableRow>,
-}
+type TableMoveEventDetail = MoveEventDetail;
 
-type TablePopinChangeEventDetail = {
-	poppedColumns: Array<TableColumnInfo>;
-}
-
-enum TableFocusTargetElement {
-	Row = "tableRow",
-	GroupRow = "tableGroupRow",
-	ColumnHeader = "columnHeader",
-	MoreButton = "moreButton",
-}
+/**
+ * Fired when a row action is clicked.
+ * @param {TableRowActionBase} action The row action instance
+ * @param {TableRow} row The row instance
+ * @public
+ */
+type TableRowActionClickEventDetail = {
+	action: TableRowActionBase,
+	row: TableRow,
+};
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-table</code> component provides a set of sophisticated and convenient functions for responsive table design.
- * It provides a comprehensive set of features for displaying and dealing with vast amounts of data.
- * <br><br>
- * To render the <code>Table</code> properly, the order of the <code>columns</code> should match with the
- * order of the item <code>cells</code> in the <code>rows</code>.
- * <br><br>
- * Desktop and tablet devices are supported.
- * On tablets, special consideration should be given to the number of visible columns
- * and rows due to the limited performance of some devices.
+ * The `ui5-table` component provides a set of sophisticated features for displaying and dealing with vast amounts of data in a responsive manner.
+ * To render the `ui5-table`, you need to define the columns and rows. You can use the provided `ui5-table-header-row` and `ui5-table-row` components for this purpose.
  *
- * <h3>Selection</h3>
- * To benefit from the selection mechanism of <code>ui5-table</code> component, you can use the available selection modes:
- * <code>SingleSelect</code> and <code>MultiSelect</code>.
- * <br>
- * In additition to the used mode, you can also specify the <code>ui5-table-row</code> type choosing between
- * <code>Active</code> or <code>Inactive</code>.
- * <br><br>
- * In <code>SingleSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row via mouse or
- * by pressing the <code>Space</code> or <code>Enter</code> keys.
- * <br>
- * In <code>MultiSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row by pressing the
- * <code>Space</code> key when a row is on focus or via mouse click over the selection checkbox of the row.
- * In order to select all the available rows at once, you can use the selection checkbox presented in the table's header.
- * <br><br>
- * <b>Note:</b> Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
+ * ### Features
  *
- * <h3>Keyboard Handling</h3>
+ * The `ui5-table` can be enhanced in its functionalities by applying different features.
+ * Features can be slotted into the `features` slot, to enable them in the component.
+ * Features need to be imported separately, as they are not enabled by default.
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * The following features are currently available:
+ *
+ * * [TableSelection](../TableSelection) - adds selection capabilities to the table
+ * * [TableGrowing](../TableGrowing) - provides growing capabilities to load more data
+ *
+ * ### Keyboard Handling
+ *
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
- * Furthermore, you can interact with <code>ui5-table</code> via the following keys.
- * <br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <ul>
- * <li>[F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.</li>
- * <li>[CTRL]+[A] - Selects all items, if MultiSelect mode is enabled.</li>
- * <li>[HOME]/[END] - Focuses the first/last item.</li>
- * <li>[PAGEUP]/[PAGEDOWN] - Moves focus up/down by page size (20 items by default).</li>
- * <li>[ALT]+[DOWN]/[UP] - Switches focus between header, last focused item, and More button (if applies) in either direction.</li>
- * <li>[SHIFT]+[DOWN]/[UP] - Selects the next/previous item in a MultiSelect table, if the current item is selected (Range selection). Otherwise, deselects them (Range deselection).</li>
- * <li>[SHIFT]+[HOME]/[END] - Range selection to the first/last item of the List.</li>
- * <li>[CTRL]+[HOME]/[END] - Same behavior as HOME & END.</li>
- * </ul>
+ * Furthermore, you can interact with `ui5-table` via the following keys:
  *
- * <h3>ES6 Module Import</h3>
+ * If the focus is on a row, the following keyboard shortcuts are available:
+ * * <kbd>Down</kbd> - Navigates down
+ * * <kbd>Up</kbd> - Navigates up
+ * * <kbd>Right</kbd> - Selects the first cell of the row
+ * * <kbd>Space</kbd> - Toggles the selection of the row
+ * * <kbd>Ctrl/Cmd + A</kbd> - In multi selection mode, toggles the selection of all rows
+ * * <kbd>Home</kbd> - Navigates to the first row, if the focus is on the first row, navigates to the header row
+ * * <kbd>End</kbd> - Navigates to the last row, if the focus is on the last row, navigates to the growing button
+ * * <kbd>Page Up</kbd> - Navigates one page up, if the focus is on the first row, navigates to the header row
+ * * <kbd>Page Down</kbd> - Navigates one page down, if the focus is on the last row, navigates to the growing button
+ * * <kbd>F2</kbd> - Focuses the first tabbable element in the row
+ * * <kbd>F7</kbd> - If focus position is remembered, moves focus to the corresponding focus position row, otherwise to the first tabbable element within the row
+ * * <kbd>[Shift]Tab</kbd> - Move focus to the element in the tab chain outside the table
+
  *
- * <code>import "@ui5/webcomponents/dist/Table.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/TableColumn.js";</code> (for <code>ui5-table-column</code>)
- * <br>
- * <code>import "@ui5/webcomponents/dist/TableRow.js";</code> (for <code>ui5-table-row</code>)
- * <br>
- * <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (for <code>ui5-table-cell</code>)
+ * If the focus is on a cell, the following keyboard shortcuts are available:
+ * * <kbd>Down</kbd> - Navigates down
+ * * <kbd>Up</kbd> - Navigates up
+ * * <kbd>Right</kbd> - Navigates right
+ * * <kbd>Left</kbd> - Navigates left, if the focus is on the first cell of the row, the focus is moved to the row.
+ * * <kbd>Home</kbd> - Navigates to the first cell of the current row, if the focus is on the first cell, navigates to the corresponding row
+ * * <kbd>End</kbd> - Navigates to the last cell of the current row, if the focus is on the last cell, navigates to the corresponding row
+ * * <kbd>Page Up</kbd> - Navigates one page up while keeping the focus in same column
+ * * <kbd>Page Down</kbd> - Navigates one page down while keeping the focus in same column
+ * * <kbd>F2</kbd> - Toggles the focus between the first tabbable cell content and the cell
+ * * <kbd>Enter</kbd> - Focuses the first tabbable cell content
+ * * <kbd>F7</kbd> - If the focus is on an interactive element inside a row, moves focus to the corresponding row and remembers the focus position of the element within the row
+ * * <kbd>[Shift]Tab</kbd> - Move focus to the element in the tab chain outside the table
+
+ *
+ * If the focus is on an interactive cell content, the following keyboard shortcuts are available:
+ * * <kbd>Down</kbd> - Move the focus to the interactive element in the same column of the previous row, unless the focused element prevents the default
+ * * <kbd>Up</kbd> - Move the focus to the interactive element in the same column of the next row, unless the focused element prevents the default
+ * * <kbd>[Shift]Tab</kbd> - Move the focus to the element in the tab chain
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Table.js";`\
+ * `import "@ui5/webcomponents/dist/TableRow.js";` (`ui5-table-row`)\
+ * `import "@ui5/webcomponents/dist/TableCell.js";` (`ui5-table-cell`)\
+ * `import "@ui5/webcomponents/dist/TableHeaderRow.js";` (`ui5-table-header-row`)\
+ * `import "@ui5/webcomponents/dist/TableHeaderCell.js";` (`ui5-table-header-cell`)
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Table
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-table
- * @appenddocs sap.ui.webc.main.TableColumn sap.ui.webc.main.TableRow sap.ui.webc.main.TableGroupRow sap.ui.webc.main.TableCell
+ * @extends UI5Element
+ * @since 2.0.0
  * @public
+ * @experimental This Table web component is available since 2.0 and has been newly implemented to provide better screen reader and keyboard handling support.
+ * Currently, it's considered experimental as its API is subject to change.
+ * This Table replaces the previous Table web component, that has been part of **@ui5/webcomponents** version 1.x.
+ * For compatibility reasons, we moved the previous Table implementation to the **@ui5/webcomponents-compat** package
+ * and will be maintained until the new Table is experimental.
+ * Keep in mind that you can use either the compat/Table, or the main/Table - you can't use them both as they both define the `ui5-table` tag name.
  */
 @customElement({
 	tag: "ui5-table",
-	fastNavigation: true,
-	styles: tableStyles,
 	renderer: litRender,
+	styles: TableStyles,
 	template: TableTemplate,
-	dependencies: [BusyIndicator, CheckBox],
+	fastNavigation: true,
+	dependencies: [
+		BusyIndicator,
+		TableHeaderRow,
+		TableCell,
+		TableRow,
+		DropIndicator,
+	],
 })
-/** Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
-*
-* @event sap.ui.webc.main.Table#row-click
-* @param {HTMLElement} row the activated row.
-* @public
-*/
+
+/**
+ * Fired when an interactive row is clicked.
+ *
+ * @param {TableRow} row The row instance
+ * @public
+ */
 @event("row-click", {
-	detail: {
-		row: { type: HTMLElement },
-	},
+	bubbles: false,
 })
 
 /**
-* Fired when <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
-*
-* @event sap.ui.webc.main.Table#popin-change
-* @param {Array} poppedColumns popped-in columns.
-* @since 1.0.0-rc.6
-* @public
-*/
-@event("popin-change", {
-	detail: {
-		poppedColumns: {
-			type: Array,
-		},
-	},
+ * Fired when a movable item is moved over a potential drop target during a dragging operation.
+ *
+ * If the new position is valid, prevent the default action of the event using `preventDefault()`.
+ *
+ * **Note:** If the dragging operation is a cross-browser operation or files are moved to a potential drop target,
+ * the `source` parameter will be `null`.
+ *
+ * @param {Event} originalEvent The original `dragover` event
+ * @param {object} source The source object
+ * @param {object} destination The destination object
+ * @public
+ */
+@event("move-over", {
+	cancelable: true,
+	bubbles: true,
 })
 
 /**
-* Fired when the user presses the <code>More</code> button or scrolls to the table's end.
-* <br><br>
-*
-* <b>Note:</b> The event will be fired if <code>growing</code> is set to <code>Button</code> or <code>Scroll</code>.
-* @event sap.ui.webc.main.Table#load-more
-* @public
-* @since 1.0.0-rc.11
-*/
-@event("load-more")
+ * Fired when a movable list item is dropped onto a drop target.
+ *
+ * **Notes:**
+ *
+ * The `move` event is fired only if there was a preceding `move-over` with prevented default action.
+ *
+ * If the dragging operation is a cross-browser operation or files are moved to a potential drop target,
+ * the `source` parameter will be `null`.
+ *
+ * @param {Event} originalEvent The original `drop` event
+ * @param {object} source The source object
+ * @param {object} destination The destination object
+ * @public
+ */
+@event("move", {
+	bubbles: true,
+})
 
 /**
-* Fired when selection is changed by user interaction
-* in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
-*
-* @event sap.ui.webc.main.Table#selection-change
-* @param {Array} selectedRows An array of the selected rows.
-* @param {Array} previouslySelectedRows An array of the previously selected rows.
-* @public
-* @since 1.0.0-rc.15
-*/
-@event("selection-change", {
-	detail: {
-		selectedRows: { type: Array },
-		previouslySelectedRows: { type: Array },
-	},
+ * Fired when a row action is clicked.
+ *
+ * @param {TableRowActionBase} action The row action instance
+ * @since 2.6.0
+ * @public
+ */
+@event("row-action-click", {
+	bubbles: false,
 })
+
 class Table extends UI5Element {
+	eventDetails!: {
+		"row-click": TableRowClickEventDetail;
+		"move-over": TableMoveEventDetail;
+		"move": TableMoveEventDetail;
+		"row-action-click": TableRowActionClickEventDetail;
+	}
 	/**
-	 * Defines the text that will be displayed when there is no data and <code>hideNoData</code> is not present.
+	 * Defines the rows of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Table.prototype.noDataText
-	 * @defaultvalue ""
-	 * @public
-	 */
-	@property()
-	noDataText!: string;
-
-	/**
-	 * Defines the text that will be displayed inside the growing button at the bottom of the table,
-	 * meant for loading more rows upon press.
+	 * **Note:** Use `ui5-table-row` for the intended design.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> If not specified a built-in text will be displayed.
-	 * <br>
-	 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Table.prototype.growingButtonText
-	 * @defaultvalue ""
-	 * @since 1.0.0-rc.15
-	 * @public
-	 */
-	@property()
-	growingButtonText!: string;
-
-	/**
-	 * Defines the subtext that will be displayed under the <code>growingButtonText</code>.
-	 *
-	 * <br><br>
-	 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Table.prototype.growingButtonSubtext
-	 * @defaultvalue ""
-	 * @since 1.0.0-rc.15
-	 * @public
-	 */
-	@property()
-	growingButtonSubtext!: string;
-
-	/**
-	 * Defines if the value of <code>noDataText</code> will be diplayed when there is no rows present in the table.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Table.prototype.hideNoData
-	 * @defaultvalue false
-	 * @public
-	 * @since 1.0.0-rc.15
-	 */
-	@property({ type: Boolean })
-	hideNoData!: boolean;
-
-	/**
-	 * Defines whether the table will have growing capability either by pressing a <code>More</code> button,
-	 * or via user scroll. In both cases <code>load-more</code> event is fired.
-	 * <br><br>
-	 *
-	 * Available options:
-	 * <br><br>
-	 * <code>Button</code> - Shows a <code>More</code> button at the bottom of the table, pressing of which triggers the <code>load-more</code> event.
-	 * <br>
-	 * <code>Scroll</code> - The <code>load-more</code> event is triggered when the user scrolls to the bottom of the table;
-	 * <br>
-	 * <code>None</code> (default) - The growing is off.
-	 * <br><br>
-	 *
-	 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
-	 * and the component will fallback to <code>growing="Button"</code>.
-	 * @type {sap.ui.webc.main.types.TableGrowingMode}
-	 * @name sap.ui.webc.main.Table.prototype.growing
-	 * @defaultvalue "None"
-	 * @since 1.0.0-rc.12
-	 * @public
-	 */
-	@property({ type: TableGrowingMode, defaultValue: TableGrowingMode.None })
-	growing!: `${TableGrowingMode}`;
-
-	/**
-	 * Defines if the table is in busy state.
-	 * <b>
-	 *
-	 * In this state the component's opacity is reduced
-	 * and busy indicator is displayed at the bottom of the table.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Table.prototype.busy
-	 * @defaultvalue false
-	 * @since 1.0.0-rc.12
-	 * @public
-	 */
-	@property({ type: Boolean })
-	busy!: boolean;
-
-	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
-	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.Table.prototype.busyDelay
-	 * @defaultValue 1000
-	 * @public
-	 */
-	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
-
-	/**
-	 * Determines whether the column headers remain fixed at the top of the page during
-	 * vertical scrolling as long as the Web Component is in the viewport.
-	 * <br><br>
-	 * <b>Restrictions:</b>
-	 * <ul>
-	 * <li>Browsers that do not support this feature:
-	 * <ul>
-	 * <li>Internet Explorer</li>
-	 * <li>Microsoft Edge lower than version 41 (EdgeHTML 16)</li>
-	 * <li>Mozilla Firefox lower than version 59</li>
-	 * </ul>
-	 * </li>
-	 * <li>Scrolling behavior:
-	 * <ul>
-	 * <li>If the Web Component is placed in layout containers that have the <code>overflow: hidden</code>
-	 * or <code>overflow: auto</code> style definition, this can
-	 * prevent the sticky elements of the Web Component from becoming fixed at the top of the viewport.</li>
-	 * </ul>
-	 * </li>
-	 * </ul>
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Table.prototype.stickyColumnHeader
-	 * @defaultvalue false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	stickyColumnHeader!: boolean;
-
-	/**
-	 * Defines the mode of the component.
-	 *
-	 * @type {sap.ui.webc.main.types.TableMode}
-	 * @name sap.ui.webc.main.Table.prototype.mode
-	 * @defaultvalue "None"
-	 * @since 1.0.0-rc.15
-	 * @public
-	 */
-	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: `${TableMode}`;
-
-	/**
-	 * Defines the accessible ARIA name of the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Table.prototype.accessibleName
-	 * @defaultvalue: ""
-	 * @public
-	 * @since 1.3.0
-	 */
-	@property({ defaultValue: undefined })
-	accessibleName?: string;
-
-	/**
-	 * Receives id(or many ids) of the elements that label the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Table.prototype.accessibleNameRef
-	 * @defaultvalue ""
-	 * @public
-	 * @since 1.3.0
-	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
-
-	@property({ type: Object, multiple: true })
-	_hiddenColumns!: Array<TableColumnInfo>;
-
-	@property({ type: Boolean })
-	_noDataDisplayed!: boolean;
-
-	/**
-	 * Defines the active state of the <code>More</code> button.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_loadMoreActive!: boolean;
-
-	/**
-	 * Used to represent the table column header for the purpose of the item navigation as it does not work with DOM objects directly
-	 * @private
-	 */
-	@property({ type: Object })
-	_columnHeader: TableColumnHeaderInfo;
-
-	/**
-	 * Defines if the entire table is in view port.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_inViewport!: boolean;
-
-	/**
-	 * Defines whether all rows are selected or not when table is in MultiSelect mode.
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @since 1.0.0-rc.15
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_allRowsSelected!: boolean;
-
-	/**
-	 * Defines the component rows.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
-	 *
-	 * @type {sap.ui.webc.main.ITableRow[]}
-	 * @name sap.ui.webc.main.Table.prototype.default
-	 * @slot rows
 	 * @public
 	 */
 	@slot({
 		type: HTMLElement,
 		"default": true,
-		individualSlots: true,
-		invalidateOnChildChange: true,
-	})
-	rows!: Array<ITableRow>;
-
-	/**
-	 * Defines the configuration for the columns of the component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
-	 *
-	 * @type {sap.ui.webc.main.ITableColumn[]}
-	 * @name sap.ui.webc.main.Table.prototype.columns
-	 * @slot
-	 * @public
-	 */
-	@slot({
-		type: HTMLElement,
-		individualSlots: true,
 		invalidateOnChildChange: {
-			properties: true,
+			properties: ["navigated", "position"],
 			slots: false,
 		},
 	})
-	columns!: Array<TableColumn>;
+	rows!: Array<TableRow>;
 
-	static async onDefine() {
-		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
+	/**
+	 * Defines the header row of the component.
+	 *
+	 * **Note:** Use `ui5-table-header-row` for the intended design.
+	 *
+	 * @public
+	 */
+	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: false, slots: true } })
+	headerRow!: Array<TableHeaderRow>;
 
+	/**
+	 * Defines the custom visualization if there is no data available.
+	 *
+	 * @public
+	 */
+	@slot()
+	nodata!: Array<HTMLElement>;
+
+	/**
+	 * Defines the features of the component.
+	 * @public
+	 */
+	@slot({ type: HTMLElement, individualSlots: true })
+	features!: Array<ITableFeature>;
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	accessibleName?: string;
+
+	/**
+	 * Identifies the element (or elements) that labels the component.
+	 *
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	accessibleNameRef?: string;
+
+	/**
+	 * Defines the text to be displayed when there are no rows in the component.
+	 *
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	noDataText?: string;
+
+	/**
+	 * Defines the mode of the <code>ui5-table</code> overflow behavior.
+	 *
+	 * Available options are:
+	 *
+	 * <code>Scroll</code> - Columns are shown as regular columns and horizontal scrolling is enabled.
+	 *
+	 * <code>Popin</code> - Columns are shown as pop-ins instead of regular columns.
+	 *
+	 * @default "Scroll"
+	 * @public
+	 */
+	@property()
+	overflowMode: `${TableOverflowMode}` = "Scroll";
+
+	/**
+	 * Defines if the loading indicator should be shown.
+	 *
+	 * **Note:** When the component is loading, it is not interactive.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	loading = false;
+
+	/**
+     * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
+     * @default 1000
+     * @public
+     */
+	@property({ type: Number })
+	loadingDelay = 1000;
+
+	/**
+	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
+	 */
+	@property()
+	stickyTop = "0";
+
+	/**
+	 * Defines the maximum number of row actions that is displayed, which determines the width of the row action column.
+	 *
+	 * **Note:** It is recommended to use a maximum of 3 row actions, as exceeding this limit may take up too much space on smaller screens.
+	 *
+	 * @default 0
+	 * @since 2.7.0
+	 * @public
+	 */
+	@property({ type: Number })
+	rowActionCount = 0;
+
+	@property({ type: Number, noAttribute: true })
+	_invalidate = 0;
+
+	@property({ type: Boolean, noAttribute: true })
+	_renderNavigated = false;
+
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-	fnHandleF7: (e: CustomEvent) => void;
-	fnOnRowFocused: (e: CustomEvent) => void;
-	_handleResize: ResizeObserverCallback;
-
-	moreDataText?: string;
-	tableEndObserved: boolean;
-	visibleColumns: Array<TableColumn>;
-	visibleColumnsCount?: number;
-	lastFocusedElement: HTMLElement | null;
-	growingIntersectionObserver?: IntersectionObserver | null;
-
-	_forwardingFocus: boolean;
-	_prevNestedElementIndex: number;
-	_itemNavigation: ItemNavigation;
-	_prevFocusedRow?: ITableRow;
-
-	_afterElement?: HTMLElement;
-	_beforeElement?: HTMLElement;
+	_events = ["keydown", "keyup", "click", "focusin", "focusout", "dragenter", "dragleave", "dragover", "drop"];
+	_onEventBound: (e: Event) => void;
+	_onResizeBound: ResizeObserverCallback;
+	_tableNavigation?: TableNavigation;
+	_tableDragAndDrop?: TableDragAndDrop;
+	_poppedIn: Array<{col: TableHeaderCell, width: float}>;
+	_containerWidth: number;
 
 	constructor() {
 		super();
-
-		this.visibleColumns = []; // template loop should always have a defined array
-		// The ItemNavigation requires each item to 1) have a "_tabIndex" property and 2) be either a UI5Element, or have an id property (to find it in the component's shadow DOM by)
-		this._columnHeader = {
-			id: `${this._id}-columnHeader`,
-			_tabIndex: "0",
-		};
-
-		this._itemNavigation = new ItemNavigation(this, {
-			navigationMode: NavigationMode.Vertical,
-			affectedPropertiesNames: ["_columnHeader"],
-			getItemsCallback: () => [this._columnHeader, ...this.rows],
-			skipItemsSize: PAGE_UP_DOWN_SIZE,
-		});
-
-		this._handleResize = this.popinContent.bind(this);
-		this.fnOnRowFocused = this.onRowFocused.bind(this);
-		this.fnHandleF7 = this._handleF7.bind(this);
-
-		this.tableEndObserved = false;
-
-		// Stores the last focused element within the table.
-		this.lastFocusedElement = null;
-
-		// Indicates whether the table is forwarding focus before or after the current table row.
-		this._forwardingFocus = false;
-
-		// Stores the last focused nested element index (within a table row) for F7 navigation.
-		this._prevNestedElementIndex = 0;
-	}
-
-	onBeforeRendering() {
-		const columnSettings = this.getColumnPropagationSettings();
-		const columnSettingsString = JSON.stringify(columnSettings);
-		const rowsCount = this.rows.length + 1;
-		const selectedRows = this.selectedRows;
-
-		this.rows.forEach((row, index) => {
-			if (row._columnsInfoString !== columnSettingsString) {
-				row._columnsInfo = columnSettings;
-				row._columnsInfoString = JSON.stringify(row._columnsInfo);
-			}
-
-			row._ariaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 2, rowsCount);
-			row._busy = this.busy;
-			row.removeEventListener("ui5-_focused", this.fnOnRowFocused as EventListener);
-			row.addEventListener("ui5-_focused", this.fnOnRowFocused as EventListener);
-			row.removeEventListener("ui5-f7-pressed", this.fnHandleF7 as EventListener);
-			row.addEventListener("ui5-f7-pressed", this.fnHandleF7 as EventListener);
-			row.mode = this.mode;
-		});
-
-		this.visibleColumns = this.columns.filter((column, index) => {
-			return !this._hiddenColumns[index];
-		});
-
-		this._noDataDisplayed = !this.rows.length && !this.hideNoData;
-		this.visibleColumnsCount = this.visibleColumns.length;
-
-		if (this.isMultiSelect) {
-			// we have to count the selection column as well
-			this.visibleColumnsCount += 1;
-		}
-
-		this._allRowsSelected = selectedRows.length === this.rows.length;
-
-		this._prevFocusedRow = this._prevFocusedRow || this.rows[0];
-	}
-
-	onAfterRendering() {
-		if (this.growsOnScroll) {
-			this.observeTableEnd();
-		}
-
-		this.checkTableInViewport();
+		this._poppedIn = [];
+		this._containerWidth = 0;
+		this._onResizeBound = this._onResize.bind(this);
+		this._onEventBound = this._onEvent.bind(this);
 	}
 
 	onEnterDOM() {
-		this.growingIntersectionObserver = this.getIntersectionObserver();
-
-		ResizeHandler.register(this.getDomRef()!, this._handleResize);
-
-		this._itemNavigation.setCurrentItem(this.rows.length ? this.rows[0] : this._columnHeader);
+		if (this.overflowMode === TableOverflowMode.Popin) {
+			ResizeHandler.register(this, this._onResizeBound);
+		}
+		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
+		this.features.forEach(feature => feature.onTableActivate?.(this));
+		this._tableNavigation = new TableNavigation(this);
+		this._tableDragAndDrop = new TableDragAndDrop(this);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
-
-		this.growingIntersectionObserver!.disconnect();
-		this.growingIntersectionObserver = null;
-		this.tableEndObserved = false;
-	}
-
-	_onkeydown(e: KeyboardEvent) {
-		if (isTabNext(e) || isTabPrevious(e)) {
-			this._handleTab(e);
-		}
-
-		if (isCtrlA(e)) {
-			e.preventDefault();
-			this.isMultiSelect && this._selectAll();
-		}
-
-		if (isUpAlt(e) || isDownAlt(e)) {
-			this._handleArrowAlt(e);
-		}
-
-		if ((isUpShift(e) || isDownShift(e)) && this.isMultiSelect) {
-			this._handleArrowNav(e);
-		}
-
-		if (isHomeCtrl(e)) {
-			e.preventDefault();
-
-			this._itemNavigation._handleHome();
-			this._itemNavigation._applyTabIndex();
-			this._itemNavigation._focusCurrentItem();
-		}
-
-		if (isEndCtrl(e)) {
-			e.preventDefault();
-
-			this._itemNavigation._handleEnd();
-			this._itemNavigation._applyTabIndex();
-			this._itemNavigation._focusCurrentItem();
-		}
-
-		if ((isHomeShift(e) || isEndShift(e)) && this.isMultiSelect) {
-			this._handleHomeEndSelection(e);
+		this._tableNavigation = undefined;
+		this._tableDragAndDrop = undefined;
+		this._events.forEach(eventType => this.removeEventListener(eventType, this._onEventBound));
+		if (this.overflowMode === TableOverflowMode.Popin) {
+			ResizeHandler.deregister(this, this._onResizeBound);
 		}
 	}
 
-	_handleTab(e: KeyboardEvent) {
-		const isNext = isTabNext(e);
-		const target = getNormalizedTarget(e.target as HTMLElement);
-		const targetType: TableFocusTargetElement | undefined = this.getFocusedElementType(e.target as HTMLElement);
-
-		if (this.columnHeaderTabbables.includes(target)) {
-			if (isNext && this.columnHeaderLastElement === target) {
-				return this._focusNextElement();
-			}
-
-			return;
+	onBeforeRendering(): void {
+		this._renderNavigated = this.rows.some(row => row.navigated);
+		if (this.headerRow[0]) {
+			this.headerRow[0]._rowActionCount = this.rowActionCount;
 		}
-
-		if (isNext && targetType === TableFocusTargetElement.ColumnHeader && !this.columnHeaderTabbables.length) {
-			return this._focusNextElement();
-		}
-
-		if (targetType === TableFocusTargetElement.Row || !targetType) {
-			return;
-		}
-
-		switch (targetType) {
-		case TableFocusTargetElement.GroupRow:
-			return isNext ? this._focusNextElement() : this._focusForwardElement(false);
-		case TableFocusTargetElement.ColumnHeader:
-			return !isNext && this._focusForwardElement(false);
-		case TableFocusTargetElement.MoreButton:
-			if (isNext) {
-				this._focusForwardElement(true);
-			} else {
-				e.preventDefault();
-				this.currentElement?.focus();
-			}
-		}
-	}
-
-	_focusNextElement() {
-		if (!this.growsWithButton) {
-			this._focusForwardElement(true);
-		} else {
-			this.morеBtn!.focus();
-		}
-	}
-
-	_handleArrowNav(e: KeyboardEvent) {
-		const isRowFocused = this.currentElement!.localName === "tr";
-
-		if (!isRowFocused) {
-			return;
-		}
-
-		const previouslySelectedRows: Array<ITableRow> = this.selectedRows;
-		const currentItem: ITableRow = this.currentItem;
-		const currentItemIdx: number = this.currentItemIdx;
-
-		const prevItemIdx = currentItemIdx - 1;
-		const nextItemIdx = currentItemIdx + 1;
-
-		const prevItem: ITableRow = this.rows[prevItemIdx];
-		const nextItem: ITableRow = this.rows[nextItemIdx];
-		const wasSelected = !!currentItem.selected;
-
-		if ((isUpShift(e) && !prevItem) || (isDownShift(e) && !nextItem)) {
-			return;
-		}
-
-		if (isUpShift(e)) {
-			currentItem.selected = currentItem.selected && !prevItem.selected;
-			prevItem.selected = currentItem.selected || (wasSelected && !currentItem.selected);
-			prevItem.focus();
-		}
-
-		if (isDownShift(e)) {
-			currentItem.selected = currentItem.selected && !nextItem.selected;
-			nextItem.selected = currentItem.selected || (wasSelected && !currentItem.selected);
-			nextItem.focus();
-		}
-
-		const selectedRows = this.selectedRows;
-
-		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
-			selectedRows,
-			previouslySelectedRows,
+		this.rows.forEach(row => {
+			row._renderNavigated = this._renderNavigated;
+			row._rowActionCount = this.rowActionCount;
 		});
+
+		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
+		this._refreshPopinState();
 	}
 
-	_handleHomeEndSelection(e: KeyboardEvent) {
-		const isRowFocused = this.currentElement!.localName === "tr";
-
-		if (!isRowFocused) {
-			return;
-		}
-		const rows = this.rows;
-		const previouslySelectedRows: Array<ITableRow> = this.selectedRows;
-		const currentItemIdx = this.currentItemIdx;
-
-		if (isHomeShift(e)) {
-			rows.slice(0, currentItemIdx + 1).forEach(item => {
-				item.selected = true;
-			});
-			rows[0].focus();
-		}
-
-		if (isEndShift(e)) {
-			rows.slice(currentItemIdx).forEach(item => {
-				item.selected = true;
-			});
-			rows[rows.length - 1].focus();
-		}
-
-		const selectedRows: Array<ITableRow> = this.selectedRows;
-
-		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
-			selectedRows,
-			previouslySelectedRows,
-		});
+	onAfterRendering(): void {
+		this.features.forEach(feature => feature.onTableAfterRendering?.(this));
 	}
 
-	/**
-	 * Handles Alt + Up/Down.
-	 * Switches focus between column header, last focused item, and "More" button (if applicable).
-	 * @private
-	 * @param { KeyboardEvent } e
-	 */
-	_handleArrowAlt(e: KeyboardEvent) {
-		const shouldMoveUp: boolean = isUpAlt(e);
-		const target = e.target as ITableRow;
-		const focusedElementType = this.getFocusedElementType(target);
+	_getSelection(): TableSelection | undefined {
+		return this.features.find(feature => isFeature<TableSelection>(feature, "TableSelection")) as TableSelection;
+	}
 
-		if (shouldMoveUp) {
-			switch (focusedElementType) {
-			case TableFocusTargetElement.Row:
-			case TableFocusTargetElement.GroupRow:
-				this._prevFocusedRow = target;
-				return this._onColumnHeaderClick(e);
-			case TableFocusTargetElement.ColumnHeader:
-				return this.morеBtn ? this.morеBtn.focus() : this._prevFocusedRow?.focus();
-			case TableFocusTargetElement.MoreButton:
-				return this._prevFocusedRow ? this._prevFocusedRow.focus() : this._onColumnHeaderClick(e);
-			}
-		} else {
-			switch (focusedElementType) {
-			case TableFocusTargetElement.Row:
-			case TableFocusTargetElement.GroupRow:
-				this._prevFocusedRow = target;
-				return this.morеBtn ? this.morеBtn.focus() : this._onColumnHeaderClick(e);
-			case TableFocusTargetElement.ColumnHeader:
-				if (this._prevFocusedRow) {
-					this._prevFocusedRow.focus();
-				} else if (this.morеBtn) {
-					this.morеBtn.focus();
+	_getVirtualizer(): TableVirtualizer | undefined {
+		return this.features.find(feature => isFeature<TableVirtualizer>(feature, "TableVirtualizer")) as TableVirtualizer;
+	}
+
+	_onEvent(e: Event) {
+		const composedPath = e.composedPath();
+		const eventOrigin = composedPath[0] as HTMLElement;
+		const elements = [this._tableNavigation, this._tableDragAndDrop, ...composedPath, ...this.features];
+		elements.forEach(element => {
+			if (element instanceof TableExtension || (element instanceof HTMLElement && element.localName.includes("ui5-table"))) {
+				const eventHandlerName = `_on${e.type}` as keyof typeof element;
+				const eventHandler = element[eventHandlerName] as (e?: Event, eventOrigin?: HTMLElement) => void;
+				if (typeof eventHandler === "function") {
+					eventHandler.call(element, e, eventOrigin);
 				}
-
-				return;
-			case TableFocusTargetElement.MoreButton:
-				return this._onColumnHeaderClick(e);
 			}
-		}
+		});
 	}
 
-	/**
-	 * Determines the type of the currently focused element.
-	 * @private
-	 * @param {object} element The DOM element
-	 * @returns {("columnHeader"|"tableRow"|"tableGroupRow"|"moreButton")} A string identifier
-	 */
-	getFocusedElementType(element: HTMLElement): TableFocusTargetElement | undefined {
-		if (element === this.columnHeader) {
-			return TableFocusTargetElement.ColumnHeader;
-		}
+	_onResize() {
+		const { clientWidth, scrollWidth } = this._tableElement;
 
-		if (element === this.morеBtn) {
-			return TableFocusTargetElement.MoreButton;
-		}
+		if (scrollWidth > clientWidth) {
+			// Overflow Handling: Move columns into the popin until overflow is resolved
+			const overflow = scrollWidth - clientWidth;
+			const headers = this._getPopinOrderedColumns(false);
+			const poppedInWidth = headers.reduce((totalPoppedInWidth, headerCell) => {
+				if (totalPoppedInWidth < overflow && !headerCell._popin) {
+					const headerWidth = Math.ceil(headerCell.getBoundingClientRect().width);
+					totalPoppedInWidth += headerWidth;
+					this._setHeaderPopinState(headerCell, true, headerWidth);
+				}
+				return totalPoppedInWidth;
+			}, 0);
+			// Calculate container width considering popped-in columns
+			const columnOverflow = poppedInWidth - overflow;
+			this._containerWidth = clientWidth - columnOverflow;
+		} else {
+			// Underflow Handling: Restore columns from popin until container width is met
+			const headers = this._getPopinOrderedColumns(true).filter(it => it._popin);
 
-		if (this.rows.includes(element as ITableRow)) {
-			const isGroupRow = element.hasAttribute("ui5-table-group-row");
-			return isGroupRow ? TableFocusTargetElement.GroupRow : TableFocusTargetElement.Row;
-		}
-	}
-
-	/**
-	 * Toggles focus between the table row's root and the last focused nested element.
-	 * @private
-	 * @param { CustomEvent } e "ui5-f7-pressed"
-	 */
-	_handleF7(e: CustomEvent<TableRowF7PressEventDetail>) {
-		const row = e.detail.row;
-		row._tabbables = getTabbableElements(row);
-		const activeElement = getActiveElement();
-		const lastFocusedElement = row._tabbables[this._prevNestedElementIndex] || row._tabbables[0];
-		const targetIndex = row._tabbables.indexOf(activeElement as HTMLElement);
-
-		if (!row._tabbables.length) {
-			return;
-		}
-
-		if (activeElement === row.root) {
-			lastFocusedElement.focus();
-		} else if (targetIndex > -1) {
-			this._prevNestedElementIndex = targetIndex;
-			row.root.focus();
+			headers.every(headerCell => {
+				const underflow = clientWidth - this._containerWidth;
+				if (underflow >= headerCell._popinWidth) {
+					this._containerWidth += headerCell._popinWidth;
+					this._setHeaderPopinState(headerCell, false, 0);
+					return true;
+				}
+				return false;
+			});
 		}
 	}
 
 	_onfocusin(e: FocusEvent) {
-		const target = getNormalizedTarget(e.target as HTMLElement);
-
-		if (!this._isForwardElement(target)) {
-			this.lastFocusedElement = target;
+		if (e.target === this) {
 			return;
 		}
 
-		if (!this._forwardingFocus) {
-			if (this.lastFocusedElement) {
-				this.lastFocusedElement.focus();
-			} else {
-				this.currentElement!.focus();
-			}
-
-			e.stopImmediatePropagation();
-		}
-
-		this._forwardingFocus = false;
-	}
-
-	_onForwardBefore(e: CustomEvent<TableRowForwardBeforeEventDetail>) {
-		this.lastFocusedElement = e.detail.target;
-		this._focusForwardElement(false);
-		e.stopImmediatePropagation();
-	}
-
-	_onForwardAfter(e: CustomEvent<TableRowForwardAfterEventDetail>) {
-		this.lastFocusedElement = e.detail.target;
-
-		if (!this.growsWithButton) {
-			this._focusForwardElement(true);
-		} else {
-			this.morеBtn!.focus();
-		}
-	}
-
-	_focusForwardElement(isAfter: boolean) {
-		this._forwardingFocus = true;
-		this.shadowRoot!.querySelector<HTMLElement>(`#${this._id}-${isAfter ? "after" : "before"}`)!.focus();
-	}
-
-	_isForwardElement(element: HTMLElement): boolean {
-		const elementId = element.id;
-		const afterElement = this._getForwardElement(true);
-		const beforeElement = this._getForwardElement(false);
-
-		if (this._id === elementId || (beforeElement && beforeElement.id === elementId)) {
-			return true;
-		}
-
-		return !!(afterElement && afterElement.id === elementId);
-	}
-
-	_getForwardElement(isAfter: boolean): HTMLElement | null {
-		if (isAfter) {
-			return this._getAfterForwardElement();
-		}
-
-		return this._getBeforeForwardElement();
-	}
-
-	_getAfterForwardElement(): HTMLElement {
-		if (!this._afterElement) {
-			this._afterElement = this.shadowRoot!.querySelector(`[id="${this._id}-after"]`)!;
-		}
-
-		return this._afterElement;
-	}
-
-	_getBeforeForwardElement(): HTMLElement {
-		if (!this._beforeElement) {
-			this._beforeElement = this.shadowRoot!.querySelector(`[id="${this._id}-before"]`)!;
-		}
-
-		return this._beforeElement;
-	}
-
-	onRowFocused(e: CustomEvent) {
-		this._itemNavigation.setCurrentItem(e.target as ITableRow);
-	}
-
-	_onColumnHeaderFocused() {
-		this._itemNavigation.setCurrentItem(this._columnHeader);
-	}
-
-	_onColumnHeaderClick(e: MouseEvent | KeyboardEvent) {
-		if (!e.target) {
-			this.columnHeader!.focus();
-		}
-
-		const target = getNormalizedTarget(e.target as HTMLElement);
-		const isNestedElement = this.columnHeaderTabbables.includes(target);
-
-		if (!isNestedElement) {
-			this.columnHeader!.focus();
-		}
-	}
-
-	_onColumnHeaderKeydown(e: KeyboardEvent) {
-		if (isSpace(e)) {
-			e.preventDefault();
-			this.isMultiSelect && this._selectAll();
-		}
-	}
-
-	_onLoadMoreKeydown(e: KeyboardEvent) {
-		if (isSpace(e)) {
-			e.preventDefault();
-			this._loadMoreActive = true;
-		}
-
-		if (isEnter(e)) {
-			this._onLoadMoreClick();
-			this._loadMoreActive = true;
-		}
-	}
-
-	_onLoadMoreKeyup(e: KeyboardEvent) {
-		if (isSpace(e)) {
-			this._onLoadMoreClick();
-		}
-		this._loadMoreActive = false;
-	}
-
-	_onLoadMoreClick() {
-		this.fireEvent("load-more");
-	}
-
-	observeTableEnd() {
-		if (!this.tableEndObserved) {
-			this.getIntersectionObserver().observe(this.tableEndDOM);
-			this.tableEndObserved = true;
-		}
-	}
-
-	onInteresection(entries: Array<IntersectionObserverEntry>) {
-		if (entries.some(entry => entry.isIntersecting)) {
-			debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
-		}
-	}
-
-	loadMore() {
-		this.fireEvent("load-more");
-	}
-
-	_handleSingleSelect(e: CustomEvent<TableRowSelectionRequestedEventDetail>) {
-		const row: ITableRow | undefined = this.getRowParent(e.target as HTMLElement);
-
-		if (!row) {
-			return;
-		}
-
-		if (!row.selected) {
-			const previouslySelectedRows = this.selectedRows;
-			this.rows.forEach(item => {
-				if (item.selected) {
-					item.selected = false;
-				}
-			});
-			row.selected = true;
-			this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
-				selectedRows: [row],
-				previouslySelectedRows,
-			});
-		}
-	}
-
-	_handleMultiSelect(e: CustomEvent<TableRowSelectionRequestedEventDetail>) {
-		const row: ITableRow | undefined = this.getRowParent(e.target as HTMLElement);
-		const previouslySelectedRows: Array<ITableRow> = this.selectedRows;
-
-		if (!row) {
-			return;
-		}
-
-		row.selected = !row.selected;
-
-		const selectedRows = this.selectedRows;
-
-		if (selectedRows.length === this.rows.length) {
-			this._allRowsSelected = true;
-		} else {
-			this._allRowsSelected = false;
-		}
-
-		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
-			selectedRows,
-			previouslySelectedRows,
-		});
-	}
-
-	_handleSelect(e: CustomEvent<TableRowSelectionRequestedEventDetail>) {
-		if (this.isSingleSelect) {
-			this._handleSingleSelect(e);
-			return;
-		}
-
-		if (this.isMultiSelect) {
-			this._handleMultiSelect(e);
-		}
-	}
-
-	_selectAll() {
-		const bAllSelected = !this._allRowsSelected;
-		const previouslySelectedRows: Array<ITableRow> = this.rows.filter(row => row.selected);
-
-		this._allRowsSelected = bAllSelected;
-
-		this.rows.forEach(row => {
-			row.selected = bAllSelected;
-		});
-
-		const selectedRows = bAllSelected ? this.rows : [];
-
-		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
-			selectedRows,
-			previouslySelectedRows,
-		});
-	}
-
-	getRowParent(child: HTMLElement): ITableRow | undefined {
-		if (child.hasAttribute("ui5-table-row")) {
-			return child as ITableRow;
-		}
-
-		const parent = child.parentElement;
-
-		if (!parent) {
-			return;
-		}
-
-		if (parent.hasAttribute("ui5-table-row")) {
-			return parent as ITableRow;
-		}
-
-		return this.getRowParent(parent);
-	}
-
-	get columnHeader(): HTMLElement | null {
-		const domRef = this.getDomRef();
-		return domRef ? domRef.querySelector<HTMLElement>(`#${this._id}-columnHeader`) : null;
-	}
-
-	get morеBtn(): HTMLElement | null {
-		const domRef = this.getDomRef();
-
-		if (this.growsWithButton && domRef) {
-			return domRef.querySelector<HTMLElement>(`#${this._id}-growingButton`);
-		}
-
-		return null;
-	}
-
-	handleResize() {
-		this.checkTableInViewport();
-		this.popinContent();
-	}
-
-	checkTableInViewport() {
-		this._inViewport = isElementInView(this.getDomRef()!);
-	}
-	popinContent() {
-		const clientRect: DOMRect = this.getDomRef()!.getBoundingClientRect();
-		const tableWidth: number = clientRect.width;
-		const hiddenColumns: Array<TableColumnInfo> = [];
-		const visibleColumnsIndexes: Array<number> = [];
-
-		// store the hidden columns
-		this.columns.forEach((column, index) => {
-			if (tableWidth < column.minWidth && column.minWidth !== Infinity) {
-				hiddenColumns[index] = {
-					index,
-					popinText: column.popinText,
-					demandPopin: column.demandPopin,
-				};
-			} else {
-				visibleColumnsIndexes.push(index);
-			}
-		});
-
-		if (visibleColumnsIndexes.length) {
-			if (!this.isMultiSelect) {
-				this.columns[visibleColumnsIndexes[0]].first = true;
-			}
-			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]].last = true;
-		}
-
-		const hiddenColumnsChange = (this._hiddenColumns.length !== hiddenColumns.length) || this._hiddenColumns.some((column, index) => column !== hiddenColumns[index]);
-		const shownColumnsChange = hiddenColumns.length === 0;
-
-		// invalidate if hidden columns count has changed or columns are shown
-		if (hiddenColumnsChange || shownColumnsChange) {
-			this._hiddenColumns = hiddenColumns;
-			this.fireEvent<TablePopinChangeEventDetail>("popin-change", {
-				poppedColumns: this._hiddenColumns,
-			});
-		}
+		// Handles focus in the table, when the focus is below a sticky element
+		scrollElementIntoView(this._scrollContainer, e.target as HTMLElement, this._stickyElements, this.effectiveDir === "rtl");
 	}
 
 	/**
-	 * Gets settings to be propagated from columns to rows.
-	 *
-	 * @returns { array }
-	 * @memberof Table
+	 * Refreshes the popin state of the columns.
+	 * Syncs the popin state of the columns with the popin state of the header cells.
+	 * This is needed when additional rows are manually added and no resize happens.
+	 * @private
 	 */
-	getColumnPropagationSettings(): Array<TableColumnInfo> {
-		return this.columns.map((column, index) => {
-			return {
-				index,
-				minWidth: column.minWidth,
-				demandPopin: column.demandPopin,
-				text: column.textContent,
-				popinText: column.popinText,
-				popinDisplay: column.popinDisplay,
-				visible: !this._hiddenColumns[index],
-			};
-		}, this);
+	_refreshPopinState() {
+		this.headerRow[0]?.cells.forEach((header, index) => {
+			this.rows.forEach(row => {
+				const cell = row.cells[index];
+				if (cell && cell._popin !== header._popin) {
+					cell._popin = header._popin;
+				}
+			});
+		});
 	}
 
-	getIntersectionObserver(): IntersectionObserver {
-		if (!this.growingIntersectionObserver) {
-			this.growingIntersectionObserver = new IntersectionObserver(this.onInteresection.bind(this), {
-				root: document,
-				rootMargin: "0px",
-				threshold: 1.0,
-			});
+	_onGrow() {
+		this._growing?.loadMore();
+	}
+
+	_getPopinOrderedColumns(reverse: boolean) {
+		let headers = [...this.headerRow[0].cells];
+		headers = headers.reverse(); // reverse the "visual" order
+		headers = headers.sort((a, b) => a.importance - b.importance); // sort by importance (asc)
+		headers.pop(); // remove the most important column, as it will not be popped in
+
+		if (reverse) {
+			headers = headers.reverse();
 		}
 
-		return this.growingIntersectionObserver;
+		return headers;
+	}
+
+	_setHeaderPopinState(headerCell: TableHeaderCell, inPopin: boolean, popinWidth: number) {
+		const headerIndex = this.headerRow[0].cells.indexOf(headerCell);
+		headerCell._popin = inPopin;
+		headerCell._popinWidth = popinWidth;
+		this.rows.forEach(row => {
+			row.cells[headerIndex]._popin = inPopin;
+		});
+	}
+
+	_isFeature(feature: any) {
+		return Boolean(feature.onTableActivate || feature.onTableAfterRendering);
+	}
+
+	_isGrowingFeature(feature: any) {
+		return Boolean(feature.loadMore && feature.hasGrowingComponent && this._isFeature(feature));
+	}
+
+	_onRowClick(row: TableRow) {
+		this.fireDecoratorEvent("row-click", { row });
+	}
+
+	_onRowActionClick(action: TableRowActionBase) {
+		const row = action.parentElement as TableRow;
+		this.fireDecoratorEvent("row-action-click", { action, row });
 	}
 
 	get styles() {
+		const virtualizer = this._getVirtualizer();
+		const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
+			if (headerCell.horizontalAlign !== undefined && !headerCell._popin) {
+				headerStyles[`--horizontal-align-${headerCell._individualSlot}`] = headerCell.horizontalAlign;
+			}
+			return headerStyles;
+		}, {} as { [key: string]: string });
 		return {
-			busy: {
-				position: this.busyIndPosition,
+			table: {
+				"grid-template-columns": this._gridTemplateColumns,
+				"--row-height": virtualizer ? `${virtualizer.rowHeight}px` : "auto",
+				...headerStyleMap,
+			},
+			spacer: {
+				"transform": virtualizer?._getTransform(),
+				"will-change": virtualizer && "transform",
 			},
 		};
 	}
 
-	get growsWithButton(): boolean {
-		return this.growing === TableGrowingMode.Button;
-	}
-
-	get growsOnScroll(): boolean {
-		return this.growing === TableGrowingMode.Scroll;
-	}
-
-	get _growingButtonText(): string {
-		return this.growingButtonText || Table.i18nBundle.getText(LOAD_MORE_TEXT);
-	}
-
-	get ariaLabelText(): string {
-		const rowsCount = this.rows.length + 1;
-		const headerRowText = Table.i18nBundle.getText(TABLE_HEADER_ROW_INFORMATION, rowsCount);
-		const columnsTitle = this.columns.map(column => {
-			return column.textContent!.trim();
-		}).join(" ");
-
-		return `${headerRowText} ${columnsTitle}`;
-	}
-
-	get tableAriaLabelText(): string | undefined {
-		return getEffectiveAriaLabelText(this);
-	}
-
-	get ariaLabelSelectAllText(): string {
-		return Table.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
-	}
-
-	get loadMoreAriaLabelledBy(): string {
-		if (this.moreDataText) {
-			return `${this._id}-growingButton-text ${this._id}-growingButton-subtext`;
+	get _gridTemplateColumns() {
+		if (!this.headerRow[0]) {
+			return;
 		}
 
-		return `${this._id}-growingButton-text`;
+		const widths = [];
+		const visibleHeaderCells = this.headerRow[0]._visibleCells as TableHeaderCell[];
+		if (this._getSelection()?.hasRowSelector()) {
+			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
+		}
+		widths.push(...visibleHeaderCells.map(cell => {
+			const minWidth = cell.minWidth === "auto" ? "3rem" : cell.minWidth;
+			if (cell.width === "auto" || cell.width.includes("%") || cell.width.includes("fr") || cell.width.includes("vw")) {
+				return `minmax(${minWidth}, ${cell.maxWidth})`;
+			}
+			return `minmax(${cell.width}, ${cell.width})`;
+		}));
+
+		if (this.rowActionCount > 0) {
+			widths.push(`calc(var(${getScopedVarName("--_ui5_button_base_min_width")}) * ${this.rowActionCount} + var(${getScopedVarName("--_ui5_table_row_actions_gap")}) * ${this.rowActionCount - 1} + var(${getScopedVarName("--_ui5_table_cell_horizontal_padding")}) * 2)`);
+		}
+
+		if (this._renderNavigated) {
+			widths.push(`var(${getScopedVarName("--_ui5_table_navigated_cell_width")})`);
+		}
+
+		return widths.join(" ");
 	}
 
-	get tableEndDOM(): Element {
-		return this.shadowRoot!.querySelector(".ui5-table-end-marker")!;
+	get _tableOverflowX() {
+		return (this.overflowMode === TableOverflowMode.Popin) ? "clip" : "auto";
 	}
 
-	get busyIndPosition(): string {
-		return this._inViewport ? "absolute" : "sticky";
+	get _tableOverflowY() {
+		return "auto";
 	}
 
-	get isMultiSelect(): boolean {
-		return this.mode === TableMode.MultiSelect;
+	get _nodataRow() {
+		return this.shadowRoot!.getElementById("nodata-row") as TableRow;
 	}
 
-	get isSingleSelect(): boolean {
-		return this.mode === TableMode.SingleSelect;
+	get _beforeElement() {
+		return this.shadowRoot!.getElementById("before") as HTMLElement;
 	}
 
-	get selectedRows(): Array<ITableRow> {
-		return this.rows.filter(row => row.selected);
+	get _afterElement() {
+		return this.shadowRoot!.getElementById("after") as HTMLElement;
 	}
 
-	get currentItemIdx(): number {
-		return this.rows.indexOf(this.currentItem);
+	get _tableElement() {
+		return this.shadowRoot!.getElementById("table") as HTMLElement;
 	}
 
-	get currentItem(): ITableRow {
-		return (this.getRootNode() as Document).activeElement as ITableRow;
+	get _loadingElement() {
+		return this.shadowRoot!.getElementById("loading") as HTMLElement;
 	}
 
-	get currentElement(): HTMLElement | undefined {
-		return this._itemNavigation._getCurrentItem();
+	get _effectiveNoDataText() {
+		return this.noDataText || Table.i18nBundle.getText(TABLE_NO_DATA);
 	}
 
-	get columnHeaderTabbables(): Array<HTMLElement> {
-		return this.columnHeader ? getTabbableElements(this.columnHeader) : [];
+	get _ariaLabel() {
+		return getEffectiveAriaLabelText(this) || undefined;
 	}
 
-	get columnHeaderLastElement(): HTMLElement | null {
-		return this.columnHeader && getLastTabbableElement(this.columnHeader);
+	get _ariaRowCount() {
+		return this._getVirtualizer()?.rowCount || undefined;
+	}
+
+	get _ariaMultiSelectable() {
+		const selection = this._getSelection();
+		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelect() : undefined;
+	}
+
+	get _shouldRenderGrowing() {
+		return this.rows.length && this._growing?.hasGrowingComponent();
+	}
+
+	get _growing() {
+		return this.features.find(feature => this._isGrowingFeature(feature)) as ITableGrowing;
+	}
+
+	get _stickyElements() {
+		const stickyRows = this.headerRow.filter(row => row.sticky);
+		const stickyColumns = this.headerRow[0]._stickyCells as TableHeaderCell[];
+
+		return [...stickyRows, ...stickyColumns];
+	}
+
+	get _scrollContainer() {
+		return this._getVirtualizer() ? this._tableElement : findVerticalScrollContainer(this);
+	}
+
+	get isTable() {
+		return true;
+	}
+
+	get dropIndicatorDOM(): DropIndicator | null {
+		return this.shadowRoot!.querySelector("[ui5-drop-indicator]");
+	}
+
+	get _hasRowActions() {
+		return this.rowActionCount > 0;
 	}
 }
 
@@ -1278,9 +691,9 @@ Table.define();
 export default Table;
 
 export type {
-	ITableRow,
-	TableColumnInfo,
+	ITableFeature,
+	ITableGrowing,
 	TableRowClickEventDetail,
-	TableSelectionChangeEventDetail,
-	TablePopinChangeEventDetail,
+	TableMoveEventDetail,
+	TableRowActionClickEventDetail,
 };

@@ -28,8 +28,8 @@
 		<content id="popover"></content>
 	</div>
 
-	<ui5-popover placement-type="Bottom" horizontal-align="Stretch" hide-arrow initial-focus="input1" class="wcPopoverWithList">
-		<ui5-list id="myList" indent separators="Inner" mode="MultiSelect" footer-text="Copyright" no-data-text="No data">
+	<ui5-popover placement="Bottom" horizontal-align="Stretch" hide-arrow initial-focus="input1" class="wcPopoverWithList">
+		<ui5-list id="myList" indent separators="Inner" selection-mode="Multiple" footer-text="Copyright" no-data-text="No data">
 			<!-- Header -->
 			<div class="popups3auto" slot="header">
 				<ui5-title>Countries:</ui5-title>
@@ -81,7 +81,7 @@
 				<ui5-button class="wcBtnOpenNewDialog">Open New Dialog</ui5-button>
 				<ui5-button class="wcBtnCloseDialog">Close Dialog</ui5-button>
 
-				<ui5-popover placement-type="Right" class="wcNewDialogPopover" header-text="Second Popover">
+				<ui5-popover placement="End" class="wcNewDialogPopover" header-text="Second Popover">
 					<ui5-button class="wcBtnOpenNewPopoverDialog1">Open New Popover </ui5-button>
 					<ui5-button class="wcBtnClosePopoverDialog1">Popover Button</ui5-button>
 				</ui5-popover>
@@ -101,7 +101,7 @@
 		<!--</div>-->
 		<h5>Web Component</h5>
 		<ui5-button class="wcBtnOpenPopover">Open Popover</ui5-button>
-		<ui5-popover placement-type="Top" class="wcPopover" header-text="Web Component Popover">
+		<ui5-popover placement="Top" class="wcPopover" header-text="Web Component Popover">
 			<div slot="header" class="popups4auto">
 				<div class="popups5auto">Custom Header</div>
 				<ui5-button icon="decline"></ui5-button>
@@ -111,7 +111,7 @@
 				<ui5-button>Accept</ui5-button>
 			</div>
 			<ui5-date-picker></ui5-date-picker>
-			<ui5-popover placement-type="Right" class="wcNewPopover" header-text="Second Popover">
+			<ui5-popover placement="End" class="wcNewPopover" header-text="Second Popover">
 				<ui5-button class="wcBtnOpenNewPopover1">Open New Popover </ui5-button>
 				<ui5-button class="wcBtnClosePopover1">Popover Button</ui5-button>
 			</ui5-popover>

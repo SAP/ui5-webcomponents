@@ -1,5 +1,5 @@
 import type UI5Element from "../UI5Element.js";
-import { Slot } from "../UI5ElementMetadata.js";
+import type { Slot } from "../UI5ElementMetadata.js";
 
 /**
  * Returns a slot decorator.

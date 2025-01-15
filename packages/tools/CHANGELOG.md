@@ -3,6 +3,966 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2-rc.0...v2.6.2) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+## [2.6.2-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.1...v2.6.2-rc.0) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+## [2.6.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0...v2.6.1) (2025-01-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.6.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.5...v2.6.0) (2025-01-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.6.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.4...v2.6.0-rc.5) (2025-01-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.6.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.3...v2.6.0-rc.4) (2025-01-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.6.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.2...v2.6.0-rc.3) (2024-12-26)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.6.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.1...v2.6.0-rc.2) (2024-12-19)
+
+
+### Bug Fixes
+
+* **build:** generation of custom-elements.json ([#10403](https://github.com/SAP/ui5-webcomponents/issues/10403)) ([c4eb55c](https://github.com/SAP/ui5-webcomponents/commit/c4eb55cba3e45677c464df1f8cf2a17e6855f2a0))
+
+
+
+
+
+# [2.6.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.0...v2.6.0-rc.1) (2024-12-16)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.6.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0...v2.6.0-rc.0) (2024-12-12)
+
+
+### Features
+
+* **framework:** add JSX template support with TypeScript ([#10046](https://github.com/SAP/ui5-webcomponents/issues/10046)) ([f42e7c1](https://github.com/SAP/ui5-webcomponents/commit/f42e7c18c846f923df4fec6ae02f1b4c20c006fa))
+
+
+
+
+
+# [2.5.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.3...v2.5.0) (2024-12-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.5.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.2...v2.5.0-rc.3) (2024-12-05)
+
+
+### Features
+
+* **framework:** add strict event type checking ([#10235](https://github.com/SAP/ui5-webcomponents/issues/10235)) ([4ff8ab7](https://github.com/SAP/ui5-webcomponents/commit/4ff8ab7c34db5058b92511767be1b96c69a91cb5))
+
+
+
+
+
+# [2.5.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.1...v2.5.0-rc.2) (2024-11-28)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.5.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.0...v2.5.0-rc.1) (2024-11-21)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.5.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.1-rc.0...v2.5.0-rc.0) (2024-11-14)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+## [2.4.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0...v2.4.1-rc.0) (2024-11-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.4.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.4...v2.4.0) (2024-11-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.4.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.3...v2.4.0-rc.4) (2024-10-31)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.4.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.2...v2.4.0-rc.3) (2024-10-28)
+
+
+### Bug Fixes
+
+* dev-server correctly imports yargs ([#10048](https://github.com/SAP/ui5-webcomponents/issues/10048)) ([7b5aa5e](https://github.com/SAP/ui5-webcomponents/commit/7b5aa5ebdddbbc0493f4699c1a74db497e22368b))
+
+
+
+
+
+# [2.4.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.1...v2.4.0-rc.2) (2024-10-24)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.4.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.0...v2.4.0-rc.1) (2024-10-17)
+
+
+### Bug Fixes
+
+* scoping issues and document how scoping is used correctly ([#10023](https://github.com/SAP/ui5-webcomponents/issues/10023)) ([ee808c3](https://github.com/SAP/ui5-webcomponents/commit/ee808c309f316fe145b05d292c92328396c655ab))
+* **tools:** revert tsconfig moduleResolution to node ([#10014](https://github.com/SAP/ui5-webcomponents/issues/10014)) ([0724b92](https://github.com/SAP/ui5-webcomponents/commit/0724b9289ad04f88972d4978ed37e76f13abca13))
+
+
+
+
+
+# [2.4.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.3.1-rc.0...v2.4.0-rc.0) (2024-10-10)
+
+
+### Bug Fixes
+
+* require handlebar file names processed by hbs2ui5 tool to end with the '.hbs' extension ([#9992](https://github.com/SAP/ui5-webcomponents/issues/9992)) ([1b23f3d](https://github.com/SAP/ui5-webcomponents/commit/1b23f3d2b02829844cb8c0cd4a4adefd628b7f4f))
+
+
+### Features
+
+* enhance `[@event](https://github.com/event)` decorator ([#9944](https://github.com/SAP/ui5-webcomponents/issues/9944)) ([fe1d816](https://github.com/SAP/ui5-webcomponents/commit/fe1d816f512400b839fd4ce1b9af1506d0cb4c9a))
+
+
+
+
+
+## [2.3.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0...v2.3.1-rc.0) (2024-10-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.3.0](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.3...v2.3.0) (2024-10-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.3.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.2...v2.3.0-rc.3) (2024-09-26)
+
+
+### Bug Fixes
+
+* nps.js works with the JS flow ([#9942](https://github.com/SAP/ui5-webcomponents/issues/9942)) ([b42ef95](https://github.com/SAP/ui5-webcomponents/commit/b42ef9567bcbd187a5f8d183e7d5014492ee845a))
+
+
+
+
+
+# [2.3.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.1...v2.3.0-rc.2) (2024-09-19)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.3.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.0...v2.3.0-rc.1) (2024-09-12)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.3.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0...v2.3.0-rc.0) (2024-09-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.2.0](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.3...v2.2.0) (2024-09-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.2.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.2...v2.2.0-rc.3) (2024-08-29)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.2.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.1...v2.2.0-rc.2) (2024-08-22)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.2.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.0...v2.2.0-rc.1) (2024-08-15)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.2.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.1...v2.2.0-rc.0) (2024-08-08)
+
+
+### Features
+
+* **core:** add asset files with fetch URLs ([#9591](https://github.com/SAP/ui5-webcomponents/issues/9591)) ([f039cf6](https://github.com/SAP/ui5-webcomponents/commit/f039cf6e96e43fbc45e55e53871c91c9ee8e4179))
+
+
+
+
+
+## [2.1.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0...v2.1.1) (2024-08-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.1.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.3...v2.1.0) (2024-08-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.1.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.2...v2.1.0-rc.3) (2024-08-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.1.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.1...v2.1.0-rc.2) (2024-07-25)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.1.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.0...v2.1.0-rc.1) (2024-07-18)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.1.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.1...v2.1.0-rc.0) (2024-07-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+## [2.0.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0...v2.0.1) (2024-07-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.0.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.6...v2.0.0) (2024-07-03)
+
+
+### Bug Fixes
+
+* template result comparison ([#9279](https://github.com/SAP/ui5-webcomponents/issues/9279)) ([3a02e3e](https://github.com/SAP/ui5-webcomponents/commit/3a02e3ec51ade59a9bdd27784a7be5a1229ef24f))
+
+
+### Features
+
+* add property initializers ([#8846](https://github.com/SAP/ui5-webcomponents/issues/8846)) ([eef0cc9](https://github.com/SAP/ui5-webcomponents/commit/eef0cc9b663fda6268b98e516ed46439435fa2b0))
+
+
+### BREAKING CHANGES
+
+* @property decorator must be adapted according to new type parameter
+
+
+
+
+
+# [2.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2024-06-17)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2024-06-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.0.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2024-05-29)
+
+
+### Features
+
+* **ui5-input:** allow custom icon styling ([#8881](https://github.com/SAP/ui5-webcomponents/issues/8881)) ([cf9f1c2](https://github.com/SAP/ui5-webcomponents/commit/cf9f1c28c93b9fa6c8663ce24d3c5e6d1ff4cc4e)), closes [#8182](https://github.com/SAP/ui5-webcomponents/issues/8182) [#6132](https://github.com/SAP/ui5-webcomponents/issues/6132)
+
+
+
+
+
+# [2.0.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2024-05-10)
+
+
+### chore
+
+* **Icons:** make pathData async ([#8785](https://github.com/SAP/ui5-webcomponents/issues/8785)) ([0549dc9](https://github.com/SAP/ui5-webcomponents/commit/0549dc95edae139f7a4f9efbbc7170922b3ab6cb))
+
+
+### Code Refactoring
+
+* **theming:** remove Belize theme ([#8519](https://github.com/SAP/ui5-webcomponents/issues/8519)) ([990313f](https://github.com/SAP/ui5-webcomponents/commit/990313fc8e429a491f4d6e67306d3df2703e54fe)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+
+
+### BREAKING CHANGES
+
+* **theming:** Remove SAP Belize theme
+* **Icons:** UI5 Web Components Icons now export `getPathData` (function) instead of `pathData` (string)
+
+If you used icons like this:
+
+```js
+import "@ui5/webcomponents-icons/dist/accept.js";
+```
+
+or like this:
+
+```js
+import accept from "@ui5/webcomponents-icons/dist/accept.js";
+```
+
+**there is no change and no adaptations are required**.
+
+In the rare case you imported `pathData` from icons, for example:
+
+```js
+import { pathData, ltr, accData } from "@ui5/webcomponents-icons/dist/accept.js";
+console.log(pathData); // String containing the SVG path
+```
+
+you must change your code to, for example:
+
+```js
+import { getPathData, ltr, accData } from "@ui5/webcomponents-icons/dist/accept.js";
+getPathData().then(pathData => {
+  console.log(pathData); // String containing the SVG path
+});
+```
+
+
+
+
+
+# [2.0.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2024-04-18)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.0.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2024-04-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.0.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0...v2.0.0-rc.0) (2024-04-09)
+
+
+### chore
+
+* bring release-2.0 to main ([#8651](https://github.com/SAP/ui5-webcomponents/issues/8651)) ([69271c9](https://github.com/SAP/ui5-webcomponents/commit/69271c9468c7dd54f90710fc4613ae0a79f85cef)), closes [#8494](https://github.com/SAP/ui5-webcomponents/issues/8494) [#8496](https://github.com/SAP/ui5-webcomponents/issues/8496) [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#8497](https://github.com/SAP/ui5-webcomponents/issues/8497) [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#8504](https://github.com/SAP/ui5-webcomponents/issues/8504) [#8509](https://github.com/SAP/ui5-webcomponents/issues/8509) [#8507](https://github.com/SAP/ui5-webcomponents/issues/8507) [#8511](https://github.com/SAP/ui5-webcomponents/issues/8511) [#8501](https://github.com/SAP/ui5-webcomponents/issues/8501) [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#8503](https://github.com/SAP/ui5-webcomponents/issues/8503) [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#8506](https://github.com/SAP/ui5-webcomponents/issues/8506) [#8502](https://github.com/SAP/ui5-webcomponents/issues/8502) [#8524](https://github.com/SAP/ui5-webcomponents/issues/8524) [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#8525](https://github.com/SAP/ui5-webcomponents/issues/8525) [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#8518](https://github.com/SAP/ui5-webcomponents/issues/8518) [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#8526](https://github.com/SAP/ui5-webcomponents/issues/8526) [#8529](https://github.com/SAP/ui5-webcomponents/issues/8529) [#8528](https://github.com/SAP/ui5-webcomponents/issues/8528) [#8531](https://github.com/SAP/ui5-webcomponents/issues/8531) [#8532](https://github.com/SAP/ui5-webcomponents/issues/8532) [#8534](https://github.com/SAP/ui5-webcomponents/issues/8534) [#8163](https://github.com/SAP/ui5-webcomponents/issues/8163) [#8527](https://github.com/SAP/ui5-webcomponents/issues/8527) [#8538](https://github.com/SAP/ui5-webcomponents/issues/8538) [#8521](https://github.com/SAP/ui5-webcomponents/issues/8521) [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#8542](https://github.com/SAP/ui5-webcomponents/issues/8542) [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#8548](https://github.com/SAP/ui5-webcomponents/issues/8548) [#8555](https://github.com/SAP/ui5-webcomponents/issues/8555) [#8559](https://github.com/SAP/ui5-webcomponents/issues/8559) [#8565](https://github.com/SAP/ui5-webcomponents/issues/8565) [#8570](https://github.com/SAP/ui5-webcomponents/issues/8570) [#8558](https://github.com/SAP/ui5-webcomponents/issues/8558) [#8568](https://github.com/SAP/ui5-webcomponents/issues/8568) [#8596](https://github.com/SAP/ui5-webcomponents/issues/8596) [#8192](https://github.com/SAP/ui5-webcomponents/issues/8192) [#8606](https://github.com/SAP/ui5-webcomponents/issues/8606) [#8605](https://github.com/SAP/ui5-webcomponents/issues/8605) [#8600](https://github.com/SAP/ui5-webcomponents/issues/8600) [#8602](https://github.com/SAP/ui5-webcomponents/issues/8602) [#8593](https://github.com/SAP/ui5-webcomponents/issues/8593)
+
+
+### BREAKING CHANGES
+
+* "Device#isIE" method has been removed and no longer available
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+* Removed the `CSP.js` module and the creation of `<style>` and `<link>` tags, as all browsers now support adoptedStyleSheets. The following APIs are not available any more and should not be used:
+```ts
+import { setUseLinks } from "@ui5/webcomponents-base/dist/CSP.js"
+import { setPackageCSSRoot } from "@ui5/webcomponents-base/dist/CSP.js"
+import { setPreloadLinks } from "@ui5/webcomponents-base/dist/CSP.js"
+```
+* Removed the `ICardHeader` interface. If you previously used the interface
+```ts
+import type { ICardHeader } from "@ui5/webcomponents-base/dist/Card.js"
+```
+Use the CardHeader type instead:
+```ts
+import type CardHeader from "@ui5/webcomponents-base/dist/CardHeader.js"
+```
+* Removed the `IUploadCollectionItem` interface. If you previously used the interface:
+```js
+import type { IUploadCollectionItem} from "@ui5/webcomponents-fiori/dist/UploadCollection.js"
+```
+Use the `UploadCollectionItem` type instead:
+```js
+import type UploadCollectionItem from "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js"
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+* The `size` property now accepts different values. If you previously used it like:
+```html
+<ui5-busy-indicator size="Small"></ui5-busy-indicator>
+```
+Now use the new values instead:
+```html
+<ui5-busy-indicator size="S"></ui5-busy-indicator>
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+* The `status` property and its shadow part have been renamed. If you previously used them:
+```html
+<style>
+    .cardHeader::part(status) { ... }
+</style>
+<ui5-card-header status="3 of 10"></ui5-popover>
+```
+Now use `additionalText` instead:
+```html
+<style>
+       .cardHeader::part(additional-text) { ... }
+</style>
+<ui5-card-header class="cardHeader" additional-text="3 of 10"></ui5-card-header>
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+* The `pageIndicatorStyle` no longer exists. If you previously used it like:
+```html
+<ui5-carousel page-indicator-style="Numeric"></ui5-carousel>
+```
+Now you should use `pageIndicatorType` instead:
+```html
+<ui5-carousel page-indicator-type="Numeric"></ui5-carousel>
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+* Removed `UI5Element#render` method in favour of `UI5Element#renderer`. If you previously used "render"
+```js
+class MyClass extends UI5Element {
+    static get render() {
+        return litRenderer;
+    }
+}
+```
+start using "renderer"
+```ts
+class MyClass extends UI5Element {
+    static get renderer() {
+        return litRenderer;
+    }
+}
+```
+* Remove  JavaScript template option from @ui5/create-webcomponents-package
+Previously `npm init @ui5/webcomponents-package` used to create JS-based project, however now it will be TypeScript-based project.
+If you previously used `npm init @ui5/webcomponents-package --enable-typescript` to create  TypeScript-based project, now it's by default, e.g `npm init @ui5/webcomponents-package` and `--enable-typescript` is removed.
+* The `Left` and `Right` options option have been renamed. If you previously used them to set the placement or the alignment of the popover:
+```html
+<ui5-popover horizontal-align="Left" placement-type="Left"></ui5-popover>
+```
+Now use `Start` or `End` instead:
+```html
+<ui5-popover horizontal-align="Start" placement-type="Start"></ui5-popover>
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+
+* docs: deploy v2 preview
+* Remove `soccor` icon. Use `soccer` instead.
+* Remove `add-polygone` icon. Use `add-polygon` instead.
+* The JSDoc plugin has been removed, and the generation of api.json has stopped. If you previously relied on the `ui5-package/dist/api.json file`, you can now use `ui5-package/dist/custom-elements.json`
+* All Assets-static.js modules are removed. If you previously imported any Assets-static.js module from any package:
+```ts
+import "@ui5/webcomponents/dist/Assets-static.js";
+import "@ui5/webcomponents-icons/dist/Assets-static.js"
+```
+use the dynamic equivalent of it:
+```ts
+import "@ui5/webcomponents/dist/Assets.js";
+import "@ui5/webcomponents-icons/dist/Assets.js"
+```
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+* The event `selected-dates-change ` is renamed to `selection-change`. In addition the event details
+`values` and `dates` are renamed to `selectedValues` and `selectedDateValues`. If you previously used the Calendar event as follows:
+```ts
+myCalendar.addEventListener("selected-dates-change", () => {
+    const values = e.detail.values;
+    const dates = e.detail.dates;
+})
+```
+Now you have to use the new event name and details:
+```ts
+myCalendar.addEventListener("selection-change", () => {
+   const values = event.detail.selectedValues;
+   const dates = event.detail.selectedDateValues;
+})
+```
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+* The property `color`  is renamed to `value`. If you previously used the change event of the ColorPicker as follows:
+```html
+<ui5-color-picker color="red"></ui5-color-picker>
+```
+Now you have to use it like this:
+```html
+<ui5-color-picker value="red"></ui5-color-picker>
+```
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+* JavaScript projects may not function properly with the tools package.
+* The `openPopover` and `showAt` methods are removed in favor of `open`  and `opener` properties. If you previously used the imperative API:
+```js
+button.addEventListener("click", function(event) {
+	colorPalettePopover.showAt(this);
+});
+```
+Now the declarative API should be used instead:
+```html
+<ui5-button id="opener">Open</ui5-button>
+<ui5-color-palette-popover opener="opener">
+```
+```js
+button.addEventListener("click", function(event) {
+	colorPalettePopover.open = !colorPalettePopover.open;
+});
+```
+* The `ui5-bar` component is now in `main` library. If you previously imported  the `ui5-bar` from `fiori`:
+```ts
+import "@ui5/webcomponents-fiori/dist/Bar.js;
+```
+Now, import the `ui5-bar` from `main`:
+```ts 
+import "@ui5/webcomponents/dist/Bar.js";
+```
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+* If you have previously used:
+```html
+<ui5-tab id="nestedTab" slot="subTabs"></ui5-tab>
+```
+Now use:
+```html
+<ui5-tab id="nestedTab" slot="items"></ui5-tab>
+```
+
+Relates to https://github.com/SAP/ui5-webcomponents/issues/8461
+* If you have previously used: 
+```html
+<ui5-tabcontainer tabs-overflow-mode="StartAndEnd"></ui5-tabcontainer>
+```
+Now use:
+```html
+<ui5-tabcontainer overflow-mode="StartAndEnd"></ui5-tabcontainer>
+```
+
+Relates to https://github.com/SAP/ui5-webcomponents/issues/8461
+* If you previously imported `TabContainerBackgroundDesign`, use `BackgroundDesign` instead.
+
+Relates to https://github.com/SAP/ui5-webcomponents/issues/8461
+* The showOverflow property is removed. If previously you have used: 
+```html
+<ui5-tabcontainer show-overflow></ui5-tabcontainer>
+```
+now use the overflowButton slot:
+```html
+<ui5-tabcontainer>
+	<ui5-button slot="startOverflowButton" id="startOverflowButton">Start</ui5-button>
+	<ui5-button slot="overflowButton" id="endOverflowButton">End</ui5-button>
+</ui5-tabcontainer>
+```
+
+Relates to https://github.com/SAP/ui5-webcomponents/issues/8461
+* The `placementType` property and the `PopoverPlacementType` enum have been renamed.
+If you have previously used the `placementType` property and the `PopoverPlacementType` 
+```html
+<ui5-popover placement-type="Bottom"></ui5-popover>
+```
+```js
+import PopoverPlacementType from "@ui5/webcomponents/dist/types/PopoverPlacementType.js";
+```
+Now use `placement` instead:
+```html
+<ui5-placement="Bottom"></ui5-popover>
+```
+```js
+import PopoverPlacementType from "@ui5/webcomponents/dist/types/PopoverPlacement.js";
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+* The `size` property of the `ui5--illustrated-message` is renamed to `design`.
+If you have previously used the `size` property:
+```html
+<ui5-illustrated-message size="Dialog">
+```
+Now use `design` instead:
+```html
+<ui5-illustrated-message design="Dialog">
+
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461, https://github.com/SAP/ui5-webcomponents/issues/7887
+* The `separator-style` property is renamed to  `separators` and the `BreadcrumbsSeparatorStyle` enum is renamed to `BreadcrumbsSeparator`.
+If you have previously used the `separator-style` property:
+```html
+<ui5-breadcrumbs separator-style="Slash">
+```
+Now use  `separators`  instead:
+```html
+<ui5-breadcrumbs separators="Slash">
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461, https://github.com/SAP/ui5-webcomponents/issues/7887
+* The `disabled` property of the `ui5-option` is removed.
+If you have previously used the `disabled` property:
+```html
+<ui5-option disabled>Option</ui5-option>
+```
+it will no longer work for the component.
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461, https://github.com/SAP/ui5-webcomponents/issues/7887
+* You can no longer import and implement the `ITab` interface. TabContainer is designed to work only with Tab and TabSeparator classes, so the interface was obsolete.
+
+
+
+
+
+# [1.24.0](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.4...v1.24.0) (2024-04-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.24.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.3...v1.24.0-rc.4) (2024-04-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.24.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.2...v1.24.0-rc.3) (2024-03-28)
+
+
+### Features
+
+* **framework:** support sr, mk, cnr locales ([#8534](https://github.com/SAP/ui5-webcomponents/issues/8534)) ([5b410d6](https://github.com/SAP/ui5-webcomponents/commit/5b410d65267e79d4420b1a6d6788db6495abc962)), closes [#8163](https://github.com/SAP/ui5-webcomponents/issues/8163)
+
+
+
+
+
+# [1.24.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.1...v1.24.0-rc.2) (2024-03-21)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.24.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.0...v1.24.0-rc.1) (2024-03-15)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.24.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.23.1...v1.24.0-rc.0) (2024-03-14)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+## [1.23.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.1-rc.0...v1.23.1) (2024-03-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+## [1.23.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0...v1.23.1-rc.0) (2024-03-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.23.0](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.5...v1.23.0) (2024-03-06)
+
+
+### Features
+
+* **ui5-illustrated-message:** introduced "Dot" size ([#8343](https://github.com/SAP/ui5-webcomponents/issues/8343)) ([9c88f36](https://github.com/SAP/ui5-webcomponents/commit/9c88f36112888c1a766875611eb2a0aecbbc6f23)), closes [#8328](https://github.com/SAP/ui5-webcomponents/issues/8328)
+
+
+
+
+
+# [1.23.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.4...v1.23.0-rc.5) (2024-02-29)
+
+
+### Bug Fixes
+
+* remove sap.ui.require call from unused openui5 module ([#8359](https://github.com/SAP/ui5-webcomponents/issues/8359)) ([50219ac](https://github.com/SAP/ui5-webcomponents/commit/50219ac23add7b86fe26d8ca51e2181f01404992))
+
+
+
+
+
+# [1.23.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.3...v1.23.0-rc.4) (2024-02-26)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.23.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.2...v1.23.0-rc.3) (2024-02-22)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.23.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.1...v1.23.0-rc.2) (2024-02-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.23.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.0...v1.23.0-rc.1) (2024-02-19)
+
+
+### Bug Fixes
+
+* **tools:** fix usage of require in mjs ([#8258](https://github.com/SAP/ui5-webcomponents/issues/8258)) ([cbca059](https://github.com/SAP/ui5-webcomponents/commit/cbca059b926a8a5473d1f13690b6670239aafb8e))
+
+
+
+
+
+# [1.23.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.1-rc.0...v1.23.0-rc.0) (2024-02-15)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+## [1.22.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0...v1.22.1-rc.0) (2024-02-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.22.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.3...v1.22.0) (2024-02-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.22.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.2...v1.22.0-rc.3) (2024-02-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.22.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.1...v1.22.0-rc.2) (2024-01-25)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.22.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.0...v1.22.0-rc.1) (2024-01-18)
+
+
+### Features
+
+* **illustration:** use illustration name as default module export ([#8074](https://github.com/SAP/ui5-webcomponents/issues/8074)) ([a9c0705](https://github.com/SAP/ui5-webcomponents/commit/a9c07055d4e06e4d1f69b7a2a48b36eb77fae4aa))
+
+
+
+
+
+# [1.22.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0...v1.22.0-rc.0) (2024-01-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.21.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.5...v1.21.0) (2024-01-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.21.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.4...v1.21.0-rc.5) (2024-01-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.21.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.3...v1.21.0-rc.4) (2023-12-28)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.21.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.2...v1.21.0-rc.3) (2023-12-21)
+
+
+### Bug Fixes
+
+* declare webpackChunkName in more generated dynamic imports ([#8029](https://github.com/SAP/ui5-webcomponents/issues/8029)) ([c85fa23](https://github.com/SAP/ui5-webcomponents/commit/c85fa23bd32574434f537df95c7507a7f1a48b5e))
+
+
+### Features
+
+* **tools:** Optimize build by switching css processing to esbuild ([#8008](https://github.com/SAP/ui5-webcomponents/issues/8008)) ([b4d411f](https://github.com/SAP/ui5-webcomponents/commit/b4d411f00f8d74ccecb2d02254126243faf53dfd))
+
+
+
+
+
+# [1.21.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.1...v1.21.0-rc.2) (2023-12-14)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
 # [1.21.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.0...v1.21.0-rc.1) (2023-12-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools

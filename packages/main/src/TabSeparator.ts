@@ -1,37 +1,44 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab } from "./TabContainer.js";
+import type { TabContainerStripInfo, TabContainerOverflowInfo, ITab } from "./TabContainer.js";
 
 // Templates
-import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
-import TabSeparatorInOverflowTemplate from "./generated/templates/TabSeparatorInOverflowTemplate.lit.js";
+import TabSeparatorInStripTemplate from "./TabSeparatorInStripTemplate.js";
+import TabSeparatorInOverflowTemplate from "./TabSeparatorInOverflowTemplate.js";
 
 // Styles
 import stripCss from "./generated/themes/TabSeparatorInStrip.css.js";
 import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
+import type ListItemCustom from "./ListItemCustom.js";
+
+interface TabSeparatorInStrip extends HTMLElement {
+	realTabReference: TabSeparator;
+}
+
+interface TabSeparatorInOverflow extends ListItemCustom {
+	realTabReference: TabSeparator;
+}
 
 /**
  * @class
- * The <code>ui5-tab-separator</code> represents a vertical line to separate tabs inside a <code>ui5-tabcontainer</code>.
- *
+ * The `ui5-tab-separator` represents a vertical line to separate tabs inside a `ui5-tabcontainer`.
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TabSeparator
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
+ * @implements {ITab}
  * @abstract
- * @tagname ui5-tab-separator
- * @implements sap.ui.webc.main.ITab
  * @public
  */
 @customElement({
 	tag: "ui5-tab-separator",
-	renderer: litRender,
+	renderer: jsxRenderer,
 })
 class TabSeparator extends UI5Element implements ITab {
-	_getElementInStrip?: () => ITab | null;
+	_forcedStyleInOverflow?: Record<string, any>;
+
+	_getElementInStrip?: () => HTMLElement | undefined;
 
 	static get stripTemplate() {
 		return TabSeparatorInStripTemplate;
@@ -41,32 +48,26 @@ class TabSeparator extends UI5Element implements ITab {
 		return TabSeparatorInOverflowTemplate;
 	}
 
-	get classes() {
-		return {
-			root: {
-				"ui5-tc__separator": true,
-			},
-		};
-	}
-
 	get isSeparator() {
 		return true;
 	}
 
+	receiveStripInfo({ getElementInStrip }: TabContainerStripInfo) {
+		this._getElementInStrip = getElementInStrip;
+	}
+
+	receiveOverflowInfo({ style }: TabContainerOverflowInfo) {
+		this._forcedStyleInOverflow = style;
+	}
+
 	/**
 	 * Returns the DOM reference of the separator that is placed in the header.
-	 * <b>Note:</b> Tabs and separators, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return <code>null</code>.
 	 *
-	 * @function
+	 * **Note:** Separators, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such separators will return `undefined`.
 	 * @public
-	 * @name sap.ui.webc.main.TabSeparator.prototype.getTabInStripDomRef
 	 */
-	getTabInStripDomRef() {
-		if (this._getElementInStrip) {
-			return this._getElementInStrip();
-		}
-
-		return null;
+	getDomRefInStrip(): HTMLElement | undefined {
+		return this._getElementInStrip?.();
 	}
 
 	get stableDomRef() {
@@ -80,11 +81,21 @@ class TabSeparator extends UI5Element implements ITab {
 	get overflowPresentation() {
 		return executeTemplate(TabSeparator.overflowTemplate, this);
 	}
+
+	captureRef(ref: HTMLElement & { realTabReference?: UI5Element} | null) {
+		if (ref) {
+			ref.realTabReference = this;
+		}
+	}
 }
 
 TabSeparator.define();
 
 TabContainer.registerTabStyles(stripCss);
-TabContainer.registerStaticAreaTabStyles(overflowCss);
+TabContainer.registerTabStyles(overflowCss);
 
 export default TabSeparator;
+export type {
+	TabSeparatorInStrip,
+	TabSeparatorInOverflow,
+};

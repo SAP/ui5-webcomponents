@@ -1,17 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
-import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
-	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
+	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown, isF2,
+	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
@@ -24,151 +20,155 @@ type StateStorage = {
 type DirectionStart = "left" | "right";
 
 /**
- * @class
- *
- * <h3 class="comment-api-title">Overview</h3>
- *
- *
- * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.SliderBase
- * @extends sap.ui.webc.base.UI5Element
- * @public
- */
-@customElement({
-	renderer: litRender,
-	styles: sliderBaseStyles,
-})
-/**
  * Fired when the value changes and the user has finished interacting with the slider.
- *
- * @event sap.ui.webc.main.SliderBase#change
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 /**
  * Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
- *
- * @event sap.ui.webc.main.SliderBase#input
  * @public
  */
-@event("input")
+@event("input", {
+	bubbles: true,
+})
+
+/**
+ * @class
+ *
+ * ### Overview
+ * @constructor
+ * @extends UI5Element
+ * @public
+ */
 abstract class SliderBase extends UI5Element {
+	eventDetails!: {
+		"change": void,
+		"input": void,
+	}
 	/**
 	 * Defines the minimum value of the slider.
-	 *
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.SliderBase.prototype.min
-	 * @defaultvalue 0
+	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
-	min!: number;
+	@property({ type: Number })
+	min = 0;
 
 	/**
 	 * Defines the maximum value of the slider.
-	 *
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.SliderBase.prototype.max
-	 * @defaultvalue 100
+	 * @default 100
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 100 })
-	max!: number;
+	@property({ type: Number })
+	max = 100;
+
+	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default undefined
+	 * @public
+	 * @since 2.0.0
+	 */
+	@property()
+	name?: string;
 
 	/**
 	 * Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
-	 * <br><br>
-	 * <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.SliderBase.prototype.step
-	 * @defaultvalue 1
+	 * **Note:** If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
+	 * @default 1
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 1 })
-	step!: number;
+	@property({ type: Number })
+	step = 1;
 
 	/**
 	 * Displays a label with a value on every N-th step.
-	 * <br><br>
-	 * <b>Note:</b> The step and tickmarks properties must be enabled.
+	 *
+	 * **Note:** The step and tickmarks properties must be enabled.
 	 * Example - if the step value is set to 2 and the label interval is also specified to 2 - then every second
 	 * tickmark will be labelled, which means every 4th value number.
-	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.SliderBase.prototype.labelInterval
-	 * @defaultvalue 0
+	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	labelInterval!: number;
+	@property({ type: Number })
+	labelInterval = 0;
 
 	/**
 	 * Enables tickmarks visualization for each step.
-	 * <br><br>
-	 * <b>Note:</b> The step must be a positive number.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.SliderBase.prototype.showTickmarks
-	 * @defaultvalue false
+	 * **Note:** The step must be a positive number.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showTickmarks!: boolean;
+	showTickmarks = false;
 
 	/**
 	 * Enables handle tooltip displaying the current value.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.SliderBase.prototype.showTooltip
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showTooltip!: boolean;
+	showTooltip = false;
+
+	/**
+	 *
+	 * Indicates whether input fields should be used as tooltips for the handles.
+	 *
+	 * **Note:** Setting this option to true will only work if showTooltip is set to true.
+	 * **Note:** In order for the component to comply with the accessibility standard, it is recommended to set the editableTooltip property to true.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	editableTooltip = false;
 
 	/**
 	 * Defines whether the slider is in disabled state.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.SliderBase.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.SliderBase.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @default undefined
 	 * @public
 	 * @since 1.4.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * @private
 	 */
-	@property({ defaultValue: "hidden" })
-	_tooltipVisibility!: string;
+	@property({ type: Number })
+	value = 0;
+
+	/**
+	 * @private
+	 */
+	@property()
+	_tooltipVisibility = "hidden";
 
 	@property({ type: Boolean })
-	_labelsOverlapping!: boolean;
+	_labelsOverlapping = false;
 
 	@property({ type: Boolean })
-	_hiddenTickmarks!: boolean;
+	_hiddenTickmarks = false;
+
+	@property({ type: Boolean })
+	_isInputValueValid = false;
 
 	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
-	_upHandler: () => void;
+	_upHandler: (e: TouchEvent | MouseEvent) => void;
 	_stateStorage: StateStorage;
-	_ontouchstart: PassiveEventListenerObject;
 	notResized = false;
 	_isUserInteraction = false;
 	_isInnerElementFocusing = false;
@@ -177,6 +177,11 @@ abstract class SliderBase extends UI5Element {
 	_oldMax?: number;
 	_labelWidth = 0;
 	_labelValues?: Array<string>;
+	_valueOnInteractionStart?: number;
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
 
 	constructor() {
 		super();
@@ -190,32 +195,25 @@ abstract class SliderBase extends UI5Element {
 			max: undefined,
 			labelInterval: undefined,
 		};
-
-		const handleTouchStartEvent = (e: TouchEvent) => {
-			this._onmousedown(e);
-		};
-
-		this._ontouchstart = {
-			handleEvent: handleTouchStartEvent,
-			passive: true,
-		};
 	}
 
 	_handleMove(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
-	_handleUp() {}
+	_handleUp(e: TouchEvent | MouseEvent) {}	// eslint-disable-line
 
 	_onmousedown(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
 
+	_updateInputValue() {}
+
 	// used in base template, but implemented in subclasses
 	abstract styles: {
-		label: object,
-		labelContainer: object,
+		label: Record<string, string>,
+		labelContainer: Record<string, string>,
 	};
 
-	abstract tickmarksObject: any;
+	abstract tickmarksObject: Array<boolean>;
 	abstract _ariaLabelledByText: string;
 
 	static get ACTION_KEYS() {
@@ -249,6 +247,14 @@ abstract class SliderBase extends UI5Element {
 		};
 	}
 
+	static get renderer() {
+		return jsxRender;
+	}
+
+	static get styles() {
+		return sliderBaseStyles;
+	}
+
 	get classes() {
 		return {
 			root: {
@@ -276,8 +282,7 @@ abstract class SliderBase extends UI5Element {
 		}
 	}
 
-	/** Shows the tooltip(s) if the <code>showTooltip</code> property is set to true
-	 *
+	/** Shows the tooltip(s) if the `showTooltip` property is set to true
 	 * @private
 	 */
 	_onmouseover() {
@@ -287,8 +292,7 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Hides the tooltip(s) if the <code>showTooltip</code> property is set to true
-	 *
+	 * Hides the tooltip(s) if the `showTooltip` property is set to true
 	 * @private
 	 */
 	_onmouseout() {
@@ -298,11 +302,17 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (this.disabled || this._effectiveStep === 0) {
+		const target = e.target as HTMLElement;
+
+		if (isF2(e) && target.classList.contains("ui5-slider-handle")) {
+			(target.parentNode!.querySelector(".ui5-slider-handle-container ui5-input") as HTMLElement).focus();
+		}
+
+		if (this.disabled || this._effectiveStep === 0 || target.hasAttribute("ui5-slider-handle")) {
 			return;
 		}
 
-		if (SliderBase._isActionKey(e)) {
+		if (SliderBase._isActionKey(e) && target && !target.hasAttribute("ui5-input")) {
 			e.preventDefault();
 
 			this._isUserInteraction = true;
@@ -310,7 +320,42 @@ abstract class SliderBase extends UI5Element {
 		}
 	}
 
-	_onkeyup() {
+	_onInputKeydown(e: KeyboardEvent) {
+		const target = e.target as HTMLElement;
+
+		if (isF2(e) && target.hasAttribute("ui5-input")) {
+			(target.parentNode!.parentNode!.querySelector(".ui5-slider-handle") as HTMLElement).focus();
+		}
+
+		if (isEnter(e)) {
+			this._updateInputValue();
+			this._updateValueFromInput(e);
+		}
+	}
+
+	_onInputChange() {
+		if (this._valueOnInteractionStart !== this.value) {
+			this.fireDecoratorEvent("change");
+		}
+	}
+
+	_onInputInput() {
+		this.fireDecoratorEvent("input");
+	}
+
+	_updateValueFromInput(e: Event) {
+		const input = e.target as HTMLInputElement;
+		const value = parseFloat(input.value);
+		this._isInputValueValid = value >= this._effectiveMin && value <= this._effectiveMax;
+
+		if (!this._isInputValueValid) {
+			return;
+		}
+
+		this.value = value;
+	}
+
+	_onKeyupBase() {
 		if (this.disabled) {
 			return;
 		}
@@ -320,7 +365,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Flags if an inner element is currently being focused
-	 *
 	 * @private
 	 */
 	_preserveFocus(isFocusing: boolean) {
@@ -329,7 +373,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Return if an inside element within the component is currently being focused
-	 *
 	 * @private
 	 */
 	_isFocusing() {
@@ -338,7 +381,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Prevent focus out when inner element within the component is currently being in process of focusing in.
-	 *
 	 * @private
 	 */
 	_preventFocusOut() {
@@ -355,7 +397,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Handle the responsiveness of the Slider's UI elements when resizing
-	 *
 	 * @private
 	 */
 	_handleResize() {
@@ -393,7 +434,6 @@ abstract class SliderBase extends UI5Element {
 	 * Called when the user starts interacting with the slider.
 	 * After a down event on the slider root, listen for move events on window, so the slider value
 	 * is updated even if the user drags the pointer outside the slider root.
-	 *
 	 * @protected
 	 */
 	handleDownBase(e: TouchEvent | MouseEvent) {
@@ -422,13 +462,13 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Forward the focus to an inner inner part within the component on press
-	 *
 	 * @private
 	 */
 	_handleFocusOnMouseDown(e: TouchEvent | MouseEvent) {
-		const focusedElement = this.shadowRoot!.activeElement;
+		const currentlyFocusedElement = this.shadowRoot!.activeElement;
+		const elementToBeFocused = e.target as HTMLElement;
 
-		if (!focusedElement || focusedElement !== e.target) {
+		if ((!currentlyFocusedElement || currentlyFocusedElement !== elementToBeFocused) && !elementToBeFocused.hasAttribute("ui5-input")) {
 			this._preserveFocus(true);
 			this.focusInnerElement();
 		}
@@ -436,8 +476,7 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Called when the user finish interacting with the slider
-	 * Fires an <code>change</code> event indicating a final value change, after user interaction is finished.
-	 *
+	 * Fires an `change` event indicating a final value change, after user interaction is finished.
 	 * @protected
 	 */
 	handleUpBase() {
@@ -453,20 +492,18 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Updates state storage for the value-related property
-	 * Fires an <code>input</code> event indicating a value change via interaction that is not yet finished.
-	 *
+	 * Fires an `input` event indicating a value change via interaction that is not yet finished.
 	 * @protected
 	 */
 	updateStateStorageAndFireInputEvent(valueType: string) {
 		this.storePropertyState(valueType);
 		if (this._isUserInteraction) {
-			this.fireEvent("input");
+			this.fireDecoratorEvent("input");
 		}
 	}
 
 	/**
 	 * Goes through the key shortcuts available for the component and returns 'true' if the event is triggered by one.
-	 *
 	 * @private
 	 */
 	static _isActionKey(e: KeyboardEvent) {
@@ -475,7 +512,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Locks the given value between min and max boundaries based on slider properties
-	 *
 	 * @protected
 	 */
 	static clipValue(value: number, min: number, max: number): number {
@@ -485,7 +521,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Sets the slider value from an event
-	 *
 	 * @protected
 	 */
 	static getValueFromInteraction(e: TouchEvent | MouseEvent, stepSize: number, min: number, max: number, boundingClientRect: DOMRect, directionStart: DirectionStart): number {
@@ -498,7 +533,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * "Stepify" the raw value - calculate the new value depending on the specified step property
-	 *
 	 * @protected
 	 */
 	static getSteppedValue(value: number, stepSize: number, min: number): number {
@@ -518,7 +552,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Gets pageX value from event on user interaction with the Slider
-	 *
 	 * @protected
 	 */
 	static getPageXValueFromEvent(e: TouchEvent | MouseEvent): number {
@@ -535,7 +568,6 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * Computes the new value (in %) from the pageX position of the cursor.
 	 * Returns the value rounded to a precision of at most 2 digits after decimal point.
-	 *
 	 * @protected
 	 */
 	static computedValueFromPageX(pageX: number, min: number, max: number, boundingClientRect: DOMRect, directionStart: DirectionStart) {
@@ -574,7 +606,6 @@ abstract class SliderBase extends UI5Element {
 	 *
 	 * Will return true if any of the properties is not equal to its previously
 	 * stored value.
-	 *
 	 * @protected
 	 */
 	isCurrentStateOutdated() {
@@ -583,7 +614,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Returns the last stored value of a property
-	 *
 	 * @protected
 	 */
 	getStoredPropertyState(prop: string) {
@@ -593,7 +623,6 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * Check if one or more properties have been updated compared to their last
 	 * saved values in the state storage.
-	 *
 	 * @protected
 	 */
 	isPropertyUpdated(...props: Array<string>) {
@@ -602,7 +631,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Updates the previously saved in the _stateStorage values of one or more properties.
-	 *
 	 * @protected
 	 */
 	storePropertyState(...props: Array<string>) {
@@ -620,7 +648,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Calculates the labels amount, width and text and creates them
-	 *
 	 * @private
 	 */
 	_createLabels() {
@@ -658,16 +685,14 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	_handleActionKeyPressBase(e: KeyboardEvent, affectedPropName: string) {
-		const isUpAction = SliderBase._isIncreaseValueAction(e);
+		const isUpAction = SliderBase._isIncreaseValueAction(e, this.directionStart);
 		const isBigStep = SliderBase._isBigStepAction(e);
 
 		const currentValue = this[affectedPropName as keyof SliderBase] as number;
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 
-		// We need to take into consideration the effective direction of the slider - rtl or ltr.
-		// While in ltr, the left arrow key decreases the value, in rtl it should actually increase it.
-		let step = this.effectiveDir === "rtl" ? -this._effectiveStep : this._effectiveStep;
+		let step = this._effectiveStep;
 
 		// If the action key corresponds to a long step and the slider has more than 10 normal steps,
 		// make a jump of 1/10th of the Slider's length, otherwise just use the normal step property.
@@ -684,11 +709,11 @@ abstract class SliderBase extends UI5Element {
 		return isUpAction ? step : step * -1;
 	}
 
-	static _isDecreaseValueAction(e: KeyboardEvent) {
-		return isDown(e) || isDownCtrl(e) || isLeft(e) || isLeftCtrl(e) || isMinus(e) || isPageDown(e);
-	}
+	static _isIncreaseValueAction(e: KeyboardEvent, directionStart: DirectionStart) {
+		if (directionStart === "right") {
+			return isUp(e) || isUpCtrl(e) || isLeft(e) || isLeftCtrl(e) || isPlus(e) || isPageUp(e);
+		}
 
-	static _isIncreaseValueAction(e: KeyboardEvent) {
 		return isUp(e) || isUpCtrl(e) || isRight(e) || isRightCtrl(e) || isPlus(e) || isPageUp(e);
 	}
 
@@ -702,7 +727,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Calculates space between tickmarks
-	 *
 	 * @private
 	 */
 	_spaceBetweenTickmarks() {
@@ -711,7 +735,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Notify in case of a invalid step value type
-	 *
 	 * @private
 	 */
 	_validateStep(step: number) {
@@ -733,9 +756,8 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Normalizes a new <code>step</code> property value.
+	 * Normalizes a new `step` property value.
 	 * If tickmarks are enabled recreates them according to it.
-	 *
 	 * @private
 	 */
 	get _effectiveStep() {
@@ -761,11 +783,23 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	get _tabIndex() {
-		return this.disabled ? "-1" : "0";
+		return this.disabled ? -1 : 0;
 	}
 
-	get _ariaLabelledByHandleRefs() {
-		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
+	get _ariaDescribedByHandleText() {
+		return this.editableTooltip ? "ui5-slider-InputDesc" : undefined;
+	}
+
+	get _ariaLabelledByHandleText() {
+		return this.accessibleName ? "ui5-slider-accName ui5-slider-sliderDesc" : "ui5-slider-sliderDesc";
+	}
+
+	get _ariaDescribedByInputText() {
+		return "";
+	}
+
+	get _ariaLabelledByInputText() {
+		return "";
 	}
 }
 

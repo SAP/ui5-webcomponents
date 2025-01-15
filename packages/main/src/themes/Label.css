@@ -16,16 +16,19 @@
 	cursor: inherit;
 }
 
-:host([wrapping-type="Normal"]) .ui5-label-root {
+:host {
 	white-space: normal;
 }
 
-:host(:not([wrapping-type="Normal"])) .ui5-label-root {
-	display: inline-flex;
+:host([wrapping-type="None"]) {
 	white-space: nowrap;
 }
 
-:host(:not([wrapping-type="Normal"])) .ui5-label-text-wrapper {
+:host([wrapping-type="None"]) .ui5-label-root {
+	display: inline-flex;
+}
+
+:host([wrapping-type="None"]) .ui5-label-text-wrapper {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	display: inline-block;
@@ -35,13 +38,13 @@
 }
 
 :host([show-colon]) .ui5-label-required-colon:before {
-	content: attr(data-colon);
+	content: attr(data-ui5-colon);
 }
 
 :host([required]) .ui5-label-required-colon:after {
 	content:"*";
 	color: var(--sapField_RequiredColor);
-	font-size: 1.25rem;
+	font-size: var(--sapFontLargeSize);
 	font-weight: bold;
 	position: relative;
 	font-style: normal;
@@ -49,12 +52,12 @@
 	line-height: 0;
 }
 
-:host([required][show-colon]) .ui5-label-required-colon:after {
-	margin-inline-start: .125rem;
+.ui5-label-text-wrapper {
+	padding-inline-end: 0.075rem; /*1.2px - fix for last letter clipping issue when style is italic*/
 }
 
-bdi {
-	padding-right: 0.075rem; /*1.2px - fix for last letter clipping issue when style is italic*/
+:host([required][show-colon]) .ui5-label-required-colon:after {
+	margin-inline-start: .125rem;
 }
 
 :host([show-colon]) .ui5-label-required-colon {

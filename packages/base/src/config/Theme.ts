@@ -3,8 +3,14 @@ import { reRenderAllUI5Elements } from "../Render.js";
 import applyTheme from "../theming/applyTheme.js";
 import getThemeDesignerTheme from "../theming/getThemeDesignerTheme.js";
 import { DEFAULT_THEME, SUPPORTED_THEMES } from "../generated/AssetParameters.js";
+import { boot, isBooted } from "../Boot.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
-let curTheme: string;
+let curTheme: string | undefined;
+
+attachConfigurationReset(() => {
+	curTheme = undefined;
+});
 
 /**
  * Returns the current theme.
@@ -32,9 +38,11 @@ const setTheme = async (theme: string): Promise<void> => {
 
 	curTheme = theme;
 
-	// Update CSS Custom Properties
-	await applyTheme(curTheme);
-	await reRenderAllUI5Elements({ themeAware: true });
+	if (isBooted()) {
+		// Update CSS Custom Properties
+		await applyTheme(curTheme);
+		await reRenderAllUI5Elements({ themeAware: true });
+	}
 };
 
 /**
@@ -61,8 +69,8 @@ const isTheme = (theme: string) => {
 };
 
 /**
- * Returns if the currently set theme is part of legacy theme families ("sap_belize" or "sap_fiori_3").
- * <b>Note</b>: in addition, the method checks the base theme of a custom theme, built via the ThemeDesigner.
+ * Returns if the currently set theme is part of legacy theme families ("sap_fiori_3").
+ * **Note**: in addition, the method checks the base theme of a custom theme, built via the ThemeDesigner.
  *
  * @private
  * @returns { boolean }
@@ -77,6 +85,11 @@ const isLegacyThemeFamily = () => {
 	return !currentTheme.startsWith("sap_horizon");
 };
 
+const isLegacyThemeFamilyAsync = async () => {
+	await boot();
+	return isLegacyThemeFamily();
+};
+
 const isKnownTheme = (theme: string) => SUPPORTED_THEMES.includes(theme);
 
 export {
@@ -84,5 +97,6 @@ export {
 	setTheme,
 	isTheme,
 	isLegacyThemeFamily,
+	isLegacyThemeFamilyAsync,
 	getDefaultTheme,
 };

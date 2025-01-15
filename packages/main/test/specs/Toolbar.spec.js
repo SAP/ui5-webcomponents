@@ -12,8 +12,7 @@ describe("Toolbar general interaction", () => {
 		const overflowButton = await otb.shadow$(".ui5-tb-overflow-btn");
 
 		await overflowButton.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#otb_d");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const popover = await otb.shadow$("ui5-popover");
 
 		assert.strictEqual(await popover.getAttribute("open"), 'true', "overflow popover created and opened, because of 'always overflow' item is inside");
 
@@ -28,8 +27,7 @@ describe("Toolbar general interaction", () => {
 
 		await overflowButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#otb_a");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const popover = await otb.shadow$("ui5-popover");
 		assert.strictEqual(await popover.getAttribute("open"), 'true', "overflow popover created and opened on click on overflow button");
 		await browser.setWindowSize(1920, 1080);
 	});
@@ -51,4 +49,27 @@ describe("Toolbar general interaction", () => {
 		assert.strictEqual(await declineButton.getTagName(), "ui5-button", false, "Toolbar button is properly rendered");
 	});
 
+	it("Should properly prevent the closing of the overflow menu when preventClosing = true", async () => {
+		const toolbar = await browser.$("#testEventpreventClosing-toolbar")
+		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
+		const popover = await toolbar.shadow$(".ui5-overflow-popover");
+		const select = await toolbar.shadow$("[ui5-select]");
+
+		await overflowButton.click();
+		await select.click();
+
+		assert.strictEqual(await popover.getProperty("open"), true, "Popover is opened");
+	});
+
+	it("Should call child events only once", async () => {
+		const toolbar = await browser.$("#clickCountToolbar");
+		const countButton = await toolbar.shadow$("#clickCounter");
+		const input = await browser.$("#input");
+
+		await input.setAttribute("value", "0");
+		await countButton.click();
+
+		assert.strictEqual(await input.getProperty("value"), "1", "Button click event only called once");
+		await input.setAttribute("value", "0");
+	});
 });

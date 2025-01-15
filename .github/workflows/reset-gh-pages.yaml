@@ -1,0 +1,31 @@
+name: Reset Github Pages
+
+on:
+  schedule:
+  - cron: "00 08 * * *"
+
+jobs:
+  reset-gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+        fetch-depth: 0
+
+    - name: Reset gh-pages git history
+      env:
+        NPM_USERNAME: ${{ secrets.NPM_USER }}
+        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
+        GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+      run: |
+        git config user.name "${{ secrets.UI5_WEBCOMP_BOT_NAME }}"
+        git config user.email "${{ secrets.UI5_WEBCOMP_BOT_EMAIL }}"
+        git checkout -b gh-pages origin/gh-pages
+        git checkout --orphan tmp-gh-pages
+        git add -A
+        git commit -am "reset history"
+        git branch -D gh-pages
+        git branch -m gh-pages
+        git push -f origin gh-pages

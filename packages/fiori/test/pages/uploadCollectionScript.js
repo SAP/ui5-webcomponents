@@ -36,7 +36,7 @@
 	}
 
 	function createUCI(file) {
-		var uci = document.createElement("ui5-upload-collection-item");
+		var uci = document.createElement("ui5-upload-collection-item"),
 			description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
 
 		uci.appendChild(createThumbnail(file.name));
@@ -47,7 +47,7 @@
 	}
 
 	document.getElementById("changeMode").addEventListener("ui5-change", function(event) {
-		uploadCollection.mode = event.detail.selectedOption.textContent;
+		uploadCollection.selectionMode = event.detail.selectedOption.textContent;
 	});
 
 	document.getElementById("changeType").addEventListener("ui5-change", function(event) {
@@ -107,8 +107,8 @@
 		var files = event.dataTransfer.files;
 
 		for (var i = 0; i < files.length; i++) {
-			uci = createUCI(files[i]);
-			document.getElementById("uploadCollectionDnD").appendChild(uci)
+			var uci = createUCI(files[i]);
+			document.getElementById("uploadCollectionDnD").appendChild(uci);
 		}
 	});
 

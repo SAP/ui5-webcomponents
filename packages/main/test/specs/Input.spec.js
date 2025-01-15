@@ -49,6 +49,15 @@ describe("Attributes propagation", () => {
 
 		assert.strictEqual(await input1.getValue(), "", "Property value should be empty");
 		assert.strictEqual(await innerInput.getValue(), "", "Inner's property value should be empty");
+
+		await input1.setProperty("value", "new value");
+		await browser.executeAsync(done => {
+			document.getElementById("input1").value = null;
+			done();
+		});
+
+		assert.strictEqual(await input1.getAttribute("value"), null, "Property value should be null");
+		assert.strictEqual(await innerInput.getAttribute("value"), null, "Value attribute should be null");
 	});
 });
 
@@ -58,9 +67,8 @@ describe("Input general interaction", () => {
 	});
 
 	it("Should not open suggestions popover when focused", async () => {
-		const input = await browser.$("#myInput2");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput2");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const input = await browser.$("#myInput");
+		const popover = await input.shadow$("ui5-responsive-popover");
 
 		// focus the input field which will display the suggestions
 		await input.click();
@@ -136,6 +144,15 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputLiveChangeResult.getValue(), "3", "input is fired 3 times");
 	});
 
+	it("fires select event", async () => {
+		const inputInner = await browser.$("#selectInput").shadow$("input");
+		const selectResult = await browser.$("#select-event-counter");
+
+		await inputInner.doubleClick();
+
+		assert.strictEqual(await selectResult.getText(), "1", "select is called");
+	});
+
 	it("fires change when same value typed, but value is mutated via API in between", async () => {
 		const inputChange = await browser.$("#inputChange").shadow$("input");
 		const inputChangeResult = await browser.$("#inputChangeResult").shadow$("input");
@@ -166,7 +183,7 @@ describe("Input general interaction", () => {
 
 		// Setup
 		const input = await browser.$("#myInput").shadow$("input");
-		const focusoutInput = await browser.$("#myInput2").shadow$("input");
+		const focusoutInput = await browser.$("#inputCompact").shadow$("input");
 		const changeCount = await browser.$("#myInput-change-count");
 
 		// Act
@@ -227,32 +244,19 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await changeCount.getHTML(false), "2", "The change event is called for the changed value");
 	});
 
-	it("fires suggestion-scroll event", async () => {
-		const input = await browser.$("#scrollInput").shadow$("input");
-		const scrollResult = await browser.$("#scrollResult");
+	it("Input event is fired when user uses arrow keys to increase/decrease numeric value", async () => {
+		await browser.url(`test/pages/Input.html`);
 
-		// act - open suggestions
+		const input = await browser.$("#input-number3");
+		await input.scrollIntoView();
 		await input.click();
-		await input.keys("a");
 
-		// act - scroll with keyboard
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
+		await input.keys("ArrowUp");
 		await input.keys("ArrowDown");
 
-		// assert
-		const scrollTop = parseInt(await scrollResult.getProperty("value"));
-		assert.isAbove(scrollTop, 0, "The suggestion-scroll event fired");
+		const inputChangeCount = await browser.$("#input-number3-change-count");
 
-		// assert isSuggestionsScrollable
-		const suggestionsScrollable = await browser.executeAsync(async done => {
-			const input = document.getElementById("scrollInput");
-			done(await input.isSuggestionsScrollable());
-		});
-		assert.ok(suggestionsScrollable,  "The suggestions popup is scrollable");
-
-		// close suggestions
-		await input.keys("Enter");
+		assert.strictEqual( await inputChangeCount.getProperty("value"), "2", "Input event is fired when navigating with arrow keys");
 	});
 
 	it("tests value removal when Input type is 'Number'", async () => {
@@ -266,7 +270,6 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(await input.getProperty("value"), "", "Input's value is removed");
 	});
-
 
 	it("tests removing fractional part of numeric value", async () => {
 		const input1 = await browser.$("#input-number31");
@@ -315,8 +318,6 @@ describe("Input general interaction", () => {
 
 		await input.click();
 
-
-
 		// -1.33e-2
 		// Press Backspace to remove the "2" character
 		await input.keys("Backspace");
@@ -364,13 +365,13 @@ describe("Input general interaction", () => {
 		let item;
 		const suggestionsInput = await browser.$("#myInput").shadow$("input");
 		const inputResult = await browser.$("#inputResult").shadow$("input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput")
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const input = await browser.$("#myInput");
+		const popover = await input.shadow$("ui5-responsive-popover");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("p");
 
-		assert.ok(await popover.getProperty("opened"), "suggestions are opened.");
+		assert.ok(await popover.getProperty("open"), "suggestions are opened.");
 
 		// This test is passing when the test is executed on browser that is NOT headless
 
@@ -379,16 +380,14 @@ describe("Input general interaction", () => {
 
 		// await item.click();
 
-		// assert.ok(!await popover.getProperty("opened"), "suggestions are closed");
+		// assert.ok(!await popover.getProperty("open"), "suggestions are closed");
 		// assert.strictEqual(await suggestionsInput.getValue(), "Portugal", "First item has been selected");
-		// assert.strictEqual(await inputResult.getValue(), "1", "suggestionItemSelected event called once");
 
 		// await suggestionsInput.keys("\b");
 		// item = await browser.$("#myInput").$$("ui5-li")[0];
 		// await item.click();
 
 		// assert.strictEqual(await suggestionsInput.getValue(), "Portugal", "First item has been selected again");
-		// assert.strictEqual(await inputResult.getValue(), "2", "suggestionItemSelected event called for second time");
 	});
 
 	it("handles suggestions selection cancel with ESC", async () => {
@@ -418,15 +417,15 @@ describe("Input general interaction", () => {
 
 		const suggestionsInput = await browser.$("#myInput").shadow$("input");
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const input = await browser.$("#myInput");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
 
 		// paste a value completely corresponding to item text
 		await suggestionsInput.click();
 		await suggestionsInput.setValue("China");
 
 		// select the item
-		let firstSuggestion = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		let firstSuggestion = await input.$("ui5-suggestion-item");
 		await firstSuggestion.click();
 
 		// without performing focus out delete the last character
@@ -465,38 +464,18 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await suggestionsInput.getValue(), "abc", "The value is restored to the last confirmed by 'ENTER' press one.");
 	});
 
-	it("handles group suggestion item via keyboard", async () => {
-
-		const suggestionsInput = await browser.$("#myInputGrouping").shadow$("input");
-		const inputResult = await browser.$("#inputResultGrouping").shadow$("input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-
-		await suggestionsInput.click();
-		await suggestionsInput.keys("C");
-		await suggestionsInput.keys("ArrowDown");
-		await suggestionsInput.keys("Enter");
-		await browser.pause(300);
-
-		assert.strictEqual(await suggestionsInput.getValue(), "C", "Group item is not selected");
-		assert.strictEqual(await inputResult.getValue(), "", "suggestionItemSelected event is not called");
-	});
-
 	it("should select typeaheaded item on mouse click and remove value text selection", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const suggestionsInput = await browser.$("#myInput").shadow$("input");
+		const input = await browser.$("#myInput");
+		const suggestionsInput = input.shadow$("input");
 		const changeEventResult = await browser.$("#inputResult").shadow$("input");
-		const suggestionSelectEventResult = await browser.$("#input-selection-event-test").shadow$("input");
-
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("C");
 		await browser.pause(300);
 
-		const firstSuggestion = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		const firstSuggestion = await input.$("ui5-suggestion-item");
 		await firstSuggestion.click();
 
 		const valueNotSelected = await browser.execute(() =>{
@@ -505,19 +484,15 @@ describe("Input general interaction", () => {
 		});
 
 		assert.strictEqual(await changeEventResult.getValue(), "1", "Change is fired once");
-		assert.strictEqual(await suggestionSelectEventResult.getValue(), "1", "suggestion-item-select is fired once");
 		assert.strictEqual(await valueNotSelected, true, "Value is no longer type aheaded (autocompleted)");
 	});
 
 	it("should select typeaheaded item on mouse click and remove value text selection", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const suggestionsInput = await browser.$("#myInput").shadow$("input");
+		const input = await browser.$("#myInput");
+		const suggestionsInput = input.shadow$("input");
 		const changeEventResult = await browser.$("#inputResult").shadow$("input");
-		const suggestionSelectEventResult = await browser.$("#input-selection-event-test").shadow$("input");
-
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("C");
@@ -525,7 +500,7 @@ describe("Input general interaction", () => {
 		await suggestionsInput.keys("ArrowDown");
 		await suggestionsInput.keys("ArrowDown");
 
-		const secondSuggestion = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item")[1];
+		const secondSuggestion = await input.$("ui5-suggestion-item:nth-of-type(2)");
 		await secondSuggestion.click();
 
 		const valueNotSelected = await browser.execute(() =>{
@@ -535,31 +510,28 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(await suggestionsInput.getValue(), "Cuba", "Item is selected");
 		assert.strictEqual(await changeEventResult.getValue(), "1", "Change is fired once");
-		assert.strictEqual(await suggestionSelectEventResult.getValue(), "1", "suggestion-item-select is fired once");
 		assert.strictEqual(await valueNotSelected, true, "Value is no longer type aheaded (autocompleted)");
 	});
 
 	it("should remove input's focus when group header item is clicked", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const input = await browser.$("#myInputGrouping");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+		const input = await $("#myInputGrouping");
 
 		await input.click();
 		await input.keys("C");
+
+		const groupHeader = await input.$("ui5-suggestion-item-group").shadow$("[ui5-li-group-header]");
+
 		await groupHeader.click();
 
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
 		assert.strictEqual(await input.getProperty("focused"), true, "Input is focused");
-
 	});
 
 	it("checks if the suggestions popover width is minimum the size of the input", async () => {
 		const input = await browser.$("#myInputGrouping");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
-		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+		const listItem = await input.$("ui5-suggestion-item");
 
 		await input.click();
 		await input.keys("a");
@@ -568,9 +540,8 @@ describe("Input general interaction", () => {
 	});
 
 	it("checks if suggestions popover width is maximum 40rem if input isn't wider", async () => {
-		const input = await browser.$("#long-sugg");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#long-sugg");
-		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+		const input = await $("#long-sugg");
+		const listItem = await input.$("ui5-suggestion-item");
 
 		await input.click();
 		await input.keys("a");
@@ -595,37 +566,17 @@ describe("Input general interaction", () => {
 
 	it("Checks if valueStateMessage is shown", async () => {
 		const inputShadowRef = await browser.$("#inputError").shadow$("input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputError");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-header");
+		const input = await browser.$("#inputError");
+		const popover = await input.shadow$("ui5-popover");
+		const respPopover = await input.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-header");
 
 		await inputShadowRef.click();
 
-		assert.ok(await popover.getProperty("opened"), "Popover with valueStateMessage should be opened.");
+		assert.ok(await popover.getProperty("open"), "Popover with valueStateMessage should be opened.");
 
 		await inputShadowRef.keys("a");
 
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
-	});
-
-	it("Checks if valueStateMessage gets updated dynamically", async () => {
-		const btn = await $("#dynamic-value-state-trigger");
-		const input = await $("#dynamic-value-state").shadow$("input");
-
-		await input.scrollIntoView();
-		await btn.click();
-		await browser.pause(2000);
-		await input.click();
-
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#dynamic-value-state");
-		const valueStatePopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
-		const initialContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
-
-		await browser.pause(2000);
-
-		const changedContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
-
-		assert.notEqual(initialContent, changedContent, "Content of the slot should be cloned when changed");
 	});
 
 	it("Checks if aria-describedby is renderd if not neccessary", async () => {
@@ -657,14 +608,20 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await innerInputError.getAttribute("aria-invalid"), "true", "aria-invalid is set to true");
 	});
 
+	it("Should render aria-haspopup attribute with value 'dialog'", async () => {
+		const input = await browser.$("#myInput");
+		const innerInput = await input.shadow$("input");
+
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "dialog", "Should render aria-haspopup attribute with value 'dialog'");
+	});
+
 	it("Value state type should be added to the screen readers default value states announcement", async () => {
 		const inputError = await browser.$("#vs-error-default");
 		const inputWarning = await browser.$("#vs-warning-default");
 		const inputSuccess = await browser.$("#vs-success-default");
 		const inputInformation = await browser.$("#vs-information-default");
 
-		let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-error-default");
-		let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		let popover = await inputError.shadow$("ui5-popover");
 
 		await inputError.click();
 
@@ -676,8 +633,7 @@ describe("Input general interaction", () => {
 
 		await inputWarning.click();
 
-		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-warning-default");
-		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		popover = await inputWarning.shadow$("ui5-popover");
 
 		ariaHiddenText = await inputWarning.shadow$(".ui5-hidden-text").getText();
 		valueStateText = await popover.$("div").getText();
@@ -687,8 +643,7 @@ describe("Input general interaction", () => {
 
 		await inputInformation.click();
 
-		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-information-default");
-		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		popover = await inputInformation.shadow$("ui5-popover");
 
 		ariaHiddenText = await inputInformation.shadow$(".ui5-hidden-text").getText();
 		valueStateText = await popover.$("div").getText();
@@ -702,17 +657,13 @@ describe("Input general interaction", () => {
 
 	it("Value state type should be added to the screen readers custom value states announcement", async () => {
 		const inputError = await browser.$("#inputError");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputError");
 
 		inputError.click();
 		inputError.keys("a");
 
-		const popoverHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover").$(".ui5-valuestatemessage-header");
-		const valueStateText = await popoverHeader.$("div").getText();
-		const ariaHiddenText = await inputError.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getText();
+		const ariaHiddenText = await inputError.shadow$(`#valueStateDesc`).getText();
 
 		assert.strictEqual(ariaHiddenText.includes("Value State Error"), true, "Hidden screen reader text is correct");
-		assert.strictEqual(valueStateText.includes("Custom error value state message"), true, "Displayed value state message text is correct");
 	});
 
 	it("Tests autocomplete(type-ahead)", async () => {
@@ -732,6 +683,24 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(await input.getProperty("value"), EXPTECTED_VALUE, "Value is autocompleted");
 		assert.strictEqual(hasSelection, true, "Autocompleted text is selected");
+	});
+
+	it("Tests autocomplete(type-ahead) of custom suggestions", async () => {
+		let hasSelection;
+
+		const input = await $("#input-custom-flat").shadow$("input");
+		const EXPTECTED_VALUE = "Albania";
+
+		await input.click();
+		await input.keys("a");
+
+		hasSelection = await browser.execute(() => {
+			const input = document.getElementById("input-custom-flat").shadowRoot.querySelector("input");
+			return input.selectionEnd - input.selectionStart > 0;
+		});
+
+		assert.strictEqual(await input.getProperty("value"), EXPTECTED_VALUE, "Value is autocompleted");
+		assert.ok(hasSelection, "Autocompleted text is selected");
 	});
 
 	it("Tests disabled autocomplete(type-ahead)", async () => {
@@ -759,11 +728,11 @@ describe("Input general interaction", () => {
 		assert.strictEqual(parseFloat(await input.getProperty("value")).toPrecision(3), "1.22", "Value is not lost");
 	});
 
-	it("fires suggestion-item-preview", async () => {
+	it("fires selection-change", async () => {
 		await browser.url(`test/pages/Input_quickview.html`);
 
 		const inputItemPreview = await browser.$("#inputPreview2").shadow$("input");
-		const suggestionItemPreviewRes = await browser.$("#suggestionItemPreviewRes");
+		const selectionChangeRes = await browser.$("#selectionChangeRes");
 		const EXPECTED_PREVIEW_ITEM_TEXT = "Laptop Lenovo";
 
 		// act
@@ -773,11 +742,11 @@ describe("Input general interaction", () => {
 		await inputItemPreview.keys("ArrowDown");
 
 		// assert
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputPreview2");
-		const inputPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const inputElement = await browser.$("#inputPreview2")
+		const inputPopover = await inputElement.shadow$("ui5-responsive-popover");
 		const helpPopover = await browser.$("#quickViewCard2");
 
-		assert.strictEqual(await suggestionItemPreviewRes.getValue(), EXPECTED_PREVIEW_ITEM_TEXT, "First item has been previewed");
+		assert.strictEqual(await selectionChangeRes.getValue(), EXPECTED_PREVIEW_ITEM_TEXT, "First item has been previewed");
 		assert.ok(await helpPopover.isDisplayedInViewport(), "The help popover is open.");
 		assert.ok(await inputPopover.isDisplayedInViewport(), "The input popover is open.");
 
@@ -790,6 +759,53 @@ describe("Input general interaction", () => {
 		assert.ok(await helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
 	});
 
+	it("tests selection-change with custom items", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const selChangeFireCount = $("#custom-items-selection-change-count");
+		const selChangeItemIndex = $("#custom-items-selection-item-index");
+		const input = await $("#input-custom-flat").shadow$("input");
+
+		await input.click();
+		await input.keys("a");
+
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await selChangeFireCount.getHTML(false), "1", "The selection-change event is fired once");
+		assert.strictEqual(await selChangeItemIndex.getHTML(false), "0", "The selected item index is correct");
+
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await selChangeFireCount.getHTML(false), "2", "The selection-change event is fired twice");
+		assert.strictEqual(await selChangeItemIndex.getHTML(false), "1", "The selected item index is correct");
+	});
+
+	it("fires open event when suggestions picker is opened on typing", async () => {
+		await browser.url(`test/pages/Input.html`);
+		const input = await browser.$("#myInput");
+		await input.click();
+		await input.keys("a");
+
+		const popover = await input.shadow$("ui5-responsive-popover");
+
+		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
+		assert.strictEqual( await $("#myInput-open-picker").getHTML(false), "Open", "The open event is fired");
+	});
+
+	it("fires close event when suggestions picker is closed", async () => {
+		await browser.url(`test/pages/Input.html`);
+		const input = await browser.$("#myInput");
+		await input.click();
+		await input.keys("a");
+
+		const popover = await input.shadow$("ui5-responsive-popover");
+		const listItem = await input.$("ui5-suggestion-item-group ui5-suggestion-item");
+		await listItem.click();
+
+		assert.notOk(await popover.isDisplayedInViewport(), "The popover is not visible");
+		assert.strictEqual( await $("#myInput-open-picker").getHTML(false), "Close", "The close event is fired");
+	});
+
 	it("Should open suggestions popover when ui5-input is the first focusable element within a dialog", async () => {
 		await browser.url(`test/pages/Input.html`);
 		const input = await browser.$("#inputInDialog");
@@ -798,8 +814,7 @@ describe("Input general interaction", () => {
 		//act
 		await button.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputInDialog");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await input.shadow$("ui5-responsive-popover");
 		const dialog = await browser.$("#inputInDialog");
 
 		await input.keys("c");
@@ -822,8 +837,8 @@ describe("Input general interaction", () => {
 		const inputDynamicSuggestions = await $("#inputCompact");
 		const inputSuggestions = await $("#myInput2");
 		const dynamicSuggestionsInnerInput = await inputDynamicSuggestions.shadow$("input");
-		const dynamicSuggestionsCount = await inputDynamicSuggestions.shadow$(`#${await inputDynamicSuggestions.getProperty("_id")}-suggestionsCount`);
-		const suggestionsCount = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-suggestionsCount`);
+		const dynamicSuggestionsCount = await inputDynamicSuggestions.shadow$(`#suggestionsCount`);
+		const suggestionsCount = await inputSuggestions.shadow$(`#suggestionsCount`);
 
 		//act
 		await inputDynamicSuggestions.click();
@@ -855,8 +870,8 @@ describe("Input general interaction", () => {
 		const inputWithGroups = await $("#inputCompact");
 		const inputSuggestions = await $("#myInput2");
 		const inputWithGroupsInnerInput = await inputWithGroups.shadow$("input");
-		const inputWithGroupsAnnouncement = await inputWithGroups.shadow$(`#${await inputWithGroups.getProperty("_id")}-selectionText`);
-		const suggestionsAnnouncement = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-selectionText`);
+		const inputWithGroupsAnnouncement = await inputWithGroups.shadow$(`#selectionText`);
+		const suggestionsAnnouncement = await inputSuggestions.shadow$(`#selectionText`);
 
 		//act
 		await inputWithGroups.click();
@@ -869,7 +884,7 @@ describe("Input general interaction", () => {
 		await inputWithGroupsInnerInput.keys("ArrowDown");
 
 		//assert
-		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "Group Header A", "Group item announcement should not contain the position and total coout.");
+		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "Group Header A", "Group item announcement should not contain the position and total count.");
 
 		//act
 		await inputWithGroupsInnerInput.keys("ArrowDown");
@@ -878,7 +893,7 @@ describe("Input general interaction", () => {
 
 		//assert
 		assert.ok(announcementText.includes("List item 1 of 12"), "The total count announcement and position of items should exclude group items.");
-		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "travel the world explore List item 1 of 12", "The additional text and description are announced");
+		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "explore List item 1 of 12", "The additional text is announced");
 		await inputWithGroupsInnerInput.keys("Backspace");
 
 		// Close suggestions to not intercept the click in the input below for the last test
@@ -909,12 +924,11 @@ describe("Input general interaction", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const input = await $("#readonly-value-state-input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-input");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const popover = await input.shadow$("ui5-popover");
 
 		await input.click();
 
-		assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
+		assert.notOk(await popover.getProperty("open"), "Popover with valueStateMessage should not be opened.");
 	});
 
 	it("Displays clear icon when typing and pressing it clears the value", async () => {
@@ -925,13 +939,13 @@ describe("Input general interaction", () => {
 		const changeCounter = await $("#clear-input-change-event-count");
 		const inputCounter = await $("#clear-input-input-event-count");
 
-		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should not be shown");
+		assert.notOk(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should not be shown");
 
 		// type
 		await innerInput.click();
 		await innerInput.keys("a");
 
-		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
+		assert.ok(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be shown");
 		assert.strictEqual(await changeCounter.getText(), "0", "Change event not called yet");
 		assert.strictEqual(await inputCounter.getText(), "1", "Input event called when typing");
 
@@ -941,7 +955,7 @@ describe("Input general interaction", () => {
 		await clearIcon.click();
 
 		assert.strictEqual(await input.getProperty("value"), "", "Clear icon clear the value");
-		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should not be shown");
+		assert.notOk(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should not be shown");
 		assert.strictEqual(await changeCounter.getText(), "0", "Change event should not be called on clearIcon click");
 		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when typing or clear action is done");
 	});
@@ -1010,22 +1024,21 @@ describe("Input general interaction", () => {
 		const disable = await $("#clear-icon-disabled-toggle");
 
 		await readonly.click();
-		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be not be shown when readonly");
+		assert.notOk(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be not be shown when readonly");
 
 		await readonly.click();
-		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
+		assert.ok(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be shown");
 
 		await disable.click();
-		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be not be shown when disabled");
+		assert.notOk(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be not be shown when disabled");
 
 		await disable.click();
-		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
+		assert.ok(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be shown");
 	});
 
-	it("Should open suggestions popover if openPicker() is called on focusin", async () => {
+	it("Should open suggestions popover if open is set on focusin", async () => {
 		const input = await browser.$("#openPickerInput");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#openPickerInput");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await input.shadow$("ui5-responsive-popover");
 
 		await input.click();
 
@@ -1061,7 +1074,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await changeCount.getHTML(false), "2", "The change event is called now, since the value is updated");
 	});
 
-	it("Change event should be fired only once, when a user types a value identical to a item and presses ENTER - #3732", async () => {
+	it("Change event should be fired only once, when a user types a value identical to an item and presses ENTER - #3732", async () => {
 		const inputChange = await browser.$("#input-change-2").shadow$("input");
 		const changeCount = await browser.$("#input-change-count-2");
 
@@ -1103,71 +1116,131 @@ describe("Input general interaction", () => {
 
 		await input.scrollIntoView();
 
-		await browser.executeAsync((done) =>{
-			return done(document.getElementById("change-event-value").openPicker());
+		await browser.execute(() =>{
+			document.getElementById("change-event-value").open = true;
 		});
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-event-value");
-		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+		const listItem = await input.$("ui5-suggestion-item");
 
 		await listItem.click();
 
 		assert.strictEqual(await input.getValue(), "", "Input's value should be empty");
 		assert.strictEqual(await inner.getValue(), "", "Inner input's value should be empty");
 	});
+
+	it("Change event is not fired when the same suggestion item is selected (with typeahead) - #8912", async () => {
+		const suggestionsInput = await browser.$("#myInput");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("a");
+
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("Enter");
+
+		const changeCount = await browser.$("#myInput-change-count");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called once");
+		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
+
+		await suggestionsInput.keys("Backspace");
+
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("Enter");
+
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is still called once");
+		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
+	});
+
+	it("Change event is not fired when the same suggestion item is selected (no-typeahead) - #8912", async () => {
+		const suggestionsInput = await browser.$("#myInput");
+		await browser.execute(() => {
+			document.querySelector("#myInput").noTypeahead = true;
+		});
+
+		await suggestionsInput.keys("Backspace");
+
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("Enter");
+
+		const changeCount = await browser.$("#myInput-change-count");
+
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is still called once");
+		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
+
+		// restore the default property value
+		await browser.execute(() => {
+			document.querySelector("#myInput").noTypeahead = false;
+		});
+	});
+
+	it("Change event is not fired when the same suggestion item is selected after focus out and selecting suggestion again - #8912", async () => {
+		const suggestionsInput = await browser.$("#myInput");
+		const changeCount = await browser.$("#myInput-change-count");
+
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called once");
+		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
+
+		await suggestionsInput.keys("Tab");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("Backspace");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is still called once");
+		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
+	});
+
+	it("Tests prevented input event", async () => {
+		const input = await $("#prevent-input-event");
+		const innerInput = await input.shadow$("input");
+
+		await input.click();
+		
+		await innerInput.keys("a");
+		await innerInput.keys("b");
+		await innerInput.keys("c");
+		await innerInput.keys("d");
+
+		// forth input should be prevented
+		assert.strictEqual(await input.getValue(), "abc", "The value is correct");
+	});
+
+	it("Tests prevented input event with clear icon", async () => {
+		const input = await $("#prevent-input-event-clear-icon");
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
+
+		await clearIcon.click();
+
+		assert.strictEqual(await input.getValue(), "Test", "The value is not cleared");
+	});
 });
 
 describe("Input arrow navigation", () => {
-
-	it("handles suggestions via keyboard, should not fire suggestionItemSelect on inactive item", async () => {
-		await browser.url(`test/pages/Input.html`);
-
-		const suggestionsInput = await browser.$("#myInput2").shadow$("input");
-		const inputResult = await browser.$("#inputResult").shadow$("input");
-
-		await suggestionsInput.click();
-		await suggestionsInput.keys("c");
-		await suggestionsInput.keys("ArrowDown");
-		await suggestionsInput.keys("Enter");
-
-		assert.strictEqual(await suggestionsInput.getValue(), "Cozy", "First item has been selected");
-		assert.strictEqual(await inputResult.getValue(), "1", "suggestionItemSelected event called once");
-
-		await suggestionsInput.keys("Backspace"); // to open the suggestions pop up once again
-		await suggestionsInput.keys("ArrowUp");
-
-		assert.strictEqual(await suggestionsInput.getValue(), "Coz",
-			"The input is still focused");
-
-		await suggestionsInput.keys("ArrowDown");
-		await suggestionsInput.keys("ArrowDown");
-		await suggestionsInput.keys("ArrowDown");
-		await suggestionsInput.keys("ArrowDown");
-		await suggestionsInput.keys("Enter");
-
-		assert.strictEqual(await suggestionsInput.getValue(), "Coz", "Inactive item text is not applied as input's value");
-		assert.strictEqual(await inputResult.getValue(), "1", "suggestionItemSelect is not fired as item is 'Inactive'");
-	});
 
 	it("Should navigate up and down through the suggestions popover with arrow keys", async () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput2");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("c");
 		await suggestionsInput.keys("ArrowDown");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
-		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		const firstListItem = await suggestionsInput.$("ui5-suggestion-item");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "Cozy", "First item has been selected");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), true, "First list item is focused");
 
 		await suggestionsInput.keys("ArrowDown");
-		const secondListItem = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item")[1];
+		const secondListItem = await suggestionsInput.$$("ui5-suggestion-item")[1];
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
@@ -1188,30 +1261,29 @@ describe("Input arrow navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#inputError");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputError");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("a");
 		await suggestionsInput.keys("ArrowDown");
 
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const valueStateHeader = await respPopover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
-		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+		const firstListItem = suggestionsInput.$("ui5-suggestion-item");
+		const groupHeader = suggestionsInput.$("ui5-suggestion-item-group");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "a", "Input's value should be the typed-in value");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
 		assert.strictEqual(await suggestionsInput.getProperty("_isValueStateFocused"), true, "Value State should not be focused");
-		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), true, "Value state header is focused");
 
 		await suggestionsInput.keys("ArrowDown");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), true, "Group header is focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is not focused");
 
 		await suggestionsInput.keys("ArrowDown");
 
@@ -1219,14 +1291,14 @@ describe("Input arrow navigation", () => {
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), true, "First list item is focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is no longer focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is not focused");
 
 		await suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), true, "Group header is focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is not focused");
 
 
 		await suggestionsInput.keys("ArrowUp");
@@ -1235,14 +1307,108 @@ describe("Input arrow navigation", () => {
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
 		assert.strictEqual(await suggestionsInput.getProperty("_isValueStateFocused"), true, "Value State should not be focused");
-		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), true, "Value state header is focused");
 
 		await suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is not focused");
+	});
+
+	it("Items should not hide behind value state header on arrow up navigation", async () => {
+		await browser.url(`test/pages/Input.html`);
+		await browser.setWindowSize(1000, 400);
+
+		const input = await browser.$("#inputError");
+		await input.scrollIntoView();
+		await input.click();
+		await input.keys("a");
+
+		let isInVisibleArea = await browser.executeAsync(async done => {
+			const input = document.getElementById("inputError");
+			const listItems = input.querySelectorAll("ui5-suggestion-item");
+			const elementRect = listItems[6].getBoundingClientRect(); //Suggestion item "Angola"
+
+			const popover = input.shadowRoot.querySelector("ui5-responsive-popover");
+			const scrollableRect = popover.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
+
+			// Check if the element is within the visible area
+			const isElementAboveViewport = elementRect.bottom < scrollableRect.top;
+			const isElementBelowViewport = elementRect.top > scrollableRect.bottom;
+			const isElementLeftOfViewport = elementRect.right < scrollableRect.left;
+			const isElementRightOfViewport = elementRect.left > scrollableRect.right;
+
+			const isListItemInVisibleArea =  (
+				!isElementAboveViewport &&
+				!isElementBelowViewport &&
+				!isElementLeftOfViewport &&
+				!isElementRightOfViewport
+			);
+
+			done(isListItemInVisibleArea);
+		});
+
+		assert.notOk(isInVisibleArea, "Item 'Angola' should not be displayed in the viewport");
+
+		// click ArrowDown 9 times - 1 time through VSH and 1 through group header and 7 times through the list items
+		await input.keys(["ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown"]);
+
+		isInVisibleArea = isInVisibleArea = await browser.executeAsync(async done => {
+			const input = document.getElementById("inputError");
+			const listItems = input.querySelectorAll("ui5-suggestion-item");
+			const elementRect = listItems[6].getBoundingClientRect(); //Suggestion item "Angola"
+
+			const popover = input.shadowRoot.querySelector("ui5-responsive-popover");
+			const scrollableRect = popover.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
+
+			// Check if the element is within the visible area
+			const isElementAboveViewport = elementRect.bottom < scrollableRect.top;
+			const isElementBelowViewport = elementRect.top > scrollableRect.bottom;
+			const isElementLeftOfViewport = elementRect.right < scrollableRect.left;
+			const isElementRightOfViewport = elementRect.left > scrollableRect.right;
+
+			const isListItemInVisibleArea =  (
+				!isElementAboveViewport &&
+				!isElementBelowViewport &&
+				!isElementLeftOfViewport &&
+				!isElementRightOfViewport
+			);
+
+			done(isListItemInVisibleArea);
+		});
+
+		assert.ok(isInVisibleArea, "Item 'Angola' should be displayed in the viewport");
+
+		// click ArrowUp 6 times through the list items to trigger scrolling and reach the first suggestion item
+		await input.keys(["ArrowUp", "ArrowUp", "ArrowUp", "ArrowUp", "ArrowUp", "ArrowUp"]);
+
+		isInVisibleArea = await browser.executeAsync(async done => {
+			const input = document.getElementById("inputError");
+			const listItems = input.querySelectorAll("ui5-suggestion-item");
+			const elementRect = listItems[0].getBoundingClientRect(); //Suggestion item "Afganistan"
+
+			const popover = input.shadowRoot.querySelector("ui5-responsive-popover");
+			const scrollableRect = popover.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
+
+			// Check if the element is within the visible area
+			const isElementAboveViewport = elementRect.bottom < scrollableRect.top;
+			const isElementBelowViewport = elementRect.top > scrollableRect.bottom;
+			const isElementLeftOfViewport = elementRect.right < scrollableRect.left;
+			const isElementRightOfViewport = elementRect.left > scrollableRect.right;
+
+			const isListItemInVisibleArea =  (
+				!isElementAboveViewport &&
+				!isElementBelowViewport &&
+				!isElementLeftOfViewport &&
+				!isElementRightOfViewport
+			);
+
+			done(isListItemInVisibleArea);
+		});
+
+		assert.ok(isInVisibleArea, "Item 'Afganistan' should be displayed in the viewport");
 	});
 });
 
@@ -1251,15 +1417,13 @@ describe("Input HOME navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput2");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("c");
 
 		await suggestionsInput.keys("Home");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
-		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		const firstListItem = await suggestionsInput.$("ui5-suggestion-item");
 		const caretPosition = await browser.execute(() =>{
 			return document.getElementById("myInput2").getCaretPosition();
 		});
@@ -1273,7 +1437,6 @@ describe("Input HOME navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput2");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("c");
@@ -1283,8 +1446,7 @@ describe("Input HOME navigation", () => {
 
 		await suggestionsInput.keys("Home");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
-		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		const firstListItem = await suggestionsInput.$("ui5-suggestion-item");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "Cozy", "First item has been selected");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
@@ -1295,7 +1457,6 @@ describe("Input HOME navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#inputError");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputError");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("a");
@@ -1306,24 +1467,23 @@ describe("Input HOME navigation", () => {
 
 		await suggestionsInput.keys("Home");
 
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const valueStateHeader = await respPopover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
-		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+		const firstListItem = suggestionsInput.$("ui5-suggestion-item");
+		const groupHeader = suggestionsInput.$("ui5-suggestion-item-group");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "a", "Input's value should be the typed-in value");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
 		assert.strictEqual(await suggestionsInput.getProperty("_isValueStateFocused"), true, "Value State should not be focused");
-		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), true, "Value state header is focused");
 	});
 
 	it("Should focus the group header from the suggestions popover with HOME", async () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("a");
@@ -1334,9 +1494,9 @@ describe("Input HOME navigation", () => {
 
 		await suggestionsInput.keys("Home");
 
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
+		const firstListItem = await suggestionsInput.$("ui5-suggestion-item");
+		const groupHeader = await suggestionsInput.$("ui5-suggestion-item-group");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
@@ -1350,7 +1510,6 @@ describe("Input END navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput2");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("c");
@@ -1358,8 +1517,7 @@ describe("Input END navigation", () => {
 		await suggestionsInput.keys("ArrowLeft");
 		await suggestionsInput.keys("End");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
-		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		const firstListItem = await suggestionsInput.$("ui5-suggestion-item");
 		const caretPosition = await browser.execute(() =>{
 			return document.getElementById("myInput2").getCaretPosition();
 		});
@@ -1373,7 +1531,6 @@ describe("Input END navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#inputCompact");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#inputCompact");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("c");
@@ -1383,8 +1540,7 @@ describe("Input END navigation", () => {
 
 		await suggestionsInput.keys("End");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
-		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item:last-child");
+		const firstListItem = await suggestionsInput.$("ui5-suggestion-item:last-of-type");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "Chili", "Last item has been selected");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
@@ -1397,13 +1553,11 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput2");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("c");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
-		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		const firstListItem = await suggestionsInput.$("ui5-suggestion-item");
 		let caretPosition = await browser.execute(() =>{
 			return document.getElementById("myInput2").getCaretPosition();
 		});
@@ -1438,7 +1592,6 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("a");
@@ -1448,8 +1601,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 
 		await suggestionsInput.keys("PageDown");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
-		const tenthListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item:nth-child(11)");
+		const tenthListItem = await suggestionsInput.$("ui5-suggestion-item:nth-of-type(10)");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "Azerbaijan", "Tenth item has been selected");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
@@ -1462,8 +1614,6 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		const suggestionsInput = await browser.$("#myInput");
 		await suggestionsInput.scrollIntoView();
 
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput");
-
 		await suggestionsInput.click();
 		await suggestionsInput.keys("a");
 
@@ -1473,8 +1623,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		await suggestionsInput.keys("PageDown");
 		await suggestionsInput.keys("PageUp");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupheader");
+		const groupHeader = await suggestionsInput.$("ui5-suggestion-item-group");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "a", "No item has been selected");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
@@ -1501,8 +1650,7 @@ describe("XSS tests for suggestions", () => {
 
 		await input.keys("a");
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#xss-input");
-		const listItems = await $(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item");
+		const listItems = await input.shadow$("ui5-responsive-popover").$$("ui5-suggestion-item");
 		const expected = [
 			"",
 			"<b></b>",
@@ -1517,67 +1665,6 @@ describe("XSS tests for suggestions", () => {
 	});
 });
 
-describe("Prevent suggestion-item-select event", () => {
-    let input;
-    let SUGGESTION_TEXT;
-    const INPUT_ID_SELECTOR = "#input-prevent-suggestion-select";
-
-    beforeEach(async () => {
-        await browser.url(`test/pages/Input.html`);
-
-        input = await browser.$(INPUT_ID_SELECTOR);
-    });
-
-    it("User can prevent suggested-item-select on desired item", async () => {
-        SUGGESTION_TEXT = "Cozy";
-
-        await input.click();
-        await input.keys(SUGGESTION_TEXT.at(0));
-
-        const staticAreaItemClassName =
-            await browser.getStaticAreaItemClassName(INPUT_ID_SELECTOR);
-        const respPopover = await browser
-            .$(`.${staticAreaItemClassName}`)
-            .shadow$("ui5-responsive-popover");
-
-        // Select first suggestion item that has event prevent
-        const firstSuggestion = await respPopover
-            .$("ui5-list")
-            .$("ui5-li-suggestion-item");
-        await firstSuggestion.click();
-
-        assert.strictEqual(
-            await input.getProperty("value"),
-            "test test",
-            "Prevent suggestion-item-select event does not work"
-        );
-    });
-
-    it("Suggestion selection works as usual for items that do not match event prevent criterias defined by user", async () => {
-        SUGGESTION_TEXT = "Compact";
-
-        await input.click();
-        await input.keys(SUGGESTION_TEXT.at(0));
-
-        const staticAreaItemClassName =
-            await browser.getStaticAreaItemClassName(INPUT_ID_SELECTOR);
-        const respPopover = await browser
-            .$(`.${staticAreaItemClassName}`)
-            .shadow$("ui5-responsive-popover");
-
-        const secondSuggestion = await respPopover
-            .$("ui5-list")
-            .$$("ui5-li-suggestion-item")[1];
-        await secondSuggestion.click();
-
-        assert.strictEqual(
-            await input.getProperty("value"),
-            SUGGESTION_TEXT,
-            "Event suggestion-item-select works as expected for items without event prevention"
-        );
-    });
-});
-
 describe("Lazy loading", () => {
 	beforeEach(async () => {
 		await browser.url(`test/pages/InputsLazyLoading.html`);
@@ -1586,13 +1673,12 @@ describe("Lazy loading", () => {
 	it("Lazy loading opens the picker once items are populated", async () => {
 		const input = await $("#field");
 		const inner = await input.shadow$("input");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field");
-		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
 
 		await inner.click();
 		await inner.keys("a");
 
-		await browser.waitUntil(() => respPopover.getProperty("opened"), {
+		await browser.waitUntil(() => respPopover.getProperty("open"), {
 			timeout: 3000,
 			timeoutMsg: "Popover should be displayed"
 		});
@@ -1601,8 +1687,7 @@ describe("Lazy loading", () => {
 	it("Does not reopeon picker on focus in", async () => {
 		const input = await $("#field");
 		const inner = await input.shadow$("input");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field");
-		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
 
 		await inner.click();
 		await inner.keys("a");
@@ -1615,25 +1700,140 @@ describe("Lazy loading", () => {
 
 		await browser.pause(3000);
 
-		assert.notOk(await respPopover.getProperty("opened"), "Picker should not be open");
+		assert.notOk(await respPopover.getProperty("open"), "Picker should not be open");
 	});
 
 	it("Should not close picker when items are updated", async () => {
 		const input = await $("#field1");
 		const inner = await input.shadow$("input");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field1");
-		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
 
 		await inner.click();
 		await inner.keys("S");
 
-		await browser.waitUntil(() => respPopover.getProperty("opened"), {
+		await browser.waitUntil(() => respPopover.getProperty("open"), {
 			timeout: 2000,
 			timeoutMsg: "Popover should be displayed"
 		});
 
 		await inner.keys("b");
 
-		assert.strictEqual(await respPopover.getProperty("opened"), true, "Picker should not be open");
+		assert.strictEqual(await respPopover.getProperty("open"), true, "Picker should not be open");
+	});
+});
+
+describe("Selection-change event", () => {
+	it("Selection-change event fires when interacting with Arrow UP and Arrow DOWN keys", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await $("#input-selection-change");
+		const inner = await input.shadow$("input");
+
+		await inner.click();
+		await inner.keys("C");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowDown");
+		await input.keys("ArrowUp");
+
+		const selectionChangeCount = await $("#input-selection-change-count");
+		assert.strictEqual(await selectionChangeCount.getText(), "3", "Selection-change event was fired 3 times");
+	});
+
+	it("Selection-change event fires when suggestion item is selected by clicking on it without previously selected", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await $("#input-selection-change");
+		const inner = await input.shadow$("input");
+		const selectionChangeCount = await $("#input-selection-change-count");
+
+		await inner.click();
+		await inner.keys("C");
+
+		// select first item
+		await input.keys("ArrowDown");
+		assert.strictEqual(await selectionChangeCount.getText(), "1", "Selection-change event was fired 1 time");
+
+		// click on second item
+		const suggestionItems = await input.$$("ui5-suggestion-item");
+		await suggestionItems[2].click();
+
+		assert.strictEqual(await selectionChangeCount.getText(), "2", "Selection-change event was fired 2 times");
+	});
+
+	it("Selection-change event does not fire when item is clicked but focus is already on it", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await $("#input-selection-change");
+		const inner = await input.shadow$("input");
+		const selectionChangeCount = await $("#input-selection-change-count");
+
+		await inner.click();
+		await inner.keys("C");
+
+		// select first item
+		await input.keys("ArrowDown");
+		assert.strictEqual(await selectionChangeCount.getText(), "1", "Selection-change event was fired once");
+
+		// click on first item
+		const firstSuggestion = await input.$("ui5-suggestion-item");
+		await firstSuggestion.click();
+
+		assert.strictEqual(await selectionChangeCount.getText(), "1", "Selection-change event was fired once");
+	});
+
+	it("Selection-change event fires with null arguments when suggestion was selected but user alters input value to something else", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await $("#input-selection-change");
+		const inner = await input.shadow$("input");
+		const selectionChangeCount = await $("#input-selection-change-count");
+		const selectionChangeValue = await $("#input-selection-change-value");
+
+		await inner.click();
+		await inner.keys("C");
+
+		// select first item
+		await input.keys("ArrowDown");
+		assert.strictEqual(await selectionChangeCount.getText(), "1", "Selection-change event was fired once");
+		assert.strictEqual(await selectionChangeValue.getText(), "Cozy", "Selection-change event was fired with arguments");
+
+		await inner.click();
+		await inner.keys("N"); // this value is not in the suggestions
+		await inner.keys("Enter");
+
+		assert.strictEqual(await selectionChangeCount.getText(), "2", "Selection-change event was fired twice");
+		assert.strictEqual(await selectionChangeValue.getText(), "", "Selection-change event was fired with null arguments");
+	});
+});
+
+describe("Property open", () => {
+	before(async () => {
+		await browser.url(`test/pages/Input.html`);
+	});
+
+	it("Suggestions picker is open when attribute open is set to true", async () => {
+		const input = await browser.$("#input-suggestions-open");
+		await input.scrollIntoView();
+
+		await browser.execute(() => {
+			document.querySelector("#input-suggestions-open").open = true;
+		});
+
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+		const suggestionItems = await input.$$("ui5-suggestion-item");
+
+		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
+		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");
+	});
+
+	it("Suggestions picker is closed when attribute open is set to false", async () => {
+		const input = await browser.$("#input-suggestions-open");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+
+		await browser.execute(() =>{
+			document.querySelector("#input-suggestions-open").open = false;
+		});
+
+		assert.strictEqual(await respPopover.getProperty("open"), false, "Suggestions popover is closed");
 	});
 });

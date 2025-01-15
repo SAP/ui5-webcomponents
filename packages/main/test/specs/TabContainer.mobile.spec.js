@@ -7,11 +7,11 @@ describe("Mobile: TabContainer general interaction", () => {
 	});
 
 	it("should close the overflow popover when pressing the cancel button", async () => {
-		const moreButton = await browser.$("#tabContainerNestedTabs").shadow$(`[data-ui5-stable="overflow-end"]`);
+		const tc = await browser.$("#tabContainerNestedTabs");
+		const moreButton = await tc.shadow$(`[data-ui5-stable="overflow-end"]`);
 		await moreButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerNestedTabs");
-		let overflow = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let overflow = await tc.shadow$("ui5-responsive-popover");
 		const closeButton = await overflow.$("ui5-button");
 
 		assert.ok(await overflow.getProperty("open"), "Overflow is opened");

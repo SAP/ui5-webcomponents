@@ -13,17 +13,12 @@ const internals = {
 		}
 		return "ontouchstart" in window || navigator.maxTouchPoints > 0;
 	},
-	get ie() {
-		if (isSSR) {
-			return false;
-		}
-		return /(msie|trident)/i.test(internals.userAgent);
-	},
+
 	get chrome() {
 		if (isSSR) {
 			return false;
 		}
-		return !internals.ie && /(Chrome|CriOS)/.test(internals.userAgent);
+		return /(Chrome|CriOS)/.test(internals.userAgent);
 	},
 	get firefox() {
 		if (isSSR) {
@@ -35,13 +30,13 @@ const internals = {
 		if (isSSR) {
 			return false;
 		}
-		return !internals.ie && !internals.chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(internals.userAgent);
+		return !internals.chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(internals.userAgent);
 	},
 	get webkit() {
 		if (isSSR) {
 			return false;
 		}
-		return !internals.ie && /webkit/.test(internals.userAgent);
+		return /webkit/.test(internals.userAgent);
 	},
 	get windows() {
 		if (isSSR) {
@@ -81,6 +76,11 @@ const internals = {
 		// "Request Desktop Website -> All websites" (for more infos see: https://forums.developer.apple.com/thread/119186).
 		// Therefore the OS is detected as MACINTOSH instead of iOS and the device is a tablet if the Device.support.touch is true.
 		return /ipad/i.test(internals.userAgent) || (/Macintosh/i.test(internals.userAgent) && "ontouchend" in document);
+	},
+
+	_isPhone() {
+		detectTablet();
+		return internals.touch && !tablet;
 	},
 };
 
@@ -156,11 +156,10 @@ const detectTablet = () => {
 		return;
 	}
 
-	tablet = (internals.ie && internals.userAgent.indexOf("Touch") !== -1) || (internals.android && !internals.androidPhone);
+	tablet = internals.userAgent.indexOf("Touch") !== -1 || (internals.android && !internals.androidPhone);
 };
 
 const supportsTouch = (): boolean => internals.touch;
-const isIE = (): boolean => internals.ie;
 const isSafari = (): boolean => internals.safari;
 const isChrome = (): boolean => internals.chrome;
 const isFirefox = (): boolean => internals.firefox;
@@ -171,8 +170,7 @@ const isTablet = (): boolean => {
 };
 
 const isPhone = (): boolean => {
-	detectTablet();
-	return internals.touch && !tablet;
+	return internals._isPhone();
 };
 
 const isDesktop = (): boolean => {
@@ -199,8 +197,8 @@ const isAndroid = (): boolean => {
 };
 
 export {
+	internals,
 	supportsTouch,
-	isIE,
 	isSafari,
 	isChrome,
 	isFirefox,

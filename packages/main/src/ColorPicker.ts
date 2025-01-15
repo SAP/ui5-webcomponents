@@ -1,17 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	getRGBColor,
+	getAlpha,
 	HSLToRGB,
 	HEXToRGB,
 	RGBToHSL,
@@ -20,10 +20,9 @@ import type {
 	ColorHSL,
 	ColorRGB,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
-import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
-import Input from "./Input.js";
-import Slider from "./Slider.js";
-import Label from "./Label.js";
+import ColorPickerTemplate from "./ColorPickerTemplate.js";
+import type Input from "./Input.js";
+import type Slider from "./Slider.js";
 
 import {
 	COLORPICKER_ALPHA_SLIDER,
@@ -48,124 +47,136 @@ type ColorCoordinates = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-color-picker</code> allows users to choose any color and provides different input options for selecting colors.
+ * ### Overview
+ * The `ui5-color-picker` allows users to choose any color and provides different input options for selecting colors.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <h4>When to use:</h4
+ * #### When to use
  * Use the color picker if:
- * <ul>
- * <li> users need to select any color freely.</li>
- * </ul>
  *
- * <h4>When not to use:</h4>
- * <ul>
- * <li> Users need to select one color from a predefined set of colors. Use the ColorPalette component instead.</li>
- * </ul>
+ * -  users need to select any color freely.
  *
- * <h3>ES6 Module Import</h3>
+ * #### When not to use
  *
- * <code>import "@ui5/webcomponents/dist/ColorPicker.js";</code>
+ * -  Users need to select one color from a predefined set of colors. Use the ColorPalette component instead.
  *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/ColorPicker.js";`
  * @constructor
- * @author SAP SE
  * @since 1.0.0-rc.12
- * @alias sap.ui.webc.main.ColorPicker
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-color-picker
+ * @extends UI5Element
  * @public
  */
 
 @customElement({
 	tag: "ui5-color-picker",
-	renderer: litRender,
+	renderer: jsxRenderer,
+	formAssociated: true,
 	styles: ColorPickerCss,
 	template: ColorPickerTemplate,
-	dependencies: [
-		Input,
-		Slider,
-		Label,
-	],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the the selected color is changed
- *
- * @event sap.ui.webc.main.ColorPicker#change
  * @public
  */
-@event("change")
-class ColorPicker extends UI5Element {
+@event("change", {
+	bubbles: true,
+})
+class ColorPicker extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: void;
+	}
 	/**
 	 * Defines the currently selected color of the component.
-	 * <br><br>
-	 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
-	 * @type {sap.ui.webc.base.types.CSSColor}
-	 * @name sap.ui.webc.main.ColorPicker.prototype.color
+	 *
+	 * **Note**: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
+	 * @default "rgba(255,255,255,1)"
 	 * @public
 	 */
-	@property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)" })
-	color!: string;
+	@property()
+	value = "rgba(255,255,255,1)";
+
+	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default undefined
+	 * @public
+	 * @since 2.0.0
+	 */
+	@property()
+	name?: string;
+
+	/**
+	 * When set to `true`, the alpha slider and inputs for RGB values will not be displayed.
+	 * @default false
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property({ type: Boolean })
+	simplified = false;
 
 	/**
 	 * Defines the HEX code of the currently selected color
-	 * *Note*: If Alpha(transperancy) is set it is not included in this property. Use <code>color</code> property.
-	 * @type {string}
+	 *
+	 * **Note**: If Alpha(transperancy) is set it is not included in this property. Use `color` property.
 	 * @private
 	 */
-	@property({ defaultValue: "ffffff", noAttribute: true })
-	hex!: string;
+	@property({ noAttribute: true })
+	hex = "ffffff";
 
 	/**
 	 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
-	 * @type {string}
 	 * @private
 	 */
 	@property({ type: Object })
-	_mainColor!: ColorRGB;
+	_mainValue: ColorRGB;
 
 	/**
 	 * Defines the currenty selected color from the main color section.
 	 * @private
 	 */
 	@property({ type: Object })
-	_color!: ColorRGB;
+	_value: ColorRGB = getRGBColor(this.value);
 
 	/**
 	 * @private
 	 */
 	@property({ type: Object })
-	_selectedCoordinates!: ColorCoordinates;
+	_selectedCoordinates: ColorCoordinates;
 
 	/**
 	 * @private
 	 */
-	@property({ validator: Float, defaultValue: 1 })
-	_alpha!: number;
+	@property({ type: Number })
+	_alpha = 1;
 
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	_hue!: number;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_isSelectedColorChanged!: boolean;
+	@property({ type: Number })
+	_hue = 0;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isHueValueChanged!: boolean;
+	_isSelectedColorChanged = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_wrongHEX!: boolean;
+	_isHueValueChanged = false;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_wrongHEX = false;
 
 	selectedHue: number;
 
@@ -173,10 +184,15 @@ class ColorPicker extends UI5Element {
 
 	mouseIn: boolean;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-	static async onDefine() {
-		ColorPicker.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue() {
+		return this.value;
 	}
 
 	constructor() {
@@ -189,7 +205,7 @@ class ColorPicker extends UI5Element {
 		};
 
 		// Default main color is red
-		this._mainColor = {
+		this._mainValue = {
 			r: 255,
 			g: 0,
 			b: 0,
@@ -202,9 +218,10 @@ class ColorPicker extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		// we have the color & _mainColor properties here
-		this._color = getRGBColor(this.color);
-		const tempColor = `rgba(${this._color.r}, ${this._color.g}, ${this._color.b}, 1)`;
+		// we have the color & ._mainValue properties here
+		this._value = getRGBColor(this.value);
+		this._alpha = getAlpha(this.value);
+		const tempColor = `rgba(${this._value.r},${this._value.g},${this._value.b},${this._alpha})`;
 		this._setHex();
 		this._setValues();
 		this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);
@@ -267,10 +284,14 @@ class ColorPicker extends UI5Element {
 		this._changeSelectedColor(e.offsetX, e.offsetY);
 	}
 
-	_handleAlphaInput(e: CustomEvent) {
+	_handleAlphaInputFromSlider(e: CustomEvent) {
 		const aphaInputValue: string = (e.target as Input).value;
 		this._alpha = parseFloat(aphaInputValue);
-		this._setColor(this._color);
+		if (Number.isNaN(this._alpha)) {
+			this._alpha = 1;
+		}
+		this._isHueValueChanged = true;
+		this._setColor(this._value);
 	}
 
 	_handleHueInput(e: CustomEvent) {
@@ -320,70 +341,74 @@ class ColorPicker extends UI5Element {
 		}
 	}
 
-	_handleRGBInputsChange(e: CustomEvent) {
+	_handleRGBInputsChange(e: Event) {
 		const target = e.target as Input;
 		const targetValue = parseInt(target.value) || 0;
 		let tempColor;
 		switch (target.id) {
 		case "red":
-			tempColor = { ...this._color, r: targetValue };
+			tempColor = { ...this._value, r: targetValue };
 			break;
 
 		case "green":
-			tempColor = { ...this._color, g: targetValue };
+			tempColor = { ...this._value, g: targetValue };
 			break;
 
 		case "blue":
-			tempColor = { ...this._color, b: targetValue };
+			tempColor = { ...this._value, b: targetValue };
 			break;
 		default:
-			tempColor = { ...this._color };
+			tempColor = { ...this._value };
 		}
 
 		this._setColor(tempColor);
 	}
 
 	_setMainColor(hueValue: number) {
-		if (hueValue <= 255) {
-			this._mainColor = {
+		const hueValueMod = hueValue * 4.251;
+
+		if (hueValueMod <= 255) {
+			this._mainValue = {
 				r: 255,
-				g: hueValue,
+				g: hueValueMod,
 				b: 0,
 			};
-		} else if (hueValue <= 510) {
-			this._mainColor = {
-				r: 255 - (hueValue - 255),
+		} else if (hueValueMod <= 510) {
+			this._mainValue = {
+				r: 255 - (hueValueMod - 255),
 				g: 255,
 				b: 0,
 			};
-		} else if (hueValue <= 765) {
-			this._mainColor = {
+		} else if (hueValueMod <= 765) {
+			this._mainValue = {
 				r: 0,
 				g: 255,
-				b: hueValue - 510,
+				b: hueValueMod - 510,
 			};
-		} else if (hueValue <= 1020) {
-			this._mainColor = {
+		} else if (hueValueMod <= 1020) {
+			this._mainValue = {
 				r: 0,
-				g: 765 - (hueValue - 255),
+				g: 765 - (hueValueMod - 255),
 				b: 255,
 			};
-		} else if (hueValue <= 1275) {
-			this._mainColor = {
-				r: hueValue - 1020,
+		} else if (hueValueMod <= 1275) {
+			this._mainValue = {
+				r: hueValueMod - 1020,
 				g: 0,
 				b: 255,
 			};
 		} else {
-			this._mainColor = {
+			this._mainValue = {
 				r: 255,
 				g: 0,
-				b: 1275 - (hueValue - 255),
+				b: 1275 - (hueValueMod - 255),
 			};
 		}
 	}
 
-	_handleAlphaChange() {
+	_handleAlphaChange(e: CustomEvent) {
+		this._handleAlphaInputFromSlider(e);
+
 		this._alpha = this._alpha < 0 ? 0 : this._alpha;
 		this._alpha = this._alpha > 1 ? 1 : this._alpha;
 	}
@@ -414,7 +439,7 @@ class ColorPicker extends UI5Element {
 		// and HSL format, the color will be parsed to RGB
 		// 0 ≤ H < 360
 		// 4.251 because with 4.25 we get out of the colors range.
-		const h = this._hue / 4.251;
+		const h = this._hue;
 
 		// 0 ≤ S ≤ 1
 		const s = 1 - +(Math.round(parseFloat((y / 256) + "e+2")) + "e-2"); // eslint-disable-line
@@ -435,9 +460,9 @@ class ColorPicker extends UI5Element {
 	}
 
 	_setColor(color: ColorRGB = { r: 0, g: 0, b: 0 }) {
-		this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
+		this.value = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
 		this._wrongHEX = !this.isValidRGBColor(color);
-		this.fireEvent("change");
+		this.fireDecoratorEvent("change");
 	}
 
 	isValidRGBColor(color: ColorRGB) {
@@ -445,9 +470,9 @@ class ColorPicker extends UI5Element {
 	}
 
 	_setHex() {
-		let red = this._color.r.toString(16),
-			green = this._color.g.toString(16),
-			blue = this._color.b.toString(16);
+		let red = this._value.r.toString(16),
+			green = this._value.g.toString(16),
+			blue = this._value.b.toString(16);
 
 		if (red.length === 1) {
 			red = `0${red}`;
@@ -463,7 +488,7 @@ class ColorPicker extends UI5Element {
 	}
 
 	_setValues() {
-		const hslColours: ColorHSL = RGBToHSL(this._color);
+		const hslColours: ColorHSL = RGBToHSL(this._value);
 		this._selectedCoordinates = {
 			x: ((Math.round(hslColours.l * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the width of the circle
 			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the height of the circle
@@ -475,7 +500,7 @@ class ColorPicker extends UI5Element {
 			this._isHueValueChanged = false;
 			this._hue = this.selectedHue ? this.selectedHue : this._hue;
 		} else {
-			this._hue = Math.round(hslColours.h * 4.25);
+			this._hue = Math.round(hslColours.h);
 		}
 
 		this._setMainColor(this._hue);
@@ -513,21 +538,26 @@ class ColorPicker extends UI5Element {
 		return this._wrongHEX ? true : undefined;
 	}
 
-	get hexInputErrorState() {
-		return this._wrongHEX ? "Error" : undefined;
+	get hexInputErrorState(): `${ValueState}` {
+		return this._wrongHEX ? "Negative" : "None";
+	}
+
+	get _isDefaultPickerMode() {
+		return !this.simplified;
 	}
 
 	get styles() {
+		// Remove after deleting the hbs template as the styles are added via the jsx template
 		return {
 			mainColor: {
-				"background-color": `rgb(${this._mainColor.r}, ${this._mainColor.g}, ${this._mainColor.b})`,
+				"background-color": `rgb(${this._mainValue.r}, ${this._mainValue.g}, ${this._mainValue.b})`,
 			},
 			circle: {
 				left: `${this._selectedCoordinates.x}px`,
 				top: `${this._selectedCoordinates.y}px`,
 			},
 			colorSpan: {
-				"background-color": `rgba(${this._color.r}, ${this._color.g}, ${this._color.b}, ${this._alpha})`,
+				"background-color": `rgba(${this._value.r}, ${this._value.g}, ${this._value.b}, ${this._alpha})`,
 			},
 		};
 	}

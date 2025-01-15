@@ -45,7 +45,7 @@ describe("General API", () => {
 	it("should wrap the text of the link", async () => {
 		const wrappingLabel = await browser.$("#wrapping-link");
 		const truncatingLabel = await browser.$("#non-wrapping-link");
-		const LINK_HEIGHT = 20; // It's 20px in sap_horizon, previously 18px in sap_fiori_3
+		const LINK_HEIGHT = 16;
 
 		assert.isAbove((await wrappingLabel.getSize()).height, (await truncatingLabel.getSize()).height);
 		assert.strictEqual((await truncatingLabel.getSize()).height, LINK_HEIGHT, "The truncated label should be single line.");
@@ -59,7 +59,7 @@ describe("General API", () => {
 	});
 
 	it("disabled link should not be enabled", async () => {
-		const link = await browser.$("#disabled-link").shadow$("a").getAttribute("disabled");
+		const link = await browser.$("#disabled-link").shadow$("a").getAttribute("aria-disabled");
 
 		assert.ok(link, "Disabled link should not be enabled.");
 	});
@@ -83,13 +83,14 @@ describe("General API", () => {
 	it("Open dialog link has propper aria-haspopup attribute", async () => {
 		const link = await browser.$("#signInLink");
 
-		assert.strictEqual(await link.shadow$("a").getAttribute("aria-haspopup"), "Dialog", "Proper aria-haspopup attribute is set");
+		assert.strictEqual(await link.shadow$("a").getAttribute("aria-haspopup"), "dialog", "Proper aria-haspopup attribute is set");
 	});
 
 	it("setting accessible-name applied on the host element is reflected on the anchor tag", async () => {
-		const link = await browser.$("#linkAccName");
+		const linkShadow = await browser.$("#linkAccName").shadow$("a");
 
-		assert.strictEqual(await link.shadow$("a").getAttribute("aria-label"), "more info", "Attribute is reflected");
+		assert.strictEqual(await linkShadow.getAttribute("aria-label"), "more info", "aria-label attribute is set");
+		assert.strictEqual(await linkShadow.getAttribute("title"), "more info", "title attribute is set");
 	});
 
 
@@ -138,4 +139,11 @@ describe("General API", () => {
 		assert.strictEqual(await result.getText(), 'SHIFT:' + await link.getText(), "label for pressed link is correct");
 	});
 
+	it("links have icons", async() => {
+		const linkWithIcon = await browser.$("#linkWithIcon");
+		const linkWithEndIcon = await browser.$("#linkWithEndIcon");
+
+		assert.ok(await linkWithIcon.shadow$("ui5-icon"), "Link have icon.");
+		assert.ok(await linkWithEndIcon.shadow$("ui5-icon"), "Link have end icon.");
+	})
 });

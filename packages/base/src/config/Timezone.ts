@@ -1,6 +1,11 @@
 import { getTimezone as getConfiguredTimezone } from "../InitialConfiguration.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
 let currTimezone: string | undefined;
+
+attachConfigurationReset(() => {
+	currTimezone = undefined;
+});
 
 /**
  * Returns the configured IANA timezone ID.
@@ -17,7 +22,7 @@ const getTimezone = (): string | undefined => {
 
 /**
  * Sets the IANA timezone ID.
- * <b>For example:</b> "America/New_York", "Europe/London", "Australia/Sydney", "Asia/Bishkek", etc.
+ * **For example:** "America/New_York", "Europe/London", "Australia/Sydney", "Asia/Bishkek", etc.
  *>
  * @param {string} timezone
  * @private

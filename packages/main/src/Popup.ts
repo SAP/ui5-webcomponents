@@ -1,29 +1,32 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isChrome, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isChrome,
+	isDesktop,
+	isPhone,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import { getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
-import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
+import PopupTemplate from "./PopupTemplate.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
 import popupStlyes from "./generated/themes/Popup.css.js";
-import popupStaticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
+import popupBlockLayerStyles from "./generated/themes/PopupBlockLayer.css.js";
 import globalStyles from "./generated/themes/PopupGlobal.css.js";
 
 const createBlockingStyle = (): void => {
@@ -47,233 +50,216 @@ type PopupBeforeCloseEventDetail = {
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * Base class for all popup Web Components.
  *
- * If you need to create your own popup-like custom UI5 Web Components, it is highly recommended that you extend
- * at least Popup in order to have consistency with other popups in terms of modal behavior and z-index management.
+ * If you need to create your own popup-like custom UI5 Web Components.
  *
  * 1. The Popup class handles modality:
  *  - The "isModal" getter can be overridden by derivatives to provide their own conditions when they are modal or not
  *  - Derivatives may call the "blockPageScrolling" and "unblockPageScrolling" static methods to temporarily remove scrollbars on the html element
- *  - Derivatives may call the "open" and "close" methods which handle focus, manage the popup registry and for modal popups, manage the blocking layer
+ *  - Derivatives may call the "openPopup" and "closePopup" methods which handle focus, manage the popup registry and for modal popups, manage the blocking layer
  *
  *  2. Provides blocking layer (relevant for modal popups only):
- *   - It is in the static area
  *   - Controlled by the "open" and "close" methods
  *
  * 3. The Popup class "traps" focus:
  *  - Derivatives may call the "applyInitialFocus" method (usually when opening, to transfer focus inside the popup)
  *
- * 4. The Popup class automatically assigns "z-index"
- *  - Each time a popup is opened, it gets a higher than the previously opened popup z-index
- *
- * 5. The template of this component exposes two inline partials you can override in derivatives:
+ * 4. The template of this component exposes two inline partials you can override in derivatives:
  *  - beforeContent (upper part of the box, useful for header/title/close button)
  *  - afterContent (lower part, useful for footer/action buttons)
- *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Popup
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @public
  */
 @customElement({
-	renderer: litRender,
-	styles: popupStlyes,
+	renderer: jsxRender,
+	styles: [popupStlyes, popupBlockLayerStyles],
 	template: PopupTemplate,
-	staticAreaTemplate: PopupBlockLayer,
-	staticAreaStyles: popupStaticAreaStyles,
 })
 /**
- * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
- *
+ * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening.
  * @public
- * @event sap.ui.webc.main.Popup#before-open
- * @allowPreventDefault
  */
-@event("before-open")
+@event("before-open", {
+	cancelable: true,
+})
 
 /**
- * Fired after the component is opened. <b>This event does not bubble.</b>
- *
+ * Fired after the component is opened.
  * @public
- * @event sap.ui.webc.main.Popup#after-open
  */
-@event("after-open")
+@event("open")
 
 /**
- * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. <b>This event does not bubble.</b>
- *
+ * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing.
  * @public
- * @event sap.ui.webc.main.Popup#before-close
- * @allowPreventDefault
- * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
+ * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  */
 @event("before-close", {
-	escPressed: { type: Boolean },
+	cancelable: true,
 })
 
 /**
- * Fired after the component is closed. <b>This event does not bubble.</b>
- *
+ * Fired after the component is closed.
  * @public
- * @event sap.ui.webc.main.Popup#after-close
  */
-@event("after-close")
+@event("close")
 
 /**
  * Fired whenever the popup content area is scrolled
- *
  * @private
- * @event sap.ui.webc.main.Popup#scroll
  */
-@event("scroll")
+@event("scroll", {
+	bubbles: true,
+})
 abstract class Popup extends UI5Element {
+	eventDetails!: {
+		"before-open": void
+		"open": void
+		"before-close": PopupBeforeCloseEventDetail
+		"close": void
+		"scroll": PopupScrollEventDetail
+	}
+
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Popup.prototype.initialFocus
-	 * @defaultvalue ""
+	 * **Note:** If an element with `autofocus` attribute is added inside the component,
+	 * `initialFocus` won't take effect.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	initialFocus!: string;
+	initialFocus?: string;
 
 	/**
 	 * Defines if the focus should be returned to the previously focused element,
 	 * when the popup closes.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Popup.prototype.preventFocusRestore
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.8
 	*/
 	@property({ type: Boolean })
-	preventFocusRestore!: boolean;
-
-	/**
-	 * Indicates if the element is open
-	 * @public
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Popup.prototype.open
-	 * @defaultvalue false
-	 * @since 1.2.0
-	 */
-	@property({ type: Boolean })
-	open!: boolean;
-
-	/**
-	 * Indicates if the element is already open
-	 * @private
-	 * @type {boolean}
-	 * @defaultvalue false
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	opened!: boolean;
+	preventFocusRestore = false;
 
 	/**
 	 * Defines the accessible name of the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Popup.prototype.accessibleName
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Popup.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * Allows setting a custom role.
-	 *
-	 * @type {sap.ui.webc.main.types.PopupAccessibleRole}
-	 * @name sap.ui.webc.main.Popup.prototype.accessibleRole
-	 * @defaultvalue "Dialog"
+	 * @default "Dialog"
 	 * @public
 	 * @since 1.10.0
 	 */
-	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.Dialog })
-	accessibleRole!: `${PopupAccessibleRole}`;
+	@property()
+	accessibleRole: `${PopupAccessibleRole}` = "Dialog";
 
 	/**
 	 * Defines the current media query size.
-	 *
-	 * @type {string}
 	 * @private
 	 */
 	@property()
-	mediaRange!: string;
+	mediaRange?: string;
 
 	/**
-	 * @private
+	 * Indicates whether initial focus should be prevented.
+	 * @public
+	 * @default false
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	_disableInitialFocus!: boolean;
-
-	@property({ type: Boolean })
-	_blockLayerHidden!: boolean;
+	preventInitialFocus = false;
 
 	/**
 	 * Indicates if the element is the top modal popup
 	 *
 	 * This property is calculated automatically
-	 *
 	 * @private
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	isTopModalPopup!: boolean;
+	isTopModalPopup = false;
 
 	/**
 	 * Defines the content of the Popup.
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Popup.prototype.default
-	 * @slot content
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>
+	content!: Array<HTMLElement>;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onPhone = false;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onDesktop = false;
 
 	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
-	_zIndex?: number;
 	_focusedElementBeforeOpen?: HTMLElement | null;
+	_opened = false;
+	_open = false;
 
 	constructor() {
 		super();
 
 		this._resizeHandler = this._resize.bind(this);
+
+		this._getRealDomRef = () => {
+			return this.shadowRoot!.querySelector<HTMLElement>("[root-element]")!;
+		};
 	}
 
 	onBeforeRendering() {
-		this._blockLayerHidden = !this.isOpen() || !this.isTopModalPopup;
+		this.onPhone = isPhone();
+		this.onDesktop = isDesktop();
 	}
 
 	onAfterRendering() {
-		this._updateMediaRange();
+		renderFinished().then(() => {
+			this._updateMediaRange();
+		});
 	}
 
 	onEnterDOM() {
+		this.setAttribute("popover", "manual");
 		ResizeHandler.register(this, this._resizeHandler);
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+
+		this.tabIndex = -1;
+
+		if (this.open) {
+			this.showPopover();
+			this.openPopup();
+		}
 	}
 
 	onExitDOM() {
-		if (this.isOpen()) {
+		if (this._opened) {
 			Popup.unblockPageScrolling(this);
 			this._removeOpenedPopup();
 		}
@@ -281,8 +267,71 @@ abstract class Popup extends UI5Element {
 		ResizeHandler.deregister(this, this._resizeHandler);
 	}
 
-	get _displayProp() {
-		return "block";
+	/**
+	 * Indicates if the element is open
+	 * @public
+	 * @default false
+	 * @since 1.2.0
+	 */
+	@property({ type: Boolean })
+	set open(value: boolean) {
+		if (this._open === value) {
+			return;
+		}
+
+		this._open = value;
+
+		if (value) {
+			this.openPopup();
+		} else {
+			this.closePopup();
+		}
+	}
+
+	get open() : boolean {
+		return this._open;
+	}
+
+	async openPopup() {
+		if (this._opened) {
+			return;
+		}
+
+		const prevented = !this.fireDecoratorEvent("before-open");
+
+		if (prevented || this._opened) {
+			return;
+		}
+
+		this._opened = true;
+
+		if (this.isModal) {
+			Popup.blockPageScrolling(this);
+		}
+
+		this._focusedElementBeforeOpen = getFocusedElement();
+
+		this._show();
+
+		if (this.getDomRef()) {
+			this._updateMediaRange();
+		}
+
+		this._addOpenedPopup();
+
+		this.open = true;
+
+		// initial focus, if focused element is statically created
+		await this.applyInitialFocus();
+
+		await renderFinished();
+
+		// initial focus, if focused element is dynamically created
+		await this.applyInitialFocus();
+
+		if (this.isConnected) {
+			this.fireDecoratorEvent("open");
+		}
 	}
 
 	_resize() {
@@ -325,7 +374,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	_scroll(e: Event) {
-		this.fireEvent<PopupScrollEventDetail>("scroll", {
+		this.fireDecoratorEvent("scroll", {
 			scrollTop: (e.target as HTMLElement).scrollTop,
 			targetRef: e.target as HTMLElement,
 		});
@@ -334,7 +383,7 @@ abstract class Popup extends UI5Element {
 	_onkeydown(e: KeyboardEvent) {
 		const isTabOutAttempt = e.target === this._root && isTabPrevious(e);
 		// if the popup is closed, focus is already moved, so Enter keydown may result in click on the newly focused element
-		const isEnterOnClosedPopupChild = isEnter(e) && !this.isOpen();
+		const isEnterOnClosedPopupChild = isEnter(e) && !this.open;
 
 		if (isTabOutAttempt || isEnterOnClosedPopupChild) {
 			e.preventDefault();
@@ -350,10 +399,6 @@ abstract class Popup extends UI5Element {
 	}
 
 	_onmousedown(e: MouseEvent) {
-		if (!isSafari()) { // Remove when adopting native dialog
-			this._root.removeAttribute("tabindex");
-		}
-
 		if (this.shadowRoot!.contains(e.target as HTMLElement)) {
 			this._shouldFocusRoot = true;
 		} else {
@@ -362,10 +407,6 @@ abstract class Popup extends UI5Element {
 	}
 
 	_onmouseup() {
-		if (!isSafari()) { // Remove when adopting native dialog
-			this._root.tabIndex = -1;
-		}
-
 		if (this._shouldFocusRoot) {
 			if (isChrome()) {
 				this._root.focus();
@@ -403,23 +444,28 @@ abstract class Popup extends UI5Element {
 	}
 
 	/**
-	 * Use this method to focus the element denoted by "initialFocus", if provided, or the first focusable element otherwise.
+	 * Use this method to focus the element denoted by "initialFocus", if provided,
+	 * or the first focusable element otherwise.
 	 * @protected
 	 */
 	async applyInitialFocus() {
-		await this.applyFocus();
+		if (!this.preventInitialFocus) {
+			await this.applyFocus();
+		}
 	}
 
 	/**
-	 * Focuses the element denoted by <code>initialFocus</code>, if provided,
+	 * Focuses the element denoted by `initialFocus`, if provided,
 	 * or the first focusable element otherwise.
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.Popup#applyFocus
-	 * @async
-	 * @returns {Promise} Promise that resolves when the focus is applied
+	 * @returns Promise that resolves when the focus is applied
 	 */
-	async applyFocus() {
+	async applyFocus(): Promise<void> {
+		// do nothing if the standard HTML autofocus is used
+		if (this.querySelector("[autofocus]")) {
+			return;
+		}
+
 		await this._waitForDomRef();
 
 		if (this.getRootNode() === this) {
@@ -443,61 +489,8 @@ abstract class Popup extends UI5Element {
 		}
 	}
 
-	/**
-	 * Tells if the component is opened
-	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.Popup#isOpen
-	 * @returns {boolean}
-	 */
-	isOpen() {
-		return this.opened;
-	}
-
 	isFocusWithin() {
 		return isFocusedElementWithinNode(this._root);
-	}
-
-	/**
-	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
-	 * @protected
-	 */
-	async _open(preventInitialFocus: boolean) {
-		const prevented = !this.fireEvent("before-open", {}, true, false);
-		if (prevented) {
-			return;
-		}
-
-		if (this.isModal && !this.shouldHideBackdrop) {
-			// create static area item ref for block layer
-			this.getStaticAreaItemDomRef();
-			this._blockLayerHidden = false;
-			Popup.blockPageScrolling(this);
-		}
-
-		this._zIndex = getNextZIndex();
-		this.style.zIndex = this._zIndex?.toString() || "";
-
-		this._focusedElementBeforeOpen = getFocusedElement();
-
-		this._show();
-
-		if (this.getDomRef()) {
-			this._updateMediaRange();
-		}
-
-		this._addOpenedPopup();
-
-		this.opened = true;
-		this.open = true;
-
-		await renderFinished();
-
-		if (!this._disableInitialFocus && !preventInitialFocus) {
-			await this.applyInitialFocus();
-		}
-
-		this.fireEvent("after-open", {}, false, false);
 	}
 
 	_updateMediaRange() {
@@ -514,28 +507,24 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Closes the popup.
-	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.Popup#close
-	 * @returns {void}
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
-		if (!this.opened) {
+	closePopup(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
+		if (!this._opened) {
 			return;
 		}
 
-		const prevented = !this.fireEvent<PopupBeforeCloseEventDetail>("before-close", { escPressed }, true, false);
+		const prevented = !this.fireDecoratorEvent("before-close", { escPressed });
 		if (prevented) {
 			return;
 		}
 
+		this._opened = false;
+
 		if (this.isModal) {
-			this._blockLayerHidden = true;
 			Popup.unblockPageScrolling(this);
 		}
 
 		this.hide();
-		this.opened = false;
 		this.open = false;
 
 		if (!preventRegistryUpdate) {
@@ -546,7 +535,7 @@ abstract class Popup extends UI5Element {
 			this.resetFocus();
 		}
 
-		this.fireEvent("after-close", {}, false, false);
+		this.fireDecoratorEvent("close");
 	}
 
 	/**
@@ -575,7 +564,10 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	_show() {
-		this.style.display = this._displayProp;
+		if (this.isConnected) {
+			this.setAttribute("popover", "manual");
+			this.showPopover();
+		}
 	}
 
 	/**
@@ -583,39 +575,23 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	hide() {
-		this.style.display = "none";
+		this.isConnected && this.hidePopover();
 	}
 
 	/**
 	 * Implement this getter with relevant logic regarding the modality of the popup (e.g. based on a public property)
-	 *
 	 * @protected
-	 * @abstract
-	 * @returns {boolean}
 	 */
 	abstract get isModal(): boolean
 
 	/**
-	 * Implement this getter with relevant logic in order to hide the block layer (f.e. based on a public property)
-	 *
-	 * @protected
-	 * @abstract
-	 * @returns {boolean}
-	 */
-	abstract get shouldHideBackdrop(): boolean
-
-	/**
 	 * Return the ID of an element in the shadow DOM that is going to label this popup
-	 *
 	 * @protected
-	 * @abstract
-	 * @returns {string | undefined}
 	 */
 	abstract get _ariaLabelledBy(): string | undefined
 
 	/**
 	 * Ensures ariaLabel is never null or empty string
-	 * @returns {string | undefined}
 	 * @protected
 	 */
 	get _ariaLabel() {
@@ -626,11 +602,11 @@ abstract class Popup extends UI5Element {
 		return this.shadowRoot!.querySelector(".ui5-popup-root")!;
 	}
 
-	get _role(): string | undefined {
-		return (this.accessibleRole === PopupAccessibleRole.None) ? undefined : this.accessibleRole.toLowerCase();
+	get _role() {
+		return (this.accessibleRole === PopupAccessibleRole.None) ? undefined : toLowercaseEnumValue(this.accessibleRole);
 	}
 
-	get _ariaModal(): string | undefined {
+	get _ariaModal(): "true" | undefined {
 		return this.accessibleRole === PopupAccessibleRole.None ? undefined : "true";
 	}
 
@@ -642,9 +618,6 @@ abstract class Popup extends UI5Element {
 		return {
 			root: {},
 			content: {},
-			blockLayer: {
-				"zIndex": this._zIndex ? this._zIndex - 1 : "",
-			},
 		};
 	}
 
@@ -652,7 +625,6 @@ abstract class Popup extends UI5Element {
 		return {
 			root: {
 				"ui5-popup-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 			content: {
 				"ui5-popup-content": true,
@@ -662,8 +634,4 @@ abstract class Popup extends UI5Element {
 }
 
 export default Popup;
-
-export type {
-	PopupScrollEventDetail,
-	PopupBeforeCloseEventDetail,
-};
+export type { PopupScrollEventDetail, PopupBeforeCloseEventDetail };

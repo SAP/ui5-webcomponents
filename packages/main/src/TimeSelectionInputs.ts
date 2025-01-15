@@ -1,16 +1,13 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import {
 	isEnter,
 	isNumber,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import TimePickerInternals from "./TimePickerInternals.js";
-import Input from "./Input.js";
-import SegmentedButton from "./SegmentedButton.js";
+import type Input from "./Input.js";
 
 import InputType from "./types/InputType.js";
 
@@ -21,7 +18,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import TimeSelectionInputsTemplate from "./generated/templates/TimeSelectionInputsTemplate.lit.js";
+import TimeSelectionInputsTemplate from "./TimeSelectionInputsTemplate.js";
 
 // Styles
 import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.js";
@@ -29,41 +26,38 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-time-selection-inputs</code> displays a popover with <code>ui5-input</code> components of type="number" and an
- * optional a AM/PM <code>ui5-segmented-button</code> according to the display format given to the <code>ui5-time-picker</code>.
+ * `ui5-time-selection-inputs` displays a popover with `ui5-input` components of type="number" and an
+ * optional a AM/PM `ui5-segmented-button` according to the display format given to the `ui5-time-picker`.
  * Using of numeric input components enables display of mobile devices' native numeric keyboard, which speeds up entering of the time.
- * The popup appears only on mobile devices when there is a tap on the <code>ui5-time-picker</code> input.
+ * The popup appears only on mobile devices when there is a tap on the `ui5-time-picker` input.
  *
  * This component should not be used separately.
- *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TimeSelectionInputs
- * @extends sap.ui.webc.main.TimePickerInternals
+ * @extends TimePickerInternals
  * @abstract
- * @tagname ui5-time-selection-inputs
  * @since 1.18.0
  * @private
  */
 @customElement({
 	tag: "ui5-time-selection-inputs",
-	renderer: litRender,
 	styles: TimeSelectionInputsCss,
 	template: TimeSelectionInputsTemplate,
-	dependencies: [
-		Input,
-		SegmentedButton,
-	],
 })
-
+@event("close-inputs", {
+	bubbles: true,
+})
 class TimeSelectionInputs extends TimePickerInternals {
-	@property({ validator: Integer, defaultValue: -1 })
-	_editedInput!: number;
+	eventDetails!: TimePickerInternals["eventDetails"] & {
+		"close-inputs": void,
+	}
+
+	@property({ type: Number })
+	_editedInput = -1;
 
 	@property()
-	_editedInputValue!: string;
+	_editedInputValue?: string;
 
 	get enterHoursLabel() {
 		return TimePickerInternals.i18nBundle.getText(TIMEPICKER_INPUTS_ENTER_HOURS);
@@ -87,7 +81,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 	}
 
 	get _is24HoursFormat() {
-		return this.formatPattern.indexOf("HH") !== -1 || this.formatPattern.indexOf("H") !== -1;
+		return this.formatPattern?.includes("HH") || this.formatPattern?.includes("H");
 	}
 
 	onBeforeRendering() {
@@ -108,11 +102,10 @@ class TimeSelectionInputs extends TimePickerInternals {
 
 	/**
 	 * Returns Input component by index or name.
-	 *
-	 * @param {number | string} indexOrName the index or name of the component
-	 * @returns { Input | undefined} component (if exists) or undefined
+	 * @param indexOrName the index or name of the component
+	 * @returns component (if exists) or undefined
 	 */
-	_inputComponent(indexOrName: number | string) {
+	_inputComponent(indexOrName: number | string): Input | undefined | null {
 		const index = typeof indexOrName === "string" ? this._indexFromName(indexOrName) : indexOrName;
 		const entity = this._entities[index].entity;
 		return entity ? this.shadowRoot?.querySelector<Input>(`#${this._id}_input_${entity}`) : undefined;
@@ -120,11 +113,10 @@ class TimeSelectionInputs extends TimePickerInternals {
 
 	/**
 	 * Returns the inner input element DOM reference.
-	 *
-	 * @param { Input } input the Input component
-	 * @returns { HTMLElement } inner input element
+	 * @param input the Input component
+	 * @returns inner input element
 	 */
-	_innerInput(input: Input) {
+	_innerInput(input: Input): HTMLInputElement | null {
 		return input && input.getInputDOMRefSync();
 	}
 
@@ -200,8 +192,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 
 	/**
 	 * Switches to the specific input.
-	 *
-	 * @param {number} index the index (in _entities array) of the input
+	 * @param index the index (in _entities array) of the input
 	 * @private
 	 */
 	_switchInput(index: number) {
@@ -213,8 +204,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 
 	/**
 	 * Switches to the next input that can de focused.
-	 *
-	 * @param {boolean} wrapAround whether to start with first clock after reaching the last one, or not
+	 * @param wrapAround whether to start with first clock after reaching the last one, or not
 	 * @private
 	 */
 	_switchNextInput(wrapAround = false) {
@@ -239,14 +229,12 @@ class TimeSelectionInputs extends TimePickerInternals {
 
 	/**
 	 * Return a value as string, formatted and prepended with zero if necessary.
-	 *
-	 * @param {number} num A number to format
-	 * @param {boolean} prependZero Whether to prepend with zero or not
-	 * @param {number} max Max value of the number for this clock
-	 * @returns {string} Formatted value
+	 * @param num A number to format
+	 * @param prependZero Whether to prepend with zero or not
+	 * @returns Formatted value
 	 * @private
 	 */
-	_formatNumberToString(num: number, prependZero: boolean) {
+	_formatNumberToString(num: number, prependZero: boolean): string {
 		return num < 10 && prependZero ? `0${num}` : num.toString();
 	}
 
@@ -256,7 +244,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 		}
 		if (isEnter(evt)) {
 			// Accept the time and close the popover
-			this.fireEvent("close-inputs");
+			this.fireDecoratorEvent("close-inputs");
 		} else if (isNumber(evt) && this._entities[this._activeIndex]) {
 			const char = evt.key;
 			const buffer = this._keyboardBuffer + char;
@@ -289,8 +277,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 
 	/**
 	 * Input 'change' event handler.
-	 *
-	 * @param {value} number new value to set on active input
+	 * @param value new value to set on active input
 	 */
 	_inputChange(value: number) {
 		const stringValue = this._formatNumberToString(value, this._entities[this._activeIndex].prependZero);

@@ -1,8 +1,13 @@
 const path = require("path");
 const fs = require("fs");
-const resolve = require("resolve");
 const LIB = path.join(__dirname, `../lib/`);
-const preprocessJSDocScript = resolve.sync("@ui5/webcomponents-tools/lib/jsdoc/preprocess.js");
+let websiteBaseUrl = "/";
+
+if (process.env.DEPLOY) {
+	websiteBaseUrl = "/ui5-webcomponents/";
+} else if (process.env.DEPLOY_NIGHTLY) {
+	websiteBaseUrl = "/ui5-webcomponents/nightly/";
+}
 
 const getScripts = (options) => {
 
@@ -12,9 +17,9 @@ const getScripts = (options) => {
 	const createIllustrationsJSImportsScript = illustrations.join(" && ");
 
 	// The script creates the "src/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
-    const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.prefix || '\"\"'} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
+    const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.set} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
 
-	const tsOption = options.typescript;
+	const tsOption = !options.legacy;
 	const tsCommandOld = tsOption ? "tsc" : "";
 	let tsWatchCommandStandalone = tsOption ? "tsc --watch" : "";
 	// this command is only used for standalone projects. monorepo projects get their watch from vite, so opt-out here
@@ -54,76 +59,71 @@ const getScripts = (options) => {
 	}
 
 	const scripts = {
-		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
+		clean: 'rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig} --fix`,
 		generate: {
 			default: `${tsCrossEnv} nps prepare.all`,
-			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copyProps" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		prepare: {
-			default: `${tsCrossEnv} nps clean prepare.all copy prepare.typescript generateAPI`,
+			default: `${tsCrossEnv} nps clean prepare.all ${options.legacy ? "copy" : ""} copyProps prepare.typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 			typescript: tsCommandOld,
 		},
-		copyGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
 		build: {
 			default: "nps prepare lint build.bundle", // build.bundle2
 			templates: `mkdirp src/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 			styles: {
 				default: `concurrently "nps build.styles.themes" "nps build.styles.components"`,
-				default2: `nps build.styles.themes build.styles.components`,
-				themes: `node "${LIB}/postcss-p/postcss-p.mjs"`,
-				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
+				themes: `node "${LIB}/css-processors/css-processor-themes.mjs"`,
+				components: `node "${LIB}/css-processors/css-processor-components.mjs"`,
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
 				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
-				json: `node "${LIB}/i18n/toJSON.js" src/i18n src/generated/assets/i18n`,
+				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
 			},
 			jsonImports: {
 				default: "mkdirp src/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
-				themes: `node "${LIB}/generate-json-imports/themes.js" src/generated/assets/themes src/generated/json-imports`,
-				i18n: `node "${LIB}/generate-json-imports/i18n.js" src/generated/assets/i18n src/generated/json-imports`,
+				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes src/generated/json-imports`,
+				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n src/generated/json-imports`,
 			},
 			jsImports: {
 				default: "mkdirp src/generated/js-imports && nps build.jsImports.illustrationsLoaders",
 				illustrationsLoaders: createIllustrationsLoadersScript,
 			},
-			bundle: `vite build ${viteConfig}`,
+			bundle: `vite build ${viteConfig} --mode testing  --base ${websiteBaseUrl}`,
 			bundle2: ``,
 			illustrations: createIllustrationsJSImportsScript,
 		},
+		copyProps: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
 		copy: {
 			default: "nps copy.src copy.props",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/`,
-			// srcGenerated2: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
-			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
+			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
 		},
 		watch: {
-			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" "nps watch.api" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
+			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" ${options.legacy ? '"nps watch.src"' : ""} "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			typescript: tsWatchCommandStandalone,
-			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
-			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
+			props: 'nps "copyProps --watch --safe --skip-initial-copy"',
+			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
-				components: {
-					default: 'concurrently "nps watch.styles.components.existingFiles" "nps watch.styles.components.newFiles"',
-					existingFiles: `nps "build.styles.components -w"`,
-					newFiles: `node "${LIB}/postcss-new-files/index.js" --srcFiles="src/themes/*.css"`,
-				},
+				components: `nps "build.styles.components -w"`,
 			},
-			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
-			api: 'chokidar "test/**/*.sample.html" -c "nps generateAPI"',
+			templates: 'chokidar "src/**/*.hbs" -i "src/generated" -c "nps build.templates"',
 			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "nps build.i18n.defaultsjs"'
 		},
 		start: "nps prepare watch.devServer",
 		test: `node "${LIB}/test-runner/test-runner.js"`,
+		"test-cy-ci": `yarn cypress run --component --browser chrome`,
+		"test-cy-open": `yarn cypress open --component --browser chrome`,
 		"test-suite-1": `node "${LIB}/test-runner/test-runner.js" --suite suite1`,
 		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
 		startWithScope: "nps scope.prepare scope.watchWithBundle",
@@ -137,16 +137,13 @@ const getScripts = (options) => {
 				replace: `node "${LIB}/scoping/scope-test-pages.js" test/pages/scoped demo`,
 			},
 			watchWithBundle: 'concurrently "nps scope.watch" "nps scope.bundle" ',
-			watch: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.props" "nps watch.styles"',
-			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
+			watch: 'concurrently "nps watch.templates" "nps watch.props" "nps watch.styles"',
+			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 		},
 		generateAPI: {
-			default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.prepareManifest",
-			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "dist/**/*.js" jsdoc-dist/`,
-			prepareManifest: `node "${LIB}/generate-custom-elements-manifest/index.js" dist dist`,
-			preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/ src`,
-			jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,
-			cleanup: "rimraf jsdoc-dist/"
+			default: tsOption ? "nps generateAPI.generateCEM generateAPI.validateCEM" : "",
+			generateCEM: `cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs" ${ options.dev ? "--dev" : "" }`,
+			validateCEM: `node "${LIB}/cem/validate.js" ${ options.dev ? "--dev" : "" }`,
 		},
 	};
 

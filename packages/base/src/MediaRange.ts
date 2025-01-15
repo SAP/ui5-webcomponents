@@ -11,8 +11,6 @@ DEAFULT_RANGE_SET.set("XL", [1440, Infinity]);
 /**
  * Enumeration containing the names and settings of predefined screen width media query range sets.
  *
- * @namespace
- * @name MediaRange.RANGESETS
  * @public
  */
  enum RANGESETS {
@@ -20,14 +18,13 @@ DEAFULT_RANGE_SET.set("XL", [1440, Infinity]);
 	 * A 4-step range set (S-M-L-XL).
 	 *
 	 * The ranges of this set are:
-	 * <ul>
-	 * <li><code>"S"</code>: For screens smaller than 600 pixels.</li>
-	 * <li><code>"M"</code>: For screens greater than or equal to 600 pixels and smaller than 1024 pixels.</li>
-	 * <li><code>"L"</code>: For screens greater than or equal to 1024 pixels and smaller than 1440 pixels.</li>
-	 * <li><code>"XL"</code>: For screens greater than or equal to 1440 pixels.</li>
-	 * </ul>
 	 *
-	 * @name MediaRange.RANGESETS.RANGE_4STEPS
+	 * - `"S"`: For screens smaller than 600 pixels.
+	 * - `"M"`: For screens greater than or equal to 600 pixels and smaller than 1024 pixels.
+	 * - `"L"`: For screens greater than or equal to 1024 pixels and smaller than 1440 pixels.
+	 * - `"XL"`: For screens greater than or equal to 1440 pixels.
+	 *
+	 *
 	 * @public
 	 */
 	RANGE_4STEPS = "4Step",
@@ -36,23 +33,22 @@ DEAFULT_RANGE_SET.set("XL", [1440, Infinity]);
 /**
  * Initializes a screen width media query range set.
  *
- * This initialization step makes the range set ready to be used for one of the other functions in namespace <code>MediaRange</code>.
+ * This initialization step makes the range set ready to be used for one of the other functions in namespace `MediaRange`.
  *
  * A range set can be defined as shown in the following example:
- * <pre>
+ * ```
  * MediaRange.initRangeSet("MyRangeSet", [200, 400], ["Small", "Medium", "Large"]);
- * </pre>
+ * ```
  * This example defines the following named ranges:
- * <ul>
- * <li><code>"Small"</code>: For screens smaller than 200 pixels.</li>
- * <li><code>"Medium"</code>: For screens greater than or equal to 200 pixels and smaller than 400 pixels.</li>
- * <li><code>"Large"</code>: For screens greater than or equal to 400 pixels.</li>
- * </ul>
  *
- * @param {string} name The name of the range set to be initialized.
+ * - `"Small"`: For screens smaller than 200 pixels.
+ * - `"Medium"`: For screens greater than or equal to 200 pixels and smaller than 400 pixels.
+ * - `"Large"`: For screens greater than or equal to 400 pixels.
+ *
+ *
+ * @param name The name of the range set to be initialized.
  * The name must be a valid id and consist only of letters and numeric digits.
- * @param {Range} [range] The given range set.
- * @name MediaRange.initRangeSet
+ * @param range The given range set.
  */
 const initRangeSet = (name: string, range: Range) => {
 	mediaRanges.set(name, range);
@@ -61,16 +57,13 @@ const initRangeSet = (name: string, range: Range) => {
 /**
  * Returns information about the current active range of the range set with the given name.
  *
- * If the optional parameter <code>width</code> is given, the active range will be determined for that width,
+ * If the optional parameter `width` is given, the active range will be determined for that width,
  * otherwise it is determined for the current window size.
  *
- * @param {string} name The name of the range set. The range set must be initialized beforehand ({@link MediaRange.initRangeSet})
- * @param {number} [width] An optional width, based on which the range should be determined;
- * If <code>width</code> is not provided, the window size will be used.
- * @returns {string} The name of the current active interval of the range set.
- *
- * @name MediaRange.getCurrentRange
- * @function
+ * @param name The name of the range set. The range set must be initialized beforehand ({@link MediaRange.initRangeSet})
+ * @param [width] An optional width, based on which the range should be determined;
+ * If `width` is not provided, the window size will be used.
+ * @returns The name of the current active interval of the range set.
  * @public
  */
 const getCurrentRange = (name: string, width = window.innerWidth): string => {
@@ -94,11 +87,7 @@ const getCurrentRange = (name: string, width = window.innerWidth): string => {
 
 /**
  * API for screen width changes.
- *
- * @namespace
- * @name MediaRange
  */
-
 const MediaRange = {
 	RANGESETS,
 	initRangeSet,

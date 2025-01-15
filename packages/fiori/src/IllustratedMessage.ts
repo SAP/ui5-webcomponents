@@ -2,16 +2,15 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
-import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type { IButton } from "@ui5/webcomponents/dist/Button.js";
+import IllustrationMessageDesign from "./types/IllustrationMessageDesign.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
 import "./illustrations/BeforeSearch.js";
 
@@ -19,52 +18,59 @@ import "./illustrations/BeforeSearch.js";
 import IllustratedMessageCss from "./generated/themes/IllustratedMessage.css.js";
 
 // Template
-import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
+import IllustratedMessageTemplate from "./IllustratedMessageTemplate.js";
+
+const getEffectiveIllustrationName = (name: string): string => {
+	if (name.startsWith("Tnt")) {
+		return name.replace("Tnt", "tnt/");
+	}
+
+	if (name.includes("/")) {
+		return name;
+	}
+
+	return `fiori/${name}`;
+};
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * An IllustratedMessage is a recommended combination of a solution-oriented message, an engaging
  * illustration, and conversational tone to better communicate an empty or a success state than just show
  * a message alone.
  *
  * Each illustration has default internationalised title and subtitle texts. Also they can be managed with
- * <code>titleText</code> and <code>subtitleText</code> properties.
+ * `titleText` and `subtitleText` properties.
  *
- * To display the desired illustration, use the <code>name</code> property, where you can find the list of all available illustrations.
- * <br><br>
- * <b>Note:</b> By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example:
- * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js"</code>
- * <br>
- * <b>Note:</b> Illustrations starting with the “Tnt” prefix are part of another illustration set. For example to use the “TntSuccess” illustration, add the following import::
- * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/Success.js"</code>
+ * To display the desired illustration, use the `name` property, where you can find the list of all available illustrations.
  *
- * <h3>Structure</h3>
+ * **Note:** By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example:
+ *
+ * `import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js"`
+ *
+ * **Note:** Illustrations starting with the “Tnt” prefix are part of another illustration set. For example to use the “TntSuccess” illustration, add the following import::
+ *
+ * `import "@ui5/webcomponents-fiori/dist/illustrations/tnt/Success.js"`
+ *
+ * ### Structure
  * The IllustratedMessage consists of the following elements, which are displayed below each other in the following order:
- * <br>
- * <ul>
- * <li>Illustration</li>
- * <li>Title</li>
- * <li>Subtitle</li>
- * <li>Actions</li>
- * </ul>
  *
- * <h3>Usage</h3>
- * <code>ui5-illustrated-message</code> is meant to be used inside container component, for example a <code>ui5-card</code>,
- * a <code>ui5-dialog</code> or a <code>ui5-page</code>
+ * - Illustration
+ * - Title
+ * - Subtitle
+ * - Actions
  *
- * <h3>ES6 Module Import</h3>
+ * ### Usage
+ * `ui5-illustrated-message` is meant to be used inside container component, for example a `ui5-card`,
+ * a `ui5-dialog` or a `ui5-page`
  *
- * <code>import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";</code>
+ * ### ES6 Module Import
  *
+ * `import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";`
+ * @csspart subtitle - Used to style the subtitle wrapper of the `ui5-illustrated-message`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.IllustratedMessage
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-illustrated-message
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.15
  */
@@ -73,145 +79,127 @@ import IllustratedMessageTemplate from "./generated/templates/IllustratedMessage
 	tag: "ui5-illustrated-message",
 	languageAware: true,
 	themeAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: IllustratedMessageCss,
 	template: IllustratedMessageTemplate,
-	dependencies: [Title],
 })
 class IllustratedMessage extends UI5Element {
 	/**
 	* Defines the illustration name that will be displayed in the component.
-	* <br><br>
-	* <b>Note:</b> By default the <code>BeforeSearch</code> illustration is loaded.
-	* <br>
+	*
+	* Example:
+	*
+	* `name='BeforeSearch'`, `name='UnableToUpload'`, etc..
+	*
+	* **Note:** To use the TNT illustrations,
+	* you need to set the `tnt` or `Tnt` prefix in front of the icon's name.
+	*
+	* Example:
+	*
+	* `name='tnt/Avatar'` or `name='TntAvatar'`.
+	*
+	* **Note:** By default the `BeforeSearch` illustration is loaded.
 	* When using an illustration type, other than the default, it should be loaded in addition:
-	* <br>
-	* <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
-	* <br><br>
-	* <b>Note:</b> TNT illustrations cointain <code>Tnt</code> prefix in their name.
-	* You can import them removing the <code>Tnt</code> prefix like this:
-	* <br>
-	* <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";</code>
-	* @type {sap.ui.webc.fiori.types.IllustrationMessageType}
-	* @defaultvalue "BeforeSearch"
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.name
+	*
+	* `import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js";`
+	*
+	* For TNT illustrations:
+	*
+	* `import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";`
+	* @default "BeforeSearch"
 	* @public
 	*/
-	@property({ type: IllustrationMessageType, defaultValue: IllustrationMessageType.BeforeSearch })
-	name!: `${IllustrationMessageType}`;
+	@property()
+	name = "BeforeSearch";
 
 	/**
 	* Determines which illustration breakpoint variant is used.
-	* <br><br>
 	*
-	* As <code>IllustratedMessage</code> adapts itself around the <code>Illustration</code>, the other
-	* elements of the component are displayed differently on the different breakpoints/illustration sizes.
-	*
-	* @type {sap.ui.webc.fiori.types.IllustrationMessageSize}
-	* @defaultvalue "Auto"
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.size
+	* As `IllustratedMessage` adapts itself around the `Illustration`, the other
+	* elements of the component are displayed differently on the different breakpoints/illustration designs.
+	* @default "Auto"
 	* @public
-	* @since 1.5.0
+	* @since 2.0.0
 	*/
-	@property({ type: IllustrationMessageSize, defaultValue: IllustrationMessageSize.Auto })
-	size!: `${IllustrationMessageSize}`;
+	@property()
+	design: `${IllustrationMessageDesign}` = "Auto";
 
 	/**
 	* Defines the subtitle of the component.
-	* <br><br>
-	* <b>Note:</b> Using this property, the default subtitle text of illustration will be overwritten.
-	* <br><br>
-	* <b>Note:</b> Using <code>subtitle</code> slot, the default of this property will be overwritten.
-	* @type {string}
-	* @defaultvalue ""
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.subtitleText
+	*
+	* **Note:** Using this property, the default subtitle text of illustration will be overwritten.
+	*
+	* **Note:** Using `subtitle` slot, the default of this property will be overwritten.
+	* @default undefined
 	* @public
 	*/
 	@property()
-	subtitleText!: string;
+	subtitleText?: string;
 
 	/**
 	* Defines the title of the component.
-	* <br><br>
-	* <b>Note:</b> Using this property, the default title text of illustration will be overwritten.
-	* @type {string}
-	* @defaultvalue ""
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.titleText
+	*
+	* **Note:** Using this property, the default title text of illustration will be overwritten.
+	* @default undefined
 	* @public
 	*/
 	@property()
-	titleText!: string;
+	titleText?: string;
 
 	/**
 	* Receives id(or many ids) of the elements that label the component.
-	*
-	* @type {string}
-	* @defaultvalue ""
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.accessibleNameRef
+	* @default undefined
 	* @public
 	* @since 1.7.0
 	*/
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
-	* Defines the semantic level of the title.
-	*
-	* <b>Note:</b> Used for accessibility purposes only.
-	*
-	* @type {sap.ui.webc.main.types.TitleLevel}
-	* @defaultvalue "H2"
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.titleLevel
-	* @public
-	* @since 1.20.0
-	*/
-	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
-	titleLevel!: `${TitleLevel}`;
-
-	/**
-	* Illustration breakpoint variant for the <code>Spot</code> size.
+	* Illustration breakpoint variant for the <code>Dot</code> design.
 	*
 	* @private
-	* @type {String}
+	* @since 1.24.0
+	*/
+	@property({ noAttribute: true })
+	dotSvg?: string;
+
+	/**
+	* Illustration breakpoint variant for the <code>Spot</code> design.
+	*
+	* @private
 	* @since 1.9.0
 	*/
 	@property({ noAttribute: true })
-	spotSvg!: string;
+	spotSvg?: string;
 
 	/**
-	* Illustration breakpoint variant for the <code>Scene</code> size.
-	*
+	* Illustration breakpoint variant for the `Scene` design.
 	* @private
-	* @type {String}
 	* @since 1.9.0
 	*/
 	@property({ noAttribute: true })
-	sceneSvg!: string;
+	sceneSvg?: string;
 
 	/**
-	* Illustration breakpoint variant for the <code>Dialog</code> size.
-	*
+	* Illustration breakpoint variant for the `Dialog` design.
 	* @private
-	* @type {String}
 	* @since 1.9.0
 	*/
 	@property({ noAttribute: true })
-	dialogSvg!: string;
+	dialogSvg?: string;
 
 	/**
 	* Determinates what is the current media of the component based on its width.
 	* @private
 	*/
 	@property()
-	media!: string;
+	media?: string;
 
 	/**
 	* Defines the title of the component.
-	* <br><br>
-	* <b>Note:</b> Using this slot, the default title text of illustration and the value of <code>title</code> property will be overwritten.
-	* @type {HTMLElement}
-	* @slot title
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.title
+	*
+	* **Note:** Using this slot, the default title text of illustration and the value of `title` property will be overwritten.
 	* @public
 	* @since 1.7.0
 	*/
@@ -220,11 +208,8 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Defines the subtitle of the component.
-	* <br><br>
-	* <b>Note:</b> Using this slot, the default subtitle text of illustration and the value of <code>subtitleText</code> property will be overwritten.
-	* @type {HTMLElement}
-	* @slot subtitle
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.subtitle
+	*
+	* **Note:** Using this slot, the default subtitle text of illustration and the value of `subtitleText` property will be overwritten.
 	* @public
 	* @since 1.0.0-rc.16
 	*/
@@ -233,17 +218,15 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Defines the component actions.
-	* @type {sap.ui.webc.main.IButton[]}
-	* @slot actions
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.default
 	* @public
 	*/
 	@slot({ type: HTMLElement, "default": true })
-	actions!: Array<HTMLElement>;
+	actions!: Array<IButton>;
 
 	illustrationTitle?: string;
 	illustrationSubtitle?: string;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 	_lastKnownOffsetWidthForMedia: Record<string, number>;
 	_lastKnownOffsetHeightForMedia: Record<string, number>;
@@ -261,29 +244,28 @@ class IllustratedMessage extends UI5Element {
 		this._lastKnownMedia = "base";
 	}
 
-	static async onDefine() {
-		IllustratedMessage.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
-
 	static get BREAKPOINTS() {
 		return {
-			DIALOG: 679,
-			SPOT: 319,
-			BASE: 259,
+			DIALOG: 681,
+			SPOT: 360,
+			DOT: 260,
+			BASE: 160,
 		};
 	}
 
 	static get BREAKPOINTS_HEIGHT() {
 		return {
-			DIALOG: 451,
-			SPOT: 296,
-			BASE: 87,
+			DIALOG: 415,
+			SPOT: 284,
+			DOT: 207,
+			BASE: 61,
 		};
 	}
 
 	static get MEDIA() {
 		return {
 			BASE: "base",
+			DOT: "dot",
 			SPOT: "spot",
 			DIALOG: "dialog",
 			SCENE: "scene",
@@ -291,20 +273,21 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	async onBeforeRendering() {
-		let illustrationData = getIllustrationDataSync(this.name);
-
 		// Gets the current illustration name given in the "name" attribute
-		const currentIllustration = this.getAttribute("name") as IllustrationMessageType;
+		let effectiveName = getEffectiveIllustrationName(this.name);
+		let illustrationData = getIllustrationDataSync(effectiveName);
 
-		if (this.hasAttribute("name") && !this.isValidIllustration(currentIllustration)) {
+		if (this.hasAttribute("name") && !this.isValidIllustration(effectiveName)) {
+			effectiveName = getEffectiveIllustrationName(IllustrationMessageType.BeforeSearch);
 			// eslint-disable-next-line
-			console.warn(`The illustration "${currentIllustration!}" does not exist. The default illustration "${IllustrationMessageType.BeforeSearch}" is loaded instead.`);
+			console.warn(`The illustration "${effectiveName!}" does not exist. The default illustration "${IllustrationMessageType.BeforeSearch}" is loaded instead.`);
 		}
 
 		if (illustrationData === undefined) {
-			illustrationData = await getIllustrationData(this.name);
+			illustrationData = await getIllustrationData(effectiveName);
 		}
 
+		this.dotSvg = illustrationData!.dotSvg;
 		this.spotSvg = illustrationData!.spotSvg;
 		this.dialogSvg = illustrationData!.dialogSvg;
 		this.sceneSvg = illustrationData!.sceneSvg;
@@ -312,7 +295,7 @@ class IllustratedMessage extends UI5Element {
 		this.illustrationTitle = IllustratedMessage.i18nBundle.getText(illustrationData!.title);
 		this.illustrationSubtitle = IllustratedMessage.i18nBundle.getText(illustrationData!.subtitle);
 
-		if (this.size !== IllustrationMessageSize.Auto) {
+		if (this.design !== IllustrationMessageDesign.Auto) {
 			this._handleCustomSize();
 		}
 	}
@@ -326,7 +309,7 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	handleResize() {
-		if (this.size !== IllustrationMessageSize.Auto) {
+		if (this.design !== IllustrationMessageDesign.Auto) {
 			this._adjustHeightToFitContainer();
 			return;
 		}
@@ -339,15 +322,17 @@ class IllustratedMessage extends UI5Element {
 		const currOffsetWidth = this.offsetWidth,
 			currOffsetHeight = this.offsetHeight;
 
-		const size = heightChange ? currOffsetHeight : currOffsetWidth,
+		const design = heightChange ? currOffsetHeight : currOffsetWidth,
 			oBreakpounts = heightChange ? IllustratedMessage.BREAKPOINTS_HEIGHT : IllustratedMessage.BREAKPOINTS;
 		let newMedia = "";
 
-		if (size <= oBreakpounts.BASE) {
+		if (design <= oBreakpounts.BASE) {
 			newMedia = IllustratedMessage.MEDIA.BASE;
-		} else if (size <= oBreakpounts.SPOT) {
+		} else if (design <= oBreakpounts.DOT) {
+			newMedia = IllustratedMessage.MEDIA.DOT;
+		} else if (design <= oBreakpounts.SPOT) {
 			newMedia = IllustratedMessage.MEDIA.SPOT;
-		} else if (size <= oBreakpounts.DIALOG) {
+		} else if (design <= oBreakpounts.DIALOG) {
 			newMedia = IllustratedMessage.MEDIA.DIALOG;
 		} else {
 			newMedia = IllustratedMessage.MEDIA.SCENE;
@@ -359,8 +344,7 @@ class IllustratedMessage extends UI5Element {
 		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth
 			&& lastKnownOffsetHeight && currOffsetHeight === lastKnownOffsetHeight)
 			|| this._lastKnownOffsetWidthForMedia[this._lastKnownMedia] === 0
-			|| this._lastKnownOffsetHeightForMedia[this._lastKnownMedia] === 0
-			|| this._lastKnownMedia !== newMedia) {
+			|| this._lastKnownOffsetHeightForMedia[this._lastKnownMedia] === 0) {
 			this.media = newMedia;
 			this._lastKnownOffsetWidthForMedia[newMedia] = currOffsetWidth;
 			this._lastKnownOffsetHeightForMedia[newMedia] = currOffsetHeight;
@@ -403,14 +387,17 @@ class IllustratedMessage extends UI5Element {
 	 * @since 1.5.0
 	 */
 	_handleCustomSize() {
-		switch (this.size) {
-		case IllustrationMessageSize.Base:
+		switch (this.design) {
+		case IllustrationMessageDesign.Base:
 			this.media = IllustratedMessage.MEDIA.BASE;
 			return;
-		case IllustrationMessageSize.Spot:
+		case IllustrationMessageDesign.Dot:
+			this.media = IllustratedMessage.MEDIA.DOT;
+			return;
+		case IllustrationMessageDesign.Spot:
 			this.media = IllustratedMessage.MEDIA.SPOT;
 			return;
-		case IllustrationMessageSize.Dialog:
+		case IllustrationMessageDesign.Dialog:
 			this.media = IllustratedMessage.MEDIA.DIALOG;
 			return;
 		default:
@@ -422,8 +409,10 @@ class IllustratedMessage extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	get effectiveIllustration(): string {
+	get effectiveIllustration(): string | undefined {
 		switch (this.media) {
+		case IllustratedMessage.MEDIA.DOT:
+			return this.dotSvg;
 		case IllustratedMessage.MEDIA.SPOT:
 			return this.spotSvg;
 		case IllustratedMessage.MEDIA.DIALOG:
@@ -463,7 +452,9 @@ class IllustratedMessage extends UI5Element {
 		return !!this.actions.length && this.media !== IllustratedMessage.MEDIA.BASE;
 	}
 
-	isValidIllustration(currentIllustration: `${IllustrationMessageType}`): boolean {
+	isValidIllustration(currentIllustration: string): boolean {
+		currentIllustration = currentIllustration.startsWith("tnt/") ? currentIllustration.replace("tnt/", "Tnt") : currentIllustration.replace("fiori/", "");
+
 		return currentIllustration in IllustrationMessageType;
 	}
 }

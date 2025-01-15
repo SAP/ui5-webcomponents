@@ -1,14 +1,20 @@
 <ui5-responsive-popover
-	placement-type="Bottom"
-	horizontal-align="Left"
+	placement="Bottom"
+	horizontal-align="Start"
 	class="{{classes.popover}}"
+	id="{{responsivePopoverId}}"
 	hide-arrow
-	_disable-initial-focus
+	prevent-initial-focus
 	style="{{styles.suggestionsPopover}}"
 	@ui5-selection-change={{_listSelectionChange}}
-	@ui5-after-close={{_afterClosePicker}}
+	@ui5-close={{_afterClose}}
 	@ui5-before-open={{_beforeOpen}}
-	@ui5-after-open={{_afterOpenPicker}}
+	@ui5-before-close={{_beforeClose}}
+	@ui5-open={{_afterOpen}}
+	@focusout={{_onPopoverFocusOut}}
+	accessible-name="{{_popupLabel}}"
+	.open={{_open}}
+	.opener={{this}}
 >
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
@@ -23,68 +29,64 @@
 				</ui5-button>
 			</div>
 			<div class="row">
-				<div
-					slot="header"
-					class="input-root-phone"
-					value-state="{{valueState}}"
+				<ui5-input
+					@ui5-input="{{_handleMobileInput}}"
+					@keydown="{{_onMobileInputKeydown}}"
+					placeholder="{{placeholder}}"
+					value-state="{{_dialogInputValueState}}"
+					?show-clear-icon="{{showClearIcon}}"
+					?no-typeahead="{{noTypeahead}}"
 				>
-					<input
-						.value="{{value}}"
-						inner-input
-						placeholder="{{placeholder}}"
-						value-state="{{valueState}}"
-						@input="{{_inputLiveChange}}"
-						@change={{_inputChange}}
-						@keydown={{_onkeydown}}
-						aria-autocomplete="both"
-						/>
-					</div>
-					<ui5-toggle-button
+					{{#each _filteredItems}}
+						<ui5-suggestion-item text="{{this.text}}" additional-text="{{this.additionalText}}"></ui5-suggestion-item>
+					{{/each}}
+				</ui5-input>
+				<ui5-toggle-button
 						slot="header"
 						class="ui5-multi-combobox-toggle-button"
 						icon="multiselect-all"
 						design="Transparent"
 						?pressed={{_showAllItemsButtonPressed}}
 						@click="{{filterSelectedItems}}"
-					></ui5-toggle-button>
-				</div>
-			{{#if hasValueStateMessage}}
-				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
-					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-					{{> valueStateMessage}}
-				</div>
-			{{/if}}
+						accessible-name="{{_showSelectedButtonAccessibleNameText}}">
+				</ui5-toggle-button>
 			</div>
 		</div>
+		{{#if hasValueStateMessage}}
+			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
+				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
+				{{#if open}}
+					{{> valueStateMessage}}
+				{{/if}}
+			</div>
+		{{/if}}
+
+		{{> selectAllWrapper}}
 	{{/if}}
 
 	{{#unless _isPhone}}
 		{{#if hasValueStateMessage}}
-			<div slot="header" @keydown="{{_onValueStateKeydown}}" tabindex="0" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
+			<div slot="header" @keydown="{{_onListHeaderKeydown}}" tabindex="0" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-				{{> valueStateMessage}}
+				{{#if open}}
+					{{> valueStateMessage}}
+				{{/if}}			
 			</div>
 		{{/if}}
+
+		{{> selectAllWrapper}}
 	{{/unless}}
 
 	{{#if filterSelected}}
-		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
+		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list" accessible-role="ListBox">
 			{{#each selectedItems}}
-				{{#if isGroupItem}}
-					<ui5-li-groupheader data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-groupheader>
-				{{else}}
-					{{> listItem}}
-				{{/if}}
+				{{> listItem}}
 			{{/each}}
 		</ui5-list>
 	{{else}}
-		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
+		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list" accessible-role="ListBox" @keydown="{{_onItemKeydown}}">
 			{{#each _filteredItems}}
-				{{#if isGroupItem}}
-					<ui5-li-groupheader data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-groupheader>
-				{{else}}
-					{{> listItem}}
-				{{/if}}
+				{{> listItem}}
 			{{/each}}
 		</ui5-list>
 	{{/if}}
@@ -102,16 +104,21 @@
 {{#if hasValueStateMessage}}
 	<ui5-popover
 		skip-registry-update
-		_disable-initial-focus
+		prevent-initial-focus
 		prevent-focus-restore
 		hide-arrow
 		class="ui5-valuestatemessage-popover"
-		placement-type="Bottom"
+		placement="Bottom"
 		horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
+		tabindex="-1"
+		.open="{{valueStateOpen}}"
+		.opener="{{this}}"
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-			{{> valueStateMessage}}
+			{{#if valueStateOpen}}
+				{{> valueStateMessage}}
+			{{/if}}
 		</div>
 	</ui5-popover>
 {{/if}}
@@ -120,22 +127,18 @@
 	{{#if shouldDisplayDefaultValueStateMessage}}
 		{{valueStateDefaultText}}
 	{{else}}
-		{{#each valueStateMessageText}}
-			{{this}}
-		{{/each}}
+		<slot name="valueStateMessage"></slot>
 	{{/if}}
 {{/inline}}
 
 {{#*inline "listItem"}}
-	<ui5-li
-		wrapping-type="Normal"
-		type="{{../_listItemsType}}"
-		additional-text={{this.additionalText}}
-		?selected={{this.selected}}
-		data-ui5-token-id="{{this._id}}"
-		data-ui5-stable="{{this.stableDomRef}}"
-		@keydown="{{../_onItemKeydown}}"
-	>
-		{{this.text}}
-	</ui5-li>
+	<slot name="{{this._individualSlot}}"></slot>
+{{/inline}}
+
+{{#*inline "selectAllWrapper"}}
+	{{#if showSelectAll}}
+		<div class="ui5-mcb-select-all-header" @keydown="{{_onListHeaderKeydown}}" tabindex="0">
+			<ui5-checkbox ?disabled={{this.readonly}} ?checked={{_allSelected}} class="ui5-mcb-select-all-checkbox" text="{{selectAllCheckboxLabel}}" @ui5-change="{{_handleSelectAllCheckboxClick}}"></ui5-checkbox>
+		</div>
+	{{/if}}
 {{/inline}}

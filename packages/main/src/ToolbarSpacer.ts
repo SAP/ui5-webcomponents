@@ -1,26 +1,21 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
-import ToolbarSpacerTemplate from "./generated/templates/ToolbarSpacerTemplate.lit.js";
+import ToolbarSpacerTemplate from "./ToolbarSpacerTemplate.js";
 
 import ToolbarItem from "./ToolbarItem.js";
+
 import { registerToolbarItem } from "./ToolbarRegistry.js";
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-toolbar-spacer</code> is an element, used for taking needed space for toolbar items to take 100% width.
+ * ### Overview
+ * The `ui5-toolbar-spacer` is an element, used for taking needed space for toolbar items to take 100% width.
  * It takes no space in calculating toolbar items width.
- *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ToolbarSpacer
- * @extends sap.ui.webc.main.ToolbarItem
- * @tagname ui5-toolbar-spacer
+ * @extends ToolbarItem
  * @abstract
  * @since 1.17.0
- * @implements sap.ui.webc.main.IToolbarItem
  * @public
  */
 @customElement({
@@ -30,16 +25,12 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
 class ToolbarSpacer extends ToolbarItem {
 	/**
 	 * Defines the width of the spacer.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
-	 *
+	 * **Note:** all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
 	 * @public
-	 * @type { sap.ui.webc.base.types.CSSSize }
-	 * @name sap.ui.webc.main.ToolbarSpacer.prototype.width
-	 * @defaultvalue undefined
+	 * @default undefined
 	 */
-	@property({ validator: CSSSize })
+	@property()
 	width?: string;
 
 	get styles() {
@@ -47,11 +38,11 @@ class ToolbarSpacer extends ToolbarItem {
 	}
 
 	get ignoreSpace() {
-		return this.width === "";
+		return this.width === "" || this.width === undefined || this.width === "auto";
 	}
 
 	get hasFlexibleWidth() {
-		return this.width === "";
+		return this.width === "" || this.width === undefined || this.width === "auto";
 	}
 
 	static get toolbarTemplate() {

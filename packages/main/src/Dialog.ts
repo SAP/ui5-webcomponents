@@ -1,19 +1,17 @@
-import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import {
 	isUp, isDown, isLeft, isRight,
 	isUpShift, isDownShift, isLeftShift, isRightShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import Popup from "./Popup.js";
-import type { PopupBeforeCloseEventDetail as DialogBeforeCloseEventDetail } from "./Popup.js";
-import Icon from "./Icon.js";
-import "@ui5/webcomponents-icons/dist/resize-corner.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -27,9 +25,8 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
+import DialogTemplate from "./DialogTemplate.js";
 // Styles
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
@@ -39,174 +36,147 @@ import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
  */
 const STEP_SIZE = 16;
 
-type ValueStateWithIcon = ValueState.Error | ValueState.Warning | ValueState.Success | ValueState.Information;
+type ValueStateWithIcon = ValueState.Negative | ValueState.Critical | ValueState.Positive | ValueState.Information;
 /**
  * Defines the icons corresponding to the dialog's state.
  */
 const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
-	[ValueState.Error]: "error",
-	[ValueState.Warning]: "alert",
-	[ValueState.Success]: "sys-enter-2",
+	[ValueState.Negative]: "error",
+	[ValueState.Critical]: "alert",
+	[ValueState.Positive]: "sys-enter-2",
 	[ValueState.Information]: "information",
 };
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-dialog</code> component is used to temporarily display some information in a
+ * ### Overview
+ * The `ui5-dialog` component is used to temporarily display some information in a
  * size-limited window in front of the regular app screen.
  * It is used to prompt the user for an action or a confirmation.
- * The <code>ui5-dialog</code> interrupts the current app processing as it is the only focused UI element and
+ * The `ui5-dialog` interrupts the current app processing as it is the only focused UI element and
  * the main screen is dimmed/blocked.
  * The dialog combines concepts known from other technologies where the windows have
  * names such as dialog box, dialog window, pop-up, pop-up window, alert box, or message box.
- * <br><br>
- * The <code>ui5-dialog</code> is modal, which means that an user action is required before it is possible to return to the parent window.
- * To open multiple dialogs, each dialog element should be separate in the markup. This will ensure the correct modal behavior. Avoid nesting dialogs within each other.
- * The content of the <code>ui5-dialog</code> is fully customizable.
  *
- * <h3>Structure</h3>
- * A <code>ui5-dialog</code> consists of a header, content, and a footer for action buttons.
- * The <code>ui5-dialog</code> is usually displayed at the center of the screen.
- * Its position can be changed by the user. To enable this, you need to set the property <code>draggable</code> accordingly.
+ * The `ui5-dialog` is modal, which means that a user action is required before it is possible to return to the parent window.
+ * To open multiple dialogs, each dialog element should be separate in the markup. This will ensure the correct modal behavior. Avoid nesting dialogs within each other.
+ * The content of the `ui5-dialog` is fully customizable.
+ *
+ * ### Structure
+ * A `ui5-dialog` consists of a header, content, and a footer for action buttons.
+ * The `ui5-dialog` is usually displayed at the center of the screen.
+ * Its position can be changed by the user. To enable this, you need to set the property `draggable` accordingly.
 
  *
- * <h3>Responsive Behavior</h3>
- * The <code>stretch</code> property can be used to stretch the
- * <code>ui5-dialog</code> on full screen.
+ * ### Responsive Behavior
+ * The `stretch` property can be used to stretch the `ui5-dialog` to full screen. For better usability, it's recommended to stretch the dialog to full screen on phone devices.
  *
- * <h3>CSS Shadow Parts</h3>
+ * **Note:** When a `ui5-bar` is used in the header or in the footer, you should remove the default dialog's paddings.
  *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-dialog</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>header - Used to style the header of the component</li>
- * <li>content - Used to style the content of the component</li>
- * <li>footer - Used to style the footer of the component</li>
- * </ul>
- * <b>Note:</b> When a <code>ui5-bar</code> is used in the header or in the footer, you should remove the default dialog's paddings.
- * <br>
  * For more information see the sample "Bar in Header/Footer".
 
+ * ### Keyboard Handling
  *
- * <h3>ES6 Module Import</h3>
+ * #### Basic Navigation
+ * When the `ui5-dialog` has the `draggable` property set to `true` and the header is focused, the user can move the dialog
+ * with the following keyboard shortcuts:
  *
- * <code>import "@ui5/webcomponents/dist/Dialog";</code>
+ * - [Up] or [Down] arrow keys - Move the dialog up/down.
+ * - [Left] or [Right] arrow keys - Move the dialog left/right.
  *
- * <b>Note: </b> We recommend placing popup-like components (<code>ui5-dialog</code> and <code>ui5-popover</code>)
- * outside any other components. Preferably, the popup-like components should be placed
- * in an upper level HTML element. Otherwise, in some cases the parent HTML elements can break
- * the position and/or z-index management of the popup-like components.
+ * #### Resizing
+ * When the `ui5-dialog` has the `resizable` property set to `true` and the header is focused, the user can change the size of the dialog
+ * with the following keyboard shortcuts:
  *
- * <b>Note:</b> We don't recommend nesting popup-like components (<code>ui5-dialog</code>, <code>ui5-popover</code>).
+ * - [Shift] + [Up] or [Down] - Decrease/Increase the height of the dialog.
+ * - [Shift] + [Left] or [Right] - Decrease/Increase the width of the dialog.
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Dialog";`
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Dialog
- * @extends sap.ui.webc.main.Popup
- * @tagname ui5-dialog
+ * @extends Popup
  * @public
+ * @csspart header - Used to style the header of the component
+ * @csspart content - Used to style the content of the component
+ * @csspart footer - Used to style the footer of the component
  */
 @customElement({
 	tag: "ui5-dialog",
 	template: DialogTemplate,
 	styles: [
-		browserScrollbarCSS,
+		Popup.styles,
 		PopupsCommonCss,
 		dialogCSS,
-	],
-	dependencies: [
-		Icon,
+		getEffectiveScrollbarStyle(),
 	],
 })
 class Dialog extends Popup {
+	eventDetails!: Popup["eventDetails"];
 	/**
 	 * Defines the header text.
-	 * <br><br>
-	 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Dialog.prototype.headerText
-	 * @defaultvalue ""
+	 * **Note:** If `header` slot is provided, the `headerText` is ignored.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
-	 * Determines whether the component should be stretched to fullscreen.
-	 * <br><br>
-	 * <b>Note:</b> The component will be stretched to approximately
-	 * 90% of the viewport.
+	 * Determines if the dialog will be stretched to full screen on mobile. On desktop,
+	 * the dialog will be stretched to approximately 90% of the viewport.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Dialog.prototype.stretch
-	 * @defaultvalue false
+	 * **Note:** For better usability of the component it is recommended to set this property to "true" when the dialog is opened on phone.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	stretch!: boolean;
+	stretch = false;
 
 	/**
 	 * Determines whether the component is draggable.
 	 * If this property is set to true, the Dialog will be draggable by its header.
-	 * <br><br>
-	 * <b>Note:</b> The component can be draggable only in desktop mode.
-	 * <br><br>
-	 * <b>Note:</b> This property overrides the default HTML "draggable" attribute native behavior.
+	 *
+	 * **Note:** The component can be draggable only in desktop mode.
+	 *
+	 * **Note:** This property overrides the default HTML "draggable" attribute native behavior.
 	 * When "draggable" is set to true, the native browser "draggable"
 	 * behavior is prevented and only the Dialog custom logic ("draggable by its header") works.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Dialog.prototype.draggable
-	 * @defaultvalue false
+	 * @default false
 	 * @since 1.0.0-rc.9
 	 * @public
 	 */
 	@property({ type: Boolean })
-	draggable!: boolean;
+	draggable = false;
 
 	/**
 	 * Configures the component to be resizable.
 	 * If this property is set to true, the Dialog will have a resize handle in its bottom right corner in LTR languages.
 	 * In RTL languages, the resize handle will be placed in the bottom left corner.
-	 * <br><br>
-	 * <b>Note:</b> The component can be resizable only in desktop mode.
-	 * <br>
-	 * <b>Note:</b> Upon resizing, externally defined height and width styling will be ignored.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Dialog.prototype.resizable
-	 * @defaultvalue false
+	 *
+	 * **Note:** The component can be resizable only in desktop mode.
+	 *
+	 * **Note:** Upon resizing, externally defined height and width styling will be ignored.
+	 * @default false
 	 * @since 1.0.0-rc.10
 	 * @public
 	 */
 	@property({ type: Boolean })
-	resizable!: boolean;
+	resizable = false;
 
 	/**
-	 * Defines the state of the <code>Dialog</code>.
-	 * <br><b>Note:</b> If <code>"Error"</code> and <code>"Warning"</code> state is set, it will change the
-	 * accessibility role to "alertdialog", if the accessibleRole property is set to <code>"Dialog"</code>.
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.Dialog.prototype.state
-	 * @defaultvalue "None"
+	 * Defines the state of the `Dialog`.
+	 *
+	 * **Note:** If `"Negative"` and `"Critical"` states is set, it will change the
+	 * accessibility role to "alertdialog", if the accessibleRole property is set to `"Dialog"`.
+	 * @default "None"
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	state!: `${ValueState}`;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	onPhone!: boolean;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	onDesktop!: boolean;
+	@property()
+	state: `${ValueState}` = "None";
 
 	_screenResizeHandler: () => void;
 	_dragMouseMoveHandler: (e: MouseEvent) => void;
@@ -230,15 +200,11 @@ class Dialog extends Popup {
 
 	/**
 	 * Defines the header HTML Element.
-	 * <br><br>
-	 * <b>Note:</b> When a <code>ui5-bar</code> is used in the header, you should remove the default dialog's paddings.
-	 * <br><br>
-	 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
-	 * <code>accessibleName</code> should be used.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Dialog.prototype.header
-	 * @slot
+	 * **Note:** When a `ui5-bar` is used in the header, you should remove the default dialog's paddings.
+	 *
+	 * **Note:** If `header` slot is provided, the labelling of the dialog is a responsibility of the application developer.
+	 * `accessibleName` should be used.
 	 * @public
 	 */
 	@slot()
@@ -246,17 +212,14 @@ class Dialog extends Popup {
 
 	/**
 	 * Defines the footer HTML Element.
-	 * <br><br>
-	 * <b>Note:</b> When a <code>ui5-bar</code> is used in the footer, you should remove the default dialog's paddings.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Dialog.prototype.footer
-	 * @slot
+	 * **Note:** When a `ui5-bar` is used in the footer, you should remove the default dialog's paddings.
 	 * @public
 	 */
 	@slot()
 	footer!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -273,40 +236,18 @@ class Dialog extends Popup {
 		this._dragStartHandler = this._handleDragStart.bind(this);
 	}
 
-	static async onDefine() {
-		Dialog.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
-
 	static _isHeader(element: HTMLElement) {
 		return element.classList.contains("ui5-popup-header-root") || element.getAttribute("slot") === "header";
-	}
-
-	/**
-	 * Shows the dialog.
-	 *
-	 * @param {boolean} [preventInitialFocus=false] Prevents applying the focus inside the popup
-	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.Dialog#show
-	 * @async
-	 * @returns {Promise} Resolves when the dialog is open
-	 */
-	async show(preventInitialFocus = false) {
-		await super._open(preventInitialFocus);
 	}
 
 	get isModal() {
 		return true;
 	}
 
-	get shouldHideBackdrop() {
-		return false;
-	}
-
 	get _ariaLabelledBy() {
 		let ariaLabelledById;
 
-		if (this.headerText !== "" && !this._ariaLabel) {
+		if (this.headerText && !this._ariaLabel) {
 			ariaLabelledById = "ui5-popup-header-text";
 		}
 
@@ -333,10 +274,6 @@ class Dialog extends Popup {
 		return Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE_RESIZABLE);
 	}
 
-	get _displayProp() {
-		return "flex";
-	}
-
 	/**
 	 * Determines if the header should be shown.
 	 */
@@ -349,7 +286,7 @@ class Dialog extends Popup {
 	}
 
 	get _headerTabIndex() {
-		return this._movable ? "0" : undefined;
+		return this._movable ? 0 : undefined;
 	}
 
 	get _showResizeHandle() {
@@ -380,16 +317,16 @@ class Dialog extends Popup {
 		return ICON_PER_STATE[this.state as ValueStateWithIcon];
 	}
 
-	get _role(): string | undefined {
+	get _role() {
 		if (this.accessibleRole === PopupAccessibleRole.None) {
 			return undefined;
 		}
 
-		if (this.state === ValueState.Error || this.state === ValueState.Warning) {
-			return PopupAccessibleRole.AlertDialog.toLowerCase();
+		if (this.state === ValueState.Negative || this.state === ValueState.Critical) {
+			return toLowercaseEnumValue(PopupAccessibleRole.AlertDialog);
 		}
 
-		return this.accessibleRole.toLowerCase();
+		return toLowercaseEnumValue(this.accessibleRole);
 	}
 
 	_show() {
@@ -401,18 +338,6 @@ class Dialog extends Popup {
 		super.onBeforeRendering();
 
 		this._isRTL = this.effectiveDir === "rtl";
-		this.onPhone = isPhone();
-		this.onDesktop = isDesktop();
-	}
-
-	onAfterRendering() {
-		super.onAfterRendering();
-
-		if (!this.isOpen() && this.open) {
-			this.show();
-		} else if (this.isOpen() && !this.open) {
-			this.close();
-		}
 	}
 
 	onEnterDOM() {
@@ -480,13 +405,11 @@ class Dialog extends Popup {
 	/**
 	 * Event handlers
 	 */
-	_onDragMouseDown(e: DragEvent) {
+	_onDragMouseDown(e: MouseEvent) {
 		// allow dragging only on the header
 		if (!this._movable || !this.draggable || !Dialog._isHeader(e.target as HTMLElement)) {
 			return;
 		}
-
-		e.preventDefault();
 
 		const {
 			top,
@@ -747,6 +670,3 @@ class Dialog extends Popup {
 Dialog.define();
 
 export default Dialog;
-export type {
-	DialogBeforeCloseEventDetail,
-};

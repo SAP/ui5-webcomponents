@@ -108,6 +108,8 @@ const isEnter = (event: KeyboardEvent): boolean => (event.key ? event.key === "E
 
 const isEnterShift = (event: KeyboardEvent): boolean => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && checkModifierKeys(event, false, false, true);
 
+const isCtrl = (event: KeyboardEvent): boolean => checkModifierKeys(event, true, false, false);
+
 const isSpace = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && !hasModifierKeys(event);
 
 const isSpaceShift = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, false, false, true);
@@ -206,11 +208,17 @@ const isShow = (event: KeyboardEvent): boolean => {
 	return (event.keyCode === KeyCodes.F4 && !hasModifierKeys(event)) || (event.keyCode === KeyCodes.ARROW_DOWN && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false));
 };
 
+const isF2 = (event: KeyboardEvent): boolean => {
+	return event.key === "F2" && !hasModifierKeys(event);
+};
+
 const isF4 = (event: KeyboardEvent): boolean => {
 	return event.key === "F4" && !hasModifierKeys(event);
 };
 
 const isF4Shift = (event: KeyboardEvent): boolean => (event.key ? event.key === "F4" : event.keyCode === KeyCodes.F4) && checkModifierKeys(event, false, false, true);
+
+const isF10Shift = (event: KeyboardEvent): boolean => (event.key ? event.key === "F10" : event.keyCode === KeyCodes.F10) && checkModifierKeys(event, false, false, true);
 
 const isF6Next = (event: KeyboardEvent): boolean => ((event.key ? event.key === "F6" : event.keyCode === KeyCodes.F6) && checkModifierKeys(event, false, false, false))
 	|| ((event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, true, false));
@@ -247,6 +255,7 @@ const isColon = (event: KeyboardEvent): boolean => ((event.key ? event.key === "
 export {
 	isEnter,
 	isEnterShift,
+	isCtrl,
 	isSpace,
 	isSpaceShift,
 	isSpaceCtrl,
@@ -282,8 +291,10 @@ export {
 	isBackSpace,
 	isDelete,
 	isShow,
+	isF2,
 	isF4,
 	isF4Shift,
+	isF10Shift,
 	isF6Previous,
 	isF6Next,
 	isF7,

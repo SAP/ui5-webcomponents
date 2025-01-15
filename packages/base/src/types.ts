@@ -1,31 +1,64 @@
-type PromiseResolve = (value: void | PromiseLike<void>) => void;
-type Timeout = ReturnType<typeof setTimeout>;
-type Interval = ReturnType<typeof setInterval>;
+import type { JSX } from "./jsx-runtime.d.ts";
 
-type StyleDataCSP = {
-	content: string,
-	packageName: string,
-	fileName: string,
-};
+// General utils
+export type LowercaseString<T> = T extends string ? Lowercase<T> : never;
 
-type StyleData = StyleDataCSP | string;
+// Core Framework types
+export type PromiseResolve = (value: void | PromiseLike<void>) => void;
+export type Timeout = ReturnType<typeof setTimeout>;
+export type Interval = ReturnType<typeof setInterval>;
 
-type ComponentStylesData = Array<ComponentStylesData> | Array<StyleData> | StyleData;
+export type StyleData = string;
 
-type ClassMapValue = Record<string, boolean>
+export type ComponentStylesData = Array<ComponentStylesData> | string;
+export type ClassMapValue = Record<string, boolean>
 
-type ClassMap = { [x: string] : ClassMapValue | ClassMap };
+export type ClassMap = { [x: string] : ClassMapValue | ClassMap };
 
-type PassiveEventListenerObject = EventListenerObject & { passive: boolean };
+export type PassiveEventListenerObject = EventListenerObject & { passive: boolean };
 
-export type {
-	PromiseResolve,
-	Timeout,
-	Interval,
-	StyleData,
-	StyleDataCSP,
-	ComponentStylesData,
-	ClassMap,
-	ClassMapValue,
-	PassiveEventListenerObject,
-};
+// Accessibility
+export type AriaRole = JSX.AriaRole;
+export type AriaHasPopup = "dialog" | "grid" | "listbox" | "menu" | "tree";
+export type AriaCurrent = "page" | "step" | "location" | "date" | "time" | "true" | "false" | boolean | undefined;
+export type AriaAutoComplete = "list" | "none" | "inline" | "both" | undefined;
+export type AriaLandmarkRole = "none" | "banner" | "main" | "region" | "navigation" | "search" | "complementary" | "form" | "contentinfo"
+
+export type AccessibilityInfo = {
+	// The WAI-ARIA role of the component.
+	role?: AriaRole,
+
+	// A translated text that represents the component type. Used when several components share same role,
+	// f.e. Select and ComboBox both have role="combobox".
+	type?: LowercaseString<string>,
+
+	// A translated text that represents relevant component description/state - value, placeholder, label, etc.
+	description?: string,
+
+	 // The component disabled state.
+	disabled?: boolean,
+
+	// The component readonly state.
+	readonly?: boolean,
+
+	// The component required state.
+	required?: boolean,
+
+	// An array of elements, aggregated by the component
+	// <b>Note:</b> Children should only be provided when it is helpful to understand the accessibility context.
+	children?: Array<HTMLElement>,
+}
+
+export type AccessibilityAttributes = {
+	ariaSetsize?: number,
+	ariaPosinset?: number,
+	ariaLabel?: string,
+	controls?: LowercaseString<string>
+	expanded?: "true" | "false" | boolean,
+	hasPopup?: AriaHasPopup,
+	name?: string,
+	role?: AriaRole,
+	ariaKeyShortcuts?: string,
+	ariaCurrent?: AriaCurrent,
+	current?: AriaCurrent,
+}

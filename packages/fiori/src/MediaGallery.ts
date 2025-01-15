@@ -3,7 +3,6 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -12,13 +11,13 @@ import Carousel from "@ui5/webcomponents/dist/Carousel.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import MediaGalleryItem from "./MediaGalleryItem.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 import MediaGalleryLayout from "./types/MediaGalleryLayout.js";
-import MediaGalleryMenuHorizontalAlign from "./types/MediaGalleryMenuHorizontalAlign.js";
-import MediaGalleryMenuVerticalAlign from "./types/MediaGalleryMenuVerticalAlign.js";
+import type MediaGalleryMenuHorizontalAlign from "./types/MediaGalleryMenuHorizontalAlign.js";
+import type MediaGalleryMenuVerticalAlign from "./types/MediaGalleryMenuVerticalAlign.js";
 
 // Styles
 import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
@@ -26,12 +25,23 @@ import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
 // Template
 import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit.js";
 
+/**
+ * Interface for components that can be slotted inside `ui5-media-gallery` as items.
+ * @public
+ */
+interface IMediaGalleryItem extends HTMLElement, ITabbable {
+	selected: boolean,
+	disabled: boolean,
+	displayedContent: HTMLElement | null;
+	layout: `${MediaGalleryItemLayout}`
+}
+
 type MediaGallerySelectionChangeEventDetail = {
-	item: MediaGalleryItem;
+	item: IMediaGalleryItem;
 }
 
 // The allowed number of thumbnail columns on each size
-// (relevant when <code>showAllThumbnails</code> is enabled)
+// (relevant when `showAllThumbnails` is enabled)
 const COLUMNS_COUNT: Record<string, number> = {
 	"S": 1,
 	"M": 2,
@@ -42,44 +52,35 @@ const COLUMNS_COUNT: Record<string, number> = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-media-gallery</code> component allows the user to browse through multimedia items. Currently,
- * the supported items are images and videos. The items should be defined using the <code>ui5-media-gallery-item</code>
+ * The `ui5-media-gallery` component allows the user to browse through multimedia items. Currently,
+ * the supported items are images and videos. The items should be defined using the `ui5-media-gallery-item`
  * component.
  *
  * The items are initially displayed as thumbnails. When the user selects a thumbnail, the corresponding item
  * is displayed in larger size.
- * <br>
+ *
  * The component is responsive by default and adjusts the position of the menu with respect to viewport size,
  * but the application is able to further customize the layout via the provided API.
  *
-* <h3>Keyboard Handling</h3>
- * The <code>ui5-media-gallery</code> provides advanced keyboard handling.
- * <br>
+ * ### Keyboard Handling
+ * The `ui5-media-gallery` provides advanced keyboard handling.
+ *
  * When the thumbnails menu is focused the following keyboard
  * shortcuts allow the user to navigate through the thumbnail items:
- * <br>
  *
- * <ul>
- * <li>[UP/DOWN] - Navigates up and down the items</li>
- * <li>[HOME] - Navigates to first item</li>
- * <li>[END] - Navigates to the last item</li>
- * <li>[SPACE/ENTER] - Select an item</li>
- * </ul>
- * <br>
+ * - [Up] or [Down] - Navigates up and down the items
+ * - [Home] - Navigates to first item
+ * - [End] - Navigates to the last item
+ * - [Space], [Enter] - Selects an item
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/MediaGallery";</code>
- * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem";</code>
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/MediaGallery.js";`
  *
+ * `import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.MediaGallery
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-media-gallery
- * @appenddocs sap.ui.webc.fiori.MediaGalleryItem
+ * @extends UI5Element
  * @public
  * @since 1.1.0
  */
@@ -88,7 +89,6 @@ const COLUMNS_COUNT: Record<string, number> = {
 	renderer: litRender,
 	styles: [MediaGalleryCss],
 	template: MediaGalleryTemplate,
-	staticAreaTemplate: MediaGalleryTemplate,
 	dependencies: [
 		MediaGalleryItem,
 		Button,
@@ -98,139 +98,115 @@ const COLUMNS_COUNT: Record<string, number> = {
 
 /**
  * Fired when selection is changed by user interaction.
- *
- * @event sap.ui.webc.fiori.MediaGallery#selection-change
  * @param {HTMLElement} item the selected item.
  * @public
  */
 @event("selection-change", {
-	detail: {
-		item: { type: HTMLElement },
-	},
+	bubbles: true,
 })
 
 /**
  * Fired when the thumbnails overflow button is clicked.
- *
- * @event sap.ui.webc.fiori.MediaGallery#overflow-click
  * @public
  */
-@event("overflow-click")
+@event("overflow-click", {
+	bubbles: true,
+})
 
 /**
- * Fired when the display area is clicked.<br>
+ * Fired when the display area is clicked.
  * The display area is the central area that contains
  * the enlarged content of the currently selected item.
- *
- * @event sap.ui.webc.fiori.MediaGallery#display-area-click
  * @public
  */
-@event("display-area-click")
+@event("display-area-click", {
+	bubbles: true,
+})
 
 class MediaGallery extends UI5Element {
+	eventDetails!: {
+		"selection-change": MediaGallerySelectionChangeEventDetail,
+		"overflow-click": void,
+		"display-area-click": void,
+	}
 	/**
-	 * If set to <code>true</code>, all thumbnails are rendered in a scrollable container.
-	 * If <code>false</code>, only up to five thumbnails are rendered, followed by
+	 * If set to `true`, all thumbnails are rendered in a scrollable container.
+	 * If `false`, only up to five thumbnails are rendered, followed by
 	 * an overflow button that shows the count of the remaining thumbnails.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.MediaGallery.prototype.showAllThumbnails
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showAllThumbnails!: boolean;
+	showAllThumbnails = false;
 
 	/**
-	 * If enabled, a <code>display-area-click</code> event is fired
+	 * If enabled, a `display-area-click` event is fired
 	 * when the user clicks or taps on the display area.
-	 * <br>
+	 *
 	 * The display area is the central area that contains
 	 * the enlarged content of the currently selected item.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.MediaGallery.prototype.interactiveDisplayArea
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	interactiveDisplayArea!: boolean;
+	interactiveDisplayArea = false;
 
 	/**
 	 * Determines the layout of the component.
-	 *
-	 * @type {sap.ui.webc.fiori.types.MediaGalleryLayout}
-	 * @name sap.ui.webc.fiori.MediaGallery.prototype.layout
-	 * @defaultvalue "Auto"
+	 * @default "Auto"
 	 * @public
 	 */
-	@property({ type: MediaGalleryLayout, defaultValue: MediaGalleryLayout.Auto })
-	layout!: `${MediaGalleryLayout}`;
+	@property()
+	layout: `${MediaGalleryLayout}` = "Auto";
 
 	/**
 	 * Determines the horizontal alignment of the thumbnails menu
 	 * vs. the central display area.
-	 *
-	 * @type {sap.ui.webc.fiori.types.MediaGalleryMenuHorizontalAlign}
-	 * @name sap.ui.webc.fiori.MediaGallery.prototype.menuHorizontalAlign
-	 * @defaultvalue "Left"
+	 * @default "Left"
 	 * @public
 	 */
-	@property({ type: MediaGalleryMenuHorizontalAlign, defaultValue: MediaGalleryMenuHorizontalAlign.Left })
-	menuHorizontalAlign!: `${MediaGalleryMenuHorizontalAlign}`;
+	@property()
+	menuHorizontalAlign: `${MediaGalleryMenuHorizontalAlign}` = "Left";
 
 	/**
 	 * Determines the vertical alignment of the thumbnails menu
 	 * vs. the central display area.
-	 *
-	 * @type {sap.ui.webc.fiori.types.MediaGalleryMenuVerticalAlign}
-	 * @name sap.ui.webc.fiori.MediaGallery.prototype.menuVerticalAlign
-	 * @defaultvalue "Bottom"
+	 * @default "Bottom"
 	 * @public
 	 */
-	@property({ type: MediaGalleryMenuVerticalAlign, defaultValue: MediaGalleryMenuVerticalAlign.Bottom })
-	menuVerticalAlign!: `${MediaGalleryMenuVerticalAlign}`;
+	@property()
+	menuVerticalAlign: `${MediaGalleryMenuVerticalAlign}` = "Bottom";
 
 	/**
 	 * Determines the actual applied layout type
 	 * (esp. needed when the app did not specify a fixed layout type
-	 * but selected <code>Auto</code> layout type).
-	 *
-	 * @type {sap.ui.webc.fiori.types.MediaGalleryLayout}
-	 * @defaultvalue "Vertical"
-	 * @private
-	 */
-	@property({ type: MediaGalleryLayout, defaultValue: MediaGalleryLayout.Vertical })
-	effectiveLayout!: `${MediaGalleryLayout}`;
-
-	/**
-	 * Defines the current media query size.
-	 *
+	 * but selected `Auto` layout type).
+	 * @default "Vertical"
 	 * @private
 	 */
 	@property()
-	mediaRange!: string;
+	effectiveLayout: `${MediaGalleryLayout}` = "Vertical";
+
+	/**
+	 * Defines the current media query size.
+	 * @private
+	 */
+	@property()
+	mediaRange = "S";
 
 	/**
 	 * The number of items in the overflow.
-	 *
 	 * @private
 	 */
-	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
-	_overflowSize!: number;
+	@property({ type: Number, noAttribute: true })
+	_overflowSize = 0;
 
 	/**
 	 * Defines the component items.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> Only one selected item is allowed.
+	 * **Note:** Only one selected item is allowed.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> Use the <code>ui5-media-gallery-item</code> component to define the desired items.
-	 *
-	 * @type {sap.ui.webc.fiori.IMediaGalleryItem[]}
-	 * @name sap.ui.webc.fiori.MediaGallery.prototype.default
-	 * @slot items
+	 * **Note:** Use the `ui5-media-gallery-item` component to define the desired items.
 	 * @public
 	 */
 	@slot({
@@ -239,11 +215,11 @@ class MediaGallery extends UI5Element {
 		invalidateOnChildChange: true,
 		"default": true,
 	})
-	items!: Array<MediaGalleryItem>;
+	items!: Array<IMediaGalleryItem>;
 
 	_itemNavigation: ItemNavigation;
 	_onResize: () => void;
-	_selectedItem?: MediaGalleryItem;
+	_selectedItem?: IMediaGalleryItem;
 
 	constructor() {
 		super();
@@ -269,6 +245,14 @@ class MediaGallery extends UI5Element {
 	}
 
 	_updateSelection() {
+		if (this.items.length === 0) {
+			this._selectedItem = undefined;
+			if (this._mainItem) {
+				const oldContent = this._mainItem.displayedContent;
+				oldContent?.remove();
+			}
+			return;
+		}
 		let itemToSelect = this.items.find(item => item.selected);
 		if (!itemToSelect || !this._isSelectableItem(itemToSelect)) {
 			itemToSelect = this._findSelectableItem();
@@ -278,7 +262,7 @@ class MediaGallery extends UI5Element {
 		}
 	}
 
-	_isSelectableItem(this: void, item: MediaGalleryItem) {
+	_isSelectableItem(this: void, item: IMediaGalleryItem) {
 		return !item.disabled && !item.hidden;
 	}
 
@@ -393,7 +377,7 @@ class MediaGallery extends UI5Element {
 		return items;
 	}
 
-	_selectItem(item: MediaGalleryItem, userInteraction = false) {
+	_selectItem(item: IMediaGalleryItem, userInteraction = false) {
 		if (item === this._selectedItem) {
 			return;
 		}
@@ -403,7 +387,7 @@ class MediaGallery extends UI5Element {
 		this._itemNavigation.setCurrentItem(item);
 
 		if (userInteraction) {
-			this.fireEvent<MediaGallerySelectionChangeEventDetail>("selection-change", { item });
+			this.fireDecoratorEvent("selection-change", { item });
 		}
 
 		if (isPhone()) {
@@ -413,22 +397,22 @@ class MediaGallery extends UI5Element {
 		}
 	}
 
-	_updateSelectedFlag(itemToSelect: MediaGalleryItem) {
+	_updateSelectedFlag(itemToSelect: IMediaGalleryItem) {
 		this.items.forEach(next => { next.selected = false; });
 		itemToSelect.selected = true;
 	}
 
-	_selectItemOnPhone(item: MediaGalleryItem) {
+	_selectItemOnPhone(item: IMediaGalleryItem) {
 		const selectableItemIndex = this._selectableItems.indexOf(item),
 			carousel = this._carousel;
 		carousel && carousel.navigateTo(selectableItemIndex);
 	}
 
-	_displayContent(item: MediaGalleryItem) {
+	_displayContent(item: IMediaGalleryItem) {
 		let clone;
 		const mainItem = this._mainItem,
-			oldContent = mainItem!._content,
-			newContent = item._content;
+			oldContent = mainItem!.displayedContent,
+			newContent = item.displayedContent;
 
 		mainItem!._thumbnailDesign = false;
 		oldContent && oldContent.remove();
@@ -442,7 +426,7 @@ class MediaGallery extends UI5Element {
 
 	_onThumbnailClick(e: MouseEvent) {
 		const target = e.target as HTMLElement;
-		const item = target.closest<MediaGalleryItem>("[ui5-media-gallery-item]")!;
+		const item = target.closest<IMediaGalleryItem>("[ui5-media-gallery-item]")!;
 
 		if (item.disabled) {
 			return;
@@ -453,7 +437,7 @@ class MediaGallery extends UI5Element {
 	}
 
 	_onOverflowBtnClick() {
-		this.fireEvent("overflow-click");
+		this.fireDecoratorEvent("overflow-click");
 	}
 
 	_onDisplayAreaClick() {
@@ -461,14 +445,14 @@ class MediaGallery extends UI5Element {
 			return;
 		}
 
-		this.fireEvent("display-area-click");
+		this.fireDecoratorEvent("display-area-click");
 	}
 
 	_onCarouselNavigate(e: CustomEvent<CarouselNavigateEventDetail>) {
 		const selectedIndex = e.detail.selectedIndex,
 			item = this._selectableItems[selectedIndex];
 
-		this.fireEvent<MediaGallerySelectionChangeEventDetail>("selection-change", { item });
+		this.fireDecoratorEvent("selection-change", { item });
 	}
 
 	get _mainItemTabIndex() {
@@ -545,4 +529,7 @@ MediaGallery.define();
 
 export default MediaGallery;
 
-export type { MediaGallerySelectionChangeEventDetail };
+export type {
+	MediaGallerySelectionChangeEventDetail,
+	IMediaGalleryItem,
+};

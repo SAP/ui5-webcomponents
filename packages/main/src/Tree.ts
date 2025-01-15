@@ -2,14 +2,21 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import TreeItem from "./TreeItem.js";
-import TreeItemCustom from "./TreeItemCustom.js";
-import TreeList from "./TreeList.js";
-import ListMode from "./types/ListMode.js";
+import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
+import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
+import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type DropIndicator from "./DropIndicator.js";
+import "./TreeItem.js";
 import type TreeItemBase from "./TreeItemBase.js";
+import "./TreeItemCustom.js";
+import type TreeList from "./TreeList.js";
+import type ListSelectionMode from "./types/ListSelectionMode.js";
+import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import type {
 	TreeItemBaseToggleEventDetail,
 	TreeItemBaseStepInEventDetail,
@@ -18,14 +25,25 @@ import type {
 import type {
 	ListItemClickEventDetail,
 	ListItemDeleteEventDetail,
+	ListItemFocusEventDetail,
 	ListSelectionChangeEventDetail,
 } from "./List.js";
 
 // Template
-import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
+import TreeTemplate from "./TreeTemplate.js";
 
 // Styles
 import TreeCss from "./generated/themes/Tree.css.js";
+
+type TreeMoveEventDetail = {
+	source: {
+		element: HTMLElement,
+	},
+	destination: {
+		element: HTMLElement,
+		placement: `${MovePlacement}`,
+	}
+}
 
 type TreeItemEventDetail = {
 	item: TreeItemBase,
@@ -35,6 +53,7 @@ type TreeItemMouseoverEventDetail = TreeItemEventDetail;
 type TreeItemMouseoutEventDetail = TreeItemEventDetail;
 type TreeItemClickEventDetail = TreeItemEventDetail;
 type TreeItemDeleteEventDetail = TreeItemEventDetail;
+type TreeItemFocusEventDetail = TreeItemEventDetail;
 type TreeSelectionChangeEventDetail = {
 	selectedItems: Array<TreeItemBase>;
 	previouslySelectedItems: Array<TreeItemBase>;
@@ -45,245 +64,219 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-tree</code> component provides a tree structure for displaying data in a hierarchy.
+ * ### Overview
+ * The `ui5-tree` component provides a tree structure for displaying data in a hierarchy.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <h4>When to use:</h4>
- * <ul>
- * <li>To display hierarchically structured items.</li>
- * <li>To select one or more items out of a set of hierarchically structured items.</li>
- * </ul>
+ * #### When to use:
  *
- * <h4>When not to use:</h4>
- * <ul>
- * <li>To display items not hierarchically strcutured. In this case, use the List component.</li>
- * <li>To select one item from a very small number of non-hierarchical items. Select or ComboBox might be more appropriate.</li>
- * <li>The hierarchy turns out to have only two levels. In this case, use List with group items.</li>
- * </ul>
+ * - To display hierarchically structured items.
+ * - To select one or more items out of a set of hierarchically structured items.
  *
- * <h3>Keyboard Handling</h3>
+ * #### When not to use:
  *
- * The <code>ui5-tree</code> provides advanced keyboard handling.
+ * - To display items not hierarchically structured. In this case, use the List component.
+ * - To select one item from a very small number of non-hierarchical items. Select or ComboBox might be more appropriate.
+ * - The hierarchy turns out to have only two levels. In this case, use List with group items.
+ *
+ * ### Keyboard Handling
+ *
+ * The `ui5-tree` provides advanced keyboard handling.
  * The user can use the following keyboard shortcuts in order to navigate trough the tree:
- * <ul>
- * <li>[UP/DOWN] - Navigates up and down the tree items that are currently visible.</li>
- * <li>[RIGHT] - Drills down the tree by expanding the tree nodes.</li>
- * <li>[LEFT] - Goes up the tree and collapses the tree nodes.</li>
- * </ul>
- * <br>
+ *
+ * - [Up] or [Down] - Navigates up and down the tree items that are currently visible.
+ * - [Right] - Drills down the tree by expanding the tree nodes.
+ * - [Left] - Goes up the tree and collapses the tree nodes.
  *
  * The user can use the following keyboard shortcuts to perform selection,
- * when the <code>mode</code> property is in use:
- * <ul>
- * <li>[SPACE] - Selects the currently focused item upon keyup.</li>
- * <li>[ENTER]  - Selects the currently focused item upon keydown.</li>
- * </ul>
+ * when the `selectionMode` property is in use:
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/Tree.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/TreeItem.js";</code>
+ * - [Space] - Selects the currently focused item upon keyup.
+ * - [Enter]  - Selects the currently focused item upon keydown.
  *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents/dist/Tree.js";`
+ *
+ * `import "@ui5/webcomponents/dist/TreeItem.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Tree
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-tree
- * @appenddocs sap.ui.webc.main.TreeItem sap.ui.webc.main.TreeItemCustom
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.8
  */
 @customElement({
 	tag: "ui5-tree",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TreeCss,
 	template: TreeTemplate,
-	dependencies: [
-		TreeList,
-		TreeItem,
-		TreeItemCustom,
-	],
 })
 /**
  * Fired when a tree item is expanded or collapsed.
- * <i>Note:</i> You can call <code>preventDefault()</code> on the event object to suppress the event, if needed.
- * This may be handy for example if you want to dynamically load tree items upon the user expanding a node.
- * Even if you prevented the event's default behavior, you can always manually call <code>toggle()</code> on a tree item.
  *
- * @event sap.ui.webc.main.Tree#item-toggle
+ * **Note:** You can call `preventDefault()` on the event object to suppress the event, if needed.
+ * This may be handy for example if you want to dynamically load tree items upon the user expanding a node.
+ * Even if you prevented the event's default behavior, you can always manually call `toggle()` on a tree item.
  * @param {HTMLElement} item the toggled item.
- * @allowPreventDefault
  * @public
  */
 @event("item-toggle", {
-	detail: {
-		item: { type: HTMLElement },
-	},
+	bubbles: true,
+	cancelable: true,
 })
 /**
  * Fired when the mouse cursor enters the tree item borders.
- * @event sap.ui.webc.main.Tree#item-mouseover
  * @param {HTMLElement} item the hovered item.
  * @since 1.0.0-rc.16
  * @public
  */
 @event("item-mouseover", {
-	detail: {
-		item: { type: HTMLElement },
-	},
+	bubbles: true,
 })
 /**
  * Fired when the mouse cursor leaves the tree item borders.
- * @event sap.ui.webc.main.Tree#item-mouseout
  * @param {HTMLElement} item the hovered item.
  * @since 1.0.0-rc.16
  * @public
  */
 @event("item-mouseout", {
-	detail: {
-		item: { type: HTMLElement },
-	},
+	bubbles: true,
 })
 /**
  * Fired when a tree item is activated.
- *
- * @event sap.ui.webc.main.Tree#item-click
- * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
  */
 @event("item-click", {
-	detail: {
-		item: { type: HTMLElement },
-	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
  * Fired when the Delete button of any tree item is pressed.
- * <br><br>
- * <b>Note:</b> A Delete button is displayed on each item,
- * when the component <code>mode</code> property is set to <code>Delete</code>.
  *
- * @event sap.ui.webc.main.Tree#item-delete
+ * **Note:** A Delete button is displayed on each item,
+ * when the component `selectionMode` property is set to `Delete`.
  * @param {HTMLElement} item the deleted item.
  * @public
  */
 @event("item-delete", {
-	detail: {
-		item: { type: HTMLElement },
-	},
+	bubbles: true,
+})
+
+/**
+ * Fired when a tree item is focused.
+ * @param {HTMLElement} item The focused item.
+ * @private
+ */
+@event("item-focus", {
+	bubbles: true,
 })
 
 /**
  * Fired when selection is changed by user interaction
- * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
- *
- * @event sap.ui.webc.main.Tree#selection-change
+ * in `Single`, `SingleStart`, `SingleEnd` and `Multiple` modes.
  * @param {Array} selectedItems An array of the selected items.
  * @param {Array} previouslySelectedItems An array of the previously selected items.
  * @param {HTMLElement} targetItem The item triggering the event.
  * @public
  */
 @event("selection-change", {
-	detail: {
-		selectedItems: { type: Array },
-		previouslySelectedItems: { type: Array },
-		targetItem: { type: HTMLElement },
-	},
+	bubbles: true,
+})
+@event("move", {
+	bubbles: true,
+})
+@event("move-over", {
+	bubbles: true,
+	cancelable: true,
 })
 class Tree extends UI5Element {
+	eventDetails!: {
+		"item-toggle": TreeItemToggleEventDetail,
+		"item-mouseover": TreeItemMouseoverEventDetail,
+		"item-mouseout": TreeItemMouseoutEventDetail,
+		"item-click": TreeItemClickEventDetail,
+		"item-delete": TreeItemDeleteEventDetail,
+		"item-focus": TreeItemFocusEventDetail,
+		"selection-change": TreeSelectionChangeEventDetail,
+		"move": TreeMoveEventDetail,
+		"move-over": TreeMoveEventDetail,
+	}
 	/**
-	 * Defines the mode of the component. Since the tree uses a <code>ui5-list</code> to display its structure,
+	 * Defines the selection mode of the component. Since the tree uses a `ui5-list` to display its structure,
 	 * the tree modes are exactly the same as the list modes, and are all applicable.
-	 *
 	 * @public
-	 * @type {sap.ui.webc.main.types.ListMode}
-	 * @name sap.ui.webc.main.Tree.prototype.mode
-	 * @defaultValue "None"
+	 * @default "None"
 	 */
-	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: `${ListMode}`;
+	@property()
+	selectionMode?: `${ListSelectionMode}` = "None";
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Tree.prototype.noDataText
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	noDataText!: string;
+	noDataText?: string;
 
 	/**
 	 * Defines the component header text.
-	 * <br><br>
-	 * <b>Note:</b> If the <code>header</code> slot is set, this property is ignored.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Tree.prototype.headerText
-	 * @defaultvalue ""
+	 * **Note:** If the `header` slot is set, this property is ignored.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Defines the component footer text.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Tree.prototype.footerText
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	footerText!: string;
+	footerText?: string;
 
 	/**
 	 * Defines the accessible name of the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Tree.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @default undefined
 	 * @public
 	 * @since 1.8.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Tree.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 * @since 1.8.0
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
-	 * Defines the description for the accessible role of the component.
-	 * @protected
-	 * @type {string}
-	 * @name sap.ui.webc.main.Tree.prototype.accessibleRoleDescription
-	 * @defaultvalue undefined
-	 * @since 1.10.0
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
 	 */
-	@property({ defaultValue: undefined, noAttribute: true })
-	accessibleRoleDescription?: string;
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Defines the IDs of the elements that describe the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
 
 	/**
 	 * Defines the items of the component. Tree items may have other tree items as children.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-tree-item</code> for the intended design.
 	 *
-	 * @type {sap.ui.webc.main.ITreeItem[]}
-	 * @name sap.ui.webc.main.Tree.prototype.default
-	 * @slot items
+	 * **Note:** Use `ui5-tree-item` for the intended design.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -291,17 +284,21 @@ class Tree extends UI5Element {
 
 	/**
 	 * Defines the component header.
-	 * <br><br>
-	 * <b>Note:</b> When the <code>header</code> slot is set, the
-	 * <code>headerText</code> property is ignored.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Tree.prototype.header
-	 * @slot header
+	 * **Note:** When the `header` slot is set, the
+	 * `headerText` property is ignored.
 	 * @public
 	 */
 	@slot()
 	header!: Array<HTMLElement>;
+
+	onEnterDOM() {
+		DragRegistry.subscribe(this);
+	}
+
+	onExitDOM() {
+		DragRegistry.unsubscribe(this);
+	}
 
 	onBeforeRendering() {
 		this._prepareTreeItems();
@@ -313,20 +310,73 @@ class Tree extends UI5Element {
 		this.shadowRoot!.querySelector<TreeList>("[ui5-tree-list]")!.onBeforeRendering();
 	}
 
+	get dropIndicatorDOM(): DropIndicator | null {
+		return this.shadowRoot!.querySelector("[ui5-drop-indicator]");
+	}
+
 	get list() {
 		return this.getDomRef() as TreeList;
 	}
 
 	get _role() {
-		return "tree";
-	}
-
-	get _label() {
-		return getEffectiveAriaLabelText(this);
+		return ListAccessibleRole.Tree;
 	}
 
 	get _hasHeader() {
 		return !!this.header.length;
+	}
+
+	_ondragenter(e: DragEvent) {
+		e.preventDefault();
+	}
+
+	_ondragleave(e: DragEvent) {
+		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
+			return;
+		}
+
+		this.dropIndicatorDOM!.targetReference = null;
+	}
+
+	_ondragover(e: DragEvent) {
+		const draggedElement = DragRegistry.getDraggedElement();
+		const allLiNodesTraversed: Array<HTMLElement> = []; // use the only <li> nodes to determine positioning
+		if (!(e.target instanceof HTMLElement) || !draggedElement) {
+			return;
+		}
+
+		this.walk(item => {
+			allLiNodesTraversed.push(item.shadowRoot!.querySelector("li")!);
+		});
+
+		const closestPosition = findClosestPosition(
+			allLiNodesTraversed,
+			e.clientY,
+			Orientation.Vertical,
+		);
+
+		if (!closestPosition) {
+			this.dropIndicatorDOM!.targetReference = null;
+			return;
+		}
+
+		closestPosition.element = <HTMLElement>(<ShadowRoot>closestPosition.element.getRootNode()).host;
+		if (draggedElement.contains(closestPosition.element)) { return; }
+		if (closestPosition.element === draggedElement) {
+			closestPosition.placements = closestPosition.placements.filter(placement => placement !== MovePlacement.On);
+		}
+
+		const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element);
+		this.dropIndicatorDOM!.targetReference = targetReference;
+		this.dropIndicatorDOM!.placement = placement;
+	}
+
+	_ondrop(e: DragEvent) {
+		if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
+			return;
+		}
+		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement);
+		this.dropIndicatorDOM.targetReference = null;
 	}
 
 	_onListItemStepIn(e: CustomEvent<TreeItemBaseStepInEventDetail>) {
@@ -349,7 +399,7 @@ class Tree extends UI5Element {
 
 	_onListItemToggle(e: CustomEvent<TreeItemBaseToggleEventDetail>) {
 		const treeItem = e.detail.item;
-		const defaultPrevented = !this.fireEvent<TreeItemToggleEventDetail>("item-toggle", { item: treeItem }, true);
+		const defaultPrevented = !this.fireDecoratorEvent("item-toggle", { item: treeItem });
 		if (!defaultPrevented) {
 			treeItem.toggle();
 		}
@@ -358,21 +408,26 @@ class Tree extends UI5Element {
 	_onListItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
 
-		if (!this.fireEvent<TreeItemClickEventDetail>("item-click", { item: treeItem }, true)) {
+		if (!this.fireDecoratorEvent("item-click", { item: treeItem })) {
 			e.preventDefault();
 		}
 	}
 
 	_onListItemDelete(e: CustomEvent<ListItemDeleteEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
-		this.fireEvent<TreeItemDeleteEventDetail>("item-delete", { item: treeItem });
+		this.fireDecoratorEvent("item-delete", { item: treeItem });
+	}
+
+	_onListItemFocus(e: CustomEvent<ListItemFocusEventDetail>) {
+		const treeItem = e.detail.item as TreeItemBase;
+		this.fireDecoratorEvent("item-focus", { item: treeItem });
 	}
 
 	_onListItemMouseOver(e: MouseEvent) {
 		const target = e.target;
 
 		if (this._isInstanceOfTreeItemBase(target)) {
-			this.fireEvent<TreeItemMouseoverEventDetail>("item-mouseover", { item: target });
+			this.fireDecoratorEvent("item-mouseover", { item: target });
 		}
 	}
 
@@ -380,7 +435,7 @@ class Tree extends UI5Element {
 		const target = e.target;
 
 		if (this._isInstanceOfTreeItemBase(target)) {
-			this.fireEvent<TreeItemMouseoutEventDetail>("item-mouseout", { item: target });
+			this.fireDecoratorEvent("item-mouseout", { item: target });
 		}
 	}
 
@@ -396,7 +451,7 @@ class Tree extends UI5Element {
 			item.selected = true;
 		});
 
-		this.fireEvent<TreeSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent("selection-change", {
 			previouslySelectedItems,
 			selectedItems,
 			targetItem,
@@ -411,14 +466,13 @@ class Tree extends UI5Element {
 
 			item.setAttribute("level", level.toString());
 
-			item._setsize = ariaSetSize;
-			item._posinset = index + 1;
+			item.forcedSetsize = ariaSetSize;
+			item.forcedPosinset = index + 1;
 		});
 	}
 
 	/**
 	 * Returns the corresponding list item for a given tree item
-	 *
 	 * @param item The tree item
 	 * @protected
 	 */
@@ -429,7 +483,7 @@ class Tree extends UI5Element {
 	/**
 	 * Returns the a flat array of all tree items
 	 * @protected
-	 * @returns {Array}
+	 * @returns array of the tree items
 	 */
 	getItems(): Array<TreeItemBase> {
 		return this.list.getItems();
@@ -447,11 +501,10 @@ class Tree extends UI5Element {
 
 	/**
 	 * Perform Depth-First-Search walk on the tree and run a callback on each node
-	 *
 	 * @public
-	 * @param {function} callback function to execute on each node of the tree with 3 arguments: the node, the level and the index
+	 * @param callback function to execute on each node of the tree with 3 arguments: the node, the level and the index
 	 */
-	walk(callback: WalkCallback) {
+	walk(callback: WalkCallback): void {
 		walkTree(this, 1, callback);
 	}
 
@@ -474,10 +527,13 @@ Tree.define();
 export default Tree;
 
 export type {
+	TreeMoveEventDetail,
 	TreeItemToggleEventDetail,
 	TreeItemMouseoverEventDetail,
 	TreeItemMouseoutEventDetail,
 	TreeItemClickEventDetail,
 	TreeItemDeleteEventDetail,
+	TreeItemFocusEventDetail,
 	TreeSelectionChangeEventDetail,
+	WalkCallback,
 };

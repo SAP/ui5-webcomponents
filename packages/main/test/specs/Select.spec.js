@@ -25,8 +25,7 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT = "Cozy";
 
 		await select.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect")
-		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
+		const firstItem = (await browser.$$("#mySelect ui5-option"))[0];
 
 		await firstItem.click();
 
@@ -42,8 +41,7 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT = "Condensed";
 
 		await select.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#selectPrevent")
-		const secondItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[1];
+		const secondItem = (await browser.$$("#selectPrevent ui5-option"))[1];
 
 		await secondItem.click();
 
@@ -60,9 +58,8 @@ describe("Select general interaction", () => {
 
 		await select.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect")
-		const firstItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:last-child");
-		await firstItem.click();
+		const lastItem = await browser.$("#mySelect ui5-option:last-child")
+		await lastItem.click();
 
 		assert.strictEqual(await inputResult.getProperty("value"), "", "Event not fired when already selected item is selected");
 	});
@@ -117,6 +114,26 @@ describe("Select general interaction", () => {
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Select label is correct.");
 		assert.strictEqual(await selectHost.getProperty("value"), EXPECTED_SELECTION_TEXT2, "The 'value' property is correct.");
+	});
+
+	it("doesn't changes selection while closed with Arrow Up/Down while at last item", async () => {
+		await browser.url(`test/pages/Select.html`);
+
+		const inputResult = await browser.$("#inputResult").shadow$("input");
+		const select = await browser.$("#errorSelect");
+		const selectText = await browser.$("#errorSelect").shadow$(".ui5-select-label-root");
+		const EXPECTED_SELECTION_TEXT1 = "Condensed";
+
+		// make sure focus is on closed select
+		await select.click();
+		await select.keys("Escape");
+
+		await select.keys("ArrowDown");
+		let selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Arrow Down shouldn't change selected item");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
+
+		assert.strictEqual(await inputResult.getProperty("value"), "", "Change event shouldn't have fired");
 	});
 
 	it("changes selection while closed with Arrow Up/Down", async () => {
@@ -188,6 +205,32 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await inputResult.getProperty("value"), "3", "Change event should have fired twice");
 	});
 
+	it("remains closed and unchanged when read-only", async () => {
+		const select = await browser.$("#mySelectReadOnly");
+		const EXPECTED_SELECTION_TEXT = "Compact";
+		const selectOptionText = await select.shadow$(".ui5-select-label-root");
+
+		// act - try to open the dropdown
+		await select.click();
+
+		const popover = await select.shadow$("ui5-responsive-popover");
+
+		// assert
+		assert.notOk(await popover.getProperty("open"), "Select remains closed.");
+
+		// act - try to change selection when dropdown is closed
+		await select.keys("ArrowUp");
+		// assert
+		let selectOptionTextHtml = await selectOptionText.getHTML(false);
+		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option remains " + EXPECTED_SELECTION_TEXT);
+
+		// act - try to change selection when dropdown is closed
+		await select.keys("ArrowDown");
+		// assert
+		selectOptionTextHtml = await selectOptionText.getHTML(false);
+		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option remains" + EXPECTED_SELECTION_TEXT);
+	});
+
 	it("announces the selected value once Select Popover is opened", async () => {
 		await browser.url(`test/pages/Select.html`);
 
@@ -219,7 +262,7 @@ describe("Select general interaction", () => {
 
 		const selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Arrow Up should change selected item");
-		
+
 		const focusedElementId = await browser.executeAsync(done => {
 			done(document.activeElement.id);
 		});
@@ -320,7 +363,7 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT1 = "Item1";
 		const EXPECTED_SELECTION_TEXT2 = "Item2";
 
-		
+
 		await btnSetValue.click();
 		let selectTextHtml = await selectText.getHTML(false);
 
@@ -328,7 +371,7 @@ describe("Select general interaction", () => {
 			EXPECTED_SELECTION_TEXT2, "Second option is selected.");
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2,
 			"Select label is " + EXPECTED_SELECTION_TEXT2);
-		
+
 		await btnSetInvalidValue.click();
 		selectTextHtml = await selectText.getHTML(false);
 
@@ -342,65 +385,65 @@ describe("Select general interaction", () => {
 		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const select = await browser.$("#mySelect");
+		const popover = await select.shadow$("ui5-responsive-popover");
 
 		await btn.click();
 		await btn.keys("Tab");
 
 		await browser.keys("Space");
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 	});
 
 	it("toggles upon F4", async () => {
 		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const select = await browser.$("#mySelect");
+		const popover = await select.shadow$("ui5-responsive-popover");
 
 		await btn.click();
 		await btn.keys("Tab");
 
 		await browser.keys("F4");
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 
 		await browser.keys("F4");
-		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
+		assert.notOk(await popover.getProperty("open"), "Select is closed.");
 	});
 
 	it("toggles upon ALT + UP", async () => {
 		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const select = await browser.$("#mySelect");
+		const popover = await select.shadow$("ui5-responsive-popover");
 
 		await btn.click();
 		await btn.keys("Tab");
 
 		await browser.keys(["Alt", "ArrowUp", "NULL"]);
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 
 		await browser.keys(["Alt", "ArrowUp", "NULL"]);
-		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
+		assert.notOk(await popover.getProperty("open"), "Select is closed.");
 	});
 
 	it("toggles upon ALT + DOWN", async () => {
 		await browser.url(`test/pages/Select.html`);
 
 		const btn = await browser.$("#myBtn2");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const select = await browser.$("#mySelect");
+		const popover = await select.shadow$("ui5-responsive-popover");
 
 		await btn.click();
 		await btn.keys("Tab");
 
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
+		assert.notOk(await popover.getProperty("open"), "Select is closed.");
 	});
 
 	it("adds unselected only items to select", async () => {
@@ -410,8 +453,7 @@ describe("Select general interaction", () => {
 		await addItemsBtn.click();
 
 		const firstOption = await browser.$("#mySelect ui5-option:first-child");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
-		const firstListItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
+		const firstListItem = (await browser.$("#mySelect ui5-option:first-child"))
 
 		assert.ok(await firstOption.getProperty("selected"), "First option should be selected");
 		assert.ok(await firstListItem.getProperty("selected"), "First list item should be selected");
@@ -466,8 +508,7 @@ describe("Select general interaction", () => {
 		await select.keys("Escape");
 
 		await select.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
-		const firstItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
+		const firstItem = await browser.$("#mySelect ui5-option:first-child");
 
 		await firstItem.click();
 
@@ -481,9 +522,8 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
 		await select.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelectEsc")
-		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
-		const thirdItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[2];
+		const firstItem = await browser.$("#mySelectEsc ui5-option:first-child");
+		const thirdItem = (await browser.$$("#mySelectEsc ui5-option"))[2];
 
 		await firstItem.click();
 
@@ -556,54 +596,56 @@ describe("Select general interaction", () => {
 
 	it("Tests that the picker is closed when the selected value is clicked", async () => {
 		const select = await browser.$("#mySelect");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect")
-		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await select.shadow$("ui5-responsive-popover");
+		const firstItem = await browser.$("#mySelect ui5-option:first-child");
 
 		// select the first item
 		await select.click();
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 		await firstItem.click();
-		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
+		assert.notOk(await popover.getProperty("open"), "Select is closed.");
 
 		// click the selected item again
 		await select.click();
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 		await firstItem.click();
-		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
+		assert.notOk(await popover.getProperty("open"), "Select is closed.");
 	});
 
 	it("Tests if currently selected option is visible in the viewport when keyboard navigation is used", async () => {
 		await browser.setWindowSize(600, 100);
 
 		const select = await browser.$("#warningSelect");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#warningSelect");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await select.shadow$("ui5-responsive-popover");
 
 		await select.click();
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 
 		await select.keys("ArrowDown");
 		await select.keys("ArrowDown");
 		await select.keys("ArrowDown");
 
-		const selectedOption = await popover.$("ui5-list").$("ui5-li[selected]");
+		const selectedOption = await browser.$("#warningSelect ui5-option[selected]");
 		assert.ok(await selectedOption.isClickable(), "Selected option is visible in the viewport.");
 	});
-});
 
-describe("Attributes propagation", () => {
-	before(async () => {
-		await browser.url(`test/pages/Select.html`);
+	it("clears typed characters after selection is changed", async () => {
+		const select = await browser.$("#textAreaAriaLabel");
+		const selectText = await select.shadow$(".ui5-select-label-root");
+	
+		await select.click();
+		await select.keys("S");
+	
+		let selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, "Second", "Typing 'S' should select 'Second'");
+	
+		await select.keys("Enter");
+	
+		await select.keys("T");
+		selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, "Third", "Typing 'T' should select 'Third' after previous selection");
+	
+		assert.strictEqual(await select.getProperty("value"), "Third", "The selection changed and typed characters were cleared");
 	});
-
-	it("propagates additional-text attribute", async () => {
-		const EXPECTED_ADDITIONAL_TEXT = "DZ",
-			staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect6"),
-			firstOption = await browser.$("#mySelect6 ui5-option:first-child"),
-			firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
-
-		assert.strictEqual(await firstOption.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is set");
-		assert.strictEqual(await firstItem.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is correct");
- 	});
+	
 });

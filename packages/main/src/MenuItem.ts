@@ -1,196 +1,404 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import type Menu from "./Menu.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import "@ui5/webcomponents-icons/dist/nav-back.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { ListItemAccessibilityAttributes } from "./ListItem.js";
+import ListItem from "./ListItem.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
+import type PopoverPlacement from "./types/PopoverPlacement.js";
+import MenuItemTemplate from "./MenuItemTemplate.js";
+import {
+	MENU_BACK_BUTTON_ARIA_LABEL,
+	MENU_CLOSE_BUTTON_ARIA_LABEL,
+	MENU_POPOVER_ACCESSIBLE_NAME,
+} from "./generated/i18n/i18n-defaults.js";
+import type { IMenuItem } from "./Menu.js";
+
+// Styles
+import menuItemCss from "./generated/themes/MenuItem.css.js";
+
+type MenuBeforeOpenEventDetail = { item?: MenuItem };
+type MenuBeforeCloseEventDetail = { escPressed: boolean };
+
+type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeyShortcuts" | "role"> & ListItemAccessibilityAttributes;
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-menu-item</code> is the item to use inside a <code>ui5-menu</code>.
+ * `ui5-menu-item` is the item to use inside a `ui5-menu`.
  * An arbitrary hierarchy structure can be represented by recursively nesting menu items.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <code>ui5-menu-item</code> is an abstract element, representing a node in a <code>ui5-menu</code>. The menu itself is rendered as a list,
- * and each <code>ui5-menu-item</code> is represented by a list item (<code>ui5-li</code>) in that list. Therefore, you should only use
- * <code>ui5-menu-item</code> directly in your apps. The <code>ui5-li</code> list item is internal for the list, and not intended for public use.
+ * `ui5-menu-item` represents a node in a `ui5-menu`. The menu itself is rendered as a list,
+ * and each `ui5-menu-item` is represented by a list item in that list. Therefore, you should only use
+ * `ui5-menu-item` directly in your apps. The `ui5-li` list item is internal for the list, and not intended for public use.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/MenuItem.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/MenuItem.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.MenuItem
- * @extends sap.ui.webc.base.UI5Element
- * @abstract
- * @tagname ui5-menu-item
- * @implements sap.ui.webc.main.IMenuItem
+ * @extends ListItem
+ * @implements {IMenuItem}
  * @since 1.3.0
  * @public
  */
-@customElement("ui5-menu-item")
-class MenuItem extends UI5Element {
+@customElement({
+	tag: "ui5-menu-item",
+	renderer: jsxRenderer,
+	template: MenuItemTemplate,
+	styles: [ListItem.styles, menuItemCss],
+})
+
+/**
+ * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening.
+ *
+ * **Note:** Since 1.14.0 the event is also fired before a sub-menu opens.
+ * @public
+ * @since 1.10.0
+ * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
+ */
+@event("before-open", {
+	cancelable: true,
+})
+
+/**
+ * Fired after the menu is opened.
+ * @public
+ */
+@event("open")
+
+/**
+ * Fired when the menu is being closed.
+ * @private
+ */
+@event("close-menu", {
+	bubbles: true,
+})
+
+/**
+ * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing.
+ * @public
+ * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
+ * @since 1.10.0
+ */
+@event("before-close", {
+	cancelable: true,
+})
+
+/**
+ * Fired after the menu is closed.
+ * @public
+ * @since 1.10.0
+ */
+@event("close")
+class MenuItem extends ListItem implements IMenuItem {
+	eventDetails!: ListItem["eventDetails"] & {
+		"before-open": MenuBeforeOpenEventDetail
+		"open": void
+		"before-close": MenuBeforeCloseEventDetail
+		"close": void
+		"close-menu": void
+	}
 	/**
 	 * Defines the text of the tree item.
-	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.text
-	 * @type {string}
-	 * @defaultValue ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
-	 * Defines the <code>additionalText</code>, displayed in the end of the menu item.
-	 * <b>Note:</b> The additional text would not be displayed if the item has a submenu.
+	 * Defines the `additionalText`, displayed in the end of the menu item.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.additionalText
-	 * @type {string}
+	 * **Note:** The additional text will not be displayed if there are items added in `items` slot or there are
+	 * components added to `endContent` slot.
+	 *
+	 * The priority of what will be displayed at the end of the menu item is as follows:
+	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
+	 * @default undefined
 	 * @public
 	 * @since 1.8.0
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
 	 * The SAP-icons font provides numerous options.
-	 * <br><br>
-	 <b>* Example:</b>
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.icon
-	 * @type {string}
-	 * @defaultvalue ""
+	 * **Example:**
+	 *
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
-	 * Defines whether a visual separator should be rendered before the item.
+	 * Defines whether `ui5-menu-item` is in disabled state.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.startsSection
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * **Note:** A disabled `ui5-menu-item` is noninteractive.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	startsSection!: boolean;
+	disabled = false;
 
 	/**
-	 * Defines whether <code>ui5-menu-item</code> is in disabled state.
-	 * <br><br>
-	 * <b>Note:</b> A disabled <code>ui5-menu-item</code> is noninteractive.
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.disabled
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	disabled!: boolean;
-
-	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
-	 *
-	 * Note: If set to <code>true</code> a <code>ui5-busy-indicator</code> component will be displayed into the related one to the current <code>ui5-menu-item</code> sub-menu popover.
-	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.busy
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * **Note:** If set to `true` a `ui5-busy-indicator` component will be displayed into the related one to the current `ui5-menu-item` sub-menu popover.
+	 * @default false
 	 * @public
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	loading = false;
 
 	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
-	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.busyDelay
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultValue 1000
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
+	 * @default 1000
 	 * @public
 	 * @since 1.13.0
 	 */
-	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
+	@property({ type: Number })
+	loadingDelay = 1000;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.accessibleName
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 * @since 1.7.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
-	 * Indicates whether any of the element siblings have children items.
+	 * Defines the text of the tooltip for the menu item.
+	 * @default undefined
+	 * @public
+	 * @since 1.23.0
 	 */
-	@property({ type: Boolean, noAttribute: true })
-	_siblingsWithChildren!: boolean;
+	@property()
+	tooltip?: string;
+
+	/**
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following fields are supported:
+	 *
+	 * - **ariaKeyShortcuts**: Indicated the availability of a keyboard shortcuts defined for the menu item.
+	 *
+	 * - **role**: Defines the role of the menu item. If not set, menu item will have default role="menuitem".
+	 *
+	 * @public
+	 * @since 2.1.0
+	 * @default {}
+	 */
+	@property({ type: Object })
+	accessibilityAttributes: MenuItemAccessibilityAttributes = {};
 
 	/**
 	 * Indicates whether any of the element siblings have icon.
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_siblingsWithIcon!: boolean;
-
-	/**
-	 * Defines whether the submenu closing must be prevented
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_preventSubMenuClose!: boolean;
-
-	/**
-	 * Stores Menu object with submenu items
-	 */
-	@property({ type: Object, defaultValue: undefined })
-	_subMenu?: Menu;
+	_siblingsWithIcon = false;
 
 	/**
 	 * Defines the items of this component.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.default
-	 * @type {sap.ui.webc.main.IMenuItem[]}
-	 * @slot items
+	 * **Note:** The slot can hold `ui5-menu-item` and `ui5-menu-separator` items.
+	 *
+	 * If there are items added to this slot, an arrow will be displayed at the end
+	 * of the item in order to indicate that there are items added. In that case components added
+	 * to `endContent` slot or `additionalText` content will not be displayed.
+	 *
+	 * The priority of what will be displayed at the end of the menu item is as follows:
+	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	items!: Array<MenuItem>;
+	items!: Array<IMenuItem>;
+
+	/**
+	 * Defines the components that should be displayed at the end of the menu item.
+	 *
+	 * **Note:** It is highly recommended to slot only components of type `ui5-button`,`ui5-link`
+	 * or `ui5-icon` in order to preserve the intended design. If there are components added to this slot,
+	 * and there is text set in `additionalText`, it will not be displayed. If there are items added to `items` slot,
+	 * nether `additionalText` nor components added to this slot would be displayed.
+	 *
+	 * The priority of what will be displayed at the end of the menu item is as follows:
+	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
+	 * @public
+	 * @since 2.0.0
+	 */
+	@slot({ type: HTMLElement })
+	endContent!: Array<HTMLElement>;
+
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
+	get placement(): `${PopoverPlacement}` {
+		return this.isRtl ? "Start" : "End";
+	}
+
+	get isRtl() {
+		return this.effectiveDir === "rtl";
+	}
 
 	get hasSubmenu() {
-		return !!(this.items.length || this.busy);
+		return !!(this.items.length || this.loading) && !this.disabled;
 	}
 
-	get hasDummyIcon() {
-		return this._siblingsWithIcon && !this.icon;
+	get hasEndContent() {
+		return !!(this.endContent.length);
 	}
 
-	get subMenuOpened() {
-		return !!this._subMenu;
+	get hasIcon() {
+		return !!this.icon;
 	}
 
-	get _additionalText() {
-		return this.hasSubmenu ? "" : this.additionalText;
+	get isSubMenuOpen() {
+		return this._popover?.open;
 	}
 
 	get ariaLabelledByText() {
 		return `${this.text} ${this.accessibleName}`.trim();
+	}
+
+	get menuHeaderTextPhone() {
+		return this.text;
+	}
+
+	get isPhone() {
+		return isPhone();
+	}
+
+	get labelBack() {
+		return MenuItem.i18nBundle.getText(MENU_BACK_BUTTON_ARIA_LABEL);
+	}
+
+	get labelClose() {
+		return MenuItem.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL);
+	}
+
+	get acessibleNameText() {
+		return MenuItem.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
+	}
+
+	get isSeparator(): boolean {
+		return false;
+	}
+
+	onBeforeRendering() {
+		super.onBeforeRendering();
+		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
+
+		this._menuItems.forEach(item => {
+			item._siblingsWithIcon = siblingsWithIcon;
+		});
+	}
+
+	async focus(focusOptions?: FocusOptions): Promise<void> {
+		await renderFinished();
+
+		if (this.hasSubmenu && this.isSubMenuOpen) {
+			return this._menuItems[0].focus(focusOptions);
+		}
+
+		return super.focus(focusOptions);
+	}
+
+	get _focusable() {
+		return true;
+	}
+
+	get _accInfo() {
+		const accInfoSettings = {
+			role: this.accessibilityAttributes.role || "menuitem" as const,
+			ariaHaspopup: this.hasSubmenu ? "menu" as const : undefined,
+			ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
+			ariaHidden: !!this.additionalText && !!this.accessibilityAttributes.ariaKeyShortcuts ? true : undefined,
+		};
+
+		return { ...super._accInfo, ...accInfoSettings };
+	}
+
+	get _popover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	get _menuItems() {
+		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+	}
+
+	_closeAll() {
+		if (this._popover) {
+			this._popover.open = false;
+		}
+		this.selected = false;
+		this.fireDecoratorEvent("close-menu");
+	}
+
+	_close() {
+		if (this._popover) {
+			this._popover.open = false;
+		}
+		this.selected = false;
+	}
+
+	_beforePopoverOpen(e: CustomEvent) {
+		const prevented = !this.fireDecoratorEvent("before-open", {});
+
+		if (prevented) {
+			e.preventDefault();
+		}
+	}
+
+	_afterPopoverOpen() {
+		this.items[0]?.focus();
+		this.fireDecoratorEvent("open");
+	}
+
+	_beforePopoverClose(e: CustomEvent) {
+		const prevented = !this.fireDecoratorEvent("before-close", { escPressed: e.detail.escPressed });
+
+		if (prevented) {
+			e.preventDefault();
+			return;
+		}
+
+		this.selected = false;
+		if (e.detail.escPressed) {
+			this.focus();
+			if (isPhone()) {
+				this.fireDecoratorEvent("close-menu");
+			}
+		}
+	}
+
+	_afterPopoverClose() {
+		this.fireDecoratorEvent("close");
 	}
 }
 
 MenuItem.define();
 
 export default MenuItem;
+
+export type {
+	MenuBeforeCloseEventDetail,
+	MenuBeforeOpenEventDetail,
+	MenuItemAccessibilityAttributes,
+};

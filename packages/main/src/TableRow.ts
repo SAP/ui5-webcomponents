@@ -1,491 +1,239 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import {
-	isSpace,
-	isEnter,
-	isF7,
-	isTabNext,
-	isTabPrevious,
-} from "@ui5/webcomponents-base/dist/Keys.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
-import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
-import type TableCell from "./TableCell.js";
-import type { ITableRow, TableColumnInfo } from "./Table.js";
-import CheckBox from "./CheckBox.js";
-import TableMode from "./types/TableMode.js";
-import TableRowType from "./types/TableRowType.js";
-import TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
+import Button from "./Button.js";
+import RadioButton from "./RadioButton.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
-import {
-	ARIA_LABEL_ROW_SELECTION,
-	LIST_ITEM_NOT_SELECTED,
-	LIST_ITEM_SELECTED,
-} from "./generated/i18n/i18n-defaults.js";
-
-// Styles
-import tableRowStyles from "./generated/themes/TableRow.css.js";
-
-type TableRowClickEventDetail = {
-	row: TableRow,
-}
-
-type TableRowSelectionRequestedEventDetail = {
-	row: TableRow,
-}
-
-type TableRowForwardBeforeEventDetail = {
-	target: HTMLElement,
-}
-
-type TableRowForwardAfterEventDetail = {
-	target: HTMLElement,
-}
-
-type TableRowF7PressEventDetail = {
-	row: TableRow,
-}
+import TableRowBase from "./TableRowBase.js";
+import TableRowCss from "./generated/themes/TableRow.css.js";
+import TableCell from "./TableCell.js";
+import type TableRowActionBase from "./TableRowActionBase.js";
+import "@ui5/webcomponents-icons/dist/overflow.js";
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-table-row</code> component represents a row in the <code>ui5-table</code>.
+ * The `ui5-table-row` component represents a row in the `ui5-table`.
  *
- * <h3>CSS Shadow Parts</h3>
+ * ### ES6 Module Import
  *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-table-row</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>row - Used to style the native <code>tr</code> element</li>
- * <li>popin-row - Used to style the <code>tr</code> element when a row pops in</li>
- * </ul>
+ * `import "@ui5/webcomponents/dist/TableRow.js";`
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TableRow
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-table-row
- * @implements sap.ui.webc.main.ITableRow
+ * @extends TableRowBase
+ * @since 2.0.0
  * @public
+ * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 @customElement({
 	tag: "ui5-table-row",
-	styles: tableRowStyles,
-	renderer: litRender,
+	styles: [TableRowBase.styles, TableRowCss],
 	template: TableRowTemplate,
-	dependencies: [CheckBox],
+	dependencies: [...TableRowBase.dependencies, RadioButton, TableCell, Button],
 })
-/**
- * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
- *
- * @event sap.ui.webc.main.TableRow#row-click
- * @since 1.0.0-rc.15
- * @private
- */
-@event("row-click")
-@event("_focused")
-/**
- * Fired on selection change of an active row.
- *
- * @event sap.ui.webc.main.TableRow#selection-requested
- * @since 1.0.0-rc.15
- * @private
- */
-@event("selection-requested")
-/**
- * Fired when F7 is pressed.
- *
- * @event sap.ui.webc.main.TableRow#f7-pressed
- * @since 1.2.0
- * @private
- */
-@event("f7-pressed")
-class TableRow extends UI5Element implements ITableRow, ITabbable {
-	/**
-	 * Defines the visual indication and behavior of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Active</code></li>
-	 * <li><code>Inactive</code></li>
-	 * </ul>
-	 * <br><br>
-	 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
-	 * while with type <code>Inactive</code> - will not.
-	 *
-	 * @type {sap.ui.webc.main.types.TableRowType}
-	 * @name sap.ui.webc.main.TableRow.prototype.type
-	 * @defaultvalue "Inactive"
-	 * @since 1.0.0-rc.15
-	 * @public
-	 */
-	@property({ type: TableRowType, defaultValue: TableRowType.Inactive })
-	type!: `${TableRowType}`;
-
-	/**
-	 * Defines the row's selected state.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.TableRow.prototype.selected
-	 * @defaultvalue false
-	 * @since 1.0.0-rc.15
-	 * @public
-	 */
-	@property({ type: Boolean })
-	selected!: boolean;
-
-	/**
-	 * Indicates if the table row is navigated.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.TableRow.prototype.navigated
-	 * @defaultvalue false
-	 * @since 1.9.0
-	 * @public
-	 */
-	@property({ type: Boolean })
-	navigated!: boolean;
-
-	/**
-	 * Defines the mode of the row (None, SingleSelect, MultiSelect).
-	 * @type {sap.ui.webc.main.types.TableMode}
-	 * @defaultvalue "None"
-	 * @since 1.0.0-rc.15
-	 * @private
-	 */
-	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: `${TableMode}`;
-
-	/**
-	 * Indicates if the table row is active.
-	 *
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @since 1.0.0-rc.15
-	 * @private
-	 */
-	@property({ type: Boolean })
-	active!: boolean;
-
-	@property({ type: Object, multiple: true })
-	_columnsInfo!: Array<TableColumnInfo>;
-
-	@property({ defaultValue: "-1" })
-	_tabIndex!: string;
-
-	@property({ type: Boolean })
-	_busy!: boolean;
-
-	@property({ defaultValue: "", noAttribute: true })
-	_ariaPosition!: string;
-
+class TableRow extends TableRowBase {
 	/**
 	 * Defines the cells of the component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 	 *
-	 * @type {sap.ui.webc.main.ITableCell[]}
-	 * @name sap.ui.webc.main.TableRow.prototype.default
-	 * @slot cells
+	 * **Note:** Use `ui5-table-cell` for the intended design.
+	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true, individualSlots: true })
+	@slot({
+		type: HTMLElement,
+		"default": true,
+		individualSlots: true,
+		invalidateOnChildChange: {
+			properties: ["_popin"],
+			slots: false,
+		},
+	})
 	cells!: Array<TableCell>;
 
-	static i18nBundle: I18nBundle;
+	/**
+	 * Defines the actions of the component.
+	 *
+	 * **Note:** Use `ui5-table-row-action` or `ui5-table-row-action-navigation` for the intended design.
+	 *
+	 * @since 2.7.0
+	 * @public
+	 */
+	@slot({
+		type: HTMLElement,
+		individualSlots: true,
+	})
+	actions!: Array<TableRowActionBase>;
 
-	visibleCells: Array<TableCell> = [];
-	popinCells: Array<TableColumnInfo> = [];
+	/**
+	 * Unique identifier of the row.
+	 *
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	rowKey = "";
 
-	_ontouchstart: PassiveEventListenerObject;
+	/**
+	 * Defines the position of the row respect to the total number of rows within the table when the `ui5-table-virtualizer` feature is used.
+	 *
+     * @default -1
+	 * @since 2.5.0
+     * @public
+     */
+	@property({ type: Number })
+	position = -1;
 
-	// Properties, set and handled by the Table
-	_tabbables: Array<HTMLElement> = [];
-	_columnsInfoString = "";
+	/**
+	 * Defines the interactive state of the row.
+	 *
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	interactive = false;
 
-	constructor() {
-		super();
+	/**
+	 * Defines the navigated state of the row.
+	 *
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	navigated = false;
 
-		const handleToushStartEvent = () => {
-			this.activate();
-		};
+	/**
+	 * Defines whether the row is movable.
+	 *
+	 * @default false
+	 * @since 2.6.0
+	 * @public
+	 */
+	@property({ type: Boolean })
+	movable = false;
 
-		this._ontouchstart = {
-			handleEvent: handleToushStartEvent,
-			passive: true,
-		};
+	@property({ type: Boolean, noAttribute: true })
+	_renderNavigated = false;
+
+	onBeforeRendering() {
+		super.onBeforeRendering();
+		this.toggleAttribute("_interactive", this._isInteractive);
+		if (this.position !== -1) {
+			this.setAttribute("aria-rowindex", `${this.position + 1}`);
+		}
+		if (this._renderNavigated && this.navigated) {
+			this.setAttribute("aria-current", "true");
+		} else {
+			this.removeAttribute("aria-current");
+		}
+		if (this.movable) {
+			this.setAttribute("draggable", "true");
+		} else {
+			this.removeAttribute("draggable");
+		}
 	}
 
-	_onmouseup() {
-		this.deactivate();
+	async focus(focusOptions?: FocusOptions | undefined): Promise<void> {
+		this.setAttribute("tabindex", "-1");
+		HTMLElement.prototype.focus.call(this, focusOptions);
+		return Promise.resolve();
 	}
 
-	_onkeydown(e: KeyboardEvent) {
-		const activeElement = getActiveElement() as HTMLElement;
-		const itemActive = this.type === TableRowType.Active;
-		const isSingleSelect = this.isSingleSelect;
-		const itemSelectable = isSingleSelect || this.isMultiSelect;
-		const isRowFocused = this._activeElementHasAttribute("ui5-table-row");
-		const target = e.target as HTMLElement;
-		const checkboxPressed = target.classList.contains("ui5-multi-select-checkbox");
-		const rowElements = Array.from(this.shadowRoot!.querySelectorAll("tr") || []);
-		const elements = rowElements.map(getLastTabbableElement);
-		const lastFocusableElement = elements.pop();
-
-		if (isTabNext(e) && activeElement === (lastFocusableElement || this.root)) {
-			this.fireEvent<TableRowForwardAfterEventDetail>("_forward-after", { target: activeElement });
+	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
+		super._onkeydown(e, eventOrigin);
+		if (e.defaultPrevented) {
+			return;
 		}
 
-		if (isTabPrevious(e) && activeElement === this.root) {
-			this.fireEvent<TableRowForwardBeforeEventDetail>("_forward-before", { target: activeElement });
-		}
-
-		if (isSpace(e) && target.tagName.toLowerCase() === "tr") {
-			e.preventDefault();
-		}
-
-		if (isRowFocused && !checkboxPressed) {
-			if ((isSpace(e) && itemSelectable) || (isEnter(e) && isSingleSelect)) {
-				this.fireEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
-			}
-
-			if (isEnter(e) && itemActive) {
-				this.fireEvent<TableRowClickEventDetail>("row-click", { row: this });
-				if (!isSingleSelect) {
-					this.activate();
-				}
-			}
-		}
-
-		if (isF7(e)) {
-			e.preventDefault();
-			this.fireEvent<TableRowF7PressEventDetail>("f7-pressed", { row: this });
+		if (eventOrigin === this && this._isInteractive && isEnter(e)) {
+			this.toggleAttribute("_active", true);
+			this._table?._onRowClick(this);
 		}
 	}
 
-	_onkeyup(e: KeyboardEvent) {
-		if (isSpace(e) || isEnter(e)) {
-			this.deactivate();
+	_onclick() {
+		if (this._isInteractive && this === getActiveElement()) {
+			this._table?._onRowClick(this);
 		}
 	}
 
-	_ontouchend() {
-		this.deactivate();
+	_onkeyup() {
+		this.removeAttribute("_active");
 	}
 
 	_onfocusout() {
-		this.deactivate();
+		this.removeAttribute("_active");
 	}
 
-	_onfocusin(e: FocusEvent, forceSelfFocus = false) {
-		if (forceSelfFocus || this._activeElementHasAttribute("ui5-table-cell")) {
-			this.root.focus();
-			this.activate();
-		}
-
-		this.fireEvent("_focused");
+	_onOverflowButtonClick(e: PointerEvent) {
+		const ctor = this.actions[0].constructor as typeof TableRowActionBase;
+		ctor.showMenu(this._overflowActions, e.target as HTMLElement);
 	}
 
-	_onrowclick(e: MouseEvent) {
-		const checkboxPressed = (e.target as HTMLElement).classList.contains("ui5-multi-select-checkbox");
-		// If the user tab over a button on IOS device, the document.activeElement
-		// is the ui5-table-row. The check below ensure that, if a button within the row is pressed,
-		// the row will not be selected.
-		if (getEventMark(e) === "button") {
-			return;
-		}
+	get _isInteractive() {
+		return this.interactive;
+	}
 
-		const activeElement = (this.getRootNode() as Document).activeElement;
-		if (!this.contains(activeElement)) {
-			// If the user clickes on non-focusable element within the ui5-table-cell,
-			// the focus goes to the body, se we have to bring it back to the row.
-			// If the user clicks on input, button or similar clickable element,
-			// the focus remains on that element.
-			this._onfocusin(e, true /* force row focus */);
-			this.deactivate();
-		}
+	get _hasRowActions() {
+		return this._rowActionCount > 0 && this.actions.some(action => action.isFixedAction() || !action.invisible);
+	}
 
-		if (this._activeElementHasAttribute("ui5-table-row")) {
-			if (this.isSingleSelect) {
-				this._handleSelection();
+	get _hasOverflowActions() {
+		let renderedActionsCount = 0;
+		return this.actions.some(action => {
+			if (action.isFixedAction() || !action.invisible) {
+				renderedActionsCount++;
 			}
+			return renderedActionsCount > this._rowActionCount;
+		});
+	}
 
-			if (this.type === TableRowType.Active && !checkboxPressed) {
-				this.fireEvent<TableRowClickEventDetail>("row-click", { row: this });
-			}
+	get _flexibleActions() {
+		const flexibleActions = this.actions.filter(action => !action.isFixedAction());
+		const fixedActionsCount = this.actions.length - flexibleActions.length;
+		let maxFlexibleActionsCount = this._rowActionCount - fixedActionsCount;
+		if (maxFlexibleActionsCount < 1) {
+			return []; // fixed actions occupy all the available space
 		}
-	}
-
-	_handleSelection() {
-		this.fireEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
-	}
-
-	_activeElementHasAttribute(attr: string): boolean {
-		return !!((this.getRootNode() as Document).activeElement?.hasAttribute(attr));
-	}
-
-	get _ariaCurrent() {
-		return this.navigated ? true : undefined;
-	}
-
-	activate() {
-		if (this.type === TableRowType.Active) {
-			this.active = true;
-		}
-	}
-
-	deactivate() {
-		if (this.active) {
-			this.active = false;
-		}
-	}
-
-	get shouldPopin() {
-		return this._columnsInfo.filter(el => {
-			return el.demandPopin || !el.visible;
-		}).length;
-	}
-
-	get allColumnsPoppedIn() {
-		return this._columnsInfo.every(el => el.demandPopin && !el.visible);
-	}
-
-	onBeforeRendering() {
-		if (!this.shouldPopin) {
-			return;
+		if (flexibleActions.length <= maxFlexibleActionsCount) {
+			return flexibleActions; // all actions fit the available space
 		}
 
-		this.visibleCells = [];
-		this.popinCells = [];
-
-		if (this.cells.length === 0) {
-			return;
+		const visibleFlexibleActions = flexibleActions.filter(action => !action.invisible);
+		if (visibleFlexibleActions.length > maxFlexibleActionsCount) {
+			maxFlexibleActionsCount--;	// preserve space for the overflow button
 		}
 
-		const allColumnsPoppedInClass = this.allColumnsPoppedIn ? "all-columns-popped-in" : "";
-		this._columnsInfo.forEach((info, index) => {
-			const cell = this.cells[index];
-			const popinDisplay = info.popinDisplay === TableColumnPopinDisplay.Inline;
+		return visibleFlexibleActions.slice(0, maxFlexibleActionsCount);
+	}
 
-			if (!cell) {
-				return;
-			}
+	get _fixedActions() {
+		let maxFixedActionsCount = this._rowActionCount;
+		if (this._hasOverflowActions) {
+			maxFixedActionsCount--;
+		}
 
-			if (info.visible) {
-				this.visibleCells.push(cell);
-				cell.popined = false;
-				cell._popinedInline = false;
-			} else if (info.demandPopin) {
-				const popinHeaderClass = this.popinCells.length === 0 ? "popin-header" : "";
-				this.popinCells.push({
-					cell,
-					popinText: info.popinText,
-					classes: `ui5-table-popin-row ${allColumnsPoppedInClass} ${popinHeaderClass}`,
-					popinDisplayInline: popinDisplay,
-				});
-				cell.popined = true;
-				if (info.popinDisplay === TableColumnPopinDisplay.Inline) {
-					cell._popinedInline = true;
-				}
-			} else {
-				cell.popined = false;
-				cell._popinedInline = false;
+		const fixedActions = this.actions.filter(action => action.isFixedAction());
+		return fixedActions.slice(0, maxFixedActionsCount);
+	}
+
+	get _overflowActions() {
+		const fixedActions = this._fixedActions;
+		const flexibleActions = this._flexibleActions;
+		const overflowActions: Array<TableRowActionBase> = [];
+		this.actions.forEach(action => {
+			if (!action.invisible && !fixedActions.includes(action) && !flexibleActions.includes(action)) {
+				overflowActions.push(action);
 			}
 		});
 
-		const lastVisibleCell = this.visibleCells[this.visibleCells.length - 1];
-
-		if (lastVisibleCell) {
-			lastVisibleCell.lastInRow = true;
-		}
-	}
-
-	get visibleCellsCount() {
-		let visibleCellsCount = this.visibleCells.length;
-
-		if (this.isMultiSelect) {
-			visibleCellsCount += 1;
-		}
-
-		return visibleCellsCount;
-	}
-
-	get ariaLabelText() {
-		const isSelected = this.selected ? TableRow.i18nBundle.getText(LIST_ITEM_SELECTED) : TableRow.i18nBundle.getText(LIST_ITEM_NOT_SELECTED);
-		const isRowSelectable = this.isSingleSelect || this.isMultiSelect;
-		const ariaLabel = this.cells.map((cell, index) => {
-			const columText = this.getColumnTextByIdx(index);
-			const cellText = cell.cellContent.length ? this.getCellText(cell) : cell.ariaLabelEmptyCellText;
-			return `${columText} ${cellText}`;
-		}).join(" ");
-
-		if (isRowSelectable) {
-			return `${ariaLabel}. ${this._ariaPosition}. ${isSelected}`;
-		}
-
-		return `${ariaLabel}. ${this._ariaPosition}`;
-	}
-
-	get ariaLabelRowSelection() {
-		return TableRow.i18nBundle.getText(ARIA_LABEL_ROW_SELECTION);
-	}
-
-	get isSingleSelect() {
-		return this.mode === TableMode.SingleSelect;
-	}
-
-	get isMultiSelect() {
-		return this.mode === TableMode.MultiSelect;
-	}
-
-	get root() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-table-row-root")!;
-	}
-
-	getCellText(cell: TableCell): string {
-		const cellTextContent = cell.textContent;
-
-		return cellTextContent ? this.getNormilzedTextContent(cellTextContent) : "";
-	}
-
-	getColumnTextByIdx(index: number): string {
-		const columnInfo: TableColumnInfo = this._columnsInfo[index];
-
-		if (!columnInfo) {
-			return "";
-		}
-
-		return columnInfo.text ? this.getNormilzedTextContent(columnInfo.text) : "";
-	}
-
-	getNormilzedTextContent(textContent: string): string {
-		return textContent.replace(/[\n\r\t]/g, "").trim();
-	}
-
-	static async onDefine() {
-		TableRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		return overflowActions;
 	}
 }
 
 TableRow.define();
 
 export default TableRow;
-
-export type {
-	TableRowClickEventDetail,
-	TableRowSelectionRequestedEventDetail,
-	TableRowForwardBeforeEventDetail,
-	TableRowForwardAfterEventDetail,
-	TableRowF7PressEventDetail,
-};

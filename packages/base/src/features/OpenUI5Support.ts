@@ -1,13 +1,11 @@
+import patchPatcher from "./patchPatcher.js";
+import type { OpenUI5Patcher } from "./patchPatcher.js";
+import patchPopup from "./patchPopup.js";
+import type { OpenUI5Popup } from "./patchPopup.js";
 import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
-import { getCurrentZIndex } from "../util/PopupUtils.js";
-import { CLDRData } from "../asset-registries/LocaleData.js";
+import type { CLDRData } from "../asset-registries/LocaleData.js";
 import type { LegacyDateCalendarCustomizing } from "../features/LegacyDateFormats.js";
-
-type OpenUI5Popup = {
-	setInitialZIndex: (zIndex: number) => void,
-	getNextZIndex: () => number,
-};
 
 type OpenUI5Core = {
 	attachInit: (callback: () => void) => void,
@@ -70,6 +68,9 @@ type Locale = {
 
 class OpenUI5Support {
 	static isAtLeastVersion116() {
+		if (!window.sap.ui!.version) {
+			return true; // sap.ui.version will be removed in newer OpenUI5 versions
+		}
 		const version = window.sap.ui!.version as string;
 		const parts = version.split(".");
 		if (!parts || parts.length < 2) {
@@ -90,7 +91,7 @@ class OpenUI5Support {
 		return new Promise<void>(resolve => {
 			window.sap.ui.require(["sap/ui/core/Core"], async (Core: OpenUI5Core) => {
 				const callback = () => {
-					let deps: Array<string> = ["sap/ui/core/Popup", "sap/ui/core/LocaleData"];
+					let deps: Array<string> = ["sap/ui/core/Popup", "sap/ui/core/Patcher", "sap/ui/core/LocaleData"];
 					if (OpenUI5Support.isAtLeastVersion116()) { // for versions since 1.116.0 and onward, use the modular core
 						deps = [
 							...deps,
@@ -101,8 +102,9 @@ class OpenUI5Support {
 							"sap/ui/core/date/CalendarUtils",
 						];
 					}
-					window.sap.ui.require(deps, (Popup: OpenUI5Popup) => {
-						Popup.setInitialZIndex(getCurrentZIndex());
+					window.sap.ui.require(deps, (Popup: OpenUI5Popup, Patcher: OpenUI5Patcher) => {
+						patchPatcher(Patcher);
+						patchPopup(Popup);
 						resolve();
 					});
 				};
@@ -214,29 +216,6 @@ class OpenUI5Support {
 		}
 
 		return !!link.href.match(/\/css(-|_)variables\.css/);
-	}
-
-	static getNextZIndex() {
-		if (!OpenUI5Support.isOpenUI5Detected()) {
-			return;
-		}
-
-		const Popup = window.sap.ui.require("sap/ui/core/Popup") as OpenUI5Popup;
-
-		if (!Popup) {
-			console.warn(`The OpenUI5Support feature hasn't been initialized properly. Make sure you import the "@ui5/webcomponents-base/dist/features/OpenUI5Support.js" module before all components' modules.`); // eslint-disable-line
-		}
-
-		return Popup.getNextZIndex();
-	}
-
-	static setInitialZIndex() {
-		if (!OpenUI5Support.isOpenUI5Detected()) {
-			return;
-		}
-
-		const Popup = window.sap.ui.require("sap/ui/core/Popup") as OpenUI5Popup;
-		Popup.setInitialZIndex(getCurrentZIndex());
 	}
 }
 

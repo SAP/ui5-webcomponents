@@ -6,7 +6,7 @@
 .ui5-breadcrumbs-root {
     white-space: nowrap;
     outline: none;
-    margin: 0 0 0.5rem 0;
+    margin:var(--_ui5_breadcrumbs_margin);
 }
 
 .ui5-breadcrumbs-root > ol {
@@ -24,8 +24,6 @@
 
 .ui5-breadcrumbs-current-location {
     min-width: 1%;
-    -webkit-flex: 1;
-    -webkit-box-flex: 1;
     flex: 1 1 auto;
     /* Fix extra height in ul -> li element */
     font-size: 0;
@@ -61,6 +59,12 @@
     bottom: 0;
 }
 
+.ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-link]::part(root),
+.ui5-breadcrumbs-link-wrapper [ui5-link]::part(root) {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
 /* underline icon on hover */
 .ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-link][focused] [ui5-icon]::after,
 .ui5-breadcrumbs-dropdown-arrow-link-wrapper:hover [ui5-icon]::after {
@@ -73,15 +77,8 @@
     right: 0;
 }
 
-/* links separator */
-li:not(.ui5-breadcrumbs-current-location)::after {
-    content: "/"; /* default separator is "Slash" */
-    padding: 0 .25rem;
-    cursor: auto;
-    color: var(--sapContent_LabelColor);
-    display: inline-block;
-    font-family: "72override",var(--sapFontFamily);
-    font-size: var(--sapFontSize);
+.ui5-breadcrumbs-popover {
+    margin-top: 0.25rem;
 }
 
 .ui5-breadcrumbs-popover-footer {
@@ -90,23 +87,34 @@ li:not(.ui5-breadcrumbs-current-location)::after {
     width: 100%;
 }
 
+/* links separator */
+.ui5-breadcrumbs-separator::after {
+	content: "/"; /* default separator is "Slash" */
+	padding: 0 .25rem;
+	cursor: auto;
+	color: var(--sapContent_LabelColor);
+	display: inline-block;
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+}
+
 /* separator styles */
-:host([separator-style="BackSlash"]) li:not(.ui5-breadcrumbs-current-location)::after {
-    content: "\\";
+:host([separators="DoubleSlash"]) .ui5-breadcrumbs-separator::after {
+	content: "//";
 }
 
-:host([separator-style="DoubleBackSlash"]) li:not(.ui5-breadcrumbs-current-location)::after {
-    content: "\\\\";
+:host([separators="BackSlash"]) .ui5-breadcrumbs-separator::after {
+	content: "\\\\";
 }
 
-:host([separator-style="DoubleGreaterThan"]) li:not(.ui5-breadcrumbs-current-location)::after {
-    content: ">>";
+:host([separators="DoubleBackSlash"]) .ui5-breadcrumbs-separator::after {
+	content: "\\\\\\\\";
 }
 
-:host([separator-style="DoubleSlash"]) li:not(.ui5-breadcrumbs-current-location)::after {
-    content: "//";
+:host([separators="GreaterThan"]) .ui5-breadcrumbs-separator::after {
+	content: ">";
 }
 
-:host([separator-style="GreaterThan"]) li:not(.ui5-breadcrumbs-current-location)::after {
-    content: ">";
+:host([separators="DoubleGreaterThan"]) .ui5-breadcrumbs-separator::after {
+	content: ">>";
 }

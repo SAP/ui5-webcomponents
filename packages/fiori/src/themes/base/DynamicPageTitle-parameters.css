@@ -1,0 +1,21 @@
+:root {
+	--_ui5_dynamic_page_title_padding_top: 0.5rem;
+    --_ui5_dynamic_page_title_padding_bottom: 0.5rem;
+    --_ui5_dynamic_page_title_min_height: 4rem;
+    --_ui5_dynamic_page_title_focus_outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+    --_ui5_dynamic_page_title_focus_outline_offset: -0.0625rem;
+
+    --_ui5_dynamic_page_title_breadcrumbs_padding_top: 0.5rem;
+    --_ui5_dynamic_page_title_breadcrumbs_padding_bottom: 0.25rem;
+
+    --_ui5_dynamic_page_title_heading_padding_top: 0.3125rem;
+
+    --_ui5_dynamic_page_title_subheading_margin_top: 0.25rem;
+
+    --_ui5_dynamic_page_title_content_padding_left: 1rem;
+
+    --_ui5_dynamic_page_title_hover_background: var(--sapObjectHeader_Hover_Background);
+
+	--_ui5_dynamic_page_snapped_title_on_mobile_line_height: 2rem;
+	--_ui5_dynamic_page_snapped_title_on_mobile_min_height: 2rem;
+}

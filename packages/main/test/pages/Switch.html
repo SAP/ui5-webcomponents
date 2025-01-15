@@ -114,7 +114,7 @@
 
 	sw.addEventListener("ui5-change", function(e) {
 		lbl.innerHTML = e.target.checked + " : " + (++counter);
-		field.value = counter;
+		field.value = `${counter}`;
 	});
 
 	switchprevented.addEventListener("ui5-change", function(e) {

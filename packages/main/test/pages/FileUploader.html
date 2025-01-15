@@ -14,6 +14,19 @@
 	</script>
 </head>
 <body>
+
+	<div>
+		<ui5-button id="open-dialog-btn">open</ui5-button>
+		<ui5-dialog id="dialog" opener="open-dialog-btn" header-text="Upload file">
+			<ui5-file-uploader>
+				<ui5-button>Upload</ui5-button>
+			</ui5-file-uploader>
+			<div slot="footer" class="dialogFooter">
+				<ui5-button design="Emphasized">Close</ui5-button>
+			</div>
+		</ui5-dialog>
+	</div>
+
 	<div>
 		<label>Single file upload:</label>
 		<ui5-file-uploader placeholder="upload file">
@@ -23,11 +36,11 @@
 
 	<div>
 		<label>FileUploader with ValueState</label>
-		<ui5-file-uploader placeholder="upload file" value-state="Warning">
+		<ui5-file-uploader placeholder="upload file" value-state="Critical" id="fu-valuestate-test">
 			<ui5-button>Upload</ui5-button>
 		</ui5-file-uploader>
 
-		<ui5-file-uploader placeholder="upload file" value-state="Error">
+		<ui5-file-uploader placeholder="upload file" value-state="Negative">
 			<ui5-button>Upload</ui5-button>
 			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 			<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
@@ -48,8 +61,8 @@
 	</div>
 	<div>
 		<label>Value state Error:</label>
-		<ui5-file-uploader value-state="Error">
-			<ui5-button icon="upload" icon-end>Upload</ui5-button>
+		<ui5-file-uploader value-state="Negative">
+			<ui5-button end-icon="upload">Upload</ui5-button>
 		</ui5-file-uploader>
 	</div>
 	<div>
@@ -59,7 +72,7 @@
 	<div>
 		<label>Button only:</label>
 		<ui5-file-uploader hide-input id="file-uploader-no-input">
-			<ui5-button icon="upload" icon-end>Upload</ui5-button>
+			<ui5-button end-icon="upload">Upload</ui5-button>
 		</ui5-file-uploader>
 	</div>
 	<div>
@@ -76,10 +89,30 @@
 		</ui5-file-uploader>
 	</div>
 	<div>
-		<label>With badge:</label>
+		<label>With tag:</label>
 		<ui5-file-uploader hide-input>
-			<ui5-badge>Upload File</ui5-badge>
+			<ui5-tag>Upload File</ui5-tag>
 		</ui5-file-uploader>
+	</div>
+	<div>
+		<ui5-title>Maximum File Size</ui5-title>
+		<div class="fileuploader1auto">
+			<label>Accepts maximum file size of 1 MB:</label>
+			<div>
+				<ui5-file-uploader 
+					placeholder="Upload"
+					max-file-size="1"
+					multiple
+					id="file-uploader-max-size">
+					<ui5-button>Upload</ui5-button>
+				</ui5-file-uploader>
+			</div>
+			<div>
+				<label>Event "file-size-exceed" thrown count:</label>
+				<span id="file-size-exceed-count">0</span>
+			</div>
+			<div id="file-size-exceed-result"></div>
+		</div>
 	</div>
 	<div>
 		<ui5-title>Form support</ui5-title>
@@ -112,6 +145,12 @@
 		</div>
 	</div>
 	<script>
+
+		const dialog = document.getElementById("dialog");
+		document.getElementById("open-dialog-btn").addEventListener("click", function() {
+			dialog.open = !dialog.open;
+		});
+
 		document.getElementById("uploadBtn").addEventListener("click", function() {
 			var fu = document.getElementById("fuFetch");
 			var data = new FormData();
@@ -131,6 +170,34 @@
 				console.log("Error")
 			})
 		});
+
+		const eventCount = document.getElementById("file-size-exceed-count");
+		const eventResult = document.getElementById("file-size-exceed-result");
+		const maxSizeFileUploader = document.getElementById("file-uploader-max-size")
+		
+		maxSizeFileUploader.addEventListener("file-size-exceed", function (event) {
+			eventCount.innerHTML = parseFloat(eventCount.innerHTML) + 1;
+	
+			const uploaderMaxSize = maxSizeFileUploader.maxFileSize;
+			const filesData = event.detail.filesData;
+
+			filesData.forEach(fileData => {
+				const fileSizeDifference = (fileData.fileSize - uploaderMaxSize).toFixed(2);
+				const errorMessage = "Can't upload file '" + fileData.fileName + "' because it exceeds the maximum upload size by " + fileSizeDifference + " MB.";
+
+				const messageStrip = document.createElement('ui5-message-strip');
+				messageStrip.addEventListener("close", handleMessageClose);
+				eventResult.append(messageStrip);
+
+				messageStrip.design = "Negative";
+				messageStrip.innerHTML = errorMessage;
+			})
+		})
+
+		function handleMessageClose(event) {
+			event.target.remove();
+		}
+
 	</script>
 </body>
 </html>

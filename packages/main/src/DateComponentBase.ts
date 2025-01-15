@@ -1,17 +1,18 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getCalendarType, getSecondaryCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
+import type CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+import type CalendarWeekNumbering from "./types/CalendarWeekNumbering.js";
 
 /**
  * @class
@@ -21,86 +22,82 @@ import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-local
  *  - "languageAware: true" metadata setting, CLDR fetch and i18n initialization
  *  - common properties (primaryCalendar, minDate, maxDate and formatPattern) declaration and methods that operate on them
  *  - additional common methods
- *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.DateComponentBase
- * @extends sap.ui.webc.base.UI5Element
+ * @abstract
+ * @extends UI5Element
  * @public
  */
 @customElement({
 	languageAware: true,
-	renderer: litRender,
+	cldr: true,
+	renderer: jsxRenderer,
 })
 class DateComponentBase extends UI5Element {
 	/**
 	 * Sets a calendar type used for display.
 	 * If not set, the calendar type of the global configuration is used.
-	 * @type {sap.ui.webc.base.types.CalendarType}
-	 * @name sap.ui.webc.main.DateComponentBase.prototype.primaryCalendarType
+	 * @default undefined
 	 * @public
 	 */
-	@property({ type: CalendarType })
+	@property()
 	primaryCalendarType?: `${CalendarType}`;
 
 	/**
 	 * Defines the secondary calendar type.
 	 * If not set, the calendar will only show the primary calendar type.
-	 * @type {sap.ui.webc.base.types.CalendarType}
-	 * @name sap.ui.webc.main.DateComponentBase.prototype.secondaryCalendarType
 	 * @since 1.0.0-rc.16
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
-	@property({ type: CalendarType })
+	@property()
 	secondaryCalendarType?: `${CalendarType}`;
 
 	/**
 	 * Determines the format, displayed in the input field.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.DateComponentBase.prototype.formatPattern
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	formatPattern!: string;
+	formatPattern?: string;
 
 	/**
 	 * Determines the minimum date available for selection.
 	 *
-	 * <b>Note:</b> If the formatPattern property is not set, the minDate value must be provided in the ISO date format (YYYY-MM-dd).
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.DateComponentBase.prototype.minDate
-	 * @defaultvalue ""
+	 * **Note:** If the formatPattern property is not set, the minDate value must be provided in the ISO date format (YYYY-MM-dd).
+	 * @default ""
 	 * @since 1.0.0-rc.6
 	 * @public
 	 */
 	@property()
-	minDate!: string;
+	minDate = "";
 
 	/**
 	 * Determines the maximum date available for selection.
 	 *
-	 * <b>Note:</b> If the formatPattern property is not set, the maxDate value must be provided in the ISO date format (YYYY-MM-dd).
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.DateComponentBase.prototype.maxDate
-	 * @defaultvalue ""
+	 * **Note:** If the formatPattern property is not set, the maxDate value must be provided in the ISO date format (YYYY-MM-dd).
+	 * @default ""
 	 * @since 1.0.0-rc.6
 	 * @public
 	 */
 	@property()
-	maxDate!: string;
+	maxDate = "";
 
+	/**
+	 * Defines how to calculate calendar weeks and first day of the week.
+	 * If not set, the calendar will be displayed according to the currently set global configuration.
+	 * @default "Default"
+	 * @since 2.2.0
+	 * @public
+	 */
+	@property()
+	calendarWeekNumbering: `${CalendarWeekNumbering}` = "Default";
+
+	@i18n("@ui5/webcomponents")
 	static i18nBundle?: I18nBundle;
 
 	/**
 	 * Cached instance of DateFormat with a format pattern of "YYYY-MM-dd".
 	 * Used by the getISOFormat method to avoid creating a new DateFormat instance on each call.
-	 *
-	 * @type {DateFormat}
 	 * @private
 	 */
 	_isoFormatInstance?: DateFormat;
@@ -176,7 +173,7 @@ class DateComponentBase extends UI5Element {
 	}
 
 	_getStringFromTimestamp(timestamp: number) {
-		const localDate = new Date(timestamp);
+		const localDate = UI5Date.getInstance(timestamp);
 		return this.getFormat().format(localDate, true);
 	}
 
@@ -203,13 +200,6 @@ class DateComponentBase extends UI5Element {
 			});
 		}
 		return this._isoFormatInstance;
-	}
-
-	static async onDefine() {
-		[DateComponentBase.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
-			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-		]);
 	}
 }
 

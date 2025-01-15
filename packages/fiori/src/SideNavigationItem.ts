@@ -1,89 +1,107 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
-import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import type SideNavigationItemBase from "./SideNavigationItemBase.js";
+import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
+import SideNavigationItemTemplate from "./SideNavigationItemTemplate.js";
+
+// Styles
+import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-side-navigation-item</code> is used within <code>ui5-side-navigation</code> only.
- * Via the <code>ui5-side-navigation-item</code> you control the content of the <code>SideNavigation</code>.
+ * Represents a navigation action. It can provide sub items.
+ * The `ui5-side-navigation-item` is used within `ui5-side-navigation` or `ui5-side-navigation-group` only.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code>
+ * `import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";`
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.SideNavigationItem
- * @extends sap.ui.webc.fiori.SideNavigationItemBase
+ * @extends SideNavigationSelectableItemBase
  * @abstract
- * @tagname ui5-side-navigation-item
  * @public
- * @implements sap.ui.webc.fiori.ISideNavigationItem
  * @since 1.0.0-rc.8
  */
-@customElement("ui5-side-navigation-item")
-class SideNavigationItem extends SideNavigationItemBase {
+@customElement({
+	tag: "ui5-side-navigation-item",
+	renderer: jsxRender,
+	template: SideNavigationItemTemplate,
+	styles: SideNavigationItemCss,
+})
+class SideNavigationItem extends SideNavigationSelectableItemBase {
 	/**
 	 * Defines if the item is expanded
 	 *
 	 * @public
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.expanded
+	 * @default false
 	 */
 	@property({ type: Boolean })
-	expanded!: boolean;
+	expanded = false;
 
 	/**
 	 * Defines if the item should be collapsible or not.
 	 * It is true, for example, for the items inside the Popover of the Side Navigation
 	 * @private
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype._fixed
+	 * @default false
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	_fixed!: boolean;
+	_fixed = false;
 
 	/**
-     * Defines nested items by passing <code>ui5-side-navigation-sub-item</code> to the default slot.
+     * Defines nested items by passing `ui5-side-navigation-sub-item` to the default slot.
 	 *
-	 * @type {sap.ui.webc.fiori.ISideNavigationSubItem[]}
 	 * @public
-	 * @slot items
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.default
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationSubItem>;
 
-	/**
-	 * Defines whether clicking the whole item or only pressing the icon will show/hide the sub items (if present).
-	 * If set to true, clicking the whole item will toggle the sub items, and it won't fire the <code>click</code> event.
-	 * By default, only clicking the arrow icon will toggle the sub items.
-	 *
-	 * @public
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.wholeItemToggleable
-	 * @since 1.0.0-rc.11
-	 */
-	@property({ type: Boolean })
-	wholeItemToggleable!: boolean;
+	get overflowItems() : Array<SideNavigationItem> {
+		return [this];
+	}
+
+	get selectableItems() : Array<SideNavigationSelectableItemBase> {
+		return [this, ...this.items];
+	}
+
+	get focusableItems() : Array<SideNavigationItemBase> {
+		if (this.sideNavCollapsed) {
+			return [this];
+		}
+
+		if (this.expanded) {
+			return [this, ...this.items];
+		}
+
+		return [this];
+	}
+
+	get allItems() : Array<SideNavigationItemBase> {
+		return [this, ...this.items];
+	}
 
 	get _ariaHasPopup() {
-		if (!this.disabled && (this.parentNode as SideNavigation).collapsed && this.items.length) {
+		if (!this.disabled && this.sideNavCollapsed && this.items.length) {
 			return "tree";
 		}
 
 		return undefined;
+	}
+
+	get _ariaChecked() {
+		if (this.isOverflow) {
+			return undefined;
+		}
+
+		return this.selected;
 	}
 
 	get _groupId() {
@@ -102,10 +120,6 @@ class SideNavigationItem extends SideNavigationItemBase {
 		return this.expanded;
 	}
 
-	get _toggleIconName() {
-		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
-	}
-
 	get classesArray() {
 		const classes = super.classesArray;
 
@@ -121,24 +135,20 @@ class SideNavigationItem extends SideNavigationItemBase {
 	}
 
 	get _selected() {
-		if (this.sideNavigation?.collapsed) {
+		if (this.sideNavCollapsed) {
 			return this.selected || this.items.some(item => item.selected);
 		}
 
 		return this.selected;
 	}
 
-	get isFixedItem() {
-		return this.slot === "fixedItems";
-	}
-
-	_onToggleClick = (e: PointerEvent) => {
+	_onToggleClick(e: PointerEvent) {
 		e.stopPropagation();
 
 		this.expanded = !this.expanded;
 	}
 
-	_onkeydown = (e: KeyboardEvent) => {
+	_onkeydown(e: KeyboardEvent) {
 		if (isLeft(e)) {
 			this.expanded = false;
 			return;
@@ -152,28 +162,52 @@ class SideNavigationItem extends SideNavigationItemBase {
 		super._onkeydown(e);
 	}
 
-	_onkeyup = (e: KeyboardEvent) => {
+	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 	}
 
-	_onfocusin = (e: FocusEvent) => {
+	_onfocusin(e: FocusEvent) {
 		super._onfocusin(e);
 	}
 
-	_onclick = (e: PointerEvent) => {
-		if (!this.sideNavigation?.collapsed
-			&& this.wholeItemToggleable
-			&& e.pointerType === "mouse") {
-			e.preventDefault();
-			e.stopPropagation();
-			this.expanded = !this.expanded;
+	_onclick(e: MouseEvent) {
+		super._onclick(e);
+	}
+
+	_onfocusout() {
+		if (!this.sideNavCollapsed) {
 			return;
 		}
 
-		super._onclick(e);
+		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
+	}
+
+	_onmouseenter() {
+		if (!this.sideNavCollapsed) {
+			return;
+		}
+
+		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
+	}
+
+	_onmouseleave() {
+		if (!this.sideNavCollapsed || !this._selected) {
+			return;
+		}
+
+		this.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
+	}
+
+	get isSideNavigationItem() {
+		return true;
 	}
 }
 
 SideNavigationItem.define();
 
+const isInstanceOfSideNavigationItem = (object: any): object is SideNavigationItem => {
+	return "isSideNavigationItem" in object;
+};
+
 export default SideNavigationItem;
+export { isInstanceOfSideNavigationItem };

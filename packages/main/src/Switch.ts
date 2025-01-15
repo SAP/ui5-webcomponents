@@ -1,27 +1,21 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/less.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
-import Icon from "./Icon.js";
 import SwitchDesign from "./types/SwitchDesign.js";
+import { FORM_CHECKABLE_REQUIRED } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
+import SwitchTemplate from "./SwitchTemplate.js";
 
 // Styles
 import switchCss from "./generated/themes/Switch.css.js";
@@ -29,231 +23,187 @@ import switchCss from "./generated/themes/Switch.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-switch</code> component is used for changing between binary states.
- * <br>
- * The component can display texts, that will be switched, based on the component state, via the <code>textOn</code> and <code>textOff</code> properties,
+ * ### Overview
+ * The `ui5-switch` component is used for changing between binary states.
+ *
+ * The component can display texts, that will be switched, based on the component state, via the `textOn` and `textOff` properties,
  * but texts longer than 3 letters will be cutted off.
- * <br>
- * However, users are able to customize the width of <code>ui5-switch</code> with pure CSS (<code>&lt;ui5-switch style="width: 200px"></code>), and set widths, depending on the texts they would use.
- * <br>
+ *
+ * However, users are able to customize the width of `ui5-switch` with pure CSS (`<ui5-switch style="width: 200px">`), and set widths, depending on the texts they would use.
+ *
  * Note: the component would not automatically stretch to fit the whole text width.
  *
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  * The state can be changed by pressing the Space and Enter keys.
  *
- * <h3>CSS Shadow Parts</h3>
+ * ### ES6 Module Import
  *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-switch</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>slider - Used to style the track, where the handle is being slid</li>
- * <li>text-on - Used to style the <code>textOn</code> property text</li>
- * <li>text-off - Used to style the <code>textOff</code> property text</li>
- * <li>handle - Used to style the handle of the switch</li>
- * </ul>
- *
- * <h3>ES6 Module Import</h3>
- *
- * <code>import "@ui5/webcomponents/dist/Switch";</code>
- *
+ * `import "@ui5/webcomponents/dist/Switch";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Switch
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-switch
+ * @extends UI5Element
  * @public
  * @since 0.8.0
+ * @csspart slider - Used to style the track, where the handle is being slid
+ * @csspart text-on - Used to style the `textOn` property text
+ * @csspart text-off - Used to style the `textOff` property text
+ * @csspart handle - Used to style the handle of the switch
  */
 @customElement({
 	tag: "ui5-switch",
+	formAssociated: true,
 	languageAware: true,
 	styles: switchCss,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: SwitchTemplate,
-	dependencies: [Icon],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the component checked state changes.
- *
  * @public
- * @event sap.ui.webc.main.Switch#change
  */
-@event("change")
-class Switch extends UI5Element implements IFormElement {
+@event("change", {
+	bubbles: true,
+	cancelable: true,
+})
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed", {
+	bubbles: true,
+	cancelable: true,
+})
+class Switch extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: void
+		"value-changed": void
+	}
 	/**
 	 * Defines the component design.
-	 * <br><br>
-	 * <b>Note:</b> If <code>Graphical</code> type is set,
-	 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 	 *
+	 * **Note:** If `Graphical` type is set,
+	 * positive and negative icons will replace the `textOn` and `textOff`.
 	 * @public
-	 * @type {sap.ui.webc.main.types.SwitchDesign}
-	 * @name sap.ui.webc.main.Switch.prototype.design
-	 * @defaultValue "Textual"
+	 * @default "Textual"
 	 */
-	@property({ type: SwitchDesign, defaultValue: SwitchDesign.Textual })
-	design!: `${SwitchDesign}`;
+	@property()
+	design: `${SwitchDesign}` = "Textual";
 
 	/**
 	 * Defines if the component is checked.
-	 * <br><br>
-	 * <b>Note:</b> The property can be changed with user interaction,
-	 * either by cliking the component, or by pressing the <code>Enter</code> or <code>Space</code> key.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Switch.prototype.checked
-	 * @defaultvalue false
+	 *
+	 * **Note:** The property can be changed with user interaction,
+	 * either by cliking the component, or by pressing the `Enter` or `Space` key.
+	 * @default false
 	 * @formEvents change
 	 * @formProperty
 	 * @public
 	 */
 	@property({ type: Boolean })
-	checked!: boolean;
+	checked = false;
 
 	/**
 	 * Defines whether the component is disabled.
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is noninteractive.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Switch.prototype.disabled
-	 * @defaultvalue false
+	 * **Note:** A disabled component is noninteractive.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean
+	disabled = false
 
 	/**
 	 * Defines the text, displayed when the component is checked.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.prototype.textOn
-	 * @defaultvalue ""
+	 * **Note:** We recommend using short texts, up to 3 letters (larger texts would be cut off).
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	textOn!: string
+	textOn?: string
 
 	/**
 	 * Defines the text, displayed when the component is not checked.
-	 * <br><br>
-	 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.prototype.textOff
-	 * @defaultvalue ""
+	 * **Note:** We recommend using short texts, up to 3 letters (larger texts would be cut off).
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	textOff!: string
+	textOff?: string
 
 	/**
 	 * Sets the accessible ARIA name of the component.
 	 *
-	 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
-	 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
-	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * **Note**: We recommend that you set an accessibleNameRef pointing to an external label or at least an `accessibleName`.
+	 * Providing an `accessibleNameRef` or an `accessibleName` is mandatory in the cases when `textOn` and `textOff` properties aren't set.
+	 * @default undefined
 	 * @public
 	 * @since 1.2.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
-	 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
-	 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
-	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * **Note**: We recommend that you set an accessibleNameRef pointing to an external label or at least an `accessibleName`.
+	 * Providing an `accessibleNameRef` or an `accessibleName` is mandatory in the cases when `textOn` and `textOff` properties aren't set.
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the tooltip of the component.
-	 * <br>
-	 * <b>Note:</b> If applicable an external label reference should always be the preferred option to provide context to the <code>ui5-switch</code> component over a tooltip.
-	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.prototype.tooltip
-	 * @defaultvalue: ""
+	 *
+	 * **Note:** If applicable an external label reference should always be the preferred option to provide context to the `ui5-switch` component over a tooltip.
+	 * @default undefined
 	 * @public
 	 * @since 1.9.0
 	 */
 	@property()
-	tooltip!: string;
+	tooltip?: string;
 
 	/**
 	 * Defines whether the component is required.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Switch.prototype.required
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.16.0
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * <br><br>
-	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
-	 *
-	 * <br><br>
-	 * <b>Note:</b> When set, a native <code>input</code> HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.prototype.name
-	 * @defaultvalue ""
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default undefined
 	 * @public
 	 * @since 1.16.0
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
-	/**
-	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit, when <code>Switch</code> is a part of HTML form.
-	 *
-	 * @type {HTMLElement[]}
-	 * @slot
-	 * @private
-	 * @since 1.16.0
-	 */
-	@slot()
-	formSupport!: Array<HTMLElement>;
-
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-	onBeforeRendering() {
-		this._enableFormSupport();
+	get formValidityMessage() {
+		return Switch.i18nBundle.getText(FORM_CHECKABLE_REQUIRED);
 	}
 
-	_enableFormSupport() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (formSupport) {
-			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: NativeFormElement) => {
-				const switchComponent = (element as Switch);
-				(nativeInput as HTMLInputElement).checked = !!switchComponent.checked;
-				nativeInput.disabled = !!switchComponent.disabled;
-				nativeInput.value = switchComponent.checked ? "on" : "";
-			});
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.checked };
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue() {
+		return this.checked ? "on" : null;
 	}
 
 	get sapNextIcon() {
@@ -283,9 +233,9 @@ class Switch extends UI5Element implements IFormElement {
 	toggle() {
 		if (!this.disabled) {
 			this.checked = !this.checked;
-			const changePrevented = !this.fireEvent("change", null, true);
+			const changePrevented = !this.fireDecoratorEvent("change");
 			// Angular two way data binding;
-			const valueChangePrevented = !this.fireEvent("value-changed", null, true);
+			const valueChangePrevented = !this.fireDecoratorEvent("value-changed");
 
 			if (changePrevented || valueChangePrevented) {
 				this.checked = !this.checked;
@@ -310,21 +260,7 @@ class Switch extends UI5Element implements IFormElement {
 	}
 
 	get effectiveTabIndex() {
-		return this.disabled ? undefined : "0";
-	}
-
-	get classes(): ClassMap {
-		const hasLabel = this.graphical || this.textOn || this.textOff;
-
-		return {
-			main: {
-				"ui5-switch-desktop": isDesktop(),
-				"ui5-switch--disabled": this.disabled,
-				"ui5-switch--checked": this.checked,
-				"ui5-switch--semantic": this.graphical,
-				"ui5-switch--no-label": !hasLabel,
-			},
-		};
+		return this.disabled ? undefined : 0;
 	}
 
 	get effectiveAriaDisabled() {
@@ -345,10 +281,6 @@ class Switch extends UI5Element implements IFormElement {
 
 	get ariaLabelText() {
 		return [getEffectiveAriaLabelText(this), this.hiddenText].join(" ").trim();
-	}
-
-	static async onDefine() {
-		Switch.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

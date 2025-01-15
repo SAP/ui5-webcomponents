@@ -1,0 +1,14 @@
+.header {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.header > * {
+    margin: 0.25rem;
+}

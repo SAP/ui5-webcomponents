@@ -21,6 +21,7 @@
 	max-height: 100%;
 	max-width: 100%;
 	border-radius: 0;
+	min-width: 0; /*this is for preventing the dialog to hold its width on small screens*/
 }
 
 :host([draggable]) .ui5-popup-header-root,
@@ -34,6 +35,10 @@
 
 :host([draggable]) .ui5-popup-root {
 	user-select: text;
+}
+
+::slotted([slot="header"]) {
+	max-width: 100%;
 }
 
 .ui5-popup-root {
@@ -57,7 +62,7 @@
 	background: var(--sapObjectHeader_BorderColor);
 }
 
-:host([state="Error"]) .ui5-popup-header-root::before {
+:host([state="Negative"]) .ui5-popup-header-root::before {
 	background: var(--sapErrorBorderColor);
 }
 
@@ -65,30 +70,31 @@
 	background: var(--sapInformationBorderColor);
 }
 
-:host([state="Success"]) .ui5-popup-header-root::before {
+:host([state="Positive"]) .ui5-popup-header-root::before {
 	background: var(--sapSuccessBorderColor);
 }
 
-:host([state="Warning"]) .ui5-popup-header-root::before {
+:host([state="Critical"]) .ui5-popup-header-root::before {
 	background: var(--sapWarningBorderColor);
 }
 
 .ui5-dialog-value-state-icon {
 	margin-inline-end: 0.5rem;
+	flex-shrink: 0;
 }
 
-:host([state="Error"]) .ui5-dialog-value-state-icon {
+:host([state="Negative"]) .ui5-dialog-value-state-icon {
 	color: var(--_ui5_dialog_header_error_state_icon_color);
 }
 
 :host([state="Information"]) .ui5-dialog-value-state-icon {
 	color: var(--_ui5_dialog_header_information_state_icon_color);
 }
-:host([state="Success"]) .ui5-dialog-value-state-icon {
+:host([state="Positive"]) .ui5-dialog-value-state-icon {
 	color: var(--_ui5_dialog_header_success_state_icon_color);
 }
 
-:host([state="Warning"]) .ui5-dialog-value-state-icon {
+:host([state="Critical"]) .ui5-dialog-value-state-icon {
 	color: var(--_ui5_dialog_header_warning_state_icon_color);
 }
 
@@ -96,7 +102,8 @@
 	outline: none;
 }
 
-.ui5-popup-header-root:focus:after {
+:host([desktop]) .ui5-popup-header-root:focus:after,
+.ui5-popup-header-root:focus-visible:after {
 	content: '';
 	position: absolute;
 	left: var(--_ui5_dialog_header_focus_left_offset);
@@ -120,10 +127,16 @@
 
 .ui5-popup-resize-handle {
 	position: absolute;
-	bottom: var(--_ui5_dialog_resize_handle_bottom);
-	inset-inline-end: var(--_ui5_dialog_resize_handle_right);
+	bottom: -0.5rem;
+	inset-inline-end: -0.5rem;
 	cursor: var(--_ui5_dialog_resize_cursor);
-	color: var(--_ui5_dialog_resize_handle_color);
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 50%;
+}
+
+.ui5-popup-resize-handle [ui5-icon] {
+	color: var(--sapButton_Lite_TextColor);
 }
 
 ::slotted([slot="footer"]) {
@@ -136,4 +149,17 @@
 
 ::slotted([slot="header"][ui5-bar]) {
 	box-shadow: none;
+}
+
+::slotted([slot="footer"][ui5-toolbar]) {
+	border: 0;
+}
+
+:host::backdrop {
+	background-color: var(--_ui5_popup_block_layer_background);
+	opacity: var(--_ui5_popup_block_layer_opacity);
+}
+
+.ui5-block-layer {
+	display: block;
 }

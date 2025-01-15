@@ -1,21 +1,23 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import Input from "@ui5/webcomponents/dist/Input.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
-import Link from "@ui5/webcomponents/dist/Link.js";
-import ProgressIndicator from "@ui5/webcomponents/dist/ProgressIndicator.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
+import type Input from "@ui5/webcomponents/dist/Input.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { isEnter, isEscape, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isDelete,
+	isEnter,
+	isEscape,
+	isSpace,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import UploadState from "./types/UploadState.js";
 import "@ui5/webcomponents-icons/dist/refresh.js";
 import "@ui5/webcomponents-icons/dist/stop.js";
@@ -32,7 +34,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
+import UploadCollectionItemTemplate from "./UploadCollectionItemTemplate.js";
 
 // Styles
 import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css.js";
@@ -40,235 +42,192 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * A component to be used within the <code>ui5-upload-collection</code>.
+ * ### Overview
+ * A component to be used within the `ui5-upload-collection`.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code>
- *
+ * `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.UploadCollectionItem
- * @extends sap.ui.webc.main.ListItem
- * @tagname ui5-upload-collection-item
+ * @extends ListItem
  * @public
- * @implements sap.ui.webc.fiori.IUploadCollectionItem
+ * @slot {Node[]} default - Hold the description of the `ui5-upload-collection-item`. Will be shown below the file name.
  * @since 1.0.0-rc.7
  */
 @customElement({
 	tag: "ui5-upload-collection-item",
 	languageAware: true,
+	renderer: jsxRenderer,
 	styles: [ListItem.styles, UploadCollectionItemCss],
 	template: UploadCollectionItemTemplate,
-	dependencies: [
-		...ListItem.dependencies,
-		Button,
-		Input,
-		Link,
-		Label,
-		ProgressIndicator,
-	],
 })
 
 /**
  * Fired when the file name is clicked.
- * <br><br>
- * <b>Note:</b> This event is only available when <code>fileNameClickable</code> property is <code>true</code>.
  *
- * @event sap.ui.webc.fiori.UploadCollectionItem#file-name-click
+ * **Note:** This event is only available when `fileNameClickable` property is `true`.
  * @public
  */
-@event("file-name-click")
+@event("file-name-click", {
+	bubbles: true,
+})
 
 /**
- * Fired when the <code>fileName</code> property gets changed.
- * <br><br>
- * <b>Note:</b> An edit button is displayed on each item,
- * when the <code>ui5-upload-collection-item</code> <code>type</code> property is set to <code>Detail</code>.
+ * Fired when the `fileName` property gets changed.
  *
- * @event sap.ui.webc.fiori.UploadCollectionItem#rename
+ * **Note:** An edit button is displayed on each item,
+ * when the `ui5-upload-collection-item` `type` property is set to `Detail`.
  * @public
  */
-@event("rename")
+@event("rename", {
+	bubbles: true,
+})
 
 /**
  * Fired when the terminate button is pressed.
- * <br><br>
- * <b>Note:</b> Terminate button is displayed when <code>uploadState</code> property is set to <code>Uploading</code>.
  *
- * @event sap.ui.webc.fiori.UploadCollectionItem#terminate
+ * **Note:** Terminate button is displayed when `uploadState` property is set to `Uploading`.
  * @public
  */
-@event("terminate")
+@event("terminate", {
+	bubbles: true,
+})
 
 /**
  * Fired when the retry button is pressed.
- * <br><br>
- * <b>Note:</b> Retry button is displayed when <code>uploadState</code> property is set to <code>Error</code>.
  *
- * @event sap.ui.webc.fiori.UploadCollectionItem#retry
+ * **Note:** Retry button is displayed when `uploadState` property is set to `Error`.
  * @public
  */
-@event("retry")
+@event("retry", {
+	bubbles: true,
+})
 
 /**
  * @since 1.0.0-rc.8
- *
- * @event
  * @private
  */
-@event("_focus-requested")
+@event("focus-requested", {
+	bubbles: true,
+})
 
 /**
  * @private
  */
-@event("_uci-delete")
+@event("request-delete", {
+	bubbles: true,
+})
 class UploadCollectionItem extends ListItem {
+	eventDetails!: ListItem["eventDetails"] & {
+		"file-name-click": void;
+		"rename": void;
+		"terminate": void;
+		"retry": void;
+		"focus-requested": void;
+		"_uci-delete": void;
+		"request-delete": void;
+	}
 	/**
-	 * Holds an instance of <code>File</code> associated with this item.
-	 *
-	 * @type {File}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.file
-	 * @defaultvalue null
+	 * Holds an instance of `File` associated with this item.
+	 * @default null
 	 * @public
 	 */
-	@property({ type: Object, noAttribute: true, defaultValue: null })
-	file?: object;
+	@property({ type: Object, noAttribute: true })
+	file: File | null = null;
 
 	/**
 	 * The name of the file.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.fileName
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
-	fileName!: string;
+	fileName = "";
 
 	/**
-	 * If set to <code>true</code> the file name will be clickable and it will fire <code>file-name-click</code> event upon click.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.fileNameClickable
-	 * @defaultvalue false
+	 * If set to `true` the file name will be clickable and it will fire `file-name-click` event upon click.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	fileNameClickable!: boolean;
+	fileNameClickable = false;
 
 	/**
 	 * Disables the delete button.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.disableDeleteButton
-	 * @defaultvalue false
-	 * @public
-	 */
-	@property({ type: Boolean, noAttribute: false })
-	disableDeleteButton!: boolean;
-
-	/**
-	 * By default, the delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.
-	 * Setting this property to <code>true</code> will hide the delete button.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.hideDeleteButton
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideDeleteButton!: boolean;
+	declare disableDeleteButton: boolean;
 
 	/**
-	 * Hides the retry button when <code>uploadState</code> property is <code>Error</code>.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.hideRetryButton
-	 * @defaultvalue false
+	 * Hides the delete button.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideRetryButton!: boolean;
+	hideDeleteButton = false;
 
 	/**
-	 * Hides the terminate button when <code>uploadState</code> property is <code>Uploading</code>.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.hideTerminateButton
-	 * @defaultvalue false
+	 * Hides the retry button when `uploadState` property is `Error`.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideTerminateButton!: boolean;
+	hideRetryButton = false;
+
+	/**
+	 * Hides the terminate button when `uploadState` property is `Uploading`.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	hideTerminateButton = false;
 
 	/**
 	 * The upload progress in percentage.
-	 * <br><br>
-	 * <b>Note:</b> Expected values are in the interval [0, 100].
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.progress
-	 * @defaultvalue 0
+	 * **Note:** Expected values are in the interval [0, 100].
+	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	progress!: number;
+	@property({ type: Number })
+	progress = 0;
 
 	/**
-	 * If set to <code>Uploading</code> or <code>Error</code>, a progress indicator showing the <code>progress</code> is displayed.
-	 * Also if set to <code>Error</code>, a refresh button is shown. When this icon is pressed <code>retry</code> event is fired.
-	 * If set to <code>Uploading</code>, a terminate button is shown. When this icon is pressed <code>terminate</code> event is fired.
+	 * Upload state.
 	 *
-	 * @type {sap.ui.webc.fiori.types.UploadState}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.uploadState
-	 * @defaultvalue "Ready"
+	 * Depending on this property, the item displays the following:
+	 *
+	 * - `Ready` - progress indicator is displayed.
+	 * - `Uploading` - progress indicator and terminate button are displayed. When the terminate button is pressed, `terminate` event is fired.
+	 * - `Error` - progress indicator and retry button are displayed. When the retry button is pressed, `retry` event is fired.
+	 * - `Complete` - progress indicator is not displayed.
+	 *
+	 * @default "Ready"
 	 * @public
 	 */
-	@property({ type: UploadState, defaultValue: UploadState.Ready })
-	uploadState!: `${UploadState}`;
+	@property()
+	uploadState: `${UploadState}` = "Ready";
 
 	/**
 	 * Indicates if editing.
-	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_editing!: boolean;
+	_editing = false;
 
 	/**
-	 * A thumbnail, which will be shown in the beginning of the <code>ui5-upload-collection-item</code>.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-icon</code> or <code>img</code> for the intended design.
+	 * A thumbnail, which will be shown in the beginning of the `ui5-upload-collection-item`.
 	 *
-	 * @type {HTMLElement}
-	 * @slot
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.thumbnail
+	 * **Note:** Use `ui5-icon` or `img` for the intended design.
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
 	thumbnail!: Array<HTMLElement>;
 
-	/**
-	 * Hold the description of the <code>ui5-upload-collection-item</code>. Will be shown below the file name.
-	 *
-	 * @type {Node[]}
-	 * @slot
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.default
-	 * @public
-	 */
-
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nFioriBundle: I18nBundle;
-
-	static async onDefine() {
-		[UploadCollectionItem.i18nFioriBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents-fiori"),
-			super.onDefine(),
-		]);
-	}
 
 	/**
 	 * @override
@@ -292,6 +251,14 @@ class UploadCollectionItem extends ListItem {
 		if (inpFocusDomRef) {
 			inpFocusDomRef.focus();
 			inpFocusDomRef.setSelectionRange(0, this._fileNameWithoutExtension.length);
+		}
+	}
+
+	_onkeyup(e: KeyboardEvent) {
+		super._onkeyup(e);
+
+		if (isDelete(e) && !this.disableDeleteButton && !this.hideDeleteButton && !this.disabled) {
+			this._onDelete();
 		}
 	}
 
@@ -319,7 +286,7 @@ class UploadCollectionItem extends ListItem {
 	_onRename() {
 		const inp = this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input")!;
 		this.fileName = inp.value + this._fileExtension;
-		this.fireEvent("rename");
+		this.fireDecoratorEvent("rename");
 
 		this._editing = false;
 		this._focus();
@@ -331,10 +298,10 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
-	async _onRenameCancel(e: KeyboardEvent) {
+	async _onRenameCancel(e: KeyboardEvent | MouseEvent) {
 		this._editing = false;
 
-		if (isEscape(e)) {
+		if (isEscape(e as KeyboardEvent)) {
 			await renderFinished();
 			this.shadowRoot!.querySelector<Button>(`#${this._id}-editing-button`)!.focus();
 		} else {
@@ -349,15 +316,15 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_focus() {
-		this.fireEvent("_focus-requested");
+		this.fireDecoratorEvent("focus-requested");
 	}
 
 	_onFileNameClick() {
-		this.fireEvent("file-name-click");
+		this.fireDecoratorEvent("file-name-click");
 	}
 
 	_onRetry() {
-		this.fireEvent("retry");
+		this.fireDecoratorEvent("retry");
 	}
 
 	_onRetryKeyup(e: KeyboardEvent) {
@@ -367,7 +334,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_onTerminate() {
-		this.fireEvent("terminate");
+		this.fireDecoratorEvent("terminate");
 	}
 
 	_onTerminateKeyup(e: KeyboardEvent) {
@@ -377,7 +344,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_onDelete() {
-		this.fireEvent("_uci-delete");
+		this.fireDecoratorEvent("request-delete");
 	}
 
 	getFocusDomRef() {
@@ -398,13 +365,6 @@ class UploadCollectionItem extends ListItem {
 				"ui5-uci-root-uploading": this.uploadState === UploadState.Uploading,
 			},
 		};
-	}
-
-	/**
-	 * @override
-	 */
-	get renderUploadCollectionDeleteButton() {
-		return !this.hideDeleteButton;
 	}
 
 	get _fileNameWithoutExtension() {
@@ -461,7 +421,7 @@ class UploadCollectionItem extends ListItem {
 
 	get valueStateName(): ValueState {
 		if (this.uploadState === UploadState.Error) {
-			return ValueState.Error;
+			return ValueState.Negative;
 		}
 
 		if (this.uploadState === UploadState.Ready || this.uploadState === UploadState.Uploading) {

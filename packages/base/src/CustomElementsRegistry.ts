@@ -1,6 +1,6 @@
 import getSharedResource from "./getSharedResource.js";
 import { getCurrentRuntimeIndex, compareRuntimes, getAllRuntimes } from "./Runtimes.js";
-import { Timeout } from "./types.js";
+import type { Timeout } from "./types.js";
 
 const Tags = getSharedResource<Map<string, number>>("Tags", new Map());
 const Definitions = new Set<string>();
@@ -85,7 +85,7 @@ const displayFailedRegistrations = () => {
 		}
 	});
 
-	message = `${message}\n\nTo prevent other runtimes from defining tags that you use, consider using scoping or have third-party libraries use scoping: https://github.com/SAP/ui5-webcomponents/blob/main/docs/2-advanced/03-scoping.md.`;
+	message = `${message}\n\nTo prevent other runtimes from defining tags that you use, consider using scoping or have third-party libraries use scoping: https://github.com/SAP/ui5-webcomponents/blob/main/docs/2-advanced/06-scoping.md.`;
 
 	console.warn(message); // eslint-disable-line
 };

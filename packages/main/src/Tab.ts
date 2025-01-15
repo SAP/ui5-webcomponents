@@ -1,13 +1,15 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	TAB_ARIA_DESIGN_POSITIVE,
 	TAB_ARIA_DESIGN_NEGATIVE,
@@ -23,19 +25,18 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import SemanticColor from "./types/SemanticColor.js";
 import ListItemType from "./types/ListItemType.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab } from "./TabContainer.js";
-import Icon from "./Icon.js";
-import Button from "./Button.js";
-import CustomListItem from "./CustomListItem.js";
+import type { TabContainerStripInfo, TabContainerOverflowInfo, ITab } from "./TabContainer.js";
+import type ListItemCustom from "./ListItemCustom.js";
 
 // Templates
-import TabTemplate from "./generated/templates/TabTemplate.lit.js";
-import TabInStripTemplate from "./generated/templates/TabInStripTemplate.lit.js";
-import TabInOverflowTemplate from "./generated/templates/TabInOverflowTemplate.lit.js";
+import TabTemplate from "./TabTemplate.js";
+import TabInStripTemplate from "./TabInStripTemplate.js";
+import TabInOverflowTemplate from "./TabInOverflowTemplate.js";
 
 // Styles
 import css from "./generated/themes/Tab.css.js";
 import stripCss from "./generated/themes/TabInStrip.css.js";
+import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 import overflowCss from "./generated/themes/TabInOverflow.css.js";
 
 const DESIGN_DESCRIPTIONS = {
@@ -45,127 +46,111 @@ const DESIGN_DESCRIPTIONS = {
 	[SemanticColor.Critical]: TAB_ARIA_DESIGN_CRITICAL,
 };
 
+interface TabInStrip extends HTMLElement {
+	realTabReference: Tab;
+}
+
+interface TabInOverflow extends ListItemCustom {
+	realTabReference: Tab;
+}
+
 /**
  * @class
- * The <code>ui5-tab</code> represents a selectable item inside a <code>ui5-tabcontainer</code>.
- * It defines both the item in the tab strip (top part of the <code>ui5-tabcontainer</code>) and the
+ * The `ui5-tab` represents a selectable item inside a `ui5-tabcontainer`.
+ * It defines both the item in the tab strip (top part of the `ui5-tabcontainer`) and the
  * content that is presented to the user once the tab is selected.
- *
  * @abstract
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Tab
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-tab
- * @implements sap.ui.webc.main.ITab
+ * @extends UI5Element
+ * @implements {ITab}
  * @public
  */
 @customElement({
 	tag: "ui5-tab",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TabTemplate,
 	styles: css,
-	dependencies: [
-		Icon,
-		Button,
-		CustomListItem,
-	],
 })
-class Tab extends UI5Element implements ITab, ITabbable {
+class Tab extends UI5Element implements ITabbable, ITab {
 	/**
 	 * The text to be displayed for the item.
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
-	 * @name sap.ui.webc.main.Tab.prototype.text
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Disabled tabs can't be selected.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.main.Tab.prototype.disabled
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Represents the "additionalText" text, which is displayed in the tab. In the cases when in the same time there are tabs with icons and tabs without icons, if a tab has no icon the "additionalText" is displayed larger.
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
-	 * @name sap.ui.webc.main.Tab.prototype.additionalText
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
 	 * Defines the icon source URI to be displayed as graphical element within the component.
 	 * The SAP-icons font provides numerous built-in icons.
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 *
-	 * @type {string}
-	 * @defaultvalue ""
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
 	 * @public
-	 * @name sap.ui.webc.main.Tab.prototype.icon
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines the component's design color.
-	 * <br><br>
+	 *
 	 * The design is applied to:
-	 * <ul>
-	 * <li>the component icon</li>
-	 * <li>the <code>text</code> when the component overflows</li>
-	 * <li>the tab selection line</li>
-	 * </ul>
 	 *
-	 * <br><br>
-	 * Available designs are: <code>"Default"</code>, <code>"Neutral"</code>, <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
+	 * - the component icon
+	 * - the `text` when the component overflows
+	 * - the tab selection line
 	 *
-	 * <br><br>
-	 * <b>Note:</b> The design depends on the current theme.
-	 * @type {sap.ui.webc.main.types.SemanticColor}
-	 * @defaultvalue "Default"
+	 * Available designs are: `"Default"`, `"Neutral"`, `"Positive"`, `"Critical"` and `"Negative"`.
+	 *
+	 * **Note:** The design depends on the current theme.
+	 * @default "Default"
 	 * @public
-	 * @name sap.ui.webc.main.Tab.prototype.design
 	 */
-	@property({ type: SemanticColor, defaultValue: SemanticColor.Default })
-	design!: `${SemanticColor}`;
+	@property()
+	design: `${SemanticColor}` = "Default";
 
 	/**
 	 * Specifies if the component is selected.
-	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.main.Tab.prototype.selected
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
+
+	/**
+	 * Defines if the tab is movable.
+	 *
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	movable = false;
 
 	@property({ type: Boolean })
-	_selected!: boolean;
+	_isTopLevelTab = false;
 
 	@property({ type: Object })
-	_realTab!: Tab;
-
-	@property({ type: Boolean })
-	_isTopLevelTab!: boolean;
+	_selectedTabReference?: Tab;
 
 	/**
 	 * Holds the content associated with this tab.
-	 *
-	 * @type {Node[]}
 	 * @public
-	 * @slot
-	 * @name sap.ui.webc.main.Tab.prototype.default
 	 */
 	@slot({
 		type: Node,
@@ -179,13 +164,9 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	/**
 	 * Defines hierarchies with nested sub tabs.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 	 *
-	 * @type {sap.ui.webc.main.ITab[]}
+	 * **Note:** Use `ui5-tab` and `ui5-tab-separator` for the intended design.
 	 * @public
-	 * @slot subTabs
-	 * @name sap.ui.webc.main.Tab.prototype.subTabs
 	 */
 	@slot({
 		type: HTMLElement,
@@ -195,21 +176,25 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			slots: false,
 		},
 	})
-	subTabs!: Array<ITab>
+	items!: Array<ITab>
 
 	_isInline?: boolean;
-	_mixedMode?: boolean;
-	_getElementInStrip?: () => ITab | null;
-	_individualSlot!: string;
+	_forcedMixedMode?: boolean;
+	_getElementInStrip?: () => HTMLElement | undefined;
+	_getElementInOverflow?: () => HTMLElement | undefined;
+	_forcedPosinset?: number;
+	_forcedSetsize?: number;
+	_forcedStyleInOverflow?: Record<string, any>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-	set _tabIndex(val: string) {
-		this.getTabInStripDomRef()!.setAttribute("tabindex", val);
+	set forcedTabIndex(val: string) {
+		this.getDomRefInStrip()!.setAttribute("tabindex", val);
 	}
 
-	get _tabIndex() {
-		return this.getTabInStripDomRef()!.getAttribute("tabindex")!;
+	get forcedTabIndex() {
+		return this.getDomRefInStrip()!.getAttribute("tabindex")!;
 	}
 
 	get displayText() {
@@ -239,67 +224,89 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get requiresExpandButton() {
-		return this.subTabs.length > 0 && this._isTopLevelTab && this._hasOwnContent;
+		return this.items.length > 0 && this._isTopLevelTab && this.hasOwnContent;
 	}
 
 	get isSingleClickArea() {
-		return this.subTabs.length > 0 && this._isTopLevelTab && !this._hasOwnContent;
+		return this.items.length > 0 && this._isTopLevelTab && !this.hasOwnContent;
 	}
 
 	get isTwoClickArea() {
-		return this.subTabs.length > 0 && this._isTopLevelTab && this._hasOwnContent;
+		return this.items.length > 0 && this._isTopLevelTab && this.hasOwnContent;
 	}
 
 	get isOnSelectedTabPath(): boolean {
-		return this._realTab === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
+		return this._selectedTabReference === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
 	}
 
-	get _effectiveSlotName() {
+	get _effectiveSlotName(): string | undefined {
 		return this.isOnSelectedTabPath ? this._individualSlot : `disabled-${this._individualSlot}`;
 	}
 
 	get _defaultSlotName() {
-		return this._realTab === this ? "" : "disabled-slot";
+		return this._selectedTabReference === this ? "" : "disabled-slot";
 	}
 
-	get _hasOwnContent() {
+	get hasOwnContent() {
 		return willShowContent(this.content);
+	}
+
+	get expandBtnAccessibilityAttributes(): Pick<AccessibilityAttributes, "hasPopup"> {
+		return {
+			hasPopup: "menu",
+		};
+	}
+
+	receiveStripInfo({
+		getElementInStrip, posinset, setsize, isInline, isTopLevelTab, mixedMode,
+	}: TabContainerStripInfo) {
+		this._getElementInStrip = getElementInStrip;
+		this._forcedPosinset = posinset;
+		this._forcedSetsize = setsize;
+		this._forcedMixedMode = mixedMode;
+		this._isInline = isInline;
+		this._isTopLevelTab = !!isTopLevelTab;
+	}
+
+	receiveOverflowInfo({ getElementInOverflow, style }: TabContainerOverflowInfo) {
+		this._getElementInOverflow = getElementInOverflow;
+		this._forcedStyleInOverflow = style;
 	}
 
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
-	 * <b>Note:</b> Tabs, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs will return <code>null</code>.
-	 * <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.
 	 *
-	 * @function
+	 * **Note:** Tabs, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such tabs will return `undefined`.
+	 *
+	 * **Note:** If you need a DOM ref to the tab content please use the `getDomRef` method.
 	 * @public
-     * @name sap.ui.webc.main.Tab.prototype.getTabInStripDomRef
 	 * @since 1.0.0-rc.16
 	 */
-	getTabInStripDomRef() {
-		if (this._getElementInStrip) {
-			return this._getElementInStrip();
-		}
-
-		return null;
+	getDomRefInStrip(): HTMLElement | undefined {
+		return this._getElementInStrip?.();
 	}
 
 	getFocusDomRef() {
-		let focusedDomRef = super.getFocusDomRef();
+		let focusedDomRef = this._getElementInOverflow?.();
 
-		if (this._getElementInStrip && this._getElementInStrip()) {
-			focusedDomRef = this._getElementInStrip()!;
+		if (!focusedDomRef) {
+			focusedDomRef = this._getElementInStrip?.();
 		}
 
 		return focusedDomRef;
 	}
 
+	async focus(focusOptions?: FocusOptions): Promise<void> {
+		await renderFinished();
+		return super.focus(focusOptions);
+	}
+
 	get isMixedModeTab() {
-		return !this.icon && this._mixedMode;
+		return !this.icon && this._forcedMixedMode;
 	}
 
 	get isTextOnlyTab() {
-		return !this.icon && !this._mixedMode;
+		return !this.icon && !this._forcedMixedMode;
 	}
 
 	get isIconTab() {
@@ -312,7 +319,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	get effectiveSelected() {
 		const subItemSelected = this.tabs.some(elem => elem.effectiveSelected);
-		return this.selected || this._selected || subItemSelected;
+		return this.selected || this._selectedTabReference === this || subItemSelected;
 	}
 
 	get effectiveHidden() {
@@ -320,7 +327,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get tabs(): Array<Tab> {
-		return this.subTabs.filter((tab): tab is Tab => !tab.isSeparator);
+		return this.items.filter((tab): tab is Tab => !tab.isSeparator);
 	}
 
 	get ariaLabelledBy() {
@@ -364,7 +371,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			classes.push("ui5-tab-strip-item--withAdditionalText");
 		}
 
-		if (!this.icon && !this._mixedMode) {
+		if (!this.icon && !this._forcedMixedMode) {
 			classes.push("ui5-tab-strip-item--textOnly");
 		}
 
@@ -372,7 +379,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			classes.push("ui5-tab-strip-item--withIcon");
 		}
 
-		if (!this.icon && this._mixedMode) {
+		if (!this.icon && this._forcedMixedMode) {
 			classes.push("ui5-tab-strip-item--mixedMode");
 		}
 
@@ -412,7 +419,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get _roleDescription() {
-		return this.subTabs.length > 0 ? Tab.i18nBundle.getText(TAB_SPLIT_ROLE_DESCRIPTION) : undefined;
+		return this.items.length > 0 ? Tab.i18nBundle.getText(TAB_SPLIT_ROLE_DESCRIPTION) : undefined;
 	}
 
 	get _ariaHasPopup() {
@@ -480,14 +487,39 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		return TabInOverflowTemplate;
 	}
 
-	static async onDefine() {
-		Tab.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	_ondragstart(e: DragEvent) {
+		if (e.target instanceof HTMLElement) {
+			e.target.setAttribute("data-moving", "");
+		}
+	}
+
+	_ondragend(e: DragEvent) {
+		if (e.target instanceof HTMLElement) {
+			e.target.removeAttribute("data-moving");
+		}
+	}
+
+	captureRef(ref: HTMLElement & { realTabReference?: UI5Element} | null) {
+		if (ref) {
+			ref.realTabReference = this;
+		}
+	}
+
+	captureButtonRef(ref: HTMLElement & { tab?: UI5Element} | null) {
+		if (ref) {
+			ref.tab = this;
+		}
 	}
 }
 
 Tab.define();
 
 TabContainer.registerTabStyles(stripCss);
-TabContainer.registerStaticAreaTabStyles(overflowCss);
+TabContainer.registerTabStyles(draggableElementStyles);
+TabContainer.registerTabStyles(overflowCss);
 
 export default Tab;
+export type {
+	TabInStrip,
+	TabInOverflow,
+};

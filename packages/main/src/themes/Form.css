@@ -1,0 +1,51 @@
+@import "./FormLayout.css";
+@import "./FormItemSpan.css";
+
+:host {
+	display: block;
+}
+
+.ui5-form-root {
+	display: flex;
+	flex-direction: column;
+	background-color: var(--sapGroup_ContentBackground);
+    border-radius: 0.75rem;
+	container-type: inline-size;
+}
+
+.ui5-form-header {
+	display: flex;
+	min-height: 2.75rem;
+	align-items: center;
+	border-bottom: 1px solid var(--sapGroup_TitleBorderColor);
+	padding: 0.875rem 1rem;
+	box-sizing: border-box;
+}
+
+.ui5-form-layout {
+	display: grid;
+	column-gap: 1rem;
+	row-gap: 0.125rem;
+	padding: 1rem 0.75rem;
+}
+
+.ui5-form-group-layout {
+	display: grid;
+	column-gap: 1rem;
+}
+
+.ui5-form-group-heading {
+	height: var(--_ui5-form-group-heading-height);
+	line-height: var(--_ui5-form-group-heading-height);
+	padding-inline-start: 0.25rem;
+}
+
+.ui5-form-column {
+	padding-top: 0.5rem;
+    padding-bottom: 1rem;
+    box-sizing: border-box;
+}
+
+::slotted([ui5-form-group]) {
+	display: contents;
+}

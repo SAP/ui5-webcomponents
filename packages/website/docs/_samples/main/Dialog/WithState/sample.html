@@ -1,0 +1,27 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor); height: 450px;">
+    <!-- playground-fold-end -->
+
+    <ui5-button id="dialogOpener">Open Dialog</ui5-button>
+
+    <ui5-dialog id="dialog" state="Negative" header-text="State :: Negative">
+        <ui5-text>Dialog with state</ui5-text>
+        <ui5-toolbar slot="footer">
+            <ui5-toolbar-button class="dialogCloser" text="Close"></ui5-toolbar-button>
+        </ui5-toolbar>
+    </ui5-dialog>
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

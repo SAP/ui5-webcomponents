@@ -2,32 +2,27 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/accept.js";
-import Icon from "./Icon.js";
-import Label from "./Label.js";
-import WrappingType from "./types/WrappingType.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type WrappingType from "./types/WrappingType.js";
 import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	VALUE_STATE_SUCCESS,
+	FORM_CHECKABLE_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import checkboxCss from "./generated/themes/CheckBox.css.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
 
 // Template
-import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
+import CheckBoxTemplate from "./CheckBoxTemplate.js";
 
 let isGlobalHandlerAttached = false;
 let activeCb: CheckBox;
@@ -35,252 +30,231 @@ let activeCb: CheckBox;
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * Allows the user to set a binary value, such as true/false or yes/no for an item.
- * <br><br>
- * The <code>ui5-checkbox</code> component consists of a box and a label that describes its purpose.
+ *
+ * The `ui5-checkbox` component consists of a box and a label that describes its purpose.
  * If it's checked, an indicator is displayed inside the box.
- * To check/uncheck the <code>ui5-checkbox</code>, the user has to click or tap the square
+ * To check/uncheck the `ui5-checkbox`, the user has to click or tap the square
  * box or its label.
- * <br><br>
- * The <code>ui5-checkbox</code> component only has 2 states - checked and unchecked.
- * Clicking or tapping toggles the <code>ui5-checkbox</code> between checked and unchecked state.
  *
- * <h3>Usage</h3>
+ * The `ui5-checkbox` component only has 2 states - checked and unchecked.
+ * Clicking or tapping toggles the `ui5-checkbox` between checked and unchecked state.
  *
- * You can define the checkbox text with via the <code>text</code> property. If the text exceeds the available width, it is truncated by default.
- * In case you prefer text to wrap, set the <code>wrappingType</code> property to "Normal".
- * The touchable area for toggling the <code>ui5-checkbox</code> ends where the text ends.
- * <br><br>
- * You can disable the <code>ui5-checkbox</code> by setting the <code>disabled</code> property to
- * <code>true</code>,
- * or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readonly</code>
- * property to <code>true</code>.
+ * ### Usage
  *
- * <br><br>
- * <h3>CSS Shadow Parts</h3>
+ * You can define the checkbox text with via the `text` property. If the text exceeds the available width, it is truncated by default.
+ * In case you prefer text to truncate, set the `wrappingType` property to "None".
+ * The touchable area for toggling the `ui5-checkbox` ends where the text ends.
  *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-checkbox</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>root - Used to style the outermost wrapper of the <code>ui5-checkbox</code></li>
- * </ul>
+ * You can disable the `ui5-checkbox` by setting the `disabled` property to
+ * `true`,
+ * or use the `ui5-checkbox` in read-only mode by setting the `readonly`
+ * property to `true`.
  *
- * <br><br>
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  *
- * The user can use the following keyboard shortcuts to toggle the checked state of the <code>ui5-checkbox</code>.
- * <ul>
- * <li>[SPACE, ENTER] - Toggles between different states: checked, not checked.</li>
- * </ul>
- * <br><br>
+ * The user can use the following keyboard shortcuts to toggle the checked state of the `ui5-checkbox`.
  *
- * <h3>ES6 Module Import</h3>
+ * - [Space],[Enter] - Toggles between different states: checked, not checked.
  *
- * <code>import "@ui5/webcomponents/dist/CheckBox";</code>
+ * ### ES6 Module Import
  *
+ * `import "@ui5/webcomponents/dist/CheckBox.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.CheckBox
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-checkbox
+ * @extends UI5Element
  * @public
+ * @csspart root - Used to style the outermost wrapper of the `ui5-checkbox`
+ * @csspart label - Used to style the label of the `ui5-checkbox`
+ * @csspart icon - Used to style the icon of the `ui5-checkbox`
  */
 @customElement({
 	tag: "ui5-checkbox",
 	languageAware: true,
-	renderer: litRender,
+	formAssociated: true,
+	renderer: jsxRenderer,
 	template: CheckBoxTemplate,
 	styles: checkboxCss,
-	dependencies: [
-		Label,
-		Icon,
-	],
 })
 /**
  * Fired when the component checked state changes.
- *
  * @public
- * @event sap.ui.webc.main.CheckBox#change
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+	cancelable: true,
+})
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed", {
+	bubbles: true,
+	cancelable: true,
+})
+class CheckBox extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		"change": void,
+		"value-changed": void,
+	};
 
-class CheckBox extends UI5Element implements IFormElement {
 	/**
 	 * Receives id(or many ids) of the elements that label the component
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.CheckBox.prototype.accessibleNameRef
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
-	 * @type {string}
 	 * @public
-	 * @name sap.ui.webc.main.CheckBox.prototype.accessibleName
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines whether the component is disabled.
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.CheckBox.prototype.disabled
-	 * @defaultvalue false
+	 * **Note:** A disabled component is completely noninteractive.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines whether the component is read-only.
-	 * <br><br>
-	 * <b>Note:</b> A read-only component is not editable,
-	 * but still provides visual feedback upon user interaction.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.CheckBox.prototype.readonly
-	 * @defaultvalue false
+	 * **Note:** A read-only component is not editable,
+	 * but still provides visual feedback upon user interaction.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
+
+	/**
+	 * Determines whether the `ui5-checkbox` is in display only state.
+	 *
+	 * When set to `true`, the `ui5-checkbox` is not interactive, not editable, not focusable
+	 * and not in the tab chain. This setting is used for forms in review mode.
+	 *
+	 * **Note:** When the property `disabled` is set to `true` this property has no effect.
+	 * @since 1.22.0
+	 * @public
+	 * @default false
+	 */
+	@property({ type: Boolean })
+	displayOnly = false;
 
 	/**
 	 * Defines whether the component is required.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.CheckBox.prototype.required
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.3.0
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	* Defines whether the component is displayed as partially checked.
-	* <br><br>
-	* <b>Note:</b> The indeterminate state can be set only programmatically and can’t be achieved by user
-	* interaction and the resulting visual state depends on the values of the <code>indeterminate</code>
-	* and <code>checked</code> properties:
-	* <ul>
-	* <li> If the component is checked and indeterminate, it will be displayed as partially checked
-	* <li> If the component is checked and it is not indeterminate, it will be displayed as checked
-	* <li> If the component is not checked, it will be displayed as not checked regardless value of the indeterminate attribute
-	* </ul>
 	*
-	* @type {boolean}
-	* @name sap.ui.webc.main.CheckBox.prototype.indeterminate
-	* @defaultvalue false
+	* **Note:** The indeterminate state can be set only programmatically and can’t be achieved by user
+	* interaction and the resulting visual state depends on the values of the `indeterminate`
+	* and `checked` properties:
+	*
+	* -  If the component is checked and indeterminate, it will be displayed as partially checked
+	* -  If the component is checked and it is not indeterminate, it will be displayed as checked
+	* -  If the component is not checked, it will be displayed as not checked regardless value of the indeterminate attribute
+	* @default false
 	* @public
 	* @since 1.0.0-rc.15
 	*/
 	@property({ type: Boolean })
-	indeterminate!: boolean;
+	indeterminate = false;
 
 	/**
 	 * Defines if the component is checked.
-	 * <br><br>
-	 * <b>Note:</b> The property can be changed with user interaction,
+	 *
+	 * **Note:** The property can be changed with user interaction,
 	 * either by cliking/tapping on the component, or by
 	 * pressing the Enter or Space key.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.CheckBox.prototype.checked
-	 * @defaultvalue false
+	 * @default false
 	 * @formEvents change
 	 * @formProperty
 	 * @public
 	 */
 	@property({ type: Boolean })
-	checked!: boolean;
+	checked = false;
 
 	/**
 	 * Defines the text of the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.CheckBox.prototype.text
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines the value state of the component.
-	 *
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.CheckBox.prototype.valueState
-	 * @defaultvalue "None"
-	 * @public
-	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
-
-	/**
-	 * Defines whether the component text wraps when there is not enough space.
-	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
-	 *
-	 * @type {sap.ui.webc.main.types.WrappingType}
-	 * @name sap.ui.webc.main.CheckBox.prototype.wrappingType
-	 * @defaultvalue "None"
-	 * @public
-	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`;
-
-	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
-	 *
-	 * <br><br>
-	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
-	 *
-	 * <br><br>
-	 * <b>Note:</b> When set, a native <code>input</code> HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.CheckBox.prototype.name
-	 * @defaultvalue ""
+	 * @default "None"
 	 * @public
 	 */
 	@property()
-	name!: string;
+	valueState: `${ValueState}` = "None";
+
+	/**
+	 * Defines whether the component text wraps when there is not enough space.
+	 *
+	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
+	 * **Note:** for option "None" the text will be truncated with an ellipsis.
+	 * @default "Normal"
+	 * @public
+	 */
+	@property()
+	wrappingType: `${WrappingType}` = "Normal";
+
+	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	name?: string;
 
 	/**
 	 * Defines the active state (pressed or not) of the component.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	active!: boolean;
+	active = false;
 
-	/**
-	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
-	 * when <code>name</code> property is set.
-	 * @type {HTMLElement[]}
-	 * @slot
-	 * @private
-	 */
-	@slot()
-	formSupport!: Array<HTMLElement>;
-
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	_deactivate: () => void;
+
+	get formValidityMessage() {
+		return CheckBox.i18nBundle.getText(FORM_CHECKABLE_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.checked };
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue() {
+		return this.checked ? "on" : null;
+	}
 
 	constructor() {
 		super();
@@ -297,20 +271,9 @@ class CheckBox extends UI5Element implements IFormElement {
 		}
 	}
 
-	onBeforeRendering() {
-		this._enableFormSupport();
-	}
-
-	_enableFormSupport() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (formSupport) {
-			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: NativeFormElement) => {
-				nativeInput.disabled = !!element.disabled;
-				(nativeInput as HTMLInputElement).checked = !!element.checked;
-				nativeInput.value = element.checked ? "on" : "";
-			});
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
 		}
 	}
 
@@ -338,13 +301,17 @@ class CheckBox extends UI5Element implements IFormElement {
 	_onkeydown(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
-			this.active = true;
+		}
+
+		if (this.readonly || this.disabled) {
+			return;
 		}
 
 		if (isEnter(e)) {
 			this.toggle();
-			this.active = true;
 		}
+
+		this.active = true;
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -368,11 +335,11 @@ class CheckBox extends UI5Element implements IFormElement {
 				this.checked = !this.checked;
 			}
 
-			const changePrevented = !this.fireEvent("change", null, true);
+			const changePrevented = !this.fireDecoratorEvent("change");
 			// Angular two way data binding
-			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
+			const valueChangePrevented = !this.fireDecoratorEvent("value-changed");
 
-			if (changePrevented || valueChagnePrevented) {
+			if (changePrevented || valueChangePrevented) {
 				this.checked = lastState.checked;
 				this.indeterminate = lastState.indeterminate;
 			}
@@ -381,14 +348,14 @@ class CheckBox extends UI5Element implements IFormElement {
 	}
 
 	canToggle() {
-		return !(this.disabled || this.readonly);
+		return !(this.disabled || this.readonly || this.displayOnly);
 	}
 
 	valueStateTextMappings() {
 		return {
-			"Error": CheckBox.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": CheckBox.i18nBundle.getText(VALUE_STATE_WARNING),
-			"Success": CheckBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Negative": CheckBox.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": CheckBox.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Positive": CheckBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
 		};
 	}
 
@@ -405,7 +372,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	}
 
 	get ariaReadonly() {
-		return this.readonly ? "true" : undefined;
+		return this.readonly || this.displayOnly ? "true" : undefined;
 	}
 
 	get effectiveAriaDisabled() {
@@ -440,15 +407,22 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	get effectiveTabIndex() {
 		const tabindex = this.getAttribute("tabindex");
-		return this.disabled ? undefined : tabindex || "0";
+
+		if (this.tabbable) {
+			return tabindex ? parseInt(tabindex) : 0;
+		}
+	}
+
+	get tabbable() {
+		return !this.disabled && !this.displayOnly;
 	}
 
 	get isCompletelyChecked() {
 		return this.checked && !this.indeterminate;
 	}
 
-	static async onDefine() {
-		CheckBox.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	get isDisplayOnly() {
+		return this.displayOnly && !this.disabled;
 	}
 }
 

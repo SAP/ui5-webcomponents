@@ -1,14 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
+import type { IColorPaletteItem } from "./ColorPalette.js";
+import ColorPaletteItemTemplate from "./ColorPaletteItemTemplate.js";
 import {
 	COLORPALETTE_COLOR_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
@@ -19,75 +18,76 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-color-palette-item</code> component represents a color in the the <code>ui5-color-palette</code>.
- *
+ * The `ui5-color-palette-item` component represents a color in the the `ui5-color-palette`.
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ColorPaletteItem
- * @extends sap.ui.webc.base.UI5Element
- * @abstract
- * @tagname ui5-color-palette-item
+ * @extends UI5Element
  * @since 1.0.0-rc.12
- * @implements sap.ui.webc.main.IColorPaletteItem
+ * @implements { IColorPaletteItem }
  * @public
  */
 @customElement({
 	tag: "ui5-color-palette-item",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: ColorPaletteItemCss,
 	template: ColorPaletteItemTemplate,
+	shadowRootOptions: { delegatesFocus: true },
 })
-class ColorPaletteItem extends UI5Element implements ITabbable {
+class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	/**
 	 * Defines the colour of the component.
-	 * <br><br>
-	 * <b>Note:</b> The value should be a valid CSS color.
 	 *
-	 * @type {sap.ui.webc.base.types.CSSColor}
-	 * @name sap.ui.webc.main.ColorPaletteItem.prototype.value
+	 * **Note:** The value should be a valid CSS color.
+	 * @default ""
 	 * @public
 	 */
-	@property({ validator: CSSColor })
-	value!: string;
+	@property()
+	value = ""
+
+	/**
+	 * Defines if the component is selected.
+	 *
+	 * **Note:** Only one item must be selected per <code>ui5-color-palette</code>.
+	 * If more than one item is defined as selected, the last one would be considered as the selected one.
+	 *
+	 * @public
+	 * @default false
+	 * @since 2.0.0
+	 */
+	@property({ type: Boolean })
+	selected = false;
 
 	/**
 	 * Defines the tab-index of the element, helper information for the ItemNavigation.
 	 * @private
 	 */
-	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	@property({ noAttribute: true })
+	forcedTabIndex = "-1";
 
 	/**
 	 * Defines the index of the item inside of the ColorPalette.
 	 * @private
-	 * @type {Integer}
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	index?: number;
 
 	/**
 	 * Defines if the ColorPalette is on phone mode.
 	 * @private
-	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
-	phone!: boolean;
+	onPhone = false;
 
 	/**
 	 * @private
-	 * @type {boolean}
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	_disabled!: boolean;
+	_disabled = false;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		ColorPaletteItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	constructor() {
 		super();
@@ -95,7 +95,12 @@ class ColorPaletteItem extends UI5Element implements ITabbable {
 
 	onBeforeRendering() {
 		this._disabled = !this.value;
-		this.phone = isPhone();
+		this.onPhone = isPhone();
+		this.setAttribute("style", `background-color: ${this.value}`);
+
+		// since height is dynamically determined by padding-block-start
+		const itemHeight = this.offsetHeight + 4; // adding 4px for the offsets on top and bottom
+		this.style.setProperty(getScopedVarName("--_ui5_color_palette_item_height"), `${itemHeight}px`);
 	}
 
 	get colorLabel() {
@@ -103,9 +108,19 @@ class ColorPaletteItem extends UI5Element implements ITabbable {
 	}
 
 	get styles() {
+		// Remove after deleting the hbs template, it's added in the jsx template
 		return {
 			root: {
 				"background-color": this.value,
+			},
+		};
+	}
+
+	get classes() {
+		// Remove after deleting the hbs template, it's added in the jsx template
+		return {
+			root: {
+				"ui5-cp-item": true,
 			},
 		};
 	}

@@ -1,10 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isLeft,
 	isRight,
@@ -12,7 +11,7 @@ import {
 	isUp,
 	isF7,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import type { ScrollEnablementEventListenerParam } from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
@@ -22,6 +21,7 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import {
 	CAROUSEL_OF_TEXT,
 	CAROUSEL_DOT_TEXT,
@@ -29,15 +29,12 @@ import {
 	CAROUSEL_NEXT_ARROW_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
-import CarouselPageIndicatorStyle from "./types/CarouselPageIndicatorStyle.js";
-import BackgroundDesign from "./types/BackgroundDesign.js";
-import BorderDesign from "./types/BorderDesign.js";
-import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import CarouselPageIndicatorType from "./types/CarouselPageIndicatorType.js";
+import type BackgroundDesign from "./types/BackgroundDesign.js";
+import type BorderDesign from "./types/BorderDesign.js";
+import CarouselTemplate from "./CarouselTemplate.js";
 
-import Button from "./Button.js";
-import Label from "./Label.js";
+import type Button from "./Button.js";
 
 // Styles
 import CarouselCss from "./generated/themes/Carousel.css.js";
@@ -46,256 +43,223 @@ type CarouselNavigateEventDetail = {
 	selectedIndex: number;
 }
 
+type ItemsInfo = {
+	id: string,
+	item: HTMLElement & { _individualSlot?: string },
+	tabIndex: number,
+	posinset: number,
+	setsize: number,
+	selected: boolean,
+	_individualSlot?: string,
+}
+
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * The Carousel allows the user to browse through a set of items.
  * The component is mostly used for showing a gallery of images, but can hold any other HTML element.
- * <br>
+ *
  * There are several ways to perform navigation:
- * <ul>
- * <li>on desktop - the user can navigate using the navigation arrows or with keyboard shorcuts.</li>
- * <li>on mobile - the user can use swipe gestures.</li>
- * </ul>
  *
- * <h3>Usage</h3>
+ * - on desktop - the user can navigate using the navigation arrows or with keyboard shortcuts.
+ * - on touch devices - the user can navigate using the navigation arrows (always visible) or can use swipe gestures.
  *
- * <h4>When to use:</h4>
+ * ### Usage
  *
- * <ul>
- * <li>The items you want to display are very different from each other.</li>
- * <li>You want to display the items one after the other.</li>
- * </ul>
+ * #### When to use:
  *
- * <h4>When not to use:</h4>
+ * - The items you want to display are very different from each other.
+ * - You want to display the items one after the other.
  *
- * <ul>
- * <li>The items you want to display need to be visible at the same time.</li>
- * <li>The items you want to display are uniform and very similar.</li>
- * </ul>
+ * #### When not to use:
  *
- * <h3>Keyboard Handling</h3>
+ * - The items you want to display need to be visible at the same time.
+ * - The items you want to display are uniform and very similar.
  *
- * <h4>Basic Navigation</h4>
- * When the <code>ui5-carousel</code> is focused the user can navigate between the items
+ * ### Keyboard Handling
+ *
+ * #### Basic Navigation
+ * When the `ui5-carousel` is focused the user can navigate between the items
  * with the following keyboard shortcuts:
- * <br>
- * <ul>
- * <li>[UP/DOWN] - Navigates to previous and next item</li>
- * <li>[LEFT/RIGHT] - Navigates to previous and next item</li>
- * </ul>
  *
- * <h3>Fast Navigation</h3>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * - [Up] or [Down] - Navigates to previous and next item
+ * - [Left] or [Right] - Navigates to previous and next item
+ *
+ * ### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
  *
- * <h3>CSS Shadow Parts</h3>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-carousel</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>content - Used to style the content of the component</li>
- * </ul>
+ * ### ES6 Module Import
  *
- * <h3>ES6 Module Import</h3>
- *
- * <code>import "@ui5/webcomponents/dist/Carousel.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/Carousel.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Carousel
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-carousel
+ * @extends UI5Element
  * @since 1.0.0-rc.6
  * @public
+ * @csspart content - Used to style the content of the component
  */
 @customElement({
 	tag: "ui5-carousel",
 	languageAware: true,
 	fastNavigation: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: CarouselCss,
 	template: CarouselTemplate,
-	dependencies: [
-		Button,
-		Label,
-	],
 })
 /**
  * Fired whenever the page changes due to user interaction,
  * when the user clicks on the navigation arrows or while resizing,
- * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
- *
- * @event sap.ui.webc.main.Carousel#navigate
+ * based on the `items-per-page` property.
  * @param {Integer} selectedIndex the current selected index
  * @public
  * @since 1.0.0-rc.7
  */
 @event("navigate", {
-	detail: {
-		selectedIndex: { type: Integer },
-	},
+	bubbles: true,
 })
 
 class Carousel extends UI5Element {
+	eventDetails!: {
+		navigate: CarouselNavigateEventDetail;
+	}
+	/**
+	 * Defines the accessible name of the component.
+	 * @default undefined
+	 * @public
+	 * @since 1.24
+	 */
+	@property()
+	accessibleName?: string;
+
+	/**
+	 * Defines the IDs of the elements that label the input.
+	 * @default undefined
+	 * @public
+	 * @since 1.24
+	 */
+	@property()
+	accessibleNameRef?: string;
+
 	/**
 	 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Carousel.prototype.cyclic
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	cyclic!: boolean;
+	cyclic = false;
 
 	/**
-	 * Defines the number of items per page on small size (up to 640px). One item per page shown by default.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.Carousel.prototype.itemsPerPageS
-	 * @defaultvalue 1
+	 * Defines the number of items per page depending on the carousel width.
+	 *
+	 * - 'S' for screens smaller than 600 pixels.
+	 * - 'M' for screens greater than or equal to 600 pixels and smaller than 1024 pixels.
+	 * - 'L' for screens greater than or equal to 1024 pixels and smaller than 1440 pixels.
+	 * - 'XL' for screens greater than or equal to 1440 pixels.
+	 *
+	 * One item per page is shown by default.
+	 * @default "S1 M1 L1 XL1"
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageS!: number;
-
-	/**
-	 * Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.Carousel.prototype.itemsPerPageM
-	 * @defaultvalue 1
-	 * @public
-	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageM!: number;
-
-	/**
-	 * Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.Carousel.prototype.itemsPerPageL
-	 * @defaultvalue 1
-	 * @public
-	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageL!: number;
+	@property()
+	itemsPerPage = "S1 M1 L1 XL1";
 
 	/**
 	 * Defines the visibility of the navigation arrows.
 	 * If set to true the navigation arrows will be hidden.
-	 * <br><br>
-	 * <b>Note:</b> The navigation arrows are never displayed on touch devices.
-	 * In this case, the user can swipe to navigate through the items.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Carousel.prototype.hideNavigationArrows
+	 *
 	 * @since 1.0.0-rc.15
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideNavigationArrows!: boolean;
+	hideNavigationArrows = false;
 
 	/**
 	 * Defines the visibility of the page indicator.
 	 * If set to true the page indicator will be hidden.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Carousel.prototype.hidePageIndicator
 	 * @since 1.0.0-rc.15
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hidePageIndicator!: boolean;
+	hidePageIndicator = false;
 
 	/**
 	 * Defines the style of the page indicator.
 	 * Available options are:
-	 * <ul>
-	 * <li><code>Default</code> - The page indicator will be visualized as dots if there are fewer than 9 pages. If there are more pages, the page indicator will switch to displaying the current page and the total number of pages. (e.g. X of Y)</li>
-	 * <li><code>Numeric</code> - The page indicator will display the current page and the total number of pages. (e.g. X of Y)</li>
-	 * </ul>
-	 * @type {sap.ui.webc.main.types.CarouselPageIndicatorStyle}
-	 * @name sap.ui.webc.main.Carousel.prototype.pageIndicatorStyle
+	 *
+	 * - `Default` - The page indicator will be visualized as dots if there are fewer than 9 pages. If there are more pages, the page indicator will switch to displaying the current page and the total number of pages. (e.g. X of Y)
+	 * - `Numeric` - The page indicator will display the current page and the total number of pages. (e.g. X of Y)
 	 * @since 1.10
-	 * @defaultvalue "Default"
+	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: CarouselPageIndicatorStyle, defaultValue: CarouselPageIndicatorStyle.Default })
-	pageIndicatorStyle!: `${CarouselPageIndicatorStyle}`;
+	@property()
+	pageIndicatorType: `${CarouselPageIndicatorType}` = "Default";
 
 	/**
 	 * Defines the carousel's background design.
-	 * @type {sap.ui.webc.main.types.BackgroundDesign}
-	 * @name sap.ui.webc.main.Carousel.prototype.backgroundDesign
 	 * @since 1.14
-	 * @defaultvalue "Translucent"
+	 * @default "Translucent"
 	 * @public
 	 */
-	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Translucent })
-	backgroundDesign!: BackgroundDesign;
+	@property()
+	backgroundDesign: `${BackgroundDesign}` = "Translucent";
 
 	/**
 	 * Defines the page indicator background design.
-	 * @type {sap.ui.webc.main.types.BackgroundDesign}
-	 * @name sap.ui.webc.main.Carousel.prototype.pageIndicatorBackgroundDesign
 	 * @since 1.14
-	 * @defaultvalue "Solid"
+	 * @default "Solid"
 	 * @public
 	 */
-	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Solid })
-	pageIndicatorBackgroundDesign!: BackgroundDesign;
+	@property()
+	pageIndicatorBackgroundDesign: `${BackgroundDesign}` = "Solid";
 
 	/**
 	 * Defines the page indicator border design.
-	 * @type {sap.ui.webc.main.types.BorderDesign}
-	 * @name sap.ui.webc.main.Carousel.prototype.pageIndicatorBorderDesign
 	 * @since 1.14
-	 * @defaultvalue "Solid"
+	 * @default "Solid"
 	 * @public
 	 */
-	@property({ type: BorderDesign, defaultValue: BorderDesign.Solid })
-	pageIndicatorBorderDesign!: BorderDesign;
+	@property()
+	pageIndicatorBorderDesign: `${BorderDesign}` = "Solid";
 
 	/**
 	 * Defines the index of the initially selected item.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.Carousel.prototype._selectedIndex
-	 * @defaultvalue 0
+	 * @default 0
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	_selectedIndex!: number;
+	@property({ type: Number })
+	_selectedIndex = 0;
 
 	/**
 	 * Defines the position of arrows.
-	 * <br><br>
+	 *
 	 * Available options are:
-	 * <ul>
-	 * <li><code>Content</code> - the arrows are placed on the sides of the current page.</li>
-	 * <li><code>Navigation</code> - the arrows are placed on the sides of the page indicator.</li>
-	 * </ul>
-	 * @type {sap.ui.webc.main.types.CarouselArrowsPlacement}
-	 * @name sap.ui.webc.main.Carousel.prototype.arrowsPlacement
-	 * @defaultvalue "Content"
+	 *
+	 * - `Content` - the arrows are placed on the sides of the current page.
+	 * - `Navigation` - the arrows are placed on the sides of the page indicator.
+	 * @default "Content"
 	 * @public
 	 */
-	@property({ type: CarouselArrowsPlacement, defaultValue: CarouselArrowsPlacement.Content })
-	arrowsPlacement!: `${CarouselArrowsPlacement}`;
+	@property()
+	arrowsPlacement: `${CarouselArrowsPlacement}` = "Content";
 
 	/**
 	 * Defines the carousel width in pixels.
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	_width?: number;
 
 	/**
 	 * Defines the carousel item width in pixels.
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	_itemWidth?: number;
 
 	/**
@@ -304,7 +268,7 @@ class Carousel extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_visibleNavigationArrows!: boolean;
+	_visibleNavigationArrows = false;
 
 	_scrollEnablement: ScrollEnablement;
 	_onResizeBound: ResizeObserverCallback;
@@ -314,14 +278,12 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the content of the component.
-	 * @type {HTMLElement[]}
-	 * @slot
-	 * @name sap.ui.webc.main.Carousel.prototype.default
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
 	content!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	static get pageTypeLimit() {
@@ -343,7 +305,7 @@ class Carousel extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation) {
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation || !isDesktop()) {
 			this._visibleNavigationArrows = true;
 		}
 
@@ -357,6 +319,9 @@ class Carousel extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._onResizeBound);
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {
@@ -387,7 +352,7 @@ class Carousel extends UI5Element {
 
 		if (this._selectedIndex > this.pagesCount - 1) {
 			this._selectedIndex = this.pagesCount - 1;
-			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -506,7 +471,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -526,13 +491,13 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
 	_navButtonClick(e: MouseEvent) {
 		const button = e.target as Button;
-		if (button.hasAttribute("arrow-forward")) {
+		if (button.hasAttribute("data-ui5-arrow-forward")) {
 			this.navigateRight();
 		} else {
 			this.navigateLeft();
@@ -543,13 +508,11 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Changes the currently displayed page.
-	 * @param {Integer} itemIndex The index of the target page
+	 * @param itemIndex The index of the target page
 	 * @since 1.0.0-rc.15
-	 * @method
-	 * @name sap.ui.webc.main.Carousel#navigateTo
 	 * @public
 	 */
-	navigateTo(itemIndex: number) {
+	navigateTo(itemIndex: number) : void {
 		this._resizing = false;
 		this._selectedIndex = itemIndex;
 	}
@@ -558,37 +521,56 @@ class Carousel extends UI5Element {
 	 * Assuming that all items have the same width
 	 * @private
 	 */
-	get items() {
+	get items(): Array<ItemsInfo> {
 		return this.content.map((item, idx) => {
 			const visible = this.isItemInViewport(idx);
 			return {
 				id: `${this._id}-carousel-item-${idx + 1}`,
 				item,
-				tabIndex: visible ? "0" : "-1",
-				posinset: `${idx + 1}`,
-				setsize: `${this.content.length}`,
-				styles: {
-					width: `${this._itemWidth || 0}px`,
-				},
-				classes: visible ? "" : "ui5-carousel-item--hidden",
+				tabIndex: visible ? 0 : -1,
+				posinset: idx + 1,
+				setsize: this.content.length,
+				selected: visible,
 			};
 		});
 	}
 
 	get effectiveItemsPerPage(): number {
+		const itemsPerPageArray = this.itemsPerPage.split(" ");
+		let itemsPerPageSizeS = 1,
+			itemsPerPageSizeM = 1,
+			itemsPerPageSizeL = 1,
+			itemsPerPageSizeXL = 1;
+
+		itemsPerPageArray.forEach(element => {
+			if (element.startsWith("S")) {
+				itemsPerPageSizeS = Number(element.slice(1)) || 1;
+			} else if (element.startsWith("M")) {
+				itemsPerPageSizeM = Number(element.slice(1)) || 1;
+			} else if (element.startsWith("L")) {
+				itemsPerPageSizeL = Number(element.slice(1)) || 1;
+			} else if (element.startsWith("XL")) {
+				itemsPerPageSizeXL = Number(element.slice(2)) || 1;
+			}
+		});
+
 		if (!this._width) {
-			return this.itemsPerPageL;
+			return itemsPerPageSizeL;
 		}
 
-		if (this._width <= 640) {
-			return this.itemsPerPageS;
+		if (this._width < 600) {
+			return itemsPerPageSizeS;
 		}
 
-		if (this._width <= 1024) {
-			return this.itemsPerPageM;
+		if (this._width >= 600 && this._width < 1024) {
+			return itemsPerPageSizeM;
 		}
 
-		return this.itemsPerPageL;
+		if (this._width >= 1024 && this._width < 1440) {
+			return itemsPerPageSizeL;
+		}
+
+		return itemsPerPageSizeXL;
 	}
 
 	isItemInViewport(index: number): boolean {
@@ -622,15 +604,6 @@ class Carousel extends UI5Element {
 		return this.pagesCount > 1;
 	}
 
-	get styles() {
-		const items = this._itemWidth || 0;
-		return {
-			content: {
-				transform: `translateX(${this._isRTL ? "" : "-"}${this._selectedIndex * items}px`,
-			},
-		};
-	}
-
 	get classes() {
 		return {
 			viewport: {
@@ -649,12 +622,6 @@ class Carousel extends UI5Element {
 				[`ui5-carousel-navigation-wrapper-bg-${this.pageIndicatorBackgroundDesign.toLowerCase()}`]: true,
 				[`ui5-carousel-navigation-wrapper-border-${this.pageIndicatorBorderDesign.toLowerCase()}`]: true,
 			},
-			navPrevButton: {
-				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
-			},
-			navNextButton: {
-				"ui5-carousel-navigation-button--hidden": !this.hasNext,
-			},
 		};
 	}
 
@@ -664,7 +631,7 @@ class Carousel extends UI5Element {
 	}
 
 	get isPageTypeDots() {
-		if (this.pageIndicatorStyle === CarouselPageIndicatorStyle.Numeric) {
+		if (this.pageIndicatorType === CarouselPageIndicatorType.Numeric) {
 			return false;
 		}
 
@@ -686,8 +653,7 @@ class Carousel extends UI5Element {
 	}
 
 	get showArrows() {
-		const displayArrows = this._visibleNavigationArrows && this.hasManyPages && isDesktop();
-
+		const displayArrows = this._visibleNavigationArrows && this.hasManyPages;
 		return {
 			content: !this.hideNavigationArrows && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
 			navigation: !this.hideNavigationArrows && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
@@ -722,6 +688,10 @@ class Carousel extends UI5Element {
 		return this.content.length ? `${this._id}-carousel-item-${this._selectedIndex + 1}` : undefined;
 	}
 
+	get ariaLabelTxt() {
+		return getEffectiveAriaLabelText(this);
+	}
+
 	get nextPageText() {
 		return Carousel.i18nBundle.getText(CAROUSEL_NEXT_ARROW_TEXT);
 	}
@@ -733,11 +703,10 @@ class Carousel extends UI5Element {
 	/**
 	 * The indices of the currently visible items of the component.
 	 * @public
-	 * @readonly
 	 * @since 1.0.0-rc.15
-	 * @returns {Integer[]} the indices of the visible items
+	 * @default []
 	 */
-	get visibleItemsIndices() {
+	get visibleItemsIndices() : Array<number> {
 		const visibleItemsIndices: Array<number> = [];
 
 		this.items.forEach((item, index) => {
@@ -747,10 +716,6 @@ class Carousel extends UI5Element {
 		});
 
 		return visibleItemsIndices;
-	}
-
-	static async onDefine() {
-		Carousel.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

@@ -1,7 +1,12 @@
 import { getAnimationMode as getConfiguredAnimationMode } from "../InitialConfiguration.js";
 import AnimationMode from "../types/AnimationMode.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
-let curAnimationMode: `${AnimationMode}`;
+let curAnimationMode: `${AnimationMode}` | undefined;
+
+attachConfigurationReset(() => {
+	curAnimationMode = undefined;
+});
 
 /**
  * Returns the animation mode - "full", "basic", "minimal" or "none".
@@ -22,7 +27,8 @@ const getAnimationMode = (): `${AnimationMode}` => {
  * @param { AnimationMode } animationMode
  */
 const setAnimationMode = (animationMode: `${AnimationMode}`) => {
-	if (animationMode in AnimationMode) {
+	const options: string[] = Object.values(AnimationMode);
+	if (options.includes(animationMode)) {
 		curAnimationMode = animationMode;
 	}
 };

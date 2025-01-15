@@ -1,13 +1,5 @@
 @import "./NotificationListItemBase.css";
-@import "./NotificationPrioIcon.css";
-
-:host {
-	--_ui5-notification_item-border-raius: 0px;
-}
-
-:host(:not([collapsed])) .ui5-nli-group-toggle-btn {
-	transform: var(--_ui5_li_notification_group_toggle_btn_rotation);
-}
+@import "./NotificationStateIcon.css";
 
 :host([collapsed]) .ui5-nli-group-items {
 	display: none;
@@ -18,53 +10,108 @@
 }
 
 .ui5-nli-group-root {
+	width: 100%;
+}
+
+.ui5-nli-group-content-wrapper {
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
-	position: relative;
+}
+
+[ui5-busy-indicator] {
 	width: 100%;
-	box-sizing: border-box;
 }
 
 .ui5-nli-group-header {
+	height: 2.75rem;
+	position: sticky;
+	top: 0;
+	z-index: 90; /* the z-index of the busy-indicator is 99 and the header shouldn't be over it */
 	background: var(--sapList_GroupHeaderBackground);
 	display: flex;
 	align-items: center;
-	padding-block: 0.75rem 0.25rem;
-	padding-inline: 0.75rem 0.5rem;
+
+	padding-inline: var(--_ui5-notification_group_header-padding);
 	width: 100%;
-	border-bottom: 0.0625rem solid var(--sapList_GroupHeaderBorderColor);
+	border-bottom: var(--_ui5-notification_group_header-border-bottom-width) solid var(--sapList_GroupHeaderBorderColor);
 	box-sizing: border-box;
-	cursor: default;
+	cursor: pointer;
+	margin-bottom: var(--_ui5-notification_group_header-margin);
 }
 
-.ui5-nli-group-toggle-btn {
-	margin-inline-end: 0.75rem;
-	cursor: pointer;
+.ui5-nli-group-header-expanded {
+	margin-bottom: var(--_ui5-notification_group_header-margin-expanded);
+}
+
+/* The focus is on the whole group but should be visualized on the Group Header */
+:host([desktop]) .ui5-nli-focusable.ui5-nli-group-root:focus .ui5-nli-group-header::before,
+.ui5-nli-focusable.ui5-nli-group-root:focus-visible .ui5-nli-group-header::before {
+	content: "";
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	position: absolute;
+	top: var(--_ui5-notification_group_header-margin);
+	bottom: var(--_ui5-notification_group_header-margin);
+	left: 0;
+	right: 0;
+	pointer-events: none;
+}
+
+.ui5-nli-group-toggle-icon {
+	min-width: 1rem;
+	min-height: 1rem;
+	margin-inline: 0.5rem;
+	color: var(--sapContent_IconColor);
 }
 
 .ui5-nli-group-title-text {
 	color: var(--sapGroup_TitleTextColor);
 	font-family: "72override", var(--sapFontFamily);
-	font-size: var(--sapFontHeader6Size);
+	font-size: var(--sapFontHeader5Size);
 	font-weight: bold;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	line-height: 2rem;
+	margin-inline-start:  0.75rem;
 }
 
 .ui5-nli-group-divider {
 	flex: 1;
 }
 
-.ui5-nli-group-counter {
-	margin-inline-start: 0.25rem;
-	margin-inline-end: 1rem;
-	color: var(--sapList_TableGroupHeaderTextColor);
-	font-size: var(--sapFontHeader6Size);
-	font-family: "72override", var(--sapFontHeaderFamily);
-}
-
 /* fix for blue background color on tap (touchscreen devices) */
 :host([ui5-li-notification-group]) {
 	-webkit-tap-highlight-color: transparent;
 }
+
+/* "More" button overrides follows */
+[ui5-notification-group-list]::part(growing-button) {
+	border: none;
+}
+
+[ui5-notification-group-list]::part(growing-button-inner) {
+	margin: var(--_ui5-notification_item-margin);
+	border: var(--_ui5-notification_item-border-top-left-right);
+	border-radius: var(--_ui5-notification_item-border-radius);
+}
+
+[ui5-notification-group-list]::part(growing-button-inner) {
+	border-radius: var(--_ui5-notification_item-border-radius);
+}
+
+[ui5-notification-group-list]::part(growing-button-inner):focus,
+[ui5-notification-group-list]::part(growing-button-inner):focus-visible {
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);;
+	outline-offset: var(--_ui5-notification_item-outline-offset);
+}
+
+[ui5-notification-group-list]::part(growing-button-inner):focus:active,
+[ui5-notification-group-list]::part(growing-button-inner):focus-visible:active {
+	background-color: var(--_ui5-notification_item-growing-btn-background-color-active);
+	border-radius: var(--_ui5-notification_item-border-radius);
+	border: var(--_ui5-notification_item-border-active);
+}
+

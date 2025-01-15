@@ -1,15 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	FILEUPLOAD_BROWSE,
 	FILEUPLOADER_TITLE,
@@ -19,20 +18,27 @@ import {
 	VALUE_STATE_WARNING,
 } from "./generated/i18n/i18n-defaults.js";
 
-import Input from "./Input.js";
-import Popover from "./Popover.js";
-import Icon from "./Icon.js";
+import type Input from "./Input.js";
+import type Popover from "./Popover.js";
 
 // Template
-import FileUploaderTemplate from "./generated/templates/FileUploaderTemplate.lit.js";
-import FileUploaderPopoverTemplate from "./generated/templates/FileUploaderPopoverTemplate.lit.js";
+import FileUploaderTemplate from "./FileUploaderTemplate.js";
 
 // Styles
 import FileUploaderCss from "./generated/themes/FileUploader.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
+
+const convertBytesToMegabytes = (bytes: number) => (bytes / 1024) / 1024;
+
+type FileData = {
+	fileName: string,
+	fileSize: number,
+}
+
+type FileUploaderFileSizeExceedEventDetail = {
+	filesData: Array<FileData>,
+}
 
 type FileUploaderChangeEventDetail = {
 	files: FileList | null,
@@ -41,170 +47,155 @@ type FileUploaderChangeEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-file-uploader</code> opens a file explorer dialog and enables users to upload files.
+ * The `ui5-file-uploader` opens a file explorer dialog and enables users to upload files.
  * The component consists of input field, but you can provide an HTML element by your choice
  * to trigger the file upload, by using the default slot.
  * Furthermore, you can set the property "hideInput" to "true" to hide the input field.
- * <br>
+ *
  * To get all selected files, you can simply use the read-only "files" property.
  * To restrict the types of files the user can select, you can use the "accept" property.
- * <br>
+ *
  * And, similar to all input based components, the FileUploader supports "valueState", "placeholder", "name", and "disabled" properties.
  *
- * For the <code>ui5-file-uploader</code>
- * <h3>ES6 Module Import</h3>
+ * For the `ui5-file-uploader`
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/FileUploader.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/FileUploader.js";`
  * @constructor
  * @since 1.0.0-rc.6
- * @author SAP SE
- * @alias sap.ui.webc.main.FileUploader
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-file-uploader
+ * @extends UI5Element
  * @public
  */
 @customElement({
 	tag: "ui5-file-uploader",
 	languageAware: true,
-	renderer: litRender,
-	styles: FileUploaderCss,
-	template: FileUploaderTemplate,
-	staticAreaTemplate: FileUploaderPopoverTemplate,
-	staticAreaStyles: [ResponsivePopoverCommonCss, ValueStateMessageCss],
-	dependencies: [
-		Input,
-		Popover,
-		Icon,
+	formAssociated: true,
+	renderer: jsxRenderer,
+	styles: [
+		FileUploaderCss,
+		ResponsivePopoverCommonCss,
+		ValueStateMessageCss,
 	],
+	template: FileUploaderTemplate,
 })
 /**
  * Event is fired when the value of the file path has been changed.
- * <b>Note:</b> Keep in mind that because of the HTML input element of type file, the event is also fired in Chrome browser when the Cancel button of the uploads window is pressed.
  *
- * @event sap.ui.webc.main.FileUploader#change
- * @param {FileList} files The current files.
+ * **Note:** Keep in mind that because of the HTML input element of type file, the event is also fired in Chrome browser when the Cancel button of the uploads window is pressed.
+ * @param {FileList | null} files The current files.
  * @public
  */
 @event("change", {
-	detail: {
-		files: { type: FileList },
-	},
+	bubbles: true,
 })
-class FileUploader extends UI5Element implements IFormElement {
+/**
+ * Event is fired when the size of a file is above the `maxFileSize` property value.
+ * @param {Array<FileData>} filesData An array of `FileData` objects containing the`fileName` and `fileSize` in MB of each file that exceeds the upload limit.
+ * @since 2.2.0
+ * @public
+ */
+@event("file-size-exceed", {
+	bubbles: true,
+})
+class FileUploader extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		"change": FileUploaderChangeEventDetail,
+		"file-size-exceed": FileUploaderFileSizeExceedEventDetail,
+	}
 	/**
 	 * Comma-separated list of file types that the component should accept.
-	 * <br><br>
-	 * <b>Note:</b> Please make sure you are adding the <code>.</code> in front on the file type, e.g. <code>.png</code> in case you want to accept png's only.
-	 * @type {string}
-	 * @name sap.ui.webc.main.FileUploader.prototype.accept
-	 * @defaultvalue ""
+	 *
+	 * **Note:** Please make sure you are adding the `.` in front on the file type, e.g. `.png` in case you want to accept png's only.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accept!: string;
+	accept?: string;
 
 	/**
 	 * If set to "true", the input field of component will not be rendered. Only the default slot that is passed will be rendered.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.FileUploader.prototype.hideInput
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideInput!: boolean;
+	hideInput = false;
 
 	/**
 	 * Defines whether the component is in disabled state.
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.FileUploader.prototype.disabled
-	 * @defaultvalue false
+	 * **Note:** A disabled component is completely noninteractive.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Allows multiple files to be chosen.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.FileUploader.prototype.multiple
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	multiple!: boolean;
+	multiple = false;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * <br><br>
-	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
-	 *
-	 * <br><br>
-	 * <b>Note:</b> When set, a native <code>input</code> HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.FileUploader.prototype.name
-	 * @defaultvalue ""
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the component has no value.
-	 * @type {string}
-	 * @name sap.ui.webc.main.FileUploader.prototype.placeholder
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	placeholder!: string;
+	placeholder?: string;
 
 	/**
 	 * Defines the name/names of the file/files to upload.
-	 * @type {string}
-	 * @name sap.ui.webc.main.FileUploader.prototype.value
-	 * @defaultvalue ""
+	 * @default ""
 	 * @formEvents change
 	 * @formProperty
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
+
+	/**
+	 * Defines the maximum file size in megabytes which prevents the upload if at least one file exceeds it.
+	 * @default undefined
+	 * @since 2.2.0
+	 * @public
+	 */
+	@property({ type: Number })
+	maxFileSize?: number;
 
 	/**
 	 * Defines the value state of the component.
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.FileUploader.prototype.valueState
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
-	 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information. <br>
-	 * <b>Note:</b> If no content is provided in this slot, the component will only consist of an input field and will not be interactable using the keyboard.<br>
-	 * Also it is not recommended to use any non-interactable components, as it may lead to poor accessibility experience.
+	 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.FileUploader.prototype.default
-	 * @slot content
+	 * **Note:** If no content is provided in this slot, the component will only consist of an input field and will not be interactable using the keyboard.
+	 * Also it is not recommended to use any non-interactable components, as it may lead to poor accessibility experience.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -212,44 +203,45 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-	 * <br>
-	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.FileUploader.prototype.valueStateMessage
+	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
+	 *
+	 * **Note:** The `valueStateMessage` would be displayed,
+	 * when the component is in `Information`, `Critical` or `Negative` value state.
 	 * @since 1.0.0-rc.9
-	 * @slot
 	 * @public
 	 */
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
-	/**
-	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
-	 * when <code>name</code> property is set.
-	 * @type {HTMLElement[]}
-	 * @slot
-	 * @private
-	 */
-	@slot()
-	formSupport!: Array<HTMLElement>;
-
-	_internals: ElementInternals;
-
 	static emptyInput: HTMLInputElement;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-	static get formAssociated() {
-		return true;
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
 	}
 
-	constructor() {
-		super();
-		this._internals = this.attachInternals && this.attachInternals();
+	/**
+	 * @override
+	 */
+	getFocusDomRef(): HTMLElement | undefined {
+		return this.content[0];
+	}
+
+	get formFormattedValue() {
+		if (this.files && this.name) {
+			const formData = new FormData();
+
+			for (let i = 0; i < this.files.length; i++) {
+				formData.append(this.name, this.files[i]);
+			}
+
+			return formData;
+		}
+
+		return null;
 	}
 
 	_onmouseover() {
@@ -264,8 +256,8 @@ class FileUploader extends UI5Element implements IFormElement {
 		});
 	}
 
-	_onclick(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
+	_onclick() {
+		if (this.getFocusDomRef()?.matches(":has(:focus-within)")) {
 			this._input.click();
 		}
 	}
@@ -284,6 +276,33 @@ class FileUploader extends UI5Element implements IFormElement {
 		}
 	}
 
+	_ondrag(e: DragEvent) {
+		e.preventDefault();
+		e.stopPropagation();
+	}
+
+	_ondrop(e: DragEvent) {
+		e.preventDefault();
+		e.stopPropagation();
+		const files = e.dataTransfer?.files;
+
+		if (!files) {
+			return;
+		}
+
+		const validatedFiles = this._validateFiles(files);
+
+		if (!this.value && !validatedFiles.length) {
+			return;
+		}
+
+		this._input.files = validatedFiles;
+		this._updateValue(validatedFiles);
+		this.fireDecoratorEvent("change", {
+			files: validatedFiles,
+		});
+	}
+
 	_onfocusin() {
 		this.focused = true;
 	}
@@ -294,21 +313,15 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * FileList of all selected files.
-	 * @readonly
-	 * @type {FileList}
 	 * @public
-	 * @name sap.ui.webc.main.FileUploader.prototype.files
+	 * @default null
 	 */
-	get files() {
+	get files(): FileList | null {
 		if (this._input) {
 			return this._input.files;
 		}
 
 		return FileUploader._emptyFilesList;
-	}
-
-	onBeforeRendering() {
-		this._enableFormSupport();
 	}
 
 	onAfterRendering() {
@@ -319,29 +332,19 @@ class FileUploader extends UI5Element implements IFormElement {
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 	}
 
-	_enableFormSupport() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-
-		if (formSupport) {
-			if (this._canUseNativeFormSupport) {
-				this._setFormValue();
-			} else {
-				formSupport.syncNativeFileInput(this,
-					(element: IFormElement, nativeInput: NativeFormElement) => {
-						nativeInput.disabled = !!element.disabled;
-					},
-					this._onChange.bind(this));
-			}
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
-	}
-
 	_onChange(e: Event) {
-		const changedFiles = (e.target as HTMLInputElement).files;
+		let changedFiles = (e.target as HTMLInputElement).files;
+
+		if (changedFiles) {
+			changedFiles = this._validateFiles(changedFiles);
+		}
+
+		if (!this.value && !changedFiles?.length) {
+			return;
+		}
 
 		this._updateValue(changedFiles);
-		this.fireEvent<FileUploaderChangeEventDetail>("change", {
+		this.fireDecoratorEvent("change", {
 			files: changedFiles,
 		});
 	}
@@ -352,16 +355,38 @@ class FileUploader extends UI5Element implements IFormElement {
 		}, "");
 	}
 
-	_setFormValue() {
-		const formData = new FormData();
+	/**
+	 * Checks whether all files are below `maxFileSize` (if set),
+	 * and fires a `file-size-exceed` event if any file exceeds it.
+	 * @private
+	 */
+	_validateFiles(changedFiles: FileList): FileList {
+		const exceededFilesData = this.maxFileSize ? this._getExceededFiles(changedFiles) : [];
 
-		if (this.files) {
-			for (let i = 0; i < this.files.length; i++) {
-				formData.append(this.name, this.files[i]);
-			}
+		if (exceededFilesData.length) {
+			this.fireDecoratorEvent("file-size-exceed", {
+				filesData: exceededFilesData,
+			});
+			changedFiles = new DataTransfer().files;
 		}
 
-		this._internals.setFormValue(formData);
+		return changedFiles;
+	}
+
+	_getExceededFiles(files: FileList): Array<FileData> {
+		const filesArray = Array.from(files);
+		const exceededFiles: Array<FileData> = [];
+
+		for (let i = 0; i < filesArray.length; i++) {
+			const fileSize = convertBytesToMegabytes(filesArray[i].size);
+			if (fileSize > this.maxFileSize!) {
+				exceededFiles.push({
+					fileName: filesArray[i].name,
+					fileSize,
+				});
+			}
+		}
+		return exceededFiles;
 	}
 
 	toggleValueStatePopover(open: boolean) {
@@ -372,25 +397,25 @@ class FileUploader extends UI5Element implements IFormElement {
 		}
 	}
 
-	async openValueStatePopover() {
-		const popover = await this._getPopover();
+	openValueStatePopover() {
+		const popover = this._getPopover();
 
 		if (popover) {
-			popover.showAt(this);
+			popover.opener = this;
+			popover.open = true;
 		}
 	}
 
-	async closeValueStatePopover() {
-		const popover = await this._getPopover();
+	closeValueStatePopover() {
+		const popover = this._getPopover();
 
 		if (popover) {
-			popover.close();
+			popover.open = false;
 		}
 	}
 
-	async _getPopover(): Promise<Popover> {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
+	_getPopover(): Popover {
+		return this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 	}
 
 	/**
@@ -413,25 +438,16 @@ class FileUploader extends UI5Element implements IFormElement {
 		return FileUploader.i18nBundle.getText(FILEUPLOADER_TITLE);
 	}
 
-	get _canUseNativeFormSupport(): boolean {
-		return !!(this._internals && this._internals.setFormValue);
-	}
-
-	get _keepInputInShadowDOM(): boolean {
-		// only put input in the light dom when ui5-file-uploader is placed inside form and there is no support for form elements
-		return this._canUseNativeFormSupport || !this.name;
-	}
-
 	get _input(): HTMLInputElement {
 		return (this.shadowRoot!.querySelector<HTMLInputElement>("input[type=file]") || this.querySelector<HTMLInputElement>("input[type=file][data-ui5-form-support]"))!;
 	}
 
 	get valueStateTextMappings(): Record<string, string> {
 		return {
-			"Success": FileUploader.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Positive": FileUploader.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": FileUploader.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": FileUploader.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": FileUploader.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Negative": FileUploader.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": FileUploader.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -444,11 +460,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	}
 
 	get hasValueStateText(): boolean {
-		return this.hasValueState && this.valueState !== ValueState.Success;
-	}
-
-	get valueStateMessageText() {
-		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
+		return this.hasValueState && this.valueState !== ValueState.Positive;
 	}
 
 	get shouldDisplayDefaultValueStateMessage(): boolean {
@@ -464,41 +476,17 @@ class FileUploader extends UI5Element implements IFormElement {
 	 */
 	get _valueStateMessageInputIcon(): string {
 		const iconPerValueState = {
-			Error: "error",
-			Warning: "alert",
-			Success: "sys-enter-2",
+			Negative: "error",
+			Critical: "alert",
+			Positive: "sys-enter-2",
 			Information: "information",
 		};
 
 		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
-	get classes() {
-		return {
-			popoverValueState: {
-				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
-				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
-			},
-		};
-	}
-
-	get styles() {
-		return {
-			popoverHeader: {
-				"width": `${this.ui5Input ? this.ui5Input.offsetWidth : 0}px`,
-			},
-		};
-	}
-
 	get ui5Input() {
 		return this.shadowRoot!.querySelector<Input>(".ui5-file-uploader-input");
-	}
-
-	static async onDefine() {
-		FileUploader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 
@@ -506,5 +494,7 @@ FileUploader.define();
 
 export default FileUploader;
 export type {
+	FileData,
 	FileUploaderChangeEventDetail,
+	FileUploaderFileSizeExceedEventDetail,
 };

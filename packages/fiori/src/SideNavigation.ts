@@ -1,11 +1,15 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import type NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
+import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -14,20 +18,26 @@ import {
 	isTablet,
 	isCombi,
 } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isSpace,
+	isEnter,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import "@ui5/webcomponents-icons/dist/circle-task-2.js";
-import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
-import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
-import SideNavigationItem from "./SideNavigationItem.js";
-import SideNavigationSubItem from "./SideNavigationSubItem.js";
-import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
-import SideNavigationPopoverTemplate from "./generated/templates/SideNavigationPopoverTemplate.lit.js";
+import { isInstanceOfSideNavigationSelectableItemBase } from "./SideNavigationSelectableItemBase.js";
+import { isInstanceOfSideNavigationItemBase } from "./SideNavigationItemBase.js";
+import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
+import { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
+import type SideNavigationItem from "./SideNavigationItem.js";
+import type SideNavigationSubItem from "./SideNavigationSubItem.js";
+import type SideNavigationGroup from "./SideNavigationGroup.js";
+import SideNavigationTemplate from "./SideNavigationTemplate.js";
+
 import {
 	SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT,
 	SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC,
 	SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC,
+	SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -42,142 +52,123 @@ type SideNavigationPopoverContents = {
 };
 
 type SideNavigationSelectionChangeEventDetail = {
-	item: SideNavigationItemBase;
+	item: SideNavigationItemBase,
 };
 
+type PopupSideNavigationItem = SideNavigationItem & { associatedItem: SideNavigationSelectableItemBase };
+
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
-type PopupClickEventDetail = {
-	target: {
-		associatedItem: SideNavigationItemBase
+type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
+	item: Pick<MenuItemClickEventDetail, "item"> & {
+		associatedItem: SideNavigationSelectableItemBase,
 	}
 };
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>SideNavigation</code> is used as a standard menu in applications.
+ * The `SideNavigation` is used as a standard menu in applications.
  * It consists of three containers: header (top-aligned), main navigation section (top-aligned) and the secondary section (bottom-aligned).
- * <ul>
- * <li>The header is meant for displaying user related information - profile data, avatar, etc.</li>
- * <li>The main navigation section is related to the user’s current work context</li>
- * <li>The secondary section is mostly used to link additional information that may be of interest (legal information, developer communities, external help, contact information and so on). </li>
- * </ul>
  *
- * <h3>Usage</h3>
+ *  - The header is meant for displaying user related information - profile data, avatar, etc.
+ *  - The main navigation section is related to the user’s current work context
+ *  - The secondary section is mostly used to link additional information that may be of interest (legal information, developer communities, external help, contact information and so on).
  *
- * Use the available <code>ui5-side-navigation-item</code> and <code>ui5-side-navigation-sub-item</code> components to build your menu.
+ * ### Usage
+ *
+ * Use the available `ui5-side-navigation-group`, `ui5-side-navigation-item`
+ * and `ui5-side-navigation-sub-item` components to build your menu.
  * The items can consist of text only or an icon with text. The use or non-use of icons must be consistent for all items on one level.
  * You must not combine entries with and without icons on the same level. We strongly recommend that you do not use icons on the second level.
  *
- * <h3>Keyboard Handling</h3>
+ * The `ui5-side-navigation` component is intended for use within an `ui5-navigation-layout` component.
+ * While it can function independently, it is recommended to use it with
+ * the `ui5-navigation-layout` for optimal user experience.
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * ### Keyboard Handling
+ *
+ * ### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents-fiori/dist/SideNavigation.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code> (for <code>ui5-side-navigation-item</code>)
- * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code> (for <code>ui5-side-navigation-sub-item</code>)
+ * ### ES6 Module Import
  *
+ * `import "@ui5/webcomponents-fiori/dist/SideNavigation.js"`
+ *
+ * `import "@ui5/webcomponents-fiori/dist/SideNavigationGroup.js";` (for `ui5-side-navigation-group`)
+ *
+ * `import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";` (for `ui5-side-navigation-item`)
+ *
+ * `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";` (for `ui5-side-navigation-sub-item`)
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.SideNavigation
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-side-navigation
+ * @extends UI5Element
  * @since 1.0.0-rc.8
- * @appenddocs sap.ui.webc.fiori.SideNavigationItem sap.ui.webc.fiori.SideNavigationSubItem
  * @public
  */
 
 @customElement({
 	tag: "ui5-side-navigation",
 	fastNavigation: true,
-	renderer: litRender,
+	renderer: jsxRender,
 	template: SideNavigationTemplate,
-	staticAreaTemplate: SideNavigationPopoverTemplate,
-	styles: SideNavigationCss,
-	staticAreaStyles: SideNavigationPopoverCss,
-	dependencies: [
-		ResponsivePopover,
-		SideNavigationItem,
-		SideNavigationSubItem,
-		Icon,
-	],
+	styles: [SideNavigationCss, SideNavigationPopoverCss, getEffectiveScrollbarStyle()],
 })
 /**
  * Fired when the selection has changed via user interaction
  *
- * @event sap.ui.webc.fiori.SideNavigation#selection-change
- * @param {sap.ui.webc.fiori.SideNavigationItemBase} item the clicked item.
- * @allowPreventDefault
+ * @param {SideNavigationSelectableItemBase} item the clicked item.
  * @public
  */
 @event("selection-change", {
-	detail: {
-		item: { type: HTMLElement },
-	},
+	bubbles: true,
+	cancelable: true,
 })
 class SideNavigation extends UI5Element {
+	eventDetails!: {
+		"selection-change": SideNavigationSelectionChangeEventDetail
+	}
+
 	/**
-	 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.
+	 * Defines whether the `ui5-side-navigation` is expanded or collapsed.
 	 *
 	 * @public
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigation.prototype.collapsed
+	 * @default false
 	 */
 	@property({ type: Boolean })
-	collapsed!: boolean;
+	collapsed = false;
 
 	/**
-	 * Defines the main items of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
-	 * for the top-level items, and the <code>ui5-side-navigation-sub-item</code> component for second-level items, nested
-	 * inside the items.
+	 * Defines the main items of the component.
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.SideNavigationItem[]}
-	 * @slot items
-	 * @name sap.ui.webc.fiori.SideNavigation.prototype.default
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<SideNavigationItem>;
+	items!: Array<SideNavigationItemBase>;
 
 	/**
-	 * Defines the header of the <code>ui5-side-navigation</code>.
+	 * Defines the fixed items at the bottom of the component.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> The header is displayed when the component is expanded - the property <code>collapsed</code> is false;
+	 * **Note:** In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 	 *
 	 * @public
-	 * @type {HTMLElement[]}
+	 */
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
+	fixedItems!: Array<SideNavigationItemBase>;
+
+	/**
+	 * Defines the header of the `ui5-side-navigation`.
+	 *
+	 * **Note:** The header is displayed when the component is expanded - the property `collapsed` is false;
+	 *
+	 * @public
 	 * @since 1.0.0-rc.11
-	 * @slot header
-	 * @name sap.ui.webc.fiori.SideNavigation.prototype.header
 	 */
 	@slot()
 	header!: Array<HTMLElement>;
-
-	/**
-	 * Defines the fixed items at the bottom of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
-	 * for the fixed items, and optionally the <code>ui5-side-navigation-sub-item</code> component to provide second-level items inside them.
-	 *
-	 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
-	 *
-	 * @public
-	 * @type {sap.ui.webc.fiori.SideNavigationItem[]}
-	 * @slot fixedItems
-	 * @name sap.ui.webc.fiori.SideNavigation.prototype.fixedItems
-	 */
-	@slot({ type: HTMLElement, invalidateOnChildChange: true })
-	fixedItems!: Array<SideNavigationItem>;
 
 	/**
 	 * @private
@@ -186,11 +177,22 @@ class SideNavigation extends UI5Element {
 	_popoverContents!: SideNavigationPopoverContents;
 
 	@property({ type: Boolean })
-	_inPopover!: boolean;
+	inPopover= false;
 
+	@property({ type: Object })
+	_menuPopoverItems: Array<SideNavigationItem> = [];
+
+	_isOverflow = false;
 	_flexibleItemNavigation: ItemNavigation;
 	_fixedItemNavigation: ItemNavigation;
 
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	isTouchDevice = false;
+
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -207,19 +209,56 @@ class SideNavigation extends UI5Element {
 			navigationMode: NavigationMode.Vertical,
 			getItemsCallback: () => this.getEnabledFixedItems(),
 		});
+
+		this._handleResizeBound = this.handleResize.bind(this);
+		this._isOverflow = false;
 	}
 
-	async _onAfterOpen() {
+	_handleResizeBound: () => void;
+
+	onBeforeRendering() {
+		super.onBeforeRendering();
+
+		this._getAllItems(this.items as Array<SideNavigationItem | SideNavigationGroup>)
+			.concat(this._getAllItems(this.fixedItems as Array<SideNavigationItem | SideNavigationGroup>))
+			.forEach(item => {
+				item.sideNavCollapsed = this.collapsed;
+				item.inPopover = this.inPopover;
+				item.sideNavigation = this;
+			});
+	}
+
+	_onAfterPopoverOpen() {
 		// as the tree/list inside the popover is never destroyed,
 		// item navigation index should be managed, because items are
 		// dynamically recreated and tabIndexes are not updated
-		const tree = await this.getPickerTree();
-		const selectedItem = tree._findSelectedItem(tree.items);
+		const tree = this.getPickerTree();
+		const selectedItem = tree._findSelectedItem(tree.items as Array<SideNavigationItem | SideNavigationGroup>);
 		if (selectedItem) {
 			selectedItem.focus();
 		} else {
 			tree.items[0]?.focus();
 		}
+	}
+
+	_onBeforePopoverOpen() {
+		const popover = this.getPicker();
+		(popover?.opener as HTMLElement)?.classList.add("ui5-sn-item-active");
+	}
+
+	_onBeforePopoverClose() {
+		const popover = this.getPicker();
+		(popover?.opener as HTMLElement)?.classList.remove("ui5-sn-item-active");
+	}
+
+	_onBeforeMenuOpen() {
+		const popover = this.getOverflowPopover();
+		(popover?.opener as HTMLElement)?.classList.add("ui5-sn-item-active");
+	}
+
+	_onBeforeMenuClose() {
+		const popover = this.getOverflowPopover();
+		(popover?.opener as HTMLElement)?.classList.remove("ui5-sn-item-active");
 	}
 
 	get accSideNavigationPopoverHiddenText() {
@@ -235,8 +274,14 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(key);
 	}
 
-	handlePopupItemClick(e: PopupClickEventDetail) {
-		const associatedItem = e.target.associatedItem;
+	get overflowAccessibleName() {
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME);
+	}
+
+	handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
+		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
+
+		e.stopPropagation();
 
 		associatedItem.fireEvent("click");
 		if (associatedItem.selected) {
@@ -246,24 +291,70 @@ class SideNavigation extends UI5Element {
 
 		this._selectItem(associatedItem);
 		this.closePicker();
+
+		this._popoverContents.item?.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	async getPicker() {
-		return (await this.getStaticAreaItemDomRef())!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
+		const associatedItem = e.detail?.item.associatedItem;
+
+		associatedItem.fireEvent("click");
+		if (associatedItem.selected) {
+			this.closeMenu();
+			return;
+		}
+
+		this._selectItem(associatedItem);
+
+		this.closeMenu();
+
+		// When subitem is selected in collapsed mode parent element should be focused
+		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
+			const parent = associatedItem.parentElement as SideNavigationItem;
+			this.focusItem(parent);
+			parent?.focus();
+		} else {
+			this.focusItem(associatedItem);
+			associatedItem?.focus();
+		}
 	}
 
-	async openPicker(opener: HTMLElement) {
-		const responsivePopover = await this.getPicker();
-		responsivePopover.showAt(opener);
+	getOverflowPopover() {
+		return this.shadowRoot!.querySelector<NavigationMenu>(".ui5-side-navigation-overflow-menu")!;
 	}
 
-	async closePicker() {
-		const responsivePopover = await this.getPicker();
-		responsivePopover.close();
+	getPicker() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	async getPickerTree() {
-		const picker = await this.getPicker();
+	openPicker(opener: HTMLElement) {
+		opener.classList.add("ui5-sn-item-active");
+
+		const responsivePopover = this.getPicker();
+		responsivePopover.opener = opener;
+		responsivePopover.open = true;
+	}
+
+	openOverflowMenu(opener: HTMLElement) {
+		opener.classList.add("ui5-sn-item-active");
+
+		const menu = this.getOverflowPopover();
+		menu.opener = opener;
+		menu.open = true;
+	}
+
+	closePicker() {
+		const responsivePopover = this.getPicker();
+		responsivePopover.open = false;
+	}
+
+	closeMenu() {
+		const menu = this.getOverflowPopover();
+		menu.open = false;
+	}
+
+	getPickerTree() {
+		const picker = this.getPicker();
 		return picker.querySelector<SideNavigation>("[ui5-side-navigation]")!;
 	}
 
@@ -280,39 +371,33 @@ class SideNavigation extends UI5Element {
 	}
 
 	get _rootRole() {
-		return this._inPopover ? "none" : undefined;
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-sn-phone": isPhone(),
-				"ui5-sn-tablet": isTablet(),
-				"ui5-sn-combi": isCombi(),
-				"ui5-sn-collapsed": this.collapsed,
-				"ui5-sn-in-popover": this._inPopover,
-			},
-		};
+		return this.inPopover ? "none" : undefined;
 	}
 
 	getEnabledFixedItems() : Array<ITabbable> {
-		return this.getEnabledItems(this.fixedItems);
+		return this.getEnabledItems(this.fixedItems as Array<SideNavigationItem | SideNavigationGroup>);
 	}
 
 	getEnabledFlexibleItems() : Array<ITabbable> {
-		return this.getEnabledItems(this.items);
+		const items = this.getEnabledItems(this.items as Array<SideNavigationItem | SideNavigationGroup>);
+
+		if (this._overflowItem) {
+			items.push(this._overflowItem);
+		}
+
+		return items;
 	}
 
-	getEnabledItems(items: Array<SideNavigationItem>) : Array<ITabbable> {
-		let result = new Array<ITabbable>();
+	getEnabledItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<ITabbable> {
+		const result = new Array<ITabbable>();
 
-		items.forEach(item => {
-			if (!item.disabled) {
-				result.push(item);
+		this._getFocusableItems(items).forEach(item => {
+			if (this.collapsed && item.classList.contains("ui5-sn-item-hidden")) {
+				return;
 			}
 
-			if (!this.collapsed && item.expanded) {
-				result = result.concat(item.items.filter(el => !el.disabled));
+			if (!item.disabled) {
+				result.push(item);
 			}
 		});
 
@@ -328,80 +413,143 @@ class SideNavigation extends UI5Element {
 	}
 
 	onAfterRendering() {
-		const activeElement = this.shadowRoot!.activeElement;
-		const flexibleDom = this.shadowRoot!.querySelector(".ui5-sn-flexible")!;
-		if (!flexibleDom.contains(activeElement)) {
-			const selectedItem = this._findSelectedItem(this.items);
+		if (!this.getDomRef()?.matches(":focus-within")) {
+			let selectedItem = this._findSelectedItem(this.items as Array<SideNavigationItem | SideNavigationGroup>);
 			if (selectedItem) {
 				this._flexibleItemNavigation.setCurrentItem(selectedItem);
-			} else {
-				const focusedItem = this._findFocusedItem(this.items);
-				if (!focusedItem) {
-					this._flexibleItemNavigation.setCurrentItem(this.items[0]);
-				}
 			}
-		}
 
-		const fixedDom = this.shadowRoot!.querySelector(".ui5-sn-fixed");
-		if (!fixedDom?.contains(activeElement)) {
-			const selectedItem = this._findSelectedItem(this.fixedItems);
+			selectedItem = this._findSelectedItem(this.fixedItems as Array<SideNavigationItem | SideNavigationGroup>);
 			if (selectedItem) {
 				this._fixedItemNavigation.setCurrentItem(selectedItem);
-			} else {
-				const focusedItem = this._findFocusedItem(this.fixedItems);
-				if (!focusedItem) {
-					this._fixedItemNavigation.setCurrentItem(this.fixedItems[0]);
-				}
 			}
 		}
-	}
-
-	_findFocusedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | undefined {
-		let focusedItem;
 
 		if (this.collapsed) {
-			focusedItem = items.find(item => item._tabIndex === "0");
-		} else {
-			focusedItem = this._getWithNestedItems(items, true).find(item => item._tabIndex === "0");
+			this.handleResize();
+		}
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResizeBound);
+
+		this.isTouchDevice = isPhone() || (isTablet() && !isCombi());
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResizeBound);
+	}
+
+	handleResize() {
+		this._updateOverflowItems();
+	}
+
+	_updateOverflowItems() {
+		const domRef = this.getDomRef();
+		if (!this.collapsed || !domRef) {
+			return null;
 		}
 
-		return focusedItem;
-	}
-
-	_getWithNestedItems(items: Array<SideNavigationItem>, expandedOnly = false): Array<SideNavigationItemBase> {
-		let result = new Array<SideNavigationItemBase>();
-
-		items.forEach(item => {
-			result.push(item);
-
-			if (!expandedOnly || item.expanded) {
-				result = result.concat(item.items);
-			}
-		});
-
-		return result;
-	}
-
-	_findSelectedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | undefined {
-		let selectedItem;
-
-		if (this.collapsed) {
-			selectedItem = items.find(item => item._selected);
-		} else {
-			selectedItem = this._getWithNestedItems(items).find(current => current.selected);
+		const overflowItem = this._overflowItem!;
+		const flexibleContentDomRef : HTMLElement = domRef.querySelector(".ui5-sn-flexible")!;
+		if (!overflowItem) {
+			return null;
 		}
 
-		return selectedItem;
-	}
+		overflowItem.classList.add("ui5-sn-item-hidden");
 
-	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationItemBase) {
-		if (item.selected && !this.collapsed) {
-			item.fireEvent("click");
+		const overflowItems = this.overflowItems;
+
+		let itemsHeight = overflowItems.reduce<number>((sum, itemRef) => {
+			itemRef.classList.remove("ui5-sn-item-hidden");
+			return sum + itemRef.offsetHeight;
+		}, 0);
+
+		const { paddingTop, paddingBottom } = window.getComputedStyle(flexibleContentDomRef);
+		const listHeight = flexibleContentDomRef?.offsetHeight - parseInt(paddingTop) - parseInt(paddingBottom);
+
+		if (itemsHeight <= listHeight) {
 			return;
 		}
 
-		if (this.collapsed && item instanceof SideNavigationItem && item.items.length) {
+		overflowItem.classList.remove("ui5-sn-item-hidden");
+
+		itemsHeight = overflowItem.offsetHeight;
+
+		const selectedItem = overflowItems.filter(isInstanceOfSideNavigationSelectableItemBase).find(item => item._selected);
+
+		if (selectedItem) {
+			const selectedItemDomRef = selectedItem.getDomRef();
+			const { marginTop, marginBottom } = window.getComputedStyle(selectedItemDomRef!);
+
+			itemsHeight += selectedItemDomRef!.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+		}
+
+		overflowItems.forEach(item => {
+			if (item === selectedItem) {
+				return;
+			}
+
+			let itemDomRef;
+
+			if (isInstanceOfSideNavigationItemBase(item)) {
+				itemDomRef = item.getDomRef()!;
+			} else {
+				itemDomRef = item;
+			}
+
+			const { marginTop, marginBottom } = window.getComputedStyle(itemDomRef);
+			itemsHeight += itemDomRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+
+			if (itemsHeight > listHeight) {
+				item.classList.add("ui5-sn-item-hidden");
+			}
+		});
+
+		this._flexibleItemNavigation._init();
+	}
+
+	_findFocusedItem(items: Array<SideNavigationItem | SideNavigationGroup>) : SideNavigationItemBase | undefined {
+		return this._getFocusableItems(items).find(item => item.forcedTabIndex === "0");
+	}
+
+	_getSelectableItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<SideNavigationSelectableItemBase> {
+		return items.reduce((result, item) => {
+			return result.concat(item.selectableItems);
+		}, new Array<SideNavigationSelectableItemBase>());
+	}
+
+	_getFocusableItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<SideNavigationItemBase> {
+		return items.reduce((result, item) => {
+			return result.concat(item.focusableItems);
+		}, new Array<SideNavigationItemBase>());
+	}
+
+	_getAllItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<SideNavigationItemBase> {
+		return items.reduce((result, item) => {
+			return result.concat(item.allItems);
+		}, new Array<SideNavigationItemBase>());
+	}
+
+	_findSelectedItem(items: Array<SideNavigationItem | SideNavigationGroup>) : SideNavigationSelectableItemBase | undefined {
+		return this._getSelectableItems(items).find(item => item._selected);
+	}
+
+	get overflowItems() : Array<HTMLElement> {
+		return (this.items as Array<SideNavigationItem | SideNavigationGroup>).reduce((result, item) => {
+			return result.concat(item.overflowItems);
+		}, new Array<HTMLElement>());
+	}
+
+	_handleItemClick(e: KeyboardEvent | MouseEvent, item: SideNavigationSelectableItemBase) {
+		if (item.selected && !this.collapsed) {
+			item.fireDecoratorEvent("click");
+			return;
+		}
+
+		if (this.collapsed && isInstanceOfSideNavigationItem(item) && item.items.length) {
 			e.preventDefault();
+			this._isOverflow = false;
 
 			this._popoverContents = {
 				item,
@@ -410,7 +558,7 @@ class SideNavigation extends UI5Element {
 
 			this.openPicker(item.getFocusDomRef() as HTMLElement);
 		} else {
-			item.fireEvent("click");
+			item.fireDecoratorEvent("click");
 
 			if (!item.selected) {
 				this._selectItem(item);
@@ -418,17 +566,37 @@ class SideNavigation extends UI5Element {
 		}
 	}
 
-	_selectItem(item: SideNavigationItemBase) {
+	_handleOverflowClick() {
+		this._isOverflow = true;
+		this._menuPopoverItems = this._getOverflowItems();
+
+		this.openOverflowMenu(this._overflowItem!.getFocusDomRef() as HTMLElement);
+	}
+
+	_getOverflowItems(): Array<SideNavigationItem> {
+		const overflowClass = "ui5-sn-item-hidden";
+		const result: Array<SideNavigationItem> = [];
+
+		this.overflowItems.forEach(item => {
+			if (isInstanceOfSideNavigationItem(item) && item.classList.contains(overflowClass)) {
+				 result.push(item);
+			}
+		});
+
+		return result;
+	}
+
+	_selectItem(item: SideNavigationSelectableItemBase) {
 		if (item.disabled) {
 			return;
 		}
 
-		if (!this.fireEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item }, true)) {
+		if (!this.fireDecoratorEvent("selection-change", { item })) {
 			return;
 		}
 
-		let items = this._getWithNestedItems(this.items);
-		items = items.concat(this._getWithNestedItems(this.fixedItems));
+		let items = this._getSelectableItems(this.items as Array<SideNavigationItem | SideNavigationGroup>);
+		items = items.concat(this._getSelectableItems(this.fixedItems as Array<SideNavigationItem | SideNavigationGroup>));
 
 		items.forEach(current => {
 			current.selected = false;
@@ -437,11 +605,39 @@ class SideNavigation extends UI5Element {
 		item.selected = true;
 	}
 
-	static async onDefine() {
-		[SideNavigation.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents-fiori"),
-			super.onDefine(),
-		]);
+	get _overflowItem() {
+		const overflowItem = this.shadowRoot!.querySelector<SideNavigationItem>(".ui5-sn-item-overflow");
+		if (overflowItem) {
+			overflowItem.sideNavigation = this;
+		}
+
+		return overflowItem;
+	}
+
+	get isOverflow() {
+		return this._isOverflow;
+	}
+
+	_onkeydownOverflow(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
+		}
+
+		if (isEnter(e)) {
+			this._handleOverflowClick();
+		}
+	}
+
+	_onkeyupOverflow(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			this._handleOverflowClick();
+		}
+	}
+
+	captureRef(ref: HTMLElement & { associatedItem?: UI5Element} | null) {
+		if (ref) {
+			ref.associatedItem = this;
+		}
 	}
 }
 

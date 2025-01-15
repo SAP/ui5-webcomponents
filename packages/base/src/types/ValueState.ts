@@ -1,45 +1,31 @@
 /**
  * Different types of ValueStates.
  *
- * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.base.types.ValueState
  */
 enum ValueState {
 	/**
-	 *
 	 * @public
-	 * @type {None}
 	 */
 	None = "None",
 
 	/**
-	 *
 	 * @public
-	 * @type {Success}
 	 */
-	Success = "Success",
+	Positive = "Positive",
 
 	/**
-	 *
 	 * @public
-	 * @type {Warning}
 	 */
-	Warning = "Warning",
+	Critical = "Critical",
 
 	/**
-	 *
 	 * @public
-	 * @type {Error}
 	 */
-	Error = "Error",
+	Negative = "Negative",
 
 	/**
-	 *
 	 * @public
-	 * @type {Information}
 	 */
 	Information = "Information",
 }

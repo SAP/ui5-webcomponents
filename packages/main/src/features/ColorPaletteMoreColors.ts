@@ -1,10 +1,6 @@
-import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-
-import Dialog from "../Dialog.js";
-import Button from "../Button.js";
-import ColorPicker from "../ColorPicker.js";
+import ColorPaletteMoreColorsTemplate from "./ColorPaletteMoreColorsTemplate.js";
 
 import {
 	COLOR_PALETTE_DIALOG_CANCEL_BUTTON,
@@ -12,19 +8,11 @@ import {
 	COLOR_PALETTE_DIALOG_TITLE,
 } from "../generated/i18n/i18n-defaults.js";
 
-class ColorPaletteMoreColors {
-	static get dependencies() {
-		return [
-			Dialog,
-			Button,
-			ColorPicker,
-		];
-	}
-
+class ColorPaletteMoreColors extends ComponentFeature {
 	static i18nBundle: I18nBundle;
 
-	static async init() {
-		ColorPaletteMoreColors.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	get template() {
+		return ColorPaletteMoreColorsTemplate;
 	}
 
 	get colorPaletteDialogTitle() {
@@ -40,6 +28,6 @@ class ColorPaletteMoreColors {
 	}
 }
 
-registerFeature("ColorPaletteMoreColors", ColorPaletteMoreColors);
+registerComponentFeature("ColorPaletteMoreColors", ColorPaletteMoreColors);
 
 export default ColorPaletteMoreColors;

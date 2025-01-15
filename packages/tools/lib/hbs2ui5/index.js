@@ -24,7 +24,7 @@ const onError = (place) => {
 	console.log(`A problem occoured when reading ${place}. Please recheck passed parameters.`);
 };
 
-const isHandlebars = (fileName) => fileName.indexOf('.hbs') !== -1;
+const isHandlebars = (fileName) => fileName.endsWith('.hbs');
 
 const hasTypes = (file, componentName) => {
 	const tsFile = path.join(path.dirname(file), componentName + ".ts")
@@ -36,7 +36,7 @@ const processFile = async (file, outputDir) => {
 	const componentNameMatcher = /(\w+)(\.hbs)/gim;
 	const componentName = componentNameMatcher.exec(file)[1];
 	const componentHasTypes = hasTypes(file, componentName);
-	if (!componentHasTypes) { 
+	if (!componentHasTypes) {
 		if (!missingTypesReported) {
 			console.warn("[Warn] The following templates do not have a corresponging .ts or .d.ts file and won't be type checked:")
 			missingTypesReported = true;
@@ -98,7 +98,7 @@ const writeRenderers = async (outputDir, controlName, fileContent) => {
 
 		let existingFileContent = "";
 		try {
-			existingFileContent = await fs.readFile(compiledFilePath);
+			existingFileContent = (await fs.readFile(compiledFilePath)).toString();
 		} catch (e) {}
 
 		if (existingFileContent !== fileContentUnix) {

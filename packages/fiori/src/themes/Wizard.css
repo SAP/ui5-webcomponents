@@ -65,7 +65,7 @@
 	padding-bottom: 1rem;
 }
 
-:host([content-layout="SingleStep"]) .ui5-wiz-content-item:not([selected]) {
+:host([content-layout="SingleStep"]) .ui5-wiz-content-item:not(.ui5-wiz-content-item-selected) {
 	display: none;
 }
 
@@ -80,7 +80,7 @@
 	display: none;
 }
 
-.ui5-wiz-content-item[stretch] {
+.ui5-wiz-content-item.ui5-wiz-content-item-stretch {
 	/* Add 2rem to ensure there is enough scroll height to reach the last step */
 	min-height: 100%;
 }

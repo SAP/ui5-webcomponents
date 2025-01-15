@@ -1,181 +1,162 @@
+// eslint-disable-next-line max-classes-per-file
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isBackSpace,
 	isSpace,
 	isDelete,
 	isSpaceCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/sys-cancel.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import { TOKEN_ARIA_DELETABLE, TOKEN_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 
-import Icon from "./Icon.js";
-import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
+import type { IIcon } from "./Icon.js";
+import type { IToken } from "./MultiInput.js";
+import TokenTemplate from "./TokenTemplate.js";
 
 // Styles
 import tokenStyles from "./generated/themes/Token.css.js";
 
 type TokenDeleteEventDetail = {
-	backSpace: boolean;
-	delete: boolean;
+	backSpace?: boolean;
+	delete?: boolean;
 }
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * Tokens are small items of information (similar to tags) that mainly serve to visualize previously selected items.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/Token.js";</code>
+ * `import "@ui5/webcomponents/dist/Token.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Token
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-token
+ * @extends UI5Element
  * @since 1.0.0-rc.9
- * @implements sap.ui.webc.main.IToken
+ * @implements {IToken}
  * @public
  */
 @customElement({
 	tag: "ui5-token",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TokenTemplate,
 	styles: tokenStyles,
-	dependencies: [Icon],
 })
 /**
  * Fired when the the component is selected by user interaction with mouse or by clicking space.
- *
- * @event sap.ui.webc.main.Token#select
- * @public
+ * @private
  */
-@event("select")
+@event("select", {
+	bubbles: true,
+})
 
 /**
  * Fired when the backspace, delete or close icon of the token is pressed
- *
- * @event
  * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
  * @param {Boolean} delete Indicates whether token is deleted by delete key.
  * @private
  */
 @event("delete", {
-	detail: {
-		"backSpace": { type: Boolean },
-		"delete": { type: Boolean },
-	},
+	bubbles: true,
 })
-
-class Token extends UI5Element implements ITabbable {
+class Token extends UI5Element implements IToken {
+	eventDetails!: {
+		"select": void
+		"delete": TokenDeleteEventDetail
+	}
 	/**
 	 * Defines the text of the token.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Token.prototype.text
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string;
-
-	/**
-	 * Defines whether the component is read-only.
-	 * <br><br>
-	 * <b>Note:</b> A read-only component can not be deleted or selected,
-	 * but still provides visual feedback upon user interaction.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Token.prototype.readonly
-	 * @defaultvalue false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	readonly!: boolean;
+	text?: string;
 
 	/**
 	 * Defines whether the component is selected or not.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Token.prototype.selected
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
+
+	/**
+	 * Defines whether the component is read-only.
+	 *
+	 * **Note:** A read-only component can not be deleted or selected,
+	 * but still provides visual feedback upon user interaction.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	readonly = false;
 
 	/**
 	 * Set by the tokenizer when a token is in the "more" area (overflowing)
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
-	overflows!: boolean;
+	overflows = false;
 
 	@property({ type: Boolean })
-	singleToken!: boolean;
+	singleToken = false;
 
 	/**
 	 * Defines whether the component is focused or not.
-	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * Defines whether the token is being deleted
 	 * This flag is used in the ui5-multi-combobox
-	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
-	toBeDeleted!: boolean;
+	toBeDeleted = false;
 
 	/**
 	 * Defines the tabIndex of the component.
-	 * @type {string}
 	 * @private
 	 */
-	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	@property({ noAttribute: true })
+	forcedTabIndex = "-1";
+
+	/**
+	 * Indicates whether the token is visible or not.
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_isVisible = false
 
 	/**
 	 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
-	 * Accepts <code>ui5-icon</code>.
-	 *
-	 * @type {sap.ui.webc.main.IIcon[]}
-	 * @name sap.ui.webc.main.Token.prototype.closeIcon
-	 * @slot closeIcon
+	 * Accepts `ui5-icon`.
 	 * @public
 	 * @since 1.0.0-rc.9
 	 */
 	@slot()
-	closeIcon!: Array<HTMLElement>;
+	closeIcon!: Array<IIcon>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	_handleSelect() {
 		if (!this.toBeDeleted) {
 			this.selected = !this.selected;
-			this.fireEvent("select");
+			this.fireDecoratorEvent("select");
 		}
 	}
 
@@ -189,7 +170,7 @@ class Token extends UI5Element implements ITabbable {
 
 	_delete() {
 		this.toBeDeleted = true;
-		this.fireEvent("delete");
+		this.fireDecoratorEvent("delete");
 	}
 
 	_keydown(e: KeyboardEvent) {
@@ -199,7 +180,7 @@ class Token extends UI5Element implements ITabbable {
 		if (!this.readonly && (isBackSpacePressed || isDeletePressed)) {
 			e.preventDefault();
 
-			this.fireEvent<TokenDeleteEventDetail>("delete", {
+			this.fireDecoratorEvent("delete", {
 				backSpace: isBackSpacePressed,
 				"delete": isDeletePressed,
 			});
@@ -214,18 +195,11 @@ class Token extends UI5Element implements ITabbable {
 
 	onBeforeRendering() {
 		this.toBeDeleted = false;
+		// this.fireMyEvent("select");
 	}
 
 	get tokenDeletableText() {
 		return Token.i18nBundle.getText(TOKEN_ARIA_DELETABLE);
-	}
-
-	get iconURI() {
-		if (getTheme().includes("sap_belize")) {
-			return "sys-cancel";
-		}
-
-		return "decline";
 	}
 
 	get textDom() {
@@ -240,9 +214,19 @@ class Token extends UI5Element implements ITabbable {
 		return Math.ceil(this.textDom.getBoundingClientRect().width) < Math.ceil(this.textDom.scrollWidth);
 	}
 
-	static async onDefine() {
-		Token.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	get ariaDescription() {
+		let description = Token.i18nBundle.getText(TOKEN_ARIA_LABEL);
+
+		if (!this.readonly) {
+			description += ` ${Token.i18nBundle.getText(TOKEN_ARIA_DELETABLE)}`;
+		}
+
+		return description;
 	}
+
+	// fireMyEvent(name: keyof this["_events"]) {
+	// 	console.log(name);
+	// }
 }
 
 Token.define();

@@ -2,89 +2,84 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import LinkDesign from "./types/LinkDesign.js";
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-breadcrumbs-item</code> component defines the content of an item in <code>ui5-breadcrumbs</code>.
- *
+ * The `ui5-breadcrumbs-item` component defines the content of an item in `ui5-breadcrumbs`.
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.BreadcrumbsItem
- * @extends sap.ui.webc.base.UI5Element
- * @abstract
- * @tagname ui5-breadcrumbs-item
- * @implements sap.ui.webc.main.IBreadcrumbsItem
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.15
+ * @abstract
  */
 @customElement("ui5-breadcrumbs-item")
 class BreadcrumbsItem extends UI5Element {
 	/**
 	 * Defines the link href.
-	 * <br><br>
-	 * <b>Note:</b> Standard hyperlink behavior is supported.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.BreadcrumbsItem.prototype.href
-	 * @defaultvalue ""
+	 * **Note:** Standard hyperlink behavior is supported.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	href!: string;
+	href?: string;
 
 	/**
 	 * Defines the link target.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>_self</code></li>
-	 * <li><code>_top</code></li>
-	 * <li><code>_blank</code></li>
-	 * <li><code>_parent</code></li>
-	 * <li><code>_search</code></li>
-	 * </ul>
-	 * <br><br>
-	 * <b>Note:<b> This property must only be used when the <code>href</code> property is set.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.BreadcrumbsItem.prototype.target
-	 * @defaultvalue undefined
+	 * Available options are:
+	 *
+	 * - `_self`
+	 * - `_top`
+	 * - `_blank`
+	 * - `_parent`
+	 * - `_search`
+	 *
+	 * **Note:** This property must only be used when the `href` property is set.
+	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	target?: string;
 
 	/**
 	 * Defines the accessible ARIA name of the item.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.BreadcrumbsItem.prototype.accessibleName
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleName!: string
+	accessibleName?: string
 
 	/**
 	 * Defines the text of the component.
-	 * <br><br>
-	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
-	 * @type {Node[]}
-	 * @name sap.ui.webc.main.BreadcrumbsItem.prototype.default
-	 * @slot
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>;
 
 	_accessibleNameText?: string;
+	_isCurrentPageItem?: boolean;
+	_needsSeparator?: boolean;
 
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
+	}
+
+	get _linkDesign() {
+		return this._isCurrentPageItem ? LinkDesign.Emphasized : LinkDesign.Default;
+	}
+
+	get accessibilityAttributes(): Pick<AccessibilityAttributes, "current"> {
+		return {
+			current: this._isCurrentPageItem ? "page" : false,
+		};
 	}
 }
 

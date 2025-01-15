@@ -1,23 +1,19 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
-import Button from "./Button.js";
-import Icon from "./Icon.js";
-import TitleLevel from "./types/TitleLevel.js";
-import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
-import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
-
+import type TitleLevel from "./types/TitleLevel.js";
+import type PanelAccessibleRole from "./types/PanelAccessibleRole.js";
+import PanelTemplate from "./PanelTemplate.js";
 import { PANEL_ICON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -26,236 +22,187 @@ import panelCss from "./generated/themes/Panel.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-panel</code> component is a container which has a header and a
+ * The `ui5-panel` component is a container which has a header and a
  * content area and is used
  * for grouping and displaying information. It can be collapsed to save space on the screen.
  *
- * <h3>Guidelines:</h3>
- * <ul>
- * <li>Nesting two or more panels is not recommended.</li>
- * <li>Do not stack too many panels on one page.</li>
- * </ul>
+ * ### Guidelines:
  *
- * <h3>Structure</h3>
+ * - Nesting two or more panels is not recommended.
+ * - Do not stack too many panels on one page.
+ *
+ * ### Structure
  * The panel's header area consists of a title bar with a header text or custom header.
- * <br>
+ *
  * The header is clickable and can be used to toggle between the expanded and collapsed state. It includes an icon which rotates depending on the state.
- * <br>
- * The custom header can be set through the <code>header</code> slot and it may contain arbitraray content, such as: title, buttons or any other HTML elements.
- * <br>
+ *
+ * The custom header can be set through the `header` slot and it may contain arbitraray content, such as: title, buttons or any other HTML elements.
+ *
  * The content area can contain an arbitrary set of controls.
- * <br><b>Note:</b> The custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
  *
- * <h3>Responsive Behavior</h3>
- * <ul>
- * <li>If the width of the panel is set to 100% (default), the panel and its children are
+ * **Note:** The custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
+ *
+ * ### Responsive Behavior
+ *
+ * - If the width of the panel is set to 100% (default), the panel and its children are
  * resized responsively,
- * depending on its parent container.</li>
- * <li>If the panel has a fixed height, it will take up the space even if the panel is
- * collapsed.</li>
- * <li>When the panel is expandable (the <code>fixed</code> property is set to <code>false</code>),
- * an arrow icon (pointing to the right) appears in front of the header.</li>
- * <li>When the animation is activated, expand/collapse uses a smooth animation to open or
- * close the content area.</li>
- * <li>When the panel expands/collapses, the arrow icon rotates 90 degrees
- * clockwise/counter-clockwise.</li>
- * </ul>
+ * depending on its parent container.
+ * - If the panel has a fixed height, it will take up the space even if the panel is
+ * collapsed.
+ * - When the panel is expandable (the `fixed` property is set to `false`),
+ * an arrow icon (pointing to the right) appears in front of the header.
+ * - When the animation is activated, expand/collapse uses a smooth animation to open or
+ * close the content area.
+ * - When the panel expands/collapses, the arrow icon rotates 90 degrees
+ * clockwise/counter-clockwise.
  *
- * <h3>CSS Shadow Parts</h3>
+ * ### Keyboard Handling
  *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-panel</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>header - Used to style the wrapper of the header</li>
- * <li>content - Used to style the wrapper of the content</li>
- * </ul>
- *
- * <h3>Keyboard Handling</h3>
- *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * #### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/Panel";</code>
- *
+ * `import "@ui5/webcomponents/dist/Panel.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Panel
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-panel
+ * @extends UI5Element
  * @public
+ * @slot {Array<Node>} default - Defines the content of the component. The content is visible only when the component is expanded.
+ * @csspart header - Used to style the wrapper of the header.
+ * @csspart content - Used to style the wrapper of the content.
  */
 @customElement({
 	tag: "ui5-panel",
 	fastNavigation: true,
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: PanelTemplate,
 	styles: panelCss,
-	dependencies: [Button, Icon],
 })
 /**
  * Fired when the component is expanded/collapsed by user interaction.
- *
- * @event sap.ui.webc.main.Panel#toggle
  * @public
  */
-@event("toggle")
+@event("toggle", {
+	bubbles: true,
+})
 class Panel extends UI5Element {
+	eventDetails!: {
+		toggle: void,
+	}
 	/**
 	 * This property is used to set the header text of the component.
 	 * The text is visible in both expanded and collapsed states.
-	 * <br><br>
-	 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Panel.prototype.headerText
-	 * @defaultvalue ""
+	 * **Note:** This property is overridden by the `header` slot.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Determines whether the component is in a fixed state that is not
 	 * expandable/collapsible by user interaction.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Panel.prototype.fixed
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	fixed!: boolean;
+	fixed = false;
 
 	/**
 	 * Indicates whether the component is collapsed and only the header is displayed.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Panel.prototype.collapsed
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	collapsed!: boolean;
+	collapsed = false;
 
 	/**
 	 * Indicates whether the transition between the expanded and the collapsed state of the component is animated. By default the animation is enabled.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Panel.prototype.noAnimation
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.16
 	 */
 	@property({ type: Boolean })
-	noAnimation!: boolean;
+	noAnimation = false;
 
 	/**
 	 * Sets the accessible ARIA role of the component.
-	 * Depending on the usage, you can change the role from the default <code>Form</code>
-	 * to <code>Region</code> or <code>Complementary</code>.
-	 *
-	 * @type {sap.ui.webc.main.types.PanelAccessibleRole}
-	 * @name sap.ui.webc.main.Panel.prototype.accessibleRole
-	 * @defaultvalue "Form"
+	 * Depending on the usage, you can change the role from the default `Form`
+	 * to `Region` or `Complementary`.
+	 * @default "Form"
 	 * @public
 	 */
-	@property({ type: PanelAccessibleRole, defaultValue: PanelAccessibleRole.Form })
-	accessibleRole!: `${PanelAccessibleRole}`;
+	@property()
+	accessibleRole: `${PanelAccessibleRole}` = "Form";
 
 	/**
 	 * Defines the "aria-level" of component heading,
-	 * set by the <code>headerText</code>.
-	 * <br><br>
-	 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
-	 * @type {sap.ui.webc.main.types.TitleLevel}
-	 * @name sap.ui.webc.main.Panel.prototype.headerLevel
-	 * @defaultvalue "H2"
+	 * set by the `headerText`.
+	 * @default "H2"
 	 * @public
 	*/
-	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
-	headerLevel!: `${TitleLevel}`;
+	@property()
+	headerLevel: `${TitleLevel}` = "H2";
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Panel.prototype.accessibleName
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Indicates whether the Panel header is sticky or not.
 	 * If stickyHeader is set to true, then whenever you scroll the content or
 	 * the application, the header of the panel will be always visible and
 	 * a solid color will be used for its design.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Panel.prototype.stickyHeader
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.16.0-rc.1
 	 */
 	 @property({ type: Boolean })
-	 stickyHeader!: boolean;
+	 stickyHeader = false;
 
 	/**
-	 * When set to <code>true</code>, the <code>accessibleName</code> property will be
+	 * When set to `true`, the `accessibleName` property will be
 	 * applied not only on the panel root itself, but on its toggle button too.
-	 * <b>Note:</b> This property only has effect if <code>accessibleName</code> is set and a header slot is provided.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * **Note:** This property only has effect if `accessibleName` is set and a header slot is provided.
+	 * @default false
 	 * @private
 	  */
 	@property({ type: Boolean })
-	useAccessibleNameForToggleButton!: boolean;
+	useAccessibleNameForToggleButton = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_hasHeader!: boolean;
+	_hasHeader = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_contentExpanded!: boolean;
+	_contentExpanded = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_animationRunning!: boolean;
+	_animationRunning = false;
 
 	/**
 	 * Defines the component header area.
-	 * <br><br>
-	 * <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Panel.prototype.header
-	 * @slot
+	 * **Note:** When a header is provided, the `headerText` property is ignored.
 	 * @public
 	 */
 	@slot()
 	header!: Array<HTMLElement>;
 
-	/**
-	 * Defines the content of the component.
-	 * The content is visible only when the component is expanded.
-	 *
-	 * @type {Node[]}
-	 * @name sap.ui.webc.main.Panel.prototype.default
-	 * @slot
-	 * @public
-	 */
-
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	onBeforeRendering() {
@@ -275,7 +222,7 @@ class Panel extends UI5Element {
 		return true;
 	}
 
-	shouldNotAnimate() {
+	get shouldNotAnimate() {
 		return this.noAnimation || getAnimationMode() === AnimationMode.None;
 	}
 
@@ -328,8 +275,8 @@ class Panel extends UI5Element {
 
 		this.collapsed = !this.collapsed;
 
-		if (this.shouldNotAnimate()) {
-			this.fireEvent("toggle");
+		if (this.shouldNotAnimate) {
+			this.fireDecoratorEvent("toggle");
 			return;
 		}
 
@@ -349,23 +296,12 @@ class Panel extends UI5Element {
 		Promise.all(animations).then(() => {
 			this._animationRunning = false;
 			this._contentExpanded = !this.collapsed;
-			this.fireEvent("toggle");
+			this.fireDecoratorEvent("toggle");
 		});
 	}
 
 	_headerOnTarget(target: HTMLElement) {
 		return target.classList.contains("sapMPanelWrappingDiv");
-	}
-
-	get classes() {
-		return {
-			headerBtn: {
-				"ui5-panel-header-button-animated": !this.shouldNotAnimate(),
-			},
-			stickyHeaderClass: {
-				"ui5-panel-heading-wrapper-sticky": this.stickyHeader,
-			},
-		};
 	}
 
 	get toggleButtonTitle() {
@@ -377,7 +313,7 @@ class Panel extends UI5Element {
 	}
 
 	get accRole() {
-		return this.accessibleRole.toLowerCase();
+		return this.accessibleRole.toLowerCase() as Lowercase<PanelAccessibleRole>;
 	}
 
 	get effectiveAccessibleName() {
@@ -396,7 +332,7 @@ class Panel extends UI5Element {
 			"ariaExpanded": this.nonFixedInternalHeader ? this.expanded : undefined,
 			"ariaControls": this.nonFixedInternalHeader ? `${this._id}-content` : undefined,
 			"ariaLabelledby": this.nonFocusableButton ? this.ariaLabelledbyReference : undefined,
-			"role": this.nonFixedInternalHeader ? "button" : undefined,
+			"role": this.nonFixedInternalHeader ? "button" : undefined as "button" | undefined,
 		};
 	}
 
@@ -409,11 +345,11 @@ class Panel extends UI5Element {
 	}
 
 	get headerAriaLevel() {
-		return this.headerLevel.slice(1);
+		return Number.parseInt(this.headerLevel.slice(1));
 	}
 
 	get headerTabIndex() {
-		return (this.header.length || this.fixed) ? "-1" : "0";
+		return (this.header.length || this.fixed) ? -1 : 0;
 	}
 
 	get headingWrapperAriaLevel() {
@@ -434,18 +370,6 @@ class Panel extends UI5Element {
 
 	get nonFocusableButton() {
 		return !this.header.length;
-	}
-
-	get styles() {
-		return {
-			content: {
-				display: this._contentExpanded ? "block" : "none",
-			},
-		};
-	}
-
-	static async onDefine() {
-		Panel.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

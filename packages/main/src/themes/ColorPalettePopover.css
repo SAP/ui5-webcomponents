@@ -9,6 +9,7 @@
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;
+    align-items: center;
 	margin: 0.1875rem 0;
 }
 

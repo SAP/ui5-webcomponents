@@ -1,23 +1,27 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import SideContentPosition from "./types/SideContentPosition.js";
 import SideContentVisibility from "./types/SideContentVisibility.js";
 import SideContentFallDown from "./types/SideContentFallDown.js";
-import DynamicSideContentTemplate from "./generated/templates/DynamicSideContentTemplate.lit.js";
+import DynamicSideContentTemplate from "./DynamicSideContentTemplate.js";
+import type {
+	AccessibilityAttributes,
+} from "@ui5/webcomponents-base";
 
 // Styles
 import DynamicSideContentCss from "./generated/themes/DynamicSideContent.css.js";
 
 // Texts
 import {
+	DSC_MAIN_ARIA_LABEL,
 	DSC_SIDE_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -29,27 +33,32 @@ const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen sizes
 
 type DynamicSideContentLayoutChangeEventDetail = {
 	currentBreakpoint: string,
-	previousBreakpoint: string,
+	previousBreakpoint: string | undefined,
 	mainContentVisible: boolean,
 	sideContentVisible: boolean,
+}
+
+type DynamicSideContentAriaAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaLabel">;
+type DynamicSideContentAccessibilityAttributes = {
+	mainContent?: DynamicSideContentAriaAccessibilityAttributes,
+	sideContent?: DynamicSideContentAriaAccessibilityAttributes,
 }
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The DynamicSideContent (<code>ui5-dynamic-side-content</code>) is a layout component that allows additional content
+ * The DynamicSideContent (`ui5-dynamic-side-content`) is a layout component that allows additional content
  * to be displayed in a way that flexibly adapts to different screen sizes. The side
  * content appears in a container next to or directly below the main content
  * (it doesn't overlay). When the side content is triggered, the main content becomes
  * narrower (if appearing side-by-side). The side content contains a separate scrollbar
  * when appearing next to the main content.
  *
+ * ### Usage
  *
- * <h3>Usage</h3>
- *
- * <i>When to use?</i>
+ * *When to use?*
  *
  * Use this component if you want to display relevant information that is not critical
  * for users to complete a task. Users should have access to all the key functions and
@@ -57,41 +66,40 @@ type DynamicSideContentLayoutChangeEventDetail = {
  * important because on smaller screen sizes it may be difficult to display the side
  * content in a way that is easily accessible for the user.
  *
- * <i>When not to use?</i>
+ * *When not to use?*
  *
  * Don't use it if you want to display navigation or critical information that prevents
  * users from completing a task when they have no access to the side content.
  *
+ * ### Responsive Behavior
  *
- * <h3>Responsive Behavior</h3>
+ * Screen width \> 1440px
  *
- * Screen width > 1440px
+ * - Main vs. side content ratio is 75 vs. 25 percent (with a minimum of 320px
+ * each).
+ * - If the application defines a trigger, the side content can be hidden.
  *
- * <ul><li>Main vs. side content ratio is 75 vs. 25 percent (with a minimum of 320px
- * each).</li>
- * <li>If the application defines a trigger, the side content can be hidden.</li></ul>
+ * Screen width \<\= 1440px and \> 1024px
  *
- * Screen width <= 1440px and > 1024px
- *
- * <ul><li>Main vs. side content ratio is 66.666 vs. 33.333 percent (with a minimum of
+ * - Main vs. side content ratio is 66.666 vs. 33.333 percent (with a minimum of
  * 320px each). If the side content width falls below 320 px, it automatically slides
  * under the main content, unless the app development team specifies that it should
- * disappear.</li></ul>
+ * disappear.
  *
- * Screen width <= 1024px and > 720px
+ * Screen width \<\= 1024px and \> 720px
  *
- * <ul><li>The side content ratio is fixed to 340px, and the main content takes the rest
- * of the width. Only if the <code>sideContentFallDown</code> is set to <code>OnMinimumWidth</code>
- * and screen width is <= 960px and > 720px the side content falls below the main content.</li></ul>
+ * - The side content ratio is fixed to 340px, and the main content takes the rest
+ * of the width. Only if the `sideContentFallDown` is set to `OnMinimumWidth`
+ * and screen width is \<\= 960px and \> 720px the side content falls below the main content.
  *
- * Screen width <= 720px (for example on a mobile device)
+ * Screen width \<\= 720px (for example on a mobile device)
  *
- * <ul><li>In this case, the side content automatically disappears from the screen (unless
- * specified to stay under the content by setting of <code>sideContentVisibility</code>
- * property to <code>AlwaysShow</code>) and can be triggered from a pre-set trigger
+ * - In this case, the side content automatically disappears from the screen (unless
+ * specified to stay under the content by setting of `sideContentVisibility`
+ * property to `AlwaysShow`) and can be triggered from a pre-set trigger
  * (specified within the app). When the side content is triggered, it replaces the main
  * content. We recommend that you always place the trigger for the side content in the
- * same location, such as in the app footer.</li></ul>
+ * same location, such as in the app footer.
  *
  * A special case allows switching the comparison mode between the main and side content.
  * In this case, the screen is split into 50:50 percent for main vs. side content. The
@@ -99,194 +107,136 @@ type DynamicSideContentLayoutChangeEventDetail = {
  * side content disappears on screen widths of less than 720 px and can only be
  * viewed by triggering it.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/DynamicSideContent";</code>
- *
+ * `import "@ui5/webcomponents-fiori/dist/DynamicSideContent.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.DynamicSideContent
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-dynamic-side-content
+ * @extends UI5Element
  * @public
  * @since 1.1.0
+ * @slot {Array<HTMLElement>} default - Defines the main content.
  */
 @customElement({
 	tag: "ui5-dynamic-side-content",
-	renderer: litRender,
-	styles: DynamicSideContentCss,
+	renderer: jsxRenderer,
+	styles: [DynamicSideContentCss, getEffectiveScrollbarStyle()],
 	template: DynamicSideContentTemplate,
 })
 /**
  * Fires when the current breakpoint has been changed.
- * @event sap.ui.webc.fiori.DynamicSideContent#layout-change
  * @param {string} currentBreakpoint the current breakpoint.
- * @param {string} previousBreakpoint the breakpoint that was active before change to current breakpoint.
+ * @param {string | undefined} previousBreakpoint the breakpoint that was active before change to current breakpoint.
  * @param {boolean} mainContentVisible visibility of the main content.
  * @param {boolean} sideContentVisible visibility of the side content.
  * @public
  */
 @event("layout-change", {
-	detail: {
-		currentBreakpoint: {
-			type: String,
-		},
-		previousBreakpoint: {
-			type: String,
-		},
-		mainContentVisible: {
-			type: Boolean,
-		},
-		sideContentVisible: {
-			type: Boolean,
-		},
-	},
+	bubbles: true,
 })
 class DynamicSideContent extends UI5Element {
+	eventDetails!: {
+		"layout-change": DynamicSideContentLayoutChangeEventDetail
+	}
 	/**
 	 * Defines the visibility of the main content.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.hideMainContent
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 *
 	 */
 	@property({ type: Boolean })
-	hideMainContent!: boolean;
+	hideMainContent = false;
 
 	/**
 	 * Defines the visibility of the side content.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.hideSideContent
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 *
 	 */
 	@property({ type: Boolean })
-	hideSideContent!: boolean;
+	hideSideContent = false;
 
 	/**
 	 * Defines whether the side content is positioned before the main content (left side
 	 * in LTR mode), or after the the main content (right side in LTR mode).
-	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
-	 *
-	 * <ul>
-	 * <li><code>Start</code></li>
-	 * <li><code>End</code></li>
-	 * </ul>
-	 *
-	 * @type {sap.ui.webc.fiori.types.SideContentPosition}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.sideContentPosition
-	 * @defaultvalue "End"
+
+	 * @default "End"
 	 * @public
 	 *
 	 */
-	@property({ type: SideContentPosition, defaultValue: SideContentPosition.End })
-	sideContentPosition!: `${SideContentPosition}`;
+	@property()
+	sideContentPosition: `${SideContentPosition}` = "End";
 
 	/**
 	 * Defines on which breakpoints the side content is visible.
-	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
-	 *
-	 * <ul>
-	 * <li><code>AlwaysShow</code></li>
-	 * <li><code>ShowAboveL</code></li>
-	 * <li><code>ShowAboveM</code></li>
-	 * <li><code>ShowAboveS</code></li>
-	 * <li><code>NeverShow</code></li>
-	 * </ul>
-	 *
-	 * @type {sap.ui.webc.fiori.types.SideContentVisibility}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.sideContentVisibility
-	 * @defaultvalue "ShowAboveS"
+ 	 * @default "ShowAboveS"
 	 * @public
 	 *
 	 */
-	@property({ type: SideContentVisibility, defaultValue: SideContentVisibility.ShowAboveS })
-	sideContentVisibility!: `${SideContentVisibility}`;
+	@property()
+	sideContentVisibility: `${SideContentVisibility}` = "ShowAboveS";
 
 	/**
 	 * Defines on which breakpoints the side content falls down below the main content.
-	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
-	 *
-	 * <ul>
-	 * <li><code>BelowXL</code></li>
-	 * <li><code>BelowL</code></li>
-	 * <li><code>BelowM</code></li>
-	 * <li><code>OnMinimumWidth</code></li>
-	 * </ul>
-	 *
-	 * @type {sap.ui.webc.fiori.types.SideContentFallDown}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.sideContentFallDown
-	 * @defaultvalue "OnMinimumWidth"
+	 * @default "OnMinimumWidth"
 	 * @public
 	 *
 	 */
-	@property({ type: SideContentFallDown, defaultValue: SideContentFallDown.OnMinimumWidth })
-	sideContentFallDown!: `${SideContentFallDown}`;
+	@property()
+	sideContentFallDown: `${SideContentFallDown}` = "OnMinimumWidth";
 
 	/**
 	 * Defines whether the component is in equal split mode. In this mode, the side and
 	 * the main content take 50:50 percent of the container on all screen sizes
 	 * except for phone, where the main and side contents are switching visibility
 	 * using the toggle method.
-	 *
-	 * @type {boolean}]
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.equalSplit
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 *
 	 */
 	@property({ type: Boolean })
-	equalSplit!: boolean;
+	equalSplit = false;
 
 	/**
-	 * @private
-	 */
-	@property({ defaultValue: "0", noAttribute: true })
-	_mcSpan!: string;
-
-	/**
-	 * @private
-	 */
-	@property({ defaultValue: "0", noAttribute: true })
-	_scSpan!: string;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_toggled!: boolean;
+	* Defines additional accessibility attributes on different areas of the component.
+	*
+	* The accessibilityAttributes object has the following fields:
+	*
+	*  - **mainContent**: `mainContent.ariaLabel` defines the aria-label of the main content area. Accepts any string.
+	*  - **sideContent**: `sideContent.ariaLabel` defines the aria-label of the side content area. Accepts any string.
+	*
+	* @default {}
+	* @public
+	* @since 2.6.0
+	*/
+	@property({ type: Object })
+	accessibilityAttributes: DynamicSideContentAccessibilityAttributes = {};
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_currentBreakpoint!: string;
+	_mcSpan = "0";
 
 	/**
-	 * Defines the main content.
-	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.default
-	 * @slot
-	 * @public
+	 * @private
 	 */
+	@property({ noAttribute: true })
+	_scSpan = "0";
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_toggled = false;
+
+	/**
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_currentBreakpoint?: string;
 
 	/**
 	 * Defines the side content.
-	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.sideContent
-	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -299,11 +249,8 @@ class DynamicSideContent extends UI5Element {
 
 	_handleResizeBound: () => void;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		DynamicSideContent.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
 
 	onAfterRendering() {
 		this._resizeContents();
@@ -320,32 +267,28 @@ class DynamicSideContent extends UI5Element {
 	/**
 	 * Toggles visibility of main and side contents on S screen size (mobile device).
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.fiori.DynamicSideContent#toggleContents
 	 */
-	toggleContents() {
+	toggleContents(): void {
 		if (this.breakpoint === this.sizeS && this.sideContentVisibility !== SideContentVisibility.AlwaysShow) {
 			this._toggled = !this._toggled;
 		}
 	}
 
-	get classes(): ClassMap {
+	get classes() {
 		const gridPrefix = "ui5-dsc-span",
 			mcSpan = this._toggled ? this._scSpan : this._mcSpan,
-			scSpan = this._toggled ? this._mcSpan : this._scSpan,
-			classes: ClassMap = {
-				main: {
-					"ui5-dsc-main": true,
-				},
-				side: {
-					"ui5-dsc-side": true,
-				},
-			};
+			scSpan = this._toggled ? this._mcSpan : this._scSpan;
 
-		classes.main[`${gridPrefix}-${mcSpan}`] = true;
-		classes.side[`${gridPrefix}-${scSpan}`] = true;
-
-		return classes;
+		return {
+			main: {
+				"ui5-dsc-main": true,
+				[`${gridPrefix}-${mcSpan}`]: true,
+			},
+			side: {
+				"ui5-dsc-side": true,
+				[`${gridPrefix}-${scSpan}`]: true,
+			},
+		};
 	}
 
 	get styles() {
@@ -367,9 +310,14 @@ class DynamicSideContent extends UI5Element {
 		};
 	}
 
-	get accInfo() {
+	get accInfo(): DynamicSideContentAccessibilityAttributes {
 		return {
-			"label": DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL),
+			mainContent: {
+				ariaLabel: this.accessibilityAttributes.mainContent?.ariaLabel || DynamicSideContent.i18nBundle.getText(DSC_MAIN_ARIA_LABEL),
+			},
+			sideContent: {
+				ariaLabel: this.accessibilityAttributes.sideContent?.ariaLabel || DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL),
+			},
 		};
 	}
 
@@ -422,7 +370,7 @@ class DynamicSideContent extends UI5Element {
 	}
 
 	get containerWidth() {
-		return (this.parentElement as HTMLElement).clientWidth;
+		return (this.parentElement as HTMLElement).getBoundingClientRect().width;
 	}
 
 	get breakpoint() {
@@ -452,7 +400,7 @@ class DynamicSideContent extends UI5Element {
 	_resizeContents() {
 		let mainSize!: string,
 			sideSize!: string,
-			sideVisible!: boolean;
+			sideVisible = false;
 
 		// initial set contents sizes
 		switch (this.breakpoint) {
@@ -522,7 +470,7 @@ class DynamicSideContent extends UI5Element {
 				mainContentVisible: mainSize !== this.span0,
 				sideContentVisible: sideSize !== this.span0,
 			};
-			this.fireEvent<DynamicSideContentLayoutChangeEventDetail>("layout-change", eventParams);
+			this.fireDecoratorEvent("layout-change", eventParams);
 			this._currentBreakpoint = this.breakpoint;
 		}
 
@@ -544,4 +492,5 @@ DynamicSideContent.define();
 export default DynamicSideContent;
 export type {
 	DynamicSideContentLayoutChangeEventDetail,
+	DynamicSideContentAccessibilityAttributes,
 };

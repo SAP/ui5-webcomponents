@@ -1,7 +1,12 @@
-<td
-	tabindex="-1"
-	part="cell"
-	role="cell"
->
+{{#if _popin}}
+	{{#if _popinText}}
+		{{_popinText}}
+		<span class="popin-colon">{{_i18nPopinColon}}</span>
+	{{else if _popinHeader}}
+		{{_popinHeader}}
+		<span class="popin-colon">{{_i18nPopinColon}}</span>
+	{{/if}}
 	<slot></slot>
-</td>
+{{else}}
+	<slot></slot>
+{{/if}}

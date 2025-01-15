@@ -91,6 +91,15 @@
 	</div>
 
 	<div>
+		<h3>StepInput with valueStateChange Prevented</h3>
+		<ui5-step-input id="stepInputValueStateChange"
+			placeholder="Enter number"
+			value-state="Negative"
+			class="stepinput2auto"
+		></ui5-step-input>
+	</div>
+
+	<div>
 		<h3>StepInput with valueState=None</h3>
 		<ui5-step-input id="stepInputNone"
 			placeholder="Enter number"
@@ -100,10 +109,10 @@
 	</div>
 
 	<div>
-		<h3>StepInput with valueState=Success</h3>
+		<h3>StepInput with valueState=Positive</h3>
 		<ui5-step-input id="stepInputSuccess"
 			placeholder="Enter number"
-			value-state="Success"
+			value-state="Positive"
 			class="stepinput2auto"
 		></ui5-step-input>
 	</div>
@@ -121,16 +130,16 @@
 		<h3>StepInput with valueState=Warning</h3>
 		<ui5-step-input id="stepInputWarning"
 			placeholder="Enter number"
-			value-state="Warning"
+			value-state="Critical"
 			class="stepinput2auto"
 		></ui5-step-input>
 	</div>
 
 	<div>
-		<h3>StepInput with valueState=Error</h3>
+		<h3>StepInput with valueState=Negative</h3>
 		<ui5-step-input id="stepInputError"
 			placeholder="Enter number"
-			value-state="Error"
+			value-state="Negative"
 			class="stepinput2auto"
 		></ui5-step-input>
 	</div>
@@ -151,21 +160,27 @@
 		></ui5-step-input>
 	</div>
 
+	<h3> 'input' event prevented</h3>
+	<ui5-step-input id="stepInputPreventedInput"
+		class="stepinput2auto"
+	></ui5-step-input>
+
 	<h3> 'change' event result</h3>
 	<ui5-input id="changeResult"></ui5-input>
 
 	<script>
-		var labelChange = document.getElementById('myLabelChange');
-		var siCozy = document.getElementById('stepInputCozy');
-		var siCompact = document.getElementById('stepInputCompact');
-		var siMinMax = document.getElementById('stepInputMinMax');
-		var siPrecision = document.getElementById('stepInputPrecision');
-		var changeResult = document.getElementById('changeResult');
-		var changeCount = 0;
-		var displayChange = function (event) {
-			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.detail.value;
+		const labelChange = document.getElementById('myLabelChange');
+		const siCozy = document.getElementById('stepInputCozy');
+		const siCompact = document.getElementById('stepInputCompact');
+		const siMinMax = document.getElementById('stepInputMinMax');
+		const siPrecision = document.getElementById('stepInputPrecision');
+		const changeResult = document.getElementById('changeResult');
+		const preventedInput = document.getElementById('stepInputPreventedInput');
+		let changeCount = 0;
+		const displayChange = function (event) {
+			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.target.value;
 			changeCount++;
-			changeResult.value = changeCount;
+			changeResult.value = `${changeCount}`;
 		}
 
 		siCozy.addEventListener('ui5-change', displayChange);
@@ -181,6 +196,13 @@
 
 		stepInputChange2.addEventListener('ui5-change', displayChange);
 
+		stepInputValueStateChange.addEventListener("value-state-change", function(e) {
+			e.preventDefault();
+		});
+
+		preventedInput.addEventListener("input", function(e) {
+			e.preventDefault();
+		});
 	</script>
 
 </body>

@@ -53,6 +53,7 @@ describe("Carousel general interaction", () => {
 		const navigation = await carousel.shadow$(".ui5-carousel-navigation > .ui5-carousel-navigation-text");
 
 		assert.ok(await navigation.isExisting(), "Navigation is rendered");
+		assert.ok(await navigation.getAttribute("dir"), "auto", "text direction is auto");
 	});
 
 	it("Buttons are rendered in the content only when hovering (arrows-placement)", async () => {
@@ -60,7 +61,7 @@ describe("Carousel general interaction", () => {
 		await carousel.scrollIntoView();
 
 		// show both arrows by navigating to the right and focus the button
-		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[arrow-forward]");
+		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[data-ui5-arrow-forward]");
 		await carouselNextButton.click();
 		await carousel.moveTo();
 
@@ -70,7 +71,7 @@ describe("Carousel general interaction", () => {
 
 	it("Buttons are rendered in the navigation without hovering (arrows-placement)", async () => {
 		const carousel = await browser.$("#carousel3");
-		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[arrow-forward]");
+		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[data-ui5-arrow-forward]");
 		await carouselNextButton.click();
 
 		await carousel.scrollIntoView();
@@ -99,6 +100,7 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(await pageIndicatorDot1.getAttribute("aria-label"), PAGE_INDICATOR_ARIA_LABEL1, "The aria-label of page indicator is correct.");
 		assert.strictEqual(await pageIndicatorDot2.getAttribute("aria-label"), PAGE_INDICATOR_ARIA_LABEL2, "The aria-label of page indicator is correct.");
 
+		const carouselItem1 = await carousel.shadow$(".ui5-carousel-item:first-child");
 		const carouselItem3 = await carousel.shadow$(".ui5-carousel-item:nth-child(3)");
 		const carouselItem4 = await carousel.shadow$(".ui5-carousel-item:nth-child(4)");
 		const CAROUSEL_ITEM3_POS = "3";
@@ -106,6 +108,7 @@ describe("Carousel general interaction", () => {
 		const SETSIZE = "8";
 
 		// assert: check random carousel items ARIA
+		assert.strictEqual(await carouselItem1.getAttribute("aria-selected"), "true", "aria-selected of carousel item is correct.");
 		assert.strictEqual(await carouselItem3.getAttribute("aria-posinset"), CAROUSEL_ITEM3_POS, "The aria-posinset of carousel item is correct.");
 		assert.strictEqual(await carouselItem4.getAttribute("aria-posinset"), CAROUSEL_ITEM4_POS, "The aria-posinset of carousel item is correct.");
 		assert.strictEqual(await carouselItem3.getAttribute("aria-setsize"), SETSIZE, "The aria-setsize of carousel item  is correct.");
@@ -121,6 +124,11 @@ describe("Carousel general interaction", () => {
 		// check root tag ARIA after navigating to 2nd page
 		await carousel.shadow$(".ui5-carousel-navigation-button:nth-child(2)").click();
 		assert.strictEqual(await carouselRoot.getAttribute("aria-activedescendant"), ACTIVEDESCENDANT_PAGE_2, "The aria-activedescendant of carousel is correct.");
+
+		const carouselWithAccessibleName1 = await browser.$("#carouselAccName").shadow$(".ui5-carousel-root");;
+		const carouselWithAccessibleName2 = await browser.$("#carouselAccNameRef").shadow$(".ui5-carousel-root");;
+		assert.strictEqual(await carouselWithAccessibleName1.getAttribute("aria-label"), "Buttons Carousel", "The aria-label is set.");
+		assert.strictEqual(await carouselWithAccessibleName2.getAttribute("aria-label"), "Many Buttons Carousel", "The aria-label is set.");
 	});
 
 	it("all visible elements in the current page have correct tabindex values", async () => {
@@ -156,8 +164,8 @@ describe("Carousel general interaction", () => {
 		await carousel.moveTo();
 		const selectedIndex = await browser.$("#result");
 		const eventCounter = await browser.$("#resultCounter");
-		const navigationArrowForward = await carousel.shadow$("ui5-button[arrow-forward]");
-		const navigationArrowsBack = await carousel.shadow$("ui5-button[arrow-back]");
+		const navigationArrowForward = await carousel.shadow$("ui5-button[data-ui5-arrow-forward]");
+		const navigationArrowsBack = await carousel.shadow$("ui5-button[data-ui5-arrow-back]");
 
 		// using the navigation arrows
 		await navigationArrowForward.click(); // forward
@@ -191,7 +199,7 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(await eventCounter.getProperty("value"), "6", "The navigate event is not fired as no previous item.");
 	});
 
-	it("page-indicator-style property", async () => {
+	it("page-indicator-type property", async () => {
 		const carousel = await browser.$("#carouselNumericPageIndicator");
 		await carousel.scrollIntoView();
 
@@ -267,5 +275,40 @@ describe("Carousel general interaction", () => {
 		innerFocusedElement = await browser.custom$("activeElement", "#carouselF7Input");
 
 		assert.ok(await browser.$(innerFocusedElement).hasClass("ui5-input-inner"), "Input is focused");
+	});
+
+	it("Items per page", async () => {
+		const carousel = await browser.$("#itemsPerPage");
+		// set outer container width to < 600px (S)
+		await browser.setWindowSize(500, 500);
+		await carousel.scrollIntoView();
+
+		const carouselItem2 = await carousel.shadow$(".ui5-carousel-item:nth-child(2)");
+		assert.ok(await carouselItem2.hasClass("ui5-carousel-item--hidden"), "Second Item is hidden only first is visible");
+
+		// set outer container width to < 1024px (M)
+		await browser.setWindowSize(1000, 500);
+		await carousel.scrollIntoView();
+
+		const carouselItem3 = await carousel.shadow$(".ui5-carousel-item:nth-child(3)");
+		assert.notOk(await carouselItem2.hasClass("ui5-carousel-item--hidden"), "Second Item is visible");
+		assert.ok(await carouselItem3.hasClass("ui5-carousel-item--hidden"), "Third Item is hidden");
+
+		// set outer container width to < 1044px (L)
+		await browser.setWindowSize(1240, 500);
+		await carousel.scrollIntoView();
+
+		const carouselItem4 = await carousel.shadow$(".ui5-carousel-item:nth-child(4)");
+		assert.notOk(await carouselItem3.hasClass("ui5-carousel-item--hidden"), "Third Item is visible");
+		assert.ok(await carouselItem4.hasClass("ui5-carousel-item--hidden"), "Fourth Item is hidden");
+
+		// set outer container width to > 1044px (XL)
+		await browser.setWindowSize(1540, 500);
+		await carousel.scrollIntoView();
+
+		const carouselItem5 = await carousel.shadow$(".ui5-carousel-item:nth-child(5)");
+		assert.notOk(await carouselItem4.hasClass("ui5-carousel-item--hidden"), "Fourth Item is visible");
+		assert.ok(await carouselItem5.hasClass("ui5-carousel-item--hidden"), "Fifth Item is hidden");
+
 	});
 });

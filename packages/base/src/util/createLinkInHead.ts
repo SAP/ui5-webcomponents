@@ -1,5 +1,5 @@
 /**
- * Creates a <link> tag in the <head> tag
+ * Creates a `<link>` tag in the `<head>` tag
  * @param href - the CSS
  * @param attributes - optional attributes to add to the tag
  */

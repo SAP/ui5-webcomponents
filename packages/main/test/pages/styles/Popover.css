@@ -32,7 +32,7 @@ ui5-date-picker,
     width: 300px
 }
 
-.popover7auto {
+.fullWidth {
     width: 100%
 }
 
@@ -72,4 +72,30 @@ ui5-date-picker,
 	container-type: inline-size;
 	position: relative;
 	z-index: 1;
+}
+
+.flexContainerSpaceBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
+.hidebackdrop::backdrop {
+	background: transparent;
+}
+
+#divOpenAndScroll {
+    height: 300px;
+    overflow: auto;
+    border: 1px solid red;
+}
+
+#divOpenAndScroll > div {
+    height: 2000px;
+}
+
+.centered-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
 }

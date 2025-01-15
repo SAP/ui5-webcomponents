@@ -38,14 +38,16 @@ export { pathData, ltr, accData };`;
 
 
 
-const collectionTemplate = (name, versions, fullName) => `import { isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
+const collectionTemplate = (name, versions, fullName) => `import { isLegacyThemeFamilyAsync } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { pathData as pathData${versions[0]}, ltr, accData } from "./${versions[0]}/${name}.js";
 import { pathData as pathData${versions[1]} } from "./${versions[1]}/${name}.js";
 
-const pathData = isLegacyThemeFamily() ? pathData${versions[0]} : pathData${versions[1]};
+const getPathData = async() => {
+	return await isLegacyThemeFamilyAsync() ? pathDatav4 : pathDatav5;
+};
 
 export default "${fullName}";
-export { pathData, ltr, accData };`;
+export { getPathData, ltr, accData };`;
 
 
 const typeDefinitionTemplate = (name, accData, collection) => `declare const pathData: string;
@@ -56,13 +58,13 @@ declare const _default: "${collection}/${name}";
 export default _default;
 export { pathData, ltr, accData };`
 
-const collectionTypeDefinitionTemplate = (name, accData) => `declare const pathData: string;
+const collectionTypeDefinitionTemplate = (name, accData) => `declare const getPathData: () => Promise<string>;
 declare const ltr: boolean;
 declare const accData: ${accData ? '{ key: string; defaultText: string; }' : null}
 declare const _default: "${name}";
 
 export default _default;
-export { pathData, ltr, accData };`
+export { getPathData, ltr, accData };`
 
 
 const svgTemplate = (pathData) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -91,7 +93,7 @@ const createIcons = async (file) => {
 
 		// For versioned icons collections, the script creates top level (unversioned) module that internally imports the versioned ones.
 		// For example, the top level "@ui5/ui5-webcomponents-icons/dist/accept.js" imports:
-		// - "@ui5/ui5-webcomponents-icons/dist/v5/accept.js" 
+		// - "@ui5/ui5-webcomponents-icons/dist/v5/accept.js"
 		// - "@ui5/ui5-webcomponents-icons/dist/v4/accept.js"
 
 		if (json.version) {

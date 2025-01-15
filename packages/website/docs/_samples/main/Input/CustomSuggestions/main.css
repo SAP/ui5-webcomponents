@@ -1,0 +1,16 @@
+.item-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
+}
+
+.green {
+	color: green;
+}
+
+.item-titles {
+	display: flex;
+	flex-direction: column;
+}

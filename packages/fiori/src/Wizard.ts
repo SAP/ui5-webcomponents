@@ -1,25 +1,22 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
-import WizardContentLayout from "./types/WizardContentLayout.js";
+import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import type WizardContentLayout from "./types/WizardContentLayout.js";
+import "./WizardStep.js";
 
 // Texts
 import {
@@ -36,12 +33,11 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Step in header and content
-import WizardTab from "./WizardTab.js";
-import WizardStep from "./WizardStep.js";
+import type WizardTab from "./WizardTab.js";
+import type WizardStep from "./WizardStep.js";
 
 // Template and Styles
-import WizardTemplate from "./generated/templates/WizardTemplate.lit.js";
-import WizardPopoverTemplate from "./generated/templates/WizardPopoverTemplate.lit.js";
+import WizardTemplate from "./WizardTemplate.js";
 import WizardCss from "./generated/themes/Wizard.css.js";
 import WizardPopoverCss from "./generated/themes/WizardPopover.css.js";
 
@@ -62,7 +58,7 @@ const STEP_SWITCH_THRESHOLDS = {
 type WizardStepChangeEventDetail = {
 	step: WizardStep,
 	previousStep: WizardStep,
-	changeWithClick: boolean,
+	withScroll: boolean,
 }
 
 type AccessibilityInformation = {
@@ -72,9 +68,9 @@ type AccessibilityInformation = {
 }
 
 type StepInfo = {
-	icon: string,
-	titleText: string,
-	subtitleText: string,
+	icon?: string,
+	titleText?: string,
+	subtitleText?: string,
 	number: number,
 	selected: boolean,
 	disabled: boolean,
@@ -84,207 +80,177 @@ type StepInfo = {
 	pos: number,
 	accInfo: AccessibilityInformation,
 	refStepId: string,
-	tabIndex: string,
-	styles: object,
+	styles: {
+		zIndex: number
+	},
 }
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-wizard</code> helps users to complete a complex task by dividing it into sections and guiding them through it.
+ * The `ui5-wizard` helps users to complete a complex task by dividing it into sections and guiding them through it.
  * It has two main areas - a navigation area at the top showing the step sequence and a content area below it.
  *
- * <h3>Structure</h3>
- * <h4>Navigation area</h4>
- * The top most area of the <code>ui5-wizard</code> is occupied by the navigation area.
+ * ### Structure
+ * #### Navigation area
+ * The top most area of the `ui5-wizard` is occupied by the navigation area.
  * It shows the sequence of steps, where the recommended number of steps is between 3 and 8 steps.
- * <ul>
- * <li> Steps can have different visual representations - numbers or icons.</li>
- * <li> Steps might have labels for better readability - titleText and subTitleText.</li>
- * <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code>.</li>
- * </ul>
  *
- * <b>Note:</b> If no selected step is defined, the first step will be auto selected.
- * <br>
- * <b>Note:</b> If multiple selected steps are defined, the last step will be selected.
+ * -  Steps can have different visual representations - numbers or icons.
+ * -  Steps might have labels for better readability - titleText and subTitleText.
+ * -  Steps are defined by using the `ui5-wizard-step` as slotted element within the `ui5-wizard`.
  *
- * <h3>CSS Shadow Parts</h3>
+ * **Note:** If no selected step is defined, the first step will be auto selected.
  *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-wizard</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>navigator - Used to style the progress navigator of the <code>ui5-wizard</code>.</li>
- * <li>step-content - Used to style a <code>ui5-wizard-step</code> container.</li>
- * </ul>
+ * **Note:** If multiple selected steps are defined, the last step will be selected.
  *
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  * The user can navigate using the following keyboard shortcuts:
- * <br>
  *
- * <h4>Wizard Progress Navigation</h4>
- * <ul>
- * 	<li>[LEFT], [DOWN] - Focus moves backward to the WizardProgressNavAnchors.</li>
- * 	<li>[UP], [RIGHT] - Focus moves forward to the WizardProgressNavAnchor.</li>
- * 	<li>[SPACE] or [ENTER], [RETURN] - Selects an active step</li>
- * 	<li>[HOME] or [PAGE UP] - Focus goes to the first step</li>
- * 	<li>[END] or [PAGE DOWN] - Focus goes to the last step</li>
- * </ul>
+ * #### Wizard Progress Navigation
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * 	- [Left] or [Down] - Focus moves backward to the WizardProgressNavAnchors.
+ * 	- [Up] or [Right] - Focus moves forward to the WizardProgressNavAnchor.
+ * 	- [Space] / [Enter] or [Return] - Selects an active step
+ * 	- [Home] or [PAGE UP] - Focus goes to the first step
+ * 	- [End] or [PAGE DOWN] - Focus goes to the last step
+ *
+ * #### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <h4>Content</h4>
+ * #### Content
  * The content occupies the main part of the page. It can hold any type of HTML elements.
- * It's defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code>.
+ * It's defined by using the `ui5-wizard-step` as slotted element within the `ui5-wizard`.
  *
- * <h3>Scrolling</h3>
+ * ### Scrolling
  * The component handles user scrolling by selecting the closest step, based on the current scroll position
  * and scrolls to particular place, when the user clicks on the step within the navigation area.
- * <br><br>
  *
- * <b>Important:</b> In order the component's scrolling behaviour to work, it has to be limited from the outside parent element in terms of height.
+ * **Important:** In order the component's scrolling behaviour to work, it has to be limited from the outside parent element in terms of height.
  * The component or its parent has to be given percentage or absolute height. Otherwise, the component will be scrolled out with the entire page.
- * <br><br>
- * <b>For example:</b>
- * <br><br>
- * <code>&lt;ui5-dialog style="height: 80%"&gt;<br></code>
- * <code>&#9;&lt;ui5-wizard&gt;&lt;/ui5-wizard&gt;<br></code>
- * <code>&lt;/ui5-dialog&gt;</code>
  *
- * <h4>Moving to next step</h4>
- * The <code>ui5-wizard-step</code> provides the necessary API and it's up to the user of the component to use it to move to the next step.
- * You have to set its <code>selected</code> property (and remove the <code>disabled</code> one if set) to <code>true</code>.
- * The <code>ui5-wizard</code> will automatically scroll to the content of the newly selected step.
- * <br><br>
+ * **For example:**
+ *
+ * ```html
+ * <ui5-dialog style="height: 80%">
+ * 	<ui5-wizard></ui5-wizard>
+ * </ui5-dialog>
+ * ```
+ *
+ * #### Moving to next step
+ * The `ui5-wizard-step` provides the necessary API and it's up to the user of the component to use it to move to the next step.
+ * You have to set its `selected` property (and remove the `disabled` one if set) to `true`.
+ * The `ui5-wizard` will automatically scroll to the content of the newly selected step.
  *
  * The Fiori 3 guidelines recommends having a "nextStep" button in the content area.
- * You can place a button, or any other type of element to trigger step change, inside the <code>ui5-wizard-step</code>,
+ * You can place a button, or any other type of element to trigger step change, inside the `ui5-wizard-step`,
  * and show/hide it when certain fields are filled or user defined criteria is met.
  *
- * <h3>Usage</h3>
- * <h4>When to use:</h4>
+ * ### Usage
+ * #### When to use:
  * When the user has to accomplish a long or unfamiliar task.
  *
- * <h4>When not to use:</h4>
+ * #### When not to use:
  * When the task has less than 3 steps.
  *
- * <h3>Responsive Behavior</h3>
+ * ### Responsive Behavior
  * On small widths the step's titleText, subtitleText and separators in the navigation area shrink and from particular point the steps are grouped together and overlap.
  * Tapping on them will show a popover to select the step to navigate to. On mobile device, the grouped steps are presented within a dialog.
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes &lt;ui5-wizard-step/&gt;)
- *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/Wizard.js";` (includes <ui5-wizard-step/>)
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.Wizard
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-wizard
+ * @extends UI5Element
  * @since 1.0.0-rc.10
- * @appenddocs sap.ui.webc.fiori.WizardStep
  * @public
+ * @csspart navigator - Used to style the progress navigator of the `ui5-wizard`.
+ * @csspart step-content - Used to style a `ui5-wizard-step` container.
  */
 @customElement({
 	tag: "ui5-wizard",
 	languageAware: true,
 	fastNavigation: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [
-		browserScrollbarCSS,
 		WizardCss,
+		WizardPopoverCss,
+		getEffectiveScrollbarStyle(),
 	],
-	staticAreaStyles: WizardPopoverCss,
 	template: WizardTemplate,
-	staticAreaTemplate: WizardPopoverTemplate,
-	dependencies: [
-		WizardTab,
-		WizardStep,
-		ResponsivePopover,
-		Button,
-	],
 })
 
 /**
  * Fired when the step is changed by user interaction - either with scrolling,
  * or by clicking on the steps within the component header.
- *
- * @event sap.ui.webc.fiori.Wizard#step-change
- * @param {sap.ui.webc.fiori.IWizardStep} step The new step.
- * @param {sap.ui.webc.fiori.IWizardStep} previousStep The previous step.
- * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
+ * @param {WizardStep} step The new step.
+ * @param {WizardStep} previousStep The previous step.
+ * @param {boolean} withScroll true when the event occurs due to user scrolling.
  * @public
  */
 @event("step-change", {
-	detail: {
-		step: { type: HTMLElement },
-		previousStep: { type: HTMLElement },
-		changeWithClick: { Boolean },
-	},
+	bubbles: true,
 })
 
 class Wizard extends UI5Element {
+	eventDetails!: {
+		"step-change": WizardStepChangeEventDetail
+	}
 	/**
-	 * Defines how the content of the <code>ui5-wizard</code> would be visualized.
+	 * Defines how the content of the `ui5-wizard` would be visualized.
 	 * @public
-	 * @type {sap.ui.webc.fiori.types.WizardContentLayout}
 	 * @since 1.14.0
-	 * @name sap.ui.webc.fiori.Wizard.prototype.contentLayout
-	 * @defaultvalue "MultipleSteps"
+	 * @default "MultipleSteps"
 	 */
-	@property({ type: WizardContentLayout, defaultValue: WizardContentLayout.MultipleSteps })
-	contentLayout?: WizardContentLayout
+	@property()
+	contentLayout: `${WizardContentLayout}` = "MultipleSteps";
 
 	/**
-	 * Defines the width of the <code>ui5-wizard</code>.
+	 * Defines the width of the `ui5-wizard`.
 	 * @private
 	 */
-	@property({ validator: Float })
+	@property({ type: Number })
 	width?: number
 
 	/**
 	 * Defines the threshold to switch between steps upon user scrolling.
-	 * <br><br>
 	 *
-	 * <b>For Example:</b>
-	 * <br>
-	 * (1) To switch to the next step, when half of the step is scrolled out - set <code>step-switch-threshold="0.5"</code>.
-	 * (2) To switch to the next step, when the entire current step is scrolled out - set <code>step-switch-threshold="1"</code>.
+	 * **For Example:**
 	 *
-	 * <br><br>
-	 * <b>Note:</b> Supported values are between 0.5 and 1
+	 * (1) To switch to the next step, when half of the step is scrolled out - set `step-switch-threshold="0.5"`.
+	 * (2) To switch to the next step, when the entire current step is scrolled out - set `step-switch-threshold="1"`.
+	 *
+	 * **Note:** Supported values are between 0.5 and 1
 	 * and values out of the range will be normalized to 0.5 and 1 respectively.
 	 * @private
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @defaultvalue 0.7
+	 * @default 0.7
 	 * @since 1.0.0-rc.13
 	 */
-	@property({ validator: Float, defaultValue: STEP_SWITCH_THRESHOLDS.DEFAULT })
-	stepSwitchThreshold!: number;
+	@property({ type: Number })
+	stepSwitchThreshold = STEP_SWITCH_THRESHOLDS.DEFAULT;
 
 	/**
-	 * Defines the height of the <code>ui5-wizard</code> content.
+	 * Defines the height of the `ui5-wizard` content.
 	 * @private
 	 */
-	@property({ validator: Float })
+	@property({ type: Number })
 	contentHeight?: number;
 
-	@property({ type: Object, multiple: true })
-	_groupedTabs!: Array<WizardTab>
+	/**
+	 * Stores references to the grouped steps.
+	 * @private
+	 */
+	@property({ type: Array })
+	_groupedTabs: Array<WizardTab> = [];
 
 	/**
 	 * Defines the steps.
-	 * <br><br>
-	 * <b>Note:</b> Use the available <code>ui5-wizard-step</code> component.
 	 *
-	 * @type {sap.ui.webc.fiori.IWizardStep[]}
-	 * @name sap.ui.webc.fiori.Wizard.prototype.default
+	 * **Note:** Use the available `ui5-wizard-step` component.
 	 * @public
-	 * @slot steps
 	 */
 	@slot({
 		"default": true,
@@ -294,6 +260,7 @@ class Wizard extends UI5Element {
 	})
 	steps!: Array<WizardStep>
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	stepScrollOffsets: Array<number>;
@@ -313,9 +280,6 @@ class Wizard extends UI5Element {
 		// Stores the scroll offsets of the steps,
 		// e.g. the steps' starting point.
 		this.stepScrollOffsets = [];
-
-		// Stores references to the grouped steps.
-		this._groupedTabs = [];
 
 		// Keeps track of the currently selected step index.
 		this.selectedStepIndex = 0;
@@ -343,24 +307,6 @@ class Wizard extends UI5Element {
 		});
 
 		this._onStepResize = this.onStepResize.bind(this);
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-wiz-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
-			},
-			popover: {
-				"ui5-wizard-responsive-popover": true,
-				"ui5-wizard-popover": !isPhone(),
-				"ui5-wizard-dialog": isPhone(),
-			},
-		};
-	}
-
-	static async onDefine() {
-		Wizard.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get SCROLL_DEBOUNCE_RATE() {
@@ -417,6 +363,14 @@ class Wizard extends UI5Element {
 
 		// Place for improvement: If the selected step is not the first, enable all the prior steps
 		this.selectedStepIndex = this.getSelectedStepIndex();
+
+		if (this.selectedStep && this.stepsInHeaderDOM.length) {
+			if (this._itemNavigation._getItems().includes(this.stepsInHeaderDOM[this.selectedStepIndex])) {
+				this._itemNavigation.setCurrentItem(this.stepsInHeaderDOM[this.selectedStepIndex]);
+			} else {
+				this._itemNavigation.setCurrentItem(this.stepsInHeaderDOM.find(el => el.selected) as WizardTab);
+			}
+		}
 	}
 
 	/**
@@ -457,7 +411,7 @@ class Wizard extends UI5Element {
 	 * Stores the scroll offsets of the steps,
 	 * e.g. the steps' starting point.
 	 *
-	 * <b>Note:</b> the disabled ones has negative offsets.
+	 * **Note:** the disabled ones has negative offsets.
 	 * @private
 	 */
 	storeStepScrollOffsets() {
@@ -469,37 +423,36 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Handles user click on steps' tabs within the header.
-	 * <b>Note:</b> the handler is bound in the template.
-	 * @param {MouseEvent} e
+	 * **Note:** the handler is bound in the template.
 	 * @private
 	 */
-	onSelectionChangeRequested(e: MouseEvent) {
+	onSelectionChangeRequested(e: CustomEvent) {
 		this.selectionRequestedByClick = true;
 		this.changeSelectionByStepAction(e.target as WizardTab);
 	}
 
 	/**
 	 * Handles user scrolling with debouncing.
-	 * <b>Note:</b> the handler is bound in the template.
-	 * @param {MouseEvent} e
+	 * **Note:** the handler is bound in the template.
 	 * @private
 	 */
-	onScroll(e: MouseEvent) {
+	onScroll(e: Event) {
 		if (this.selectionRequestedByClick) {
 			this.selectionRequestedByClick = false;
 			return;
 		}
 
-		debounce(this.changeSelectionByScroll.bind(this, (e.target as HTMLElement).scrollTop), Wizard.SCROLL_DEBOUNCE_RATE);
+		if (this.contentLayout !== "SingleStep") {
+			debounce(this.changeSelectionByScroll.bind(this, (e.target as HTMLElement).scrollTop), Wizard.SCROLL_DEBOUNCE_RATE);
+		}
 	}
 
 	/**
-	 * Handles when a step in the header is focused in order to update the <code>ItemNavigation</code>.
-	 * <b>Note:</b> the handler is bound in the template.
-	 * @param {FocusEvent} e
+	 * Handles when a step in the header is focused in order to update the `ItemNavigation`.
+	 * **Note:** the handler is bound in the template.
 	 * @private
 	 */
-	onStepInHeaderFocused(e: FocusEvent) {
+	onStepInHeaderFocused(e: CustomEvent) {
 		this._itemNavigation.setCurrentItem(e.target as WizardTab);
 	}
 
@@ -621,7 +574,7 @@ class Wizard extends UI5Element {
 		return selectedStep.getAttribute(EXPANDED_STEP) === "false" && selectedStep.getAttribute(AFTER_EXPANDED_STEP) === "true" && (iStepNumber + 1 < this.steps.length);
 	}
 
-	async _showPopover(oDomTarget: WizardTab, isAtStart: boolean) {
+	_showPopover(oDomTarget: WizardTab, isAtStart: boolean) {
 		const tabs = Array.from(this.stepsInHeaderDOM);
 		this._groupedTabs = [];
 
@@ -632,11 +585,12 @@ class Wizard extends UI5Element {
 			this._groupedTabs.push(tabs[i]);
 		}
 
-		const responsivePopover = await this._respPopover();
-		responsivePopover.showAt(oDomTarget);
+		const responsivePopover = this._respPopover();
+		responsivePopover.opener = oDomTarget;
+		responsivePopover.open = true;
 	}
 
-	async _onGroupedTabClick(e: MouseEvent) {
+	_onGroupedTabClick(e: MouseEvent) {
 		const eTarget = e.target as WizardTab;
 
 		if (this._isGroupAtStart(eTarget)) {
@@ -656,25 +610,26 @@ class Wizard extends UI5Element {
 		const selectedStep = this.selectedStep;
 		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 
-		this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
+		this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, false);
 		this._closeRespPopover();
 		tabs[newlySelectedIndex].focus();
 	}
 
-	async _closeRespPopover() {
-		const responsivePopover = await this._respPopover();
-		responsivePopover && responsivePopover.close();
+	_closeRespPopover() {
+		const responsivePopover = this._respPopover();
+		if (responsivePopover) {
+			responsivePopover.open = false;
+		}
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>(`.ui5-wizard-responsive-popover`)!;
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>(`.ui5-wizard-responsive-popover`)!;
 	}
 
 	/**
-	 * Called upon <code>onScroll</code>.
+	 * Called upon `onScroll`.
 	 * Selects the closest step, based on the user scroll position.
-	 * @param {Integer} scrollPos the current scroll position
+	 * @param scrollPos the current scroll position
 	 * @private
 	 */
 	changeSelectionByScroll(scrollPos: number) {
@@ -689,16 +644,16 @@ class Wizard extends UI5Element {
 		// If the calculated index is in range,
 		// change selection and fire "step-change".
 		if (!stepToSelect.disabled && newlySelectedIndex >= 0 && newlySelectedIndex <= this.stepsCount - 1) {
-			this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex, false);
+			this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex, true);
 			this.selectionRequestedByScroll = true;
 		}
 	}
 
 	/**
-	 * Called upon <code>onSelectionChangeRequested</code>.
+	 * Called upon `onSelectionChangeRequested`.
 	 * Selects the external step (ui5-wizard-step),
 	 * based on the clicked or activated via keyboard step in the header (ui5-wizard-tab).
-	 * @param {WizardTab} stepInHeader the step equivalent in the header
+	 * @param stepInHeader the step equivalent in the header
 	 * @private
 	 */
 	async changeSelectionByStepAction(stepInHeader: WizardTab) {
@@ -724,7 +679,7 @@ class Wizard extends UI5Element {
 
 		if (bExpanded || (!bExpanded && (newlySelectedIndex === 0 || newlySelectedIndex === this.steps.length - 1))) {
 			// Change selection and fire "step-change".
-			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
+			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, false);
 		}
 	}
 
@@ -810,7 +765,7 @@ class Wizard extends UI5Element {
 	}
 
 	get enabledStepsInHeaderDOM() {
-		return this.stepsInHeaderDOM;
+		return this.stepsInHeaderDOM.filter(step => !step.disabled);
 	}
 
 	get navAriaRoleDescription() {
@@ -860,7 +815,6 @@ class Wizard extends UI5Element {
 	/**
 	 * Returns an array of data objects, based on the user defined steps
 	 * to later build the steps (tabs) within the header.
-	 * @returns {Array<StepInfo>}
 	 * @private
 	 */
 	getStepsInfo() {
@@ -902,7 +856,6 @@ class Wizard extends UI5Element {
 				pos,
 				accInfo,
 				refStepId: step._id,
-				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
 				styles: {
 					zIndex: isAfterCurrent ? --inintialZIndex : 1,
 				},
@@ -914,7 +867,6 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Returns the index of the selected step.
-	 * @returns {Integer}
 	 * @private
 	 */
 	getSelectedStepIndex() {
@@ -926,7 +878,6 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Returns the index of the last enabled step.
-	 * @returns {Integer}
 	 * @private
 	 */
 	getLastEnabledStepIndex() {
@@ -954,7 +905,7 @@ class Wizard extends UI5Element {
 	}
 
 	/**
-	 * Scrolls to the content of the selected step, used in <code>onAfterRendering</cod>.
+	 * Scrolls to the content of the selected step, used in `onAfterRendering`.
 	 * @private
 	 */
 	scrollToSelectedStep() {
@@ -965,11 +916,10 @@ class Wizard extends UI5Element {
 	}
 
 	/**
-	 * Scrolls to the content item within the <code>ui5-wizard</code> shadowDOM
+	 * Scrolls to the content item within the `ui5-wizard` shadowDOM
 	 * by given step index.
-	 *
 	 * @private
-	 * @param {Integer} stepIndex the index of a step
+	 * @param stepIndex the index of a step
 	 */
 	scrollToContentItem(stepIndex: number) {
 		this.contentDOM.scrollTop = this.getClosestScrollPosByStepIndex(stepIndex);
@@ -977,9 +927,8 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Returns to closest scroll position for the given step index.
-	 *
 	 * @private
-	 * @param {Integer} stepIndex the index of a step
+	 * @param stepIndex the index of a step
 	 */
 	getClosestScrollPosByStepIndex(stepIndex: number) {
 		if (stepIndex === 0) {
@@ -1001,7 +950,7 @@ class Wizard extends UI5Element {
 	/**
 	 * Returns the closest step index by given scroll position.
 	 * @private
-	 * @param {Integer} scrollPos the scroll position
+	 * @param scrollPos the scroll position
 	 */
 	getClosestStepIndexByScrollPos(scrollPos: number) {
 		for (let closestStepIndex = 0; closestStepIndex <= this.stepScrollOffsets.length - 1; closestStepIndex++) {
@@ -1023,14 +972,13 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Switches the selection from the old step to the newly selected step.
-	 *
-	 * @param {WizardStep} selectedStep the old step
-	 * @param {WizardStep} stepToSelect the step to be selected
-	 * @param {Integer} stepToSelectIndex the index of the newly selected step
-	 * @param {boolean} changeWithClick the selection changed due to user click in the step navigation
+	 * @param selectedStep the old step
+	 * @param stepToSelect the step to be selected
+	 * @param stepToSelectIndex the index of the newly selected step
+	 * @param withScroll the selection changed due to user scrolling
 	 * @private
 	 */
-	switchSelectionFromOldToNewStep(selectedStep: WizardStep | null, stepToSelect: WizardStep, stepToSelectIndex: number, changeWithClick: boolean) {
+	switchSelectionFromOldToNewStep(selectedStep: WizardStep | null, stepToSelect: WizardStep, stepToSelectIndex: number, withScroll: boolean) {
 		if (selectedStep && stepToSelect) {
 			// keep the selection if next step is disabled
 			if (!stepToSelect.disabled) {
@@ -1038,10 +986,10 @@ class Wizard extends UI5Element {
 				stepToSelect.selected = true;
 			}
 
-			this.fireEvent<WizardStepChangeEventDetail>("step-change", {
+			this.fireDecoratorEvent("step-change", {
 				step: stepToSelect,
 				previousStep: selectedStep,
-				changeWithClick,
+				withScroll,
 			});
 
 			this.selectedStepIndex = stepToSelectIndex;

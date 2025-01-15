@@ -19,6 +19,28 @@
 </head>
 
 <body class="colorpalette1auto">
+
+	<ui5-color-palette id="cp1SelectedTest">
+		<ui5-color-palette-item value="darkblue" selected></ui5-color-palette-item>
+		<ui5-color-palette-item value="pink" selected></ui5-color-palette-item>
+		<ui5-color-palette-item value="#444444" selected></ui5-color-palette-item>
+		<ui5-color-palette-item value="rgb(0,200,0)" selected></ui5-color-palette-item>
+		<ui5-color-palette-item value="green"></ui5-color-palette-item>
+		<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+		<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+		<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+		<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+	</ui5-color-palette>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
 	<ui5-color-palette id="cp1">
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
@@ -113,11 +135,12 @@
 		});
 
 		colorPaletteBtn.addEventListener("click", function(event) {
-			respPopover.showAt(colorPaletteBtn);
+			respPopover.opener = colorPaletteBtn;
+			respPopover.open = true;
 		});
 
 		btnClose.addEventListener("click", function(event) {
-			respPopover.close();
+			respPopover.open = false;
 		});
 	</script>
 </html>

@@ -49,8 +49,7 @@ describe("Breadcrumbs general interaction", () => {
 		// Act
 		await overflowArrowLink.click(); // open the overflow
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
+		const firstItem = (await browser.$(`#breadcrumbs1`).shadow$$("ui5-li"))[0];
 
 		await firstItem.click();
 
@@ -149,65 +148,61 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("standard breadcrumb with single item shows location", async () => {
 		const breadcrumbs = await browser.$("#breadcrumbsWithSingleItem"),
-			label = (await breadcrumbs.shadow$("ui5-label"));
+			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
 
 		// Check
-		assert.strictEqual(await label.getText(), "Location", "label is displayed");
+		assert.strictEqual(await link.getText(), "Location", "label is displayed");
 	});
 
 	it("opens upon space", async () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await browser.$(`#breadcrumbs1`).shadow$("ui5-responsive-popover");
 
 		await externalElement.click();
 		await externalElement.keys("Tab");
 
 		await browser.keys("Space");
-		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
+		assert.ok(await popover.getProperty("open"), "Dropdown is opened.");
 	});
 
 	it("toggles upon F4", async () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await browser.$(`#breadcrumbs1`).shadow$("ui5-responsive-popover");
 
 		await externalElement.click();
 		await externalElement.keys("Tab");
 
 		await browser.keys("F4");
-		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
+		assert.ok(await popover.getProperty("open"), "Dropdown is opened.");
 
 		await browser.keys("F4");
-		assert.notOk(await popover.getProperty("opened"), "Dropdown is closed.");
+		assert.notOk(await popover.getProperty("open"), "Dropdown is closed.");
 	});
 
 	it("toggles upon ALT + DOWN", async () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await browser.$(`#breadcrumbs1`).shadow$("ui5-responsive-popover");
 
 		await externalElement.click();
 		await externalElement.keys("Tab");
 
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
+		assert.ok(await popover.getProperty("open"), "Dropdown is opened.");
 
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.notOk(await popover.getProperty("opened"), "Dropdown is closed.");
+		assert.notOk(await popover.getProperty("open"), "Dropdown is closed.");
 	});
 
 	it("renders accessible names of overflowing link items", async () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbsWithAccName"),
-			listItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[1],
+		const listItem = (await browser.$(`#breadcrumbsWithAccName`).shadow$$("ui5-li"))[1],
 			expectedAriaLabel = "first link acc name";
 
 		// Check
@@ -221,6 +216,17 @@ describe("Breadcrumbs general interaction", () => {
 
 		// Check
 		assert.strictEqual(await link.getProperty("accessibleName"), expectedAccessibleName, "label for last link is correct");
+	});
+
+	it("renders accessible name of popover", async () => {
+		await browser.url(`test/pages/Breadcrumbs.html`);
+
+		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
+		const popover = await browser.$(`#breadcrumbs1`).shadow$("ui5-responsive-popover");
+		const expectedAriaLabel = "Available values";
+
+		await externalElement.click();
+		assert.ok(await popover.shadow$(".ui5-popover-root").getProperty("ariaLabel"), expectedAriaLabel);
 	});
 
 	it("cancels default if item-click event listener calls preventDefault", async () => {
@@ -362,4 +368,44 @@ describe("Breadcrumbs general interaction", () => {
 		assert.strictEqual(await breadcrumbs.getProperty("_overflowSize"), 1, "Max stack of calling not hit for invalidation of control");
 	});
 
+});
+
+describe("Breadcrumbs with item for current page", () => {
+	before(async () => {
+		await browser.url(`test/pages/Breadcrumbs.html`);
+	});
+
+	it("renders current page item as link", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbs2"),
+			link = (await breadcrumbs.shadow$("li:last-child ui5-link"));
+
+		// assert
+		assert.ok(await link.isExisting(), "item for current page is a link");
+		assert.strictEqual(await link.getText(), "Location",
+			"item for current page has correct text");
+	});
+
+	it("sets correct design to link for current page", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbs2"),
+			link = (await breadcrumbs.shadow$("li:last-child ui5-link"));
+
+		// assert
+		assert.strictEqual(await link.getProperty("design"), "Emphasized",
+			"link has correct design");
+	});
+
+	it("does not render separator after link to current page", async () => {
+		const breadcrumbWithCurrentPage = await browser.$("#breadcrumbs2"),
+			breadcrumbWithNoCurrentPage = await browser.$("#breadcrumbs3"),
+			separatorAfterCurrentPageLink =
+				(await breadcrumbWithCurrentPage.shadow$("li:last-child span.ui5-breadcrumbs-separator")),
+			separatorAfterNonCurrentPageLink =
+				(await breadcrumbWithNoCurrentPage.shadow$("li:last-child span.ui5-breadcrumbs-separator"));
+
+		// assert
+		assert.ok(await separatorAfterNonCurrentPageLink.isExisting(),
+			"renders separator after link to another page");
+		assert.notOk(await separatorAfterCurrentPageLink.isExisting(),
+			"does not render separator after link to current page");
+	});
 });

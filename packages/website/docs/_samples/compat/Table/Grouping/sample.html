@@ -1,0 +1,54 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+<!-- playground-fold-end -->
+
+<ui5-table>
+
+    <ui5-table-column slot="columns">
+        <ui5-label>City</ui5-label>
+    </ui5-table-column>
+    <ui5-table-column slot="columns" min-width="500" popin-text="Supplier" demand-popin="">
+        <ui5-label>Supplier</ui5-label>
+    </ui5-table-column>
+    <ui5-table-column slot="columns" min-width="500">
+        <ui5-label>Date Of Foundation</ui5-label>
+    </ui5-table-column>
+
+    <ui5-table-group-row>Country: Bulgaria</ui5-table-group-row>
+    <ui5-table-row>
+        <ui5-table-cell><ui5-text>Sofia</ui5-text></ui5-table-cell>
+        <ui5-table-cell><ui5-text>Data Analytics</ui5-text></ui5-table-cell>
+        <ui5-table-cell><ui5-text>1980</ui5-text></ui5-table-cell>
+    </ui5-table-row>
+    <ui5-table-row>
+        <ui5-table-cell><ui5-text>Plovdiv</ui5-text></ui5-table-cell>
+        <ui5-table-cell><ui5-text>Old Town Corp</ui5-text></ui5-table-cell>
+        <ui5-table-cell><ui5-text>1899</ui5-text></ui5-table-cell>
+    </ui5-table-row>
+
+    <ui5-table-group-row><ui5-text>Country: USA</ui5-text></ui5-table-group-row>
+    <ui5-table-row>
+        <ui5-table-cell><ui5-text>New York</ui5-text></ui5-table-cell>
+        <ui5-table-cell><ui5-text>Deloitte</ui5-text></ui5-table-cell>
+        <ui5-table-cell><ui5-text>1845</ui5-text></ui5-table-cell>
+    </ui5-table-row>
+    <ui5-table-row>
+        <ui5-table-cell><ui5-text>Bentonville</ui5-text></ui5-table-cell>
+        <ui5-table-cell><ui5-text>Walmart</ui5-text></ui5-table-cell>
+        <ui5-table-cell><ui5-text>1962</ui5-text></ui5-table-cell>
+    </ui5-table-row>
+
+</ui5-table>
+<!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+</html>
+<!-- playground-fold-end -->
+

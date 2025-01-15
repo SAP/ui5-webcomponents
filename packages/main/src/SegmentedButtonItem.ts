@@ -1,101 +1,210 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
-
-import ToggleButton from "./ToggleButton.js";
-import ButtonDesign from "./types/ButtonDesign.js";
-import Icon from "./Icon.js";
-
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
+import type { ISegmentedButtonItem } from "./SegmentedButton.js";
+import SegmentedButtonItemTemplate from "./SegmentedButtonItemTemplate.js";
 
+import type { IButton } from "./Button.js";
+import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * Users can use the <code>ui5-segmented-button-item</code> as part of a <code>ui5-segmented-button</code>.
- * <br><br>
- * Clicking or tapping on a <code>ui5-segmented-button-item</code> changes its state to <code>pressed</code>.
+ * Users can use the `ui5-segmented-button-item` as part of a `ui5-segmented-button`.
+ *
+ * Clicking or tapping on a `ui5-segmented-button-item` changes its state to `selected`.
  * The item returns to its initial state when the user clicks or taps on it again.
  * By applying additional custom CSS-styling classes, apps can give a different style to any
- * <code>ui5-segmented-button-item</code>.
+ * `ui5-segmented-button-item`.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/SegmentedButtonItem";</code>
- *
+ * `import "@ui5/webcomponents/dist/SegmentedButtonItem.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.SegmentedButtonItem
- * @extends sap.ui.webc.main.ToggleButton
- * @abstract
- * @tagname ui5-segmented-button-item
- * @implements sap.ui.webc.main.ISegmentedButtonItem
+ * @extends UI5Element
+ * @implements { ISegmentedButtonItem }
+ * @implements { IButton }
  * @public
  */
 @customElement({
 	tag: "ui5-segmented-button-item",
+	renderer: jsxRenderer,
 	template: SegmentedButtonItemTemplate,
-	dependencies: [Icon],
+	styles: segmentedButtonItemCss,
 })
-class SegmentedButtonItem extends ToggleButton {
+class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButtonItem {
 	/**
-	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
-	 *
-	 * @type {sap.ui.webc.main.types.ButtonDesign}
-	 * @defaultvalue "Default"
-	 * @name sap.ui.webc.main.SegmentedButtonItem.prototype.design
-	 * @public
-	 */
-	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	design!: `${ButtonDesign}`;
-
-	/**
-	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
-	 *
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.SegmentedButtonItem.prototype.iconEnd
+	 * Defines whether the component is disabled.
+	 * A disabled component can't be selected or
+	 * focused, and it is not in the tab chain.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	iconEnd!: boolean;
+	disabled = false;
 
 	/**
-	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
-	 *
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.SegmentedButtonItem.prototype.submits
+	 * Determines whether the component is displayed as selected.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	submits!: boolean;
+	selected = false;
+
+	/**
+	 * Defines the tooltip of the component.
+	 *
+	 * **Note:** A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
+	 * @default undefined
+	 * @public
+	 * @since 1.2.0
+	 */
+	@property()
+	tooltip?: string;
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 * @default undefined
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	accessibleName?: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that label the component.
+	 * @default undefined
+	 * @public
+	 * @since 1.1.0
+	 */
+	@property()
+	accessibleNameRef?: string;
+
+	/**
+	 * Defines the icon, displayed as graphical element within the component.
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * Example:
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	icon?: string;
+
+	/**
+	 * Defines if the button has icon and no text.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	iconOnly = false;
+
+	/**
+	 * Indicates if the element is focusable
+	 * @private
+	 */
+	@property({ type: Boolean })
+	nonInteractive = false;
+
+	/**
+	 * Defines the tabIndex of the component.
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	forcedTabIndex?: string;
 
 	/**
 	 * Defines the index of the item inside of the SegmentedButton.
-	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultvalue 0
+	 * @default 0
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	posInSet!: number;
+	@property({ type: Number })
+	posInSet = 0;
 
 	/**
 	 * Defines how many items are inside of the SegmentedButton.
-	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultvalue 0
+	 * @default 0
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	sizeOfSet!: number;
+	@property({ type: Number })
+	sizeOfSet = 0;
+
+	/**
+	 * Defines the text of the component.
+	 *
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 * @public
+	 */
+	@slot({ type: Node, "default": true })
+	text!: Array<Node>;
+
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
 
 	get ariaDescription() {
 		return SegmentedButtonItem.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION);
+	}
+
+	constructor() {
+		super();
+	}
+
+	_onclick(e: MouseEvent) {
+		if (this.disabled) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
+		this.selected = !this.selected;
+	}
+
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
+
+	onBeforeRendering(): void {
+		this.iconOnly = !willShowContent(this.text);
+	}
+
+	_onkeyup(e: KeyboardEvent) {
+		if (isSpaceShift(e)) {
+			e.preventDefault();
+		}
+	}
+
+	get tabIndexValue() {
+		if (this.disabled) {
+			return;
+		}
+
+		const tabindex = this.getAttribute("tabindex");
+
+		if (tabindex) {
+			return tabindex;
+		}
+
+		return this.forcedTabIndex;
+	}
+
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
+	}
+
+	get showIconTooltip() {
+		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
 	}
 }
 

@@ -196,6 +196,19 @@ const getRGBColor = (color: string): ColorRGB => {
 	return HEXToRGB(color);
 };
 
+const getAlpha = (color: string): number => {
+	let alpha = 1;
+
+	if (color.startsWith("rgba") || color.startsWith("hsla")) {
+		const parts = color.split(",");
+		if (parts.length === 4) {
+			alpha = parseFloat(parts[3].replace(")", "").trim());
+		}
+	}
+
+	return alpha;
+};
+
 /**
  * Return an object with the properties for each of the main colors(red, green, blue)
  * @param {String} color Receives a color in the following format: "rgba(0, 0, 0, 1)
@@ -332,7 +345,7 @@ const HEXToRGB = (hex: string): ColorRGB => {
  * @param {Object} color Receives an object with the properties for each of the main colors(r, g, b)
  */
 const RGBtoHEX = (color: ColorRGB): string => {
-	const hexMap = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E"];
+	const hexMap = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
 	let hexValue = "#";
 
 	let divisionNumber = color.r / 16;
@@ -394,6 +407,7 @@ const RGBToHSL = (color: ColorRGB): ColorHSL => {
 
 export {
 	getRGBColor,
+	getAlpha,
 	HSLToRGB,
 	HEXToRGB,
 	RGBToHSL,

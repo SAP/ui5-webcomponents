@@ -10,17 +10,56 @@ import type { ComponentStylesData as Styles } from "../types.js";
  * @returns { ClassDecorator }
  */
 const customElement = (tagNameOrComponentSettings: string | {
+	/**
+	 * The tag name of the custom element (will be suffixed if the scoping feature is used).
+	 */
 	tag?: string,
+	/**
+	 * The renderer of the custom element - officially supported are: jsxRenderer and litRender (deprecated).
+	 */
 	renderer?: Renderer,
+	/**
+	 * The styles to be injected into the shadow root of the custom element.
+	 */
 	styles?: Styles,
+	/**
+	 * The template function of the custom element - must match the renderer.
+	 */
 	template?: Template,
+	/**
+	 * Other custom elements used in the shadow root of the custom element.
+	 * @deprecated no longer necessary for jsxRenderer-enabled components
+	 */
 	dependencies?: Array<typeof UI5Element>,
-	staticAreaStyles?: Styles,
-	staticAreaTemplate?: Template,
+	/**
+	 * Whether the custom element should be re-rendered when the language changes.
+	 */
 	languageAware?: boolean,
+	/**
+	 * Whether the custom element should be re-rendered when the theme changes.
+	 */
 	themeAware?: boolean,
+	/**
+	 * Whether the custom element needs the CLDR assets.
+	 */
+	cldr?: boolean,
+	/**
+	 * Whether the custom element supports the F6 Fast navigation feature (is a fast-navigation group).
+	 */
 	fastNavigation?: boolean,
-}): ClassDecorator => {
+	/**
+	 * Whether the custom element is form-associated and implements form-relevant features.
+	 */
+	formAssociated?: boolean,
+	/**
+	 * The shadow root options of the custom element.
+	 */
+	shadowRootOptions?: Partial<ShadowRootInit>,
+	/**
+	 * A list of all features, supported by the custom element.
+	 */
+	features?: Array<string>,
+} = {}): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
 			target.metadata = {};
@@ -35,26 +74,44 @@ const customElement = (tagNameOrComponentSettings: string | {
 			tag,
 			languageAware,
 			themeAware,
+			cldr,
 			fastNavigation,
+			formAssociated,
+			shadowRootOptions,
+			features,
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
 		if (languageAware) {
 			target.metadata.languageAware = languageAware;
 		}
+		if (cldr) {
+			target.metadata.cldr = cldr;
+		}
+
+		if (features) {
+			target.metadata.features = features;
+		}
+
 		if (themeAware) {
 			target.metadata.themeAware = themeAware;
 		}
 		if (fastNavigation) {
 			target.metadata.fastNavigation = fastNavigation;
 		}
+		if (formAssociated) {
+			target.metadata.formAssociated = formAssociated;
+		}
 
-		["render", "renderer", "template", "staticAreaTemplate", "styles", "staticAreaStyles", "dependencies"].forEach((customElementEntity: string) => {
-			const _customElementEntity = customElementEntity === "render" ? "renderer" : customElementEntity;
-			const customElementEntityValue = tagNameOrComponentSettings[_customElementEntity as keyof typeof tag];
+		if (shadowRootOptions) {
+			target.metadata.shadowRootOptions = shadowRootOptions;
+		}
+
+		["renderer", "template", "styles", "dependencies"].forEach((customElementEntity: string) => {
+			const customElementEntityValue = tagNameOrComponentSettings[customElementEntity as keyof typeof tag];
 
 			customElementEntityValue && Object.defineProperty(target, customElementEntity, {
-				get: () => customElementEntityValue,
+				get: () => tagNameOrComponentSettings[customElementEntity as keyof typeof tag],
 			});
 		});
 	};

@@ -7,55 +7,40 @@ import type FilterItemOption from "./FilterItemOption.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
+ * ### Usage
  *
- * <h3>Usage</h3>
+ * For the `ui5-filter-item`
+ * ### ES6 Module Import
  *
- * For the <code>ui5-filter-item</code>
- * <h3>ES6 Module Import</h3>
- *
- * <code>import @ui5/webcomponents-fiori/dist/FilterItem.js";</code>
- *
+ * `import @ui5/webcomponents-fiori/dist/FilterItem.js";`
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.FilterItem
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
  * @since 1.0.0-rc.16
- * @tagname ui5-filter-item
- * @implements sap.ui.webc.fiori.IFilterItem
  * @public
  */
 @customElement("ui5-filter-item")
 class FilterItem extends UI5Element {
 	/**
 	 * Defines the text of the component.
-	 *
-	 * @name sap.ui.webc.fiori.FilterItem.prototype.text
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines the additional text of the component.
-	 *
-	 * @name sap.ui.webc.fiori.FilterItem.prototype.additionalText
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
-	 * Defines the <code>values</code> list.
-	 * @name sap.ui.webc.fiori.FilterItem.prototype.values
-	 * @type {sap.ui.webc.fiori.IFilterItemOption[]}
-	 * @slot values
+	 * Defines the `values` list.
 	 * @public
 	 */
 	@slot()

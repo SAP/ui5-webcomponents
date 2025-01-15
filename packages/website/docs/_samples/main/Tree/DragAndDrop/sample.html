@@ -1,0 +1,51 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-fold-end -->
+    <ui5-tree id="tree" no-data-text="No data" mode="MultiSelect" accessible-name="Tree with accessibleName">
+
+        <ui5-tree-item movable text="Tree 1" icon="paste" additional-text="Available" indeterminate selected additional-text-state="Information" accessible-name="Tree item with accessibleName">
+            <ui5-title slot="content">
+                <ui5-label>Tree 1</ui5-label>
+                <ui5-label>Tree 1</ui5-label>
+            </ui5-title>
+
+            <ui5-tree-item movable expanded text="Tree 1.1" additional-text="Re-stock" additional-text-state="Negative" indeterminate selected>
+                <ui5-tree-item movable text="Tree 1.1.1" additional-text="Required" additional-text-state="Critical" selected></ui5-tree-item>
+                <ui5-tree-item movable text="Tree 1.1.2" additional-text="Available" additional-text-state="Positive"></ui5-tree-item>
+            </ui5-tree-item>
+        </ui5-tree-item>
+
+        <ui5-tree-item movable data-allows-nesting text="Tree 2(Allows Nesting)" icon="copy">
+            <ui5-tree-item movable id="firstCollapsedItem" text="Tree 2.1">
+                <ui5-tree-item movable text="Tree 2.1.1"></ui5-tree-item>
+                <ui5-tree-item movable text="Tree 2.1.2">
+                    <ui5-tree-item movable text="Tree 2.1.2.1"></ui5-tree-item>
+                    <ui5-tree-item movable text="Tree 2.1.2.2"></ui5-tree-item>
+                    <ui5-tree-item movable text="Tree 2.1.2.3"></ui5-tree-item>
+                    <ui5-tree-item movable text="Tree 2.1.2.5"></ui5-tree-item>
+                </ui5-tree-item>
+            </ui5-tree-item>
+            <ui5-tree-item movable text="Tree 2.2"></ui5-tree-item>
+            <ui5-tree-item movable text="Tree 2.3"></ui5-tree-item>
+        </ui5-tree-item>
+
+        <ui5-tree-item movable text="Tree 3 (no icon)">
+        </ui5-tree-item>
+
+    </ui5-tree>
+
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

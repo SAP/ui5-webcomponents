@@ -1,33 +1,25 @@
 /**
  * Different BusyIndicator sizes.
- *
- * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.main.types.BusyIndicatorSize
  */
 enum BusyIndicatorSize {
 	/**
 	 * small size
 	 * @public
-	 * @type {Small}
 	 */
-	Small = "Small",
+	S = "S",
 
 	/**
 	 * medium size
 	 * @public
-	 * @type {Medium}
 	 */
-	Medium = "Medium",
+	M = "M",
 
 	/**
 	 * large size
 	 * @public
-	 * @type {Large}
 	 */
-	Large = "Large",
+	L = "L",
 }
 
 export default BusyIndicatorSize;

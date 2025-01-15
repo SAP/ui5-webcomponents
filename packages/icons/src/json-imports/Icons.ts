@@ -4,13 +4,13 @@ const loadIconsBundle = async (collection: string): Promise<CollectionData> => {
     let iconData: CollectionData;
 
 	if (collection === "SAP-icons-v5") {
-		iconData = (await import("../generated/assets/v5/SAP-icons.json")).default;
+		iconData = (await import(/* webpackChunkName: "ui5-webcomponents-sap-icons-v5" */ "../generated/assets/v5/SAP-icons.json")).default;
 	} else {
-		iconData = (await import("../generated/assets/v4/SAP-icons.json")).default;
+		iconData = (await import(/* webpackChunkName: "ui5-webcomponents-sap-icons-v4" */ "../generated/assets/v4/SAP-icons.json")).default;
 	}
 
     if (typeof iconData === "string" && (iconData as string).endsWith(".json")) {
-        throw new Error("[icons] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build or use `import \"@ui5/webcomponents-icons/dist/Assets-static.js\". Check the \"Assets\" documentation for more information.");
+        throw new Error("[icons] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build. Check the \"Assets\" documentation for more information.");
     }
     return iconData;
 }

@@ -1,7 +1,4 @@
-![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/main/docs/images/UI5_logo_wide.png)
-
-
-# UI5 Web Components - Create Package
+# ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/main/docs/images/UI5_logo_water.png)UI5 Web Components - Create Package
 
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
@@ -21,7 +18,6 @@ Options:
     --name <string>     - defines the package name
     --component-name <string>      - defines the component class name that will be created in your new package
     --tag <string>      - defines the tag name of the sample web component that will be created in your new package. The tag will be derived from the component name if not provided.
-    --enable-typescript - enables TypeScript support for the package
     --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```
 
@@ -37,7 +33,6 @@ Options:
     --name <string>     - defines the package name
     --component-name <string>      - defines the component class name that will be created in your new package
     --tag <string>      - defines the tag name of the sample web component that will be created in your new package
-    --enable-typescript - enables TypeScript support for the package
     --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```
 
@@ -47,7 +42,7 @@ components package.
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/main/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)
-- [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
+- [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/play/)
 
 ## Support
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/main/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://ui5-slack-invite.cfapps.eu10.hana.ondemand.com/).

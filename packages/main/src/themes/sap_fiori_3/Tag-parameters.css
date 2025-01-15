@@ -1,0 +1,5 @@
+@import "../base/Tag-parameters.css";
+
+:root {
+	--ui5-tag-information-text-shadow: var(--sapContent_ContrastTextShadow);
+}
