@@ -899,9 +899,9 @@ class ShellBar extends UI5Element {
 				item.classList.remove("ui5-shellbar-hidden-button");
 				restoreVisibility = true;
 			}
-			const gap = parseInt(getComputedStyle(item).getPropertyValue("margin-inline-start"));
 			// exlcude the gap if an item is in the additional context as the wrapped element's width is already including the gap
-			const itemWidth = item.offsetWidth + (isAdditionalContext ? 0 : gap); 
+			const gap = isAdditionalContext ? 0 : parseInt(getComputedStyle(item).getPropertyValue("margin-inline-start"));
+			const itemWidth = item.offsetWidth + gap;
 			if (restoreVisibility) {
 				item.classList.add("ui5-shellbar-hidden-button");
 				restoreVisibility = false;
