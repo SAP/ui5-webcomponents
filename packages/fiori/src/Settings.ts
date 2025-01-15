@@ -26,6 +26,7 @@ import {
 	SETTINGS_DIALOG_ACCESSIBLE_NAME,
 	SETTING_LIST_ARIA_ROLE_DESC,
 	SETTINGS_DIALOG_CLOSE_BUTTON_TEXT,
+	SETTINGS_DIALOG_NO_SEARCH_RESULTS_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 type SettingsItemSelectEventDetail = {
@@ -193,6 +194,12 @@ class Settings extends UI5Element {
 	 */
 	_filteredFixedItems: Array<SettingItem> = [];
 
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_showNoSearchResult = false;
+
 	onBeforeRendering() {
 		const searchValue = this._searchValue.toLowerCase();
 		this._filteredItems = [];
@@ -217,6 +224,12 @@ class Settings extends UI5Element {
 				this._selectedSetting = item;
 			}
 		});
+
+		if (this._filteredItems.length === 0 && this._filteredFixedItems.length === 0) {
+			this._showNoSearchResult = true;
+		} else {
+			this._showNoSearchResult = false;
+		}
 
 		if (!this._selectedSetting) {
 			this._selectedSetting = this.items[0] || this.fixedItems[0];
@@ -273,6 +286,9 @@ class Settings extends UI5Element {
 
 	get closeButtonText() {
 		return Settings.i18nBundle.getText(SETTINGS_DIALOG_CLOSE_BUTTON_TEXT);
+	}
+	get noSearchResultsText() {
+		return Settings.i18nBundle.getText(SETTINGS_DIALOG_NO_SEARCH_RESULTS_TEXT);
 	}
 
 	get _selectedItemSlotName() {

@@ -2,6 +2,7 @@ import type Settings from "./Settings.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
+import Text from "@ui5/webcomponents/dist/Text.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
@@ -28,13 +29,18 @@ export default function SettingsTemplate(this: Settings) {
 							<Title level="H4" size="H4">{this.headerTitle}</Title>
 						}
 						{this.showSearchField &&
-							<Input placeholder="Search" type="Search" class="ui5-sd-side-search" onInput={this._handleInput}>
-								<Icon id="searchFieldIcon" slot="icon" name={search}></Icon>
+							<Input placeholder="Search" type="Search" class="ui5-sd-side-search"
+								   onInput={this._handleInput}>
+								<Icon id="searchFieldIcon" slot="icon" name={search} showTooltip></Icon>
 							</Input>
 						}
 					</div>
-
-					{renderList.call(this, this._filteredItems, "ui5-sd-side-items")}
+					{this._showNoSearchResult ?
+						<div class="ui5-sd-side-text">
+							<Text>{this.noSearchResultsText}</Text>
+						</div>
+						:
+						renderList.call(this, this._filteredItems, "ui5-sd-side-items")}
 
 					{this._filteredFixedItems.length > 0 && renderList.call(this, this._filteredFixedItems, "ui5-sd-side-fixedItems")}
 				</div>
@@ -53,8 +59,8 @@ export default function SettingsTemplate(this: Settings) {
 
 function renderList(this: Settings, items: Array<SettingItem> = [], classes: string) {
 	return <List accessibleRole="Menu" onItemClick={this._handleItemClick} class={classes}>
-		{items.map(item => (
+			{items.map(item => (
 			<ListItemStandard icon={item._icon} tooltip={item._tooltip} ref={this.captureRef.bind(item)} selected={item.selected} disabled={item.disabled} accessibleName={item.ariaLabelledByText}>{item.text}</ListItemStandard>
-		))}
-	</List>;
+			))}
+		</List>;
 }

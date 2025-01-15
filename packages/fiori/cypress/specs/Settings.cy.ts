@@ -58,7 +58,7 @@ describe("Initial rendering", () => {
 	it("tests setting with button", () => {
 		cy.mount(html`<ui5-settings open>
 							<ui5-setting-item>
-								<ui5-setting-view ">
+								<ui5-setting-view>
 									<ui5-button>Setting 3 Content 1</ui5-button>
 								</ui5-setting-view>
 							</ui5-setting-item>

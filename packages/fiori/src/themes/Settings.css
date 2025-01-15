@@ -44,6 +44,11 @@
 	min-height: 0;
 }
 
+
+.ui5-sd-side-text {
+	align-self: center;
+}
+
 .ui5-sd-side-fixedItems :last-child {
 	border-bottom: none;
 }
