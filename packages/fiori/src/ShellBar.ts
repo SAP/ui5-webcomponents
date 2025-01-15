@@ -339,6 +339,7 @@ class ShellBar extends UI5Element {
 	 * Defines whether or not the search field is open by default
 	 * @default false
 	 * @public
+	 * @since 2.6.1
 	 * **Note:** The `showOpenSearchField` property is in an experimental state and is a subject to change.
 	 */
 	@property({ type: Boolean })
