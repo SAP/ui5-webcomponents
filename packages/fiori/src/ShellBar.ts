@@ -928,7 +928,7 @@ class ShellBar extends UI5Element {
 		// last, start hiding the items that are in the additional context
 		this._hideAdditionalContext();
 
-		if (this.additionalContextHidden.length && JSON.stringify(this.additionalContextHidden) !== JSON.stringify(this._cachedHiddenContent)) {
+		if (JSON.stringify(this.additionalContextHidden) !== JSON.stringify(this._cachedHiddenContent)) {
 			this.fireDecoratorEvent("additional-context-disappears", { items: this.additionalContextHidden });
 		}
 
