@@ -64,8 +64,7 @@ const getDefaultTheme = (): string => {
  * @returns {boolean}
  */
 const isTheme = (theme: string) => {
-	const currentTheme = getTheme();
-	return currentTheme === theme;
+	return getTheme() === theme;
 };
 
 /**
