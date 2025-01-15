@@ -335,15 +335,15 @@ class ShellBar extends UI5Element {
 	@property({ type: Boolean })
 	showSearchField = false;
 
-	/**
-	 * Defines whether or not the search field is open by default
-	 * @default false
-	 * @public
-	 * @since 2.6.1
-	 * **Note:** The `showOpenSearchField` property is in an experimental state and is a subject to change.
-	 */
-	@property({ type: Boolean })
-	showOpenSearchField = false;
+	// /**
+	//  * Defines whether or not the search field is open by default
+	//  * @default false
+	//  * @public
+	//  * @since 2.6.1
+	//  * **Note:** The `showOpenSearchField` property is in an experimental state and is a subject to change.
+	//  */
+	// @property({ type: Boolean })
+	// showOpenSearchField = false;
 
 	/**
 	 * Defines additional accessibility attributes on different areas of the component.
@@ -519,6 +519,9 @@ class ShellBar extends UI5Element {
 	_overflowNotifications: string | null;
 	_lastOffsetWidth = 0;
 	_observableContent: Array<HTMLElement> = [];
+	_searchBarAutoOpen: boolean = false;
+	_searchBarAutoClosed: boolean = false;
+	_searchIconPressed: boolean = false;
 
 	_headerPress: () => void;
 
@@ -578,10 +581,8 @@ class ShellBar extends UI5Element {
 			this.overflowPopover.open = false;
 			if (this._lastOffsetWidth !== this.offsetWidth) {
 				this._overflowActions();
-				if (this.showOpenSearchField) {
+				if (this._searchBarAutoOpen) {
 					this._searchBarInitialState();
-				} else if (this.showSearchField)	{
-					this.showSearchField = false;
 				}
 			}
 		}, RESIZE_THROTTLE_RATE);
@@ -596,12 +597,15 @@ class ShellBar extends UI5Element {
 		}
 		if ((spacerWidth <= 0 || this.additionalContextHidden.length !== 0) && this.showSearchField === true) {
 			this.showSearchField = false;
+			this._searchBarAutoClosed = true;
 		}
 		if (spacerWidth > searchFieldWidth && this.additionalContextHidden.length === 0 && this.showSearchField === false) {
 			this.showSearchField = true;
+			this._searchBarAutoClosed = false;
 		}
 		if (this.additionalContext.length === 0 && this.showSearchField === false) {
 			this.showSearchField = true;
+			this._searchBarAutoClosed = false;
 		}
 	}
 
@@ -789,6 +793,7 @@ class ShellBar extends UI5Element {
 		requestAnimationFrame(() => {
 			this._lastOffsetWidth = this.offsetWidth;
 			this._overflowActions();
+			this._searchBarAutoOpen = this._searchBarAutoClosed || (this.showSearchField && !this._searchIconPressed);
 		});
 	}
 
@@ -837,6 +842,7 @@ class ShellBar extends UI5Element {
 		this._updateAssistantIconVisibility(newItems);
 
 		this._updateItemsInfo(newItems);
+		this._hideAdditionalContext();
 	}
 
 	_hideOverflowItems(hiddenItems: number, items: IShelBarItemInfo[]) {
@@ -977,7 +983,7 @@ class ShellBar extends UI5Element {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
-		if (this.showOpenSearchField) {
+		if (this._searchBarAutoOpen) {
 			setTimeout(() => this._searchBarInitialState(), 100);
 		}
 	}
@@ -995,10 +1001,12 @@ class ShellBar extends UI5Element {
 			targetRef: searchButtonRef,
 			searchFieldVisible: this.showSearchField,
 		});
+		this._searchIconPressed = true;
 		if (defaultPrevented) {
 			return;
 		}
 		this.showSearchField = !this.showSearchField;
+		this._searchBarAutoOpen = this.showSearchField;
 
 		if (!this.showSearchField) {
 			return;
@@ -1530,7 +1538,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get showAdditionalContext() {
-		return !this.isSBreakPoint && this.hasAdditionalContext;
+		return this.hasAdditionalContext;
 	}
 
 	get _hasVisibleStartContent() {

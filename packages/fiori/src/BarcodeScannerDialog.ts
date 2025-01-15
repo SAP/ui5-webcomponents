@@ -7,7 +7,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { Result, Exception } from "@zxing/library";
 import type { Interval } from "@ui5/webcomponents-base/dist/types.js";
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -183,10 +182,6 @@ class BarcodeScannerDialog extends UI5Element {
 		this._codeReader = new BrowserMultiFormatReader();
 		this._handleVideoPlayingBound = this._handleVideoPlaying.bind(this);
 		this._handleCaptureRegionBound = this._handleDrawCaptureRegion.bind(this);
-	}
-
-	static async onDefine() {
-		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	async onAfterRendering() {
