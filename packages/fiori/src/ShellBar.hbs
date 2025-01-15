@@ -40,15 +40,18 @@
 					{{#if showTitleInMenuButton}}
 					<div class="ui5-shellbar-menu-button-title">
 						{{primaryTitle}}
-						{{#if secondaryTitle}}
-							<div style="display: block" class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">{{secondaryTitle}}</div>
-						{{/if}}
 					</div>
 					{{/if}}
 
 					<ui5-icon class="ui5-shellbar-menu-button-arrow" name="slim-arrow-down">
 					</ui5-icon>
 				</button>
+
+				{{#if secondaryTitle}}
+					{{#unless isSBreakPoint}}
+						<div style="display: block" class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">{{secondaryTitle}}</div>
+					{{/unless}}
+				{{/if}}
 			{{/if}}
 		{{/if}}
 
@@ -59,6 +62,11 @@
 				{{/if}}
 			{{else}}
 				{{> combinedLogo}}
+				{{#if secondaryTitle}}
+					{{#if primaryTitle}}
+					<h2 class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">{{secondaryTitle}}</h2>
+					{{/if}}
+				{{/if}}
 			{{/if}}
 		{{/unless}}
 	</div>
@@ -247,11 +255,6 @@
 		<h1 class="ui5-shellbar-title">
 			<bdi>{{primaryTitle}}</bdi>
 		</h1>
-		{{/if}}
-		{{#if secondaryTitle}}
-			{{#if primaryTitle}}
-			<h2 class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">{{secondaryTitle}}</h2>
-			{{/if}}
 		{{/if}}
 	</div>
 </div>

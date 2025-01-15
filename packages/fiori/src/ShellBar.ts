@@ -268,7 +268,6 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
  */
 @event("additional-context-disappears", {
 	bubbles: true,
-	cancelable: true,
 })
 
 class ShellBar extends UI5Element {
@@ -342,7 +341,7 @@ class ShellBar extends UI5Element {
 	 * Defines whether or not the search field is open by default
 	 * @default false
 	 * @public
-	 * @experimental This API is subject to change.
+	 * **Note:** The `showOpenSearchField` property is in an experimental state and is a subject to change.
 	 */
 	@property({ type: Boolean })
 	showOpenSearchField = false;
