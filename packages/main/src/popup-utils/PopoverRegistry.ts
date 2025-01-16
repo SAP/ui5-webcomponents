@@ -10,6 +10,13 @@ type RegisteredPopover = {
 	parentPopovers: Array<Popover>;
 }
 
+type PopupCloseInfo = {
+	escPressed?: boolean;
+	preventRegistryUpdate?: boolean;
+	preventFocusRestore?: boolean;
+	outsideClick?: boolean;
+};
+
 let updateInterval: Interval;
 const intervalTimeout = 300;
 const openedRegistry: Array<RegisteredPopover> = [];
@@ -22,7 +29,7 @@ const repositionPopovers = () => {
 
 const closePopoversIfLostFocus = () => {
 	if (getActiveElement()!.tagName === "IFRAME") {
-		getRegistry().reverse().forEach(popup => popup.instance.closePopup(false, false, true));
+		getRegistry().reverse().forEach(popup => popup.instance.closePopup({ preventRegistryUpdate: true }));
 	}
 };
 
@@ -88,7 +95,7 @@ const clickHandler = (event: MouseEvent) => {
 			break;
 		}
 
-		popup.closePopup();
+		popup.closePopup({ outsideClick: true });
 	}
 };
 
@@ -131,7 +138,7 @@ const removeOpenedPopover = (instance: Popover) => {
 				removeOpenedPopup(openedRegistry[indexOfItemToRemove].instance);
 				detachScrollHandler(openedRegistry[indexOfItemToRemove].instance);
 				const itemToClose = openedRegistry.splice(indexOfItemToRemove, 1);
-				itemToClose[0].instance.closePopup(false, true);
+				itemToClose[0].instance.closePopup({ preventFocusRestore: true });
 			}
 		}
 	}
@@ -165,3 +172,6 @@ const getParentPopoversIfNested = (instance: Popover) => {
 };
 
 export { addOpenedPopover, removeOpenedPopover, getRegistry };
+export type {
+	PopupCloseInfo,
+};

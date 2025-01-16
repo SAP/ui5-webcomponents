@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-	<title>Dialog</title>
+	<title>Popup Prevent Events</title>
 
 	<script data-ui5-config type="application/json">
 		{
@@ -98,7 +98,7 @@
 	});
 
 	popover.addEventListener("before-close", (event) => {
-		if (!event.detail.escPressed) {
+		if (!event.detail.escPressed && !event.detail.outsideClick) {
 			return;
 		}
 

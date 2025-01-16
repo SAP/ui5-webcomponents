@@ -23,6 +23,7 @@ import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseE
 import PopupTemplate from "./PopupTemplate.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
+import type { PopupCloseInfo } from "./popup-utils/PopoverRegistry.js";
 
 // Styles
 import popupStlyes from "./generated/themes/Popup.css.js";
@@ -46,6 +47,7 @@ type PopupScrollEventDetail = {
 
 type PopupBeforeCloseEventDetail = {
 	escPressed: boolean;
+	outsideClick: boolean;
 }
 
 /**
@@ -96,6 +98,7 @@ type PopupBeforeCloseEventDetail = {
  * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing.
  * @public
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
+ * @param {boolean} outsideClick Indicates that the event is triggered by a click outside the popup.
  */
 @event("before-close", {
 	cancelable: true,
@@ -508,12 +511,16 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Closes the popup.
 	 */
-	closePopup(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
+	closePopup(popupCloseInfo : PopupCloseInfo = {}): void {
 		if (!this._opened) {
 			return;
 		}
 
-		const prevented = !this.fireDecoratorEvent("before-close", { escPressed });
+		const prevented = !this.fireDecoratorEvent("before-close", {
+			escPressed: popupCloseInfo.escPressed || false,
+			outsideClick: popupCloseInfo.outsideClick || false,
+		});
+
 		if (prevented) {
 			return;
 		}
@@ -527,11 +534,11 @@ abstract class Popup extends UI5Element {
 		this.hide();
 		this.open = false;
 
-		if (!preventRegistryUpdate) {
+		if (!popupCloseInfo.preventRegistryUpdate) {
 			this._removeOpenedPopup();
 		}
 
-		if (!this.preventFocusRestore && !preventFocusRestore) {
+		if (!this.preventFocusRestore && !popupCloseInfo.preventFocusRestore) {
 			this.resetFocus();
 		}
 
