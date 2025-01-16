@@ -709,7 +709,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			// disabled ItemNavigation from the list since we are not using it
 			const list = await this.Suggestions._getList();
 
-			list._itemNavigation._getItems().forEach(item => {
+			list?._itemNavigation._getItems().forEach(item => {
 				item.forcedTabIndex = "-1";
 			});
 		}
