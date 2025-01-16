@@ -226,6 +226,13 @@ class DynamicPage extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		if (!this.mediaRange) {
+			this.mediaRange = MediaRange.getCurrentRange(
+				MediaRange.RANGESETS.RANGE_4STEPS,
+				window.innerWidth,
+			);
+		}
+
 		if (this.dynamicPageTitle) {
 			this.dynamicPageTitle.snapped = this._headerSnapped;
 			this.dynamicPageTitle.interactive = this.hasHeading;
