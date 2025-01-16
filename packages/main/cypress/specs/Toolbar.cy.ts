@@ -122,4 +122,23 @@ describe("Toolbar general interaction", () => {
 			.find(".ui5-tb-overflow-btn-hidden")
 			.should("exist", "hidden class attached to tb button, meaning it's not shown as expected");
 	});
+
+	it("Should call click handler on abstract item", () => {
+		cy.mount(html`
+			<ui5-toolbar>
+				<ui5-toolbar-button text="Button 1"></ui5-toolbar-button>
+			</ui5-toolbar>
+		`);
+
+		cy.get("ui5-toolbar-button[text='Button 1']")
+			.then(button => {
+				button.get(0).addEventListener("click", cy.stub().as("clicked"));
+			});
+
+		cy.get("ui5-button", { includeShadowDom: true }).contains("Button 1")
+			.click();
+
+		cy.get("@clicked")
+			.should("have.been.calledOnce");
+	});
 });
