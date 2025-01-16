@@ -40,6 +40,7 @@ import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import throttle from "@ui5/webcomponents-base/dist/util/throttle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 
 import type ShellBarItem from "./ShellBarItem.js";
 
@@ -608,7 +609,7 @@ class ShellBar extends UI5Element {
 
 	_onKeyDown(e: KeyboardEvent) {
 		const items = this._getVisibleAndInteractiveItems();
-		const activeElement = this._getActiveElement();
+		const activeElement = getActiveElement();
 		const currentIndex = items.findIndex(el => el === activeElement);
 
 		if (isLeft(e) || isRight(e)) {
@@ -648,16 +649,6 @@ class ShellBar extends UI5Element {
 			return dom?.tabIndex === 0;
 		}
 		return element.tabIndex === 0;
-	}
-
-	_getActiveElement() {
-		const activeElement = document.activeElement;
-
-		if (activeElement === this) {
-			return activeElement.shadowRoot!.activeElement;
-		}
-
-		return activeElement;
 	}
 
 	_getNavigableContent() {
