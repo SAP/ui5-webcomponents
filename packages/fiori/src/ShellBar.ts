@@ -592,6 +592,9 @@ class ShellBar extends UI5Element {
 	_searchBarInitialState() {
 		const spacerWidth = this.shadowRoot!.querySelector(".ui5-shellbar-spacer") ? this.shadowRoot!.querySelector(".ui5-shellbar-spacer")!.getBoundingClientRect().width : 0;
 		const searchFieldWidth = this.domCalculatedValues("--_ui5_shellbar_search_field_width");
+		if (this._searchIconPressed) {
+			return;
+		}
 		if (this._showFullWidthSearch) {
 			this.showSearchField = false;
 			this._searchBarAutoClosed = true;
