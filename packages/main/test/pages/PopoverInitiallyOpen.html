@@ -31,6 +31,22 @@
 			btn1.onclick = () => {
 				popover.open = true;
 			};
+
+			const ui5button = document.createElement("ui5-button");
+			ui5button.id = "btnCont1";
+			ui5button.textContent = "Open Popover";
+
+			const ui5popover = document.createElement("ui5-popover");
+			ui5popover.id = "popoverCont1";
+			ui5popover.open = true;
+			ui5popover.opener = "btnCont1"
+
+			const popoverContent = document.createElement("div");
+			popoverContent.innerHTML = "<button>button</button>";
+			ui5popover.appendChild(popoverContent);
+
+			document.body.appendChild(ui5button);
+			document.body.appendChild(ui5popover);
 		}
 	</script>
 </head>
@@ -46,5 +62,10 @@
 
 	<ui5-button id="openPopoverBtn2">Open Popover</ui5-button>
 	<ui5-popover id="popover2" open opener="openPopoverBtn2">Content</ui5-popover>
+
+	<br />
+	<br />
+	<br />
+
 </body>
 </html>

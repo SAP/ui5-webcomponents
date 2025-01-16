@@ -30,7 +30,6 @@ import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./ButtonTemplate.js";
-import Icon from "./Icon.js";
 
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
@@ -88,21 +87,8 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 	renderer: jsxRenderer,
 	template: ButtonTemplate,
 	styles: buttonCss,
-	dependencies: [Icon],
 	shadowRootOptions: { delegatesFocus: true },
 })
-/**
- * Fired when the component is activated either with a
- * mouse/tap or by using the Enter or Space key.
- *
- * **Note:** The event will not be fired if the `disabled`
- * property is set to `true`.
- * @public
- * @native
- */
-// @event("click", {
-// 	bubbles: true,
-// })
 /**
  * Fired whenever the active state of the component changes.
  * @private
@@ -113,9 +99,9 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 })
 class Button extends UI5Element implements IButton {
 	eventDetails!: {
-		"active-state-change": void
-		// click: void
-	}
+		"active-state-change": void,
+	};
+
 	/**
 	 * Defines the component design.
 	 * @default "Default"

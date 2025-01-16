@@ -41,6 +41,7 @@ import { updateFormValue, setFormValue } from "./features/InputElementsFormSuppo
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
 import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 import { getI18nBundle } from "./i18nBundle.js";
+import type I18nBundle from "./i18nBundle.js";
 import { fetchCldr } from "./asset-registries/LocaleData.js";
 import getLocale from "./locale/getLocale.js";
 
@@ -149,7 +150,7 @@ type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}
 : T;
 type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
 
-type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "autocomplete" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "inputmode" | "lang" | "nonce" | "part" | "exportparts" | "pattern" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate" | "ref";
+type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "autocomplete" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "inputmode" | "lang" | "nonce" | "part" | "exportparts" | "pattern" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate" | "ref" | "inert";
 type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
 type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: IsAny<T[Property], any, (e: CustomEvent<T[Property]>) => void> }
 
@@ -277,19 +278,6 @@ abstract class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	async connectedCallback() {
-		if (DEV_MODE) {
-			const rootNode = this.getRootNode();
-			// when an element is connected, check if it exists in the `dependencies` of the parent
-			if (rootNode instanceof ShadowRoot && instanceOfUI5Element(rootNode.host)) {
-				const klass = rootNode.host.constructor as typeof UI5Element;
-				const hasDependency = klass.tagsToScope.includes((this.constructor as typeof UI5Element).getMetadata().getPureTag());
-				if (!hasDependency) {
-					// eslint-disable-next-line no-console
-					console.error(`[UI5-FWK] ${(this.constructor as typeof UI5Element).getMetadata().getTag()} not found in dependencies of ${klass.getMetadata().getTag()}`);
-				}
-			}
-		}
-
 		if (DEV_MODE) {
 			const props = (this.constructor as typeof UI5Element).getMetadata().getProperties();
 			for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
@@ -863,7 +851,7 @@ abstract class UI5Element extends HTMLElement {
 		*/
 		this._changedState = [];
 
-		// Update shadow root and static area item
+		// Update shadow root
 		if (ctor._needsShadowDOM()) {
 			updateShadowRoot(this);
 		}
@@ -1093,6 +1081,10 @@ abstract class UI5Element extends HTMLElement {
 		return true;
 	}
 
+	get isUI5AbstractElement(): boolean {
+		return !(this.constructor as typeof UI5Element)._needsShadowDOM();
+	}
+
 	get classes(): ClassMap {
 		return {};
 	}
@@ -1247,9 +1239,10 @@ abstract class UI5Element extends HTMLElement {
 
 	/**
 	 * Returns an array with the dependencies for this UI5 Web Component, which could be:
-	 *  - composed components (used in its shadow root or static area item)
+	 *  - composed components (used in its shadow root)
 	 *  - slotted components that the component may need to communicate with
 	 *
+	 * @deprecated no longer necessary for jsxRenderer-enabled components
 	 * @protected
 	 */
 	static get dependencies(): Array<typeof UI5Element> {
@@ -1300,6 +1293,11 @@ abstract class UI5Element extends HTMLElement {
 
 	static asyncFinished: boolean;
 	static definePromise: Promise<void> | undefined;
+	static i18nBundleStorage: Record<string, I18nBundle> = {};
+
+	static get i18nBundles(): Record<string, I18nBundle> {
+		return this.i18nBundleStorage;
+	}
 
 	/**
 	 * Registers a UI5 Web Component in the browser window object
@@ -1316,8 +1314,7 @@ abstract class UI5Element extends HTMLElement {
 			const [i18nBundles] = result;
 			Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
 				const propertyName = pair[0];
-				const targetClass = pair[1].target;
-				(targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
+				this.i18nBundleStorage[propertyName] = i18nBundles[index];
 			});
 			this.asyncFinished = true;
 		};

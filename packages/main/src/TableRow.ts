@@ -3,11 +3,14 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
+import Button from "./Button.js";
+import RadioButton from "./RadioButton.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 import TableRowBase from "./TableRowBase.js";
 import TableRowCss from "./generated/themes/TableRow.css.js";
 import TableCell from "./TableCell.js";
-import RadioButton from "./RadioButton.js";
+import type TableRowActionBase from "./TableRowActionBase.js";
+import "@ui5/webcomponents-icons/dist/overflow.js";
 
 /**
  * @class
@@ -30,7 +33,7 @@ import RadioButton from "./RadioButton.js";
 	tag: "ui5-table-row",
 	styles: [TableRowBase.styles, TableRowCss],
 	template: TableRowTemplate,
-	dependencies: [...TableRowBase.dependencies, RadioButton, TableCell],
+	dependencies: [...TableRowBase.dependencies, RadioButton, TableCell, Button],
 })
 class TableRow extends TableRowBase {
 	/**
@@ -52,6 +55,20 @@ class TableRow extends TableRowBase {
 	cells!: Array<TableCell>;
 
 	/**
+	 * Defines the actions of the component.
+	 *
+	 * **Note:** Use `ui5-table-row-action` or `ui5-table-row-action-navigation` for the intended design.
+	 *
+	 * @since 2.7.0
+	 * @public
+	 */
+	@slot({
+		type: HTMLElement,
+		individualSlots: true,
+	})
+	actions!: Array<TableRowActionBase>;
+
+	/**
 	 * Unique identifier of the row.
 	 *
 	 * @default ""
@@ -61,9 +78,10 @@ class TableRow extends TableRowBase {
 	rowKey = "";
 
 	/**
-	 * Defines the position of the row respect to the total number of rows within the table when the <code>ui5-table-virtualizer</code> feature is used.
+	 * Defines the position of the row respect to the total number of rows within the table when the `ui5-table-virtualizer` feature is used.
 	 *
      * @default -1
+	 * @since 2.5.0
      * @public
      */
 	@property({ type: Number })
@@ -91,6 +109,7 @@ class TableRow extends TableRowBase {
 	 * Defines whether the row is movable.
 	 *
 	 * @default false
+	 * @since 2.6.0
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -131,13 +150,13 @@ class TableRow extends TableRowBase {
 
 		if (eventOrigin === this && this._isInteractive && isEnter(e)) {
 			this.toggleAttribute("_active", true);
-			this._table?._onRowPress(this);
+			this._table?._onRowClick(this);
 		}
 	}
 
 	_onclick() {
 		if (this._isInteractive && this === getActiveElement()) {
-			this._table?._onRowPress(this);
+			this._table?._onRowClick(this);
 		}
 	}
 
@@ -149,8 +168,69 @@ class TableRow extends TableRowBase {
 		this.removeAttribute("_active");
 	}
 
+	_onOverflowButtonClick(e: PointerEvent) {
+		const ctor = this.actions[0].constructor as typeof TableRowActionBase;
+		ctor.showMenu(this._overflowActions, e.target as HTMLElement);
+	}
+
 	get _isInteractive() {
 		return this.interactive;
+	}
+
+	get _hasRowActions() {
+		return this._rowActionCount > 0 && this.actions.some(action => action.isFixedAction() || !action.invisible);
+	}
+
+	get _hasOverflowActions() {
+		let renderedActionsCount = 0;
+		return this.actions.some(action => {
+			if (action.isFixedAction() || !action.invisible) {
+				renderedActionsCount++;
+			}
+			return renderedActionsCount > this._rowActionCount;
+		});
+	}
+
+	get _flexibleActions() {
+		const flexibleActions = this.actions.filter(action => !action.isFixedAction());
+		const fixedActionsCount = this.actions.length - flexibleActions.length;
+		let maxFlexibleActionsCount = this._rowActionCount - fixedActionsCount;
+		if (maxFlexibleActionsCount < 1) {
+			return []; // fixed actions occupy all the available space
+		}
+		if (flexibleActions.length <= maxFlexibleActionsCount) {
+			return flexibleActions; // all actions fit the available space
+		}
+
+		const visibleFlexibleActions = flexibleActions.filter(action => !action.invisible);
+		if (visibleFlexibleActions.length > maxFlexibleActionsCount) {
+			maxFlexibleActionsCount--;	// preserve space for the overflow button
+		}
+
+		return visibleFlexibleActions.slice(0, maxFlexibleActionsCount);
+	}
+
+	get _fixedActions() {
+		let maxFixedActionsCount = this._rowActionCount;
+		if (this._hasOverflowActions) {
+			maxFixedActionsCount--;
+		}
+
+		const fixedActions = this.actions.filter(action => action.isFixedAction());
+		return fixedActions.slice(0, maxFixedActionsCount);
+	}
+
+	get _overflowActions() {
+		const fixedActions = this._fixedActions;
+		const flexibleActions = this._flexibleActions;
+		const overflowActions: Array<TableRowActionBase> = [];
+		this.actions.forEach(action => {
+			if (!action.invisible && !fixedActions.includes(action) && !flexibleActions.includes(action)) {
+				overflowActions.push(action);
+			}
+		});
+
+		return overflowActions;
 	}
 }
 

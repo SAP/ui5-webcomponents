@@ -33,7 +33,6 @@ import userMenuItemCss from "./generated/themes/UserMenuItem.css.js";
 	tag: "ui5-user-menu-item",
 	template: UserMenuItemTemplate,
 	styles: [MenuItem.styles, userMenuItemCss],
-	dependencies: [...MenuItem.dependencies],
 })
 class UserMenuItem extends MenuItem {
 	/**

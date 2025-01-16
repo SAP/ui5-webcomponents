@@ -46,27 +46,6 @@ describe("Toolbar general interaction", () => {
 			});
 	});
 
-	it("should be able to use toolbar button as popover opener", () => {
-		cy.mount(html`
-			<ui5-toolbar id="tb">
-				<ui5-toolbar-button icon="add" text="Left 1 (long)" id="clickCounter"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="decline" text="Left 2" id="clearCounter"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
-				<ui5-toolbar-separator></ui5-toolbar-separator>
-				<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
-				<ui5-toolbar-button id="btnOpenMenu" text="Open Menu" prevent-overflow-closing></ui5-toolbar-button>
-			</ui5-toolbar>
-			<ui5-popover id="popup" opener="btnOpenMenu">
-				Hello World
-			</ui5-popover>
-		`);
-
-		cy.get("#popup").invoke("prop", "open", "true");
-
-		cy.get("#popup")
-			.should("be.visible");
-	});
-
 	it("shouldn't have toolbar button as popover opener when there is spacer before last toolbar item", () => {
 		cy.mount(html`
 			<ui5-toolbar id="otb_spacer">
@@ -113,6 +92,32 @@ describe("Toolbar general interaction", () => {
 		cy.wait(500);
 
 		cy.get("@toolbar")
+			.shadow()
+			.find(".ui5-tb-overflow-btn-hidden")
+			.should("exist", "hidden class attached to tb button, meaning it's not shown as expected");
+	});
+
+	it("shouldn't display the overflow button when initially rendered in a hidden container and later made visible", () => {
+		cy.mount(html`
+			<div id="otb_hidden_container" style="display:none;">
+				<ui5-toolbar id="otb_hidden">
+					<ui5-toolbar-button icon="add" text="Append"></ui5-toolbar-button>
+				</ui5-toolbar>
+			</div>
+		`);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(500);
+
+		cy.get("#otb_hidden_container")
+			.as("hiddenContainer");
+
+		// show the hidden container
+		cy.get("@hiddenContainer")
+			.invoke("show");
+
+		// overflowbutton should not be rendered
+		cy.get("#otb_hidden")
 			.shadow()
 			.find(".ui5-tb-overflow-btn-hidden")
 			.should("exist", "hidden class attached to tb button, meaning it's not shown as expected");

@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isSpace,
 	isUp,
@@ -19,7 +19,6 @@ import {
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -27,7 +26,6 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -56,7 +54,7 @@ import Button from "./Button.js";
 import type ListItemBase from "./ListItemBase.js";
 
 // Templates
-import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
+import SelectTemplate from "./SelectTemplate.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
@@ -130,7 +128,7 @@ type SelectLiveChangeEventDetail = {
 	tag: "ui5-select",
 	languageAware: true,
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: SelectTemplate,
 	styles: [
 		selectCss,
@@ -823,7 +821,7 @@ class Select extends UI5Element implements IFormInputElement {
 	get _effectiveTabIndex() {
 		return this.disabled
 		|| (this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
-		&& this.responsivePopover.open) ? "-1" : "0";
+		&& this.responsivePopover.open) ? -1 : 0;
 	}
 
 	 /**
