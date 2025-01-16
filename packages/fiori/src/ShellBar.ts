@@ -593,6 +593,7 @@ class ShellBar extends UI5Element {
 		const searchFieldWidth = this.domCalculatedValues("--_ui5_shellbar_search_field_width");
 		if (this._showFullWidthSearch) {
 			this.showSearchField = false;
+			this._searchBarAutoClosed = true;
 			return;
 		}
 		if ((spacerWidth <= 0 || this.additionalContextHidden.length !== 0) && this.showSearchField === true) {
@@ -600,10 +601,6 @@ class ShellBar extends UI5Element {
 			this._searchBarAutoClosed = true;
 		}
 		if (spacerWidth > searchFieldWidth && this.additionalContextHidden.length === 0 && this.showSearchField === false) {
-			this.showSearchField = true;
-			this._searchBarAutoClosed = false;
-		}
-		if (this.additionalContext.length === 0 && this.showSearchField === false) {
 			this.showSearchField = true;
 			this._searchBarAutoClosed = false;
 		}
@@ -793,8 +790,8 @@ class ShellBar extends UI5Element {
 		requestAnimationFrame(() => {
 			this._lastOffsetWidth = this.offsetWidth;
 			this._overflowActions();
-			this._searchBarAutoOpen = this._searchBarAutoClosed || (this.showSearchField && !this._searchIconPressed);
 		});
+		this._searchBarAutoOpen = this._searchBarAutoClosed || (this.showSearchField && !this._searchIconPressed);
 	}
 
 	/**
@@ -886,9 +883,13 @@ class ShellBar extends UI5Element {
 	_handleActionsOverflow() {
 		const itemsToOverflow = this.itemsToOverflow;
 		const container = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-overflow-container-right")!;
+		const searchFieldWidth = this.searchField[0] ? this.searchField[0].offsetWidth : 0;
 		const nonDisappearingItems = Array.from(container.querySelectorAll<HTMLElement>(".ui5-shellbar-no-overflow-button"));
 		const nonDisappearingItemsWidth = nonDisappearingItems.reduce((acc, el) => acc + el.offsetWidth + this.domCalculatedValues("--_ui5-shellbar-overflow-button-margin"), 0);
-		const totalWidth = container.offsetWidth - nonDisappearingItemsWidth - this.separatorsWidth;
+		let totalWidth = container.offsetWidth - nonDisappearingItemsWidth - this.separatorsWidth;
+		if (this.additionalContext.length === 0) {
+			totalWidth -= searchFieldWidth;
+		}
 
 		let usedWidth = 0;
 		let hiddenItems = 0;
