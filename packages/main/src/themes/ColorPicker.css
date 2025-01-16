@@ -188,7 +188,7 @@
 }
 
 .ui5-color-channel-toggle {
-    min-width: var(--_ui_color_channel_toggle_button_width);
+    min-width: var(--_ui5_color_channel_toggle_button_width);
     margin-inline-start: 0.5rem;
 }
 
