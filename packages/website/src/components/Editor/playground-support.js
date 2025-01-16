@@ -19,12 +19,8 @@ const loadThemeProperties = async (themeName) => {
         case "sap_fiori_3_hcw": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-fiori_3_hcw-parameters-bundle" */ "@ui5/webcomponents/dist/generated/themes/sap_fiori_3_hcw/parameters-bundle.css.js")).default;
         case "sap_horizon": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon-parameters-bundle" */ "@ui5/webcomponents/dist/generated/themes/sap_horizon/parameters-bundle.css.js")).default;
         case "sap_horizon_dark": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_dark-parameters-bundle" */ "@ui5/webcomponents/dist/generated/themes/sap_horizon_dark/parameters-bundle.css.js")).default;
-        case "sap_horizon_dark_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_dark_exp-parameters-bundle" */ "@ui5/webcomponents/dist/generated/themes/sap_horizon_dark_exp/parameters-bundle.css.js")).default;
-        case "sap_horizon_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_exp-parameters-bundle" */ "@ui5/webcomponents/dist/generated/themes/sap_horizon_exp/parameters-bundle.css.js")).default;
         case "sap_horizon_hcb": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcb-parameters-bundle" */ "@ui5/webcomponents/dist/generated/themes/sap_horizon_hcb/parameters-bundle.css.js")).default;
-        case "sap_horizon_hcb_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcb_exp-parameters-bundle" */ "@ui5/webcomponents/dist/generated/themes/sap_horizon_hcb_exp/parameters-bundle.css.js")).default;
         case "sap_horizon_hcw": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcw-parameters-bundle" */ "@ui5/webcomponents/dist/generated/themes/sap_horizon_hcw/parameters-bundle.css.js")).default;
-        case "sap_horizon_hcw_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcw_exp-parameters-bundle" */ "@ui5/webcomponents/dist/generated/themes/sap_horizon_hcw_exp/parameters-bundle.css.js")).default;
         default: throw "unknown theme";
     }
 };
@@ -37,7 +33,7 @@ const loadAndCheck = async (themeName) => {
     return result;
 };
 
-["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_dark_exp", "sap_horizon_exp", "sap_horizon_hcb", "sap_horizon_hcb_exp", "sap_horizon_hcw", "sap_horizon_hcw_exp"]
+["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_hcb", "sap_horizon_hcw"]
     .forEach(themeName => registerThemePropertiesLoader("@ui5/webcomponents", themeName, loadAndCheck));
 
 const loadThemePropertiesFiori = async (themeName) => {
@@ -48,12 +44,8 @@ const loadThemePropertiesFiori = async (themeName) => {
         case "sap_fiori_3_hcw": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-fiori_3_hcw-parameters-bundle" */ "@ui5/webcomponents-fiori/dist/generated/themes/sap_fiori_3_hcw/parameters-bundle.css.js")).default;
         case "sap_horizon": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon-parameters-bundle" */ "@ui5/webcomponents-fiori/dist/generated/themes/sap_horizon/parameters-bundle.css.js")).default;
         case "sap_horizon_dark": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_dark-parameters-bundle" */ "@ui5/webcomponents-fiori/dist/generated/themes/sap_horizon_dark/parameters-bundle.css.js")).default;
-        case "sap_horizon_dark_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_dark_exp-parameters-bundle" */ "@ui5/webcomponents-fiori/dist/generated/themes/sap_horizon_dark_exp/parameters-bundle.css.js")).default;
-        case "sap_horizon_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_exp-parameters-bundle" */ "@ui5/webcomponents-fiori/dist/generated/themes/sap_horizon_exp/parameters-bundle.css.js")).default;
         case "sap_horizon_hcb": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcb-parameters-bundle" */ "@ui5/webcomponents-fiori/dist/generated/themes/sap_horizon_hcb/parameters-bundle.css.js")).default;
-        case "sap_horizon_hcb_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcb_exp-parameters-bundle" */ "@ui5/webcomponents-fiori/dist/generated/themes/sap_horizon_hcb_exp/parameters-bundle.css.js")).default;
         case "sap_horizon_hcw": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcw-parameters-bundle" */ "@ui5/webcomponents-fiori/dist/generated/themes/sap_horizon_hcw/parameters-bundle.css.js")).default;
-        case "sap_horizon_hcw_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcw_exp-parameters-bundle" */ "@ui5/webcomponents-fiori/dist/generated/themes/sap_horizon_hcw_exp/parameters-bundle.css.js")).default;
         default: throw "unknown theme";
     }
 };
@@ -66,7 +58,7 @@ const loadAndCheckFiori = async (themeName) => {
     return result;
 };
 
-["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_dark_exp", "sap_horizon_exp", "sap_horizon_hcb", "sap_horizon_hcb_exp", "sap_horizon_hcw", "sap_horizon_hcw_exp"]
+["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_hcb", "sap_horizon_hcw"]
     .forEach(themeName => registerThemePropertiesLoader("@ui5/webcomponents-fiori", themeName, loadAndCheckFiori));
     
 
@@ -78,12 +70,8 @@ const loadThemePropertiesCompat = async (themeName) => {
         case "sap_fiori_3_hcw": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-fiori_3_hcw-parameters-bundle" */ "@ui5/webcomponents-compat/dist/generated/themes/sap_fiori_3_hcw/parameters-bundle.css.js")).default;
         case "sap_horizon": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon-parameters-bundle" */ "@ui5/webcomponents-compat/dist/generated/themes/sap_horizon/parameters-bundle.css.js")).default;
         case "sap_horizon_dark": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_dark-parameters-bundle" */ "@ui5/webcomponents-compat/dist/generated/themes/sap_horizon_dark/parameters-bundle.css.js")).default;
-        case "sap_horizon_dark_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_dark_exp-parameters-bundle" */ "@ui5/webcomponents-compat/dist/generated/themes/sap_horizon_dark_exp/parameters-bundle.css.js")).default;
-        case "sap_horizon_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_exp-parameters-bundle" */ "@ui5/webcomponents-compat/dist/generated/themes/sap_horizon_exp/parameters-bundle.css.js")).default;
         case "sap_horizon_hcb": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcb-parameters-bundle" */ "@ui5/webcomponents-compat/dist/generated/themes/sap_horizon_hcb/parameters-bundle.css.js")).default;
-        case "sap_horizon_hcb_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcb_exp-parameters-bundle" */ "@ui5/webcomponents-compat/dist/generated/themes/sap_horizon_hcb_exp/parameters-bundle.css.js")).default;
         case "sap_horizon_hcw": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcw-parameters-bundle" */ "@ui5/webcomponents-compat/dist/generated/themes/sap_horizon_hcw/parameters-bundle.css.js")).default;
-        case "sap_horizon_hcw_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcw_exp-parameters-bundle" */ "@ui5/webcomponents-compat/dist/generated/themes/sap_horizon_hcw_exp/parameters-bundle.css.js")).default;
         default: throw "unknown theme";
     }
 };
@@ -96,7 +84,7 @@ const loadAndCheckCompat = async (themeName) => {
     return result;
 };
 
-["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_dark_exp", "sap_horizon_exp", "sap_horizon_hcb", "sap_horizon_hcb_exp", "sap_horizon_hcw", "sap_horizon_hcw_exp"]
+["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_hcb", "sap_horizon_hcw"]
     .forEach(themeName => registerThemePropertiesLoader("@ui5/webcomponents-compat", themeName, loadAndCheckCompat));
 
 // ai
@@ -110,12 +98,8 @@ const loadThemePropertiesAI = async (themeName) => {
         case "sap_fiori_3_hcw": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-fiori_3_hcw-parameters-bundle" */ "@ui5/webcomponents-ai/dist/generated/themes/sap_fiori_3_hcw/parameters-bundle.css.js")).default;
         case "sap_horizon": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon-parameters-bundle" */ "@ui5/webcomponents-ai/dist/generated/themes/sap_horizon/parameters-bundle.css.js")).default;
         case "sap_horizon_dark": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_dark-parameters-bundle" */ "@ui5/webcomponents-ai/dist/generated/themes/sap_horizon_dark/parameters-bundle.css.js")).default;
-        case "sap_horizon_dark_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_dark_exp-parameters-bundle" */ "@ui5/webcomponents-ai/dist/generated/themes/sap_horizon_dark_exp/parameters-bundle.css.js")).default;
-        case "sap_horizon_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_exp-parameters-bundle" */ "@ui5/webcomponents-ai/dist/generated/themes/sap_horizon_exp/parameters-bundle.css.js")).default;
         case "sap_horizon_hcb": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcb-parameters-bundle" */ "@ui5/webcomponents-ai/dist/generated/themes/sap_horizon_hcb/parameters-bundle.css.js")).default;
-        case "sap_horizon_hcb_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcb_exp-parameters-bundle" */ "@ui5/webcomponents-ai/dist/generated/themes/sap_horizon_hcb_exp/parameters-bundle.css.js")).default;
         case "sap_horizon_hcw": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcw-parameters-bundle" */ "@ui5/webcomponents-ai/dist/generated/themes/sap_horizon_hcw/parameters-bundle.css.js")).default;
-        case "sap_horizon_hcw_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-sap-horizon_hcw_exp-parameters-bundle" */ "@ui5/webcomponents-ai/dist/generated/themes/sap_horizon_hcw_exp/parameters-bundle.css.js")).default;
         default: throw "unknown theme";
     }
 };
@@ -128,7 +112,7 @@ const loadAndCheckAI = async (themeName) => {
     return result;
 };
 
-["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_dark_exp", "sap_horizon_exp", "sap_horizon_hcb", "sap_horizon_hcb_exp", "sap_horizon_hcw", "sap_horizon_hcw_exp"]
+["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_hcb", "sap_horizon_hcw"]
     .forEach(themeName => registerThemePropertiesLoader("@ui5/webcomponents-ai", themeName, loadAndCheckAI));
 
 // theming loaders
@@ -140,12 +124,8 @@ const loadThemeProperties2 = async (themeName) => {
         case "sap_fiori_3_hcw": return (await import(/* webpackChunkName: "ui5-webcomponents-theming-sap-fiori_3_hcw-parameters-bundle" */ "@ui5/webcomponents-theming/dist/generated/themes/sap_fiori_3_hcw/parameters-bundle.css.js")).default;
         case "sap_horizon": return (await import(/* webpackChunkName: "ui5-webcomponents-theming-sap-horizon-parameters-bundle" */ "@ui5/webcomponents-theming/dist/generated/themes/sap_horizon/parameters-bundle.css.js")).default;
         case "sap_horizon_dark": return (await import(/* webpackChunkName: "ui5-webcomponents-theming-sap-horizon_dark-parameters-bundle" */ "@ui5/webcomponents-theming/dist/generated/themes/sap_horizon_dark/parameters-bundle.css.js")).default;
-        case "sap_horizon_dark_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-theming-sap-horizon_dark_exp-parameters-bundle" */ "@ui5/webcomponents-theming/dist/generated/themes/sap_horizon_dark_exp/parameters-bundle.css.js")).default;
-        case "sap_horizon_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-theming-sap-horizon_exp-parameters-bundle" */ "@ui5/webcomponents-theming/dist/generated/themes/sap_horizon_exp/parameters-bundle.css.js")).default;
         case "sap_horizon_hcb": return (await import(/* webpackChunkName: "ui5-webcomponents-theming-sap-horizon_hcb-parameters-bundle" */ "@ui5/webcomponents-theming/dist/generated/themes/sap_horizon_hcb/parameters-bundle.css.js")).default;
-        case "sap_horizon_hcb_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-theming-sap-horizon_hcb_exp-parameters-bundle" */ "@ui5/webcomponents-theming/dist/generated/themes/sap_horizon_hcb_exp/parameters-bundle.css.js")).default;
         case "sap_horizon_hcw": return (await import(/* webpackChunkName: "ui5-webcomponents-theming-sap-horizon_hcw-parameters-bundle" */ "@ui5/webcomponents-theming/dist/generated/themes/sap_horizon_hcw/parameters-bundle.css.js")).default;
-        case "sap_horizon_hcw_exp": return (await import(/* webpackChunkName: "ui5-webcomponents-theming-sap-horizon_hcw_exp-parameters-bundle" */ "@ui5/webcomponents-theming/dist/generated/themes/sap_horizon_hcw_exp/parameters-bundle.css.js")).default;
         default: throw "unknown theme";
     }
 };
@@ -156,7 +136,7 @@ const loadAndCheck2 = async (themeName) => {
     }
     return {_:data};
 };
-["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_dark_exp", "sap_horizon_exp", "sap_horizon_hcb", "sap_horizon_hcb_exp", "sap_horizon_hcw", "sap_horizon_hcw_exp"]
+["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_hcb", "sap_horizon_hcw"]
     .forEach(themeName => registerThemePropertiesLoader("@ui5/webcomponents-theming", themeName, loadAndCheck2));
 
 import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";

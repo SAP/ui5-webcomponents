@@ -13,6 +13,7 @@ Provides web components implementing AI-related visual and interaction.
 | Web Component            | Tag name                       | Module import                                           |
 |--------------------------|--------------------------------|---------------------------------------------------------|
 | Button                   | `ui5-ai-button`                | `import "@ui5/webcomponents-ai/dist/Button.js";`        |
+| Button State             | `ui5-ai-button-state`          | comes with `ui5-ai-button`                              |
 | PromptInput              | `ui5-ai-prompt-input`          | `import "@ui5/webcomponents-ai/dist/PromptInput.js";`   |
 
 ## Provided assets

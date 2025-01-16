@@ -101,9 +101,6 @@
 	--_ui5_tl_li_margin_bottom: 1.625rem;
 
 	/*switch*/
-	--_ui5_switch_focus_width_size_horizon_exp: calc(100% + 4px);
-	--_ui5_switch_focus_height_size_horizon_exp: calc(100% + 4px);
-
 	--_ui5_tc_item_text: 3rem;
 	--_ui5_tc_item_height: 4.75rem;
 	--_ui5_tc_item_text_only_height: 2.75rem;
@@ -338,9 +335,6 @@
 
 	/* Responsive Popover */
 	--_ui5-responsive_popover_header_height: 2.5rem;
-
-	/* Side Navigation */
-	--ui5_side_navigation_item_height: 2rem;
 
 	/* Slider */
 	--_ui5_slider_handle_height: 1.25rem;

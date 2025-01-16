@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2...v2.7.0-rc.0) (2025-01-16)
+
+
+### Bug Fixes
+
+* ai button and color palette bring their own items ([#10517](https://github.com/SAP/ui5-webcomponents/issues/10517)) ([11b9356](https://github.com/SAP/ui5-webcomponents/commit/11b9356a13d01ece1ebcf4185b61259b9ad6d364))
+* **ui5-form:** prevent content overflow ([#10552](https://github.com/SAP/ui5-webcomponents/issues/10552)) ([819a453](https://github.com/SAP/ui5-webcomponents/commit/819a453c1a9dd8c55a89c6c32c34e73f9e127e86))
+* **ui5-label:** adjust asterisk size ([#10533](https://github.com/SAP/ui5-webcomponents/issues/10533)) ([44a245d](https://github.com/SAP/ui5-webcomponents/commit/44a245d685c0ace10f93af21652c6c89eb421498)), closes [#10494](https://github.com/SAP/ui5-webcomponents/issues/10494)
+* **ui5-popover:** fix opener reference ([#10507](https://github.com/SAP/ui5-webcomponents/issues/10507)) ([a38a28e](https://github.com/SAP/ui5-webcomponents/commit/a38a28e11245e0121bd0a2d6b9d1f5b294952a42))
+* **ui5-toast:** fix template and remove additional text ([#10559](https://github.com/SAP/ui5-webcomponents/issues/10559)) ([ad8f08f](https://github.com/SAP/ui5-webcomponents/commit/ad8f08f1a1b8d2e02b3a929afa46a38ae708feb3))
+* **ui5-toolbar:** correct display of overflow button in hidden container ([#10529](https://github.com/SAP/ui5-webcomponents/issues/10529)) ([3a2f8e3](https://github.com/SAP/ui5-webcomponents/commit/3a2f8e365a2319176e70e4e8cc8e575f58511c6f))
+* **ui5-toolbar:** overflow behaviour ([#10547](https://github.com/SAP/ui5-webcomponents/issues/10547)) ([8df4eb2](https://github.com/SAP/ui5-webcomponents/commit/8df4eb215a15e37df225bbd98836719b584f3065))
+
+
+### Features
+
+* **ui5-side-navigation:** update existing design for Horizon theme ([#10337](https://github.com/SAP/ui5-webcomponents/issues/10337)) ([d5eff51](https://github.com/SAP/ui5-webcomponents/commit/d5eff51f56042d5fbf94e87d6bd94cdbe2d55982))
+* **ui5-table:** popin-text property added ([#10514](https://github.com/SAP/ui5-webcomponents/issues/10514)) ([a01a303](https://github.com/SAP/ui5-webcomponents/commit/a01a3036526cd02eaac1a973ac5054a7c9c8a194))
+* **ui5-table:** table row actions feature added ([#10460](https://github.com/SAP/ui5-webcomponents/issues/10460)) ([dfe09ae](https://github.com/SAP/ui5-webcomponents/commit/dfe09ae51987ef6237fccfbf0bcb76abb8251dee))
+
+
+
+
+
+## [2.6.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2-rc.0...v2.6.2) (2025-01-09)
+
+
+### Bug Fixes
+
+* **build:** fix incorrect module ref in custom-elements-manifest ([#10497](https://github.com/SAP/ui5-webcomponents/issues/10497)) ([ea8cdea](https://github.com/SAP/ui5-webcomponents/commit/ea8cdea0b43f31c11479aa2997387be0ef71c6cb))
+
+
+
+
+
+## [2.6.2-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.1...v2.6.2-rc.0) (2025-01-09)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** tooltip is now visible on badge ([#10498](https://github.com/SAP/ui5-webcomponents/issues/10498)) ([12000d6](https://github.com/SAP/ui5-webcomponents/commit/12000d6f117e2ce51bc44a8c6f52a71aa1268b1a))
+
+
+
+
+
 ## [2.6.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0...v2.6.1) (2025-01-08)
 
 **Note:** Version bump only for package @ui5/webcomponents

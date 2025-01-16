@@ -1,7 +1,8 @@
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type { AccessibilityAttributes, UI5CustomEvent } from "@ui5/webcomponents-base";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -57,7 +58,57 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
 	template: MenuItemTemplate,
 	styles: [ListItem.styles, menuItemCss],
 })
+
+/**
+ * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening.
+ *
+ * **Note:** Since 1.14.0 the event is also fired before a sub-menu opens.
+ * @public
+ * @since 1.10.0
+ * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
+ */
+@event("before-open", {
+	cancelable: true,
+})
+
+/**
+ * Fired after the menu is opened.
+ * @public
+ */
+@event("open")
+
+/**
+ * Fired when the menu is being closed.
+ * @private
+ */
+@event("close-menu", {
+	bubbles: true,
+})
+
+/**
+ * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing.
+ * @public
+ * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
+ * @since 1.10.0
+ */
+@event("before-close", {
+	cancelable: true,
+})
+
+/**
+ * Fired after the menu is closed.
+ * @public
+ * @since 1.10.0
+ */
+@event("close")
 class MenuItem extends ListItem implements IMenuItem {
+	eventDetails!: ListItem["eventDetails"] & {
+		"before-open": MenuBeforeOpenEventDetail
+		"open": void
+		"before-close": MenuBeforeCloseEventDetail
+		"close": void
+		"close-menu": void
+	}
 	/**
 	 * Defines the text of the tree item.
 	 * @default undefined
@@ -297,7 +348,7 @@ class MenuItem extends ListItem implements IMenuItem {
 			this._popover.open = false;
 		}
 		this.selected = false;
-		this.fireEvent("close-menu", {});
+		this.fireDecoratorEvent("close-menu");
 	}
 
 	_close() {
@@ -308,7 +359,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
-		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, false);
+		const prevented = !this.fireDecoratorEvent("before-open", {});
 
 		if (prevented) {
 			e.preventDefault();
@@ -317,11 +368,11 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	_afterPopoverOpen() {
 		this.items[0]?.focus();
-		this.fireEvent("open", {}, false, false);
+		this.fireDecoratorEvent("open");
 	}
 
-	_beforePopoverClose(e: UI5CustomEvent<ResponsivePopover, "before-close">) {
-		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, false);
+	_beforePopoverClose(e: CustomEvent) {
+		const prevented = !this.fireDecoratorEvent("before-close", { escPressed: e.detail.escPressed });
 
 		if (prevented) {
 			e.preventDefault();
@@ -332,13 +383,13 @@ class MenuItem extends ListItem implements IMenuItem {
 		if (e.detail.escPressed) {
 			this.focus();
 			if (isPhone()) {
-				this.fireEvent("close-menu", {});
+				this.fireDecoratorEvent("close-menu");
 			}
 		}
 	}
 
 	_afterPopoverClose() {
-		this.fireEvent("close", {}, false, false);
+		this.fireDecoratorEvent("close");
 	}
 }
 
