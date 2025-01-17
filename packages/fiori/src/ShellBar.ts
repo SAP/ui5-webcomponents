@@ -798,30 +798,6 @@ class ShellBar extends UI5Element {
 		}
 	}
 
-	_handleSizeS() {
-		const hasIcons = [this.showNotifications, this.searchField.length, this.items.length].reduce((acc: number, val) => {
-			return acc + Number(val);
-		}, 0);
-
-		const newItems = this._getAllItems(hasIcons > 1).filter(i => i.show).map((info): IShelBarItemInfo => {
-			const isOverflowIcon = info.classes.indexOf("ui5-shellbar-overflow-button") !== -1;
-			const isImageIcon = info.classes.indexOf("ui5-shellbar-image-button") !== -1;
-			const shouldStayOnScreen = hasIcons === 1 || isOverflowIcon || (isImageIcon && this.hasProfile);
-
-			return {
-				...info,
-				classes: `${info.classes} ${shouldStayOnScreen ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-button`,
-			};
-		});
-
-		// assistant is a slot, still described in the itemsInfo for the purpose of the overflow
-		// so if marked as hidden, it should be hidden separately
-		this._updateAssistantIconVisibility(newItems);
-
-		this._updateItemsInfo(newItems);
-		this._hideAdditionalContext();
-	}
-
 	_hideOverflowItems(hiddenItems: number, items: IShelBarItemInfo[]) {
 		for (let i = 0; hiddenItems > 0 && i < items.length; i++) {
 			// start from last item
