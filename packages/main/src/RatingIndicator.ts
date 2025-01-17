@@ -251,7 +251,6 @@ class RatingIndicator extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		if (this.disabled || this.readonly) {
-			e.preventDefault();
 			return;
 		}
 
