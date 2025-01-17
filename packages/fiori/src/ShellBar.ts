@@ -104,7 +104,7 @@ type ShellBarMenuItemClickEventDetail = {
 	item: HTMLElement;
 };
 
-type ShellBarAdditionalContextItemDisappearsEventDetail = {
+type ShellBarContentItemVisibilityChangeEventDetail = {
 	items: Array<HTMLElement>
 };
 
@@ -112,11 +112,6 @@ type ShellBarSearchButtonEventDetail = {
 	targetRef: HTMLElement;
 	searchFieldVisible: boolean;
 };
-
-type ShellBarAssistantActionDisappearsEventDetail= {
-	item: HTMLElement;
-	isHidden: boolean;
-}
 
 interface IShelBarItemInfo {
 	id: string,
@@ -260,14 +255,14 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
 })
 
 /**
- * Fired, when an additional context item disappears
+ * Fired, when an item from the startContent or endContent slots is hidden or shown.
  *
- * @param {Array<HTMLElement>} array of all the items that disappeared from additional context slot
+ * @param {Array<HTMLElement>} array of all the items that are hidden
  * @public
  * @since 2.6.1
- * **Note:** The `additional-context-disappears` event is in an experimental state and is a subject to change.
+ * **Note:** The `content-item-visibility-change` event is in an experimental state and is a subject to change.
  */
-@event("additional-context-disappears", {
+@event("content-item-visibility-change", {
 	bubbles: true,
 })
 
@@ -279,7 +274,7 @@ class ShellBar extends UI5Element {
 		"logo-click": ShellBarLogoClickEventDetail,
 		"menu-item-click": ShellBarMenuItemClickEventDetail,
 		"search-button-click": ShellBarSearchButtonEventDetail,
-		"additional-context-disappears": ShellBarAdditionalContextItemDisappearsEventDetail
+		"content-item-visibility-change": ShellBarContentItemVisibilityChangeEventDetail
 	}
 	/**
 	 * Defines the `primaryTitle`.
@@ -335,16 +330,6 @@ class ShellBar extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	showSearchField = false;
-
-	// /**
-	//  * Defines whether or not the search field is open by default
-	//  * @default false
-	//  * @public
-	//  * @since 2.6.1
-	//  * **Note:** The `showOpenSearchField` property is in an experimental state and is a subject to change.
-	//  */
-	// @property({ type: Boolean })
-	// showOpenSearchField = false;
 
 	/**
 	 * Defines additional accessibility attributes on different areas of the component.
@@ -809,7 +794,6 @@ class ShellBar extends UI5Element {
 		if (this.breakpointSize !== mappedSize) {
 			this.breakpointSize = mappedSize;
 		}
-		return mappedSize;
 	}
 
 	_handleSizeS() {
@@ -929,7 +913,7 @@ class ShellBar extends UI5Element {
 		this._hideAdditionalContext();
 
 		if (JSON.stringify(this.additionalContextHidden) !== JSON.stringify(this._cachedHiddenContent)) {
-			this.fireDecoratorEvent("additional-context-disappears", { items: this.additionalContextHidden });
+			this.fireDecoratorEvent("content-item-visibility-change", { items: this.additionalContextHidden });
 		}
 
 		this._cachedHiddenContent = this.additionalContextHidden;
@@ -938,11 +922,7 @@ class ShellBar extends UI5Element {
 	}
 
 	_overflowActions() {
-		const size = this._handleBarBreakpoints();
-
-		if (size === "S") {
-			return this._handleSizeS();
-		}
+		this._handleBarBreakpoints();
 
 		const newItems = this._handleActionsOverflow();
 		this._updateSeparatorsVisibility();
@@ -1631,7 +1611,7 @@ ShellBar.define();
 export default ShellBar;
 
 export type {
-	ShellBarAdditionalContextItemDisappearsEventDetail,
+	ShellBarContentItemVisibilityChangeEventDetail,
 	ShellBarNotificationsClickEventDetail,
 	ShellBarProfileClickEventDetail,
 	ShellBarProductSwitchClickEventDetail,
@@ -1639,5 +1619,4 @@ export type {
 	ShellBarMenuItemClickEventDetail,
 	ShellBarAccessibilityAttributes,
 	ShellBarSearchButtonEventDetail,
-	ShellBarAssistantActionDisappearsEventDetail,
 };
