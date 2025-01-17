@@ -96,4 +96,30 @@ describe("Toolbar general interaction", () => {
 			.find(".ui5-tb-overflow-btn-hidden")
 			.should("exist", "hidden class attached to tb button, meaning it's not shown as expected");
 	});
+
+	it("shouldn't display the overflow button when initially rendered in a hidden container and later made visible", () => {
+		cy.mount(html`
+			<div id="otb_hidden_container" style="display:none;">
+				<ui5-toolbar id="otb_hidden">
+					<ui5-toolbar-button icon="add" text="Append"></ui5-toolbar-button>
+				</ui5-toolbar>
+			</div>
+		`);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(500);
+
+		cy.get("#otb_hidden_container")
+			.as("hiddenContainer");
+
+		// show the hidden container
+		cy.get("@hiddenContainer")
+			.invoke("show");
+
+		// overflowbutton should not be rendered
+		cy.get("#otb_hidden")
+			.shadow()
+			.find(".ui5-tb-overflow-btn-hidden")
+			.should("exist", "hidden class attached to tb button, meaning it's not shown as expected");
+	});
 });
