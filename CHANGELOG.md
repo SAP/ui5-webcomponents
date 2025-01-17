@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.15](https://github.com/SAP/ui5-webcomponents/compare/v1.24.14...v1.24.15) (2025-01-17)
+
+
+### Bug Fixes
+
+* **ui5-input:** open popup after toggling show-suggestions ([#10314](https://github.com/SAP/ui5-webcomponents/issues/10314)) ([0f6313b](https://github.com/SAP/ui5-webcomponents/commit/0f6313bda0dd8c0eff96d71d3b0d40e535e65fe4)), closes [#10265](https://github.com/SAP/ui5-webcomponents/issues/10265)
+* **ui5-input:** prevent setting tabindex to items ([#10355](https://github.com/SAP/ui5-webcomponents/issues/10355)) ([5571f28](https://github.com/SAP/ui5-webcomponents/commit/5571f28aa7da840c3a3175003971ade5e102e2e0))
+* **ui5-popover:** revert rtl correction fix ([#10428](https://github.com/SAP/ui5-webcomponents/issues/10428)) ([e127409](https://github.com/SAP/ui5-webcomponents/commit/e1274091e531628cc1893d07e6b2d88d71b5a3c7))
+
+
+
+
+
 ## [1.24.14](https://github.com/SAP/ui5-webcomponents/compare/v1.24.13...v1.24.14) (2024-12-13)
 
 
