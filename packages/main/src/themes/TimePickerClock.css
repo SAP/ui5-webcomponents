@@ -174,7 +174,7 @@
 
 .ui5-tp-clock-transition .ui5-tp-clock-items .ui5-tp-clock-number {
 	animation-name: fadeOutClockItems;
-	animation-delay: 0.1s;
+	animation-delay: 0.15s;
 	animation-duration: 0.15s;
 	animation-timing-function: ease-out;
 	animation-fill-mode: forwards;
@@ -182,7 +182,7 @@
 
 .ui5-tp-clock-transition .ui5-tp-clock-dial::before {
 	animation-name: fadeOutClockLabel;
-	animation-duration: 0.125s;
+	animation-duration: 0.3s;
 	animation-timing-function: ease-out;
 	animation-fill-mode: forwards;
 }
@@ -190,14 +190,14 @@
 .ui5-tp-clock-transition .ui5-tp-clock-number.ui5-tp-clock-selected,
 .ui5-tp-clock-transition .ui5-tp-clock-select-marker {
 	animation-name: fadeOutSelectedItem;
-	animation-duration: 0.25s;
+	animation-delay: 0.1s;
+	animation-duration: 0.2s;
 	animation-timing-function: ease-out;
 	animation-fill-mode: forwards;
 }
 
 .ui5-tp-clock-transition .ui5-tp-clock-items .ui5-tp-clock-mid-dot {
 	animation-name: fadeOutSelectedItem;
-	animation-delay: 0.05s;
 	animation-duration: 0.2s;
 	animation-timing-function: ease-out;
 	animation-fill-mode: forwards;
@@ -206,7 +206,7 @@
 
 :host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-items .ui5-tp-clock-number {
 	animation-name: fadeInClockItems;
-	animation-delay: 0.1s;
+	animation-delay: 0.15s;
 	animation-duration: 0.15s;
 	animation-timing-function: ease-in;
 	animation-fill-mode: forwards;
@@ -214,8 +214,7 @@
 
 :host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-dial::before {
 	animation-name: fadeInClockLabel;
-	animation-delay: 0.1s;
-	animation-duration: 0.15s;
+	animation-duration: 0.3s;
 	animation-timing-function: ease-in;
 	animation-fill-mode: forwards;
 }
@@ -223,16 +222,15 @@
 :host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-number.ui5-tp-clock-selected,
 :host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-select-marker {
 	animation-name: fadeInSelectedItem;
-	animation-delay: 0.15s;
-	animation-duration: 0.1s;
+	animation-delay: 0.1s;
+	animation-duration: 0.2s;
 	animation-timing-function: ease-in;
 	animation-fill-mode: forwards;
 }
 
 :host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-items .ui5-tp-clock-mid-dot {
 	animation-name: fadeInSelectedItem;
-	animation-delay: 0.1s;
-	animation-duration: 0.06s;
+	animation-duration: 0.2s;
 	animation-timing-function: ease-in;
 	animation-fill-mode: forwards;
 }

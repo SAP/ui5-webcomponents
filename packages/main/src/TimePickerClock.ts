@@ -445,7 +445,7 @@ class TimePickerClock extends UI5Element {
 			"dotHeight": dotHeight,
 			"numberHeight": numberHeight,
 			"activeRadiusMax": radius,
-			"activeRadiusMin": radius - numberHeight * 2 - 1,
+			"activeRadiusMin": radius - numberHeight * 1.4 - 1,
 			"offsetX": offset.left + scrollLeft,
 			"offsetY": offset.top + scrollTop,
 		};

@@ -410,7 +410,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 		const clockComponent = this._clockComponent(this._activeIndex);
 		const newClockComponent = this._clockComponent(clockIndex);
-		const TRANSITION_DELAY = 250;
+		const TRANSITION_DELAY = 300;
 
 		if (this._skipAnimation && clockIndex !== 0 && this._activeIndex === 0 && clockComponent) {
 			clockComponent._skipAnimation = false;
