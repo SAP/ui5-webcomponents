@@ -256,11 +256,11 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
 
 /**
  * Fired, when an item from the startContent or endContent slots is hidden or shown.
+ * **Note:** The `content-item-visibility-change` event is in an experimental state and is a subject to change.
  *
  * @param {Array<HTMLElement>} array of all the items that are hidden
  * @public
- * @since 2.6.1
- * **Note:** The `content-item-visibility-change` event is in an experimental state and is a subject to change.
+ * @since 2.7.0
  */
 @event("content-item-visibility-change", {
 	bubbles: true,
@@ -476,18 +476,20 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Define the items displayed in the start of the additional content area.
-	 * @public
-	 * @since 2.6.1
 	 * **Note:** The `startContent` slot is in an experimental state and is a subject to change.
+	 *
+	 * @public
+	 * @since 2.7.0
 	 */
 	@slot({ type: HTMLElement, individualSlots: true })
 	startContent!: Array<HTMLElement>;
 
 	/**
 	 * Define the items displayed in the end of the additional content area.
-	 * @public
-	 * @since 2.6.1
  	 * **Note:** The `endContent` slot is in an experimental state and is a subject to change.
+	 *
+	 * @public
+	 * @since 2.7.0
 	 */
 	@slot({ type: HTMLElement, individualSlots: true })
 	endContent!: Array<HTMLElement>;
