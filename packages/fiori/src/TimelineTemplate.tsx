@@ -1,5 +1,5 @@
 import Button from "@ui5/webcomponents/dist/Button.js";
-import Timeline from "./Timeline.js";
+import type Timeline from "./Timeline.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 
 export default function TimelineTemplate(this: Timeline) {
@@ -15,8 +15,8 @@ export default function TimelineTemplate(this: Timeline) {
 								<slot name={item._individualSlot}></slot>
 							</li>
 						)}
-						{ this.growsWithButton && moreRow.call(this)}
-						{ this.growsOnScroll && endRow.call(this)}
+						{ this.growsWithButton && moreRow.call(this) }
+						{ this.growsOnScroll && endRow.call(this) }
 					</ul>
 				</div>
 
@@ -29,10 +29,10 @@ function moreRow(this: Timeline) {
 		<li class="ui5-timeline-list-item ui5-timeline-list-growing">
 			<div class="ui5-tli-icon-outer">
 				<Button icon={this.growingButtonIcon}
-					id={`${this._id}-growingButton`}
+					id={`${this._id}-growing-btn`}
 					class={{
-						"ui5-table-growing-row-inner": true,
-						"ui5-table-growing-row-inner--active": this._loadMoreActive
+						"ui5-timeline-growing-row-inner": true,
+						"ui5-timeline-growing-row-inner--active": this._loadMoreActive
 					}}
 					tabindex={0}
 					onClick={this._onLoadMoreClick}
@@ -53,8 +53,8 @@ function moreRow(this: Timeline) {
 
 function endRow(this: Timeline) {
 	return (
-		<div tabindex={-1} aria-hidden="true" class="ui5-time-line-end-marker">
-			<span tabindex={-1} aria-hidden="true" class="ui5-time-line-end-marker"></span>
+		<div tabindex={-1} aria-hidden="true" class="ui5-timeline-end-marker">
+			<span tabindex={-1} aria-hidden="true" class="ui5-timeline-end-marker"></span>
 		</div>
 	)
 }

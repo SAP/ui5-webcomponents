@@ -23,9 +23,15 @@ import TimelineGroupItem from "./TimelineGroupItem.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
+import process from "@ui5/webcomponents-icons/dist/process.js";
+import drillDown from "@ui5/webcomponents-icons/dist/drill-down.js";
 // Styles
 import TimelineCss from "./generated/themes/Timeline.css.js";
-import {TimelineLayout, TimeLineGrowingMode} from "./types/TimelineLayout.js";
+import TimelineLayout from "./types/TimelineLayout.js";
+// Mode
+import TimeLineGrowingMode from "./types/TimelineGrowingMode.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
 
 /**
  * Interface for components that may be slotted inside `ui5-timeline` as items
@@ -79,7 +85,7 @@ const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
  *
  * **Note:** The event will be fired if `growing` is set to `Button` or `Scroll`.
  * @public
- * @since 2.0.0
+ * @since 2.7.0
  */
 @event("load-more", {
 	bubbles: true,
@@ -111,7 +117,7 @@ class Timeline extends UI5Element {
 	 * Defines if the component would display a loading indicator over the Timeline.
 	 *
 	 * @default false
-	 * @since 2.0.0
+	 * @since 2.7.0
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -140,7 +146,7 @@ class Timeline extends UI5Element {
 	 * **Restrictions:** `growing="Scroll"` is not supported for Internet Explorer,
 	 * and the component will fallback to `growing="Button"`.
 	 * @default "None"
-	 * @since 2.0.0
+	 * @since 2.7.0
 	 * @public
 	 */
 	@property()
@@ -159,6 +165,9 @@ class Timeline extends UI5Element {
 	 */
 	@slot({ type: HTMLElement, individualSlots: true, "default": true })
 	items!: Array<ITimelineItem>;
+
+	@query(".ui5-timeline-end-marker")
+  	timeLineEndDOM!: HTMLElement;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
@@ -192,12 +201,8 @@ class Timeline extends UI5Element {
 		return this.growing === TimeLineGrowingMode.Scroll;
 	}
 
-	get timeLineEndDOM(): Element {
-		return this.shadowRoot!.querySelector(".ui5-time-line-end-marker")!;
-	}
-
 	get growingButtonIcon() {
-		return this.layout === TimelineLayout.Horizontal ? "process" : "drill-down";
+		return this.layout === TimelineLayout.Horizontal ? process : drillDown;
 	}
 
 	get moreBtn(): HTMLElement | null {
@@ -229,8 +234,10 @@ class Timeline extends UI5Element {
 	}
 
 	onExitDOM() {
-		this.growingIntersectionObserver!.disconnect();
-		this.growingIntersectionObserver = null;
+		if (this.growingIntersectionObserver) {
+			this.growingIntersectionObserver.disconnect();
+			this.growingIntersectionObserver = null;
+		}
 		this.timeLineEndObserved = false;
 	}
 
@@ -287,7 +294,6 @@ class Timeline extends UI5Element {
 	}
 
 	onInvalidation(change: ChangeInfo) {
-		console.error(change)
 		if (change.type === "property" && change.name === "growing") {
 			this.timeLineEndObserved = false;
 			this.getIntersectionObserver().disconnect();
@@ -299,7 +305,7 @@ class Timeline extends UI5Element {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		let target = e.target as ITimelineItem | ToggleButton;
+		let target = e.target as ITimelineItem | ToggleButton | HTMLElement;
 
 		if ((target as ITimelineItem).isGroupItem) {
 			target = target.shadowRoot!.querySelector<ToggleButton>("[ui5-toggle-button]")!;

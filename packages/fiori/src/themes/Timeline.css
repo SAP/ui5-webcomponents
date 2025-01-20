@@ -25,8 +25,8 @@
 	justify-content: center;
 }
 
-:host .ui5-time-line-end-marker {
-	margin: -1px;
+:host([layout="Horizontal"]) .ui5-timeline-end-marker {
+	margin: -0.625rem;
 }
 
 :host([layout="Vertical"]) .ui5-timeline-list {
