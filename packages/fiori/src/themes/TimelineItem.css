@@ -165,6 +165,7 @@
 	position: relative;
 	margin-left: .5rem;
 	padding: var(--_ui5_TimelineItem_bubble_content_padding);
+	word-break: break-word;
 }
 
 :host([layout="Horizontal"]) .ui5-tli-bubble {
