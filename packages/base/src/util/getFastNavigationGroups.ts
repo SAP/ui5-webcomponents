@@ -48,7 +48,11 @@ const findFastNavigationGroups = (container: HTMLElement, startFromContainer?: b
 			findFastNavigationGroups(child as HTMLElement, false);
 		}
 
-		child = assignedElements && assignedElements.length ? assignedElements[++index] : originalChild.nextElementSibling;
+		if (child === container) {
+			child = assignedElements && assignedElements.length ? assignedElements[++index] : null;
+		} else {
+			child = assignedElements && assignedElements.length ? assignedElements[++index] : originalChild.nextElementSibling;
+		}
 	}
 };
 
