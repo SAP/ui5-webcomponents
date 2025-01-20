@@ -6,6 +6,4 @@
 
 .ui5-dynamic-page-header-root {
     background: inherit;
-    padding-top: var(--_ui5_dynamic_page_header_padding_top);
-    padding-bottom: var(--_ui5_dynamic_page_header_padding_bottom);
 }
