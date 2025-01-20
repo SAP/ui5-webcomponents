@@ -75,6 +75,16 @@ class TableHeaderCell extends TableCellBase {
 	@property({ type: Number })
 	importance = 0;
 
+	/**
+	 * The text for the column when it pops in.
+	 *
+	 * @default undefined
+	 * @since 2.7.0
+	 * @public
+	 */
+	@property()
+	popinText?: string;
+
 	@property({ type: Boolean, noAttribute: true })
 	_popin = false;
 
@@ -90,8 +100,10 @@ class TableHeaderCell extends TableCellBase {
 
 	onBeforeRendering() {
 		super.onBeforeRendering();
-		// overwrite setting of TableCellBase so that the TableHeaderCell always uses the slot variable
-		this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
+		if (this._individualSlot) {
+			// overwrite setting of TableCellBase so that the TableHeaderCell always uses the slot variable
+			this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
+		}
 	}
 }
 
