@@ -63,4 +63,29 @@ describe("RatingIndicator", () => {
 				.should("have.css", "height", "24px");
 		});
 	});
+
+	describe("RatingIndicator Accessibility", () => {
+		it("should be able to tab after and before readonly element", () => {
+			cy.mount(html`
+				<button>Before</button>
+				<ui5-rating-indicator value="3" readonly></ui5-rating-indicator>
+				<button>after</button>
+			`);
+
+			cy.get("button:first").realClick();
+			cy.focused().should("contain", "Before");
+
+			// press tab
+			cy.realPress("Tab");
+			cy.realPress("Tab");
+
+			cy.focused().should("contain", "after");
+
+			// press shift + tab
+			cy.realPress(["Shift", "Tab"]);
+			cy.realPress(["Shift", "Tab"]);
+
+			cy.focused().should("contain", "Before");
+		});
+	});
 });
