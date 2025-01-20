@@ -20,7 +20,7 @@ export default function TimelineGroupItemTemplate(this: TimelineGroupItem) {
 
 				<ToggleButton
 					class="ui5-tlgi-btn"
-					icon={getEffectiveGroupIcon.call(this)}
+					icon={getEffectiveGroupIcon.call(this, this.layout, this.collapsed)}
 					pressed={this.collapsed}
 					onClick={this.onGroupItemClick}
 				>
@@ -38,10 +38,10 @@ export default function TimelineGroupItemTemplate(this: TimelineGroupItem) {
 	);
 }
 
-function getEffectiveGroupIcon(this: TimelineGroupItem): string {
-	if (this.layout === TimelineLayout.Vertical) {
-		return this.collapsed ? slimArrowleft : slimArrowDown;
+function getEffectiveGroupIcon(layout: `${TimelineLayout}`, collapsed: boolean): string {
+	if (layout === TimelineLayout.Vertical) {
+		return collapsed ? slimArrowleft : slimArrowDown;
 	}
 
-	return this.collapsed ? slimArrowup : slimArrowRight;
+	return collapsed ? slimArrowup : slimArrowRight;
 }
