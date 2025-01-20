@@ -8,12 +8,12 @@ describe("Text", () => {
 	});
 
 	it("tests default wrapping behavior", () => {
-		cy.mount(html`<ui5-text >Text</ui5-text>`)
+		cy.mount(html`<ui5-text >Text</ui5-text>`);
 		cy.get("[ui5-text]").should("have.css", "word-wrap", "break-word");
 	});
 
 	it("tests maxLines default behavior", () => {
-		cy.mount(html`<ui5-text >Text</ui5-text>`)
+		cy.mount(html`<ui5-text >Text</ui5-text>`);
 		cy.get("[ui5-text]").should("have.css", "-webkit-line-clamp", "none");
 	});
 
@@ -28,5 +28,4 @@ describe("Text", () => {
 		cy.get("[ui5-text]").shadow().find(".empty-indicator").should("have.text", "–");
 		cy.get("[ui5-text]").shadow().find(".empty-indicator-aria-label").should("have.text", "Empty Value");
 	});
-
 });

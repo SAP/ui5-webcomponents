@@ -34,8 +34,8 @@ describe("Label", () => {
 			`);
 
 			cy.get("#showColon-true").shadow().find(".ui5-label-text-wrapper").invoke("width")
-				.then(labelWithColonWidth => {
-					cy.get("#showColon-false").shadow().find(".ui5-label-text-wrapper").should("have.css", "width", `${labelWithColonWidth}px`);
+				.then($labelWithColonWidth => {
+					cy.get("#showColon-false").shadow().find(".ui5-label-text-wrapper").should("have.css", "width", `${$labelWithColonWidth}px`);
 				});
 		});
 
@@ -45,10 +45,10 @@ describe("Label", () => {
 				<ui5-label id="truncated-label-1" wrapping-type="None" style="width: 200px">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
 			`);
 
-			cy.get("#wrapping-label-1").invoke("height").then(wrappingLabelHeight => {
-				cy.get("#truncated-label-1").invoke("height").should(truncatedLabelHeight => {
-					expect(wrappingLabelHeight).to.be.greaterThan(16);
-					expect(truncatedLabelHeight).to.be.lessThan(17);
+			cy.get("#wrapping-label-1").invoke("height").then($wrappingLabelHeight => {
+				cy.get("#truncated-label-1").invoke("height").should($truncatedLabelHeight => {
+					expect($wrappingLabelHeight).to.be.greaterThan(16);
+					expect($truncatedLabelHeight).to.be.lessThan(17);
 				});
 			});
 		});
@@ -58,7 +58,8 @@ describe("Label", () => {
 
 			cy.get("#showColon-true").shadow().find(".ui5-label-required-colon").then($el => {
 				return getComputedStyle($el[0], ":before").content;
-			}).should("equal", `"${LABEL_COLON.defaultText}"`);
+			})
+				.should("equal", `"${LABEL_COLON.defaultText}"`);
 		});
 	});
 
