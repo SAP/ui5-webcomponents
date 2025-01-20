@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { ChangeInfo, InvalidationInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -78,6 +78,7 @@ type CalendarSelectionChangeEventDetail = {
 type SpecialCalendarDateT = {
 	specialDateTimestamp: number;
 	type: `${CalendarLegendItemType}`;
+	tooltip?: string;
 };
 
 /**
@@ -301,6 +302,8 @@ class Calendar extends CalendarPart {
 	@property()
 	_selectedItemType: `${CalendarLegendItemType}` = "None";
 
+	_onCalendarLegendInvalidateBound: (invalidationInfo: InvalidationInfo) => void;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -308,6 +311,14 @@ class Calendar extends CalendarPart {
 		super();
 
 		this._valueIsProcessed = false;
+		this._onCalendarLegendInvalidateBound = this._onCalendarLegendInvalidate.bind(this);
+	}
+
+	_onCalendarLegendInvalidate(invalidationInfo: InvalidationInfo) {
+		if (invalidationInfo.reason === "childchange") {
+			this._specialCalendarDates;
+			invalidationInfo.target.detachInvalidate(this._onCalendarLegendInvalidateBound);
+		}
 	}
 
 	/**
@@ -409,6 +420,11 @@ class Calendar extends CalendarPart {
 			return isTypeMatch && dateValue && this._isValidCalendarDate(dateValue);
 		});
 
+		validSpecialDates.forEach(date => {
+			const refLegendItem = this.calendarLegend.length ? this.calendarLegend[0].items.find(item => item.type === date.type) : undefined;
+			date._tooltip = refLegendItem?.text || "";
+		});
+
 		const uniqueDates = new Set();
 		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
 
@@ -420,7 +436,8 @@ class Calendar extends CalendarPart {
 				uniqueDates.add(timestamp);
 				const specialDateTimestamp = CalendarDateComponent.fromLocalJSDate(dateFromValue).valueOf() / 1000;
 				const type = date.type;
-				uniqueSpecialDates.push({ specialDateTimestamp, type });
+				const tooltip = date._tooltip;
+				uniqueSpecialDates.push({ specialDateTimestamp, type, tooltip });
 			}
 		});
 
@@ -452,6 +469,11 @@ class Calendar extends CalendarPart {
 
 	onBeforeRendering() {
 		this._normalizeCurrentPicker();
+		const calendarLegend = this.calendarLegend.length ? this.calendarLegend[0] : undefined;
+
+		if (calendarLegend) {
+			calendarLegend.attachInvalidate(this._onCalendarLegendInvalidateBound);
+		}
 
 		if (!this._valueIsProcessed) {
 			if (this._selectedDatesTimestamps) {
