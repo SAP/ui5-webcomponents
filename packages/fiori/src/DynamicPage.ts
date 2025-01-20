@@ -151,14 +151,6 @@ class DynamicPage extends UI5Element {
 	showFooter = false;
 
 	/**
-	 * Defines the current media query size.
-	 *
-	 * @private
-	 */
-	@property()
-	mediaRange?: string;
-
-	/**
 	 * Defines the content of the Dynamic Page.
 	 *
 	 * @public
