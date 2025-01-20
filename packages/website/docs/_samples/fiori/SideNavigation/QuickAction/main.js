@@ -4,9 +4,16 @@ import "@ui5/webcomponents-fiori/dist/SideNavigationGroup.js";
 import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";
 
 import "@ui5/webcomponents-icons/dist/home.js";
-import "@ui5/webcomponents-icons/dist/chain-link.js";
 import "@ui5/webcomponents-icons/dist/group.js";
-import "@ui5/webcomponents-icons/dist/locate-me.js";
-import "@ui5/webcomponents-icons/dist/calendar.js";
 import "@ui5/webcomponents-icons/dist/history.js";
-import "@ui5/webcomponents-icons/dist/customer.js";
+import "@ui5/webcomponents-icons/dist/write-new.js";
+
+const quickAction = document.getElementById("quickAction");
+
+quickAction.accessibilityAttributes = {
+	hasPopup: "dialog"
+};
+
+quickAction.addEventListener("click", () => {
+	alert("Quick Action clicked");
+});

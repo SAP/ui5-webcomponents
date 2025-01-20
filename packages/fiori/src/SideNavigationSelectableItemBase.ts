@@ -3,6 +3,10 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+
+type SideNavigationItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
 /**
  * Fired when the component is activated either with a
@@ -84,6 +88,42 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	target?: string;
 
 	/**
+	 * Item design.
+	 *
+	 * **Note:** Items with "Action" design must not have sub-items.
+	 *
+	 * @public
+	 * @default "Default"
+	 * @since 2.7.0
+	 */
+	@property()
+	design: `${SideNavigationItemDesign}` = "Default";
+
+	/**
+	 * Indicates whether the navigation item is selectable. By default all items are selectable unless specifically marked as unselectable.
+	 *
+	 * @public
+	 * @default false
+	 * @since 2.7.0
+	 */
+	@property({ type: Boolean })
+	unselectable = false;
+
+	/**
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following fields are supported:
+	 *
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
+	 *
+	 * @public
+	 * @default {}
+	 * @since 2.7.0
+	 */
+	@property({ type: Object })
+	accessibilityAttributes: SideNavigationItemAccessibilityAttributes = {};
+
+	/**
 	 * @private
 	 * @default false
 	 */
@@ -96,6 +136,10 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		}
 
 		return "treeitem";
+	}
+
+	get isSelectable() {
+		return !this.unselectable && !this.disabled;
 	}
 
 	get _href() {
@@ -188,4 +232,7 @@ const isInstanceOfSideNavigationSelectableItemBase = (object: any): object is Si
 export default SideNavigationSelectableItemBase;
 export {
 	isInstanceOfSideNavigationSelectableItemBase,
+};
+export type {
+	SideNavigationItemAccessibilityAttributes,
 };
