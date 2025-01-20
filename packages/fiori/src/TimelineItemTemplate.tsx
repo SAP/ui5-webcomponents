@@ -16,7 +16,7 @@ export default function TimelineItemTemplate(this: TimelineItem) {
 				<div class="ui5-tli-icon-outer">
 					{
 						this.icon ?
-							<Icon class="ui5-tli-icon" name={this.icon}/>
+							<Icon class="ui5-tli-icon" name={this.icon} mode="Decorative"/>
 							:
 							<div class="ui5-tli-dummy-icon-container"></div>
 					}
@@ -28,6 +28,7 @@ export default function TimelineItemTemplate(this: TimelineItem) {
 					data-sap-focus-ref
 					class="ui5-tli-bubble"
 					tabindex={parseInt(this.forcedTabIndex)}
+					aria-description={this.timelineItemStateText}
 				>
 					<div class="ui5-tli-title">
 						{ this.name && name.call(this) }
