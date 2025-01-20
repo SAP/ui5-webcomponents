@@ -2,4 +2,5 @@
 
 :root {
 	--_ui5_color_picker_slider_container_margin_top: -.5rem;
+	--_ui5_color_picker_slider_handle_inner_border_color: var(--sapContent_ForegroundColor);
 }

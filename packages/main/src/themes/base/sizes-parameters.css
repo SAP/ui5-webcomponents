@@ -39,12 +39,17 @@
 	/* ColorPicker */
 	--_ui_color_picker_slider_progress_container_height: 1.625rem;
 	--_ui_color_picker_slider_handle_height: 2rem;
+	--_ui_color_picker_slider_handle_width: 1.0625rem;
 	--_ui_color_picker_slider_handle_after_height: 1.75rem;
 	--_ui_color_picker_slider_handle_focus_height: 2.125rem;
 	--_ui5_color_picker_colors_wrapper_height: 2.25rem;
 	--_ui5_color_picker_sliders_height: 3rem;
 	--_ui5_color_picker_main_color_margin_bottom: 1rem;
+	--_ui5_color_picker_slider_spacing: 0.9375rem;
 	--_ui5_color_channel_toggle_button_width: 1.625rem;
+	--_ui5_color_channel_toggle_button_margin-top: -0.75rem;
+	--_ui5_color_channel_hex_input_width: 4.8125rem;
+	--_ui5-color_channel_margin_top: 0.25rem;
 
 	/* ColorPalette */
 	 --_ui5_color-palette-item-height: 1.75rem;
@@ -215,12 +220,17 @@
 	/* ColorPicker */
 	--_ui_color_picker_slider_progress_container_height: 1.125rem;
 	--_ui_color_picker_slider_handle_height: 1.5rem;
+	--_ui_color_picker_slider_handle_width: 0.9375rem;
 	--_ui_color_picker_slider_handle_after_height: 1.25rem;
 	--_ui_color_picker_slider_handle_focus_height: 1.625rem;
 	--_ui5_color_picker_colors_wrapper_height: 1.5rem;
 	--_ui5_color_picker_sliders_height: 2.25rem;
 	--_ui5_color_picker_main_color_margin_bottom: 0.75rem;
+	--_ui5_color_picker_slider_spacing: 0.8125rem;
 	--_ui5_color_channel_toggle_button_width: 1.375rem;
+	--_ui5_color_channel_toggle_button_margin-top: -0.9375rem;
+	--_ui5_color_channel_hex_input_width: 4.625rem;
+	--_ui5-color_channel_margin_top: 0rem;
 
 	/* ColorPalette */
 	--_ui5_color-palette-item-height: 1.25rem;
