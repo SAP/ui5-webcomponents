@@ -90,7 +90,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	/**
 	 * Item design.
 	 *
-	 * **Note:** Items with "Action" design must not have sub items.
+	 * **Note:** Items with "Action" design must not have sub-items.
 	 *
 	 * @public
 	 * @default "Default"
@@ -100,7 +100,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	design: `${SideNavigationItemDesign}` = "Default";
 
 	/**
-	 * Whether clicking on the item will result in the item being selected. By default all items are selectable.
+	 * Indicates whether the navigation item is selectable. By default all items are selectable unless specifically marked as unselectable.
 	 *
 	 * @public
 	 * @default false

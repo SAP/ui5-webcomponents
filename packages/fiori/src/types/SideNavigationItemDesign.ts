@@ -12,7 +12,9 @@ enum SideNavigationItemDesign {
 	Default = "Default",
 
 	/**
-	 * Design for items that perform an action, such as opening a dialog.
+	 * Design for items that trigger an action, such as opening a dialog.
+	 *
+	 * **Note:** Items with this design must not have sub-items.
 	 *
 	 * @public
 	 */
