@@ -33,7 +33,7 @@
 	<ui5-ai-button id="myAiButtonSplit" state="generate">
 		<ui5-ai-button-state name="generate" text="Regenerate" icon="ai"></ui5-ai-button-state>
 		<ui5-ai-button-state name="generating" text="Stop Generating" icon="stop"></ui5-ai-button-state>
-		<ui5-ai-button-state name="revise" text="Regenerate" icon="ai" split-mode></ui5-ai-button-state>
+		<ui5-ai-button-state name="revise" text="Regenerate" icon="ai" show-arrow-button></ui5-ai-button-state>
 	</ui5-ai-button>
 	<br/>
 	<br/>
@@ -227,18 +227,18 @@
 		menuReg.addEventListener("open", function(evt) {
 			var button = menuReg.opener;
 
-			button.activeArrowButton = true;
+			button.arrowButtonPressed = true;
 		});
 
 		menuReg.addEventListener("close", function(evt) {
 			var button = menuReg.opener;
 
-			button.activeArrowButton = false;
+			button.arrowButtonPressed = false;
 		});
 
 		myAiButton.addEventListener("click", aiButtonClickHandler);
 		myAiButtonSplit.addEventListener("click", aiButtonSplitClickHandler);
-		myAiButtonSplit.addEventListener("arrow-click", aiButtonSplitArrowClickHandler);
+		myAiButtonSplit.addEventListener("arrow-button-click", aiButtonSplitArrowClickHandler);
 		myAiButtonIconOnly.addEventListener("click", aiButtonClickHandler);
 
 		function aiQuickPromptButtonClickHandler(e) {
