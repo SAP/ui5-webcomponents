@@ -1,0 +1,1 @@
+const _="ApfX3Ybp+LpUZGYmQzr70w_{0} characters remaining",E="j5kNPkXE7zFJCcHSJi7nbg_{0} characters over limit",T={PROMPT_INPUT_CHARACTERS_LEFT:_,PROMPT_INPUT_CHARACTERS_EXCEEDED:E};export{E as PROMPT_INPUT_CHARACTERS_EXCEEDED,_ as PROMPT_INPUT_CHARACTERS_LEFT,T as default};
