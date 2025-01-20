@@ -45,16 +45,30 @@ import {
 	TIMEPICKER_INPUT_DESCRIPTION,
 	TIMEPICKER_POPOVER_ACCESSIBLE_NAME,
 	FORM_TEXTFIELD_REQUIRED,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_INFORMATION,
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_WARNING,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+
+type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 
 type TimePickerChangeInputEventDetail = {
 	value: string,
 	valid: boolean,
+}
+
+enum ValueStateIconMapping {
+	Negative = "error",
+	Critical = "alert",
+	Positive = "sys-enter-2",
+	Information = "information",
 }
 
 type TimePickerChangeEventDetail = TimePickerChangeInputEventDetail;
@@ -133,6 +147,7 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 		TimePickerCss,
 		ResponsivePopoverCommonCss,
 		TimePickerPopoverCss,
+		ValueStateMessageCss,
 	],
 })
 /**
@@ -687,6 +702,12 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_onfocusin(e: FocusEvent) {
+		if (this.open) {
+			// Prevents the value state message popover from appearing when a responsive popover (like time selection) is open
+			// since the responsive popover already includes the necessary information in its header.
+			this._getInput()._inputIconFocused = true;
+		}
+
 		if (this._isMobileDevice) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
@@ -697,12 +718,66 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	get valueStateDefaultText(): string | undefined {
+		if (this.valueState === ValueState.None) {
+			return;
+		}
+
+		return this.valueStateTextMappings[this.valueState];
+	}
+
+	get valueStateTextMappings(): ValueStateAnnouncement {
+		return {
+			[ValueState.Positive]: TimePicker.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			[ValueState.Negative]: TimePicker.i18nBundle.getText(VALUE_STATE_ERROR),
+			[ValueState.Critical]: TimePicker.i18nBundle.getText(VALUE_STATE_WARNING),
+			[ValueState.Information]: TimePicker.i18nBundle.getText(VALUE_STATE_INFORMATION),
+		};
+	}
+
+	get shouldDisplayDefaultValueStateMessage(): boolean {
+		return !this.valueStateMessage.length && this.hasValueStateText;
+	}
+
+	/**
+	* This method is relevant for sap_horizon theme only
+	*/
+	get _valueStateMessageIcon(): string {
+		return this.valueState !== ValueState.None ? ValueStateIconMapping[this.valueState] : "";
+	}
+
 	get submitButtonLabel() {
 		return TimePicker.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
 	}
 
 	get cancelButtonLabel() {
 		return TimePicker.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
+	}
+
+	get hasValueStateText(): boolean {
+		return this.hasValueState && this.valueState !== ValueState.Positive;
+	}
+
+	get hasValueState(): boolean {
+		return this.valueState !== ValueState.None;
+	}
+
+	get classes() {
+		return {
+			popover: {
+				"ui5-suggestions-popover": true,
+				"ui5-popover-with-value-state-header-phone": this._isPhone && this.hasValueStateText,
+				"ui5-popover-with-value-state-header": !this._isPhone && this.hasValueStateText,
+			},
+			popoverValueState: {
+				"ui5-valuestatemessage-header": true,
+				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
+		};
 	}
 
 	/**

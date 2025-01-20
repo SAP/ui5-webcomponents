@@ -1,6 +1,7 @@
 import type TimePicker from "./TimePicker.js";
 import Button from "./Button.js";
 import Popover from "./Popover.js";
+import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
 import TimeSelectionInputs from "./TimeSelectionInputs.js";
@@ -16,7 +17,7 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				opener={this}
 				open={this.open}
 				allowTargetOverlap={true}
-				_hideHeader={true}
+				_hideHeader={!this.hasValueStateText}
 				hideArrow={true}
 				accessibleName={this.pickerAccessibleName}
 				onClose={this.onResponsivePopoverAfterClose}
@@ -24,6 +25,8 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				onWheel={this._handleWheel}
 				onKeyDown={this._onkeydown}
 			>
+				{this.hasValueStateText && renderValueStateTextHeader.call(this)}
+
 				<TimeSelectionClocks
 					id={`${this._id}-time-sel`}
 					value={this._timeSelectionValue}
@@ -52,6 +55,8 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 					onWheel={this._handleWheel}
 					onKeyDown={this._onkeydown}
 				>
+					{this.hasValueStateText && renderValueStateTextHeader.call(this, { "width": "100%" }) }
+
 					<div class="popover-content">
 						<TimeSelectionInputs
 							id={`${this._id}-time-sel-inputs`}
@@ -69,5 +74,33 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				</Popover>
 			}
 		</>
+	);
+}
+
+function valueStateMessage(this: TimePicker) {
+	return (
+		<>
+			{ this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : <slot name="valueStateMessage">{this.valueStateMessage[0].innerHTML}</slot> }
+		</>
+	);
+}
+
+function renderValueStateTextHeader(this: TimePicker, style?: Record<string, string>) {
+	if (!this.hasValueStateText) {
+		return null;
+	}
+
+	return (
+		<div
+			slot="header"
+			class={{
+				"ui5-popover-header": true,
+				...this.classes.popoverValueState,
+			}}
+			style={style}
+		>
+			<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}/>
+			{ valueStateMessage.call(this) }
+		</div>
 	);
 }
