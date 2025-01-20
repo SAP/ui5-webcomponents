@@ -123,10 +123,15 @@ describe("Toolbar general interaction", () => {
 			.should("exist", "hidden class attached to tb button, meaning it's not shown as expected");
 	});
 
-	it("Should call click handler on abstract item", () => {
+	it("Should call event handlers on abstract item", () => {
 		cy.mount(html`
 			<ui5-toolbar>
 				<ui5-toolbar-button text="Button 1"></ui5-toolbar-button>
+				<ui5-toolbar-select>
+					<ui5-toolbar-select-option>1</ui5-toolbar-select-option>
+					<ui5-toolbar-select-option selected>2</ui5-toolbar-select-option>
+					<ui5-toolbar-select-option>3</ui5-toolbar-select-option>
+				</ui5-toolbar-select>
 			</ui5-toolbar>
 		`);
 
@@ -139,6 +144,31 @@ describe("Toolbar general interaction", () => {
 			.click();
 
 		cy.get("@clicked")
+			.should("have.been.calledOnce");
+
+		cy.get("ui5-toolbar-select")
+			.then(select => {
+				select.get(0).addEventListener("ui5-click", cy.stub().as("clicked"));
+				select.get(0).addEventListener("ui5-change", cy.stub().as("changed"));
+				select.get(0).addEventListener("ui5-open", cy.stub().as("opened"));
+				select.get(0).addEventListener("ui5-close", cy.stub().as("closed"));
+			});
+
+		cy.get("ui5-select", { includeShadowDom: true })
+			.click();
+
+		cy.get("@clicked")
+			.should("have.been.calledOnce");
+		cy.get("@opened")
+			.should("have.been.calledOnce");
+
+		cy.get("ui5-option", { includeShadowDom: true })
+			.first()
+			.click();
+
+		cy.get("@changed")
+			.should("have.been.calledOnce");
+		cy.get("@closed")
 			.should("have.been.calledOnce");
 	});
 });
