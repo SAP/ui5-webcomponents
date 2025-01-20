@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import TimelineLayout from "./types/TimelineLayout.js";
+import {TimelineLayout} from "./types/TimelineLayout.js";
 import type { ITimelineItem } from "./Timeline.js";
 
 import TimelineGroupItemTemplate from "./TimelineGroupItemTemplate.js";

@@ -7,8 +7,8 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type Link from "@ui5/webcomponents/dist/Link.js";
 import type { ITimelineItem } from "./Timeline.js";
 import TimelineItemTemplate from "./TimelineItemTemplate.js";
-import type TimelineLayout from "./types/TimelineLayout.js";
 // Styles
+import {TimelineLayout} from "./types/TimelineLayout.js";
 import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
 
 /**
