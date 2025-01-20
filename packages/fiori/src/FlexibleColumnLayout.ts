@@ -10,6 +10,8 @@ import { supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/vertical-grip.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
@@ -19,12 +21,15 @@ import {
 	isRightShift,
 	isHome,
 	isEnd,
+	isEnter,
+	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { PassiveEventListenerObject, AriaLandmarkRole } from "@ui5/webcomponents-base";
 import FCLLayout from "./types/FCLLayout.js";
 import type { LayoutConfiguration } from "./fcl-utils/FCLLayout.js";
 import {
 	getLayoutsByMedia,
+	getNextLayoutByArrowPress,
 } from "./fcl-utils/FCLLayout.js";
 
 // Texts
@@ -167,6 +172,7 @@ type UserDefinedColumnLayouts = {
 	renderer: jsxRenderer,
 	styles: FlexibleColumnLayoutCss,
 	template: FlexibleColumnLayoutTemplate,
+	dependencies: [Icon, Button],
 })
 
 /**
@@ -655,13 +661,34 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
+		if (isEnter(e) || isSpace(e)) {
+			e.preventDefault();
+			const focusedElement = e.target as HTMLElement;
+			if (focusedElement === this.startArrowDOM) {
+				this.switchLayoutOnArrowPress();
+				return;
+			}
+			return;
+		}
+
 		const stepSize = 2,
 			bigStepSize = this._width,
 			isRTL = this.effectiveDir === "rtl";
 		let step = 0;
+
+		if (!this.startColumnVisible && e.target === this.startSeparatorDOM && isLeft(e)) {
+			return;
+		}
+
 		if (isLeft(e)) {
+			if (this.startArrowDOM === e.target) {
+				return;
+			}
 			step = -stepSize * 10;
 		} else if (isRight(e)) {
+			if (this.startArrowDOM === e.target) {
+				return;
+			}
 			step = stepSize * 10;
 		} else if (isLeftShift(e)) {
 			step = -stepSize;
@@ -819,6 +846,30 @@ class FlexibleColumnLayout extends UI5Element {
 		}
 
 		if (moved({
+			separator: "start",
+			from: FCLLayout.ThreeColumnsStartHiddenMidExpanded,
+			forward: true,
+		}) && !isTablet && Math.ceil(startColumnPxWidth) >= COLUMN_MIN_WIDTH) {
+			return FCLLayout.ThreeColumnsMidExpanded;
+		}
+
+		if (moved({
+			separator: "end",
+			from: FCLLayout.ThreeColumnsStartHiddenMidExpanded,
+			forward: false,
+		}) && newColumnWidths.mid < newColumnWidths.end) {
+			return FCLLayout.ThreeColumnsStartHiddenEndExpanded;
+		}
+
+		if (moved({
+			separator: "end",
+			from: FCLLayout.ThreeColumnsStartHiddenEndExpanded,
+			forward: true,
+		}) && newColumnWidths.mid >= newColumnWidths.end) {
+			return FCLLayout.ThreeColumnsStartHiddenMidExpanded;
+		}
+
+		if (moved({
 			separator: "end",
 			from: FCLLayout.ThreeColumnsMidExpandedEndHidden,
 			forward: false,
@@ -878,6 +929,14 @@ class FlexibleColumnLayout extends UI5Element {
 		}
 
 		return fclLayoutBeforeMove; // no layout change
+	}
+
+	switchLayoutOnArrowPress() {
+		const lastUsedLayout = this.layout as FCLLayout;
+		this.layout = getNextLayoutByArrowPress()[lastUsedLayout as keyof typeof getNextLayoutByArrowPress];
+		if (this.layout !== lastUsedLayout) {
+			this.fireLayoutChange(true, false);
+		}
 	}
 
 	get _availableWidthForColumns() {
@@ -982,6 +1041,10 @@ class FlexibleColumnLayout extends UI5Element {
 		return this.disableResizing ? false : this.startSeparatorGripVisibility;
 	}
 
+	get showStartSeparatorArrow() {
+		return this.disableResizing ? false : this.startSeparatorArrowVisibility;
+	}
+
 	get showEndSeparatorGrip() {
 		return this.disableResizing ? false : this.endSeparatorGripVisibility;
 	}
@@ -992,6 +1055,18 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get endSeparatorGripVisibility() {
 		return this.effectiveSeparatorsInfo[1].gripVisible;
+	}
+
+	get startSeparatorArrowVisibility() {
+		return this.effectiveSeparatorsInfo[0].arrowVisible;
+	}
+
+	get startArrowDirection() {
+		return this.effectiveSeparatorsInfo[0].arrowDirection;
+	}
+
+	get startArrowDOM() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-arrow--start")!;
 	}
 
 	get effectiveSeparatorsInfo() {

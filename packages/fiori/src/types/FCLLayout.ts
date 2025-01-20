@@ -72,6 +72,26 @@ enum FCLLayout {
 	 */
 	ThreeColumnsMidExpandedEndHidden = "ThreeColumnsMidExpandedEndHidden",
 
+	 /**
+     * Desktop: Defaults to 0 - 67 - 33 percent widths of columns. Start is hidden, Mid (expanded) and End columns are displayed.
+     * Tablet:  Defaults to 0 - 67 - 33 percent widths of columns. Start is hidden, Mid (expanded) and End columns are displayed.
+     * Phone:   Fixed -- 100 percent width of the Mid column, only the Mid column is displayed.
+     *
+     * Use to display the Mid and End columns while the Start column is hidden.
+     * @public
+     */
+	 ThreeColumnsStartHiddenMidExpanded = "ThreeColumnsStartHiddenMidExpanded",
+
+	 /**
+	  * Desktop: Defaults to 0 - 33 - 67 percent widths of columns. Start is hidden, Mid and End (expanded) columns are displayed.
+	  * Tablet:  Defaults to 0 - 33 - 67 percent widths of columns. Start is hidden, Mid and End (expanded) columns are displayed.
+	  * Phone:   Fixed -- 100 percent width of the End column, only the End column is displayed.
+	  *
+	  * Use to display the Mid column and expanded End column while the grip of the separator is not visible.
+	  * @public
+	  */
+	 ThreeColumnsStartHiddenEndExpanded = "ThreeColumnsStartHiddenEndExpanded",
+
 	/**
 	 * Desktop: Fixed -- 100 -- percent widths of columns, only the Mid column is displayed
 	 * Tablet:  Fixed -- 100 -- percent widths of columns, only the Mid column is displayed
