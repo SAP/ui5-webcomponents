@@ -4,6 +4,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -37,6 +38,7 @@ import TimePickerTemplate from "./TimePickerTemplate.js";
 import type Input from "./Input.js";
 import type { InputAccInfo } from "./Input.js";
 import type TimeSelectionInputs from "./TimeSelectionInputs.js";
+import type TimeSelectionClocks from "./TimeSelectionClocks.js";
 import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
 
 import {
@@ -301,6 +303,9 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
+	@query("[ui5-time-selection-clocks]")
+	_timeSelectionClocks?: TimeSelectionClocks;
+
 	tempValue?: string;
 
 	@i18n("@ui5/webcomponents")
@@ -411,6 +416,13 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	onResponsivePopoverAfterClose() {
 		this.open = false;
 		this.fireDecoratorEvent("close");
+	}
+
+	onResponsivePopoverBeforeOpen() {
+		const clocks = this._timeSelectionClocks;
+		if (clocks) {
+			clocks._skipAnimation = true;
+		}
 	}
 
 	onResponsivePopoverAfterOpen() {

@@ -20,6 +20,7 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				hideArrow={true}
 				accessibleName={this.pickerAccessibleName}
 				onClose={this.onResponsivePopoverAfterClose}
+				onBeforeOpen={this.onResponsivePopoverBeforeOpen}
 				onOpen={this.onResponsivePopoverAfterOpen}
 				onWheel={this._handleWheel}
 				onKeyDown={this._onkeydown}

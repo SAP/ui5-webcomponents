@@ -66,8 +66,9 @@ export default function TimeSelectionClocksTemplate(this: TimeSelectionClocks) {
 						displayStep={entity.displayStep}
 						valueStep={entity.attributes && entity.attributes.step}
 						lastItemReplacement={entity.lastItemReplacement}
-						showInnerCircle={entity.showInnerCircle}
+						hideFractions={entity.hideFractions}
 						prependZero={entity.prependZero}
+						_skipAnimation={entity.skipAnimation}
 						onChange={this._clockChange}
 					>
 					</TimePickerClock>
