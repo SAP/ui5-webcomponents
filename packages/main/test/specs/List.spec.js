@@ -566,7 +566,7 @@ describe("List Tests", () => {
 	it('group headers should not be with role options', async () => {
 		const groupHeader = await browser.$(">>>#listSelectedItem #group .ui5-ghli-root");
 
-		assert.strictEqual(await groupHeader.getAttribute("role"), "group", "Item label is empty");
+		assert.strictEqual(await groupHeader.getAttribute("role"), "listitem", "Item label is empty");
 	});
 
 	it('anchor tabs should be accessible within list items', async () => {
