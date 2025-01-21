@@ -217,8 +217,8 @@ class MenuItem extends ListItem implements IMenuItem {
 		});
 	}
 
-	get _navigableItems() {
-		return [...this.endContent] as Array<HTMLElement>;
+	get _navigableItems(): Array<HTMLElement> {
+		return [...this.endContent];
 	}
 
 	_navigateToEndContent(isLast?: boolean) {
