@@ -137,7 +137,7 @@ class Timeline extends UI5Element {
 	 *
 	 * Available options:
 	 *
-	 * `Button` - Shows a `More` button at the bottom of the Timeline, pressing of which triggers the `load-more` event.
+	 * `Button` - Shows a button at the end of the Timeline, pressing which triggers the load-more event.
 	 *
 	 * `Scroll` - The `load-more` event is triggered when the user scrolls to the bottom of the Timeline;
 	 *
@@ -205,20 +205,6 @@ class Timeline extends UI5Element {
 		return this.layout === TimelineLayout.Horizontal ? process : drillDown;
 	}
 
-	get moreBtn(): HTMLElement | null {
-		const domRef = this.getDomRef();
-
-		if (this.growsWithButton && domRef) {
-			return domRef.querySelector<HTMLElement>(`#${this._id}-growingButton`);
-		}
-
-		return null;
-	}
-
-	get showBusyIndicatorOverlay() {
-		return !this.growsWithButton && this.loading;
-	}
-
 	get growsWithButton(): boolean {
 		return this.growing === TimeLineGrowingMode.Button;
 	}
@@ -250,7 +236,7 @@ class Timeline extends UI5Element {
 
 	getIntersectionObserver(): IntersectionObserver {
 		if (!this.growingIntersectionObserver) {
-			this.growingIntersectionObserver = new IntersectionObserver(this.onInteresection.bind(this), {
+			this.growingIntersectionObserver = new IntersectionObserver(this.onIntersection.bind(this), {
 				root: document,
 				threshold: 1.0,
 			});
@@ -259,7 +245,7 @@ class Timeline extends UI5Element {
 		return this.growingIntersectionObserver;
 	}
 
-	onInteresection(entries: Array<IntersectionObserverEntry>) {
+	onIntersection(entries: Array<IntersectionObserverEntry>) {
 		if (this.initialIntersection) {
 			this.initialIntersection = false;
 			return;

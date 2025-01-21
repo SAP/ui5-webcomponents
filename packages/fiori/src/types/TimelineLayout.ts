@@ -17,4 +17,4 @@ enum TimelineLayout {
 	Horizontal= "Horizontal",
 }
 
-export default TimelineLayout
+export default TimelineLayout;
