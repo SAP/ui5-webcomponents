@@ -78,8 +78,6 @@ describe("ColorPalette interactions", () => {
 
 		assert.ok(colorPicker, "Color picker is rendered");
 
-		await colorPicker.setProperty("value", "#fafafa");
-
 		// The initial focus is on the first slider
 		await browser.keys("Tab"); // Slider 2
 		await browser.keys("Tab"); // Hex field
