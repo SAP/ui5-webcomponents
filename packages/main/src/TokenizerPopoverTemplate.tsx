@@ -42,7 +42,6 @@ export default function TokenizerPopoverTemplate(this: Tokenizer) {
 				onItemDelete={this.itemDelete}
 			>
 				{this._tokens
-					.filter(token => token._isVisible)
 					.map(token => <ListItemStandard key={String(token._id)} data-ui5-token-ref-id={token._id} wrappingType="Normal">{token.text}</ListItemStandard>)}
 			</List>
 

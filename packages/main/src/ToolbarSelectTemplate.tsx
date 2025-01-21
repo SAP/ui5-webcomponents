@@ -12,6 +12,10 @@ export default function ToolbarSelectTemplate(this: ToolbarSelect) {
 			disabled={this.disabled}
 			accessibleName={this.accessibleName}
 			accessibleNameRef={this.accessibleNameRef}
+			onClick={(...args) => this.onClick(...args)}
+			onClose={(...args) => this.onClose(...args)}
+			onOpen={(...args) => this.onOpen(...args)}
+			onChange={(...args) => this.onChange(...args)}
 		>
 			{this.options.map((option, index) => (
 				<Option
