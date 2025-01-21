@@ -134,17 +134,6 @@ class SettingItem extends UI5Element {
 	selected = false;
 
 	/**
-	 * Defines whether the component is read-only.
-	 *
-	 * **Note:** A read-only component is not editable,
-	 * but still provides visual feedback upon user interaction.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	readonly = false;
-
-	/**
 	 * Defines whether the component is in disabled state.
 	 *
 	 * **Note:** A disabled component is completely noninteractive.
