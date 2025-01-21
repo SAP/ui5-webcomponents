@@ -20,10 +20,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 class ShellBarSpacer extends UI5Element {
 	@property({ type: Boolean })
 	visible = false;
-
-	get isSpacer() {
-		return true;
-	}
 }
 
 ShellBarSpacer.define();
