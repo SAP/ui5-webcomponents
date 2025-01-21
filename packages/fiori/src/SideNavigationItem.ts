@@ -223,7 +223,9 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_toggle() {
-		this.expanded = !this.expanded;
+		if (this.items.length) {
+			this.expanded = !this.expanded;
+		}
 	}
 }
 
