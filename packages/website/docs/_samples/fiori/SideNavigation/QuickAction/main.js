@@ -8,12 +8,22 @@ import "@ui5/webcomponents-icons/dist/group.js";
 import "@ui5/webcomponents-icons/dist/history.js";
 import "@ui5/webcomponents-icons/dist/write-new.js";
 
+import "@ui5/webcomponents/dist/Bar.js";
+import "@ui5/webcomponents/dist/Button.js";
+import "@ui5/webcomponents/dist/Dialog.js";
+import "@ui5/webcomponents/dist/Text.js";
+
 const quickAction = document.getElementById("quickAction");
+const dialog = document.getElementById("quickActionDialog");
 
 quickAction.accessibilityAttributes = {
 	hasPopup: "dialog"
 };
 
 quickAction.addEventListener("click", () => {
-	alert("Quick Action clicked");
+	dialog.open = true;
+});
+
+document.getElementById("quickActionCloseBtn").addEventListener("click", () => {
+	dialog.open = false;
 });
