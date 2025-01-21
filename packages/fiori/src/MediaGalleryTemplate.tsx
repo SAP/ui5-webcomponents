@@ -18,7 +18,7 @@ export default function MediaGalleryTemplate(this: MediaGallery) {
                         )}
                     </Carousel>
                     : <MediaGalleryItem
-                        _interactive={this._isDisplayInteractive}
+                        _interactive={this.interactiveDisplayArea}
                         _square={this._shouldHaveSquareDisplay}
                         tabIndex={this._mainItemTabIndex}
                     ></MediaGalleryItem>

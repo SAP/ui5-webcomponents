@@ -516,10 +516,6 @@ class MediaGallery extends UI5Element {
 		return !this._shouldHaveWideDisplay;
 	}
 
-	get _isDisplayInteractive() {
-		return this.interactiveDisplayArea;
-	}
-
 	static get THUMBNAIL_HEIGHT() {
 		return 80; // px
 	}
