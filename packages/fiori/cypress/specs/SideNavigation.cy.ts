@@ -192,6 +192,45 @@ describe("Side Navigation interaction", () => {
 		});
 	});
 
+	it("Tests 'click' event with Enter and Space", () => {
+		cy.mount(html`
+			<ui5-side-navigation id="sideNav">
+				<ui5-side-navigation-item id="item" text="1"></ui5-side-navigation-item>
+				<ui5-side-navigation-item id="unselectableItem" text="2" unselectable></ui5-side-navigation-item>
+				<ui5-side-navigation-item id="parentItem" text="3">
+					<ui5-side-navigation-sub-item text="3.1"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+				<ui5-side-navigation-item text="4" expanded>
+					<ui5-side-navigation-sub-item id="childItem" text="4.1"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+				<ui5-side-navigation-item id="unselectableParentItem" text="5" unselectable>
+					<ui5-side-navigation-sub-item id="text9" text="5.1"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		`);
+
+		[
+			{ element: cy.get("#item").shadow().find(".ui5-sn-item"), expectedCallCount: 2 },
+			{ element: cy.get("#unselectableItem").shadow().find(".ui5-sn-item"), expectedCallCount: 2 },
+			{ element: cy.get("#parentItem").shadow().find(".ui5-sn-item"), expectedCallCount: 2 },
+			{ element: cy.get("#childItem").shadow().find(".ui5-sn-item"), expectedCallCount: 2 },
+			{ element: cy.get("#unselectableParentItem").shadow().find(".ui5-sn-item"), expectedCallCount: 2 },
+		].forEach(({ element, expectedCallCount }) => {
+			cy.get("#sideNav")
+				.then(sideNav => {
+					sideNav.get(0).addEventListener("click", cy.stub().as("clickHandler"));
+				});
+
+			// act
+			element.focus();
+			cy.realPress("Space")
+				.realPress("Enter");
+
+			// assert
+			cy.get("@clickHandler").should("have.callCount", expectedCallCount);
+		});
+	});
+
 	it("Tests 'selection-change' event", () => {
 		cy.mount(html`
 			<ui5-side-navigation id="sideNav">
