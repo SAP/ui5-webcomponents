@@ -1,3 +1,5 @@
+// vitest and jsdom and not supported for component development, use cypress instead
+// this test is purely to make sure jsdom does not fail when used with web components
 import { expect, test } from 'vitest'
 import "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents/dist/Dialog.js";
