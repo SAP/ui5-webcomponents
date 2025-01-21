@@ -1,7 +1,7 @@
 import MediaGallery from "./MediaGallery.js";
+import MediaGalleryItem from "./MediaGalleryItem.js";
 import Carousel from "@ui5/webcomponents/dist/Carousel.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
-import MediaGalleryItem from "./MediaGalleryItem.js";
 
 export default function MediaGalleryTemplate(this: MediaGallery) {
     return (<div class="ui5-media-gallery-root">
