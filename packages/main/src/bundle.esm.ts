@@ -121,7 +121,7 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ListItemGroup from "./ListItemGroup.js";
 
 // Features
-import "./features/ColorPaletteMoreColors.js";
+// import "./features/ColorPaletteMoreColors.js";
 import "./features/InputSuggestions.js";
 
 const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon3d, icon3dv1, icon3dv2];

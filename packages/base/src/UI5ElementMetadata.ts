@@ -19,7 +19,7 @@ type Slot = {
 type SlotValue = Node;
 
 type Property = {
-	type?: BooleanConstructor | StringConstructor | ObjectConstructor | NumberConstructor | ArrayConstructor,
+	type?: BooleanConstructor | StringConstructor | ObjectConstructor | NumberConstructor | ArrayConstructor | FunctionConstructor,
 	noAttribute?: boolean,
 	converter?: {
 		fromAttribute(value: string | null, type: unknown): string | number | boolean | null | undefined,
@@ -27,7 +27,8 @@ type Property = {
 	}
 }
 
-type PropertyValue = boolean | number | string | object | undefined | null;
+// eslint-disable-next-line
+type PropertyValue = boolean | number | string | object | Function | undefined | null;
 
 type EventData = Record<string, { detail?: Record<string, object>, cancelable?: boolean, bubbles?: boolean }>;
 
@@ -141,7 +142,7 @@ class UI5ElementMetadata {
 	 */
 	hasAttribute(propName: string): boolean {
 		const propData = this.getProperties()[propName];
-		return propData.type !== Object && propData.type !== Array && !propData.noAttribute;
+		return propData.type !== Object && propData.type !== Array && propData.type !== Function && !propData.noAttribute;
 	}
 
 	/**

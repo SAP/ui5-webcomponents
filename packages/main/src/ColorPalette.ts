@@ -10,7 +10,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import type { JsxTemplateModule } from "@ui5/webcomponents-base/dist/index.js";
+import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import {
 	isSpace,
 	isEnter,
@@ -150,11 +150,11 @@ class ColorPalette extends UI5Element {
 	onPhone = false;
 
 	/**
-	 * The showMoreColors template module.
+	 * The showMoreColors template.
 	 * @private
 	 */
-	@property({ type: Object })
-	showMoreColorsTemplateModule?: JsxTemplateModule;
+	@property({ type: Function })
+	showMoreColorsTemplate?: JsxTemplate;
 
 	/**
 	 * @private
@@ -220,10 +220,16 @@ class ColorPalette extends UI5Element {
 			item.index = index + 1;
 		});
 
-		if (this.showMoreColors && !this.showMoreColorsTemplateModule) {
-			import("./features/ColorPaletteMoreColorsTemplate.js").then(module => {
-				this.showMoreColorsTemplateModule = module;
-			});
+		if (this.showMoreColors) {
+			// If the features is preloaded (the user manually imported ColorPaletteMoreColors.js), the teplate is already available on the constructor
+			if (ColorPalette.ColorPaletteMoreColorsTemplate) {
+				this.showMoreColorsTemplate = ColorPalette.ColorPaletteMoreColorsTemplate;
+			// If feature is not preloaded, load the template dynamically
+			} else {
+				import("./features/ColorPaletteMoreColorsTemplate.js").then(module => {
+					this.showMoreColorsTemplate = module.default;
+				});
+			}
 		}
 
 		this.onPhone = isPhone();
@@ -637,6 +643,8 @@ class ColorPalette extends UI5Element {
 			},
 		};
 	}
+
+	static ColorPaletteMoreColorsTemplate?: JsxTemplate;
 }
 
 ColorPalette.define();

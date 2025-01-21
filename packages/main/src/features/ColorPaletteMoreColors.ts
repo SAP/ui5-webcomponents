@@ -1,3 +1,5 @@
-// This module is now deprecated and should no longer be imported
-// When imported, it will only pre-load the optional template for the showMoreColors feature
-import "./ColorPaletteMoreColorsTemplate.js";
+// Importing this module is no longer required for the the "MoreColors" feature, but rather serves as a preload
+import ColorPaletteMoreColorsTemplate from "./ColorPaletteMoreColorsTemplate.js";
+import ColorPalette from "../ColorPalette.js";
+
+ColorPalette.ColorPaletteMoreColorsTemplate = ColorPaletteMoreColorsTemplate;
