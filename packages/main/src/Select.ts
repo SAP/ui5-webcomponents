@@ -62,6 +62,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 
+const isClient = typeof document !== "undefined";
 /**
  * Interface for components that may be slotted inside `ui5-select` as options
  * @public
@@ -373,8 +374,19 @@ class Select extends UI5Element implements IFormInputElement {
 
 	onBeforeRendering() {
 		this._ensureSingleSelection();
+		this.updateValueFromOptions();
 
-		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
+		if (isClient) {
+			this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
+		}
+	}
+
+	updateValueFromOptions() {
+		const selectedOption = this.selectedOption;
+
+		if (selectedOption) {
+			this.valueStorage = selectedOption.getAttribute("value") || selectedOption.textContent || "";
+		}
 	}
 
 	onAfterRendering() {
@@ -416,6 +428,7 @@ class Select extends UI5Element implements IFormInputElement {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
+	valueStorage = "";
 	/**
 	 * Defines the value of the component:
 	 *
@@ -438,10 +451,13 @@ class Select extends UI5Element implements IFormInputElement {
 		options.forEach(option => {
 			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
 		});
+
+		this.valueStorage = newValue;
 	}
 
 	get value(): string {
-		return this.selectedOption?.value || this.selectedOption?.textContent || "";
+		return this.valueStorage;
+		// return this.selectedOption?.value || this.selectedOption?.textContent || "";
 	}
 
 	get _selectedIndex() {

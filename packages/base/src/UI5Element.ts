@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import "@ui5/webcomponents-base/dist/ssr-dom.js";
+import { render } from "preact-render-to-string";
 import type { JSX } from "./jsx-runtime.js";
+import type { VNode } from "preact";
 import merge from "./thirdparty/merge.js";
 import { boot } from "./Boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
@@ -44,6 +46,8 @@ import { getI18nBundle } from "./i18nBundle.js";
 import type I18nBundle from "./i18nBundle.js";
 import { fetchCldr } from "./asset-registries/LocaleData.js";
 import getLocale from "./locale/getLocale.js";
+
+const isSSR = typeof document === "undefined";
 
 const DEV_MODE = true;
 let autoId = 0;
@@ -194,6 +198,8 @@ abstract class UI5Element extends HTMLElement {
 	// setters from the constructor should not set attributes, this is delegated after the first rendering but is async
 	// setters after the constructor can set attributes synchronously for more convinient development
 	_rendered = false;
+	_childNodesFromServer: ChildNode[] = [];
+	_childrenFromServer: Element[] = [];
 
 	constructor() {
 		super();
@@ -239,7 +245,9 @@ abstract class UI5Element extends HTMLElement {
 
 			const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
 			if (slotsAreManaged) {
-				this.shadowRoot!.addEventListener("slotchange", this._onShadowRootSlotChange.bind(this));
+				if (!isSSR) {
+					this.shadowRoot!.addEventListener("slotchange", this._onShadowRootSlotChange.bind(this));
+				}
 			}
 		}
 	}
@@ -302,7 +310,7 @@ abstract class UI5Element extends HTMLElement {
 
 		if (slotsAreManaged) {
 			// always register the observer before yielding control to the main thread (await)
-			this._startObservingDOMChildren();
+			// this._startObservingDOMChildren();
 			await this._processChildren();
 		}
 
@@ -414,7 +422,9 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		const slotsMap = ctor.getMetadata().getSlots();
 		const canSlotText = ctor.getMetadata().canSlotText();
-		const domChildren = Array.from(canSlotText ? this.childNodes : this.children) as Array<Node>;
+		const _childNodes = isSSR ? (this._childNodesFromServer) : this.childNodes;
+		const _children = isSSR ? (this._childrenFromServer) : this.children;
+		const domChildren = Array.from(canSlotText ? _childNodes : _children) as Array<Node>;
 
 		const slotsCachedContentMap = new Map<string, Array<SlotValue>>(); // Store here the content of each slot before the mutation occurred
 		const propertyNameToSlotMap = new Map<string, string>(); // Used for reverse lookup to determine to which slot the property name corresponds
@@ -455,7 +465,7 @@ abstract class UI5Element extends HTMLElement {
 			// Await for not-yet-defined custom elements
 			if (child instanceof HTMLElement) {
 				const localName = child.localName;
-				const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
+				const shouldWaitForCustomElement = !isSSR && localName.includes("-") && !shouldIgnoreCustomElement(localName);
 
 				if (shouldWaitForCustomElement) {
 					const isDefined = customElements.get(localName);
@@ -472,7 +482,9 @@ abstract class UI5Element extends HTMLElement {
 				}
 			}
 
-			child = (ctor.getMetadata().constructor as typeof UI5ElementMetadata).validateSlotValue(child, slotData);
+			if (!isSSR) {
+				child = (ctor.getMetadata().constructor as typeof UI5ElementMetadata).validateSlotValue(child, slotData);
+			}
 
 			// Listen for any invalidation on the child if invalidateOnChildChange is true or an object (ignore when false or not set)
 			if (instanceOfUI5Element(child) && slotData.invalidateOnChildChange) {
@@ -481,7 +493,7 @@ abstract class UI5Element extends HTMLElement {
 			}
 
 			// Listen for the slotchange event if the child is a slot itself
-			if (child instanceof HTMLSlotElement) {
+			if (!isSSR && child instanceof HTMLSlotElement) {
 				this._attachSlotChange(child, slotName, !!slotData.invalidateOnChildChange);
 			}
 
@@ -818,6 +830,7 @@ abstract class UI5Element extends HTMLElement {
 
 			if (!this._rendered) {
 				// first time rendering, previous setters might have been initializers from the constructor - update attributes here
+				console.log("update attributes")
 				this.updateAttributes();
 			}
 
@@ -853,6 +866,9 @@ abstract class UI5Element extends HTMLElement {
 
 		// Update shadow root
 		if (ctor._needsShadowDOM()) {
+			if (isSSR) {
+				return updateShadowRoot(this);
+			}
 			updateShadowRoot(this);
 		}
 		this._rendered = true;

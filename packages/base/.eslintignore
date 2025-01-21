@@ -18,7 +18,9 @@ src/util/metaUrl.js
 src/ssr-dom*
 index.js
 src/jsx-runtime.ts
+src/jsx-runtime-node.ts
 src/jsx-dev-runtime.ts
+jsx-runtime.d.ts
 jsx-runtime.d.ts
 jsx-dev-runtime.d.ts
 jsx-utils.ts

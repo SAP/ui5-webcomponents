@@ -63,6 +63,8 @@
     "postcss": "^8.4.5",
     "postcss-cli": "^9.1.0",
     "postcss-selector-parser": "^6.0.10",
+    "preact": "^10.25.4",
+    "preact-render-to-string": "^6.5.13",
     "prompts": "^2.4.2",
     "properties-reader": "^2.2.0",
     "recursive-readdir": "^2.2.2",

@@ -17,8 +17,17 @@
     "directory": "packages/base"
   },
   "exports": {
-    "./jsx-runtime": "./dist/jsx-runtime.js",
+    "./jsx-runtime": {
+      "browser": "./dist/jsx-runtime.js",
+      "node": "./dist/jsx-runtime-node.js",
+      "default": "./dist/jsx-runtime.js"
+    },
     "./jsx-dev-runtime": "./dist/jsx-dev-runtime.js",
+    "./dist/jsx-env-render.js": {
+      "browser": "./dist/jsx-client.js",
+      "node": "./dist/jsx-server.js",
+      "default": "./dist/jsx-client.js"
+    },
     "./dist/ssr-dom.js": {
       "browser": "./dist/ssr-dom.js",
       "node": "./dist/ssr-dom-shim.js",
@@ -53,7 +62,8 @@
   },
   "dependencies": {
     "@lit-labs/ssr-dom-shim": "^1.1.2",
-    "lit-html": "^2.0.1"
+    "lit-html": "^2.0.1",
+    "preact-render-to-string": "^6.5.13"
   },
   "devDependencies": {
     "@openui5/sap.ui.core": "1.120.17",

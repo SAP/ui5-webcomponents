@@ -5,6 +5,8 @@ import { isRtlAware } from "./locale/RTLAwareRegistry.js";
 import type UI5Element from "./UI5Element.js";
 import type { PromiseResolve, Timeout } from "./types.js";
 
+const isSSR = typeof document === "undefined";
+
 type BeforeComponentRenderCallback = (webComponent: UI5Element) => void;
 
 const registeredElements = new Set<UI5Element>();
@@ -58,6 +60,9 @@ const cancelRender = (webComponent: UI5Element) => {
  * Schedules a rendering task, if not scheduled already
  */
 const scheduleRenderTask = async () => {
+	if (isSSR) {
+		return;
+	}
 	if (!queuePromise) {
 		queuePromise = new Promise<void>(resolve => {
 			window.requestAnimationFrame(() => {
