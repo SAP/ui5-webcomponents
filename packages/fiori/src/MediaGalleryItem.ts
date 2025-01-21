@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
@@ -15,7 +15,7 @@ import type { IMediaGalleryItem } from "./MediaGallery.js";
 import MediaGalleryItemCss from "./generated/themes/MediaGalleryItem.css.js";
 
 // Template
-import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemplate.lit.js";
+import MediaGalleryItemTemplate from "./MediaGalleryItemTemplate.js";
 
 /**
  * @class
@@ -42,7 +42,7 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
  */
 @customElement({
 	tag: "ui5-media-gallery-item",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: MediaGalleryItemCss,
 	template: MediaGalleryItemTemplate,
 	dependencies: [Icon],
@@ -145,11 +145,11 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 
 		this._monitoredContent = null;
 		this._monitoredThumbnail = null;
+		this._interactive = !isPhone();
 	}
 
 	onEnterDOM() {
 		this._thumbnailDesign = !isPhone();
-		this._interactive = !isPhone();
 		this._square = true;
 	}
 
@@ -178,7 +178,10 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	}
 
 	get effectiveTabIndex() {
-		return this.disabled ? undefined : this.forcedTabIndex;
+		if (this.disabled) {
+			return undefined;
+		}
+		return !this.forcedTabIndex ? undefined : parseInt(this.forcedTabIndex);
 	}
 
 	get _showBackgroundIcon() {
