@@ -181,7 +181,7 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 		if (this.disabled) {
 			return undefined;
 		}
-		return !this.forcedTabIndex ? undefined : parseInt(this.forcedTabIndex);
+		return this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined;
 	}
 
 	get _showBackgroundIcon() {
