@@ -21,7 +21,6 @@ import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegist
 import ColorPaletteTemplate from "./ColorPaletteTemplate.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
 import type Button from "./Button.js";
-import type Dialog from "./Dialog.js";
 import type ColorPaletteMoreColors from "./features/ColorPaletteMoreColors.js";
 import type ColorPicker from "./ColorPicker.js";
 import "./ColorPaletteItem.js";
