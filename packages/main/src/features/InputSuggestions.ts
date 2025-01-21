@@ -9,6 +9,7 @@ import "../SuggestionItemGroup.js";
 import type SuggestionItem from "../SuggestionItem.js";
 import type ListItemGroupHeader from "../ListItemGroupHeader.js";
 import InputSuggestionsTemplate from "./InputSuggestionsTemplate.js";
+import Input from "../Input.js";
 
 import {
 	LIST_ITEM_POSITION,
@@ -554,6 +555,8 @@ class Suggestions {
 		this.selectedItemIndex = 0;
 	}
 }
+
+Input.SuggestionsClass = Suggestions;
 
 export default Suggestions;
 

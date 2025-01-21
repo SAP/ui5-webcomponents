@@ -1261,11 +1261,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return;
 		}
 
-		import("./features/InputSuggestions.js").then(SuggestionsModule => {
-			const Suggestions = SuggestionsModule.default;
+		const setup = (Suggestions: typeof InputSuggestions) => {
 			Suggestions.i18nBundle = Input.i18nBundle;
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
-		});
+		};
+
+		// If the features is preloaded (the user manually imported InputSuggestions.js), it is already available on the constructor
+		if (Input.SuggestionsClass) {
+			setup(Input.SuggestionsClass);
+		// If feature is not preloaded, load it dynamically
+		} else {
+			import("./features/InputSuggestions.js").then(SuggestionsModule => {
+				setup(SuggestionsModule.default);
+			});
+		}
 	}
 
 	acceptSuggestion(item: IInputSuggestionItemSelectable, keyboardUsed: boolean) {
@@ -1738,16 +1747,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		return value;
 	}
-}
 
-// declare module "@ui5/webcomponents-base/jsx-runtime" {
-// 	// eslint-disable-next-line @typescript-eslint/no-namespace
-// 	namespace JSX {
-// 		interface IntrinsicElements {
-// 			"ui5-input": Input["_jsxProps"];
-// 		}
-// 	}
-// }
+	static SuggestionsClass?: typeof InputSuggestions;
+}
 
 Input.define();
 
