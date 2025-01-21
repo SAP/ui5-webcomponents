@@ -3,6 +3,34 @@ import "../../src/SideNavigation.js";
 import "../../src/SideNavigationItem.js";
 import "../../src/SideNavigationSubItem.js";
 
+describe("Side Navigation Rendering", () => {
+	it("Tests rendering in collapsed mode", () => {
+		cy.mount(html`
+			<ui5-side-navigation id="sideNav" collapsed>
+				<ui5-side-navigation-item text="1" id="parentItem">
+					<ui5-side-navigation-sub-item text="1.1"></ui5-side-navigation-sub-item>
+					<ui5-side-navigation-sub-item text="1.2" design="Action"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+				<ui5-side-navigation-item text="2" id="parentItem2" design="Action">
+					<ui5-side-navigation-sub-item text="2.1"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		`);
+
+		cy.get("#parentItem").realClick();
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.2']")
+			.should("have.attr", "design", "Action");
+
+		cy.get("#parentItem2").realClick();
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='2']")
+			.should("have.attr", "design", "Action");
+	});
+});
+
 describe("Side Navigation interaction", () => {
 	it("Tests expanding and collapsing of items", () => {
 		cy.mount(html`

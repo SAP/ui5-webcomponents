@@ -60,6 +60,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 						tooltip={this._popoverContents.item._tooltip}
 						href={this._popoverContents.item._href}
 						target={this._popoverContents.item._target}
+						design={this._popoverContents.item.design}
 						disabled={this._popoverContents.item.disabled}
 						expanded={true}
 						_fixed={true}
@@ -74,6 +75,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 								tooltip={item._tooltip}
 								href={item._href}
 								target={item._target}
+								design={item.design}
 								disabled={item.disabled}
 								selected={item.selected}
 								unselectable={item.unselectable}
