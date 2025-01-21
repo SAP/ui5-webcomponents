@@ -64,6 +64,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 						expanded={true}
 						_fixed={true}
 						selected={this._popoverContents.item.selected}
+						unselectable={this._popoverContents.item.unselectable}
 						onui5-click={this.handlePopupItemClick}
 						ref={this.captureRef.bind(this._popoverContents.item)}
 					>
@@ -75,6 +76,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 								target={item._target}
 								disabled={item.disabled}
 								selected={item.selected}
+								unselectable={item.unselectable}
 								onui5-click={this.handlePopupItemClick}
 								ref={this.captureRef.bind(item)}
 							/>

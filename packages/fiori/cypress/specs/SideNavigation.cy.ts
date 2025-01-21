@@ -191,13 +191,54 @@ describe("Side Navigation interaction", () => {
 		].forEach(({ element, expectedCallCount }) => {
 			cy.get("#sideNav")
 				.then(sideNav => {
-					sideNav.get(0).addEventListener("ui5-selection-change", cy.stub().as("clickHandler"));
+					sideNav.get(0).addEventListener("ui5-selection-change", cy.stub().as("selectionChangeHandler"));
 				});
 			// act
 			element.realClick();
 
 			// assert
-			cy.get("@clickHandler").should("have.callCount", expectedCallCount);
+			cy.get("@selectionChangeHandler").should("have.callCount", expectedCallCount);
+		});
+	});
+
+	it("Tests 'selection-change' event when SideNavigation is collapsed", () => {
+		cy.mount(html`
+			<ui5-side-navigation id="sideNav" collapsed>
+				<ui5-side-navigation-item text="1"></ui5-side-navigation-item>
+				<ui5-side-navigation-item id="parentItem" text="2">
+					<ui5-side-navigation-sub-item text="2.1"></ui5-side-navigation-sub-item>
+					<ui5-side-navigation-sub-item text="2.2" unselectable></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		`);
+
+		cy.get("#parentItem").realClick();
+		[
+			{
+				element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-item][text='2']").shadow()
+					.find(".ui5-sn-item"),
+				expectedCallCount: 1,
+			},
+			{
+				element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='2.1']"),
+				expectedCallCount: 1,
+			},
+			{
+				element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='2.2']"),
+				expectedCallCount: 0,
+			},
+		].forEach(({ element, expectedCallCount }) => {
+			cy.get("#sideNav")
+				.then(sideNav => {
+					sideNav.get(0).addEventListener("ui5-selection-change", cy.stub().as("selectionChangeHandler"));
+				});
+
+			// act
+			cy.get("#parentItem").realClick();
+			element.realClick();
+
+			// assert
+			cy.get("@selectionChangeHandler").should("have.callCount", expectedCallCount);
 		});
 	});
 });
