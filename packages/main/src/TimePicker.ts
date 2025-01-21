@@ -702,12 +702,6 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		if (this.open) {
-			// Prevents the value state message popover from appearing when a responsive popover (like time selection) is open
-			// since the responsive popover already includes the necessary information in its header.
-			this._getInput()._inputIconFocused = true;
-		}
-
 		if (this._isMobileDevice) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {

@@ -1,13 +1,13 @@
 import type TimePicker from "./TimePicker.js";
 import Icon from "./Icon.js";
-import Input from "./Input.js";
+import DateTimeInput from "./DateTimeInput.js";
 import TimePickerPopoverTemplate from "./TimePickerPopoverTemplate.js";
 
 export default function TimePickerTemplate(this: TimePicker) {
 	return (
 		<>
 			<div id={this._id} class="ui5-time-picker-root">
-				<Input
+				<DateTimeInput
 					data-sap-focus-ref
 					id={`${this._id}-inner`}
 					class="ui5-time-picker-input"
@@ -17,6 +17,7 @@ export default function TimePickerTemplate(this: TimePicker) {
 					readonly={this.readonly}
 					required={this.required}
 					valueState={this.valueState}
+					_shouldOpenValueStatePopover={!this.open}
 					_inputAccInfo={this.accInfo}
 					onClick={this._handleInputClick}
 					onChange={this._handleInputChange}
@@ -45,7 +46,7 @@ export default function TimePickerTemplate(this: TimePicker) {
 							}}
 						/>
 					}
-				</Input>
+				</DateTimeInput>
 			</div>
 
 			{ TimePickerPopoverTemplate.call(this) }
