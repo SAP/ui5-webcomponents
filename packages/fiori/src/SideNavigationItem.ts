@@ -108,7 +108,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _ariaChecked() {
-		if (this.isOverflow) {
+		if (this.isOverflow || this.unselectable) {
 			return undefined;
 		}
 

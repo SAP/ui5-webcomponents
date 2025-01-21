@@ -415,4 +415,44 @@ describe("Side Navigation Accessibility", () => {
 			.find(".ui5-sn-item")
 			.should("have.attr", "aria-haspopup", "dialog");
 	});
+
+	it("SideNavigationItem aria-role in collapsed SideNavigation", () => {
+		cy.mount(html`
+			<ui5-side-navigation id="sideNav" collapsed>
+				<ui5-side-navigation-item id="item" text="1"></ui5-side-navigation-item>
+				<ui5-side-navigation-item id="unselectableItem" text="2" unselectable></ui5-side-navigation-item>
+			</ui5-side-navigation>
+		`);
+
+		// assert
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "role", "menuitemradio");
+
+		cy.get("#unselectableItem")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "role", "menuitem");
+	});
+
+	it("SideNavigationItem aria-checked in collapsed SideNavigation", () => {
+		cy.mount(html`
+			<ui5-side-navigation id="sideNav" collapsed>
+				<ui5-side-navigation-item id="item" text="1"></ui5-side-navigation-item>
+				<ui5-side-navigation-item id="unselectableItem" text="2" unselectable></ui5-side-navigation-item>
+			</ui5-side-navigation>
+		`);
+
+		// assert
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "aria-checked");
+
+		cy.get("#unselectableItem")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("not.have.attr", "aria-checked");
+	});
 });
