@@ -3,7 +3,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 
 export default function MediaGalleryItemTemplate(this: MediaGalleryItem) {
     return (<div class="ui5-media-gallery-item-root"
-            tabindex={this.effectiveTabIndex} // TODO: check if 'tabIndex' acceptable
+            tabindex={this.effectiveTabIndex}
             data-sap-focus-ref
             onKeyDown={this._onkeydown}
             onKeyUp={this._onkeyup}
