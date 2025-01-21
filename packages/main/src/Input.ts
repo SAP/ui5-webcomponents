@@ -581,7 +581,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_handleResizeBound: ResizeObserverCallback;
 	_keepInnerValue: boolean;
 	_shouldAutocomplete?: boolean;
-	_keyDown?: boolean;
+	_enterKeyDown?: boolean;
 	_isKeyNavigation?: boolean;
 	Suggestions?: InputSuggestions;
 	_selectedText?: string;
@@ -780,6 +780,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		if (isEnter(e)) {
+			this._enterKeyDown = true;
 			return this._handleEnter(e);
 		}
 
@@ -807,7 +808,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this._clearPopoverFocusAndSelection();
 		}
 
-		this._keyDown = true;
 		this._isKeyNavigation = false;
 	}
 
@@ -818,7 +818,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.value = (e.target as HTMLInputElement).value;
 		}
 
-		this._keyDown = false;
+		this._enterKeyDown = false;
 	}
 
 	_handleUp(e: KeyboardEvent) {
@@ -870,10 +870,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		if (!suggestionItemPressed) {
 			this.lastConfirmedValue = this.value;
-
-			if (this._internals.form) {
-				submitForm(this);
-			}
 
 			return;
 		}
@@ -1025,6 +1021,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 				this._changeToBeFired = true;
 			} else {
 				fireChange();
+
+				if (this._enterKeyDown && this._internals.form) {
+					submitForm(this);
+				}
 			}
 		}
 	}

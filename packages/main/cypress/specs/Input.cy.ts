@@ -128,4 +128,39 @@ describe("Input Tests", () => {
 			.find("ul")
 			.should("not.have.attr", "tabindex", "0");
 	});
+
+	it("tests submit and change event order", () => {
+		cy.mount(html`
+			<form>
+				<ui5-input />
+			</form>
+		`);
+
+		cy.get("form")
+			.as("form");
+
+		cy.get("[ui5-input]")
+			.as("input");
+
+		// spy change event
+		cy.get<Input>("@input")
+			.then($input => {
+				$input.get(0).addEventListener("change", cy.spy().as("change"));
+			});
+
+		// spy submit event and prevent it
+		cy.get("@form")
+			.then($form => {
+				$form.get(0).addEventListener("submit", e => e.preventDefault());
+				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
+			});
+
+		// check if submit is triggered after change
+		cy.get<Input>("@input")
+			.shadow()
+			.find("input")
+			.type("test{enter}");
+
+		cy.get("@change").should("have.been.calledBefore", cy.get("@submit"));
+	});
 });
