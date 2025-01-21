@@ -29,19 +29,17 @@ abstract class TableCellBase extends UI5Element {
 	@slot({ type: Node, "default": true })
 	content!: Array<Node>;
 
-	@property({ type: Boolean })
-	_popin = false;
-
 	/**
 	 * Determines the horizontal alignment of table cells.
-	 * **Note:** All values valid for justify-content can be used, not just the ones inside the enumeration.
+	 *
 	 * @default undefined
 	 * @public
 	 */
 	@property()
     horizontalAlign?: `${TableCellHorizontalAlign}`;
 
-	_individualSlot?: string;
+	@property({ type: Boolean })
+	_popin = false;
 
 	protected ariaRole: string = "gridcell";
 

@@ -3,13 +3,18 @@
 <div id="table" role="grid"
     style="{{styles.table}}"
     aria-label="{{_ariaLabel}}"
+    aria-rowcount="{{_ariaRowCount}}"
     aria-multiselectable="{{_ariaMultiSelectable}}"
 >
     <slot name="headerRow"></slot>
-    <slot></slot>
+    <div id="rows">
+        <div id="spacer" style="{{styles.spacer}}">
+            <slot></slot>
+        </div>
+    </div>
     {{#unless rows.length}}
         <ui5-table-row id="nodata-row">
-            <ui5-table-cell id="nodata-cell" excluded-from-navigation>
+            <ui5-table-cell id="nodata-cell" excluded-from-navigation horizontal-align="Center">
             {{#if nodata.length}}
                 <slot name="nodata"></slot>
             {{else}}
@@ -24,6 +29,11 @@
             {{> growingRow}}
         </div>
     {{/if}}
+
+    <ui5-drop-indicator
+		orientation="Horizontal"
+		.ownerReference="{{this}}"
+	></ui5-drop-indicator>
 
     {{> tableEndRow}}
 </div>

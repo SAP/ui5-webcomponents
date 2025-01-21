@@ -1,14 +1,20 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type {
+	AriaAutoComplete,
+	AriaRole,
+	AriaHasPopup,
+	ClassMap,
+} from "@ui5/webcomponents-base/dist/types.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-// @ts-ignore
+// @ts-expect-error
 import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.js";
 
 import {
@@ -40,26 +46,19 @@ import {
 	getAllAccessibleNameRefTexts,
 	registerUI5Element,
 	deregisterUI5Element,
-} from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+} from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/not-editable.js";
-import "@ui5/webcomponents-icons/dist/error.js";
-import "@ui5/webcomponents-icons/dist/alert.js";
-import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
-import "@ui5/webcomponents-icons/dist/information.js";
 import type SuggestionItem from "./SuggestionItem.js";
 import type { SuggestionComponent } from "./features/InputSuggestions.js";
 import type InputSuggestions from "./features/InputSuggestions.js";
-import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
-import Popover from "./Popover.js";
-import Icon from "./Icon.js";
+import type Popover from "./Popover.js";
+import type Icon from "./Icon.js";
 import type { IIcon } from "./Icon.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 // Templates
-import InputTemplate from "./generated/templates/InputTemplate.lit.js";
+import InputTemplate from "./InputTemplate.js";
 import { StartsWith } from "./Filters.js";
 
 import {
@@ -87,7 +86,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
-import ResponsivePopover from "./ResponsivePopover.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
 
 /**
  * Interface for components that represent a suggestion item, usable in `ui5-input`
@@ -110,16 +109,18 @@ type NativeInputAttributes = {
 	step?: number
 }
 
-type AccInfo = {
+type InputAccInfo = {
 	ariaRoledescription?: string,
 	ariaDescribedBy?: string,
-	ariaHasPopup?: string,
-	ariaAutoComplete?: string,
-	role?: string,
+	ariaHasPopup?: AriaHasPopup,
+	ariaAutoComplete?: AriaAutoComplete,
+	role?: AriaRole,
 	ariaControls?: string,
-	ariaExpanded?: string,
+	ariaRequired?: boolean,
+	ariaExpanded?: boolean,
 	ariaDescription?: string,
 	ariaLabel?: string,
+	ariaInvalid?: boolean,
 }
 
 // all sementic events
@@ -197,7 +198,7 @@ type InputSuggestionScrollEventDetail = {
 	tag: "ui5-input",
 	languageAware: true,
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: InputTemplate,
 	styles: [
 		inputStyles,
@@ -206,10 +207,6 @@ type InputSuggestionScrollEventDetail = {
 		SuggestionsCss,
 	],
 	features: ["InputSuggestions"],
-	get dependencies() {
-		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
-		return ([Popover, ResponsivePopover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
-	},
 })
 
 /**
@@ -217,14 +214,6 @@ type InputSuggestionScrollEventDetail = {
  * @public
  */
 @event("change", {
-	bubbles: true,
-})
-
-/**
- * Fired to make Angular two way data binding work properly.
- * @private
- */
-@event("value-changed", {
 	bubbles: true,
 })
 
@@ -255,13 +244,7 @@ type InputSuggestionScrollEventDetail = {
  * @public
  * @since 2.0.0
  */
-@event<InputSelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-	 	* @public
-	 	*/
-		item: { type: HTMLElement },
-	},
+@event("selection-change", {
 	bubbles: true,
 })
 
@@ -281,17 +264,7 @@ type InputSuggestionScrollEventDetail = {
  * @protected
  * @since 1.0.0-rc.8
  */
-@event<InputSuggestionScrollEventDetail>("suggestion-scroll", {
-	detail: {
-		/**
-	 	* @public
-	 	*/
-		scrollTop: { type: Number },
-		/**
-	 	* @public
-	 	*/
-		scrollContainer: { type: HTMLElement },
-	},
+@event("suggestion-scroll", {
 	bubbles: true,
 })
 
@@ -313,6 +286,16 @@ type InputSuggestionScrollEventDetail = {
 	bubbles: true,
 })
 class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
+	eventDetails!: {
+		"change": InputEventDetail,
+		"input": InputEventDetail,
+		"select": void,
+		"selection-change": InputSelectionChangeEventDetail,
+		"type-ahead": void,
+		"suggestion-scroll": InputSuggestionScrollEventDetail,
+		"open": void,
+		"close": void,
+	}
 	/**
 	 * Defines whether the component is in disabled state.
 	 *
@@ -514,7 +497,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_isValueStateFocused = false;
 
 	@property({ type: Object })
-	_inputAccInfo: AccInfo = {};
+	_inputAccInfo: InputAccInfo = {};
 
 	@property({ type: Object })
 	_nativeInputAttributes: NativeInputAttributes = {};
@@ -607,6 +590,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_changeToBeFired?: boolean; // used to wait change event firing after suggestion item selection
 	_performTextSelection?: boolean;
 	_isLatestValueFromSuggestions: boolean;
+	_isChangeTriggeredBySuggestion: boolean;
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -663,6 +647,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		// Indicates whether the value of the input is comming from a suggestion item
 		this._isLatestValueFromSuggestions = false;
+
+		this._isChangeTriggeredBySuggestion = false;
 
 		this._handleResizeBound = this._handleResize.bind(this);
 
@@ -751,6 +737,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		if (this.showSuggestions && this.Suggestions?._getPicker()) {
 			this._listWidth = this.Suggestions._getListWidth();
+
+			// disabled ItemNavigation from the list since we are not using it
+			this.Suggestions._getList()._itemNavigation._getItems = () => [];
 		}
 
 		if (this._performTextSelection) {
@@ -979,7 +968,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		this._keepInnerValue = false;
 		this.focused = false; // invalidating property
-
+		this._isChangeTriggeredBySuggestion = false;
 		if (this.showClearIcon && !this._effectiveShowClearIcon) {
 			this._clearIconClicked = false;
 			this._handleChange();
@@ -1022,9 +1011,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		const fireChange = () => {
-			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
+			if (!this._isChangeTriggeredBySuggestion) {
+				this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
+			}
 			this.previousValue = this.value;
 			this.typedInValue = this.value;
+			this._isChangeTriggeredBySuggestion = false;
 		};
 
 		if (this.previousValue !== this.getInputDOMRefSync()!.value) {
@@ -1040,7 +1032,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_clear() {
 		const valueBeforeClear = this.value;
 		this.value = "";
-		const prevented = !this.fireDecoratorEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: "" });
+		const prevented = !this.fireDecoratorEvent(INPUT_EVENTS.INPUT, { inputType: "" });
 
 		if (prevented) {
 			this.value = valueBeforeClear;
@@ -1058,23 +1050,33 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._clearIconClicked = true;
 	}
 
-	_scroll(e: CustomEvent<PopupScrollEventDetail>) {
-		this.fireDecoratorEvent<InputSuggestionScrollEventDetail>("suggestion-scroll", {
+	_scroll(e: UI5CustomEvent<ResponsivePopover, "scroll">) {
+		this.fireDecoratorEvent("suggestion-scroll", {
 			scrollTop: e.detail.scrollTop,
 			scrollContainer: e.detail.targetRef,
 		});
 	}
 
 	_handleSelect() {
-		this.fireDecoratorEvent("select", {});
+		this.fireDecoratorEvent("select");
 	}
 
-	_handleInput(e: InputEvent | CustomEvent<InputEventDetail>) {
+	_handleInput(e: CustomEvent<InputEventDetail>) {
+		const eventType: string = (e.detail && e.detail.inputType) || "";
+
+		this._input(e, eventType);
+	}
+
+	_handleNativeInput(e: InputEvent) {
+		const eventType: string = e.inputType || "";
+
+		this._input(e, eventType);
+	}
+
+	_input(e: CustomEvent<InputEventDetail> | InputEvent, eventType: string) {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef!.value;
-		const eventType: string = (e as InputEvent).inputType
-			|| (e.detail && (e as CustomEvent<InputEventDetail>).detail.inputType)
-			|| "";
+
 		this._keepInnerValue = false;
 
 		const allowedEventTypes = [
@@ -1257,8 +1259,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
-		Suggestions.i18nBundle = Input.i18nBundle;
 		if (Suggestions) {
+			Suggestions.i18nBundle = Input.i18nBundle;
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
 		}
 	}
@@ -1284,6 +1286,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
 
+			this._isChangeTriggeredBySuggestion = true;
 			// value might change in the change event handler
 			this.typedInValue = this.value;
 			this.previousValue = this.value;
@@ -1320,18 +1323,21 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.value = inputValue;
 		this.typedInValue = inputValue;
 		this.valueBeforeSelectionStart = inputValue;
+		const valueAfterInput = this.value;
 
 		if (isUserInput) { // input
 			const inputType = e.inputType || "";
-			const prevented = !this.fireDecoratorEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType });
+			const prevented = !this.fireDecoratorEvent(INPUT_EVENTS.INPUT, { inputType });
 
 			if (prevented) {
-				this.value = valueBeforeInput;
-				inputRef && (inputRef.value = valueBeforeInput);
+				// if the value is not changed after preventing the input event, revert the value
+				if (valueAfterInput === this.value) {
+					this.value = valueBeforeInput;
+				}
+
+				inputRef && (inputRef.value = this.value);
 			}
 
-			// Angular two way data binding
-			this.fireDecoratorEvent("value-changed");
 			this.fireResetSelectionChange();
 		}
 	}
@@ -1452,7 +1458,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	fireSelectionChange(item: IInputSuggestionItem | null, isValueFromSuggestions: boolean) {
 		if (this.Suggestions) {
-			this.fireDecoratorEvent<InputSelectionChangeEventDetail>(INPUT_EVENTS.SELECTION_CHANGE, { item });
+			this.fireDecoratorEvent(INPUT_EVENTS.SELECTION_CHANGE, { item });
 			this._isLatestValueFromSuggestions = isValueFromSuggestions;
 		}
 	}
@@ -1479,8 +1485,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		return Input.i18nBundle.getText(INPUT_AVALIABLE_VALUES);
 	}
 
-	get inputType() {
-		return this.type.toLowerCase();
+	get inputType(): `${InputType}` {
+		return this.type;
+	}
+	get inputNativeType(): Lowercase<`${InputType}`> {
+		return this.type.toLowerCase() as Lowercase<`${InputType}`>;
 	}
 
 	get isTypeNumber() {
@@ -1497,24 +1506,21 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	get accInfo() {
 		const ariaHasPopupDefault = this.showSuggestions ? "dialog" : undefined;
-		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
+		const ariaAutoCompleteDefault = this.showSuggestions ? "list" as const : undefined;
 		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 
-		const info = {
-			"input": {
-				"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
-				"ariaDescribedBy": ariaDescribedBy || undefined,
-				"ariaInvalid": this.valueState === ValueState.Negative ? "true" : undefined,
-				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
-				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
-				"role": this._inputAccInfo && this._inputAccInfo.role,
-				"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
-				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
-				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts || undefined,
-			},
+		return {
+			"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
+			"ariaDescribedBy": ariaDescribedBy || undefined,
+			"ariaInvalid": this.valueState === ValueState.Negative ? true : undefined,
+			"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
+			"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
+			"role": this._inputAccInfo && this._inputAccInfo.role,
+			"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
+			"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
+			"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
+			"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts || undefined,
 		};
-		return info;
 	}
 
 	get nativeInputAttributes() {
@@ -1591,7 +1597,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	get suggestionSeparators() {
-		return "None";
+		return "None" as const;
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
@@ -1731,10 +1737,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 }
 
+// declare module "@ui5/webcomponents-base/jsx-runtime" {
+// 	// eslint-disable-next-line @typescript-eslint/no-namespace
+// 	namespace JSX {
+// 		interface IntrinsicElements {
+// 			"ui5-input": Input["_jsxProps"];
+// 		}
+// 	}
+// }
+
 Input.define();
 
 export default Input;
 export type {
+	InputAccInfo,
 	IInputSuggestionItem,
 	IInputSuggestionItemSelectable,
 	InputSuggestionScrollEventDetail,

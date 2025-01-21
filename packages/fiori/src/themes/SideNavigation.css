@@ -1,3 +1,5 @@
+@import "./SideNavigationGroup.css";
+
 :host(:not([hidden])) {
 	display: inline-block;
 	height: 100%;
@@ -5,7 +7,6 @@
 	width: var(--_ui5_side_navigation_width);
 	max-width: 100%;
 	transition: width 0.3s, min-width 0.3s;
-	border-radius: var(--_ui5_side_navigation_border_radius);
 	box-shadow: var(--_ui5_side_navigation_box_shadow);
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
@@ -17,10 +18,6 @@
 	width: var(--_ui5_side_navigation_collapsed_width);
 }
 
-:host([is-touch-device]) {
-	border-radius: var(--_ui5_side_navigation_phone_border_radius);
-}
-
 .ui5-sn-root {
 	height: 100%;
 	display: flex;
@@ -28,18 +25,6 @@
 	box-sizing: border-box;
 	border-radius: inherit;
 	border-inline-end: var(--_ui5_side_navigation_border_right);
-}
-
-.ui5-sn-spacer {
-	margin: var(--_ui5_side_navigation_navigation_separator_margin);
-	height: var(--_ui5_side_navigation_navigation_separator_height);
-	min-height: var(--_ui5_side_navigation_navigation_separator_height);
-	background-color: var(--_ui5_side_navigation_navigation_separator_background_color);
-	border-radius: var(--_ui5_side_navigation_navigation_separator_radius);
-}
-
-.ui5-sn-collapsed .ui5-sn-spacer {
-	margin: var(--_ui5_side_navigation_navigation_separator_margin_collapsed);
 }
 
 .ui5-sn-flexible {
@@ -57,10 +42,17 @@
 
 .ui5-sn-list {
 	margin: 0;
-	padding: var(--_ui5_side_navigation_padding);
 	list-style: none;
 	box-sizing: border-box;
 	overflow: hidden auto;
+}
+
+.ui5-sn-list.ui5-sn-flexible {
+	padding: var(--_ui5_side_navigation_padding-flexible);
+}
+
+.ui5-sn-list.ui5-sn-fixed {
+	padding: var(--_ui5_side_navigation_padding-fixed);
 }
 
 .ui5-sn-collapsed .ui5-sn-list {

@@ -2,16 +2,16 @@ import { isDesktop, isPhone, isTablet } from "@ui5/webcomponents-base/dist/Devic
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
@@ -31,14 +31,12 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
-import Icon from "./Icon.js";
-import Popover from "./Popover.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
-import Input from "./Input.js";
-import Button from "./Button.js";
-import TimeSelectionClocks from "./TimeSelectionClocks.js";
-import TimeSelectionInputs from "./TimeSelectionInputs.js";
+import type Popover from "./Popover.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
+import TimePickerTemplate from "./TimePickerTemplate.js";
+import type Input from "./Input.js";
+import type { InputAccInfo } from "./Input.js";
+import type TimeSelectionInputs from "./TimeSelectionInputs.js";
 import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
 
 import {
@@ -129,21 +127,12 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 	languageAware: true,
 	cldr: true,
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TimePickerTemplate,
 	styles: [
 		TimePickerCss,
 		ResponsivePopoverCommonCss,
 		TimePickerPopoverCss,
-	],
-	dependencies: [
-		Icon,
-		Popover,
-		ResponsivePopover,
-		TimeSelectionClocks,
-		TimeSelectionInputs,
-		Input,
-		Button,
 	],
 })
 /**
@@ -153,21 +142,7 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
-@event<TimePickerChangeEventDetail>("change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		value: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
+@event("change", {
 	bubbles: true,
 })
 
@@ -177,21 +152,7 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
  * @param {string} value The current value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
-@event<TimePickerInputEventDetail>("input", {
-	detail: {
-		/**
-		 * @public
-		 */
-		value: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
+@event("input", {
 	bubbles: true,
 })
 /**
@@ -211,6 +172,13 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 	bubbles: true,
 })
 class TimePicker extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: TimePickerChangeEventDetail;
+		"value-changed": TimePickerChangeEventDetail;
+		input: TimePickerInputEventDetail;
+		open: void;
+		close: void;
+	}
 	/**
 	 * Defines a formatted time value.
 	 * @default ""
@@ -370,7 +338,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return TimePicker.i18nBundle.getText(TIMEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
-	get accInfo() {
+	get accInfo(): InputAccInfo {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "dialog",
@@ -519,7 +487,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_updateValueAndFireEvents(value: string, normalizeValue: boolean, eventsNames: Array<string>) {
+	_updateValueAndFireEvents(value: string, normalizeValue: boolean, eventsNames: Array<"input" | "change" | "value-changed">) {
 		if (value === this.value) {
 			return;
 		}
@@ -536,7 +504,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		this.tempValue = value; // if the picker is open, sync it
 		this._updateValueState(); // Change the value state to Error/None, but only if needed
 		eventsNames.forEach(eventName => {
-			this.fireDecoratorEvent<TimePickerChangeInputEventDetail>(eventName, { value, valid });
+			this.fireDecoratorEvent(eventName, { value, valid });
 		});
 	}
 
@@ -555,6 +523,10 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_handleInputLiveChange(e: CustomEvent) {
+		if (this._isPhone) {
+			e.preventDefault();
+		}
+
 		const target = e.target as Input;
 		this._updateValueAndFireEvents(target.value, false, ["input"]);
 	}
@@ -721,12 +693,6 @@ class TimePicker extends UI5Element implements IFormInputElement {
 				const popover = this._getInputsPopover();
 				popover.applyFocus();
 			}
-			e.preventDefault();
-		}
-	}
-
-	_oninput(e: CustomEvent) {
-		if (this._isPhone) {
 			e.preventDefault();
 		}
 	}

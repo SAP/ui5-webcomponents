@@ -1,18 +1,13 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
-import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
-import "@ui5/webcomponents-icons/dist/circle-task-2.js";
-import "@ui5/webcomponents-icons/dist/arrow-right.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
-import SideNavigationItemTemplate from "./generated/templates/SideNavigationItemTemplate.lit.js";
+import SideNavigationItemTemplate from "./SideNavigationItemTemplate.js";
 
 // Styles
 import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
@@ -37,12 +32,9 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
  */
 @customElement({
 	tag: "ui5-side-navigation-item",
-	renderer: litRender,
+	renderer: jsxRender,
 	template: SideNavigationItemTemplate,
 	styles: SideNavigationItemCss,
-	dependencies: [
-		Icon,
-	],
 })
 class SideNavigationItem extends SideNavigationSelectableItemBase {
 	/**
@@ -72,7 +64,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationSubItem>;
 
-	get overflowItems() : Array<HTMLElement> {
+	get overflowItems() : Array<SideNavigationItem> {
 		return [this];
 	}
 
@@ -128,10 +120,6 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		return this.expanded;
 	}
 
-	get _toggleIconName() {
-		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
-	}
-
 	get classesArray() {
 		const classes = super.classesArray;
 
@@ -154,13 +142,13 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		return this.selected;
 	}
 
-	_onToggleClick = (e: PointerEvent) => {
+	_onToggleClick(e: PointerEvent) {
 		e.stopPropagation();
 
 		this.expanded = !this.expanded;
 	}
 
-	_onkeydown = (e: KeyboardEvent) => {
+	_onkeydown(e: KeyboardEvent) {
 		if (isLeft(e)) {
 			this.expanded = false;
 			return;
@@ -174,19 +162,19 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		super._onkeydown(e);
 	}
 
-	_onkeyup = (e: KeyboardEvent) => {
+	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 	}
 
-	_onfocusin = (e: FocusEvent) => {
+	_onfocusin(e: FocusEvent) {
 		super._onfocusin(e);
 	}
 
-	_onclick = (e: PointerEvent) => {
+	_onclick(e: MouseEvent) {
 		super._onclick(e);
 	}
 
-	_onfocusout = () => {
+	_onfocusout() {
 		if (!this.sideNavCollapsed) {
 			return;
 		}
@@ -194,7 +182,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
-	_onmouseenter = () => {
+	_onmouseenter() {
 		if (!this.sideNavCollapsed) {
 			return;
 		}
@@ -202,7 +190,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
-	_onmouseleave = () => {
+	_onmouseleave() {
 		if (!this.sideNavCollapsed || !this._selected) {
 			return;
 		}

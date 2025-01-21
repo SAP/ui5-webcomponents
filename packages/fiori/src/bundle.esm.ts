@@ -32,10 +32,15 @@ import ShellBarItem from "./ShellBarItem.js";
 import SideNavigation from "./SideNavigation.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
+import SideNavigationGroup from "./SideNavigationGroup.js";
 import SortItem from "./SortItem.js";
 import Timeline from "./Timeline.js";
+import NavigationLayout from "./NavigationLayout.js";
 import UploadCollection from "./UploadCollection.js";
 import UploadCollectionItem from "./UploadCollectionItem.js";
+import UserMenu from "./UserMenu.js";
+import UserMenuAccount from "./UserMenuAccount.js";
+import UserMenuItem from "./UserMenuItem.js";
 import ViewSettingsDialog from "./ViewSettingsDialog.js";
 import Wizard from "./Wizard.js";
 

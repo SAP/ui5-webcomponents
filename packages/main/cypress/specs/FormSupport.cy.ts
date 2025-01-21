@@ -41,6 +41,9 @@ describe("Form support", () => {
 	<button type="submit">Submits forms</button>
 </form>`);
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -78,6 +81,9 @@ describe("Form support", () => {
 	<button type="submit">Submits forms</button>
 </form>`);
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -106,6 +112,9 @@ describe("Form support", () => {
 	<ui5-combobox id="combobox5" name="combobox5" required></ui5-combobox>
 	<button type="submit">Submits forms</button>
 </form>`);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -148,6 +157,9 @@ describe("Form support", () => {
 	<button type="submit">Submits forms</button>
 </form>`);
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -188,6 +200,9 @@ describe("Form support", () => {
 	<ui5-daterange-picker id="daterange_picker5" name="daterange_picker5" required></ui5-daterange-picker>
 	<button type="submit">Submits forms</button>
 </form>`);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -230,6 +245,9 @@ describe("Form support", () => {
 	<button type="submit">Submits forms</button>
 </form>`);
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -270,6 +288,9 @@ describe("Form support", () => {
 	<ui5-input id="input5" name="input5" required></ui5-input>
 	<button type="submit">Submits forms</button>
 </form>`);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -335,6 +356,9 @@ describe("Form support", () => {
 	<button type="submit">Submits forms</button>
 </form>`);
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -396,6 +420,9 @@ describe("Form support", () => {
 	<button type="submit">Submits forms</button>
 </form>`);
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -432,6 +459,9 @@ describe("Form support", () => {
 	<ui5-radio-button id="rb_1" required name="rb1"></ui5-radio-button>
 	<button type="submit">Submits forms</button>
 </form>`);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -471,6 +501,9 @@ describe("Form support", () => {
 	<button type="submit">Submits forms</button>
 </form>`);
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -498,6 +531,9 @@ describe("Form support", () => {
 	<button type="submit">Submits forms</button>
 </form>`);
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -513,6 +549,7 @@ describe("Form support", () => {
 		cy.get("#rb_4")
 			.realClick();
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(200);
 
@@ -537,6 +574,9 @@ describe("Form support", () => {
 	<ui5-range-slider id="range_slider4" name="range_slider4" start-value="25" end-value="75"></ui5-range-slider>
 	<button type="submit">Submits forms</button>
 </form>`);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -610,6 +650,9 @@ describe("Form support", () => {
 	<button type="submit">Submits forms</button>
 </form>`);
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -655,6 +698,9 @@ describe("Form support", () => {
 	<button type="submit">Submits forms</button>
 </form>`);
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -682,6 +728,9 @@ describe("Form support", () => {
 	<ui5-step-input id="step_input4" name="step_input4" value="4"></ui5-step-input>
 	<button type="submit">Submits forms</button>
 </form>`);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -711,6 +760,9 @@ describe("Form support", () => {
 	<ui5-switch id="switch5" name="switch5" required text="ui5-switch with name, value and required"></ui5-switch>
 	<button type="submit">Submits forms</button>
 </form>`);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -749,6 +801,9 @@ describe("Form support", () => {
 	<ui5-textarea id="textarea5" name="textarea5" required></ui5-textarea>
 	<button type="submit">Submits forms</button>
 </form>`);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -792,6 +847,9 @@ describe("Form support", () => {
 </form>`);
 		/* eslint-enable no-irregular-whitespace */
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -827,6 +885,9 @@ describe("Form support", () => {
 		cy.mount(html`<form method="get">
 	<ui5-button id="b1">Does not submit forms</ui5-button>
 </form>`);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -871,6 +932,9 @@ describe("Form support", () => {
 	<ui5-button id="b1">Does not submit forms</ui5-button>
 	<ui5-button id="b2" submits>Submits forms</ui5-button>
 </form>`);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {

@@ -1,35 +1,30 @@
 import {
 	isSpace, isDelete, isF10Shift, isEnterShift, isUp, isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import Tag from "@ui5/webcomponents/dist/Tag.js";
-import Link from "@ui5/webcomponents/dist/Link.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
+import type { ButtonAccessibilityAttributes } from "@ui5/webcomponents/dist/Button.js";
+import type Link from "@ui5/webcomponents/dist/Link.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationList from "./NotificationList.js";
 
 // Icons
-import "@ui5/webcomponents-icons/dist/overflow.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/high-priority.js";
-import "@ui5/webcomponents-icons/dist/message-success.js";
-import "@ui5/webcomponents-icons/dist/message-information.js";
-import "@ui5/webcomponents-icons/dist/message-error.js";
-import "@ui5/webcomponents-icons/dist/message-warning.js";
+import iconSysEnter2 from "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import iconAlert from "@ui5/webcomponents-icons/dist/alert.js";
+import iconError from "@ui5/webcomponents-icons/dist/error.js";
+import iconInformation from "@ui5/webcomponents-icons/dist/information.js";
 
 // Texts
 import {
@@ -49,10 +44,11 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
-import NotificationListItemTemplate from "./generated/templates/NotificationListItemTemplate.lit.js";
+import NotificationListItemTemplate from "./NotificationListItemTemplate.js";
 
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
+import IconDesign from "@ui5/webcomponents/dist/types/IconDesign.js";
 
 type NotificationListItemCloseEventDetail = {
 	item: HTMLElement,
@@ -68,10 +64,10 @@ type Footnote = Record<string, any>;
  * Defines the icons name corresponding to the notification's status indicator.
  */
 const ICON_PER_STATUS_NAME = {
-	[ValueState.Negative]: "error",
-	[ValueState.Critical]: "alert",
-	[ValueState.Positive]: "sys-enter-2",
-	[ValueState.Information]: "information",
+	[ValueState.Negative]: iconError,
+	[ValueState.Critical]: iconAlert,
+	[ValueState.Positive]: iconSysEnter2,
+	[ValueState.Information]: iconInformation,
 	[ValueState.None]: "",
 };
 
@@ -79,11 +75,11 @@ const ICON_PER_STATUS_NAME = {
  * Defines the icons design (color) corresponding to the notification's status indicator.
  */
 const ICON_PER_STATUS_DESIGN = {
-	[ValueState.Negative]: "Negative",
-	[ValueState.Critical]: "Critical",
-	[ValueState.Positive]: "Positive",
-	[ValueState.Information]: "Information",
-	[ValueState.None]: "",
+	[ValueState.Negative]: IconDesign.Negative,
+	[ValueState.Critical]: IconDesign.Critical,
+	[ValueState.Positive]: IconDesign.Positive,
+	[ValueState.Information]: IconDesign.Information,
+	[ValueState.None]: undefined,
 };
 
 /**
@@ -137,14 +133,8 @@ const ICON_PER_STATUS_DESIGN = {
 	styles: [
 		NotificationListItemCss,
 	],
+	renderer: jsxRenderer,
 	template: NotificationListItemTemplate,
-	dependencies: [
-		Button,
-		Icon,
-		BusyIndicator,
-		Link,
-		Tag,
-	],
 })
 
 @event("_press", {
@@ -156,19 +146,15 @@ const ICON_PER_STATUS_DESIGN = {
  * @param {HTMLElement} item the closed item.
  * @public
  */
-@event<NotificationListItemCloseEventDetail>("close", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: {
-			type: HTMLElement,
-		},
-	},
+@event("close", {
 	bubbles: true,
 })
 
 class NotificationListItem extends NotificationListItemBase {
+	eventDetails!: NotificationListItemBase["eventDetails"] & {
+		_press: NotificationListItemPressEventDetail,
+		close: NotificationListItemCloseEventDetail,
+	}
 	/**
 	* Defines if the `titleText` and `description` should wrap,
 	* they truncate by default.
@@ -275,7 +261,7 @@ class NotificationListItem extends NotificationListItemBase {
 	_descOverflowHeight: number;
 	_onResizeBound: ResizeObserverCallback;
 
-	_ariaLevel : string | undefined;
+	_ariaLevel?: number;
 
 	constructor() {
 		super();
@@ -309,10 +295,6 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get hasImportance() {
 		return this.importance !== NotificationListItemImportance.Standard;
-	}
-
-	get contentClasses() {
-		return this.hasImportance ? "ui5-nli-content ui5-nli-content-with-importance" : "ui5-nli-content";
 	}
 
 	get hasFootNotes() {
@@ -469,19 +451,15 @@ class NotificationListItem extends NotificationListItemBase {
 		return this.read ? NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
 	}
 
-	get accInfoButton() {
+	get menuButtonAccessibilityAttributes(): ButtonAccessibilityAttributes {
 		return {
-			accessibilityAttributes: {
-				hasPopup: "menu",
-			},
+			hasPopup: "menu",
 		};
 	}
 
-	get accInfoLink() {
+	get moreLinkAccessibilityAttributes() {
 		return {
-			accessibilityAttributes: {
-				expanded: this._showMorePressed,
-			},
+			expanded: this._showMorePressed,
 		};
 	}
 
@@ -492,13 +470,13 @@ class NotificationListItem extends NotificationListItemBase {
 	/**
 	 * Event handlers
 	 */
-	_onclick(e: MouseEvent) {
-		this.fireItemPress(e);
+	_onclick() {
+		this.fireItemPress();
 	}
 
-	_onShowMoreClick(e: MouseEvent) {
+	_onShowMoreClick(e: UI5CustomEvent<Link, "click">) {
 		e.preventDefault();
-		this._showMorePressed = !this._showMorePressed;
+		this._toggleShowMorePressed();
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
@@ -531,6 +509,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		const navItems = list.getEnabledItems();
+		// @ts-expect-error TOFIX strictEvents
 		const index = navItems.indexOf(this) + (isUp(e) ? -1 : 1);
 		const nextItem = navItems[index] as NotificationListItemBase;
 		if (!nextItem) {
@@ -550,13 +529,14 @@ class NotificationListItem extends NotificationListItemBase {
 
 		const space = isSpace(e);
 
-		if (space && getEventMark(e) === "link") {
-			this._onShowMoreClick(e as unknown as MouseEvent);
+		if (space && this.getFocusDomRef()!.matches(":has(:focus-within)")) {
+			e.preventDefault();
+			this._toggleShowMorePressed();
 			return;
 		}
 
 		if (isDelete(e)) {
-			this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+			this.fireDecoratorEvent("close", { item: this });
 		}
 
 		if (isF10Shift(e)) {
@@ -564,18 +544,22 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		if (isEnterShift(e)) {
-			this._showMorePressed = !this._showMorePressed;
+			this._toggleShowMorePressed();
 		}
 	}
 
 	_onBtnCloseClick() {
-		this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+		this.fireDecoratorEvent("close", { item: this });
 	}
 
 	_onBtnMenuClick() {
 		if (this.getMenu()) {
 			this.openMenu();
 		}
+	}
+
+	_toggleShowMorePressed() {
+		this._showMorePressed = !this._showMorePressed;
 	}
 
 	openMenu() {
@@ -585,19 +569,23 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	getMenu() {
-		const menu = this.querySelector<Menu>("ui5-menu")!;
+		const menu = this.querySelector<Menu>("[ui5-menu]")!;
 		return menu;
 	}
 
 	/**
 	 * Private
 	 */
-	fireItemPress(e: Event) {
-		if (getEventMark(e) === "button" || getEventMark(e) === "link") {
+	fireItemPress() {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 
-		this.fireDecoratorEvent<NotificationListItemPressEventDetail>("_press", { item: this });
+		// NotificationListItem will never be assigned to a variable of type ListItemBase
+		// typescipt complains here, if that is the case, the parameter to the _press event handler could be a ListItemBase item,
+		// but this is never the case, all components are used by their class and never assigned to a variable with a type of ListItemBase
+		// @ts-expect-error
+		this.fireDecoratorEvent("_press", { item: this });
 	}
 
 	onResize() {
