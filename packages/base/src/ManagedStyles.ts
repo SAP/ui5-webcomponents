@@ -1,6 +1,7 @@
 import { getCurrentRuntimeIndex, compareRuntimes } from "./Runtimes.js";
 
 const isSSR = typeof document === "undefined";
+const isJsDom = typeof navigator !== "undefined" && navigator.userAgent.includes("jsdom");
 
 const getStyleId = (name: string, value: string) => {
 	return value ? `${name}|${value}` : name;
@@ -48,7 +49,7 @@ const updateStyle = (content: string, name: string, value = "", theme?: string) 
 };
 
 const hasStyle = (name: string, value = ""): boolean => {
-	if (isSSR) {
+	if (isSSR || isJsDom) {
 		return true;
 	}
 
@@ -60,6 +61,10 @@ const removeStyle = (name: string, value = "") => {
 };
 
 const createOrUpdateStyle = (content: string, name: string, value = "", theme?: string) => {
+	if (isJsDom) {
+		// jsdom (vitest) does not support adoptedStyleSheets, but it is safe to igore for app testing
+		return;
+	}
 	if (hasStyle(name, value)) {
 		updateStyle(content, name, value, theme);
 	} else {
