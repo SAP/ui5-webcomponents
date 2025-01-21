@@ -329,14 +329,6 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-right {
-	/* display: flex;
-	overflow: hidden;
-	position: relative;
-	box-sizing: border-box;
-	white-space: nowrap;
-	justify-content: flex-end;
-	flex-grow: 1;
-	overflow: hidden; */
 	flex-grow: 1;
 	justify-content: flex-end;
 }
@@ -362,7 +354,6 @@ slot[name="profile"] {
 	flex-shrink: 1;
 }
 
-::slotted(.ui5-shellbar-separator),
 .ui5-shellbar-separator {
 	flex-grow: 0;
 	flex-shrink: 0;
@@ -395,20 +386,13 @@ slot[name="profile"] {
 	position: absolute;
 }
 
-::slotted([slot^="startContent"]),
-::slotted([slot^="endContent"]) {
- 	margin-inline-start: var(--_ui5-shellbar-content-margin-start);
-}
-
-::slotted([slot^="startContent"][slot$="-1"]),
-::slotted([slot^="endContent"][slot$="-1"]) {
-	margin-inline-start: 0;
-}
-
 .ui5-shellbar-additional-content-item {
 	flex-shrink: 0;
-	margin: 0;
-	padding: 0;
+ 	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
+}
+
+.ui5-shellbar-additional-content-item:first-child {
+	padding-inline-start: 0;
 }
 
 :host(:not([notifications-count])) .ui5-shellbar-bell-button {
