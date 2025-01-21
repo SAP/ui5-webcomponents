@@ -22,6 +22,7 @@ import ColorPaletteTemplate from "./ColorPaletteTemplate.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
 import type Button from "./Button.js";
 import type ColorPicker from "./ColorPicker.js";
+import "./ColorPaletteItem.js";
 
 import {
 	COLORPALETTE_CONTAINER_LABEL,

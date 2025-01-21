@@ -10,10 +10,6 @@ const assetsMeta = {
 	    "sap_horizon_dark",
 	    "sap_horizon_hcb",
 	    "sap_horizon_hcw",
-      "sap_horizon_exp",
-	    "sap_horizon_dark_exp",
-	    "sap_horizon_hcb_exp",
-	    "sap_horizon_hcw_exp",
     ],
   },
   "languages": {

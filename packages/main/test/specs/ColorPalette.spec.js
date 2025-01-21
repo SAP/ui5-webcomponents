@@ -89,6 +89,7 @@ describe("ColorPalette interactions", () => {
 		await browser.keys("Tab"); // Green
 		await browser.keys("Tab"); // Blue
 		await browser.keys("Tab"); // Alpha
+		await browser.keys("Tab"); // Toggle Mode Button
 		await browser.keys("Tab"); // Ok Button
 
 		await browser.keys("Enter"); // Close the dialog & change the value of the color palette

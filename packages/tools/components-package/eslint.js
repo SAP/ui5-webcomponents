@@ -42,8 +42,10 @@ const getTsModeOverrides = () => {
 
 	const tsxConfiguration = JSON.parse(JSON.stringify(tsConfiguration));
 	tsxConfiguration.files = ["*.tsx"];
+	tsxConfiguration.plugins.push("jsx-no-leaked-values");
 	tsxConfiguration.rules = {
 		...tsxConfiguration.rules,
+		"jsx-no-leaked-values/jsx-no-leaked-values": "error",
 		"@typescript-eslint/unbound-method": "off", // to be able to attach on* listeners
 		"@typescript-eslint/no-misused-promises": "off", // to be able to have async event listeners
 		"operator-linebreak": "off",
