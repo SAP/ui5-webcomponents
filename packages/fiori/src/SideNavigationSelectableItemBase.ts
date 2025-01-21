@@ -102,6 +102,14 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	/**
 	 * Indicates whether the navigation item is selectable. By default all items are selectable unless specifically marked as unselectable.
 	 *
+	 * When a parent item is marked as unselectable, clicking it will only expand or collapse its sub-items.
+	 * To achieve better user experience you should not mix unselectable parent items and selectable parent items in the same side navigation.
+	 *
+	 *
+	 * **Guidelines**:
+	 * - External links should not be unselectable
+	 * - Items that trigger actions (with design "Action") should be unselectable
+	 *
 	 * @public
 	 * @default false
 	 * @since 2.7.0
@@ -132,7 +140,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 
 	get ariaRole() {
 		if (this.sideNavCollapsed) {
-			return this.isOverflow ? "menuitem" : "menuitemradio";
+			return this.isOverflow || this.unselectable ? "menuitem" : "menuitemradio";
 		}
 
 		return "treeitem";
