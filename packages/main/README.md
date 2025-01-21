@@ -28,7 +28,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Checkbox                 | `ui5-checkbox`              | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
 | Color Palette            | `ui5-color-palette`         | `import "@ui5/webcomponents/dist/ColorPalette.js";`        |
 | Color Palette Item       | `ui5-color-palette-item`    | comes with `ui5-color-palette`                             |
-| Color Palette Popover    | `ui5-color-palette-popover` | comes with `ui5-color-palette-popover`                     |
+| Color Palette Popover    | `ui5-color-palette-popover` | `import "@ui5/webcomponents/dist/ColorPalettePopover.js";` |
 | Color Picker             | `ui5-color-picker`          | `import "@ui5/webcomponents/dist/ComboPicker.js";`         |
 | ComboBox                 | `ui5-combobox`              | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
 | ComboBox Item            | `ui5-cb-item`               | comes with `ui5-combobox`                                  |

@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2...v2.7.0-rc.0) (2025-01-16)
+
+
+### Bug Fixes
+
+* i18n decorator property definition ([#10521](https://github.com/SAP/ui5-webcomponents/issues/10521)) ([d19f4e9](https://github.com/SAP/ui5-webcomponents/commit/d19f4e99bad74432bff21587da43a5844f17f8cf))
+* **ui5-view-settings-dialog:** adjust reset button announcement ([#10320](https://github.com/SAP/ui5-webcomponents/issues/10320)) ([42b29f3](https://github.com/SAP/ui5-webcomponents/commit/42b29f3eb6c435959ee67551d5f9f450995370ce)), closes [#10191](https://github.com/SAP/ui5-webcomponents/issues/10191)
+
+
+### Features
+
+* **ui5-side-navigation:** update existing design for Horizon theme ([#10337](https://github.com/SAP/ui5-webcomponents/issues/10337)) ([d5eff51](https://github.com/SAP/ui5-webcomponents/commit/d5eff51f56042d5fbf94e87d6bd94cdbe2d55982))
+
+
+
+
+
+## [2.6.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2-rc.0...v2.6.2) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
 ## [2.6.2-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.1...v2.6.2-rc.0) (2025-01-09)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

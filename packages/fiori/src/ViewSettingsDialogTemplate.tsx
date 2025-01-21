@@ -50,11 +50,13 @@ function ViewSettingsDialogTemplateHeader(this: ViewSettingsDialog) {
 								selected={this.isModeSort}
 								icon={sortIcon}
 								data-mode="Sort"
+								tooltip={this._sortButtonTooltip}
 							/>
 							<SegmentedButtonItem
 								selected={this.isModeFilter}
 								icon={filterIcon}
 								data-mode="Filter"
+								tooltip={this._filterButtonTooltip}
 							/>
 						</SegmentedButton>
 					</div>
