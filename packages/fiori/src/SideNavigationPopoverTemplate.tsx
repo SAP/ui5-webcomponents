@@ -56,6 +56,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 					class="ui5-side-navigation-in-popover"
 				>
 					<SideNavigationItem
+						accessibilityAttributes={this._popoverContents.item.accessibilityAttributes}
 						text={this._popoverContents.item.text}
 						tooltip={this._popoverContents.item._tooltip}
 						href={this._popoverContents.item._href}
@@ -71,6 +72,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 					>
 						{this._popoverContents.subItems.map(item =>
 							<SideNavigationSubItem
+								accessibilityAttributes={item.accessibilityAttributes}
 								text={item.text}
 								tooltip={item._tooltip}
 								href={item._href}

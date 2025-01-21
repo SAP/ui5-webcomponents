@@ -276,54 +276,8 @@ describe("Side Navigation Accessibility", () => {
 		cy.mount(html`
 			<ui5-side-navigation>
 				<ui5-side-navigation-item id="item1" text="1"></ui5-side-navigation-item>
-			</ui5-side-navigation>
-		`);
-
-		cy.get("#item1")
-			.shadow()
-			.find(".ui5-sn-item")
-			.should("not.have.attr", "aria-haspopup");
-
-		cy.get("#item1")
-			.invoke("prop", "accessibilityAttributes", {
-				hasPopup: "dialog",
-			});
-
-		cy.get("#item1")
-			.shadow()
-			.find(".ui5-sn-item")
-			.should("have.attr", "aria-haspopup", "dialog");
-	});
-
-	it("SideNavigationItem ariaHasPopup in collapsed SideNavigation", () => {
-		cy.mount(html`
-			<ui5-side-navigation collapsed>
-				<ui5-side-navigation-item id="item1" text="1"></ui5-side-navigation-item>
-			</ui5-side-navigation>
-		`);
-
-		cy.get("#item1")
-			.shadow()
-			.find(".ui5-sn-item")
-			.should("not.have.attr", "aria-haspopup");
-
-		cy.get("#item1")
-			.invoke("prop", "accessibilityAttributes", {
-				hasPopup: "dialog",
-			});
-
-		cy.get("#item1")
-			.shadow()
-			.find(".ui5-sn-item")
-			.should("have.attr", "aria-haspopup", "dialog");
-	});
-
-	it("SideNavigationItem with sub items ariaHasPopup in collapsed SideNavigation", () => {
-		cy.mount(html`
-			<ui5-side-navigation collapsed>
-				<ui5-side-navigation-item id="item1" text="1">
-					<ui5-side-navigation-sub-item text="1.1"></ui5-side-navigation-sub-item>
-					<ui5-side-navigation-sub-item text="1.2"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-item id="item2" text="2" expanded>
+					<ui5-side-navigation-sub-item id="childItem" text="2.1"></ui5-side-navigation-sub-item>
 				</ui5-side-navigation-item>
 			</ui5-side-navigation>
 		`);
@@ -331,6 +285,95 @@ describe("Side Navigation Accessibility", () => {
 		cy.get("#item1")
 			.shadow()
 			.find(".ui5-sn-item")
+			.should("not.have.attr", "aria-haspopup");
+
+		cy.get("#item1")
+			.invoke("prop", "accessibilityAttributes", {
+				hasPopup: "dialog",
+			});
+
+		cy.get("#item1")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "aria-haspopup", "dialog");
+
+		cy.get("#childItem")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("not.have.attr", "aria-haspopup");
+
+		cy.get("#childItem")
+			.invoke("prop", "accessibilityAttributes", {
+				hasPopup: "dialog",
+			});
+
+		cy.get("#childItem")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "aria-haspopup", "dialog");
+	});
+
+	it("SideNavigationItem with sub items ariaHasPopup in collapsed SideNavigation", () => {
+		cy.mount(html`
+			<ui5-side-navigation id="sideNav" collapsed>
+				<ui5-side-navigation-item id="item1" text="1">
+					<ui5-side-navigation-sub-item id="childItem" text="1.1"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		`);
+		cy.get("#item1").realClick();
+
+		// assert
+		cy.get("#item1")
+			.shadow()
+			.find(".ui5-sn-item")
 			.should("have.attr", "aria-haspopup", "tree");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("not.have.attr", "aria-haspopup");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("not.have.attr", "aria-haspopup");
+
+		// act
+		cy.get("#item1")
+			.invoke("prop", "accessibilityAttributes", {
+				hasPopup: "dialog",
+			});
+		cy.get("#childItem")
+			.invoke("prop", "accessibilityAttributes", {
+				hasPopup: "dialog",
+			});
+
+		// reopen the popover
+		cy.get("#item1").realClick().realClick();
+
+		// assert
+		cy.get("#item1")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "aria-haspopup", "tree");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "aria-haspopup", "dialog");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "aria-haspopup", "dialog");
 	});
 });
