@@ -16,7 +16,7 @@ globalThis.FileList ??= FileListShim as object as typeof FileList;
 // Polyfill `adoptedStyleSheets` globally for both `Document` and `ShadowRoot`
 const adoptedSheetsStore = new WeakMap();
 
-if (!("adoptedStyleSheets" in Document.prototype)) {
+if (globalThis.Document && !("adoptedStyleSheets" in Document.prototype)) {
   Object.defineProperty(Document.prototype, "adoptedStyleSheets", {
     get() {
       return adoptedSheetsStore.get(this) || [];
@@ -27,7 +27,7 @@ if (!("adoptedStyleSheets" in Document.prototype)) {
   });
 }
 
-if (!("adoptedStyleSheets" in ShadowRoot.prototype)) {
+if (globalThis.ShadowRoot && !("adoptedStyleSheets" in ShadowRoot.prototype)) {
   Object.defineProperty(ShadowRoot.prototype, "adoptedStyleSheets", {
     get() {
       return adoptedSheetsStore.get(this) || [];
@@ -39,7 +39,7 @@ if (!("adoptedStyleSheets" in ShadowRoot.prototype)) {
 }
 
 // Polyfill CSSStyleSheet to provide `replaceSync`
-if (!("replaceSync" in CSSStyleSheet.prototype)) {
+if (globalThis.CSSStyleSheet && !("replaceSync" in CSSStyleSheet.prototype)) {
     Object.defineProperty(CSSStyleSheet.prototype, "replaceSync", {
       value(cssText: string) {
         this.cssText = cssText;
