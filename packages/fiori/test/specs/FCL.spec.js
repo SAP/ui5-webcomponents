@@ -567,3 +567,23 @@ describe("ACC", () => {
 			"Middle column is hidden from the acc tree.");
 	});
 });
+
+describe("First column closing arrow behavior", () => {
+	it("should switch layout and update arrow icon on desktop", async () => {
+		const fcl = await browser.$("#fcl10");
+		const arrowBtn = await fcl.shadow$(".ui5-fcl-arrow--start");
+	
+		await fcl.setProperty("layout", "ThreeColumnsStartHiddenMidExpanded");
+		assert.strictEqual(await arrowBtn.getAttribute("icon"), "slim-arrow-right", "Arrow should point right");
+	
+		await arrowBtn.click();
+	
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "Layout should switch to ThreeColumnsMidExpanded");
+		assert.strictEqual(await arrowBtn.getAttribute("icon"), "slim-arrow-left", "Arrow should point left");
+
+		await arrowBtn.click();
+
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsStartHiddenMidExpanded", "Layout should switch to ThreeColumnsStartHiddenMidExpanded");
+		assert.strictEqual(await arrowBtn.getAttribute("icon"), "slim-arrow-right", "Arrow should point right");
+	});
+});
