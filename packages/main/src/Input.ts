@@ -780,7 +780,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		if (isEnter(e)) {
+			const isValueChanged = this.previousValue === this.getInputDOMRefSync()!.value;
 			this._enterKeyDown = true;
+
+			if (isValueChanged && this._internals.form) {
+				submitForm(this);
+			}
+
 			return this._handleEnter(e);
 		}
 

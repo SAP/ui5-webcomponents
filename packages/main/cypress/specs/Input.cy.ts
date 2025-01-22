@@ -159,8 +159,10 @@ describe("Input Tests", () => {
 		cy.get<Input>("@input")
 			.shadow()
 			.find("input")
-			.type("test{enter}");
+			.type("test{enter}{enter}");
 
 		cy.get("@change").should("have.been.calledBefore", cy.get("@submit"));
+		cy.get("@submit").should("have.been.calledTwice");
+		cy.get("@change").should("have.been.calledOnce");
 	});
 });
