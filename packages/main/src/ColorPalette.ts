@@ -221,7 +221,7 @@ class ColorPalette extends UI5Element {
 		});
 
 		if (this.showMoreColors) {
-			// If the features is preloaded (the user manually imported ColorPaletteMoreColors.js), the teplate is already available on the constructor
+			// If the feature is preloaded (the user manually imported ColorPaletteMoreColors.js), the teplate is already available on the constructor
 			if (ColorPalette.ColorPaletteMoreColorsTemplate) {
 				this.showMoreColorsTemplate = ColorPalette.ColorPaletteMoreColorsTemplate;
 			// If feature is not preloaded, load the template dynamically
