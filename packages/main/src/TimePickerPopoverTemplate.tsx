@@ -25,7 +25,7 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				onWheel={this._handleWheel}
 				onKeyDown={this._onkeydown}
 			>
-				{this.hasValueStateText && renderValueStateTextHeader.call(this)}
+				{this.hasValueStateText && valueStateTextHeader.call(this)}
 
 				<TimeSelectionClocks
 					id={`${this._id}-time-sel`}
@@ -55,7 +55,7 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 					onWheel={this._handleWheel}
 					onKeyDown={this._onkeydown}
 				>
-					{this.hasValueStateText && renderValueStateTextHeader.call(this, { "width": "100%" }) }
+					{this.hasValueStateText && valueStateTextHeader.call(this, { "width": "100%" }) }
 
 					<div class="popover-content">
 						<TimeSelectionInputs
@@ -79,15 +79,13 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 
 function valueStateMessage(this: TimePicker) {
 	return (
-		<>
-			{ this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : <slot name="valueStateMessage">{this.valueStateMessage[0].innerHTML}</slot> }
-		</>
+		this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : <slot name="valueStateMessage"></slot>
 	);
 }
 
-function renderValueStateTextHeader(this: TimePicker, style?: Record<string, string>) {
+function valueStateTextHeader(this: TimePicker, style?: Record<string, string>) {
 	if (!this.hasValueStateText) {
-		return null;
+		return;
 	}
 
 	return (

@@ -25,7 +25,7 @@ export default function TimePickerTemplate(this: TimePicker) {
 					onFocusIn={this._onfocusin}
 					onKeyDown={this._onkeydown}
 				>
-					{this.valueStateMessage.length > 0 &&
+					{this.valueStateMessage.length > 0 && !this.open &&
 						<slot
 							name="valueStateMessage"
 							slot="valueStateMessage"
