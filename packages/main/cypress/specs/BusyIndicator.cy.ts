@@ -181,6 +181,6 @@ describe("BusyIndicator general interaction", () => {
 		cy.get("#busy-indicator-height")
 			.shadow()
 			.find(".ui5-busy-indicator-root")
-			.should("have.css", "height", "148px");
+			.should("have.css", "height", "144px");
 	});
 });
