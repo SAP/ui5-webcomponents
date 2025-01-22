@@ -52,6 +52,7 @@ describe("Component Behavior", () => {
 
 	describe("ui5-shellbar menu", () => {
 		it("tests prevents close on content click", async () => {
+			await browser.setWindowSize(1920, 1680);
 			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
 			const menuPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-menu-popover");
 			const firstMenuItem = await menuPopover.$("ui5-list > ui5-li");
@@ -392,6 +393,7 @@ describe("Component Behavior", () => {
 		describe("Small screen", () => {
 			beforeEach(async () => {
 				await browser.setWindowSize(510, 1680);
+				await browser.$("#shellbar").setProperty("showSearchField", false);
 			});
 
 			it("tests logoClick event", async () => {

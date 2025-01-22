@@ -475,24 +475,14 @@ class ShellBar extends UI5Element {
 	midContent!: Array<HTMLElement>;
 
 	/**
-	 * Define the items displayed in the start of the additional content area.
-	 * **Note:** The `startContent` slot is in an experimental state and is a subject to change.
+	 * Define the items displayed in the additional content area.
+	 * **Note:** The `content` slot is in an experimental state and is a subject to change.
 	 *
 	 * @public
 	 * @since 2.7.0
 	 */
 	@slot({ type: HTMLElement, individualSlots: true })
-	startContent!: Array<HTMLElement>;
-
-	/**
-	 * Define the items displayed in the end of the additional content area.
- 	 * **Note:** The `endContent` slot is in an experimental state and is a subject to change.
-	 *
-	 * @public
-	 * @since 2.7.0
-	 */
-	@slot({ type: HTMLElement, individualSlots: true })
-	endContent!: Array<HTMLElement>;
+	content!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
@@ -648,8 +638,7 @@ class ShellBar extends UI5Element {
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo"),
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo-area"),
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-menu-button"),
-			...this.startContent,
-			...this.endContent,
+			...this.additionalContext,
 			...this._getRightChildItems(),
 		] as HTMLElement[];
 	}
@@ -1430,6 +1419,35 @@ class ShellBar extends UI5Element {
 		return [...this.startContent, ...this.endContent];
 	}
 
+	get startContent() {
+		// return all items before the ui5-shellbar-spacer
+		const startContent = [];
+		for (let i = 0; i < this.content.length; i++) {
+			const child = this.content[i];
+			if (child.hasAttribute("ui5-shellbar-spacer")) {
+				break;
+			}
+			startContent.push(child);
+		}
+		return startContent;
+	}
+
+	get endContent() {
+		// return all items after the ui5-shellbar-spacer
+		const endContent = [];
+		let spacerFound = false;
+		for (let i = 0; i < this.content.length; i++) {
+			const child = this.content[i];
+			if (spacerFound) {
+				endContent.push(child);
+			}
+			if (child.hasAttribute("ui5-shellbar-spacer")) {
+				spacerFound = true;
+			}
+		}
+		return endContent;
+	}
+
 	get _rightChildRole() {
 		const items = this._getRightChildItems();
 		const visibleItems = items.filter(item => {
@@ -1487,11 +1505,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get hasAdditionalContext() {
-		return this.startContent.length > 0 || this.endContent.length > 0;
-	}
-
-	get showAdditionalContext() {
-		return this.hasAdditionalContext;
+		return this.additionalContext.length > 0;
 	}
 
 	get _hasVisibleStartContent() {
