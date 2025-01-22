@@ -95,15 +95,14 @@
 	background-position-x: calc(50% - 0.03125rem);
 }
 
-/*only if the arrow is present the lines will be shorten*/
-.ui5-fcl-separator:has(.ui5-fcl-arrow--start):hover:not(:has(.ui5-fcl-arrow--start:hover)) .ui5-fcl-grip:before,
-.ui5-fcl-separator:has(.ui5-fcl-arrow--start):hover:not(:has(.ui5-fcl-arrow--start:hover)) .ui5-fcl-grip:after {
-	height: calc(40% - 1rem);
+.ui5-fcl-separator:hover .ui5-fcl-grip:before,
+.ui5-fcl-separator:hover .ui5-fcl-grip:after {
+	height: calc(50% - 1rem);
 }
 
-.ui5-fcl-separator:hover:not(:has(.ui5-fcl-arrow--start:hover)) .ui5-fcl-grip:before,
-.ui5-fcl-separator:hover:not(:has(.ui5-fcl-arrow--start:hover)) .ui5-fcl-grip:after {
-	height: calc(50% - 1rem);
+/* Only apply shorter height when arrow is visible */
+.ui5-fcl-separator:hover .ui5-fcl-arrow:not([style*="display: none"]) + .ui5-fcl-grip::before {
+    height: calc(40% - 1rem);
 }
 
 [aria-hidden] ::slotted([slot="startColumn"]),

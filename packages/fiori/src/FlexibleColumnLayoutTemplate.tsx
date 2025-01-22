@@ -32,8 +32,8 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 				tabindex={this.startSeparatorTabIndex}
 				onMouseDown={this.onSeparatorPress}
 				onTouchStart={this.onSeparatorPress}
-				onKeyDown={this._onkeydown}
-				onKeyUp={this._onkeyup}
+				onKeyDown={this._onSeparatorKeydown}
+				onKeyUp={this._onSeparatorKeyUp}
 			>
 				{ arrowStart.call(this) }
 				{ gripStart.call(this) }
@@ -61,8 +61,8 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 				tabindex={this.endSeparatorTabIndex}
 				onMouseDown={this.onSeparatorPress}
 				onTouchStart={this.onSeparatorPress}
-				onKeyDown={this._onkeydown}
-				onKeyUp={this._onkeyup}
+				onKeyDown={this._onSeparatorKeydown}
+				onKeyUp={this._onSeparatorKeyUp}
 			>
 				{ gripEnd.call(this) }
 			</div>
@@ -90,6 +90,7 @@ function arrowStart(this: FlexibleColumnLayout) {
 			icon={this.startArrowDirection === "backward" ? "slim-arrow-left" : "slim-arrow-right"}
 			design="Transparent"
 			onClick={this.switchLayoutOnArrowPress}
+			onKeyDown={this._onArrowKeydown}
 			class="ui5-fcl-arrow ui5-fcl-arrow--start"
 			style={{
 				display: this.showStartSeparatorArrow ? "inline-block" : "none",

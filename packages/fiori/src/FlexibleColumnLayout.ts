@@ -482,6 +482,9 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	onSeparatorPress(e: TouchEvent | MouseEvent) {
+		if (e.target as HTMLElement === this.startArrowDOM) {
+			return;
+		}
 		const pressedSeparator = (e.target as HTMLElement).closest(".ui5-fcl-separator") as HTMLElement;
 		if (pressedSeparator.classList.contains("ui5-fcl-separator-start") && !this.showStartSeparatorGrip) {
 			return;
@@ -660,17 +663,21 @@ class FlexibleColumnLayout extends UI5Element {
 		return columnLayoutToAdjust;
 	}
 
-	async _onkeydown(e: KeyboardEvent) {
+	_onArrowKeydown(e: KeyboardEvent) {
 		if (isEnter(e) || isSpace(e)) {
-			e.preventDefault();
-			const focusedElement = e.target as HTMLElement;
-			if (focusedElement === this.startArrowDOM) {
+		  e.preventDefault();
+		  const focusedElement = e.target as HTMLElement;
+		  if (focusedElement === this.startArrowDOM) {
 				this.switchLayoutOnArrowPress();
-				return;
-			}
+		  }
+		}
+	  }
+
+	async _onSeparatorKeydown(e: KeyboardEvent) {
+		const separator = e.target as HTMLElement;
+		if (!separator.classList.contains("ui5-fcl-separator")) {
 			return;
 		}
-
 		const stepSize = 2,
 			bigStepSize = this._width,
 			isRTL = this.effectiveDir === "rtl";
@@ -706,7 +713,6 @@ class FlexibleColumnLayout extends UI5Element {
 			return;
 		}
 
-		const separator = e.target as HTMLElement;
 		if (!this.separatorMovementSession) {
 			this.separatorMovementSession = this.initSeparatorMovementSession(separator, 0, false);
 		}
@@ -720,7 +726,7 @@ class FlexibleColumnLayout extends UI5Element {
 		separator.focus();
 	}
 
-	_onkeyup() {
+	_onSeparatorKeyUp() {
 		if (this.separatorMovementSession) {
 			this.onSeparatorMoveEnd();
 		}
