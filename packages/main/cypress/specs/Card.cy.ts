@@ -33,15 +33,9 @@ describe("Card header", () => {
 		cy.get("#cardHeader1")
 			.shadow()
 			.find(".ui5-card-header-focusable-element")
-			.should("have.attr", "role", "button");
-		cy.get("#cardHeader1")
-			.shadow()
-			.find(".ui5-card-header-focusable-element")
-			.should("have.attr", "tabindex", "0");
-		cy.get("#cardHeader1")
-			.shadow()
-			.find(".ui5-card-header-focusable-element")
-			.should("have.attr", "aria-roledescription", "Interactive Card Header");
+			.should("have.attr", "role", "button")
+			.and("have.attr", "tabindex", "0")
+			.and("have.attr", "aria-roledescription", "Interactive Card Header");
 	});
 	it("Tests that aria attribute are correct on a header", () => {
 		cy.mount(cardHeader);
@@ -50,14 +44,8 @@ describe("Card header", () => {
 		cy.get("#cardHeader2")
 			.shadow()
 			.find(".ui5-card-header-focusable-element")
-			.should("have.attr", "role", "group");
-		cy.get("#cardHeader2")
-			.shadow()
-			.find(".ui5-card-header-focusable-element")
-			.should("have.attr", "tabindex", "0");
-		cy.get("#cardHeader2")
-			.shadow()
-			.find(".ui5-card-header-focusable-element")
-			.should("have.attr", "aria-roledescription", "Card Header");
+			.should("have.attr", "role", "group")
+			.and("have.attr", "tabindex", "0")
+			.and("have.attr", "aria-roledescription", "Card Header");
 	});
 });
