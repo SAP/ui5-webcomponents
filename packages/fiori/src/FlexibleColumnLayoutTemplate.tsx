@@ -35,7 +35,7 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 				onKeyDown={this._onSeparatorKeydown}
 				onKeyUp={this._onSeparatorKeyUp}
 			>
-				{ arrowStart.call(this) }
+				{ this.showStartSeparatorArrow && arrowStart.call(this) }
 				{ gripStart.call(this) }
 			</div>
 
@@ -92,9 +92,6 @@ function arrowStart(this: FlexibleColumnLayout) {
 			onClick={this.switchLayoutOnArrowPress}
 			onKeyDown={this._onArrowKeydown}
 			class="ui5-fcl-arrow ui5-fcl-arrow--start"
-			style={{
-				display: this.showStartSeparatorArrow ? "inline-block" : "none",
-			}}
 		/>
 	);
 }

@@ -101,8 +101,8 @@
 }
 
 /* Only apply shorter height when arrow is visible */
-.ui5-fcl-separator:hover .ui5-fcl-arrow:not([style*="display: none"]) + .ui5-fcl-grip::before {
-    height: calc(40% - 1rem);
+.ui5-fcl-separator:hover .ui5-fcl-arrow + .ui5-fcl-grip::before  {
+	height: calc(40% - 1rem);
 }
 
 [aria-hidden] ::slotted([slot="startColumn"]),
