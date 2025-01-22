@@ -163,6 +163,11 @@ type InputSuggestionScrollEventDetail = {
  * When the user makes changes to the text, the change event is fired,
  * which enables you to react on any text change.
  *
+ * **Note:** If you are using the `ui5-input` as a single npm module,
+ * don't forget to import the `InputSuggestions` module from
+ * "@ui5/webcomponents/dist/features/InputSuggestions.js"
+ * to enable the suggestions functionality.
+ *
  * ### Keyboard Handling
  * The `ui5-input` provides the following keyboard shortcuts:
  *
