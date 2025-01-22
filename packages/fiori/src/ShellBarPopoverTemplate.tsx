@@ -7,9 +7,9 @@ export default function PopoversTemplate(this: ShellBar) {
 	return (
 		<>
 			<Popover class="ui5-shellbar-menu-popover"
-				hideArrow
+				hideArrow={true}
 				placement="Bottom"
-				preventInitialFocus
+				preventInitialFocus={true}
 				onBeforeOpen={this._menuPopoverBeforeOpen}
 				onClose={this._menuPopoverAfterClose}
 			>
@@ -20,9 +20,9 @@ export default function PopoversTemplate(this: ShellBar) {
 
 			<Popover class="ui5-shellbar-overflow-popover"
 				placement="Bottom"
-				preventInitialFocus
+				preventInitialFocus={true}
 				horizontalAlign={this.popoverHorizontalAlign}
-				hideArrow
+				hideArrow={true}
 				onBeforeOpen={this._overflowPopoverBeforeOpen}
 				onClose={this._overflowPopoverAfterClose}
 			>

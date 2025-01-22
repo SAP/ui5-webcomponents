@@ -306,7 +306,7 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests profileClick event", async () => {
-				const profileIcon = await browser.$("#shellbar").shadow$("[profile-btn]");
+				const profileIcon = await browser.$("#shellbar").shadow$("[data-profile-btn]");
 				const input = await browser.$("#press-input");
 
 				await profileIcon.click();
@@ -414,7 +414,7 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests profileClick event", async () => {
-				const profileIcon = await browser.$("#shellbar").shadow$("[profile-btn]");
+				const profileIcon = await browser.$("#shellbar").shadow$("[data-profile-btn]");
 				const input = await browser.$("#press-input");
 
 				await profileIcon.click();

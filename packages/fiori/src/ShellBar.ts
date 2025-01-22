@@ -26,11 +26,11 @@ import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import "@ui5/webcomponents-icons/dist/search.js";
-import "@ui5/webcomponents-icons/dist/bell.js";
-import "@ui5/webcomponents-icons/dist/overflow.js";
-import "@ui5/webcomponents-icons/dist/grid.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import search from "@ui5/webcomponents-icons/dist/search.js";
+import da from "@ui5/webcomponents-icons/dist/da.js";
+import bell from "@ui5/webcomponents-icons/dist/bell.js";
+import overflow from "@ui5/webcomponents-icons/dist/overflow.js";
+import grid from "@ui5/webcomponents-icons/dist/grid.js";
 import type {
 	ClassMap,
 	AccessibilityAttributes,
@@ -1073,7 +1073,7 @@ class ShellBar extends UI5Element {
 
 		const items: Array<IShelBarItemInfo> = [
 			{
-				icon: "search",
+				icon: search,
 				text: this._searchText,
 				classes: `${this.searchField.length ? "" : "ui5-shellbar-invisible-button"} ${showSearchButton ? "" : "ui5-shellbar-no-overflow-button"} ui5-shellbar-search-button ui5-shellbar-button`,
 				domOrder: this.searchField.length ? (++domOrder) : -1,
@@ -1083,7 +1083,7 @@ class ShellBar extends UI5Element {
 				tooltip: this._searchText,
 			},
 			{
-				icon: "da",
+				icon: da,
 				text: "Assistant",
 				classes: `${this.assistant.length ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-button`,
 				id: `${this._id}-item-${4}`,
@@ -1093,7 +1093,7 @@ class ShellBar extends UI5Element {
 				tooltip: this.assistant.length ? (this.assistant[0].getAttribute("text") || this.assistant[0].getAttribute("title") || undefined) : undefined,
 			},
 			{
-				icon: "bell",
+				icon: bell,
 				title: this._notificationsText,
 				text: ShellBar.i18nBundle.getText(SHELLBAR_NOTIFICATIONS_NO_COUNT),
 				count: this.notificationsCount,
@@ -1130,7 +1130,7 @@ class ShellBar extends UI5Element {
 				};
 			}),
 			{
-				icon: "overflow",
+				icon: overflow,
 				text: "Overflow",
 				classes: `${showOverflowButton ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-no-overflow-button ui5-shellbar-overflow-button ui5-shellbar-button`,
 				domOrder: showOverflowButton ? (++domOrder) : -1,
@@ -1150,7 +1150,7 @@ class ShellBar extends UI5Element {
 				tooltip: this._profileText,
 			},
 			{
-				icon: "grid",
+				icon: grid,
 				text: this._productsText,
 				classes: `${this.showProductSwitch ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-image-button ui5-shellbar-button-product-switch`,
 				id: `${this._id}-item-${4}`,

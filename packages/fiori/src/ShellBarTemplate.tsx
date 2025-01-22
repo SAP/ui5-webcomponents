@@ -2,6 +2,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import type ShellBar from "./ShellBar.js";
 import ShellBarPopoverTemplate from "./ShellBarPopoverTemplate.js";
+import slimArrowDown from  "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 export default function ShellBarTemplate(this: ShellBar) {
 	return (
@@ -38,7 +39,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 										{this.showTitleInMenuButton && (
 											<div class="ui5-shellbar-menu-button-title">{this.primaryTitle}</div>
 										)}
-										<Icon class="ui5-shellbar-menu-button-arrow" name="slim-arrow-down" />
+										<Icon class="ui5-shellbar-menu-button-arrow" name={slimArrowDown} />
 									</button>
 									{this.secondaryTitle && !this.isSBreakPoint && (
 										<div style={{ display: "block" }} class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">
@@ -210,7 +211,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 function profileButton(this: ShellBar) {
 	return (
 		<Button
-			profile-btn
+			data-profile-btn
 			id={`${this._id}-item-3`}
 			onClick={this._handleProfilePress}
 			tooltip={this._profileText}
