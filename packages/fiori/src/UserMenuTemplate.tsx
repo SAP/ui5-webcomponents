@@ -136,9 +136,11 @@ function headerContent(this: UserMenu) {
 					{this._selectedAccount.avatarSrc &&
 						<img src={this._selectedAccount.avatarSrc}/>
 					}
+					{this.hideEditAvatar != true &&
 					<Tag slot="badge" wrappingType="None" design="Set1" colorScheme="5" title={this._editAvatarTooltip}>
 						<Icon slot="icon" name={edit}></Icon>
 					</Tag>
+					}
 				</Avatar>
 				{this._selectedAccount.titleText &&
 					<Title id="selected-account-title" class="ui5-pm-selected-account-title">{this._selectedAccount.titleText}</Title>
