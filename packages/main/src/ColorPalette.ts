@@ -102,7 +102,6 @@ class ColorPalette extends UI5Element {
 	/**
 	 * Defines whether the user can choose a custom color from a color picker
 	 *
-	 * **Note:** In order to use this property you need to import the following module: `"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"`
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -150,10 +149,11 @@ class ColorPalette extends UI5Element {
 	onPhone = false;
 
 	/**
+
 	 * The showMoreColors template.
 	 * @private
 	 */
-	@property({ type: Function })
+	@property({ noAttribute: true })
 	showMoreColorsTemplate?: JsxTemplate;
 
 	/**
