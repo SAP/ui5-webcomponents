@@ -1,6 +1,14 @@
 import { html } from "lit";
 import "../../src/Tokenizer.js";
+import "../../src/Token.js";
 import type Tokenizer from "../../src/Tokenizer.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/index.js";
+
+const onTokenDelete = (event: UI5CustomEvent<Tokenizer, "token-delete">) => {
+	event.detail.tokens.forEach(token => {
+		(event.target as Tokenizer).removeChild(token);
+	});
+};
 
 describe("Tokenizer - multi-line and Clear All", () => {
 	it("'Clear All' link is rendered for multi-line tokenizer and show-clear-all set to true", () => {
@@ -110,5 +118,48 @@ describe("Tokenizer - multi-line and Clear All", () => {
 
 		cy.get("@delete")
 			.should("have.been.calledOnce");
+	});
+
+	it("tests token removal", () => {
+		cy.mount(html` 
+			<ui5-tokenizer id="test-token-delete" style="width: 100px">
+				<ui5-token text="aute"></ui5-token>
+				<ui5-token text="ad"></ui5-token>
+				<ui5-token text="exercitation"></ui5-token>
+				<ui5-token text="esse"></ui5-token>
+				<ui5-token text="labore"></ui5-token>
+				<ui5-token text="amet"></ui5-token>
+				<ui5-token text="excepteur"></ui5-token>
+			</ui5-tokenizer>`);
+
+		cy.get("#test-token-delete")
+			.then($tokenizer => {
+				$tokenizer.get(0).addEventListener("token-delete", onTokenDelete as EventListener);
+			});
+
+		cy.get("#test-token-delete")
+			.find("ui5-token")
+			.should("have.length", 7);
+
+		cy.get("#test-token-delete")
+			.shadow()
+			.find(".ui5-tokenizer-more-text")
+			.realClick();
+
+		cy.get("#test-token-delete")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should("be.visible");
+
+		cy.get("#test-token-delete")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]").eq(0)
+			.shadow()
+			.find(".ui5-li-deletebtn [ui5-button]")
+			.realClick();
+
+		cy.get("#test-token-delete")
+			.find("ui5-token")
+			.should("have.length", 6);
 	});
 });
