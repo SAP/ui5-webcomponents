@@ -1,4 +1,4 @@
-import MediaGallery from "./MediaGallery.js";
+import type MediaGallery from "./MediaGallery.js";
 import MediaGalleryItem from "./MediaGalleryItem.js";
 import Carousel from "@ui5/webcomponents/dist/Carousel.js";
 import Button from "@ui5/webcomponents/dist/Button.js";

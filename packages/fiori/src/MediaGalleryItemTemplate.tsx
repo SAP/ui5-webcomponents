@@ -1,4 +1,4 @@
-import MediaGalleryItem from "./MediaGalleryItem.js";
+import type MediaGalleryItem from "./MediaGalleryItem.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 
 export default function MediaGalleryItemTemplate(this: MediaGalleryItem) {
