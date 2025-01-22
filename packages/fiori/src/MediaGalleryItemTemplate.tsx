@@ -2,7 +2,8 @@ import type MediaGalleryItem from "./MediaGalleryItem.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 
 export default function MediaGalleryItemTemplate(this: MediaGalleryItem) {
-	return (<div class="ui5-media-gallery-item-root"
+	return (
+		<div class="ui5-media-gallery-item-root"
 			tabindex={this.effectiveTabIndex}
 			data-sap-focus-ref
 			onKeyDown={this._onkeydown}
@@ -18,4 +19,3 @@ export default function MediaGalleryItemTemplate(this: MediaGalleryItem) {
 		</div>
 	);
 }
-
