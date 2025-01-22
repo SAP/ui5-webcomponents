@@ -118,7 +118,7 @@ export default defineConfig(async () => {
 			istanbul({
 				include: ['packages/**/src/*','src/*'],
 				exclude: ['node_modules', 'test/'],
-				extension: ['.js', '.ts', '.vue'],
+				extension: ['.js', '.ts', '.vue', ".tsx"],
 				requireEnv: true,
 				cypress: true,
 			}),
