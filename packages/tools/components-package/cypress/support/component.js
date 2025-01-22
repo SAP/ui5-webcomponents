@@ -1,3 +1,4 @@
+import '@cypress/code-coverage/support'
 import { setupHooks } from '@cypress/mount-utils';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { mount } from 'cypress-ct-lit'

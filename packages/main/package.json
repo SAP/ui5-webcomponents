@@ -31,6 +31,7 @@
     "test:suite-2": "wc-dev test-suite-2",
     "test:cypress": "nps test-cy-ci",
     "test:cypress:open": "nps test-cy-open",
+    "test:vitest": "yarn vitest run",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "tsc -b"
   },
@@ -60,6 +61,8 @@
   "devDependencies": {
     "@ui5/webcomponents-tools": "2.7.0-rc.0",
     "chromedriver": "^131.0.0",
-    "lit": "^2.0.0"
+    "jsdom": "^26.0.0",
+    "lit": "^2.0.0",
+    "vitest": "^3.0.2"
   }
 }
