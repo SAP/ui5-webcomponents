@@ -149,6 +149,66 @@ describe("Initial rendering", () => {
 		cy.get("@settingViews").should("have.length", 2);
 		cy.get("@settingItem").shadow().find("[ui5-tabcontainer]").should("exist");
 	});
+
+	it("tests setting page", () => {
+		cy.mount(html`<ui5-settings open>
+							<ui5-setting-item>
+								<ui5-setting-view text="Setting1" slot="pages">
+								 </ui5-setting-view>
+							</ui5-setting-item>
+						</ui5-settings>`);
+		cy.get("[ui5-settings]").as("settings");
+		cy.get("@settings").should("exist");
+		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
+		cy.get("@settingItem").should("exist");
+		cy.get("@settingItem").find("[ui5-setting-view]").as("settingViews");
+		cy.get("@settingViews").should("exist");
+		cy.get("@settingViews").should("have.length", 1);
+		cy.get("@settingItem").shadow().find("[ui5-tabcontainer]").should("not.exist");
+	});
+
+	it("tests setting page with secondary", () => {
+		cy.mount(html`<ui5-settings open>
+							<ui5-setting-item>
+								<ui5-setting-view slot="pages">
+									<ui5-button id="product1-button">Product 1</ui5-button>
+									<ui5-button id="product2-button">Product 2</ui5-button>
+								</ui5-setting-view>
+								<ui5-setting-view slot="pages" text="Inner Page" id="notification-second-page" secondary>second page content
+								</ui5-setting-view>
+							</ui5-setting-item>
+						</ui5-settings>`);
+		cy.get("[ui5-settings]").as("settings");
+		cy.get("@settings").should("exist");
+		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
+		cy.get("@settingItem").should("exist");
+		cy.get("@settingItem").find("[ui5-setting-view]").as("settingViews");
+		cy.get("@settingViews").should("exist");
+		cy.get("@settingViews").should("have.length", 2);
+		cy.get("@settingItem").shadow().find("[ui5-tabcontainer]").should("not.exist");
+	});
+
+	it("tests setting page secondary selected", () => {
+		cy.mount(html`<ui5-settings open>
+							<ui5-setting-item>
+								<ui5-setting-view slot="pages" text="Inner Page" id="notification-second-page" secondary selected>
+									<ui5-text>second page content</ui5-text>
+								</ui5-setting-view>
+							</ui5-setting-item>
+						</ui5-settings>`);
+		cy.get("[ui5-settings]").as("settings");
+		cy.get("@settings").should("exist");
+		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
+		cy.get("@settingItem").should("exist");
+		cy.get("@settingItem").find("[ui5-setting-view]").as("settingViews");
+		cy.get("@settingViews").should("exist");
+		cy.get("@settingViews").should("have.length", 1);
+		cy.get("@settingItem").shadow().find("[ui5-tabcontainer]").should("not.exist");
+		cy.get("@settingItem").find("[ui5-text]").should("exist");
+		cy.get("@settingItem").shadow().find("[ui5-button]").as("navigateBackButton");
+		cy.get("@navigateBackButton").should("exist");
+		cy.get("@navigateBackButton").should("have.attr", "icon", "nav-back");
+	});
 });
 
 describe("Events", () => {

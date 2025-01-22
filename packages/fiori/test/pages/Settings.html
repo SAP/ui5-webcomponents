@@ -58,12 +58,20 @@
 		</ui5-setting-view>
 	</ui5-setting-item>
 </ui5-settings>
+<ui5-title level="H5" class="header-title">Text Direction</ui5-title>
+<ui5-switch id="direction" text-on="RTL" text-off="LTR"></ui5-switch>
 <script>
+	const direction = document.getElementById("direction");
 	const settingsDialog = document.getElementById("setting");
 	const notificationButton = document.getElementById("notification-button");
 	const notificationSecondPage = document.getElementById("notification-second-page");
 	const product1Button = document.getElementById("product1-button");
 	const product2Button = document.getElementById("product2-button");
+
+	direction.addEventListener("ui5-change", function() {
+		document.body.setAttribute("dir", direction.checked ? "rtl" : "ltr");
+		window["sap-ui-webcomponents-bundle"].applyDirection();
+	});
 
 	document.getElementById("btnOpenSettings").addEventListener("click", function () {
 		settingsDialog.open = true;
