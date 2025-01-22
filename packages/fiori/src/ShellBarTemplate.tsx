@@ -2,7 +2,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import type ShellBar from "./ShellBar.js";
 import ShellBarPopoverTemplate from "./ShellBarPopoverTemplate.js";
-import slimArrowDown from  "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 export default function ShellBarTemplate(this: ShellBar) {
 	return (
