@@ -88,6 +88,10 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * in the currently clicked menu item.
  * - `Arrow Left` or `Escape` - Closes the currently opened sub-menu.
  *
+ * when there is endContent :
+ * - `Arrow Left` or `ArrowRight` - Navigate between the menu item actions and the menu item it self
+ * - `Arrow Up` / `Arrow Down` - Navigates up and down the menu items that are currently visible
+ *
  * Note: if the text ditrection is set to Right-to-left (RTL), `Arrow Right` and `Arrow Left` functionality is swapped.
  *
  * ### ES6 Module Import
@@ -365,7 +369,7 @@ class Menu extends UI5Element {
 			} else if ((shouldCloseMenu || isTabNextPrevious) && parentElement._popover) {
 				parentElement._popover.open = false;
 				parentElement.selected = false;
-				const opener = this._popover.getOpenerHTMLElement(parentElement._popover.opener)// this._popover.getOpenerHTMLElement(this.opener)as HTMLElement;
+				const opener = this._popover.getOpenerHTMLElement(parentElement._popover.opener);
 				opener?.focus();
 			}
 		} else if (isUp(e)) {
