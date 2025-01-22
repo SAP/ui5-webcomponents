@@ -1266,7 +1266,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
 		};
 
-		// If the features is preloaded (the user manually imported InputSuggestions.js), it is already available on the constructor
+		// If the feature is preloaded (the user manually imported InputSuggestions.js), it is already available on the constructor
 		if (Input.SuggestionsClass) {
 			setup(Input.SuggestionsClass);
 		// If feature is not preloaded, load it dynamically
