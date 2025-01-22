@@ -404,29 +404,24 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * @param skipAnimation whether to skip transition animation while displaying the next clock
 	 */
 	_switchClock(clockIndex: number, skipAnimation = false) {
-		if (this._activeIndex === clockIndex) {
+		if (this._activeIndex === clockIndex || !this._entities.length || clockIndex >= this._entities.length) {
 			return;
 		}
 
-		const clockComponent = this._clockComponent(this._activeIndex);
+		const currentClockComponent = this._clockComponent(this._activeIndex);
 		const newClockComponent = this._clockComponent(clockIndex);
-		const TRANSITION_DELAY = 300;
 
-		if (this._skipAnimation && clockIndex !== 0 && this._activeIndex === 0 && clockComponent) {
-			clockComponent._skipAnimation = false;
+		if (this._skipAnimation && clockIndex !== 0 && this._activeIndex === 0 && currentClockComponent) {
+			currentClockComponent._skipAnimation = false;
 			this._skipAnimation = skipAnimation;
 		}
 
-		if (this._entities.length && clockIndex < this._entities.length) {
-			if (newClockComponent && skipAnimation) {
-				newClockComponent._skipAnimation = true;
-				this._activateClock(clockIndex);
-			} else {
-				clockComponent?.shadowRoot?.querySelector(".ui5-tp-clock")?.classList.add("ui5-tp-clock-transition");
-				setTimeout(() => {
-					this._activateClock(clockIndex);
-				}, TRANSITION_DELAY);
-			}
+		if (newClockComponent && skipAnimation) {
+			newClockComponent._skipAnimation = true;
+			this._activateClock(clockIndex);
+		} else {
+			currentClockComponent?._firstNumberElement?.addEventListener("animationend", () => this._activateClock(clockIndex), { once: true });
+			currentClockComponent?._clockWrapper?.classList.add("ui5-tp-clock-transition");
 		}
 	}
 

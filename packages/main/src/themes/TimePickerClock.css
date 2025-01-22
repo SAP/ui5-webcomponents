@@ -29,10 +29,7 @@
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	color: var(--sapContent_LabelColor);
-	top: 2.75rem;
-	left: 2.75rem;
-	bottom: 2.75rem;
-	right: 2.75rem;
+	inset: 2.75rem;
 	border-radius: 100%;
 	z-index: 2;
 }
@@ -49,10 +46,7 @@
 
 .ui5-tp-clock-cover {
 	position: absolute;
-	top: -0.25rem;
-	left: -0.25rem;
-	bottom: -0.25rem;
-	right: -0.25rem;
+	inset: -0.25rem;
 	border-radius: 100%;
 	z-index: 10;
 	touch-action: none;
@@ -156,10 +150,7 @@
 .ui5-tp-clock-items,
 .ui5-tp-clock-markers {
 	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+	inset: 0;
 }
 
 /* Animations */
@@ -175,14 +166,14 @@
 .ui5-tp-clock-transition .ui5-tp-clock-items .ui5-tp-clock-number {
 	animation-name: fadeOutClockItems;
 	animation-delay: 0.15s;
-	animation-duration: 0.15s;
+	animation-duration: 0.2s;
 	animation-timing-function: ease-out;
 	animation-fill-mode: forwards;
 }
 
 .ui5-tp-clock-transition .ui5-tp-clock-dial::before {
 	animation-name: fadeOutClockLabel;
-	animation-duration: 0.3s;
+	animation-duration: 0.35s;
 	animation-timing-function: ease-out;
 	animation-fill-mode: forwards;
 }
@@ -191,13 +182,14 @@
 .ui5-tp-clock-transition .ui5-tp-clock-select-marker {
 	animation-name: fadeOutSelectedItem;
 	animation-delay: 0.1s;
-	animation-duration: 0.2s;
+	animation-duration: 0.15s;
 	animation-timing-function: ease-out;
 	animation-fill-mode: forwards;
 }
 
 .ui5-tp-clock-transition .ui5-tp-clock-items .ui5-tp-clock-mid-dot {
 	animation-name: fadeOutSelectedItem;
+	animation-delay: 0.15s;
 	animation-duration: 0.2s;
 	animation-timing-function: ease-out;
 	animation-fill-mode: forwards;
@@ -207,14 +199,14 @@
 :host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-items .ui5-tp-clock-number {
 	animation-name: fadeInClockItems;
 	animation-delay: 0.15s;
-	animation-duration: 0.15s;
+	animation-duration: 0.2s;
 	animation-timing-function: ease-in;
 	animation-fill-mode: forwards;
 }
 
 :host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-dial::before {
 	animation-name: fadeInClockLabel;
-	animation-duration: 0.3s;
+	animation-duration: 0.35s;
 	animation-timing-function: ease-in;
 	animation-fill-mode: forwards;
 }
@@ -223,13 +215,14 @@
 :host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-select-marker {
 	animation-name: fadeInSelectedItem;
 	animation-delay: 0.1s;
-	animation-duration: 0.2s;
+	animation-duration: 0.15s;
 	animation-timing-function: ease-in;
 	animation-fill-mode: forwards;
 }
 
 :host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-items .ui5-tp-clock-mid-dot {
 	animation-name: fadeInSelectedItem;
+	animation-delay: 0.15s;
 	animation-duration: 0.2s;
 	animation-timing-function: ease-in;
 	animation-fill-mode: forwards;
@@ -254,7 +247,7 @@
 		display: flex;
 		transform: translateY(0);
 	}
-	30% {
+	10% {
 		opacity: 1;
 		display: flex;
 		transform: translateY(4px);

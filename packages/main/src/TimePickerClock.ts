@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
 // Template
@@ -258,6 +259,12 @@ class TimePickerClock extends UI5Element {
 	@property({ type: Boolean })
 	_skipAnimation = false;
 
+	@query(".ui5-tp-clock-number")
+	_firstNumberElement?: HTMLElement;
+
+	@query(".ui5-tp-clock")
+	_clockWrapper?: HTMLElement;
+
 	_fnOnMouseOutUp: () => void;
 
 	constructor() {
@@ -282,18 +289,12 @@ class TimePickerClock extends UI5Element {
 		this._hoveredItem = this._updateSelectedOrHoveredItem(this._fixReplacementValue(this._hoveredValue), CLOCK_NUMBER_HOVERED_CLASS);
 	}
 
-	/**
-	 * can be getter
-	 */
-	_itemsCount(): number {
+	get _itemsCount(): number {
 		return this.itemMax - this.itemMin + 1;
 	}
 
-	/**
-	 * can be getter
-	 */
-	_angleStep(): number {
-		return this.hideFractions ? 360 / this._itemsCount() : 6;
+	get _angleStep(): number {
+		return this.hideFractions ? 360 / this._itemsCount : 6;
 	}
 
 	/**
@@ -347,9 +348,9 @@ class TimePickerClock extends UI5Element {
 	 */
 	_prepareClockItems() {
 		const values = [];
-		const angleStep = this._angleStep();
+		const angleStep = this._angleStep;
 		const visualItemsCount = 360 / angleStep;
-		const multiplier = visualItemsCount / this._itemsCount();
+		const multiplier = visualItemsCount / this._itemsCount;
 		let item: TimePickerClockItem;
 		let i;
 
@@ -445,7 +446,7 @@ class TimePickerClock extends UI5Element {
 			"dotHeight": dotHeight,
 			"numberHeight": numberHeight,
 			"activeRadiusMax": radius,
-			"activeRadiusMin": radius - numberHeight * 1.4 - 1,
+			"activeRadiusMin": radius - numberHeight * 1.5 - 1,
 			"offsetX": offset.left + scrollLeft,
 			"offsetY": offset.top + scrollTop,
 		};

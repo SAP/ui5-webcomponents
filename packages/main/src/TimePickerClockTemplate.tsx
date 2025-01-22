@@ -17,13 +17,13 @@ export default function TimePickerClockTemplate(this: TimePickerClock) {
 
 			<div class="ui5-tp-clock-items">
 				{this._items.map((item, i) => (
-					<div class="ui5-tp-clock-item" style={{ transform: `translate(-50%) rotate(${(i + 1) * this._angleStep()}deg` }}>
+					<div class="ui5-tp-clock-item" style={{ transform: `translate(-50%) rotate(${(i + 1) * this._angleStep}deg` }}>
 						{ item.item ?
 							<>
 								<span class="ui5-tp-clock-dot"></span>
 								<span id={`${this._id}-${item.item}`}
 									class="ui5-tp-clock-number"
-									style={{ transform: `rotate(-${(i + 1) * this._angleStep()}deg)` }}
+									style={{ transform: `rotate(-${(i + 1) * this._angleStep}deg)` }}
 								>
 									{item.item}
 								</span>
