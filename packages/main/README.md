@@ -104,14 +104,13 @@ The `ui5-color-palette` component has a `showMoreColors` property, that, when se
 Since this functionality is not always needed, the "More colors" dialog and its children are not direct dependencies of the component by default,
 and are only loaded dynamically when `showMoreColors` is set to `true`.
 
-Legacy import: 
+Feature import (optional as of `2.7.0`): 
 
 ```js
-// @deprecated this import is no longer needed as of 2.7.0
 import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js";
 ```
 
-In older versions (prior to `2.7.0`) apps were required to manually import component features in order to use them. This is no longer needed as components now use dynamic imports for features.
+You can optionally pre-load the feature (thus avoiding the dynamic import), if you prefer so. 
 
 ### Input Suggestions Feature
 
@@ -122,14 +121,13 @@ Since input suggestions may not always be needed, they do not come as part of th
 
 Setting the `showSuggestions` property to `true` loads the suggestions feature dynamically (as well as the `ui5-suggestion-item` component) for your convenience.
 
-Legacy import: 
+Feature import (optional as of `2.7.0`):  
 
 ```js
-// @deprecated this import is no longer needed as of 2.7.0
 import "@ui5/webcomponents/dist/features/InputSuggestions.js";
 ```
 
-In older versions (prior to `2.7.0`) apps were required to manually import component features in order to use them. This is no longer needed as components now use dynamic imports for features.
+You can optionally pre-load the feature (thus avoiding the dynamic import), if you prefer so.
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/main/README.md)
