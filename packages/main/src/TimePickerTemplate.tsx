@@ -2,6 +2,7 @@ import type TimePicker from "./TimePicker.js";
 import Icon from "./Icon.js";
 import DateTimeInput from "./DateTimeInput.js";
 import TimePickerPopoverTemplate from "./TimePickerPopoverTemplate.js";
+import timeEntryRequest from "@ui5/webcomponents-icons/dist/time-entry-request.js";
 
 export default function TimePickerTemplate(this: TimePicker) {
 	return (
@@ -35,7 +36,7 @@ export default function TimePickerTemplate(this: TimePicker) {
 					{!this.readonly &&
 						<Icon
 							slot="icon"
-							name={this.openIconName}
+							name={timeEntryRequest}
 							tabindex={-1}
 							showTooltip={true}
 							onClick={this._togglePicker}

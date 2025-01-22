@@ -55,7 +55,7 @@ describe("TimePicker general interaction", () => {
 		await browser.keys("Tab"); // Move to submit
 		await browser.keys("Enter"); // Enter on submit
 
-		const textValue = await timepicker.shadow$("ui5-input").getValue();
+		const textValue = await timepicker.shadow$("ui5-datetime-input").getValue();
 		assert.strictEqual(textValue.substring(0,2), "02", "Hours are equal");
 		assert.strictEqual(textValue.substring(3,5), "40", "Minutes are equal");
 		assert.strictEqual(textValue.substring(6,8), "05", "Seconds are equal");

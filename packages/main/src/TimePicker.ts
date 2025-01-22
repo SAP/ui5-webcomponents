@@ -30,7 +30,6 @@ import {
 	isF6Next,
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import type Popover from "./Popover.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
@@ -63,13 +62,6 @@ type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, strin
 type TimePickerChangeInputEventDetail = {
 	value: string,
 	valid: boolean,
-}
-
-enum ValueStateIconMapping {
-	Negative = "error",
-	Critical = "alert",
-	Positive = "sys-enter-2",
-	Information = "information",
 }
 
 type TimePickerChangeEventDetail = TimePickerChangeInputEventDetail;
@@ -733,14 +725,6 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	get shouldDisplayDefaultValueStateMessage(): boolean {
 		return !willShowContent(this.valueStateMessage) && this.hasValueStateText;
 	}
-
-	/**
-	* This method is relevant for sap_horizon theme only
-	*/
-	get _valueStateMessageIcon(): string {
-		return this.valueState !== ValueState.None ? ValueStateIconMapping[this.valueState] : "";
-	}
-
 	get submitButtonLabel() {
 		return TimePicker.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
 	}

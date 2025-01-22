@@ -5,6 +5,11 @@ import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
 import TimeSelectionInputs from "./TimeSelectionInputs.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import error from "@ui5/webcomponents-icons/dist/error.js";
+import alert from "@ui5/webcomponents-icons/dist/alert.js";
+import sysEnter2 from "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import information from "@ui5/webcomponents-icons/dist/information.js";
 
 export default function TimePickerPopoverTemplate(this: TimePicker) {
 	return (
@@ -97,8 +102,19 @@ function valueStateTextHeader(this: TimePicker, style?: Record<string, string>) 
 			}}
 			style={style}
 		>
-			<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}/>
+			<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)}/>
 			{ valueStateMessage.call(this) }
 		</div>
 	);
+}
+
+function valueStateMessageInputIcon(this: TimePicker) {
+	const iconPerValueState = {
+		Negative: error,
+		Critical: alert,
+		Positive: sysEnter2,
+		Information: information,
+	};
+
+	return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 }
