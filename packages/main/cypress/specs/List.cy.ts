@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import "../../src/List.js";
 import "../../src/ListItemStandard.js";
 import type List from "../../src/List.js";

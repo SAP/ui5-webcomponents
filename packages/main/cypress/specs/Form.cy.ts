@@ -782,7 +782,7 @@ describe("Accessibility", () => {
 						<ui5-label for="nameInp" slot="labelContent">Name:</ui5-label>
 						<ui5-input value="Red Point Stores" id="nameInp"></ui5-input>
 					</ui5-form-item>
-				
+
 					<ui5-form-item>
 						<ui5-label id="cityLbl" for="cityInp" slot="labelContent">ZIP Code/City:</ui5-label>
 						<ui5-input id="cityInp" value="411" accessible-name-ref="cityLbl"></ui5-input>
@@ -796,7 +796,7 @@ describe("Accessibility", () => {
 						<ui5-input id="streetInp" value="Main St" accessible-name-ref="streetLbl"></ui5-input>
 						<ui5-input id="streetNumberInp" value="1618" accessible-name-ref="streetLbl"></ui5-input>
 					</ui5-form-item>
-					
+
 					<ui5-form-item>
 						<ui5-label id="countryLbl" for="countrySel" slot="labelContent">Country:</ui5-label>
 						<ui5-input id="countrySel" accessible-name-ref="countryLbl"></ui5-input>
@@ -809,7 +809,7 @@ describe("Accessibility", () => {
 					<ui5-label for="nameInp2" slot="labelContent">Name:</ui5-label>
 					<ui5-input value="Red Point Stores" id="nameInp2"></ui5-input>
 				</ui5-form-item>
-				
+
 				<ui5-form-item>
 					<ui5-label id="cityLbl2" for="cityInp2" slot="labelContent">ZIP Code/City:</ui5-label>
 					<ui5-input id="cityInp2" value="411" accessible-name-ref="cityLbl2"></ui5-input>
@@ -821,7 +821,7 @@ describe("Accessibility", () => {
 					<ui5-input id="streetInp2" value="Main St" accessible-name-ref="streetLbl2"></ui5-input>
 					<ui5-input id="streetNumberInp" value="1618" accessible-name-ref="streetLbl2"></ui5-input>
 				</ui5-form-item>
-				
+
 				<ui5-form-item>
 					<ui5-label id="countryLbl2" for="countrySel2" slot="labelContent">Country:</ui5-label>
 					<ui5-input id="countrySel2" accessible-name-ref="countryLbl2"></ui5-input>

@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import "@ui5/webcomponents-icons/dist/camera.js";
 import "../../src/BarcodeScannerDialog.js";
 import type BarcodeScannerDialog from "../../src/BarcodeScannerDialog.js";

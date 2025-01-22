@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import "../../../src/Dialog.js";
 import "../../../src/Select.js";
 import "../../../src/Option.js";

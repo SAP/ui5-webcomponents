@@ -58,8 +58,10 @@
     "@ui5/webcomponents-theming": "2.7.0-rc.0"
   },
   "devDependencies": {
+    "@ui5/webcomponents-testing": "0.0.0",
     "@ui5/webcomponents-tools": "2.7.0-rc.0",
     "chromedriver": "^131.0.0",
+    "lit-html": "^2.0.0",
     "lit": "^2.0.0"
   }
 }

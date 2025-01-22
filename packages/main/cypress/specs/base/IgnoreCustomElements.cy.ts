@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import "../../../src/Card.js";
 import "../../../src/CardHeader.js";
 
