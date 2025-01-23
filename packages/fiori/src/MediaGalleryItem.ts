@@ -82,7 +82,7 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_interactive = false;
+	_interactive = !isPhone();
 
 	/**
 	 * @private
@@ -142,7 +142,6 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 
 		this._monitoredContent = null;
 		this._monitoredThumbnail = null;
-		this._interactive = !isPhone();
 	}
 
 	onEnterDOM() {
