@@ -1,6 +1,6 @@
 :host {
-    font-family: var(--sapFontSemiboldDuplexFamily);
-    color: var(--sapList_HeaderTextColor);
+    font-family: var(--_ui5_table_header_cell_font-family);
+    color: var(--_ui5_table_header_cell_text_color);
 }
 
 :host(:empty) {

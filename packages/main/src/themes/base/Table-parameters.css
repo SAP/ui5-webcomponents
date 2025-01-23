@@ -5,4 +5,8 @@
 	--_ui5_table_cell_horizontal_padding: 0.5rem;
 	--_ui5_table_cell_vertical_padding: 0.25rem;
 	--_ui5_table_row_actions_gap: 0.25rem;
+	--_ui5_table_font: normal var(--sapFontSize) var(--sapFontFamily);
+	--_ui5_table_text_color: var(--sapList_TextColor);
+	--_ui5_table_header_cell_font-family: var(--sapFontSemiboldDuplexFamily);
+	--_ui5_table_header_cell_text_color: var(--sapList_HeaderTextColor);
 }

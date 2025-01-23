@@ -1,8 +1,8 @@
 :host {
 	display: block;
     position: relative;
-    color: var(--sapList_TextColor);
-    font: var(--sapFontSize) var(--sapFontFamily);
+    color: var(--_ui5_table_text_color);
+    font: var(--_ui5_table_font);
 }
 
 :host([hidden]) {
