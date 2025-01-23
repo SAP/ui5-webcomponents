@@ -2,8 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import "@ui5/webcomponents-icons/dist/background.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -45,7 +43,6 @@ import MediaGalleryItemTemplate from "./MediaGalleryItemTemplate.js";
 	renderer: jsxRenderer,
 	styles: MediaGalleryItemCss,
 	template: MediaGalleryItemTemplate,
-	dependencies: [Icon],
 })
 /**
  * @private

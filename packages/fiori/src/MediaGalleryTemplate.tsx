@@ -12,7 +12,7 @@ export default function MediaGalleryTemplate(this: MediaGallery) {
 					{this._isPhonePlatform
 						? <Carousel
 							onNavigate={this._onCarouselNavigate}
-							hideNavigationArrows
+							hideNavigationArrows={true}
 						>
 							{this._selectableItems.map(item =>
 								<slot name={item._individualSlot}></slot>
