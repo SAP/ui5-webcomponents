@@ -28,8 +28,10 @@ import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/To
 import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
+import BadgePlacement from "./types/BadgePlacement.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./ButtonTemplate.js";
+import "./Tab.js";
 
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
@@ -228,6 +230,18 @@ class Button extends UI5Element implements IButton {
 	 */
 	@property()
 	type: `${ButtonType}` = "Button";
+
+	/**
+	 * @public
+	*/
+	@property()
+	badgePlacement: `${BadgePlacement}` = "None";
+
+	/**
+	 * @public
+	*/
+	@property()
+	badgeText: string = "";
 
 	/**
 	 * Describes the accessibility role of the button.
@@ -513,6 +527,10 @@ class Button extends UI5Element implements IButton {
 
 	get _isReset() {
 		return this.type === ButtonType.Reset;
+	}
+
+	get hasBadge() {
+		return this.badgePlacement !== BadgePlacement.None;
 	}
 }
 

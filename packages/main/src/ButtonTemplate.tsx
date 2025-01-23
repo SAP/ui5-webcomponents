@@ -1,5 +1,6 @@
 import type Button from "./Button.js";
 import Icon from "./Icon.js";
+import Tag from "./Tag.js";
 
 export default function ButtonTemplate(this: Button, injectedProps?: {
 		ariaPressed?: boolean,
@@ -64,6 +65,10 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 
 			{this.hasButtonType &&
 				<span id="ui5-button-hiddenText-type" aria-hidden="true" class="ui5-hidden-text">{this.buttonTypeText}</span>
+			}
+
+			{this.hasBadge &&
+				<Tag design="Critical" hide-state-icon>{this.badgeText}</Tag>
 			}
 		</button>
 	</>);
