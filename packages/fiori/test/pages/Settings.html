@@ -15,58 +15,182 @@
 </head>
 
 <body>
+<ui5-shellbar id="shellbar" primary-title="Corporate Portal">
+	<ui5-avatar slot="profile">
+		<img src="./img/man_avatar_1.png"/>
+	</ui5-avatar>
+	<img slot="logo" src="./img/sap-logo-svg.svg" />
+</ui5-shellbar>
+<ui5-user-menu id="userMenuShellBar">
+	<ui5-user-menu-account slot="accounts"
+						   avatar-src="./img/man_avatar_1.png"
+						   title-text="Alain Chevalier"
+						   subtitle-text="alian.chevalier@sap.com"
+						   description="Delivery Manager, SAP SE"
+						   selected>
+	</ui5-user-menu-account>
+	<ui5-user-menu-item icon="action-settings" text="Setting" data-id="setting"></ui5-user-menu-item>
+</ui5-user-menu>
+
+<div style="border:1px solid black"></div>
 <ui5-button id="btnOpenSettings">User settings</ui5-button>
 <ui5-settings id="setting" header-title="Settings" show-search-field>
 	<ui5-setting-item icon="user-settings" text="User Account" tooltip="User Account" header-title="User Account">
 		<ui5-setting-view slot="pages">
-			User Account content
+			<ui5-icon name="person-placeholder"></ui5-icon><ui5-title level="H3" size="H3" style='display:inline; margin:0.5rem'>Alain Chevalier</ui5-title>
+			<div>
+				<ui5-label>Name:</ui5-label><ui5-text style="display: inline;">Alain Chevalier</ui5-text><br/>
+				<ui5-label>Email:</ui5-label><ui5-text style="display: inline;">alian.chevalier@sap.com</ui5-text><br/>
+				<ui5-label>Server:</ui5-label><ui5-text style="display: inline;">delivery-001.sap.com</ui5-text><br/>
+			</div>
+			<ui5-label>Personalization</ui5-label><br/>
+			<ui5-button id="reset-all-button">Reset All Personalization</ui5-button>
+			<ui5-panel fixed>
+				<ui5-label>
+					Reset your personalization settings for the launchpad (such as theme, language, user activities, and home page content).
+				</ui5-label>
+			</ui5-panel>
 		</ui5-setting-view>
 	</ui5-setting-item>
 
 	<ui5-setting-item icon="palette" text="Appearance" tooltip="Appearance" header-title="Appearance">
 		<ui5-setting-view text="Themes">
-			Themes content
+			<ui5-list separators="Inner">
+				<ui5-li icon="palette">SAP Morning Horizon</ui5-li>
+				<ui5-li icon="palette">SAP Evening Horizon</ui5-li>
+				<ui5-li icon="palette">SAP High Contrast Black (SAP Horizon)</ui5-li>
+				<ui5-li icon="palette">SAP High Contrast White (SAP Horizon)</ui5-li>
+			</ui5-list>
+			<ui5-button id="themeSave" style="float: right;">Save</ui5-button>
+			<ui5-toast design="Emphasized">Changes applied.</ui5-toast>
 		</ui5-setting-view>
 		<ui5-setting-view text="Display settings">
-			Display settings content
+			<ui5-checkbox checked text="Optimized for Touch Input"></ui5-checkbox>
+			<ui5-panel fixed>
+				<ui5-label>
+					Increases the size and spacing of controls to allow you to interact with them more easily using your fingertip.
+					This is useful for hybrid devices that combine touch and mouse events.
+				</ui5-label>
+			</ui5-panel>
 		</ui5-setting-view>
 	</ui5-setting-item>
 
 	<ui5-setting-item text="Language & Region" tooltip="Language & Region" header-title="Language & Region">
 		<ui5-setting-view slot="pages">
-			Language & Region content
+			<ui5-label>Language and Region:</ui5-label>
+			<ui5-combobox placeholder="Language">
+				<ui5-cb-item text="Browse Language" selected></ui5-cb-item>
+				<ui5-cb-item text="English"></ui5-cb-item>
+				<ui5-cb-item text="European Spanish"></ui5-cb-item>
+				<ui5-cb-item text="French (France)"></ui5-cb-item>
+				<ui5-cb-item text="Germany"></ui5-cb-item>
+			</ui5-combobox>
+
+			<ui5-panel fixed>
+				<ui5-label>
+					The time zone will not be applied in UI5 apps.
+					If you don't know the type of an app, you can check it in the "About" dialog in the "ID of the Application Framework” field.
+				</ui5-label>
+			</ui5-panel>
+			</br>
+			<ui5-label for="timeFormat">Time Format:</ui5-label>
+			<ui5-radio-button name="timeFormat" text="12h"></ui5-radio-button>
+			<ui5-radio-button checked name="timeFormat" text="24h"></ui5-radio-button>
+			<ui5-panel fixed>
+			<ui5-label>
+				After you save your settings, the browser will refresh for the new settings to take effect.
+			</ui5-label>
+			</ui5-panel>
+		</ui5-setting-view>
+	</ui5-setting-item>
+
+	<ui5-setting-item icon="iphone" text="SAP Mobile Start Application" tooltip="SAP Mobile Start Application" header-title="SAP Mobile Start Application">
+		<ui5-setting-view slot="pages">
+			<ui5-button id="mobile1-button">iOS</ui5-button>
+			<ui5-button id="mobile2-button">Android</ui5-button>
+		</ui5-setting-view>
+
+		<ui5-setting-view slot="pages" text="Inner Page" id="mobile-second-page" secondary>
+			<ui5-text>Enable access to your site from the SAP Mobile Start application.</ui5-text>
+			<ui5-button id="mobile-install">Install</ui5-button><ui5-button id="mobile-register">Register</ui5-button>
+			<ui5-text>Scan the QR Code to install the mobile application</ui5-text>
+			<ui5-icon name="qr-code" style="width: 20rem; height: 20rem;"></ui5-icon>
 		</ui5-setting-view>
 	</ui5-setting-item>
 
 	<ui5-setting-item icon="bell" text="Notifications" tooltip="Notifications" header-title="Notifications">
 		<ui5-setting-view slot="pages">
-			<ui5-button id="product1-button">Product 1</ui5-button>
-			<ui5-button id="product2-button">Product 2</ui5-button>
-		</ui5-setting-view>
-
-		<ui5-setting-view slot="pages" text="Inner Page" id="notification-second-page" secondary>
-			Notification second page content
+			<ui5-checkbox checked text="Show High-Priority Notification Alerts"></ui5-checkbox>
 		</ui5-setting-view>
 	</ui5-setting-item>
 
 	<ui5-setting-item icon="reset" slot="fixedItems" text="Reset Settings" tooltip="Reset Settings" header-title="Reset Settings">
 		<ui5-setting-view text="Reset Personalization">
-			Reset Personalization content
+			<ui5-button id="resetPersonalization">Reset Personalization content</ui5-button>
+			<ui5-toast id="toastReset" design="Emphasized">Changes Reset.</ui5-toast>
 		</ui5-setting-view>
 		<ui5-setting-view text="Reset All Settings">
-			Reset All Settings content
+			<ui5-button id="resetAll">Reset All Settings content</ui5-button>
+			<ui5-toast id="toastResetAll" design="Emphasized">All changes Reset.</ui5-toast>
 		</ui5-setting-view>
 	</ui5-setting-item>
 </ui5-settings>
+
+<ui5-dialog id="additionalDialog" state="Critical" header-text="Warning">
+	<ui5-text>Clicking on reset will delete your personalization settings for the launchpad (e.g. theme, language, user activities, and home page content) and for apps using the launchpad personalization features (e.g. filter settings, table columns).
+		This action is irreversible.
+		Further changes in the dialog will not be applied.
+		Are you sure you want to proceed with the reset?</ui5-text>
+	<ui5-toolbar slot="footer">
+		<ui5-toolbar-button
+			class="dialogCloser"
+			design="Emphasized"
+			text="OK">
+		</ui5-toolbar-button>
+		<ui5-toolbar-button
+			class="dialogCloser"
+			design="Transparent"
+			text="Cancel">
+		</ui5-toolbar-button>
+	</ui5-toolbar>
+</ui5-dialog>
+
 <ui5-title level="H5" class="header-title">Text Direction</ui5-title>
 <ui5-switch id="direction" text-on="RTL" text-off="LTR"></ui5-switch>
 <script>
 	const direction = document.getElementById("direction");
+	const menuShellBar = document.getElementById("userMenuShellBar");
 	const settingsDialog = document.getElementById("setting");
-	const notificationButton = document.getElementById("notification-button");
-	const notificationSecondPage = document.getElementById("notification-second-page");
-	const product1Button = document.getElementById("product1-button");
-	const product2Button = document.getElementById("product2-button");
+	const mobileSecondPage = document.getElementById("mobile-second-page");
+	const mobile1Button = document.getElementById("mobile1-button");
+	const mobile2Button = document.getElementById("mobile2-button");
+
+	const resetAllButton = document.getElementById("reset-all-button");
+	const additionalDialog = document.getElementById("additionalDialog");
+	const additionalDialogClosers = [...additionalDialog.querySelectorAll(".dialogCloser")];
+	const resetAll = document.getElementById("resetAll");
+	const resetPersonalization = document.getElementById("resetPersonalization");
+	const toast = [...document.getElementsByTagName("ui5-toast")][0];
+	const toastReset =  document.getElementById("toastReset");
+	const toastResetAll =  document.getElementById("toastResetAll");
+	const themeSave =document.getElementById("themeSave");
+	menuShellBar.addEventListener("item-click", function (event) {
+		const item = event.detail.item.getAttribute("data-id");
+
+		switch (item) {
+			case "setting":
+				settingsDialog.open = true;
+		}
+	});
+
+	shellbar.addEventListener("ui5-profile-click", (event) => {
+		menuShellBar.opener = event.detail.targetRef;
+		if(menuShellBar.open){
+			menuShellBar.open = false;
+		} else {
+			menuShellBar.open = true;
+		}
+	});
 
 	direction.addEventListener("ui5-change", function() {
 		document.body.setAttribute("dir", direction.checked ? "rtl" : "ltr");
@@ -77,14 +201,36 @@
 		settingsDialog.open = true;
 	});
 
-	product1Button.addEventListener("click", function () {
-		notificationSecondPage.selected = true;
-		notificationSecondPage.text = "Product 1";
+	mobile1Button.addEventListener("click", function () {
+		mobileSecondPage.selected = true;
+		mobileSecondPage.text = "iOS";
 	});
 
-	product2Button.addEventListener("click", function () {
-		notificationSecondPage.selected = true;
-		notificationSecondPage.text = "Product 2";
+	mobile2Button.addEventListener("click", function () {
+		mobileSecondPage.selected = true;
+		mobileSecondPage.text = "Android";
+	});
+
+	resetAllButton.addEventListener("click", function () {
+		additionalDialog.open = true;
+	});
+
+	additionalDialogClosers.forEach(btn => {
+		btn.addEventListener("click", () => {
+			additionalDialog.open = false;
+		});
+	})
+
+	themeSave.addEventListener("click", function () {
+		toast.open = true;
+	});
+
+	resetPersonalization.addEventListener("click", function () {
+		toastReset.open = true;
+	});
+
+	resetAll.addEventListener("click", function () {
+		toastResetAll.open = true;
 	});
 
 	settingsDialog.addEventListener("item-select", function (event) {
