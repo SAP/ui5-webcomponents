@@ -440,7 +440,7 @@ Cypress tests automatically run with instrumentation switched on. To see the cod
 ```sh
 # build the project
 yarn build
-# run the tests for a pacakge
+# run the tests for a package
 cd packages/main
 yarn test:cypress
 # start a static server in the `coverage` folder and inspect the results in the browser
