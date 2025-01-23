@@ -301,7 +301,6 @@ bdi {
 	border-bottom-left-radius: var(--_ui5_button_focused_inner_border_radius);
 }
 
-/* Slotted Badge */
 :host([badge-placement="End"]) .ui5-button-root [ui5-tag] {
 	pointer-events: initial;
 	font-family: "72override", var(--sapFontFamily);
@@ -312,7 +311,6 @@ bdi {
 	--_ui5-tag-border-radius: 50%;
 }
 
-/* Slotted Badge */
 :host([badge-placement="EndTop"]) .ui5-button-root [ui5-tag] {
 	pointer-events: initial;
 	position: absolute;
