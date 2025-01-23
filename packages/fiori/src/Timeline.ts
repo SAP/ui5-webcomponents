@@ -167,7 +167,7 @@ class Timeline extends UI5Element {
 	items!: Array<ITimelineItem>;
 
 	@query(".ui5-timeline-end-marker")
-  	timeLineEndDOM!: HTMLElement;
+	timelineEndMarker!: HTMLElement;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
@@ -195,6 +195,10 @@ class Timeline extends UI5Element {
 		return this.accessibleName
 			? `${Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL)} ${this.accessibleName}`
 			: Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL);
+	}
+
+	get showBusyIndicatorOverlay() {
+		return !this.growsWithButton && this.loading;
 	}
 
 	get growsOnScroll(): boolean {
@@ -229,7 +233,7 @@ class Timeline extends UI5Element {
 
 	observeTimeLineEnd() {
 		if (!this.timeLineEndObserved) {
-			this.getIntersectionObserver().observe(this.timeLineEndDOM);
+			this.getIntersectionObserver().observe(this.timelineEndMarker);
 			this.timeLineEndObserved = true;
 		}
 	}

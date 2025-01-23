@@ -285,23 +285,30 @@
 <script>
 	const growing = document.getElementById("horizontalWithGroupsGrowing");
 		growing.addEventListener("load-more", (e) => {
-			const newGroup = document.createElement("ui5-timeline-group-item");
+			growing.loading = true
 
-			newGroup.setAttribute("group-name", "test");
+			setTimeout(() => {
+				const newGroup = document.createElement("ui5-timeline-group-item");
 
-			for (let i = 0; i < 10; i++) {
-				newGroup.innerHTML += `
-					<ui5-timeline-item title-text="Review Meeting" subtitle-text="26.02.2017 09:30" icon="meeting-room">
-						<ui5-avatar-group type="Group" avatar-size="S">
-							<ui5-avatar initials="LK"></ui5-avatar>
-							<ui5-avatar initials="AW"></ui5-avatar>
-							<ui5-avatar initials="BR"></ui5-avatar>
-						</ui5-avatar-group>
-						<div>Review project deliverables</div>
-					</ui5-timeline-item>
-				`;
-				growing.appendChild(newGroup);
-			}
+				newGroup.setAttribute("group-name", "test");
+
+				for (let i = 0; i < 10; i++) {
+					newGroup.innerHTML += `
+						<ui5-timeline-item title-text="Review Meeting" subtitle-text="26.02.2017 09:30" icon="meeting-room">
+							<ui5-avatar-group type="Group" avatar-size="S">
+								<ui5-avatar initials="LK"></ui5-avatar>
+								<ui5-avatar initials="AW"></ui5-avatar>
+								<ui5-avatar initials="BR"></ui5-avatar>
+							</ui5-avatar-group>
+							<div>Review project deliverables</div>
+						</ui5-timeline-item>
+					`;
+					growing.appendChild(newGroup);
+					growing.loading = false;
+				}
+
+			}, 10000);
+
 
 		});
 </script>

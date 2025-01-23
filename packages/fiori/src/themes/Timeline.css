@@ -18,11 +18,15 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	margin-inline-start: 0.625rem;
+	align-items: center;
+	min-width: 3.375rem;
 }
 :host([layout="Vertical"]) .ui5-timeline-list-item.ui5-timeline-list-growing {
 	display: flex;
-	flex-direction: row;
+	flex-direction: row-reverse;
 	justify-content: center;
+	align-items: center;
 }
 
 :host([layout="Horizontal"]) .ui5-timeline-end-marker {
@@ -59,4 +63,17 @@
 	overflow: auto;
 	/* The padding values of the parent container are added to the size of scroll container */
 	width: calc(100% + var(--_ui5_timeline_scroll_container_offset));
+}
+
+:host([loading]) .ui5-timeline-growing-button-busy-indicator:not([_is-busy]) {
+	display: none;
+}
+
+.ui5-timeline-root,
+.ui5-timeline-busy-indicator {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	box-sizing: border-box;
+	padding-inline-end: 0;
 }
