@@ -421,6 +421,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	onResponsivePopoverBeforeOpen() {
 		const clocks = this._timeSelectionClocks;
 		if (clocks) {
+			clocks._activeIndex = 0;
 			clocks._skipAnimation = true;
 		}
 	}
