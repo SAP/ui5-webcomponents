@@ -39,7 +39,6 @@ import type {
 } from "./types.js";
 import { updateFormValue, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
-import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 import { getI18nBundle } from "./i18nBundle.js";
 import type I18nBundle from "./i18nBundle.js";
 import { fetchCldr } from "./asset-registries/LocaleData.js";
@@ -1321,16 +1320,6 @@ abstract class UI5Element extends HTMLElement {
 		this.definePromise = defineSequence();
 
 		const tag = this.getMetadata().getTag();
-
-		const features = this.getMetadata().getFeatures();
-
-		features.forEach(feature => {
-			if (getComponentFeature(feature)) {
-				this.cacheUniqueDependencies();
-			}
-
-			subscribeForFeatureLoad(feature, this, this.cacheUniqueDependencies.bind(this));
-		});
 
 		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);
