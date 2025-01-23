@@ -8,7 +8,6 @@ import "@ui5/webcomponents/dist/Switch.js";
 import "@ui5/webcomponents/dist/Tag.js";
 import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/Input.js";
-import "@ui5/webcomponents/dist/features/InputSuggestions.js";
 import "@ui5/webcomponents/dist/SuggestionItem.js";
 import "@ui5/webcomponents/dist/SuggestionItemCustom.js";
 import "@ui5/webcomponents/dist/SuggestionItemGroup.js";
