@@ -2,6 +2,7 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/InitialConfiguration.js";
 import verticalGrip from "@ui5/webcomponents-icons/dist/vertical-grip.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 import type FlexibleColumnLayout from "./FlexibleColumnLayout.js";
 
 export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout) {
@@ -31,9 +32,10 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 				tabindex={this.startSeparatorTabIndex}
 				onMouseDown={this.onSeparatorPress}
 				onTouchStart={this.onSeparatorPress}
-				onKeyDown={this._onkeydown}
-				onKeyUp={this._onkeyup}
+				onKeyDown={this._onSeparatorKeydown}
+				onKeyUp={this._onSeparatorKeyUp}
 			>
+				{ this.showStartSeparatorArrow && arrowStart.call(this) }
 				{ gripStart.call(this) }
 			</div>
 
@@ -59,8 +61,8 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 				tabindex={this.endSeparatorTabIndex}
 				onMouseDown={this.onSeparatorPress}
 				onTouchStart={this.onSeparatorPress}
-				onKeyDown={this._onkeydown}
-				onKeyUp={this._onkeyup}
+				onKeyDown={this._onSeparatorKeydown}
+				onKeyUp={this._onSeparatorKeyUp}
 			>
 				{ gripEnd.call(this) }
 			</div>
@@ -79,6 +81,18 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 				<slot name="endColumn" aria-hidden={this._accAttributes.columns.middle.ariaHidden}></slot>
 			</div>
 		</div>
+	);
+}
+
+function arrowStart(this: FlexibleColumnLayout) {
+	return (
+		<Button
+			icon={this.startArrowDirection === "backward" ? "slim-arrow-left" : "slim-arrow-right"}
+			design="Transparent"
+			onClick={this.switchLayoutOnArrowPress}
+			onKeyDown={this._onArrowKeydown}
+			class="ui5-fcl-arrow ui5-fcl-arrow--start"
+		/>
 	);
 }
 

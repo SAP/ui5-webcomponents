@@ -1,9 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import type NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
+import type NavigationMenu from "./NavigationMenu.js";
 import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -114,7 +115,7 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 	fastNavigation: true,
 	renderer: jsxRender,
 	template: SideNavigationTemplate,
-	styles: [SideNavigationCss, SideNavigationPopoverCss],
+	styles: [SideNavigationCss, SideNavigationPopoverCss, getEffectiveScrollbarStyle()],
 })
 /**
  * Fired when the selection has changed via user interaction
