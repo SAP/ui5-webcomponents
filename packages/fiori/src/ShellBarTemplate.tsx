@@ -172,7 +172,6 @@ export default function ShellBarTemplate(this: ShellBar) {
 						<Button
 							id={`${this._id}-item-5`}
 							class={{
-								"ui5-shellbar-no-overflow-button": true, // always visible
 								"ui5-shellbar-button": true,
 								"ui5-shellbar-overflow-button": true,
 								...this.classes.overflow,

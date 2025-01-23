@@ -532,7 +532,6 @@ slot[name="profile"] {
 
 /* if class contains ui5-shellbar-hidden-button */
 ::slotted(.ui5-shellbar-hidden-button),
-::slotted(.ui5-shellbar-force-hidden-button),
 .ui5-shellbar-hidden-button,
 .ui5-shellbar-invisible-button {
 	visibility: hidden;
@@ -542,6 +541,7 @@ slot[name="profile"] {
 	width: 0;
 	margin: 0;
 	padding: 0;
+	padding-inline-start: 0;
 	border: 0;
 	margin-inline-start: 0;
 }

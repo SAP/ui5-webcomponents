@@ -720,6 +720,10 @@ class ShellBar extends UI5Element {
 	onBeforeRendering() {
 		this.withLogo = this.hasLogo;
 
+		this.neverHideContent.forEach(item => {
+			item.classList.remove("ui5-shellbar-hidden-button");
+		});
+
 		this._hiddenIcons = this._itemsInfo.filter(info => {
 			const isHidden = (info.classes.indexOf("ui5-shellbar-hidden-button") !== -1);
 			const isSet = info.classes.indexOf("ui5-shellbar-invisible-button") === -1;
@@ -735,9 +739,12 @@ class ShellBar extends UI5Element {
 	}
 
 	get additionalContextSorted() {
-		return this.additionalContext.sort((a, b) => {
-			return parseInt(a.getAttribute("data-hide-order") || "0") - parseInt(b.getAttribute("data-hide-order") || "0");
-		}).map(item => this.shadowRoot!.querySelector<HTMLElement>(`#${item.slot}`)).filter(item => item !== null);
+		return this.additionalContext
+			.filter(item => item.getAttribute("data-hide-order") !== "never")
+			.sort((a, b) => {
+				return parseInt(a.getAttribute("data-hide-order") || "0") - parseInt(b.getAttribute("data-hide-order") || "0");
+			})
+			.map(item => this.shadowRoot!.querySelector<HTMLElement>(`#${item.slot}`)).filter(item => item !== null);
 	}
 
 	get additionalContextContainer() {
@@ -798,7 +805,7 @@ class ShellBar extends UI5Element {
 
 		const additionalContextSorted = this.additionalContextSorted.toReversed();
 
-		let usedWidth = 0;
+		let usedWidth = this.neverHideContent.reduce((acc, el) => acc + el.offsetWidth, 0);
 
 		for (let i = 0; i < additionalContextSorted.length; i++) {
 			const item = additionalContextSorted[i];
@@ -817,7 +824,10 @@ class ShellBar extends UI5Element {
 		const itemsToOverflow = this.itemsToOverflow;
 		const container = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-overflow-container-right")!;
 		const searchFieldWidth = this.searchField[0] ? this.searchField[0].offsetWidth : 0;
-		const nonDisappearingItems = Array.from(container.querySelectorAll<HTMLElement>(".ui5-shellbar-no-overflow-button"));
+		const nonDisappearingItems = [
+			...Array.from(container.querySelectorAll<HTMLElement>(".ui5-shellbar-no-overflow-button")),
+			...this.neverHideContent,
+		];
 		const nonDisappearingItemsWidth = nonDisappearingItems.reduce((acc, el) => acc + el.offsetWidth + this.domCalculatedValues("--_ui5-shellbar-overflow-button-margin"), 0);
 		let totalWidth = container.offsetWidth - nonDisappearingItemsWidth - this.separatorsWidth;
 		if (this.additionalContext.length === 0) {
@@ -1068,14 +1078,16 @@ class ShellBar extends UI5Element {
 	 * Returns all items that will be placed in the right of the bar as icons / dom elements.
 	 * @param showOverflowButton Determines if overflow button should be visible (not overflowing)
 	 */
-	_getAllItems(showOverflowButton: boolean, showSearchButton = true): Array<IShelBarItemInfo> {
+	_getAllItems(showOverflowButton: boolean, overflowSearchButton = true): Array<IShelBarItemInfo> {
 		let domOrder = -1;
+
+		const hasSpaceForSearch = this.additionalContextContainer ? this.additionalContextContainer.offsetWidth > 46 : true;
 
 		const items: Array<IShelBarItemInfo> = [
 			{
 				icon: search,
 				text: this._searchText,
-				classes: `${this.searchField.length ? "" : "ui5-shellbar-invisible-button"} ${showSearchButton ? "" : "ui5-shellbar-no-overflow-button"} ui5-shellbar-search-button ui5-shellbar-button`,
+				classes: `${this.searchField.length ? "" : "ui5-shellbar-invisible-button"} ${overflowSearchButton && !hasSpaceForSearch ? "" : "ui5-shellbar-no-overflow-button"} ui5-shellbar-search-button ui5-shellbar-button`,
 				domOrder: this.searchField.length ? (++domOrder) : -1,
 				id: `${this._id}-item-${1}`,
 				press: this._handleSearchIconPress.bind(this),
@@ -1245,7 +1257,6 @@ class ShellBar extends UI5Element {
 			},
 			search: {
 				"ui5-shellbar-hidden-button": this.isIconHidden("search"),
-				"ui5-shellbar-no-overflow-button": this.breakpointSize !== "S",
 			},
 			overflow: {
 				"ui5-shellbar-hidden-button": this._hiddenIcons.length === 0,
@@ -1402,6 +1413,13 @@ class ShellBar extends UI5Element {
 			}
 		}
 		return endContent;
+	}
+
+	get neverHideContent() {
+		return this.additionalContext
+			.filter(item => item.getAttribute("data-hide-order") === "never")
+			.map(item => this.shadowRoot!.querySelector<HTMLElement>(`#${item.slot}`))
+			.filter(item => item !== null);
 	}
 
 	get _rightChildRole() {
