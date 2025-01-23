@@ -162,4 +162,14 @@ describe("ARIA attributes", () => {
 
 		assert.equal(await avatarRoot.getAttribute("aria-label"), await avatar.getAttribute("accessible-name"), "aria-label should be set according to accessibleName property");
 	});
+
+	it ("initials of avatar are correctly announced", async () => {
+		const avatar = await $("#interactive-avatar"),
+			  avatarRoot = avatar.shadow$(".ui5-avatar-root"),
+			  initials = await avatar.shadow$(".ui5-avatar-initials"),
+			  expectedLabel = "Avatar " + initials;
+
+		assert.equal(await avatarRoot.getAttribute("aria-label"), expectedLabel, "the aria-label should include the initials when they are defined");
+	});
+
 });

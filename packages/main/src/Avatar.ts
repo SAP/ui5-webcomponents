@@ -292,13 +292,14 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 		return null;
 	}
-
 	get accessibleNameText() {
+		const defaultLabel = Avatar.i18nBundle.getText(AVATAR_TOOLTIP);
+
 		if (this.accessibleName) {
 			return this.accessibleName;
 		}
 
-		return Avatar.i18nBundle.getText(AVATAR_TOOLTIP) || undefined;
+		return this.initials ? `${defaultLabel} ${this.initials}`.trim() : defaultLabel;
 	}
 
 	get hasImage() {
