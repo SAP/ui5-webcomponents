@@ -136,7 +136,7 @@ function headerContent(this: UserMenu) {
 					{this._selectedAccount.avatarSrc &&
 						<img src={this._selectedAccount.avatarSrc}/>
 					}
-					{!this.hideEditAvatar &&
+					{this.showEditButton &&
 					<Tag slot="badge" wrappingType="None" design="Set1" colorScheme="5" title={this._editAvatarTooltip}>
 						<Icon slot="icon" name={edit}></Icon>
 					</Tag>

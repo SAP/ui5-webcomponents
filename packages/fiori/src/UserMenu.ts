@@ -184,14 +184,14 @@ class UserMenu extends UI5Element {
 	showAddAccount = false;
 
 	/**
-	 * Defines if the User menu avatar edit button should be hidden.
+	 * Defines if the User menu shows edit button.
 	 *
 	 * @default false
 	 * @public
 	 * @since 2.7.0
 	 */
 	@property({ type: Boolean })
-	hideEditAvatar = false;
+	showEditButton = false;
 
 	/**
 	 * Defines the menu items.
