@@ -2,7 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import MenuItem from "./MenuItem.js";
+import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
 import NavigationMenu from "./NavigationMenu.js";
 import NavigationMenuItemTemplate from "./NavigationMenuItemTemplate.js";
 
@@ -29,7 +29,7 @@ import {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/NavigationMenuItem.js";`
+ * `import "@ui5/webcomponents-fiori/dist/NavigationMenuItem.js";`
  * @constructor
  * @extends MenuItem
  * @since 1.22.0

@@ -42,8 +42,7 @@ Cypress.Commands.add("ui5ColorPaletteCheckSelectedColor", { prevSubject: true },
 	cy.get("@colorPalette")
 		.shadow()
 		.find("ui5-dialog")
-		.find("ui5-button")
-		.should("have.attr", "design", "Emphasized") // The OK button is Emphasized (the Cancel button is Transparent)
+		.find("ui5-button[design=Emphasized]") // The OK button is Emphasized (the Cancel button is Transparent)
 		.as("okButton");
 
 	cy.get("@redColor")
@@ -59,6 +58,7 @@ Cypress.Commands.add("ui5ColorPaletteCheckSelectedColor", { prevSubject: true },
 		.should("have.attr", "value", values.a);
 
 	cy.get("@okButton")
+		.should("be.visible") // Make sure the OK button is rendered before clicking it
 		.realClick();
 
 	cy.get("@colorPalette")
