@@ -180,7 +180,9 @@ type ListMoveEventDetail = MoveEventDetail;
  * Fired when an item is clicked, unless the item's `type` property
  * is set to `Inactive`.
  *
- * **Note:** This event will not be fired if the `selectionMode` property is set to a value other than the default and the checkbox or radio button within the list item is **clicked directly**. In such cases, use the `selection-change` event to track when the list item is checked/unchecked.
+ * **Note**: This event will not trigger if the `selectionMode` property is set to a non-default value and an **interactive** component
+ * (such as a checkbox or radio button) within the list item is directly clicked.
+ * In these scenarios, use the `selection-change` event to monitor when an item is selected or deselected.
  * @param {HTMLElement} item The clicked item.
  * @public
  */
