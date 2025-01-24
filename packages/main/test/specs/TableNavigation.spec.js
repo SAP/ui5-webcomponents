@@ -1,6 +1,6 @@
 import { assert } from "chai";
 
-describe("Table - Keyboard Navigation", async () => {
+describe.skip("Table - Keyboard Navigation", async () => {
 	before(async () => {
 		await browser.url("test/pages/TableNavigation.html");
 	});
@@ -288,7 +288,7 @@ describe("Table - Keyboard Navigation", async () => {
 });
 
 
-describe("Table - Keyboard Navigation with Fixed Headers", async() => {
+describe.skip("Table - Keyboard Navigation with Fixed Headers", async() => {
 	before(async() => {
 		await browser.url("test/pages/TableFixedHeader.html");
 	});

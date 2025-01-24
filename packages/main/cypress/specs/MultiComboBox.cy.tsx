@@ -19,3 +19,40 @@ describe("Security", () => {
 			.should("have.text", "Albania<button onClick='alert(1)'>alert</button>");
 	});
 });
+
+describe("Value State", () => {
+	it("should be able to change value states upon typing", () => {
+		cy.mount(
+			<MultiComboBox no-validation>
+				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		// add event listener
+		cy.get("ui5-multi-combobox")
+			.then(mcb => {
+				mcb.get(0).addEventListener("input", e => {
+					(mcb.get(0) as MultiComboBox).valueState = (e.target as MultiComboBox).value.length ? "Negative" : "Information";
+				});
+			});
+
+		// type "f"
+		cy.get("ui5-multi-combobox")
+			.shadow()
+			.find("input")
+			.type("f");
+
+		cy.realPress("Backspace");
+
+		cy.get("ui5-multi-combobox")
+			.shadow()
+			.find("input")
+			.realPress("f");
+
+		cy.get("ui5-multi-combobox")
+			.shadow()
+			.find(".ui5-valuestatemessage--information")
+			.should("not.exist");
+	});
+});

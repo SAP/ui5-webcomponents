@@ -379,7 +379,8 @@ describe("ExpandableText", () => {
 
 			cy.get("@rpo")
 				.contains("[slot=footer] [ui5-button]", EXPANDABLE_TEXT_CLOSE.defaultText)
-				.should("exist");
+				.should("exist")
+				.and("be.visible");
 
 			cy.get("@rpo")
 				.contains("[slot=footer] [ui5-button]", EXPANDABLE_TEXT_CLOSE.defaultText)
