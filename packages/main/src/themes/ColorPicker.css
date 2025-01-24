@@ -51,6 +51,7 @@
 .ui5-color-picker-sliders-wrapper {
     width: calc(100% - 0.6875rem);
     margin-left: -0.625rem;
+    padding-bottom: 0.25rem;
 }
 
 [ui5-slider] {
@@ -67,7 +68,7 @@
 }
 
 [ui5-slider]::part(handle-container) {
-    margin-top: var(--_ui5_color_picker_slider_handle_margin_top);
+    margin-top: var(--_ui5_color_picker_slider_hande_container_margin_top);
     margin-inline-start: -0.125rem;
     z-index: 2;
 }
@@ -239,11 +240,6 @@
 .ui5-color-picker-alpha-slider::part(handle)::before,
 .ui5-color-picker-hue-slider::part(handle)::before {
     display: none;
-}
-
-.ui5-color-picker-alpha-slider::part(handle):focus,
-.ui5-color-picker-hue-slider::part(handle):focus {
-    margin-top: var(--_ui5_color_picker_slider_handle_focus_margin_top);
 }
 
 :dir(rtl) [ui5-slider].ui5-color-picker-hue-slider::part(progress-container) {
