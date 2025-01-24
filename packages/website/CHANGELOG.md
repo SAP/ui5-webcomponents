@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.0...v2.7.0-rc.1) (2025-01-23)
+
+
+### Bug Fixes
+
+* **ui5-side-navigation:** corrects playground sample  ([#10625](https://github.com/SAP/ui5-webcomponents/issues/10625)) ([5a668b4](https://github.com/SAP/ui5-webcomponents/commit/5a668b4dd242f9867584eee4abab97f60b6f9e9d)), closes [#10592](https://github.com/SAP/ui5-webcomponents/issues/10592)
+
+
+### Features
+
+* **ui5-timeline-item:** introduce `state` property ([#10277](https://github.com/SAP/ui5-webcomponents/issues/10277)) ([b378604](https://github.com/SAP/ui5-webcomponents/commit/b378604e008efbf71054e72583ff8fd9fd227275))
+
+
+
+
+
 # [2.7.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2...v2.7.0-rc.0) (2025-01-16)
 
 

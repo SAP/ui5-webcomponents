@@ -23,7 +23,7 @@ describe("Calendar general interaction", () => {
 	it("The time is with the correct offset in time picker", async () => {
 
 		const timePicker = await browser.$("#timePickerNow");
-		const timePickerValue = await timePicker.shadow$("ui5-input").getValue();
+		const timePickerValue = await timePicker.shadow$("ui5-datetime-input").getValue();
 		const now = new Date();
 		const offset = now.getTimezoneOffset();
 		now.setMinutes(now.getMinutes() + offset);

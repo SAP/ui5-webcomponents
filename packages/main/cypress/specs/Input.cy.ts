@@ -1,7 +1,6 @@
 import { html } from "lit";
 import "../../src/Input.js";
 import type Input from "../../src/Input.js";
-import "../../src/features/InputSuggestions.js";
 import "../../src/SuggestionItem.js";
 import "../../src/SuggestionItemCustom.js";
 import "../../src/SuggestionItemGroup.js";
