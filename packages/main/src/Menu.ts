@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import {
 	isLeft,
 	isRight,
@@ -12,23 +12,21 @@ import {
 	isPhone,
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
-import Button from "./Button.js";
-import List from "./List.js";
-import BusyIndicator from "./BusyIndicator.js";
-import MenuItem from "./MenuItem.js";
-import MenuSeparator from "./MenuSeparator.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
+import type MenuItem from "./MenuItem.js";
+import "./MenuItem.js";
+import "./MenuSeparator.js";
 import type {
 	ListItemClickEventDetail,
 } from "./List.js";
-import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
+import menuTemplate from "./MenuTemplate.js";
 import {
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
 	MENU_POPOVER_ACCESSIBLE_NAME,
@@ -95,99 +93,80 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  */
 @customElement({
 	tag: "ui5-menu",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: menuCss,
 	template: menuTemplate,
-	dependencies: [
-		ResponsivePopover,
-		Button,
-		List,
-		MenuItem,
-		MenuSeparator,
-		BusyIndicator,
-	],
 })
 
 /**
  * Fired when an item is being clicked.
  *
  * **Note:** Since 1.17.0 the event is preventable, allowing the menu to remain open after an item is pressed.
- * @allowPreventDefault
  * @param { HTMLElement } item The currently clicked menu item.
  * @param { string } text The text of the currently clicked menu item.
  * @public
  */
-@event<MenuItemClickEventDetail>("item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: {
-			type: HTMLElement,
-		},
-		/**
-		 * @public
-		 */
-		text: {
-			type: String,
-		},
-	},
+@event("item-click", {
+	cancelable: true,
 })
 
 /**
- * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. **This event does not bubble.**
+ * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening.
  *
  * **Note:** Since 1.14.0 the event is also fired before a sub-menu opens.
  * @public
- * @allowPreventDefault
  * @since 1.10.0
  * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
  */
-@event<MenuBeforeOpenEventDetail>("before-open", {
-	detail: {
-		/**
-		 * @public
-		 * @since 1.14.0
-		 */
-		item: {
-			type: HTMLElement,
-		},
-	},
+@event("before-open", {
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
- * Fired after the menu is opened. **This event does not bubble.**
+ * Fired after the menu is opened.
  * @public
  * @since 1.10.0
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
 
 /**
- * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. **This event does not bubble.**
+ * Fired when the menu is being closed.
+ * @private
+ */
+@event("close-menu", {
+	bubbles: true,
+})
+
+/**
+ * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing.
  * @public
- * @allowPreventDefault
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  * @since 1.10.0
  */
-@event<MenuBeforeCloseEventDetail>("before-close", {
-	detail: {
-		/**
-		 * @public
-		 */
-		escPressed: {
-			type: Boolean,
-		},
-	},
+@event("before-close", {
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
- * Fired after the menu is closed. **This event does not bubble.**
+ * Fired after the menu is closed.
  * @public
  * @since 1.10.0
  */
 @event("close")
 
 class Menu extends UI5Element {
+	eventDetails!: {
+		"item-click": MenuItemClickEventDetail,
+		"before-open": MenuBeforeOpenEventDetail,
+		"open": void,
+		"before-close": MenuBeforeCloseEventDetail,
+		"close": void,
+		"close-menu": void,
+	}
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
 	 * @default undefined
@@ -243,12 +222,9 @@ class Menu extends UI5Element {
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<IMenuItem>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	_timeout?: Timeout;
-
-	static async onDefine() {
-		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	get isRtl() {
 		return this.effectiveDir === "rtl";
@@ -293,9 +269,9 @@ class Menu extends UI5Element {
 			return;
 		}
 
-		this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
+		this.fireDecoratorEvent("before-open", {
 			item,
-		}, false, false);
+		});
 		item._popover.opener = item;
 		item._popover.open = true;
 		item.selected = true;
@@ -327,6 +303,17 @@ class Menu extends UI5Element {
 		}
 	}
 
+	async focus(focusOptions?: FocusOptions): Promise<void> {
+		await renderFinished();
+		const firstMenuItem = this._menuItems[0];
+
+		if (firstMenuItem) {
+			return firstMenuItem.focus(focusOptions);
+		}
+
+		return super.focus(focusOptions);
+	}
+
 	_startOpenTimeout(item: MenuItem) {
 		clearTimeout(this._timeout);
 
@@ -345,13 +332,13 @@ class Menu extends UI5Element {
 		const item = e.detail.item as MenuItem;
 
 		if (!item._popover) {
-			const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
+			const prevented = !this.fireDecoratorEvent("item-click", {
 				"item": item,
 				"text": item.text || "",
-			}, true, false);
+			});
 
 			if (!prevented && this._popover) {
-				item.fireEvent("close-menu", {});
+				item.fireDecoratorEvent("close-menu");
 			}
 		} else {
 			this._openItemSubMenu(item);
@@ -381,7 +368,7 @@ class Menu extends UI5Element {
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
-		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, true);
+		const prevented = !this.fireDecoratorEvent("before-open", {});
 
 		if (prevented) {
 			this.open = false;
@@ -391,11 +378,11 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this._menuItems[0]?.focus();
-		this.fireEvent("open", {}, false, true);
+		this.fireDecoratorEvent("open");
 	}
 
-	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
-		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, true);
+	_beforePopoverClose(e: CustomEvent) {
+		const prevented = !this.fireDecoratorEvent("before-close", { escPressed: e.detail.escPressed });
 
 		if (prevented) {
 			this.open = true;
@@ -405,7 +392,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverClose() {
 		this.open = false;
-		this.fireEvent("close", {}, false, true);
+		this.fireDecoratorEvent("close");
 	}
 }
 

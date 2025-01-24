@@ -1,6 +1,7 @@
 import { camelToKebabCase, kebabToCamelCase } from "./util/StringHelper.js";
 import { getSlottedNodes } from "./util/SlotsHelper.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
+import type UI5Element from "./UI5Element.js";
 
 type SlotInvalidation = {
 	properties: boolean | Array<string>,
@@ -28,7 +29,14 @@ type Property = {
 
 type PropertyValue = boolean | number | string | object | undefined | null;
 
-type EventData = Record<string, object>;
+type EventData = Record<string, { detail?: Record<string, object>, cancelable?: boolean, bubbles?: boolean }>;
+
+type I18nBundleAccessorValue = {
+	bundleName: string,
+	target: typeof UI5Element
+};
+
+type I18nBundleAccessors = Record<string, I18nBundleAccessorValue>;
 
 type Metadata = {
 	tag?: string,
@@ -39,9 +47,11 @@ type Metadata = {
 	fastNavigation?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,
+	cldr?: boolean,
 	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>
 	features?: Array<string>
+	i18n?: I18nBundleAccessors
 };
 
 type State = Record<string, PropertyValue | Array<SlotValue>>;
@@ -95,14 +105,6 @@ class UI5ElementMetadata {
 	 */
 	getPureTag(): string {
 		return this.metadata.tag || "";
-	}
-
-	/**
-	 * Returns the tag of the UI5 Element without the scope
-	 * @private
-	 */
-	getFeatures(): Array<string> {
-		return this.metadata.features || [];
 	}
 
 	/**
@@ -236,6 +238,13 @@ class UI5ElementMetadata {
 		return !!this.metadata.themeAware;
 	}
 
+	/**
+	 * Determines whether this UI5 Element needs CLDR assets to be fetched to work correctly
+	 */
+	needsCLDR(): boolean {
+		return !!this.metadata.cldr;
+	}
+
 	getShadowRootOptions(): Partial<ShadowRootInit> {
 		return this.metadata.shadowRootOptions || {};
 	}
@@ -312,6 +321,13 @@ class UI5ElementMetadata {
 		}
 
 		throw new Error("Wrong format for invalidateOnChildChange: boolean or object is expected");
+	}
+
+	getI18n(): I18nBundleAccessors {
+		if (!this.metadata.i18n) {
+			this.metadata.i18n = {};
+		}
+		return this.metadata.i18n;
 	}
 }
 

@@ -15,6 +15,10 @@
 			display: inline-block;
 			margin-right: 20px;
 		}
+
+		body{
+			margin: 0;
+		}
 	</style>
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
@@ -40,7 +44,6 @@
 	<ui5-button id="btnToggle">Toggle 'Compact'</ui5-button>
 	<br />
 	<br />
-
 	<ui5-rating-indicator id="rating-indicator1" accessible-name="Hello World"></ui5-rating-indicator>
 	<br />
 	<ui5-rating-indicator id="rating-indicator-test" value="3.7" readonly></ui5-rating-indicator>
@@ -111,6 +114,14 @@
 	<br>
 	<br>
 
+	<h3>Different sizes due to size property</h3>
+		<ui5-rating-indicator size="S"></ui5-rating-indicator>
+		<br>
+		<ui5-rating-indicator size="M" value="4" disabled></ui5-rating-indicator>
+		<br>
+		<ui5-rating-indicator size="L" value="3.5" readonly></ui5-rating-indicator>
+		<br>
+
 	<h3>sizes</h3>
 	<section>
 		<ui5-rating-indicator class="ratingindicator2auto"></ui5-rating-indicator>
@@ -123,7 +134,6 @@
 		<br>
 
 	</section>
-
 	<script>
 		var changeCount = 0;
 		var ratingIndicator4 = document.getElementById("rating-indicator4");

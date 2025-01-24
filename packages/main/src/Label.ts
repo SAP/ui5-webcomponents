@@ -1,14 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type WrappingType from "./types/WrappingType.js";
 import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import LabelTemplate from "./generated/templates/LabelTemplate.lit.js";
+import LabelTemplate from "./LabelTemplate.js";
 
 // Styles
 import labelCss from "./generated/themes/Label.css.js";
@@ -39,7 +39,7 @@ import labelCss from "./generated/themes/Label.css.js";
  */
 @customElement({
 	tag: "ui5-label",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: LabelTemplate,
 	styles: labelCss,
 	languageAware: true,
@@ -87,11 +87,8 @@ class Label extends UI5Element {
 	@property()
 	wrappingType: `${WrappingType}` = "Normal";
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		Label.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	_onclick() {
 		if (!this.for) {

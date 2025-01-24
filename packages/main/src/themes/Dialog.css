@@ -21,6 +21,7 @@
 	max-height: 100%;
 	max-width: 100%;
 	border-radius: 0;
+	min-width: 0; /*this is for preventing the dialog to hold its width on small screens*/
 }
 
 :host([draggable]) .ui5-popup-header-root,
@@ -150,9 +151,13 @@
 	box-shadow: none;
 }
 
+::slotted([slot="footer"][ui5-toolbar]) {
+	border: 0;
+}
+
 :host::backdrop {
 	background-color: var(--_ui5_popup_block_layer_background);
-	opacity: var(--_ui5_dialog_block_layer_opacity);
+	opacity: var(--_ui5_popup_block_layer_opacity);
 }
 
 .ui5-block-layer {

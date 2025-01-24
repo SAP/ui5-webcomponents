@@ -49,7 +49,7 @@ describe("Attributes propagation", () => {
 
 		assert.strictEqual(await input1.getValue(), "", "Property value should be empty");
 		assert.strictEqual(await innerInput.getValue(), "", "Inner's property value should be empty");
-	
+
 		await input1.setProperty("value", "new value");
 		await browser.executeAsync(done => {
 			document.getElementById("input1").value = null;
@@ -1196,6 +1196,30 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is still called once");
 		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
 	});
+
+	it("Tests prevented input event", async () => {
+		const input = await $("#prevent-input-event");
+		const innerInput = await input.shadow$("input");
+
+		await input.click();
+		
+		await innerInput.keys("a");
+		await innerInput.keys("b");
+		await innerInput.keys("c");
+		await innerInput.keys("d");
+
+		// forth input should be prevented
+		assert.strictEqual(await input.getValue(), "abc", "The value is correct");
+	});
+
+	it("Tests prevented input event with clear icon", async () => {
+		const input = await $("#prevent-input-event-clear-icon");
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
+
+		await clearIcon.click();
+
+		assert.strictEqual(await input.getValue(), "Test", "The value is not cleared");
+	});
 });
 
 describe("Input arrow navigation", () => {
@@ -1252,14 +1276,14 @@ describe("Input arrow navigation", () => {
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
 		assert.strictEqual(await suggestionsInput.getProperty("_isValueStateFocused"), true, "Value State should not be focused");
-		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), true, "Value state header is focused");
 
 		await suggestionsInput.keys("ArrowDown");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), true, "Group header is focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is not focused");
 
 		await suggestionsInput.keys("ArrowDown");
 
@@ -1267,14 +1291,14 @@ describe("Input arrow navigation", () => {
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), true, "First list item is focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is no longer focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is not focused");
 
 		await suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), true, "Group header is focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is not focused");
 
 
 		await suggestionsInput.keys("ArrowUp");
@@ -1283,14 +1307,108 @@ describe("Input arrow navigation", () => {
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
 		assert.strictEqual(await suggestionsInput.getProperty("_isValueStateFocused"), true, "Value State should not be focused");
-		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), true, "Value state header is focused");
 
 		await suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is not focused");
+	});
+
+	it("Items should not hide behind value state header on arrow up navigation", async () => {
+		await browser.url(`test/pages/Input.html`);
+		await browser.setWindowSize(1000, 400);
+
+		const input = await browser.$("#inputError");
+		await input.scrollIntoView();
+		await input.click();
+		await input.keys("a");
+
+		let isInVisibleArea = await browser.executeAsync(async done => {
+			const input = document.getElementById("inputError");
+			const listItems = input.querySelectorAll("ui5-suggestion-item");
+			const elementRect = listItems[6].getBoundingClientRect(); //Suggestion item "Angola"
+
+			const popover = input.shadowRoot.querySelector("ui5-responsive-popover");
+			const scrollableRect = popover.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
+
+			// Check if the element is within the visible area
+			const isElementAboveViewport = elementRect.bottom < scrollableRect.top;
+			const isElementBelowViewport = elementRect.top > scrollableRect.bottom;
+			const isElementLeftOfViewport = elementRect.right < scrollableRect.left;
+			const isElementRightOfViewport = elementRect.left > scrollableRect.right;
+
+			const isListItemInVisibleArea =  (
+				!isElementAboveViewport &&
+				!isElementBelowViewport &&
+				!isElementLeftOfViewport &&
+				!isElementRightOfViewport
+			);
+
+			done(isListItemInVisibleArea);
+		});
+
+		assert.notOk(isInVisibleArea, "Item 'Angola' should not be displayed in the viewport");
+
+		// click ArrowDown 9 times - 1 time through VSH and 1 through group header and 7 times through the list items
+		await input.keys(["ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown"]);
+
+		isInVisibleArea = isInVisibleArea = await browser.executeAsync(async done => {
+			const input = document.getElementById("inputError");
+			const listItems = input.querySelectorAll("ui5-suggestion-item");
+			const elementRect = listItems[6].getBoundingClientRect(); //Suggestion item "Angola"
+
+			const popover = input.shadowRoot.querySelector("ui5-responsive-popover");
+			const scrollableRect = popover.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
+
+			// Check if the element is within the visible area
+			const isElementAboveViewport = elementRect.bottom < scrollableRect.top;
+			const isElementBelowViewport = elementRect.top > scrollableRect.bottom;
+			const isElementLeftOfViewport = elementRect.right < scrollableRect.left;
+			const isElementRightOfViewport = elementRect.left > scrollableRect.right;
+
+			const isListItemInVisibleArea =  (
+				!isElementAboveViewport &&
+				!isElementBelowViewport &&
+				!isElementLeftOfViewport &&
+				!isElementRightOfViewport
+			);
+
+			done(isListItemInVisibleArea);
+		});
+
+		assert.ok(isInVisibleArea, "Item 'Angola' should be displayed in the viewport");
+
+		// click ArrowUp 6 times through the list items to trigger scrolling and reach the first suggestion item
+		await input.keys(["ArrowUp", "ArrowUp", "ArrowUp", "ArrowUp", "ArrowUp", "ArrowUp"]);
+
+		isInVisibleArea = await browser.executeAsync(async done => {
+			const input = document.getElementById("inputError");
+			const listItems = input.querySelectorAll("ui5-suggestion-item");
+			const elementRect = listItems[0].getBoundingClientRect(); //Suggestion item "Afganistan"
+
+			const popover = input.shadowRoot.querySelector("ui5-responsive-popover");
+			const scrollableRect = popover.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
+
+			// Check if the element is within the visible area
+			const isElementAboveViewport = elementRect.bottom < scrollableRect.top;
+			const isElementBelowViewport = elementRect.top > scrollableRect.bottom;
+			const isElementLeftOfViewport = elementRect.right < scrollableRect.left;
+			const isElementRightOfViewport = elementRect.left > scrollableRect.right;
+
+			const isListItemInVisibleArea =  (
+				!isElementAboveViewport &&
+				!isElementBelowViewport &&
+				!isElementLeftOfViewport &&
+				!isElementRightOfViewport
+			);
+
+			done(isListItemInVisibleArea);
+		});
+
+		assert.ok(isInVisibleArea, "Item 'Afganistan' should be displayed in the viewport");
 	});
 });
 
@@ -1359,7 +1477,7 @@ describe("Input HOME navigation", () => {
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
 		assert.strictEqual(await suggestionsInput.getProperty("_isValueStateFocused"), true, "Value State should not be focused");
-		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), true, "Value state header is focused");
 	});
 
 	it("Should focus the group header from the suggestions popover with HOME", async () => {

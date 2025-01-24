@@ -3,6 +3,380 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.0...v2.7.0-rc.1) (2025-01-23)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** prevent layout shift with container queries ([#10578](https://github.com/SAP/ui5-webcomponents/issues/10578)) ([c2c3608](https://github.com/SAP/ui5-webcomponents/commit/c2c36080b956312e04fa8231d86e1517a58bd811)), closes [#10564](https://github.com/SAP/ui5-webcomponents/issues/10564)
+* **ui5-dynamic-page:** remove redundant padding ([#10448](https://github.com/SAP/ui5-webcomponents/issues/10448)) ([491538b](https://github.com/SAP/ui5-webcomponents/commit/491538befe698e2c8957549be9d0eccf9014bd7e)), closes [#10413](https://github.com/SAP/ui5-webcomponents/issues/10413)
+* **ui5-page:** fix floating footer layout ([#10496](https://github.com/SAP/ui5-webcomponents/issues/10496)) ([19f7857](https://github.com/SAP/ui5-webcomponents/commit/19f7857ffed9672d3560e6f5a365436119061846)), closes [#10358](https://github.com/SAP/ui5-webcomponents/issues/10358)
+* **ui5-wizard:** replace resize observer with container query ([#7996](https://github.com/SAP/ui5-webcomponents/issues/7996)) ([475c293](https://github.com/SAP/ui5-webcomponents/commit/475c293fe5797aee9dd8a160d69c7baa118a6f07)), closes [#7666](https://github.com/SAP/ui5-webcomponents/issues/7666)
+
+
+### Features
+
+* **ui5-flexible-column-layout:** add arrow icon functionality ([#10362](https://github.com/SAP/ui5-webcomponents/issues/10362)) ([61b94ae](https://github.com/SAP/ui5-webcomponents/commit/61b94aece6b41fa438df9d0e9b5dc60f28bae55d))
+* **ui5-shellbar:** introduce content slot ([#10595](https://github.com/SAP/ui5-webcomponents/issues/10595)) ([c8b8696](https://github.com/SAP/ui5-webcomponents/commit/c8b86964a8dfe906176bf106f80d278d910f3f8f))
+* **ui5-timeline-item:** introduce `state` property ([#10277](https://github.com/SAP/ui5-webcomponents/issues/10277)) ([b378604](https://github.com/SAP/ui5-webcomponents/commit/b378604e008efbf71054e72583ff8fd9fd227275))
+
+
+
+
+
+# [2.7.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2...v2.7.0-rc.0) (2025-01-16)
+
+
+### Bug Fixes
+
+* i18n decorator property definition ([#10521](https://github.com/SAP/ui5-webcomponents/issues/10521)) ([d19f4e9](https://github.com/SAP/ui5-webcomponents/commit/d19f4e99bad74432bff21587da43a5844f17f8cf))
+* **ui5-view-settings-dialog:** adjust reset button announcement ([#10320](https://github.com/SAP/ui5-webcomponents/issues/10320)) ([42b29f3](https://github.com/SAP/ui5-webcomponents/commit/42b29f3eb6c435959ee67551d5f9f450995370ce)), closes [#10191](https://github.com/SAP/ui5-webcomponents/issues/10191)
+
+
+### Features
+
+* **ui5-side-navigation:** update existing design for Horizon theme ([#10337](https://github.com/SAP/ui5-webcomponents/issues/10337)) ([d5eff51](https://github.com/SAP/ui5-webcomponents/commit/d5eff51f56042d5fbf94e87d6bd94cdbe2d55982))
+
+
+
+
+
+## [2.6.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2-rc.0...v2.6.2) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [2.6.2-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.1...v2.6.2-rc.0) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [2.6.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0...v2.6.1) (2025-01-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.6.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.5...v2.6.0) (2025-01-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.6.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.4...v2.6.0-rc.5) (2025-01-07)
+
+
+### Bug Fixes
+
+* remove dependencies for TSX components and fix features ([#10449](https://github.com/SAP/ui5-webcomponents/issues/10449)) ([a2b5f6f](https://github.com/SAP/ui5-webcomponents/commit/a2b5f6fb768499a8b757a9b7abad5f19033a33a7))
+* **ui5-dynamic-page:** prevent scroll position reset on unpinning the header ([#10441](https://github.com/SAP/ui5-webcomponents/issues/10441)) ([9f5a67a](https://github.com/SAP/ui5-webcomponents/commit/9f5a67ac185a087f65548ace894747dafa8c217a))
+* **ui5-dynamic-page:** update header sticky on manual snap ([#10431](https://github.com/SAP/ui5-webcomponents/issues/10431)) ([1975d56](https://github.com/SAP/ui5-webcomponents/commit/1975d56e45a4cc0d3f272ad31cb081b91a1b0d1d)), closes [#10430](https://github.com/SAP/ui5-webcomponents/issues/10430)
+* **ui5-navigation-layout:** replace "sideCollapsed" property with "mode" property ([#10390](https://github.com/SAP/ui5-webcomponents/issues/10390)) ([ae562dd](https://github.com/SAP/ui5-webcomponents/commit/ae562ddd8c5eeb43d07857743c640e1a3d7d60e2))
+* **ui5-notification-list-item:** scoping issue ([#10458](https://github.com/SAP/ui5-webcomponents/issues/10458)) ([6cc4615](https://github.com/SAP/ui5-webcomponents/commit/6cc46157deec42f207a528f37962b8fd7b968f2b))
+* **ui5-side-navigation:** ensure all items are focusable after expand ([#10453](https://github.com/SAP/ui5-webcomponents/issues/10453)) ([e60ad85](https://github.com/SAP/ui5-webcomponents/commit/e60ad858431eda48db44fc7fa22cfd4843b22aea)), closes [#10391](https://github.com/SAP/ui5-webcomponents/issues/10391)
+
+
+### Features
+
+* **ui5-dynamic-side-content:** add customizable aria labels ([#10416](https://github.com/SAP/ui5-webcomponents/issues/10416)) ([5887d29](https://github.com/SAP/ui5-webcomponents/commit/5887d29bbe26ddc73c5a6eb3be14985126e9490f)), closes [#8612](https://github.com/SAP/ui5-webcomponents/issues/8612)
+
+
+
+
+
+# [2.6.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.3...v2.6.0-rc.4) (2025-01-02)
+
+
+### Features
+
+* **ui5-user-menu:** add open and close events ([#10363](https://github.com/SAP/ui5-webcomponents/issues/10363)) ([f57125a](https://github.com/SAP/ui5-webcomponents/commit/f57125a27b9d7aa7a9f3554db374f1d7da589e6e))
+
+
+
+
+
+# [2.6.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.2...v2.6.0-rc.3) (2024-12-26)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** correct z-index for dynamic page header ([#10425](https://github.com/SAP/ui5-webcomponents/issues/10425)) ([5af40ae](https://github.com/SAP/ui5-webcomponents/commit/5af40ae08423bafee67129b4583b891d4ac71674)), closes [#10399](https://github.com/SAP/ui5-webcomponents/issues/10399)
+* **ui5-navigation-layout:** fix example ([#10421](https://github.com/SAP/ui5-webcomponents/issues/10421)) ([2a4691e](https://github.com/SAP/ui5-webcomponents/commit/2a4691e3f378d8339fb151473c6e63f52413700d))
+* **ui5-side-navigation:** fix expand and collapse ([#10418](https://github.com/SAP/ui5-webcomponents/issues/10418)) ([4d17e57](https://github.com/SAP/ui5-webcomponents/commit/4d17e575857fbc2665cb9a277418f3e6b9b9433c))
+
+
+### Features
+
+* **ui5-user-menu:** add open and close events ([#10363](https://github.com/SAP/ui5-webcomponents/issues/10363)) ([8109bfd](https://github.com/SAP/ui5-webcomponents/commit/8109bfd85d54374f007564c66df1404fef1a340c))
+
+
+
+
+
+# [2.6.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.1...v2.6.0-rc.2) (2024-12-19)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.6.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.0...v2.6.0-rc.1) (2024-12-16)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** add subtitle interaction ([#10372](https://github.com/SAP/ui5-webcomponents/issues/10372)) ([ab00713](https://github.com/SAP/ui5-webcomponents/commit/ab00713930d2e50497adad52cfbd1b02557a8f41)), closes [#10347](https://github.com/SAP/ui5-webcomponents/issues/10347)
+
+
+
+
+
+# [2.6.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0...v2.6.0-rc.0) (2024-12-12)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** fix header role ([#10317](https://github.com/SAP/ui5-webcomponents/issues/10317)) ([00823cf](https://github.com/SAP/ui5-webcomponents/commit/00823cf959b42cc4bbee5ea98e98d02f12f01a6a))
+
+
+### Features
+
+* **framework:** add JSX template support with TypeScript ([#10046](https://github.com/SAP/ui5-webcomponents/issues/10046)) ([f42e7c1](https://github.com/SAP/ui5-webcomponents/commit/f42e7c18c846f923df4fec6ae02f1b4c20c006fa))
+* **ui5-user-menu:** add title and manage button to pin header on phone ([#10339](https://github.com/SAP/ui5-webcomponents/issues/10339)) ([a4e6d56](https://github.com/SAP/ui5-webcomponents/commit/a4e6d568f6376e64d4adcd44f1eb95d06cee719d))
+
+
+
+
+
+# [2.5.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.3...v2.5.0) (2024-12-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.5.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.2...v2.5.0-rc.3) (2024-12-05)
+
+
+### Bug Fixes
+
+* **ui5-list:** enable focusin event bubbling ([#10156](https://github.com/SAP/ui5-webcomponents/issues/10156)) ([3b6cc84](https://github.com/SAP/ui5-webcomponents/commit/3b6cc8457ab47c1651a34f04b9401ee3112bd8c5)), closes [#9787](https://github.com/SAP/ui5-webcomponents/issues/9787)
+* **ui5-view-settings-dialog:** adjust dialog heading level ([#10289](https://github.com/SAP/ui5-webcomponents/issues/10289)) ([08d48a3](https://github.com/SAP/ui5-webcomponents/commit/08d48a3eb5e16708242b4a721ead74aebb8bb8ae))
+
+
+### Features
+
+* **framework:** add strict event type checking ([#10235](https://github.com/SAP/ui5-webcomponents/issues/10235)) ([4ff8ab7](https://github.com/SAP/ui5-webcomponents/commit/4ff8ab7c34db5058b92511767be1b96c69a91cb5))
+* **ui5-user-menu:** introduce new component ([#10244](https://github.com/SAP/ui5-webcomponents/issues/10244)) ([1558499](https://github.com/SAP/ui5-webcomponents/commit/15584993472c2a9d34349da999da74bfe450e76e))
+
+
+
+
+
+# [2.5.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.1...v2.5.0-rc.2) (2024-11-28)
+
+
+### Bug Fixes
+
+* **ui5-wizard:** stacked Wizard Steps are aligned properly ([#10250](https://github.com/SAP/ui5-webcomponents/issues/10250)) ([3473fbf](https://github.com/SAP/ui5-webcomponents/commit/3473fbf7dd6f97d0de70a540d412c36901455926)), closes [#9779](https://github.com/SAP/ui5-webcomponents/issues/9779)
+
+
+
+
+
+# [2.5.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.0...v2.5.0-rc.1) (2024-11-21)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.5.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.1-rc.0...v2.5.0-rc.0) (2024-11-14)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** move subheading slot outside the title wrapper ([#10163](https://github.com/SAP/ui5-webcomponents/issues/10163)) ([6466b8a](https://github.com/SAP/ui5-webcomponents/commit/6466b8ad7f73c85a5c105dea3c196f6bfb78f27a))
+
+
+### Features
+
+* **ui5-list, ui5-tree:** support accessible description ([#10131](https://github.com/SAP/ui5-webcomponents/issues/10131)) ([45f0ffe](https://github.com/SAP/ui5-webcomponents/commit/45f0ffeafb2da0ffcaf425649c7440b604e359a3)), closes [#6445](https://github.com/SAP/ui5-webcomponents/issues/6445)
+
+
+
+
+
+## [2.4.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0...v2.4.1-rc.0) (2024-11-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.4.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.4...v2.4.0) (2024-11-03)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** improve scrolling smoothness ([#10093](https://github.com/SAP/ui5-webcomponents/issues/10093)) ([d1420b0](https://github.com/SAP/ui5-webcomponents/commit/d1420b0be2c40ca649503cca0715e4c529929f8f)), closes [#10011](https://github.com/SAP/ui5-webcomponents/issues/10011)
+* **ui5-dynamic-page:** prevent unwanted header toggle from scroll ([#10007](https://github.com/SAP/ui5-webcomponents/issues/10007)) ([7a7d00c](https://github.com/SAP/ui5-webcomponents/commit/7a7d00c0d615283d1a86d775b6c51db7feadfb42))
+* **ui5-media-gallery:** clear selected thumbnail on item removal ([#10087](https://github.com/SAP/ui5-webcomponents/issues/10087)) ([af4cadb](https://github.com/SAP/ui5-webcomponents/commit/af4cadbfb637c1a6440aa0bd1fc516629ae332ae))
+
+
+
+
+
+# [2.4.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.3...v2.4.0-rc.4) (2024-10-31)
+
+
+### Features
+
+* **ui5-navigation-layout:** add ui5-navigation-layout component ([#9517](https://github.com/SAP/ui5-webcomponents/issues/9517)) ([463c780](https://github.com/SAP/ui5-webcomponents/commit/463c780df03e95eacf82075f9a47007a5a088b01))
+
+
+
+
+
+# [2.4.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.2...v2.4.0-rc.3) (2024-10-28)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** align header area with title and content ([#10053](https://github.com/SAP/ui5-webcomponents/issues/10053)) ([61e3dbd](https://github.com/SAP/ui5-webcomponents/commit/61e3dbd1f9a5b69c824cfcdae5c750d59585615a))
+
+
+
+
+
+# [2.4.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.1...v2.4.0-rc.2) (2024-10-24)
+
+
+### Bug Fixes
+
+* **ui5-notification-list:** fix header bar visibility ([#10010](https://github.com/SAP/ui5-webcomponents/issues/10010)) ([95db5c6](https://github.com/SAP/ui5-webcomponents/commit/95db5c63a3c21ba2d948f5070f3bd1ba85e584ef)), closes [#9995](https://github.com/SAP/ui5-webcomponents/issues/9995)
+
+
+### Features
+
+* **ui5-barcode-scanner-dialog:** added support for custom header and footer slots ([#10066](https://github.com/SAP/ui5-webcomponents/issues/10066)) ([4d06b2e](https://github.com/SAP/ui5-webcomponents/commit/4d06b2e94024e1cf6e121650453362ca79fc8836)), closes [#8919](https://github.com/SAP/ui5-webcomponents/issues/8919)
+* **ui5-filter-item, ui5-sort-item,..:** add selected `filterItems` to `ui5-confirm` event details ([#9838](https://github.com/SAP/ui5-webcomponents/issues/9838)) ([56ad311](https://github.com/SAP/ui5-webcomponents/commit/56ad3115affe17f453a30ac0880ac879dbbd763b))
+
+
+
+
+
+# [2.4.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.0...v2.4.0-rc.1) (2024-10-17)
+
+
+### Bug Fixes
+
+* **tools:** revert tsconfig moduleResolution to node ([#10014](https://github.com/SAP/ui5-webcomponents/issues/10014)) ([0724b92](https://github.com/SAP/ui5-webcomponents/commit/0724b9289ad04f88972d4978ed37e76f13abca13))
+* **ui5-notification-list-group:** group header hight is shorter when collapsed ([#9953](https://github.com/SAP/ui5-webcomponents/issues/9953)) ([4c8a76e](https://github.com/SAP/ui5-webcomponents/commit/4c8a76edb5699810addd5c77fac2eabd507568f3)), closes [#9911](https://github.com/SAP/ui5-webcomponents/issues/9911)
+* **ui5-page:** fix createElement error caused by adding new style property in the constructor ([#9998](https://github.com/SAP/ui5-webcomponents/issues/9998)) ([fd402e4](https://github.com/SAP/ui5-webcomponents/commit/fd402e41933da5e57456b736332872a0f0006cdf)), closes [#9981](https://github.com/SAP/ui5-webcomponents/issues/9981)
+
+
+### Features
+
+* **ui5-barcode-scanner-dialog:** added capture region overlay ([#9646](https://github.com/SAP/ui5-webcomponents/issues/9646)) ([19475eb](https://github.com/SAP/ui5-webcomponents/commit/19475eb897d08c5f09ae2583678cc79decca5adc))
+
+
+
+
+
+# [2.4.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.3.1-rc.0...v2.4.0-rc.0) (2024-10-10)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** handle separator movement ([#9978](https://github.com/SAP/ui5-webcomponents/issues/9978)) ([e3db6a6](https://github.com/SAP/ui5-webcomponents/commit/e3db6a6dd2cf290dffd41052849b27e6ee9d36e3))
+* **ui5-upload-collеction:** hide the upload icon when the height is too small ([#9990](https://github.com/SAP/ui5-webcomponents/issues/9990)) ([d7e485a](https://github.com/SAP/ui5-webcomponents/commit/d7e485a87fc77a3b664c985ddb36981e1ccb33fc)), closes [#9975](https://github.com/SAP/ui5-webcomponents/issues/9975)
+
+
+### Features
+
+* enhance `[@event](https://github.com/event)` decorator ([#9944](https://github.com/SAP/ui5-webcomponents/issues/9944)) ([fe1d816](https://github.com/SAP/ui5-webcomponents/commit/fe1d816f512400b839fd4ce1b9af1506d0cb4c9a))
+
+
+
+
+
+## [2.3.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0...v2.3.1-rc.0) (2024-10-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.3.0](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.3...v2.3.0) (2024-10-02)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** action buttons reading fix ([#9858](https://github.com/SAP/ui5-webcomponents/issues/9858)) ([c850ff1](https://github.com/SAP/ui5-webcomponents/commit/c850ff14a6aedd3aaf46f724e3c933a003734008))
+
+
+### Features
+
+* **framework:** introduce the `i18n` decorator and the `cldr` option ([#9897](https://github.com/SAP/ui5-webcomponents/issues/9897)) ([1f29d23](https://github.com/SAP/ui5-webcomponents/commit/1f29d231fe892a850871e7f73afca93c730ecffd))
+* **ui5-dynamic-page-title:** implement snapped title on mobile ([#9898](https://github.com/SAP/ui5-webcomponents/issues/9898)) ([b8b9a98](https://github.com/SAP/ui5-webcomponents/commit/b8b9a981927822e827da73916d3f1697638c4edc))
+
+
+
+
+
+# [2.3.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.2...v2.3.0-rc.3) (2024-09-26)
+
+
+### Bug Fixes
+
+* **ui5-barcode-scanner-dialog:** can be imported in server environments with a shim ([#9901](https://github.com/SAP/ui5-webcomponents/issues/9901)) ([40dc4eb](https://github.com/SAP/ui5-webcomponents/commit/40dc4eb3f103a1d979ea7bb9849f3a4f3a68680b))
+* **ui5-flexible-column-layout:** iframe content no longer hinders resize ([#9859](https://github.com/SAP/ui5-webcomponents/issues/9859)) ([d594ae7](https://github.com/SAP/ui5-webcomponents/commit/d594ae7c4b89849f0cd296cac29fdab7b5c2a8c0))
+* **ui5-page:** fix double footer and adjust animation timing ([#9885](https://github.com/SAP/ui5-webcomponents/issues/9885)) ([e8beb76](https://github.com/SAP/ui5-webcomponents/commit/e8beb76ea28f76eb39af40df9c0cc5c603a365d2)), closes [#9755](https://github.com/SAP/ui5-webcomponents/issues/9755) [#9756](https://github.com/SAP/ui5-webcomponents/issues/9756)
+
+
+
+
+
+# [2.3.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.1...v2.3.0-rc.2) (2024-09-19)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-side-content:** fix scrollbar styling ([#9842](https://github.com/SAP/ui5-webcomponents/issues/9842)) ([c5d0249](https://github.com/SAP/ui5-webcomponents/commit/c5d02499a849b09cd076b9419c723a81b642bf17))
+* **ui5-illustrated-message:** illustration fixed ([#9739](https://github.com/SAP/ui5-webcomponents/issues/9739)) ([0b57512](https://github.com/SAP/ui5-webcomponents/commit/0b575120c079a3726320046d033aeb1ba4a4dee5))
+* **ui5-wizard:** prevent step selection upon scrolling on Single Step layout ([#9766](https://github.com/SAP/ui5-webcomponents/issues/9766)) ([82f6afc](https://github.com/SAP/ui5-webcomponents/commit/82f6afc2fab521d114ee534c12939b44a9ca69fa)), closes [#9083](https://github.com/SAP/ui5-webcomponents/issues/9083)
+
+
+
+
+
+# [2.3.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.0...v2.3.0-rc.1) (2024-09-12)
+
+
+### Features
+
+* **ui5-li-notification-group:** add new features - growing and sticky header ([#9783](https://github.com/SAP/ui5-webcomponents/issues/9783)) ([a40a451](https://github.com/SAP/ui5-webcomponents/commit/a40a45160d4efe1e1ebb8c43ee3216a2f758558c))
+
+
+
+
+
 # [2.3.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0...v2.3.0-rc.0) (2024-09-05)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

@@ -1,8 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
@@ -12,7 +12,6 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
@@ -20,8 +19,18 @@ import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 
 type ListItemBasePressEventDetail = {
 	item: ListItemBase,
-	selected: boolean,
-	key: string,
+	selected?: boolean,
+	key?: string,
+}
+
+type ListItemBaseForwardAfterEventDetail = {
+	item: ListItemBase,
+	target: HTMLElement,
+}
+
+type ListItemBaseForwardBeforeEventDetail = {
+	item: ListItemBase,
+	target: HTMLElement,
 }
 
 /**
@@ -34,15 +43,33 @@ type ListItemBasePressEventDetail = {
  * @public
  */
 @customElement({
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [styles, draggableElementStyles],
 })
-@event("_request-tabindex-change")
-@event("_press")
-@event("_focused")
-@event("_forward-after")
-@event("_forward-before")
+@event("request-tabindex-change", {
+	bubbles: true,
+})
+@event("_press", {
+	bubbles: true,
+})
+@event("_focused", {
+	bubbles: true,
+})
+@event("forward-after", {
+	bubbles: true,
+	cancelable: true,
+})
+@event("forward-before", {
+	bubbles: true,
+})
 class ListItemBase extends UI5Element implements ITabbable {
+	eventDetails!: {
+		"request-tabindex-change": FocusEvent,
+		"_press": ListItemBasePressEventDetail,
+		"_focused": FocusEvent,
+		"forward-after": ListItemBaseForwardAfterEventDetail,
+		"forward-before": ListItemBaseForwardBeforeEventDetail,
+	}
 	/**
 	 * Defines the selected state of the component.
 	 * @default false
@@ -106,12 +133,12 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		this.fireEvent("_request-tabindex-change", e);
+		this.fireDecoratorEvent("request-tabindex-change", e);
 		if (e.target !== this.getFocusDomRef()) {
 			return;
 		}
 
-		this.fireEvent("_focused", e);
+		this.fireDecoratorEvent("_focused", e);
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -123,7 +150,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 			return this._handleTabPrevious(e);
 		}
 
-		if (getEventMark(e) === "button") {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 
@@ -137,7 +164,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
-		if (getEventMark(e) === "button") {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 		if (isSpace(e)) {
@@ -146,7 +173,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_onclick(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 		this.fireItemPress(e);
@@ -159,17 +186,17 @@ class ListItemBase extends UI5Element implements ITabbable {
 		if (isEnter(e as KeyboardEvent)) {
 			e.preventDefault();
 		}
-		this.fireEvent<ListItemBasePressEventDetail>("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
+		this.fireDecoratorEvent("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
 	}
 
 	_handleTabNext(e: KeyboardEvent) {
-		if (!this.fireEvent("_forward-after", { item: this, target: e.target }, true)) {
+		if (!this.fireDecoratorEvent("forward-after", { item: this, target: e.target as HTMLElement })) {
 			e.preventDefault();
 		}
 	}
 
 	_handleTabPrevious(e: KeyboardEvent) {
-		this.fireEvent("_forward-before", { item: this, target: e.target });
+		this.fireDecoratorEvent("forward-before", { item: this, target: e.target as HTMLElement });
 	}
 
 	/**
@@ -213,4 +240,6 @@ export default ListItemBase;
 
 export type {
 	ListItemBasePressEventDetail,
+	ListItemBaseForwardAfterEventDetail,
+	ListItemBaseForwardBeforeEventDetail,
 };

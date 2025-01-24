@@ -24,7 +24,7 @@ const onError = (place) => {
 	console.log(`A problem occoured when reading ${place}. Please recheck passed parameters.`);
 };
 
-const isHandlebars = (fileName) => fileName.indexOf('.hbs') !== -1;
+const isHandlebars = (fileName) => fileName.endsWith('.hbs');
 
 const hasTypes = (file, componentName) => {
 	const tsFile = path.join(path.dirname(file), componentName + ".ts")

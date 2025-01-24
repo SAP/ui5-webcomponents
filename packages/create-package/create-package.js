@@ -108,6 +108,7 @@ const generateFilesContent = (packageName, componentName, skipSubfolder) => {
 		ui5: {
 			webComponentsPackage: true,
 		},
+		type: "module",
 		scripts: {
 			"clean": "wc-dev clean",
 			"lint": "wc-dev lint",
@@ -132,7 +133,7 @@ const generateFilesContent = (packageName, componentName, skipSubfolder) => {
 		"devDependencies": {
 			"@ui5/webcomponents-tools": version,
 			"chromedriver": "*",
-			"typescript": "^5.2.2"
+			"typescript": "^5.6.2"
 		},
 	};
 

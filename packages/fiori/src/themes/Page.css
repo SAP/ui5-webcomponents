@@ -47,6 +47,11 @@
 }
 /*** Responsive paddings ***/
 
+::slotted([ui5-bar][slot="footer"][design="FloatingFooter"]) {
+	margin: auto;
+	padding: 0;
+}
+
 /* S Size */
 @container (max-width: 599px) {
 	:host([floating-footer]) .ui5-page-footer-root,
@@ -58,6 +63,10 @@
 	::slotted([ui5-bar][design="Footer"]) {
 		box-sizing: border-box;
 		padding: 0 .25rem;
+	}
+
+	::slotted([ui5-bar][design="FloatingFooter"]) {
+		width: calc(100% - 0.5rem);
 	}
 }
 
@@ -73,6 +82,10 @@
 		box-sizing: border-box;
 		padding: 0 1.25rem;
 	}
+
+	::slotted([ui5-bar][design="FloatingFooter"]) {
+		width: calc(100% - 2.5rem);
+	}
 }
 
 /* L Size */
@@ -86,6 +99,10 @@
 	::slotted([ui5-bar][slot="footer"]) {
 		box-sizing: border-box;
 		padding: 0 1.25rem;
+	}
+
+	::slotted([ui5-bar][design="FloatingFooter"]) {
+		width: calc(100% - 2.5rem);
 	}
 }
 
@@ -101,6 +118,10 @@
 		box-sizing: border-box;
 		padding: 0 2.25rem;
 	}
+
+	::slotted([ui5-bar][design="FloatingFooter"]) {
+		width: calc(100% - 4.5rem);
+	}
 }
 
 :host([no-scrolling]) .ui5-page-content-root {
@@ -112,11 +133,11 @@
 }
 
 :host(:not([fixed-footer]):not([hide-footer])) .ui5-page-footer-root {
-	animation: bounceShow 0.35s forwards ease-in-out;
+	animation: bounceShow var(--_ui5-page-animation-duration) forwards ease-in-out;
 }
 
 :host(:not([fixed-footer])[hide-footer]) .ui5-page-footer-root {
-	animation: bounceHide 0.35s forwards ease-in-out;
+	animation: bounceHide var(--_ui5-page-animation-duration) forwards ease-in-out;
 }
 
 /* BackgroundDesign */

@@ -42,8 +42,10 @@ class TableHeaderCell extends TableCellBase {
 	/**
  	 * Defines the minimum width of the column.
 	 *
-	 * If the table is in `Popin` mode, the column will move into the popin when
-	 * when the minimum width does not fit anymore.
+	 * If the table is in `Popin` mode and the minimum width does not fit anymore,
+	 * the column will move into the popin.
+	 *
+	 * **Note:** If `minWidth` has the `auto` value, the table ensures that the column is wider than at least `3rem`.
 	 *
 	 * @default "auto"
 	 * @public
@@ -73,6 +75,16 @@ class TableHeaderCell extends TableCellBase {
 	@property({ type: Number })
 	importance = 0;
 
+	/**
+	 * The text for the column when it pops in.
+	 *
+	 * @default undefined
+	 * @since 2.7.0
+	 * @public
+	 */
+	@property()
+	popinText?: string;
+
 	@property({ type: Boolean, noAttribute: true })
 	_popin = false;
 
@@ -84,6 +96,14 @@ class TableHeaderCell extends TableCellBase {
 		this.style.minWidth = this.minWidth;
 		this.style.maxWidth = this.maxWidth;
 		this.style.width = this.width;
+	}
+
+	onBeforeRendering() {
+		super.onBeforeRendering();
+		if (this._individualSlot) {
+			// overwrite setting of TableCellBase so that the TableHeaderCell always uses the slot variable
+			this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
+		}
 	}
 }
 

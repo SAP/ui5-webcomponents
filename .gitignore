@@ -7,10 +7,15 @@ dist
 **/test/test-elements/generated
 .dev-server-port
 
+# Code coverage
+coverage
+.nyc_output
+
 # scoping feature generated entry points for vite consumption
 packages/compat/test/pages/scoped
 packages/main/test/pages/scoped
 packages/fiori/test/pages/scoped
+packages/ai/test/pages/scoped
 
 # Ignore npm files/folders
 node_modules

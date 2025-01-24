@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 
@@ -10,7 +10,9 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  *
  * @public
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 
 /**
  * @class
@@ -24,6 +26,9 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  */
 @customElement()
 class SideNavigationSelectableItemBase extends SideNavigationItemBase {
+	eventDetails!: SideNavigationItemBase["eventDetails"] & {
+		"click": void
+	}
 	/**
 	 * Defines the icon of the item.
 	 *
@@ -151,7 +156,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		}
 	}
 
-	_onclick(e: PointerEvent) {
+	_onclick(e: MouseEvent) {
 		this._activate(e);
 	}
 
@@ -161,11 +166,11 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		this.sideNavigation?.focusItem(this);
 	}
 
-	_activate(e: KeyboardEvent | PointerEvent) {
+	_activate(e: KeyboardEvent | MouseEvent) {
 		e.stopPropagation();
 
 		if (this.isOverflow) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 		} else {
 			this.sideNavigation?._handleItemClick(e, this);
 		}
@@ -181,4 +186,6 @@ const isInstanceOfSideNavigationSelectableItemBase = (object: any): object is Si
 };
 
 export default SideNavigationSelectableItemBase;
-export { isInstanceOfSideNavigationSelectableItemBase };
+export {
+	isInstanceOfSideNavigationSelectableItemBase,
+};

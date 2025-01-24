@@ -16,19 +16,10 @@ import {
 } from "./utils.mjs";
 
 const jsDocRegExp = /\/\*\*(.|\n)+?\s+\*\//;
+const ASTFalseKeywordCode = 94;
 
 const getParams = (ts, eventDetails, commentParams, classNode, moduleDoc) => {
 	return commentParams?.map(commentParam => {
-		const decoratorParam = eventDetails?.find(prop => prop?.name?.text === commentParam?.name);
-
-		if (!decoratorParam || !decoratorParam?.jsDoc?.[0]) {
-			return;
-		}
-
-		const decoratorParamParsedComment = parse(decoratorParam?.jsDoc?.[0]?.getText?.(), { spacing: 'preserve' })[0];
-
-		validateJSDocComment("eventParam", decoratorParamParsedComment, decoratorParam.name?.text, moduleDoc);
-
 		const { typeName, name } = getType(normalizeTagType(commentParam?.type));
 		let type;
 
@@ -47,12 +38,10 @@ const getParams = (ts, eventDetails, commentParams, classNode, moduleDoc) => {
 		return {
 			type,
 			name: commentParam?.name,
-			_ui5privacy: getPrivacyStatus(decoratorParamParsedComment),
+			_ui5privacy: "public",
 			description: normalizeDescription(commentParam?.description),
-			_ui5since: getSinceStatus(decoratorParamParsedComment),
-			deprecated: getDeprecatedStatus(decoratorParamParsedComment),
 		};
-	}).filter(pair => !!pair);
+	});
 };
 
 function processEvent(ts, event, classNode, moduleDoc) {
@@ -77,30 +66,32 @@ function processEvent(ts, event, classNode, moduleDoc) {
 	const privacy = findTag(eventParsedComment, ["public", "private", "protected"])?.tag || "private";
 	const sinceTag = findTag(eventParsedComment, "since");
 	const commentParams = findAllTags(eventParsedComment, "param");
-	const allowPreventDefault = hasTag(eventParsedComment, "allowPreventDefault") || undefined;
 	const description = normalizeDescription(eventParsedComment?.description);
 	const native = hasTag(eventParsedComment, "native");
-	const eventDetails = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
+	const eventArgs = event?.expression?.arguments;
+	let eventBubbles;
+	let eventCancelable;
+	let eventDetails;
 
-	if (event?.expression?.arguments?.[1] && !event?.expression?.typeArguments) {
-		logDocumentationError(moduleDoc.path, `Event details for event '${name}' must be described using generics. Add type via generics to the decorator: @event<TypeForDetails>("${name}", {details}).`)
-	}
+	eventArgs && eventArgs.forEach(arg => {
+		arg.properties?.forEach(prop => {
+			if (prop.name?.text === "bubbles") {
+				eventBubbles = prop.initializer.kind === ASTFalseKeywordCode ? false : true;
+			} else if (prop.name?.text === "cancelable") {
+				eventCancelable = prop.initializer.kind === ASTFalseKeywordCode ? false : true;
+			} else if (prop.name?.text === "detail") {
+				eventDetails = prop.initializer?.properties;
+			}
+		});
+	});
 
 	result.description = description;
-	result._ui5allowPreventDefault = allowPreventDefault;
+	result._ui5Cancelable = eventCancelable !== undefined ? eventCancelable : false;
+	result._ui5allowPreventDefault = result._ui5Cancelable;
+	result._ui5Bubbles = eventBubbles !== undefined ? eventBubbles : false;
 
 	if (native) {
 		result.type = { text: "Event" };
-	} else if (event?.expression?.typeArguments) {
-		const typesText = event?.expression?.typeArguments.map(type => type.typeName?.text).filter(Boolean).join(" | ");
-		const typeRefs = (getTypeRefs(ts, event.expression)
-			?.map(e => getReference(ts, e, event, moduleDoc.path)).filter(Boolean)) || [];
-
-		result.type = { text: `CustomEvent<${typesText}>` };
-
-		if (typeRefs.length) {
-			result.type.references = typeRefs;
-		}
 	}
 
 	if (privacy) {
@@ -121,7 +112,53 @@ function processEvent(ts, event, classNode, moduleDoc) {
 			: sinceTag.name;
 	}
 
-	if (commentParams && eventDetails) {
+	const eventDetailType = classNode.members?.find(member => {
+		return ts.isPropertyDeclaration(member) && member.name.text === "eventDetails"
+	})?.type;
+	const eventDetailRef = eventDetailType?.members?.find(member => member.name.text === name) || eventDetailType?.types?.[eventDetailType?.types?.length - 1]?.members?.find(member => member.name.text === name);
+	const hasGeneric = !!event?.expression?.typeArguments
+
+	if (commentParams.length) {
+		if (eventDetailRef && hasGeneric) {
+			logDocumentationError(moduleDoc.path, `Event details for event '${name}' has to be defined either with generic or with eventDetails.`)
+		} else if (eventDetails) {
+			if (hasGeneric) {
+				const typesText = event?.expression?.typeArguments.map(type => type.typeName?.text).filter(Boolean).join(" | ");
+				const typeRefs = (getTypeRefs(ts, event.expression)
+					?.map(e => getReference(ts, e, event, moduleDoc.path)).filter(Boolean)) || [];
+
+				result.type = { text: `CustomEvent<${typesText}>` };
+
+				if (typeRefs.length) {
+					result.type.references = typeRefs;
+				}
+			} else if (eventDetailRef) {
+				const typesText = eventDetailRef?.type?.typeName?.text;
+				const typeRefs = (getTypeRefs(ts, eventDetailRef)
+					?.map(e => getReference(ts, e, event, moduleDoc.path)).filter(Boolean)) || [];
+
+				result.type = { text: `CustomEvent<${typesText}>` };
+
+				if (typeRefs.length) {
+					result.type.references = typeRefs;
+				}
+			} else {
+				logDocumentationError(moduleDoc.path, `Event details for event '${name}' must be described using generics. Add type via generics to the decorator: @event<TypeForDetails>("${name}", {details}).`)
+			}
+		} else if (eventDetailRef) {
+			const typesText = eventDetailRef?.type?.typeName?.text;
+			const typeRefs = (getTypeRefs(ts, eventDetailRef)
+				?.map(e => getReference(ts, e, event, moduleDoc.path)).filter(Boolean)) || [];
+
+			result.type = { text: `CustomEvent<${typesText}>` };
+
+			if (typeRefs.length) {
+				result.type.references = typeRefs;
+			}
+		} else {
+			logDocumentationError(moduleDoc.path, `Event details for event '${name}' must be described.`)
+		}
+
 		result._ui5parameters = getParams(ts, eventDetails, commentParams, classNode, moduleDoc);
 	}
 

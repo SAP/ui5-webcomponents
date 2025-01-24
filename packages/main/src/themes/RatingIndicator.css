@@ -32,6 +32,14 @@
 	border-radius: var(--_ui5_rating_indicator_border_radius);
 }
 
+:host([size="S"]) .ui5-rating-indicator-item {
+	font-size: var(--_ui5_rating_indicator_item_size_s);
+}
+
+ :host([size="L"]) .ui5-rating-indicator-item {
+	font-size: var(--_ui5_rating_indicator_item_size_l);
+}
+
 [ui5-icon] {
 	display: flex;
 	text-shadow: var(--sapContent_TextShadow);
@@ -40,6 +48,7 @@
 .ui5-rating-indicator-root {
 	outline: none;
 	position: relative;
+	padding: var(--_ui5_rating_indicator_component_padding);
 }
 
 .ui5-rating-indicator-list {
@@ -54,6 +63,10 @@
 	position: relative;
 	width: var(--_ui5_rating_indicator_item_width);
 	height: var(--_ui5_rating_indicator_item_height);
+}
+
+:host([size="L"]) .ui5-rating-indicator-item:not(:last-child) {
+	margin-inline-end: 0.25rem;
 }
 
 .ui5-rating-indicator-item:not(:last-child) {

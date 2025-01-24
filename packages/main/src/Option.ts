@@ -3,10 +3,9 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { IOption } from "./Select.js";
 import ListItemBase from "./ListItemBase.js";
-import Icon from "./Icon.js";
 
 // Template
-import OptionTemplate from "./generated/templates/OptionTemplate.lit.js";
+import OptionTemplate from "./OptionTemplate.js";
 
 // Styles
 import optionBaseCss from "./generated/themes/OptionBase.css.js";
@@ -37,11 +36,10 @@ import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText
 		listItemIconCss,
 		optionBaseCss,
 	],
-	dependencies: [
-		Icon,
-	],
 })
 class Option extends ListItemBase implements IOption {
+	eventDetails!: ListItemBase["eventDetails"];
+
 	/**
 	 * Defines the text of the component.
 	 *

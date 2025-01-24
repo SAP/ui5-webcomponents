@@ -1,11 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
+import TableCellTemplate from "./TableCellTemplate.js";
 
 // Styles
 import tableCellStyles from "./generated/themes/TableCell.css.js";
@@ -28,7 +28,7 @@ import {
  */
 @customElement({
 	tag: "ui5-table-cell",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TableCellTemplate,
 	styles: tableCellStyles,
 })
@@ -58,10 +58,8 @@ class TableCell extends UI5Element {
 	@slot({ type: HTMLElement, "default": true })
 	content?: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-	static async onDefine() {
-		TableCell.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	get cellContent(): Array<HTMLElement> {
 		return this.getSlottedNodes<HTMLElement>("content");

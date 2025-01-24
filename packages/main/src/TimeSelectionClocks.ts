@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import {
 	isDown,
@@ -21,14 +21,12 @@ import {
 	isColon,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import TimePickerInternals from "./TimePickerInternals.js";
-import TimePickerClock from "./TimePickerClock.js";
-import ToggleSpinButton from "./ToggleSpinButton.js";
-import SegmentedButton from "./SegmentedButton.js";
-import SegmentedButtonItem from "./SegmentedButtonItem.js";
+import type TimePickerClock from "./TimePickerClock.js";
+import type ToggleSpinButton from "./ToggleSpinButton.js";
 import type { TimePickerClockChangeEventDetail } from "./TimePickerClock.js";
 
 // Template
-import TimeSelectionClocksTemplate from "./generated/templates/TimeSelectionClocksTemplate.lit.js";
+import TimeSelectionClocksTemplate from "./TimeSelectionClocksTemplate.js";
 
 // Styles
 import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.js";
@@ -36,7 +34,9 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
 /**
  * Fired when the picker is being closed.
  */
-@event("close-picker")
+@event("close-picker", {
+	bubbles: true,
+})
 
 /**
  * @class
@@ -59,15 +59,13 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
 	tag: "ui5-time-selection-clocks",
 	styles: TimeSelectionClocksCss,
 	template: TimeSelectionClocksTemplate,
-	dependencies: [
-		TimePickerClock,
-		ToggleSpinButton,
-		SegmentedButton,
-		SegmentedButtonItem,
-	],
 })
 
 class TimeSelectionClocks extends TimePickerInternals {
+	eventDetails!: TimePickerInternals["eventDetails"] & {
+		"close-picker": void,
+	};
+
 	/**
 	 * Flag for pressed Space key
 	 */
@@ -118,18 +116,13 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 */
 	_clocksFocusIn(evt: Event) {
 		const target = evt.target as HTMLElement;
-		this._focused = true;
 		if (target.id === this._id) {
 			this._switchClock(this._activeIndex);
 		}
 	}
 
-	_clocksFocusOut() {
-		this._focused = false;
-	}
-
 	/**
-	 * ToggleSpinButton focusin event handler.Switches to clock which button is being focused.
+	 * ToggleSpinButton focusin event handler. Switches to clock which button is being focused.
 	 * @param evt Event object
 	 */
 	_buttonFocusIn(evt: Event) {
@@ -174,7 +167,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 		if (isEnter(evt)) {
 			// Accept the time and close the popover
-			this.fireEvent("close-picker");
+			this.fireDecoratorEvent("close-picker");
 		} else if (isSpace(evt) && toggleSpinButtonTarget && !this._spacePressed) {
 			evt.preventDefault();
 			this._spacePressed = true;
@@ -377,7 +370,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 			});
 		}
 		this._entities[this._activeIndex].active = true;
-		this._entities[this._activeIndex].focused = this._focused && !this._amPmFocused;
 		this._createPeriodComponent();
 	}
 
@@ -401,10 +393,8 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 		if (this._entities.length && clockIndex < this._entities.length && newButton) {
 			this._entities[this._activeIndex].active = false;
-			this._entities[this._activeIndex].focused = false;
 			this._activeIndex = clockIndex;
 			this._entities[this._activeIndex].active = true;
-			this._entities[this._activeIndex].focused = this._focused && !this._amPmFocused;
 			newButton.focus();
 		}
 	}

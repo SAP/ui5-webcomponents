@@ -62,9 +62,17 @@
     width: 0.9375rem;
     height: 1.5rem;
     background: transparent;
+    box-sizing: border-box;
+}
+
+[ui5-slider]::part(handle-container) {
     margin-inline-start: -2px;
     margin-top: var(--_ui5_color_picker_slider_handle_margin_top);
-    box-sizing: border-box;
+}
+
+[ui5-slider]::part(handle-container):focus-within {
+    margin-inline-start: unset;
+    margin-top: unset;
 }
 
 [ui5-slider]::part(handle)::after {
@@ -109,7 +117,7 @@
 .ui5-color-picker-current-color {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -148,23 +156,39 @@
     margin-left: .2rem;
 }
 
-.ui5-color-picker-rgb-wrapper {
+.ui5-color-channel-inputs-wrapper {
     display: flex;
     justify-content: space-around;
     width: 100%;
+    align-items: center;
 }
 
-.ui5-color-picker-rgb {
+.ui5-color-channel {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 1rem;
+    position: relative;
 }
 
-.ui5-color-picker-rgb-input {
+.ui5-color-channel-input {
     width: 2.5rem;
     min-width: 2.5rem;
     text-align: center;
+}
+
+.ui5-color-channel-input::part(input) {
+    min-width: initial;
+    padding: 0 0.25rem;
+}
+
+.ui5-color-channel-percentage-label {
+    width: 1rem;
+}
+
+.ui5-color-channel-toggle {
+    min-width: var(--_ui_color_channel_toggle_button_width);
+    margin-inline-start: 0.5rem;
 }
 
 .ui5-color-picker-hue-slider::part(progress-container)::before,

@@ -1,9 +1,12 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
@@ -43,10 +46,11 @@ import {
 	DAY_PICKER_WEEK_NUMBER_TEXT,
 	DAY_PICKER_NON_WORKING_DAY,
 	DAY_PICKER_TODAY,
+	LIST_ITEM_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
+import DayPickerTemplate from "./DayPickerTemplate.js";
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
@@ -64,13 +68,13 @@ type Day = {
 	timestamp: string,
 	day: number,
 	focusRef: boolean,
-	_tabIndex: string,
+	_tabIndex: number,
 	selected: boolean,
 	_isSecondaryCalendarType: boolean,
 	classes: string,
 	ariaLabel: string,
-	ariaSelected: string,
-	ariaDisabled: string | undefined,
+	ariaSelected: boolean,
+	ariaDisabled: boolean | undefined,
 	disabled: boolean,
 	secondDay?: number,
 	weekNum?: number,
@@ -111,12 +115,21 @@ type DayPickerNavigateEventDetail = {
 /**
  * Fired when the selected date(s) change
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 /**
  * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
  */
-@event("navigate")
+@event("navigate", {
+	bubbles: true,
+})
 class DayPicker extends CalendarPart implements ICalendarPicker {
+	eventDetails!: CalendarPart["eventDetails"] & {
+		"change": DayPickerChangeEventDetail,
+		"navigate": DayPickerNavigateEventDetail,
+	};
+
 	/**
 	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 	 * @default []
@@ -179,6 +192,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	_autoFocus?: boolean;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	onBeforeRendering() {
@@ -248,15 +262,15 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			const day: Day = {
 				timestamp: timestamp.toString(),
 				focusRef: isFocused,
-				_tabIndex: isFocused ? "0" : "-1",
+				_tabIndex: isFocused ? 0 : -1,
 				selected: isSelected || isSelectedBetween,
 				day: tempDate.getDate(),
 				secondDay: this.hasSecondaryCalendarType ? (tempSecondDate as CalendarDate).getDate() : undefined,
 				_isSecondaryCalendarType: this.hasSecondaryCalendarType,
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
 				ariaLabel,
-				ariaSelected: String(isSelected || isSelectedBetween),
-				ariaDisabled: isDisabled || isOtherMonth ? "true" : undefined,
+				ariaSelected: isSelected || isSelectedBetween,
+				ariaDisabled: isDisabled || isOtherMonth,
 				disabled: isDisabled,
 				type: specialDayType,
 				parts: "day-cell",
@@ -458,7 +472,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 		this._updateSelectedDates(timestamp, isShift);
 
-		this.fireEvent<DayPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -474,6 +488,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			return;
 		}
 
+		announce(DayPicker.i18nBundle.getText(LIST_ITEM_SELECTED), InvisibleMessageMode.Assertive);
 		if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
 			this.selectedDates = [this.selectedDates[0], timestamp];
 			return;
@@ -507,7 +522,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			}
 		});
 
-		this.fireEvent<DayPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -518,6 +533,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			this._removeTimestampFromSelection(timestamp);
 		} else {
 			this._addTimestampToSelection(timestamp);
+			announce(DayPicker.i18nBundle.getText(LIST_ITEM_SELECTED), InvisibleMessageMode.Assertive);
 		}
 	}
 
@@ -715,7 +731,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -726,7 +742,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
 		this._updateSecondTimestamp();
-		this.fireEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -750,15 +766,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		}
 
 		return this.hideWeekNumbers;
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-dp-root": true,
-				"ui5-dp-twocalendartypes": this.hasSecondaryCalendarType,
-			},
-		};
 	}
 
 	_isWeekend(oDate: CalendarDate): boolean {

@@ -6,11 +6,12 @@
 	],
 	"compilerOptions": {
 		"outDir": "dist",
-		"module": "es2022",
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
 		"composite": true,
 		"rootDir": "src",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"tsBuildInfoFile": "dist/.tsbuildinfo",
 		"paths": {
 			"@ui5/webcomponents-base/dist/*": [

@@ -2,14 +2,13 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import IllustrationMessageDesign from "./types/IllustrationMessageDesign.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
@@ -19,7 +18,7 @@ import "./illustrations/BeforeSearch.js";
 import IllustratedMessageCss from "./generated/themes/IllustratedMessage.css.js";
 
 // Template
-import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
+import IllustratedMessageTemplate from "./IllustratedMessageTemplate.js";
 
 const getEffectiveIllustrationName = (name: string): string => {
 	if (name.startsWith("Tnt")) {
@@ -80,10 +79,9 @@ const getEffectiveIllustrationName = (name: string): string => {
 	tag: "ui5-illustrated-message",
 	languageAware: true,
 	themeAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: IllustratedMessageCss,
 	template: IllustratedMessageTemplate,
-	dependencies: [Title],
 })
 class IllustratedMessage extends UI5Element {
 	/**
@@ -228,6 +226,7 @@ class IllustratedMessage extends UI5Element {
 	illustrationTitle?: string;
 	illustrationSubtitle?: string;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 	_lastKnownOffsetWidthForMedia: Record<string, number>;
 	_lastKnownOffsetHeightForMedia: Record<string, number>;
@@ -243,10 +242,6 @@ class IllustratedMessage extends UI5Element {
 		this._lastKnownOffsetHeightForMedia = {};
 		// this will store the last known media, in order to detect if IllustratedMessage has been hidden by expand/collapse container
 		this._lastKnownMedia = "base";
-	}
-
-	static async onDefine() {
-		IllustratedMessage.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get BREAKPOINTS() {

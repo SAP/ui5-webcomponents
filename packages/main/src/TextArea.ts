@@ -2,26 +2,21 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import Popover from "./Popover.js";
-import Icon from "./Icon.js";
+import type Popover from "./Popover.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-import "@ui5/webcomponents-icons/dist/error.js";
-import "@ui5/webcomponents-icons/dist/alert.js";
-import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
-import "@ui5/webcomponents-icons/dist/information.js";
 
-import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
+import TextAreaTemplate from "./TextAreaTemplate.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -80,15 +75,23 @@ type ExceededText = {
 		valueStateMessageStyles,
 		getEffectiveScrollbarStyle(),
 	],
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TextAreaTemplate,
-	dependencies: [Popover, Icon],
 })
 /**
  * Fired when the text has changed and the focus leaves the component.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed", {
+	bubbles: true,
+})
 
 /**
  * Fired when the value of the component changes at each keystroke or when
@@ -96,7 +99,9 @@ type ExceededText = {
  * @since 1.0.0-rc.5
  * @public
  */
-@event("input")
+@event("input", {
+	bubbles: true,
+})
 
 /**
  * Fired when some text has been selected.
@@ -104,7 +109,9 @@ type ExceededText = {
  * @since 1.23.0
  * @public
  */
-@event("select")
+@event("select", {
+	bubbles: true,
+})
 
 /**
  * Fired when textarea is scrolled.
@@ -112,9 +119,18 @@ type ExceededText = {
  * @since 1.23.0
  * @public
  */
-@event("scroll")
+@event("scroll", {
+	bubbles: true,
+})
 
 class TextArea extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		"change": void;
+		"input": void;
+		"select": void;
+		"scroll": void;
+		"value-changed": void;
+	}
 	/**
 	 * Defines the value of the component.
 	 * @formEvents change input
@@ -305,6 +321,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	previousValue: string;
 	valueStatePopover?: Popover;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
@@ -321,10 +338,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	get formFormattedValue(): FormData | string | null {
 		return this.value;
-	}
-
-	static async onDefine() {
-		TextArea.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
@@ -382,7 +395,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 			this.value = this.previousValue;
 			nativeTextArea.value = this.value;
-			this.fireEvent("input");
+			this.fireDecoratorEvent("input");
 		}
 	}
 
@@ -408,15 +421,15 @@ class TextArea extends UI5Element implements IFormInputElement {
 	}
 
 	_onchange() {
-		this.fireEvent("change", {});
+		this.fireDecoratorEvent("change");
 	}
 
 	_onselect() {
-		this.fireEvent("select", {});
+		this.fireDecoratorEvent("select");
 	}
 
 	_onscroll() {
-		this.fireEvent("scroll", {});
+		this.fireDecoratorEvent("scroll");
 	}
 
 	_oninput(e: InputEvent) {
@@ -434,10 +447,10 @@ class TextArea extends UI5Element implements IFormInputElement {
 			nativeTextArea.setSelectionRange(this.maxlength, valueLength);
 		}
 
-		this.fireEvent("input", {});
+		this.fireDecoratorEvent("input");
 
 		// Angular two way data binding
-		this.fireEvent("value-changed");
+		this.fireDecoratorEvent("value-changed");
 	}
 
 	_onResize() {
@@ -540,14 +553,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 		};
 	}
 
-	get styles() {
-		return {
-			valueStateMsgPopover: {
-				"max-width": `${this._width!}px`,
-			},
-		};
-	}
-
 	get tabIndex() {
 		return this.disabled ? -1 : 0;
 	}
@@ -594,8 +599,8 @@ class TextArea extends UI5Element implements IFormInputElement {
 		return "";
 	}
 
-	get ariaInvalid() {
-		return this.valueState === ValueState.Negative ? "true" : null;
+	get _ariaInvalid() {
+		return this.valueState === ValueState.Negative ? "true" : undefined;
 	}
 
 	get openValueStateMsgPopover() {
@@ -616,20 +621,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
 		return this.effectiveDir !== "rtl" ? "Start" : "End";
-	}
-
-	/**
-	 * This method is relevant for sap_horizon theme only
-	 */
-	get _valueStateMessageIcon() {
-		const iconPerValueState = {
-			Negative: "error",
-			Critical: "alert",
-			Positive: "sys-enter-2",
-			Information: "information",
-		};
-
-		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
 	get valueStateTextMappings() {

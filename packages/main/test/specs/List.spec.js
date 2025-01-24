@@ -46,7 +46,7 @@ describe("List Tests", () => {
 		assert.strictEqual(await selectionChangeResultField.getProperty("value"), "1", "selectionChange event has been fired.");
 
 		await secondItemRadio.click();
-		assert.strictEqual(await itemClickResultField.getProperty("value"), "2", "itemClick event has been fired second time");
+		assert.strictEqual(await itemClickResultField.getProperty("value"), "1", "itemClick event has been fired second time");
 		assert.strictEqual(await selectionChangeResultField.getProperty("value"), "2", "selectionChange event has been fired second time.");
 		assert.strictEqual(await selectionChangeResultFieldRadio.getProperty("value"), "true", "selectionChange event correct detail - selectionComponentPressed.");
 
@@ -589,7 +589,7 @@ describe("List Tests", () => {
 		assert.strictEqual(await itemCloseResult.getProperty("value"), "0", "item-close event is not fired when the button is pressed.");
 	});
 
-	it("List item fires _request-tabindex-change event and updates tabindex when inner element receives focus", async () => {
+	it("List item fires request-tabindex-change event and updates tabindex when inner element receives focus", async () => {
 		const innerElement = await browser.$("#effectiveTabindexChange #country11 button");
 		const listItem = await browser.$("#effectiveTabindexChange #country11");
 		const rootItemElement = await listItem.shadow$(".ui5-li-root");

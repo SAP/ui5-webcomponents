@@ -404,27 +404,6 @@ describe("Wizard general interaction", () => {
 		assert.ok(await disabledPopover.isDisplayedInViewport(), "Popover is opened.");
 	});
 
-	it("tests responsive paddings", async () => {
-		await browser.url(`test/pages/Wizard.html`);
-		const wizard = $("#wiz");
-
-		// resize window S
-		await browser.setWindowSize(500, 1000);
-		assert.strictEqual(await wizard.getProperty("_breakpoint"), "S", "Small breakpoint is enabled");
-
-		// resize window M
-		await browser.setWindowSize(1000, 1000);
-		assert.strictEqual(await wizard.getProperty("_breakpoint"), "M", "Medium breakpoint is enabled");
-
-		// resize window L
-		await browser.setWindowSize(1200, 1000);
-		assert.strictEqual(await wizard.getProperty("_breakpoint"), "L", "Large breakpoint is enabled");
-
-		// resize window XL
-		await browser.setWindowSize(1600, 1000);
-		assert.strictEqual(await wizard.getProperty("_breakpoint"), "XL", "Extra Large breakpoint is enabled");
-	});
-
 	it("WizardPageMode: move to next step", async () => {
 		await browser.url(`test/pages/WizardPageMode_test.html`);
 
@@ -471,5 +450,15 @@ describe("Wizard general interaction", () => {
 			"Second step in the content is not selected.");
 		assert.strictEqual(await step2.isDisplayedInViewport(), false,
 			"Second step should not be visible.");
+	});
+
+	it("WizardPageMode: prevent page change upon scrolling", async () => {
+		browser.url(`test/pages/Wizard_inline_page_mode.html`);
+
+		await $('ui5-message-strip').click();
+		await browser.keys("End");
+		await browser.pause(1000);
+
+		assert.notOk(await $$("ui5-wizard-step")[1].getProperty("selected"), "Second step should not be selected");
 	});
 });

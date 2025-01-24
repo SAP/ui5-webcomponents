@@ -1,6 +1,6 @@
 import List from "@ui5/webcomponents/dist/List.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase";
+import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 
 /**
  * @class
@@ -29,6 +29,10 @@ class NotificationListGroupList extends List {
 	}
 
 	onItemFocused() {
+	}
+
+	_onfocusin(e: FocusEvent) {
+		e.stopImmediatePropagation();
 	}
 
 	focusItem(item: ListItemBase) {

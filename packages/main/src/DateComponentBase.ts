@@ -1,9 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getCalendarType, getSecondaryCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
@@ -30,7 +29,8 @@ import type CalendarWeekNumbering from "./types/CalendarWeekNumbering.js";
  */
 @customElement({
 	languageAware: true,
-	renderer: litRender,
+	cldr: true,
+	renderer: jsxRenderer,
 })
 class DateComponentBase extends UI5Element {
 	/**
@@ -92,6 +92,7 @@ class DateComponentBase extends UI5Element {
 	@property()
 	calendarWeekNumbering: `${CalendarWeekNumbering}` = "Default";
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle?: I18nBundle;
 
 	/**
@@ -199,13 +200,6 @@ class DateComponentBase extends UI5Element {
 			});
 		}
 		return this._isoFormatInstance;
-	}
-
-	static async onDefine() {
-		[DateComponentBase.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
-			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-		]);
 	}
 }
 

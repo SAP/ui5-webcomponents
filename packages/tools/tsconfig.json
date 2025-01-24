@@ -11,6 +11,8 @@
 		"sourceMap": true,
 		"inlineSources": true,
 		"strict": true,
-		"moduleResolution": "node"
+		"moduleResolution": "node",
+		"jsx": "react-jsx",
+		"jsxImportSource": "@ui5/webcomponents-base",
 	}
 }
