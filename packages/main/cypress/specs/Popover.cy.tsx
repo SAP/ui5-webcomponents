@@ -1,21 +1,22 @@
-import { html } from "lit";
-import "../../src/Button.js";
-import "../../src/Toolbar.js";
-import "../../src/ToolbarButton.js";
-import "../../src/Popover.js";
+import ToolbarButton from "../../src/ToolbarButton.js";
+import Toolbar from "../../src/Toolbar.js";
+import Popover from "../../src/Popover.js";
+import Button from "../../src/Button.js";
 
 describe("Popover opener", () => {
 	it("tests 'opener' set as string of abstract element's ID ", () => {
-		cy.mount(html`
-			<ui5-toolbar id="tb">
-				<ui5-toolbar-button text="Add"></ui5-toolbar-button>
-				<ui5-toolbar-button text="Delete" id="clearCounter"></ui5-toolbar-button>
-				<ui5-toolbar-button id="btnOpenMenu" text="Open Menu" prevent-overflow-closing></ui5-toolbar-button>
-			</ui5-toolbar>
-			<ui5-popover id="popup" opener="btnOpenMenu">
-				<ui5-button id="btnClosePopover">Close</ui5-button>
-			</ui5-popover>
-		`);
+		cy.mount(
+			<>
+				<Toolbar id="tb">
+					<ToolbarButton text="Add"></ToolbarButton>
+					<ToolbarButton text="Delete" id="clearCounter"></ToolbarButton>
+					<ToolbarButton id="btnOpenMenu" text="Open Menu" preventOverflowClosing={true}></ToolbarButton>
+				</Toolbar>
+				<Popover id="popup" opener="btnOpenMenu">
+					<Button id="btnClosePopover">Close</Button>
+				</Popover>
+			</>
+		);
 
 		// act
 		cy.get("#popup").invoke("prop", "open", "true");
@@ -30,16 +31,18 @@ describe("Popover opener", () => {
 	});
 
 	it("tests 'opener' set as DOM ref of abstract element's DOM reference", () => {
-		cy.mount(html`
-			<ui5-toolbar id="tb">
-				<ui5-toolbar-button text="Add"></ui5-toolbar-button>
-				<ui5-toolbar-button text="Delete"></ui5-toolbar-button>
-				<ui5-toolbar-button id="btnOpenPopover" text="Open Menu" prevent-overflow-closing></ui5-toolbar-button>
-			</ui5-toolbar>
-			<ui5-popover id="popup">
-				<ui5-button id="btnClosePopover">Close</ui5-button>
-			</ui5-popover>
-		`);
+		cy.mount(
+			<>
+				<Toolbar id="tb">
+					<ToolbarButton text="Add"></ToolbarButton>
+					<ToolbarButton text="Delete"></ToolbarButton>
+					<ToolbarButton id="btnOpenPopover" text="Open Menu" preventOverflowClosing={true}></ToolbarButton>
+				</Toolbar>
+				<Popover id="popup">
+					<Button id="btnClosePopover">Close</Button>
+				</Popover>
+			</>
+		);
 
 		cy.get("#btnOpenPopover").then($toolbarBtn => {
 			cy.wrap($toolbarBtn.get(0)).as("toolbarBtn");

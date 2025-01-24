@@ -1,16 +1,15 @@
-import { html } from "lit";
-import "../../src/MultiComboBox.js";
-import "../../src/MultiComboBoxItem.js";
+import MultiComboBox from "../../src/MultiComboBox.js";
+import MultiComboBoxItem from "../../src/MultiComboBoxItem.js";
 
 describe("Security", () => {
 	it("tests setting malicious text to items", () => {
-		cy.mount(html`
-			<ui5-multi-combobox>
-				<ui5-mcb-item text="<script>alert('XSS')</script>"></ui5-mcb-item>
-				<ui5-mcb-item text="<b onmouseover=alert('XSS')></b>"></ui5-mcb-item>
-				<ui5-mcb-item text="Albania<button onClick='alert(1)'>alert</button>"></ui5-mcb-item>
-			</ui5-multi-combobox>
-		`);
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="<script>alert('XSS')</script>"></MultiComboBoxItem>
+				<MultiComboBoxItem text="<b onmouseover=alert('XSS')></b>"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Albania<button onClick='alert(1)'>alert</button>"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
 
 		cy.get("ui5-mcb-item").eq(0).shadow().find(".ui5-li-title")
 			.should("have.text", "<script>alert('XSS')</script>");

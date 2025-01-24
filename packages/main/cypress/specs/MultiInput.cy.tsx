@@ -1,20 +1,21 @@
-import { html } from "lit";
-import "../../src/MultiInput.js";
-import "../../src/Tokenizer.js";
-import "../../src/SuggestionItem.js";
+import SuggestionItem from "../../src/SuggestionItem.js";
+import MultiInput from "../../src/MultiInput.js";
 
 describe("MultiInput Web Component", () => {
 	it("creates only one token when typing 'ad' and pressing Enter", () => {
-		cy.mount(html`<ui5-multi-input show-suggestions show-value-help-icon id="suggestion-token">
-            <ui5-suggestion-item text="Aute"></ui5-suggestion-item>
-            <ui5-suggestion-item text="ad"></ui5-suggestion-item>
-            <ui5-suggestion-item text="exercitation"></ui5-suggestion-item>
-            <ui5-suggestion-item text="esse"></ui5-suggestion-item>
-            <ui5-suggestion-item text="labore"></ui5-suggestion-item>
-            <ui5-suggestion-item text="amet"></ui5-suggestion-item>
-            <ui5-suggestion-item text="aute"></ui5-suggestion-item>
-            <ui5-suggestion-item text="excepteur"></ui5-suggestion-item>
-        </ui5-multi-input>`);
+		cy.mount(
+			<MultiInput showSuggestions={true} showValueHelpIcon={true} id="suggestion-token">
+				<SuggestionItem text="Aute"></SuggestionItem>
+				<SuggestionItem text="ad"></SuggestionItem>
+				<SuggestionItem text="exercitation"></SuggestionItem>
+				<SuggestionItem text="esse"></SuggestionItem>
+				<SuggestionItem text="labore"></SuggestionItem>
+				<SuggestionItem text="amet"></SuggestionItem>
+				<SuggestionItem text="aute"></SuggestionItem>
+				<SuggestionItem text="excepteur"></SuggestionItem>
+			</MultiInput>
+		);
+
 		cy.get("#suggestion-token").then(multiInput => {
 			const createTokenFromText = (text: string): HTMLElement => {
 				const token = document.createElement("ui5-token");
