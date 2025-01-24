@@ -1,12 +1,10 @@
-import { html } from "lit";
-import "../../src/StepInput.js";
-import type StepInput from "../../src/StepInput.js";
+import StepInput from "../../src/StepInput.js";
 
 describe("StepInput Tests", () => {
 	it("tets input event prevention", () => {
-		cy.mount(html`
-			<ui5-step-input></ui5-step-input>
-		`);
+		cy.mount(
+			<StepInput></StepInput>
+		);
 
 		cy.get("[ui5-step-input]")
 			.as("stepInput");
