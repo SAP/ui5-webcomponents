@@ -7,7 +7,7 @@ describe("Card header", () => {
 			<CardHeader
 				id="cardHeader1"
 				slot="header"
-				additional-text="4 of 10"
+				additionalText="4 of 10"
 				titleText="Quick Links"
 				subtitleText="Quick links sub title"
 				interactive={true}

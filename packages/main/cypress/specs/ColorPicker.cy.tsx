@@ -2,7 +2,7 @@ import ColorPicker from "../../src/ColorPicker.js";
 
 describe("Color Picker tests", () => {
 	it("should not display color channel inputs and alpha slider in simplified mode", () => {
-		cy.mount(<ColorPicker simplified></ColorPicker>);
+		cy.mount(<ColorPicker simplified={true}></ColorPicker>);
 
 		cy.get("ui5-color-picker")
 			.as("colorPicker");

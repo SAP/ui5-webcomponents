@@ -1,21 +1,19 @@
-import { html } from "lit";
-import "../../src/List.js";
-import "../../src/ListItemStandard.js";
-import type List from "../../src/List.js";
+import List from "../../src/List.js";
+import ListItemStandard from "../../src/ListItemStandard.js";
 
 describe("List Tests", () => {
 	it("tests 'loadMore' event fired upon infinite scroll", () => {
-		cy.mount(html`
-		<ui5-list style="height: 300px;"  growing="Scroll">
-			<ui5-li>Laptop Lenovo</ui5-li>
-			<ui5-li>IPhone 3</ui5-li>
-			<ui5-li>HP Monitor 24</ui5-li>
-			<ui5-li>Audio cabel</ui5-li>
-			<ui5-li>DVD set</ui5-li>
-			<ui5-li>HP Monitor 24</ui5-li>
-			<ui5-li>Audio cabel</ui5-li>
-			<ui5-li id="lastItem">Last Item</ui5-li>
-		</ui5-list>`);
+		cy.mount(
+			<List style="height: 300px;" growing="Scroll">
+				<ListItemStandard>Laptop Lenovo</ListItemStandard>
+				<ListItemStandard>IPhone 3</ListItemStandard>
+				<ListItemStandard>HP Monitor 24</ListItemStandard>
+				<ListItemStandard>Audio cabel</ListItemStandard>
+				<ListItemStandard>DVD set</ListItemStandard>
+				<ListItemStandard>HP Monitor 24</ListItemStandard>
+				<ListItemStandard>Audio cabel</ListItemStandard>
+				<ListItemStandard id="lastItem">Last Item</ListItemStandard>
+			</List>);
 
 		cy.get("[ui5-list]")
 			.as("list");
@@ -34,13 +32,13 @@ describe("List Tests", () => {
 	});
 
 	it("Arrow down and up navigation between last item and growing button", () => {
-		cy.mount(html`
-			<ui5-list growing="Button">
-				<ui5-li>Laptop Lenovo</ui5-li>
-				<ui5-li>IPhone 3</ui5-li>
-				<ui5-li>HP Monitor 24</ui5-li>
-			</ui5-list>
-		`);
+		cy.mount(
+			<List growing="Button">
+				<ListItemStandard>Laptop Lenovo</ListItemStandard>
+				<ListItemStandard>IPhone 3</ListItemStandard>
+				<ListItemStandard>HP Monitor 24</ListItemStandard>
+			</List>
+		);
 
 		cy.get("[ui5-list]")
 			.as("list");
@@ -77,13 +75,13 @@ describe("List Tests", () => {
 	});
 
 	it("Home key on growing button moves focus to first item", () => {
-		cy.mount(html`
-			<ui5-list growing="Button">
-				<ui5-li>Laptop Lenovo</ui5-li>
-				<ui5-li>IPhone 3</ui5-li>
-				<ui5-li>HP Monitor 24</ui5-li>
-			</ui5-list>
-		`);
+		cy.mount(
+			<List growing="Button">
+				<ListItemStandard>Laptop Lenovo</ListItemStandard>
+				<ListItemStandard>IPhone 3</ListItemStandard>
+				<ListItemStandard>HP Monitor 24</ListItemStandard>
+			</List>
+		);
 
 		cy.get("[ui5-list]")
 			.as("list");
@@ -111,13 +109,13 @@ describe("List Tests", () => {
 	});
 
 	it("End key navigation moves focus from first item to last item and then to growing button", () => {
-		cy.mount(html`
-			<ui5-list growing="Button">
-				<ui5-li>Laptop Lenovo</ui5-li>
-				<ui5-li>IPhone 3</ui5-li>
-				<ui5-li>HP Monitor 24</ui5-li>
-			</ui5-list>
-		`);
+		cy.mount(
+			<List growing="Button">
+				<ListItemStandard>Laptop Lenovo</ListItemStandard>
+				<ListItemStandard>IPhone 3</ListItemStandard>
+				<ListItemStandard>HP Monitor 24</ListItemStandard>
+			</List>
+		);
 
 		cy.get("[ui5-list]")
 			.as("list");
