@@ -9,19 +9,19 @@
 	<meta charset="utf-8">
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
-	<link rel="stylesheet" type="text/css" href="./styles/Timeline.css">
+	<link rel="stylesheet" type="text/css" href="./styles/TimelineGrowing_Scroll.css">
 </head>
 
-<body class="timeline1auto">
+<body class="timeline_auto">
 
 	<header class="header">
-		<h1 class="header-title">ui5-timeline</h1>
+		<h1 class="header-title">Timeline growing "Scroll"</h1>
 	</header>
 
 	<section>
 		<h2>Timeline - Vertical</h2>
-		<div style="max-height: 25rem; overflow: auto; margin-bottom: 5rem;display: flex;">
-			<ui5-timeline layout="Vertical" id="timelineVertical">
+		<div class="timeline-vertical-container">
+			<ui5-timeline layout="Vertical" id="timelineVertical" growing="Scroll">
 				<ui5-timeline-item title-text="called" subtitle-text="20.02.2017 11:30" name="Stanislava Baltova"
 					name-clickable></ui5-timeline-item>
 				<ui5-timeline-item title-text="Weekly Sync - CP Design" subtitle-text="27.08.2017 (11:00 - 12:00)"
@@ -64,9 +64,10 @@
 					icon="calendar"><ui5-avatar initials="SK"></ui5-avatar></ui5-timeline-item>
 			</ui5-timeline>
 		</div>
-		<h2>Basic Timeline - Horizontal</h2>
-		<div>
-			<ui5-timeline layout="Horizontal">
+
+		<h2>Timeline - Horizontal</h2>
+		<div class="timeline-horizontal-container">
+			<ui5-timeline id="timelineHorizontal" layout="Horizontal" growing="Scroll">
 				<ui5-timeline-item title-text="called" subtitle-text="20.02.2017 11:30" icon="calendar"
 					name="Stanislava Baltova" name-clickable></ui5-timeline-item>
 				<ui5-timeline-item title-text="Weekly Sync - CP Design" subtitle-text="27.08.2017 (11:00 - 12:00)"
@@ -111,58 +112,34 @@
 		const timelineVertical = document.getElementById("timelineVertical");
 		const timelineHorizontal = document.getElementById("timelineHorizontal");
 
-		const growing = document.getElementById("horizontalWithGroupsGrowing");
+		timelineVertical.addEventListener("load-more", addElement);
+		timelineHorizontal.addEventListener("load-more", addElement);
 
-		// const addElement = (timeline) => {
-		// 	timeline.loading = true
+		function addElement(e) {
+			this.loading = true;
 
-		// 	setTimeout(() => {
-		// 		const newGroup = document.createElement("ui5-timeline-group-item");
+			 setTimeout(() => {
+			const newGroup = document.createElement("ui5-timeline-group-item");
 
-		// 		newGroup.setAttribute("group-name", "test");
+			newGroup.setAttribute("group-name", "test");
 
-		// 		for (let i = 0; i < 10; i++) {
-		// 			newGroup.innerHTML += `
-		// 				<ui5-timeline-item title-text="Review Meeting" subtitle-text="26.02.2017 09:30" icon="meeting-room">
-		// 					<ui5-avatar-group type="Group" avatar-size="S">
-		// 						<ui5-avatar initials="LK"></ui5-avatar>
-		// 						<ui5-avatar initials="AW"></ui5-avatar>
-		// 						<ui5-avatar initials="BR"></ui5-avatar>
-		// 					</ui5-avatar-group>
-		// 					<div>Review project deliverables</div>
-		// 				</ui5-timeline-item>
-		// 			`;
-		// 			growing.appendChild(newGroup);
-		// 			growing.loading = false;
-		// 		}
+				for (let i = 0; i < 10; i++) {
+					newGroup.innerHTML += `
+						<ui5-timeline-item title-text="Review Meeting" subtitle-text="26.02.2017 09:30" icon="meeting-room">
+							<ui5-avatar-group type="Group" avatar-size="S">
+								<ui5-avatar initials="LK"></ui5-avatar>
+								<ui5-avatar initials="AW"></ui5-avatar>
+								<ui5-avatar initials="BR"></ui5-avatar>
+							</ui5-avatar-group>
+							<div>Review project deliverables</div>
+						</ui5-timeline-item>
+					`;
+					this.appendChild(newGroup);
+					this.loading = false;
+				}
 
-		// 	}, 1000000);
-		// }
-		// growing.addEventListener("load-more", (e) => {
-		// 	growing.loading = true
-
-		// 	setTimeout(() => {
-		// 		const newGroup = document.createElement("ui5-timeline-group-item");
-
-		// 		newGroup.setAttribute("group-name", "test");
-
-		// 		for (let i = 0; i < 10; i++) {
-		// 			newGroup.innerHTML += `
-		// 				<ui5-timeline-item title-text="Review Meeting" subtitle-text="26.02.2017 09:30" icon="meeting-room">
-		// 					<ui5-avatar-group type="Group" avatar-size="S">
-		// 						<ui5-avatar initials="LK"></ui5-avatar>
-		// 						<ui5-avatar initials="AW"></ui5-avatar>
-		// 						<ui5-avatar initials="BR"></ui5-avatar>
-		// 					</ui5-avatar-group>
-		// 					<div>Review project deliverables</div>
-		// 				</ui5-timeline-item>
-		// 			`;
-		// 			growing.appendChild(newGroup);
-		// 			growing.loading = false;
-		// 		}
-
-		// 	}, 1000000);
-		// });
+			}, 1500);
+		}
 	</script>
 </body>
 

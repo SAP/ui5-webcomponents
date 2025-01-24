@@ -132,15 +132,15 @@ class Timeline extends UI5Element {
 
 	/**
 	 * Defines whether the Timeline will have growing capability either by pressing a `More` button,
-	 * or via user scroll. In both cases `load-more` event is fired.
+	 * or via user scroll. In both cases a `load-more` event is fired.
 	 *
 	 * Available options:
 	 *
-	 * `Button` - Shows a button at the end of the Timeline, pressing which triggers the load-more event.
+	 * `Button` - Displays a button at the end of the Timeline, which when pressed triggers the `load-more` event.
 	 *
-	 * `Scroll` - The `load-more` event is triggered when the user scrolls to the bottom of the Timeline;
+	 * `Scroll` -Triggers the `load-more` event when the user scrolls to the bottom of the Timeline.
 	 *
-	 * `None` (default) - The growing is off.
+	 * `None` (default) - The growing functionality is off.
 	 *
 	 * **Restrictions:** `growing="Scroll"` is not supported for Internet Explorer,
 	 * and the component will fallback to `growing="Button"`.
@@ -180,7 +180,7 @@ class Timeline extends UI5Element {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this._navigatableItems,
+			getItemsCallback: () => this._navigableItems,
 		});
 	}
 
@@ -373,8 +373,8 @@ class Timeline extends UI5Element {
 			updatedTarget = target.shadowRoot!.querySelector<ToggleButton>("[ui5-toggle-button]")!;
 		}
 
-		const nextTargetIndex = isNext ? this._navigatableItems.indexOf(updatedTarget) + 1 : this._navigatableItems.indexOf(updatedTarget) - 1;
-		const nextTarget = this._navigatableItems[nextTargetIndex];
+		const nextTargetIndex = isNext ? this._navigableItems.indexOf(updatedTarget) + 1 : this._navigableItems.indexOf(updatedTarget) - 1;
+		const nextTarget = this._navigableItems[nextTargetIndex];
 
 		if (!nextTarget) {
 			return;
@@ -387,7 +387,7 @@ class Timeline extends UI5Element {
 		}
 	}
 
-	get _navigatableItems() {
+	get _navigableItems() {
 		const navigatableItems: Array<ITimelineItem | ToggleButton> = [];
 
 		if (!this.items.length) {
