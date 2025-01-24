@@ -1,33 +1,19 @@
-import { html } from "lit";
-import "../../src/Card.js";
-import "../../src/CardHeader.js";
-
-const interactiveCardHeader = html` <ui5-card>
-	<ui5-card-header
-        id="cardHeader1"
-		slot="header"
-		additional-text="4 of 10"
-		title-text="Quick Links"
-		subtitle-text="Quick links sub title"
-		interactive
-	>
-	</ui5-card-header>
-</ui5-card>`;
-
-const cardHeader = html` <ui5-card>
-	<ui5-card-header
-        id="cardHeader2"
-		slot="header"
-		additional-text="4 of 10"
-		title-text="Quick Links"
-		subtitle-text="Quick links sub title"
-	>
-	</ui5-card-header>
-</ui5-card>`;
+import Card from "../../src/Card.js";
+import CardHeader from "../../src/CardHeader.js";
 
 describe("Card header", () => {
 	it("Tests that aria attribute are correct on interactive header", () => {
-		cy.mount(interactiveCardHeader);
+		cy.mount(<Card>
+			<CardHeader
+				id="cardHeader1"
+				slot="header"
+				additional-text="4 of 10"
+				titleText="Quick Links"
+				subtitleText="Quick links sub title"
+				interactive={true}
+			>
+			</CardHeader></Card>
+		);
 
 		// assert
 		cy.get("#cardHeader1")
@@ -37,8 +23,18 @@ describe("Card header", () => {
 			.and("have.attr", "tabindex", "0")
 			.and("have.attr", "aria-roledescription", "Interactive Card Header");
 	});
+
 	it("Tests that aria attribute are correct on a header", () => {
-		cy.mount(cardHeader);
+		cy.mount(<Card>
+			<CardHeader
+				id="cardHeader2"
+				slot="header"
+				additionalText="4 of 10"
+				titleText="Quick Links"
+				subtitleText="Quick links sub title"
+			>
+			</CardHeader>
+		</Card>);
 
 		// assert
 		cy.get("#cardHeader2")

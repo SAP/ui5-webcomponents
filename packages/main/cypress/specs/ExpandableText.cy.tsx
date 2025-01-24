@@ -1,5 +1,4 @@
-import { html } from "lit";
-import "../../src/ExpandableText.js";
+import ExpandableText from "../../src/ExpandableText.js";
 import {
 	EXPANDABLE_TEXT_SHOW_MORE,
 	EXPANDABLE_TEXT_SHOW_LESS,
@@ -11,7 +10,7 @@ describe("ExpandableText", () => {
 		it("Should display only 100 characters by default", () => {
 			const text = "This is a very long text that should be displayed. This is a very long text that should be displayed. This is a very long text that should be displayed.";
 
-			cy.mount(html`<ui5-expandable-text text=${text}></ui5-expandable-text>`);
+			cy.mount(<ExpandableText text={text}></ExpandableText>);
 
 			expect(text.length).to.be.greaterThan(100);
 
@@ -25,7 +24,7 @@ describe("ExpandableText", () => {
 		it("Should display full text if maxCharacters are set, but not exceeded", () => {
 			const text = "This is a very long text that should be displayed";
 
-			cy.mount(html`<ui5-expandable-text text=${text} max-characters="9999"></ui5-expandable-text>`);
+			cy.mount(<ExpandableText text={text} maxCharacters={9999}></ExpandableText>);
 
 			cy.get("[ui5-expandable-text]")
 				.shadow()
@@ -38,7 +37,7 @@ describe("ExpandableText", () => {
 			const text = "This is a very long text that should be displayed";
 			const maxCharacters = 5;
 
-			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}"></ui5-expandable-text>`);
+			cy.mount(<ExpandableText text={text} maxCharacters={maxCharacters}></ExpandableText>);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 
@@ -62,7 +61,7 @@ describe("ExpandableText", () => {
 		it("Should display 'Show More' if maxCharacters are exceeded, set to 0", () => {
 			const text = "This is a very long text that should be displayed";
 
-			cy.mount(html`<ui5-expandable-text text=${text} max-characters="0"></ui5-expandable-text>`);
+			cy.mount(<ExpandableText text={text} maxCharacters={0}></ExpandableText>);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 
@@ -82,7 +81,7 @@ describe("ExpandableText", () => {
 		});
 
 		it("Should NOT display 'Show More' if maxCharacters are 0, but text is empty", () => {
-			cy.mount(html`<ui5-expandable-text max-characters="0"></ui5-expandable-text>`);
+			cy.mount(<ExpandableText maxCharacters={0}></ExpandableText>);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 
@@ -104,7 +103,7 @@ describe("ExpandableText", () => {
 			const text = "This is a very long text that should be displayed";
 			const maxCharacters = 5;
 
-			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}"></ui5-expandable-text>`);
+			cy.mount(<ExpandableText text={text} maxCharacters={maxCharacters}></ExpandableText>);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
@@ -136,10 +135,12 @@ describe("ExpandableText", () => {
 			const text = "This is a very long text that should be displayed";
 			const maxCharacters = 5;
 
-			cy.mount(html`
-				<button id="before">before</button>
-				<ui5-expandable-text text=${text} max-characters="${maxCharacters}"></ui5-expandable-text>
-			`);
+			cy.mount(
+				<>
+					<button id="before">before</button>
+					<ExpandableText text={text} maxCharacters={maxCharacters}></ExpandableText>
+				</>
+			);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
@@ -175,7 +176,7 @@ describe("ExpandableText", () => {
 		it("ARIA attributes", () => {
 			const text = "This is a very long text that should be displayed";
 
-			cy.mount(html`<ui5-expandable-text text=${text} max-characters="5"></ui5-expandable-text>`);
+			cy.mount(<ExpandableText text={text} maxCharacters={5}></ExpandableText>);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
@@ -202,7 +203,7 @@ describe("ExpandableText", () => {
 
 	describe("Empty Indicator", () => {
 		it("Should display empty indicator if text is empty and emptyIndicatorMode=On", () => {
-			cy.mount(html`<ui5-expandable-text text="" empty-indicator-mode="On"></ui5-expandable-text>`);
+			cy.mount(<ExpandableText text="" emptyIndicatorMode="On"></ExpandableText>);
 
 			cy.get("[ui5-expandable-text]")
 				.shadow()
@@ -211,7 +212,7 @@ describe("ExpandableText", () => {
 		});
 
 		it("Should NOT display empty indicator if text is empty and emptyIndicatorMode=Off", () => {
-			cy.mount(html`<ui5-expandable-text text="" empty-indicator-mode="Off"></ui5-expandable-text>`);
+			cy.mount(<ExpandableText text="" emptyIndicatorMode="Off"></ExpandableText>);
 
 			cy.get("[ui5-expandable-text]")
 				.shadow()
@@ -225,7 +226,7 @@ describe("ExpandableText", () => {
 			const text = "This is a very long text that should be displayed";
 			const maxCharacters = 5;
 
-			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}" overflow-mode="Popover"></ui5-expandable-text>`);
+			cy.mount(<ExpandableText text={text} maxCharacters={maxCharacters} overflowMode="Popover"></ExpandableText>);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
@@ -277,7 +278,7 @@ describe("ExpandableText", () => {
 		it("ARIA attributes", () => {
 			const text = "This is a very long text that should be displayed";
 
-			cy.mount(html`<ui5-expandable-text text=${text} max-characters="5" overflow-mode="Popover"></ui5-expandable-text>`);
+			cy.mount(<ExpandableText text={text} maxCharacters={5} overflowMode="Popover"></ExpandableText>);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
@@ -311,10 +312,12 @@ describe("ExpandableText", () => {
 			const text = "This is a very long text that should be displayed";
 			const maxCharacters = 5;
 
-			cy.mount(html`
-				<button id="before">before</button>
-				<ui5-expandable-text text=${text} max-characters="${maxCharacters}" overflow-mode="Popover"></ui5-expandable-text>
-			`);
+			cy.mount(
+				<>
+					<button id="before">before</button>
+					<ExpandableText text={text} maxCharacters={maxCharacters} overflowMode="Popover"></ExpandableText>
+				</>
+			);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
@@ -354,7 +357,7 @@ describe("ExpandableText", () => {
 			const text = "This is a very long text that should be displayed";
 			const maxCharacters = 5;
 
-			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}" overflow-mode="Popover"></ui5-expandable-text>`);
+			cy.mount(<ExpandableText text={text} maxCharacters={maxCharacters} overflowMode="Popover"></ExpandableText>);
 			cy.ui5SimulateDevice("phone");
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");

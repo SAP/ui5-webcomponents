@@ -10,9 +10,8 @@ module.exports = defineConfig({
 		},
 		supportFile: path.join(__dirname, "cypress/support/component.js"),
 		indexHtmlFile: path.join(__dirname, "cypress/support/component-index.html"),
-		specPattern: ["**/specs/*.cy.{js,ts}", "**/specs/**/*.cy.{js,ts}"],
+		specPattern: ["**/specs/*.cy.{js,ts}", "**/specs/*.cy.{jsx,tsx}", "**/specs/**/*.cy.{js,ts}"],
 		devServer: {
-			framework: 'cypress-ct-lit',
 			bundler: 'vite',
 		}
 	},

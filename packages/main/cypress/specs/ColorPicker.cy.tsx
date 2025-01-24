@@ -1,10 +1,8 @@
-import { html } from "lit";
-import "../../src/ColorPicker.js";
-import type ColorPicker from "../../src/ColorPicker.js";
+import ColorPicker from "../../src/ColorPicker.js";
 
 describe("Color Picker tests", () => {
 	it("should not display color channel inputs and alpha slider in simplified mode", () => {
-		cy.mount(html`<ui5-color-picker simplified></ui5-color-picker>`);
+		cy.mount(<ColorPicker simplified></ColorPicker>);
 
 		cy.get("ui5-color-picker")
 			.as("colorPicker");
@@ -26,7 +24,7 @@ describe("Color Picker tests", () => {
 	});
 
 	it("should toggle display to RGB or HSL when button is selected", () => {
-		cy.mount(html`<ui5-color-picker value="rgba(112, 178, 225, 1)"></ui5-color-picker>`);
+		cy.mount(<ColorPicker value="rgba(112, 178, 225, 1)"></ColorPicker>);
 
 		cy.get("ui5-color-picker")
 			.as("colorPicker");
@@ -51,7 +49,7 @@ describe("Color Picker tests", () => {
 	});
 
 	it("should update value when hue is changed via the input field", () => {
-		cy.mount(html`<ui5-color-picker value="rgba(112, 178, 225, 1)"></ui5-color-picker>`);
+		cy.mount(<ColorPicker value="rgba(112, 178, 225, 1)"></ColorPicker>);
 
 		cy.get("ui5-color-picker")
 			.as("colorPicker");
@@ -67,7 +65,7 @@ describe("Color Picker tests", () => {
 	});
 
 	it("should update value when saturation is changed via the input field", () => {
-		cy.mount(html`<ui5-color-picker value="rgba(112, 225, 131, 1)"></ui5-color-picker>`);
+		cy.mount(<ColorPicker value="rgba(112, 225, 131, 1)"></ColorPicker>);
 
 		cy.get("ui5-color-picker")
 			.as("colorPicker");
@@ -83,7 +81,7 @@ describe("Color Picker tests", () => {
 	});
 
 	it("should update value when light is changed via the input field", () => {
-		cy.mount(html`<ui5-color-picker value="rgba(130, 206, 143, 1)"></ui5-color-picker>`);
+		cy.mount(<ColorPicker value="rgba(130, 206, 143, 1)"></ColorPicker>);
 
 		cy.get("ui5-color-picker")
 			.as("colorPicker");
@@ -99,7 +97,7 @@ describe("Color Picker tests", () => {
 	});
 
 	it("should show correct accessibility info for HSL inputs", () => {
-		cy.mount(html`<ui5-color-picker></ui5-color-picker>`);
+		cy.mount(<ColorPicker></ColorPicker>);
 
 		cy.get("ui5-color-picker")
 			.as("colorPicker");

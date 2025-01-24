@@ -1,35 +1,24 @@
 import '@cypress/code-coverage/support'
-import { setupHooks } from '@cypress/mount-utils';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import { mount } from 'cypress-ct-lit'
+import { render } from "@ui5/webcomponents-base/dist/thirdparty/preact/preact.module.js";
+import { setupHooks, getContainerEl} from '@cypress/mount-utils';
 import "./commands.js";
 
-let dispose;
-
 function cleanup() {
-	dispose?.();
+	render(null, getContainerEl())
 }
 
-function ui5Mount(component, options = {}) {
+function mount(component, options = {}) {
+	const root = getContainerEl();
 	const configurationScript = document.head.querySelector("script[data-ui5-config]")
 	cleanup();
 
 	if (options.ui5Configuration) {
 		configurationScript.innerHTML = JSON.stringify(options.ui5Configuration);
-
 	}
 
-	dispose = () => {
-		configurationScript.innerHTML = "{}";
-	}
-
-	if (typeof component === "string") {
-		return mount(unsafeHTML(component), options)
-	}
-
-	return mount(component, options)
+	return render(component, root);
 }
 
 setupHooks(cleanup);
 
-Cypress.Commands.add('mount', ui5Mount)
+Cypress.Commands.add('mount', mount)

@@ -1,15 +1,16 @@
-import { html } from "lit";
-import "../../src/ColorPalette.js";
-import "../../src/ColorPaletteItem.js";
+import ColorPalette from "../../src/ColorPalette.js";
+import ColorPaletteItem from "../../src/ColorPaletteItem.js";
 
 describe("Color Palette tests", () => {
 	it("internal color picker should have selected color set on open", () => {
-		cy.mount(html`<ui5-color-palette show-more-colors show-recent-colors>
-<ui5-color-palette-item id="named" value="red"></ui5-color-palette-item>
-<ui5-color-palette-item id="rgba" value="rgba(0, 255, 0, 0.5)"></ui5-color-palette-item>
-<ui5-color-palette-item id="rgb" value="rgb(0,0,255)"></ui5-color-palette-item>
-<ui5-color-palette-item id="hex" value="#C0FFEE"></ui5-color-palette-item>
-</ui5-color-palette>`);
+		cy.mount(
+			<ColorPalette showMoreColors={true} showRecentColors={true}>
+				<ColorPaletteItem id="named" value="red"></ColorPaletteItem>
+				<ColorPaletteItem id="rgba" value="rgba(0, 255, 0, 0.5)"></ColorPaletteItem>
+				<ColorPaletteItem id="rgb" value="rgb(0,0,255)"></ColorPaletteItem>
+				<ColorPaletteItem id="hex" value="#C0FFEE"></ColorPaletteItem>
+			</ColorPalette>
+		);
 
 		cy.get("ui5-color-palette")
 			.ui5ColorPaletteCheckSelectedColor("#named", {

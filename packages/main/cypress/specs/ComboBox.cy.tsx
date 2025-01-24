@@ -1,16 +1,15 @@
-import { html } from "lit";
-import "../../src/ComboBox.js";
-import "../../src/ComboBoxItem.js";
+import ComboBox from "../../src/ComboBox.js";
+import ComboBoxItem from "../../src/ComboBoxItem.js";
 
 describe("Security", () => {
 	it("tests setting malicious text to items", () => {
-		cy.mount(html`
-			<ui5-combobox>
-				<ui5-cb-item text="<script>alert('XSS')</script>"></ui5-cb-item>
-				<ui5-cb-item text="<b onmouseover=alert('XSS')></b>"></ui5-cb-item>
-				<ui5-cb-item text="Albania<button onClick='alert(1)'>alert</button>"></ui5-cb-item>
-			</ui5-combobox>
-		`);
+		cy.mount(
+			<ComboBox>
+				<ComboBoxItem text="<script>alert('XSS')</script>"></ComboBoxItem>
+				<ComboBoxItem text="<b onmouseover=alert('XSS')></b>"></ComboBoxItem>
+				<ComboBoxItem text="Albania<button onClick='alert(1)'>alert</button>"></ComboBoxItem>
+			</ComboBox>
+		);
 
 		cy.get("ui5-cb-item").eq(0).shadow().find(".ui5-li-title")
 			.should("have.text", "<script>alert('XSS')</script>");
