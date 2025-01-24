@@ -1,4 +1,3 @@
-
 enum TimeLineGrowingMode {
 	/**
 	 * Component `load-more` is fired

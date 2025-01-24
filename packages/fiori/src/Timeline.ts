@@ -5,7 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	isTabNext,
 	isTabPrevious,
@@ -18,10 +18,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineTemplate from "./TimelineTemplate.js";
-import TimelineItem from "./TimelineItem.js";
-import TimelineGroupItem from "./TimelineGroupItem.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import process from "@ui5/webcomponents-icons/dist/process.js";
@@ -31,7 +28,6 @@ import TimelineCss from "./generated/themes/Timeline.css.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 // Mode
 import TimeLineGrowingMode from "./types/TimelineGrowingMode.js";
-import type Button from "@ui5/webcomponents/dist/Button.js";
 
 /**
  * Interface for components that may be slotted inside `ui5-timeline` as items
@@ -209,7 +205,7 @@ class Timeline extends UI5Element {
 	onAfterRendering() {
 		if (this.growsOnScroll) {
 			this.observeTimeLineEnd();
-		} else if (this.timeLineEndObserved){
+		} else if (this.timeLineEndObserved) {
 			this.unobserveTimelineEnd();
 		}
 
@@ -229,7 +225,7 @@ class Timeline extends UI5Element {
 
 	async observeTimelineEnd() {
 		if (!this.timeLineEndObserved) {
-			//await renderFinished();
+			await renderFinished();
 			this.getIntersectionObserver().observe(this.timelineEndDOM!);
 			this.timeLineEndObserved = true;
 		}

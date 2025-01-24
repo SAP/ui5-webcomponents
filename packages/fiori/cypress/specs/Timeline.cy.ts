@@ -1,6 +1,5 @@
 import { html } from "lit";
-import "../../src/Timeline.js";
-import Timeline from "../../src/Timeline.js";
+import type Timeline from "../../src/Timeline.js";
 
 const sample = html`
 <ui5-timeline layout="Vertical" accessible-name="vertical" id="timelineAccName">
@@ -24,7 +23,6 @@ const sampleWithSingleItem = html`
 
 const groupSample = html`
 <ui5-timeline id="verticalWithGroups">
-				<!-- GROUP ITEM -->
 				<ui5-timeline-group-item group-name="Events">
 					<ui5-timeline-item id="testItem1" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP Talk">Morning event</ui5-timeline-item>
 					<ui5-timeline-item id="testItem2" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP Talk">
@@ -144,7 +142,6 @@ describe("Timeline with group items interactions", () => {
 		cy.realPress("ArrowDown");
 		cy.realPress("ArrowUp");
 
-
 		cy.get("@currentGroup")
 			.find("ui5-timeline-item")
 			.eq(1)
@@ -176,8 +173,8 @@ describe("Timeline with group items interactions", () => {
 		cy.realPress("Space");
 
 		cy.get("@currentGroup")
-		.eq(0)
-		.should("have.attr", "collapsed");
+			.eq(0)
+			.should("have.attr", "collapsed");
 	});
 });
 
@@ -200,7 +197,8 @@ describe("Timeline with growing mode", () => {
 		cy.get<Timeline>("@timeline")
 			.then(timeline => {
 				timeline.get(0).addEventListener("ui5-load-more", cy.stub().as("loadMore"));
-			})
+			});
+
 		cy.get("#scroll-container")
 			.scrollTo("bottom", { duration: 100 });
 

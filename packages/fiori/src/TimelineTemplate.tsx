@@ -6,9 +6,9 @@ export default function TimelineTemplate(this: Timeline) {
 	return (
 		<div class="ui5-timeline-root"
 			onFocusIn={this._onfocusin}
-			onKeyDown={this._onkeydown}>
-
-				<BusyIndicator
+			onKeyDown={this._onkeydown}
+		>
+			<BusyIndicator
 				id={`${this._id}-busyIndicator`}
 				delay={this.loadingDelay}
 				active={this.showBusyIndicatorOverlay}
@@ -26,7 +26,7 @@ export default function TimelineTemplate(this: Timeline) {
 						{ this.growsOnScroll && endRow.call(this) }
 					</ul>
 				</div>
-				</BusyIndicator>
+			</BusyIndicator>
 		</div>
 	);
 }
@@ -53,9 +53,9 @@ function moreRow(this: Timeline) {
 					class="ui5-timeline-growing-button-busy-indicator"
 					active>
 				</BusyIndicator>
-	}
+			}
 		</li>
-	)
+	);
 }
 
 function endRow(this: Timeline) {
@@ -63,5 +63,5 @@ function endRow(this: Timeline) {
 		<div tabindex={-1} aria-hidden="true" class="ui5-timeline-end-marker">
 			<span tabindex={-1} aria-hidden="true" class="ui5-timeline-end-marker"></span>
 		</div>
-	)
+	);
 }
