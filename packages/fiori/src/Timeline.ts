@@ -77,7 +77,6 @@ const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 	renderer: jsxRenderer,
 	styles: TimelineCss,
 	template: TimelineTemplate,
-	dependencies: [BusyIndicator, TimelineItem, TimelineGroupItem],
 })
 
 /**
@@ -114,7 +113,7 @@ class Timeline extends UI5Element {
 	accessibleName?: string;
 
 	/**
-	 * Defines if the component would display a loading indicator over the Timeline.
+	 * Defines if the component should display a loading indicator over the Timeline.
 	 *
 	 * @default false
 	 * @since 2.7.0
@@ -174,8 +173,8 @@ class Timeline extends UI5Element {
 
 	_itemNavigation: ItemNavigation;
 	growingIntersectionObserver?: IntersectionObserver | null;
-	timeLineEndObserved: boolean;
-	initialIntersection: boolean;
+	timeLineEndObserved = false;
+	initialIntersection = true;
 
 	constructor() {
 		super();
@@ -183,12 +182,6 @@ class Timeline extends UI5Element {
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this._navigatableItems,
 		});
-
-		this.timeLineEndObserved = false;
-
-		// Indicates the Timeline bottom most part has been detected by the IntersectionObserver
-		// for the first time.
-		this.initialIntersection = true;
 	}
 
 	get ariaLabel() {
@@ -216,19 +209,15 @@ class Timeline extends UI5Element {
 	onAfterRendering() {
 		if (this.growsOnScroll) {
 			this.observeTimeLineEnd();
+		} else if (this.timeLineEndObserved){
+			this.unobserveTimelineEnd();
 		}
-	}
 
-	onEnterDOM() {
 		this.growingIntersectionObserver = this.getIntersectionObserver();
 	}
 
 	onExitDOM() {
-		if (this.growingIntersectionObserver) {
-			this.growingIntersectionObserver.disconnect();
-			this.growingIntersectionObserver = null;
-		}
-		this.timeLineEndObserved = false;
+		this.unobserveTimelineEnd();
 	}
 
 	observeTimeLineEnd() {
@@ -238,10 +227,30 @@ class Timeline extends UI5Element {
 		}
 	}
 
+	async observeTimelineEnd() {
+		if (!this.timeLineEndObserved) {
+			//await renderFinished();
+			this.getIntersectionObserver().observe(this.timelineEndDOM!);
+			this.timeLineEndObserved = true;
+		}
+	}
+
+	unobserveTimelineEnd() {
+		if (this.growingIntersectionObserver) {
+			this.growingIntersectionObserver.disconnect();
+			this.growingIntersectionObserver = null;
+			this.timeLineEndObserved = false;
+		}
+	}
+
+	get timelineEndDOM() {
+		return this.shadowRoot!.querySelector(".ui5-timeline-end-marker");
+	}
+
 	getIntersectionObserver(): IntersectionObserver {
 		if (!this.growingIntersectionObserver) {
 			this.growingIntersectionObserver = new IntersectionObserver(this.onIntersection.bind(this), {
-				root: document,
+				root: null,
 				threshold: 1.0,
 			});
 		}
@@ -283,19 +292,12 @@ class Timeline extends UI5Element {
 		this._loadMoreActive = false;
 	}
 
-	onInvalidation(change: ChangeInfo) {
-		if (change.type === "property" && change.name === "growing") {
-			this.timeLineEndObserved = false;
-			this.getIntersectionObserver().disconnect();
-		}
-	}
-
 	_onLoadMoreClick() {
 		this.fireDecoratorEvent("load-more");
 	}
 
 	_onfocusin(e: FocusEvent) {
-		let target = e.target as ITimelineItem | ToggleButton | HTMLElement;
+		let target = e.target as ITimelineItem | ToggleButton;
 
 		if ((target as ITimelineItem).isGroupItem) {
 			target = target.shadowRoot!.querySelector<ToggleButton>("[ui5-toggle-button]")!;

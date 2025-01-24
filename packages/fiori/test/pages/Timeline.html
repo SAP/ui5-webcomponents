@@ -219,10 +219,10 @@
 	</div>
 </section>
 
-<section style="width: 100%;">
+<section style="width: 100%; height: 50rem;">
 	<h2>Advanced Timeline - Horizontal With Groups and Diverse Components</h2>
-	<div style="width: 800px;">
-		<ui5-timeline layout="Horizontal" id="horizontalWithGroupsGrowing"  growing ="Button">
+	<div style="max-height: 10.5rem; overflow: auto;">
+		<ui5-timeline layout="Vertical" id="horizontalWithGroupsGrowing" style="height: 10rem;" growing ="Scroll">
 			<ui5-timeline-group-item group-name="SAP Events">
 				<ui5-timeline-item title-text="Online Meeting" subtitle-text="20.02.2017 11:30" icon="calendar">
 					<div>Discussion about upcoming projects</div>
@@ -307,7 +307,7 @@
 					growing.loading = false;
 				}
 
-			}, 10000);
+			}, 1000000);
 
 
 		});

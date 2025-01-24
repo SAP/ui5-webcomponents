@@ -77,3 +77,14 @@
 	box-sizing: border-box;
 	padding-inline-end: 0;
 }
+
+:host([layout="Vertical"]) .ui5-timeline-scroll-container {
+	overflow: auto;
+	height: 100%;
+	width: 100%;
+}
+
+:host([growing="Scroll"]) .ui5-timeline-end-marker {
+	/* Ensure the list-end-marker has a block property to always be stretched and "visible" on the screen */
+	display: inline-block;
+}
