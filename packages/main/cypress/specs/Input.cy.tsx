@@ -1,15 +1,13 @@
-import { html } from "lit";
-import "../../src/Input.js";
-import type Input from "../../src/Input.js";
-import "../../src/SuggestionItem.js";
-import "../../src/SuggestionItemCustom.js";
-import "../../src/SuggestionItemGroup.js";
+import Input from "../../src/Input.js";
+import SuggestionItem from "../../src/SuggestionItem.js";
+import SuggestionItemCustom from "../../src/SuggestionItemCustom.js";
+import SuggestionItemGroup from "../../src/SuggestionItemGroup.js";
 
 describe("Input Tests", () => {
 	it("tets input event prevention", () => {
-		cy.mount(html`
-			<ui5-input></ui5-input>
-		`);
+		cy.mount(
+			<Input></Input>
+		);
 
 		cy.get("[ui5-input]")
 			.as("input");
@@ -34,13 +32,13 @@ describe("Input Tests", () => {
 	});
 
 	it("tests custom suggestion items tabindex", () => {
-		cy.mount(html`
-			<ui5-input show-suggestions>
-				<ui5-suggestion-item-custom text="Item 1">Item 1</ui5-suggestion-item-custom>
-				<ui5-suggestion-item-custom text="Item 2">Item 2</ui5-suggestion-item-custom>
-				<ui5-suggestion-item-custom text="Item 3">Item 3</ui5-suggestion-item-custom>
-			</ui5-input>
-		`);
+		cy.mount(
+			<Input showSuggestions={true}>
+				<SuggestionItemCustom text="Item 1">Item 1</SuggestionItemCustom>
+				<SuggestionItemCustom text="Item 2">Item 2</SuggestionItemCustom>
+				<SuggestionItemCustom text="Item 3">Item 3</SuggestionItemCustom>
+			</Input>
+		);
 
 		cy.get("[ui5-input]")
 			.as("input");
@@ -63,13 +61,13 @@ describe("Input Tests", () => {
 	});
 
 	it("tests regular suggestion items tabindex", () => {
-		cy.mount(html`
-			<ui5-input show-suggestions>
-				<ui5-suggestion-item text="Item 1"></ui5-suggestion-item>
-				<ui5-suggestion-item text="Item 2"></ui5-suggestion-item>
-				<ui5-suggestion-item text="Item 3"></ui5-suggestion-item>
-			</ui5-input>
-		`);
+		cy.mount(
+			<Input showSuggestions={true}>
+				<SuggestionItem text="Item 1"></SuggestionItem>
+				<SuggestionItem text="Item 2"></SuggestionItem>
+				<SuggestionItem text="Item 3"></SuggestionItem>
+			</Input>
+		);
 
 		cy.get("[ui5-input]")
 			.as("input");
@@ -92,20 +90,20 @@ describe("Input Tests", () => {
 	});
 
 	it("tests suggestion group items tabindex", () => {
-		cy.mount(html`
-			<ui5-input show-suggestions>
-				<ui5-suggestion-item-group header-text="Group 1">
-					<ui5-suggestion-item text="Item 1"></ui5-suggestion-item>
-					<ui5-suggestion-item text="Item 2"></ui5-suggestion-item>
-					<ui5-suggestion-item text="Item 3"></ui5-suggestion-item>
-				</ui5-suggestion-item-group>
-				<ui5-suggestion-item-group header-text="Group 2">
-					<ui5-suggestion-item text="Item 4"></ui5-suggestion-item>
-					<ui5-suggestion-item text="Item 5"></ui5-suggestion-item>
-					<ui5-suggestion-item text="Item 6"></ui5-suggestion-item>
-				</ui5-suggestion-item-group>
-			</ui5-input>
-		`);
+		cy.mount(
+			<Input showSuggestions={true}>
+				<SuggestionItemGroup headerText="Group 1">
+					<SuggestionItem text="Item 1"></SuggestionItem>
+					<SuggestionItem text="Item 2"></SuggestionItem>
+					<SuggestionItem text="Item 3"></SuggestionItem>
+				</SuggestionItemGroup>
+				<SuggestionItemGroup headerText="Group 2">
+					<SuggestionItem text="Item 4"></SuggestionItem>
+					<SuggestionItem text="Item 5"></SuggestionItem>
+					<SuggestionItem text="Item 6"></SuggestionItem>
+				</SuggestionItemGroup>
+			</Input>
+		);
 
 		cy.get("[ui5-input]")
 			.as("input");

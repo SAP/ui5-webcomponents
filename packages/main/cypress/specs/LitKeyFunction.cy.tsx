@@ -1,16 +1,17 @@
-import { html } from "lit";
-import "../../src/MultiComboBox.js";
-import "../../src/MultiComboBoxItem.js";
 import type List from "../../src/List.js";
+import MultiComboBox from "../../src/MultiComboBox.js";
+import MultiComboBoxItem from "../../src/MultiComboBoxItem.js";
 
 describe("Lit HTML key function for #each", () => {
 	it("LIT HTML does not mess up keys when looping over lists", () => {
-		cy.mount(html`<ui5-multi-combobox id="mcb">
-			<ui5-mcb-item text="<empty>"></ui5-mcb-item>
-			<ui5-mcb-item text="Algeria"></ui5-mcb-item>
-			<ui5-mcb-item text="China"></ui5-mcb-item>
-			<ui5-mcb-item text="USA"></ui5-mcb-item>
-</ui5-multi-combobox>`);
+		cy.mount(
+			<MultiComboBox id="mcb">
+				<MultiComboBoxItem text="<empty>"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
+				<MultiComboBoxItem text="China"></MultiComboBoxItem>
+				<MultiComboBoxItem text="USA"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
 
 		cy.get("#mcb")
 			.as("mcb")
