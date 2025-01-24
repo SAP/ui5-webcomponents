@@ -9,8 +9,7 @@ import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types
 type SideNavigationItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
 /**
- * Fired when the component is activated either with a
- * click/tap or by using the [Enter] or [Space] keys.
+ * Fired when the component is activated either with a click/tap or by using the [Enter] or [Space] keys.
  *
  * @public
  */
@@ -102,13 +101,13 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	/**
 	 * Indicates whether the navigation item is selectable. By default all items are selectable unless specifically marked as unselectable.
 	 *
-	 * When a parent item is marked as unselectable, clicking it will only expand or collapse its sub-items.
-	 * To achieve better user experience you should not mix unselectable parent items and selectable parent items in the same side navigation.
+	 * When a parent item is marked as unselectable, selecting it will only expand or collapse its sub-items.
+	 * To improve user experience do not mix unselectable parent items with selectable parent items in a single side navigation.
 	 *
 	 *
 	 * **Guidelines**:
-	 * - External links should not be unselectable
-	 * - Items that trigger actions (with design "Action") should be unselectable
+	 * - External links should be unselectable.
+	 * - Items that trigger actions (with design "Action") should be unselectable.
 	 *
 	 * @public
 	 * @default false
