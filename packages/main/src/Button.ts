@@ -28,15 +28,17 @@ import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/To
 import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
-import BadgePlacement from "./types/BadgePlacement.js";
+import BadgePlacement from "./types/BadgeDesign.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./ButtonTemplate.js";
 import "./Tab.js";
+import "./ButtonBadge.js";
 
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
+import type ButtonBadge from "./ButtonBadge.js";
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
@@ -234,18 +236,6 @@ class Button extends UI5Element implements IButton {
 	type: `${ButtonType}` = "Button";
 
 	/**
-	 * @public
-	*/
-	@property()
-	badgePlacement: `${BadgePlacement}` = "None";
-
-	/**
-	 * @public
-	*/
-	@property()
-	badgeText: string = "";
-
-	/**
 	 * Describes the accessibility role of the button.
 	 *
 	 * **Note:** Use <code>ButtonAccessibleRole.Link</code> role only with a press handler, which performs a navigation. In all other scenarios the default button semantics are recommended.
@@ -331,6 +321,9 @@ class Button extends UI5Element implements IButton {
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>;
 
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
+	badge!: Array<ButtonBadge>;
+
 	_deactivate: () => void;
 
 	@i18n("@ui5/webcomponents")
@@ -366,6 +359,13 @@ class Button extends UI5Element implements IButton {
 	}
 
 	async onBeforeRendering() {
+		const needsOverflowVisible = this.badge.length && (this.badge[0].design === BadgePlacement.AttentionDot || this.badge[0].design === BadgePlacement.OverlayText);
+		if (needsOverflowVisible) {
+			this._internals.states.add("has-overlay-badge");
+		} else {
+			this._internals.states.delete("has-overlay-badge");
+		}
+
 		this.hasIcon = !!this.icon;
 		this.hasEndIcon = !!this.endIcon;
 		this.iconOnly = this.isIconOnly;
@@ -529,10 +529,6 @@ class Button extends UI5Element implements IButton {
 
 	get _isReset() {
 		return this.type === ButtonType.Reset;
-	}
-
-	get hasBadge() {
-		return this.badgePlacement !== BadgePlacement.None;
 	}
 }
 

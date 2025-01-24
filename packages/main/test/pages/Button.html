@@ -107,18 +107,22 @@
 	<br/>
 
 	<ui5-button design="Transparent" icon="employee">Transparent</ui5-button>
-	<ui5-button disabled design="Transparent" icon="employee">Transparent</ui5-button>
+	<ui5-button disabled design="Transparent" icon="employee">Transparent
+	</ui5-button>
 	<br/>
 	<br/>
 
 	<ui5-title>Cozy</ui5-title>
 
-	<ui5-button design="Emphasized" icon="employee" badge-placement="End" badge-text="72">Emphasized
+	<ui5-button icon="employee">Emphasized
+		<ui5-button-badge design="InlineText" text="72" slot="badge"></ui5-button-badge>
 	</ui5-button>
 
-	<ui5-button design="Emphasized" icon="employee" badge-placement="EndTop" badge-text="999+">Emphasized
+	<ui5-button design="Emphasized" icon="employee">Emphasized
+		<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
 	</ui5-button>
-	<ui5-button design="Emphasized" icon="employee" badge-placement="EndTop">Emphasized
+	<ui5-button icon="employee">Emphasized
+		<ui5-button-badge design="AttentionDot" slot="badge"></ui5-button-badge>
 	</ui5-button>
 
 	<br><br>
@@ -126,13 +130,48 @@
 	<ui5-title>Compact</ui5-title>
 
 	<div data-ui5-compact-size>
-		<ui5-button design="Emphasized" icon="employee" badge-placement="End" badge-text="72">Emphasized
+		<ui5-button icon="employee">Emphasized
+			<ui5-button-badge design="InlineText" text="72" slot="badge"></ui5-button-badge>
 		</ui5-button>
 	
-		<ui5-button design="Emphasized" icon="employee" badge-placement="EndTop" badge-text="999+">Emphasized
-		</ui5-button> (<ui5-label>not supported for compact</ui5-label>)
-		<ui5-button design="Emphasized" icon="employee" badge-placement="EndTop">Emphasized
+		<ui5-button design="Emphasized" icon="employee">Emphasized
+			<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
 		</ui5-button>
+		<ui5-button icon="employee">Emphasized
+			<ui5-button-badge design="AttentionDot" slot="badge"></ui5-button-badge>
+		</ui5-button>
+	</div>
+
+	<div dir="rtl">
+		<ui5-title>Cozy</ui5-title>
+
+		<ui5-button icon="employee">Emphasized
+			<ui5-button-badge design="InlineText" text="72" slot="badge"></ui5-button-badge>
+		</ui5-button>
+	
+		<ui5-button design="Emphasized" icon="employee">Emphasized
+			<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
+		</ui5-button>
+		<ui5-button icon="employee">Emphasized
+			<ui5-button-badge design="AttentionDot" slot="badge"></ui5-button-badge>
+		</ui5-button>
+	
+		<br><br>
+	
+		<ui5-title>Compact</ui5-title>
+	
+		<div data-ui5-compact-size>
+			<ui5-button icon="employee">Emphasized
+				<ui5-button-badge design="InlineText" text="72" slot="badge"></ui5-button-badge>
+			</ui5-button>
+		
+			<ui5-button design="Emphasized" icon="employee">Emphasized
+				<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
+			</ui5-button>
+			<ui5-button icon="employee">Emphasized
+				<ui5-button-badge design="AttentionDot" slot="badge"></ui5-button-badge>
+			</ui5-button>
+		</div>
 	</div>
 
 	<br><br>
