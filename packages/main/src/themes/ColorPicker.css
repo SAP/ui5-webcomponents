@@ -68,14 +68,9 @@
 }
 
 [ui5-slider]::part(handle-container) {
-    margin-top: var(--_ui5_color_picker_slider_hande_container_margin_top);
+    margin-top: var(--_ui5_color_picker_slider_handle_container_margin_top);
     margin-inline-start: -0.125rem;
     z-index: 2;
-}
-
-[ui5-slider]::part(handle-container):focus-within {
-    margin-inline-start: unset;
-    margin-top: unset;
 }
 
 [ui5-slider]::part(handle)::after {
