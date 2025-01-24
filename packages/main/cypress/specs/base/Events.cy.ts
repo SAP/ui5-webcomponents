@@ -4,7 +4,6 @@ import "../../../src/Select.js";
 import "../../../src/Option.js";
 import "../../../src/Input.js";
 import "../../../src/SuggestionItem.js";
-import "../../../src/features/InputSuggestions.js";
 import "../../../src/MessageStrip.js";
 import "../../../src/MultiComboBox.js";
 import "../../../src/MultiComboBoxItem.js";

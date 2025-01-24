@@ -2,6 +2,7 @@ import type ColorPicker from "./ColorPicker.js";
 import Label from "./Label.js";
 import Slider from "./Slider.js";
 import Input from "./Input.js";
+import Button from "./Button.js";
 
 export default function ColorPickerTemplate(this: ColorPicker) {
 	return (
@@ -46,7 +47,7 @@ export default function ColorPickerTemplate(this: ColorPicker) {
 						value={this._alpha}
 						accessibleName={this.alphaSliderLabel}
 						showTooltip={true}
-						onInput={this._handleAlphaInputFromSlider}
+						onInput={this._handleAlphaInput}
 					/>
 				}
 			</div>
@@ -57,7 +58,7 @@ export default function ColorPickerTemplate(this: ColorPicker) {
 					<span class="ui5-color-picker-color">
 						<div
 							class="ui5-color-picker-color-inner"
-							style={{ "background-color": `rgba(${this._value.r}, ${this._value.g}, ${this._value.b}, ${this._alpha})` }}
+							style={{ "background-color": this._colorValue.toRGBString() }}
 						></div>
 					</span>
 				</div>
@@ -66,7 +67,7 @@ export default function ColorPickerTemplate(this: ColorPicker) {
 					<Label>Hex</Label>
 					<Input
 						class="ui5-color-picker-hex-input"
-						value={this.hex}
+						value={this.HEX}
 						onKeyDown={this._onkeydown}
 						accessibleName={this.hexInputLabel}
 						onChange={this._handleHEXChange}
@@ -77,49 +78,48 @@ export default function ColorPickerTemplate(this: ColorPicker) {
 
 			{this._isDefaultPickerMode &&
 				<div
-					class="ui5-color-picker-rgb-wrapper"
-					onui5-change={this._handleRGBInputsChange}
+					class="ui5-color-channel-inputs-wrapper"
+					onui5-change={this._handleColorInputChange}
 				>
-					<div class="ui5-color-picker-rgb">
-						<Input
-							id="red"
-							class="ui5-color-picker-rgb-input"
-							disabled={this.inputsDisabled}
-							accessibleName={this.redInputLabel}
-							value={String(this._value.r)}
-						/>
-						<Label>R</Label>
-					</div>
-					<div class="ui5-color-picker-rgb">
-						<Input
-							id="green"
-							class="ui5-color-picker-rgb-input"
-							disabled={this.inputsDisabled}
-							accessibleName={this.greenInputLabel}
-							value={String(this._value.g)}
-						/>
-						<Label>G</Label>
-					</div>
-					<div class="ui5-color-picker-rgb">
-						<Input
-							id="blue"
-							class="ui5-color-picker-rgb-input"
-							disabled={this.inputsDisabled}
-							accessibleName={this.blueInputLabel}
-							value={String(this._value.b)}
-						/>
-						<Label>B</Label>
-					</div>
-					<div class="ui5-color-picker-rgb">
+					{this.colorChannelInputs.map(input =>
+						<><div class="ui5-color-channel">
+							<Input
+								id={input.id}
+								class="ui5-color-channel-input"
+								disabled={this.inputsDisabled}
+								accessibleName={input.accessibleName}
+								value={String(input.value)} />
+							<Label>{input.label}</Label>
+						</div>
+						<div class="ui5-color-channel-percentage-label">
+							{input.showPercentSymbol &&
+								<Label>%</Label>
+							}
+						</div></>
+					)}
+
+					<div class="ui5-color-channel">
 						<Input
 							id="alpha"
 							disabled={this.inputsDisabled}
-							class="ui5-color-picker-rgb-input"
+							class="ui5-color-channel-input"
 							value={String(this._alpha)}
 							accessibleName={this.alphaInputLabel}
 							onChange={this._handleAlphaChange}
+							onInput={this._handleAlphaInput}
 						/>
 						<Label>A</Label>
+					</div>
+
+					<div>
+						<Button
+							class="ui5-color-channel-toggle"
+							id="toggle-picker-mode"
+							icon="expand"
+							design="Transparent"
+							tooltip={this.toggleModeTooltip}
+							onClick={this._togglePickerMode}
+						/>
 					</div>
 				</div>
 			}

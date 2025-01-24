@@ -33,6 +33,22 @@
 	inset-inline-start: 50%;
 }
 
+:host([state="Positive"]) .ui5-tli-icon {
+	color: var(--sapPositiveElementColor);
+}
+
+:host([state="Negative"]) .ui5-tli-icon {
+	color: var(--sapNegativeElementColor);
+}
+
+:host([state="Critical"]) .ui5-tli-icon {
+	color: var(--sapCriticalElementColor);
+}
+
+:host([state="Information"]) .ui5-tli-icon {
+	color: var(--sapInformativeElementColor);
+}
+
 :host(:not([icon])[layout="Vertical"]) .ui5-tli-indicator::before {
 	inset-block-start: 1.75rem;
 }
@@ -149,6 +165,7 @@
 	position: relative;
 	margin-left: .5rem;
 	padding: var(--_ui5_TimelineItem_bubble_content_padding);
+	word-break: break-word;
 }
 
 :host([layout="Horizontal"]) .ui5-tli-bubble {
