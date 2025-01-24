@@ -137,13 +137,12 @@ describe("Table - Popin Mode", () => {
 	});
 
 	it("test with one by one popping out", () => {
-		const borderWidth = 1;
 		const testWidths = [
 			{ width: 150, poppedIn: ["colD", "colC", "colB"] },
-			{ width: 300 + borderWidth, poppedIn: ["colD", "colC", "colB"] },
-			{ width: 500 + borderWidth, poppedIn: ["colD", "colC"] },
-			{ width: 700 + borderWidth, poppedIn: ["colD"] },
-			{ width: 850 + borderWidth, poppedIn: [] },
+			{ width: 300, poppedIn: ["colD", "colC", "colB"] },
+			{ width: 500, poppedIn: ["colD", "colC"] },
+			{ width: 700, poppedIn: ["colD"] },
+			{ width: 850, poppedIn: [] },
 		];
 
 		testWidths.forEach(({ width, poppedIn }) => {
