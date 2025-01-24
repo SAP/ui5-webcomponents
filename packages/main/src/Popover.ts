@@ -511,7 +511,7 @@ class Popover extends Popup {
 	 * @protected
 	 */
 	focusOpener() {
-		this.getOpenerHTMLElement(this.opener)?.focus()
+		this.getOpenerHTMLElement(this.opener)?.focus();
 	}
 
 	/**

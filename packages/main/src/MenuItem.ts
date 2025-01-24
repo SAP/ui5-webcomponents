@@ -219,9 +219,9 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	get _navigableItems(): Array<HTMLElement> {
 		return [...this.endContent].filter(item => {
-			return item.hasAttribute("ui5-button") ||
-				item.hasAttribute("ui5-link") ||
-				(item.hasAttribute("ui5-icon") && item.getAttribute("mode") === "Interactive");
+			return item.hasAttribute("ui5-button")
+			|| item.hasAttribute("ui5-link")
+			|| (item.hasAttribute("ui5-icon") && item.getAttribute("mode") === "Interactive");
 		});
 	}
 
