@@ -1,15 +1,15 @@
 import type NavigationMenuItem from "./NavigationMenuItem.js";
-import MenuItemTemplate from "./MenuItemTemplate.js";
-import type { MenuItemHooks } from "./MenuItemTemplate.js";
-import Icon from "./Icon.js";
+import MenuItemTemplate from "@ui5/webcomponents/dist/MenuItemTemplate.js";
+import type { MenuItemHooks } from "@ui5/webcomponents/dist/MenuItemTemplate.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 import slimArrowRightIcon from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import arrowRightIcon from "@ui5/webcomponents-icons/dist/arrow-right.js";
 import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
 import navBackIcon from "@ui5/webcomponents-icons/dist/nav-back.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import Button from "./Button.js";
-import List from "./List.js";
-import BusyIndicator from "./BusyIndicator.js";
+import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
+import List from "@ui5/webcomponents/dist/List.js";
+import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 
 const predefinedHooks: Partial<MenuItemHooks> = {
 	listItemContent,
