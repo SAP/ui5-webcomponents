@@ -67,15 +67,15 @@ describe("F6 navigation", () => {
 					<Button id="first">First focusable</Button>
 				</div>
 				<div class="section" data-sap-ui-fastnavgroup="true">
-					<Button style="visibility: hidden;">Hidden</Button>
+					<Button style={{ visibility: "hidden" }}>Hidden</Button>
 				</div>
-				<div class="section" data-sap-ui-fastnavgroup="true"  style="visibility: hidden;">
+				<div class="section" data-sap-ui-fastnavgroup="true" style={{ visibility: "hidden" }}>
 					<Button>Hidden</Button>
 				</div>
 				<div class="section" data-sap-ui-fastnavgroup="true">
-					<Button style="display: none;">Hidden</Button>
+					<Button style={{ display: "none" }}>Hidden</Button>
 				</div>
-				<div class="section" data-sap-ui-fastnavgroup="true"  style="display: none;">
+				<div class="section" data-sap-ui-fastnavgroup="true" style={{ display: "none" }}>
 					<Button>Hidden</Button>
 				</div>
 				<div class="section">
@@ -174,24 +174,28 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with nested groups", () => {
-			cy.mount(<div class="section">
-				<button id="before">Before element</button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<Button id="first">First focusable</Button>
-				<div class="section" data-sap-ui-fastnavgroup="true">
-					<Button id="second">Second focusable</Button>
-				</div>
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<Button id="third">Third focusable</Button>
-			</div>
-			<div class="section">
-				<Button>After Element</Button>
-			</div>);
+			cy.mount(
+				<>
+					<div class="section">
+						<button id="before">Before element</button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="first">First focusable</Button>
+						<div class="section" data-sap-ui-fastnavgroup="true">
+							<Button id="second">Second focusable</Button>
+						</div>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="third">Third focusable</Button>
+					</div>
+					<div class="section">
+						<Button>After Element</Button>
+					</div>
+				</>
+			);
 
 			// act
 			cy.get("#before").focus();
@@ -224,31 +228,35 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with nesting inside empty fastnav-group parent", () => {
-			cy.mount(<div class="section">
-				<button id="before">Before element</button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<div class="section" data-sap-ui-fastnavgroup="true">
-					<Button id="first">First focusable</Button>
-				</div>
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<div class="section" data-sap-ui-fastnavgroup="true">
-					<Button id="second">First focusable</Button>
-				</div>
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<Button id="third">Second focusable</Button>
-			</div>
-			<div class="section">
-				<Button>After Element</Button>
-			</div>);
+			cy.mount(
+				<>
+					<div class="section">
+						<button id="before">Before element</button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<div class="section" data-sap-ui-fastnavgroup="true">
+							<Button id="first">First focusable</Button>
+						</div>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<div class="section" data-sap-ui-fastnavgroup="true">
+							<Button id="second">First focusable</Button>
+						</div>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="third">Second focusable</Button>
+					</div>
+					<div class="section">
+						<Button>After Element</Button>
+					</div>
+				</>
+			);
 
 			// act
 			cy.get("#before").focus();
@@ -281,27 +289,31 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with group as a focusable element", () => {
-			cy.mount(<div class="section">
-				<button id="before">Before element</button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<Button id="first">First focusable</Button>
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section" tabindex="0" id="second" data-sap-ui-fastnavgroup="true">
-				Second focusable
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<Button id="third">Third focusable</Button>
-			</div>
-			<div class="section">
-				<Button>After Element</Button>
-			</div>);
+			cy.mount(
+				<>
+					<div class="section">
+						<button id="before">Before element</button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="first">First focusable</Button>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" tabindex={0} id="second" data-sap-ui-fastnavgroup="true">
+						Second focusable
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="third">Third focusable</Button>
+					</div>
+					<div class="section">
+						<Button>After Element</Button>
+					</div>
+				</>
+			);
 
 			// act
 			cy.get("#before").focus();
@@ -334,24 +346,28 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation without a focusable element", () => {
-			cy.mount(<div class="section">
-				<Button id="first">Before element</Button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				Group without focusable element
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				Group without focusable element
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section">
-				<Button>After Element</Button>
-			</div>);
+			cy.mount(
+				<>
+					<div class="section">
+						<Button id="first">Before element</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						Group without focusable element
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						Group without focusable element
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section">
+						<Button>After Element</Button>
+					</div>
+				</>
+			);
 
 			// act
 			cy.get("#first")
@@ -370,21 +386,25 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with a single group", () => {
-			cy.mount(<div class="section">
-				<button id="before">Before element</button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<Button id="first">Before element</Button>
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section">
-				<Button>After Element</Button>
-			</div>);
+			cy.mount(
+				<>
+					<div class="section">
+						<button id="before">Before element</button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="first">Before element</Button>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section">
+						<Button>After Element</Button>
+					</div>
+				</>
+			);
 
 			// act
 			cy.get("#before").focus();
@@ -461,15 +481,15 @@ describe("F6 navigation", () => {
 					<Button id="first">First focusable</Button>
 				</div>
 				<div class="section" data-sap-ui-fastnavgroup="true">
-					<Button style="visibility: hidden;">Hidden</Button>
+					<Button style={{ visibility: "hidden" }}>Hidden</Button>
 				</div>
-				<div class="section" data-sap-ui-fastnavgroup="true"  style="visibility: hidden;">
+				<div class="section" data-sap-ui-fastnavgroup="true" style={{ visibility: "hidden" }}>
 					<Button>Hidden</Button>
 				</div>
 				<div class="section" data-sap-ui-fastnavgroup="true">
-					<Button style="display: none;">Hidden</Button>
+					<Button style={{ display: "none" }}>Hidden</Button>
 				</div>
-				<div class="section" data-sap-ui-fastnavgroup="true"  style="display: none;">
+				<div class="section" data-sap-ui-fastnavgroup="true" style={{ display: "none" }}>
 					<Button>Hidden</Button>
 				</div>
 				<div class="section">
@@ -568,24 +588,28 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with nested groups", () => {
-			cy.mount(<div class="section">
-				<button id="before">Before element</button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<Button id="first">First focusable</Button>
-				<div class="section" data-sap-ui-fastnavgroup="true">
-					<Button id="second">Second focusable</Button>
-				</div>
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<Button id="third">Third focusable</Button>
-			</div>
-			<div class="section">
-				<Button>After Element</Button>
-			</div>);
+			cy.mount(
+				<>
+					<div class="section">
+						<button id="before">Before element</button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="first">First focusable</Button>
+						<div class="section" data-sap-ui-fastnavgroup="true">
+							<Button id="second">Second focusable</Button>
+						</div>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="third">Third focusable</Button>
+					</div>
+					<div class="section">
+						<Button>After Element</Button>
+					</div>
+				</>
+			);
 
 			// act
 			cy.get("#before").focus();
@@ -618,31 +642,35 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with nesting inside empty fastnav-group parent", () => {
-			cy.mount(<div class="section">
-				<button id="before">Before element</button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<div class="section" data-sap-ui-fastnavgroup="true">
-					<Button id="first">First focusable</Button>
-				</div>
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<div class="section" data-sap-ui-fastnavgroup="true">
-					<Button id="second">First focusable</Button>
-				</div>
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<Button id="third">Second focusable</Button>
-			</div>
-			<div class="section">
-				<Button>After Element</Button>
-			</div>);
+			cy.mount(
+				<>
+					<div class="section">
+						<button id="before">Before element</button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<div class="section" data-sap-ui-fastnavgroup="true">
+							<Button id="first">First focusable</Button>
+						</div>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<div class="section" data-sap-ui-fastnavgroup="true">
+							<Button id="second">First focusable</Button>
+						</div>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="third">Second focusable</Button>
+					</div>
+					<div class="section">
+						<Button>After Element</Button>
+					</div>
+				</>
+			);
 
 			// act
 			cy.get("#before").focus();
@@ -675,27 +703,31 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with group as a focusable element", () => {
-			cy.mount(<div class="section">
-				<button id="before">Before element</button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<Button id="first">First focusable</Button>
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section" tabindex="0" id="second" data-sap-ui-fastnavgroup="true">
-				Second focusable
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<Button id="third">Third focusable</Button>
-			</div>
-			<div class="section">
-				<Button>After Element</Button>
-			</div>);
+			cy.mount(
+				<>
+					<div class="section">
+						<button id="before">Before element</button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="first">First focusable</Button>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" tabindex={0} id="second" data-sap-ui-fastnavgroup="true">
+						Second focusable
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="third">Third focusable</Button>
+					</div>
+					<div class="section">
+						<Button>After Element</Button>
+					</div>
+				</>
+			);
 
 			// act
 			cy.get("#before").focus();
@@ -728,24 +760,28 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation without a focusable element", () => {
-			cy.mount(<div class="section">
-				<Button id="first">Before element</Button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				Group without focusable element
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				Group without focusable element
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section">
-				<Button>After Element</Button>
-			</div>);
+			cy.mount(
+				<>
+					<div class="section">
+						<Button id="first">Before element</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						Group without focusable element
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						Group without focusable element
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section">
+						<Button>After Element</Button>
+					</div>
+				</>
+			);
 
 			// act
 			cy.get("#first")
@@ -764,21 +800,25 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with a single group", () => {
-			cy.mount(<div class="section">
-				<button id="before">Before element</button>
-			</div>
-			<div class="section" data-sap-ui-fastnavgroup="true">
-				<Button id="first">Before element</Button>
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section">
-				<Button>Something focusable</Button>
-			</div>
-			<div class="section">
-				<Button>After Element</Button>
-			</div>);
+			cy.mount(
+				<>
+					<div class="section">
+						<button id="before">Before element</button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="first">Before element</Button>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section">
+						<Button>After Element</Button>
+					</div>
+				</>
+			);
 
 			// act
 			cy.get("#before").focus();
