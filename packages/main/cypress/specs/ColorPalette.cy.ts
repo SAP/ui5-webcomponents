@@ -1,7 +1,6 @@
 import { html } from "lit";
 import "../../src/ColorPalette.js";
 import "../../src/ColorPaletteItem.js";
-import "../../src/features/ColorPaletteMoreColors.js";
 
 describe("Color Palette tests", () => {
 	it("internal color picker should have selected color set on open", () => {

@@ -526,7 +526,7 @@ slot[name="profile"] {
 	align-items: center;
 }
 
-::slotted([ui5-button][profile-btn]) {
+::slotted([ui5-button][data-profile-btn]) {
 	width: auto;
 }
 
