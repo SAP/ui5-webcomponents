@@ -508,6 +508,13 @@ class Popover extends Popup {
 	}
 
 	/**
+	 * @protected
+	 */
+	focusOpener() {
+		this.getOpenerHTMLElement(this.opener)?.focus()
+	}
+
+	/**
 	 * @private
 	 */
 	calcPlacement(targetRect: DOMRect, popoverSize: PopoverSize): CalculatedPlacement {

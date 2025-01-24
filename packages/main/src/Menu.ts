@@ -88,9 +88,9 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * in the currently clicked menu item.
  * - `Arrow Left` or `Escape` - Closes the currently opened sub-menu.
  *
- * when there is endContent :
- * - `Arrow Left` or `ArrowRight` - Navigate between the menu item actions and the menu item it self
- * - `Arrow Up` / `Arrow Down` - Navigates up and down the menu items that are currently visible
+ * when there is `endContent` :
+ * - `Arrow Left` or `ArrowRight` - Navigate between the menu item actions and the menu item itself
+ * - `Arrow Up` / `Arrow Down` - Navigates up and down the currently visible menu items
  *
  * Note: if the text ditrection is set to Right-to-left (RTL), `Arrow Right` and `Arrow Left` functionality is swapped.
  *
@@ -352,8 +352,9 @@ class Menu extends UI5Element {
 		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
 		const item = e.target as MenuItem;
 		const parentElement = item.parentElement as MenuItem;
-		const shouldCloseMenu = parentElement.hasAttribute("ui5-menu-item") && (this.isRtl ? isRight(e) : isLeft(e));
+		const shouldItemNavigation = isUp(e) || isDown(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
+		const shouldCloseMenu = !shouldItemNavigation && !shouldOpenMenu && parentElement.hasAttribute("ui5-menu-item");
 
 		if (item.hasAttribute("ui5-menu-item")) {
 			if (isEnter(e) || isTabNextPrevious) {
@@ -369,8 +370,7 @@ class Menu extends UI5Element {
 			} else if ((shouldCloseMenu || isTabNextPrevious) && parentElement._popover) {
 				parentElement._popover.open = false;
 				parentElement.selected = false;
-				const opener = this._popover.getOpenerHTMLElement(parentElement._popover.opener);
-				opener?.focus();
+				parentElement._popover.focusOpener();
 			}
 		} else if (isUp(e)) {
 			this._navigateOutOfEndContent(parentElement);
@@ -383,9 +383,9 @@ class Menu extends UI5Element {
 		const opener = menuItem?.parentElement as MenuItem | Menu;
 		const currentIndex = opener._menuItems.indexOf(menuItem);
 		const nextItem = isDownwards ? opener._menuItems[currentIndex + 1] : opener._menuItems[currentIndex - 1];
-		const focusItem = nextItem || opener._menuItems[currentIndex];
+		const itemToFocus = nextItem || opener._menuItems[currentIndex];
 
-		focusItem.focus();
+		itemToFocus.focus();
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
