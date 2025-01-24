@@ -1,7 +1,8 @@
-import { html } from "lit";
-import "@ui5/webcomponents-icons/dist/camera.js";
-import "../../src/BarcodeScannerDialog.js";
-import type BarcodeScannerDialog from "../../src/BarcodeScannerDialog.js";
+import BarcodeScannerDialog from "../../src/BarcodeScannerDialog.js";
+import camera from "@ui5/webcomponents-icons/dist/camera.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
+import Label from "@ui5/webcomponents/dist/Label.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
 
 describe("BarcodeScannerDialog", () => {
 	let openDialogHandler: EventListener | null;
@@ -9,15 +10,17 @@ describe("BarcodeScannerDialog", () => {
 	let handleScanError: (event: CustomEvent) => void;
 
 	beforeEach(() => {
-		cy.mount(html`
-			<ui5-barcode-scanner-dialog id="dlgScan"></ui5-barcode-scanner-dialog>
-			<ui5-button id="btnScan" icon="camera">Open Scanner Dialog</ui5-button>
+		cy.mount(
+			<>
+				<BarcodeScannerDialog id="dlgScan"></BarcodeScannerDialog>
+				<Button id="btnScan" icon={camera}>Open Scanner Dialog</Button>
 
-			<div>
-				<ui5-label id="scanResult"></ui5-label>
-				<ui5-label id="scanError"></ui5-label>
-			</div>
-		`);
+				<div>
+					<Label id="scanResult"></Label>
+					<Label id="scanError"></Label>
+				</div>
+			</>
+		);
 
 		cy.get("#dlgScan").as("dialog");
 		cy.get("#btnScan").as("button");
@@ -360,17 +363,19 @@ describe("BarcodeScannerDialog with Custom Slots", () => {
 	let closeDialogHandler: EventListener | null;
 
 	beforeEach(() => {
-		cy.mount(html`
-		  <ui5-barcode-scanner-dialog id="dlgScanCustom">
-			<div slot="header" class="custom-dialog-header">
-			  <ui5-title level="H2">My Custom Header</ui5-title>
-			</div>
-			<div slot="footer" class="custom-dialog-footer">
-			  <ui5-button id="customCloseBtn">My Custom Close Button</ui5-button>
-			</div>
-		  </ui5-barcode-scanner-dialog>
-		  <ui5-button id="btnScanCustom" icon="camera">Open Custom Scanner Dialog</ui5-button>
-		`);
+		cy.mount(
+			<>
+				<BarcodeScannerDialog id="dlgScanCustom">
+					<div slot="header" class="custom-dialog-header">
+						<Title level="H2">My Custom Header</Title>
+					</div>
+					<div slot="footer" class="custom-dialog-footer">
+						<Button id="customCloseBtn">My Custom Close Button</Button>
+					</div>
+				</BarcodeScannerDialog>
+				<Button id="btnScanCustom" icon={camera}>Open Custom Scanner Dialog</Button>
+			</>
+		);
 
 		cy.get("#dlgScanCustom").as("customDialog");
 		cy.get("#btnScanCustom").as("customButton");

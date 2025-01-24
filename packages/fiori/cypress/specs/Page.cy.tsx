@@ -1,26 +1,26 @@
-import { html } from "lit";
-import "../../src/Page.js";
-import "@ui5/webcomponents/dist/Bar.js";
-import "@ui5/webcomponents/dist/Button.js";
 import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import Page from "../../src/Page.js";
+import Bar from "@ui5/webcomponents/dist/Bar.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 
 describe("Page general interaction", () => {
 	beforeEach(() => {
-		cy.mount(html`
-			<ui5-page style="height: 300px;" show-footer>
-				<ui5-bar slot="header">
-					<ui5-button slot="startContent">Header button</ui5-button>
-				</ui5-bar>
+		cy.mount(
+			// <ui5-page style="height: 300px;" show-footer>
+			<Page style="height: 300px;">
+				<Bar slot="header">
+					<Button slot="startContent">Header button</Button>
+				</Bar>
 
 				<div id="content">
 					Test content
 				</div>
-				<ui5-bar slot="footer">
-					<ui5-button slot="endContent">Footer button</ui5-button>
-				</ui5-bar>
-			</ui5-page>
-		`);
+				<Bar slot="footer">
+					<Button slot="endContent">Footer button</Button>
+				</Bar>
+			</Page>
+		);
 	});
 
 	it("tests initial rendering", () => {

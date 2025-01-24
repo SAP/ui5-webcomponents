@@ -1,38 +1,38 @@
-import { html } from "lit";
-import "../../src/Timeline.js";
-import "../../src/TimelineItem.js";
-import "@ui5/webcomponents-icons/dist/accept.js";
-import "@ui5/webcomponents-icons/dist/message-information.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/message-warning.js";
+import TimelineItem from "../../src/TimelineItem.js";
+import TimelineGroupItem from "../../src/TimelineGroupItem.js";
+import accept from "@ui5/webcomponents-icons/dist/accept.js";
+import messageInformation from "@ui5/webcomponents-icons/dist/message-information.js";
+import Timeline from "../../src/Timeline.js";
 
 describe("Accessibility", () => {
 	beforeEach(() => {
-		cy.mount(html`
-			<ui5-timeline id="test-timeline">
-				<ui5-timeline-group-item group-name="Build">
-					<ui5-timeline-item
+		cy.mount(
+			<Timeline id="test-timeline">
+				<TimelineGroupItem group-name="Build">
+					<TimelineItem
 						id="item1"
 						title="Compile"
-						subtitle="Testing suite A"
-						icon="sap-icon://accept"
+						// subtitle="Testing suite A"
+						subtitleText="Testing suite A"
+						icon={accept}
 						name="Testing suite A"
 						state="Positive"
 					>
 						Compilation succeeded.
-					</ui5-timeline-item>
-					<ui5-timeline-item
+					</TimelineItem>
+					<TimelineItem
 						id="item2"
 						title="Lint"
-						subtitle="Testing suite B"
-						icon="sap-icon://message-information"
+						// subtitle="Testing suite B"
+						subtitleText="Testing suite B"
+						icon={messageInformation}
 						name="Testing suite B"
 					>
 						Lint completed with minor issues.
-					</ui5-timeline-item>
-				</ui5-timeline-group-item>
-			</ui5-timeline>
-		`);
+					</TimelineItem>
+				</TimelineGroupItem>
+			</Timeline>
+		);
 
 		cy.get("#test-timeline").as("timeline");
 	});

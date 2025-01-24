@@ -1,47 +1,45 @@
-import { html } from "lit";
-import "../../src/NavigationLayout.js";
-import "../../src/SideNavigation.js";
-import "../../src/SideNavigationGroup.js";
-import "../../src/SideNavigationItem.js";
-import "../../src/ShellBar.js";
-import "@ui5/webcomponents/dist/Button.js";
-import "@ui5/webcomponents-icons/dist/home.js";
-import "@ui5/webcomponents-icons/dist/menu.js";
+import NavigationLayout from "../../src/NavigationLayout.js";
+import home from "@ui5/webcomponents-icons/dist/home.js";
+import menu from "@ui5/webcomponents-icons/dist/menu.js";
+import ShellBar from "../../src/ShellBar.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
+import SideNavigation from "../../src/SideNavigation.js";
+import SideNavigationItem from "../../src/SideNavigationItem.js";
+import SideNavigationGroup from "../../src/SideNavigationGroup.js";
 
-const sampleCode = html`
-<ui5-navigation-layout id="nl1">
-	<ui5-shellbar
-		slot="header"
-		primary-title="UI5 Web Components"
-	>
-		<ui5-button icon="menu" slot="startButton" id="startButton"></ui5-button>
-	</ui5-shellbar>
-	<ui5-side-navigation id="sn1" slot="sideContent">
-		<!-- Items -->
-		<ui5-side-navigation-item text="Home" href="#home" icon="home"></ui5-side-navigation-item>
-		<ui5-side-navigation-group text="Group 1" expanded>
-			<ui5-side-navigation-item text="Item 1" href="#item1"
-									  icon="home"></ui5-side-navigation-item>
-			<ui5-side-navigation-item text="Item 2" href="#item2"
-									  icon="home"></ui5-side-navigation-item>
-			<ui5-side-navigation-item text="Item 3" href="#item3"
-									  icon="home"></ui5-side-navigation-item>
-		</ui5-side-navigation-group>
-		<!-- Fixed Items -->
-		<ui5-side-navigation-item slot="fixedItems"
-								  text="Legal"
-								  href="https://www.sap.com/about/legal/impressum.html"
-								  target="_blank"
-								  icon="home"></ui5-side-navigation-item>
-	</ui5-side-navigation>
-	<div>
-		Content
-	</div>
-</ui5-navigation-layout>`;
+function sampleCode() {
+	return <NavigationLayout id="nl1">
+		<ShellBar slot="header" primaryTitle="UI5 Web Components">
+			<Button icon={menu} slot="startButton" id="startButton"></Button>
+		</ShellBar>
+
+		<SideNavigation id="sn1" slot="sideContent">
+			<SideNavigationItem text="Home" href="#home" icon={home}></SideNavigationItem>
+
+			<SideNavigationGroup text="Group 1" expanded={true}>
+				<SideNavigationItem text="Item 1" href="#item1" icon={home}></SideNavigationItem>
+				<SideNavigationItem text="Item 2" href="#item2"icon={home}></SideNavigationItem>
+				<SideNavigationItem text="Item 3" href="#item3" icon={home}></SideNavigationItem>
+			</SideNavigationGroup>
+
+			<SideNavigationItem
+				slot="fixedItems"
+				text="Legal"
+				href="https://www.sap.com/about/legal/impressum.html"
+				target="_blank"
+				icon={home}>
+			</SideNavigationItem>
+		</SideNavigation>
+
+		<div>
+			Content
+		</div>
+	</NavigationLayout>;
+}
 
 describe("Rendering and interaction", () => {
 	beforeEach(() => {
-		cy.mount(sampleCode);
+		cy.mount(sampleCode());
 	});
 
 	it("tests initial rendering", () => {
@@ -92,7 +90,7 @@ describe("Rendering and interaction", () => {
 describe("Navigation Layout on Phone", () => {
 	beforeEach(() => {
 		cy.ui5SimulateDevice("phone");
-		cy.mount(sampleCode);
+		cy.mount(sampleCode());
 	});
 
 	it("tests initial rendering", () => {
