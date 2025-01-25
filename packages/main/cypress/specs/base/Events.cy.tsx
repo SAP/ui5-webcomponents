@@ -1,41 +1,40 @@
-import { html } from "lit";
-import "../../../src/Dialog.js";
-import "../../../src/Select.js";
-import "../../../src/Option.js";
-import "../../../src/Input.js";
-import "../../../src/SuggestionItem.js";
-import "../../../src/MessageStrip.js";
-import "../../../src/MultiComboBox.js";
-import "../../../src/MultiComboBoxItem.js";
-import "../../../src/Panel.js";
-import "../../../src/Button.js";
-import "../../../src/CheckBox.js";
-import "../../../src/Label.js";
-import "../../../src/MenuItem.js";
-import "../../../src/Menu.js";
+import Dialog from "../../../src/Dialog.js";
+import Input from "../../../src/Input.js";
+import SuggestionItem from "../../../src/SuggestionItem.js";
+import MessageStrip from "../../../src/MessageStrip.js";
+import Panel from "../../../src/Panel.js";
+import Label from "../../../src/Label.js";
+import Select from "../../../src/Select.js";
+import Option from "../../../src/Option.js";
+import Button from "../../../src/Button.js";
+import MenuItem from "../../../src/MenuItem.js";
+import Menu from "../../../src/Menu.js";
+import MultiComboBox from "../../../src/MultiComboBox.js";
+import MultiComboBoxItem from "../../../src/MultiComboBoxItem.js";
+import CheckBox from "../../../src/CheckBox.js";
 
 describe("Event bubbling", () => {
 	it("test bubbling events", () => {
-		cy.mount(html`
+		cy.mount(
 			<div id="app">
-				<ui5-dialog id="myDialog" header-text="Dialog">
-					<ui5-input id="myInput" show-suggestions>
-						<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
-						<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
-						<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
-					</ui5-input>
+				<Dialog id="myDialog" headerText="Dialog">
+					<Input id="myInput" showSuggestions={true}>
+						<SuggestionItem text="Cozy"></SuggestionItem>
+						<SuggestionItem text="Compact"></SuggestionItem>
+						<SuggestionItem text="Condensed"></SuggestionItem>
+					</Input>
 
-					<ui5-message-strip id="myMsgStrip">(Information) with default icon and close button:</ui5-message-strip>
+					<MessageStrip id="myMsgStrip">(Information) with default icon and close button:</MessageStrip>
 
-					<ui5-panel id="panel" header-text="Panel">
-						<ui5-label>
+					<Panel id="panel" headerText="Panel">
+						<Label>
 							Lorem ipsum dolor sit amet, tamquam invidunt cu sed, unum regione mel ea, quo ea alia novum. Ne qui illud zril
 							nostrum, vel ea sint dicant postea.
-						</ui5-label>
-					</ui5-panel>
-				</ui5-dialog>
+						</Label>
+					</Panel>
+				</Dialog>
 			</div>
-		`);
+		);
 
 		cy.get("#app")
 			.as("app");
@@ -121,28 +120,28 @@ describe("Event bubbling", () => {
 	});
 
 	it("test non-bubbling events", () => {
-		cy.mount(html`
+		cy.mount(
 			<div id="app">
-				<ui5-dialog id="myDialog" header-text="Dialog">
-					<ui5-select id="mySelect">
-						<ui5-option>Hello</ui5-option>
-						<ui5-option>World</ui5-option>
-						<ui5-option>Hello</ui5-option>
-					</ui5-select>
+				<Dialog id="myDialog" headerText="Dialog">
+					<Select id="mySelect">
+						<Option>Hello</Option>
+						<Option>World</Option>
+						<Option>Hello</Option>
+					</Select>
 
-					<ui5-button id="btnOpen">Open Menu</ui5-button>
-					<ui5-menu id="myMenu" header-text="Menu" opener="btnOpen">
-						<ui5-menu-item text="New File"></ui5-menu-item>
-						<ui5-menu-item text="New Folder"></ui5-menu-item>
-					</ui5-menu>
+					<Button id="btnOpen">Open Menu</Button>
+					<Menu id="myMenu" header-text="Menu" opener="btnOpen">
+						<MenuItem text="New File"></MenuItem>
+						<MenuItem text="New Folder"></MenuItem>
+					</Menu>
 
-					<ui5-multi-combobox id="myMCB">
-						<ui5-mcb-item text="Cosy"></ui5-mcb-item>
-						<ui5-mcb-item selected text="Compact"></ui5-mcb-item>
-					</ui5-multi-combobox>
-				</ui5-dialog>
+					<MultiComboBox id="myMCB">
+						<MultiComboBoxItem text="Cosy"></MultiComboBoxItem>
+						<MultiComboBoxItem selected text="Compact"></MultiComboBoxItem>
+					</MultiComboBox>
+				</Dialog>
 			</div>
-		`);
+		);
 
 		cy.get("#app")
 			.as("app");
@@ -247,12 +246,12 @@ describe("Event bubbling", () => {
 	});
 
 	it("test cancelable events", () => {
-		cy.mount(html`
+		cy.mount(
 			<div id="app">
-				<ui5-checkbox id="cb"></ui5-checkbox>
-				<ui5-checkbox id="cb2"></ui5-checkbox>
+				<CheckBox id="cb"></CheckBox>
+				<CheckBox id="cb2"></CheckBox>
 			</div>
-		`);
+		);
 
 		cy.get("#cb")
 			.as("checkbox");

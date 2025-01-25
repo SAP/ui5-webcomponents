@@ -1,27 +1,32 @@
-import { html } from "lit";
 import "../../src/Toast.js";
 import "../../src/Button.js";
 import "../../src/List.js";
 import "../../src/ListItemStandard.js";
-import type Toast from "../../src/Toast.js";
+import Toast from "../../src/Toast.js";
+import List from "../../src/List.js";
+import ListItemStandard from "../../src/ListItemStandard.js";
 
 describe("Toast - test popover API", () => {
 	it("Should verify the toast has the popover attribute set to manual", () => {
-		cy.mount(html`
-		<ui5-toast id="toast" open placement="TopStart">TopStart</ui5-toast>`);
+		cy.mount(
+			<Toast id="toast" open={true} placement="TopStart">TopStart</Toast>
+		);
 		cy.get<Toast>("[ui5-toast]")
 			.should("have.attr", "popover", "manual")
 			.should("be.visible");
 	});
 
 	it("Toast should stay on top of list after scroll", () => {
-		cy.mount(html`
-		<ui5-toast id="toast" open duration="999999" placement="TopStart">TopStart</ui5-toast>
-		<ui5-list id="list" header-text="List with ListItemStandard" style="opacity: 0.7">
-			<ui5-li additional-text="3">List Item 1</ui5-li>
-			<ui5-li additional-text="2">List Item 2</ui5-li>
-			<ui5-li additional-text="1">List Item 3</ui5-li>
-		</ui5-list>`);
+		cy.mount(
+			<>
+				<Toast id="toast" open duration={999999} placement="TopStart">TopStart</Toast>
+				<List id="list" headerText="List with ListItemStandard" style={{ opacity: "0.7" }}>
+					<ListItemStandard additionalText="3">List Item 1</ListItemStandard>
+					<ListItemStandard additionalText="2">List Item 2</ListItemStandard>
+					<ListItemStandard additionalText="1">List Item 3</ListItemStandard>
+				</List>
+			</>
+		);
 
 		cy.get<Toast>("[ui5-toast]")
 			.should("have.attr", "popover", "manual")

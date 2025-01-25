@@ -2,16 +2,21 @@ import { html } from "lit";
 import "../../../src/Label.js";
 import "../../../src/Input.js";
 import "../../../src/List.js";
+import Label from "../../../src/Label.js";
+import Input from "../../../src/Input.js";
+import List from "../../../src/List.js";
 
 describe("AccessibilityTextsHelper", () => {
 	it("Label-for tests", () => {
-		cy.mount(html`
-			<ui5-input id="myInput" placeholder="input placeholder" class="field"></ui5-input>
-			<ui5-label id="lblDesc1" for="myInput">Desc1</ui5-label>
-			<ui5-label id="lblDesc2" for="myInput">Desc2</ui5-label>
-			<ui5-label id="lblDesc3" for="myInput">Desc3</ui5-label>
-			<label id="lblDesc4" for="myInput">Desc4</label>
-		`);
+		cy.mount(
+			<>
+				<Input id="myInput" placeholder="input placeholder" class="field"></Input>
+				<Label id="lblDesc1" for="myInput">Desc1</Label>
+				<Label id="lblDesc2" for="myInput">Desc2</Label>
+				<Label id="lblDesc3" for="myInput">Desc3</Label>
+				<label id="lblDesc4" for="myInput">Desc4</label>
+			</>
+		);
 
 		// assert
 		cy.get("#myInput")
@@ -34,12 +39,14 @@ describe("AccessibilityTextsHelper", () => {
 	});
 
 	it("Input accessibleNameRef Tests", () => {
-		cy.mount(html`
-            <ui5-label id="lblEnterName1">FirstDesc</ui5-label>
-            <ui5-label id="lblEnterName2">SecondDesc</ui5-label>
-            <ui5-label id="lblEnterName3">ThirdDesc</ui5-label>
-            <ui5-input id="inputEnterName" accessible-name-ref="lblEnterName1 lblEnterName3" placeholder="Enter your name"></ui5-input>
-        `);
+		cy.mount(
+			<>
+				<Label id="lblEnterName1">FirstDesc</Label>
+				<Label id="lblEnterName2">SecondDesc</Label>
+				<Label id="lblEnterName3">ThirdDesc</Label>
+				<Input id="inputEnterName" accessibleNameRef="lblEnterName1 lblEnterName3" placeholder="Enter your name"></Input>
+			</>
+        );
 
 		// assert
 		cy.get("#inputEnterName")
@@ -81,11 +88,13 @@ describe("AccessibilityTextsHelper", () => {
 	});
 
 	it("Input accessibleName and accessibleNameRef Tests", () => {
-		cy.mount(html`
-			<ui5-label id="lblEnterDesc1" for="inputEnterDesc">Label for inputEnterDesc</ui5-label>
-			<ui5-label id="lblEnterDesc3">Label to be added/removed as accessible-name-ref</ui5-label>
-			<ui5-input id="inputEnterDesc" accessible-name="Some description added by accessibleName" placeholder="Enter description"></ui5-input>
-		`);
+		cy.mount(
+			<>
+				<Label id="lblEnterDesc1" for="inputEnterDesc">Label for inputEnterDesc</Label>
+				<Label id="lblEnterDesc3">Label to be added/removed as accessible-name-ref</Label>
+				<Input id="inputEnterDesc" accessibleName="Some description added by accessibleName" placeholder="Enter description"></Input>
+			</>
+		);
 
 		const INITIAL_ACCESSIBLE_NAME = "Some description added by accessibleName";
 		const UPDATED_ACCESSIBLE_NAME = "Another description added by accessibleName";
@@ -158,12 +167,14 @@ describe("AccessibilityTextsHelper", () => {
 	});
 
 	it("Three inputs with same label accessibleNameRef Tests", () => {
-		cy.mount(html`
-			<ui5-label id="lblTestDesc" for="testInput1">Label for testInput1 Desc</ui5-label>
-			<ui5-input id="testInput1" placeholder="Enter description1"></ui5-input>
-			<ui5-input id="testInput2" accessible-name-ref="lblTestDesc" accessible-name="Hello" placeholder="Enter description2"></ui5-input>
-			<ui5-input id="testInput3" accessible-name-ref="lblTestDesc" placeholder="Enter description3"></ui5-input>
-		`);
+		cy.mount(
+			<>
+				<Label id="lblTestDesc" for="testInput1">Label for testInput1 Desc</Label>
+				<Input id="testInput1" placeholder="Enter description1"></Input>
+				<Input id="testInput2" accessibleNameRef="lblTestDesc" accessibleName="Hello" placeholder="Enter description2"></Input>
+				<Input id="testInput3" accessibleNameRef="lblTestDesc" placeholder="Enter description3"></Input>
+			</>
+		);
 
 		const LBL_TEXT_CONTENT = "Label for testInput1 Desc";
 		const LBL_TEXT_CONTENT_UPDATED = "Another description for testing";
@@ -236,14 +247,16 @@ describe("AccessibilityTextsHelper", () => {
 	});
 
 	it("Tests generic html elements with for attribute", () => {
-		cy.mount(html`
-			<label id="elId1" for="myInput2">Desc1</label>
-			<label id="elId2" for="myInput2">Desc2</label>
-			<ui5-input id="myInput2" placeholder="input placeholder"></ui5-input>
-			<div id="elId3" for="myInput2">Desc3</div>
-			<span id="elId4" for="myInput2">Desc4</span>
-			<span id="elId5" for="myInput2">Desc5</span>
-		`);
+		cy.mount(
+			<>
+				<label id="elId1" for="myInput2">Desc1</label>
+				<label id="elId2" for="myInput2">Desc2</label>
+				<Input id="myInput2" placeholder="input placeholder"></Input>
+				<label id="elId3" for="myInput2">Desc3</label>
+				<label id="elId4" for="myInput2">Desc4</label>
+				<label id="elId5" for="myInput2">Desc5</label>
+			</>
+		);
 
 		cy.get("#myInput2")
 			.shadow()
@@ -280,11 +293,13 @@ describe("AccessibilityTextsHelper", () => {
 	});
 
 	it("Tests accessibleDescription and accessibleDescriptionRef with ui5-list", () => {
-		cy.mount(html`
-			<ui5-label id="lblDesc1">Desc1</ui5-label>
-			<ui5-label id="lblDesc2">Desc2</ui5-label>
-			<ui5-list id="list" accessible-description-ref="lblDesc1 lblDesc2" accessible-description="Desc3"></ui5-list>
-		`);
+		cy.mount(
+			<>
+				<Label id="lblDesc1">Desc1</Label>
+				<Label id="lblDesc2">Desc2</Label>
+				<List id="list" accessibleDescriptionRef="lblDesc1 lblDesc2" accessibleDescription="Desc3"></List>
+			</>
+		);
 
 		cy.get("#list")
 			.shadow()

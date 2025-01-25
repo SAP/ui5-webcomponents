@@ -1,34 +1,33 @@
-import { html } from "lit";
-import "../../src/Toolbar.js";
-import "../../src/ToolbarButton.js";
-import "../../src/ToolbarSelect.js";
-import "../../src/ToolbarSelectOption.js";
-import "../../src/ToolbarSeparator.js";
-import "../../src/ToolbarSpacer.js";
-import "../../src/Popover.js";
-import type ToolbarItem from "../../src/ToolbarItem.js";
-import "@ui5/webcomponents-icons/dist/add.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/employee.js";
+import Toolbar from "../../src/Toolbar.js";
+import ToolbarButton from "../../src/ToolbarButton.js";
+import ToolbarItem from "../../src/ToolbarItem.js";
+import ToolbarSelect from "../../src/ToolbarSelect.js";
+import ToolbarSelectOption from "../../src/ToolbarSelectOption.js";
+import ToolbarSeparator from "../../src/ToolbarSeparator.js";
+import ToolbarSpacer from "../../src/ToolbarSpacer.js";
+import Popover from "../../src/Popover.js";
+import add from "@ui5/webcomponents-icons/dist/add.js";
+import decline from "@ui5/webcomponents-icons/dist/decline.js";
+import employee from "@ui5/webcomponents-icons/dist/employee.js";
 
 describe("Toolbar general interaction", () => {
 	it.skip("Should not return null upon calling getDomRef for all direct child items", () => {
-		cy.mount(html`
-			<ui5-toolbar id="otb_standard">
-				<ui5-toolbar-button text="Button 1"></ui5-toolbar-button>
-				<ui5-toolbar-button text="Button 2"></ui5-toolbar-button>
-				<ui5-toolbar-button text="Button 3"></ui5-toolbar-button>
-				<ui5-toolbar-select>
-					<ui5-toolbar-select-option>1</ui5-toolbar-select-option>
-					<ui5-toolbar-select-option>2</ui5-toolbar-select-option>
-					<ui5-toolbar-select-option>3</ui5-toolbar-select-option>
-				</ui5-toolbar-select>
-				<ui5-toolbar-separator></ui5-toolbar-separator>
-				<ui5-toolbar-button text="Button 4"></ui5-toolbar-button>
-				<ui5-toolbar-button text="Button 5"></ui5-toolbar-button>
-				<ui5-toolbar-button text="Button 6"></ui5-toolbar-button>
-			</ui5-toolbar>
-		`);
+		cy.mount(
+			<Toolbar id="otb_standard">
+				<ToolbarButton text="Button 1"></ToolbarButton>
+				<ToolbarButton text="Button 2"></ToolbarButton>
+				<ToolbarButton text="Button 3"></ToolbarButton>
+				<ToolbarSelect>
+					<ToolbarSelectOption>1</ToolbarSelectOption>
+					<ToolbarSelectOption>2</ToolbarSelectOption>
+					<ToolbarSelectOption>3</ToolbarSelectOption>
+				</ToolbarSelect>
+				<ToolbarSeparator></ToolbarSeparator>
+				<ToolbarButton text="Button 4"></ToolbarButton>
+				<ToolbarButton text="Button 5"></ToolbarButton>
+				<ToolbarButton text="Button 6"></ToolbarButton>
+			</Toolbar>
+		);
 
 		cy.get("#otb_standard")
 			.as("toolbar");
@@ -47,17 +46,17 @@ describe("Toolbar general interaction", () => {
 	});
 
 	it("shouldn't have toolbar button as popover opener when there is spacer before last toolbar item", () => {
-		cy.mount(html`
-			<ui5-toolbar id="otb_spacer">
-				<ui5-toolbar-button icon="add" text="Plus" design="Default"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="employee" text="Hire"></ui5-toolbar-button>
-				<ui5-toolbar-separator></ui5-toolbar-separator>
-				<ui5-toolbar-button icon="add" text="Add"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="decline" text="Decline"></ui5-toolbar-button>
-				<ui5-toolbar-spacer></ui5-toolbar-spacer>
-				<ui5-toolbar-button icon="add" text="Append"></ui5-toolbar-button>
-			</ui5-toolbar>
-		`);
+		cy.mount(
+			<Toolbar id="otb_spacer">
+				<ToolbarButton icon={add} text="Plus" design="Default"></ToolbarButton>
+				<ToolbarButton icon={employee} text="Hire"></ToolbarButton>
+				<ToolbarSeparator></ToolbarSeparator>
+				<ToolbarButton icon={add} text="Add"></ToolbarButton>
+				<ToolbarButton icon={decline} text="Decline"></ToolbarButton>
+				<ToolbarSpacer></ToolbarSpacer>
+				<ToolbarButton icon={add} text="Append"></ToolbarButton>
+			</Toolbar>
+		);
 
 		cy.get("#otb_spacer")
 			.as("toolbar");
@@ -72,18 +71,18 @@ describe("Toolbar general interaction", () => {
 	});
 
 	it("shouldn't show overflow button if there is enough space", () => {
-		cy.mount(html`
-			<ui5-toolbar style="width:fit-content;max-width:100%;">
-				<ui5-toolbar-button icon="decline">
-				</ui5-toolbar-button>
+		cy.mount(
+			<Toolbar style={{ width:" fit-content"," max-width": "100%;" }}>
+				<ToolbarButton icon={decline}>
+				</ToolbarButton>
 
-				<ui5-toolbar-button icon="add">
-				</ui5-toolbar-button>
+				<ToolbarButton icon={add}>
+				</ToolbarButton>
 
-				<ui5-toolbar-button icon="employee">
-				</ui5-toolbar-button>
-			</ui5-toolbar>
-		`);
+				<ToolbarButton icon={employee}>
+				</ToolbarButton>
+			</Toolbar>
+		);
 
 		cy.get("[ui5-toolbar]")
 			.as("toolbar");
@@ -98,13 +97,13 @@ describe("Toolbar general interaction", () => {
 	});
 
 	it("shouldn't display the overflow button when initially rendered in a hidden container and later made visible", () => {
-		cy.mount(html`
+		cy.mount(
 			<div id="otb_hidden_container" style="display:none;">
-				<ui5-toolbar id="otb_hidden">
-					<ui5-toolbar-button icon="add" text="Append"></ui5-toolbar-button>
-				</ui5-toolbar>
+				<Toolbar id="otb_hidden">
+					<ToolbarButton icon={add} text="Append"></ToolbarButton>
+				</Toolbar>
 			</div>
-		`);
+		);
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(500);
@@ -124,16 +123,16 @@ describe("Toolbar general interaction", () => {
 	});
 
 	it("Should call event handlers on abstract item", () => {
-		cy.mount(html`
-			<ui5-toolbar>
-				<ui5-toolbar-button text="Button 1"></ui5-toolbar-button>
-				<ui5-toolbar-select>
-					<ui5-toolbar-select-option>1</ui5-toolbar-select-option>
-					<ui5-toolbar-select-option selected>2</ui5-toolbar-select-option>
-					<ui5-toolbar-select-option>3</ui5-toolbar-select-option>
-				</ui5-toolbar-select>
-			</ui5-toolbar>
-		`);
+		cy.mount(
+			<Toolbar>
+				<ToolbarButton text="Button 1"></ToolbarButton>
+				<ToolbarSelect>
+					<ToolbarSelectOption>1</ToolbarSelectOption>
+					<ToolbarSelectOption selected={true}>2</ToolbarSelectOption>
+					<ToolbarSelectOption>3</ToolbarSelectOption>
+				</ToolbarSelect>
+			</Toolbar>
+		);
 
 		cy.get("ui5-toolbar-button[text='Button 1']")
 			.then(button => {
