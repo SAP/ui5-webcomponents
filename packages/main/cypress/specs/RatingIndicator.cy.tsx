@@ -1,12 +1,11 @@
-import { html } from "lit";
-import "../../src/RatingIndicator.js";
+import RatingIndicator from "../../src/RatingIndicator.js";
 
 describe("RatingIndicator", () => {
 	describe("Half Icon appearance", () => {
 		it("Half icon should be filled when rating indicator is disabled", () => {
 			const attributeValue = "favorite";
 
-			cy.mount(html`<ui5-rating-indicator value="2.5" disabled></ui5-rating-indicator>`);
+			cy.mount(<RatingIndicator value={2.5} disabled={true}></RatingIndicator>);
 
 			cy.get("[ui5-rating-indicator]")
 				.shadow()
@@ -17,7 +16,7 @@ describe("RatingIndicator", () => {
 		it("Half icon should be filled when rating indicator is readonly", () => {
 			const attributeValue = "favorite";
 
-			cy.mount(html`<ui5-rating-indicator value="2.5" readonly></ui5-rating-indicator>`);
+			cy.mount(<RatingIndicator value={2.5} readonly={true}></RatingIndicator>);
 
 			cy.get("[ui5-rating-indicator]")
 				.shadow()
@@ -28,7 +27,7 @@ describe("RatingIndicator", () => {
 		it("Half icon should be border only when rating indicator is regular", () => {
 			const attributeValue = "unfavorite";
 
-			cy.mount(html`<ui5-rating-indicator value="2.5"></ui5-rating-indicator>`);
+			cy.mount(<RatingIndicator value={2.5}></RatingIndicator>);
 
 			cy.get("[ui5-rating-indicator]")
 				.shadow()
@@ -39,7 +38,7 @@ describe("RatingIndicator", () => {
 
 	describe("RatingIndicator Sizes", () => {
 		it("should apply correct size and spacing for size 'S'", () => {
-			cy.mount(html`<ui5-rating-indicator size="S" value="3"></ui5-rating-indicator>`);
+			cy.mount(<RatingIndicator size="S" value={3}></RatingIndicator>);
 
 			cy.get("ui5-rating-indicator")
 				.shadow()
@@ -48,7 +47,7 @@ describe("RatingIndicator", () => {
 				.should("have.css", "margin-right", "3px");
 		});
 		it("should apply correct size and spacing for size 'L' readonly", () => {
-			cy.mount(html`<ui5-rating-indicator size="L" value="3.5" readonly></ui5-rating-indicator>`);
+			cy.mount(<RatingIndicator size="L" value={3.5} readonly={true}></RatingIndicator>);
 
 			cy.get("ui5-rating-indicator")
 				.shadow()
@@ -66,11 +65,13 @@ describe("RatingIndicator", () => {
 
 	describe("RatingIndicator Accessibility", () => {
 		it("should be able to tab after and before readonly element", () => {
-			cy.mount(html`
-				<button>Before</button>
-				<ui5-rating-indicator value="3" readonly></ui5-rating-indicator>
-				<button>after</button>
-			`);
+			cy.mount(
+				<>
+					<button>Before</button>
+					<RatingIndicator value={3} readonly={true}></RatingIndicator>
+					<button>after</button>
+				</>
+			);
 
 			cy.get("button:first").realClick();
 			cy.focused().should("contain", "Before");

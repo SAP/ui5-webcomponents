@@ -1,10 +1,10 @@
-import { html } from "lit";
-
-import "../../src/Table.js";
-import "../../src/TableHeaderRow.js";
-import "../../src/TableCell.js";
-import "../../src/TableRow.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
+import TableHeaderRow from "../../src/TableHeaderRow.js";
+import TableHeaderCell from "../../src/TableHeaderCell.js";
+import Table from "../../src/Table.js";
+import TableRow from "../../src/TableRow.js";
+import TableCell from "../../src/TableCell.js";
+import Label from "../../src/Label.js";
 
 describe("API & Events", () => {
 	function dragTo(selectors: { source: string, destination: string }, position: MovePlacement, expectMove = true, onPrevented = false) {
@@ -71,24 +71,24 @@ describe("API & Events", () => {
 
 	beforeEach(() => {
 		cy.viewport(1920, 1080);
-		cy.mount(html`
-			<ui5-table id="table">
-				<ui5-table-header-row slot="headerRow">
-					<ui5-table-header-cell><span>ColumnA</span></ui5-table-header-cell>
-					<ui5-table-header-cell><span>ColumnB</span></ui5-table-header-cell>
-				</ui5-table-header-row>
-				${Array.from({ length: 10 }).map((_, index) => html`
-					<ui5-table-row row-key="${index}" movable>
-						<ui5-table-cell><ui5-label>Cell A</ui5-label></ui5-table-cell>
-						<ui5-table-cell><ui5-label>Cell B</ui5-label></ui5-table-cell>
-					</ui5-table-row>
-				`)}
-				<ui5-table-row row-key="10">
-						<ui5-table-cell><ui5-label>Cell A</ui5-label></ui5-table-cell>
-						<ui5-table-cell><ui5-label>Cell B</ui5-label></ui5-table-cell>
-				</ui5-table-row>
-			</ui5-table>
-		`);
+		cy.mount(
+			<Table id="table">
+				<TableHeaderRow slot="headerRow">
+					<TableHeaderCell><span>ColumnA</span></TableHeaderCell>
+					<TableHeaderCell><span>ColumnB</span></TableHeaderCell>
+				</TableHeaderRow>
+				${Array.from({ length: 10 }).map((_, index) =>
+					<TableRow rowKey={`${index}`} movable={true}>
+						<TableCell><Label>Cell A</Label></TableCell>
+						<TableCell><Label>Cell B</Label></TableCell>
+					</TableRow>
+				)}
+				<TableRow rowKey="10">
+					<TableCell><Label>Cell A</Label></TableCell>
+					<TableCell><Label>Cell B</Label></TableCell>
+				</TableRow>
+			</Table>
+		);
 	});
 
 	it("tests if draggable=true is set", () => {
