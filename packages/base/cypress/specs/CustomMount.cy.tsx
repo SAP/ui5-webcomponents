@@ -2,7 +2,7 @@ import { getAnimationMode } from "../../src/config/AnimationMode.js";
 
 describe("Custom mount", () => {
 	it("mount", () => {
-		cy.mount(`<button>Test</button>`);
+		cy.mount(<button>Test</button>);
 
 		cy.get("button")
 			.should("exist")
@@ -12,7 +12,7 @@ describe("Custom mount", () => {
 	it("mount with configuration", () => {
 		const configurationObject = { "animationMode": "basic" };
 
-		cy.mount(`<button>Test with configuration</button>`, {
+		cy.mount(<button>Test with configuration</button>, {
 			ui5Configuration: configurationObject,
 		});
 
