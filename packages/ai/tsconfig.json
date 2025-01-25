@@ -6,6 +6,7 @@
 	],
 	"compilerOptions": {
 		"outDir": "dist",
+		"composite": true,
 		"experimentalDecorators": true,
 		"verbatimModuleSyntax": true,
 		"module": "NodeNext",
