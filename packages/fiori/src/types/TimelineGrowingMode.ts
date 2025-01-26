@@ -1,7 +1,7 @@
 enum TimeLineGrowingMode {
 	/**
 	 * Component `load-more` is fired
-	 * upon pressing a "More" button at the bottom.
+	 * upon pressing a "More" button at the end.
 	 * @public
 	 */
 	Button = "Button",

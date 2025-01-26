@@ -14,6 +14,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
+import TimelineItem from "./TimelineItem.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
@@ -134,7 +135,7 @@ class Timeline extends UI5Element {
 	 *
 	 * `Button` - Displays a button at the end of the Timeline, which when pressed triggers the `load-more` event.
 	 *
-	 * `Scroll` -Triggers the `load-more` event when the user scrolls to the bottom of the Timeline.
+	 * `Scroll` -Triggers the `load-more` event when the user scrolls to the end of the Timeline.
 	 *
 	 * `None` (default) - The growing functionality is off.
 	 *
@@ -204,7 +205,7 @@ class Timeline extends UI5Element {
 
 	onAfterRendering() {
 		if (this.growsOnScroll) {
-			this.observeTimeLineEnd();
+			this.observeTimelineEnd();
 		} else if (this.timeLineEndObserved) {
 			this.unobserveTimelineEnd();
 		}
@@ -216,17 +217,10 @@ class Timeline extends UI5Element {
 		this.unobserveTimelineEnd();
 	}
 
-	observeTimeLineEnd() {
-		if (!this.timeLineEndObserved) {
-			this.getIntersectionObserver().observe(this.timelineEndMarker);
-			this.timeLineEndObserved = true;
-		}
-	}
-
 	async observeTimelineEnd() {
 		if (!this.timeLineEndObserved) {
 			await renderFinished();
-			this.getIntersectionObserver().observe(this.timelineEndDOM!);
+			this.getIntersectionObserver().observe(this.timelineEndMarker!);
 			this.timeLineEndObserved = true;
 		}
 	}
@@ -237,10 +231,6 @@ class Timeline extends UI5Element {
 			this.growingIntersectionObserver = null;
 			this.timeLineEndObserved = false;
 		}
-	}
-
-	get timelineEndDOM() {
-		return this.shadowRoot!.querySelector(".ui5-timeline-end-marker");
 	}
 
 	getIntersectionObserver(): IntersectionObserver {

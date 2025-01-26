@@ -112,30 +112,23 @@
 		const timelineVertical = document.getElementById("timelineVertical");
 		const timelineHorizontal = document.getElementById("timelineHorizontal");
 
-		timelineVertical.addEventListener("load-more", addElement);
-		timelineHorizontal.addEventListener("load-more", addElement);
+		timelineVertical.addEventListener("load-more", () => addElement(timelineVertical));
+		timelineHorizontal.addEventListener("load-more", () => addElement(timelineHorizontal));
 
-		function addElement(e) {
-			this.loading = true;
+		function addElement(timeline) {
+			timeline.loading = true;
 
 			 setTimeout(() => {
-			const newGroup = document.createElement("ui5-timeline-group-item");
-
-			newGroup.setAttribute("group-name", "test");
-
 				for (let i = 0; i < 10; i++) {
-					newGroup.innerHTML += `
-						<ui5-timeline-item title-text="Review Meeting" subtitle-text="26.02.2017 09:30" icon="meeting-room">
-							<ui5-avatar-group type="Group" avatar-size="S">
-								<ui5-avatar initials="LK"></ui5-avatar>
-								<ui5-avatar initials="AW"></ui5-avatar>
-								<ui5-avatar initials="BR"></ui5-avatar>
-							</ui5-avatar-group>
-							<div>Review project deliverables</div>
-						</ui5-timeline-item>
-					`;
-					this.appendChild(newGroup);
-					this.loading = false;
+					const item = document.createElement("ui5-timeline-item");
+					item.setAttribute("title-text", "Video Conference Call");
+					item.setAttribute("subtitle-text", "31.01.2018 (12:00 - 13:00)");
+					item.setAttribute("icon", "calendar");
+					item.setAttribute("name", "tanislava Baltova");
+					item.textContent = "Online meeting";
+
+					timeline.appendChild(item);
+					timeline.loading = false;
 				}
 
 			}, 1500);
