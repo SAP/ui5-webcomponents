@@ -75,7 +75,7 @@ class ButtonState extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	splitMode = false;
+	showArrowButton = false;
 }
 
 ButtonState.define();
