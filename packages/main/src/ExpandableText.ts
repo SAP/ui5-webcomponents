@@ -2,13 +2,11 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import Text from "./Text.js";
-import Link, { type LinkAccessibilityAttributes } from "./Link.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import Button from "./Button.js";
+import type { LinkAccessibilityAttributes } from "./Link.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
 import ExpandableTextOverflowMode from "./types/ExpandableTextOverflowMode.js";
 import type TextEmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 import {
@@ -20,7 +18,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import ExpandableTextTemplate from "./generated/templates/ExpandableTextTemplate.lit.js";
+import ExpandableTextTemplate from "./ExpandableTextTemplate.js";
 
 // Styles
 import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
@@ -52,25 +50,19 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @since 2.5.0
+ * @since 2.6.0
  */
 @customElement({
 	tag: "ui5-expandable-text",
-	renderer: litRender,
+	renderer: jsxRender,
 	styles: ExpandableTextCss,
 	template: ExpandableTextTemplate,
-	dependencies: [
-		Text,
-		Link,
-		ResponsivePopover,
-		Button,
-	],
 })
 class ExpandableText extends UI5Element {
 	/**
 	 * Text of the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -90,7 +82,7 @@ class ExpandableText extends UI5Element {
 	 * @public
 	 */
 	@property()
-	overflowMode: `${ExpandableTextOverflowMode}` = ExpandableTextOverflowMode.InPlace
+	overflowMode: `${ExpandableTextOverflowMode}` = "InPlace"
 
 	/**
 	 * Specifies if an empty indicator should be displayed when there is no text.
@@ -111,7 +103,7 @@ class ExpandableText extends UI5Element {
 			return this.shadowRoot?.querySelector("[ui5-responsive-popover]") as HTMLElement;
 		}
 
-		return this.shadowRoot?.querySelector("ui5-link") as HTMLElement;
+		return this.shadowRoot?.querySelector("[ui5-link]") as HTMLElement;
 	}
 
 	get _displayedText() {
@@ -164,7 +156,7 @@ class ExpandableText extends UI5Element {
 			return this._expanded ? ExpandableText.i18nBundle.getText(EXPANDABLE_TEXT_SHOW_LESS_POPOVER_ARIA_LABEL) : ExpandableText.i18nBundle.getText(EXPANDABLE_TEXT_SHOW_MORE_POPOVER_ARIA_LABEL);
 		}
 
-		return null;
+		return undefined;
 	}
 
 	_handlePopoverClose() {
@@ -185,7 +177,7 @@ class ExpandableText extends UI5Element {
 		}
 	}
 
-	_handleCloseButtonClick(e: CustomEvent) {
+	_handleCloseButtonClick(e: MouseEvent) {
 		this._expanded = false;
 		e.stopPropagation();
 	}

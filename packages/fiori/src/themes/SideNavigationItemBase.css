@@ -28,6 +28,10 @@
 	display: none;
 }
 
+:host([design="Action"]) {
+	color: var(--sapButton_TextColor);
+}
+
 .ui5-sn-item:focus {
 	outline: none;
 }
@@ -79,7 +83,7 @@ and there is an additional border that appears on hover. */
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected {
-	background: var(--sapList_SelectionBackgroundColor);
+	background: var(--_ui5_side_navigation_collapsed_selected_item_background);
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled):active .ui5-sn-item-text,
@@ -93,7 +97,7 @@ and there is an additional border that appears on hover. */
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:hover {
-	background: var(--sapList_Hover_SelectionBackground);
+	background: var(--_ui5_side_navigation_collapsed_selected_item_background_hover);
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
@@ -103,10 +107,6 @@ and there is an additional border that appears on hover. */
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected.ui5-sn-item-active {
 	background: var(--sapList_Active_Background);
-}
-
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected {
-	background: var(--_ui5_side_navigation_collapsed_selected_item_background);
 }
 
 .ui5-sn-item::before {
@@ -138,8 +138,12 @@ and there is an additional border that appears on hover. */
 
 .ui5-sn-item-icon {
 	color: var(--_ui5_side_navigation_icon_color);
-	height: var(--_ui5_side_navigation_icon_font_size);
-	min-width: var(--_ui5_side_navigation_group_icon_width);
+	padding-inline-start: 1rem;
+	padding-inline-end: var(--_ui5_side_navigation_icon_padding_inline_end);
+}
+
+:host([design="Action"]) .ui5-sn-item-icon {
+	color: var(--sapButton_TextColor);
 }
 
 .ui5-sn-item-toggle-icon,
@@ -149,28 +153,39 @@ and there is an additional border that appears on hover. */
 	height: 0.875rem;
 }
 
+:host(:not([side-nav-collapsed])) .ui5-sn-item-toggle-icon,
 .ui5-sn-item-external-link-icon {
-	color: var(--_ui5_side_navigation_external_link_icon_color);
+	min-width: var(--_ui5_side_navigation_expand_icon_width);
 }
 
-.ui5-sn-item-fixed .ui5-sn-item-toggle-icon,
-.ui5-sn-item-fixed .ui5-sn-item-external-link-icon {
+:host([in-popover]) .ui5-sn-item-toggle-icon {
 	display: none;
+	min-width: var(--_ui5_side_navigation_expand_icon_width);
 }
 
 :host([side-nav-collapsed]) .ui5-sn-item {
 	justify-content: center;
 }
 
+:host([slot="fixedItems"]:not(side-nav-collapsed)) .ui5-sn-item.ui5-sn-item-level1 {
+	margin-top: var(--_ui5_side_navigation_first_fixed_item_margin_top); /* space for the focus*/
+ }
+
 :host([side-nav-collapsed]) .ui5-sn-item-icon {
-	padding: var(--_ui5_side_navigation_item_collapsed_icon_padding);
+	padding-inline-end: 1rem;
 }
 
 :host([side-nav-collapsed]) .ui5-sn-item-text {
 	display: none;
 }
 
-:host([side-nav-collapsed]) .ui5-sn-item-toggle-icon,
+ :host([side-nav-collapsed]) .ui5-sn-item-toggle-icon {
+	display: var(--_ui5_side_navigation_item_expand_icon_visibility);
+	font-size: 0.75rem;
+	position: absolute;
+	inset-inline-end: var(--_ui5_side_navigation_item_expand_icon_right);
+}
+
 :host([side-nav-collapsed]) .ui5-sn-item-external-link-icon {
 	display: none;
 }
@@ -180,6 +195,7 @@ and there is an additional border that appears on hover. */
 	width: var(--_ui5_side_navigation_item_collapsed_hover_focus_width);
 	box-shadow: var(--_ui5_side_navigation_box_shadow);
 	z-index: 1;
+	padding-inline-end: var(--_ui5_side_navigation_item_collapsed_padding_right);
 }
 
 :host([side-nav-collapsed]) .ui5-sn-item.ui5-sn-item-selected:hover,
@@ -203,10 +219,11 @@ and there is an additional border that appears on hover. */
 
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon {
-	display: var(--_ui5_side_navigation_item_collapsed_hover_focus_display);
+	left: var(--_ui5_side_navigation_item_expand_icon_hover_left);
+	right: var(--_ui5_side_navigation_item_expand_icon_hover_right);
 }
 
-.ui5-sn-item[aria-expanded=false] + .ui5-sn-item-ul {
+.ui5-sn-item[aria-expanded=false] ~  .ui5-sn-item-ul {
 	display: none;
 }
 
@@ -230,27 +247,6 @@ and there is an additional border that appears on hover. */
 	bottom: 0.125rem;
 }
 
-.ui5-sn-item-selection-icon {
-	display: none;
-	height: 0.5rem;
-	width: 0.5rem;
-	margin-inline: 0.5rem;
-	color: var(--sapList_SelectionBorderColor);
-}
-
-.ui5-sn-item[aria-expanded] .ui5-sn-item-selection-icon {
-	margin-inline: 0.5rem 0;
-}
-
-.ui5-sn-item-selected .ui5-sn-item-selection-icon {
-	display: var(--_ui5_side_navigation_selection_indicator_display);
-}
-
-:host([in-popover]) .ui5-sn-item {
-	padding: var(--_ui5_side_navigation_popup_item_padding);
-	width: auto;
-}
-
 .ui5-sn-item-separator {
-	min-height: 0.75rem;
+	min-height: 0.5rem;
 }

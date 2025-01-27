@@ -25,8 +25,10 @@ import "@ui5/webcomponents-icons/dist/document-text.js";
 import "@ui5/webcomponents-icons/dist/compare.js";
 import "@ui5/webcomponents-icons/dist/locked.js";
 
+import NavigationLayoutMode from "@ui5/webcomponents-fiori/dist/types/NavigationLayoutMode.js";
+
 document.querySelector("#startButton").addEventListener("click", function (event) {
-	nl1.sideCollapsed = !nl1.sideCollapsed;
+	nl1.mode = nl1.isSideCollapsed() ? NavigationLayoutMode.Expanded : NavigationLayoutMode.Collapsed;
 });
 
 document.querySelector("#sn1").addEventListener("selection-change", function (event) {
@@ -34,9 +36,11 @@ document.querySelector("#sn1").addEventListener("selection-change", function (ev
 		return;
 	}
 
-	const contentItems = document.querySelectorAll(".contentItem");
+	const contentItems = document.querySelectorAll(".contentItem"),
+		divId = "cont" + event.detail.item.getAttribute("href").replace("#", "").charAt(0).toUpperCase() + event.detail.item.getAttribute("href").replace("#", "").slice(1);
+
 	contentItems.forEach(item => {
 		item.classList.remove("contentItemVisible");
 	});
-	document.getElementById(event.detail.item.getAttribute("href").replace("#", "")).classList.add("contentItemVisible");
+	document.getElementById(divId)?.classList.add("contentItemVisible");
 });

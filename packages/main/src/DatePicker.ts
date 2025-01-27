@@ -29,11 +29,10 @@ import {
 	isF6Next,
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
+
 import {
 	DATEPICKER_OPEN_ICON_TITLE,
 	DATEPICKER_DATE_DESCRIPTION,
@@ -42,16 +41,15 @@ import {
 	DATEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
-import Icon from "./Icon.js";
-import Button from "./Button.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import Calendar from "./Calendar.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
+import type Calendar from "./Calendar.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
-import CalendarDateComponent from "./CalendarDate.js";
-import Input from "./Input.js";
+import type CalendarSelectionMode from "./types/CalendarSelectionMode.js";
+import type Input from "./Input.js";
+import type { InputAccInfo } from "./Input.js";
 import InputType from "./types/InputType.js";
 import IconMode from "./types/IconMode.js";
-import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
+import DatePickerTemplate from "./DatePickerTemplate.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -75,6 +73,8 @@ type DatePickerInputEventDetail = {
 	value: string,
 	valid: boolean,
 }
+
+type Picker = "day" | "month" | "year";
 
 /**
  * @class
@@ -166,14 +166,6 @@ type DatePickerInputEventDetail = {
 		datePickerCss,
 		ResponsivePopoverCommonCss,
 		datePickerPopoverCss,
-	],
-	dependencies: [
-		Icon,
-		ResponsivePopover,
-		Calendar,
-		CalendarDateComponent,
-		Input,
-		Button,
 	],
 })
 /**
@@ -337,7 +329,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	_respPopoverConfig?: object;
 
 	@property()
-	_calendarCurrentPicker = "day";
+	_calendarCurrentPicker: Picker = "day";
 
 	liveValue?: string;
 
@@ -420,7 +412,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * Override in derivatives to change calendar selection mode
 	 * @protected
 	 */
-	get _calendarSelectionMode(): string {
+	get _calendarSelectionMode(): `${CalendarSelectionMode}` {
 		return "Single";
 	}
 
@@ -583,7 +575,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * The ui5-input "input" event handler - fire input even when the user types
 	 * @protected
 	 */
-	_onInputInput(e: KeyboardEvent) {
+	_onInputInput(e: Event) {
 		this._updateValueAndFireEvents((e.target as DatePicker).value, false, ["input"], false);
 	}
 
@@ -679,10 +671,10 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return this.phone;
 	}
 
-	get accInfo() {
+	get accInfo(): InputAccInfo {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
-			"ariaHasPopup": AriaHasPopup.Grid.toLowerCase(),
+			"ariaHasPopup": "grid",
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
@@ -717,7 +709,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 */
 	get firstPicker() {
 		const calendarPickerMode = this._calendarPickersMode;
-		let firstPicker = "day";
+		let firstPicker: Picker = "day";
 
 		if (calendarPickerMode === CalendarPickersMode.YEAR) {
 			firstPicker = "year";

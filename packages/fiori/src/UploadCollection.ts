@@ -4,18 +4,11 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
-import List from "@ui5/webcomponents/dist/List.js";
-import ListItemCustom from "@ui5/webcomponents/dist/ListItemCustom.js";
 import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
-import IllustratedMessage from "./IllustratedMessage.js";
 import "./illustrations/Tent.js";
 import type UploadCollectionItem from "./UploadCollectionItem.js";
-import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
 import "@ui5/webcomponents-icons/dist/document.js";
 import {
 	UPLOADCOLLECTION_NO_DATA_TEXT,
@@ -34,7 +27,7 @@ import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
 import type UploadCollectionSelectionMode from "./types/UploadCollectionSelectionMode.js";
 
 // Template
-import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemplate.lit.js";
+import UploadCollectionTemplate from "./UploadCollectionTemplate.js";
 
 // Styles
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
@@ -66,17 +59,9 @@ type UploadCollectionItemDeleteEventDetail = {
 @customElement({
 	tag: "ui5-upload-collection",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: UploadCollectionCss,
 	template: UploadCollectionTemplate,
-	dependencies: [
-		Icon,
-		Label,
-		List,
-		ListItemCustom,
-		Title,
-		IllustratedMessage,
-	],
 })
 /**
  * Fired when an element is dropped inside the drag and drop overlay.
@@ -272,15 +257,6 @@ class UploadCollection extends UI5Element {
 			content: {
 				"ui5-uc-content": true,
 				"ui5-uc-content-no-data": this.items.length === 0,
-			},
-			dndOverlay: {
-				"uc-dnd-overlay": true,
-				"uc-drag-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drag,
-				"uc-drop-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drop,
-			},
-			noFiles: {
-				"uc-no-files": true,
-				"uc-no-files-dnd-overlay": this._showDndOverlay,
 			},
 		};
 	}

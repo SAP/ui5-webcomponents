@@ -1,5 +1,6 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
@@ -9,7 +10,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import ListItem from "./ListItem.js";
-import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import {
@@ -19,7 +19,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import TreeItemBaseTemplate from "./generated/templates/TreeItemBaseTemplate.lit.js";
+import TreeItemBaseTemplate from "./TreeItemBaseTemplate.js";
 
 // Styles
 import treeItemCss from "./generated/themes/TreeItem.css.js";
@@ -41,14 +41,11 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  */
 @customElement({
 	languageAware: true,
+	renderer: jsxRenderer,
 	template: TreeItemBaseTemplate,
 	styles: [
 		ListItem.styles,
 		treeItemCss,
-	],
-	dependencies: [
-		...ListItem.dependencies,
-		Icon,
 	],
 })
 /**
@@ -257,7 +254,7 @@ class TreeItemBase extends ListItem {
 
 	get _accInfo() {
 		const accInfoSettings = {
-			role: "treeitem",
+			role: "treeitem" as const,
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
 			ariaLevel: this.level,
 			posinset: this.forcedPosinset,

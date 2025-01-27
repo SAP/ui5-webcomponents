@@ -475,6 +475,19 @@ describe("Initially opened", () => {
 	it("test initial focus", async () => {
 		assert.ok(await browser.$("#popoverBtn").matches(":focus"), "initial focus is correct");
 	});
+
+	it("test _open", async () => {
+
+		const popoverOpen = await browser.$("#popoverOpen");
+		const popover1 = await browser.$("#popover1");
+		const popover2 = await browser.$("#popover2");
+		const popoverCont1 = await browser.$("#popoverCont1");
+
+		assert.ok(await popoverOpen.getProperty("_opened"), "_opened is set");
+		assert.ok(await popover1.getProperty("_opened"), "_opened is set");
+		assert.ok(await popover2.getProperty("_opened"), "_opened is set");
+		assert.ok(await popoverCont1.getProperty("_opened"), "_opened is set");
+	});
 });
 
 describe("Acc", () => {

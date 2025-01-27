@@ -9,18 +9,18 @@ import {
 	DATERANGE_DESCRIPTION,
 	DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
-import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
+import DateRangePickerTemplate from "./DateRangePickerTemplate.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
-import CalendarDateRange from "./CalendarDateRange.js";
 
 import type {
 	DatePickerChangeEventDetail as DateRangePickerChangeEventDetail,
 	DatePickerInputEventDetail as DateRangePickerInputEventDetail,
 } from "./DatePicker.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
+import type CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
 const DEFAULT_DELIMITER = "-";
 
@@ -60,7 +60,6 @@ const DEFAULT_DELIMITER = "-";
 	tag: "ui5-daterange-picker",
 	styles: [DatePicker.styles, DateRangePickerCss],
 	template: DateRangePickerTemplate,
-	dependencies: [...DatePicker.dependencies, CalendarDateRange],
 })
 class DateRangePicker extends DatePicker implements IFormInputElement {
 	 /**
@@ -136,7 +135,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * Required by DatePicker.js
 	 * @override
 	 */
-	get _calendarSelectionMode() {
+	get _calendarSelectionMode(): `${CalendarSelectionMode}` {
 		return "Range";
 	}
 

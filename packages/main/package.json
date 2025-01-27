@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents",
-  "version": "2.5.0",
+  "version": "2.7.0-rc.1",
   "description": "UI5 Web Components: webcomponents.main",
   "ui5": {
     "webComponentsPackage": true
@@ -31,6 +31,7 @@
     "test:suite-2": "wc-dev test-suite-2",
     "test:cypress": "nps test-cy-ci",
     "test:cypress:open": "nps test-cy-open",
+    "test:vitest": "yarn vitest run",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "tsc -b"
   },
@@ -50,16 +51,18 @@
     "directory": "packages/main"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "2.5.0",
-    "@ui5/webcomponents-icons": "2.5.0",
-    "@ui5/webcomponents-icons-business-suite": "2.5.0",
-    "@ui5/webcomponents-icons-tnt": "2.5.0",
-    "@ui5/webcomponents-localization": "2.5.0",
-    "@ui5/webcomponents-theming": "2.5.0"
+    "@ui5/webcomponents-base": "2.7.0-rc.1",
+    "@ui5/webcomponents-icons": "2.7.0-rc.1",
+    "@ui5/webcomponents-icons-business-suite": "2.7.0-rc.1",
+    "@ui5/webcomponents-icons-tnt": "2.7.0-rc.1",
+    "@ui5/webcomponents-localization": "2.7.0-rc.1",
+    "@ui5/webcomponents-theming": "2.7.0-rc.1"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "2.5.0",
+    "@ui5/webcomponents-tools": "2.7.0-rc.1",
     "chromedriver": "^131.0.0",
-    "lit": "^2.0.0"
+    "jsdom": "^26.0.0",
+    "lit": "^2.0.0",
+    "vitest": "^3.0.2"
   }
 }

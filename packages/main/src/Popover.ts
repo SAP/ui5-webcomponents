@@ -1,3 +1,4 @@
+import { instanceOfUI5Element } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -5,21 +6,17 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
-import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
-import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
-
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import Popup from "./Popup.js";
-import type { PopupBeforeCloseEventDetail as PopoverBeforeCloseEventDetail } from "./Popup.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
 
 // Template
-import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
+import PopoverTemplate from "./PopoverTemplate.js";
 // Styles
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
@@ -89,6 +86,7 @@ type CalculatedPlacement = {
 	template: PopoverTemplate,
 })
 class Popover extends Popup {
+	eventDetails!: Popup["eventDetails"];
 	/**
 	 * Defines the header text.
 	 *
@@ -297,8 +295,12 @@ class Popover extends Popup {
 	}
 
 	getOpenerHTMLElement(opener: HTMLElement | string | undefined): HTMLElement | null | undefined {
-		if (opener === undefined || opener instanceof HTMLElement) {
+		if (opener === undefined) {
 			return opener;
+		}
+
+		if (opener instanceof HTMLElement) {
+			return this._isUI5AbstractElement(opener) ? opener.getFocusDomRef() : opener;
 		}
 
 		let rootNode = this.getRootNode();
@@ -313,8 +315,8 @@ class Popover extends Popup {
 			openerHTMLElement = document.getElementById(opener);
 		}
 
-		if (openerHTMLElement && this._isUI5Element(openerHTMLElement)) {
-			return openerHTMLElement.getFocusDomRef();
+		if (openerHTMLElement) {
+			return this._isUI5AbstractElement(openerHTMLElement) ? openerHTMLElement.getFocusDomRef() : openerHTMLElement;
 		}
 
 		return openerHTMLElement;
@@ -377,7 +379,7 @@ class Popover extends Popup {
 
 		const opener = this.getOpenerHTMLElement(this.opener);
 
-		if (opener && this._isUI5Element(opener) && !opener.getDomRef()) {
+		if (opener && instanceOfUI5Element(opener) && !opener.getDomRef()) {
 			return;
 		}
 
@@ -470,20 +472,6 @@ class Popover extends Popup {
 		return top + (Number.parseInt(this.style.top || "0") - actualTop);
 	}
 
-	_getContainingBlockClientLocation() {
-		let parentElement = getParentElement(this);
-
-		while (parentElement) {
-			if (isElementContainingBlock(parentElement)) {
-				return parentElement.getBoundingClientRect();
-			}
-
-			parentElement = getParentElement(parentElement);
-		}
-
-		return { left: 0, top: 0 };
-	}
-
 	getPopoverSize(): PopoverSize {
 		const rect = this.getBoundingClientRect(),
 			width = rect.width,
@@ -499,8 +487,8 @@ class Popover extends Popup {
 		});
 	}
 
-	_isUI5Element(el: HTMLElement): el is UI5Element {
-		return "isUI5Element" in el;
+	_isUI5AbstractElement(el: HTMLElement): el is UI5Element {
+		return instanceOfUI5Element(el) && el.isUI5AbstractElement;
 	}
 
 	get arrowDOM() {
@@ -849,7 +837,3 @@ Popover.define();
 export default Popover;
 
 export { instanceOfPopover };
-
-export type {
-	PopoverBeforeCloseEventDetail,
-};

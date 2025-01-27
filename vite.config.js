@@ -4,6 +4,7 @@ import customHotUpdate from "@ui5/webcomponents-tools/lib/dev-server/custom-hot-
 import path, { dirname, join, resolve } from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { checker } from 'vite-plugin-checker';
+import istanbul from 'vite-plugin-istanbul';
 
 // use after path.join and path.resolve as they turn paths to windows separators and comparisons and replacements stop working
 const toPosixPath = (pathStr) => {
@@ -11,6 +12,12 @@ const toPosixPath = (pathStr) => {
 }
 
 const customResolver = (id, source, options) => {
+	// jsx-dev-runtime should be resolved as a .ts file so all of its imports are also fetched as .ts files
+	if (id === "@ui5/webcomponents-base/jsx-dev-runtime") {
+		const importerRoot = source.replace(/packages\/.*/, "packages");
+		const resolved = join(importerRoot, "base/src", "jsx-dev-runtime.ts");
+		return resolved;
+	}
 	const isIconImporter = source.includes("packages/icons") || source.includes("packages/icons-tnt/") || source.includes("packages/icons-business-suite/")
 	if (isIconImporter && id.startsWith("@ui5/webcomponents-base/dist")) {
 		const importerRoot = source.replace(/packages\/icons.*/, "packages");
@@ -92,7 +99,6 @@ const customResolver = (id, source, options) => {
 		return resolved;
 	}
 }
-
 export default defineConfig(async () => {
 	return {
 		build: {
@@ -108,7 +114,14 @@ export default defineConfig(async () => {
 					tsconfigPath: "packages/fiori/tsconfig.json",
 					buildMode: true,
 				}
-			})
+			}),
+			istanbul({
+				include: ['packages/**/src/*','src/*'],
+				exclude: ['node_modules', 'test/'],
+				extension: ['.js', '.ts', '.tsx'],
+				requireEnv: true,
+				cypress: true,
+			}),
 		],
 		resolve: {
 			alias: [

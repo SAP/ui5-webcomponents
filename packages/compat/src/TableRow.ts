@@ -5,8 +5,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isSpace,
 	isEnter,
@@ -16,13 +15,12 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import type TableCell from "./TableCell.js";
 import type { ITableRow, TableColumnInfo } from "./Table.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
-import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
+import TableRowTemplate from "./TableRowTemplate.js";
 import {
 	ARIA_LABEL_ROW_SELECTION,
 	LIST_ITEM_NOT_SELECTED,
@@ -68,9 +66,8 @@ type TableRowF7PressEventDetail = {
 @customElement({
 	tag: "ui5-table-row",
 	styles: tableRowStyles,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TableRowTemplate,
-	dependencies: [CheckBox],
 })
 /**
  * Fired when a row in `Active` mode is clicked or `Enter` key is pressed.
@@ -89,13 +86,13 @@ type TableRowF7PressEventDetail = {
 /**
  * @private
  */
-@event("_forward-before", {
+@event("forward-before", {
 	bubbles: true,
 })
 /**
  * @private
  */
-@event("_forward-after", {
+@event("forward-after", {
 	bubbles: true,
 })
 /**
@@ -118,8 +115,8 @@ class TableRow extends UI5Element implements ITableRow {
 	eventDetails!: {
 		"row-click": TableRowClickEventDetail,
 		"_focused": FocusEvent,
-		"_forward-before": TableRowForwardBeforeEventDetail,
-		"_forward-after": TableRowForwardAfterEventDetail,
+		"forward-before": TableRowForwardBeforeEventDetail,
+		"forward-after": TableRowForwardAfterEventDetail,
 		"selection-requested": TableRowSelectionRequestedEventDetail,
 		"f7-pressed": TableRowF7PressEventDetail,
 	}
@@ -198,23 +195,12 @@ class TableRow extends UI5Element implements ITableRow {
 	visibleCells: Array<TableCell> = [];
 	popinCells: Array<TableColumnInfo> = [];
 
-	_ontouchstart: PassiveEventListenerObject;
-
 	// Properties, set and handled by the Table
 	tabbableElements: Array<HTMLElement> = [];
 	_columnsInfoString = "";
 
-	constructor() {
-		super();
-
-		const handleToushStartEvent = () => {
-			this.activate();
-		};
-
-		this._ontouchstart = {
-			handleEvent: handleToushStartEvent,
-			passive: true,
-		};
+	_ontouchstart() {
+		this.activate();
 	}
 
 	_onmouseup() {
@@ -234,11 +220,11 @@ class TableRow extends UI5Element implements ITableRow {
 		const lastFocusableElement = elements.pop();
 
 		if (isTabNext(e) && activeElement === (lastFocusableElement || this.root)) {
-			this.fireDecoratorEvent("_forward-after", { target: activeElement });
+			this.fireDecoratorEvent("forward-after", { target: activeElement });
 		}
 
 		if (isTabPrevious(e) && activeElement === this.root) {
-			this.fireDecoratorEvent("_forward-before", { target: activeElement });
+			this.fireDecoratorEvent("forward-before", { target: activeElement });
 		}
 
 		if (isSpace(e) && target.tagName.toLowerCase() === "tr") {
@@ -342,10 +328,10 @@ class TableRow extends UI5Element implements ITableRow {
 		}
 	}
 
-	get shouldPopin() {
-		return this._columnsInfo?.filter(el => {
+	get shouldPopin(): boolean {
+		return !!(this._columnsInfo?.filter(el => {
 			return el.demandPopin || !el.visible;
-		}).length;
+		}).length);
 	}
 
 	get allColumnsPoppedIn() {

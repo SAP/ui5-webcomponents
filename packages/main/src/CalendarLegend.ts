@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -14,8 +14,9 @@ import {
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
-import CalendarLegendTemplate from "./generated/templates/CalendarLegendTemplate.lit.js";
-import CalendarLegendItem from "./CalendarLegendItem.js";
+import CalendarLegendTemplate from "./CalendarLegendTemplate.js";
+import "./CalendarLegendItem.js";
+import type CalendarLegendItem from "./CalendarLegendItem.js";
 import { CAL_LEGEND_ROLE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -44,22 +45,22 @@ type CalendarLegendItemSelectionChangeEventDetail = {
  */
 @customElement({
 	tag: "ui5-calendar-legend",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: CalendarLegendCss,
 	template: CalendarLegendTemplate,
-	dependencies: [CalendarLegendItem],
 })
-@event("_calendar-legend-selection-change", {
+@event("calendar-legend-selection-change", {
 	bubbles: true,
 })
-@event("_calendar-legend-focus-out", {
+@event("calendar-legend-focus-out", {
 	bubbles: true,
 })
 class CalendarLegend extends UI5Element {
 	eventDetails!: {
-		"_calendar-legend-selection-change": CalendarLegendItemSelectionChangeEventDetail,
-		"_calendar-legend-focus-out": void,
-	}
+		"calendar-legend-selection-change": CalendarLegendItemSelectionChangeEventDetail,
+		"calendar-legend-focus-out": void,
+	};
+
 	/**
 	 * Hides the Today item in the legend.
 	 * @default false
@@ -141,14 +142,14 @@ class CalendarLegend extends UI5Element {
 	_onFocusIn(e: FocusEvent) {
 		const target = e.target as CalendarLegendItem;
 
-		this.fireDecoratorEvent("_calendar-legend-selection-change", {
+		this.fireDecoratorEvent("calendar-legend-selection-change", {
 			item: target,
 		});
 		this._lastFocusedItemIndex = this.focusableElements.indexOf(target);
 	}
 
 	_onFocusOut() {
-		this.fireDecoratorEvent("_calendar-legend-focus-out");
+		this.fireDecoratorEvent("calendar-legend-focus-out");
 	}
 
 	_onItemKeyDown(e: KeyboardEvent) {
@@ -192,10 +193,10 @@ class CalendarLegend extends UI5Element {
 
 	get defaultItemsMapping() {
 		const typeMapping = [
-			{ type: [CalendarLegendItemType.Today], hide: this.hideToday },
-			{ type: [CalendarLegendItemType.Selected], hide: this.hideSelectedDay },
-			{ type: [CalendarLegendItemType.Working], hide: this.hideWorkingDay },
-			{ type: [CalendarLegendItemType.NonWorking], hide: this.hideNonWorkingDay },
+			{ type: CalendarLegendItemType.Today, hide: this.hideToday },
+			{ type: CalendarLegendItemType.Selected, hide: this.hideSelectedDay },
+			{ type: CalendarLegendItemType.Working, hide: this.hideWorkingDay },
+			{ type: CalendarLegendItemType.NonWorking, hide: this.hideNonWorkingDay },
 		];
 
 		return typeMapping;

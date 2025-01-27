@@ -5,11 +5,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -18,14 +15,14 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 
 // Template
-import DynamicPageTemplate from "./generated/templates/DynamicPageTemplate.lit.js";
+import DynamicPageTemplate from "./DynamicPageTemplate.js";
 
 // Styles
 import DynamicPageCss from "./generated/themes/DynamicPage.css.js";
 
 import DynamicPageHeader from "./DynamicPageHeader.js";
 import DynamicPageTitle from "./DynamicPageTitle.js";
-import DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
+import type DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
 
 // Texts
 import {
@@ -98,10 +95,9 @@ const SCROLL_THRESHOLD = 10; // px
  */
 @customElement({
 	tag: "ui5-dynamic-page",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: DynamicPageCss,
 	template: DynamicPageTemplate,
-	dependencies: [DynamicPageHeaderActions],
 })
 
 /**
@@ -155,14 +151,6 @@ class DynamicPage extends UI5Element {
 	showFooter = false;
 
 	/**
-	 * Defines the current media query size.
-	 *
-	 * @private
-	 */
-	@property()
-	mediaRange?: string;
-
-	/**
 	 * Defines the content of the Dynamic Page.
 	 *
 	 * @public
@@ -204,8 +192,6 @@ class DynamicPage extends UI5Element {
 	@property({ type: Boolean })
 	_headerSnapped = false;
 
-	_updateMediaRange: ResizeObserverCallback;
-
 	@query(".ui5-dynamic-page-scroll-container")
 	scrollContainer?: HTMLElement;
 
@@ -214,16 +200,6 @@ class DynamicPage extends UI5Element {
 
 	constructor() {
 		super();
-
-		this._updateMediaRange = this.updateMediaRange.bind(this);
-	}
-
-	onEnterDOM() {
-		ResizeHandler.register(this, this._updateMediaRange);
-	}
-
-	onExitDOM() {
-		ResizeHandler.deregister(this, this._updateMediaRange);
 	}
 
 	onBeforeRendering() {
@@ -267,7 +243,7 @@ class DynamicPage extends UI5Element {
 
 	get _accAttributesForHeaderActions() {
 		return {
-			controls: `${this._id}-header`,
+			controls: `${this._id}-header` as Lowercase<string>,
 		};
 	}
 
@@ -327,6 +303,10 @@ class DynamicPage extends UI5Element {
 		const headerHeight = this.dynamicPageHeader.getBoundingClientRect().height;
 		const lastHeaderSnapped = this._headerSnapped;
 
+		if (this._headerSnapped && scrollTop > headerHeight) {
+			this.showHeaderInStickArea = false;
+		}
+
 		const shouldSnap = !this._headerSnapped && scrollTop > headerHeight + SCROLL_THRESHOLD;
 		const shouldExpand = this._headerSnapped && (scrollTop < headerHeight - SCROLL_THRESHOLD
 			|| (!scrollTop && !headerHeight));
@@ -369,6 +349,9 @@ class DynamicPage extends UI5Element {
 
 	async onPinClick() {
 		this.headerPinned = !this.headerPinned;
+		if (this.headerPinned) {
+			this.showHeaderInStickArea = true;
+		}
 		this.fireDecoratorEvent("pin-button-toggle");
 		await renderFinished();
 		this.headerActions?.focusPinButton();
@@ -424,10 +407,6 @@ class DynamicPage extends UI5Element {
 	async onExpandHoverOut() {
 		this.dynamicPageTitle?.removeAttribute("hovered");
 		await renderFinished();
-	}
-
-	updateMediaRange() {
-		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
 	}
 }
 
