@@ -1,12 +1,7 @@
 import { html } from "lit";
-// import Timeline from "../../src/Timeline.js";
 import "../../src/Timeline.js";
 import "../../src/TimelineItem.js";
 import "../../src/TimelineGroupItem.js";
-import "@ui5/webcomponents-icons/dist/accept.js";
-import "@ui5/webcomponents-icons/dist/message-information.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/message-warning.js";
 
 const sample = html`
 <ui5-timeline layout="Vertical" accessible-name="vertical" id="timelineAccName">

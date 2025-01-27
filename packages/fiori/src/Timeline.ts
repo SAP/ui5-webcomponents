@@ -28,7 +28,7 @@ import drillDown from "@ui5/webcomponents-icons/dist/drill-down.js";
 import TimelineCss from "./generated/themes/Timeline.css.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 // Mode
-import TimeLineGrowingMode from "./types/TimelineGrowingMode.js";
+import TimelineGrowingMode from "./types/TimelineGrowingMode.js";
 
 /**
  * Interface for components that may be slotted inside `ui5-timeline` as items
@@ -128,7 +128,7 @@ class Timeline extends UI5Element {
 	loadingDelay = 1000;
 
 	/**
-	 * Defines whether the Timeline will have growing capability either by pressing a `More` button,
+	 * Defines whether the Timeline will have growing capability either by pressing a "More" button,
 	 * or via user scroll. In both cases a `load-more` event is fired.
 	 *
 	 * Available options:
@@ -139,14 +139,12 @@ class Timeline extends UI5Element {
 	 *
 	 * `None` (default) - The growing functionality is off.
 	 *
-	 * **Restrictions:** `growing="Scroll"` is not supported for Internet Explorer,
-	 * and the component will fallback to `growing="Button"`.
 	 * @default "None"
 	 * @since 2.7.0
 	 * @public
 	 */
 	@property()
-	growing: `${TimeLineGrowingMode}` = "None";
+	growing: `${TimelineGrowingMode}` = "None";
 
 	/**
 	 * Defines the active state of the `More` button.
@@ -192,7 +190,7 @@ class Timeline extends UI5Element {
 	}
 
 	get growsOnScroll(): boolean {
-		return this.growing === TimeLineGrowingMode.Scroll;
+		return this.growing === TimelineGrowingMode.Scroll;
 	}
 
 	get growingButtonIcon() {
@@ -200,7 +198,7 @@ class Timeline extends UI5Element {
 	}
 
 	get growsWithButton(): boolean {
-		return this.growing === TimeLineGrowingMode.Button;
+		return this.growing === TimelineGrowingMode.Button;
 	}
 
 	onAfterRendering() {
