@@ -584,7 +584,7 @@ describe("Table - Keyboard Navigation with Fixed Headers", () => {
 				.then($headerRow => {
 					cy.get("@row")
 						.then($row => {
-							expect($row[0].getBoundingClientRect().y).to.be.gt($headerRow[0].getBoundingClientRect().y)
+							expect($row[0].getBoundingClientRect().y).to.be.gt($headerRow[0].getBoundingClientRect().y);
 						});
 				});
 		}
@@ -651,7 +651,7 @@ describe("Table - Keyboard Navigation with Fixed Headers", () => {
 				.then($headerRow => {
 					cy.get("@row")
 						.then($row => {
-							expect($row[0].getBoundingClientRect().y).to.be.gt($headerRow[0].getBoundingClientRect().y)
+							expect($row[0].getBoundingClientRect().y).to.be.gt($headerRow[0].getBoundingClientRect().y);
 						});
 				});
 		}
@@ -706,7 +706,7 @@ describe("Table - Keyboard Navigation with Fixed Headers", () => {
 				.then($headerRow => {
 					cy.get("@row")
 						.then($row => {
-							expect($row[0].getBoundingClientRect().y).to.be.gt($headerRow[0].getBoundingClientRect().y)
+							expect($row[0].getBoundingClientRect().y).to.be.gt($headerRow[0].getBoundingClientRect().y);
 						});
 				});
 		}
