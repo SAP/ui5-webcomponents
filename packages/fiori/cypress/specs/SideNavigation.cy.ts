@@ -222,12 +222,15 @@ describe("Side Navigation interaction", () => {
 				});
 
 			// act
-			element.focus();
-			cy.realPress("Space")
-				.realPress("Enter");
+			element.then($element => {
+				$element[0].focus();
 
-			// assert
-			cy.get("@clickHandler").should("have.callCount", expectedCallCount);
+				cy.realPress("Space")
+					.realPress("Enter");
+
+				// assert
+				cy.get("@clickHandler").should("have.callCount", expectedCallCount);
+			});
 		});
 	});
 
