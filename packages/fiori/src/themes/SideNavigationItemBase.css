@@ -153,6 +153,10 @@ and there is an additional border that appears on hover. */
 	height: 0.875rem;
 }
 
+:host([design="Action"]) .ui5-sn-item-external-link-icon {
+	color: var(--sapButton_TextColor);
+}
+
 :host(:not([side-nav-collapsed])) .ui5-sn-item-toggle-icon,
 .ui5-sn-item-external-link-icon {
 	min-width: var(--_ui5_side_navigation_expand_icon_width);
