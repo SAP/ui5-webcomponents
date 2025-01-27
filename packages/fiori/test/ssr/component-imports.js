@@ -6,6 +6,8 @@ import FlexibleColumnLayout from "../../dist/FlexibleColumnLayout.js";
 import IllustratedMessage from "../../dist/IllustratedMessage.js";
 import MediaGallery from "../../dist/MediaGallery.js";
 import MediaGalleryItem from "../../dist/MediaGalleryItem.js";
+import NavigationMenu from "../../dist/NavigationMenu.js";
+import NavigationMenuItem from "../../dist/NavigationMenuItem.js";
 import NotificationListGroupItem from "../../dist/NotificationListGroupItem.js";
 import NotificationListItem from "../../dist/NotificationListItem.js";
 import Page from "../../dist/Page.js";

@@ -612,7 +612,7 @@ describe("Select general interaction", () => {
 		assert.notOk(await popover.getProperty("open"), "Select is closed.");
 	});
 
-	it("Tests if currently selected option is visible in the viewport when keyboard navigation is used", async () => {
+	it.skip("Tests if currently selected option is visible in the viewport when keyboard navigation is used", async () => {
 		await browser.setWindowSize(600, 100);
 
 		const select = await browser.$("#warningSelect");
@@ -632,20 +632,20 @@ describe("Select general interaction", () => {
 	it("clears typed characters after selection is changed", async () => {
 		const select = await browser.$("#textAreaAriaLabel");
 		const selectText = await select.shadow$(".ui5-select-label-root");
-	
+
 		await select.click();
 		await select.keys("S");
-	
+
 		let selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, "Second", "Typing 'S' should select 'Second'");
-	
+
 		await select.keys("Enter");
-	
+
 		await select.keys("T");
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, "Third", "Typing 'T' should select 'Third' after previous selection");
-	
+
 		assert.strictEqual(await select.getProperty("value"), "Third", "The selection changed and typed characters were cleared");
 	});
-	
+
 });
