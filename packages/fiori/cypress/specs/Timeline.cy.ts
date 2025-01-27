@@ -1,5 +1,5 @@
 import { html } from "lit";
-import type Timeline from "../../src/Timeline.js";
+// import Timeline from "../../src/Timeline.js";
 import "../../src/Timeline.js";
 import "../../src/TimelineItem.js";
 import "../../src/TimelineGroupItem.js";
@@ -201,7 +201,7 @@ describe("Timeline with growing mode", () => {
 		cy.get("[ui5-timeline]")
 			.as("timeline");
 
-		cy.get<Timeline>("@timeline")
+		cy.get("@timeline")
 			.then(timeline => {
 				timeline.get(0).addEventListener("ui5-load-more", cy.stub().as("loadMore"));
 			});
@@ -250,7 +250,6 @@ describe("Timeline with growing mode", () => {
 			.should("be.focused");
 	});
 });
-
 
 describe("Accessibility", () => {
 	beforeEach(() => {

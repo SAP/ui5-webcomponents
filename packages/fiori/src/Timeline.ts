@@ -14,7 +14,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
-import TimelineItem from "./TimelineItem.js";
+import "./TimelineItem.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
@@ -220,7 +220,7 @@ class Timeline extends UI5Element {
 	async observeTimelineEnd() {
 		if (!this.timeLineEndObserved) {
 			await renderFinished();
-			this.getIntersectionObserver().observe(this.timelineEndMarker!);
+			this.getIntersectionObserver().observe(this.timelineEndMarker);
 			this.timeLineEndObserved = true;
 		}
 	}
