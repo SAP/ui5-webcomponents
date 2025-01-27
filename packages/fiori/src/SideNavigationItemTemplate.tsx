@@ -111,7 +111,6 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
-						// @ts-expect-error
 						onClick={this._onToggleClick}
 					/>
 					}
@@ -128,6 +127,7 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					aria-expanded={this._expanded}
 					aria-current={this._ariaCurrent}
 					aria-selected={this.selected}
+					aria-haspopup={this.accessibilityAttributes?.hasPopup}
 					title={this._tooltip}
 					aria-owns={this._groupId}
 				>
@@ -143,7 +143,6 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
-						// @ts-expect-error
 						onClick={this._onToggleClick}
 					/>
 					}
