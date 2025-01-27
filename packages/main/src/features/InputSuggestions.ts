@@ -81,15 +81,19 @@ class Suggestions {
 		this.selectedItemIndex = -1;
 	}
 
-	onUp(e: KeyboardEvent) {
+	onUp(e: KeyboardEvent, indexOfItem: number) {
+		// this.selectedItemIndex = indexOfSelectedItem;
 		e.preventDefault();
-		this._handleItemNavigation(false /* forward */);
+		indexOfItem = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+		this._handleItemNavigation(false /* forward */, indexOfItem);
 		return true;
 	}
 
-	onDown(e: KeyboardEvent) {
+	onDown(e: KeyboardEvent, indexOfItem: number) {
+		// this.selectedItemIndex = indexOfSelectedItem;
 		e.preventDefault();
-		this._handleItemNavigation(true /* forward */);
+		indexOfItem = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+		this._handleItemNavigation(true /* forward */, indexOfItem);
 		return true;
 	}
 
@@ -298,11 +302,12 @@ class Suggestions {
 		return !!(this._getPicker()?.open);
 	}
 
-	_handleItemNavigation(forward: boolean) {
+	_handleItemNavigation(forward: boolean, indexOfItem: number) {
+		this.selectedItemIndex = indexOfItem;
+
 		if (!this._getItems().length) {
 			return;
 		}
-
 		if (forward) {
 			this._selectNextItem();
 		} else {
@@ -312,6 +317,7 @@ class Suggestions {
 
 	_selectNextItem() {
 		const itemsCount = this._getItems().length;
+
 		const previousSelectedIdx = this.selectedItemIndex;
 
 		if (this._hasValueState && previousSelectedIdx === -1 && !this.component._isValueStateFocused) {
