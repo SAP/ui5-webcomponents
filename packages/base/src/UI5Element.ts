@@ -39,8 +39,8 @@ import type {
 } from "./types.js";
 import { updateFormValue, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
-import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 import { getI18nBundle } from "./i18nBundle.js";
+import type I18nBundle from "./i18nBundle.js";
 import { fetchCldr } from "./asset-registries/LocaleData.js";
 import getLocale from "./locale/getLocale.js";
 
@@ -1080,6 +1080,10 @@ abstract class UI5Element extends HTMLElement {
 		return true;
 	}
 
+	get isUI5AbstractElement(): boolean {
+		return !(this.constructor as typeof UI5Element)._needsShadowDOM();
+	}
+
 	get classes(): ClassMap {
 		return {};
 	}
@@ -1288,6 +1292,11 @@ abstract class UI5Element extends HTMLElement {
 
 	static asyncFinished: boolean;
 	static definePromise: Promise<void> | undefined;
+	static i18nBundleStorage: Record<string, I18nBundle> = {};
+
+	static get i18nBundles(): Record<string, I18nBundle> {
+		return this.i18nBundleStorage;
+	}
 
 	/**
 	 * Registers a UI5 Web Component in the browser window object
@@ -1304,24 +1313,13 @@ abstract class UI5Element extends HTMLElement {
 			const [i18nBundles] = result;
 			Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
 				const propertyName = pair[0];
-				const targetClass = pair[1].target;
-				(targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
+				this.i18nBundleStorage[propertyName] = i18nBundles[index];
 			});
 			this.asyncFinished = true;
 		};
 		this.definePromise = defineSequence();
 
 		const tag = this.getMetadata().getTag();
-
-		const features = this.getMetadata().getFeatures();
-
-		features.forEach(feature => {
-			if (getComponentFeature(feature)) {
-				this.cacheUniqueDependencies();
-			}
-
-			subscribeForFeatureLoad(feature, this, this.cacheUniqueDependencies.bind(this));
-		});
 
 		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);

@@ -1,5 +1,4 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import type List from "../List.js";
@@ -10,6 +9,7 @@ import "../SuggestionItemGroup.js";
 import type SuggestionItem from "../SuggestionItem.js";
 import type ListItemGroupHeader from "../ListItemGroupHeader.js";
 import InputSuggestionsTemplate from "./InputSuggestionsTemplate.js";
+import Input from "../Input.js";
 
 import {
 	LIST_ITEM_POSITION,
@@ -45,7 +45,7 @@ type SuggestionsAccInfo = {
  * @class
  * @private
  */
-class Suggestions extends ComponentFeature {
+class Suggestions {
 	component: SuggestionComponent;
 	slotName: string;
 	handleFocus: boolean;
@@ -64,7 +64,6 @@ class Suggestions extends ComponentFeature {
 	}
 
 	constructor(component: SuggestionComponent, slotName: string, highlight: boolean, handleFocus: boolean) {
-		super();
 		// The component, that the suggestion would plug into.
 		this.component = component;
 
@@ -557,8 +556,7 @@ class Suggestions extends ComponentFeature {
 	}
 }
 
-// Add suggestions support to the global features registry so that Input.js can use it
-registerComponentFeature("InputSuggestions", Suggestions);
+Input.SuggestionsClass = Suggestions;
 
 export default Suggestions;
 

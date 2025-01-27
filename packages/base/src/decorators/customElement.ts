@@ -57,6 +57,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 	shadowRootOptions?: Partial<ShadowRootInit>,
 	/**
 	 * A list of all features, supported by the custom element.
+	 * @deprecated no longer necessary for jsxRenderer-enabled components
 	 */
 	features?: Array<string>,
 } = {}): ClassDecorator => {
@@ -78,7 +79,6 @@ const customElement = (tagNameOrComponentSettings: string | {
 			fastNavigation,
 			formAssociated,
 			shadowRootOptions,
-			features,
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
@@ -87,10 +87,6 @@ const customElement = (tagNameOrComponentSettings: string | {
 		}
 		if (cldr) {
 			target.metadata.cldr = cldr;
-		}
-
-		if (features) {
-			target.metadata.features = features;
 		}
 
 		if (themeAware) {

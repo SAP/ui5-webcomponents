@@ -206,6 +206,7 @@ class Tokenizer extends UI5Element {
 	 *
 	 * **Note:** The `multiLine` property is in an experimental state and is a subject to change.
 	 * @default false
+	 * @since 2.5.0
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -216,6 +217,7 @@ class Tokenizer extends UI5Element {
 	 *
 	 * **Note:** The `showClearAll` property is in an experimental state and is a subject to change.
 	 * @default false
+	 * @since 2.5.0
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -323,10 +325,6 @@ class Tokenizer extends UI5Element {
 		type: HTMLElement,
 		"default": true,
 		individualSlots: true,
-		invalidateOnChildChange: {
-			properties: ["_isVisible"],
-			slots: false,
-		},
 	})
 	tokens!: Array<Token>;
 
@@ -568,7 +566,6 @@ class Tokenizer extends UI5Element {
 			this.open = false;
 		} else {
 			if (isPhone()) {
-				token._isVisible = false;
 				this._deletedDialogItems.push(token);
 			} else {
 				this.fireDecoratorEvent("token-delete", { tokens: [token] });
@@ -601,17 +598,6 @@ class Tokenizer extends UI5Element {
 	}
 
 	handleBeforeOpen() {
-		if (this.multiLine) {
-			this._resetTokensVisibility();
-
-			const focusedToken = this._tokens.find(token => token.focused);
-			focusedToken!._isVisible = true;
-		} else {
-			this._tokens.forEach(token => {
-				token._isVisible = true;
-			});
-		}
-
 		const list = this._getList();
 		const firstListItem = list.querySelectorAll("[ui5-li]")[0]! as ListItem;
 
@@ -624,10 +610,6 @@ class Tokenizer extends UI5Element {
 		this.open = false;
 		this._preventCollapse = false;
 		this._focusedElementBeforeOpen = null;
-
-		this._tokens.forEach(token => {
-			token._isVisible = true;
-		});
 	}
 
 	handleDialogButtonPress(e: MouseEvent) {
@@ -969,12 +951,6 @@ class Tokenizer extends UI5Element {
 				tokens: this._selectedTokens,
 			});
 		}
-	}
-
-	_resetTokensVisibility() {
-		this._tokens.forEach(token => {
-			token._isVisible = false;
-		});
 	}
 
 	get hasTokens() {

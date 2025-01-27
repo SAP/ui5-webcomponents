@@ -45,6 +45,16 @@ class SideNavigationSubItem extends SideNavigationSelectableItemBase {
 	_onclick(e: MouseEvent) {
 		super._onclick(e);
 	}
+
+	get classesArray() {
+		const classes = super.classesArray;
+
+		if (this.icon) {
+			classes.push("ui5-sn-item-has-icon");
+		}
+
+		return classes;
+	}
 }
 
 SideNavigationSubItem.define();
