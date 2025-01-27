@@ -301,6 +301,8 @@ bdi {
 	border-bottom-left-radius: var(--_ui5_button_focused_inner_border_radius);
 }
 
+
+/* Button with badge */
 .ui5-button-root.ui5-button-badge-placement-end [ui5-tag] {
 	pointer-events: initial;
 	font-family: "72override", var(--sapFontFamily);
@@ -316,7 +318,7 @@ bdi {
 	position: absolute;
 	top: 0;
 	inset-inline-end: 0;
-	margin: -7px;
+	margin: -0.5rem;
 	z-index: 1000;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
@@ -325,13 +327,13 @@ bdi {
 	--_ui5-tag-border-radius: 50%;
 }
 
-.ui5-button-badge-dot.ui5-button-root [ui5-tag]{
+.ui5-button-badge-dot.ui5-button-root [ui5-tag] {
 	pointer-events: initial;
 	content:"";
 	position: absolute;
 	top: 0;
 	inset-inline-end: 0;
-	margin: -4px;
+	margin: -0.25rem;
 	z-index: 1000;
 	min-width: 0.75rem;
     min-height: .75rem;
@@ -339,9 +341,11 @@ bdi {
 	width: 0.75rem;
 	color: var(--sapBackgroundColor);
 	--_ui5-tag-border-radius: 100%;
+	border: 1px solid white;
+	border-radius: 100%;
 }
 
-:host(:state(has-overlay-badge)){
+:host(:state(has-overlay-badge)) {
 	overflow: visible;
 	margin-right: 5px;
 }

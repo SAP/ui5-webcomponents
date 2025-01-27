@@ -321,6 +321,11 @@ class Button extends UI5Element implements IButton {
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>;
 
+	/**
+	 * Adds a badge to the button.
+	 *
+	 * @public
+	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	badge!: Array<ButtonBadge>;
 
@@ -529,6 +534,10 @@ class Button extends UI5Element implements IButton {
 
 	get _isReset() {
 		return this.type === ButtonType.Reset;
+	}
+
+	get shouldRenderBadge() {
+		return !!this.badge.length && (!!this.badge[0].text.length || this.badge[0].design === "AttentionDot");
 	}
 }
 

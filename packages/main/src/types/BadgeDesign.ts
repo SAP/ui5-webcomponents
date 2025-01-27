@@ -1,8 +1,8 @@
 /**
- * Determines where the badge is placed.
+ * Determines where the style of the badge.
  * @public
  */
-enum BadgePlacement {
+enum BadgeDesign {
 	/**
 	 * The button renders the badge at the end.
 	 * @public
@@ -21,4 +21,4 @@ enum BadgePlacement {
 	AttentionDot = "AttentionDot",
 }
 
-export default BadgePlacement;
+export default BadgeDesign;

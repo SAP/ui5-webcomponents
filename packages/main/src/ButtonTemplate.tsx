@@ -72,7 +72,7 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 				<span id="ui5-button-hiddenText-type" aria-hidden="true" class="ui5-hidden-text">{this.buttonTypeText}</span>
 			}
 
-			{!!this.badge.length && (!!this.badge[0].text.length || this.badge[0].design === "AttentionDot") &&
+			{this.shouldRenderBadge &&
 				<Tag
 					design="Critical" hide-state-icon>{this.badge[0].text}</Tag>
 			}
