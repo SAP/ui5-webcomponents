@@ -1,6 +1,8 @@
 import { html } from "lit";
 import type Timeline from "../../src/Timeline.js";
+import "../../src/Timeline.js";
 import "../../src/TimelineItem.js";
+import "../../src/TimelineGroupItem.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/message-information.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
