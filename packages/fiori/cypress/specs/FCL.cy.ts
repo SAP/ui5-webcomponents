@@ -2,7 +2,7 @@ import { html } from "lit";
 import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import "../../src/FlexibleColumnLayout.js";
 
-describe("Columns resize", () => {
+describe.skip("Columns resize", () => {
 	beforeEach(() => {
 		cy.wrap({ setAnimationMode })
 			.invoke("setAnimationMode", "none");

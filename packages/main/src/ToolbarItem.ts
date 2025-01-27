@@ -1,12 +1,21 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 
 import type ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
 type IEventOptions = {
 	preventClosing: boolean;
 }
+
+type ToolbarItemEventDetail = {
+	targetRef: HTMLElement;
+}
+
+@event("close-overflow", {
+	bubbles: true,
+})
 
 /**
  * @class
@@ -21,7 +30,8 @@ type IEventOptions = {
 class ToolbarItem extends UI5Element {
 	// strictEvents: needed for parent class
 	eventDetails!: {
-		click: void
+		click: ToolbarItemEventDetail,
+		"close-overflow": void;
 	}
 	/**
 	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
@@ -101,18 +111,13 @@ class ToolbarItem extends UI5Element {
 		throw new Error("Popover template must be defined");
 	}
 
-	/**
-	 * Returns the events that the item is subscribed to.
-	 * @protected
-	 */
-	get subscribedEvents(): Map<string, IEventOptions> {
-		return new Map();
-	}
-
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
 }
 
-export type { IEventOptions };
+export type {
+	IEventOptions,
+	ToolbarItemEventDetail,
+};
 export default ToolbarItem;
