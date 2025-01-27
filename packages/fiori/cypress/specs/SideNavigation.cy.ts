@@ -210,19 +210,27 @@ describe("Side Navigation interaction", () => {
 		`);
 
 		[
-			{ element: cy.get("#item").shadow().find(".ui5-sn-item"), expectedCallCount: 2 },
-			{ element: cy.get("#unselectableItem").shadow().find(".ui5-sn-item"), expectedCallCount: 2 },
-			{ element: cy.get("#parentItem").shadow().find(".ui5-sn-item"), expectedCallCount: 2 },
-			{ element: cy.get("#childItem").shadow().find(".ui5-sn-item"), expectedCallCount: 2 },
-			{ element: cy.get("#unselectableParentItem").shadow().find(".ui5-sn-item"), expectedCallCount: 2 },
-		].forEach(({ element, expectedCallCount }) => {
+			{ selector: "#item", expectedCallCount: 2 },
+			{ selector: "#unselectableItem", expectedCallCount: 2 },
+			{ selector: "#parentItem", expectedCallCount: 2 },
+			{ selector: "#childItem", expectedCallCount: 2 },
+			{ selector: "#unselectableParentItem", expectedCallCount: 2 },
+		].forEach(({ selector, expectedCallCount }) => {
 			cy.get("#sideNav")
 				.then(sideNav => {
 					sideNav.get(0).addEventListener("click", cy.stub().as("clickHandler"));
 				});
 
+			cy.get(selector)
+				.shadow()
+				.find(".ui5-sn-item")
+				.as("sn-item")
+				.should("have.attr", "tabindex");
+
 			// act
-			element.focus();
+			cy.get("@sn-item")
+				.focus();
+
 			cy.realPress("Space")
 				.realPress("Enter");
 
