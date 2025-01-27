@@ -9,6 +9,9 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import type { ListItemAccessibilityAttributes } from "./ListItem.js";
 import ListItem from "./ListItem.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
@@ -248,6 +251,37 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
+
+	_itemNavigation: ItemNavigation;
+
+	constructor() {
+		super();
+
+		this._itemNavigation = new ItemNavigation(this, {
+			navigationMode: NavigationMode.Horizontal,
+			behavior: ItemNavigationBehavior.Static,
+			getItemsCallback: () => this._navigableItems,
+		});
+	}
+
+	get _navigableItems(): Array<HTMLElement> {
+		return [...this.endContent].filter(item => {
+			return item.hasAttribute("ui5-button")
+			|| item.hasAttribute("ui5-link")
+			|| (item.hasAttribute("ui5-icon") && item.getAttribute("mode") === "Interactive");
+		});
+	}
+
+	_navigateToEndContent(isLast?: boolean) {
+		const item = isLast
+			? this._navigableItems[this._navigableItems.length - 1]
+			: this._navigableItems[0];
+
+		if (item) {
+			this._itemNavigation.setCurrentItem(item);
+			this._itemNavigation._focusCurrentItem();
+		}
+	}
 
 	get placement(): `${PopoverPlacement}` {
 		return this.isRtl ? "Start" : "End";
