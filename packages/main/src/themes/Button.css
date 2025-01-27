@@ -307,8 +307,7 @@ bdi {
 	pointer-events: initial;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
-	color: var(--sapBackgroundColor);
-	padding-inline-start: 5px;
+	padding-inline-start: 0.25rem;
 	--_ui5-tag-height: 0.625rem;
 	--_ui5-tag-border-radius: 50%;
 }
@@ -322,7 +321,6 @@ bdi {
 	z-index: 1000;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
-	color: var(--sapBackgroundColor);
 	--_ui5-tag-height: 0.625rem;
 	--_ui5-tag-border-radius: 50%;
 }
@@ -335,14 +333,22 @@ bdi {
 	inset-inline-end: 0;
 	margin: -0.25rem;
 	z-index: 1000;
-	min-width: 0.75rem;
-    min-height: .75rem;
-    height: 0.75rem;
-	width: 0.75rem;
-	color: var(--sapBackgroundColor);
 	--_ui5-tag-border-radius: 100%;
-	border: 1px solid white;
 	border-radius: 100%;
+}
+
+[ui5-tag]::part(root) {
+	border:  0.0625rem solid var(--sapContent_BadgeBorderColor);
+	background-color: var(--sapContent_BadgeBackground);
+	color: var(--sapContent_BadgeTextColor);
+	height: 1rem;
+}
+
+.ui5-button-badge-dot.ui5-button-root [ui5-tag]::part(root) {
+	min-width: var(--_ui5-button-badge-diameter);
+    min-height: var(--_ui5-button-badge-diameter);
+    height: var(--_ui5-button-badge-diameter);
+	width: var(--_ui5-button-badge-diameter);
 }
 
 :host(:state(has-overlay-badge)) {
