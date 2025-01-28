@@ -1,5 +1,3 @@
-import { html } from "lit";
-import "../../src/Tokenizer.js";
 import Tokenizer from "../../src/Tokenizer.js";
 import Token from "../../src/Token.js";
 

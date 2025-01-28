@@ -3,16 +3,18 @@ import CardHeader from "../../src/CardHeader.js";
 
 describe("Card header", () => {
 	it("Tests that aria attribute are correct on interactive header", () => {
-		cy.mount(<Card>
-			<CardHeader
-				id="cardHeader1"
-				slot="header"
-				additionalText="4 of 10"
-				titleText="Quick Links"
-				subtitleText="Quick links sub title"
-				interactive={true}
-			>
-			</CardHeader></Card>
+		cy.mount(
+			<Card>
+				<CardHeader
+					id="cardHeader1"
+					slot="header"
+					additionalText="4 of 10"
+					titleText="Quick Links"
+					subtitleText="Quick links sub title"
+					interactive={true}
+				>
+				</CardHeader>
+			</Card>
 		);
 
 		// assert
@@ -25,16 +27,18 @@ describe("Card header", () => {
 	});
 
 	it("Tests that aria attribute are correct on a header", () => {
-		cy.mount(<Card>
-			<CardHeader
-				id="cardHeader2"
-				slot="header"
-				additionalText="4 of 10"
-				titleText="Quick Links"
-				subtitleText="Quick links sub title"
-			>
-			</CardHeader>
-		</Card>);
+		cy.mount(
+			<Card>
+				<CardHeader
+					id="cardHeader2"
+					slot="header"
+					additionalText="4 of 10"
+					titleText="Quick Links"
+					subtitleText="Quick links sub title"
+				>
+				</CardHeader>
+			</Card>
+		);
 
 		// assert
 		cy.get("#cardHeader2")

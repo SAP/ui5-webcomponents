@@ -1,4 +1,3 @@
-import "../../src/Tree.js";
 import Tree from "../../src/Tree.js";
 import "../../src/TreeItem.js";
 

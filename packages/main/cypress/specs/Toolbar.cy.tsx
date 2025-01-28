@@ -1,11 +1,10 @@
 import Toolbar from "../../src/Toolbar.js";
 import ToolbarButton from "../../src/ToolbarButton.js";
-import ToolbarItem from "../../src/ToolbarItem.js";
 import ToolbarSelect from "../../src/ToolbarSelect.js";
 import ToolbarSelectOption from "../../src/ToolbarSelectOption.js";
 import ToolbarSeparator from "../../src/ToolbarSeparator.js";
 import ToolbarSpacer from "../../src/ToolbarSpacer.js";
-import Popover from "../../src/Popover.js";
+import type ToolbarItem from "../../src/ToolbarItem.js";
 import add from "@ui5/webcomponents-icons/dist/add.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import employee from "@ui5/webcomponents-icons/dist/employee.js";
@@ -72,7 +71,7 @@ describe("Toolbar general interaction", () => {
 
 	it("shouldn't show overflow button if there is enough space", () => {
 		cy.mount(
-			<Toolbar style={{ width:" fit-content"," max-width": "100%;" }}>
+			<Toolbar style={{ width: "fit-content", " max-width": "100%;" }}>
 				<ToolbarButton icon={decline}>
 				</ToolbarButton>
 

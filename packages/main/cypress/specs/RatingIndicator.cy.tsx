@@ -44,7 +44,7 @@ describe("RatingIndicator", () => {
 				.shadow()
 				.find("li.ui5-rating-indicator-item.ui5-rating-indicator-item-sel")
 				.should($el => {
-					const height = parseFloat($el.css('height'));
+					const height = parseFloat($el.css("height"));
 					expect(height).to.be.greaterThan(21.9);
 					expect(height).to.be.lessThan(22.1);
 				  });
@@ -56,7 +56,7 @@ describe("RatingIndicator", () => {
 				.shadow()
 				.find("li.ui5-rating-indicator-item.ui5-rating-indicator-item-sel")
 				.should($el => {
-					const height = parseFloat($el.css('height'));
+					const height = parseFloat($el.css("height"));
 					expect(height).to.be.greaterThan(31.9);
 					expect(height).to.be.lessThan(32.1);
 				  })
@@ -67,7 +67,7 @@ describe("RatingIndicator", () => {
 				.find("li.ui5-rating-indicator-item.ui5-rating-indicator-item-unsel")
 				.find("ui5-icon")
 				.should($el => {
-					const height = parseFloat($el.css('height'));
+					const height = parseFloat($el.css("height"));
 					expect(height).to.be.greaterThan(23.9);
 					expect(height).to.be.lessThan(24.1);
 				  });

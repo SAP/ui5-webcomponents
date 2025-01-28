@@ -1,7 +1,3 @@
-import "../../src/Toast.js";
-import "../../src/Button.js";
-import "../../src/List.js";
-import "../../src/ListItemStandard.js";
 import Toast from "../../src/Toast.js";
 import List from "../../src/List.js";
 import ListItemStandard from "../../src/ListItemStandard.js";

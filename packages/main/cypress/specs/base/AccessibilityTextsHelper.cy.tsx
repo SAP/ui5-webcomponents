@@ -1,7 +1,3 @@
-import { html } from "lit";
-import "../../../src/Label.js";
-import "../../../src/Input.js";
-import "../../../src/List.js";
 import Label from "../../../src/Label.js";
 import Input from "../../../src/Input.js";
 import List from "../../../src/List.js";
@@ -46,7 +42,7 @@ describe("AccessibilityTextsHelper", () => {
 				<Label id="lblEnterName3">ThirdDesc</Label>
 				<Input id="inputEnterName" accessibleNameRef="lblEnterName1 lblEnterName3" placeholder="Enter your name"></Input>
 			</>
-        );
+		);
 
 		// assert
 		cy.get("#inputEnterName")
