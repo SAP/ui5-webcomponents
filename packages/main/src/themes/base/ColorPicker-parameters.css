@@ -6,7 +6,7 @@
     --_ui5_color_picker_slider_handle_margin_top: -0.125rem;
     --_ui5_color_picker_slider_handle_inner_border_color: #fff;
     --_ui5_color_picker_circle_outer_border: 0.0625rem solid var(--sapContent_ContrastShadowColor);
-    --_ui5_color_picker_circle_inner_border: 0.0625rem solid var(--sapField_BorderColor);
+    --_ui5_color_picker_circle_inner_border: var(--sapField_Picker_BorderWidth) solid var(--sapField_BorderColor);
     --_ui5_color_picker_circle_inner_circle_size: 0.5625rem;
     --_ui5_color_picker_slider_handle_inline_focus: none;
     --_ui5_color_picker_slider_handle_container_margin_top: none;
