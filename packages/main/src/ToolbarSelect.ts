@@ -11,10 +11,11 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
 import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
 import ToolbarPopoverSelectTemplate from "./ToolbarPopoverSelectTemplate.js";
 import ToolbarItem from "./ToolbarItem.js";
+import type { ToolbarItemEventDetail } from "./ToolbarItem.js";
 import type ToolbarSelectOption from "./ToolbarSelectOption.js";
 import type { SelectChangeEventDetail } from "./Select.js";
 
-type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
+type ToolbarSelectChangeEventDetail = ToolbarItemEventDetail & SelectChangeEventDetail;
 
 /**
  * @class
@@ -63,8 +64,8 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 class ToolbarSelect extends ToolbarItem {
 	eventDetails!: ToolbarItem["eventDetails"] & {
 		change: ToolbarSelectChangeEventDetail;
-		open: void;
-		close: void;
+		open: ToolbarItemEventDetail;
+		close: ToolbarItemEventDetail;
 	}
 	/**
 	 * Defines the width of the select.
@@ -122,8 +123,6 @@ class ToolbarSelect extends ToolbarItem {
 	@property()
 	accessibleNameRef?: string;
 
-	_onEvent: EventListener
-
 	static get toolbarTemplate() {
 		return ToolbarSelectTemplate;
 	}
@@ -132,56 +131,49 @@ class ToolbarSelect extends ToolbarItem {
 		return ToolbarPopoverSelectTemplate;
 	}
 
-	get subscribedEvents() {
-		const map = new Map();
-
-		map.set("click", { preventClosing: true });
-		map.set("ui5-change", { preventClosing: false });
-		map.set("ui5-open", { preventClosing: true });
-		map.set("ui5-close", { preventClosing: true });
-
-		return map;
-	}
-
-	constructor() {
-		super();
-
-		this._onEvent = this._onEventHandler.bind(this);
-	}
-
-	onEnterDOM(): void {
-		this.attachEventListeners();
-	}
-
-	onExitDOM(): void {
-		this.detachEventListeners();
-	}
-
-	attachEventListeners(): void {
-		[...this.subscribedEvents.keys()].forEach(e => {
-			this.addEventListener(e, this._onEvent);
-		});
-	}
-
-	detachEventListeners(): void {
-		[...this.subscribedEvents.keys()].forEach(e => {
-			this.removeEventListener(e, this._onEvent);
-		});
-	}
-
-	_onEventHandler(e: Event): void {
-		if (e.type === "ui5-change") {
-			// update options
-			const selectedOption = (e as CustomEvent<ToolbarSelectChangeEventDetail>).detail.selectedOption;
-			const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
-			this.options.forEach((option: ToolbarSelectOption, index: number) => {
-				if (index === selectedOptionIndex) {
-					option.setAttribute("selected", "");
-				} else {
-					option.removeAttribute("selected");
-				}
-			});
+	onClick(e: Event): void {
+		e.stopImmediatePropagation();
+		const prevented = !this.fireDecoratorEvent("click", { targetRef: e.target as HTMLElement });
+		if (prevented && !this.preventOverflowClosing) {
+			this.fireDecoratorEvent("close-overflow");
 		}
+	}
+
+	onOpen(e: Event): void {
+		e.stopImmediatePropagation();
+		const prevented = !this.fireDecoratorEvent("open", { targetRef: e.target as HTMLElement });
+		if (prevented) {
+			this.fireDecoratorEvent("close-overflow");
+		}
+	}
+
+	onClose(e: Event): void {
+		e.stopImmediatePropagation();
+		const prevented = !this.fireDecoratorEvent("close", { targetRef: e.target as HTMLElement });
+		if (prevented) {
+			this.fireDecoratorEvent("close-overflow");
+		}
+	}
+
+	onChange(e: CustomEvent<SelectChangeEventDetail>): void {
+		e.stopImmediatePropagation();
+		const prevented = !this.fireDecoratorEvent("change", { ...e.detail, targetRef: e.target as HTMLElement });
+		if (!prevented) {
+			this.fireDecoratorEvent("close-overflow");
+		}
+
+		this._syncOptions(e.detail.selectedOption);
+	}
+
+	_syncOptions(selectedOption: HTMLElement): void {
+		const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
+		this.options.forEach((option: ToolbarSelectOption, index: number) => {
+			if (index === selectedOptionIndex) {
+				option.setAttribute("selected", "");
+			} else {
+				option.removeAttribute("selected");
+			}
+		});
 	}
 
 	get styles() {

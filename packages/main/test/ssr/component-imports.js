@@ -24,8 +24,6 @@ import MultiInput from "../../dist/MultiInput.js";
 import Label from "../../dist/Label.js";
 import Link from "../../dist/Link.js";
 import Menu from "../../dist/Menu.js";
-import NavigationMenu from "../../dist/NavigationMenu.js";
-import NavigationMenuItem from "../../dist/NavigationMenuItem.js";
 import MenuItem from "../../dist/MenuItem.js";
 import Popover from "../../dist/Popover.js";
 import Panel from "../../dist/Panel.js";

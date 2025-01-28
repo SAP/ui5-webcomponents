@@ -44,6 +44,7 @@ export default function SideNavigationSubItemTemplate(this: SideNavigationSubIte
 					onFocusIn={this._onfocusin}
 					tabIndex={this.effectiveTabIndex ? parseInt(this.effectiveTabIndex) : undefined}
 					aria-current={this._ariaCurrent}
+					aria-haspopup={this.accessibilityAttributes?.hasPopup}
 					aria-selected={this.selected}
 					title={this._tooltip}
 				>

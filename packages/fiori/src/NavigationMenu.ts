@@ -4,14 +4,14 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import Menu from "./Menu.js";
-import type MenuItem from "./MenuItem.js";
+import Menu from "@ui5/webcomponents/dist/Menu.js";
+import type MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
 import type NavigationMenuItem from "./NavigationMenuItem.js";
 import NavigationMenuTemplate from "./NavigationMenuTemplate.js";
 
 // Styles
 import navigationMenuCss from "./generated/themes/NavigationMenu.css.js";
-import menuCss from "./generated/themes/Menu.css.js";
+import menuCss from "@ui5/webcomponents/dist/generated/themes/Menu.css.js";
 
 import {
 	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
@@ -31,7 +31,7 @@ import {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/NavigationMenu.js";`
+ * `import "@ui5/webcomponents-fiori/dist/NavigationMenu.js";`
  * @constructor
  * @extends Menu
  * @since 1.22.0
