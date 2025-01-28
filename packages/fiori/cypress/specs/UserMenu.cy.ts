@@ -169,6 +169,7 @@ describe("Avatar configuration", () => {
 		cy.get("@avatar").should("exist");
 		cy.get("@avatar").should("have.length", 1);
 		cy.get("@avatar").should("have.attr", "fallback-icon", "person-placeholder");
+		cy.get("@avatar").find("[ui5-tag]").should("not.exist");
 	});
 
 	it("tests initials", () => {
@@ -207,6 +208,25 @@ describe("Avatar configuration", () => {
 		cy.get("@avatar").find("img").as("image");
 		cy.get("@image").should("have.length", 1);
 		cy.get("@image").should("have.attr", "src", "./../../test/pages/img/man_avatar_1.png");
+	});
+
+	it("tests showEditButton", () => {
+		cy.mount(html`<ui5-button id="openUserMenuBtn">Open User Menu</ui5-button>
+		<ui5-user-menu open opener="openUserMenuBtn" show-edit-button>
+			<ui5-user-menu-account slot="accounts"
+								   title-text="Alain Chevalier 1"
+								   subtitle-text="alian.chevalier@sap.com"
+								   description="Delivery Manager, SAP SE">
+			</ui5-user-menu-account>
+		</ui5-user-menu>`);
+		cy.get("[ui5-user-menu]").as("userMenu");
+		cy.get("@userMenu").should("exist");
+		cy.get("@userMenu").shadow().find("[ui5-avatar]").as("avatar");
+		cy.get("@avatar").should("exist");
+		cy.get("@avatar").should("have.length", 1);
+		cy.get("@avatar").should("have.attr", "fallback-icon", "person-placeholder");
+		cy.get("@avatar").find("[ui5-tag]").should("exist");
+		cy.get("@avatar").find("[ui5-tag]").should("have.length", 1);
 	});
 });
 
