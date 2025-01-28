@@ -16,10 +16,10 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 		>
 			{this._menuPopoverItems.map(item =>
 				<NavigationMenuItem
+					accessibilityAttributes={item.accessibilityAttributes}
 					text={item.text}
 					icon={item.icon}
 					disabled={item.disabled}
-					// expanded={true}
 					href={item.href}
 					target={item.target}
 					title={item.title}
@@ -27,6 +27,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 				>
 					{item.items.map(subItem =>
 						<NavigationMenuItem
+							accessibilityAttributes={subItem.accessibilityAttributes}
 							text={subItem.text}
 							icon={subItem.icon}
 							disabled={subItem.disabled}
