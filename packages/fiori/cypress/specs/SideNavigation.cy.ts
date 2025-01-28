@@ -139,25 +139,25 @@ describe("Side Navigation interaction", () => {
 		cy.realPress("Space");
 
 		// assert
-		cy.get("#unselectableItem").should("have.attr", "expanded");
+		cy.get("#unselectableItem").should("be.focused").and("have.attr", "expanded");
 
 		// act
 		cy.realPress("Space");
 
 		// assert
-		cy.get("#unselectableItem").should("not.have.attr", "expanded");
+		cy.get("#unselectableItem").should("be.focused").and("not.have.attr", "expanded");
 
 		// act
 		cy.realPress("Enter");
 
 		// assert
-		cy.get("#unselectableItem").should("have.attr", "expanded");
+		cy.get("#unselectableItem").should("be.focused").and("have.attr", "expanded");
 
 		// act
 		cy.realPress("Enter");
 
 		// assert
-		cy.get("#unselectableItem").should("not.have.attr", "expanded");
+		cy.get("#unselectableItem").should("be.focused").and("not.have.attr", "expanded");
 	});
 
 	it("Tests isSelectable", () => {
