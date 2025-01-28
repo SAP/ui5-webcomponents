@@ -1,5 +1,6 @@
 import '@cypress/code-coverage/support'
-import { render } from "@ui5/webcomponents-base/dist/thirdparty/preact/preact.module.js";
+import { render, createContext } from "@ui5/webcomponents-base/dist/thirdparty/preact/preact.module.js";
+import { jsx } from "@ui5/webcomponents-base/dist/thirdparty/preact/jsxRuntime.module.js";
 import { setupHooks, getContainerEl} from '@cypress/mount-utils';
 import "./commands.js";
 
@@ -16,7 +17,10 @@ function mount(component, options = {}) {
 		configurationScript.innerHTML = JSON.stringify(options.ui5Configuration);
 	}
 
-	return render(component, root);
+	// REFACTOR THIS PART
+	const ctx = createContext(this);
+	const vnode = jsx(ctx.Provider, { value: component, children: component });
+	return render(vnode, root);
 }
 
 setupHooks(cleanup);

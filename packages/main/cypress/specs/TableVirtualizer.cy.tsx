@@ -1,25 +1,22 @@
-import { html } from "lit";
-import "../../src/Table.js";
-import "../../src/TableHeaderRow.js";
-import "../../src/TableHeaderCell.js";
+import Table from "../../src/Table.js";
+import TableHeaderRow from "../../src/TableHeaderRow.js";
+import TableHeaderCell from "../../src/TableHeaderCell.js";
 import "../../src/TableRow.js";
 import "../../src/TableCell.js";
-import "../../src/TableVirtualizer.js";
 
-import type Table from "../../src/Table.js";
-import type TableVirtualizer from "../../src/TableVirtualizer.js";
+import TableVirtualizer from "../../src/TableVirtualizer.js";
 import type { RangeChangeEventDetail } from "../../src/TableVirtualizer.js";
 
 describe("TableVirtualizer", () => {
 	function mountTable(rowHeight = 50, rowCount = 100, tableHeight = 250) {
-		cy.mount(html`
-			<ui5-table style="height: ${tableHeight}px">
-				<ui5-table-header-row slot="headerRow" hidden>
-					<ui5-table-header-cell>Column</ui5-table-header-cell>
-				</ui5-table-header-row>
-				<ui5-table-virtualizer slot="features" row-height="${rowHeight}" row-count="${rowCount}"></ui5-table-virtualizer>
-			</ui5-table>
-		`);
+		cy.mount(
+			<Table style={{ height: `${tableHeight}px` }}>
+				<TableHeaderRow slot="headerRow" hidden>
+					<TableHeaderCell>Column</TableHeaderCell>
+				</TableHeaderRow>
+				<TableVirtualizer slot="features" rowHeight={rowHeight} rowCount={rowCount}></TableVirtualizer>
+			</Table>
+		);
 
 		cy.get<TableVirtualizer>("[ui5-table-virtualizer]").as("virtualizer").then($virtualizer => {
 			$virtualizer[0].addEventListener("range-change", updateRows as EventListener);

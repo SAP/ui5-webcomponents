@@ -1,29 +1,30 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 /* eslint-disable newline-per-chained-call */
-import "../../src/Table.js";
-import "../../src/TableHeaderRow.js";
+import Table from "../../src/Table.js";
 import "../../src/TableHeaderCell.js";
-import "../../src/TableRow.js";
 import "../../src/TableCell.js";
-import "../../src/TableRowAction.js";
-import "../../src/TableRowActionNavigation.js";
 import "../../src/Menu.js";
 import "../../src/MenuItem.js";
-import "@ui5/webcomponents-icons/dist/add.js";
-import "@ui5/webcomponents-icons/dist/edit.js";
-import "@ui5/webcomponents-icons/dist/delete.js";
-import "@ui5/webcomponents-icons/dist/share.js";
+import add from "@ui5/webcomponents-icons/dist/add.js";
+import edit from "@ui5/webcomponents-icons/dist/edit.js";
+import share from "@ui5/webcomponents-icons/dist/share.js";
+import deleteIcon from "@ui5/webcomponents-icons/dist/delete.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import TableHeaderRow from "../../src/TableHeaderRow.js";
+import TableRowAction from "../../src/TableRowAction.js";
+import TableRowActionNavigation from "../../src/TableRowActionNavigation.js";
+import TableRow from "../../src/TableRow.js";
+import type { JSX } from "@ui5/webcomponents-base/jsx-runtime";
 
 describe("TableRowActions", () => {
-	function mountTable(rowActionCount = 0, rows = "") {
-		cy.mount(`
-			<ui5-table row-action-count="${rowActionCount}">
-				<ui5-table-header-row slot="headerRow"></ui5-table-header-row>
-				${rows}
-			</ui5-table>
-		`);
+	function mountTable(rowActionCount = 0, content: () => JSX.Element) {
+		cy.mount(
+			<Table rowActionCount={rowActionCount}>
+				<TableHeaderRow slot="headerRow"></TableHeaderRow>
+				{content()}
+			</Table>
+		);
 
 		cy.get("[ui5-table]").as("table").children("ui5-table-row").as("rows");
 		cy.get("@table").children("ui5-table-header-row").first().as("headerRow");
@@ -40,20 +41,21 @@ describe("TableRowActions", () => {
 
 	describe("Rendering", () => {
 		it("tests single row action", () => {
-			mountTable(1, `
-				<ui5-table-row id="addRow">
-					<ui5-table-row-action slot="actions" id="addAction" icon="add" text="Add"></ui5-table-row-action>
-				</ui5-table-row>
-				<ui5-table-row>
-					<ui5-table-row-action slot="actions" icon="add" text="Add" invisible></ui5-table-row-action>
-				</ui5-table-row>
-				<ui5-table-row>
-					<ui5-table-row-action-navigation slot="actions"></ui5-table-row-action-navigation>
-				</ui5-table-row>
-				<ui5-table-row id="navigationRow">
-					<ui5-table-row-action-navigation slot="actions" id="navigationAction" interactive></ui5-table-row-action-navigation>
-				</ui5-table-row>
-			`);
+			mountTable(1, () => <>
+				<TableRow id="addRow">
+					<TableRowAction slot="actions" id="addAction" icon={add} text="Add"></TableRowAction>
+				</TableRow>
+				<TableRow>
+					<TableRowAction slot="actions" icon={add} text="Add" invisible={true}></TableRowAction>
+				</TableRow>
+				<TableRow>
+					<TableRowActionNavigation slot="actions"></TableRowActionNavigation>
+				</TableRow>
+				<TableRow id="navigationRow">
+					<TableRowActionNavigation slot="actions" id="navigationAction" interactive={true}></TableRowActionNavigation>
+				</TableRow>
+			</>
+			);
 
 			cy.get("@headerRow").shadow().find("#actions-cell").should("exist");
 			cy.get("@innerTable").should("have.css", "gridTemplateColumns", `${8 + 36 + 8}px`);
@@ -75,14 +77,15 @@ describe("TableRowActions", () => {
 		});
 
 		it("tests multiple row actions - all visible", () => {
-			mountTable(2, `
-				<ui5-table-row>
-					<ui5-table-row-action-navigation slot="actions" interactive></ui5-table-row-action-navigation>
-					<ui5-table-row-action slot="actions" id="addAction" icon="add" text="Add"></ui5-table-row-action>
-					<ui5-table-row-action slot="actions" id="editAction" icon="edit" text="Edit"></ui5-table-row-action>
-					<ui5-table-row-action slot="actions" icon="delete" text="Delete"></ui5-table-row-action>
-				</ui5-table-row>
-			`);
+			mountTable(2, () => <>
+				<TableRow>
+					<TableRowActionNavigation slot="actions" interactive={true}></TableRowActionNavigation>
+					<TableRowAction slot="actions" id="addAction" icon={add} text="Add"></TableRowAction>
+					<TableRowAction slot="actions" id="editAction" icon={edit} text="Edit"></TableRowAction>
+					<TableRowAction slot="actions" icon={deleteIcon} text="Delete"></TableRowAction>
+				</TableRow>
+			</>
+			);
 
 			cy.get("@headerRow").shadow().find("#actions-cell").should("exist");
 			cy.get("@innerTable").should("have.css", "gridTemplateColumns", `${8 + 36 + 4 + 36 + 8}px`);
@@ -151,13 +154,14 @@ describe("TableRowActions", () => {
 		});
 
 		it("tests that invisible actions occupy space for alignment", () => {
-			mountTable(3, `
-				<ui5-table-row>
-					<ui5-table-row-action slot="actions" icon="add" text="Add"></ui5-table-row-action>
-					<ui5-table-row-action slot="actions" icon="edit" text="Edit" invisible></ui5-table-row-action>
-					<ui5-table-row-action slot="actions" icon="delete" text="Delete"></ui5-table-row-action>
-				</ui5-table-row>
-			`);
+			mountTable(3, () => <>
+				<TableRow>
+					<TableRowAction slot="actions" icon={add} text="Add"></TableRowAction>
+					<TableRowAction slot="actions" icon={edit} text="Edit" invisible={true}></TableRowAction>
+					<TableRowAction slot="actions" icon={deleteIcon} text="Delete"></TableRowAction>
+				</TableRow>
+			</>
+			);
 
 			cy.get("@row1").find("ui5-table-row-action").then($actions => {
 				const firstAction = $actions[0];
@@ -168,14 +172,15 @@ describe("TableRowActions", () => {
 		});
 
 		it("tests that avoiding overflow is more important than aligment", () => {
-			mountTable(3, `
-				<ui5-table-row>
-					<ui5-table-row-action slot="actions" icon="add" text="Add" invisible></ui5-table-row-action>
-					<ui5-table-row-action slot="actions" icon="edit" text="Edit"></ui5-table-row-action>
-					<ui5-table-row-action slot="actions" icon="delete" text="Delete"></ui5-table-row-action>
-					<ui5-table-row-action slot="actions" icon="share" text="Share" invisible></ui5-table-row-action>
-				</ui5-table-row>
-			`);
+			mountTable(3, () => <>
+				<TableRow>
+					<TableRowAction slot="actions" icon={add} text="Add" invisible={true}></TableRowAction>
+					<TableRowAction slot="actions" icon={edit} text="Edit"></TableRowAction>
+					<TableRowAction slot="actions" icon={deleteIcon} text="Delete"></TableRowAction>
+					<TableRowAction slot="actions" icon={share} text="Share" invisible={true}></TableRowAction>
+				</TableRow>
+			</>
+			);
 
 			cy.get("@row1").shadow().find("#actions-cell").children().as("actions");
 			cy.get("@actions").should("have.length", 2);
@@ -184,14 +189,15 @@ describe("TableRowActions", () => {
 		});
 
 		it("tests that the aligment of navigation is more important than avoiding overflow", () => {
-			mountTable(3, `
-				<ui5-table-row>
-					<ui5-table-row-action-navigation slot="actions" invisible></ui5-table-row-action-navigation>
-					<ui5-table-row-action slot="actions" icon="add" text="Add"></ui5-table-row-action>
-					<ui5-table-row-action slot="actions" icon="edit" text="Edit"></ui5-table-row-action>
-					<ui5-table-row-action slot="actions" icon="delete" text="Delete"></ui5-table-row-action>
-				</ui5-table-row>
-			`);
+			mountTable(3, () => <>
+				<TableRow>
+					<TableRowActionNavigation slot="actions" invisible={true}></TableRowActionNavigation>
+					<TableRowAction slot="actions" icon={add} text="Add"></TableRowAction>
+					<TableRowAction slot="actions" icon={edit} text="Edit"></TableRowAction>
+					<TableRowAction slot="actions" icon={deleteIcon} text="Delete"></TableRowAction>
+				</TableRow>
+			</>
+			);
 
 			cy.get("@row1").shadow().find("#actions-cell").children().as("actions");
 			cy.get("@actions").should("have.length", 3);
