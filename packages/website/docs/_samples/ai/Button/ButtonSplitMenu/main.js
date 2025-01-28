@@ -61,17 +61,17 @@ function menuItemClickHandler(evt) {
 function menuOpenHandler() {
 	var button = menu.opener;
 
-	button.activeArrowButton = true;
+	button.arrowButtonPressed = true;
 }
 
 function menuCloseHandler() {
 	var button = menu.opener;
 
-	button.activeArrowButton = false;
+	button.arrowButtonPressed = false;
 }
 
 myAiButton.addEventListener("click", aiButtonClickHandler);
-myAiButton.addEventListener("arrow-click", aiButtonArrowClickHandler);
+myAiButton.addEventListener("arrow-button-click", aiButtonArrowClickHandler);
 menu.addEventListener("item-click", menuItemClickHandler);
 menu.addEventListener("open", menuOpenHandler);
 menu.addEventListener("close", menuCloseHandler);
