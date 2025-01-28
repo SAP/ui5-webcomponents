@@ -247,11 +247,6 @@
 		display: flex;
 		transform: translateY(0);
 	}
-	10% {
-		opacity: 1;
-		display: flex;
-		transform: translateY(4px);
-	}
 	to {
 		opacity: 0;
 		display: flex;
@@ -286,14 +281,6 @@
 		opacity: 0;
 		display: flex;
 		transform: translateY(16px);
-	}
-	50% {
-		opacity: 1;
-		display: flex;
-	}
-	90% {
-		display: flex;
-		transform: translateY(-4px);
 	}
 	to {
 		opacity: 1;
