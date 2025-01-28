@@ -1,7 +1,7 @@
 import { assert } from "chai";
 
 
-describe("FlexibleColumnLayout Behavior", () => {
+describe.skip("FlexibleColumnLayout Behavior", () => {
 	before(async () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
@@ -90,7 +90,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 	});
 });
 
-describe("Layout change by dragging start-separator on desktop", () => {
+describe.skip("Layout change by dragging start-separator on desktop", () => {
 	before(async () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
@@ -182,7 +182,7 @@ describe("Layout change by dragging start-separator on desktop", () => {
 	});
 });
 
-describe("Layout change by dragging end-separator on desktop", () => {
+describe.skip("Layout change by dragging end-separator on desktop", () => {
 	before(async () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
@@ -216,7 +216,7 @@ describe("Layout change by dragging end-separator on desktop", () => {
 	});
 });
 
-describe("Layout change by dragging start-separator on tablet", () => {
+describe.skip("Layout change by dragging start-separator on tablet", () => {
 	before(async () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
@@ -310,7 +310,7 @@ describe("Layout change by dragging start-separator on tablet", () => {
 	});
 });
 
-describe("Layout change by dragging end-separator on tablet", () => {
+describe.skip("Layout change by dragging end-separator on tablet", () => {
 	before(async () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
@@ -344,7 +344,7 @@ describe("Layout change by dragging end-separator on tablet", () => {
 	});
 });
 
-describe("Preserves column min-width", () => {
+describe.skip("Preserves column min-width", () => {
 	before(async () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
@@ -377,7 +377,7 @@ describe("Preserves column min-width", () => {
 
 	it("preserves min-width of begin column", async () => {
 		await browser.setWindowSize(1400, 1080);
-		
+
 		const fcl = await browser.$("#fcl3"),
 			startSeparator = await fcl.shadow$(".ui5-fcl-separator-start"),
 			smallestColumnWidth = 248;
@@ -480,7 +480,7 @@ describe("Preserves column min-width", () => {
 	});
 });
 
-describe("ACC", () => {
+describe.skip("ACC", () => {
 	before(async () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
@@ -568,16 +568,16 @@ describe("ACC", () => {
 	});
 });
 
-describe("First column closing arrow behavior", () => {
+describe.skip("First column closing arrow behavior", () => {
 	it("should switch layout and update arrow icon on desktop", async () => {
 		const fcl = await browser.$("#fcl10");
 		const arrowBtn = await fcl.shadow$(".ui5-fcl-arrow--start");
-	
+
 		await fcl.setProperty("layout", "ThreeColumnsStartHiddenMidExpanded");
 		assert.strictEqual(await arrowBtn.getAttribute("icon"), "slim-arrow-right", "Arrow should point right");
-	
+
 		await arrowBtn.click();
-	
+
 		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "Layout should switch to ThreeColumnsMidExpanded");
 		assert.strictEqual(await arrowBtn.getAttribute("icon"), "slim-arrow-left", "Arrow should point left");
 

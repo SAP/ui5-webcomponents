@@ -14,5 +14,5 @@ notificationList.addEventListener("item-close", e => {
 
 menuWithActions.addEventListener("ui5-item-click", function(event) {
     wcToast.textContent = "Menu button '" + event.detail.text + "' pressed" + " on Notification List Item with id '" + event.target.parentElement.id + "'.";
-    wcToast.show();
+    wcToast.open = true;
 });

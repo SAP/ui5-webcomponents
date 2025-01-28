@@ -108,14 +108,6 @@ class UI5ElementMetadata {
 	}
 
 	/**
-	 * Returns the tag of the UI5 Element without the scope
-	 * @private
-	 */
-	getFeatures(): Array<string> {
-		return this.metadata.features || [];
-	}
-
-	/**
 	 * Returns the tag of the UI5 Element
 	 * @public
 	 */
