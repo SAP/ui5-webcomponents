@@ -324,6 +324,7 @@ class Button extends UI5Element implements IButton {
 	/**
 	 * Adds a badge to the button.
 	 *
+	 * **Note:** Although using badge with `InlineText` is possible, we don't recommend it being used when the compoent is in compact density mode.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })

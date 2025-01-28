@@ -51,6 +51,7 @@ import tagCss from "./generated/themes/Tag.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Tag.js";`
+ * @csspart root - Used to style the root element.
  * @constructor
  * @extends UI5Element
  * @since 2.0.0
