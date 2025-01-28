@@ -7,7 +7,7 @@ import type BadgeDesign from "./types/BadgeDesign.js";
  * @class
  *
  * ### ES6 Module Import
- *
+ * The `ui5-button-badge` component defines a badge that appears in the `ui5-button`.
  * `import "@ui5/webcomponents/dist/ButtonBadge.js";`
  * @constructor
  * @extends UI5Element

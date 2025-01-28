@@ -30,6 +30,7 @@ import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import BadgePlacement from "./types/BadgeDesign.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
+import type ButtonBadge from "./ButtonBadge.js";
 import ButtonTemplate from "./ButtonTemplate.js";
 import "./Tab.js";
 import "./ButtonBadge.js";
@@ -38,7 +39,6 @@ import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPH
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
-import type ButtonBadge from "./ButtonBadge.js";
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
@@ -366,6 +366,7 @@ class Button extends UI5Element implements IButton {
 
 	async onBeforeRendering() {
 		const needsOverflowVisible = this.badge.length && (this.badge[0].design === BadgePlacement.AttentionDot || this.badge[0].design === BadgePlacement.OverlayText);
+
 		if (needsOverflowVisible) {
 			this._internals.states.add("has-overlay-badge");
 		} else {
