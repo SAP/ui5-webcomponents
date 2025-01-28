@@ -124,6 +124,37 @@ describe("Side Navigation interaction", () => {
 		cy.get("#unselectableItem").should("not.have.attr", "expanded");
 	});
 
+	it("Tests expanding and collapsing of unselectable parent item when SideNavigation is collapsed", () => {
+		cy.mount(html`
+			<ui5-side-navigation id="sideNav" collapsed>
+				<ui5-side-navigation-item id="item1" text="1" unselectable>
+					<ui5-side-navigation-sub-item text="1.1"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		`);
+
+		// act
+		cy.get("#item1").realClick();
+
+		// assert
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+			.should("have.attr", "expanded");
+
+		// assert
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+			.realClick();
+
+		// assert
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+			.should("have.attr", "expanded");
+	});
+
 	it("Tests isSelectable", () => {
 		cy.mount(`
 			<ui5-side-navigation>
