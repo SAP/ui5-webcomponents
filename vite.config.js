@@ -4,6 +4,7 @@ import customHotUpdate from "@ui5/webcomponents-tools/lib/dev-server/custom-hot-
 import path, { dirname, join, resolve } from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { checker } from 'vite-plugin-checker';
+import istanbul from 'vite-plugin-istanbul';
 
 // use after path.join and path.resolve as they turn paths to windows separators and comparisons and replacements stop working
 const toPosixPath = (pathStr) => {
@@ -98,7 +99,6 @@ const customResolver = (id, source, options) => {
 		return resolved;
 	}
 }
-
 export default defineConfig(async () => {
 	return {
 		build: {
@@ -114,7 +114,14 @@ export default defineConfig(async () => {
 					tsconfigPath: "packages/fiori/tsconfig.json",
 					buildMode: true,
 				}
-			})
+			}),
+			istanbul({
+				include: ['packages/**/src/*','src/*'],
+				exclude: ['node_modules', 'test/'],
+				extension: ['.js', '.ts', '.tsx'],
+				requireEnv: true,
+				cypress: true,
+			}),
 		],
 		resolve: {
 			alias: [

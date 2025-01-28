@@ -36,7 +36,7 @@ describe("TimePicker on phone - general interactions", () => {
 
 		// act
 		await timePicker.setProperty("value", "11:12:13");
-		await timePicker.shadow$("ui5-input").click();
+		await timePicker.shadow$("ui5-datetime-input").click();
 
 		// assert
 		assert.ok(await timePickerPopover.getAttribute("open"), "Popover found");
@@ -61,7 +61,7 @@ describe("TimePicker on phone - general interactions", () => {
 
 		// act
 		await timePicker.setProperty("value", "10:20:30 AM");
-		await timePicker.shadow$("ui5-input").click();
+		await timePicker.shadow$("ui5-datetime-input").click();
 
 		await hoursInnerInput.setValue("11");
 		await minutesInnerInput.setValue("22");
@@ -80,7 +80,7 @@ describe("TimePicker on phone - general interactions", () => {
 		assert.strictEqual((await timePicker.getAttribute("value")).toUpperCase(), "11:22:33 PM", "Correct new time is set to the TimePicker");
 
 		// act
-		await timePicker.shadow$("ui5-input").click();
+		await timePicker.shadow$("ui5-datetime-input").click();
 		await hoursInnerInput.setValue("10");
 		await minutesInnerInput.setValue("20");
 		await secondsInnerInput.setValue("30");
@@ -109,7 +109,7 @@ describe("TimePicker on phone - general interactions", () => {
 
 		// act
 		await timePicker.setProperty("value", "10:20:30 AM");
-		await timePicker.shadow$("ui5-input").click();
+		await timePicker.shadow$("ui5-datetime-input").click();
 		await browser.keys(["0", "8", "2", "4", "1", "3"]);
 
 		// assert
@@ -124,7 +124,7 @@ describe("TimePicker on phone - general interactions", () => {
 		assert.strictEqual((await timePicker.getAttribute("value")).toUpperCase(), "08:24:13", "New time is not set to the TimePicker");
 
 		// act
-		await timePicker.shadow$("ui5-input").click();
+		await timePicker.shadow$("ui5-datetime-input").click();
 		await browser.keys(["3", "6", "8"]);
 
 		// assert
@@ -139,7 +139,7 @@ describe("TimePicker on phone - general interactions", () => {
 		assert.strictEqual((await timePicker.getAttribute("value")).toUpperCase(), "03:06:08", "New time is not set to the TimePicker");
 
 		// act
-		await timePicker.shadow$("ui5-input").click();
+		await timePicker.shadow$("ui5-datetime-input").click();
 		await browser.keys(["4", "5"]);
 
 		// assert
@@ -188,7 +188,7 @@ describe("TimePicker on phone - accessibility and other input attributes", () =>
 		const texts = await getResourceBundleTexts({ keys, id: "timepicker" });
 
 		// act
-		await timePicker.shadow$("ui5-input").click();
+		await timePicker.shadow$("ui5-datetime-input").click();
 
 		// assert
 		assert.strictEqual(await hoursInnerInput.getAttribute("step"), "1", "Correct hours 'step' attribute");
@@ -217,7 +217,7 @@ describe("TimePicker on phone - accessibility and other input attributes", () =>
 		const secondsInnerInput = await components[2].shadow$("input");
 
 		// act
-		await timePicker.shadow$("ui5-input").click();
+		await timePicker.shadow$("ui5-datetime-input").click();
 
 		// assert
 		assert.strictEqual(await hoursInnerInput.getAttribute("type"), "number", "Correct hours 'type' attribute");

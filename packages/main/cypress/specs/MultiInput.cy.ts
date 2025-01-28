@@ -1,7 +1,6 @@
 import { html } from "lit";
 import "../../src/MultiInput.js";
 import "../../src/Tokenizer.js";
-import "../../src/features/InputSuggestions.js";
 import "../../src/SuggestionItem.js";
 
 describe("MultiInput Web Component", () => {

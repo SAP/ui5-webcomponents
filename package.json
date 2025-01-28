@@ -47,7 +47,7 @@
     "ci:deploy:nightly": "DEPLOY_NIGHTLY=true yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build:nightly",
 
     "ci:test:base": "yarn workspace @ui5/webcomponents-base test",
-    "ci:test:main:suite-1": "yarn workspace @ui5/webcomponents test:ssr && yarn workspace @ui5/webcomponents test:suite-1",
+    "ci:test:main:suite-1": "yarn workspace @ui5/webcomponents test:ssr && yarn workspace @ui5/webcomponents test:vitest && yarn workspace @ui5/webcomponents test:suite-1",
     "ci:test:main:suite-2": "yarn workspace @ui5/webcomponents test:cypress && yarn workspace @ui5/webcomponents test:suite-2",
     "ci:test:fiori": "yarn workspace @ui5/webcomponents-fiori test:ssr && yarn workspace @ui5/webcomponents-fiori test:cypress && yarn workspace @ui5/webcomponents-fiori test",
     "ci:test:compat": "yarn workspace @ui5/webcomponents-compat test:ssr && yarn workspace @ui5/webcomponents-compat test",
