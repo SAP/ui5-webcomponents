@@ -495,5 +495,41 @@ describe("Menu interaction", () => {
 				.find("[ui5-responsive-popover]")
 				.should("have.attr", "accessible-name", "Select an option from the menu");
 		});
+
+		it("Menu items - navigation in endContent", () => {
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+			<ui5-menu id="menu" opener="btnOpen">
+				<ui5-menu-item id="item2" text="Item 2">
+					<ui5-button id="newLock" slot="endContent" icon="locked" design="Transparent"></ui5-button>
+					<ui5-button id="newFavorite" slot="endContent" icon="favorite" design="Transparent"></ui5-button>
+				</ui5-menu-item>
+				<ui5-menu-item text="Item3" additional-text="Ctrl+F" icon="add-folder" ></ui5-menu-item>
+			</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpen();
+
+			cy.get("[ui5-menu] > [ui5-menu-item]").as("items");
+			cy.get("[ui5-menu] [ui5-button]").as("buttons");
+			cy.get("@items").first().should("be.focused");
+
+			cy.realPress("ArrowRight");
+			cy.get("@buttons").first().should("be.focused");
+
+			cy.realPress("ArrowRight");
+			cy.get("@buttons").last().should("be.focused");
+
+			cy.realPress("ArrowRight");
+			cy.get("@buttons").last().should("be.focused");
+
+			cy.realPress("ArrowLeft");
+			cy.get("@buttons").first().should("be.focused");
+
+			cy.realPress("ArrowLeft");
+			cy.get("@buttons").first().should("be.focused");
+
+			cy.realPress("ArrowDown");
+			cy.get("@items").last().should("be.focused");
+		});
 	});
 });
