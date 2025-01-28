@@ -5,8 +5,8 @@ import "../../src/ToggleButton.js";
 import "../../src/Calendar.js";
 import "../../src/Button.js";
 import "../../src/CalendarDate.js";
-import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js"
-import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"
+import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
 describe("Calendar general interaction", () => {
 	beforeEach(() => {
@@ -26,14 +26,14 @@ describe("Calendar general interaction", () => {
 			<ui5-calendar id="calendar1"></ui5-calendar>
 		`);
 
-		cy.window().then((win) => {
+		cy.window().then(win => {
 			const toggleButton = win.document.getElementById("weekNumbersButton") as ToggleButton;
 			const calendar = win.document.getElementById("calendar1") as Calendar;
-			
-			toggleButton!.addEventListener("click", (event: Event) => {
+
+			toggleButton.addEventListener("click", (event: Event) => {
 				const button = event.target as ToggleButton;
 
-				calendar.hideWeekNumbers = button.pressed ? true : false;
+				calendar.hideWeekNumbers = button.pressed;
 				toggleButton.innerHTML = button.pressed ? "show" : "hide";
 			});
 		});
@@ -98,8 +98,8 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find("[tabindex='0']")
 			.invoke("attr", "data-sap-timestamp")
-			.then(timestamp => {
-				const focusedYear = new Date(parseInt(timestamp!) * 1000).getUTCFullYear();
+			.then(_timestamp => {
+				const focusedYear = new Date(parseInt(_timestamp!) * 1000).getUTCFullYear();
 				expect(focusedYear).to.equal(1997);
 			});
 	});
@@ -129,8 +129,8 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find("[tabindex='0']")
 			.invoke("attr", "data-sap-timestamp")
-			.then(timestamp => {
-				const focusedMonth = new Date(parseInt(timestamp!) * 1000).getUTCMonth();
+			.then(_timestamp => {
+				const focusedMonth = new Date(parseInt(_timestamp!) * 1000).getUTCMonth();
 				expect(focusedMonth).to.equal(10);
 			});
 	});
@@ -161,8 +161,8 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find("[tabindex='0']")
 			.invoke("attr", "data-sap-timestamp")
-			.then(timestamp => {
-				const focusedYear = new Date(parseInt(timestamp!) * 1000).getUTCFullYear();
+			.then(_timestamp => {
+				const focusedYear = new Date(parseInt(_timestamp!) * 1000).getUTCFullYear();
 				expect(focusedYear).to.equal(2000);
 			});
 	});
@@ -215,22 +215,21 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find("[tabindex='0']")
 			.click();
-		
-		cy.wait(300); // time to process the focus change
+
 		cy.focused().realPress("PageUp");
 
 		cy.get<Calendar>("#calendar1")
 			.invoke("prop", "timestamp")
-			.then(timestamp => {
-				expect(new Date(timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
+			.then(_timestamp => {
+				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
 			});
 
 		cy.focused().realPress("PageDown");
 
 		cy.get<Calendar>("#calendar1")
 			.invoke("prop", "timestamp")
-			.then(timestamp => {
-				expect(new Date(timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 10, 1, 0, 0, 0)));
+			.then(_timestamp => {
+				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 10, 1, 0, 0, 0)));
 			});
 	});
 
@@ -244,21 +243,21 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find("[tabindex='0']")
 			.click();
-		
+
 		cy.focused().realPress(["Shift", "PageUp"]);
 
 		cy.get<Calendar>("#calendar1")
 			.invoke("prop", "timestamp")
-			.then(timestamp => {
-				expect(new Date(timestamp * 1000)).to.deep.equal(new Date(Date.UTC(1999, 10, 1, 0, 0, 0)));
+			.then(_timestamp => {
+				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(1999, 10, 1, 0, 0, 0)));
 			});
 
 		cy.focused().realPress(["Shift", "PageDown"]);
 
 		cy.get<Calendar>("#calendar1")
 			.invoke("prop", "timestamp")
-			.then(timestamp => {
-				expect(new Date(timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 10, 1, 0, 0, 0)));
+			.then(_timestamp => {
+				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 10, 1, 0, 0, 0)));
 			});
 	});
 
@@ -272,21 +271,21 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find("[tabindex='0']")
 			.click();
-		
+
 		cy.focused().realPress(["Control", "Shift", "PageUp"]);
 
 		cy.get<Calendar>("#calendar1")
 			.invoke("prop", "timestamp")
-			.then(timestamp => {
-				expect(new Date(timestamp * 1000)).to.deep.equal(new Date(Date.UTC(1990, 10, 1, 0, 0, 0)));
+			.then(_timestamp => {
+				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(1990, 10, 1, 0, 0, 0)));
 			});
 
 		cy.focused().realPress(["Control", "Shift", "PageDown"]);
 
 		cy.get<Calendar>("#calendar1")
 			.invoke("prop", "timestamp")
-			.then(timestamp => {
-				expect(new Date(timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 10, 1, 0, 0, 0)));
+			.then(_timestamp => {
+				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 10, 1, 0, 0, 0)));
 			});
 	});
 
@@ -306,16 +305,16 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.invoke("prop", "timestamp")
-			.then(timestamp => {
-				expect(new Date(timestamp * 1000)).to.deep.equal(new Date(Date.UTC(1999, 9, 1, 0, 0, 0)));
+			.then(_timestamp => {
+				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(1999, 9, 1, 0, 0, 0)));
 			});
- 
+
 		cy.focused().realPress("PageDown");
 
 		cy.get<Calendar>("#calendar1")
 			.invoke("prop", "timestamp")
-			.then(timestamp => {
-				expect(new Date(timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
+			.then(_timestamp => {
+				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
 			});
 	});
 
@@ -330,22 +329,21 @@ describe("Calendar general interaction", () => {
 			.find("[tabindex='0']")
 			.click();
 
-		cy.wait(300);
 		cy.focused().realPress(["Shift", "F4"]);
 		cy.focused().realPress("PageUp");
 
 		cy.get<Calendar>("#calendar1")
 			.invoke("prop", "timestamp")
-			.then(timestamp => {
-				expect(new Date(timestamp * 1000)).to.deep.equal(new Date(Date.UTC(1980, 9, 1, 0, 0, 0)));
+			.then(_timestamp => {
+				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(1980, 9, 1, 0, 0, 0)));
 			});
 
 		cy.focused().realPress("PageDown");
 
 		cy.get<Calendar>("#calendar1")
 			.invoke("prop", "timestamp")
-			.then(timestamp => {
-				expect(new Date(timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
+			.then(_timestamp => {
+				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
 			});
 	});
 
@@ -356,15 +354,17 @@ describe("Calendar general interaction", () => {
 
 		const timestamps = [971136000, 971222400, 971308800];
 
-		timestamps.forEach(timestamp => {
+		timestamps.forEach(_timestamp => {
 			cy.get<Calendar>("#calendar1")
 				.shadow()
 				.find("ui5-daypicker")
 				.shadow()
-				.find(`[data-sap-timestamp=${timestamp}]`)
+				.find(`[data-sap-timestamp=${_timestamp}]`)
 				.first()
-				.click()
-				.should("have.class", "ui5-dp-item--selected");
+				.as("date");
+
+			cy.get("@date").click();
+			cy.get("@date").should("have.class", "ui5-dp-item--selected");
 		});
 
 		cy.get<Calendar>("#calendar1")
@@ -472,8 +472,8 @@ describe("Calendar general interaction", () => {
 		cy.get<Calendar>("#calendar4").invoke("prop", "timestamp", 1594166400)
 			.invoke("prop", "minDate", "7/7/2020")
 			.invoke("prop", "maxDate", "20/10/2020")
-			.invoke("prop", "formatPattern", "dd/MM/yyyy")
-		
+			.invoke("prop", "formatPattern", "dd/MM/yyyy");
+
 		cy.get<Calendar>("#calendar4")
 			.shadow()
 			.find(".ui5-calheader")
@@ -497,8 +497,18 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-next]")
-			.should("not.have.class", "ui5-calheader-arrowbtn-disabled")
-			.click()
+			.should("not.have.class", "ui5-calheader-arrowbtn-disabled");
+
+		cy.get<Calendar>("#calendar4")
+			.shadow()
+			.find(".ui5-calheader")
+			.find("[data-ui5-cal-header-btn-next]")
+			.click();
+
+		cy.get<Calendar>("#calendar4")
+			.shadow()
+			.find(".ui5-calheader")
+			.find("[data-ui5-cal-header-btn-next]")
 			.click();
 
 		cy.get<Calendar>("#calendar4")
@@ -520,14 +530,14 @@ describe("Calendar general interaction", () => {
 		cy.get<Calendar>("#calendar5").invoke("prop", "timestamp", timestamp)
 			.invoke("prop", "primaryCalendarType", "Islamic")
 			.invoke("prop", "secondaryCalendarType", "Gregorian");
-		
+
 		cy.get<Calendar>("#calendar5")
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-month] > span")
 			.should("have.length", 2);
 
-		cy.get<Calendar>("#calendar5") 
+		cy.get<Calendar>("#calendar5")
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-year] > span")
@@ -542,7 +552,6 @@ describe("Calendar general interaction", () => {
 			.invoke("prop", "primaryCalendarType", "Islamic")
 			.invoke("prop", "secondaryCalendarType", "Gregorian");
 
-		cy.wait(300);
 		cy.get<Calendar>("#calendar5")
 			.shadow()
 			.find(".ui5-calheader")
@@ -553,10 +562,9 @@ describe("Calendar general interaction", () => {
 				expect(spans[1].textContent).to.equal("Sep – Oct");
 			});
 
-		cy.wait(300);
 		cy.get<Calendar>("#calendar5")
 			.shadow()
-			.find(".ui5-calheader")  
+			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-year]")
 			.find("span")
 			.then(spans => {
@@ -567,7 +575,7 @@ describe("Calendar general interaction", () => {
 
 	it("Calendar render two type for Month when MonthPicker is opened", () => {
 		cy.mount(html`<ui5-calendar id="calendar5" primary-calendar-type='Islamic' secondary-calendar-type='Gregorian'></ui5-calendar>`);
-		
+
 		const timestamp = new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).valueOf() / 1000;
 		cy.get<Calendar>("#calendar5").invoke("prop", "timestamp", timestamp);
 
@@ -593,7 +601,7 @@ describe("Calendar general interaction", () => {
 
 	it("Calendar render two type for Year when Year Picker is opened", () => {
 		cy.mount(html`<ui5-calendar id="calendar5" primary-calendar-type='Islamic' secondary-calendar-type='Gregorian'></ui5-calendar>`);
-		
+
 		const timestamp = new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).valueOf() / 1000;
 		cy.get<Calendar>("#calendar5").invoke("prop", "timestamp", timestamp);
 
@@ -639,7 +647,7 @@ describe("Calendar general interaction", () => {
 
 	it("Min and max dates are NOT set without format-pattern, because are not in ISO format (YYYY-MM-dd)", () => {
 		cy.get<Calendar>("#calendar1")
-			.invoke("prop", "maxDate", `${new Date(Date.UTC(2024, 9, 4, 0, 0, 0))}`)
+			.invoke("prop", "maxDate", new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toString())
 			.invoke("prop", "minDate", "25.10.2018");
 
 		cy.get<Calendar>("#calendar1")
@@ -708,7 +716,7 @@ describe("Calendar general interaction", () => {
 			<ui5-calendar id="calendar3">
 				<ui5-special-date slot="specialDates"></ui5-special-date>
 			</ui5-calendar>`);
-		
+
 		cy.get<Calendar>("#calendar3")
 			.invoke("prop", "formatPattern", "ddMMyyyy")
 			.invoke("prop", "minDate", "01072020")
@@ -744,7 +752,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar8")
 			.invoke("prop", "calendarWeekNumbering", "ISO_8601");
-		
+
 		cy.get<Calendar>("#calendar9")
 			.invoke("prop", "calendarWeekNumbering", "MiddleEastern");
 
@@ -763,7 +771,7 @@ describe("Calendar general interaction", () => {
 			.first()
 			.should("have.text", "52");
 
-		// Check first week number in MiddleEastern calendar  
+		// Check first week number in MiddleEastern calendar
 		cy.get<Calendar>("#calendar9")
 			.shadow()
 			.find("ui5-daypicker")
@@ -799,16 +807,15 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar8")
 			.invoke("prop", "calendarWeekNumbering", "ISO_8601");
-		
+
 		cy.get<Calendar>("#calendar9")
 			.invoke("prop", "calendarWeekNumbering", "MiddleEastern");
 
 		cy.get<Calendar>("#calendar10")
 			.invoke("prop", "calendarWeekNumbering", "WesternTraditional");
 
-
 		cy.get("[ui5-date]")
-		.invoke("prop", "value", "Jan 1, 2023");
+			.invoke("prop", "value", "Jan 1, 2023");
 
 		cy.get<Calendar>("#calendar8")
 			.shadow()
@@ -825,12 +832,12 @@ describe("Calendar general interaction", () => {
 			.find(".ui5-dp-firstday")
 			.first()
 			.should("have.text", "Sat");
-			
+
 		cy.get<Calendar>("#calendar10")
 			.shadow()
 			.find("[ui5-daypicker]")
 			.shadow()
-			.find(".ui5-dp-firstday") 
+			.find(".ui5-dp-firstday")
 			.first()
 			.should("have.text", "Sun");
 	});
