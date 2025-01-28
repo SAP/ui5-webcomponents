@@ -239,83 +239,83 @@ describe("Side Navigation interaction", () => {
 		});
 	});
 
-	// it("Tests 'selection-change' event", () => {
-	// 	cy.mount(
-	// 		<SideNavigation id="sideNav">
-	// 			<SideNavigationItem id="item" text="1" />
-	// 			<SideNavigationItem id="unselectableItem" text="2" unselectable={true} />
-	// 			<SideNavigationItem id="parentItem" text="3">
-	// 				<SideNavigationSubItem text="3.1" />
-	// 			</SideNavigationItem>
-	// 			<SideNavigationItem text="4" expanded={true}>
-	// 				<SideNavigationSubItem id="childItem" text="4.1" />
-	// 			</SideNavigationItem>
-	// 			<SideNavigationItem id="unselectableParentItem" text="5" unselectable={true}>
-	// 				<SideNavigationSubItem id="text9" text="5.1" />
-	// 			</SideNavigationItem>
-	// 	  </SideNavigation>
-	// 	);
-
-	// 	[
-	// 		{ element: cy.get("#item"), expectedCallCount: 1 },
-	// 		{ element: cy.get("#unselectableItem"), expectedCallCount: 0 },
-	// 		{ element: cy.get("#parentItem"), expectedCallCount: 1 },
-	// 		{ element: cy.get("#childItem"), expectedCallCount: 1 },
-	// 		{ element: cy.get("#unselectableParentItem"), expectedCallCount: 0 },
-	// 		{ element: cy.get("#unselectableParentItem").shadow().find(".ui5-sn-item-toggle-icon"), expectedCallCount: 0 },
-	// 	].forEach(({ element, expectedCallCount }) => {
-	// 		cy.get("#sideNav")
-	// 			.then(sideNav => {
-	// 				sideNav.get(0).addEventListener("ui5-selection-change", cy.stub().as("selectionChangeHandler"));
-	// 			});
-	// 		// act
-	// 		element.realClick();
-
-	// 		// assert
-	// 		cy.get("@selectionChangeHandler").should("have.callCount", expectedCallCount);
-	// 	});
-	// });
-
-	it("Tests 'selection-change' event when SideNavigation is collapsed", () => {
+	it("Tests 'selection-change' event", () => {
 		cy.mount(
-			<SideNavigation id="sideNav" collapsed={true}>
-				<SideNavigationItem text="1" />
-				<SideNavigationItem id="parentItem" text="2">
-					<SideNavigationSubItem text="2.1" />
-					<SideNavigationSubItem text="2.2" unselectable={true} />
+			<SideNavigation id="sideNav">
+				<SideNavigationItem id="item" text="1" />
+				<SideNavigationItem id="unselectableItem" text="2" unselectable={true} />
+				<SideNavigationItem id="parentItem" text="3">
+					<SideNavigationSubItem text="3.1" />
 				</SideNavigationItem>
-			</SideNavigation>
+				<SideNavigationItem text="4" expanded={true}>
+					<SideNavigationSubItem id="childItem" text="4.1" />
+				</SideNavigationItem>
+				<SideNavigationItem id="unselectableParentItem" text="5" unselectable={true}>
+					<SideNavigationSubItem id="text9" text="5.1" />
+				</SideNavigationItem>
+		  </SideNavigation>
 		);
 
-		cy.get("#parentItem").realClick();
 		[
-			{
-				element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-item][text='2']").shadow()
-					.find(".ui5-sn-item"),
-				expectedCallCount: 1,
-			},
-			{
-				element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='2.1']"),
-				expectedCallCount: 1,
-			},
-			{
-				element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='2.2']"),
-				expectedCallCount: 0,
-			},
+			{ element: cy.get("#item"), expectedCallCount: 1 },
+			{ element: cy.get("#unselectableItem"), expectedCallCount: 0 },
+			{ element: cy.get("#parentItem"), expectedCallCount: 1 },
+			{ element: cy.get("#childItem"), expectedCallCount: 1 },
+			{ element: cy.get("#unselectableParentItem"), expectedCallCount: 0 },
+			{ element: cy.get("#unselectableParentItem").shadow().find(".ui5-sn-item-toggle-icon"), expectedCallCount: 0 },
 		].forEach(({ element, expectedCallCount }) => {
 			cy.get("#sideNav")
 				.then(sideNav => {
 					sideNav.get(0).addEventListener("ui5-selection-change", cy.stub().as("selectionChangeHandler"));
 				});
-
 			// act
-			cy.get("#parentItem").realClick();
 			element.realClick();
 
 			// assert
 			cy.get("@selectionChangeHandler").should("have.callCount", expectedCallCount);
 		});
 	});
+
+	// it("Tests 'selection-change' event when SideNavigation is collapsed", () => {
+	// 	cy.mount(
+	// 		<SideNavigation id="sideNav" collapsed={true}>
+	// 			<SideNavigationItem text="1" />
+	// 			<SideNavigationItem id="parentItem" text="2">
+	// 				<SideNavigationSubItem text="2.1" />
+	// 				<SideNavigationSubItem text="2.2" unselectable={true} />
+	// 			</SideNavigationItem>
+	// 		</SideNavigation>
+	// 	);
+
+	// 	cy.get("#parentItem").realClick();
+	// 	[
+	// 		{
+	// 			element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-item][text='2']").shadow()
+	// 				.find(".ui5-sn-item"),
+	// 			expectedCallCount: 1,
+	// 		},
+	// 		{
+	// 			element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='2.1']"),
+	// 			expectedCallCount: 1,
+	// 		},
+	// 		{
+	// 			element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='2.2']"),
+	// 			expectedCallCount: 0,
+	// 		},
+	// 	].forEach(({ element, expectedCallCount }) => {
+	// 		cy.get("#sideNav")
+	// 			.then(sideNav => {
+	// 				sideNav.get(0).addEventListener("ui5-selection-change", cy.stub().as("selectionChangeHandler"));
+	// 			});
+
+	// 		// act
+	// 		cy.get("#parentItem").realClick();
+	// 		element.realClick();
+
+	// 		// assert
+	// 		cy.get("@selectionChangeHandler").should("have.callCount", expectedCallCount);
+	// 	});
+	// });
 });
 
 describe("Side Navigation Accessibility", () => {
