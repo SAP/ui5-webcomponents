@@ -1,36 +1,35 @@
-import { html } from "lit";
 import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
-import "../../src/Form.js";
-import "../../src/FormItem.js";
-import "../../src/FormGroup.js";
-import "../../src/Label.js";
-import "../../src/Text.js";
-import "../../src/Input.js";
+import Form from "../../src/Form.js";
+import FormItem from "../../src/FormItem.js";
+import FormGroup from "../../src/FormGroup.js";
+import Label from "../../src/Label.js";
+import Text from "../../src/Text.js";
+import Input from "../../src/Input.js";
 
 describe("General API", () => {
 	it("tests calculated state of Form with default layout, label-span and empty-span", () => {
-		cy.mount(html`<ui5-form class="addressForm" header-text="Default form">
-			<ui5-form-group header-text="Address">
-				<ui5-form-item>
-					<ui5-label slot="labelContent">Name</ui5-label>
-					<ui5-text>Red Point Stores</ui5-text>
-				</ui5-form-item>
-			</ui5-form-group>
+		cy.mount(<Form headerText="Default form">
+			<FormGroup headerText="Address">
+				<FormItem>
+					<Label slot="labelContent">Name</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+			</FormGroup>
 
-			<ui5-form-group id="testFormGroup2" header-text="Contact">
-				<ui5-form-item>
-					<ui5-label slot="labelContent">Twitter</ui5-label>
-					<ui5-text>@sap</ui5-text>
-				</ui5-form-item>
-			</ui5-form-group>
+			<FormGroup headerText="Contact">
+				<FormItem>
+					<Label slot="labelContent">Twitter</Label>
+					<Text>@sap</Text>
+				</FormItem>
+			</FormGroup>
 
-			<ui5-form-group id="testFormGroup3" header-text="Other info">
-				<ui5-form-item>
-					<ui5-label slot="labelContent">Name</ui5-label>
-					<ui5-text>Red Point Stores</ui5-text>
-				</ui5-form-item>
-			</ui5-form-group>
-		</ui5-form>`);
+			<FormGroup headerText="Other info">
+				<FormItem>
+					<Label slot="labelContent">Name</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+			</FormGroup>
+		</Form>);
 
 		cy.get("[ui5-form]")
 			.as("form");
@@ -51,28 +50,28 @@ describe("General API", () => {
 	});
 
 	it("tests calculated state of Form with layout='S1 M2 L3 XL6' and label-span='S12 M4 L4 XL4'", () => {
-		cy.mount(html`<ui5-form class="addressForm" header-text="WebC :: Supplier 3gr (S1 M2 L3 XL6)" layout="S1 M2 L3 XL6">
-	<ui5-form-group header-text="Address">
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Name</ui5-label>
-			<ui5-text>Red Point Stores</ui5-text>
-		</ui5-form-item>
-	</ui5-form-group>
+		cy.mount(<Form headerText="WebC :: Supplier 3gr (S1 M2 L3 XL6)" layout="S1 M2 L3 XL6">
+			<FormGroup headerText="Address">
+				<FormItem>
+					<Label slot="labelContent">Name</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+			</FormGroup>
 
-	<ui5-form-group id="testFormGroup2" header-text="Contact">
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Twitter</ui5-label>
-			<ui5-text>@sap</ui5-text>
-		</ui5-form-item>
-	</ui5-form-group>
+			<FormGroup headerText="Contact">
+				<FormItem>
+					<Label slot="labelContent">Twitter</Label>
+					<Text>@sap</Text>
+				</FormItem>
+			</FormGroup>
 
-	<ui5-form-group id="testFormGroup3" header-text="Other info">
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Name</ui5-label>
-			<ui5-text>Red Point Stores</ui5-text>
-		</ui5-form-item>
-	</ui5-form-group>
-</ui5-form>`);
+			<FormGroup headerText="Other info">
+				<FormItem>
+					<Label slot="labelContent">Name</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+			</FormGroup>
+		</Form>);
 
 		cy.get("[ui5-form]")
 			.as("form");
@@ -103,39 +102,39 @@ describe("General API", () => {
 	});
 
 	it("tests calculated state of Form with layout='S1 M2 L2 XL3' label-span='S12 M12 L12 XL12'", () => {
-		cy.mount(html`<ui5-form header-text="Labels on top" layout="S1 M2 L2 XL3" label-span="S12 M12 L12 XL12">
-	<ui5-form-item>
-		<ui5-label slot="labelContent">Name</ui5-label>
-		<input />
-	</ui5-form-item>
+		cy.mount(<Form headerText="Labels on top" layout="S1 M2 L2 XL3" labelSpan="S12 M12 L12 XL12">
+			<FormItem>
+				<Label slot="labelContent">Name</Label>
+				<input />
+			</FormItem>
 
-	<ui5-form-item>
-		<ui5-label slot="labelContent">ZIP Code/City</ui5-label>
-		<input />
-		<input />
-	</ui5-form-item>
+			<FormItem>
+				<Label slot="labelContent">ZIP Code/City</Label>
+				<input />
+				<input />
+			</FormItem>
 
-	<ui5-form-item>
-		<ui5-label slot="labelContent">Street</ui5-label>
-		<input />
-		<input />
-	</ui5-form-item>
+			<FormItem>
+				<Label slot="labelContent">Street</Label>
+				<input />
+				<input />
+			</FormItem>
 
-	<ui5-form-item>
-		<ui5-label slot="labelContent">Country</ui5-label>
-		<input />
-	</ui5-form-item>
+			<FormItem>
+				<Label slot="labelContent">Country</Label>
+				<input />
+			</FormItem>
 
-	<ui5-form-item>
-		<ui5-label slot="labelContent">WebSite</ui5-label>
-		<input />
-	</ui5-form-item>
+			<FormItem>
+				<Label slot="labelContent">WebSite</Label>
+				<input />
+			</FormItem>
 
-	<ui5-form-item>
-		<ui5-label slot="labelContent">Delivery address</ui5-label>
-		<input />
-	</ui5-form-item>
-</ui5-form>`);
+			<FormItem>
+				<Label slot="labelContent">Delivery address</Label>
+				<input />
+			</FormItem>
+		</Form>);
 
 		cy.get("[ui5-form]")
 			.as("form");
@@ -166,28 +165,28 @@ describe("General API", () => {
 	});
 
 	it("tests calculated state of Form empty-span='S0 M0 L1 XL1'", () => {
-		cy.mount(html`<ui5-form empty-span="L1 XL1">
-			<ui5-form-group header-text="Address">
-				<ui5-form-item>
-					<ui5-label slot="labelContent">Name</ui5-label>
-					<ui5-text>Red Point Stores</ui5-text>
-				</ui5-form-item>
-			</ui5-form-group>
+		cy.mount(<Form emptySpan="L1 XL1">
+			<FormGroup headerText="Address">
+				<FormItem>
+					<Label slot="labelContent">Name</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+			</FormGroup>
 
-			<ui5-form-group id="testFormGroup2" header-text="Contact">
-				<ui5-form-item>
-					<ui5-label slot="labelContent">Twitter</ui5-label>
-					<ui5-text>@sap</ui5-text>
-				</ui5-form-item>
-			</ui5-form-group>
+			<FormGroup id="testFormGroup2" headerText="Contact">
+				<FormItem>
+					<Label slot="labelContent">Twitter</Label>
+					<Text>@sap</Text>
+				</FormItem>
+			</FormGroup>
 
-			<ui5-form-group id="testFormGroup3" header-text="Other info">
-				<ui5-form-item>
-					<ui5-label slot="labelContent">Name</ui5-label>
-					<ui5-text>Red Point Stores</ui5-text>
-				</ui5-form-item>
-			</ui5-form-group>
-		</ui5-form>`);
+			<FormGroup id="testFormGroup3" headerText="Other info">
+				<FormItem>
+					<Label slot="labelContent">Name</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+			</FormGroup>
+		</Form>);
 
 		cy.get("[ui5-form]")
 			.as("form");
@@ -200,25 +199,26 @@ describe("General API", () => {
 	});
 
 	it("tests calculated state of two FormGroups in layout='S1 M2 L3 XL4'", () => {
-		cy.mount(html`<ui5-form header-text="WebC :: Supplier 2gr (S1 M2 L3 XL4)" layout="S1 M2 L3 XL4">
-	<ui5-form-group id="testFormGroup4" header-text="Address">
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Name</ui5-label>
-			<ui5-text>Red Point Stores</ui5-text>
-		</ui5-form-item>
-	</ui5-form-group>
+		cy.mount(<Form headerText="WebC :: Supplier 2gr (S1 M2 L3 XL4)" layout="S1 M2 L3 XL4">
+			<FormGroup id="testFormGroup4" headerText="Address">
+				<FormItem>
+					<Label slot="labelContent">Name</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+			</FormGroup>
 
-	<ui5-form-group id="testFormGroup5" header-text="Contact">
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Twitter</ui5-label>
-			<ui5-text>@sap</ui5-text>
-		</ui5-form-item>
+			<FormGroup id="testFormGroup5" headerText="Contact">
+				<FormItem>
+					<Label slot="labelContent">Twitter</Label>
+					<Text>@sap</Text>
+				</FormItem>
 
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Email</ui5-label>
-			<ui5-text>john.smith@sap.com</ui5-text>
-		</ui5-form-item>
-</ui5-form>`);
+				<FormItem>
+					<Label slot="labelContent">Email</Label>
+					<Text>john.smith@sap.com</Text>
+				</FormItem>
+			</FormGroup>
+		</Form>);
 
 		cy.get("#testFormGroup4")
 			.as("formGr1");
@@ -252,43 +252,43 @@ describe("General API", () => {
 	});
 
 	it("tests calculated state of three FormGroups in layout='S1 M2 L3 XL6'", () => {
-		cy.mount(html`<ui5-form header-text="WebC :: Supplier 3gr (S1 M2 L3 XL6)" layout="S1 M2 L3 XL6">
-	<ui5-form-group id="testFormGroup1" header-text="Address">
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Name</ui5-label>
-			<ui5-text>Red Point Stores</ui5-text>
-		</ui5-form-item>
-	</ui5-form-group>
+		cy.mount(<Form headerText="WebC :: Supplier 3gr (S1 M2 L3 XL6)" layout="S1 M2 L3 XL6">
+			<FormGroup id="testFormGroup1" headerText="Address">
+				<FormItem>
+					<Label slot="labelContent">Name</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+			</FormGroup>
 
-	<ui5-form-group id="testFormGroup2" header-text="Contact">
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Twitter</ui5-label>
-			<ui5-text>@sap</ui5-text>
-		</ui5-form-item>
+			<FormGroup id="testFormGroup2" headerText="Contact">
+				<FormItem>
+					<Label slot="labelContent">Twitter</Label>
+					<Text>@sap</Text>
+				</FormItem>
 
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Email</ui5-label>
-			<ui5-text>john.smith@sap.com</ui5-text>
-		</ui5-form-item>
+				<FormItem>
+					<Label slot="labelContent">Email</Label>
+					<Text>john.smith@sap.com</Text>
+				</FormItem>
 
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Tel</ui5-label>
-			<ui5-text>+49 6227 747474</ui5-text>
-		</ui5-form-item>
-	</ui5-form-group>
+				<FormItem>
+					<Label slot="labelContent">Tel</Label>
+					<Text>+49 6227 747474</Text>
+				</FormItem>
+			</FormGroup>
 
-	<ui5-form-group id="testFormGroup3" header-text="Other info">
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Name</ui5-label>
-			<ui5-text>Red Point Stores</ui5-text>
-		</ui5-form-item>
+			<FormGroup id="testFormGroup3" headerText="Other info">
+				<FormItem>
+					<Label slot="labelContent">Name</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
 
-		<ui5-form-item>
-			<ui5-label slot="labelContent">ZIP Code/City</ui5-label>
-			<ui5-text>411 Maintown</ui5-text>
-		</ui5-form-item>
-	</ui5-form-group>
-</ui5-form>`);
+				<FormItem>
+					<Label slot="labelContent">ZIP Code/City</Label>
+					<Text>411 Maintown</Text>
+				</FormItem>
+			</FormGroup>
+		</Form>);
 
 		cy.get("#testFormGroup1")
 			.as("formGr1");
@@ -337,33 +337,33 @@ describe("General API", () => {
 	});
 
 	it("tests calculated state of three FormGroups in layout='S1 M2 L3 XL4'", () => {
-		cy.mount(html`<ui5-form header-text="WebC :: Supplier 3gr (S1 M2 L3 XL4)" layout="S1 M2 L3 XL4">
-	<ui5-form-group id="testFormGroup6" header-text="Address">
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Name</ui5-label>
-			<ui5-text>Red Point Stores</ui5-text>
-		</ui5-form-item>
-	</ui5-form-group>
+		cy.mount(<Form headerText="WebC :: Supplier 3gr (S1 M2 L3 XL4)" layout="S1 M2 L3 XL4">
+			<FormGroup id="testFormGroup6" headerText="Address">
+				<FormItem>
+					<Label slot="labelContent">Name</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+			</FormGroup>
 
-	<ui5-form-group id="testFormGroup7" header-text="Contact">
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Twitter</ui5-label>
-			<ui5-text>@sap</ui5-text>
-		</ui5-form-item>
+			<FormGroup id="testFormGroup7" headerText="Contact">
+				<FormItem>
+					<Label slot="labelContent">Twitter</Label>
+					<Text>@sap</Text>
+				</FormItem>
 
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Email</ui5-label>
-			<ui5-text>john.smith@sap.com</ui5-text>
-		</ui5-form-item>
-	</ui5-form-group>
+				<FormItem>
+					<Label slot="labelContent">Email</Label>
+					<Text>john.smith@sap.com</Text>
+				</FormItem>
+			</FormGroup>
 
-	<ui5-form-group id="testFormGroup8" header-text="Other info">
-		<ui5-form-item>
-			<ui5-label slot="labelContent">Name</ui5-label>
-			<ui5-text>Red Point Stores</ui5-text>
-		</ui5-form-item>
-	</ui5-form-group>
-</ui5-form>`);
+			<FormGroup id="testFormGroup8" headerText="Other info">
+				<FormItem>
+					<Label slot="labelContent">Name</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+			</FormGroup>
+		</Form>);
 
 		cy.get("#testFormGroup6")
 			.as("formGr1");
@@ -413,50 +413,50 @@ describe("General API", () => {
 
 	describe("tests items ordering within a group", () => {
 		beforeEach(() => {
-			cy.mount(html`<ui5-form layout="S3 M4 L5 XL6">
-	<ui5-form-group>
-		<ui5-form-item>
-			<span slot="labelContent">Item:</span>
-			<span>1</span>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">Item:</span>
-			<span>2</span>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">Item:</span>
-			<span>3</span>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">Item:</span>
-			<span>4</span>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">Item:</span>
-			<span>5</span>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">Item:</span>
-			<span>6</span>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">Item:</span>
-			<span>7</span>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">Item:</span>
-			<span>8</span>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">Item:</span>
-			<span>9</span>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">Item:</span>
-			<span>10</span>
-		</ui5-form-item>
-	</ui5-form-group>
-</ui5-form>`);
+			cy.mount(<Form layout="S3 M4 L5 XL6">
+				<FormGroup>
+					<FormItem>
+						<span slot="labelContent">Item:</span>
+						<span>1</span>
+					</FormItem>
+					<FormItem>
+						<span slot="labelContent">Item:</span>
+						<span>2</span>
+					</FormItem>
+					<FormItem>
+						<span slot="labelContent">Item:</span>
+						<span>3</span>
+					</FormItem>
+					<FormItem>
+						<span slot="labelContent">Item:</span>
+						<span>4</span>
+					</FormItem>
+					<FormItem>
+						<span slot="labelContent">Item:</span>
+						<span>5</span>
+					</FormItem>
+					<FormItem>
+						<span slot="labelContent">Item:</span>
+						<span>6</span>
+					</FormItem>
+					<FormItem>
+						<span slot="labelContent">Item:</span>
+						<span>7</span>
+					</FormItem>
+					<FormItem>
+						<span slot="labelContent">Item:</span>
+						<span>8</span>
+					</FormItem>
+					<FormItem>
+						<span slot="labelContent">Item:</span>
+						<span>9</span>
+					</FormItem>
+					<FormItem>
+						<span slot="labelContent">Item:</span>
+						<span>10</span>
+					</FormItem>
+				</FormGroup>
+			</Form>);
 		});
 
 		it("10 items in 6 columns", () => {
@@ -655,28 +655,28 @@ describe("General API", () => {
 
 describe("Accessibility", () => {
 	it("tests 'role' and 'aria-labelledby' of form with groups", () => {
-		cy.mount(html`<ui5-form class="addressForm" header-text="Form header text">
-			<ui5-form-group header-text="Address">
-				<ui5-form-item>
-					<ui5-label>Name:</ui5-label>
-					<ui5-text>Red Point Stores</ui5-text>
-				</ui5-form-item>
-			</ui5-form-group>
+		cy.mount(<Form headerText="Form header text">
+			<FormGroup headerText="Address">
+				<FormItem>
+					<Label>Name:</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+			</FormGroup>
 
-			<ui5-form-group id="testFormGroup2" header-text="Contact">
-				<ui5-form-item>
-					<ui5-label>Twitter:</ui5-label>
-					<ui5-text>@sap</ui5-text>
-				</ui5-form-item>
-			</ui5-form-group>
+			<FormGroup id="testFormGroup2" headerText="Contact">
+				<FormItem>
+					<Label>Twitter:</Label>
+					<Text>@sap</Text>
+				</FormItem>
+			</FormGroup>
 
-			<ui5-form-group id="testFormGroup3" header-text="Other info">
-				<ui5-form-item>
-					<ui5-label>Name:</ui5-label>
-					<ui5-text>Red Point Stores</ui5-text>
-				</ui5-form-item>
-			</ui5-form-group>
-		</ui5-form>`);
+			<FormGroup id="testFormGroup3" headerText="Other info">
+				<FormItem>
+					<Label>Name:</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+			</FormGroup>
+		</Form>);
 
 		cy.get("[ui5-form]")
 			.as("form");
@@ -734,20 +734,20 @@ describe("Accessibility", () => {
 	});
 
 	it("tests 'role' and 'aria-labelledby' of form without groups", () => {
-		cy.mount(html`<ui5-form class="addressForm" header-text="Form header text">
-				<ui5-form-item>
-					<ui5-label>Name:</ui5-label>
-					<ui5-text>Red Point Stores</ui5-text>
-				</ui5-form-item>
-				<ui5-form-item>
-					<ui5-label>Twitter:</ui5-label>
-					<ui5-text>@sap</ui5-text>
-				</ui5-form-item>
-				<ui5-form-item>
-					<ui5-label>Name:</ui5-label>
-					<ui5-text>Red Point Stores</ui5-text>
-				</ui5-form-item>
-		</ui5-form>`);
+		cy.mount(<Form headerText="Form header text">
+			<FormItem>
+				<Label>Name:</Label>
+				<Text>Red Point Stores</Text>
+			</FormItem>
+			<FormItem>
+				<Label>Twitter:</Label>
+				<Text>@sap</Text>
+			</FormItem>
+			<FormItem>
+				<Label>Name:</Label>
+				<Text>Red Point Stores</Text>
+			</FormItem>
+		</Form>);
 
 		cy.get("[ui5-form]")
 			.as("form");
@@ -772,61 +772,63 @@ describe("Accessibility", () => {
 	});
 
 	it("tests F6 navigation", () => {
-		cy.mount(html`
-			<section>
-				<button id="before">Before element</button>
-			</section>
-			<ui5-form id="formWithGroups" header-text="Form 1">
-				<ui5-form-group header-text="Address">
-					<ui5-form-item>
-						<ui5-label for="nameInp" slot="labelContent">Name:</ui5-label>
-						<ui5-input value="Red Point Stores" id="nameInp"></ui5-input>
-					</ui5-form-item>
-				
-					<ui5-form-item>
-						<ui5-label id="cityLbl" for="cityInp" slot="labelContent">ZIP Code/City:</ui5-label>
-						<ui5-input id="cityInp" value="411" accessible-name-ref="cityLbl"></ui5-input>
-						<ui5-input value="Maintown" accessible-name-ref="cityLbl"></ui5-input>
-					</ui5-form-item>
-				</ui5-form-group>
+		cy.mount(
+			<>
+				<section>
+					<button id="before">Before element</button>
+				</section>
+				<Form id="formWithGroups" headerText="Form 1">
+					<FormGroup headerText="Address">
+						<FormItem>
+							<Label for="nameInp" slot="labelContent">Name:</Label>
+							<Input value="Red Point Stores" id="nameInp"></Input>
+						</FormItem>
 
-				<ui5-form-group header-text="Contact">
-					<ui5-form-item>
-						<ui5-label id="streetLbl" for="streetInp" slot="labelContent">Street:</ui5-label>
-						<ui5-input id="streetInp" value="Main St" accessible-name-ref="streetLbl"></ui5-input>
-						<ui5-input id="streetNumberInp" value="1618" accessible-name-ref="streetLbl"></ui5-input>
-					</ui5-form-item>
-					
-					<ui5-form-item>
-						<ui5-label id="countryLbl" for="countrySel" slot="labelContent">Country:</ui5-label>
-						<ui5-input id="countrySel" accessible-name-ref="countryLbl"></ui5-input>
-					</ui5-form-item>
-				</ui5-form-group>
-			</ui5-form>
+						<FormItem>
+							<Label id="cityLbl" for="cityInp" slot="labelContent">ZIP Code/City:</Label>
+							<Input id="cityInp" value="411" accessible-name-ref="cityLbl"></Input>
+							<Input value="Maintown" accessible-name-ref="cityLbl"></Input>
+						</FormItem>
+					</FormGroup>
 
-			<ui5-form id="formWithItems" header-text="Form 2">
-				<ui5-form-item>
-					<ui5-label for="nameInp2" slot="labelContent">Name:</ui5-label>
-					<ui5-input value="Red Point Stores" id="nameInp2"></ui5-input>
-				</ui5-form-item>
-				
-				<ui5-form-item>
-					<ui5-label id="cityLbl2" for="cityInp2" slot="labelContent">ZIP Code/City:</ui5-label>
-					<ui5-input id="cityInp2" value="411" accessible-name-ref="cityLbl2"></ui5-input>
-					<ui5-input value="Maintown" accessible-name-ref="cityLbl2"></ui5-input>
-				</ui5-form-item>
+					<FormGroup headerText="Contact">
+						<FormItem>
+							<Label id="streetLbl" for="streetInp" slot="labelContent">Street:</Label>
+							<Input id="streetInp" value="Main St" accessible-name-ref="streetLbl"></Input>
+							<Input id="streetNumberInp" value="1618" accessible-name-ref="streetLbl"></Input>
+						</FormItem>
 
-				<ui5-form-item>
-					<ui5-label id="streetLbl2" for="streetInp2" slot="labelContent">Street:</ui5-label>
-					<ui5-input id="streetInp2" value="Main St" accessible-name-ref="streetLbl2"></ui5-input>
-					<ui5-input id="streetNumberInp" value="1618" accessible-name-ref="streetLbl2"></ui5-input>
-				</ui5-form-item>
-				
-				<ui5-form-item>
-					<ui5-label id="countryLbl2" for="countrySel2" slot="labelContent">Country:</ui5-label>
-					<ui5-input id="countrySel2" accessible-name-ref="countryLbl2"></ui5-input>
-				</ui5-form-item>
-			</ui5-form>`);
+						<FormItem>
+							<Label id="countryLbl" for="countrySel" slot="labelContent">Country:</Label>
+							<Input id="countrySel" accessible-name-ref="countryLbl"></Input>
+						</FormItem>
+					</FormGroup>
+				</Form>
+
+				<Form id="formWithItems" headerText="Form 2">
+					<FormItem>
+						<Label for="nameInp2" slot="labelContent">Name:</Label>
+						<Input value="Red Point Stores" id="nameInp2"></Input>
+					</FormItem>
+
+					<FormItem>
+						<Label id="cityLbl2" for="cityInp2" slot="labelContent">ZIP Code/City:</Label>
+						<Input id="cityInp2" value="411" accessible-name-ref="cityLbl2"></Input>
+						<Input value="Maintown" accessible-name-ref="cityLbl2"></Input>
+					</FormItem>
+
+					<FormItem>
+						<Label id="streetLbl2" for="streetInp2" slot="labelContent">Street:</Label>
+						<Input id="streetInp2" value="Main St" accessible-name-ref="streetLbl2"></Input>
+						<Input id="streetNumberInp" value="1618" accessible-name-ref="streetLbl2"></Input>
+					</FormItem>
+
+					<FormItem>
+						<Label id="countryLbl2" for="countrySel2" slot="labelContent">Country:</Label>
+						<Input id="countrySel2" accessible-name-ref="countryLbl2"></Input>
+					</FormItem>
+				</Form>
+			</>);
 
 		cy.get("#before").focus();
 		cy.realPress("F6");

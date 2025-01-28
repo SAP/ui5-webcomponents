@@ -55,18 +55,11 @@ describe("Columns resize", () => {
 		cy.get("@separator")
 			.realMouseUp();
 
-		for (let i = 0; i < 5; i++) {
-			cy.get("@separator")
-				.realMouseMove(i * 50, 0);
-		}
-
-		for (let i = 0; i < 5; i++) {
-			cy.get("@separator")
-				.realMouseMove(i * -100, 0);
-		}
+		cy.get("@separator")
+			.realMouseMove(200, 0);
 
 		cy.get("@separator")
-			.realMouseMove(-400, 0);
+			.realMouseMove(-100, 0);
 
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
