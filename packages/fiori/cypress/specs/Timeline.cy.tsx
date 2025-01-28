@@ -66,7 +66,7 @@ function GroupSample() {
 
 describe("Timeline general interaction", () => {
 	it("should fire name-click event on a normal item name", () => {
-		cy.mount(Sample());
+		cy.mount(<Sample />);
 
 		cy.get("[ui5-timeline]")
 			.as("timeline")
@@ -83,7 +83,7 @@ describe("Timeline general interaction", () => {
 	});
 
 	it("setting accessible-name applied on the host element is reflected on the ul tag", () => {
-		cy.mount(Sample());
+		cy.mount(<Sample />);
 		cy.get("[ui5-timeline]")
 			.shadow()
 			.find("ul")
@@ -91,7 +91,7 @@ describe("Timeline general interaction", () => {
 	});
 
 	it("Item within Timeline Item is rendered", () => {
-		cy.mount(SampleWithSingleItem());
+		cy.mount(<SampleWithSingleItem />);
 
 		cy.get("[ui5-timeline]")
 			.find("#testTimelineItem")
@@ -104,7 +104,7 @@ describe("Timeline general interaction", () => {
 
 describe("Timeline with group items interactions", () => {
 	it("Group items are rendered", () => {
-		cy.mount(GroupSample());
+		cy.mount(<GroupSample />);
 
 		cy.get("[ui5-timeline]")
 			.find("[ui5-timeline-group-item][group-name='Events']")
@@ -117,7 +117,7 @@ describe("Timeline with group items interactions", () => {
 	});
 
 	it("Group items are collapsed on button click", () => {
-		cy.mount(GroupSample());
+		cy.mount(<GroupSample />);
 
 		cy.get("[ui5-timeline]")
 			.find("[ui5-timeline-group-item][group-name='Events']")
@@ -146,7 +146,7 @@ describe("Timeline with group items interactions", () => {
 	});
 
 	it("Group items are navigable", () => {
-		cy.mount(GroupSample());
+		cy.mount(<GroupSample />);
 
 		cy.get("[ui5-timeline]")
 			.find("[ui5-timeline-group-item][group-name='Events']")
@@ -166,7 +166,7 @@ describe("Timeline with group items interactions", () => {
 	});
 
 	it("Group can be collapsed/expanded using keyboard", () => {
-		cy.mount(GroupSample());
+		cy.mount(<GroupSample />);
 
 		cy.get("[ui5-timeline]")
 			.find("[ui5-timeline-group-item][group-name='Events']")

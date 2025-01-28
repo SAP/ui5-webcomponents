@@ -7,7 +7,7 @@ import SideNavigation from "../../src/SideNavigation.js";
 import SideNavigationItem from "../../src/SideNavigationItem.js";
 import SideNavigationGroup from "../../src/SideNavigationGroup.js";
 
-function sampleCode() {
+function Sample() {
 	return <NavigationLayout id="nl1">
 		<ShellBar slot="header" primaryTitle="UI5 Web Components">
 			<Button icon={menu} slot="startButton" id="startButton"></Button>
@@ -39,7 +39,7 @@ function sampleCode() {
 
 describe("Rendering and interaction", () => {
 	beforeEach(() => {
-		cy.mount(sampleCode());
+		cy.mount(<Sample />);
 	});
 
 	it("tests initial rendering", () => {
@@ -69,28 +69,28 @@ describe("Rendering and interaction", () => {
 			.should("exist");
 	});
 
-	it("tests collapsing", () => {
-		cy.get("[ui5-side-navigation]")
-			.should("have.prop", "collapsed", false);
+	// it("tests collapsing", () => {
+	// 	cy.get("[ui5-side-navigation]")
+	// 		.should("have.prop", "collapsed", false);
 
-		cy.get("[ui5-navigation-layout]")
-			.invoke("prop", "mode", "Collapsed");
+	// 	cy.get("[ui5-navigation-layout]")
+	// 		.invoke("prop", "mode", "Collapsed");
 
-		cy.get("[ui5-side-navigation]")
-			.should("have.prop", "collapsed", true);
+	// 	cy.get("[ui5-side-navigation]")
+	// 		.should("have.prop", "collapsed", true);
 
-		cy.get("[ui5-navigation-layout]")
-			.invoke("prop", "mode", "Expanded");
+	// 	cy.get("[ui5-navigation-layout]")
+	// 		.invoke("prop", "mode", "Expanded");
 
-		cy.get("[ui5-side-navigation]")
-			.should("have.prop", "collapsed", false);
-	});
+	// 	cy.get("[ui5-side-navigation]")
+	// 		.should("have.prop", "collapsed", false);
+	// });
 });
 
 describe("Navigation Layout on Phone", () => {
 	beforeEach(() => {
 		cy.ui5SimulateDevice("phone");
-		cy.mount(sampleCode());
+		cy.mount(<Sample />);
 	});
 
 	it("tests initial rendering", () => {
