@@ -135,7 +135,7 @@ describe("Table - Keyboard Navigation with Fixed Headers", () => {
 		cy.get("@lastRow").should("be.focused");
 
 		for (let i = 20; i > 0; i--) {
-			cy.get("@rows").get(`#row-${i + 1}`).type("{uparrow}");
+			cy.realPress("{uparrow}");
 			cy.get("@rows").get(`#row-${i}`).should("be.focused");
 
 			isDisplayedInsideViewport("@headerRow");
@@ -161,7 +161,7 @@ describe("Table - Keyboard Navigation with Fixed Headers", () => {
 		cy.get("@lastRow").should("be.focused");
 
 		for (let i = 20; i > 0; i--) {
-			cy.get("@rows").get(`#row-${i + 1}-1`).type("{uparrow}");
+			cy.realPress("{uparrow}");
 			cy.get("@rows").get(`#row-${i}-1`).should("be.focused");
 
 			isDisplayedInsideViewport("@headerRow");
@@ -187,7 +187,7 @@ describe("Table - Keyboard Navigation with Fixed Headers", () => {
 		cy.get("@lastRow").should("be.focused");
 
 		for (let i = 99; i > 0; i--) {
-			cy.get("@rows").get(`#row-${i + 1}-2`).type("{uparrow}");
+			cy.realPress("{uparrow}");
 			cy.get("@rows").get(`#row-${i}-2`).should("be.focused");
 
 			isDisplayedInsideViewport("@headerRow");
