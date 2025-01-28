@@ -99,6 +99,10 @@
 	pointer-events: none;
 }
 
+:host .ui5-menu-item-submenu-icon .ui5-menu-item-icon-end{
+	color: var(--sapContent_NonInteractiveIconColor);
+}
+
 .ui5-menu-item-icon-end {
 	display: inline-block;
 	vertical-align: middle;
