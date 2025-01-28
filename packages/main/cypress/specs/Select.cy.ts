@@ -37,3 +37,22 @@ describe("Select - Accessibility", () => {
 			.should("have.attr", "title", EXPECTED_TOOLTIP);
 	});
 });
+
+describe("Select - Popover", () => {
+	it("Popover should render custom value state", () => {
+		cy.mount(html`
+			<ui5-select id="warningSelect" value-state="Critical">
+				<ui5-option>This option has text bigger than ui5-select's width</ui5-option>
+				<div slot="valueStateMessage">Custom message</div>
+
+			</ui5-select>
+		`);
+
+		cy.get("#warningSelect").realClick().realPress("Escape");
+
+		cy.get("#warningSelect")
+			.find("[slot=\"valueStateMessage\"]")
+			.should("be.visible")
+			.should("have.text", "Custom message");
+	});
+});

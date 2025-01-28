@@ -78,11 +78,13 @@ describe("ColorPalette interactions", () => {
 
 		assert.ok(colorPicker, "Color picker is rendered");
 
-		await colorPicker.setProperty("value", "#fafafa");
-
-		// The initial focus is on the HEX input
-		await browser.keys("Tab"); // Slider 1
+		// The initial focus is on the first slider
 		await browser.keys("Tab"); // Slider 2
+		await browser.keys("Tab"); // Hex field
+
+		// Now the focus is on the hex field
+		await browser.keys("fafafa"); // type the new value in the hex field (this is the same as rgba(250, 250, 250, 1))
+
 		await browser.keys("Tab"); // Red
 		await browser.keys("Tab"); // Green
 		await browser.keys("Tab"); // Blue
@@ -92,7 +94,7 @@ describe("ColorPalette interactions", () => {
 
 		await browser.keys("Enter"); // Close the dialog & change the value of the color palette
 
-		assert.strictEqual(await colorPalette.getProperty("selectedColor"), "#fafafa", "Custom color is selected from the color picker");
+		assert.strictEqual(await colorPalette.getProperty("selectedColor"), "rgba(250, 250, 250, 1)", "Custom color is selected from the color picker");
 	})
 
 	it("Tests show-recent-colors functionality", async () => {
