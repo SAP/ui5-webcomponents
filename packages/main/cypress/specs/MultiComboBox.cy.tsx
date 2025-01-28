@@ -23,7 +23,7 @@ describe("Security", () => {
 describe("Value State", () => {
 	it("should be able to change value states upon typing", () => {
 		cy.mount(
-			<MultiComboBox no-validation>
+			<MultiComboBox noValidation={true}>
 				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
 				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
 			</MultiComboBox>
