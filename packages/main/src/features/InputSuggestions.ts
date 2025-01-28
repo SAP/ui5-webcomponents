@@ -82,7 +82,6 @@ class Suggestions {
 	}
 
 	onUp(e: KeyboardEvent, indexOfItem: number) {
-		// this.selectedItemIndex = indexOfSelectedItem;
 		e.preventDefault();
 		indexOfItem = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
 		this._handleItemNavigation(false /* forward */, indexOfItem);
@@ -90,7 +89,6 @@ class Suggestions {
 	}
 
 	onDown(e: KeyboardEvent, indexOfItem: number) {
-		// this.selectedItemIndex = indexOfSelectedItem;
 		e.preventDefault();
 		indexOfItem = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
 		this._handleItemNavigation(true /* forward */, indexOfItem);

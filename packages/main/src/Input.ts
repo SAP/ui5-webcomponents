@@ -1174,13 +1174,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_selectMatchingItem(item: IInputSuggestionItemSelectable) {
-		const items = this.Suggestions?._getItems();
-		const index = items?.findIndex(suggItem => suggItem.id === item.id);
-		if (index) {
-			this._indexOfSelectedItem = index;
-		}
 		item.selected = true;
-		this.fireDecoratorEvent("select");
 	}
 
 	_handleTypeAhead(item: IInputSuggestionItemSelectable) {
