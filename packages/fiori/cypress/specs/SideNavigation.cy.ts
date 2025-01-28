@@ -128,6 +128,7 @@ describe("Side Navigation interaction", () => {
 	it("Tests expanding and collapsing of unselectable items with Space and Enter", () => {
 		cy.mount(html`
 			<ui5-side-navigation>
+				<ui5-side-navigation-item id="focusStart" text="focus start"></ui5-side-navigation-item>
 				<ui5-side-navigation-item id="unselectableItem" text="1" unselectable>
 					<ui5-side-navigation-sub-item text="1.2"></ui5-side-navigation-sub-item>
 				</ui5-side-navigation-item>
@@ -135,7 +136,8 @@ describe("Side Navigation interaction", () => {
 		`);
 
 		// act
-		cy.get("#unselectableItem").shadow().find(".ui5-sn-item").focus();
+		cy.get("#focusStart").realClick();
+		cy.realPress("ArrowDown");
 		cy.realPress("Space");
 
 		// assert
