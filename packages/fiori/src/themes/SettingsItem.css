@@ -13,6 +13,8 @@
 	gap: 0.5rem;
 	align-items: center;
 	padding: 1rem 1rem 0.5rem;
+	font-size: var(--sapFontHeader5Size);
+	font-family: var(--sapFontBoldFamily);
 }
 
 .ui5-setting-item-loading-container {

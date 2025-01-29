@@ -16,6 +16,7 @@ export default function SettingsTemplate(this: Settings) {
 
 		<Dialog class="ui5-sd-dialog"
 			open={this.open}
+			stretch
 			accessibleName={this.accessibleNameText}
 			onui5-_collapse={this._handleCollapseClick}
 			onOpen={this._handleDialogAfterOpen}
@@ -58,9 +59,9 @@ export default function SettingsTemplate(this: Settings) {
 }
 
 function renderList(this: Settings, items: Array<SettingItem> = [], classes: string) {
-	return <List accessibleRole="Menu" onItemClick={this._handleItemClick} class={classes}>
-			{items.map(item => (
+	return <List accessibleRole="Menu" onItemClick={this._handleItemClick} class={classes} separators="None">
+		{items.map(item => (
 			<ListItemStandard icon={item._icon} tooltip={item._tooltip} ref={this.captureRef.bind(item)} selected={item.selected} disabled={item.disabled} accessibleName={item.ariaLabelledByText}>{item.text}</ListItemStandard>
-			))}
-		</List>;
+		))}
+	</List>;
 }
