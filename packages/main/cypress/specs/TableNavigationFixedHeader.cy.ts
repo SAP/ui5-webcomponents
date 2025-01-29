@@ -160,24 +160,17 @@ describe("Table - Keyboard Navigation with Fixed Headers", () => {
 					<ui5-table-header-cell id="colC" min-width="200px">Column C</ui5-table-header-cell>
 					<ui5-table-header-cell id="colD" min-width="150px">Column D</ui5-table-header-cell>
 				</ui5-table-header-row>
+				${Array.from({ length: 100 }).map((row, index) => html`
+					<ui5-table-row id="${`row-${index + 1}-2`}">
+						<ui5-table-cell><ui5-label><b>Notebook Basic ${index + 1}</b><br>HT-100${index + 1}</ui5-label></ui5-table-cell>
+						<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
+						<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
+						<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
+						<ui5-table-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>29</b> EUR</ui5-label></ui5-table-cell>
+					</ui5-table-row>
+				`)}
 			</ui5-table>
 		`);
-
-		cy.document().then(doc => {
-			const table = doc.getElementById("table2");
-			for (let i = 0; i < 100; i++) {
-				const newRow = doc.createElement("ui5-table-row");
-				newRow.id = `row-${i + 1}-2`;
-				newRow.innerHTML = `
-					<ui5-table-cell><ui5-label><b>Notebook Basic ${18 + i}</b><br>HT-100${2 + i}</ui5-label></ui5-table-cell>
-					<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
-					<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
-					<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
-					<ui5-table-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>29</b> EUR</ui5-label></ui5-table-cell>
-				`;
-				table?.appendChild(newRow);
-			}
-		});
 
 		cy.get("#table2").children("ui5-table-row").as("rows");
 		cy.get("#table2").children("ui5-table-header-row").as("headerRow");
