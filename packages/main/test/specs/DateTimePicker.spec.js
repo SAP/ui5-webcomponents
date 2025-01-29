@@ -92,17 +92,11 @@ describe("DateTimePicker general interaction", () => {
 		// select new time
 		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-ui5-clock="hours"]`).click();
 		await browser.keys("ArrowDown"); // select 02
-
-		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-ui5-clock="minutes"]`).click();
-		await browser.pause(1000);
+		await browser.keys("Space"); // select minutes
 		await browser.keys("ArrowDown"); await browser.keys("ArrowDown"); // select 14
-
-		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-ui5-clock="seconds"]`).click();
-		await browser.pause(1000);
+		await browser.keys("Space"); // select seconds
 		await browser.keys("ArrowUp"); await browser.keys("ArrowUp"); await browser.keys("ArrowUp"); // select 19
-
 		await browser.keys("p"); // select PM
-
 		await picker.$("#ok").click();
 
 		// assert
