@@ -742,6 +742,9 @@ class ShellBar extends UI5Element {
 			this._lastOffsetWidth = this.offsetWidth;
 			this._overflowActions();
 		});
+		if (this._isInitialRendering) {
+			this._updateSearchFieldState();
+		}
 	}
 
 	/**
