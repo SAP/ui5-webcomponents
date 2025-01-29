@@ -57,6 +57,7 @@
 	border-right: var(--_ui5-notification_item-border-top-left-right);
 	border-top: var(--_ui5-notification_item-border-top-left-right);
 	border-radius: var(--_ui5-notification_item-border-radius);
+	list-style: none;
 }
 /* End */
 
