@@ -153,6 +153,7 @@ and there is an additional border that appears on hover. */
 	height: 0.875rem;
 }
 
+:host([design="Action"]) .ui5-sn-item-toggle-icon,
 :host([design="Action"]) .ui5-sn-item-external-link-icon {
 	color: var(--sapButton_TextColor);
 }
