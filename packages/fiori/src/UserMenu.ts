@@ -184,6 +184,16 @@ class UserMenu extends UI5Element {
 	showAddAccount = false;
 
 	/**
+	 * Defines if the User menu shows edit button.
+	 *
+	 * @default false
+	 * @public
+	 * @since 2.7.0
+	 */
+	@property({ type: Boolean })
+	showEditButton = false;
+
+	/**
 	 * Defines the menu items.
 	 * @public
 	 */
