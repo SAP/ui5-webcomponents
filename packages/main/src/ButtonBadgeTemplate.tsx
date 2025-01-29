@@ -1,6 +1,6 @@
-import type Button from "./Button.js";
+import type ButtonBadge from "./ButtonBadge.js";
 import Tag from "./Tag.js";
 
-export default function ButtonTemplate(this: Button) {
+export default function ButtonTemplate(this: ButtonBadge) {
 	return <Tag design="Critical" hide-state-icon>{this.text}</Tag>;
 }
