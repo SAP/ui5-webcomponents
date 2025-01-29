@@ -18,6 +18,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 				<NavigationMenuItem
 					text={item.text}
 					icon={item.icon}
+					design={item.design}
 					disabled={item.disabled}
 					// expanded={true}
 					href={item.href}
@@ -29,6 +30,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 						<NavigationMenuItem
 							text={subItem.text}
 							icon={subItem.icon}
+							design={subItem.design}
 							disabled={subItem.disabled}
 							ref={this.captureRef.bind(subItem)}
 							href={subItem.href}
