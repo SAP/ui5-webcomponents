@@ -19,6 +19,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 					accessibilityAttributes={item.accessibilityAttributes}
 					text={item.text}
 					icon={item.icon}
+					design={item.design}
 					disabled={item.disabled}
 					href={item.href}
 					target={item.target}
@@ -30,6 +31,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 							accessibilityAttributes={subItem.accessibilityAttributes}
 							text={subItem.text}
 							icon={subItem.icon}
+							design={subItem.design}
 							disabled={subItem.disabled}
 							ref={this.captureRef.bind(subItem)}
 							href={subItem.href}

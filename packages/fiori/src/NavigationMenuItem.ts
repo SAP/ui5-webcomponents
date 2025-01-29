@@ -3,7 +3,10 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
+import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 import NavigationMenu from "./NavigationMenu.js";
+
+// Templates
 import NavigationMenuItemTemplate from "./NavigationMenuItemTemplate.js";
 
 // Styles
@@ -72,6 +75,9 @@ class NavigationMenuItem extends MenuItem {
 	 */
 	@property()
 	target?: string;
+
+	@property()
+	design: `${SideNavigationItemDesign}` = "Default";
 
 	get isExternalLink() {
 		return this.href && this.target === "_blank";

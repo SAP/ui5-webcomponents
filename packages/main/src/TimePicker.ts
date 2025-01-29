@@ -34,7 +34,7 @@ import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import type Popover from "./Popover.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import TimePickerTemplate from "./TimePickerTemplate.js";
-import type Input from "./Input.js";
+import type DateTimeInput from "./DateTimeInput.js";
 import type { InputAccInfo } from "./Input.js";
 import type TimeSelectionInputs from "./TimeSelectionInputs.js";
 import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
@@ -526,7 +526,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_handleInputChange(e: CustomEvent) {
-		const target = e.target as Input;
+		const target = e.target as DateTimeInput;
 		this._updateValueAndFireEvents(target.value, true, ["change", "value-changed"]);
 	}
 
@@ -535,7 +535,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 			e.preventDefault();
 		}
 
-		const target = e.target as Input;
+		const target = e.target as DateTimeInput;
 		this._updateValueAndFireEvents(target.value, false, ["input"]);
 	}
 
@@ -555,12 +555,12 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
 	}
 
-	_getInput(): Input {
-		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
+	_getDateTimeInput(): DateTimeInput {
+		return this.shadowRoot!.querySelector<DateTimeInput>("[ui5-datetime-input]")!;
 	}
 
 	_getInputField() {
-		const input = this._getInput();
+		const input = this._getDateTimeInput();
 		return input && input.getInputDOMRef();
 	}
 
@@ -575,7 +575,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 		const target = e.target as HTMLElement;
 
-		if (target && this.open && this._getInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+		if (target && this.open && this._getDateTimeInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this._togglePicker();
 		}
 		if (this.open) {
@@ -690,8 +690,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * Hides mobile device keyboard by temporary setting the input to readonly state.
 	 */
 	_hideMobileKeyboard() {
-		this._getInput().readonly = true;
-		setTimeout(() => { this._getInput().readonly = false; }, 0);
+		this._getDateTimeInput().readonly = true;
+		setTimeout(() => { this._getDateTimeInput().readonly = false; }, 0);
 	}
 
 	_onfocusin(e: FocusEvent) {
