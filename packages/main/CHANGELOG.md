@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.3](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2...v2.6.3) (2025-01-29)
+
+
+### Bug Fixes
+
+* **ui5-*:** fix jsx templates boolean checks ([#10516](https://github.com/SAP/ui5-webcomponents/issues/10516)) ([b31c7b5](https://github.com/SAP/ui5-webcomponents/commit/b31c7b5de74272f69287985763f4f01ef46169db)), closes [#10509](https://github.com/SAP/ui5-webcomponents/issues/10509)
+
+
+
+
+
 ## [2.6.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2-rc.0...v2.6.2) (2025-01-09)
 
 
