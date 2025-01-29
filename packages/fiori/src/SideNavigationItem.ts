@@ -170,11 +170,6 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
-		if (this.unselectable && isSpace(e)) {
-			this._toggle();
-			return;
-		}
-
 		if (this.unselectable && isEnter(e)) {
 			this._toggle();
 		}
@@ -183,6 +178,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
+		if (this.unselectable && isSpace(e)) {
+			this._toggle();
+		}
+
 		super._onkeyup(e);
 	}
 
