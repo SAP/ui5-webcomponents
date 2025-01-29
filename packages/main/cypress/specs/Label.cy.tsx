@@ -75,10 +75,10 @@ describe("Label", () => {
 				</>
 			);
 
+			cy.get("[ui5-input]").shadow().find(".ui5-input-inner").should("have.attr", "aria-label", "Label for Input");
+
 			cy.get("[ui5-label]").realClick();
 			cy.get("[ui5-input]").should("be.focused");
-
-			cy.get("[ui5-input]").shadow().find(".ui5-input-inner").should("have.attr", "aria-label", "Label for Input");
 		});
 
 		it("should focus native HTML input on click", () => {
@@ -125,8 +125,10 @@ describe("Label", () => {
 				</>
 			);
 
+			cy.get("[ui5-date-picker]").should("be.visible");
+
 			cy.get("[ui5-label]").realClick();
-			cy.get("#ui5-datepicker").should("be.focused");
+			cy.get("[ui5-date-picker]").should("be.focused");
 		});
 
 		// Custom component should be reworked a bit

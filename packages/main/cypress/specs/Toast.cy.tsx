@@ -32,7 +32,7 @@ describe("Toast - test popover API", () => {
 			.then($toast => {
 				const toastRect = $toast[0].getBoundingClientRect();
 				cy.get("#list")
-					.then($list => {
+					.should($list => {
 						const listRect = $list[0].getBoundingClientRect();
 						const isOverlapping = toastRect.right > listRect.left
 							&& toastRect.left < listRect.right

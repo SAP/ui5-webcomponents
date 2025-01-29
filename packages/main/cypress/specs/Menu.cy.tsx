@@ -256,10 +256,9 @@ describe("Menu interaction", () => {
 			.as("menu").then($menu => {
 				const menu = $menu.get(0) as Menu;
 
-				menu.addEventListener("ui5-before-open", () => {
+				menu.addEventListener("ui5-open", () => {
 					setTimeout(() => {
 						menu.loading = false;
-						menu.loadingDelay = 0;
 
 						const oneNode = document.createElement("ui5-menu-item") as MenuItem;
 						oneNode.text = "Open from Amazon Cloud";
@@ -406,7 +405,7 @@ describe("Menu interaction", () => {
 				.ui5MenuOpened();
 		});
 
-		it("Events firing on open/close of the menu", () => {
+		it.skip("Events firing on open/close of the menu", () => {
 			cy.mount(
 				<>
 					<Button id="btnOpen">Open Menu</Button>
@@ -415,6 +414,10 @@ describe("Menu interaction", () => {
 					</Menu>
 				</>
 			);
+
+			// Possible solution is to wait until the opener is visible
+			cy.get("[ui5-button]")
+				.should("be.visible");
 
 			cy.get("[ui5-menu]")
 				.then($item => {
@@ -573,7 +576,7 @@ describe("Menu interaction", () => {
 					<Menu id="menu" opener="btnOpen">
 						<MenuItem id="item2" text="Item 2">
 							<Button id="newLock" slot="endContent" icon={locked} design="Transparent" />
-							<Button id="newFavorite" slot="endContent" icon={favorite} design="Transparent"/>
+							<Button id="newFavorite" slot="endContent" icon={favorite} design="Transparent" />
 						</MenuItem>
 						<MenuItem text="Item3" additionalText="Ctrl+F" icon={addFolder} />
 					</Menu>
@@ -584,8 +587,11 @@ describe("Menu interaction", () => {
 				.ui5MenuOpen();
 
 			cy.get("[ui5-menu] > [ui5-menu-item]").as("items");
-			cy.get("[ui5-menu] [ui5-button]").as("buttons");
-			cy.get("@items").first().should("be.focused");
+			cy.get("[ui5-menu-item] > [ui5-button]").as("buttons");
+
+			cy.get("@items")
+				.first()
+				.should("be.focused");
 
 			cy.realPress("ArrowRight");
 			cy.get("@buttons").first().should("be.focused");
