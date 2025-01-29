@@ -3,7 +3,7 @@ import SideNavigationItem from "../../src/SideNavigationItem.js";
 import SideNavigationSubItem from "../../src/SideNavigationSubItem.js";
 import group from "@ui5/webcomponents-icons/dist/group.js";
 
-describe.skip("Side Navigation Rendering", () => {
+describe("Side Navigation Rendering", () => {
 	it("Tests rendering in collapsed mode", () => {
 		cy.mount(
 			<SideNavigation id="sideNav" collapsed={true}>
@@ -345,46 +345,46 @@ describe("Side Navigation interaction", () => {
 		});
 	});
 
-	// it("Tests 'selection-change' event when SideNavigation is collapsed", () => {
-	// 	cy.mount(
-	// 		<SideNavigation id="sideNav" collapsed={true}>
-	// 			<SideNavigationItem text="1" />
-	// 			<SideNavigationItem id="parentItem" text="2">
-	// 				<SideNavigationSubItem text="2.1" />
-	// 				<SideNavigationSubItem text="2.2" unselectable={true} />
-	// 			</SideNavigationItem>
-	// 		</SideNavigation>
-	// 	);
+	it("Tests 'selection-change' event when SideNavigation is collapsed", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true}>
+				<SideNavigationItem text="1" />
+				<SideNavigationItem id="parentItem" text="2">
+					<SideNavigationSubItem text="2.1" />
+					<SideNavigationSubItem text="2.2" unselectable={true} />
+				</SideNavigationItem>
+			</SideNavigation>
+		);
 
-	// 	cy.get("#parentItem").realClick();
-	// 	[
-	// 		{
-	// 			element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-item][text='2']").shadow()
-	// 				.find(".ui5-sn-item"),
-	// 			expectedCallCount: 1,
-	// 		},
-	// 		{
-	// 			element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='2.1']"),
-	// 			expectedCallCount: 1,
-	// 		},
-	// 		{
-	// 			element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='2.2']"),
-	// 			expectedCallCount: 0,
-	// 		},
-	// 	].forEach(({ element, expectedCallCount }) => {
-	// 		cy.get("#sideNav")
-	// 			.then(sideNav => {
-	// 				sideNav.get(0).addEventListener("ui5-selection-change", cy.stub().as("selectionChangeHandler"));
-	// 			});
+		cy.get("#parentItem").realClick();
+		[
+			{
+				element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-item][text='2']").shadow()
+					.find(".ui5-sn-item"),
+				expectedCallCount: 1,
+			},
+			{
+				element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='2.1']"),
+				expectedCallCount: 1,
+			},
+			{
+				element: cy.get("#sideNav").shadow().find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='2.2']"),
+				expectedCallCount: 0,
+			},
+		].forEach(({ element, expectedCallCount }) => {
+			cy.get("#sideNav")
+				.then(sideNav => {
+					sideNav.get(0).addEventListener("ui5-selection-change", cy.stub().as("selectionChangeHandler"));
+				});
 
-	// 		// act
-	// 		cy.get("#parentItem").realClick();
-	// 		element.realClick();
+			// act
+			cy.get("#parentItem").realClick();
+			element.realClick();
 
-	// 		// assert
-	// 		cy.get("@selectionChangeHandler").should("have.callCount", expectedCallCount);
-	// 	});
-	// });
+			// assert
+			cy.get("@selectionChangeHandler").should("have.callCount", expectedCallCount);
+		});
+	});
 });
 
 describe("Side Navigation Accessibility", () => {
@@ -429,69 +429,69 @@ describe("Side Navigation Accessibility", () => {
 			.should("have.attr", "aria-haspopup", "dialog");
 	});
 
-	// it("SideNavigationItem with sub items ariaHasPopup in collapsed SideNavigation", () => {
-	// 	cy.mount(
-	// 		<SideNavigation id="sideNav" collapsed={true}>
-	// 			<SideNavigationItem id="item1" text="1">
-	// 				<SideNavigationSubItem id="childItem" text="1.1" />
-	// 			</SideNavigationItem>
-	// 		</SideNavigation>
-	// 	);
-	// 	cy.get("#item1").realClick();
+	it("SideNavigationItem with sub items ariaHasPopup in collapsed SideNavigation", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true}>
+				<SideNavigationItem id="item1" text="1">
+					<SideNavigationSubItem id="childItem" text="1.1" />
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+		cy.get("#item1").realClick();
 
-	// 	// assert
-	// 	cy.get("#item1")
-	// 		.shadow()
-	// 		.find(".ui5-sn-item")
-	// 		.should("have.attr", "aria-haspopup", "tree");
+		// assert
+		cy.get("#item1")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "aria-haspopup", "tree");
 
-	// 	cy.get("#sideNav")
-	// 		.shadow()
-	// 		.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
-	// 		.shadow()
-	// 		.find(".ui5-sn-item")
-	// 		.should("not.have.attr", "aria-haspopup");
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("not.have.attr", "aria-haspopup");
 
-	// 	cy.get("#sideNav")
-	// 		.shadow()
-	// 		.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.1']")
-	// 		.shadow()
-	// 		.find(".ui5-sn-item")
-	// 		.should("not.have.attr", "aria-haspopup");
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("not.have.attr", "aria-haspopup");
 
-	// 	// act
-	// 	cy.get("#item1")
-	// 		.invoke("prop", "accessibilityAttributes", {
-	// 			hasPopup: "dialog",
-	// 		});
-	// 	cy.get("#childItem")
-	// 		.invoke("prop", "accessibilityAttributes", {
-	// 			hasPopup: "dialog",
-	// 		});
+		// act
+		cy.get("#item1")
+			.invoke("prop", "accessibilityAttributes", {
+				hasPopup: "dialog",
+			});
+		cy.get("#childItem")
+			.invoke("prop", "accessibilityAttributes", {
+				hasPopup: "dialog",
+			});
 
-	// 	// reopen the popover
-	// 	cy.get("#item1").realClick().realClick();
+		// reopen the popover
+		cy.get("#item1").realClick().realClick();
 
-	// 	// assert
-	// 	cy.get("#item1")
-	// 		.shadow()
-	// 		.find(".ui5-sn-item")
-	// 		.should("have.attr", "aria-haspopup", "tree");
+		// assert
+		cy.get("#item1")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "aria-haspopup", "tree");
 
-	// 	cy.get("#sideNav")
-	// 		.shadow()
-	// 		.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
-	// 		.shadow()
-	// 		.find(".ui5-sn-item")
-	// 		.should("have.attr", "aria-haspopup", "dialog");
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "aria-haspopup", "dialog");
 
-	// 	cy.get("#sideNav")
-	// 		.shadow()
-	// 		.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.1']")
-	// 		.shadow()
-	// 		.find(".ui5-sn-item")
-	// 		.should("have.attr", "aria-haspopup", "dialog");
-	// });
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "aria-haspopup", "dialog");
+	});
 
 	it("SideNavigationItem aria-role in collapsed SideNavigation", () => {
 		cy.mount(
