@@ -16,7 +16,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Tag                      | `ui5-tag`                   | `import "@ui5/webcomponents/dist/Tag.js";`                 |
 | Busy Indicator           | `ui5-busy-indicator`        | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
 | Button                   | `ui5-button`                | `import "@ui5/webcomponents/dist/Button.js";`              |
-| ButtonBadge              | `ui5-button-badge`          | comes with `ui5-button`                                    |
+| ButtonBadge              | `ui5-button-badge`          | `import "@ui5/webcomponents/dist/ButtonBadge.js";`         |
 | Calendar                 | `ui5-calendar`              | `import "@ui5/webcomponents/dist/Calendar.js";`            |
 | Calendar Date            | `ui5-date`                  | comes with `ui5-calendar`                                  |
 | Calendar Date Range      | `ui5-date-range`            | comes with `ui5-calendar`                                  |

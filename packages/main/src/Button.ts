@@ -28,12 +28,10 @@ import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/To
 import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
-import BadgeDesign from "./types/BadgeDesign.js";
+import ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import type ButtonBadge from "./ButtonBadge.js";
 import ButtonTemplate from "./ButtonTemplate.js";
-import "./ButtonBadge.js";
-
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -373,7 +371,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	_setBadgeOverlayStyle() {
-		const needsOverflowVisible = this.badge.length && (this.badge[0].design === BadgeDesign.AttentionDot || this.badge[0].design === BadgeDesign.OverlayText);
+		const needsOverflowVisible = this.badge.length && (this.badge[0].design === ButtonBadgeDesign.AttentionDot || this.badge[0].design === ButtonBadgeDesign.OverlayText);
 
 		if (needsOverflowVisible) {
 			this._internals.states.add("has-overlay-badge");
@@ -541,7 +539,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	get shouldRenderBadge() {
-		return !!this.badge.length && (!!this.badge[0].text.length || this.badge[0].design === BadgeDesign.AttentionDot);
+		return !!this.badge.length && (!!this.badge[0].text.length || this.badge[0].design === ButtonBadgeDesign.AttentionDot);
 	}
 }
 

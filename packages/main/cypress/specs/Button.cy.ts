@@ -1,5 +1,6 @@
 import { html } from "lit";
 import "../../src/Button.js";
+import "../../src/ButtonBadge.js";
 import type Button from "../../src/Button.js";
 import "@ui5/webcomponents-icons/dist/download.js";
 import "@ui5/webcomponents-icons/dist/employee.js";
