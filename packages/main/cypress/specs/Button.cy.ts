@@ -366,6 +366,10 @@ describe("Accessibility", () => {
 			</ui5-button>`);
 
 		cy.get("[ui5-button]")
+			.find("ui5-button-badge")
+			.as("badge");
+
+		cy.get("@badge")
 			.shadow()
 			.find("ui5-tag")
 			.as("tag");

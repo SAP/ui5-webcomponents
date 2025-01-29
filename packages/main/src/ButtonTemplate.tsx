@@ -1,6 +1,5 @@
 import type Button from "./Button.js";
 import Icon from "./Icon.js";
-import Tag from "./Tag.js";
 
 export default function ButtonTemplate(this: Button, injectedProps?: {
 		ariaPressed?: boolean,
@@ -73,8 +72,7 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 			}
 
 			{this.shouldRenderBadge &&
-				<Tag
-					design="Critical" hide-state-icon>{this.badge[0].text}</Tag>
+				<slot name="badge"/>
 			}
 		</button>
 	</>);

@@ -303,16 +303,15 @@ bdi {
 
 
 /* Button with badge */
-.ui5-button-root.ui5-button-badge-placement-end [ui5-tag] {
+::slotted([slot="badge"][design="InlineText"]) {
 	pointer-events: initial;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
 	padding-inline-start: 0.25rem;
 	--_ui5-tag-height: 0.625rem;
-	--_ui5-tag-border-radius: 50%;
 }
 
-.ui5-button-badge-placement-end-top.ui5-button-root [ui5-tag] {
+::slotted([slot="badge"][design="OverlayText"]) {
 	pointer-events: initial;
 	position: absolute;
 	top: 0;
@@ -322,33 +321,16 @@ bdi {
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
 	--_ui5-tag-height: 0.625rem;
-	--_ui5-tag-border-radius: 50%;
 }
 
-.ui5-button-badge-dot.ui5-button-root [ui5-tag] {
+::slotted([slot="badge"][design="AttentionDot"]) {
 	pointer-events: initial;
-	content:"";
+	content: "";
 	position: absolute;
 	top: 0;
 	inset-inline-end: 0;
 	margin: -0.25rem;
 	z-index: 1000;
-	--_ui5-tag-border-radius: 100%;
-	border-radius: 100%;
-}
-
-[ui5-tag]::part(root) {
-	border:  0.0625rem solid var(--sapContent_BadgeBorderColor);
-	background-color: var(--sapContent_BadgeBackground);
-	color: var(--sapContent_BadgeTextColor);
-	height: 1rem;
-}
-
-.ui5-button-badge-dot.ui5-button-root [ui5-tag]::part(root) {
-	min-width: var(--_ui5-button-badge-diameter);
-    min-height: var(--_ui5-button-badge-diameter);
-    height: var(--_ui5-button-badge-diameter);
-	width: var(--_ui5-button-badge-diameter);
 }
 
 :host(:state(has-overlay-badge)) {
