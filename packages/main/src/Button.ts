@@ -28,11 +28,10 @@ import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/To
 import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
-import BadgePlacement from "./types/BadgeDesign.js";
+import BadgeDesign from "./types/BadgeDesign.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import type ButtonBadge from "./ButtonBadge.js";
 import ButtonTemplate from "./ButtonTemplate.js";
-import "./Tab.js";
 import "./ButtonBadge.js";
 
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
@@ -323,8 +322,7 @@ class Button extends UI5Element implements IButton {
 
 	/**
 	 * Adds a badge to the button.
-	 *
-	 * **Note:** Although using badge with `InlineText` is possible, we don't recommend it being used when the compoent is in compact density mode.
+	 * @since 2.7.0
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
@@ -365,19 +363,23 @@ class Button extends UI5Element implements IButton {
 	}
 
 	async onBeforeRendering() {
-		const needsOverflowVisible = this.badge.length && (this.badge[0].design === BadgePlacement.AttentionDot || this.badge[0].design === BadgePlacement.OverlayText);
-
-		if (needsOverflowVisible) {
-			this._internals.states.add("has-overlay-badge");
-		} else {
-			this._internals.states.delete("has-overlay-badge");
-		}
+		this._setBadgeOverlayStyle();
 
 		this.hasIcon = !!this.icon;
 		this.hasEndIcon = !!this.endIcon;
 		this.iconOnly = this.isIconOnly;
 
 		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
+	}
+
+	_setBadgeOverlayStyle() {
+		const needsOverflowVisible = this.badge.length && (this.badge[0].design === BadgeDesign.AttentionDot || this.badge[0].design === BadgeDesign.OverlayText);
+
+		if (needsOverflowVisible) {
+			this._internals.states.add("has-overlay-badge");
+		} else {
+			this._internals.states.delete("has-overlay-badge");
+		}
 	}
 
 	_onclick() {
@@ -539,7 +541,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	get shouldRenderBadge() {
-		return !!this.badge.length && (!!this.badge[0].text.length || this.badge[0].design === "AttentionDot");
+		return !!this.badge.length && (!!this.badge[0].text.length || this.badge[0].design === BadgeDesign.AttentionDot);
 	}
 }
 

@@ -1,5 +1,6 @@
 /**
  * Determines where the style of the badge.
+ * @since 2.7.0
  * @public
  */
 enum BadgeDesign {
@@ -10,6 +11,8 @@ enum BadgeDesign {
 	InlineText = "InlineText",
 	/**
 	 * The button renders the badge at the top end corner.
+	 *
+	 * **Note:** Although using badge with `OverlayText` is possible, we don't recommend it being used when the compoent is in compact density mode.
 	 * @public
 	 */
 	OverlayText = "OverlayText",

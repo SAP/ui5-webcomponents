@@ -6,11 +6,12 @@ import type BadgeDesign from "./types/BadgeDesign.js";
 /**
  * @class
  *
- * ### ES6 Module Import
  * The `ui5-button-badge` component defines a badge that appears in the `ui5-button`.
  * `import "@ui5/webcomponents/dist/ButtonBadge.js";`
  * @constructor
  * @extends UI5Element
+ * @abstract
+ * @since 2.7.0
  * @public
  */
 @customElement({
@@ -18,12 +19,16 @@ import type BadgeDesign from "./types/BadgeDesign.js";
 })
 class ButtonBadge extends UI5Element {
 	/**
+     * Determines where the badge should be placed.
+     * @since 2.7.0
 	 * @public
 	*/
 	@property()
 	design: `${BadgeDesign}` = "AttentionDot";
 
 	/**
+     * Defines the text of the component.
+     * @since 2.7.0
 	 * @public
 	*/
 	@property()
