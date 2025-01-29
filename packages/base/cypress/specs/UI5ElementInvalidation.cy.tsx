@@ -1,9 +1,9 @@
 import type UI5Element from "../../src/UI5Element.js";
-import "../../test/test-elements/Generic.js";
+import Generic from "../../test/test-elements/Generic.js";
 
 describe("Invalidation works", () => {
 	it("Tests that changing a property invalidates", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
@@ -22,7 +22,7 @@ describe("Invalidation works", () => {
 	});
 
 	it("Tests that setting a property to the same value does not invalidate", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		const text = "new value";
 
@@ -41,7 +41,7 @@ describe("Invalidation works", () => {
 	});
 
 	it("Tests that setting a property of type Object always invalidates", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		const obj = {};
 		const otherObj = {};
@@ -61,7 +61,7 @@ describe("Invalidation works", () => {
 	});
 
 	it("Tests that setting an array property always invalidates", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		const arr: Array<string> = [];
 		const otherArr: Array<string> = [];
@@ -81,7 +81,7 @@ describe("Invalidation works", () => {
 	});
 
 	it("Tests that adding a child invalidates", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
@@ -100,7 +100,7 @@ describe("Invalidation works", () => {
 	});
 
 	it("Tests that removing a child invalidates", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		const div = document.createElement("div");
 
@@ -128,7 +128,7 @@ describe("Invalidation works", () => {
 	});
 
 	it("Tests that modifying textContent invalidates", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
@@ -154,7 +154,7 @@ describe("Invalidation works", () => {
 	});
 
 	it("Tests that modifying nodeValue invalidates", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
@@ -180,7 +180,7 @@ describe("Invalidation works", () => {
 	});
 
 	it("Tests that multiple invalidations result in a single rendering", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric");

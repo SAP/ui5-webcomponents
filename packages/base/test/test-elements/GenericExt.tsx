@@ -16,3 +16,5 @@ class GenericExt extends Generic {
 }
 
 GenericExt.define();
+
+export default GenericExt;

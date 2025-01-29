@@ -1,8 +1,8 @@
-import "../../test/test-elements/Accessor.js";
+import Accessor from "../../test/test-elements/Accessor.js";
 
 describe("Framework boot", () => {
 	it("Setting property updates attribute, state and DOM", () => {
-		cy.mount(`<ui5-test-accessor></ui5-test-accessor>`);
+		cy.mount(<Accessor></Accessor>);
 
 		cy.get("[ui5-test-accessor]")
 			.as("testAccessor")
@@ -36,7 +36,7 @@ describe("Framework boot", () => {
 	});
 
 	it("Setting attribute updates property, state and DOM", () => {
-		cy.mount(`<ui5-test-accessor></ui5-test-accessor>`);
+		cy.mount(<Accessor></Accessor>);
 
 		cy.get("[ui5-test-accessor]")
 			.as("testAccessor")
@@ -70,7 +70,7 @@ describe("Framework boot", () => {
 	});
 
 	it("should stop searching for accessors when HTMLElement is reached", () => {
-		cy.mount(`<ui5-test-accessor></ui5-test-accessor>`);
+		cy.mount(<Accessor></Accessor>);
 
 		cy.get("[ui5-test-accessor]")
 			.invoke("prop", "title")

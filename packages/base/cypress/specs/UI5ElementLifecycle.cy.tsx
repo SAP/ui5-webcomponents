@@ -1,11 +1,11 @@
 import type UI5Element from "../../src/UI5Element.js";
-import "../../test/test-elements/Generic.js";
+import Generic from "../../test/test-elements/Generic.js";
 
 describe("Lifecycle works", () => {
 	it("Tests that changing a property invalidates", () => {
 		const el = document.createElement("ui5-test-generic");
 
-		cy.mount(`<div id="container"></div>`);
+		cy.mount(<div id="container"></div>);
 
 		cy.spy<UI5Element>((el as UI5Element), "onBeforeRendering").as("onBeforeRendering");
 
@@ -32,7 +32,7 @@ describe("Lifecycle works", () => {
 	});
 
 	it("Tests element invalidation callbacks", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")

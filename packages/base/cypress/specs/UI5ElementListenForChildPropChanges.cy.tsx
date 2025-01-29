@@ -1,13 +1,15 @@
 import type UI5Element from "../../src/UI5Element.js";
 
-import "../../test/test-elements/Parent.js";
-import "../../test/test-elements/Child.js";
+import Parent from "../../test/test-elements/Parent.js";
+import Child from "../../test/test-elements/Child.js";
 
 describe("Invalidation works", () => {
 	it("Tests that changing a monitored property of a child invalidates the parent", () => {
-		cy.mount(`<ui5-test-parent>
-		<ui5-test-child></ui5-test-child>
-	</ui5-test-parent>`);
+		cy.mount(
+			<Parent>
+				<Child></Child>
+			</Parent>
+		);
 
 		cy.get("[ui5-test-parent]")
 			.as("testParent")
@@ -23,9 +25,11 @@ describe("Invalidation works", () => {
 	});
 
 	it("Tests that changing a non-monitored property of a child does not invalidate the parent", () => {
-		cy.mount(`<ui5-test-parent>
-		<ui5-test-child></ui5-test-child>
-	</ui5-test-parent>`);
+		cy.mount(
+			<Parent>
+				<Child></Child>
+			</Parent>
+		);
 
 		cy.get("[ui5-test-parent]")
 			.as("testParent")
@@ -41,9 +45,11 @@ describe("Invalidation works", () => {
 	});
 
 	it("Tests that changing a non-monitored property of a child does not invalidate the parent", () => {
-		cy.mount(`<ui5-test-parent>
-		<ui5-test-child slot="items"></ui5-test-child>
-	</ui5-test-parent>`);
+		cy.mount(
+			<Parent>
+				<Child slot="items"></Child>
+			</Parent>
+		);
 
 		cy.get("[ui5-test-parent]")
 			.as("testParent")

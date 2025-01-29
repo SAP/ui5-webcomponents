@@ -5,3 +5,5 @@ import UI5Element from "../../src/UI5Element.js";
 class NoShadow extends UI5Element {}
 
 NoShadow.define();
+
+export default NoShadow;

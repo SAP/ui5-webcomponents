@@ -1,12 +1,12 @@
 import UI5Element from "../../src/UI5Element.js";
-import litRender, { html } from "../../src/renderer/LitRenderer.js";
 import customElement from "../../src/decorators/customElement.js";
 import slot from "../../src/decorators/slot.js";
 import property from "../../src/decorators/property.js";
+import jsxRenderer from "../../src/renderer/JsxRenderer.js";
 
 @customElement({
 	tag: "ui5-test-generic",
-	renderer: litRender,
+	renderer: jsxRenderer,
 })
 class Generic extends UI5Element {
 	@property()
@@ -43,14 +43,14 @@ class Generic extends UI5Element {
 	"row-header"!: Array<HTMLElement>
 
 	static get template() {
-		return () => {
-			return html`<div><p>
-				<slot></slot>
-				<slot name="other"></slot>
-				<slot name="individual-1"></slot>
-				<slot name="individual-2"></slot>
-			</p></div>`;
-		};
+		return () => <div>
+				<p>
+					<slot></slot>
+					<slot name="other"></slot>
+					<slot name="individual-1"></slot>
+					<slot name="individual-2"></slot>
+				</p>
+			</div>;
 	}
 
 	static get styles() {

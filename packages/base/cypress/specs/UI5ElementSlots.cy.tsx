@@ -1,20 +1,21 @@
-import "../../test/test-elements/Generic.js";
+import Generic from "../../test/test-elements/Generic.js";
 
 describe("Slots work properly", () => {
 	it("Tests that properties exist on the element for each slot", () => {
-		cy.mount(`<ui5-test-generic>
-		Default slot text
-		<span>Default slot content</span>
-		<span slot="other">Other slot content 1</span>
-		<span slot="other">Other slot content 2</span>
-		<span slot="individual">Individual slot content 1</span>
-		<span slot="individual">Individual slot content 2</span>
-		<span slot="named">Item in slot with propertyName</span>
-		<span slot="named">Item in slot with propertyName</span>
-		<span slot="row-header">Item in slot row-header</span>
-		<span slot="row-header">Item in slot row-header</span>
-	</ui5-test-generic>
-		`);
+		cy.mount(
+			<Generic>
+				Default slot text
+				<span>Default slot content</span>
+				<span slot="other">Other slot content 1</span>
+				<span slot="other">Other slot content 2</span>
+				<span slot="individual">Individual slot content 1</span>
+				<span slot="individual">Individual slot content 2</span>
+				<span slot="named">Item in slot with propertyName</span>
+				<span slot="named">Item in slot with propertyName</span>
+				<span slot="row-header">Item in slot row-header</span>
+				<span slot="row-header">Item in slot row-header</span>
+			</Generic>
+		);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric");
@@ -44,11 +45,12 @@ describe("Slots work properly", () => {
 	});
 
 	it("Tests that properties exist on the element for each slot", () => {
-		cy.mount(`<ui5-test-generic>
-		<span slot="individual">Individual slot content 1</span>
-		<span slot="individual">Individual slot content 2</span>
-	</ui5-test-generic>
-		`);
+		cy.mount(
+			<Generic>
+				<span slot="individual">Individual slot content 1</span>
+				<span slot="individual">Individual slot content 2</span>
+			</Generic>
+		);
 
 		cy.get("[slot=individual]")
 			.should("not.exist");
@@ -63,14 +65,15 @@ describe("Slots work properly", () => {
 	it("Tests that changing the slot attribute of children redistributes them across slot accessors", () => {
 		let defaultSlotLength = 0;
 
-		cy.mount(`<ui5-test-generic>
-<span>Default slot content</span>
-<span slot="other" id="o1">Other slot content 1</span>
-<span slot="other" id="o2">Other slot content 2</span>
-<span slot="named">Item in slot with propertyName</span>
-<span slot="named">Item in slot with propertyName</span>
-	</ui5-test-generic>
-		`);
+		cy.mount(
+			<Generic>
+				<span>Default slot content</span>
+				<span slot="other" id="o1">Other slot content 1</span>
+				<span slot="other" id="o2">Other slot content 2</span>
+				<span slot="named">Item in slot with propertyName</span>
+				<span slot="named">Item in slot with propertyName</span>
+			</Generic>
+		);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric");

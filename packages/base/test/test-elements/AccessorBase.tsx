@@ -1,10 +1,10 @@
 import UI5Element from "../../src/UI5Element.js";
 import customElement from "../../src/decorators/customElement.js";
 import property from "../../src/decorators/property.js";
-import litRender, { html } from "../../src/renderer/LitRenderer.js";
+import jsxRenderer from "../../src/renderer/JsxRenderer.js";
 
 @customElement({
-	renderer: litRender,
+	renderer: jsxRenderer,
 })
 class AccessorBase extends UI5Element {
 	storage: boolean = false;
@@ -19,7 +19,9 @@ class AccessorBase extends UI5Element {
 	}
 
 	render() {
-		return html`<div>${this.myProp}</div>`;
+		return (
+			<div>{this.myProp}</div>
+		);
 	}
 }
 

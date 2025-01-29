@@ -1,11 +1,11 @@
 import UI5Element from "../../src/UI5Element.js";
 import customElement from "../../src/decorators/customElement.js";
 import slot from "../../src/decorators/slot.js";
-import litRender, { html } from "../../src/renderer/LitRenderer.js";
+import jsxRenderer from "../../src/renderer/JsxRenderer.js";
 
 @customElement({
 	tag: "ui5-test-parent",
-	renderer: litRender,
+	renderer: jsxRenderer,
 })
 class Parent extends UI5Element {
 	@slot({
@@ -26,13 +26,14 @@ class Parent extends UI5Element {
 		},
 	})
 	items!: Array<HTMLElement>;
+
 	static get template() {
-		return () => {
-			return html`<div>
+		return () => <div>
 				<slot></slot>
-			</div>`;
+			</div>;
 		};
-	}
 }
 
 Parent.define();
+
+export default Parent;

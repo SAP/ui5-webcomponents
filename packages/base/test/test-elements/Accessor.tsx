@@ -1,19 +1,23 @@
 import AccessorBase from "./AccessorBase.js";
 import customElement from "../../src/decorators/customElement.js";
 import property from "../../src/decorators/property.js";
-import litRender, { html } from "../../src/renderer/LitRenderer.js";
+import jsxRenderer from "../../src/renderer/JsxRenderer.js";
 
 @customElement({
 	tag: "ui5-test-accessor",
-	renderer: litRender,
+	renderer: jsxRenderer,
 })
 class Accessor extends AccessorBase {
 	@property()
 	// @ts-ignore
-	title?: string;
+	title: string;
+
+	ala: string = "default";
 
 	render() {
-		return html`<div>${this.myProp}</div>`;
+		return (
+			<div>{`${this.myProp}`}</div>
+		);
 	}
 }
 

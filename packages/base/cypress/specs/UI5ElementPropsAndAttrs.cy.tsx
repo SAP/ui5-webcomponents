@@ -1,8 +1,8 @@
-import "../../test/test-elements/Generic.js";
+import Generic from "../../test/test-elements/Generic.js";
 
 describe("Properties and attributes convert to each other", () => {
 	it("Tests that properties with default values are initialized with the default value", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric");
@@ -13,7 +13,7 @@ describe("Properties and attributes convert to each other", () => {
 	});
 
 	it("Tests that prop-attr conversion works for string properties", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric");
@@ -33,7 +33,7 @@ describe("Properties and attributes convert to each other", () => {
 	});
 
 	it("Tests that prop-attr conversion works for boolean properties", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric");
@@ -66,7 +66,7 @@ describe("Properties and attributes convert to each other", () => {
 	});
 
 	it("Tests that object properties have no attributes", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric");
@@ -79,7 +79,7 @@ describe("Properties and attributes convert to each other", () => {
 	});
 
 	it("Tests that array properties have no attributes", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric");
@@ -92,7 +92,7 @@ describe("Properties and attributes convert to each other", () => {
 	});
 
 	it("Tests that noAttribute properties have no attributes", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric");
@@ -105,7 +105,7 @@ describe("Properties and attributes convert to each other", () => {
 	});
 
 	it("Tests that properties with default values do automatically set attributes", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.should("have.attr", "default-value-prop", "Hello");

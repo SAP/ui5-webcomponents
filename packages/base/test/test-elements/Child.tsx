@@ -1,11 +1,11 @@
 import UI5Element from "../../src/UI5Element.js";
 import customElement from "../../src/decorators/customElement.js";
 import property from "../../src/decorators/property.js";
-import litRender, { html } from "../../src/renderer/LitRenderer.js";
+import jsxRenderer from "../../src/renderer/JsxRenderer.js";
 
 @customElement({
 	tag: "ui5-test-child",
-	renderer: litRender,
+	renderer: jsxRenderer,
 })
 class Child extends UI5Element {
 	@property()
@@ -19,9 +19,11 @@ class Child extends UI5Element {
 
 	static get template() {
 		return () => {
-			return html`<div></div>`;
+			return <div></div>;
 		};
 	}
 }
 
 Child.define();
+
+export default Child;

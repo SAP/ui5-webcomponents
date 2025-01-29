@@ -1,9 +1,9 @@
 import type UI5Element from "../../src/UI5Element.js";
-import "../../test/test-elements/GenericExt.js";
+import GenericExt from "../../test/test-elements/GenericExt.js";
 
 describe("Invalidation works", () => {
 	it("Tests that changing a monitored property of a child invalidates the parent", () => {
-		cy.mount(`<ui5-test-generic-ext></ui5-test-generic-ext>`);
+		cy.mount(<GenericExt></GenericExt>);
 
 		cy.get("[ui5-test-generic-ext]")
 			.then($el => {
@@ -33,7 +33,7 @@ describe("Invalidation works", () => {
 	});
 
 	it("When extending metadata, property defaultValue can be modified", () => {
-		cy.mount(`<ui5-test-generic-ext></ui5-test-generic-ext>`);
+		cy.mount(<GenericExt></GenericExt>);
 
 		cy.get("[ui5-test-generic-ext]")
 			.invoke("attr", "str-prop")

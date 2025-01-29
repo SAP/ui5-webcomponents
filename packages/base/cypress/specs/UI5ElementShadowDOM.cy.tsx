@@ -1,9 +1,9 @@
-import "../../test/test-elements/Generic.js";
-import "../../test/test-elements/NoShadowDOM.js";
+import Generic from "../../test/test-elements/Generic.js";
+import NoShadowDOM from "../../test/test-elements/NoShadowDOM.js";
 
 describe("The framework can define web components", () => {
 	it("Tests that element's Shadow DOM is rendered if it has a template", () => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<Generic></Generic>);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
@@ -19,7 +19,7 @@ describe("The framework can define web components", () => {
 	});
 
 	it("Tests that element's Shadow DOM is not rendered if it has no template", () => {
-		cy.mount(`<ui5-test-no-shadow></ui5-test-no-shadow>`);
+		cy.mount(<NoShadowDOM></NoShadowDOM>);
 
 		cy.get("[ui5-test-no-shadow]")
 			.then($element => {
