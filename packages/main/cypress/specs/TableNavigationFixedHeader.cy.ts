@@ -11,7 +11,19 @@ import "../../src/Title.js";
 import "../../src/Slider.js";
 
 describe("Table - Keyboard Navigation with Fixed Headers", () => {
-	beforeEach(() => {
+	function isDisplayedInsideViewport(element: string) {
+		cy.get(element).then($el => {
+			const el = $el[0];
+			const rect = el.getBoundingClientRect();
+
+			expect(rect.top).to.be.at.least(0);
+			expect(rect.left).to.be.at.least(0);
+			expect(rect.bottom).to.be.lessThan(Cypress.config("viewportHeight"));
+			expect(rect.right).to.be.lessThan(Cypress.config("viewportWidth"));
+		});
+	}
+
+	it("scrollable container - focused row should always be below the header", () => {
 		cy.mount(html`
 			<div style="height:300px; overflow:auto;">
 				<ui5-bar id="toolbar" design="Header" accessible-name-ref="title" style="position: sticky; top: 0; z-index: 2; height: 50px;">
@@ -49,7 +61,35 @@ describe("Table - Keyboard Navigation with Fixed Headers", () => {
 					<ui5-table-row id="row-21"> <ui5-table-cell>A</ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
 				</ui5-table>
 			</div>
+		`);
 
+		cy.get("#table0").children("ui5-table-row").as("rows");
+		cy.get("#table0").children("ui5-table-header-row").as("headerRow");
+		cy.get("@rows").get("#row-21").as("lastRow");
+
+		cy.get("@lastRow").scrollIntoView();
+		cy.get("@lastRow").click("left");
+		cy.get("@lastRow").should("be.focused");
+
+		for (let i = 20; i > 0; i--) {
+			cy.realPress("{uparrow}");
+			cy.get("@rows").get(`#row-${i}`).should("be.focused");
+
+			isDisplayedInsideViewport("@headerRow");
+
+			cy.get("@headerRow").then($headerRow => {
+				cy.get("@rows").get(`#row-${i}`).then($row => {
+					const headerRowBottom = $headerRow[0].getBoundingClientRect().bottom;
+					const focusedRowTop = $row[0].getBoundingClientRect().top;
+
+					expect(focusedRowTop).to.be.at.least(headerRowBottom);
+				});
+			});
+		}
+	});
+
+	it("scrollable table - focused row should always be below the header", () => {
+		cy.mount(html`
 			<ui5-table id="table1" overflow-mode="Popin" sticky-top="0" accessible-name-ref="title" no-data-text="No data found" style="height: 300px; overflow: auto;">
 				<ui5-table-header-row sticky slot="headerRow">
 					<ui5-table-header-cell id="colA" min-width="300px"><span>ColumnA</span></ui5-table-header-cell>
@@ -79,8 +119,35 @@ describe("Table - Keyboard Navigation with Fixed Headers", () => {
 				<ui5-table-row id="row-20-1"> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
 				<ui5-table-row id="row-21-1"> <ui5-table-cell>A</ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
 			</ui5-table>
+		`);
 
+		cy.get("#table1").children("ui5-table-row").as("rows");
+		cy.get("#table1").children("ui5-table-header-row").as("headerRow");
+		cy.get("@rows").get("#row-21-1").as("lastRow");
 
+		cy.get("@lastRow").scrollIntoView();
+		cy.get("@lastRow").click("left");
+		cy.get("@lastRow").should("be.focused");
+
+		for (let i = 20; i > 0; i--) {
+			cy.realPress("{uparrow}");
+			cy.get("@rows").get(`#row-${i}-1`).should("be.focused");
+
+			isDisplayedInsideViewport("@headerRow");
+
+			cy.get("@headerRow").then($headerRow => {
+				cy.get("@rows").get(`#row-${i}-1`).then($row => {
+					const headerRowBottom = $headerRow[0].getBoundingClientRect().bottom;
+					const focusedRowTop = $row[0].getBoundingClientRect().top;
+
+					expect(focusedRowTop).to.be.at.least(headerRowBottom);
+				});
+			});
+		}
+	});
+
+	it("body as scroll container - focused row should always be below the header", () => {
+		cy.mount(html`
 			<ui5-bar id="toolbar2" design="Header" accessible-name-ref="title" style="position: sticky; top: 0; z-index: 2; height: 50px;">
 				<ui5-title tabindsex="0" level="H3" id="title" slot="startContent">My Selectable Products (3)</ui5-title>
 				<ui5-slider id="slider" min="0" max="100" step="1" value="100"
@@ -111,73 +178,7 @@ describe("Table - Keyboard Navigation with Fixed Headers", () => {
 				table?.appendChild(newRow);
 			}
 		});
-	});
 
-	function isDisplayedInsideViewport(element: string) {
-		cy.get(element).then($el => {
-			const el = $el[0];
-			const rect = el.getBoundingClientRect();
-
-			expect(rect.top).to.be.at.least(0);
-			expect(rect.left).to.be.at.least(0);
-			expect(rect.bottom).to.be.lessThan(Cypress.config("viewportHeight"));
-			expect(rect.right).to.be.lessThan(Cypress.config("viewportWidth"));
-		});
-	}
-
-	it("scrollable container - focused row should always be below the header", () => {
-		cy.get("#table0").children("ui5-table-row").as("rows");
-		cy.get("#table0").children("ui5-table-header-row").as("headerRow");
-		cy.get("@rows").get("#row-21").as("lastRow");
-
-		cy.get("@lastRow").scrollIntoView();
-		cy.get("@lastRow").click("left");
-		cy.get("@lastRow").should("be.focused");
-
-		for (let i = 20; i > 0; i--) {
-			cy.realPress("{uparrow}");
-			cy.get("@rows").get(`#row-${i}`).should("be.focused");
-
-			isDisplayedInsideViewport("@headerRow");
-
-			cy.get("@headerRow").then($headerRow => {
-				cy.get("@rows").get(`#row-${i}`).then($row => {
-					const headerRowBottom = $headerRow[0].getBoundingClientRect().bottom;
-					const focusedRowTop = $row[0].getBoundingClientRect().top;
-
-					expect(focusedRowTop).to.be.at.least(headerRowBottom);
-				});
-			});
-		}
-	});
-
-	it("scrollable table - focused row should always be below the header", () => {
-		cy.get("#table1").children("ui5-table-row").as("rows");
-		cy.get("#table1").children("ui5-table-header-row").as("headerRow");
-		cy.get("@rows").get("#row-21-1").as("lastRow");
-
-		cy.get("@lastRow").scrollIntoView();
-		cy.get("@lastRow").click("left");
-		cy.get("@lastRow").should("be.focused");
-
-		for (let i = 20; i > 0; i--) {
-			cy.realPress("{uparrow}");
-			cy.get("@rows").get(`#row-${i}-1`).should("be.focused");
-
-			isDisplayedInsideViewport("@headerRow");
-
-			cy.get("@headerRow").then($headerRow => {
-				cy.get("@rows").get(`#row-${i}-1`).then($row => {
-					const headerRowBottom = $headerRow[0].getBoundingClientRect().bottom;
-					const focusedRowTop = $row[0].getBoundingClientRect().top;
-
-					expect(focusedRowTop).to.be.at.least(headerRowBottom);
-				});
-			});
-		}
-	});
-
-	it("body as scroll container - focused row should always be below the header", () => {
 		cy.get("#table2").children("ui5-table-row").as("rows");
 		cy.get("#table2").children("ui5-table-header-row").as("headerRow");
 		cy.get("@rows").get("#row-100-2").as("lastRow");
