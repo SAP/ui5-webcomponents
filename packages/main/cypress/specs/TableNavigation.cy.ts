@@ -191,9 +191,6 @@ describe("Table - Keyboard Navigation", () => {
 
 		cy.get("@headerRow").type("{downarrow}{rightarrow}");
 
-		// differs from originial test where condition was i < 4
-		// changed due to cy.type after last assertion
-		// TBD just a reminder for reviewers
 		for (let i = 0; i < 3; i++) {
 			getCell(i, i, false).should("be.focused")
 				.type("{downarrow}{rightarrow}");
