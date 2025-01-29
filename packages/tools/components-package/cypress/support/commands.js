@@ -37,3 +37,67 @@
 // }
 
 import "cypress-real-events";
+
+Cypress.Commands.overwrite('realClick', (originalFn, element, options) => {
+	cy.get(element)
+		.should("be.visible")
+		.then(() => {
+			return originalFn(element, options)
+		});
+})
+
+Cypress.Commands.overwrite('realHover', (originalFn, element, options) => {
+	cy.get(element)
+		.should("be.visible")
+		.then(() => {
+			return originalFn(element, options)
+		});
+})
+
+Cypress.Commands.overwrite('realTouch', (originalFn, element, options) => {
+	cy.get(element)
+		.should("be.visible")
+		.then(() => {
+			return originalFn(element, options)
+		});
+})
+
+Cypress.Commands.overwrite('realSwipe', (originalFn, element, options) => {
+	cy.get(element)
+		.should("be.visible")
+		.then(() => {
+			return originalFn(element, options)
+		});
+})
+
+Cypress.Commands.overwrite('realMouseDown', (originalFn, element, options) => {
+	cy.get(element)
+		.should("be.visible")
+		.then(() => {
+			return originalFn(element, options)
+		});
+})
+
+Cypress.Commands.overwrite('realMouseUp', (originalFn, element, options) => {
+	cy.get(element)
+		.should("be.visible")
+		.then(() => {
+			return originalFn(element, options)
+		});
+})
+
+Cypress.Commands.overwrite('realMouseMove', (originalFn, element, options) => {
+	cy.get(element)
+		.should("be.visible")
+		.then(() => {
+			return originalFn(element, options)
+		});
+})
+
+Cypress.Commands.overwrite('realMouseWheel', (originalFn, element, options) => {
+	cy.get(element)
+		.should("be.visible")
+		.then(() => {
+			return originalFn(element, options)
+		});
+})
