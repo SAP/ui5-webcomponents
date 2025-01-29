@@ -7,7 +7,6 @@ export default function ListItemGroupTemplate(this: ListItemGroup, hooks?: { ite
 
 	return (
 		<ul
-			role="group"
 			class="ui5-group-li-root"
 			onDragEnter={this._ondragenter}
 			onDragOver={this._ondragover}
