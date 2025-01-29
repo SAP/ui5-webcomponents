@@ -1,7 +1,9 @@
 import Avatar from "../../src/Avatar.js";
 import Button from "../../src/Button.js";
-import download from "@ui5/webcomponents-icons/dist/download.js";
 import Label from "../../src/Label.js";
+import ButtonBadge from "../../src/ButtonBadge.js";
+import download from "@ui5/webcomponents-icons/dist/download.js";
+import employee from "@ui5/webcomponents-icons/dist/employee.js";
 
 describe("Button general interaction", () => {
 	it("tests button's text rendering", () => {
@@ -168,7 +170,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests clicking on disabled button with Icon", () => {
-		cy.mount(<Button icon="employee" disabled></Button>);
+		cy.mount(<Button icon={employee} disabled></Button>);
 
 		cy.get("[ui5-button]")
 			.as("button");
@@ -360,5 +362,28 @@ describe("Accessibility", () => {
 
 		cy.get("@button")
 			.should("have.attr", "aria-description", "A long description.");
+	});
+
+	it("button with a badge", () => {
+		cy.mount(
+			<Button design="Emphasized" icon={employee}>Emphasized
+				<ButtonBadge design="OverlayText" text="999+" slot="badge"></ButtonBadge>
+			</Button>
+		);
+
+		cy.get("[ui5-button]")
+			.find("ui5-button-badge")
+			.as("badge");
+
+		cy.get("@badge")
+			.shadow()
+			.find("ui5-tag")
+			.as("tag");
+
+		cy.get("@tag")
+			.should("have.attr", "design", "Critical");
+
+		cy.get("@tag")
+			.should("have.text", "999+");
 	});
 });
