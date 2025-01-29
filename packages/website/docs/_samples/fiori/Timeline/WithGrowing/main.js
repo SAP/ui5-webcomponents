@@ -11,8 +11,8 @@ const itemToLoad = 5;
 const growingTimeline = document.querySelector("#growingTimeline");
 const timelineItemTemplate = (index) => {
     var timelineItem = document.createElement("ui5-timeline-item");
-    timelineItem.titleText = "title text";
-    timelineItem.subtitleText = "the subtitle tex goes here " + index;
+    timelineItem.titleText = "Title text";
+    timelineItem.subtitleText = "The subtitle text goes here " + index;
     timelineItem.icon = "calendar";
     return timelineItem;
 }

@@ -6,7 +6,7 @@ import group from "@ui5/webcomponents-icons/dist/group.js";
 describe.skip("Side Navigation Rendering", () => {
 	it("Tests rendering in collapsed mode", () => {
 		cy.mount(
-			<SideNavigation id="sideNav" collapsed>
+			<SideNavigation id="sideNav" collapsed={true}>
 				<SideNavigationItem text="1" id="parentItem">
 					<SideNavigationSubItem text="1.1" />
 					<SideNavigationSubItem text="1.2" design="Action" />
@@ -27,6 +27,42 @@ describe.skip("Side Navigation Rendering", () => {
 		cy.get("#sideNav")
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='2']")
+			.should("have.attr", "design", "Action");
+	});
+
+	it("Tests rendering of overflow items", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true}>
+				<SideNavigationItem text="dummy item"></SideNavigationItem>
+				<SideNavigationItem text="1" design="Action"></SideNavigationItem>
+				<SideNavigationItem text="2" href="https://sap.com" target="_blank" design="Action"></SideNavigationItem>
+				<SideNavigationItem text="3">
+					<SideNavigationSubItem text="3.1" design="Action"></SideNavigationSubItem>
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.invoke("attr", "style", "height: 100px");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-item-overflow:not(.ui5-sn-item-hidden)")
+			.realClick();
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='1']")
+			.should("have.attr", "design", "Action");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='2']")
+			.should("have.attr", "design", "Action");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='3.1']")
 			.should("have.attr", "design", "Action");
 	});
 });
@@ -92,6 +128,7 @@ describe("Side Navigation interaction", () => {
 	it("Tests expanding and collapsing of unselectable items with Space and Enter", () => {
 		cy.mount(
 			<SideNavigation>
+				<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
 				<SideNavigationItem id="unselectableItem" text="1" unselectable={true}>
 					<SideNavigationSubItem text="1.2" />
 				</SideNavigationItem>
@@ -99,29 +136,30 @@ describe("Side Navigation interaction", () => {
 		);
 
 		// act
-		cy.get("#unselectableItem").shadow().find(".ui5-sn-item").focus();
+		cy.get("#focusStart").realClick();
+		cy.realPress("ArrowDown");
 		cy.realPress("Space");
 
 		// assert
-		cy.get("#unselectableItem").should("have.attr", "expanded");
+		cy.get("#unselectableItem").should("be.focused").and("have.attr", "expanded");
 
 		// act
 		cy.realPress("Space");
 
 		// assert
-		cy.get("#unselectableItem").should("not.have.attr", "expanded");
+		cy.get("#unselectableItem").should("be.focused").and("not.have.attr", "expanded");
 
 		// act
 		cy.realPress("Enter");
 
 		// assert
-		cy.get("#unselectableItem").should("have.attr", "expanded");
+		cy.get("#unselectableItem").should("be.focused").and("have.attr", "expanded");
 
 		// act
 		cy.realPress("Enter");
 
 		// assert
-		cy.get("#unselectableItem").should("not.have.attr", "expanded");
+		cy.get("#unselectableItem").should("be.focused").and("not.have.attr", "expanded");
 	});
 
 	it("Tests isSelectable", () => {
