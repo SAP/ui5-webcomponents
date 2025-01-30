@@ -3,7 +3,6 @@ import SortItem from "../../src/SortItem.js";
 import FilterItem from "../../src/FilterItem.js";
 import FilterItemOption from "../../src/FilterItemOption.js";
 
-
 describe("View settings dialog - selection", () => {
 	it("tests clicking on sort items (both on the text and radio button)", () => {
 		cy.mount(<ViewSettingsDialog id="vsd">
