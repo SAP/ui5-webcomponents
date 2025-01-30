@@ -164,7 +164,7 @@ describe("View settings dialog - selection", () => {
 			.find("ui5-button[design=Emphasized]")
 			.realClick();
 
-		// Check if the confirm event was fired with: filters = [{"Filter 1":["Some filter 1","Some filter 3"]}] 
+		// Check if the confirm event was fired with: filters = [{"Filter 1":["Some filter 1","Some filter 3"]}]
 		cy.get("@confirm")
 			.should("be.called")
 			.its("firstCall.args.0.detail.filters")
