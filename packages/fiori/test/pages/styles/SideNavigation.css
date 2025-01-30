@@ -20,6 +20,7 @@ body {
     display: flex;
     flex: 1;
     min-height: 0;
+    flex-direction: column;
 }
 
 ui5-shellbar::part(root) {
@@ -35,4 +36,13 @@ ui5-shellbar::part(root) {
 
 .sidenavigation1auto {
     background-color: var(--sapBackgroundColor);
+}
+
+.ensure-overflow {
+    height: 500px;
+}
+
+.form-field {
+    display: flex;
+    align-items: center;
 }
