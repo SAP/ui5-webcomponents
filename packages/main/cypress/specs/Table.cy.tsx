@@ -184,6 +184,7 @@ describe("Table - Popin Mode", () => {
 			});
 
 			const expectedState = expectedStates.find(state => state.width >= randomWidth);
+			// eslint-disable-next-line cypress/no-unnecessary-waiting, no-loop-func
 			cy.get("ui5-table-header-cell").each(($cell, index) => {
 				const id = $cell.attr("id") ?? "";
 				const shouldBePoppedIn = expectedState?.poppedIn.includes(id);
