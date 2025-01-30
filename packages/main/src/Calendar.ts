@@ -572,7 +572,7 @@ class Calendar extends CalendarPart {
 		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
 		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this._secondaryCalendarType, this._timestamp);
 		const secondMonthInfo = convertMonthNumbersToMonthNames(dateInSecType.firstDate.getMonth(), dateInSecType.lastDate.getMonth(), this._secondaryCalendarType);
-		const secondYearText = secondYearFormat.format(localDate, true);
+		const secondYearText = secondYearFormat.format(localDate, false);
 
 		return {
 			yearButtonText: secondYearText,
