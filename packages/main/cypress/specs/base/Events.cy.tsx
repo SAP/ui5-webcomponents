@@ -1,3 +1,4 @@
+import "../../../src/features/InputSuggestions.js";
 import Dialog from "../../../src/Dialog.js";
 import Input from "../../../src/Input.js";
 import SuggestionItem from "../../../src/SuggestionItem.js";
