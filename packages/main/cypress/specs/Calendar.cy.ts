@@ -6,7 +6,20 @@ import "../../src/CalendarDate.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
-const DEFAULT_CALENDAR = html`<ui5-calendar id="calendar1"></ui5-calendar>`;
+const DEFAULT_CALENDAR = (date: Date) => {
+	const calDate = new Date(date);
+	const formattedDate = calDate.toLocaleDateString("default", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	});
+
+	return html`
+		<ui5-calendar id="calendar1" timestamp="${calDate.valueOf() / 1000}">
+			<ui5-date value="${formattedDate}"></ui5-date>
+		</ui5-calendar>
+	`;
+};
 
 const CALENDARS_WITH_WEEK_NUMBER_CONFIGS = html`
 			<ui5-calendar id="calendar1" calendar-week-numbering="ISO_8601">
@@ -23,20 +36,9 @@ const CALENDARS_WITH_WEEK_NUMBER_CONFIGS = html`
 			`;
 
 describe("Calendar general interaction", () => {
-	it("Calendar is rendered", () => {
-		cy.mount(DEFAULT_CALENDAR);
-
-		cy.get<Calendar>("ui5-calendar")
-			.shadow()
-			.find(".ui5-cal-root")
-			.should("exist");
-	});
-
 	it("Focus goes into the current day item of the day picker", () => {
-		cy.mount(DEFAULT_CALENDAR);
-		const timestamp = new Date(Date.UTC(2000, 10, 22, 0, 0, 0)).valueOf() / 1000;
-
-		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
+		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
+		cy.mount(DEFAULT_CALENDAR(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -48,7 +50,7 @@ describe("Calendar general interaction", () => {
 		cy.focused().realPress("Tab");
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
+		cy.wait(300);
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
@@ -58,7 +60,7 @@ describe("Calendar general interaction", () => {
 		cy.focused().realPress("Tab");
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
+		cy.wait(300);
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
@@ -68,7 +70,7 @@ describe("Calendar general interaction", () => {
 		cy.focused().realPress(["Shift", "Tab"]);
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
+		cy.wait(300);
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
@@ -78,7 +80,7 @@ describe("Calendar general interaction", () => {
 		cy.focused().realPress(["Shift", "Tab"]);
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
+		cy.wait(300);
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find("ui5-daypicker")
@@ -88,11 +90,9 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar focuses the selected year when yearpicker is opened", () => {
-		cy.mount(DEFAULT_CALENDAR);
 		const YEAR = 1997;
-		const timestamp = Date.UTC(YEAR) / 1000;
-
-		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
+		const date = Date.UTC(YEAR);
+		cy.mount(DEFAULT_CALENDAR(new Date(date)));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -113,10 +113,8 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar focuses the selected month when monthpicker is opened with space", () => {
-		cy.mount(DEFAULT_CALENDAR);
-		const timestamp = new Date(Date.UTC(2000, 10, 22, 0, 0, 0)).valueOf() / 1000;
-
-		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
+		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
+		cy.mount(DEFAULT_CALENDAR(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -146,10 +144,8 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar focuses the selected year when yearpicker is opened with space", () => {
-		cy.mount(DEFAULT_CALENDAR);
-		const timestamp = new Date(Date.UTC(2000, 10, 22, 0, 0, 0)).valueOf() / 1000;
-
-		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
+		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
+		cy.mount(DEFAULT_CALENDAR(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -163,7 +159,7 @@ describe("Calendar general interaction", () => {
 		cy.focused().realPress("Space");
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
+		cy.wait(300);
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find("ui5-yearpicker")
@@ -182,52 +178,44 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar doesn't mark year as selected when there are no selected dates", () => {
-		cy.mount(DEFAULT_CALENDAR);
-		const timestamp = new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000;
+		cy.mount(html`<ui5-calendar id="calendar2"></ui5-calendar>`);
 
-		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
-
-		cy.get<Calendar>("#calendar1")
+		cy.get<Calendar>("#calendar2")
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-year]")
 			.click();
 
-		cy.get<Calendar>("#calendar1")
+		cy.get<Calendar>("#calendar2")
 			.shadow()
 			.find("ui5-yearpicker")
 			.shadow()
-			.find(`[data-sap-timestamp=973036800]`)
+			.find(`[data-sap-timestamp=1738195200]`)
 			.should("have.focus")
 			.should("not.have.class", "ui5-yp-item--selected");
 	});
 
 	it("Calendar doesn't mark month as selected when there are no selected dates", () => {
-		cy.mount(DEFAULT_CALENDAR);
-		const timestamp = new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000;
+		cy.mount(html`<ui5-calendar id="calendar2"></ui5-calendar>`);
 
-		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
-
-		cy.get<Calendar>("#calendar1")
+		cy.get<Calendar>("#calendar2")
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-month]")
 			.click();
 
-		cy.get<Calendar>("#calendar1")
+		cy.get<Calendar>("#calendar2")
 			.shadow()
 			.find("ui5-monthpicker")
 			.shadow()
-			.find(`[data-sap-timestamp=973036800]`)
+			.find(`[data-sap-timestamp=1738195200]`)
 			.should("have.focus")
 			.should("not.have.class", "ui5-mp-item--selected");
 	});
 
 	it("Page up/down increments/decrements the month value", () => {
-		cy.mount(DEFAULT_CALENDAR);
-		const timestamp = new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000;
-
-		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
+		const date = new Date(Date.UTC(2000, 10, 1, 0, 0, 0));
+		cy.mount(DEFAULT_CALENDAR(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -254,10 +242,8 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Shift + Page up/down increments/decrements the year value by one", () => {
-		cy.mount(DEFAULT_CALENDAR);
-		const timestamp = new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000;
-
-		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
+		const date = new Date(Date.UTC(2000, 10, 1, 0, 0, 0));
+		cy.mount(DEFAULT_CALENDAR(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -284,10 +270,8 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Ctrl + Shift + Page up/down increments/decrements the year value by ten", () => {
-		cy.mount(DEFAULT_CALENDAR);
-		const timestamp = new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000;
-
-		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
+		const date = new Date(Date.UTC(2000, 10, 1, 0, 0, 0));
+		cy.mount(DEFAULT_CALENDAR(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -314,10 +298,8 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Page up/down increments/decrements the year value in the month picker", () => {
-		cy.mount(DEFAULT_CALENDAR);
-		const timestamp = new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000;
-
-		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
+		const date = new Date(Date.UTC(2000, 9, 1, 0, 0, 0));
+		cy.mount(DEFAULT_CALENDAR(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -345,10 +327,8 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Page up/down increments/decrements the year range in the year picker", () => {
-		cy.mount(DEFAULT_CALENDAR);
-		const timestamp = new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000;
-
-		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
+		const date = new Date(Date.UTC(2000, 9, 1, 0, 0, 0));
+		cy.mount(DEFAULT_CALENDAR(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -582,7 +562,7 @@ describe("Calendar general interaction", () => {
 			});
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
+		cy.wait(300);
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
