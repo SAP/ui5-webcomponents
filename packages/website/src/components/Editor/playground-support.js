@@ -26,7 +26,7 @@ const loadThemeProperties = async (themeName) => {
 };
 const loadAndCheck = async (themeName) => {
     const data = await loadThemeProperties(themeName);
-    debugger;
+    
     if (typeof data === "string" && data.endsWith(".json")) {
         throw new Error("error");
     }
