@@ -120,12 +120,12 @@ describe("Menu interaction", () => {
 			.as("items");
 
 		cy.get("@items")
-			.eq(1)
+			.last()
 			.should("be.visible")
 			.ui5MenuItemClick();
 
 		cy.get("@items")
-			.eq(1)
+			.last()
 			.should("be.focused")
 			.and("have.attr", "disabled");
 	});

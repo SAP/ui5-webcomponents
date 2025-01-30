@@ -38,10 +38,10 @@
 
 import "cypress-real-events";
 
-Cypress.Commands.overwrite('realClick', (originalFn, element, ...args) => {
+const realEventCmdCallback = (originalFn, element, ...args) => {
 	cy.get(element)
 		.should($el => {
-			if ($el[0].tagName.includes("-") && typeof $el[0].getDomRef === "function") {
+			if ($el[0].tagName.includes("-") && typeof $el[0].shadowRoot && typeof $el[0].getDomRef === "function") {
 				expect($el[0].getDomRef()).to.exist;
 			} else {
 				expect(true).to.be.true;
@@ -51,109 +51,18 @@ Cypress.Commands.overwrite('realClick', (originalFn, element, ...args) => {
 		.then(() => {
 			return originalFn(element, ...args)
 		});
-})
+};
 
-Cypress.Commands.overwrite('realHover', (originalFn, element, ...args) => {
-	cy.get(element)
-		.should($el => {
-			if ($el[0].tagName.includes("-") && typeof $el[0].getDomRef === "function") {
-				expect($el[0].getDomRef()).to.exist;
-			} else {
-				expect(true).to.be.true;
-			}
-		})
-		.and("be.visible")
-		.then(() => {
-			return originalFn(element, ...args)
-		});
-})
+const commands = [
+	"realClick",
+	"realHover",
+	"realTouch",
+	"realSwipe",
+	"realMouseDown",
+	"realMouseUp",
+	"realMouseMove"
+];
 
-Cypress.Commands.overwrite('realTouch', (originalFn, element, ...args) => {
-	cy.get(element)
-		.should($el => {
-			if ($el[0].tagName.includes("-") && typeof $el[0].getDomRef === "function") {
-				expect($el[0].getDomRef()).to.exist;
-			} else {
-				expect(true).to.be.true;
-			}
-		})
-		.and("be.visible")
-		.then(() => {
-			return originalFn(element, ...args)
-		});
-})
-
-Cypress.Commands.overwrite('realSwipe', (originalFn, element, ...args) => {
-	cy.get(element)
-		.should($el => {
-			if ($el[0].tagName.includes("-") && typeof $el[0].getDomRef === "function") {
-				expect($el[0].getDomRef()).to.exist;
-			} else {
-				expect(true).to.be.true;
-			}
-		})
-		.and("be.visible")
-		.then(() => {
-			return originalFn(element, ...args)
-		});
-})
-
-Cypress.Commands.overwrite('realMouseDown', (originalFn, element, ...args) => {
-	cy.get(element)
-		.should($el => {
-			if ($el[0].tagName.includes("-") && typeof $el[0].getDomRef === "function") {
-				expect($el[0].getDomRef()).to.exist;
-			} else {
-				expect(true).to.be.true;
-			}
-		})
-		.and("be.visible")
-		.then(() => {
-			return originalFn(element, ...args)
-		});
-})
-
-Cypress.Commands.overwrite('realMouseUp', (originalFn, element, ...args) => {
-	cy.get(element)
-		.should($el => {
-			if ($el[0].tagName.includes("-") && typeof $el[0].getDomRef === "function") {
-				expect($el[0].getDomRef()).to.exist;
-			} else {
-				expect(true).to.be.true;
-			}
-		})
-		.and("be.visible")
-		.then(() => {
-			return originalFn(element, ...args)
-		});
-})
-
-Cypress.Commands.overwrite('realMouseMove', (originalFn, element, ...args) => {
-	cy.get(element)
-		.should($el => {
-			if ($el[0].tagName.includes("-") && typeof $el[0].getDomRef === "function") {
-				expect($el[0].getDomRef()).to.exist;
-			} else {
-				expect(true).to.be.true;
-			}
-		})
-		.and("be.visible")
-		.then(() => {
-			return originalFn(element, ...args)
-		});
-})
-
-Cypress.Commands.overwrite('realMouseWheel', (originalFn, element, ...args) => {
-	cy.get(element)
-		.should($el => {
-			if ($el[0].tagName.includes("-") && typeof $el[0].getDomRef === "function") {
-				expect($el[0].getDomRef()).to.exist;
-			} else {
-				expect(true).to.be.true;
-			}
-		})
-		.and("be.visible")
-		.then(() => {
-			return originalFn(element, ...args)
-		});
+commands.forEach(cmd => {
+	Cypress.Commands.overwrite(cmd, realEventCmdCallback)
 })
