@@ -116,7 +116,7 @@ describe("TableGrowing - Button", () => {
 
 			cy.get<TableGrowing>("[ui5-table-growing]")
 				.then(tableGrowing => tableGrowing.get(0).addEventListener("load-more", cy.stub().as("loadMore")))
-				.click();
+				.realClick();
 
 			cy.get("@loadMore")
 				.should("have.been.calledOnce");
@@ -126,9 +126,12 @@ describe("TableGrowing - Button", () => {
 			cy.mount(<TableSample></TableSample>);
 
 			cy.get<TableGrowing>("[ui5-table-growing]")
-				.then(tableGrowing => tableGrowing.get(0).addEventListener("load-more", cy.stub().as("loadMore")))
+				.then(tableGrowing => tableGrowing.get(0).addEventListener("load-more", cy.stub().as("loadMore")));
+
+			cy.get<TableGrowing>("[ui5-table-growing]")
 				.shadow()
 				.find("#growing-button")
+				.should("be.visible")
 				.focus();
 
 			cy.realPress("Enter");
@@ -139,6 +142,7 @@ describe("TableGrowing - Button", () => {
 			cy.get<TableGrowing>("[ui5-table-growing]")
 				.shadow()
 				.find("#growing-button")
+				.should("be.visible")
 				.focus();
 
 			cy.realPress("Space");
@@ -160,7 +164,7 @@ describe("TableGrowing - Button", () => {
 						table!.appendChild(row);
 					});
 				})
-				.click();
+				.realClick();
 
 			cy.get("[ui5-table]")
 				.children("ui5-table-row")
@@ -175,7 +179,7 @@ describe("TableGrowing - Button", () => {
 			cy.mount(<TableSample></TableSample>);
 
 			cy.get<TableGrowing>("[ui5-table-growing]")
-				.click();
+				.realClick();
 
 			cy.get("[ui5-table-growing]")
 				.should("have.focus");
@@ -218,11 +222,17 @@ describe("TableGrowing - Scroll", () => {
 		it("tests loadMore event fire upon scrolling to table end", () => {
 			cy.mount(<TableGrowingSample rowCount={10} overflow={true}></TableGrowingSample>);
 
+			cy.get("[ui5-table]")
+				.should("be.visible");
+
 			cy.get<TableGrowing>("[ui5-table-growing]")
 				.then(tableGrowing => tableGrowing.get(0).addEventListener("load-more", cy.stub().as("loadMore")));
 
 			cy.get("[ui5-table-row]:last-child")
 				.scrollIntoView();
+
+			cy.get("[ui5-table-row]:last-child")
+				.should("be.visible");
 
 			cy.get("@loadMore")
 				.should("have.been.calledOnce");

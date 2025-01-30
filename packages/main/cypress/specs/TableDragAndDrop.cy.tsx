@@ -89,6 +89,9 @@ describe("API & Events", () => {
 				</TableRow>
 			</Table>
 		);
+
+		cy.get("[ui5-table]")
+			.should("be.visible");
 	});
 
 	it("tests if draggable=true is set", () => {
