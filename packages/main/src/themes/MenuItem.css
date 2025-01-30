@@ -108,7 +108,7 @@
 	inset-inline-end: var(--_ui5_menu_item_submenu_icon_right);
 }
 
-:host .ui5-menu-item-submenu-icon .ui5-menu-item-icon-end {
+.ui5-menu-item-submenu-icon .ui5-menu-item-icon-end {
 	color: var(--sapContent_NonInteractiveIconColor);
 }
 
