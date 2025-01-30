@@ -493,6 +493,84 @@ describe("Side Navigation Accessibility", () => {
 			.should("have.attr", "aria-haspopup", "dialog");
 	});
 
+	it("SideNavigationItem ariaHasPopup in overflow", () => {
+		cy.mount(html`
+			<ui5-side-navigation id="sideNav" collapsed>
+				<ui5-side-navigation-item id="item" text="1"></ui5-side-navigation-item>
+				<ui5-side-navigation-item id="parentItem" text="2">
+					<ui5-side-navigation-sub-item id="childItem" text="2.1"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		`);
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu")
+			.as("overflowMenu");
+
+		cy.get("#sideNav")
+			.invoke("attr", "style", "height: 100px");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-item-overflow:not(.ui5-sn-item-hidden)")
+			.realClick();
+
+		// assert
+		cy.get("@overflowMenu")
+			.find("[ui5-navigation-menu-item][text='1']")
+			.shadow()
+			.find(".ui5-navigation-menu-item-root")
+			.should("not.have.attr", "aria-haspopup");
+
+		cy.get("@overflowMenu")
+			.find("[ui5-navigation-menu-item][text='2']")
+			.shadow()
+			.find(".ui5-navigation-menu-item-root")
+			.should("have.attr", "aria-haspopup", "menu");
+
+		cy.get("@overflowMenu")
+			.find("[ui5-navigation-menu-item][text='2.1']")
+			.shadow()
+			.find(".ui5-navigation-menu-item-root")
+			.should("not.have.attr", "aria-haspopup");
+
+		// act
+		cy.get("#item")
+			.invoke("prop", "accessibilityAttributes", {
+				hasPopup: "dialog",
+			});
+
+		cy.get("#parentItem")
+			.invoke("prop", "accessibilityAttributes", {
+				hasPopup: "dialog",
+			});
+
+		cy.get("#childItem")
+			.invoke("prop", "accessibilityAttributes", {
+				hasPopup: "dialog",
+			});
+
+		// assert
+		cy.get("@overflowMenu")
+			.find("[ui5-navigation-menu-item][text='1']")
+			.shadow()
+			.find(".ui5-navigation-menu-item-root")
+			.should("have.attr", "aria-haspopup", "dialog");
+
+		cy.get("@overflowMenu")
+			.find("[ui5-navigation-menu-item][text='2']")
+			.shadow()
+			.find(".ui5-navigation-menu-item-root")
+			.should("have.attr", "aria-haspopup", "menu");
+
+		cy.get("@overflowMenu")
+			.find("[ui5-navigation-menu-item][text='2.1']")
+			.shadow()
+			.find(".ui5-navigation-menu-item-root")
+			.should("have.attr", "aria-haspopup", "dialog");
+	});
+
 	it("SideNavigationItem aria-role in collapsed SideNavigation", () => {
 		cy.mount(
 			<SideNavigation id="sideNav" collapsed={true}>
