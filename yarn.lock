@@ -1814,10 +1814,10 @@
     js-yaml "4.1.0"
     nyc "15.1.0"
 
-"@cypress/mount-utils@^4.0.0":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@cypress/mount-utils/-/mount-utils-4.1.1.tgz#458a664e2d137d98805aaa454320f3ebc6dc1609"
-  integrity sha512-rW49MH5P47LQQ+hr2o+vTD0smht+hSE0vG4Cdai0dLmg0QJ0L+remfikC87omy1VSo0lz226vmW1xOUx350U/w==
+"@cypress/mount-utils@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@cypress/mount-utils/-/mount-utils-4.1.2.tgz#c2c869e473621319a7723e7bee9757477ab34441"
+  integrity sha512-904bOLLJqtjwWpkmVUQtaYwGSfpBV1G4kYZCq/xytcrTYqZcDjZkyYi1bjEIr5GMUR1FURNg4ZGDP0P6Zy7FGA==
 
 "@cypress/request@^3.0.0":
   version "3.0.1"
@@ -8017,13 +8017,6 @@ custom-elements-manifest@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/custom-elements-manifest/-/custom-elements-manifest-1.0.0.tgz#b35c2129076a1dc9f95d720c6f7b5b71a857274b"
   integrity sha512-j59k0ExGCKA8T6Mzaq+7axc+KVHwpEphEERU7VZ99260npu/p/9kd+Db+I3cGKxHkM5y6q5gnlXn00mzRQkX2A==
-
-cypress-ct-lit@^0.4.0:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/cypress-ct-lit/-/cypress-ct-lit-0.4.1.tgz#f21341ab0d37e30cea45a9ce44b959fe5db1b8fa"
-  integrity sha512-iYVoBU605anRDstyxVWxQKFoiuzeA0gvj4I80aj0cym7VUCoarYFMjYA2CBEynLzJxS4yoTZC+jdff8dWYdgiA==
-  dependencies:
-    "@cypress/mount-utils" "^4.0.0"
 
 cypress-real-events@^1.12.0:
   version "1.12.0"

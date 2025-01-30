@@ -12,7 +12,7 @@ declare global {
 		interface Chainable {
 			/**
 			 * Mount your component into Cypress sandbox
-			 * @param component content to render by ;react render function
+			 * @param component content to render by preact render function
 			 * @param options render options for custom rendering
 			 */
 			mount: typeof mount;
