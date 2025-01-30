@@ -322,7 +322,7 @@ describe("Side Navigation interaction", () => {
 				<SideNavigationItem id="unselectableParentItem" text="5" unselectable={true}>
 					<SideNavigationSubItem id="text9" text="5.1" />
 				</SideNavigationItem>
-		  </SideNavigation>
+			</SideNavigation>
 		);
 
 		[
@@ -494,14 +494,14 @@ describe("Side Navigation Accessibility", () => {
 	});
 
 	it("SideNavigationItem ariaHasPopup in overflow", () => {
-		cy.mount(html`
-			<ui5-side-navigation id="sideNav" collapsed>
-				<ui5-side-navigation-item id="item" text="1"></ui5-side-navigation-item>
-				<ui5-side-navigation-item id="parentItem" text="2">
-					<ui5-side-navigation-sub-item id="childItem" text="2.1"></ui5-side-navigation-sub-item>
-				</ui5-side-navigation-item>
-			</ui5-side-navigation>
-		`);
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true}>
+				<SideNavigationItem id="item" text="1"></SideNavigationItem>
+				<SideNavigationItem id="parentItem" text="2">
+					<SideNavigationSubItem id="childItem" text="2.1"></SideNavigationSubItem>
+				</SideNavigationItem>
+			</SideNavigation>
+		);
 
 		cy.get("#sideNav")
 			.shadow()
