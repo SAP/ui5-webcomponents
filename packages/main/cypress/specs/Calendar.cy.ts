@@ -6,7 +6,7 @@ import "../../src/CalendarDate.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
-const DEFAULT_CALENDAR = (date: Date) => {
+const getDefaultCalendar = (date: Date) => {
 	const calDate = new Date(date);
 	const formattedDate = calDate.toLocaleDateString("default", {
 		year: "numeric",
@@ -21,7 +21,7 @@ const DEFAULT_CALENDAR = (date: Date) => {
 	`;
 };
 
-const CALENDARS_WITH_WEEK_NUMBER_CONFIGS = html`
+const getCalendarsWithWeekNumbers = () => html`
 			<ui5-calendar id="calendar1" calendar-week-numbering="ISO_8601">
 				<ui5-date value="Jan 1, 2023"></ui5-date>
 			</ui5-calendar>
@@ -38,19 +38,17 @@ const CALENDARS_WITH_WEEK_NUMBER_CONFIGS = html`
 describe("Calendar general interaction", () => {
 	it("Focus goes into the current day item of the day picker", () => {
 		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
-		cy.mount(DEFAULT_CALENDAR(date));
+		cy.mount(getDefaultCalendar(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(`div[data-sap-timestamp=974851200]`)
 			.should("have.focus");
 
 		cy.focused().realPress("Tab");
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(300);
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
@@ -59,8 +57,6 @@ describe("Calendar general interaction", () => {
 
 		cy.focused().realPress("Tab");
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(300);
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
@@ -69,8 +65,6 @@ describe("Calendar general interaction", () => {
 
 		cy.focused().realPress(["Shift", "Tab"]);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(300);
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
@@ -79,11 +73,9 @@ describe("Calendar general interaction", () => {
 
 		cy.focused().realPress(["Shift", "Tab"]);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(300);
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(`div[data-sap-timestamp=974851200]`)
 			.should("have.focus");
@@ -92,7 +84,7 @@ describe("Calendar general interaction", () => {
 	it("Calendar focuses the selected year when yearpicker is opened", () => {
 		const YEAR = 1997;
 		const date = Date.UTC(YEAR);
-		cy.mount(DEFAULT_CALENDAR(new Date(date)));
+		cy.mount(getDefaultCalendar(new Date(date)));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -102,7 +94,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-yearpicker")
+			.find("[ui5-yearpicker]")
 			.shadow()
 			.find("[tabindex='0']")
 			.invoke("attr", "data-sap-timestamp")
@@ -114,11 +106,11 @@ describe("Calendar general interaction", () => {
 
 	it("Calendar focuses the selected month when monthpicker is opened with space", () => {
 		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
-		cy.mount(DEFAULT_CALENDAR(date));
+		cy.mount(getDefaultCalendar(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(`div[data-sap-timestamp=974851200]`)
 			.click();
@@ -128,12 +120,12 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-monthpicker")
+			.find("[ui5-monthpicker]")
 			.should("not.have.attr", "hidden");
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-monthpicker")
+			.find("[ui5-monthpicker]")
 			.shadow()
 			.find("[tabindex='0']")
 			.invoke("attr", "data-sap-timestamp")
@@ -145,11 +137,11 @@ describe("Calendar general interaction", () => {
 
 	it("Calendar focuses the selected year when yearpicker is opened with space", () => {
 		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
-		cy.mount(DEFAULT_CALENDAR(date));
+		cy.mount(getDefaultCalendar(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(`div[data-sap-timestamp=974851200]`)
 			.click();
@@ -158,16 +150,14 @@ describe("Calendar general interaction", () => {
 		cy.focused().realPress("Tab");
 		cy.focused().realPress("Space");
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(300);
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-yearpicker")
+			.find("[ui5-yearpicker]")
 			.should("not.have.attr", "hidden");
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-yearpicker")
+			.find("[ui5-yearpicker]")
 			.shadow()
 			.find("[tabindex='0']")
 			.invoke("attr", "data-sap-timestamp")
@@ -188,7 +178,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar2")
 			.shadow()
-			.find("ui5-yearpicker")
+			.find("[ui5-yearpicker]")
 			.shadow()
 			.find(`[data-sap-timestamp=1738195200]`)
 			.should("have.focus")
@@ -206,7 +196,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar2")
 			.shadow()
-			.find("ui5-monthpicker")
+			.find("[ui5-monthpicker]")
 			.shadow()
 			.find(`[data-sap-timestamp=1738195200]`)
 			.should("have.focus")
@@ -215,11 +205,11 @@ describe("Calendar general interaction", () => {
 
 	it("Page up/down increments/decrements the month value", () => {
 		const date = new Date(Date.UTC(2000, 10, 1, 0, 0, 0));
-		cy.mount(DEFAULT_CALENDAR(date));
+		cy.mount(getDefaultCalendar(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
 			.click();
@@ -243,11 +233,11 @@ describe("Calendar general interaction", () => {
 
 	it("Shift + Page up/down increments/decrements the year value by one", () => {
 		const date = new Date(Date.UTC(2000, 10, 1, 0, 0, 0));
-		cy.mount(DEFAULT_CALENDAR(date));
+		cy.mount(getDefaultCalendar(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
 			.click();
@@ -271,11 +261,11 @@ describe("Calendar general interaction", () => {
 
 	it("Ctrl + Shift + Page up/down increments/decrements the year value by ten", () => {
 		const date = new Date(Date.UTC(2000, 10, 1, 0, 0, 0));
-		cy.mount(DEFAULT_CALENDAR(date));
+		cy.mount(getDefaultCalendar(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
 			.click();
@@ -299,11 +289,11 @@ describe("Calendar general interaction", () => {
 
 	it("Page up/down increments/decrements the year value in the month picker", () => {
 		const date = new Date(Date.UTC(2000, 9, 1, 0, 0, 0));
-		cy.mount(DEFAULT_CALENDAR(date));
+		cy.mount(getDefaultCalendar(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
 			.click();
@@ -328,11 +318,11 @@ describe("Calendar general interaction", () => {
 
 	it("Page up/down increments/decrements the year range in the year picker", () => {
 		const date = new Date(Date.UTC(2000, 9, 1, 0, 0, 0));
-		cy.mount(DEFAULT_CALENDAR(date));
+		cy.mount(getDefaultCalendar(date));
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
 			.click();
@@ -366,7 +356,7 @@ describe("Calendar general interaction", () => {
 		timestamps.forEach(_timestamp => {
 			cy.get<Calendar>("#calendar1")
 				.shadow()
-				.find("ui5-daypicker")
+				.find("[ui5-daypicker]")
 				.shadow()
 				.find(`[data-sap-timestamp=${_timestamp}]`)
 				.first()
@@ -393,7 +383,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(`[data-sap-timestamp=${timestamp}]`)
 			.first()
@@ -408,7 +398,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(`[data-sap-timestamp=971222400]`)
 			.should("have.focus");
@@ -424,7 +414,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(`[data-sap-timestamp=${timestamps[0]}]`)
 			.first()
@@ -432,7 +422,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(`[data-sap-timestamp=${timestamps[2]}]`)
 			.first()
@@ -440,21 +430,21 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(`[data-sap-timestamp=${timestamps[0]}]`)
 			.should("have.class", "ui5-dp-item--selected");
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(`[data-sap-timestamp=${timestamps[1]}]`)
 			.should("have.class", "ui5-dp-item--selected-between");
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(`[data-sap-timestamp=${timestamps[2]}]`)
 			.should("have.class", "ui5-dp-item--selected");
@@ -561,8 +551,6 @@ describe("Calendar general interaction", () => {
 				expect(spans[1].textContent).to.equal("Sep – Oct");
 			});
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(300);
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
@@ -588,7 +576,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-monthpicker")
+			.find("[ui5-monthpicker]")
 			.shadow()
 			.find(".ui5-mp-item")
 			.first()
@@ -614,7 +602,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-yearpicker")
+			.find("[ui5-yearpicker]")
 			.shadow()
 			.find(".ui5-yp-item")
 			.should("have.length", 8)
@@ -639,7 +627,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-yearpicker")
+			.find("[ui5-yearpicker]")
 			.shadow()
 			.find(".ui5-yp-root .ui5-yp-item")
 			.eq(11) // year 2025
@@ -658,7 +646,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-yearpicker")
+			.find("[ui5-yearpicker]")
 			.shadow()
 			.find(".ui5-yp-root .ui5-yp-item")
 			.eq(3) // year 2016
@@ -666,7 +654,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-yearpicker")
+			.find("[ui5-yearpicker]")
 			.shadow()
 			.find(".ui5-yp-root .ui5-yp-item")
 			.eq(10) // year 2024
@@ -690,14 +678,14 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-monthpicker")
+			.find("[ui5-monthpicker]")
 			.shadow()
 			.find(`[data-sap-timestamp=${timestamp}]`)
 			.click();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(`div[data-sap-timestamp=${timestamp}]`)
 			.should("have.focus");
@@ -711,7 +699,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(".ui5-dp-root")
 			.find("div[data-ui5-special-day]")
@@ -719,12 +707,12 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Check calendar week numbers with specific CalendarWeekNumbering configuration", () => {
-		cy.mount(CALENDARS_WITH_WEEK_NUMBER_CONFIGS);
+		cy.mount(getCalendarsWithWeekNumbers());
 
 		// Check first week number in ISO_8601 calendar
 		cy.get<Calendar>("#calendar1")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(".ui5-dp-weekname")
 			.first()
@@ -733,7 +721,7 @@ describe("Calendar general interaction", () => {
 		// Check first week number in MiddleEastern calendar
 		cy.get<Calendar>("#calendar2")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(".ui5-dp-weekname")
 			.first()
@@ -742,7 +730,7 @@ describe("Calendar general interaction", () => {
 		// Check first week number in WesternTraditional calendar
 		cy.get<Calendar>("#calendar3")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(".ui5-dp-weekname")
 			.first()
@@ -750,7 +738,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Check calendar week day names with specific CalendarWeekNumbering configuration", () => {
-		cy.mount(CALENDARS_WITH_WEEK_NUMBER_CONFIGS);
+		cy.mount(getCalendarsWithWeekNumbers());
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find("[ui5-daypicker]")
