@@ -14,6 +14,7 @@ import "@ui5/webcomponents/dist/CheckBox.js";
 
 let response = null;
 let texts = null;
+let skipDialog = false;
 
 if (!response) {
 	response = await fetch("../assets/data/predefinedTexts.json");
@@ -30,12 +31,23 @@ const toggleDialog = (dialog, isOpen) => {
 dialogCloser.addEventListener("click", () => toggleDialog(dialog, false));
 
 myAiButton.addEventListener("click", () => {
-	if (myAiButton.state !== "generating") {
+	if (myAiButton.state === "generating") {
+		myAiButton.state = "regenerate";
+		stopTextGeneration();
+		return;
+	}
+
+	if (skipDialog) {
+		startGenerationHandler();
+	} else {
 		toggleDialog(dialog, true);
 	}
 });
 
 document.getElementById("dialogProceed").addEventListener("click", () => {
+	if (checkbox.checked) {
+		skipDialog = true;
+	}
 	toggleDialog(dialog, false);
 	startGenerationHandler();
 });
@@ -131,10 +143,3 @@ const typeText = (text, output) => {
 		generationIntervals.push(interval);
 	});
 };
-
-myAiButton.addEventListener("click", () => {
-	if (myAiButton.state === "generating") {
-		myAiButton.state = "regenerate";
-		stopTextGeneration();
-	}
-});

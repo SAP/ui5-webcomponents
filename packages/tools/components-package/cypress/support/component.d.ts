@@ -7,7 +7,7 @@ export interface MountUI5Options extends MountLitTemplateOptions {
 	ui5Configuration: object;
 }
 export type MountOptions = Partial<MountUI5Options>;
-export declare function mount<T extends keyof HTMLElementTagNameMap = any>(component: string | Renderable, options?: MountOptions): Cypress.Chainable<JQuery<HTMLElementTagNameMap[T]>>;
+export declare function mount<T extends keyof HTMLElementTagNameMap = any>(component: JSX.Element, options?: MountOptions): Cypress.Chainable<JQuery<HTMLElementTagNameMap[T]>>;
 declare global {
 	namespace Cypress {
 		interface Chainable {

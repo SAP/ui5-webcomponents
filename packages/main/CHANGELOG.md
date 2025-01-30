@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.1...v2.7.0-rc.2) (2025-01-30)
+
+
+### Bug Fixes
+
+* **f6navigation:** fast navigation in certain container only ([#10485](https://github.com/SAP/ui5-webcomponents/issues/10485)) ([4b2ab63](https://github.com/SAP/ui5-webcomponents/commit/4b2ab63cae9b175f07d266e4150a587756cd7f6c))
+* **ui5-button-badge:** align template ([#10705](https://github.com/SAP/ui5-webcomponents/issues/10705)) ([cacdf54](https://github.com/SAP/ui5-webcomponents/commit/cacdf542c594e8e6e168c77c7622647041e27cd2))
+* **ui5-multi-combobox:** fix valueState background set while typing ([#10586](https://github.com/SAP/ui5-webcomponents/issues/10586)) ([06243e4](https://github.com/SAP/ui5-webcomponents/commit/06243e494715e01230d6efab79b1b3f1212c9ac5)), closes [#10454](https://github.com/SAP/ui5-webcomponents/issues/10454)
+* **ui5-rating-indicator:** allow tab next/prev when readonly ([#10584](https://github.com/SAP/ui5-webcomponents/issues/10584)) ([ad01c1a](https://github.com/SAP/ui5-webcomponents/commit/ad01c1a384f3788c3a14c1ed77de41e4072cd7b9)), closes [#10580](https://github.com/SAP/ui5-webcomponents/issues/10580)
+* **ui5-select:** custom value state message is now visible ([#10647](https://github.com/SAP/ui5-webcomponents/issues/10647)) ([f5d1a8f](https://github.com/SAP/ui5-webcomponents/commit/f5d1a8f89c2b14cc6e753f6e12e1f805e859ac7f)), closes [#10323](https://github.com/SAP/ui5-webcomponents/issues/10323)
+* **ui5-switch:** apply focus only on root element click ([#10588](https://github.com/SAP/ui5-webcomponents/issues/10588)) ([6ff93c5](https://github.com/SAP/ui5-webcomponents/commit/6ff93c5afc4f4320eca0449f91e7a29ba306d05a))
+* **ui5-table:** fix selector column width ([#10640](https://github.com/SAP/ui5-webcomponents/issues/10640)) ([cdcb599](https://github.com/SAP/ui5-webcomponents/commit/cdcb599775c01f562965dcf2343242c8a5fb4aca))
+* **ui5-timepicker:** adapt new private component with internal logic ([#10684](https://github.com/SAP/ui5-webcomponents/issues/10684)) ([d0a45ab](https://github.com/SAP/ui5-webcomponents/commit/d0a45abb899811d549c08cfe1ad40b8f66b7a728))
+
+
+### Features
+
+* **ui5-button:** add badge to ui5-button ([#10642](https://github.com/SAP/ui5-webcomponents/issues/10642)) ([1e693fd](https://github.com/SAP/ui5-webcomponents/commit/1e693fd5b1fc80a5eb7b82a43cf34bd33eccb9fb))
+* **ui5-button:** introduce CSS Shadow parts ([#10628](https://github.com/SAP/ui5-webcomponents/issues/10628)) ([cda7d8b](https://github.com/SAP/ui5-webcomponents/commit/cda7d8b30abf013ea98932ed20848123b025aeaa)), closes [#10611](https://github.com/SAP/ui5-webcomponents/issues/10611)
+* **ui5-colorpicker:** adjust visual design ([#10495](https://github.com/SAP/ui5-webcomponents/issues/10495)) ([600ab25](https://github.com/SAP/ui5-webcomponents/commit/600ab25a0ccf2e69d97bc40f44ac94f4a7e740eb))
+* **ui5-menu:** Enhance keyboard navigation ([#10243](https://github.com/SAP/ui5-webcomponents/issues/10243)) ([34d604d](https://github.com/SAP/ui5-webcomponents/commit/34d604d3e63a4d2a15cdc0a1222c568f379ed333))
+* **ui5-split-button, etc:** introduce new parameters ([#10680](https://github.com/SAP/ui5-webcomponents/issues/10680)) ([af32326](https://github.com/SAP/ui5-webcomponents/commit/af32326a551d5be858e470e374e1c0f6e07c75d1))
+* **ui5-time-picker:** Improve component based on user testing ([#10577](https://github.com/SAP/ui5-webcomponents/issues/10577)) ([e687547](https://github.com/SAP/ui5-webcomponents/commit/e687547045d2d58b91a165f4ef27bcc0c74dbf47))
+* update sap/icons to v5.11.1 & 4.23 ([#10692](https://github.com/SAP/ui5-webcomponents/issues/10692)) ([4545ef7](https://github.com/SAP/ui5-webcomponents/commit/4545ef7998bbd52782d476486957debd633ec1af))
+
+
+
+
+
 # [2.7.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.0...v2.7.0-rc.1) (2025-01-23)
 
 
