@@ -6,7 +6,7 @@ import FilterItemOption from "../../src/FilterItemOption.js";
 describe("View settings dialog - selection", () => {
 	it("tests clicking on sort items (both on the text and radio button)", () => {
 		cy.mount(<ViewSettingsDialog id="vsd">
-			<SortItem slot="sortItems" text="Name" selected></SortItem>
+			<SortItem slot="sortItems" text="Name" selected={true}></SortItem>
 			<SortItem slot="sortItems" text="Position"></SortItem>
 		</ViewSettingsDialog>);
 
