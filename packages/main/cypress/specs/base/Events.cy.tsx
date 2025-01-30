@@ -77,7 +77,9 @@ describe("Event bubbling", () => {
 
 		// act - toggle Input suggestions
 		cy.get("@input")
-			.realClick()
+			.realClick();
+
+		cy.get("@input")
 			.realType("a");
 
 		cy.get("@input")
