@@ -25,7 +25,9 @@
     "generate": "nps generate",
     "generateAPI": "nps generateAPI",
     "bundle": "nps build.bundle",
-    "test": "wc-dev test",
+    "test": "nps test-cy-ci",
+    "test:cypress": "nps test-cy-ci",
+    "test:cypress:open": "nps test-cy-open",
     "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "tsc -b"
