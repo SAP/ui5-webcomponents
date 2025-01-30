@@ -1,5 +1,4 @@
 import Calendar from "../../src/Calendar.js";
-import Button from "../../src/Button.js";
 import CalendarDate from "../../src/CalendarDate.js";
 import CalendarDateRange from "../../src/CalendarDateRange.js";
 import SpecialCalendarDate from "../../src/SpecialCalendarDate.js";
