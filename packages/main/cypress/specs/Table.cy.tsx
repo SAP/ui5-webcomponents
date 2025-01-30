@@ -184,7 +184,6 @@ describe("Table - Popin Mode", () => {
 			});
 
 			const expectedState = expectedStates.find(state => state.width >= randomWidth);
-			// eslint-disable-next-line cypress/no-unnecessary-waiting, no-loop-func
 			cy.get("ui5-table-header-cell").each(($cell, index) => {
 				const id = $cell.attr("id") ?? "";
 				const shouldBePoppedIn = expectedState?.poppedIn.includes(id);
@@ -235,11 +234,12 @@ describe("Table - Horizontal alignment of cells", () => {
 	function check(id: string, index: number, alignment: string) {
 		cy.get(id)
 			.should("have.css", "justify-content", alignment)
-			.invoke("attr", "style")
-			.then(style => {
+			.and($el => {
+				const style = $el.attr("style");
 				const variable = style?.match(/justify-content: ([^;]+)/)?.[1] ?? "";
 				expect(variable).to.equal(`var(--horizontal-align-default-${index})`);
 			});
+
 		cy.get("ui5-table-row")
 			.get(`ui5-table-cell:nth-of-type(${index})`)
 			.should("have.css", "justify-content", alignment);
@@ -247,7 +247,7 @@ describe("Table - Horizontal alignment of cells", () => {
 
 	beforeEach(() => {
 		cy.mount(
-			<Table id="table" overflowMode="Popin" style={{ width: "120px" }}>
+			<Table id="table" overflowMode="Popin" style={{ width: "1120px" }}>
 				<TableHeaderRow slot="headerRow">
 					<TableHeaderCell id="productCol" width="300px"><span>Product</span></TableHeaderCell>
 					<TableHeaderCell id="supplierCol" horizontalAlign="Center" width="200px">Supplier</TableHeaderCell>
@@ -278,6 +278,9 @@ describe("Table - Horizontal alignment of cells", () => {
 				</TableRow>
 			</Table>
 		);
+
+		cy.get("[ui5-table]")
+			.should("be.visible");
 	});
 
 	it("default alignment when horizotal align is not set", () => {
@@ -311,7 +314,9 @@ describe("Table - Horizontal alignment of cells", () => {
 		check("#supplierCol", 2, "center");
 
 		cy.get("#supplierCol")
-			.invoke("attr", "horizontal-align", "End")
+			.invoke("attr", "horizontal-align", "End");
+
+		cy.get("#supplierCol")
 			.should("have.attr", "horizontal-align", "End");
 
 		check("#supplierCol", 2, "end");
@@ -321,7 +326,9 @@ describe("Table - Horizontal alignment of cells", () => {
 		check("#supplierCol", 2, "center");
 
 		cy.get("ui5-table-row:nth-of-type(2) > ui5-table-cell:nth-child(2)")
-			.invoke("attr", "horizontal-align", "Start")
+			.invoke("attr", "horizontal-align", "Start");
+
+		cy.get("ui5-table-row:nth-of-type(2) > ui5-table-cell:nth-child(2)")
 			.should("have.attr", "horizontal-align", "Start")
 			.should("have.css", "justify-content", "start");
 
@@ -336,7 +343,9 @@ describe("Table - Horizontal alignment of cells", () => {
 
 		// Change alignment of header cell => should not affect custom cell alignment
 		cy.get("#supplierCol")
-			.invoke("attr", "horizontal-align", "End")
+			.invoke("attr", "horizontal-align", "End");
+
+		cy.get("#supplierCol")
 			.should("have.attr", "horizontal-align", "End");
 
 		cy.get("ui5-table-row:nth-of-type(2) > ui5-table-cell:nth-child(2)")
@@ -494,11 +503,6 @@ describe("Table - Fixed Header", () => {
 
 describe("Table - Horizontal Scrolling", () => {
 	beforeEach(() => {
-		cy.window().then(window => {
-			window.document.body.style.margin = "0";
-			window.document.body.style.padding = "0";
-		});
-
 		cy.mount(
 			<Table id="table" overflowMode="Scroll" stickyTop="0px" style={{ width: "300px", overflow: "auto" }} accessibleNameRef="title">
 				<TableSelection id="selection" selected="0 2" slot="features"></TableSelection>
@@ -510,21 +514,21 @@ describe("Table - Horizontal Scrolling", () => {
 					<TableHeaderCell id="priceCol" width="200px">Price</TableHeaderCell>
 				</TableHeaderRow>
 				<TableRow id="firstRow" navigated={true} key="0">
-					<TableCell><Label><b>Notebook Basic 15</b><br/><a href="#">HT-1000</a></Label></TableCell>
+					<TableCell><Label><b>Notebook Basic 15</b><br /><a href="#">HT-1000</a></Label></TableCell>
 					<TableCell><Label>Very Best Screens</Label></TableCell>
 					<TableCell><Label>30 x 18 x 3 cm</Label></TableCell>
 					<TableCell><Label style="color: #2b7c2b"><b>4.2</b> KG</Label></TableCell>
 					<TableCell id="lastCell"><Label><b>956</b> EUR</Label></TableCell>
 				</TableRow>
 				<TableRow key="1">
-					<TableCell><Label><b>Notebook Basic 16</b><br/><a href="#">HT-1001</a></Label></TableCell>
+					<TableCell><Label><b>Notebook Basic 16</b><br /><a href="#">HT-1001</a></Label></TableCell>
 					<TableCell><Label>Smartcards</Label></TableCell>
 					<TableCell><Input value="29 x 17 x 3.1 cm" accessibleNameRef="dimensionsCol"></Input></TableCell>
 					<TableCell><Label style="color: #2b7c2b"><b>4.5</b> KG</Label></TableCell>
 					<TableCell><Label><b>1249</b> EUR</Label></TableCell>
 				</TableRow>
 				<TableRow key="2" interactive>
-					<TableCell><Label><b>Notebook Basic 17</b><br/><a href="#">HT-1002</a></Label></TableCell>
+					<TableCell><Label><b>Notebook Basic 17</b><br /><a href="#">HT-1002</a></Label></TableCell>
 					<TableCell><Label>Technocom</Label></TableCell>
 					<TableCell><Label>32 x 21 x 4 cm</Label></TableCell>
 					<TableCell><Label style="color: #2b7c2b"><b>3.7</b> KG</Label></TableCell>
@@ -538,21 +542,21 @@ describe("Table - Horizontal Scrolling", () => {
 					<TableCell><Label><b>29</b> EUR</Label></TableCell>
 				</TableRow>
 				<TableRow key="4">
-					<TableCell><Label><b>Notebook Basic 19</b><br/><a href="#">HT-1004</a></Label></TableCell>
+					<TableCell><Label><b>Notebook Basic 19</b><br /><a href="#">HT-1004</a></Label></TableCell>
 					<TableCell><Label>Technocom</Label></TableCell>
 					<TableCell><Label>32 x 21 x 4 cm</Label></TableCell>
 					<TableCell><Label style="color: #2b7c2b"><b>3.7</b> KG</Label></TableCell>
 					<TableCell><Label><b>29</b> EUR</Label></TableCell>
 				</TableRow>
 				<TableRow key="5">
-					<TableCell><Label><b>Notebook Basic 20</b><br/><a href="#">HT-1005</a></Label></TableCell>
+					<TableCell><Label><b>Notebook Basic 20</b><br /><a href="#">HT-1005</a></Label></TableCell>
 					<TableCell><Label>Technocom</Label></TableCell>
 					<TableCell><Label>32 x 21 x 4 cm</Label></TableCell>
 					<TableCell><Label style="color: #2b7c2b"><b>3.7</b> KG</Label></TableCell>
 					<TableCell><Label><b>29</b> EUR</Label></TableCell>
 				</TableRow>
 				<TableRow key="6" interactive>
-					<TableCell><Label><b>Notebook Basic 21</b><br/><a href="#">HT-1006</a></Label></TableCell>
+					<TableCell><Label><b>Notebook Basic 21</b><br /><a href="#">HT-1006</a></Label></TableCell>
 					<TableCell><Label>Technocom</Label></TableCell>
 					<TableCell><Label>32 x 21 x 4 cm</Label></TableCell>
 					<TableCell><Label style="color: #2b7c2b"><b>3.7</b> KG</Label></TableCell>
@@ -560,6 +564,9 @@ describe("Table - Horizontal Scrolling", () => {
 				</TableRow>
 			</Table>
 		);
+
+		cy.get("[ui5-table]")
+			.should("be.visible");
 	});
 
 	it("navigated indidcator is fixed to the right", () => {
@@ -585,7 +592,7 @@ describe("Table - Horizontal Scrolling", () => {
 			.shadow()
 			.find("#selection-cell")
 			.should("have.css", "position", "sticky")
-			.then($selectionCell => {
+			.and($selectionCell => {
 				const selectionRect = $selectionCell[0].getBoundingClientRect();
 				expect(selectionRect.left).to.be.eq(0);
 			});
@@ -593,7 +600,7 @@ describe("Table - Horizontal Scrolling", () => {
 		cy.get("#table")
 			.shadow()
 			.find("#table")
-			.then($table => {
+			.should($table => {
 				const leftOffset = $table[0].scrollLeft;
 				expect(leftOffset).to.be.greaterThan(0);
 			});
@@ -638,7 +645,7 @@ describe("Table - Navigated Rows", () => {
 			.find("#navigated")
 			.then($navigated2 => {
 				cy.get("@navigated1")
-					.then($navigated1 => {
+					.should($navigated1 => {
 						const nav1BG = getComputedStyle($navigated1[0]).backgroundColor;
 						const nav2BG = getComputedStyle($navigated2[0]).backgroundColor;
 						expect(nav1BG).to.not.be.eq(nav2BG);
@@ -648,7 +655,7 @@ describe("Table - Navigated Rows", () => {
 		cy.get("#table1")
 			.shadow()
 			.find("#table")
-			.then($table => {
+			.should($table => {
 				const gridTemplateColumns = $table[0].style.gridTemplateColumns;
 				// eslint-disable-next-line no-unused-expressions
 				expect(gridTemplateColumns.endsWith("table_navigated_cell_width)")).to.be.true;
