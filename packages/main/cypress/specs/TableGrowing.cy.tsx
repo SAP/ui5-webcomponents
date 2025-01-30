@@ -1,30 +1,45 @@
-import { html } from "lit";
+import Table from "../../src/Table.js";
+import TableHeaderRow from "../../src/TableHeaderRow.js";
+import TableHeaderCell from "../../src/TableHeaderCell.js";
+import TableRow from "../../src/TableRow.js";
+import TableCell from "../../src/TableCell.js";
+import TableGrowing from "../../src/TableGrowing.js";
+import Label from "../../src/Label.js";
 
-import "../../src/Table.js";
-import "../../src/TableHeaderRow.js";
-import "../../src/TableCell.js";
-import "../../src/TableRow.js";
-import "../../src/TableGrowing.js";
+function TableSample() {
+	return <Table id="table">
+		<TableGrowing slot="features"></TableGrowing>
+		<TableHeaderRow slot="headerRow">
+			<TableHeaderCell><span>ColumnA</span></TableHeaderCell>
+		</TableHeaderRow>
+		<TableRow>
+			<TableCell><Label>Cell A</Label></TableCell>
+		</TableRow>
+	</Table>;
+}
 
-import type TableGrowing from "../../src/TableGrowing.js";
+function TableGrowingSample(props: { rowCount: number, overflow: boolean }) {
+	return (
+		<div id="wrapper" style={{ height: "200px", overflow: props.overflow ? "auto" : "" }}>
+			<Table id="table">
+				<TableGrowing slot="features" type="Scroll"></TableGrowing>
+				<TableHeaderRow slot="headerRow">
+					<TableHeaderCell><span>ColumnA</span></TableHeaderCell>
+				</TableHeaderRow>
+				{Array.from({ length: props.rowCount }).map(() => (
+					<TableRow>
+						<TableCell><Label>Cell A</Label></TableCell>
+					</TableRow>
+				))}
+			</Table>
+		</div>
+	);
+}
 
 describe("TableGrowing - Button", () => {
-	function mountTable() {
-		cy.mount(html`
-			<ui5-table id="table">
-				<ui5-table-growing slot="features"></ui5-table-growing>
-				<ui5-table-header-row slot="headerRow">
-					<ui5-table-header-cell><span>ColumnA</span></ui5-table-header-cell>
-				</ui5-table-header-row>
-				<ui5-table-row>
-					<ui5-table-cell><ui5-label>Cell A</ui5-label></ui5-table-cell>
-				</ui5-table-row>
-			</ui5-table>
-		`);
-	}
 	describe("Rendering", () => {
 		it("tests button is rendered", () => {
-			mountTable();
+			cy.mount(<TableSample></TableSample>);
 
 			cy.get("[ui5-table-growing]")
 				.shadow()
@@ -47,17 +62,18 @@ describe("TableGrowing - Button", () => {
 		it("tests correct custom texts are rendered", () => {
 			const growingText = "My Custom Growing Text",
 				growingSubtext = "My Custom Growing Subtext";
-			cy.mount(html`
-				<ui5-table>
-					<ui5-table-growing slot="features" growing-text="${growingText}" growing-sub-text="${growingSubtext}"/>
-					<ui5-table-header-row slot="headerRow">
-						<ui5-table-header-cell><span>ColumnA</span></ui5-table-header-cell>
-					</ui5-table-header-row>
-					<ui5-table-row>
-						<ui5-table-cell><ui5-label>Cell A</ui5-label></ui5-table-cell>
-					</ui5-table-row>
-				</ui5-table>
-			`);
+
+			cy.mount(
+				<Table>
+					<TableGrowing slot="features" growingText={growingText} growingSubText={growingSubtext} />
+					<TableHeaderRow slot="headerRow">
+						<TableHeaderCell><span>ColumnA</span></TableHeaderCell>
+					</TableHeaderRow>
+					<TableRow>
+						<TableCell><Label>Cell A</Label></TableCell>
+					</TableRow>
+				</Table>
+			);
 
 			cy.get("[ui5-table-growing]")
 				.shadow()
@@ -78,14 +94,14 @@ describe("TableGrowing - Button", () => {
 		});
 
 		it("tests growing button not shown when no data", () => {
-			cy.mount(html`
-				<ui5-table>
-					<ui5-table-growing slot="features"></ui5-table-growing>
-					<ui5-table-header-row slot="headerRow">
-						<ui5-table-header-cell><span>ColumnA</span></ui5-table-header-cell>
-					</ui5-table-header-row>
-				</ui5-table>
-			`);
+			cy.mount(
+				<Table>
+					<TableGrowing slot="features"></TableGrowing>
+					<TableHeaderRow slot="headerRow">
+						<TableHeaderCell><span>ColumnA</span></TableHeaderCell>
+					</TableHeaderRow>
+				</Table>
+			);
 
 			cy.get("[ui5-table]")
 				.shadow()
@@ -96,7 +112,7 @@ describe("TableGrowing - Button", () => {
 
 	describe("Event & Focus", () => {
 		it("tests loadMore event fired upon pressing button", () => {
-			mountTable();
+			cy.mount(<TableSample></TableSample>);
 
 			cy.get<TableGrowing>("[ui5-table-growing]")
 				.then(tableGrowing => tableGrowing.get(0).addEventListener("load-more", cy.stub().as("loadMore")))
@@ -107,7 +123,7 @@ describe("TableGrowing - Button", () => {
 		});
 
 		it("test loadMore event fired upon pressing Enter", () => {
-			mountTable();
+			cy.mount(<TableSample></TableSample>);
 
 			cy.get<TableGrowing>("[ui5-table-growing]")
 				.then(tableGrowing => tableGrowing.get(0).addEventListener("load-more", cy.stub().as("loadMore")))
@@ -132,7 +148,7 @@ describe("TableGrowing - Button", () => {
 		});
 
 		it("tests focus is set to first newly added row", () => {
-			mountTable();
+			cy.mount(<TableSample></TableSample>);
 
 			cy.get<TableGrowing>("[ui5-table-growing]")
 				.then(tableGrowing => {
@@ -156,7 +172,7 @@ describe("TableGrowing - Button", () => {
 		});
 
 		it("tests focus is set to growing button when no new rows are added", () => {
-			mountTable();
+			cy.mount(<TableSample></TableSample>);
 
 			cy.get<TableGrowing>("[ui5-table-growing]")
 				.click();
@@ -168,27 +184,9 @@ describe("TableGrowing - Button", () => {
 });
 
 describe("TableGrowing - Scroll", () => {
-	function mountTable(rowCount: number = 10, overflow = false) {
-		cy.mount(html`
-			<div id="wrapper" style="height: 200px; ${overflow ? "overflow: auto" : ""}">
-			<ui5-table id="table">
-				<ui5-table-growing slot="features" type="Scroll"></ui5-table-growing>
-				<ui5-table-header-row slot="headerRow">
-					<ui5-table-header-cell><span>ColumnA</span></ui5-table-header-cell>
-				</ui5-table-header-row>
-				${Array.from({ length: rowCount }).map(() => html`
-					<ui5-table-row>
-						<ui5-table-cell><ui5-label>Cell A</ui5-label></ui5-table-cell>
-					</ui5-table-row>
-				`)}
-			</ui5-table>
-			</div>
-		`);
-	}
-
 	describe("Rendering", () => {
 		it("tests no button shown, when scrollable", () => {
-			mountTable(10, true);
+			cy.mount(<TableGrowingSample rowCount={10} overflow={true}></TableGrowingSample>);
 
 			cy.get("[ui5-table-growing]")
 				.shadow()
@@ -202,7 +200,7 @@ describe("TableGrowing - Scroll", () => {
 		});
 
 		it("tests button shown when not scrollable", () => {
-			mountTable(1, false);
+			cy.mount(<TableGrowingSample rowCount={1} overflow={false}></TableGrowingSample>);
 
 			cy.get("[ui5-table-growing]")
 				.shadow()
@@ -218,7 +216,7 @@ describe("TableGrowing - Scroll", () => {
 
 	describe("Event", () => {
 		it("tests loadMore event fire upon scrolling to table end", () => {
-			mountTable(10, true);
+			cy.mount(<TableGrowingSample rowCount={10} overflow={true}></TableGrowingSample>);
 
 			cy.get<TableGrowing>("[ui5-table-growing]")
 				.then(tableGrowing => tableGrowing.get(0).addEventListener("load-more", cy.stub().as("loadMore")));
@@ -231,7 +229,7 @@ describe("TableGrowing - Scroll", () => {
 		});
 
 		it("tests button fires load-more, button vanishes, scroll to end fires load-more", () => {
-			mountTable(1, true);
+			cy.mount(<TableGrowingSample rowCount={1} overflow={true}></TableGrowingSample>);
 
 			cy.get<TableGrowing>("[ui5-table-growing]")
 				.then(tableGrowing => {
@@ -245,7 +243,7 @@ describe("TableGrowing - Scroll", () => {
 					});
 					tableGrowing.get(0).addEventListener("load-more", cy.stub().as("loadMore"));
 				})
-				.click();
+				.realClick();
 
 			cy.get("@loadMore")
 				.should("have.been.calledOnce");
