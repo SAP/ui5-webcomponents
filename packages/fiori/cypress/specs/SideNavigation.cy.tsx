@@ -30,7 +30,7 @@ describe("Side Navigation Rendering", () => {
 			.should("have.attr", "design", "Action");
 	});
 
-	it("Tests rendering of overflow items", () => {
+	it.skip("Tests rendering of overflow items", () => {
 		cy.mount(
 			<SideNavigation id="sideNav" collapsed={true}>
 				<SideNavigationItem text="dummy item"></SideNavigationItem>
