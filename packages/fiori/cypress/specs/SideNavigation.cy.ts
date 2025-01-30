@@ -144,19 +144,25 @@ describe("Side Navigation interaction", () => {
 		cy.get("#unselectableItem").should("be.focused").and("have.attr", "expanded");
 
 		// act
-		cy.realPress("Space");
+		cy.focused().trigger("keyup", {
+			key: " ",
+		});
 
 		// assert
 		cy.get("#unselectableItem").should("be.focused").and("not.have.attr", "expanded");
 
 		// act
-		cy.realPress("Enter");
+		cy.focused().trigger("keydown", {
+			key: "Enter",
+		});
 
 		// assert
 		cy.get("#unselectableItem").should("be.focused").and("have.attr", "expanded");
 
 		// act
-		cy.realPress("Enter");
+		cy.focused().trigger("keydown", {
+			key: "Enter",
+		});
 
 		// assert
 		cy.get("#unselectableItem").should("be.focused").and("not.have.attr", "expanded");
