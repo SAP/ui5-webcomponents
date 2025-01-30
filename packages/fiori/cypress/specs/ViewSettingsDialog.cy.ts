@@ -22,7 +22,9 @@ describe("View settings dialog - selection", () => {
 
 		// Open the dialog and wait until it's visible
 		cy.get("@vsd")
-			.invoke("prop", "open", true)
+			.invoke("prop", "open", true);
+
+		cy.get("@vsd")
 			.shadow()
 			.find("[ui5-dialog]")
 			.should("be.visible");
@@ -62,7 +64,9 @@ describe("View settings dialog - selection", () => {
 
 		// Open the dialog again and wait until it's visible
 		cy.get("@vsd")
-			.invoke("prop", "open", true)
+			.invoke("prop", "open", true);
+
+		cy.get("@vsd")
 			.shadow()
 			.find("[ui5-dialog]")
 			.should("be.visible");
