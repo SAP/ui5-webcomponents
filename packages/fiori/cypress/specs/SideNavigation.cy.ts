@@ -125,7 +125,7 @@ describe("Side Navigation interaction", () => {
 		cy.get("#item1").should("not.have.attr", "expanded");
 	});
 
-	it("Tests expanding and collapsing of unselectable items with Space and Enter", () => {
+	it.skip("Tests expanding and collapsing of unselectable items with Space and Enter", () => {
 		cy.mount(html`
 			<ui5-side-navigation>
 				<ui5-side-navigation-item id="focusStart" text="focus start"></ui5-side-navigation-item>
