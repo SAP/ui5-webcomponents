@@ -1,17 +1,15 @@
-import { html } from "lit";
-import "../../src/ViewSettingsDialog.js";
-import "../../src/SortItem.js";
-import "../../src/FilterItem.js";
-import "../../src/FilterItemOption.js";
+import ViewSettingsDialog from "../../src/ViewSettingsDialog.js";
+import SortItem from "../../src/SortItem.js";
+import FilterItem from "../../src/FilterItem.js";
+import FilterItemOption from "../../src/FilterItemOption.js";
+
 
 describe("View settings dialog - selection", () => {
 	it("tests clicking on sort items (both on the text and radio button)", () => {
-		cy.mount(html`
-			<ui5-view-settings-dialog id="vsd" sort-ascending>
-        		<ui5-sort-item slot="sortItems" text="Name" selected></ui5-sort-item>
-       			<ui5-sort-item slot="sortItems" text="Position"></ui5-sort-item>
-    		</ui5-view-settings-dialog>
-		`);
+		cy.mount(<ViewSettingsDialog id="vsd">
+			<SortItem slot="sortItems" text="Name" selected></SortItem>
+			<SortItem slot="sortItems" text="Position"></SortItem>
+		</ViewSettingsDialog>);
 
 		// Bind the "confirm" event - it will be called twice (first with Position, then with Name)
 		cy.get("[ui5-view-settings-dialog]")
@@ -94,20 +92,18 @@ describe("View settings dialog - selection", () => {
 	});
 
 	it("tests clicking on filter items, and filter item options (both on the text and checkbox)", () => {
-		cy.mount(html`
-			<ui5-view-settings-dialog id="vsd">
-        		<ui5-filter-item slot="filterItems" text="Filter 1">
-					<ui5-filter-item-option slot="values" text="Some filter 1"></ui5-filter-item-option>
-					<ui5-filter-item-option slot="values" text="Some filter 2"></ui5-filter-item-option>
-					<ui5-filter-item-option slot="values" text="Some filter 3"></ui5-filter-item-option>
-				</ui5-filter-item>
-				<ui5-filter-item slot="filterItems" text="Filter 2">
-					<ui5-filter-item-option slot="values" text="Some filter 4"></ui5-filter-item-option>
-					<ui5-filter-item-option slot="values" text="Some filter 5"></ui5-filter-item-option>
-					<ui5-filter-item-option slot="values" text="Some filter 6"></ui5-filter-item-option>
-				</ui5-filter-item>
-    		</ui5-view-settings-dialog>
-		`);
+		cy.mount(<ViewSettingsDialog id="vsd">
+			<FilterItem slot="filterItems" text="Filter 1">
+				<FilterItemOption slot="values" text="Some filter 1"></FilterItemOption>
+				<FilterItemOption slot="values" text="Some filter 2"></FilterItemOption>
+				<FilterItemOption slot="values" text="Some filter 3"></FilterItemOption>
+			</FilterItem>
+			<FilterItem slot="filterItems" text="Filter 2">
+				<FilterItemOption slot="values" text="Some filter 4"></FilterItemOption>
+				<FilterItemOption slot="values" text="Some filter 5"></FilterItemOption>
+				<FilterItemOption slot="values" text="Some filter 6"></FilterItemOption>
+			</FilterItem>
+		</ViewSettingsDialog>);
 
 		// Bind the "confirm" event - it will be called once with filters = [{"Filter 1":["Some filter 1","Some filter 3"]}]
 		cy.get("[ui5-view-settings-dialog]")
