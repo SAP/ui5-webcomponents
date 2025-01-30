@@ -1,5 +1,7 @@
+import Button from "../../src/Button.js";
 import Icon from "../../src/Icon.js";
 import MessageStrip from "../../src/MessageStrip.js";
+import ResponsivePopover from "../../src/ResponsivePopover.js";
 import {
 	MESSAGE_STRIP_CLOSE_BUTTON_INFORMATION,
 	MESSAGE_STRIP_CLOSE_BUTTON_CUSTOM,
@@ -75,6 +77,66 @@ describe("API", () => {
 				.find("button")
 				.should("have.attr", "title", btnText);
 		});
+	});
+
+	it("should not close the popover when close button is clicked", () => {
+		cy.mount(
+			<>
+				<Button id="btnopen">Open ResponsivePopover</Button>
+				<ResponsivePopover
+					opener="btnopen"
+					headerText="Newsletter subscription"
+					id="resppopover"
+				>
+					<div class="popover-content">
+						<MessageStrip design="Information">Information Message</MessageStrip>
+					</div>
+
+					<div slot="footer" class="popover-footer">
+						<Button id="closePopoverButton" design="Emphasized">Subscribe</Button>
+					</div>
+				</ResponsivePopover>
+			</>
+		);
+
+		cy.get("[ui5-button]")
+			.as("button");
+
+		cy.get("[ui5-responsive-popover]")
+			.as("popover");
+
+		cy.get("@button")
+			.then($btn => {
+				$btn[0].addEventListener("click", () => {
+					cy.get("@popover").then($popover => {
+						$popover[0].setAttribute("open", "");
+					});
+				});
+			});
+
+		cy.get("@popover")
+			.then($popover => {
+				$popover[0].addEventListener("close", () => {
+					$popover[0].removeAttribute("open");
+				});
+			});
+
+		cy.get("@button")
+			.realClick();
+
+		cy.get("@popover")
+			.should("have.attr", "open");
+
+		cy.get("ui5-message-strip")
+			.shadow()
+			.find("ui5-button")
+			.as("buttonMS");
+
+		cy.get("@buttonMS")
+			.realClick();
+
+		cy.get("@popover")
+			.should("have.attr", "open");
 	});
 });
 
