@@ -11,6 +11,11 @@ describe("Invalidation works", () => {
 			</Parent>
 		);
 
+		cy.get<Parent>("[ui5-test-parent]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
+
 		cy.get("[ui5-test-parent]")
 			.as("testParent")
 			.then(el => {
@@ -31,6 +36,11 @@ describe("Invalidation works", () => {
 			</Parent>
 		);
 
+		cy.get<Parent>("[ui5-test-parent]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
+
 		cy.get("[ui5-test-parent]")
 			.as("testParent")
 			.then(el => {
@@ -50,6 +60,11 @@ describe("Invalidation works", () => {
 				<Child slot="items"></Child>
 			</Parent>
 		);
+
+		cy.get<Parent>("[ui5-test-parent]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
 
 		cy.get("[ui5-test-parent]")
 			.as("testParent")

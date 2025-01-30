@@ -5,6 +5,11 @@ describe("Invalidation works", () => {
 	it("Tests that changing a property invalidates", () => {
 		cy.mount(<Generic></Generic>);
 
+		cy.get<Generic>("[ui5-test-generic]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
+
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
 			.then(el => {
@@ -26,6 +31,11 @@ describe("Invalidation works", () => {
 
 		const text = "new value";
 
+		cy.get<Generic>("[ui5-test-generic]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
+
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
 			.invoke("prop", "strProp", text)
@@ -45,6 +55,11 @@ describe("Invalidation works", () => {
 
 		const obj = {};
 		const otherObj = {};
+
+		cy.get<Generic>("[ui5-test-generic]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
@@ -66,6 +81,11 @@ describe("Invalidation works", () => {
 		const arr: Array<string> = [];
 		const otherArr: Array<string> = [];
 
+		cy.get<Generic>("[ui5-test-generic]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
+
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
 			.invoke("prop", "multiProp", arr)
@@ -82,6 +102,11 @@ describe("Invalidation works", () => {
 
 	it("Tests that adding a child invalidates", () => {
 		cy.mount(<Generic></Generic>);
+
+		cy.get<Generic>("[ui5-test-generic]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
@@ -103,6 +128,11 @@ describe("Invalidation works", () => {
 		cy.mount(<Generic></Generic>);
 
 		const div = document.createElement("div");
+
+		cy.get<Generic>("[ui5-test-generic]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
@@ -130,6 +160,11 @@ describe("Invalidation works", () => {
 	it("Tests that modifying textContent invalidates", () => {
 		cy.mount(<Generic></Generic>);
 
+		cy.get<Generic>("[ui5-test-generic]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
+
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
 			.then($testGeneric => {
@@ -156,6 +191,11 @@ describe("Invalidation works", () => {
 	it("Tests that modifying nodeValue invalidates", () => {
 		cy.mount(<Generic></Generic>);
 
+		cy.get<Generic>("[ui5-test-generic]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
+
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
 			.then($testGeneric => {
@@ -181,6 +221,11 @@ describe("Invalidation works", () => {
 
 	it("Tests that multiple invalidations result in a single rendering", () => {
 		cy.mount(<Generic></Generic>);
+
+		cy.get<Generic>("[ui5-test-generic]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric");

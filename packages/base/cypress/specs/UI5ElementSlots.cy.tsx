@@ -17,6 +17,11 @@ describe("Slots work properly", () => {
 			</Generic>
 		);
 
+		cy.get<Generic>("[ui5-test-generic]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
+
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric");
 
@@ -52,6 +57,13 @@ describe("Slots work properly", () => {
 			</Generic>
 		);
 
+		cy.get<Generic>("[ui5-test-generic]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
+
+		cy.get("[ui5-test-generic]");
+
 		cy.get("[slot=individual]")
 			.should("not.exist");
 
@@ -74,6 +86,11 @@ describe("Slots work properly", () => {
 				<span slot="named">Item in slot with propertyName</span>
 			</Generic>
 		);
+
+		cy.get<Generic>("[ui5-test-generic]")
+			.should($el => {
+				expect($el[0].getDomRef()).to.exist;
+			});
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric");
