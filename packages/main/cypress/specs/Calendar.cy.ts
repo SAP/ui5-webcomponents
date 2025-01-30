@@ -40,11 +40,7 @@ describe("Calendar general interaction", () => {
 		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
 		cy.mount(getDefaultCalendar(date));
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-daypicker]")
-			.shadow()
-			.find(`div[data-sap-timestamp=974851200]`)
+		cy.ui5CalendarGetDay("#calendar1", "974851200")
 			.should("have.focus");
 
 		cy.focused().realPress("Tab");
@@ -73,11 +69,7 @@ describe("Calendar general interaction", () => {
 
 		cy.focused().realPress(["Shift", "Tab"]);
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-daypicker]")
-			.shadow()
-			.find(`div[data-sap-timestamp=974851200]`)
+		cy.ui5CalendarGetDay("#calendar1", "974851200")
 			.should("have.focus");
 	});
 
@@ -108,11 +100,7 @@ describe("Calendar general interaction", () => {
 		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
 		cy.mount(getDefaultCalendar(date));
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-daypicker]")
-			.shadow()
-			.find(`div[data-sap-timestamp=974851200]`)
+		cy.ui5CalendarGetDay("#calendar1", "974851200")
 			.click();
 
 		cy.focused().realPress("Tab");
@@ -139,11 +127,7 @@ describe("Calendar general interaction", () => {
 		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
 		cy.mount(getDefaultCalendar(date));
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-daypicker]")
-			.shadow()
-			.find(`div[data-sap-timestamp=974851200]`)
+		cy.ui5CalendarGetDay("#calendar1", "974851200")
 			.click();
 
 		cy.focused().realPress("Tab");
@@ -194,11 +178,7 @@ describe("Calendar general interaction", () => {
 			.find("[data-ui5-cal-header-btn-month]")
 			.click();
 
-		cy.get<Calendar>("#calendar2")
-			.shadow()
-			.find("[ui5-monthpicker]")
-			.shadow()
-			.find(`[data-sap-timestamp=1738195200]`)
+		cy.ui5CalendarGetMonth("#calendar2", "1738195200")
 			.should("have.focus")
 			.should("not.have.class", "ui5-mp-item--selected");
 	});
@@ -354,12 +334,7 @@ describe("Calendar general interaction", () => {
 		const timestamps = [971136000, 971222400, 971308800];
 
 		timestamps.forEach(_timestamp => {
-			cy.get<Calendar>("#calendar1")
-				.shadow()
-				.find("[ui5-daypicker]")
-				.shadow()
-				.find(`[data-sap-timestamp=${_timestamp}]`)
-				.first()
+			cy.ui5CalendarGetDay("#calendar1", _timestamp.toString())
 				.as("date");
 
 			cy.get("@date").click();
@@ -381,12 +356,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-daypicker]")
-			.shadow()
-			.find(`[data-sap-timestamp=${timestamp}]`)
-			.first()
+		cy.ui5CalendarGetDay("#calendar1", timestamp.toString())
 			.focus();
 
 		// Select the focused date
@@ -396,11 +366,7 @@ describe("Calendar general interaction", () => {
 		cy.focused().realPress("Space");
 		cy.focused().realPress("ArrowRight");
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-daypicker]")
-			.shadow()
-			.find(`[data-sap-timestamp=971222400]`)
+		cy.ui5CalendarGetDay("#calendar1", "971222400")
 			.should("have.focus");
 	});
 
@@ -412,41 +378,19 @@ describe("Calendar general interaction", () => {
 
 		const timestamps = [971740800, 971827200, 971913600];
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-daypicker]")
-			.shadow()
-			.find(`[data-sap-timestamp=${timestamps[0]}]`)
-			.first()
+		cy.ui5CalendarGetDay("#calendar1", timestamps[0].toString())
 			.click();
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-daypicker]")
-			.shadow()
-			.find(`[data-sap-timestamp=${timestamps[2]}]`)
-			.first()
+		cy.ui5CalendarGetDay("#calendar1", timestamps[2].toString())
 			.click();
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-daypicker]")
-			.shadow()
-			.find(`[data-sap-timestamp=${timestamps[0]}]`)
+		cy.ui5CalendarGetDay("#calendar1", timestamps[0].toString())
 			.should("have.class", "ui5-dp-item--selected");
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-daypicker]")
-			.shadow()
-			.find(`[data-sap-timestamp=${timestamps[1]}]`)
+		cy.ui5CalendarGetDay("#calendar1", timestamps[1].toString())
 			.should("have.class", "ui5-dp-item--selected-between");
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-daypicker]")
-			.shadow()
-			.find(`[data-sap-timestamp=${timestamps[2]}]`)
+		cy.ui5CalendarGetDay("#calendar1", timestamps[2].toString())
 			.should("have.class", "ui5-dp-item--selected");
 
 		cy.get<Calendar>("#calendar1")
@@ -676,18 +620,10 @@ describe("Calendar general interaction", () => {
 			.find("[data-ui5-cal-header-btn-month]")
 			.click();
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-monthpicker]")
-			.shadow()
-			.find(`[data-sap-timestamp=${timestamp}]`)
+		cy.ui5CalendarGetMonth("#calendar1", timestamp.toString())
 			.click();
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-daypicker]")
-			.shadow()
-			.find(`div[data-sap-timestamp=${timestamp}]`)
+		cy.ui5CalendarGetDay("#calendar1", timestamp.toString())
 			.should("have.focus");
 	});
 
