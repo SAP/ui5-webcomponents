@@ -1,7 +1,7 @@
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type { AccessibilityAttributes } from "@ui5/webcomponents-base";
+import type { AccessibilityAttributes, AriaHasPopup, AriaRole } from "@ui5/webcomponents-base";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -9,6 +9,9 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import type { ListItemAccessibilityAttributes } from "./ListItem.js";
 import ListItem from "./ListItem.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
@@ -249,6 +252,37 @@ class MenuItem extends ListItem implements IMenuItem {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
+	_itemNavigation: ItemNavigation;
+
+	constructor() {
+		super();
+
+		this._itemNavigation = new ItemNavigation(this, {
+			navigationMode: NavigationMode.Horizontal,
+			behavior: ItemNavigationBehavior.Static,
+			getItemsCallback: () => this._navigableItems,
+		});
+	}
+
+	get _navigableItems(): Array<HTMLElement> {
+		return [...this.endContent].filter(item => {
+			return item.hasAttribute("ui5-button")
+			|| item.hasAttribute("ui5-link")
+			|| (item.hasAttribute("ui5-icon") && item.getAttribute("mode") === "Interactive");
+		});
+	}
+
+	_navigateToEndContent(isLast?: boolean) {
+		const item = isLast
+			? this._navigableItems[this._navigableItems.length - 1]
+			: this._navigableItems[0];
+
+		if (item) {
+			this._itemNavigation.setCurrentItem(item);
+			this._itemNavigation._focusCurrentItem();
+		}
+	}
+
 	get placement(): `${PopoverPlacement}` {
 		return this.isRtl ? "Start" : "End";
 	}
@@ -325,9 +359,14 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	get _accInfo() {
-		const accInfoSettings = {
-			role: this.accessibilityAttributes.role || "menuitem" as const,
-			ariaHaspopup: this.hasSubmenu ? "menu" as const : undefined,
+		const accInfoSettings: {
+			role: AriaRole;
+			ariaHaspopup?: `${AriaHasPopup}`;
+			ariaKeyShortcuts?: string;
+			ariaHidden?: boolean;
+		} = {
+			role: this.accessibilityAttributes.role || "menuitem",
+			ariaHaspopup: this.hasSubmenu ? "menu" : undefined,
 			ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
 			ariaHidden: !!this.additionalText && !!this.accessibilityAttributes.ariaKeyShortcuts ? true : undefined,
 		};

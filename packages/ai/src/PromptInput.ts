@@ -183,8 +183,6 @@ class PromptInput extends UI5Element {
 	/**
 	 * Defines whether the component should show suggestions, if such are present.
 	 *
-	 * **Note:** You need to import the `InputSuggestions` module
-	 * from `"@ui5/webcomponents/dist/features/InputSuggestions.js"` to enable this functionality.
 	 * @default false
 	 * @public
 	 */
@@ -199,11 +197,6 @@ class PromptInput extends UI5Element {
 	 *
 	 * **Note:** The `<ui5-suggestion-item>`, `<ui5-suggestion-item-group>` and `ui5-suggestion-item-custom` are recommended to be used as suggestion items.
 	 *
-	 * **Note:** Importing the Input Suggestions Support feature:
-	 *
-	 * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";`
-	 *
-	 * automatically imports the `<ui5-suggestion-item>` and `<ui5-suggestion-item-group>` for your convenience.
 	 * @public
 	 */
 		@slot({ type: HTMLElement, "default": true })
