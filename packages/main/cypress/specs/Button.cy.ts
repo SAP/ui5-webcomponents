@@ -1,5 +1,6 @@
 import { html } from "lit";
 import "../../src/Button.js";
+import "../../src/ButtonBadge.js";
 import type Button from "../../src/Button.js";
 import "@ui5/webcomponents-icons/dist/download.js";
 import "@ui5/webcomponents-icons/dist/employee.js";
@@ -358,5 +359,26 @@ describe("Accessibility", () => {
 
 		cy.get("@button")
 			.should("have.attr", "aria-description", "A long description.");
+	});
+
+	it("button with a badge", () => {
+		cy.mount(html`<ui5-button design="Emphasized" icon="employee">Emphasized
+				<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
+			</ui5-button>`);
+
+		cy.get("[ui5-button]")
+			.find("ui5-button-badge")
+			.as("badge");
+
+		cy.get("@badge")
+			.shadow()
+			.find("ui5-tag")
+			.as("tag");
+
+		cy.get("@tag")
+			.should("have.attr", "design", "Critical");
+
+		cy.get("@tag")
+			.should("have.text", "999+");
 	});
 });
