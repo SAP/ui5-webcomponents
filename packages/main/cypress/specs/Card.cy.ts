@@ -2,30 +2,7 @@ import { html } from "lit";
 import "../../src/Card.js";
 import "../../src/CardHeader.js";
 
-const interactiveCardHeader = html` <ui5-card>
-	<ui5-card-header
-        id="cardHeader1"
-		slot="header"
-		additional-text="4 of 10"
-		title-text="Quick Links"
-		subtitle-text="Quick links sub title"
-		interactive
-	>
-	</ui5-card-header>
-</ui5-card>`;
-
-const cardHeader = html` <ui5-card>
-	<ui5-card-header
-        id="cardHeader2"
-		slot="header"
-		additional-text="4 of 10"
-		title-text="Quick Links"
-		subtitle-text="Quick links sub title"
-	>
-	</ui5-card-header>
-</ui5-card>`;
-
-const card = html`<ui5-card id="card" class="myCard">
+const card = html`<ui5-card id="card">
 	<ui5-card-header
 		id="cardHeader"
 		slot="header"
@@ -35,29 +12,19 @@ const card = html`<ui5-card id="card" class="myCard">
 		interactive>
 	</ui5-card-header>
 
-	<ui5-list id="myList3" separators="Inner">
-		<ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
-		<ui5-li icon="opportunity">Segmentation Models</ui5-li>
-		<ui5-li icon="line-charts">Marketing plans</ui5-li>
-	</ui5-list>
-
-	<ui5-input id="field" value="0" class="myInput"></ui5-input>
+	<div></div>
 </ui5-card>`;
 
-const card2 = html`<ui5-card id="card2" class="myCard">
+const card2 = html`<ui5-card id="card2">
 	<ui5-card-header
 		id="cardHeader2"
 		slot="header"
 		additional-text="4 of 10"
 		title-text="Quick Links"
 		subtitle-text="Quick Links">
-		<ui5-icon name="group" slot="avatar"></ui5-icon>
 	</ui5-card-header>
 
-	<ui5-list id="myList3" separators="None">
-		<ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
-		<ui5-li icon="opportunity">Segmentation Models</ui5-li>
-	</ui5-list>
+	<div></div>
 </ui5-card>`;
 
 describe("Card general interaction", () => {
@@ -66,31 +33,6 @@ describe("Card general interaction", () => {
 
 		// assert
 		cy.get("#card").should("exist");
-	});
-
-	it("Tests additionalText is rendered, when action is set", () => {
-		cy.mount(html`
-			<ui5-card class="myCard" id="actionCard">
-				<ui5-card-header
-					id="actionCardHeader"
-					slot="header"
-					title-text="Linked Activities (5)"
-					additional-text="4 of 10">
-					<ui5-button icon="add" slot="action" design="Transparent">Add activity</ui5-button>
-				</ui5-card-header>
-
-				<ui5-list id="myList3" separators="Inner">
-					<ui5-li icon="horizontal-bullet-chart">Increase customer satisfaction by 10% using marketing methods</ui5-li>
-					<ui5-li icon="opportunity">Get 1000 survey responses to annual employee survey</ui5-li>
-				</ui5-list>
-			</ui5-card>
-		`);
-
-		// assert
-		cy.get("#actionCardHeader")
-			.shadow()
-			.find(".ui5-card-header-additionalText")
-			.should("exist");
 	});
 
 	it("Tests interactive header results in interactive class on the card", () => {
@@ -150,24 +92,20 @@ describe("Card general interaction", () => {
 
 	it("Tests clicking on an action does not fire header's click event", () => {
 		cy.mount(html`
-			<ui5-card id="card3">
+			<ui5-card>
 				<ui5-card-header
-					id="cardHeader3"
+					id="cardHeader"
 					slot="header"
 					title-text="Quick Links"
-					subtitle-text="Quick Links"
 					interactive>
 					<ui5-button id="actionBtn" slot="action">Act</ui5-button>
 				</ui5-card-header>
 
-				<ui5-list id="myList3" separators="Inner">
-					<ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
-					<ui5-li icon="opportunity">Segmentation Models</ui5-li>
-				</ui5-list>
+				<div></div>
 			</ui5-card>
 		`);
 
-		cy.get("#cardHeader3").then($header => {
+		cy.get("#cardHeader").then($header => {
 			$header.get(0).addEventListener("ui5-click", cy.stub().as("headerClick"));
 		});
 
@@ -182,18 +120,12 @@ describe("Card general interaction", () => {
 			<ui5-card
 				id="loadingCard"
 				loading
-				loading-delay="500"
-				accessible-name="My Card">
+				loading-delay="500"">
 				<ui5-card-header
-					id="loadingCardHeader"
 					slot="header"
-					interactive
 					title-text="Interactive Header">
-					<ui5-button slot="action">Header Button</ui5-button>
 				</ui5-card-header>
-				<div class="myContent">
-					<ui5-button>Content Button</ui5-button>
-				</div>
+				<div></div>
 			</ui5-card>
 		`);
 
@@ -207,10 +139,20 @@ describe("Card general interaction", () => {
 
 describe("Card header", () => {
 	it("Tests that aria attribute are correct on interactive header", () => {
-		cy.mount(interactiveCardHeader);
+		cy.mount(html`
+			<ui5-card>
+				<ui5-card-header
+					id="cardHeader"
+					slot="header"
+					title-text="Quick Links"
+					interactive
+				>
+				</ui5-card-header>
+			</ui5-card>	
+		`);
 
 		// assert
-		cy.get("#cardHeader1")
+		cy.get("#cardHeader")
 			.shadow()
 			.find(".ui5-card-header-focusable-element")
 			.should("have.attr", "role", "button")
@@ -219,15 +161,45 @@ describe("Card header", () => {
 	});
 
 	it("Tests that aria attribute are correct on a header", () => {
-		cy.mount(cardHeader);
+		cy.mount(html`
+			<ui5-card>
+				<ui5-card-header
+					id="cardHeader"
+					slot="header"
+					title-text="Quick Links"
+				>
+				</ui5-card-header>
+			</ui5-card>
+		`);
 
 		// assert
-		cy.get("#cardHeader2")
+		cy.get("#cardHeader")
 			.shadow()
 			.find(".ui5-card-header-focusable-element")
 			.should("have.attr", "role", "group")
 			.and("have.attr", "tabindex", "0")
 			.and("have.attr", "aria-roledescription", "Card Header");
+	});
+
+	it("Tests additionalText is rendered, when action is set", () => {
+		cy.mount(html`
+			<ui5-card>
+				<ui5-card-header
+					id="actionCardHeader"
+					slot="header"
+					title-text="Linked Activities (5)"
+					additional-text="4 of 10">
+				</ui5-card-header>
+
+				<div></div>
+			</ui5-card>
+		`);
+
+		// assert
+		cy.get("#actionCardHeader")
+			.shadow()
+			.find(".ui5-card-header-additionalText")
+			.should("exist");
 	});
 });
 
@@ -237,7 +209,6 @@ describe("Card Accessibility", () => {
 			<ui5-card id="textCard" accessible-name="Internships">
 				<ui5-card-header
 					slot="header"
-					id="header4"
 					title-text="New Internships">
 				</ui5-card-header>
 			</ui5-card>
@@ -254,7 +225,6 @@ describe("Card Accessibility", () => {
 		cy.mount(html`
 			<ui5-card id="textCardRef" accessible-name="Internships" accessible-name-ref="cont">
 				<ui5-card-header
-					id="header5"
 					slot="header"
 					title-text="New Positions">
 				</ui5-card-header>
@@ -271,13 +241,10 @@ describe("Card Accessibility", () => {
 
 	it("Tests aria-label", () => {
 		cy.mount(html`
-			<ui5-card id="textAreaAriaLabel" class="myCard">
+			<ui5-card id="textAreaAriaLabel">
 				<ui5-card-header
 					slot="header"
-					id="header"
-					additional-text="4 of 10"
-					title-text="Linked Activities (5)"
-					subtitle-text="Quick Links">
+					title-text="Linked Activities (5)">
 				</ui5-card-header>
 			</ui5-card>
 		`);
@@ -314,5 +281,45 @@ describe("Card Accessibility", () => {
 			.find(".ui5-card-header .ui5-card-header-title")
 			.invoke("attr", "aria-level", "4")
 			.should("have.attr", "aria-level", "4");
+	});
+
+	it("Tests header aria-labelledby", () => {
+		cy.mount(html`
+			<div>
+				<ui5-card>
+					<ui5-card-header
+						slot="header"
+						id="header"
+						additional-text="4 of 10"
+						title-text="Linked Activities (5)"
+						subtitle-text="Quick Links">
+					</ui5-card-header>
+				</ui5-card>
+
+				<ui5-card>
+					<ui5-card-header
+						slot="header"
+						id="header2"
+						title-text="New Jobs (5)"
+						subtitle-text="Find One">
+					</ui5-card-header>
+				</ui5-card>
+			</div>
+		`);
+
+		// assert
+		cy.get("#header").invoke("prop", "_id").then(headerId => {
+			cy.get("#header")
+				.shadow()
+				.find(".ui5-card-header .ui5-card-header-focusable-element")
+				.should("have.attr", "aria-labelledby", `${headerId}-title ${headerId}-subtitle ${headerId}-additionalText`);
+		});
+
+		cy.get("#header2").invoke("prop", "_id").then(headerId2 => {
+			cy.get("#header2")
+				.shadow()
+				.find(".ui5-card-header .ui5-card-header-focusable-element")
+				.should("have.attr", "aria-labelledby", `${headerId2}-title ${headerId2}-subtitle`);
+		});
 	});
 });
