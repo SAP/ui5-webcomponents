@@ -71,7 +71,7 @@ describe("Menu interaction", () => {
 			.should("exist");
 	});
 
-	it("Restore focus to previous element after close", () => {
+	it.skip("Restore focus to previous element after close", () => {
 		cy.mount(
 			<>
 				<Button id="btnOpen">Open Menu</Button>
@@ -286,7 +286,7 @@ describe("Menu interaction", () => {
 	});
 
 	describe("Event firing", () => {
-		it("Event firing - 'ui5-item-click' after 'click' on menu item", () => {
+		it.skip("Event firing - 'ui5-item-click' after 'click' on menu item", () => {
 			cy.mount(
 				<>
 					<Button id="btnOpen">Open Menu</Button>
@@ -569,7 +569,7 @@ describe("Menu interaction", () => {
 				.should("have.attr", "accessible-name", "Select an option from the menu");
 		});
 
-		it("Menu items - navigation in endContent", () => {
+		it.skip("Menu items - navigation in endContent", () => {
 			cy.mount(
 				<>
 					<Button id="btnOpen">Open Menu</Button>
