@@ -38,66 +38,66 @@
 
 import "cypress-real-events";
 
-Cypress.Commands.overwrite('realClick', (originalFn, element, options) => {
+Cypress.Commands.overwrite('realClick', (originalFn, element, ...args) => {
 	cy.get(element)
 		.should("be.visible")
 		.then(() => {
-			return originalFn(element, options)
+			return originalFn(element, ...args)
 		});
 })
 
-Cypress.Commands.overwrite('realHover', (originalFn, element, options) => {
+Cypress.Commands.overwrite('realHover', (originalFn, element, ...args) => {
 	cy.get(element)
 		.should("be.visible")
 		.then(() => {
-			return originalFn(element, options)
+			return originalFn(element, ...args)
 		});
 })
 
-Cypress.Commands.overwrite('realTouch', (originalFn, element, options) => {
+Cypress.Commands.overwrite('realTouch', (originalFn, element, ...args) => {
 	cy.get(element)
 		.should("be.visible")
 		.then(() => {
-			return originalFn(element, options)
+			return originalFn(element, ...args)
 		});
 })
 
-Cypress.Commands.overwrite('realSwipe', (originalFn, element, options) => {
+Cypress.Commands.overwrite('realSwipe', (originalFn, element, ...args) => {
 	cy.get(element)
 		.should("be.visible")
 		.then(() => {
-			return originalFn(element, options)
+			return originalFn(element, ...args)
 		});
 })
 
-Cypress.Commands.overwrite('realMouseDown', (originalFn, element, options) => {
+Cypress.Commands.overwrite('realMouseDown', (originalFn, element, ...args) => {
 	cy.get(element)
 		.should("be.visible")
 		.then(() => {
-			return originalFn(element, options)
+			return originalFn(element, ...args)
 		});
 })
 
-Cypress.Commands.overwrite('realMouseUp', (originalFn, element, options) => {
+Cypress.Commands.overwrite('realMouseUp', (originalFn, element, ...args) => {
 	cy.get(element)
 		.should("be.visible")
 		.then(() => {
-			return originalFn(element, options)
+			return originalFn(element, ...args)
 		});
 })
 
-Cypress.Commands.overwrite('realMouseMove', (originalFn, element, options) => {
+Cypress.Commands.overwrite('realMouseMove', (originalFn, element, ...args) => {
 	cy.get(element)
 		.should("be.visible")
 		.then(() => {
-			return originalFn(element, options)
+			return originalFn(element, ...args)
 		});
 })
 
-Cypress.Commands.overwrite('realMouseWheel', (originalFn, element, options) => {
+Cypress.Commands.overwrite('realMouseWheel', (originalFn, element, ...args) => {
 	cy.get(element)
 		.should("be.visible")
 		.then(() => {
-			return originalFn(element, options)
+			return originalFn(element, ...args)
 		});
 })
