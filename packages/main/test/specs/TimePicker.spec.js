@@ -45,11 +45,11 @@ describe("TimePicker general interaction", () => {
 		for (let i=1; i<= 10; i++) await browser.keys("ArrowDown"); // Select 02
 
 		// switch to minutes clock
-		await browser.keys("Tab");
+		await browser.keys("Space");
 		for (let i=1; i<= 20; i++) await browser.keys("ArrowDown"); // Select 40
 
 		// switch to seconds clock
-		await browser.keys("Tab");
+		await browser.keys("Space");
 		for (let i=1; i<= 4; i++) await browser.keys("ArrowUp"); // Select 5
 
 		await browser.keys("Tab"); // Move to submit

@@ -34,6 +34,7 @@ import Bar from "./Bar.js";
 import Breadcrumbs from "./Breadcrumbs.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
+import ButtonBadge from "./ButtonBadge.js";
 import Card from "./Card.js";
 import CalendarLegend from "./CalendarLegend.js";
 import CardHeader from "./CardHeader.js";
