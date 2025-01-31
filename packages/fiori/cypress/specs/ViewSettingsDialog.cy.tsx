@@ -5,20 +5,17 @@ import FilterItemOption from "../../src/FilterItemOption.js";
 
 describe("View settings dialog - selection", () => {
 	it("tests clicking on sort items (both on the text and radio button)", () => {
-		cy.mount(<ViewSettingsDialog id="vsd">
+		cy.mount(<ViewSettingsDialog id="vsd" onConfirm={cy.stub().as("confirm")}>
 			<SortItem slot="sortItems" text="Name" selected={true}></SortItem>
 			<SortItem slot="sortItems" text="Position"></SortItem>
 		</ViewSettingsDialog>);
 
-		// Bind the "confirm" event - it will be called twice (first with Position, then with Name)
-		cy.get("[ui5-view-settings-dialog]")
-			.as("vsd")
-			.then(vsd => {
-				vsd.get(0).addEventListener("ui5-confirm", cy.stub().as("confirm"));
-			});
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(100); // Wait after mounting the component temporarily, until the component is fully rendered
 
 		// Open the dialog and wait until it's visible
-		cy.get("@vsd")
+		cy.get("[ui5-view-settings-dialog]")
+			.as("vsd")
 			.invoke("prop", "open", true);
 
 		cy.get("@vsd")
@@ -91,7 +88,7 @@ describe("View settings dialog - selection", () => {
 	});
 
 	it("tests clicking on filter items, and filter item options (both on the text and checkbox)", () => {
-		cy.mount(<ViewSettingsDialog id="vsd">
+		cy.mount(<ViewSettingsDialog id="vsd" onConfirm={cy.stub().as("confirm")}>
 			<FilterItem slot="filterItems" text="Filter 1">
 				<FilterItemOption slot="values" text="Some filter 1"></FilterItemOption>
 				<FilterItemOption slot="values" text="Some filter 2"></FilterItemOption>
@@ -104,15 +101,12 @@ describe("View settings dialog - selection", () => {
 			</FilterItem>
 		</ViewSettingsDialog>);
 
-		// Bind the "confirm" event - it will be called once with filters = [{"Filter 1":["Some filter 1","Some filter 3"]}]
-		cy.get("[ui5-view-settings-dialog]")
-			.as("vsd")
-			.then(vsd => {
-				vsd.get(0).addEventListener("ui5-confirm", cy.stub().as("confirm"));
-			});
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(100); // Wait after mounting the component temporarily, until the component is fully rendered
 
 		// Open the dialog and wait until it's visible
-		cy.get("@vsd")
+		cy.get("[ui5-view-settings-dialog]")
+			.as("vsd")
 			.invoke("prop", "open", true)
 			.shadow()
 			.find("[ui5-dialog]")
