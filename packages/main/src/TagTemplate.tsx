@@ -12,11 +12,12 @@ export default function TagTemplate(this: Tag) {
 						aria-roledescription={this._roleDescription}
 						aria-description={this._valueState}
 						onClick={this._onclick}
+						part="root"
 					>
 						{ content.call(this) }
 					</button>
 					:
-					<div class="ui5-tag-root" title={this._title}>
+					<div class="ui5-tag-root" title={this._title} part="root">
 						{ content.call(this) }
 					</div>
 			}

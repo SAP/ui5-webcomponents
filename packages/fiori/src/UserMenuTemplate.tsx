@@ -32,6 +32,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 			open={this.open}
 			opener={this.opener}
 			onClose={this._handlePopoverAfterClose}
+			onOpen={this._handlePopoverAfterOpen}
 		>
 			{this._isPhone ?
 				<>
@@ -76,7 +77,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 								<Button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon={addEmployee} onClick={this._handleAddAccountClick} tooltip={this._addAccountTooltip}/>
 							}
 						</div>
-						{this._otherAccounts.length &&
+						{this._otherAccounts.length > 0 &&
 							<List onItemClick={this._handleAccountSwitch}>
 								{this._otherAccounts.map(account =>
 									<ListItemCustom
@@ -107,7 +108,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 					</Panel>
 			}
 
-			{this.menuItems.length &&
+			{this.menuItems.length > 0 &&
 					<List
 						class="ui5-user-menu-list"
 						selectionMode="None"
@@ -135,9 +136,11 @@ function headerContent(this: UserMenu) {
 					{this._selectedAccount.avatarSrc &&
 						<img src={this._selectedAccount.avatarSrc}/>
 					}
+					{this.showEditButton &&
 					<Tag slot="badge" wrappingType="None" design="Set1" colorScheme="5" title={this._editAvatarTooltip}>
 						<Icon slot="icon" name={edit}></Icon>
 					</Tag>
+					}
 				</Avatar>
 				{this._selectedAccount.titleText &&
 					<Title id="selected-account-title" class="ui5-pm-selected-account-title">{this._selectedAccount.titleText}</Title>

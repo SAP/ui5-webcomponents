@@ -1,7 +1,6 @@
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import navRightArrow from "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import navDownArrow from "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
-import circleTask from "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import arrowRight from "@ui5/webcomponents-icons/dist/arrow-right.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
 
@@ -104,9 +103,6 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					<Icon class="ui5-sn-item-icon" name={this.icon}/>
 					}
 					<div class="ui5-sn-item-text">{this.text}</div>
-					<Icon class="ui5-sn-item-selection-icon"
-						name={circleTask}
-					/>
 					{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
 						name={arrowRight}
@@ -115,7 +111,7 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
-						onui5-click={this._onToggleClick}
+						onClick={this._onToggleClick}
 					/>
 					}
 				</a>
@@ -131,6 +127,7 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					aria-expanded={this._expanded}
 					aria-current={this._ariaCurrent}
 					aria-selected={this.selected}
+					aria-haspopup={this.accessibilityAttributes?.hasPopup}
 					title={this._tooltip}
 					aria-owns={this._groupId}
 				>
@@ -138,9 +135,6 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					<Icon class="ui5-sn-item-icon" name={this.icon}/>
 					}
 					<div class="ui5-sn-item-text">{this.text}</div>
-					<Icon class="ui5-sn-item-selection-icon"
-						name={circleTask}
-					/>
 					{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
 						name={arrowRight}
@@ -149,7 +143,7 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
-						onui5-click={this._onToggleClick}
+						onClick={this._onToggleClick}
 					/>
 					}
 				</div>

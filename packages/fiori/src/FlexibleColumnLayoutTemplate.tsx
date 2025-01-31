@@ -1,7 +1,10 @@
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/InitialConfiguration.js";
-import verticalGrip from "@ui5/webcomponents-icons/dist/vertical-grip.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import verticalGripIcon from "@ui5/webcomponents-icons/dist/vertical-grip.js";
+import slimdArrowRightIcon from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import slimdArrowLefttIcon from "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 import type FlexibleColumnLayout from "./FlexibleColumnLayout.js";
 
 export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout) {
@@ -31,9 +34,10 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 				tabindex={this.startSeparatorTabIndex}
 				onMouseDown={this.onSeparatorPress}
 				onTouchStart={this.onSeparatorPress}
-				onKeyDown={this._onkeydown}
-				onKeyUp={this._onkeyup}
+				onKeyDown={this._onSeparatorKeydown}
+				onKeyUp={this._onSeparatorKeyUp}
 			>
+				{ this.showStartSeparatorArrow && arrowStart.call(this) }
 				{ gripStart.call(this) }
 			</div>
 
@@ -59,8 +63,8 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 				tabindex={this.endSeparatorTabIndex}
 				onMouseDown={this.onSeparatorPress}
 				onTouchStart={this.onSeparatorPress}
-				onKeyDown={this._onkeydown}
-				onKeyUp={this._onkeyup}
+				onKeyDown={this._onSeparatorKeydown}
+				onKeyUp={this._onSeparatorKeyUp}
 			>
 				{ gripEnd.call(this) }
 			</div>
@@ -82,10 +86,22 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 	);
 }
 
+function arrowStart(this: FlexibleColumnLayout) {
+	return (
+		<Button
+			icon={this.startArrowDirection === "backward" ? slimdArrowLefttIcon : slimdArrowRightIcon}
+			design="Transparent"
+			onClick={this.switchLayoutOnArrowPress}
+			onKeyDown={this._onArrowKeydown}
+			class="ui5-fcl-arrow ui5-fcl-arrow--start"
+		/>
+	);
+}
+
 function gripStart(this: FlexibleColumnLayout) {
 	return (
 		<Icon
-			name={verticalGrip}
+			name={verticalGripIcon}
 			class="ui5-fcl-grip ui5-fcl-grip--start"
 			style={{ display: this.showStartSeparatorGrip ? "inline-block" : "none" }}
 		/>
@@ -95,7 +111,7 @@ function gripStart(this: FlexibleColumnLayout) {
 function gripEnd(this: FlexibleColumnLayout) {
 	return (
 		<Icon
-			name={verticalGrip}
+			name={verticalGripIcon}
 			class="ui5-fcl-grip ui5-fcl-grip--end"
 			style={{ display: this.showEndSeparatorGrip ? "inline-block" : "none" }}
 		/>

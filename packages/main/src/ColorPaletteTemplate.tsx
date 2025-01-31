@@ -3,7 +3,6 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type ColorPalette from "./ColorPalette.js";
 import Button from "./Button.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
-import ColorPaletteDialogTemplate from "./ColorPaletteDialogTemplate.js";
 
 export default function ColorPaletteTemplate(this: ColorPalette) {
 	return (
@@ -41,7 +40,7 @@ export default function ColorPaletteTemplate(this: ColorPalette) {
 					)}
 				</div>
 
-				{this._showMoreColors &&
+				{this.showMoreColors &&
 					<div class="ui5-cp-more-colors-wrapper">
 						<div class="ui5-cp-separator"></div>
 						<Button
@@ -67,7 +66,7 @@ export default function ColorPaletteTemplate(this: ColorPalette) {
 				}
 			</div>
 
-			{ ColorPaletteDialogTemplate.call(this) }
+			{ this.showMoreColors && this.showMoreColorsTemplate?.call(this) }
 		</>
 	);
 }

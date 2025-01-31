@@ -74,7 +74,8 @@
 	--_ui5_tc_overflowItem_negative_color: var(--sapNegativeColor);
 	--_ui5_tc_overflowItem_critical_color: var(--sapCriticalColor);
 	--_ui5_tc_overflowItem_focus_offset: 0.125rem;
-	--_ui5_tc_overflowItem_extraIndent: 0rem;
+	--_ui5_tc_overflowItem_indent: 0.5rem;
+	--_ui5_tc_overflowItem_extra_indent: 0rem;
 
 	/* Header Item icons */
 	--_ui5_tc_headerItemIcon_border: 1px solid var(--sapHighlightColor);

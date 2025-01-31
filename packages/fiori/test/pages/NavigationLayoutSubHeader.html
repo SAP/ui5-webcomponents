@@ -49,7 +49,7 @@
 					<ui5-tab slot="items" text="Child Tab Text"></ui5-tab>
 					<ui5-tab slot="items" text="Child Tab Text"></ui5-tab>
 				</ui5-tab>
-				
+
 			</ui5-tabcontainer>
 		</div>
 		<div class="content">
@@ -142,7 +142,7 @@
 
 	<script>
 		document.querySelector("#startButton").addEventListener("click", function (event) {
-			nl1.sideCollapsed = !nl1.sideCollapsed;
+			nl1.mode = nl1.isSideCollapsed() ? "Expanded" : "Collapsed";
 		});
 
 		document.querySelector("#sn1").addEventListener("selection-change", function (event) {

@@ -8,7 +8,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
@@ -44,9 +43,6 @@ import SideNavigationGroupCss from "./generated/themes/SideNavigationGroup.css.j
 	renderer: jsxRender,
 	template: SideNavigationGroupTemplate,
 	styles: SideNavigationGroupCss,
-	dependencies: [
-		Icon,
-	],
 })
 class SideNavigationGroup extends SideNavigationItemBase {
 	/**
@@ -69,9 +65,9 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
-	get overflowItems() : Array<SideNavigationItem> {
-		const separator1 = this.shadowRoot!.querySelector(".ui5-sn-item-separator:first-child") as SideNavigationItem;
-		const separator2 = this.shadowRoot!.querySelector(".ui5-sn-item-separator:last-child") as SideNavigationItem;
+	get overflowItems() : Array<HTMLElement> {
+		const separator1 = this.shadowRoot!.querySelector<HTMLElement>(".ui5-sn-item-separator:first-child")!;
+		const separator2 = this.shadowRoot!.querySelector<HTMLElement>(".ui5-sn-item-separator:last-child")!;
 
 		const overflowItems = this.items.reduce((result, item) => {
 			return result.concat(item.overflowItems);

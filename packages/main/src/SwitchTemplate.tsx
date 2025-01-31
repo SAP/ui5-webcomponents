@@ -59,13 +59,7 @@ export default function SwitchTemplate(this: Switch) {
 							</>
 						}
 
-						<span class="ui5-switch-handle" part="handle">
-							{/*  this icon is used in the sap_horizon_exp theme */}
-							<Icon
-								name={this.sapNextIcon}
-								class="ui5-switch-handle-icon"
-							/>
-						</span>
+						<span class="ui5-switch-handle" part="handle"></span>
 					</div>
 				</div>
 			</div>

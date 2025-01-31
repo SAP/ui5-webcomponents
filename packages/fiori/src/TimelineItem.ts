@@ -3,13 +3,24 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Link from "@ui5/webcomponents/dist/Link.js";
+import type Link from "@ui5/webcomponents/dist/Link.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITimelineItem } from "./Timeline.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import TimelineItemTemplate from "./TimelineItemTemplate.js";
-import type TimelineLayout from "./types/TimelineLayout.js";
 // Styles
+import type TimelineLayout from "./types/TimelineLayout.js";
+
+import {
+	TIMELINE_ITEM_INFORMATION_STATE_TEXT,
+	TIMELINE_ITEM_POSITIVE_STATE_TEXT,
+	TIMELINE_ITEM_NEGATIVE_STATE_TEXT,
+	TIMELINE_ITEM_CRITICAL_STATE_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
+
 import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
 
 /**
@@ -28,10 +39,6 @@ import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
 	renderer: jsxRenderer,
 	styles: TimelineItemCss,
 	template: TimelineItemTemplate,
-	dependencies: [
-		Icon,
-		Link,
-	],
 })
 /**
  * Fired when the item name is pressed either with a
@@ -90,6 +97,15 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 */
 	@property()
 	subtitleText?: string;
+
+	/**
+	 * Defines the state of the icon displayed in the `ui5-timeline-item`.
+	 * @default "None"
+	 * @public
+	 * @since 2.7.0
+	 */
+	@property()
+	state: `${ValueState}` = "None";
 
 	/**
 	 * Defines the content of the `ui5-timeline-item`.
@@ -154,6 +170,9 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	@property({ type: Number })
 	positionInGroup?: number;
 
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
 	constructor() {
 		super();
 	}
@@ -167,6 +186,19 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 */
 	focusLink() {
 		this.shadowRoot!.querySelector<Link>("[ui5-link]")?.focus();
+	}
+
+	static typeTextMappings(): Record<string, I18nText> {
+		return {
+			"Information": TIMELINE_ITEM_INFORMATION_STATE_TEXT,
+			"Positive": TIMELINE_ITEM_POSITIVE_STATE_TEXT,
+			"Negative": TIMELINE_ITEM_NEGATIVE_STATE_TEXT,
+			"Critical": TIMELINE_ITEM_CRITICAL_STATE_TEXT,
+		};
+	}
+
+	get timelineItemStateText() {
+		return this.state !== "None" ? TimelineItem.i18nBundle.getText(TimelineItem.typeTextMappings()[this.state]) : undefined;
 	}
 
 	get isGroupItem() {
