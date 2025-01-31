@@ -5,5 +5,3 @@ import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/Label.js";
 import "@ui5/webcomponents-icons/dist/phone.js";
 import "@ui5/webcomponents-icons/dist/calendar.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";

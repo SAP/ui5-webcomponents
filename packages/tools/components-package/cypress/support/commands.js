@@ -37,3 +37,32 @@
 // }
 
 import "cypress-real-events";
+
+const realEventCmdCallback = (originalFn, element, ...args) => {
+	cy.get(element)
+		.should($el => {
+			if ($el[0].tagName.includes("-") && typeof $el[0].shadowRoot && typeof $el[0].getDomRef === "function") {
+				expect($el[0].getDomRef()).to.exist;
+			} else {
+				expect(true).to.be.true;
+			}
+		})
+		.and("be.visible")
+		.then(() => {
+			return originalFn(element, ...args)
+		});
+};
+
+const commands = [
+	"realClick",
+	"realHover",
+	"realTouch",
+	"realSwipe",
+	"realMouseDown",
+	"realMouseUp",
+	"realMouseMove"
+];
+
+commands.forEach(cmd => {
+	Cypress.Commands.overwrite(cmd, realEventCmdCallback)
+})

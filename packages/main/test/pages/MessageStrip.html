@@ -21,6 +21,21 @@
 	<ui5-message-strip id="messageStrip">Hello World!</ui5-message-strip>
 	<ui5-input id="inputField"></ui5-input>
 
+	<br />
+	<h4> MessageStrip inside ResponsivePopover</h4>
+	<ui5-button id="btnopen">Open ResponsivePopover</ui5-button>
+	<ui5-responsive-popover
+	opener="btnopen"
+	header-text="Newsletter subscription"
+	id="resppopover"
+	placement="Bottom">
+	<div class="popover-content">
+	  <ui5-message-strip design="Information">Information Message</ui5-message-strip>
+	</div>
+	<div slot="footer" class="popover-footer">
+	  <ui5-button id="closePopoverButton" design="Emphasized">Subscribe</ui5-button>
+	</div>
+  </ui5-responsive-popover>
 
 	<ui5-message-strip class="top" design="Information">Default (Information) with default icon and close button:</ui5-message-strip>
 	<ui5-message-strip class="top" design="Negative">Negative with <b>default</b> icon and close button:</ui5-message-strip>
@@ -76,6 +91,15 @@
 		document.getElementById('btn').addEventListener('click', () => {
 			mStrip.design = 'ColorSet1';
 			mStrip.colorScheme = '1';
+		});
+
+		const btn = document.getElementById("btnopen");
+		const popover = document.getElementById("resppopover");
+		btn.addEventListener("click", () => {
+			popover.open = !popover.open;
+		});
+		popover.addEventListener("close", () => {
+			popover.open = false;
 		});
 	</script>
 </body>

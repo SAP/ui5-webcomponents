@@ -52,9 +52,10 @@ describe("Component Behavior", () => {
 
 	describe("ui5-shellbar menu", () => {
 		it("tests prevents close on content click", async () => {
+			await browser.setWindowSize(1920, 1680);
 			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
 			const menuPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-menu-popover");
-			const firstMenuItem = await menuPopover.$("ui5-list > ui5-li");
+			const firstMenuItem = await browser.$("[ui5-li][slot='menuItems']");
 			const checkBox = await browser.$("#checkKeepPopoverOpen");
 
 			await checkBox.setProperty("checked", true);
@@ -68,7 +69,7 @@ describe("Component Behavior", () => {
 		it("tests close on content click", async () => {
 			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
 			const menuPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-menu-popover");
-			const firstMenuItem = await menuPopover.$("ui5-list > ui5-li");
+			const firstMenuItem = await browser.$("[ui5-li][slot='menuItems']");
 			const checkBox = await browser.$("#checkKeepPopoverOpen");
 
 			await checkBox.setProperty("checked", false);
@@ -305,7 +306,7 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests profileClick event", async () => {
-				const profileIcon = await browser.$("#shellbar").shadow$("[profile-btn]");
+				const profileIcon = await browser.$("#shellbar").shadow$("[data-profile-btn]");
 				const input = await browser.$("#press-input");
 
 				await profileIcon.click();
@@ -355,9 +356,8 @@ describe("Component Behavior", () => {
 			it("tests menuItemClick event", async () => {
 				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
 
-				const menuPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-menu-popover");
-				const firstMenuItem = await menuPopover.$("ui5-list > ui5-li");
-				const secondMenuItem = await menuPopover.$("ui5-list > ui5-li:nth-child(2)");
+				const firstMenuItem = await browser.$("#shellbar [ui5-li][slot='menuItems']");
+				const secondMenuItem = await browser.$$("#shellbar [ui5-li][slot='menuItems']")[1];
 				const input = await browser.$("#press-input");
 				const inputData = await browser.$("#press-data");
 
@@ -392,6 +392,7 @@ describe("Component Behavior", () => {
 		describe("Small screen", () => {
 			beforeEach(async () => {
 				await browser.setWindowSize(510, 1680);
+				await browser.$("#shellbar").setProperty("showSearchField", false);
 			});
 
 			it("tests logoClick event", async () => {
@@ -413,7 +414,7 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests profileClick event", async () => {
-				const profileIcon = await browser.$("#shellbar").shadow$("[profile-btn]");
+				const profileIcon = await browser.$("#shellbar").shadow$("[data-profile-btn]");
 				const input = await browser.$("#press-input");
 
 				await profileIcon.click();
