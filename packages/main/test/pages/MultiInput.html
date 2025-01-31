@@ -387,6 +387,20 @@
 		</ui5-multi-input>
 	</div>
 
+
+	<h1 class="sample-container-title">Token delete</h1>
+
+	<ui5-multi-input show-suggestions id="test-token-delete">
+		<ui5-token slot="tokens" text="Aute"></ui5-token>
+		<ui5-token slot="tokens" text="ad"></ui5-token>
+		<ui5-token slot="tokens" text="exercitation"></ui5-token>
+		<ui5-token slot="tokens" text="esse"></ui5-token>
+		<ui5-token slot="tokens" text="labore"></ui5-token>
+		<ui5-token slot="tokens" text="amet"></ui5-token>
+		<ui5-token slot="tokens" text="aute"></ui5-token>
+		<ui5-token slot="tokens" text="excepteur"></ui5-token>
+	</ui5-multi-input>
+
 	<script>
 
 		var createTokenFromText = function (text) {
@@ -470,6 +484,7 @@
 		}
 
 		document.getElementById("token-unique").addEventListener("ui5-token-delete", handleTokenDelete);
+		document.getElementById("test-token-delete").addEventListener("ui5-token-delete", handleTokenDelete);
 		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", handleTokenDelete);
 		document.getElementById("two-tokens").addEventListener("ui5-token-delete", handleTokenDelete);
 		document.getElementById("readonly-mi").addEventListener("ui5-token-delete", handleTokenDelete);

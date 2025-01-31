@@ -16,10 +16,11 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 		>
 			{this._menuPopoverItems.map(item =>
 				<NavigationMenuItem
+					accessibilityAttributes={item.accessibilityAttributes}
 					text={item.text}
 					icon={item.icon}
+					design={item.design}
 					disabled={item.disabled}
-					// expanded={true}
 					href={item.href}
 					target={item.target}
 					title={item.title}
@@ -27,8 +28,10 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 				>
 					{item.items.map(subItem =>
 						<NavigationMenuItem
+							accessibilityAttributes={subItem.accessibilityAttributes}
 							text={subItem.text}
 							icon={subItem.icon}
+							design={subItem.design}
 							disabled={subItem.disabled}
 							ref={this.captureRef.bind(subItem)}
 							href={subItem.href}
@@ -56,25 +59,31 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 					class="ui5-side-navigation-in-popover"
 				>
 					<SideNavigationItem
+						accessibilityAttributes={this._popoverContents.item.accessibilityAttributes}
 						text={this._popoverContents.item.text}
 						tooltip={this._popoverContents.item._tooltip}
 						href={this._popoverContents.item._href}
 						target={this._popoverContents.item._target}
+						design={this._popoverContents.item.design}
 						disabled={this._popoverContents.item.disabled}
 						expanded={true}
 						_fixed={true}
 						selected={this._popoverContents.item.selected}
+						unselectable={this._popoverContents.item.unselectable}
 						onui5-click={this.handlePopupItemClick}
 						ref={this.captureRef.bind(this._popoverContents.item)}
 					>
 						{this._popoverContents.subItems.map(item =>
 							<SideNavigationSubItem
+								accessibilityAttributes={item.accessibilityAttributes}
 								text={item.text}
 								tooltip={item._tooltip}
 								href={item._href}
 								target={item._target}
+								design={item.design}
 								disabled={item.disabled}
 								selected={item.selected}
+								unselectable={item.unselectable}
 								onui5-click={this.handlePopupItemClick}
 								ref={this.captureRef.bind(item)}
 							/>
