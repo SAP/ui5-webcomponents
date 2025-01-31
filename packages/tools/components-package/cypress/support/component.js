@@ -1,5 +1,5 @@
 import "@cypress/code-coverage/support";
-import { setupHooks, getContainerEl} from "@cypress/mount-utils";
+import { setupHooks, getContainerEl } from "@cypress/mount-utils";
 import { mount as preactMount } from "./cypress-ct-preact.js";
 import "./commands.js";
 
@@ -22,7 +22,27 @@ function mount(component, options = {}) {
 	applyConfiguration(options);
 
 	// Mount JSX Element
-	return preactMount(component, container);
+	return cy.wrap({ preactMount })
+		.invoke("preactMount", component, container)
+		.then(() => {
+			cy.get(container)
+				.find("*")
+				.should($el => {
+					const shadowrootsExist = [...$el].every(el => {
+						if (el.hasAttribute("ui5-table-growing")) {
+							return true;
+						}
+
+						if (el.tagName.includes("-") && el.shadowRoot) {
+							return el.shadowRoot.hasChildNodes();
+						}
+
+						return true;
+					})
+
+					expect(shadowrootsExist).to.be.true;
+				})
+		});
 }
 
 setupHooks(cleanup);
