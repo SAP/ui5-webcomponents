@@ -252,20 +252,20 @@ describe("UploadCollection Rendering", () => {
 	});
 
 	it("Tests that 'header' and 'accessible-name' get forwarded to the inner list", () => {
+		const EXPECTED_ACC_NAME = "Uploaded (4)";
+
 		cy.mount(<UploadCollectionSample />);
 
 		cy.get("#uploadCollection")
-			.invoke("attr", "accessible-name").then(accessibleName => {
-				cy.get("#uploadCollection")
-					.shadow()
-					.find("[ui5-list]")
-					.invoke("attr", "accessible-name")
-					.should("equal", accessibleName);
-			});
-
-		cy.get("#uploadCollection")
 			.shadow()
-			.find("ui5-list")
+			.find("[ui5-list]")
+			.as("list");
+
+		cy.get("@list")
+			.invoke("prop", "accessibleName")
+			.should("equal", EXPECTED_ACC_NAME);
+
+		cy.get("@list")
 			.shadow()
 			.find("slot[name='header']")
 			.then(slot => {
