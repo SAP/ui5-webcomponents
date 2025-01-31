@@ -99,7 +99,7 @@ function valueStateMessage(this: Select) {
 		<>
 			{this.shouldDisplayDefaultValueStateMessage
 				? this.valueStateText
-				: <slot name="valueStateMessage"></slot>
+				: <slot onClick={this._applyFocus} name="valueStateMessage"></slot>
 			}
 		</>
 	);
