@@ -55,6 +55,7 @@ declare global {
 			ui5ColorPickerToggleColorMode(): Chainable<void>
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
 			ui5ColorPaletteCheckSelectedColor(colorPaletteItem: string, values: {r: string, g: string, b: string, a: string}): Chainable<void>
+			ui5ColorPaletteNavigateAndCheckSelectedColor(startIndex: number, key: string, expectedValue: string): Chainable<void>
 		}
 	}
 }

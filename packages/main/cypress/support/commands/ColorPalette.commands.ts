@@ -66,3 +66,18 @@ Cypress.Commands.add("ui5ColorPaletteCheckSelectedColor", { prevSubject: true },
 		.find("ui5-dialog")
 		.should("not.be.visible"); // Make sure the dialog is closed at the end of the command (otherwise the next command will sometimes assert against the old dialog values)
 });
+
+Cypress.Commands.add("ui5ColorPaletteNavigateAndCheckSelectedColor", (startIndex: number, key: string, expectedValue: string) => {
+	cy.get("#cp1")
+		.find("ui5-color-palette-item")
+		.eq(startIndex)
+		.click();
+
+	// @ts-ignore
+	cy.realPress(key)
+		.realPress("Space");
+
+	cy.get("#cp1")
+		.find("ui5-color-palette-item[selected]")
+		.should("have.value", expectedValue);
+});
