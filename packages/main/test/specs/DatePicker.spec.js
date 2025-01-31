@@ -1284,9 +1284,9 @@ describe("Date Picker Tests", () => {
 		assert.ok(await monthPicker.getAttribute("hidden"));
 		assert.notOk(await yearPicker.getAttribute("hidden"));
 
-		const timestamp_2014 = 1388534400;
-		const calendarDate_2014 = await datepicker.getPickerYear(timestamp_2014);
-		await calendarDate_2014.click();
+		const timestamp_2015 = 1420070400;
+		const calendarDate_2015 = await datepicker.getPickerYear(timestamp_2015);
+		await calendarDate_2015.click();
 
 		assert.isFalse(await datepicker.isPickerOpen(), "picker is closed after year selection");
 	});
@@ -1414,7 +1414,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	describe("Legacy date customization", () => {
-		it.only("Customization of legacy dates in Islamic calendar", async () => {
+		it("Customization of legacy dates in Islamic calendar", async () => {
 			// According to the Islamic calendar, Rab. I 9, 1446 AH should be displayed on Thursday,
 			// but it needs to be configured using the legacyDateCalendarCustomizing setting.
 			datepicker.page = "test/pages/DatePicker_legacy_test_page.html";

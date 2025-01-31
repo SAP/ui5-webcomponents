@@ -404,14 +404,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		}
 	}
 
-	_onfocusin() {
-		this._autoFocus = true;
-	}
-
-	_onfocusout() {
-		this._autoFocus = false;
-	}
-
 	/**
 	 * Tells if the day is selected (dark blue).
 	 * @param timestamp
