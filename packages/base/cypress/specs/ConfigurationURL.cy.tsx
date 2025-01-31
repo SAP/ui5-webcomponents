@@ -1,5 +1,5 @@
 import { internals } from "../../src/Location.js";
-import "../../test/test-elements/Generic.js";
+import TestGeneric from "../../test/test-elements/Generic.js";
 import { resetConfiguration } from "../../src/InitialConfiguration.js";
 import { getLanguage } from "../../src/config/Language.js";
 import { getCalendarType } from "../../src/config/CalendarType.js";
@@ -23,7 +23,7 @@ describe("Some settings can be set via SAP UI URL params", () => {
 			.invoke("search")
 			.should("be.equal", searchParams);
 
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<TestGeneric />);
 	});
 
 	it("Tests that language is applied", () => {
@@ -66,7 +66,7 @@ describe("Different themeRoot configurations", () => {
 			.invoke("search")
 			.should("be.equal", searchParams);
 
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<TestGeneric />);
 
 		cy.wrap({ getThemeRoot })
 			.invoke("getThemeRoot")
@@ -87,7 +87,7 @@ describe("Different themeRoot configurations", () => {
 			.invoke("search")
 			.should("be.equal", searchParams);
 
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<TestGeneric />);
 
 		cy.wrap({ getThemeRoot })
 			.invoke("getThemeRoot")
@@ -108,7 +108,7 @@ describe("Different themeRoot configurations", () => {
 			.invoke("search")
 			.should("be.equal", searchParams);
 
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<TestGeneric />);
 
 		cy.wrap({ getThemeRoot })
 			.invoke("getThemeRoot")
@@ -134,7 +134,7 @@ describe("Some settings can be set via SAP URL params", () => {
 			.invoke("search")
 			.should("be.equal", searchParams);
 
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<TestGeneric />);
 	});
 
 	it("Tests that language is applied via sap-ui-language", () => {
@@ -165,7 +165,7 @@ describe("Some settings can be set via SAP UI URL params", () => {
 			.invoke("search")
 			.should("be.equal", searchParams);
 
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<TestGeneric />);
 	});
 
 	it("Tests that language is applied via sap-ui-language", () => {
