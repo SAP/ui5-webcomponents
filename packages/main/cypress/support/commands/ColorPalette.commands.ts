@@ -71,7 +71,7 @@ Cypress.Commands.add("ui5ColorPaletteNavigateAndCheckSelectedColor", (startIndex
 	cy.get("#cp1")
 		.find("ui5-color-palette-item")
 		.eq(startIndex)
-		.click();
+		.realClick();
 
 	// @ts-ignore
 	cy.realPress(key)

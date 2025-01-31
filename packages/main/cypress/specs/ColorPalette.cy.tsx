@@ -1,22 +1,24 @@
 import ColorPalette from "../../src/ColorPalette.js";
 import ColorPaletteItem from "../../src/ColorPaletteItem.js";
 
-const getColorPalette = () => (
-	<ColorPalette id="cp1">
-		<ColorPaletteItem value="darkblue"></ColorPaletteItem>
-		<ColorPaletteItem value="pink"></ColorPaletteItem>
-		<ColorPaletteItem value="#444444"></ColorPaletteItem>
-		<ColorPaletteItem value="rgb(0,200,0)"></ColorPaletteItem>
-		<ColorPaletteItem value="green"></ColorPaletteItem>
-		<ColorPaletteItem value="darkred"></ColorPaletteItem>
-		<ColorPaletteItem value="yellow"></ColorPaletteItem>
-		<ColorPaletteItem value="blue"></ColorPaletteItem>
-		<ColorPaletteItem value="cyan"></ColorPaletteItem>
-		<ColorPaletteItem value="orange"></ColorPaletteItem>
-		<ColorPaletteItem value="#5480e7"></ColorPaletteItem>
-		<ColorPaletteItem value="#ff6699"></ColorPaletteItem>
-	</ColorPalette>
-);
+function ColorPaletteSample() {
+	return (
+		<ColorPalette id="cp1">
+			<ColorPaletteItem value="darkblue"></ColorPaletteItem>
+			<ColorPaletteItem value="pink"></ColorPaletteItem>
+			<ColorPaletteItem value="#444444"></ColorPaletteItem>
+			<ColorPaletteItem value="rgb(0,200,0)"></ColorPaletteItem>
+			<ColorPaletteItem value="green"></ColorPaletteItem>
+			<ColorPaletteItem value="darkred"></ColorPaletteItem>
+			<ColorPaletteItem value="yellow"></ColorPaletteItem>
+			<ColorPaletteItem value="blue"></ColorPaletteItem>
+			<ColorPaletteItem value="cyan"></ColorPaletteItem>
+			<ColorPaletteItem value="orange"></ColorPaletteItem>
+			<ColorPaletteItem value="#5480e7"></ColorPaletteItem>
+			<ColorPaletteItem value="#ff6699"></ColorPaletteItem>
+		</ColorPalette>
+	);
+}
 
 describe("Color Palette tests", () => {
 	it("internal color picker should have selected color set on open", () => {
@@ -63,12 +65,12 @@ describe("Color Palette tests", () => {
 	});
 
 	it("Test if selecting element works", () => {
-		cy.mount(getColorPalette());
+		cy.mount(<ColorPaletteSample/>);
 
 		cy.get<ColorPalette>("#cp1")
 			.find("ui5-color-palette-item")
 			.first()
-			.click();
+			.realClick();
 
 		cy.get<ColorPalette>("#cp1")
 			.find("ui5-color-palette-item[selected]")
@@ -76,12 +78,12 @@ describe("Color Palette tests", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", () => {
-		cy.mount(getColorPalette());
+		cy.mount(<ColorPaletteSample/>);
 
 		cy.get<ColorPalette>("#cp1")
 			.find("ui5-color-palette-item")
 			.first()
-			.click();
+			.realClick();
 
 		cy.get<ColorPalette>("#cp1")
 			.find("ui5-color-palette-item[selected]")
@@ -95,7 +97,7 @@ describe("Color Palette tests", () => {
 	});
 
 	it("Test if keyboard navigation on elements works with Arrow keys", () => {
-		cy.mount(getColorPalette());
+		cy.mount(<ColorPaletteSample/>);
 		cy.ui5ColorPaletteNavigateAndCheckSelectedColor(0, "ArrowRight", "pink");
 		cy.ui5ColorPaletteNavigateAndCheckSelectedColor(0, "ArrowLeft", "#ff6699");
 		cy.ui5ColorPaletteNavigateAndCheckSelectedColor(0, "ArrowUp", "orange");
@@ -104,7 +106,7 @@ describe("Color Palette tests", () => {
 
 	it("Tests show-recent-colors functionality", () => {
 		cy.mount(
-			<ColorPalette id="cp4" showMoreColors showRecentColors>
+			<ColorPalette id="cp4" showMoreColors={true} showRecentColors={true}>
 				<ColorPaletteItem value="pink"></ColorPaletteItem>
 				<ColorPaletteItem value="darkblue"></ColorPaletteItem>
 				<ColorPaletteItem value="#444444"></ColorPaletteItem>
@@ -125,7 +127,7 @@ describe("Color Palette tests", () => {
 			.find("ui5-color-palette-item")
 			.then(items => {
 				for (let i = 0; i < 5; i++) {
-					cy.wrap(items[i]).click();
+					cy.wrap(items[i]).realClick();
 				}
 			});
 
@@ -146,10 +148,10 @@ describe("Color Palette tests", () => {
 	it("Tests if only one item is selected at a time in the color palette", () => {
 		cy.mount(
 			<ColorPalette id="cp1SelectedTest">
-				<ColorPaletteItem value="darkblue" selected></ColorPaletteItem>
-				<ColorPaletteItem value="pink" selected></ColorPaletteItem>
-				<ColorPaletteItem value="#444444" selected></ColorPaletteItem>
-				<ColorPaletteItem value="rgb(0,200,0)" selected></ColorPaletteItem>
+				<ColorPaletteItem value="darkblue" selected={true}></ColorPaletteItem>
+				<ColorPaletteItem value="pink" selected={true}></ColorPaletteItem>
+				<ColorPaletteItem value="#444444" selected={true}></ColorPaletteItem>
+				<ColorPaletteItem value="rgb(0,200,0)" selected={true}></ColorPaletteItem>
 				<ColorPaletteItem value="green"></ColorPaletteItem>
 				<ColorPaletteItem value="darkred"></ColorPaletteItem>
 				<ColorPaletteItem value="yellow"></ColorPaletteItem>
@@ -164,12 +166,12 @@ describe("Color Palette tests", () => {
 		cy.get("#cp1SelectedTest")
 			.find("ui5-color-palette-item")
 			.eq(0)
-			.click();
+			.realClick();
 
 		cy.get("#cp1SelectedTest")
 			.find("ui5-color-palette-item")
 			.eq(1)
-			.click();
+			.realClick();
 
 		cy.get("#cp1SelectedTest")
 			.find("ui5-color-palette-item")
@@ -185,10 +187,10 @@ describe("Color Palette tests", () => {
 	it("Tests if clicking on selected item, does not deselect it", () => {
 		cy.mount(
 			<ColorPalette id="cp1SelectedTest">
-				<ColorPaletteItem value="darkblue" selected></ColorPaletteItem>
-				<ColorPaletteItem value="pink" selected></ColorPaletteItem>
-				<ColorPaletteItem value="#444444" selected></ColorPaletteItem>
-				<ColorPaletteItem value="rgb(0,200,0)" selected></ColorPaletteItem>
+				<ColorPaletteItem value="darkblue" selected={true}></ColorPaletteItem>
+				<ColorPaletteItem value="pink" selected={true}></ColorPaletteItem>
+				<ColorPaletteItem value="#444444" selected={true}></ColorPaletteItem>
+				<ColorPaletteItem value="rgb(0,200,0)" selected={true}></ColorPaletteItem>
 				<ColorPaletteItem value="green"></ColorPaletteItem>
 				<ColorPaletteItem value="darkred"></ColorPaletteItem>
 				<ColorPaletteItem value="yellow"></ColorPaletteItem>
