@@ -1,168 +1,172 @@
-import { html } from "lit";
-import "../../src/UploadCollection.js";
-import "../../src/UploadCollectionItem.js";
-import "@ui5/webcomponents/dist/FileUploader.js";
-import "@ui5/webcomponents/dist/Button.js";
-import "@ui5/webcomponents/dist/Title.js";
-import "@ui5/webcomponents/dist/Label.js";
-import "@ui5/webcomponents/dist/Icon.js";
 import "@ui5/webcomponents/dist/Select.js";
 import "@ui5/webcomponents/dist/Option.js";
+import UploadCollection from "../../src/UploadCollection.js";
+import UploadCollectionItem from "../../src/UploadCollectionItem.js";
+import Label from "@ui5/webcomponents/dist/Label.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
+import FileUploader from "@ui5/webcomponents/dist/FileUploader.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 
-const uploadCollection = html`
-<ui5-upload-collection id="uploadCollection" accessible-name="Uploaded (4)">
-	<div slot="header" class="header">
-		<ui5-title id="uploadCollectionTitle">Uploaded (4)</ui5-title>
-		<ui5-label>Add new files and press to start uploading pending files:</ui5-label>
-		<ui5-button id="startUploading">Start</ui5-button>
-		<div class="spacer"></div>
-		<ui5-file-uploader id="fileUploader" hide-input multiple>
-			<ui5-button icon="add" design="Transparent"></ui5-button>
-		</ui5-file-uploader>
-	</div>
-	<ui5-upload-collection-item
-		id="firstItem"
-		file-name="LaptopHT-1000.jpg"
-		file-name-clickable
-		upload-state="Complete"
-	>
-		<img src="./img/HT-1000.jpg" slot="thumbnail">
-		File name is clickable.
-	</ui5-upload-collection-item>
-	<ui5-upload-collection-item
-		id="secondItem"
-		file-name=".gitignore"
-		disable-delete-button
-		upload-state="Complete"
-	>
-		<ui5-icon name="customize" slot="thumbnail"></ui5-icon>
-		You cannot delete this file.
-	</ui5-upload-collection-item>
-	<ui5-upload-collection-item
-		id="latestReportsPdf"
-		file-name="latest.reports.pdf"
-		upload-state="Complete"
-	>
-		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
-		Some description.
-	</ui5-upload-collection-item>
-	<ui5-upload-collection-item
-		id="reportPdf"
-		file-name="report.pdf"
-		upload-state="Complete"
-	>
-		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
-		Some description.
-	</ui5-upload-collection-item>
-	<ui5-upload-collection-item
-		id="disabledPdf"
-		file-name="disabledFile.pdf"
-		upload-state="Complete"
-		disabled
-	>
-		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
-		Some description.
-	</ui5-upload-collection-item>
-	<ui5-upload-collection-item
-		id="noFileExtension"
-		file-name="noextension"
-		upload-state="Complete"
-	>
-		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
-	</ui5-upload-collection-item>
-	<ui5-upload-collection-item
-		id="keyboardNavigation"
-		file-name="Graph.docx"
-		hide-delete-button
-		upload-state="Complete"
-	>
-		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
-	</ui5-upload-collection-item>
-</ui5-upload-collection>
-`;
+function UploadCollectionSample() {
+	return <UploadCollection id="uploadCollection" accessibleName="Uploaded (4)">
+		<div slot="header" class="header">
+			<Title id="uploadCollectionTitle">Uploaded (4)</Title>
+			<Label>Add new files and press to start uploading pending files:</Label>
+			<Button id="startUploading">Start</Button>
+			<div class="spacer"></div>
+			<FileUploader id="fileUploader" hideInput={true} multiple={true}>
+				<Button icon="add" design="Transparent"></Button>
+			</FileUploader>
+		</div>
+		<UploadCollectionItem
+			id="firstItem"
+			fileName="LaptopHT-1000.jpg"
+			fileNameClickable={true}
+			uploadState="Complete"
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail" />
+			File name is clickable.
+		</UploadCollectionItem>
+		<UploadCollectionItem
+			id="secondItem"
+			fileName=".gitignore"
+			disable-delete-button
+			uploadState="Complete"
+		>
+			<Icon name="customize" slot="thumbnail"></Icon>
+			You cannot delete this file.
+		</UploadCollectionItem>
+		<UploadCollectionItem
+			id="latestReportsPdf"
+			fileName="latest.reports.pdf"
+			uploadState="Complete"
+		>
+			<Icon name="document-text" slot="thumbnail"></Icon>
+			Some description.
+		</UploadCollectionItem>
+		<UploadCollectionItem
+			id="reportPdf"
+			fileName="report.pdf"
+			uploadState="Complete"
+		>
+			<Icon name="document-text" slot="thumbnail"></Icon>
+			Some description.
+		</UploadCollectionItem>
+		<UploadCollectionItem
+			id="disabledPdf"
+			fileName="disabledFile.pdf"
+			uploadState="Complete"
+			disabled={true}
+		>
+			<Icon name="document-text" slot="thumbnail"></Icon>
+			Some description.
+		</UploadCollectionItem>
+		<UploadCollectionItem
+			id="noFileExtension"
+			fileName="noextension"
+			uploadState="Complete"
+		>
+			<Icon name="document-text" slot="thumbnail"></Icon>
+		</UploadCollectionItem>
+		<UploadCollectionItem
+			id="keyboardNavigation"
+			fileName="Graph.docx"
+			hideDeleteButton={true}
+			uploadState="Complete"
+		>
+			<Icon name="document-text" slot="thumbnail"></Icon>
+		</UploadCollectionItem>
+	</UploadCollection>;
+}
 
-const uploadCollectionStates = html`
-<ui5-upload-collection id="uploadCollectionStates">
-	<div class="header" slot="header">
-		<ui5-title>Upload States</ui5-title>
-	</div>
-	<ui5-upload-collection-item
-		id="completeState"
-		file-name="LaptopHT-1000.jpg"
-		file-name-clickable
-		upload-state="Complete"
-	>
-		<img src="./img/HT-1000.jpg" slot="thumbnail">
-		uploadState="Complete"
-	</ui5-upload-collection-item>
-	<ui5-upload-collection-item
-		id="uploadingState"
-		file-name="Laptop.jpg"
-		type="Detail"
-		disable-delete-button
-		upload-state="Uploading"
-		progress="37"
-	>
-		<img src="./img/HT-1000.jpg" slot="thumbnail">
-		uploadState="Uploading"
-	</ui5-upload-collection-item>
-	<ui5-upload-collection-item
-		id="hiddenFileName"
-		file-name=".gitignore"
-		type="Detail"
-		hide-terminate-button
-		upload-state="Error"
-		progress="89"
-	>
-		<img src="./img/HT-1000.jpg" slot="thumbnail">
-		uploadState="Uploading" with hidden terminate button
-	</ui5-upload-collection-item>
-	<ui5-upload-collection-item
-		file-name="Laptop (2).jpg"
-		type="Detail"
-		hide-terminate-button
-		upload-state="Uploading"
-		progress="89"
-	>
-		<img src="./img/HT-1000.jpg" slot="thumbnail">
-		uploadState="Uploading" with hidden terminate button
-	</ui5-upload-collection-item>
-	<ui5-upload-collection-item
-		id="errorState"
-		file-name="latest.reports.pdf"
-		type="Detail"
-		upload-state="Error"
-		progress="59"
-	>
-		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
-		uploadState="Error"
-	</ui5-upload-collection-item>
-	<ui5-upload-collection-item
-		id="readyState"
-		file-name="noextension"
-		type="Detail"
-	>
-		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
-		uploadState="Ready" (default)
-	</ui5-upload-collection-item>
-</ui5-upload-collection>
-`;
+function UploadCollectionStatesSample() {
+	return <UploadCollection id="uploadCollectionStates">
+		<div class="header" slot="header">
+			<Title>Upload States</Title>
+		</div>
+		<UploadCollectionItem
+			id="completeState"
+			fileName="LaptopHT-1000.jpg"
+			fileNameClickable={true}
+			uploadState="Complete"
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail" />
+			uploadState="Complete"
+		</UploadCollectionItem>
+
+		<UploadCollectionItem
+			id="uploadingState"
+			fileName="Laptop.jpg"
+			type="Detail"
+			disableDeleteButton={true}
+			uploadState="Uploading"
+			progress={37}
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail" />
+			uploadState="Uploading"
+		</UploadCollectionItem>
+
+		<UploadCollectionItem
+			id="hiddenFileName"
+			fileName=".gitignore"
+			type="Detail"
+			hideTerminateButton={true}
+			uploadState="Error"
+			progress={89}
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail" />
+			uploadState="Uploading" with hidden terminate button
+		</UploadCollectionItem>
+
+		<UploadCollectionItem
+			fileName="Laptop (2).jpg"
+			type="Detail"
+			hideTerminateButton={true}
+			uploadState="Uploading"
+			progress={89}
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail" />
+			uploadState="Uploading" with hidden terminate button
+		</UploadCollectionItem>
+
+		<UploadCollectionItem
+			id="errorState"
+			fileName="latest.reports.pdf"
+			type="Detail"
+			uploadState="Error"
+			progress={59}
+		>
+			<Icon name="document-text" slot="thumbnail"></Icon>
+			uploadState="Error"
+		</UploadCollectionItem>
+
+		<UploadCollectionItem
+			id="readyState"
+			fileName="noextension"
+			type="Detail"
+		>
+			<Icon name="document-text" slot="thumbnail"></Icon>
+			uploadState="Ready" (default)
+		</UploadCollectionItem>
+	</UploadCollection>;
+}
 
 describe("UploadCollection Rendering", () => {
 	it("Tests that Link is shown when 'fileNameClickable'", () => {
-		cy.mount(uploadCollection);
+		cy.mount(<UploadCollectionSample />);
 
 		cy.get("#firstItem").shadow().find("ui5-link").should("be.visible");
 	});
 
 	it("Tests that span is shown when file name is NOT clickable", () => {
-		cy.mount(uploadCollection);
+		cy.mount(<UploadCollectionSample />);
 
 		cy.get("#secondItem").shadow().find("span.ui5-uci-file-name").should("be.visible");
 	});
 
 	it("Tests that input and buttons are shown when editing", () => {
-		cy.mount(uploadCollectionStates);
+		cy.mount(<UploadCollectionStatesSample />);
 
 		cy.get("#errorState").shadow().find(".ui5-li-detailbtn").realClick();
 		cy.get("#errorState").shadow().find(".ui5-uci-edit-container").should("be.visible");
@@ -173,7 +177,7 @@ describe("UploadCollection Rendering", () => {
 	});
 
 	it("Tests that no buttons besides 'Terminate' are shown, when uploadState is 'Uploading'", () => {
-		cy.mount(uploadCollectionStates);
+		cy.mount(<UploadCollectionStatesSample />);
 
 		cy.get("#uploadingState").shadow().find("ui5-button[icon=stop]").should("be.visible");
 		cy.get("#uploadingState").shadow().find(".ui5-li-detailbtn").should("not.be.visible");
@@ -183,7 +187,7 @@ describe("UploadCollection Rendering", () => {
 	});
 
 	it("Tests that 'Retry' button is shown when uploadState is 'Error'", () => {
-		cy.mount(uploadCollectionStates);
+		cy.mount(<UploadCollectionStatesSample />);
 
 		cy.get("#errorState").shadow().find("ui5-button[icon=refresh]").should("be.visible");
 		cy.get("#errorState").shadow().find(".ui5-li-detailbtn").should("be.visible");
@@ -197,44 +201,43 @@ describe("UploadCollection Rendering", () => {
 	});
 
 	it("Tests the visibility of buttons", () => {
-		cy.mount(html`
-			<ui5-upload-collection id="uploadCollection3">
+		cy.mount(
+			<UploadCollection id="uploadCollection3">
 				<div class="header" slot="header">
-					<ui5-title>Hidden buttons</ui5-title>
+					<Title>Hidden buttons</Title>
 				</div>
 
-				<ui5-upload-collection-item id="uc3-default" file-name="File name">
-					<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+				<UploadCollectionItem id="uc3-default" fileName="File name">
+					<Icon name="document-text" slot="thumbnail"></Icon>
 					Default, delete button always visible
-				</ui5-upload-collection-item>
+				</UploadCollectionItem>
 
-				<ui5-upload-collection-item id="uc3-default-hidden-delete" file-name="File name" hide-delete-button>
-					<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+				<UploadCollectionItem id="uc3-default-hidden-delete" fileName="File name" hideDeleteButton={true}>
+					<Icon name="document-text" slot="thumbnail"></Icon>
 					Default, delete button hidden
-				</ui5-upload-collection-item>
+				</UploadCollectionItem>
 
-				<ui5-upload-collection-item id="uc3-error" file-name="File name" upload-state="Error">
-					<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+				<UploadCollectionItem id="uc3-error" fileName="File name" uploadState="Error">
+					<Icon name="document-text" slot="thumbnail"></Icon>
 					uploadState="Error" with retry button visible by default
-				</ui5-upload-collection-item>
+				</UploadCollectionItem>
 
-				<ui5-upload-collection-item id="uc3-error-hidden-retry" file-name="File name" upload-state="Error" hide-retry-button>
-					<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+				<UploadCollectionItem id="uc3-error-hidden-retry" fileName="File name" uploadState="Error" hide-retry-button>
+					<Icon name="document-text" slot="thumbnail"></Icon>
 					uploadState="Error" with hidden retry button
-				</ui5-upload-collection-item>
+				</UploadCollectionItem>
 
-				<ui5-upload-collection-item id="uc3-uploading" file-name="File name" upload-state="Uploading">
-					<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+				<UploadCollectionItem id="uc3-uploading" fileName="File name" uploadState="Uploading">
+					<Icon name="document-text" slot="thumbnail"></Icon>
 					uploadState="Uploading" with terminate button visible by default
-				</ui5-upload-collection-item>
+				</UploadCollectionItem>
 
-				<ui5-upload-collection-item id="uc3-uploading-hidden-terminate" file-name="File name" upload-state="Uploading" hide-terminate-button>
-					<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+				<UploadCollectionItem id="uc3-uploading-hidden-terminate" fileName="File name" uploadState="Uploading" hideTerminateButton={true}>
+					<Icon name="document-text" slot="thumbnail"></Icon>
 					uploadState="Uploading" with hidden terminate button
-				</ui5-upload-collection-item>
-
-			</ui5-upload-collection>	
-		`);
+				</UploadCollectionItem>
+			</UploadCollection>
+		);
 
 		cy.get("#uc3-default").shadow().find(".ui5-upload-collection-deletebtn").should("be.visible");
 		cy.get("#uc3-default-hidden-delete").shadow().find(".ui5-upload-collection-deletebtn").should("not.exist");
@@ -249,7 +252,7 @@ describe("UploadCollection Rendering", () => {
 	});
 
 	it("Tests that 'header' and 'accessible-name' get forwarded to the inner list", () => {
-		cy.mount(uploadCollection);
+		cy.mount(<UploadCollectionSample />);
 
 		cy.get("#uploadCollection")
 			.invoke("attr", "accessible-name").then(accessibleName => {
@@ -277,7 +280,7 @@ describe("UploadCollection Rendering", () => {
 	});
 
 	it("Tests that in 'Multiple' selectionMode there is checkbox", () => {
-		cy.mount(uploadCollection);
+		cy.mount(<UploadCollectionSample />);
 
 		cy.get("#uploadCollection").invoke("prop", "selectionMode", "Multiple");
 
@@ -286,7 +289,7 @@ describe("UploadCollection Rendering", () => {
 	});
 
 	it("Tests that in 'SingleStart' mode there is a radio button", () => {
-		cy.mount(uploadCollection);
+		cy.mount(<UploadCollectionSample />);
 
 		cy.get("#uploadCollection").invoke("prop", "selectionMode", "SingleStart");
 
@@ -298,7 +301,7 @@ describe("UploadCollection Rendering", () => {
 	});
 
 	it("Tests Disabled item", () => {
-		cy.mount(uploadCollection);
+		cy.mount(<UploadCollectionSample />);
 
 		cy.get("#disabledPdf")
 			.should("have.attr", "disabled");
@@ -330,7 +333,7 @@ describe("Events", () => {
 
 describe("Keyboard handling", () => {
 	it("Tests item tab order", () => {
-		cy.mount(uploadCollectionStates);
+		cy.mount(<UploadCollectionStatesSample />);
 
 		cy.get("#hiddenFileName").realClick();
 		cy.get("#hiddenFileName").should("be.focused");
