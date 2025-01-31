@@ -26,11 +26,11 @@ const loadThemeProperties = async (themeName) => {
 };
 const loadAndCheck = async (themeName) => {
     const data = await loadThemeProperties(themeName);
+    
     if (typeof data === "string" && data.endsWith(".json")) {
         throw new Error("error");
     }
-    const result = {_:data}
-    return result;
+    return data;
 };
 
 ["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_hcb", "sap_horizon_hcw"]
@@ -54,8 +54,7 @@ const loadAndCheckFiori = async (themeName) => {
     if (typeof data === "string" && data.endsWith(".json")) {
         throw new Error("error");
     }
-    const result = {_:data}
-    return result;
+    return data;
 };
 
 ["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_hcb", "sap_horizon_hcw"]
@@ -80,8 +79,7 @@ const loadAndCheckCompat = async (themeName) => {
     if (typeof data === "string" && data.endsWith(".json")) {
         throw new Error("error");
     }
-    const result = {_:data}
-    return result;
+    return data;
 };
 
 ["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_hcb", "sap_horizon_hcw"]
@@ -108,8 +106,7 @@ const loadAndCheckAI = async (themeName) => {
     if (typeof data === "string" && data.endsWith(".json")) {
         throw new Error("error");
     }
-    const result = {_:data}
-    return result;
+    return data;
 };
 
 ["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_hcb", "sap_horizon_hcw"]
@@ -134,7 +131,7 @@ const loadAndCheck2 = async (themeName) => {
     if (typeof data === "string" && data.endsWith(".json")) {
         throw new Error("error");
     }
-    return {_:data};
+    return data;
 };
 ["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_hcb", "sap_horizon_hcw"]
     .forEach(themeName => registerThemePropertiesLoader("@ui5/webcomponents-theming", themeName, loadAndCheck2));
