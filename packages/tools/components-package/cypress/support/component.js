@@ -21,7 +21,7 @@ function mount(component, options = {}) {
 	// Apply custom configuration
 	applyConfiguration(options);
 
-	// Mount JSX Element or string
+	// Mount JSX Element
 	return preactMount(component, container);
 }
 
