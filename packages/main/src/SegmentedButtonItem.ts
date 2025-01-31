@@ -15,8 +15,6 @@ import type { ISegmentedButtonItem } from "./SegmentedButton.js";
 import SegmentedButtonItemTemplate from "./SegmentedButtonItemTemplate.js";
 
 import type { IButton } from "./Button.js";
-import Icon from "./Icon.js";
-
 import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.js";
 /**
  * @class
@@ -44,7 +42,6 @@ import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.j
 	renderer: jsxRenderer,
 	template: SegmentedButtonItemTemplate,
 	styles: segmentedButtonItemCss,
-	dependencies: [Icon],
 })
 class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButtonItem {
 	/**

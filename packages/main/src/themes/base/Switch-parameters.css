@@ -100,7 +100,6 @@
 	--_ui5_switch_handle_semantic_on_hover_box_shadow: var(--sapContent_Informative_Shadow);
 	--_ui5_switch_handle_semantic_off_hover_box_shadow: var(--sapContent_Negative_Shadow);
 
-	--_ui5-switch-handle-icon-display: none;
 	--_ui5_switch_handle_left: -0.0625rem;
 	--_ui5-switch-slider-texts-display: inline;
 

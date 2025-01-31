@@ -22,7 +22,6 @@ import {
 	isAndroid,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isUp,
 	isDown,
@@ -53,8 +52,8 @@ import type SuggestionItem from "./SuggestionItem.js";
 import type { SuggestionComponent } from "./features/InputSuggestions.js";
 import type InputSuggestions from "./features/InputSuggestions.js";
 import InputType from "./types/InputType.js";
-import Popover from "./Popover.js";
-import Icon from "./Icon.js";
+import type Popover from "./Popover.js";
+import type Icon from "./Icon.js";
 import type { IIcon } from "./Icon.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 // Templates
@@ -86,7 +85,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
-import ResponsivePopover from "./ResponsivePopover.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
 
 /**
  * Interface for components that represent a suggestion item, usable in `ui5-input`
@@ -164,11 +163,6 @@ type InputSuggestionScrollEventDetail = {
  * When the user makes changes to the text, the change event is fired,
  * which enables you to react on any text change.
  *
- * **Note:** If you are using the `ui5-input` as a single npm module,
- * don't forget to import the `InputSuggestions` module from
- * "@ui5/webcomponents/dist/features/InputSuggestions.js"
- * to enable the suggestions functionality.
- *
  * ### Keyboard Handling
  * The `ui5-input` provides the following keyboard shortcuts:
  *
@@ -184,8 +178,6 @@ type InputSuggestionScrollEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Input.js";`
- *
- * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";` (optional - for input suggestions support)
  *
  * @constructor
  * @extends UI5Element
@@ -206,11 +198,6 @@ type InputSuggestionScrollEventDetail = {
 		ValueStateMessageCss,
 		SuggestionsCss,
 	],
-	features: ["InputSuggestions"],
-	get dependencies() {
-		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
-		return ([Popover, ResponsivePopover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
-	},
 })
 
 /**
@@ -418,8 +405,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	/**
 	 * Defines whether the component should show suggestions, if such are present.
 	 *
-	 * **Note:** You need to import the `InputSuggestions` module
-	 * from `"@ui5/webcomponents/dist/features/InputSuggestions.js"` to enable this functionality.
 	 * @default false
 	 * @public
 	 */
@@ -530,6 +515,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_accessibleLabelsRefTexts?: string;
 
 	/**
+	 * @private
+	 */
+	@property({ type: Object })
+	Suggestions?: InputSuggestions;
+
+	/**
 	 * Defines the suggestion items.
 	 *
 	 * **Note:** The suggestions would be displayed only if the `showSuggestions`
@@ -537,11 +528,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 *
 	 * **Note:** The `<ui5-suggestion-item>`, `<ui5-suggestion-item-group>` and `ui5-suggestion-item-custom` are recommended to be used as suggestion items.
 	 *
-	 * **Note:** Importing the Input Suggestions Support feature:
-	 *
-	 * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";`
-	 *
-	 * automatically imports the `<ui5-suggestion-item>` and `<ui5-suggestion-item-group>` for your convenience.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -587,7 +573,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_shouldAutocomplete?: boolean;
 	_keyDown?: boolean;
 	_isKeyNavigation?: boolean;
-	Suggestions?: InputSuggestions;
 	_selectedText?: string;
 	_clearIconClicked?: boolean;
 	_focusedAfterClear: boolean;
@@ -1262,10 +1247,19 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return;
 		}
 
-		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
-		Suggestions.i18nBundle = Input.i18nBundle;
-		if (Suggestions) {
+		const setup = (Suggestions: typeof InputSuggestions) => {
+			Suggestions.i18nBundle = Input.i18nBundle;
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
+		};
+
+		// If the feature is preloaded (the user manually imported InputSuggestions.js), it is already available on the constructor
+		if (Input.SuggestionsClass) {
+			setup(Input.SuggestionsClass);
+		// If feature is not preloaded, load it dynamically
+		} else {
+			import("./features/InputSuggestions.js").then(SuggestionsModule => {
+				setup(SuggestionsModule.default);
+			});
 		}
 	}
 
@@ -1739,16 +1733,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		return value;
 	}
-}
 
-// declare module "@ui5/webcomponents-base/jsx-runtime" {
-// 	// eslint-disable-next-line @typescript-eslint/no-namespace
-// 	namespace JSX {
-// 		interface IntrinsicElements {
-// 			"ui5-input": Input["_jsxProps"];
-// 		}
-// 	}
-// }
+	static SuggestionsClass?: typeof InputSuggestions;
+}
 
 Input.define();
 

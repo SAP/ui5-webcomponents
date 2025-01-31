@@ -15,85 +15,84 @@
 	</style>
 </head>
 
-<body>
-	<!-- toolbar with ui5-bar -->
-	<ui5-bar design="Header" accessible-name-ref="title" style="position: sticky; top: 0; z-index: 2; height: 50px;">
-		<ui5-title tabindex="0" level="H3" id="title" slot="startContent">My Selectable Products (1000)</ui5-title>
-		<ui5-slider id="slider" min="0" max="100" step="1" value="100"
-			label-interval="0"></ui5-slider>
-	</ui5-bar>
+<body style="background-color: var(--sapBackgroundColor)" class="ui5-content-density-compact">
+    <div class="section">
+		<ui5-table id="table" loading-delay="100" style="height: 150px;">
+			<ui5-table-virtualizer id="virtualizer" slot="features" row-count="1000" row-height="32"></ui5-table-virtualizer>
+			<ui5-table-selection slot="features"></ui5-table-selection>
+			<ui5-table-header-row slot="headerRow" sticky>
+				<ui5-table-header-cell width="300px">Product Name</ui5-table-header-cell>
+				<ui5-table-header-cell>Dimensions</ui5-table-header-cell>
+				<ui5-table-header-cell>Weight</ui5-table-header-cell>
+				<ui5-table-header-cell horizontal-align="Right">Price</ui5-table-header-cell>
+			</ui5-table-header-row>
+		</ui5-table>
+		<template id="rowTemplate">
+			<ui5-table-row position="-1" row-key="-1">
+				<ui5-table-cell data="name"></ui5-table-cell>
+				<ui5-table-cell data="height"></ui5-table-cell>
+				<ui5-table-cell data="weight"></ui5-table-cell>
+				<ui5-table-cell data="price"></ui5-table-cell>
+			</ui5-table-row>
+		</template>
+	</div>
 
-	<ui5-table id="table" loading-delay="0" accessible-name-ref="title" no-data-text="No data found" overflow-mode="Scroll" style="height: 375px;">
-		<ui5-table-virtualizer id="virtualizer" slot="features" row-height="51" row-count="10"></ui5-table-virtualizer>
-		<ui5-table-selection id="selection" selected="2 5" slot="features"></ui5-table-selection>
-		<ui5-table-header-row slot="headerRow" sticky>
-			<ui5-table-header-cell width="200px" id="produtCol">Product</ui5-table-header-cell>
-			<ui5-table-header-cell width="max-content" id="supplierCol">Supplier</ui5-table-header-cell>
-			<ui5-table-header-cell width="max-content" id="dimensionsCol">Dimensions</ui5-table-header-cell>
-			<ui5-table-header-cell width="max-content" id="weightCol">Weight</ui5-table-header-cell>
-			<ui5-table-header-cell width="100px"  id="priceCol">Price</ui5-table-header-cell>
-		</ui5-table-heπader-row>
-	</ui5-table>
-
-	<ui5-input value="after table" data-sap-ui-fastnavgroup="true"></ui5-input>
 	<script>
-		const slider = document.getElementById("slider");
-		const table = document.getElementById("table");
-		let timer = 0;
-		slider.addEventListener("input", (e) => {
-			table.style.width = `${e.target.value}%`;
-		});
-		table.addEventListener("row-click", (e) => {
-			console.log(`${Date.now()}: Row with the row-key ${e.detail.row.row-key} is clicked`);
-		});
 
-		const virtualizerData = [];
-		for (let i = 0; i <= 1000; i++) {
-			virtualizerData.push(Math.random() * 200 + 32);
+		class ProductStore {
+			constructor() {
+				this.products = [];
+			}
+
+			async fetchProducts(first, last) {
+				const products = [];
+				for (let i = first; i < last; i++) {
+					this.products[i] ??= await this.fetchProduct(i);
+					products.push(this.products[i]);
+				}
+				return products;
+			}
+
+			async fetchProduct(index) {
+				return new Promise(resolve => {
+					setTimeout(() => {
+						resolve({
+							key: `P${index}`,
+							name: `Product ${index}`,
+							height: `${(Math.random() * 100).toFixed(0)} cm`,
+							weight: `${(Math.random() * 100).toFixed(1)} KG`,
+							price: `${(Math.random() * 1000).toFixed(2)} EUR`
+						});
+					}, Math.random() * 10); // Simulate network delay
+				});
+			}
 		}
 
+		const productStore = new ProductStore();
+		const table = document.getElementById("table");
+		const rowTemplate = document.getElementById("rowTemplate");
 		const virtualizer = document.getElementById("virtualizer");
-		virtualizer.addEventListener("range-change", (e) => {
 
- 			if (table.rows.length) {
-				clearTimeout(timer);
-				table.loading = true;
-				timer = setTimeout(() => {
-					for (let i = e.detail.first; i < e.detail.last; i++) {
-						const index = i - e.detail.first;
-						const content = table.rows[index].cells[0];
-						table.rows[index].rowKey = i + "";
-						table.rows[index].position = i;
-						content.querySelector("b").firstChild.nodeValue = `Notebook Basic ${i}`;
-						content.querySelector("a").firstChild.nodeValue = `HT-100${i}`;
-					}
-					table.loading = false;
-				}, 500);
-				return;
+		virtualizer.addEventListener("range-change", async (e) => {
+			const { first, last } = e.detail;
+			const products = await productStore.fetchProducts(first, last);
+			for (let i = first; i < last; i++) {
+				const rowIndex = i - first;
+				const product = products[rowIndex];
+				const row = table.rows[rowIndex] || table.appendChild(rowTemplate.content.firstElementChild.cloneNode(true));
+				row.setAttribute("position", i);
+				row.setAttribute("row-key", product.key);
+				row.querySelectorAll("[data]").forEach(el => {
+					el.textContent = product[el.getAttribute("data")];
+				});
 			}
-
-			table.rows.forEach(row => row.remove());
-
-			for (let i = e.detail.first; i < e.detail.last; i++) {
-				const newRow = document.createElement("ui5-table-row");
-				newRow.setAttribute("row-key", i.toString());
-				newRow.position = i;
-				newRow.innerHTML = `
-					<ui5-table-cell><ui5-label><b>Notebook Basic ${i}</b><br><a href="#">HT-100${i}</a></ui5-label></ui5-table-cell>
-					<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
-					<ui5-table-cell><ui5-input></ui5-input></ui5-table-cell>
-					<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
-					<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
-				`;
-				table.appendChild(newRow);
+			for (let i = last; i < table.rows.length; i++) {
+				table.rows[i].remove();
 			}
 		});
 
-		const selection = document.getElementById("selection");
-		selection.addEventListener("change", (e) => {
-			console.log(e.target.selected);
-		});
 	</script>
+
 </body>
 
 </html>

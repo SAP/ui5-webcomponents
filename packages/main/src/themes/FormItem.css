@@ -17,6 +17,7 @@
 :host([column-span="5"]) {
 	grid-column: span 5;
 }
+
 :host([column-span="6"]) {
 	grid-column: span 6;
 }
@@ -40,6 +41,8 @@
 }
 
 .ui5-form-item-content {
+	overflow: hidden;
+	width: 100%;
 	display: flex;
 	padding: 0 0.25rem;
 }
@@ -57,13 +60,9 @@
 	box-sizing: border-box;
 }
 
-::slotted([ui5-input]) {
+::slotted(*) {
 	width: 100%;
 }
-::slotted([ui5-select]) {
-	width: 100%;
-}
-
 
 @container (max-width: 600px) {
 	:host {

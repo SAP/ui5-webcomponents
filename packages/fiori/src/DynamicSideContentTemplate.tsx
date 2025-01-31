@@ -24,6 +24,8 @@ export default function DynamicSideContentTemplate(this: DynamicSideContent) {
 function mainContent(this: DynamicSideContent) {
 	return (
 		<div
+			role="main"
+			aria-label={this.accInfo.mainContent?.ariaLabel}
 			class={this.classes.main}
 			style={this.styles.main}
 		>
@@ -36,7 +38,7 @@ function sideContent(this: DynamicSideContent) {
 	return (
 		<aside
 			role="complementary"
-			aria-label={this.accInfo.label}
+			aria-label={this.accInfo.sideContent?.ariaLabel}
 			class={this.classes.side}
 			style={this.styles.side}
 		>

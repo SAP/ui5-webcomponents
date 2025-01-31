@@ -5,20 +5,11 @@ import {
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
-import Avatar from "@ui5/webcomponents/dist/Avatar.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
-import Text from "@ui5/webcomponents/dist/Text.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
-import Panel from "@ui5/webcomponents/dist/Panel.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Bar from "@ui5/webcomponents/dist/Bar.js";
-import List from "@ui5/webcomponents/dist/List.js";
+import type Title from "@ui5/webcomponents/dist/Title.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
-import ListItemCustom from "@ui5/webcomponents/dist/ListItemCustom.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
-import Tag from "@ui5/webcomponents/dist/Tag.js";
-import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -73,20 +64,6 @@ type UserMenuOtherAccountClickEventDetail = {
 	renderer: jsxRenderer,
 	template: UserMenuTemplate,
 	styles: [UserMenuCss],
-	dependencies: [
-		ResponsivePopover,
-		Avatar,
-		Title,
-		Text,
-		Label,
-		Button,
-		Panel,
-		Icon,
-		Bar,
-		List,
-		ListItemCustom,
-		Tag,
-	],
 })
 
 /**
@@ -127,8 +104,23 @@ type UserMenuOtherAccountClickEventDetail = {
 })
 
 /**
+ * Fired when a user menu is open.
+ * @public
+ * @since 2.6.0
+ */
+@event("open")
+
+/**
+ * Fired when a user menu is close.
+ * @public
+ * @since 2.6.0
+ */
+@event("close")
+
+/**
  * Fired when the "Sign Out" button is selected.
  * @public
+ * @since 2.6.0
  */
 @event("sign-out-click", {
 	cancelable: true,
@@ -141,6 +133,9 @@ class UserMenu extends UI5Element {
 		"change-account": UserMenuOtherAccountClickEventDetail;
 		"item-click": UserMenuItemClickEventDetail;
 		"sign-out-click": void;
+		"open": void;
+		"close": void;
+
 	}
 	/**
 	 * Defines if the User Menu is opened.
@@ -187,6 +182,16 @@ class UserMenu extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	showAddAccount = false;
+
+	/**
+	 * Defines if the User menu shows edit button.
+	 *
+	 * @default false
+	 * @public
+	 * @since 2.7.0
+	 */
+	@property({ type: Boolean })
+	showEditButton = false;
 
 	/**
 	 * Defines the menu items.
@@ -364,8 +369,13 @@ class UserMenu extends UI5Element {
 		this._closeUserMenu();
 	}
 
+	_handlePopoverAfterOpen() {
+		this.fireDecoratorEvent("open");
+	}
+
 	_handlePopoverAfterClose() {
 		this.open = false;
+		this.fireDecoratorEvent("close");
 	}
 
 	_handleDeclineClick() {

@@ -5,6 +5,7 @@
 @import "./Breadcrumbs-parameters.css";
 @import "./BusyIndicator-parameters.css";
 @import "./Button-parameters.css";
+@import "../base/ButtonBadge-parameters.css";
 @import "../base/CalendarLegend-parameters.css";
 @import "./CalendarLegendItem-parameters.css";
 @import "../base/Card-parameters.css";
@@ -52,6 +53,7 @@
 @import "./ToggleButton-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";
+@import "../base/Toolbar-parameters.css";
 @import "./Token-parameters.css";
 @import "./Tokenizer-parameters.css";
 @import "./MultiComboBox-parameters.css";

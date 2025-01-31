@@ -23,7 +23,6 @@ import {
 	RATING_INDICATOR_ARIA_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import RatingIndicatorTemplate from "./RatingIndicatorTemplate.js";
-import Icon from "./Icon.js";
 
 // Styles
 import RatingIndicatorCss from "./generated/themes/RatingIndicator.css.js";
@@ -76,7 +75,6 @@ type Star = {
 	renderer: jsxRenderer,
 	styles: RatingIndicatorCss,
 	template: RatingIndicatorTemplate,
-	dependencies: [Icon],
 })
 /**
  * The event is fired when the value changes.
@@ -253,7 +251,11 @@ class RatingIndicator extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		if (this.disabled || this.readonly) {
-			e.preventDefault();
+			// prevent page scrolling
+			if (isSpace(e)) {
+				e.preventDefault();
+			}
+
 			return;
 		}
 
