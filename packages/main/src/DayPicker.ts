@@ -190,8 +190,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	@property({ type: Array })
 	specialCalendarDates: Array<SpecialCalendarDateT> = [];
 
-	_autoFocus?: boolean;
-
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -393,10 +391,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	onAfterRendering() {
-		if (this._autoFocus && !this._hidden) {
-			this.focus();
-		}
-
 		const focusedDay = this.shadowRoot!.querySelector<HTMLElement>("[data-sap-focus-ref]");
 
 		if (focusedDay && document.activeElement !== focusedDay && this._specialCalendarDates.length === 0) {

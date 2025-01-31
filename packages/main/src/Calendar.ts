@@ -52,7 +52,6 @@ interface ICalendarPicker {
 	_showNextPage: () => void,
 	_hasPreviousPage: () => boolean,
 	_hasNextPage: () => boolean,
-	_autoFocus?: boolean,
 	_firstYear?: number,
 	_lastYear?: number,
 }
