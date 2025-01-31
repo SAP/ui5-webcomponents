@@ -65,4 +65,4 @@ const commands = [
 
 commands.forEach(cmd => {
 	Cypress.Commands.overwrite(cmd, realEventCmdCallback)
-})
+});

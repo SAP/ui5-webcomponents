@@ -40,7 +40,7 @@ function mount(component, options = {}) {
 						return true;
 					})
 
-					expect(shadowrootsExist).to.be.true;
+					expect(shadowrootsExist, "Custom elements with shadow DOM have content in their shadow DOM").to.be.true;
 				})
 		});
 }
