@@ -29,10 +29,6 @@ function mount(component, options = {}) {
 				.find("*")
 				.should($el => {
 					const shadowrootsExist = [...$el].every(el => {
-						if (el.hasAttribute("ui5-table-growing")) {
-							return true;
-						}
-
 						if (el.tagName.includes("-") && el.shadowRoot) {
 							return el.shadowRoot.hasChildNodes();
 						}
