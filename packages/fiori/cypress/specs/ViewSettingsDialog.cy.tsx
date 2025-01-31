@@ -5,10 +5,12 @@ import FilterItemOption from "../../src/FilterItemOption.js";
 
 describe("View settings dialog - selection", () => {
 	it("tests clicking on sort items (both on the text and radio button)", () => {
-		cy.mount(<ViewSettingsDialog id="vsd" onConfirm={cy.stub().as("confirm")}>
-			<SortItem slot="sortItems" text="Name" selected={true}></SortItem>
-			<SortItem slot="sortItems" text="Position"></SortItem>
-		</ViewSettingsDialog>);
+		cy.mount(
+			<ViewSettingsDialog id="vsd" onConfirm={cy.stub().as("confirm")}>
+				<SortItem slot="sortItems" text="Name" selected={true}></SortItem>
+				<SortItem slot="sortItems" text="Position"></SortItem>
+			</ViewSettingsDialog>
+		);
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(100); // Wait after mounting the component temporarily, until the component is fully rendered
@@ -88,18 +90,20 @@ describe("View settings dialog - selection", () => {
 	});
 
 	it("tests clicking on filter items, and filter item options (both on the text and checkbox)", () => {
-		cy.mount(<ViewSettingsDialog id="vsd" onConfirm={cy.stub().as("confirm")}>
-			<FilterItem slot="filterItems" text="Filter 1">
-				<FilterItemOption slot="values" text="Some filter 1"></FilterItemOption>
-				<FilterItemOption slot="values" text="Some filter 2"></FilterItemOption>
-				<FilterItemOption slot="values" text="Some filter 3"></FilterItemOption>
-			</FilterItem>
-			<FilterItem slot="filterItems" text="Filter 2">
-				<FilterItemOption slot="values" text="Some filter 4"></FilterItemOption>
-				<FilterItemOption slot="values" text="Some filter 5"></FilterItemOption>
-				<FilterItemOption slot="values" text="Some filter 6"></FilterItemOption>
-			</FilterItem>
-		</ViewSettingsDialog>);
+		cy.mount(
+			<ViewSettingsDialog id="vsd" onConfirm={cy.stub().as("confirm")}>
+				<FilterItem slot="filterItems" text="Filter 1">
+					<FilterItemOption slot="values" text="Some filter 1"></FilterItemOption>
+					<FilterItemOption slot="values" text="Some filter 2"></FilterItemOption>
+					<FilterItemOption slot="values" text="Some filter 3"></FilterItemOption>
+				</FilterItem>
+				<FilterItem slot="filterItems" text="Filter 2">
+					<FilterItemOption slot="values" text="Some filter 4"></FilterItemOption>
+					<FilterItemOption slot="values" text="Some filter 5"></FilterItemOption>
+					<FilterItemOption slot="values" text="Some filter 6"></FilterItemOption>
+				</FilterItem>
+			</ViewSettingsDialog>
+		);
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(100); // Wait after mounting the component temporarily, until the component is fully rendered
