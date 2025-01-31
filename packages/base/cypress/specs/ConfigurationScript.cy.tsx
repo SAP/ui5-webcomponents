@@ -43,7 +43,7 @@ describe("Configuration script", () => {
 	};
 
 	before(() => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`, {
+		cy.mount(<TestGeneric />, {
 			ui5Configuration: configurationObject,
 		});
 
