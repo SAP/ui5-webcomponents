@@ -23,13 +23,36 @@ jobs:
       - name: Test Build
         run: yarn ci:testbuild
 
+      - name: List Build Folders (Debugging)
+        run: |
+          echo "Listing all packages and their contents..."
+          ls -R packages/  # This should now reflect your folder structure under packages/
+
       - name: Upload Build Artifacts (All Packages)
         uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
           path: |
-            packages/*/dist          # Upload all dist folders inside packages
-            packages/*/src/generated # Upload all generated folders inside packages
+            packages/ai/dist
+            packages/base/dist
+            packages/main/dist
+            packages/fiori/dist
+            packages/compat/dist
+            packages/icons/dist
+            packages/icons-tnt/dist
+            packages/icons-business-suite/dist
+            packages/localization/dist
+            packages/theming/dist
+            packages/ai/src/generated
+            packages/base/src/generated
+            packages/main/src/generated
+            packages/fiori/src/generated
+            packages/compat/src/generated
+            packages/icons/src/generated
+            packages/icons-tnt/src/generated
+            packages/icons-business-suite/src/generated
+            packages/localization/src/generated
+            packages/theming/src/generated
         continue-on-error: true
 
   check:
