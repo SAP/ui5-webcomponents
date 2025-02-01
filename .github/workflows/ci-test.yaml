@@ -20,24 +20,14 @@ jobs:
       - name: Install Dependencies
         run: yarn --frozen-lockfile
 
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            node-modules-${{ runner.os }}-
-
       - name: Test Build
         run: yarn ci:testbuild
 
-      - name: Cache Build Artifacts
-        uses: actions/cache@v4
+      - name: Upload Build Artifacts (All Packages)
+        uses: actions/upload-artifact@v4
         with:
-          path: build
-          key: build-${{ runner.os }}-${{ github.sha }}
-          restore-keys: |
-            build-${{ runner.os }}-
+          name: build-artifacts
+          path: packages/*/dist  # Upload all `dist` folders inside `packages/`
 
   check:
     needs: setup
@@ -54,17 +44,14 @@ jobs:
           node-version: 22
           cache: 'yarn'
 
-      - name: Restore node_modules Cache
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
 
-      - name: Restore Build Cache
-        uses: actions/cache@v4
+      - name: Download Build Artifacts (All Packages)
+        uses: actions/download-artifact@v4
         with:
-          path: build
-          key: build-${{ runner.os }}-${{ github.sha }}
+          name: build-artifacts
+          path: packages
 
       - name: Test
         run: yarn ci:test:${{ matrix.suite }}
