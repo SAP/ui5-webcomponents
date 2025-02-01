@@ -5,25 +5,66 @@ on:
   push:
     branches:
       - 'main'
+
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4.1.0
+        with:
+          node-version: 22
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-
+
+      - name: Test Build
+        run: yarn ci:testbuild
+
+      - name: Cache Build Artifacts
+        uses: actions/cache@v4
+        with:
+          path: build
+          key: build-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            build-${{ runner.os }}-
+
   check:
-    runs-on: ubuntu-latest 
+    needs: setup
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         suite: ['base', 'compat', 'ai', 'main:suite-1', 'main:cy:suite-1', 'main:suite-2', 'main:cy:suite-2', 'fiori']
+      fail-fast: false
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - uses: actions/setup-node@v4.1.0
-      with:
-        node-version: 22
-        cache: 'yarn'
+      - uses: actions/setup-node@v4.1.0
+        with:
+          node-version: 22
+          cache: 'yarn'
 
-    - name: Install Dependencies
-      run: yarn --frozen-lockfile
+      - name: Restore node_modules Cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
-    - name: Test Build
-      run: yarn ci:testbuild
+      - name: Restore Build Cache
+        uses: actions/cache@v4
+        with:
+          path: build
+          key: build-${{ runner.os }}-${{ github.sha }}
 
-    - name: Test
-      run: yarn ci:test:${{ matrix.suite }}
+      - name: Test
+        run: yarn ci:test:${{ matrix.suite }}
