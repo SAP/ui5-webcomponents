@@ -20,6 +20,15 @@ jobs:
       - name: Install Dependencies
         run: yarn --frozen-lockfile
 
+        # Cache node_modules after installing dependencies
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-
+
       - name: Test Build
         run: yarn ci:testbuild
 
@@ -70,8 +79,14 @@ jobs:
           node-version: 22
           cache: 'yarn'
 
-      - name: Install Dependencies
-        run: yarn --frozen-lockfile
+      # Restore the node_modules cache from the setup job
+      - name: Restore node_modules Cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-
 
       - name: Download Build Artifacts (All Packages)
         uses: actions/download-artifact@v4
