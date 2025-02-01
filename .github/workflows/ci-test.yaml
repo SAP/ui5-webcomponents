@@ -30,6 +30,7 @@ jobs:
           path: |
             packages/*/dist          # Upload all dist folders inside packages
             packages/*/src/generated # Upload all generated folders inside packages
+        continue-on-error: true
 
   check:
     needs: setup
