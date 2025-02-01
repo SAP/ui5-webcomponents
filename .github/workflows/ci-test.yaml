@@ -27,7 +27,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
-          path: packages/*/dist  # Upload all `dist` folders inside `packages/`
+          path: |
+            packages/*/dist          # Upload all dist folders inside packages
+            packages/*/src/generated # Upload all generated folders inside packages
 
   check:
     needs: setup
