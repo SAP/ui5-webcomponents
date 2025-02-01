@@ -20,7 +20,10 @@ module.exports = defineConfig({
 		},
 		supportFile: path.join(__dirname, "cypress/support/component.js"),
 		indexHtmlFile: path.join(__dirname, "cypress/support/component-index.html"),
-		specPattern: getSpecsBySuite(process.env.TEST_SUITE),
+		specPattern: suites[process.env.TEST_SUITE] || [
+			"**/specs/*.cy.{js,ts,jsx,tsx}",
+			"**/specs/**/*.cy.{js,ts,jsx,tsx}",
+		],
 		devServer: {
 			bundler: 'vite',
 		}
@@ -31,10 +34,3 @@ module.exports = defineConfig({
 	viewportHeight: 1080,
 	viewportWidth: 1440,
 })
-
-function getSpecsBySuite(suite) {
-	return suites[suite] || [
-		"**/specs/*.cy.{js,ts,jsx,tsx}",
-		"**/specs/**/*.cy.{js,ts,jsx,tsx}",
-	];
-}
