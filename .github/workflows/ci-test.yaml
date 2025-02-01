@@ -20,7 +20,7 @@ jobs:
       - name: Install Dependencies
         run: yarn --frozen-lockfile
 
-        # Cache node_modules after installing dependencies
+      # Cache node_modules after installing dependencies
       - name: Cache node_modules
         uses: actions/cache@v4
         with:
@@ -28,6 +28,15 @@ jobs:
           key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             node-modules-${{ runner.os }}-
+
+      # Cache Cypress binary
+      - name: Cache Cypress Binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-
 
       - name: Test Build
         run: yarn ci:testbuild
@@ -87,6 +96,15 @@ jobs:
           key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             node-modules-${{ runner.os }}-
+
+      # Restore the Cypress binary cache from the setup job
+      - name: Restore Cypress Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-
 
       - name: Download Build Artifacts (All Packages)
         uses: actions/download-artifact@v4
