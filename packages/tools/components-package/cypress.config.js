@@ -1,11 +1,15 @@
 const { defineConfig } = require('cypress')
 const path = require("path");
 const coverageTask = require('@cypress/code-coverage/task');
-const glob = require('glob');
 
 const suites = {
-	"SUITE1": /^[A-Oa-o]/,
-	"SUITE2": /^[P-Zp-z]/,
+	SUITE1: [
+		"**/specs/base/*.cy.{jsx,tsx}",
+		"**/specs/[A-I]*.cy.{js,jsx,ts,tsx}",
+	],
+	SUITE2: [
+		"**/specs/[^A-I]*.cy.{js,jsx,ts,tsx}",
+	],
 };
 
 module.exports = defineConfig({
@@ -28,22 +32,7 @@ module.exports = defineConfig({
 	viewportWidth: 1440,
 })
 
-// function getSpecsBySuite(suite) {
-// 	const allSpecs = glob.sync("**/specs/**/**/*.cy.{jsx,tsx}", { nodir: true });
-// 	return suite ? allSpecs.filter(file => suites[suite].test(file.split('/').pop())) : allSpecs;
-// }
-
 function getSpecsBySuite(suite) {
-	const suites = {
-	  SUITE1: [
-		"**/specs/base/*.cy.{jsx,tsx}",
-		"**/specs/[A-I]*.cy.{js,jsx,ts,tsx}",
-	  ],
-	  SUITE2: [
-		"**/specs/[^A-I]*.cy.{js,jsx,ts,tsx}",
-	  ],
-	};
-  
 	return suites[suite] || [
 		"**/specs/*.cy.{js,ts,jsx,tsx}",
 		"**/specs/**/*.cy.{js,ts,jsx,tsx}",
