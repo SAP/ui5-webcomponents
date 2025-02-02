@@ -101,12 +101,11 @@ function arrowStart(this: FlexibleColumnLayout) {
 function gripStart(this: FlexibleColumnLayout) {
 	return (
 		<div
-			class="ui5-fcl-grip-container"
+			class="ui5-fcl-grip ui5-fcl-grip--start"
 			style={{ display: this.showStartSeparatorGrip ? "flex" : "none" }}>
 			<Icon
 				name={verticalGripIcon}
-				class="ui5-fcl-grip ui5-fcl-grip--start"
-
+				class="ui5-fcl-grip-icon"
 			/>
 		</div>
 	);
@@ -115,11 +114,11 @@ function gripStart(this: FlexibleColumnLayout) {
 function gripEnd(this: FlexibleColumnLayout) {
 	return (
 		<div
-			class="ui5-fcl-grip-container"
+			class="ui5-fcl-grip ui5-fcl-grip--end"
 			style={{ display: this.showEndSeparatorGrip ? "flex" : "none" }}>
 			<Icon
 				name={verticalGripIcon}
-				class="ui5-fcl-grip ui5-fcl-grip--end"
+				class="ui5-fcl-grip-icon"
 			/>
 		</div>
 	);

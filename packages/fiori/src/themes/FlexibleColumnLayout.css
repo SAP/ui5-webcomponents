@@ -51,8 +51,10 @@
 	border:var(--_ui5_fcl_separator_focus_border);
 	outline: none;
 }
-.ui5-fcl-grip-container{
+
+.ui5-fcl-grip {
 	cursor: col-resize;
+	overflow: visible;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -61,13 +63,8 @@
 	z-index: 10;
 }
 
-.ui5-fcl-grip {
-	cursor: col-resize;
-	overflow: visible;
-	z-index: 1;
+.ui5-fcl-grip-icon {
 	color: var(--sapButton_TextColor);
-	padding-top: 0.3125rem;
-	padding-bottom: 0.3125rem;
 }
 
 .ui5-fcl-arrow {
@@ -112,7 +109,7 @@
 }
 
 /* Only apply shorter height when arrow is visible */
-.ui5-fcl-separator:hover .ui5-fcl-arrow + .ui5-fcl-grip-container .ui5-fcl-grip::before {
+.ui5-fcl-separator:hover .ui5-fcl-arrow + .ui5-fcl-grip::before {
     height: calc(40% - 1rem);
 }
 
