@@ -126,3 +126,460 @@ describe("Input Tests", () => {
 			.should("not.have.attr", "tabindex", "0");
 	});
 });
+
+describe("Input general interaction", () => {
+	it("handles suggestions selection cancel with ESC", () => {
+		cy.mount(
+			<Input id="myInputEsc" show-suggestions class="input3auto">
+				<SuggestionItem text="Chromium"></SuggestionItem>
+				<SuggestionItem text="Titanium"></SuggestionItem>
+				<SuggestionItem text="Iron"></SuggestionItem>
+				<SuggestionItem text="Gold"></SuggestionItem>
+				<SuggestionItem text="Silver"></SuggestionItem>
+			</Input>
+		);
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("@input")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.as("popover");
+
+		cy.get("@input")
+			.realClick();
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@input")
+			.realType("C");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@popover")
+			.should("have.attr", "open");
+
+		cy.get("@input")
+			.realPress("ArrowDown");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@input")
+			.should("have.attr", "value", "Titanium");
+
+		cy.get("@input")
+			.realPress("Escape");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@input")
+			.should("have.value", "C");
+	});
+
+	it("tests selection-change with custom items", () => {
+		cy.mount(
+			<Input id="myInput2" showSuggestions class="input3auto">
+			  <SuggestionItem text="Cozy" />
+			  <SuggestionItem text="Compact" />
+			  <SuggestionItem text="Condensed" />
+			  <SuggestionItem text="Compact" />
+			  <SuggestionItem text="Condensed" />
+			</Input>
+		  );
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("@input")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.as("popover");
+
+		cy.get("@input")
+			.realClick();
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@input")
+			.realType("c");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@popover")
+			.should("have.attr", "open");
+
+		cy.get("@input")
+			.realPress("ArrowDown");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@input")
+			.should("have.value", "Compact")
+			.should("not.have.attr", "focused");
+
+		cy.get("ui5-suggestion-item")
+			.eq(1)
+			.should("have.attr", "focused");
+
+		cy.get("@input")
+			.realPress("ArrowDown");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("ui5-suggestion-item")
+			.eq(2)
+			.should("have.attr", "focused");
+
+		cy.get("ui5-suggestion-item")
+			.eq(1)
+			.should("not.have.attr", "focused");
+	});
+});
+
+describe("Input arrow navigation", () => {
+	it("Value state header and group headers should be included in the arrow navigation", () => {
+		cy.mount(
+			<Input id="inputError" class="input2auto" showSuggestions valueState="Negative" placeholder="Search for a country ...">
+				<div slot="valueStateMessage">
+					Custom error value state message with a <a href="#">Link</a>.
+				</div>
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+				<SuggestionItem text="Condensed" />
+				<SuggestionItem text="Compact" />
+				<SuggestionItem text="Condensed" />
+			</Input>
+		);
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("@input")
+			.realClick()
+			.realType("a")
+			.realPress("ArrowDown");
+
+		cy.get("@input")
+			.should("not.have.attr", "focused");
+
+		cy.get("@input")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.as("ui5-responsive-popover");
+
+		cy.get("@ui5-responsive-popover")
+			.find("div")
+			.as("valueMessage")
+			.should("have.class", "ui5-responsive-popover-header--focused");
+
+		cy.get("@input")
+			.realPress("ArrowDown");
+
+		cy.get("@valueMessage")
+			.should("not.have.class", "ui5-responsive-popover-header--focused");
+
+		cy.get("ui5-suggestion-item")
+			.eq(0)
+			.should("have.attr", "focused");
+	});
+
+	it("Should navigate up and down through the suggestions popover with arrow keys", () => {
+		cy.mount(
+			<Input id="myInput2" showSuggestions class="input3auto">
+			  <SuggestionItem text="Cozy" />
+			  <SuggestionItem text="Compact" />
+			  <SuggestionItem text="Condensed" />
+			  <SuggestionItem text="Compact" />
+			  <SuggestionItem text="Condensed" />
+			</Input>
+		  );
+
+		cy.get("#myInput2")
+			.as("input");
+
+		cy.get("@input")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.as("popover");
+
+		cy.get("@input").click();
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+		cy.get("@input").realType("c");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@popover")
+			.should("have.attr", "open");
+
+		cy.get("@input").realPress("ArrowDown");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("ui5-suggestion-item").eq(1).should("have.attr", "text", "Compact");
+		cy.get("@input").should("not.have.attr", "focused");
+		cy.get("ui5-suggestion-item").eq(1).should("have.attr", "focused");
+
+		cy.get("@input")
+			.realPress("ArrowDown");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("ui5-suggestion-item").eq(2).should("have.attr", "focused");
+		cy.get("ui5-suggestion-item").eq(1).should("not.have.attr", "focused");
+
+		cy.get("@input")
+			.realPress("ArrowUp");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("ui5-suggestion-item").eq(1).should("have.attr", "focused");
+		cy.get("ui5-suggestion-item").eq(2).should("not.have.attr", "focused");
+
+		cy.get("@input").realPress("ArrowUp");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+		cy.get("@input").realPress("ArrowUp");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@input").should("have.attr", "focused");
+		cy.get("ui5-suggestion-item").first().should("not.have.attr", "focused");
+	});
+});
+
+describe("Input PAGEUP/PAGEDOWN navigation", () => {
+	beforeEach(() => {
+		cy.mount(
+			<Input id="myInput" showSuggestions placeholder="Search for a country ...">
+			  <SuggestionItemGroup headerText="A">
+					<SuggestionItem text="Afghanistan" />
+					<SuggestionItem text="Argentina" />
+					<SuggestionItem text="Albania" />
+					<SuggestionItem text="Armenia" />
+					<SuggestionItem text="Algeria" />
+					<SuggestionItem text="Andorra" />
+					<SuggestionItem text="Angola" />
+					<SuggestionItem text="Austria" />
+					<SuggestionItem text="Australia" />
+					<SuggestionItem text="Azerbaijan" />
+					<SuggestionItem text="Aruba" />
+					<SuggestionItem text="Antigua and Barbuda" />
+			  </SuggestionItemGroup>
+			</Input>
+		  );
+	});
+	it("Should focus the tenth item from the suggestions popover with PAGEDOWN", () => {
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("@input")
+			.realClick();
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@input")
+			.realType("a");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@input")
+			.realPress("ArrowDown");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@input")
+			.realPress("PageDown");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("ui5-suggestion-item")
+			.eq(11)
+			.should("have.attr", "text", "Antigua and Barbuda");
+
+		cy.get("ui5-suggestion-item")
+			.eq(11)
+			.should("have.attr", "focused");
+	});
+
+	it("Should focus the -10 item/group header from the suggestions popover with PAGEUP", () => {
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("@input")
+			.realClick();
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@input")
+			.realType("a");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@input")
+			.realPress("ArrowUp");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("ui5-suggestion-item-group")
+			.eq(0)
+			.should("have.attr", "focused");
+
+		cy.get("@input")
+			.realPress("PageDown");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("@input")
+			.realPress("PageUp");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("ui5-suggestion-item-group")
+			.eq(0)
+			.should("have.attr", "focused");
+	});
+});
+
+describe("Selection-change event", () => {
+	it("Selection-change event fires with null arguments when suggestion was selected but user alters input value to something else", () => {
+		cy.mount(
+			<Input id="input-selection-change" showSuggestions>
+			  <SuggestionItem text="Cozy" />
+			  <SuggestionItem text="Compact" />
+			  <SuggestionItem text="Condensed" />
+			</Input>
+		  );
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("ui5-input")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		let eventCount = 0;
+
+		cy.get("@input").then($input => {
+			$input[0].addEventListener("ui5-selection-change", () => {
+				eventCount++;
+			});
+		});
+
+		cy.get("@innerInput")
+			.click();
+		cy.get("@innerInput")
+			.type("C");
+		cy.get("@innerInput")
+			.realPress("ArrowDown");
+		cy.get("@innerInput")
+			.realPress("Enter");
+
+		cy.get("@innerInput")
+			.should("have.value", "Compact");
+
+		cy.get("@innerInput")
+			.click();
+		cy.get("@innerInput")
+			.clear();
+		cy.get("@innerInput")
+			.type("N");
+		cy.get("@innerInput")
+			.realPress("Enter");
+
+		cy.get("@innerInput")
+			.should("have.value", "N");
+
+		cy.then(() => {
+			expect(eventCount).to.equal(2);
+		});
+	});
+});
+
+describe("Change event behavior when selecting the same suggestion item", () => {
+	let changeCount = 0;
+
+	beforeEach(() => {
+		cy.mount(
+			<Input id="myInput" showSuggestions placeholder="Search for a country ...">
+			  <SuggestionItemGroup headerText="A">
+					<SuggestionItem text="Afghanistan" />
+					<SuggestionItem text="Argentina" />
+					<SuggestionItem text="Albania" />
+					<SuggestionItem text="Armenia" />
+					<SuggestionItem text="Algeria" />
+			  </SuggestionItemGroup>
+			</Input>
+		  );
+
+		cy.get("#myInput")
+			.as("input");
+
+		cy.get("@input").then($el => {
+			$el[0].addEventListener("change", () => {
+				changeCount++;
+			});
+		});
+	});
+
+	it("Change event is not fired when the same suggestion item is selected (with typeahead)", () => {
+		cy.get("@input")
+			.click();
+
+		cy.get("@input")
+			.realType("a");
+
+		cy.get("@input").realPress("Enter");
+		cy.get("@input").should("have.value", "Afghanistan");
+
+		cy.get("@input").realPress("Backspace");
+		cy.get("@input").realPress("ArrowDown");
+		cy.get("@input").realPress("ArrowDown");
+		cy.get("@input").realPress("Enter");
+
+		cy.get("@input").should("have.value", "Afghanistan");
+		cy.then(() => {
+			expect(changeCount).to.equal(1);
+		});
+	});
+
+	it("Change event is not fired when the same suggestion item is selected (no-typeahead)", () => {
+		cy.get("@input").invoke("attr", "value", "Afghanistan");
+		cy.get("@input").invoke("attr", "no-typeahead", true);
+
+		cy.get("@input").realPress("Backspace");
+
+		cy.get("@input").realPress("ArrowDown");
+		cy.get("@input").realPress("ArrowDown");
+		cy.get("@input").realPress("Enter");
+
+		cy.get("@input").should("have.value", "Afghanistan");
+		cy.then(() => {
+			expect(changeCount).to.equal(1);
+		});
+	});
+
+	it("Change event is not fired when the same suggestion item is selected after focus out and selecting suggestion again", () => {
+		cy.get("@input")
+			.invoke("attr", "value", "Afghanistan");
+
+		cy.get("@input")
+			.realPress("Tab");
+
+		cy.get("@input")
+			.realClick();
+		cy.get("@input")
+			.realPress("ArrowDown");
+		cy.get("@input")
+			.realPress("ArrowDown");
+		cy.get("@input")
+			.realPress("Enter");
+
+		cy.get("@input").should("have.value", "Afghanistan");
+		cy.then(() => {
+			expect(changeCount).to.equal(1);
+		});
+	});
+});

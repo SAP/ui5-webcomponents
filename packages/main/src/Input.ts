@@ -574,7 +574,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_keyDown?: boolean;
 	_isKeyNavigation?: boolean;
 	_indexOfSelectedItem: number;
-	// Suggestions?: InputSuggestions;
 	_selectedText?: string;
 	_clearIconClicked?: boolean;
 	_focusedAfterClear: boolean;
@@ -824,7 +823,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_handleUp(e: KeyboardEvent) {
 		if (this.Suggestions?.isOpened()) {
-			// const itemIndex = this.currentItemIndex;
 			this.Suggestions.onUp(e, this.currentItemIndex);
 		}
 	}
@@ -1218,7 +1216,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.focused = false;
 		}
 
-		if (this._changeToBeFired && this._isChangeTriggeredBySuggestion === false) {
+		if (this._changeToBeFired && !this._isChangeTriggeredBySuggestion) {
 			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
 		} else {
 			this._isChangeTriggeredBySuggestion = false;

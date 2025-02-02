@@ -83,15 +83,15 @@ class Suggestions {
 
 	onUp(e: KeyboardEvent, indexOfItem: number) {
 		e.preventDefault();
-		indexOfItem = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
-		this._handleItemNavigation(false /* forward */, indexOfItem);
+		const index = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+		this._handleItemNavigation(false /* forward */, index);
 		return true;
 	}
 
 	onDown(e: KeyboardEvent, indexOfItem: number) {
 		e.preventDefault();
-		indexOfItem = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
-		this._handleItemNavigation(true /* forward */, indexOfItem);
+		const index = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+		this._handleItemNavigation(true /* forward */, index);
 		return true;
 	}
 
@@ -300,8 +300,8 @@ class Suggestions {
 		return !!(this._getPicker()?.open);
 	}
 
-	_handleItemNavigation(forward: boolean, indexOfItem: number) {
-		this.selectedItemIndex = indexOfItem;
+	_handleItemNavigation(forward: boolean, index: number) {
+		this.selectedItemIndex = index;
 
 		if (!this._getItems().length) {
 			return;
