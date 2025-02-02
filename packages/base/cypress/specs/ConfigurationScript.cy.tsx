@@ -1,6 +1,7 @@
 import { getAnimationMode } from "../../src/config/AnimationMode.js";
 import { getCalendarType } from "../../src/config/CalendarType.js";
 import { getDefaultFontLoading } from "../../src/config/Fonts.js";
+import TestGeneric from "../../test/test-elements/Generic.js";
 import { getFirstDayOfWeek, getLegacyDateCalendarCustomizing } from "../../src/config/FormatSettings.js";
 import { getLanguage } from "../../src/config/Language.js";
 import { getNoConflict } from "../../src/config/NoConflict.js";
@@ -43,7 +44,7 @@ describe("Configuration script", () => {
 	};
 
 	before(() => {
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`, {
+		cy.mount(<TestGeneric />, {
 			ui5Configuration: configurationObject,
 		});
 

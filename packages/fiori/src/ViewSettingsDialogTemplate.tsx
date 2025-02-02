@@ -78,7 +78,7 @@ function ViewSettingsDialogTemplateContent(this: ViewSettingsDialog) {
 				<div class="ui5-vsd-sort">
 					<List
 						selectionMode="SingleStart"
-						onItemClick={this._onSortOrderChange}
+						onSelectionChange={this._onSortOrderChange} // radio button - use selectionChange
 						sort-order=""
 						accessibleNameRef={`${this._id}-label`}
 					>
@@ -92,7 +92,7 @@ function ViewSettingsDialogTemplateContent(this: ViewSettingsDialog) {
 					</List>
 					<List
 						selectionMode="SingleStart"
-						onItemClick={this._onSortByChange}
+						onSelectionChange={this._onSortByChange} // radio button - use selectionChange
 						sort-by=""
 					>
 						<ListItemGroup headerText={this._sortByLabel}>
@@ -110,7 +110,7 @@ function ViewSettingsDialogTemplateContent(this: ViewSettingsDialog) {
 				{this._filterStepTwo ? (
 					<List
 						selectionMode="Multiple"
-						onItemClick={this._handleFilterValueItemClick}
+						onSelectionChange={this._handleFilterValueItemClick} // checkboxes to select/deselect - use selectionChange
 						accessibleNameRef={`${this._id}-label`}
 					>
 						{this._currentSettings.filters.filter(item => item.selected).map(item => (<>
@@ -123,7 +123,7 @@ function ViewSettingsDialogTemplateContent(this: ViewSettingsDialog) {
 					</List>
 				) : ( // else
 					<List
-						onItemClick={this._changeCurrentFilter}
+						onItemClick={this._changeCurrentFilter} // list item to drill down into the second-level menu - use click
 						accessibleNameRef={`${this._id}-label`}
 					>
 						<ListItemGroup headerText={this._filterByLabel}>
