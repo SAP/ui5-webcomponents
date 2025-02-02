@@ -36,6 +36,7 @@
 /* separator */
 .ui5-fcl-separator {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	width: 1rem;
@@ -50,6 +51,16 @@
 	border:var(--_ui5_fcl_separator_focus_border);
 	outline: none;
 }
+.ui5-fcl-grip-container{
+	cursor: col-resize;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 1.5rem;
+	height: 2rem;
+	z-index: 10;
+}
+
 .ui5-fcl-grip {
 	cursor: col-resize;
 	overflow: visible;
@@ -101,8 +112,8 @@
 }
 
 /* Only apply shorter height when arrow is visible */
-.ui5-fcl-separator:hover .ui5-fcl-arrow + .ui5-fcl-grip::before  {
-	height: calc(40% - 1rem);
+.ui5-fcl-separator:hover .ui5-fcl-arrow + .ui5-fcl-grip-container .ui5-fcl-grip::before {
+    height: calc(40% - 1rem);
 }
 
 [aria-hidden] ::slotted([slot="startColumn"]),
