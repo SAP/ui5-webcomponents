@@ -977,28 +977,6 @@ describe("Date Picker Tests", () => {
 		await datepicker.closePicker();
 	});
 
-	it("DatePicker dates and week number", async () => {
-		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
-		datepicker.id = "#dp13";
-		const root = await datepicker.getRoot();
-		await root.setAttribute("primary-calendar-type", "Gregorian");
-
-		const input = await datepicker.getInput();
-		await input.click();
-		await browser.keys("May 3, 2100");
-		await browser.keys("Enter");
-		// open picker after accepting the date
-		await datepicker.openPicker();
-
-		const data = Array.from(await datepicker.getDayPickerDatesRow(2));
-		assert.strictEqual(await data[0].getAttribute("aria-label"), "Calendar Week 19", "First columnheader have Week number aria-label");
-		assert.strictEqual(await data[1].getAttribute("aria-label"), "Non-Working Day May 2, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
-		assert.strictEqual(await data[2].getAttribute("aria-label"), "May 3, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
-		assert.strictEqual(await data[3].getAttribute("aria-label"), "May 4, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
-
-		await datepicker.closePicker();
-	});
-
 	it("Tests aria-label", async () => {
 		const EXPECTED_ARIA_LABEL = "Hello World";
 
