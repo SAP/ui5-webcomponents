@@ -20,10 +20,7 @@ module.exports = defineConfig({
 		},
 		supportFile: path.join(__dirname, "cypress/support/component.js"),
 		indexHtmlFile: path.join(__dirname, "cypress/support/component-index.html"),
-		specPattern: suites[process.env.TEST_SUITE] || [
-			"**/specs/*.cy.{js,ts,jsx,tsx}",
-			"**/specs/**/*.cy.{js,ts,jsx,tsx}",
-		],
+		specPattern: suites[process.env.TEST_SUITE] || ["**/specs/**/*.cy.{js,ts,jsx,tsx}"],
 		devServer: {
 			bundler: 'vite',
 		}

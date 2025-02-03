@@ -400,6 +400,10 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	_applyFocus() {
+		this.focus();
+	}
+
 	_onfocusin() {
 		this.focused = true;
 	}
