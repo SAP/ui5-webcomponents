@@ -16,7 +16,7 @@ Cypress.Commands.add("ui5ColorPaletteCheckSelectedColor", { prevSubject: true },
 
 	cy.get("@colorPalette")
 		.shadow()
-		.find("ui5-color-picker")
+		.find("[ui5-color-picker]")
 		.as("colorPicker");
 
 	cy.get("@colorPicker")
@@ -41,7 +41,7 @@ Cypress.Commands.add("ui5ColorPaletteCheckSelectedColor", { prevSubject: true },
 
 	cy.get("@colorPalette")
 		.shadow()
-		.find("ui5-dialog")
+		.find("[ui5-dialog]")
 		.find("ui5-button[design=Emphasized]") // The OK button is Emphasized (the Cancel button is Transparent)
 		.as("okButton");
 
@@ -63,13 +63,16 @@ Cypress.Commands.add("ui5ColorPaletteCheckSelectedColor", { prevSubject: true },
 
 	cy.get("@colorPalette")
 		.shadow()
-		.find("ui5-dialog")
+		.find("[ui5-dialog]")
 		.should("not.be.visible"); // Make sure the dialog is closed at the end of the command (otherwise the next command will sometimes assert against the old dialog values)
 });
 
-Cypress.Commands.add("ui5ColorPaletteNavigateAndCheckSelectedColor", (startIndex: number, key: string, expectedValue: string) => {
-	cy.get("#cp1")
-		.find("ui5-color-palette-item")
+Cypress.Commands.add("ui5ColorPaletteNavigateAndCheckSelectedColor", { prevSubject: true }, (subject, startIndex: number, key: string, expectedValue: string) => {
+	cy.get(subject)
+		.as("colorPalette");
+
+	cy.get("@colorPalette")
+		.find("[ui5-color-palette-item]")
 		.eq(startIndex)
 		.realClick();
 
@@ -77,7 +80,7 @@ Cypress.Commands.add("ui5ColorPaletteNavigateAndCheckSelectedColor", (startIndex
 	cy.realPress(key)
 		.realPress("Space");
 
-	cy.get("#cp1")
+	cy.get("@colorPalette")
 		.find("ui5-color-palette-item[selected]")
 		.should("have.value", expectedValue);
 });

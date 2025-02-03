@@ -68,7 +68,7 @@ describe("Color Palette tests", () => {
 		cy.mount(<ColorPaletteSample/>);
 
 		cy.get<ColorPalette>("#cp1")
-			.find("ui5-color-palette-item")
+			.find("[ui5-color-palette-item]")
 			.first()
 			.realClick();
 
@@ -81,7 +81,7 @@ describe("Color Palette tests", () => {
 		cy.mount(<ColorPaletteSample/>);
 
 		cy.get<ColorPalette>("#cp1")
-			.find("ui5-color-palette-item")
+			.find("[ui5-color-palette-item]")
 			.first()
 			.realClick();
 
@@ -98,10 +98,15 @@ describe("Color Palette tests", () => {
 
 	it("Test if keyboard navigation on elements works with Arrow keys", () => {
 		cy.mount(<ColorPaletteSample/>);
-		cy.ui5ColorPaletteNavigateAndCheckSelectedColor(0, "ArrowRight", "pink");
-		cy.ui5ColorPaletteNavigateAndCheckSelectedColor(0, "ArrowLeft", "#ff6699");
-		cy.ui5ColorPaletteNavigateAndCheckSelectedColor(0, "ArrowUp", "orange");
-		cy.ui5ColorPaletteNavigateAndCheckSelectedColor(9, "ArrowDown", "darkblue");
+
+		cy.get<ColorPalette>("#cp1")
+			.ui5ColorPaletteNavigateAndCheckSelectedColor(0, "ArrowRight", "pink");
+		cy.get<ColorPalette>("#cp1")
+			.ui5ColorPaletteNavigateAndCheckSelectedColor(0, "ArrowLeft", "#ff6699");
+		cy.get<ColorPalette>("#cp1")
+			.ui5ColorPaletteNavigateAndCheckSelectedColor(0, "ArrowUp", "orange");
+		cy.get<ColorPalette>("#cp1")
+			.ui5ColorPaletteNavigateAndCheckSelectedColor(9, "ArrowDown", "darkblue");
 	});
 
 	it("Tests show-recent-colors functionality", () => {
@@ -124,7 +129,7 @@ describe("Color Palette tests", () => {
 
 		// click on first 5 color palette items
 		cy.get("#cp4")
-			.find("ui5-color-palette-item")
+			.find("[ui5-color-palette-item]")
 			.then(items => {
 				for (let i = 0; i < 5; i++) {
 					cy.wrap(items[i]).realClick();
@@ -134,7 +139,7 @@ describe("Color Palette tests", () => {
 		// check recent colors
 		cy.get("#cp4")
 			.shadow()
-			.find(".ui5-cp-recent-colors-wrapper ui5-color-palette-item")
+			.find(".ui5-cp-recent-colors-wrapper [ui5-color-palette-item]")
 			.should("have.length", 5)
 			.then(items => {
 				cy.wrap(items[0]).should("have.value", "green");
@@ -164,22 +169,22 @@ describe("Color Palette tests", () => {
 		);
 
 		cy.get("#cp1SelectedTest")
-			.find("ui5-color-palette-item")
+			.find("[ui5-color-palette-item]")
 			.eq(0)
 			.realClick();
 
 		cy.get("#cp1SelectedTest")
-			.find("ui5-color-palette-item")
+			.find("[ui5-color-palette-item]")
 			.eq(1)
 			.realClick();
 
 		cy.get("#cp1SelectedTest")
-			.find("ui5-color-palette-item")
+			.find("[ui5-color-palette-item]")
 			.eq(0)
 			.should("not.have.attr", "selected");
 
 		cy.get("#cp1SelectedTest")
-			.find("ui5-color-palette-item")
+			.find("[ui5-color-palette-item]")
 			.eq(1)
 			.should("have.attr", "selected");
 	});
@@ -203,7 +208,7 @@ describe("Color Palette tests", () => {
 		);
 
 		cy.get("#cp1SelectedTest")
-			.find("ui5-color-palette-item")
+			.find("[ui5-color-palette-item]")
 			.first()
 			.realClick()
 			.realClick()
