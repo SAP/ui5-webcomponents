@@ -96,7 +96,14 @@
 
 	.ui5-sd-side {
 		max-width: 20rem;
+	}
+
+	:dir(ltr) .ui5-sd-side {
 		border-right: 0.0625rem solid var(--sapList_BorderColor);
+	}
+
+	:dir(rtl) .ui5-sd-side {
+		border-left: 0.0625rem solid var(--sapList_BorderColor);
 	}
 
 	.ui5-sd-content {
