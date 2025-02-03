@@ -7,7 +7,7 @@ on:
       - 'main'
 
 jobs:
-  setup:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,7 +20,6 @@ jobs:
       - name: Install Dependencies
         run: yarn --frozen-lockfile
 
-      # Cache node_modules after installing dependencies
       - name: Cache node_modules
         uses: actions/cache@v4
         with:
@@ -29,7 +28,6 @@ jobs:
           restore-keys: |
             node-modules-${{ runner.os }}-
 
-      # Cache Cypress binary
       - name: Cache Cypress Binary
         uses: actions/cache@v4
         with:
@@ -40,11 +38,6 @@ jobs:
 
       - name: Test Build
         run: yarn ci:testbuild
-
-      - name: List Build Folders (Debugging)
-        run: |
-          echo "Listing all packages and their contents..."
-          ls -R packages/  # This should now reflect your folder structure under packages/
 
       - name: Upload Build Artifacts (All Packages)
         uses: actions/upload-artifact@v4
@@ -74,7 +67,7 @@ jobs:
         continue-on-error: true
 
   check:
-    needs: setup
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -88,8 +81,7 @@ jobs:
           node-version: 22
           cache: 'yarn'
 
-      # Restore the node_modules cache from the setup job
-      - name: Restore node_modules Cache
+      - name: Reuse node_modules from cache
         uses: actions/cache@v4
         with:
           path: node_modules
@@ -97,8 +89,7 @@ jobs:
           restore-keys: |
             node-modules-${{ runner.os }}-
 
-      # Restore the Cypress binary cache from the setup job
-      - name: Restore Cypress Cache
+      - name: Restore Cypress from cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress
@@ -106,7 +97,7 @@ jobs:
           restore-keys: |
             cypress-${{ runner.os }}-
 
-      - name: Download Build Artifacts (All Packages)
+      - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
