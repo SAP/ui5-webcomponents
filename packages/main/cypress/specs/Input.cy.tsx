@@ -303,7 +303,7 @@ describe("Input arrow navigation", () => {
 			.find("ui5-responsive-popover")
 			.as("popover");
 
-		cy.get("@input").click();
+		cy.get("@input").realClick();
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(200);
 		cy.get("@input").realType("c");
@@ -469,7 +469,7 @@ describe("Selection-change event", () => {
 		});
 
 		cy.get("@innerInput")
-			.click();
+			.realClick();
 		cy.get("@innerInput")
 			.type("C");
 		cy.get("@innerInput")
@@ -481,7 +481,7 @@ describe("Selection-change event", () => {
 			.should("have.value", "Compact");
 
 		cy.get("@innerInput")
-			.click();
+			.realClick();
 		cy.get("@innerInput")
 			.clear();
 		cy.get("@innerInput")
@@ -526,7 +526,7 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 
 	it("Change event is not fired when the same suggestion item is selected (with typeahead)", () => {
 		cy.get("@input")
-			.click();
+			.realClick();
 
 		cy.get("@input")
 			.realType("a");
