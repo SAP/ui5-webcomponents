@@ -49,7 +49,7 @@ describe("Input Tests", () => {
 			.as("inner");
 
 		cy.get("@inner").realClick();
-		cy.get("@inner").type("i");
+		cy.get("@inner").realType("i");
 		cy.get("@inner").realPress("ArrowDown");
 
 		cy.get("@input")
@@ -78,7 +78,7 @@ describe("Input Tests", () => {
 			.as("inner");
 
 		cy.get("@inner").realClick();
-		cy.get("@inner").type("i");
+		cy.get("@inner").realType("i");
 		cy.get("@inner").realPress("ArrowDown");
 
 		cy.get("@input")
@@ -114,7 +114,7 @@ describe("Input Tests", () => {
 			.as("inner");
 
 		cy.get("@inner").realClick();
-		cy.get("@inner").type("i");
+		cy.get("@inner").realType("i");
 		cy.get("@inner").realPress("ArrowDown");
 
 		cy.get("@input")

@@ -33,7 +33,7 @@ describe("MultiInput Web Component", () => {
 				}
 			});
 		});
-
+ 
 		cy.get("#suggestion-token")
 			.shadow()
 			.find("input")
