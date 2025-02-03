@@ -33,14 +33,14 @@ describe("MultiInput Web Component", () => {
 				}
 			});
 		});
- 
+
 		cy.get("#suggestion-token")
 			.shadow()
 			.find("input")
 			.realType("ad{enter}");
 
 		cy.get("ui5-multi-input")
-			.find("ui5-token")
+			.find("[ui5-token]")
 			.should("have.length", 1)
 			.and("have.attr", "text", "ad");
 	});
