@@ -7,101 +7,24 @@ on:
       - 'main'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4.1.0
-        with:
-          node-version: 22
-          cache: 'yarn'
-
-      - name: Install Dependencies
-        run: yarn --frozen-lockfile
-
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            node-modules-${{ runner.os }}-
-
-      - name: Cache Cypress Binary
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/Cypress
-          key: cypress-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            cypress-${{ runner.os }}-
-
-      - name: Test Build
-        run: yarn ci:testbuild
-
-      - name: Upload Build Artifacts (All Packages)
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifacts
-          path: |
-            packages/ai/dist
-            packages/base/dist
-            packages/main/dist
-            packages/fiori/dist
-            packages/compat/dist
-            packages/icons/dist
-            packages/icons-tnt/dist
-            packages/icons-business-suite/dist
-            packages/localization/dist
-            packages/theming/dist
-            packages/ai/src/generated
-            packages/base/src/generated
-            packages/main/src/generated
-            packages/fiori/src/generated
-            packages/compat/src/generated
-            packages/icons/src/generated
-            packages/icons-tnt/src/generated
-            packages/icons-business-suite/src/generated
-            packages/localization/src/generated
-            packages/theming/src/generated
-        continue-on-error: true
-
   check:
-    needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
         suite: ['base', 'compat', 'ai', 'main:suite-1', 'main:cy:suite-1', 'main:suite-2', 'main:cy:suite-2', 'fiori']
       fail-fast: false
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4.1.0
+      with:
+        node-version: 22
+        cache: 'yarn'
 
-      - uses: actions/setup-node@v4.1.0
-        with:
-          node-version: 22
-          cache: 'yarn'
+    - name: Install
+      run: yarn --frozen-lockfile
 
-      - name: Reuse node_modules from cache
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            node-modules-${{ runner.os }}-
+    - name: Build
+      run: yarn ci:testbuild
 
-      - name: Restore Cypress from cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/Cypress
-          key: cypress-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            cypress-${{ runner.os }}-
-
-      - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
-          path: packages
-
-      - name: Test
-        run: yarn ci:test:${{ matrix.suite }}
+    - name: Test
+      run: yarn ci:test:${{ matrix.suite }} }}
