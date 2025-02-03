@@ -40,7 +40,7 @@ describe("Card general interaction", () => {
 
 		// assert
 		cy.get("#cardHeader")
-			.click();
+			.realClick();
 		cy.get("#cardHeader").should("be.focused");
 		cy.get("#card")
 			.shadow()
