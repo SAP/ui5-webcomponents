@@ -69,3 +69,31 @@ describe("Columns resize", () => {
 			});
 	});
 });
+
+describe("ACC", () => {
+	it("verifies that aria-hidden is not set in OneColumn layout", () => {
+		cy.mount(
+			<FlexibleColumnLayout id="fcl" layout="OneColumn">
+				<div class="column" id="startColumn" slot="startColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.as("fcl");
+
+		cy.get("@fcl")
+			.shadow()
+			.find("slot[name=startColumn]")
+			.should("not.have.attr", "aria-hidden");
+
+		cy.get("@fcl")
+			.shadow()
+			.find("slot[name=midColumn]")
+			.should("have.attr", "aria-hidden");
+
+		cy.get("@fcl")
+			.shadow()
+			.find("slot[name=endColumn]")
+			.should("have.attr", "aria-hidden");
+	});
+});
