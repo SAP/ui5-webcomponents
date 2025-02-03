@@ -23,7 +23,7 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 				aria-labelledby={`${this._id}-startColumnText`}
 			>
 				<span id={`${this._id}-startColumnText`} class="ui5-hidden-text">{this.accStartColumnText}</span>
-				<slot name="startColumn" aria-hidden={this._accAttributes.columns.middle.ariaHidden}></slot>
+				<slot name="startColumn" aria-hidden={this._accAttributes.columns.start.ariaHidden}></slot>
 			</div>
 
 			<div
@@ -80,7 +80,7 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 				aria-labelledby={`${this._id}-endColumnText`}
 			>
 				<span id={`${this._id}-endColumnText`} class="ui5-hidden-text">{this.accEndColumnText}</span>
-				<slot name="endColumn" aria-hidden={this._accAttributes.columns.middle.ariaHidden}></slot>
+				<slot name="endColumn" aria-hidden={this._accAttributes.columns.end.ariaHidden}></slot>
 			</div>
 		</div>
 	);
