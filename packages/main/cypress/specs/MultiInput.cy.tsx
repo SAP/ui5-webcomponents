@@ -37,7 +37,7 @@ describe("MultiInput Web Component", () => {
 		cy.get("#suggestion-token")
 			.shadow()
 			.find("input")
-			.type("ad{enter}");
+			.realType("ad{enter}");
 
 		cy.get("ui5-multi-input")
 			.find("ui5-token")
