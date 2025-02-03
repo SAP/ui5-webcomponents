@@ -242,16 +242,21 @@ class UploadCollectionItem extends ListItem {
 	async _initInputField() {
 		await renderFinished();
 
-		const inp = this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input")!;
-		inp.value = this._fileNameWithoutExtension;
+		if (this.editInpElement) {
+			this.editInpElement.value = this._fileNameWithoutExtension;
+		}
 
 		await renderFinished();
 
-		const inpFocusDomRef = inp.getFocusDomRef() as HTMLInputElement;
+		const inpFocusDomRef = this.editInpElement?.getFocusDomRef();
 		if (inpFocusDomRef) {
 			inpFocusDomRef.focus();
-			inpFocusDomRef.setSelectionRange(0, this._fileNameWithoutExtension.length);
+			(inpFocusDomRef as HTMLInputElement).setSelectionRange(0, this._fileNameWithoutExtension.length);
 		}
+	}
+
+	get editInpElement() {
+		return this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input");
 	}
 
 	_onkeyup(e: KeyboardEvent) {

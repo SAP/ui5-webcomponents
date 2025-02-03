@@ -88,11 +88,15 @@ class NavigationMenuItem extends MenuItem {
 	}
 
 	get _accInfo() {
-		const accInfoSettings = {
-			role: this.href ? "none" as const : "treeitem" as const,
-		};
+		const accInfo = super._accInfo;
 
-		return { ...super._accInfo, ...accInfoSettings };
+		accInfo.role = this.href ? "none" : "treeitem";
+
+		if (!accInfo.ariaHaspopup) {
+			accInfo.ariaHaspopup = this.accessibilityAttributes.hasPopup;
+		}
+
+		return accInfo;
 	}
 
 	get classes(): ClassMap {

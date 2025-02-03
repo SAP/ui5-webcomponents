@@ -191,7 +191,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onclick(e: MouseEvent) {
-		if (this.unselectable) {
+		if (!this.inPopover && this.unselectable) {
 			this._toggle();
 		}
 
