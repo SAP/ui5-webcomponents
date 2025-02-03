@@ -41,8 +41,8 @@ import "cypress-real-events";
 const realEventCmdCallback = (originalFn, element, ...args) => {
 	cy.get(element)
 		.should($el => {
-			if ($el[0].tagName.includes("-") && typeof $el[0].shadowRoot && typeof $el[0].getDomRef === "function") {
-				expect($el[0].getDomRef()).to.exist;
+			if ($el[0].tagName.includes("-") && $el[0].shadowRoot) {
+				expect($el[0].shadowRoot.hasChildNodes()).to.be.true;
 			} else {
 				expect(true).to.be.true;
 			}
@@ -65,4 +65,4 @@ const commands = [
 
 commands.forEach(cmd => {
 	Cypress.Commands.overwrite(cmd, realEventCmdCallback)
-})
+});

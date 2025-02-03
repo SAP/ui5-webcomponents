@@ -3,10 +3,6 @@ import arrowRight from "@ui5/webcomponents-icons/dist/arrow-right.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 
 export default function SideNavigationSubItemTemplate(this: SideNavigationSubItem) {
-	if (this.sideNavCollapsed) {
-		return <></>;
-	}
-
 	return (
 		<li id={this._id} class="ui5-sn-list-li" role="none">
 			{this._href ?
