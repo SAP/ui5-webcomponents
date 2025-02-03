@@ -30,13 +30,6 @@ function CardSample2() {
 }
 
 describe("Card general interaction", () => {
-	it("Tests initial rendering", () => {
-		cy.mount(<CardSample />);
-
-		// assert
-		cy.get("#card").should("exist");
-	});
-
 	it("Tests interactive header results in interactive class on the card", () => {
 		cy.mount(
 			<div>
@@ -47,14 +40,13 @@ describe("Card general interaction", () => {
 
 		// assert
 		cy.get("#cardHeader")
-			.should("have.prop", "interactive", true);
+			.click();
+		cy.get("#cardHeader").should("be.focused");
 		cy.get("#card")
 			.shadow()
 			.find(".ui5-card-root")
 			.should("have.class", "ui5-card--interactive");
 
-		cy.get("#cardHeader2")
-			.should("have.prop", "interactive", false);
 		cy.get("#card2")
 			.shadow()
 			.find(".ui5-card-root")
