@@ -3,6 +3,7 @@ import { assert } from "chai";
 
 describe("FlexibleColumnLayout Behavior", () => {
 	before(async () => {
+		await browser.setWindowSize(1000, 1080);
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
 
@@ -377,7 +378,7 @@ describe("Preserves column min-width", () => {
 
 	it("preserves min-width of begin column", async () => {
 		await browser.setWindowSize(1400, 1080);
-		
+
 		const fcl = await browser.$("#fcl3"),
 			startSeparator = await fcl.shadow$(".ui5-fcl-separator-start"),
 			smallestColumnWidth = 248;
@@ -565,5 +566,25 @@ describe("ACC", () => {
 
 		assert.strictEqual(await middleColumnDOM.getAttribute("aria-hidden"), "true",
 			"Middle column is hidden from the acc tree.");
+	});
+});
+
+describe("First column closing arrow behavior", () => {
+	it("should switch layout and update arrow icon on desktop", async () => {
+		const fcl = await browser.$("#fcl10");
+		const arrowBtn = await fcl.shadow$(".ui5-fcl-arrow--start");
+
+		await fcl.setProperty("layout", "ThreeColumnsStartHiddenMidExpanded");
+		assert.strictEqual(await arrowBtn.getAttribute("icon"), "slim-arrow-right", "Arrow should point right");
+
+		await arrowBtn.click();
+
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "Layout should switch to ThreeColumnsMidExpanded");
+		assert.strictEqual(await arrowBtn.getAttribute("icon"), "slim-arrow-left", "Arrow should point left");
+
+		await arrowBtn.click();
+
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsStartHiddenMidExpanded", "Layout should switch to ThreeColumnsStartHiddenMidExpanded");
+		assert.strictEqual(await arrowBtn.getAttribute("icon"), "slim-arrow-right", "Arrow should point right");
 	});
 });

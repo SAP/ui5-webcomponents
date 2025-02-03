@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-tools",
-  "version": "2.7.0-rc.0",
+  "version": "2.7.0",
   "description": "UI5 Web Components: webcomponents.tools",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@custom-elements-manifest/analyzer": "^0.8.4",
+    "@cypress/code-coverage": "^3.13.10",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "@wdio/cli": "^7.19.7",
@@ -63,6 +64,7 @@
     "postcss": "^8.4.5",
     "postcss-cli": "^9.1.0",
     "postcss-selector-parser": "^6.0.10",
+    "preact": "^10.25.4",
     "prompts": "^2.4.2",
     "properties-reader": "^2.2.0",
     "recursive-readdir": "^2.2.2",
@@ -70,6 +72,7 @@
     "rimraf": "^3.0.2",
     "slash": "3.0.0",
     "vite": "^5.4.8",
+    "vite-plugin-istanbul": "^6.0.2",
     "wdio-chromedriver-service": "^7.3.2"
   },
   "peerDependencies": {
@@ -82,7 +85,7 @@
     }
   },
   "devDependencies": {
-    "cypress-ct-lit": "^0.4.0",
+    "@cypress/mount-utils": "^4.1.2",
     "cypress-real-events": "^1.12.0",
     "esbuild": "^0.19.9",
     "yargs": "^17.5.1"

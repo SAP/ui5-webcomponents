@@ -163,11 +163,6 @@ type InputSuggestionScrollEventDetail = {
  * When the user makes changes to the text, the change event is fired,
  * which enables you to react on any text change.
  *
- * **Note:** If you are using the `ui5-input` as a single npm module,
- * don't forget to import the `InputSuggestions` module from
- * "@ui5/webcomponents/dist/features/InputSuggestions.js"
- * to enable the suggestions functionality.
- *
  * ### Keyboard Handling
  * The `ui5-input` provides the following keyboard shortcuts:
  *
@@ -183,8 +178,6 @@ type InputSuggestionScrollEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Input.js";`
- *
- * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";` (optional - for input suggestions support)
  *
  * @constructor
  * @extends UI5Element
@@ -412,8 +405,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	/**
 	 * Defines whether the component should show suggestions, if such are present.
 	 *
-	 * **Note:** You need to import the `InputSuggestions` module
-	 * from `"@ui5/webcomponents/dist/features/InputSuggestions.js"` to enable this functionality.
 	 * @default false
 	 * @public
 	 */
@@ -537,11 +528,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 *
 	 * **Note:** The `<ui5-suggestion-item>`, `<ui5-suggestion-item-group>` and `ui5-suggestion-item-custom` are recommended to be used as suggestion items.
 	 *
-	 * **Note:** Importing the Input Suggestions Support feature:
-	 *
-	 * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";`
-	 *
-	 * automatically imports the `<ui5-suggestion-item>` and `<ui5-suggestion-item-group>` for your convenience.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })

@@ -1,0 +1,7 @@
+[ui5-side-navigation] {
+	height: 600px;
+}
+
+#quickActionDialog::part(footer) {
+	padding-inline: 0;
+}
