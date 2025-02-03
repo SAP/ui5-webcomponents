@@ -22,7 +22,6 @@ function mount(component, options = {}) {
 	applyConfiguration(options);
 
 	// Mount JSX Element
-	preactMount(null, container); // clean content in order to prevent preact from just updating it.
 	preactMount(component, container);
 
 	cy.get(container)
