@@ -230,18 +230,18 @@ describe("Timeline with growing mode", () => {
 			.last()
 			.should("be.focused");
 
-		cy.realPress("Tab");
+		cy.realPress("ArrowDown");
 
 		cy.get("@timeline")
 			.shadow()
 			.find("[id$='growing-btn']")
 			.should("be.focused");
 
-		cy.realPress("Tab");
+		cy.realPress("ArrowUp");
 
 		cy.get("@timeline")
 			.find("ui5-timeline-item")
-			.first()
+			.last()
 			.should("be.focused");
 	});
 });

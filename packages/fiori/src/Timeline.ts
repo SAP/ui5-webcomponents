@@ -11,6 +11,10 @@ import {
 	isTabPrevious,
 	isSpace,
 	isEnter,
+	isUp,
+	isDown,
+	isLeft,
+	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
@@ -338,6 +342,19 @@ class Timeline extends UI5Element {
 	_onkeydown(e: KeyboardEvent) {
 		const target = e.target as ITimelineItem;
 
+		if (isDown(e) || isRight(e)) {
+
+			this._handleDown();
+			e.preventDefault();
+			return;
+		}
+
+		if (isUp(e) || isLeft(e)) {
+			this._handleLodeMoreUp(e);
+			e.preventDefault();
+			return;
+		}
+
 		if (target.nameClickable && !target.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
@@ -369,6 +386,60 @@ class Timeline extends UI5Element {
 			nextTarget.focus();
 			this._itemNavigation.setCurrentItem(nextTarget);
 		}
+	}
+
+	_handleDown() {
+		if (!this.growsWithButton) {
+			return;
+		}
+
+		this._shouldFocusGrowingButton();
+	}
+
+	_shouldFocusGrowingButton() {
+		const items = this._navigableItems;
+		const lastIndex = items.length - 1;
+		const currentIndex = this._itemNavigation._currentIndex;
+
+		if (currentIndex !== -1 && currentIndex === lastIndex) {
+			this.focusGrowingButton();
+		}
+	}
+
+	focusGrowingButton() {
+		const growingBtn = this.getGrowingButton();
+
+		if (growingBtn) {
+			growingBtn.focus();
+		}
+	}
+
+	getGrowingButton() {
+		return this.shadowRoot!.querySelector(`[id="${this._id}-growing-btn"]`) as HTMLElement;
+	}
+
+	_handleLodeMoreUp(e: KeyboardEvent) {
+		const growingButton = this.getGrowingButton();
+
+		if (growingButton === e.target) {
+			const items = this._navigableItems;
+			const lastItem = items[items.length - 1];
+
+			this.focusItem(lastItem);
+
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		}
+	}
+
+	/**
+	 * Focuses a list item and sets its tabindex to "0" via the ItemNavigation
+	 * @protected
+	 * @param item
+	 */
+	focusItem(item: ITimelineItem | ToggleButton) {
+		this._itemNavigation.setCurrentItem(item);
+		item.focus();
 	}
 
 	get _navigableItems() {
