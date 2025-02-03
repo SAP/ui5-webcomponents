@@ -39,9 +39,6 @@ describe("Form support", () => {
 			<button type="submit" > Submits forms </button>
 		</form>);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
-
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -79,9 +76,6 @@ describe("Form support", () => {
 			<button type="submit">Submits forms</button>
 		</form>);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
-
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -110,9 +104,6 @@ describe("Form support", () => {
 			<ComboBox id="combobox5" name="combobox5" required></ComboBox>
 			<button type="submit">Submits forms</button>
 		</form>);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -155,9 +146,6 @@ describe("Form support", () => {
 			<button type="submit">Submits forms</button>
 		</form>);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
-
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -198,9 +186,6 @@ describe("Form support", () => {
 			<DateRangePicker id="daterange_picker5" name="daterange_picker5" required></DateRangePicker>
 			<button type="submit">Submits forms</button>
 		</form>);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -243,9 +228,6 @@ describe("Form support", () => {
 			<button type="submit">Submits forms</button>
 		</form>);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
-
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -286,9 +268,6 @@ describe("Form support", () => {
 			<Input id="input5" name="input5" required></Input>
 			<button type="submit">Submits forms</button>
 		</form>);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -351,9 +330,6 @@ describe("Form support", () => {
 			<button type="submit">Submits forms</button>
 		</form>);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
-
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -415,9 +391,6 @@ describe("Form support", () => {
 			<button type="submit">Submits forms</button>
 		</form>);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
-
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -455,9 +428,6 @@ describe("Form support", () => {
 			<button type="submit">Submits forms</button>
 		</form>);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
-
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -472,9 +442,6 @@ describe("Form support", () => {
 
 		cy.get("#rb_1")
 			.realClick();
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("button")
 			.realClick();
@@ -494,9 +461,6 @@ describe("Form support", () => {
 			<RadioButton required id="rb_2" checked></RadioButton>
 			<button type="submit">Submits forms</button>
 		</form>);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -525,9 +489,6 @@ describe("Form support", () => {
 			<button type="submit">Submits forms</button>
 		</form>);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
-
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -542,9 +503,6 @@ describe("Form support", () => {
 
 		cy.get("#rb_4")
 			.realClick();
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("button")
 			.realClick();
@@ -567,9 +525,6 @@ describe("Form support", () => {
 			<RangeSlider id="range_slider4" name="range_slider4" start-value="25" end-value="75"></RangeSlider>
 			<button type="submit">Submits forms</button>
 		</form>);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -643,9 +598,6 @@ describe("Form support", () => {
 			<button type="submit">Submits forms</button>
 		</form>);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(1000);
-
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -691,9 +643,6 @@ describe("Form support", () => {
 			<button type="submit">Submits forms</button>
 		</form>);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
-
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -721,9 +670,6 @@ describe("Form support", () => {
 			<StepInput id="step_input4" name="step_input4" value={4}></StepInput>
 			<button type="submit">Submits forms</button>
 		</form>);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -753,9 +699,6 @@ describe("Form support", () => {
 			<Switch id="switch5" name="switch5" required textOn="ui5-switch with name, value and required"></Switch>
 			<button type="submit">Submits forms</button>
 		</form>);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -794,9 +737,6 @@ describe("Form support", () => {
 			<TextArea id="textarea5" name="textarea5" required></TextArea>
 			<button type="submit">Submits forms</button>
 		</form>);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
@@ -838,9 +778,6 @@ describe("Form support", () => {
 			<button type="submit">Submits forms</button>
 		</form>);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
-
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -877,9 +814,6 @@ describe("Form support", () => {
 			<Button id="b1">Does not submit forms</Button>
 		</form>);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
-
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
@@ -902,7 +836,7 @@ describe("Form support", () => {
 				<Option value="compact">Compact</Option>
 				<Option value="condensed" selected>Condensed</Option>
 			</Select>
-			<TextArea id="ta" name="ta" value="asd"></TextArea>
+			<TextArea id="ta" name="ta" value="ok"></TextArea>
 			<TextArea name="ta_disabled" disabled value="ok"></TextArea>
 			<DatePicker name="dp" value="Apr 10, 2019"></DatePicker>
 			<DatePicker name="dp_disabled" disabled value="Apr 10, 2019"></DatePicker>
@@ -917,9 +851,6 @@ describe("Form support", () => {
 			<Button id="b1">Does not submit forms</Button>
 			<Button id="b2" submits>Submits forms</Button>
 		</form>);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("form")
 			.then($item => {
