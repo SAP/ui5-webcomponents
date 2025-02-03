@@ -99,14 +99,10 @@ describe("Color Palette tests", () => {
 	it("Test if keyboard navigation on elements works with Arrow keys", () => {
 		cy.mount(<ColorPaletteSample/>);
 
-		cy.get<ColorPalette>("#cp1")
-			.ui5ColorPaletteNavigateAndCheckSelectedColor(0, "ArrowRight", "pink");
-		cy.get<ColorPalette>("#cp1")
-			.ui5ColorPaletteNavigateAndCheckSelectedColor(0, "ArrowLeft", "#ff6699");
-		cy.get<ColorPalette>("#cp1")
-			.ui5ColorPaletteNavigateAndCheckSelectedColor(0, "ArrowUp", "orange");
-		cy.get<ColorPalette>("#cp1")
-			.ui5ColorPaletteNavigateAndCheckSelectedColor(9, "ArrowDown", "darkblue");
+		cy.ui5ColorPaletteNavigateAndCheckSelectedColor("#cp1", 0, "ArrowRight", "pink");
+		cy.ui5ColorPaletteNavigateAndCheckSelectedColor("#cp1", 0, "ArrowLeft", "#ff6699");
+		cy.ui5ColorPaletteNavigateAndCheckSelectedColor("#cp1", 0, "ArrowUp", "orange");
+		cy.ui5ColorPaletteNavigateAndCheckSelectedColor("#cp1", 9, "ArrowDown", "darkblue");
 	});
 
 	it("Tests show-recent-colors functionality", () => {

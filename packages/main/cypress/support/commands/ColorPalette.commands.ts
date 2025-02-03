@@ -67,7 +67,7 @@ Cypress.Commands.add("ui5ColorPaletteCheckSelectedColor", { prevSubject: true },
 		.should("not.be.visible"); // Make sure the dialog is closed at the end of the command (otherwise the next command will sometimes assert against the old dialog values)
 });
 
-Cypress.Commands.add("ui5ColorPaletteNavigateAndCheckSelectedColor", { prevSubject: true }, (subject, startIndex: number, key: string, expectedValue: string) => {
+Cypress.Commands.add("ui5ColorPaletteNavigateAndCheckSelectedColor", (subject, startIndex: number, key: string, expectedValue: string) => {
 	cy.get(subject)
 		.as("colorPalette");
 
