@@ -955,9 +955,9 @@ describe("Date Picker Tests", () => {
 
 	it("DayPiker day number attribute", async () => {
 		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		datepicker.id = "#dp13";
 		const root = await datepicker.getRoot();
 		await root.setAttribute("primary-calendar-type", "Gregorian");
-		datepicker.id = "#dp13";
 		await datepicker.openPicker();
 		await root.keys("May 3, 2100");
 		await root.keys("Enter");
@@ -979,9 +979,9 @@ describe("Date Picker Tests", () => {
 
 	it("DatePicker dates and week number", async () => {
 		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		datepicker.id = "#dp13";
 		const root = await datepicker.getRoot();
 		await root.setAttribute("primary-calendar-type", "Gregorian");
-		datepicker.id = "#dp13";
 
 		const input = await datepicker.getInput();
 		await input.click();
