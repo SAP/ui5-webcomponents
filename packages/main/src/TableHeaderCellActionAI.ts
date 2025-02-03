@@ -17,7 +17,7 @@ import "@ui5/webcomponents-icons/dist/ai.js";
  *
  * @constructor
  * @extends TableHeaderCellActionBase
- * @since 2.7.0
+ * @since 2.8.0
  * @public
  */
 @customElement({ tag: "ui5-table-header-cell-action-ai" })

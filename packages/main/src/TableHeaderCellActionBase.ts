@@ -7,12 +7,34 @@ import Button from "./Button.js";
 import type TableCell from "./TableCell.js";
 
 /**
+ * Fired when a header cell action is clicked.
+ *
+ * @param {HTMLElement} targetRef The reference to the element that triggered the event
+ * @public
+ * @since 2.8.0
+ */
+type TableHeaderCellActionClickEventDetail = {
+	targetRef: HTMLElement;
+};
+
+/**
+ * Fired when a header cell action is clicked.
+ *
+ * @param {HTMLElement} targetRef The reference to the element that triggered the event
+ * @public
+ * @since 2.8.0
+ */
+@eventStrict("click", {
+	bubbles: false,
+})
+
+/**
  * @class
  * The `TableHeaderCellActionBase` class serves as a foundation for table header cell actions.
  * @constructor
  * @abstract
  * @extends UI5Element
- * @since 2.7.0
+ * @since 2.8.0
  * @public
  */
 @customElement({
@@ -21,20 +43,9 @@ import type TableCell from "./TableCell.js";
 	template: TableHeaderCellActionBaseTemplate,
 	dependencies: [Button],
 })
-
-/**
- * Fired when an action is clicked.
- *
- * @public
- * @since 2.7.0
- */
-@eventStrict("click", {
-	bubbles: false,
-})
-
 abstract class TableHeaderCellActionBase extends UI5Element {
 	eventDetails!: {
-		"click": void
+		"click": TableHeaderCellActionClickEventDetail,
 	}
 
 	abstract getRenderInfo(): {
@@ -48,7 +59,7 @@ abstract class TableHeaderCellActionBase extends UI5Element {
 
 	_onClick(e: MouseEvent) {
 		const action = this.parentElement ? this : ((this.getRootNode() as ShadowRoot).host as TableCell)._headerCell.action[0] as this;
-		action.fireDecoratorEvent("click");
+		action.fireDecoratorEvent("click", { targetRef: e.target as HTMLElement });
 		e.stopPropagation();
 	}
 
@@ -62,3 +73,7 @@ abstract class TableHeaderCellActionBase extends UI5Element {
 }
 
 export default TableHeaderCellActionBase;
+
+export type {
+	TableHeaderCellActionClickEventDetail,
+};

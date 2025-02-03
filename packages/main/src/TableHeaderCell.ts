@@ -94,7 +94,7 @@ class TableHeaderCell extends TableCellBase {
 	 * Defines the sort indicator of the column.
 	 *
 	 * @default "None"
-	 * @since 2.7.0
+	 * @since 2.8.0
 	 * @public
 	 */
 	@property()
@@ -103,10 +103,10 @@ class TableHeaderCell extends TableCellBase {
 	/**
 	 * Defines the action of the column.
 	 *
-	 * **Note:** Only one `action` is allowed.
+	 * **Note:** While multiple actions are technically possible, this is not supported.
 	 *
 	 * @public
-	 * @since 2.7.0
+	 * @since 2.8.0
 	 */
 	@slot()
 	action!: Array<TableHeaderCellActionBase>;
