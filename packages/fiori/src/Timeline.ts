@@ -407,7 +407,7 @@ class Timeline extends UI5Element {
 	}
 
 	_handleUp(e: KeyboardEvent) {
-		if ( this.growingButton === e.target) {
+		if (this.growingButton === e.target) {
 			const items = this._navigableItems;
 			const lastItem = items[items.length - 1];
 
