@@ -255,7 +255,7 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
 })
 
 /**
- * Fired, when an item from the startContent or endContent slots is hidden or shown.
+ * Fired, when an item from the content slot is hidden or shown.
  * **Note:** The `content-item-visibility-change` event is in an experimental state and is a subject to change.
  *
  * @param {Array<HTMLElement>} array of all the items that are hidden
