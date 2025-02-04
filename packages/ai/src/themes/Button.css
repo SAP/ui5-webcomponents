@@ -90,7 +90,7 @@
 }
 
 /* Fade out phase */
-
+/*
 :host(.ui5-ai-button-fade-out) .ui5-ai-button-text {
 	opacity: 0;
 	transform: translateY(-1rem);
@@ -109,9 +109,9 @@
 	transform: translateY(-1rem);
 	transition: opacity 0.06s ease-in-out 0.12s, transform 0.08s ease-in-out 0.12s;
 }
-
+*/
 /* Fade middle phase */
-
+/*
 :host(.ui5-ai-button-fade-mid) .ui5-ai-button-text,
 :host(.ui5-ai-button-fade-mid) ::part(icon),
 :host(.ui5-ai-button-fade-mid) ::part(endIcon),
@@ -120,9 +120,9 @@
 	transform: translateY(1rem);
 	transition: none;
 }
-
+*/
 /* Fade in phase */
-
+/*
 :host(.ui5-ai-button-fade-in) .ui5-ai-button-text {
 	opacity: 1;
 	transform: translateY(0);
@@ -140,3 +140,118 @@
 	transform: translateY(0);
 	transition: opacity 0.06s ease-in-out 0.12s, transform 0.08s ease-in-out 0.12s;
 }
+*/
+
+/* Refferent selectors */
+/* Text */
+
+/* .ui5-ai-button-inner.ui5-ai-button-fade-out- > .ui5-ai-button-text {
+	color: red !important;
+	opacity: 0.5;
+	transform: translateY(-0.5rem);
+} */
+
+/* Icon */
+/* .ui5-ai-button-inner.ui5-ai-button-fade-out-::part(icon) {
+	color: red !important;
+	opacity: 0.5;
+	transform: translateY(-0.5rem);
+} */
+
+/* End Icon */
+/* .ui5-ai-button-inner.ui5-ai-button-fade-out-::part(endIcon) {
+	color: red !important;
+	opacity: 0.5;
+	transform: translateY(-0.5rem);
+} */
+
+/* Arrow Button */
+/* .ui5-ai-button-inner.ui5-ai-button-fade-out-::part(arrowButton) {
+	color: red !important;
+	opacity: 0.5;
+	transform: translateY(-0.5rem);
+} */
+
+/* Keyframes */
+
+@keyframes fadeOutText {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-1rem);
+	}
+}
+
+/* Keyframes moved to components where parts are defined */
+
+@keyframes fadeOutIcon {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-1rem);
+	}
+}
+
+@keyframes fadeOutEndIcon {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-1rem);
+	}
+}
+
+@keyframes fadeOutArrowButton {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-1rem);
+	}
+}
+
+/* Animations */
+
+/* Fade Out */
+.ui5-ai-button-inner.ui5-ai-button-fade-out > .ui5-ai-button-text {
+	animation-name: fadeOutText;
+	animation-delay: 0.12s;
+	animation-duration: 1.08s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+}
+
+.ui5-ai-button-inner.ui5-ai-button-fade-out::part(icon) {
+	animation-name: fadeOutIcon;
+	animation-duration: 1.1s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+}
+
+.ui5-ai-button-inner.ui5-ai-button-fade-out::part(endIcon) {
+	animation-name: fadeOutEndIcon;
+	animation-delay: 0.2s;
+	animation-duration: 1.1s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+}
+
+.ui5-ai-button-inner.ui5-ai-button-fade-out::part(arrowButton) {
+	animation-name: fadeOutArrowButton;
+	animation-delay: 0.2s;
+	animation-duration: 1.1s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+}
+
+

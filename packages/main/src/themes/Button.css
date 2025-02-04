@@ -300,3 +300,41 @@ bdi {
 	border-top-left-radius: var(--_ui5_button_focused_inner_border_radius);
 	border-bottom-left-radius: var(--_ui5_button_focused_inner_border_radius);
 }
+
+
+/*
+
+@keyframes fadeOutIcon {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-1rem);
+	}
+}
+
+@keyframes fadeOutEndIcon {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-1rem);
+	}
+}
+
+@keyframes fadeOutArrowButton {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-1rem);
+	}
+}
+
+*/
