@@ -604,6 +604,9 @@ describe("Form support", () => {
 				</ui5-select>`);
 			});
 
+		cy.get("#select6")
+			.should("be.visible");
+
 		cy.get("form")
 			.then($item => {
 				$item.get(0).addEventListener("submit", e => e.preventDefault());
