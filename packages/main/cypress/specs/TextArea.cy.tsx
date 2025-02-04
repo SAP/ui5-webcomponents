@@ -310,28 +310,28 @@ describe("TextArea general interaction", () => {
 					const initialTextareaSize = textarea.height();
 
 					cy.focused()
-						.type("1{enter}");
+						.realType("1{enter}");
 
 					cy.focused()
-						.type("2{enter}");
+						.realType("2{enter}");
 
 					cy.focused()
-						.type("3{enter}");
+						.realType("3{enter}");
 
 					cy.focused()
-						.type("4{enter}");
+						.realType("4{enter}");
 
 					cy.focused()
-						.type("5{enter}");
+						.realType("5{enter}");
 
 					cy.focused()
-						.type("6{enter}");
+						.realType("6{enter}");
 
 					cy.focused()
-						.type("7{enter}");
+						.realType("7{enter}");
 
 					cy.focused()
-						.type("8");
+						.realType("8");
 
 					cy.get("@textarea")
 						.invoke("height")

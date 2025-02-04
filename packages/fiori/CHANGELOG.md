@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.2...v2.7.0) (2025-02-03)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** aria-hidden is now correct ([#10752](https://github.com/SAP/ui5-webcomponents/issues/10752)) ([8bf7e76](https://github.com/SAP/ui5-webcomponents/commit/8bf7e76bf9a9946f358038c6524b2e20851879c4))
+* **ui5-side-navigation:** apply aria-haspopup to items in overflow ([#10686](https://github.com/SAP/ui5-webcomponents/issues/10686)) ([9550875](https://github.com/SAP/ui5-webcomponents/commit/9550875d65dda77118f7644e081ebf34eedf4d2a))
+* **ui5-view-settings-dialog:** clicking on the radio button/checkbox works ([#10706](https://github.com/SAP/ui5-webcomponents/issues/10706)) ([ff1bdeb](https://github.com/SAP/ui5-webcomponents/commit/ff1bdeb61886eaa129b24f02958b6e40c54775f9))
+
+
+
+
+
 # [2.7.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.1...v2.7.0-rc.2) (2025-01-30)
 
 
