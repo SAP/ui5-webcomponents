@@ -492,19 +492,17 @@ class SideNavigation extends UI5Element {
 
 			let itemDomRef;
 
-			if (isInstanceOfSideNavigationItemBase(item) && item.getDomRef()) {
-				itemDomRef = item.getDomRef();
+			if (isInstanceOfSideNavigationItemBase(item)) {
+				itemDomRef = item.getDomRef()!;
 			} else {
 				itemDomRef = item;
 			}
 
-			if (itemDomRef) {
-				const { marginTop, marginBottom } = window.getComputedStyle(itemDomRef);
-				itemsHeight += itemDomRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+			const { marginTop, marginBottom } = window.getComputedStyle(itemDomRef);
+			itemsHeight += itemDomRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
 
-				if (itemsHeight > listHeight) {
-					item.classList.add("ui5-sn-item-hidden");
-				}
+			if (itemsHeight > listHeight) {
+				item.classList.add("ui5-sn-item-hidden");
 			}
 		});
 
