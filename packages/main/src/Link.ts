@@ -14,8 +14,10 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
+import type ReactiveAreaMode from "./types/ReactiveAreaMode.js";
 import type WrappingType from "./types/WrappingType.js";
 import type LinkAccessibleRole from "./types/LinkAccessibleRole.js";
+
 // Template
 import LinkTemplate from "./LinkTemplate.js";
 
@@ -153,6 +155,23 @@ class Link extends UI5Element implements ITabbable {
 	 */
 	@property()
 	design: `${LinkDesign}` = "Default";
+
+	/**
+	 * Defines the size of the reactive area of the link:
+	 * - **ReactiveAreaMode.Inline**: The link is displayed as part of a sentence.
+	 * - **ReactiveAreaMode.Overlay**: The link is displayed as an overlay on top of other interactive parts of the page.
+	 *
+	 * **Note:**It is designed to make links easier to activate and helps meet the WCAG 2.2 Target Size requirement. It is applicable only for the SAP Horizon themes.
+	 * **Note:**The Reactive area size is sufficiently large to help users avoid accidentally selecting (clicking or tapping) on unintented UI elements.
+	 * UI elements positioned over other parts of the page may need an invisible active touch area.
+	 * This will ensure that no elements beneath are activated accidentally when the user tries to interact with the overlay element.
+	 *
+	 * @public
+	 * @since 2.6.0
+	 * @default "Inline"
+	 */
+	@property()
+	reactiveAreaMode: `${ReactiveAreaMode}` = "Inline";
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
