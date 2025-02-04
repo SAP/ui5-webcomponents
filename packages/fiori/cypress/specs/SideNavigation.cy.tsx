@@ -308,6 +308,62 @@ describe("Side Navigation interaction", () => {
 		});
 	});
 
+	it("Tests link opening with mouse click", () => {
+		cy.mount(
+			<SideNavigation id="sideNav">
+				<SideNavigationItem id="item" text="1" />
+				<SideNavigationItem id="unselectableItemWithLink" text="external link" target="_blank" unselectable={true} href="#test"/>
+				<SideNavigationItem text="3">
+					<SideNavigationSubItem id="SubItemWithLink" text="external link" target="_blank" href="#test"/>
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.url().should("not.include", "#test");
+		cy.get("#unselectableItemWithLink").shadow().find("a").invoke("removeAttr", "target");
+
+		cy.get("#unselectableItemWithLink").realClick();
+
+		cy.url().should("include", "#test");
+
+		// Remove #test from the URL
+		cy.window().then(win => {
+			win.history.pushState({}, "", win.location.pathname + win.location.search);
+		});
+
+		cy.url().should("not.include", "#test");
+	});
+
+	it("Tests link opening with Enter", () => {
+		cy.mount(
+			<SideNavigation id="sideNav">
+				<SideNavigationItem id="item" text="1" />
+				<SideNavigationItem id="unselectableItemWithLink" text="external link" target="_blank" unselectable={true} href="#test"/>
+				<SideNavigationItem text="3">
+					<SideNavigationSubItem id="SubItemWithLink" text="external link" target="_blank" href="#test"/>
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.url().should("not.include", "#test");
+		cy.get("#unselectableItemWithLink").shadow().find("a").invoke("removeAttr", "target");
+
+		// cy.get("#unselectableItemWithLink").trigger("keydown", { key: "Enter" });
+		cy.get("#unselectableItemWithLink").realPress("Enter");
+
+		cy.url().should("include", "#test");
+
+		// Remove #test from the URL
+		cy.window().then(win => {
+			win.history.pushState({}, "", win.location.pathname + win.location.search);
+		});
+
+		cy.url().should("not.include", "#test");
+	});
+
+	// it("Tests link opening with Space", () => {
+	// });
+
 	it("Tests 'selection-change' event", () => {
 		cy.mount(
 			<SideNavigation id="sideNav">
