@@ -92,6 +92,7 @@ abstract class TableRowActionBase extends UI5Element {
 	}
 
 	onEnterDOM(): void {
+		this.setAttribute("slot", "actions");
 		this.toggleAttribute("_fixed", this.isFixedAction());
 	}
 
