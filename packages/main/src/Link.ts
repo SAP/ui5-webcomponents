@@ -14,10 +14,9 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
-import type ReactiveAreaMode from "./types/ReactiveAreaMode.js";
 import type WrappingType from "./types/WrappingType.js";
 import type LinkAccessibleRole from "./types/LinkAccessibleRole.js";
-
+import type ReactiveAreaMode from "./types/ReactiveAreaMode.js";
 // Template
 import LinkTemplate from "./LinkTemplate.js";
 
