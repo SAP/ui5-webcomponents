@@ -127,10 +127,10 @@
 }
 
 :host([reactive-area-mode="Overlay"]) .ui5-link-root {
-	line-height: 1.5rem;
+	line-height: var(--_ui5_link_large_reactive_area_height);
 }
 
 :host([reactive-area-mode="Overlay"])::part(icon), 
 :host([reactive-area-mode="Overlay"])::part(endIcon) {
-	height: 1.5rem;
+	height: var(--_ui5_link_large_reactive_area_height);
 }

@@ -166,7 +166,7 @@ class Link extends UI5Element implements ITabbable {
 	 * This will ensure that no elements beneath are activated accidentally when the user tries to interact with the overlay element.
 	 *
 	 * @public
-	 * @since 2.6.0
+	 * @since 2.7.0
 	 * @default "Inline"
 	 */
 	@property()
