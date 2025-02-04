@@ -9,6 +9,8 @@
 		"composite": true,
 		"experimentalDecorators": true,
 		"tsBuildInfoFile": "dist/.tsbuildinfobuild",
+		"module": "NodeNext",
+		"moduleResolution": "nodenext",
 	},
 	"references": [
 		{
