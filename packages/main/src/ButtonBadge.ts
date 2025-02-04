@@ -13,7 +13,7 @@ import buttonBadgeCss from "./generated/themes/ButtonBadge.css.js";
  *
  * The `ui5-button-badge` component defines a badge that appears in the `ui5-button`.
  *
- *  * ### ES6 Module Import
+ * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/ButtonBadge.js";`
  * @constructor
@@ -29,7 +29,10 @@ import buttonBadgeCss from "./generated/themes/ButtonBadge.css.js";
 })
 class ButtonBadge extends UI5Element {
 	/**
-     * Determines where the badge should be placed and how it should be styled.
+     * Defines the badge placement and appearance.
+	 * - **InlineText** - displayed inside the button after its text, and recommended for **compact** density.
+	 * - **OverlayText** - displayed at the top-end corner of the button, and recommended for **cozy** density.
+	 * - **AttentionDot** - displayed at the top-end corner of the button as a dot, and suitable for both **cozy** and **compact** densities.
      * @since 2.7.0
 	 * @public
 	*/
