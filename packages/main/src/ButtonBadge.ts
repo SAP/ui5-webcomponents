@@ -13,7 +13,7 @@ import buttonBadgeCss from "./generated/themes/ButtonBadge.css.js";
  *
  * The `ui5-button-badge` component defines a badge that appears in the `ui5-button`.
  *
- *  ### ES6 Module Import
+ * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/ButtonBadge.js";`
  * @constructor
