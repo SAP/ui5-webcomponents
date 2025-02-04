@@ -545,7 +545,7 @@ describe("Form support", () => {
 			.should("be.equal", "range_slider3=0&range_slider3=100&range_slider4=25&range_slider4=75");
 	});
 
-	it.skip("ui5-select in form", () => {
+	it("ui5-select in form", () => {
 		cy.mount(<form method="get">
 			<Select id="select1">
 				<Option selected>Option 1</Option>
@@ -573,12 +573,6 @@ describe("Form support", () => {
 				<Option value="option2" selected>Option 2</Option>
 				<Option value="">Option 3</Option>
 			</Select>
-			<Select id="select6" name="select6">
-				<Option>Option 1</Option>
-				<Option value="option2">Option 2</Option>
-				<Option value="" selected>Option 3</Option>
-			</Select>
-
 			<Select id="select7" name="select7" required>
 				<Option selected>Option 1</Option>
 				<Option value="option2">Option 2</Option>
@@ -597,6 +591,18 @@ describe("Form support", () => {
 
 			<button type="submit">Submits forms</button>
 		</form>);
+
+		// Explicitly insert ui5-select with option that has attribute to empty string otherwise JSX will
+		// set is a property and it won't be applied to the DOM and it can't be achieved using setAttribute method
+		cy.get("#select7")
+			.then($el => {
+				$el[0].insertAdjacentHTML("beforebegin", `
+				<ui5-select id="select6" name="select6">
+					<ui5-option>Option 1</ui5-option>
+					<ui5-option value="option2">Option 2</ui5-option>
+					<ui5-option value="" selected>Option 3</ui5-option>
+				</ui5-select>`);
+			});
 
 		cy.get("form")
 			.then($item => {
@@ -827,7 +833,7 @@ describe("Form support", () => {
 			.should("have.not.been.called");
 	});
 
-	it.skip("Submit button does submit forms", () => {
+	it("Submit button does submit forms", () => {
 		cy.mount(<form method="get">
 			<Input name="input" value="ok"></Input>
 			<Input name="input_disabled" disabled value="ok"></Input>
