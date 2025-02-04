@@ -338,6 +338,7 @@ describe("Component Behavior", () => {
 		describe("Big screen", () => {
 			beforeEach(async () => {
 				await browser.setWindowSize(1920, 1080);
+				await browser.url(`test/pages/ShellBar.html`);
 			});
 
 			it("tests opening of menu", async () => {
