@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type BadgeDesign from "./types/ButtonBadgeDesign.js";
+import type ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ButtonBadgeTemplate from "./ButtonBadgeTemplate.js";
 
@@ -34,7 +34,7 @@ class ButtonBadge extends UI5Element {
 	 * @public
 	*/
 	@property()
-	design: `${BadgeDesign}` = "AttentionDot";
+	design: `${ButtonBadgeDesign}` = "AttentionDot";
 
 	/**
      * Defines the text of the component.
