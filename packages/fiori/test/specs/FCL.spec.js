@@ -3,6 +3,7 @@ import { assert } from "chai";
 
 describe("FlexibleColumnLayout Behavior", () => {
 	before(async () => {
+		await browser.setWindowSize(1000, 1080);
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
 
