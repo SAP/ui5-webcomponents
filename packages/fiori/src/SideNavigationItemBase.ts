@@ -54,7 +54,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	tooltip?: string;
 
 	@property({ noAttribute: true })
-	forcedTabIndex?: string
+	forcedTabIndex = "-1";
 
 	@property({ type: Boolean })
 	sideNavCollapsed = false;
