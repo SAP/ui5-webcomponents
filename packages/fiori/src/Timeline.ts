@@ -167,6 +167,9 @@ class Timeline extends UI5Element {
 	@query(".ui5-timeline-end-marker")
 	timelineEndMarker!: HTMLElement;
 
+	@query((`[id="ui5-timeline-growing-btn"]`))
+	growingButton!: HTMLElement;
+
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
@@ -343,14 +346,13 @@ class Timeline extends UI5Element {
 		const target = e.target as ITimelineItem;
 
 		if (isDown(e) || isRight(e)) {
-
 			this._handleDown();
 			e.preventDefault();
 			return;
 		}
 
 		if (isUp(e) || isLeft(e)) {
-			this._handleLodeMoreUp(e);
+			this._handleUp(e);
 			e.preventDefault();
 			return;
 		}
@@ -389,39 +391,23 @@ class Timeline extends UI5Element {
 	}
 
 	_handleDown() {
-		if (!this.growsWithButton) {
-			return;
-		}
-
-		this._shouldFocusGrowingButton();
-	}
-
-	_shouldFocusGrowingButton() {
-		const items = this._navigableItems;
-		const lastIndex = items.length - 1;
-		const currentIndex = this._itemNavigation._currentIndex;
-
-		if (currentIndex !== -1 && currentIndex === lastIndex) {
+		if (this.growsWithButton) {
 			this.focusGrowingButton();
 		}
 	}
 
 	focusGrowingButton() {
-		const growingBtn = this.getGrowingButton();
+		const items = this._navigableItems;
+		const lastIndex = items.length - 1;
+		const currentIndex = this._itemNavigation._currentIndex;
 
-		if (growingBtn) {
-			growingBtn.focus();
+		if (currentIndex !== -1 && currentIndex === lastIndex) {
+			this.growingButton?.focus();
 		}
 	}
 
-	getGrowingButton() {
-		return this.shadowRoot!.querySelector(`[id="${this._id}-growing-btn"]`) as HTMLElement;
-	}
-
-	_handleLodeMoreUp(e: KeyboardEvent) {
-		const growingButton = this.getGrowingButton();
-
-		if (growingButton === e.target) {
+	_handleUp(e: KeyboardEvent) {
+		if ( this.growingButton === e.target) {
 			const items = this._navigableItems;
 			const lastItem = items[items.length - 1];
 
