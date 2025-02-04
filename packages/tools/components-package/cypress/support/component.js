@@ -22,23 +22,23 @@ function mount(component, options = {}) {
 	applyConfiguration(options);
 
 	// Mount JSX Element
-	return cy.wrap({ preactMount })
-		.invoke("preactMount", component, container)
-		.then(() => {
-			cy.get(container)
-				.find("*")
-				.should($el => {
-					const shadowrootsExist = [...$el].every(el => {
-						if (el.tagName.includes("-") && el.shadowRoot) {
-							return el.shadowRoot.hasChildNodes();
-						}
+	preactMount(component, container);
 
-						return true;
-					})
+	cy.get(container)
+	.find("*")
+	.should($el => {
+		const shadowrootsExist = [...$el].every(el => {
+			if (el.tagName.includes("-") && el.shadowRoot) {
+				return el.shadowRoot.hasChildNodes();
+			}
 
-					expect(shadowrootsExist, "Custom elements with shadow DOM have content in their shadow DOM").to.be.true;
-				})
-		});
+			return true;
+		})
+
+		expect(shadowrootsExist, "Custom elements with shadow DOM have content in their shadow DOM").to.be.true;
+	})
+
+	return cy.get(container);
 }
 
 setupHooks(cleanup);
