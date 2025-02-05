@@ -61,6 +61,7 @@
     "@ui5/webcomponents-theming": "2.7.0"
   },
   "devDependencies": {
+    "@ui5/webcomponents-testing": "0.0.0",
     "@ui5/webcomponents-tools": "2.7.0",
     "chromedriver": "^131.0.0",
     "jsdom": "^26.0.0",

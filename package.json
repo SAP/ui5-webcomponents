@@ -88,6 +88,7 @@
   },
   "workspaces": [
     "packages/theming",
+    "packages/testing",
     "packages/base",
     "packages/localization",
     "packages/main",

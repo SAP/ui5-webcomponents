@@ -1,0 +1,1 @@
+import "./cypress/support/component.d.ts"
