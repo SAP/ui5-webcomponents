@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.16](https://github.com/SAP/ui5-webcomponents/compare/v1.24.15...v1.24.16) (2025-02-05)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** announce initials ([#10755](https://github.com/SAP/ui5-webcomponents/issues/10755)) ([39166a9](https://github.com/SAP/ui5-webcomponents/commit/39166a90bf44fdb09acb600d6b0958284e114285))
+* **ui5-popover:** popover arrow is aligned to the middle of the opener ([#10657](https://github.com/SAP/ui5-webcomponents/issues/10657)) ([c38aa13](https://github.com/SAP/ui5-webcomponents/commit/c38aa13c57cb441c742c629e4114dd7d0909e67b)), closes [#9886](https://github.com/SAP/ui5-webcomponents/issues/9886)
+
+
+
+
+
 ## [1.24.15](https://github.com/SAP/ui5-webcomponents/compare/v1.24.14...v1.24.15) (2025-01-17)
 
 
