@@ -358,7 +358,7 @@ describe("Side Navigation interaction", () => {
 		cy.mount(
 			<SideNavigation>
 				<SideNavigationItem id="focusStart" text="focus start" />
-				<SideNavigationItem text="external link" unselectable={true} href="#test"/>
+				<SideNavigationItem id="linkItem" text="external link" unselectable={true} href="#test"/>
 			</SideNavigation>
 		);
 
@@ -367,6 +367,25 @@ describe("Side Navigation interaction", () => {
 		cy.get("#focusStart").realClick();
 		cy.realPress("ArrowDown");
 		cy.realPress("Space");
+
+		cy.url().should("include", "#test");
+
+		// Remove #test from the URL
+		cy.window().then(win => {
+			win.history.back();
+		});
+
+		cy.url().should("not.include", "#test");
+
+		cy.get("#focusStart").realClick();
+		cy.realPress("ArrowDown");
+		cy.realPress("Space");
+		cy.get("#linkItem").should("be.focused");
+
+		// act
+		cy.focused().trigger("keydown", {
+			key: "Enter",
+		});
 
 		cy.url().should("include", "#test");
 
