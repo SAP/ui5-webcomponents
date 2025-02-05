@@ -74,13 +74,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 					</div>
 				)}
 				<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
-					<div style={{
-						display: "flex",
-						justifyContent: "flex-end",
-						alignItems: "center",
-						flexGrow: 1,
-						minWidth: "max-content",
-					}}>
+					<div class="ui5-shellbar-overflow-container-right-inner">
 						{this.hasAdditionalContext && (
 							<>
 								{this.showStartSeparatorInParent && (
@@ -167,7 +161,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 								</>
 							)}
 							{this.hasAssistant && (
-								<div id="assistant" class={classes.assistant}>
+								<div id={`${this._id}-assistant`} class={classes.assistant}>
 									<slot name="assistant"></slot>
 								</div>
 							)}
