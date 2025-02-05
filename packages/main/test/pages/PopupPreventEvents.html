@@ -68,20 +68,24 @@
 	});
 
 	closeButton.addEventListener("click", () => {
-		if (!confirmClose()) {
-			return;
-		}
+		//if (!confirmClose()) {
+			// return;
+		//}
 
 		dialog.open = false;
 	});
 
 	dialog.addEventListener("before-close", (event) => {
-		if (!event.detail.escPressed) {
-			return;
-		}
-
 		if (!confirmClose()) {
 			event.preventDefault();
+			dialog.open = true;
+		}
+	});
+
+	dialog.addEventListener("before-open", (event) => {
+		if (!confirmClose()) {
+			event.preventDefault();
+			dialog.open = false;
 		}
 	});
 
