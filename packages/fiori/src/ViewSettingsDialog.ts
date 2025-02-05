@@ -10,7 +10,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import type List from "@ui5/webcomponents/dist/List.js";
-import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
+import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 
@@ -515,12 +515,14 @@ class ViewSettingsDialog extends UI5Element {
 		this._currentMode = ViewSettingsDialogMode[mode];
 	}
 
-	_handleFilterValueItemClick(e: CustomEvent<ListItemClickEventDetail>) {
+	_handleFilterValueItemClick(e: CustomEvent<ListSelectionChangeEventDetail>) {
+		const itemText = e.detail.targetItem.innerText;
+
 		// Update the component state
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
 			if (filter.selected) {
 				filter.filterOptions.forEach(option => {
-					if (option.text === e.detail.item.innerText) {
+					if (option.text === itemText) {
 						option.selected = !option.selected;
 					}
 				});
@@ -528,20 +530,19 @@ class ViewSettingsDialog extends UI5Element {
 			return filter;
 		});
 
-		this._setSelectedProp(e);
+		this._setSelectedProp(itemText);
 
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
 	}
 
 	/**
 	 * Sets the selected property of the clicked item.
-	 * @param e
 	 * @private
 	 */
-	_setSelectedProp(e: CustomEvent<ListItemClickEventDetail>) {
+	_setSelectedProp(itemText: string) {
 		this.filterItems.forEach(filterItem => {
 			filterItem.values.forEach(option => {
-				if (option.text === e.detail.item.innerText) {
+				if (option.text === itemText) {
 					option.selected = !option.selected;
 				}
 			});
@@ -669,10 +670,10 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores `Sort Order` list as recently used control and its selected item in current state.
 	 */
-	_onSortOrderChange(e: CustomEvent<ListItemClickEventDetail>) {
+	_onSortOrderChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		this._recentlyFocused = this._sortOrder!;
 		this._currentSettings.sortOrder = this.initSortOrderItems.map(item => {
-			item.selected = item.text === e.detail.item.innerText;
+			item.selected = item.text === e.detail.targetItem.innerText;
 			return item;
 		});
 
@@ -683,8 +684,8 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores `Sort By` list as recently used control and its selected item in current state.
 	 */
-	_onSortByChange(e: CustomEvent<ListItemClickEventDetail>) {
-		const selectedItemIndex = Number(e.detail.item.getAttribute("data-ui5-external-action-item-index"));
+	_onSortByChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
+		const selectedItemIndex = Number(e.detail.targetItem.getAttribute("data-ui5-external-action-item-index"));
 		this._recentlyFocused = this._sortBy!;
 		this._currentSettings.sortBy = this.initSortByItems.map((item, index) => {
 			item.selected = index === selectedItemIndex;
