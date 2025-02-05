@@ -265,17 +265,21 @@ class Popover extends Popup {
 
 	isOpenerClicked(e: MouseEvent) {
 		const target = e.target as HTMLElement;
-		if (target === this._opener) {
+		const opener = this.getOpenerHTMLElement(this.opener);
+
+		if (!opener) {
+			return false;
+		}
+
+		if (target === opener) {
 			return true;
 		}
 
-		const ui5ElementTarget = target as UI5Element;
-
-		if (ui5ElementTarget.getFocusDomRef && ui5ElementTarget.getFocusDomRef() === this._opener) {
+		if (this._isUI5AbstractElement(target) && target.getFocusDomRef() === opener) {
 			return true;
 		}
 
-		return e.composedPath().indexOf(this._opener as EventTarget) > -1;
+		return e.composedPath().indexOf(opener) > -1;
 	}
 
 	/**
