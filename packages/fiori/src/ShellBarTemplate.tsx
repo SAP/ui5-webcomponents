@@ -204,6 +204,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 					class={{
 						"ui5-shellbar-button": true,
 						"ui5-shellbar-overflow-button": true,
+						"ui5-shellbar-items-for-arrow-nav": true,
 						...this.classes.overflow,
 					}}
 					icon="sap-icon://overflow"
@@ -217,7 +218,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 				{this.showProductSwitch && (
 					<Button
 						id={`${this._id}-item-4`}
-						class={`ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-items-for-arrow-nav`}
+						class="ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-items-for-arrow-nav"
 						icon="sap-icon://grid"
 						data-ui5-text="Product Switch"
 						onClick={this._handleProductSwitchPress}

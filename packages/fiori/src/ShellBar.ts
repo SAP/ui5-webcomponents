@@ -613,17 +613,8 @@ class ShellBar extends UI5Element {
 		return style.display !== "none" && style.visibility !== "hidden" && element.offsetWidth > 0 && element.offsetHeight > 0;
 	}
 
-	_isInteractive(element: HTMLElement | UI5Element): boolean {
-		const component = element as UI5Element;
-		if (component.isUI5Element) {
-			const dom = component.getFocusDomRef();
-			return dom?.tabIndex === 0;
-		}
-		return element.tabIndex === 0;
-	}
-
 	_getNavigableContent() {
-		return [
+		const elements = [
 			...this.startButton,
 			...this.logo,
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo"),
@@ -632,6 +623,14 @@ class ShellBar extends UI5Element {
 			...this.contentItems,
 			...this._getRightChildItems(),
 		] as HTMLElement[];
+
+		return elements.map((element: HTMLElement) => {
+			const component = element as UI5Element;
+			if (component.isUI5Element) {
+				return component.getFocusDomRef();
+			}
+			return element;
+		}).filter(el => !!el);
 	}
 
 	_getRightChildItems() {
@@ -646,7 +645,7 @@ class ShellBar extends UI5Element {
 	_getVisibleAndInteractiveItems() {
 		const items = this._getNavigableContent();
 		const visibleAndInteractiveItems = items.filter(item => {
-			return this._isVisible(item) && this._isInteractive(item);
+			return this._isVisible(item) && item.tabIndex === 0;
 		});
 
 		return visibleAndInteractiveItems;
@@ -1177,7 +1176,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get contentItemsSorted() {
-		return this.contentItems.sort((a, b) => {
+		return this.contentItems.toReversed().sort((a, b) => {
 			return parseInt(a.getAttribute("data-hide-order") || "0") - parseInt(b.getAttribute("data-hide-order") || "0");
 		});
 	}
@@ -1341,8 +1340,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get contentItems() {
-		// order is important for the responsive behavior
-		return [...this.endContent, ...this.startContent];
+		return [...this.startContent, ...this.endContent];
 	}
 
 	get startContent() {
