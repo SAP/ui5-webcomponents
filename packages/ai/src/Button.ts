@@ -202,6 +202,10 @@ class Button extends UI5Element {
 		}
 	}
 
+	onAfterRendering(): void {
+		debugger; // maybe the moment we can add the stylesheet?
+	}
+
 	/**
 	 * Starts the fade-out animation.
 	 * @private

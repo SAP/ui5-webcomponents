@@ -389,8 +389,41 @@
 	background-color: var(--_ui5_split_button_attention_separator_color);
 }
 
-/* Keyframes for AI button animations :) */
-/*
+@keyframes fadeOutText {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-1rem);
+	}
+}
+
+/* Keyframes moved to components where parts are defined */
+
+@keyframes fadeOutIcon {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-1rem);
+	}
+}
+
+@keyframes fadeOutEndIcon {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-1rem);
+	}
+}
+
 @keyframes fadeOutArrowButton {
 	from {
 		opacity: 1;
@@ -401,4 +434,37 @@
 		transform: translateY(-1rem);
 	}
 }
-*/
+
+/* Animations */
+
+/* Fade Out
+.ui5-ai-button-inner.ui5-ai-button-fade-out > .ui5-ai-button-text {
+	animation-name: fadeOutText;
+	animation-delay: 0.12s;
+	animation-duration: 1.08s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+}
+
+.ui5-ai-button-inner.ui5-ai-button-fade-out::part(icon) {
+	animation-name: fadeOutIcon;
+	animation-duration: 1.1s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+}
+
+.ui5-ai-button-inner.ui5-ai-button-fade-out::part(endIcon) {
+	animation-name: fadeOutEndIcon;
+	animation-delay: 0.2s;
+	animation-duration: 1.1s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+}
+
+.ui5-ai-button-inner.ui5-ai-button-fade-out::part(arrowButton) {
+	animation-name: fadeOutArrowButton;
+	animation-delay: 0.2s;
+	animation-duration: 1.1s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+} */
