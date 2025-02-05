@@ -74,7 +74,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 				)}
 				<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
 					<div class="ui5-shellbar-overflow-container-right-inner">
-						{this.hasAdditionalContext && (
+						{this.hasContentItems && (
 							<>
 								{this.showStartSeparatorInWrapper && (
 									<div class={{
@@ -119,7 +119,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 								)}
 							</>
 						)}
-						{!this.hasAdditionalContext && <div class="ui5-shellbar-spacer"></div>}
+						{!this.hasContentItems && <div class="ui5-shellbar-spacer"></div>}
 						<div class="ui5-shellbar-overflow-container-right-child" role={this._rightChildRole}>
 							{this.hasSearchField && (
 								<>

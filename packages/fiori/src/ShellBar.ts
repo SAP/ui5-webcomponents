@@ -732,7 +732,7 @@ class ShellBar extends UI5Element {
 			return isHidden && isSet && !shouldStayOnScreen;
 		});
 
-		this._observeAdditionalContextItems();
+		this._observeContentItems();
 	}
 
 	onAfterRendering() {
@@ -1140,7 +1140,7 @@ class ShellBar extends UI5Element {
 		this._overflowNotifications = overflowNotifications;
 	}
 
-	_observeAdditionalContextItems() {
+	_observeContentItems() {
 		if (JSON.stringify(this.contentItems) === JSON.stringify(this._observableContent)) {
 			return false;
 		}
@@ -1402,7 +1402,7 @@ class ShellBar extends UI5Element {
 		return ShellBar.i18nBundle.getText(SHELLBAR_OVERFLOW);
 	}
 
-	get hasAdditionalContext() {
+	get hasContentItems() {
 		return this.contentItems.length > 0;
 	}
 
