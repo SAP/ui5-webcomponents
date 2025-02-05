@@ -234,7 +234,7 @@
 			toggleButton.icon = toggleButton.pressed ? "sap-icon://da-2" : "sap-icon://da";
 		});
 
-		shellbar.addEventListener("additional-context-disappears", (e) => {
+		shellbar.addEventListener("content-item-visibility-change", (e) => {
 			console.log(e.detail.items);
 		})
 

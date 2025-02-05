@@ -5,11 +5,10 @@ import ShellBarPopoverTemplate from "./ShellBarPopoverTemplate.js";
 import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 export default function ShellBarTemplate(this: ShellBar) {
-	const classes = this.classes;
 	return (
 		<>
 			<header
-				class={classes.wrapper}
+				class={this.classes.wrapper}
 				aria-label={this._shellbarText}
 				onKeyDown={this._onKeyDown}
 				part="root">
@@ -25,7 +24,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 									<button
 										class={{
 											"ui5-shellbar-menu-button": true,
-											...classes.button,
+											...this.classes.button,
 										}}
 										onClick={this._headerPress}
 										aria-haspopup="menu"
@@ -77,17 +76,17 @@ export default function ShellBarTemplate(this: ShellBar) {
 					<div class="ui5-shellbar-overflow-container-right-inner">
 						{this.hasAdditionalContext && (
 							<>
-								{this.showStartSeparatorInParent && (
+								{this.showStartSeparatorInWrapper && (
 									<div class={{
 										"ui5-shellbar-separator": true,
 										"ui5-shellbar-separator-start": true,
 									}}></div>
 								)}
 								{this.startContent.map((item, index) => {
-									const itemInfo = this._contentClasses.find(info => info.id === item._individualSlot);
+									const itemInfo = this._contentInfo.find(info => info.id === item._individualSlot);
 									return (
 										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes}>
-											{!this.showStartSeparatorInParent && index === 0 && (
+											{!this.showStartSeparatorInWrapper && index === 0 && (
 												<div class={{
 													"ui5-shellbar-separator": true,
 													"ui5-shellbar-separator-start": true,
@@ -99,11 +98,11 @@ export default function ShellBarTemplate(this: ShellBar) {
 								})}
 								<div class="ui5-shellbar-spacer"></div>
 								{this.endContent.map((item, index) => {
-									const itemInfo = this._contentClasses.find(info => info.id === item._individualSlot);
+									const itemInfo = this._contentInfo.find(info => info.id === item._individualSlot);
 									return (
 										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes}>
 											<slot name={item._individualSlot}></slot>
-											{!this.showEndSeparatorInParent && index === this.endContent.length - 1 && (
+											{!this.showEndSeparatorInWrapper && index === this.endContent.length - 1 && (
 												<div class={{
 													"ui5-shellbar-separator": true,
 													"ui5-shellbar-separator-end": true,
@@ -112,7 +111,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 										</div>
 									);
 								})}
-								{this.showEndSeparatorInParent && (
+								{this.showEndSeparatorInWrapper && (
 									<div class={{
 										"ui5-shellbar-separator": true,
 										"ui5-shellbar-separator-end": true,
@@ -146,7 +145,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 											"ui5-shellbar-button": true,
 											"ui5-shellbar-search-button": true,
 											"ui5-shellbar-search-item-for-arrow-nav": true,
-											...classes.search,
+											...this.classes.search,
 										}}
 										icon="sap-icon://search"
 										data-ui5-text="Search"
@@ -161,7 +160,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 								</>
 							)}
 							{this.hasAssistant && (
-								<div id={`${this._id}-assistant`} class={classes.assistant}>
+								<div id={`${this._id}-assistant`} class={this.classes.assistant}>
 									<slot name="assistant"></slot>
 								</div>
 							)}
@@ -172,7 +171,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 										"ui5-shellbar-button": true,
 										"ui5-shellbar-bell-button": true,
 										"ui5-shellbar-items-for-arrow-nav": true,
-										...classes.notification,
+										...this.classes.notification,
 									}}
 									icon="sap-icon://bell"
 									data-ui5-text="Notifications"
@@ -205,7 +204,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 					class={{
 						"ui5-shellbar-button": true,
 						"ui5-shellbar-overflow-button": true,
-						...classes.overflow,
+						...this.classes.overflow,
 					}}
 					icon="sap-icon://overflow"
 					data-count={this._overflowNotifications}
