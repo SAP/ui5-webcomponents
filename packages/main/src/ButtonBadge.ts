@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
+import ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ButtonBadgeTemplate from "./ButtonBadgeTemplate.js";
 
@@ -42,12 +42,18 @@ class ButtonBadge extends UI5Element {
 	/**
      * Defines the text of the component.
 	 *
-	 * **Note:** Text is not needed when the `design` property is set to `AttentionDot`.
+	 * **Note:** Text is not applied when the `design` property is set to `AttentionDot`.
+	 *
+	 * **Note:** The badge component only accepts numeric values and the "+" symbol. Using other characters or formats may result in unpredictable behavior, which is not guaranteed or supported.
      * @since 2.7.0
 	 * @public
 	*/
 	@property()
 	text: string = "";
+
+	get effectiveText() {
+		return this.design === ButtonBadgeDesign.AttentionDot ? "" : this.text;
+	}
 }
 
 ButtonBadge.define();
