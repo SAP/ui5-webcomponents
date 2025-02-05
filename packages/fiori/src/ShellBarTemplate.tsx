@@ -5,10 +5,11 @@ import ShellBarPopoverTemplate from "./ShellBarPopoverTemplate.js";
 import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 export default function ShellBarTemplate(this: ShellBar) {
+	const classes = this.classes;
 	return (
 		<>
 			<header
-				class={this.classes.wrapper}
+				class={classes.wrapper}
 				aria-label={this._shellbarText}
 				onKeyDown={this._onKeyDown}
 				part="root">
@@ -24,7 +25,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 									<button
 										class={{
 											"ui5-shellbar-menu-button": true,
-											...this.classes.button,
+											...classes.button,
 										}}
 										onClick={this._headerPress}
 										aria-haspopup="menu"
@@ -73,135 +74,168 @@ export default function ShellBarTemplate(this: ShellBar) {
 					</div>
 				)}
 				<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
-					{this.hasAdditionalContext && (
-						<>
-							<div style={this.styles.additionalContext.start.separator} class="ui5-shellbar-separator ui5-shellbar-separator-start"></div>
-							<div class="ui5-shellbar-overflow-container-additional-content" aria-label={this._additionalContextText} role={this._additionalContextRole}>
-								{this.startContent.map(item => (
-									<div key={item._individualSlot} id={item._individualSlot} class="ui5-shellbar-additional-content-item">
-										<slot name={item._individualSlot}></slot>
-									</div>
-								))}
-								<div class="ui5-shellbar-spacer"></div>
-								{this.endContent.map(item => (
-									<div key={item._individualSlot} id={item._individualSlot} class="ui5-shellbar-additional-content-item">
-										<slot name={item._individualSlot}></slot>
-									</div>
-								))}
-							</div>
-							<div style={this.styles.additionalContext.end.separator} class="ui5-shellbar-separator ui5-shellbar-separator-end"></div>
-						</>
-					)}
-					{!this.hasAdditionalContext && <div class="ui5-shellbar-spacer"></div>}
-					<div class="ui5-shellbar-overflow-container-right-child" role={this._rightChildRole}>
-						{this.hasSearchField && (
+					<div style={{
+						display: "flex",
+						justifyContent: "flex-end",
+						alignItems: "center",
+						flexGrow: 1,
+						minWidth: "max-content",
+					}}>
+						{this.hasAdditionalContext && (
 							<>
-								{this._showFullWidthSearch && (
-									<div class="ui5-shellbar-search-full-width-wrapper" style={this.styles.searchField}>
-										<div class="ui5-shellbar-search-full-field">
-											<slot name="searchField"></slot>
-										</div>
-										<Button
-											onClick={this._handleCancelButtonPress}
-											class="ui5-shellbar-button ui5-shellbar-cancel-button"
-											data-ui5-stable="cancel-search">
-											{this._cancelBtnText}
-										</Button>
-									</div>
+								{this.showStartSeparatorInParent && (
+									<div class={{
+										"ui5-shellbar-separator": true,
+										"ui5-shellbar-separator-start": true,
+									}}></div>
 								)}
-								<div class="ui5-shellbar-search-field" style={this.styles.searchField}>
-									{!this._showFullWidthSearch && <slot name="searchField"></slot>}
-								</div>
-								<Button
-									id={`${this._id}-item-1`}
-									class={{
-										"ui5-shellbar-button": true,
-										"ui5-shellbar-search-button": true,
-										"ui5-shellbar-search-item-for-arrow-nav": true,
-										...this.classes.search,
-									}}
-									icon="sap-icon://search"
-									data-ui5-text="Search"
-									data-ui5-notifications-count={this.notificationsCount}
-									data-ui5-stable="toggle-search"
-									onClick={this._handleSearchIconPress}
-									tooltip={this._searchBtnOpen}
-									aria-label={this._searchBtnOpen}
-									aria-expanded={this._searchFieldExpanded}
-									accessibilityAttributes={this.accInfo.search.accessibilityAttributes}
-								/>
+								{this.startContent.map((item, index) => {
+									const itemInfo = this._contentClasses.find(info => info.id === item._individualSlot);
+									return (
+										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes}>
+											{!this.showStartSeparatorInParent && index === 0 && (
+												<div class={{
+													"ui5-shellbar-separator": true,
+													"ui5-shellbar-separator-start": true,
+												}}></div>
+											)}
+											<slot name={item._individualSlot}></slot>
+										</div>
+									);
+								})}
+								<div class="ui5-shellbar-spacer"></div>
+								{this.endContent.map((item, index) => {
+									const itemInfo = this._contentClasses.find(info => info.id === item._individualSlot);
+									return (
+										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes}>
+											<slot name={item._individualSlot}></slot>
+											{!this.showEndSeparatorInParent && index === this.endContent.length - 1 && (
+												<div class={{
+													"ui5-shellbar-separator": true,
+													"ui5-shellbar-separator-end": true,
+												}}></div>
+											)}
+										</div>
+									);
+								})}
+								{this.showEndSeparatorInParent && (
+									<div class={{
+										"ui5-shellbar-separator": true,
+										"ui5-shellbar-separator-end": true,
+									}}></div>
+								)}
 							</>
 						)}
-						{this.hasAssistant && (
-							<div id="assistant" class={this.classes.assistant}>
-								<slot name="assistant"></slot>
-							</div>
-						)}
-						{this.showNotifications && (
-							<Button
-								id={`${this._id}-item-2`}
-								class={{
-									"ui5-shellbar-button": true,
-									"ui5-shellbar-bell-button": true,
-									"ui5-shellbar-items-for-arrow-nav": true,
-									...this.classes.notification,
-								}}
-								icon="sap-icon://bell"
-								data-ui5-text="Notifications"
-								data-ui5-notifications-count={this.notificationsCount}
-								onClick={this._handleNotificationsPress}
-								tooltip={this._notificationsText}
-								accessibilityAttributes={this.accInfo.notifications.accessibilityAttributes}
-								data-ui5-stable="notifications"
-							/>
-						)}
-						{this.customItemsInfo.map(item => (
-							<Button
-								key={item.id}
-								id={item.id}
-								class={`${item.classes} ui5-shellbar-items-for-arrow-nav`}
-								icon={item.icon}
-								tooltip={item.tooltip}
-								data-count={item.count}
-								data-ui5-notifications-count={this.notificationsCount}
-								data-ui5-external-action-item-id={item.refItemid}
-								data-ui5-stable={item.stableDomRef}
-								onClick={item.press}
-							/>
-						))}
-						<Button
-							id={`${this._id}-item-5`}
-							class={{
-								"ui5-shellbar-no-overflow-button": true, // always visible
-								"ui5-shellbar-button": true,
-								"ui5-shellbar-overflow-button": true,
-								...this.classes.overflow,
-							}}
-							icon="sap-icon://overflow"
-							data-count={this._overflowNotifications}
-							onClick={this._handleOverflowPress}
-							tooltip={this._overflowText}
-							accessibilityAttributes={this.accInfo.overflow.accessibilityAttributes}
-							data-ui5-stable="overflow"
-						/>
-						{this.hasProfile && profileButton.call(this)}
-						{this.showProductSwitch && (
-							<Button
-								id={`${this._id}-item-4`}
-								class={`ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-items-for-arrow-nav`}
-								icon="sap-icon://grid"
-								data-ui5-text="Product Switch"
-								onClick={this._handleProductSwitchPress}
-								tooltip={this._productsText}
-								aria-label={this._productSwitchBtnText}
-								aria-haspopup="dialog"
-								aria-expanded={this.accInfo.products.accessibilityAttributes.expanded}
-								accessibilityAttributes={this.accInfo.products.accessibilityAttributes}
-								data-ui5-stable="product-switch"
-							/>
-						)}
+						{!this.hasAdditionalContext && <div class="ui5-shellbar-spacer"></div>}
+						<div class="ui5-shellbar-overflow-container-right-child" role={this._rightChildRole}>
+							{this.hasSearchField && (
+								<>
+									{this.showFullWidthSearch && (
+										<div class="ui5-shellbar-search-full-width-wrapper" style={this.styles.searchField}>
+											<div class="ui5-shellbar-search-full-field">
+												<slot name="searchField"></slot>
+											</div>
+											<Button
+												onClick={this._handleCancelButtonPress}
+												class="ui5-shellbar-button ui5-shellbar-cancel-button"
+												data-ui5-stable="cancel-search">
+												{this._cancelBtnText}
+											</Button>
+										</div>
+									)}
+									<div class="ui5-shellbar-search-field" style={this.styles.searchField}>
+										<slot name="searchField"></slot>
+									</div>
+									<Button
+										id={`${this._id}-item-1`}
+										class={{
+											"ui5-shellbar-button": true,
+											"ui5-shellbar-search-button": true,
+											"ui5-shellbar-search-item-for-arrow-nav": true,
+											...classes.search,
+										}}
+										icon="sap-icon://search"
+										data-ui5-text="Search"
+										data-ui5-notifications-count={this.notificationsCount}
+										data-ui5-stable="toggle-search"
+										onClick={this._handleSearchIconPress}
+										tooltip={this._searchBtnOpen}
+										aria-label={this._searchBtnOpen}
+										aria-expanded={this.showSearchField}
+										accessibilityAttributes={this.accInfo.search.accessibilityAttributes}
+									/>
+								</>
+							)}
+							{this.hasAssistant && (
+								<div id="assistant" class={classes.assistant}>
+									<slot name="assistant"></slot>
+								</div>
+							)}
+							{this.showNotifications && (
+								<Button
+									id={`${this._id}-item-2`}
+									class={{
+										"ui5-shellbar-button": true,
+										"ui5-shellbar-bell-button": true,
+										"ui5-shellbar-items-for-arrow-nav": true,
+										...classes.notification,
+									}}
+									icon="sap-icon://bell"
+									data-ui5-text="Notifications"
+									data-ui5-notifications-count={this.notificationsCount}
+									onClick={this._handleNotificationsPress}
+									tooltip={this._notificationsText}
+									accessibilityAttributes={this.accInfo.notifications.accessibilityAttributes}
+									data-ui5-stable="notifications"
+								/>
+							)}
+							{this.customItemsInfo.map(item => (
+								<Button
+									key={item.id}
+									id={item.id}
+									class={`${item.classes} ui5-shellbar-items-for-arrow-nav`}
+									icon={item.icon}
+									tooltip={item.tooltip}
+									data-count={item.count}
+									data-ui5-notifications-count={this.notificationsCount}
+									data-ui5-external-action-item-id={item.refItemid}
+									data-ui5-stable={item.stableDomRef}
+									onClick={item.press}
+								/>
+							))}
+						</div>
 					</div>
 				</div>
+				<Button
+					id={`${this._id}-item-5`}
+					class={{
+						"ui5-shellbar-button": true,
+						"ui5-shellbar-overflow-button": true,
+						...classes.overflow,
+					}}
+					icon="sap-icon://overflow"
+					data-count={this._overflowNotifications}
+					onClick={this._handleOverflowPress}
+					tooltip={this._overflowText}
+					accessibilityAttributes={this.accInfo.overflow.accessibilityAttributes}
+					data-ui5-stable="overflow"
+				/>
+				{this.hasProfile && profileButton.call(this)}
+				{this.showProductSwitch && (
+					<Button
+						id={`${this._id}-item-4`}
+						class={`ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-items-for-arrow-nav`}
+						icon="sap-icon://grid"
+						data-ui5-text="Product Switch"
+						onClick={this._handleProductSwitchPress}
+						tooltip={this._productsText}
+						aria-label={this._productSwitchBtnText}
+						aria-haspopup="dialog"
+						aria-expanded={this.accInfo.products.accessibilityAttributes.expanded}
+						accessibilityAttributes={this.accInfo.products.accessibilityAttributes}
+						data-ui5-stable="product-switch"
+					/>
+				)}
 			</header>
 			{ShellBarPopoverTemplate.call(this)}
 		</>
