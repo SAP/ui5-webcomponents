@@ -156,11 +156,11 @@ class Link extends UI5Element implements ITabbable {
 	design: `${LinkDesign}` = "Default";
 
 	/**
-	 * Defines the target area size the link:
+	 * Defines the target area size of the link:
 	 * - **InteractiveAreaSize.Normal**: The default target area size.
-	 * - **InteractiveAreaSize.Large**: The target area size is enlared up to 24px in height.
+	 * - **InteractiveAreaSize.Large**: The target area size is enlared to 24px in height.
 	 *
-	 * **Note:**It is designed to make links easier to activate and helps meet the WCAG 2.2 Target Size requirement. It is applicable only for the SAP Horizon themes.
+	 * **Note:**The property is designed to make links easier to activate and helps meet the WCAG 2.2 Target Size requirement. It is applicable only for the SAP Horizon themes.
 	 * **Note:**The interactive area is sufficiently large to help users avoid accidentally selecting (clicking or tapping) on unintented UI elements.
 	 * UI elements positioned over other parts of the page may need an invisible active touch area.
 	 * This will ensure that no elements beneath are activated accidentally when the user tries to interact with the overlay element.
