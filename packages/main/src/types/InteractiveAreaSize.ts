@@ -7,7 +7,7 @@
 enum InteractiveAreaSize {
 
 	/**
-	 * The target area size corresponds to it's default size.
+	 * The default target area size.
 	 * @public
 	 */
 	Normal = "Normal",

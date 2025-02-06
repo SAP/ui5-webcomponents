@@ -157,7 +157,7 @@ class Link extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the target area size the link:
-	 * - **InteractiveAreaSize.Normal**: The target area size corresponds to it's default size.
+	 * - **InteractiveAreaSize.Normal**: The default target area size.
 	 * - **InteractiveAreaSize.Large**: The target area size is enlared up to 24px in height.
 	 *
 	 * **Note:**It is designed to make links easier to activate and helps meet the WCAG 2.2 Target Size requirement. It is applicable only for the SAP Horizon themes.
