@@ -149,29 +149,21 @@ describe("Input general interaction", () => {
 
 		cy.get("@input")
 			.realClick();
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@input")
 			.realType("C");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@popover")
 			.should("have.attr", "open");
 
 		cy.get("@input")
 			.realPress("ArrowDown");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@input")
 			.should("have.attr", "value", "Titanium");
 
 		cy.get("@input")
 			.realPress("Escape");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@input")
 			.should("have.value", "C");
@@ -198,21 +190,15 @@ describe("Input general interaction", () => {
 
 		cy.get("@input")
 			.realClick();
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@input")
 			.realType("c");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@popover")
 			.should("have.attr", "open");
 
 		cy.get("@input")
 			.realPress("ArrowDown");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@input")
 			.should("have.value", "Compact")
@@ -224,8 +210,6 @@ describe("Input general interaction", () => {
 
 		cy.get("@input")
 			.realPress("ArrowDown");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("ui5-suggestion-item")
 			.eq(2)
@@ -304,18 +288,12 @@ describe("Input arrow navigation", () => {
 			.as("popover");
 
 		cy.get("@input").realClick();
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 		cy.get("@input").realType("c");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@popover")
 			.should("have.attr", "open");
 
 		cy.get("@input").realPress("ArrowDown");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("ui5-suggestion-item").eq(1).should("have.attr", "text", "Compact");
 		cy.get("@input").should("not.have.attr", "focused");
@@ -323,26 +301,18 @@ describe("Input arrow navigation", () => {
 
 		cy.get("@input")
 			.realPress("ArrowDown");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("ui5-suggestion-item").eq(2).should("have.attr", "focused");
 		cy.get("ui5-suggestion-item").eq(1).should("not.have.attr", "focused");
 
 		cy.get("@input")
 			.realPress("ArrowUp");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("ui5-suggestion-item").eq(1).should("have.attr", "focused");
 		cy.get("ui5-suggestion-item").eq(2).should("not.have.attr", "focused");
 
 		cy.get("@input").realPress("ArrowUp");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 		cy.get("@input").realPress("ArrowUp");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@input").should("have.attr", "focused");
 		cy.get("ui5-suggestion-item").first().should("not.have.attr", "focused");
@@ -376,23 +346,15 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 
 		cy.get("@input")
 			.realClick();
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@input")
 			.realType("a");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@input")
 			.realPress("ArrowDown");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@input")
 			.realPress("PageDown");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("ui5-suggestion-item")
 			.eq(11)
@@ -409,18 +371,12 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 
 		cy.get("@input")
 			.realClick();
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@input")
 			.realType("a");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@input")
 			.realPress("ArrowUp");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("ui5-suggestion-item-group")
 			.eq(0)
@@ -428,13 +384,9 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 
 		cy.get("@input")
 			.realPress("PageDown");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("@input")
 			.realPress("PageUp");
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(200);
 
 		cy.get("ui5-suggestion-item-group")
 			.eq(0)

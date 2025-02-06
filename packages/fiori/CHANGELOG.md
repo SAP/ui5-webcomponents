@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0...v2.8.0-rc.0) (2025-02-06)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** adjust grip minimum target size ([#10743](https://github.com/SAP/ui5-webcomponents/issues/10743)) ([aa58291](https://github.com/SAP/ui5-webcomponents/commit/aa58291abd89c20c00822c2d78bed16dc32251ee)), closes [#10669](https://github.com/SAP/ui5-webcomponents/issues/10669)
+* **ui5-timeline:** enhance keyboard navigation ([#10746](https://github.com/SAP/ui5-webcomponents/issues/10746)) ([0ebc0f4](https://github.com/SAP/ui5-webcomponents/commit/0ebc0f42d3e8ed5dec44bc4a56601718f22840e3))
+
+
+
+
+
 # [2.7.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.2...v2.7.0) (2025-02-03)
 
 

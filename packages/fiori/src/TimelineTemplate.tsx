@@ -36,7 +36,7 @@ function moreRow(this: Timeline) {
 		<li class="ui5-timeline-list-item ui5-timeline-list-growing">
 			<div class="ui5-tli-icon-outer">
 				<Button icon={this.growingButtonIcon}
-					id={`${this._id}-growing-btn`}
+					id={"ui5-timeline-growing-btn"}
 					class={{
 						"ui5-timeline-growing-row-inner": true,
 						"ui5-timeline-growing-row-inner--active": this._loadMoreActive
