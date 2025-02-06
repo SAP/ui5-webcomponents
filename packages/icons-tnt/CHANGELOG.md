@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.16](https://github.com/SAP/ui5-webcomponents/compare/v1.24.15...v1.24.16) (2025-02-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
 ## [1.24.15](https://github.com/SAP/ui5-webcomponents/compare/v1.24.14...v1.24.15) (2025-01-17)
 
 **Note:** Version bump only for package @ui5/webcomponents-icons-tnt
