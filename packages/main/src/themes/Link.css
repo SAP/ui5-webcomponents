@@ -126,11 +126,11 @@
 	text-decoration: var(--_ui5_link_focused_hover_text_decoration);
 }
 
-:host([reactive-area-mode="Overlay"]) .ui5-link-root {
-	line-height: var(--_ui5_link_large_reactive_area_height);
+:host([interactive-area-size="Large"]) .ui5-link-root {
+	line-height: var(--_ui5_link_large_interactive_area_height);
 }
 
-:host([reactive-area-mode="Overlay"])::part(icon), 
-:host([reactive-area-mode="Overlay"])::part(endIcon) {
-	height: var(--_ui5_link_large_reactive_area_height);
+:host([interactive-area-size="Large"])::part(icon), 
+:host([interactive-area-size="Large"])::part(endIcon) {
+	height: var(--_ui5_link_large_interactive_area_height);
 }
