@@ -17,7 +17,7 @@ describe("Responsiveness", () => {
 			id="shellbar"
 			primaryTitle="Product Title"
 			secondaryTitle="Solution name"
-			notifications-count="99+"
+			notificationsCount="99+"
 			showNotifications={true}
 			showProductSwitch={true}
 		>
@@ -100,51 +100,23 @@ describe("Responsiveness", () => {
 		cy.viewport(1920, 1080);
 	});
 
-	it("tests XXL Breakpoint 1920px", () => {
+	it("tests XL Breakpoint 1920px", () => {
 		cy.viewport(1920, 1080);
-		cy.get("@shellbar")
-			.find("ui5-button[slot='startButton']")
-			.as("backButton");
 
-		cy.get("@shellbar")
-			.shadow()
-			.find(".ui5-shellbar-title")
-			.as("primaryTitle");
+		cy.get("@shellbar").should("have.prop", "breakpointSize", "XL");
 
-		cy.get("@shellbar")
-			.shadow()
-			.find(".ui5-shellbar-secondary-title")
-			.as("secondaryTitle");
+		cy.get("@shellbar").find("ui5-toggle-button[slot='assistant']").as("assistant");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-overflow-button").as("overflowButton");
+		cy.get("@shellbar").find("ui5-button[slot='startButton']").as("backButton");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-title").as("primaryTitle");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-secondary-title").as("secondaryTitle");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-custom-item").as("customActionIcon1");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-bell-button").as("notificationsIcon");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-image-button").as("profileIcon");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-button-product-switch").as("productSwitchIcon");
 
-		cy.get("@shellbar")
-			.shadow()
-			.find(".ui5-shellbar-search-button")
-			.as("searchButton");
-
-		cy.get("@shellbar")
-			.shadow()
-			.find(".ui5-shellbar-custom-item")
-			.as("customActionIcon1");
-
-		cy.get("@shellbar")
-			.shadow()
-			.find(".ui5-shellbar-bell-button")
-			.as("notificationsIcon");
-
-		cy.get("@shellbar")
-			.shadow()
-			.find(".ui5-shellbar-image-button")
-			.as("profileIcon");
-
-		cy.get("@shellbar")
-			.shadow()
-			.find(".ui5-shellbar-button-product-switch")
-			.as("productSwitchIcon");
-
-		cy.get("@shellbar")
-			.find("ui5-toggle-button[slot='assistant']")
-			.as("assistant");
-
+		cy.get("@assistant").should("be.visible");
+		cy.get("@overflowButton").should("not.be.visible");
 		cy.get("@backButton").should("be.visible");
 		cy.get("@primaryTitle").should("be.visible");
 		cy.get("@secondaryTitle").should("be.visible");
@@ -152,15 +124,99 @@ describe("Responsiveness", () => {
 		cy.get("@notificationsIcon").should("be.visible");
 		cy.get("@profileIcon").should("be.visible");
 		cy.get("@productSwitchIcon").should("be.visible");
+	});
+
+	it("tests M Breakpoint and overflow 570px", () => {
+		cy.viewport(570, 1680);
+
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-overflow-button").as("overflowButton");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-search-button").as("searchIcon");
+
+		cy.get("@searchIcon").should("be.visible");
+		cy.get("@overflowButton").should("be.visible");
+	});
+
+	it("tests XL Breakpoint 1820px", () => {
+		cy.viewport(1820, 1680);
+
+		cy.get("@shellbar").should("have.prop", "breakpointSize", "XL");
+	});
+
+	it("tests L Breakpoint 1400px", () => {
+		cy.viewport(1400, 1680);
+
+		cy.get("@shellbar").should("have.prop", "breakpointSize", "L");
+
+		cy.get("@shellbar").find("ui5-toggle-button[slot='assistant']").as("assistant");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-overflow-button").as("overflowButton");
+		cy.get("@shellbar").find("ui5-button[slot='startButton']").as("backButton");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-title").as("primaryTitle");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-secondary-title").as("secondaryTitle");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-search-button").as("searchIcon");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-custom-item").as("customActionIcon1");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-bell-button").as("notificationsIcon");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-image-button").as("profileIcon");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-button-product-switch").as("productSwitchIcon");
+
 		cy.get("@assistant").should("be.visible");
+		cy.get("@overflowButton").should("not.be.visible");
+		cy.get("@backButton").should("be.visible");
+		cy.get("@primaryTitle").should("be.visible");
+		cy.get("@secondaryTitle").should("be.visible");
+		cy.get("@searchIcon").should("be.visible");
+		cy.get("@customActionIcon1").should("be.visible");
+		cy.get("@notificationsIcon").should("be.visible");
+		cy.get("@profileIcon").should("be.visible");
+		cy.get("@productSwitchIcon").should("be.visible");
+	});
 
-		cy.get("@searchButton").click();
+	it("tests M Breakpoint 870px", () => {
+		cy.viewport(810, 1680);
 
-		cy.get("@shellbar")
-			.find("ui5-input[slot='searchField']")
-			.as("searchField").should("be.visible");
+		cy.get("@shellbar").should("have.prop", "breakpointSize", "M");
 
-		cy.get("@searchButton").click();
+		cy.get("@shellbar").find("ui5-toggle-button[slot='assistant']").as("assistant");
+		cy.get("@shellbar").find("ui5-button[slot='startButton']").as("backButton");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-title").as("primaryTitle");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-search-button").as("searchIcon");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-bell-button").as("notificationsIcon");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-image-button").as("profileIcon");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-button-product-switch").as("productSwitchIcon");
+
+		cy.get("@assistant").should("be.visible");
+		cy.get("@backButton").should("be.visible");
+		cy.get("@primaryTitle").should("be.visible");
+		cy.get("@searchIcon").should("be.visible");
+		cy.get("@notificationsIcon").should("be.visible");
+		cy.get("@profileIcon").should("be.visible");
+		cy.get("@productSwitchIcon").should("be.visible");
+	});
+
+	it("tests S Breakpoint and overflow 510px", () => {
+		cy.viewport(510, 1680);
+
+		cy.get("@shellbar").should("have.prop", "breakpointSize", "S");
+
+		cy.get("@shellbar").find("[slot='assistant']").as("assistant");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-overflow-button").as("overflowButton");
+		cy.get("@shellbar").find("ui5-button[slot='startButton']").as("backButton");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-search-button").as("searchIcon");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-bell-button").as("notificationsIcon");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-image-button").as("profileIcon");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-button-product-switch").as("productSwitchIcon");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-overflow-popover").as("overflowPopover");
+
+		cy.get("@assistant").should("be.visible");
+		cy.get("@overflowButton").should("be.visible");
+		cy.get("@backButton").should("be.visible");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-title").should("not.exist");
+		cy.get("@shellbar").shadow().find(".ui5-shellbar-secondary-title").should("not.exist");
+		cy.get("@searchIcon").should("be.visible");
+		cy.get("@notificationsIcon").should("be.visible");
+		cy.get("@profileIcon").should("be.visible");
+		cy.get("@productSwitchIcon").should("be.visible");
+
+		cy.get("@overflowPopover").find("ui5-li").should("have.length", 2);
 	});
 
 	it("tests S Breakpoint 320px", () => {
