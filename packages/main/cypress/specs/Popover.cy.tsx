@@ -117,22 +117,18 @@ describe("Popover interaction", () => {
 						return;
 					}
 
-					// Create a shadow root
-					const shadow = this.attachShadow({ mode: "open" });
-					this._shadow = shadow;
-
-					const wrapper = document.createElement("div");
+					this._shadow = this.attachShadow({ mode: "open" });
 
 					const btn = document.createElement("button");
 					btn.textContent = "Opener in Shadow Root";
+					btn.setAttribute("id", "opener");
 
 					const pop = document.createElement("ui5-popover") as Popover;
-					pop.opener = btn;
-					// pop.open = true;
+					pop.opener = "opener";
+					pop.open = true;
 
-					wrapper.appendChild(btn);
-					wrapper.appendChild(pop);
-					shadow.appendChild(wrapper);
+					this._shadow.appendChild(btn);
+					this._shadow.appendChild(pop);
 				}
 			}
 
@@ -146,9 +142,6 @@ describe("Popover interaction", () => {
 					<opener-shadow-root-test id="openerShadowRooTest"></opener-shadow-root-test>
 				</>
 			);
-
-			// act
-			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").invoke("prop", "open", true);
 
 			// assert
 			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").should("be.visible");
