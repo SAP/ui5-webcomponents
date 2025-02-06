@@ -43,16 +43,16 @@ describe("TableRowActions", () => {
 		it("tests single row action", () => {
 			mountTable(1, () => <>
 				<TableRow id="addRow">
-					<TableRowAction slot="actions" id="addAction" icon={add} text="Add"></TableRowAction>
+					<TableRowAction slot="_actions" id="addAction" icon={add} text="Add"></TableRowAction>
 				</TableRow>
 				<TableRow>
-					<TableRowAction slot="actions" icon={add} text="Add" invisible={true}></TableRowAction>
+					<TableRowAction slot="_actions" icon={add} text="Add" invisible={true}></TableRowAction>
 				</TableRow>
 				<TableRow>
-					<TableRowActionNavigation slot="actions"></TableRowActionNavigation>
+					<TableRowActionNavigation slot="_actions"></TableRowActionNavigation>
 				</TableRow>
 				<TableRow id="navigationRow">
-					<TableRowActionNavigation slot="actions" id="navigationAction" interactive={true}></TableRowActionNavigation>
+					<TableRowActionNavigation slot="_actions" id="navigationAction" interactive={true}></TableRowActionNavigation>
 				</TableRow>
 			</>
 			);
@@ -79,10 +79,10 @@ describe("TableRowActions", () => {
 		it("tests multiple row actions - all visible", () => {
 			mountTable(2, () => <>
 				<TableRow>
-					<TableRowActionNavigation slot="actions" interactive={true}></TableRowActionNavigation>
-					<TableRowAction slot="actions" id="addAction" icon={add} text="Add"></TableRowAction>
-					<TableRowAction slot="actions" id="editAction" icon={edit} text="Edit"></TableRowAction>
-					<TableRowAction slot="actions" icon={deleteIcon} text="Delete"></TableRowAction>
+					<TableRowActionNavigation slot="_actions" interactive={true}></TableRowActionNavigation>
+					<TableRowAction slot="_actions" id="addAction" icon={add} text="Add"></TableRowAction>
+					<TableRowAction slot="_actions" id="editAction" icon={edit} text="Edit"></TableRowAction>
+					<TableRowAction slot="_actions" icon={deleteIcon} text="Delete"></TableRowAction>
 				</TableRow>
 			</>
 			);
@@ -156,9 +156,9 @@ describe("TableRowActions", () => {
 		it("tests that invisible actions occupy space for alignment", () => {
 			mountTable(3, () => <>
 				<TableRow>
-					<TableRowAction slot="actions" icon={add} text="Add"></TableRowAction>
-					<TableRowAction slot="actions" icon={edit} text="Edit" invisible={true}></TableRowAction>
-					<TableRowAction slot="actions" icon={deleteIcon} text="Delete"></TableRowAction>
+					<TableRowAction slot="_actions" icon={add} text="Add"></TableRowAction>
+					<TableRowAction slot="_actions" icon={edit} text="Edit" invisible={true}></TableRowAction>
+					<TableRowAction slot="_actions" icon={deleteIcon} text="Delete"></TableRowAction>
 				</TableRow>
 			</>
 			);
@@ -174,10 +174,10 @@ describe("TableRowActions", () => {
 		it("tests that avoiding overflow is more important than aligment", () => {
 			mountTable(3, () => <>
 				<TableRow>
-					<TableRowAction slot="actions" icon={add} text="Add" invisible={true}></TableRowAction>
-					<TableRowAction slot="actions" icon={edit} text="Edit"></TableRowAction>
-					<TableRowAction slot="actions" icon={deleteIcon} text="Delete"></TableRowAction>
-					<TableRowAction slot="actions" icon={share} text="Share" invisible={true}></TableRowAction>
+					<TableRowAction slot="_actions" icon={add} text="Add" invisible={true}></TableRowAction>
+					<TableRowAction slot="_actions" icon={edit} text="Edit"></TableRowAction>
+					<TableRowAction slot="_actions" icon={deleteIcon} text="Delete"></TableRowAction>
+					<TableRowAction slot="_actions" icon={share} text="Share" invisible={true}></TableRowAction>
 				</TableRow>
 			</>
 			);
@@ -191,10 +191,10 @@ describe("TableRowActions", () => {
 		it("tests that the aligment of navigation is more important than avoiding overflow", () => {
 			mountTable(3, () => <>
 				<TableRow>
-					<TableRowActionNavigation slot="actions" invisible={true}></TableRowActionNavigation>
-					<TableRowAction slot="actions" icon={add} text="Add"></TableRowAction>
-					<TableRowAction slot="actions" icon={edit} text="Edit"></TableRowAction>
-					<TableRowAction slot="actions" icon={deleteIcon} text="Delete"></TableRowAction>
+					<TableRowActionNavigation slot="_actions" invisible={true}></TableRowActionNavigation>
+					<TableRowAction slot="_actions" icon={add} text="Add"></TableRowAction>
+					<TableRowAction slot="_actions" icon={edit} text="Edit"></TableRowAction>
+					<TableRowAction slot="_actions" icon={deleteIcon} text="Delete"></TableRowAction>
 				</TableRow>
 			</>
 			);
