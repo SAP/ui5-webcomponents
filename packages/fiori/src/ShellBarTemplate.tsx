@@ -78,13 +78,13 @@ export default function ShellBarTemplate(this: ShellBar) {
 							<div style={this.styles.additionalContext.start.separator} class="ui5-shellbar-separator ui5-shellbar-separator-start"></div>
 							<div class="ui5-shellbar-overflow-container-additional-content" aria-label={this._additionalContextText} role={this._additionalContextRole}>
 								{this.startContent.map(item => (
-									<div key={item._individualSlot} id={item._individualSlot} class="ui5-shellbar-additional-content-item">
+									<div key={item._individualSlot} id={item._individualSlot} class="ui5-shellbar-additional-content-item" data-hide-order={item.getAttribute("data-hide-order")}>
 										<slot name={item._individualSlot}></slot>
 									</div>
 								))}
 								<div class="ui5-shellbar-spacer"></div>
 								{this.endContent.map(item => (
-									<div key={item._individualSlot} id={item._individualSlot} class="ui5-shellbar-additional-content-item">
+									<div key={item._individualSlot} id={item._individualSlot} class="ui5-shellbar-additional-content-item" data-hide-order={item.getAttribute("data-hide-order")}>
 										<slot name={item._individualSlot}></slot>
 									</div>
 								))}

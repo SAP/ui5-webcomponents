@@ -1281,7 +1281,7 @@ class ShellBar extends UI5Element {
 			return "flex";
 		}
 
-		return "none";
+		return "flex";
 	}
 
 	get customItemsInfo() {
