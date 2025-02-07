@@ -36,6 +36,7 @@
 //   }
 // }
 
+import "@ui5/cypress-common/commands.js";
 import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "./commands/Menu.commands.js";
 import "./commands/ColorPicker.commands.js";
