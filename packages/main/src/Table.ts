@@ -539,6 +539,7 @@ class Table extends UI5Element {
 		headerCell._popin = inPopin;
 		headerCell._popinWidth = popinWidth;
 		this.rows.forEach(row => {
+			row.cells[headerIndex]._hiddenInPopin = headerCell.hiddenInPopin;
 			row.cells[headerIndex]._popin = inPopin;
 		});
 	}

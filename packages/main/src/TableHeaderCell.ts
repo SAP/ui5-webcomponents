@@ -101,6 +101,16 @@ class TableHeaderCell extends TableCellBase {
 	sortIndicator: `${TableSortOrder}` = "None";
 
 	/**
+	 * Defines if the column is hidden in the popin.
+	 *
+	 * @default false
+	 * @since 2.8.0
+	 * @public
+	 */
+	@property({ type: Boolean })
+	hiddenInPopin: boolean = false;
+
+	/**
 	 * Defines the action of the column.
 	 *
 	 * **Note:** While multiple actions are technically possible, this is not supported.
