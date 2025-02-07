@@ -33,7 +33,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import type Popover from "./Popover.js";
-import type ResponsivePopover from "./ResponsivePopover.js";
 import TimePickerTemplate from "./TimePickerTemplate.js";
 import type DateTimeInput from "./DateTimeInput.js";
 import type { InputAccInfo } from "./Input.js";
@@ -314,6 +313,12 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	@query("[ui5-time-selection-clocks]")
 	_timeSelectionClocks?: TimeSelectionClocks;
 
+	@query("[ui5-popover]")
+	_inputsPopover?: Popover;
+
+	@query("[ui5-datetime-input]")
+	_dateTimeInput?: DateTimeInput;
+
 	tempValue?: string;
 
 	@i18n("@ui5/webcomponents")
@@ -408,12 +413,17 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return !isDesktop() && (isPhone() || isTablet());
 	}
 
+	get shouldDisplayValueStateMessageInResponsivePopover() {
+		return this.hasValueStateText && !this._inputsPopover?.open;
+	}
+
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
 		this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
 	}
 
 	_togglePicker() {
 		this.open = !this.open;
+		this._isMobileDevice && (this._inputsPopover!.open = false);
 	}
 
 	submitPickers() {
@@ -445,9 +455,9 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 */
 	openInputsPopover() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
-		const popover = this._getInputsPopover();
-		popover.opener = this;
-		popover.open = true;
+		const popover = this._inputsPopover;
+		popover!.opener = this;
+		popover!.open = true;
 		this._isInputsPopoverOpen = true;
 	}
 
@@ -457,8 +467,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @returns Resolves when the Inputs popover is closed
 	 */
 	closeInputsPopover() {
-		const popover = this._getInputsPopover();
-		popover.open = false;
+		const popover = this._inputsPopover;
+		popover!.open = false;
 	}
 
 	toggleInputsPopover() {
@@ -483,8 +493,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	onInputsPopoverAfterOpen() {
-		const popover = this._getInputsPopover();
-		popover.querySelector<TimeSelectionInputs>("[ui5-time-selection-inputs]")!._addNumericAttributes();
+		const popover = this._inputsPopover;
+		popover!.querySelector<TimeSelectionInputs>("[ui5-time-selection-inputs]")!._addNumericAttributes();
 	}
 
 	onInputsPopoverAfterClose() {
@@ -560,20 +570,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return !this.disabled && this._isMobileDevice;
 	}
 
-	_getPopover() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
-	}
-
-	_getInputsPopover() {
-		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
-	}
-
-	_getDateTimeInput(): DateTimeInput {
-		return this.shadowRoot!.querySelector<DateTimeInput>("[ui5-datetime-input]")!;
-	}
-
 	_getInputField() {
-		const input = this._getDateTimeInput();
+		const input = this._dateTimeInput;
 		return input && input.getInputDOMRef();
 	}
 
@@ -588,7 +586,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 		const target = e.target as HTMLElement;
 
-		if (target && this.open && this._getDateTimeInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+		if (target && this.open && this._dateTimeInput!.id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this._togglePicker();
 		}
 		if (this.open) {
@@ -703,16 +701,16 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * Hides mobile device keyboard by temporary setting the input to readonly state.
 	 */
 	_hideMobileKeyboard() {
-		this._getDateTimeInput().readonly = true;
-		setTimeout(() => { this._getDateTimeInput().readonly = false; }, 0);
+		this._dateTimeInput!.readonly = true;
+		setTimeout(() => { this._dateTimeInput!.readonly = false; }, 0);
 	}
 
 	_onfocusin(e: FocusEvent) {
 		if (this._isMobileDevice) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
-				const popover = this._getInputsPopover();
-				popover.applyFocus();
+				const popover = this._inputsPopover;
+				popover!.applyFocus();
 			}
 			e.preventDefault();
 		}
