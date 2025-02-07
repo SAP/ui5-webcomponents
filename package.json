@@ -88,7 +88,6 @@
   },
   "workspaces": [
     "packages/theming",
-    "packages/testing",
     "packages/cy-testing",
     "packages/cy-common",
     "packages/base",
