@@ -379,12 +379,11 @@ describe("Side Navigation interaction", () => {
 
 		cy.get("#focusStart").realClick();
 		cy.realPress("ArrowDown");
-		cy.realPress("Space");
 		cy.get("#linkItem").should("be.focused");
 
 		// act
-		cy.focused().trigger("keydown", {
-			key: "Enter",
+		cy.focused().trigger("keyup", {
+			key: " ",
 		});
 
 		cy.url().should("include", "#test");
