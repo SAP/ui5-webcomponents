@@ -41,7 +41,7 @@ function mountTestpage() {
 				<ComboBoxItem text="Single"></ComboBoxItem>
 				<ComboBoxItem text="Multiple"></ComboBoxItem>
 			</ComboBox>
-			<Table id="table0" no-data-text="No data found">
+			<Table id="table0" noDataText="No data found">
 				<TableSelection id="selection" slot="features"></TableSelection>
 				<TableHeaderRow slot="headerRow">
 					<TableHeaderCell id="colA"><span>ColumnA</span></TableHeaderCell>
@@ -49,61 +49,61 @@ function mountTestpage() {
 					<TableHeaderCell id="colC">Column C</TableHeaderCell>
 					<TableHeaderCell id="colD">Column D</TableHeaderCell>
 				</TableHeaderRow>
-				<TableRow row-key="0">
+				<TableRow rowKey="0">
 					<TableCell><Label>Cell A</Label></TableCell>
 					<TableCell><Label>Cell B</Label></TableCell>
 					<TableCell><Label>Cell C</Label></TableCell>
 					<TableCell><Label>Cell D</Label></TableCell>
 				</TableRow>
-				<TableRow row-key="1">
+				<TableRow rowKey="1">
 					<TableCell><Label>Cell A</Label></TableCell>
 					<TableCell><Label>Cell B</Label></TableCell>
 					<TableCell><Label>Cell C</Label></TableCell>
 					<TableCell><Label>Cell D</Label></TableCell>
 				</TableRow>
-				<TableRow row-key="2">
+				<TableRow rowKey="2">
 					<TableCell><Label>Cell A</Label></TableCell>
 					<TableCell><Label>Cell B</Label></TableCell>
 					<TableCell><Label>Cell C</Label></TableCell>
 					<TableCell><Label>Cell D</Label></TableCell>
 				</TableRow>
-				<TableRow row-key="3">
+				<TableRow rowKey="3">
 					<TableCell><Label>Cell A</Label></TableCell>
 					<TableCell><Label>Cell B</Label></TableCell>
 					<TableCell><Label>Cell C</Label></TableCell>
 					<TableCell><Label>Cell D</Label></TableCell>
 				</TableRow>
-				<TableRow row-key="4">
+				<TableRow rowKey="4">
 					<TableCell><Label>Cell A</Label></TableCell>
 					<TableCell><Label>Cell B</Label></TableCell>
 					<TableCell><Label>Cell C</Label></TableCell>
 					<TableCell><Label>Cell D</Label></TableCell>
 				</TableRow>
-				<TableRow row-key="5">
+				<TableRow rowKey="5">
 					<TableCell><Label>Cell A</Label></TableCell>
 					<TableCell><Label>Cell B</Label></TableCell>
 					<TableCell><Label>Cell C</Label></TableCell>
 					<TableCell><Label>Cell D</Label></TableCell>
 				</TableRow>
-				<TableRow row-key="6">
+				<TableRow rowKey="6">
 					<TableCell><Label>Cell A</Label></TableCell>
 					<TableCell><Label>Cell B</Label></TableCell>
 					<TableCell><Label>Cell C</Label></TableCell>
 					<TableCell><Label>Cell D</Label></TableCell>
 				</TableRow>
-				<TableRow row-key="7">
+				<TableRow rowKey="7">
 					<TableCell><Label>Cell A</Label></TableCell>
 					<TableCell><Label>Cell B</Label></TableCell>
 					<TableCell><Label>Cell C</Label></TableCell>
 					<TableCell><Label>Cell D</Label></TableCell>
 				</TableRow>
-				<TableRow row-key="8">
+				<TableRow rowKey="8">
 					<TableCell><Label>Cell A</Label></TableCell>
 					<TableCell><Label>Cell B</Label></TableCell>
 					<TableCell><Label>Cell C</Label></TableCell>
 					<TableCell><Label>Cell D</Label></TableCell>
 				</TableRow>
-				<TableRow row-key="9">
+				<TableRow rowKey="9">
 					<TableCell><Label>Cell A</Label></TableCell>
 					<TableCell><Label>Cell B</Label></TableCell>
 					<TableCell><Label>Cell C</Label></TableCell>
