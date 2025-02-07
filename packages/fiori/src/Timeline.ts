@@ -15,7 +15,6 @@ import {
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import "./TimelineItem.js";
-import "./TimelineGroupItem.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
