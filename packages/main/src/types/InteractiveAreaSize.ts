@@ -1,19 +1,19 @@
 /**
- * Interactive area size.
+ * Defines the area size around the component that the user can select.
  *
  * @public
- * @since 2.7.0
+ * @since 2.8.0
  */
 enum InteractiveAreaSize {
 
 	/**
-	 * The default target area size.
+	 * The default target area size (the area taken by the component itself without any extra invisible touch area).
 	 * @public
 	 */
 	Normal = "Normal",
 
 	/**
-	 * The target area size is enlared up to 24px in height.
+	 * Enlarged target area size (up to 24px in height) provides users with an enhanced dedicated space to interact with the component.
 	 * @public
 	 */
 	Large = "Large",
