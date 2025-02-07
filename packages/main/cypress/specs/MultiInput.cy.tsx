@@ -1,5 +1,6 @@
 import SuggestionItem from "../../src/SuggestionItem.js";
 import MultiInput from "../../src/MultiInput.js";
+import "../../src/Token.js";
 
 describe("MultiInput Web Component", () => {
 	it("creates only one token when typing 'ad' and pressing Enter", () => {

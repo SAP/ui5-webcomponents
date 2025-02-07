@@ -56,7 +56,7 @@ describe("Lifecycle works", () => {
 	it("Tests element destruction callback", () => {
 		const el = document.createElement("ui5-test-generic");
 
-		cy.mount(`<div id="container"></div>`);
+		cy.mount(<div id="container"></div>);
 
 		cy.spy<UI5Element>((el as UI5Element), "onExitDOM").as("onExitDOM");
 		cy.spy<UI5Element>((el as UI5Element), "onEnterDOM").as("onEnterDOM");

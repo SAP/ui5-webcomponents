@@ -56,6 +56,7 @@ import FormGroup from "./FormGroup.js";
 import FileUploader from "./FileUploader.js";
 import Table from "./Table.js";
 import TableHeaderCell from "./TableHeaderCell.js";
+import TableHeaderCellActionAI from "./TableHeaderCellActionAI.js";
 import TableHeaderRow from "./TableHeaderRow.js";
 import TableGrowing from "./TableGrowing.js";
 import TableSelection from "./TableSelection.js";

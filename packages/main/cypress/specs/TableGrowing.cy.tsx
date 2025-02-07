@@ -195,7 +195,7 @@ describe("TableGrowing - Scroll", () => {
 			cy.get("[ui5-table-growing]")
 				.shadow()
 				.find("#growing-button")
-				.should("not.exist");
+				.should("not.be.visible");
 
 			cy.get("[ui5-table]")
 				.shadow()
@@ -265,7 +265,7 @@ describe("TableGrowing - Scroll", () => {
 			cy.get("[ui5-table-growing]")
 				.shadow()
 				.find("#growing-button")
-				.should("not.exist");
+				.should("not.be.visible");
 
 			cy.get("[ui5-table]")
 				.shadow()

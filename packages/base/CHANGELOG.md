@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0...v2.8.0-rc.0) (2025-02-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [2.7.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.2...v2.7.0) (2025-02-03)
+
+
+### Bug Fixes
+
+* **framework:** improve check for native popovers ([#10745](https://github.com/SAP/ui5-webcomponents/issues/10745)) ([f21f9b8](https://github.com/SAP/ui5-webcomponents/commit/f21f9b8835c7081235acc79d067b6e0a77feccbd))
+
+
+
+
+
 # [2.7.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.1...v2.7.0-rc.2) (2025-01-30)
 
 

@@ -1,8 +1,6 @@
 import "@cypress/code-coverage/support";
-import { setupHooks, getContainerEl} from "@cypress/mount-utils";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import { setupHooks, getContainerEl } from "@cypress/mount-utils";
 import { mount as preactMount } from "./cypress-ct-preact.js";
-import { mount as litMount } from "cypress-ct-lit";
 import "./commands.js";
 
 function applyConfiguration(options) {
@@ -23,19 +21,24 @@ function mount(component, options = {}) {
 	// Apply custom configuration
 	applyConfiguration(options);
 
-	// Mount string - remove after migrating all
-	if (typeof component === "string") {
-		return litMount(unsafeHTML(component), options)
-	}
-	
-	// Mount lit template -  - remove after migrating all
-	const legacyMount = component?.strings?.length > 0;
-	if (legacyMount) {
-		return litMount(component, options);
-	}
+	// Mount JSX Element
+	preactMount(component, container);
 
-	// Mount JSX template
-	return preactMount(component, container);
+	cy.get(container)
+	.find("*")
+	.should($el => {
+		const shadowrootsExist = [...$el].every(el => {
+			if (el.tagName.includes("-") && el.shadowRoot) {
+				return el.shadowRoot.hasChildNodes();
+			}
+
+			return true;
+		})
+
+		expect(shadowrootsExist, "Custom elements with shadow DOM have content in their shadow DOM").to.be.true;
+	})
+
+	return cy.get(container);
 }
 
 setupHooks(cleanup);

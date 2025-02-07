@@ -1,7 +1,7 @@
 import { registerThemePropertiesLoader } from "../../src/AssetRegistry.js";
 import { setTheme } from "../../src/config/Theme.js";
 import { getCurrentRuntimeIndex } from "../../src/Runtimes.js";
-import "../../test/test-elements/Generic.js";
+import TestGeneric from "../../test/test-elements/Generic.js";
 
 describe("Custom themes can be registered", () => {
 	it("Tests that theme parameters are changed on theme change", () => {
@@ -10,7 +10,7 @@ describe("Custom themes can be registered", () => {
 		const currentRuntime = 0;
 		const dataPropAttr = `data-ui5-component-properties-${currentRuntime}`;
 
-		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+		cy.mount(<TestGeneric />);
 
 		cy.wrap({ getCurrentRuntimeIndex })
 			.invoke("getCurrentRuntimeIndex")

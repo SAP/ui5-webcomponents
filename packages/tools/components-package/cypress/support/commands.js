@@ -41,10 +41,8 @@ import "cypress-real-events";
 const realEventCmdCallback = (originalFn, element, ...args) => {
 	cy.get(element)
 		.should($el => {
-			if ($el[0].tagName.includes("-") && typeof $el[0].shadowRoot && typeof $el[0].getDomRef === "function") {
-				expect($el[0].getDomRef()).to.exist;
-			} else {
-				expect(true).to.be.true;
+			if ($el[0].tagName.includes("-") && $el[0].shadowRoot) {
+				expect($el[0].shadowRoot.hasChildNodes(), "Custom elements with shadow DOM have content in their shadow DOM").to.be.true;
 			}
 		})
 		.and("be.visible")
@@ -65,4 +63,4 @@ const commands = [
 
 commands.forEach(cmd => {
 	Cypress.Commands.overwrite(cmd, realEventCmdCallback)
-})
+});

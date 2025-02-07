@@ -41,7 +41,7 @@ describe("Value State", () => {
 		cy.get("ui5-multi-combobox")
 			.shadow()
 			.find("input")
-			.type("f");
+			.realType("f");
 
 		cy.realPress("Backspace");
 
