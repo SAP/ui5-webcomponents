@@ -55,7 +55,7 @@ import switchCss from "./generated/themes/Switch.css.js";
 	styles: switchCss,
 	renderer: jsxRenderer,
 	template: SwitchTemplate,
-	shadowRootOptions: { delegatesFocus: true },
+	// shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the component checked state changes.
