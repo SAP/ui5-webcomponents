@@ -3,7 +3,6 @@
 {{else if _isInteractive}}
     <ui5-button
         icon="{{_icon}}"
-        text="{{_text}}"
         tooltip="{{_text}}"
         @click={{_onActionClick}}
         design="Transparent">
@@ -12,6 +11,6 @@
     <ui5-icon
         name="{{_icon}}"
         tooltip="{{_text}}"
-        design="Transparent">
+        design="NonInteractive">
     </ui5-icon>
 {{/if}}
