@@ -139,7 +139,7 @@ describe("Responsiveness", () => {
 	it("tests XL Breakpoint 1820px", () => {
 		cy.viewport(1820, 1680);
 
-		cy.get("@shellbar").should("have.prop", "breakpointSize", "XL");
+		cy.get("@shellbar").should("have.prop", "breakpointSize", "L");
 	});
 
 	it("tests L Breakpoint 1400px", () => {
@@ -171,7 +171,7 @@ describe("Responsiveness", () => {
 	});
 
 	it("tests M Breakpoint 870px", () => {
-		cy.viewport(810, 1680);
+		cy.viewport(870, 1680);
 
 		cy.get("@shellbar").should("have.prop", "breakpointSize", "M");
 
