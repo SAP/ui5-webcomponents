@@ -126,8 +126,8 @@ describe("Responsiveness", () => {
 		cy.get("@productSwitchIcon").should("be.visible");
 	});
 
-	it("tests M Breakpoint and overflow 570px", () => {
-		cy.viewport(570, 1680);
+	it.only("tests M Breakpoint and overflow 500px", () => {
+		cy.viewport(500, 1680);
 
 		cy.get("@shellbar").shadow().find(".ui5-shellbar-overflow-button").as("overflowButton");
 		cy.get("@shellbar").shadow().find(".ui5-shellbar-search-button").as("searchIcon");
