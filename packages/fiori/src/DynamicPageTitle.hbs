@@ -48,7 +48,9 @@
         {{/unless}}
       </div>
     </div>
-    <slot name="{{subheadingSlotName}}"></slot>
+    	<div class="ui5-dynamic-page-title--subheading">
+          <slot name="{{subheadingSlotName}}"></slot>
+      </div>
   {{/if}}
   
   <span id="{{_id}}-toggle-description" class="ui5-hidden-text">{{_ariaDescribedbyText}}</span>
