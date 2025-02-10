@@ -389,52 +389,6 @@
 	background-color: var(--_ui5_split_button_attention_separator_color);
 }
 
-@keyframes fadeOutText {
-	from {
-		opacity: 1;
-		transform: translateY(0);
-	}
-	to {
-		opacity: 0;
-		transform: translateY(-1rem);
-	}
-}
-
-/* Keyframes moved to components where parts are defined */
-
-@keyframes fadeOutIcon {
-	from {
-		opacity: 1;
-		transform: translateY(0);
-	}
-	to {
-		opacity: 0;
-		transform: translateY(-1rem);
-	}
-}
-
-@keyframes fadeOutEndIcon {
-	from {
-		opacity: 1;
-		transform: translateY(0);
-	}
-	to {
-		opacity: 0;
-		transform: translateY(-1rem);
-	}
-}
-
-@keyframes fadeOutArrowButton {
-	from {
-		opacity: 1;
-		transform: translateY(0);
-	}
-	to {
-		opacity: 0;
-		transform: translateY(-1rem);
-	}
-}
-
 /* Animations */
 
 /* Fade Out

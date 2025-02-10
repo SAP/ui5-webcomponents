@@ -14,7 +14,12 @@ const updateShadowRoot = (element: UI5Element) => {
 		return;
 	}
 
-	shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor);
+	if (element._additionalStyleSheets?.length) {
+		shadowRoot.adoptedStyleSheets = [...getConstructableStyle(ctor), ...element._additionalStyleSheets];
+	} else {
+		shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor);
+	}
+
 	ctor.renderer(element, shadowRoot);
 };
 

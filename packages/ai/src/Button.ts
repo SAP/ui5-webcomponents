@@ -16,6 +16,44 @@ import ButtonTemplate from "./ButtonTemplate.js";
 // Styles
 import ButtonCss from "./generated/themes/Button.css.js";
 
+
+const newStyles = new CSSStyleSheet();
+newStyles.replaceSync(`
+	@keyframes fadeOutIcon {
+		from {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(-1rem);
+		}
+	}
+
+	@keyframes fadeOutEndIcon {
+		from {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(-1rem);
+		}
+	}
+
+	@keyframes fadeOutArrowButton {
+		from {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(-1rem);
+		}
+	}
+`);
+
+
 /**
  * @class
  *
@@ -203,7 +241,19 @@ class Button extends UI5Element {
 	}
 
 	onAfterRendering(): void {
-		debugger; // maybe the moment we can add the stylesheet?
+		if (this._splitButton && this._splitButton.shadowRoot) {
+			this._splitButton._additionalStyleSheets = [newStyles];
+		} else {
+			return;
+		}
+
+		if (this._splitButton.textButton && this._splitButton.textButton.shadowRoot) {
+			this._splitButton.textButton._additionalStyleSheets = [newStyles];
+		}
+
+		if (this._splitButton.arrowButton && this._splitButton.arrowButton.shadowRoot) {
+			this._splitButton.arrowButton._additionalStyleSheets = [newStyles];
+		}
 	}
 
 	/**

@@ -182,6 +182,7 @@ abstract class UI5Element extends HTMLElement {
 	_internals: ElementInternals;
 	_individualSlot?: string;
 	_getRealDomRef?: () => HTMLElement;
+	_additionalStyleSheets?: Array<CSSStyleSheet>;
 
 	static template?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
