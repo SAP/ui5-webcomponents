@@ -191,6 +191,9 @@ describe("Responsiveness", () => {
 	it("tests S Breakpoint and overflow 510px", () => {
 		cy.viewport(510, 1680);
 
+		cy.get("#shellbar")
+			.as("shellbar");
+
 		cy.get("@shellbar").should("have.prop", "breakpointSize", "S");
 
 		cy.get("@shellbar").find("[slot='assistant']").as("assistant");
