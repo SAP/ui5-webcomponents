@@ -199,4 +199,99 @@ describe("Input Tests", () => {
 		cy.get("@submit").should("have.been.calledTwice");
 		cy.get("@change").should("have.been.calledOnce");
 	});
+
+	it("tests if submits value if suggestion is autocompleted", () => {
+		cy.mount(
+			<form>
+				<Input showSuggestions={true}>
+					<SuggestionItem text="Hello"></SuggestionItem>
+				</Input>
+			</form>
+		);
+
+		cy.get("form")
+			.as("form");
+
+		cy.get("[ui5-input]")
+			.as("input");
+
+		// spy change event
+		cy.get<Input>("@input")
+			.then($input => {
+				$input.get(0).addEventListener("change", cy.spy().as("change"));
+			});
+
+		// spy submit event and prevent it
+		cy.get("@form")
+			.then($form => {
+				$form.get(0).addEventListener("submit", e => e.preventDefault());
+				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
+			});
+
+		// checks when the submit is triggered
+		cy.get<Input>("@input")
+			.shadow()
+			.find("input")
+			.as("inner");
+
+		cy.get("@inner").realClick();
+		cy.get("@inner").type("H{enter}");
+
+		cy.get("@submit").should("have.not.been.called");
+		cy.get("@change").should("have.been.calledOnce");
+
+		cy.get("@inner").realPress("Enter");
+
+		cy.get("@submit").should("have.been.calledOnce");
+		cy.get("@change").should("have.been.calledOnce");
+	});
+
+	it("tests if submits value if suggestion is autocompleted", () => {
+		cy.mount(
+			<form>
+				<Input showSuggestions={true}>
+					<SuggestionItem text="Hello"></SuggestionItem>
+				</Input>
+			</form>
+		);
+
+		cy.get("form")
+			.as("form");
+
+		cy.get("[ui5-input]")
+			.as("input");
+
+		// spy change event
+		cy.get<Input>("@input")
+			.then($input => {
+				$input.get(0).addEventListener("change", cy.spy().as("change"));
+			});
+
+		// spy submit event and prevent it
+		cy.get("@form")
+			.then($form => {
+				$form.get(0).addEventListener("submit", e => e.preventDefault());
+				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
+			});
+
+		// checks when the submit is triggered
+		cy.get<Input>("@input")
+			.shadow()
+			.find("input")
+			.as("inner");
+
+		cy.get("@inner").realClick();
+		cy.get("@inner").type("H{downArrow}{enter}");
+
+		cy.get("@submit").should("have.not.been.called");
+		cy.get("@change").should("have.been.calledOnce");
+
+		cy.get<Input>("@input")
+			.shadow()
+			.find("input")
+			.type("{enter}");
+
+		cy.get("@submit").should("have.been.calledOnce");
+		cy.get("@change").should("have.been.calledOnce");
+	});
 });

@@ -769,10 +769,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		if (isEnter(e)) {
-			const isValueChanged = this.previousValue === this.getInputDOMRefSync()!.value;
+			const isValueUnchanged = this.previousValue === this.getInputDOMRefSync()!.value;
 			this._enterKeyDown = true;
 
-			if (isValueChanged && this._internals.form) {
+			if (isValueUnchanged && this._internals.form) {
 				submitForm(this);
 			}
 
@@ -1208,6 +1208,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		if (this._changeToBeFired) {
+			this.previousValue = this.value;
 			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
 			this._changeToBeFired = false;
 		}
