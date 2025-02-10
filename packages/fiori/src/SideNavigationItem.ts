@@ -2,11 +2,18 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isLeft,
+	isRight,
+	isSpace,
+	isEnter,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
+
+// Templates
 import SideNavigationItemTemplate from "./SideNavigationItemTemplate.js";
 
 // Styles
@@ -89,6 +96,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _ariaHasPopup() {
+		if (this.inPopover && this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
+		}
+
 		if (!this.disabled && this.sideNavCollapsed && this.items.length) {
 			return "tree";
 		}
@@ -97,7 +108,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _ariaChecked() {
-		if (this.isOverflow) {
+		if (this.isOverflow || this.unselectable) {
 			return undefined;
 		}
 
@@ -142,10 +153,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		return this.selected;
 	}
 
-	_onToggleClick(e: PointerEvent) {
+	_onToggleClick(e: CustomEvent) {
 		e.stopPropagation();
 
-		this.expanded = !this.expanded;
+		this._toggle();
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -157,6 +168,15 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		if (isRight(e)) {
 			this.expanded = true;
 			return;
+		}
+
+		if (this.unselectable && isSpace(e)) {
+			this._toggle();
+			return;
+		}
+
+		if (this.unselectable && isEnter(e)) {
+			this._toggle();
 		}
 
 		super._onkeydown(e);
@@ -171,6 +191,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onclick(e: MouseEvent) {
+		if (!this.inPopover && this.unselectable) {
+			this._toggle();
+		}
+
 		super._onclick(e);
 	}
 
@@ -200,6 +224,12 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 
 	get isSideNavigationItem() {
 		return true;
+	}
+
+	_toggle() {
+		if (this.items.length) {
+			this.expanded = !this.expanded;
+		}
 	}
 }
 

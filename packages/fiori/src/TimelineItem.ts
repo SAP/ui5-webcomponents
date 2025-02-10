@@ -11,6 +11,7 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITimelineItem } from "./Timeline.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import TimelineItemTemplate from "./TimelineItemTemplate.js";
+// Styles
 import type TimelineLayout from "./types/TimelineLayout.js";
 
 import {
@@ -20,7 +21,6 @@ import {
 	TIMELINE_ITEM_CRITICAL_STATE_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
-// Styles
 import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
 
 /**

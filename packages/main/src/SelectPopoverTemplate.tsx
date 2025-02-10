@@ -43,7 +43,7 @@ export default function SelectPopoverTemplate(this: Select) {
 									"ui5-select-value-state-dialog-header": true,
 									...this.classes.popoverValueState
 								}}>
-									{valueStateMessage.call(this)}
+									{this._isPickerOpen && valueStateMessage.call(this)}
 								</div>
 							}
 						</div>
@@ -56,7 +56,7 @@ export default function SelectPopoverTemplate(this: Select) {
 							<Icon
 								class="ui5-input-value-state-message-icon"
 								name={this._valueStateMessageInputIcon} />
-							{valueStateMessage.call(this)}
+							{this._isPickerOpen && valueStateMessage.call(this)}
 						</div>
 					}
 
@@ -99,7 +99,7 @@ function valueStateMessage(this: Select) {
 		<>
 			{this.shouldDisplayDefaultValueStateMessage
 				? this.valueStateText
-				: <slot name="valueStateMessage"></slot>
+				: <slot onClick={this._applyFocus} name="valueStateMessage"></slot>
 			}
 		</>
 	);
