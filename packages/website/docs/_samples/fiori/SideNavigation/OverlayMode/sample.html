@@ -1,0 +1,191 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sample</title>
+	<link rel="stylesheet" href="./main.css">
+</head>
+
+<body style="background: var(--sapBackgroundColor); height: 650px">
+	<!-- playground-fold-end -->
+
+	<ui5-shellbar id="shellbar" primary-title="Corporate Portal" notifications-count="99+" show-notifications>
+		<ui5-avatar slot="profile">
+			<img src="https://sap.github.io/ui5-webcomponents/images/avatars/woman_avatar_5.png" />
+		</ui5-avatar>
+		<img slot="logo" src="https://sap.github.io/ui5-webcomponents/images/sap-logo-svg.svg" />
+		<ui5-button icon="menu2" slot="startButton" id="startButton"></ui5-button>
+
+		<ui5-input slot="searchField"></ui5-input>
+	</ui5-shellbar>
+
+	<ui5-responsive-popover id="resp-popover" no-scrolling placement="Bottom" accessible-name="Main Navigation">
+			<ui5-side-navigation id="sideNav">
+				<!-- Items -->
+				<ui5-side-navigation-item text="Home" href="#home" icon="home">Home</ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Favorites" href="#favorites" icon="favorite-list">Favorites</ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Recents" href="#recents" icon="history">Recents</ui5-side-navigation-item>
+
+				<ui5-side-navigation-group text="Business Areas" expanded>
+					<ui5-side-navigation-item text="Manufacturing" unselectable icon="wrench">
+						<ui5-side-navigation-sub-item text="Inventory Management" href="#subitem1"></ui5-side-navigation-sub-item>
+						<ui5-side-navigation-sub-item text="Quality Control" href="#subitem2"></ui5-side-navigation-sub-item>
+					</ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Sales" href="#item5" icon="multiple-line-chart" expanded>
+						<ui5-side-navigation-sub-item text="Sales Accounts" href="#subitem3"></ui5-side-navigation-sub-item>
+						<ui5-side-navigation-sub-item text="Manage Sales Accounts" href="#subitem4"></ui5-side-navigation-sub-item>
+						<ui5-side-navigation-sub-item text="Sales Order" href="#subitem5"></ui5-side-navigation-sub-item>
+						<ui5-side-navigation-sub-item text="Sales Overview" href="#subitem6"></ui5-side-navigation-sub-item>
+					</ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Customer Service" href="#item6" icon="customer-and-contacts">
+					</ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Finance" href="#item7" icon="customer-financial-fact-sheet">
+						<ui5-side-navigation-sub-item text="Payroll Management" href="#subitem7"></ui5-side-navigation-sub-item>
+						<ui5-side-navigation-sub-item text="Tax Management" href="#subitem8"></ui5-side-navigation-sub-item>
+					</ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Employee Services" href="#item8" icon="employee">
+					</ui5-side-navigation-item>
+				</ui5-side-navigation-group>
+				<!-- Fixed Items -->
+				<ui5-side-navigation-item slot="fixedItems" id="quickAction" text="Create" design="Action" unselectable icon="write-new">
+				</ui5-side-navigation-item>
+				<ui5-side-navigation-item slot="fixedItems" text="App Finder" href="https://openui5.hana.ondemand.com/demoapps" target="_blank" icon="widgets"></ui5-side-navigation-item>
+				<ui5-side-navigation-item slot="fixedItems" text="Legal" href="https://www.sap.com/about/legal/impressum.html" target="_blank" icon="compare"></ui5-side-navigation-item>
+			</ui5-side-navigation>
+	</ui5-responsive-popover>
+
+	<ui5-popover id="profilePopover" placement="Bottom">
+		<div class="profile-popover-header">
+			<ui5-title style="padding: 0.25rem 1rem 0rem 1rem">My profile</ui5-title>
+		</div>
+		<div class="profile-popover-content" style="margin-top: 1rem;">
+			<ui5-list separators="None">
+				<ui5-li icon="sys-find">App Finder</ui5-li>
+				<ui5-li icon="settings">Settings</ui5-li>
+				<ui5-li icon="edit">Edit Home Page</ui5-li>
+				<ui5-li icon="sys-help">Help</ui5-li>
+				<ui5-li icon="log">Sign out</ui5-li>
+			</ui5-list>
+		</div>
+	</ui5-popover>
+
+	<ui5-dialog header-text="Create New Item" draggable resizable id="quickActionDialog">
+		<ui5-text>Create new item...</ui5-text>
+		<ui5-bar slot="footer" design="Footer">
+			<ui5-button slot="endContent" design="Emphasized">Create</ui5-button>
+			<ui5-button slot="endContent" id="quickActionCloseBtn">Close</ui5-button>
+		</ui5-bar>
+	</ui5-dialog>
+
+	<div class="contentWrapper">
+		<div class="content">
+			<div id="home" class="contentItem contentItemVisible">
+				<ui5-title size="H2">Home</ui5-title>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div id="favorites" class="contentItem">
+				<ui5-title size="H2">Favorites</ui5-title>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc gravida volutpat interdum. Suspendisse rhoncus velit lacus, a accumsan lacus cursus eu. Fusce fermentum vitae massa ut tempus. Suspendisse risus tortor, eleifend non sodales eu, sodales eu arcu. Maecenas at libero diam. Etiam et sollicitudin libero. Nam tincidunt nisi nec fermentum ornare. Phasellus nec nisl vulputate, facilisis leo et, elementum lorem. Nam quis ligula rutrum, mattis risus eu, viverra neque.
+				</p>
+			</div>
+			<div id="recents" class="contentItem">
+				<ui5-title size="H2">Recents</ui5-title>
+				<p>
+					Nunc nec ante condimentum, tincidunt lacus quis, facilisis sapien. Morbi quis erat nec sem blandit laoreet at eu purus. Nulla facilisi. Nulla pretium rhoncus ante, nec lacinia nunc varius vel. Sed at consectetur magna. Nulla odio eros, efficitur sit amet sodales ac, condimentum vel risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin enim velit, fermentum id tellus nec, lacinia mattis lorem. Praesent.
+				</p>
+			</div>
+			<div id="subitem1" class="contentItem">
+				<ui5-title size="H2">Manufacturing</ui5-title>
+				<ui5-title size="H3">Inventory Management</ui5-title>
+				<p>
+					Suspendisse sollicitudin, dolor eu rutrum iaculis, lectus sapien pellentesque justo, in imperdiet quam sem sit amet eros. Ut posuere convallis purus, et iaculis libero efficitur quis. In vestibulum laoreet rhoncus. Vivamus in eleifend ex. Duis aliquam, diam ut semper cursus, urna eros pharetra massa, id sodales elit lacus non lacus. Curabitur tristique felis vitae dui euismod, a elementum elit ullamcorper. Nam vehicula leo porta, tincidunt purus et, sollicitudin neque.
+				</p>
+			</div>
+			<div id="subitem2" class="contentItem">
+				<ui5-title size="H2">Manufacturing</ui5-title>
+				<ui5-title size="H3">Quality Control</ui5-title>
+				<p>
+					Donec aliquam, magna ac commodo varius, erat leo aliquam nisi, nec imperdiet lacus mi facilisis risus. Nam lobortis tortor a lacus iaculis, et posuere dui porta. Suspendisse tempor metus vitae purus porta maximus. Morbi venenatis convallis felis, quis interdum urna vestibulum sed. Cras id odio vel sapien venenatis feugiat. Vestibulum et tellus arcu. Donec dignissim eleifend purus, sodales convallis neque auctor at. Etiam non accumsan velit. Suspendisse potenti. Cras.
+				</p>
+			</div>
+			<div id="item5" class="contentItem">
+				<ui5-title size="H2">Sales</ui5-title>
+				<p>
+					Ut dignissim rutrum odio. Vestibulum maximus id sapien dictum dignissim. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam cursus malesuada diam, in scelerisque mauris cursus eget. Sed posuere, nibh pellentesque tempus tempor, enim libero efficitur diam, ac hendrerit sapien risus scelerisque nisi. Morbi ullamcorper ornare arcu in vulputate. Sed nec venenatis augue. Nullam eros odio, malesuada non ultricies eget, condimentum sed ipsum. Etiam.
+				</p>
+			</div>
+			<div id="subitem3" class="contentItem">
+				<ui5-title size="H2">Sales</ui5-title>
+				<ui5-title size="H3">Sales Accounts</ui5-title>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div id="subitem4" class="contentItem">
+				<ui5-title size="H2">Sales</ui5-title>
+				<ui5-title size="H3">Manage Sales Accounts</ui5-title>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div id="subitem5" class="contentItem">
+				<ui5-title size="H2">Sales</ui5-title>
+				<ui5-title size="H3">Sales Order</ui5-title>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div id="subitem6" class="contentItem">
+				<ui5-title size="H2">Sales</ui5-title>
+				<ui5-title size="H3">Sales Оverview</ui5-title>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div id="item6" class="contentItem">
+				<ui5-title size="H2">Customer Service</ui5-title>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div id="item7" class="contentItem">
+				<ui5-title size="H2">Finance</ui5-title>
+				<p>
+					Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean in iaculis diam. Nullam dapibus a ex in mollis. Integer quis pulvinar lectus. Nam porta tempor elit eu condimentum. Maecenas non orci quis sapien ullamcorper fringilla sed non nibh. Proin a ex massa. Aliquam eu pulvinar metus. In fringilla dapibus posuere. Vestibulum at volutpat mauris. Suspendisse convallis enim nec faucibus convallis. Vestibulum massa felis, porta quis.
+				</p>
+			</div>
+			<div id="subitem7" class="contentItem">
+				<ui5-title size="H2">Finance</ui5-title>
+				<ui5-title size="H3">Payroll Management</ui5-title>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div id="subitem8" class="contentItem">
+				<ui5-title size="H2">Finance</ui5-title>
+				<ui5-title size="H3">Tax Management</ui5-title>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div id="item8" class="contentItem">
+				<ui5-title size="H2">Employee Services</ui5-title>
+				<p>
+					Vestibulum eget felis dapibus, vulputate metus eget, vulputate nunc. Donec rutrum libero ex, quis faucibus mi aliquam in. Vestibulum vulputate nisl condimentum justo varius eleifend. Curabitur quis lacus at velit varius imperdiet sit amet nec mauris. In sed enim quis elit iaculis sollicitudin. Mauris efficitur erat sit amet felis sollicitudin, et blandit quam fermentum. Phasellus et pretium ex. Ut ac purus purus. Ut cursus pretium hendrerit. Morbi ac vehicula.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- playground-fold -->
+	<script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

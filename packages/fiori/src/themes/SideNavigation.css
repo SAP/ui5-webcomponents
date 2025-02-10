@@ -65,6 +65,10 @@
 	padding: var(--_ui5_side_navigation_parent_popup_padding);
 }
 
+:host([overlay-mode][on-phone]) {
+	width: var(--_ui5_side_navigation_phone_width);
+}
+
 .ui5-sn-item-overflow {
 	margin-top: auto;
 }
