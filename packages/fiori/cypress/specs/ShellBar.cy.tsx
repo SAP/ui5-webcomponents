@@ -92,6 +92,9 @@ describe("Responsiveness", () => {
 	beforeEach(() => {
 		cy.mount(basicTemplate()).as("html");
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(1000);
+
 		cy.get("#shellbar")
 			.as("shellbar");
 	});
