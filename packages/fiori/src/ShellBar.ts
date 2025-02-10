@@ -1419,8 +1419,8 @@ class ShellBar extends UI5Element {
 		if (prioritizeContent) {
 			// search field was toggled, the content items should make space for it
 			const overflowItems = [...items, assistant];
-			const visibleItems = overflowItems.filter(item => item && item.classList.contains("ui5-shellbar-hidden-button"));
-			const hiddenItems = overflowItems.filter(item => item && !item.classList.contains("ui5-shellbar-hidden-button"));
+			const visibleItems = overflowItems.filter(item => item && !item.classList.contains("ui5-shellbar-hidden-button"));
+			const hiddenItems = overflowItems.filter(item => item && item.classList.contains("ui5-shellbar-hidden-button"));
 			itemsToHide = [
 				...hiddenItems,
 				...contentItems,
