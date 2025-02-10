@@ -34,15 +34,30 @@ export default function MultiComboBoxTemplate(this: MultiComboBox) {
 				expanded={this._tokenizerExpanded}
 				open={this.tokenizerOpen}
 			>
-				{this.items.filter(item => item.selected).map((item, index) => (
-					<Token
+				{this.items.map((item, index) => {
+					if (item.isGroupItem) {
+						return item.items?.map((groupItem, groupItemIndex) => {
+							if (groupItem.selected) {
+								return <Token
+									readonly={this.readonly}
+									class="ui5-multi-combobox-token"
+									data-ui5-id={groupItem._id}
+									part={`token-${groupItemIndex}`}
+									text={groupItem.text}
+								/>;
+							}
+							return null;
+						});
+					}
+
+					return <Token
 						readonly={this.readonly}
 						class="ui5-multi-combobox-token"
 						data-ui5-id={item._id}
 						part={`token-${index}`}
 						text={item.text}
-					/>
-				))}
+					/>;
+				})}
 			</Tokenizer>
 
 			<input
