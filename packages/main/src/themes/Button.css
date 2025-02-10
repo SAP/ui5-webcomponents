@@ -21,6 +21,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .ui5-button-root {
@@ -299,4 +300,41 @@ bdi {
 :host([ui5-segmented-button-item]:not(:first-child)) .ui5-button-root:focus-visible:after {
 	border-top-left-radius: var(--_ui5_button_focused_inner_border_radius);
 	border-bottom-left-radius: var(--_ui5_button_focused_inner_border_radius);
+}
+
+
+/* Button with badge */
+::slotted([slot="badge"][design="InlineText"]) {
+	pointer-events: initial;
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSmallSize);
+	padding-inline-start: 0.25rem;
+	--_ui5-tag-height: 0.625rem;
+}
+
+::slotted([slot="badge"][design="OverlayText"]) {
+	pointer-events: initial;
+	position: absolute;
+	top: 0;
+	inset-inline-end: 0;
+	margin: -0.5rem;
+	z-index: 1000;
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSmallSize);
+	--_ui5-tag-height: 0.625rem;
+}
+
+::slotted([slot="badge"][design="AttentionDot"]) {
+	pointer-events: initial;
+	content: "";
+	position: absolute;
+	top: 0;
+	inset-inline-end: 0;
+	margin: -0.25rem;
+	z-index: 1000;
+}
+
+:host(:state(has-overlay-badge)) {
+	overflow: visible;
+	margin-right: 5px;
 }

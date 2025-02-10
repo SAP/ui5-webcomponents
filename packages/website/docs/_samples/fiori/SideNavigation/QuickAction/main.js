@@ -16,6 +16,7 @@ import "@ui5/webcomponents/dist/Text.js";
 const quickAction = document.getElementById("quickAction");
 const dialog = document.getElementById("quickActionDialog");
 
+// mandatory attribute for action items that open dialog
 quickAction.accessibilityAttributes = {
 	hasPopup: "dialog"
 };

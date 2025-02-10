@@ -56,7 +56,7 @@ const getTsModeOverrides = () => {
 	};
 
 	const cypressConfiguration = {
-		"files": ["**/cypress/**/*.ts"],
+		"files": ["**/cypress/**/*.ts", "**/cypress/**/*.tsx"],
 
 		"plugins": [
 			"cypress"
@@ -69,6 +69,7 @@ const getTsModeOverrides = () => {
 		},
 		"rules": {
 			"max-nested-callbacks": 0,
+			"no-unused-expressions": 0,
 			"@typescript-eslint/no-namespace": "off",
 			"cypress/no-assigning-return-values": "error",
 			"cypress/no-unnecessary-waiting": "error",

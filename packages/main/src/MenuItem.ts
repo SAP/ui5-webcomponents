@@ -1,7 +1,7 @@
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type { AccessibilityAttributes } from "@ui5/webcomponents-base";
+import type { AccessibilityAttributes, AriaHasPopup, AriaRole } from "@ui5/webcomponents-base";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -359,9 +359,14 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	get _accInfo() {
-		const accInfoSettings = {
-			role: this.accessibilityAttributes.role || "menuitem" as const,
-			ariaHaspopup: this.hasSubmenu ? "menu" as const : undefined,
+		const accInfoSettings: {
+			role: AriaRole;
+			ariaHaspopup?: `${AriaHasPopup}`;
+			ariaKeyShortcuts?: string;
+			ariaHidden?: boolean;
+		} = {
+			role: this.accessibilityAttributes.role || "menuitem",
+			ariaHaspopup: this.hasSubmenu ? "menu" : undefined,
 			ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
 			ariaHidden: !!this.additionalText && !!this.accessibilityAttributes.ariaKeyShortcuts ? true : undefined,
 		};
