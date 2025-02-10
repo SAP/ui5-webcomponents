@@ -1,5 +1,4 @@
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import { slot, property, customElement } from "@ui5/webcomponents-base/dist/decorators.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemBase from "./ListItemBase.js";
@@ -39,6 +38,9 @@ class ListItemGroupHeader extends ListItemBase {
 	 */
 	@property()
 	accessibleName?: string;
+
+	@slot()
+	subItems!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;

@@ -6,23 +6,29 @@ export default function ListItemGroupTemplate(this: ListItemGroup, hooks?: { ite
 	const items = hooks?.items || defaultItems;
 
 	return (
-		<ul
-			class="ui5-group-li-root"
-			onDragEnter={this._ondragenter}
-			onDragOver={this._ondragover}
-			onDrop={this._ondrop}
-			onDragLeave={this._ondragleave}
-		>
+		<>
 			{this.hasHeader &&
 				<ListItemGroupHeader focused={this.focused} part="header">
 					{ this.hasFormattedHeader ? <slot name="header"></slot> : this.headerText }
+					<div
+						slot="subItems"
+						aria-owns={`${this._id}-content`}
+					></div>
 				</ListItemGroupHeader>
 			}
+			<ul class="ui5-group-li-root"
+				onDragEnter={this._ondragenter}
+				onDragOver={this._ondragover}
+				onDrop={this._ondrop}
+				onDragLeave={this._ondragleave}
+				id={`${this._id}-content`}>
 
-			{ items.call(this) }
+				{ items.call(this) }
 
-			<DropIndicator orientation="Horizontal" ownerReference={this}/>
-		</ul>
+				<DropIndicator orientation="Horizontal" ownerReference={this}/>
+			</ul>
+		</>
+
 	);
 }
 
