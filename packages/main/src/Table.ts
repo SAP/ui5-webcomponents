@@ -237,6 +237,7 @@ type TableRowActionClickEventDetail = {
  * Fired when a row action is clicked.
  *
  * @param {TableRowActionBase} action The row action instance
+ * @param {TableRow} row The row instance
  * @since 2.6.0
  * @public
  */

@@ -257,7 +257,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	_onclick() {
-		if (this.getFocusDomRef()?.matches(":has(:focus-within)")) {
+		if (this.getFocusDomRef()?.matches(":focus-within")) {
 			this._input.click();
 		}
 	}

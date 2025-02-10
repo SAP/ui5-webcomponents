@@ -1155,7 +1155,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	getTokenByRefId(refId: string) {
-		return this.tokens.find(token => token._id === refId)!;
+		return this._tokens.find(token => token._id === refId)!;
 	}
 }
 
