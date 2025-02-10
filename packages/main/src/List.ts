@@ -676,10 +676,6 @@ class List extends UI5Element {
 		return ids.length ? ids.join(" ") : undefined;
 	}
 
-	get noDataAriaLabelledBy() {
-		return `${this._id}-nodata-text`;
-	}
-
 	get ariaLabelTxt() {
 		return this._associatedLabelsRefTexts || getEffectiveAriaLabelText(this);
 	}

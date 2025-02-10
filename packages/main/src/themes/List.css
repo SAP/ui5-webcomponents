@@ -90,6 +90,7 @@
 	height: var(--_ui5_list_no_data_height);
 	font-size: var(--_ui5_list_no_data_font_size);
 	font-family: "72override", var(--sapFontFamily);
+	position: relative;
 }
 
 .ui5-list-nodata:focus::after {
@@ -98,12 +99,6 @@
 	position: absolute;
 	inset: 0.125rem;
 	pointer-events: none;
-	top: 50%;
-}
-
-:host([header-text=""]) .ui5-list-nodata:focus::after,
-:host(:not([header-text])) .ui5-list-nodata:focus::after {
-  top: 0.125rem;
 }
 
 .ui5-list-nodata-text {
