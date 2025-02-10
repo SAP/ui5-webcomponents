@@ -21,6 +21,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .ui5-button-root {
