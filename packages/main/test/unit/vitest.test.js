@@ -7,7 +7,7 @@ import testAssets from "@ui5/webcomponents/dist/bundle.esm.js";
 
 test('ui5-button should be a real web component instance', () => {
   const button = document.createElement("ui5-button");
-  // document.body.appendChild(button);
+  document.body.appendChild(button);
   expect(button).toBeTruthy();
   expect(button.constructor.getMetadata().getTag()).toBe("ui5-button");
 
