@@ -3,6 +3,89 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0...v2.8.0-rc.0) (2025-02-06)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** adjust grip minimum target size ([#10743](https://github.com/SAP/ui5-webcomponents/issues/10743)) ([aa58291](https://github.com/SAP/ui5-webcomponents/commit/aa58291abd89c20c00822c2d78bed16dc32251ee)), closes [#10669](https://github.com/SAP/ui5-webcomponents/issues/10669)
+* **ui5-timeline:** enhance keyboard navigation ([#10746](https://github.com/SAP/ui5-webcomponents/issues/10746)) ([0ebc0f4](https://github.com/SAP/ui5-webcomponents/commit/0ebc0f42d3e8ed5dec44bc4a56601718f22840e3))
+
+
+
+
+
+# [2.7.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.2...v2.7.0) (2025-02-03)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** aria-hidden is now correct ([#10752](https://github.com/SAP/ui5-webcomponents/issues/10752)) ([8bf7e76](https://github.com/SAP/ui5-webcomponents/commit/8bf7e76bf9a9946f358038c6524b2e20851879c4))
+* **ui5-side-navigation:** apply aria-haspopup to items in overflow ([#10686](https://github.com/SAP/ui5-webcomponents/issues/10686)) ([9550875](https://github.com/SAP/ui5-webcomponents/commit/9550875d65dda77118f7644e081ebf34eedf4d2a))
+* **ui5-view-settings-dialog:** clicking on the radio button/checkbox works ([#10706](https://github.com/SAP/ui5-webcomponents/issues/10706)) ([ff1bdeb](https://github.com/SAP/ui5-webcomponents/commit/ff1bdeb61886eaa129b24f02958b6e40c54775f9))
+
+
+
+
+
+# [2.7.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.1...v2.7.0-rc.2) (2025-01-30)
+
+
+### Bug Fixes
+
+* **ui5-side-navigation-item:** correct color for actions in overflow menu ([#10678](https://github.com/SAP/ui5-webcomponents/issues/10678)) ([a96d5ff](https://github.com/SAP/ui5-webcomponents/commit/a96d5ff937807c895b8956882c8f4995fcda8aa1))
+* **ui5-side-navigation:** don't toggle expanded state of items in popover ([#10691](https://github.com/SAP/ui5-webcomponents/issues/10691)) ([4c49c96](https://github.com/SAP/ui5-webcomponents/commit/4c49c96317159fbde9a69c09e8454be99a14a8c8))
+* **ui5-timeline-item:** correct wrapping on long text ([#10483](https://github.com/SAP/ui5-webcomponents/issues/10483)) ([bf4c816](https://github.com/SAP/ui5-webcomponents/commit/bf4c816a38d2206b0c472c05846d74c81edc9e6e))
+
+
+### Features
+
+* **ui5-side-navigation:** add actions and unselectable items ([#10482](https://github.com/SAP/ui5-webcomponents/issues/10482)) ([9fb9bae](https://github.com/SAP/ui5-webcomponents/commit/9fb9bae3ce086320aed83117aa8641fc06ad5587))
+* **ui5-timeline:** introduce "growing" property ([#10470](https://github.com/SAP/ui5-webcomponents/issues/10470)) ([c39c0e8](https://github.com/SAP/ui5-webcomponents/commit/c39c0e845dceadb1383c49ea8d2f60cd98df3fc0))
+* **ui5-user-menu:** introduce `show-edit-button` property ([#10619](https://github.com/SAP/ui5-webcomponents/issues/10619)) ([6adec46](https://github.com/SAP/ui5-webcomponents/commit/6adec468c2edf41df608d26511a9b7cbf58381f7))
+
+
+
+
+
+# [2.7.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.0...v2.7.0-rc.1) (2025-01-23)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** prevent layout shift with container queries ([#10578](https://github.com/SAP/ui5-webcomponents/issues/10578)) ([c2c3608](https://github.com/SAP/ui5-webcomponents/commit/c2c36080b956312e04fa8231d86e1517a58bd811)), closes [#10564](https://github.com/SAP/ui5-webcomponents/issues/10564)
+* **ui5-dynamic-page:** remove redundant padding ([#10448](https://github.com/SAP/ui5-webcomponents/issues/10448)) ([491538b](https://github.com/SAP/ui5-webcomponents/commit/491538befe698e2c8957549be9d0eccf9014bd7e)), closes [#10413](https://github.com/SAP/ui5-webcomponents/issues/10413)
+* **ui5-page:** fix floating footer layout ([#10496](https://github.com/SAP/ui5-webcomponents/issues/10496)) ([19f7857](https://github.com/SAP/ui5-webcomponents/commit/19f7857ffed9672d3560e6f5a365436119061846)), closes [#10358](https://github.com/SAP/ui5-webcomponents/issues/10358)
+* **ui5-wizard:** replace resize observer with container query ([#7996](https://github.com/SAP/ui5-webcomponents/issues/7996)) ([475c293](https://github.com/SAP/ui5-webcomponents/commit/475c293fe5797aee9dd8a160d69c7baa118a6f07)), closes [#7666](https://github.com/SAP/ui5-webcomponents/issues/7666)
+
+
+### Features
+
+* **ui5-flexible-column-layout:** add arrow icon functionality ([#10362](https://github.com/SAP/ui5-webcomponents/issues/10362)) ([61b94ae](https://github.com/SAP/ui5-webcomponents/commit/61b94aece6b41fa438df9d0e9b5dc60f28bae55d))
+* **ui5-shellbar:** introduce content slot ([#10595](https://github.com/SAP/ui5-webcomponents/issues/10595)) ([c8b8696](https://github.com/SAP/ui5-webcomponents/commit/c8b86964a8dfe906176bf106f80d278d910f3f8f))
+* **ui5-timeline-item:** introduce `state` property ([#10277](https://github.com/SAP/ui5-webcomponents/issues/10277)) ([b378604](https://github.com/SAP/ui5-webcomponents/commit/b378604e008efbf71054e72583ff8fd9fd227275))
+
+
+
+
+
+# [2.7.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2...v2.7.0-rc.0) (2025-01-16)
+
+
+### Bug Fixes
+
+* i18n decorator property definition ([#10521](https://github.com/SAP/ui5-webcomponents/issues/10521)) ([d19f4e9](https://github.com/SAP/ui5-webcomponents/commit/d19f4e99bad74432bff21587da43a5844f17f8cf))
+* **ui5-view-settings-dialog:** adjust reset button announcement ([#10320](https://github.com/SAP/ui5-webcomponents/issues/10320)) ([42b29f3](https://github.com/SAP/ui5-webcomponents/commit/42b29f3eb6c435959ee67551d5f9f450995370ce)), closes [#10191](https://github.com/SAP/ui5-webcomponents/issues/10191)
+
+
+### Features
+
+* **ui5-side-navigation:** update existing design for Horizon theme ([#10337](https://github.com/SAP/ui5-webcomponents/issues/10337)) ([d5eff51](https://github.com/SAP/ui5-webcomponents/commit/d5eff51f56042d5fbf94e87d6bd94cdbe2d55982))
+
+
+
+
+
 ## [2.6.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2-rc.0...v2.6.2) (2025-01-09)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

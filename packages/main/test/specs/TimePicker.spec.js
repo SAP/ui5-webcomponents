@@ -11,7 +11,7 @@ describe("TimePicker general interaction", () => {
 
 		await setTimeButton.click();
 
-		assert.equal(await timepicker.shadow$("ui5-input").getValue(), "3:16:16 ч.");
+		assert.equal(await timepicker.shadow$("ui5-datetime-input").getValue(), "3:16:16 ч.");
 	});
 
 	it("tests clocks value", async () => {
@@ -20,7 +20,7 @@ describe("TimePicker general interaction", () => {
 
 		// act
 		await timepicker.setProperty("value", "11:12:13");
-		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+		await timepicker.shadow$("ui5-datetime-input").$(".ui5-time-picker-input-icon-button").click();
 
 		const hoursClockValue = await timepickerPopover.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-ui5-clock="hours"]`).getProperty("selectedValue");
 		const minutesClockValue = await timepickerPopover.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-ui5-clock="minutes"]`).getProperty("selectedValue");
@@ -37,25 +37,25 @@ describe("TimePicker general interaction", () => {
 		const picker = await timepicker.shadow$("ui5-responsive-popover");
 
 		// act
-		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+		await timepicker.shadow$("ui5-datetime-input").$(".ui5-time-picker-input-icon-button").click();
 		await browser.keys("Escape");
-		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+		await timepicker.shadow$("ui5-datetime-input").$(".ui5-time-picker-input-icon-button").click();
 
 		// hours clock is displayed
 		for (let i=1; i<= 10; i++) await browser.keys("ArrowDown"); // Select 02
 
 		// switch to minutes clock
-		await browser.keys("Tab");
+		await browser.keys("Space");
 		for (let i=1; i<= 20; i++) await browser.keys("ArrowDown"); // Select 40
 
 		// switch to seconds clock
-		await browser.keys("Tab");
+		await browser.keys("Space");
 		for (let i=1; i<= 4; i++) await browser.keys("ArrowUp"); // Select 5
 
 		await browser.keys("Tab"); // Move to submit
 		await browser.keys("Enter"); // Enter on submit
 
-		const textValue = await timepicker.shadow$("ui5-input").getValue();
+		const textValue = await timepicker.shadow$("ui5-datetime-input").getValue();
 		assert.strictEqual(textValue.substring(0,2), "02", "Hours are equal");
 		assert.strictEqual(textValue.substring(3,5), "40", "Minutes are equal");
 		assert.strictEqual(textValue.substring(6,8), "05", "Seconds are equal");
@@ -68,12 +68,12 @@ describe("TimePicker general interaction", () => {
 		await browser.keys("123123123");
 		await browser.keys("Enter");
 
-		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("valueState"), "Negative", "The value state is on error");
+		assert.strictEqual(await timepicker.shadow$("ui5-datetime-input").getProperty("valueState"), "Negative", "The value state is on error");
 	});
 
 	it("tests change event", async () => {
 		const timepicker = await browser.$("#timepickerChange");
-		const input = await timepicker.shadow$("ui5-input");
+		const input = await timepicker.shadow$("ui5-datetime-input");
 		const icon = await input.$("ui5-icon");
 		const changeResult = await browser.$("#changeResult");
 
@@ -128,13 +128,13 @@ describe("TimePicker general interaction", () => {
 
 		// act
 		await timepicker.click();
-		while(await timepicker.shadow$("ui5-input").getProperty("value") !== ""){
+		while(await timepicker.shadow$("ui5-datetime-input").getProperty("value") !== ""){
 			await browser.keys("Backspace");
 		}
 		await button.click();
 
 		// assert
-		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("valueState"), "None", "The value state is None");
+		assert.strictEqual(await timepicker.shadow$("ui5-datetime-input").getProperty("valueState"), "None", "The value state is None");
 	});
 
 	it("tests input keyboard handling", async () => {
@@ -146,27 +146,27 @@ describe("TimePicker general interaction", () => {
 		await browser.keys('Shift');
 
 		// assert
-		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("value"), "02:41:05", "The value of minutes is +1");
+		assert.strictEqual(await timepicker.shadow$("ui5-datetime-input").getProperty("value"), "02:41:05", "The value of minutes is +1");
 		// act
 		await timepicker.click();
 		await browser.keys(['Shift', 'PageDown']);
 		await browser.keys('Shift');
 
 		// assert
-		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("value"), "02:40:05", "The value of minutes is -1");
+		assert.strictEqual(await timepicker.shadow$("ui5-datetime-input").getProperty("value"), "02:40:05", "The value of minutes is -1");
 
 		// act
 		await timepicker.click();
 		await browser.keys('PageUp');
 
 		// assert
-		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("value"), "03:40:05", "The value of hours is +1");
+		assert.strictEqual(await timepicker.shadow$("ui5-datetime-input").getProperty("value"), "03:40:05", "The value of hours is +1");
 		// act
 		await timepicker.click();
 		await browser.keys('PageDown');
 
 		// assert
-		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("value"), "02:40:05", "The value of hours is -1");
+		assert.strictEqual(await timepicker.shadow$("ui5-datetime-input").getProperty("value"), "02:40:05", "The value of hours is -1");
 
 		// act
 		await timepicker.click();
@@ -175,7 +175,7 @@ describe("TimePicker general interaction", () => {
 		await browser.keys('Control');
 
 		// assert
-		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("value"), "02:40:06", "The value of seconds is +1");
+		assert.strictEqual(await timepicker.shadow$("ui5-datetime-input").getProperty("value"), "02:40:06", "The value of seconds is +1");
 		// act
 		await timepicker.click();
 		await browser.keys(['Shift', 'Control', 'PageDown']);
@@ -183,14 +183,14 @@ describe("TimePicker general interaction", () => {
 		await browser.keys('Control');
 
 		// assert
-		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("value"), "02:40:05", "The value of seconds is -1");
+		assert.strictEqual(await timepicker.shadow$("ui5-datetime-input").getProperty("value"), "02:40:05", "The value of seconds is -1");
 	});
 
 	it("test closing the picker with the keyboard", async () => {
 		const timepicker = await browser.$("#timepicker3");
 
 		// act
-		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+		await timepicker.shadow$("ui5-datetime-input").$(".ui5-time-picker-input-icon-button").click();
 		await browser.keys(["Alt", "ArrowUp"]);
 
 		const timepickerPopover = await timepicker.shadow$("ui5-responsive-popover");
@@ -210,7 +210,7 @@ describe("TimePicker general interaction", () => {
 		await browser.keys("Enter");
 
 		// assert that the value in the input is different than the string 'now'
-		assert.notStrictEqual(await timepicker.shadow$("ui5-input").getProperty("value"), "now", "the value is not 'now'");
+		assert.notStrictEqual(await timepicker.shadow$("ui5-datetime-input").getProperty("value"), "now", "the value is not 'now'");
 	});
 
 	it("opening time picker's value-help, sets the 'open' property to true", async () => {
@@ -218,7 +218,7 @@ describe("TimePicker general interaction", () => {
 		const timepickerPopover = await timepicker.shadow$("ui5-responsive-popover");
 
 		// act
-		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+		await timepicker.shadow$("ui5-datetime-input").$(".ui5-time-picker-input-icon-button").click();
 
 		assert.strictEqual(await timepicker.getProperty("open"), true, "The timepicker's open property is set to true");
 		assert.strictEqual(await timepickerPopover.getProperty("open"), true, "The popover is opened");
@@ -248,14 +248,14 @@ describe("TimePicker general interaction", () => {
 
 	it("input should have accessible name", async () => {
 		const timepicker = await browser.$("#timepickerAccessibleNameRef");
-		const innerInput = await timepicker.shadow$("ui5-input").shadow$("input");
+		const innerInput = await timepicker.shadow$("ui5-datetime-input").shadow$("input");
 
 		assert.strictEqual(await innerInput.getAttribute("aria-label"), "Pick a time", "Input aria-label attribute is correct.");
 	});
 
 	it("should apply aria-label from the accessibleNameRef property", async () => {
 		const timepicker = await browser.$("#timepickerAccessibleName");
-		const innerInput = await timepicker.shadow$("ui5-input").shadow$("input");
+		const innerInput = await timepicker.shadow$("ui5-datetime-input").shadow$("input");
 
 		assert.strictEqual(await innerInput.getAttribute("aria-label"), "Pick a time", "Input aria-label attribute is correct.");
 	});

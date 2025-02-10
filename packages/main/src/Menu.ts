@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -8,6 +7,10 @@ import {
 	isLeft,
 	isRight,
 	isEnter,
+	isTabNext,
+	isTabPrevious,
+	isDown,
+	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	isPhone,
@@ -82,6 +85,10 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * in the currently clicked menu item.
  * - `Arrow Left` or `Escape` - Closes the currently opened sub-menu.
  *
+ * when there is `endContent` :
+ * - `Arrow Left` or `ArrowRight` - Navigate between the menu item actions and the menu item itself
+ * - `Arrow Up` / `Arrow Down` - Navigates up and down the currently visible menu items
+ *
  * Note: if the text ditrection is set to Right-to-left (RTL), `Arrow Right` and `Arrow Left` functionality is swapped.
  *
  * ### ES6 Module Import
@@ -103,42 +110,57 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * Fired when an item is being clicked.
  *
  * **Note:** Since 1.17.0 the event is preventable, allowing the menu to remain open after an item is pressed.
- * @allowPreventDefault
  * @param { HTMLElement } item The currently clicked menu item.
  * @param { string } text The text of the currently clicked menu item.
  * @public
  */
-@event("item-click")
+@event("item-click", {
+	cancelable: true,
+})
 
 /**
- * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. **This event does not bubble.**
+ * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening.
  *
  * **Note:** Since 1.14.0 the event is also fired before a sub-menu opens.
  * @public
- * @allowPreventDefault
  * @since 1.10.0
  * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
  */
-@event("before-open")
+@event("before-open", {
+	bubbles: true,
+	cancelable: true,
+})
 
 /**
- * Fired after the menu is opened. **This event does not bubble.**
+ * Fired after the menu is opened.
  * @public
  * @since 1.10.0
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
 
 /**
- * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. **This event does not bubble.**
+ * Fired when the menu is being closed.
+ * @private
+ */
+@event("close-menu", {
+	bubbles: true,
+})
+
+/**
+ * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing.
  * @public
- * @allowPreventDefault
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  * @since 1.10.0
  */
-@event("before-close")
+@event("before-close", {
+	bubbles: true,
+	cancelable: true,
+})
 
 /**
- * Fired after the menu is closed. **This event does not bubble.**
+ * Fired after the menu is closed.
  * @public
  * @since 1.10.0
  */
@@ -151,6 +173,7 @@ class Menu extends UI5Element {
 		"open": void,
 		"before-close": MenuBeforeCloseEventDetail,
 		"close": void,
+		"close-menu": void,
 	}
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
@@ -254,9 +277,9 @@ class Menu extends UI5Element {
 			return;
 		}
 
-		this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
+		this.fireDecoratorEvent("before-open", {
 			item,
-		}, false, false);
+		});
 		item._popover.opener = item;
 		item._popover.open = true;
 		item.selected = true;
@@ -317,13 +340,13 @@ class Menu extends UI5Element {
 		const item = e.detail.item as MenuItem;
 
 		if (!item._popover) {
-			const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
+			const prevented = !this.fireDecoratorEvent("item-click", {
 				"item": item,
 				"text": item.text || "",
-			}, true, false);
+			});
 
 			if (!prevented && this._popover) {
-				item.fireEvent("close-menu", {});
+				item.fireDecoratorEvent("close-menu");
 			}
 		} else {
 			this._openItemSubMenu(item);
@@ -331,29 +354,47 @@ class Menu extends UI5Element {
 	}
 
 	_itemKeyDown(e: KeyboardEvent) {
-		if (!isLeft(e) && !isRight(e)) {
-			return;
-		}
-
-		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
-		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
+		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
 		const item = e.target as MenuItem;
 		const parentElement = item.parentElement as MenuItem;
+		const shouldItemNavigation = isUp(e) || isDown(e);
+		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
+		const shouldCloseMenu = !shouldItemNavigation && !shouldOpenMenu && parentElement.hasAttribute("ui5-menu-item");
 
-		if (isEnter(e)) {
-			e.preventDefault();
-		}
-		if (shouldOpenMenu) {
-			this._openItemSubMenu(item);
-		} else if (shouldCloseMenu && parentElement.hasAttribute("ui5-menu-item") && parentElement._popover) {
-			parentElement._popover.open = false;
-			parentElement.selected = false;
-			(parentElement._popover.opener as HTMLElement)?.focus();
+		if (item.hasAttribute("ui5-menu-item")) {
+			if (isEnter(e) || isTabNextPrevious) {
+				e.preventDefault();
+			}
+
+			if (isRight(e) || isLeft(e)) {
+				item._navigateToEndContent(isLeft(e));
+			}
+
+			if (shouldOpenMenu) {
+				this._openItemSubMenu(item);
+			} else if ((shouldCloseMenu || isTabNextPrevious) && parentElement._popover) {
+				parentElement._popover.open = false;
+				parentElement.selected = false;
+				parentElement._popover.focusOpener();
+			}
+		} else if (isUp(e)) {
+			this._navigateOutOfEndContent(parentElement);
+		} else if (isDown(e)) {
+			this._navigateOutOfEndContent(parentElement, true);
 		}
 	}
 
+	_navigateOutOfEndContent(menuItem: MenuItem, isDownwards?: boolean) {
+		const opener = menuItem?.parentElement as MenuItem | Menu;
+		const currentIndex = opener._menuItems.indexOf(menuItem);
+		const nextItem = isDownwards ? opener._menuItems[currentIndex + 1] : opener._menuItems[currentIndex - 1];
+		const itemToFocus = nextItem || opener._menuItems[currentIndex];
+
+		itemToFocus.focus();
+	}
+
 	_beforePopoverOpen(e: CustomEvent) {
-		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, true);
+		const prevented = !this.fireDecoratorEvent("before-open", {});
 
 		if (prevented) {
 			this.open = false;
@@ -363,11 +404,11 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this._menuItems[0]?.focus();
-		this.fireEvent("open", {}, false, true);
+		this.fireDecoratorEvent("open");
 	}
 
-	_beforePopoverClose(e: UI5CustomEvent<ResponsivePopover, "before-close">) {
-		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, true);
+	_beforePopoverClose(e: CustomEvent) {
+		const prevented = !this.fireDecoratorEvent("before-close", { escPressed: e.detail.escPressed });
 
 		if (prevented) {
 			this.open = true;

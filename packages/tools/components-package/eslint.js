@@ -42,8 +42,10 @@ const getTsModeOverrides = () => {
 
 	const tsxConfiguration = JSON.parse(JSON.stringify(tsConfiguration));
 	tsxConfiguration.files = ["*.tsx"];
+	tsxConfiguration.plugins.push("jsx-no-leaked-values");
 	tsxConfiguration.rules = {
 		...tsxConfiguration.rules,
+		"jsx-no-leaked-values/jsx-no-leaked-values": "error",
 		"@typescript-eslint/unbound-method": "off", // to be able to attach on* listeners
 		"@typescript-eslint/no-misused-promises": "off", // to be able to have async event listeners
 		"operator-linebreak": "off",
@@ -54,7 +56,7 @@ const getTsModeOverrides = () => {
 	};
 
 	const cypressConfiguration = {
-		"files": ["**/cypress/**/*.ts"],
+		"files": ["**/cypress/**/*.ts", "**/cypress/**/*.tsx"],
 
 		"plugins": [
 			"cypress"
@@ -67,6 +69,7 @@ const getTsModeOverrides = () => {
 		},
 		"rules": {
 			"max-nested-callbacks": 0,
+			"no-unused-expressions": 0,
 			"@typescript-eslint/no-namespace": "off",
 			"cypress/no-assigning-return-values": "error",
 			"cypress/no-unnecessary-waiting": "error",
