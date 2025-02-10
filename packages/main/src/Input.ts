@@ -573,6 +573,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_shouldAutocomplete?: boolean;
 	_enterKeyDown?: boolean;
 	_isKeyNavigation?: boolean;
+	_indexOfSelectedItem: number;
 	_selectedText?: string;
 	_clearIconClicked?: boolean;
 	_focusedAfterClear: boolean;
@@ -638,6 +639,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._isLatestValueFromSuggestions = false;
 
 		this._isChangeTriggeredBySuggestion = false;
+
+		this._indexOfSelectedItem = -1;
 
 		this._handleResizeBound = this._handleResize.bind(this);
 
@@ -717,6 +720,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			const item = this._getFirstMatchingItem(value);
 			if (item) {
 				this._handleTypeAhead(item);
+				this._selectMatchingItem(item);
 			}
 		}
 	}
@@ -816,15 +820,22 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._enterKeyDown = false;
 	}
 
+	get currentItemIndex() {
+		const allItems = this.Suggestions?._getItems() as IInputSuggestionItemSelectable[];
+		const currentItem = allItems.find(item => { return item.selected || item.focused; });
+		const indexOfCurrentItem = currentItem ? allItems.indexOf(currentItem) : -1;
+		return indexOfCurrentItem;
+	}
+
 	_handleUp(e: KeyboardEvent) {
 		if (this.Suggestions?.isOpened()) {
-			this.Suggestions.onUp(e);
+			this.Suggestions.onUp(e, this.currentItemIndex);
 		}
 	}
 
 	_handleDown(e: KeyboardEvent) {
 		if (this.Suggestions?.isOpened()) {
-			this.Suggestions.onDown(e);
+			this.Suggestions.onDown(e, this.currentItemIndex);
 		}
 	}
 
@@ -1166,6 +1177,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.Suggestions?.onItemPress(e);
 	}
 
+	_selectMatchingItem(item: IInputSuggestionItemSelectable) {
+		item.selected = true;
+	}
+
 	_handleTypeAhead(item: IInputSuggestionItemSelectable) {
 		const value = item.text ? item.text : "";
 
@@ -1207,11 +1222,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.focused = false;
 		}
 
-		if (this._changeToBeFired) {
+		if (this._changeToBeFired && !this._isChangeTriggeredBySuggestion) {
 			this.previousValue = this.value;
 			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
-			this._changeToBeFired = false;
+		} else {
+			this._isChangeTriggeredBySuggestion = false;
 		}
+		this._changeToBeFired = false;
 
 		this.open = false;
 		this.isTyping = false;
@@ -1409,7 +1426,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		if (shouldFireSelectionChange) {
 			this.fireSelectionChange(suggestionItem, true);
 		}
-
 		this.acceptSuggestion(suggestionItem, keyboardUsed);
 	}
 
