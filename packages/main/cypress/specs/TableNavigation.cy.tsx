@@ -1,62 +1,62 @@
-import { html } from "lit";
-
-import "../../src/Table.js";
-import "../../src/TableHeaderRow.js";
-import "../../src/TableHeaderCell.js";
-import "../../src/TableRow.js";
-import "../../src/TableCell.js";
-import "../../src/TableGrowing.js";
+import Table from "../../src/Table.js";
+import TableHeaderRow from "../../src/TableHeaderRow.js";
+import TableHeaderCell from "../../src/TableHeaderCell.js";
+import TableRow from "../../src/TableRow.js";
+import TableCell from "../../src/TableCell.js";
+import TableGrowing from "../../src/TableGrowing.js";
 
 describe("Table - Keyboard Navigation", () => {
 	beforeEach(() => {
-		cy.mount(html`
-			<input id="before-table1" type="number" value="0">
-			<ui5-table id="table0">
-                <ui5-table-growing id="growing" type="Button" slot="features"></ui5-table-growing>
-				<ui5-table-header-row slot="headerRow">
-                    <ui5-table-header-cell><a id="row0-link" href="test.html">Link</a></ui5-table-header-cell>
-                    <ui5-table-header-cell>Header2</ui5-table-header-cell>
-                    <ui5-table-header-cell>Header3</ui5-table-header-cell>
-                    <ui5-table-header-cell>Header4</ui5-table-header-cell>
-			    </ui5-table-header-row>
-				<ui5-table-row>
-                    <ui5-table-cell>Row1Cell0</ui5-table-cell>
-                    <ui5-table-cell><input id="row1-input"></ui5-table-cell>
-                    <ui5-table-cell><button id="row1-button">Button 1</button></ui5-table-cell>
-                    <ui5-table-cell>Row1Cell3</ui5-table-cell>
-                </ui5-table-row>
-				<ui5-table-row id="interactive-row" interactive>
-                    <ui5-table-cell>Row2Cell0</ui5-table-cell>
-                    <ui5-table-cell><input id="row2-input"></ui5-table-cell>
-                    <ui5-table-cell><button id="row2-button">Button 2</button></ui5-table-cell>
-                    <ui5-table-cell>Row2Cell3</ui5-table-cell>
-                </ui5-table-row>
-				<ui5-table-row id="notinteractive-row"> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell> Here the table structure is broken. There is only one cell in row 5. </ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-				<ui5-table-row> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> <ui5-table-cell></ui5-table-cell> </ui5-table-row>
-			</ui5-table>
-			<input id="after-table1">
-		`);
+		cy.mount(
+			<>
+				<input id="before-table1" type="Number" value="0"/>
+				<Table id="table0">
+					<TableGrowing id="growing" type="Button" slot="features"></TableGrowing>
+					<TableHeaderRow slot="headerRow">
+						<TableHeaderCell><a id="row0-link" href="test.html">Link</a></TableHeaderCell>
+						<TableHeaderCell>Header2</TableHeaderCell>
+						<TableHeaderCell>Header3</TableHeaderCell>
+						<TableHeaderCell>Header4</TableHeaderCell>
+					</TableHeaderRow>
+					<TableRow>
+						<TableCell>Row1Cell0</TableCell>
+						<TableCell><input id="row1-input"/></TableCell>
+						<TableCell><button id="row1-button">Button 1</button></TableCell>
+						<TableCell>Row1Cell3</TableCell>
+					</TableRow>
+					<TableRow id="interactive-row" interactive>
+						<TableCell>Row2Cell0</TableCell>
+						<TableCell><input id="row2-input"/></TableCell>
+						<TableCell><button id="row2-button">Button 2</button></TableCell>
+						<TableCell>Row2Cell3</TableCell>
+					</TableRow>
+					<TableRow id="notinteractive-row"> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell> Here the table structure is broken. There is only one cell in row 5. </TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+					<TableRow> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> <TableCell></TableCell> </TableRow>
+				</Table>
+				<input id="after-table1"/>
+			</>
+		);
 
 		cy.document().then(doc => {
 			const table = doc.getElementById("table0");
