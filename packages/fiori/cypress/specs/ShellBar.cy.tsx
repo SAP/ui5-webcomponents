@@ -11,6 +11,8 @@ import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Switch from "@ui5/webcomponents/dist/Switch.js";
 
+const RESIZE_THROTTLE_RATE = 300; // ms
+
 describe("Responsiveness", () => {
 	function basicTemplate() {
 		return <ShellBar
@@ -92,8 +94,9 @@ describe("Responsiveness", () => {
 	beforeEach(() => {
 		cy.mount(basicTemplate()).as("html");
 
+		// breakpoints are set on resize event
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(1000);
+		cy.wait(RESIZE_THROTTLE_RATE);
 
 		cy.get("#shellbar")
 			.as("shellbar");
@@ -193,9 +196,6 @@ describe("Responsiveness", () => {
 
 	it("tests S Breakpoint and overflow 510px", () => {
 		cy.viewport(510, 1680);
-
-		cy.get("#shellbar")
-			.as("shellbar");
 
 		cy.get("@shellbar").should("have.prop", "breakpointSize", "S");
 
