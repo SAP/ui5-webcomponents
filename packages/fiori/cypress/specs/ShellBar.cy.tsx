@@ -96,15 +96,8 @@ describe("Responsiveness", () => {
 			.as("shellbar");
 	});
 
-	afterEach(() => {
-		cy.viewport(1920, 1080);
-	});
-
 	it("tests XL Breakpoint 1920px", () => {
 		cy.viewport(1920, 1080);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(500);
 
 		cy.get("@shellbar").should("have.prop", "breakpointSize", "XL");
 
@@ -131,9 +124,6 @@ describe("Responsiveness", () => {
 
 	it("tests M Breakpoint and overflow 500px", () => {
 		cy.viewport(500, 1680);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(500);
 
 		cy.get("@shellbar").shadow().find(".ui5-shellbar-overflow-button").as("overflowButton");
 		cy.get("@shellbar").shadow().find(".ui5-shellbar-search-button").as("searchIcon");
@@ -178,9 +168,6 @@ describe("Responsiveness", () => {
 
 	it("tests M Breakpoint 870px", () => {
 		cy.viewport(870, 1680);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(500);
 
 		cy.get("@shellbar").should("have.prop", "breakpointSize", "M");
 
