@@ -64,7 +64,7 @@ export default function MultiComboBoxTemplate(this: MultiComboBox) {
 				placeholder={this._getPlaceholder}
 				disabled={this.disabled}
 				readonly={this.readonly}
-				// value-state={this.valueState}
+				value-state={this.valueState}
 				onInput={this._inputLiveChange}
 				onChange={this._inputChange}
 				onKeyDown={this._onkeydown}
