@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.2](https://github.com/SAP/ui5-webcomponents/compare/v2.5.1...v2.5.2) (2025-02-10)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** add subtitle interaction ([e3d36ce](https://github.com/SAP/ui5-webcomponents/commit/e3d36ce927e00cef6c843c2af10c321758a647e7))
+* **ui5-dynamic-page:** correct z-index for dynamic page header ([#10425](https://github.com/SAP/ui5-webcomponents/issues/10425)) ([2657eb7](https://github.com/SAP/ui5-webcomponents/commit/2657eb719e7af04d0f6ad8010fbd7673fe1d6dfd)), closes [#10399](https://github.com/SAP/ui5-webcomponents/issues/10399)
+
+
+
+
+
 ## [2.5.1](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0...v2.5.1) (2024-12-17)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
