@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { customElement, property, slot } from "@ui5/webcomponents-base/decorators.js";
-import jsxRenderer from "@ui5/webcomponents-base/renderer/JsxRenderer.js";
+import { customElement, property, slot } from "@ui5/webcomponents-base/dist/decorators.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import SettingViewTemplate from "./SettingViewTemplate.js";
 import SettingViewCss from "./generated/themes/SettingView.css.js";
 
