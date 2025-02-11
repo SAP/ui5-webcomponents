@@ -122,7 +122,7 @@ describe("Input Tests", () => {
 			.shadow()
 			.find("[ui5-li-group-header]")
 			.shadow()
-			.find("ul")
+			.find("li")
 			.should("not.have.attr", "tabindex", "0");
 	});
 });
