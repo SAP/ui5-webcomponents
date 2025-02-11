@@ -485,43 +485,6 @@ class NotificationListItem extends NotificationListItemBase {
 		if (isF10Shift(e)) {
 			e.preventDefault();
 		}
-
-		this.focusSameItemOnNextRow(e);
-	}
-
-	focusSameItemOnNextRow(e: KeyboardEvent) {
-		const target = e.target as HTMLElement;
-		if (!target || target.hasAttribute("ui5-menu-item")) {
-			return;
-		}
-
-		const isFocusWithin = this.matches(":focus-within");
-		if (!isFocusWithin || (!isUp(e) && !isDown(e))) {
-			return;
-		}
-
-		e.preventDefault();
-		e.stopImmediatePropagation();
-
-		const list = this.closest("[ui5-notification-list]") as NotificationList;
-		if (!list) {
-			return;
-		}
-
-		const navItems = list.getEnabledItems();
-		// @ts-expect-error TOFIX strictEvents
-		const index = navItems.indexOf(this) + (isUp(e) ? -1 : 1);
-		const nextItem = navItems[index] as NotificationListItemBase;
-		if (!nextItem) {
-			return;
-		}
-
-		const sameItemOnNextRow = nextItem.getHeaderDomRef()!.querySelector(`.${target.className}`) as HTMLElement;
-		if (sameItemOnNextRow && sameItemOnNextRow.offsetParent) {
-			sameItemOnNextRow.focus();
-		} else {
-			nextItem.focus();
-		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {

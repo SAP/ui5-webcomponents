@@ -3,6 +3,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import NotificationListGroupItem from "./NotificationListGroupItem.js";
+import { isDown, isUp } from "@ui5/webcomponents-base/dist/Keys.js";
+import type NotificationListItemBase from "./NotificationListItemBase.js";
 
 /**
  * @class
@@ -35,6 +37,42 @@ class NotificationListInternal extends List {
 		});
 
 		return items;
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		super._onkeydown(e);
+		this.focusSameItemOnNextRow(e);
+	}
+
+	focusSameItemOnNextRow(e: KeyboardEvent) {
+		const target = e.target as HTMLElement;
+		const shadowTarget = target.shadowRoot!.activeElement as HTMLElement;
+		if (!target || target.hasAttribute("ui5-menu-item")) {
+			return;
+		}
+
+		const isFocusWithin = target.matches(":focus-within");
+		if (!isFocusWithin || (!isUp(e) && !isDown(e))) {
+			return;
+		}
+
+		e.preventDefault();
+		e.stopImmediatePropagation();
+
+		const navItems = this.getEnabledItems();
+		// @ts-expect-error TOFIX strictEvents
+		const index = navItems.indexOf(target) + (isUp(e) ? -1 : 1);
+		const nextItem = navItems[index] as NotificationListItemBase;
+		if (!nextItem) {
+			return;
+		}
+
+		const sameItemOnNextRow = nextItem.getHeaderDomRef()!.querySelector(`.${shadowTarget.className}`) as HTMLElement;
+		if (sameItemOnNextRow && sameItemOnNextRow.offsetParent) {
+			sameItemOnNextRow.focus();
+		} else {
+			nextItem.focus();
+		}
 	}
 }
 
