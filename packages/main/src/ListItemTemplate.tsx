@@ -145,7 +145,7 @@ function selectionElement(this: ListItem) {
 				onChange={this.onMultiSelectionComponentPress}
 			/>
 		);
-	case this.renderDeleteButton:
+	case this.modeDelete:
 		return (
 			<div class="ui5-li-deletebtn">
 				{
@@ -160,7 +160,6 @@ function selectionElement(this: ListItem) {
 								id={`${this._id}-deleteSelectionElement`}
 								design="Transparent"
 								icon={declineIcon}
-								disabled={this.disableDeleteButton}
 								onClick={this.onDelete}
 								tooltip={this.deleteText}
 							/>

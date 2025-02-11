@@ -41,6 +41,7 @@ import SettingItem from "./SettingItem.js";
 import SettingsDialog from "./Settings.js";
 import SettingView from "./SettingView.js";
 import Timeline from "./Timeline.js";
+import TimelineGroupItem from "./TimelineGroupItem.js";
 import NavigationLayout from "./NavigationLayout.js";
 import UploadCollection from "./UploadCollection.js";
 import UploadCollectionItem from "./UploadCollectionItem.js";
