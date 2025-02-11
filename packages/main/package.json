@@ -32,6 +32,7 @@
     "test:cypress:suite-1": "nps test-cy-ci-suite-1",
     "test:cypress:suite-2": "nps test-cy-ci-suite-2",
     "test:cypress:open": "nps test-cy-open",
+    "test:cypress:single": "nps test-cy-single",
     "test:vitest": "yarn vitest run",
     "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
     "create-ui5-element": "wc-create-ui5-element",
