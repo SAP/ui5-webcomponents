@@ -6,4 +6,4 @@ module.exports = {
 		emptyOutDir: false,
 	},
 	plugins: [virtualIndex()],
-};;
+};
