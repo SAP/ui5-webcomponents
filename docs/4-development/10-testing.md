@@ -444,3 +444,21 @@ yarn test:cypress
 # start a static server in the `coverage` folder and inspect the results in the browser
 http-server coverage
 ```
+
+## Guideliness
+
+### General Principles
+Focus on testing behavior rather than implementation details to ensure your tests remain useful even as the codebase evolves. Avoid fine-grained tests that tightly couple with implementation details, as they make refactoring difficult.
+
+### Write Tests That
+- Verify the expected behavior of the component, not its internal workings.
+- Mimic real user interactions (clicks, typing, form submissions) instead of testing component internals.
+- Are independent (each test should stand alone and not rely on the outcome of another test).
+- Are fast and run efficiently to avoid slowing down development.
+
+
+### Avoid Tests That
+- Directly assert implementation details.
+- Know too much of about the internals of a component, as minor refactors will require unnecessary test changes.
+- Are too slow or too broad, making it difficult to pinpoint failures.
+- Are written just for high coverage—coverage is useful for identifying untested paths, but it should not be the goal in itself.
