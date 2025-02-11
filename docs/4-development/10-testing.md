@@ -449,9 +449,12 @@ http-server coverage
 
 ### General Principles
 
-Focus on testing behavior rather than implementation details to ensure your tests remain useful even as the codebase evolves. Avoid fine-grained tests that tightly couple with implementation details, as they make refactoring difficult.
+- Focus on testing behavior rather than implementation details to ensure your tests remain useful even as the codebase evolves.
+- Avoid fine-grained tests that tightly couple with implementation details, as they make refactoring difficult.
+- Write feature-centric tests with focus on how a feature behaves as a whole, on the available user interactions, rather than testing individual implementation details.
 
 ### Write Tests That
+
 - Verify the expected behavior of the component, not its internal workings.
 - Mimic real user interactions (clicks, typing, form submissions) instead of testing component internals.
 
@@ -518,6 +521,6 @@ it("tests initial rendering", () => {
     .should("exist");
 });
 ```
-
+- Over-relying on `cy.wait()` — use assertions `cy.get().should()`, instead of fixed delays
 - Are too slow or too broad, making it difficult to pinpoint failures.
 - Are written just for high coverage—coverage is useful for identifying untested paths, but it should not be the goal in itself.
