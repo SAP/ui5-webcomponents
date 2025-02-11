@@ -223,10 +223,6 @@ class SettingItem extends UI5Element {
 		return this.tooltip ? this.tooltip : this.text;
 	}
 
-	get _isPhone() {
-		return isPhone();
-	}
-
 	get _icon() {
 		return `sap-icon://${this.icon}`;
 	}

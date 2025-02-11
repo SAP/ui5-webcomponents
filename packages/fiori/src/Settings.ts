@@ -17,6 +17,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type { PopupBeforeCloseEventDetail } from "@ui5/webcomponents/dist/Popup.js";
+import { isPhone, isTablet, isCombi } from "@ui5/webcomponents-base/dist/Device.js";
 import SettingsTemplate from "./SettingsTemplate.js";
 import type SettingItem from "./SettingItem.js";
 import SettingsCss from "./generated/themes/Settings.css.js";
@@ -293,6 +294,10 @@ class Settings extends UI5Element {
 
 	get _selectedItemSlotName() {
 		return this._selectedSetting ? this._selectedSetting._individualSlot : "";
+	}
+
+	get _isTouch() {
+		return isPhone() || (isTablet() && !isCombi());
 	}
 
 	_handleCloseButtonClick() {
