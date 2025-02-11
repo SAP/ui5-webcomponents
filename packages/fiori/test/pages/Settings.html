@@ -10,6 +10,7 @@
 		}
 
 	</script>
+	<link rel="stylesheet" type="text/css" href="./styles/Settings.css">
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 </head>
@@ -37,18 +38,27 @@
 <ui5-settings id="setting" header-title="Settings" show-search-field>
 	<ui5-setting-item icon="user-settings" text="User Account" tooltip="User Account" header-title="User Account">
 		<ui5-setting-view slot="pages">
-			<ui5-icon name="person-placeholder"></ui5-icon><ui5-title level="H3" size="H3" style='display:inline; margin:0.5rem'>Alain Chevalier</ui5-title>
-			<div>
-				<ui5-label>Name:</ui5-label><ui5-text style="display: inline;">Alain Chevalier</ui5-text><br/>
-				<ui5-label>Email:</ui5-label><ui5-text style="display: inline;">alian.chevalier@sap.com</ui5-text><br/>
-				<ui5-label>Server:</ui5-label><ui5-text style="display: inline;">delivery-001.sap.com</ui5-text><br/>
+			<ui5-icon name="person-placeholder"></ui5-icon><ui5-title level="H3" size="H3" class="ua-name">Alain Chevalier</ui5-title>
+			<div class="container">
+				<div class="ua-info-item">
+					<ui5-label for="name">Name:</ui5-label>
+					<ui5-text id="name">Alain Chevalier</ui5-text>
+				</div>
+				<div class="ua-info-item">
+					<ui5-label for="email">Email:</ui5-label>
+					<ui5-text id="email">alian.chevalier@sap.com</ui5-text>
+				</div>
+				<div class="ua-info-item">
+					<ui5-label for="server">Server:</ui5-label>
+					<ui5-text id="server">delivery-001.sap.com</ui5-text>
+				</div>
 			</div>
-			<ui5-label>Personalization</ui5-label><br/>
+			<ui5-label for="reset-all-button">Personalization</ui5-label><br/>
 			<ui5-button id="reset-all-button">Reset All Personalization</ui5-button>
-			<ui5-panel fixed>
-				<ui5-label>
+			<ui5-panel fixed class="ua-panel">
+				<ui5-text>
 					Reset your personalization settings for the launchpad (such as theme, language, user activities, and home page content).
-				</ui5-label>
+				</ui5-text>
 			</ui5-panel>
 		</ui5-setting-view>
 	</ui5-setting-item>
@@ -61,7 +71,7 @@
 				<ui5-li icon="palette">SAP High Contrast Black (SAP Horizon)</ui5-li>
 				<ui5-li icon="palette">SAP High Contrast White (SAP Horizon)</ui5-li>
 			</ui5-list>
-			<ui5-button id="themeSave" style="float: right;">Save</ui5-button>
+			<ui5-button id="themeSave" class="save-btn" design="Emphasized">Save</ui5-button>
 			<ui5-toast design="Emphasized">Changes applied.</ui5-toast>
 		</ui5-setting-view>
 		<ui5-setting-view text="Display settings">
@@ -77,6 +87,8 @@
 
 	<ui5-setting-item text="Language & Region" tooltip="Language & Region" header-title="Language & Region">
 		<ui5-setting-view slot="pages">
+			<div class="container">
+			<div class="lr-item">
 			<ui5-label>Language and Region:</ui5-label>
 			<ui5-combobox placeholder="Language">
 				<ui5-cb-item text="Browse Language" selected></ui5-cb-item>
@@ -85,7 +97,12 @@
 				<ui5-cb-item text="French (France)"></ui5-cb-item>
 				<ui5-cb-item text="Germany"></ui5-cb-item>
 			</ui5-combobox>
-
+			</div>
+			<div class="lr-item">
+				<ui5-label for="format">Date Format:</ui5-label>
+				<ui5-text id="format">MMM d, y</ui5-text>
+			</div>
+			</div>
 			<ui5-panel fixed>
 				<ui5-label>
 					The time zone will not be applied in UI5 apps.
@@ -93,9 +110,11 @@
 				</ui5-label>
 			</ui5-panel>
 			</br>
+			<div class="lt-time-format">
 			<ui5-label for="timeFormat">Time Format:</ui5-label>
 			<ui5-radio-button name="timeFormat" text="12h"></ui5-radio-button>
-			<ui5-radio-button checked name="timeFormat" text="24h"></ui5-radio-button>
+				<ui5-radio-button checked name="timeFormat" text="24h"></ui5-radio-button>
+			</div>
 			<ui5-panel fixed>
 			<ui5-label>
 				After you save your settings, the browser will refresh for the new settings to take effect.
