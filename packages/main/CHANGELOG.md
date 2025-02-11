@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.2](https://github.com/SAP/ui5-webcomponents/compare/v2.7.1...v2.7.2) (2025-02-11)
+
+
+### Bug Fixes
+
+* **ui5-button-badge:** remove text when in attention dot mode ([#10768](https://github.com/SAP/ui5-webcomponents/issues/10768)) ([4293449](https://github.com/SAP/ui5-webcomponents/commit/4293449d5e5d345bdd720a0f4504694f7045b1c0))
+
+
+
+
+
 ## [2.7.1](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0...v2.7.1) (2025-02-07)
 
 **Note:** Version bump only for package @ui5/webcomponents
