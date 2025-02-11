@@ -46,6 +46,7 @@ import CalendarTemplate from "./CalendarTemplate.js";
 import calendarCSS from "./generated/themes/Calendar.css.js";
 import CalendarHeaderCss from "./generated/themes/CalendarHeader.css.js";
 import { CALENDAR_HEADER_NEXT_BUTTON, CALENDAR_HEADER_PREVIOUS_BUTTON } from "./generated/i18n/i18n-defaults.js";
+import type { YearRangePickerChangeEventDetail } from "./YearRangePicker.js";
 
 interface ICalendarPicker {
 	_showPreviousPage: () => void,
@@ -212,11 +213,15 @@ type SpecialCalendarDateT = {
 @event("show-year-view", {
 	bubbles: true,
 })
+@event("show-year-range-view", {
+	bubbles: true,
+})
 class Calendar extends CalendarPart {
 	eventDetails!: CalendarPart["eventDetails"] & {
 		"selection-change": CalendarSelectionChangeEventDetail,
 		"show-month-view": void,
 		"show-year-view": void,
+		"show-year-range-view": void,
 	}
 	/**
 	 * Defines the type of selection used in the calendar component.
@@ -243,11 +248,11 @@ class Calendar extends CalendarPart {
 	hideWeekNumbers = false;
 
 	/**
-	 * Which picker is currently visible to the user: day/month/year
+	 * Which picker is currently visible to the user: day/month/year/yearRange
 	 * @private
 	 */
 	@property()
-	_currentPicker: "day" | "month" | "year" = "day"
+	_currentPicker: "day" | "month" | "year" | "year-range" = "day"
 
 	@property({ type: Boolean })
 	_previousButtonDisabled = false;
@@ -441,6 +446,10 @@ class Calendar extends CalendarPart {
 	 * Makes sure that _currentPicker is always set to a value, allowed by _pickersMode
 	 */
 	_normalizeCurrentPicker() {
+		if (this._currentPicker === "year-range") {
+			return;
+		}
+
 		if (this._currentPicker === "day" && this._pickersMode !== CalendarPickersMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "month";
 		}
@@ -508,6 +517,10 @@ class Calendar extends CalendarPart {
 	 * The user clicked the "year" button in the header
 	 */
 	onHeaderShowYearPress() {
+		if (this._currentPicker === "year") {
+			this.onHeaderShowYearRangePress();
+			return;
+		} // todo - make a new header specifically for yearrange
 		this.showYear();
 		this.fireDecoratorEvent("show-year-view");
 	}
@@ -515,6 +528,19 @@ class Calendar extends CalendarPart {
 	showYear() {
 		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "year";
+	}
+
+	/**
+	 * The user clicked the "year range" button in the YearPicker header
+	 */
+	onHeaderShowYearRangePress() {
+		this.showYearRange();
+		this.fireDecoratorEvent("show-year-range-view");
+	}
+
+	showYearRange() {
+		this._currentPickerDOM._autoFocus = false;
+		this._currentPicker = "year-range";
 	}
 
 	get _currentPickerDOM() {
@@ -586,7 +612,7 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	get _isHeaderMonthButtonHidden(): boolean {
-		return this._currentPicker === "month" || this._currentPicker === "year";
+		return this._currentPicker !== "day";
 	}
 
 	/**
@@ -594,7 +620,7 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	get _isHeaderYearButtonHidden(): boolean {
-		return this._currentPicker === "year";
+		return this._currentPicker === "year-range";
 	}
 
 	get _isDayPickerHidden() {
@@ -607,6 +633,10 @@ class Calendar extends CalendarPart {
 
 	get _isYearPickerHidden() {
 		return this._currentPicker !== "year";
+	}
+
+	get _isYearRangePickerHidden() {
+		return this._currentPicker !== "year-range";
 	}
 
 	_fireEventAndUpdateSelectedDates(selectedDates: Array<number>) {
@@ -649,6 +679,12 @@ class Calendar extends CalendarPart {
 			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
 
+		this._currentPickerDOM._autoFocus = true;
+	}
+
+	onSelectedYearRangeChange(e: CustomEvent<YearRangePickerChangeEventDetail>) {
+		this.timestamp = e.detail.timestamp;
+		this._currentPicker = "year";
 		this._currentPickerDOM._autoFocus = true;
 	}
 

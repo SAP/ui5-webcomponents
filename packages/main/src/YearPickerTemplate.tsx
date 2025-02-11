@@ -30,7 +30,7 @@ export default function YearPickerTemplate(this: YearPicker) {
 						</span>
 						{
 							year.yearInSecType &&
-							<span class="ui5-yp-year-sec-type">
+							<span class="ui5-yp-item-sec-type">
 								{year.yearInSecType}
 							</span>
 						}
