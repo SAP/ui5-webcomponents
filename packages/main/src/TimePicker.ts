@@ -314,10 +314,10 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	_timeSelectionClocks?: TimeSelectionClocks;
 
 	@query("[ui5-popover]")
-	_inputsPopover?: Popover;
+	_inputsPopover!: Popover;
 
 	@query("[ui5-datetime-input]")
-	_dateTimeInput?: DateTimeInput;
+	_dateTimeInput!: DateTimeInput;
 
 	tempValue?: string;
 
@@ -423,7 +423,9 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	_togglePicker() {
 		this.open = !this.open;
-		this._isMobileDevice && (this._inputsPopover!.open = false);
+		if (this._isMobileDevice) {
+			this._inputsPopover.open = false;
+		}
 	}
 
 	submitPickers() {
@@ -456,8 +458,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	openInputsPopover() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
 		const popover = this._inputsPopover;
-		popover!.opener = this;
-		popover!.open = true;
+		popover.opener = this;
+		popover.open = true;
 		this._isInputsPopoverOpen = true;
 	}
 
@@ -468,7 +470,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 */
 	closeInputsPopover() {
 		const popover = this._inputsPopover;
-		popover!.open = false;
+		popover.open = false;
 	}
 
 	toggleInputsPopover() {
@@ -494,7 +496,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	onInputsPopoverAfterOpen() {
 		const popover = this._inputsPopover;
-		popover!.querySelector<TimeSelectionInputs>("[ui5-time-selection-inputs]")!._addNumericAttributes();
+		popover.querySelector<TimeSelectionInputs>("[ui5-time-selection-inputs]")!._addNumericAttributes();
 	}
 
 	onInputsPopoverAfterClose() {
@@ -586,7 +588,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 		const target = e.target as HTMLElement;
 
-		if (target && this.open && this._dateTimeInput!.id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+		if (target && this.open && this._dateTimeInput.id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this._togglePicker();
 		}
 		if (this.open) {
@@ -701,8 +703,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * Hides mobile device keyboard by temporary setting the input to readonly state.
 	 */
 	_hideMobileKeyboard() {
-		this._dateTimeInput!.readonly = true;
-		setTimeout(() => { this._dateTimeInput!.readonly = false; }, 0);
+		this._dateTimeInput.readonly = true;
+		setTimeout(() => { this._dateTimeInput.readonly = false; }, 0);
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -710,7 +712,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
 				const popover = this._inputsPopover;
-				popover!.applyFocus();
+				popover.applyFocus();
 			}
 			e.preventDefault();
 		}
@@ -750,6 +752,10 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	get hasValueState(): boolean {
 		return this.valueState !== ValueState.None;
+	}
+
+	get shouldDisplayValueStateMessageOnDesktop() {
+		return this.valueStateMessage.length > 0 && !this.open && !this._isMobileDevice;
 	}
 
 	get classes() {
