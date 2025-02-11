@@ -449,9 +449,7 @@ http-server coverage
 
 ### General Principles
 
-- Focus on testing behavior rather than implementation details to ensure your tests remain useful even as the codebase evolves.
-- Avoid fine-grained tests that tightly couple with implementation details, as they make refactoring difficult.
-- Write feature-centric tests with focus on how a feature behaves as a whole, on the available user interactions, rather than testing individual implementation details.
+Focus on testing behavior rather than tests that tightly couple with implementation details as they make refactoring difficult and to ensure your tests remain useful even as the codebase evolves. As a rule of thumb, focus on feature-centric tests asserting how a feature works as a whole and test the available user interactions.
 
 ### Write Tests That
 
@@ -494,6 +492,7 @@ it("Change event is not fired when the same suggestion item is selected (with ty
 
 
 ### Avoid Tests That
+
 - Directly assert implementation details as minor refactors will require unnecessary test changes.
 
 ```css
