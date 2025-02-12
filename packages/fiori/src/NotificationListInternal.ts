@@ -52,6 +52,11 @@ class NotificationListInternal extends List {
 			}
 		});
 
+		const growingButton = this.getGrowingButton();
+		if (growingButton) {
+			allNavigationItems.push(growingButton);
+		}
+
 		this._allNavigationItems = allNavigationItems;
 
 		return items;
@@ -129,6 +134,10 @@ class NotificationListInternal extends List {
 	}
 
 	_focusSameItemOnNextRow(e: KeyboardEvent) {
+		if ((!isUp(e) && !isDown(e))) {
+			return;
+		}
+
 		const target = e.target as HTMLElement;
 		const shadowTarget = target.shadowRoot!.activeElement as HTMLElement;
 		const activeElement = getActiveElement()! as HTMLElement;
@@ -139,7 +148,7 @@ class NotificationListInternal extends List {
 		}
 
 		const isFocusWithin = target.matches(":focus-within");
-		if (!isFocusWithin || (!isUp(e) && !isDown(e))) {
+		if (!isFocusWithin) {
 			return;
 		}
 
