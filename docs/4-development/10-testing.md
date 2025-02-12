@@ -447,8 +447,6 @@ http-server coverage
 
 ## Guideliness
 
-### General Principles
-
 Focus on testing behavior rather than tests that tightly couple with implementation details as they make refactoring difficult and to ensure your tests remain useful even as the codebase evolves. As a rule of thumb, focus on feature-centric tests asserting how a feature works as a whole and test the available user interactions.
 
 ### Write Tests That
