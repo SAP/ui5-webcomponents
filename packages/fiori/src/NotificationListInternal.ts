@@ -76,6 +76,11 @@ class NotificationListInternal extends List {
 	_handleHomeKey(e: KeyboardEvent) {
 		e.stopImmediatePropagation();
 
+		const target = e.target as HTMLElement;
+		if (target?.hasAttribute("ui5-li-notification-group")) {
+			return;
+		}
+
 		const currentFocusedItem = this.getEnabledItems()[this._itemNavigation._currentIndex];
 		if (!currentFocusedItem) {
 			return;
@@ -86,7 +91,7 @@ class NotificationListInternal extends List {
 
 		for (let i = currentFocusedIndex - 1; i >= 0; i--) {
 			const item = this._allNavigationItems[i];
-			if (this._isGrowinButton(item)) {
+			if (item.hasAttribute("ui5-li-notification-group")) {
 				nextFocusedIndex = i + 1;
 				break;
 			}
@@ -108,6 +113,12 @@ class NotificationListInternal extends List {
 
 		for (let i = currentFocusedIndex + 1; i < this._allNavigationItems.length; i++) {
 			const item = this._allNavigationItems[i];
+
+			if (item.hasAttribute("ui5-li-notification-group")) {
+				nextFocusedIndex = i - 1;
+				break;
+			}
+
 			if (this._isGrowinButton(item)) {
 				nextFocusedIndex = i === currentFocusedIndex + 1 ? i : i - 1;
 				break;
