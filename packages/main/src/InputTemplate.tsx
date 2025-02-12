@@ -1,11 +1,13 @@
 import type Input from "./Input.js";
+import type { JsxTemplateResult } from "@ui5/webcomponents-base/dist/index.js";
 import Icon from "./Icon.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import InputPopoverTemplate from "./InputPopoverTemplate.js";
 
-type TemplateHook = () => void;
+type TemplateHook = () => JsxTemplateResult;
 
-export default function InputTemplate(this: Input, hooks?: { preContent: TemplateHook, postContent: TemplateHook }) {
+export default function InputTemplate(this: Input, hooks?: { preContent: TemplateHook, postContent: TemplateHook, suggestionsList: TemplateHook }) {
+	const suggestionsList = hooks?.suggestionsList;
 	const preContent = hooks?.preContent || defaultPreContent;
 	const postContent = hooks?.postContent || defaultPostContent;
 
@@ -104,7 +106,7 @@ export default function InputTemplate(this: Input, hooks?: { preContent: Templat
 				</div>
 			</div>
 
-			{ InputPopoverTemplate.call(this) }
+			{ InputPopoverTemplate.call(this, { suggestionsList }) }
 		</>
 	);
 }
