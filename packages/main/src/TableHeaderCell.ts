@@ -108,7 +108,7 @@ class TableHeaderCell extends TableCellBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hiddenInPopin: boolean = false;
+	popinHidden: boolean = false;
 
 	/**
 	 * Defines the action of the column.

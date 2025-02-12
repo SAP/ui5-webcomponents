@@ -46,7 +46,7 @@ abstract class TableCellBase extends UI5Element {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-	_hiddenInPopin = false;
+	_popinHidden = false;
 
 	onEnterDOM() {
 		this.toggleAttribute("ui5-table-cell-base", true);

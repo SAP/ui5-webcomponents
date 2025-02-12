@@ -58,14 +58,14 @@ describe("Table - Rendering", () => {
 });
 
 describe("Table - Popin Mode", () => {
-	function mounTable(hideInPopin = false) {
+	function mounTable(popinHidden = false) {
 		cy.mount(
 			<Table id="table" overflowMode="Popin">
 				<TableHeaderRow slot="headerRow">
 					<TableHeaderCell id="colA" minWidth="300px"><span>ColumnA</span></TableHeaderCell>
 					<TableHeaderCell id="colB" minWidth="200px">Column B</TableHeaderCell>
 					<TableHeaderCell id="colC" minWidth="200px">Column C</TableHeaderCell>
-					<TableHeaderCell id="colD" minWidth="150px" popinText="Column ?" hiddenInPopin={hideInPopin}>Column D</TableHeaderCell>
+					<TableHeaderCell id="colD" minWidth="150px" popinText="Column ?" popinHidden={popinHidden}>Column D</TableHeaderCell>
 				</TableHeaderRow>
 				<TableRow>
 					<TableCell><Label>Cell A</Label></TableCell>
@@ -236,7 +236,7 @@ describe("Table - Popin Mode", () => {
 		}).should("be.true");
 	});
 
-	it("should hide column in popin if hiddenInPopin is set", () => {
+	it("should hide column in popin if popinHidden is set", () => {
 		mounTable(true);
 
 		const testWidths = [

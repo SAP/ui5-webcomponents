@@ -110,7 +110,7 @@ abstract class TableRowBase extends UI5Element {
 	}
 
 	get _popinCells() {
-		return this.cells.filter(c => c._popin && !c._hiddenInPopin);
+		return this.cells.filter(c => c._popin && !c._popinHidden);
 	}
 
 	get _stickyCells() {
