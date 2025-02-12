@@ -3,7 +3,6 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	customElement, property, slot, eventStrict as event,
 } from "@ui5/webcomponents-base/dist/decorators.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import TabContainer from "@ui5/webcomponents/dist/TabContainer.js";
