@@ -11,9 +11,7 @@ describe("Table - Keyboard Navigation", async () => {
 		const growing = await browser.$("#growing");
 		const rowsLength = rows.length;
 
-		await browser.pause(500);
-
-		await rows[1].click();
+		await rows[1].click({ x: - 100 });
 		assert.ok(await rows[1].isFocused(), `Click: Row 1 is focused.`);
 
 		await browser.keys("ArrowLeft");
@@ -65,8 +63,6 @@ describe("Table - Keyboard Navigation", async () => {
 		const rows = await table.$$("ui5-table-header-row,ui5-table-row");
 		const growing = await browser.$("#growing");
 
-		await browser.pause(500);
-
 		const rowCells = [];
 		for (const row of rows) {
 			const cells = await row.$$("ui5-table-header-cell,ui5-table-cell");
@@ -77,7 +73,7 @@ describe("Table - Keyboard Navigation", async () => {
 			return rowCells[rowIndex][cellIndex];
 		}
 
-		await rows[1].click();
+		await rows[1].click({ x: - 100 });
 		assert.ok(await rows[1].isFocused(), `Click: Row 1 is focused.`);
 
 		await browser.keys("ArrowRight");
@@ -157,8 +153,6 @@ describe("Table - Keyboard Navigation", async () => {
 		const beforeTable = await browser.$("#before-table1");
 		const afterTable = await browser.$("#after-table1");
 
-		await browser.pause(500);
-
 		const rowCells = [];
 		for (const row of rows) {
 			const cells = await row.$$("ui5-table-header-cell,ui5-table-cell");
@@ -169,7 +163,7 @@ describe("Table - Keyboard Navigation", async () => {
 			return rowCells[rowIndex][cellIndex];
 		}
 
-		await rows[1].click();
+		await rows[1].click({ x: - 100 });
 		assert.ok(await rows[1].isFocused(), `Click: Row 1 is focused.`);
 
 		await browser.keys("F2");
@@ -267,18 +261,16 @@ describe("Table - Keyboard Navigation", async () => {
 		const rowButton = await browser.$("#row2-button");
 		const anotherRow = await browser.$("#notinteractive-row");
 
-		await browser.pause(200);
-
-		await row.click();
+		await row.click({ x: - 100 });
 		assert.equal(await input.getValue(), "1", `Interactive row is clicked and the row-click event result is correct.`);
 
 		await browser.keys("Enter");
 		assert.equal(await input.getValue(), "2", `Enter is presed for the interactive row and the row-click event result is correct.`);
 
-		await anotherRow.click();
+		await anotherRow.click({ x: - 100 });
 		assert.equal(await input.getValue(), "2", `Not interactive row is clicked and there is no row-click event triggered.`);
 
-		await rowButton.click();
+		await rowButton.click({ x: - 100 });
 		assert.equal(await input.getValue(), "2", `Button in a row is clicked and there is no row-click event triggered.`);
 
 		await browser.keys("Enter");
