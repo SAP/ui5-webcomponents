@@ -1,0 +1,21 @@
+{
+  "name": "@ui5/cypress-common",
+  "version": "0.0.0",
+  "description": "Example Framework Definition adapter for Cypress Component Testing",
+  "scripts": {
+    "build": "tsc"
+  },
+  "types": "*.d.ts",
+  "files": [
+    "package.json",
+    "commands.js",
+    "config.js",
+    "commands.d.ts",
+    "config.d.ts"
+  ],
+  "devDependencies": {
+    "cypress": "^13.11.0",
+    "typescript": "^5.6.2",
+    "cypress-real-events": "^1.12.0"
+  }
+}
