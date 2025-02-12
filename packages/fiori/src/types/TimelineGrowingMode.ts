@@ -1,3 +1,8 @@
+/**
+ * Timeline growing modes.
+ * @public
+ * @since 2.7.0
+ */
 enum TimelineGrowingMode {
 	/**
 	 * Event `load-more` is fired

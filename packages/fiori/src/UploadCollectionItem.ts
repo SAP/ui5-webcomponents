@@ -157,7 +157,7 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare disableDeleteButton: boolean;
+	disableDeleteButton = false;
 
 	/**
 	 * Hides the delete button.
