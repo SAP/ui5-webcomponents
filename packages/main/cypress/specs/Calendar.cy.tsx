@@ -149,6 +149,9 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar doesn't mark year as selected when there are no selected dates", () => {
+		const todayDate = new Date();
+		const todayTimestamp = Date.UTC(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0, 0) / 1000;
+
 		cy.mount(<Calendar id="calendar2"></Calendar>);
 
 		cy.get<Calendar>("#calendar2")
@@ -161,12 +164,15 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find("[ui5-yearpicker]")
 			.shadow()
-			.find(`[data-sap-timestamp=1738195200]`)
+			.find(`[data-sap-timestamp=${todayTimestamp}]`)
 			.should("have.focus")
 			.should("not.have.class", "ui5-yp-item--selected");
 	});
 
 	it("Calendar doesn't mark month as selected when there are no selected dates", () => {
+		const todayDate = new Date();
+		const todayTimestamp = Date.UTC(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0, 0) / 1000;
+
 		cy.mount(<Calendar id="calendar2"></Calendar>);
 
 		cy.get<Calendar>("#calendar2")
@@ -175,7 +181,7 @@ describe("Calendar general interaction", () => {
 			.find("[data-ui5-cal-header-btn-month]")
 			.click();
 
-		cy.ui5CalendarGetMonth("#calendar2", "1738195200")
+		cy.ui5CalendarGetMonth("#calendar2", todayTimestamp.toString())
 			.should("have.focus")
 			.should("not.have.class", "ui5-mp-item--selected");
 	});
