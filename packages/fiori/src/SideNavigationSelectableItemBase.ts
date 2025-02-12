@@ -206,6 +206,18 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._activate(e);
+
+			if (this.href && !e.defaultPrevented) {
+				const customEvent = new MouseEvent("click");
+
+				customEvent.stopImmediatePropagation();
+				if (this.getDomRef()!.querySelector("a")) {
+					this.getDomRef()!.querySelector("a")!.dispatchEvent(customEvent);
+				} else {
+					// when Side Navigation is collapsed and it is first level item we have directly <a> element
+					this.getDomRef()!.dispatchEvent(customEvent);
+				}
+			}
 		}
 	}
 

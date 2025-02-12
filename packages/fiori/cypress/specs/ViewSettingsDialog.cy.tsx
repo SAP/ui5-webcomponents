@@ -12,9 +12,6 @@ describe("View settings dialog - selection", () => {
 			</ViewSettingsDialog>
 		);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(100); // Wait after mounting the component temporarily, until the component is fully rendered TODO: remove this after the issue is fixed
-
 		// Open the dialog and wait until it's visible
 		cy.get("[ui5-view-settings-dialog]")
 			.as("vsd")
@@ -104,9 +101,6 @@ describe("View settings dialog - selection", () => {
 				</FilterItem>
 			</ViewSettingsDialog>
 		);
-
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(100); // Wait after mounting the component temporarily, until the component is fully rendered TODO: remove this after the issue is fixed
 
 		// Open the dialog and wait until it's visible
 		cy.get("[ui5-view-settings-dialog]")
