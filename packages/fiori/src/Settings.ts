@@ -29,6 +29,7 @@ import {
 	SETTINGS_DIALOG_CLOSE_BUTTON_TEXT,
 	SETTINGS_DIALOG_NO_SEARCH_RESULTS_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 
 type SettingsItemSelectEventDetail = {
 	item: SettingItem;
@@ -201,7 +202,15 @@ class Settings extends UI5Element {
 	@property({ type: Boolean })
 	_showNoSearchResult = false;
 
+	/**
+	 * Defines the current media query size.
+	 * @private
+	 */
+	@property({ type: String })
+	_mediaRange?: any;
+
 	onBeforeRendering() {
+		this._mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS);
 		const searchValue = this._searchValue.toLowerCase();
 		this._filteredItems = [];
 		this._filteredFixedItems = [];
@@ -296,8 +305,8 @@ class Settings extends UI5Element {
 		return this._selectedSetting ? this._selectedSetting._individualSlot : "";
 	}
 
-	get _isTouch() {
-		return isPhone() || (isTablet() && !isCombi());
+	get _showSettingWithNavigation() {
+		return (isPhone() || (isTablet() && !isCombi())) || (this._mediaRange === "S" || this._mediaRange === "M");
 	}
 
 	_handleCloseButtonClick() {
