@@ -2,7 +2,9 @@ import { assert } from "chai";
 
 describe("Table - Keyboard Navigation", async () => {
 	before(async () => {
+		await browser.setWindowSize(1920, 1200);
 		await browser.url("test/pages/TableNavigation.html");
+
 	});
 
 	it("should navigate on rows", async () => {
@@ -11,7 +13,7 @@ describe("Table - Keyboard Navigation", async () => {
 		const growing = await browser.$("#growing");
 		const rowsLength = rows.length;
 
-		await rows[1].click({ x: - 100 });
+		await rows[1].click();
 		assert.ok(await rows[1].isFocused(), `Click: Row 1 is focused.`);
 
 		await browser.keys("ArrowLeft");
@@ -73,7 +75,7 @@ describe("Table - Keyboard Navigation", async () => {
 			return rowCells[rowIndex][cellIndex];
 		}
 
-		await rows[1].click({ x: - 100 });
+		await rows[1].click();
 		assert.ok(await rows[1].isFocused(), `Click: Row 1 is focused.`);
 
 		await browser.keys("ArrowRight");
@@ -163,7 +165,7 @@ describe("Table - Keyboard Navigation", async () => {
 			return rowCells[rowIndex][cellIndex];
 		}
 
-		await rows[1].click({ x: - 100 });
+		await rows[1].click();
 		assert.ok(await rows[1].isFocused(), `Click: Row 1 is focused.`);
 
 		await browser.keys("F2");
@@ -261,16 +263,16 @@ describe("Table - Keyboard Navigation", async () => {
 		const rowButton = await browser.$("#row2-button");
 		const anotherRow = await browser.$("#notinteractive-row");
 
-		await row.click({ x: - 100 });
+		await row.click();
 		assert.equal(await input.getValue(), "1", `Interactive row is clicked and the row-click event result is correct.`);
 
 		await browser.keys("Enter");
 		assert.equal(await input.getValue(), "2", `Enter is presed for the interactive row and the row-click event result is correct.`);
 
-		await anotherRow.click({ x: - 100 });
+		await anotherRow.click();
 		assert.equal(await input.getValue(), "2", `Not interactive row is clicked and there is no row-click event triggered.`);
 
-		await rowButton.click({ x: - 100 });
+		await rowButton.click();
 		assert.equal(await input.getValue(), "2", `Button in a row is clicked and there is no row-click event triggered.`);
 
 		await browser.keys("Enter");
