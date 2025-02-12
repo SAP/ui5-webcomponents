@@ -126,6 +126,7 @@ const getScripts = (options) => {
 		"test-cy-ci-suite-1": `cross-env CYPRESS_COVERAGE=true TEST_SUITE=SUITE1 yarn cypress run --component --browser chrome`,
 		"test-cy-ci-suite-2": `cross-env CYPRESS_COVERAGE=true TEST_SUITE=SUITE2 yarn cypress run --component --browser chrome`,
 		"test-cy-open": `cross-env CYPRESS_COVERAGE=true yarn cypress open --component --browser chrome`,
+		"test-cy-single": `cross-env yarn cypress run --component --browser chrome --spec ${process.argv[3]}`,
 		"test-suite-1": `node "${LIB}/test-runner/test-runner.js" --suite suite1`,
 		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
 		startWithScope: "nps scope.prepare scope.watchWithBundle",
