@@ -1,12 +1,13 @@
-import { html } from "lit";
-import "../../src/SettingItem.js";
-import "../../src/SettingView.js";
-import "../../src/Settings.js";
+import SettingItem from "../../src/SettingItem.js";
+import SettingView from "../../src/SettingView.js";
+import Settings from "../../src/Settings.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
+import Text from "@ui5/webcomponents/dist/Text.js";
 
 describe("Initial rendering", () => {
 	it("tests no config provided", () => {
-		cy.mount(html`<ui5-settings open>
-						</ui5-settings>`);
+		cy.mount(<Settings open>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").shadow().find("[ui5-dialog]").as("dialog");
@@ -19,8 +20,8 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests header-title provided", () => {
-		cy.mount(html`<ui5-settings header-title="Settings" open>
-						</ui5-settings>`);
+		cy.mount(<Settings header-title="Settings" open>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").shadow().find("[ui5-dialog]").as("dialog");
@@ -30,8 +31,8 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests show-search-field provided", () => {
-		cy.mount(html`<ui5-settings show-search-field open>
-						</ui5-settings>`);
+		cy.mount(<Settings show-search-field open>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").shadow().find("[ui5-dialog]").as("dialog");
@@ -41,12 +42,12 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests setting item no config", () => {
-		cy.mount(html`<ui5-settings open>
-			<ui5-setting-item>
-				<ui5-setting-view>
-				</ui5-setting-view>
-			</ui5-setting-item>
-		</ui5-settings>`);
+		cy.mount(<Settings open>
+			<SettingItem>
+				<SettingView>
+				</SettingView>
+			</SettingItem>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
@@ -56,13 +57,13 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests setting with button", () => {
-		cy.mount(html`<ui5-settings open>
-							<ui5-setting-item>
-								<ui5-setting-view>
-									<ui5-button>Setting 3 Content 1</ui5-button>
-								</ui5-setting-view>
-							</ui5-setting-item>
-						</ui5-settings>`);
+		cy.mount(<Settings open>
+			<SettingItem>
+				<SettingView>
+					<Button>Setting 3 Content 1</Button>
+				</SettingView>
+			</SettingItem>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
@@ -74,12 +75,12 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests setting text", () => {
-		cy.mount(html`<ui5-settings open>
-							<ui5-setting-item text="Setting">
-								<ui5-setting-view text="Setting1">
-								</ui5-setting-view>
-							</ui5-setting-item>
-						</ui5-settings>`);
+		cy.mount(<Settings open>
+			<SettingItem text="Setting">
+				<SettingView text="Setting1">
+				</SettingView>
+			</SettingItem>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
@@ -91,10 +92,10 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests setting tooltip", () => {
-		cy.mount(html`<ui5-settings open>
-							<ui5-setting-item text="Setting" tooltip="Setting tooltip">
-							</ui5-setting-item>
-						</ui5-settings>`);
+		cy.mount(<Settings open>
+			<SettingItem text="Setting" tooltip="Setting tooltip">
+			</SettingItem>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
@@ -104,10 +105,10 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests setting icon", () => {
-		cy.mount(html`<ui5-settings open>
-							<ui5-setting-item icon="accessibility">
-							</ui5-setting-item>
-						</ui5-settings>`);
+		cy.mount(<Settings open>
+			<SettingItem icon="accessibility">
+			</SettingItem>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
@@ -116,12 +117,12 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests setting header-title", () => {
-		cy.mount(html`<ui5-settings open>
-							<ui5-setting-item  header-title="Header title | Setting 3">
-								<ui5-setting-view text="Setting1">
-							 	</ui5-setting-view>
-							</ui5-setting-item>
-						</ui5-settings>`);
+		cy.mount(<Settings open>
+			<SettingItem header-title="Header title | Setting 3">
+				<SettingView text="Setting1">
+				</SettingView>
+			</SettingItem>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
@@ -132,14 +133,14 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests setting tabs", () => {
-		cy.mount(html`<ui5-settings open>
-							<ui5-setting-item>
-								<ui5-setting-view text="Setting1">
-								 </ui5-setting-view>
-								<ui5-setting-view text="Setting2">
-								</ui5-setting-view>
-							</ui5-setting-item>
-						</ui5-settings>`);
+		cy.mount(<Settings open>
+			<SettingItem>
+				<SettingView text="Setting1">
+						 </SettingView>
+				<SettingView text="Setting2">
+				</SettingView>
+			</SettingItem>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
@@ -151,12 +152,12 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests setting page", () => {
-		cy.mount(html`<ui5-settings open>
-							<ui5-setting-item>
-								<ui5-setting-view text="Setting1" slot="pages">
-								 </ui5-setting-view>
-							</ui5-setting-item>
-						</ui5-settings>`);
+		cy.mount(<Settings open>
+			<SettingItem>
+				<SettingView text="Setting1" slot="pages">
+						 </SettingView>
+			</SettingItem>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
@@ -168,16 +169,16 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests setting page with secondary", () => {
-		cy.mount(html`<ui5-settings open>
-							<ui5-setting-item>
-								<ui5-setting-view slot="pages">
-									<ui5-button id="product1-button">Product 1</ui5-button>
-									<ui5-button id="product2-button">Product 2</ui5-button>
-								</ui5-setting-view>
-								<ui5-setting-view slot="pages" text="Inner Page" id="notification-second-page" secondary>second page content
-								</ui5-setting-view>
-							</ui5-setting-item>
-						</ui5-settings>`);
+		cy.mount(<Settings open>
+			<SettingItem>
+				<SettingView slot="pages">
+					<Button id="product1-button">Product 1</Button>
+					<Button id="product2-button">Product 2</Button>
+				</SettingView>
+				<SettingView slot="pages" text="Inner Page" id="notification-second-page" secondary>second page content
+				</SettingView>
+			</SettingItem>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
@@ -189,13 +190,13 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests setting page secondary selected", () => {
-		cy.mount(html`<ui5-settings open>
-							<ui5-setting-item>
-								<ui5-setting-view slot="pages" text="Inner Page" id="notification-second-page" secondary selected>
-									<ui5-text>second page content</ui5-text>
-								</ui5-setting-view>
-							</ui5-setting-item>
-						</ui5-settings>`);
+		cy.mount(<Settings open>
+			<SettingItem>
+				<SettingView slot="pages" text="Inner Page" id="notification-second-page" secondary selected>
+					<Text>second page content</Text>
+				</SettingView>
+			</SettingItem>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings").find("[ui5-setting-item]").as("settingItem");
@@ -213,14 +214,14 @@ describe("Initial rendering", () => {
 
 describe("Events", () => {
 	it("tests item-select", () => {
-		cy.mount(html`<ui5-settings open>
-			<ui5-setting-item text="Setting">
-				<ui5-setting-view text="Setting1">
-				</ui5-setting-view>
-				<ui5-setting-view text="Setting2">
-				</ui5-setting-view>
-			</ui5-setting-item>
-		</ui5-settings>`);
+		cy.mount(<Settings open>
+			<SettingItem text="Setting">
+				<SettingView text="Setting1">
+				</SettingView>
+				<SettingView text="Setting2">
+				</SettingView>
+			</SettingItem>
+		</Settings>);
 		cy.get("[ui5-settings]").as("settings");
 		cy.get("@settings").should("exist");
 		cy.get("@settings")
