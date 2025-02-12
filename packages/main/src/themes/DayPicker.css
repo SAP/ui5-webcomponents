@@ -87,6 +87,7 @@
 	font-size: var(--sapFontSize);
 	border: var(--_ui5_daypicker_item_border);
 	border-radius: var(--_ui5_daypicker_item_border_radius);
+	cursor: pointer;
 }
 
 .ui5-dp-item:hover {

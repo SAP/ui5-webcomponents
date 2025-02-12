@@ -26,7 +26,6 @@ import {
 	USER_MENU_POPOVER_ACCESSIBLE_NAME,
 	USER_MENU_EDIT_AVATAR_TXT,
 	USER_MENU_ADD_ACCOUNT_TXT,
-	USER_MENU_CLOSE_BUTTON_TXT,
 	USER_MENU_CLOSE_DIALOG_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -184,6 +183,16 @@ class UserMenu extends UI5Element {
 	showAddAccount = false;
 
 	/**
+	 * Defines if the User menu shows edit button.
+	 *
+	 * @default false
+	 * @public
+	 * @since 2.7.0
+	 */
+	@property({ type: Boolean })
+	showEditButton = false;
+
+	/**
 	 * Defines the menu items.
 	 * @public
 	 */
@@ -336,7 +345,7 @@ class UserMenu extends UI5Element {
 			return;
 		}
 
-		 this._closeUserMenu();
+		this._closeUserMenu();
 	}
 
 	_handleMenuItemClick(e: CustomEvent<ListItemClickEventDetail>) {
@@ -368,10 +377,6 @@ class UserMenu extends UI5Element {
 		this.fireDecoratorEvent("close");
 	}
 
-	_handleDeclineClick() {
-		this._closeUserMenu();
-	}
-
 	_openItemSubMenu(item: UserMenuItem) {
 		if (!item._popover || item._popover.open) {
 			return;
@@ -380,18 +385,6 @@ class UserMenu extends UI5Element {
 		item._popover.opener = item;
 		item._popover.open = true;
 		item.selected = true;
-	}
-
-	_closeItemSubMenu(item: UserMenuItem) {
-		if (item && item._popover) {
-			const openedSibling = item._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
-			if (openedSibling) {
-				this._closeItemSubMenu(openedSibling);
-			}
-
-			item._popover.open = false;
-			item.selected = false;
-		}
 	}
 
 	_closeUserMenu() {
@@ -404,10 +397,6 @@ class UserMenu extends UI5Element {
 
 	get _otherAccounts() {
 		return this.accounts.filter(account => account !== this._selectedAccount);
-	}
-
-	get _declineButtonTooltip() {
-		return UserMenu.i18nBundle.getText(USER_MENU_CLOSE_BUTTON_TXT);
 	}
 
 	get _manageAccountButtonText() {

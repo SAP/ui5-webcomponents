@@ -4,7 +4,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import type NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
+import type NavigationMenu from "./NavigationMenu.js";
 import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -492,17 +492,19 @@ class SideNavigation extends UI5Element {
 
 			let itemDomRef;
 
-			if (isInstanceOfSideNavigationItemBase(item)) {
-				itemDomRef = item.getDomRef()!;
+			if (isInstanceOfSideNavigationItemBase(item) && item.getDomRef()) {
+				itemDomRef = item.getDomRef();
 			} else {
 				itemDomRef = item;
 			}
 
-			const { marginTop, marginBottom } = window.getComputedStyle(itemDomRef);
-			itemsHeight += itemDomRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+			if (itemDomRef) {
+				const { marginTop, marginBottom } = window.getComputedStyle(itemDomRef);
+				itemsHeight += itemDomRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
 
-			if (itemsHeight > listHeight) {
-				item.classList.add("ui5-sn-item-hidden");
+				if (itemsHeight > listHeight) {
+					item.classList.add("ui5-sn-item-hidden");
+				}
 			}
 		});
 
@@ -587,7 +589,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	_selectItem(item: SideNavigationSelectableItemBase) {
-		if (item.disabled) {
+		if (!item.isSelectable) {
 			return;
 		}
 

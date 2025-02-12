@@ -326,9 +326,6 @@ abstract class Popup extends UI5Element {
 
 		await renderFinished();
 
-		// initial focus, if focused element is dynamically created
-		await this.applyInitialFocus();
-
 		if (this.isConnected) {
 			this.fireDecoratorEvent("open");
 		}
