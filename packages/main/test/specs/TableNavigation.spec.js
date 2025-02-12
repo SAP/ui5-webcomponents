@@ -11,6 +11,8 @@ describe("Table - Keyboard Navigation", async () => {
 		const growing = await browser.$("#growing");
 		const rowsLength = rows.length;
 
+		await browser.pause(500);
+
 		await rows[1].click();
 		assert.ok(await rows[1].isFocused(), `Click: Row 1 is focused.`);
 
@@ -62,6 +64,8 @@ describe("Table - Keyboard Navigation", async () => {
 		const table = await browser.$("#table0");
 		const rows = await table.$$("ui5-table-header-row,ui5-table-row");
 		const growing = await browser.$("#growing");
+
+		await browser.pause(500);
 
 		const rowCells = [];
 		for (const row of rows) {
@@ -152,6 +156,8 @@ describe("Table - Keyboard Navigation", async () => {
 		const row2Button = await table.$("#row2-button");
 		const beforeTable = await browser.$("#before-table1");
 		const afterTable = await browser.$("#after-table1");
+
+		await browser.pause(500);
 
 		const rowCells = [];
 		for (const row of rows) {
@@ -260,6 +266,8 @@ describe("Table - Keyboard Navigation", async () => {
 		const input = await browser.$("#before-table1");
 		const rowButton = await browser.$("#row2-button");
 		const anotherRow = await browser.$("#notinteractive-row");
+
+		await browser.pause(200);
 
 		await row.click();
 		assert.equal(await input.getValue(), "1", `Interactive row is clicked and the row-click event result is correct.`);
