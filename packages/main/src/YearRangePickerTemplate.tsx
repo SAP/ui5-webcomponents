@@ -10,7 +10,7 @@ export default function YearRangePickerTemplate(this: YearRangePicker) {
 			aria-multiselectable="false"
 			onClick={this._selectYearRange}
 		>
-			{this._rangesInterval.map(rangeRow =>
+			{this._yearRanges.map(rangeRow =>
 				<div role="row" class="ui5-yrp-interval-container">
 					{rangeRow.map(yearRange => <div
 						data-sap-timestamp={yearRange.timestamp}

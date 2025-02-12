@@ -34,7 +34,7 @@ type YearRange = {
 	// parts: string; - todo
 }
 
-type YearRangeInterval = Array<Array<YearRange>>;
+type YearRanges = Array<Array<YearRange>>;
 
 type YearRangePickerChangeEventDetail = {
 	dates: Array<number>,
@@ -92,7 +92,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 	rangeSize: number = 8;
 
 	@property({ type: Array })
-	_rangesInterval: YearRangeInterval = []; // todo - rename - yes year ranges maybe
+	_yearRanges: YearRanges = [];
 
 	@property({ type: Boolean, noAttribute: true })
 	_hidden = false;
@@ -151,7 +151,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 		const tempDate = new CalendarDate(calendarDate, this._primaryCalendarType);
 		tempDate.setYear(this._firstYear);
 
-		const rangeIntervals: YearRangeInterval = [];
+		const rangeIntervals: YearRanges = [];
 
 		for (let i = 0; i < pageSize; i++) {
 			const endDate = new CalendarDate(tempDate, this._primaryCalendarType);
@@ -202,7 +202,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 			tempDate.setYear(tempDate.getYear() + this.rangeSize);
 		}
 
-		this._rangesInterval = rangeIntervals;
+		this._yearRanges = rangeIntervals;
 	}
 
 	_checkHasSelectedDatesInRange(startYear: number, endYear: number) {
