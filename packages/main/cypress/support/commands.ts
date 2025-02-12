@@ -38,8 +38,9 @@
 
 import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "./commands/Menu.commands.js";
-import "./commands/ColorPicker.commands.js";
 import "./commands/ColorPalette.commands.js";
+import "./commands/ColorPalettePopover.commands.js";
+import "./commands/ColorPicker.commands.js";
 
 type SimulationDevices = "phone"
 
@@ -56,6 +57,14 @@ declare global {
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
 			ui5ColorPaletteCheckSelectedColor(colorPaletteItem: string, values: {r: string, g: string, b: string, a: string}): Chainable<void>
 			ui5ColorPaletteNavigateAndCheckSelectedColor(colorPalette: string, startIndex: number, key: string, expectedValue: string): Chainable<void>
+			ui5ColorPalettePopoverOpened(): Chainable<void>
+			ui5ColorPalettePopoverOpen(options?: { opener?: string }): Chainable<void>
+			ui5GetColorPaletteInPopover(): Chainable<void>
+			ui5GetColorPaletteDefaultButton(): Chainable<void>
+			ui5GetColorPaletteFirstItem(): Chainable<void>
+			ui5GetColorPaletteMoreColorsButton(): Chainable<void>
+			ui5RegisterCloseCounter(inputSelector: string): Chainable<void>
+			ui5ColorPalettePopoverClose(): Chainable<void>
 		}
 	}
 }
