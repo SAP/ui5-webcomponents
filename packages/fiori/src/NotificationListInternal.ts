@@ -58,16 +58,14 @@ class NotificationListInternal extends List {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		super._onkeydown(e);
-
 		if (isEnd(e)) {
-			this._handleEnd1(e);
+			this._handleEndKey(e);
 			e.preventDefault();
 			return;
 		}
 
 		if (isHome(e)) {
-			this._handleHome1(e);
+			this._handleHomeKey(e);
 			e.preventDefault();
 			return;
 		}
@@ -75,7 +73,7 @@ class NotificationListInternal extends List {
 		this._focusSameItemOnNextRow(e);
 	}
 
-	_handleHome1(e: KeyboardEvent) {
+	_handleHomeKey(e: KeyboardEvent) {
 		e.stopImmediatePropagation();
 
 		const currentFocusedItem = this.getEnabledItems()[this._itemNavigation._currentIndex];
@@ -97,14 +95,32 @@ class NotificationListInternal extends List {
 		this._allNavigationItems[nextFocusedIndex].focus();
 	}
 
-	_handleEnd1(e: KeyboardEvent) {
+	_handleEndKey(e: KeyboardEvent) {
 		e.stopImmediatePropagation();
+
+		const currentFocusedItem = this.getEnabledItems()[this._itemNavigation._currentIndex];
+		if (!currentFocusedItem) {
+			return;
+		}
+
+		const currentFocusedIndex = this._allNavigationItems.indexOf(currentFocusedItem);
+		let nextFocusedIndex = this._allNavigationItems.length - 1;
+
+		for (let i = currentFocusedIndex + 1; i < this._allNavigationItems.length; i++) {
+			const item = this._allNavigationItems[i];
+			if (this._isGrowinButton(item)) {
+				nextFocusedIndex = i === currentFocusedIndex + 1 ? i : i - 1;
+				break;
+			}
+		}
+
+		this._allNavigationItems[nextFocusedIndex].focus();
 	}
 
 	_focusSameItemOnNextRow(e: KeyboardEvent) {
 		const target = e.target as HTMLElement;
 		const shadowTarget = target.shadowRoot!.activeElement as HTMLElement;
-		const activeElement = getActiveElement();
+		const activeElement = getActiveElement()! as HTMLElement;
 		const isGrowingBtn = this._isGrowinButton(activeElement);
 
 		if (!target || target.hasAttribute("ui5-menu-item")) {
@@ -119,15 +135,25 @@ class NotificationListInternal extends List {
 		e.preventDefault();
 		e.stopImmediatePropagation();
 
-		const navItems = this.getEnabledItems();
-		// @ts-expect-error TOFIX strictEvents
-		const index = navItems.indexOf(isGrowingBtn ? activeElement : target) + (isUp(e) ? -1 : 1);
-		const nextItem = navItems[index] as NotificationListItemBase;
+		const currentItem = isGrowingBtn ? activeElement : this.getEnabledItems()[this._itemNavigation._currentIndex];
+		const index = this._allNavigationItems.indexOf(currentItem) + (isUp(e) ? -1 : 1);
+		const nextItem = this._allNavigationItems[index];
 		if (!nextItem) {
 			return;
 		}
 
-		const sameItemOnNextRow = this._isGrowinButton(nextItem) ? null : nextItem.getHeaderDomRef()!.querySelector(`.${shadowTarget.className}`) as HTMLElement;
+		if (this._isGrowinButton(nextItem) || shadowTarget.classList.contains("ui5-nli-focusable")) {
+			nextItem.focus();
+			return;
+		}
+
+		const nextListItem = nextItem as NotificationListItemBase;
+		if (nextListItem.loading) {
+			nextItem.focus();
+			return;
+		}
+
+		const sameItemOnNextRow = nextListItem.getHeaderDomRef()!.querySelector<HTMLElement>(`.${shadowTarget.className}`);
 		if (sameItemOnNextRow && sameItemOnNextRow.offsetParent) {
 			sameItemOnNextRow.focus();
 		} else {
