@@ -7,6 +7,7 @@ import {
 	TABLE_SELECTION,
 	TABLE_ROW_POPIN,
 	TABLE_ROW_ACTIONS,
+	TABLE_COLUMN_HEADER_ROW,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -72,6 +73,11 @@ class TableHeaderRow extends TableRowBase {
 	 */
 	@property({ type: Boolean })
 	sticky = false;
+
+	onEnterDOM(): void {
+		super.onEnterDOM();
+		this.setAttribute("aria-roledescription", TableRowBase.i18nBundle.getText(TABLE_COLUMN_HEADER_ROW));
+	}
 
 	onBeforeRendering() {
 		super.onBeforeRendering();
