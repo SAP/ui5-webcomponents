@@ -1,5 +1,5 @@
 import {
-	isSpace, isDelete, isF10Shift, isEnterShift, isUp, isDown,
+	isSpace, isDelete, isF10Shift, isEnterShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -18,7 +18,6 @@ import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.j
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
-import type NotificationList from "./NotificationList.js";
 
 // Icons
 import iconSysEnter2 from "@ui5/webcomponents-icons/dist/sys-enter-2.js";
