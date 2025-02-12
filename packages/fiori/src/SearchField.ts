@@ -164,6 +164,14 @@ class SearchField extends UI5Element {
 	placeholder?: string;
 
 	/**
+	 * Defines the accessible ARIA name of the component.
+	 * @public
+	 * @default undefined
+	 */
+	@property()
+	accessibleName?: string;
+
+	/**
 	 * Defines the component scope options.
 	 * @public
 	 */
@@ -242,8 +250,14 @@ class SearchField extends UI5Element {
 		});
 	}
 
-	get _searchDesign() {
-		return this.value.length && this.focusedInnerInput ? ButtonDesign.Emphasized : ButtonDesign.Transparent;
+	get _isSearchIcon() {
+		return this.value.length && this.focusedInnerInput;
+	}
+
+	get _searchButtonAccessibilityAttributes() {
+		return {
+			expanded: this.expanded
+		}
 	}
 }
 

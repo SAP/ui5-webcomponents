@@ -14,8 +14,10 @@
     --_ui5_search_input_outline: none;
     --_ui5_search_icon_size: 1.75rem;
     --_ui5_search_icon_padding: 0.375rem;
+    --_ui5_search_icon_hover_padding: 0.3125rem;
     --_ui5_search_input_start_margin: 0;
     --_ui5_search_input_end_padding: 0;
     --_ui5-search-input-start-padding: 0.5rem;
     --_ui5-search-select-height: 1.625rem;
+    --_ui5-search-icon-border: none;
 }
