@@ -5,6 +5,7 @@
 @import "./NotificationListItem-parameters.css";
 @import "./Page-parameters.css";
 @import "./ProductSwitchItem-parameters.css";
+@import "../base/ShellBar-parameters.css";
 @import "./ShellBar-parameters.css";
 @import "./SideNavigation-parameters.css";
 @import "./TimelineItem-parameters.css";

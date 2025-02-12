@@ -26,7 +26,7 @@ import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handle
 import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import type { MoveEventDetail as ListMoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
@@ -49,13 +49,12 @@ import type ListItemBase from "./ListItemBase.js";
 import type {
 	ListItemBasePressEventDetail,
 } from "./ListItemBase.js";
-import DropIndicator from "./DropIndicator.js";
+import type DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
 import type {
 	SelectionRequestEventDetail,
 } from "./ListItem.js";
 import ListSeparator from "./types/ListSeparator.js";
-import BusyIndicator from "./BusyIndicator.js";
 
 // Template
 import ListTemplate from "./ListTemplate.js";
@@ -71,7 +70,8 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import type CheckBox from "./CheckBox.js";
 import type RadioButton from "./RadioButton.js";
-import ListItemGroup, { isInstanceOfListItemGroup } from "./ListItemGroup.js";
+import { isInstanceOfListItemGroup } from "./ListItemGroup.js";
+import type ListItemGroup from "./ListItemGroup.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -106,6 +106,8 @@ type ListItemToggleEventDetail = {
 type ListItemClickEventDetail = {
 	item: ListItemBase,
 }
+
+type ListMoveEventDetail = MoveEventDetail;
 
 /**
  * @class
@@ -173,11 +175,14 @@ type ListItemClickEventDetail = {
 		listCss,
 		getEffectiveScrollbarStyle(),
 	],
-	dependencies: [BusyIndicator, DropIndicator, ListItemGroup],
 })
 /**
  * Fired when an item is activated, unless the item's `type` property
  * is set to `Inactive`.
+ *
+ * **Note**: This event is not triggered by interactions with selection components such as the checkboxes and radio buttons,
+ * associated with non-default `selectionMode` values, or if any other **interactive** component
+ * (such as a button or input) within the list item is directly clicked.
  * @param {HTMLElement} item The clicked item.
  * @public
  */

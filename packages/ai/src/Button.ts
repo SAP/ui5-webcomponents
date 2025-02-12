@@ -6,10 +6,10 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
+import type SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
 import type ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
-import ButtonState from "./ButtonState.js";
+import type ButtonState from "./ButtonState.js";
+import "./ButtonState.js";
 
 import ButtonTemplate from "./ButtonTemplate.js";
 
@@ -54,7 +54,6 @@ import ButtonCss from "./generated/themes/Button.css.js";
 	renderer: jsxRenderer,
 	template: ButtonTemplate,
 	styles: ButtonCss,
-	dependencies: [SplitButton, Icon, ButtonState],
 	shadowRootOptions: { delegatesFocus: true },
 })
 
@@ -73,14 +72,14 @@ import ButtonCss from "./generated/themes/Button.css.js";
  * [Alt] + [Arrow Up]/ [Arrow Down], or [F4] keyboard keys.
  * @public
  */
-@event("arrow-click", {
+@event("arrow-button-click", {
 	bubbles: true,
 })
 
 class Button extends UI5Element {
 	eventDetails!: {
 		"click": void;
-		"arrow-click": void;
+		"arrow-button-click": void;
 	}
 	/**
 	 * Defines the component design.
@@ -118,7 +117,7 @@ class Button extends UI5Element {
 	 * @since 2.6.0
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	activeArrowButton = false;
+	arrowButtonPressed = false;
 
 	/**
 	 * Keeps the current state object of the component.
@@ -152,7 +151,7 @@ class Button extends UI5Element {
 	_hiddenSplitButton?: SplitButton;
 
 	get _hideArrowButton() {
-		return !this._effectiveStateObject?.splitMode;
+		return !this._effectiveStateObject?.showArrowButton;
 	}
 
 	get _effectiveState() {
@@ -176,7 +175,7 @@ class Button extends UI5Element {
 	}
 
 	get _stateEndIcon() {
-		const endIcon = this._effectiveStateObject?.splitMode ? "" : this._effectiveStateObject?.endIcon;
+		const endIcon = this._effectiveStateObject?.showArrowButton ? "" : this._effectiveStateObject?.endIcon;
 		return endIcon;
 	}
 
@@ -188,7 +187,7 @@ class Button extends UI5Element {
 		const splitButton = this._splitButton;
 
 		if (splitButton) {
-			splitButton.activeArrowButton = this.activeArrowButton;
+			splitButton.activeArrowButton = this.arrowButtonPressed;
 		}
 
 		if (!this._currentStateObject?.name) {
@@ -226,10 +225,10 @@ class Button extends UI5Element {
 		const buttonWidth = button.offsetWidth;
 		const currentState: Partial<ButtonState> = this._currentStateObject || {};
 
-		if ((!currentState.splitMode && newStateObject.splitMode) || (!currentState.endIcon && !!newStateObject.endIcon)) {
+		if ((!currentState.showArrowButton && newStateObject.showArrowButton) || (!currentState.endIcon && !!newStateObject.endIcon)) {
 			this.classList.add("ui5-ai-button-button-to-menu");
 		}
-		if ((currentState.splitMode && !newStateObject.splitMode) || (!!currentState.endIcon && !newStateObject.endIcon)) {
+		if ((currentState.showArrowButton && !newStateObject.showArrowButton) || (!!currentState.endIcon && !newStateObject.endIcon)) {
 			this.classList.add("ui5-ai-button-menu-to-button");
 		}
 
@@ -299,12 +298,12 @@ class Button extends UI5Element {
 	}
 
 	/**
-	 * Handles the arrow-click event when `ui5-ai-button` is in split mode.
+	 * Handles the arrow-button-click event when `ui5-ai-button` is in split mode.
 	 * @private
 	 */
 	_onArrowClick(e: CustomEvent): void {
 		e.stopImmediatePropagation();
-		this.fireDecoratorEvent("arrow-click");
+		this.fireDecoratorEvent("arrow-button-click");
 	}
 }
 

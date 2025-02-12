@@ -35,16 +35,6 @@ function listItemContent(this: MenuItem) {
 		{this.text && <div class="ui5-menu-item-text">{this.text}</div>}
 
 		{rightContent.call(this)}
-
-		{this.hasSubmenu && (
-			<div class="ui5-menu-item-submenu-icon" >
-				<Icon
-					part="subicon"
-					name={slimArrowRight}
-					class="ui5-menu-item-icon-end"
-				/>
-			</div>
-		)}
 	</>);
 }
 

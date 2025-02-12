@@ -1,8 +1,12 @@
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { customElement, property, slot } from "@ui5/webcomponents-base/dist/decorators.js";
 import TableCellBase from "./TableCellBase.js";
 import TableHeaderCellTemplate from "./generated/templates/TableHeaderCellTemplate.lit.js";
 import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
+import Icon from "./Icon.js";
+import SortOrder from "@ui5/webcomponents-base/dist/types/SortOrder.js";
+import type TableHeaderCellActionBase from "./TableHeaderCellActionBase.js";
+import "@ui5/webcomponents-icons/dist/sort-ascending.js";
+import "@ui5/webcomponents-icons/dist/sort-descending.js";
 
 /**
  * @class
@@ -28,6 +32,7 @@ import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
 	tag: "ui5-table-header-cell",
 	styles: [TableCellBase.styles, TableHeaderCellStyles],
 	template: TableHeaderCellTemplate,
+	dependencies: [Icon],
 })
 class TableHeaderCell extends TableCellBase {
 	/**
@@ -75,6 +80,37 @@ class TableHeaderCell extends TableCellBase {
 	@property({ type: Number })
 	importance = 0;
 
+	/**
+	 * The text for the column when it pops in.
+	 *
+	 * @default undefined
+	 * @since 2.7.0
+	 * @public
+	 */
+	@property()
+	popinText?: string;
+
+	/**
+	 * Defines the sort indicator of the column.
+	 *
+	 * @default "None"
+	 * @since 2.8.0
+	 * @public
+	 */
+	@property()
+	sortIndicator: `${SortOrder}` = "None";
+
+	/**
+	 * Defines the action of the column.
+	 *
+	 * **Note:** While multiple actions are technically possible, this is not supported.
+	 *
+	 * @public
+	 * @since 2.8.0
+	 */
+	@slot()
+	action!: Array<TableHeaderCellActionBase>;
+
 	@property({ type: Boolean, noAttribute: true })
 	_popin = false;
 
@@ -90,8 +126,21 @@ class TableHeaderCell extends TableCellBase {
 
 	onBeforeRendering() {
 		super.onBeforeRendering();
-		// overwrite setting of TableCellBase so that the TableHeaderCell always uses the slot variable
-		this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
+		if (this._individualSlot) {
+			// overwrite setting of TableCellBase so that the TableHeaderCell always uses the slot variable
+			this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
+		}
+		if (this.sortIndicator !== SortOrder.None) {
+			this.setAttribute("aria-sort", this.sortIndicator.toLowerCase());
+		} else if (this.hasAttribute("aria-sort")) {
+			this.removeAttribute("aria-sort");
+		}
+	}
+
+	get _sortIcon() {
+		if (this.sortIndicator !== SortOrder.None) {
+			return `sort-${this.sortIndicator.toLowerCase()}`;
+		}
 	}
 }
 

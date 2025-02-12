@@ -194,6 +194,64 @@
 	</section>
 
 	<section>
+		<h2>Semantic States Overflow</h2>
+		<ui5-tabcontainer id="semanticOverflow">
+			<ui5-tab design="Positive" text="Home">
+				<ui5-tab slot="items" design="Negative" text="Home 1"></ui5-tab>	
+				<ui5-tab slot="items" design="Positive" text="Home 2">
+					<ui5-tab slot="items" design="Positive" text="Home 2.1">
+					   <ui5-tab slot="items" text="Home 2.1.1"></ui5-tab>
+					   <ui5-tab slot="items" design="Positive" text="Home 2.1.2"></ui5-tab>
+					</ui5-tab>
+					<ui5-tab slot="items" design="Critical" text="Home 2.2"></ui5-tab>
+				</ui5-tab>
+				
+				<ui5-tab slot="items" design="Negative" text="Home 3"></ui5-tab>		  
+			</ui5-tab>
+
+			<ui5-tab design="Critical" text="Filter">
+				<ui5-tab slot="items" text="1.1.Filter"></ui5-tab>
+				<ui5-tab slot="items" design="Critical" text="1.2.Filter">
+					<ui5-tab slot="items" text="1.2.1.Filter">
+						<ui5-tab slot="items" design="Positive" text="1.2.1.1.Filter"></ui5-tab>
+						<ui5-tab slot="items" design="Negative" text="1.2.1.2.Filter"></ui5-tab>
+						<ui5-tab slot="items" text="1.2.1.3.Filter"></ui5-tab>
+					</ui5-tab>
+					<ui5-tab slot="items" text="1.2.2.Filter"></ui5-tab>
+				</ui5-tab>
+				<ui5-tab slot="items" design="Negative" text="1.3.Filter"></ui5-tab>
+			</ui5-tab>
+			<ui5-tab design="Negative" text="Settings"></ui5-tab>
+			<ui5-tab design="Positive" text="One"></ui5-tab>
+
+			<ui5-tab design="Critical" text="Two">
+				<ui5-tab design="Positive" slot="items" text="nested one"></ui5-tab>
+				<ui5-tab design="Positive" slot="items" text="nested two"></ui5-tab>
+			</ui5-tab>
+
+			<ui5-tab text="Three"></ui5-tab>
+			<ui5-tab design="Negative" text="Four">
+				<ui5-tab slot="items" text="4.1"></ui5-tab>
+				<ui5-tab design="Critical" slot="items" text="4.2">
+					<ui5-tab slot="items" text="4.2.1."></ui5-tab>
+					<ui5-tab slot="items" text="4.2.2.">
+						<ui5-tab slot="items" design="Critical" text="4.2.2.1"></ui5-tab>
+						<ui5-tab slot="items" text="4.2.2.2"></ui5-tab>
+					</ui5-tab>
+					<ui5-tab design="Critical" slot="items" text="4.2.3.">
+						<ui5-tab slot="items" text="4.2.3.1"></ui5-tab>
+						<ui5-tab slot="items" text="4.2.3.2"></ui5-tab>
+					</ui5-tab>
+				</ui5-tab>
+				<ui5-tab slot="items" text="4.3"></ui5-tab>
+				<ui5-tab design="Critical" slot="items" text="4.4."></ui5-tab>
+			</ui5-tab>
+
+			<ui5-tab design="Negative" text="Five"></ui5-tab>
+		</ui5-tabcontainer>
+	</section>
+
+	<section>
 		<h2>Text only Start And End Overflow</h2>
 		<ui5-tabcontainer id="tabContainerStartAndEndOverflow" overflow-mode="StartAndEnd" collapsed>
 			<ui5-tab text="One"></ui5-tab>

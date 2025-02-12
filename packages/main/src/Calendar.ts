@@ -24,20 +24,17 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import CalendarDate from "./CalendarDate.js";
 import CalendarDateRange from "./CalendarDateRange.js";
+import "./SpecialCalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
-import DayPicker from "./DayPicker.js";
 import type { DayPickerChangeEventDetail } from "./DayPicker.js";
-import MonthPicker from "./MonthPicker.js";
 import type { MonthPickerChangeEventDetail } from "./MonthPicker.js";
-import YearPicker from "./YearPicker.js";
 import type { YearPickerChangeEventDetail } from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
-import CalendarLegend from "./CalendarLegend.js";
+import type CalendarLegend from "./CalendarLegend.js";
 import type { CalendarLegendItemSelectionChangeEventDetail } from "./CalendarLegend.js";
-import SpecialCalendarDate from "./SpecialCalendarDate.js";
+import type SpecialCalendarDate from "./SpecialCalendarDate.js";
 import type CalendarLegendItemType from "./types/CalendarLegendItemType.js";
-import Icon from "./Icon.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -81,6 +78,7 @@ type CalendarSelectionChangeEventDetail = {
 type SpecialCalendarDateT = {
 	specialDateTimestamp: number;
 	type: `${CalendarLegendItemType}`;
+	tooltip?: string;
 };
 
 /**
@@ -194,16 +192,6 @@ type SpecialCalendarDateT = {
 	fastNavigation: true,
 	template: CalendarTemplate,
 	styles: [calendarCSS, CalendarHeaderCss],
-	dependencies: [
-		SpecialCalendarDate,
-		CalendarDate,
-		CalendarDateRange,
-		DayPicker,
-		MonthPicker,
-		YearPicker,
-		CalendarLegend,
-		Icon,
-	],
 })
 /**
  * Fired when the selected dates change.
@@ -287,7 +275,7 @@ class Calendar extends CalendarPart {
 	 * @public
 	 * @since 1.23.0
 	 */
-	@slot({ type: HTMLElement })
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	calendarLegend!: Array<CalendarLegend>;
 
 	/**
@@ -422,6 +410,11 @@ class Calendar extends CalendarPart {
 			return isTypeMatch && dateValue && this._isValidCalendarDate(dateValue);
 		});
 
+		validSpecialDates.forEach(date => {
+			const refLegendItem = this.calendarLegend.length ? this.calendarLegend[0].items.find(item => item.type === date.type) : undefined;
+			date._tooltip = refLegendItem?.text || "";
+		});
+
 		const uniqueDates = new Set();
 		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
 
@@ -433,7 +426,8 @@ class Calendar extends CalendarPart {
 				uniqueDates.add(timestamp);
 				const specialDateTimestamp = CalendarDateComponent.fromLocalJSDate(dateFromValue).valueOf() / 1000;
 				const type = date.type;
-				uniqueSpecialDates.push({ specialDateTimestamp, type });
+				const tooltip = date._tooltip;
+				uniqueSpecialDates.push({ specialDateTimestamp, type, tooltip });
 			}
 		});
 
@@ -585,7 +579,7 @@ class Calendar extends CalendarPart {
 		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
 		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this._secondaryCalendarType, this._timestamp);
 		const secondMonthInfo = convertMonthNumbersToMonthNames(dateInSecType.firstDate.getMonth(), dateInSecType.lastDate.getMonth(), this._secondaryCalendarType);
-		const secondYearText = secondYearFormat.format(localDate, true);
+		const secondYearText = secondYearFormat.format(localDate);
 
 		return {
 			yearButtonText: secondYearText,

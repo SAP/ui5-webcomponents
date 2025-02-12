@@ -17,9 +17,8 @@ import Highlight from "./types/Highlight.js";
 import ListItemType from "./types/ListItemType.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListItemBase from "./ListItemBase.js";
-import RadioButton from "./RadioButton.js";
-import CheckBox from "./CheckBox.js";
-import Button from "./Button.js";
+import type RadioButton from "./RadioButton.js";
+import type CheckBox from "./CheckBox.js";
 import type { IButton } from "./Button.js";
 import {
 	DELETE,
@@ -85,11 +84,6 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
 		ListItemBase.styles,
 		listItemAdditionalTextCss,
 		styles,
-	],
-	dependencies: [
-		Button,
-		RadioButton,
-		CheckBox,
 	],
 })
 /**
@@ -213,8 +207,6 @@ abstract class ListItem extends ListItemBase {
 	accessibleName?: string;
 	// used in ListItem template but implemented in TreeItemBase
 	indeterminate?: boolean;
-	// Used in UploadCollectionItem
-	disableDeleteButton?: boolean;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -421,17 +413,6 @@ abstract class ListItem extends ListItemBase {
 	get modeDelete() {
 		return this._selectionMode === ListSelectionMode.Delete;
 	}
-
-	/**
-	 * Used in UploadCollectionItem
-	 */
-	get renderDeleteButton() {
-		return this.modeDelete;
-	}
-
-	/**
-	 * End
-	 */
 
 	get typeDetail() {
 		return this.type === ListItemType.Detail;

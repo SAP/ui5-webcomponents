@@ -7,7 +7,7 @@
 	font-weight: normal;
 }
 
-.ui5-sn-item-level2 {
+.ui5-sn-item-level2:not(.ui5-sn-item-has-icon) {
 	padding-inline-start: var(--_ui5_side_navigation_group_icon_width);
 }
 

@@ -2,10 +2,10 @@
 
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
-Provides essential building blocks, necessary to implement the Fiori UX concept, 
+Provides essential building blocks, necessary to implement the Fiori UX concept,
 such as a common header (ShellBar).
 
-## Provided components 
+## Provided components
 
 | Web Component                             | Tag name                       | Module import                                                         |
 |-------------------------------------------|--------------------------------|-----------------------------------------------------------------------|
@@ -27,8 +27,10 @@ such as a common header (ShellBar).
 | Side Navigation                           | `ui5-side-navigation`          | `import "@ui5/webcomponents-fiori/dist/SideNavigation.js";`           |
 | Side Navigation Item                      | `ui5-side-navigation-item`     | `import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";`       |
 | Side Navigation Sub Item                  | `ui5-side-navigation-sub-item` | `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";`    |
+| Side Navigation Group                     | `ui5-side-navigation-group`    | `import "@ui5/webcomponents-fiori/dist/SideNavigationGroup.js";`      |
 | Timeline                                  | `ui5-timeline`                 | `import "@ui5/webcomponents-fiori/dist/Timeline.js";`                 |
 | Timeline Item                             | `ui5-timeline-item`            | comes with `ui5-timeline`                                             |
+| Timeline Group Item                       | `ui5-timeline-group-item`      | `import "@ui5/webcomponents-fiori/dist/TimelineGroupItem.js";`        |
 | Upload Collection                         | `ui5-upload-collection`        | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`         |
 | Upload Collection Item                    | `ui5-upload-collection-item`   | `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`     |
 | User Menu                                 | `ui5-user-menu`                | `import "@ui5/webcomponents-fiori/dist/UserMenu.js";`                 |

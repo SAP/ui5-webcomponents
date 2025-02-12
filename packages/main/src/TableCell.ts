@@ -34,17 +34,30 @@ class TableCell extends TableCellBase {
 		super.onBeforeRendering();
 		if (this.horizontalAlign) {
 			this.style.justifyContent = this.horizontalAlign;
-		} else {
-			this.style.justifyContent = `var(--horizontal-align-${(this as any)._individualSlot})`;
+		} else if (this._individualSlot) {
+			this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
 		}
 	}
 
-	get _popinHeader() {
+	get _headerCell() {
 		const row = this.parentElement as TableRow;
 		const table = row.parentElement as Table;
 		const index = row.cells.indexOf(this);
-		const headerCell = table.headerRow[0].cells[index];
-		return headerCell.content[0]?.cloneNode(true);
+		return table.headerRow[0].cells[index];
+	}
+
+	get _popinHeaderNodes() {
+		const nodes = [];
+		const headerCell = this._headerCell;
+		if (headerCell.popinText) {
+			nodes.push(headerCell.popinText);
+		} else {
+			nodes.push(...this._headerCell.content.map(node => node.cloneNode(true)));
+		}
+		if (headerCell.action[0]) {
+			nodes.push(headerCell.action[0].cloneNode(true));
+		}
+		return nodes;
 	}
 
 	get _i18nPopinColon() {

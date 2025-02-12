@@ -22,7 +22,7 @@ import { AVATAR_TOOLTIP } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import AvatarCss from "./generated/themes/Avatar.css.js";
 
-import Icon from "./Icon.js";
+import type Icon from "./Icon.js";
 import AvatarSize from "./types/AvatarSize.js";
 import type AvatarShape from "./types/AvatarShape.js";
 import type AvatarColorScheme from "./types/AvatarColorScheme.js";
@@ -61,7 +61,6 @@ type AvatarAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 	renderer: jsxRenderer,
 	styles: AvatarCss,
 	template: AvatarTemplate,
-	dependencies: [Icon],
 })
 /**
  * Fired on mouseup, space and enter if avatar is interactive
@@ -299,7 +298,9 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 			return this.accessibleName;
 		}
 
-		return Avatar.i18nBundle.getText(AVATAR_TOOLTIP) || undefined;
+		const defaultLabel = Avatar.i18nBundle.getText(AVATAR_TOOLTIP);
+
+		return this.initials ? `${defaultLabel} ${this.initials}`.trim() : defaultLabel;
 	}
 
 	get hasImage() {

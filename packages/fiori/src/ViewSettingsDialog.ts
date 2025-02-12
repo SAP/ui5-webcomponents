@@ -8,16 +8,11 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
-import Dialog from "@ui5/webcomponents/dist/Dialog.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
-import ListItemGroup from "@ui5/webcomponents/dist/ListItemGroup.js";
-import List from "@ui5/webcomponents/dist/List.js";
-import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
-import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
-import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
-import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
+import type Dialog from "@ui5/webcomponents/dist/Dialog.js";
+import type List from "@ui5/webcomponents/dist/List.js";
+import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
+import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 
 import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
 import "@ui5/webcomponents-icons/dist/sort.js";
@@ -36,6 +31,9 @@ import {
 	VSD_ORDER_ASCENDING,
 	VSD_ORDER_DESCENDING,
 	VSD_FILTER_BY,
+	VSD_SORT_TOOLTIP,
+	VSD_FILTER_TOOLTIP,
+	VSD_RESET_BUTTON_ACTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -107,17 +105,6 @@ type VSDInternalSettings = {
 	renderer: jsxRenderer,
 	styles: viewSettingsDialogCSS,
 	template: ViewSettingsDialogTemplate,
-	dependencies: [
-		Button,
-		Title,
-		Dialog,
-		Label,
-		List,
-		ListItemStandard,
-		ListItemGroup,
-		SegmentedButton,
-		SegmentedButtonItem,
-	],
 })
 
 /**
@@ -358,6 +345,18 @@ class ViewSettingsDialog extends UI5Element {
 		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_BY);
 	}
 
+	get _sortButtonTooltip() {
+		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_TOOLTIP);
+	}
+
+	get _filterButtonTooltip() {
+		return ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_TOOLTIP);
+	}
+
+	get _resetButtonAction() {
+		return ViewSettingsDialog.i18nBundle.getText(VSD_RESET_BUTTON_ACTION);
+	}
+
 	get _isPhone() {
 		return isPhone();
 	}
@@ -516,12 +515,14 @@ class ViewSettingsDialog extends UI5Element {
 		this._currentMode = ViewSettingsDialogMode[mode];
 	}
 
-	_handleFilterValueItemClick(e: CustomEvent<ListItemClickEventDetail>) {
+	_handleFilterValueItemClick(e: CustomEvent<ListSelectionChangeEventDetail>) {
+		const itemText = e.detail.targetItem.innerText;
+
 		// Update the component state
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
 			if (filter.selected) {
 				filter.filterOptions.forEach(option => {
-					if (option.text === e.detail.item.innerText) {
+					if (option.text === itemText) {
 						option.selected = !option.selected;
 					}
 				});
@@ -529,20 +530,19 @@ class ViewSettingsDialog extends UI5Element {
 			return filter;
 		});
 
-		this._setSelectedProp(e);
+		this._setSelectedProp(itemText);
 
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
 	}
 
 	/**
 	 * Sets the selected property of the clicked item.
-	 * @param e
 	 * @private
 	 */
-	_setSelectedProp(e: CustomEvent<ListItemClickEventDetail>) {
+	_setSelectedProp(itemText: string) {
 		this.filterItems.forEach(filterItem => {
 			filterItem.values.forEach(option => {
-				if (option.text === e.detail.item.innerText) {
+				if (option.text === itemText) {
 					option.selected = !option.selected;
 				}
 			});
@@ -654,6 +654,7 @@ class ViewSettingsDialog extends UI5Element {
 		this._restoreSettings(this._initialSettings);
 		this._recentlyFocused = this._sortOrder!;
 		this._focusRecentlyUsedControl();
+		announce(this._resetButtonAction, InvisibleMessageMode.Polite);
 	}
 
 	/**
@@ -669,10 +670,10 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores `Sort Order` list as recently used control and its selected item in current state.
 	 */
-	_onSortOrderChange(e: CustomEvent<ListItemClickEventDetail>) {
+	_onSortOrderChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		this._recentlyFocused = this._sortOrder!;
 		this._currentSettings.sortOrder = this.initSortOrderItems.map(item => {
-			item.selected = item.text === e.detail.item.innerText;
+			item.selected = item.text === e.detail.targetItem.innerText;
 			return item;
 		});
 
@@ -683,8 +684,8 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores `Sort By` list as recently used control and its selected item in current state.
 	 */
-	_onSortByChange(e: CustomEvent<ListItemClickEventDetail>) {
-		const selectedItemIndex = Number(e.detail.item.getAttribute("data-ui5-external-action-item-index"));
+	_onSortByChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
+		const selectedItemIndex = Number(e.detail.targetItem.getAttribute("data-ui5-external-action-item-index"));
 		this._recentlyFocused = this._sortBy!;
 		this._currentSettings.sortBy = this.initSortByItems.map((item, index) => {
 			item.selected = index === selectedItemIndex;

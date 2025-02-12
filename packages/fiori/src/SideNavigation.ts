@@ -1,10 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
-import NavigationMenuItem from "@ui5/webcomponents/dist/NavigationMenuItem.js";
+import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import type NavigationMenu from "./NavigationMenu.js";
 import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -27,9 +27,10 @@ import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import { isInstanceOfSideNavigationSelectableItemBase } from "./SideNavigationSelectableItemBase.js";
 import { isInstanceOfSideNavigationItemBase } from "./SideNavigationItemBase.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
-import SideNavigationItem, { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
-import SideNavigationSubItem from "./SideNavigationSubItem.js";
-import SideNavigationGroup from "./SideNavigationGroup.js";
+import { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
+import type SideNavigationItem from "./SideNavigationItem.js";
+import type SideNavigationSubItem from "./SideNavigationSubItem.js";
+import type SideNavigationGroup from "./SideNavigationGroup.js";
 import SideNavigationTemplate from "./SideNavigationTemplate.js";
 
 import {
@@ -114,15 +115,7 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 	fastNavigation: true,
 	renderer: jsxRender,
 	template: SideNavigationTemplate,
-	styles: [SideNavigationCss, SideNavigationPopoverCss],
-	dependencies: [
-		ResponsivePopover,
-		SideNavigationGroup,
-		SideNavigationItem,
-		SideNavigationSubItem,
-		NavigationMenu,
-		NavigationMenuItem,
-	],
+	styles: [SideNavigationCss, SideNavigationPopoverCss, getEffectiveScrollbarStyle()],
 })
 /**
  * Fired when the selection has changed via user interaction
@@ -399,7 +392,7 @@ class SideNavigation extends UI5Element {
 		const result = new Array<ITabbable>();
 
 		this._getFocusableItems(items).forEach(item => {
-			if (item.classList.contains("ui5-sn-item-hidden")) {
+			if (this.collapsed && item.classList.contains("ui5-sn-item-hidden")) {
 				return;
 			}
 
@@ -499,17 +492,19 @@ class SideNavigation extends UI5Element {
 
 			let itemDomRef;
 
-			if (isInstanceOfSideNavigationItemBase(item)) {
-				itemDomRef = item.getDomRef()!;
+			if (isInstanceOfSideNavigationItemBase(item) && item.getDomRef()) {
+				itemDomRef = item.getDomRef();
 			} else {
 				itemDomRef = item;
 			}
 
-			const { marginTop, marginBottom } = window.getComputedStyle(itemDomRef);
-			itemsHeight += itemDomRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+			if (itemDomRef) {
+				const { marginTop, marginBottom } = window.getComputedStyle(itemDomRef);
+				itemsHeight += itemDomRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
 
-			if (itemsHeight > listHeight) {
-				item.classList.add("ui5-sn-item-hidden");
+				if (itemsHeight > listHeight) {
+					item.classList.add("ui5-sn-item-hidden");
+				}
 			}
 		});
 
@@ -594,7 +589,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	_selectItem(item: SideNavigationSelectableItemBase) {
-		if (item.disabled) {
+		if (!item.isSelectable) {
 			return;
 		}
 

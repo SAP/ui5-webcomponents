@@ -21,7 +21,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ButtonDesign from "./types/ButtonDesign.js";
-import Button from "./Button.js";
+import type Button from "./Button.js";
 
 import {
 	SPLIT_BUTTON_DESCRIPTION,
@@ -74,6 +74,9 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/SplitButton.js";`
+ * @csspart button - Used to style the native button element
+ * @csspart icon - Used to style the icon in the native button element
+ * @csspart endIcon - Used to style the end icon in the native button element
  * @constructor
  * @extends UI5Element
  * @public
@@ -84,7 +87,6 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
 	renderer: jsxRenderer,
 	styles: SplitButtonCss,
 	template: SplitButtonTemplate,
-	dependencies: [Button],
 })
 /**
  * Fired when the user clicks on the default action.

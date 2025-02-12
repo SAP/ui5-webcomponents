@@ -18,10 +18,8 @@ import {
 	COLOR_PALETTE_DIALOG_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
-import Button from "./Button.js";
-import Title from "./Title.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import ColorPalette from "./ColorPalette.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
+import type ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail, IColorPaletteItem } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
 
@@ -57,12 +55,6 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 	renderer: jsxRenderer,
 	styles: [ResponsivePopoverCommonCss, ColorPalettePopoverCss],
 	template: ColorPalettePopoverTemplate,
-	dependencies: [
-		ResponsivePopover,
-		Button,
-		Title,
-		ColorPalette,
-	],
 })
 
 /**
@@ -98,7 +90,6 @@ class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can choose a custom color from a component.
 	 *
-	 * **Note:** In order to use this property you need to import the following module: `"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"`
 	 * @default false
 	 * @public
 	 */

@@ -29,10 +29,7 @@
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	color: var(--sapContent_LabelColor);
-	top: 2.75rem;
-	left: 2.75rem;
-	bottom: 2.75rem;
-	right: 2.75rem;
+	inset: 2.75rem;
 	border-radius: 100%;
 	z-index: 2;
 }
@@ -49,10 +46,7 @@
 
 .ui5-tp-clock-cover {
 	position: absolute;
-	top: 0.5625rem;
-	left: 0.5625rem;
-	bottom: 0.5625rem;
-	right: 0.5625rem;
+	inset: -0.25rem;
 	border-radius: 100%;
 	z-index: 10;
 	touch-action: none;
@@ -98,7 +92,7 @@
 	background-color: var(--sapField_BorderColor);
 }
 
-.ui5-tp-clock-marker {
+.ui5-tp-clock-select-marker {
 	box-sizing: border-box;
 	width: 0.25rem;
 	height: 0.5625rem;
@@ -106,6 +100,16 @@
 	border-radius: 100%;
 	background-color: var(--sapButton_Selected_Background);
 	border: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+}
+
+.ui5-tp-clock-hover-marker {
+	box-sizing: border-box;
+	width: 0.25rem;
+	height: 0.5625rem;
+	margin: 0 auto;
+	border-radius: 100%;
+	background-color: var(--sapList_Hover_Background);
+	border: 0.0625rem solid var(--sapGroup_TitleBorderColor);
 }
 
 .ui5-tp-clock-number {
@@ -120,10 +124,12 @@
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	color: var(--sapTextColor);
+	border: 0.0625rem solid transparent;
 }
 
 .ui5-tp-clock-number.ui5-tp-clock-number-hover:not(.ui5-tp-clock-selected) {
 	background-color: var(--sapList_Hover_Background);
+	z-index: 5;
 }
 
 .ui5-tp-clock-selected {
@@ -132,3 +138,168 @@
 	border: 0.0625rem solid var(--sapButton_Selected_BorderColor);
 }
 
+.ui5-tp-clock-hovered {
+	background-color: var(--sapList_Hover_Background);
+	z-index: 5;
+}
+
+.ui5-tp-clock-pointer {
+	cursor: pointer;
+}
+
+.ui5-tp-clock-items,
+.ui5-tp-clock-markers {
+	position: absolute;
+	inset: 0;
+}
+
+/* Animations */
+
+:host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-items .ui5-tp-clock-number,
+:host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-items .ui5-tp-clock-mid-dot,
+:host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-number.ui5-tp-clock-selected,
+:host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-select-marker,
+:host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-dial::before {
+	opacity: 0;
+}
+
+.ui5-tp-clock-transition .ui5-tp-clock-items .ui5-tp-clock-number {
+	animation-name: fadeOutClockItems;
+	animation-delay: 0.15s;
+	animation-duration: 0.2s;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
+
+.ui5-tp-clock-transition .ui5-tp-clock-dial::before {
+	animation-name: fadeOutClockLabel;
+	animation-duration: 0.35s;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
+
+.ui5-tp-clock-transition .ui5-tp-clock-number.ui5-tp-clock-selected,
+.ui5-tp-clock-transition .ui5-tp-clock-select-marker {
+	animation-name: fadeOutSelectedItem;
+	animation-delay: 0.1s;
+	animation-duration: 0.15s;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
+
+.ui5-tp-clock-transition .ui5-tp-clock-items .ui5-tp-clock-mid-dot {
+	animation-name: fadeOutSelectedItem;
+	animation-delay: 0.15s;
+	animation-duration: 0.2s;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
+
+
+:host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-items .ui5-tp-clock-number {
+	animation-name: fadeInClockItems;
+	animation-delay: 0.15s;
+	animation-duration: 0.2s;
+	animation-timing-function: ease-in;
+	animation-fill-mode: forwards;
+}
+
+:host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-dial::before {
+	animation-name: fadeInClockLabel;
+	animation-duration: 0.35s;
+	animation-timing-function: ease-in;
+	animation-fill-mode: forwards;
+}
+
+:host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-number.ui5-tp-clock-selected,
+:host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-select-marker {
+	animation-name: fadeInSelectedItem;
+	animation-delay: 0.1s;
+	animation-duration: 0.15s;
+	animation-timing-function: ease-in;
+	animation-fill-mode: forwards;
+}
+
+:host(:not([_skip-animation])) .ui5-tp-clock-active:not(.ui5-tp-clock-transition) .ui5-tp-clock-items .ui5-tp-clock-mid-dot {
+	animation-name: fadeInSelectedItem;
+	animation-delay: 0.15s;
+	animation-duration: 0.2s;
+	animation-timing-function: ease-in;
+	animation-fill-mode: forwards;
+}
+
+/* @keyframes */
+
+@keyframes fadeOutClockItems {
+	from {
+		opacity: 1;
+		display: block;
+	}
+	to {
+		opacity: 0;
+		display: block;
+	}
+}
+
+@keyframes fadeOutClockLabel {
+	from {
+		opacity: 1;
+		display: flex;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		display: flex;
+		transform: translateY(-16px);
+	}
+}
+
+@keyframes fadeOutSelectedItem {
+	from {
+		opacity: 1;
+		display: block;
+	}
+	to {
+		opacity: 0;
+		display: block;
+	}
+}
+
+@keyframes fadeInClockItems {
+	from {
+		opacity: 0;
+		display: block;
+	}
+	to {
+		opacity: 1;
+		display: block;
+	}
+}
+
+@keyframes fadeInClockLabel {
+	from {
+		opacity: 0;
+		display: flex;
+		transform: translateY(16px);
+	}
+	to {
+		opacity: 1;
+		display: flex;
+		transform: translateY(0px);
+	}
+}
+
+@keyframes fadeInSelectedItem {
+	from {
+		opacity: 0;
+		display: block;
+	}
+	50% {
+		opacity: 0.5;
+		display: block;
+	}
+	to {
+		opacity: 1;
+		display: block;
+	}
+}

@@ -7,11 +7,8 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import Input from "@ui5/webcomponents/dist/Input.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
-import Link from "@ui5/webcomponents/dist/Link.js";
-import ProgressIndicator from "@ui5/webcomponents/dist/ProgressIndicator.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
+import type Input from "@ui5/webcomponents/dist/Input.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -63,14 +60,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 	renderer: jsxRenderer,
 	styles: [ListItem.styles, UploadCollectionItemCss],
 	template: UploadCollectionItemTemplate,
-	dependencies: [
-		...ListItem.dependencies,
-		Button,
-		Input,
-		Link,
-		Label,
-		ProgressIndicator,
-	],
 })
 
 /**
@@ -168,7 +157,7 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare disableDeleteButton: boolean;
+	disableDeleteButton = false;
 
 	/**
 	 * Hides the delete button.
@@ -253,16 +242,21 @@ class UploadCollectionItem extends ListItem {
 	async _initInputField() {
 		await renderFinished();
 
-		const inp = this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input")!;
-		inp.value = this._fileNameWithoutExtension;
+		if (this.editInpElement) {
+			this.editInpElement.value = this._fileNameWithoutExtension;
+		}
 
 		await renderFinished();
 
-		const inpFocusDomRef = inp.getFocusDomRef() as HTMLInputElement;
+		const inpFocusDomRef = this.editInpElement?.getFocusDomRef();
 		if (inpFocusDomRef) {
 			inpFocusDomRef.focus();
-			inpFocusDomRef.setSelectionRange(0, this._fileNameWithoutExtension.length);
+			(inpFocusDomRef as HTMLInputElement).setSelectionRange(0, this._fileNameWithoutExtension.length);
 		}
+	}
+
+	get editInpElement() {
+		return this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input");
 	}
 
 	_onkeyup(e: KeyboardEvent) {
