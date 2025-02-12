@@ -7,7 +7,11 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
-import type ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
+import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
+import {
+	isDesktop,
+	isSafari,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import type ButtonState from "./ButtonState.js";
 import "./ButtonState.js";
 
@@ -15,6 +19,22 @@ import ButtonTemplate from "./ButtonTemplate.js";
 
 // Styles
 import ButtonCss from "./generated/themes/Button.css.js";
+import { isDown, isDownAlt, isEnter, isEscape, isF4, isShift, isSpace, isTabNext, isTabPrevious, isUp, isUpAlt } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { AriaHasPopup, AriaRole } from "@ui5/webcomponents-base/dist/types.js";
+import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_EMPHASIZED, BUTTON_ARIA_TYPE_REJECT, SPLIT_BUTTON_ARROW_BUTTON_TOOLTIP, SPLIT_BUTTON_DESCRIPTION, SPLIT_BUTTON_KEYBOARD_HINT } from "@ui5/webcomponents/dist/generated/i18n/i18n-defaults.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/InitialConfiguration.js";
+import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import type ButtonAccessibleRole from "@ui5/webcomponents/dist/types/ButtonAccessibleRole.js";
+
+
+let isGlobalHandlerAttached = false;
+let activeButton: Button | null = null
 
 /**
  * @class
@@ -80,6 +100,7 @@ class Button extends UI5Element {
 	eventDetails!: {
 		"click": void;
 		"arrow-button-click": void;
+		"active-state-change": void;
 	}
 	/**
 	 * Defines the component design.
@@ -87,7 +108,7 @@ class Button extends UI5Element {
 	 * @public
 	 */
 	@property()
-	design?: `${ButtonDesign}` = "Default"
+	design: `${ButtonDesign}` = "Default"
 
 	/**
 	 * Defines whether the component is disabled.
@@ -144,11 +165,43 @@ class Button extends UI5Element {
 	@slot({ type: HTMLElement, "default": true })
 	states!: Array<ButtonState>;
 
+	/**
+	 * Defines the text of the component.
+	 *
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 * @public
+	 */
+	@slot({ type: Node})
+	text!: Array<Node>;
+
 	@query("[ui5-split-button]")
 	_splitButton?: SplitButton;
 
 	@query(".ui5-ai-button-hidden[ui5-split-button]")
 	_hiddenSplitButton?: SplitButton;
+
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
+	_tabIndex?: number;
+	private _shiftOrEscapePressed?: boolean;
+	private _textButtonActive = false;
+	private _isKeyDownOperation = false;
+	private _activeArrowButton?: boolean;
+	private _isDefaultActionPressed?: boolean;
+	private _spacePressed?: boolean;
+	activeArrowButton: any;
+	accessibleDescription = "";
+	tooltip: any;
+	hasIcon?: boolean;
+	hasEndIcon?: boolean;
+	buttonTitle: any;
+	nonInteractive: any;
+	_cancelAction?: boolean;
+	forcedTabIndex = "";
+	accessibilityAttributes: any;
+	accessibleRole: `${ButtonAccessibleRole}` = "Button";
+	active: any;
 
 	get _hideArrowButton() {
 		return !this._effectiveStateObject?.showArrowButton;
@@ -183,6 +236,31 @@ class Button extends UI5Element {
 		return !!this._stateText;
 	}
 
+	constructor() {
+		super();
+		this._deactivate = () => {
+			if (activeButton) {
+				activeButton._setActiveState(false);
+			}
+		};
+
+		if (!isGlobalHandlerAttached) {
+			document.addEventListener("mouseup", this._deactivate);
+
+			isGlobalHandlerAttached = true;
+		}
+	}
+
+	_onmousedowntextbutton() {
+		if (this.nonInteractive) {
+			return;
+		}
+
+		this._setActiveState(true);
+		activeButton = this; // eslint-disable-line
+	}
+
+
 	onBeforeRendering(): void {
 		const splitButton = this._splitButton;
 
@@ -200,6 +278,399 @@ class Button extends UI5Element {
 		if (currentStateName !== "" && currentStateName !== this._effectiveState) {
 			this._fadeOut();
 		}
+
+		if (this.disabled) {
+			this._tabIndex = -1;
+		}
+
+		this.hasIcon = !!this._stateIcon;
+		this.hasEndIcon = !!this._stateEndIcon;
+		this.iconOnly = this.isIconOnly;
+	}
+
+	_handleMouseClick(e: MouseEvent) {
+		this._fireClick(e);
+	}
+
+	_onFocusOut() {
+		if (this.disabled || this.getFocusDomRef()!.matches(":has(:focus-within)")) {
+			return;
+		}
+
+		this._shiftOrEscapePressed = false;
+		this._setTabIndexValue();
+	}
+
+	_onFocusIn() {
+		if (this.disabled || this.getFocusDomRef()!.matches(":has(:focus-within)")) {
+			return;
+		}
+		this._shiftOrEscapePressed = false;
+	}
+
+	handleTouchStart(e: TouchEvent | MouseEvent) {
+		e.stopPropagation();
+		this._textButtonActive = true;
+		this._tabIndex = -1;
+	}
+
+	_onInnerButtonFocusIn(e: FocusEvent) {
+		e.stopPropagation();
+		this._setTabIndexValue(true);
+		const target = e.target as Button;
+		target.focus();
+	}
+
+	_onKeyDown(e: KeyboardEvent) {
+		this._isKeyDownOperation = true;
+		if (this._isArrowKeyAction(e)) {
+			this._handleArrowButtonAction(e);
+			this._activeArrowButton = true;
+		} else if (this._isDefaultAction(e)) {
+			this._handleDefaultAction(e);
+			this._isDefaultActionPressed = true;
+		}
+
+		if (this._spacePressed && this._isShiftOrEscape(e)) {
+			this._handleShiftOrEscapePressed();
+		}
+
+		// Handles button freeze issue when pressing Enter/Space and navigating with Tab/Shift+Tab simultaneously.
+		if (this._isDefaultActionPressed && (isTabNext(e) || isTabPrevious(e))) {
+			this._activeArrowButton = false;
+			this._textButtonActive = false;
+		}
+
+		this._tabIndex = -1;
+	}
+
+	_onKeyUp(e: KeyboardEvent) {
+		this._isKeyDownOperation = false;
+		if (this._isArrowKeyAction(e)) {
+			e.preventDefault();
+			this._activeArrowButton = false;
+			this._textButtonActive = false;
+		} else if (this._isDefaultAction(e)) {
+			this._isDefaultActionPressed = false;
+			this._textButtonActive = false;
+			if (isSpace(e)) {
+				e.preventDefault();
+				e.stopPropagation();
+				this._fireClick();
+				this._spacePressed = false;
+				this._textButtonActive = false;
+			}
+		}
+
+		if (this._isShiftOrEscape(e)) {
+			this._handleShiftOrEscapePressed();
+		}
+
+		this._tabIndex = -1;
+	}
+
+	_fireClick(e?: Event) {
+		e?.stopPropagation();
+		if (!this._shiftOrEscapePressed) {
+			this.fireDecoratorEvent("click");
+		}
+		this._shiftOrEscapePressed = false;
+	}
+
+	_fireArrowClick(e?: Event) {
+		e?.stopPropagation();
+
+		this.fireDecoratorEvent("arrow-button-click");
+	}
+
+	_textButtonRelease() {
+		this._textButtonActive = false;
+		this._tabIndex = -1;
+	}
+
+	_arrowButtonPress(e: MouseEvent) {
+		e.stopPropagation();
+
+		this._tabIndex = -1;
+	}
+
+	_arrowButtonRelease(e: MouseEvent) {
+		e.preventDefault();
+
+		this._tabIndex = -1;
+	}
+
+	_setTabIndexValue(innerButtonPressed?: boolean) {
+		this._tabIndex = this.disabled ? -1 : 0;
+
+		if (this._tabIndex === -1 && innerButtonPressed) {
+			this._tabIndex = 0;
+		}
+	}
+
+	_onArrowButtonActiveStateChange(e: CustomEvent) {
+		if (this.activeArrowButton) {
+			e.preventDefault();
+		}
+	}
+
+	/**
+	 * Checks if the pressed key is an arrow key.
+	 * @param e - keyboard event
+	 * @private
+	 */
+	_isArrowKeyAction(e: KeyboardEvent): boolean {
+		return isDown(e) || isUp(e) || isDownAlt(e) || isUpAlt(e) || isF4(e);
+	}
+
+	/**
+	 * Checks if the pressed key is a default action key (Space or Enter).
+	 * @param e - keyboard event
+	 * @private
+	 */
+	_isDefaultAction(e: KeyboardEvent): boolean {
+		return isSpace(e) || isEnter(e);
+	}
+
+	/**
+	 * Checks if the pressed key is an escape key or shift key.
+	 * @param e - keyboard event
+	 * @private
+	 */
+	_isShiftOrEscape(e: KeyboardEvent): boolean {
+		return isEscape(e) || isShift(e);
+	}
+
+	/**
+	 * Handles the click event and the focus on the arrow button.
+	 * @param e - keyboard event
+	 * @private
+	 */
+	_handleArrowButtonAction(e: KeyboardEvent | MouseEvent) {
+		e.preventDefault();
+
+		this._fireArrowClick(e);
+
+		if (isSpace((e as KeyboardEvent))) {
+			this._spacePressed = true;
+		}
+	}
+
+	/**
+	 * Handles the default action and the active state of the respective button.
+	 * @param e - keyboard event
+	 * @private
+	 */
+	_handleDefaultAction(e: KeyboardEvent) {
+		e.preventDefault();
+		const wasSpacePressed = isSpace(e);
+		const target = e.target as Button;
+
+		if (this.arrowButton && target === this.arrowButton) {
+			this._activeArrowButton = true;
+			this._fireArrowClick();
+			if (wasSpacePressed) {
+				this._spacePressed = true;
+				this._textButtonActive = false;
+			}
+		} else {
+			this._textButtonActive = true;
+			if (wasSpacePressed) {
+				this._spacePressed = true;
+				return;
+			}
+			this._fireClick();
+		}
+	}
+
+	_handleShiftOrEscapePressed() {
+		this._shiftOrEscapePressed = true;
+		this._textButtonActive = false;
+		this._isKeyDownOperation = false;
+	}
+
+	get effectiveActiveArrowButton() {
+		return this.activeArrowButton || this._activeArrowButton;
+	}
+
+	get textButtonAccText() {
+		return this.textContent;
+	}
+
+	get isTextButton() {
+		return !!this.textContent;
+	}
+
+	get textButton() {
+		return this.getDomRef()?.querySelector<Button>(".ui5-split-text-button");
+	}
+
+	get arrowButton() {
+		return this.getDomRef()?.querySelector<Button>(".ui5-split-arrow-button");
+	}
+
+	get accInfo() {
+		return {
+			root: {
+				"description": Button.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
+				"keyboardHint": Button.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
+			},
+			arrowButton: {
+				"title": this.arrowButtonTooltip,
+				"accessibilityAttributes": {
+					"hasPopup": "menu" as AriaHasPopup,
+					"expanded": this.effectiveActiveArrowButton,
+				},
+			},
+		};
+	}
+
+	get arrowButtonTooltip() {
+		return Button.i18nBundle.getText(SPLIT_BUTTON_ARROW_BUTTON_TOOLTIP);
+	}
+
+	get ariaLabelText() {
+		return [Button.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION), Button.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT)].join(" ");
+	}
+
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
+
+
+	_onclicktextbutton() {
+		if (this.nonInteractive) {
+			return;
+		}
+
+		if (isSafari()) {
+			this.getDomRef()?.focus();
+		}
+	}
+
+	_ontouchendtextbutton(e: TouchEvent) {
+		if (this.disabled) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
+
+		if (this.active) {
+			this._setActiveState(false);
+		}
+
+		if (activeButton) {
+			activeButton._setActiveState(false);
+		}
+	}
+
+	_onkeydowntextbutton(e: KeyboardEvent) {
+		this._cancelAction = isShift(e) || isEscape(e);
+
+		if (isSpace(e) || isEnter(e)) {
+			this._setActiveState(true);
+		} else if (this._cancelAction) {
+			this._setActiveState(false);
+		}
+	}
+
+	_onkeyuptextbutton(e: KeyboardEvent) {
+		if (this._cancelAction) {
+			e.preventDefault();
+		}
+		if (isSpace(e) || isEnter(e)) {
+			if (this.active) {
+				this._setActiveState(false);
+			}
+		}
+	}
+
+	_onfocusouttextbutton() {
+		if (this.nonInteractive) {
+			return;
+		}
+
+		if (this.active) {
+			this._setActiveState(false);
+		}
+	}
+
+	_setActiveState(active: boolean) {
+		const eventPrevented = !this.fireDecoratorEvent("active-state-change");
+
+		if (eventPrevented) {
+			return;
+		}
+
+		this.active = active;
+	}
+
+	get _hasPopup() {
+		return this.accessibilityAttributes.hasPopup;
+	}
+
+	get hasButtonType() {
+		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
+	}
+
+	get isIconOnly() {
+		return !willShowContent(this.text);
+	}
+
+	static typeTextMappings(): Record<string, I18nText> {
+		return {
+			"Positive": BUTTON_ARIA_TYPE_ACCEPT,
+			"Negative": BUTTON_ARIA_TYPE_REJECT,
+			"Emphasized": BUTTON_ARIA_TYPE_EMPHASIZED,
+		};
+	}
+
+	getDefaultTooltip() {
+		if (!getEnableDefaultTooltips()) {
+			return;
+		}
+
+		return getIconAccessibleName(this._stateIcon);
+	}
+
+	get buttonTypeText() {
+		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
+	}
+
+	get effectiveAccRole(): AriaRole {
+		return toLowercaseEnumValue(this.accessibleRole);
+	}
+
+	get tabIndexValue() {
+		if (this.disabled) {
+			return;
+		}
+
+		const tabindex = this.getAttribute("tabindex");
+
+		if (tabindex) {
+			return Number.parseInt(tabindex);
+		}
+
+		return this.nonInteractive ? -1 : Number.parseInt(this.forcedTabIndex);
+	}
+
+	get showIconTooltip() {
+		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
+	}
+
+	get ariaLabelTextTextButton() {
+		return getEffectiveAriaLabelText(this);
+	}
+
+	get ariaDescribedbyText() {
+		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
+	}
+
+	get ariaDescriptionText() {
+		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
 	}
 
 	/**
