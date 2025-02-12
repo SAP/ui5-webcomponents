@@ -11,8 +11,8 @@ export default function SearchFieldTemplate(this: SearchField) {
 				<div class="ui5-search-field-content">
 					{this.showScope &&
 						<>
-							<Select onChange={this._handleScopeChange} class="sapUiSizeCompact" accessibleName="Select scope">
-								{this.scopeOptions.map((scopeOption) => {
+							<Select onChange={this._handleScopeChange} class="sapUiSizeCompact" accessibleName={this._translations.scope}>
+								{this.scopeOptions.map(scopeOption => {
 									return <Option
 										id={scopeOption._id}
 										selected={scopeOption.selected}
@@ -37,13 +37,12 @@ export default function SearchFieldTemplate(this: SearchField) {
 						onFocusOut={this._onfocusout}
 						onKeyDown={this._onkeydown} />
 
-
 					{this._effectiveShowClearIcon &&
 						<Icon
 							class="ui5-shell-search-field-icon"
 							name="decline"
 							showTooltip={true}
-							accessibleName="Clear search"
+							accessibleName={this._translations.clearIcon}
 							onClick={this._handleClear}
 						></Icon>
 					}
@@ -55,7 +54,7 @@ export default function SearchFieldTemplate(this: SearchField) {
 						}}
 						name="search"
 						showTooltip={true}
-						accessibleName="Search (Enter)"
+						accessibleName={this._translations.searchIcon}
 						onClick={this._handleSearchIconPress}
 						onFocusOut={this._handleSearchIconFocusOut}
 					></Icon>
@@ -68,7 +67,8 @@ export default function SearchFieldTemplate(this: SearchField) {
 				design="Transparent"
 				data-sap-focus-ref
 				onClick={this._handleSearchIconPress}
-				accessibleName="Open Search"
+				tooltip={this._translations.collapsedSearch}
+				accessibleName={this._translations.collapsedSearch}
 				accessibilityAttributes={this._searchButtonAccessibilityAttributes}
 			></Button>
 		)

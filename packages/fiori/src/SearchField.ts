@@ -3,19 +3,28 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import SearchFieldTemplate from "./SearchFieldTemplate.js";
 import SearchFieldCss from "./generated/themes/SearchField.css.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Select from "@ui5/webcomponents/dist/Select.js";
 import Option from "@ui5/webcomponents/dist/Option.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/index.js";
+
+import {
+	SEARCH_FIELD_SCOPE_SELECT_LABEL,
+	SEARCH_FIELD_CLEAR_ICON,
+	SEARCH_FIELD_SEARCH_ICON,
+	SEARCH_FIELD_SEARCH_COLLAPSED,
+	SEARCH_FIELD_SEARCH_EXPANDED,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-search`
@@ -190,6 +199,9 @@ class SearchField extends UI5Element {
 	@property({ type: Boolean })
 	_effectiveShowClearIcon = false;
 
+	@i18n("@ui5/webcomponents-fiori")
+	static i18nBundle: I18nBundle;
+
 	onBeforeRendering() {
 		this._effectiveShowClearIcon = (this.showClearIcon && !!this.value);
 	}
@@ -246,7 +258,7 @@ class SearchField extends UI5Element {
 
 	_handleScopeChange(e: UI5CustomEvent<Select, "change">) {
 		this.fireDecoratorEvent("scope-change", {
-			scope: this.scopeOptions.find(option => e.detail.selectedOption!.id === option._id),
+			scope: this.scopeOptions.find(option => e.detail.selectedOption.id === option._id),
 		});
 	}
 
@@ -256,8 +268,17 @@ class SearchField extends UI5Element {
 
 	get _searchButtonAccessibilityAttributes() {
 		return {
-			expanded: this.expanded
-		}
+			expanded: this.expanded,
+		};
+	}
+
+	get _translations() {
+		return {
+			scope: SearchField.i18nBundle.getText(SEARCH_FIELD_SCOPE_SELECT_LABEL),
+			clearIcon: SearchField.i18nBundle.getText(SEARCH_FIELD_CLEAR_ICON),
+			searchIcon: this._isSearchIcon ? SearchField.i18nBundle.getText(SEARCH_FIELD_SEARCH_ICON) : SearchField.i18nBundle.getText(SEARCH_FIELD_SEARCH_EXPANDED),
+			collapsedSearch: SearchField.i18nBundle.getText(SEARCH_FIELD_SEARCH_COLLAPSED),
+		};
 	}
 }
 

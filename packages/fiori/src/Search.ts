@@ -35,7 +35,6 @@ import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type SearchItem from "./SearchItem.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import type SearchItemGroup from "./SearchItemGroup.js";
 
 interface ISearchSuggestionItem extends UI5Element {
 	selected: boolean;
