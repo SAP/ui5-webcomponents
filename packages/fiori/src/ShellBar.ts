@@ -496,6 +496,7 @@ class ShellBar extends UI5Element {
 	_searchBarAutoOpen: boolean = false;
 	_searchBarAutoClosed: boolean = false;
 	_searchIconPressed: boolean = false;
+	_isAnimating: boolean = false;
 
 	_headerPress: () => void;
 
@@ -548,6 +549,7 @@ class ShellBar extends UI5Element {
 			this.overflowPopover.open = false;
 			if (this._lastOffsetWidth !== this.offsetWidth) {
 				this._overflowActions();
+				this._isAnimating = false;
 				if (this._searchBarAutoOpen) {
 					this._searchBarInitialState();
 				}
@@ -931,6 +933,7 @@ class ShellBar extends UI5Element {
 			searchFieldVisible: this.showSearchField,
 		});
 		this._searchIconPressed = true;
+		this._isAnimating = true;
 		if (defaultPrevented) {
 			return;
 		}
@@ -1003,6 +1006,7 @@ class ShellBar extends UI5Element {
 
 	_handleCancelButtonPress() {
 		this.showSearchField = false;
+		this._isAnimating = true;
 	}
 
 	_handleProductSwitchPress(e: MouseEvent) {
@@ -1236,6 +1240,7 @@ class ShellBar extends UI5Element {
 				"ui5-shellbar-root": true,
 				"ui5-shellbar-with-searchfield": this.hasSearchField,
 				"ui5-shellbar-with-full-searchfield": this.hasSearchField && this.showSearchField && this._showFullWidthSearch,
+				"ui5-shellbar-animating": this._isAnimating,
 			},
 			button: {
 				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
