@@ -132,7 +132,7 @@ class NotificationListInternal extends List {
 				break;
 			}
 
-			if (this._isGrowinButton(item)) {
+			if (this._isGrowingButton(item)) {
 				nextFocusedIndex = i === currentFocusedIndex + 1 ? i : i - 1;
 				break;
 			}
@@ -149,7 +149,7 @@ class NotificationListInternal extends List {
 		const target = e.target as HTMLElement;
 		const shadowTarget = target.shadowRoot!.activeElement as HTMLElement;
 		const activeElement = getActiveElement()! as HTMLElement;
-		const isGrowingBtn = this._isGrowinButton(activeElement);
+		const isGrowingBtn = this._isGrowingButton(activeElement);
 
 		if (!target || target.hasAttribute("ui5-menu-item")) {
 			return;
@@ -170,7 +170,7 @@ class NotificationListInternal extends List {
 			return;
 		}
 
-		if (this._isGrowinButton(nextItem) || shadowTarget.classList.contains("ui5-nli-focusable")) {
+		if (this._isGrowingButton(nextItem) || shadowTarget.classList.contains("ui5-nli-focusable")) {
 			nextItem.focus();
 			return;
 		}
@@ -189,7 +189,7 @@ class NotificationListInternal extends List {
 		}
 	}
 
-	_isGrowinButton(item: Element | null) {
+	_isGrowingButton(item: Element | null) {
 		return item?.classList.contains("ui5-growing-button-inner");
 	}
 }
