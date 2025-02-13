@@ -21,6 +21,11 @@
 		<ui5-title tabindex="0" level="H3" id="title" slot="startContent">My Selectable Products (3)</ui5-title>
 		<ui5-slider id="slider" min="0" max="100" step="1" value="100"
 			label-interval="0"></ui5-slider>
+		<ui5-toolbar-spacer></ui5-toolbar-spacer>
+		<ui5-segmented-button id="showHideDetails" slot="endContent">
+			<ui5-segmented-button-item tooltip="Show Details" icon="detail-more"></ui5-segmented-button-item>
+			<ui5-segmented-button-item tooltip="Hide Details" icon="detail-less" selected></ui5-segmented-button-item>
+		</ui5-segmented-button>
 	</ui5-bar>
 
 	<ui5-table id="table" overflow-mode="Popin" accessible-name-ref="title" style="height: 400px">
@@ -98,6 +103,20 @@
 		const selection = document.getElementById("selection");
 		selection.addEventListener("change", (e) => {
 			console.log(e.target.selected);
+		});
+
+		const HIDDEN_COLUMNS = ["dimensionsCol", "weightCol"];
+		function setPopinState(hideDetails) {
+			HIDDEN_COLUMNS.forEach((columnId) => {
+				const headerCell = document.getElementById(columnId);
+				headerCell.popinHidden = hideDetails;
+			});
+		}
+
+		const showHideDetails = document.getElementById("showHideDetails");
+		showHideDetails.addEventListener("selection-change", (e) => {
+			const selectedItem = e.detail.selectedItems[0];
+			setPopinState(selectedItem.tooltip === "Hide details");
 		});
 	</script>
 </body>
