@@ -82,9 +82,10 @@ class NotificationListInternal extends List {
 		e.stopImmediatePropagation();
 
 		const target = e.target as HTMLElement;
+		const activeElement = getActiveElement()! as HTMLElement;
 
-		if (target?.hasAttribute("ui5-menu-item")
-			|| target?.hasAttribute("ui5-li-notification-group")) {
+		if ((!this._isGrowingButton(activeElement) && target?.hasAttribute("ui5-li-notification-group"))
+			|| target?.hasAttribute("ui5-menu-item")) {
 			return;
 		}
 
