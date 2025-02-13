@@ -4,6 +4,8 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import TabContainer from "@ui5/webcomponents/dist/TabContainer.js";
 import Tab from "@ui5/webcomponents/dist/Tab.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
+import "@ui5/webcomponents-icons/dist/globe.js";
+import "@ui5/webcomponents-icons/dist/nav-back.js";
 
 export default function SettingItemTemplate(this: SettingItem) {
 	const content = this.tabs.length > 0 && !this._hasSelectedPageView ?

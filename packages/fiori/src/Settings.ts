@@ -18,6 +18,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type { PopupBeforeCloseEventDetail } from "@ui5/webcomponents/dist/Popup.js";
 import { isPhone, isTablet, isCombi } from "@ui5/webcomponents-base/dist/Device.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import SettingsTemplate from "./SettingsTemplate.js";
 import type SettingItem from "./SettingItem.js";
 import SettingsCss from "./generated/themes/Settings.css.js";
@@ -29,7 +30,6 @@ import {
 	SETTINGS_DIALOG_CLOSE_BUTTON_TEXT,
 	SETTINGS_DIALOG_NO_SEARCH_RESULTS_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
-import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 
 type SettingsItemSelectEventDetail = {
 	item: SettingItem;
@@ -37,21 +37,27 @@ type SettingsItemSelectEventDetail = {
 
 type SettingsBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
 
+/**
+ * @class
+ * ### Overview
+ *
+ * The `ui5-settings` is an SAP Fiori specific web component that is used in `ui5-profile-menu`
+ * and allows the user to easily see information and settings for the current account.
+ *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/Settings.js";`
+ *
+ * @constructor
+ * @extends UI5Element
+ * @experimental
+ * @public
+ * @since 2.8.0
+ */
 @customElement({
 	tag: "ui5-settings",
 	renderer: jsxRenderer,
 	template: SettingsTemplate,
 	styles: [SettingsCss],
-	dependencies: [
-		Title,
-		Input,
-		Icon,
-		Dialog,
-		Toolbar,
-		ToolbarButton,
-		ListItemStandard,
-		List,
-	],
 })
 
 /**
@@ -83,21 +89,6 @@ type SettingsBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
  */
 @event("close")
 
-/**
- * @class
- * ### Overview
- *
- * The `ui5-settings` is an SAP Fiori specific web component that is used in `ui5-profile-menu`
- * and allows the user to easily see information and settings for the current account.
- *
- * ### ES6 Module Import
- * `import "@ui5/webcomponents-fiori/dist/Settings.js";`
- *
- * @constructor
- * @extends UI5Element
- * @experimental
- * @public
- */
 class Settings extends UI5Element {
 	eventDetails!: {
 		"item-select": SettingsItemSelectEventDetail,

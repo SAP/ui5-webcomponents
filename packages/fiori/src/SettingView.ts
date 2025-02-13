@@ -4,12 +4,6 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import SettingViewTemplate from "./SettingViewTemplate.js";
 import SettingViewCss from "./generated/themes/SettingView.css.js";
 
-@customElement({
-	tag: "ui5-setting-view",
-	renderer: jsxRenderer,
-	template: SettingViewTemplate,
-	styles: [SettingViewCss],
-})
 /**
  * @class
  * ### Overview
@@ -20,7 +14,15 @@ import SettingViewCss from "./generated/themes/SettingView.css.js";
  * @extends UI5Element
  * @experimental
  * @public
+ * @since 2.8.0
  */
+@customElement({
+	tag: "ui5-setting-view",
+	renderer: jsxRenderer,
+	template: SettingViewTemplate,
+	styles: [SettingViewCss],
+})
+
 class SettingView extends UI5Element {
 	/**
 	 * Defines the title text of the view.

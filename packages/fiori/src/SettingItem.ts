@@ -3,20 +3,12 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	customElement, property, slot, eventStrict as event,
 } from "@ui5/webcomponents-base/dist/decorators.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import TabContainer from "@ui5/webcomponents/dist/TabContainer.js";
 import type { TabContainerTabSelectEventDetail } from "@ui5/webcomponents/dist/TabContainer.js";
-import Tab from "@ui5/webcomponents/dist/Tab.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
+import type Tab from "@ui5/webcomponents/dist/Tab.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import SettingItemTemplate from "./SettingItemTemplate.js";
 import type SettingView from "./SettingView.js";
 import SettingsItemCss from "./generated/themes/SettingsItem.css.js";
-
-// Icons
-import "@ui5/webcomponents-icons/dist/globe.js";
-import "@ui5/webcomponents-icons/dist/nav-back.js";
 
 type SettingItemViewSelectEventDetail = {
 	view: SettingView;
@@ -26,18 +18,31 @@ type SettingItemBackClickEventDetail = {
 	view: SettingView;
 }
 
+/**
+ * @class
+ * ### Overview
+ *
+ * The `ui5-setting-item` represents an item in the `ui5-settings dialog`.
+ *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/SettingItem.js";`
+ *
+ * You can disable the <code>SettingItem</code> by setting the <code>enabled</code> property to <code>false</code>,
+ * or use the <code>SettingItem</code> in read-only mode by setting the <code>editable</code> property to false.
+ *
+ * <b>Note:</b> Disabled and read-only states shouldn't be used together.
+ *
+ * @constructor
+ * @extends UI5Element
+ * @experimental
+ * @public
+ * @since 2.8.0
+ */
 @customElement({
 	tag: "ui5-setting-item",
 	renderer: jsxRenderer,
 	template: SettingItemTemplate,
 	styles: [getEffectiveScrollbarStyle(), SettingsItemCss],
-	dependencies: [
-		Button,
-		TabContainer,
-		Tab,
-		Title,
-		BusyIndicator,
-	],
 })
 
 /**
@@ -68,25 +73,6 @@ type SettingItemBackClickEventDetail = {
 	bubbles: true,
 })
 
-/**
- * @class
- * ### Overview
- *
- * The `ui5-setting-item` represents an item in the `ui5-settings dialog`.
- *
- * ### ES6 Module Import
- * `import "@ui5/webcomponents-fiori/dist/SettingItem.js";`
- *
- * You can disable the <code>SettingItem</code> by setting the <code>enabled</code> property to <code>false</code>,
- * or use the <code>SettingItem</code> in read-only mode by setting the <code>editable</code> property to false.
- *
- * <b>Note:</b> Disabled and read-only states shouldn't be used together.
- *
- * @constructor
- * @extends UI5Element
- * @experimental
- * @public
- */
 class SettingItem extends UI5Element {
 	eventDetails!: {
 		"_collapse": void,
@@ -99,7 +85,7 @@ class SettingItem extends UI5Element {
 	 *
 	 *
 	 * @public
-	 * @default undefined
+	 * @default ""
 	 */
 	@property({ type: String })
 	text = "";
@@ -108,7 +94,7 @@ class SettingItem extends UI5Element {
 	 * Defines the tooltip of the component.
 	 *
 	 * A tooltip attribute should be provided, in order to represent meaning/function, when the component is collapsed(icon only is visualized).
-	 * @default undefined
+	 * @default ""
 	 * @public
 	 */
 	@property({ type: String })
@@ -118,7 +104,7 @@ class SettingItem extends UI5Element {
 	 * Defines the headerTitle of the item.
 	 *
 	 * @public
-	 * @default undefined
+	 * @default ""
 	 */
 	@property({ type: String })
 	headerTitle?: string;
@@ -135,6 +121,7 @@ class SettingItem extends UI5Element {
 	/**
 	 * Defines whether the component is in disabled state.
 	 *
+	 * **Note:** A disabled component is completely noninteractive.
 	 * **Note:** A disabled component is completely noninteractive.
 	 * @default false
 	 * @public
@@ -153,7 +140,7 @@ class SettingItem extends UI5Element {
 	/**
 	 * Defines the icon of the component.
 	 *
-	 * @default undefined
+	 * @default "globe"
 	 * @public
 	 */
 	@property({ type: String })
@@ -223,7 +210,7 @@ class SettingItem extends UI5Element {
 	}
 
 	get _icon() {
-		return `sap-icon://${this.icon}`;
+		return this.icon;
 	}
 
 	_handleBackButtonClick() {
