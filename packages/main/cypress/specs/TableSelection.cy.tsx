@@ -48,41 +48,11 @@ function mountTestpage(selectionMode: TableSelectionMode) {
 					<TableCell><Label>Cell C</Label></TableCell>
 					<TableCell><Label>Cell D</Label></TableCell>
 				</TableRow>
-				<TableRow rowKey="5">
-					<TableCell><Label>Cell A</Label></TableCell>
-					<TableCell><Label>Cell B</Label></TableCell>
-					<TableCell><Label>Cell C</Label></TableCell>
-					<TableCell><Label>Cell D</Label></TableCell>
-				</TableRow>
-				<TableRow rowKey="6">
-					<TableCell><Label>Cell A</Label></TableCell>
-					<TableCell><Label>Cell B</Label></TableCell>
-					<TableCell><Label>Cell C</Label></TableCell>
-					<TableCell><Label>Cell D</Label></TableCell>
-				</TableRow>
-				<TableRow rowKey="7">
-					<TableCell><Label>Cell A</Label></TableCell>
-					<TableCell><Label>Cell B</Label></TableCell>
-					<TableCell><Label>Cell C</Label></TableCell>
-					<TableCell><Label>Cell D</Label></TableCell>
-				</TableRow>
-				<TableRow rowKey="8">
-					<TableCell><Label>Cell A</Label></TableCell>
-					<TableCell><Label>Cell B</Label></TableCell>
-					<TableCell><Label>Cell C</Label></TableCell>
-					<TableCell><Label>Cell D</Label></TableCell>
-				</TableRow>
-				<TableRow rowKey="9">
-					<TableCell><Label>Cell A</Label></TableCell>
-					<TableCell><Label>Cell B</Label></TableCell>
-					<TableCell><Label>Cell C</Label></TableCell>
-					<TableCell><Label>Cell D</Label></TableCell>
-				</TableRow>
 			</Table>
 		</>
 	);
 
-	cy.get("#table0").children("ui5-table-header-row").as("headerRow");
+	cy.get("#table0").children("ui5-table-header-row").first().as("headerRow");
 	cy.get("#table0").children("ui5-table-row").get("[row-key=\"0\"]").as("row0");
 	cy.get("#table0").children("ui5-table-row").get("[row-key=\"4\"]").as("row4");
 }
@@ -94,7 +64,7 @@ describe("Mode - None", () => {
 
 	it("selection should be not active", () => {
 		cy.get("#selection").should("have.attr", "mode", TableSelectionMode.None);
-		cy.get("@headerRow").first().shadow().find("#selection-cell")
+		cy.get("@headerRow").shadow().find("#selection-cell")
 			.should("not.exist");
 		cy.get("@row0").shadow().find("#selection-cell")
 			.should("not.exist");
@@ -138,7 +108,7 @@ const testConfig = {
 			"RANGE_KEYBOARD": {
 				"initial": "0",
 				"block_1": "0",
-				"block_2": "6",
+				"block_2": "3",
 			},
 		},
 	},
@@ -177,8 +147,8 @@ const testConfig = {
 			},
 			"RANGE_KEYBOARD": {
 				"initial": "0",
-				"block_1": "0 1 2 3 4",
-				"block_2": "0 1 2 3 4 6 7 8 9"
+				"block_1": "0 1",
+				"block_2": "0 1 3 4"
 			}
 		}
 	}
@@ -200,12 +170,12 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 		});
 
 		it("Correct boxes are shown", () => {
-			cy.get("@headerRow").first().shadow().find("#selection-cell")
+			cy.get("@headerRow").shadow().find("#selection-cell")
 				.should(testConfigEntry.cases.BOXES.header.exists ? "exist" : "not.exist");
 			cy.get("@row0").shadow().find("#selection-cell")
 				.should(testConfigEntry.cases.BOXES.row.exists ? "exist" : "not.exist");
 
-			cy.get("@headerRow").first().shadow().find("#selection-component")
+			cy.get("@headerRow").shadow().find("#selection-component")
 				.should(testConfigEntry.cases.BOXES.header.checkbox ? "exist" : "not.exist");
 			cy.get("@row0").shadow().find("#selection-component")
 				.should(testConfigEntry.cases.BOXES.row.checkbox ? "exist" : "not.exist");
@@ -262,11 +232,11 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 			cy.get("@row0").realPress("Space");
 			checkSelection(testConfigEntry.cases.RANGE_KEYBOARD.initial);
 
-			cy.realPress(["Shift", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowUp"]);
+			cy.realPress(["Shift", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowUp", "ArrowUp"]);
 			checkSelection(testConfigEntry.cases.RANGE_KEYBOARD.block_1);
 
 			cy.realPress(["ArrowDown", "ArrowDown", "Space"]);
-			cy.realPress(["Shift", "ArrowDown", "ArrowDown", "ArrowDown"]);
+			cy.realPress(["Shift", "ArrowDown"]);
 			checkSelection(testConfigEntry.cases.RANGE_KEYBOARD.block_2);
 		});
 	});
