@@ -122,6 +122,7 @@ function listItemContent(this: UploadCollectionItem) {
 							onClick={this.onDetailClick}
 							onKeyUp={this._onDetailKeyup}
 							class="ui5-li-detailbtn ui5-uci-edit"
+							aria-label={this._editButtonTooltip}
 						/>
 					)}
 					{!this.hideDeleteButton && (
@@ -136,6 +137,7 @@ function listItemContent(this: UploadCollectionItem) {
 								disabled={this.disableDeleteButton}
 								onClick={this._onDelete}
 								tooltip={this.deleteText}
+								aria-label={this.deleteText}
 							/>
 						)
 					)}
