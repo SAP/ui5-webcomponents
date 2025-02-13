@@ -104,7 +104,7 @@ describe("Popover interaction", () => {
 			cy.get("#pop").should("be.visible");
 		});
 
-		it("tests clicking on the opener, when popover and the opener are in a shadow root", () => {
+		it("tests clicking on the opener if both the popover and the opener are located in a shadow root", () => {
 			class OpenerShadowRootTest extends HTMLElement {
 				_shadow: ShadowRoot | null = null;
 
