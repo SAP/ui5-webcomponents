@@ -564,9 +564,9 @@ describe("List Tests", () => {
 	});
 
 	it('group headers should be rendered as LI', async () => {
-		const groupHeader = await browser.$(">>>#listSelectedItem #group li.ui5-ghli-root");
+		const groupHeader = await browser.$(">>>#listSelectedItem #group div.ui5-ghli-root");
 
-		assert.ok(await groupHeader.isExisting(), "Group header is rendered as LI");
+		assert.ok(await groupHeader.isExisting(), "Group header is rendered as DIV");
 	});
 
 	it('anchor tabs should be accessible within list items', async () => {
