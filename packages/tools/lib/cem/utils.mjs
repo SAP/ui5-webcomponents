@@ -263,12 +263,22 @@ const findDecorator = (node, decoratorName) => {
 };
 
 const findAllDecorators = (node, decoratorName) => {
-    return (
-        node?.decorators?.filter(
-            (decorator) =>
-                decorator?.expression?.expression?.text === decoratorName
-        ) || []
-    );
+    if (typeof decoratorName === "string") {
+        return node?.decorators?.filter(decorator => decorator?.expression?.expression?.text === decoratorName ) || [];
+    }
+
+    if (Array.isArray(decoratorName)) {
+        return node?.decorators?.filter(decorator => {
+                if (decorator?.expression?.expression?.text) {
+                    return decoratorName.includes(decorator.expression.expression.text);
+                }
+
+                return false;
+            }
+        ) || [];
+    }
+
+    return [];
 };
 
 const hasTag = (jsDoc, tagName) => {
