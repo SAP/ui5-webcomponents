@@ -7,15 +7,11 @@ import TableCell from "../../src/TableCell.js";
 import TableSelectionMode from "../../src/types/TableSelectionMode.js";
 import TableSelection from "../../src/TableSelection.js";
 
-function changeMode(mode: TableSelectionMode) {
-	cy.get("#selection").invoke("attr", "mode", mode);
-}
-
-function mountTestpage() {
+function mountTestpage(selectionMode: TableSelectionMode) {
 	cy.mount(
 		<>
 			<Table id="table0" noDataText="No data found">
-				<TableSelection id="selection" slot="features"></TableSelection>
+				<TableSelection id="selection" slot="features" mode={selectionMode}></TableSelection>
 				<TableHeaderRow slot="headerRow">
 					<TableHeaderCell id="colA"><span>ColumnA</span></TableHeaderCell>
 					<TableHeaderCell id="colB">Column B</TableHeaderCell>
@@ -85,18 +81,18 @@ function mountTestpage() {
 			</Table>
 		</>
 	);
+
+	cy.get("#table0").children("ui5-table-header-row").as("headerRow");
+	cy.get("#table0").children("ui5-table-row").get("[row-key=\"0\"]").as("row0");
+	cy.get("#table0").children("ui5-table-row").get("[row-key=\"4\"]").as("row4");
 }
 
 describe("Mode - None", () => {
 	before(() => {
-		mountTestpage();
-		changeMode(TableSelectionMode.None);
+		mountTestpage(TableSelectionMode.None);
 	});
 
 	it("selection should be not active", () => {
-		cy.get("#table0").children("ui5-table-header-row").as("headerRow");
-		cy.get("#table0").children("ui5-table-row").get("[row-key=\"0\"]").as("row0");
-
 		cy.get("#selection").should("have.attr", "mode", TableSelectionMode.None);
 		cy.get("@headerRow").first().shadow().find("#selection-cell")
 			.should("not.exist");
@@ -192,7 +188,7 @@ const testConfig = {
 // should("have.attr"... and similar functions always returned '' instead of the actual value
 // It could be a timing issue but .wait didn't help either
 function checkSelection(rowIndex: string) {
-	cy.get("@selection").then(sel => {
+	cy.get("#selection").then(sel => {
 		expect(sel.get(0).getAttribute("selected")).to.equal(rowIndex);
 	});
 }
@@ -200,13 +196,7 @@ function checkSelection(rowIndex: string) {
 Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 	describe(`Mode - ${mode}`, () => {
 		beforeEach(() => {
-			mountTestpage();
-			changeMode(testConfigEntry.config.mode as TableSelectionMode);
-
-			cy.get("#table0").as("table");
-			cy.get("#table0").children("ui5-table-header-row").as("headerRow");
-			cy.get("#table0").children("ui5-table-row").get("[row-key=\"0\"]").as("row0");
-			cy.get("#selection").as("selection");
+			mountTestpage(testConfigEntry.config.mode as TableSelectionMode);
 		});
 
 		it("Correct boxes are shown", () => {
@@ -222,15 +212,13 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 		});
 
 		it("select row via SPACE", () => {
-			cy.get("#table0").children("ui5-table-row").get("[row-key=\"4\"]").as("row4");
-
 			cy.get("@row0").realClick({ position: "left" });
 			cy.get("@row0").realPress("Space");
 			checkSelection(testConfigEntry.cases.SPACE.space_0);
 
 			cy.get("@row4").realClick();
 			cy.get("@row4").realPress("Space");
-			cy.get("@table").children("ui5-table-selection").first().should("have.attr", "mode", testConfigEntry.config.mode);
+			cy.get("#selection").should("have.attr", "mode", testConfigEntry.config.mode);
 			checkSelection(testConfigEntry.cases.SPACE.space_4);
 		});
 
@@ -246,8 +234,6 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 		});
 
 		it("select row via mouse", () => {
-			cy.get("#table0").children("ui5-table-row").get("[row-key=\"4\"]").as("row4");
-
 			cy.get("@row0").shadow().find("#selection-component").realClick();
 			checkSelection(testConfigEntry.cases.MOUSE.mouse_0);
 
@@ -256,8 +242,6 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 		});
 
 		it("range selection with mouse", () => {
-			cy.get("#table0").children("ui5-table-row").get("[row-key=\"4\"]").as("row4");
-
 			cy.get("@row0").shadow().find("#selection-component").realClick();
 			checkSelection(testConfigEntry.cases.RANGE_MOUSE.range_mouse_initial);
 
@@ -274,8 +258,6 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 		});
 
 		it("range selection with keyboard", () => {
-			cy.get("#table0").children("ui5-table-row").get("[row-key=\"4\"]").as("row4");
-
 			cy.get("@row0").realClick({ position: "center" });
 			cy.get("@row0").realPress("Space");
 			checkSelection(testConfigEntry.cases.RANGE_KEYBOARD.initial);
