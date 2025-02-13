@@ -67,6 +67,9 @@ describe("Table - Keyboard Navigation", () => {
 				}
 			});
 		});
+
+		cy.get("#table0").children("ui5-table-row").as("rows");
+		cy.get("#table0").children("ui5-table-header-row").as("headerRow");
 	});
 
 	function getCell(row: number, cell: number, headerRow: boolean) {
@@ -79,9 +82,6 @@ describe("Table - Keyboard Navigation", () => {
 	}
 
 	it("should navigate on rows", () => {
-		cy.get("#table0").children("ui5-table-row").as("rows");
-		cy.get("#table0").children("ui5-table-header-row").as("headerRow");
-
 		cy.get("@rows").eq(0)
 			// left click is needed to focus the row
 			// otherwise the it would click in the center of the row where an input is
@@ -130,9 +130,6 @@ describe("Table - Keyboard Navigation", () => {
 	});
 
 	it("should navigate on cells", () => {
-		cy.get("#table0").children("ui5-table-row").as("rows");
-		cy.get("#table0").children("ui5-table-header-row").as("headerRow");
-
 		cy.get("@rows").eq(0)
 			.click("left");
 
@@ -203,13 +200,8 @@ describe("Table - Keyboard Navigation", () => {
 	});
 
 	it("should handle F2/F7/Enter/Tab/Up/Down", () => {
-		cy.get("#table0").children("ui5-table-row").as("rows");
-		cy.get("#table0").children("ui5-table-header-row").as("headerRow");
-		cy.get("@headerRow").get("#row0-link").as("row0Link");
 		cy.get("@rows").eq(0).get("#row1-input").as("row1Input");
-		cy.get("@rows").eq(0).get("#row1-button").as("row1Button");
 		cy.get("@rows").eq(1).get("#row2-input").as("row2Input");
-		cy.get("@rows").eq(1).get("#row2-button").as("row2Button");
 
 		cy.get("@rows").eq(0).click("left");
 		cy.get("@rows").eq(0).should("be.focused");
@@ -245,7 +237,7 @@ describe("Table - Keyboard Navigation", () => {
 		getCell(0, 0, true).should("be.focused")
 
 			.type("{enter}");
-		cy.get("@row0Link").should("be.focused")
+		cy.get("@headerRow").get("#row0-link").should("be.focused")
 
 			.type("{downarrow}");
 		getCell(0, 0, false).should("be.focused")
@@ -263,7 +255,7 @@ describe("Table - Keyboard Navigation", () => {
 		cy.get("@row2Input").eq(0).should("be.focused")
 
 			.realPress("Tab");
-		cy.get("@row2Button").should("be.focused")
+		cy.get("@rows").eq(1).get("#row2-button").should("be.focused")
 
 			.realPress("F7");
 		cy.get("@rows").eq(1).should("be.focused")
@@ -272,7 +264,7 @@ describe("Table - Keyboard Navigation", () => {
 		cy.get("@rows").eq(0).should("be.focused")
 
 			.realPress("F7");
-		cy.get("@row1Button").eq(0).should("be.focused")
+		cy.get("@rows").eq(0).get("#row1-button").should("be.focused")
 
 			.type("{uparrow}");
 		getCell(0, 2, true).should("be.focused")
@@ -303,11 +295,9 @@ describe("Table - Keyboard Navigation", () => {
 	});
 
 	it("should should work correctly for interactive rows", () => {
-		cy.get("#table0").children("ui5-table-row").as("rows");
 		cy.get("@rows").eq(1).get("#row2-button").as("row2Button");
 		cy.get("#table0").get("#before-table1").as("input");
 		cy.get("@rows").get("#interactive-row").as("row");
-		cy.get("@rows").get("#notinteractive-row").as("anotherRow");
 
 		cy.get("@row").click("left");
 		cy.get("@input").should("have.value", "1");
@@ -315,7 +305,7 @@ describe("Table - Keyboard Navigation", () => {
 		cy.get("@row").type("{enter}");
 		cy.get("@input").should("have.value", "2");
 
-		cy.get("@anotherRow").click("left");
+		cy.get("@rows").get("#notinteractive-row").click("left");
 		cy.get("@input").should("have.value", "2");
 
 		cy.get("@row2Button").click("left");
