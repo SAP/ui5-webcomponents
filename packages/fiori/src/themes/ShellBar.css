@@ -212,12 +212,14 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-logo {
+	overflow: hidden;
 	cursor: pointer;
 	max-height: 2rem;
 	max-width: 3.75rem;
 }
 
 .ui5-shellbar-logo-area {
+	overflow: hidden;
 	display: flex;
 	align-items: center;
 	padding: .25rem .5rem .25rem .25rem;
@@ -232,14 +234,12 @@ slot[name="profile"] {
 
 .ui5-shellbar-logo:focus,
 .ui5-shellbar-logo-area:focus {
-	overflow: hidden;
 	outline: var(--_ui5_shellbar_logo_outline);
 	border-radius: var(--_ui5_shellbar_logo_border_radius);
 }
 
 .ui5-shellbar-overflow-container > .ui5-shellbar-logo:hover,
 .ui5-shellbar-logo-area:hover {
-	overflow: hidden;
 	box-shadow: var(--_ui5_shellbar_button_box_shadow);
 	border-radius: var(--_ui5_shellbar_logo_border_radius);
 }
