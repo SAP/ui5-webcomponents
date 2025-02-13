@@ -164,7 +164,6 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.ui5DateTimePickerOpen("#dtMinutes");
 
-		// Verify the number of clock controls and period selector via new commands
 		cy.ui5DateTimePickerTimeSelectionClocksCount("#dtMinutes").then(clocksCount => {
 			expect(clocksCount).to.equal(expectedClocksCount,
 				"The picker should display 2 clocks for hours and minutes.");
