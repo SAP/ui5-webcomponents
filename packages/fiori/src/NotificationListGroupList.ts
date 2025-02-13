@@ -35,6 +35,10 @@ class NotificationListGroupList extends List {
 		e.stopImmediatePropagation();
 	}
 
+	_onkeydown() {
+
+	}
+
 	focusItem(item: ListItemBase) {
 		item.focus();
 	}

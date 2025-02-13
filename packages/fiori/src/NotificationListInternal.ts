@@ -82,7 +82,9 @@ class NotificationListInternal extends List {
 		e.stopImmediatePropagation();
 
 		const target = e.target as HTMLElement;
-		if (target?.hasAttribute("ui5-li-notification-group")) {
+
+		if (target?.hasAttribute("ui5-menu-item")
+			|| target?.hasAttribute("ui5-li-notification-group")) {
 			return;
 		}
 
@@ -107,6 +109,12 @@ class NotificationListInternal extends List {
 
 	_handleEndKey(e: KeyboardEvent) {
 		e.stopImmediatePropagation();
+
+		const target = e.target as HTMLElement;
+
+		if (target?.hasAttribute("ui5-menu-item")) {
+			return;
+		}
 
 		const currentFocusedItem = this.getEnabledItems()[this._itemNavigation._currentIndex];
 		if (!currentFocusedItem) {
