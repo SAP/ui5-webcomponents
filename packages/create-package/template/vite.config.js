@@ -5,9 +5,10 @@ import viteConfig from "@ui5/webcomponents-tools/components-package/vite.config.
 // Ensure that the property exists before modifying it to avoid unintended errors.
 // For available configuration options, refer to: https://vite.dev/config/#configuring-vite
 //
-// viteConfig.build = {
-// 	...viteConfig.build,
-// 	sourcemap: true, // For example: Enable source maps for better debugging
-// };
+// Ensure the plugins array exists
+// viteConfig.plugins = viteConfig.plugins || [];
+//
+// Push a new fake plugin
+// viteConfig.plugins.push({ name: 'fake-plugin' });
 
 export default viteConfig;
