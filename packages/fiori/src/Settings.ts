@@ -3,15 +3,8 @@ import {
 	customElement, property, slot, eventStrict as event,
 } from "@ui5/webcomponents-base/dist/decorators.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import Input from "@ui5/webcomponents/dist/Input.js";
+import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Dialog from "@ui5/webcomponents/dist/Dialog.js";
-import Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
-import ToolbarButton from "@ui5/webcomponents/dist/ToolbarButton.js";
-import List from "@ui5/webcomponents/dist/List.js";
-import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
