@@ -71,11 +71,13 @@ class TableRow extends TableRowBase {
 	/**
 	 * Unique identifier of the row.
 	 *
-	 * @default ""
+	 * **Note:** For selection features to work properly, this property is mandatory, and its value must not contain spaces.
+	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	rowKey = "";
+	rowKey?: string;
 
 	/**
 	 * Defines the position of the row respect to the total number of rows within the table when the `ui5-table-virtualizer` feature is used.

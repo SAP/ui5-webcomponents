@@ -61,6 +61,8 @@ import TableHeaderCellActionAI from "./TableHeaderCellActionAI.js";
 import TableHeaderRow from "./TableHeaderRow.js";
 import TableGrowing from "./TableGrowing.js";
 import TableSelection from "./TableSelection.js";
+import TableSelectionMulti from "./TableSelectionMulti.js";
+import TableSelectionSingle from "./TableSelectionSingle.js";
 import TableVirtualizer from "./TableVirtualizer.js";
 import TableRowAction from "./TableRowAction.js";
 import TableRowActionNavigation from "./TableRowActionNavigation.js";
