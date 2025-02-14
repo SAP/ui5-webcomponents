@@ -21,6 +21,7 @@ export default function ListItemGroupTemplate(this: ListItemGroup, hooks?: { ite
 						role={groupRole}
 						slot="subItems"
 						aria-owns={`${this._id}-content`}
+						aria-label={this.headerText}
 					></div>
 				</ListItemGroupHeader>
 			}
