@@ -200,7 +200,7 @@ describe("Input Tests", () => {
 		cy.get("@change").should("have.been.calledOnce");
 	});
 
-	it("tests if submits value if suggestion is autocompleted", () => {
+	it("tests if submit is fired in case of autocomplete", () => {
 		cy.mount(
 			<form>
 				<Input showSuggestions={true}>
@@ -246,7 +246,7 @@ describe("Input Tests", () => {
 		cy.get("@change").should("have.been.calledOnce");
 	});
 
-	it("tests if submits value if suggestion is autocompleted", () => {
+	it("tests if submit event is fired upon item selection", () => {
 		cy.mount(
 			<form>
 				<Input showSuggestions={true}>
