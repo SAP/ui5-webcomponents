@@ -3,9 +3,6 @@ import Menu from "../../src/Menu.js";
 import MenuItem from "../../src/MenuItem.js";
 
 import openFolder from "@ui5/webcomponents-icons/dist/open-folder.js";
-import addFolder from "@ui5/webcomponents-icons/dist/add-folder.js";
-import locked from "@ui5/webcomponents-icons/dist/locked.js";
-import favorite from "@ui5/webcomponents-icons/dist/favorite.js";
 
 describe("Menu interaction", () => {
 	it("Menu opens after button click", () => {
