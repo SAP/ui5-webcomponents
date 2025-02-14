@@ -10,6 +10,7 @@ import Input from "../../src/Input.js";
 import Bar from "../../src/Bar.js";
 import Title from "../../src/Title.js";
 import Slider from "../../src/Slider.js";
+import Button from "../../src/Button.js";
 
 // Porting Table.spec.js (wdio tests) to cypress tests
 const ROLE_COLUMN_HEADER = "columnheader";
@@ -33,6 +34,7 @@ describe("Table - Rendering", () => {
 		cy.get("ui5-table-header-row").should("exist");
 		cy.get("ui5-table-row").should("exist");
 		cy.get("ui5-table-header-cell").should("have.length", 2);
+		cy.get("ui5-table-header-row").should("have.attr", "aria-roledescription", "Column Header Row");
 	});
 
 	it("tests if initial empty table renders without errors", () => {
@@ -684,6 +686,76 @@ describe("Table - Navigated Rows", () => {
 				// eslint-disable-next-line no-unused-expressions
 				expect(gridTemplateColumns.endsWith("table_navigated_cell_width)")).to.be.true;
 			});
+	});
+});
+
+describe("Table - Interactive Rows", () => {
+	it("fires the row-click event", () => {
+		cy.mount(
+			<Table id="table1">
+				<TableSelection id="selection" selected="1 2" slot="features"></TableSelection>
+				<TableHeaderRow id="headerRow" slot="headerRow">
+					<TableHeaderCell>ColumnA</TableHeaderCell>
+					<TableHeaderCell>ColumnB</TableHeaderCell>
+				</TableHeaderRow>
+				<TableRow id="row1" rowKey="1">
+					<TableCell><Label>Cell A</Label></TableCell>
+					<TableCell><Button>Cell B</Button></TableCell>
+				</TableRow>
+				<TableRow id="row2" rowKey="2" interactive={true}>
+					<TableCell><Label>Cell A</Label></TableCell>
+					<TableCell><Button>Cell B</Button></TableCell>
+				</TableRow>
+			</Table>
+		);
+
+		cy.get("#table1").invoke("on", "row-click", cy.stub().as("rowClickHandler"));
+		cy.get("#row1").realClick();
+		cy.get("@rowClickHandler").should("not.have.been.called");
+		cy.get("#row1").realPress("Enter");
+		cy.get("@rowClickHandler").should("not.have.been.called");
+
+		cy.get("#row2").realClick();
+		cy.get("@rowClickHandler").invoke("getCall", 0).its("args.0.detail.row").as("clickedRow");
+		cy.get("@clickedRow").should("have.attr", "id", "row2");
+		cy.get("#row2").realPress("Enter");
+		cy.get("@rowClickHandler").should("have.been.calledTwice");
+
+		cy.get("#row2").find("ui5-label").realClick();
+		cy.get("@rowClickHandler").should("have.been.calledThrice");
+
+		cy.get("#row2").find("ui5-button").as("row2button");
+		cy.get("@row2button").invoke("on", "click", cy.stub().as("buttonClickHandler"));
+		cy.get("@row2button").realClick();
+		cy.get("@buttonClickHandler").should("have.been.calledOnce");
+		cy.get("@rowClickHandler").should("have.been.calledThrice");
+
+		cy.get("@row2button").realPress("Enter");
+		cy.get("@buttonClickHandler").should("have.been.calledTwice");
+		cy.get("@rowClickHandler").should("have.been.calledThrice");
+
+		cy.get("@row2button").realPress("Space");
+		cy.get("@buttonClickHandler").should("have.been.calledThrice");
+		cy.get("@rowClickHandler").should("have.been.calledThrice");
+
+		// move the following tests to the TableSelection.cy.tsx
+		cy.get("#headerRow").shadow().find("#selection-cell").as("headerRowSelectionCell");
+		cy.get("@headerRowSelectionCell").find("#selection-component").as("headerRowCheckBox");
+		cy.get("@headerRowCheckBox").should("have.attr", "checked");
+		cy.get("#table1").then($table => {
+			$table.append(
+				`<ui5-table-row id="row3" row-key="3">
+					<ui5-table-cell>Cell A</ui5-table-cell>
+					<ui5-table-cell>Cell B</ui5-table-cell>
+				</ui5-table-row>`
+			);
+		});
+		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
+		cy.get("#row3").invoke("remove");
+		cy.get("@headerRowCheckBox").should("have.attr", "checked");
+		cy.get("#row2").invoke("remove");
+		cy.get("#row1").invoke("remove");
+		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
 	});
 });
 
