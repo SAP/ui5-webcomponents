@@ -19,9 +19,12 @@
 	<!-- toolbar with ui5-bar -->
 	<ui5-bar design="Header" accessible-name-ref="title" style="position: sticky; top: 0; z-index: 2; height: 50px;">
 		<ui5-title tabindex="0" level="H3" id="title" slot="startContent">My Selectable Products (3)</ui5-title>
-		<ui5-slider id="slider" min="0" max="100" step="1" value="100"
-			label-interval="0"></ui5-slider>
-		<ui5-toolbar-spacer></ui5-toolbar-spacer>
+		<ui5-segmented-button id="sizeBtn" accessible-name="Switch Table Size">
+			<ui5-segmented-button-item>25%</ui5-segmented-button-item>
+			<ui5-segmented-button-item>50%</ui5-segmented-button-item>
+			<ui5-segmented-button-item>75%</ui5-segmented-button-item>
+			<ui5-segmented-button-item selected>100%</ui5-segmented-button-item>
+		</ui5-segmented-button>
 		<ui5-segmented-button id="showHideDetails" slot="endContent">
 			<ui5-segmented-button-item tooltip="Show Details" icon="detail-more"></ui5-segmented-button-item>
 			<ui5-segmented-button-item tooltip="Hide Details" icon="detail-less" selected></ui5-segmented-button-item>
@@ -69,10 +72,11 @@
 			console.log("ai2 clicked");
 		});
 
-		const slider = document.getElementById("slider");
+		const sizeBtn = document.getElementById("sizeBtn");
 		const table = document.getElementById("table");
-		slider.addEventListener("input", (e) => {
-			table.style.width = `${e.target.value}%`;
+		sizeBtn.addEventListener("selection-change", (e) => {
+			const selectedItem = e.detail.selectedItems[0];
+			table.style.width = selectedItem.textContent;
 		});
 		table.addEventListener("row-click", (e) => {
 			console.log(`${Date.now()}: Row with the row-key ${e.detail.row.row-key} is clicked`);
@@ -116,7 +120,7 @@
 		const showHideDetails = document.getElementById("showHideDetails");
 		showHideDetails.addEventListener("selection-change", (e) => {
 			const selectedItem = e.detail.selectedItems[0];
-			setPopinState(selectedItem.tooltip === "Hide details");
+			setPopinState(selectedItem.tooltip === "Hide Details");
 		});
 	</script>
 </body>

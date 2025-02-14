@@ -41,12 +41,13 @@ abstract class TableCellBase extends UI5Element {
 	@property({ type: Boolean })
 	_popin = false;
 
+	@property({ type: Boolean, noAttribute: true })
+	_popinHidden = false;
+
 	protected ariaRole: string = "gridcell";
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	_popinHidden = false;
 
 	onEnterDOM() {
 		this.toggleAttribute("ui5-table-cell-base", true);

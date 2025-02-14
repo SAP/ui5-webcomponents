@@ -11,13 +11,18 @@
 <body style="background-color: var(--sapBackgroundColor)">
     <div class="section">
 <!-- playground-fold-end -->
-<ui5-slider id="slider" min="0" max="100" step="1" value="100" label-interval="0"></ui5-slider>
-<div style="display: flex; justify-content: right; background-color: var(--sapList_Background); padding: 0.125rem;">
-	<ui5-segmented-button id="showHideDetailsBtn" accessible-name="Show/Hide Details">
+<ui5-bar>
+	<ui5-segmented-button id="sizeBtn" accessible-name="Switch Table Size">
+		<ui5-segmented-button-item>25%</ui5-segmented-button-item>
+		<ui5-segmented-button-item>50%</ui5-segmented-button-item>
+		<ui5-segmented-button-item>75%</ui5-segmented-button-item>
+		<ui5-segmented-button-item selected>100%</ui5-segmented-button-item>
+	</ui5-segmented-button>
+	<ui5-segmented-button id="showHideDetailsBtn" slot="endContent" accessible-name="Show/Hide Details">
 		<ui5-segmented-button-item tooltip="Show Details" icon="detail-more"></ui5-segmented-button-item>
 		<ui5-segmented-button-item tooltip="Hide Details" icon="detail-less" selected></ui5-segmented-button-item>
 	</ui5-segmented-button>
-</div>
+</ui5-bar>
 <ui5-table id="table" overflow-mode="Popin">
 	<ui5-table-header-row slot="headerRow">
 		<ui5-table-header-cell id="produtCol" min-width="300px"><span>Product</span></ui5-table-header-cell>
