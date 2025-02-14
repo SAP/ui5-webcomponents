@@ -62,9 +62,10 @@ describe("Initial rendering", () => {
 					</UserMenuAccount>
 					<UserMenuAccount
 						slot="accounts"
-						avatarInitials="AC"
+						avatarSrc="./../../test/pages/img/man_avatar_1.png"
 						titleText="Alain Chevalier 2"
-						subtitleText="test.alian.chevalier@sap.com">
+						subtitleText="test.alian.chevalier@sap.com"
+						description="Delivery Manager, SAP SE">
 					</UserMenuAccount>
 				</UserMenu>
 			</>
@@ -397,6 +398,45 @@ describe("Events", () => {
 		cy.get("@changedAccount").its("args.0.0.detail.selectedAccount").should("have.property", "titleText", "Alain Chevalier 2");
 	});
 
+	it("tests change-account event prevented", () => {
+		cy.mount(
+			<>
+				<Button id="openUserMenuBtn">Open User Menu</Button>
+				<UserMenu open={true} opener="openUserMenuBtn" showOtherAccounts={true}>
+					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1" avatarSrc="./../../test/pages/img/man_avatar_1.png"></UserMenuAccount>
+					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 2"></UserMenuAccount>
+				</UserMenu>
+			</>
+		);
+		cy.get("[ui5-user-menu]").as("userMenu");
+		cy.get("@userMenu")
+			.shadow()
+			.find("[ui5-panel]")
+			.as("otherAccounts");
+
+		cy.get("@userMenu").then($userMenu => {
+			$userMenu.get(0).addEventListener("change-account", e => e.preventDefault());
+			$userMenu.get(0).addEventListener("change-account", cy.stub().as("changedAccount"));
+		});
+
+		cy.get("@otherAccounts")
+			.shadow()
+			.find("[ui5-button]")
+			.click();
+
+		cy.get("@otherAccounts")
+			.find("[ui5-li-custom]")
+			.realClick();
+
+		cy.get("@userMenu").shadow().find("[ui5-avatar]").first()
+			.as("avatar");
+		cy.get("@avatar").should("exist");
+		cy.get("@avatar").find("img").as("image");
+		cy.get("@image").should("have.length", 1);
+		cy.get("@image").should("have.attr", "src", "./../../test/pages/img/man_avatar_1.png");
+		cy.get("@avatar").should("have.class", "ui5-pm--selected-account-avatar");
+	});
+
 	it("tests item-click event", () => {
 		cy.mount(
 			<>
@@ -422,6 +462,59 @@ describe("Events", () => {
 		cy.get("@clicked").its("args.0.0.detail.item").should("have.property", "text", "Setting");
 	});
 
+	it("tests item-click sub menu event", () => {
+		cy.mount(
+			<>
+				<Button id="openUserMenuBtn">Open User Menu</Button>
+				<UserMenu open={true} opener="openUserMenuBtn">
+					<UserMenuItem text="Setting" data-id="setting">
+						<UserMenuItem text="Sub-Setting" data-id="sub-setting"></UserMenuItem>
+					</UserMenuItem>
+				</UserMenu>
+			</>
+		);
+		cy.get("[ui5-user-menu]").as("userMenu");
+		cy.get("@userMenu")
+			.find("[ui5-user-menu-item]")
+			.as("userMenuItem");
+
+		cy.get("@userMenu")
+			.then($userMenu => {
+				$userMenu.get(0).addEventListener("item-click", cy.stub().as("clicked"));
+			});
+
+		cy.get("@userMenuItem").first().click();
+
+		cy.get("@clicked").should("have.not.been.called");
+	});
+
+	it("tests item-click sub menu event", () => {
+		cy.mount(
+			<>
+				<Button id="openUserMenuBtn">Open User Menu</Button>
+				<UserMenu open={true} opener="openUserMenuBtn">
+					<UserMenuItem text="Setting" data-id="setting">
+						<UserMenuItem text="Sub-Setting" data-id="sub-setting"></UserMenuItem>
+					</UserMenuItem>
+				</UserMenu>
+			</>
+		);
+		cy.get("[ui5-user-menu]").as("userMenu");
+		cy.get("@userMenu")
+			.find("[ui5-user-menu-item]")
+			.as("userMenuItem");
+
+		cy.get("@userMenu")
+			.then($userMenu => {
+				$userMenu.get(0).addEventListener("item-click", cy.stub().as("clicked"));
+			});
+
+		cy.get("@userMenuItem").first().click();
+		cy.get("@userMenuItem").first().click();
+
+		cy.get("@clicked").should("have.not.been.called");
+	});
+
 	it("tests sign-out-click event", () => {
 		cy.mount(
 			<>
@@ -440,6 +533,27 @@ describe("Events", () => {
 		cy.get("@signOutBtn").click();
 
 		cy.get("@clicked").should("have.been.calledOnce");
+	});
+
+	it("tests sign-out-click event prevented", () => {
+		cy.mount(
+			<>
+				<Button id="openUserMenuBtn">Open User Menu</Button>
+				<UserMenu open={true} opener="openUserMenuBtn"></UserMenu>
+			</>
+		);
+		cy.get("[ui5-user-menu]").as("userMenu");
+		cy.get("@userMenu").shadow().find("[ui5-button]").as("signOutBtn");
+
+		cy.get("@userMenu")
+			.then($userMenu => {
+				$userMenu.get(0).addEventListener("sign-out-click", e => e.preventDefault());
+				$userMenu.get(0).addEventListener("sign-out-click", cy.stub().as("clicked"));
+			});
+
+		cy.get("@signOutBtn").click();
+
+		cy.get("@userMenu").should("have.attr", "open");
 	});
 
 	it("tests open event", () => {
@@ -497,7 +611,10 @@ describe("Responsiveness", () => {
 		cy.mount(
 			<>
 				<Button id="openUserMenuBtn">Open User Menu</Button>
-				<UserMenu id="userMenuShellBar" open={true} opener="openUserMenuBtn">
+				<UserMenu id="userMenuShellBar" open={true}
+					opener="openUserMenuBtn"
+					showManageAccount={true}
+					showAddAccount={true}>
 					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 					<UserMenuItem text="Setting1" data-id="setting1"></UserMenuItem>
 				</UserMenu>

@@ -101,7 +101,10 @@ export default function MultiComboBoxTemplate(this: MultiComboBox) {
 
 			{!this.readonly &&
 				<Icon name="slim-arrow-down"
-					class="inputIcon"
+					class={{
+						"inputIcon": true,
+						"inputIcon--pressed": this._iconPressed,
+					}}
 					slot="icon"
 					tabIndex={-1}
 					onClick={this.togglePopoverByDropdownIcon}
