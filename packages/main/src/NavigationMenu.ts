@@ -47,6 +47,9 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 	renderer: litRender,
 	staticAreaStyles: [staticAreaMenuCss, staticAreaNavigationMenuCss],
 	staticAreaTemplate: staticAreaMenuTemplate,
+	dependencies: [
+		NavigationMenuItem,
+	],
 })
 
 class NavigationMenu extends Menu {
