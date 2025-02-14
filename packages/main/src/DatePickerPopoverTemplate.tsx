@@ -30,8 +30,7 @@ export default function DatePickerPopoverTemplate(this: DatePicker, hooks?: { he
 		>
 			{ this.showHeader && header.call(this) }
 
-			{/* { content.call(this) } */}
-			<Calendar></Calendar>
+			{ content.call(this) }
 
 			{ this.showFooter && footer.call(this) }
 		</ResponsivePopover>
