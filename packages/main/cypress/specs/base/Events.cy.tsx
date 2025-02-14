@@ -222,7 +222,7 @@ describe("Event bubbling", () => {
 
 		// assert - the open event of the MultiComboBox do not bubble
 		cy.get("@mcbOpened").should("have.been.calledOnce");
-		cy.get("@dialogOpened").should("have.been.calledTwice");
+		cy.get("@dialogOpened").should("have.been.calledOnce");
 
 		cy.get("@multiComboboxIcon")
 			.realClick();

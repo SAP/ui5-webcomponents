@@ -1,10 +1,10 @@
 /**
- * Defines the sort order for `ui5-table`-related components.
+ * Defines the sort order.
  *
  * @public
- * @since 2.7.0
+ * @since 2.8.0
  */
-enum TableSortOrder {
+enum SortOrder {
 	/**
 	 * Sorting is not applied.
 	 * @public
@@ -24,4 +24,4 @@ enum TableSortOrder {
 	Descending = "Descending",
 }
 
-export default TableSortOrder;
+export default SortOrder;

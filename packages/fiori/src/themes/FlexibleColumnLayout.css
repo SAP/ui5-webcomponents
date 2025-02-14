@@ -45,11 +45,12 @@
 	border-inline-end: var(--_ui5_fcl_column_border);
 	position: relative;
 	box-sizing: border-box;
+	z-index: 1;
 }
 
-.ui5-fcl-separator:focus {
-	border:var(--_ui5_fcl_separator_focus_border);
-	outline: none;
+.ui5-fcl-separator:focus { 
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
 
 .ui5-fcl-grip {

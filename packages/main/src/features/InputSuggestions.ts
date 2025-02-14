@@ -266,18 +266,8 @@ class Suggestions {
 		this.onItemSelected(pressedItem as SuggestionItem, false /* keyboardUsed */);
 	}
 
-	_onOpen() {
-		this._applyFocus();
-	}
-
 	_onClose() {
 		this._handledPress = false;
-	}
-
-	_applyFocus() {
-		if (this.selectedItemIndex) {
-			this._getItems()[this.selectedItemIndex]?.focus();
-		}
 	}
 
 	_isItemOnTarget() {

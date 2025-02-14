@@ -1241,7 +1241,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_handlePickerAfterOpen() {
-		this.Suggestions?._onOpen();
 		this.fireDecoratorEvent("open");
 	}
 
