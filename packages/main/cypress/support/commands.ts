@@ -40,6 +40,7 @@ import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "./commands/Menu.commands.js";
 import "./commands/ColorPicker.commands.js";
 import "./commands/ColorPalette.commands.js";
+import "./commands/DatePicker.commands.js";
 
 type SimulationDevices = "phone"
 
@@ -56,6 +57,8 @@ declare global {
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
 			ui5ColorPaletteCheckSelectedColor(colorPaletteItem: string, values: {r: string, g: string, b: string, a: string}): Chainable<void>
 			ui5ColorPaletteNavigateAndCheckSelectedColor(colorPalette: string, startIndex: number, key: string, expectedValue: string): Chainable<void>
+			ui5GetInnerInput(): Chainable<void>
+			ui5GetPickerDate(timestamp: number): Chainable<void>
 		}
 	}
 }
