@@ -24,7 +24,7 @@ import {
 	isEnter,
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { PassiveEventListenerObject, AriaLandmarkRole } from "@ui5/webcomponents-base";
+import type { PassiveEventListenerObject } from "@ui5/webcomponents-base";
 import FCLLayout from "./types/FCLLayout.js";
 import type { LayoutConfiguration } from "./fcl-utils/FCLLayout.js";
 import {
@@ -46,6 +46,7 @@ import FlexibleColumnLayoutTemplate from "./FlexibleColumnLayoutTemplate.js";
 
 // Styles
 import FlexibleColumnLayoutCss from "./generated/themes/FlexibleColumnLayout.css.js";
+import type FlexibleColumnAccessibility from "./FlexibleColumnAccessibility.js";
 
 enum MEDIA {
 	PHONE = "phone",
@@ -83,30 +84,6 @@ type FlexibleColumnLayoutLayoutChangeEventDetail = {
 	separatorsUsed: boolean,
 	resized: boolean,
 };
-
-type FCLAccessibilityRoles = Extract<AriaLandmarkRole, "none" | "complementary" | "contentinfo" | "main" | "region">
-type FCLAccessibilityAttributes = {
-	startColumn?: {
-		role: FCLAccessibilityRoles,
-		name: string,
-	},
-	midColumn?: {
-		role: FCLAccessibilityRoles,
-		name: string,
-	},
-	endColumn?: {
-		role: FCLAccessibilityRoles,
-		name: string,
-	},
-	startSeparator?: {
-		role: FCLAccessibilityRoles,
-		name: string,
-	},
-	endSeparator?: {
-		role: FCLAccessibilityRoles,
-		name: string,
-	},
-}
 
 type UserDefinedColumnLayouts = {
 	"tablet": {
@@ -218,33 +195,6 @@ class FlexibleColumnLayout extends UI5Element {
 	disableResizing = false;
 
 	/**
-	* Defines additional accessibility attributes on different areas of the component.
-	*
-	* The accessibilityAttributes object has the following fields,
-	* where each field is an object supporting one or more accessibility attributes:
-	*
-	*  - **startColumn**: `startColumn.role` and `startColumn.name`.
-	*  - **midColumn**: `midColumn.role` and `midColumn.name`.
-	*  - **endColumn**: `endColumn.role` and `endColumn.name`.
-	*  - **startSeparator**: `startSeparator.role` and `startSeparator.name`.
-	*  - **endSeparator**: `endSeparator.role` and `endSeparator.name`.
-	*
-	* The accessibility attributes support the following values:
-	*
-	* - **role**: Defines the accessible ARIA landmark role of the area.
-	* Accepts the following values: `none`, `complementary`, `contentinfo`, `main` or `region`.
-	*
-	* - **name**: Defines the accessible ARIA name of the area.
-	* Accepts any string.
-	*
-	* @default {}
-	* @public
-	* @since 2.0.0
-	*/
-	@property({ type: Object })
-	accessibilityAttributes: FCLAccessibilityAttributes = {};
-
-	/**
 	* Defines the component width in px.
 	* @default 0
 	* @private
@@ -291,6 +241,21 @@ class FlexibleColumnLayout extends UI5Element {
 	*/
 	@slot()
 	startColumn!: Array<HTMLElement>;
+
+	@slot()
+	startColumnAccessibility!: Array<FlexibleColumnAccessibility>;
+
+	@slot()
+	midColumnAccessibility!: Array<FlexibleColumnAccessibility>;
+
+	@slot()
+	endColumnAccessibility!: Array<FlexibleColumnAccessibility>;
+
+	@slot()
+	startSeparatorAccessibility!: Array<FlexibleColumnAccessibility>;
+
+	@slot()
+	endSeparatorAccessibility!: Array<FlexibleColumnAccessibility>;
 
 	/**
 	* Defines the content in the middle column.
@@ -1122,57 +1087,87 @@ class FlexibleColumnLayout extends UI5Element {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-column--end")!;
 	}
 
+	get startColAcc() {
+		if (this.startColumnAccessibility.length) {
+			return this.startColumnAccessibility[0];
+		}
+	}
+
+	get midColAcc() {
+		if (this.midColumnAccessibility.length) {
+			return this.midColumnAccessibility[0];
+		}
+	}
+
+	get endColAcc() {
+		if (this.endColumnAccessibility.length) {
+			return this.endColumnAccessibility[0];
+		}
+	}
+
+	get startSeparatorAcc() {
+		if (this.startSeparatorAccessibility.length) {
+			return this.startSeparatorAccessibility[0];
+		}
+	}
+
+	get endSeparatorAcc() {
+		if (this.endSeparatorAccessibility.length) {
+			return this.endSeparatorAccessibility[0];
+		}
+	}
+
 	get accStartColumnText() {
-		return this.accessibilityAttributes.startColumn?.name || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_TXT);
+		return this.startColAcc?.accessibleNameText || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
 	get accMiddleColumnText() {
-		return this.accessibilityAttributes.midColumn?.name || FlexibleColumnLayout.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
+		return this.midColAcc?.accessibleNameText || FlexibleColumnLayout.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
 	get accEndColumnText() {
-		return this.accessibilityAttributes.endColumn?.name || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_TXT);
+		return this.endColAcc?.accessibleNameText || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 
 	get accStartSeparatorText() {
-		let name = this.accessibilityAttributes.startSeparator?.name;
-		if (!name && this.showStartSeparatorGrip) {
-			name = FlexibleColumnLayout.i18nBundle.getText(FCL_START_SEPARATOR_TOOLTIP);
+		let assignedLabel = this.startSeparatorAcc?.accessibleNameText;
+		if (!assignedLabel && this.showStartSeparatorGrip) {
+			assignedLabel = FlexibleColumnLayout.i18nBundle.getText(FCL_START_SEPARATOR_TOOLTIP);
 		}
-		return name;
+		return assignedLabel;
 	}
 
 	get accEndSeparatorText() {
-		return this.accessibilityAttributes.endSeparator?.name || FlexibleColumnLayout.i18nBundle.getText(FCL_END_SEPARATOR_TOOLTIP);
+		return this.endSeparatorAcc?.accessibleNameText || FlexibleColumnLayout.i18nBundle.getText(FCL_END_SEPARATOR_TOOLTIP);
 	}
 
 	get accStartColumnRole() {
 		if (this.startColumnVisible) {
-			return this.accessibilityAttributes.startColumn?.role || "region";
+			return this.startColAcc?.accessibleRole || "region";
 		}
 		return undefined;
 	}
 
 	get accMiddleColumnRole() {
 		if (this.midColumnVisible) {
-			return this.accessibilityAttributes.midColumn?.role || "region";
+			return this.midColAcc?.accessibleRole || "region";
 		}
 		return undefined;
 	}
 
 	get accEndColumnRole() {
 		if (this.endColumnVisible) {
-			return this.accessibilityAttributes.endColumn?.role || "region";
+			return this.endColAcc?.accessibleRole || "region";
 		}
 		return undefined;
 	}
 
 	get accStartSeparatorRole() {
-		return this.accessibilityAttributes.startSeparator?.role || "separator";
+		return this.startSeparatorAcc?.accessibleRole || "separator";
 	}
 
 	get accEndSeparatorRole() {
-		return this.accessibilityAttributes.endSeparator?.role || "separator";
+		return this.endSeparatorAcc?.accessibleRole || "separator";
 	}
 
 	get _effectiveLayoutsByMedia() {
@@ -1206,6 +1201,5 @@ export default FlexibleColumnLayout;
 export type {
 	MEDIA,
 	FlexibleColumnLayoutLayoutChangeEventDetail,
-	FCLAccessibilityAttributes,
 	FlexibleColumnLayoutColumnLayout,
 };

@@ -17,6 +17,7 @@ import DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
 import DynamicSideContent from "./DynamicSideContent.js";
 import FilterItem from "./FilterItem.js";
 import FilterItemOption from "./FilterItemOption.js";
+import FlexibleColumnAccessibility from "./FlexibleColumnAccessibility.js";
 import FlexibleColumnLayout from "./FlexibleColumnLayout.js";
 import IllustratedMessage from "./IllustratedMessage.js";
 import MediaGallery from "./MediaGallery.js";

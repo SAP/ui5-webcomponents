@@ -2,6 +2,7 @@ import BarcodeScannerDialog from "../../dist/BarcodeScannerDialog.js";
 import DynamicSideContent from "../../dist/DynamicSideContent.js";
 import FilterItem from "../../dist/FilterItem.js";
 import FilterItemOption from "../../dist/FilterItemOption.js";
+import FlexibleColumnAccessibility from "../../dist/FlexibleColumnAccessibility.js";
 import FlexibleColumnLayout from "../../dist/FlexibleColumnLayout.js";
 import IllustratedMessage from "../../dist/IllustratedMessage.js";
 import MediaGallery from "../../dist/MediaGallery.js";
