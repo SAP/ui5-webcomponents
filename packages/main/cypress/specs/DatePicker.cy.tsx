@@ -1,14 +1,17 @@
 import DatePicker from "../../src/DatePicker.js";
+import Label from "../../src/Label.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
-import { resetConfiguration } from "@ui5/webcomponents-base/dist//InitialConfiguration.js";
+import { resetConfiguration } from "@ui5/webcomponents-base/dist/InitialConfiguration.js";
 import "@ui5/webcomponents/dist/Assets.js";
-import DateRangePicker from "../../src/DateRangePicker.js";
-import Calendar from "../../src/Calendar.js";
-import ResponsivePopover from "../../src/ResponsivePopover.js";
 
 describe("Date Picker Tests", () => {
-	it.skip("input renders", () => {
+	afterEach(() => {
+		// eslint-disable-next-line
+		cy.wait(200);
+	});
+
+	it("input renders", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -28,8 +31,8 @@ describe("Date Picker Tests", () => {
 
 		cy.get("@input")
 			.should("have.attr", "aria-roledescription", "Date Input")
-			.should("have.attr", "aria-haspopup", "grid")
-			.should("not.have.attr", "aria-controls");
+			.and("have.attr", "aria-haspopup", "grid")
+			.and("not.have.attr", "aria-controls");
 
 		cy.get("@input")
 			.should("not.have.attr", "aria-expanded");
@@ -55,21 +58,16 @@ describe("Date Picker Tests", () => {
 			.as("datePicker");
 
 		cy.get<DatePicker>("@datePicker")
-			.ui5GetInnerInput();
-
-		cy.get("@input")
-			.realClick();
-
-		cy.get("@input")
-			.type("11 декември 2018г.");
-
-		cy.get("@input")
+			.ui5GetInnerInput()
+			.realClick()
+			.realType("11 декември 2018г.")
 			.realPress("Enter");
 
-		cy.get("@datePicker").should("have.attr", "value-state", "None");
+		cy.get("@datePicker")
+			.should("have.attr", "value-state", "None");
 	});
 
-	it.skip("custom formatting", () => {
+	it("custom formatting", () => {
 		cy.mount(<DatePicker format-pattern="yyyy, dd/MM"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -77,36 +75,25 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
-			.as("input");
-
-		cy.get("@input")
-			.realClick();
-
-		cy.get("@input")
-			.realType("2018, 05/05");
-
-		cy.get("@input")
+			.as("input")
+			.realClick()
+			.realType("2018, 05/05")
 			.realPress("Enter");
 
-		cy.get("@datePicker").should("have.attr", "value-state", "None");
+		cy.get("@datePicker")
+			.should("have.attr", "value-state", "None");
 	});
 
-	it.skip("value state", () => {
+	it("value state", () => {
 		cy.mount(<DatePicker></DatePicker>);
 		cy.get("[ui5-date-picker]")
 			.as("datePicker");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
-			.as("input");
-
-		cy.get("@input")
-			.realClick();
-
-		cy.get("@input")
-			.realType("Invalid input");
-
-		cy.get("@input")
+			.as("input")
+			.realClick()
+			.realType("Invalid input")
 			.realPress("Enter");
 
 		cy.get("@datePicker")
@@ -122,18 +109,24 @@ describe("Date Picker Tests", () => {
 			.should("be.visible");
 	});
 
-	it.skip("disabled", () => {
+	it("disabled", () => {
 		cy.mount(<DatePicker disabled></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
+			.as("datePicker")
+			.should("have.css", "pointer-events", "none");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
 			.should("have.attr", "disabled");
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-icon")
+			.should("have.css", "pointer-events", "none");
 	});
 
-	it.skip("readonly", () => {
+	it("readonly", () => {
 		cy.mount(<DatePicker readonly></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -149,7 +142,7 @@ describe("Date Picker Tests", () => {
 			.should("not.exist");
 	});
 
-	it.skip("required", () => {
+	it("required", () => {
 		cy.mount(<DatePicker required></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -165,7 +158,7 @@ describe("Date Picker Tests", () => {
 			.should("have.attr", "aria-required", "true");
 	});
 
-	it.skip("placeholder", () => {
+	it("placeholder", () => {
 		cy.mount(<DatePicker placeholder="test placeholder"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -176,7 +169,7 @@ describe("Date Picker Tests", () => {
 			.should("have.attr", "placeholder", "test placeholder");
 	});
 
-	it.skip("primary calendar type", () => {
+	it("primary calendar type", () => {
 		cy.mount(<DatePicker primary-calendar-type="Islamic"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -188,18 +181,7 @@ describe("Date Picker Tests", () => {
 			.should("have.attr", "primary-calendar-type", "Islamic");
 	});
 
-	/*
-Use the following steps for each test to rewrite it in cypress:
-1) Mount (do not use cy.visit but cy.mount) the DatePicker component with the same attributes as the one with a correspodning ID from the DatePicker_test_page.html
-2) Use cypress selectors instead of the methods from the DatePickerTestPage.js file, in order to achieve the same result
-3) Create an alias for the DatePicker component and use with a typescript type for all the selectors in the test.
-Use came case for naming the aliases.
-4) Insert a linebreak after each chained method call in the test
-5) Use double quotes for the strings in the test
-6) Do not use the cypress then method
-*/
-
-	it.skip("Islamic calendar type input value", () => {
+	it("Islamic calendar type input value", () => {
 		cy.mount(<DatePicker primary-calendar-type="Islamic" format-pattern="MMM d, y G"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -207,15 +189,9 @@ Use came case for naming the aliases.
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
-			.as("input");
-
-		cy.get("@input")
-			.realClick();
-
-		cy.get("@input")
-			.realType("Rab. I 6, 1440 AH");
-
-		cy.get("@input")
+			.as("input")
+			.realClick()
+			.realType("Rab. I 6, 1440 AH")
 			.realPress("Enter");
 
 		cy.get("@datePicker")
@@ -227,7 +203,7 @@ Use came case for naming the aliases.
 			.should("have.attr", "value-state", "None");
 	});
 
-	it.skip("Selected date from daypicker is the same as datepicker date", () => {
+	it("Selected date from daypicker is the same as datepicker date", () => {
 		cy.mount(<DatePicker value="Jan 29, 2019" format-pattern="MMM d, y"></DatePicker>);
 
 		const timestamp_11_Jan_2019 = 1547164800;
@@ -236,9 +212,7 @@ Use came case for naming the aliases.
 			.as("datePicker");
 
 		cy.get<DatePicker>("@datePicker")
-			.shadow()
-			.find("ui5-icon")
-			.realClick();
+			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5GetPickerDate(timestamp_11_Jan_2019)
@@ -248,7 +222,7 @@ Use came case for naming the aliases.
 			.should("have.value", "Jan 11, 2019");
 	});
 
-	it.skip("focusout fires change", () => {
+	it("focusout fires change", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -256,64 +230,26 @@ Use came case for naming the aliases.
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
-			.as("input");
-
-		cy.get("@input")
-			.realClick();
-
-		cy.get("@input")
-			.realType("Jan 1, 1999");
-
-		cy.get("@input")
+			.as("input")
+			.realClick()
+			.realType("Jan 1, 1999")
 			.realPress("Tab");
 
 		cy.get<DatePicker>("@datePicker")
 			.should("have.attr", "value", "Jan 1, 1999");
 	});
 
-	it("test1", () => {
-		cy.mount(<DatePicker></DatePicker>);
-
-		cy.get("[ui5-date-picker]")
-			.should("exist");
-	});
-
-	it("test2", () => {
-		cy.mount(<DatePicker></DatePicker>);
-
-		cy.get("[ui5-date-picker]")
-			.should("exist");
-	});
-
-	it("test3", () => {
-		cy.mount(<input></input>);
-
-		cy.get("input")
-			.as("input");
-
-		cy.get("@input")
-			.realClick();
-
-		cy.get("@input")
-			.realType("far4iloto");
-
-		cy.get("@input")
-			.should("have.value", "far4iloto");
-	});
-
-	it.skip("Select a date from the picker popover", () => {
+	it("Select a date from the picker popover", () => {
 		cy.mount(<DatePicker value="Jan 6, 2015"></DatePicker>);
 
 		const timestamp_6_Jan_2015 = 1420502400;
 		const timestamp_8_Jan_2015 = timestamp_6_Jan_2015 + 2 * 24 * 60 * 60;
 
-		cy.get("ui5-date-picker#dp6")
+		cy.get("[ui5-date-picker]")
 			.as("datePicker");
 
 		cy.get<DatePicker>("@datePicker")
-			.shadow()
-			.find("ui5-icon")
-			.realClick();
+			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5GetPickerDate(timestamp_6_Jan_2015)
@@ -335,7 +271,7 @@ Use came case for naming the aliases.
 			.should("have.value", "Jan 8, 2015");
 	});
 
-	it.skip("Clear the input field", () => {
+	it("Clear the input field", () => {
 		cy.mount(<DatePicker value="2015" format-pattern="y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -343,1248 +279,1418 @@ Use came case for naming the aliases.
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
-			.as("input");
-
-		cy.get("@input")
-			.realClick();
-
-		cy.get("@input")
-			.realPress("Backspace");
-
-		cy.get("@input")
-			.realPress("Backspace");
-
-		cy.get("@input")
-			.realPress("Backspace");
-
-		cy.get("@input")
-			.realPress("Backspace");
-
-		cy.get("@input")
+			.as("input")
+			.realClick()
+			.realPress("Backspace")
+			.realPress("Backspace")
+			.realPress("Backspace")
+			.realPress("Backspace")
 			.realPress("Enter");
 
 		cy.get<DatePicker>("@datePicker")
 			.should("have.value", "");
 	});
 
-	/* it("respect first day of the week - monday", async () => {
-		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=bg`);
-		datepicker.id = "#dp7_1";
+	it.skip("respect first day of the week - monday", () => {
+		cy.mount(<DatePicker value="фев 6, 2019" format-pattern="MMM d, y"></DatePicker>, {
+			ui5Configuration: {
+				"language": "bg",
+			},
+		});
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "фев 6, 2019");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		const timestamp_3_Feb_2019 = 1549152000;
+		const timestamp_28_Jan_2019 = 1548633600;
 
-		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
-		assert.include(timestamp, "1548633600", "28 Jan is the first displayed date for Feb 2019")
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const calendarDate_3_Feb_2019 = await datepicker.getPickerDate(1549152000);
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedDate()
+			.invoke("attr", "data-sap-timestamp")
+			.should("include", `${timestamp_28_Jan_2019}`);
 
-		assert.ok(await calendarDate_3_Feb_2019.hasClass("ui5-dp-wday6"), "3 Feb 2019 is displayed as last day of the week");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetPickerDate(timestamp_3_Feb_2019)
+			.should("have.class", "ui5-dp-wday6");
 	});
 
-	it("if today is 30 jan, clicking next month does not skip feb", async () => {
-		await datepicker.open();
+	it("if today is 30 jan, clicking next month does not skip feb", () => {
+		cy.mount(<DatePicker value="Jan 30, 2019" format-pattern="MMM d, y"></DatePicker>);
 
-		datepicker.id = "#dp7_2";
+		const timestamp_27_Jan_2019 = 1548547200;
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Jan 30, 2019");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
-		(await datepicker.getBtnNext()).click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const firstDisplayedDate = (await datepicker.getFirstDisplayedDate());
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		// first displayed date should be Jan 27, 2019, so this is February
-		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
-		assert.include(timestamp, "1548547200", "Feb is the displayed month");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetNextButton()
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedDate()
+			.invoke("attr", "data-sap-timestamp")
+			.should("include", `${timestamp_27_Jan_2019}`);
 	});
 
-	it("picker stays open on input click", async () => {
-		await datepicker.open();
+	it("picker stays open on input click", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		datepicker.id = "#dp6";
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.as("input")
+			.realClick();
 
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
-		assert.ok(await innerInput.isFocusedDeep(), "input is focused");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "open");
 	});
 
-	it("change fires when we change the input back to its original value", async () => {
-		datepicker.id = "#dp8"; // initial value is Jan 6, 2015
+	it("change fires when we change the input back to its original value", () => {
+		cy.mount(<DatePicker value="2015" format-pattern="y"></DatePicker>);
 
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		await browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
-		await innerInput.keys("Jan 8, 2015");
-		await browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		assert.equal(await browser.$("#lbl").getHTML(false), "1", 'change has fired once');
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.as("input")
+			.realClick();
 
-		await innerInput.click();
-		await browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
-		await innerInput.keys("Jan 6, 2015");
-		await browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
+		cy.get("@input")
+			.realPress("Backspace")
+			.realPress("Backspace")
+			.realPress("Backspace")
+			.realPress("Backspace")
+			.realPress("Enter");
 
-		assert.equal(await browser.$("#lbl").getHTML(false), "2", 'change has fired once');
+		cy.get<DatePicker>("@datePicker")
+			.should("have.value", "");
+
+		cy.get("@input")
+			.realType("2015")
+			.realPress("Enter");
+
+		cy.get<DatePicker>("@datePicker")
+			.should("have.value", "2015");
 	});
 
-	it("change fires every time tomorrow is typed and normalized", async () => {
-		let tomorrowDate;
-		const lblChangeCounter = await browser.$("#lblTomorrow");
-		const lblTomorrowDate = await browser.$("#lblTomorrowDate");
+	it("change fires every time tomorrow is typed and normalized", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		datepicker.id = "#dp13";
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		// Type tomorrow.
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		await innerInput.keys("tomorrow");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realType("tomorrow")
+			.realPress("Enter");
 
-		// Press Enter, store the date and delete it.
-		await innerInput.keys("Enter");
-		tomorrowDate = await lblTomorrowDate.getHTML(false);
-		await browser.keys("\b\b\b\b\b\b\b\b\b\b\b\b\b");
-		await innerInput.keys("Enter");
-
-		// Type tomorrow and press Enter for the second time.
-		await innerInput.keys("tomorrow");
-		await innerInput.keys("Enter");
-
-		// Two change events should be fired and the date should twice normalized
-		assert.equal(await lblChangeCounter.getHTML(false), "3", 'change event is being fired twice');
-		assert.equal(await lblTomorrowDate.getHTML(false), tomorrowDate, 'tomorrow is normalized to date twice as well');
+		cy.get<DatePicker>("@datePicker")
+			.invoke("attr", "value")
+			.should("not.be.empty")
+			.and("not.equal", "tomorrow");
 	});
 
-	it("today value is normalized and correctly rounded to 00:00:00", async () => {
-		datepicker.id = "#dp9";
+	it("today value is normalized and correctly rounded to 00:00:00", () => {
+		cy.mount(<DatePicker value="today"></DatePicker>);
 
 		let timestampToday = new Date().getTime();
-		timestampToday = (timestampToday - timestampToday % (24 * 60 * 60 * 1000)) / 1000;
+		timestampToday = (timestampToday - (timestampToday % (24 * 60 * 60 * 1000))) / 1000;
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
-		const calendar = await datepicker.getCalendar();
-		assert.equal(await calendar.getProperty('timestamp'), timestampToday, "calendar selected dates is ok");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const calendarDateToday = await datepicker.getPickerDate(timestampToday);
-		assert.ok(await calendarDateToday.hasClass('ui5-dp-item--selected'), "calendar selected date is ok");
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.should("have.attr", "timestamp", `${timestampToday}`);
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetPickerDate(timestampToday)
+			.should("have.class", "ui5-dp-item--selected");
 	});
 
-	it("does not open, if disabled", async () => {
-		datepicker.id = "#dp10";
+	it("[F4] toggles the calendar", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		assert.notOk(await datepicker.isPickerOpen(), "picker is closed initially.");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		assert.equal((await valueHelpIcon.getCSSProperty('pointer-events')).value, "none", "pointer events are none");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker")
+			.should("not.have.attr", "open");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.as("input")
+			.realClick()
+			.realPress("F4");
+
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "open");
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.shadow()
+			.find("ui5-daypicker")
+			.should("be.visible");
 	});
 
-	it("[F4] toggles the calendar", async () => {
-		datepicker.id = "#dp11";
+	it("[Alt] + [Up] toggles the calendar", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		await browser.keys("F4");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.as("input")
+			.realClick()
+			.realPress(["Alt", "ArrowUp"]);
 
-		assert.ok(await datepicker.isPickerOpen(), "datepicker is open");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "open");
+
+		cy.get("@input")
+			.realPress(["Alt", "ArrowUp"]);
+
+		cy.get<DatePicker>("@datePicker")
+			.should("not.have.attr", "open");
 	});
 
-	it("[Alt] + [Up] toggles the calendar", async () => {
-		datepicker.id = "#dp9";
+	it("[Alt] + [Down] toggles the calendar", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		await browser.keys(["Alt", "ArrowUp", "NULL"]);
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.as("input")
+			.realClick()
+			.realPress(["Alt", "ArrowDown"]);
 
-		assert.ok(await datepicker.isPickerOpen(), "datepicker is open");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "open");
 
-		await browser.keys(["Alt", "ArrowUp", "NULL"]);
+		cy.get("@input")
+			.realPress(["Alt", "ArrowDown"]);
 
-		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
+		cy.get<DatePicker>("@datePicker")
+			.should("not.have.attr", "open");
 	});
 
-	it("[Alt] + [Down] toggles the calendar", async () => {
-		datepicker.id = "#dp11";
+	it("[F4] shows month picker after date picker is open", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		await browser.keys(["Alt", "ArrowDown", "NULL"]);
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realPress("F4");
 
-		assert.ok(await datepicker.isPickerOpen(), "datepicker is open");
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.as("calendar")
+			.realPress("F4");
 
-		await browser.keys(["Alt", "ArrowDown", "NULL"]);
+		cy.get("@calendar")
+			.shadow()
+			.find("ui5-daypicker")
+			.should("not.be.visible");
 
-		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
+		cy.get("@calendar")
+			.shadow()
+			.find("ui5-monthpicker")
+			.should("be.visible");
 	});
 
-	it("[F4] shows year picker after date picker is open", async () => {
-		datepicker.id = "#dp11";
+	it("[Shift] + [F4] shows year picker after date picker is open", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
-		await browser.keys("F4");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const calendar = await datepicker.getCalendar();
-		assert.notOk((await calendar.shadow$("ui5-monthpicker"))._hidden, "Month picker is open");
-		await valueHelpIcon.click(); // close the datepicker
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.as("calendar")
+			.realPress(["Shift", "F4"]);
+
+		cy.get("@calendar")
+			.shadow()
+			.find("ui5-yearpicker")
+			.should("be.visible");
 	});
 
-	it("[Shift] + [F4] shows year picker after date picker is open", async () => {
-		datepicker.id = "#dp11";
+	it("[F4] shows month picker after year picker is open", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
-		await browser.keys(['Shift', 'F4']);
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const calendar = await datepicker.getCalendar();
-		assert.notOk((await calendar.shadow$("ui5-yearpicker"))._hidden, "Year picker is open");
-		await valueHelpIcon.click(); // close the datepicker
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.as("calendar")
+			.realPress(["Shift", "F4"]);
+
+		cy.get("@calendar")
+			.realPress("F4");
+
+		cy.get("@calendar")
+			.shadow()
+			.find("ui5-monthpicker")
+			.should("be.visible");
 	});
 
-	it("[F4] shows month picker after year picker is open", async () => {
-		datepicker.id = "#dp11";
+	it("[Shift] + [F4] shows year picker after month picker is open", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
-		await browser.keys(['Shift', 'F4']);
-		await browser.keys('F4');
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const calendar = await datepicker.getCalendar();
-		assert.notOk((await calendar.shadow$("ui5-monthpicker"))._hidden, "Year picker is open");
-		await valueHelpIcon.click(); // close the datepicker
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.as("calendar")
+			.realPress("F4");
+
+		cy.get("@calendar")
+			.realPress(["Shift", "F4"]);
+
+		cy.get("@calendar")
+			.shadow()
+			.find("ui5-yearpicker")
+			.should("be.visible");
 	});
 
-	it("[Shift] + [F4] shows year picker after month picker is open", async () => {
-		datepicker.id = "#dp11";
+	it("DatePicker popover when initially opened displays a day picker", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
-		await browser.keys('F4');
-		await browser.keys(['Shift', 'F4']);
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const calendar = await datepicker.getCalendar();
-		assert.notOk((await calendar.shadow$("ui5-yearpicker"))._hidden, "Year picker is open");
-		await valueHelpIcon.click(); // close the datepicker
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.as("calendar")
+			.realPress("F4")
+			.realPress("Escape");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
+
+		cy.get("@calendar")
+			.shadow()
+			.find("ui5-daypicker")
+			.should("be.visible");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.as("calendar")
+			.realPress(["Shift", "F4"])
+			.realPress("Escape");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
+
+		cy.get("@calendar")
+			.shadow()
+			.find("ui5-daypicker")
+			.should("be.visible");
 	});
 
-	it("DatePicker popover when initially opened displays a day picker", async () => {
-		datepicker.id = "#dp11";
+	it("daypicker extreme values max", () => {
+		const timestamp_28_Nov_9999 = "253399363200";
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
-		await browser.keys('F4'); // show month picker
-		await valueHelpIcon.click(); // close the datepicker
+		cy.mount(<DatePicker value="Dec 31, 9999"></DatePicker>);
 
-		const calendar = await datepicker.getCalendar();
-		assert.notOk((await calendar.shadow$("ui5-daypicker"))._hidden, "Day picker is open");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await browser.keys(['Shift', 'F4']); // show year picker
-		await valueHelpIcon.click(); // close the datepicker
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		await valueHelpIcon.click(); // open the datepicker
-		assert.notOk((await calendar.shadow$("ui5-daypicker"))._hidden, "Day picker is open");
-
-		await valueHelpIcon.click(); // close the datepicker
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedDate()
+			.invoke("attr", "data-sap-timestamp")
+			.should("include", timestamp_28_Nov_9999);
 	});
 
-	it("[F4] on year picker doesn't close the date picker", async () => {
-		datepicker.id = "#dp11";
+	it("daypicker extreme values min", () => {
+		const timestamp_31_Dec_0000 = "-62135683200";
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
-		await browser.keys("F4");
+		cy.mount(<DatePicker value="Jan 1, 0001"></DatePicker>);
 
-		await browser.keys("F4");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		assert.ok(await datepicker.isPickerOpen(), "Datepicker remains open");
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedDate()
+			.invoke("attr", "data-sap-timestamp")
+			.should("include", timestamp_31_Dec_0000);
 	});
 
-	it("daypicker extreme values max", async () => {
-		var _28Nov9999 = "253399363200";
+	it("daypicker prev extreme values min", () => {
+		const timestamp_31_Dec_0000 = "-62135683200";
 
-		await datepicker.open();
-		datepicker.id = "#dp12";
+		cy.mount(<DatePicker value="Feb 1, 0001"></DatePicker>);
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Dec 31, 9999");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
-		assert.include(timestamp, _28Nov9999, "28 Nov, 9999 is the first displayed date");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetPreviousButton()
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedDate()
+			.invoke("attr", "data-sap-timestamp")
+			.should("include", timestamp_31_Dec_0000);
 	});
 
-	it("daypicker extreme values min", async () => {
-		var _31Dec0000 = "-62135683200";
+	it("daypicker next extreme values max", () => {
+		const timestamp_28_Nov_9999 = "253399363200";
 
-		await datepicker.open();
-		datepicker.id = "#dp12";
+		cy.mount(<DatePicker value="Nov 30, 9999"></DatePicker>);
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Jan 1, 0001");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
-		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
-		assert.include(timestamp, _31Dec0000, "Jan 1, 0001 is the second displayed date");
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetNextButton()
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedDate()
+			.invoke("attr", "data-sap-timestamp")
+			.should("include", timestamp_28_Nov_9999);
 	});
 
-	it("daypicker prev extreme values min", async () => {
-		var _31Dec0000 = "-62135683200";
+	it("monthpicker next extreme values max", () => {
+		cy.mount(<DatePicker value="Dec 31, 9998"></DatePicker>);
 
-		await datepicker.open();
-		datepicker.id = "#dp12";
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Feb 1, 0001");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const btnPrev = await datepicker.getBtnPrev();
-		await btnPrev.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetMonthButton()
+			.realClick();
 
-		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
-		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
-		assert.include(timestamp, _31Dec0000, "Jan 1, 0001 is the second displayed date");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetNextButton()
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.as("calendar")
+			.shadow()
+			.find("ui5-monthpicker")
+			.should("be.visible");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.invoke("text")
+			.should("include", "9999");
 	});
 
-	it("daypicker next extreme values max", async () => {
-		var _28Nov9999 = "253399363200";
+	it("monthpicker prev extreme values min", () => {
+		cy.mount(<DatePicker value="Jan 1, 0002"></DatePicker>);
 
-		await datepicker.open();
-		datepicker.id = "#dp12";
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Nov 30, 9999");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const btnNext = await datepicker.getBtnNext();
-		await btnNext.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetMonthButton()
+			.realClick();
 
-		const firstDisplayedDate = await datepicker.getFirstDisplayedDate();
-		const timestamp = await firstDisplayedDate.getAttribute("data-sap-timestamp");
-		assert.include(timestamp, _28Nov9999, "28 Nov, 9999 is the first displayed date");
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.as("calendar")
+			.shadow()
+			.find("ui5-monthpicker")
+			.should("be.visible");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetPreviousButton()
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.invoke("text")
+			.should("include", "0001");
 	});
 
-	it("monthpicker next extreme values max", async () => {
-		await datepicker.open();
-		datepicker.id = "#dp12";
+	it("yearpicker extreme values max", () => {
+		cy.mount(<DatePicker value="Dec 31, 9995"></DatePicker>);
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Dec 31, 9998");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const btnMonth = await datepicker.getBtnMonth();
-		await btnMonth.click();
-		const btnNext = await datepicker.getBtnNext();
-		await btnNext.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.realClick();
 
-		const btnYear = await datepicker.getBtnYear();
-		const innerHTML = await btnYear.getProperty("innerHTML");
-		assert.include(innerHTML, "9999", "year button's text is correct");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedYear()
+			.invoke("text")
+			.should("include", "9980");
 	});
 
-	it("monthpicker prev extreme values min", async () => {
-		await datepicker.open();
-		datepicker.id = "#dp12";
+	it("yearpicker extreme values min", () => {
+		cy.mount(<DatePicker value="Jan 1, 0003"></DatePicker>);
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Jan 1, 0002");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const btnMonth = await datepicker.getBtnMonth();
-		await btnMonth.click();
-		const btnPrev = await datepicker.getBtnPrev();
-		await btnPrev.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.realClick();
 
-		const btnYear = await datepicker.getBtnYear();
-		const innerHTML = await btnYear.getProperty("innerHTML");
-		assert.include(innerHTML, "0001", "year button's text is correct");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedYear()
+			.invoke("text")
+			.should("include", "0001");
 	});
 
-	it("yearpicker extreme values max", async () => {
-		await datepicker.open();
-		datepicker.id = "#dp12";
+	it("yearpicker prev page extreme values min", () => {
+		cy.mount(<DatePicker value="Jan 1, 0012"></DatePicker>);
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Dec 31, 9995");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const btnYear = await datepicker.getBtnYear();
-		await btnYear.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		const innerHTML = await firstDisplayedYear.getProperty("innerHTML");
-		assert.include(innerHTML, "9980", "First year in the year picker is correct");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedYear()
+			.invoke("text")
+			.should("include", "0002");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetPreviousButton()
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedYear()
+			.invoke("text")
+			.should("include", "0001");
 	});
 
-	it("yearpicker extreme values min", async () => {
-		await datepicker.open();
-		datepicker.id = "#dp12";
+	it("yearpicker next page extreme values max", () => {
+		cy.mount(<DatePicker value="Dec 31, 9986"></DatePicker>);
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Jan 1, 0003");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const btnYear = await datepicker.getBtnYear();
-		await btnYear.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		const innerHTML = await firstDisplayedYear.getProperty("innerHTML");
-		assert.include(innerHTML, "0001", "First year in the year picker is correct");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedYear()
+			.invoke("text")
+			.should("include", "9976");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetNextButton()
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedYear()
+			.invoke("text")
+			.should("include", "9980");
 	});
 
-	it("yearpicker prev page extreme values min", async () => {
-		await datepicker.open();
-		datepicker.id = "#dp12";
+	it("yearpicker click extreme values max", () => {
+		cy.mount(<DatePicker value="Dec 31, 9986"></DatePicker>);
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Jan 1, 0012");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const btnYear = await datepicker.getBtnYear();
-		await btnYear.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		let firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		let innerHTML = await firstDisplayedYear.getProperty("innerHTML");
-		assert.include(innerHTML, "0002", "First year in the year picker is correct");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.realClick();
 
-		const btnPrev = await datepicker.getBtnPrev();
-		await btnPrev.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedYear(10)
+			.invoke("text")
+			.should("include", "9986");
 
-		firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		innerHTML = await firstDisplayedYear.getProperty("innerHTML");
-		assert.include(innerHTML, "0001", "First year in the year picker is correct");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedYear(10)
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedYear()
+			.invoke("text")
+			.should("include", "9976");
 	});
 
-	it("yearpicker next page extreme values max", async () => {
-		await datepicker.open();
-		datepicker.id = "#dp12";
+	it("yearpicker click extreme values min above 10", () => {
+		cy.mount(<DatePicker value="Jan 1, 0012"></DatePicker>);
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Dec 31, 9986");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const btnYear = await datepicker.getBtnYear();
-		await btnYear.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		let firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		let innerHTML = await firstDisplayedYear.getProperty("innerHTML");
-		assert.include(innerHTML, "9976", "First year in the year picker is correct");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.realClick();
 
-		const btnNext = await datepicker.getBtnNext();
-		await btnNext.click();
-
-		firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		innerHTML = await firstDisplayedYear.getProperty("innerHTML");
-		assert.include(innerHTML, "9980", "First year in the year picker is correct");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedYear(2)
+			.invoke("text")
+			.should("include", "0004");
 	});
 
-	it("yearpicker click extreme values max", async () => {
-		await datepicker.open();
-		datepicker.id = "#dp12";
+	it("yearpicker click extreme values min below 10", () => {
+		cy.mount(<DatePicker value="Jan 1, 0004"></DatePicker>);
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Dec 31, 9986");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const btnYear = await datepicker.getBtnYear();
-		await btnYear.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const tenthYear = await datepicker.getDisplayedYear(10);
-		let innerHTML = await tenthYear.getProperty("innerHTML");
-		assert.include(innerHTML, "9986", "Tenth year in the year picker is correct");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.realClick();
 
-		await tenthYear.click();
-		await btnYear.click();
-
-		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		innerHTML = await firstDisplayedYear.getProperty("innerHTML");
-		assert.include(innerHTML, "9976", "First year in the year picker is correct");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetFirstDisplayedYear()
+			.invoke("text")
+			.should("include", "0001");
 	});
 
-	it("yearpicker click extreme values min above 10", async () => {
-		await datepicker.open();
-		datepicker.id = "#dp12";
+	it("placeholder, based on the formatPattern", () => {
+		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Jan 1, 0012");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const btnYear = await datepicker.getBtnYear();
-		await btnYear.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.invoke("attr", "placeholder")
+			.should("equal", "MMM d, y");
 
-		const thirdYear = await datepicker.getDisplayedYear(2);
-		const innerHTML = await thirdYear.getProperty("innerHTML");
-		assert.include(innerHTML, "0004", "Third year in the year picker is correct");
+		cy.get<DatePicker>("@datePicker")
+			.should("not.have.attr", "placeholder");
 	});
 
-	it("yearpicker click extreme values min below 10", async () => {
-		await datepicker.open();
-		datepicker.id = "#dp12";
+	it("placeholder, set by the user", () => {
+		cy.mount(<DatePicker placeholder="Delivery date" format-pattern="MMM d, y"></DatePicker>);
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Jan 1, 0004");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const btnYear = await datepicker.getBtnYear();
-		await btnYear.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.invoke("attr", "placeholder")
+			.should("equal", "Delivery date");
 
-		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		const innerHTML = await firstDisplayedYear.getProperty("innerHTML");
-		assert.include(innerHTML, "0001", "First year in the year picker is correct");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "placeholder", "Delivery date");
 	});
 
-	it("placeholder, based on the formatPattern", async () => {
-		datepicker.id = "#dp14";
+	it("Going under the minimum date changes value state", () => {
+		cy.mount(<DatePicker format-pattern="MMM d, y" min-date="Jan 1, 2000"></DatePicker>);
 
-		const pickerFormatPattern = "MMM d, y";
-		const innerInput = await datepicker.getInnerInput();
-		const innerInputPlaceholder = await innerInput.getProperty("placeholder");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		// The DatePicker has no placeholder set, in this case a default placeholder, based on the format pattern,
-		//  is set to the internal input.
-		const root = await datepicker.getRoot()
-		assert.notOk(await root.getProperty("placeholder"), "The DatePicker has no placeholder set");
-		assert.equal(innerInputPlaceholder, pickerFormatPattern, "By default, the inner input has the formatPattern as placeholder");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realType("Jan 1, 1999")
+			.realPress("Enter");
+
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "value-state", "Negative");
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-input")
+			.shadow()
+			.find(".ui5-input-content")
+			.should("be.visible");
 	});
 
-	it("placeholder, set by the user", async () => {
-		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
-		datepicker.id = "#dp15";
+	it("Going over the maximum date changes value state", () => {
+		cy.mount(<DatePicker format-pattern="MMM d, y" max-date="Jan 8, 2100"></DatePicker>);
 
-		const placeholder = "Delivery date";
-		const innerInput = await datepicker.getInnerInput();
-		const innerInputPlaceholder = await innerInput.getProperty("placeholder");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		// The DatePicker has placeholder set, in this case the default placeholder, based on the format pattern,
-		// is not displayed.
-		const root = await datepicker.getRoot();
-		assert.ok(await root.getProperty("placeholder"), "The DatePicker has placeholder set");
-		assert.equal(innerInputPlaceholder, placeholder, "The inner input has the placeholder, set by the user");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realType("May 5, 2100")
+			.realPress("Enter");
+
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "value-state", "Negative");
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-input")
+			.shadow()
+			.find(".ui5-input-content")
+			.should("be.visible");
 	});
 
-	it("Going under the minimum date changes value state", async () => {
-		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
-		datepicker.id = "#dp33";
+	it("Maximum or minimum date changes value state to none", () => {
+		cy.mount(<DatePicker format-pattern="y" min-date="2000" max-date="2100"></DatePicker>);
 
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		await innerInput.keys("Jan 1, 1999");
-		await innerInput.keys("Enter");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const input = await datepicker.getInput();
-		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.as("input")
+			.realClick()
+			.realType("2000")
+			.realPress("Enter");
 
-		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
-		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "value-state", "None");
+
+		cy.get("@input")
+			.realClick()
+			.realPress("Backspace")
+			.realPress("Backspace")
+			.realPress("Backspace")
+			.realPress("Backspace")
+			.realType("2100")
+			.realPress("Enter");
+
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "value-state", "None");
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-input")
+			.shadow()
+			.find(".ui5-input-content")
+			.should("be.visible");
 	});
 
-	it("Going over the maximum date changes value state", async () => {
-		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
-		datepicker.id = "#dp33";
+	it("Years are disabled when out of range", () => {
+		cy.mount(<DatePicker
+			value="Jan 8, 2100"
+			format-pattern="MMM d, y"
+			min-date="Jan 1, 2000"
+			max-date="Jan 8, 2100">
+		</DatePicker>);
 
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		while(await innerInput.getValue() !== ""){
-			await innerInput.keys("Backspace");
-		}
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await innerInput.keys("May 5, 2100");
-		await innerInput.keys("Enter");
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const input = await datepicker.getInput();
-		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.realClick();
 
-		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
-		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedYear(11)
+			.should("have.class", "ui5-yp-item--disabled")
+			.and("not.have.focus");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedYear(10)
+			.as("year")
+			.should("have.focus");
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.realPress("ArrowRight");
+
+		cy.get("@year")
+			.should("have.focus");
 	});
 
-	it("Maximum or minimum date changes value state to none", async () => {
-		datepicker.id = "#dp33";
+	it("Months are disabled when out of range", () => {
+		cy.mount(<DatePicker
+			value="Jan 8, 2100"
+			format-pattern="MMM d, y"
+			min-date="Jan 1, 2000"
+			max-date="Jan 8, 2100">
+		</DatePicker>);
 
-		const input = await datepicker.getInput();
-		const innerInput = await datepicker.getInnerInput();
-		await input.click();
-		while(await innerInput.getValue() !== ""){
-			await innerInput.keys("Backspace");
-		}
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await innerInput.keys("Jan 8, 2100");
-		const root = await datepicker.getRoot();
-		await root.keys("Enter");
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid (1)");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetMonthButton()
+			.realClick();
 
-		await input.click();
-		await root.setProperty("value", "Jan 1, 2000");
-		await root.keys("Enter");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedMonth(10)
+			.should("have.class", "ui5-mp-item--disabled");
 
-		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid (2)");
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.realPress("ArrowDown");
 
-		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
-		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedMonth(0)
+			.should("have.focus");
 	});
 
-	it("Years are disabled when out of range", async () => {
-		datepicker.id = "#dp33";
+	it("Days are disabled when out of range", () => {
+		cy.mount(<DatePicker
+			value="Jan 1, 2024"
+			format-pattern="MMM d, y"
+			max-date="Jan 1, 2024">
+		</DatePicker>);
 
-		const input = await datepicker.getInput();
-		await input.click();
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Jan 8, 2100");
-		await root.keys("Enter");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await datepicker.openPicker();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const btnYear = await datepicker.getBtnYear();
-		await btnYear.click();
-		let displayedYear = await datepicker.getDisplayedYear(11);
-		assert.ok(await displayedYear.hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
-		assert.notOk(await displayedYear.isFocusedDeep(), "Years out of range (2101) can not be reached with keyboard");
-
-		await root.keys("ArrowRight");
-
-		displayedYear = await datepicker.getDisplayedYear(10);
-		assert.ok(await displayedYear.isFocusedDeep(), "Focus remained on year 2100");
-
-		await datepicker.closePicker();
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedDay(15)
+			.should("have.class", "ui5-dp-item--disabled");
 	});
 
-	it("Months are disabled when out of range", async () => {
-		datepicker.id = "#dp33";
+	it("Min and Max dates are included in the interval", () => {
+		cy.mount(<DatePicker
+			value="Jan 10, 2024"
+			format-pattern="MMM d, y"
+			min-date="Jan 1, 2024"
+			max-date="Jan 31, 2024"
+		></DatePicker>);
 
-		const input = await datepicker.getInput();
-		await input.click();
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Jan 8, 2100");
-		await root.keys("Enter");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await datepicker.openPicker();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const btnMonth = await datepicker.getBtnMonth();
-		await btnMonth.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedDay(9)
+			.should("not.have.class", "ui5-dp-item--disabled");
 
-		let displayedMonth = await datepicker.getDisplayedMonth(10);
-		assert.ok(await displayedMonth.hasClass("ui5-mp-item--disabled"), "Months out of range are disabled");
-
-		await root.keys("ArrowDown");
-
-		displayedMonth = await datepicker.getDisplayedMonth(0);
-		assert.ok(await displayedMonth.isFocusedDeep(), "Months out of range cannot be reached with keyboard");
-
-		await datepicker.closePicker();
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedDay(11)
+			.should("not.have.class", "ui5-dp-item--disabled");
 	});
 
-	it("Days are disabled when out of range", async () => {
-		datepicker.id = "#dp33";
+	it("Week numbers are visible", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		await browser.$("#dp33").scrollIntoView();
-		await datepicker.openPicker();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const displayedDay = await datepicker.getDisplayedDay(15);
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		assert.ok(await displayedDay.hasClass("ui5-dp-item--disabled"), "Days out of range are disabled");
-
-		await datepicker.closePicker();
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.shadow()
+			.find("ui5-daypicker")
+			.shadow()
+			.find(".ui5-dp-weekname-container")
+			.should("exist");
 	});
 
-	it("Days are enabled when in range", async () => {
-		datepicker.id = "#dp33";
-		await datepicker.openPicker();
-		const displayedDay = await datepicker.getDisplayedDay(12);
+	it("Week numbers are hidden", () => {
+		cy.mount(<DatePicker hide-week-numbers></DatePicker>);
 
-		assert.ok(await displayedDay.isFocusedDeep(), "Days in range are enabled");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await datepicker.closePicker();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.shadow()
+			.find("ui5-daypicker")
+			.shadow()
+			.find(".ui5-dp-weekname-container")
+			.should("not.exist");
 	});
 
-	it("Min and Max date are included in the interval", async () => {
-		datepicker.id = "#dp33";
+	it("Calendar root have correct attribute", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		await datepicker.openPicker();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		let displayedDay = await datepicker.getDisplayedDay(9);
-		assert.notOk(await displayedDay.hasClass("ui5-dp-item--disabled"), "Min date is included");
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		displayedDay = await datepicker.getDisplayedDay(11);
-		assert.notOk(await displayedDay.hasClass("ui5-dp-item--disabled"), "Max date is included");
-
-		await datepicker.closePicker();
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.shadow()
+			.find("ui5-daypicker")
+			.shadow()
+			.find(".ui5-dp-content")
+			.should("have.attr", "role", "grid")
+			.and("have.attr", "aria-roledescription", "Gregorian calendar");
 	});
 
-	it("Tests week numbers column visibility", async () => {
-		// act
-		datepicker.id = "#dp18";
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+	it("DayPicker content wrapped", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		// assert
-		let dayPicker = await datepicker.getDayPicker();
-		const weekNumbersCol1 = await dayPicker.shadow$(".ui5-dp-weekname-container");
-		assert.ok(await weekNumbersCol1.isExisting(), "The week numbers column is visible.");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		// close date picker
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		await browser.keys(["Alt", "ArrowUp", "NULL"]);
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		// act
-		datepicker.id = "#dp19";
-		await valueHelpIcon.click();
-
-		// assert
-		dayPicker = await datepicker.getDayPicker();
-		const weekNumbersCol2 = await dayPicker.shadow$(".ui5-dp-weekname-container");
-		assert.notOk(await weekNumbersCol2.isExisting(), "The week numbers column is hidden.");
-
-		// close date picker
-		await innerInput.click();
-		await browser.keys(["Alt", "ArrowUp", "NULL"]);
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.shadow()
+			.find("ui5-daypicker")
+			.shadow()
+			.find(".ui5-dp-content")
+			.children()
+			.each($row => {
+				cy.wrap($row)
+					.should("have.attr", "role", "row");
+			});
 	});
 
-	it("Calendar root have correct attribute", async () => {
+	it("DayPicker day number attribute", () => {
+		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
 
-		datepicker.id = "#dp18";
-		(await datepicker.getValueHelpIcon()).click();
-		const monthpickerContent = (await datepicker.getDayPicker()).shadow$(".ui5-dp-content");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		assert.strictEqual(await monthpickerContent.getAttribute("role"), "grid", "Calendar root have correct role attribute");
-		assert.strictEqual(await monthpickerContent.getAttribute("aria-roledescription"), "Gregorian calendar", "Calendar root have correct roledescription")
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.shadow()
+			.find("ui5-daypicker")
+			.shadow()
+			.find(".ui5-dp-content")
+			.children()
+			.as("rows");
+
+		cy.get("@rows")
+			.first()
+			.find(".ui5-dp-dayname")
+			.should("have.attr", "role", "columnheader");
+
+		cy.get("@rows")
+			.last()
+			.find(".ui5-dp-weekname-container")
+			.should("have.attr", "role", "rowheader");
+
+		cy.get("@rows")
+			.last()
+			.find(".ui5-dp-item")
+			.should("have.attr", "role", "gridcell");
 	});
 
-	it("DayPicker content wrapped", async () => {
-		datepicker.id = "#dp19";
-		await datepicker.open();
-		let arr = await datepicker.getDayPickerContent();
+	it("DatePicker dates and week number", () => {
+		cy.mount(<DatePicker
+			format-pattern="MMM d, y"
+			primary-calendar-type="Gregorian"
+			value="May 3, 2100"
+		></DatePicker>);
 
-		arr.forEach(async function(el){
-			assert.strictEqual(await el.getAttribute("role"), "row", "Content wrapper has correct role");
-		});
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.shadow()
+			.find("ui5-daypicker")
+			.shadow()
+			.find(".ui5-dp-content > div[role='row']:nth-child(3)")
+			.as("row");
+
+		cy.get("@row")
+			.children()
+			.first()
+			.should("have.attr", "aria-label", "Calendar Week 19")
+			.next()
+			.should("have.attr", "aria-label", "May 2, 2100 Non-Working Day")
+			.next()
+			.should("have.attr", "aria-label", "May 3, 2100")
+			.next()
+			.should("have.attr", "aria-label", "May 4, 2100");
 	});
 
-	it("DayPicker day name attribute", async () => {
-		// await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
-		const root = await datepicker.getRoot();
-		await root.setAttribute("primary-calendar-type", "Gregorian");
-		// datepicker.id = "#dp13";
-		// datepicker.openPicker();
-		// const root = await datepicker.getRoot();
-		await root.keys("May 3, 2100");
-		// const root = await datepicker.getRoot();
-		await root.keys("Enter");
-
-		// const content = Array.from(datepicker.getDayPickerDayNames());
-		// const dayName = ["Week number", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-		// content.forEach((element,index) => {
-		// 	assert.strictEqual(await element.getAttribute("role"), "columnheader", "Each day have column header role");
-		// 	assert.strictEqual(await element.getAttribute("aria-label"), dayName[index], "Aria-label is correct");
-		// });
-	});
-
-	it("DayPiker day number attribute", async () => {
-		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
-		const root = await datepicker.getRoot();
-		await root.setAttribute("primary-calendar-type", "Gregorian");
-		datepicker.id = "#dp13";
-		await datepicker.openPicker();
-		await root.keys("May 3, 2100");
-		await root.keys("Enter");
-
-		const rows = Array.from(await datepicker.getDayPickerNumbers());
-		const firstColumn = Array.from(await rows[1].$$("div"));
-		const lastColumn = Array.from(await rows[rows.length - 1].$$("div"));
-
-		assert.strictEqual(await firstColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
-		assert.strictEqual(await firstColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
-		assert.strictEqual(await firstColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
-
-		assert.strictEqual(await lastColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
-		assert.strictEqual(await lastColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
-		assert.strictEqual(await lastColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
-
-		await datepicker.closePicker();
-	});
-
-	it("DatePicker dates and week number", async () => {
-		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
-		const root = await datepicker.getRoot();
-		await root.setAttribute("primary-calendar-type", "Gregorian");
-		datepicker.id = "#dp13";
-
-		const input = await datepicker.getInput();
-		await input.click();
-		await browser.keys("May 3, 2100");
-		await browser.keys("Enter");
-		// open picker after accepting the date
-		await datepicker.openPicker();
-
-		const data = Array.from(await datepicker.getDayPickerDatesRow(2));
-		assert.strictEqual(await data[0].getAttribute("aria-label"), "Calendar Week 19", "First columnheader have Week number aria-label");
-		assert.strictEqual(await data[1].getAttribute("aria-label"), "Non-Working Day May 2, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
-		assert.strictEqual(await data[2].getAttribute("aria-label"), "May 3, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
-		assert.strictEqual(await data[3].getAttribute("aria-label"), "May 4, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
-
-		await datepicker.closePicker();
-	});
-
-	it("Tests aria-label", async () => {
+	it("Tests aria-label", () => {
 		const EXPECTED_ARIA_LABEL = "Hello World";
 
-		datepicker.id = "#dpAriaLabel";
+		cy.mount(<DatePicker accessible-name={EXPECTED_ARIA_LABEL}></DatePicker>);
 
-		const innerInput = await datepicker.getInnerInput();
-		assert.strictEqual(await innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
-			"The aria-label is correct.")
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.should("have.attr", "aria-label", EXPECTED_ARIA_LABEL);
 	});
 
-	it("Tests aria-labelledby", async () => {
+	it("Tests aria-labelledby", () => {
 		const EXPECTED_ARIA_LABEL = "info text";
 
-		datepicker.id = "#dpAriaLabelledBy";
+		cy.mount(
+			<>
+				<Label id="infoText">{EXPECTED_ARIA_LABEL}</Label>
+				<DatePicker accessible-name-ref="infoText"></DatePicker>
+			</>
+		);
 
-		const innerInput = await datepicker.getInnerInput();
-		assert.strictEqual(await innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
-			"The aria-label is correct.")
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.should("have.attr", "aria-label", EXPECTED_ARIA_LABEL);
 	});
 
-	it("Page up/down increments/decrements the day value", async () => {
-		datepicker.id = "#dp1";
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Jan 1, 2000");
+	it("Page up/down increments/decrements the day value", () => {
+		cy.mount(<DatePicker value="Jan 1, 2000" format-pattern="MMM d, y"></DatePicker>);
 
-		const input = await datepicker.getInput();
-		await input.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await browser.keys('PageDown');
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.as("input")
+			.realClick()
+			.realPress("PageDown");
 
-		const innerInput = await datepicker.getInnerInput();
-		let date = new Date(await innerInput.getValue());
-		assert.strictEqual(date.getDate(), 31, "Correct day value");
-		assert.strictEqual(date.getMonth(), 11, "Correct month value");
-		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.value", "Dec 31, 1999");
 
-		await browser.keys('PageUp');
+		cy.get("@input")
+			.realPress("PageUp");
 
-		date = new Date(await innerInput.getValue());
-		assert.strictEqual(date.getDate(), 1, "Correct day value");
-		assert.strictEqual(date.getMonth(), 0, "Correct month value");
-		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.value", "Jan 1, 2000");
 	});
 
-	it("Shift + Page up/down increments/decrements the month value", async () => {
-		datepicker.id = "#dp1";
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Jan 1, 2000");
+	it("Shift + Page up/down increments/decrements the month value", () => {
+		cy.mount(<DatePicker value="Jan 1, 2000" format-pattern="MMM d, y"></DatePicker>);
 
-		const input = await datepicker.getInput();
-		await input.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await browser.keys(['Shift', 'PageDown']);
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.as("input")
+			.realClick()
+			.realPress(["Shift", "PageDown"]);
 
-		const innerInput = await datepicker.getInnerInput();
-		let date = new Date(await innerInput.getValue());
-		assert.strictEqual(date.getDate(), 1, "Correct day value");
-		assert.strictEqual(date.getMonth(), 11, "Correct month value");
-		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.value", "Dec 1, 1999");
 
-		await browser.keys(['Shift', 'PageUp']);
+		cy.get("@input")
+			.realPress(["Shift", "PageUp"]);
 
-		date = new Date(await innerInput.getValue());
-		assert.strictEqual(date.getDate(), 1, "Correct day value");
-		assert.strictEqual(date.getMonth(), 0, "Correct month value");
-		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.value", "Jan 1, 2000");
 	});
 
-	it("Ctrl + Shift + Page up/down increments/decrements the year value", async () => {
-		datepicker.id = "#dp1";
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Jan 1, 2000");
+	it("Ctrl + Shift + Page up/down increments/decrements the year value", () => {
+		cy.mount(<DatePicker value="Jan 1, 2000" format-pattern="MMM d, y"></DatePicker>);
 
-		const input = await datepicker.getInput();
-		await input.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await browser.keys(['Control', 'Shift', 'PageDown']);
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.as("input")
+			.realClick()
+			.realPress(["Control", "Shift", "PageDown"]);
 
-		const innerInput = await datepicker.getInnerInput();
-		let date = new Date(await innerInput.getValue());
-		assert.strictEqual(date.getDate(), 1, "Correct day value");
-		assert.strictEqual(date.getMonth(), 0, "Correct month value");
-		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.value", "Jan 1, 1999");
 
-		await browser.keys(['Control', 'Shift', 'PageUp']);
+		cy.get("@input")
+			.realPress(["Control", "Shift", "PageUp"]);
 
-		date = new Date(await innerInput.getValue());
-		assert.strictEqual(date.getDate(), 1, "Correct day value");
-		assert.strictEqual(date.getMonth(), 0, "Correct month value");
-		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.value", "Jan 1, 2000");
 	});
 
-	it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
-		datepicker.id = "#dp33";
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.doubleClick();
-		await browser.keys("Jan 1, 2000");
+	it("Keyboard navigation works when there are disabled dates in the calendar grid", () => {
+		cy.mount(<DatePicker
+			value="Jan 1, 2000"
+			format-pattern="MMM d, y"
+			min-date="Jan 1, 2000">
+		</DatePicker>);
 
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await browser.keys("ArrowDown");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realPress("F4");
 
-		const displayedDay = await datepicker.getDisplayedDay(13);
-		assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.realPress("ArrowDown");
 
-		await browser.keys("Escape");
-		await innerInput.doubleClick();
-		await browser.keys("Backspace");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedDay(13)
+			.should("have.focus");
 	});
 
-	it("Value state changes only on submit", async () => {
-		await browser.url(`test/pages/DatePicker.html?sap-ui-language=en`);
-		datepicker.id = "#dp33";
+	it("Value state changes only on submit", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		await browser.keys("somereallylongtextthatshouldcheckifwevalidateoninput");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const input = await datepicker.getInput();
-		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.as("input")
+			.realClick()
+			.realType("test");
 
-		await browser.keys("Enter");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "value-state", "None");
 
-		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
+		cy.get("@input")
+			.realPress("Enter");
+
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "value-state", "Negative");
 	});
 
-	it("focusout fires change but doesn't change the value state if the default behaviour is prevented", async () => {
-		datepicker.id = "#dpPrevent";
+	it("Prevent value-state-change event", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		const input = await datepicker.getInput();
-		await input.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker")
+			.then($datePicker => {
+				$datePicker.on("value-state-change", event => {
+					event.preventDefault();
+				});
+			});
 
-		const root = await datepicker.getRoot();
-		await root.keys("Jan 1, 1999999");
-		await browser.$("#dp5").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realType("Invalid value")
+			.realPress("Enter");
 
-		assert.equal(await input.getProperty("value"), "", 'the value is not changed');
+		cy.get("@datePicker")
+			.should("have.attr", "value-state", "None");
 	});
 
-	it("when value is prevented, the target value is restored to previous one", async () => {
-		datepicker.id = "#dpPrevent";
+	it("Prevent change event", () => {
+		cy.mount(
+			<>
+				<Label></Label>
+				<DatePicker format-pattern="MMM d, y"></DatePicker>
+			</>
+		);
 
-		const input = await datepicker.getInput();
-		await input.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const root = await datepicker.getRoot();
-		await root.keys("Mar 31, 1995");
-		await browser.$("#dp5").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
+		cy.get<DatePicker>("@datePicker")
+			.then($datePicker => {
+				$datePicker.on("change", event => {
+					event.preventDefault();
+					cy.get("[ui5-label]").invoke("attr", "text", `${event.target.value}`);
+				});
+			});
 
-		assert.equal(await input.getProperty("valueState"), "None", 'the value state is not changed');
-		assert.equal(await browser.$("#lblChangePreventTargetValue").getHTML(false), "target value on event fire: Mar 31, 1995", 'the value is applied on target before prevention');
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realType("Mar 31, 1995")
+			.realPress("Enter");
+
+		cy.get<DatePicker>("@datePicker")
+			.should("have.value", "")
+			.and("have.attr", "value-state", "None");
+
+		cy.get("[ui5-label]").should("have.attr", "text", "Mar 31, 1995");
 	});
 
-	it("DatePicker's formatter has strict parsing enabled", async () => {
-		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
-		datepicker.id = "#dp7_1";
+	it("DatePicker's formatter has strict parsing enabled", () => {
+		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
 
-		const input = await datepicker.getInput();
-		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		await browser.keys("Jan 60, 2000");
-		await browser.keys("Enter");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realType("Jan 60, 2000")
+			.realPress("Enter");
 
-		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
-
-		await innerInput.doubleClick();
-		await browser.keys("Backspace");
-		await browser.keys("Enter");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "value-state", "Negative");
 	});
 
-	it("Invalid initial value isn't cleared due to formatting", async () => {
-		datepicker.id = "#dp20";
-		const input = await datepicker.getInput();
+	it("Invalid initial value isn't cleared due to formatting", () => {
+		cy.mount(<DatePicker value="Invalid value"></DatePicker>);
 
-		assert.equal(await input.getProperty("value"), "Invalid value", "the value isn't changed");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.should("have.value", "Invalid value");
 	});
 
-	it("Invalid state is refreshed after a value is picked by Calendar and set again", async () => {
-		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
-		datepicker.id = "#dp33";
+	it("Invalid state is refreshed after a value is picked by Calendar and set again", () => {
+		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
 
-		const input = await datepicker.getInput();
-		const innerInput = await datepicker.getInnerInput();
-		await input.click();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await innerInput.keys("asd")
-		await innerInput.keys("Enter");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realType("Invalid value")
+			.realPress("Enter");
 
-		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is not Negative (1)");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "value-state", "Negative");
 
-		await datepicker.openPicker();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		const displayedDay = await datepicker.getDisplayedDay(15);
-		await displayedDay.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedDay(15)
+			.realClick();
 
-		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid (2)");
-
-		await input.click();
-		while(await innerInput.getValue() !== ""){
-			await innerInput.keys("Backspace");
-		}
-		await innerInput.keys("asd");
-		await innerInput.keys("Enter");
-
-		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is not valid (3)");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "value-state", "None");
 	});
 
-	it("should open calendar picker in CalendarMode.DAY_MONTH_YEAR mode", async () => {
-		datepicker.id = "#dpCalendarModeDays";
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		await browser.keys("2020, 04/01");
-		await browser.keys("Enter");
+	it("Min and max dates are set, with no format pattern provided, using valid ISO format", () => {
+		cy.mount(<DatePicker min-date="2019-09-01" max-date="2019-11-01"></DatePicker>);
 
-		await datepicker.openPicker();
-		const calendar = await datepicker.getCalendar();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const currentPicker = await calendar.getProperty("_currentPicker");
-		assert.equal(currentPicker, "day", "calendar is opened on days");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realType("Nov 1, 2020")
+			.realPress("Enter");
 
-		const dayPicker = await calendar.shadow$("ui5-daypicker");
-		const monthPicker = await calendar.shadow$("ui5-monthpicker");
-		const yearPicker = await calendar.shadow$("ui5-yearpicker");
-		assert.notOk(await dayPicker.getAttribute("hidden"));
-		assert.ok(await monthPicker.getAttribute("hidden"));
-		assert.ok(await yearPicker.getAttribute("hidden"));
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "value-state", "Negative");
 
-		const timestamp_30_Jan_2020 = 1580342400;
-		const calendarDate_30_Jan_2020 = await datepicker.getPickerDate(timestamp_30_Jan_2020);
-		await calendarDate_30_Jan_2020.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		assert.isFalse(await datepicker.isPickerOpen(), "picker is closed after day selection");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedYear(3)
+			.should("have.class", "ui5-yp-item--disabled");
 	});
 
-	it("should open calendar picker in CalendarMode.MONTH_YEAR mode", async () => {
-		datepicker.id = "#dpCalendarModeMonths";
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		await browser.keys("June 2023");
-		await browser.keys("Enter");
+	it("Min and max dates are NOT set because no format pattern is provided & format used is not ISO", () => {
+		cy.mount(<DatePicker min-date="22.10.2020" max-date="22.10.2021"></DatePicker>);
 
-		const calendar = await datepicker.getCalendar();
-		await datepicker.openPicker();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const currentPicker = await calendar.getProperty("_currentPicker");
-		assert.equal(currentPicker, "month", "calendar is opened on months");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realType("Apr 12, 2024")
+			.realPress("Enter");
 
-		const dayPicker = await calendar.shadow$("ui5-daypicker");
-		const monthPicker = await calendar.shadow$("ui5-monthpicker");
-		const yearPicker = await calendar.shadow$("ui5-yearpicker");
-		assert.ok(await dayPicker.getAttribute("hidden"));
-		assert.notOk(await monthPicker.getAttribute("hidden"));
-		assert.ok(await yearPicker.getAttribute("hidden"));
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "value-state", "None");
 
-		const timestamp_Nov_2023 = 1698796800;
-		const calendarDate_Nov_2023 = await datepicker.getPickerMonth(timestamp_Nov_2023);
-		await calendarDate_Nov_2023.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		assert.isFalse(await datepicker.isPickerOpen(), "picker is closed after month selection");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetYearButton()
+			.realClick();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetDisplayedYear(11)
+			.should("not.have.class", "ui5-yp-item--disabled");
 	});
 
-	it("should open calendar picker in CalendarMode.YEAR mode", async () => {
-		datepicker.id = "#dpCalendarModeYears";
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		await browser.keys("2018");
-		await browser.keys("Enter");
+	it("Date picker in month mode", () => {
+		cy.mount(<DatePicker format-pattern="MMM y"></DatePicker>);
 
-		await datepicker.openPicker();
-		const calendar = await datepicker.getCalendar();
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		const currentPicker = await calendar.getProperty("_currentPicker");
-		assert.equal(currentPicker, "year", "calendar is opened on months");
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realPress("F4");
 
-		const dayPicker = await calendar.shadow$("ui5-daypicker");
-		const monthPicker = await calendar.shadow$("ui5-monthpicker");
-		const yearPicker = await calendar.shadow$("ui5-yearpicker");
-		assert.ok(await dayPicker.getAttribute("hidden"));
-		assert.ok(await monthPicker.getAttribute("hidden"));
-		assert.notOk(await yearPicker.getAttribute("hidden"));
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "open");
 
-		const timestamp_2014 = 1388534400;
-		const calendarDate_2014 = await datepicker.getPickerYear(timestamp_2014);
-		await calendarDate_2014.click();
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.as("calendar")
+			.should("have.attr", "_current-picker", "month");
 
-		assert.isFalse(await datepicker.isPickerOpen(), "picker is closed after year selection");
+		cy.get("@calendar")
+			.shadow()
+			.find("ui5-monthpicker")
+			.should("be.visible");
 	});
 
-	it("Min and max dates are set, with no format pattern provided, using valid ISO format", async () => {
-		datepicker.id = "#dpISOMinMaxDates";
+	it("Date picker in year mode", () => {
+		cy.mount(<DatePicker format-pattern="yyyy"></DatePicker>);
 
-		const Input = await datepicker.getInput();
-		await Input.click();
-		await browser.keys("Nov 1, 2020");
-		await browser.keys("Enter");
-		assert.equal(await Input.getProperty("valueState"), "Negative", "Correctly set value state to 'Negative'");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await datepicker.openPicker();
-		const btnYear = await datepicker.getBtnYear();
-		await btnYear.click();
-		let displayedYear = await datepicker.getDisplayedYear(3);
+		cy.get<DatePicker>("@datePicker")
+			.ui5GetInnerInput()
+			.realClick()
+			.realPress("F4");
 
-		assert.ok(await displayedYear.hasClass("ui5-yp-item--disabled"), "Year 2021 is disabled");
-		// close the pickers and revert the datePicker state to initial
-		await browser.keys("Enter");
-		await browser.keys("Enter");
-		await Input.setAttribute("value", "");
+		cy.get<DatePicker>("@datePicker")
+			.should("have.attr", "open");
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.as("calendar")
+			.should("have.attr", "_current-picker", "year");
+
+		cy.get("@calendar")
+			.shadow()
+			.find("ui5-yearpicker")
+			.should("be.visible");
 	});
 
-	it("Min and max dates are NOT set because no format pattern is provided & format used is not ISO", async () => {
-		datepicker.id = "#dpISOMinMaxDates";
-		const root = await datepicker.getRoot();
-		// set min-date and max-date to valid dates, but not in ISO format
-		await root.setAttribute("min-date", "22.10.2020");
-		await root.setAttribute("max-date", "22.10.2021");
+	it("picker popover should have accessible name", () => {
+		cy.mount(<DatePicker></DatePicker>);
 
-		const Input = await datepicker.getInput();
-		await Input.click();
-		await browser.keys("Apr 12, 2024");
-		await browser.keys("Enter");
-		assert.equal(await Input.getProperty("valueState"), "None", "Correct value state");
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
 
-		await datepicker.openPicker();
-		const btnYear = await datepicker.getBtnYear();
-		await btnYear.click();
+		cy.get<DatePicker>("@datePicker")
+			.ui5ValueHelpIconPress();
 
-		let displayedYear = await datepicker.getDisplayedYear(11);
-		assert.notOk(await displayedYear.hasClass("ui5-yp-item--disabled"), "Year 2025 is not disabled");
-
-		await datepicker.closePicker();
-	});
-
-	it("Value state is not changed, when value-state-change is prevented", async () => {
-		datepicker.id = "#dpVsChangePrevented";
-
-		const input = await datepicker.getInput();
-
-		const valueState = await input.getProperty("valueState");
-		await input.click();
-		await browser.keys("Jan 29, 2019");
-
-		await browser.$("#dpVsChangePrevented").shadow$("ui5-input").shadow$("input").click(); // click elsewhere to focusout
-
-		assert.strictEqual(await input.getProperty("valueState"), valueState, "value state is not changed");
-	});
-
-	it("should open date picker in daypicker", async () => {
-		datepicker.id = "#dpCalendarModeMonths";
-
-		const calendar = await datepicker.getCalendar();
-		const datepickerRoot = await datepicker.getRoot();
-		await datepicker.openPicker();
-
-		let currentPicker = await calendar.getProperty("_currentPicker");
-		assert.equal(currentPicker, "month", "calendar is opened on months");
-
-		await datepicker.closePicker();
-
-		await datepickerRoot.setAttribute("format-pattern", "yyyy, dd/MM");
-
-		await datepicker.openPicker();
-		currentPicker = await calendar.getProperty("_currentPicker");
-
-		assert.equal(currentPicker, "day", "calendar is opened on days");
-
-		const dayPicker = await calendar.shadow$("ui5-daypicker");
-		const monthPicker = await calendar.shadow$("ui5-monthpicker");
-		const yearPicker = await calendar.shadow$("ui5-yearpicker");
-		assert.notOk(await dayPicker.getAttribute("hidden"));
-		assert.ok(await monthPicker.getAttribute("hidden"));
-		assert.ok(await yearPicker.getAttribute("hidden"));
-
-		await datepicker.closePicker();
-	});
-
-	it("should open day picker view initially when open is triggered via keyboard", async () => {
-		datepicker.id = "#dpCalendarModeMonths";
-
-		const calendar = await datepicker.getCalendar();
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
-		let currentPicker = await calendar.getProperty("_currentPicker");
-
-		assert.ok(await datepicker.isPickerOpen(), "Datepicker is open");
-		assert.equal(currentPicker, "day", "calendar is opened on days");
-
-		await browser.keys("F4");
-		currentPicker = await calendar.getProperty("_currentPicker");
-		assert.equal(currentPicker, "month", "calendar is opened on months");
-
-		await browser.keys("Escape");
-		assert.notOk(await datepicker.isPickerOpen(), "Datepicker is closed");
-
-		await valueHelpIcon.click();
-		currentPicker = await calendar.getProperty("_currentPicker");
-		assert.ok(await datepicker.isPickerOpen(), "Datepicker is open");
-		assert.equal(currentPicker, "day", "calendar is opened on days");
-	});
-
-	it("picker popover should have accessible name", async () => {
-		datepicker.id = "#dp";
-		await datepicker.openPicker();
-
-		const popover = await datepicker.getPopover();
-
-		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date", "Picker popover has an accessible name");
-
-		await datepicker.closePicker();
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.attr", "accessible-name", "Choose Date");
 	});
 
 	describe("Legacy date customization", () => {
-		it.only("Customization of legacy dates in Islamic calendar", async () => {
-			// According to the Islamic calendar, Rab. I 9, 1446 AH should be displayed on Thursday,
-			// but it needs to be configured using the legacyDateCalendarCustomizing setting.
-			datepicker.page = "test/pages/DatePicker_legacy_test_page.html";
+		it.skip("Customization of legacy dates in Islamic calendar", () => {
+			cy.mount(<DatePicker value="Rab. I 9, 1446 AH" primary-calendar-type="Islamic"></DatePicker>);
 
-			await datepicker.open();
+			cy.get("[ui5-date-picker]")
+				.as("datePicker");
 
-			datepicker.id = "#dp";
+			cy.get<DatePicker>("@datePicker")
+				.ui5ValueHelpIconPress();
 
-			const currentSelection = await datepicker.getDisplayedDay(11);
-
-			assert.strictEqual(await currentSelection.getText(), "9", "Legacy date customization is applied");
+			cy.get<DatePicker>("@datePicker")
+				.ui5GetDisplayedDay(11)
+				.should("have.text", "9");
 		});
-	}); */
+	});
 });

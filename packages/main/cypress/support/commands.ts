@@ -64,6 +64,16 @@ declare global {
 			ui5ColorPaletteNavigateAndCheckSelectedColor(colorPalette: string, startIndex: number, key: string, expectedValue: string): Chainable<void>
 			ui5GetInnerInput(): Chainable<void>
 			ui5GetPickerDate(timestamp: number): Chainable<void>
+			ui5GetFirstDisplayedDate(): Chainable<void>
+			ui5GetFirstDisplayedYear(): Chainable<void>
+			ui5GetDisplayedDay(index: number): Chainable<void>
+			ui5GetDisplayedMonth(index: number): Chainable<void>
+			ui5GetDisplayedYear(index: number): Chainable<void>
+			ui5GetNextButton(): Chainable<void>
+			ui5GetPreviousButton(): Chainable<void>
+			ui5GetMonthButton(): Chainable<void>
+			ui5GetYearButton(): Chainable<void>
+			ui5ValueHelpIconPress(): Chainable<void>
 		}
 	}
 }
