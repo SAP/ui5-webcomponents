@@ -75,7 +75,6 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
-			.as("input")
 			.realClick()
 			.realType("2018, 05/05")
 			.realPress("Enter");
@@ -91,7 +90,6 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
-			.as("input")
 			.realClick()
 			.realType("Invalid input")
 			.realPress("Enter");
@@ -130,9 +128,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker readonly></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.should("have.attr", "readonly");
 
@@ -146,9 +142,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker required></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.shadow()
 			.find("ui5-input")
 			.should("have.attr", "required");
@@ -162,9 +156,6 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker placeholder="test placeholder"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
 			.should("have.attr", "placeholder", "test placeholder");
 	});
@@ -173,9 +164,6 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker primary-calendar-type="Islamic"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
 			.shadow()
 			.find("ui5-calendar")
 			.should("have.attr", "primary-calendar-type", "Islamic");
@@ -185,9 +173,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker primary-calendar-type="Islamic" format-pattern="MMM d, y G"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.as("input")
 			.realClick()
@@ -209,9 +195,7 @@ describe("Date Picker Tests", () => {
 		const timestamp_11_Jan_2019 = 1547164800;
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -226,9 +210,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.as("input")
 			.realClick()
@@ -246,9 +228,7 @@ describe("Date Picker Tests", () => {
 		const timestamp_8_Jan_2015 = timestamp_6_Jan_2015 + 2 * 24 * 60 * 60;
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -275,9 +255,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="2015" format-pattern="y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.as("input")
 			.realClick()
@@ -302,9 +280,7 @@ describe("Date Picker Tests", () => {
 		const timestamp_28_Jan_2019 = 1548633600;
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -323,9 +299,7 @@ describe("Date Picker Tests", () => {
 		const timestamp_27_Jan_2019 = 1548547200;
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -342,14 +316,11 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
-			.as("input")
 			.realClick();
 
 		cy.get<DatePicker>("@datePicker")
@@ -360,9 +331,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="2015" format-pattern="y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.as("input")
 			.realClick();
@@ -389,9 +358,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.realClick()
 			.realType("tomorrow")
@@ -410,9 +377,7 @@ describe("Date Picker Tests", () => {
 		timestampToday = (timestampToday - (timestampToday % (24 * 60 * 60 * 1000))) / 1000;
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -434,7 +399,6 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
-			.as("input")
 			.realClick()
 			.realPress("F4");
 
@@ -453,9 +417,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.as("input")
 			.realClick()
@@ -475,9 +437,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.as("input")
 			.realClick()
@@ -497,9 +457,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.realClick()
 			.realPress("F4");
@@ -525,9 +483,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -546,18 +502,14 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
 			.find("ui5-calendar")
 			.as("calendar")
-			.realPress(["Shift", "F4"]);
-
-		cy.get("@calendar")
+			.realPress(["Shift", "F4"])
 			.realPress("F4");
 
 		cy.get("@calendar")
@@ -570,18 +522,14 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
 			.find("ui5-calendar")
 			.as("calendar")
-			.realPress("F4");
-
-		cy.get("@calendar")
+			.realPress("F4")
 			.realPress(["Shift", "F4"]);
 
 		cy.get("@calendar")
@@ -594,9 +542,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -639,9 +585,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Dec 31, 9999"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -656,9 +600,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Jan 1, 0001"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -673,9 +615,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Feb 1, 0001"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -694,9 +634,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Nov 30, 9999"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -713,9 +651,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Dec 31, 9998"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -744,9 +680,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Jan 1, 0002"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -775,9 +709,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Dec 31, 9995"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -794,9 +726,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Jan 1, 0003"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -813,9 +743,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Jan 1, 0012"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -841,9 +769,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Dec 31, 9986"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -869,9 +795,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Dec 31, 9986"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -901,9 +825,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Jan 1, 0012"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -920,9 +842,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Jan 1, 0004"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -939,9 +859,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.invoke("attr", "placeholder")
 			.should("equal", "MMM d, y");
@@ -954,9 +872,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker placeholder="Delivery date" format-pattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.invoke("attr", "placeholder")
 			.should("equal", "Delivery date");
@@ -969,9 +885,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker format-pattern="MMM d, y" min-date="Jan 1, 2000"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.realClick()
 			.realType("Jan 1, 1999")
@@ -992,9 +906,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker format-pattern="MMM d, y" max-date="Jan 8, 2100"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.realClick()
 			.realType("May 5, 2100")
@@ -1015,9 +927,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker format-pattern="y" min-date="2000" max-date="2100"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.as("input")
 			.realClick()
@@ -1056,9 +966,7 @@ describe("Date Picker Tests", () => {
 		</DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -1093,9 +1001,7 @@ describe("Date Picker Tests", () => {
 		</DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -1124,9 +1030,7 @@ describe("Date Picker Tests", () => {
 		</DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -1143,9 +1047,7 @@ describe("Date Picker Tests", () => {
 		></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -1161,9 +1063,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -1180,9 +1080,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker hide-week-numbers></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -1199,9 +1097,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -1219,9 +1115,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -1242,9 +1136,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -1281,9 +1173,7 @@ describe("Date Picker Tests", () => {
 		></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -1313,9 +1203,6 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker accessible-name={EXPECTED_ARIA_LABEL}></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
 			.should("have.attr", "aria-label", EXPECTED_ARIA_LABEL);
 	});
@@ -1331,9 +1218,6 @@ describe("Date Picker Tests", () => {
 		);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
 			.ui5GetInnerInput()
 			.should("have.attr", "aria-label", EXPECTED_ARIA_LABEL);
 	});
@@ -1342,9 +1226,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Jan 1, 2000" format-pattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.as("input")
 			.realClick()
@@ -1364,9 +1246,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Jan 1, 2000" format-pattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.as("input")
 			.realClick()
@@ -1386,9 +1266,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker value="Jan 1, 2000" format-pattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.as("input")
 			.realClick()
@@ -1412,9 +1290,7 @@ describe("Date Picker Tests", () => {
 		</DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.realClick()
 			.realPress("F4");
@@ -1433,9 +1309,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.as("input")
 			.realClick()
@@ -1481,9 +1355,7 @@ describe("Date Picker Tests", () => {
 		);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.then($datePicker => {
 				$datePicker.on("change", event => {
 					event.preventDefault();
@@ -1508,9 +1380,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.realClick()
 			.realType("Jan 60, 2000")
@@ -1535,9 +1405,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.realClick()
 			.realType("Invalid value")
@@ -1561,9 +1429,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker min-date="2019-09-01" max-date="2019-11-01"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.realClick()
 			.realType("Nov 1, 2020")
@@ -1588,9 +1454,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker min-date="22.10.2020" max-date="22.10.2021"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.realClick()
 			.realType("Apr 12, 2024")
@@ -1615,9 +1479,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker format-pattern="MMM y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.realClick()
 			.realPress("F4");
@@ -1641,9 +1503,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker format-pattern="yyyy"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5GetInnerInput()
 			.realClick()
 			.realPress("F4");
@@ -1667,9 +1527,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
-			.as("datePicker");
-
-		cy.get<DatePicker>("@datePicker")
+			.as("datePicker")
 			.ui5ValueHelpIconPress();
 
 		cy.get<DatePicker>("@datePicker")
@@ -1683,9 +1541,7 @@ describe("Date Picker Tests", () => {
 			cy.mount(<DatePicker value="Rab. I 9, 1446 AH" primary-calendar-type="Islamic"></DatePicker>);
 
 			cy.get("[ui5-date-picker]")
-				.as("datePicker");
-
-			cy.get<DatePicker>("@datePicker")
+				.as("datePicker")
 				.ui5ValueHelpIconPress();
 
 			cy.get<DatePicker>("@datePicker")
