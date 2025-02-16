@@ -275,6 +275,18 @@ class TabContainer extends UI5Element {
 	tabsPlacement: `${TabContainerTabsPlacement}` = "Top";
 
 	/**
+	 * Defines whether no tabs will be selected initially.
+	 *
+	 * **Note:** By default, if none of the child tabs have the `selected` property, the first tab will be automatically selected.
+	 * Setting this property to `true` allows preventing this behavior.
+	 * @default false
+	 * @since 2.9.0
+	 * @private
+	 */
+	@property({ type: Boolean })
+	noDefaultSelection = false;
+
+	/**
 	 * Defines the current media query size.
 	 * @private
 	 */
@@ -374,7 +386,7 @@ class TabContainer extends UI5Element {
 
 		if (selectedTab) {
 			this._selectedTab = selectedTab;
-		} else {
+		} else if (!this.noDefaultSelection) {
 			this._selectedTab = this._itemsFlat[0] as Tab;
 		}
 
@@ -914,6 +926,23 @@ class TabContainer extends UI5Element {
 		return true;
 	}
 
+	@property({ type: Object })
+	get selectedTab(): Tab | undefined {
+		return this._selectedTab;
+	}
+
+	/**
+	 * Sets the selected tab.
+	 *
+	 * @default undefined
+	 * @public
+	 */
+	set selectedTab(tab: Tab | undefined) {
+		if (tab !== this._selectedTab) {
+			this._selectedTab = tab;
+		}
+	}
+
 	slideContentDown(element: HTMLElement) {
 		return slideDown(element).promise();
 	}
@@ -975,7 +1004,7 @@ class TabContainer extends UI5Element {
 		const tabStrip = this._getTabStrip();
 		let allItemsWidth = 0;
 
-		if (!this._selectedTab) {
+		if (!this._selectedTab && !this.noDefaultSelection) {
 			return;
 		}
 
@@ -1428,6 +1457,7 @@ class TabContainer extends UI5Element {
 			root: {
 				"ui5-tc-root": true,
 				"ui5-tc--textOnly": this.textOnly,
+				"ui5-tc--noTabSelected": !this._selectedTab,
 				"ui5-tc--withAdditionalText": this.withAdditionalText,
 				"ui5-tc--standardTabLayout": this.standardTabLayout,
 			},
