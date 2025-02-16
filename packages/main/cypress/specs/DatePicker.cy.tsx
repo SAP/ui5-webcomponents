@@ -1359,7 +1359,7 @@ describe("Date Picker Tests", () => {
 			.then($datePicker => {
 				$datePicker.on("change", event => {
 					event.preventDefault();
-					cy.get("[ui5-label]").invoke("attr", "text", `${event.target.value}`);
+					cy.get("[ui5-label]").invoke("attr", "text", `${(event.target as DatePicker).value}`);
 				});
 			});
 
