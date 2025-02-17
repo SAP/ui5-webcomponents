@@ -27,63 +27,71 @@
 }
 
 /* [ui5-li]: additionalTextState */
-:host([additional-text-state="Critical"]) .ui5-li-additional-text {
+:host([additional-text-state="Critical"]) .ui5-li-additional-text,
+:host([additional-text-state="Critical"]) ::slotted([slot="expandableAdditionalText"]) {
 	color: var(--sapCriticalTextColor);
 }
 
-:host([additional-text-state="Positive"]) .ui5-li-additional-text {
+:host([additional-text-state="Positive"]) .ui5-li-additional-text,
+:host([additional-text-state="Positive"]) ::slotted([slot="expandableAdditionalText"]) {
 	color: var(--sapPositiveTextColor);
 }
 
-:host([additional-text-state="Negative"]) .ui5-li-additional-text {
+:host([additional-text-state="Negative"]) .ui5-li-additional-text,
+:host([additional-text-state="Negative"]) ::slotted([slot="expandableAdditionalText"]) {
 	color: var(--sapNegativeTextColor);
 }
 
-:host([additional-text-state="Information"]) .ui5-li-additional-text {
+:host([additional-text-state="Information"]) .ui5-li-additional-text,
+:host([additional-text-state="Information"]) ::slotted([slot="expandableAdditionalText"]) {
 	color: var(--sapInformativeTextColor);
 }
 
 /* [ui5-li]: item with title and description */
-:host([has-title][description]) {
-	height: 5rem;
+:host([has-title][has-description]) {
+	min-height: 5rem;
 }
 
 :host([has-title][image]) {
-	height: 5rem;
+	min-height: 5rem;
 }
 
 :host([_has-image]) {
-	height: 5rem;
+	min-height: 5rem;
 }
 
 :host([image]) .ui5-li-content {
-	height: 3rem;
+	min-height: 3rem;
 }
 
-::slotted(img[slot="image"]){
+::slotted(img[slot="image"]) {
 	width: var(--_ui5_list_item_img_size);
 	height: var(--_ui5_list_item_img_size);
 	border-radius: var(--ui5-avatar-border-radius);
 	object-fit: contain
 }
 
-:host([description]) .ui5-li-root {
+:host([has-description]) .ui5-li-root {
 	padding: 1rem;
 }
 
-:host([description]) .ui5-li-content {
-	height: 3rem;
+:host([has-description]) .ui5-li-content {
+	min-height: 3rem;
 }
 
-:host([has-title][description]) .ui5-li-title {
+:host([has-title][has-description]) .ui5-li-title {
 	padding-bottom: 0.375rem;
+}
+
+:host([has-title][has-description][has-expandable-content]) .ui5-li-title {
+	padding-bottom: 0.75rem;
 }
 
 .ui5-li-text-wrapper {
 	flex-direction: column;
 }
 
-:host([description]) .ui5-li-text-wrapper {
+:host([has-description]) .ui5-li-text-wrapper {
 	height: 100%;
 	justify-content: space-between;
 	padding: 0.125rem 0;
@@ -92,6 +100,14 @@
 .ui5-li-description-info-wrapper {
 	display: flex;
 	justify-content: space-between;
+	/* The ui5-li-additional-text element has a margin of 0.25rem on each side,
+	totaling 1rem as per the specification */
+	column-gap: .75rem;
+}
+
+.ui5-li-description-info-wrapper.ui5-li-description-info-wrapper--column {
+	flex-direction: column;
+	row-gap: .5rem;
 }
 
 .ui5-li-additional-text,
@@ -115,8 +131,20 @@
 	font-size: var(--sapFontSize);
 }
 
-:host([description]) .ui5-li-additional-text {
+:host([has-description]) .ui5-li-additional-text {
 	align-self: flex-end;
+}
+
+/* when both description and additional text are present */
+/* allocate 60% of the space for description and 40% for additional text */
+:host([has-description][has-additional-text]) {
+	.ui5-li-desc {
+		flex: 3;
+	}
+
+	.ui5-li-additional-text {
+		flex: 2;
+	}
 }
 
 .ui5-li-image {
@@ -146,12 +174,12 @@
 	flex-shrink: 0;
 }
 
-:host([description]) .ui5-li-singlesel-radiobtn {
+:host([has-description]) .ui5-li-singlesel-radiobtn {
 	align-self: flex-start;
 	margin-top: var(--_ui5_list_item_selection_btn_margin_top);
 }
 
-:host([description]) .ui5-li-multisel-cb {
+:host([has-description]) .ui5-li-multisel-cb {
 	align-self: flex-start;
 	margin-top: var(--_ui5_list_item_selection_btn_margin_top);
 }
@@ -197,4 +225,28 @@
 
 :host([highlight="Information"]) .ui5-li-highlight {
 	background: var(--sapInformativeTextColor);
+}
+
+/* expandable content */
+:host([has-expandable-content]) {
+	height: auto;
+}
+
+:host([has-expandable-content]) .ui5-li-root {
+	min-height: var(--_ui5_list_item_base_height);
+}
+
+:host([has-expandable-content]) .ui5-li-icon,
+:host([has-expandable-content][_has-image]) .ui5-li-image {
+	display: flex;
+	align-self: flex-start;
+}
+
+:host([has-expandable-content]) .ui5-li-icon {
+	margin-top: .5rem;
+}
+
+:host([has-expandable-content]) .ui5-li-detailbtn,
+:host([has-expandable-content]) .ui5-li-deletebtn {
+	padding-left: .875rem;
 }

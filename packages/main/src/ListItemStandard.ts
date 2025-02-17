@@ -28,7 +28,8 @@ import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
  * @csspart checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode
  * @slot {Node[]} default - Defines the text of the component.
  *
- * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ * **Note:** Although this slot accepts HTML elements, it is strongly recommended to provide text
+ * or a `<ui5-expandable-text>` component for a consistent design.
  * @constructor
  * @extends ListItem
  * @public
@@ -130,6 +131,27 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	_hasImage = false;
 
 	/**
+	 * Indicates if the list item has description content.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hasDescription = false;
+
+	/**
+	 * Indicates if the list item has additional text content.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hasAdditionalText = false;
+
+	/**
+	 * Indicates if the list item has expandable content.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hasExpandableContent = false;
+
+	/**
 	 * **Note:** While the slot allows option for setting custom avatar, to match the
 	 * design guidelines, please use the `ui5-avatar` with it's default size - S.
 	 *
@@ -141,10 +163,35 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	@slot()
 	image!: Array<HTMLElement>;
 
+	/**
+	 * Defines the expandable description of the component.
+	 * **Note:** Can only be used with a `ui5-expandable-text` component
+	 * @since 2.8.0
+	 * @public
+	 */
+	@slot()
+	expandableDescription!: Array<HTMLElement>;
+
+	/**
+	 * Defines the expandable additional text of the component.
+	 * **Note:** Can only be used with a `ui5-expandable-text` component
+	 * @since 2.8.0
+	 * @public
+	 */
+	@slot()
+	expandableAdditionalText!: Array<HTMLElement>;
+
 	onBeforeRendering() {
 		super.onBeforeRendering();
+
 		this.hasTitle = !!this.textContent;
 		this._hasImage = this.hasImage;
+		this.hasDescription = !!(this.description || this.hasExpandableDescription);
+		this.hasAdditionalText = !!(this.additionalText || this.hasExpandableAdditionalText);
+
+		if (this.hasExpandableNodes) {
+			this.hasExpandableContent = true;
+		}
 	}
 
 	get displayIconBegin(): boolean {
@@ -157,6 +204,27 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 
 	get hasImage(): boolean {
 		return !!this.image.length;
+	}
+
+	get hasExpandableDescription(): boolean {
+		return this.expandableDescription.length > 0;
+	}
+
+	get hasExpandableAdditionalText(): boolean {
+		return this.expandableAdditionalText.length > 0;
+	}
+
+	get hasExpandableTitle(): boolean {
+		const defaultSlot = this.shadowRoot?.querySelector("slot:not([name])");
+		const assignedNodes = defaultSlot ? (defaultSlot as HTMLSlotElement).assignedNodes() : [];
+
+		return assignedNodes.some(node => node instanceof HTMLElement && node.tagName.toLowerCase() === "ui5-expandable-text");
+	}
+
+	get hasExpandableNodes(): boolean {
+		return this.hasExpandableTitle
+			|| this.hasExpandableDescription
+			|| this.hasExpandableAdditionalText;
 	}
 }
 

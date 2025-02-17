@@ -92,9 +92,11 @@
 	color: var(--sapList_TextColor);
 }
 
-.ui5-li-content .ui5-li-title {
+.ui5-li-content .ui5-li-title,
+::slotted(ui5-expandable-text:not([slot])) {
 	color: var(--sapList_TextColor);
 	font-size: var(--_ui5_list_item_title_size);
+	--_ui5_expandable_text_toggle_font_size: var(--sapFontSize);
 }
 
 .ui5-li-text-wrapper {

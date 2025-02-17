@@ -34,3 +34,8 @@
 	align-items: center;
 	justify-content: flex-end;
 }
+
+/* Styles required for the expandable text list item */
+.ui5-exp-text-toggle {
+	font-size: var(--_ui5_expandable_text_toggle_font_size);
+}

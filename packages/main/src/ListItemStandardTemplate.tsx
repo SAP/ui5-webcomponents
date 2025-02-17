@@ -17,29 +17,110 @@ export default function ListItemStandardTemplate(this: ListItemStandard, hooks?:
 }
 
 function listItemContent(this: ListItemStandard) {
+	const shouldSetColumnLayout = this.hasExpandableDescription && this.hasExpandableAdditionalText;
+
 	return <>
 		<div class="ui5-li-text-wrapper">
-			<span part="title" class="ui5-li-title">
-				<slot></slot>
-			</span>
-			{this.description && (
-				<div class="ui5-li-description-info-wrapper">
-					<span part="description" class="ui5-li-desc">{this.description}</span>
-					{
-						this.additionalText && (
-							<span part="additional-text" class="ui5-li-additional-text">{this.additionalText}</span>
-						)
-					}
+			{renderTitle.call(this)}
+
+			{shouldRenderDescriptionInfoWrapper.call(this) && (
+				<div class={{
+					"ui5-li-description-info-wrapper": true,
+					"ui5-li-description-info-wrapper--column": shouldSetColumnLayout,
+				}}>
+					{renderDescription.call(this)}
+					{renderAdditionalText.call(this)}
 				</div>
 			)}
 
-			{!this.typeActive && <span class="ui5-hidden-text">{this.type}</span>}
+			{renderHiddenText.call(this)}
 		</div>
 
-		{!this.description && this.additionalText && (
-			<span part="additional-text" class="ui5-li-additional-text">{this.additionalText}</span>
-		)}
+		{renderStandaloneAdditionalText.call(this)}
 	</>;
+}
+
+function shouldRenderDescriptionInfoWrapper(this: ListItemStandard): boolean {
+	return !!(this.description || this.hasExpandableDescription);
+}
+
+function renderTitle(this: ListItemStandard) {
+	return (
+		<span part="title" class="ui5-li-title">
+			<slot></slot>
+		</span>
+	);
+}
+
+function renderDescription(this: ListItemStandard) {
+	if (this.hasExpandableDescription) {
+		return (
+			<span part="description" class="ui5-li-desc">
+				<slot name="expandableDescription"></slot>
+			</span>
+		);
+	}
+
+	if (this.description) {
+		return (
+			<span part="description" class="ui5-li-desc">
+				{this.description}
+			</span>
+		);
+	}
+
+	return null;
+}
+
+function renderAdditionalText(this: ListItemStandard) {
+	if (this.hasExpandableAdditionalText) {
+		return (
+			<span part="additional-text" class="ui5-li-additional-text">
+				<slot name="expandableAdditionalText"></slot>
+			</span>
+		);
+	}
+
+	if (this.additionalText) {
+		return (
+			<span part="additional-text" class="ui5-li-additional-text">
+				{this.additionalText}
+			</span>
+		);
+	}
+
+	return null;
+}
+
+function renderStandaloneAdditionalText(this: ListItemStandard) {
+	const hasDescriptionWrapper = shouldRenderDescriptionInfoWrapper.call(this);
+	const hasAdditionalText = this.hasExpandableAdditionalText || this.additionalText;
+
+	if (!hasDescriptionWrapper && hasAdditionalText) {
+		if (this.hasExpandableAdditionalText) {
+			return (
+				<span part="additional-text" class="ui5-li-additional-text">
+					<slot name="expandableAdditionalText"></slot>
+				</span>
+			);
+		}
+
+		return (
+			<span part="additional-text" class="ui5-li-additional-text">
+				{this.additionalText}
+			</span>
+		);
+	}
+
+	return null;
+}
+
+function renderHiddenText(this: ListItemStandard) {
+	if (!this.typeActive) {
+		return <span class="ui5-hidden-text">{this.type}</span>;
+	}
+
+	return null;
 }
 
 function imageBegin(this: ListItemStandard) {
