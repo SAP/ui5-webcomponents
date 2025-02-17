@@ -168,9 +168,7 @@ type SelectLiveChangeEventDetail = {
  * Fired after the component's dropdown menu opens.
  * @public
  */
-@event("open", {
-	bubbles: true,
-})
+@event("open")
 
 /**
  * Fired after the component's dropdown menu closes.
