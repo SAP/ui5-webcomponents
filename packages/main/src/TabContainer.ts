@@ -388,6 +388,8 @@ class TabContainer extends UI5Element {
 			this._selectedTab = selectedTab;
 		} else if (!this.noDefaultSelection) {
 			this._selectedTab = this._itemsFlat[0] as Tab;
+		} else {
+			this._selectedTab = undefined;
 		}
 
 		walk(this.items, item => {
@@ -924,23 +926,6 @@ class TabContainer extends UI5Element {
 		// select the tab
 		this._selectedTab = selectedTab;
 		return true;
-	}
-
-	@property({ type: Object })
-	get selectedTab(): Tab | undefined {
-		return this._selectedTab;
-	}
-
-	/**
-	 * Sets the selected tab.
-	 *
-	 * @default undefined
-	 * @public
-	 */
-	set selectedTab(tab: Tab | undefined) {
-		if (tab !== this._selectedTab) {
-			this._selectedTab = tab;
-		}
 	}
 
 	slideContentDown(element: HTMLElement) {
