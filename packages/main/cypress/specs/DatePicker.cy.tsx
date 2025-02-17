@@ -1,8 +1,89 @@
+import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
+import "../../src/Assets.js";
+import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import DatePicker from "../../src/DatePicker.js";
 import Label from "../../src/Label.js";
-import "../../src/Assets.js";
-import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
-import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+
+describe("Legacy date customization", () => {
+	it("Customization of legacy dates in Islamic calendar", () => {
+		cy.wrap({ setLanguage })
+			.invoke("setLanguage", "en");
+
+		// According to the Islamic calendar, Rab. I 9, 1446 AH should be displayed on Thursday,
+		// but it needs to be configured using the legacyDateCalendarCustomizing setting.
+		cy.mount(<DatePicker value="Rab. I 9, 1446 AH" primary-calendar-type="Islamic"></DatePicker>, {
+			ui5Configuration: {
+				"formatSettings": {
+					"legacyDateCalendarCustomizing": [
+						{
+							"dateFormat": "A",
+							"gregDate": "20240211",
+							"islamicMonthStart": "14450801"
+						},
+						{
+							"dateFormat": "A",
+							"gregDate": "20240311",
+							"islamicMonthStart": "14450901"
+						},
+						{
+							"dateFormat": "A",
+							"gregDate": "20240410",
+							"islamicMonthStart": "14451001"
+						},
+						{
+							"dateFormat": "A",
+							"gregDate": "20240509",
+							"islamicMonthStart": "14451101"
+						},
+						{
+							"dateFormat": "A",
+							"gregDate": "20240607",
+							"islamicMonthStart": "14451201"
+						},
+						{
+							"dateFormat": "A",
+							"gregDate": "20240707",
+							"islamicMonthStart": "14460101"
+						},
+						{
+							"dateFormat": "A",
+							"gregDate": "20240805",
+							"islamicMonthStart": "14460201"
+						},
+						{
+							"dateFormat": "A",
+							"gregDate": "20240904",
+							"islamicMonthStart": "14460301"
+						},
+						{
+							"dateFormat": "A",
+							"gregDate": "20241004",
+							"islamicMonthStart": "14460401"
+						},
+						{
+							"dateFormat": "A",
+							"gregDate": "20241103",
+							"islamicMonthStart": "14460501"
+						},
+						{
+							"dateFormat": "A",
+							"gregDate": "20241202",
+							"islamicMonthStart": "14460601"
+						}
+					]
+				}
+			}
+		});
+
+		cy.get("[ui5-date-picker]")
+			.as("datePicker")
+			.ui5DatePickerValueHelpIconPress();
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetDisplayedDay(11)
+			.should("have.text", "9");
+	});
+});
 
 describe("Date Picker Tests", () => {
 	afterEach(() => {
@@ -1542,19 +1623,5 @@ describe("Date Picker Tests", () => {
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.attr", "accessible-name", "Choose Date");
-	});
-
-	describe("Legacy date customization", () => {
-		it.skip("Customization of legacy dates in Islamic calendar", () => {
-			cy.mount(<DatePicker value="Rab. I 9, 1446 AH" primary-calendar-type="Islamic"></DatePicker>);
-
-			cy.get("[ui5-date-picker]")
-				.as("datePicker")
-				.ui5DatePickerValueHelpIconPress();
-
-			cy.get<DatePicker>("@datePicker")
-				.ui5DatePickerGetDisplayedDay(11)
-				.should("have.text", "9");
-		});
 	});
 });
