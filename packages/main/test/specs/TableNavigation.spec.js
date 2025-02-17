@@ -2,9 +2,8 @@ import { assert } from "chai";
 
 describe("Table - Keyboard Navigation", async () => {
 	before(async () => {
-		await browser.setWindowSize(1920, 1200);
 		await browser.url("test/pages/TableNavigation.html");
-
+		await browser.setWindowSize(1920, 1200);
 	});
 
 	it("should navigate on rows", async () => {

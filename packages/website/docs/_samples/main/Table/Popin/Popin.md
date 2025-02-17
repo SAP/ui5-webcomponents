@@ -7,4 +7,7 @@ When screen space becomes limited, Popin mode seamlessly reorganizes columns. Th
 
 You can influence the order of columns appearing the popin area, by defining the importance of each column.
 
+You can hide specific columns in the popin by using the `popinHidden` property on the `ui5-table-header-cell`. 
+**Please note:** Hiding columns in the popin leads to accessibility issues, as on smaller screens information is lost.
+
 <Editor html={html} js={js} />
