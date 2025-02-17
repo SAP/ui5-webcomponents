@@ -6,6 +6,7 @@ import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
 import Button from "../Button.js";
+import ListAccessibleRole from "../types/ListAccessibleRole.js";
 
 export default function InputSuggestionsTemplate(this: Input, hooks?: { suggestionsList?: (this: Input) => JsxTemplateResult, valueStateMessage: (this: Input) => JsxTemplateResult, valueStateMessageInputIcon: (this: Input) => string }) {
 	const suggestionsList = hooks?.suggestionsList || defaultSuggestionsList;
@@ -100,6 +101,7 @@ export default function InputSuggestionsTemplate(this: Input, hooks?: { suggesti
 function defaultSuggestionsList(this: Input) {
 	return (
 		<List
+			accessibleRole={ListAccessibleRole.ListBox}
 			separators={this.suggestionSeparators}
 			selectionMode="Single"
 			onMouseDown={this.onItemMouseDown}
