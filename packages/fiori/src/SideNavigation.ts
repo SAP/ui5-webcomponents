@@ -142,6 +142,15 @@ class SideNavigation extends UI5Element {
 	collapsed = false;
 
 	/**
+	 * Defines whether the `ui5-side-navigation` will be used inside a popover.
+	 *
+	 * @public
+	 * @default false
+	 */
+	@property({ type: Boolean })
+	overlayMode = false;
+
+	/**
 	 * Defines the main items of the component.
 	 *
 	 * @public
@@ -191,6 +200,12 @@ class SideNavigation extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	isTouchDevice = false;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onPhone = false;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
@@ -434,6 +449,7 @@ class SideNavigation extends UI5Element {
 		ResizeHandler.register(this, this._handleResizeBound);
 
 		this.isTouchDevice = isPhone() || (isTablet() && !isCombi());
+		this.onPhone = isPhone();
 	}
 
 	onExitDOM() {
