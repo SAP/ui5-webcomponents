@@ -42,6 +42,7 @@ import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "./commands/Calendar.commands.js";
 import "./commands/ColorPalette.commands.js";
 import "./commands/ColorPicker.commands.js";
+import "./commands/DateTimePicker.commands.js";
 import "./commands/Menu.commands.js";
 
 type SimulationDevices = "phone"
@@ -61,6 +62,14 @@ declare global {
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
 			ui5ColorPaletteCheckSelectedColor(colorPaletteItem: string, values: {r: string, g: string, b: string, a: string}): Chainable<void>
 			ui5ColorPaletteNavigateAndCheckSelectedColor(colorPalette: string, startIndex: number, key: string, expectedValue: string): Chainable<void>
+			ui5DateTimePickerOpen(selector: string): Chainable<void>;
+			ui5DateTimePickerClose(selector: string): Chainable<void>;
+			ui5DateTimePickerIsOpen(selector: string): Chainable<boolean>;
+			ui5DateTimePickerGetSubmitButton(selector: string): Chainable<JQuery<HTMLElement>>;
+			ui5DateTimePickerGetCancelButton(selector: string): Chainable<JQuery<HTMLElement>>;
+			ui5DateTimePickerTimeSelectionClocksCount(selector: string): Chainable<number>;
+			ui5DateTimePickerPeriodSegmentedButtonCount(selector: string): Chainable<number>;
+			ui5DateTimePickerGetPicker(selector: string): Chainable<JQuery<HTMLElement>>;
 		}
 	}
 }
