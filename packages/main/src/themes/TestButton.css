@@ -1,0 +1,133 @@
+:host {
+	display: inline-block;
+}
+
+.test-button-root {
+	background-color: var(--sapButton_Background);
+	border-radius: var(--sapButton_BorderCornerRadius);
+	color: var(--sapButton_TextColor);
+	height: var(--sapElement_Height);
+	display: inline-flex;
+	box-sizing: border-box;
+	box-shadow: inset 0px 0px 0px var(--sapButton_BorderWidth) var(--outter-box-shadow-color, var(--sapButton_BorderColor));
+	overflow: hidden;
+}
+
+.test-button-inner {
+	height: 100%;
+	padding-inline: 0.625rem;
+	color: var(--sapButton_TextColor);
+	border: var(--sapButton_BorderWidth) transparent solid;
+	border-radius: var(--sapButton_BorderCornerRadius);
+	background-color: transparent;
+	color: inherit;
+	display: flex;
+	place-items: center;
+	gap: 0.375rem;
+
+	[ui5-icon] {
+		color: currentColor;
+	}
+}
+
+:host([readonly]) .test-button-root {
+	opacity: var(--sapContent_DisabledOpacity);
+	pointer-events: none;
+}
+
+.test-button-root:focus,
+.test-button-inner:focus {
+	outline: var(--sapContent_FocusColor) var(--sapContent_FocusStyle) var(--sapContent_FocusWidth);
+	outline-offset: -0.25rem;
+}
+
+.test-button-inner:hover {
+	background-color: var(--sapButton_Hover_Background);
+	border-color: var(--sapButton_Hover_BorderColor);
+	color: var(--sapButton_Hover_TextColor);
+}
+
+.test-button-inner:is([data-arrow-btn-active="true"], [data-main-btn-active="true"]) {
+	background-color: var(--sapButton_Active_Background);
+	border-color: var(--sapButton_Active_BorderColor);
+	color: var(--sapContent_DisabledOpacity);
+}
+
+:host([design="Emphasized"]) {
+	--outter-box-shadow-color: var(--sapButton_Emphasized_BorderColor);
+	--separator-color: var(--sapButton_Emphasized_TextColor);
+
+	.test-button-root {
+		background-color: var(--sapButton_Emphasized_Background);
+		color: var(--sapButton_Emphasized_TextColor);
+	}
+
+	.test-button-inner:hover {
+		background-color: var(--sapButton_Emphasized_Hover_Background);
+		border-color: var(--sapButton_Emphasized_Hover_BorderColor);
+		color: var(--sapButton_Emphasized_Hover_TextColor);
+	}
+
+	.test-button-inner:is([data-arrow-btn-active="true"], [data-main-btn-active="true"]) {
+		background-color: var(--sapButton_Emphasized_Active_Background);
+		border-color: var(--sapButton_Emphasized_Active_BorderColor);
+		color: var(--sapButton_Emphasized_Active_TextColor);
+	}
+
+	.test-button-root:focus,
+	.test-button-inner:focus {
+		outline-color: var(--sapContent_ContrastFocusColor);
+	}
+
+	.test-button-root:active:focus,
+	.test-button-inner:is([data-arrow-btn-active="true"], [data-main-btn-active="true"]):focus {
+		outline-color: var(--sapContent_FocusColor);
+	}
+}
+
+:host([design="Transparent"]) {
+	--outter-box-shadow-color: var(--sapButton_Lite_BorderColor);
+	--separator-color: var(--sapButton_Lite_TextColor);
+
+	.test-button-root {
+		background-color: var(--sapButton_Lite_Background);
+		color: var(--sapButton_Lite_TextColor);
+	}
+
+	.test-button-inner:hover {
+		background-color: var(--sapButton_Lite_Hover_Background);
+		border-color: var(--sapButton_Lite_Hover_BorderColor);
+		color: var(--sapButton_Lite_Hover_TextColor);
+	}
+
+	.test-button-inner:is([data-arrow-btn-active="true"], [data-main-btn-active="true"]) {
+		background-color: var(--sapButton_Lite_Active_Background);
+		border-color: var(--sapButton_Lite_Active_BorderColor);
+		color: var(--sapButton_Active_TextColor);
+	}
+}
+
+.test-button-arrow {
+	position: relative;
+}
+
+.test-button-arrow::before {
+	content: "";
+	height: 1rem;
+	width: 0.0625rem;
+	display: inline-block;
+	background-color: var(--separator-color, var(--sapButton_TextColor));
+	position: absolute;
+	left: -0.0625rem;
+}
+
+.test-button-inner:hover+.test-button-arrow::before,
+.test-button-arrow:hover::before {
+	display: none;
+}
+
+[data-text] {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

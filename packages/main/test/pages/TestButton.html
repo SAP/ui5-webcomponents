@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<title>Button</title>
+	<script>
+		// delete Document.prototype.adoptedStyleSheets
+	</script>
+
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="./styles/Button.css">
+
+</head>
+
+<body class="button1auto">
+	<test-button state="1">
+		<test-button-state name="0" icon="ai"></test-button-state>
+		<test-button-state name="1" icon="ai" text="probabababa"></test-button-state>
+		<test-button-state name="2" icon="ai" text="probabababa" end-icon="ai"></test-button-state>
+		<test-button-state name="3" icon="ai" text="probabababa" show-arrow-button></test-button-state>
+	</test-button>
+	<test-button state="1" design="Emphasized">
+		<test-button-state name="0" icon="ai"></test-button-state>
+		<test-button-state name="1" icon="ai" text="probabababa"></test-button-state>
+		<test-button-state name="2" icon="ai" text="probabababa" end-icon="ai"></test-button-state>
+		<test-button-state name="3" icon="ai" text="probabababa" show-arrow-button></test-button-state>
+	</test-button>
+	<test-button state="1" design="Transparent">
+		<test-button-state name="0" icon="ai"></test-button-state>
+		<test-button-state name="1" icon="ai" text="probabababa"></test-button-state>
+		<test-button-state name="2" icon="ai" text="probabababa" end-icon="ai"></test-button-state>
+		<test-button-state name="3" icon="ai" text="probabababa" show-arrow-button></test-button-state>
+	</test-button>
+
+	<br />
+	<br />
+	<br />
+
+	<test-button state="1" readonly>
+		<test-button-state name="0" icon="ai"></test-button-state>
+		<test-button-state name="1" icon="ai" text="probabababa"></test-button-state>
+		<test-button-state name="2" icon="ai" text="probabababa" end-icon="ai"></test-button-state>
+		<test-button-state name="3" icon="ai" text="probabababa" show-arrow-button></test-button-state>
+
+	</test-button>
+	<test-button state="1" readonly design="Emphasized">
+		<test-button-state name="0" icon="ai"></test-button-state>
+		<test-button-state name="1" icon="ai" text="probabababa"></test-button-state>
+		<test-button-state name="2" icon="ai" text="probabababa" end-icon="ai"></test-button-state>
+		<test-button-state name="3" icon="ai" text="probabababa" show-arrow-button></test-button-state>
+
+	</test-button>
+	<test-button state="1" readonly design="Transparent">
+		<test-button-state name="0" icon="ai"></test-button-state>
+		<test-button-state name="1" icon="ai" text="probabababa"></test-button-state>
+		<test-button-state name="2" icon="ai" text="probabababa" end-icon="ai"></test-button-state>
+		<test-button-state name="3" icon="ai" text="probabababa" show-arrow-button></test-button-state>
+
+	</test-button>
+
+	<script>
+		const btns = document.querySelectorAll("test-button");
+
+		btns.forEach(btn => {
+			btn.addEventListener("ui5-click", e => {
+				// btns.forEach(c => c.state = `${(parseInt(c.state) + 1) % 4}`);
+				e.target.state = `${(parseInt(e.target.state) + 1) % 4}`;
+				console.log("click")
+			})
+			btn.addEventListener("ui5-arrow-click", e => {
+				// btns.forEach(c => c.state = `${(parseInt(c.state) + 1) % 4}`);
+				// console.log("arrow-click")
+				// // e.target.state = `${(parseInt(e.target.state) + 1) % 4}`;
+			})
+		})
+	</script>
+</body>
+
+</html>
