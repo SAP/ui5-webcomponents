@@ -64,9 +64,9 @@ declare global {
 			ui5ColorPaletteNavigateAndCheckSelectedColor(colorPalette: string, startIndex: number, key: string, expectedValue: string): Chainable<void>
 			ui5DatePickerGetInnerInput(): Chainable<JQuery<HTMLElement>>
 			ui5DatePickerGetPopoverDate(timestamp: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetDisplayedDay(index: number): Chainable<JQuery<HTMLElement>>
 			ui5DatePickerGetFirstDisplayedDate(): Chainable<JQuery<HTMLElement>>
 			ui5DatePickerGetFirstDisplayedYear(): Chainable<JQuery<HTMLElement>>
-			ui5DatePickerGetDisplayedDay(index: number): Chainable<JQuery<HTMLElement>>
 			ui5DatePickerGetDisplayedMonth(index: number): Chainable<JQuery<HTMLElement>>
 			ui5DatePickerGetDisplayedYear(index: number): Chainable<JQuery<HTMLElement>>
 			ui5DatePickerGetNextButton(): Chainable<JQuery<HTMLElement>>
