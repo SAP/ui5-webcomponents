@@ -1,35 +1,33 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import {
+	customElement, slot, property, eventStrict, i18n,
+} from "@ui5/webcomponents-base/dist/decorators.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import TableTemplate from "./generated/templates/TableTemplate.lit.js";
+import TableStyles from "./generated/themes/Table.css.js";
+import TableHeaderRow from "./TableHeaderRow.js";
+import TableRow from "./TableRow.js";
+import TableCell from "./TableCell.js";
+import TableExtension from "./TableExtension.js";
+import TableNavigation from "./TableNavigation.js";
+import TableOverflowMode from "./types/TableOverflowMode.js";
+import TableDragAndDrop from "./TableDragAndDrop.js";
+import DropIndicator from "./DropIndicator.js";
+import BusyIndicator from "./BusyIndicator.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import TableTemplate from "./generated/templates/TableTemplate.lit.js";
-import TableStyles from "./generated/themes/Table.css.js";
-import TableRow from "./TableRow.js";
-import TableHeaderRow from "./TableHeaderRow.js";
 import type TableHeaderCell from "./TableHeaderCell.js";
-import TableExtension from "./TableExtension.js";
 import type TableSelection from "./TableSelection.js";
-import TableOverflowMode from "./types/TableOverflowMode.js";
-import TableNavigation from "./TableNavigation.js";
-import DropIndicator from "./DropIndicator.js";
+import type TableRowActionBase from "./TableRowActionBase.js";
+import type TableVirtualizer from "./TableVirtualizer.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	TABLE_NO_DATA,
 } from "./generated/i18n/i18n-defaults.js";
-import BusyIndicator from "./BusyIndicator.js";
-import TableCell from "./TableCell.js";
-import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
-import TableDragAndDrop from "./TableDragAndDrop.js";
-import type TableRowActionBase from "./TableRowActionBase.js";
-import type TableVirtualizer from "./TableVirtualizer.js";
 
 /**
  * Interface for components that can be slotted inside the `features` slot of the `ui5-table`.
@@ -70,6 +68,7 @@ interface ITableGrowing extends ITableFeature {
 
 /**
  * Fired when an interactive row is clicked.
+ *
  * @param {TableRow} row The clicked row instance
  * @public
  */
@@ -81,6 +80,7 @@ type TableMoveEventDetail = MoveEventDetail;
 
 /**
  * Fired when a row action is clicked.
+ *
  * @param {TableRowActionBase} action The row action instance
  * @param {TableRow} row The row instance
  * @public
@@ -192,7 +192,7 @@ type TableRowActionClickEventDetail = {
  * @param {TableRow} row The row instance
  * @public
  */
-@event("row-click", {
+@eventStrict("row-click", {
 	bubbles: false,
 })
 
@@ -209,7 +209,7 @@ type TableRowActionClickEventDetail = {
  * @param {object} destination The destination object
  * @public
  */
-@event("move-over", {
+@eventStrict("move-over", {
 	cancelable: true,
 	bubbles: true,
 })
@@ -229,7 +229,7 @@ type TableRowActionClickEventDetail = {
  * @param {object} destination The destination object
  * @public
  */
-@event("move", {
+@eventStrict("move", {
 	bubbles: true,
 })
 
@@ -237,10 +237,11 @@ type TableRowActionClickEventDetail = {
  * Fired when a row action is clicked.
  *
  * @param {TableRowActionBase} action The row action instance
+ * @param {TableRow} row The row instance
  * @since 2.6.0
  * @public
  */
-@event("row-action-click", {
+@eventStrict("row-action-click", {
 	bubbles: false,
 })
 
@@ -288,6 +289,7 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines the features of the component.
+	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, individualSlots: true })
@@ -347,6 +349,7 @@ class Table extends UI5Element {
 
 	/**
      * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
+	 *
      * @default 1000
      * @public
      */
@@ -385,13 +388,12 @@ class Table extends UI5Element {
 	_onResizeBound: ResizeObserverCallback;
 	_tableNavigation?: TableNavigation;
 	_tableDragAndDrop?: TableDragAndDrop;
-	_poppedIn: Array<{col: TableHeaderCell, width: float}>;
-	_containerWidth: number;
+	_poppedIn: Array<{col: TableHeaderCell, width: float}> = [];
+	_containerWidth = 0;
+	_rowsLength = 0;
 
 	constructor() {
 		super();
-		this._poppedIn = [];
-		this._containerWidth = 0;
 		this._onResizeBound = this._onResize.bind(this);
 		this._onEventBound = this._onEvent.bind(this);
 	}
@@ -419,6 +421,10 @@ class Table extends UI5Element {
 		this._renderNavigated = this.rows.some(row => row.navigated);
 		if (this.headerRow[0]) {
 			this.headerRow[0]._rowActionCount = this.rowActionCount;
+			if (this._getSelection()?.isMultiSelect() && this._rowsLength !== this.rows.length) {
+				this._rowsLength = this.rows.length;
+				this.headerRow[0]._invalidate++;
+			}
 		}
 		this.rows.forEach(row => {
 			row._renderNavigated = this._renderNavigated;

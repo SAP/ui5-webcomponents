@@ -4,11 +4,13 @@ import TableCell from "../../src/TableCell.js";
 import TableRow from "../../src/TableRow.js";
 import TableSelection from "../../src/TableSelection.js";
 import TableHeaderCell from "../../src/TableHeaderCell.js";
+import TableHeaderCellActionAI from "../../src/TableHeaderCellActionAI.js";
 import Label from "../../src/Label.js";
 import Input from "../../src/Input.js";
 import Bar from "../../src/Bar.js";
 import Title from "../../src/Title.js";
 import Slider from "../../src/Slider.js";
+import Button from "../../src/Button.js";
 
 // Porting Table.spec.js (wdio tests) to cypress tests
 const ROLE_COLUMN_HEADER = "columnheader";
@@ -32,6 +34,7 @@ describe("Table - Rendering", () => {
 		cy.get("ui5-table-header-row").should("exist");
 		cy.get("ui5-table-row").should("exist");
 		cy.get("ui5-table-header-cell").should("have.length", 2);
+		cy.get("ui5-table-header-row").should("have.attr", "aria-roledescription", "Column Header Row");
 	});
 
 	it("tests if initial empty table renders without errors", () => {
@@ -661,5 +664,174 @@ describe("Table - Navigated Rows", () => {
 				// eslint-disable-next-line no-unused-expressions
 				expect(gridTemplateColumns.endsWith("table_navigated_cell_width)")).to.be.true;
 			});
+	});
+});
+
+describe("Table - Interactive Rows", () => {
+	it("fires the row-click event", () => {
+		cy.mount(
+			<Table id="table1">
+				<TableSelection id="selection" selected="1 2" slot="features"></TableSelection>
+				<TableHeaderRow id="headerRow" slot="headerRow">
+					<TableHeaderCell>ColumnA</TableHeaderCell>
+					<TableHeaderCell>ColumnB</TableHeaderCell>
+				</TableHeaderRow>
+				<TableRow id="row1" rowKey="1">
+					<TableCell><Label>Cell A</Label></TableCell>
+					<TableCell><Button>Cell B</Button></TableCell>
+				</TableRow>
+				<TableRow id="row2" rowKey="2" interactive={true}>
+					<TableCell><Label>Cell A</Label></TableCell>
+					<TableCell><Button>Cell B</Button></TableCell>
+				</TableRow>
+			</Table>
+		);
+
+		cy.get("#table1").invoke("on", "row-click", cy.stub().as("rowClickHandler"));
+		cy.get("#row1").realClick();
+		cy.get("@rowClickHandler").should("not.have.been.called");
+		cy.get("#row1").realPress("Enter");
+		cy.get("@rowClickHandler").should("not.have.been.called");
+
+		cy.get("#row2").realClick();
+		cy.get("@rowClickHandler").invoke("getCall", 0).its("args.0.detail.row").as("clickedRow");
+		cy.get("@clickedRow").should("have.attr", "id", "row2");
+		cy.get("#row2").realPress("Enter");
+		cy.get("@rowClickHandler").should("have.been.calledTwice");
+
+		cy.get("#row2").find("ui5-label").realClick();
+		cy.get("@rowClickHandler").should("have.been.calledThrice");
+
+		cy.get("#row2").find("ui5-button").as("row2button");
+		cy.get("@row2button").invoke("on", "click", cy.stub().as("buttonClickHandler"));
+		cy.get("@row2button").realClick();
+		cy.get("@buttonClickHandler").should("have.been.calledOnce");
+		cy.get("@rowClickHandler").should("have.been.calledThrice");
+
+		cy.get("@row2button").realPress("Enter");
+		cy.get("@buttonClickHandler").should("have.been.calledTwice");
+		cy.get("@rowClickHandler").should("have.been.calledThrice");
+
+		cy.get("@row2button").realPress("Space");
+		cy.get("@buttonClickHandler").should("have.been.calledThrice");
+		cy.get("@rowClickHandler").should("have.been.calledThrice");
+
+		// move the following tests to the TableSelection.cy.tsx
+		cy.get("#headerRow").shadow().find("#selection-cell").as("headerRowSelectionCell");
+		cy.get("@headerRowSelectionCell").find("#selection-component").as("headerRowCheckBox");
+		cy.get("@headerRowCheckBox").should("have.attr", "checked");
+		cy.get("#table1").then($table => {
+			$table.append(
+				`<ui5-table-row id="row3" row-key="3">
+					<ui5-table-cell>Cell A</ui5-table-cell>
+					<ui5-table-cell>Cell B</ui5-table-cell>
+				</ui5-table-row>`
+			);
+		});
+		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
+		cy.get("#row3").invoke("remove");
+		cy.get("@headerRowCheckBox").should("have.attr", "checked");
+		cy.get("#row2").invoke("remove");
+		cy.get("#row1").invoke("remove");
+		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
+	});
+});
+
+describe("Table - HeaderCell", () => {
+	beforeEach(() => {
+		cy.mount(
+			<Table overflow-mode="Popin">
+				<TableHeaderRow slot="headerRow">
+					<TableHeaderCell min-width="300px">Column A</TableHeaderCell>
+					<TableHeaderCell min-width="200px" sort-indicator="Ascending">
+						<Label required wrappingType="None">Column B</Label>
+						<TableHeaderCellActionAI slot="action"></TableHeaderCellActionAI>
+					</TableHeaderCell>
+					<TableHeaderCell min-width="150px" popin-text="Popin Text">
+						<Label required>Column C</Label>
+					</TableHeaderCell>
+				</TableHeaderRow>
+				<TableRow>
+					<TableCell>Cell A</TableCell>
+					<TableCell>Cell B</TableCell>
+					<TableCell>Cell C</TableCell>
+				</TableRow>
+				<TableRow>
+					<TableCell>Cell A</TableCell>
+					<TableCell>Cell B</TableCell>
+					<TableCell>Cell C</TableCell>
+				</TableRow>
+			</Table>
+		);
+		cy.get("[ui5-table]").as("table").children("ui5-table-row").as("rows");
+		cy.get("@table").children("ui5-table-header-row").first().as("headerRow");
+		cy.get("@headerRow").get("ui5-table-header-cell").each(($headerCell, index) => {
+			cy.wrap($headerCell).as(`headerCell${index + 1}`);
+		});
+		cy.get("@rows").each(($row, index) => {
+			cy.wrap($row).as(`row${index + 1}`);
+		});
+	});
+
+	it("should render header-cell correctly", () => {
+		cy.get("@headerCell1").contains("Column A");
+		cy.get("@headerCell2").should("have.attr", "aria-sort", "ascending");
+		cy.get("@headerCell2").find("ui5-table-header-cell-action-ai").as("actionB");
+		cy.get("@actionB").shadow().find("ui5-button").as("actionBbutton");
+		cy.get("@actionBbutton").should("have.attr", "icon", "ai");
+		cy.get("@actionBbutton").should("have.attr", "tooltip", "Generated by AI");
+		cy.get("@actionB").invoke("on", "click", cy.stub().as("actionBclick"));
+		cy.get("@actionBbutton").realClick();
+		cy.get("@actionBclick").should("have.been.calledOnce");
+		cy.get("@headerCell2").shadow().find("ui5-icon").as("actionBicon");
+		cy.get("@actionBicon").should("have.attr", "name", "sort-ascending");
+
+		cy.get("@headerCell2").invoke("attr", "sort-indicator", "Descending");
+		cy.get("@headerCell2").shadow().find("ui5-icon").should("have.attr", "name", "sort-descending");
+		cy.get("@actionBicon").should("have.attr", "name", "sort-descending");
+		cy.get("@headerCell2").should("have.attr", "aria-sort", "descending");
+
+		cy.get("@headerCell2").invoke("attr", "sort-indicator", "None");
+		cy.get("@headerCell2").shadow().find("ui5-icon").should("not.exist");
+		cy.get("@headerCell2").should("not.have.attr", "aria-sort");
+
+		cy.get("@table").invoke("css", "width", "250px");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(50);
+
+		cy.get("@row1").find("ui5-table-cell[_popin]").as("row1popins");
+		cy.get("@row1popins").first().as("row1popinB");
+		cy.get("@row1popinB").shadow().find("ui5-table-header-cell-action-ai").as("row1popinBaction");
+		cy.get("@row1popinBaction").shadow().find("ui5-button").as("row1popinBbutton");
+		cy.get("@row1popinBbutton").should("have.attr", "icon", "ai");
+		cy.get("@row1popinBbutton").should("have.attr", "design", "Transparent");
+		cy.get("@row1popinBbutton").should("have.attr", "tooltip", "Generated by AI");
+		cy.get("@row1popinBbutton").realClick();
+		cy.get("@actionBclick").invoke("getCall", 1).its("args.0.detail.targetRef").as("actionBclickTarget");
+		cy.get("@actionBclickTarget").should("have.attr", "icon", "ai");
+		cy.get("@actionBclickTarget").should("have.attr", "design", "Transparent");
+		cy.get("@actionBclickTarget").should("have.attr", "tooltip", "Generated by AI");
+
+		cy.get("@row1popinB").shadow().find("ui5-label").as("row1popinBlabel");
+		cy.get("@row1popinBlabel").contains("Column B");
+		cy.get("@row1popinBlabel").should("have.attr", "wrapping-type", "None");
+		cy.get("@row1popinBlabel").should("have.attr", "required");
+
+		cy.get("@row1popins").last().as("row1popinC");
+		cy.get("@row1popinC").shadow().find("ui5-label").should("not.exist");
+		cy.get("@row1popinC").shadow().should("have.text", "Popin Text:");
+		cy.get("@row1popinC").should("have.text", "Cell C");
+
+		cy.get("@row2").find("ui5-table-cell[_popin]").as("row2popins");
+		cy.get("@row2popins").first().as("row2popinB");
+		cy.get("@row2popinB").shadow().find("ui5-table-header-cell-action-ai").as("row2popinBaction");
+		cy.get("@row2popinBaction").shadow().find("ui5-button").as("row2popinBbutton");
+		cy.get("@row2popinBbutton").should("have.attr", "icon", "ai");
+		cy.get("@row2popinBbutton").should("have.attr", "tooltip", "Generated by AI");
+		cy.get("@row2popinBbutton").realClick();
+		cy.get("@actionBclick").invoke("getCall", 2).its("args.0.detail.targetRef").as("actionBclickTarget");
+		cy.get("@actionBclickTarget").should("have.attr", "icon", "ai");
+		cy.get("@actionBclickTarget").should("have.attr", "design", "Transparent");
+		cy.get("@actionBclickTarget").should("have.attr", "tooltip", "Generated by AI");
 	});
 });

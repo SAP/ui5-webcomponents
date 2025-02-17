@@ -33,8 +33,8 @@
 .ui5-shellbar-menu-button,
 .ui5-shellbar-button,
 .ui5-shellbar-image-button,
-::slotted([ui5-toggle-button]),
-::slotted([ui5-button]){
+::slotted([ui5-toggle-button]:not([slot^="content"])),
+::slotted([ui5-button]:not([slot^="content"])) {
 	height: 2.25rem;
 	padding: 0;
 	margin-inline-start: var(--_ui5-shellbar-overflow-button-margin);
@@ -53,6 +53,14 @@
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+}
+
+::slotted([ui5-toggle-button][slot="assistant"]) {
+	margin-inline-start: 0;
+}
+
+.ui5-shellbar-assistant-button {
+	margin-inline-start: var(--_ui5-shellbar-overflow-button-margin);
 }
 
 ::slotted([ui5-button][slot="startButton"]) {
@@ -204,12 +212,14 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-logo {
+	overflow: hidden;
 	cursor: pointer;
 	max-height: 2rem;
-	padding: .25rem;
+	max-width: 3.75rem;
 }
 
 .ui5-shellbar-logo-area {
+	overflow: hidden;
 	display: flex;
 	align-items: center;
 	padding: .25rem .5rem .25rem .25rem;
@@ -222,13 +232,8 @@ slot[name="profile"] {
 	margin-inline-start: 0.125rem;
 }
 
-.ui5-shellbar-logo-area .ui5-shellbar-logo {
-	padding: 0;
-}
-
 .ui5-shellbar-logo:focus,
 .ui5-shellbar-logo-area:focus {
-	overflow: hidden;
 	outline: var(--_ui5_shellbar_logo_outline);
 	border-radius: var(--_ui5_shellbar_logo_border_radius);
 }
@@ -340,12 +345,14 @@ slot[name="profile"] {
 	align-items: center;
 }
 
-.ui5-shellbar-overflow-container-additional-content {
-	align-items: center;
+.ui5-shellbar-overflow-container-right-inner {
 	display: flex;
-	overflow: hidden;
+	justify-content: flex-end;
+	align-items: center;
 	flex-grow: 1;
+	min-width: max-content;
 }
+
 
 .ui5-shellbar-spacer {
 	flex-grow: 1;
@@ -362,13 +369,8 @@ slot[name="profile"] {
 	background-color: var(--sapToolbar_SeparatorColor);
 }
 
-.ui5-shellbar-separator-start {
-	margin-inline-end: 0.5rem;
-}
-
 .ui5-shellbar-separator-end {
 	margin-inline-start: 0.5rem;
-	margin-inline-end: 0.5rem;
 }
 
 .ui5-shellbar-overflow-container-right-child .ui5-shellbar-button[data-count]:has(+ .ui5-shellbar-overflow-button)::before {
@@ -386,13 +388,11 @@ slot[name="profile"] {
 	position: absolute;
 }
 
-.ui5-shellbar-additional-content-item {
+.ui5-shellbar-content-item {
+	display: flex;
+	align-items: center;
 	flex-shrink: 0;
  	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
-}
-
-.ui5-shellbar-additional-content-item:first-child {
-	padding-inline-start: 0;
 }
 
 :host(:not([notifications-count])) .ui5-shellbar-bell-button {
@@ -440,6 +440,8 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-search-field {
+	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
+	min-width: var(--_ui5_shellbar_search_field_width);
 	align-items: center;
 	flex-grow: 1;
 	margin-inline-start: 0.5rem;
@@ -451,10 +453,6 @@ slot[name="profile"] {
 .ui5-shellbar-overflow-container-right-child > :first-child,
 .ui5-shellbar-search-field:first-child + .ui5-shellbar-button:not(.ui5-shellbar-search-button) {
 	margin-inline-start: 0;
-}
-
-.ui5-shellbar-with-full-searchfield .ui5-shellbar-overflow-container-additional-content {
-	max-width: 0px;
 }
 
 .ui5-shellbar-search-full-width-wrapper .ui5-shellbar-search-full-field {
@@ -508,8 +506,8 @@ slot[name="profile"] {
 
 ::slotted([slot="logo"]) {
 	max-height: 2rem;
+	max-width: 3.75rem;
 	pointer-events: none;
-	padding: 0 0.25rem;
 }
 
 .ui5-shellbar-co-pilot-placeholder {
@@ -539,7 +537,6 @@ slot[name="profile"] {
 
 /* if class contains ui5-shellbar-hidden-button */
 ::slotted(.ui5-shellbar-hidden-button),
-::slotted(.ui5-shellbar-force-hidden-button),
 .ui5-shellbar-hidden-button,
 .ui5-shellbar-invisible-button {
 	order: -1;
@@ -549,6 +546,7 @@ slot[name="profile"] {
 	width: 0;
 	margin: 0;
 	padding: 0;
+	padding-inline-start: 0;
 	border: 0;
 	margin-inline-start: 0;
 }
