@@ -177,3 +177,7 @@
 :host([media-range="XL"]) .ui5-tc__content {
 	padding: 1rem 3rem;
 }
+
+.ui5-tc-root.ui5-tc--noTabSelected .ui5-tc__content {
+	padding: 0;
+}
