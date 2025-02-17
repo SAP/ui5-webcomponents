@@ -1,16 +1,24 @@
-function throttle(func: () => void, delay: number): () => void {
-	let wait = false;
+import type { Timeout } from "../types.js";
 
-	return (...args) => {
-		if (wait) {
+function throttle(func: () => void, delay: number): () => void {
+	let lastArgs: [] | null = null; // used to ensure an explicit last call after the delay
+	let throttleTimeout: Timeout | null = null;
+
+	return function throttled(...args) {
+		if (throttleTimeout) {
+			lastArgs = args;
 			return;
 		}
 
 		func(...args);
-		wait = true;
-		setTimeout(() => {
-			wait = false;
+		throttleTimeout = setTimeout(() => {
+			if (lastArgs) {
+				func(...lastArgs);
+				lastArgs = null;
+			}
+			throttleTimeout = null;
 		}, delay);
 	};
 }
+
 export default throttle;
