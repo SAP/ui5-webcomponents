@@ -42,8 +42,8 @@ describe("Day Picker Tests", () => {
 
 		cy.focused()
 			.invoke("attr", "data-sap-timestamp")
-			.then((timestampAttr) => {
-				const timestamp = parseInt(timestampAttr!, 10);
+			.then(timestampAttr => {
+				const timestamp = parseInt(timestampAttr!);
 				const selectedDate = new Date(timestamp * 1000).getDate();
 				const expectedDate = new Date(Date.now() + 24 * 3600 * 1000).getDate();
 				expect(selectedDate).to.eq(expectedDate);
@@ -63,11 +63,11 @@ describe("Day Picker Tests", () => {
 		// Set configuration first
 		cy.wrap({ setLanguage })
 			.invoke("setLanguage", "pt_PT");
-	
+
 		cy.wrap({ getLanguage })
 			.invoke("getLanguage")
 			.should("equal", "pt_PT");
-	
+
 		cy.mount(<DefaultDayPicker />);
 
 		cy.get("#daypicker")
@@ -77,5 +77,3 @@ describe("Day Picker Tests", () => {
 			.should("eq", "D");
 	});
 });
-
-
