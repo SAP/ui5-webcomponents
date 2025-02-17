@@ -97,6 +97,8 @@ import Tab from "./Tab.js";
 import TabSeparator from "./TabSeparator.js";
 import Text from "./Text.js";
 import TextArea from "./TextArea.js";
+import TestButton from "./TestButton.js";
+import TestButtonState from "./TestButtonState.js";
 import TimePicker from "./TimePicker.js";
 import TimePickerClock from "./TimePickerClock.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
