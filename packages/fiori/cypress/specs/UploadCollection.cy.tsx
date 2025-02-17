@@ -251,6 +251,19 @@ describe("UploadCollection Rendering", () => {
 		cy.get("#uc3-uploading-hidden-terminate").shadow().find("ui5-button[icon=stop]").should("not.exist");
 	});
 
+	it("Tests rendering of 'deleteButton' slot", () => {
+		cy.mount(
+			<UploadCollection id="uploadCollection">
+				<UploadCollectionItem id="item" fileName="File name">
+					<button slot="deleteButton" id="deleteButton">custom delete button</button>
+				</UploadCollectionItem>
+			</UploadCollection>
+		);
+
+		cy.get("#deleteButton").should("be.visible");
+		cy.get("#item").shadow().find(".ui5-upload-collection-deletebtn").should("not.exist");
+	});
+
 	it("Tests that 'header' and 'accessible-name' get forwarded to the inner list", () => {
 		const EXPECTED_ACC_NAME = "Uploaded (4)";
 
