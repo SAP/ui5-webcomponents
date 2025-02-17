@@ -62,18 +62,18 @@ declare global {
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
 			ui5ColorPaletteCheckSelectedColor(colorPaletteItem: string, values: {r: string, g: string, b: string, a: string}): Chainable<void>
 			ui5ColorPaletteNavigateAndCheckSelectedColor(colorPalette: string, startIndex: number, key: string, expectedValue: string): Chainable<void>
-			ui5GetInnerInput(): Chainable<void>
-			ui5GetPickerDate(timestamp: number): Chainable<void>
-			ui5GetFirstDisplayedDate(): Chainable<void>
-			ui5GetFirstDisplayedYear(): Chainable<void>
-			ui5GetDisplayedDay(index: number): Chainable<void>
-			ui5GetDisplayedMonth(index: number): Chainable<void>
-			ui5GetDisplayedYear(index: number): Chainable<void>
-			ui5GetNextButton(): Chainable<void>
-			ui5GetPreviousButton(): Chainable<void>
-			ui5GetMonthButton(): Chainable<void>
-			ui5GetYearButton(): Chainable<void>
-			ui5ValueHelpIconPress(): Chainable<void>
+			ui5DatePickerGetInnerInput(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetPopoverDate(timestamp: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetFirstDisplayedDate(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetFirstDisplayedYear(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetDisplayedDay(index: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetDisplayedMonth(index: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetDisplayedYear(index: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetNextButton(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetPreviousButton(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetMonthButton(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetYearButton(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerValueHelpIconPress(): Chainable<void>
 		}
 	}
 }
