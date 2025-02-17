@@ -21,18 +21,25 @@
 	<ui5-button id="btnOpenWithAttr">Open with Attribute</ui5-button>
 
 	<!-- with header and footer slots -->
-	<ui5-responsive-popover initial-focus="emailInput" id="respPopover">
-		<div id="respPopoverHeader" slot="header">
-			<ui5-title>Hello World</ui5-title>
-		</div>
+	<ui5-responsive-popover initial-focus="emailInput" id="respPopover" placement="Bottom" hide-arrow>
 
 		<div class="popover-content">
-			<ui5-label for="emailInput" required>Email: </ui5-label>
-			<ui5-input id="emailInput" class="samples-margin-top responsivepopover3auto"  placeholder="Enter Email"></ui5-input>
+			<ui5-list id="firstPage" separators="None">
+                <ui5-li >Delivered</ui5-li>
+                <ui5-li >Pending</ui5-li>
+                <ui5-li >Declined</ui5-li>
+            </ui5-list>
+			<ui5-list id="secondPage" separators="None" class="hide-list">
+                <ui5-li >Delivered</ui5-li>
+                <ui5-li >Not pending</ui5-li>
+                <ui5-li >Not declined</ui5-li>
+            </ui5-list>
 		</div>
 
 		<div slot="footer" class="popover-footer">
-			<ui5-button id="btnClose" design="Emphasized">Subscribe</ui5-button>
+			<ui5-icon id="navBack" name="nav-back" mode="Interactive"></ui5-icon>
+			<ui5-text id="navText">1/2</ui5-text>
+			<ui5-icon id="navFwd" mode="Interactive" name="navigation-right-arrow"></ui5-icon>
 		</div>
 	</ui5-responsive-popover>
 
@@ -223,8 +230,16 @@
 			respPopover.opener = btnOpen;
 			respPopover.open = true;
 		});
-		btnClose.addEventListener("click", function(event) {
-			respPopover.open = false;
+		navBack.addEventListener("click", function(event) {
+			firstPage.classList.remove("hide-list");
+			secondPage.classList.add("hide-list");
+			navText.textContent = "1/2";
+		});
+
+		navFwd.addEventListener("click", function(event) {
+			firstPage.classList.add("hide-list");
+			secondPage.classList.remove("hide-list");
+			navText.textContent = "2/2";
 		});
 
 		btnOpen2.addEventListener("click", function(event) {
@@ -325,5 +340,19 @@
 			rPNoneRole.open = true;
 		});
 	</script>
+
+	<style>
+		[ui5-responsive-popover]::part(content) {
+			padding: 0px;
+		}
+
+		[ui5-list].hide-list {
+			display: none;
+		}
+
+		[ui5-responsive-popover] .popover-footer {
+			justify-content: flex-start;
+		}
+	</style>
 </body>
 </html>
