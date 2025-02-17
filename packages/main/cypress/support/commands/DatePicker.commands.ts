@@ -6,7 +6,10 @@ Cypress.Commands.add("ui5DatePickerGetInnerInput", { prevSubject: true }, subjec
 		.shadow()
 		.find("ui5-input")
 		.shadow()
-		.find("input");
+		.find("input")
+		.as("innerInput");
+
+	return cy.get("@innerInput");
 });
 
 Cypress.Commands.add("ui5DatePickerGetPopoverDate", { prevSubject: true }, (subject, timestamp) => {
@@ -22,7 +25,7 @@ Cypress.Commands.add("ui5DatePickerGetPopoverDate", { prevSubject: true }, (subj
 		.as("calendar")
 		.should("be.visible");
 
-	cy.get("@calendar")
+	return cy.get("@calendar")
 		.shadow()
 		.find("ui5-daypicker")
 		.shadow()
@@ -42,7 +45,7 @@ Cypress.Commands.add("ui5DatePickerGetDisplayedDay", { prevSubject: true }, (sub
 		.as("calendar")
 		.should("be.visible");
 
-	cy.get("@calendar")
+	return cy.get("@calendar")
 		.shadow()
 		.find("ui5-daypicker")
 		.shadow()
@@ -63,7 +66,7 @@ Cypress.Commands.add("ui5DatePickerGetFirstDisplayedDate", { prevSubject: true }
 		.as("calendar")
 		.should("be.visible");
 
-	cy.get("@calendar")
+	return cy.get("@calendar")
 		.shadow()
 		.find("ui5-daypicker")
 		.shadow()
@@ -85,7 +88,7 @@ Cypress.Commands.add("ui5DatePickerGetFirstDisplayedYear", { prevSubject: true }
 		.as("yearPicker")
 		.should("be.visible");
 
-	cy.get("@yearPicker")
+	return cy.get("@yearPicker")
 		.shadow()
 		.find("div.ui5-yp-item");
 });
@@ -104,7 +107,7 @@ Cypress.Commands.add("ui5DatePickerGetDisplayedMonth", { prevSubject: true }, (s
 		.as("monthPicker")
 		.should("be.visible");
 
-	cy.get("@monthPicker")
+	return cy.get("@monthPicker")
 		.shadow()
 		.find(".ui5-mp-root .ui5-mp-item")
 		.eq(index);
@@ -125,7 +128,7 @@ Cypress.Commands.add("ui5DatePickerGetDisplayedYear", { prevSubject: true }, (su
 		.as("yearPicker")
 		.should("be.visible");
 
-	cy.get("@yearPicker")
+	return cy.get("@yearPicker")
 		.shadow()
 		.find(".ui5-yp-root .ui5-yp-item")
 		.eq(index);
@@ -144,7 +147,7 @@ Cypress.Commands.add("ui5DatePickerGetNextButton", { prevSubject: true }, subjec
 		.as("calendar")
 		.should("be.visible");
 
-	cy.get("@calendar")
+	return cy.get("@calendar")
 		.shadow()
 		.find(".ui5-calheader div[data-ui5-cal-header-btn-next]");
 });
@@ -162,7 +165,7 @@ Cypress.Commands.add("ui5DatePickerGetPreviousButton", { prevSubject: true }, su
 		.as("calendar")
 		.should("be.visible");
 
-	cy.get("@calendar")
+	return cy.get("@calendar")
 		.shadow()
 		.find(".ui5-calheader div[data-ui5-cal-header-btn-prev]");
 });
@@ -177,7 +180,7 @@ Cypress.Commands.add("ui5DatePickerGetMonthButton", { prevSubject: true }, subje
 		.as("calendar")
 		.should("be.visible");
 
-	cy.get("@calendar")
+	return cy.get("@calendar")
 		.shadow()
 		.find(".ui5-calheader div[data-ui5-cal-header-btn-month]");
 });
@@ -192,7 +195,7 @@ Cypress.Commands.add("ui5DatePickerGetYearButton", { prevSubject: true }, subjec
 		.as("calendar")
 		.should("be.visible");
 
-	cy.get("@calendar")
+	return cy.get("@calendar")
 		.shadow()
 		.find(".ui5-calheader div[data-ui5-cal-header-btn-year]");
 });
