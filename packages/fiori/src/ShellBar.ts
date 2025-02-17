@@ -738,8 +738,10 @@ class ShellBar extends UI5Element {
 
 	onAfterRendering() {
 		this._lastOffsetWidth = this.offsetWidth;
-		this._overflowActions();
-		this.onInitialRendering();
+		setTimeout(() => {
+			this._overflowActions();
+			this.onInitialRendering();
+		}, RESIZE_THROTTLE_RATE);
 	}
 
 	async onInitialRendering() {
@@ -1253,7 +1255,7 @@ class ShellBar extends UI5Element {
 	get styles() {
 		return {
 			searchField: {
-				"display": this.showSearchField ? "flex" : "none",
+				"display": this.showSearchField || this._isAnimating ? "flex" : "none",
 			},
 		};
 	}
