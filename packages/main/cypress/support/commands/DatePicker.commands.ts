@@ -1,5 +1,8 @@
 Cypress.Commands.add("ui5DatePickerGetInnerInput", { prevSubject: true }, subject => {
 	cy.wrap(subject)
+		.as("datePicker");
+
+	cy.get("@datePicker")
 		.shadow()
 		.find("ui5-input")
 		.shadow()
@@ -174,7 +177,7 @@ Cypress.Commands.add("ui5DatePickerGetMonthButton", { prevSubject: true }, subje
 		.as("calendar")
 		.should("be.visible");
 
-	return cy.get("@calendar")
+	cy.get("@calendar")
 		.shadow()
 		.find(".ui5-calheader div[data-ui5-cal-header-btn-month]");
 });
