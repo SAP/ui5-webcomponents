@@ -1,0 +1,2 @@
+"use strict";import c from"./util/hash2str.js";import{pascalToKebabCase as f}from"./util/StringHelper.js";function l(t,e,a){const n=t.getMetadata().getEvents();Object.keys(e).forEach(s=>{if(s.startsWith("on")){const o=s.slice(2),i=f(o);i in n&&s!=="onClick"&&(e[`onui5-${i}`]=e[s],delete e[s])}})}export function isUI5ElementClass(t){return typeof t=="function"&&"getMetadata"in t}export function preprocess(t,e,a){let n;return isUI5ElementClass(t)?(n=t.getMetadata().getTag(),l(t,e,a)):n=t,typeof e.class=="object"&&(e.class=c(e.class)),n}
+//# sourceMappingURL=jsx-utils.js.map
