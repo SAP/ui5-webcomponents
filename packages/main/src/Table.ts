@@ -532,9 +532,11 @@ class Table extends UI5Element {
 		this.headerRow[0]?.cells.forEach((header, index) => {
 			this.rows.forEach(row => {
 				const cell = row.cells[index];
-				cell._popinHidden = header.popinHidden;
-				if (cell && cell._popin !== header._popin) {
-					cell._popin = header._popin;
+				if (cell) {
+					cell._popinHidden = header.popinHidden;
+					if (cell._popin !== header._popin) {
+						cell._popin = header._popin;
+					}
 				}
 			});
 		});
