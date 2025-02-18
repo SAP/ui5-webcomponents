@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+	"outDir": "dist",
+	"rootDir": "src",
     "target": "ES2015",
     "module": "CommonJS",
     "moduleResolution": "node",
@@ -10,5 +12,4 @@
     "types": ["cypress"],
     "skipLibCheck": true
   },
-  "include": ["definition.ts"]
 }

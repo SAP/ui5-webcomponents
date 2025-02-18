@@ -9,14 +9,6 @@
     "./*": "./dist/*"
   },
   "type": "module",
-  "types": "*.d.ts",
-  "files": [
-    "package.json",
-    "commands.js",
-    "commands.d.ts",
-    "cypress.config.js",
-    "cypress.config.d.ts"
-  ],
   "devDependencies": {
     "@ui5/cypress-ct-ui5-webc": "0.0.0",
     "cypress": "^13.11.0",
