@@ -5,6 +5,7 @@ import { getLanguage } from "../../src/config/Language.js";
 import { getCalendarType } from "../../src/config/CalendarType.js";
 import { getTheme } from "../../src/config/Theme.js";
 import { getAnimationMode } from "../../src/config/AnimationMode.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getThemeRoot } from "../../src/config/ThemeRoot.js";
 
 describe("Some settings can be set via SAP UI URL params", () => {
@@ -47,7 +48,7 @@ describe("Some settings can be set via SAP UI URL params", () => {
 	it("Tests that animationMode is applied", () => {
 		cy.wrap({ getAnimationMode })
 			.invoke("getAnimationMode")
-			.should("equal", "basic");
+			.should("equal", AnimationMode.Basic);
 	});
 });
 
