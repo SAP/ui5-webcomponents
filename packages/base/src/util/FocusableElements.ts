@@ -8,6 +8,11 @@ const isFocusTrap = (el: HTMLElement) => {
 	return el.hasAttribute("data-ui5-focus-trap");
 };
 
+const isScrollable = (el: HTMLElement) => {
+	return (el.scrollHeight > el.clientHeight && ["scroll", "auto"].indexOf(getComputedStyle(el).overflowY) >= 0)
+		|| (el.scrollWidth > el.clientWidth && ["scroll", "auto"].indexOf(getComputedStyle(el).overflowX) >= 0);
+};
+
 const getFirstFocusableElement = async (container: HTMLElement, startFromContainer?: boolean): FocusableElementPromise => {
 	if (!container || isElementHidden(container)) {
 		return null;
@@ -67,6 +72,11 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 				}
 
 				focusableDescendant = await findFocusableElement(child, forward);
+
+				if (!focusableDescendant && isScrollable(child)) {
+					return (child && typeof child.focus === "function") ? child : null;
+				}
+
 				if (focusableDescendant) {
 					return (focusableDescendant && typeof focusableDescendant.focus === "function") ? focusableDescendant : null;
 				}
