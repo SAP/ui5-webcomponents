@@ -13,8 +13,9 @@ import activate from "@ui5/webcomponents-icons/dist/activate.js";
 describe("Default Tooltips", () => {
 	before(() => {
 		cy.wrap({ setEnableDefaultTooltips })
-			.invoke("setEnableDefaultTooltips", true);
+			.invoke("setEnableDefaultTooltips", false);
 	})
+
 	it("tests navigation", () => {
 		cy.mount(
 			<>

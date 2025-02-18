@@ -88,7 +88,9 @@ describe("Event bubbling", () => {
 			.realClick();
 
 		cy.get("@input")
-			.realType("a");
+			.should("be.focused");
+
+		cy.realType("a");
 
 		cy.get("@input")
 			.find("[ui5-suggestion-item]")
