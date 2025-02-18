@@ -81,217 +81,118 @@ describe("Table - Keyboard Navigation", () => {
 			.eq(cell);
 	}
 
+	function performActions(actions: { element: Cypress.Chainable, click?: string, condition?: string, conditionValue?:string, type?: string, press?: string | string[] }[]) {
+		actions.forEach(action => {
+			if (action.click) {
+				// @ts-ignore
+				action.element.click(action.click);
+			}
+			if (action.condition) {
+				if (action.conditionValue) {
+					action.element.wait(0).should(action.condition, action.conditionValue);
+				} else {
+					action.element.wait(0).should(action.condition);
+				}
+			}
+			if (action.type) {
+				action.element.type(action.type);
+			}
+			if (action.press) {
+				// @ts-ignore
+				action.element.realPress(action.press);
+			}
+		});
+	}
+
 	it("should navigate on rows", () => {
-		cy.get("@rows").eq(0)
+		performActions([
 			// left click is needed to focus the row
 			// otherwise the it would click in the center of the row where an input is
 			// resulting in a focus on the input instead of the row
-			.click("left");
-		cy.get("@rows").eq(0).should("be.focused")
-
-		    .type("{leftarrow}");
-		cy.get("@rows").eq(0).should("be.focused")
-
-			.type("{uparrow}");
-		cy.get("@headerRow").should("be.focused")
-
-			.type("{uparrow}");
-		cy.get("@headerRow").should("be.focused")
-
-			.type("{downarrow}{downarrow}");
-		cy.get("@rows").eq(1).should("be.focused")
-
-			.type("{pagedown}");
-		cy.get("@rows").eq(21).should("be.focused")
-
-			.type("{pagedown}");
-		cy.get("@rows").eq(24).should("be.focused")
-
-			.type("{pagedown}");
-		cy.get("#growing").shadow().find("#growing-button").should("be.focused")
-
-			.type("{pageup}");
-		cy.get("@rows").eq(5).should("be.focused")
-
-			.type("{pageup}");
-		cy.get("@rows").eq(0).should("be.focused")
-
-			.type("{end}");
-		cy.get("@rows").eq(24).should("be.focused")
-
-			.type("{end}");
-		cy.get("#growing").shadow().find("#growing-button").should("be.focused")
-
-			.type("{home}");
-		cy.get("@rows").eq(0).should("be.focused")
-
-			.type("{home}");
-		cy.get("@headerRow").should("be.focused");
+			{ element: cy.get("@rows").eq(0), click: "left" },
+			{ element: cy.get("@rows").eq(0), type: "{leftarrow}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(0), type: "{uparrow}", condition: "be.focused" },
+			{ element: cy.get("@headerRow"), type: "{uparrow}", condition: "be.focused" },
+			{ element: cy.get("@headerRow"), type: "{downarrow}{downarrow}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(1), type: "{pagedown}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(21), type: "{pagedown}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(24), type: "{pagedown}", condition: "be.focused" },
+			{ element: cy.get("#growing").shadow().find("#growing-button"), type: "{pageup}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(5), type: "{pageup}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(0), type: "{end}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(24), type: "{end}", condition: "be.focused" },
+			{ element: cy.get("#growing").shadow().find("#growing-button"), type: "{home}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(0), type: "{home}", condition: "be.focused" },
+			{ element: cy.get("@headerRow"), condition: "be.focused" }
+		]);
 	});
 
 	it("should navigate on cells", () => {
-		cy.get("@rows").eq(0)
-			.click("left");
-
-		cy.get("@rows").eq(0).should("be.focused")
-
-			.type("{rightarrow}");
-		getCell(0, 0, false).should("be.focused")
-
-			.type("{leftarrow}");
-		cy.get("@rows").eq(0).should("be.focused")
-
-			.type("{rightarrow}{rightarrow}");
-		getCell(0, 1, false).should("be.focused")
-
-			.type("{home}");
-		getCell(0, 0, false).should("be.focused")
-
-			.type("{end}");
-		getCell(0, 3, false).should("be.focused")
-
-			.type("{rightarrow}");
-		getCell(0, 3, false).should("be.focused")
-
-			.type("{end}");
-		cy.get("@rows").eq(0).should("be.focused")
-
-			.type("{end}");
-		cy.get("@rows").eq(24).should("be.focused")
-
-			.type("{rightarrow}{rightarrow}{rightarrow}");
-		getCell(24, 2, false).should("be.focused")
-
-			.type("{pageup}");
-		getCell(4, 0, false).should("be.focused")
-
-			.type("{pageup}");
-		getCell(0, 0, false).should("be.focused")
-
-			.type("{pageup}");
-		getCell(0, 0, true).should("be.focused")
-
-			.type("{pagedown}");
-		getCell(19, 0, false).should("be.focused")
-
-			.type("{pagedown}");
-		getCell(24, 0, false).should("be.focused")
-
-			.type("{pagedown}");
-		cy.get("#growing").shadow().find("#growing-button").should("be.focused")
-
-			.type("{home}");
-		cy.get("@rows").eq(0).should("be.focused")
-
-			.type("{home}");
-		cy.get("@headerRow").should("be.focused");
-
-		cy.get("@headerRow").type("{downarrow}{rightarrow}");
-
-		for (let i = 0; i < 3; i++) {
-			getCell(i, i, false).should("be.focused")
-				.type("{downarrow}{rightarrow}");
-		}
-
-		getCell(3, 3, false).should("be.focused")
-			.type("{downarrow}");
-
-		getCell(4, 0, false).should("be.focused");
+		performActions([
+			{ element: cy.get("@rows").eq(0), click: "left" },
+			{ element: cy.get("@rows").eq(0), type: "{rightarrow}", condition: "be.focused" },
+			{ element: getCell(0, 0, false), type: "{leftarrow}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(0), type: "{rightarrow}{rightarrow}", condition: "be.focused" },
+			{ element: getCell(0, 1, false), type: "{home}", condition: "be.focused" },
+			{ element: getCell(0, 0, false), type: "{end}", condition: "be.focused" },
+			{ element: getCell(0, 3, false), type: "{rightarrow}", condition: "be.focused" },
+			{ element: getCell(0, 3, false), type: "{end}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(0), type: "{end}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(24), type: "{rightarrow}{rightarrow}{rightarrow}", condition: "be.focused" },
+			{ element: getCell(24, 2, false), type: "{pageup}", condition: "be.focused" },
+			{ element: getCell(4, 0, false), type: "{pageup}", condition: "be.focused" },
+			{ element: getCell(0, 0, false), type: "{pageup}", condition: "be.focused" },
+			{ element: getCell(0, 0, true), type: "{pagedown}", condition: "be.focused" },
+			{ element: getCell(19, 0, false), type: "{pagedown}", condition: "be.focused" },
+			{ element: getCell(24, 0, false), type: "{pagedown}", condition: "be.focused" },
+			{ element: cy.get("#growing").shadow().find("#growing-button"), type: "{home}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(0), type: "{home}", condition: "be.focused" },
+			{ element: cy.get("@headerRow"), type: "{downarrow}{rightarrow}", condition: "be.focused" },
+			{ element: getCell(0, 0, false), type: "{downarrow}{rightarrow}", condition: "be.focused" },
+			{ element: getCell(1, 1, false), type: "{downarrow}{rightarrow}", condition: "be.focused" },
+			{ element: getCell(2, 2, false), type: "{downarrow}{rightarrow}", condition: "be.focused" },
+			{ element: getCell(3, 3, false), type: "{downarrow}", condition: "be.focused" },
+			{ element: getCell(4, 0, false), condition: "be.focused" }
+		]);
 	});
 
 	it("should handle F2/F7/Enter/Tab/Up/Down", () => {
 		cy.get("@rows").eq(0).get("#row1-input").as("row1Input");
 		cy.get("@rows").eq(1).get("#row2-input").as("row2Input");
 
-		cy.get("@rows").eq(0).click("left");
-		cy.get("@rows").eq(0).should("be.focused");
-
-		cy.get("@rows").eq(0).realPress("F2");
-		cy.get("@row1Input").eq(0).should("be.focused")
-
-			.realPress("F2");
-		getCell(0, 1, false).should("be.focused")
-
-			.realPress("F2");
-		cy.get("@row1Input").eq(0).should("be.focused")
-
-			.realPress("F7");
-		cy.get("@rows").eq(0).should("be.focused")
-
-			.realPress("F7");
-		cy.get("@row1Input").eq(0).should("be.focused")
-
-			.type("{downarrow}");
-		cy.get("@row1Input").eq(0).should("be.focused")
-
-			.type("{uparrow}");
-		cy.get("@row1Input").eq(0).should("be.focused")
-
-			.realPress(["F2", "{uparrow}"]);
-		getCell(0, 1, true).should("be.focused")
-
-			.realPress("F2");
-		getCell(0, 1, true).should("be.focused")
-
-			.type("{leftarrow}");
-		getCell(0, 0, true).should("be.focused")
-
-			.type("{enter}");
-		cy.get("@headerRow").get("#row0-link").should("be.focused")
-
-			.type("{downarrow}");
-		getCell(0, 0, false).should("be.focused")
-
-			.realPress("Tab");
-		cy.get("#after-table1").should("be.focused")
-
-			.realPress(["Shift", "Tab"]);
-		cy.get("@rows").eq(0).should("be.focused")
-
-			.type("{downarrow}");
-		cy.get("@rows").eq(1).should("be.focused")
-
-			.realPress("F7");
-		cy.get("@row2Input").eq(0).should("be.focused")
-
-			.realPress("Tab");
-		cy.get("@rows").eq(1).get("#row2-button").should("be.focused")
-
-			.realPress("F7");
-		cy.get("@rows").eq(1).should("be.focused")
-
-			.type("{uparrow}");
-		cy.get("@rows").eq(0).should("be.focused")
-
-			.realPress("F7");
-		cy.get("@rows").eq(0).get("#row1-button").should("be.focused")
-
-			.type("{uparrow}");
-		getCell(0, 2, true).should("be.focused")
-
-			.realPress("F7");
-		cy.get("@headerRow").should("be.focused")
-
-			.type("{downarrow}");
-		cy.get("@rows").eq(0).should("be.focused")
-
-			.realPress("F7");
-		getCell(0, 2, false).should("be.focused")
-
-			.realPress("F7");
-		cy.get("@rows").eq(0).should("be.focused")
-
-			.type("{downarrow}");
-		cy.get("@rows").eq(1).should("be.focused")
-
-			.realPress("F7");
-		getCell(1, 2, false).should("be.focused")
-
-			.realPress(["Shift", "Tab"]);
-		cy.get("#before-table1").should("be.focused")
-
-			.realPress("Tab");
-		cy.get("@rows").eq(1).should("be.focused");
+		performActions([
+			{ element: cy.get("@rows").eq(0), click: "left" },
+			{ element: cy.get("@rows").eq(0), press: "F2", condition: "be.focused" },
+			{ element: cy.get("@row1Input"), press: "F2", condition: "be.focused" },
+			{ element: getCell(0, 1, false), press: "F2", condition: "be.focused" },
+			{ element: cy.get("@row1Input"), press: "F7", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(0), press: "F7", condition: "be.focused" },
+			{ element: cy.get("@row1Input").eq(0), type: "{downarrow}", condition: "be.focused" },
+			{ element: cy.get("@row1Input").eq(0), type: "{uparrow}", condition: "be.focused" },
+			{ element: cy.get("@row1Input").eq(0), press: ["F2", "{uparrow}"], condition: "be.focused" },
+			{ element: getCell(0, 1, true), press: "F2", condition: "be.focused" },
+			{ element: getCell(0, 1, true), type: "{leftarrow}", condition: "be.focused" },
+			{ element: getCell(0, 0, true), type: "{enter}", condition: "be.focused" },
+			{ element: cy.get("@headerRow").get("#row0-link"), type: "{downarrow}", condition: "be.focused" },
+			{ element: getCell(0, 0, false), press: "Tab", condition: "be.focused" },
+			{ element: cy.get("#after-table1"), press: ["Shift", "Tab"], condition: "be.focused" },
+			{ element: cy.get("@rows").eq(0), type: "{downarrow}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(1), press: "F7", condition: "be.focused" },
+			{ element: cy.get("@row2Input").eq(0), press: "Tab", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(1).get("#row2-button"), press: "F7", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(1), type: "{uparrow}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(0), press: "F7", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(0).get("#row1-button"), type: "{uparrow}", condition: "be.focused" },
+			{ element: getCell(0, 2, true), press: "F7", condition: "be.focused" },
+			{ element: cy.get("@headerRow"), type: "{downarrow}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(0), press: "F7", condition: "be.focused" },
+			{ element: getCell(0, 2, false), press: "F7", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(0), type: "{downarrow}", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(1), press: "F7", condition: "be.focused" },
+			{ element: getCell(1, 2, false), press: ["Shift", "Tab"], condition: "be.focused" },
+			{ element: cy.get("#before-table1"), press: "Tab", condition: "be.focused" },
+			{ element: cy.get("@rows").eq(1), press: "Tab", condition: "be.focused" }
+		]);
 	});
 
 	it("should should work correctly for interactive rows", () => {
@@ -299,28 +200,23 @@ describe("Table - Keyboard Navigation", () => {
 		cy.get("#table0").get("#before-table1").as("input");
 		cy.get("@rows").get("#interactive-row").as("row");
 
-		cy.get("@row").click("left");
-		cy.get("@input").should("have.value", "1");
-
-		cy.get("@row").type("{enter}");
-		cy.get("@input").should("have.value", "2");
-
-		cy.get("@rows").get("#notinteractive-row").click("left");
-		cy.get("@input").should("have.value", "2");
-
-		cy.get("@row2Button").click("left");
-		cy.get("@input").should("have.value", "2");
-
-		cy.get("@row2Button").type("{enter}");
-		cy.get("@input").should("have.value", "2");
-
-		cy.get("@row2Button").realPress("F7");
-		cy.get("@row").should("be.focused");
-
-		cy.get("@row").realPress("Space");
-		cy.get("@input").should("have.value", "2");
-
-		cy.get("@row").type("{enter}");
-		cy.get("@input").should("have.value", "3");
+		performActions([
+			{ element: cy.get("@row"), click: "left" },
+			{ element: cy.get("@input"), condition: "have.value", conditionValue: "1" },
+			{ element: cy.get("@row"), type: "{enter}" },
+			{ element: cy.get("@input"), condition: "have.value", conditionValue: "2" },
+			{ element: cy.get("@rows").get("#notinteractive-row"), click: "left" },
+			{ element: cy.get("@input"), condition: "have.value", conditionValue: "2" },
+			{ element: cy.get("@row2Button"), click: "left" },
+			{ element: cy.get("@input"), condition: "have.value", conditionValue: "2" },
+			{ element: cy.get("@row2Button"), type: "{enter}" },
+			{ element: cy.get("@input"), condition: "have.value", conditionValue: "2" },
+			{ element: cy.get("@row2Button"), press: "F7" },
+			{ element: cy.get("@row"), condition: "be.focused" },
+			{ element: cy.get("@row"), press: "Space" },
+			{ element: cy.get("@input"), condition: "have.value", conditionValue: "2" },
+			{ element: cy.get("@row"), type: "{enter}" },
+			{ element: cy.get("@input"), condition: "have.value", conditionValue: "3" }
+		]);
 	});
 });
