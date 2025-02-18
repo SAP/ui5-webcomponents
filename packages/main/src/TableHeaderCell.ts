@@ -103,8 +103,8 @@ class TableHeaderCell extends TableCellBase {
 	/**
 	 * Defines if the column is hidden in the popin.
 	 *
-	 * **Note:** Please be aware, that hiding the column in the popin might lead to accessibility issues, as
-	 * users might not be able to access the content of the column on small screen sizes.
+	 * **Note:** Please be aware that hiding the column in the popin might lead to accessibility issues as
+	 * users might not be able to access the content of the column on small screens.
 	 *
 	 * @default false
 	 * @since 2.8.0
