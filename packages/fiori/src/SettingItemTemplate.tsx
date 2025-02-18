@@ -42,7 +42,7 @@ export default function SettingItemTemplate(this: SettingItem) {
 				<div class="ui5-setting-item-header">
 					<Button icon="nav-back" design="Transparent" onClick={this._handleBackButtonClick} class="ui5-setting-item-collapse-btn" style={{ display: this._shouldShowBackButton ? "block" : "" }}></Button>
 
-					<Title level="H4" size="H4">{this._hasSelectedPageView ? this._selectedPageView.text : this.headerTitle}</Title>
+					<Title level="H2" size="H4">{this._hasSelectedPageView ? this._selectedPageView.text : this.headerTitle}</Title>
 				</div>
 			</header>
 

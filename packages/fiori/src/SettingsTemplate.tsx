@@ -28,7 +28,7 @@ export default function SettingsTemplate(this: Settings) {
 				<div class="ui5-sd-side" aria-orientation="vertical" aria-roledescription={this.ariaRoleDescList}>
 					<div class="ui5-sd-side-header">
 						{this.headerTitle &&
-							<Title level="H4" size="H4">{this.headerTitle}</Title>
+							<Title level="H1" size="H4">{this.headerTitle}</Title>
 						}
 						{this.showSearchField &&
 							<Input placeholder="Search" type="Search" class="ui5-sd-side-search"
@@ -53,7 +53,7 @@ export default function SettingsTemplate(this: Settings) {
 			</div>
 
 			<Toolbar slot="footer" design="Transparent">
-				<ToolbarButton design="Transparent" text={this.closeButtonText} onClick={this._handleCloseButtonClick} />
+				<ToolbarButton design="Transparent" text={this.closeButtonText} tooltip={this.closeButtonText} onClick={this._handleCloseButtonClick} />
 			</Toolbar>
 		</Dialog>
 	);
