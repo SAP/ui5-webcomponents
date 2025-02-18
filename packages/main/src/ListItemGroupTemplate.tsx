@@ -1,24 +1,16 @@
-import type { AriaRole } from "@ui5/webcomponents-base/";
 import type ListItemGroup from "./ListItemGroup.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import DropIndicator from "./DropIndicator.js";
 import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 
-export default function ListItemGroupTemplate(this: ListItemGroup, hooks?: { items: () => void }, injectedProps?: {
-	groupHeaderRole?: `${ListItemAccessibleRole}`,
-	groupRole?: AriaRole,
-}) {
-	const items = hooks?.items || defaultItems;
-	const groupHeaderRole = injectedProps?.groupHeaderRole || ListItemAccessibleRole.ListItem;
-	const groupRole = injectedProps?.groupRole || "list";
-
+export default function ListItemGroupTemplate(this: ListItemGroup) {
 	return (
 		<>
 			{this.hasHeader &&
-				<ListItemGroupHeader focused={this.focused} part="header" accessibleRole={groupHeaderRole}>
+				<ListItemGroupHeader focused={this.focused} part="header" accessibleRole={ListItemAccessibleRole.ListItem}>
 					{ this.hasFormattedHeader ? <slot name="header"></slot> : this.headerText }
 					<div
-						role={groupRole}
+						role="list"
 						slot="subItems"
 						aria-owns={`${this._id}-content`}
 						aria-label={this.headerText}
@@ -32,15 +24,11 @@ export default function ListItemGroupTemplate(this: ListItemGroup, hooks?: { ite
 				onDragLeave={this._ondragleave}
 				id={`${this._id}-content`}>
 
-				{ items.call(this) }
+				<slot></slot>
 
 				<DropIndicator orientation="Horizontal" ownerReference={this}/>
 			</div>
 		</>
 
 	);
-}
-
-function defaultItems(this: ListItemGroup) {
-	return <slot></slot>;
 }
