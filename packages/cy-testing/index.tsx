@@ -4,23 +4,12 @@ import type { JSX } from 'preact';
 
 type Options = Record<string, any>;
 
-function applyConfiguration(options: Options) {
-	let configurationScript = document.head.querySelector("script[data-ui5-config]");
-
-	if (options.ui5Configuration && configurationScript) {
-		configurationScript.innerHTML = JSON.stringify(options.ui5Configuration);
-	}
-}
-
 function cleanup() {
 	render(null, getContainerEl());
 }
 
 export function mount(component: JSX.Element, options: Options = {}) {
 	const container = getContainerEl();
-
-	// Apply custom configuration
-	applyConfiguration(options);
 
 	// Mount JSX Element
 	render(null, container);

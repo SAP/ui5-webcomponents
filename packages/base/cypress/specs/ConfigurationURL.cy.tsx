@@ -55,6 +55,16 @@ describe("Different themeRoot configurations", () => {
 	it("Allowed theme root", () => {
 		const searchParams = "sap-ui-theme=sap_horizon_hcb@https://example.com";
 
+		// All allowed theme roots need to be described inside the meta tag.
+		cy.window()
+			.then($el => {
+				const metaTag = document.createElement("meta");
+				metaTag.name = "sap-allowedThemeOrigins";
+				metaTag.content = "https://example.com";
+
+				$el.document.head.append(metaTag);
+			})
+
 		cy.stub(internals, "search", () => {
 			return searchParams;
 		});
@@ -71,6 +81,14 @@ describe("Different themeRoot configurations", () => {
 		cy.wrap({ getThemeRoot })
 			.invoke("getThemeRoot")
 			.should("equal", "https://example.com/UI5/");
+
+		// All allowed theme roots need to be described inside the meta tag.
+		cy.window()
+			.then($el => {
+				const metaTag = $el.document.head.querySelector("[name='sap-allowedThemeOrigins']");
+
+				metaTag?.remove();
+			})
 	});
 
 	it("Unallowed theme root", () => {
