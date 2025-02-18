@@ -143,16 +143,16 @@ function transitionToLoadState() {
 
 function updateMenuVisibility(menu, isVisible, isOpen = false) {
 	if (isVisible) {
-		toggleShowHideClass(menu, "hide", "show");
+		updateElementVisibility(menu, "hide", "show");
 	} else {
-		toggleShowHideClass(menu, "show", "hide");
+		updateElementVisibility(menu, "show", "hide");
 	}
 	if (isOpen) {
 		menu.open = true;
 	}
 }
 
-function toggleShowHideClass(element, classToRemove, classToAdd) {
+function updateElementVisibility(element, classToRemove, classToAdd) {
 	element.classList.remove(classToRemove);
 	element.classList.add(classToAdd);
 }
