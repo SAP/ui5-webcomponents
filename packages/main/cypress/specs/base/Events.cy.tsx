@@ -98,8 +98,6 @@ describe("Event bubbling", () => {
 			.realClick();
 
 		// assert
-		// - the close event of the MessageStrip doesn't bubble
-		// - the close event of the Input doesnt't bubble
 		// - the close event of the Dialog is not triggered because MessageStrip and Input do not bubble
 		cy.get("@inpClosed")
 			.should("have.been.calledOnce");
