@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.0...v2.8.0-rc.1) (2025-02-13)
+
+
+### Bug Fixes
+
+* **ui5-button:** remove tap highlight on safari ([#10786](https://github.com/SAP/ui5-webcomponents/issues/10786)) ([ac83d60](https://github.com/SAP/ui5-webcomponents/commit/ac83d60ab0feb0681535a59f500f213c1b262c16))
+* **ui5-table:** update select all checkbox ([#10833](https://github.com/SAP/ui5-webcomponents/issues/10833)) ([819edcd](https://github.com/SAP/ui5-webcomponents/commit/819edcd51b04d60634fa8faa8f5c6b256eac99f5)), closes [#10658](https://github.com/SAP/ui5-webcomponents/issues/10658) [#10574](https://github.com/SAP/ui5-webcomponents/issues/10574) [#10804](https://github.com/SAP/ui5-webcomponents/issues/10804)
+* **ui5-time-picker:** display value state message in popover's header correctly on mobile ([#10795](https://github.com/SAP/ui5-webcomponents/issues/10795)) ([accc3d6](https://github.com/SAP/ui5-webcomponents/commit/accc3d69fba53bb98eca0dc924f388212bc14566))
+
+
+### Features
+
+* **ui5-link:** introduce reactive area size property ([#10762](https://github.com/SAP/ui5-webcomponents/issues/10762)) ([6ff54ce](https://github.com/SAP/ui5-webcomponents/commit/6ff54ce57ce2bb84f0adcccc209b740f6749d27e))
+* **ui5-table:** action header cell is added ([#10698](https://github.com/SAP/ui5-webcomponents/issues/10698)) ([ff6d77d](https://github.com/SAP/ui5-webcomponents/commit/ff6d77d46a6c4fde07935fed5914ce8807f90032))
+
+
+
+
+
 # [2.8.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0...v2.8.0-rc.0) (2025-02-06)
 
 
