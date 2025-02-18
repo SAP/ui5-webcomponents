@@ -341,7 +341,7 @@ class Popover extends Popup {
 		let overflowsTop = false;
 
 		if (closedPopupParent instanceof Popover) {
-			const contentRect = closedPopupParent.contentDOM.getBoundingClientRect();
+			const contentRect = closedPopupParent.getBoundingClientRect();
 			overflowsBottom = openerRect.top > (contentRect.top + contentRect.height);
 			overflowsTop = (openerRect.top + openerRect.height) < contentRect.top;
 		}
