@@ -1,6 +1,6 @@
 import { defineConfig } from "cypress";
 // @ts-ignore
-import viteConfig from "../../vite.config.js";
+import viteConfig from "../../../vite.config.js";
 import coverageTask from "@cypress/code-coverage/task";
 
 export default defineConfig({
