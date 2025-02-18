@@ -5,15 +5,18 @@
   "scripts": {
     "build": "tsc"
   },
+  "type": "module",
   "types": "*.d.ts",
   "files": [
     "package.json",
     "commands.js",
+    "cypress.config.js",
     "config.js",
     "commands.d.ts",
     "config.d.ts"
   ],
   "devDependencies": {
+    "@ui5/cypress-ct-ui5-webc": "0.0.0",
     "cypress": "^13.11.0",
     "typescript": "^5.6.2",
     "cypress-real-events": "^1.12.0"

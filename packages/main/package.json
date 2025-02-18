@@ -67,8 +67,6 @@
     "jsdom": "^26.0.0",
     "lit": "^2.0.0",
     "vitest": "^3.0.2",
-    "cypress": "^13.11.0",
-    "@ui5/cypress-ct-ui5-webc": "0.0.0",
     "@ui5/cypress-common": "0.0.0"
   }
 }

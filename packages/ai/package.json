@@ -56,8 +56,6 @@
   "devDependencies": {
     "@ui5/webcomponents-tools": "2.8.0-rc.1",
     "chromedriver": "^132.0.0",
-    "cypress": "^13.11.0",
-    "@ui5/cypress-ct-ui5-webc": "0.0.0",
     "@ui5/cypress-common": "0.0.0"
   }
 }

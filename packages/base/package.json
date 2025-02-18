@@ -67,8 +67,6 @@
     "replace-in-file": "^6.3.5",
     "resolve": "^1.20.0",
     "touch": "^3.1.0",
-    "cypress": "^13.11.0",
-    "@ui5/cypress-ct-ui5-webc": "0.0.0",
     "@ui5/cypress-common": "0.0.0"
   }
 }
