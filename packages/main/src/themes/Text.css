@@ -4,13 +4,12 @@
 	font-family: var(--sapFontFamily);
 	color: var(--sapTextColor);
 	line-height: normal;
-	word-wrap: break-word;
 	cursor: text;
 	overflow: hidden;
 }
 
 :host([max-lines="1"]) {
-	display: block;
+	display: inline-block;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
@@ -21,6 +20,7 @@
 	line-clamp: var(--_ui5_text_max_lines);
 	-webkit-box-orient: vertical;
 	white-space: normal;
+	word-wrap: break-word;
 }
 
 .empty-indicator-aria-label {
