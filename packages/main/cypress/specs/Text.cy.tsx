@@ -22,7 +22,7 @@ describe("Text", () => {
 		cy.mount(<Text maxLines={1}>Text</Text>);
 
 		cy.get("[ui5-text]")
-			.should("have.css", "display", "block")
+			.should("have.css", "display", "inline-block")
 			.should("have.css", "overflow", "hidden")
 			.should("have.css", "text-overflow", "ellipsis")
 			.should("have.css", "white-space", "nowrap");
