@@ -990,10 +990,6 @@ class TabContainer extends UI5Element {
 		const tabStrip = this._getTabStrip();
 		let allItemsWidth = 0;
 
-		if (!this._selectedTab && !this.noDefaultSelection) {
-			return;
-		}
-
 		const itemsDomRefs = this.items.map(item => item.getDomRefInStrip()) as Array<TabInStrip | TabSeparatorInStrip>;
 
 		// make sure the overflows are hidden
