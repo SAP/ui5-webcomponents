@@ -282,6 +282,7 @@ class TabContainer extends UI5Element {
 	 * @default false
 	 * @since 2.9.0
 	 * @public
+	 * @experimental
 	 */
 	@property({ type: Boolean })
 	noDefaultSelection = false;
