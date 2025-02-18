@@ -38,7 +38,7 @@ export default function SettingItemTemplate(this: SettingItem) {
 
 	return (
 		<div class="ui5-setting-item">
-			<header class="ui5-setting-item-header-container">
+			<header class="ui5-setting-item-header-container" tabindex={0}>
 				<div class="ui5-setting-item-header">
 					<Button icon="nav-back" design="Transparent" onClick={this._handleBackButtonClick} class="ui5-setting-item-collapse-btn" style={{ display: this._shouldShowBackButton ? "block" : "" }}></Button>
 
