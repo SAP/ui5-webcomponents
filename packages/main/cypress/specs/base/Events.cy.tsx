@@ -99,15 +99,16 @@ describe("Event bubbling", () => {
 
 		// assert
 		// - the close event of the MessageStrip doesn't bubble
-		// - the close event of the Input bubbles: Input -> Dialog -> App
+		// - the close event of the Input doesnt't bubble
+		// - the close event of the Dialog is not triggered because MessageStrip and Input do not bubble
 		cy.get("@inpClosed")
 			.should("have.been.calledOnce");
 		cy.get("@msgClosed")
 			.should("have.been.calledOnce");
 		cy.get("@dialogClosed")
-			.should("have.been.calledOnce");
+			.should("have.been.not.called");
 		cy.get("@appClosed")
-			.should("have.been.calledOnce");
+			.should("have.been.not.called");
 
 		// act - toggle Panel
 		cy.get("@panel")
