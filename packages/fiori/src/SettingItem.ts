@@ -138,6 +138,14 @@ class SettingItem extends UI5Element {
 	loading = false;
 
 	/**
+	 * Indicates why the control is in loading state.
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	loadingReason?: string;
+
+	/**
 	 * Defines the icon of the component.
 	 *
 	 * @default "globe"

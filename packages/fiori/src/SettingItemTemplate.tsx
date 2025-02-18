@@ -30,7 +30,9 @@ export default function SettingItemTemplate(this: SettingItem) {
 	const loadingState = <div class="ui5-setting-item-loading-container">
 		<BusyIndicator
 			active={this.loading}
-			class="ui5-setting-item-busy">
+			class="ui5-setting-item-busy"
+			delay={0}
+			aria-description={this.loadingReason}>
 		</BusyIndicator>
 	</div>;
 

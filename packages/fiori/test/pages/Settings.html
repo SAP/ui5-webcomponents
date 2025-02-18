@@ -256,9 +256,10 @@
 		console.log(`Item selected: ${event.detail.item.text}`, event.detail);
 		if(event.detail.item.text ==="Language & Region"){
 			event.detail.item.loading=true;
+			event.detail.item.loadingReason="Language & Region loading data...";
 			setTimeout(function(){
 				event.detail.item.loading=false;
-				}, 5000);
+				}, 3000);
 		}
 	});
 
