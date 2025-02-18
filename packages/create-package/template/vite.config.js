@@ -9,6 +9,6 @@ import viteConfig from "@ui5/webcomponents-tools/components-package/vite.config.
 // viteConfig.plugins = viteConfig.plugins || [];
 //
 // Push a new fake plugin
-// viteConfig.plugins.push({ name: 'fake-plugin' });
+// viteConfig.plugins.push({ name: 'my-custom-plugin' });
 
 export default viteConfig;
