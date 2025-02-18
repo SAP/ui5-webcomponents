@@ -1,9 +1,15 @@
 import { defineConfig } from "cypress";
 // @ts-ignore
-import viteConfig  from "../../vite.config.js";
+import viteConfig from "../../vite.config.js";
+import coverageTask from "@cypress/code-coverage/task";
 
 export default defineConfig({
 	component: {
+		setupNodeEvents(on, config) {
+			coverageTask(on, config);
+
+			return config
+		},
 		devServer: {
 			framework: "@ui5/cypress-ct-ui5-webc" as any,
 			bundler: "vite",
