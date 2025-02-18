@@ -19,11 +19,15 @@
 </head>
 
 <body class="button1auto">
-	<test-button state="1">
-		<test-button-state name="0" icon="ai"></test-button-state>
-		<test-button-state name="1" icon="ai" text="probabababa"></test-button-state>
-		<test-button-state name="2" icon="ai" text="probabababa" end-icon="ai"></test-button-state>
-		<test-button-state name="3" icon="ai" text="probabababa" show-arrow-button></test-button-state>
+	<test-button state="0">
+		<test-button-state name="0" icon="ai" text="short"></test-button-state>
+		<test-button-state name="1" text="long long long text"></test-button-state>
+		<test-button-state name="2" icon="share"></test-button-state>
+		<test-button-state name="3" icon="ai"></test-button-state>
+		<test-button-state name="4" icon="share" text="long long long text"></test-button-state>
+		<test-button-state name="5" icon="share" text="short"></test-button-state>
+		<test-button-state name="6" icon="ai" text="long long long text"></test-button-state>
+		<test-button-state name="7" text="short"></test-button-state>
 	</test-button>
 	<test-button state="1" design="Emphasized">
 		<test-button-state name="0" icon="ai"></test-button-state>
@@ -70,7 +74,7 @@
 		btns.forEach(btn => {
 			btn.addEventListener("ui5-click", e => {
 				// btns.forEach(c => c.state = `${(parseInt(c.state) + 1) % 4}`);
-				e.target.state = `${(parseInt(e.target.state) + 1) % 4}`;
+				e.target.state = `${(parseInt(e.target.state) + 1) % 8}`;
 				console.log("click")
 			})
 			btn.addEventListener("ui5-arrow-click", e => {

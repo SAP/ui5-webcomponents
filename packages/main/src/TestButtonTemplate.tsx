@@ -1,6 +1,6 @@
 import type TestButton from "./TestButton.js";
 import Icon from "./Icon.js";
-import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+// import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 export default function TestButtonTemplate(this: TestButton) {
 	// const startIcon = this.currentStateObject?.icon;
@@ -38,16 +38,16 @@ export default function TestButtonTemplate(this: TestButton) {
 	);
 }
 
-function arrowBtnTemplate(this: TestButton) {
-	return <button
-		class="test-button-inner test-button-arrow"
-		id="arrow-btn"
-		tabindex={-1}
-		data-arrow-btn-active={this.arrowBtnActivated}
-		onClick={this.handleClick}
-		onKeyDown={this.handleKeyDown}
-		onKeyUp={this.handleKeyUp}
-	>
-		<Icon name={slimArrowDown} id="arrow-icon" />
-	</button>;
-}
+// function arrowBtnTemplate(this: TestButton) {
+// 	return <button
+// 		class="test-button-inner test-button-arrow"
+// 		id="arrow-btn"
+// 		tabindex={-1}
+// 		data-arrow-btn-active={this.arrowBtnActivated}
+// 		onClick={this.handleClick}
+// 		onKeyDown={this.handleKeyDown}
+// 		onKeyUp={this.handleKeyUp}
+// 	>
+// 		<Icon name={slimArrowDown} id="arrow-icon" />
+// 	</button>;
+// }

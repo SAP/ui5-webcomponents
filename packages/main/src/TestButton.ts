@@ -26,7 +26,7 @@ const animations = [
 		],
 		options: {
 			delay: 0,
-			duration: 1000,
+			duration: 100,
 			fill: "forwards",
 			easing: "ease-in-out",
 		},
@@ -39,8 +39,8 @@ const animations = [
 		],
 		options: {
 			id: "iconFadeOut",
-			delay: 600,
-			duration: 400,
+			delay: 60,
+			duration: 40,
 			fill: "forwards",
 		},
 	},
@@ -51,8 +51,8 @@ const animations = [
 			{ transform: "translateY(-1rem)" },
 		],
 		options: {
-			delay: 1200,
-			duration: 800,
+			delay: 120,
+			duration: 80,
 			fill: "forwards",
 			easing: "ease-in-out",
 		},
@@ -65,8 +65,8 @@ const animations = [
 		],
 		options: {
 			id: "textFadeOut",
-			delay: 1200,
-			duration: 600,
+			delay: 120,
+			duration: 60,
 			fill: "forwards",
 		},
 	},
@@ -77,8 +77,8 @@ const animations = [
 			{ transform: "translateY(0)" },
 		],
 		options: {
-			delay: 2400,
-			duration: 1000,
+			delay: 240,
+			duration: 100,
 			fill: "forwards",
 			easing: "ease-in-out",
 		},
@@ -90,8 +90,8 @@ const animations = [
 			{ opacity: "1" },
 		],
 		options: {
-			delay: 2400,
-			duration: 400,
+			delay: 240,
+			duration: 40,
 			fill: "forwards",
 		},
 	},
@@ -103,8 +103,8 @@ const animations = [
 		],
 		options: {
 			id: "textFadeIn",
-			delay: 3000,
-			duration: 800,
+			delay: 300,
+			duration: 80,
 			fill: "forwards",
 			easing: "ease-in-out",
 		},
@@ -116,8 +116,8 @@ const animations = [
 			{ opacity: "1" },
 		],
 		options: {
-			delay: 3000,
-			duration: 600,
+			delay: 300,
+			duration: 60,
 			fill: "forwards",
 		},
 	},
@@ -204,17 +204,6 @@ class TestButton extends UI5Element {
 		this.fireDecoratorEvent(eventName);
 	}
 
-	handleKeyDown(e: KeyboardEvent) {
-		if (isSpace(e) || isEnter(e)) {
-			this.arrowBtnActivated = this.arrowBtn === e.currentTarget;
-			this.mainBtnActivated = this.arrowBtn !== e.currentTarget;
-		}
-
-		if (isEnter(e)) {
-			this.fireClickEvent(e, e.currentTarget === this.arrowBtn ? "arrow-click" : "click");
-		}
-	}
-
 	testAnimation() {
 		const oldText = this._prevStateObject?.text || "";
 		const oldIcon = this._prevStateObject?.icon || "";
@@ -231,7 +220,15 @@ class TestButton extends UI5Element {
 						this.shadowRoot!.querySelector("[data-text]")!.textContent = newText;
 					}
 
+					if (newText) {
+						this.shadowRoot!.querySelector("[data-text]").hidden = false;
+					}
+
 					this.shadowRoot!.querySelector("[data-icon]").name = newIcon;
+
+					if (newIcon) {
+						this.shadowRoot!.querySelector("[data-icon]").hidden = false;
+					}
 
 					this.shadowRoot!.querySelector("[data-text]")
 						?.animate([
@@ -239,13 +236,17 @@ class TestButton extends UI5Element {
 							{ maxWidth: `${newText.length}ch` },
 						], {
 							delay: 0,
-							duration: 1000,
+							duration: 100,
 							fill: "forwards",
 							easing: "ease-in-out",
 						})
 						.finished.then(() => {
 							if (!(newText.length > oldText.length)) {
 								this.shadowRoot!.querySelector("[data-text]")!.textContent = newText;
+							}
+
+							if (!newText) {
+								this.shadowRoot!.querySelector("[data-text]").hidden = true;
 							}
 						});
 
@@ -255,15 +256,32 @@ class TestButton extends UI5Element {
 							{ width: newIcon ? "1rem" : "0px" },
 						], {
 							delay: 0,
-							duration: 1000,
+							duration: 100,
 							fill: "forwards",
 							easing: "ease-in-out",
+						})
+						.finished
+						.then(() => {
+							if (!newIcon) {
+								this.shadowRoot!.querySelector("[data-icon]").hidden = true;
+							}
 						});
 				});
 			}
 
 			this._prevStateObject = this.currentStateObject;
 		});
+	}
+
+	handleKeyDown(e: KeyboardEvent) {
+		if (isSpace(e) || isEnter(e)) {
+			this.arrowBtnActivated = this.arrowBtn === e.currentTarget;
+			this.mainBtnActivated = this.arrowBtn !== e.currentTarget;
+		}
+
+		if (isEnter(e)) {
+			this.fireClickEvent(e, e.currentTarget === this.arrowBtn ? "arrow-click" : "click");
+		}
 	}
 
 	handleKeyUp(e: KeyboardEvent) {
