@@ -77,7 +77,9 @@ describe("Legacy date customization", () => {
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
-			.ui5DatePickerValueHelpIconPress();
+			.ui5DatePickerGetInnerInput()
+			.realClick()
+			.realPress("F4");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetDisplayedDay(11)
