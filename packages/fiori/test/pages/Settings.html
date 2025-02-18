@@ -254,6 +254,12 @@
 
 	settingsDialog.addEventListener("item-select", function (event) {
 		console.log(`Item selected: ${event.detail.item.text}`, event.detail);
+		if(event.detail.item.text ==="Language & Region"){
+			event.detail.item.loading=true;
+			setTimeout(function(){
+				event.detail.item.loading=false;
+				}, 5000);
+		}
 	});
 
 	settingsDialog.addEventListener("view-select", function (event) {
