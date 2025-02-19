@@ -2,6 +2,7 @@
  * Selection modes of the &lt;ui5-table&gt; component.
  *
  * @public
+ * @deprecated This component is deprecated and will be removed in future releases. Use `ui5-table-selection-single` or `ui5-table-selection-multi` components instead.
  */
 enum TableSelectionMode {
 	/**
