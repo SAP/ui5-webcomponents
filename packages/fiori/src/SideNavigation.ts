@@ -31,6 +31,7 @@ import { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 import type SideNavigationGroup from "./SideNavigationGroup.js";
+import type SideNavigationDesign from "./types/SideNavigationDesign.js";
 import SideNavigationTemplate from "./SideNavigationTemplate.js";
 
 import {
@@ -142,6 +143,15 @@ class SideNavigation extends UI5Element {
 	collapsed = false;
 
 	/**
+	 * Defines whether the control should have container styling or not.
+	 *
+	 * @public
+	 * @default "Decorated"
+	 */
+	@property()
+	design: `${SideNavigationDesign}` = "Decorated";
+
+	/**
 	 * Defines the main items of the component.
 	 *
 	 * @public
@@ -181,6 +191,12 @@ class SideNavigation extends UI5Element {
 
 	@property({ type: Object })
 	_menuPopoverItems: Array<SideNavigationItem> = [];
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	isPhone = isPhone();
 
 	_isOverflow = false;
 	_flexibleItemNavigation: ItemNavigation;

@@ -18,6 +18,15 @@
 	width: var(--_ui5_side_navigation_collapsed_width);
 }
 
+/* SideNavigationDesign */
+:host([design="Plain"]) {
+	box-shadow: none;
+}
+
+:host([design="Plain"][is-phone]) {
+	width: 100%;
+}
+
 .ui5-sn-root {
 	height: 100%;
 	display: flex;
