@@ -1,0 +1,8 @@
+[ui5-responsive-popover]::part(content) {
+    padding: 0;
+}
+
+[ui5-responsive-popover] {
+    width: 200px;
+    height: 400px;
+}
