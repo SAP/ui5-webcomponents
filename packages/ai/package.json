@@ -27,7 +27,7 @@
     "bundle": "nps build.bundle",
     "test": "nps test-cy-ci",
     "test:cypress": "nps test-cy-ci",
-    "test:cypress:single": "nps test-cy-single",
+    "test:cypress:single": "npx cypress run --component --browser chrome --spec",
     "test:cypress:open": "nps test-cy-open",
     "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
     "create-ui5-element": "wc-create-ui5-element",
