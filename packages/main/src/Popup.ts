@@ -297,10 +297,11 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireDecoratorEvent("before-open");
-
-		if (prevented || this._opened) {
-			return;
+		if (this._fullyConnected) {
+			const prevented = !this.fireDecoratorEvent("before-open");
+			if (prevented) {
+				return;
+			}
 		}
 
 		this._opened = true;
@@ -326,7 +327,7 @@ abstract class Popup extends UI5Element {
 
 		await renderFinished();
 
-		if (this.isConnected) {
+		if (this.isConnected && this._fullyConnected) {
 			this.fireDecoratorEvent("open");
 		}
 	}
@@ -510,9 +511,11 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireDecoratorEvent("before-close", { escPressed });
-		if (prevented) {
-			return;
+		if (this._fullyConnected) {
+			const prevented = !this.fireDecoratorEvent("before-close", {escPressed});
+			if (prevented) {
+				return;
+			}
 		}
 
 		this._opened = false;
@@ -532,7 +535,9 @@ abstract class Popup extends UI5Element {
 			this.resetFocus();
 		}
 
-		this.fireDecoratorEvent("close");
+		if (this._fullyConnected) {
+			this.fireDecoratorEvent("close");
+		}
 	}
 
 	/**
