@@ -178,6 +178,10 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 			classes.push("ui5-sn-item-selected");
 		}
 
+		if (this.unselectable) {
+			classes.push("ui5-sn-item-unselectable");
+		}
+
 		return classes;
 	}
 
