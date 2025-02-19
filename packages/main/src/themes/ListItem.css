@@ -57,7 +57,7 @@
 }
 
 :host([_has-image]) {
-	min-height: 5rem;
+	height: 5rem;
 }
 
 :host([image]) .ui5-li-content {
@@ -71,7 +71,7 @@
 	object-fit: contain
 }
 
-:host([has-description]) .ui5-li-root {
+:host([has-description]:not([has-expandable-content])) .ui5-li-root {
 	padding: 1rem;
 }
 
@@ -122,7 +122,8 @@
 	height: auto;
 }
 
-:host([wrapping-type="Normal"]) .ui5-li-content {
+:host([wrapping-type="Normal"]) .ui5-li-content,
+:host([has-expandable-content]) .ui5-li-content {
 	margin: var(--_ui5_list_item_content_vertical_offset) 0;
 }
 
@@ -133,18 +134,6 @@
 
 :host([has-description]) .ui5-li-additional-text {
 	align-self: flex-end;
-}
-
-/* when both description and additional text are present */
-/* allocate 60% of the space for description and 40% for additional text */
-:host([has-description][has-additional-text]) {
-	.ui5-li-desc {
-		flex: 3;
-	}
-
-	.ui5-li-additional-text {
-		flex: 2;
-	}
 }
 
 .ui5-li-image {
@@ -174,25 +163,21 @@
 	flex-shrink: 0;
 }
 
+:host([has-description]) .ui5-li-multisel-cb,
 :host([has-description]) .ui5-li-singlesel-radiobtn {
 	align-self: flex-start;
 	margin-top: var(--_ui5_list_item_selection_btn_margin_top);
 }
 
-:host([has-description]) .ui5-li-multisel-cb {
-	align-self: flex-start;
-	margin-top: var(--_ui5_list_item_selection_btn_margin_top);
-}
-
-:host([_selection-mode="SingleStart"]) .ui5-li-root {
+:host([ui5-li][_selection-mode="SingleStart"]) .ui5-li-root {
 	padding-inline: 0 1rem;
 }
 
-:host([_selection-mode="Multiple"]) .ui5-li-root {
+:host([ui5-li][_selection-mode="Multiple"]) .ui5-li-root {
 	padding-inline: 0 1rem;
 }
 
-:host([_selection-mode="SingleEnd"]) .ui5-li-root {
+:host([ui5-li][_selection-mode="SingleEnd"]) .ui5-li-root {
 	padding-inline: 1rem 0;
 }
 
@@ -249,4 +234,14 @@
 :host([has-expandable-content]) .ui5-li-detailbtn,
 :host([has-expandable-content]) .ui5-li-deletebtn {
 	padding-left: .875rem;
+}
+
+:host([has-expandable-content]) .ui5-li-multisel-cb,
+:host([has-expandable-content]) .ui5-li-singlesel-radiobtn {
+	align-self: flex-start;
+}
+
+:host([has-expandable-content][has-description][has-description]) .ui5-li-singlesel-radiobtn,
+:host([has-expandable-content][has-description][has-description]) .ui5-li-multisel-cb {
+	margin-top: unset;
 }

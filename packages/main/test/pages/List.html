@@ -516,7 +516,19 @@
 
 	<br/><br/>
 
-	<ui5-list header-text="List with expandable content" selection-mode="Delete">
+	<h2>List with expandable content</h2>
+
+	<ui5-label for="selectExpandableContent">Change selectionMode:</ui5-label>
+	<ui5-select id="selectExpandableContent">
+		<ui5-option selected>None</ui5-option>
+		<ui5-option>Single</ui5-option>
+		<ui5-option>SingleStart</ui5-option>
+		<ui5-option>SingleEnd</ui5-option>
+		<ui5-option>Multiple</ui5-option>
+		<ui5-option>Delete</ui5-option>
+	</ui5-select>
+
+	<ui5-list id="listWithExpandableContent" header-text="List with expandable content (Current selectionMode: None)">
 		<ui5-li>Basic list item with normal text</ui5-li>
 
 		<ui5-li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus pariatur doloremque ea illum rem maiores quisquam ut mollitia, magni praesentium iusto quam placeat, neque voluptatem, ducimus numquam fugiat itaque voluptates. Officia magni autem cumque commodi minus ducimus ex tempore vel qui provident aliquam ad laborum velit maiores suscipit sint, aliquid deserunt non incidunt iusto eum sit totam. Delectus id qui provident accusamus, repellendus alias nam doloremque voluptas fuga pariatur dolor vel quasi in dignissimos rerum, hic distinctio at ullam ab eius sint laudantium nostrum? Dolorum ab explicabo exercitationem assumenda, sequi, eveniet repellat unde illo modi officia voluptatibus nisi, architecto optio.</ui5-li>
@@ -544,6 +556,13 @@
 			<ui5-expandable-text text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic consequatur praesentium earum autem officia velit deleniti consequuntur maiores a explicabo!">
 			</ui5-expandable-text>
 		</ui5-li>
+
+		<ui5-li>
+			<ui5-expandable-text text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic consequatur praesentium earum autem officia velit deleniti consequuntur maiores a explicabo!">
+			</ui5-expandable-text>
+			<ui5-avatar slot="image" initials="PM" color-scheme="Accent1"></ui5-avatar>
+		</ui5-li>
+
 
 		<ui5-li description="Description" additional-text="Available" additional-text-state="Positive">
 			Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic consequatur praesentium earum autem officia velit
@@ -695,6 +714,7 @@
 		var singleSelectEndList = document.getElementById('myList2');
 		var multiSelectList = document.getElementById('myList4');
 		var singleSelectListPrevent = document.getElementById('listPrevent');
+		var listWithExpandableContent = document.getElementById('listWithExpandableContent');
 
 		var list = document.getElementById('myList5');
 		var resetBtn = document.getElementById('resetBtn');
@@ -707,6 +727,8 @@
 		var lblSelectionChange2 = document.getElementById('selectionChange2');
 		var visualizationList = document.getElementById('myList6');
 		var select = document.getElementById('select');
+		var selectExpandableContent = document.getElementById('selectExpandableContent');
+
 		var selectionModes = {
 			"None": undefined,
 			"Single": "Single",
@@ -723,8 +745,15 @@
 		select.addEventListener("ui5-change", function (event) {
 			var value = event.detail.selectedOption.textContent;
 
-			visualizationList.selectionModes = selectionModes[value];
+			visualizationList.selectionMode = selectionModes[value];
 			visualizationList.headerText = visualizationList.headerText.replace(/\(.+\)/, "(Current selectionMode: " + value + ")");
+		});
+
+		selectExpandableContent.addEventListener("ui5-change", function (event) {
+			var value = event.detail.selectedOption.textContent;
+
+			listWithExpandableContent.selectionMode = selectionModes[value];
+			listWithExpandableContent.headerText = listWithExpandableContent.headerText.replace(/\(.+\)/, "(Current selectionMode: " + value + ")");
 		});
 
 		var getItems = function getItems(items) {
