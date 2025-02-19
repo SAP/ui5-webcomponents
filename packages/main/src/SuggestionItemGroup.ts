@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type SuggestionListItem from "./SuggestionListItem.js";
 import ListItemGroup from "./ListItemGroup.js";
+import ListBoxItemGroupTemplate from "./ListBoxItemGroupTemplate.js";
 
 /**
  * @class
@@ -14,6 +15,7 @@ import ListItemGroup from "./ListItemGroup.js";
  */
 @customElement({
 	tag: "ui5-suggestion-item-group",
+	template: ListBoxItemGroupTemplate,
 })
 class SuggestionItemGroup extends ListItemGroup {
 	/**

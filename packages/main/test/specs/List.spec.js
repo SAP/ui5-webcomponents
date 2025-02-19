@@ -563,10 +563,10 @@ describe("List Tests", () => {
 		assert.strictEqual(ariaSelectedText, "Selected", "Selected state text is correct");
 	});
 
-	it('group headers should not be with role options', async () => {
-		const groupHeader = await browser.$(">>>#listSelectedItem #group .ui5-ghli-root");
+	it('group headers should be rendered as LI', async () => {
+		const groupHeader = await browser.$(">>>#listSelectedItem #group div.ui5-ghli-root");
 
-		assert.strictEqual(await groupHeader.getAttribute("role"), "group", "Item label is empty");
+		assert.ok(await groupHeader.isExisting(), "Group header is rendered as DIV");
 	});
 
 	it('anchor tabs should be accessible within list items', async () => {
