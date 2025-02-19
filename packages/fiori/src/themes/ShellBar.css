@@ -558,8 +558,8 @@ slot[name="profile"] {
 	animation: motion-hide 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);
 	animation-fill-mode: forwards;
 }
-.ui5-shellbar-content-item[data-hide-order = 2]	{
-	animation-duration: 0.05s;
+.ui5-shellbar-content-item[data-hide-order = 1]	{
+	animation-duration: 0.01s;
 }
 .ui5-shellbar-content-item[data-hide-order = 2]	{
  	animation-duration: 0.1s;
