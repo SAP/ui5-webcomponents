@@ -1,0 +1,19 @@
+{
+  "name": "@ui5/cypress-common",
+  "version": "0.0.0",
+  "description": "Example Framework Definition adapter for Cypress Component Testing",
+  "scripts": {
+    "build": "tsc"
+  },
+  "exports": {
+    "./*": "./dist/*"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@ui5/cypress-ct-ui5-webc": "0.0.0",
+    "cypress": "^13.11.0",
+    "typescript": "^5.6.2",
+    "cypress-real-events": "^1.12.0",
+    "@cypress/code-coverage": "^3.13.11"
+  }
+}
