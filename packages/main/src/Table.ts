@@ -534,9 +534,7 @@ class Table extends UI5Element {
 				const cell = row.cells[index];
 				if (cell) {
 					cell._popinHidden = header.popinHidden;
-					if (cell._popin !== header._popin) {
-						cell._popin = header._popin;
-					}
+					cell._popin = header._popin;
 				}
 			});
 		});
