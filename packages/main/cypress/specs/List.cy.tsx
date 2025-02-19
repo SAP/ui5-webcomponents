@@ -1,5 +1,6 @@
 import List from "../../src/List.js";
 import ListItemStandard from "../../src/ListItemStandard.js";
+import ExpandableText from "../../src/ExpandableText.js";
 
 describe("List Tests", () => {
 	it("tests 'loadMore' event fired upon infinite scroll", () => {
@@ -149,5 +150,113 @@ describe("List Tests", () => {
 			.shadow()
 			.find("[id$='growing-btn']")
 			.should("be.focused");
+	});
+});
+
+describe("List with expandable content", () => {
+	const MAX_CHARACTERS_LENGTH = 100; // Default value; could be changed later to fulfill the specificaiton
+
+	it("renders expandable title correctly", () => {
+		const longText = "This is a very long title that should be truncated initially and expandable when clicked. This is a very long title that should be truncated initially and expandable when clicked. This is a very long title that should be truncated initially and expandable when clicked.";
+
+		cy.mount(
+			<List>
+				<ListItemStandard>
+					<ExpandableText text={longText} />
+				</ListItemStandard>
+			</List>
+		);
+
+		// Check if title is initially truncated
+		cy.get("ui5-expandable-text")
+			.shadow()
+			.find(".ui5-exp-text-text")
+			.should("be.visible")
+			.invoke("text")
+			.should("have.length.at.most", MAX_CHARACTERS_LENGTH);
+
+		// Expand the text
+		cy.get("ui5-expandable-text")
+			.shadow()
+			.find(".ui5-exp-text-toggle")
+			.click();
+
+		// Verify full text is visible
+		cy.get("ui5-expandable-text")
+			.shadow()
+			.find(".ui5-exp-text-text")
+			.should("be.visible")
+			.invoke("text")
+			.should("equal", longText);
+	});
+
+	it("renders expandable description correctly", () => {
+		const longText = "This is a very long description that should be truncated initially and expandable when clicked. This is a very long description that should be truncated initially and expandable when clicked. This is a very long description that should be truncated initially and expandable when clicked.";
+
+		cy.mount(
+			<List>
+				<ListItemStandard>
+					Item with expandable description
+					<ExpandableText slot="expandableDescription" text={longText} />
+				</ListItemStandard>
+			</List>
+		);
+
+		// Check if description is initially truncated
+		cy.get("ui5-expandable-text")
+			.shadow()
+			.find(".ui5-exp-text-text")
+			.should("be.visible")
+			.invoke("text")
+			.should("have.length.at.most", MAX_CHARACTERS_LENGTH);
+
+		// Expand the text
+		cy.get("ui5-expandable-text")
+			.shadow()
+			.find(".ui5-exp-text-toggle")
+			.click();
+
+		// Verify full text is visible
+		cy.get("ui5-expandable-text")
+			.shadow()
+			.find(".ui5-exp-text-text")
+			.should("be.visible")
+			.invoke("text")
+			.should("equal", longText);
+	});
+
+	it("renders expandable additional text correctly", () => {
+		const longText = "This is a very long additional text that should be truncated initially and expandable when clicked. This is a very long additional text that should be truncated initially and expandable when clicked. This is a very long additional text that should be truncated initially and expandable when clicked.";
+
+		cy.mount(
+			<List>
+				<ListItemStandard>
+					Item with expandable additional text
+					<ExpandableText slot="expandableAdditionalText" text={longText} />
+				</ListItemStandard>
+			</List>
+		);
+
+		// Check initial truncated state
+		cy.get("ui5-expandable-text")
+			.shadow()
+			.find(".ui5-exp-text-text")
+			.should("be.visible")
+			.invoke("text")
+			.should("have.length.at.most", MAX_CHARACTERS_LENGTH);
+
+		// Expand the text
+		cy.get("ui5-expandable-text")
+			.shadow()
+			.find(".ui5-exp-text-toggle")
+			.click();
+
+		// Verify full text is visible
+		cy.get("ui5-expandable-text")
+			.shadow()
+			.find(".ui5-exp-text-text")
+			.should("be.visible")
+			.invoke("text")
+			.should("equal", longText);
 	});
 });
