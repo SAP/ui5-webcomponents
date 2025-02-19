@@ -297,11 +297,8 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		if (this._fullyConnected) {
-			const prevented = !this.fireDecoratorEvent("before-open");
-			if (prevented) {
-				return;
-			}
+		if (this._fullyConnected && !this.fireDecoratorEvent("before-open")) {
+			return;
 		}
 
 		this._opened = true;
@@ -511,11 +508,8 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		if (this._fullyConnected) {
-			const prevented = !this.fireDecoratorEvent("before-close", {escPressed});
-			if (prevented) {
-				return;
-			}
+		if (this._fullyConnected && !this.fireDecoratorEvent("before-close", { escPressed })) {
+			return;
 		}
 
 		this._opened = false;
