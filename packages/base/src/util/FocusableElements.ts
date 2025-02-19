@@ -1,6 +1,7 @@
 import isElementHidden from "./isElementHidden.js";
 import isElementClickable from "./isElementClickable.js";
 import { instanceOfUI5Element } from "../UI5Element.js";
+import { isSafari } from "../Device.js";
 
 type FocusableElementPromise = Promise<HTMLElement | null>;
 
@@ -9,8 +10,10 @@ const isFocusTrap = (el: HTMLElement) => {
 };
 
 const isScrollable = (el: HTMLElement) => {
-	return (el.scrollHeight > el.clientHeight && ["scroll", "auto"].indexOf(getComputedStyle(el).overflowY) >= 0)
-		|| (el.scrollWidth > el.clientWidth && ["scroll", "auto"].indexOf(getComputedStyle(el).overflowX) >= 0);
+	const computedStyle = getComputedStyle(el);
+
+	return (el.scrollHeight > el.clientHeight && ["scroll", "auto"].indexOf(computedStyle.overflowY) >= 0)
+		|| (el.scrollWidth > el.clientWidth && ["scroll", "auto"].indexOf(computedStyle.overflowX) >= 0);
 };
 
 const getFirstFocusableElement = async (container: HTMLElement, startFromContainer?: boolean): FocusableElementPromise => {
@@ -73,7 +76,8 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 
 				focusableDescendant = await findFocusableElement(child, forward);
 
-				if (!focusableDescendant && isScrollable(child)) {
+				// check if it is a keyboard focusable scroll container
+				if (!isSafari() && !focusableDescendant && isScrollable(child)) {
 					return (child && typeof child.focus === "function") ? child : null;
 				}
 
