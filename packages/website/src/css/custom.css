@@ -209,7 +209,8 @@ code {
 }
 
 .newComponentBadge,
-.expComponentBadge {
+.expComponentBadge,
+.deprComponentBadge {
   position: relative;
 }
 
@@ -227,7 +228,27 @@ code {
   pointer-events: none;
 }
 
-.newComponentBadge.expComponentBadge:before {
+.deprComponentBadge:before {
+  color: #fff;
+  position: absolute;
+  top: 0.25rem;
+  inset-inline-end: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.125rem 0.25rem;
+  box-sizing: border-box;
+  font-size: 0.75rem;
+  content: "depr";
+  background: #ffb700e0;
+  pointer-events: none;
+}
+
+.deprComponentBadge.expComponentBadge:before {
+	display: none;
+}
+
+
+.newComponentBadge.expComponentBadge:before,
+.newComponentBadge.deprComponentBadge:before {
   inset-inline-end: 3.25rem;
 }
 
@@ -246,11 +267,13 @@ code {
 }
 
 .theme-doc-sidebar-item-category.newComponentBadge:after,
-.theme-doc-sidebar-item-category.expComponentBadge:before {
+.theme-doc-sidebar-item-category.expComponentBadge:before,
+.theme-doc-sidebar-item-category.deprComponentBadge:before {
     inset-inline-end: 2.25rem;
 }
 
-.theme-doc-sidebar-item-category.newComponentBadge.expComponentBadge:before {
+.theme-doc-sidebar-item-category.newComponentBadge.expComponentBadge:before,
+.theme-doc-sidebar-item-category.newComponentBadge.deprComponentBadge:before {
     inset-inline-end: 4.5rem;
 }
 
