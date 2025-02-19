@@ -70,6 +70,10 @@ class ListItemGroupHeader extends ListItemBase {
 	get ariaLabelText() {
 		return [this.textContent, this.accessibleName].filter(Boolean).join(" ");
 	}
+
+	get hasSubItems() {
+		return this.subItems.length > 0;
+	}
 }
 
 ListItemGroupHeader.define();

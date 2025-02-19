@@ -19,7 +19,7 @@ export default function ListItemGroupHeaderTemplate(this: ListItemGroupHeader) {
 				<span class="ui5-ghli-title"><slot></slot></span>
 			</div>
 
-			<slot name="subItems"></slot>
+			{this.hasSubItems && <slot name="subItems"></slot>}
 		</div>
 	);
 }
