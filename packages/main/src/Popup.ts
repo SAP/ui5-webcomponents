@@ -293,11 +293,11 @@ abstract class Popup extends UI5Element {
 	}
 
 	async openPopup() {
-		if (this._opened) {
+		if (!this.isConnected || this._opened) {
 			return;
 		}
 
-		if (this.isConnected && !this.fireDecoratorEvent("before-open")) {
+		if (!this.fireDecoratorEvent("before-open")) {
 			return;
 		}
 
@@ -324,9 +324,7 @@ abstract class Popup extends UI5Element {
 
 		await renderFinished();
 
-		if (this.isConnected) {
-			this.fireDecoratorEvent("open");
-		}
+		this.fireDecoratorEvent("open");
 	}
 
 	_resize() {
