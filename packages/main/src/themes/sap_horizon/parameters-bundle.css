@@ -18,6 +18,7 @@
 @import "./DayPicker-parameters.css";
 @import "../base/Dialog-parameters.css";
 @import "./Dialog-parameters.css";
+@import "../base/DynamicDateRange-parameters.css";
 @import "./FileUploader-parameters.css";
 @import "../base/Table-parameters.css";
 @import "../base/Form-parameters.css";
