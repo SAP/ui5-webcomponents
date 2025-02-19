@@ -256,7 +256,7 @@ describe("Menu interaction", () => {
 			.as("menu").then($menu => {
 				const menu = $menu.get(0) as Menu;
 
-				menu.addEventListener("ui5-open", () => {
+				menu.addEventListener("ui5-before-open", () => {
 					setTimeout(() => {
 						menu.loading = false;
 
