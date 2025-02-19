@@ -53,6 +53,8 @@
 	--_ui5_side_navigation_item_collapsed_padding_right: 3.9375rem;
 	--_ui5_side_navigation_action_item_collapsed_padding: 1rem;
 	--_ui5_side_navigation_item_collapsed_unselectable_padding: 3rem;
+	--_ui5_side_navigation_action_item_border_hover: var(--sapElement_BorderWidth) solid var(--sapButton_Hover_BorderColor); /*var(--sapList_BorderColor);*/
+	--_ui5_side_navigation_action_item_border_active: var(--_ui5_side_navigation_action_item_border_hover);
 }
 
 [data-ui5-compact-size],
