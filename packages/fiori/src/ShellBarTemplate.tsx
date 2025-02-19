@@ -85,7 +85,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 								{this.startContent.map((item, index) => {
 									const itemInfo = this._contentInfo.find(info => info.id === item._individualSlot);
 									return (
-										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes} data-hide-order={item.getAttribute("data-hide-order")}>
+										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes} data-hide-order={`${item.getAttribute("data-hide-order")}s`}>
 											{!this.showStartSeparatorInWrapper && index === 0 && (
 												<div class={{
 													"ui5-shellbar-separator": true,

@@ -440,7 +440,6 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-search-field {
-	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
 	align-items: center;
 	flex-grow: 1;
 	margin-inline-start: 0.5rem;
@@ -451,6 +450,7 @@ slot[name="profile"] {
 
 :host([show-search-field]:not(.ui5-shellbar-animating)) .ui5-shellbar-search-field {
 	min-width: var(--_ui5_shellbar_search_field_width);
+	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
 }
 
 .ui5-shellbar-overflow-container-right-child > :first-child,
@@ -558,8 +558,8 @@ slot[name="profile"] {
 	animation: motion-hide 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);
 	animation-fill-mode: forwards;
 }
-.ui5-shellbar-content-item[data-hide-order = 1]	{
- 	animation-duration: attr("data-hide-order");
+.ui5-shellbar-content-item[data-hide-order = 2]	{
+	animation-duration: 0.05s;
 }
 .ui5-shellbar-content-item[data-hide-order = 2]	{
  	animation-duration: 0.1s;
@@ -591,7 +591,6 @@ slot[name="profile"] {
 
 .ui5-shellbar-animating .ui5-shellbar-search-field {
 	animation: expand-shrink 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);
-	padding-inline-start: 0;
 }
 
 :host([show-search-field]) .ui5-shellbar-search-field,
@@ -636,5 +635,6 @@ slot[name="profile"] {
 	to {
 		min-width: 0;
 		opacity: 0;
+		padding-inline-start: 0;
 	}
 }
