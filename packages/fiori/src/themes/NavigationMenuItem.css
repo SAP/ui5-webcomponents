@@ -1,4 +1,3 @@
-
 :host::part(native-li) {
 	padding-left: 0.5rem;
 	width: auto;
@@ -8,7 +7,7 @@
 	inset: 0;
  }
 
- :host {
+:host {
 	display: flex;
 	align-items: center;
 	width: 100%;
@@ -23,13 +22,21 @@
 	font-size: var(--sapFontSize);
 }
 
+:host([design="Action"]) {
+	color: var(--sapButton_TextColor);
+}
+
 :host([ui5-navigation-menu-item][selected]) {
 	border-bottom: none;
 }
 
+:host::part(content) {
+	color: inherit;
+}
+
 :host .ui5-navmenu-item-link {
 	text-decoration: none;
-	color: var(--sapList_TextColor);
+	color: inherit;
 }
 
 .ui5-navigation-menu-item-root .ui5-menu-item-icon-end {
@@ -37,7 +44,7 @@
 	inset-inline-end: auto;
 	width: 0.75rem;
 	height: 0.75rem;
-	color: var(--sapList_TextColor);
+	color: inherit
 }
 
 .ui5-navigation-menu-item-root .ui5-sn-item-external-link-icon {
@@ -45,8 +52,12 @@
 	height: 0.875rem;
 }
 
+:host([design="Action"]) .ui5-sn-item-external-link-icon {
+	color: var(--sapButton_TextColor);
+}
+
 :host::part(icon) {
-	color: var(--sapList_TextColor);
+	color: inherit;
 	min-width: 1rem;
 	min-height: 1rem;
 }

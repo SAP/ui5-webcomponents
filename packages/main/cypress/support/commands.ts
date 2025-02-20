@@ -37,9 +37,12 @@
 // }
 
 import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import "./commands/Menu.commands.js";
-import "./commands/ColorPicker.commands.js";
+
+// Please keep this list in alphabetical order
+import "./commands/Calendar.commands.js";
 import "./commands/ColorPalette.commands.js";
+import "./commands/ColorPicker.commands.js";
+import "./commands/Menu.commands.js";
 
 type SimulationDevices = "phone"
 
@@ -52,9 +55,12 @@ declare global {
 			ui5MenuItemClick(): Chainable<void>
 			ui5DOMRef(): Chainable<void>
 			ui5MenuItemPress(key: any): Chainable<void>
+			ui5CalendarGetDay(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
+			ui5CalendarGetMonth(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
 			ui5ColorPickerToggleColorMode(): Chainable<void>
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
 			ui5ColorPaletteCheckSelectedColor(colorPaletteItem: string, values: {r: string, g: string, b: string, a: string}): Chainable<void>
+			ui5ColorPaletteNavigateAndCheckSelectedColor(colorPalette: string, startIndex: number, key: string, expectedValue: string): Chainable<void>
 		}
 	}
 }

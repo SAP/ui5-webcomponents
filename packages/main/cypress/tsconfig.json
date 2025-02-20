@@ -7,6 +7,8 @@
 		"types": ["@ui5/webcomponents-tools"],
 		"composite": true,
 		"tsBuildInfoFile": "dist/.tsbuildinfobuild",
+		"module": "NodeNext",
+		"moduleResolution": "nodenext",
 		"paths": {
 			"@ui5/webcomponents-base/dist/*": [
 				"../../base/src/*"

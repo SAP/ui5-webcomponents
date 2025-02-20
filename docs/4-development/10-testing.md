@@ -225,21 +225,19 @@ For each package in your project, include a `cypress` folder at the root level w
 To write tests for a specific component, create a file in the respective package's specs folder:
 
 ```
-{packageName}/cypress/specs/MyComponent.cy.ts
+{packageName}/cypress/specs/MyComponent.cy.tsx
 ```
 
-We utilize component testing for UI5 web components, which involves mounting the component you intend to test. Our custom `mount` function leverages Lit for rendering components.
+We utilize component testing for UI5 web components, which involves mounting the component you intend to test. Our custom `mount` function leverages `preact` with `JSX` syntax for rendering components.
 
 **Example Test File:**
 
 ```typescript
-import { html } from "lit";
+describe("MyComponent Rendering", () => {
+  it("MyComponent exists", () => {
+    cy.mount(<MyComponent></MyComponent>);
 
-describe("Demo", () => {
-  it("Button exists", () => {
-    cy.mount(html`<ui5-test-generic></ui5-test-generic>`);
-
-    cy.get("[ui5-button]").should("exist");
+    cy.get("[my-component]").should("exist");
   });
 });
 ```
@@ -301,7 +299,7 @@ With Cypress component testing, we can efficiently verify if events are fired us
 **Example:**
 
 ```typescript
-cy.mount(html`<ui5-button></ui5-button>`);
+cy.mount(<Button></Button>`);
 
 cy.get("[ui5-button]").then(($button) => {
   cy.spy($button[0], "click").as("clickEvent");
@@ -332,7 +330,7 @@ describe("Configuration Example", () => {
   };
 
   before(() => {
-    cy.mount(html`<ui5-test-generic></ui5-test-generic>`, {
+    cy.mount(<MyComponent></MyComponent>, {
       ui5Configuration: config,
     });
 
@@ -381,7 +379,7 @@ To simulate mobile testing conditions, use the `ui5SimulateDevice` Cypress comma
 **Example:**
 
 ```typescript
-cy.mount(html`<ui5-button></ui5-button>`);
+cy.mount(<Button></Button>);
 
 cy.ui5SimulateDevice("phone"); // Simulates a phone device
 
@@ -426,13 +424,43 @@ import "./myComponentCommands";
 ```typescript
 describe("My Component Tests", () => {
   it("should click my component", () => {
-    cy.mount(html`<my-component></my-component>`);
+    cy.mount(<MyComponent></MyComponent>);
 
     cy.clickMyComponent("my-component");
   });
 });
 ```
 
+### Changing the language
+
+Locale-aware components often need to set the user's language for certain tests.
+
+Here is how you can do it:
+
+```typescript
+import Calendar from "../../src/Calendar.js";
+import "../../src/Assets.js"; // Do not forget to import the Assets.js module for the extra languages
+import { setLanguage, getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+
+describe("Test group", () => {
+	it("Test", () => {
+		// setLanguage("bg"); // Wrong, the promise will not be awaited!
+
+		cy.wrap({ setLanguage })
+			.invoke("setLanguage", "bg"); // Correct, the promise will be awaited!
+
+		cy.wrap({ getLanguage })
+			.invoke("getLanguage")
+			.should("equal", "bg");
+
+		cy.mount(<Calendar />); // This calendar will be in Bulgarian
+	});
+});
+```
+
+Notes:
+ - You must import the Assets module for the extra languages to work
+ - You must call `setLanguage` with `cy.wrap` to make sure it will be awaited until the desired language is completely set (CLDR assets are fetched)
 
 ### Code coverage
 

@@ -149,8 +149,10 @@ class TableVirtualizer extends UI5Element implements ITableFeature {
 	}
 
 	onExitDOM(): void {
-		this._scrollContainer.removeEventListener("scroll", this._onScrollBound);
-		this._table = undefined;
+		if (this._table) {
+			this._scrollContainer.removeEventListener("scroll", this._onScrollBound);
+			this._table = undefined;
+		}
 	}
 
 	/**

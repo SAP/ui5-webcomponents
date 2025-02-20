@@ -36,6 +36,7 @@
 /* separator */
 .ui5-fcl-separator {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	width: 1rem;
@@ -44,19 +45,27 @@
 	border-inline-end: var(--_ui5_fcl_column_border);
 	position: relative;
 	box-sizing: border-box;
+	z-index: 1;
 }
 
-.ui5-fcl-separator:focus {
-	border:var(--_ui5_fcl_separator_focus_border);
-	outline: none;
+.ui5-fcl-separator:focus { 
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
+
 .ui5-fcl-grip {
 	cursor: col-resize;
 	overflow: visible;
-	z-index: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 1.5rem;
+	height: 2rem;
+	z-index: 10;
+}
+
+.ui5-fcl-grip-icon {
 	color: var(--sapButton_TextColor);
-	padding-top: 0.3125rem;
-	padding-bottom: 0.3125rem;
 }
 
 .ui5-fcl-arrow {
@@ -101,8 +110,8 @@
 }
 
 /* Only apply shorter height when arrow is visible */
-.ui5-fcl-separator:hover .ui5-fcl-arrow + .ui5-fcl-grip::before  {
-	height: calc(40% - 1rem);
+.ui5-fcl-separator:hover .ui5-fcl-arrow + .ui5-fcl-grip::before {
+    height: calc(40% - 1rem);
 }
 
 [aria-hidden] ::slotted([slot="startColumn"]),

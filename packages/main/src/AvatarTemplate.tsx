@@ -18,7 +18,7 @@ export default function AvatarTemplate(this: Avatar) {
 				<slot></slot>
 				:
 				<>
-					{ this.icon && <Icon class="ui5-avatar-icon" name={this.icon}></Icon> }
+					{ this.icon && <Icon class="ui5-avatar-icon" name={this.icon} accessibleName={this.accessibleName}></Icon> }
 
 					{ this.initials &&
 					<>

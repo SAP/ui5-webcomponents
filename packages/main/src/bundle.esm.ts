@@ -18,6 +18,7 @@ import icon3d from "@ui5/webcomponents-icons-business-suite/dist/3d.js";
 import icon3dv1 from "@ui5/webcomponents-icons-business-suite/dist/v1/3d.js";
 import icon3dv2 from "@ui5/webcomponents-icons-business-suite/dist/v2/3d.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
+import { getAllRegisteredTags } from "@ui5/webcomponents-base/dist/CustomElementsRegistry.js";
 
 // The SAP Icons V4 icon collection is set by default in sap_fiori_3,
 // but it's configurable:
@@ -34,6 +35,7 @@ import Bar from "./Bar.js";
 import Breadcrumbs from "./Breadcrumbs.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
+import ButtonBadge from "./ButtonBadge.js";
 import Card from "./Card.js";
 import CalendarLegend from "./CalendarLegend.js";
 import CardHeader from "./CardHeader.js";
@@ -55,6 +57,7 @@ import FormGroup from "./FormGroup.js";
 import FileUploader from "./FileUploader.js";
 import Table from "./Table.js";
 import TableHeaderCell from "./TableHeaderCell.js";
+import TableHeaderCellActionAI from "./TableHeaderCellActionAI.js";
 import TableHeaderRow from "./TableHeaderRow.js";
 import TableGrowing from "./TableGrowing.js";
 import TableSelection from "./TableSelection.js";
@@ -123,6 +126,7 @@ const testAssets = {
 	getAcceptIconPathData: getPathData,
 	generateHighlightedMarkup,
 	getExportedIconsValues: () => icons,
+	getAllRegisteredTags,
 };
 
 registerIconLoader("my-icons", () => {
