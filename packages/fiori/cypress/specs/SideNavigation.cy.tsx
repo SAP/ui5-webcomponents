@@ -127,12 +127,14 @@ describe("Side Navigation interaction", () => {
 
 	it("Tests expanding and collapsing of unselectable items with Space and Enter", () => {
 		cy.mount(
-			<SideNavigation>
-				<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
-				<SideNavigationItem id="unselectableItem" text="1" unselectable={true}>
-					<SideNavigationSubItem text="1.2" />
-				</SideNavigationItem>
-			</SideNavigation>
+			<>
+				<SideNavigation>
+					<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
+					<SideNavigationItem id="unselectableItem" text="1" unselectable={true}>
+						<SideNavigationSubItem text="1.2" />
+					</SideNavigationItem>
+				</SideNavigation>
+			</>
 		);
 
 		// act
