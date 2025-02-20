@@ -44,7 +44,7 @@ class NotificationListGroupList extends List {
 		item.focus();
 	}
 
-	_onLoadMoreKeydown(e: KeyboardEvent){
+	_onLoadMoreKeydown(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.stopImmediatePropagation();
 		}
