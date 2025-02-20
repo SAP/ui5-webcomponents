@@ -505,23 +505,6 @@ class Table extends UI5Element {
 		scrollElementIntoView(this._scrollContainer, e.target as HTMLElement, this._stickyElements, this.effectiveDir === "rtl");
 	}
 
-	/**
-	 * Refreshes the popin state of the columns.
-	 * Syncs the popin state of the columns with the popin state of the header cells.
-	 * This is needed when additional rows are manually added and no resize happens.
-	 * @private
-	 */
-	_refreshPopinState() {
-		this.headerRow[0]?.cells.forEach((header, index) => {
-			this.rows.forEach(row => {
-				const cell = row.cells[index];
-				if (cell && cell._popin !== header._popin) {
-					cell._popin = header._popin;
-				}
-			});
-		});
-	}
-
 	_onGrow() {
 		this._growing?.loadMore();
 	}
@@ -539,11 +522,30 @@ class Table extends UI5Element {
 		return headers;
 	}
 
+	/**
+	 * Refreshes the popin state of the columns.
+	 * Syncs the popin state of the columns with the popin state of the header cells.
+	 * This is needed when additional rows are manually added and no resize happens.
+	 * @private
+	 */
+	_refreshPopinState() {
+		this.headerRow[0]?.cells.forEach((header, index) => {
+			this.rows.forEach(row => {
+				const cell = row.cells[index];
+				if (cell) {
+					cell._popinHidden = header.popinHidden;
+					cell._popin = header._popin;
+				}
+			});
+		});
+	}
+
 	_setHeaderPopinState(headerCell: TableHeaderCell, inPopin: boolean, popinWidth: number) {
 		const headerIndex = this.headerRow[0].cells.indexOf(headerCell);
 		headerCell._popin = inPopin;
 		headerCell._popinWidth = popinWidth;
 		this.rows.forEach(row => {
+			row.cells[headerIndex]._popinHidden = headerCell.popinHidden;
 			row.cells[headerIndex]._popin = inPopin;
 		});
 	}
