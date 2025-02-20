@@ -173,7 +173,7 @@ describe("Tokenizer - multi-line and Clear All", () => {
 
 	it("handles overflow mechanism as expected", () => {
 		cy.mount(
-			<Tokenizer style={{ width: "100%", border: "1px solid red" }}>
+			<Tokenizer style={{ width: "100%" }}>
 				<Token text="Andora"></Token>
 				<Token text="Bulgaria"></Token>
 				<Token text="Canada"></Token>
