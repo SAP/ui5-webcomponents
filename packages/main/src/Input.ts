@@ -273,9 +273,8 @@ type InputSuggestionScrollEventDetail = {
  * @public
  * @since 2.0.0
  */
-@event("close", {
-	bubbles: true,
-})
+@event("close")
+
 class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
 	eventDetails!: {
 		"change": InputEventDetail,
@@ -1234,7 +1233,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_handlePickerAfterOpen() {
-		this.Suggestions?._onOpen();
 		this.fireDecoratorEvent("open");
 	}
 

@@ -14,7 +14,7 @@
 
 .ui5-tag-root {
 	display: flex;
-	align-items: center;
+	align-items: baseline;
 	justify-content: center;
 	width: 100%;
 	min-width: 1.125em;
@@ -72,11 +72,6 @@
 	color: inherit;
 	pointer-events: none;
 	align-self: flex-start;
-}
-
-:host([wrapping-type="None"]) [ui5-icon],
-:host([wrapping-type="None"]) ::slotted([ui5-icon]) {
-	align-self: auto;
 }
 
 /* Value State Design Types */

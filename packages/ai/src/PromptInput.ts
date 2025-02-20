@@ -32,7 +32,7 @@ import PromptInputCss from "./generated/themes/PromptInput.css.js";
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents-ai/dist/PromptInput.js
+ * `import "@ui5/webcomponents-ai/dist/PromptInput.js"`
  * @class
  * @constructor
  * @public
