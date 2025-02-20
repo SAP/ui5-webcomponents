@@ -125,15 +125,19 @@ function listItemContent(this: UploadCollectionItem) {
 						/>
 					)}
 					{!this.hideDeleteButton && (
-						<Button
-							class="ui5-upload-collection-deletebtn"
-							id={`${this._id}-deleteSelectionElement`}
-							design="Transparent"
-							icon={declineIcon}
-							disabled={this.disableDeleteButton}
-							onClick={this._onDelete}
-							tooltip={this.deleteText}
-						/>
+						this.hasDeleteButtonSlot ? (
+							<slot name="deleteButton"></slot>
+						) : (
+							<Button
+								class="ui5-upload-collection-deletebtn"
+								id={`${this._id}-deleteSelectionElement`}
+								design="Transparent"
+								icon={declineIcon}
+								disabled={this.disableDeleteButton}
+								onClick={this._onDelete}
+								tooltip={this.deleteText}
+							/>
+						)
 					)}
 				</>
 			)}

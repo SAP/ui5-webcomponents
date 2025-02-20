@@ -31,7 +31,7 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				onWheel={this._handleWheel}
 				onKeyDown={this._onkeydown}
 			>
-				{this.hasValueStateText && valueStateTextHeader.call(this)}
+				{this.shouldDisplayValueStateMessageInResponsivePopover && valueStateTextHeader.call(this)}
 
 				<TimeSelectionClocks
 					id={`${this._id}-time-sel`}
