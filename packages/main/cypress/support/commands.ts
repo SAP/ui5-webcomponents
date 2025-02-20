@@ -69,7 +69,7 @@ declare global {
 			ui5DateTimePickerGetCancelButton(selector: string): Chainable<JQuery<HTMLElement>>;
 			ui5DateTimePickerTimeSelectionClocksCount(selector: string): Chainable<number>;
 			ui5DateTimePickerPeriodSegmentedButtonCount(selector: string): Chainable<number>;
-			ui5DateTimePickerGetPicker(selector: string): Chainable<JQuery<HTMLElement>>;
+			ui5DateTimePickerGetPopover(selector: string): Chainable<JQuery<HTMLElement>>;
 		}
 	}
 }

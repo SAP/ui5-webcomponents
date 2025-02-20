@@ -9,7 +9,7 @@ Cypress.Commands.add("ui5DateTimePickerClose", selector => {
 	cy.get(selector).invoke("attr", "open", false);
 });
 
-Cypress.Commands.add("ui5DateTimePickerGetPicker", selector => {
+Cypress.Commands.add("ui5DateTimePickerGetPopover", selector => {
 	return cy.get(selector)
 		.shadow()
 		.find("ui5-responsive-popover");
