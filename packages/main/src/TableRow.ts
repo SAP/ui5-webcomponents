@@ -48,7 +48,7 @@ class TableRow extends TableRowBase {
 		"default": true,
 		individualSlots: true,
 		invalidateOnChildChange: {
-			properties: ["_popin"],
+			properties: ["_popin", "_popinHidden"],
 			slots: false,
 		},
 	})
