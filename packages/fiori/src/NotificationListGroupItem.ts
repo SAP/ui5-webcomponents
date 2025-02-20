@@ -225,6 +225,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			return;
 		}
 
+		if (this.getGrowingButton()?.matches(":focus")) {
+			return;
+		}
+
 		await super._onkeydown(e);
 
 		const space = isSpace(e);

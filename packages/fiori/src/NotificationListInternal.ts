@@ -6,6 +6,8 @@ import NotificationListGroupItem from "./NotificationListGroupItem.js";
 import {
 	isDown,
 	isUp,
+	isLeft,
+	isRight,
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
