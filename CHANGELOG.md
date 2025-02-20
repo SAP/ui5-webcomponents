@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.1...v2.8.0-rc.2) (2025-02-20)
+
+
+### Bug Fixes
+
+* **framework:** allow usage of events with any name not only kebab-case ([#10896](https://github.com/SAP/ui5-webcomponents/issues/10896)) ([d49f0de](https://github.com/SAP/ui5-webcomponents/commit/d49f0ded677a3d000e22811504a93f7ab11b145c))
+* **ui5-avatar:** fix acc-name announcement ([#10854](https://github.com/SAP/ui5-webcomponents/issues/10854)) ([cb37653](https://github.com/SAP/ui5-webcomponents/commit/cb37653ae80a82ba0a588d127490798f787705af)), closes [#10461](https://github.com/SAP/ui5-webcomponents/issues/10461)
+* **ui5-checkbox:** ensure consistent focus behavior ([#10639](https://github.com/SAP/ui5-webcomponents/issues/10639)) ([a73c8d8](https://github.com/SAP/ui5-webcomponents/commit/a73c8d814e7769d81ba43d2239f51269a6fe0859))
+* **ui5-flexible-column-layout:** correct focus outline styles ([#10788](https://github.com/SAP/ui5-webcomponents/issues/10788)) ([59710df](https://github.com/SAP/ui5-webcomponents/commit/59710df6e37776531d09d285705ce99e3feb883c)), closes [#10670](https://github.com/SAP/ui5-webcomponents/issues/10670)
+* **ui5-list:** add correct focus style and accessibility roles for no-data item ([#10503](https://github.com/SAP/ui5-webcomponents/issues/10503)) ([9a0bc7c](https://github.com/SAP/ui5-webcomponents/commit/9a0bc7c33f3ff104c50e84f7ffecf69f7dfe116a)), closes [#10436](https://github.com/SAP/ui5-webcomponents/issues/10436)
+* **ui5-popover:** don't close the popover if the opener is clicked ([#10780](https://github.com/SAP/ui5-webcomponents/issues/10780)) ([bc9eb08](https://github.com/SAP/ui5-webcomponents/commit/bc9eb0841074918d5c26ee7a37b51f8284ce87ae))
+* **ui5-popover:** popover is opened from header slot ([#10856](https://github.com/SAP/ui5-webcomponents/issues/10856)) ([c224672](https://github.com/SAP/ui5-webcomponents/commit/c22467261d7598fdc080fde214bf737142715865)), closes [#10544](https://github.com/SAP/ui5-webcomponents/issues/10544)
+* **ui5-tag:** fix tag alignment ([#10852](https://github.com/SAP/ui5-webcomponents/issues/10852)) ([ae629dc](https://github.com/SAP/ui5-webcomponents/commit/ae629dce61baa751819e7b968cb4fa779309f4e1)), closes [#10810](https://github.com/SAP/ui5-webcomponents/issues/10810)
+
+
+### Features
+
+* **ui5-table-header-cell:** add popinHidden property ([#10834](https://github.com/SAP/ui5-webcomponents/issues/10834)) ([12e7dcd](https://github.com/SAP/ui5-webcomponents/commit/12e7dcd187f9f94150643bab7cbdc8ad7590337c))
+
+
+
+
+
 # [2.8.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.0...v2.8.0-rc.1) (2025-02-13)
 
 
