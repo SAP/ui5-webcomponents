@@ -5,6 +5,7 @@ import type DynamicDateRange from "./DynamicDateRange.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import ListItemStandard from "./ListItemStandard.js";
+import Button from "./Button.js";
 
 export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) {
 	return (
@@ -23,18 +24,44 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 			// onOpen={this.onResponsivePopoverAfterOpen}
 			// onBeforeOpen={this.onResponsivePopoverBeforeOpen}
 		>
-			<List
-				class="ui5-dynamic-date-range-options-list"
-				separators="None"
-				selectionMode="Single"
-				// onItemClick={this._selectItem}
-				// onItemFocused={this._onItemFocus}
-				// onMouseDown={this._itemMousedown}
-			>
-				{this._optionsTitles.map(optionTitle => {
-					return <ListItemStandard>{optionTitle}</ListItemStandard>;
-				})}
-			</List>
+			{this._hasCurrentOptionTemplate &&
+				<div slot="header">
+					{this._currentOption?.title}
+				</div>
+			}
+			{!this._hasCurrentOptionTemplate ? <div class="ui5-dynamic-date-range-options">
+				<List
+					class="ui5-dynamic-date-range-options-list"
+					separators="None"
+					selectionMode="Single"
+					onItemClick={this._selectOption}
+					// onItemFocused={this._onItemFocus}
+					// onMouseDown={this._itemMousedown}
+				>
+					{this._optionsTitles.map(optionTitle => {
+						return <ListItemStandard>{optionTitle}</ListItemStandard>;
+					})}
+				</List>
+			</div>
+				:
+				<div class="ui5-dynamic-date-range-option-container">
+					{this._currentOption?.template?.call(this)}
+				</div>
+			}
+			{this._hasCurrentOptionTemplate &&
+				<div slot="footer">
+					<div slot="footer" class="ui5-vsd-footer">
+						<Button
+							design="Emphasized"
+							onClick={this._submitValue}
+						>Submit</Button>
+						<Button
+							design="Transparent"
+							onClick={this._close}
+						>Close</Button>
+					</div>
+				</div>
+			}
 		</ResponsivePopover>
 	);
 }

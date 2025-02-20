@@ -16,6 +16,13 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import type ResponsivePopover from "./ResponsivePopover.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import IconMode from "./types/IconMode.js";
+import type DynamicDateRangeOption from "./DynamicDateOption.js";
+import "./DynamicDateOption.js";
+import "./dynamic-date-range-options/DynamicDateRangeOptionToday.js";
+import "./dynamic-date-range-options/DynamicDateRangeOptionYesterday.js";
+import "./dynamic-date-range-options/DynamicDateRangeOptionTomorrow.js";
+import "./dynamic-date-range-options/DynamicDateRangeOptionDate.js";
+import type Input from "./Input.js";
 
 /**
  * @class
@@ -57,14 +64,17 @@ class DynamicDateRange extends UI5Element {
 	@property({ type: Boolean })
 	open = false;
 
-	@slot({ type: HTMLElement })
-	options!: Array<HTMLElement>;
+    @property({ type: Object })
+    _currentOption?: DynamicDateRangeOption;
+
+	@slot({ type: HTMLElement, "default": true })
+	options!: Array<DynamicDateRangeOption>;
 
     responsivePopover?: ResponsivePopover;
+    private _currentValue: { operator: string | undefined; values: any[]; };
 
     get _optionsTitles(): Array<string> {
-		// return this.options.map(option => option.title);
-        return ["one", "two", "three", "four"];
+		return this.options.map(option => option.text);
     }
 
     get openIconName() {
@@ -82,6 +92,38 @@ class DynamicDateRange extends UI5Element {
     _togglePicker(): void {
 		this.open = !this.open;
 	}
+
+    _selectOption(e: any) {
+        console.log(e.detail.item.textContent);
+        this._currentOption = this.options.find(option => option.text === e.detail.item.textContent);
+        console.log(this._currentOption);
+    }
+
+    get _hasCurrentOptionTemplate(): boolean {
+        return !!this._currentOption && !!this._currentOption.template;
+    }
+
+    _submitValue() {
+        this._getInput().value = this._currentOption?.format(this._currentValue.values);
+        this._currentOption = undefined;
+        this.open = false;
+    }
+
+    _close() {
+        this._currentOption = undefined;
+        this.open = false;
+    }
+
+    _getInput(): Input {
+		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
+	}
+
+    calendarSelectionChange(e: any) {
+        this._currentValue = {
+            operator: this._currentOption?.text,
+            values: [new Date(e.detail.timestamp * 1000)],
+        }
+    }
 }
 
 DynamicDateRange.define();

@@ -6,3 +6,8 @@
     width: 200px;
     height: 400px;
 }
+
+[ui5-responsive-popover]::part(content) {
+    width: 200px;
+    height: 400px;
+}

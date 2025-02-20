@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import jsxRendererer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import DynamicDateRangeOption from "../DynamicDateOption.js";
 /**
  * @class
  * @constructor
@@ -12,20 +13,20 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  * @since 2.0.0
  */
 @customElement({
-	tag: "ui5-dynamic-date-range-option",
+	tag: "ui5-dynamic-date-range-option-tomorrow",
 	// renderer: jsxRendererer,
 })
 
-class DynamicDateRangeOption extends UI5Element {
-    @property({ noAttribute: true })
+class DynamicDateRangeOptionTomorrow extends DynamicDateRangeOption {
+    @property()
     template?: JsxTemplate;
 
     parse(value: string) {
-        return { operator: "", values: [] };
+        return new Date();
     }
 
     format() {
-        return "";
+        return "Tomorrow";
     }
 
     toDates() {
@@ -33,17 +34,17 @@ class DynamicDateRangeOption extends UI5Element {
     }
 
     get text(): string {
-        return "";
+        return "Tomorrow";
     }
 
     get key() {
-        return "";
+        return "Tomorrow";
     }
 
     get icon() {
         return "";
     }
 }
-DynamicDateRangeOption.define();
+DynamicDateRangeOptionTomorrow.define();
 
-export default DynamicDateRangeOption;
+export default DynamicDateRangeOptionTomorrow;
