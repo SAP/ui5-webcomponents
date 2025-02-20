@@ -89,6 +89,7 @@ describe("Table - Keyboard Navigation", () => {
 			}
 			if (action.condition) {
 				if (action.conditionValue) {
+					// timing issue - without wait the check is failing
 					action.element.wait(0).should(action.condition, action.conditionValue);
 				} else {
 					action.element.wait(0).should(action.condition);
