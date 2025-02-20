@@ -53,11 +53,11 @@ class NotificationListItemBase extends ListItemBase {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
-	 * @default 1000
+	 * @default 0
 	 * @public
 	 */
 	@property({ type: Number })
-	loadingDelay = 1000;
+	loadingDelay = 0;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nFioriBundle: I18nBundle;
