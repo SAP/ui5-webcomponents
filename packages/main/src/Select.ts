@@ -348,37 +348,6 @@ class Select extends UI5Element implements IFormInputElement {
 	@slot()
 	label!: Array<HTMLElement>;
 
-	/**
-	 * Defines the value of the component:
-	 *
-	 * - when get - returns the value of the component or the value/text content of tge selected option.
-	 * - when set - selects the option with matching `value` property or text content.
-	 *
-	 * **Note:** For selection, use either the Select's value or the desired option's selected property.
-	 * Mixed usage could result in unexpected behavior.
-	 *
-	 * **Note:** If the given value does not match any existing option,
-	 * the first option will get selected.
-	 * @public
-	 * @default ""
-	 * @since 1.20.0
-	 * @formProperty
-	 * @formEvents change liveChange
-	 */
-	@property()
-	set value(newValue: string) {
-		this._pendingValue = newValue;
-		this._valueStorage = newValue;
-		this._selectOptionByValue(newValue);
-	}
-
-	get value(): string {
-		if (this._valueStorage) {
-			return this._valueStorage;
-		}
-		return this.selectedOption?.value || this.selectedOption?.textContent || "";
-	}
-
 	get formValidityMessage() {
 		return Select.i18nBundle.getText(FORM_SELECTABLE_REQUIRED);
 	}
@@ -474,7 +443,6 @@ class Select extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Selects an option by string value.
-	 * @param { string } newValue - the value of the option to be selected
 	 * @private
 	 */
 	_selectOptionByValue(newValue: string) {
@@ -508,6 +476,37 @@ class Select extends UI5Element implements IFormInputElement {
 
 	_respPopover() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	/**
+	 * Defines the value of the component:
+	 *
+	 * - when get - returns the value of the component or the value/text content of tge selected option.
+	 * - when set - selects the option with matching `value` property or text content.
+	 *
+	 * **Note:** For selection, use either the Select's value or the desired option's selected property.
+	 * Mixed usage could result in unexpected behavior.
+	 *
+	 * **Note:** If the given value does not match any existing option,
+	 * the first option will get selected.
+	 * @public
+	 * @default ""
+	 * @since 1.20.0
+	 * @formProperty
+	 * @formEvents change liveChange
+	 */
+	@property()
+	set value(newValue: string) {
+		this._pendingValue = newValue;
+		this._valueStorage = newValue;
+		this._selectOptionByValue(newValue);
+	}
+
+	get value(): string {
+		if (this._valueStorage) {
+			return this._valueStorage;
+		}
+		return this.selectedOption?.value || this.selectedOption?.textContent || "";
 	}
 
 	get _selectedIndex() {
