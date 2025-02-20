@@ -145,7 +145,7 @@ class NotificationListInternal extends List {
 	}
 
 	_focusSameItemOnNextRow(e: KeyboardEvent) {
-		if ((!isUp(e) && !isDown(e))) {
+		if (!isUp(e) && !isDown(e) && !isLeft(e) && !isRight(e)) {
 			return;
 		}
 
@@ -167,7 +167,7 @@ class NotificationListInternal extends List {
 		e.stopImmediatePropagation();
 
 		const currentItem = isGrowingBtn ? activeElement : this.getEnabledItems()[this._itemNavigation._currentIndex];
-		const index = this._allNavigationItems.indexOf(currentItem) + (isUp(e) ? -1 : 1);
+		const index = this._allNavigationItems.indexOf(currentItem) + ((isUp(e) || isLeft(e)) ? -1 : 1);
 		const nextItem = this._allNavigationItems[index];
 		if (!nextItem) {
 			return;
@@ -179,7 +179,7 @@ class NotificationListInternal extends List {
 		}
 
 		const nextListItem = nextItem as NotificationListItemBase;
-		if (nextListItem.loading) {
+		if (nextListItem.loading || (isLeft(e) || isRight(e))) {
 			nextItem.focus();
 			return;
 		}
