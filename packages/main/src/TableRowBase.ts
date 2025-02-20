@@ -2,17 +2,16 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type TableCellBase from "./TableCellBase.js";
 import TableRowBaseCss from "./generated/themes/TableRowBase.css.js";
 import type Table from "./Table.js";
-import CheckBox from "./CheckBox.js";
 import { isInstanceOfTable } from "./TableUtils.js";
 import {
 	TABLE_ROW_SELECTOR,
 } from "./generated/i18n/i18n-defaults.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
 /**
  * @class
@@ -24,9 +23,8 @@ import {
  * @public
  */
 @customElement({
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TableRowBaseCss,
-	dependencies: [CheckBox],
 })
 abstract class TableRowBase extends UI5Element {
 	cells!: Array<TableCellBase>;

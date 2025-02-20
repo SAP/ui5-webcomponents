@@ -1,8 +1,7 @@
 import { customElement, property, slot } from "@ui5/webcomponents-base/dist/decorators.js";
 import TableCellBase from "./TableCellBase.js";
-import TableHeaderCellTemplate from "./generated/templates/TableHeaderCellTemplate.lit.js";
+import TableHeaderCellTemplate from "./TableHeaderCellTemplate.js";
 import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
-import Icon from "./Icon.js";
 import SortOrder from "@ui5/webcomponents-base/dist/types/SortOrder.js";
 import type TableHeaderCellActionBase from "./TableHeaderCellActionBase.js";
 import "@ui5/webcomponents-icons/dist/sort-ascending.js";
@@ -32,7 +31,6 @@ import "@ui5/webcomponents-icons/dist/sort-descending.js";
 	tag: "ui5-table-header-cell",
 	styles: [TableCellBase.styles, TableHeaderCellStyles],
 	template: TableHeaderCellTemplate,
-	dependencies: [Icon],
 })
 class TableHeaderCell extends TableCellBase {
 	/**

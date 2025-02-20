@@ -3,12 +3,10 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
-import Button from "./Button.js";
-import RadioButton from "./RadioButton.js";
-import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
+import TableRowTemplate from "./TableRowTemplate.js";
 import TableRowBase from "./TableRowBase.js";
 import TableRowCss from "./generated/themes/TableRow.css.js";
-import TableCell from "./TableCell.js";
+import type TableCell from "./TableCell.js";
 import type TableRowActionBase from "./TableRowActionBase.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 
@@ -33,7 +31,6 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
 	tag: "ui5-table-row",
 	styles: [TableRowBase.styles, TableRowCss],
 	template: TableRowTemplate,
-	dependencies: [...TableRowBase.dependencies, RadioButton, TableCell, Button],
 })
 class TableRow extends TableRowBase {
 	/**
@@ -168,7 +165,7 @@ class TableRow extends TableRowBase {
 		this.removeAttribute("_active");
 	}
 
-	_onOverflowButtonClick(e: PointerEvent) {
+	_onOverflowButtonClick(e: MouseEvent) {
 		const ctor = this.actions[0].constructor as typeof TableRowActionBase;
 		ctor.showMenu(this._overflowActions, e.target as HTMLElement);
 	}
