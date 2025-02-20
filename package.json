@@ -42,7 +42,7 @@
 
     "ci:releasebuild": "npm-run-all --sequential generate ts generateProd generateAPI",
     "ci:lint": "npm-run-all --sequential generate lint",
-    "ci:testbuild": "npm-run-all --sequential generate ts generateProd bundle && yarn workspace @ui5/cypress-common build && yarn workspace @ui5/cypress-ct-ui5-webc build",
+    "ci:testbuild": "npm-run-all --sequential generate ts generateProd bundle && yarn workspace @ui5/cy-internal build && yarn workspace @ui5/cypress-ct-ui5-webc build",
     "ci:deploy": "DEPLOY=true yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build",
     "ci:deploy:nightly": "DEPLOY_NIGHTLY=true yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build:nightly",
 
@@ -88,8 +88,8 @@
   },
   "workspaces": [
     "packages/theming",
-    "packages/cy-testing",
-    "packages/cy-common",
+    "packages/cypress-ct-ui5-webc",
+    "packages/cy-internal",
     "packages/base",
     "packages/localization",
     "packages/main",

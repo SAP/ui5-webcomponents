@@ -36,7 +36,7 @@
 //   }
 // }
 
-import "@ui5/cypress-common/commands.js";
+import "@ui5/cy-internal/commands.js";
 import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Please keep this list in alphabetical order

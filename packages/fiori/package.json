@@ -64,6 +64,6 @@
     "@ui5/webcomponents-tools": "2.8.0-rc.1",
     "chromedriver": "^132.0.0",
     "lit": "^2.0.0",
-    "@ui5/cypress-common": "0.0.0"
+    "@ui5/cy-internal": "0.0.0"
   }
 }

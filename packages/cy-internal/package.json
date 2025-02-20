@@ -1,5 +1,5 @@
 {
-  "name": "@ui5/cypress-common",
+  "name": "@ui5/cy-internal",
   "version": "0.0.0",
   "description": "Example Framework Definition adapter for Cypress Component Testing",
   "scripts": {
