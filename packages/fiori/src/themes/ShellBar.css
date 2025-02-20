@@ -522,6 +522,7 @@ slot[name="profile"] {
 	margin-inline: 0 0.5rem;
 	justify-content: center;
 	align-items: center;
+	--_ui5_button_focused_border: var(--_ui5_shellbar_button_focused_border);
 }
 
 ::slotted([ui5-button][data-profile-btn]) {
