@@ -9,6 +9,7 @@ import TableRowActionBase from "./TableRowActionBase.js";
  * @extends TableRowActionBase
  * @since 2.7.0
  * @public
+ * @experimental
  */
 @customElement({ tag: "ui5-table-row-action" })
 
