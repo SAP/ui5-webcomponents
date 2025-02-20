@@ -23,7 +23,6 @@ export default function ExpandableTextTemplate(this: ExpandableText) {
 					accessibleName={this._accessibleNameForToggle}
 					accessibilityAttributes={this._accessibilityAttributesForToggle}
 					onClick={this._handleToggleClick}
-					onMouseDown={this._handleToggleMousedown}
 				>
 					{this._textForToggle}
 				</Link>
