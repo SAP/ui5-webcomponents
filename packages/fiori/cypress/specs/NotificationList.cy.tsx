@@ -61,7 +61,14 @@ describe("Keyboard Navigation", () => {
 		cy.mount(<Sample />);
 	});
 
-	it("tests ArrowUp and ArrowDown", () => {
+	it("tests Arrows and Space keys", () => {
+		cy.get("#group1")
+			.shadow()
+			.find("[ui5-notification-group-list]")
+			.shadow()
+			.find("[ui5-busy-indicator] .ui5-growing-button-inner")
+			.as("growingButton");
+
 		cy.realPress("Tab");
 		cy.get("#item11").realClick();
 		cy.get("#item11").should("be.focused");
@@ -72,12 +79,7 @@ describe("Keyboard Navigation", () => {
 		cy.get("#item1last").should("be.focused");
 
 		cy.realPress("ArrowDown");
-		cy.get("#group1")
-			.shadow()
-			.find("[ui5-notification-group-list]")
-			.shadow()
-			.find("[ui5-busy-indicator] .ui5-growing-button-inner")
-			.should("be.focused");
+		cy.get("@growingButton").should("be.focused");
 
 		cy.realPress("ArrowDown");
 		cy.get("#group2").should("be.focused");
@@ -89,18 +91,35 @@ describe("Keyboard Navigation", () => {
 		cy.get("#group2").should("be.focused");
 
 		cy.realPress("ArrowUp");
+		cy.get("@growingButton").should("be.focused");
+
+		cy.realPress("ArrowUp");
+		cy.get("#item1last").should("be.focused");
+
+		cy.realPress("ArrowRight");
+		cy.get("@growingButton").should("be.focused");
+
+		cy.realPress("ArrowRight");
+		cy.get("#group2").should("be.focused");
+
+		cy.realPress("ArrowUp");
+		cy.get("@growingButton").should("be.focused");
+
+		cy.realPress("Space");
+		cy.get("@growingButton").should("be.focused");
+
+		cy.realPress("ArrowLeft");
+		cy.get("#item1last").should("be.focused");
+	});
+
+	it("tests Home and End", () => {
 		cy.get("#group1")
 			.shadow()
 			.find("[ui5-notification-group-list]")
 			.shadow()
 			.find("[ui5-busy-indicator] .ui5-growing-button-inner")
-			.should("be.focused");
+			.as("growingButton");
 
-		cy.realPress("ArrowUp");
-		cy.get("#item1last").should("be.focused");
-	});
-
-	it("tests Home and End", () => {
 		cy.realPress("Tab");
 		cy.get("#item11").realClick();
 		cy.get("#item11").should("be.focused");
@@ -109,20 +128,10 @@ describe("Keyboard Navigation", () => {
 		cy.get("#item1last").should("be.focused");
 
 		cy.realPress("End");
-		cy.get("#group1")
-			.shadow()
-			.find("[ui5-notification-group-list]")
-			.shadow()
-			.find("[ui5-busy-indicator] .ui5-growing-button-inner")
-			.should("be.focused");
+		cy.get("@growingButton").should("be.focused");
 
 		cy.realPress("End");
-		cy.get("#group1")
-			.shadow()
-			.find("[ui5-notification-group-list]")
-			.shadow()
-			.find("[ui5-busy-indicator] .ui5-growing-button-inner")
-			.should("be.focused");
+		cy.get("@growingButton").should("be.focused");
 
 		cy.realPress("ArrowDown");
 		cy.realPress("End");
