@@ -15,19 +15,19 @@ export default function TableRowTemplate(this: TableRow) {
 					ui5-table-selection-component
 				>
 					{ this._isMultiSelect ?
-						<CheckBox id="selectionComponent"
+						<CheckBox id="selection-component"
 							tabindex={-1}
 							checked={this._isSelected}
 							onChange={this._informSelectionChange}
-							accessible-name={this._i18nRowSelector}
+							accessibleName={this._i18nRowSelector}
 						></CheckBox>
 						:
-						<RadioButton id="selectionComponent"
+						<RadioButton id="selection-component"
 							tabindex={-1}
 							name={this._tableId}
 							checked={this._isSelected}
 							onChange={this._informSelectionChange}
-							accessible-name={this._i18nRowSelector}
+							accessibleName={this._i18nRowSelector}
 						></RadioButton>
 					}
 				</TableCell>
@@ -59,7 +59,7 @@ export default function TableRowTemplate(this: TableRow) {
 			}
 
 			{ this._renderNavigated &&
-				<TableCell id="navigated-cell" excluded-from-navigation>
+				<TableCell id="navigated-cell" excluded-from-navigation={true}>
 					<div id="navigated"></div>
 				</TableCell>
 			}

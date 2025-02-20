@@ -175,7 +175,8 @@ class TableRow extends TableRowBase {
 	}
 
 	get _hasRowActions() {
-		return this._rowActionCount > 0 && this.actions.some(action => action.isFixedAction() || !action.invisible);
+		// even if there are no actions visible or fixed, we still need to render the action cell to ensure alignment
+		return this._rowActionCount > 0;
 	}
 
 	get _hasOverflowActions() {
