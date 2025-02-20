@@ -1184,11 +1184,11 @@ abstract class UI5Element extends HTMLElement {
 						});
 
 						if (this._rendered) {
-							// is already rendered, so it is not the constructor -
-							// can set the attribute synchronously
+							// the component is already rendered, indicating it is not the constructor -
+							// therefore the attribute can be set synchronously.
 
 							// get the effective value of the property,
-							// as it might be different from the one passed
+							// as it might differ from the provided value
 							const newValue = origGet ? origGet.call(this) : this._state[prop];
 
 							this._updateAttribute(prop, newValue);
