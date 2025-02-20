@@ -1,6 +1,6 @@
 import type TestButton from "./TestButton.js";
 import Icon from "./Icon.js";
-// import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 export default function TestButtonTemplate(this: TestButton) {
 	// const startIcon = this.currentStateObject?.icon;
@@ -28,26 +28,26 @@ export default function TestButtonTemplate(this: TestButton) {
 				data-main-btn-active={this.mainBtnActivated}
 			>
 
-				<Icon name={this._prevStateObject?.icon} id="start-icon" data-icon="true" />
-				<div id="text" data-text="true">{this._prevStateObject?.text || ""}</div>
-				{/* {endIcon ? <Icon name={endIcon} id="end-icon" /> : undefined} */}
+				<Icon name={this._prevStateObject?.icon} id="start-icon" data-icon="true" style={{ display: !this._prevStateObject?.icon ? "none" : "inline-block" }} />
+				<div id="text" data-text="true" style={{ display: !this._prevStateObject?.text ? "none" : "inline-block" }}>{this._prevStateObject?.text || ""}</div>
+				<Icon name={this._prevStateObject?.endIcon} id="end-icon" style={{ display: !this._prevStateObject?.endIcon ? "none" : "inline-block" }} />
 			</button>
 
-			{/* {arrowBtn ? arrowBtnTemplate.call(this) : undefined} */}
+			{arrowBtnTemplate.call(this)}
 		</div>
 	);
 }
 
-// function arrowBtnTemplate(this: TestButton) {
-// 	return <button
-// 		class="test-button-inner test-button-arrow"
-// 		id="arrow-btn"
-// 		tabindex={-1}
-// 		data-arrow-btn-active={this.arrowBtnActivated}
-// 		onClick={this.handleClick}
-// 		onKeyDown={this.handleKeyDown}
-// 		onKeyUp={this.handleKeyUp}
-// 	>
-// 		<Icon name={slimArrowDown} id="arrow-icon" />
-// 	</button>;
-// }
+function arrowBtnTemplate(this: TestButton) {
+	return <button
+		class="test-button-inner test-button-arrow"
+		id="arrow-btn"
+		tabindex={-1}
+		data-arrow-btn-active={this.arrowBtnActivated}
+		onClick={this.handleClick}
+		onKeyDown={this.handleKeyDown}
+		onKeyUp={this.handleKeyUp} style={{ display: !this._prevStateObject?.showArrowButton ? "none" : "inline-block" }}
+	>
+		<Icon name={slimArrowDown} id="arrow-icon" />
+	</button>;
+}

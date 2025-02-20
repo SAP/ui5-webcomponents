@@ -15,113 +15,15 @@ import TestButtonTemplate from "./TestButtonTemplate.js";
 // Styles
 import TestButtonCss from "./generated/themes/TestButton.css.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import type Icon from "./Icon.js";
+import { ANIMATIONS } from "./TestButtonAnimations.js";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const animations = [
-	{
-		element: "[data-icon]",
-		keyframes: [
-			{ transform: "translateY(0)" },
-			{ transform: "translateY(-1rem)" },
-		],
-		options: {
-			delay: 0,
-			duration: 100,
-			fill: "forwards",
-			easing: "ease-in-out",
-		},
-	},
-	{
-		element: "[data-icon]",
-		keyframes: [
-			{ opacity: "1" },
-			{ opacity: "0" },
-		],
-		options: {
-			id: "iconFadeOut",
-			delay: 60,
-			duration: 40,
-			fill: "forwards",
-		},
-	},
-	{
-		element: "[data-text]",
-		keyframes: [
-			{ transform: "translateY(0)" },
-			{ transform: "translateY(-1rem)" },
-		],
-		options: {
-			delay: 120,
-			duration: 80,
-			fill: "forwards",
-			easing: "ease-in-out",
-		},
-	},
-	{
-		element: "[data-text]",
-		keyframes: [
-			{ opacity: "1" },
-			{ opacity: "0" },
-		],
-		options: {
-			id: "textFadeOut",
-			delay: 120,
-			duration: 60,
-			fill: "forwards",
-		},
-	},
-	{
-		element: "[data-icon]",
-		keyframes: [
-			{ transform: "translateY(1rem)" },
-			{ transform: "translateY(0)" },
-		],
-		options: {
-			delay: 240,
-			duration: 100,
-			fill: "forwards",
-			easing: "ease-in-out",
-		},
-	},
-	{
-		element: "[data-icon]",
-		keyframes: [
-			{ opacity: "0" },
-			{ opacity: "1" },
-		],
-		options: {
-			delay: 240,
-			duration: 40,
-			fill: "forwards",
-		},
-	},
-	{
-		element: "[data-text]",
-		keyframes: [
-			{ transform: "translateY(1rem)" },
-			{ transform: "translateY(0)" },
-		],
-		options: {
-			id: "textFadeIn",
-			delay: 300,
-			duration: 80,
-			fill: "forwards",
-			easing: "ease-in-out",
-		},
-	},
-	{
-		element: "[data-text]",
-		keyframes: [
-			{ opacity: "0" },
-			{ opacity: "1" },
-		],
-		options: {
-			delay: 300,
-			duration: 60,
-			fill: "forwards",
-		},
-	},
-];
+const RESIZE_ANIMATION_SETTINGS = {
+	delay: 0,
+	duration: 100,
+	fill: "forwards" as FillMode,
+	easing: "ease-in-out",
+};
 
 @customElement({
 	tag: "test-button",
@@ -207,80 +109,104 @@ class TestButton extends UI5Element {
 	testAnimation() {
 		const oldText = this._prevStateObject?.text || "";
 		const oldIcon = this._prevStateObject?.icon || "";
+		const oldEndIcon = this._prevStateObject?.endIcon || "";
+		const oldShowArrowIcon = this._prevStateObject?.showArrowButton || false;
 		const newText = this.currentStateObject?.text || "";
 		const newIcon = this.currentStateObject?.icon || "";
+		const newEndIcon = this.currentStateObject?.endIcon || "";
+		const newShowArrowButton = this.currentStateObject?.showArrowButton || false;
 
-		animations.forEach(animation => {
+		ANIMATIONS.forEach(animation => {
 			const element = this.shadowRoot?.querySelector(animation.element);
 			const currentAnimation = element?.animate(animation.keyframes, animation.options);
 
 			if (currentAnimation?.id === "textFadeOut") {
 				currentAnimation.finished.then(() => {
-					if (newText.length > oldText.length) {
-						this.shadowRoot!.querySelector("[data-text]")!.textContent = newText;
-					}
-
-					if (newText) {
-						this.shadowRoot!.querySelector("[data-text]").hidden = false;
-					}
-
-					this.shadowRoot!.querySelector("[data-icon]").name = newIcon;
-
-					if (newIcon) {
-						this.shadowRoot!.querySelector("[data-icon]").hidden = false;
-					}
-
-					this.shadowRoot!.querySelector("[data-text]")
-						?.animate([
-							{ maxWidth: `${oldText.length}ch` },
-							{ maxWidth: `${newText.length}ch` },
-						], {
-							delay: 0,
-							duration: 100,
-							fill: "forwards",
-							easing: "ease-in-out",
-						})
-						.finished.then(() => {
-							if (!(newText.length > oldText.length)) {
-								this.shadowRoot!.querySelector("[data-text]")!.textContent = newText;
-							}
-
-							if (!newText) {
-								this.shadowRoot!.querySelector("[data-text]").hidden = true;
-							}
-						});
-
-					this.shadowRoot!.querySelector("[data-icon]")
-						?.animate([
-							{ width: oldIcon ? "1rem" : "0px" },
-							{ width: newIcon ? "1rem" : "0px" },
-						], {
-							delay: 0,
-							duration: 100,
-							fill: "forwards",
-							easing: "ease-in-out",
-						})
-						.finished
-						.then(() => {
-							if (!newIcon) {
-								this.shadowRoot!.querySelector("[data-icon]").hidden = true;
-							}
-						});
+					this.iconAnimation("#end-icon", oldEndIcon, newEndIcon);
+					this.iconAnimation("#start-icon", oldIcon, newIcon);
+					this.textAnimation(oldText, newText);
+					this.arrowButtonAnimation(oldShowArrowIcon, newShowArrowButton);
 				});
 			}
-
-			this._prevStateObject = this.currentStateObject;
 		});
+
+		this._prevStateObject = this.currentStateObject;
+	}
+
+	arrowButtonAnimation(oldState: boolean, newState: boolean) {
+		const arrowBtn = this.shadowRoot!.querySelector<HTMLElement>("#arrow-btn")!;
+		if (newState) {
+			arrowBtn.style.display = "inline-block";
+		}
+
+		arrowBtn
+			?.animate([
+				{ width: oldState ? "100%" : "0px" },
+				{ width: newState ? "100%" : "0px" },
+			], RESIZE_ANIMATION_SETTINGS)
+			.finished.then(() => {
+				if (!newState) {
+					arrowBtn.style.display = "none";
+				}
+			});
+	}
+
+	textAnimation(oldState: string, newState: string) {
+		const textEl = this.shadowRoot!.querySelector<HTMLSpanElement>("#text")!;
+
+		if (newState.length > oldState.length) {
+			textEl.textContent = newState;
+		}
+
+		if (newState) {
+			textEl.style.display = "inline-block";
+		}
+
+		textEl
+			?.animate([
+				{ maxWidth: `${oldState.length}ch` },
+				{ maxWidth: `${newState.length}ch` },
+			], RESIZE_ANIMATION_SETTINGS)
+			.finished.then(() => {
+				if (!(newState.length > oldState.length)) {
+					textEl.textContent = newState;
+				}
+
+				if (!newState) {
+					textEl.style.display = "none";
+				}
+			});
+	}
+
+	iconAnimation(el: string, oldState: string, newState: string) {
+		const icon = this.shadowRoot!.querySelector<Icon>(el)!;
+		icon.name = newState;
+
+		if (newState) {
+			icon.style.display = "inline-block";
+		}
+
+		this.shadowRoot!.querySelector(el)
+			?.animate([
+				{ width: oldState ? "1rem" : "0px" },
+				{ width: newState ? "1rem" : "0px" },
+			], RESIZE_ANIMATION_SETTINGS)
+			.finished
+			.then(() => {
+				if (!newState) {
+					icon.style.display = "none";
+				}
+			});
 	}
 
 	handleKeyDown(e: KeyboardEvent) {
 		if (isSpace(e) || isEnter(e)) {
-			this.arrowBtnActivated = this.arrowBtn === e.currentTarget;
-			this.mainBtnActivated = this.arrowBtn !== e.currentTarget;
+			this.arrowBtnActivated = this.arrowBtn === e.target;
+			this.mainBtnActivated = this.arrowBtn !== e.target;
 		}
 
 		if (isEnter(e)) {
-			this.fireClickEvent(e, e.currentTarget === this.arrowBtn ? "arrow-click" : "click");
+			this.fireClickEvent(e, e.target === this.arrowBtn ? "arrow-click" : "click");
 		}
 	}
 
@@ -289,7 +215,7 @@ class TestButton extends UI5Element {
 		this.mainBtnActivated = false;
 
 		if (isSpace(e)) {
-			this.fireClickEvent(e, e.currentTarget === this.arrowBtn ? "arrow-click" : "click");
+			this.fireClickEvent(e, e.target === this.arrowBtn ? "arrow-click" : "click");
 		}
 	}
 
