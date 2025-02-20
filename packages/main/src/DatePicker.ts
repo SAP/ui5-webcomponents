@@ -13,6 +13,7 @@ import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/get
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isPageUp,
@@ -39,13 +40,17 @@ import {
 	INPUT_SUGGESTIONS_TITLE,
 	FORM_TEXTFIELD_REQUIRED,
 	DATEPICKER_POPOVER_ACCESSIBLE_NAME,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_INFORMATION,
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_WARNING,
 } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import type Calendar from "./Calendar.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import type CalendarSelectionMode from "./types/CalendarSelectionMode.js";
-import type Input from "./Input.js";
+import type DateTimeInput from "./DateTimeInput.js";
 import type { InputAccInfo } from "./Input.js";
 import InputType from "./types/InputType.js";
 import IconMode from "./types/IconMode.js";
@@ -58,6 +63,9 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import datePickerCss from "./generated/themes/DatePicker.css.js";
 import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+
+type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 
 type DatePickerChangeEventDetail = {
 	value: string,
@@ -166,6 +174,7 @@ type Picker = "day" | "month" | "year";
 		datePickerCss,
 		ResponsivePopoverCommonCss,
 		datePickerPopoverCss,
+		ValueStateMessageCss,
 	],
 })
 /**
@@ -553,8 +562,8 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		}
 	}
 
-	_getInput(): Input {
-		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
+	_getInput(): DateTimeInput {
+		return this.shadowRoot!.querySelector<DateTimeInput>("[ui5-datetime-input]")!;
 	}
 
 	/**
@@ -677,6 +686,53 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			"ariaHasPopup": "grid",
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
+		};
+	}
+
+	get valueStateDefaultText(): string | undefined {
+		if (this.valueState === ValueState.None) {
+			return;
+		}
+
+		return this.valueStateTextMappings[this.valueState];
+	}
+
+	get valueStateTextMappings(): ValueStateAnnouncement {
+		return {
+			[ValueState.Positive]: DatePicker.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			[ValueState.Negative]: DatePicker.i18nBundle.getText(VALUE_STATE_ERROR),
+			[ValueState.Critical]: DatePicker.i18nBundle.getText(VALUE_STATE_WARNING),
+			[ValueState.Information]: DatePicker.i18nBundle.getText(VALUE_STATE_INFORMATION),
+		};
+	}
+
+	get shouldDisplayDefaultValueStateMessage(): boolean {
+		return !willShowContent(this.valueStateMessage) && this.hasValueStateText;
+	}
+
+	get hasValueStateText(): boolean {
+		return this.hasValueState && this.valueState !== ValueState.Positive;
+	}
+
+	get hasValueState(): boolean {
+		return this.valueState !== ValueState.None;
+	}
+
+	get classes() {
+		return {
+			popover: {
+				"ui5-suggestions-popover": true,
+				"ui5-popover-with-value-state-header-phone": this.phone && this.hasValueStateText,
+				"ui5-popover-with-value-state-header": !this.phone && this.hasValueStateText,
+			},
+			popoverValueState: {
+				"ui5-valuestatemessage-header": true,
+				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
 		};
 	}
 

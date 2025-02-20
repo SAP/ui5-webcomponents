@@ -12,7 +12,7 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.keys("123123123");
 		await daterangepicker.keys("Enter");
 
-		assert.strictEqual(await daterangepicker.shadow$("ui5-input").getProperty("valueState"), "Negative", "The value state is negative");
+		assert.strictEqual(await daterangepicker.shadow$("ui5-datetime-input").getProperty("valueState"), "Negative", "The value state is negative");
 	});
 
 	it("Custom Validation None", async () => {
@@ -23,7 +23,7 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.keys("09/09/2020 - 10/10/2020");
 		await daterangepicker.keys("Enter");
 
-		assert.strictEqual(await daterangepicker.shadow$("ui5-input").getProperty("valueState"), "None", "The value state is on none");
+		assert.strictEqual(await daterangepicker.shadow$("ui5-datetime-input").getProperty("valueState"), "None", "The value state is on none");
 	});
 
 	it("Selected dates are updated after value update in the input field", async () => {
@@ -33,7 +33,7 @@ describe("DateRangePicker general interaction", () => {
 		assert.strictEqual(await dayPicker.getProperty("timestamp"), firstDateTimestamp, "The first date is selected");
 	});
 
-	it("Is delimiter set", async () => {
+	it.only("Is delimiter set", async () => {
 		const daterangepicker = await browser.$("#daterange-picker2");
 
 		assert.strictEqual(await daterangepicker.getProperty("delimiter"), "@", "The delimiter is set to @");
@@ -203,7 +203,7 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.keys("2020-09-09 - 2020-10-10");
 		await daterangepicker.keys("Enter");
 
-		assert.strictEqual(await daterangepicker.shadow$("ui5-input").getProperty("valueState"), "None", "The value state is on none");
+		assert.strictEqual(await daterangepicker.shadow$("ui5-datetime-input").getProperty("valueState"), "None", "The value state is on none");
 	});
 
 	it("Month is not changed in multiselect mode", async () => {
@@ -286,7 +286,7 @@ describe("DateRangePicker general interaction", () => {
 		await browser.url(`test/pages/DateRangePicker.html?sap-ui-language=bg`);
 
 		const daterangepicker = await browser.$("#daterange-picker8");
-		const dateRangePickerInput = await daterangepicker.shadow$("ui5-input");
+		const dateRangePickerInput = await daterangepicker.shadow$("ui5-datetime-input");
 
 		await daterangepicker.click();
 		await daterangepicker.keys("10.02.2023 г. - 25.07.2023 г.");

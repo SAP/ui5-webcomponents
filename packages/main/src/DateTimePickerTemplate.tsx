@@ -18,6 +18,12 @@ export default function DateTimePickerTemplate(this: DateTimePicker) {
 
 function header(this: DateTimePicker) {
 	return (
+		<></>
+	);
+}
+
+function content(this: DateTimePicker) {
+	return (
 		<>
 			{ this.phone &&
 				<div class="ui5-dt-picker-header">
@@ -27,57 +33,53 @@ function header(this: DateTimePicker) {
 					</SegmentedButton>
 				</div>
 			}
-		</>
-	);
-}
 
-function content(this: DateTimePicker) {
-	return (
-		<div class={{
-			"ui5-dt-picker-content": true,
-			"ui5-dt-picker-content--phone": this.phone,
-		}}>
-			<Calendar
-				class={{
-					"ui5-dt-cal": true,
-					"ui5-dt-cal--hidden": this.phone && this.showTimeView,
-					"ui5-dt-time--hidden": this.phone && this.showDateView,
-				}}
-				id={`${this._id}-calendar`}
-				primaryCalendarType={this._primaryCalendarType}
-				secondaryCalendarType={this.secondaryCalendarType}
-				formatPattern={this._formatPattern}
-				selectionMode={this._calendarSelectionMode}
-				minDate={this.minDate}
-				maxDate={this.maxDate}
-				calendarWeekNumbering={this.calendarWeekNumbering}
-				onSelectionChange={this.onSelectedDatesChange}
-				onShowMonthView={this.onHeaderShowMonthPress}
-				onShowYearView={this.onHeaderShowYearPress}
-				hideWeekNumbers={this.hideWeekNumbers}
-				_currentPicker={this._calendarCurrentPicker}
-			>
-				{this._calendarSelectedDates.map(date =>
-					<CalendarDate value={date} />
-				)}
-			</Calendar>
-
-			{ !this.phone && <span class="ui5-dt-picker-separator"></span> }
-
-			{ this.showTimeView &&
-				<TimeSelectionClocks
-					id={`${this._id}-time-sel`}
+			<div class={{
+				"ui5-dt-picker-content": true,
+				"ui5-dt-picker-content--phone": this.phone,
+			}}>
+				<Calendar
 					class={{
-						"ui5-dt-time": true,
-						...this.classes.dateTimeView,
+						"ui5-dt-cal": true,
+						"ui5-dt-cal--hidden": this.phone && this.showTimeView,
+						"ui5-dt-time--hidden": this.phone && this.showDateView,
 					}}
+					id={`${this._id}-calendar`}
+					primaryCalendarType={this._primaryCalendarType}
+					secondaryCalendarType={this.secondaryCalendarType}
 					formatPattern={this._formatPattern}
-					value={this._timeSelectionValue}
-					onChange={this.onTimeSelectionChange}
-					_calendarType={this._primaryCalendarType}
-				/>
-			}
-		</div>
+					selectionMode={this._calendarSelectionMode}
+					minDate={this.minDate}
+					maxDate={this.maxDate}
+					calendarWeekNumbering={this.calendarWeekNumbering}
+					onSelectionChange={this.onSelectedDatesChange}
+					onShowMonthView={this.onHeaderShowMonthPress}
+					onShowYearView={this.onHeaderShowYearPress}
+					hideWeekNumbers={this.hideWeekNumbers}
+					_currentPicker={this._calendarCurrentPicker}
+				>
+					{this._calendarSelectedDates.map(date =>
+						<CalendarDate value={date} />
+					)}
+				</Calendar>
+
+				{ !this.phone && <span class="ui5-dt-picker-separator"></span> }
+
+				{ this.showTimeView &&
+					<TimeSelectionClocks
+						id={`${this._id}-time-sel`}
+						class={{
+							"ui5-dt-time": true,
+							...this.classes.dateTimeView,
+						}}
+						formatPattern={this._formatPattern}
+						value={this._timeSelectionValue}
+						onChange={this.onTimeSelectionChange}
+						_calendarType={this._primaryCalendarType}
+					/>
+				}
+			</div>
+		</>
 	);
 }
 

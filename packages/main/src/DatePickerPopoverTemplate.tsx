@@ -1,9 +1,15 @@
 import type DatePicker from "./DatePicker.js";
 import Button from "./Button.js";
 import Calendar from "./Calendar.js";
+import Icon from "./Icon.js";
 import CalendarDate from "./CalendarDate.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import error from "@ui5/webcomponents-icons/dist/error.js";
+import alert from "@ui5/webcomponents-icons/dist/alert.js";
+import sysEnter2 from "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import information from "@ui5/webcomponents-icons/dist/information.js";
 
 type TemplateHook = () => void;
 
@@ -15,6 +21,7 @@ export default function DatePickerPopoverTemplate(this: DatePicker, hooks?: { he
 	return (
 		<ResponsivePopover
 			id={`${this._id}-responsive-popover`}
+			class="ui5-date-picker-popover"
 			opener={this}
 			open={this.open}
 			allowTargetOverlap
@@ -22,13 +29,15 @@ export default function DatePickerPopoverTemplate(this: DatePicker, hooks?: { he
 			horizontalAlign="Start"
 			accessibleName={this.pickerAccessibleName}
 			hideArrow={true}
-			_hideHeader={this._shouldHideHeader}
+			_hideHeader={!this.hasValueStateText}
 			onKeyDown={this._onkeydown}
 			onClose={this.onResponsivePopoverAfterClose}
 			onOpen={this.onResponsivePopoverAfterOpen}
 			onBeforeOpen={this.onResponsivePopoverBeforeOpen}
 		>
-			{ this.showHeader && header.call(this) }
+			{ this.phone && this.showHeader && header.call(this) }
+
+			{ valueStateTextHeader.call(this, { "width": "100%" }) }
 
 			{ content.call(this) }
 
@@ -75,6 +84,43 @@ function defaultContent(this: DatePicker) {
 			{ this._calendarSelectedDates.map(date => <CalendarDate value={date}/>)}
 		</Calendar>
 	);
+}
+
+function valueStateMessage(this: DatePicker) {
+	return (
+		this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : <slot name="valueStateMessage"></slot>
+	);
+}
+
+function valueStateTextHeader(this: DatePicker, style?: Record<string, string>) {
+	if (!this.hasValueStateText) {
+		return;
+	}
+
+	return (
+		<div
+			slot={!this.phone ? "header" : undefined}
+			class={{
+				"ui5-popover-header": true,
+				...this.classes.popoverValueState,
+			}}
+			style={style}
+		>
+			<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)}/>
+			{ valueStateMessage.call(this) }
+		</div>
+	);
+}
+
+function valueStateMessageInputIcon(this: DatePicker) {
+	const iconPerValueState = {
+		Negative: error,
+		Critical: alert,
+		Positive: sysEnter2,
+		Information: information,
+	};
+
+	return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 }
 
 function defaultFooter() {}

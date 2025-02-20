@@ -77,7 +77,7 @@ describe("DateTimePicker general interaction", () => {
 		await openPickerById("dtSeconds");
 
 		// assert
-		const currentValue = await dtPicker.shadow$("ui5-input").getValue();
+		const currentValue = await dtPicker.shadow$("ui5-datetime-input").getValue();
 		assert.strictEqual(currentValue, PREVIOUS_VALUE,  "The initial date/time is correctly set.");
 
 		// act
@@ -100,7 +100,7 @@ describe("DateTimePicker general interaction", () => {
 		await picker.$("#ok").click();
 
 		// assert
-		const newValue = await dtPicker.shadow$("ui5-input").getValue();
+		const newValue = await dtPicker.shadow$("ui5-datetime-input").getValue();
 		assert.strictEqual(newValue.toUpperCase(), "14/04/2020, 02:14:19 PM", "The new date/time is correctly selected.");
 	});
 
@@ -108,7 +108,7 @@ describe("DateTimePicker general interaction", () => {
 		const PREVIOUS_VALUE = "14/04/2020, 02:14:19 PM";
 		const dtPicker = await browser.$("#dtSeconds");
 		// assert
-		const currentValue = await dtPicker.shadow$("ui5-input").getValue();
+		const currentValue = await dtPicker.shadow$("ui5-datetime-input").getValue();
 		assert.strictEqual(currentValue, PREVIOUS_VALUE,  "The initial date/time is correctly set.");
 
 		await browser.keys("Tab");
@@ -128,7 +128,7 @@ describe("DateTimePicker general interaction", () => {
 		await selectedDay.click();
 		await picker.$("#ok").click();
 		// assert
-		const newValue = await dtPicker.shadow$("ui5-input").getValue();
+		const newValue = await dtPicker.shadow$("ui5-datetime-input").getValue();
 		const result = newValue.indexOf(selectedDate) > -1;
 		assert.ok(result, "The new date/time is correctly selected.");
 	});
@@ -233,7 +233,7 @@ describe("DateTimePicker general interaction", () => {
 		await picker.$("#ok").click();
 
 		// assert
-		const newValue = await dtPicker.shadow$("ui5-input").getValue();
+		const newValue = await dtPicker.shadow$("ui5-datetime-input").getValue();
 		assert.strictEqual(newValue.toUpperCase(), "13/04/2020, 12:34:56 AM", "The new date/time is correctly selected.");
 	});
 
@@ -253,7 +253,7 @@ describe("DateTimePicker general interaction", () => {
 		await picker.$("#ok").click();
 
 		// assert
-		const newValue = await dtPicker.shadow$("ui5-input").getValue();
+		const newValue = await dtPicker.shadow$("ui5-datetime-input").getValue();
 		assert.strictEqual(newValue.toUpperCase(), "13/04/2020, 12:34:56 PM", "The new date/time is correctly selected.");
 	});
 

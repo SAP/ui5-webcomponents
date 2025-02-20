@@ -1,3 +1,8 @@
+
+:host .ui5-date-picker-popover {
+	width: auto;
+}
+
 .ui5-dt-picker-content {
 	display: flex;
 	flex-direction: row;
