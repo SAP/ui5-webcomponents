@@ -1928,6 +1928,16 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await innerInput.getAttribute("aria-label"), await mcbLabel.getHTML(false), "aria-label attribute is correct.");
 		});
 
+		it("Checks if tokenizer hidden text of tokenizer label has aria-hidden attribute", async () => {
+			const mcb = await browser.$("#mcb-compact");
+
+			await mcb.scrollIntoView();
+
+			const ariaHiddenAttribute= mcb.shadow$(".ui5-multi-combobox-tokenizer").shadow$(".ui5-hidden-text").getAttribute("aria-hidden");
+
+			assert.strictEqual(ariaHiddenAttribute, true, "aria-hidden of invisible text is true");
+		});
+
 		it("Value state type should be added to the screen readers default value states announcement", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
