@@ -41,7 +41,6 @@
 		<ui5-notification-list class="notificationsPopoverList">
 			<ui5-li-notification-group id="notificationsListGroupGrowing"
 									   title-text="Orders"
-									   loading-delay="0"
 									   growing="Button">
 				<ui5-li-notification show-close
 					title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
@@ -217,7 +216,6 @@
 			id="notificationListFirstGroup"
 			show-close
 			show-counter
-			loading-delay="0"
 			growing="Button"
 			title-text="Orders - test deprecated properties"
 			priority="High"
@@ -467,7 +465,6 @@
 
 		<ui5-li-notification-group
 			loading
-			loading-delay="0"
 			growing="Button"
 			title-text="Last week"
 		>
@@ -678,7 +675,7 @@
 				setTimeout(() => {
 					notificationsListGroupGrowing.items[focusIndex].focus();
 				}, 500);
-			}, 500);
+			}, 2000);
 		});
 
 		btnShowMessageStrip.addEventListener("click", function() {
@@ -696,7 +693,7 @@
 				setTimeout(() => {
 					notificationListFirstGroup.items[focusIndex].focus();
 				}, 500);
-			}, 500);
+			}, 2000);
 		});
 	</script>
 </body>

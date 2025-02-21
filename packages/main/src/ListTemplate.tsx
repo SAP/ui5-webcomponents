@@ -101,13 +101,15 @@ function moreRow(this: List) {
 			>
 				{this.loading &&
 					<BusyIndicator
-						part="growing-button-busy-indicator"
 						delay={this.loadingDelay}
 						class="ui5-list-growing-button-busy-indicator"
 						active>
 					</BusyIndicator>
 				}
-				<span id={`${this._id}-growingButton-text`} class="ui5-growing-button-text" growing-button-text>{this._growingButtonText}</span>
+				<span id={`${this._id}-growingButton-text`}
+					  class="ui5-growing-button-text"
+					  part="growing-button-text"
+					  growing-button-text>{this._growingButtonText}</span>
 			</div>
 		</div>
 	);

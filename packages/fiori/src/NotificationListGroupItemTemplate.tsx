@@ -55,7 +55,7 @@ export default function NotificationListItemTemplate(this: NotificationListGroup
 					accessibleNameRef={`${this._id}-title-text`}
 					growing={this.growing}
 					loading={this.loading}
-					loadingDelay={this.loadingDelay}
+					loadingDelay={this._loadingDelay}
 					onLoadMore={this._onLoadMore}
 				>
 					<slot></slot>
