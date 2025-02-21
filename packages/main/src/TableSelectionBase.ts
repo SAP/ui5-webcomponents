@@ -3,6 +3,7 @@ import { property, eventStrict } from "@ui5/webcomponents-base/dist/decorators.j
 import { isInstanceOfTable } from "./TableUtils.js";
 import type Table from "./Table.js";
 import type TableRowBase from "./TableRowBase.js";
+import type TableRow from "./TableRow.js";
 import type { ITableFeature } from "./Table.js";
 
 /**
@@ -35,7 +36,7 @@ abstract class TableSelectionBase extends UI5Element implements ITableFeature {
 	}
 
 	/**
-	 * Defines the selection of the component.
+	 * Defines the selected elements of the component.
 	 *
 	 * @default undefined
 	 * @public
@@ -76,7 +77,7 @@ abstract class TableSelectionBase extends UI5Element implements ITableFeature {
 	}
 
 	/**
-	 * Determines whether a row selector (e.g., `radiobutton` or `checkbox`) should be rendered.
+	 * Determines whether a row selector (for example, `radiobutton` or `checkbox`) is rendered.
 	 */
 	isRowSelectorRequired(): boolean {
 		return true;
@@ -88,8 +89,20 @@ abstract class TableSelectionBase extends UI5Element implements ITableFeature {
 	 * @param row The row instance
 	 * @public
 	 */
-	getRowKey(row: TableRowBase): string {
-		return row.getAttribute("row-key") || "";
+	getRowKey(row: TableRow): string {
+		return row.rowKey || "";
+	}
+
+	/**
+	 * Returns the table row instance for the given row key.
+	 *
+	 * @param rowKey The row key
+	 * @public
+	 */
+	getRowByKey(rowKey: string): TableRow | undefined {
+		if (this._table && rowKey) {
+			return this._table.rows.find(row => this.getRowKey(row) === rowKey);
+		}
 	}
 
 	/**
@@ -110,7 +123,7 @@ abstract class TableSelectionBase extends UI5Element implements ITableFeature {
 	abstract setSelected(row: TableRowBase, selected: boolean, _fireEvent: boolean): void;
 
 	/**
-	 * Invalidates the table and its rows to force the selection to be re-evaluated.
+	 * Invalidates the table and its rows to re-evaluate the selection.
 	 *
 	 * @protected
 	 */

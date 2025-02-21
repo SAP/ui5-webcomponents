@@ -8,5 +8,6 @@ import "@ui5/webcomponents/dist/Label.js";
 
 const selectionFeature = document.getElementById("selection");
 selectionFeature.addEventListener("change", (e) => {
-	console.log(`${selectionFeature.selected} is selected.`);
+	console.log("Selected key", selectionFeature.selected);
+	console.log("Selected row", selectionFeature.getRowByKey(selectionFeature.selected));
 })

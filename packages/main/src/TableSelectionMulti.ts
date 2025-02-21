@@ -11,7 +11,7 @@ import type TableRowBase from "./TableRowBase.js";
  *
  * ### Overview
  *
- * The `ui5-table-selection-multi` component is used inside the `ui5-table` to add multi selection capabilities to the `ui5-table`.
+ * The `ui5-table-selection-multi` component is used inside the `ui5-table` to add multi-selection capabilities to the `ui5-table`.
  * Since selection is key-based, each `ui5-table-row` must define a unique `row-key` property.
  *
  * ### Usage
@@ -64,7 +64,7 @@ class TableSelectionMulti extends TableSelectionBase {
 			return this.areAllRowsSelected();
 		}
 
-		const rowKey = this.getRowKey(row);
+		const rowKey = this.getRowKey(row as TableRow);
 		return this.getSelectedAsSet().has(rowKey);
 	}
 
@@ -73,7 +73,7 @@ class TableSelectionMulti extends TableSelectionBase {
 			return;
 		}
 
-		const tableRows = row.isHeaderRow() ? this._table!.rows : [row];
+		const tableRows = row.isHeaderRow() ? this._table!.rows : [row as TableRow];
 		const selectedSet = this.getSelectedAsSet();
 		tableRows.forEach(tableRow => {
 			const rowKey = this.getRowKey(tableRow);
@@ -238,7 +238,7 @@ class TableSelectionMulti extends TableSelectionBase {
 
 	/**
 	 * Handles the range selection
-	 * @param targetRow row that is currently focused
+	 * @param targetRow Row that is currently focused
 	 * @param change indicates direction
 	 * @private
 	 */

@@ -6,6 +6,7 @@ import TableRow from "../../src/TableRow.js";
 import TableCell from "../../src/TableCell.js";
 import TableSelectionSingle from "../../src/TableSelectionSingle.js";
 import TableSelectionMulti from "../../src/TableSelectionMulti.js";
+import TableSelectionBase from "../../src/TableSelectionBase.js";
 
 function mountTestpage(selectionMode: string) {
 	cy.mount(
@@ -161,9 +162,21 @@ const testConfig = {
 // I've had to check the attribute this way because
 // should("have.attr"... and similar functions always returned '' instead of the actual value
 // It could be a timing issue but .wait didn't help either
-function checkSelection(rowIndex: string) {
-	cy.get("#selection").then(sel => {
-		expect(sel.get(0).getAttribute("selected")).to.equal(rowIndex);
+function checkSelection(expectedSelected: string) {
+	cy.get("#selection").then($selection => {
+		const selection = $selection.get(0) as TableSelectionBase;
+		expect(selection.getAttribute("selected")).to.equal(expectedSelected);
+
+		if (selection.isMultiSelectable()) {
+			const selectedRows = (selection as TableSelectionMulti).getSelectedRows();
+			expect(selectedRows.map(row => selection.getRowKey(row)).join(" ")).to.equal(expectedSelected);
+			const selectedAsSet = (selection as TableSelectionMulti).getSelectedAsSet();
+			expect([...selectedAsSet].join(" ")).to.equal(expectedSelected);
+		} else {
+			const selectedRow = (selection as TableSelectionSingle).getSelectedRow();
+			expect(selectedRow!.rowKey).to.equal(expectedSelected);
+			expect(selectedRow).to.equal(selection.getRowByKey(expectedSelected));
+		}
 	});
 }
 
