@@ -85,6 +85,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 	readonly identifier = "TableSelection";
 	_table?: Table;
+	_rowsLength = 0;
 	_rangeSelection?: {selected: boolean, isUp: boolean | null, rows: TableRow[], isMouse: boolean, shiftPressed: boolean} | null;
 
 	onTableActivate(table: Table) {
@@ -100,6 +101,13 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 	onBeforeRendering() {
 		this._invalidateTableAndRows();
+	}
+
+	onTableBeforeRendering() {
+		if (this.isMultiSelectable() && this._table && this._table.headerRow[0] && this._rowsLength !== this._table.rows.length) {
+			this._rowsLength = this._table.rows.length;
+			this._table.headerRow[0]._invalidate++;
+		}
 	}
 
 	isSelectable(): boolean {

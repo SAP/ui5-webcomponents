@@ -6,7 +6,7 @@ import TableRow from "../../src/TableRow.js";
 import TableCell from "../../src/TableCell.js";
 import TableSelectionSingle from "../../src/TableSelectionSingle.js";
 import TableSelectionMulti from "../../src/TableSelectionMulti.js";
-import TableSelectionBase from "../../src/TableSelectionBase.js";
+import type TableSelectionBase from "../../src/TableSelectionBase.js";
 
 function mountTestpage(selectionMode: string) {
 	cy.mount(
@@ -255,5 +255,42 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 			cy.realPress(["Shift", "ArrowDown"]);
 			checkSelection(testConfigEntry.cases.RANGE_KEYBOARD.block_2);
 		});
+	});
+});
+
+describe("TableSelectionMulti", () => {
+	it("updates the header row checkbox when rows are added or removed", () => {
+		cy.mount(
+			<Table id="table1">
+				<TableSelectionMulti id="selection" selected="1 2" slot="features"></TableSelectionMulti>
+				<TableHeaderRow id="headerRow" slot="headerRow">
+					<TableHeaderCell>ColumnA</TableHeaderCell>
+				</TableHeaderRow>
+				<TableRow id="row1" rowKey="1">
+					<TableCell><Label>Cell A</Label></TableCell>
+				</TableRow>
+				<TableRow id="row2" rowKey="2">
+					<TableCell><Label>Cell A</Label></TableCell>
+				</TableRow>
+			</Table>
+		);
+
+		cy.get("#headerRow").shadow().find("#selection-cell").as("headerRowSelectionCell");
+		cy.get("@headerRowSelectionCell").find("#selection-component").as("headerRowCheckBox");
+		cy.get("@headerRowCheckBox").should("have.attr", "checked");
+		cy.get("#table1").then($table => {
+			$table.append(
+				`<ui5-table-row id="row3" row-key="3">
+					<ui5-table-cell>Cell A</ui5-table-cell>
+					<ui5-table-cell>Cell B</ui5-table-cell>
+				</ui5-table-row>`
+			);
+		});
+		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
+		cy.get("#row3").invoke("remove");
+		cy.get("@headerRowCheckBox").should("have.attr", "checked");
+		cy.get("#row2").invoke("remove");
+		cy.get("#row1").invoke("remove");
+		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
 	});
 });

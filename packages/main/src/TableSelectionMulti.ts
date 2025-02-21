@@ -47,6 +47,7 @@ class TableSelectionMulti extends TableSelectionBase {
 	@property()
 	selected?: string;
 
+	private _rowsLength = 0;
 	private _rangeSelection?: {
 		selected: boolean,
 		isUp: boolean | null,
@@ -54,6 +55,13 @@ class TableSelectionMulti extends TableSelectionBase {
 		isMouse: boolean,
 		shiftPressed: boolean
 	} | null;
+
+	onTableBeforeRendering() {
+		if (this._table && this._table.headerRow[0] && this._rowsLength !== this._table.rows.length) {
+			this._rowsLength = this._table.rows.length;
+			this._table.headerRow[0]._invalidate++;
+		}
+	}
 
 	isMultiSelectable(): boolean {
 		return true;

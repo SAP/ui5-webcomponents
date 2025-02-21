@@ -40,11 +40,17 @@ interface ITableFeature extends UI5Element {
 	readonly identifier: string;
 	/**
 	 * Called when the table is activated.
-	 * @param table table instance
+	 * @param table Table instance
 	 */
 	onTableActivate?(table: Table): void;
 	/**
-	 * Called when the table finished rendering.
+	 * Called every time before the table renders.
+	 * @param table Table instance
+	 */
+	onTableBeforeRendering?(table?: Table): void;
+	/**
+	 * Called every time after the table renders.
+	 * @param table Table instance
 	 */
 	onTableAfterRendering?(table?: Table): void;
 }
@@ -391,7 +397,6 @@ class Table extends UI5Element {
 	_tableDragAndDrop?: TableDragAndDrop;
 	_poppedIn: Array<{col: TableHeaderCell, width: float}> = [];
 	_containerWidth = 0;
-	_rowsLength = 0;
 
 	constructor() {
 		super();
@@ -422,10 +427,6 @@ class Table extends UI5Element {
 		this._renderNavigated = this.rows.some(row => row.navigated);
 		if (this.headerRow[0]) {
 			this.headerRow[0]._rowActionCount = this.rowActionCount;
-			if (this._getSelection()?.isMultiSelectable() && this._rowsLength !== this.rows.length) {
-				this._rowsLength = this.rows.length;
-				this.headerRow[0]._invalidate++;
-			}
 		}
 		this.rows.forEach(row => {
 			row._renderNavigated = this._renderNavigated;
@@ -434,6 +435,7 @@ class Table extends UI5Element {
 
 		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
 		this._refreshPopinState();
+		this.features.forEach(feature => feature.onTableBeforeRendering?.(this));
 	}
 
 	onAfterRendering(): void {

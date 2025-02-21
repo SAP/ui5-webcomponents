@@ -737,25 +737,6 @@ describe("Table - Interactive Rows", () => {
 		cy.get("@row2button").realPress("Space");
 		cy.get("@buttonClickHandler").should("have.been.calledThrice");
 		cy.get("@rowClickHandler").should("have.been.calledThrice");
-
-		// move the following tests to the TableSelection.cy.tsx
-		cy.get("#headerRow").shadow().find("#selection-cell").as("headerRowSelectionCell");
-		cy.get("@headerRowSelectionCell").find("#selection-component").as("headerRowCheckBox");
-		cy.get("@headerRowCheckBox").should("have.attr", "checked");
-		cy.get("#table1").then($table => {
-			$table.append(
-				`<ui5-table-row id="row3" row-key="3">
-					<ui5-table-cell>Cell A</ui5-table-cell>
-					<ui5-table-cell>Cell B</ui5-table-cell>
-				</ui5-table-row>`
-			);
-		});
-		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
-		cy.get("#row3").invoke("remove");
-		cy.get("@headerRowCheckBox").should("have.attr", "checked");
-		cy.get("#row2").invoke("remove");
-		cy.get("#row1").invoke("remove");
-		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
 	});
 });
 
