@@ -411,6 +411,9 @@ class Select extends UI5Element implements IFormInputElement {
 			if (!this.selectedOption) {
 				this._applyAutoSelection();
 			}
+
+			// sync valueStorage with the selected option
+			this._syncValueStorage();
 		}
 	}
 
@@ -438,6 +441,12 @@ class Select extends UI5Element implements IFormInputElement {
 			if (selectedIndex === i) {
 				break;
 			}
+		}
+	}
+
+	_syncValueStorage() {
+		if ((this.selectedOption?.textContent || this.selectedOption?.value !== this._valueStorage)) {
+			this.value = this.selectedOption?.value || this.selectedOption?.textContent || "";
 		}
 	}
 
