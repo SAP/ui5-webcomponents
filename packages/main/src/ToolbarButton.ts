@@ -158,7 +158,7 @@ class ToolbarButton extends ToolbarItem {
 
 	/**
      * Defines if the toolbar button is hidden.
-     * @public
+     * @private
      * @default false
      */
 	@property({ type: Boolean })
