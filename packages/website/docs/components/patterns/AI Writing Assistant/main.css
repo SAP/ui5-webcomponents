@@ -10,8 +10,3 @@ body {
 .show {
 	display: block;
 }
-
-#btn {
-	display: none;
-	position: absolute;
-}
