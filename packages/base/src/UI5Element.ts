@@ -1312,8 +1312,8 @@ abstract class UI5Element extends HTMLElement {
 			]);
 			const [i18nBundles] = result;
 			Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
-				const propertyName = pair[0];
-				this.i18nBundleStorage[propertyName] = i18nBundles[index];
+				const bundleName = pair[1].bundleName;
+				this.i18nBundleStorage[bundleName] = i18nBundles[index];
 			});
 			this.asyncFinished = true;
 		};
