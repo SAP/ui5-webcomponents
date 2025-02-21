@@ -36,5 +36,5 @@
 //   }
 // }
 
-import "@ui5/cy-internal/commands.js";
+import "@ui5/cypress-internal/commands.js";
 import "../../../main/cypress/support/commands.js";

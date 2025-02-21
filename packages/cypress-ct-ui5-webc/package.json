@@ -1,7 +1,6 @@
 {
   "name": "@ui5/cypress-ct-ui5-webc",
   "version": "0.0.0",
-  "private": "true",
   "description": "Example Framework Definition adapter for Cypress Component Testing",
   "exports": {
     "node": "./dist/definition.js",
