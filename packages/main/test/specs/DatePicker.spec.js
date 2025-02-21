@@ -955,9 +955,9 @@ describe("Date Picker Tests", () => {
 
 	it("DayPiker day number attribute", async () => {
 		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		datepicker.id = "#dp13";
 		const root = await datepicker.getRoot();
 		await root.setAttribute("primary-calendar-type", "Gregorian");
-		datepicker.id = "#dp13";
 		await datepicker.openPicker();
 		await root.keys("May 3, 2100");
 		await root.keys("Enter");
@@ -992,9 +992,9 @@ describe("Date Picker Tests", () => {
 
 		const data = Array.from(await datepicker.getDayPickerDatesRow(2));
 		assert.strictEqual(await data[0].getAttribute("aria-label"), "Calendar Week 19", "First columnheader have Week number aria-label");
-		assert.strictEqual(await data[1].getAttribute("aria-label"), "Non-Working Day May 2, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
-		assert.strictEqual(await data[2].getAttribute("aria-label"), "May 3, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
-		assert.strictEqual(await data[3].getAttribute("aria-label"), "May 4, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.strictEqual(await data[1].getAttribute("aria-label"), "May 2, 2100 Non-Working Day ", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.strictEqual(await data[2].getAttribute("aria-label"), "May 3, 2100 ", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.strictEqual(await data[3].getAttribute("aria-label"), "May 4, 2100 ", "Each date have the full date's info in Month Date, Year in aria-label");
 
 		await datepicker.closePicker();
 	});
@@ -1284,9 +1284,9 @@ describe("Date Picker Tests", () => {
 		assert.ok(await monthPicker.getAttribute("hidden"));
 		assert.notOk(await yearPicker.getAttribute("hidden"));
 
-		const timestamp_2014 = 1388534400;
-		const calendarDate_2014 = await datepicker.getPickerYear(timestamp_2014);
-		await calendarDate_2014.click();
+		const timestamp_2015 = 1420070400;
+		const calendarDate_2015 = await datepicker.getPickerYear(timestamp_2015);
+		await calendarDate_2015.click();
 
 		assert.isFalse(await datepicker.isPickerOpen(), "picker is closed after year selection");
 	});
@@ -1414,7 +1414,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	describe("Legacy date customization", () => {
-		it.only("Customization of legacy dates in Islamic calendar", async () => {
+		it("Customization of legacy dates in Islamic calendar", async () => {
 			// According to the Islamic calendar, Rab. I 9, 1446 AH should be displayed on Thursday,
 			// but it needs to be configured using the legacyDateCalendarCustomizing setting.
 			datepicker.page = "test/pages/DatePicker_legacy_test_page.html";
