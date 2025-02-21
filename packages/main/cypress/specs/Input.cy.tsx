@@ -2,6 +2,8 @@ import Input from "../../src/Input.js";
 import SuggestionItem from "../../src/SuggestionItem.js";
 import SuggestionItemCustom from "../../src/SuggestionItemCustom.js";
 import SuggestionItemGroup from "../../src/SuggestionItemGroup.js";
+import Dialog from "../../src/Dialog.js";
+import Button from "../../src/Button.js";
 
 describe("Input Tests", () => {
 	it("tets input event prevention", () => {
@@ -122,7 +124,7 @@ describe("Input Tests", () => {
 			.shadow()
 			.find("[ui5-li-group-header]")
 			.shadow()
-			.find("ul")
+			.find("div")
 			.should("not.have.attr", "tabindex", "0");
 	});
 });
@@ -533,5 +535,63 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.then(() => {
 			expect(changeCount).to.equal(1);
 		});
+	});
+
+	it("should not close the dialog when item is selected", () => {
+		cy.mount(
+			<>
+				<Button>Open</Button>
+				<Dialog>
+					<Input showSuggestions={true}>
+						<SuggestionItem text="First item"></SuggestionItem>
+						<SuggestionItem text="Second item"></SuggestionItem>
+					</Input>
+				</Dialog>
+			</>
+		);
+
+		cy.get("[ui5-button]")
+			.as("button");
+
+		cy.get("[ui5-dialog]")
+			.as("dialog");
+
+		cy.get("[ui5-input]")
+			.as("input");
+
+		cy.get("@button")
+			.then($btn => {
+				$btn[0].addEventListener("click", () => {
+					cy.get("@dialog").then($dialog => {
+						$dialog[0].setAttribute("open", "");
+					});
+				});
+			});
+
+		cy.get("@dialog")
+			.then($dialog => {
+				$dialog[0].addEventListener("close", () => {
+					$dialog[0].removeAttribute("open");
+				});
+			});
+
+		cy.get("@button")
+			.realClick();
+
+		cy.get("@input")
+			.realClick();
+
+		cy.get("@input")
+			.realType("f");
+
+		cy.get("[ui5-suggestion-item")
+			.eq(0)
+			.as("suggestion-item");
+
+		cy.get("@suggestion-item")
+			.click();
+
+		cy.get("@dialog")
+			.should("have.attr", "open");
 	});
 });

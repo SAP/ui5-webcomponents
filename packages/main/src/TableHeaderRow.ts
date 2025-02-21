@@ -56,7 +56,7 @@ class TableHeaderRow extends TableRowBase {
 		type: HTMLElement,
 		"default": true,
 		invalidateOnChildChange: {
-			properties: ["width", "_popin", "horizontalAlign"],
+			properties: ["width", "_popin", "horizontalAlign", "popinHidden"],
 			slots: false,
 		},
 		individualSlots: true,
@@ -96,10 +96,6 @@ class TableHeaderRow extends TableRowBase {
 
 	get _isSelectable() {
 		return this._isMultiSelect;
-	}
-
-	get _isSelected() {
-		return this._tableSelection?.areAllRowsSelected();
 	}
 
 	get _i18nSelection() {

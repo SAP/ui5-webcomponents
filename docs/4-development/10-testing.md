@@ -431,6 +431,36 @@ describe("My Component Tests", () => {
 });
 ```
 
+### Changing the language
+
+Locale-aware components often need to set the user's language for certain tests.
+
+Here is how you can do it:
+
+```typescript
+import Calendar from "../../src/Calendar.js";
+import "../../src/Assets.js"; // Do not forget to import the Assets.js module for the extra languages
+import { setLanguage, getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+
+describe("Test group", () => {
+	it("Test", () => {
+		// setLanguage("bg"); // Wrong, the promise will not be awaited!
+
+		cy.wrap({ setLanguage })
+			.invoke("setLanguage", "bg"); // Correct, the promise will be awaited!
+
+		cy.wrap({ getLanguage })
+			.invoke("getLanguage")
+			.should("equal", "bg");
+
+		cy.mount(<Calendar />); // This calendar will be in Bulgarian
+	});
+});
+```
+
+Notes:
+ - You must import the Assets module for the extra languages to work
+ - You must call `setLanguage` with `cy.wrap` to make sure it will be awaited until the desired language is completely set (CLDR assets are fetched)
 
 ### Code coverage
 
