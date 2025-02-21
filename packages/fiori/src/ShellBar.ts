@@ -1140,9 +1140,10 @@ class ShellBar extends UI5Element {
 	}
 
 	_observeContentItems() {
-		if (JSON.stringify(this.contentItems) === JSON.stringify(this._observableContent)) {
-			return false;
+		if (this.hasMatchingContent) {
+			return;
 		}
+
 		this.contentItems.forEach(item => {
 			if (!this._observableContent.includes(item)) {
 				this.contentItemsObserver.observe(item, {
@@ -1173,6 +1174,15 @@ class ShellBar extends UI5Element {
 		}
 
 		return itemInfo.classes.indexOf("ui5-shellbar-hidden-button") !== -1;
+	}
+
+	get hasMatchingContent() {
+		if (this._observableContent.length !== this.contentItems.length) {
+			return false;
+		}
+
+		const observableContentSet = new WeakSet(this._observableContent);
+		return this.contentItems.every(item => observableContentSet.has(item));
 	}
 
 	get contentItemsSorted() {
