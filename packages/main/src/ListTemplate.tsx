@@ -106,7 +106,10 @@ function moreRow(this: List) {
 						active>
 					</BusyIndicator>
 				}
-				<span id={`${this._id}-growingButton-text`} class="ui5-growing-button-text" growing-button-text>{this._growingButtonText}</span>
+				<span id={`${this._id}-growingButton-text`}
+					  class="ui5-growing-button-text"
+					  part="growing-button-text"
+					  growing-button-text>{this._growingButtonText}</span>
 			</div>
 		</div>
 	);
