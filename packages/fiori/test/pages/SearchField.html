@@ -32,7 +32,7 @@
 	</div>
 	<div class="container" style="padding-top: 1rem; display: flex; flex-direction: column;">
 		<ui5-label>Initially expanded fixed search with scope and placeholder:</ui5-label>
-		<ui5-search-field accessible-name="Global Search" id="scoped-search" fixed expanded show-scope placeholder="Placeholder">
+		<ui5-search-field accessible-name="Global Search" id="scoped-search" fixed expanded mode="Scoped" placeholder="Placeholder">
 			<ui5-search-field-scope-option text="All" slot="scopeOptions"></ui5-search-field-scope-option>
 			<ui5-search-field-scope-option text="Apps" selected slot="scopeOptions"></ui5-search-field-scope-option>
 			<ui5-search-field-scope-option text="Products" slot="scopeOptions"></ui5-search-field-scope-option>
@@ -57,7 +57,7 @@
 		</div>
 		<div class="container" style="padding-top: 1rem; display: flex; flex-direction: column;">
 			<ui5-label>Initially expanded search with scope</ui5-label>
-			<ui5-search-field accessible-name="Global Search"  expanded show-scope>
+			<ui5-search-field accessible-name="Global Search"  expanded mode="Scoped">
 				<ui5-search-field-scope-option text="All" slot="scopeOptions"></ui5-search-field-scope-option>
 				<ui5-search-field-scope-option text="Apps" slot="scopeOptions"></ui5-search-field-scope-option>
 				<ui5-search-field-scope-option text="Products" selected slot="scopeOptions"></ui5-search-field-scope-option>

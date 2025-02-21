@@ -1,16 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import SearchFieldTemplate from "./SearchFieldTemplate.js";
 import SearchFieldCss from "./generated/themes/SearchField.css.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Select from "@ui5/webcomponents/dist/Select.js";
-import Option from "@ui5/webcomponents/dist/Option.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import SearchMode from "./types/SearchMode.js";
 
 import {
 	isEnter,
@@ -60,9 +58,7 @@ type SearchFieldScopeSelectionChangeDetails = {
  *
  * @constructor
  * @extends UI5Element
- * @public
- * @since 2.0.0
- * @experimental This component is availabe since 2.0 under an experimental flag and its API and behaviour are subject to change.
+ * @private
  */
 @customElement({
 	tag: "ui5-search-field",
@@ -71,12 +67,6 @@ type SearchFieldScopeSelectionChangeDetails = {
 	template: SearchFieldTemplate,
 	styles: [
 		SearchFieldCss,
-	],
-	dependencies: [
-		Button,
-		Icon,
-		Select,
-		Option,
 	],
 })
 
@@ -94,13 +84,7 @@ type SearchFieldScopeSelectionChangeDetails = {
  * @public
  * @param {HTMLElement} scope The newly selected scope
  */
-@event<SearchFieldScopeSelectionChangeDetails>("scope-change", {
-	detail: {
-		/**
-	 	* @public
-	 	*/
-		scope: { type: HTMLElement },
-	},
+@event("scope-change", {
 	bubbles: true,
 })
 
@@ -118,14 +102,14 @@ class SearchField extends UI5Element {
 		input: void,
 		"scope-change": SearchFieldScopeSelectionChangeDetails,
 	}
+
 	/**
-	 * Defines whether scope select should be shown.
-	 *
-	 * @default false
+	 * Defines the mode of the component.
+	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: Boolean })
-	showScope = false;
+	@property()
+	mode: `${SearchMode}` = "Default";
 
 	/**
 	 * Defines whether the clear icon of the search will be shown.
@@ -221,7 +205,9 @@ class SearchField extends UI5Element {
 	}
 
 	_handleEnter() {
-		this.fireDecoratorEvent("search");
+		if (this.value.length) {
+			this.fireDecoratorEvent("search");
+		}
 	}
 
 	_handleSearchIconFocusOut() {}
