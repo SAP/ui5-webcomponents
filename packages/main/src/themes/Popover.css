@@ -8,6 +8,10 @@
 	box-shadow: var(--_ui5_popover_no_arrow_box_shadow);
 }
 
+:host([no-scrolling]) .ui5-popover-root {
+	overflow: hidden;
+}
+
 /* pointing upward arrow */
 :host([actual-placement="Bottom"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
