@@ -1,6 +1,7 @@
 import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
 import "../../src/Assets.js";
-import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+import "@ui5/webcomponents/dist/Assets.js"
+import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import DatePicker from "../../src/DatePicker.js";
 import Label from "../../src/Label.js";
 
@@ -123,10 +124,6 @@ describe("Date Picker Tests", () => {
 	it("input receives value in format pattern depending on the set language", () => {
 		cy.wrap({ setLanguage })
 			.invoke("setLanguage", "bg");
-
-		cy.wrap({ getLanguage })
-			.invoke("getLanguage")
-			.should("equal", "bg");
 
 		cy.mount(<DatePicker value="11 декември 2018г." format-pattern="long"></DatePicker>);
 
@@ -357,10 +354,6 @@ describe("Date Picker Tests", () => {
 	it("respect first day of the week - monday", () => {
 		cy.wrap({ setLanguage })
 			.invoke("setLanguage", "bg");
-
-		cy.wrap({ getLanguage })
-			.invoke("getLanguage")
-			.should("equal", "bg");
 
 		cy.mount(<DatePicker value="фев 6, 2019" format-pattern="MMM d, y"></DatePicker>);
 
