@@ -5,7 +5,7 @@ export default function TableGrowingTemplate(this: TableGrowing) {
 		<div
 			id="growing-button"
 			tabindex={-1}
-			ui5-growing-active={this._activeState}
+			data-ui5-growing-active={this._activeState}
 			onClick={this.loadMore}
 			onKeyDown={this._onKeydown}
 			onKeyUp={this._onKeyup}
@@ -17,7 +17,7 @@ export default function TableGrowingTemplate(this: TableGrowing) {
 			{ this.growingSubText &&
 				<span id="growing-subtext">{this.growingSubText}</span>
 			}
-			<span id="growing-description" style="display: none;" aria-hidden="true">{this._growingButtonDescription}</span>
+			<span id="growing-description" class="ui5-hidden-text" aria-hidden="true">{this._growingButtonDescription}</span>
 		</div>
 	);
 }

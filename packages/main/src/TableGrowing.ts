@@ -125,7 +125,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * Used for keyboard interaction.
 	 * @private
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, noAttribute: true })
 	_activeState = false;
 
 	@property({ type: Number, noAttribute: true })

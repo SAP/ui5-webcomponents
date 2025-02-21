@@ -11,8 +11,8 @@ export default function TableRowTemplate(this: TableRow) {
 				<TableCell
 					id="selection-cell"
 					aria-selected={this._isSelected}
-					ui5-table-cell-fixed
-					ui5-table-selection-component
+					data-ui5-table-cell-fixed
+					data-ui5-table-selection-component
 				>
 					{ this._isMultiSelect ?
 						<CheckBox id="selection-component"
@@ -59,7 +59,7 @@ export default function TableRowTemplate(this: TableRow) {
 			}
 
 			{ this._renderNavigated &&
-				<TableCell id="navigated-cell" excluded-from-navigation={true}>
+				<TableCell id="navigated-cell" data-excluded-from-navigation={true}>
 					<div id="navigated"></div>
 				</TableCell>
 			}

@@ -25,7 +25,7 @@ export default function TableTemplate(this: Table) {
 
 				{ this.rows.length === 0 &&
 					<TableRow id="nodata-row">
-						<TableCell id="nodata-cell" excluded-from-navigation horizontal-align="Center">
+						<TableCell id="nodata-cell" data-excluded-from-navigation horizontal-align="Center">
 							{ this.nodata.length > 0 ?
 								<slot name="nodata"></slot>
 								:

@@ -9,15 +9,15 @@ export default function TableHeaderRowTemplate(this: TableHeaderRow) {
 				<TableHeaderCell id="selection-cell"
 					aria-selected={this._isSelected}
 					aria-label={this._i18nSelection}
-					ui5-table-cell-fixed
-					ui5-table-selection-component
+					data-ui5-table-cell-fixed
+					data-ui5-table-selection-component
 				>
 					{ this._isMultiSelect &&
 						<CheckBox id="selection-component"
 							tabindex={-1}
 							checked={this._isSelected}
 							onChange={this._informSelectionChange}
-							accessible-name={this._i18nRowSelector}
+							accessibleName={this._i18nRowSelector}
 						></CheckBox>
 					}
 				</TableHeaderCell>
@@ -36,7 +36,7 @@ export default function TableHeaderRowTemplate(this: TableHeaderRow) {
 			{ this._popinCells.length > 0 &&
 				<TableHeaderCell id="popin-cell"
 					aria-label={this._i18nRowPopin}
-					excluded-from-navigation
+					data-excluded-from-navigation
 				></TableHeaderCell>
 			}
 		</>

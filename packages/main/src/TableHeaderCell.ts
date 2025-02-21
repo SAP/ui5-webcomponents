@@ -4,8 +4,6 @@ import TableHeaderCellTemplate from "./TableHeaderCellTemplate.js";
 import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
 import SortOrder from "@ui5/webcomponents-base/dist/types/SortOrder.js";
 import type TableHeaderCellActionBase from "./TableHeaderCellActionBase.js";
-import "@ui5/webcomponents-icons/dist/sort-ascending.js";
-import "@ui5/webcomponents-icons/dist/sort-descending.js";
 
 /**
  * @class
@@ -145,12 +143,6 @@ class TableHeaderCell extends TableCellBase {
 			this.setAttribute("aria-sort", this.sortIndicator.toLowerCase());
 		} else if (this.hasAttribute("aria-sort")) {
 			this.removeAttribute("aria-sort");
-		}
-	}
-
-	get _sortIcon() {
-		if (this.sortIndicator !== SortOrder.None) {
-			return `sort-${this.sortIndicator.toLowerCase()}`;
 		}
 	}
 }
