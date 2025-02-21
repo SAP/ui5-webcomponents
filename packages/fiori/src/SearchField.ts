@@ -6,9 +6,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import SearchFieldTemplate from "./SearchFieldTemplate.js";
 import SearchFieldCss from "./generated/themes/SearchField.css.js";
-import Select from "@ui5/webcomponents/dist/Select.js";
+import type Select from "@ui5/webcomponents/dist/Select.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import SearchMode from "./types/SearchMode.js";
+import type SearchMode from "./types/SearchMode.js";
 
 import {
 	isEnter,
