@@ -11,19 +11,6 @@ body {
 	display: block;
 }
 
-.icon {
-	color: #1969DA;
-}
-
-.icon-clicked {
-	border-left: 1px solid #1969DA;
-	background-color: white;
-}
-
-.loading-input {
-	background-color: #e1f4ff;
-}
-
 #btn {
 	display: none;
 	position: absolute;
