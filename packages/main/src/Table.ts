@@ -2,22 +2,20 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
 	customElement, slot, property, eventStrict, i18n,
 } from "@ui5/webcomponents-base/dist/decorators.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TableTemplate from "./generated/templates/TableTemplate.lit.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import TableTemplate from "./TableTemplate.js";
 import TableStyles from "./generated/themes/Table.css.js";
-import TableHeaderRow from "./TableHeaderRow.js";
-import TableRow from "./TableRow.js";
-import TableCell from "./TableCell.js";
 import TableExtension from "./TableExtension.js";
 import TableNavigation from "./TableNavigation.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableDragAndDrop from "./TableDragAndDrop.js";
-import DropIndicator from "./DropIndicator.js";
-import BusyIndicator from "./BusyIndicator.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import type DropIndicator from "./DropIndicator.js";
+import type TableHeaderRow from "./TableHeaderRow.js";
+import type TableRow from "./TableRow.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type TableHeaderCell from "./TableHeaderCell.js";
@@ -173,17 +171,10 @@ type TableRowActionClickEventDetail = {
  */
 @customElement({
 	tag: "ui5-table",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TableStyles,
 	template: TableTemplate,
 	fastNavigation: true,
-	dependencies: [
-		BusyIndicator,
-		TableHeaderRow,
-		TableCell,
-		TableRow,
-		DropIndicator,
-	],
 })
 
 /**
@@ -663,7 +654,7 @@ class Table extends UI5Element {
 	}
 
 	get _shouldRenderGrowing() {
-		return this.rows.length && this._growing?.hasGrowingComponent();
+		return !!this.rows.length && this._growing?.hasGrowingComponent();
 	}
 
 	get _growing() {

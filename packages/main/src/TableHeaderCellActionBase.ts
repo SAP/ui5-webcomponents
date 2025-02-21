@@ -1,9 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { customElement, eventStrict } from "@ui5/webcomponents-base/dist/decorators.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TableHeaderCellActionBaseTemplate from "./generated/templates/TableHeaderCellActionBaseTemplate.lit.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import TableHeaderCellActionBaseTemplate from "./TableHeaderCellActionBaseTemplate.js";
 import TableHeaderCellActionBaseStyles from "./generated/themes/TableHeaderCellActionBase.css.js";
-import Button from "./Button.js";
 import type TableCell from "./TableCell.js";
 
 /**
@@ -38,10 +37,9 @@ type TableHeaderCellActionClickEventDetail = {
  * @public
  */
 @customElement({
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TableHeaderCellActionBaseStyles,
 	template: TableHeaderCellActionBaseTemplate,
-	dependencies: [Button],
 })
 abstract class TableHeaderCellActionBase extends UI5Element {
 	eventDetails!: {

@@ -24,7 +24,7 @@
     }
 }
 
-#growing-button:active,#growing-button[active] {
+#growing-button:active,#growing-button[ui5-growing-active] {
     background: var(--sapList_Active_Background);
 }
 

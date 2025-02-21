@@ -653,13 +653,13 @@ describe("Table - Navigated Rows", () => {
 			.shadow()
 			.find("#navigated-cell")
 			.should("exist")
-			.should("have.attr", "excluded-from-navigation", "");
+			.should("have.attr", "excluded-from-navigation");
 
 		cy.get("#row2")
 			.shadow()
 			.find("#navigated-cell")
 			.should("exist")
-			.should("have.attr", "excluded-from-navigation", "");
+			.should("have.attr", "excluded-from-navigation");
 
 		cy.get("#row1")
 			.shadow()
