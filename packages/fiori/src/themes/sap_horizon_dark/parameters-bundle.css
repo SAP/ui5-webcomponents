@@ -8,6 +8,7 @@
 @import "./ProductSwitchItem-parameters.css";
 @import "../base/ShellBar-parameters.css";
 @import "./ShellBar-parameters.css";
+@import "../base/SearchField-parameters.css";
 @import "./TimelineItem-parameters.css";
 @import "./SideNavigation-parameters.css";
 @import "./UploadCollection-parameters.css";
