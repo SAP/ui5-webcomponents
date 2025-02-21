@@ -1,0 +1,12 @@
+body {
+	background-color: var(--sapBackgroundColor);
+	height: 300px;
+}
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: block;
+}
