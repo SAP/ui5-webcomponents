@@ -59,7 +59,8 @@ describe("Page general interaction", () => {
 	});
 
 	it("tests animation off footer toggling", () => {
-		setAnimationMode(AnimationMode.None);
+		cy.wrap({ setAnimationMode })
+			.invoke("setAnimationMode", AnimationMode.None);
 
 		cy.get("[ui5-page] [slot='footer']")
 			.as("footer");
