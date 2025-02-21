@@ -193,6 +193,7 @@ class SideNavigation extends UI5Element {
 	_menuPopoverItems: Array<SideNavigationItem> = [];
 
 	/**
+	 * Defines if the component is rendered on phone.
 	 * @private
 	 */
 	@property({ type: Boolean })
