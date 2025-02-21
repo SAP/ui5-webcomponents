@@ -54,7 +54,7 @@ type SearchFieldScopeSelectionChangeDetails = {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/fiori/dist/Search.js";`
+ * `import "@ui5/webcomponents/fiori/dist/SearchField.js";`
  *
  * @constructor
  * @extends UI5Element
