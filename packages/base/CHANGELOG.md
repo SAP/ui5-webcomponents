@@ -3,17 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.8.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.2...v2.8.0) (2025-02-21)
-
-
-### Bug Fixes
-
-* test ([2623f73](https://github.com/SAP/ui5-webcomponents/commit/2623f731a5ecf48ac131d7f05282bdb7953f60cf))
-
-
-
-
-
 # [2.8.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.1...v2.8.0-rc.2) (2025-02-20)
 
 
