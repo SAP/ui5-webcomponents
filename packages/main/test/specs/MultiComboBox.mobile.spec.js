@@ -315,19 +315,20 @@ describe("Items selection", () => {
 	});
 
 	it("should select all items when clicking select all", async () => {
-		const cb = await $("#mcb-select-all-vs");
+		const cb = await browser.$("#mcb-select-all-vs");
 		const popover = await cb.shadow$("ui5-responsive-popover");
-		const spanRef = await $("#select-all-event");
+		const selectAllCheckbox = await popover.$(".ui5-mcb-select-all-checkbox");
+		const selectAllCheckboxRoot = await selectAllCheckbox.shadow$(".ui5-checkbox-root");
+		const spanRef = await browser.$("#select-all-event");
 
 		await cb.click();
-
-		await popover.$(".ui5-mcb-select-all-checkbox").click();
+		await selectAllCheckboxRoot.click();
 		// ok button
 		await popover.$(".ui5-responsive-popover-footer").$("ui5-button").click();
 		assert.strictEqual(await spanRef.getText(), "Selected items count: 27");
 
 		await cb.click();
-		await popover.$(".ui5-mcb-select-all-checkbox").click();
+		await selectAllCheckboxRoot.click();
 		// ok button
 		await popover.$(".ui5-responsive-popover-footer").$("ui5-button").click();
 		assert.strictEqual(await spanRef.getText(), "Selected items count: 0");
@@ -335,14 +336,15 @@ describe("Items selection", () => {
 
 
 	it("select all should not be checked if all items are not selected", async () => {
-		const mcb = await $("#mcb-select-all-vs");
+		const mcb = await browser.$("#mcb-select-all-vs");
 		const popover = await mcb.shadow$("ui5-responsive-popover");
 		const closeIcon = await popover.$(".ui5-responsive-popover-close-btn");
 		const selectAllCheckbox = await popover.$(".ui5-mcb-select-all-checkbox");
+		const selectAllCheckboxRoot = await selectAllCheckbox.shadow$(".ui5-checkbox-root");
 
 		await mcb.click();
 
-		await selectAllCheckbox.click();
+		await selectAllCheckboxRoot.click();
 		await closeIcon.click();
 		await mcb.click();
 
