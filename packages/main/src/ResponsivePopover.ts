@@ -7,6 +7,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
 import ResponsivePopoverTemplate from "./ResponsivePopoverTemplate.js";
+import type { PopupCloseInfo } from "./popup-utils/PopoverRegistry.js";
 import Popover from "./Popover.js";
 import type Dialog from "./Dialog.js";
 
@@ -97,11 +98,11 @@ class ResponsivePopover extends Popover {
 	 * Closes the popover/dialog.
 	 * @override
 	 */
-	closePopup(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) : void {
+	closePopup(popupCloseInfo : PopupCloseInfo | undefined = undefined) : void {
 		if (!isPhone()) {
-			super.closePopup(escPressed, preventRegistryUpdate, preventFocusRestore);
+			super.closePopup(popupCloseInfo);
 		} else {
-			this._dialog?.closePopup(escPressed, preventRegistryUpdate, preventFocusRestore);
+			this._dialog?.closePopup(popupCloseInfo);
 		}
 	}
 
