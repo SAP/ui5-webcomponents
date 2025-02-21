@@ -2,6 +2,8 @@ import ToolbarButton from "../../src/ToolbarButton.js";
 import Toolbar from "../../src/Toolbar.js";
 import Popover from "../../src/Popover.js";
 import Button from "../../src/Button.js";
+import List from "../../src/List.js";
+import ListItemStandard from "../../src/ListItemStandard.js";
 
 describe("Popover opener", () => {
 	it("tests 'opener' set as string of abstract element's ID ", () => {
@@ -151,6 +153,65 @@ describe("Popover interaction", () => {
 
 			// assert
 			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").should("be.visible");
+		});
+	});
+
+	describe("Scrolling", () => {
+		it("tests disabled scrolling in popover", () => {
+			cy.mount(
+				<>
+					<button id="opener1">Open</button>
+					<Popover id="popNoScroll" style="height:200px;" open={true} no-scrolling opener="opener1">
+						<List>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard id="txt1"> Text 1 </ListItemStandard>
+						</List>
+					</Popover>
+				</>
+			);
+
+			cy.get("#popNoScroll")
+				.shadow()
+				.find(".ui5-popup-content")
+				.should("have.css", "overflow", "hidden");
+		});
+
+		it("tests scrolling in popover", () => {
+			cy.mount(
+				<>
+					<button id="opener1">Open</button>
+					<Popover id="popNoScroll" style="height:200px;" open={true} opener="opener1">
+						<List>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard> Text </ListItemStandard>
+							<ListItemStandard id="txt1"> Text </ListItemStandard>
+						</List>
+					</Popover>
+				</>
+			);
+
+			cy.get("#popNoScroll")
+				.shadow()
+				.find(".ui5-popup-content")
+				.scrollTo("bottom");
+
+			cy.get("#txt1")
+				.should("be.visible");
 		});
 	});
 });
