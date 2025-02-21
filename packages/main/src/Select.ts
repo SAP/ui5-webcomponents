@@ -303,6 +303,9 @@ class Select extends UI5Element implements IFormInputElement {
 	responsivePopover!: ResponsivePopover;
 	valueStatePopover?: Popover;
 
+	_valueStorage: string | undefined;
+	_pendingValue: string = "";
+
 	/**
 	 * Defines the component options.
 	 *
@@ -361,7 +364,6 @@ class Select extends UI5Element implements IFormInputElement {
 
 	get formFormattedValue() {
 		const selectedOption = this.selectedOption;
-
 		if (selectedOption) {
 			if ("value" in selectedOption && selectedOption.value) {
 				return selectedOption.value;
@@ -374,7 +376,7 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	onBeforeRendering() {
-		this._ensureSingleSelection();
+		this._applySelection();
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 	}
@@ -389,9 +391,49 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_ensureSingleSelection() {
-		// if no item is selected => select the first one
-		// if multiple items are selected => select the last selected one
+	/*
+	 * Updates the option selection,
+	 * based on the Select's "value" and the Options' "selected" properties.
+	 */
+	_applySelection() {
+		// value property has not been set
+		if (!this._valueStorage) {
+			this._applyAutoSelection();
+			return;
+		}
+
+		// value property has been set
+		if (this._valueStorage) {
+			// apply the selection of the option, that hasn't successfully been selected yet
+			this._applyPendingSelection();
+
+			// apply auto selection if no option has been selected
+			if (!this.selectedOption) {
+				this._applyAutoSelection();
+			}
+
+			// sync valueStorage with the selected option
+			this._syncValueStorage();
+		}
+	}
+
+	/**
+	 * Applies the selection of the option, that hasn't successfully been selected yet,
+	 * because the option hasn't been defined or available at that point.
+	 * @private
+	 */
+	_applyPendingSelection() {
+		if (this._pendingValue) {
+			this._selectOptionByValue(this._pendingValue);
+		}
+	}
+
+	/**
+	 * Selects the first option if no option is selected
+	 * or selects the last option if multiple options are selected.
+	 * @private
+	 */
+	_applyAutoSelection() {
 		let selectedIndex = this.options.findLastIndex(option => option.selected);
 		selectedIndex = selectedIndex === -1 ? 0 : selectedIndex;
 		for (let i = 0; i < this.options.length; i++) {
@@ -400,6 +442,29 @@ class Select extends UI5Element implements IFormInputElement {
 				break;
 			}
 		}
+	}
+
+	_syncValueStorage() {
+		if ((this.selectedOption?.textContent || this.selectedOption?.value !== this._valueStorage)) {
+			this.value = this.selectedOption?.value || this.selectedOption?.textContent || "";
+		}
+	}
+
+	/**
+	 * Selects an option by string value.
+	 * @private
+	 */
+	_selectOptionByValue(newValue: string) {
+		const options = Array.from(this.children) as Array<IOption>;
+
+		options.forEach(option => {
+			if (((option.getAttribute("value") || option.textContent) === newValue)) {
+				this._pendingValue = "";
+				option.selected = true;
+			} else {
+				option.selected = false;
+			}
+		});
 	}
 
 	_applyFocus() {
@@ -425,9 +490,11 @@ class Select extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the value of the component:
 	 *
-	 * - when get - returns the value of the component, e.g. the `value` property of the selected option or its text content.
-	 *
+	 * - when get - returns the value of the component or the value/text content of tge selected option.
 	 * - when set - selects the option with matching `value` property or text content.
+	 *
+	 * **Note:** For selection, use either the Select's value or the desired option's selected property.
+	 * Mixed usage could result in unexpected behavior.
 	 *
 	 * **Note:** If the given value does not match any existing option,
 	 * the first option will get selected.
@@ -437,16 +504,17 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @formEvents change liveChange
 	 */
-	@property({ noAttribute: true })
+	@property()
 	set value(newValue: string) {
-		const options = Array.from(this.children) as Array<IOption>;
-
-		options.forEach(option => {
-			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
-		});
+		this._pendingValue = newValue;
+		this._valueStorage = newValue;
+		this._selectOptionByValue(newValue);
 	}
 
 	get value(): string {
+		if (this._valueStorage) {
+			return this._valueStorage;
+		}
 		return this.selectedOption?.value || this.selectedOption?.textContent || "";
 	}
 
@@ -601,11 +669,15 @@ class Select extends UI5Element implements IFormInputElement {
 			this.options[selectedIndex].selected = false;
 		}
 
+		const selectedOption = this.options[index];
 		if (selectedIndex !== index) {
-			this.fireDecoratorEvent("live-change", { selectedOption: this.options[index] });
+			this.fireDecoratorEvent("live-change", { selectedOption });
 		}
 
-		this.options[index].selected = true;
+		selectedOption.selected = true;
+		if (this._valueStorage) {
+			this.value = selectedOption.value || selectedOption.textContent || "";
+		}
 	}
 
 	/**
