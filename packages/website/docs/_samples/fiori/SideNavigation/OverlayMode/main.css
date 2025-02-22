@@ -1,0 +1,24 @@
+.contentWrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    position: relative;
+}
+
+.content {
+    padding: 1rem;
+    flex: 1;
+    min-width: 0;
+    overflow: auto;
+}
+.contentItem {
+    display: none;
+}
+
+.contentItemVisible {
+    display: block;
+}
+
+ui5-responsive-popover::part(content) {
+    padding: 0;
+}
