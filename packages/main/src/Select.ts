@@ -402,18 +402,20 @@ class Select extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		// value property has been set
+		// "value" has been used
 		if (this._valueStorage) {
-			// apply the selection of the option, that hasn't successfully been selected yet
-			this._applyPendingSelection();
+			// apply pending selection of the option, that hasn't successfully been selected yet
+			if (this._pendingValue) {
+				this._applyPendingSelection();
+			}
 
-			// apply auto selection if no option has been selected
+			// apply auto-selection if no option has been selected
 			if (!this.selectedOption) {
 				this._applyAutoSelection();
 			}
 
-			// sync valueStorage with the selected option
-			this._syncValueStorage();
+			// sync value with the selected option state
+			this._syncValue();
 		}
 	}
 
@@ -423,9 +425,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @private
 	 */
 	_applyPendingSelection() {
-		if (this._pendingValue) {
-			this._selectOptionByValue(this._pendingValue);
-		}
+		this._selectOptionByValue(this._pendingValue);
 	}
 
 	/**
@@ -444,9 +444,21 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_syncValueStorage() {
-		if ((this.selectedOption?.textContent || this.selectedOption?.value !== this._valueStorage)) {
-			this.value = this.selectedOption?.value || this.selectedOption?.textContent || "";
+	/**
+	 * Syncs the value and the option selection. Covers the cases when:
+	 * - options "selected" state is used together with the value property
+	 * - value property is used to select an option, but the option never existed and the first option has been auto-selected.
+	 * @private
+	 */
+	_syncValue() {
+		if (!this.selectedOption) {
+			return;
+		}
+
+		if ((this.selectedOption.value || this.selectedOption.textContent) !== this._valueStorage) {
+			const pendingValue = this._pendingValue;
+			this.updateValueByOption(this.selectedOption);
+			this._pendingValue = pendingValue; // restore pending value if option is added at later point.
 		}
 	}
 
@@ -465,6 +477,10 @@ class Select extends UI5Element implements IFormInputElement {
 				option.selected = false;
 			}
 		});
+	}
+
+	updateValueByOption(option: IOption) {
+		this.value = option.value || option.textContent || "";
 	}
 
 	_applyFocus() {
@@ -676,7 +692,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 		selectedOption.selected = true;
 		if (this._valueStorage) {
-			this.value = selectedOption.value || selectedOption.textContent || "";
+			this.updateValueByOption(selectedOption);
 		}
 	}
 
@@ -769,6 +785,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 		nextOption.selected = true;
 		nextOption.focused = true;
+		this._valueStorage && this.updateValueByOption(nextOption);
 
 		this.fireDecoratorEvent("live-change", { selectedOption: nextOption });
 
