@@ -699,3 +699,63 @@ describe("Side Navigation Accessibility", () => {
 			.should("not.have.attr", "aria-checked");
 	});
 });
+
+describe("Focusable items", () => {
+	it("Tests focusable items in popover", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true}>
+				<SideNavigationItem id="parentItem" text="1">
+					<SideNavigationSubItem text="1.1" />
+					<SideNavigationSubItem text="1.2" disabled={true} />
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#parentItem").realClick();
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "0");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "-1");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.2']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("not.have.attr", "tabindex");
+	});
+
+	it("Tests focusable items in popover of unselectable parent", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true}>
+				<SideNavigationItem id="unselectableParentItem" text="1" unselectable={true}>
+					<SideNavigationSubItem text="1.1" />
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#unselectableParentItem").realClick();
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "-1");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "0");
+	});
+});
