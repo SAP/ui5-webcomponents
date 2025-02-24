@@ -30,6 +30,8 @@ import Page from "./Page.js";
 import ProductSwitch from "./ProductSwitch.js";
 import ProductSwitchItem from "./ProductSwitchItem.js";
 import ShellBar from "./ShellBar.js";
+import SearchField from "./SearchField.js";
+import SearchFieldScopeOption from "./SearchFieldScopeOption.js";
 import ShellBarSpacer from "./ShellBarSpacer.js";
 import ShellBarItem from "./ShellBarItem.js";
 import SideNavigation from "./SideNavigation.js";
