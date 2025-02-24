@@ -122,7 +122,6 @@ class SettingItem extends UI5Element {
 	 * Defines whether the component is in disabled state.
 	 *
 	 * **Note:** A disabled component is completely noninteractive.
-	 * **Note:** A disabled component is completely noninteractive.
 	 * @default false
 	 * @public
 	 */
