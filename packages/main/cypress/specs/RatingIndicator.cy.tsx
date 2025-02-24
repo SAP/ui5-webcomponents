@@ -1,5 +1,5 @@
 import RatingIndicator from "../../src/RatingIndicator.js";
-import {RATING_INDICATOR_ARIA_DESCRIPTION} from "../../src/generated/i18n/i18n-defaults.js";
+import { RATING_INDICATOR_ARIA_DESCRIPTION } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("RatingIndicator", () => {
 	describe("Half Icon appearance", () => {
@@ -104,7 +104,7 @@ describe("RatingIndicator", () => {
 
 	describe("Rating Indicator general interaction", () => {
 		it("Tests basic rating indicator rendering", () => {
-			cy.mount(<RatingIndicator id="rating-indicator1" accessibleName="Hello World"></RatingIndicator>);
+			cy.mount(<RatingIndicator id="rating-indicator1"></RatingIndicator>);
 
 			cy.get("#rating-indicator1")
 				.shadow()
@@ -137,23 +137,16 @@ describe("RatingIndicator", () => {
 		});
 
 		it("Tests change event", () => {
-			let changeEventCount = 0;
 			cy.mount(
-				<>
-					<RatingIndicator id="rating-indicator4" value={6} max={8}></RatingIndicator>
-					<input id="changes"></input>
-				</>
+				<RatingIndicator id="rating-indicator4" value={6} max={8}></RatingIndicator>
 			);
 
 			cy.get("#rating-indicator4").as("ri");
 
 			cy.get("@ri")
 				.then(ratingIndicator => {
-					ratingIndicator.get(0).addEventListener("ui5-change", () => {
-						changeEventCount++;
-						document.getElementById("changes")!.setAttribute("value", changeEventCount.toString());
+					ratingIndicator.get(0).addEventListener("ui5-change", cy.stub().as("changeEvent"));
 				});
-			});
 
 			cy.get("@ri")
 				.shadow()
@@ -198,7 +191,7 @@ describe("RatingIndicator", () => {
 			cy.get("@ri").realPress("Enter");
 			cy.get("@ri").should("have.attr", "value", "0");
 
-			cy.get("#changes").should("have.attr", "value", "17");
+			cy.get("@changeEvent").should("have.callCount", 17);
 		});
 
 		it("Tests ACC attrs", () => {
