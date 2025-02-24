@@ -123,6 +123,13 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	get isSideNavigationItemBase() {
 		return true;
 	}
+
+	/**
+	 * @private
+	 */
+	applyInitialFocusInPopover() {
+
+	}
 }
 
 const isInstanceOfSideNavigationItemBase = (object: any): object is SideNavigationItemBase => {

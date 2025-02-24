@@ -237,7 +237,7 @@ class SideNavigation extends UI5Element {
 		if (selectedItem) {
 			selectedItem.focus();
 		} else {
-			tree.items[0]?.focus();
+			tree.items[0]?.applyInitialFocusInPopover();
 		}
 	}
 
