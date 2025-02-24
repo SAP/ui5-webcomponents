@@ -353,7 +353,8 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	get formValidity(): ValidityStateFlags {
-		return { valueMissing: this.required && (this.value === "") };
+		const value = this._valueStorage ? this._valueStorage : this.selectedOption?.getAttribute("value");
+		return { valueMissing: this.required && value === "" };
 	}
 
 	async formElementAnchor() {
@@ -361,7 +362,19 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	get formFormattedValue() {
-		return this.value;
+		if (this._valueStorage) {
+			return this._valueStorage;
+		}
+
+		const selectedOption = this.selectedOption;
+		if (selectedOption) {
+			if ("value" in selectedOption && selectedOption.value) {
+				return selectedOption.value;
+			}
+
+			return selectedOption.hasAttribute("value") ? selectedOption.getAttribute("value") : selectedOption.textContent;
+		}
+		return "";
 	}
 
 	onBeforeRendering() {
