@@ -6,7 +6,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import NotificationListGrowingMode from "@ui5/webcomponents/dist/types/NotificationListGrowingMode.js";
+import type NotificationListGrowingMode from "@ui5/webcomponents/dist/types/NotificationListGrowingMode.js";
 import type NotificationListGroupList from "./NotificationListGroupList.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationListItem from "./NotificationListItem.js";
@@ -191,10 +191,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get _pressable() {
 		return false;
-	}
-
-	get _loadingDelay() {
-		return this.growing === NotificationListGrowingMode.Button ? 0 : this.loadingDelay;
 	}
 
 	get groupCollapsedIcon() {
