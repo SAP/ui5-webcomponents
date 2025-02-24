@@ -509,7 +509,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * - when get - returns the value of the component or the value/text content of tge selected option.
 	 * - when set - selects the option with matching `value` property or text content.
 	 *
-	 * **Note:** For selection, use either the Select's value or the desired option's selected property.
+	 * **Note:** Use either the Select's value or the Options' selected property.
 	 * Mixed usage could result in unexpected behavior.
 	 *
 	 * **Note:** If the given value does not match any existing option,
@@ -691,9 +691,7 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 
 		selectedOption.selected = true;
-		if (this._valueStorage) {
-			this.updateValueByOption(selectedOption);
-		}
+		this._valueStorage && this.updateValueByOption(selectedOption);
 	}
 
 	/**
