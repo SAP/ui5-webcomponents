@@ -154,3 +154,94 @@ describe("Popover interaction", () => {
 		});
 	});
 });
+
+describe("Events", () => {
+	it("before-open", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpenPopover">Open</Button>
+				<Popover id="popoverId" opener="btnOpenPopover">
+					<div data-sap-ui-fastnavgroup="true">
+						<button id="first">First group focusable</button>
+					</div>
+					<div data-sap-ui-fastnavgroup="true">
+						<button id="second">Second group focusable</button>
+					</div>
+				</Popover>
+			</>
+		);
+
+		cy.get("#popoverId")
+			.should("not.be.visible");
+
+		const preventDefault = (e : Event) => {
+			e.preventDefault();
+		};
+
+		cy.get("#popoverId").then($dialog => {
+			$dialog.get(0).addEventListener("before-open", preventDefault);
+		});
+
+		cy.get("#popoverId")
+			.invoke("prop", "open", true);
+
+		cy.get("#popoverId")
+			.should("not.be.visible");
+
+		cy.get("#popoverId").then($popover => {
+			$popover.get(0).removeEventListener("before-open", preventDefault);
+		});
+
+		cy.get("#popoverId")
+			.invoke("prop", "open", true);
+
+		cy.get("#popoverId")
+			.should("be.visible");
+	});
+
+	it("before-close", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpenPopover">Open</Button>
+				<Popover id="popoverId" opener="btnOpenPopover">
+					<div data-sap-ui-fastnavgroup="true">
+						<button id="first">First group focusable</button>
+					</div>
+					<div data-sap-ui-fastnavgroup="true">
+						<button id="second">Second group focusable</button>
+					</div>
+				</Popover>
+			</>
+		);
+
+		cy.get("#popoverId")
+			.invoke("prop", "open", true);
+
+		cy.get("#popoverId")
+			.should("be.visible");
+
+		const preventDefault = (e : Event) => {
+			e.preventDefault();
+		};
+
+		cy.get("#popoverId").then($popover => {
+			$popover.get(0).addEventListener("before-close", preventDefault);
+		});
+
+		cy.get("#popoverId")
+			.invoke("prop", "open", false);
+
+		cy.get("#popoverId")
+			.should("be.visible");
+
+		cy.get("#popoverId").then($popover => {
+			$popover.get(0).removeEventListener("before-close", preventDefault);
+		});
+
+		cy.get("#popoverId")
+			.invoke("prop", "open", false);
+
+		cy.get("#popoverId")
+			.should("not.be.visible");
+	});
+});
