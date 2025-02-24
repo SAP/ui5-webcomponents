@@ -10,7 +10,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
-import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 
 // Templates
@@ -134,7 +133,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	get classesArray() {
 		const classes = super.classesArray;
 
-		if (!this.disabled && (this.parentNode as SideNavigation).collapsed && this.items.length) {
+		if (!this.disabled && this.sideNavigation?.collapsed && this.items.length) {
 			classes.push("ui5-sn-item-with-expander");
 		}
 
