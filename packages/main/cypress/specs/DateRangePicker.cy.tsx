@@ -1,9 +1,10 @@
-import "@ui5/webcomponents/dist/Assets.js"
+import "../../dist/Assets.js";
 import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import DateRangePicker from "../../src/DateRangePicker.js";
 
 describe("DateRangePicker general interaction", () => {
 	afterEach(() => {
+		// eslint-disable-next-line
 		cy.wait(200);
 	});
 	it("Custom Validation Error", () => {
@@ -54,8 +55,8 @@ describe("DateRangePicker general interaction", () => {
 			.find("ui5-calendar")
 			.shadow()
 			.find("ui5-daypicker")
-			.invoke('attr', 'timestamp')
-			.should('eq', timestamp_9_Sep_2020.toString());
+			.invoke("attr", "timestamp")
+			.should("eq", timestamp_9_Sep_2020.toString());
 	});
 
 	it("Is delimiter set", () => {
@@ -90,23 +91,23 @@ describe("DateRangePicker general interaction", () => {
 			.realPress("Enter");
 
 		cy.get<DateRangePicker>("@dateRangePicker")
-			.then(($datePicker) => {
+			.then($datePicker => {
 				cy.wrap({
-						startDateValue: () => $datePicker[0].startDateValue,
-						endDateValue: () => $datePicker[0].endDateValue
-					})
+					startDateValue: () => $datePicker[0].startDateValue,
+					endDateValue: () => $datePicker[0].endDateValue
+				})
 					.as("dates")
 					.invoke("startDateValue")
-					.then((date) => {
+					.then(date => {
 						const timestamp = date ? date.getTime() : new Date().getTime();
 						expect(new Date(timestamp)).to.deep.equal(new Date(2019, 8, 27));
 					});
 
 				cy.get("@dates")
 					.invoke("endDateValue")
-					.then((date) => {
+					.then(date => {
 						const timestamp = date ? date.getTime() : new Date().getTime();
-						expect(new Date(timestamp)).to.deep.equal(new Date(2019, 9, 10));
+						expect(new Date(timestamp as number)).to.deep.equal(new Date(2019, 9, 10));
 					});
 			});
 	});
@@ -123,23 +124,23 @@ describe("DateRangePicker general interaction", () => {
 			.realPress("Enter");
 
 		cy.get<DateRangePicker>("@dateRangePicker")
-			.then(($el) => {
+			.then($el => {
 				cy.wrap({
-						startDateValue: () => $el[0].startDateValue,
-						endDateValue: () => $el[0].endDateValue
-					})
+					startDateValue: () => $el[0].startDateValue,
+					endDateValue: () => $el[0].endDateValue
+				})
 					.as("dates")
 					.invoke("startDateValue")
-					.then((date) => {
+					.then(date => {
 						const timestamp = date ? date.getTime() : new Date().getTime();
 						expect(new Date(timestamp)).to.deep.equal(new Date(2020, 7, 5));
 					});
 
 				cy.get("@dates")
 					.invoke("endDateValue")
-					.then((date) => {
+					.then(date => {
 						const timestamp = date ? date.getTime() : new Date().getTime();
-						expect(new Date(timestamp)).to.deep.equal(new Date(2020, 7, 5));
+						expect(new Date(timestamp as number)).to.deep.equal(new Date(2020, 7, 5));
 					});
 			});
 	});
@@ -171,9 +172,9 @@ describe("DateRangePicker general interaction", () => {
 
 		const changeStub = cy.stub();
 		cy.get("@dateRangePicker")
-			.then(($dateRangePicker) => {
-				$dateRangePicker.on("change",  changeStub);
-		});
+			.then($dateRangePicker => {
+				$dateRangePicker.on("change", changeStub);
+			});
 
 		cy.get("@dayOne").realClick();
 		cy.get("@dayTwo").realClick();
@@ -203,8 +204,8 @@ describe("DateRangePicker general interaction", () => {
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 28, 2020");
 
 		cy.get("@input")
-			.realPress("PageUp")
-		
+			.realPress("PageUp");
+
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 29, 2020");
 
@@ -217,7 +218,7 @@ describe("DateRangePicker general interaction", () => {
 
 		cy.get("@input")
 			.realPress("PageUp");
-		
+
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 29, 2020");
 	});
@@ -381,21 +382,21 @@ describe("DateRangePicker general interaction", () => {
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
-			.then(($datePicker) => {
+			.then($datePicker => {
 				cy.wrap({
-						startDateValue: () => $datePicker[0].startDateValue,
-						endDateValue: () => $datePicker[0].endDateValue
-					})
+					startDateValue: () => $datePicker[0].startDateValue,
+					endDateValue: () => $datePicker[0].endDateValue
+				})
 					.as("dates")
 					.invoke("startDateValue")
-					.then((date) => {
+					.then(date => {
 						const timestamp = date ? date.getTime() : new Date().getTime();
 						expect(new Date(timestamp)).to.deep.equal(new Date(2019, 8, 27));
 					});
 
 				cy.get("@dates")
 					.invoke("endDateValue")
-					.then((date) => {
+					.then(date => {
 						expect(date.toString()).to.be.equal("Invalid Date");
 					});
 			});
@@ -439,7 +440,7 @@ describe("DateRangePicker general interaction", () => {
 			.find("ui5-daypicker")
 			.shadow()
 			.find(".ui5-dp-root .ui5-dp-content div > .ui5-dp-item")
-			.then((days) => {
+			.then(days => {
 				const startSelectionDay = days[14];
 				const dayInBetween = days[15];
 				const endSelectionDay = days[20];
@@ -512,7 +513,7 @@ describe("DateRangePicker general interaction", () => {
 			.find("ui5-monthpicker")
 			.shadow()
 			.find(".ui5-mp-root .ui5-mp-item")
-			.then((months) => {
+			.then(months => {
 				const startSelectionMonth = months[8];
 				const monthInBetween = months[9];
 				const endSelectionMonth = months[10];
@@ -564,7 +565,7 @@ describe("DateRangePicker general interaction", () => {
 			.find("ui5-yearpicker")
 			.shadow()
 			.find(".ui5-yp-root .ui5-yp-item")
-			.then((years) => {
+			.then(years => {
 				const startSelectionYear = years[0];
 				const yearInBetween = years[4];
 				const endSelectionYear = years[5];
