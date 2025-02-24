@@ -52,7 +52,6 @@ interface ICalendarPicker {
 	_showNextPage: () => void,
 	_hasPreviousPage: () => boolean,
 	_hasNextPage: () => boolean,
-	_autoFocus?: boolean,
 	_firstYear?: number,
 	_lastYear?: number,
 }
@@ -441,7 +440,6 @@ class Calendar extends CalendarPart {
 		if (defaultTypes.includes(this._selectedItemType)) {
 			this._selectedItemType = "None"; // In order to avoid filtering of default types
 		}
-		this._currentPickerDOM._autoFocus = false;
 	}
 
 	/**
@@ -507,7 +505,6 @@ class Calendar extends CalendarPart {
 	}
 
 	showMonth() {
-		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "month";
 	}
 
@@ -520,7 +517,6 @@ class Calendar extends CalendarPart {
 	}
 
 	showYear() {
-		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "year";
 	}
 
@@ -534,10 +530,6 @@ class Calendar extends CalendarPart {
 	 */
 	onHeaderPreviousPress() {
 		this._currentPickerDOM._showPreviousPage();
-
-		if (this.calendarLegend) {
-			this._currentPickerDOM._autoFocus = true;
-		}
 	}
 
 	/**
@@ -545,10 +537,6 @@ class Calendar extends CalendarPart {
 	 */
 	onHeaderNextPress() {
 		this._currentPickerDOM._showNextPage();
-
-		if (this.calendarLegend) {
-			this._currentPickerDOM._autoFocus = true;
-		}
 	}
 
 	_setSecondaryCalendarTypeButtonText() {
@@ -641,8 +629,6 @@ class Calendar extends CalendarPart {
 		} else {
 			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
-
-		this._currentPickerDOM._autoFocus = true;
 	}
 
 	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
@@ -655,8 +641,6 @@ class Calendar extends CalendarPart {
 		} else {
 			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
-
-		this._currentPickerDOM._autoFocus = true;
 	}
 
 	onNavigate(e: CustomEvent) {
