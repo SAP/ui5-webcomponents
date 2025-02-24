@@ -1,3 +1,5 @@
+import UI5Element from "../UI5Element.js";
+
 /**
  * Determines the slot to which a node should be assigned
  * @param node Text node or HTML element
@@ -14,6 +16,16 @@ const getSlotName = (node: Node) => {
 	if (slot) {
 		const match = slot.match(/^(.+?)-\d+$/);
 		return match ? match[1] : slot;
+	}
+
+	// If autoSlot is used, take it as a slot name
+	if (node instanceof UI5Element) {
+		const ctor = node.constructor as typeof UI5Element;
+		const autoSlot = ctor.getMetadata().getAutoSlot();
+		if (autoSlot) {
+			node.slot = autoSlot;
+			return autoSlot;
+		}
 	}
 
 	// Use default slot as a fallback
