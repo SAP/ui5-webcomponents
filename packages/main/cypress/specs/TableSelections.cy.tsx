@@ -4,14 +4,20 @@ import TableHeaderRow from "../../src/TableHeaderRow.js";
 import TableHeaderCell from "../../src/TableHeaderCell.js";
 import TableRow from "../../src/TableRow.js";
 import TableCell from "../../src/TableCell.js";
-import TableSelectionMode from "../../src/types/TableSelectionMode.js";
-import TableSelection from "../../src/TableSelection.js";
+import TableSelectionSingle from "../../src/TableSelectionSingle.js";
+import TableSelectionMulti from "../../src/TableSelectionMulti.js";
+import type TableSelectionBase from "../../src/TableSelectionBase.js";
 
-function mountTestpage(selectionMode: TableSelectionMode) {
+function mountTestpage(selectionMode: string) {
 	cy.mount(
 		<>
 			<Table id="table0" noDataText="No data found">
-				<TableSelection id="selection" slot="features" mode={selectionMode}></TableSelection>
+				{selectionMode === "Single" && (
+					<TableSelectionSingle id="selection" slot="features"></TableSelectionSingle>
+				)}
+				{selectionMode === "Multiple" && (
+					<TableSelectionMulti id="selection" slot="features"></TableSelectionMulti>
+				)}
 				<TableHeaderRow slot="headerRow">
 					<TableHeaderCell id="colA"><span>ColumnA</span></TableHeaderCell>
 					<TableHeaderCell id="colB">Column B</TableHeaderCell>
@@ -59,11 +65,10 @@ function mountTestpage(selectionMode: TableSelectionMode) {
 
 describe("Mode - None", () => {
 	before(() => {
-		mountTestpage(TableSelectionMode.None);
+		mountTestpage("None");
 	});
 
 	it("selection should be not active", () => {
-		cy.get("#selection").should("have.attr", "mode", TableSelectionMode.None);
 		cy.get("@headerRow").shadow().find("#selection-cell")
 			.should("not.exist");
 		cy.get("@row0").shadow().find("#selection-cell")
@@ -157,16 +162,28 @@ const testConfig = {
 // I've had to check the attribute this way because
 // should("have.attr"... and similar functions always returned '' instead of the actual value
 // It could be a timing issue but .wait didn't help either
-function checkSelection(rowIndex: string) {
-	cy.get("#selection").then(sel => {
-		expect(sel.get(0).getAttribute("selected")).to.equal(rowIndex);
+function checkSelection(expectedSelected: string) {
+	cy.get("#selection").then($selection => {
+		const selection = $selection.get(0) as TableSelectionBase;
+		expect(selection.getAttribute("selected")).to.equal(expectedSelected);
+
+		if (selection.isMultiSelectable()) {
+			const selectedRows = (selection as TableSelectionMulti).getSelectedRows();
+			expect(selectedRows.map(row => selection.getRowKey(row)).join(" ")).to.equal(expectedSelected);
+			const selectedAsSet = (selection as TableSelectionMulti).getSelectedAsSet();
+			expect([...selectedAsSet].join(" ")).to.equal(expectedSelected);
+		} else {
+			const selectedRow = (selection as TableSelectionSingle).getSelectedRow();
+			expect(selectedRow!.rowKey).to.equal(expectedSelected);
+			expect(selectedRow).to.equal(selection.getRowByKey(expectedSelected));
+		}
 	});
 }
 
 Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 	describe(`Mode - ${mode}`, () => {
 		beforeEach(() => {
-			mountTestpage(testConfigEntry.config.mode as TableSelectionMode);
+			mountTestpage(testConfigEntry.config.mode);
 		});
 
 		it("Correct boxes are shown", () => {
@@ -188,7 +205,6 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 
 			cy.get("@row4").realClick();
 			cy.get("@row4").realPress("Space");
-			cy.get("#selection").should("have.attr", "mode", testConfigEntry.config.mode);
 			checkSelection(testConfigEntry.cases.SPACE.space_4);
 		});
 
@@ -242,11 +258,11 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 	});
 });
 
-describe("TableSelection - Multi", () => {
+describe("TableSelectionMulti", () => {
 	it("updates the header row checkbox when rows are added or removed", () => {
 		cy.mount(
 			<Table id="table1">
-				<TableSelection id="selection" selected="1 2" slot="features"></TableSelection>
+				<TableSelectionMulti id="selection" selected="1 2" slot="features"></TableSelectionMulti>
 				<TableHeaderRow id="headerRow" slot="headerRow">
 					<TableHeaderCell>ColumnA</TableHeaderCell>
 				</TableHeaderRow>
