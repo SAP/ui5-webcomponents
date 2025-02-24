@@ -308,6 +308,94 @@ describe("Side Navigation interaction", () => {
 		});
 	});
 
+	it("Tests link opening with mouse click", () => {
+		cy.mount(
+			<SideNavigation id="sideNav">
+				<SideNavigationItem id="item" text="1" />
+				<SideNavigationItem id="unselectableItemWithLink" text="external link" unselectable={true} href="#test"/>
+			</SideNavigation>
+		);
+
+		cy.url().should("not.include", "#test");
+
+		cy.get("#unselectableItemWithLink").realClick();
+
+		cy.url().should("include", "#test");
+
+		// Remove #test from the URL
+		cy.window().then(win => {
+			win.history.back();
+		});
+
+		cy.url().should("not.include", "#test");
+	});
+
+	it("Tests link opening with Enter", () => {
+		cy.mount(
+			<SideNavigation>
+				<SideNavigationItem id="focusStart" text="focus start" />
+				<SideNavigationItem text="external link" unselectable={true} href="#test"/>
+			</SideNavigation>
+		);
+
+		cy.url().should("not.include", "#test");
+
+		cy.get("#focusStart").realClick();
+		cy.realPress("ArrowDown");
+		cy.realPress("Enter");
+
+		cy.url().should("include", "#test");
+
+		// Remove #test from the URL
+		cy.window().then(win => {
+			win.history.back();
+		});
+
+		cy.url().should("not.include", "#test");
+	});
+
+	it("Tests link opening with Space", () => {
+		cy.mount(
+			<SideNavigation>
+				<SideNavigationItem id="focusStart" text="focus start" />
+				<SideNavigationItem id="linkItem" text="external link" unselectable={true} href="#test"/>
+			</SideNavigation>
+		);
+
+		cy.url().should("not.include", "#test");
+
+		cy.get("#focusStart").realClick();
+		cy.realPress("ArrowDown");
+		cy.realPress("Space");
+
+		cy.url().should("include", "#test");
+
+		// Remove #test from the URL
+		cy.window().then(win => {
+			win.history.back();
+		});
+
+		cy.url().should("not.include", "#test");
+
+		cy.get("#focusStart").realClick();
+		cy.realPress("ArrowDown");
+		cy.get("#linkItem").should("be.focused");
+
+		// act
+		cy.focused().trigger("keyup", {
+			key: " ",
+		});
+
+		cy.url().should("include", "#test");
+
+		// Remove #test from the URL
+		cy.window().then(win => {
+			win.history.back();
+		});
+
+		cy.url().should("not.include", "#test");
+	});
+
 	it("Tests 'selection-change' event", () => {
 		cy.mount(
 			<SideNavigation id="sideNav">

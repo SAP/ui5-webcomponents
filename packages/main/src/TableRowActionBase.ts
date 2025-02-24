@@ -3,7 +3,6 @@ import { customElement, property } from "@ui5/webcomponents-base/dist/decorators
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TableRowActionBaseTemplate from "./generated/templates/TableRowActionBaseTemplate.lit.js";
 import TableRowActionBaseStyles from "./generated/themes/TableRowActionBase.css.js";
-import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import type Menu from "./Menu.js";
@@ -11,7 +10,6 @@ import type MenuItem from "./MenuItem.js";
 import type Table from "./Table.js";
 import type TableRow from "./TableRow.js";
 import type TableRowAction from "./TableRowAction.js";
-import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 let MenuConstructor: new () => Menu;
 let MenuItemConstructor: new () => MenuItem;
@@ -43,9 +41,6 @@ abstract class TableRowActionBase extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	invisible = false;
-
-	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
 
 	private static _menu: Menu;
 	private static _menuItems = new WeakMap();
