@@ -439,58 +439,52 @@ describe("'layout-change' event:", () => {
 			dsc.get(0).addEventListener("ui5-layout-change", cy.stub().as("layoutChange"));
 		});
 
-		// Set to XL
-		cy.viewport(1600, 500);
-
+		// Change to M
 		cy.viewport(800, 500);
-		//not worknig
 		cy.get("@layoutChange").should("be.called")
 			.should("be.calledWithMatch", {
 				detail: {
 					currentBreakpoint: "M",
-					previousBreakpoint: "XL",
+					previousBreakpoint: "L",
 					mainContentVisible: true,
 					sideContentVisible: true
 				},
 			});
 
-		//working option
-		// cy.get("@layoutChangeSpy").then(spy => {
-		// 	const event = spy.args.find(([e]) => e.type === "ui5-layout-change")[0];
-		// 	expect(event.detail.currentBreakpoint).to.equal("M");
-		// 	expect(event.detail.previousBreakpoint).to.equal("L");
-		// 	expect(event.detail.mainContentVisible).to.be.true;
-		// 	expect(event.detail.sideContentVisible).to.be.true;
-		// });
-
-		// // Change to > 720 and < 1024 (M)
-		cy.viewport(800, 500);
-		// cy.get("@currentBreakpoint").should("have.value", "M");
-		// cy.get("@previousBreakpoint").should("have.value", "XL");
-		// cy.get("@mainVisible").should("have.value", "1");
-		// cy.get("@sideVisible").should("have.value", "1");
-
 		// Change to > 1024 and < 1440 (L)
 		cy.viewport(1200, 500);
-		// cy.get("@eventSpy").should("have.been.calledTwice");
-		// cy.get("@eventSpy").should("have.been.calledWith", {});]
-		// cy.get("@currentBreakpoint").should("have.value", "L");
-		// cy.get("@previousBreakpoint").should("have.value", "M");
-		// cy.get("@mainVisible").should("have.value", "1");
-		// cy.get("@sideVisible").should("have.value", "1");
+		cy.get("@layoutChange").should("be.called")
+			.should("be.calledWithMatch", {
+				detail: {
+					currentBreakpoint: "L",
+					previousBreakpoint: "M",
+					mainContentVisible: true,
+					sideContentVisible: true
+				},
+			});
 
-		// // Change to < 720 (S)
-		// cy.viewport(600, 500);
-		// cy.get("@currentBreakpoint").should("have.value", "S");
-		// cy.get("@previousBreakpoint").should("have.value", "M");
-		// cy.get("@mainVisible").should("have.value", "1");
-		// cy.get("@sideVisible").should("have.value", "0");
+		// Change to < 720 (S)
+		cy.viewport(600, 500);
+		cy.get("@layoutChange").should("be.called")
+			.should("be.calledWithMatch", {
+				detail: {
+					currentBreakpoint: "S",
+					previousBreakpoint: "L",
+					mainContentVisible: true,
+					sideContentVisible: false
+				},
+			});
 
-		// // Change back to > 1440 (XL)
-		// cy.viewport(1600, 500);
-		// cy.get("@currentBreakpoint").should("have.value", "XL");
-		// cy.get("@previousBreakpoint").should("have.value", "S");
-		// cy.get("@mainVisible").should("have.value", "1");
-		// cy.get("@sideVisible").should("have.value", "1");
+		// Change to > 1440 (XL)
+		cy.viewport(1600, 500);
+		cy.get("@layoutChange").should("be.called")
+			.should("be.calledWithMatch", {
+				detail: {
+					currentBreakpoint: "XL",
+					previousBreakpoint: "S",
+					mainContentVisible: true,
+					sideContentVisible: true
+				},
+			});
 	});
 });
