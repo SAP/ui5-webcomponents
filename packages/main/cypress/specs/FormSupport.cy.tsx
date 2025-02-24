@@ -676,6 +676,17 @@ describe("Form support", () => {
 			.eq(1)
 			.realClick();
 
+		cy.get("#select99")
+			.realClick();
+
+		cy.get("#select99")
+			.should("have.attr", "opened");
+
+		cy.get("#select99")
+			.find("[ui5-option]")
+			.eq(1)
+			.realClick();
+
 		cy.get("button")
 			.realClick();
 
