@@ -102,6 +102,14 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		return [this, ...this.items];
 	}
 
+	get effectiveTabIndex() {
+		if (this.inPopover && this.unselectable) {
+			return undefined;
+		}
+
+		return super.effectiveTabIndex;
+	}
+
 	get _ariaHasPopup() {
 		if (this.inPopover && this.accessibilityAttributes?.hasPopup) {
 			return this.accessibilityAttributes.hasPopup;

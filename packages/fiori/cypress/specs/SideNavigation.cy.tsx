@@ -749,7 +749,7 @@ describe("Focusable items", () => {
 			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
 			.shadow()
 			.find(".ui5-sn-item")
-			.should("have.attr", "tabindex", "-1");
+			.should("not.have.attr", "tabindex");
 
 		cy.get("#sideNav")
 			.shadow()

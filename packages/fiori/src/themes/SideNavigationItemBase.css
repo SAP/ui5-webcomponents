@@ -104,7 +104,7 @@ and there is an additional border that appears on hover. */
 	cursor: default;
 }
 
-.ui5-sn-item:not(.ui5-sn-item-disabled):hover {
+:host(:not([ui5-side-navigation-item][in-popover][unselectable])) .ui5-sn-item:not(.ui5-sn-item-disabled):hover {
 	background: var(--sapList_Hover_Background);
 }
 
@@ -128,7 +128,7 @@ and there is an additional border that appears on hover. */
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected.ui5-sn-item-active,
-.ui5-sn-item:not(.ui5-sn-item-disabled):active,
+:host(:not([ui5-side-navigation-item][in-popover][unselectable])) .ui5-sn-item:not(.ui5-sn-item-disabled):active,
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-active,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected.ui5-sn-item-active {
