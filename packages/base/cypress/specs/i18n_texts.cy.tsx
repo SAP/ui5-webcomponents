@@ -116,7 +116,7 @@ describe("i18n decorator", () => {
 		cy.mount(<>
 			<I18nParent />
 			<I18nChild2 />
-		</>)
+		</>);
 
 		cy.get("[i18n-parent]")
 			.invoke("prop", "i18nText")
