@@ -430,6 +430,26 @@ abstract class UI5Element extends HTMLElement {
 		const slottedChildrenMap = new Map<string, Array<{child: Node, idx: number }>>();
 
 		const allChildrenUpgraded = domChildren.map(async (child, idx) => {
+			// Await for not-yet-defined custom elements
+			if (child instanceof HTMLElement) {
+				const localName = child.localName;
+				const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
+
+				if (shouldWaitForCustomElement) {
+					const isDefined = customElements.get(localName);
+					if (!isDefined) {
+						const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
+						let timeoutPromise = elementTimeouts.get(localName);
+						if (!timeoutPromise) {
+							timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
+							elementTimeouts.set(localName, timeoutPromise);
+						}
+						await Promise.race([whenDefinedPromise, timeoutPromise]);
+					}
+					customElements.upgrade(child);
+				}
+			}
+
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -449,26 +469,6 @@ abstract class UI5Element extends HTMLElement {
 				const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
 				autoIncrementMap.set(slotName, nextIndex);
 				(child as SlottedChild)._individualSlot = `${slotName}-${nextIndex}`;
-			}
-
-			// Await for not-yet-defined custom elements
-			if (child instanceof HTMLElement) {
-				const localName = child.localName;
-				const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
-
-				if (shouldWaitForCustomElement) {
-					const isDefined = customElements.get(localName);
-					if (!isDefined) {
-						const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
-						let timeoutPromise = elementTimeouts.get(localName);
-						if (!timeoutPromise) {
-							timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
-							elementTimeouts.set(localName, timeoutPromise);
-						}
-						await Promise.race([whenDefinedPromise, timeoutPromise]);
-					}
-					customElements.upgrade(child);
-				}
 			}
 
 			child = (ctor.getMetadata().constructor as typeof UI5ElementMetadata).validateSlotValue(child, slotData);

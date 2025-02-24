@@ -51,7 +51,8 @@ type Metadata = {
 	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>
 	features?: Array<string>
-	i18n?: I18nBundleAccessors
+	i18n?: I18nBundleAccessors,
+	autoSlot?: string,
 };
 
 type State = Record<string, PropertyValue | Array<SlotValue>>;
@@ -328,6 +329,10 @@ class UI5ElementMetadata {
 			this.metadata.i18n = {};
 		}
 		return this.metadata.i18n;
+	}
+
+	getAutoSlot(): string {
+		return this.metadata.autoSlot || "";
 	}
 }
 

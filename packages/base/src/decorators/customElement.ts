@@ -60,6 +60,10 @@ const customElement = (tagNameOrComponentSettings: string | {
 	 * @deprecated no longer necessary for jsxRenderer-enabled components
 	 */
 	features?: Array<string>,
+	/**
+	 * Automatically assigns the element to a slot with the given name.
+	 */
+	autoSlot?: string,
 } = {}): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
@@ -79,6 +83,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 			fastNavigation,
 			formAssociated,
 			shadowRootOptions,
+			autoSlot,
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
@@ -101,6 +106,10 @@ const customElement = (tagNameOrComponentSettings: string | {
 
 		if (shadowRootOptions) {
 			target.metadata.shadowRootOptions = shadowRootOptions;
+		}
+
+		if (autoSlot) {
+			target.metadata.autoSlot = autoSlot;
 		}
 
 		["renderer", "template", "styles", "dependencies"].forEach((customElementEntity: string) => {
