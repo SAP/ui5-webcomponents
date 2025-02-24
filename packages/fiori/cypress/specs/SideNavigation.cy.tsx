@@ -137,6 +137,7 @@ describe("Side Navigation interaction", () => {
 
 		// act
 		cy.get("#focusStart").realClick();
+		cy.get("#focusStart").realClick();
 		cy.realPress("ArrowDown");
 		cy.realPress("Space");
 
