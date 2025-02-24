@@ -13,12 +13,28 @@ describe("Text", () => {
 
 	it("tests maxLines default behavior", () => {
 		cy.mount(<Text >Text</Text>);
-		cy.get("[ui5-text]").should("have.css", "-webkit-line-clamp", "none");
+		cy.get("[ui5-text]")
+			.should("have.css", "-webkit-box-orient", "vertical")
+			.should("have.css", "-webkit-line-clamp", "none");
 	});
 
-	it("tests maxLines", () => {
+	it("tests maxLines = 1", () => {
 		cy.mount(<Text maxLines={1}>Text</Text>);
-		cy.get("[ui5-text]").should("have.css", "-webkit-line-clamp", "1");
+
+		cy.get("[ui5-text]")
+			.should("have.css", "display", "inline-block")
+			.should("have.css", "overflow", "hidden")
+			.should("have.css", "text-overflow", "ellipsis")
+			.should("have.css", "white-space", "nowrap");
+	});
+
+	it("tests maxLines > 1", () => {
+		cy.mount(<Text maxLines={2}>Text</Text>);
+
+		cy.get("[ui5-text]")
+			.should("have.css", "overflow", "hidden")
+			.should("have.css", "-webkit-line-clamp", "2")
+			.should("have.css", "-webkit-box-orient", "vertical");
 	});
 
 	it("tests emptyIndicatorMode", () => {
