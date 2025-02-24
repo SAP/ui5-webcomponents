@@ -1,4 +1,3 @@
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import type NotificationListGroupItem from "./NotificationListGroupItem.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import NotificationListGroupList from "./NotificationListGroupList.js";
@@ -22,51 +21,46 @@ export default function NotificationListItemTemplate(this: NotificationListGroup
 					{this.loadingText}
 				</span>
 			)}
-			<BusyIndicator
-				delay={this.loadingDelay}
-				active={this.loading}
-				inert={this.loading}
-				class="ui5-nli-loading"
-			>
-				<div class="ui5-nli-group-content-wrapper">
+			<div class="ui5-nli-group-content-wrapper">
+				<div
+					class={{
+						"ui5-nli-group-header": true,
+						"ui5-nli-group-header-expanded": this._expanded,
+					}}
+					onClick={this._onHeaderToggleClick}
+					onKeyDown={this._onkeydown}
+					role="button"
+					aria-expanded={this._expanded}
+					aria-controls={`${this._id}-notificationsList`}
+					title={this.toggleIconAccessibleName}>
+					<Icon
+						name={this.groupCollapsedIcon}
+						class="ui5-nli-group-toggle-icon"
+						mode="Decorative"
+					/>
 					<div
-						class={{
-							"ui5-nli-group-header": true,
-							"ui5-nli-group-header-expanded": this._expanded,
-						}}
-						onClick={this._onHeaderToggleClick}
-						onKeyDown={this._onkeydown}
-						role="button"
-						aria-expanded={this._expanded}
-						aria-controls={`${this._id}-notificationsList`}
-						title={this.toggleIconAccessibleName}>
-						<Icon
-							name={this.groupCollapsedIcon}
-							class="ui5-nli-group-toggle-icon"
-							mode="Decorative"
-						/>
-						<div
-							id={`${this._id}-title-text`}
-							class="ui5-nli-group-title-text"
-							part="title-text"
-							role="heading"
-							aria-level={2}
-						>
-							{this.titleText}
-						</div>
-						<div class="ui5-nli-group-divider"></div>
-					</div>
-					<NotificationListGroupList
-						id={`${this._id}-notificationsList`}
-						class="ui5-nli-group-items"
-						accessibleNameRef={`${this._id}-title-text`}
-						growing={this.growing}
-						onLoadMore={this._onLoadMore}
+						id={`${this._id}-title-text`}
+						class="ui5-nli-group-title-text"
+						part="title-text"
+						role="heading"
+						aria-level={2}
 					>
-						<slot></slot>
-					</NotificationListGroupList>
+						{this.titleText}
+					</div>
+					<div class="ui5-nli-group-divider"></div>
 				</div>
-			</BusyIndicator>
+				<NotificationListGroupList
+					id={`${this._id}-notificationsList`}
+					class="ui5-nli-group-items"
+					accessibleNameRef={`${this._id}-title-text`}
+					growing={this.growing}
+					loading={this.loading}
+					loadingDelay={this.loadingDelay}
+					onLoadMore={this._onLoadMore}
+				>
+					<slot></slot>
+				</NotificationListGroupList>
+			</div>
 		</li>
 	);
 }
