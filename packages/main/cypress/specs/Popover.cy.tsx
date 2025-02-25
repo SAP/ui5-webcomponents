@@ -153,6 +153,31 @@ describe("Popover interaction", () => {
 			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").should("be.visible");
 		});
 	});
+
+	it("tests clicking outside the popover when 'mousedown' event propagation is stopped", () => {
+		cy.mount(
+			<>
+				<button id="opener">Open</button>
+				<Popover id="pop" open={true} opener="opener">
+					<Button id="btnClosePopover">Close</Button>
+				</Popover>
+				<button id="btn">Stops mousedown propagation</button>
+			</>
+		);
+
+		cy.get("#pop").should("be.visible");
+		cy.get("#btn").then(btn => {
+			btn.get(0).addEventListener("mousedown", event => {
+				event.stopPropagation();
+			});
+		});
+
+		// act
+		cy.get("#btn").realClick();
+
+		// assert
+		cy.get("#pop").should("not.be.visible");
+	});
 });
 
 describe("Focusing", () => {
