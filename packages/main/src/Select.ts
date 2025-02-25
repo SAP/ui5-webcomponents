@@ -272,6 +272,15 @@ class Select extends UI5Element implements IFormInputElement {
 	accessibleNameRef?: string;
 
 	/**
+	 * Defines the tooltip of the select.
+	 * @default undefined
+	 * @public
+	 * @since 2.8.0
+	 */
+	@property()
+	tooltip?: string;
+
+	/**
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
