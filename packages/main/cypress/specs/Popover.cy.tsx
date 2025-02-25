@@ -2,8 +2,6 @@ import ToolbarButton from "../../src/ToolbarButton.js";
 import Toolbar from "../../src/Toolbar.js";
 import Popover from "../../src/Popover.js";
 import Button from "../../src/Button.js";
-import List from "../../src/List.js";
-import ListItemStandard from "../../src/ListItemStandard.js";
 
 describe("Popover opener", () => {
 	it("tests 'opener' set as string of abstract element's ID ", () => {
