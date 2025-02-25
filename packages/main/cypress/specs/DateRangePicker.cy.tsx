@@ -178,7 +178,7 @@ describe("DateRangePicker general interaction", () => {
 		cy.get("@dayOne").realClick();
 		cy.get("@dayTwo").realClick();
 
-		cy.get("@changeStub").should("have.callCount", 1);
+		cy.get("@changeStub").should("be.calledOnce");
 	});
 
 	it("Page up/down increments/decrements day value", () => {
