@@ -235,21 +235,6 @@ abstract class UI5Element extends HTMLElement {
 		if (ctor._needsShadowDOM()) {
 			const defaultOptions = { mode: "open" } as ShadowRootInit;
 			this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
-
-			const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
-			if (slotsAreManaged) {
-				this.shadowRoot!.addEventListener("slotchange", this._onShadowRootSlotChange.bind(this));
-			}
-		}
-	}
-
-	/**
-	 * Note: this "slotchange" listener is for slots, rendered in the component's shadow root
-	 */
-	_onShadowRootSlotChange(e: Event) {
-		const targetShadowRoot = (e.target as Node)?.getRootNode(); // the "slotchange" event target is always a slot element
-		if (targetShadowRoot === this.shadowRoot) { // only for slotchange events that originate from slots, belonging to the component's shadow root
-			this._processChildren();
 		}
 	}
 
@@ -380,10 +365,11 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		const canSlotText = metadata.canSlotText();
-		const mutationObserverOptions = {
+		const mutationObserverOptions: MutationObserverInit = {
 			childList: true,
 			subtree: canSlotText,
 			characterData: canSlotText,
+			attributeFilter: ["slot"],
 		};
 		observeDOMNode(this, this._processChildren.bind(this) as MutationCallback, mutationObserverOptions);
 	}
