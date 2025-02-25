@@ -121,7 +121,7 @@ describe("'sideContentPosition' property", () => {
 describe("'equalSplit' property", () => {
 	it("set to 'true'", () => {
 		cy.mount(
-			<DynamicSideContent>
+			<DynamicSideContent equalSplit>
 				<div>
 					<h1>Main Content</h1>
 				</div>
@@ -131,7 +131,6 @@ describe("'equalSplit' property", () => {
 			</DynamicSideContent>
 		);
 		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
-		cy.get("@dynamicSideContent").invoke("attr", "equal-split", "");
 
 		cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-main").should("have.class", "ui5-dsc-span-6");
 		cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-side").should("have.class", "ui5-dsc-span-6");
@@ -329,8 +328,6 @@ describe("'sideContentFallDown' property", () => {
 				</DynamicSideContent>
 			);
 			cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
-
-			cy.get("@dynamicSideContent").invoke("attr", "side-content-fall-down", setting);
 
 			widths.forEach(({ size, expected }) => {
 				cy.viewport(size, 500);
