@@ -222,6 +222,14 @@
 		const menuBasic = document.getElementById("menuSubs");
 		const sidenav = document.querySelector("ui5-side-navigation");
 
+		const feedbackBtn = document.getElementById("feedbackBtn");
+
+		const feedbackButtonAcc = {
+			hasPopup: "dialog",
+			expanded: true
+		}
+		feedbackBtn.accessibilityAttributes = feedbackButtonAcc;
+
 		btnOpenBasic.addEventListener("click", function(event) {
 			menuBasic.open = !menuBasic.open;
 		});

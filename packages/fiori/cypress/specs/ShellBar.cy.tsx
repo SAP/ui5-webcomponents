@@ -101,6 +101,9 @@ describe("Responsiveness", () => {
 		cy.get("#shellbar")
 			.as("shellbar");
 	});
+	afterEach(() => {
+		cy.viewport(1920, 1080);
+	});
 
 	it("tests XL Breakpoint 1920px", () => {
 		cy.viewport(1920, 1080);
@@ -294,5 +297,22 @@ describe("Responsiveness", () => {
 			.shadow()
 			.find(".ui5-shellbar-overflow-button")
 			.should("be.hidden");
+	});
+
+	it("Test accessibility attributes on custom action buttons", () => {
+		cy.mount(basicTemplate()).as("html");
+
+		cy.get("@shellbar")
+			.shadow()
+			.find<Button>("#call")
+			.as("call-button")
+			.then($el => {
+				$el.get(0).accessibilityAttributes = { "hasPopup": "dialog", "expanded": "true" };
+			});
+		cy.get("@call-button")
+			.shadow()
+			.find("button")
+			.should("have.attr", "aria-expanded", "true")
+			.should("have.attr", "aria-hasPopup", "dialog");
 	});
 });

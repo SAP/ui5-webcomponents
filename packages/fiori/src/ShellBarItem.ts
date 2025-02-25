@@ -2,10 +2,13 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base";
 
 type ShellBarItemClickEventDetail = {
 	targetRef: HTMLElement,
 };
+
+type ShellBarItemAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls">;
 
 /**
  * Interface for components that may be slotted inside `ui5-shellbar` as items
@@ -66,6 +69,9 @@ class ShellBarItem extends UI5Element {
 	@property()
 	count?: string;
 
+	@property({ type: Object })
+	accessibilityAttributes: ShellBarItemAccessibilityAttributes = {};
+
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
@@ -80,5 +86,6 @@ class ShellBarItem extends UI5Element {
 ShellBarItem.define();
 
 export default ShellBarItem;
-
+export type { ShellBarItem };
 export type { ShellBarItemClickEventDetail };
+export type { ShellBarItemAccessibilityAttributes };
