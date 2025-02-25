@@ -59,7 +59,7 @@ const attachGlobalClickHandler = () => {
 };
 
 const detachGlobalClickHandler = () => {
-	document.removeEventListener("mousedown", clickHandler);
+	document.removeEventListener("mousedown", clickHandler, { capture: true });
 };
 
 const clickHandler = (event: MouseEvent) => {
