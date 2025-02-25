@@ -14,7 +14,6 @@ import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/index.js";
 
 import {
 	SEARCH_FIELD_SCOPE_SELECT_LABEL,

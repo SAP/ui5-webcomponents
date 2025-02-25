@@ -390,6 +390,11 @@ describe("SearchField general interaction", () => {
 				.shadow()
 				.find("[role='combobox']")
 				.should("have.attr", "aria-label", SEARCH_FIELD_SCOPE_SELECT_LABEL.defaultText);
+
+			cy.get("@scope")
+				.shadow()
+				.find(".ui5-select-root")
+				.should("have.attr", "title", SEARCH_FIELD_SCOPE_SELECT_LABEL.defaultText);
 		});
 
 		it("Two options should be rendered in the scope", () => {

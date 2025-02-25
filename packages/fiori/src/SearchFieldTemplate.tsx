@@ -15,7 +15,11 @@ export default function SearchFieldTemplate(this: SearchField) {
 				<div class="ui5-search-field-content">
 					{this.mode === SearchMode.Scoped &&
 						<>
-							<Select onChange={this._handleScopeChange} class="sapUiSizeCompact" accessibleName={this._translations.scope}>
+							<Select
+								onChange={this._handleScopeChange}
+								class="sapUiSizeCompact"
+								accessibleName={this._translations.scope}
+								tooltip={this._translations.scope}>
 								{this.scopeOptions.map(scopeOption => {
 									return <Option
 										selected={scopeOption.selected}
