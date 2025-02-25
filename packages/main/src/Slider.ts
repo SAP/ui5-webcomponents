@@ -264,12 +264,16 @@ class Slider extends SliderBase implements IFormInputElement {
 		this._valueOnInteractionStart = undefined;
 	}
 
-	_onkeyup() {
+	_onkeyup(e: KeyboardEvent) {
+		const isActionKey = SliderBase._isActionKey(e);
+
 		this._onKeyupBase();
 
-		if (this._valueOnInteractionStart !== this.value) {
+		if (isActionKey && this._valueOnInteractionStart !== this.value) {
 			this.fireDecoratorEvent("change");
 		}
+
+		this._valueOnInteractionStart = this.value;
 	}
 
 	_onInputFocusOut(e: FocusEvent) {
