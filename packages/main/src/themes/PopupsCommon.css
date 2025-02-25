@@ -79,10 +79,6 @@
     display: none;
 }
 
-:host([no-scrolling]) .ui5-popup-content {
-    overflow: hidden;
-}
-
 /*** Responsive paddings for the content***/
 :host([media-range="S"]) .ui5-popup-content {
 	padding: 1rem var(--_ui5_popup_content_padding_s);
