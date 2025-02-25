@@ -6,7 +6,7 @@ export default function TableCellTemplate(this: TableCell) {
 			{ this._popin &&
 				// TODO: Handle nodes correctly
 				<>
-					{ this._popinHeaderNodes.map(node => (node))}
+					<div ref={this.captureRef.bind(this)}></div>
 					<span class="popin-colon">{this._i18nPopinColon}</span>
 				</>
 			}

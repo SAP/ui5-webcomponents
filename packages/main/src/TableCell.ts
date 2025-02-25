@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import TableCellTemplate from "./TableCellTemplate.js";
 import TableCellStyles from "./generated/themes/TableCell.css.js";
 import TableCellBase from "./TableCellBase.js";
 import type TableRow from "./TableRow.js";
@@ -27,17 +27,35 @@ import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
  */
 @customElement({
 	tag: "ui5-table-cell",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [TableCellBase.styles, TableCellStyles],
 	template: TableCellTemplate,
 })
 class TableCell extends TableCellBase {
+	popinRef!: HTMLElement;
+
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		if (this.horizontalAlign) {
 			this.style.justifyContent = this.horizontalAlign;
 		} else if (this._individualSlot) {
 			this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
+		}
+	}
+
+	onAfterRendering(): void {
+		if (this._popin && this.popinRef) {
+			if (!this.popinRef.hasChildNodes()) {
+				this._popinHeaderNodes.forEach(popinNode => {
+					this.popinRef.append(popinNode);
+				});
+			}
+		}
+	}
+
+	captureRef(ref: HTMLElement | null) {
+		if (ref) {
+			this.popinRef = ref;
 		}
 	}
 
@@ -48,10 +66,6 @@ class TableCell extends TableCellBase {
 		return table.headerRow[0].cells[index];
 	}
 
-	// TODO: This does not work with JSX (could work with dangerouslySetInnerHTML but I'd like to avoid that)
-	// JSX expects a string or a JSX.Element, not DOM nodes, either we need to format nodes to JSX.Element or
-	// just retrieve the inner text of the element and use it as a string
-	// TBD
 	get _popinHeaderNodes() {
 		const nodes = [];
 		const headerCell = this._headerCell;
