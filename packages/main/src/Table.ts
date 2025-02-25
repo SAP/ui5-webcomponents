@@ -20,6 +20,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type TableHeaderCell from "./TableHeaderCell.js";
 import type TableSelection from "./TableSelection.js";
+import type TableSelectionBase from "./TableSelectionBase.js";
 import type TableRowActionBase from "./TableRowActionBase.js";
 import type TableVirtualizer from "./TableVirtualizer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -37,11 +38,17 @@ interface ITableFeature extends UI5Element {
 	readonly identifier: string;
 	/**
 	 * Called when the table is activated.
-	 * @param table table instance
+	 * @param table Table instance
 	 */
 	onTableActivate?(table: Table): void;
 	/**
-	 * Called when the table finished rendering.
+	 * Called every time before the table renders.
+	 * @param table Table instance
+	 */
+	onTableBeforeRendering?(table?: Table): void;
+	/**
+	 * Called every time after the table renders.
+	 * @param table Table instance
 	 */
 	onTableAfterRendering?(table?: Table): void;
 }
@@ -381,7 +388,6 @@ class Table extends UI5Element {
 	_tableDragAndDrop?: TableDragAndDrop;
 	_poppedIn: Array<{col: TableHeaderCell, width: float}> = [];
 	_containerWidth = 0;
-	_rowsLength = 0;
 
 	constructor() {
 		super();
@@ -412,10 +418,6 @@ class Table extends UI5Element {
 		this._renderNavigated = this.rows.some(row => row.navigated);
 		if (this.headerRow[0]) {
 			this.headerRow[0]._rowActionCount = this.rowActionCount;
-			if (this._getSelection()?.isMultiSelect() && this._rowsLength !== this.rows.length) {
-				this._rowsLength = this.rows.length;
-				this.headerRow[0]._invalidate++;
-			}
 		}
 		this.rows.forEach(row => {
 			row._renderNavigated = this._renderNavigated;
@@ -424,18 +426,23 @@ class Table extends UI5Element {
 
 		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
 		this._refreshPopinState();
+		this.features.forEach(feature => feature.onTableBeforeRendering?.(this));
 	}
 
 	onAfterRendering(): void {
 		this.features.forEach(feature => feature.onTableAfterRendering?.(this));
 	}
 
-	_getSelection(): TableSelection | undefined {
-		return this.features.find(feature => isFeature<TableSelection>(feature, "TableSelection")) as TableSelection;
+	_findFeature<T>(featureName: string): T {
+		return this.features.find(feature => isFeature<T>(feature, featureName)) as T;
+	}
+
+	_getSelection(): TableSelectionBase | TableSelection | undefined {
+		return this._findFeature<TableSelectionBase>("TableSelectionBase") || this._findFeature<TableSelection>("TableSelection");
 	}
 
 	_getVirtualizer(): TableVirtualizer | undefined {
-		return this.features.find(feature => isFeature<TableVirtualizer>(feature, "TableVirtualizer")) as TableVirtualizer;
+		return this._findFeature<TableVirtualizer>("TableVirtualizer");
 	}
 
 	_onEvent(e: Event) {
@@ -541,12 +548,8 @@ class Table extends UI5Element {
 		});
 	}
 
-	_isFeature(feature: any) {
-		return Boolean(feature.onTableActivate || feature.onTableAfterRendering);
-	}
-
 	_isGrowingFeature(feature: any) {
-		return Boolean(feature.loadMore && feature.hasGrowingComponent && this._isFeature(feature));
+		return Boolean(feature.loadMore && feature.hasGrowingComponent && isFeature<ITableGrowing>(feature, "TableGrowing"));
 	}
 
 	_onRowClick(row: TableRow) {
@@ -586,7 +589,7 @@ class Table extends UI5Element {
 
 		const widths = [];
 		const visibleHeaderCells = this.headerRow[0]._visibleCells as TableHeaderCell[];
-		if (this._getSelection()?.hasRowSelector()) {
+		if (this._getSelection()?.isRowSelectorRequired()) {
 			widths.push("min-content");
 		}
 		widths.push(...visibleHeaderCells.map(cell => {
@@ -650,7 +653,7 @@ class Table extends UI5Element {
 
 	get _ariaMultiSelectable() {
 		const selection = this._getSelection();
-		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelect() : undefined;
+		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelectable() : undefined;
 	}
 
 	get _shouldRenderGrowing() {
@@ -658,7 +661,7 @@ class Table extends UI5Element {
 	}
 
 	get _growing() {
-		return this.features.find(feature => this._isGrowingFeature(feature)) as ITableGrowing;
+		return this._findFeature<ITableGrowing>("TableGrowing");
 	}
 
 	get _stickyElements() {

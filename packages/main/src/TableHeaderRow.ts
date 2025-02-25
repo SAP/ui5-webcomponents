@@ -97,10 +97,6 @@ class TableHeaderRow extends TableRowBase {
 		return this._isMultiSelect;
 	}
 
-	get _isSelected() {
-		return this._tableSelection?.areAllRowsSelected();
-	}
-
 	get _i18nSelection() {
 		return TableRowBase.i18nBundle.getText(TABLE_SELECTION);
 	}

@@ -16,7 +16,7 @@ export default function TableHeaderRowTemplate(this: TableHeaderRow) {
 						<CheckBox id="selection-component"
 							tabindex={-1}
 							checked={this._isSelected}
-							onChange={this._informSelectionChange}
+							onChange={this._onSelectionChange}
 							accessibleName={this._i18nRowSelector}
 						></CheckBox>
 					}
