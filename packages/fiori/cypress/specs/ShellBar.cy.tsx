@@ -35,7 +35,7 @@ describe("Responsiveness", () => {
 			<Button icon={navBack} slot="startButton" id="start-button"></Button>
 
 			<ShellBarItem id="disc" icon={activities} text="Disconnect"></ShellBarItem>
-			<ShellBarItem id="call" icon={sysHelp} text="Incoming Calls"></ShellBarItem>
+			<ShellBarItem id="call" icon={sysHelp} text="Incoming Calls" stable-dom-ref="call"></ShellBarItem>
 
 			<Input placeholder="Instructions" slot="searchField" showSuggestions={true} valueState="Information">
 				<div slot="valueStateMessage">Instructions</div>
@@ -304,7 +304,7 @@ describe("Responsiveness", () => {
 
 		cy.get("@shellbar")
 			.shadow()
-			.find<Button>("#call")
+			.find<Button>(`[data-ui5-stable="call"]`)
 			.as("call-button")
 			.then($el => {
 				$el.get(0).accessibilityAttributes = { "hasPopup": "dialog", "expanded": "true" };

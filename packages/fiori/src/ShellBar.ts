@@ -41,10 +41,8 @@ import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHo
 import throttle from "@ui5/webcomponents-base/dist/util/throttle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
-import type {
-	ShellBarItem,
-	ShellBarItemAccessibilityAttributes,
-} from "./ShellBarItem.js";
+import type ShellBarItem from "./ShellBarItem.js";
+import type { ShellBarItemAccessibilityAttributes } from "./ShellBarItem.js";
 
 // Templates
 import ShellBarTemplate from "./ShellBarTemplate.js";
@@ -1053,9 +1051,9 @@ class ShellBar extends UI5Element {
 				const show = !!item.icon || false;
 				return {
 					icon: item.icon,
-					id: item.id,
+					id: item._id,
 					count: item.count || undefined,
-					π: item._id,
+					refItemid: item._id,
 					text: item.text,
 					classes: "ui5-shellbar-custom-item ui5-shellbar-button",
 					show,

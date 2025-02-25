@@ -86,6 +86,6 @@ class ShellBarItem extends UI5Element {
 ShellBarItem.define();
 
 export default ShellBarItem;
-export type { ShellBarItem };
+
 export type { ShellBarItemClickEventDetail };
 export type { ShellBarItemAccessibilityAttributes };
