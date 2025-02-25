@@ -1170,6 +1170,11 @@ abstract class UI5Element extends HTMLElement {
 
 					const isDifferent = oldState !== value;
 					if (isDifferent) {
+						if (this._rendered) {
+							// is already rendered so it is not the constructor - can set the attribute synchronously
+							this._updateAttribute(prop, value);
+						}
+
 						// if the decorator is on a setter, use it for storage
 						if (origSet) {
 							origSet.call(this, value);
@@ -1182,11 +1187,6 @@ abstract class UI5Element extends HTMLElement {
 							newValue: value,
 							oldValue: oldState,
 						});
-
-						if (this._rendered) {
-							// is already rendered so it is not the constructor - can set the attribute synchronously
-							this._updateAttribute(prop, value);
-						}
 
 						if (ctor.getMetadata().isFormAssociated()) {
 							setFormValue(this as unknown as IFormInputElement);
