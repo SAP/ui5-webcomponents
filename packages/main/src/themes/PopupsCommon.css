@@ -31,6 +31,13 @@
     flex: auto;
 }
 
+/* when the content is keyboard focusable scroll container */
+.ui5-popup-content:focus {
+    outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+    outline-offset: calc(-1 * var(--sapContent_FocusWidth));
+    border-radius: var(--_ui5_popup_border_radius);
+}
+
 .ui5-popup-footer-root {
     background: var(--sapPageFooter_Background);
     border-top: 1px solid var(--sapPageFooter_BorderColor);
