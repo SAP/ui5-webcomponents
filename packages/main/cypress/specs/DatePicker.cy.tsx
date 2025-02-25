@@ -1430,20 +1430,14 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Prevent change event", () => {
-		cy.mount(
-			<>
-				<Label></Label>
-				<DatePicker format-pattern="MMM d, y"></DatePicker>
-			</>
-		);
+		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
 			.then($datePicker => {
-				$datePicker.on("change", event => {
+				$datePicker.on("change", cy.stub().as("changeHandler").callsFake((event: Event) => {
 					event.preventDefault();
-					cy.get("[ui5-label]").invoke("attr", "text", `${(event.target as DatePicker).value}`);
-				});
+				}));
 			});
 
 		cy.get<DatePicker>("@datePicker")
@@ -1456,7 +1450,14 @@ describe("Date Picker Tests", () => {
 			.should("have.value", "")
 			.and("have.attr", "value-state", "None");
 
-		cy.get("[ui5-label]").should("have.attr", "text", "Mar 31, 1995");
+		cy.get("@changeHandler")
+			.should("have.been.calledOnce")
+			.and("have.been.calledWithMatch", {
+				detail: {
+					value: "Mar 31, 1995",
+					valid: true,
+				}
+			});
 	});
 
 	it("DatePicker's formatter has strict parsing enabled", () => {
