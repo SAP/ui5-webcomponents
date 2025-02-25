@@ -1,5 +1,6 @@
 import Button from "@ui5/webcomponents/dist/Button.js";
 import DynamicSideContent from "../../src/DynamicSideContent.js";
+import SideContentFallDown from "../../src/types/SideContentFallDown.js";
 
 describe("Accessibility", () => {
 	it("tests main and side content roles", () => {
@@ -84,7 +85,7 @@ describe("Accessibility", () => {
 describe("'sideContentPosition' property", () => {
 	it("set to 'End'", () => {
 		cy.mount(
-			<DynamicSideContent>
+			<DynamicSideContent sideContentPosition="End">
 				<div>
 					<h1>Main Content</h1>
 				</div>
@@ -95,14 +96,13 @@ describe("'sideContentPosition' property", () => {
 		);
 		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
 
-		cy.get("@dynamicSideContent").invoke("attr", "side-content-position", "End");
 		cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-root > *").first()
 			.should("have.class", "ui5-dsc-main");
 	});
 
 	it("set to 'Start'", () => {
 		cy.mount(
-			<DynamicSideContent>
+			<DynamicSideContent sideContentPosition="Start">
 				<div>
 					<h1>Main Content</h1>
 				</div>
@@ -111,10 +111,9 @@ describe("'sideContentPosition' property", () => {
 				</div>
 			</DynamicSideContent>
 		);
-	  cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
+		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
 
-	  cy.get("@dynamicSideContent").invoke("attr", "side-content-position", "Start");
-	  cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-root > *").first()
+		cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-root > *").first()
 			.should("have.class", "ui5-dsc-side");
 	});
 });
@@ -190,28 +189,26 @@ describe("containers widths on M size:", () => {
 			</DynamicSideContent>
 		);
 		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
-		cy.get("ui5-dynamic-side-content").then(dynamicSideContent => {
-			// set outer container width to > 960 and < 1024 (M1)
-			cy.viewport(1020, 500);
-			cy.wrap(dynamicSideContent)
-				.shadow()
-				.find(".ui5-dsc-main")
-				.should("have.class", "ui5-dsc-span-fixed");
-			cy.wrap(dynamicSideContent)
-				.shadow()
-				.find(".ui5-dsc-side")
-				.should("have.class", "ui5-dsc-span-fixed");
-			// set outer container width to > 720 and < 960 (M2)
-			cy.viewport(950, 500);
-			cy.wrap(dynamicSideContent)
-				.shadow()
-				.find(".ui5-dsc-main")
-				.should("have.class", "ui5-dsc-span-12");
-			cy.wrap(dynamicSideContent)
-				.shadow()
-				.find(".ui5-dsc-side")
-				.should("have.class", "ui5-dsc-span-12");
-		});
+		// set outer container width to > 960 and < 1024 (M1)
+		cy.viewport(1020, 500);
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-main")
+			.should("have.class", "ui5-dsc-span-fixed");
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-side")
+			.should("have.class", "ui5-dsc-span-fixed");
+		// set outer container width to > 720 and < 960 (M2)
+		cy.viewport(950, 500);
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-main")
+			.should("have.class", "ui5-dsc-span-12");
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-side")
+			.should("have.class", "ui5-dsc-span-12");
 	});
 });
 
@@ -228,18 +225,17 @@ describe("containers widths on S size:", () => {
 			</DynamicSideContent>
 		);
 		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
-		cy.get("ui5-dynamic-side-content").then(dynamicSideContent => {
+
 		// set outer container width to < 720 (S)
-			cy.viewport(700, 500);
-			cy.wrap(dynamicSideContent)
-				.shadow()
-				.find(".ui5-dsc-main")
-				.should("have.class", "ui5-dsc-span-12");
-			cy.wrap(dynamicSideContent)
-				.shadow()
-				.find(".ui5-dsc-side")
-				.should("have.class", "ui5-dsc-span-0");
-	  });
+		cy.viewport(700, 500);
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-main")
+			.should("have.class", "ui5-dsc-span-12");
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-side")
+			.should("have.class", "ui5-dsc-span-0");
 	});
 });
 
@@ -247,7 +243,7 @@ describe("'sideContentVisibility' property:", () => {
 	it("'AlwaysShow' - side content is always visible", () => {
 		cy.viewport(1600, 500);
 		cy.mount(
-			<DynamicSideContent>
+			<DynamicSideContent sideContentVisibility="AlwaysShow">
 				<div>
 					<h1>Main Content</h1>
 				</div>
@@ -257,7 +253,6 @@ describe("'sideContentVisibility' property:", () => {
 			</DynamicSideContent>
 		);
 		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
-		cy.get("ui5-dynamic-side-content").invoke("attr", "side-content-visibility", "AlwaysShow");
 
 		const viewports = [
 			{ width: 1600, expectedClass: "ui5-dsc-span-3" },
@@ -279,52 +274,52 @@ describe("'sideContentVisibility' property:", () => {
 
 describe("'sideContentFallDown' property", () => {
 	const testCases = [
-	  {
-			setting: "BelowXL",
-			widths: [
-				{ size: 1600, expected: "ui5-dsc-span-3", message: "The side content does not fall down" },
-				{ size: 1400, expected: "ui5-dsc-span-12", message: "The side content falls down" },
-				{ size: 1020, expected: "ui5-dsc-span-12", message: "The side content falls down" },
-				{ size: 950, expected: "ui5-dsc-span-12", message: "The side content falls down" },
-				{ size: 700, expected: "ui5-dsc-span-0", message: "The side content is not visible" },
-			],
-	  },
-	  {
-			setting: "BelowL",
-			widths: [
-				{ size: 1600, expected: "ui5-dsc-span-3", message: "The side content does not fall down" },
-				{ size: 1400, expected: "ui5-dsc-span-4", message: "The side content does not fall down" },
-				{ size: 1020, expected: "ui5-dsc-span-12", message: "The side content falls down" },
-				{ size: 950, expected: "ui5-dsc-span-12", message: "The side content falls down" },
-				{ size: 700, expected: "ui5-dsc-span-0", message: "The side content is not visible" },
-			],
-	  },
-	  {
-			setting: "BelowM",
-			widths: [
-				{ size: 1600, expected: "ui5-dsc-span-3", message: "The side content does not fall down" },
-				{ size: 1400, expected: "ui5-dsc-span-4", message: "The side content does not fall down" },
-				{ size: 1020, expected: "ui5-dsc-span-fixed", message: "The side content does not fall down" },
-				{ size: 950, expected: "ui5-dsc-span-fixed", message: "The side content does not fall down" },
-				{ size: 700, expected: "ui5-dsc-span-0", message: "The side content is not visible" },
-			],
-	  },
-	  {
-			setting: "OnMinimumWidth",
-			widths: [
-				{ size: 1600, expected: "ui5-dsc-span-3", message: "The side content does not fall down" },
-				{ size: 1400, expected: "ui5-dsc-span-4", message: "The side content does not fall down" },
-				{ size: 1020, expected: "ui5-dsc-span-fixed", message: "The side content does not fall down" },
-				{ size: 950, expected: "ui5-dsc-span-12", message: "The side content falls down" },
-				{ size: 700, expected: "ui5-dsc-span-0", message: "The side content is not visible" },
-			],
-	  },
+		{
+			  setting: SideContentFallDown.BelowXL,
+			  widths: [
+				  { size: 1600, expected: "ui5-dsc-span-3" },
+				  { size: 1400, expected: "ui5-dsc-span-12" },
+				  { size: 1020, expected: "ui5-dsc-span-12" },
+				  { size: 950, expected: "ui5-dsc-span-12" },
+				  { size: 700, expected: "ui5-dsc-span-0" },
+			  ],
+		},
+		{
+			  setting: SideContentFallDown.BelowL,
+			  widths: [
+				  { size: 1600, expected: "ui5-dsc-span-3" },
+				  { size: 1400, expected: "ui5-dsc-span-4" },
+				  { size: 1020, expected: "ui5-dsc-span-12" },
+				  { size: 950, expected: "ui5-dsc-span-12" },
+				  { size: 700, expected: "ui5-dsc-span-0" },
+			  ],
+		},
+		{
+			  setting: SideContentFallDown.BelowM,
+			  widths: [
+				  { size: 1600, expected: "ui5-dsc-span-3" },
+				  { size: 1400, expected: "ui5-dsc-span-4" },
+				  { size: 1020, expected: "ui5-dsc-span-fixed" },
+				  { size: 950, expected: "ui5-dsc-span-fixed" },
+				  { size: 700, expected: "ui5-dsc-span-0" },
+			  ],
+		},
+		{
+			  setting: SideContentFallDown.OnMinimumWidth,
+			  widths: [
+				  { size: 1600, expected: "ui5-dsc-span-3" },
+				  { size: 1400, expected: "ui5-dsc-span-4" },
+				  { size: 1020, expected: "ui5-dsc-span-fixed" },
+				  { size: 950, expected: "ui5-dsc-span-12" },
+				  { size: 700, expected: "ui5-dsc-span-0" },
+			  ],
+		},
 	];
 
 	testCases.forEach(({ setting, widths }) => {
 	  it(`'${setting}' - side content falls down at expected breakpoints`, () => {
 			cy.mount(
-				<DynamicSideContent>
+				<DynamicSideContent sideContentFallDown={setting}>
 					<div>
 						<h1>Main Content</h1>
 					</div>
@@ -337,13 +332,12 @@ describe("'sideContentFallDown' property", () => {
 
 			cy.get("@dynamicSideContent").invoke("attr", "side-content-fall-down", setting);
 
-			widths.forEach(({ size, expected, message }) => {
+			widths.forEach(({ size, expected }) => {
 				cy.viewport(size, 500);
 				cy.get("@dynamicSideContent")
 					.shadow()
 					.find(".ui5-dsc-side")
-					.invoke("attr", "class")
-					.should("include", expected, message);
+					.should("have.class", expected);
 			});
 	  });
 	});
@@ -351,52 +345,52 @@ describe("'sideContentFallDown' property", () => {
 
 describe("'sideContentFallDown' property", () => {
 	const testCases = [
-	  {
-			setting: "BelowXL",
-			widths: [
-				{ size: 1600, expected: "ui5-dsc-span-3", message: "The side content does not fall down" },
-				{ size: 1400, expected: "ui5-dsc-span-12", message: "The side content falls down" },
-				{ size: 1020, expected: "ui5-dsc-span-12", message: "The side content falls down" },
-				{ size: 950, expected: "ui5-dsc-span-12", message: "The side content falls down" },
-				{ size: 700, expected: "ui5-dsc-span-0", message: "The side content is not visible" },
-			],
-	  },
-	  {
-			setting: "BelowL",
-			widths: [
-				{ size: 1600, expected: "ui5-dsc-span-3", message: "The side content does not fall down" },
-				{ size: 1400, expected: "ui5-dsc-span-4", message: "The side content does not fall down" },
-				{ size: 1020, expected: "ui5-dsc-span-12", message: "The side content falls down" },
-				{ size: 950, expected: "ui5-dsc-span-12", message: "The side content falls down" },
-				{ size: 700, expected: "ui5-dsc-span-0", message: "The side content is not visible" },
-			],
-	  },
-	  {
-			setting: "BelowM",
-			widths: [
-				{ size: 1600, expected: "ui5-dsc-span-3", message: "The side content does not fall down" },
-				{ size: 1400, expected: "ui5-dsc-span-4", message: "The side content does not fall down" },
-				{ size: 1020, expected: "ui5-dsc-span-fixed", message: "The side content does not fall down" },
-				{ size: 950, expected: "ui5-dsc-span-fixed", message: "The side content does not fall down" },
-				{ size: 700, expected: "ui5-dsc-span-0", message: "The side content is not visible" },
-			],
-	  },
-	  {
-			setting: "OnMinimumWidth",
-			widths: [
-				{ size: 1600, expected: "ui5-dsc-span-3", message: "The side content does not fall down" },
-				{ size: 1400, expected: "ui5-dsc-span-4", message: "The side content does not fall down" },
-				{ size: 1020, expected: "ui5-dsc-span-fixed", message: "The side content does not fall down" },
-				{ size: 950, expected: "ui5-dsc-span-12", message: "The side content falls down" },
-				{ size: 700, expected: "ui5-dsc-span-0", message: "The side content is not visible" },
-			],
-	  },
+		{
+			  setting: SideContentFallDown.BelowXL,
+			  widths: [
+				  { size: 1600, expected: "ui5-dsc-span-3" },
+				  { size: 1400, expected: "ui5-dsc-span-12" },
+				  { size: 1020, expected: "ui5-dsc-span-12" },
+				  { size: 950, expected: "ui5-dsc-span-12" },
+				  { size: 700, expected: "ui5-dsc-span-0" },
+			  ],
+		},
+		{
+			  setting: SideContentFallDown.BelowL,
+			  widths: [
+				  { size: 1600, expected: "ui5-dsc-span-3" },
+				  { size: 1400, expected: "ui5-dsc-span-4" },
+				  { size: 1020, expected: "ui5-dsc-span-12" },
+				  { size: 950, expected: "ui5-dsc-span-12" },
+				  { size: 700, expected: "ui5-dsc-span-0" },
+			  ],
+		},
+		{
+			  setting: SideContentFallDown.BelowM,
+			  widths: [
+				  { size: 1600, expected: "ui5-dsc-span-3" },
+				  { size: 1400, expected: "ui5-dsc-span-4" },
+				  { size: 1020, expected: "ui5-dsc-span-fixed" },
+				  { size: 950, expected: "ui5-dsc-span-fixed" },
+				  { size: 700, expected: "ui5-dsc-span-0" },
+			  ],
+		},
+		{
+			  setting: SideContentFallDown.OnMinimumWidth,
+			  widths: [
+				  { size: 1600, expected: "ui5-dsc-span-3" },
+				  { size: 1400, expected: "ui5-dsc-span-4" },
+				  { size: 1020, expected: "ui5-dsc-span-fixed" },
+				  { size: 950, expected: "ui5-dsc-span-12" },
+				  { size: 700, expected: "ui5-dsc-span-0" },
+			  ],
+		},
 	];
 
 	testCases.forEach(({ setting, widths }) => {
 	  it(`'${setting}' - side content falls down at expected breakpoints`, () => {
 			cy.mount(
-				<DynamicSideContent>
+				<DynamicSideContent sideContentFallDown={setting}>
 					<div>
 						<h1>Main Content</h1>
 					</div>
@@ -407,15 +401,12 @@ describe("'sideContentFallDown' property", () => {
 			);
 			cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
 
-			cy.get("@dynamicSideContent").invoke("attr", "side-content-fall-down", setting);
-
-			widths.forEach(({ size, expected, message }) => {
+			widths.forEach(({ size, expected }) => {
 				cy.viewport(size, 500);
 				cy.get("@dynamicSideContent")
 					.shadow()
 					.find(".ui5-dsc-side")
-					.invoke("attr", "class")
-					.should("include", expected, message);
+					.should("have.class", expected);
 			});
 	  });
 	});
