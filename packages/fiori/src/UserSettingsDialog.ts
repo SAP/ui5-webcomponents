@@ -12,9 +12,9 @@ import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type { PopupBeforeCloseEventDetail } from "@ui5/webcomponents/dist/Popup.js";
 import { isPhone, isTablet, isCombi } from "@ui5/webcomponents-base/dist/Device.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import SettingsTemplate from "./SettingsTemplate.js";
-import type SettingItem from "./SettingItem.js";
-import SettingsCss from "./generated/themes/Settings.css.js";
+import UserSettingsDialogTemplate from "./UserSettingsDialogTemplate.js";
+import type UserSettingsItem from "./UserSettingsItem.js";
+import UserSettingsDialogCss from "./generated/themes/UserSettingsDialog.css.js";
 
 // Texts
 import {
@@ -24,21 +24,21 @@ import {
 	SETTINGS_DIALOG_NO_SEARCH_RESULTS_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
-type SettingsItemSelectEventDetail = {
-	item: SettingItem;
+type UserSettingsItemSelectEventDetail = {
+	item: UserSettingsItem;
 }
 
-type SettingsBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
+type UserSettingsBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
 
 /**
  * @class
  * ### Overview
  *
- * The `ui5-settings` is an SAP Fiori specific web component that is used in `ui5-profile-menu`
+ * The `ui5-user-settings-dialog` is an SAP Fiori specific web component that is used in `ui5-profile-menu`
  * and allows the user to easily see information and settings for the current account.
  *
  * ### ES6 Module Import
- * `import "@ui5/webcomponents-fiori/dist/Settings.js";`
+ * `import "@ui5/webcomponents-fiori/dist/UserSettingsDialog.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -47,18 +47,18 @@ type SettingsBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
  * @since 2.8.0
  */
 @customElement({
-	tag: "ui5-settings",
+	tag: "ui5-user-settings-dialog",
 	renderer: jsxRenderer,
-	template: SettingsTemplate,
-	styles: [SettingsCss],
+	template: UserSettingsDialogTemplate,
+	styles: [UserSettingsDialogCss],
 })
 
 /**
  * Fired when an item is selected.
- * @param {SettingItem} item The selected `setting item`.
+ * @param {UserSettingsItem} item The selected `user settings item`.
  * @public
  */
-@event("item-select", {
+@event("selection-change", {
 	cancelable: true,
 })
 
@@ -82,15 +82,15 @@ type SettingsBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
  */
 @event("close")
 
-class Settings extends UI5Element {
+class UserSettingsDialog extends UI5Element {
 	eventDetails!: {
-		"item-select": SettingsItemSelectEventDetail,
+		"selection-change": UserSettingsItemSelectEventDetail,
 		"open": void,
-		"before-close": SettingsBeforeCloseEventDetail,
+		"before-close": UserSettingsBeforeCloseEventDetail,
 		"close": void,
 	};
 	/**
-	 * Defines, if the Settings Dialog is opened.
+	 * Defines, if the User Settings Dialog is opened.
 	 *
 	 * @default false
 	 * @public
@@ -99,13 +99,13 @@ class Settings extends UI5Element {
 	open = false;
 
 	/**
-	 * Defines the headerTitle of the item.
+	 * Defines the headerText of the item.
 	 *
 	 * @public
 	 * @default undefined
 	 */
 	@property({ type: String })
-	headerTitle?: string;
+	headerText?: string;
 
 	/**
 	 * Defines, if the Search Field would be displayed.
@@ -118,7 +118,7 @@ class Settings extends UI5Element {
 	showSearchField = false;
 
 	/**
-	 * Defines the setting items.
+	 * Defines the user settings items.
 	 *
 	 * **Note:** If no setting items is set as `selected`, the first one will be selected.
 	 * @public
@@ -132,10 +132,10 @@ class Settings extends UI5Element {
 			slots: true,
 		},
 	})
-	items!: Array<SettingItem>;
+	items!: Array<UserSettingsItem>;
 
 	/**
-	 * Defines the fixed setting items.
+	 * Defines the fixed user setting items.
 	 *
 	 * @public
 	 */
@@ -147,7 +147,7 @@ class Settings extends UI5Element {
 			slots: true,
 		},
 	})
-	fixedItems!: Array<SettingItem>;
+	fixedItems!: Array<UserSettingsItem>;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
@@ -168,17 +168,17 @@ class Settings extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_selectedSetting?: SettingItem;
+	_selectedSetting?: UserSettingsItem;
 
 	/**
 	 * @private
 	 */
-	_filteredItems: Array<SettingItem> = [];
+	_filteredItems: Array<UserSettingsItem> = [];
 
 	/**
 	 * @private
 	 */
-	_filteredFixedItems: Array<SettingItem> = [];
+	_filteredFixedItems: Array<UserSettingsItem> = [];
 
 	/**
 	 * @private
@@ -231,9 +231,9 @@ class Settings extends UI5Element {
 	}
 
 	_handleItemClick(e: CustomEvent<ListItemClickEventDetail>) {
-		const setting = e.detail.item as ListItemBase & { associatedSettingItem: SettingItem };
+		const setting = e.detail.item as ListItemBase & { associatedSettingItem: UserSettingsItem };
 		const settingItem = setting.associatedSettingItem;
-		const eventPrevented = !this.fireDecoratorEvent("item-select", {
+		const eventPrevented = !this.fireDecoratorEvent("selection-change", {
 			item: settingItem,
 		});
 		this._collapsed = true;
@@ -271,18 +271,18 @@ class Settings extends UI5Element {
 	}
 
 	get accessibleNameText() {
-		return Settings.i18nBundle.getText(SETTINGS_DIALOG_ACCESSIBLE_NAME);
+		return UserSettingsDialog.i18nBundle.getText(SETTINGS_DIALOG_ACCESSIBLE_NAME);
 	}
 
 	get ariaRoleDescList() {
-		return Settings.i18nBundle.getText(SETTING_LIST_ARIA_ROLE_DESC);
+		return UserSettingsDialog.i18nBundle.getText(SETTING_LIST_ARIA_ROLE_DESC);
 	}
 
 	get closeButtonText() {
-		return Settings.i18nBundle.getText(SETTINGS_DIALOG_CLOSE_BUTTON_TEXT);
+		return UserSettingsDialog.i18nBundle.getText(SETTINGS_DIALOG_CLOSE_BUTTON_TEXT);
 	}
 	get noSearchResultsText() {
-		return Settings.i18nBundle.getText(SETTINGS_DIALOG_NO_SEARCH_RESULTS_TEXT);
+		return UserSettingsDialog.i18nBundle.getText(SETTINGS_DIALOG_NO_SEARCH_RESULTS_TEXT);
 	}
 
 	get _selectedItemSlotName() {
@@ -316,10 +316,10 @@ class Settings extends UI5Element {
 	}
 }
 
-Settings.define();
+UserSettingsDialog.define();
 
-export default Settings;
+export default UserSettingsDialog;
 export type {
-	SettingsItemSelectEventDetail,
-	SettingsBeforeCloseEventDetail,
+	UserSettingsItemSelectEventDetail,
+	UserSettingsBeforeCloseEventDetail,
 };

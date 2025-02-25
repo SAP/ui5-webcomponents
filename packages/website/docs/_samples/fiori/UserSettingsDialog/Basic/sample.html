@@ -33,9 +33,9 @@
 	<ui5-user-menu-item icon="action-settings" text="Setting" data-id="setting"></ui5-user-menu-item>
 </ui5-user-menu>
 
-<ui5-settings id="settings" header-title="Settings" show-search-field>
-	<ui5-setting-item icon="user-settings" text="User Account" tooltip="User Account" header-title="User Account">
-		<ui5-setting-view slot="pages">
+<ui5-user-settings-dialog id="settings" header-text="Settings" show-search-field>
+	<ui5-user-settings-item icon="user-settings" text="User Account" tooltip="User Account" header-text="User Account">
+		<ui5-user-settings-view slot="pages">
 			<ui5-icon name="person-placeholder"></ui5-icon><ui5-title level="H3" size="H3" class="ua-name">Alain Chevalier</ui5-title>
 			<div class="container">
 				<div class="ua-info-item">
@@ -58,11 +58,11 @@
 					Reset your personalization settings for the launchpad (such as theme, language, user activities, and home page content).
 				</ui5-text>
 			</ui5-panel>
-		</ui5-setting-view>
-	</ui5-setting-item>
+		</ui5-user-settings-view>
+	</ui5-user-settings-item>
 
-	<ui5-setting-item icon="palette" text="Appearance" tooltip="Appearance" header-title="Appearance">
-		<ui5-setting-view text="Themes">
+	<ui5-user-settings-item icon="palette" text="Appearance" tooltip="Appearance" header-text="Appearance">
+		<ui5-user-settings-view text="Themes">
 			<ui5-list separators="Inner">
 				<ui5-li icon="palette">SAP Morning Horizon</ui5-li>
 				<ui5-li icon="palette">SAP Evening Horizon</ui5-li>
@@ -71,8 +71,8 @@
 			</ui5-list>
 			<ui5-button id="themeSave" class="save-btn" design="Emphasized">Save</ui5-button>
 			<ui5-toast design="Emphasized">Changes applied.</ui5-toast>
-		</ui5-setting-view>
-		<ui5-setting-view text="Display settings">
+		</ui5-user-settings-view>
+		<ui5-user-settings-view text="Display settings">
 			<ui5-checkbox checked text="Optimized for Touch Input"></ui5-checkbox>
 			<ui5-panel fixed>
 				<ui5-label>
@@ -80,11 +80,11 @@
 					This is useful for hybrid devices that combine touch and mouse events.
 				</ui5-label>
 			</ui5-panel>
-		</ui5-setting-view>
-	</ui5-setting-item>
+		</ui5-user-settings-view>
+	</ui5-user-settings-item>
 
-	<ui5-setting-item text="Language & Region" tooltip="Language & Region" header-title="Language & Region">
-		<ui5-setting-view slot="pages">
+	<ui5-user-settings-item text="Language & Region" tooltip="Language & Region" header-text="Language & Region">
+		<ui5-user-settings-view slot="pages">
 			<div class="container">
 				<div class="lr-item">
 					<ui5-label>Language and Region:</ui5-label>
@@ -118,40 +118,40 @@
 					After you save your settings, the browser will refresh for the new settings to take effect.
 				</ui5-label>
 			</ui5-panel>
-		</ui5-setting-view>
-	</ui5-setting-item>
+		</ui5-user-settings-view>
+	</ui5-user-settings-item>
 
-	<ui5-setting-item icon="iphone" text="SAP Mobile Start Application" tooltip="SAP Mobile Start Application" header-title="SAP Mobile Start Application">
-		<ui5-setting-view slot="pages">
+	<ui5-user-settings-item icon="iphone" text="SAP Mobile Start Application" tooltip="SAP Mobile Start Application" header-text="SAP Mobile Start Application">
+		<ui5-user-settings-view slot="pages">
 			<ui5-button id="mobile1-button">iOS</ui5-button>
 			<ui5-button id="mobile2-button">Android</ui5-button>
-		</ui5-setting-view>
+		</ui5-user-settings-view>
 
-		<ui5-setting-view slot="pages" text="Inner Page" id="mobile-second-page" secondary>
+		<ui5-user-settings-view slot="pages" text="Inner Page" id="mobile-second-page" secondary>
 			<ui5-text>Enable access to your site from the SAP Mobile Start application.</ui5-text>
 			<ui5-button id="mobile-install">Install</ui5-button><ui5-button id="mobile-register">Register</ui5-button>
 			<ui5-text>Scan the QR Code to install the mobile application</ui5-text>
 			<ui5-icon name="qr-code" style="width: 20rem; height: 20rem;"></ui5-icon>
-		</ui5-setting-view>
-	</ui5-setting-item>
+		</ui5-user-settings-view>
+	</ui5-user-settings-item>
 
-	<ui5-setting-item icon="bell" text="Notifications" tooltip="Notifications" header-title="Notifications">
-		<ui5-setting-view slot="pages">
+	<ui5-user-settings-item icon="bell" text="Notifications" tooltip="Notifications" header-text="Notifications">
+		<ui5-user-settings-view slot="pages">
 			<ui5-checkbox checked text="Show High-Priority Notification Alerts"></ui5-checkbox>
-		</ui5-setting-view>
-	</ui5-setting-item>
+		</ui5-user-settings-view>
+	</ui5-user-settings-item>
 
-	<ui5-setting-item icon="reset" slot="fixedItems" text="Reset Settings" tooltip="Reset Settings" header-title="Reset Settings">
-		<ui5-setting-view text="Reset Personalization">
+	<ui5-user-settings-item icon="reset" slot="fixedItems" text="Reset Settings" tooltip="Reset Settings" header-text="Reset Settings">
+		<ui5-user-settings-view text="Reset Personalization">
 			<ui5-button id="resetPersonalization">Reset Personalization content</ui5-button>
 			<ui5-toast id="toastReset" design="Emphasized">Changes Reset.</ui5-toast>
-		</ui5-setting-view>
-		<ui5-setting-view text="Reset All Settings">
+		</ui5-user-settings-view>
+		<ui5-user-settings-view text="Reset All Settings">
 			<ui5-button id="resetAll">Reset All Settings content</ui5-button>
 			<ui5-toast id="toastResetAll" design="Emphasized">All changes Reset.</ui5-toast>
-		</ui5-setting-view>
-	</ui5-setting-item>
-</ui5-settings>
+		</ui5-user-settings-view>
+	</ui5-user-settings-item>
+</ui5-user-settings-dialog>
 
 <ui5-dialog id="additionalDialog" state="Critical" header-text="Warning">
 	<ui5-text>Clicking on reset will delete your personalization settings for the launchpad (e.g. theme, language, user activities, and home page content) and for apps using the launchpad personalization features (e.g. filter settings, table columns).

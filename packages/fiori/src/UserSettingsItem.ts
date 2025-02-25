@@ -6,29 +6,29 @@ import {
 import type { TabContainerTabSelectEventDetail } from "@ui5/webcomponents/dist/TabContainer.js";
 import type Tab from "@ui5/webcomponents/dist/Tab.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
-import SettingItemTemplate from "./SettingItemTemplate.js";
-import type SettingView from "./SettingView.js";
-import SettingsItemCss from "./generated/themes/SettingsItem.css.js";
+import UserSettingsItemTemplate from "./UserSettingsItemTemplate.js";
+import type UserSettingsView from "./UserSettingsView.js";
+import UserSettingsItemCss from "./generated/themes/UserSettingsItem.css.js";
 
-type SettingItemViewSelectEventDetail = {
-	view: SettingView;
+type UserSettingsItemViewSelectEventDetail = {
+	view: UserSettingsView;
 }
 
-type SettingItemBackClickEventDetail = {
-	view: SettingView;
+type UserSettingsItemBackClickEventDetail = {
+	view: UserSettingsView;
 }
 
 /**
  * @class
  * ### Overview
  *
- * The `ui5-setting-item` represents an item in the `ui5-settings dialog`.
+ * The `ui5-user-settings-item` represents an item in the `ui5-user-settings-dialog`.
  *
  * ### ES6 Module Import
- * `import "@ui5/webcomponents-fiori/dist/SettingItem.js";`
+ * `import "@ui5/webcomponents-fiori/dist/UserSettingsItem.js";`
  *
- * You can disable the <code>SettingItem</code> by setting the <code>enabled</code> property to <code>false</code>,
- * or use the <code>SettingItem</code> in read-only mode by setting the <code>editable</code> property to false.
+ * You can disable the <code>UserSettingsItem</code> by setting the <code>enabled</code> property to <code>false</code>,
+ * or use the <code>UserSettingsItem</code> in read-only mode by setting the <code>editable</code> property to false.
  *
  * <b>Note:</b> Disabled and read-only states shouldn't be used together.
  *
@@ -39,29 +39,18 @@ type SettingItemBackClickEventDetail = {
  * @since 2.8.0
  */
 @customElement({
-	tag: "ui5-setting-item",
+	tag: "ui5-user-settings-item",
 	renderer: jsxRenderer,
-	template: SettingItemTemplate,
-	styles: [getEffectiveScrollbarStyle(), SettingsItemCss],
+	template: UserSettingsItemTemplate,
+	styles: [getEffectiveScrollbarStyle(), UserSettingsItemCss],
 })
 
 /**
- * Fired when a view is selected.
- * @param {SettingView} view The selected `view`.
+ * Fired when a selected view changed.
+ * @param {UserSettingsView} view The selected `view`.
  * @public
  */
-@event("view-select", {
-	bubbles: true,
-	cancelable: true,
-})
-
-/**
- * Fired when a back button is clicked in a page view.
- * @param {SettingView} view The selected `view`.
- * @public
- */
-@event("back-click", {
-	bubbles: true,
+@event("selection-change", {
 	cancelable: true,
 })
 
@@ -73,16 +62,15 @@ type SettingItemBackClickEventDetail = {
 	bubbles: true,
 })
 
-class SettingItem extends UI5Element {
+class UserSettingsItem extends UI5Element {
 	eventDetails!: {
 		"_collapse": void,
-		"view-select": SettingItemViewSelectEventDetail,
-		"back-click": SettingItemBackClickEventDetail,
+		"selection-change": UserSettingsItemViewSelectEventDetail,
+		"back-click": UserSettingsItemBackClickEventDetail,
 
 	}
 	/**
 	 * Defines the text of the item.
-	 *
 	 *
 	 * @public
 	 * @default ""
@@ -101,13 +89,13 @@ class SettingItem extends UI5Element {
 	tooltip = "";
 
 	/**
-	 * Defines the headerTitle of the item.
+	 * Defines the headerText of the item.
 	 *
 	 * @public
 	 * @default ""
 	 */
 	@property({ type: String })
-	headerTitle?: string;
+	headerText?: string;
 
 	/**
 	 * Shows item tab.
@@ -176,12 +164,13 @@ class SettingItem extends UI5Element {
 			slots: false,
 		},
 	})
-	tabs!: Array<SettingView>;
+	tabs!: Array<UserSettingsView>;
 
 	/**
 	 * Defines the page views of the setting item.
 	 *
-	 * If there are no tab views, the first page view will be shown unless there is selected one. If there is selected page view it will be shown no matter if there are tab views.
+	 * If there are no tab views, the first page view will be shown unless there is selected one. If there is selected page
+	 * view it will be shown no matter if there are tab views.
 	 *
 	 * @public
 	 */
@@ -193,7 +182,7 @@ class SettingItem extends UI5Element {
 			slots: false,
 		},
 	})
-	pages!: Array<SettingView>;
+	pages!: Array<UserSettingsView>;
 
 	/**
 	 * @private
@@ -223,7 +212,7 @@ class SettingItem extends UI5Element {
 	_handleBackButtonClick() {
 		if (this._shouldShowBackButton) {
 			const selectedPageView = this._selectedPageView;
-			const eventPrevented = !this.fireDecoratorEvent("back-click", {
+			const eventPrevented = !this.fireDecoratorEvent("selection-change", {
 				view: selectedPageView,
 			});
 
@@ -236,9 +225,9 @@ class SettingItem extends UI5Element {
 	}
 
 	_handleTabSelect(e: CustomEvent<TabContainerTabSelectEventDetail>) {
-		const tab = e.detail.tab as Tab & { associatedSettingView: SettingView };
+		const tab = e.detail.tab as Tab & { associatedSettingView: UserSettingsView };
 		const tabView = tab.associatedSettingView;
-		const eventPrevented = !this.fireDecoratorEvent("view-select", {
+		const eventPrevented = !this.fireDecoratorEvent("selection-change", {
 			view: tabView,
 		});
 
@@ -256,17 +245,17 @@ class SettingItem extends UI5Element {
 		return !!(this._hasSelectedPageView && this._selectedPageView.secondary);
 	}
 
-	captureRef(this: SettingView, ref: HTMLElement & { associatedSettingView?: SettingView} | null) {
+	captureRef(this: UserSettingsView, ref: HTMLElement & { associatedSettingView?: UserSettingsView} | null) {
 		if (ref) {
 			ref.associatedSettingView = this;
 		}
 	}
 }
 
-SettingItem.define();
+UserSettingsItem.define();
 
-export default SettingItem;
+export default UserSettingsItem;
 export type {
-	SettingItemViewSelectEventDetail,
-	SettingItemBackClickEventDetail,
+	UserSettingsItemViewSelectEventDetail,
+	UserSettingsItemBackClickEventDetail,
 };

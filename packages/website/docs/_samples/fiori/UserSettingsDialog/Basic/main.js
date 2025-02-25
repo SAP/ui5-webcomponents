@@ -1,6 +1,6 @@
-import "@ui5/webcomponents-fiori/dist/SettingView.js";
-import "@ui5/webcomponents-fiori/dist/SettingItem.js";
-import "@ui5/webcomponents-fiori/dist/Settings.js";
+import "@ui5/webcomponents-fiori/dist/UserSettingsView.js";
+import "@ui5/webcomponents-fiori/dist/UserSettingsItem.js";
+import "@ui5/webcomponents-fiori/dist/UserSettingsDialog.js";
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
 import "@ui5/webcomponents-fiori/dist/UserMenu.js"
@@ -33,6 +33,7 @@ import "@ui5/webcomponents-icons/dist/reset.js";
 const shellbar = document.getElementById("shellbar");
 const menuShellBar = document.getElementById("userMenuShellBar");
 const settingsDialog = document.getElementById("settings");
+const settingsDialogItems = [...document.getElementsByTagName("ui5-user-settings-item")];
 const mobileSecondPage = document.getElementById("mobile-second-page");
 const mobile1Button = document.getElementById("mobile1-button");
 const mobile2Button = document.getElementById("mobile2-button");
@@ -99,8 +100,8 @@ resetAll.addEventListener("click", function () {
 	toastResetAll.open = true;
 });
 
-settingsDialog.addEventListener("item-select", function (event) {
-	console.log(`Item selected: ${event.detail.item.text}`, event.detail);
+settingsDialog.addEventListener("selection-change", function (event) {
+	console.log(`Selection change: ${event.detail.item.text}`, event.detail);
 	if(event.detail.item.text ==="Language & Region"){
 		event.detail.item.loading=true;
 		event.detail.item.loadingReason="Language & Region loading data...";
@@ -110,12 +111,10 @@ settingsDialog.addEventListener("item-select", function (event) {
 	}
 });
 
-settingsDialog.addEventListener("view-select", function (event) {
-	console.log(`View selected: ${event.detail.view.text}`, event.detail);
-});
-
-settingsDialog.addEventListener("back-click", function (event) {
-	console.log(`Back navigation on view: ${event.detail.view.text}`, event.detail);
+settingsDialogItems.forEach((settingsDialogItem) => {
+	settingsDialogItem.addEventListener("selection-change", function (event) {
+		console.log(`Selection change: ${event.detail.view.text}`, event.detail);
+	});
 });
 
 settingsDialog.addEventListener("open", function (event) {

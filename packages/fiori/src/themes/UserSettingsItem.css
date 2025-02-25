@@ -1,14 +1,14 @@
-.ui5-setting-item {
+.ui5-user-settings-item {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 }
 
-.ui5-setting-item-header-container {
+.ui5-user-settings-item-header-container {
 	container-type: inline-size;
 }
 
-.ui5-setting-item-header {
+.ui5-user-settings-item-header {
 	display: flex;
 	gap: 0.5rem;
 	align-items: center;
@@ -18,23 +18,23 @@
 	border-bottom: 0.0625rem solid var(--sapList_BorderColor);
 }
 
-.ui5-setting-item-loading-container {
+.ui5-user-settings-item-loading-container {
 	position: relative;
 }
 
-.ui5-setting-item-view-container,
-.ui5-setting-item-loading-container,
-.ui5-setting-item-tabs {
+.ui5-user-settings-item-view-container,
+.ui5-user-settings-item-loading-container,
+.ui5-user-settings-item-tabs {
 	flex: 1;
 	min-height: 0;
 }
 
-.ui5-setting-item-tabs::part(content) {
+.ui5-user-settings-item-tabs::part(content) {
 	padding: 0;
 	border-bottom: 0;
 }
 
-.ui5-setting-item-view-container {
+.ui5-user-settings-item-view-container {
 	overflow: auto;
 }
 
@@ -47,7 +47,7 @@
 	opacity: var(--_ui5-listitembase_disabled_opacity);
 }
 
-.ui5-setting-item-busy {
+.ui5-user-settings-item-busy {
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -61,18 +61,18 @@
 	pointer-events: all;
 }
 
-.ui5-setting-item-busy:not([active]) {
+.ui5-user-settings-item-busy:not([active]) {
 	display: none;
 }
 
 @media screen and (width >= 64rem) {
-	.ui5-setting-item-collapse-btn {
+	.ui5-user-settings-item-collapse-btn {
 		display: none;
 	}
 }
 
 @container (width > 37.5rem) {
-	.ui5-setting-item-header {
+	.ui5-user-settings-item-header {
 		padding-inline: 2rem;
 	}
 }

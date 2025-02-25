@@ -1,14 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { customElement, property, slot } from "@ui5/webcomponents-base/dist/decorators.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import SettingViewTemplate from "./SettingViewTemplate.js";
-import SettingViewCss from "./generated/themes/SettingView.css.js";
+import UserSettingsViewTemplate from "./UserSettingsViewTemplate.js";
+import UserSettingViewCss from "./generated/themes/UserSettingsView.css.js";
 
 /**
  * @class
  * ### Overview
  *
- * The `ui5-setting-view` represents an view to be shown in the `ui5-setting-item`.
+ * The `ui5-user-settings-view` represents an view to be shown in the `ui5-user-settings-item`.
  *
  * @constructor
  * @extends UI5Element
@@ -17,13 +17,13 @@ import SettingViewCss from "./generated/themes/SettingView.css.js";
  * @since 2.8.0
  */
 @customElement({
-	tag: "ui5-setting-view",
+	tag: "ui5-user-settings-view",
 	renderer: jsxRenderer,
-	template: SettingViewTemplate,
-	styles: [SettingViewCss],
+	template: UserSettingsViewTemplate,
+	styles: [UserSettingViewCss],
 })
 
-class SettingView extends UI5Element {
+class UserSettingsView extends UI5Element {
 	/**
 	 * Defines the title text of the view.
 	 *
@@ -43,7 +43,8 @@ class SettingView extends UI5Element {
 	selected = false;
 
 	/**
-	 * Indicates weather the view is a secondary. It is relevant only if the view is used in `pages` slot of `ui5-settings-item` and controls the visibility of the back button.
+	 * Indicates weather the view is a secondary. It is relevant only if the view is used in `pages` slot of `ui5-user-settings-item`
+	 * and controls the visibility of the back button.
 	 * @default false
 	 * @public
 	 */
@@ -62,6 +63,6 @@ class SettingView extends UI5Element {
 	content!: Array<HTMLElement>;
 }
 
-SettingView.define();
+UserSettingsView.define();
 
-export default SettingView;
+export default UserSettingsView;
