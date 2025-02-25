@@ -6,9 +6,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import SearchFieldTemplate from "./SearchFieldTemplate.js";
 import SearchFieldCss from "./generated/themes/SearchField.css.js";
-import type Select from "@ui5/webcomponents/dist/Select.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type SearchMode from "./types/SearchMode.js";
+import type { IOption, SelectChangeEventDetail } from "@ui5/webcomponents/dist/Select.js";
 
 import {
 	isEnter,
@@ -210,8 +210,6 @@ class SearchField extends UI5Element {
 		}
 	}
 
-	_handleSearchIconFocusOut() {}
-
 	_handleSearchIconPress() {
 		if (this.value.length) {
 			this.fireDecoratorEvent("search");
@@ -242,9 +240,10 @@ class SearchField extends UI5Element {
 		this.focus();
 	}
 
-	_handleScopeChange(e: UI5CustomEvent<Select, "change">) {
+	_handleScopeChange(e: CustomEvent<SelectChangeEventDetail>) {
+		const item = e.detail.selectedOption as IOption & { scopeOption: ISearchFieldScopeOption };
 		this.fireDecoratorEvent("scope-change", {
-			scope: this.scopeOptions.find(option => e.detail.selectedOption.id === option._id),
+			scope: item.scopeOption,
 		});
 	}
 
@@ -265,6 +264,12 @@ class SearchField extends UI5Element {
 			searchIcon: this._isSearchIcon ? SearchField.i18nBundle.getText(SEARCH_FIELD_SEARCH_ICON) : SearchField.i18nBundle.getText(SEARCH_FIELD_SEARCH_EXPANDED),
 			collapsedSearch: SearchField.i18nBundle.getText(SEARCH_FIELD_SEARCH_COLLAPSED),
 		};
+	}
+
+	captureRef(ref: HTMLElement & { scopeOption?: UI5Element} | null) {
+		if (ref) {
+			ref.scopeOption = this;
+		}
 	}
 }
 

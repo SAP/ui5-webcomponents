@@ -6,6 +6,7 @@ import type SearchField from "./SearchField.js";
 import SearchMode from "./types/SearchMode.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import search from "@ui5/webcomponents-icons/dist/search.js";
+import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 
 export default function SearchFieldTemplate(this: SearchField) {
 	return (
@@ -17,9 +18,9 @@ export default function SearchFieldTemplate(this: SearchField) {
 							<Select onChange={this._handleScopeChange} class="sapUiSizeCompact" accessibleName={this._translations.scope}>
 								{this.scopeOptions.map(scopeOption => {
 									return <Option
-										id={scopeOption._id}
 										selected={scopeOption.selected}
 										data-ui5-stable={scopeOption.stableDomRef}
+										ref={this.captureRef.bind(scopeOption)}
 									>{scopeOption.text}</Option>;
 								},
 								this)}
@@ -59,7 +60,6 @@ export default function SearchFieldTemplate(this: SearchField) {
 						showTooltip={true}
 						accessibleName={this._translations.searchIcon}
 						onClick={this._handleSearchIconPress}
-						onFocusOut={this._handleSearchIconFocusOut}
 					></Icon>
 				</div>
 			</div>
@@ -67,7 +67,7 @@ export default function SearchFieldTemplate(this: SearchField) {
 			<Button
 				class="ui5-shell-search-field-button"
 				icon={search}
-				design="Transparent"
+				design={ButtonDesign.Transparent}
 				data-sap-focus-ref
 				onClick={this._handleSearchIconPress}
 				tooltip={this._translations.collapsedSearch}
