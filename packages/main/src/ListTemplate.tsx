@@ -102,6 +102,7 @@ function moreRow(this: List) {
 				{this.loading &&
 					<BusyIndicator
 						delay={this.loadingDelay}
+						part="growing-button-busy-indicator"
 						class="ui5-list-growing-button-busy-indicator"
 						active>
 					</BusyIndicator>
