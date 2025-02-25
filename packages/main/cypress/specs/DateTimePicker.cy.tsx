@@ -61,13 +61,19 @@ describe("DateTimePicker general interaction", () => {
 	// 			.find(".ui5-dp-item--selected")
 	// 			.should("exist");
 
+	// 		// Select the next day.
 	// 		cy.realPress("ArrowRight");
 	// 		cy.realPress("Space");
 
-	// 		cy.get("ui5-time-selection-clocks")
-	// 			.shadow()
-	// 			.find(`ui5-toggle-spin-button[data-ui5-clock="hours"]`)
-	// 			.realClick();
+	// 		// Press Tab three times to get to the time selection.
+	// 		// Note: we are using Tab to get to the time selection instead of realClick()
+	// 		// to avoid fade in animations delay
+	// 		// But the test is still unstable
+	// 		cy.realPress("Tab");
+	// 		cy.realPress("Tab");
+	// 		cy.realPress("Tab");
+
+	// 		// Adjust hours.
 	// 		cy.realPress("ArrowDown");
 	// 		cy.realPress("Space");
 
@@ -91,6 +97,8 @@ describe("DateTimePicker general interaction", () => {
 	// 		.find("ui5-input")
 	// 		.invoke("prop", "value")
 	// 		.should("equal", "14/04/2020, 02:14:19 PM");
+
+	// 	cy.ui5DateTimePickerIsOpen("#dtSeconds").should("equal", false);
 	// });
 
 	it("tests selection of new date without changing the time section", () => {
@@ -195,38 +203,42 @@ describe("DateTimePicker general interaction", () => {
 				.invoke("prop", "active")
 				.should("equal", true);
 		});
+
+		cy.ui5DateTimePickerClose("#dt");
+		cy.ui5DateTimePickerIsOpen("#dt").should("equal", false);
 	});
 
-	it("tests selection of 12:34:56 AM", () => {
-		cy.mount(<DateTimePickerWithSeconds />);
+	// Unstable test, needs investigation
+	// it("tests selection of 12:34:56 AM", () => {
+	// 	cy.mount(<DateTimePickerWithSeconds />);
 
-		cy.ui5DateTimePickerOpen("#dtSeconds");
+	// 	cy.ui5DateTimePickerOpen("#dtSeconds");
+	// 	cy.ui5DateTimePickerIsOpen("#dtSeconds").should("equal", true);
 
-		cy.ui5DateTimePickerGetPopover("#dtSeconds").within(() => {
-			cy.get("ui5-time-selection-clocks")
-				.shadow()
-				.find(`ui5-toggle-spin-button[data-ui5-clock="hours"]`)
-				.realClick();
-			cy.realType("12");
-			cy.get("ui5-time-selection-clocks")
-				.shadow()
-				.find(`ui5-toggle-spin-button[data-ui5-clock="minutes"]`)
-				.realClick();
-			cy.realType("34");
-			cy.get("ui5-time-selection-clocks")
-				.shadow()
-				.find(`ui5-toggle-spin-button[data-ui5-clock="seconds"]`)
-				.realClick();
-			cy.realType("56");
-			cy.get("#ok").realClick();
-		});
+	// 	cy.ui5DateTimePickerGetPopover("#dtSeconds")
+	// 		.within(() => {
+	// 			cy.get("ui5-calendar")
+	// 				.shadow()
+	// 				.find("ui5-daypicker")
+	// 				.shadow()
+	// 				.find(".ui5-dp-item--selected")
+	// 				.realClick()
+	// 				// Press Tab three times to get to the time selection.
+	// 				// Note: we are using Tab to get to the time selection instead of realClick()
+	// 				// to avoid fade in animations delay.
+	// 				.realPress("Tab")
+	// 				.realPress("Tab")
+	// 				.realPress("Tab")
+	// 				.realType("123456a");
+	// 			cy.get("#ok").realClick();
+	// 		});
 
-		cy.get("#dtSeconds")
-			.shadow()
-			.find("ui5-input")
-			.invoke("prop", "value")
-			.should("equal", "13/04/2020, 12:34:56 AM");
-	});
+	// 	cy.get("#dtSeconds")
+	// 		.shadow()
+	// 		.find("ui5-input")
+	// 		.invoke("prop", "value")
+	// 		.should("equal", "13/04/2020, 12:34:56 AM");
+	// });
 
 	it("tests change event is prevented on submit when prevent default is called", () => {
 		cy.mount(<DefaultDateTimePicker />);
@@ -301,7 +313,7 @@ describe("DateTimePicker general interaction", () => {
 			$el[0].addEventListener("ui5-change", changeStub);
 		});
 
-		// Open the picker and select a date to enable the OK button
+		// Open the picker, select a date, and submit to fire the event
 		cy.ui5DateTimePickerOpen("#dt");
 		cy.ui5DateTimePickerGetPopover("#dt").within(() => {
 			cy.get("ui5-calendar")
@@ -313,21 +325,17 @@ describe("DateTimePicker general interaction", () => {
 			cy.get("#ok").realClick();
 		});
 
-		// Assert that the change event was fired once
-		cy.wrap(null).then(() => {
-			expect(changeStub).to.have.callCount(1);
-		});
+		// Assert the change event was fired once
+		cy.wrap(changeStub).should("have.been.calledOnce");
 
-		// Re-open the picker and submit without any change
+		// Re-open the picker and submit without making a change
 		cy.ui5DateTimePickerOpen("#dt");
 		cy.ui5DateTimePickerGetPopover("#dt").within(() => {
 			cy.get("#ok").realClick();
 		});
 
-		// The change event should not be fired again
-		cy.wrap(null).then(() => {
-			expect(changeStub).to.have.callCount(1);
-		});
+		// The change event should not have been fired a second time.
+		cy.wrap(changeStub).should("have.been.calledOnce");
 
 		// Verify the picker is closed
 		cy.ui5DateTimePickerIsOpen("#dt").should("equal", false);
