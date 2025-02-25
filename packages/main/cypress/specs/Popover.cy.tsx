@@ -155,6 +155,66 @@ describe("Popover interaction", () => {
 	});
 });
 
+describe("Focusing", () => {
+	it("tests no focusable elements, but content is scrolling", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open</Button>
+				<Popover id="popoverId"
+							 style="width: 10rem; height: 10rem;"
+							 opener="btnOpen">
+					<div>
+						Note: The content of the prop will be rendered into a by assigning the
+						respective slot attribute (slot="footer"). Since you can't change the
+						DOM order of slots when declaring them within a prop, it might prove
+						beneficial to manually mount them as part of the component's children,
+						especially when facing problems with the reading order of screen
+						readers. Note: When passing a custom React component to this prop, you
+						have to make sure your component reads the slot prop and appends it to
+						the most outer element of your component. Learn more about it here.
+					</div>
+				</Popover>
+			</>
+		);
+
+		// act
+		cy.get("#popoverId").invoke("prop", "open", "true");
+
+		cy.get("#popoverId")
+			.shadow()
+			.find(".ui5-popup-content")
+			.should("be.focused");
+	});
+
+	it("tests first element is keyboard focusable scroll container", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open</Button>
+				<Popover id="popoverId"
+						 opener="btnOpen">
+					<div id="innerContent" style="width: 10rem; height: 10rem; overflow-y: auto;">
+						Note: The content of the prop will be rendered into a by assigning the
+						respective slot attribute (slot="footer"). Since you can't change the
+						DOM order of slots when declaring them within a prop, it might prove
+						beneficial to manually mount them as part of the component's children,
+						especially when facing problems with the reading order of screen
+						readers. Note: When passing a custom React component to this prop, you
+						have to make sure your component reads the slot prop and appends it to
+						the most outer element of your component. Learn more about it here.
+					</div>
+					<Button>Button</Button>
+				</Popover>
+			</>
+		);
+
+		// act
+		cy.get("#popoverId").invoke("prop", "open", "true");
+
+		cy.get("#innerContent")
+			.should("be.focused");
+	});
+});
+
 describe("Events", () => {
 	it("before-open", () => {
 		cy.mount(
