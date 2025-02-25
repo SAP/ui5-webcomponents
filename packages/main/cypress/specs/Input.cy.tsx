@@ -2,6 +2,8 @@ import Input from "../../src/Input.js";
 import SuggestionItem from "../../src/SuggestionItem.js";
 import SuggestionItemCustom from "../../src/SuggestionItemCustom.js";
 import SuggestionItemGroup from "../../src/SuggestionItemGroup.js";
+import Dialog from "../../src/Dialog.js";
+import Button from "../../src/Button.js";
 
 describe("Input Tests", () => {
 	it("tets input event prevention", () => {
@@ -122,8 +124,177 @@ describe("Input Tests", () => {
 			.shadow()
 			.find("[ui5-li-group-header]")
 			.shadow()
-			.find("ul")
+			.find("div")
 			.should("not.have.attr", "tabindex", "0");
+	});
+
+	it("tests submit and change event order", () => {
+		cy.mount(
+			<form>
+				<Input></Input>
+			</form>
+		);
+
+		cy.get("form")
+			.as("form");
+
+		cy.get("[ui5-input]")
+			.as("input");
+
+		// spy change event
+		cy.get<Input>("@input")
+			.then($input => {
+				$input.get(0).addEventListener("change", cy.spy().as("change"));
+			});
+
+		// spy submit event and prevent it
+		cy.get("@form")
+			.then($form => {
+				$form.get(0).addEventListener("submit", e => e.preventDefault());
+				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
+			});
+
+		// check if submit is triggered after change
+		cy.get<Input>("@input")
+			.shadow()
+			.find("input")
+			.type("test{enter}");
+
+		cy.get("@change").should("have.been.calledBefore", cy.get("@submit"));
+		cy.get("@submit").should("have.been.calledOnce");
+		cy.get("@change").should("have.been.calledOnce");
+	});
+
+	it("tests if pressing enter twice fires submit 2 times and change once", () => {
+		cy.mount(
+			<form>
+				<Input></Input>
+			</form>
+		);
+
+		cy.get("form")
+			.as("form");
+
+		cy.get("[ui5-input]")
+			.as("input");
+
+		// spy change event
+		cy.get<Input>("@input")
+			.then($input => {
+				$input.get(0).addEventListener("change", cy.spy().as("change"));
+			});
+
+		// spy submit event and prevent it
+		cy.get("@form")
+			.then($form => {
+				$form.get(0).addEventListener("submit", e => e.preventDefault());
+				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
+			});
+
+		// check if submit is triggered after change
+		cy.get<Input>("@input")
+			.shadow()
+			.find("input")
+			.type("test{enter}{enter}");
+
+		cy.get("@change").should("have.been.calledBefore", cy.get("@submit"));
+		cy.get("@submit").should("have.been.calledTwice");
+		cy.get("@change").should("have.been.calledOnce");
+	});
+
+	it("tests if submit is fired in case of autocomplete", () => {
+		cy.mount(
+			<form>
+				<Input showSuggestions={true}>
+					<SuggestionItem text="Hello"></SuggestionItem>
+				</Input>
+			</form>
+		);
+
+		cy.get("form")
+			.as("form");
+
+		cy.get("[ui5-input]")
+			.as("input");
+
+		// spy change event
+		cy.get<Input>("@input")
+			.then($input => {
+				$input.get(0).addEventListener("change", cy.spy().as("change"));
+			});
+
+		// spy submit event and prevent it
+		cy.get("@form")
+			.then($form => {
+				$form.get(0).addEventListener("submit", e => e.preventDefault());
+				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
+			});
+
+		// checks when the submit is triggered
+		cy.get<Input>("@input")
+			.shadow()
+			.find("input")
+			.as("inner");
+
+		cy.get("@inner").realClick();
+		cy.get("@inner").type("H{enter}");
+
+		cy.get("@submit").should("have.not.been.called");
+		cy.get("@change").should("have.been.calledOnce");
+
+		cy.get("@inner").realPress("Enter");
+
+		cy.get("@submit").should("have.been.calledOnce");
+		cy.get("@change").should("have.been.calledOnce");
+	});
+
+	it("tests if submit event is fired upon item selection", () => {
+		cy.mount(
+			<form>
+				<Input showSuggestions={true}>
+					<SuggestionItem text="Hello"></SuggestionItem>
+				</Input>
+			</form>
+		);
+
+		cy.get("form")
+			.as("form");
+
+		cy.get("[ui5-input]")
+			.as("input");
+
+		// spy change event
+		cy.get<Input>("@input")
+			.then($input => {
+				$input.get(0).addEventListener("change", cy.spy().as("change"));
+			});
+
+		// spy submit event and prevent it
+		cy.get("@form")
+			.then($form => {
+				$form.get(0).addEventListener("submit", e => e.preventDefault());
+				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
+			});
+
+		// checks when the submit is triggered
+		cy.get<Input>("@input")
+			.shadow()
+			.find("input")
+			.as("inner");
+
+		cy.get("@inner").realClick();
+		cy.get("@inner").type("H{downArrow}{enter}");
+
+		cy.get("@submit").should("have.not.been.called");
+		cy.get("@change").should("have.been.calledOnce");
+
+		cy.get<Input>("@input")
+			.shadow()
+			.find("input")
+			.type("{enter}");
+
+		cy.get("@submit").should("have.been.calledOnce");
+		cy.get("@change").should("have.been.calledOnce");
 	});
 });
 
@@ -533,5 +704,63 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.then(() => {
 			expect(changeCount).to.equal(1);
 		});
+	});
+
+	it("should not close the dialog when item is selected", () => {
+		cy.mount(
+			<>
+				<Button>Open</Button>
+				<Dialog>
+					<Input showSuggestions={true}>
+						<SuggestionItem text="First item"></SuggestionItem>
+						<SuggestionItem text="Second item"></SuggestionItem>
+					</Input>
+				</Dialog>
+			</>
+		);
+
+		cy.get("[ui5-button]")
+			.as("button");
+
+		cy.get("[ui5-dialog]")
+			.as("dialog");
+
+		cy.get("[ui5-input]")
+			.as("input");
+
+		cy.get("@button")
+			.then($btn => {
+				$btn[0].addEventListener("click", () => {
+					cy.get("@dialog").then($dialog => {
+						$dialog[0].setAttribute("open", "");
+					});
+				});
+			});
+
+		cy.get("@dialog")
+			.then($dialog => {
+				$dialog[0].addEventListener("close", () => {
+					$dialog[0].removeAttribute("open");
+				});
+			});
+
+		cy.get("@button")
+			.realClick();
+
+		cy.get("@input")
+			.realClick();
+
+		cy.get("@input")
+			.realType("f");
+
+		cy.get("[ui5-suggestion-item")
+			.eq(0)
+			.as("suggestion-item");
+
+		cy.get("@suggestion-item")
+			.click();
+
+		cy.get("@dialog")
+			.should("have.attr", "open");
 	});
 });

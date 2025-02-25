@@ -237,8 +237,6 @@ class Suggestions {
 		};
 
 		this._getComponent().onItemSelected(item, keyboardUsed);
-		item.selected = false;
-		item.focused = false;
 		this._getComponent().open = false;
 	}
 
@@ -268,18 +266,8 @@ class Suggestions {
 		this.onItemSelected(pressedItem as SuggestionItem, false /* keyboardUsed */);
 	}
 
-	_onOpen() {
-		this._applyFocus();
-	}
-
 	_onClose() {
 		this._handledPress = false;
-	}
-
-	_applyFocus() {
-		if (this.selectedItemIndex) {
-			this._getItems()[this.selectedItemIndex]?.focus();
-		}
 	}
 
 	_isItemOnTarget() {

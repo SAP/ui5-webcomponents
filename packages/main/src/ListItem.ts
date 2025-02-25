@@ -207,8 +207,6 @@ abstract class ListItem extends ListItemBase {
 	accessibleName?: string;
 	// used in ListItem template but implemented in TreeItemBase
 	indeterminate?: boolean;
-	// Used in UploadCollectionItem
-	disableDeleteButton?: boolean;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -415,17 +413,6 @@ abstract class ListItem extends ListItemBase {
 	get modeDelete() {
 		return this._selectionMode === ListSelectionMode.Delete;
 	}
-
-	/**
-	 * Used in UploadCollectionItem
-	 */
-	get renderDeleteButton() {
-		return this.modeDelete;
-	}
-
-	/**
-	 * End
-	 */
 
 	get typeDetail() {
 		return this.type === ListItemType.Detail;

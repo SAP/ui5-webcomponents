@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ClassMap, Timeout } from "@ui5/webcomponents-base/dist/types.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -44,9 +44,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/multiselect-all.js";
-import "@ui5/webcomponents-icons/dist/not-editable.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -92,7 +89,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
-import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
+import MultiComboBoxTemplate from "./MultiComboBoxTemplate.js";
 
 // Styles
 import multiCbxStyles from "./generated/themes/MultiComboBox.css.js";
@@ -113,6 +110,7 @@ import SuggestionItem from "./SuggestionItem.js";
  */
 interface IMultiComboBoxItem extends UI5Element {
 	text?: string,
+	additionalText?: string,
 	headerText?: string,
 	selected: boolean,
 	isGroupItem?: boolean,
@@ -178,7 +176,7 @@ type MultiComboboxItemWithSelection = {
 	tag: "ui5-multi-combobox",
 	languageAware: true,
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRender,
 	template: MultiComboBoxTemplate,
 	styles: [
 		multiCbxStyles,
@@ -2017,20 +2015,26 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get classes(): ClassMap {
+		const popover = {
+			"ui5-multi-combobox-all-items-responsive-popover": true,
+			"ui5-suggestions-popover": true,
+			"ui5-popover-with-value-state-header-phone": this._isPhone && this.hasValueStateMessage,
+			"ui5-popover-with-value-state-header": !this._isPhone && this.hasValueStateMessage,
+		};
+		const popoverValueState = {
+			"ui5-valuestatemessage-root": true,
+			"ui5-valuestatemessage-header": true,
+			"ui5-valuestatemessage--success": (this.valueState === ValueState.Positive) || (isPhone() && this._dialogInputValueState === ValueState.Positive),
+			"ui5-valuestatemessage--error": (this.valueState === ValueState.Negative) || (isPhone() && this._dialogInputValueState === ValueState.Negative),
+			"ui5-valuestatemessage--warning": (this.valueState === ValueState.Critical) || (isPhone() && this._dialogInputValueState === ValueState.Critical),
+			"ui5-valuestatemessage--information": (this.valueState === ValueState.Information) || (isPhone() && this._dialogInputValueState === ValueState.Information),
+		};
 		return {
-			popover: {
-				"ui5-multi-combobox-all-items-responsive-popover": true,
-				"ui5-suggestions-popover": true,
-				"ui5-popover-with-value-state-header-phone": this._isPhone && this.hasValueStateMessage,
-				"ui5-popover-with-value-state-header": !this._isPhone && this.hasValueStateMessage,
-			},
-			popoverValueState: {
-				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage-header": true,
-				"ui5-valuestatemessage--success": (this.valueState === ValueState.Positive) || (isPhone() && this._dialogInputValueState === ValueState.Positive),
-				"ui5-valuestatemessage--error": (this.valueState === ValueState.Negative) || (isPhone() && this._dialogInputValueState === ValueState.Negative),
-				"ui5-valuestatemessage--warning": (this.valueState === ValueState.Critical) || (isPhone() && this._dialogInputValueState === ValueState.Critical),
-				"ui5-valuestatemessage--information": (this.valueState === ValueState.Information) || (isPhone() && this._dialogInputValueState === ValueState.Information),
+			popover,
+			popoverValueState,
+			responsivePopoverHeaderValueState: {
+				"ui5-responsive-popover-header": true,
+				...popoverValueState,
 			},
 		};
 	}

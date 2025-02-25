@@ -82,7 +82,6 @@ notificationsListGroupGrowing.addEventListener("load-more", (e) => {
 	const focusIndex = notificationsListGroupGrowing.items.length;
 
 	notificationsListGroupGrowing.loading = true;
-	notificationsListGroupGrowing.loadingDelay = 0;
 	setTimeout(() => {
 		insertItems(notificationsListGroupGrowing);
 		notificationsListGroupGrowing.loading = false;
@@ -90,7 +89,7 @@ notificationsListGroupGrowing.addEventListener("load-more", (e) => {
 		setTimeout(() => {
 			notificationsListGroupGrowing.items[focusIndex].focus();
 		}, 500);
-	}, 500);
+	}, 2000);
 });
 
 btnShowMessageStrip.addEventListener("click", function() {

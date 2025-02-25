@@ -3,7 +3,7 @@ import TableCellBase from "./TableCellBase.js";
 import TableHeaderCellTemplate from "./generated/templates/TableHeaderCellTemplate.lit.js";
 import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
 import Icon from "./Icon.js";
-import TableSortOrder from "./types/TableSortOrder.js";
+import SortOrder from "@ui5/webcomponents-base/dist/types/SortOrder.js";
 import type TableHeaderCellActionBase from "./TableHeaderCellActionBase.js";
 import "@ui5/webcomponents-icons/dist/sort-ascending.js";
 import "@ui5/webcomponents-icons/dist/sort-descending.js";
@@ -98,7 +98,20 @@ class TableHeaderCell extends TableCellBase {
 	 * @public
 	 */
 	@property()
-	sortIndicator: `${TableSortOrder}` = "None";
+	sortIndicator: `${SortOrder}` = "None";
+
+	/**
+	 * Defines if the column is hidden in the popin.
+	 *
+	 * **Note:** Please be aware that hiding the column in the popin might lead to accessibility issues as
+	 * users might not be able to access the content of the column on small screens.
+	 *
+	 * @default false
+	 * @since 2.8.0
+	 * @public
+	 */
+	@property({ type: Boolean })
+	popinHidden: boolean = false;
 
 	/**
 	 * Defines the action of the column.
@@ -130,7 +143,7 @@ class TableHeaderCell extends TableCellBase {
 			// overwrite setting of TableCellBase so that the TableHeaderCell always uses the slot variable
 			this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
 		}
-		if (this.sortIndicator !== TableSortOrder.None) {
+		if (this.sortIndicator !== SortOrder.None) {
 			this.setAttribute("aria-sort", this.sortIndicator.toLowerCase());
 		} else if (this.hasAttribute("aria-sort")) {
 			this.removeAttribute("aria-sort");
@@ -138,7 +151,7 @@ class TableHeaderCell extends TableCellBase {
 	}
 
 	get _sortIcon() {
-		if (this.sortIndicator !== TableSortOrder.None) {
+		if (this.sortIndicator !== SortOrder.None) {
 			return `sort-${this.sortIndicator.toLowerCase()}`;
 		}
 	}
