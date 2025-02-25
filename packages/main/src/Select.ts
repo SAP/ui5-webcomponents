@@ -400,20 +400,18 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 
 		// "value" has been used
-		if (this._valueStorage) {
-			// apply pending selection of the option, that hasn't successfully been selected yet
-			if (this._pendingValue) {
-				this._applyPendingSelection();
-			}
-
-			// apply auto-selection if no option has been selected
-			if (!this.selectedOption) {
-				this._applyAutoSelection();
-			}
-
-			// sync value with the selected option state
-			this._syncValue();
+		// - apply pending selection of the option, that hasn't successfully been selected yet
+		if (this._pendingValue) {
+			this._applyPendingSelection();
 		}
+
+		// - apply auto-selection if no option has been selected
+		if (!this.selectedOption) {
+			this._applyAutoSelection();
+		}
+
+		// - sync value with the selected option state
+		this._syncValue();
 	}
 
 	/**

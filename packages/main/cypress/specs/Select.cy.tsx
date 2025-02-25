@@ -2,7 +2,7 @@ import Option from "../../src/Option.js";
 import OptionCustom from "../../src/OptionCustom.js";
 import Select from "../../src/Select.js";
 
-describe("Select - General", () => {
+describe("Select - value handling", () => {
 	it("tests selection via Select's value", () => {
 		cy.mount(
 			<>
@@ -90,6 +90,18 @@ describe("Select - General", () => {
 
 		// assert "Option 2" is selected after dynamic value change
 		cy.get("#opt2").should("have.attr", "selected");
+	});
+
+	it("tests Select's value of a missing option - auto-selects firsts", () => {
+		cy.mount(
+			<Select id="sel" value="option3">
+				<Option id="opt1" value="option1">Option 1</Option>
+				<Option id="opt2" value="option2">Option 2</Option>
+			</Select>
+		);
+
+		// assert "Option 2" is selected after dynamic value change
+		cy.get("#opt1").should("have.attr", "selected");
 	});
 });
 
