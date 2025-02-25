@@ -8,7 +8,7 @@ import UserSettingViewCss from "./generated/themes/UserSettingsView.css.js";
  * @class
  * ### Overview
  *
- * The `ui5-user-settings-view` represents an view to be shown in the `ui5-user-settings-item`.
+ * The `ui5-user-settings-view` represents a view displayed in the `ui5-user-settings-item`.
  *
  * @constructor
  * @extends UI5Element
@@ -25,7 +25,7 @@ import UserSettingViewCss from "./generated/themes/UserSettingsView.css.js";
 
 class UserSettingsView extends UI5Element {
 	/**
-	 * Defines the title text of the view.
+	 * Defines the title text of the user settings view.
 	 *
 	 * @public
 	 * @default undefined
@@ -43,7 +43,7 @@ class UserSettingsView extends UI5Element {
 	selected = false;
 
 	/**
-	 * Indicates weather the view is a secondary. It is relevant only if the view is used in `pages` slot of `ui5-user-settings-item`
+	 * Indicates whether the view is secondary. It is relevant only if the view is used in `pages` slot of `ui5-user-settings-item`
 	 * and controls the visibility of the back button.
 	 * @default false
 	 * @public

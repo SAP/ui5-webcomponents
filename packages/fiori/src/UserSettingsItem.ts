@@ -70,7 +70,7 @@ class UserSettingsItem extends UI5Element {
 
 	}
 	/**
-	 * Defines the text of the item.
+	 * Defines the text of the user settings item.
 	 *
 	 * @public
 	 * @default ""
@@ -81,7 +81,7 @@ class UserSettingsItem extends UI5Element {
 	/**
 	 * Defines the tooltip of the component.
 	 *
-	 * A tooltip attribute should be provided, in order to represent meaning/function, when the component is collapsed(icon only is visualized).
+	 * A tooltip attribute should be provided to represent the meaning or function when the component is collapsed and only the icon is visible.
 	 * @default ""
 	 * @public
 	 */
@@ -150,7 +150,7 @@ class UserSettingsItem extends UI5Element {
 	accessibleName?: string;
 
 	/**
-	 * Defines the tab views of the setting item.
+	 * Defines the tab views of the user settings item.
 	 *
 	 * The tab views are displayed by default if there is no selected page view.
 	 * @public
@@ -167,7 +167,7 @@ class UserSettingsItem extends UI5Element {
 	tabs!: Array<UserSettingsView>;
 
 	/**
-	 * Defines the page views of the setting item.
+	 * Defines the page views of the user settings item.
 	 *
 	 * If there are no tab views, the first page view will be shown unless there is selected one. If there is selected page
 	 * view it will be shown no matter if there are tab views.

@@ -18,10 +18,10 @@ import UserSettingsDialogCss from "./generated/themes/UserSettingsDialog.css.js"
 
 // Texts
 import {
-	SETTINGS_DIALOG_ACCESSIBLE_NAME,
-	SETTING_LIST_ARIA_ROLE_DESC,
-	SETTINGS_DIALOG_CLOSE_BUTTON_TEXT,
-	SETTINGS_DIALOG_NO_SEARCH_RESULTS_TEXT,
+	USER_SETTINGS_DIALOG_ACCESSIBLE_NAME,
+	USER_SETTINGS_LIST_ARIA_ROLE_DESC,
+	USER_SETTINGS_DIALOG_CLOSE_BUTTON_TEXT,
+	USER_SETTINGS_DIALOG_NO_SEARCH_RESULTS_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 type UserSettingsItemSelectEventDetail = {
@@ -34,8 +34,8 @@ type UserSettingsBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
  * @class
  * ### Overview
  *
- * The `ui5-user-settings-dialog` is an SAP Fiori specific web component that is used in `ui5-profile-menu`
- * and allows the user to easily see information and settings for the current account.
+ * The `ui5-user-settings-dialog` is an SAP Fiori-specific web component used in the `ui5-profile-menu`.
+ * It allows the user to easily view information and settings for an account.
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents-fiori/dist/UserSettingsDialog.js";`
@@ -77,7 +77,7 @@ type UserSettingsBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
 })
 
 /**
- * Fired when a settings dialog is close.
+ * Fired when a settings dialog is closed.
  * @public
  */
 @event("close")
@@ -108,7 +108,7 @@ class UserSettingsDialog extends UI5Element {
 	headerText?: string;
 
 	/**
-	 * Defines, if the Search Field would be displayed.
+	 * Defines if the Search Field would be displayed.
 	 *
 	 * **Note:** By default the Search Field is not displayed.
 	 * @default false
@@ -120,7 +120,7 @@ class UserSettingsDialog extends UI5Element {
 	/**
 	 * Defines the user settings items.
 	 *
-	 * **Note:** If no setting items is set as `selected`, the first one will be selected.
+	 * **Note:**  If no setting item is set as `selected`, the first one will be selected.
 	 * @public
 	 */
 	@slot({
@@ -135,7 +135,7 @@ class UserSettingsDialog extends UI5Element {
 	items!: Array<UserSettingsItem>;
 
 	/**
-	 * Defines the fixed user setting items.
+	 * Defines the fixed user settings items.
 	 *
 	 * @public
 	 */
@@ -271,18 +271,18 @@ class UserSettingsDialog extends UI5Element {
 	}
 
 	get accessibleNameText() {
-		return UserSettingsDialog.i18nBundle.getText(SETTINGS_DIALOG_ACCESSIBLE_NAME);
+		return UserSettingsDialog.i18nBundle.getText(USER_SETTINGS_DIALOG_ACCESSIBLE_NAME);
 	}
 
 	get ariaRoleDescList() {
-		return UserSettingsDialog.i18nBundle.getText(SETTING_LIST_ARIA_ROLE_DESC);
+		return UserSettingsDialog.i18nBundle.getText(USER_SETTINGS_LIST_ARIA_ROLE_DESC);
 	}
 
 	get closeButtonText() {
-		return UserSettingsDialog.i18nBundle.getText(SETTINGS_DIALOG_CLOSE_BUTTON_TEXT);
+		return UserSettingsDialog.i18nBundle.getText(USER_SETTINGS_DIALOG_CLOSE_BUTTON_TEXT);
 	}
 	get noSearchResultsText() {
-		return UserSettingsDialog.i18nBundle.getText(SETTINGS_DIALOG_NO_SEARCH_RESULTS_TEXT);
+		return UserSettingsDialog.i18nBundle.getText(USER_SETTINGS_DIALOG_NO_SEARCH_RESULTS_TEXT);
 	}
 
 	get _selectedItemSlotName() {
