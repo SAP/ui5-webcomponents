@@ -152,10 +152,10 @@ class Popover extends Popup {
 	/**
 	 * Defines whether the content is scrollable.
 	 * @default false
-	 * @public
+	 * @private
 	 */
 	@property({ type: Boolean })
-	noScrolling = false;
+	disableScrolling = false;
 
 	/**
 	 * Sets the X translation of the arrow
