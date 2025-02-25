@@ -151,14 +151,6 @@ z-index: 1;
 		<ui5-list id="bigList"></ui5-list>
 	</ui5-popover>
 
-	<ui5-button id="big-popover-no-scroll-button">
-		Open Popover no scroll
-	</ui5-button>
-
-	<ui5-popover placement="Bottom" style="height:200px;" id="popover-no-scroll" no-scrolling header-text="hello world">
-		<ui5-list id="bigList4"></ui5-list>
-	</ui5-popover>
-
 	<ui5-button id="acc-role-popover-button">
 		Open Popover ACC role - AlertDialog
 	</ui5-button>
@@ -673,15 +665,6 @@ z-index: 1;
 		document.getElementById("bigList3").innerHTML = [].map.call("Ullamco ea ad fugiat enim elit dolore ullamco ad magna excepteur cupidatat.", function (item, index) {
 			return "<ui5-li>" + item + "</ui5-li>";
 		}).join("");
-
-		document.getElementById("bigList4").innerHTML = [].map.call("Ullamco ea ad fugiat enim elit dolore ullamco ad magna excepteur cupidatat.", function (item, index) {
-			return "<ui5-li>" + item + "</ui5-li>";
-		}).join("");
-
-		document.getElementById("big-popover-no-scroll-button").addEventListener("click", function (event) {
-			document.getElementById("popover-no-scroll").opener = event.target;
-			document.getElementById("popover-no-scroll").open = true;
-		});
 
 		document.getElementById("big-popover-button").addEventListener("click", function (event) {
 			document.getElementById("big-popover").opener = event.target;
