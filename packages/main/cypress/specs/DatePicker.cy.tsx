@@ -11,7 +11,7 @@ describe("Legacy date customization", () => {
 
 		// According to the Islamic calendar, Rab. I 9, 1446 AH should be displayed on Thursday,
 		// but it needs to be configured using the legacyDateCalendarCustomizing setting.
-		cy.mount(<DatePicker value="Rab. I 9, 1446 AH" primary-calendar-type="Islamic"></DatePicker>, {
+		cy.mount(<DatePicker value="Rab. I 9, 1446 AH" primaryCalendarType="Islamic"></DatePicker>, {
 			ui5Configuration: {
 				"formatSettings": {
 					"legacyDateCalendarCustomizing": [
@@ -124,7 +124,7 @@ describe("Date Picker Tests", () => {
 		cy.wrap({ setLanguage })
 			.invoke("setLanguage", "bg");
 
-		cy.mount(<DatePicker value="11 декември 2018г." format-pattern="long"></DatePicker>);
+		cy.mount(<DatePicker value="11 декември 2018г." formatPattern="long"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker");
@@ -149,7 +149,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("custom formatting", () => {
-		cy.mount(<DatePicker format-pattern="yyyy, dd/MM"></DatePicker>);
+		cy.mount(<DatePicker formatPattern="yyyy, dd/MM"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker");
@@ -189,7 +189,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("disabled", () => {
-		cy.mount(<DatePicker disabled></DatePicker>);
+		cy.mount(<DatePicker disabled={true}></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -206,7 +206,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("readonly", () => {
-		cy.mount(<DatePicker readonly></DatePicker>);
+		cy.mount(<DatePicker readonly={true}></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -220,7 +220,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("required", () => {
-		cy.mount(<DatePicker required></DatePicker>);
+		cy.mount(<DatePicker required={true}></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -242,7 +242,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("primary calendar type", () => {
-		cy.mount(<DatePicker primary-calendar-type="Islamic"></DatePicker>);
+		cy.mount(<DatePicker primaryCalendarType="Islamic"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.shadow()
@@ -251,7 +251,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Islamic calendar type input value", () => {
-		cy.mount(<DatePicker primary-calendar-type="Islamic" format-pattern="MMM d, y G"></DatePicker>);
+		cy.mount(<DatePicker primaryCalendarType="Islamic" formatPattern="MMM d, y G"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -271,7 +271,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Selected date from daypicker is the same as datepicker date", () => {
-		cy.mount(<DatePicker value="Jan 29, 2019" format-pattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 29, 2019" formatPattern="MMM d, y"></DatePicker>);
 
 		const timestamp_11_Jan_2019 = 1547164800;
 
@@ -333,7 +333,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Clear the input field", () => {
-		cy.mount(<DatePicker value="2015" format-pattern="y"></DatePicker>);
+		cy.mount(<DatePicker value="2015" formatPattern="y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -354,7 +354,7 @@ describe("Date Picker Tests", () => {
 		cy.wrap({ setLanguage })
 			.invoke("setLanguage", "bg");
 
-		cy.mount(<DatePicker value="фев 6, 2019" format-pattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker value="фев 6, 2019" formatPattern="MMM d, y"></DatePicker>);
 
 		const timestamp_3_Feb_2019 = 1549152000;
 		const timestamp_28_Jan_2019 = 1548633600;
@@ -366,7 +366,7 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedDate()
 			.invoke("attr", "data-sap-timestamp")
-			.should("include", `${timestamp_28_Jan_2019}`);
+			.should("include", timestamp_28_Jan_2019.toString());
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPopoverDate(timestamp_3_Feb_2019)
@@ -377,7 +377,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("if today is 30 jan, clicking next month does not skip feb", () => {
-		cy.mount(<DatePicker value="Jan 30, 2019" format-pattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 30, 2019" formatPattern="MMM d, y"></DatePicker>);
 
 		const timestamp_27_Jan_2019 = 1548547200;
 
@@ -392,7 +392,7 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedDate()
 			.invoke("attr", "data-sap-timestamp")
-			.should("include", `${timestamp_27_Jan_2019}`);
+			.should("include", timestamp_27_Jan_2019.toString());
 	});
 
 	it("picker stays open on input click", () => {
@@ -411,7 +411,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("change fires when we change the input back to its original value", () => {
-		cy.mount(<DatePicker value="2015" format-pattern="y"></DatePicker>);
+		cy.mount(<DatePicker value="2015" formatPattern="y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -466,7 +466,7 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
 			.find("ui5-calendar")
-			.should("have.attr", "timestamp", `${timestampToday}`);
+			.should("have.attr", "timestamp", timestampToday.toString());
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPopoverDate(timestampToday)
@@ -939,7 +939,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("placeholder, based on the formatPattern", () => {
-		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -952,7 +952,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("placeholder, set by the user", () => {
-		cy.mount(<DatePicker placeholder="Delivery date" format-pattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker placeholder="Delivery date" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -965,7 +965,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Going under the minimum date changes value state", () => {
-		cy.mount(<DatePicker format-pattern="MMM d, y" min-date="Jan 1, 2000"></DatePicker>);
+		cy.mount(<DatePicker formatPattern="MMM d, y" minDate="Jan 1, 2000"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -986,7 +986,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Going over the maximum date changes value state", () => {
-		cy.mount(<DatePicker format-pattern="MMM d, y" max-date="Jan 8, 2100"></DatePicker>);
+		cy.mount(<DatePicker formatPattern="MMM d, y" maxDate="Jan 8, 2100"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1007,7 +1007,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Maximum or minimum date changes value state to none", () => {
-		cy.mount(<DatePicker format-pattern="y" min-date="2000" max-date="2100"></DatePicker>);
+		cy.mount(<DatePicker formatPattern="y" minDate="2000" maxDate="2100"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1043,9 +1043,9 @@ describe("Date Picker Tests", () => {
 	it("Years are disabled when out of range", () => {
 		cy.mount(<DatePicker
 			value="Jan 8, 2100"
-			format-pattern="MMM d, y"
-			min-date="Jan 1, 2000"
-			max-date="Jan 8, 2100">
+			formatPattern="MMM d, y"
+			minDate="Jan 1, 2000"
+			maxDate="Jan 8, 2100">
 		</DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -1078,9 +1078,9 @@ describe("Date Picker Tests", () => {
 	it("Months are disabled when out of range", () => {
 		cy.mount(<DatePicker
 			value="Jan 8, 2100"
-			format-pattern="MMM d, y"
-			min-date="Jan 1, 2000"
-			max-date="Jan 8, 2100">
+			formatPattern="MMM d, y"
+			minDate="Jan 1, 2000"
+			maxDate="Jan 8, 2100">
 		</DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -1108,8 +1108,8 @@ describe("Date Picker Tests", () => {
 	it("Days are disabled when out of range", () => {
 		cy.mount(<DatePicker
 			value="Jan 1, 2024"
-			format-pattern="MMM d, y"
-			max-date="Jan 1, 2024">
+			formatPattern="MMM d, y"
+			maxDate="Jan 1, 2024">
 		</DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -1124,9 +1124,9 @@ describe("Date Picker Tests", () => {
 	it("Min and Max dates are included in the interval", () => {
 		cy.mount(<DatePicker
 			value="Jan 10, 2024"
-			format-pattern="MMM d, y"
-			min-date="Jan 1, 2024"
-			max-date="Jan 31, 2024"
+			formatPattern="MMM d, y"
+			minDate="Jan 1, 2024"
+			maxDate="Jan 31, 2024"
 		></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -1160,7 +1160,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Week numbers are hidden", () => {
-		cy.mount(<DatePicker hide-week-numbers></DatePicker>);
+		cy.mount(<DatePicker hideWeekNumbers={true}></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1216,7 +1216,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DayPicker day number attribute", () => {
-		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1250,8 +1250,8 @@ describe("Date Picker Tests", () => {
 
 	it("DatePicker dates and week number", () => {
 		cy.mount(<DatePicker
-			format-pattern="MMM d, y"
-			primary-calendar-type="Gregorian"
+			formatPattern="MMM d, y"
+			primaryCalendarType="Gregorian"
 			value="May 3, 2100"
 		></DatePicker>);
 
@@ -1283,7 +1283,7 @@ describe("Date Picker Tests", () => {
 	it("Tests aria-label", () => {
 		const EXPECTED_ARIA_LABEL = "Hello World";
 
-		cy.mount(<DatePicker accessible-name={EXPECTED_ARIA_LABEL}></DatePicker>);
+		cy.mount(<DatePicker accessibleName={EXPECTED_ARIA_LABEL}></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.ui5DatePickerGetInnerInput()
@@ -1296,7 +1296,7 @@ describe("Date Picker Tests", () => {
 		cy.mount(
 			<>
 				<Label id="infoText">{EXPECTED_ARIA_LABEL}</Label>
-				<DatePicker accessible-name-ref="infoText"></DatePicker>
+				<DatePicker accessibleNameRef="infoText"></DatePicker>
 			</>
 		);
 
@@ -1306,7 +1306,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Page up/down increments/decrements the day value", () => {
-		cy.mount(<DatePicker value="Jan 1, 2000" format-pattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 1, 2000" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1326,7 +1326,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Shift + Page up/down increments/decrements the month value", () => {
-		cy.mount(<DatePicker value="Jan 1, 2000" format-pattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 1, 2000" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1346,7 +1346,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Ctrl + Shift + Page up/down increments/decrements the year value", () => {
-		cy.mount(<DatePicker value="Jan 1, 2000" format-pattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 1, 2000" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1368,8 +1368,8 @@ describe("Date Picker Tests", () => {
 	it("Keyboard navigation works when there are disabled dates in the calendar grid", () => {
 		cy.mount(<DatePicker
 			value="Jan 1, 2000"
-			format-pattern="MMM d, y"
-			min-date="Jan 1, 2000">
+			formatPattern="MMM d, y"
+			minDate="Jan 1, 2000">
 		</DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -1430,7 +1430,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Prevent change event", () => {
-		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1461,7 +1461,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DatePicker's formatter has strict parsing enabled", () => {
-		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1486,7 +1486,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Invalid state is refreshed after a value is picked by Calendar and set again", () => {
-		cy.mount(<DatePicker format-pattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1510,7 +1510,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Min and max dates are set, with no format pattern provided, using valid ISO format", () => {
-		cy.mount(<DatePicker min-date="2019-09-01" max-date="2019-11-01"></DatePicker>);
+		cy.mount(<DatePicker minDate="2019-09-01" maxDate="2019-11-01"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1535,7 +1535,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Min and max dates are NOT set because no format pattern is provided & format used is not ISO", () => {
-		cy.mount(<DatePicker min-date="22.10.2020" max-date="22.10.2021"></DatePicker>);
+		cy.mount(<DatePicker minDate="22.10.2020" maxDate="22.10.2021"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1560,7 +1560,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Date picker in month mode", () => {
-		cy.mount(<DatePicker format-pattern="MMM y"></DatePicker>);
+		cy.mount(<DatePicker formatPattern="MMM y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -1584,7 +1584,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Date picker in year mode", () => {
-		cy.mount(<DatePicker format-pattern="yyyy"></DatePicker>);
+		cy.mount(<DatePicker formatPattern="yyyy"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
