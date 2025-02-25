@@ -144,6 +144,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	onTableActivate(table: Table): void {
 		this._table = table;
 		this._shouldFocusRow = false;
+		this._invalidateTable();
 	}
 
 	onTableAfterRendering(): void {
