@@ -7,8 +7,10 @@
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
     <style>
 
-		ui5-responsive-popover::part(content) {
+		#respPopover::part(content) {
 			padding: 0;
+			overflow-x: visible;
+			overflow-y: hidden
 		}
 	</style>
 </head>
@@ -23,7 +25,7 @@
 		>
 			<ui5-button icon="menu" slot="startButton" id="startButton"></ui5-button>
 		</ui5-shellbar>
-        <ui5-responsive-popover id="respPopover" no-scrolling placement="Bottom" accessible-name="Main Navigation">
+        <ui5-responsive-popover id="respPopover" placement="Bottom" accessible-name="Main Navigation">
                 <ui5-side-navigation id="nl1" design="Plain">
                     <!-- Items -->
                     <ui5-side-navigation-item text="Home" href="#home" icon="home"></ui5-side-navigation-item>
@@ -38,6 +40,7 @@
                         </ui5-side-navigation-item>
                         <ui5-side-navigation-item text="Item 3" href="#item3" icon="activity-assigned-to-goal"></ui5-side-navigation-item>
                     </ui5-side-navigation-group>
+					<ui5-side-navigation-item text="Home2" href="#home2" icon="home"></ui5-side-navigation-item>
                     <ui5-side-navigation-group text="Group 2" expanded>
                         <ui5-side-navigation-item text="Item 4" href="#item4" icon="history" expanded>
                             <ui5-side-navigation-sub-item text="Sub Item 5" href="#subitem5"></ui5-side-navigation-sub-item>
@@ -83,7 +86,7 @@
 		});
 
 		document.querySelector("#nl1").addEventListener("selection-change", function (event) {
-			respPopover.open=false;
+			respPopover.open=false;	
 		});
 	</script>
 </body>
