@@ -8,7 +8,7 @@ describe("DateRangePicker general interaction", () => {
 		cy.wait(200);
 	});
 	it("Custom Validation Error", () => {
-		cy.mount(<DateRangePicker format-pattern="dd/MM/yyyy"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="dd/MM/yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.shadow()
@@ -23,7 +23,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Custom Validation None", () => {
-		cy.mount(<DateRangePicker format-pattern="dd/MM/yyyy"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="dd/MM/yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.shadow()
@@ -38,7 +38,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Selected dates are updated after value update in the input field", () => {
-		cy.mount(<DateRangePicker format-pattern="dd/MM/yyyy"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="dd/MM/yyyy"></DateRangePicker>);
 
 		const timestamp_9_Sep_2020 = 1599609600;
 
@@ -60,7 +60,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Is delimiter set", () => {
-		cy.mount(<DateRangePicker format-pattern="MMM d, y" delimiter="@"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="MMM d, y" delimiter="@"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -80,7 +80,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("startDateValue and endDateValue getter", () => {
-		cy.mount(<DateRangePicker format-pattern="dd/MM/yyyy"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="dd/MM/yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -113,7 +113,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Setting the same date as first & last is possible", () => {
-		cy.mount(<DateRangePicker format-pattern="dd/MM/yyyy"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="dd/MM/yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -183,7 +183,7 @@ describe("DateRangePicker general interaction", () => {
 
 	it("Page up/down increments/decrements day value", () => {
 		cy.mount(<DateRangePicker
-			format-pattern="MMM d, y"
+			formatPattern="MMM d, y"
 			value="Jul 16, 2020 @ Jul 29, 2020"
 			delimiter="@">
 		</DateRangePicker>);
@@ -222,7 +222,7 @@ describe("DateRangePicker general interaction", () => {
 
 	it("Page up/down increments/decrements month value", () => {
 		cy.mount(<DateRangePicker
-			format-pattern="MMM d, y"
+			formatPattern="MMM d, y"
 			value="Jul 16, 2020 @ Jul 29, 2020"
 			delimiter="@"
 		></DateRangePicker>);
@@ -261,7 +261,7 @@ describe("DateRangePicker general interaction", () => {
 
 	it("Page up/down increments/decrements year value", () => {
 		cy.mount(<DateRangePicker
-			format-pattern="MMM d, y"
+			formatPattern="MMM d, y"
 			value="Jul 16, 2020 @ Jul 29, 2020"
 			delimiter="@">
 		</DateRangePicker>);
@@ -299,7 +299,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Enter keyboard key confirms the date range in the input field", () => {
-		cy.mount(<DateRangePicker format-pattern="MMM d, y" delimiter="@"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="MMM d, y" delimiter="@"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -315,7 +315,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Focus out of the input field confirms the date range", () => {
-		cy.mount(<DateRangePicker format-pattern="MMM d, y" delimiter="@"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="MMM d, y" delimiter="@"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -331,7 +331,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Delimiter is part of the format pattern", () => {
-		cy.mount(<DateRangePicker format-pattern="yyyy-MM-dd"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="yyyy-MM-dd"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -347,7 +347,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Month on next button press", () => {
-		cy.mount(<DateRangePicker value="09/09/2020 - 10/10/2020" format-pattern="dd/MM/yyyy"></DateRangePicker>);
+		cy.mount(<DateRangePicker value="09/09/2020 - 10/10/2020" formatPattern="dd/MM/yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -375,7 +375,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("startDateValue and endDateValue getters when single value", () => {
-		cy.mount(<DateRangePicker value="27/09/2019" format-pattern="dd/MM/yyyy"></DateRangePicker>);
+		cy.mount(<DateRangePicker value="27/09/2019" formatPattern="dd/MM/yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -419,7 +419,7 @@ describe("DateRangePicker general interaction", () => {
 		cy.wrap({ setLanguage })
 			.invoke("setLanguage", "en");
 
-		cy.mount(<DateRangePicker format-pattern="dd/MM/yyyy"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="dd/MM/yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -452,7 +452,7 @@ describe("DateRangePicker general interaction", () => {
 		cy.wrap({ setLanguage })
 			.invoke("setLanguage", "bg");
 
-		cy.mount(<DateRangePicker min-date="2023-02-10" max-date="2023-07-22"></DateRangePicker>);
+		cy.mount(<DateRangePicker minDate="2023-02-10" maxDate="2023-07-22"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -470,7 +470,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Should open month picker if format-pattern is 'MM.yyyy'", () => {
-		cy.mount(<DateRangePicker format-pattern="MM.yyyy"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="MM.yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -492,7 +492,7 @@ describe("DateRangePicker general interaction", () => {
 		cy.wrap({ setLanguage })
 			.invoke("setLanguage", "en");
 
-		cy.mount(<DateRangePicker format-pattern="MM.yyyy"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="MM.yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -522,7 +522,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Should open year picker if format-pattern is 'yyyy'", () => {
-		cy.mount(<DateRangePicker format-pattern="yyyy"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -544,7 +544,7 @@ describe("DateRangePicker general interaction", () => {
 		cy.wrap({ setLanguage })
 			.invoke("setLanguage", "en");
 
-		cy.mount(<DateRangePicker format-pattern="yyyy"></DateRangePicker>);
+		cy.mount(<DateRangePicker formatPattern="yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
