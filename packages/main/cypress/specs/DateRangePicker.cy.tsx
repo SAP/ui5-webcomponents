@@ -170,18 +170,15 @@ describe("DateRangePicker general interaction", () => {
 			.realClick()
 			.realPress("F4");
 
-		const changeStub = cy.stub();
 		cy.get("@dateRangePicker")
 			.then($dateRangePicker => {
-				$dateRangePicker.on("change", changeStub);
+				$dateRangePicker.on("change", cy.stub().as("changeStub"));
 			});
 
 		cy.get("@dayOne").realClick();
 		cy.get("@dayTwo").realClick();
 
-		cy.wrap(null).then(() => {
-			expect(changeStub).to.have.calledOnce;
-		});
+		cy.get("@changeStub").should("have.callCount", 1);
 	});
 
 	it("Page up/down increments/decrements day value", () => {
