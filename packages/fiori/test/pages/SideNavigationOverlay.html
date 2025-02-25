@@ -30,7 +30,7 @@
                     <!-- Items -->
                     <ui5-side-navigation-item text="Home" href="#home" icon="home"></ui5-side-navigation-item>
                     <ui5-side-navigation-group expanded>
-                        <ui5-side-navigation-item text="Item 1" expanded href="#item1" icon="locate-me">
+                        <ui5-side-navigation-item text="Group 1" text="Item 1" expanded href="#item1" icon="locate-me">
                             <ui5-side-navigation-sub-item text="Sub Item 1" href="#subitem1"></ui5-side-navigation-sub-item>
                             <ui5-side-navigation-sub-item text="Sub Item 2" href="#subitem2"></ui5-side-navigation-sub-item>
                         </ui5-side-navigation-item>
@@ -85,9 +85,12 @@
 			respPopover.open = true;
 		});
 
-		document.querySelector("#nl1").addEventListener("selection-change", function (event) {
-			respPopover.open=false;	
+		nl1.querySelectorAll("ui5-side-navigation-item").forEach(element => {
+			element.addEventListener("click", function (event) {
+				respPopover.open=false;	
+			});
 		});
+		
 	</script>
 </body>
 </html>
