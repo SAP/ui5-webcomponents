@@ -57,17 +57,19 @@ abstract class TableRowBase extends UI5Element {
 		return this;
 	}
 
-	_informSelectionChange() {
-		this._tableSelection?.informSelectionChange(this);
-	}
-
 	isHeaderRow(): boolean {
 		return false;
 	}
 
+	_onSelectionChange() {
+		const tableSelection = this._tableSelection!;
+		const selected = tableSelection.isMultiSelectable() ? !this._isSelected : true;
+		tableSelection.setSelected(this, selected, true);
+	}
+
 	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
 		if ((eventOrigin === this && this._isSelectable && isSpace(e)) || (eventOrigin === this._selectionCell && (isSpace(e) || isEnter(e)))) {
-			this._informSelectionChange();
+			this._onSelectionChange();
 			e.preventDefault();
 		}
 	}
@@ -94,11 +96,11 @@ abstract class TableRowBase extends UI5Element {
 	}
 
 	get _isMultiSelect() {
-		return this._tableSelection?.isMultiSelect();
+		return this._tableSelection?.isMultiSelectable();
 	}
 
 	get _hasRowSelector() {
-		return this._tableSelection?.hasRowSelector();
+		return this._tableSelection?.isRowSelectorRequired();
 	}
 
 	get _selectionCell() {
@@ -110,7 +112,7 @@ abstract class TableRowBase extends UI5Element {
 	}
 
 	get _popinCells() {
-		return this.cells.filter(c => c._popin);
+		return this.cells.filter(c => c._popin && !c._popinHidden);
 	}
 
 	get _stickyCells() {

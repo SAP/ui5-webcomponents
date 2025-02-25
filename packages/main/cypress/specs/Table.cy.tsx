@@ -2,7 +2,7 @@ import Table from "../../src/Table.js";
 import TableHeaderRow from "../../src/TableHeaderRow.js";
 import TableCell from "../../src/TableCell.js";
 import TableRow from "../../src/TableRow.js";
-import TableSelection from "../../src/TableSelection.js";
+import TableSelectionMulti from "../../src/TableSelectionMulti.js";
 import TableHeaderCell from "../../src/TableHeaderCell.js";
 import TableHeaderCellActionAI from "../../src/TableHeaderCellActionAI.js";
 import Label from "../../src/Label.js";
@@ -60,38 +60,64 @@ describe("Table - Rendering", () => {
 });
 
 describe("Table - Popin Mode", () => {
-	beforeEach(() => {
+	function checkPopinState(expectedState: { poppedIn: string[], hidden: string[] }) {
+		cy.get("ui5-table-header-cell").each(($cell, index) => {
+			const id = $cell.attr("id") ?? "";
+			const shouldBePoppedIn = expectedState.poppedIn.includes(id);
+			const shouldBeHidden = expectedState.hidden.includes(id);
+			const roleCondition = shouldBePoppedIn || shouldBeHidden ? "not.have.attr" : "have.attr";
+
+			cy.wrap($cell)
+				.should(roleCondition, "role", ROLE_COLUMN_HEADER);
+			cy.get("ui5-table-header-row")
+				.shadow()
+				.find(`slot[name=default-${index + 1}]`)
+				.should(shouldBePoppedIn || shouldBeHidden ? "not.exist" : "exist");
+		});
+
+		cy.get("ui5-table-row").each($row => {
+			cy.wrap($row).find("ui5-table-cell").each(($cell, index) => {
+				const id = $cell.attr("id") ?? "NOT_FOUND";
+				const shouldBeHidden = expectedState.hidden.some(hiddenId => id.includes(hiddenId));
+				cy.wrap($row).shadow().find(`slot[name=default-${index + 1}]`)
+					.should(shouldBeHidden ? "not.exist" : "exist");
+			});
+		});
+	}
+
+	function mounTable(popinHidden = false) {
 		cy.mount(
 			<Table id="table" overflowMode="Popin">
 				<TableHeaderRow slot="headerRow">
 					<TableHeaderCell id="colA" minWidth="300px"><span>ColumnA</span></TableHeaderCell>
 					<TableHeaderCell id="colB" minWidth="200px">Column B</TableHeaderCell>
 					<TableHeaderCell id="colC" minWidth="200px">Column C</TableHeaderCell>
-					<TableHeaderCell id="colD" minWidth="150px" popinText="Column ?">Column D</TableHeaderCell>
+					<TableHeaderCell id="colD" minWidth="150px" popinText="Column ?" popinHidden={popinHidden}>Column D</TableHeaderCell>
 				</TableHeaderRow>
 				<TableRow>
-					<TableCell><Label>Cell A</Label></TableCell>
-					<TableCell><Label>Cell B</Label></TableCell>
-					<TableCell><Label>Cell C</Label></TableCell>
-					<TableCell><Label>Cell D</Label></TableCell>
+					<TableCell id="row-1-colA"><Label>Cell A</Label></TableCell>
+					<TableCell id="row-1-colB"><Label>Cell B</Label></TableCell>
+					<TableCell id="row-1-colC"><Label>Cell C</Label></TableCell>
+					<TableCell id="row-1-colD"><Label>Cell D</Label></TableCell>
 				</TableRow>
 				<TableRow>
-					<TableCell><Label>Cell A</Label></TableCell>
-					<TableCell><Label>Cell B</Label></TableCell>
-					<TableCell><Label>Cell C</Label></TableCell>
-					<TableCell><Label>Cell D</Label></TableCell>
+					<TableCell id="row-2-colA"><Label>Cell A</Label></TableCell>
+					<TableCell id="row-2-colB"><Label>Cell B</Label></TableCell>
+					<TableCell id="row-2-colC"><Label>Cell C</Label></TableCell>
+					<TableCell id="row-2-colD"><Label>Cell D</Label></TableCell>
 				</TableRow>
 				<TableRow>
-					<TableCell><Label>Cell A</Label></TableCell>
-					<TableCell><Label>Cell B</Label></TableCell>
-					<TableCell><Label>Cell C</Label></TableCell>
-					<TableCell><Label>Cell D</Label></TableCell>
+					<TableCell id="row-3-colA"><Label>Cell A</Label></TableCell>
+					<TableCell id="row-3-colB"><Label>Cell B</Label></TableCell>
+					<TableCell id="row-3-colC"><Label>Cell C</Label></TableCell>
+					<TableCell id="row-3-colD"><Label>Cell D</Label></TableCell>
 				</TableRow>
 			</Table>
 		);
-	});
+	}
 
 	it("no pop-in width 'optimal' table width", () => {
+		mounTable();
 		cy.get("ui5-table").then($table => {
 			$table.css("width", "850px");
 		});
@@ -103,17 +129,11 @@ describe("Table - Popin Mode", () => {
 		cy.get("ui5-table-header-cell")
 			.should("have.length", 4);
 
-		cy.get("ui5-table-header-cell").each(($cell, index) => {
-			cy.wrap($cell)
-				.should("have.attr", "role", ROLE_COLUMN_HEADER);
-			cy.get("ui5-table-header-row")
-				.shadow()
-				.find(`slot[name=default-${index + 1}]`)
-				.should("exist");
-		});
+		checkPopinState({ poppedIn: [], hidden: [] });
 	});
 
 	it("test with one by one popping in", () => {
+		mounTable();
 		const testWidths = [
 			{ width: 850, poppedIn: [] },
 			{ width: 700, poppedIn: ["colD"] },
@@ -127,22 +147,12 @@ describe("Table - Popin Mode", () => {
 				$table.css("width", `${width}px`);
 			});
 
-			cy.get("ui5-table-header-cell").each(($cell, index) => {
-				const id = $cell.attr("id") ?? "";
-				const shouldBePoppedIn = poppedIn.includes(id);
-				const roleCondition = shouldBePoppedIn ? "not.have.attr" : "have.attr";
-
-				cy.wrap($cell)
-					.should(roleCondition, "role", ROLE_COLUMN_HEADER);
-				cy.get("ui5-table-header-row")
-					.shadow()
-					.find(`slot[name=default-${index + 1}]`)
-					.should(shouldBePoppedIn ? "not.exist" : "exist");
-			});
+			checkPopinState({ poppedIn, hidden: [] });
 		});
 	});
 
 	it("test with one by one popping out", () => {
+		mounTable();
 		const testWidths = [
 			{ width: 150, poppedIn: ["colD", "colC", "colB"] },
 			{ width: 300, poppedIn: ["colD", "colC", "colB"] },
@@ -156,22 +166,12 @@ describe("Table - Popin Mode", () => {
 				$table.css("width", `${width}px`);
 			});
 
-			cy.get("ui5-table-header-cell").each(($cell, index) => {
-				const id = $cell.attr("id") ?? "";
-				const shouldBePoppedIn = poppedIn.includes(id);
-				const roleCondition = shouldBePoppedIn ? "not.have.attr" : "have.attr";
-
-				cy.wrap($cell)
-					.should(roleCondition, "role", ROLE_COLUMN_HEADER);
-				cy.get("ui5-table-header-row")
-					.shadow()
-					.find(`slot[name=default-${index + 1}]`)
-					.should(shouldBePoppedIn ? "not.exist" : "exist");
-			});
+			checkPopinState({ poppedIn, hidden: [] });
 		});
 	});
 
 	it("test with random widths", () => {
+		mounTable();
 		const expectedStates = [
 			{ width: 500, poppedIn: ["colD", "colC", "colB"] },
 			{ width: 700, poppedIn: ["colD", "colC"] },
@@ -187,24 +187,12 @@ describe("Table - Popin Mode", () => {
 			});
 
 			const expectedState = expectedStates.find(state => state.width >= randomWidth);
-			// eslint-disable-next-line cypress/no-unnecessary-waiting, no-loop-func
-			cy.get("ui5-table-header-cell").each(($cell, index) => {
-				const id = $cell.attr("id") ?? "";
-				const shouldBePoppedIn = expectedState?.poppedIn.includes(id);
-				const roleCondition = shouldBePoppedIn ? "not.have.attr" : "have.attr";
-
-				cy.wrap($cell)
-					.should(roleCondition, "role", ROLE_COLUMN_HEADER);
-
-				cy.get("ui5-table-header-row")
-					.shadow()
-					.find(`slot[name=default-${index + 1}]`)
-					.should(shouldBePoppedIn ? "not.exist" : "exist");
-			});
+			checkPopinState({ poppedIn: expectedState?.poppedIn ?? [], hidden: [] });
 		}
 	});
 
 	it("should show the popin-text in the popin area", () => {
+		mounTable();
 		cy.get("ui5-table").then($table => {
 			$table.css("width", "150px");
 		});
@@ -231,6 +219,40 @@ describe("Table - Popin Mode", () => {
 			}
 			return popinCellCount && popinCellCount === validPopinTextCount;
 		}).should("be.true");
+	});
+
+	it("should hide column in popin if popinHidden is set", () => {
+		mounTable(true);
+
+		const testWidths = [
+			{ width: 150, poppedIn: ["colC", "colB"], hidden: ["colD"] },
+			{ width: 300, poppedIn: ["colC", "colB"], hidden: ["colD"] },
+			{ width: 500, poppedIn: ["colC"], hidden: ["colD"] },
+			{ width: 700, poppedIn: [], hidden: ["colD"] },
+			{ width: 850, poppedIn: [], hidden: [] },
+		];
+
+		testWidths.forEach(({ width, poppedIn, hidden }) => {
+			cy.get("ui5-table").then($table => {
+				$table.css("width", `${width}px`);
+			});
+
+			checkPopinState({ poppedIn, hidden });
+		});
+	});
+
+	it("should hide popin if popinHidden, shows it if changed on runtime", () => {
+		mounTable(true);
+		cy.get("ui5-table").then($table => {
+			$table.css("width", "150px");
+		});
+
+		checkPopinState({ poppedIn: ["colC", "colB"], hidden: ["colD"] });
+
+		cy.get("#colD")
+			.invoke("removeAttr", "popin-hidden");
+
+		checkPopinState({ poppedIn: ["colC", "colB", "colD"], hidden: [] });
 	});
 });
 
@@ -509,7 +531,7 @@ describe("Table - Horizontal Scrolling", () => {
 	beforeEach(() => {
 		cy.mount(
 			<Table id="table" overflowMode="Scroll" stickyTop="0px" style={{ width: "300px", overflow: "auto" }} accessibleNameRef="title">
-				<TableSelection id="selection" selected="0 2" slot="features"></TableSelection>
+				<TableSelectionMulti id="selection" selected="0 2" slot="features"></TableSelectionMulti>
 				<TableHeaderRow slot="headerRow" sticky>
 					<TableHeaderCell id="produtCol" width="200px"><span>Product</span></TableHeaderCell>
 					<TableHeaderCell id="supplierCol" width="200px">Supplier</TableHeaderCell>
@@ -671,7 +693,7 @@ describe("Table - Interactive Rows", () => {
 	it("fires the row-click event", () => {
 		cy.mount(
 			<Table id="table1">
-				<TableSelection id="selection" selected="1 2" slot="features"></TableSelection>
+				<TableSelectionMulti id="selection" selected="1 2" slot="features"></TableSelectionMulti>
 				<TableHeaderRow id="headerRow" slot="headerRow">
 					<TableHeaderCell>ColumnA</TableHeaderCell>
 					<TableHeaderCell>ColumnB</TableHeaderCell>
@@ -715,25 +737,6 @@ describe("Table - Interactive Rows", () => {
 		cy.get("@row2button").realPress("Space");
 		cy.get("@buttonClickHandler").should("have.been.calledThrice");
 		cy.get("@rowClickHandler").should("have.been.calledThrice");
-
-		// move the following tests to the TableSelection.cy.tsx
-		cy.get("#headerRow").shadow().find("#selection-cell").as("headerRowSelectionCell");
-		cy.get("@headerRowSelectionCell").find("#selection-component").as("headerRowCheckBox");
-		cy.get("@headerRowCheckBox").should("have.attr", "checked");
-		cy.get("#table1").then($table => {
-			$table.append(
-				`<ui5-table-row id="row3" row-key="3">
-					<ui5-table-cell>Cell A</ui5-table-cell>
-					<ui5-table-cell>Cell B</ui5-table-cell>
-				</ui5-table-row>`
-			);
-		});
-		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
-		cy.get("#row3").invoke("remove");
-		cy.get("@headerRowCheckBox").should("have.attr", "checked");
-		cy.get("#row2").invoke("remove");
-		cy.get("#row1").invoke("remove");
-		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
 	});
 });
 
