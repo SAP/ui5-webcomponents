@@ -369,12 +369,11 @@ abstract class UI5Element extends HTMLElement {
 			childList: true,
 			subtree: true,
 			characterData: canSlotText,
-			attributeFilter: ["slot"],
 		};
-		observeDOMNode(this, this._processChildren.bind(this) as MutationCallback, mutationObserverOptions);
+		observeDOMNode(this, this.handleMutationChange.bind(this) as MutationCallback, mutationObserverOptions);
 	}
 
-	onObservedMutation(changes: MutationRecord[]) {
+	handleMutationChange(changes: MutationRecord[]) {
 		let shouldProccessChildren = false;
 
 		changes.forEach(change => {
@@ -386,7 +385,7 @@ abstract class UI5Element extends HTMLElement {
 			const directChildren = [...this.childNodes].includes(change.target as ChildNode);
 
 			// we observe slot attribute change only on the direct child of the web component
-			if (directChildren && change.type === "attributes") {
+			if (directChildren && change.type === "attributes" && change.attributeName === "slot") {
 				shouldProccessChildren = true;
 			}
 		});
