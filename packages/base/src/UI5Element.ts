@@ -367,11 +367,11 @@ abstract class UI5Element extends HTMLElement {
 		const canSlotText = metadata.canSlotText();
 		const mutationObserverOptions: MutationObserverInit = {
 			childList: true,
-			subtree: canSlotText,
+			subtree: true,
 			characterData: canSlotText,
 			attributeFilter: ["slot"],
 		};
-		observeDOMNode(this, this.onObservedMutation.bind(this) as MutationCallback, mutationObserverOptions);
+		observeDOMNode(this, this._processChildren.bind(this) as MutationCallback, mutationObserverOptions);
 	}
 
 	onObservedMutation(changes: MutationRecord[]) {
