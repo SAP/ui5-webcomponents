@@ -21,6 +21,7 @@ import PromptInputTemplate from "./PromptInputTemplate.js";
 
 // Styles
 import PromptInputCss from "./generated/themes/PromptInput.css.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/index.js";
 
 /**
  * @class
@@ -229,8 +230,8 @@ class PromptInput extends UI5Element {
 		}
 	}
 
-	_onInnerInput(e: CustomEvent<InputEventDetail>) {
-		this.value = (e.target as Input).value;
+	_onInnerInput(e: UI5CustomEvent<Input, "input">) {
+		this.value = e.currentTarget.value;
 
 		this.fireDecoratorEvent("input");
 	}
@@ -243,8 +244,8 @@ class PromptInput extends UI5Element {
 		this.fireDecoratorEvent("submit");
 	}
 
-	_onTypeAhead(e: CustomEvent): void {
-		this.value = (e.target as Input).value;
+	_onTypeAhead(e: UI5CustomEvent<Input, "type-ahead">): void {
+		this.value = e.currentTarget.value;
 	}
 
 	get _exceededText() {
