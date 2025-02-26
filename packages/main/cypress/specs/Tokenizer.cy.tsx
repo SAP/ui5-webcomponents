@@ -170,4 +170,40 @@ describe("Tokenizer - multi-line and Clear All", () => {
 			.find("[ui5-token]")
 			.should("have.length", 6);
 	});
+
+	it("handles overflow mechanism as expected", () => {
+		cy.mount(
+			<Tokenizer style={{ width: "100%" }}>
+				<Token text="Andora"></Token>
+				<Token text="Bulgaria"></Token>
+				<Token text="Canada"></Token>
+				<Token text="Denmark"></Token>
+				<Token text="Estonia"></Token>
+				<Token text="Andora"></Token>
+			</Tokenizer>
+		);
+
+		cy.get("ui5-token")
+			.eq(5)
+			.as("lastToken");
+
+		cy.get("@lastToken")
+			.should("be.visible");
+
+		cy.viewport(500, 600);
+
+		cy.get("ui5-tokenizer")
+			.shadow()
+			.find("span")
+			.should("have.attr", "aria-haspopup", "dialog")
+			.as("n-more");
+
+		cy.get("@lastToken")
+			.should("be.hidden");
+
+		cy.viewport(600, 600);
+
+		cy.get("@lastToken")
+			.should("be.visible");
+	});
 });

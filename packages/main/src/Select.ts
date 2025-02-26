@@ -168,9 +168,7 @@ type SelectLiveChangeEventDetail = {
  * Fired after the component's dropdown menu opens.
  * @public
  */
-@event("open", {
-	bubbles: true,
-})
+@event("open")
 
 /**
  * Fired after the component's dropdown menu closes.
@@ -272,6 +270,15 @@ class Select extends UI5Element implements IFormInputElement {
 	 */
 	@property()
 	accessibleNameRef?: string;
+
+	/**
+	 * Defines the tooltip of the select.
+	 * @default undefined
+	 * @public
+	 * @since 2.8.0
+	 */
+	@property()
+	tooltip?: string;
 
 	/**
 	 * @private

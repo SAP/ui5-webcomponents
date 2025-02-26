@@ -68,14 +68,13 @@ describe("SearchField general interaction", () => {
 				.find("[ui5-button]")
 				.shadow()
 				.find("button")
-				.as("inner-button")
+				.as("inner-button");
 
 			cy.get("@inner-button")
 				.should("have.attr", "aria-expanded", "false");
 
 			cy.get("@inner-button")
 				.should("have.attr", "title", SEARCH_FIELD_SEARCH_COLLAPSED.defaultText);
-			
 			cy.get("@inner-button")
 				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_COLLAPSED.defaultText);
 		});
@@ -119,12 +118,11 @@ describe("SearchField general interaction", () => {
 				.find("[ui5-icon]")
 				.shadow()
 				.find("svg")
-				.as("search-icon")
+				.as("search-icon");
 
 			cy.get("@search-icon")
 				.find("title")
 				.should("contain.text", SEARCH_FIELD_SEARCH_EXPANDED.defaultText);
-			
 			cy.get("@search-icon")
 				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_EXPANDED.defaultText);
 
@@ -142,7 +140,6 @@ describe("SearchField general interaction", () => {
 		it("expanded search field button accessibility", () => {
 			cy.mount(<SearchField value="text" expanded={true}></SearchField>);
 
-
 			cy.get("[ui5-search-field]")
 				.shadow()
 				.find("input")
@@ -153,12 +150,11 @@ describe("SearchField general interaction", () => {
 				.find("[ui5-icon]")
 				.shadow()
 				.find("svg")
-				.as("search-icon")
+				.as("search-icon");
 
 			cy.get("@search-icon")
 				.find("title")
 				.should("contain.text", SEARCH_FIELD_SEARCH_ICON.defaultText);
-			
 			cy.get("@search-icon")
 				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_ICON.defaultText);
 		});
@@ -221,19 +217,17 @@ describe("SearchField general interaction", () => {
 				.find("[ui5-icon][name='decline']")
 				.shadow()
 				.find("svg")
-				.as("clear-icon")
+				.as("clear-icon");
 
 			cy.get("@clear-icon")
 				.find("title")
 				.should("contain.text", SEARCH_FIELD_CLEAR_ICON.defaultText);
-			
 			cy.get("@clear-icon")
 				.should("have.attr", "aria-label", SEARCH_FIELD_CLEAR_ICON.defaultText);
 		});
 	});
 
 	describe("Events", () => {
-
 		it("fires search event on Enter", () => {
 			cy.mount(<SearchField value="test" expanded={true}></SearchField>);
 
@@ -356,7 +350,6 @@ describe("SearchField general interaction", () => {
 	});
 
 	describe("Scoped Search Field", () => {
-
 		it("ui5-select should not be rendered on Default Search Field", () => {
 			cy.mount(<SearchField value="test" expanded={true}></SearchField>);
 
@@ -393,6 +386,11 @@ describe("SearchField general interaction", () => {
 				.shadow()
 				.find("[role='combobox']")
 				.should("have.attr", "aria-label", SEARCH_FIELD_SCOPE_SELECT_LABEL.defaultText);
+
+			cy.get("@scope")
+				.shadow()
+				.find(".ui5-select-root")
+				.should("have.attr", "title", SEARCH_FIELD_SCOPE_SELECT_LABEL.defaultText);
 		});
 
 		it("Two options should be rendered in the scope", () => {
@@ -408,7 +406,7 @@ describe("SearchField general interaction", () => {
 
 			cy.get("@scope")
 				.find("[ui5-option]")
-				.should('have.length', 2);
+				.should("have.length", 2);
 		});
 
 		it("scope-change event should be fired, when a scope option is selected", () => {
