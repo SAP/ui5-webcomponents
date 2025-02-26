@@ -65,14 +65,6 @@ describe("DateTimePicker general interaction", () => {
 			cy.realPress("ArrowRight");
 			cy.realPress("Space");
 
-			// Press Tab three times to get to the time selection.
-			// Note: we are using Tab to get to the time selection instead of realClick()
-			// to avoid fade in animations delay
-			// But the test is still unstable
-			// cy.realPress("Tab");
-			// cy.realPress("Tab");
-			// cy.realPress("Tab");
-
 			// Adjust hours.
 			cy.get("ui5-time-selection-clocks")
 				.shadow()
