@@ -1,10 +1,10 @@
 @import "../base/Switch-parameters.css";
 :root {
 	/* Switch */
-	--_ui5_switch_width: 3.5rem;
+	--_ui5_switch_width: 2.5rem;
 	--_ui5_switch_min_width: none;
 
-	--_ui5_switch_with_label_width: 3.875rem;
+	--_ui5_switch_with_label_width: 2.875rem;
 
 	--_ui5_switch_focus_outline: none;
 	--_ui5_switch_root_after_outline: 0.125rem solid var(--sapContent_FocusColor);
@@ -14,8 +14,8 @@
 
 	--_ui5_switch_root_outline_top: 0.5rem;
 	--_ui5_switch_root_outline_bottom: 0.5rem;
-	--_ui5_switch_root_outline_left: 0.375rem;
-	--_ui5_switch_root_outline_right: 0.375rem;
+	--_ui5_switch_root_outline_left: -0.125rem;
+	--_ui5_switch_root_outline_right: -0.125rem;
 
 
 	--_ui5_switch_disabled_opacity: var(--sapContent_DisabledOpacity);

@@ -1,12 +1,12 @@
 @import "../base/Switch-parameters.css";
 :root {
 	/* Switch */
-	--_ui5_switch_width: 3.5rem;
+	--_ui5_switch_width: 2.5rem;
 	--_ui5_switch_compact_width: 3rem;
 	--_ui5_switch_min_width: none;
 	--_ui5_switch_compact_min_width: none;
 
-	--_ui5_switch_with_label_width: 3.875rem;
+	--_ui5_switch_with_label_width: 2.875rem;
 	--_ui5_switch_compact_with_label_width: 3.75rem;
 
 	--_ui5_switch_focus_outline: none;
@@ -17,8 +17,8 @@
 
 	--_ui5_switch_root_outline_top: 0.5rem;
 	--_ui5_switch_root_outline_bottom: 0.5rem;
-	--_ui5_switch_root_outline_left: 0.375rem;
-	--_ui5_switch_root_outline_right: 0.375rem;
+	--_ui5_switch_root_outline_left: -0.125rem;
+	--_ui5_switch_root_outline_right: -0.125rem;
 
 	--_ui5_switch_root_compact_outline_top: 0.25rem;
 	--_ui5_switch_root_compact_outline_bottom: 0.25rem;
