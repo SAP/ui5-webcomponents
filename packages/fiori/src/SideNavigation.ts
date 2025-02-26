@@ -144,6 +144,7 @@ class SideNavigation extends UI5Element {
 
 	/**
 	 * Defines whether the control should have container styling or not.
+	 * **Note** In order to achieve the best user experience, it is recommended the use "Plain" value when SideNavigation is placed inside responsive popover.
 	 *
 	 * @public
 	 * @default "Decorated"
