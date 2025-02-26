@@ -7,7 +7,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import type { IInputSuggestionItem, InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
+import type { IInputSuggestionItem } from "@ui5/webcomponents/dist/Input.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import {
 	isEnter,
