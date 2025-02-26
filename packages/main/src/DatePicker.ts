@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -357,6 +358,12 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	responsivePopover?: ResponsivePopover;
 
+	@query("[ui5-datetime-input]")
+	_dateTimeInput!: DateTimeInput;
+
+	@query("[ui5-calendar]")
+	_calendar!: Calendar;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -384,7 +391,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		if (isPhone()) {
 			this.blur(); // close device's keyboard and prevent further typing
 		} else {
-			this._getInput()?.focus();
+			this._dateTimeInput?.focus();
 		}
 
 		this.fireDecoratorEvent("close");
@@ -410,11 +417,6 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 		this.value = this.normalizeValue(this.value) || this.value;
 		this.liveValue = this.value;
-	}
-
-	get _calendar() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!
-			.querySelector<Calendar>("[ui5-calendar]")!;
 	}
 
 	/**
@@ -465,7 +467,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			}
 		}
 		const target = e.target as HTMLElement;
-		if (target && this.open && this._getInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+		if (target && this.open && this._dateTimeInput.id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this._togglePicker();
 		}
 
@@ -527,7 +529,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		const previousValue = this.value;
 
 		if (updateValue) {
-			this._getInput().value = value;
+			this._dateTimeInput.value = value;
 			this.value = value;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
@@ -539,11 +541,11 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		});
 
 		if (!executeEvent && updateValue) {
-			if (this.value !== previousValue && this.value !== this._getInput().value) {
+			if (this.value !== previousValue && this.value !== this._dateTimeInput.value) {
 				return; // If the value was changed in the change event, do not revert it
 			}
 
-			this._getInput().value = previousValue;
+			this._dateTimeInput.value = previousValue;
 
 			this.value = previousValue;
 		}
@@ -560,10 +562,6 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		if (eventPrevented) {
 			this.valueState = previousValueState;
 		}
-	}
-
-	_getInput(): DateTimeInput {
-		return this.shadowRoot!.querySelector<DateTimeInput>("[ui5-datetime-input]")!;
 	}
 
 	/**
@@ -766,10 +764,6 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return isDesktop() ? IconMode.Decorative : IconMode.Interactive;
 	}
 
-	_respPopover() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
-	}
-
 	_canOpenPicker() {
 		return !this.disabled && !this.readonly;
 	}
@@ -835,7 +829,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	_toggleAndFocusInput() {
 		this._togglePicker();
-		this._getInput().focus();
+		this._dateTimeInput.focus();
 	}
 
 	/**

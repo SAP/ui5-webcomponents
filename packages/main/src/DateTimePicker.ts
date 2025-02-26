@@ -362,10 +362,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
-	getPicker() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
-	}
-
 	getSelectedDateTime() {
 		const selectedDate = this.getFormat().parse(this._calendarSelectedDates[0]) as Date;
 		const selectedTime = this.getFormat().parse(this._timeSelectionValue) as Date;
