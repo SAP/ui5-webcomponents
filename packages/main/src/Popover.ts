@@ -409,6 +409,8 @@ class Popover extends Popup {
 			return this.closePopup();
 		}
 
+		this._visible = true;
+
 		this._oldPlacement = placement;
 		this.actualPlacement = placement.placement;
 

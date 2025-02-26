@@ -8,6 +8,11 @@
 
 :host([open]) {
 	display: flex;
+	visibility: hidden;
+}
+
+:host([open][_visible]) {
+	visibility: visible;
 }
 
 .ui5-popup-root {
