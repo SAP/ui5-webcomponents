@@ -63,8 +63,8 @@ const scripts = {
 		default: 'concurrently "nps test.ssr" "nps test.ssr2" "nps test.test-cy-ci"',
 		ssr: `mocha test/ssr`,
 		ssr2: "node -e \"import('./dist/Device.js')\"",
-		"test-cy-ci": `nps generate && nps generateTestTemplates && cross-env UI5_BASE=true yarn cypress run --component --browser chrome`,
-		"test-cy-open": `nps generate && nps generateTestTemplates && cross-env UI5_BASE=true yarn cypress open --component --browser chrome`,
+		"test-cy-ci": `nps generateTestTemplates && cross-env UI5_BASE=true yarn cypress run --component --browser chrome`,
+		"test-cy-open": `nps generateTestTemplates && cross-env UI5_BASE=true yarn cypress open --component --browser chrome`,
 	},
 };
 
