@@ -157,8 +157,8 @@ describe("Popover interaction", () => {
 			cy.mount(
 				<>
 					<button id="opener">Open</button>
-					<Popover id="pop" open={true} opener="opener">
-						<Button id="btnClosePopover">Close</Button>
+					<Popover id="pop" open={true} opener="opener" placement="Bottom">
+						<span>popover content</span>
 					</Popover>
 					<button id="btn">Stops mousedown propagation</button>
 				</>
