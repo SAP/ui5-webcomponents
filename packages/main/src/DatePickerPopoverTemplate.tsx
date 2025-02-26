@@ -102,7 +102,12 @@ function valueStateTextHeader(this: DatePicker, style?: Record<string, string>) 
 			slot={!this.phone ? "header" : undefined}
 			class={{
 				"ui5-popover-header": true,
-				...this.classes.popoverValueState,
+				"ui5-valuestatemessage-header": true,
+				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			}}
 			style={style}
 		>

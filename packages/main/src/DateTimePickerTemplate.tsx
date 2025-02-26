@@ -70,7 +70,8 @@ function content(this: DateTimePicker) {
 						id={`${this._id}-time-sel`}
 						class={{
 							"ui5-dt-time": true,
-							...this.classes.dateTimeView,
+							"ui5-dt-cal--hidden": this.phone && this.showTimeView,
+							"ui5-dt-time--hidden": this.phone && this.showDateView,
 						}}
 						formatPattern={this._formatPattern}
 						value={this._timeSelectionValue}

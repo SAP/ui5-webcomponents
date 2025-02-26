@@ -718,24 +718,6 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return this.valueState !== ValueState.None;
 	}
 
-	get classes() {
-		return {
-			popover: {
-				"ui5-suggestions-popover": true,
-				"ui5-popover-with-value-state-header-phone": this.phone && this.hasValueStateText,
-				"ui5-popover-with-value-state-header": !this.phone && this.hasValueStateText,
-			},
-			popoverValueState: {
-				"ui5-valuestatemessage-header": true,
-				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
-				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
-			},
-		};
-	}
-
 	get openIconTitle() {
 		return DatePicker.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
 	}

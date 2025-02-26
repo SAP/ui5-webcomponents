@@ -191,38 +191,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		}
 	}
 
-	/**
-	 * Read-only getters
-	 */
-	get classes() {
-		return {
-			// Remove after deliting the hbs template, the classes are added in the jsx template
-			picker: {
-				"ui5-dt-picker-content--phone": this.phone,
-			},
-			dateTimeView: {
-				"ui5-dt-cal--hidden": this.phone && this.showTimeView,
-				"ui5-dt-time--hidden": this.phone && this.showDateView,
-			},
-			footer: {
-				"ui5-dt-picker-footer-time-hidden": (this.phone && this.showTimeView) || (this.phone && this.showDateView),
-			},
-			popover: {
-				"ui5-suggestions-popover": true,
-				"ui5-popover-with-value-state-header-phone": this.phone && this.hasValueStateText,
-				"ui5-popover-with-value-state-header": !this.phone && this.hasValueStateText,
-			},
-			popoverValueState: {
-				"ui5-valuestatemessage-header": true,
-				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
-				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
-			},
-		};
-	}
-
 	get _formatPattern() {
 		const hasHours = !!(this.formatPattern || "").match(/H/i);
 		const fallback = !this.formatPattern || !hasHours;
