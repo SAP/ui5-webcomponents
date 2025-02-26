@@ -174,23 +174,40 @@ describe("Side Navigation interaction", () => {
 		// act
 		cy.get("#item1").realClick();
 
-		// assert
 		cy.get("#sideNav")
 			.shadow()
-			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
-			.should("have.attr", "expanded");
+			.find("[ui5-responsive-popover]")
+			.as("popover");
 
 		// assert
-		cy.get("#sideNav")
-			.shadow()
-			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+		cy.get("@popover")
+			.should("be.visible");
+
+		cy.get("@popover")
+			.find("[ui5-side-navigation-item][text='1']")
+			.should("be.visible");
+
+		cy.get("@popover")
+			.find("[ui5-side-navigation-sub-item][text='1.1']")
+			.should("be.visible");
+
+		// act
+		cy.get("@popover")
+			.find("[ui5-side-navigation-item][text='1']")
 			.realClick();
 
 		// assert
-		cy.get("#sideNav")
-			.shadow()
-			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
-			.should("have.attr", "expanded");
+		cy.get("@popover")
+			.should("be.visible");
+
+		// act
+		cy.get("@popover")
+			.find("[ui5-side-navigation-sub-item][text='1.1']")
+			.realClick();
+
+		// assert
+		cy.get("@popover")
+			.should("not.be.visible");
 	});
 
 	it("Tests isSelectable", () => {
