@@ -806,7 +806,6 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	_render() {
 		const ctor = this.constructor as typeof UI5Element;
-		const hasIndividualSlots = ctor.getMetadata().hasIndividualSlots();
 
 		// restore properties that were initialized before `define` by calling the setter
 		if (this.initializedProperties.size > 0) {
