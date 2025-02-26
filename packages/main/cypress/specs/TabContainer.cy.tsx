@@ -2,9 +2,9 @@ import TabContainer from "../../src/TabContainer.js";
 import Tab from "../../src/Tab.js";
 
 describe("TabContainer general interaction", () => {
-	it("Tests noDefault selection", () => {
+	it("Tests no auto selection", () => {
 		cy.mount(
-			<TabContainer no-default-selection id="tcNoDefault">
+			<TabContainer no-auto-selection id="tcNoAuto">
 				<Tab text="Products ID">
 					tab1
 				</Tab>
@@ -17,7 +17,7 @@ describe("TabContainer general interaction", () => {
 			</TabContainer>
 		);
 
-		cy.get("#tcNoDefault")
+		cy.get("#tcNoAuto")
 			.then(tc => {
 				const tabContainer = tc.get(0) as TabContainer;
 				const allItems = tabContainer.allItems;

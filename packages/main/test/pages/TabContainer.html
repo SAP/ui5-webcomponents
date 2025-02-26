@@ -945,7 +945,7 @@
 
 	<section>
 		<h2>No tab initially selected</h2>
-		<ui5-tabcontainer no-default-selection id="tcNoDefault">
+		<ui5-tabcontainer no-auto-selection id="tcNoAuto">
 			<ui5-tab text="Products ID">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
@@ -1092,7 +1092,7 @@
 		});
 
 		resetBtn.addEventListener("click", () => {
-			tcNoDefault.allItems.forEach(tab => tab.selected = false);
+			tcNoAuto.allItems.forEach(tab => tab.selected = false);
 		});
 
 	</script>

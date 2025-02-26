@@ -285,7 +285,7 @@ class TabContainer extends UI5Element {
 	 * @experimental
 	 */
 	@property({ type: Boolean })
-	noDefaultSelection = false;
+	noAutoSelection = false;
 
 	/**
 	 * Defines the current media query size.
@@ -387,7 +387,7 @@ class TabContainer extends UI5Element {
 
 		if (selectedTab) {
 			this._selectedTab = selectedTab;
-		} else if (!this.noDefaultSelection) {
+		} else if (!this.noAutoSelection) {
 			this._selectedTab = this._itemsFlat[0] as Tab;
 		} else {
 			this._selectedTab = undefined;
