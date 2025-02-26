@@ -32,8 +32,6 @@ import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
 	template: TableCellTemplate,
 })
 class TableCell extends TableCellBase {
-	popinRef!: HTMLElement;
-
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		if (this.horizontalAlign) {
@@ -43,19 +41,9 @@ class TableCell extends TableCellBase {
 		}
 	}
 
-	onAfterRendering(): void {
-		if (this._popin && this.popinRef) {
-			if (!this.popinRef.hasChildNodes()) {
-				this._popinHeaderNodes.forEach(popinNode => {
-					this.popinRef.append(popinNode);
-				});
-			}
-		}
-	}
-
-	captureRef(ref: HTMLElement | null) {
-		if (ref) {
-			this.popinRef = ref;
+	injectHeaderNodes(ref: HTMLElement | null) {
+		if (this._popin && ref) {
+			ref.replaceChildren(...this._popinHeaderNodes);
 		}
 	}
 
