@@ -25,7 +25,7 @@ import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
 import { kebabToCamelCase, camelToKebabCase, kebabToPascalCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
-import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
+import { getSlotName, getSlottedNodesList, getAutoSlot } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import executeTemplate from "./renderer/executeTemplate.js";
@@ -453,6 +453,12 @@ abstract class UI5Element extends HTMLElement {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = getSlotName(child);
 			const slotData = slotsMap[slotName];
+
+			// Assign auto-slot if applicable
+			const autoSlot = getAutoSlot(child);
+			if (autoSlot) {
+				(child as HTMLElement).slot = autoSlot; // if getAutoSlot returns a string, node is an HTMLElement
+			}
 
 			// Check if the slotName is supported
 			if (slotData === undefined) {
