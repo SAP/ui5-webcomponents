@@ -3,6 +3,9 @@ import Menu from "../../src/Menu.js";
 import MenuItem from "../../src/MenuItem.js";
 
 import openFolder from "@ui5/webcomponents-icons/dist/open-folder.js";
+import addFolder from "@ui5/webcomponents-icons/dist/add-folder.js";
+import locked from "@ui5/webcomponents-icons/dist/locked.js";
+import favorite from "@ui5/webcomponents-icons/dist/favorite.js";
 
 describe("Menu interaction", () => {
 	it("Menu opens after button click", () => {
@@ -568,47 +571,47 @@ describe("Menu interaction", () => {
 
 		/* The test is valid, but currently it is not stable. It will be reviewed further and stabilized afterwards. */
 
-		// it("Menu items - navigation in endContent", () => {
-		// 	cy.mount(
-		// 		<>
-		// 			<Button id="btnOpen">Open Menu</Button>
-		// 			<Menu id="menu" opener="btnOpen">
-		// 				<MenuItem id="item2" text="Item 2">
-		// 					<Button id="newLock" slot="endContent" icon={locked} design="Transparent" />
-		// 					<Button id="newFavorite" slot="endContent" icon={favorite} design="Transparent" />
-		// 				</MenuItem>
-		// 				<MenuItem text="Item3" additionalText="Ctrl+F" icon={addFolder} />
-		// 			</Menu>
-		// 		</>
-		// 	);
+		it.skip("Menu items - navigation in endContent", () => {
+			cy.mount(
+				<>
+					<Button id="btnOpen">Open Menu</Button>
+					<Menu id="menu" opener="btnOpen">
+						<MenuItem id="item2" text="Item 2">
+							<Button id="newLock" slot="endContent" icon={locked} design="Transparent" />
+							<Button id="newFavorite" slot="endContent" icon={favorite} design="Transparent" />
+						</MenuItem>
+						<MenuItem text="Item3" additionalText="Ctrl+F" icon={addFolder} />
+					</Menu>
+				</>
+			);
 
-		// 	cy.get("[ui5-menu]")
-		// 		.ui5MenuOpen();
+			cy.get("[ui5-menu]")
+				.ui5MenuOpen();
 
-		// 	cy.get("[ui5-menu] > [ui5-menu-item]").as("items");
-		// 	cy.get("[ui5-menu-item] > [ui5-button]").as("buttons");
+			cy.get("[ui5-menu] > [ui5-menu-item]").as("items");
+			cy.get("[ui5-menu-item] > [ui5-button]").as("buttons");
 
-		// 	cy.get("@items")
-		// 		.first()
-		// 		.should("be.focused");
+			cy.get("@items")
+				.first()
+				.should("be.focused");
 
-		// 	cy.realPress("ArrowRight");
-		// 	cy.get("@buttons").first().should("be.focused");
+			cy.realPress("ArrowRight");
+			cy.get("@buttons").first().should("be.focused");
 
-		// 	cy.realPress("ArrowRight");
-		// 	cy.get("@buttons").last().should("be.focused");
+			cy.realPress("ArrowRight");
+			cy.get("@buttons").last().should("be.focused");
 
-		// 	cy.realPress("ArrowRight");
-		// 	cy.get("@buttons").last().should("be.focused");
+			cy.realPress("ArrowRight");
+			cy.get("@buttons").last().should("be.focused");
 
-		// 	cy.realPress("ArrowLeft");
-		// 	cy.get("@buttons").first().should("be.focused");
+			cy.realPress("ArrowLeft");
+			cy.get("@buttons").first().should("be.focused");
 
-		// 	cy.realPress("ArrowLeft");
-		// 	cy.get("@buttons").first().should("be.focused");
+			cy.realPress("ArrowLeft");
+			cy.get("@buttons").first().should("be.focused");
 
-		// 	cy.realPress("ArrowDown");
-		// 	cy.get("@items").last().should("be.focused");
-		// });
+			cy.realPress("ArrowDown");
+			cy.get("@items").last().should("be.focused");
+		});
 	});
 });
