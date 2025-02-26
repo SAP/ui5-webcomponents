@@ -8,10 +8,13 @@
 
 :host([open]) {
 	display: flex;
+}
+
+:host([open]:not([ui5-responsive-popover])) {
 	opacity: 0;
 }
 
-:host([open][_visible]) {
+:host([open][_visible]:not([ui5-responsive-popover])) {
 	opacity: 1;
 }
 
