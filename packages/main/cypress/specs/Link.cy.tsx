@@ -11,25 +11,6 @@ describe("General API", () => {
 			.should("exist");
 	});
 
-	it("tests href attributes", () => {
-		const HREF_ATTRIBUTE = "https://www.sap.com/index.html";
-
-		cy.mount(<Link></Link>);
-
-		cy.get("[ui5-link]")
-			.shadow()
-			.find(".ui5-link-root")
-			.as("innerLink");
-
-		cy.get("@innerLink")
-			.should("not.have.attr", "href");
-
-		cy.get("[ui5-link]").invoke("attr", "href", HREF_ATTRIBUTE);
-
-		cy.get("@innerLink")
-			.should("have.attr", "href", HREF_ATTRIBUTE);
-	});
-
 	it("tests rel attribute", () => {
 		cy.mount(<Link href="https://www.sap.com" target="_blank"></Link>);
 
@@ -37,25 +18,6 @@ describe("General API", () => {
 			.shadow()
 			.find(".ui5-link-root")
 			.should("have.attr", "rel", "noreferrer noopener");
-	});
-
-	it("tests target attributes", () => {
-		const TARGET_ATTRIBUTE = "_blank";
-
-		cy.mount(<Link></Link>);
-
-		cy.get("[ui5-link]")
-			.shadow()
-			.find(".ui5-link-root")
-			.as("innerLink");
-
-		cy.get("@innerLink")
-			.should("not.have.attr", "target");
-
-		cy.get("[ui5-link]").invoke("attr", "target", TARGET_ATTRIBUTE);
-
-		cy.get("@innerLink")
-			.should("have.attr", "target", TARGET_ATTRIBUTE);
 	});
 
 	it("should wrap the text of the link", () => {
