@@ -181,6 +181,7 @@ abstract class UI5Element extends HTMLElement {
 	_state: State;
 	_internals: ElementInternals;
 	_individualSlot?: string;
+	_autoSlot?: string;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
@@ -457,7 +458,7 @@ abstract class UI5Element extends HTMLElement {
 			// Assign auto-slot if applicable
 			const autoSlot = getAutoSlot(child);
 			if (autoSlot) {
-				(child as HTMLElement).slot = autoSlot; // if getAutoSlot returns a string, node is an HTMLElement
+				(child as UI5Element)._autoSlot = autoSlot; // If getAutoSlot returns a string, child is a UI5Element
 			}
 
 			// Check if the slotName is supported
@@ -863,9 +864,7 @@ abstract class UI5Element extends HTMLElement {
 		this._rendered = true;
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
-		if (hasIndividualSlots) {
-			this._assignIndividualSlotsToChildren();
-		}
+		this._assignSpecialSlotsToChildren();
 
 		// Call the onAfterRendering hook
 		this.onAfterRendering();
@@ -874,12 +873,14 @@ abstract class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_assignIndividualSlotsToChildren() {
+	_assignSpecialSlotsToChildren() {
 		const domChildren = Array.from(this.children);
 
 		domChildren.forEach((child: Record<string, any>) => {
 			if (child._individualSlot) {
 				child.setAttribute("slot", child._individualSlot);
+			} else if (child._autoSlot) {
+				child.setAttribute("slot", child._autoSlot);
 			}
 		});
 	}
