@@ -138,20 +138,20 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 
 type NotEqual<X, Y> = true extends Equal<X, Y> ? false : true
 type Equal<X, Y> =
-  (<T>() => T extends X ? 1 : 2) extends
-  (<T>() => T extends Y ? 1 : 2) ? true : false
+	(<T>() => T extends X ? 1 : 2) extends
+	(<T>() => T extends Y ? 1 : 2) ? true : false
 
 // JSX support
 type IsAny<T, Y, N> = 0 extends (1 & T) ? Y : N
 // type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: T[Property] extends IsAny<T> ? any : (e: CustomEvent<T[Property]>) => void }
 type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}`
-? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
-: T;
+	? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
+	: T;
 type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
 
 type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "autocomplete" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "inputmode" | "lang" | "nonce" | "part" | "exportparts" | "pattern" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate" | "ref" | "inert";
 type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
-type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: IsAny<T[Property], any, (e: CustomEvent<T[Property]>) => void> }
+type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}`]: IsAny<T[Property], any, (e: CustomEvent<T[Property]>) => void> }
 
 /**
  * @class
@@ -332,25 +332,25 @@ abstract class UI5Element extends HTMLElement {
 	 * Called every time before the component renders.
 	 * @public
 	 */
-	onBeforeRendering(): void {}
+	onBeforeRendering(): void { }
 
 	/**
 	 * Called every time after the component renders.
 	 * @public
 	 */
-	onAfterRendering(): void {}
+	onAfterRendering(): void { }
 
 	/**
 	 * Called on connectedCallback - added to the DOM.
 	 * @public
 	 */
-	onEnterDOM(): void {}
+	onEnterDOM(): void { }
 
 	/**
 	 * Called on disconnectedCallback - removed from the DOM.
 	 * @public
 	 */
-	onExitDOM(): void {}
+	onExitDOM(): void { }
 
 	/**
 	 * @private
@@ -371,7 +371,29 @@ abstract class UI5Element extends HTMLElement {
 			characterData: canSlotText,
 			attributeFilter: ["slot"],
 		};
-		observeDOMNode(this, this._processChildren.bind(this) as MutationCallback, mutationObserverOptions);
+		observeDOMNode(this, this.onObservedMutation.bind(this) as MutationCallback, mutationObserverOptions);
+	}
+
+	onObservedMutation(changes: MutationRecord[]) {
+		let shouldProccessChildren = false;
+
+		changes.forEach(change => {
+			// we observe all changes of the component except its slot attribute
+			if (change.target === this && change.type !== "attributes") {
+				shouldProccessChildren = true;
+			}
+
+			const directChildren = [...this.childNodes].includes(change.target as ChildNode);
+
+			// we observe slot attribute change only on the direct child of the web component
+			if (directChildren && change.type === "attributes") {
+				shouldProccessChildren = true;
+			}
+		});
+
+		if (shouldProccessChildren) {
+			this._processChildren();
+		}
 	}
 
 	/**
@@ -413,7 +435,7 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		const autoIncrementMap = new Map<string, number>();
-		const slottedChildrenMap = new Map<string, Array<{child: Node, idx: number }>>();
+		const slottedChildrenMap = new Map<string, Array<{ child: Node, idx: number }>>();
 
 		const allChildrenUpgraded = domChildren.map(async (child, idx) => {
 			// Determine the type of the child (mainly by the slot attribute)
@@ -769,7 +791,7 @@ abstract class UI5Element extends HTMLElement {
 	 *
 	 * @public
 	 */
-	onInvalidation(changeInfo: ChangeInfo): void {} // eslint-disable-line
+	onInvalidation(changeInfo: ChangeInfo): void { } // eslint-disable-line
 
 	updateAttributes() {
 		const ctor = this.constructor as typeof UI5Element;
@@ -798,7 +820,7 @@ abstract class UI5Element extends HTMLElement {
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
 
-		try	{
+		try {
 			this.onBeforeRendering();
 
 			if (!this._rendered) {
