@@ -23,9 +23,9 @@
 			primary-title="UI5 Web Components"
 			secondary-title="The Best Run SAP"
 		>
-			<ui5-button icon="menu" slot="startButton" id="startButton"></ui5-button>
+			<ui5-button icon="menu" id="menuBtn" slot="startButton"></ui5-button>
 		</ui5-shellbar>
-        <ui5-responsive-popover id="respPopover" placement="Bottom" accessible-name="Main Navigation">
+        <ui5-responsive-popover id="respPopover" opener="menuBtn" placement="Bottom" accessible-name="Main Navigation">
                 <ui5-side-navigation id="nl1" design="Plain">
                     <!-- Items -->
                     <ui5-side-navigation-item text="Home" href="#home" icon="home"></ui5-side-navigation-item>
@@ -81,7 +81,6 @@
 
 	<script>
 		startButton.addEventListener("click", function (event) {
-			respPopover.opener = startButton;
 			respPopover.open = true;
 		});
 

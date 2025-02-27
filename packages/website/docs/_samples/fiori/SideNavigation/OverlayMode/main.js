@@ -16,14 +16,13 @@ import "@ui5/webcomponents-icons/dist/history.js";
 import "@ui5/webcomponents-icons/dist/customer.js"; 
 import "@ui5/webcomponents-icons/dist/menu.js";
 
-startButton.addEventListener("click", function (event) {
-	respPopover.opener = startButton;
+startButton.addEventListener("click", function () {
 	respPopover.open = true;
 });
 
 //By design on clicking on an element the popover should close
 nl1.querySelectorAll("ui5-side-navigation-item").forEach(element => {
-	element.addEventListener("click", function (event) {
+	element.addEventListener("click", function () {
 		respPopover.open=false;	
 	});
 });
