@@ -49,12 +49,12 @@
 }
 
 :host([design="Action"]) .ui5-sn-item:not(.ui5-sn-item-disabled):hover {
-	border: var(--sapButton_BorderWidth) solid var(--sapButton_Hover_BorderColor);
+	border: var(--_ui5_side_navigation_action_item_border_hover);
 	background: var(--sapButton_Hover_Background);
 }
 
 :host([design="Action"]) .ui5-sn-item:not(.ui5-sn-item-disabled):active {
-	border: var(--sapButton_BorderWidth) solid var(--sapButton_Active_BorderColor);
+	border: var(--_ui5_side_navigation_action_item_border_active);
 	background: var(--sapButton_Active_Background);
 }
 
