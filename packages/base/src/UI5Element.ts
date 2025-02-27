@@ -42,6 +42,7 @@ import { getI18nBundle } from "./i18nBundle.js";
 import type I18nBundle from "./i18nBundle.js";
 import { fetchCldr } from "./asset-registries/LocaleData.js";
 import getLocale from "./locale/getLocale.js";
+import { shouldIgnoreCustomElement } from "./IgnoreCustomElements.js";
 
 const DEV_MODE = true;
 let autoId = 0;
@@ -449,25 +450,26 @@ abstract class UI5Element extends HTMLElement {
 				(child as SlottedChild)._individualSlot = `${slotName}-${nextIndex}`;
 			}
 
-			// // Await for not-yet-defined custom elements
-			// if (child instanceof HTMLElement) {
-			// 	const localName = child.localName;
-			// 	const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
+			// Await for not-yet-defined custom elements
+			if (child instanceof HTMLElement) {
+				const localName = child.localName;
+				const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
 
-			// 	if (shouldWaitForCustomElement) {
-			// 		const isDefined = customElements.get(localName);
-			// 		if (!isDefined) {
-			// 			const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
-			// 			let timeoutPromise = elementTimeouts.get(localName);
-			// 			if (!timeoutPromise) {
-			// 				timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
-			// 				elementTimeouts.set(localName, timeoutPromise);
-			// 			}
-			// 			await Promise.race([whenDefinedPromise, timeoutPromise]);
-			// 		}
-			// 		customElements.upgrade(child);
-			// 	}
-			// }
+				if (shouldWaitForCustomElement) {
+					const isDefined = customElements.get(localName);
+					if (!isDefined) {
+						throw new Error("should not reach");
+						// const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
+						// let timeoutPromise = elementTimeouts.get(localName);
+						// if (!timeoutPromise) {
+						// 	timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
+						// 	elementTimeouts.set(localName, timeoutPromise);
+						// }
+						// await Promise.race([whenDefinedPromise, timeoutPromise]);
+					}
+					customElements.upgrade(child);
+				}
+			}
 
 			child = (ctor.getMetadata().constructor as typeof UI5ElementMetadata).validateSlotValue(child, slotData);
 
