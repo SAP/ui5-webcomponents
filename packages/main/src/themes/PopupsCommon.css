@@ -10,11 +10,11 @@
 	display: flex;
 }
 
-:host([open]:not([ui5-responsive-popover])) {
+:host([open]:not([ui5-responsive-popover][on-phone])) {
 	opacity: 0;
 }
 
-:host([open][_visible]:not([ui5-responsive-popover])) {
+:host([open][_visible]:not([ui5-responsive-popover][on-phone])) {
 	opacity: 1;
 }
 
