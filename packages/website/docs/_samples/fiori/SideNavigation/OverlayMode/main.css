@@ -1,0 +1,5 @@
+#respPopover::part(content) {
+	padding: 0;
+	overflow-x: visible;
+	overflow-y: hidden
+}
