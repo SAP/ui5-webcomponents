@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -14,7 +14,7 @@ import {
 import type Table from "./Table.js";
 import type { ITableGrowing } from "./Table.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
-import TableGrowingTemplate from "./generated/templates/TableGrowingTemplate.lit.js";
+import TableGrowingTemplate from "./TableGrowingTemplate.js";
 import TableGrowingCss from "./generated/themes/TableGrowing.css.js";
 import {
 	TABLE_MORE,
@@ -64,7 +64,7 @@ import {
  */
 @customElement({
 	tag: "ui5-table-growing",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TableGrowingTemplate,
 	styles: TableGrowingCss,
 })
@@ -125,7 +125,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * Used for keyboard interaction.
 	 * @private
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, noAttribute: true })
 	_activeState = false;
 
 	@property({ type: Number, noAttribute: true })

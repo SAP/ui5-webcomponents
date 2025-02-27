@@ -21,7 +21,7 @@
     background-color: inherit;
 }
 
-:host([fixed]) {
+:host([data-ui5-table-cell-fixed]) {
     position: sticky;
     z-index: 1;
 }

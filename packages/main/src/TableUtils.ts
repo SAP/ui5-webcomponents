@@ -6,7 +6,7 @@ const isInstanceOfTable = (obj: any): obj is Table => {
 };
 
 const isSelectionCheckbox = (e: Event) => {
-	return e.composedPath().some((el: EventTarget) => (el as HTMLElement).hasAttribute?.("ui5-table-selection-component"));
+	return e.composedPath().some((el: EventTarget) => (el as HTMLElement).hasAttribute?.("data-ui5-table-selection-component"));
 };
 
 const isHeaderSelector = (e: Event) => {
