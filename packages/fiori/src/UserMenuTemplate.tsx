@@ -73,8 +73,8 @@ export default function UserMenuTemplate(this: UserMenu) {
 					<Panel collapsed={true} class="ui5-pm-other-accounts">
 						<div slot="header" class="ui5-user-menu-account-header">
 							<Title slot="header" level="H4">{this._otherAccountsButtonText} ({this._otherAccounts.length})</Title>
-							{this.showEditAccount &&
-								<Button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon={userEdit} onClick={this._handleAddAccountClick} tooltip={this._addAccountTooltip}/>
+							{this.showEditAccounts &&
+								<Button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon={userEdit} onClick={this._handleEditAccountsClick} tooltip={this._editAccountsTooltip}/>
 							}
 						</div>
 						{this._otherAccounts.length > 0 &&
