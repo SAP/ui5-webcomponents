@@ -201,6 +201,7 @@ abstract class UI5Element extends HTMLElement {
 	// setters from the constructor should not set attributes, this is delegated after the first rendering but is async
 	// setters after the constructor can set attributes synchronously for more convinient development
 	_rendered = false;
+	static _fullyDefined = new Set();
 
 	constructor() {
 		super();
@@ -284,6 +285,13 @@ abstract class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	async connectedCallback() {
+		const ctor = this.constructor as typeof UI5Element;
+		if (!ctor._fullyDefined.has(this.constructor)) {
+			setTimeout(() => {
+				this.connectedCallback();
+			}, 0);
+			return;
+		}
 		if (DEV_MODE) {
 			const props = (this.constructor as typeof UI5Element).getMetadata().getProperties();
 			for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
@@ -294,8 +302,6 @@ abstract class UI5Element extends HTMLElement {
 				}
 			}
 		}
-
-		const ctor = this.constructor as typeof UI5Element;
 
 		this.setAttribute(ctor.getMetadata().getPureTag(), "");
 		if (ctor.getMetadata().supportsF6FastNavigation()) {
@@ -1345,6 +1351,7 @@ abstract class UI5Element extends HTMLElement {
 			this._generateAccessors();
 			registerTag(tag);
 			customElements.define(tag, this as unknown as CustomElementConstructor);
+			this._fullyDefined.add(this);
 		}
 
 		return this;
