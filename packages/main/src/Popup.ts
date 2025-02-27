@@ -216,6 +216,12 @@ abstract class Popup extends UI5Element {
 	@property({ type: Boolean })
 	onDesktop = false;
 
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_visible = false;
+
 	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
 	_focusedElementBeforeOpen?: HTMLElement | null;
@@ -525,6 +531,7 @@ abstract class Popup extends UI5Element {
 
 		this.hide();
 		this.open = false;
+		this._visible = false;
 
 		if (!preventRegistryUpdate) {
 			this._removeOpenedPopup();
