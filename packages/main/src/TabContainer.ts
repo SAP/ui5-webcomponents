@@ -275,7 +275,7 @@ class TabContainer extends UI5Element {
 	tabsPlacement: `${TabContainerTabsPlacement}` = "Top";
 
 	/**
-	 * Defines if no tab will be selected initially.
+	 * Defines if automatic tab selection is deactivated.
 	 *
 	 * **Note:** By default, if none of the child tabs have the `selected` property set, the first tab will be automatically selected.
 	 * Setting this property to `true` allows preventing this behavior.
