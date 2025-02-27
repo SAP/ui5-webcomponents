@@ -194,6 +194,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 									data-ui5-external-action-item-id={item.refItemid}
 									data-ui5-stable={item.stableDomRef}
 									onClick={item.press}
+									accessibilityAttributes={item.accessibilityAttributes}
 								/>
 							))}
 						</div>
