@@ -28,6 +28,7 @@ let MenuItemConstructor: new () => MenuItem;
 	styles: TableRowActionBaseStyles,
 	template: TableRowActionBaseTemplate,
 	dependencies: [Button, Icon],
+	autoSlot: "actions",
 })
 
 abstract class TableRowActionBase extends UI5Element {
