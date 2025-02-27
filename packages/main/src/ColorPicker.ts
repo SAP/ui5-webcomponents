@@ -39,6 +39,7 @@ import {
 
 // Styles
 import ColorPickerCss from "./generated/themes/ColorPicker.css.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/index.js";
 
 const PICKER_POINTER_WIDTH = 6.5;
 
@@ -155,6 +156,13 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 */
 	@property({ type: Number })
 	_alpha = 1;
+
+	/**
+	 * this is the alpha value in the input only while editing, since it can container invalid/empty values temporarily
+	 * @private
+	 */
+	@property()
+	_alphaTemp?: string;
 
 	/**
 	 * @private
@@ -298,8 +306,9 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._changeSelectedColor(e.offsetX, e.offsetY);
 	}
 
-	_handleAlphaInput(e: CustomEvent) {
-		const aphaInputValue: string = (e.target as Input).value;
+	_handleAlphaInput(e: UI5CustomEvent<Input, "input"> | UI5CustomEvent<Slider, "input">) {
+		const aphaInputValue = String(e.currentTarget.value);
+		this._alphaTemp = aphaInputValue;
 		this._alpha = parseFloat(aphaInputValue);
 		if (Number.isNaN(this._alpha)) {
 			this._alpha = 1;
@@ -432,6 +441,14 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	}
 
 	_handleAlphaChange() {
+		// parse the input value if valid or fallback to default
+		this._alpha = this._alphaTemp ? parseFloat(this._alphaTemp) : 1;
+		if (Number.isNaN(this._alpha)) {
+			this._alpha = 1;
+		}
+		// reset input value so _alpha is rendered
+		this._alphaTemp = undefined;
+		// normalize range
 		this._alpha = this._alpha < 0 ? 0 : this._alpha;
 		this._alpha = this._alpha > 1 ? 1 : this._alpha;
 
