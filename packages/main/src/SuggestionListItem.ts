@@ -39,14 +39,11 @@ class SuggestionListItem extends ListItemStandard {
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.hasTitle = !!this.titleText.length;
+		this.hasDescription = !!(this.description || this.hasExpandableDescription || this.richDescription.length);
 	}
 
 	get effectiveTitle() {
 		return this.titleText.filter(node => node.nodeType !== Node.COMMENT_NODE).map(el => el.textContent).join("");
-	}
-
-	get hasDescription() {
-		return this.richDescription.length > 0 || this.description;
 	}
 
 	get groupItem() {
