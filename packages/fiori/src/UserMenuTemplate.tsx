@@ -27,6 +27,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 			placement="Bottom"
 			verticalAlign="Bottom"
 			horizontalAlign="End"
+			preventInitialFocus={true}
 			accessibleName={this.accessibleNameText}
 			open={this.open}
 			opener={this.opener}
