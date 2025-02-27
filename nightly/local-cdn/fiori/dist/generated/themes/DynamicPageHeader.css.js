@@ -3,6 +3,6 @@ import defaultThemeBase from "@ui5/webcomponents-theming/dist/generated/themes/s
 import defaultTheme from "./sap_horizon/parameters-bundle.css.js";
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_horizon", async () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents-fiori", "sap_horizon", async () => defaultTheme);
-export default `:host{background-color:var(--_ui5-v2-8-0-rc-2_dynamic_page_header_background_color);display:block;box-shadow:var(--_ui5-v2-8-0-rc-2_dynamic_page_header-box-shadow)}.ui5-dynamic-page-header-root{background:inherit}
+export default `:host{background-color:var(--_ui5-v2-8-0-rc-3_dynamic_page_header_background_color);display:block;box-shadow:var(--_ui5-v2-8-0-rc-3_dynamic_page_header-box-shadow)}.ui5-dynamic-page-header-root{background:inherit}
 `;
 //# sourceMappingURL=DynamicPageHeader.css.js.map

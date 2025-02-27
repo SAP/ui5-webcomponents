@@ -3,6 +3,6 @@ import defaultThemeBase from "@ui5/webcomponents-theming/dist/generated/themes/s
 import defaultTheme from "./sap_horizon/parameters-bundle.css.js";
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_horizon", async () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_horizon", async () => defaultTheme);
-export default `:host{--_ui5-v2-8-0-rc-2_input_width: 100%;min-width:6.25rem;min-height:2rem}:host([on-phone]){display:contents}.ui5-responsive-popover-header{height:var(--_ui5-v2-8-0-rc-2-responsive_popover_header_height);display:flex;justify-content:var(--_ui5-v2-8-0-rc-2_popup_header_prop_header_text_alignment);align-items:center;width:100%}.ui5-responsive-popover-header-text{width:calc(100% - var(--_ui5-v2-8-0-rc-2_button_base_min_width))}.ui5-responsive-popover-header-no-title{justify-content:flex-end}
+export default `:host{--_ui5-v2-8-0-rc-3_input_width: 100%;min-width:6.25rem;min-height:2rem}:host([on-phone]){display:contents}.ui5-responsive-popover-header{height:var(--_ui5-v2-8-0-rc-3-responsive_popover_header_height);display:flex;justify-content:var(--_ui5-v2-8-0-rc-3_popup_header_prop_header_text_alignment);align-items:center;width:100%}.ui5-responsive-popover-header-text{width:calc(100% - var(--_ui5-v2-8-0-rc-3_button_base_min_width))}.ui5-responsive-popover-header-no-title{justify-content:flex-end}
 `;
 //# sourceMappingURL=ResponsivePopover.css.js.map
