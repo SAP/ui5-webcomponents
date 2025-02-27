@@ -5,13 +5,13 @@
 enum SideNavigationDesign {
 
 	/**
-	 * Side Navigation has a standalone design.
+	 * SideNavigation has a standalone design.
 	 * @public
 	 */
 	Decorated = "Decorated",
 
 	/**
-	 * Side Navigation is without standalone design.
+	 * SideNavigation is without standalone design.
 	 * @public
  	 */
 	Plain = "Plain",
