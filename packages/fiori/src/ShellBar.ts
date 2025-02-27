@@ -505,6 +505,7 @@ class ShellBar extends UI5Element {
 	_observableContent: Array<HTMLElement> = [];
 	_isAnimating: boolean = false;
 	_autoRestoreSearchField = false;
+	_handleAnimationEndRef = this._handleAnimationEnd.bind(this);
 
 	_headerPress: () => void;
 
@@ -557,7 +558,6 @@ class ShellBar extends UI5Element {
 			if (this._lastOffsetWidth !== this.offsetWidth) {
 				this._overflowActions();
 				if (this.autoSearchField) {
-					this._isAnimating = false;
 					this._updateSearchFieldState();
 				}
 			}
@@ -738,10 +738,10 @@ class ShellBar extends UI5Element {
 
 	onAfterRendering() {
 		this._lastOffsetWidth = this.offsetWidth;
-		setTimeout(() => {
+		if (!this._isAnimating) {
 			this._overflowActions();
-			this.onInitialRendering();
-		}, RESIZE_THROTTLE_RATE);
+		}
+		this.onInitialRendering();
 	}
 
 	async onInitialRendering() {
@@ -788,7 +788,7 @@ class ShellBar extends UI5Element {
 
 	_resetItemsVisibility(items: Array<HTMLElement>) {
 		items.forEach(item => {
-			item.classList.remove("ui5-shellbar-hidden-button");
+			item.classList.contains("ui5-shellbar-hidden-button") && item.classList.remove("ui5-shellbar-hidden-button");
 		});
 	}
 
@@ -858,13 +858,31 @@ class ShellBar extends UI5Element {
 		ResizeHandler.deregister(this, this._handleResize);
 	}
 
+	_handleAnimationEnd() {
+		this._isAnimating = false;
+		this.searchField[0].removeEventListener("animationend", this._handleAnimationEndRef);
+		this._overflowActions();
+	}
+
+	_attachAnimationEndHandlers() {
+		const searchWrapper = this.shadowRoot!.querySelector(".ui5-shellbar-search-field");
+		this._isAnimating = true;
+		searchWrapper?.addEventListener("animationend", this._handleAnimationEndRef);
+		setTimeout(() => {
+			if (this._isAnimating) {
+				this._handleAnimationEnd();
+			}
+		}, RESIZE_THROTTLE_RATE);
+	}
+
 	_handleSearchIconPress() {
 		const searchButtonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-search-button")!;
 		const defaultPrevented = !this.fireDecoratorEvent("search-button-click", {
 			targetRef: searchButtonRef,
 			searchFieldVisible: this.showSearchField,
 		});
-		this._isAnimating = true;
+		this._attachAnimationEndHandlers();
+
 		if (defaultPrevented) {
 			return;
 		}
@@ -936,7 +954,7 @@ class ShellBar extends UI5Element {
 
 	_handleCancelButtonPress() {
 		this.showSearchField = false;
-		this._isAnimating = true;
+		this._attachAnimationEndHandlers();
 	}
 
 	_handleProductSwitchPress(e: MouseEvent) {

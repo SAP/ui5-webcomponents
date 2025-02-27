@@ -593,7 +593,7 @@ slot[name="profile"] {
 	animation: expand-shrink 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);
 }
 
-:host([show-search-field]) .ui5-shellbar-search-field,
+:host([show-search-field]) .ui5-shellbar-animating .ui5-shellbar-search-field,
 :host([show-search-field]) .ui5-shellbar-animating .ui5-shellbar-search-full-width-wrapper {
  	animation: expand-grow 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9) forwards;
 }
