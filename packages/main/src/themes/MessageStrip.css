@@ -242,7 +242,3 @@
 :host([design="ColorSet1"]) .ui5-message-strip-close-button::part(button):before {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
-
-/* :host([design="ColorSet2"]) .ui5-message-strip-close-button:hover:focus {
-	border-color: var(--sapContent_FocusColor);
-} */
