@@ -16,7 +16,8 @@ import personPlaceholder from "@ui5/webcomponents-icons/dist/person-placeholder.
 import userSettings from "@ui5/webcomponents-icons/dist/user-settings.js";
 import log from "@ui5/webcomponents-icons/dist/log.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
-import addEmployee from "@ui5/webcomponents-icons/dist/add-employee.js";
+import userEdit from "@ui5/webcomponents-icons/dist/user-edit.js";
+import selectedAccount from "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 
 export default function UserMenuTemplate(this: UserMenu) {
 	return (
@@ -27,7 +28,6 @@ export default function UserMenuTemplate(this: UserMenu) {
 			placement="Bottom"
 			verticalAlign="Bottom"
 			horizontalAlign="End"
-			preventInitialFocus={true}
 			accessibleName={this.accessibleNameText}
 			open={this.open}
 			opener={this.opener}
@@ -74,7 +74,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 						<div slot="header" class="ui5-user-menu-account-header">
 							<Title slot="header" level="H4">{this._otherAccountsButtonText} ({this._otherAccounts.length})</Title>
 							{this.showAddAccount &&
-								<Button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon={addEmployee} onClick={this._handleAddAccountClick} tooltip={this._addAccountTooltip}/>
+								<Button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon={userEdit} onClick={this._handleAddAccountClick} tooltip={this._addAccountTooltip}/>
 							}
 						</div>
 						{this._otherAccounts.length > 0 &&
@@ -89,17 +89,27 @@ export default function UserMenuTemplate(this: UserMenu) {
 													<img src={account.avatarSrc}/>
 												}
 											</Avatar>
-											<div>
+											<div class="ui5-pm-other-accounts-info">
 												{account.titleText &&
-												<Title>{account.titleText}</Title>
+												<Title class="ui5-pm-other-accounts-title">{account.titleText}</Title>
 												}
 												{account.subtitleText &&
-												<Label>{account.subtitleText}</Label>
+												<Label class="ui5-pm-other-accounts-additional-info">{account.subtitleText}</Label>
 												}
 												{account.description &&
-												<Label>{account.description}</Label>
+												<Label class="ui5-pm-other-accounts-additional-info">{account.description}</Label>
 												}
 											</div>
+											<div>
+												{account.selected &&
+													<Icon
+														part="icon"
+														name={selectedAccount}
+														class="ui5-pm-selected-account-icon"
+														mode="Decorative" />
+												}
+											</div>
+
 										</div>
 									</ListItemCustom>
 								)}

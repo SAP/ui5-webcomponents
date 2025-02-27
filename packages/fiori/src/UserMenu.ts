@@ -180,7 +180,7 @@ class UserMenu extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showAddAccount = false;
+	showAddAccount = false;//TODO rename to show-edit-accont
 
 	/**
 	 * Defines if the User menu shows edit button.
@@ -396,7 +396,7 @@ class UserMenu extends UI5Element {
 	}
 
 	get _otherAccounts() {
-		return this.accounts.filter(account => account !== this._selectedAccount);
+		return this.accounts;
 	}
 
 	get _manageAccountButtonText() {
