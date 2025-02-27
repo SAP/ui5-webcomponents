@@ -1,7 +1,9 @@
 import type Select from "./Select.js";
+import Button from "./Button.js";
 import Icon from "./Icon.js";
 import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import SelectPopoverTemplate from "./SelectPopoverTemplate.js";
+import ButtonDesign from "./types/ButtonDesign.js";
 
 export default function SelectTemplate(this: Select) {
 	return (
@@ -15,48 +17,57 @@ export default function SelectTemplate(this: Select) {
 				onClick={this._onclick}
 				title={this.tooltip}
 			>
-				{this.selectedOptionIcon &&
-					<Icon
-						mode="Decorative"
-						class="ui5-select-option-icon"
-						name={this.selectedOptionIcon} />
+				{this.icon &&
+					<Button
+						data-sap-focus-ref
+						design={ButtonDesign.Transparent}
+						// mode="Decorative"
+						class="ui5-select-icon"
+						icon={this.icon} />
 				}
-
-				<div
-					class="ui5-select-label-root"
-					data-sap-focus-ref
-					tabindex={this._effectiveTabIndex}
-					role="combobox"
-					aria-haspopup="listbox"
-					aria-label={this.ariaLabelText}
-					aria-describedby={this.valueStateTextId}
-					aria-disabled={this.isDisabled}
-					aria-required={this.required}
-					aria-readonly={this.readonly}
-					aria-expanded={this._isPickerOpen}
-					aria-roledescription={this._ariaRoleDescription}
-					onKeyDown={this._onkeydown}
-					onKeyPress={this._handleKeyboardNavigation}
-					onKeyUp={this._onkeyup}
-					onFocusIn={this._onfocusin}
-					onFocusOut={this._onfocusout}
-				>
-					{this.hasCustomLabel
-						? <slot name="label"></slot>
-						: this.text
+				{!this.icon && <>
+					{this.selectedOptionIcon &&
+						<Icon
+							mode="Decorative"
+							class="ui5-select-option-icon"
+							name={this.selectedOptionIcon} />
 					}
-				</div>
 
-				{!this.readonly &&
-					<Icon
-						part="icon"
-						name={slimArrowDown}
-						class={{
-							"inputIcon": true,
-							"inputIcon--pressed": this._iconPressed,
-						}} />
-				}
+					<div
+						class="ui5-select-label-root"
+						data-sap-focus-ref
+						tabindex={this._effectiveTabIndex}
+						role="combobox"
+						aria-haspopup="listbox"
+						aria-label={this.ariaLabelText}
+						aria-describedby={this.valueStateTextId}
+						aria-disabled={this.isDisabled}
+						aria-required={this.required}
+						aria-readonly={this.readonly}
+						aria-expanded={this._isPickerOpen}
+						aria-roledescription={this._ariaRoleDescription}
+						onKeyDown={this._onkeydown}
+						onKeyPress={this._handleKeyboardNavigation}
+						onKeyUp={this._onkeyup}
+						onFocusIn={this._onfocusin}
+						onFocusOut={this._onfocusout}
+					>
+						{this.hasCustomLabel
+							? <slot name="label"></slot>
+							: this.text
+						}
+					</div>
 
+					{!this.readonly &&
+						<Icon
+							part="icon"
+							name={slimArrowDown}
+							class={{
+								"inputIcon": true,
+								"inputIcon--pressed": this._iconPressed,
+							}} />
+					}
+				</>}
 				{this.hasValueState &&
 					<span id={`${this._id}-valueStateDesc`} class="ui5-hidden-text">
 						{this.valueStateText}
