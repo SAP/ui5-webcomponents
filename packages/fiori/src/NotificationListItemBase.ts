@@ -5,7 +5,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 
 // Texts
@@ -23,6 +22,7 @@ import {
  * @public
  */
 class NotificationListItemBase extends ListItemBase {
+	eventDetails!: ListItemBase["eventDetails"];
 	/**
 	 * Defines the `titleText` of the item.
 	 * @default undefined
@@ -76,7 +76,7 @@ class NotificationListItemBase extends ListItemBase {
 	async _onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
-		if (isSpace(e) && getEventMark(e) !== "button") {
+		if (isSpace(e) && this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			e.preventDefault();
 			return;
 		}

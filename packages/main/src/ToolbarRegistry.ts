@@ -20,13 +20,8 @@ const getRegisteredStyles = () => {
 	return [...registry.values()].map((ElementClass: typeof ToolbarItem) => ElementClass.styles);
 };
 
-const getRegisteredDependencies = () => {
-	return [...registry.values()].map((ElementClass: typeof ToolbarItem) => ElementClass.dependencies).flat();
-};
-
 export {
 	registerToolbarItem,
 	getRegisteredToolbarItem,
 	getRegisteredStyles,
-	getRegisteredDependencies,
 };

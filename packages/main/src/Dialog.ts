@@ -10,10 +10,8 @@ import {
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import Popup from "./Popup.js";
-import type { PopupBeforeCloseEventDetail as DialogBeforeCloseEventDetail } from "./Popup.js";
-import Icon from "./Icon.js";
-import "@ui5/webcomponents-icons/dist/resize-corner.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -27,7 +25,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
+import DialogTemplate from "./DialogTemplate.js";
 // Styles
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
@@ -71,8 +69,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 
  *
  * ### Responsive Behavior
- * The `stretch` property can be used to stretch the
- * `ui5-dialog` on full screen.
+ * The `stretch` property can be used to stretch the `ui5-dialog` to full screen. For better usability, it's recommended to stretch the dialog to full screen on phone devices.
  *
  * **Note:** When a `ui5-bar` is used in the header or in the footer, you should remove the default dialog's paddings.
  *
@@ -114,12 +111,9 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 		dialogCSS,
 		getEffectiveScrollbarStyle(),
 	],
-	dependencies: [
-		Icon,
-		...Popup.dependencies,
-	],
 })
 class Dialog extends Popup {
+	eventDetails!: Popup["eventDetails"];
 	/**
 	 * Defines the header text.
 	 *
@@ -131,10 +125,10 @@ class Dialog extends Popup {
 	headerText?: string;
 
 	/**
-	 * Determines whether the component should be stretched to fullscreen.
+	 * Determines if the dialog will be stretched to full screen on mobile. On desktop,
+	 * the dialog will be stretched to approximately 90% of the viewport.
 	 *
-	 * **Note:** The component will be stretched to approximately
-	 * 90% of the viewport.
+	 * **Note:** For better usability of the component it is recommended to set this property to "true" when the dialog is opened on phone.
 	 * @default false
 	 * @public
 	 */
@@ -292,7 +286,7 @@ class Dialog extends Popup {
 	}
 
 	get _headerTabIndex() {
-		return this._movable ? "0" : undefined;
+		return this._movable ? 0 : undefined;
 	}
 
 	get _showResizeHandle() {
@@ -323,16 +317,16 @@ class Dialog extends Popup {
 		return ICON_PER_STATE[this.state as ValueStateWithIcon];
 	}
 
-	get _role(): string | undefined {
+	get _role() {
 		if (this.accessibleRole === PopupAccessibleRole.None) {
 			return undefined;
 		}
 
 		if (this.state === ValueState.Negative || this.state === ValueState.Critical) {
-			return PopupAccessibleRole.AlertDialog.toLowerCase();
+			return toLowercaseEnumValue(PopupAccessibleRole.AlertDialog);
 		}
 
-		return this.accessibleRole.toLowerCase();
+		return toLowercaseEnumValue(this.accessibleRole);
 	}
 
 	_show() {
@@ -351,6 +345,8 @@ class Dialog extends Popup {
 		this._attachScreenResizeHandler();
 
 		this.addEventListener("dragstart", this._dragStartHandler);
+
+		this.setAttribute("data-sap-ui-fastnavgroup-container", "true");
 	}
 
 	onExitDOM() {
@@ -411,7 +407,7 @@ class Dialog extends Popup {
 	/**
 	 * Event handlers
 	 */
-	_onDragMouseDown(e: DragEvent) {
+	_onDragMouseDown(e: MouseEvent) {
 		// allow dragging only on the header
 		if (!this._movable || !this.draggable || !Dialog._isHeader(e.target as HTMLElement)) {
 			return;
@@ -676,6 +672,3 @@ class Dialog extends Popup {
 Dialog.define();
 
 export default Dialog;
-export type {
-	DialogBeforeCloseEventDetail,
-};

@@ -11,6 +11,8 @@
 		"rootDir": "src",
 		"tsBuildInfoFile": "dist/.tsbuildinfo",
 		"verbatimModuleSyntax": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"paths": {
 			"@ui5/webcomponents-base/dist/*": [
 				"../base/src/*"

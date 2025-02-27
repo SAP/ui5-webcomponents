@@ -11,9 +11,9 @@ jobs:
       with:
         token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
         fetch-depth: 0
-    - uses: actions/setup-node@v4.0.1
+    - uses: actions/setup-node@v4.1.0
       with:
-        node-version: 18
+        node-version: 22
         cache: 'yarn'
 
     - name: Install
@@ -41,6 +41,10 @@ jobs:
         NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
         GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
       run: yarn lerna publish from-git --yes
+
+    - name: Pre-Deploy
+      run: |
+        yarn ci:deploy:nightly
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4.3.3

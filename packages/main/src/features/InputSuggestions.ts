@@ -1,21 +1,22 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
-import List from "../List.js";
+import type List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
 import type ResponsivePopover from "../ResponsivePopover.js";
-import SuggestionItem from "../SuggestionItem.js";
-import Button from "../Button.js";
-import Icon from "../Icon.js";
+import "../SuggestionItem.js";
+import "../SuggestionItemGroup.js";
+import type SuggestionItem from "../SuggestionItem.js";
 import type ListItemGroupHeader from "../ListItemGroupHeader.js";
+import InputSuggestionsTemplate from "./InputSuggestionsTemplate.js";
+import Input from "../Input.js";
 
 import {
 	LIST_ITEM_POSITION,
 	LIST_ITEM_GROUP_HEADER,
 } from "../generated/i18n/i18n-defaults.js";
 import type ListItemBase from "../ListItemBase.js";
-import SuggestionItemGroup from "../SuggestionItemGroup.js";
+import type SuggestionItemGroup from "../SuggestionItemGroup.js";
 import type { IInputSuggestionItem, IInputSuggestionItemSelectable } from "../Input.js";
 
 interface SuggestionComponent extends UI5Element {
@@ -44,7 +45,7 @@ type SuggestionsAccInfo = {
  * @class
  * @private
  */
-class Suggestions extends ComponentFeature {
+class Suggestions {
 	component: SuggestionComponent;
 	slotName: string;
 	handleFocus: boolean;
@@ -58,8 +59,11 @@ class Suggestions extends ComponentFeature {
 	static i18nBundle: I18nBundle;
 	static SCROLL_STEP = 60;
 
+	get template() {
+		return InputSuggestionsTemplate;
+	}
+
 	constructor(component: SuggestionComponent, slotName: string, highlight: boolean, handleFocus: boolean) {
-		super();
 		// The component, that the suggestion would plug into.
 		this.component = component;
 
@@ -77,15 +81,17 @@ class Suggestions extends ComponentFeature {
 		this.selectedItemIndex = -1;
 	}
 
-	onUp(e: KeyboardEvent) {
+	onUp(e: KeyboardEvent, indexOfItem: number) {
 		e.preventDefault();
-		this._handleItemNavigation(false /* forward */);
+		const index = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+		this._handleItemNavigation(false /* forward */, index);
 		return true;
 	}
 
-	onDown(e: KeyboardEvent) {
+	onDown(e: KeyboardEvent, indexOfItem: number) {
 		e.preventDefault();
-		this._handleItemNavigation(true /* forward */);
+		const index = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+		this._handleItemNavigation(true /* forward */, index);
 		return true;
 	}
 
@@ -231,8 +237,6 @@ class Suggestions extends ComponentFeature {
 		};
 
 		this._getComponent().onItemSelected(item, keyboardUsed);
-		item.selected = false;
-		item.focused = false;
 		this._getComponent().open = false;
 	}
 
@@ -262,18 +266,8 @@ class Suggestions extends ComponentFeature {
 		this.onItemSelected(pressedItem as SuggestionItem, false /* keyboardUsed */);
 	}
 
-	_onOpen() {
-		this._applyFocus();
-	}
-
 	_onClose() {
 		this._handledPress = false;
-	}
-
-	_applyFocus() {
-		if (this.selectedItemIndex) {
-			this._getItems()[this.selectedItemIndex]?.focus();
-		}
 	}
 
 	_isItemOnTarget() {
@@ -294,11 +288,12 @@ class Suggestions extends ComponentFeature {
 		return !!(this._getPicker()?.open);
 	}
 
-	_handleItemNavigation(forward: boolean) {
+	_handleItemNavigation(forward: boolean, index: number) {
+		this.selectedItemIndex = index;
+
 		if (!this._getItems().length) {
 			return;
 		}
-
 		if (forward) {
 			this._selectNextItem();
 		} else {
@@ -308,6 +303,7 @@ class Suggestions extends ComponentFeature {
 
 	_selectNextItem() {
 		const itemsCount = this._getItems().length;
+
 		const previousSelectedIdx = this.selectedItemIndex;
 
 		if (this._hasValueState && previousSelectedIdx === -1 && !this.component._isValueStateFocused) {
@@ -550,20 +546,9 @@ class Suggestions extends ComponentFeature {
 		this.accInfo = undefined;
 		this.selectedItemIndex = 0;
 	}
-
-	static get dependencies() {
-		return [
-			SuggestionItem,
-			SuggestionItemGroup,
-			List,
-			Button,
-			Icon,
-		];
-	}
 }
 
-// Add suggestions support to the global features registry so that Input.js can use it
-registerComponentFeature("InputSuggestions", Suggestions);
+Input.SuggestionsClass = Suggestions;
 
 export default Suggestions;
 

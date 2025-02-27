@@ -3,6 +3,258 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.1...v2.8.0-rc.2) (2025-02-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.8.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.0...v2.8.0-rc.1) (2025-02-13)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.8.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0...v2.8.0-rc.0) (2025-02-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.7.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.2...v2.7.0) (2025-02-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.7.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.1...v2.7.0-rc.2) (2025-01-30)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.7.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.0...v2.7.0-rc.1) (2025-01-23)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.7.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2...v2.7.0-rc.0) (2025-01-16)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [2.6.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2-rc.0...v2.6.2) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [2.6.2-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.1...v2.6.2-rc.0) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [2.6.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0...v2.6.1) (2025-01-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.6.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.5...v2.6.0) (2025-01-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.6.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.4...v2.6.0-rc.5) (2025-01-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.6.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.3...v2.6.0-rc.4) (2025-01-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.6.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.2...v2.6.0-rc.3) (2024-12-26)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.6.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.1...v2.6.0-rc.2) (2024-12-19)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.6.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.0...v2.6.0-rc.1) (2024-12-16)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.6.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0...v2.6.0-rc.0) (2024-12-12)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.5.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.3...v2.5.0) (2024-12-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.5.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.2...v2.5.0-rc.3) (2024-12-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.5.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.1...v2.5.0-rc.2) (2024-11-28)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.5.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.0...v2.5.0-rc.1) (2024-11-21)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.5.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.1-rc.0...v2.5.0-rc.0) (2024-11-14)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [2.4.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0...v2.4.1-rc.0) (2024-11-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.4.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.4...v2.4.0) (2024-11-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.4.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.3...v2.4.0-rc.4) (2024-10-31)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.4.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.2...v2.4.0-rc.3) (2024-10-28)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.4.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.1...v2.4.0-rc.2) (2024-10-24)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.4.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.0...v2.4.0-rc.1) (2024-10-17)
+
+
+### Bug Fixes
+
+* **localization:** legacy date customization ([#10026](https://github.com/SAP/ui5-webcomponents/issues/10026)) ([273c015](https://github.com/SAP/ui5-webcomponents/commit/273c01597ae483fdfe1996dad733d32e4c9a13a9))
+* **tools:** revert tsconfig moduleResolution to node ([#10014](https://github.com/SAP/ui5-webcomponents/issues/10014)) ([0724b92](https://github.com/SAP/ui5-webcomponents/commit/0724b9289ad04f88972d4978ed37e76f13abca13))
+
+
+
+
+
+# [2.4.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.3.1-rc.0...v2.4.0-rc.0) (2024-10-10)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [2.3.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0...v2.3.1-rc.0) (2024-10-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.3.0](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.3...v2.3.0) (2024-10-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
 # [2.3.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.2...v2.3.0-rc.3) (2024-09-26)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization

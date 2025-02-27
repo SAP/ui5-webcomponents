@@ -5,28 +5,31 @@ on: workflow_dispatch
 jobs:
   test-issue-comment:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      issues: write
     steps:
     - uses: actions/checkout@v4
       with:
         token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
         fetch-depth: 0
-    - uses: actions/setup-node@v4.0.1
+    - uses: actions/setup-node@v4.1.0
       with:
-        node-version: 18
+        node-version: 22
         cache: 'yarn'
 
     - name: Install
       run: yarn --frozen-lockfile
 
-    - name: Add release comments to issues and PRs
-      uses: actions/github-script@v6
+    - name: Publish Release Comments
+      uses: actions/github-script@v7
       env:
+          NODE_OPTIONS: '--max-old-space-size=12096'
           GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
       with:
+          github-token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
           script: |
-            const { readFileSync } = require('fs');
-            const { URL } = require('url');
-            const { version } = require('./lerna.json');
-            console.log('Create issue comments for lerna version: ', version);
-            const script = require('./.github/actions/createIssueComments.cjs');
-            аwait script({ github: github.rest, context, core, version })
+            const commentOnFixedIssues = (await import('${{ github.workspace }}/.github/actions/commentOnFixedIssues.mjs')).default;
+
+            await commentOnFixedIssues({ github , context });

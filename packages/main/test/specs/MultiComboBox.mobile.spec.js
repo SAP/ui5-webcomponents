@@ -1,5 +1,15 @@
 import { assert } from "chai";
 
+const getVisibleItems = async (id) => {
+	const slottedItems = await browser.executeAsync((mcbId, done) => {
+		const mcb = document.getElementById(mcbId);
+		
+		done(mcb.shadowRoot.querySelector(".ui5-multi-combobox-all-items-list").getSlottedNodes("items"));
+	}, id);
+
+	return slottedItems;
+};
+
 describe("Basic interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/MultiComboBox.html`);
@@ -93,7 +103,7 @@ describe("Basic interaction", () => {
 		const toggleSelectedButton =  await multiCombo.shadow$("ui5-responsive-popover").$("ui5-toggle-button");
 		assert.strictEqual(await toggleSelectedButton.getAttribute("pressed"), "", "Toggle selected items button is pressed");
 
-		const itemsCount = await multiCombo.shadow$("ui5-responsive-popover").$("ui5-list").$$("ui5-li")
+		const itemsCount = (await getVisibleItems("multi1"));
 		assert.strictEqual(itemsCount.length, 3, "Only the selected items are shown");
 	});
 
@@ -104,7 +114,7 @@ describe("Basic interaction", () => {
 
 		toggleSelectedButton.click();
 
-		const itemsCount = await multiCombo.shadow$("ui5-responsive-popover").$("ui5-list").$$("ui5-li")
+		const itemsCount = await multiCombo.$$(`ui5-mcb-item`);
 		assert.strictEqual(itemsCount.length, 4, "All items are shown");
 
 		const dialogCloseButton = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
@@ -223,7 +233,7 @@ describe("Items selection", () => {
 		await multiCombo.scrollIntoView();
 		await mcbInput.click();
 
-		const listItem = await multiCombo.shadow$("ui5-responsive-popover").$$("ui5-li")[0];
+		const listItem = await multiCombo.$$("ui5-mcb-item")[0];
 		await listItem.click();
 
 		const token = await multiCombo.shadow$("ui5-tokenizer").$("ui5-token");
@@ -237,7 +247,7 @@ describe("Items selection", () => {
 		await multiCombo.scrollIntoView();
 		await mcbInput.click();
 
-		const listItemCheckbox = await multiCombo.shadow$("ui5-responsive-popover").$$("ui5-li")[1].shadow$("ui5-checkbox");
+		const listItemCheckbox = await multiCombo.$$("ui5-mcb-item")[1].shadow$("ui5-checkbox");
 		await listItemCheckbox.click();
 
 		const dialogOkButton = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
@@ -254,7 +264,7 @@ describe("Items selection", () => {
 		await multiCombo.scrollIntoView();
 		await mcbInput.click();
 
-		const listItemCheckbox = await multiCombo.shadow$("ui5-responsive-popover").$$("ui5-li")[2].shadow$("ui5-checkbox");
+		const listItemCheckbox = await multiCombo.$$("ui5-mcb-item")[2].shadow$("ui5-checkbox");
 		await listItemCheckbox.click();
 
 		const dialogCloseButton = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
@@ -270,10 +280,10 @@ describe("Items selection", () => {
 		await multiCombo.scrollIntoView();
 		await multiCombo.shadow$('ui5-tokenizer').shadow$(".ui5-tokenizer-more-text").click();
 
-		const listItemCheckbox = await multiCombo.shadow$("ui5-responsive-popover").$$("ui5-li")[0].shadow$("ui5-checkbox");
+		const listItemCheckbox = await multiCombo.$$("ui5-mcb-item")[0].shadow$("ui5-checkbox");
 		await listItemCheckbox.click();
 
-		const listItem = await multiCombo.shadow$("ui5-responsive-popover").$$("ui5-li")[1];
+		const listItem = await multiCombo.$$("ui5-mcb-item")[2];
 		await listItem.click();
 
 		const dialogOkButton = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
@@ -294,7 +304,7 @@ describe("Items selection", () => {
 		const toggleSelectedButton =  await multiCombo.shadow$("ui5-responsive-popover").$("ui5-toggle-button");
 		await toggleSelectedButton.click();
 
-		const listItem = await multiCombo.shadow$("ui5-responsive-popover").$$("ui5-li")[1];
+		const listItem = await multiCombo.$$("ui5-mcb-item")[1];
 		await listItem.click();
 
 		const dialogOkButton = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
@@ -305,19 +315,20 @@ describe("Items selection", () => {
 	});
 
 	it("should select all items when clicking select all", async () => {
-		const cb = await $("#mcb-select-all-vs");
+		const cb = await browser.$("#mcb-select-all-vs");
 		const popover = await cb.shadow$("ui5-responsive-popover");
-		const spanRef = await $("#select-all-event");
+		const selectAllCheckbox = await popover.$(".ui5-mcb-select-all-checkbox");
+		const selectAllCheckboxRoot = await selectAllCheckbox.shadow$(".ui5-checkbox-root");
+		const spanRef = await browser.$("#select-all-event");
 
 		await cb.click();
-
-		await popover.$(".ui5-mcb-select-all-checkbox").click();
+		await selectAllCheckboxRoot.click();
 		// ok button
 		await popover.$(".ui5-responsive-popover-footer").$("ui5-button").click();
 		assert.strictEqual(await spanRef.getText(), "Selected items count: 27");
 
 		await cb.click();
-		await popover.$(".ui5-mcb-select-all-checkbox").click();
+		await selectAllCheckboxRoot.click();
 		// ok button
 		await popover.$(".ui5-responsive-popover-footer").$("ui5-button").click();
 		assert.strictEqual(await spanRef.getText(), "Selected items count: 0");
@@ -325,14 +336,15 @@ describe("Items selection", () => {
 
 
 	it("select all should not be checked if all items are not selected", async () => {
-		const mcb = await $("#mcb-select-all-vs");
+		const mcb = await browser.$("#mcb-select-all-vs");
 		const popover = await mcb.shadow$("ui5-responsive-popover");
 		const closeIcon = await popover.$(".ui5-responsive-popover-close-btn");
 		const selectAllCheckbox = await popover.$(".ui5-mcb-select-all-checkbox");
+		const selectAllCheckboxRoot = await selectAllCheckbox.shadow$(".ui5-checkbox-root");
 
 		await mcb.click();
 
-		await selectAllCheckbox.click();
+		await selectAllCheckboxRoot.click();
 		await closeIcon.click();
 		await mcb.click();
 
@@ -341,12 +353,11 @@ describe("Items selection", () => {
 
 	it("should not close the dialog on checkbox click", async () => {
 		const mcb = await $("#mcb-select-all-vs");
-		const popover = await mcb.shadow$("ui5-responsive-popover");
 
 		await mcb.scrollIntoView();
 		await mcb.click();
 
-		const listItemCheckbox = await popover.$$("ui5-li")[0].shadow$("ui5-checkbox");
+		const listItemCheckbox = await mcb.$("ui5-mcb-item").shadow$("ui5-checkbox");
 		await listItemCheckbox.click();
 
 		assert.strictEqual(await mcb.getProperty("open"), true, "Mobile dialog is not closed on checkbox click");
@@ -386,7 +397,7 @@ describe("Eventing", () => {
 		await multiCombo.scrollIntoView();
 		await mcbInput.click();
 
-		const listItem = await multiCombo.shadow$("ui5-responsive-popover").$$("ui5-li")[0];
+		const listItem = await multiCombo.$$("ui5-mcb-item")[0];
 		await listItem.click();
 
 		assert.strictEqual(await browser.$("#events-input").getValue(), "selectionChange", "The correct event was fired");
@@ -401,7 +412,7 @@ describe("Eventing", () => {
 		await multiCombo.scrollIntoView();
 		await mcbInput.click();
 
-		const listItemCheckbox = await multiCombo.shadow$("ui5-responsive-popover").$$("ui5-li")[1].shadow$("ui5-checkbox");
+		const listItemCheckbox = await multiCombo.$$("ui5-mcb-item")[1].shadow$("ui5-checkbox");
 		await listItemCheckbox.click();
 
 		const dialogOkButton = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
@@ -421,7 +432,7 @@ describe("Eventing", () => {
 		await multiCombo.scrollIntoView();
 		await multiCombo.shadow$("ui5-icon").click();
 
-		const listItemCheckbox = await multiCombo.shadow$("ui5-responsive-popover").$$("ui5-li")[2].shadow$("ui5-checkbox");
+		const listItemCheckbox = await multiCombo.$$("ui5-mcb-item")[2].shadow$("ui5-checkbox");
 		await listItemCheckbox.click();
 
 		const dialogCloseButton = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
@@ -442,7 +453,7 @@ describe("Eventing", () => {
 		let tokens = await multiCombo.shadow$("ui5-tokenizer").$$("ui5-token");
 		assert.strictEqual(tokens.length, 1, "There should be only one token.");
 
-		const listItemCheckbox = await multiCombo.shadow$("ui5-responsive-popover").$$("ui5-li")[0].shadow$("ui5-checkbox");
+		const listItemCheckbox = await multiCombo.$$("ui5-mcb-item")[0].shadow$("ui5-checkbox");
 		await listItemCheckbox.click();
 
 		const dialogOkButton = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");

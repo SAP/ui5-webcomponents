@@ -1,18 +1,19 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
-import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
-import "@ui5/webcomponents-icons/dist/circle-task-2.js";
-import "@ui5/webcomponents-icons/dist/arrow-right.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
+import {
+	isLeft,
+	isRight,
+	isSpace,
+	isEnter,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
-import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
-import SideNavigationItemTemplate from "./generated/templates/SideNavigationItemTemplate.lit.js";
+
+// Templates
+import SideNavigationItemTemplate from "./SideNavigationItemTemplate.js";
 
 // Styles
 import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
@@ -37,12 +38,9 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
  */
 @customElement({
 	tag: "ui5-side-navigation-item",
-	renderer: litRender,
+	renderer: jsxRender,
 	template: SideNavigationItemTemplate,
 	styles: SideNavigationItemCss,
-	dependencies: [
-		Icon,
-	],
 })
 class SideNavigationItem extends SideNavigationSelectableItemBase {
 	/**
@@ -72,7 +70,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationSubItem>;
 
-	get overflowItems() : Array<HTMLElement> {
+	get overflowItems() : Array<SideNavigationItem> {
 		return [this];
 	}
 
@@ -97,6 +95,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _ariaHasPopup() {
+		if (this.inPopover && this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
+		}
+
 		if (!this.disabled && this.sideNavCollapsed && this.items.length) {
 			return "tree";
 		}
@@ -105,7 +107,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _ariaChecked() {
-		if (this.isOverflow) {
+		if (this.isOverflow || this.unselectable) {
 			return undefined;
 		}
 
@@ -128,14 +130,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		return this.expanded;
 	}
 
-	get _toggleIconName() {
-		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
-	}
-
 	get classesArray() {
 		const classes = super.classesArray;
 
-		if (!this.disabled && (this.parentNode as SideNavigation).collapsed && this.items.length) {
+		if (!this.disabled && this.sideNavigation?.collapsed && this.items.length) {
 			classes.push("ui5-sn-item-with-expander");
 		}
 
@@ -154,13 +152,13 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		return this.selected;
 	}
 
-	_onToggleClick = (e: PointerEvent) => {
+	_onToggleClick(e: CustomEvent) {
 		e.stopPropagation();
 
-		this.expanded = !this.expanded;
+		this._toggle();
 	}
 
-	_onkeydown = (e: KeyboardEvent) => {
+	_onkeydown(e: KeyboardEvent) {
 		if (isLeft(e)) {
 			this.expanded = false;
 			return;
@@ -171,22 +169,35 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
+		if (this.unselectable && isSpace(e)) {
+			this._toggle();
+			return;
+		}
+
+		if (this.unselectable && isEnter(e)) {
+			this._toggle();
+		}
+
 		super._onkeydown(e);
 	}
 
-	_onkeyup = (e: KeyboardEvent) => {
+	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 	}
 
-	_onfocusin = (e: FocusEvent) => {
+	_onfocusin(e: FocusEvent) {
 		super._onfocusin(e);
 	}
 
-	_onclick = (e: PointerEvent) => {
+	_onclick(e: MouseEvent) {
+		if (!this.inPopover && this.unselectable) {
+			this._toggle();
+		}
+
 		super._onclick(e);
 	}
 
-	_onfocusout = () => {
+	_onfocusout() {
 		if (!this.sideNavCollapsed) {
 			return;
 		}
@@ -194,7 +205,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
-	_onmouseenter = () => {
+	_onmouseenter() {
 		if (!this.sideNavCollapsed) {
 			return;
 		}
@@ -202,7 +213,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
-	_onmouseleave = () => {
+	_onmouseleave() {
 		if (!this.sideNavCollapsed || !this._selected) {
 			return;
 		}
@@ -212,6 +223,12 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 
 	get isSideNavigationItem() {
 		return true;
+	}
+
+	_toggle() {
+		if (this.items.length) {
+			this.expanded = !this.expanded;
+		}
 	}
 }
 

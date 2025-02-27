@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -48,6 +48,10 @@ import {
  * </ui5-table>
  * ```
  *
+ * **Notes**:
+ * * When the `ui5-table-growing` component is used with the `Scroll` type and the table is currently not scrollable,
+ * the component will render a growing button instead to ensure growing capabilities until the table becomes scrollable.
+ *
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/TableGrowing.js";`
@@ -70,9 +74,14 @@ import {
  *
  * @public
  */
-@event("load-more")
+@event("load-more", {
+	bubbles: true,
+})
 
 class TableGrowing extends UI5Element implements ITableGrowing {
+	eventDetails!: {
+		"load-more": void;
+	}
 	/**
 	 * Defines the mode of the <code>ui5-table</code> growing.
 	 *
@@ -80,7 +89,8 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 *
 	 * Button - Shows a More button at the bottom of the table, pressing it will load more rows.
 	 *
-	 * Scroll - The rows are loaded automatically by scrolling to the bottom of the table. If the table is not scrollable, this option is the same as the Button.
+	 * Scroll - The rows are loaded automatically by scrolling to the bottom of the table. If the table is not scrollable,
+	 * a growing button will be rendered instead to ensure growing functionality.
 	 * @default "Button"
 	 * @public
 	 */
@@ -111,12 +121,6 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	growingSubText?: string;
 
 	/**
-	 * Disables the growing feature.
-	 */
-	@property({ type: Boolean })
-	disabled = false;
-
-	/**
 	 * Defines the active state of the growing button.
 	 * Used for keyboard interaction.
 	 * @private
@@ -124,12 +128,15 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	@property({ type: Boolean })
 	_activeState = false;
 
+	@property({ type: Number, noAttribute: true })
+	_invalidate = 0;
+
 	readonly identifier = "TableGrowing";
 	_table?: Table;
 	_observer?: IntersectionObserver;
-	_individualSlot?: string;
 	_currentLastRow?: HTMLElement;
 	_shouldFocusRow?: boolean;
+	_renderContent = true;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -137,12 +144,9 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	onTableActivate(table: Table): void {
 		this._table = table;
 		this._shouldFocusRow = false;
-		if (this._hasScrollToLoad()) {
-			this._observeTableEnd();
-		}
 	}
 
-	onTableRendered(): void {
+	onTableAfterRendering(): void {
 		// Focus the first row after growing, when the growing button is used
 		if (this._shouldFocusRow) {
 			this._shouldFocusRow = false;
@@ -157,11 +161,12 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 			focusRow?.focus();
 		}
 
-		if (this.disabled) {
+		if (this._renderContent !== this.hasGrowingComponent()) {
+			this._invalidate++;
 			return;
 		}
 
-		if (this._hasScrollToLoad()) {
+		if (this._hasScrollToLoad() && !this.hasGrowingComponent() && !this._observer) {
 			this._observeTableEnd();
 		}
 	}
@@ -177,15 +182,16 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 		this._observer?.disconnect();
 		this._observer = undefined;
 		this._currentLastRow = undefined;
+		this._renderContent = this.hasGrowingComponent();
 		this._invalidateTable();
 	}
 
 	hasGrowingComponent(): boolean {
-		if (this._hasScrollToLoad()) {
-			return !(this._table && this._table._scrollContainer.scrollHeight > this._table._scrollContainer.clientHeight);
+		if (this.type === TableGrowingMode.Scroll) {
+			return !!this._table && this._table._scrollContainer.clientHeight >= this._table._tableElement.scrollHeight;
 		}
 
-		return this.type === TableGrowingMode.Button && !this.disabled;
+		return this.type === `${TableGrowingMode.Button}`;
 	}
 
 	/**
@@ -199,7 +205,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 		}
 		this._shouldFocusRow = true;
 
-		this.fireEvent("load-more");
+		this.fireDecoratorEvent("load-more");
 	}
 
 	_hasScrollToLoad() {
@@ -228,11 +234,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 */
 	_getIntersectionObserver(): IntersectionObserver {
 		if (!this._observer) {
-			this._observer = new IntersectionObserver(this._onIntersection.bind(this), {
-				root: document,
-				rootMargin: "10px",
-				threshold: 1.0,
-			});
+			this._observer = new IntersectionObserver(this._onIntersection.bind(this), { root: document });
 		}
 		return this._observer;
 	}

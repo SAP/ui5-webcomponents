@@ -1,0 +1,30 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor); height: 300px;">
+    <!-- playground-fold-end -->
+
+		<ui5-ai-button id="myAiButton" state="generate">
+			<ui5-ai-button-state name="generate" text="Generate" icon="ai"></ui5-ai-button-state>
+			<ui5-ai-button-state name="generating" text="Stop Generating" icon="stop"></ui5-ai-button-state>
+			<ui5-ai-button-state name="regenerate" text="Regenerate" icon="ai" show-arrow-button></ui5-ai-button-state>
+		</ui5-ai-button>
+
+		<ui5-menu id="menu">
+			<ui5-menu-item text="Edit prompt"></ui5-menu-item>
+			<ui5-menu-item text="Change tone"></ui5-menu-item>
+		</ui5-menu>
+
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

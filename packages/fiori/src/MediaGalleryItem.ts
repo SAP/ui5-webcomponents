@@ -1,11 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import "@ui5/webcomponents-icons/dist/background.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 import type { IMediaGalleryItem } from "./MediaGallery.js";
@@ -14,7 +13,7 @@ import type { IMediaGalleryItem } from "./MediaGallery.js";
 import MediaGalleryItemCss from "./generated/themes/MediaGalleryItem.css.js";
 
 // Template
-import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemplate.lit.js";
+import MediaGalleryItemTemplate from "./MediaGalleryItemTemplate.js";
 
 /**
  * @class
@@ -41,12 +40,20 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
  */
 @customElement({
 	tag: "ui5-media-gallery-item",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: MediaGalleryItemCss,
 	template: MediaGalleryItemTemplate,
-	dependencies: [Icon],
+})
+/**
+ * @private
+ */
+@event("click", {
+	bubbles: true,
 })
 class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
+	eventDetails!: {
+		click: { item: MediaGalleryItem },
+	}
 	/**
 	 * Defines the selected state of the component.
 	 * @default false
@@ -75,7 +82,7 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_interactive = false;
+	_interactive = !isPhone();
 
 	/**
 	 * @private
@@ -139,7 +146,6 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 
 	onEnterDOM() {
 		this._thumbnailDesign = !isPhone();
-		this._interactive = !isPhone();
 		this._square = true;
 	}
 
@@ -168,7 +174,10 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	}
 
 	get effectiveTabIndex() {
-		return this.disabled ? undefined : this.forcedTabIndex;
+		if (this.disabled) {
+			return undefined;
+		}
+		return this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined;
 	}
 
 	get _showBackgroundIcon() {
@@ -252,7 +261,7 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	}
 
 	_fireItemClick() {
-		this.fireEvent("click", { item: this });
+		this.fireDecoratorEvent("click", { item: this });
 	}
 }
 

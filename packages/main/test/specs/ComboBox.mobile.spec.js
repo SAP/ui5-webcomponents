@@ -1,7 +1,27 @@
 import { assert } from "chai";
 
+const getVisibleItems = async (combo) => {
+	const items = await combo.$$("ui5-cb-item");
+	const filteredItems = await Promise.all(items.map(async item => {
+			return (await item.getProperty("_isVisible")) ? item : null;
+	}));
+
+	// filter out null values
+	return filteredItems.filter(item => item !== null);
+};
+
+const getVisibleGroupItems = async (combo) => {
+	const items = await combo.$$("ui5-cb-item-group");
+	const filteredItems = await Promise.all(items.map(async item => {
+			return (await item.getProperty("_isVisible")) ? item : null;
+	}));
+
+	// filter out null values
+	return filteredItems.filter(item => item !== null);
+};
+
 describe("Basic mobile picker rendering and interaction", () => {
-	before(async () => {
+	beforeEach(async () => {
 		await browser.url("test/pages/ComboBox.html");
 		await browser.emulateDevice('iPhone X');
 	});
@@ -23,10 +43,13 @@ describe("Basic mobile picker rendering and interaction", () => {
 	});
 
 	it("Should close the mobile picker dialog when pressing the close button", async () => {
-		const combo = await browser.$("#combo2");
-		const picker =  await combo.shadow$("ui5-responsive-popover");
-		const dialogCloseButton = await picker.$(".ui5-responsive-popover-close-btn");
+		const combo = await $("#combo2");
 
+		await combo.click();
+
+		const picker = await combo.shadow$("ui5-responsive-popover");
+		const dialogCloseButton = await picker.$(".ui5-responsive-popover-close-btn");
+		
 		assert.ok(await picker.isDisplayed(), "Picker is still opened");
 
 		await dialogCloseButton.click();
@@ -95,7 +118,7 @@ describe("Eventing", () => {
 		await combo.scrollIntoView();
 		await combo.click();
 
-		const suggestionItem = await combo.shadow$("ui5-responsive-popover").$$("ui5-li")[1];
+		const suggestionItem = (await getVisibleItems(combo))[1];
 		await suggestionItem.click();
 
 		assert.strictEqual(await combo.getAttribute("value"), "Bulgaria", "The combo box's value is updated properly");
@@ -264,11 +287,10 @@ describe("Picker filtering", () => {
 		await combo.click();
 
 		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]");
-		const dialogList = await combo.shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li').length, 9, "All of the items are shown (8)");
+		assert.strictEqual((await getVisibleItems(combo)).length, 9, "All of the items are shown (8)");
 		await dialogInput.keys("B");
-		assert.strictEqual(await dialogList.$$('ui5-li').length, 4, "There are 4 filtered items");
+		assert.strictEqual((await getVisibleItems(combo)).length, 4, "There are 4 filtered items");
 	});
 
 	it("Should filter group header list items", async () => {
@@ -280,11 +302,10 @@ describe("Picker filtering", () => {
 		await combo.click();
 
 		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]");
-		const dialogList = await combo.shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li-group').length, 3, "All of the group header list items are shown (3)");
+		assert.strictEqual((await getVisibleGroupItems(combo)).length, 3, "All of the group header list items are shown (3)");
 		await dialogInput.keys("B");
-		assert.strictEqual(await dialogList.$$('ui5-li-group').length, 2, "There is only 1 visible group");
+		assert.strictEqual((await getVisibleGroupItems(combo)).length, 2, "There is only 1 visible group");
 	});
 });
 

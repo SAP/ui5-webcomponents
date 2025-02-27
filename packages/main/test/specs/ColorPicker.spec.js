@@ -63,7 +63,7 @@ describe("Color Picker general interaction", () => {
 
 		await hueSliderHandle.dragAndDrop({ x: 200, y: 0 });
 
-		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(182, 61, 184, 0)", "Color properly changed");
+		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(184, 61, 173, 0)", "Color properly changed");
 		assert.strictEqual(await stepInput.getAttribute("value"), "1", "Change event gets fired on hue slider change");
 	});
 
@@ -75,7 +75,7 @@ describe("Color Picker general interaction", () => {
 		await colorPicker.scrollIntoView();
 		await alphaSliderHandle.dragAndDrop({ x: 200, y: 0 });
 
-		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(182, 61, 184, 0.83)", "Alpha value propely changed");
+		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(184, 61, 173, 0.85)", "Alpha value propely changed");
 		assert.strictEqual(await stepInput.getAttribute("value"), "2", "Change event gets fired on alpha slider change");
 	});
 

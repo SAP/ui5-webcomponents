@@ -90,17 +90,13 @@ describe("DateTimePicker general interaction", () => {
 		await browser.keys("Space");
 
 		// select new time
-		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-sap-clock="hours"]`).click();
+		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-ui5-clock="hours"]`).click();
 		await browser.keys("ArrowDown"); // select 02
-
-		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-sap-clock="minutes"]`).click();
+		await browser.keys("Space"); // select minutes
 		await browser.keys("ArrowDown"); await browser.keys("ArrowDown"); // select 14
-
-		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-sap-clock="seconds"]`).click();
+		await browser.keys("Space"); // select seconds
 		await browser.keys("ArrowUp"); await browser.keys("ArrowUp"); await browser.keys("ArrowUp"); // select 19
-
 		await browser.keys("p"); // select PM
-
 		await picker.$("#ok").click();
 
 		// assert
@@ -216,7 +212,7 @@ describe("DateTimePicker general interaction", () => {
 
 		// assert
 		const picker = await getPicker("dt");
-		const active = await picker.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-sap-clock="hours"]`).getProperty("active");
+		const active = await picker.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-ui5-clock="hours"]`).getProperty("active");
 		assert.ok(active, "The hours clock is active.");
 
 		await closePickerById("dt");
@@ -231,7 +227,7 @@ describe("DateTimePicker general interaction", () => {
 		const picker = await getPicker("dtTest12AM");
 
 		// select new time
-		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-sap-clock="hours"]`).click();
+		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-ui5-clock="hours"]`).click();
 		await browser.keys("123456a"); // select 12:34:56 AM
 
 		await picker.$("#ok").click();
@@ -251,7 +247,7 @@ describe("DateTimePicker general interaction", () => {
 		const picker = await getPicker("dtTest12PM");
 
 		// select new time
-		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-sap-clock="hours"]`).click();
+		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-ui5-clock="hours"]`).click();
 		await browser.keys("123456p"); // select 12:34:56 PM
 
 		await picker.$("#ok").click();

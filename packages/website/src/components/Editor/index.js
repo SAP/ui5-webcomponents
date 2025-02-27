@@ -68,6 +68,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
         "@ui5/webcomponents-ai/": `${getHostBaseUrl()}local-cdn/ai/`,
         "@ui5/webcomponents-fiori/": `${getHostBaseUrl()}local-cdn/fiori/`,
         "@ui5/webcomponents-compat/": `${getHostBaseUrl()}local-cdn/compat/`,
+        "@ui5/webcomponents-base/jsx-runtime": `${getHostBaseUrl()}local-cdn/base/dist/jsx-runtime.js`,
         "@ui5/webcomponents-base/": `${getHostBaseUrl()}local-cdn/base/`,
         "@ui5/webcomponents-icons/": `${getHostBaseUrl()}local-cdn/icons/`,
         "@ui5/webcomponents-localization/": `${getHostBaseUrl()}local-cdn/localization/`,
@@ -82,6 +83,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
         "@ui5/webcomponents-ai/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-ai@${siteConfig.customFields.ui5Version}/`,
         "@ui5/webcomponents-fiori/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-fiori@${siteConfig.customFields.ui5Version}/`,
         "@ui5/webcomponents-compat/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-compat@${siteConfig.customFields.ui5Version}/`,
+        "@ui5/webcomponents-base/jsx-runtime": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-base@${siteConfig.customFields.ui5Version}/dist/jsx-runtime.js`,
         "@ui5/webcomponents-base/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-base@${siteConfig.customFields.ui5Version}/`,
         "@ui5/webcomponents-icons/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-icons@${siteConfig.customFields.ui5Version}/`,
         "@ui5/webcomponents-localization/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-localization@${siteConfig.customFields.ui5Version}/`,
@@ -93,7 +95,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     }
   }
 
-  function addImportMap(html) {
+  function addHeadContent(html) {
     return html.replace("<head>", `
 <head>
     <script type="importmap">
@@ -105,6 +107,10 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
       *:not(:defined) {
         display: none;
       }
+
+    html {
+      forced-color-adjust: none;
+    }
     </style>
 `)
   }
@@ -231,7 +237,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     let newConfig = {
       files: {
         "index.html": {
-          content: addImportMap(fixAssetPaths(_html)),
+          content: addHeadContent(fixAssetPaths(_html)),
         },
         "playground-support.js": {
           content: playgroundSupport({theme, textDirection, contentDensity, iframeId}),
@@ -263,9 +269,11 @@ ${fixAssetPaths(_js)}`,
       if (savedProject) {
         try {
           const savedConfig = JSON.parse(savedProject);
-          savedConfig["index.html"].content = addImportMap(fixAssetPaths(savedConfig["index.html"].content));
-          if (savedConfig["main.js"] && newConfig.files["main.ts"]) {
-            delete newConfig.files["main.ts"];
+          savedConfig["index.html"].content = addHeadContent(fixAssetPaths(savedConfig["index.html"].content));
+          const oldMainFile = savedConfig["main.js"] || savedConfig["main.ts"];
+          if (oldMainFile && newConfig.files["main.tsx"]) {
+            // if the saved project has a main from an old default, and the default project has a main.tsx file, restore the saved one
+            delete newConfig.files["main.tsx"];
           }
           newConfig.files = {...newConfig.files, ...savedConfig};
         } catch (e) {
@@ -278,9 +286,11 @@ ${fixAssetPaths(_js)}`,
     if (location.pathname.includes("/play") && location.hash) {
       try {
         const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
-        sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
-        if (sharedConfig["main.js"] && newConfig.files["main.ts"]) {
-          delete newConfig.files["main.ts"];
+        sharedConfig["index.html"].content = addHeadContent(fixAssetPaths(sharedConfig["index.html"].content));
+        const oldMainFile = sharedConfig["main.js"] || sharedConfig["main.ts"];
+        if (oldMainFile && newConfig.files["main.tsx"]) {
+            // if the shared project has a main from an old default, and the default project has a main.tsx file, restore the saved one
+          delete newConfig.files["main.tsx"];
         }
         newConfig.files = {...newConfig.files, ...sharedConfig};
       } catch (e) {
@@ -301,9 +311,10 @@ ${fixAssetPaths(_js)}`,
     tabBarRef.current.project = projectRef.current;
     fileEditorRef.current.project = projectRef.current;
     previewRef.current.project = projectRef.current;
-	  
+
     // algolia search opens the search on key `/` because this custom element is the event target but has no `isContentEditable`
     Object.defineProperty(fileEditorRef.current, "isContentEditable", {
+        configurable: true,
         get() {
             return true;
         },

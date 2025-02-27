@@ -1,9 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isSpace,
 	isUp,
@@ -17,9 +17,8 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -27,7 +26,6 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -56,7 +54,7 @@ import Button from "./Button.js";
 import type ListItemBase from "./ListItemBase.js";
 
 // Templates
-import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
+import SelectTemplate from "./SelectTemplate.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
@@ -68,14 +66,14 @@ import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
  * Interface for components that may be slotted inside `ui5-select` as options
  * @public
  */
-type IOption = ListItemBase & {
+interface IOption extends ListItemBase {
 	tooltip?: string,
 	icon?: string,
 	value?: string,
 	additionalText?: string,
-	focused?: boolean,
+	focused: boolean,
 	effectiveDisplayText: string,
-};
+}
 
 type SelectChangeEventDetail = {
 	selectedOption: IOption,
@@ -130,7 +128,7 @@ type SelectLiveChangeEventDetail = {
 	tag: "ui5-select",
 	languageAware: true,
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: SelectTemplate,
 	styles: [
 		selectCss,
@@ -149,17 +147,12 @@ type SelectLiveChangeEventDetail = {
 })
 /**
  * Fired when the selected option changes.
- * @allowPreventDefault
  * @param {IOption} selectedOption the selected option.
  * @public
  */
-@event<SelectChangeEventDetail>("change", {
-	detail: {
-		/**
-		* @public
-		*/
-		selectedOption: { type: HTMLElement },
-	},
+@event("change", {
+	bubbles: true,
+	cancelable: true,
 })
 /**
  * Fired when the user navigates through the options, but the selection is not finalized,
@@ -168,25 +161,46 @@ type SelectLiveChangeEventDetail = {
  * @public
  * @since 1.17.0
  */
-@event<SelectLiveChangeEventDetail>("live-change", {
-	detail: {
-		/**
-		* @public
-		*/
-		selectedOption: { type: HTMLElement },
-	},
+@event("live-change", {
+	bubbles: true,
 })
 /**
  * Fired after the component's dropdown menu opens.
  * @public
  */
 @event("open")
+
 /**
  * Fired after the component's dropdown menu closes.
  * @public
  */
 @event("close")
+
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("selected-item-changed", {
+	bubbles: true,
+})
+
+/**
+ * Fired to make Vue.js two way data binding work properly.
+ * @private
+ */
+@event("input", {
+	bubbles: true,
+})
+
 class Select extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		"change": SelectChangeEventDetail,
+		"live-change": SelectLiveChangeEventDetail,
+		"open": void,
+		"close": void,
+		"selected-item-changed": void,
+		"input": void,
+	}
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -256,6 +270,15 @@ class Select extends UI5Element implements IFormInputElement {
 	 */
 	@property()
 	accessibleNameRef?: string;
+
+	/**
+	 * Defines the tooltip of the select.
+	 * @default undefined
+	 * @public
+	 * @since 2.8.0
+	 */
+	@property()
+	tooltip?: string;
 
 	/**
 	 * @private
@@ -349,7 +372,11 @@ class Select extends UI5Element implements IFormInputElement {
 		const selectedOption = this.selectedOption;
 
 		if (selectedOption) {
-			return selectedOption.hasAttribute("value") ? selectedOption.value! : selectedOption.textContent;
+			if ("value" in selectedOption && selectedOption.value) {
+				return selectedOption.value;
+			}
+
+			return selectedOption.hasAttribute("value") ? selectedOption.getAttribute("value") : selectedOption.textContent;
 		}
 
 		return "";
@@ -382,6 +409,10 @@ class Select extends UI5Element implements IFormInputElement {
 				break;
 			}
 		}
+	}
+
+	_applyFocus() {
+		this.focus();
 	}
 
 	_onfocusin() {
@@ -580,7 +611,7 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 
 		if (selectedIndex !== index) {
-			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.options[index] });
+			this.fireDecoratorEvent("live-change", { selectedOption: this.options[index] });
 		}
 
 		this.options[index].selected = true;
@@ -676,7 +707,7 @@ class Select extends UI5Element implements IFormInputElement {
 		nextOption.selected = true;
 		nextOption.focused = true;
 
-		this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: nextOption });
+		this.fireDecoratorEvent("live-change", { selectedOption: nextOption });
 
 		if (!this._isPickerOpen) {
 			// arrow pressed on closed picker - do selection change
@@ -699,7 +730,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 	_afterOpen() {
 		this.opened = true;
-		this.fireEvent<CustomEvent>("open");
+		this.fireDecoratorEvent("open");
 		this.itemSelectionAnnounce();
 		this._scrollSelectedItem();
 		this._applyFocusToSelectedItem();
@@ -723,7 +754,7 @@ class Select extends UI5Element implements IFormInputElement {
 			this._fireChangeEvent(this.options[this._selectedIndex]);
 			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
-		this.fireEvent<CustomEvent>("close");
+		this.fireDecoratorEvent("close");
 	}
 
 	get hasCustomLabel() {
@@ -731,10 +762,13 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	_fireChangeEvent(selectedOption: IOption) {
-		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
+		const changePrevented = !this.fireDecoratorEvent("change", { selectedOption });
 
 		//  Angular two way data binding
-		this.fireEvent("selected-item-changed");
+		this.fireDecoratorEvent("selected-item-changed");
+
+		// Fire input event for Vue.js two-way binding
+		this.fireDecoratorEvent("input");
 
 		if (changePrevented) {
 			this._select(this._selectedIndexBeforeOpen);
@@ -802,7 +836,7 @@ class Select extends UI5Element implements IFormInputElement {
 	get _effectiveTabIndex() {
 		return this.disabled
 		|| (this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
-		&& this.responsivePopover.open) ? "-1" : "0";
+		&& this.responsivePopover.open) ? -1 : 0;
 	}
 
 	 /**

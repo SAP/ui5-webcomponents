@@ -17,6 +17,10 @@ import type SideNavigation from "./SideNavigation.js";
  * @since 1.19.0
  */
 class SideNavigationItemBase extends UI5Element implements ITabbable {
+	eventDetails!: {
+		click: void
+	}
+
 	/**
 	 * Defines the text of the item.
 	 *
@@ -50,7 +54,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	tooltip?: string;
 
 	@property({ noAttribute: true })
-	forcedTabIndex?: string
+	forcedTabIndex = "-1";
 
 	@property({ type: Boolean })
 	sideNavCollapsed = false;

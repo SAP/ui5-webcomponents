@@ -1,10 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { AccessibilityAttributes, StyleData } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
@@ -32,6 +32,8 @@ import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js"
 import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
+import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
 import type { SetDraggedElementFunction } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
@@ -43,16 +45,14 @@ import {
 	TABCONTAINER_POPOVER_CANCEL_BUTTON,
 	TABCONTAINER_SUBTABS_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
-import Button from "./Button.js";
-import Icon from "./Icon.js";
-import List from "./List.js";
-import DropIndicator from "./DropIndicator.js";
+import type Button from "./Button.js";
+import type List from "./List.js";
+import type DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
 import type { TabInStrip, TabInOverflow } from "./Tab.js";
 import type { TabSeparatorInOverflow, TabSeparatorInStrip } from "./TabSeparator.js";
 import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
-import ListItemCustom from "./ListItemCustom.js";
-import ResponsivePopover from "./ResponsivePopover.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
 import type BackgroundDesign from "./types/BackgroundDesign.js";
@@ -61,7 +61,7 @@ import OverflowMode from "./types/OverflowMode.js";
 import type { IButton } from "./Button.js";
 
 // Templates
-import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
+import TabContainerTemplate from "./TabContainerTemplate.js";
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
@@ -69,7 +69,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 
 type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | TabInStrip;
 
-const tabStyles: Array<StyleData> = [];
+const tabStyles: Array<string> = [];
 const PAGE_UP_DOWN_SIZE = 5;
 
 type TabContainerStripInfo = {
@@ -165,16 +165,8 @@ interface ITab extends UI5Element {
 		tabContainerCss,
 		ResponsivePopoverCommonCss,
 	],
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TabContainerTemplate,
-	dependencies: [
-		Button,
-		Icon,
-		List,
-		ResponsivePopover,
-		DropIndicator,
-		ListItemCustom,
-	],
 })
 /**
  * Fired when a tab is selected.
@@ -182,19 +174,10 @@ interface ITab extends UI5Element {
  * @param {Integer} tabIndex The selected `tab` index in the flattened array of all tabs and their subTabs, provided by the `allItems` getter.
  * @public
  * @since 2.0.0
- * @allowPreventDefault
  */
-@event<TabContainerTabSelectEventDetail>("tab-select", {
-	detail: {
-		/**
-		 * @public
-		 */
-		tab: { type: HTMLElement },
-		/**
-		 * @public
-		 */
-		tabIndex: { type: Number },
-	},
+@event("tab-select", {
+	bubbles: true,
+	cancelable: true,
 })
 /**
  * Fired when element is being moved over the tab container.
@@ -204,19 +187,10 @@ interface ITab extends UI5Element {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  * @since 2.0.0
- * @allowPreventDefault
  */
-@event<TabContainerMoveEventDetail>("move-over", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move-over", {
+	bubbles: true,
+	cancelable: true,
 })
 /**
  * Fired when element is moved to the tab container.
@@ -225,21 +199,16 @@ interface ITab extends UI5Element {
  * @param {object} source Contains information about the moved element under `element` property.
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
- * @allowPreventDefault
  */
-@event<TabContainerMoveEventDetail>("move", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move", {
+	bubbles: true,
 })
 class TabContainer extends UI5Element {
+	eventDetails!: {
+		"tab-select": TabContainerTabSelectEventDetail;
+		"move-over": TabContainerMoveEventDetail;
+		"move": TabContainerMoveEventDetail;
+	}
 	/**
 	 * Defines whether the tab content is collapsed.
 	 * @default false
@@ -375,7 +344,7 @@ class TabContainer extends UI5Element {
 	_handleResizeBound: () => void;
 	_setDraggedElement?: SetDraggedElementFunction;
 
-	static registerTabStyles(styles: StyleData) {
+	static registerTabStyles(styles: string) {
 		tabStyles.push(styles);
 	}
 
@@ -528,7 +497,7 @@ class TabContainer extends UI5Element {
 	}
 
 	@longDragOverHandler("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]")
-	_onHeaderDragOver(e: DragEvent, isLongDragOver: boolean) {
+	_onHeaderDragOver(e: DragEvent, isLongDragOver?: boolean) {
 		if (!(e.target instanceof HTMLElement) || !e.target.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab],[role=separator]")) {
 			this.dropIndicatorDOM!.targetReference = null;
 			return;
@@ -548,36 +517,17 @@ class TabContainer extends UI5Element {
 			e.preventDefault();
 		} else if (closestPosition) {
 			const dropTarget = (closestPosition.element as TabInStrip).realTabReference;
-			let placements = closestPosition.placements;
 
 			if (dropTarget === draggedElement) {
-				placements = placements.filter(placement => placement !== MovePlacement.On);
+				closestPosition.placements = closestPosition.placements.filter(placement => placement !== MovePlacement.On);
 			}
 
-			const acceptedPlacement = placements.find(placement => {
-				const dragOverPrevented = !this.fireEvent<TabContainerMoveEventDetail>("move-over", {
-					source: {
-						element: draggedElement!,
-					},
-					destination: {
-						element: dropTarget,
-						placement,
-					},
-				}, true);
-
-				if (dragOverPrevented) {
-					e.preventDefault();
-					this.dropIndicatorDOM!.targetReference = closestPosition.element;
-					this.dropIndicatorDOM!.placement = placement;
-					return true;
-				}
-
-				return false;
-			});
-
-			if (acceptedPlacement === MovePlacement.On && (closestPosition.element as TabInStrip).realTabReference.items.length) {
+			const { targetReference, placement } = handleDragOver(e, this, closestPosition, dropTarget);
+			this.dropIndicatorDOM!.targetReference = targetReference;
+			this.dropIndicatorDOM!.placement = placement;
+			if (placement === MovePlacement.On && (closestPosition.element as TabInStrip).realTabReference.items.length) {
 				popoverTarget = closestPosition.element;
-			} else if (!acceptedPlacement) {
+			} else if (!placement) {
 				this.dropIndicatorDOM!.targetReference = null;
 			}
 		}
@@ -594,21 +544,8 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		e.preventDefault();
-		const draggedElement = DragRegistry.getDraggedElement()!;
-
-		this.fireEvent<TabContainerMoveEventDetail>("move", {
-			source: {
-				element: draggedElement,
-			},
-			destination: {
-				element: (this.dropIndicatorDOM!.targetReference as TabInStrip).realTabReference,
-				placement: this.dropIndicatorDOM!.placement,
-			},
-		});
-
+		handleDrop(e, this, (this.dropIndicatorDOM!.targetReference as TabInStrip).realTabReference, this.dropIndicatorDOM!.placement);
 		this.dropIndicatorDOM!.targetReference = null;
-		draggedElement.focus();
 	}
 
 	_moveHeaderItem(tab: Tab, e: KeyboardEvent) {
@@ -638,7 +575,7 @@ class TabContainer extends UI5Element {
 		});
 
 		const acceptedPosition = positions.find(({ element, placement }) => {
-			return !this.fireEvent<TabContainerMoveEventDetail>("move-over", {
+			return !this.fireDecoratorEvent("move-over", {
 				source: {
 					element: tab,
 				},
@@ -646,11 +583,11 @@ class TabContainer extends UI5Element {
 					element: (element as TabInStrip).realTabReference,
 					placement,
 				},
-			}, true);
+			});
 		});
 
 		if (acceptedPosition) {
-			this.fireEvent<TabContainerMoveEventDetail>("move", {
+			this.fireDecoratorEvent("move", {
 				source: {
 					element: tab,
 				},
@@ -705,7 +642,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const placementAccepted = !this.fireEvent<TabContainerMoveEventDetail>("move-over", {
+		const placementAccepted = !this.fireDecoratorEvent("move-over", {
 			source: {
 				element: draggedElement,
 			},
@@ -713,7 +650,7 @@ class TabContainer extends UI5Element {
 				element: destinationElement,
 				placement: destination.placement,
 			},
-		}, true);
+		});
 
 		if (placementAccepted) {
 			e.preventDefault();
@@ -749,7 +686,7 @@ class TabContainer extends UI5Element {
 
 		e.preventDefault();
 
-		this.fireEvent<TabContainerMoveEventDetail>("move", {
+		this.fireDecoratorEvent("move", {
 			source: {
 				element: draggedElement,
 			},
@@ -757,7 +694,7 @@ class TabContainer extends UI5Element {
 				element: destinationElement,
 				placement: destination.placement,
 			},
-		}, true);
+		});
 
 		this.dropIndicatorDOM!.targetReference = null;
 		draggedElement.focus();
@@ -968,7 +905,7 @@ class TabContainer extends UI5Element {
 	 * @returns true if the tab selection is successful, false if it was prevented
 	 */
 	selectTab(selectedTab: Tab, selectedTabIndex: number) {
-		if (!this.fireEvent<TabContainerTabSelectEventDetail>("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex }, true)) {
+		if (!this.fireDecoratorEvent("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex })) {
 			return false;
 		}
 
@@ -1005,7 +942,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_sendOverflowPresentationInfos(items: Array<ITab>) {
-		const extraIndent = items
+		const semanticIcons = items
 			.filter((item): item is Tab => !item.isSeparator)
 			.some(tab => tab.design !== SemanticColor.Default && tab.design !== SemanticColor.Neutral);
 
@@ -1015,8 +952,8 @@ class TabContainer extends UI5Element {
 					return this._findTabInOverflow(item);
 				},
 				style: {
-					[getScopedVarName("--_ui5-tab-indentation-level")]: item.isSeparator ? level + 1 : level,
-					[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
+					[getScopedVarName("--_ui5-tab-indentation-level")]: level,
+					[getScopedVarName("--_ui5-tab-level-has-icon")]: semanticIcons ? "1" : "0",
 				},
 			});
 		});

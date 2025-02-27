@@ -2,12 +2,12 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isSpace,
@@ -17,12 +17,11 @@ import {
 	isUp,
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 import type WrappingType from "./types/WrappingType.js";
 
 // Template
-import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
+import RadioButtonTemplate from "./RadioButtonTemplate.js";
 
 // i18n
 import {
@@ -74,19 +73,23 @@ let activeRadio: RadioButton;
 	tag: "ui5-radio-button",
 	languageAware: true,
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: RadioButtonTemplate,
 	styles: radioButtonCss,
-	dependencies: [Label],
 })
 /**
  * Fired when the component checked state changes.
  * @public
  * @since 1.0.0-rc.15
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 class RadioButton extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: void,
+	}
 	/**
 	 * Defines whether the component is disabled.
 	 *
@@ -100,8 +103,8 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines whether the component is read-only.
 	 *
-	 * **Note:** A read-only component is not editable,
-	 * but still provides visual feedback upon user interaction.
+	 * **Note:** A read-only component isn't editable or selectable.
+	 * However, because it's focusable, it still provides visual feedback upon user interaction.
 	 * @default false
 	 * @public
 	 */
@@ -123,6 +126,9 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * **Note:** The property value can be changed with user interaction,
 	 * either by clicking/tapping on the component,
 	 * or by using the Space or Enter key.
+	 *
+	 * **Note:** Only enabled radio buttons can be checked.
+	 * Read-only radio buttons are not selectable, and therefore are always unchecked.
 	 * @default false
 	 * @formEvents change
 	 * @formProperty
@@ -202,8 +208,8 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	@property()
 	accessibleNameRef?: string;
 
-	@property()
-	_tabIndex?: string;
+	@property({ type: Number })
+	_tabIndex?: number;
 
 	/**
 	 * Defines the active state (pressed or not) of the component.
@@ -383,7 +389,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 
 		if (!this.name) {
 			this.checked = !this.checked;
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 			return this;
 		}
 
@@ -395,16 +401,8 @@ class RadioButton extends UI5Element implements IFormInputElement {
 		return !(this.disabled || this.readonly || this.checked);
 	}
 
-	get classes() {
-		return {
-			inner: {
-				"ui5-radio-inner--hoverable": !this.disabled && !this.readonly && isDesktop(),
-			},
-		};
-	}
-
 	get effectiveAriaDisabled() {
-		return this.disabled ? "true" : null;
+		return (this.disabled || this.readonly) ? true : undefined;
 	}
 
 	get ariaLabelText() {
@@ -438,14 +436,14 @@ class RadioButton extends UI5Element implements IFormInputElement {
 		const tabindex = this.getAttribute("tabindex");
 
 		if (this.disabled) {
-			return "-1";
+			return -1;
 		}
 
 		if (this.name) {
 			return this._tabIndex;
 		}
 
-		return tabindex || "0";
+		return tabindex ? parseInt(tabindex) : 0;
 	}
 }
 

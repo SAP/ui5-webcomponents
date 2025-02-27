@@ -38,13 +38,13 @@
 }
 
 :host([show-colon]) .ui5-label-required-colon:before {
-	content: attr(data-colon);
+	content: attr(data-ui5-colon);
 }
 
 :host([required]) .ui5-label-required-colon:after {
 	content:"*";
 	color: var(--sapField_RequiredColor);
-	font-size: 1.25rem;
+	font-size: var(--sapFontLargeSize);
 	font-weight: bold;
 	position: relative;
 	font-style: normal;

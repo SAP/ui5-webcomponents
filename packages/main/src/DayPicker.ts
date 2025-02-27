@@ -1,10 +1,12 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
@@ -44,10 +46,11 @@ import {
 	DAY_PICKER_WEEK_NUMBER_TEXT,
 	DAY_PICKER_NON_WORKING_DAY,
 	DAY_PICKER_TODAY,
+	LIST_ITEM_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
+import DayPickerTemplate from "./DayPickerTemplate.js";
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
@@ -65,13 +68,14 @@ type Day = {
 	timestamp: string,
 	day: number,
 	focusRef: boolean,
-	_tabIndex: string,
+	_tabIndex: number,
 	selected: boolean,
 	_isSecondaryCalendarType: boolean,
 	classes: string,
+	tooltip?: string,
 	ariaLabel: string,
-	ariaSelected: string,
-	ariaDisabled: string | undefined,
+	ariaSelected: boolean,
+	ariaDisabled: boolean | undefined,
 	disabled: boolean,
 	secondDay?: number,
 	weekNum?: number,
@@ -112,12 +116,21 @@ type DayPickerNavigateEventDetail = {
 /**
  * Fired when the selected date(s) change
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 /**
  * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
  */
-@event("navigate")
+@event("navigate", {
+	bubbles: true,
+})
 class DayPicker extends CalendarPart implements ICalendarPicker {
+	eventDetails!: CalendarPart["eventDetails"] & {
+		"change": DayPickerChangeEventDetail,
+		"navigate": DayPickerNavigateEventDetail,
+	};
+
 	/**
 	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 	 * @default []
@@ -226,6 +239,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 			const specialCalendarDate = specialCalendarDates.find(specialDate => specialDate.specialDateTimestamp === timestamp);
 			const specialDayType = specialCalendarDate ? specialCalendarDate.type : "";
+			const specialDayTooltip = specialCalendarDate ? specialCalendarDate.tooltip : "";
+			const unnamedCalendarTypeLabel = specialDayTooltip && !this._isDefaultCalendarLegendType(specialDayType) ? specialDayTooltip : "";
 
 			const isFocused = tempDate.getMonth() === calendarDate.getMonth() && tempDate.getDate() === calendarDate.getDate();
 			const isSelected = this._isDaySelected(timestamp);
@@ -236,29 +251,34 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			const isToday = tempDate.isSame(todayDate);
 			const isFirstDayOfWeek = tempDate.getDay() === firstDayOfWeek;
 
-			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
+			const nonWorkingAriaLabel = (isWeekend || specialDayType === "NonWorking") && specialDayType !== "Working"
+				? `${nonWorkingDayLabel} `
+				: "";
 			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
 
 			const tempSecondDateNumber = tempSecondDate ? tempSecondDate.getDate() : "";
 			const tempSecondYearNumber = tempSecondDate ? tempSecondDate.getYear() : "";
 			const secondaryMonthsNamesString = secondaryMonthsNames.length > 0 ? secondaryMonthsNames[tempSecondDate!.getMonth()] : "";
 
+			const tooltip = `${todayAriaLabel}${nonWorkingAriaLabel}${unnamedCalendarTypeLabel}`;
+
 			const ariaLabel = this.hasSecondaryCalendarType
-				? `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}; ${secondaryMonthsNamesString} ${tempSecondDateNumber}, ${tempSecondYearNumber}`
-				: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`;
+				? `${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}; ${secondaryMonthsNamesString} ${tempSecondDateNumber}, ${tempSecondYearNumber} ${tooltip} `
+				: `${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()} ${tooltip}`;
 
 			const day: Day = {
 				timestamp: timestamp.toString(),
 				focusRef: isFocused,
-				_tabIndex: isFocused ? "0" : "-1",
+				_tabIndex: isFocused ? 0 : -1,
 				selected: isSelected || isSelectedBetween,
 				day: tempDate.getDate(),
 				secondDay: this.hasSecondaryCalendarType ? (tempSecondDate as CalendarDate).getDate() : undefined,
 				_isSecondaryCalendarType: this.hasSecondaryCalendarType,
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
+				tooltip,
 				ariaLabel,
-				ariaSelected: String(isSelected || isSelectedBetween),
-				ariaDisabled: isDisabled || isOtherMonth ? "true" : undefined,
+				ariaSelected: isSelected || isSelectedBetween,
+				ariaDisabled: isDisabled || isOtherMonth,
 				disabled: isDisabled,
 				type: specialDayType,
 				parts: "day-cell",
@@ -460,7 +480,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 		this._updateSelectedDates(timestamp, isShift);
 
-		this.fireEvent<DayPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -476,6 +496,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			return;
 		}
 
+		announce(DayPicker.i18nBundle.getText(LIST_ITEM_SELECTED), InvisibleMessageMode.Assertive);
 		if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
 			this.selectedDates = [this.selectedDates[0], timestamp];
 			return;
@@ -509,7 +530,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			}
 		});
 
-		this.fireEvent<DayPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -520,6 +541,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			this._removeTimestampFromSelection(timestamp);
 		} else {
 			this._addTimestampToSelection(timestamp);
+			announce(DayPicker.i18nBundle.getText(LIST_ITEM_SELECTED), InvisibleMessageMode.Assertive);
 		}
 	}
 
@@ -717,7 +739,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -728,7 +750,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
 		this._updateSecondTimestamp();
-		this.fireEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -754,15 +776,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		return this.hideWeekNumbers;
 	}
 
-	get classes() {
-		return {
-			root: {
-				"ui5-dp-root": true,
-				"ui5-dp-twocalendartypes": this.hasSecondaryCalendarType,
-			},
-		};
-	}
-
 	_isWeekend(oDate: CalendarDate): boolean {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 
@@ -777,6 +790,10 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_isDayPressed(target: HTMLElement): boolean {
 		const targetParent = target.parentNode as HTMLElement;
 		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && targetParent.classList && targetParent.classList.contains("ui5-dp-item"));
+	}
+
+	_isDefaultCalendarLegendType(type: string): boolean {
+		return ["NonWorking", "Working", "Today", "Selected", "None"].includes(type);
 	}
 
 	_getSecondaryDay(tempDate: CalendarDate): CalendarDate {

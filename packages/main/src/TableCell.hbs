@@ -1,11 +1,7 @@
 {{#if _popin}}
-	{{#if _popinHeader}}
-		<div class="popin-header-colon">
-			{{_popinHeader}}
-			<span class="popin-colon">{{_i18nPopinColon}}</span>
-		</div>
-	{{/if}}
-	<slot></slot>
-{{else}}
-	<slot></slot>
+	{{#each _popinHeaderNodes}}
+		{{this}}
+	{{/each}}
+	<span class="popin-colon">{{_i18nPopinColon}}</span>
 {{/if}}
+<slot></slot>

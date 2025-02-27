@@ -4,18 +4,16 @@ import {
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type NotificationListGrowingMode from "@ui5/webcomponents/dist/types/NotificationListGrowingMode.js";
-import NotificationListGroupList from "./NotificationListGroupList.js";
+import type NotificationListGroupList from "./NotificationListGroupList.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationListItem from "./NotificationListItem.js";
 
 // Icons
-import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
-import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
+import iconNavigationRightArrow from "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import iconNavigationDownArrow from "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 
 // Texts
 import {
@@ -26,7 +24,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
-import NotificationListGroupItemTemplate from "./generated/templates/NotificationListGroupItemTemplate.lit.js";
+import NotificationListGroupItemTemplate from "./NotificationListGroupItemTemplate.js";
 
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
@@ -49,7 +47,7 @@ type NotificationListGroupItemToggleEventDetail = {
  * - Items of the group
  *
  * ### Usage
- * The component can be used in a standard `ui5-list`.
+ * The component should be used inside a `ui5-notification-list`.
  *
  * ### Keyboard Handling
  * The `ui5-li-notification-group` provides advanced keyboard handling.
@@ -72,23 +70,20 @@ type NotificationListGroupItemToggleEventDetail = {
 @customElement({
 	tag: "ui5-li-notification-group",
 	languageAware: true,
+	renderer: jsxRenderer,
 	styles: [
 		NotificationListGroupItemCss,
 	],
 	template: NotificationListGroupItemTemplate,
-	dependencies: [
-		NotificationListGroupList,
-		Button,
-		Icon,
-		BusyIndicator,
-	],
 })
 
 /**
  * Fired when the `ui5-li-notification-group` is expanded/collapsed by user interaction.
  * @public
  */
-@event("toggle")
+@event("toggle", {
+	bubbles: true,
+})
 
 /**
  * Fired when additional items are requested.
@@ -96,9 +91,15 @@ type NotificationListGroupItemToggleEventDetail = {
  * @public
  * @since 2.2.0
  */
-@event("load-more")
+@event("load-more", {
+	bubbles: true,
+})
 
 class NotificationListGroupItem extends NotificationListItemBase {
+	eventDetails!: NotificationListItemBase["eventDetails"] & {
+		toggle: NotificationListGroupItemToggleEventDetail;
+		"load-more": void;
+	}
 	/**
 	 * Defines if the group is collapsed or expanded.
 	 * @default false
@@ -129,7 +130,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		super.onBeforeRendering();
 
 		this.items.forEach(item => {
-			item._ariaLevel = "2";
+			item._ariaLevel = 2;
 		});
 
 		if (this.loading) {
@@ -184,7 +185,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return ids.join(" ");
 	}
 
-	get _ariaExpanded() {
+	get _expanded() {
 		return !this.collapsed;
 	}
 
@@ -193,12 +194,12 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	get groupCollapsedIcon() {
-		return this.collapsed ? "navigation-right-arrow" : "navigation-down-arrow";
+		return this.collapsed ? iconNavigationRightArrow : iconNavigationDownArrow;
 	}
 
 	toggleCollapsed() {
 		this.collapsed = !this.collapsed;
-		this.fireEvent<NotificationListGroupItemToggleEventDetail>("toggle", { item: this });
+		this.fireDecoratorEvent("toggle", { item: this });
 	}
 
 	/**
@@ -210,17 +211,21 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	_onLoadMore() {
-		this.fireEvent("load-more");
+		this.fireDecoratorEvent("load-more");
 	}
 
-	get loadMoreButton() {
+	getGrowingButton() {
 		const innerList = this.getDomRef()?.querySelector("[ui5-notification-group-list]") as NotificationListGroupList;
-		return innerList.getDomRef()?.querySelector("[growing-button-inner]") as HTMLElement;
+		return innerList.getGrowingButton();
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
 		const isFocused = this.matches(":focus");
 		if (!isFocused) {
+			return;
+		}
+
+		if (this.getGrowingButton()?.matches(":focus")) {
 			return;
 		}
 

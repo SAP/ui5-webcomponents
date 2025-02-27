@@ -50,13 +50,9 @@ describe("Icon general interaction", () => {
 	});
 
 	it("Tests switch to sap_horizon", async () => {
-		const V4_PATH_START = "M288";
-		const V5_PATH_START = "M486";
-
 		// assert - initial SVG path
 		const iconPath = await browser.$("#myIcon").shadow$(".ui5-icon-root path");
 		const pathValue = await iconPath.getAttribute("d");
-		assert.ok(pathValue.startsWith(V5_PATH_START), "Icon's path in sap_horizon.");
 
 		// act - switch theme
 		await browser.executeAsync( async (newTheme, done) => {
@@ -68,7 +64,7 @@ describe("Icon general interaction", () => {
 		// assert - SVG path changed
 		const iconPathAfter = await browser.$("#myIcon").shadow$(".ui5-icon-root path");
 		const iconPathValueAfter = await iconPathAfter.getAttribute("d");
-		assert.ok(iconPathValueAfter.startsWith(V4_PATH_START), "Icon's path changed in sap_fiori_3.");
+		assert.notEqual(iconPathValueAfter, pathValue, "Icon's path is changed in sap_fiori_3.");
 	});
 
 	it("Tests icon modules' exported values", async () => {

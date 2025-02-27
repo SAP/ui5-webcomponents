@@ -9,7 +9,7 @@
         <ui5-checkbox id="selection-component" tabindex="-1"
             ?checked="{{_isSelected}}"
             accessible-name="{{_i18nRowSelector}}"
-            @ui5-change="{{_informSelectionChange}}"
+            @ui5-change="{{_onSelectionChange}}"
         ></ui5-checkbox>
     {{/if}}
     </ui5-table-header-cell>
@@ -18,6 +18,10 @@
 {{#each _visibleCells}}
 	<slot name="{{_individualSlot}}"></slot>
 {{/each}}
+
+{{#if _hasRowActions}}
+    <ui5-table-header-cell id="actions-cell" aria-label="{{_i18nRowActions}}"></ui5-table-header-cell>
+{{/if}}
 
 {{#if _popinCells.length}}
     <ui5-table-header-cell id="popin-cell" aria-label="{{_i18nRowPopin}}" excluded-from-navigation></ui5-table-cell>
