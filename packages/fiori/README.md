@@ -36,6 +36,9 @@ such as a common header (ShellBar).
 | User Menu                                 | `ui5-user-menu`                | `import "@ui5/webcomponents-fiori/dist/UserMenu.js";`                 |
 | User Menu Account                         | `ui5-user-menu-account`        | `import "@ui5/webcomponents-fiori/dist/UserMenuAccount.js";`          |
 | User Menu Item                            | `ui5-user-menu-item`           | `import "@ui5/webcomponents-fiori/dist/UserMenuItem.js";`             |
+| User Settings Dialog                      | `ui5-user-settings-dialog`     | `import "@ui5/webcomponents-fiori/dist/UserSettingsDialog.js";`       |
+| User Settings Item                        | `ui5-user-settings-item`       | `import "@ui5/webcomponents-fiori/dist/UserSettingsItem.js";`         |
+| User Settings View                        | `ui5-user-settings-view`       | `import "@ui5/webcomponents-fiori/dist/UserSettingsView.js";`         |
 | View Settings Dialog                      | `ui5-view-settings-dialog`     | `import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";`       |
 | View Settings Dialog - Sort Item          | `ui5-sort-item`                | `import "@ui5/webcomponents-fiori/dist/SortItem.js";`                 |
 | View Settings Dialog - Filter Item        | `ui5-filter-item`              | `import "@ui5/webcomponents-fiori/dist/FilterItem.js";`               |

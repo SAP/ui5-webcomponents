@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.2...v2.8.0-rc.3) (2025-02-27)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** update title font styles ([#10912](https://github.com/SAP/ui5-webcomponents/issues/10912)) ([6a85a53](https://github.com/SAP/ui5-webcomponents/commit/6a85a53f58bf0780975a5e41a1db69d05c9d1059)), closes [#10879](https://github.com/SAP/ui5-webcomponents/issues/10879)
+* **ui5-notification-list:** improve keyboard accessibility for the "More" button ([#10822](https://github.com/SAP/ui5-webcomponents/issues/10822)) ([b659fe2](https://github.com/SAP/ui5-webcomponents/commit/b659fe2faeb42eb052dafcc0c16215a3bf1f1926))
+* **ui5-shellbar:** adjust focus style of startButton ([#10908](https://github.com/SAP/ui5-webcomponents/issues/10908)) ([cc0be62](https://github.com/SAP/ui5-webcomponents/commit/cc0be62a675d22d6f63471c57d71964d395fd5d6)), closes [#10598](https://github.com/SAP/ui5-webcomponents/issues/10598)
+
+
+### Features
+
+* **ui5-search-field:** introduce base component ([#10922](https://github.com/SAP/ui5-webcomponents/issues/10922)) ([f4489c0](https://github.com/SAP/ui5-webcomponents/commit/f4489c0cecd8c0f2f7916b39e2183193f171f725))
+* **ui5-side-navigation:** visual design enhancements ([#10839](https://github.com/SAP/ui5-webcomponents/issues/10839)) ([09e3f35](https://github.com/SAP/ui5-webcomponents/commit/09e3f35f5973aca5b2104508a3f8d452d8380a76))
+* **ui5-user-settings-dialog:** introduce new components `UserSettingsDialog`, `UserSettingsItem`, and `UserSettingsView` ([#10832](https://github.com/SAP/ui5-webcomponents/issues/10832)) ([8b50b13](https://github.com/SAP/ui5-webcomponents/commit/8b50b134af44cb9b83a223bb1d0d9e3478f47c77))
+
+
+
+
+
 # [2.8.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.1...v2.8.0-rc.2) (2025-02-20)
 
 
