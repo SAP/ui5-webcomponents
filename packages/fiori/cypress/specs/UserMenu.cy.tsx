@@ -79,11 +79,11 @@ describe("Initial rendering", () => {
 		cy.get("@responsivePopover").find("[ui5-button]").should("have.length", 1);
 	});
 
-	it("tests config show-add-account", () => {
+	it("tests config show-edit-account", () => {
 		cy.mount(
 			<>
 				<Button id="openUserMenuBtn">Open User Menu</Button>
-				<UserMenu open={true} opener="openUserMenuBtn" showOtherAccounts={true} showAddAccount={true}>
+				<UserMenu open={true} opener="openUserMenuBtn" showOtherAccounts={true} showEditAccount={true}>
 					<UserMenuAccount
 						slot="accounts"
 						titleText="Alain Chevalier 1"
@@ -342,7 +342,7 @@ describe("Events", () => {
 		cy.mount(
 			<>
 				<Button id="openUserMenuBtn">Open User Menu</Button>
-				<UserMenu open={true} opener="openUserMenuBtn" showAddAccount={true} showOtherAccounts={true}>
+				<UserMenu open={true} opener="openUserMenuBtn" showEditAccount={true} showOtherAccounts={true}>
 					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 				</UserMenu>
 			</>
