@@ -75,15 +75,15 @@ describe("Initial rendering", () => {
 		cy.get("@userMenu").should("exist");
 		cy.get("@userMenu").shadow().find("[ui5-responsive-popover]").as("responsivePopover");
 		cy.get("@responsivePopover").should("exist");
-		cy.get("@responsivePopover").find("[ui5-panel]").contains(`${USER_MENU_OTHER_ACCOUNT_BUTTON_TXT.defaultText} (1)`);
+		cy.get("@responsivePopover").find("[ui5-panel]").contains(`${USER_MENU_OTHER_ACCOUNT_BUTTON_TXT.defaultText} (2)`);
 		cy.get("@responsivePopover").find("[ui5-button]").should("have.length", 1);
 	});
 
-	it("tests config show-add-account", () => {
+	it("tests config show-edit-account", () => {
 		cy.mount(
 			<>
 				<Button id="openUserMenuBtn">Open User Menu</Button>
-				<UserMenu open={true} opener="openUserMenuBtn" showOtherAccounts={true} showAddAccount={true}>
+				<UserMenu open={true} opener="openUserMenuBtn" showOtherAccounts={true} showEditAccount={true}>
 					<UserMenuAccount
 						slot="accounts"
 						titleText="Alain Chevalier 1"
@@ -342,7 +342,7 @@ describe("Events", () => {
 		cy.mount(
 			<>
 				<Button id="openUserMenuBtn">Open User Menu</Button>
-				<UserMenu open={true} opener="openUserMenuBtn" showAddAccount={true} showOtherAccounts={true}>
+				<UserMenu open={true} opener="openUserMenuBtn" showEditAccount={true} showOtherAccounts={true}>
 					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 				</UserMenu>
 			</>
@@ -369,8 +369,8 @@ describe("Events", () => {
 			<>
 				<Button id="openUserMenuBtn">Open User Menu</Button>
 				<UserMenu open={true} opener="openUserMenuBtn" showOtherAccounts={true}>
-					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 2"></UserMenuAccount>
+					<UserMenuAccount selected slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 				</UserMenu>
 			</>
 		);
@@ -390,7 +390,7 @@ describe("Events", () => {
 			.click();
 
 		cy.get("@otherAccounts")
-			.find("[ui5-li-custom]")
+			.find("[ui5-li-custom]").first()
 			.click();
 
 		cy.get("@changedAccount").should("have.been.calledOnce");
@@ -614,7 +614,7 @@ describe("Responsiveness", () => {
 				<UserMenu id="userMenuShellBar" open={true}
 					opener="openUserMenuBtn"
 					showManageAccount={true}
-					showAddAccount={true}>
+					showEditAccount={true}>
 					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 					<UserMenuItem text="Setting1" data-id="setting1"></UserMenuItem>
 				</UserMenu>
@@ -635,7 +635,7 @@ describe("Responsiveness", () => {
 					id="userMenuShellBar"
 					open={true} opener="openUserMenuBtn"
 					showManageAccount={true}
-					showAddAccount={true}
+					showEditAccount={true}
 				>
 					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 					<UserMenuItem text="Setting1" data-id="setting1"></UserMenuItem>

@@ -174,13 +174,13 @@ class UserMenu extends UI5Element {
 	showOtherAccounts = false;
 
 	/**
-	 * Defines if the User Menu shows the Add Account option.
+	 * Defines if the User Menu shows the Edit Account option.
 	 *
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showAddAccount = false;//TODO rename to show-edit-accont
+	showEditAccount = false;
 
 	/**
 	 * Defines if the User menu shows edit button.

@@ -100,7 +100,7 @@
 
 .ui5-pm-other-accounts-content {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 11.4rem auto;
     align-items: center;
 	width: 100%;
 	height: 4.5rem;
@@ -125,6 +125,7 @@
 	font-size: var(--sapFontSize);
 	font-style: normal;
 	line-height: normal;
+	width: 11.4rem;
 }
 
 .ui5-pm-other-accounts-additional-info {
@@ -135,7 +136,9 @@
 	font-size: var(--sapFontSize);
 	font-style: normal;
 	line-height: normal;
+	width: 11.4rem;
 }
+
 
 .ui5-pm-selected-account-icon {
 	display: flex;

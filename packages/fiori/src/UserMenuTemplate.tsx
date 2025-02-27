@@ -73,7 +73,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 					<Panel collapsed={true} class="ui5-pm-other-accounts">
 						<div slot="header" class="ui5-user-menu-account-header">
 							<Title slot="header" level="H4">{this._otherAccountsButtonText} ({this._otherAccounts.length})</Title>
-							{this.showAddAccount &&
+							{this.showEditAccount &&
 								<Button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon={userEdit} onClick={this._handleAddAccountClick} tooltip={this._addAccountTooltip}/>
 							}
 						</div>
@@ -91,13 +91,13 @@ export default function UserMenuTemplate(this: UserMenu) {
 											</Avatar>
 											<div class="ui5-pm-other-accounts-info">
 												{account.titleText &&
-												<Title class="ui5-pm-other-accounts-title">{account.titleText}</Title>
+												<Title class="ui5-pm-other-accounts-title" wrapping-type="None">{account.titleText}</Title>
 												}
 												{account.subtitleText &&
-												<Label class="ui5-pm-other-accounts-additional-info">{account.subtitleText}</Label>
+												<Label class="ui5-pm-other-accounts-additional-info" wrapping-type="None">{account.subtitleText}</Label>
 												}
 												{account.description &&
-												<Label class="ui5-pm-other-accounts-additional-info">{account.description}</Label>
+												<Label class="ui5-pm-other-accounts-additional-info" wrapping-type="None">{account.description}</Label>
 												}
 											</div>
 											<div>
