@@ -504,6 +504,7 @@ class AvatarGroup extends UI5Element {
 	_overflowItems() {
 		if (this.items.length < 2) {
 			// no need to overflow avatars
+			this._setHiddenItems(0);
 			return;
 		}
 
