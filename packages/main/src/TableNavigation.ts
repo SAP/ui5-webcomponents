@@ -59,8 +59,8 @@ class TableNavigation extends TableExtension {
 			items.push(this._getNavigationItemsOfRow(this._table._nodataRow));
 		}
 
-		if (this._table.rows.length > 0 && this._table._growing?.hasGrowingComponent()) {
-			items.push([this._table._growing.getFocusDomRef()]);
+		if (this._table.rows.length > 0 && this._table._getGrowing()?.hasGrowingComponent()) {
+			items.push([this._table._getGrowing()?.getFocusDomRef()]);
 			this._gridWalker.setLastRowPos(-1);
 		} else {
 			this._gridWalker.setLastRowPos(0);

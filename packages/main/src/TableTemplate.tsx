@@ -34,7 +34,7 @@ export default function TableTemplate(this: Table) {
 					</TableRow>
 				}
 
-				{ this.rows.length > 0 && this._growing?.hasGrowingComponent() &&
+				{ this.rows.length > 0 && this._getGrowing()?.hasGrowingComponent() &&
 					<div id="footer" role="rowgroup">
 						{ growingRow.call(this) }
 					</div>
@@ -69,7 +69,7 @@ function growingRow(this: Table) {
 	return (
 		<TableRow id="growing-row" ui5-growing-row>
 			<TableCell id="growing-cell">
-				<slot name={this._growing._individualSlot}></slot>
+				<slot name={this._getGrowing()?._individualSlot}></slot>
 			</TableCell>
 		</TableRow>
 	);

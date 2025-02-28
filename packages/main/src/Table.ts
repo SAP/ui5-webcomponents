@@ -23,6 +23,7 @@ import type TableSelection from "./TableSelection.js";
 import type TableSelectionBase from "./TableSelectionBase.js";
 import type TableRowActionBase from "./TableRowActionBase.js";
 import type TableVirtualizer from "./TableVirtualizer.js";
+import type TableGrowing from "./TableGrowing.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	TABLE_NO_DATA,
@@ -445,6 +446,10 @@ class Table extends UI5Element {
 		return this._findFeature<TableVirtualizer>("TableVirtualizer");
 	}
 
+	_getGrowing(): TableGrowing | undefined {
+		return this._findFeature<TableGrowing>("TableGrowing");
+	}
+
 	_onEvent(e: Event) {
 		const composedPath = e.composedPath();
 		const eventOrigin = composedPath[0] as HTMLElement;
@@ -504,7 +509,7 @@ class Table extends UI5Element {
 	}
 
 	_onGrow() {
-		this._growing?.loadMore();
+		this._getGrowing()?.loadMore();
 	}
 
 	_getPopinOrderedColumns(reverse: boolean) {
@@ -654,10 +659,6 @@ class Table extends UI5Element {
 	get _ariaMultiSelectable() {
 		const selection = this._getSelection();
 		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelectable() : undefined;
-	}
-
-	get _growing() {
-		return this._findFeature<ITableGrowing>("TableGrowing");
 	}
 
 	get _stickyElements() {
