@@ -32,24 +32,24 @@
 	--_ui5_side_navigation_selected_and_focused_border_style_color: var(--_ui5_side_navigation_selected_border_style_color);
 	--_ui5_side_navigation_group_icon_width: 2.5rem;
 	--_ui5_side_navigation_icon_padding_inline_end: 0.5rem;
-	--_ui5_side_navigation_group_text_weight: bold;
-	--_ui5_side_navigation_group_bottom_margin_in_popup: 0.75rem;
+	--_ui5_side_navigation_parent_item_bottom_margin_in_popup: var(--_ui5_side_navigation_item_bottom_margin);
 	--_ui5_side_navigation_group_padding: 1rem;
 	--_ui5_side_navigation_padding-flexible: 0.5rem 0.5rem 0 0.5rem; 
 	--_ui5_side_navigation_padding-fixed: 0 0.5rem 0.5rem 0.5rem;
-	--_ui5_side_navigation_parent_popup_padding: 0.75rem;
+	--_ui5_side_navigation_parent_popup_padding: 0.5rem;
 	--_ui5_side_navigation_parent_popup_border_radius: 0.75rem;
 	--_ui5_side_navigation_popup_item_padding: 0 0.5rem;
 	--_ui5_side_navigation_popup_icon_width: 0.5rem;
 	--_ui5_side_navigation_popup_shadow_color1: color-mix(in srgb, var(--sapContent_ShadowColor) 48%, transparent);
 	--_ui5_side_navigation_popup_shadow_color2: color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
 	--_ui5_side_navigation_popup_box_shadow: 0 0 0.125rem 0 var(--_ui5_side_navigation_popup_shadow_color1), 0 1rem 2rem 0 var(--_ui5_side_navigation_popup_shadow_color2);
-	--_ui5_side_navigation_popup_title_text_size: 1.25rem;
+	/* --_ui5_side_navigation_popup_title_text_size: 1.25rem; */
 	--_ui5_side_navigation_popup_title_line_height: 1.5rem;
 	--_ui5_side_navigation_selection_indicator_display: inline-block;
 	--_ui5_side_navigation_first_fixed_item_margin_top: 0.125rem;
 	--_ui5_side_navigation_active_text_color: var(--sapButton_TextColor);
 
+	--_ui5_side_navigation_item_font_family: var(--sapFontBoldFamily);
 	--_ui5_side_navigation_item_expand_icon_visibility: block;
 	--_ui5_side_navigation_item_collapsed_hover_focus_width: fit-content;
 	--_ui5_side_navigation_item_collapsed_hover_focus_display: block;

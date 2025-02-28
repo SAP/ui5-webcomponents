@@ -2,9 +2,8 @@
 
 :host {
 	color: var(--sapList_TextColor);
-	font-family: "72override", var(--sapFontFamily);
+	font-family: var(--_ui5_side_navigation_item_font_family);
 	font-size: var(--sapFontSize);
-	font-weight: var(--_ui5_side_navigation_group_text_weight);
 }
 
 .ui5-sn-item-level1:not(:has(> .ui5-sn-item-icon)),
@@ -13,7 +12,7 @@
 }
 
 :host([in-popover]) .ui5-sn-item-level1 {
-	margin-bottom: var(--_ui5_side_navigation_group_bottom_margin_in_popup);
+	margin-bottom: var(--_ui5_side_navigation_parent_item_bottom_margin_in_popup);
 }
 
 :host([in-popover]) .ui5-sn-item-level1 .ui5-sn-item-text {
