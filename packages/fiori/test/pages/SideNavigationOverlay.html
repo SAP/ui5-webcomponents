@@ -29,16 +29,16 @@
                 <ui5-side-navigation id="nl1" design="Plain">
                     <!-- Items -->
                     <ui5-side-navigation-item text="Home" href="#home" icon="home"></ui5-side-navigation-item>
-                    <ui5-side-navigation-group expanded>
-                        <ui5-side-navigation-item text="Group 1" text="Item 1" expanded href="#item1" icon="locate-me">
-                            <ui5-side-navigation-sub-item text="Sub Item 1" href="#subitem1"></ui5-side-navigation-sub-item>
+                    <ui5-side-navigation-group text="Group 1" expanded>
+                        <ui5-side-navigation-item text="Item 1" text="Item 1" expanded href="#item1" icon="locate-me">
+                            <ui5-side-navigation-sub-item text="Sub Item 1" href="#subitem1" unselectable></ui5-side-navigation-sub-item>
                             <ui5-side-navigation-sub-item text="Sub Item 2" href="#subitem2"></ui5-side-navigation-sub-item>
                         </ui5-side-navigation-item>
-                        <ui5-side-navigation-item text="Item 2" href="#item2" icon="calendar" expanded>
+                        <ui5-side-navigation-item text="Item 2" href="#item2" icon="calendar" unselectable expanded>
                             <ui5-side-navigation-sub-item text="Sub Item 3" href="#subitem3"></ui5-side-navigation-sub-item>
                             <ui5-side-navigation-sub-item text="Sub Item 4" href="#subitem4"></ui5-side-navigation-sub-item>
                         </ui5-side-navigation-item>
-                        <ui5-side-navigation-item text="Item 3" href="#item3" icon="activity-assigned-to-goal"></ui5-side-navigation-item>
+                        <ui5-side-navigation-item text="Item 3" href="#item3" icon="activity-assigned-to-goal" unselectable></ui5-side-navigation-item>
                     </ui5-side-navigation-group>
 					<ui5-side-navigation-item text="Home2" href="#home2" icon="home"></ui5-side-navigation-item>
                     <ui5-side-navigation-group text="Group 2" expanded>
@@ -80,15 +80,21 @@
 	</div>
 
 	<script>
-		startButton.addEventListener("click", function (event) {
+		menuBtn.addEventListener("click", function (event) {
 			respPopover.open = true;
 		});
 
-		nl1.querySelectorAll("ui5-side-navigation-item").forEach(element => {
-			element.addEventListener("click", function (event) {
-				respPopover.open=false;	
-			});
-		});
+        const items = nl1.getElementsByTagName("ui5-side-navigation-item");
+
+        for (const item of items) {
+            item.addEventListener("click", function (event) {
+                if(event.target.tagName.indexOf("SUB-ITEM") === -1 && event.target.getAttribute("unselectable") !== "" && item.children.length === 0) {
+                    respPopover.open=  false;
+                } else if (event.target.tagName.indexOf("SUB-ITEM") > -1 && event.target.getAttribute("unselectable") !== "") {
+                    respPopover.open = false;
+                }
+            });
+        }
 		
 	</script>
 </body>
