@@ -1,5 +1,4 @@
 import Link from "../../src/Link.js";
-import type { LinkClickEventDetail } from "../../src/Link.js";
 
 describe("General API", () => {
 	it("render initially", () => {
