@@ -404,7 +404,7 @@ class Popover extends Popup {
 			placement = this.calcPlacement(this._openerRect!, popoverSize);
 		}
 
-		this._visible = true;
+		this.isVisible = true;
 
 		if (this._preventRepositionAndClose || this.isOpenerOutsideViewport(this._openerRect!)) {
 			await this._waitForDomRef();
