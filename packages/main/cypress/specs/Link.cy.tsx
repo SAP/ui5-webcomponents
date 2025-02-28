@@ -162,62 +162,39 @@ describe("General API", () => {
 	});
 
 	it("passes special keys pressed while item clicked", () => {
-		cy.mount(
-			<>
-				<Link>Link</Link>
-				<span id="result"></span>
-			</>
-		);
+		cy.mount(<Link>Link</Link>);
 
 		cy.get("[ui5-link]")
 			.then($link => {
-				$link[0].addEventListener("click", event => {
-					const result = document.getElementById("result");
-					const eventDetail = event.detail as unknown as LinkClickEventDetail;
-					let keyText = "";
-
-					if (eventDetail.ctrlKey) {
-						keyText = "CTRL pressed";
-					}
-					if (eventDetail.metaKey) {
-						keyText = "META pressed";
-					}
-					if (eventDetail.altKey) {
-						keyText = "ALT pressed";
-					}
-					if (eventDetail.shiftKey) {
-						keyText = "SHIFT pressed";
-					}
-					event.preventDefault();
-					if (result) {
-						result.innerText = keyText;
-					}
-				});
+				$link[0].addEventListener("click", cy.stub().as("clickHandler"));
 			});
 
 		// CTRL Key
 		cy.get("[ui5-link]")
 			.realClick({ ctrlKey: true });
 
+		cy.get("@clickHandler")
+			.should("be.calledWithMatch", { detail: { ctrlKey: true } });
+
 		// META Key
 		cy.get("[ui5-link]")
 			.realClick({ metaKey: true });
 
-		cy.get("#result")
-			.should("have.text", "META pressed");
+		cy.get("@clickHandler")
+			.should("be.calledWithMatch", { detail: { metaKey: true } });
 
 		// ALT Key
 		cy.get("[ui5-link]")
 			.realClick({ altKey: true });
 
-		cy.get("#result")
-			.should("have.text", "ALT pressed");
+		cy.get("@clickHandler")
+			.should("be.calledWithMatch", { detail: { altKey: true } });
 
 		// SHIFT Key
 		cy.get("[ui5-link]").realClick({ shiftKey: true });
 
-		cy.get("#result")
-			.should("have.text", "SHIFT pressed");
+		cy.get("@clickHandler")
+			.should("be.calledWithMatch", { detail: { shiftKey: true } });
 	});
 
 	it("links have icons", () => {
