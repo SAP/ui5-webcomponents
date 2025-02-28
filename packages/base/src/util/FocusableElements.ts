@@ -62,28 +62,7 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 
 		if (!isElementHidden(originalChild)) {
 			if (instanceOfUI5Element(child)) {
-				const focusDomRef = await child.getFocusDomRefAsync();
-
-				if (!focusDomRef || isElementHidden(focusDomRef)) {
-					return null;
-				}
-
-				if (focusDomRef.nodeType === 1 && isElemFocusable(focusDomRef) && !isFocusTrap(focusDomRef)) {
-					if (isElementClickable(focusDomRef)) {
-						return (focusDomRef && typeof focusDomRef.focus === "function") ? focusDomRef : null;
-					}
-
-					focusableDescendant = await findFocusableElement(focusDomRef, forward);
-
-					// check if it is a keyboard focusable scroll container
-					if (!isSafari() && !focusableDescendant && isScrollable(focusDomRef)) {
-						return (focusDomRef && typeof focusDomRef.focus === "function") ? focusDomRef : null;
-					}
-
-					if (focusableDescendant) {
-						return (focusableDescendant && typeof focusableDescendant.focus === "function") ? focusableDescendant : null;
-					}
-				}
+				child = child.getDomRef();
 			}
 
 			if (!child || isElementHidden(child)) {
