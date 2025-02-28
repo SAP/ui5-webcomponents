@@ -42,7 +42,7 @@ class TableCell extends TableCellBase {
 	}
 
 	injectHeaderNodes(ref: HTMLElement | null) {
-		if (ref?.hasChildNodes()) {
+		if (ref && !ref.hasChildNodes()) {
 			ref.replaceChildren(...this._popinHeaderNodes);
 		}
 	}
