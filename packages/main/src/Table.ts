@@ -656,10 +656,6 @@ class Table extends UI5Element {
 		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelectable() : undefined;
 	}
 
-	get _shouldRenderGrowing() {
-		return !!this.rows.length && this._growing?.hasGrowingComponent();
-	}
-
 	get _growing() {
 		return this._findFeature<ITableGrowing>("TableGrowing");
 	}

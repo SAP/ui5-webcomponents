@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -11,7 +12,6 @@ import { isInstanceOfTable } from "./TableUtils.js";
 import {
 	TABLE_ROW_SELECTOR,
 } from "./generated/i18n/i18n-defaults.js";
-import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
 /**
  * @class

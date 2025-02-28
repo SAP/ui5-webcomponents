@@ -4,7 +4,6 @@ import TableCell from "./TableCell.js";
 import DropIndicator from "./DropIndicator.js";
 import BusyIndicator from "./BusyIndicator.js";
 
-// TODO: rethink styles ? maybe move them here?
 export default function TableTemplate(this: Table) {
 	return (
 		<>
@@ -35,7 +34,7 @@ export default function TableTemplate(this: Table) {
 					</TableRow>
 				}
 
-				{ this._shouldRenderGrowing &&
+				{ this.rows.length > 0 && this._growing?.hasGrowingComponent() &&
 					<div id="footer" role="rowgroup">
 						{ growingRow.call(this) }
 					</div>

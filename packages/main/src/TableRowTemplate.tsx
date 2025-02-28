@@ -34,13 +34,13 @@ export default function TableRowTemplate(this: TableRow) {
 			}
 
 			{ this._visibleCells.map(cell => (
-				<slot name={cell._individualSlot} key={cell._individualSlot}></slot>
+				<slot name={cell._individualSlot}></slot>
 			))}
 
 			{ this._hasRowActions &&
 				<TableCell id="actions-cell">
 					{ this._flexibleActions.map(action => (
-						<slot name={action._individualSlot} key={action._individualSlot}></slot>
+						<slot name={action._individualSlot}></slot>
 					))}
 
 					{ this._hasOverflowActions &&
@@ -53,7 +53,7 @@ export default function TableRowTemplate(this: TableRow) {
 					}
 
 					{ this._fixedActions.map(action => (
-						<slot name={action._individualSlot} key={action._individualSlot}></slot>
+						<slot name={action._individualSlot}></slot>
 					))}
 				</TableCell>
 			}
@@ -67,7 +67,7 @@ export default function TableRowTemplate(this: TableRow) {
 			{ this._popinCells.length > 0 &&
 				<TableCell id="popin-cell">
 					{ this._popinCells.map(cell => (
-						<slot name={cell._individualSlot} key={cell._individualSlot}></slot>
+						<slot name={cell._individualSlot}></slot>
 					))}
 				</TableCell>
 			}
