@@ -10,3 +10,17 @@ body {
 .show {
 	display: block;
 }
+
+ui5-icon#ai-wa-icon:hover {
+	background: var(--sapButton_Hover_Background);
+	/* border-color: var(--sapButton_BorderColor); */
+	border: 1px solid var(--sapButton_BorderColor);
+	color: var(--sapButton_IconColor);
+}
+
+.icon-pressed {
+	background: transparent;
+	/* border-color: var(--sapButton_BorderColor); */
+	border: 1px solid var(--sapButton_BorderColor);
+	color: var(--sapButton_IconColor);
+}

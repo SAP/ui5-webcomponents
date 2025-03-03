@@ -1,0 +1,238 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>ui5-input</title>
+
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+	<style>
+		ui5-icon[name="ai"]:hover {
+			background: var(--sapButton_Hover_Background);
+			/* border-color: var(--sapButton_BorderColor); */
+			border: 1px solid var(--sapButton_BorderColor);
+			color: var(--sapButton_IconColor);
+		}
+
+		ui5-icon[name="stop"] {
+			color: var(--sapButton_IconColor);
+		}
+
+		ui5-icon[name="ai"].icon-pressed:not(:hover) {
+			background: var(--sapField_Hover_Background);
+			/* border-color: var(--sapButton_BorderColor); */
+			/* border: 1px solid red; */
+			/* color: var(--sapButton_IconColor); */
+			/* box-shadow: var(--_ui5-v2-7-3_input_icon_box_shadow); */
+			box-shadow: var(--sapField_Hover_Shadow);
+			color: var(--_ui5-v2-7-3_input_icon_pressed_color);
+			box-sizing: border-box;
+			border-radius: var(--sapField_BorderCornerRadius);
+
+		}
+			</style>
+</head>
+
+<body>
+
+	<ui5-label for="ai-wa-input">Input with AI writing assistant.</ui5-label>
+	<br>
+	<ui5-input id="ai-wa-input" placeholder="Placeholder"></ui5-input>
+	<!-- <ui5-input id="input" placeholder="Placeholder">
+		<ui5-icon id="icon" slot="icon" name="ai" design="Information" mode="Interactive" accessible-name="AI Writing Assistant (Shift + F4)" aria-haspopup="menu" show-tooltip tabindex="-1"></ui5-icon>
+	</ui5-input>
+	<ui5-multi-combobox placeholder="Type your value">
+        <ui5-mcb-item text="Albania"></ui5-mcb-item>
+        <ui5-mcb-item selected text="Argentina"></ui5-mcb-item>
+        <ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
+        <ui5-mcb-item text="Denmark"></ui5-mcb-item>
+        <ui5-mcb-item text="England"></ui5-mcb-item>
+        <ui5-mcb-item text="Germany"></ui5-mcb-item>
+        <ui5-mcb-item text="Philippines"></ui5-mcb-item>
+        <ui5-mcb-item text="Portugal"></ui5-mcb-item>
+        <ui5-mcb-item text="The United Kingdom of Great Britain and Northern Ireland"></ui5-mcb-item>
+    </ui5-multi-combobox> -->
+	<ui5-menu id="ai-wa-menu-generate" opener="ai-wa-icon" class="hide">
+		<ui5-menu-item text="Generate" additional-text="Ctrl+Enter"></ui5-menu-item>
+	</ui5-menu>
+
+	<ui5-menu id="ai-wa-menu-regenerate" opener="ai-wa-icon" class="hide">
+		<ui5-menu-item text="Regenerate" additional-text="Ctrl+Enter"></ui5-menu-item>
+		<ui5-menu-separator></ui5-menu-separator>
+		<ui5-menu-item text="Check spelling and grammar" starts-section></ui5-menu-item>
+		<ui5-menu-item text="Translate">
+			<ui5-menu-item text="English"></ui5-menu-item>
+			<ui5-menu-item text="German"></ui5-menu-item>
+			<ui5-menu-item text="Spanish"></ui5-menu-item>
+		</ui5-menu-item>
+	</ui5-menu>
+	<script>
+
+		const input = document.getElementById('ai-wa-input');
+		const icon = document.createElement('ui5-icon');
+
+		icon.setAttribute("name", "ai");
+		icon.setAttribute("slot", "icon");
+		icon.setAttribute("accessible-name", "AI Writing Assistant (Shift + F4)");
+		icon.setAttribute("aria-haspopup", "menu");
+		icon.setAttribute("show-tooltip", true);
+		// icon.setAttribute("design", "Information");
+		// icon.setAttribute("mode", "Interactive");
+
+		icon.id = "ai-wa-icon";
+
+		const menuGenerate = document.getElementById('ai-wa-menu-generate');
+		const menuRegenerate = document.getElementById('ai-wa-menu-regenerate');
+
+		let lastInputValue = "";
+		let loadTimeout;
+
+		input.addEventListener('focus', () => {
+			updateIconVisibility(true);
+		});
+
+		input.addEventListener('focusout', e => {
+			if (!menuGenerate.open && !menuRegenerate.open && e.relatedTarget !== icon) {
+				icon.classList.remove("icon-pressed");
+				updateIconState("ai", "AI Writing Assistant (Shift + F4)");
+				updateIconVisibility(false);
+			}
+		});
+
+		icon.addEventListener("click", e => {
+			icon.classList.add("icon-pressed");
+			if (icon.name === "stop") {
+				stopLoading();
+				return;
+			}
+			if (input.value.length) {
+				updateMenuVisibility(menuRegenerate, true, true);
+				updateMenuVisibility(menuGenerate, false);
+
+			} else {
+				updateMenuVisibility(menuGenerate, true, true);
+				updateMenuVisibility(menuRegenerate, false);
+			}
+		});
+
+		menuGenerate.addEventListener("before-close", e => {
+			if (icon.name === "stop") {
+				return;
+			}
+			icon.classList.remove("icon-pressed");
+			updateIconVisibility(false);
+		});
+
+		menuRegenerate.addEventListener("before-close", e => {
+			if (icon.name === "stop") {
+				return;
+			}
+			icon.classList.remove("icon-pressed");
+			updateIconVisibility(false);
+		});
+
+		menuGenerate.addEventListener("item-click", (e) => {
+			transitionToLoadState();
+		});
+
+		menuRegenerate.addEventListener("item-click", (e) => {
+			transitionToLoadState();
+		});
+
+		document.addEventListener('keydown', function (event) {
+			const isMac = navigator.userAgent.includes('Mac')
+			if (event.key === 'Escape') {
+				stopLoading();
+			}
+
+			if (event.key === 'F4' && event.shiftKey) {
+				if (input.value.length) {
+					updateMenuVisibility(menuRegenerate, true, true);
+					updateMenuVisibility(menuGenerate, false);
+				} else {
+					updateMenuVisibility(menuGenerate, true, true);
+					updateMenuVisibility(menuRegenerate, false);
+				}
+			}
+
+			if (event.key === 'Enter' && (event.ctrlKey || (isMac && event.metaKey))) {
+				transitionToLoadState();
+			}
+
+		});
+
+		function stopLoading() {
+			clearTimeout(loadTimeout);
+			updateInputState(true, lastInputValue);
+			updateIconState("ai", "AI Writing Assistant (Shift + F4)");
+		}
+
+		function updateIconVisibility(visible) {
+			if (visible) {
+				input.appendChild(icon)
+			} else {
+				input.removeChild(icon)
+				icon.remove();
+			}
+		}
+
+		function updateIconState(iconName, iconAccessibleName) {
+			icon.name = iconName;
+			icon.accessibleName = iconAccessibleName;
+		}
+
+		function updateInputState(isEditable, value) {
+			if (isEditable) {
+				input.removeAttribute('readonly');
+			} else {
+				input.setAttribute('readonly', true);
+			}
+			input.value = value;
+		}
+
+		function addInputValue(value) {
+			if (value && value !== "Analyzing request...") {
+				lastInputValue = value;
+			}
+		}
+
+		function transitionToLoadState() {
+			addInputValue(input.value);
+			updateInputState(false, 'Analyzing request...');
+			updateIconState("stop", "Stop generating (Esc");
+			invisibleMessageUpdate("AI writing assistant generating. Stop generating (ESC)", "Polite");
+
+			loadTimeout = setTimeout(() => {
+				updateInputState(true, 'AI Writing Assistant in Input field');
+				invisibleMessageUpdate("Input Field with text generated by AI", "Assertive");
+				updateIconState("ai", "AI Writing Assistant (Shift + F4)");
+			}, 2000);
+		}
+
+		function updateMenuVisibility(menu, isVisible, isOpen = false) {
+			if (isVisible) {
+				updateElementVisibility(menu, "hide", "show");
+			} else {
+				updateElementVisibility(menu, "show", "hide");
+			}
+			if (isOpen) {
+				menu.open = true;
+			}
+		}
+
+		function updateElementVisibility(element, classToRemove, classToAdd) {
+			element.classList.remove(classToRemove);
+			element.classList.add(classToAdd);
+		}
+
+		function invisibleMessageUpdate(message, mode) {
+			//announce(message, mode);
+		}
+
+	</script>
+</body>
+
+</html>

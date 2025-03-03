@@ -11,13 +11,18 @@ import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 
 const input = document.getElementById('ai-wa-input');
-const icon = document.getElementById('ai-wa-icon');
+const icon = document.createElement('ui5-icon');
 const menuGenerate = document.getElementById('ai-wa-menu-generate');
 const menuRegenerate = document.getElementById('ai-wa-menu-regenerate');
 
 let lastInputValue = "";
 let loadTimeout;
 
+icon.id = "ai-wa-icon";
+icon.accessibleName = "AI Writing Assistant (Shift + F4)";
+icon.showTooltip = true;
+icon.name = "ai";
+icon.setAttribute("aria-haspopup", "menu");
 
 input.addEventListener('focus', () => {
 	updateIconVisibility(true);
@@ -31,6 +36,7 @@ input.addEventListener('focusout', e => {
 });
 
 icon.addEventListener("click", e => {
+	icon.classList.add("icon-pressed");
 	if (icon.name === "stop") {
 		stopLoading();
 		return;
@@ -49,10 +55,12 @@ menuGenerate.addEventListener("before-close", e => {
 	if (icon.name === "stop") {
 		return;
 	}
+	icon.classList.remove("icon-pressed");
 	updateIconVisibility(false);
 });
 
 menuRegenerate.addEventListener("before-close", e => {
+	icon.classList.remove("icon-pressed");
 	if (icon.name === "stop") {
 		return;
 	}
@@ -97,11 +105,10 @@ function stopLoading() {
 
 function updateIconVisibility(visible) {
 	if (visible) {
-		icon.classList.remove("hidden");
-		icon.classList.add("show");
+		input.appendChild(icon)
 	} else {
-		icon.classList.remove("show");
-		icon.classList.add("hidden");
+		input.removeChild(icon)
+		icon.remove();
 	}
 }
 
