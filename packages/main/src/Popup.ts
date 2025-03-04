@@ -299,7 +299,8 @@ abstract class Popup extends UI5Element {
 
 		const prevented = !this.fireDecoratorEvent("before-open");
 
-		if (prevented || this._opened) {
+		if (prevented) {
+			this.open = false;
 			return;
 		}
 
@@ -512,6 +513,7 @@ abstract class Popup extends UI5Element {
 
 		const prevented = !this.fireDecoratorEvent("before-close", { escPressed });
 		if (prevented) {
+			this.open = true;
 			return;
 		}
 

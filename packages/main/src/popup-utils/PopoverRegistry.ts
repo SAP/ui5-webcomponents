@@ -55,11 +55,11 @@ const detachScrollHandler = (popover: Popover) => {
 };
 
 const attachGlobalClickHandler = () => {
-	document.addEventListener("mousedown", clickHandler);
+	document.addEventListener("mousedown", clickHandler, { capture: true });
 };
 
 const detachGlobalClickHandler = () => {
-	document.removeEventListener("mousedown", clickHandler);
+	document.removeEventListener("mousedown", clickHandler, { capture: true });
 };
 
 const clickHandler = (event: MouseEvent) => {

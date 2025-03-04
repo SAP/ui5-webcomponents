@@ -1,8 +1,8 @@
-import ListItemGroupTemplate from "./ListItemGroupTemplate.js";
+import ListBoxItemGroupTemplate from "./ListBoxItemGroupTemplate.js";
 import type ComboBoxItemGroup from "./ComboBoxItemGroup.js";
 
 export default function ComboBoxItemGroupTemplate(this: ComboBoxItemGroup) {
-	return [ListItemGroupTemplate.call(this, { items })];
+	return [ListBoxItemGroupTemplate.call(this, { items })];
 }
 
 function items(this: ComboBoxItemGroup) {
