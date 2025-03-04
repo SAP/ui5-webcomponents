@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.17](https://github.com/SAP/ui5-webcomponents/compare/v1.24.16...v1.24.17) (2025-03-04)
+
+
+### Bug Fixes
+
+* **ui5-popover, ui5-dialog:** fix finding keyboard focusable scroll containers ([#10937](https://github.com/SAP/ui5-webcomponents/issues/10937)) ([eb3a739](https://github.com/SAP/ui5-webcomponents/commit/eb3a739aebd0a2a5e6dea1d7af424772a4ac62c9))
+
+
+
+
+
 ## [1.24.16](https://github.com/SAP/ui5-webcomponents/compare/v1.24.15...v1.24.16) (2025-02-05)
 
 **Note:** Version bump only for package @ui5/webcomponents-base

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.17](https://github.com/SAP/ui5-webcomponents/compare/v1.24.16...v1.24.17) (2025-03-04)
+
+
+### Bug Fixes
+
+* **ui5-button:** remove tap highlight on safari ([#10802](https://github.com/SAP/ui5-webcomponents/issues/10802)) ([c26d0fc](https://github.com/SAP/ui5-webcomponents/commit/c26d0fc3aba136317f8b0eea796e2aa37cc12be4)), closes [#10777](https://github.com/SAP/ui5-webcomponents/issues/10777) [#10786](https://github.com/SAP/ui5-webcomponents/issues/10786)
+* **ui5-carousel:** fix failing test ([#10940](https://github.com/SAP/ui5-webcomponents/issues/10940)) ([0742795](https://github.com/SAP/ui5-webcomponents/commit/07427953ed1caed1652c8b8af5a989303b01d1da))
+* **ui5-navigation-menu:** add missing dependencies ([#10874](https://github.com/SAP/ui5-webcomponents/issues/10874)) ([eaf68e8](https://github.com/SAP/ui5-webcomponents/commit/eaf68e8b9ae6e0cd807d33e930b84662e12d8892)), closes [#10841](https://github.com/SAP/ui5-webcomponents/issues/10841)
+* **ui5-popover, ui5-dialog:** fix finding keyboard focusable scroll containers ([#10937](https://github.com/SAP/ui5-webcomponents/issues/10937)) ([eb3a739](https://github.com/SAP/ui5-webcomponents/commit/eb3a739aebd0a2a5e6dea1d7af424772a4ac62c9))
+* **ui5-tokenizer:** hide visually hidden text from screen reader ([#10918](https://github.com/SAP/ui5-webcomponents/issues/10918)) ([731cfa2](https://github.com/SAP/ui5-webcomponents/commit/731cfa28e02a71171ba1848d7595095fd6a9dc09))
+
+
+
+
+
 ## [1.24.16](https://github.com/SAP/ui5-webcomponents/compare/v1.24.15...v1.24.16) (2025-02-05)
 
 
