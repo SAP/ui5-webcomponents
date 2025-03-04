@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.4](https://github.com/SAP/ui5-webcomponents/compare/v2.7.3...v2.7.4) (2025-03-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-business-suite
+
+
+
+
+
 ## [2.7.3](https://github.com/SAP/ui5-webcomponents/compare/v2.7.1...v2.7.3) (2025-02-13)
 
 **Note:** Version bump only for package @ui5/webcomponents-icons-business-suite

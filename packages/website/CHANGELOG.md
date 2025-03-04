@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.4](https://github.com/SAP/ui5-webcomponents/compare/v2.7.3...v2.7.4) (2025-03-04)
+
+
+### Features
+
+* **ui5-table-header-cell:** add popinHidden property ([#10834](https://github.com/SAP/ui5-webcomponents/issues/10834)) ([5928e95](https://github.com/SAP/ui5-webcomponents/commit/5928e953cc0a81e79f02c0a7b78be3111caa7ddf))
+* **ui5-table:** action header cell is added ([#10698](https://github.com/SAP/ui5-webcomponents/issues/10698)) ([317fe96](https://github.com/SAP/ui5-webcomponents/commit/317fe966886b46cf2687cbec3349b2ab08a23cad))
+
+
+
+
+
 ## [2.7.3](https://github.com/SAP/ui5-webcomponents/compare/v2.7.1...v2.7.3) (2025-02-13)
 
 **Note:** Version bump only for package @ui5/webcomponents-website
