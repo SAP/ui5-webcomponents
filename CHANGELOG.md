@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.3](https://github.com/SAP/ui5-webcomponents/compare/v2.5.2...v2.5.3) (2025-03-04)
+
+
+### Bug Fixes
+
+* **ui5-list:** add correct focus style and accessibility roles for no-data item ([#10503](https://github.com/SAP/ui5-webcomponents/issues/10503)) ([3e4f1f3](https://github.com/SAP/ui5-webcomponents/commit/3e4f1f3c9018b29d6af3e5c37ef1382df838e4f0)), closes [#10436](https://github.com/SAP/ui5-webcomponents/issues/10436)
+* **ui5-toast:** implement popover api to ensure toast is top level element ([#10178](https://github.com/SAP/ui5-webcomponents/issues/10178)) ([0af8f03](https://github.com/SAP/ui5-webcomponents/commit/0af8f03f84e44198129c9c1ba9d0ee7226d9c7c9))
+
+
+
+
+
 ## [2.5.2](https://github.com/SAP/ui5-webcomponents/compare/v2.5.1...v2.5.2) (2025-02-10)
 
 
