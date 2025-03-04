@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.3...v2.8.0) (2025-03-04)
+
+
+### Bug Fixes
+
+* **ui5-avatar-group:** fixed unnecessary rendering of overflow button ([#10979](https://github.com/SAP/ui5-webcomponents/issues/10979)) ([97ccd05](https://github.com/SAP/ui5-webcomponents/commit/97ccd0581de4ed2ae62648628598e20c47391f46)), closes [#10948](https://github.com/SAP/ui5-webcomponents/issues/10948)
+* **ui5-popover:** ensure that popover is closed when mousedown propagation is stopped ([#10953](https://github.com/SAP/ui5-webcomponents/issues/10953)) ([dbd3ab7](https://github.com/SAP/ui5-webcomponents/commit/dbd3ab7ca3110bd5a90698514b5e032f4f6902f5))
+* **ui5-shellbar:** correct matching content check ([#10921](https://github.com/SAP/ui5-webcomponents/issues/10921)) ([8782951](https://github.com/SAP/ui5-webcomponents/commit/87829511dd2057b3cf7ff1f28fb04ce00df19ffc))
+* **ui5-shellbar:** menu-item-click click event is now properly fired ([#10983](https://github.com/SAP/ui5-webcomponents/issues/10983)) ([27c8bb7](https://github.com/SAP/ui5-webcomponents/commit/27c8bb7ba6e9d153d3da2ad2d976e7ab4cc13714)), closes [#10950](https://github.com/SAP/ui5-webcomponents/issues/10950)
+* **ui5-switch:** reduce touch area according to VD spec ([#10954](https://github.com/SAP/ui5-webcomponents/issues/10954)) ([8cba1cf](https://github.com/SAP/ui5-webcomponents/commit/8cba1cfa1606edb7a595931481c182c97fd804a1))
+* **ui5-token:** align selected token height with non selected ([#10868](https://github.com/SAP/ui5-webcomponents/issues/10868)) ([16af941](https://github.com/SAP/ui5-webcomponents/commit/16af941257c42d91d8dd098ccd9404d952d47d4d)), closes [#10444](https://github.com/SAP/ui5-webcomponents/issues/10444)
+* **ui5-toolbar:** prevent default dialog announcement ([#10971](https://github.com/SAP/ui5-webcomponents/issues/10971)) ([edd54da](https://github.com/SAP/ui5-webcomponents/commit/edd54da0493022d0367e17b30de7abe702806390)), closes [#10324](https://github.com/SAP/ui5-webcomponents/issues/10324)
+* **user-menu:** focus on user menu when it is opened ([#10967](https://github.com/SAP/ui5-webcomponents/issues/10967)) ([a9e2868](https://github.com/SAP/ui5-webcomponents/commit/a9e28689eb80c225244ee5a1f7587fdd6ec48319))
+
+
+### Features
+
+* **framework:** add `.currentTarget` to the type of event handler in TSX and UI5CustomEvent ([#10957](https://github.com/SAP/ui5-webcomponents/issues/10957)) ([f56753c](https://github.com/SAP/ui5-webcomponents/commit/f56753c5142d6e817b05d7e33bd160f09c2d5205))
+* **ui5-side-navigation:** improve interaction of unselectable parent items in collapsed mode ([#10939](https://github.com/SAP/ui5-webcomponents/issues/10939)) ([20507fa](https://github.com/SAP/ui5-webcomponents/commit/20507fa405c1af2469d98905d6b499e55067c7a6))
+* **ui5-tabcontainer:** add `noAutoSelection` property ([#10877](https://github.com/SAP/ui5-webcomponents/issues/10877)) ([581a626](https://github.com/SAP/ui5-webcomponents/commit/581a626f37fd8d05195555fae2e1d1b2a7a41498))
+* **user-menu:** change api name from showAddAccount to showEditAccounts ([#10966](https://github.com/SAP/ui5-webcomponents/issues/10966)) ([aa9cf2d](https://github.com/SAP/ui5-webcomponents/commit/aa9cf2d55af42ec6880d98452f6a627fc76e9b3b))
+
+
+
+
+
 # [2.8.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.2...v2.8.0-rc.3) (2025-02-27)
 
 

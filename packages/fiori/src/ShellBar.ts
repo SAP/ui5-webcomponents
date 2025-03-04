@@ -16,7 +16,7 @@ import {
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import List from "@ui5/webcomponents/dist/List.js";
-import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
+import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -651,9 +651,9 @@ class ShellBar extends UI5Element {
 		return visibleAndInteractiveItems;
 	}
 
-	_menuItemPress(e: CustomEvent<ListSelectionChangeEventDetail>) {
+	_menuItemPress(e: CustomEvent<ListItemClickEventDetail>) {
 		const shouldContinue = this.fireDecoratorEvent("menu-item-click", {
-			item: e.detail.selectedItems[0],
+			item: e.detail.item,
 		});
 		if (shouldContinue) {
 			this.menuPopover!.open = false;

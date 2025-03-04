@@ -34,7 +34,7 @@ type UserSettingsBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
  * @class
  * ### Overview
  *
- * The `ui5-user-settings-dialog` is an SAP Fiori-specific web component used in the `ui5-profile-menu`.
+ * The `ui5-user-settings-dialog` is an SAP Fiori-specific web component used in the `ui5-user-menu`.
  * It allows the user to easily view information and settings for an account.
  *
  * ### ES6 Module Import
