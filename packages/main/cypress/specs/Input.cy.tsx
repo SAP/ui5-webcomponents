@@ -4,9 +4,12 @@ import SuggestionItemCustom from "../../src/SuggestionItemCustom.js";
 import SuggestionItemGroup from "../../src/SuggestionItemGroup.js";
 import Dialog from "../../src/Dialog.js";
 import Button from "../../src/Button.js";
+import Icon from "../../src/Icon.js";
+
+import add from "@ui5/webcomponents-icons/dist/add.js";
 
 describe("Input Tests", () => {
-	it("tets input event prevention", () => {
+	it("test input event prevention", () => {
 		cy.mount(
 			<Input></Input>
 		);
@@ -126,6 +129,22 @@ describe("Input Tests", () => {
 			.shadow()
 			.find("div")
 			.should("not.have.attr", "tabindex", "0");
+	});
+
+	it("tests tabindex of the div holding icon slot ", () => {
+		cy.mount(
+			<Input>
+				<Icon slot="icon" name={add}></Icon>
+			</Input>
+		);
+
+		cy.get("[ui5-input]")
+			.as("input");
+
+		cy.get<Input>("@input")
+			.shadow()
+			.find("div.ui5-input-icon-root")
+			.should("have.attr", "tabindex", "-1");
 	});
 
 	it("tests submit and change event order", () => {
