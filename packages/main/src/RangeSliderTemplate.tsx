@@ -73,12 +73,13 @@ export function handles(this: RangeSlider) {
 					{this.editableTooltip ?
 						<Input
 							type="Number"
-							value={this.startValue.toString()}
+							value={this.startValueTemp ?? this.startValue.toString()}
 							accessibleNameRef="ui5-slider-InputLabel"
+							onFocusIn={() => { this.startValueTemp = this.startValue.toString(); }}
 							onFocusOut={this._onInputFocusOut}
 							onKeyDown={this._onInputKeydown}
 							onChange={this._onInputChange}
-							onInput={this._onInputInput}
+							onInput={this._onStartInputInput}
 							data-sap-ui-start-value
 							tabIndex={-1}
 						></Input>
@@ -115,12 +116,13 @@ export function handles(this: RangeSlider) {
 					{this.editableTooltip ?
 						<Input
 							type="Number"
-							value={this.endValue.toString()}
+							value={this.endValueTemp ?? this.endValue.toString()}
 							accessibleNameRef="ui5-slider-InputLabel"
+							onFocusIn={() => { this.endValueTemp = this.endValue.toString(); }}
 							onFocusOut={this._onInputFocusOut}
 							onKeyDown={this._onInputKeydown}
 							onChange={this._onInputChange}
-							onInput={this._onInputInput}
+							onInput={this._onEndInputInput}
 							data-sap-ui-end-value
 							tabIndex={-1}
 						></Input>

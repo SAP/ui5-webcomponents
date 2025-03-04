@@ -24,6 +24,7 @@ import {
 
 // Styles
 import rangeSliderStyles from "./generated/themes/RangeSlider.css.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/index.js";
 
 type AriaHandlesText = {
 	startHandleText?: string,
@@ -104,6 +105,9 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	@property({ type: Number })
 	startValue = 0;
 
+	@property()
+	startValueTemp?: string;
+
 	/**
 	 * Defines end point of a selection - position of a second handle on the slider.
 	 * @default 100
@@ -113,6 +117,9 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 */
 	@property({ type: Number })
 	endValue = 100;
+
+	@property()
+	endValueTemp?: string;
 
 	@property({ type: Boolean })
 	rangePressed = false;
@@ -312,7 +319,19 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		}
 	}
 
+	_onStartInputInput(e: UI5CustomEvent<Input, "input">) {
+		super._onInputInput();
+		this.startValueTemp = e.currentTarget.value;
+	}
+
+	_onEndInputInput(e: UI5CustomEvent<Input, "input">) {
+		super._onInputInput();
+		this.endValueTemp = e.currentTarget.value;
+	}
+
 	_onInputFocusOut(e: FocusEvent) {
+		this.startValueTemp = undefined;
+		this.endValueTemp = undefined;
 		const tooltipInput = e.target as Input;
 		const oppositeTooltipInput: Input = tooltipInput.hasAttribute("data-sap-ui-start-value") ? this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-end-value]")! : this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-start-value]")!;
 		const relatedTarget = e.relatedTarget as HTMLElement;
