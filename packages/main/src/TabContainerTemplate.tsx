@@ -45,6 +45,7 @@ export default function TabContainerTemplate(this: TabContainer, injectedPartial
 				"ui5-tc--textOnly": this.textOnly,
 				"ui5-tc--withAdditionalText": this.withAdditionalText,
 				"ui5-tc--standardTabLayout": this.standardTabLayout,
+				"ui5-tc--noTabSelected": !this._selectedTab,
 			}}
 		>
 			{this.tabsAtTheBottom && partials.contentArea.call(this)}

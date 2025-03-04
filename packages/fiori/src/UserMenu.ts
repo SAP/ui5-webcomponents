@@ -25,7 +25,7 @@ import {
 	USER_MENU_SIGN_OUT_BUTTON_TXT,
 	USER_MENU_POPOVER_ACCESSIBLE_NAME,
 	USER_MENU_EDIT_AVATAR_TXT,
-	USER_MENU_ADD_ACCOUNT_TXT,
+	USER_MENU_EDIT_ACCOUNTS_TXT,
 	USER_MENU_CLOSE_DIALOG_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -78,10 +78,10 @@ type UserMenuOtherAccountClickEventDetail = {
 @event("manage-account-click")
 
 /**
- * Fired when the "Add Account" button is selected.
+ * Fired when the "Edit Accounts" button is selected.
  * @public
  */
-@event("add-account-click")
+@event("edit-accounts-click")
 
 /**
  * Fired when the account is switched to a different one.
@@ -128,7 +128,7 @@ class UserMenu extends UI5Element {
 	eventDetails!: {
 		"avatar-click": void;
 		"manage-account-click": void;
-		"add-account-click": void;
+		"edit-accounts-click": void;
 		"change-account": UserMenuOtherAccountClickEventDetail;
 		"item-click": UserMenuItemClickEventDetail;
 		"sign-out-click": void;
@@ -174,13 +174,17 @@ class UserMenu extends UI5Element {
 	showOtherAccounts = false;
 
 	/**
+	 * Defines if the User Menu shows the Add Account option.
 	 * Defines if the User Menu shows the Edit Account option.
+	 * Defines if the User Menu shows the Edit Accounts option.
 	 *
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
+	showAddAccount = false;
 	showEditAccount = false;
+	showEditAccounts = false;
 
 	/**
 	 * Defines if the User menu shows edit button.
@@ -321,8 +325,8 @@ class UserMenu extends UI5Element {
 		this.fireDecoratorEvent("manage-account-click");
 	}
 
-	_handleAddAccountClick() {
-		this.fireDecoratorEvent("add-account-click");
+	_handleEditAccountsClick() {
+		this.fireDecoratorEvent("edit-accounts-click");
 	}
 
 	_handleAccountSwitch(e: CustomEvent<ListItemClickEventDetail>) {
@@ -415,8 +419,8 @@ class UserMenu extends UI5Element {
 		return UserMenu.i18nBundle.getText(USER_MENU_EDIT_AVATAR_TXT);
 	}
 
-	get _addAccountTooltip() {
-		return UserMenu.i18nBundle.getText(USER_MENU_ADD_ACCOUNT_TXT);
+	get _editAccountsTooltip() {
+		return UserMenu.i18nBundle.getText(USER_MENU_EDIT_ACCOUNTS_TXT);
 	}
 
 	get _closeDialogAriaLabel() {
