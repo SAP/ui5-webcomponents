@@ -16,7 +16,7 @@ import personPlaceholder from "@ui5/webcomponents-icons/dist/person-placeholder.
 import userSettings from "@ui5/webcomponents-icons/dist/user-settings.js";
 import log from "@ui5/webcomponents-icons/dist/log.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
-import addEmployee from "@ui5/webcomponents-icons/dist/add-employee.js";
+import userEdit from "@ui5/webcomponents-icons/dist/user-edit.js";
 
 export default function UserMenuTemplate(this: UserMenu) {
 	return (
@@ -72,8 +72,8 @@ export default function UserMenuTemplate(this: UserMenu) {
 					<Panel collapsed={true} class="ui5-pm-other-accounts">
 						<div slot="header" class="ui5-user-menu-account-header">
 							<Title slot="header" level="H4">{this._otherAccountsButtonText} ({this._otherAccounts.length})</Title>
-							{this.showAddAccount &&
-								<Button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon={addEmployee} onClick={this._handleAddAccountClick} tooltip={this._addAccountTooltip}/>
+							{this.showEditAccounts &&
+								<Button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon={userEdit} onClick={this._handleEditAccountsClick} tooltip={this._editAccountsTooltip}/>
 							}
 						</div>
 						{this._otherAccounts.length > 0 &&
