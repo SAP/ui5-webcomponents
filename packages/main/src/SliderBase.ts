@@ -12,6 +12,7 @@ import {
 
 // Styles
 import sliderBaseStyles from "./generated/themes/SliderBase.css.js";
+import type { SliderTooltipChangeEventDetails } from "./SliderTooltip.js";
 
 type StateStorage = {
 	[key: string]: number | undefined,
@@ -153,8 +154,8 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * @private
 	 */
-	@property()
-	_tooltipVisibility = "hidden";
+	@property({ type: Boolean })
+	_tooltipsOpen = false;
 
 	@property({ type: Boolean })
 	_labelsOverlapping = false;
@@ -205,7 +206,7 @@ abstract class SliderBase extends UI5Element {
 
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
 
-	_updateInputValue() {}
+	_updateInputValue(value: string) {} // eslint-disable-line
 
 	// used in base template, but implemented in subclasses
 	abstract styles: {
@@ -286,9 +287,7 @@ abstract class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_onmouseover() {
-		if (this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.VISIBLE;
-		}
+		this._tooltipsOpen = this.showTooltip;
 	}
 
 	/**
@@ -297,7 +296,7 @@ abstract class SliderBase extends UI5Element {
 	 */
 	_onmouseout() {
 		if (this.showTooltip && !this.shadowRoot!.activeElement) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
+			this._tooltipsOpen = false;
 		}
 	}
 
@@ -305,14 +304,14 @@ abstract class SliderBase extends UI5Element {
 		const target = e.target as HTMLElement;
 
 		if (isF2(e) && target.classList.contains("ui5-slider-handle")) {
-			(target.parentNode!.querySelector(".ui5-slider-handle-container ui5-input") as HTMLElement).focus();
+			(target.parentNode!.querySelector("[ui5-slider-tooltip]") as HTMLElement).focus();
 		}
 
 		if (this.disabled || this._effectiveStep === 0 || target.hasAttribute("ui5-slider-handle")) {
 			return;
 		}
 
-		if (SliderBase._isActionKey(e) && target && !target.hasAttribute("ui5-input")) {
+		if (SliderBase._isActionKey(e) && target && !target.hasAttribute("ui5-slider-tooltip")) {
 			e.preventDefault();
 
 			this._isUserInteraction = true;
@@ -320,32 +319,17 @@ abstract class SliderBase extends UI5Element {
 		}
 	}
 
-	_onInputKeydown(e: KeyboardEvent) {
-		const target = e.target as HTMLElement;
+	_onInputKeydown() {}
 
-		if (isF2(e) && target.hasAttribute("ui5-input")) {
-			(target.parentNode!.parentNode!.querySelector(".ui5-slider-handle") as HTMLElement).focus();
-		}
+	_onTooltipChange(e: CustomEvent<SliderTooltipChangeEventDetails>) {
+		const value = e.detail.value;
 
-		if (isEnter(e)) {
-			this._updateInputValue();
-			this._updateValueFromInput(e);
-		}
+		this._updateInputValue(value);
+		this._updateValueFromInput(value);
 	}
 
-	_onInputChange() {
-		if (this._valueOnInteractionStart !== this.value) {
-			this.fireDecoratorEvent("change");
-		}
-	}
-
-	_onInputInput() {
-		this.fireDecoratorEvent("input");
-	}
-
-	_updateValueFromInput(e: Event) {
-		const input = e.target as HTMLInputElement;
-		const value = parseFloat(input.value);
+	_updateValueFromInput(fieldValue: string) {
+		const value = parseFloat(fieldValue);
 		this._isInputValueValid = value >= this._effectiveMin && value <= this._effectiveMax;
 
 		if (!this._isInputValueValid) {
