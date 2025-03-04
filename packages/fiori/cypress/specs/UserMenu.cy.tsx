@@ -614,8 +614,6 @@ describe("Responsiveness", () => {
 				<UserMenu id="userMenuShellBar" open={true}
 					opener="openUserMenuBtn"
 					showManageAccount={true}
-					showAddAccount={true}>
-					showEditAccount={true}>
 					showEditAccounts={true}>
 					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 					<UserMenuItem text="Setting1" data-id="setting1"></UserMenuItem>
