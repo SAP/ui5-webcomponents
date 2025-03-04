@@ -1,14 +1,21 @@
 {
-  "compilerOptions": {
-	"outDir": "dist",
-	"rootDir": "src",
-    "target": "ES6",
-    "module": "ES6",
-    "moduleResolution": "node",
-    "declaration": true,
-    "lib": ["DOM", "ES6"],
-    "esModuleInterop": true,
-    "strict": true,
-    "types": ["cypress"]
-  },
+	"compilerOptions": {
+		"outDir": "dist",
+		"allowJs": true,
+		"rootDir": "src",
+		"skipLibCheck": true,
+		"target": "ES6",
+		"module": "ES6",
+		"moduleResolution": "node",
+		"declaration": true,
+		"lib": [
+			"DOM",
+			"ES6"
+		],
+		"esModuleInterop": true,
+		"strict": true,
+		"types": [
+			"cypress"
+		]
+	},
 }

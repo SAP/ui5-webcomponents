@@ -4,13 +4,15 @@
   "description": "Example Framework Definition adapter for Cypress Component Testing",
   "private": true,
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "clean": "rimraf dist"
   },
   "exports": {
     "./*": "./dist/*"
   },
   "type": "module",
-  "devDependencies": {
+  "dependencies": {
+    "eslint-plugin-cypress": "^3.4.0",
     "@ui5/cypress-ct-ui5-webc": "0.0.0",
     "cypress": "^13.11.0",
     "typescript": "^5.6.2",
