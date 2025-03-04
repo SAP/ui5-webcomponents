@@ -70,56 +70,14 @@ export default function UserMenuTemplate(this: UserMenu) {
 			}
 
 			{this.showOtherAccounts &&
-					<Panel collapsed={true} class="ui5-pm-other-accounts">
-						<div slot="header" class="ui5-user-menu-account-header">
-							<Title slot="header" level="H4">{this._otherAccountsButtonText} ({this._otherAccounts.length})</Title>
-							{this.showEditAccounts &&
-								<Button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon={userEdit} onClick={this._handleEditAccountsClick} tooltip={this._editAccountsTooltip}/>
-							}
-						</div>
-						{this._otherAccounts.length > 0 &&
-							<List onItemClick={this._handleAccountSwitch}>
-								{this._otherAccounts.map(account =>
-									<ListItemCustom
-										ref={this.captureRef.bind(account)}
-									>
-										<div class="ui5-pm-other-accounts-content">
-											<Avatar slot="image" size="S" initials={account._initials} fallbackIcon={personPlaceholder}>
-												{account.avatarSrc &&
-													<img src={account.avatarSrc}/>
-												}
-											</Avatar>
-											<div class="ui5-pm-other-accounts-info">
-												{account.titleText &&
-												<Title class="ui5-pm-other-accounts-title" wrapping-type="None">{account.titleText}</Title>
-												}
-												{account.subtitleText &&
-												<Label class="ui5-pm-other-accounts-additional-info" wrapping-type="None">{account.subtitleText}</Label>
-												}
-												{account.description &&
-												<Label class="ui5-pm-other-accounts-additional-info" wrapping-type="None">{account.description}</Label>
-												}
-											</div>
-											<div>
-												{account.selected &&
-													<Icon
-														part="icon"
-														name={selectedAccount}
-														class="ui5-pm-selected-account-icon"
-														mode="Decorative" />
-												}
-											</div>
-
-										</div>
-									</ListItemCustom>
-								)}
-							</List>
-						}
-					</Panel>
+				<>
+					{otherAccountsContent.call(this)}
+				</>
 			}
 
 			{this.menuItems.length > 0 &&
 					<List
+						id="ui5-user-menu-list"
 						class="ui5-user-menu-list"
 						selectionMode="None"
 						separators="None"
@@ -153,14 +111,14 @@ function headerContent(this: UserMenu) {
 					}
 				</Avatar>
 				{this._selectedAccount.titleText &&
-					<Title id="selected-account-title" class="ui5-pm-selected-account-title">{this._selectedAccount.titleText}</Title>
+					<Text maxLines={2} id="selected-account-title" class="ui5-pm-selected-account-title">{this._selectedAccount.titleText}</Text>
 				}
 
 				{this._selectedAccount.subtitleText &&
-					<Text class="ui5-pm-selected-account-subtitleText">{this._selectedAccount.subtitleText}</Text>
+					<Text maxLines={1} class="ui5-pm-selected-account-subtitleText">{this._selectedAccount.subtitleText}</Text>
 				}
 				{this._selectedAccount.description &&
-					<Text class="ui5-pm-selected-account-description">{this._selectedAccount.description}</Text>
+					<Text maxLines={1} class="ui5-pm-selected-account-description">{this._selectedAccount.description}</Text>
 				}
 
 				{this.showManageAccount &&
@@ -168,5 +126,64 @@ function headerContent(this: UserMenu) {
 				}
 			</div>
 		}
+	</>);
+}
+
+function otherAccountsContent(this: UserMenu) {
+	return (<>
+		<Panel collapsed={true} class="ui5-pm-other-accounts">
+			<div slot="header" class="ui5-user-menu-account-header">
+				<Title slot="header" level="H4" wrapping-type="None">{this._otherAccountsButtonText} ({this._otherAccounts.length})</Title>
+				{this.showEditAccounts &&
+					<Button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon={userEdit} onClick={this._handleEditAccountsClick} tooltip={this._editAccountsTooltip}/>
+				}
+			</div>
+			{this._otherAccounts.length > 0 &&
+				<>
+					{otherAccountsList.call(this)}
+				</>
+			}
+		</Panel>
+	</>);
+}
+
+function otherAccountsList(this: UserMenu) {
+	return (<>
+		<List onItemClick={this._handleAccountSwitch}>
+			{this._otherAccounts.map(account =>
+				<ListItemCustom
+					ref={this.captureRef.bind(account)}
+				>
+					<div class="ui5-pm-other-accounts-content">
+						<Avatar slot="image" size="S" initials={account._initials} fallbackIcon={personPlaceholder}>
+							{account.avatarSrc &&
+								<img src={account.avatarSrc}/>
+							}
+						</Avatar>
+						<div class="ui5-pm-other-accounts-info">
+							{account.titleText &&
+								<Title class="ui5-pm-other-accounts-title" wrapping-type="None">{account.titleText}</Title>
+							}
+							{account.subtitleText &&
+								<Label class="ui5-pm-other-accounts-additional-info" wrapping-type="None">{account.subtitleText}</Label>
+							}
+							{account.description &&
+								<Label class="ui5-pm-other-accounts-additional-info" wrapping-type="None">{account.description}</Label>
+							}
+						</div>
+						<div>
+							{account.selected &&
+								<Icon
+									part="icon"
+									name={selectedAccount}
+									class="ui5-pm-selected-account-icon"
+									mode="Decorative" />
+							}
+						</div>
+
+					</div>
+				</ListItemCustom>
+			)}
+		</List>
 	</>);
 }

@@ -48,6 +48,8 @@
     align-items: center;
     flex-direction: column;
     margin-bottom: 1rem;
+	overflow: hidden;
+	padding: 0.5rem;
 }
 
 .ui5-pm--selected-account-avatar{
@@ -99,13 +101,12 @@
 }
 
 .ui5-pm-other-accounts-content {
-    display: grid;
-    grid-template-columns: auto 11.4rem auto;
+    display: flex;
     align-items: center;
 	width: 100%;
 	height: 4.5rem;
-	gap: 0.75rem;
-    padding-block: 0.5rem 1rem;
+	gap: 12px;
+    padding-block: 8px 16px;
 }
 
 .ui5-pm-other-accounts-info {
@@ -115,6 +116,8 @@
 	align-items: flex-start;
 	gap: 4px;
 	align-self: stretch;
+	width: 100%;
+	overflow: hidden;
 }
 
 .ui5-pm-other-accounts-title {
@@ -125,7 +128,6 @@
 	font-size: var(--sapFontSize);
 	font-style: normal;
 	line-height: normal;
-	width: 11.4rem;
 }
 
 .ui5-pm-other-accounts-additional-info {
@@ -136,9 +138,7 @@
 	font-size: var(--sapFontSize);
 	font-style: normal;
 	line-height: normal;
-	width: 11.4rem;
 }
-
 
 .ui5-pm-selected-account-icon {
 	display: flex;
