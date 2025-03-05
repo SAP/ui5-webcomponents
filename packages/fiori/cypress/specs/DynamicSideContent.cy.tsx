@@ -94,9 +94,14 @@ describe("'sideContentPosition' property", () => {
 				</div>
 			</DynamicSideContent>
 		);
-		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
 
-		cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-root > *").first()
+		cy.get("[ui5-dynamic-side-content]")
+			.as("dynamicSideContent");
+
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-root > *")
+			.first()
 			.should("have.class", "ui5-dsc-main");
 	});
 
@@ -111,9 +116,14 @@ describe("'sideContentPosition' property", () => {
 				</div>
 			</DynamicSideContent>
 		);
-		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
 
-		cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-root > *").first()
+		cy.get("[ui5-dynamic-side-content]")
+			.as("dynamicSideContent");
+
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-root > *")
+			.first()
 			.should("have.class", "ui5-dsc-side");
 	});
 });
@@ -121,7 +131,7 @@ describe("'sideContentPosition' property", () => {
 describe("'equalSplit' property", () => {
 	it("set to 'true'", () => {
 		cy.mount(
-			<DynamicSideContent equalSplit>
+			<DynamicSideContent equalSplit={true}>
 				<div>
 					<h1>Main Content</h1>
 				</div>
@@ -130,16 +140,26 @@ describe("'equalSplit' property", () => {
 				</div>
 			</DynamicSideContent>
 		);
-		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
 
-		cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-main").should("have.class", "ui5-dsc-span-6");
-		cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-side").should("have.class", "ui5-dsc-span-6");
+		cy.get("[ui5-dynamic-side-content]")
+			.as("dynamicSideContent");
+
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-main")
+			.should("have.class", "ui5-dsc-span-6");
+
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-side")
+			.should("have.class", "ui5-dsc-span-6");
 	});
 });
 
 describe("containers widths on XL size", () => {
 	it("check for proper width", () => {
 		cy.viewport(1600, 500);
+
 		cy.mount(
 			<DynamicSideContent>
 				<div>
@@ -150,15 +170,26 @@ describe("containers widths on XL size", () => {
 				</div>
 			</DynamicSideContent>
 		);
-		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
-		cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-main").should("have.class", "ui5-dsc-span-9");
-		cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-side").should("have.class", "ui5-dsc-span-3");
+
+		cy.get("[ui5-dynamic-side-content]")
+			.as("dynamicSideContent");
+
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-main")
+			.should("have.class", "ui5-dsc-span-9");
+
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-side")
+			.should("have.class", "ui5-dsc-span-3");
 	});
 });
 
 describe("containers widths on L size", () => {
 	it("check for proper width", () => {
 		cy.viewport(1400, 500);
+
 		cy.mount(
 			<DynamicSideContent>
 				<div>
@@ -169,9 +200,19 @@ describe("containers widths on L size", () => {
 				</div>
 			</DynamicSideContent>
 		);
-		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
-		cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-main").should("have.class", "ui5-dsc-span-8");
-		cy.get("@dynamicSideContent").shadow().find(".ui5-dsc-side").should("have.class", "ui5-dsc-span-4");
+
+		cy.get("[ui5-dynamic-side-content]")
+			.as("dynamicSideContent");
+
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-main")
+			.should("have.class", "ui5-dsc-span-8");
+
+		cy.get("@dynamicSideContent")
+			.shadow()
+			.find(".ui5-dsc-side")
+			.should("have.class", "ui5-dsc-span-4");
 	});
 });
 
@@ -187,23 +228,31 @@ describe("containers widths on M size:", () => {
 				</div>
 			</DynamicSideContent>
 		);
-		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
+
+		cy.get("[ui5-dynamic-side-content]")
+			.as("dynamicSideContent");
+
 		// set outer container width to > 960 and < 1024 (M1)
 		cy.viewport(1020, 500);
+
 		cy.get("@dynamicSideContent")
 			.shadow()
 			.find(".ui5-dsc-main")
 			.should("have.class", "ui5-dsc-span-fixed");
+
 		cy.get("@dynamicSideContent")
 			.shadow()
 			.find(".ui5-dsc-side")
 			.should("have.class", "ui5-dsc-span-fixed");
+
 		// set outer container width to > 720 and < 960 (M2)
 		cy.viewport(950, 500);
+
 		cy.get("@dynamicSideContent")
 			.shadow()
 			.find(".ui5-dsc-main")
 			.should("have.class", "ui5-dsc-span-12");
+
 		cy.get("@dynamicSideContent")
 			.shadow()
 			.find(".ui5-dsc-side")
@@ -223,14 +272,18 @@ describe("containers widths on S size:", () => {
 				</div>
 			</DynamicSideContent>
 		);
-		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
+
+		cy.get("[ui5-dynamic-side-content]")
+			.as("dynamicSideContent");
 
 		// set outer container width to < 720 (S)
 		cy.viewport(700, 500);
+
 		cy.get("@dynamicSideContent")
 			.shadow()
 			.find(".ui5-dsc-main")
 			.should("have.class", "ui5-dsc-span-12");
+
 		cy.get("@dynamicSideContent")
 			.shadow()
 			.find(".ui5-dsc-side")
@@ -241,6 +294,7 @@ describe("containers widths on S size:", () => {
 describe("'sideContentVisibility' property:", () => {
 	it("'AlwaysShow' - side content is always visible", () => {
 		cy.viewport(1600, 500);
+
 		cy.mount(
 			<DynamicSideContent sideContentVisibility="AlwaysShow">
 				<div>
@@ -251,7 +305,9 @@ describe("'sideContentVisibility' property:", () => {
 				</div>
 			</DynamicSideContent>
 		);
-		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
+
+		cy.get("[ui5-dynamic-side-content]")
+			.as("dynamicSideContent");
 
 		const viewports = [
 			{ width: 1600, expectedClass: "ui5-dsc-span-3" },
@@ -263,6 +319,7 @@ describe("'sideContentVisibility' property:", () => {
 
 		viewports.forEach(({ width, expectedClass }) => {
 			cy.viewport(width, 500);
+
 			cy.get("ui5-dynamic-side-content")
 				.shadow()
 				.find(".ui5-dsc-side")
@@ -327,10 +384,13 @@ describe("'sideContentFallDown' property", () => {
 					</div>
 				</DynamicSideContent>
 			);
-			cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
+
+			cy.get("[ui5-dynamic-side-content]")
+				.as("dynamicSideContent");
 
 			widths.forEach(({ size, expected }) => {
 				cy.viewport(size, 500);
+
 				cy.get("@dynamicSideContent")
 					.shadow()
 					.find(".ui5-dsc-side")
@@ -396,10 +456,13 @@ describe("'sideContentFallDown' property", () => {
 					</div>
 				</DynamicSideContent>
 			);
-			cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
+
+			cy.get("[ui5-dynamic-side-content]")
+				.as("dynamicSideContent");
 
 			widths.forEach(({ size, expected }) => {
 				cy.viewport(size, 500);
+
 				cy.get("@dynamicSideContent")
 					.shadow()
 					.find(".ui5-dsc-side")
@@ -421,15 +484,20 @@ describe("'layout-change' event:", () => {
 				</div>
 			</DynamicSideContent>
 		);
-		cy.get("[ui5-dynamic-side-content]").as("dynamicSideContent");
+
+		cy.get("[ui5-dynamic-side-content]")
+			.as("dynamicSideContent");
 
 		cy.get("@dynamicSideContent").then(dsc => {
-			dsc.get(0).addEventListener("ui5-layout-change", cy.stub().as("layoutChange"));
+			dsc.get(0).addEventListener("ui5-layout-change", cy.stub()
+				.as("layoutChange"));
 		});
 
 		// Change to M
 		cy.viewport(800, 500);
-		cy.get("@layoutChange").should("be.called")
+
+		cy.get("@layoutChange")
+			.should("be.called")
 			.should("be.calledWithMatch", {
 				detail: {
 					currentBreakpoint: "M",
@@ -441,7 +509,9 @@ describe("'layout-change' event:", () => {
 
 		// Change to > 1024 and < 1440 (L)
 		cy.viewport(1200, 500);
-		cy.get("@layoutChange").should("be.called")
+
+		cy.get("@layoutChange")
+			.should("be.called")
 			.should("be.calledWithMatch", {
 				detail: {
 					currentBreakpoint: "L",
@@ -453,7 +523,9 @@ describe("'layout-change' event:", () => {
 
 		// Change to < 720 (S)
 		cy.viewport(600, 500);
-		cy.get("@layoutChange").should("be.called")
+
+		cy.get("@layoutChange")
+			.should("be.called")
 			.should("be.calledWithMatch", {
 				detail: {
 					currentBreakpoint: "S",
@@ -465,7 +537,9 @@ describe("'layout-change' event:", () => {
 
 		// Change to > 1440 (XL)
 		cy.viewport(1600, 500);
-		cy.get("@layoutChange").should("be.called")
+
+		cy.get("@layoutChange")
+			.should("be.called")
 			.should("be.calledWithMatch", {
 				detail: {
 					currentBreakpoint: "XL",
