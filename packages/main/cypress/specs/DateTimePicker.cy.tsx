@@ -114,6 +114,8 @@ describe("DateTimePicker general interaction", () => {
 	});
 
 	it("tests selection of new date without changing the time section", () => {
+		setAnimationMode(AnimationMode.None);
+
 		const PREVIOUS_VALUE = "14/04/2020, 02:14:19 PM";
 		cy.mount(<DateTimePickerWithSeconds initialValue={PREVIOUS_VALUE} />);
 
@@ -160,6 +162,8 @@ describe("DateTimePicker general interaction", () => {
 			.should(val => {
 				expect(val).to.include(selectedDate);
 			});
+
+		setAnimationMode(AnimationMode.Full);
 	});
 
 	it("tests time controls for dtSeconds picker", () => {
