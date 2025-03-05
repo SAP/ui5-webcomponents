@@ -63,7 +63,7 @@ describe("DateTimePicker general interaction", () => {
 				.find("ui5-daypicker")
 				.shadow()
 				.find(".ui5-dp-item--selected")
-				.should("exist");
+				.should("be.focused");
 
 			// Select the next day.
 			cy.realPress("ArrowRight");
@@ -75,6 +75,7 @@ describe("DateTimePicker general interaction", () => {
 				.find(`ui5-toggle-spin-button[data-ui5-clock="hours"]`)
 				.realClick()
 				.should("be.focused");
+
 			cy.realPress("ArrowDown");
 			cy.realPress("Space");
 
@@ -84,6 +85,7 @@ describe("DateTimePicker general interaction", () => {
 				.find(`ui5-toggle-spin-button[data-ui5-clock="minutes"]`)
 				.realClick()
 				.should("be.focused");
+
 			cy.realPress("ArrowDown");
 			cy.realPress("ArrowDown");
 			cy.realPress("Space");
@@ -94,6 +96,7 @@ describe("DateTimePicker general interaction", () => {
 				.find(`ui5-toggle-spin-button[data-ui5-clock="seconds"]`)
 				.realClick()
 				.should("be.focused");
+
 			cy.realPress("ArrowUp");
 			cy.realPress("ArrowUp");
 			cy.realPress("ArrowUp");
