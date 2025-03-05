@@ -121,7 +121,7 @@
 	outline-offset: -0.3125rem;
 }
 
-:host(:not([show-scope])) .ui5-search-field-inner-input {
+:host(:not([mode="Scoped"])) .ui5-search-field-inner-input {
 	padding-inline-start: 0.875rem;
 }
 
@@ -142,7 +142,7 @@
 	padding-inline-start: 0.125rem;
 }
 
-:host([show-scope]) .ui5-search-field-inner-input {
+:host([mode="Scoped"]) .ui5-search-field-inner-input {
 	margin-inline-start: var(--_ui5_search_input_start_margin);
 }
 

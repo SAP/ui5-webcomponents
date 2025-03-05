@@ -4,6 +4,10 @@ import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Text from "@ui5/webcomponents/dist/Text.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
+import ListSeparator from "@ui5/webcomponents/dist/types/ListSeparator.js";
+import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
+import PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
+import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js";
 
 export default function SearchPopoverTemplate(this: Search) {
 	return (
@@ -11,8 +15,8 @@ export default function SearchPopoverTemplate(this: Search) {
 			hideArrow={true}
 			preventFocusRestore={true}
 			preventInitialFocus={true}
-			placement="Bottom"
-			horizontalAlign="Start"
+			placement={PopoverPlacement.Bottom}
+			horizontalAlign={PopoverHorizontalAlign.Start}
 			open={this._open}
 			opener={this}
 			onClose={this._handleClose}
@@ -28,13 +32,19 @@ export default function SearchPopoverTemplate(this: Search) {
 							<>
 								{this._showHeader &&
 									(<header slot="header" class="ui5-search-popover-header">
-										<Title size="H6">{this.headerText}</Title>
+										<Title size={TitleLevel.H6}>{this.headerText}</Title>
 										<Text class="ui5-search-popover-subheader"><i>{this.subheaderText}</i></Text>
 									</header>)
 								}
 
 								<main>
-									<List class="ui5-search-list" onLoadMore={this._handleMore} separators="None" growingButtonText={this.moreButtonText} growing={this._effectiveGrowing} onKeyDown={this._onItemKeydown}>
+									<List
+										class="ui5-search-list"
+										onLoadMore={this._handleMore}
+										separators={ListSeparator.None}
+										growingButtonText={this.moreButtonText}
+										growing={this._effectiveGrowing}
+										onKeyDown={this._onItemKeydown}>
 										<slot></slot>
 									</List>
 								</main>

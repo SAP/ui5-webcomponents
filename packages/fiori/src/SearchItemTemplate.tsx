@@ -3,6 +3,8 @@ import type SearchItem from "./SearchItem.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
+import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
+import TagDesign from "@ui5/webcomponents/dist/types/TagDesign.js";
 
 export default function SearchFieldTemplate(this: SearchItem) {
 	return (
@@ -20,35 +22,21 @@ export default function SearchFieldTemplate(this: SearchItem) {
 		>
 			<div part="content" class="ui5-search-item-content">
 				<div class="ui5-search-item-begin-content">
-					{this._hasAvatar ?
-						<slot name="avatar"></slot>
-						: (
-							this.icon &&
-							<Icon class="ui5-search-item-icon" name={this.icon}></Icon>
-						)
+					{this.icon &&
+						<Icon class="ui5-search-item-icon" name={this.icon}></Icon>
 					}
 
 					{this.scopeName &&
-						<Tag design="Set2" colorScheme="10">
+						<Tag design={TagDesign.Set2} colorScheme="10">
 							{this.scopeName}
 						</Tag>
 					}
 
 					<div class="ui5-search-item-titles-container">
 						<span part="title" class="ui5-search-item-heading" dangerouslySetInnerHTML={{ __html: this._markupText }}></span>
-
-						{this.subheadingText &&
-							<div class="ui5-search-item-byline-container">
-								<span part="subheading" class="ui5-search-item-subheading">{this.subheadingText}</span>
-
-								{this.additionalText &&
-									<span class="ui5-search-item-additionalText">{this.additionalText}</span>
-								}
-							</div>
-						}
 					</div>
 					{this.selected &&
-						<Button class="ui5-search-item-selected-delete" design="Transparent" icon={decline}></Button>
+						<Button class="ui5-search-item-selected-delete" design={ButtonDesign.Transparent} icon={decline}></Button>
 					}
 				</div>
 			</div>

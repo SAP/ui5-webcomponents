@@ -64,6 +64,7 @@ export default function SearchFieldTemplate(this: SearchField) {
 						showTooltip={true}
 						accessibleName={this._translations.searchIcon}
 						onClick={this._handleSearchIconPress}
+						onFocusOut={this._handleSearchIconFocusOut}
 					></Icon>
 				</div>
 			</div>

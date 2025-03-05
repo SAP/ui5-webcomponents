@@ -1,19 +1,10 @@
-import { property, slot } from "@ui5/webcomponents-base/dist/decorators.js";
+import { property } from "@ui5/webcomponents-base/dist/decorators.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Select from "@ui5/webcomponents/dist/Select.js";
-import Option from "@ui5/webcomponents/dist/Option.js";
-
-// import SearchItemTemplate from "./generated/templates/SearchItemTemplate.lit.js";
 import SearchItemTemplate from "./SearchItemTemplate.js";
 import SearchItemCss from "./generated/themes/SearchItem.css.js";
-import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import Tag from "@ui5/webcomponents/dist/Tag.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-// import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 /**
  * @class
@@ -29,8 +20,8 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
  * @constructor
  * @extends ListItemBase
  * @public
- * @since 2.0.0
- * @experimental This component is availabe since 2.0 under an experimental flag and its API and behaviour are subject to change.
+ * @since
+ * @experimental
  */
 @customElement({
 	tag: "ui5-search-item",
@@ -41,27 +32,11 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 		ListItemBase.styles,
 		SearchItemCss,
 	],
-	dependencies: [
-		Button,
-		Icon,
-		Select,
-		Option,
-		Tag,
-	],
 })
 
 class SearchItem extends ListItemBase {
 	@property()
 	headingText = "";
-
-	@property()
-	subheadingText?: string;
-
-	@property()
-	additionalText?: string;
-
-	@property()
-	additionalTextState: `${ValueState}` = "None";
 
 	@property()
 	icon?: string;
@@ -75,14 +50,7 @@ class SearchItem extends ListItemBase {
 	@property()
 	scopeName?: string;
 
-	@slot()
-	avatar!: Array<HTMLElement>;
-
 	_markupText = "";
-
-	get _hasAvatar(): boolean {
-		return !!this.avatar.length;
-	}
 
 	_onfocusin(e: FocusEvent) {
 		super._onfocusin(e);

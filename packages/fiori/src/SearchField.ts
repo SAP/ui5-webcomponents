@@ -226,6 +226,8 @@ class SearchField extends UI5Element {
 		}, 0);
 	}
 
+	_handleSearchIconFocusOut() {}
+
 	_handleInput(e: InputEvent) {
 		this.value = (e.target as HTMLInputElement).value;
 

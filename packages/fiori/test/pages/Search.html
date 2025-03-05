@@ -26,7 +26,7 @@
 	</div>
 	<div class="container" style="padding-top: 1rem; display: flex; flex-direction: column;">
 		<ui5-label>Initially expanded search with scope</ui5-label>
-		<ui5-search id="scoped-search" expanded show-scope>
+		<ui5-search id="scoped-search" expanded mode="Scoped">
 			<ui5-search-field-scope-option text="All" slot="scopeOptions"></ui5-search-field-scope-option>
 			<ui5-search-field-scope-option text="Apps" selected slot="scopeOptions"></ui5-search-field-scope-option>
 			<ui5-search-field-scope-option text="Products" slot="scopeOptions"></ui5-search-field-scope-option>
@@ -75,11 +75,10 @@
 	<div class="container">
 		<ui5-label>Search with Byline items</ui5-label>
 		<ui5-search expanded>
-			<ui5-search-item heading-text="Zikola Al Nour" subheading-text="Byline description Laborum ullamco ad reprehenderit" additional-text="Negative state of the item should overflow" additional-text-state="Negative">
-				<ui5-avatar slot="avatar" initials="MH"></ui5-avatar>
+			<ui5-search-item heading-text="Zikola Al Nour">
 			</ui5-search-item>
 
-			<ui5-search-item heading-text="List Item" subheading-text="Byline description Laborum ullamco ad reprehenderit" icon="search" selected ></ui5-search-item>
+			<ui5-search-item heading-text="List Item" icon="search" selected ></ui5-search-item>
 			
 		</ui5-search>
 	</div>

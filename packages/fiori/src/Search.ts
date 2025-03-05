@@ -1,17 +1,10 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import SearchPopupMode from "@ui5/webcomponents/dist/types/SearchPopupMode.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Select from "@ui5/webcomponents/dist/Select.js";
-import Option from "@ui5/webcomponents/dist/Option.js";
-import Popover from "@ui5/webcomponents/dist/Popover.js";
-import List from "@ui5/webcomponents/dist/List.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
-import Text from "@ui5/webcomponents/dist/Text.js";
+import type Popover from "@ui5/webcomponents/dist/Popover.js";
+import type List from "@ui5/webcomponents/dist/List.js";
 import {
 	isUp,
 	isDown,
@@ -35,6 +28,7 @@ import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type SearchItem from "./SearchItem.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import ListGrowingMode from "@ui5/webcomponents/dist/types/ListGrowingMode.js";
 
 interface ISearchSuggestionItem extends UI5Element {
 	selected: boolean;
@@ -47,7 +41,7 @@ interface ISearchSuggestionItem extends UI5Element {
  *
  * ### Overview
  *
- * A `ui5-search` is an input field, used for user search.
+ * A `ui5-search` is an input with suggestions, used for user search.
  *
  * The `ui5-search` consists of several elements parts:
  * - Scope - displays a select in the beggining of the component, used for filtering results by their scope.
@@ -55,6 +49,7 @@ interface ISearchSuggestionItem extends UI5Element {
  * - Clear button - gives the possibility for deleting the entered value
  * - Search button - a primary button for performing search, when the user has entered a search term
  * - Expand/Collapse button - when there is no search term, the search button behaves as an expand/collapse button for the `ui5-search` component
+ * - Suggestions - a list with available search suggestions
  *
  * ### ES6 Module Import
  *
@@ -63,8 +58,8 @@ interface ISearchSuggestionItem extends UI5Element {
  * @constructor
  * @extends UI5Element
  * @public
- * @since 2.0.0
- * @experimental This component is availabe since 2.0 under an experimental flag and its API and behaviour are subject to change.
+ * @since
+ * @experimental
  */
 @customElement({
 	tag: "ui5-search",
@@ -75,24 +70,12 @@ interface ISearchSuggestionItem extends UI5Element {
 		SearchField.styles,
 		SearchCss,
 	],
-	dependencies: [
-		Button,
-		Icon,
-		Select,
-		Option,
-		Popover,
-		List,
-		BusyIndicator,
-		Title,
-		Text,
-	],
 })
 
 /**
  * Fired when load more button is pressed.
  *
  * @public
- * @since 2.4.0
  */
 @event("load-more")
 
@@ -130,6 +113,22 @@ class Search extends SearchField {
 	moreButtonText?: string;
 
 	/**
+	 * Defines the Search suggestion items.
+	 *
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true })
+	items!: Array<SearchItem>;
+
+	/**
+	 * Defines the illustrated message to be shown in the popup.
+	 *
+	 * @public
+	 */
+	@slot()
+	illustration!: HTMLElement;
+
+	/**
 	 * Indicates whether the items picker is open.
 	 * @private
 	 */
@@ -146,22 +145,6 @@ class Search extends SearchField {
 	@property({ noAttribute: true })
 	_innerValue = "";
 
-	/**
-	 * Defines the Search suggestion items.
-	 *
-	 * @public
-	 */
-	@slot({ type: HTMLElement, "default": true })
-	items!: Array<SearchItem>;
-
-	/**
-	 * Defines the illustrated message to be shown in the popup.
-	 *
-	 * @public
-	 */
-	@slot()
-	illustration!: HTMLElement;
-
 	_shouldAutocomplete?: boolean;
 	_performTextSelection?: boolean;
 	typedInValue: string;
@@ -176,16 +159,18 @@ class Search extends SearchField {
 	}
 
 	onBeforeRendering() {
+		super.onBeforeRendering();
+
 		const innerInput = this.nativeInput;
 		const autoCompletedChars = innerInput && (innerInput.selectionEnd! - innerInput.selectionStart!);
 
-		// Typehead causes issues on Android devices, so we disable it for now
 		// If there is already a selection the autocomplete has already been performed
 		if (this._shouldAutocomplete && !autoCompletedChars) {
 			const item = this._getFirstMatchingItem(this.value);
 
 			if (item) {
 				this._handleTypeAhead(item);
+				this.deselectItems();
 				item.selected = true;
 			} else {
 				this.typedInValue = this.value;
@@ -207,6 +192,12 @@ class Search extends SearchField {
 		});
 	}
 
+	deselectItems() {
+		this._flattenItems.forEach(item => {
+			item.selected = false;
+		});
+	}
+
 	_getFirstMatchingItem(current: string): ISearchSuggestionItem | undefined {
 		if (!this._flattenItems.length || !current) {
 			return;
@@ -215,10 +206,17 @@ class Search extends SearchField {
 		const startsWithMatches = this._startsWithMatchingItems(current);
 		const partialMatches = this._startsWithPerTermMatchingItems(current);
 
-		if (this._flattenItems.indexOf(startsWithMatches[0]) <= this._flattenItems.indexOf(partialMatches[0])) {
+		if (!startsWithMatches.length) {
+			return partialMatches[0] ?? undefined;
+		}
+
+		if (!partialMatches.length) {
 			return startsWithMatches[0];
 		}
-		return partialMatches[0] || undefined;
+
+		return this._flattenItems.indexOf(startsWithMatches[0]) <= this._flattenItems.indexOf(partialMatches[0])
+			? startsWithMatches[0]
+			: partialMatches[0];
 	}
 
 	_handleTypeAhead(item: ISearchSuggestionItem) {
@@ -305,16 +303,6 @@ class Search extends SearchField {
 		}
 	}
 
-	/**
-	 * Returns a reference to the native input element
-	 * @protected
-	 */
-	get nativeInput() {
-		const domRef = this.getDomRef();
-
-		return domRef ? domRef.querySelector<HTMLInputElement>(`input`) : null;
-	}
-
 	_getPicker() {
 		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
 	}
@@ -368,6 +356,12 @@ class Search extends SearchField {
 		this.fireDecoratorEvent("load-more");
 	}
 
+	get nativeInput() {
+		const domRef = this.getDomRef();
+
+		return domRef ? domRef.querySelector<HTMLInputElement>(`input`) : null;
+	}
+
 	get _showIllustration() {
 		return !!this.illustration && this.popupMode === SearchPopupMode.Illustration;
 	}
@@ -377,12 +371,11 @@ class Search extends SearchField {
 	}
 
 	get _showHeader() {
-		// can we show subheader only?
 		return !!this.headerText;
 	}
 
 	get _effectiveGrowing() {
-		return this.showMore ? "Button" : "None";
+		return this.showMore ? ListGrowingMode.Button : ListGrowingMode.None;
 	}
 }
 
