@@ -2,7 +2,6 @@ import ViewSettingsDialog from "../../src/ViewSettingsDialog.js";
 import SortItem from "../../src/SortItem.js";
 import FilterItem from "../../src/FilterItem.js";
 import FilterItemOption from "../../src/FilterItemOption.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
 
 describe("View settings dialog - selection", () => {
 	it("tests clicking on sort items (both on the text and radio button)", () => {
