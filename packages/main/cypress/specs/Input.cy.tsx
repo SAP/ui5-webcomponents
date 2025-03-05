@@ -144,7 +144,14 @@ describe("Input Tests", () => {
 		cy.get<Input>("@input")
 			.shadow()
 			.find("div.ui5-input-icon-root")
+			.as("inputIconRoot");
+
+		cy.get("@inputIconRoot")
 			.should("have.attr", "tabindex", "-1");
+
+		cy.get("@inputIconRoot").focus();
+
+		cy.get("@inputIconRoot").should("be.focused");
 	});
 
 	it("tests submit and change event order", () => {
