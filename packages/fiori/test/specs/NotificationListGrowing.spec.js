@@ -7,6 +7,7 @@ describe("Notification List Group Item Tests", () => {
 
 	it("tests click growing button", async () => {
 		const growingBtn = await browser.$('>>> #notificationListFirstGroup [id$="growing-btn"]');
+		await browser.pause(2000);
 		assert.ok(await growingBtn.isDisplayed(), "Growing button is visible");
 
 		let groupItems = await browser.$$("#notificationListFirstGroup ui5-li-notification");
