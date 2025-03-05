@@ -1,4 +1,6 @@
 import DateTimePicker from "../../src/DateTimePicker.js";
+import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 
 function DefaultDateTimePicker() {
 	return (
@@ -34,6 +36,8 @@ describe("DateTimePicker general interaction", () => {
 
 	// Unstable but valid test, needs to be individually observed
 	it("tests selection of new date/time", () => {
+		setAnimationMode(AnimationMode.None);
+
 		const PREVIOUS_VALUE = "13/04/2020, 03:16:16 AM";
 
 		cy.mount(<DateTimePicker id="dtSeconds" formatPattern="dd/MM/yyyy, hh:mm:ss a" value={PREVIOUS_VALUE} />);
@@ -105,6 +109,8 @@ describe("DateTimePicker general interaction", () => {
 			.should("have.attr", "value", "14/04/2020, 02:14:19 PM");
 
 		cy.ui5DateTimePickerIsOpen("#dtSeconds").should("equal", false);
+
+		setAnimationMode(AnimationMode.Full);
 	});
 
 	it("tests selection of new date without changing the time section", () => {
@@ -216,6 +222,8 @@ describe("DateTimePicker general interaction", () => {
 
 	// Unstable test, needs investigation
 	it("tests selection of 12:34:56 AM", () => {
+		setAnimationMode(AnimationMode.None);
+
 		cy.mount(<DateTimePickerWithSeconds />);
 
 		cy.ui5DateTimePickerOpen("#dtSeconds");
@@ -261,6 +269,8 @@ describe("DateTimePicker general interaction", () => {
 			.find("ui5-input")
 			.invoke("prop", "value")
 			.should("equal", "13/04/2020, 12:34:56 AM");
+
+		setAnimationMode(AnimationMode.Full);
 	});
 
 	it("tests change event is prevented on submit when prevent default is called", () => {
