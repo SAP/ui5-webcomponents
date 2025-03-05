@@ -46,6 +46,7 @@ import {
 	registerUI5Element,
 	deregisterUI5Element,
 	getEffectiveAriaDescriptionText,
+	getAllAccessibleDescriptionRefTexts,
 } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
@@ -445,7 +446,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * Defines the accessible description of the component.
 	 * @default undefined
 	 * @public
-	 * @since 2.8.0
+	 * @since 2.9.0
 	 */
 	@property()
 	accessibleDescription?: string;
@@ -454,7 +455,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * Receives id(or many ids) of the elements that describe the input.
 	 * @default undefined
 	 * @public
-	 * @since 2.8.0
+	 * @since 2.9.0
 	 */
 	@property()
 	accessibleDescriptionRef?: string;
@@ -1218,7 +1219,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_updateAssociatedLabelsTexts() {
 		this._associatedLabelsTexts = getAssociatedLabelForTexts(this);
 		this._accessibleLabelsRefTexts = getAllAccessibleNameRefTexts(this);
-		this._associatedDescriptionRefTexts = getEffectiveAriaDescriptionText(this);
+		this._associatedDescriptionRefTexts = getAllAccessibleDescriptionRefTexts(this);
 	}
 
 	_closePicker() {
@@ -1544,13 +1545,22 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		return this.hasValueState ? `valueStateDesc` : "";
 	}
 
-	get ariaDescriptionId() {
-		const hasAriaDescription = this.ariaDescriptionText !== "";
+	get _accInfoAriaDescription() {
+		return (this._inputAccInfo && this._inputAccInfo.ariaDescription) || "";
+	}
+
+	get _accInfoAriaDescriptionId() {
+		const hasAriaDescription = this._accInfoAriaDescription !== "";
 		return hasAriaDescription ? "descr" : "";
 	}
 
 	get ariaDescriptionText() {
-		return (this._inputAccInfo && this._inputAccInfo.ariaDescription) || this._associatedDescriptionRefTexts || "";
+		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this);
+	}
+
+	get ariaDescriptionTextId() {
+		const hasAriaDescription = this.ariaDescriptionText !== "";
+		return hasAriaDescription ? "accessibleDescription" : "";
 	}
 
 	get ariaDescribedByIds() {
@@ -1558,7 +1568,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.suggestionsTextId,
 			this.valueStateTextId,
 			this._inputAccInfo.ariaDescribedBy,
-			this.ariaDescriptionId,
+			this._accInfoAriaDescriptionId,
+			this.ariaDescriptionTextId,
 		].filter(Boolean).join(" ");
 	}
 
@@ -1575,7 +1586,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			"role": this._inputAccInfo && this._inputAccInfo.role,
 			"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
 			"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
-			"ariaDescription": this.ariaDescriptionText,
+			"ariaDescription": this._accInfoAriaDescription,
+			"accessibleDescription": this.ariaDescriptionText,
 			"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts || undefined,
 		};
 	}
