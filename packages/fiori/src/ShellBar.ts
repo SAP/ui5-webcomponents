@@ -16,7 +16,7 @@ import {
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import List from "@ui5/webcomponents/dist/List.js";
-import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
+import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -651,9 +651,9 @@ class ShellBar extends UI5Element {
 		return visibleAndInteractiveItems;
 	}
 
-	_menuItemPress(e: CustomEvent<ListSelectionChangeEventDetail>) {
+	_menuItemPress(e: CustomEvent<ListItemClickEventDetail>) {
 		const shouldContinue = this.fireDecoratorEvent("menu-item-click", {
-			item: e.detail.selectedItems[0],
+			item: e.detail.item,
 		});
 		if (shouldContinue) {
 			this.menuPopover!.open = false;
@@ -1140,9 +1140,10 @@ class ShellBar extends UI5Element {
 	}
 
 	_observeContentItems() {
-		if (JSON.stringify(this.contentItems) === JSON.stringify(this._observableContent)) {
-			return false;
+		if (this.hasMatchingContent) {
+			return;
 		}
+
 		this.contentItems.forEach(item => {
 			if (!this._observableContent.includes(item)) {
 				this.contentItemsObserver.observe(item, {
@@ -1173,6 +1174,15 @@ class ShellBar extends UI5Element {
 		}
 
 		return itemInfo.classes.indexOf("ui5-shellbar-hidden-button") !== -1;
+	}
+
+	get hasMatchingContent() {
+		if (this._observableContent.length !== this.contentItems.length) {
+			return false;
+		}
+
+		const observableContentSet = new WeakSet(this._observableContent);
+		return this.contentItems.every(item => observableContentSet.has(item));
 	}
 
 	get contentItemsSorted() {
