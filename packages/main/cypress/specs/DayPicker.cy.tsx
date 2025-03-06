@@ -51,6 +51,9 @@ describe("Day Picker Tests", () => {
 	});
 
 	it("Day names are correctly displayed when length is less than 3", () => {
+		cy.wrap({ setLanguage })
+			.invoke("setLanguage", "en");
+
 		cy.mount(<DefaultDayPicker />);
 		cy.get("#daypicker")
 			.shadow()
