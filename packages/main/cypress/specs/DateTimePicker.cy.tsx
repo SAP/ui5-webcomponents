@@ -35,13 +35,11 @@ describe("DateTimePicker general interaction", () => {
 	});
 
 	// Unstable but valid test, needs to be individually observed
-	it("tests selection of new date/time", () => {
+	it("tests selection of new date", () => {
 		setAnimationMode(AnimationMode.None);
-
 		const PREVIOUS_VALUE = "13/04/2020, 03:16:16 AM";
 
 		cy.mount(<DateTimePicker id="dtSeconds" formatPattern="dd/MM/yyyy, hh:mm:ss a" value={PREVIOUS_VALUE} />);
-
 		cy.ui5DateTimePickerOpen("#dtSeconds");
 
 		cy.get("#dtSeconds")
@@ -50,7 +48,7 @@ describe("DateTimePicker general interaction", () => {
 			.should("have.value", PREVIOUS_VALUE);
 
 		cy.ui5DateTimePickerGetPopover("#dtSeconds").within(() => {
-			// Select the next day (click on the currently selected day, then ArrowRight and Space).
+			// Click the currently selected day and then move to the next day.
 			cy.get("ui5-calendar")
 				.shadow()
 				.find("ui5-daypicker")
@@ -58,18 +56,37 @@ describe("DateTimePicker general interaction", () => {
 				.find(".ui5-dp-item--selected")
 				.realClick();
 
-			cy.get("ui5-calendar")
-				.shadow()
-				.find("ui5-daypicker")
-				.shadow()
-				.find(".ui5-dp-item--selected")
-				.should("be.focused");
-
-			// Select the next day.
 			cy.realPress("ArrowRight");
 			cy.realPress("Space");
 
-			// Adjust hours.
+			// Confirm the change.
+			cy.get("#ok").realClick();
+		});
+
+		// Only the date has changed; the time remains the same.
+		cy.get("#dtSeconds")
+			.shadow()
+			.find("ui5-input")
+			.should("have.attr", "value", "14/04/2020, 03:16:16 AM");
+
+		cy.ui5DateTimePickerIsOpen("#dtSeconds").should("equal", false);
+		setAnimationMode(AnimationMode.Full);
+	});
+
+	it("tests time controls adjustments", () => {
+		setAnimationMode(AnimationMode.None);
+		const PREVIOUS_VALUE = "13/04/2020, 03:16:16 AM";
+
+		cy.mount(<DateTimePicker id="dtSeconds" formatPattern="dd/MM/yyyy, hh:mm:ss a" value={PREVIOUS_VALUE} />);
+		cy.ui5DateTimePickerOpen("#dtSeconds");
+
+		cy.get("#dtSeconds")
+			.shadow()
+			.find("ui5-input")
+			.should("have.value", PREVIOUS_VALUE);
+
+		cy.ui5DateTimePickerGetPopover("#dtSeconds").within(() => {
+			// Adjust hours:
 			cy.get("ui5-time-selection-clocks")
 				.shadow()
 				.find(`ui5-toggle-spin-button[data-ui5-clock="hours"]`)
@@ -106,10 +123,11 @@ describe("DateTimePicker general interaction", () => {
 			cy.get("#ok").realClick();
 		});
 
+		// Only the time parts have been updated.
 		cy.get("#dtSeconds")
 			.shadow()
 			.find("ui5-input")
-			.should("have.attr", "value", "14/04/2020, 02:14:19 PM");
+			.should("have.attr", "value", "13/04/2020, 02:14:19 PM");
 
 		cy.ui5DateTimePickerIsOpen("#dtSeconds").should("equal", false);
 
