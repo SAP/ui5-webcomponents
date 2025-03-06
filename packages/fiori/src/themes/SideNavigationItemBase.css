@@ -7,7 +7,7 @@
 .ui5-sn-item {
 	display: flex;
 	align-items: center;
-	width: 100%;
+	width: auto;
 	box-sizing: border-box;
 	text-decoration: none;
 	position: relative;
@@ -29,7 +29,33 @@
 }
 
 :host([design="Action"]) {
-	color: var(--sapButton_TextColor);
+	color:  var(--sapButton_TextColor);
+}
+
+:host([design="Action"]) .ui5-sn-item:not(.ui5-sn-item-disabled):active [ui5-icon],
+:host([design="Action"]) .ui5-sn-item:not(.ui5-sn-item-disabled):active .ui5-sn-item-text {
+	color: var(--_ui5_side_navigation_active_text_color);
+}
+
+:host([design="Action"]) .ui5-sn-item {
+	border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
+	box-sizing: content-box;
+}
+
+:host([design="Action"]:not([side-nav-collapsed])) .ui5-sn-item {
+	max-width: -moz-available;
+	max-width: -webkit-fill-available;
+	max-width: fill-available;
+}
+
+:host([design="Action"]) .ui5-sn-item:not(.ui5-sn-item-disabled):hover {
+	border: var(--_ui5_side_navigation_action_item_border_hover);
+	background: var(--sapButton_Hover_Background);
+}
+
+:host([design="Action"]) .ui5-sn-item:not(.ui5-sn-item-disabled):active {
+	border: var(--_ui5_side_navigation_action_item_border_active);
+	background: var(--sapButton_Active_Background);
 }
 
 .ui5-sn-item:focus {
@@ -78,7 +104,11 @@ and there is an additional border that appears on hover. */
 	cursor: default;
 }
 
-.ui5-sn-item:not(.ui5-sn-item-disabled):hover {
+:host([ui5-side-navigation-item][in-popover][unselectable]) .ui5-sn-item {
+	cursor: unset;
+}
+
+:host(:not([ui5-side-navigation-item][in-popover][unselectable])) .ui5-sn-item:not(.ui5-sn-item-disabled):hover {
 	background: var(--sapList_Hover_Background);
 }
 
@@ -102,7 +132,7 @@ and there is an additional border that appears on hover. */
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected.ui5-sn-item-active,
-.ui5-sn-item:not(.ui5-sn-item-disabled):active,
+:host(:not([ui5-side-navigation-item][in-popover][unselectable])) .ui5-sn-item:not(.ui5-sn-item-disabled):active,
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-active,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected.ui5-sn-item-active {
@@ -123,7 +153,7 @@ and there is an additional border that appears on hover. */
 	border-width: var(--_ui5_side_navigation_selected_border_width);
 }
 
-.ui5-sn-item:not(.ui5-sn-item-disabled):not(.ui5-sn-item-selected):hover::before {
+:host(:not([design="Action"])) .ui5-sn-item:not(.ui5-sn-item-disabled):not(.ui5-sn-item-selected):hover::before {
 	border: var(--_ui5_side_navigation_hover_border_style_color);
 	border-width: var(--_ui5_side_navigation_hover_border_width);
 }
@@ -157,15 +187,29 @@ and there is an additional border that appears on hover. */
 :host([design="Action"]) .ui5-sn-item-external-link-icon {
 	color: var(--sapButton_TextColor);
 }
-
-:host(:not([side-nav-collapsed])) .ui5-sn-item-toggle-icon,
 .ui5-sn-item-external-link-icon {
+	min-width: 3rem;
+}
+
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon,
+:host(:not([side-nav-collapsed])) .ui5-sn-item-toggle-icon {
 	min-width: var(--_ui5_side_navigation_expand_icon_width);
+	padding-inline: 0.25rem 0.375rem;
+	padding-block: 0.25rem; /* height of the separator (the border left) should be --sapElement_Condensed_Heightwhich is equal to 1.375rem (22px) */
+	border-inline-start: 0.0625rem solid var(--sapTextColor);
+	margin-inline-start: 1rem;
+}
+
+:host([unselectable]:not([side-nav-collapsed])) .ui5-sn-item-toggle-icon,
+:host(:not([side-nav-collapsed])) .ui5-sn-item-group .ui5-sn-item-toggle-icon,
+:host([unselectable][side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
+:host([unselectable][side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon {
+	border-inline-start: none;
 }
 
 :host([in-popover]) .ui5-sn-item-toggle-icon {
 	display: none;
-	min-width: var(--_ui5_side_navigation_expand_icon_width);
 }
 
 :host([side-nav-collapsed]) .ui5-sn-item {
@@ -175,9 +219,13 @@ and there is an additional border that appears on hover. */
 :host([slot="fixedItems"]:not(side-nav-collapsed)) .ui5-sn-item.ui5-sn-item-level1 {
 	margin-top: var(--_ui5_side_navigation_first_fixed_item_margin_top); /* space for the focus*/
  }
-
 :host([side-nav-collapsed]) .ui5-sn-item-icon {
 	padding-inline-end: 1rem;
+}
+
+:host([design="Action"][side-nav-collapsed]) .ui5-sn-item-icon {
+	padding-inline-end: calc(1rem - 1px); /* minus the width of the border */
+	padding-inline-start: calc(1rem - 1px); /* minus the width of the border */
 }
 
 :host([side-nav-collapsed]) .ui5-sn-item-text {
@@ -203,13 +251,30 @@ and there is an additional border that appears on hover. */
 	padding-inline-end: var(--_ui5_side_navigation_item_collapsed_padding_right);
 }
 
+:host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover:not(.ui5-sn-item-with-expander),
+:host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander) {
+	padding-inline-end: 0;
+}
+
+:host([unselectable][side-nav-collapsed]) .ui5-sn-item.ui5-sn-item.ui5-sn-item-with-expander:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover,
+:host([unselectable][side-nav-collapsed]) .ui5-sn-item.ui5-sn-item.ui5-sn-item-with-expander:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus {
+	padding-inline-end: var(--_ui5_side_navigation_item_collapsed_unselectable_padding);
+}
+
+:host([unselectable][side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-with-expander):hover,
+:host([unselectable][side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-with-expander):focus {
+	padding-inline-end: var(--_ui5_side_navigation_action_item_collapsed_padding);
+}
+
 :host([side-nav-collapsed]) .ui5-sn-item.ui5-sn-item-selected:hover,
 :host([side-nav-collapsed]) .ui5-sn-item.ui5-sn-item-selected:focus {
 	background: var(--sapList_SelectionBackgroundColor);
 }
 
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover:not(.ui5-sn-item-with-expander),
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander) {
+:host([side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover:not(.ui5-sn-item-with-expander),
+:host([side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander),
+:host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover:not(.ui5-sn-item-with-expander):not([target="_blank"]),
+:host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander):not([target="_blank"]) {
 	padding-inline-end: var(--_ui5_side_navigation_item_collapsed_hover_focus_padding_right);
 }
 
@@ -253,5 +318,5 @@ and there is an additional border that appears on hover. */
 }
 
 .ui5-sn-item-separator {
-	min-height: 0.5rem;
+	min-height: 0.625rem;
 }

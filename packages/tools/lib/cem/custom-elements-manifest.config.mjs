@@ -127,7 +127,7 @@ function processClass(ts, classNode, moduleDoc) {
 	}
 
 	// Events
-	currClass.events = findAllDecorators(classNode, "event")
+	currClass.events = findAllDecorators(classNode, ["event", "eventStrict"])
 		?.map(event => processEvent(ts, event, classNode, moduleDoc));
 
 	// TODO: remove after changing Button's click to custom event.
