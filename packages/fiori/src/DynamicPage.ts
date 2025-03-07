@@ -242,9 +242,10 @@ class DynamicPage extends UI5Element {
 	}
 
 	get _accAttributesForHeaderActions() {
-		return {
-			controls: `${this._id}-header` as Lowercase<string>,
-		};
+		const headerElement = this.querySelector(`#${this._id}-header`);
+		return headerElement ? {
+		  controls: `${this._id}-header` as Lowercase<string>,
+		} : {};
 	}
 
 	get headerTabIndex() {
