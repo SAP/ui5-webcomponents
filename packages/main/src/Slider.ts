@@ -6,7 +6,7 @@ import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import SliderBase from "./SliderBase.js";
-import type Input from "./Input.js";
+import type SliderTooltip from "./SliderTooltip.js";
 
 // Template
 import SliderTemplate from "./SliderTemplate.js";
@@ -122,10 +122,6 @@ class Slider extends SliderBase implements IFormInputElement {
 	 *
 	 */
 	onBeforeRendering() {
-		if (this.editableTooltip) {
-			this._updateInputValue();
-		}
-
 		if (!this.isCurrentStateOutdated()) {
 			return;
 		}
@@ -172,7 +168,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	_onmousedown(e: TouchEvent | MouseEvent) {
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
-		if (this.disabled || this.step === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
+		if (this.disabled || this.step === 0 || (e.target as HTMLElement).hasAttribute("ui5-slider-tooltip")) {
 			return;
 		}
 
@@ -201,9 +197,7 @@ class Slider extends SliderBase implements IFormInputElement {
 			this._valueInitial = this.value;
 		}
 
-		if (this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.VISIBLE;
-		}
+		this._tooltipsOpen = this.showTooltip;
 	}
 
 	_onfocusout(e: FocusEvent) {
@@ -218,8 +212,8 @@ class Slider extends SliderBase implements IFormInputElement {
 		// value that was saved when it was first focused in
 		this._valueInitial = undefined;
 
-		if (this.showTooltip && !(e.relatedTarget as HTMLInputElement)?.hasAttribute("ui5-input")) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
+		if (this.showTooltip && !(e.relatedTarget as HTMLInputElement)?.hasAttribute("ui5-slider-tooltip")) {
+			this._tooltipsOpen = false;
 		}
 	}
 
@@ -228,10 +222,6 @@ class Slider extends SliderBase implements IFormInputElement {
 	 * @private
 	 */
 	_handleMove(e: TouchEvent | MouseEvent) {
-		if ((e.target as HTMLElement).hasAttribute("ui5-input")) {
-			return;
-		}
-
 		e.preventDefault();
 
 		// If step is 0 no interaction is available because there is no constant
@@ -251,11 +241,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	/** Called when the user finish interacting with the slider
 	 * @private
 	 */
-	_handleUp(e: TouchEvent | MouseEvent) {
-		if ((e.target as HTMLElement).hasAttribute("ui5-input")) {
-			return;
-		}
-
+	_handleUp() {
 		if (this._valueOnInteractionStart !== this.value) {
 			this.fireDecoratorEvent("change");
 		}
@@ -264,40 +250,7 @@ class Slider extends SliderBase implements IFormInputElement {
 		this._valueOnInteractionStart = undefined;
 	}
 
-	_onInputFocusOut(e: FocusEvent) {
-		const tooltipInput = this.shadowRoot!.querySelector("[ui5-input]") as Input;
-
-		this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
-		this._updateValueFromInput(e);
-
-		if (!this._isInputValueValid) {
-			tooltipInput.value = this._lastValidInputValue;
-			this._isInputValueValid = true;
-			this._tooltipInputValueState = "None";
-		}
-	}
-
-	_updateInputValue() {
-		const tooltipInput = this.shadowRoot!.querySelector("[ui5-input]") as Input;
-
-		if (!tooltipInput) {
-			return;
-		}
-
-		this._isInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
-
-		if (!this._isInputValueValid) {
-			this._tooltipInputValue = this._lastValidInputValue;
-			this._isInputValueValid = true;
-			this._tooltipInputValueState = "Negative";
-
-			return;
-		}
-
-		this._tooltipInputValue = this.value.toString();
-		this._lastValidInputValue = this._tooltipInputValue;
-		this._tooltipInputValueState = "None";
-	}
+	_updateInputValue() {}
 
 	/** Determines if the press is over the handle
 	 * @private
@@ -334,6 +287,12 @@ class Slider extends SliderBase implements IFormInputElement {
 		}
 	}
 
+	_onTooltopForwardFocus(e: CustomEvent) {
+		const tooltip = e.target as SliderTooltip;
+
+		tooltip.followRef?.focus();
+	}
+
 	get inputValue() {
 		return this.value.toString();
 	}
@@ -353,9 +312,6 @@ class Slider extends SliderBase implements IFormInputElement {
 			labelContainer: {
 				"width": `100%`,
 				[this.directionStart]: `-${this._labelWidth / 2}%`,
-			},
-			tooltip: {
-				"visibility": `${this._tooltipVisibility}`,
 			},
 		};
 	}

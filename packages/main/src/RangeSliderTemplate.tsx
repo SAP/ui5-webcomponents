@@ -3,6 +3,7 @@ import type RangeSlider from "./RangeSlider.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
 import SliderBaseTemplate from "./SliderBaseTemplate.js";
+import SliderTooltip from "./SliderTooltip.js";
 
 export default function RangeSliderTemplate(this: RangeSlider) {
 	return SliderBaseTemplate.call(this, {
@@ -67,26 +68,6 @@ export function handles(this: RangeSlider) {
 					slider-icon
 				></Icon>
 			</div>
-
-			{this.showTooltip &&
-				<div class="ui5-slider-tooltip ui5-slider-tooltip--start" style={this.styles.tooltip}>
-					{this.editableTooltip ?
-						<Input
-							type="Number"
-							value={this.startValue.toString()}
-							accessibleNameRef="ui5-slider-InputLabel"
-							onFocusOut={this._onInputFocusOut}
-							onKeyDown={this._onInputKeydown}
-							onChange={this._onInputChange}
-							onInput={this._onInputInput}
-							data-sap-ui-start-value
-							tabIndex={-1}
-						></Input>
-						:
-						<span class="ui5-slider-tooltip-value">{this.tooltipStartValue}</span>
-					}
-				</div>
-			}
 		</div>
 		<div class="ui5-slider-handle-container" style={this.styles.endHandle} part="handle-container">
 			<div class="ui5-slider-handle ui5-slider-handle--end"
@@ -110,25 +91,29 @@ export function handles(this: RangeSlider) {
 				></Icon>
 			</div>
 
-			{this.showTooltip &&
-				<div class="ui5-slider-tooltip ui5-slider-tooltip--end" style={this.styles.tooltip}>
-					{this.editableTooltip ?
-						<Input
-							type="Number"
-							value={this.endValue.toString()}
-							accessibleNameRef="ui5-slider-InputLabel"
-							onFocusOut={this._onInputFocusOut}
-							onKeyDown={this._onInputKeydown}
-							onChange={this._onInputChange}
-							onInput={this._onInputInput}
-							data-sap-ui-end-value
-							tabIndex={-1}
-						></Input>
-						:
-						<span class="ui5-slider-tooltip-value">{this.tooltipEndValue}</span>
-					}
-				</div>
-			}
+			<SliderTooltip
+				open={this._tooltipsOpen}
+				value={this.startValue.toString()}
+				min={this.min}
+				max={this.max}
+				editable={this.editableTooltip}
+				followRef={this.shadowRoot?.querySelector(".ui5-slider-handle--start") as HTMLElement}
+				onChange={this._onTooltipChange}
+				// onForwardFocus={this._onTooltopForwardFocus}
+			>
+			</SliderTooltip>
+
+			<SliderTooltip
+				open={this._tooltipsOpen}
+				value={this.endValue.toString()}
+				min={this.min}
+				max={this.max}
+				editable={this.editableTooltip}
+				followRef={this.shadowRoot?.querySelector(".ui5-slider-handle--end") as HTMLElement}
+				onChange={this._onTooltipChange}
+				// onForwardFocus={this._onTooltopForwardFocus}
+			>
+			</SliderTooltip>
 		</div>
 	</>);
 }
