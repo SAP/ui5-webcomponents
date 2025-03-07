@@ -33,41 +33,38 @@ export default function UserMenuTemplate(this: UserMenu) {
 			opener={this.opener}
 			onClose={this._handlePopoverAfterClose}
 			onOpen={this._handlePopoverAfterOpen}
+			onScroll={this._handleScroll}
 		>
-			{this._isPhone ?
-				<>
-					<Bar class="ui5-pm-phone-header" slot="header">
-						{this._manageAccountVisibleInHeader &&
-							<Button icon={userSettings} onClick={this._handleManageAccountClick} slot="startContent"></Button>
-						}
+			<>
+				<Bar class={{
+					"ui5-pm-fixed-header": true,
+					"ui5-pm-rp-scrolled": this._isScrolled || this._titleMovedToHeader || this._manageAccountVisibleInHeader
+				}} slot="header">
+					{this._manageAccountVisibleInHeader &&
+						<Button icon={userSettings} onClick={this._handleManageAccountClick} slot="startContent"></Button>
+					}
 
-						{this._titleMovedToHeader &&
-							<Title
-								level="H1"
-								wrappingType="None"
-							>
-								{this._selectedAccount.titleText}
-							</Title>
-						}
-
-						<Button
-							icon={decline}
-							design="Transparent"
-							accessibleName={this._closeDialogAriaLabel}
-							onClick={this._closeUserMenu}
-							slot="endContent"
+					{this._titleMovedToHeader &&
+						<Title
+							level="H1"
+							wrappingType="None"
 						>
-						</Button>
-					</Bar>
-					<div class="ui5-pm-header">
-						{headerContent.call(this)}
-					</div>
-				</>
-				:
-				<div class="ui5-pm-header" slot="header">
+							{this._selectedAccount.titleText}
+						</Title>
+					}
+
+					{this._isPhone && <Button
+						icon={decline}
+						design="Transparent"
+						accessibleName={this._closeDialogAriaLabel}
+						onClick={this._closeUserMenu}
+						slot="endContent"
+					 />}
+				</Bar>
+				<div class="ui5-pm-header">
 					{headerContent.call(this)}
 				</div>
-			}
+			</>
 
 			{this.showOtherAccounts &&
 				<>

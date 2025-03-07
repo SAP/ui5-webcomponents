@@ -623,7 +623,7 @@ describe("Responsiveness", () => {
 		cy.get("[ui5-user-menu]").as("userMenu");
 		cy.get("@userMenu").should("exist");
 		cy.get("@userMenu").shadow().find("[ui5-bar]").as("headerBar");
-		cy.get("@headerBar").should("have.class", "ui5-pm-phone-header");
+		cy.get("@headerBar").should("have.class", "ui5-pm-fixed-header");
 	});
 
 	it("tests scroll on phone", () => {

@@ -28,6 +28,7 @@ import {
 	USER_MENU_EDIT_ACCOUNTS_TXT,
 	USER_MENU_CLOSE_DIALOG_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
+import type { PopupScrollEventDetail } from "@ui5/webcomponents/dist/Popup.js";
 
 type UserMenuItemClickEventDetail = {
 	item: UserMenuItem;
@@ -236,6 +237,13 @@ class UserMenu extends UI5Element {
 	_manageAccountMovedToHeader = false;
 
 	/**
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_isScrolled = false;
+
+	/**
 	 * @private
 	 */
 	_selectedAccount!: UserMenuAccount;
@@ -268,7 +276,7 @@ class UserMenu extends UI5Element {
 	}
 
 	onAfterRendering(): void {
-		if (this._isPhone && this._responsivePopover) {
+		if (this._responsivePopover) {
 			const observerOptions = {
 				threshold: [0.15],
 			};
@@ -288,6 +296,10 @@ class UserMenu extends UI5Element {
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	_handleScroll(e: CustomEvent<PopupScrollEventDetail>) {
+		this._isScrolled = e.detail.scrollTop > 0;
 	}
 
 	_handleIntersection(entries: IntersectionObserverEntry[]) {
