@@ -338,3 +338,269 @@ bdi {
 	overflow: visible;
 	margin-right: 5px;
 }
+
+.ui5-button:not([hidden]) {
+	display: inline-block;
+}
+
+.ui5-button {
+	min-width: var(--_ui5_button_base_min_width);
+	height: var(--_ui5_button_base_height);
+	line-height: normal;
+	font-family: var(--_ui5_button_fontFamily);
+	font-size: var(--sapFontSize);
+	text-shadow: var(--_ui5_button_text_shadow);
+	border-radius: var(--_ui5_button_border_radius);
+	cursor: pointer;
+	background-color: var(--sapButton_Background);
+	border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
+	color: var(--sapButton_TextColor);
+	box-sizing: border-box;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.ui5-button-root {
+	min-width: inherit;
+	cursor: inherit;
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	outline: none;
+	padding: 0 var(--_ui5_button_base_padding);
+	position: relative;
+	background: transparent;
+	border: none;
+	color: inherit;
+	text-shadow: inherit;
+	font: inherit;
+	white-space: inherit;
+	overflow: inherit;
+	text-overflow: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+	line-height: inherit;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.ui5-button:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover,
+.ui5-button:not([hidden]):not([disabled]).ui5_hovered {
+	background: var(--sapButton_Hover_Background);
+	border: 1px solid var(--sapButton_Hover_BorderColor);
+	color: var(--sapButton_Hover_TextColor);
+}
+
+.ui5-button-icon,
+.ui5-button-end-icon {
+	color: inherit;
+	flex-shrink: 0;
+}
+
+.ui5-button-end-icon {
+	margin-inline-start: var(--_ui5_button_base_icon_margin);
+}
+
+.ui5-button[icon-only]:not([has-end-icon]) .ui5-button-root {
+	min-width: auto;
+	padding: 0;
+}
+
+.ui5-button[icon-only] .ui5-button-text {
+	display: none;
+}
+
+.ui5-button-text {
+	outline: none;
+	position: relative;
+	white-space: inherit;
+	overflow: inherit;
+	text-overflow: inherit;
+}
+
+.ui5-button[has-icon]:not(:empty) .ui5-button-text {
+	margin-inline-start: var(--_ui5_button_base_icon_margin);
+}
+
+.ui5-button[has-end-icon]:not([has-icon]):empty .ui5-button-end-icon {
+	margin-inline-start: 0;
+}
+
+.ui5-button[disabled] {
+	opacity: var(--sapContent_DisabledOpacity);
+	pointer-events: unset;
+	cursor: default;
+}
+
+.ui5-button[has-icon]:not([icon-only]):not([has-end-icon]) .ui5-button-text{
+	/* calculating the minimum width by removing the icon size  */
+	min-width: calc(var(--_ui5_button_base_min_width) - var(--_ui5_button_base_icon_margin) - 1rem);
+}
+.ui5-button[disabled]:active {
+	pointer-events: none;
+}
+
+.ui5-button[desktop]:not([active]) .ui5-button-root:focus-within:after,
+.ui5-button:not([active]) .ui5-button-root:focus-visible:after,
+.ui5-button[desktop][active][design="Emphasized"] .ui5-button-root:focus-within:after,
+.ui5-button[active][design="Emphasized"] .ui5-button-root:focus-visible:after,
+.ui5-button[desktop][active] .ui5-button-root:focus-within:before,
+.ui5-button[active] .ui5-button-root:focus-visible:before {
+	content: "";
+	position: absolute;
+	box-sizing: border-box;
+	left: 0.0625rem;
+	top: 0.0625rem;
+	right: 0.0625rem;
+	bottom: 0.0625rem;
+	border: var(--_ui5_button_focused_border);
+	border-radius: var(--_ui5_button_focused_border_radius);
+}
+
+.ui5-button[desktop][active] .ui5-button-root:focus-within:before,
+.ui5-button[active] .ui5-button-root:focus-visible:before {
+	border-color: var(--_ui5_button_pressed_focused_border_color);
+}
+
+.ui5-button[design="Emphasized"][desktop] .ui5-button-root:focus-within:after,
+.ui5-button[design="Emphasized"] .ui5-button-root:focus-visible:after {
+	border-color: var(--_ui5_button_emphasized_focused_border_color);
+}
+
+.ui5-button[design="Emphasized"][desktop] .ui5-button-root:focus-within:before,
+.ui5-button[design="Emphasized"] .ui5-button-root:focus-visible:before {
+	content: "";
+	position: absolute;
+	box-sizing: border-box;
+	left: 0.0625rem;
+	top: 0.0625rem;
+	right: 0.0625rem;
+	bottom: 0.0625rem;
+	border: var(--_ui5_button_emphasized_focused_border_before);
+	border-radius: var(--_ui5_button_focused_border_radius);
+}
+
+.ui5-button-root::-moz-focus-inner {
+	border: 0;
+}
+
+bdi {
+	display: block;
+	white-space: inherit;
+	overflow: inherit;
+	text-overflow: inherit;
+}
+
+.ui5-button[ui5-button][active]:not([disabled]):not([non-interactive]) {
+	background-image: none;
+	background-color: var(--sapButton_Active_Background);
+	border-color: var(--sapButton_Active_BorderColor);
+	color: var(--sapButton_Active_TextColor);
+}
+
+.ui5-button[design="Positive"] {
+	background-color: var(--sapButton_Accept_Background);
+	border-color: var(--sapButton_Accept_BorderColor);
+	color: var(--sapButton_Accept_TextColor);
+}
+
+/*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
+.ui5-button[design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover,
+.ui5-button[design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered {
+	background-color: var(--sapButton_Accept_Hover_Background);
+	border-color: var(--sapButton_Accept_Hover_BorderColor);
+	color: var(--sapButton_Accept_Hover_TextColor);
+}
+
+.ui5-button[ui5-button][design="Positive"][active]:not([non-interactive]) {
+	background-color: var(--sapButton_Accept_Active_Background);
+	border-color: var(--sapButton_Accept_Active_BorderColor);
+	color: var(--sapButton_Accept_Active_TextColor);
+}
+
+.ui5-button[design="Negative"] {
+	background-color: var(--sapButton_Reject_Background);
+	border-color: var(--sapButton_Reject_BorderColor);
+	color: var(--sapButton_Reject_TextColor);
+}
+
+/*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
+.ui5-button[design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover,
+.ui5-button[design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered {
+	background-color: var(--sapButton_Reject_Hover_Background);
+	border-color: var(--sapButton_Reject_Hover_BorderColor);
+	color: var(--sapButton_Reject_Hover_TextColor);
+}
+
+.ui5-button[ui5-button][design="Negative"][active]:not([non-interactive]) {
+	background-color: var(--sapButton_Reject_Active_Background);
+	border-color: var(--sapButton_Reject_Active_BorderColor);
+	color: var(--sapButton_Reject_Active_TextColor);
+}
+
+.ui5-button[design="Attention"] {
+	background-color: var(--sapButton_Attention_Background);
+	border-color: var(--sapButton_Attention_BorderColor);
+	color: var(--sapButton_Attention_TextColor);
+}
+
+/*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
+.ui5-button[design="Attention"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover,
+.ui5-button[design="Attention"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered {
+	background-color: var(--sapButton_Attention_Hover_Background);
+	border-color: var(--sapButton_Attention_Hover_BorderColor);
+	color: var(--sapButton_Attention_Hover_TextColor);
+}
+
+.ui5-button[ui5-button][design="Attention"][active]:not([non-interactive]) {
+	background-color: var(--sapButton_Attention_Active_Background);
+	border-color: var(--sapButton_Attention_Active_BorderColor);
+	color: var(--sapButton_Attention_Active_TextColor);
+}
+
+.ui5-button[design="Emphasized"] {
+	background-color: var(--sapButton_Emphasized_Background);
+	border-color: var(--sapButton_Emphasized_BorderColor);
+	border-width: var(--_ui5_button_emphasized_border_width);
+	color: var(--sapButton_Emphasized_TextColor);
+	font-family: var(--sapFontBoldFamily );
+}
+
+/*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
+.ui5-button[design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover,
+.ui5-button[design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered {
+	background-color: var(--sapButton_Emphasized_Hover_Background);
+	border-color: var(--sapButton_Emphasized_Hover_BorderColor);
+	border-width: var(--_ui5_button_emphasized_border_width);
+	color: var(--sapButton_Emphasized_Hover_TextColor);
+}
+
+.ui5-button[ui5-button][design="Empasized"][active]:not([non-interactive]) {
+	background-color: var(--sapButton_Emphasized_Active_Background);
+	border-color: var(--sapButton_Emphasized_Active_BorderColor);
+	color: var(--sapButton_Emphasized_Active_TextColor);
+}
+
+.ui5-button[design="Emphasized"][desktop] .ui5-button-root:focus-within:after,
+.ui5-button[design="Emphasized"] .ui5-button-root:focus-visible:after {
+	border-color: var(--_ui5_button_emphasized_focused_border_color);
+	outline: none;
+}
+
+.ui5-button[design="Transparent"] {
+	background-color: var(--sapButton_Lite_Background);
+	color: var(--sapButton_Lite_TextColor);
+	border-color: var(--sapButton_Lite_BorderColor);
+}
+
+.ui5-button[ui5-button][design="Transparent"][active]:not([non-interactive]) {
+	background-color: var(--sapButton_Lite_Active_Background);
+	border-color: var(--sapButton_Lite_Active_BorderColor);
+	color: var(--sapButton_Active_TextColor);
+}
