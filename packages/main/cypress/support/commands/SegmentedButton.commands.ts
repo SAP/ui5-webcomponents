@@ -17,3 +17,16 @@ Cypress.Commands.add("ui5SegmentedButtonItemToggleSelect", { prevSubject: true }
 	cy.get<SegmentedButtonItem>("@segmentedButtonItem")
 		.should(arg2, "selected");
 });
+
+Cypress.Commands.add("ui5SegmentedButtonFocusFirstItem", { prevSubject: true }, subject => {
+	cy.wrap(subject)
+		.as("items")
+		.should("be.visible");
+
+	cy.get<SegmentedButtonItem>("@items")
+		.first()
+		.realClick();
+
+	cy.get<SegmentedButtonItem>("@items")
+		.should("be.focused");
+});

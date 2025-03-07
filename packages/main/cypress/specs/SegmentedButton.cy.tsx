@@ -4,12 +4,10 @@ import SegmentedButtonItem from "../../src/SegmentedButtonItem.js";
 describe("SegmentedButton general interaction tests", () => {
 	it("should have first item selected by default", () => {
 		cy.mount(
-			<>
-				<SegmentedButton>
-					<SegmentedButtonItem id="first">First</SegmentedButtonItem>
-					<SegmentedButtonItem id="second">Second</SegmentedButtonItem>
-				</SegmentedButton>
-			</>
+			<SegmentedButton>
+				<SegmentedButtonItem>First</SegmentedButtonItem>
+				<SegmentedButtonItem>Second</SegmentedButtonItem>
+			</SegmentedButton>
 		);
 
 		cy.get("[ui5-segmented-button]")
@@ -23,12 +21,10 @@ describe("SegmentedButton general interaction tests", () => {
 
 	it("should select second item with enter", () => {
 		cy.mount(
-			<>
-				<SegmentedButton>
-					<SegmentedButtonItem id="first">First</SegmentedButtonItem>
-					<SegmentedButtonItem id="second">Second</SegmentedButtonItem>
-				</SegmentedButton>
-			</>
+			<SegmentedButton>
+				<SegmentedButtonItem>First</SegmentedButtonItem>
+				<SegmentedButtonItem>Second</SegmentedButtonItem>
+			</SegmentedButton>
 		);
 
 		cy.get("[ui5-segmented-button]")
@@ -39,15 +35,7 @@ describe("SegmentedButton general interaction tests", () => {
 			.as("items");
 
 		cy.get<SegmentedButtonItem>("@items")
-			.first()
-			.realClick();
-
-		cy.get<SegmentedButtonItem>("@items")
-			.first()
-			.as("firstItem");
-
-		cy.get<SegmentedButtonItem>("@firstItem")
-			.should("be.focused");
+			.ui5SegmentedButtonFocusFirstItem();
 
 		cy.realPress("ArrowRight");
 
@@ -56,7 +44,9 @@ describe("SegmentedButton general interaction tests", () => {
 			.as("secondItem");
 
 		cy.get<SegmentedButtonItem>("@secondItem")
-			.should("be.focused")
+			.should("be.focused");
+
+		cy.get<SegmentedButtonItem>("@secondItem")
 			.should("not.have.attr", "selected");
 
 		cy.realPress("Enter");
@@ -67,12 +57,10 @@ describe("SegmentedButton general interaction tests", () => {
 
 	it("should select second item with space", () => {
 		cy.mount(
-			<>
-				<SegmentedButton>
-					<SegmentedButtonItem id="first">First</SegmentedButtonItem>
-					<SegmentedButtonItem id="second">Second</SegmentedButtonItem>
-				</SegmentedButton>
-			</>
+			<SegmentedButton>
+				<SegmentedButtonItem>First</SegmentedButtonItem>
+				<SegmentedButtonItem>Second</SegmentedButtonItem>
+			</SegmentedButton>
 		);
 
 		cy.get("[ui5-segmented-button]")
@@ -83,15 +71,7 @@ describe("SegmentedButton general interaction tests", () => {
 			.as("items");
 
 		cy.get<SegmentedButtonItem>("@items")
-			.first()
-			.realClick();
-
-		cy.get<SegmentedButtonItem>("@items")
-			.first()
-			.as("firstItem");
-
-		cy.get<SegmentedButtonItem>("@firstItem")
-			.should("be.focused");
+			.ui5SegmentedButtonFocusFirstItem();
 
 		cy.realPress("ArrowRight");
 
@@ -100,7 +80,9 @@ describe("SegmentedButton general interaction tests", () => {
 			.as("secondItem");
 
 		cy.get<SegmentedButtonItem>("@secondItem")
-			.should("be.focused")
+			.should("be.focused");
+
+		cy.get<SegmentedButtonItem>("@secondItem")
 			.should("not.have.attr", "selected");
 
 		cy.realPress("Space");
@@ -111,13 +93,11 @@ describe("SegmentedButton general interaction tests", () => {
 
 	it("should select last item with mouse", () => {
 		cy.mount(
-			<>
-				<SegmentedButton>
-					<SegmentedButtonItem id="first">First</SegmentedButtonItem>
-					<SegmentedButtonItem id="second">Second</SegmentedButtonItem>
-					<SegmentedButtonItem id="third">Third</SegmentedButtonItem>
-				</SegmentedButton>
-			</>
+			<SegmentedButton>
+				<SegmentedButtonItem>First</SegmentedButtonItem>
+				<SegmentedButtonItem>Second</SegmentedButtonItem>
+				<SegmentedButtonItem>Third</SegmentedButtonItem>
+			</SegmentedButton>
 		);
 
 		cy.get("[ui5-segmented-button]")
@@ -137,12 +117,10 @@ describe("SegmentedButton general interaction tests", () => {
 
 	it("should be able to select multple items in multiple selection mode", () => {
 		cy.mount(
-			<>
-				<SegmentedButton selection-mode="Multiple">
-					<SegmentedButtonItem selected id="first">First</SegmentedButtonItem>
-					<SegmentedButtonItem id="second">Second</SegmentedButtonItem>
-				</SegmentedButton>
-			</>
+			<SegmentedButton selectionMode="Multiple">
+				<SegmentedButtonItem selected={true}>First</SegmentedButtonItem>
+				<SegmentedButtonItem>Second</SegmentedButtonItem>
+			</SegmentedButton>
 		);
 
 		cy.get("[ui5-segmented-button]")
@@ -171,12 +149,10 @@ describe("SegmentedButton general interaction tests", () => {
 
 	it("should be able to deselect items in multiple selection mode", () => {
 		cy.mount(
-			<>
-				<SegmentedButton selection-mode="Multiple">
-					<SegmentedButtonItem selected id="first">First</SegmentedButtonItem>
-					<SegmentedButtonItem selected id="second">Second</SegmentedButtonItem>
-				</SegmentedButton>
-			</>
+			<SegmentedButton selectionMode="Multiple">
+				<SegmentedButtonItem selected={true}>First</SegmentedButtonItem>
+				<SegmentedButtonItem selected={true}>Second</SegmentedButtonItem>
+			</SegmentedButton>
 		);
 
 		cy.get("[ui5-segmented-button]")
@@ -209,9 +185,9 @@ describe("Accessibility", () => {
 	it("should have correct aria labels", () => {
 		cy.mount(
 			<>
-				<SegmentedButton selection-mode="Multiple">
-					<SegmentedButtonItem accessible-name="accessible text">First</SegmentedButtonItem>
-					<SegmentedButtonItem accessible-name-ref="reference">Second</SegmentedButtonItem>
+				<SegmentedButton selectionMode="Multiple">
+					<SegmentedButtonItem accessibleName="accessible text">First</SegmentedButtonItem>
+					<SegmentedButtonItem accessibleNameRef="reference">Second</SegmentedButtonItem>
 				</SegmentedButton>
 				<span id="reference">accessible ref text</span>
 			</>
