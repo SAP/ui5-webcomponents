@@ -178,12 +178,12 @@ class Icon extends UI5Element implements IIcon {
 
 	/**
 	 * Defines the mode of the component.
-	 * @default "Image"
+	 * @default "Decorative"
 	 * @public
 	 * @since 2.0.0
 	 */
 	@property()
-	mode: `${IconMode}` = "Image";
+	mode: `${IconMode}` = "Decorative";
 
 	/**
 	 * @private
