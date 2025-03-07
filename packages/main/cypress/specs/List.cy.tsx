@@ -2,7 +2,7 @@ import List from "../../src/List.js";
 import ListItemStandard from "../../src/ListItemStandard.js";
 
 describe("List Tests", () => {
-	it.only("tests 'loadMore' event fired upon infinite scroll", () => {
+	it("tests 'loadMore' event fired upon infinite scroll", () => {
 		cy.mount(
 			<List style="height: 300px;" growing="Scroll">
 				<ListItemStandard>Laptop Lenovo</ListItemStandard>
