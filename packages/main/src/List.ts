@@ -700,7 +700,7 @@ class List extends UI5Element {
 
 	hasGrowingComponent(): boolean {
 		if (this.growsOnScroll && this.scrollContainer) {
-			return this.scrollContainer.clientHeight > this.scrollContainer.scrollHeight;
+			return this.scrollContainer.clientHeight !== this.scrollContainer.scrollHeight;
 		}
 
 		return this.growsWithButton;
