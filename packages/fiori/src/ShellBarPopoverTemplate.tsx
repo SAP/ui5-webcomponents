@@ -36,6 +36,7 @@ export default function PopoversTemplate(this: ShellBar) {
 							type="Active"
 							onui5-_press={icon.press}
 							tooltip={icon.tooltip}
+							accessibilityAttributes={this.accInfo.search.accessibilityAttributes}
 						>
 							{icon.text}
 						</ListItemStandard>
