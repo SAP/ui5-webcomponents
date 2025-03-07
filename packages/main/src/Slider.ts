@@ -264,6 +264,18 @@ class Slider extends SliderBase implements IFormInputElement {
 		this._valueOnInteractionStart = undefined;
 	}
 
+	_onkeyup(e: KeyboardEvent) {
+		const isActionKey = SliderBase._isActionKey(e);
+
+		this._onKeyupBase();
+
+		if (isActionKey && this._valueOnInteractionStart !== this.value) {
+			this.fireDecoratorEvent("change");
+		}
+
+		this._valueOnInteractionStart = this.value;
+	}
+
 	_onInputFocusOut(e: FocusEvent) {
 		const tooltipInput = this.shadowRoot!.querySelector("[ui5-input]") as Input;
 
