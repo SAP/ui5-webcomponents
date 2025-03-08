@@ -30,6 +30,7 @@ export default function BusyIndicatorTemplate(this: BusyIndicator) {
 				<span
 					data-ui5-focus-redirect
 					tabindex={0}
+					role="none"
 					onFocusIn={this._redirectFocus}
 				></span>
 			)}

@@ -49,6 +49,7 @@ export default function SelectTemplate(this: Select) {
 
 				{!this.readonly &&
 					<Icon
+						part="icon"
 						name={slimArrowDown}
 						class={{
 							"inputIcon": true,

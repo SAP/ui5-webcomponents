@@ -1,10 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { customElement, property } from "@ui5/webcomponents-base/dist/decorators.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TableRowActionBaseTemplate from "./generated/templates/TableRowActionBaseTemplate.lit.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import TableRowActionBaseTemplate from "./TableRowActionBaseTemplate.js";
 import TableRowActionBaseStyles from "./generated/themes/TableRowActionBase.css.js";
-import Icon from "./Icon.js";
-import Button from "./Button.js";
 import type Menu from "./Menu.js";
 import type MenuItem from "./MenuItem.js";
 import type Table from "./Table.js";
@@ -24,10 +22,9 @@ let MenuItemConstructor: new () => MenuItem;
  * @public
  */
 @customElement({
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TableRowActionBaseStyles,
 	template: TableRowActionBaseTemplate,
-	dependencies: [Button, Icon],
 })
 
 abstract class TableRowActionBase extends UI5Element {
