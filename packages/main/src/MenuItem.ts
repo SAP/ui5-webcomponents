@@ -209,7 +209,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: MenuItemAccessibilityAttributes = {};
+	declare accessibilityAttributes: MenuItemAccessibilityAttributes;
 
 	/**
 	 * Indicates whether any of the element siblings have icon.
