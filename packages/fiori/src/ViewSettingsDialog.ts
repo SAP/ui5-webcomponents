@@ -34,6 +34,7 @@ import {
 	VSD_SORT_TOOLTIP,
 	VSD_FILTER_TOOLTIP,
 	VSD_RESET_BUTTON_ACTION,
+	VSD_SELECTED_FILTER_COUNT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -290,6 +291,10 @@ class ViewSettingsDialog extends UI5Element {
 				return this._currentSettings.filters[i];
 			}
 		}
+	}
+
+	get _selectedFiltersLabel() {
+		return ` ${ViewSettingsDialog.i18nBundle.getText(VSD_SELECTED_FILTER_COUNT)}`;
 	}
 
 	get shouldBuildSort() {
