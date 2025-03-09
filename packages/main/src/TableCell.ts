@@ -1,5 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import TableCellTemplate from "./TableCellTemplate.js";
 import TableCellStyles from "./generated/themes/TableCell.css.js";
 import TableCellBase from "./TableCellBase.js";
 import type TableRow from "./TableRow.js";
@@ -26,6 +27,7 @@ import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
  */
 @customElement({
 	tag: "ui5-table-cell",
+	renderer: jsxRenderer,
 	styles: [TableCellBase.styles, TableCellStyles],
 	template: TableCellTemplate,
 })
@@ -36,6 +38,12 @@ class TableCell extends TableCellBase {
 			this.style.justifyContent = this.horizontalAlign;
 		} else if (this._individualSlot) {
 			this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
+		}
+	}
+
+	injectHeaderNodes(ref: HTMLElement | null) {
+		if (ref && !ref.hasChildNodes()) {
+			ref.replaceChildren(...this._popinHeaderNodes);
 		}
 	}
 

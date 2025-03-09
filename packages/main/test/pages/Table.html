@@ -41,9 +41,9 @@
 				<ui5-table-header-cell-action-ai slot="action" id="ai1"></ui5-table-header-cell-action-ai>
 			</ui5-table-header-cell>
 			<ui5-table-header-cell id="supplierCol" width="400px">Supplier</ui5-table-header-cell>
-			<ui5-table-header-cell id="dimensionsCol" importance="-1" min-width="300px" popin-hidden>Dimensions</ui5-table-header-cell>
-			<ui5-table-header-cell id="weightCol" popin-text="Weight">Weight</ui5-table-header-cell>
-			<ui5-table-header-cell id="priceCol"  min-width="220px" horizontal-align="End" popin-text="Price" sort-indicator="Ascending" popin-hidden>
+			<ui5-table-header-cell id="dimensionsCol" importance="-1" min-width="300px" popin-hidden><div style="display: flex; flex-direction: column;"><span>Dimensions</span><span>in cm</span></div></ui5-table-header-cell>
+			<ui5-table-header-cell id="weightCol" popin-text="Weight" popin-hidden>Weight</ui5-table-header-cell>
+			<ui5-table-header-cell id="priceCol"  min-width="220px" horizontal-align="End" popin-text="Price" sort-indicator="Ascending">
 				<ui5-label wrapping-type="None">This is a long column header for the Price column</ui5-label>
 				<ui5-table-header-cell-action-ai slot="action" id="ai2"></ui5-table-header-cell-action-ai>
 			</ui5-table-header-cell>

@@ -150,14 +150,6 @@ class Popover extends Popup {
 	allowTargetOverlap = false;
 
 	/**
-	 * Defines whether the content is scrollable.
-	 * @default false
-	 * @private
-	 */
-	@property({ type: Boolean })
-	disableScrolling = false;
-
-	/**
 	 * Sets the X translation of the arrow
 	 * @private
 	 */

@@ -152,5 +152,181 @@ describe("Popover interaction", () => {
 			// assert
 			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").should("be.visible");
 		});
+
+		it("tests clicking outside the popover when 'mousedown' event propagation is stopped", () => {
+			cy.mount(
+				<>
+					<button id="opener">Open</button>
+					<Popover id="pop" open={true} opener="opener" placement="Bottom">
+						<span>popover content</span>
+					</Popover>
+					<button id="btn">Stops mousedown propagation</button>
+				</>
+			);
+
+			cy.get("#pop").should("be.visible");
+			cy.get("#btn").then(btn => {
+				btn.get(0).addEventListener("mousedown", event => {
+					event.stopPropagation();
+				});
+			});
+
+			// act
+			cy.get("#btn").realMouseDown();
+
+			// assert
+			cy.get("#pop").should("not.be.visible");
+		});
+	});
+});
+
+describe("Focusing", () => {
+	it("tests no focusable elements, but content is scrolling", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open</Button>
+				<Popover id="popoverId"
+							 style="width: 10rem; height: 10rem;"
+							 opener="btnOpen">
+					<div>
+						Note: The content of the prop will be rendered into a by assigning the
+						respective slot attribute (slot="footer"). Since you can't change the
+						DOM order of slots when declaring them within a prop, it might prove
+						beneficial to manually mount them as part of the component's children,
+						especially when facing problems with the reading order of screen
+						readers. Note: When passing a custom React component to this prop, you
+						have to make sure your component reads the slot prop and appends it to
+						the most outer element of your component. Learn more about it here.
+					</div>
+				</Popover>
+			</>
+		);
+
+		// act
+		cy.get("#popoverId").invoke("prop", "open", "true");
+
+		cy.get("#popoverId")
+			.shadow()
+			.find(".ui5-popup-content")
+			.should("be.focused");
+	});
+
+	it("tests first element is keyboard focusable scroll container", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open</Button>
+				<Popover id="popoverId"
+						 opener="btnOpen">
+					<div id="innerContent" style="width: 10rem; height: 10rem; overflow-y: auto;">
+						Note: The content of the prop will be rendered into a by assigning the
+						respective slot attribute (slot="footer"). Since you can't change the
+						DOM order of slots when declaring them within a prop, it might prove
+						beneficial to manually mount them as part of the component's children,
+						especially when facing problems with the reading order of screen
+						readers. Note: When passing a custom React component to this prop, you
+						have to make sure your component reads the slot prop and appends it to
+						the most outer element of your component. Learn more about it here.
+					</div>
+					<Button>Button</Button>
+				</Popover>
+			</>
+		);
+
+		// act
+		cy.get("#popoverId").invoke("prop", "open", "true");
+
+		cy.get("#innerContent")
+			.should("be.focused");
+	});
+});
+
+describe("Events", () => {
+	it("before-open", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpenPopover">Open</Button>
+				<Popover id="popoverId" opener="btnOpenPopover">
+					<div data-sap-ui-fastnavgroup="true">
+						<button id="first">First group focusable</button>
+					</div>
+					<div data-sap-ui-fastnavgroup="true">
+						<button id="second">Second group focusable</button>
+					</div>
+				</Popover>
+			</>
+		);
+
+		cy.get("#popoverId")
+			.should("not.be.visible");
+
+		const preventDefault = (e : Event) => {
+			e.preventDefault();
+		};
+
+		cy.get("#popoverId").then($dialog => {
+			$dialog.get(0).addEventListener("before-open", preventDefault);
+		});
+
+		cy.get("#popoverId")
+			.invoke("prop", "open", true);
+
+		cy.get("#popoverId")
+			.should("not.be.visible");
+
+		cy.get("#popoverId").then($popover => {
+			$popover.get(0).removeEventListener("before-open", preventDefault);
+		});
+
+		cy.get("#popoverId")
+			.invoke("prop", "open", true);
+
+		cy.get("#popoverId")
+			.should("be.visible");
+	});
+
+	it("before-close", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpenPopover">Open</Button>
+				<Popover id="popoverId" opener="btnOpenPopover">
+					<div data-sap-ui-fastnavgroup="true">
+						<button id="first">First group focusable</button>
+					</div>
+					<div data-sap-ui-fastnavgroup="true">
+						<button id="second">Second group focusable</button>
+					</div>
+				</Popover>
+			</>
+		);
+
+		cy.get("#popoverId")
+			.invoke("prop", "open", true);
+
+		cy.get("#popoverId")
+			.should("be.visible");
+
+		const preventDefault = (e : Event) => {
+			e.preventDefault();
+		};
+
+		cy.get("#popoverId").then($popover => {
+			$popover.get(0).addEventListener("before-close", preventDefault);
+		});
+
+		cy.get("#popoverId")
+			.invoke("prop", "open", false);
+
+		cy.get("#popoverId")
+			.should("be.visible");
+
+		cy.get("#popoverId").then($popover => {
+			$popover.get(0).removeEventListener("before-close", preventDefault);
+		});
+
+		cy.get("#popoverId")
+			.invoke("prop", "open", false);
+
+		cy.get("#popoverId")
+			.should("not.be.visible");
 	});
 });
