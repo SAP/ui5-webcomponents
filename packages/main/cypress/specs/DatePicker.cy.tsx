@@ -675,6 +675,11 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetFirstDisplayedDate()
 			.invoke("attr", "data-sap-timestamp")
 			.should("include", timestamp_28_Nov_9999);
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetNextButton()
+			.invoke("attr", "class")
+			.should("include", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("daypicker extreme values min", () => {
@@ -690,6 +695,11 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetFirstDisplayedDate()
 			.invoke("attr", "data-sap-timestamp")
 			.should("include", timestamp_31_Dec_0000);
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetPreviousButton()
+			.invoke("attr", "class")
+			.should("include", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("daypicker prev extreme values min", () => {
@@ -709,6 +719,11 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetFirstDisplayedDate()
 			.invoke("attr", "data-sap-timestamp")
 			.should("include", timestamp_31_Dec_0000);
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetPreviousButton()
+			.invoke("attr", "class")
+			.should("include", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("daypicker next extreme values max", () => {
@@ -728,6 +743,11 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetFirstDisplayedDate()
 			.invoke("attr", "data-sap-timestamp")
 			.should("include", timestamp_28_Nov_9999);
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetNextButton()
+			.invoke("attr", "class")
+			.should("include", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("monthpicker next extreme values max", () => {
@@ -757,6 +777,11 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetYearButton()
 			.invoke("text")
 			.should("include", "9999");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetNextButton()
+			.invoke("attr", "class")
+			.should("include", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("monthpicker prev extreme values min", () => {
@@ -786,6 +811,11 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetYearButton()
 			.invoke("text")
 			.should("include", "0001");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetPreviousButton()
+			.invoke("attr", "class")
+			.should("include", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("yearpicker extreme values max", () => {
@@ -803,6 +833,11 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetFirstDisplayedYear()
 			.invoke("text")
 			.should("include", "9980");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetNextButton()
+			.invoke("attr", "class")
+			.should("include", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("yearpicker extreme values min", () => {
@@ -820,6 +855,11 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetFirstDisplayedYear()
 			.invoke("text")
 			.should("include", "0001");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetPreviousButton()
+			.invoke("attr", "class")
+			.should("include", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("yearpicker prev page extreme values min", () => {
@@ -846,6 +886,11 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetFirstDisplayedYear()
 			.invoke("text")
 			.should("include", "0001");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetPreviousButton()
+			.invoke("attr", "class")
+			.should("include", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("yearpicker next page extreme values max", () => {
@@ -872,6 +917,11 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetFirstDisplayedYear()
 			.invoke("text")
 			.should("include", "9980");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetNextButton()
+			.invoke("attr", "class")
+			.should("include", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("yearpicker click extreme values max", () => {
@@ -904,7 +954,7 @@ describe("Date Picker Tests", () => {
 			.should("include", "9976");
 	});
 
-	it("yearpicker click extreme values min above 10", () => {
+	it("yearpicker click extreme values min year above 10", () => {
 		cy.mount(<DatePicker value="Jan 1, 0012"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -921,7 +971,7 @@ describe("Date Picker Tests", () => {
 			.should("include", "0004");
 	});
 
-	it("yearpicker click extreme values min below 10", () => {
+	it("yearpicker click extreme values min year below 10", () => {
 		cy.mount(<DatePicker value="Jan 1, 0004"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
