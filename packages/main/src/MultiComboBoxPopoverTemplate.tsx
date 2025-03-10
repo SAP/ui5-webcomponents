@@ -28,7 +28,7 @@ export default function MultiComboBoxPopoverTemplate(this: MultiComboBox) {
 			onOpen={this._afterOpen}
 			onFocusOut={this._onPopoverFocusOut}
 			accessibleName={this._popupLabel}
-			open={this._open}
+			open={this.open}
 			opener={this}
 		>
 			{this._isPhone && <>
