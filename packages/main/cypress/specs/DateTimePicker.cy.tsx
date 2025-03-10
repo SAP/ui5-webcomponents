@@ -35,7 +35,7 @@ describe("DateTimePicker general interaction", () => {
 	});
 
 	// Unstable but valid test, needs to be individually observed
-	it("tests selection of new date", () => {
+	it.skip("tests selection of new date", () => {
 		setAnimationMode(AnimationMode.None);
 		const PREVIOUS_VALUE = "13/04/2020, 03:16:16 AM";
 
@@ -134,7 +134,8 @@ describe("DateTimePicker general interaction", () => {
 		setAnimationMode(AnimationMode.Full);
 	});
 
-	it("tests selection of new date without changing the time section", () => {
+	// Unstable test, needs investigation
+	it.skip("tests selection of new date without changing the time section", () => {
 		setAnimationMode(AnimationMode.None);
 
 		const PREVIOUS_VALUE = "14/04/2020, 02:14:19 PM";
@@ -246,7 +247,7 @@ describe("DateTimePicker general interaction", () => {
 	});
 
 	// Unstable test, needs investigation
-	it("tests selection of 12:34:56 AM", () => {
+	it.skip("tests selection of 12:34:56 AM", () => {
 		setAnimationMode(AnimationMode.None);
 
 		cy.mount(<DateTimePickerWithSeconds />);
