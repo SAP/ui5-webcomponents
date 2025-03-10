@@ -56,3 +56,63 @@ describe("Value State", () => {
 			.should("not.exist");
 	});
 });
+
+describe("Event firing", () => {
+	it("tests if open event is fired correctly", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Bulgaria"></MultiComboBoxItem>
+				<MultiComboBoxItem text="England"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("ui5-multi-combobox")
+			.as("multiComboBox");
+
+		cy.get("@multiComboBox")
+			.then($mcb => {
+				$mcb[0].addEventListener("focusin", () => {
+					$mcb[0].setAttribute("open", "true");
+				});
+			});
+
+		cy.get("@multiComboBox")
+			.then($mcb => {
+				$mcb[0].addEventListener("ui5-open", cy.stub().as("mcbOpened"));
+			});
+
+		cy.get("@multiComboBox")
+			.shadow()
+			.find("input")
+			.as("input");
+
+		cy.get("@input")
+			.click();
+
+		cy.get("@multiComboBox")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.as("respPopover");
+
+		cy.get("@respPopover")
+			.should("have.attr", "open");
+
+		cy.get("@mcbOpened")
+			.should("have.been.calledOnce");
+
+		cy.get("@multiComboBox")
+			.shadow()
+			.find("ui5-icon")
+			.as("icon");
+
+		cy.get("@icon")
+			.click();
+
+		cy.get("@icon")
+			.click();
+
+		cy.get("@mcbOpened")
+			.should("have.been.calledTwice");
+	});
+});

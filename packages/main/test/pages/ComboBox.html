@@ -308,13 +308,13 @@
 		<ui5-combobox id="dynamic-items">
 			<ui5-cb-item text="Hello World"></ui5-cb-item>
 		</ui5-combobox>
-	
+
 		<ui5-button id="add-items-btn">Start adding items</ui5-button>
-	
+
 		<script>
 			const addItemsBtn = document.getElementById("add-items-btn");
 			const dynamicItemsCb = document.getElementById("dynamic-items");
-	
+
 			addItemsBtn.addEventListener("click", () => {
 				setInterval(() => {
 					const item = document.createElement("ui5-cb-item");
@@ -389,7 +389,7 @@
 
 			// remove busy state
 			event.target.loading = false;
-			
+
 			// load the items once or turn off filtering
 		}, { once: true });
 	</script>
@@ -483,6 +483,10 @@
 
 		document.getElementById("value-set-btn").addEventListener("click", function (event) {
 			document.getElementById("combo").value = "new value";
+		});
+
+		document.getElementById("combo").addEventListener("focusin", () => {
+			document.getElementById("combo").open = true;
 		});
 
 		document.getElementById("combo-focus").addEventListener("click", function () {
