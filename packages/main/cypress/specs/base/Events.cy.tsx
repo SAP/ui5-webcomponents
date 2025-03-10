@@ -13,8 +13,15 @@ import Menu from "../../../src/Menu.js";
 import MultiComboBox from "../../../src/MultiComboBox.js";
 import MultiComboBoxItem from "../../../src/MultiComboBoxItem.js";
 import CheckBox from "../../../src/CheckBox.js";
+import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 
 describe("Event bubbling", () => {
+	before(() => {
+		cy.wrap({ setAnimationMode })
+			.invoke("setAnimationMode", AnimationMode.None);
+	})
+
 	it("test bubbling events", () => {
 		cy.mount(
 			<div id="app">
@@ -81,7 +88,9 @@ describe("Event bubbling", () => {
 			.realClick();
 
 		cy.get("@input")
-			.realType("a");
+			.should("be.focused");
+
+		cy.realType("a");
 
 		cy.get("@input")
 			.find("[ui5-suggestion-item]")

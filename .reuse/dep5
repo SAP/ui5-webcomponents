@@ -29,7 +29,6 @@ Files: *
 Copyright: 2020 SAP SE or an SAP affiliate company and OpenUI5 contributors
 License: Apache-2.0
 
-
 Files: packages/base/dist/sap/ui/thirdparty/caja-html-sanitizer.js
 Copyright: Google Inc.
 License: Apache-2.0
@@ -53,4 +52,7 @@ License: MIT
 
 Files: packages/base/src/thirdparty/preact/*
 Copyright: 2015-present Jason Miller
+License: MIT
+
+Files: packages/cypress-ct-ui5-webc/*
 License: MIT
