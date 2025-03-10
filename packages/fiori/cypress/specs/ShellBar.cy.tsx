@@ -35,7 +35,7 @@ describe("Responsiveness", () => {
 			<Button icon={navBack} slot="startButton" id="start-button"></Button>
 
 			<ShellBarItem id="disc" icon={activities} text="Disconnect"></ShellBarItem>
-			<ShellBarItem id="call" icon={sysHelp} text="Incoming Calls"></ShellBarItem>
+			<ShellBarItem id="call" icon={sysHelp} text="Incoming Calls" stable-dom-ref="call"></ShellBarItem>
 
 			<Input placeholder="Instructions" slot="searchField" showSuggestions={true} valueState="Information">
 				<div slot="valueStateMessage">Instructions</div>
@@ -100,6 +100,9 @@ describe("Responsiveness", () => {
 
 		cy.get("#shellbar")
 			.as("shellbar");
+	});
+	afterEach(() => {
+		cy.viewport(1920, 1080);
 	});
 
 	it("tests XL Breakpoint 1920px", () => {
@@ -294,5 +297,22 @@ describe("Responsiveness", () => {
 			.shadow()
 			.find(".ui5-shellbar-overflow-button")
 			.should("be.hidden");
+	});
+
+	it("Test accessibility attributes on custom action buttons", () => {
+		cy.mount(basicTemplate()).as("html");
+
+		cy.get("@shellbar")
+			.shadow()
+			.find<Button>(`[data-ui5-stable="call"]`)
+			.as("call-button")
+			.then($el => {
+				$el.get(0).accessibilityAttributes = { "hasPopup": "dialog", "expanded": "true" };
+			});
+		cy.get("@call-button")
+			.shadow()
+			.find("button")
+			.should("have.attr", "aria-expanded", "true")
+			.should("have.attr", "aria-hasPopup", "dialog");
 	});
 });
