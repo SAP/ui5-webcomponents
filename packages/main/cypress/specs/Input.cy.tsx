@@ -4,7 +4,6 @@ import SuggestionItemCustom from "../../src/SuggestionItemCustom.js";
 import SuggestionItemGroup from "../../src/SuggestionItemGroup.js";
 import Dialog from "../../src/Dialog.js";
 import Button from "../../src/Button.js";
-import Icon from "../../src/Icon.js";
 
 import add from "@ui5/webcomponents-icons/dist/add.js";
 
@@ -135,6 +134,7 @@ describe("Input Tests", () => {
 		cy.mount(
 			<Input id="input"></Input>
 		);
+
 		cy.document().then(doc => {
 			const input = doc.querySelector<Input>("#input")!;
 			const icon = document.createElement("ui5-icon");
