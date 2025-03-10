@@ -145,6 +145,9 @@ describe("Input Tests", () => {
 			input.addEventListener("focus", () => {
 				input.appendChild(icon);
 			});
+			input.addEventListener("focusout", () => {
+				input.removeChild(icon);
+			});
 		});
 
 		cy.get("[ui5-input]")
