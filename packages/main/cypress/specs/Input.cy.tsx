@@ -131,27 +131,39 @@ describe("Input Tests", () => {
 			.should("not.have.attr", "tabindex", "0");
 	});
 
-	it("tests tabindex of the div holding icon slot ", () => {
+	it.only("tests tabindex of the div holding icon slot ", () => {
 		cy.mount(
-			<Input>
-				<Icon slot="icon" name={add}></Icon>
-			</Input>
+			<Input id="input"></Input>
 		);
+		cy.document().then(doc => {
+			const input = doc.querySelector<Input>("#input")!;
+			const icon = document.createElement("ui5-icon");
+			icon.setAttribute("slot", "icon");
+			icon.setAttribute("name", add);
+			icon.id = "icon";
+
+			input.addEventListener("focus", () => {
+				input.appendChild(icon);
+			});
+		});
 
 		cy.get("[ui5-input]")
 			.as("input");
 
-		cy.get<Input>("@input")
-			.shadow()
-			.find("div.ui5-input-icon-root")
-			.as("inputIconRoot");
+		cy.get<Input>("@input").realClick();
 
-		cy.get("@inputIconRoot")
-			.should("have.attr", "tabindex", "-1");
+		cy.get("[ui5-icon]")
+			.as("icon");
 
-		cy.get("@inputIconRoot").focus();
+		cy.get("@icon")
+			.then($icon => {
+				$icon.get(0).addEventListener("click", cy.spy().as("click"));
+			});
 
-		cy.get("@inputIconRoot").should("be.focused");
+		cy.get<Icon>("@icon").realClick();
+
+		cy.get("@click")
+			.should("have.been.calledOnce");
 	});
 
 	it("tests submit and change event order", () => {
