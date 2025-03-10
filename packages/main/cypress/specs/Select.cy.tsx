@@ -100,7 +100,11 @@ describe("Select - value handling", () => {
 			</Select>
 		);
 
-		// assert "Option 2" is selected after dynamic value change
+		// DISCUSSION:
+		// the UI shows "Option 1" as selected, but the value is still "option3"
+		cy.get("#sel")
+			.should("have.attr", "value", "option3")
+			.invoke("prop", "value", "option3");
 		cy.get("#opt1").should("have.attr", "selected");
 	});
 });
