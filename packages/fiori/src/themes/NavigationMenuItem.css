@@ -1,11 +1,13 @@
 :host::part(native-li) {
 	padding-left: 0.5rem;
 	width: auto;
+	border-radius: inherit;
 }
+
 :host::part(native-li)::after {
 	border-radius: 0.375rem;
 	inset: 0;
- }
+}
 
 :host {
 	display: flex;
@@ -18,8 +20,12 @@
 	border-radius: 0.375rem;
 	transition: var(--_ui5_side_navigation_item_transition);
 	color: var(--sapList_TextColor);
-	font-weight: bold;
 	font-size: var(--sapFontSize);
+	font-family: var(--_ui5_side_navigation_item_font_family);
+}
+
+::slotted([ui5-navigation-menu-item]) {
+	font-family: "72override", var(--sapFontFamily);
 }
 
 :host([design="Action"]) {
@@ -32,6 +38,7 @@
 
 :host::part(content) {
 	color: inherit;
+	font-family: inherit;
 }
 
 :host .ui5-navmenu-item-link {
@@ -63,4 +70,12 @@
 
 :host([focused]):not([active]) {
 	background: none;
+}
+
+.ui5-menu-rp {
+	padding: var(--_ui5_side_navigation_popup_padding);
+}
+
+::slotted([ui5-navigation-menu-item]:not(:last-of-type)) {
+	margin-block-end: var(--_ui5_side_navigation_item_bottom_margin_in_popup);
 }

@@ -1,3 +1,7 @@
+:host {
+	display: block;
+}
+
 .ui5-sn-item-ul {
 	margin: 0;
 	padding: 0;
@@ -19,7 +23,9 @@
 	background-color: var(--sapList_Background);
 	border-radius: var(--_ui5_side_navigation_item_border_radius);
 	transition: var(--_ui5_side_navigation_item_transition);
+}
 
+:host(:not([in-popover])) .ui5-sn-item {
 	margin-block-end: var(--_ui5_side_navigation_item_bottom_margin);
 }
 
