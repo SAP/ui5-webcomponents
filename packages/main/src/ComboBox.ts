@@ -489,6 +489,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_focusin(e: FocusEvent) {
 		this.focused = true;
 		this._autocomplete = false;
+		this._lastValue = this.value;
 
 		!isPhone() && (e.target as HTMLInputElement).setSelectionRange(0, this.value.length);
 	}
