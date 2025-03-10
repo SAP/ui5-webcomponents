@@ -937,7 +937,7 @@ class Select extends UI5Element implements IFormElement {
 	get selectOptions(): Array<IOption> {
 		const menu = this._getSelectMenu();
 		if (menu) {
-			return menu.options;
+			return Array.from(menu.children) as Array<IOption>;
 		}
 		return this._filteredItems;
 	}
