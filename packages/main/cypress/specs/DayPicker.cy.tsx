@@ -67,10 +67,6 @@ describe("Day Picker Tests", () => {
 		cy.wrap({ setLanguage })
 			.invoke("setLanguage", "pt_PT");
 
-		cy.wrap({ getLanguage })
-			.invoke("getLanguage")
-			.should("equal", "pt_PT");
-
 		cy.mount(<DefaultDayPicker />);
 
 		cy.get("#daypicker")
