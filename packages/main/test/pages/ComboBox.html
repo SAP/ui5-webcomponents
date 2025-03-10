@@ -359,6 +359,21 @@
 			});
 		</script>
 	</div>
+	<div class="demo-section">
+		<span>Open ComboBox on focus</span>
+		<ui5-combobox id="comboFocus" class="combobox2auto" value="Bulgaria" accessible-name-ref="countryLabel">
+			<ui5-cb-item text="Algeria"></ui5-cb-item>
+			<ui5-cb-item text="Argentina"></ui5-cb-item>
+			<ui5-cb-item text="Bulgaria"></ui5-cb-item>
+			<ui5-cb-item text="Canada"></ui5-cb-item>
+			<ui5-cb-item text="Chile"></ui5-cb-item>
+		</ui5-combobox>
+		<script>
+			document.getElementById("comboFocus").addEventListener("focusin", () => {
+				document.getElementById("comboFocus").open = true;
+			});
+		</script>
+	</div>
 
 	<script type="module">
 		document.getElementById("lazy").addEventListener("ui5-input", async event => {
@@ -483,10 +498,6 @@
 
 		document.getElementById("value-set-btn").addEventListener("click", function (event) {
 			document.getElementById("combo").value = "new value";
-		});
-
-		document.getElementById("combo").addEventListener("focusin", () => {
-			document.getElementById("combo").open = true;
 		});
 
 		document.getElementById("combo-focus").addEventListener("click", function () {
