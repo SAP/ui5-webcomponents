@@ -1,7 +1,7 @@
 {
   "name": "@ui5/cypress-internal",
   "version": "0.0.0",
-  "description": "Example Framework Definition adapter for Cypress Component Testing",
+  "description": "Common testing configuration used internally inside the monorepo",
   "private": true,
   "scripts": {
     "build": "tsc && node ./src/copy.js",
