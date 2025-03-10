@@ -62,7 +62,7 @@ describe("Day Picker Tests", () => {
 			.should("eq", "Sun");
 	});
 
-	it("Display the day name as 'D'", () => {
+	it("Day names are correctly displayed when length is more than 3", () => {
 		// Set configuration first
 		cy.wrap({ setLanguage })
 			.invoke("setLanguage", "pt_PT");
