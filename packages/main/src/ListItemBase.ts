@@ -5,7 +5,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
-import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isEnter,
@@ -13,7 +12,6 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
@@ -23,6 +21,16 @@ type ListItemBasePressEventDetail = {
 	item: ListItemBase,
 	selected?: boolean,
 	key?: string,
+}
+
+type ListItemBaseForwardAfterEventDetail = {
+	item: ListItemBase,
+	target: HTMLElement,
+}
+
+type ListItemBaseForwardBeforeEventDetail = {
+	item: ListItemBase,
+	target: HTMLElement,
 }
 
 /**
@@ -59,8 +67,8 @@ class ListItemBase extends UI5Element implements ITabbable {
 		"request-tabindex-change": FocusEvent,
 		"_press": ListItemBasePressEventDetail,
 		"_focused": FocusEvent,
-		"forward-after": void,
-		"forward-before": void,
+		"forward-after": ListItemBaseForwardAfterEventDetail,
+		"forward-before": ListItemBaseForwardBeforeEventDetail,
 	}
 	/**
 	 * Defines the selected state of the component.
@@ -182,29 +190,13 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_handleTabNext(e: KeyboardEvent) {
-		if (this.shouldForwardTabAfter()) {
-			if (!this.fireDecoratorEvent("forward-after")) {
-				e.preventDefault();
-			}
+		if (!this.fireDecoratorEvent("forward-after", { item: this, target: e.target as HTMLElement })) {
+			e.preventDefault();
 		}
 	}
 
 	_handleTabPrevious(e: KeyboardEvent) {
-		const target = e.target as HTMLElement;
-
-		if (this.shouldForwardTabBefore(target)) {
-			this.fireDecoratorEvent("forward-before");
-		}
-	}
-
-	/**
-	 * Determines if th current list item either has no tabbable content or
-	 * [Tab] is performed onto the last tabbale content item.
-	 */
-	shouldForwardTabAfter() {
-		const aContent = getTabbableElements(this.getFocusDomRef()!);
-
-		return aContent.length === 0 || (aContent[aContent.length - 1] === getActiveElement());
+		this.fireDecoratorEvent("forward-before", { item: this, target: e.target as HTMLElement });
 	}
 
 	/**
@@ -240,13 +232,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	get _effectiveTabIndex() {
-		if (!this._focusable) {
-			return -1;
-		}
-		if (this.selected) {
-			return 0;
-		}
-		return this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined;
+		return -1;
 	}
 }
 
@@ -254,4 +240,6 @@ export default ListItemBase;
 
 export type {
 	ListItemBasePressEventDetail,
+	ListItemBaseForwardAfterEventDetail,
+	ListItemBaseForwardBeforeEventDetail,
 };
