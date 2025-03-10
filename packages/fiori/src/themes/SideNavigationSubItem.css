@@ -4,7 +4,6 @@
 	color: var(--sapList_TextColor);
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
-	font-weight: normal;
 }
 
 .ui5-sn-item-level2:not(.ui5-sn-item-has-icon) {
