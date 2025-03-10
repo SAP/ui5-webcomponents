@@ -33,9 +33,22 @@ function renderButton(this: Select) {
 	return (
 		<>
 			<Button
-				data-sap-focus-ref
 				class="ui5-select-icon"
-				icon={this.icon} />
+				icon={this.icon}
+				data-sap-focus-ref
+				aria-haspopup="listbox"
+				aria-label={this.ariaLabelText}
+				aria-describedby={this.valueStateTextId}
+				disabled={this.isDisabled}
+				aria-required={this.required}
+				aria-readonly={this.readonly}
+				aria-expanded={this._isPickerOpen}
+				aria-roledescription={this._ariaRoleDescription}
+				onKeyDown={this._onkeydown}
+				onKeyPress={this._handleKeyboardNavigation}
+				onKeyUp={this._onkeyup}
+				onFocusIn={this._onfocusin}
+				onFocusOut={this._onfocusout} />
 		</>
 	);
 }

@@ -463,6 +463,8 @@ class AvatarGroup extends UI5Element {
 			if (index !== this._itemsCount - 1 || this._customOverflowButton) {
 				// based on RTL the browser automatically sets left or right margin to avatars
 				avatar.style.marginInlineEnd = offsets[avatar.effectiveSize][this.type];
+			} else {
+				avatar.style.marginInlineEnd = "";
 			}
 		});
 	}
