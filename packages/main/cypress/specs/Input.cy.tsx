@@ -5,8 +5,10 @@ import SuggestionItemGroup from "../../src/SuggestionItemGroup.js";
 import Dialog from "../../src/Dialog.js";
 import Button from "../../src/Button.js";
 
+import add from "@ui5/webcomponents-icons/dist/add.js";
+
 describe("Input Tests", () => {
-	it("tets input event prevention", () => {
+	it("test input event prevention", () => {
 		cy.mount(
 			<Input></Input>
 		);
@@ -126,6 +128,45 @@ describe("Input Tests", () => {
 			.shadow()
 			.find("div")
 			.should("not.have.attr", "tabindex", "0");
+	});
+
+	it("tests tabindex of the div holding icon slot ", () => {
+		cy.mount(
+			<Input id="input"></Input>
+		);
+
+		cy.document().then(doc => {
+			const input = doc.querySelector<Input>("#input")!;
+			const icon = document.createElement("ui5-icon");
+			icon.setAttribute("slot", "icon");
+			icon.setAttribute("name", add);
+			icon.id = "icon";
+
+			input.addEventListener("focus", () => {
+				input.appendChild(icon);
+			});
+			input.addEventListener("focusout", () => {
+				input.removeChild(icon);
+			});
+		});
+
+		cy.get("[ui5-input]")
+			.as("input");
+
+		cy.get<Input>("@input").realClick();
+
+		cy.get("[ui5-icon]")
+			.as("icon");
+
+		cy.get("@icon")
+			.then($icon => {
+				$icon[0].addEventListener("click", cy.spy().as("click"));
+			});
+
+		cy.get("@icon").realClick();
+
+		cy.get("@click")
+			.should("have.been.calledOnce");
 	});
 
 	it("tests submit and change event order", () => {
