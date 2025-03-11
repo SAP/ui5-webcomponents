@@ -7,7 +7,7 @@ import slimArrowRightIcon from "@ui5/webcomponents-icons/dist/slim-arrow-right.j
 import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
-import { isIListItemSelectable } from "./List.js";
+import { isIListItemSelectable } from "./ListItemBase.js";
 
 export type ListItemHooks = {
 	listItemPreContent: JsxTemplate

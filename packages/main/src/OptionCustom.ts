@@ -9,7 +9,7 @@ import OptionCustomTemplate from "./OptionCustomTemplate.js";
 
 // Styles
 import optionBaseCss from "./generated/themes/OptionBase.css.js";
-import type { IListItemSelectable } from "./List.js";
+import type { IListItemSelectable } from "./ListItemBase.js";
 
 /**
  * @class

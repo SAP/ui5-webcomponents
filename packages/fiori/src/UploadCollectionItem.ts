@@ -38,7 +38,7 @@ import UploadCollectionItemTemplate from "./UploadCollectionItemTemplate.js";
 
 // Styles
 import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css.js";
-import type { IListItemSelectable } from "@ui5/webcomponents/dist/List.js";
+import type { IListItemSelectable } from "@ui5/webcomponents/dist/ListItemBase.js";
 
 /**
  * @class

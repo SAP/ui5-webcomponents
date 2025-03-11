@@ -11,7 +11,7 @@ import OptionTemplate from "./OptionTemplate.js";
 import optionBaseCss from "./generated/themes/OptionBase.css.js";
 import listItemIconCss from "./generated/themes/ListItemIcon.css.js";
 import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText.css.js";
-import type { IListItemSelectable } from "./List.js";
+import type { IListItemSelectable } from "./ListItemBase.js";
 
 /**
  * @class

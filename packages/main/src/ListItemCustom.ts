@@ -3,12 +3,12 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import type { IListItemSelectable } from "./ListItemBase.js";
 import ListItem from "./ListItem.js";
 import ListItemCustomTemplate from "./ListItemCustomTemplate.js";
 
 // Styles
 import ListItemCustomCss from "./generated/themes/ListItemCustom.css.js";
-import type { IListItemSelectable } from "./List.js";
 
 /**
  * @class

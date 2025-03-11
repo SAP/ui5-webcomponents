@@ -49,6 +49,7 @@ import type ListItemBase from "./ListItemBase.js";
 import type {
 	ListItemBasePressEventDetail,
 } from "./ListItemBase.js";
+import { isIListItemSelectable } from "./ListItemBase.js";
 import type DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
 import type {
@@ -82,12 +83,6 @@ const PAGE_UP_DOWN_SIZE = 10;
 // ListItemBase-based events
 type ListItemFocusEventDetail = {
 	item: ListItemBase,
-}
-
-interface IListItemSelectable {
-	effectiveSelectedState: boolean;
-	toggleSelectedState(newValue: boolean): void;
-	isSelectable: true;
 }
 
 type ListSelectionChangeEventDetail = {
@@ -1437,16 +1432,9 @@ class List extends UI5Element {
 	}
 }
 
-function isIListItemSelectable(el: any): el is IListItemSelectable {
-	return !!("isSelectable" in el && el.isSelectable);
-}
-
 List.define();
 
 export default List;
-export {
-	isIListItemSelectable,
-};
 export type {
 	ListItemClickEventDetail,
 	ListItemFocusEventDetail,
@@ -1455,5 +1443,4 @@ export type {
 	ListItemToggleEventDetail,
 	ListSelectionChangeEventDetail,
 	ListMoveEventDetail,
-	IListItemSelectable,
 };

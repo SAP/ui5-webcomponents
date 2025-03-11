@@ -5,7 +5,7 @@ import ListItemBase from "./ListItemBase.js";
 
 import ComboBoxItemTemplate from "./ComboBoxItemTemplate.js";
 import ComboboxItemCss from "./generated/themes/ComboBoxItem.css.js";
-import type { IListItemSelectable } from "./List.js";
+import type { IListItemSelectable } from "./ListItemBase.js";
 
 /**
  * @class

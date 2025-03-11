@@ -18,7 +18,16 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
 import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
-import { isIListItemSelectable } from "./List.js";
+
+interface IListItemSelectable {
+	effectiveSelectedState: boolean;
+	toggleSelectedState(newValue: boolean): void;
+	isSelectable: true;
+}
+
+function isIListItemSelectable(el: any): el is IListItemSelectable {
+	return !!("isSelectable" in el && el.isSelectable);
+}
 
 type ListItemBasePressEventDetail = {
 	item: ListItemBase,
@@ -263,6 +272,11 @@ class ListItemBase extends UI5Element implements ITabbable {
 
 export default ListItemBase;
 
+export {
+	isIListItemSelectable,
+};
+
 export type {
 	ListItemBasePressEventDetail,
+	IListItemSelectable,
 };

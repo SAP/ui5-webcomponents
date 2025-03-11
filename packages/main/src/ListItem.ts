@@ -16,7 +16,7 @@ import "@ui5/webcomponents-icons/dist/edit.js";
 import Highlight from "./types/Highlight.js";
 import ListItemType from "./types/ListItemType.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
-import ListItemBase from "./ListItemBase.js";
+import ListItemBase, { isIListItemSelectable } from "./ListItemBase.js";
 import type RadioButton from "./RadioButton.js";
 import type CheckBox from "./CheckBox.js";
 import type { IButton } from "./Button.js";
@@ -35,7 +35,6 @@ import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText
 
 // Icons
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
-import { isIListItemSelectable } from "./List.js";
 
 interface IAccessibleListItem {
 	accessibleName?: string;

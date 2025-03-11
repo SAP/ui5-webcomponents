@@ -23,7 +23,7 @@ import TreeItemBaseTemplate from "./TreeItemBaseTemplate.js";
 
 // Styles
 import treeItemCss from "./generated/themes/TreeItem.css.js";
-import type { IListItemSelectable } from "./List.js";
+import type { IListItemSelectable } from "./ListItemBase.js";
 
 type TreeItemBaseEventDetail = {
 	item: TreeItemBase,

@@ -84,7 +84,8 @@ import inputStyles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
-import type { IListItemSelectable, ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
+import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
+import type { IListItemSelectable } from "./ListItemBase.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 
 /**

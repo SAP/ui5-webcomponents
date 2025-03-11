@@ -2,7 +2,7 @@ import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import type List from "../List.js";
-import { isIListItemSelectable } from "../List.js";
+import { isIListItemSelectable } from "../ListItemBase.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
 import type ResponsivePopover from "../ResponsivePopover.js";
 import "../SuggestionItem.js";

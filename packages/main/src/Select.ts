@@ -31,7 +31,8 @@ import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMe
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import List from "./List.js";
-import type { IListItemSelectable, ListItemClickEventDetail } from "./List.js";
+import type { ListItemClickEventDetail } from "./List.js";
+import type { IListItemSelectable } from "./ListItemBase.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
