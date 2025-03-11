@@ -15,6 +15,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realType("invalid input")
 			.realPress("Enter");
 
@@ -30,6 +31,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realType("09/09/2020 - 10/10/2020")
 			.realPress("Enter");
 
@@ -47,6 +49,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realType("09/09/2020 - 10/10/2020")
 			.realPress("Enter");
 
@@ -55,8 +58,7 @@ describe("DateRangePicker general interaction", () => {
 			.find("ui5-calendar")
 			.shadow()
 			.find("ui5-daypicker")
-			.invoke("attr", "timestamp")
-			.should("eq", timestamp_9_Sep_2020.toString());
+			.should("have.attr", "timestamp", timestamp_9_Sep_2020.toString());
 	});
 
 	it("Is delimiter set", () => {
@@ -67,14 +69,12 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realType("Feb 25, 2022 @ Feb 28, 2022")
 			.realPress("Enter");
 
 		cy.get<DateRangePicker>("@dateRangePicker")
 			.invoke("attr", "delimiter", "###")
-			.should("have.attr", "delimiter", "###");
-
-		cy.get<DateRangePicker>("@dateRangePicker")
 			.should("have.attr", "value", "Feb 25, 2022 ### Feb 28, 2022");
 	});
 
@@ -86,6 +86,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realType("27/09/2019 - 10/10/2019")
 			.realPress("Enter");
 
@@ -119,6 +120,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realType("05/08/2020 - 05/08/2020")
 			.realPress("Enter");
 
@@ -305,6 +307,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realType("Jul 17, 2020 @ Jul 16, 2020")
 			.realPress("Enter");
 
@@ -320,6 +323,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realType("Jul 17, 2020 @ Jul 16, 2020")
 			.realPress("Tab");
 
@@ -335,6 +339,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realType("2020-09-09 - 2020-10-10")
 			.realPress("Enter");
 
@@ -422,6 +427,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realType("09/06/2024 - 15/06/2024")
 			.realPress("Enter")
 			.realPress("F4");
@@ -457,6 +463,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("input")
 			.realClick()
+			.should("be.focused")
 			.realType("10.02.2023 - 25.07.2023")
 			.realPress("Enter");
 
@@ -494,6 +501,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realType("09.2024 - 11.2024")
 			.realPress("Enter")
 			.realPress("F4");
@@ -546,6 +554,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realType("0001 - 0006")
 			.realPress("Enter")
 			.realPress("F4");
