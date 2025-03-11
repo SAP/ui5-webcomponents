@@ -5,6 +5,7 @@ import { getLanguage } from "../../src/config/Language.js";
 import { getCalendarType } from "../../src/config/CalendarType.js";
 import { getTheme } from "../../src/config/Theme.js";
 import { getAnimationMode } from "../../src/config/AnimationMode.js";
+import AnimationMode from "../../src/types/AnimationMode.js";
 import { getThemeRoot } from "../../src/config/ThemeRoot.js";
 
 describe("Some settings can be set via SAP UI URL params", () => {
@@ -47,13 +48,23 @@ describe("Some settings can be set via SAP UI URL params", () => {
 	it("Tests that animationMode is applied", () => {
 		cy.wrap({ getAnimationMode })
 			.invoke("getAnimationMode")
-			.should("equal", "basic");
+			.should("equal", AnimationMode.Basic);
 	});
 });
 
 describe("Different themeRoot configurations", () => {
 	it("Allowed theme root", () => {
 		const searchParams = "sap-ui-theme=sap_horizon_hcb@https://example.com";
+
+		// All allowed theme roots need to be described inside the meta tag.
+		cy.window()
+			.then($el => {
+				const metaTag = document.createElement("meta");
+				metaTag.name = "sap-allowedThemeOrigins";
+				metaTag.content = "https://example.com";
+
+				$el.document.head.append(metaTag);
+			})
 
 		cy.stub(internals, "search", () => {
 			return searchParams;
@@ -71,6 +82,14 @@ describe("Different themeRoot configurations", () => {
 		cy.wrap({ getThemeRoot })
 			.invoke("getThemeRoot")
 			.should("equal", "https://example.com/UI5/");
+
+		// All allowed theme roots need to be described inside the meta tag.
+		cy.window()
+			.then($el => {
+				const metaTag = $el.document.head.querySelector("[name='sap-allowedThemeOrigins']");
+
+				metaTag?.remove();
+			})
 	});
 
 	it("Unallowed theme root", () => {

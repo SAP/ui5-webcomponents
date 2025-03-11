@@ -1,0 +1,23 @@
+{
+  "name": "@ui5/cypress-internal",
+  "version": "0.0.0",
+  "description": "Common testing configuration used internally inside the monorepo",
+  "private": true,
+  "scripts": {
+    "build": "tsc && node ./src/copy.js",
+    "generate": "yarn build",
+    "clean": "rimraf dist"
+  },
+  "exports": {
+    "./*": "./dist/*"
+  },
+  "type": "module",
+  "dependencies": {
+    "eslint-plugin-cypress": "^3.4.0",
+    "@ui5/cypress-ct-ui5-webc": "0.0.1",
+    "cypress": "^13.11.0",
+    "typescript": "^5.6.2",
+    "cypress-real-events": "^1.12.0",
+    "@cypress/code-coverage": "^3.13.11"
+  }
+}
