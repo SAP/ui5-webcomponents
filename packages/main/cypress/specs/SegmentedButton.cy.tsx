@@ -14,7 +14,7 @@ describe("SegmentedButton general interaction tests", () => {
 			.as("segmentedButton");
 
 		cy.get<SegmentedButton>("@segmentedButton")
-			.find("ui5-segmented-button-item")
+			.find("[ui5-segmented-button-item]")
 			.first()
 			.should("have.attr", "selected");
 	});
@@ -31,7 +31,7 @@ describe("SegmentedButton general interaction tests", () => {
 			.as("segmentedButton");
 
 		cy.get<SegmentedButton>("@segmentedButton")
-			.find("ui5-segmented-button-item")
+			.find("[ui5-segmented-button-item]")
 			.as("items");
 
 		cy.get<SegmentedButtonItem>("@items")
@@ -67,7 +67,7 @@ describe("SegmentedButton general interaction tests", () => {
 			.as("segmentedButton");
 
 		cy.get<SegmentedButton>("@segmentedButton")
-			.find("ui5-segmented-button-item")
+			.find("[ui5-segmented-button-item]")
 			.as("items");
 
 		cy.get<SegmentedButtonItem>("@items")
@@ -104,7 +104,7 @@ describe("SegmentedButton general interaction tests", () => {
 			.as("segmentedButton");
 
 		cy.get<SegmentedButton>("@segmentedButton")
-			.find("ui5-segmented-button-item")
+			.find("[ui5-segmented-button-item]")
 			.as("items");
 
 		cy.get<SegmentedButtonItem>("@items")
@@ -127,7 +127,7 @@ describe("SegmentedButton general interaction tests", () => {
 			.as("segmentedButton");
 
 		cy.get<SegmentedButton>("@segmentedButton")
-			.find("ui5-segmented-button-item")
+			.find("[ui5-segmented-button-item]")
 			.as("items");
 
 		cy.get<SegmentedButtonItem>("@items")
@@ -159,7 +159,7 @@ describe("SegmentedButton general interaction tests", () => {
 			.as("segmentedButton");
 
 		cy.get<SegmentedButton>("@segmentedButton")
-			.find("ui5-segmented-button-item")
+			.find("[ui5-segmented-button-item]")
 			.as("items");
 
 		cy.get<SegmentedButtonItem>("@items")
@@ -197,7 +197,7 @@ describe("Accessibility", () => {
 			.as("segmentedButton");
 
 		cy.get<SegmentedButton>("@segmentedButton")
-			.find("ui5-segmented-button-item")
+			.find("[ui5-segmented-button-item]")
 			.as("items");
 
 		cy.get<SegmentedButtonItem>("@items")
