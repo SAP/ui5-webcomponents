@@ -42,10 +42,6 @@ class MultiComboBoxItemGroup extends ComboBoxItemGroup implements IMultiComboBox
 		return true;
 	}
 
-	get selected() {
-		return false;
-	}
-
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}

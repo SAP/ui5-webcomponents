@@ -1204,12 +1204,12 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const prevItemIdx = currentItemIdx - 1;
 		this._previouslySelectedItems = this._getSelectedItems();
 		if (isDownShift(e) && items[nextItemIdx]) {
-			items[nextItemIdx].effectiveSelectedState = items[currentItemIdx].effectiveSelectedState;
+			items[nextItemIdx].toggleSelectedState(items[currentItemIdx].effectiveSelectedState);
 			items[nextItemIdx].focus();
 		}
 
 		if (isUpShift(e) && items[prevItemIdx]) {
-			items[prevItemIdx].effectiveSelectedState = items[currentItemIdx].effectiveSelectedState;
+			items[prevItemIdx].toggleSelectedState(items[currentItemIdx].effectiveSelectedState);
 			items[prevItemIdx].focus();
 		}
 
@@ -1702,7 +1702,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	handleCancel() {
 		this._itemsBeforeOpen.forEach(item => {
 			if (isInstanceOfMultiComboBoxItem(item.ref)) {
-				item.ref.selected = item.selected;
+				item.ref.toggleSelectedState(item.selected);
 			}
 		});
 
