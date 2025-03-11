@@ -95,7 +95,7 @@ class TreeItemBase extends ListItem implements IListItemSelectable {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected = true;
+	selected = false;
 
 	/**
 	 * If set, an icon will be displayed before the text of the tree list item.
