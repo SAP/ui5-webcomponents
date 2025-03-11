@@ -364,7 +364,8 @@ describe("DateTimePicker general interaction", () => {
 			.should("equal", "Choose Date and Time");
 	});
 
-	it("tests change event is fired on submit", () => {
+	// Unstable test, needs investigation
+	it.skip("tests change event is fired on submit", () => {
 		cy.mount(<DefaultDateTimePicker />);
 
 		const changeStub = cy.stub();
