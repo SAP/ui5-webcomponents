@@ -4,7 +4,7 @@ describe("Color Picker general interaction tests", () => {
 	it("should not display color channel inputs and alpha slider in simplified mode", () => {
 		cy.mount(<ColorPicker simplified={true}></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -26,7 +26,7 @@ describe("Color Picker general interaction tests", () => {
 	it("should correctly parse colors in value property", () => {
 		cy.mount(<ColorPicker></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -63,7 +63,7 @@ describe("Color Picker general interaction tests", () => {
 	it("should toggle display from RGB to HSL when arrow button is selected", () => {
 		cy.mount(<ColorPicker value="rgba(112, 178, 225, 1)"></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -82,7 +82,7 @@ describe("Color Picker general interaction tests", () => {
 	it("should update value when color is changed via the RGB input fields", () => {
 		cy.mount(<ColorPicker value="rgba(62, 128, 99, 1)"></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -101,7 +101,7 @@ describe("Color Picker general interaction tests", () => {
 	it("should update value when color is changed via the Hue input field", () => {
 		cy.mount(<ColorPicker value="rgba(112, 178, 225, 1)"></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -117,7 +117,7 @@ describe("Color Picker general interaction tests", () => {
 	it("should update value when color is changed via the Saturation input field", () => {
 		cy.mount(<ColorPicker value="rgba(112, 225, 131, 1)"></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -133,7 +133,7 @@ describe("Color Picker general interaction tests", () => {
 	it("should update value when color is changed via the Light input field", () => {
 		cy.mount(<ColorPicker value="rgba(130, 206, 143, 1)"></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -149,7 +149,7 @@ describe("Color Picker general interaction tests", () => {
 	it("should update value when color is changed via the HEX input field", () => {
 		cy.mount(<ColorPicker value="rgba(123, 56, 93, 1)"></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -162,7 +162,7 @@ describe("Color Picker general interaction tests", () => {
 	it("should update value when alpha is changed via the Alpha input field", () => {
 		cy.mount(<ColorPicker value="rgba(232, 128, 222, 0.89)"></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -175,7 +175,7 @@ describe("Color Picker general interaction tests", () => {
 	it("should update value when color is changed via the Hue slider", () => {
 		cy.mount(<ColorPicker value="rgba(70, 64, 191, 1)"></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -190,7 +190,7 @@ describe("Color Picker general interaction tests", () => {
 	it("should update value when alpha is changed via the Alpha slider", () => {
 		cy.mount(<ColorPicker value="rgba(70, 64, 191, 0)"></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -205,7 +205,7 @@ describe("Color Picker general interaction tests", () => {
 	it("should update Saturation & Light inputs when selecting color from main color grid", () => {
 		cy.mount(<ColorPicker value="rgba(136, 64, 101, 1)"></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -240,7 +240,7 @@ describe("Color Picker accessibility tests", () => {
 	it("should show correct accessibility info for RGB inputs", () => {
 		cy.mount(<ColorPicker></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -262,7 +262,7 @@ describe("Color Picker accessibility tests", () => {
 	it("should show correct accessibility info for HSL inputs", () => {
 		cy.mount(<ColorPicker></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
@@ -287,7 +287,7 @@ describe("Color Picker accessibility tests", () => {
 	it("should show correct accessibility info for sliders and other input", () => {
 		cy.mount(<ColorPicker></ColorPicker>);
 
-		cy.get("ui5-color-picker")
+		cy.get("[ui5-color-picker]")
 			.as("colorPicker");
 
 		cy.get<ColorPicker>("@colorPicker")
