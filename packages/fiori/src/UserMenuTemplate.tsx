@@ -23,8 +23,9 @@ export default function UserMenuTemplate(this: UserMenu) {
 	return (
 		<ResponsivePopover
 			id="user-menu-rp"
-			class="ui5-pm-rp"
+			class="ui5-user-menu-rp"
 			tabindex={-1}
+			initialFocus={"ui5-user-menu-list"}
 			placement="Bottom"
 			verticalAlign="Bottom"
 			horizontalAlign="End"
@@ -37,8 +38,8 @@ export default function UserMenuTemplate(this: UserMenu) {
 		>
 			<>
 				<Bar class={{
-					"ui5-pm-fixed-header": true,
-					"ui5-pm-rp-scrolled": this._isScrolled || this._titleMovedToHeader || this._manageAccountVisibleInHeader
+					"ui5-user-menu-fixed-header": true,
+					"ui5-user-menu-rp-scrolled": this._isScrolled || this._titleMovedToHeader || this._manageAccountVisibleInHeader
 				}} slot="header">
 					{this._manageAccountVisibleInHeader &&
 						<Button icon={userSettings} onClick={this._handleManageAccountClick} slot="startContent"></Button>
@@ -61,7 +62,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 						slot="endContent"
 					 />}
 				</Bar>
-				<div class="ui5-pm-header">
+				<div class="ui5-user-menu-header">
 					{headerContent.call(this)}
 				</div>
 			</>
@@ -86,8 +87,8 @@ export default function UserMenuTemplate(this: UserMenu) {
 					</List>
 			}
 
-			<div slot="footer" class="ui5-pm-footer">
-				<Button class="ui5-pm-sign-out-btn" design="Transparent" icon={log} onClick={this._handleSignOutClick}>{this._signOutButtonText}</Button>
+			<div slot="footer" class="ui5-user-menu-footer">
+				<Button class="ui5-user-menu-sign-out-btn" design="Transparent" icon={log} onClick={this._handleSignOutClick}>{this._signOutButtonText}</Button>
 			</div>
 		</ResponsivePopover>
 	);
@@ -96,8 +97,8 @@ export default function UserMenuTemplate(this: UserMenu) {
 function headerContent(this: UserMenu) {
 	return (<>
 		{this._selectedAccount &&
-			<div class="ui5-pm-selected-account">
-				<Avatar size="L" onClick={this._handleAvatarClick} initials={this._selectedAccount._initials} fallbackIcon={personPlaceholder} class="ui5-pm--selected-account-avatar" interactive>
+			<div class="ui5-user-menu-selected-account">
+				<Avatar size="L" onClick={this._handleAvatarClick} initials={this._selectedAccount._initials} fallbackIcon={personPlaceholder} class="ui5-user-menu--selected-account-avatar" interactive>
 					{this._selectedAccount.avatarSrc &&
 						<img src={this._selectedAccount.avatarSrc}/>
 					}
@@ -108,18 +109,18 @@ function headerContent(this: UserMenu) {
 					}
 				</Avatar>
 				{this._selectedAccount.titleText &&
-					<Text maxLines={2} id="selected-account-title" class="ui5-pm-selected-account-title">{this._selectedAccount.titleText}</Text>
+					<Text maxLines={2} id="selected-account-title" class="ui5-user-menu-selected-account-title">{this._selectedAccount.titleText}</Text>
 				}
 
 				{this._selectedAccount.subtitleText &&
-					<Text maxLines={1} class="ui5-pm-selected-account-subtitleText">{this._selectedAccount.subtitleText}</Text>
+					<Text maxLines={1} class="ui5-user-menu-selected-account-subtitleText">{this._selectedAccount.subtitleText}</Text>
 				}
 				{this._selectedAccount.description &&
-					<Text maxLines={1} class="ui5-pm-selected-account-description">{this._selectedAccount.description}</Text>
+					<Text maxLines={1} class="ui5-user-menu-selected-account-description">{this._selectedAccount.description}</Text>
 				}
 
 				{this.showManageAccount &&
-					<Button id="selected-account-manage-btn" icon={userSettings} class="ui5-pm-manage-account-btn" onClick={this._handleManageAccountClick}>{this._manageAccountButtonText}</Button>
+					<Button id="selected-account-manage-btn" icon={userSettings} class="ui5-user-menu-manage-account-btn" onClick={this._handleManageAccountClick}>{this._manageAccountButtonText}</Button>
 				}
 			</div>
 		}
@@ -128,11 +129,11 @@ function headerContent(this: UserMenu) {
 
 function otherAccountsContent(this: UserMenu) {
 	return (<>
-		<Panel collapsed={true} class="ui5-pm-other-accounts">
+		<Panel collapsed={true} class="ui5-user-menu-other-accounts">
 			<div slot="header" class="ui5-user-menu-account-header">
 				<Title slot="header" level="H4" wrapping-type="None">{this._otherAccountsButtonText} ({this._otherAccounts.length})</Title>
 				{this.showEditAccounts &&
-					<Button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon={userEdit} onClick={this._handleEditAccountsClick} tooltip={this._editAccountsTooltip}/>
+					<Button slot="header" class="ui5-user-menu-add-account-btn" design="Transparent" icon={userEdit} onClick={this._handleEditAccountsClick} tooltip={this._editAccountsTooltip}/>
 				}
 			</div>
 			{this._otherAccounts.length > 0 &&
@@ -147,25 +148,29 @@ function otherAccountsContent(this: UserMenu) {
 function otherAccountsList(this: UserMenu) {
 	return (<>
 		<List onItemClick={this._handleAccountSwitch}>
-			{this._otherAccounts.map(account =>
+			{this._otherAccounts.map((account, index) =>
 				<ListItemCustom
 					ref={this.captureRef.bind(account)}
+					aria-labelledby={account.titleText}
+					aria-possition={index + 1}
+					aria-setsize={this._otherAccounts.length}
+					aria-dectiption={this.getAccountDescriptionText(account)}
 				>
-					<div class="ui5-pm-other-accounts-content">
+					<div class="ui5-user-menu-other-accounts-content">
 						<Avatar slot="image" size="S" initials={account._initials} fallbackIcon={personPlaceholder}>
 							{account.avatarSrc &&
 								<img src={account.avatarSrc}/>
 							}
 						</Avatar>
-						<div class="ui5-pm-other-accounts-info">
+						<div class="ui5-user-menu-other-accounts-info">
 							{account.titleText &&
-								<Title class="ui5-pm-other-accounts-title" wrapping-type="None">{account.titleText}</Title>
+								<Title class="ui5-user-menu-other-accounts-title" wrapping-type="None">{account.titleText}</Title>
 							}
 							{account.subtitleText &&
-								<Label class="ui5-pm-other-accounts-additional-info" wrapping-type="None">{account.subtitleText}</Label>
+								<Label class="ui5-user-menu-other-accounts-additional-info" wrapping-type="None">{account.subtitleText}</Label>
 							}
 							{account.description &&
-								<Label class="ui5-pm-other-accounts-additional-info" wrapping-type="None">{account.description}</Label>
+								<Label class="ui5-user-menu-other-accounts-additional-info" wrapping-type="None">{account.description}</Label>
 							}
 						</div>
 						<div>
@@ -173,7 +178,7 @@ function otherAccountsList(this: UserMenu) {
 								<Icon
 									part="icon"
 									name={selectedAccount}
-									class="ui5-pm-selected-account-icon"
+									class="ui5-user-menu-selected-account-icon"
 									mode="Decorative" />
 							}
 						</div>

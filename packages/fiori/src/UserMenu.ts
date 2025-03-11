@@ -28,6 +28,7 @@ import {
 	USER_MENU_EDIT_AVATAR_TXT,
 	USER_MENU_EDIT_ACCOUNTS_TXT,
 	USER_MENU_CLOSE_DIALOG_BUTTON,
+	USER_MENU_POPOVER_ACCESSIBLE_ACCOUNT_SELECTED_TXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 type UserMenuItemClickEventDetail = {
@@ -440,6 +441,10 @@ class UserMenu extends UI5Element {
 			return "";
 		}
 		return `${UserMenu.i18nBundle.getText(USER_MENU_POPOVER_ACCESSIBLE_NAME)} ${this._selectedAccount.titleText}`;
+	}
+
+	getAccountDescriptionText(account: UserMenuAccount) {
+		return `${account.subtitleText} ${account.description} ${account.selected ? UserMenu.i18nBundle.getText(USER_MENU_POPOVER_ACCESSIBLE_ACCOUNT_SELECTED_TXT): ""}`;
 	}
 
 	getAccountByRefId(refId: string) {

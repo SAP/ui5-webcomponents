@@ -1,50 +1,50 @@
-.ui5-pm-rp {
+.ui5-user-menu-rp {
     width: 20rem;
 }
 
-.ui5-pm-rp::part(content),
-.ui5-pm-rp::part(footer) {
+.ui5-user-menu-rp::part(content),
+.ui5-user-menu-rp::part(footer) {
     padding-inline: 0.5rem;
 }
 
-.ui5-pm-rp::part(header) {
+.ui5-user-menu-rp::part(header) {
     box-shadow: none;
     padding: 0;
 }
 
-.ui5-pm-header {
+.ui5-user-menu-header {
     display: flex;
     flex-direction: column;
 }
 
-[on-phone] .ui5-pm-header {
+[on-phone] .ui5-user-menu-header {
     padding-inline: 0;
 }
 
-.ui5-pm-fixed-header:not(.ui5-pm-rp-scrolled) {
+.ui5-user-menu-fixed-header:not(.ui5-user-menu-rp-scrolled) {
 	box-shadow: none;
 }
 
-.ui5-pm-fixed-header::part(startContent),
-.ui5-pm-fixed-header::part(endContent) {
+.ui5-user-menu-fixed-header::part(startContent),
+.ui5-user-menu-fixed-header::part(endContent) {
     padding: 0;
 }
 
-.ui5-pm-fixed-header [ui5-button] {
+.ui5-user-menu-fixed-header [ui5-button] {
     margin-inline: 0.5rem;
     font-family: var(--sapFontSemiboldFamily);
 }
 
-.ui5-pm-rp::part(content) {
+.ui5-user-menu-rp::part(content) {
     padding-top: 0;
     padding-bottom: 0.5rem;
 }
 
-.ui5-pm-rp::part(footer) {
+.ui5-user-menu-rp::part(footer) {
     padding-block: 0.5rem;
 }
 
-.ui5-pm-selected-account {
+.ui5-user-menu-selected-account {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -52,59 +52,59 @@
     overflow: hidden;
 }
 
-[on-phone] .ui5-pm--selected-account-avatar {
+[on-phone] .ui5-user-menu--selected-account-avatar {
     margin-block-start: 0.5rem;
 }
 
-.ui5-pm--selected-account-avatar {
+.ui5-user-menu--selected-account-avatar {
     margin-block-end: 0.5rem;
 }
 
-.ui5-pm-selected-account-title {
+.ui5-user-menu-selected-account-title {
     margin-block: 0.25rem;
     font-family: var(--sapFontBoldFamily);
     font-size: var(--sapFontLargeSize);
     color: var(--sapTextColor)
 }
 
-.ui5-pm-selected-account-subtitleText {
+.ui5-user-menu-selected-account-subtitleText {
     margin-block: 0.25rem;
     font-family: var(--sapFontFamily);
     font-size: var(--sapFontSize);
     color: var(--sapContent_LabelColor)
 }
 
-.ui5-pm-selected-account-description {
+.ui5-user-menu-selected-account-description {
     margin-bottom: 1rem;
     font-family: var(--sapFontFamily);
     font-size: var(--sapFontSize);
     color: var(--sapContent_LabelColor)
 }
 
-.ui5-pm-decline-btn {
+.ui5-user-menu-decline-btn {
     align-self: flex-end;
     font-family: var(--sapFontSemiboldFamily);
 }
 
-.ui5-pm-manage-account-btn {
+.ui5-user-menu-manage-account-btn {
     margin-top: 0.5rem;
     font-family: var(--sapFontSemiboldFamily);
 }
 
 
-.ui5-pm-sign-out-btn {
+.ui5-user-menu-sign-out-btn {
     font-family: var(--sapFontSemiboldFamily);
 }
 
-.ui5-pm-other-accounts {
+.ui5-user-menu-other-accounts {
     margin-bottom: 1rem;
 }
 
-.ui5-pm-other-accounts::part(content) {
+.ui5-user-menu-other-accounts::part(content) {
     padding: 0;
 }
 
-.ui5-pm-other-accounts-content {
+.ui5-user-menu-other-accounts-content {
     display: flex;
     align-items: center;
     width: 100%;
@@ -113,7 +113,7 @@
     padding-block: 8px 16px;
 }
 
-.ui5-pm-other-accounts-info {
+.ui5-user-menu-other-accounts-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -124,7 +124,7 @@
     overflow: hidden;
 }
 
-.ui5-pm-other-accounts-title {
+.ui5-user-menu-other-accounts-title {
     overflow: hidden;
     color: var(--sapList_TextColor);
     text-overflow: ellipsis;
@@ -134,7 +134,7 @@
     line-height: normal;
 }
 
-.ui5-pm-other-accounts-additional-info {
+.ui5-user-menu-other-accounts-additional-info {
     overflow: hidden;
     color: var(--sapContent_LabelColor);
     text-overflow: ellipsis;
@@ -144,7 +144,7 @@
     line-height: normal;
 }
 
-.ui5-pm-selected-account-icon {
+.ui5-user-menu-selected-account-icon {
     display: flex;
     width: 18px;
     align-items: center;
@@ -161,7 +161,7 @@
     align-items: center;
 }
 
-.ui5-pm-footer {
+.ui5-user-menu-footer {
     display: flex;
     flex: 1;
     justify-content: flex-end;
