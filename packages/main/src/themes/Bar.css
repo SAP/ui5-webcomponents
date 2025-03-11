@@ -24,12 +24,12 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-start;
-	flex: 0 0 auto;
-	z-index: 1;
 }
 
 .ui5-bar-root .ui5-bar-content-container {
-	min-width: 0;
+	min-width: calc(30% - calc(var(--_ui5_bar-start-container-padding-start)
+							 + var(--_ui5_bar-end-container-padding-end)
+						  + (2*var(--_ui5_bar-mid-container-padding-start-end))));
 }
 
 .ui5-bar-root.ui5-bar-root-shrinked .ui5-bar-content-container {
@@ -44,21 +44,13 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-end;
-	flex: 0 0 auto;
-	z-index: 1;
 }
-
 .ui5-bar-root .ui5-bar-midcontent-container {
 	padding: 0 var(--_ui5_bar-mid-container-padding-start-end);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	flex: 0 1 auto;
-	min-width: 0;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
 }
 
 :host([design="Footer"]){
