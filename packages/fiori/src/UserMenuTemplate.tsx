@@ -150,7 +150,8 @@ function otherAccountsContent(this: UserMenu) {
 
 function otherAccountsList(this: UserMenu) {
 	return (<>
-		<List onItemClick={this._handleAccountSwitch} aria-labelledby={this._ariaLabelledByActions}>
+		<List onItemClick={this._handleAccountSwitch} aria-labelledby={this._ariaLabelledByActions} loadingDelay={0}
+			  loading={this._otherAccounts.some((account) => account.loading ===true)}>
 			{this._otherAccounts.map((account, index) =>
 				<ListItemCustom
 					ref={this.captureRef.bind(account)}

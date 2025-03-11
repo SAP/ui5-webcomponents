@@ -105,7 +105,7 @@ describe("Initial rendering", () => {
 		cy.get("@userMenu").should("exist");
 		cy.get("@userMenu").shadow().find("[ui5-responsive-popover]").as("responsivePopover");
 		cy.get("@responsivePopover").should("exist");
-		cy.get("@responsivePopover").find(".ui5-user-menu-add-account-btn").should("exist");
+		cy.get("@responsivePopover").find(".ui5-pm-add-account-btn").should("exist");
 		cy.get("@responsivePopover").find("[ui5-button]").should("have.length", 2);
 	});
 });
@@ -351,7 +351,7 @@ describe("Events", () => {
 		cy.get("[ui5-user-menu]").as("userMenu");
 		cy.get("@userMenu")
 			.shadow()
-			.find(".ui5-user-menu-add-account-btn")
+			.find(".ui5-pm-add-account-btn")
 			.as("addAccountBtn");
 
 		cy.get("@userMenu")
@@ -434,7 +434,7 @@ describe("Events", () => {
 		cy.get("@avatar").find("img").as("image");
 		cy.get("@image").should("have.length", 1);
 		cy.get("@image").should("have.attr", "src", "./../../test/pages/img/man_avatar_1.png");
-		cy.get("@avatar").should("have.class", "ui5-user-menu--selected-account-avatar");
+		cy.get("@avatar").should("have.class", "ui5-pm--selected-account-avatar");
 	});
 
 	it("tests item-click event", () => {
@@ -623,7 +623,7 @@ describe("Responsiveness", () => {
 		cy.get("[ui5-user-menu]").as("userMenu");
 		cy.get("@userMenu").should("exist");
 		cy.get("@userMenu").shadow().find("[ui5-bar]").as("headerBar");
-		cy.get("@headerBar").should("have.class", "ui5-user-menu-fixed-header");
+		cy.get("@headerBar").should("have.class", "ui5-pm-fixed-header");
 	});
 
 	it("tests scroll on phone", () => {

@@ -196,7 +196,10 @@
 
 	menuShellBar.addEventListener("change-account", function (event) {
 		console.log("Change account account", event.detail);
-	});
+		event.detail.selectedAccount.loading=true;
+		setTimeout(function(){
+			event.detail.selectedAccount.loading=false;
+		}, 1000);	});
 
 	menuShellBar.addEventListener("sign-out-click", function (event) {
 		console.log("Sign Out clicked");
