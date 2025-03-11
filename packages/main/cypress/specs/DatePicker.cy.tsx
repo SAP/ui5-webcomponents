@@ -79,6 +79,7 @@ describe("Legacy date customization", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get<DatePicker>("@datePicker")
@@ -138,6 +139,7 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get<DatePicker>("@datePicker")
@@ -344,6 +346,7 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetInnerInput()
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realPress("Backspace")
 			.realPress("Backspace")
 			.realPress("Backspace")
@@ -406,7 +409,8 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetInnerInput()
-			.realClick();
+			.realClick()
+			.should("be.focused");
 
 		cy.get<DatePicker>("@datePicker")
 			.should("have.attr", "open");
@@ -419,7 +423,8 @@ describe("Date Picker Tests", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.as("input")
-			.realClick();
+			.realClick()
+			.should("be.focused");
 
 		cy.get("@input")
 			.realPress("Backspace")
@@ -487,6 +492,7 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get<DatePicker>("@datePicker")
@@ -508,6 +514,7 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetInnerInput()
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realPress(["Alt", "ArrowUp"]);
 
 		cy.get<DatePicker>("@datePicker")
@@ -528,6 +535,7 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetInnerInput()
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realPress(["Alt", "ArrowDown"]);
 
 		cy.get<DatePicker>("@datePicker")
@@ -547,6 +555,7 @@ describe("Date Picker Tests", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get<DatePicker>("@datePicker")
@@ -1353,6 +1362,7 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetInnerInput()
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realPress("PageDown");
 
 		cy.get<DatePicker>("@datePicker")
@@ -1373,6 +1383,7 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetInnerInput()
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realPress(["Shift", "PageDown"]);
 
 		cy.get<DatePicker>("@datePicker")
@@ -1393,6 +1404,7 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetInnerInput()
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realPress(["Control", "Shift", "PageDown"]);
 
 		cy.get<DatePicker>("@datePicker")
@@ -1416,6 +1428,7 @@ describe("Date Picker Tests", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get<DatePicker>("@datePicker")
@@ -1599,7 +1612,8 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetYearButton()
-			.realClick();
+			.realClick()
+			.should("be.focused");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetDisplayedYear(11)
@@ -1613,6 +1627,7 @@ describe("Date Picker Tests", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get<DatePicker>("@datePicker")
@@ -1637,6 +1652,7 @@ describe("Date Picker Tests", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get<DatePicker>("@datePicker")
