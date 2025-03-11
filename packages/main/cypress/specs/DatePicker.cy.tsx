@@ -79,6 +79,7 @@ describe("Legacy date customization", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get<DatePicker>("@datePicker")
