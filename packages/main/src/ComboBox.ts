@@ -182,6 +182,13 @@ type ComboBoxSelectionChangeEventDetail = {
 })
 
 /**
+ * Fired when the dropdown is closed.
+ * @since 2.9.0
+ * @public
+ */
+@event("close")
+
+/**
  * Fired when typing in input or clear icon is pressed.
  *
  * **Note:** filterValue property is updated, input is changed.
@@ -204,6 +211,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		"change": void,
 		"input": void,
 		"open": void,
+		"close": void,
 		"selection-change": ComboBoxSelectionChangeEventDetail,
 	}
 	/**
@@ -556,6 +564,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		this.open = false;
+		this.fireDecoratorEvent("close");
 	}
 
 	_toggleRespPopover() {

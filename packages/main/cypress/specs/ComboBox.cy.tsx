@@ -21,7 +21,7 @@ describe("Security", () => {
 });
 
 describe("Event firing", () => {
-	it("tests if open event is fired correctly", () => {
+	it("tests if open and close events are fired correctly", () => {
 		cy.mount(
 			<ComboBox>
 				<ComboBoxItem text="Algeria"></ComboBoxItem>
@@ -41,6 +41,10 @@ describe("Event firing", () => {
 
 		cy.get("@combo").then($combo => {
 			$combo[0].addEventListener("ui5-open", cy.stub().as("comboOpened"));
+		});
+
+		cy.get("@combo").then($combo => {
+			$combo[0].addEventListener("ui5-close", cy.stub().as("comboClosed"));
 		});
 
 		cy.get("@combo")
@@ -63,6 +67,9 @@ describe("Event firing", () => {
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.attr", "open");
+
+		cy.get("@comboClosed")
+			.should("have.been.calledOnce");
 
 		cy.get("@comboOpened")
 			.should("have.been.calledTwice");

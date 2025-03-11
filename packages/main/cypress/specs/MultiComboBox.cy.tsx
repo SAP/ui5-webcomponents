@@ -58,7 +58,7 @@ describe("Value State", () => {
 });
 
 describe("Event firing", () => {
-	it("tests if open event is fired correctly", () => {
+	it("tests if open and close events are fired correctly", () => {
 		cy.mount(
 			<MultiComboBox>
 				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
@@ -80,6 +80,11 @@ describe("Event firing", () => {
 		cy.get("@multiComboBox")
 			.then($mcb => {
 				$mcb[0].addEventListener("ui5-open", cy.stub().as("mcbOpened"));
+			});
+
+		cy.get("@multiComboBox")
+			.then($mcb => {
+				$mcb[0].addEventListener("ui5-close", cy.stub().as("mcbClosed"));
 			});
 
 		cy.get("@multiComboBox")
@@ -111,6 +116,9 @@ describe("Event firing", () => {
 
 		cy.get("@icon")
 			.click();
+
+		cy.get("@mcbClosed")
+			.should("have.been.calledOnce");
 
 		cy.get("@mcbOpened")
 			.should("have.been.calledTwice");
