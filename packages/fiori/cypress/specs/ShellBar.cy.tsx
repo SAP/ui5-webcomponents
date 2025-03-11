@@ -320,9 +320,11 @@ describe("Slots", () => {
 					<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
 					<Button slot="content">Start Button 1</Button>
 					<Button slot="content" data-hide-order="1">Start Button 2</Button>
+					<Button slot="content">Start Button 3</Button>
 					<ShellBarSpacer slot="content" />
 					<Button slot="content">End Button 1</Button>
 					<Button slot="content" data-hide-order="1">End Button 2</Button>
+					<Button slot="content">End Button 3</Button>
 				</ShellBar>
 			);
 
@@ -348,7 +350,7 @@ describe("Slots", () => {
 
 			cy.get("#shellbar")
 				.shadow()
-				.find("div[id='content-5'] > .ui5-shellbar-separator-end")
+				.find("div[id='content-6'] > .ui5-shellbar-separator-end")
 				.should("exist");
 
 			cy.viewport(1920, 1080);
@@ -364,7 +366,7 @@ describe("Slots", () => {
 
 			cy.get("#shellbar")
 				.shadow()
-				.find("div[id='content-5'] > .ui5-shellbar-separator-end")
+				.find("div[id='content-6'] > .ui5-shellbar-separator-end")
 				.should("not.exist");
 		});
 	});
