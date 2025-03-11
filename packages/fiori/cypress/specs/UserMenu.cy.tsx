@@ -338,7 +338,7 @@ describe("Events", () => {
 		cy.get("@clicked").should("have.been.calledOnce");
 	});
 
-	it("tests add-account-click event", () => {
+	it("tests edit-accounts-click event", () => {
 		cy.mount(
 			<>
 				<Button id="openUserMenuBtn">Open User Menu</Button>

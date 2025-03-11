@@ -24,7 +24,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 		<ResponsivePopover
 			id="user-menu-rp"
 			class="ui5-pm-rp"
-			tabIndex={-1}
+			tabindex={-1}
 			placement="Bottom"
 			verticalAlign="Bottom"
 			horizontalAlign="End"
@@ -97,7 +97,7 @@ function headerContent(this: UserMenu) {
 	return (<>
 		{this._selectedAccount &&
 			<div class="ui5-pm-selected-account">
-				<Avatar size="L" onClick={this._handleAvatarClick} initials={this._selectedAccount._initials} fallbackIcon={personPlaceholder} class="ui5-pm--selected-account-avatar">
+				<Avatar size="L" onClick={this._handleAvatarClick} initials={this._selectedAccount._initials} fallbackIcon={personPlaceholder} class="ui5-pm--selected-account-avatar" interactive>
 					{this._selectedAccount.avatarSrc &&
 						<img src={this._selectedAccount.avatarSrc}/>
 					}

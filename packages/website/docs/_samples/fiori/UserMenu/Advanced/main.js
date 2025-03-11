@@ -54,8 +54,8 @@ menu.addEventListener("manage-account-click", function () {
 	console.log("Manage account clicked");
 });
 
-menu.addEventListener("add-account-click", function () {
-	console.log("Add account clicked");
+menu.addEventListener("edit-accounts-click", function () {
+	console.log("Edit accounts clicked");
 });
 
 menu.addEventListener("change-account", function (event) {
