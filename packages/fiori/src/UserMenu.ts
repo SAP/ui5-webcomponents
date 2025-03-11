@@ -11,6 +11,7 @@ import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { PopupScrollEventDetail } from "@ui5/webcomponents/dist/Popup.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type UserMenuAccount from "./UserMenuAccount.js";
@@ -28,7 +29,6 @@ import {
 	USER_MENU_EDIT_ACCOUNTS_TXT,
 	USER_MENU_CLOSE_DIALOG_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
-import type { PopupScrollEventDetail } from "@ui5/webcomponents/dist/Popup.js";
 
 type UserMenuItemClickEventDetail = {
 	item: UserMenuItem;
