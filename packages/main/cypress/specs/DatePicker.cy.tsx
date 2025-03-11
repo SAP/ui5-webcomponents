@@ -157,6 +157,7 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realType("2018, 05/05")
 			.realPress("Enter");
 
@@ -172,6 +173,7 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realType("Invalid input")
 			.realPress("Enter");
 
@@ -258,6 +260,7 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetInnerInput()
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realType("Rab. I 6, 1440 AH")
 			.realPress("Enter");
 
@@ -295,6 +298,7 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetInnerInput()
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realType("Jan 1, 1999")
 			.realPress("Tab");
 
@@ -365,8 +369,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedDate()
-			.invoke("attr", "data-sap-timestamp")
-			.should("include", timestamp_28_Jan_2019.toString());
+			.should("have.attr", "data-sap-timestamp", timestamp_28_Jan_2019.toString());
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPopoverDate(timestamp_3_Feb_2019)
@@ -391,8 +394,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedDate()
-			.invoke("attr", "data-sap-timestamp")
-			.should("include", timestamp_27_Jan_2019.toString());
+			.should("have.attr", "data-sap-timestamp", timestamp_27_Jan_2019.toString());
 	});
 
 	it("picker stays open on input click", () => {
@@ -430,6 +432,7 @@ describe("Date Picker Tests", () => {
 			.should("have.value", "");
 
 		cy.get("@input")
+			.should("be.focused")
 			.realType("2015")
 			.realPress("Enter");
 
@@ -444,6 +447,7 @@ describe("Date Picker Tests", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realType("tomorrow")
 			.realPress("Enter");
 
@@ -673,13 +677,11 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedDate()
-			.invoke("attr", "data-sap-timestamp")
-			.should("include", timestamp_28_Nov_9999);
+			.should("have.attr", "data-sap-timestamp", timestamp_28_Nov_9999);
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetNextButton()
-			.invoke("attr", "class")
-			.should("include", "ui5-calheader-arrowbtn-disabled");
+			.should("have.class", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("daypicker extreme values min", () => {
@@ -693,13 +695,11 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedDate()
-			.invoke("attr", "data-sap-timestamp")
-			.should("include", timestamp_31_Dec_0000);
+			.should("have.attr", "data-sap-timestamp", timestamp_31_Dec_0000);
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPreviousButton()
-			.invoke("attr", "class")
-			.should("include", "ui5-calheader-arrowbtn-disabled");
+			.should("have.class", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("daypicker prev extreme values min", () => {
@@ -717,13 +717,11 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedDate()
-			.invoke("attr", "data-sap-timestamp")
-			.should("include", timestamp_31_Dec_0000);
+			.should("have.attr", "data-sap-timestamp", timestamp_31_Dec_0000);
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPreviousButton()
-			.invoke("attr", "class")
-			.should("include", "ui5-calheader-arrowbtn-disabled");
+			.should("have.class", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("daypicker next extreme values max", () => {
@@ -741,13 +739,11 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedDate()
-			.invoke("attr", "data-sap-timestamp")
-			.should("include", timestamp_28_Nov_9999);
+			.should("have.attr", "data-sap-timestamp", timestamp_28_Nov_9999);
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetNextButton()
-			.invoke("attr", "class")
-			.should("include", "ui5-calheader-arrowbtn-disabled");
+			.should("have.class", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("monthpicker next extreme values max", () => {
@@ -775,13 +771,11 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetYearButton()
-			.invoke("text")
-			.should("include", "9999");
+			.should("have.text", "9999");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetNextButton()
-			.invoke("attr", "class")
-			.should("include", "ui5-calheader-arrowbtn-disabled");
+			.should("have.class", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("monthpicker prev extreme values min", () => {
@@ -809,13 +803,11 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetYearButton()
-			.invoke("text")
-			.should("include", "0001");
+			.should("have.text", "0001");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPreviousButton()
-			.invoke("attr", "class")
-			.should("include", "ui5-calheader-arrowbtn-disabled");
+			.should("have.class", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("yearpicker extreme values max", () => {
@@ -836,8 +828,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetNextButton()
-			.invoke("attr", "class")
-			.should("include", "ui5-calheader-arrowbtn-disabled");
+			.should("have.class", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("yearpicker extreme values min", () => {
@@ -858,8 +849,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPreviousButton()
-			.invoke("attr", "class")
-			.should("include", "ui5-calheader-arrowbtn-disabled");
+			.should("have.class", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("yearpicker prev page extreme values min", () => {
@@ -889,8 +879,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPreviousButton()
-			.invoke("attr", "class")
-			.should("include", "ui5-calheader-arrowbtn-disabled");
+			.should("have.class", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("yearpicker next page extreme values max", () => {
@@ -920,8 +909,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetNextButton()
-			.invoke("attr", "class")
-			.should("include", "ui5-calheader-arrowbtn-disabled");
+			.should("have.class", "ui5-calheader-arrowbtn-disabled");
 	});
 
 	it("yearpicker click extreme values max", () => {
@@ -994,8 +982,7 @@ describe("Date Picker Tests", () => {
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
-			.invoke("attr", "placeholder")
-			.should("equal", "MMM d, y");
+			.should("have.attr", "placeholder", "MMM d, y")
 
 		cy.get<DatePicker>("@datePicker")
 			.should("not.have.attr", "placeholder");
@@ -1007,8 +994,7 @@ describe("Date Picker Tests", () => {
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
-			.invoke("attr", "placeholder")
-			.should("equal", "Delivery date");
+			.should("have.attr", "placeholder", "Delivery date");
 
 		cy.get<DatePicker>("@datePicker")
 			.should("have.attr", "placeholder", "Delivery date");
@@ -1021,6 +1007,7 @@ describe("Date Picker Tests", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realType("Jan 1, 1999")
 			.realPress("Enter");
 
@@ -1042,6 +1029,7 @@ describe("Date Picker Tests", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realType("May 5, 2100")
 			.realPress("Enter");
 
@@ -1064,6 +1052,7 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetInnerInput()
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realType("2000")
 			.realPress("Enter");
 
@@ -1072,6 +1061,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get("@input")
 			.realClick()
+			.should("be.focused")
 			.realPress("Backspace")
 			.realPress("Backspace")
 			.realPress("Backspace")
@@ -1446,6 +1436,7 @@ describe("Date Picker Tests", () => {
 			.ui5DatePickerGetInnerInput()
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realType("test");
 
 		cy.get<DatePicker>("@datePicker")
@@ -1472,6 +1463,7 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realType("Invalid value")
 			.realPress("Enter");
 
@@ -1493,6 +1485,7 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realType("Mar 31, 1995")
 			.realPress("Enter");
 
@@ -1517,6 +1510,7 @@ describe("Date Picker Tests", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realType("Jan 60, 2000")
 			.realPress("Enter");
 
@@ -1542,6 +1536,7 @@ describe("Date Picker Tests", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realType("Invalid value")
 			.realPress("Enter");
 
@@ -1566,6 +1561,7 @@ describe("Date Picker Tests", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realType("Nov 1, 2020")
 			.realPress("Enter");
 
@@ -1591,6 +1587,7 @@ describe("Date Picker Tests", () => {
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
+			.should("be.focused")
 			.realType("Apr 12, 2024")
 			.realPress("Enter");
 
