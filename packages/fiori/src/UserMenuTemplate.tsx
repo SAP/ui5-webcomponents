@@ -11,6 +11,7 @@ import ListItemCustom from "@ui5/webcomponents/dist/ListItemCustom.js";
 import Panel from "@ui5/webcomponents/dist/Panel.js";
 import Bar from "@ui5/webcomponents/dist/Bar.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import edit from "@ui5/webcomponents-icons/dist/edit.js";
 import personPlaceholder from "@ui5/webcomponents-icons/dist/person-placeholder.js";
 import userSettings from "@ui5/webcomponents-icons/dist/user-settings.js";
@@ -30,6 +31,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 			verticalAlign="Bottom"
 			horizontalAlign="End"
 			accessibleName={this.accessibleNameText}
+			aria-labelledby={this.accessibleNameText}
 			open={this.open}
 			opener={this.opener}
 			onClose={this._handlePopoverAfterClose}
@@ -62,6 +64,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 						slot="endContent"
 					 />}
 				</Bar>
+
 				<div class="ui5-user-menu-header">
 					{headerContent.call(this)}
 				</div>
@@ -97,7 +100,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 function headerContent(this: UserMenu) {
 	return (<>
 		{this._selectedAccount &&
-			<div class="ui5-user-menu-selected-account">
+			<div class="ui5-user-menu-selected-account" aria-labelledby={this._ariaLabelledByAccountInformationText}>
 				<Avatar size="L" onClick={this._handleAvatarClick} initials={this._selectedAccount._initials} fallbackIcon={personPlaceholder} class="ui5-user-menu--selected-account-avatar" interactive>
 					{this._selectedAccount.avatarSrc &&
 						<img src={this._selectedAccount.avatarSrc}/>
@@ -129,7 +132,7 @@ function headerContent(this: UserMenu) {
 
 function otherAccountsContent(this: UserMenu) {
 	return (<>
-		<Panel collapsed={true} class="ui5-user-menu-other-accounts">
+		<Panel collapsed={true} class="ui5-user-menu-other-accounts" aria-labelledby={this._otherAccountsButtonText}>
 			<div slot="header" class="ui5-user-menu-account-header">
 				<Title slot="header" level="H4" wrapping-type="None">{this._otherAccountsButtonText} ({this._otherAccounts.length})</Title>
 				{this.showEditAccounts &&
@@ -147,7 +150,7 @@ function otherAccountsContent(this: UserMenu) {
 
 function otherAccountsList(this: UserMenu) {
 	return (<>
-		<List onItemClick={this._handleAccountSwitch}>
+		<List onItemClick={this._handleAccountSwitch} aria-labelledby={this._ariaLabelledByActions}>
 			{this._otherAccounts.map((account, index) =>
 				<ListItemCustom
 					ref={this.captureRef.bind(account)}
