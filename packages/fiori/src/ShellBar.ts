@@ -1227,7 +1227,7 @@ class ShellBar extends UI5Element {
 		if (!itemInfo) {
 			return false;
 		}
-		const lastVisibleItem = contentInfo.at(1);
+		const lastVisibleItem = contentInfo.at(-1);
 		return lastVisibleItem?.id === itemInfo.id && itemInfo.classes.indexOf("ui5-shellbar-hidden-button") > -1;
 	}
 
