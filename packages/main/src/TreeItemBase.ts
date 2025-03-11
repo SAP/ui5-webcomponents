@@ -23,6 +23,7 @@ import TreeItemBaseTemplate from "./TreeItemBaseTemplate.js";
 
 // Styles
 import treeItemCss from "./generated/themes/TreeItem.css.js";
+import type { IListItemSelectable } from "./List.js";
 
 type TreeItemBaseEventDetail = {
 	item: TreeItemBase,
@@ -74,7 +75,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 @event("step-out", {
 	bubbles: true,
 })
-class TreeItemBase extends ListItem {
+class TreeItemBase extends ListItem implements IListItemSelectable {
 	eventDetails!: ListItem["eventDetails"] & {
 		toggle: TreeItemBaseToggleEventDetail;
 		"step-in": TreeItemBaseStepInEventDetail;
@@ -87,6 +88,14 @@ class TreeItemBase extends ListItem {
 	 */
 	@property({ type: Number })
 	level = 1;
+
+	/**
+	 * Defines the selected state of the component.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	selected = true;
 
 	/**
 	 * If set, an icon will be displayed before the text of the tree list item.
@@ -313,6 +322,16 @@ class TreeItemBase extends ListItem {
 	get iconAccessibleName(): string {
 		return this.expanded ? TreeItemBase.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : TreeItemBase.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
 	}
+
+	get effectiveSelectedState() {
+		return this.selected;
+	}
+
+	toggleSelectedState(newValue: boolean) {
+		this.selected = newValue;
+	}
+
+	isSelectable = true as const;
 }
 
 export default TreeItemBase;

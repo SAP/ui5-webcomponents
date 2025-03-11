@@ -38,6 +38,7 @@ import UploadCollectionItemTemplate from "./UploadCollectionItemTemplate.js";
 
 // Styles
 import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css.js";
+import type { IListItemSelectable } from "@ui5/webcomponents/dist/List.js";
 
 /**
  * @class
@@ -117,7 +118,7 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 @event("request-delete", {
 	bubbles: true,
 })
-class UploadCollectionItem extends ListItem {
+class UploadCollectionItem extends ListItem implements IListItemSelectable {
 	eventDetails!: ListItem["eventDetails"] & {
 		"file-name-click": void;
 		"rename": void;
@@ -127,6 +128,15 @@ class UploadCollectionItem extends ListItem {
 		"_uci-delete": void;
 		"request-delete": void;
 	}
+
+	/**
+	 * Defines the selected state of the component.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	selected = false;
+
 	/**
 	 * Holds an instance of `File` associated with this item.
 	 * @default null
@@ -446,6 +456,16 @@ class UploadCollectionItem extends ListItem {
 	get showEditButton() {
 		return this.type === ListItemType.Detail;
 	}
+
+	get effectiveSelectedState() {
+		return this.selected;
+	}
+
+	toggleSelectedState(newValue: boolean) {
+		this.selected = newValue;
+	}
+
+	isSelectable = true as const;
 }
 
 UploadCollectionItem.define();

@@ -53,6 +53,15 @@ class MultiComboBoxItemGroup extends ComboBoxItemGroup implements IMultiComboBox
 	getFocusDomRef() {
 		return this.shadowRoot!.querySelector("[ui5-li-group-header]") as ListItemGroupHeader;
 	}
+
+	get effectiveSelectedState() {
+		return false;
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	toggleSelectedState(newValue: boolean) {}
+
+	isSelectable = true as const;
 }
 
 MultiComboBoxItemGroup.define();

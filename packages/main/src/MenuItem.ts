@@ -26,6 +26,7 @@ import type { IMenuItem } from "./Menu.js";
 
 // Styles
 import menuItemCss from "./generated/themes/MenuItem.css.js";
+import type { IListItemSelectable } from "./List.js";
 
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
@@ -104,7 +105,7 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
  * @since 1.10.0
  */
 @event("close")
-class MenuItem extends ListItem implements IMenuItem {
+class MenuItem extends ListItem implements IMenuItem, IListItemSelectable {
 	eventDetails!: ListItem["eventDetails"] & {
 		"before-open": MenuBeforeOpenEventDetail
 		"open": void
@@ -253,6 +254,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	static i18nBundle: I18nBundle;
 
 	_itemNavigation: ItemNavigation;
+	_isSelected = false;
 
 	constructor() {
 		super();
@@ -386,7 +388,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		if (this._popover) {
 			this._popover.open = false;
 		}
-		this.selected = false;
+		this.toggleSelectedState(false);
 		this.fireDecoratorEvent("close-menu");
 	}
 
@@ -394,7 +396,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		if (this._popover) {
 			this._popover.open = false;
 		}
-		this.selected = false;
+		this.toggleSelectedState(false);
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
@@ -418,7 +420,7 @@ class MenuItem extends ListItem implements IMenuItem {
 			return;
 		}
 
-		this.selected = false;
+		this.toggleSelectedState(false);
 		if (e.detail.escPressed) {
 			this.focus();
 			if (isPhone()) {
@@ -430,6 +432,16 @@ class MenuItem extends ListItem implements IMenuItem {
 	_afterPopoverClose() {
 		this.fireDecoratorEvent("close");
 	}
+
+	get effectiveSelectedState() {
+		return this._isSelected;
+	}
+
+	toggleSelectedState(newValue: boolean) {
+		this._isSelected = newValue;
+	}
+
+	isSelectable = true as const;
 }
 
 MenuItem.define();

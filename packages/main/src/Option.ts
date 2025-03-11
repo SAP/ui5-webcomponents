@@ -11,6 +11,7 @@ import OptionTemplate from "./OptionTemplate.js";
 import optionBaseCss from "./generated/themes/OptionBase.css.js";
 import listItemIconCss from "./generated/themes/ListItemIcon.css.js";
 import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText.css.js";
+import type { IListItemSelectable } from "./List.js";
 
 /**
  * @class
@@ -37,7 +38,7 @@ import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText
 		optionBaseCss,
 	],
 })
-class Option extends ListItemBase implements IOption {
+class Option extends ListItemBase implements IOption, IListItemSelectable {
 	eventDetails!: ListItemBase["eventDetails"];
 
 	/**
@@ -94,7 +95,7 @@ class Option extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare selected: boolean;
+	selected = false;
 
 	get displayIconBegin(): boolean {
 		return !!this.icon;
@@ -103,6 +104,16 @@ class Option extends ListItemBase implements IOption {
 	get effectiveDisplayText() {
 		return this.textContent || "";
 	}
+
+	get effectiveSelectedState() {
+		return this.selected;
+	}
+
+	toggleSelectedState(newValue: boolean) {
+		this.selected = newValue;
+	}
+
+	isSelectable = true as const;
 }
 
 Option.define();

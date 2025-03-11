@@ -9,6 +9,7 @@ import OptionCustomTemplate from "./OptionCustomTemplate.js";
 
 // Styles
 import optionBaseCss from "./generated/themes/OptionBase.css.js";
+import type { IListItemSelectable } from "./List.js";
 
 /**
  * @class
@@ -36,7 +37,7 @@ import optionBaseCss from "./generated/themes/OptionBase.css.js";
 		optionBaseCss,
 	],
 })
-class OptionCustom extends ListItemBase implements IOption {
+class OptionCustom extends ListItemBase implements IOption, IListItemSelectable {
 	eventDetails!: ListItemBase["eventDetails"];
 
 	/**
@@ -78,11 +79,21 @@ class OptionCustom extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare selected: boolean;
+	selected = false;
 
 	get effectiveDisplayText() {
 		return this.displayText || this.textContent || "";
 	}
+
+	get effectiveSelectedState() {
+		return this.selected;
+	}
+
+	toggleSelectedState(newValue: boolean) {
+		this.selected = newValue;
+	}
+
+	isSelectable = true as const;
 }
 
 OptionCustom.define();

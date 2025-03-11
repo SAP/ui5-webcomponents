@@ -52,6 +52,14 @@ class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelecta
 	@property()
 	markupText = "";
 
+	/**
+	 * Defines the selected state of the component.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	selected = false;
+
 	onEnterDOM() {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
@@ -61,6 +69,16 @@ class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelecta
 	get _effectiveTabIndex() {
 		return -1;
 	}
+
+	get effectiveSelectedState() {
+		return this.selected;
+	}
+
+	toggleSelectedState(newValue: boolean) {
+		this.selected = newValue;
+	}
+
+	isSelectable = true as const;
 }
 
 SuggestionItem.define();

@@ -5,6 +5,7 @@ import ListItemBase from "./ListItemBase.js";
 
 import ComboBoxItemTemplate from "./ComboBoxItemTemplate.js";
 import ComboboxItemCss from "./generated/themes/ComboBoxItem.css.js";
+import type { IListItemSelectable } from "./List.js";
 
 /**
  * @class
@@ -19,7 +20,7 @@ import ComboboxItemCss from "./generated/themes/ComboBoxItem.css.js";
 	template: ComboBoxItemTemplate,
 	styles: [ListItemBase.styles, ComboboxItemCss],
 })
-class ComboBoxItem extends ListItemBase implements IComboBoxItem {
+class ComboBoxItem extends ListItemBase implements IComboBoxItem, IListItemSelectable {
 	eventDetails!: ListItemBase["eventDetails"];
 	/**
 	 * Defines the text of the component.
@@ -68,6 +69,16 @@ class ComboBoxItem extends ListItemBase implements IComboBoxItem {
 	 */
 	@property()
 	markupText = "";
+
+	get effectiveSelectedState() {
+		return this.selected;
+	}
+
+	toggleSelectedState(newValue: boolean) {
+		this.selected = newValue;
+	}
+
+	isSelectable = true as const;
 }
 
 ComboBoxItem.define();

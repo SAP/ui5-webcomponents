@@ -35,6 +35,7 @@ import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText
 
 // Icons
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import { isIListItemSelectable } from "./List.js";
 
 interface IAccessibleListItem {
 	accessibleName?: string;
@@ -165,14 +166,6 @@ abstract class ListItem extends ListItemBase {
 	 */
 	@property()
 	highlight: `${Highlight}` = "None";
-
-	/**
-	 * Defines the selected state of the component.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	declare selected: boolean;
 
 	/**
 	 * Used to define the role of the list item.
@@ -371,7 +364,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onDetailClick() {
-		this.fireDecoratorEvent("detail-click", { item: this, selected: this.selected });
+		this.fireDecoratorEvent("detail-click", { item: this, selected: isIListItemSelectable(this) && this.effectiveSelectedState });
 	}
 
 	fireItemPress(e: Event) {
@@ -428,7 +421,7 @@ abstract class ListItem extends ListItemBase {
 
 	get _ariaSelected() {
 		if (this.modeMultiple || this.modeSingleSelect) {
-			return this.selected;
+			return isIListItemSelectable(this) && this.effectiveSelectedState;
 		}
 
 		return undefined;

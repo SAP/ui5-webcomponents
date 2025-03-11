@@ -2,6 +2,7 @@ import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import type List from "../List.js";
+import { isIListItemSelectable } from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
 import type ResponsivePopover from "../ResponsivePopover.js";
 import "../SuggestionItem.js";
@@ -195,7 +196,7 @@ class Suggestions {
 	}
 
 	get _selectedItem() {
-		return this._getNonGroupItems().find(item => item.selected) as SuggestionItem | null;
+		return this._getNonGroupItems().find(item => item.effectiveSelectedState) as SuggestionItem | null;
 	}
 
 	_isScrollable() {
@@ -249,14 +250,15 @@ class Suggestions {
 	onItemPress(e: CustomEvent<ListItemClickEventDetail | ListSelectionChangeEventDetail>) {
 		let pressedItem: ListItemBase; // SuggestionListItem
 		const isPressEvent = e.type === "ui5-item-click";
+		const item = (e.detail as ListItemClickEventDetail).item;
 
 		// Only use the press e if the item is already selected, in all other cases we are listening for 'ui5-selection-change' from the list
 		// Also we have to check if the selection-change is fired by the list's 'item-click' event handling, to avoid double handling on our side
-		if ((isPressEvent && !(e.detail as ListItemClickEventDetail).item.selected) || (this._handledPress && !isPressEvent)) {
+		if ((isPressEvent && !(isIListItemSelectable(item) && item.effectiveSelectedState)) || (this._handledPress && !isPressEvent)) {
 			return;
 		}
 
-		if (isPressEvent && (e.detail as ListItemClickEventDetail).item.selected) {
+		if (isPressEvent && isIListItemSelectable(item) && item.effectiveSelectedState) {
 			pressedItem = (e.detail as ListItemClickEventDetail).item;
 			this._handledPress = true;
 		} else {
@@ -401,14 +403,14 @@ class Suggestions {
 			previousItem.focused = false;
 		}
 		if (previousItem?.hasAttribute("ui5-suggestion-item") || previousItem?.hasAttribute("ui5-suggestion-item-custom")) {
-			(previousItem as IInputSuggestionItemSelectable).selected = false;
+			(previousItem as IInputSuggestionItemSelectable).toggleSelectedState(false);
 		}
 
 		if (currentItem) {
 			currentItem.focused = true;
 
 			if (!isGroupItem) {
-				(currentItem as IInputSuggestionItemSelectable).selected = true;
+				(currentItem as IInputSuggestionItemSelectable).toggleSelectedState(true);
 			}
 
 			if (this.handleFocus) {

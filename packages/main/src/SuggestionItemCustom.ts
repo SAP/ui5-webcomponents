@@ -44,6 +44,14 @@ class SuggestionItemCustom extends ListItemBase implements IInputSuggestionItemS
 	text?: string;
 
 	/**
+	 * Defines the selected state of the component.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	selected = false;
+
+	/**
 	 * Defines the content of the component.
 	 *
 	 * @public
@@ -54,6 +62,16 @@ class SuggestionItemCustom extends ListItemBase implements IInputSuggestionItemS
 	get _effectiveTabIndex() {
 		return -1;
 	}
+
+	get effectiveSelectedState() {
+		return this.selected;
+	}
+
+	toggleSelectedState(newValue: boolean) {
+		this.selected = newValue;
+	}
+
+	isSelectable = true as const;
 }
 
 SuggestionItemCustom.define();

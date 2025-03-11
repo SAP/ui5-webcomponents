@@ -31,7 +31,7 @@ import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMe
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import List from "./List.js";
-import type { ListItemClickEventDetail } from "./List.js";
+import type { IListItemSelectable, ListItemClickEventDetail } from "./List.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
@@ -66,7 +66,7 @@ import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
  * Interface for components that may be slotted inside `ui5-select` as options
  * @public
  */
-interface IOption extends ListItemBase {
+interface IOption extends ListItemBase, IListItemSelectable {
 	tooltip?: string,
 	icon?: string,
 	value?: string,
@@ -401,10 +401,10 @@ class Select extends UI5Element implements IFormInputElement {
 	_ensureSingleSelection() {
 		// if no item is selected => select the first one
 		// if multiple items are selected => select the last selected one
-		let selectedIndex = this.options.findLastIndex(option => option.selected);
+		let selectedIndex = this.options.findLastIndex(option => option.effectiveSelectedState);
 		selectedIndex = selectedIndex === -1 ? 0 : selectedIndex;
 		for (let i = 0; i < this.options.length; i++) {
-			this.options[i].selected = selectedIndex === i;
+			this.options[i].toggleSelectedState(selectedIndex === i);
 			if (selectedIndex === i) {
 				break;
 			}
@@ -451,7 +451,7 @@ class Select extends UI5Element implements IFormInputElement {
 		const options = Array.from(this.children) as Array<IOption>;
 
 		options.forEach(option => {
-			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
+			option.toggleSelectedState(!!((option.getAttribute("value") || option.textContent) === newValue));
 		});
 	}
 
@@ -460,7 +460,7 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	get _selectedIndex() {
-		return this.options.findIndex(option => option.selected);
+		return this.options.findIndex(option => option.effectiveSelectedState);
 	}
 
 	/**
@@ -469,7 +469,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @default undefined
 	 */
 	get selectedOption(): IOption | undefined {
-		return this.options.find(option => option.selected);
+		return this.options.find(option => option.effectiveSelectedState);
 	}
 
 	get text() {
@@ -607,14 +607,14 @@ class Select extends UI5Element implements IFormInputElement {
 			return;
 		}
 		if (this.options[selectedIndex]) {
-			this.options[selectedIndex].selected = false;
+			this.options[selectedIndex].toggleSelectedState(false);
 		}
 
 		if (selectedIndex !== index) {
 			this.fireDecoratorEvent("live-change", { selectedOption: this.options[index] });
 		}
 
-		this.options[index].selected = true;
+		this.options[index].toggleSelectedState(true);
 	}
 
 	/**
@@ -701,10 +701,10 @@ class Select extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		previousOption.selected = false;
+		previousOption.toggleSelectedState(false);
 		previousOption.focused = false;
 
-		nextOption.selected = true;
+		nextOption.toggleSelectedState(true);
 		nextOption.focused = true;
 
 		this.fireDecoratorEvent("live-change", { selectedOption: nextOption });
@@ -738,7 +738,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 	_applyFocusToSelectedItem() {
 		this.options.forEach(option => {
-			option.focused = option.selected;
+			option.focused = option.effectiveSelectedState;
 		});
 	}
 

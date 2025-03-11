@@ -7,6 +7,7 @@ import ListItem from "./ListItem.js";
 import type { IAccessibleListItem } from "./ListItem.js";
 import type WrappingType from "./types/WrappingType.js";
 import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
+import type { IListItemSelectable } from "./List.js";
 
 /**
  * @class
@@ -38,7 +39,7 @@ import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
 	renderer: jsxRenderer,
 	template: ListItemStandardTemplate,
 })
-class ListItemStandard extends ListItem implements IAccessibleListItem {
+class ListItemStandard extends ListItem implements IAccessibleListItem, IListItemSelectable {
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
 	 * @default undefined
@@ -47,6 +48,14 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 */
 	@property()
 	description?: string;
+
+	/**
+	 * Defines the selected state of the component.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	selected = false;
 
 	/**
 	 * Defines the `icon` source URI.
@@ -158,6 +167,16 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	get hasImage(): boolean {
 		return !!this.image.length;
 	}
+
+	get effectiveSelectedState() {
+		return this.selected;
+	}
+
+	toggleSelectedState(newValue: boolean) {
+		this.selected = newValue;
+	}
+
+	isSelectable = true as const;
 }
 
 ListItemStandard.define();

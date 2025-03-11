@@ -18,6 +18,7 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
 import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
+import { isIListItemSelectable } from "./List.js";
 
 type ListItemBasePressEventDetail = {
 	item: ListItemBase,
@@ -62,13 +63,6 @@ class ListItemBase extends UI5Element implements ITabbable {
 		"forward-after": void,
 		"forward-before": void,
 	}
-	/**
-	 * Defines the selected state of the component.
-	 * @default false
-	 * @private
-	 */
-	@property({ type: Boolean })
-	selected = false;
 
 	/**
 	 * Defines whether the item is movable.
@@ -122,6 +116,19 @@ class ListItemBase extends UI5Element implements ITabbable {
 
 	onBeforeRendering(): void {
 		this.actionable = true;
+		this.toggleSelectionCSSState();
+	}
+
+	toggleSelectionCSSState() {
+		if (!isIListItemSelectable(this)) {
+			return;
+		}
+
+		if (this.effectiveSelectedState) {
+			this._internals.states.add("selected");
+		} else {
+			this._internals.states.delete("selected");
+		}
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -178,7 +185,10 @@ class ListItemBase extends UI5Element implements ITabbable {
 		if (isEnter(e as KeyboardEvent)) {
 			e.preventDefault();
 		}
-		this.fireDecoratorEvent("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
+
+		const selected = isIListItemSelectable(this) ? this.effectiveSelectedState : false;
+
+		this.fireDecoratorEvent("_press", { item: this, selected, key: (e as KeyboardEvent).key });
 	}
 
 	_handleTabNext(e: KeyboardEvent) {
@@ -243,7 +253,8 @@ class ListItemBase extends UI5Element implements ITabbable {
 		if (!this._focusable) {
 			return -1;
 		}
-		if (this.selected) {
+
+		if (isIListItemSelectable(this) && this.effectiveSelectedState) {
 			return 0;
 		}
 		return this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined;

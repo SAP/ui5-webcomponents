@@ -384,7 +384,7 @@ class UserMenu extends UI5Element {
 
 		item._popover.opener = item;
 		item._popover.open = true;
-		item.selected = true;
+		item.toggleSelectedState(true);
 	}
 
 	_closeUserMenu() {
