@@ -195,6 +195,7 @@ describe("DateRangePicker general interaction", () => {
 			.find("ui5-input")
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realPress("End")
 			.realPress("PageDown");
 
@@ -234,6 +235,7 @@ describe("DateRangePicker general interaction", () => {
 			.find("ui5-input")
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realPress("End")
 			.realPress(["Shift", "PageUp"]);
 
@@ -273,6 +275,7 @@ describe("DateRangePicker general interaction", () => {
 			.find("ui5-input")
 			.as("input")
 			.realClick()
+			.should("be.focused")
 			.realPress("End")
 			.realPress(["Control", "Shift", "PageUp"]);
 
@@ -363,11 +366,14 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get("@calendarHeader")
 			.find("[data-ui5-cal-header-btn-next]")
-			.realClick();
+			.realClick()
+			.should("be.visible")
+			.and("be.focused");
 
 		cy.get("@calendarHeader")
 			.find("[data-ui5-cal-header-btn-month]")
@@ -408,6 +414,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get("@dateRangePicker")
@@ -479,6 +486,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get("@dateRangePicker")
@@ -532,6 +540,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get("@dateRangePicker")
