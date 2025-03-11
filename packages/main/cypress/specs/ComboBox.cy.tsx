@@ -36,5 +36,14 @@ describe("General interactions", () => {
 		cy.get("#cb").shadow().find("input").click();
 		cy.get("#another-cb").shadow().find("input").click();
 		cy.get("@changeStub").should("not.have.been.called");
+
+		cy.get("#cb").then(($cb) => {
+			const comboBox = $cb[0] as ComboBox;
+			comboBox.value = "Another ComboBox item text";
+		});
+
+		cy.get("#cb").shadow().find("input").click();
+		cy.get("#another-cb").shadow().find("input").click();
+		cy.get("@changeStub").should("not.have.been.called");
 	});
 });
