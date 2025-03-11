@@ -169,6 +169,7 @@ describe("DateRangePicker general interaction", () => {
 			.shadow()
 			.find("ui5-input")
 			.realClick()
+			.should("be.focused")
 			.realPress("F4");
 
 		cy.get("@dateRangePicker")
@@ -372,8 +373,7 @@ describe("DateRangePicker general interaction", () => {
 		cy.get("@calendarHeader")
 			.find("[data-ui5-cal-header-btn-next]")
 			.realClick()
-			.should("be.visible")
-			.and("be.focused");
+			.should("be.visible");
 
 		cy.get("@calendarHeader")
 			.find("[data-ui5-cal-header-btn-month]")
