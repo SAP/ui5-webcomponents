@@ -130,7 +130,7 @@ describe("Input Tests", () => {
 			.should("not.have.attr", "tabindex", "0");
 	});
 
-	it.only("tests tabindex of the div holding icon slot ", () => {
+	it("tests tabindex of the div holding icon slot ", () => {
 		cy.mount(
 			<Input id="input"></Input>
 		);
@@ -160,10 +160,10 @@ describe("Input Tests", () => {
 
 		cy.get("@icon")
 			.then($icon => {
-				$icon.get(0).addEventListener("click", cy.spy().as("click"));
+				$icon[0].addEventListener("click", cy.spy().as("click"));
 			});
 
-		cy.get<Icon>("@icon").realClick();
+		cy.get("@icon").realClick();
 
 		cy.get("@click")
 			.should("have.been.calledOnce");
