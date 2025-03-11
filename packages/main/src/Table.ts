@@ -594,21 +594,27 @@ class Table extends UI5Element {
 
 		const widths = [];
 		const visibleHeaderCells = this.headerRow[0]._visibleCells as TableHeaderCell[];
+
+		// Selection Cell Width
 		if (this._getSelection()?.isRowSelectorRequired()) {
 			widths.push("min-content");
 		}
+
+		// Column Widths
 		widths.push(...visibleHeaderCells.map(cell => {
-			const minWidth = cell.minWidth === "auto" ? "3rem" : cell.minWidth;
-			if (cell.width === "auto" || cell.width.includes("%") || cell.width.includes("fr") || cell.width.includes("vw")) {
-				return `minmax(${minWidth}, ${cell.maxWidth})`;
+			const minWidth = cell.minWidth === "auto" || !cell.minWidth ? "3rem" : `min(3rem, ${cell.minWidth})`;
+			if (cell.maxWidth) {
+				return `minmax(${minWidth}, max(${cell.maxWidth}))`;
 			}
-			return `minmax(${cell.width}, ${cell.width})`;
+			return `minmax(${minWidth}, ${cell.width || "1fr"})`;
 		}));
 
+		// Row Action Cell Width
 		if (this.rowActionCount > 0) {
 			widths.push(`calc(var(${getScopedVarName("--_ui5_button_base_min_width")}) * ${this.rowActionCount} + var(${getScopedVarName("--_ui5_table_row_actions_gap")}) * ${this.rowActionCount - 1} + var(${getScopedVarName("--_ui5_table_cell_horizontal_padding")}) * 2)`);
 		}
 
+		// Navigated Cell Width
 		if (this._renderNavigated) {
 			widths.push(`var(${getScopedVarName("--_ui5_table_navigated_cell_width")})`);
 		}

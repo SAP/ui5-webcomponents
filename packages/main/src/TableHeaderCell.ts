@@ -34,11 +34,11 @@ class TableHeaderCell extends TableCellBase {
 	/**
 	 * Defines the width of column.
 	 *
-	 * @default "auto"
+	 * @default "1fr"
 	 * @public
 	 */
 	@property()
-	width = "auto";
+	width?: string | undefined;
 
 	/**
  	 * Defines the minimum width of the column.
@@ -52,7 +52,7 @@ class TableHeaderCell extends TableCellBase {
 	 * @public
 	 */
 	@property()
-	minWidth = "auto";
+	minWidth?: string | undefined;
 
 	/**
 	 * Defines the maximum width of the column.
@@ -61,7 +61,7 @@ class TableHeaderCell extends TableCellBase {
 	 * @public
 	 */
 	@property()
-	maxWidth = "auto";
+	maxWidth?: string | undefined;
 
 	/**
 	 * Defines the importance of the column.
@@ -128,9 +128,6 @@ class TableHeaderCell extends TableCellBase {
 
 	onEnterDOM() {
 		super.onEnterDOM();
-		this.style.minWidth = this.minWidth;
-		this.style.maxWidth = this.maxWidth;
-		this.style.width = this.width;
 	}
 
 	onBeforeRendering() {
