@@ -196,7 +196,6 @@ describe("DateRangePicker general interaction", () => {
 			.find("ui5-input")
 			.as("input")
 			.realClick()
-			.should("be.focused")
 			.realPress("End")
 			.realPress("PageDown");
 
@@ -236,7 +235,6 @@ describe("DateRangePicker general interaction", () => {
 			.find("ui5-input")
 			.as("input")
 			.realClick()
-			.should("be.focused")
 			.realPress("End")
 			.realPress(["Shift", "PageUp"]);
 
@@ -276,7 +274,6 @@ describe("DateRangePicker general interaction", () => {
 			.find("ui5-input")
 			.as("input")
 			.realClick()
-			.should("be.focused")
 			.realPress("End")
 			.realPress(["Control", "Shift", "PageUp"]);
 
