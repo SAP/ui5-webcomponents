@@ -18,18 +18,21 @@ const menuRegenerate = document.getElementById('ai-wa-menu-regenerate');
 let lastInputValue = "";
 let loadTimeout;
 
-icon.id = "ai-wa-icon";
-icon.accessibleName = "AI Writing Assistant (Shift + F4)";
-icon.showTooltip = true;
-icon.name = "ai";
+icon.setAttribute("name", "ai");
+icon.setAttribute("slot", "icon");
+icon.setAttribute("accessible-name", "AI Writing Assistant (Shift + F4)");
 icon.setAttribute("aria-haspopup", "menu");
+icon.setAttribute("show-tooltip", true);
+icon.id = "ai-wa-icon";
 
 input.addEventListener('focus', () => {
 	updateIconVisibility(true);
 });
 
 input.addEventListener('focusout', e => {
-	if (!menuGenerate.open && !menuRegenerate.open && e.relatedTarget !== icon) {
+	if (!menuGenerate.open && !menuRegenerate.open &&
+		e.relatedTarget !== icon && icon.name !== "stop") {
+		icon.classList.remove("icon-pressed");
 		updateIconState("ai", "AI Writing Assistant (Shift + F4)");
 		updateIconVisibility(false);
 	}

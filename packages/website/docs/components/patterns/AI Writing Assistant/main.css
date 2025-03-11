@@ -11,16 +11,21 @@ body {
 	display: block;
 }
 
-ui5-icon#ai-wa-icon:hover {
+ui5-icon[name="ai"]:hover {
 	background: var(--sapButton_Hover_Background);
-	/* border-color: var(--sapButton_BorderColor); */
 	border: 1px solid var(--sapButton_BorderColor);
 	color: var(--sapButton_IconColor);
 }
 
-.icon-pressed {
-	background: transparent;
-	/* border-color: var(--sapButton_BorderColor); */
-	border: 1px solid var(--sapButton_BorderColor);
+ui5-icon[name="stop"] {
 	color: var(--sapButton_IconColor);
+}
+
+ui5-icon[name="ai"].icon-pressed:not(:hover) {
+	background: var(--sapField_Hover_Background);
+	box-shadow: var(--sapField_Hover_Shadow);
+	color: var(--sapButton_Selected_TextColor);
+	box-sizing: border-box;
+	border-radius: var(--sapField_BorderCornerRadius);
+
 }
