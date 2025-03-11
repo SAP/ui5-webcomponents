@@ -1,10 +1,11 @@
 import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import FlexibleColumnLayout from "../../src/FlexibleColumnLayout.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 
 describe("Columns resize", () => {
 	beforeEach(() => {
 		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", "none");
+			.invoke("setAnimationMode", AnimationMode.None);
 
 		cy.mount(
 			<FlexibleColumnLayout id="fcl" style={{ height: "300px" }} layout="TwoColumnsMidExpanded">
