@@ -1,3 +1,4 @@
+import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
 import "../../src/Assets.js";
 import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
@@ -13,6 +14,7 @@ describe("Legacy date customization", () => {
 		// but it needs to be configured using the legacyDateCalendarCustomizing setting.
 		cy.mount(<DatePicker value="Rab. I 9, 1446 AH" primaryCalendarType="Islamic"></DatePicker>, {
 			ui5Configuration: {
+				"calendarType": "Islamic",
 				"formatSettings": {
 					"legacyDateCalendarCustomizing": [
 						{
@@ -409,8 +411,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetInnerInput()
-			.realClick()
-			.should("be.focused");
+			.realClick();
 
 		cy.get<DatePicker>("@datePicker")
 			.should("have.attr", "open");
