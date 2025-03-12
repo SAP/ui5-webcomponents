@@ -35,7 +35,7 @@ describe("Event firing", () => {
 
 		cy.get("@combo").then($combo => {
 			$combo[0].addEventListener("focusin", () => {
-			 $combo[0].setAttribute("open", "true");
+			$combo[0].setAttribute("open", "true");
 			});
 		});
 
@@ -74,4 +74,31 @@ describe("Event firing", () => {
 		cy.get("@comboOpened")
 			.should("have.been.calledTwice");
 	});
+
+	it("should not fire 'change' event on focusout if value is not changed by user interaction", () => {
+		cy.mount(
+			<>
+				<ComboBox id="cb" value="ComboBox item text"></ComboBox>
+				<ComboBox id="another-cb"></ComboBox>
+			</>
+		);
+
+		cy.get("#cb").then($cb => {
+			$cb[0].addEventListener("ui5-change", cy.stub().as("changeStub"));
+		});
+
+		cy.get("#cb").shadow().find("input").click();
+		cy.get("#another-cb").shadow().find("input").click();
+		cy.get("@changeStub").should("not.have.been.called");
+
+		cy.get("#cb").then(($cb) => {
+			const comboBox = $cb[0] as ComboBox;
+			comboBox.value = "Another ComboBox item text";
+		});
+
+		cy.get("#cb").shadow().find("input").click();
+		cy.get("#another-cb").shadow().find("input").click();
+		cy.get("@changeStub").should("not.have.been.called");
+	});
 });
+

@@ -508,6 +508,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this.focused = true;
 		this._autocomplete = false;
 
+		if (!e.relatedTarget || (e.relatedTarget !== this.shadowRoot!.querySelector(".ui5-input-clear-icon"))) {
+			this._lastValue = this.value;
+		}
+
 		!isPhone() && (e.target as HTMLInputElement).setSelectionRange(0, this.value.length);
 	}
 
