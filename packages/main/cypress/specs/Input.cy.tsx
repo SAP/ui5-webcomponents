@@ -431,6 +431,22 @@ describe("Input general interaction", () => {
 			.eq(1)
 			.should("not.have.attr", "focused");
 	});
+
+	it("Should fire 'input' event when the value is cleared with ESC", () => {
+		cy.mount(
+			<Input></Input>
+		  );
+
+		  cy.get("[ui5-input]").then($input => {
+			  $input[0].addEventListener("ui5-input", cy.spy().as("inputEvent"));
+		  });
+
+		cy.get("[ui5-input]").realClick();
+		cy.get("[ui5-input]").realPress("a");
+		cy.get("[ui5-input]").realPress("Escape");
+
+		cy.get("@inputEvent").should("have.been.calledTwice");
+	});
 });
 
 describe("Input arrow navigation", () => {
