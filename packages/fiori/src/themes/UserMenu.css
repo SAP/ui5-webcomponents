@@ -100,6 +100,11 @@
     margin-bottom: 1rem;
 }
 
+.ui5-user-menu-other-accounts::part(header) {
+	border-bottom-left-radius:0;
+	border-bottom-right-radius:0;
+}
+
 .ui5-user-menu-other-accounts::part(content) {
     padding: 0;
 }
