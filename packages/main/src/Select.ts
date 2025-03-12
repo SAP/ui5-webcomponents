@@ -387,7 +387,7 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	/*
+	/**
 	 * Applies the option selection,
 	 * based on the Select's "value" or the Options' "selected" properties.
 	 */
@@ -399,10 +399,8 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 
 		// "value" has been used
-		// - apply pending selection of the option, that hasn't successfully been selected yet
 		this._applySelectionByValue();
 
-		// - apply auto-selection if no option has matched the value
 		if (!this.selectedOption) {
 			this._applyAutoSelection();
 		}
@@ -410,7 +408,6 @@ class Select extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Applies the selection of the option by the given value,
-	 * @private
 	 */
 	_applySelectionByValue() {
 		if (this._valueStorage !== undefined && (this._valueStorage !== (this.selectedOption?.value || this.selectedOption?.textContent))) {
@@ -421,7 +418,6 @@ class Select extends UI5Element implements IFormInputElement {
 	/**
 	 * Selects the first option if no option is selected
 	 * or selects the last option if multiple options are selected.
-	 * @private
 	 */
 	_applyAutoSelection() {
 		let selectedIndex = this.options.findLastIndex(option => option.selected);
@@ -436,7 +432,6 @@ class Select extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Selects an option by string value.
-	 * @private
 	 */
 	_selectOptionByValue(newValue: string) {
 		const options = Array.from(this.children) as Array<IOption>;
@@ -445,7 +440,10 @@ class Select extends UI5Element implements IFormInputElement {
 		});
 	}
 
-	updateValueByOption(option: IOption) {
+	/**
+	 * Sets value option by an option.
+	 */
+	_setValueByOption(option: IOption) {
 		this.value = option.value || option.textContent || "";
 	}
 
@@ -657,7 +655,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 		selectedOption.selected = true;
 		if (this._valueStorage !== undefined) {
-			this.updateValueByOption(selectedOption);
+			this._setValueByOption(selectedOption);
 		}
 	}
 
@@ -752,7 +750,7 @@ class Select extends UI5Element implements IFormInputElement {
 		nextOption.focused = true;
 
 		if (this._valueStorage !== undefined) {
-			this.updateValueByOption(nextOption);
+			this._setValueByOption(nextOption);
 		}
 
 		this.fireDecoratorEvent("live-change", { selectedOption: nextOption });
