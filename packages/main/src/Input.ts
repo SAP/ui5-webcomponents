@@ -924,7 +924,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		if (!isOpen) {
 			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
-
 			return;
 		}
 
