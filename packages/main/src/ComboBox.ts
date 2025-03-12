@@ -173,6 +173,22 @@ type ComboBoxSelectionChangeEventDetail = {
 })
 
 /**
+ * Fired when the dropdown is opened.
+ * @since 2.9.0
+ * @public
+ */
+@event("open", {
+	bubbles: true,
+})
+
+/**
+ * Fired when the dropdown is closed.
+ * @since 2.9.0
+ * @public
+ */
+@event("close")
+
+/**
  * Fired when typing in input or clear icon is pressed.
  *
  * **Note:** filterValue property is updated, input is changed.
@@ -194,6 +210,8 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	eventDetails!: {
 		"change": void,
 		"input": void,
+		"open": void,
+		"close": void,
 		"selection-change": ComboBoxSelectionChangeEventDetail,
 	}
 	/**
@@ -363,10 +381,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Indicates whether the items picker is open.
-	 * @private
-	 * @since 2.0.0
+	 * @public
+	 * @since 2.9.0
 	 */
-	@property({ type: Boolean, noAttribute: true })
+	@property({ type: Boolean })
 	open = false;
 
 	/**
@@ -530,6 +548,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_afterOpenPopover() {
 		this._iconPressed = true;
 		this.inner.focus();
+		this.fireDecoratorEvent("open");
 	}
 
 	_afterClosePopover() {
@@ -549,6 +568,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		this.open = false;
+		this.fireDecoratorEvent("close");
 	}
 
 	_toggleRespPopover() {
