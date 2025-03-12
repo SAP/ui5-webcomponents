@@ -83,7 +83,7 @@ class ShellBarItem extends UI5Element {
 	 *
 	 * @default {}
 	 * @public
-	 * @since 2.8.1
+	 * @since 2.9.0
 	 */
 
 	@property({ type: Object })
