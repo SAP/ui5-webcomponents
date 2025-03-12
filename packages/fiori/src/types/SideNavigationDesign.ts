@@ -1,5 +1,5 @@
 /**
- * Available options for the Side Navigation design.
+ * Available options for the SideNavigation design.
  * @public
  */
 enum SideNavigationDesign {
