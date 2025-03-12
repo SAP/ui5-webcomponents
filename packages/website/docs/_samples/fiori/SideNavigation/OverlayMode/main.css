@@ -3,3 +3,15 @@
 	overflow-x: visible;
 	overflow-y: hidden
 }
+
+.content {
+	padding: 2rem;
+}
+
+.contentItem {
+	display: none;
+}
+
+.contentItemVisible {
+	display: block;
+}
