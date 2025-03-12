@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0...v2.8.1-rc.0) (2025-03-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [2.8.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.3...v2.8.0) (2025-03-04)
+
+
+### Features
+
+* **framework:** add `.currentTarget` to the type of event handler in TSX and UI5CustomEvent ([#10957](https://github.com/SAP/ui5-webcomponents/issues/10957)) ([f56753c](https://github.com/SAP/ui5-webcomponents/commit/f56753c5142d6e817b05d7e33bd160f09c2d5205))
+
+
+
+
+
+# [2.8.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.2...v2.8.0-rc.3) (2025-02-27)
+
+
+### Bug Fixes
+
+* i18n bundle storage ([#10924](https://github.com/SAP/ui5-webcomponents/issues/10924)) ([e5456fb](https://github.com/SAP/ui5-webcomponents/commit/e5456fba557ab339ddcf6d933284a2b51155fa33)), closes [#10521](https://github.com/SAP/ui5-webcomponents/issues/10521)
+* **ui5-popover, ui5-dialog:** fix finding keyboard focusable scroll containers ([#10891](https://github.com/SAP/ui5-webcomponents/issues/10891)) ([ed26b90](https://github.com/SAP/ui5-webcomponents/commit/ed26b9051ef02772d748de463b9b3084de12ebe8))
+* **ui5-popover, ui5-dialog:** fix preventDefault for before-open and before-close events ([#10883](https://github.com/SAP/ui5-webcomponents/issues/10883)) ([e32e7ba](https://github.com/SAP/ui5-webcomponents/commit/e32e7ba83e4a950a7ad4745c302cc34b57c4cb8e))
+
+
+
+
+
 # [2.8.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.1...v2.8.0-rc.2) (2025-02-20)
 
 
