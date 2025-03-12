@@ -482,7 +482,7 @@ abstract class ListItem extends ListItemBase {
 			ariaHaspopup: this.accessibilityAttributes.hasPopup,
 			setsize: this.accessibilityAttributes.ariaSetsize,
 			posinset: this.accessibilityAttributes.ariaPosinset,
-			listItemAriaLabel: this.typeActive && document.activeElement === this ? ListItem.i18nBundle.getText(LIST_ITEM_ACTIVE) : undefined,
+			listItemAriaLabel: this.typeActive ? ListItem.i18nBundle.getText(LIST_ITEM_ACTIVE) : undefined,
 			tooltip: this.tooltip,
 		};
 	}
