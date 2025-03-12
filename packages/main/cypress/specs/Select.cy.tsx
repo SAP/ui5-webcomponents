@@ -69,3 +69,20 @@ describe("Select - Popover", () => {
 			.should("have.text", "Custom message");
 	});
 });
+
+describe("Select - Properties", () => {
+	it("Icon only is setting properly the required icon", () => {
+		cy.mount(
+			<Select icon-only="download">
+				<Option icon="iphone" selected>Phone</Option>
+				<Option icon="ipad">Tablet</Option>
+				<Option icon="laptop">Desktop</Option>
+			</Select>
+		);
+
+		cy.get("[ui5-option]")
+			.shadow()
+			.find("[ui5-icon]")
+			.should("have.attr", "name", "download");
+	});
+});

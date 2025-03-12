@@ -1,9 +1,7 @@
 import type Select from "./Select.js";
-import Button from "./Button.js";
 import Icon from "./Icon.js";
 import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import SelectPopoverTemplate from "./SelectPopoverTemplate.js";
-
 export default function SelectTemplate(this: Select) {
 	return (
 		<>
@@ -16,87 +14,64 @@ export default function SelectTemplate(this: Select) {
 				onClick={this._onclick}
 				title={this.tooltip}
 			>
-				{this.icon ? renderButton.call(this) : renderLabel.call(this)}
+				{!this.iconOnly && this.selectedOptionIcon &&
+					<Icon
+						mode="Decorative"
+						class="ui5-select-option-icon"
+						name={this.selectedOptionIcon} />
+				}
+
+				<div
+					class="ui5-select-label-root"
+					data-sap-focus-ref
+					tabindex={this._effectiveTabIndex}
+					role="combobox"
+					aria-haspopup="listbox"
+					aria-label={this.ariaLabelText}
+					aria-describedby={this.valueStateTextId}
+					aria-disabled={this.isDisabled}
+					aria-required={this.required}
+					aria-readonly={this.readonly}
+					aria-expanded={this._isPickerOpen}
+					aria-roledescription={this._ariaRoleDescription}
+					onKeyDown={this._onkeydown}
+					onKeyPress={this._handleKeyboardNavigation}
+					onKeyUp={this._onkeyup}
+					onFocusIn={this._onfocusin}
+					onFocusOut={this._onfocusout}
+				>
+					{this.hasCustomLabel
+						? <slot name="label"></slot>
+						: this.text
+					}
+				</div>
+
+				{this.iconOnly &&
+					<Icon
+						name={this.iconOnly}
+						class={{
+							"inputIcon": true,
+							"inputIcon--pressed": this._iconPressed,
+						}} />
+				}
+
+				{!this.iconOnly && !this.readonly &&
+					<Icon
+						part="icon"
+						name={slimArrowDown}
+						class={{
+							"inputIcon": true,
+							"inputIcon--pressed": this._iconPressed,
+						}} />
+				}
+
 				{this.hasValueState &&
 					<span id={`${this._id}-valueStateDesc`} class="ui5-hidden-text">
 						{this.valueStateText}
 					</span>
 				}
 			</div>
-
 			{SelectPopoverTemplate.call(this)}
-		</>
-	);
-}
-
-function renderButton(this: Select) {
-	return (
-		<>
-			<Button
-				class="ui5-select-icon"
-				icon={this.icon}
-				data-sap-focus-ref
-				aria-haspopup="listbox"
-				aria-label={this.ariaLabelText}
-				aria-describedby={this.valueStateTextId}
-				disabled={this.isDisabled}
-				aria-required={this.required}
-				aria-readonly={this.readonly}
-				aria-expanded={this._isPickerOpen}
-				aria-roledescription={this._ariaRoleDescription}
-				onKeyDown={this._onkeydown}
-				onKeyPress={this._handleKeyboardNavigation}
-				onKeyUp={this._onkeyup}
-				onFocusIn={this._onfocusin}
-				onFocusOut={this._onfocusout} />
-		</>
-	);
-}
-
-function renderLabel(this: Select) {
-	return (
-		<>
-			{this.selectedOptionIcon &&
-				<Icon
-					mode="Decorative"
-					class="ui5-select-option-icon"
-					name={this.selectedOptionIcon} />
-			}
-
-			<div
-				class="ui5-select-label-root"
-				data-sap-focus-ref
-				tabindex={this._effectiveTabIndex}
-				role="combobox"
-				aria-haspopup="listbox"
-				aria-label={this.ariaLabelText}
-				aria-describedby={this.valueStateTextId}
-				aria-disabled={this.isDisabled}
-				aria-required={this.required}
-				aria-readonly={this.readonly}
-				aria-expanded={this._isPickerOpen}
-				aria-roledescription={this._ariaRoleDescription}
-				onKeyDown={this._onkeydown}
-				onKeyPress={this._handleKeyboardNavigation}
-				onKeyUp={this._onkeyup}
-				onFocusIn={this._onfocusin}
-				onFocusOut={this._onfocusout}
-			>
-				{this.hasCustomLabel
-					? <slot name="label"></slot>
-					: this.text
-				}
-			</div>
-
-			{!this.readonly &&
-				<Icon
-					part="icon"
-					name={slimArrowDown}
-					class={{
-						"inputIcon": true,
-						"inputIcon--pressed": this._iconPressed,
-					}} />
-			}
 		</>
 	);
 }

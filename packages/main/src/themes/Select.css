@@ -2,18 +2,18 @@
 @import "./InputIcon.css";
 @import "./Input.css";
 
-:host([icon]) {
+:host([icon-only]) {
 	min-width: var(--_ui5_button_base_min_width);
 	width: var(--_ui5_button_base_min_width);
-	border-radius: var(--_ui5_button_border_radius);
 }
 
-:host([icon]) .ui5-select-root {
+:host([icon-only]) .ui5-select-root {
 	min-width: var(--_ui5_button_base_min_width);
 }
 
-:host([icon][focused]:not([opened])) .ui5-input-focusable-element:after {
-	display: none;
+:host([icon-only]) .ui5-select-label-root {
+	min-width: 0;
+	padding-inline-start: 0;
 }
 
 .ui5-select-root {
