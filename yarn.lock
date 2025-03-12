@@ -1478,9 +1478,9 @@
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
 "@babel/runtime-corejs3@^7.22.6":
-  version "7.23.9"
-  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.23.9.tgz#1b43062a13ecb60158aecdd81bc3fab4108b7cbc"
-  integrity sha512-oeOFTrYWdWXCvXGB5orvMTJ6gCZ9I6FBjR+M38iKNXCsPxr4xT0RTdg5uz1H7QP8pp74IzPtwritEr+JscqHXQ==
+  version "7.26.10"
+  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.26.10.tgz#5a3185ca2813f8de8ae68622572086edf5cf51f2"
+  integrity sha512-uITFQYO68pMEYR46AHgQoyBg7KPPJDAbGn4jUTIRgCFJIp88MIBUianVOplhZDEec07bp9zIyr4Kp0FCyQzmWg==
   dependencies:
     core-js-pure "^3.30.2"
     regenerator-runtime "^0.14.0"
@@ -4130,10 +4130,10 @@
   resolved "https://registry.yarnpkg.com/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@sap-theming/theming-base-content@11.24.0":
-  version "11.24.0"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.24.0.tgz#13195b6a345292576aac1c69386facbb91bd396a"
-  integrity sha512-Mtk011SHZhmhnRaD7B0eMVqGwPBuu1d9PaWkTpSD30MUuLZ0Uag4OMczWDT1oJwq0zGFYxGZxwtiCMwkwBxCKw==
+"@sap-theming/theming-base-content@11.26.0":
+  version "11.26.0"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.26.0.tgz#70051ba618faeda7fdb4fa569747a29a0932a490"
+  integrity sha512-ciEFuyCnAIzPnEq93deLgiIgrpg86VL5ZtrgobOHK3PRmVdgy7Ou6XbjQESq3lMNpfwwyO4+VmHipPwqTSmS0A==
 
 "@semantic-release/error@^4.0.0":
   version "4.0.0"
@@ -7109,10 +7109,10 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
 
-chromedriver@^132.0.0:
-  version "132.0.2"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-132.0.2.tgz#9bba1d82b14346769a37d708846da7c2d3110fcd"
-  integrity sha512-aywIWYggkAwdFN5zkyYHXUyUBJt2hFMweS3XU0XINIdfOG386z+sqAlExB4P1A10cSz+SO5gxcCgxd8UJNBvgg==
+chromedriver@^133.0.0:
+  version "133.0.3"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-133.0.3.tgz#84c314954172cf07dff89485afbe5778c3082b25"
+  integrity sha512-wGZUtrSdyqnbweXEDIbn+ndu7memG4SEqG6/D+mSabKUEic0hveMYepAPAhlYtvyOc0X8JbsARYtEalVD3R/Vg==
   dependencies:
     "@testim/chrome-version" "^1.1.4"
     axios "^1.7.4"

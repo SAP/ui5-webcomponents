@@ -14,11 +14,11 @@
     "build:definition": "tsc --project tsconfig.definition.json"
   },
   "devDependencies": {
-    "cypress": "^13.11.0",
-    "preact": "^10.25.4",
     "typescript": "^5.6.2"
   },
   "dependencies": {
+    "cypress": "^13.11.0",
+    "preact": "^10.25.4",
     "@cypress/mount-utils": "^4.0.0"
   }
 }
