@@ -471,6 +471,16 @@ abstract class ListItem extends ListItemBase {
 		return `${this._id}-content ${this._id}-invisibleText`;
 	}
 
+	get ariaLabelledByText() {
+		const texts = [
+			this._accInfo.listItemAriaLabel,
+			this.accessibleName,
+			this.typeActive ? ListItem.i18nBundle.getText(LIST_ITEM_ACTIVE) : undefined,
+		].filter(Boolean);
+
+		return texts.join(" ");
+	}
+
 	get _accInfo(): AccInfo {
 		return {
 			role: this.listItemAccessibleRole,
@@ -482,7 +492,6 @@ abstract class ListItem extends ListItemBase {
 			ariaHaspopup: this.accessibilityAttributes.hasPopup,
 			setsize: this.accessibilityAttributes.ariaSetsize,
 			posinset: this.accessibilityAttributes.ariaPosinset,
-			listItemAriaLabel: this.typeActive ? ListItem.i18nBundle.getText(LIST_ITEM_ACTIVE) : undefined,
 			tooltip: this.tooltip,
 		};
 	}
