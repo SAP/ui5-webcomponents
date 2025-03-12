@@ -86,6 +86,10 @@ export default function ListItemTemplate(this: ListItem, hooks?: Partial<ListIte
 			</div>
 		)}
 
+		{this.hasCustomIconSlot &&
+			<slot name="customIcon"></slot>
+		}
+
 		{this.typeNavigation && (
 			<Icon name={slimArrowRightIcon} />
 		)}

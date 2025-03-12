@@ -1,5 +1,8 @@
 import List from "../../src/List.js";
 import ListItemStandard from "../../src/ListItemStandard.js";
+import Icon from "../../src/Icon.js";
+
+import bell from "@ui5/webcomponents-icons/dist/bell.js";
 
 describe("List Tests", () => {
 	it("tests 'loadMore' event fired upon infinite scroll", () => {
@@ -149,5 +152,26 @@ describe("List Tests", () => {
 			.shadow()
 			.find("[id$='growing-btn']")
 			.should("be.focused");
+	});
+
+	it("Tests customIcon slot", () => {
+		cy.mount(
+			<List>
+				<ListItemStandard id="custom-icon-slot-li">
+					<Icon name={bell} slot="customIcon" id="custom-icon"></Icon>Color Set 1 - color-scheme 1
+				</ListItemStandard>
+			</List>
+		);
+
+		cy.get("#custom-icon-slot-li")
+			.shadow()
+			.find("slot[name='customIcon']")
+			.should("exist")
+			.then($slot => {
+				const slotElement = $slot[0] as HTMLSlotElement;
+				const assignedNodes = slotElement.assignedNodes();
+				expect(assignedNodes.length).to.be.greaterThan(0);
+				cy.wrap(assignedNodes[0]).should("have.attr", "id", "custom-icon");
+			});
 	});
 });

@@ -20,6 +20,7 @@ import ListItemBase from "./ListItemBase.js";
 import type RadioButton from "./RadioButton.js";
 import type CheckBox from "./CheckBox.js";
 import type { IButton } from "./Button.js";
+import type { IIcon } from "./Icon.js";
 import {
 	DELETE,
 	ARIA_LABEL_LIST_ITEM_CHECKBOX,
@@ -200,6 +201,14 @@ abstract class ListItem extends ListItemBase {
 	*/
 	@slot()
 	deleteButton!: Array<IButton>;
+
+	/**
+	 * Defines the icon to be displayed in the component.
+	 * @public
+	 * @since 2.8.2
+	 */
+	@slot()
+	customIcon!: Array<IIcon>;
 
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
@@ -458,6 +467,10 @@ abstract class ListItem extends ListItemBase {
 
 	get hasDeleteButtonSlot() {
 		return !!this.deleteButton.length;
+	}
+
+	get hasCustomIconSlot() {
+		return !!this.customIcon.length;
 	}
 
 	get _accessibleNameRef(): string {
