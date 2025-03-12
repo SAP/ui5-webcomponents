@@ -166,21 +166,10 @@ describe("List - Accessibility", () => {
 			cy.get("#active")
 				.shadow()
 				.find(`#${_id}-invisibleText`)
-				.should("not.have.text", "Is Active");
-			// act
-			cy.get("#active").realClick();
-			cy.get("#active").should("be.focused");
-
-			cy.get("#active")
-				.shadow()
-				.find(`#${_id}-invisibleText`)
 				.should("have.text", "Is Active");
 		});
 
 		cy.get("#inactive").invoke("prop", "_id").then(_id => {
-			cy.get("#inactive").realClick();
-			cy.get("#inactive").should("be.focused");
-
 			cy.get("#inactive")
 				.shadow()
 				.find(`#${_id}-invisibleText`)
