@@ -78,7 +78,7 @@ describe("Event firing", () => {
 	it("should not fire 'change' event on focusout if value is not changed by user interaction", () => {
 		cy.mount(
 			<>
-				<ComboBox id="cb" value ="ComboBox item text"></ComboBox>
+				<ComboBox id="cb" value="ComboBox item text"></ComboBox>
 				<ComboBox id="another-cb"></ComboBox>
 			</>
 		);
