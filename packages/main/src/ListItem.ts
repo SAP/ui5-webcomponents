@@ -205,7 +205,7 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the icon to be displayed in the component.
 	 * @public
-	 * @since 2.8.2
+	 * @since 2.9.0
 	 */
 	@slot()
 	customIcon!: Array<IIcon>;
