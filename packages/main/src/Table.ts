@@ -602,7 +602,7 @@ class Table extends UI5Element {
 
 		// Column Widths
 		widths.push(...visibleHeaderCells.map(cell => {
-			const minWidth = cell.minWidth === "auto" || !cell.minWidth ? "3rem" : `min(3rem, ${cell.minWidth})`;
+			const minWidth = cell.minWidth === "auto" || !cell.minWidth ? "3rem" : `max(3rem, ${cell.minWidth})`;
 			if (cell.maxWidth) {
 				return `minmax(${minWidth}, max(${cell.maxWidth}))`;
 			}
