@@ -23,6 +23,24 @@ describe("Color Picker general interaction tests", () => {
 			.should("not.exist");
 	});
 
+	it("should fire change event when color is changed", () => {
+		cy.mount(<ColorPicker></ColorPicker>);
+
+		cy.get("[ui5-color-picker]")
+			.as("colorPicker");
+
+		cy.get<ColorPicker>("@colorPicker")
+			.then($item => {
+				$item.get(0).addEventListener("change", cy.stub().as("valueChanged"));
+			});
+
+		cy.get<ColorPicker>("@colorPicker")
+			.ui5ColorPickerUpdateInput("#red", "123");
+
+		cy.get("@valueChanged")
+			.should("have.been.calledOnce");
+	});
+
 	it("should correctly parse colors in value property", () => {
 		cy.mount(<ColorPicker></ColorPicker>);
 
