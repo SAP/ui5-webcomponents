@@ -34,16 +34,16 @@ class TableHeaderCell extends TableCellBase {
 	/**
 	 * Defines the width of column.
 	 *
-	 * The default value is "1fr". This allows the column to grow and shrink according to the available space,
-	 * distributing the space proportionally among all columns with the same or similar width values.
+	 * By default, the column will grow and shrink according to the available space.
+	 * This will distribute the space proportionally among all columns with no specific width set.
 	 *
-	 * **Note:** This property is ignored if the `maxWidth` property is set.
+	 * **Note:** This property is ignored if the `maxWidth` or `minWidth` property is set.
 	 *
-	 * @default "1fr"
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	width?: string | undefined;
+	width?: string;
 
 	/**
  	 * Defines the minimum width of the column.

@@ -602,11 +602,12 @@ class Table extends UI5Element {
 
 		// Column Widths
 		widths.push(...visibleHeaderCells.map(cell => {
-			const minWidth = cell.minWidth === "auto" || !cell.minWidth ? "3rem" : `max(3rem, ${cell.minWidth})`;
-			if (cell.maxWidth) {
-				return `minmax(${minWidth}, max(${cell.maxWidth}))`;
+			if (cell.minWidth || cell.maxWidth) {
+				const minWidth = cell.minWidth === "auto" || !cell.minWidth ? "3rem" : `max(3rem, ${cell.minWidth})`;
+				const maxWidth = cell.maxWidth ? cell.maxWidth : "1fr";
+				return `minmax(${minWidth}, ${maxWidth})`;
 			}
-			return `minmax(${minWidth}, ${cell.width || "1fr"})`;
+			return cell.width ? cell.width : `minmax(3rem, ${cell.width || "1fr"})`;
 		}));
 
 		// Row Action Cell Width
