@@ -29,7 +29,8 @@ Cypress.Commands.add("ui5DatePickerGetPopoverDate", { prevSubject: true }, (subj
 		.shadow()
 		.find("ui5-daypicker")
 		.shadow()
-		.find(`[data-sap-timestamp='${timestamp}']`);
+		.find(`[data-sap-timestamp='${timestamp}']`)
+		.first();
 });
 
 Cypress.Commands.add("ui5DatePickerGetDisplayedDay", { prevSubject: true }, (subject, index) => {
@@ -151,7 +152,8 @@ Cypress.Commands.add("ui5DatePickerGetNextButton", { prevSubject: true }, subjec
 
 	return cy.get("@calendar")
 		.shadow()
-		.find(".ui5-calheader div[data-ui5-cal-header-btn-next]");
+		.find(".ui5-calheader div[data-ui5-cal-header-btn-next]")
+		.first();
 });
 
 Cypress.Commands.add("ui5DatePickerGetPreviousButton", { prevSubject: true }, subject => {
@@ -169,7 +171,8 @@ Cypress.Commands.add("ui5DatePickerGetPreviousButton", { prevSubject: true }, su
 
 	return cy.get("@calendar")
 		.shadow()
-		.find(".ui5-calheader div[data-ui5-cal-header-btn-prev]");
+		.find(".ui5-calheader div[data-ui5-cal-header-btn-prev]")
+		.first();
 });
 
 Cypress.Commands.add("ui5DatePickerGetMonthButton", { prevSubject: true }, subject => {
@@ -184,7 +187,8 @@ Cypress.Commands.add("ui5DatePickerGetMonthButton", { prevSubject: true }, subje
 
 	return cy.get("@calendar")
 		.shadow()
-		.find(".ui5-calheader div[data-ui5-cal-header-btn-month]");
+		.find(".ui5-calheader div[data-ui5-cal-header-btn-month]")
+		.first();
 });
 
 Cypress.Commands.add("ui5DatePickerGetYearButton", { prevSubject: true }, subject => {
@@ -199,7 +203,8 @@ Cypress.Commands.add("ui5DatePickerGetYearButton", { prevSubject: true }, subjec
 
 	return cy.get("@calendar")
 		.shadow()
-		.find(".ui5-calheader div[data-ui5-cal-header-btn-year]");
+		.find(".ui5-calheader div[data-ui5-cal-header-btn-year]")
+		.first();
 });
 
 Cypress.Commands.add("ui5DatePickerValueHelpIconPress", { prevSubject: true }, subject => {
