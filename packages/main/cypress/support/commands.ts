@@ -45,6 +45,7 @@ import "./commands/ColorPalette.commands.js";
 import "./commands/ColorPicker.commands.js";
 import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
+import "./commands/SegmentedButton.commands.js";
 
 type SimulationDevices = "phone"
 
@@ -75,6 +76,8 @@ declare global {
 			ui5DatePickerGetMonthButton(): Chainable<JQuery<HTMLElement>>
 			ui5DatePickerGetYearButton(): Chainable<JQuery<HTMLElement>>
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
+			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
+			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
 		}
 	}
 }
