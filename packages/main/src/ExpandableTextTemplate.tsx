@@ -8,6 +8,7 @@ export default function ExpandableTextTemplate(this: ExpandableText) {
 	return (
 		<div>
 			<Text
+				part="text"
 				class="ui5-exp-text-text"
 				emptyIndicatorMode={this.emptyIndicatorMode}
 			>
