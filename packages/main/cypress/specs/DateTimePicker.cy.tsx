@@ -153,7 +153,8 @@ describe("DateTimePicker general interaction", () => {
 		cy.get("#dtSeconds")
 			.shadow()
 			.find("ui5-input")
-			.realClick();
+			.realClick()
+			.should("be.focused");
 		cy.realType("wrongtext");
 		cy.realPress("Tab");
 
@@ -238,8 +239,7 @@ describe("DateTimePicker general interaction", () => {
 			cy.get("ui5-time-selection-clocks")
 				.shadow()
 				.find(`ui5-time-picker-clock[data-ui5-clock="hours"]`)
-				.invoke("prop", "active")
-				.should("equal", true);
+				.should("have.attr", "active", "");
 		});
 
 		cy.ui5DateTimePickerClose("#dt");
@@ -293,8 +293,7 @@ describe("DateTimePicker general interaction", () => {
 		cy.get("#dtSeconds")
 			.shadow()
 			.find("ui5-input")
-			.invoke("prop", "value")
-			.should("equal", "13/04/2020, 12:34:56 AM");
+			.should("have.prop", "value", "13/04/2020, 12:34:56 AM");
 
 		setAnimationMode(AnimationMode.Full);
 	});
@@ -318,6 +317,7 @@ describe("DateTimePicker general interaction", () => {
 				.find("ui5-daypicker")
 				.shadow()
 				.find("[data-sap-focus-ref]")
+				.should("be.focused")
 				.realClick();
 			cy.get("#ok").realClick();
 		});
@@ -325,8 +325,7 @@ describe("DateTimePicker general interaction", () => {
 		cy.get("#dt")
 			.shadow()
 			.find("ui5-input")
-			.invoke("prop", "value")
-			.should("equal", "");
+			.should("have.prop", "value", "");
 	});
 
 	it("Min and max dates are set, with no format pattern provided, using valid ISO format", () => {
@@ -360,8 +359,7 @@ describe("DateTimePicker general interaction", () => {
 		cy.ui5DateTimePickerOpen("#dt");
 
 		cy.ui5DateTimePickerGetPopover("#dt")
-			.invoke("attr", "accessible-name")
-			.should("equal", "Choose Date and Time");
+			.should("have.attr", "accessible-name", "Choose Date and Time");
 	});
 
 	// Unstable test, needs investigation
@@ -381,7 +379,8 @@ describe("DateTimePicker general interaction", () => {
 				.find("ui5-daypicker")
 				.shadow()
 				.find("[data-sap-focus-ref]")
-				.realClick();
+				.realClick()
+				.should("be.focused");
 			cy.get("#ok").realClick();
 		});
 
