@@ -7658,10 +7658,10 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
 
-chromedriver@^132.0.0:
-  version "132.0.2"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-132.0.2.tgz#9bba1d82b14346769a37d708846da7c2d3110fcd"
-  integrity sha512-aywIWYggkAwdFN5zkyYHXUyUBJt2hFMweS3XU0XINIdfOG386z+sqAlExB4P1A10cSz+SO5gxcCgxd8UJNBvgg==
+chromedriver@^133.0.0:
+  version "133.0.3"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-133.0.3.tgz#84c314954172cf07dff89485afbe5778c3082b25"
+  integrity sha512-wGZUtrSdyqnbweXEDIbn+ndu7memG4SEqG6/D+mSabKUEic0hveMYepAPAhlYtvyOc0X8JbsARYtEalVD3R/Vg==
   dependencies:
     "@testim/chrome-version" "^1.1.4"
     axios "^1.7.4"
