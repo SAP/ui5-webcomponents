@@ -107,7 +107,7 @@ class NavigationMenuItem extends MenuItem {
 		return result;
 	}
 
-	get accSideNavigationPopoverHiddenText() {
+	get acessibleNameText() {
 		return NavigationMenu.i18nBundle.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);
 	}
 }
