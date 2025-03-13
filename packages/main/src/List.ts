@@ -55,6 +55,7 @@ import type {
 	SelectionRequestEventDetail,
 } from "./ListItem.js";
 import ListSeparator from "./types/ListSeparator.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 
 // Template
 import ListTemplate from "./ListTemplate.js";
@@ -465,6 +466,13 @@ class List extends UI5Element {
 	_loadMoreActive = false;
 
 	/**
+	 * Defines the current media query size.
+	 * @private
+	 */
+	@property({ type: String })
+	mediaRange!: string;
+
+	/**
 	 * Defines the items of the component.
 	 *
 	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
@@ -494,6 +502,7 @@ class List extends UI5Element {
 	resizeListenerAttached: boolean;
 	listEndObserved: boolean;
 	_handleResize: ResizeObserverCallback;
+	_handleMediaRangeUpdateBound: ResizeObserverCallback;
 	initialIntersection: boolean;
 	_selectionRequested?: boolean;
 	_groupCount: number;
@@ -530,7 +539,7 @@ class List extends UI5Element {
 
 		this._handleResize = this.checkListInViewport.bind(this);
 
-		this._handleResize = this.checkListInViewport.bind(this);
+		this._handleMediaRangeUpdateBound = this._handleMediaRangeUpdate.bind(this);
 
 		// Indicates the List bottom most part has been detected by the IntersectionObserver
 		// for the first time.
@@ -562,6 +571,7 @@ class List extends UI5Element {
 	onEnterDOM() {
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
 		DragRegistry.subscribe(this);
+		ResizeHandler.register(this.getDomRef()!, this._handleMediaRangeUpdateBound);
 	}
 
 	onExitDOM() {
@@ -569,6 +579,7 @@ class List extends UI5Element {
 		this.unobserveListEnd();
 		this.resizeListenerAttached = false;
 		ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
+		ResizeHandler.deregister(this.getDomRef()!, this._handleMediaRangeUpdateBound);
 		DragRegistry.unsubscribe(this);
 	}
 
@@ -776,6 +787,8 @@ class List extends UI5Element {
 				(item as ListItem)._selectionMode = this.selectionMode;
 			}
 			item.hasBorder = showBottomBorder;
+
+			(item as ListItem).mediaRange = this.mediaRange;
 		});
 	}
 
@@ -1063,6 +1076,11 @@ class List extends UI5Element {
 		if (this.hasGrowingComponent()) {
 			this.fireDecoratorEvent("load-more");
 		}
+	}
+
+	_handleMediaRangeUpdate() {
+		const width = this.getBoundingClientRect().width;
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
 	/*

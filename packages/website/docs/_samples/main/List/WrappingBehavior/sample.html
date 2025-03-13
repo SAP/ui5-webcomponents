@@ -1,0 +1,39 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+	<!-- playground-fold-end -->
+	<ui5-list header-text="List Item Wrapping Examples">
+		<!-- Default Behavior (Truncating) -->
+		<ui5-li
+			text="Long list item title that gets truncated when it exceeds the width of the container. This allows users to see the beginning of the text and understand what the item is about. Long list item title that gets truncated when it exceeds the width of the container. This allows users to see the beginning of the text and understand what the item is about."
+			description="This description is truncated by default and shows an ellipsis at the end when the text is too long to fit in a single line. This description is truncated by default and shows an ellipsis at the end when the text is too long to fit in a single line."
+			additional-text="Truncated">
+			<ui5-avatar slot="image">
+				<img src="../assets/images/avatars/man_avatar_1.png" alt="Man image">
+			</ui5-avatar>
+		</ui5-li>
+
+		<!-- Wrapped Behavior -->
+		<ui5-li wrapping
+			text="Long list item title that gets wrapped when it exceeds the width of the container. This allows users to read the full title without requiring interaction. Long list item title that gets wrapped when it exceeds the width of the container. This allows users to read the full title without requiring interaction. Long list item title that gets wrapped when it exceeds the width of the container. This allows users to read the full title without requiring interaction."
+			description="This description gets wrapped when the 'wrapping' property is enabled, and the content flows to multiple lines instead of being truncated. This allows users to read lengthy descriptions without requiring interaction. This description gets wrapped when the 'wrapping' property is enabled, and the content flows to multiple lines instead of being truncated. This allows users to read lengthy descriptions without requiring interaction."
+			additional-text="Wrapped">
+			<ui5-avatar slot="image">
+				<img src="../assets/images/avatars/man_avatar_2.png" alt="Man image">
+			</ui5-avatar>
+		</ui5-li>
+	</ui5-list>
+	<!-- playground-fold -->
+	<script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

@@ -20,7 +20,7 @@ describe("List Tests", () => {
 
 		cy.get<List>("@list")
 			.then(list => {
-				list.get(0).addEventListener("ui5-load-more", cy.stub().as("loadMore"));
+				list.get(0)?.addEventListener("ui5-load-more", cy.stub().as("loadMore"));
 			})
 			.shadow()
 			.find(".ui5-list-scroll-container")
@@ -175,5 +175,95 @@ describe("List - Accessibility", () => {
 				.find(`#${_id}-invisibleText`)
 				.should("not.have.text", "Is Active");
 		});
+	});
+});
+
+describe("List - Wrapping Behavior", () => {
+	it("renders list items with wrapping functionality", () => {
+		const longText = "This is a very long text that should demonstrate the wrapping functionality of ListItemStandard components; This is a very long text that should demonstrate the wrapping functionality of ListItemStandard components; This is a very long text that should demonstrate the wrapping functionality of ListItemStandard components; This is a very long text that should demonstrate the wrapping functionality of ListItemStandard components; This is a very long text that should demonstrate the wrapping functionality of ListItemStandard components";
+		const longDescription = "This is an even longer description text to verify that wrapping works correctly for the description part of the list item as well; This is an even longer description text to verify that wrapping works correctly for the description part of the list item as well; This is an even longer description text to verify that wrapping works correctly for the description part of the list item as well; This is an even longer description text to verify that wrapping works correctly for the description part of the list item as well; This is an even longer description text to verify that wrapping works correctly for the description part of the list item as well; This is an even longer description text to verify that wrapping works correctly for the description part of the list item as well";
+		
+		cy.mount(
+			<List>
+				<ListItemStandard id="wrapping-item" wrapping text={longText} description={longDescription}></ListItemStandard>
+			</List>
+		);
+
+		// Check wrapping attributes are set correctly
+		cy.get("#wrapping-item")
+			.should("have.attr", "wrapping");
+
+		cy.get("#wrapping-item")
+			.should("have.attr", "wrapping-type", "Normal");
+		
+		// Check that ExpandableText components are present in the wrapping item
+		cy.get("#wrapping-item")
+			.shadow()
+			.find("ui5-expandable-text")
+			.should("exist")
+			.and("have.length", 2);
+	});
+
+	it("uses maxCharacters of 300 on desktop viewport for wrapping list items", () => {
+		const longText = "This is a very long text that exceeds 100 characters but is less than 300 characters. This sentence is just to add more text to ensure we pass the 100 character threshold. And now we're adding even more text to be extra certain that we have enough content to demonstrate the behavior properly. And now we're adding even more text to be extra certain that we have enough content to demonstrate the behavior properly. And now we're adding even more text to be extra certain that we have enough content to demonstrate the behavior properly.";
+		
+		cy.mount(
+			<List>
+				<ListItemStandard id="wrapping-item" wrapping text={longText}></ListItemStandard>
+			</List>
+		);
+
+		// Check that ExpandableText is created with maxCharacters prop of 300
+		cy.get("#wrapping-item")
+			.shadow()
+			.find("ui5-expandable-text")
+			.first()
+			.invoke('prop', 'maxCharacters')
+			.should('eq', 300);
+	});
+
+	it("should switch wrapping type when wrapping prop is toggled", () => {
+		const longText = "This is a very long text that should be wrapped when the wrapping prop is enabled, and truncated when it's disabled. This is a very long text that should be wrapped when the wrapping prop is enabled, and truncated when it's disabled. This is a very long text that should be wrapped when the wrapping prop is enabled, and truncated when it's disabled. This is a very long text that should be wrapped when the wrapping prop is enabled, and truncated when it's disabled. This is a very long text that should be wrapped when the wrapping prop is enabled, and truncated when it's disabled. And now we're adding even more text to be extra certain that we have enough content to demonstrate the behavior properly.";
+		
+		// First render with wrapping enabled
+		cy.mount(
+			<List>
+				<ListItemStandard id="wrapping-item" wrapping text={longText}></ListItemStandard>
+			</List>
+		);
+
+		// Check that wrapping attribute is set
+		cy.get("#wrapping-item")
+			.should("have.attr", "wrapping");
+
+		// Check that wrapping-type attribute is set to Normal
+		cy.get("#wrapping-item")
+			.should("have.attr", "wrapping-type", "Normal");
+
+		// Should have expandable text component when wrapping is enabled
+		cy.get("#wrapping-item")
+			.shadow()
+			.find("ui5-expandable-text")
+			.should("exist");
+
+		// Remove the wrapping attribute from the existing component
+		cy.get("#wrapping-item")
+			.then($el => {
+				$el[0].removeAttribute("wrapping");
+			});
+
+		// Check that wrapping attribute is removed
+		cy.get("#wrapping-item")
+			.should("not.have.attr", "wrapping");
+
+		// Now check the wrapping-type attribute in a separate command
+		cy.get("#wrapping-item")
+			.should("have.attr", "wrapping-type", "None");
+
+		// Should not have expandable text component when wrapping is disabled
+		cy.get("#wrapping-item")
+			.shadow()
+			.find("ui5-expandable-text")
+			.should("not.exist");
 	});
 });
