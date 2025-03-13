@@ -16,6 +16,7 @@ describe("Day Picker Tests", () => {
 			.as("today");
 		cy.get("@today")
 			.realClick()
+			.should("be.focused")
 			.realPress("ArrowRight")
 			.realPress("Space");
 		cy.focused()
@@ -33,10 +34,12 @@ describe("Day Picker Tests", () => {
 		cy.get("#daypicker")
 			.shadow()
 			.find(".ui5-dp-item--now")
+			.should("be.focused")
 			.as("today");
 
 		cy.get("@today")
 			.realClick()
+			.should("be.focused")
 			.realPress("ArrowRight")
 			.realPress("Enter");
 
@@ -58,8 +61,8 @@ describe("Day Picker Tests", () => {
 		cy.get("#daypicker")
 			.shadow()
 			.find(".ui5-dp-firstday")
-			.invoke("prop", "textContent")
-			.should("eq", "Sun");
+			.first()
+			.should("have.text", "Sun");
 	});
 
 	it("Day names are correctly displayed when length is more than 3", () => {
@@ -72,7 +75,7 @@ describe("Day Picker Tests", () => {
 		cy.get("#daypicker")
 			.shadow()
 			.find(".ui5-dp-firstday")
-			.invoke("prop", "textContent")
-			.should("eq", "D");
+			.first()
+			.should("have.text", "D");
 	});
 });
