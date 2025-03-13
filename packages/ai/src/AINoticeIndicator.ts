@@ -8,6 +8,8 @@ import AINoticeIndicatorMode from "./types/AINoticeIndicatorMode.js";
 import {
 	BUTTON_TEXT_CLOSE,
 	TITLE_TEXT,
+	POPOVER_TEXT,
+	VERIFICATION_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -78,6 +80,14 @@ class AINoticeIndicator extends UI5Element {
 
 	get _titleText() {
 		return AINoticeIndicator.i18nBundle.getText(TITLE_TEXT);
+	}
+
+	get _popoverText() {
+		return AINoticeIndicator.i18nBundle.getText(POPOVER_TEXT);
+	}
+
+	get _verificationText() {
+		return AINoticeIndicator.i18nBundle.getText(VERIFICATION_TEXT);
 	}
 
     getMode(): void {
