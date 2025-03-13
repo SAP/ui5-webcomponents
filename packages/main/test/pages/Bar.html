@@ -76,9 +76,32 @@
 	<section>
 		<ui5-bar>
 			<ui5-title id="titleElementWithLongText" slot="startContent">...</ui5-title>
-		  </ui5-bar>
+		</ui5-bar>
 		<ui5-button id="loadButton">Change Title</ui5-button>
+
+		<ui5-bar design="Header">
+			<ui5-button icon="home" tooltip="Go home" design="Transparent" slot="startContent"></ui5-button>
+			<ui5-title id="basic-label" wrapping-type="None">Content Content Content Content Content ContContent Content Content Content Content </ui5-title>
+			<ui5-button icon="home" tooltip="Go home" design="Transparent" slot="endContent"></ui5-button>
+		</ui5-bar>
+	
+		<ui5-button id="openDialog" design="Transparent">Open Dialog</ui5-button>
+	
+		<ui5-dialog id="myDialog" header-text="Dialog Title" class="myDialog">
+			<!-- Bar footer -->
+			<ui5-bar design="Footer">
+				<ui5-button icon="home" tooltip="Go home" design="Transparent" slot="endContent">
+					This is a very long text that exceeds the calculated width of the dialog
+				</ui5-button>
+			</ui5-bar>
+		</ui5-dialog>
+
 		<script>
+
+			openDialog.addEventListener("click", () => {
+				myDialog.open = true;
+			});
+
 			const loadButton = document.getElementById("loadButton");
 			const titleElementWithLongText = document.getElementById("titleElementWithLongText");
 
