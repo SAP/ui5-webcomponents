@@ -2,6 +2,7 @@ import type Select from "./Select.js";
 import Icon from "./Icon.js";
 import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import SelectPopoverTemplate from "./SelectPopoverTemplate.js";
+
 export default function SelectTemplate(this: Select) {
 	return (
 		<>
