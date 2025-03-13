@@ -197,7 +197,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Select a date from the picker popover", () => {
-		cy.mount(<DatePicker value="Jan 6, 2015"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 6, 2015" formatPattern="MMM d, y"></DatePicker>);
 
 		const timestamp_6_Jan_2015 = 1420502400;
 		const timestamp_8_Jan_2015 = timestamp_6_Jan_2015 + 2 * 24 * 60 * 60;
@@ -565,7 +565,7 @@ describe("Date Picker Tests", () => {
 	it("daypicker extreme values max", () => {
 		const timestamp_28_Nov_9999 = "253399363200";
 
-		cy.mount(<DatePicker value="Dec 31, 9999"></DatePicker>);
+		cy.mount(<DatePicker value="Dec 31, 9999" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -583,7 +583,7 @@ describe("Date Picker Tests", () => {
 	it("daypicker extreme values min", () => {
 		const timestamp_31_Dec_0000 = "-62135683200";
 
-		cy.mount(<DatePicker value="Jan 1, 0001"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 1, 0001" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -601,7 +601,7 @@ describe("Date Picker Tests", () => {
 	it("daypicker prev extreme values min", () => {
 		const timestamp_31_Dec_0000 = "-62135683200";
 
-		cy.mount(<DatePicker value="Feb 1, 0001"></DatePicker>);
+		cy.mount(<DatePicker value="Feb 1, 0001" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -623,7 +623,7 @@ describe("Date Picker Tests", () => {
 	it("daypicker next extreme values max", () => {
 		const timestamp_28_Nov_9999 = "253399363200";
 
-		cy.mount(<DatePicker value="Nov 30, 9999"></DatePicker>);
+		cy.mount(<DatePicker value="Nov 30, 9999" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -643,7 +643,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("monthpicker next extreme values max", () => {
-		cy.mount(<DatePicker value="Dec 31, 9998"></DatePicker>);
+		cy.mount(<DatePicker value="Dec 31, 9998" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -675,7 +675,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("monthpicker prev extreme values min", () => {
-		cy.mount(<DatePicker value="Jan 1, 0002"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 1, 0002" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -707,7 +707,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker extreme values max", () => {
-		cy.mount(<DatePicker value="Dec 31, 9995"></DatePicker>);
+		cy.mount(<DatePicker value="Dec 31, 9995" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -719,8 +719,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedYear()
-			.invoke("text")
-			.should("include", "9980");
+			.should("have.text", "9980");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetNextButton()
@@ -728,7 +727,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker extreme values min", () => {
-		cy.mount(<DatePicker value="Jan 1, 0003"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 1, 0003" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -740,8 +739,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedYear()
-			.invoke("text")
-			.should("include", "0001");
+			.should("have.text", "0001");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPreviousButton()
@@ -749,7 +747,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker prev page extreme values min", () => {
-		cy.mount(<DatePicker value="Jan 1, 0012"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 1, 0012" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -761,8 +759,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedYear()
-			.invoke("text")
-			.should("include", "0002");
+			.should("have.text", "0002");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPreviousButton()
@@ -770,8 +767,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedYear()
-			.invoke("text")
-			.should("include", "0001");
+			.should("have.text", "0001");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPreviousButton()
@@ -779,7 +775,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker next page extreme values max", () => {
-		cy.mount(<DatePicker value="Dec 31, 9986"></DatePicker>);
+		cy.mount(<DatePicker value="Dec 31, 9986" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -791,8 +787,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedYear()
-			.invoke("text")
-			.should("include", "9976");
+			.should("have.text", "9976");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetNextButton()
@@ -800,8 +795,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedYear()
-			.invoke("text")
-			.should("include", "9980");
+			.should("have.text", "9980");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetNextButton()
@@ -809,7 +803,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker click extreme values max", () => {
-		cy.mount(<DatePicker value="Dec 31, 9986"></DatePicker>);
+		cy.mount(<DatePicker value="Dec 31, 9986" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -821,8 +815,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetDisplayedYear(10)
-			.invoke("text")
-			.should("include", "9986");
+			.should("have.text", "9986");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetDisplayedYear(10)
@@ -834,12 +827,11 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedYear()
-			.invoke("text")
-			.should("include", "9976");
+			.should("have.text", "9976");
 	});
 
 	it("yearpicker click extreme values min year above 10", () => {
-		cy.mount(<DatePicker value="Jan 1, 0012"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 1, 0012" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -851,12 +843,11 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetDisplayedYear(2)
-			.invoke("text")
-			.should("include", "0004");
+			.should("have.text", "0004");
 	});
 
 	it("yearpicker click extreme values min year below 10", () => {
-		cy.mount(<DatePicker value="Jan 1, 0004"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 1, 0004" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -868,8 +859,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedYear()
-			.invoke("text")
-			.should("include", "0001");
+			.should("have.text", "0001");
 	});
 
 	it("placeholder, based on the formatPattern", () => {

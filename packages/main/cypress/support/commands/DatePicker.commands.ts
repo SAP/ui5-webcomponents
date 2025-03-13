@@ -70,7 +70,8 @@ Cypress.Commands.add("ui5DatePickerGetFirstDisplayedDate", { prevSubject: true }
 		.shadow()
 		.find("ui5-daypicker")
 		.shadow()
-		.find("div.ui5-dp-item");
+		.find("div.ui5-dp-item")
+		.first();
 });
 
 Cypress.Commands.add("ui5DatePickerGetFirstDisplayedYear", { prevSubject: true }, subject => {
@@ -90,7 +91,8 @@ Cypress.Commands.add("ui5DatePickerGetFirstDisplayedYear", { prevSubject: true }
 
 	return cy.get("@yearPicker")
 		.shadow()
-		.find("div.ui5-yp-item");
+		.find("div.ui5-yp-item")
+		.first();
 });
 Cypress.Commands.add("ui5DatePickerGetDisplayedMonth", { prevSubject: true }, (subject: string, index: number) => {
 	cy.wrap(subject)
