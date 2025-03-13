@@ -57,6 +57,30 @@ describe("Table - Rendering", () => {
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(500);
 	});
+
+	it("columns have equal widths width default width", () => {
+		cy.mount(
+			<Table style="width: 400px;" id="table">
+				<TableHeaderRow slot="headerRow">
+					<TableHeaderCell><span>ColumnA</span></TableHeaderCell>
+					<TableHeaderCell><span>ColumnB</span></TableHeaderCell>
+					<TableHeaderCell><span>ColumnC</span></TableHeaderCell>
+					<TableHeaderCell><span>ColumnD</span></TableHeaderCell>
+				</TableHeaderRow>
+				<TableRow>
+					<TableCell><Label>Cell A</Label></TableCell>
+					<TableCell><Label>Cell B</Label></TableCell>
+					<TableCell><Label>Cell C</Label></TableCell>
+					<TableCell><Label>Cell D</Label></TableCell>
+				</TableRow>
+			</Table>
+		);
+
+		cy.get("ui5-table-header-cell").each(($cell, index) => {
+			const expected = index === 0 || index === 3 ? 99 : 100;
+			expect($cell.outerWidth()).to.be.equal(expected);
+		});
+	});
 });
 
 describe("Table - Popin Mode", () => {

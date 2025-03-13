@@ -66,7 +66,7 @@ class TableHeaderCell extends TableCellBase {
 	 *
 	 * **Notes:**
 	 * - This property expects absolute values.
-	 * 
+	 *
 	 * @public
 	 * @default undefined
 	 */
