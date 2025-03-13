@@ -2,6 +2,7 @@
 	class="ui5-carousel-root ui5-carousel-background-{{_backgroundDesign}}"
 	tabindex="0"
 	role="list"
+	aria-roledescription={{_roleDescription}}
 	aria-label="{{ariaLabelTxt}}"
 	aria-activedescendant="{{ariaActiveDescendant}}"
 	@focusin="{{_onfocusin}}"
@@ -16,7 +17,6 @@
 					class="ui5-carousel-item {{classes}}"
 					style="{{styles}}"
 					role="listitem"
-					aria-roledescription={{_roleDescription}}
 					aria-posinset="{{posinset}}"
 					aria-setsize="{{setsize}}"
 					part="item"
