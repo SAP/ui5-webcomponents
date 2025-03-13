@@ -1,6 +1,6 @@
 import "../../src/Assets.js";
 import DayPicker from "../../src/DayPicker.js";
-import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
 function DefaultDayPicker() {
