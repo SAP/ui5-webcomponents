@@ -54,7 +54,8 @@ describe("DateTimePicker general interaction", () => {
 				.find("ui5-daypicker")
 				.shadow()
 				.find(".ui5-dp-item--selected")
-				.realClick();
+				.realClick()
+				.should("be.focused");
 
 			cy.realPress("ArrowRight");
 			cy.realPress("Space");
@@ -67,6 +68,7 @@ describe("DateTimePicker general interaction", () => {
 		cy.get("#dtSeconds")
 			.shadow()
 			.find("ui5-input")
+			.should("be.focused")
 			.should("have.attr", "value", "14/04/2020, 03:16:16 AM");
 
 		cy.ui5DateTimePickerIsOpen("#dtSeconds").should("equal", false);
@@ -127,6 +129,7 @@ describe("DateTimePicker general interaction", () => {
 		cy.get("#dtSeconds")
 			.shadow()
 			.find("ui5-input")
+			.should("be.focused")
 			.should("have.attr", "value", "13/04/2020, 02:14:19 PM");
 
 		cy.ui5DateTimePickerIsOpen("#dtSeconds").should("equal", false);
@@ -161,13 +164,14 @@ describe("DateTimePicker general interaction", () => {
 		cy.ui5DateTimePickerOpen("#dtSeconds");
 
 		// Act
-		let selectedDate: string;
+		let selectedDate = "";
 		cy.ui5DateTimePickerGetPopover("#dtSeconds").within(() => {
 			cy.get("ui5-calendar")
 				.shadow()
 				.find("ui5-daypicker")
 				.shadow()
 				.find(".ui5-dp-item--now")
+				.should("be.focused")
 				.then($el => {
 					const timestamp = $el.attr("data-sap-timestamp") || "";
 					const date = new Date(parseInt(timestamp) * 1000);
@@ -181,10 +185,8 @@ describe("DateTimePicker general interaction", () => {
 		cy.get("#dtSeconds")
 			.shadow()
 			.find("ui5-input")
-			.invoke("prop", "value")
-			.should(val => {
-				expect(val).to.include(selectedDate);
-			});
+			.should("be.focused")
+			.should("have.attr", "value", selectedDate + ", 02:14:19 PM");
 
 		setAnimationMode(AnimationMode.Full);
 	});
@@ -262,6 +264,7 @@ describe("DateTimePicker general interaction", () => {
 					.find("ui5-daypicker")
 					.shadow()
 					.find(".ui5-dp-item--selected")
+					.should("be.focused")
 					.realClick();
 
 				cy.get("ui5-time-selection-clocks")
@@ -293,7 +296,8 @@ describe("DateTimePicker general interaction", () => {
 		cy.get("#dtSeconds")
 			.shadow()
 			.find("ui5-input")
-			.should("have.prop", "value", "13/04/2020, 12:34:56 AM");
+			.should("be.focused")
+			.should("have.attr", "value", "13/04/2020, 12:34:56 AM");
 
 		setAnimationMode(AnimationMode.Full);
 	});
@@ -325,7 +329,8 @@ describe("DateTimePicker general interaction", () => {
 		cy.get("#dt")
 			.shadow()
 			.find("ui5-input")
-			.should("have.prop", "value", "");
+			.should("be.focused")
+			.should("have.attr", "value", "");
 	});
 
 	it("Min and max dates are set, with no format pattern provided, using valid ISO format", () => {
