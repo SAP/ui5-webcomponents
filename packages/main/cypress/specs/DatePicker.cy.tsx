@@ -1,7 +1,5 @@
-// import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
 import "../../src/Assets.js";
-import { resetConfiguration } from "@ui5/webcomponents-base/dist/InitialConfiguration.js";
 import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import DatePicker from "../../src/DatePicker.js";
 import Label from "../../src/Label.js";
@@ -163,35 +161,7 @@ describe("Date Picker Tests", () => {
 			.should("have.attr", "placeholder", "test placeholder");
 	});
 
-	it("primary calendar type", () => {
-		cy.mount(<DatePicker primaryCalendarType="Islamic"></DatePicker>);
-
-		cy.get("[ui5-date-picker]")
-			.shadow()
-			.find("ui5-calendar")
-			.should("have.attr", "primary-calendar-type", "Islamic");
-	});
-
-	it("Islamic calendar type input value", () => {
-		cy.mount(<DatePicker primaryCalendarType="Islamic" formatPattern="MMM d, y G"></DatePicker>);
-
-		cy.get("[ui5-date-picker]")
-			.as("datePicker")
-			.ui5DatePickerGetInnerInput()
-			.as("input")
-			.realClick()
-			.should("be.focused")
-			.realType("Rab. I 6, 1440 AH")
-			.realPress("Enter");
-
-		cy.get("@datePicker")
-			.should("have.value", "Rab. I 6, 1440 AH");
-
-		cy.get("@datePicker")
-			.shadow()
-			.find("ui5-input")
-			.should("have.attr", "value-state", "None");
-	});
+	
 
 	it("Selected date from daypicker is the same as datepicker date", () => {
 		cy.mount(<DatePicker value="Jan 29, 2019" formatPattern="MMM d, y"></DatePicker>);
@@ -1600,9 +1570,13 @@ describe("Date Picker Tests", () => {
 	});
 });
 
-describe("Legacy date customization", () => {
+describe("Legacy date customization and Islamic calendar type", () => {
+	afterEach(() => {
+		// eslint-disable-next-line
+		cy.wait(200);
+	});
+
 	const configurationObject = {
-		"calendarType": "Islamic",
 		"formatSettings": {
 			"legacyDateCalendarCustomizing": [
 				{
@@ -1674,12 +1648,6 @@ describe("Legacy date customization", () => {
 				return $el.document.head.append(scriptElement);
 			})
 
-		cy.wrap({ resetConfiguration })
-			.invoke("resetConfiguration", true);
-
-		cy.wrap({ setLanguage })
-			.invoke("setLanguage", "en");
-
 		// According to the Islamic calendar, Rab. I 9, 1446 AH should be displayed on Thursday,
 		// but it needs to be configured using the legacyDateCalendarCustomizing setting.
 		cy.mount(<DatePicker value="Rab. I 9, 1446 AH" primaryCalendarType="Islamic"></DatePicker>);
@@ -1701,8 +1669,35 @@ describe("Legacy date customization", () => {
 
 				scriptElement?.remove();
 			})
+	});
 
-		cy.wrap({ resetConfiguration })
-			.invoke("resetConfiguration", true);
+	it("primary calendar type", () => {
+		cy.mount(<DatePicker primaryCalendarType="Islamic"></DatePicker>);
+
+		cy.get("[ui5-date-picker]")
+			.shadow()
+			.find("ui5-calendar")
+			.should("have.attr", "primary-calendar-type", "Islamic");
+	});
+
+	it("Islamic calendar type input value", () => {
+		cy.mount(<DatePicker primaryCalendarType="Islamic" formatPattern="MMM d, y G"></DatePicker>);
+
+		cy.get("[ui5-date-picker]")
+			.as("datePicker")
+			.ui5DatePickerGetInnerInput()
+			.as("input")
+			.realClick()
+			.should("be.focused")
+			.realType("Rab. I 6, 1440 AH")
+			.realPress("Enter");
+
+		cy.get("@datePicker")
+			.should("have.value", "Rab. I 6, 1440 AH");
+
+		cy.get("@datePicker")
+			.shadow()
+			.find("ui5-input")
+			.should("have.attr", "value-state", "None");
 	});
 });
