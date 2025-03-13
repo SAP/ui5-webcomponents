@@ -28,7 +28,6 @@ export default function AINoticeIndicatorTemplate(this: AINoticeIndicator) {
 
 				{this._usePopover &&
 					<ResponsivePopover
-						open={this._expanded}
 						opener="toggle"
 						title={this._titleText}
 						accessibleNameRef="popover-text"

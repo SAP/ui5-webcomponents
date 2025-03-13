@@ -7,10 +7,15 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AINoticeIndicatorMode from "./types/AINoticeIndicatorMode.js";
 import {
 	BUTTON_TEXT_CLOSE,
-	TITLE_TEXT,
 	POPOVER_TEXT,
-	VERIFICATION_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
+
+
+// Template
+import AINoticeIndicatorTemplate from "./AINoticeIndicatorTemplate.js";
+
+// Styles
+import AINoticeIndicatorCss from "./generated/themes/AINoticeIndicator.css.js";
 
 /**
  * @class
@@ -29,6 +34,9 @@ import {
 @customElement({
 	tag: "ui5-ai-notice-indicator",
 	renderer: jsxRender,
+	styles: AINoticeIndicatorCss,
+	template: AINoticeIndicatorTemplate,
+	shadowRootOptions: { delegatesFocus: true },
 })
 class AINoticeIndicator extends UI5Element {
 	/**
@@ -58,15 +66,6 @@ class AINoticeIndicator extends UI5Element {
 	@property()
 	mode: `${AINoticeIndicatorMode}` = "Default"
 
-    /**
-	 * Specifies if an empty indicator should be displayed when there is no text.
-     * 
-	 * @default "Off"
-	 * @public
-	 */
-	@property({ type: Boolean })
-	_expanded = false;
-
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -74,20 +73,20 @@ class AINoticeIndicator extends UI5Element {
 		return this.shadowRoot?.querySelector("[ui5-responsive-popover]") as HTMLElement;
 	}
 
+	get _verificationText() {
+		return this.verificationText;
+	}
+
+	get _titleText() {
+		return this.attributionText;
+	}
+
     get _closeButtonText() {
 		return AINoticeIndicator.i18nBundle.getText(BUTTON_TEXT_CLOSE);
 	}
 
-	get _titleText() {
-		return AINoticeIndicator.i18nBundle.getText(TITLE_TEXT);
-	}
-
 	get _popoverText() {
 		return AINoticeIndicator.i18nBundle.getText(POPOVER_TEXT);
-	}
-
-	get _verificationText() {
-		return AINoticeIndicator.i18nBundle.getText(VERIFICATION_TEXT);
 	}
 
     getMode(): void {
@@ -99,16 +98,16 @@ class AINoticeIndicator extends UI5Element {
 	}
 
     _handleCloseButtonClick(e: MouseEvent) {
-		this._expanded = false;
+		this._usePopover;
 		e.stopPropagation();
 	}
 
 	_handleToggleClick() {
-		this._expanded = !this._expanded;
+		this._usePopover;
 	}
 
 	_handlePopoverClose() {
-		this._expanded = false;
+		this._usePopover;
 	}
 }
 
