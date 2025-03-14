@@ -27,7 +27,7 @@ export default function TableHeaderRowTemplate(this: TableHeaderRow) {
 				<slot name={cell._individualSlot} key={cell._individualSlot}></slot>
 			))}
 
-			{ this._hasRowActions &&
+			{ this._rowActionCount > 0 &&
 				<TableHeaderCell id="actions-cell"
 					aria-label={this._i18nRowActions}
 				></TableHeaderCell>
