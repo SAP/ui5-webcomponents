@@ -31,7 +31,7 @@
 }
 
 :host([ui5-navigation-menu-item])::part(native-li) {
-	padding-left: var(--_ui5_side_navigation_item_padding_start_in_popup);
+	padding-left: var(--_ui5_side_navigation_item_padding_start_in_overflow_popup);
 	width: auto;
 	border-radius: inherit;
 }

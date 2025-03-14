@@ -10,6 +10,10 @@
 	padding-inline-start: var(--_ui5_side_navigation_group_icon_width);
 }
 
+:host([in-popover]) .ui5-sn-item-level2:not(.ui5-sn-item-has-icon) {
+	padding-inline-start: var(--_ui5_side_navigation_item_padding_start_in_popup);
+}
+
 :host(:last-child) .ui5-sn-item.ui5-sn-item-level2:not(.ui5-sn-item-selected)::before {
 	border: var(--_ui5_side_navigation_group_border_style_color);
 	border-width: var(--_ui5_side_navigation_group_border_width);
