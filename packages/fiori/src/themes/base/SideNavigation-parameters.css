@@ -29,7 +29,7 @@
 	--_ui5_side_navigation_item_bottom_margin: 0;
 	--_ui5_side_navigation_item_bottom_margin_in_popup: 0;
 	--_ui5_side_navigation_item_padding_start_in_popup: var(--_ui5_side_navigation_group_icon_width);
-	--_ui5_side_navigation_item_padding_start_in_overflow_popup: 0.5rem;
+	--_ui5_side_navigation_item_padding_start_in_overflow_popup: 0.75rem;
 	--_ui5_side_navigation_item_transition: none;
 	--_ui5_side_navigation_item_padding_left: 0.5rem;
 	--_ui5_side_navigation_no_icons_group_padding: 1rem;
