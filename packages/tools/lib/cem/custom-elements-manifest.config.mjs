@@ -27,6 +27,7 @@ import { generateCustomData } from "cem-plugin-vs-code-custom-data-generator";
 import { customElementJetBrainsPlugin } from "custom-element-jet-brains-integration";
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
+const devMode = process.env.UI5_CEM_MODE === "dev";
 
 const extractClassNodeJSDoc = node => {
 	const fileContent = node.getFullText();
@@ -127,7 +128,7 @@ function processClass(ts, classNode, moduleDoc) {
 	}
 
 	// Events
-	currClass.events = findAllDecorators(classNode, "event")
+	currClass.events = findAllDecorators(classNode, ["event", "eventStrict"])
 		?.map(event => processEvent(ts, event, classNode, moduleDoc));
 
 	// TODO: remove after changing Button's click to custom event.
@@ -532,8 +533,8 @@ export default {
 					}
 				})
 			},
-			packageLinkPhase({ context }) {
-				if (context.dev) {
+			packageLinkPhase() {
+				if (devMode) {
 					displayDocumentationErrors();
 				}
 			}

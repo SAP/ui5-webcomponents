@@ -1,4 +1,3 @@
-import type { JsxTemplate } from "@ui5/webcomponents-base";
 import type MenuItem from "./MenuItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Button from "./Button.js";
@@ -11,16 +10,12 @@ import Icon from "./Icon.js";
 import ListItemTemplate from "./ListItemTemplate.js";
 import type { ListItemHooks } from "./ListItemTemplate.js";
 
-export type MenuItemHooks = ListItemHooks & {
-	listItemPostContent: JsxTemplate,
-}
-
-const predefinedHooks: Partial<MenuItemHooks> = {
+const predefinedHooks: Partial<ListItemHooks> = {
 	listItemContent,
 	iconBegin,
 };
 
-export default function MenuItemTemplate(this: MenuItem, hooks?: Partial<MenuItemHooks>) {
+export default function MenuItemTemplate(this: MenuItem, hooks?: Partial<ListItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return <>
