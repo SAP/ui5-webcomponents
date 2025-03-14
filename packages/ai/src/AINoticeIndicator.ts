@@ -36,7 +36,6 @@ import AINoticeIndicatorCss from "./generated/themes/AINoticeIndicator.css.js";
 	renderer: jsxRender,
 	styles: AINoticeIndicatorCss,
 	template: AINoticeIndicatorTemplate,
-	shadowRootOptions: { delegatesFocus: true },
 })
 class AINoticeIndicator extends UI5Element {
 	/**
@@ -65,6 +64,9 @@ class AINoticeIndicator extends UI5Element {
 	 */
 	@property()
 	mode: `${AINoticeIndicatorMode}` = "Default"
+
+	@property({ type: Boolean })
+	_expanded = false;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -98,16 +100,16 @@ class AINoticeIndicator extends UI5Element {
 	}
 
     _handleCloseButtonClick(e: MouseEvent) {
-		this._usePopover;
+		this._expanded = false;
 		e.stopPropagation();
 	}
 
 	_handleToggleClick() {
-		this._usePopover;
+		this._expanded = !this._expanded;
 	}
 
 	_handlePopoverClose() {
-		this._usePopover;
+		this._expanded = false;
 	}
 }
 

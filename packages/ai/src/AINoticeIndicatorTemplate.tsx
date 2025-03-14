@@ -26,8 +26,9 @@ export default function AINoticeIndicatorTemplate(this: AINoticeIndicator) {
 				{this._verificationText}
 			</Label>
 
-				{this._usePopover &&
+				{/* {this._usePopover && */}
 					<ResponsivePopover
+						open={this._expanded}
 						opener="toggle"
 						title={this._titleText}
 						accessibleNameRef="popover-text"
@@ -36,7 +37,7 @@ export default function AINoticeIndicatorTemplate(this: AINoticeIndicator) {
 						class="ui5-ai-notice-indicator-inner"
 						onClose={this._handlePopoverClose}
 					>
-						<Text id="popover-text"></Text>
+						<Text id="popover-text" class="ui5-ai-notice-indicator-description">sdfsdfsd</Text>
 						<div
 							slot="footer"
 							class="ui5-ai-notice-indicator-footer"
@@ -49,7 +50,7 @@ export default function AINoticeIndicatorTemplate(this: AINoticeIndicator) {
 							</Button>
 						</div>
 					</ResponsivePopover>
-				}
+				{/* }  */}
 		</div>
 	);
 }
