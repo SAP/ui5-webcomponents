@@ -15,7 +15,7 @@ export default function SelectTemplate(this: Select) {
 				onClick={this._onclick}
 				title={this.tooltip}
 			>
-				{this.selectedOptionIcon &&
+				{!this.iconOnly && this.selectedOptionIcon &&
 					<Icon
 						mode="Decorative"
 						class="ui5-select-option-icon"
@@ -47,7 +47,16 @@ export default function SelectTemplate(this: Select) {
 					}
 				</div>
 
-				{!this.readonly &&
+				{this.iconOnly &&
+					<Icon
+						name={this.iconOnly}
+						class={{
+							"inputIcon": true,
+							"inputIcon--pressed": this._iconPressed,
+						}} />
+				}
+
+				{!this.iconOnly && !this.readonly &&
 					<Icon
 						part="icon"
 						name={slimArrowDown}
@@ -63,7 +72,6 @@ export default function SelectTemplate(this: Select) {
 					</span>
 				}
 			</div>
-
 			{SelectPopoverTemplate.call(this)}
 		</>
 	);
