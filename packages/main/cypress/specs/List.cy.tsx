@@ -20,7 +20,7 @@ describe("List Tests", () => {
 
 		cy.get<List>("@list")
 			.then(list => {
-				list.get(0).addEventListener("ui5-load-more", cy.stub().as("loadMore"));
+				list.get(0)?.addEventListener("ui5-load-more", cy.stub().as("loadMore"));
 			})
 			.shadow()
 			.find(".ui5-list-scroll-container")
@@ -149,6 +149,34 @@ describe("List Tests", () => {
 			.shadow()
 			.find("[id$='growing-btn']")
 			.should("be.focused");
+	});
+
+	it("renders list items with wrapping functionality", () => {
+		const longText = "This is a very long text that should demonstrate the wrapping functionality of ListItemStandard components; This is a very long text that should demonstrate the wrapping functionality of ListItemStandard components; This is a very long text that should demonstrate the wrapping functionality of ListItemStandard components; This is a very long text that should demonstrate the wrapping functionality of ListItemStandard components; This is a very long text that should demonstrate the wrapping functionality of ListItemStandard components";
+		const longDescription = "This is an even longer description text to verify that wrapping works correctly for the description part of the list item as well; This is an even longer description text to verify that wrapping works correctly for the description part of the list item as well; This is an even longer description text to verify that wrapping works correctly for the description part of the list item as well; This is an even longer description text to verify that wrapping works correctly for the description part of the list item as well; This is an even longer description text to verify that wrapping works correctly for the description part of the list item as well; This is an even longer description text to verify that wrapping works correctly for the description part of the list item as well";
+		
+		cy.mount(
+			<List>
+				<ListItemStandard id="wrapping-item" wrapping text={longText} description={longDescription}></ListItemStandard>
+			</List>
+		);
+
+		// First verify elements exist before making assertions
+		cy.get("#wrapping-item").should("exist");
+
+		// Then check wrapping attributes are set correctly
+		cy.get("#wrapping-item")
+			.should("have.attr", "wrapping");
+
+		cy.get("#wrapping-item")
+			.should("have.attr", "wrapping-type", "Normal");
+		
+		// Check that ExpandableText components are present in the wrapping item
+		cy.get("#wrapping-item")
+			.shadow()
+			.find("ui5-expandable-text")
+			.should("exist")
+			.and("have.length", 2);
 	});
 });
 

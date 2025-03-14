@@ -29,6 +29,7 @@ import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
  * @slot {Node[]} default - Defines the text of the component.
  *
  * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ * **Note:** Deprecated, use `text` property instead.
  * @constructor
  * @extends ListItem
  * @public
@@ -40,6 +41,16 @@ import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
 })
 class ListItemStandard extends ListItem implements IAccessibleListItem {
 	/**
+	 * Defines the text of the component.
+	 *
+	 * @default undefined
+	 * @public
+	 * @since 2.9.0
+	 */
+	@property()
+	text?: string;
+
+	/**
 	 * Defines the description displayed right under the item text, if such is present.
 	 * @default undefined
 	 * @public
@@ -47,6 +58,26 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 */
 	@property()
 	description?: string;
+
+	/**
+	 * Defines the `additionalText`, displayed in the end of the list item.
+	 * @default undefined
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	additionalText?: string;
+
+	/**
+	 * Defines the state of the `additionalText`.
+	 *
+	 * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
+	 * @default "None"
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	additionalTextState: `${ValueState}` = "None";
 
 	/**
 	 * Defines the `icon` source URI.
@@ -70,26 +101,6 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	iconEnd = false;
 
 	/**
-	 * Defines the `additionalText`, displayed in the end of the list item.
-	 * @default undefined
-	 * @public
-	 * @since 1.0.0-rc.15
-	 */
-	@property()
-	additionalText?: string;
-
-	/**
-	 * Defines the state of the `additionalText`.
-	 *
-	 * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
-	 * @default "None"
-	 * @public
-	 * @since 1.0.0-rc.15
-	 */
-	@property()
-	additionalTextState: `${ValueState}` = "None";
-
-	/**
 	 * Defines whether the item is movable.
 	 * @default false
 	 * @public
@@ -99,14 +110,16 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	movable = false;
 
 	/**
-	 * Defines the text alternative of the component.
-	 * Note: If not provided a default text alternative will be set, if present.
-	 * @default undefined
+	 * Defines whether the content of the list item should wrap when it's too long.
+	 * When set to true, the content (title, description) will be wrapped
+	 * using the expandable text component.
+	 *
+	 * @default false
 	 * @public
-	 * @since 1.0.0-rc.15
+	 * @since 2.9.0
 	 */
-	@property()
-	declare accessibleName?: string;
+	@property({ type: Boolean })
+	wrapping = false;
 
 	/**
 	 * Defines if the text of the component should wrap, they truncate by default.
@@ -118,6 +131,16 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 */
 	@property()
 	wrappingType: `${WrappingType}` = "None";
+
+	/**
+	 * Defines the text alternative of the component.
+	 * **Note:** If not provided a default text alternative will be set, if present.
+	 * @default undefined
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	accessibleName?: string;
 
 	/**
 	 * Indicates if the list item has text content.
@@ -143,8 +166,27 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 
 	onBeforeRendering() {
 		super.onBeforeRendering();
-		this.hasTitle = !!this.textContent;
+		this.hasTitle = !!(this.text || this.textContent);
 		this._hasImage = this.hasImage;
+		this.wrappingType = this.wrapping ? "Normal" : "None";
+	}
+
+	/**
+	 * Returns the content text, either from text property or from the default slot
+	 * @private
+	 */
+	get _textContent(): string {
+		return this.text || this.textContent || "";
+	}
+
+	/**
+	 * Determines the maximum characters to display based on the current media range.
+	 * - Size S: 100 characters
+	 * - Size M and larger: 300 characters
+	 * @private
+	 */
+	get _maxCharacters(): number {
+		return this.mediaRange === "S" ? 100 : 300;
 	}
 
 	get displayIconBegin(): boolean {
