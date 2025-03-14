@@ -49,8 +49,8 @@ const scripts = {
 	},
 	generateAPI: {
 		default: "nps generateAPI.generateCEM generateAPI.validateCEM",
-		generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs" --dev`,
-		validateCEM: `node "${LIB}/cem/validate.js" --dev`,
+		generateCEM: `cross-env UI5_CEM_MODE='dev' cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
+		validateCEM: `cross-env UI5_CEM_MODE='dev' node "${LIB}/cem/validate.js"`,
 	},
 	watch: {
 		default: 'concurrently "nps watch.src" "nps watch.styles"',
