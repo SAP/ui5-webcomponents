@@ -11,14 +11,13 @@ body {
 	display: block;
 }
 
-ui5-icon[name="ai"]:hover {
-	background: var(--sapButton_Hover_Background);
-	border: 1px solid var(--sapButton_BorderColor);
+ui5-icon {
 	color: var(--sapButton_IconColor);
 }
 
-ui5-icon[name="stop"] {
-	color: var(--sapButton_IconColor);
+ui5-icon[name="ai"]:hover {
+	background: var(--sapButton_Hover_Background);
+	border: 1px solid var(--sapButton_BorderColor);
 }
 
 ui5-icon[name="ai"].icon-pressed:not(:hover) {
