@@ -39,7 +39,7 @@ const isElemFocusable = (el: HTMLElement) => {
 const isUI5ElementWithNegativeTabIndex = (el: HTMLElement) => {
 	if (instanceOfUI5Element(el)) {
 		const tabIndex = el.getAttribute("tabindex");
-		if (tabIndex !== null && tabIndex !== undefined && parseInt(tabIndex) < 0) {
+		if (tabIndex !== null && parseInt(tabIndex) < 0) {
 			return true;
 		}
 	}
