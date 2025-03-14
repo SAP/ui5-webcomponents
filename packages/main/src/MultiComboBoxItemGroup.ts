@@ -42,10 +42,6 @@ class MultiComboBoxItemGroup extends ComboBoxItemGroup implements IMultiComboBox
 		return true;
 	}
 
-	get selected() {
-		return false;
-	}
-
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
@@ -53,6 +49,15 @@ class MultiComboBoxItemGroup extends ComboBoxItemGroup implements IMultiComboBox
 	getFocusDomRef() {
 		return this.shadowRoot!.querySelector("[ui5-li-group-header]") as ListItemGroupHeader;
 	}
+
+	get effectiveSelectedState() {
+		return false;
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	toggleSelectedState(newValue: boolean) {}
+
+	isSelectable = true as const;
 }
 
 MultiComboBoxItemGroup.define();

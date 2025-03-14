@@ -49,6 +49,7 @@ import type ListItemBase from "./ListItemBase.js";
 import type {
 	ListItemBasePressEventDetail,
 } from "./ListItemBase.js";
+import { isIListItemSelectable } from "./ListItemBase.js";
 import type DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
 import type {
@@ -833,12 +834,12 @@ class List extends UI5Element {
 	}
 
 	handleSingle(item: ListItemBase): boolean {
-		if (item.selected) {
+		if (isIListItemSelectable(item) && item.effectiveSelectedState) {
 			return false;
 		}
 
 		this.deselectSelectedItems();
-		item.selected = true;
+		isIListItemSelectable(item) && item.toggleSelectedState(true);
 
 		return true;
 	}
@@ -856,7 +857,7 @@ class List extends UI5Element {
 	}
 
 	handleMultiple(item: ListItemBase, selected: boolean): boolean {
-		item.selected = selected;
+		isIListItemSelectable(item) && item.toggleSelectedState(selected);
 		return true;
 	}
 
@@ -867,11 +868,11 @@ class List extends UI5Element {
 	}
 
 	deselectSelectedItems() {
-		this.getSelectedItems().forEach(item => { item.selected = false; });
+		this.getSelectedItems().forEach(item => { isIListItemSelectable(item) && item.toggleSelectedState(false); });
 	}
 
 	getSelectedItems(): Array<ListItemBase> {
-		return this.getItems().filter(item => item.selected);
+		return this.getItems().filter(item => isIListItemSelectable(item) && item.effectiveSelectedState);
 	}
 
 	getEnabledItems(): Array<ListItemBase> {
@@ -913,7 +914,10 @@ class List extends UI5Element {
 			const multiSelectCheckBox = item.shadowRoot!.querySelector<CheckBox>(".ui5-li-multisel-cb");
 			const singleSelectRadioButton = item.shadowRoot!.querySelector<RadioButton>(".ui5-li-singlesel-radiobtn");
 
-			item.selected = oldSelection;
+			if (isIListItemSelectable(item)) {
+				item.toggleSelectedState(oldSelection);
+			}
+
 			if (multiSelectCheckBox) {
 				multiSelectCheckBox.checked = oldSelection;
 			} else if (singleSelectRadioButton) {
@@ -1077,7 +1081,7 @@ class List extends UI5Element {
 		}
 
 		if (lastTabbableEl === target) {
-			if (this.getFirstItem(x => x.selected && x._focusable)) {
+			if (this.getFirstItem(x => isIListItemSelectable(x) && x.effectiveSelectedState && x._focusable)) {
 				this.focusFirstSelectedItem();
 			} else if (this.getPreviouslyFocusedItem()) {
 				this.focusPreviouslyFocusedItem();
@@ -1247,7 +1251,7 @@ class List extends UI5Element {
 			const detail: SelectionRequestEventDetail = {
 				item: pressedItem,
 				selectionComponentPressed: false,
-				selected: !pressedItem.selected,
+				selected: isIListItemSelectable(pressedItem) && !pressedItem.effectiveSelectedState,
 				key: e.detail.key,
 			};
 
@@ -1343,7 +1347,7 @@ class List extends UI5Element {
 
 	focusFirstSelectedItem() {
 		// only enabled items are focusable
-		const firstSelectedItem = this.getFirstItem(x => x.selected && x._focusable);
+		const firstSelectedItem = this.getFirstItem(x => isIListItemSelectable(x) && x.effectiveSelectedState && x._focusable);
 
 		if (firstSelectedItem) {
 			firstSelectedItem.focus();

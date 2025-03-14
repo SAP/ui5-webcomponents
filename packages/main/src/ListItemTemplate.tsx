@@ -7,6 +7,7 @@ import slimArrowRightIcon from "@ui5/webcomponents-icons/dist/slim-arrow-right.j
 import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
+import { isIListItemSelectable } from "./ListItemBase.js";
 
 export type ListItemHooks = {
 	listItemPreContent: JsxTemplate
@@ -126,7 +127,7 @@ function selectionElement(this: ListItem) {
 				tabindex={-1}
 				id={`${this._id}-singleSelectionElement`}
 				class="ui5-li-singlesel-radiobtn"
-				checked={this.selected}
+				checked={isIListItemSelectable(this) && this.effectiveSelectedState}
 				onChange={this.onSingleSelectionComponentPress}
 			/>
 		);
@@ -139,7 +140,7 @@ function selectionElement(this: ListItem) {
 				tabindex={-1}
 				id={`${this._id}-multiSelectionElement`}
 				class="ui5-li-multisel-cb"
-				checked={this.selected}
+				checked={isIListItemSelectable(this) && this.effectiveSelectedState}
 				accessibleName={this._accInfo.ariaLabel}
 				onChange={this.onMultiSelectionComponentPress}
 			/>

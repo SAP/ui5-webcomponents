@@ -445,10 +445,10 @@ class Tree extends UI5Element {
 		const targetItem = e.detail.targetItem as TreeItemBase;
 
 		previouslySelectedItems.forEach(item => {
-			item.selected = false;
+			item.toggleSelectedState(false);
 		});
 		selectedItems.forEach(item => {
-			item.selected = true;
+			item.toggleSelectedState(true);
 		});
 
 		this.fireDecoratorEvent("selection-change", {

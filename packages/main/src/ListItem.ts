@@ -16,7 +16,7 @@ import "@ui5/webcomponents-icons/dist/edit.js";
 import Highlight from "./types/Highlight.js";
 import ListItemType from "./types/ListItemType.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
-import ListItemBase from "./ListItemBase.js";
+import ListItemBase, { isIListItemSelectable } from "./ListItemBase.js";
 import type RadioButton from "./RadioButton.js";
 import type CheckBox from "./CheckBox.js";
 import type { IButton } from "./Button.js";
@@ -166,14 +166,6 @@ abstract class ListItem extends ListItemBase {
 	 */
 	@property()
 	highlight: `${Highlight}` = "None";
-
-	/**
-	 * Defines the selected state of the component.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	declare selected: boolean;
 
 	/**
 	 * Used to define the role of the list item.
@@ -372,7 +364,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onDetailClick() {
-		this.fireDecoratorEvent("detail-click", { item: this, selected: this.selected });
+		this.fireDecoratorEvent("detail-click", { item: this, selected: isIListItemSelectable(this) && this.effectiveSelectedState });
 	}
 
 	fireItemPress(e: Event) {
@@ -429,7 +421,7 @@ abstract class ListItem extends ListItemBase {
 
 	get _ariaSelected() {
 		if (this.modeMultiple || this.modeSingleSelect) {
-			return this.selected;
+			return isIListItemSelectable(this) && this.effectiveSelectedState;
 		}
 
 		return undefined;

@@ -16,7 +16,7 @@
 	border-color: var(--sapList_AlternatingBackground);
 }
 
-:host([_toggle-button-end][selected]:not([level="1"])) .ui5-li-root {
+:host([_toggle-button-end]:state(selected):not([level="1"])) .ui5-li-root {
 	border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
@@ -25,12 +25,12 @@
 	cursor: pointer;
 }
 
-:host([_toggle-button-end]:not([selected])) .ui5-li-root-tree:hover,
-:host(:not([_selection-mode="None"]):not([_selection-mode="Delete"]):not([active]):not([selected])) .ui5-li-root-tree:hover {
+:host([_toggle-button-end]:not(:state(selected))) .ui5-li-root-tree:hover,
+:host(:not([_selection-mode="None"]):not([_selection-mode="Delete"]):not([active]):not(:state(selected))) .ui5-li-root-tree:hover {
 	background: var(--sapList_Hover_Background);
 }
 
-:host(:not([level="1"]):not([active]):not([selected])) .ui5-li-root-tree {
+:host(:not([level="1"]):not([active]):not(:state(selected))) .ui5-li-root-tree {
 	background: var(--sapList_AlternatingBackground);
 }
 
@@ -38,11 +38,11 @@
 	background: var(--ui5-listitem-background-color);
 }
 
-:host([_toggle-button-end][selected]:not([level="1"])) .ui5-li-root-tree {
+:host([_toggle-button-end]:state(selected):not([level="1"])) .ui5-li-root-tree {
 	background: var(--sapList_SelectionBackgroundColor);
 }
 
-:host(:not([_selection-mode="None"]):not([_selection-mode="Delete"]):not([active])[selected]) .ui5-li-root-tree:hover {
+:host(:not([_selection-mode="None"]):not([_selection-mode="Delete"]):not([active]):state(selected)) .ui5-li-root-tree:hover {
 	background-color: var(--sapList_Hover_SelectionBackground);
 }
 
@@ -82,10 +82,10 @@ is the .ui5-li-root and not the host. The host height expands to fill subtree */
 }
 
 /* selected */
-:host([selected]) {
+:host(:state(selected)) {
     background: unset;
 }
-:host([selected]) .ui5-li-root {
+:host(:state(selected)) .ui5-li-root {
     background: var(--sapList_SelectionBackgroundColor);
 }
 
@@ -97,17 +97,17 @@ is the .ui5-li-root and not the host. The host height expands to fill subtree */
 }
 
 /* focused & selected */
-:host(:not([focused])[selected][has-border]) {
+:host(:not([focused]):state(selected)[has-border]) {
     border-bottom: unset;
 }
-:host(:not([focused])[selected][has-border]) .ui5-li-root {
+:host(:not([focused]):state(selected)[has-border]) .ui5-li-root {
     border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
-:host([focused][selected]) {
+:host([focused]:state(selected)) {
     border-bottom: unset;
 }
-:host([focused][selected]) .ui5-li-root {
+:host([focused]:state(selected)) .ui5-li-root {
     border-bottom: var(--ui5-listitem-focused-selected-border-bottom);
 }
 

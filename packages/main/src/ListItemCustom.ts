@@ -3,6 +3,7 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import type { IListItemSelectable } from "./ListItemBase.js";
 import ListItem from "./ListItem.js";
 import ListItemCustomTemplate from "./ListItemCustomTemplate.js";
 
@@ -33,7 +34,7 @@ import ListItemCustomCss from "./generated/themes/ListItemCustom.css.js";
 	renderer: jsxRenderer,
 	styles: [ListItem.styles, ListItemCustomCss],
 })
-class ListItemCustom extends ListItem {
+class ListItemCustom extends ListItem implements IListItemSelectable {
 	/**
 	 * Defines whether the item is movable.
 	 * @default false
@@ -42,6 +43,14 @@ class ListItemCustom extends ListItem {
 	 */
 	@property({ type: Boolean })
 	movable = false;
+
+	/**
+	 * Defines the selected state of the component.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	selected = false;
 
 	/**
 	 * Defines the text alternative of the component.
@@ -83,6 +92,16 @@ class ListItemCustom extends ListItem {
 
 		return result;
 	}
+
+	get effectiveSelectedState() {
+		return this.selected;
+	}
+
+	toggleSelectedState(newValue: boolean) {
+		this.selected = newValue;
+	}
+
+	isSelectable = true as const;
 }
 
 ListItemCustom.define();

@@ -282,7 +282,7 @@ class Menu extends UI5Element {
 		});
 		item._popover.opener = item;
 		item._popover.open = true;
-		item.selected = true;
+		item.toggleSelectedState(true);
 	}
 
 	_closeItemSubMenu(item: MenuItem) {
@@ -293,7 +293,7 @@ class Menu extends UI5Element {
 			}
 
 			item._popover.open = false;
-			item.selected = false;
+			item.toggleSelectedState(false);
 		}
 	}
 
@@ -374,7 +374,7 @@ class Menu extends UI5Element {
 				this._openItemSubMenu(item);
 			} else if ((shouldCloseMenu || isTabNextPrevious) && parentElement._popover) {
 				parentElement._popover.open = false;
-				parentElement.selected = false;
+				parentElement.toggleSelectedState(false);
 				parentElement._popover.focusOpener();
 			}
 		} else if (isUp(e)) {

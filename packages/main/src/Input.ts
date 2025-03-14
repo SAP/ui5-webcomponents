@@ -85,6 +85,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
+import type { IListItemSelectable } from "./ListItemBase.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 
 /**
@@ -97,9 +98,8 @@ interface IInputSuggestionItem extends UI5Element {
 	items?: IInputSuggestionItem[];
 }
 
-interface IInputSuggestionItemSelectable extends IInputSuggestionItem {
+interface IInputSuggestionItemSelectable extends IInputSuggestionItem, IListItemSelectable {
 	text?: string;
-	selected: boolean;
 }
 
 type NativeInputAttributes = {
@@ -821,7 +821,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	get currentItemIndex() {
 		const allItems = this.Suggestions?._getItems() as IInputSuggestionItemSelectable[];
-		const currentItem = allItems.find(item => { return item.selected || item.focused; });
+		const currentItem = allItems.find(item => { return item.effectiveSelectedState || item.focused; });
 		const indexOfCurrentItem = currentItem ? allItems.indexOf(currentItem) : -1;
 		return indexOfCurrentItem;
 	}
@@ -1177,7 +1177,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_selectMatchingItem(item: IInputSuggestionItemSelectable) {
-		item.selected = true;
+		item.toggleSelectedState(true);
 	}
 
 	_handleTypeAhead(item: IInputSuggestionItemSelectable) {

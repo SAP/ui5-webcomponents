@@ -37,7 +37,7 @@ export default function MultiComboBoxTemplate(this: MultiComboBox) {
 				{this.items.map((item, index) => {
 					if (item.isGroupItem) {
 						return item.items?.map((groupItem, groupItemIndex) => {
-							return groupItem.selected && <Token
+							return groupItem.effectiveSelectedState && <Token
 								readonly={this.readonly}
 								class="ui5-multi-combobox-token"
 								data-ui5-id={groupItem._id}
@@ -47,7 +47,7 @@ export default function MultiComboBoxTemplate(this: MultiComboBox) {
 						});
 					}
 
-					return item.selected && <Token
+					return item.effectiveSelectedState && <Token
 						readonly={this.readonly}
 						class="ui5-multi-combobox-token"
 						data-ui5-id={item._id}
