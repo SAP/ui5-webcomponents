@@ -100,6 +100,88 @@ describe("RatingIndicator", () => {
 
 			cy.focused().should("contain", "Before");
 		});
+
+		it("Tests ACC attrs", () => {
+			const TOOLTIP = "Rating";
+			const ARIA_LABEL = "Hello World";
+
+			cy.mount(
+				<>
+					<RatingIndicator id="rating-indicator1" accessibleName={ARIA_LABEL}></RatingIndicator>
+					<RatingIndicator id="rating-indicator-readonly" value={1} max={3} readonly></RatingIndicator>
+				</>
+			);
+
+			cy.get("#rating-indicator1").as("ri");
+
+			cy.get("@ri")
+				.shadow()
+				.find(".ui5-rating-indicator-root")
+				.should("have.attr", "aria-label", ARIA_LABEL)
+				.and("have.attr", "title", TOOLTIP)
+				.and("not.have.attr", "aria-readonly");
+
+			cy.get("#rating-indicator-readonly")
+				.shadow()
+				.find(".ui5-rating-indicator-root")
+				.should("have.attr", "aria-readonly", "true");
+
+			cy.get("@ri")
+				.shadow()
+				.find(".ui5-rating-indicator-root")
+				.should("have.attr", "aria-valuetext", "0 of 5");
+
+			cy.get("@ri")
+				.shadow()
+				.find(".ui5-rating-indicator-item")
+				.eq(2)
+				.realClick();
+
+			cy.get("@ri")
+				.shadow()
+				.find(".ui5-rating-indicator-root")
+				.should("have.attr", "aria-valuetext", "3 of 5");
+
+			cy.get("@ri")
+				.shadow()
+				.find(".ui5-rating-indicator-list")
+				.should("have.attr", "aria-hidden", "true");
+		});
+
+		it("Tests ACC attrs - tooltip property", () => {
+			const TOOLTIP = "Test";
+
+			cy.mount(<RatingIndicator id="rating-indicator-title" tooltip={TOOLTIP}></RatingIndicator>);
+
+			cy.get("#rating-indicator-title")
+				.shadow()
+				.find(".ui5-rating-indicator-root")
+				.should("have.attr", "title", TOOLTIP);
+		});
+
+		it("Tests ACC attrs - required property add aria-description", () => {
+			cy.mount(<RatingIndicator id="rating-indicator-required" required></RatingIndicator>);
+
+			cy.get("#rating-indicator-required")
+				.shadow()
+				.find(".ui5-rating-indicator-root")
+				.should("have.attr", "aria-description", RATING_INDICATOR_ARIA_DESCRIPTION.defaultText);
+		});
+
+		it("Tests ACC attrs - accessible-name-ref", () => {
+			const ACCESSIBLE_NAME_REF_TEXT = "Some ACC label";
+			cy.mount(
+				<>
+					<label id="label-acc-name-ref">{ACCESSIBLE_NAME_REF_TEXT}</label>
+					<RatingIndicator id="rating-indicator-acc-name-ref" accessible-name-ref="label-acc-name-ref"></RatingIndicator>
+				</>
+			);
+
+			cy.get("#rating-indicator-acc-name-ref")
+				.shadow()
+				.find(".ui5-rating-indicator-root")
+				.should("have.attr", "aria-label", ACCESSIBLE_NAME_REF_TEXT);
+		});
 	});
 
 	describe("Rating Indicator general interaction", () => {
@@ -192,88 +274,6 @@ describe("RatingIndicator", () => {
 			cy.get("@ri").should("have.attr", "value", "0");
 
 			cy.get("@changeEvent").should("have.callCount", 17);
-		});
-
-		it("Tests ACC attrs", () => {
-			const TOOLTIP = "Rating";
-			const ARIA_LABEL = "Hello World";
-
-			cy.mount(
-				<>
-					<RatingIndicator id="rating-indicator1" accessibleName={ARIA_LABEL}></RatingIndicator>
-					<RatingIndicator id="rating-indicator-readonly" value={1} max={3} readonly></RatingIndicator>
-				</>
-			);
-
-			cy.get("#rating-indicator1").as("ri");
-
-			cy.get("@ri")
-				.shadow()
-				.find(".ui5-rating-indicator-root")
-				.should("have.attr", "aria-label", ARIA_LABEL)
-				.and("have.attr", "title", TOOLTIP)
-				.and("not.have.attr", "aria-readonly");
-
-			cy.get("#rating-indicator-readonly")
-				.shadow()
-				.find(".ui5-rating-indicator-root")
-				.should("have.attr", "aria-readonly", "true");
-
-			cy.get("@ri")
-				.shadow()
-				.find(".ui5-rating-indicator-root")
-				.should("have.attr", "aria-valuetext", "0 of 5");
-
-			cy.get("@ri")
-				.shadow()
-				.find(".ui5-rating-indicator-item")
-				.eq(2)
-				.realClick();
-
-			cy.get("@ri")
-				.shadow()
-				.find(".ui5-rating-indicator-root")
-				.should("have.attr", "aria-valuetext", "3 of 5");
-
-			cy.get("@ri")
-				.shadow()
-				.find(".ui5-rating-indicator-list")
-				.should("have.attr", "aria-hidden", "true");
-		});
-
-		it("Tests ACC attrs - tooltip property", () => {
-			const TOOLTIP = "Test";
-
-			cy.mount(<RatingIndicator id="rating-indicator-title" tooltip={TOOLTIP}></RatingIndicator>);
-
-			cy.get("#rating-indicator-title")
-				.shadow()
-				.find(".ui5-rating-indicator-root")
-				.should("have.attr", "title", TOOLTIP);
-		});
-
-		it("Tests ACC attrs - required property add aria-description", () => {
-			cy.mount(<RatingIndicator id="rating-indicator-required" required></RatingIndicator>);
-
-			cy.get("#rating-indicator-required")
-				.shadow()
-				.find(".ui5-rating-indicator-root")
-				.should("have.attr", "aria-description", RATING_INDICATOR_ARIA_DESCRIPTION.defaultText);
-		});
-
-		it("Tests ACC attrs - accessible-name-ref", () => {
-			const ACCESSIBLE_NAME_REF_TEXT = "Some ACC label";
-			cy.mount(
-				<>
-					<label id="label-acc-name-ref">{ACCESSIBLE_NAME_REF_TEXT}</label>
-					<RatingIndicator id="rating-indicator-acc-name-ref" accessible-name-ref="label-acc-name-ref"></RatingIndicator>
-				</>
-			);
-
-			cy.get("#rating-indicator-acc-name-ref")
-				.shadow()
-				.find(".ui5-rating-indicator-root")
-				.should("have.attr", "aria-label", ACCESSIBLE_NAME_REF_TEXT);
 		});
 	});
 });
