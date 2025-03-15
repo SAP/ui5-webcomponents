@@ -15,12 +15,13 @@
 	--_ui5_tc_headerItem_color: var(--sapContent_LabelColor);
 	--_ui5_tc_headerItem_additional_text_color: var(--sapContent_LabelColor);
 	--_ui5_tc_headerItem_text_hover_color: var(--_ui5_tc_headerItem_color);
-	--_ui5_tc_headerItem_text_selected_color: var(--sapSelectedColor);
+	--_ui5_tc_headerItem_text_selected_color: var(--sapTab_Selected_TextColor);
 	--_ui5_tc_headerItem_text_selected_hover_color: var(--sapSelectedColor);
 	--_ui5_tc_headeritem_text_font_weight: normal;
 	--_ui5_tc_headerItem_additional_text_font_weight: normal;
 	--_ui5_tc_headerItem_neutral_color: var(--sapNeutralTextColor);
 	--_ui5_tc_headerItem_positive_color: var(--sapPositiveTextColor);
+	--_ui5_tc_headerItem_selected_positive_color: var(--_ui5_tc_headerItem_positive_color);
 	--_ui5_tc_headerItem_negative_color: var(--sapNegativeTextColor);
 	--_ui5_tc_headerItem_critical_color: var(--sapCriticalTextColor);
 	--_ui5_tc_headerItem_neutral_border_color: var(--sapNeutralElementColor);
@@ -87,6 +88,10 @@
 	--_ui5_tc_headerItemIcon_critical_selected_background: var(--sapCriticalColor);
 	--_ui5_tc_headerItemIcon_neutral_selected_background: var(--sapNeutralColor);
 	--_ui5_tc_headerItemIcon_semantic_selected_color: var(--sapGroup_ContentBackground);
+	--_ui5_tc_headerItemIcon_positive_selected_color: var(--_ui5_tc_headerItemIcon_semantic_selected_color);
+	--_ui5_tc_headerItemIcon_negative_selected_color: var(--_ui5_tc_headerItemIcon_semantic_selected_color);
+	--_ui5_tc_headerItemIcon_critical_selected_color: var(--_ui5_tc_headerItemIcon_semantic_selected_color);
+	--_ui5_tc_headerItemIcon_neutral_selected_color: var(--_ui5_tc_headerItemIcon_semantic_selected_color);
 	--_ui5_tc_headerItemIcon_background_color: transparent;
 
 	--_ui5_tc_overflowItem_default_color: var(--sapNeutralTextColor);
