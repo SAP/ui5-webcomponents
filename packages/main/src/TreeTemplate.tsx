@@ -35,7 +35,6 @@ export default function TreeTemplate(this: Tree) {
 			<slot></slot>
 
 			<DropIndicator orientation="Horizontal" ownerReference={this} />
-
 		</TreeList>
 	);
 }
