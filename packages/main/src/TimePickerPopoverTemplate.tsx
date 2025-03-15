@@ -6,6 +6,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
 import TimeSelectionInputs from "./TimeSelectionInputs.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import error from "@ui5/webcomponents-icons/dist/error.js";
 import alert from "@ui5/webcomponents-icons/dist/alert.js";
 import sysEnter2 from "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -22,7 +23,6 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				opener={this}
 				open={this.open}
 				allowTargetOverlap={true}
-				_hideHeader={!this.hasValueStateText}
 				hideArrow={true}
 				accessibleName={this.pickerAccessibleName}
 				onClose={this.onResponsivePopoverAfterClose}
@@ -31,7 +31,9 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				onWheel={this._handleWheel}
 				onKeyDown={this._onkeydown}
 			>
-				{this.shouldDisplayValueStateMessageInResponsivePopover && valueStateTextHeader.call(this)}
+				{ this._isPhone && header.call(this) }
+
+				{ this.shouldDisplayValueStateMessageInResponsivePopover && valueStateTextHeader.call(this) }
 
 				<TimeSelectionClocks
 					id={`${this._id}-time-sel`}
@@ -61,7 +63,7 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 					onWheel={this._handleWheel}
 					onKeyDown={this._onkeydown}
 				>
-					{this.hasValueStateText && valueStateTextHeader.call(this, { "width": "100%" }) }
+					{ this.hasValueStateText && valueStateTextHeader.call(this, { "width": "100%" }) }
 
 					<div class="popover-content">
 						<TimeSelectionInputs
@@ -83,6 +85,23 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 	);
 }
 
+function header(this: TimePicker) {
+	return (
+		<div slot="header" class="ui5-responsive-popover-header">
+			<div class="row">
+				<span>{this._headerTitleText}</span>
+				<Button
+					class="ui5-responsive-popover-close-btn"
+					icon={decline}
+					design="Transparent"
+					onClick={this._togglePicker}
+				>
+				</Button>
+			</div>
+		</div>
+	);
+}
+
 function valueStateMessage(this: TimePicker) {
 	return (
 		this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : <slot name="valueStateMessage"></slot>
@@ -99,7 +118,12 @@ function valueStateTextHeader(this: TimePicker, style?: Record<string, string>) 
 			slot="header"
 			class={{
 				"ui5-popover-header": true,
-				...this.classes.popoverValueState,
+				"ui5-valuestatemessage-header": true,
+				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			}}
 			style={style}
 		>
