@@ -1,3 +1,4 @@
+import DropIndicator from "./DropIndicator.js";
 import type Tree from "./Tree.js";
 import TreeList from "./TreeList.js";
 
@@ -32,6 +33,8 @@ export default function TreeTemplate(this: Tree) {
 			{this._hasHeader && <slot name="header" slot="header"></slot>}
 
 			<slot></slot>
+
+			<DropIndicator orientation="Horizontal" ownerReference={this} />
 
 		</TreeList>
 	);

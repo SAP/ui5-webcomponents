@@ -641,7 +641,7 @@ class List extends UI5Element {
 	}
 
 	get hasData() {
-		return this.getItems().length !== 0;
+		return this.getItems().length !== 0 && !(this.getItems().length === 1 && this.getItems()[0].hasAttribute("ui5-drop-indicator"));
 	}
 
 	get showBusyIndicatorOverlay() {
