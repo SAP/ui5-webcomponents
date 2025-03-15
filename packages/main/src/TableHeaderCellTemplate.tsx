@@ -1,9 +1,8 @@
 import Icon from "./Icon.js";
 import SortOrder from "@ui5/webcomponents-base/dist/types/SortOrder.js";
-import type TableHeaderCell from "./TableHeaderCell.js";
-
 import SortAscending from "@ui5/webcomponents-icons/dist/sort-ascending.js";
 import SortDescending from "@ui5/webcomponents-icons/dist/sort-descending.js";
+import type TableHeaderCell from "./TableHeaderCell.js";
 
 export default function TableHeaderCellTemplate(this: TableHeaderCell) {
 	return (

@@ -251,6 +251,7 @@ class Table extends UI5Element {
 		"move": TableMoveEventDetail;
 		"row-action-click": TableRowActionClickEventDetail;
 	}
+
 	/**
 	 * Defines the rows of the component.
 	 *
@@ -327,7 +328,6 @@ class Table extends UI5Element {
 	 * Available options are:
 	 *
 	 * <code>Scroll</code> - Columns are shown as regular columns and horizontal scrolling is enabled.
-	 *
 	 * <code>Popin</code> - Columns are shown as pop-ins instead of regular columns.
 	 *
 	 * @default "Scroll"
@@ -340,6 +340,7 @@ class Table extends UI5Element {
 	 * Defines if the loading indicator should be shown.
 	 *
 	 * **Note:** When the component is loading, it is not interactive.
+	 *
 	 * @default false
 	 * @public
 	 */
@@ -356,12 +357,6 @@ class Table extends UI5Element {
 	loadingDelay = 1000;
 
 	/**
-	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
-	 */
-	@property()
-	stickyTop = "0";
-
-	/**
 	 * Defines the maximum number of row actions that is displayed, which determines the width of the row action column.
 	 *
 	 * **Note:** It is recommended to use a maximum of 3 row actions, as exceeding this limit may take up too much space on smaller screens.
@@ -372,6 +367,12 @@ class Table extends UI5Element {
 	 */
 	@property({ type: Number })
 	rowActionCount = 0;
+
+	/**
+	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
+	 */
+	@property()
+	stickyTop = "0";
 
 	@property({ type: Number, noAttribute: true })
 	_invalidate = 0;
@@ -417,10 +418,7 @@ class Table extends UI5Element {
 
 	onBeforeRendering(): void {
 		this._renderNavigated = this.rows.some(row => row.navigated);
-		if (this.headerRow[0]) {
-			this.headerRow[0]._rowActionCount = this.rowActionCount;
-		}
-		this.rows.forEach(row => {
+		[...this.headerRow, ...this.rows].forEach(row => {
 			row._renderNavigated = this._renderNavigated;
 			row._rowActionCount = this.rowActionCount;
 		});
@@ -566,6 +564,10 @@ class Table extends UI5Element {
 		this.fireDecoratorEvent("row-action-click", { action, row });
 	}
 
+	_$<T = HTMLElement>(selector: string): T {
+		return this.shadowRoot?.querySelector(selector) as T;
+	}
+
 	get styles() {
 		const virtualizer = this._getVirtualizer();
 		const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
@@ -616,32 +618,38 @@ class Table extends UI5Element {
 		return widths.join(" ");
 	}
 
-	get _tableOverflowX() {
-		return (this.overflowMode === TableOverflowMode.Popin) ? "clip" : "auto";
-	}
-
-	get _tableOverflowY() {
-		return "auto";
+	get dropIndicatorDOM() {
+		return this._$<DropIndicator>("[ui5-drop-indicator]");
 	}
 
 	get _nodataRow() {
-		return this.shadowRoot!.getElementById("nodata-row") as TableRow;
+		return this._$<TableRow>("#nodata-row");
 	}
 
 	get _beforeElement() {
-		return this.shadowRoot!.getElementById("before") as HTMLElement;
+		return this._$("#before");
 	}
 
 	get _afterElement() {
-		return this.shadowRoot!.getElementById("after") as HTMLElement;
+		return this._$("#after");
 	}
 
 	get _tableElement() {
-		return this.shadowRoot!.getElementById("table") as HTMLElement;
+		return this._$("#table");
 	}
 
 	get _loadingElement() {
-		return this.shadowRoot!.getElementById("loading") as HTMLElement;
+		return this._$("#loading");
+	}
+
+	get _scrollContainer() {
+		return this._getVirtualizer() ? this._tableElement : findVerticalScrollContainer(this);
+	}
+
+	get _stickyElements() {
+		const stickyRows = this.headerRow.filter(row => row.sticky);
+		const stickyColumns = this.headerRow[0]._stickyCells as TableHeaderCell[];
+		return [...stickyRows, ...stickyColumns];
 	}
 
 	get _effectiveNoDataText() {
@@ -661,27 +669,8 @@ class Table extends UI5Element {
 		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelectable() : undefined;
 	}
 
-	get _stickyElements() {
-		const stickyRows = this.headerRow.filter(row => row.sticky);
-		const stickyColumns = this.headerRow[0]._stickyCells as TableHeaderCell[];
-
-		return [...stickyRows, ...stickyColumns];
-	}
-
-	get _scrollContainer() {
-		return this._getVirtualizer() ? this._tableElement : findVerticalScrollContainer(this);
-	}
-
 	get isTable() {
 		return true;
-	}
-
-	get dropIndicatorDOM(): DropIndicator | null {
-		return this.shadowRoot!.querySelector("[ui5-drop-indicator]");
-	}
-
-	get _hasRowActions() {
-		return this.rowActionCount > 0;
 	}
 }
 
