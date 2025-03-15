@@ -36,6 +36,17 @@ const isElemFocusable = (el: HTMLElement) => {
 	return el.hasAttribute("data-ui5-focus-redirect") || !isElementHidden(el);
 };
 
+const isUI5ElementWithNegativeTabIndex = (el: HTMLElement) => {
+	if (instanceOfUI5Element(el)) {
+		const tabIndex = el.getAttribute("tabindex");
+		if (tabIndex !== null && parseInt(tabIndex) < 0) {
+			return true;
+		}
+	}
+
+	return false;
+};
+
 const findFocusableElement = async (container: HTMLElement, forward: boolean, startFromContainer?: boolean): FocusableElementPromise => {
 	let child: HTMLElement | undefined;
 	let assignedElements;
@@ -60,9 +71,16 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 	while (child) {
 		const originalChild: HTMLElement | undefined = child;
 
-		if (!isElementHidden(originalChild)) {
+		if (!isElementHidden(originalChild) && !isUI5ElementWithNegativeTabIndex(originalChild)) {
 			if (instanceOfUI5Element(child)) {
-				child = await child.getFocusDomRefAsync();
+				// getDomRef is used because some components mark their focusable ref in an inner
+				// html but there might also be focusable targets outside of it
+				// as an example - TreeItemBase
+				// div - root of the component returned by getDomRef()
+				// 	li.ui5-li-tree - returned by getFocusDomRef() and may not be focusable (ItemNavigation manages tabindex)
+				// 	ul.subtree - may still contain focusable targets (sub nodes of the tree item)
+				await child._waitForDomRef();
+				child = child.getDomRef();
 			}
 
 			if (!child || isElementHidden(child)) {
