@@ -42,7 +42,6 @@ import {
 	VALUE_STATE_TYPE_ERROR,
 	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
-	LIST_ITEM_POSITION,
 	SELECT_ROLE_DESCRIPTION,
 	FORM_SELECTABLE_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
@@ -550,7 +549,6 @@ class Select extends UI5Element implements IFormInputElement {
 			this._changeSelectedItem(this._selectedIndex, nextIndex);
 
 			if (currentIndex !== this._selectedIndex) {
-				this.itemSelectionAnnounce();
 				this._scrollSelectedItem();
 			}
 		}
@@ -686,7 +684,9 @@ class Select extends UI5Element implements IFormInputElement {
 			// Announce new item even if picker is opened.
 			// The aria-activedescendents attribute can't be used,
 			// because listitem elements are in different shadow dom
-			this.itemSelectionAnnounce();
+			if (!this.opened) {
+				this.itemSelectionAnnounce();
+			}
 			this._scrollSelectedItem();
 		}
 	}
@@ -728,10 +728,13 @@ class Select extends UI5Element implements IFormInputElement {
 		this._lastSelectedOption = this.options[this._selectedIndex];
 	}
 
+	get _ariaActiveDescendant() {
+		return this.opened ? `${this._id}-option-${this._currentlySelectedOption?._id}` : undefined;
+	}
+
 	_afterOpen() {
 		this.opened = true;
 		this.fireDecoratorEvent("open");
-		this.itemSelectionAnnounce();
 		this._scrollSelectedItem();
 		this._applyFocusToSelectedItem();
 	}
@@ -913,14 +916,8 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	itemSelectionAnnounce() {
-		let text;
-		const optionsCount = this.options.length;
-		const itemPositionText = Select.i18nBundle.getText(LIST_ITEM_POSITION, this._selectedIndex + 1, optionsCount);
-
-		if (this.focused && this._currentlySelectedOption) {
-			text = `${this._currentlySelectedOption.textContent as string} ${this._isPickerOpen ? itemPositionText : ""}`;
-
-			announce(text, InvisibleMessageMode.Polite);
+		if (this.focused && this._currentlySelectedOption.textContent) {
+			announce(this._currentlySelectedOption.textContent, InvisibleMessageMode.Polite);
 		}
 	}
 
@@ -946,6 +943,13 @@ class Select extends UI5Element implements IFormInputElement {
 
 	get selectedOptionIcon() {
 		return this.selectedOption && this.selectedOption.icon;
+	}
+
+	get optionTexts() {
+		return this.options.map(option => ({
+			text: option.textContent,
+			id: `${this._id}-option-${option._id}`,
+		}));
 	}
 
 	_getPopover() {

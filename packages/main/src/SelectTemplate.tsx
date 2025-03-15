@@ -35,6 +35,8 @@ export default function SelectTemplate(this: Select) {
 					aria-readonly={this.readonly}
 					aria-expanded={this._isPickerOpen}
 					aria-roledescription={this._ariaRoleDescription}
+					aria-activedescendant={this._ariaActiveDescendant}
+					aria-controls={`${this._id}-hidden-texts`}
 					onKeyDown={this._onkeydown}
 					onKeyPress={this._handleKeyboardNavigation}
 					onKeyUp={this._onkeyup}
@@ -56,6 +58,12 @@ export default function SelectTemplate(this: Select) {
 							"inputIcon--pressed": this._iconPressed,
 						}} />
 				}
+
+				<ul id="{{_id}}-hidden-texts" class="ui5-hidden-text" role="listbox">
+					{this.optionTexts.map(optionText => (
+						<li id={optionText.id} class="ui5-hidden-text" role="option">{optionText.text}</li>
+					))}
+				</ul>
 
 				{this.hasValueState &&
 					<span id={`${this._id}-valueStateDesc`} class="ui5-hidden-text">
