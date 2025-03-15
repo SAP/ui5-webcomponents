@@ -351,6 +351,8 @@ class DynamicPage extends UI5Element {
 		this.headerPinned = !this.headerPinned;
 		if (this.headerPinned) {
 			this.showHeaderInStickArea = true;
+		} else if (this.scrollContainer!.scrollTop === 0) {
+			this.showHeaderInStickArea = false;
 		}
 		this.fireDecoratorEvent("pin-button-toggle");
 		await renderFinished();
@@ -371,6 +373,17 @@ class DynamicPage extends UI5Element {
 	async _toggleHeader() {
 		const headerHeight = this.dynamicPageHeader?.getBoundingClientRect().height || 0;
 		const currentScrollTop = this.scrollContainer!.scrollTop;
+
+		if (!this._headerSnapped && this.headerPinned) {
+			this.headerPinned = false;
+			this.fireDecoratorEvent("pin-button-toggle");
+		}
+
+		if (currentScrollTop <= SCROLL_THRESHOLD) {
+			this._headerSnapped = !this._headerSnapped;
+			this.showHeaderInStickArea = this._headerSnapped;
+			return;
+		}
 
 		if (currentScrollTop > SCROLL_THRESHOLD && currentScrollTop < headerHeight) {
 			if (!this._headerSnapped) {
