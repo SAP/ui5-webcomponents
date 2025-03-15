@@ -5,8 +5,6 @@
 	min-height: var(--_ui5_list_item_base_height);
 	box-sizing: border-box;
 	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
-	border-right: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
-	border-left: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
 	overflow: clip;
 }
 

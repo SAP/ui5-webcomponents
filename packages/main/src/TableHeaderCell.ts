@@ -34,11 +34,16 @@ class TableHeaderCell extends TableCellBase {
 	/**
 	 * Defines the width of column.
 	 *
-	 * @default "auto"
+	 * By default, the column will grow and shrink according to the available space.
+	 * This will distribute the space proportionally among all columns with no specific width set.
+	 *
+	 * **Note:** This property is ignored if the `maxWidth` or `minWidth` property is set.
+	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	width = "auto";
+	width?: string;
 
 	/**
  	 * Defines the minimum width of the column.
@@ -46,22 +51,27 @@ class TableHeaderCell extends TableCellBase {
 	 * If the table is in `Popin` mode and the minimum width does not fit anymore,
 	 * the column will move into the popin.
 	 *
-	 * **Note:** If `minWidth` has the `auto` value, the table ensures that the column is wider than at least `3rem`.
+	 * **Notes:**
+	 * - This property expects absolute values.
+	 * - The column cannot be smaller than '3rem', even if the provided value is smaller.
 	 *
-	 * @default "auto"
 	 * @public
+	 * @default undefined
 	 */
 	@property()
-	minWidth = "auto";
+	minWidth?: string;
 
 	/**
 	 * Defines the maximum width of the column.
 	 *
-	 * @default "auto"
+	 * **Notes:**
+	 * - This property expects absolute values.
+	 *
 	 * @public
+	 * @default undefined
 	 */
 	@property()
-	maxWidth = "auto";
+	maxWidth?: string;
 
 	/**
 	 * Defines the importance of the column.
@@ -128,9 +138,6 @@ class TableHeaderCell extends TableCellBase {
 
 	onEnterDOM() {
 		super.onEnterDOM();
-		this.style.minWidth = this.minWidth;
-		this.style.maxWidth = this.maxWidth;
-		this.style.width = this.width;
 	}
 
 	onBeforeRendering() {
