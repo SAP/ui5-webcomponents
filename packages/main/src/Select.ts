@@ -100,8 +100,21 @@ type SelectLiveChangeEventDetail = {
  *
  * 2. With OptionCustom (`ui5-option-custom`) web component.
  *
- * Options with custom content are defined by using the OptionCustom component
+ * Options with custom content are defined by using the OptionCustom component.
  * The OptionCustom component comes with no predefined layout and it expects consumers to define it.
+ *
+ * ### Selection
+ *
+ * The options can be selected via user interaction (click or with the use of the Space and Enter keys)
+ * and programmatically - the Select component supports two distinct selection APIs, though mixing them is not supported:
+ * - The "value" property of the Select component
+ * - The "selected" property on individual options
+ *
+ * **Note:** If the "value" property is set but does not match any option, the first option will be automatically selected.
+ * However, the "value" property itself will remain unchanged.
+ *
+ * **Note:** when both "value" and "selected" are both used (although discouraged),
+ * the "value" property will take precedence.
  *
  * ### Keyboard Handling
  * The `ui5-select` provides advanced keyboard handling.
@@ -420,7 +433,6 @@ class Select extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Selects an option by given value.
-	 * @param { string } value
 	 */
 	_applySelectionByValue(value: string) {
 		if (value !== (this.selectedOption?.value || this.selectedOption?.textContent)) {
@@ -445,7 +457,6 @@ class Select extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Selects an option by string value.
-	 * @param { string } newValue
 	 */
 	_selectOptionByValue(newValue: string) {
 		const options = Array.from(this.children) as Array<IOption>;
@@ -456,7 +467,6 @@ class Select extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Sets value by given option.
-	 * @param { IOption } option
 	 */
 	_setValueByOption(option: IOption) {
 		this.value = option.value || option.textContent || "";
@@ -485,7 +495,7 @@ class Select extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the value of the component:
 	 *
-	 * - when get - returns the value of the component or the value/text content of tge selected option.
+	 * - when get - returns the value of the component or the value/text content of the selected option.
 	 * - when set - selects the option with matching `value` property or text content.
 	 *
 	 * **Note:** Use either the Select's value or the Options' selected property.
