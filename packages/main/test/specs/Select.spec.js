@@ -376,7 +376,7 @@ describe("Select general interaction", () => {
 		selectTextHtml = await selectText.getHTML(false);
 
 		assert.strictEqual(await select.getProperty("value"),
-			EXPECTED_SELECTION_TEXT1, "First option is selected as value did not match any options.");
+			"NAN", "Value did not match any options and remains 'NAN', although first option is selected.");
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1,
 			"Select label is " + EXPECTED_SELECTION_TEXT1);
 	});

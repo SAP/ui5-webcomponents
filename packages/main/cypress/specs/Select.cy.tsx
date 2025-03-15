@@ -100,11 +100,12 @@ describe("Select - value handling", () => {
 			</Select>
 		);
 
-		// DISCUSSION:
-		// the UI shows "Option 1" as selected, but the value is still "option3"
+		// assert: Value remains "option3"
 		cy.get("#sel")
 			.should("have.attr", "value", "option3")
 			.invoke("prop", "value", "option3");
+
+		// assert: First option is auto-selected
 		cy.get("#opt1").should("have.attr", "selected");
 	});
 });

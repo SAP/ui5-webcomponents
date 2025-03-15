@@ -369,12 +369,15 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	get formFormattedValue() {
+		if (this._valueStorage !== undefined) {
+			return this._valueStorage;
+		}
+
 		const selectedOption = this.selectedOption;
 		if (selectedOption) {
 			if ("value" in selectedOption && selectedOption.value) {
 				return selectedOption.value;
 			}
-
 			return selectedOption.hasAttribute("value") ? selectedOption.getAttribute("value") : selectedOption.textContent;
 		}
 		return "";
@@ -397,18 +400,18 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	/**
-	 * Applies the option selection,
-	 * based on the Select's "value" or the Options' "selected" properties.
+	 * Selects an option, based on the Select's "value" property,
+	 * or the options' "selected" property.
 	 */
 	_applySelection() {
-		// "value" property has not been set
+		// Flow 1: "value" has not been used
 		if (this._valueStorage === undefined) {
 			this._applyAutoSelection();
 			return;
 		}
 
-		// "value" has been used
-		this._applySelectionByValue();
+		// Flow 2: "value" has been used - select the option by value or apply auto selection
+		this._applySelectionByValue(this._valueStorage);
 
 		if (!this.selectedOption) {
 			this._applyAutoSelection();
@@ -416,16 +419,17 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	/**
-	 * Applies the selection of the option by the given value,
+	 * Selects an option by given value.
+	 * @param { string } value
 	 */
-	_applySelectionByValue() {
-		if (this._valueStorage !== undefined && (this._valueStorage !== (this.selectedOption?.value || this.selectedOption?.textContent))) {
-			this._selectOptionByValue(this._valueStorage);
+	_applySelectionByValue(value: string) {
+		if (value !== (this.selectedOption?.value || this.selectedOption?.textContent)) {
+			this._selectOptionByValue(value);
 		}
 	}
 
 	/**
-	 * Selects the first option if no option is selected
+	 * Selects the first option if no option is selected,
 	 * or selects the last option if multiple options are selected.
 	 */
 	_applyAutoSelection() {
@@ -441,6 +445,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Selects an option by string value.
+	 * @param { string } newValue
 	 */
 	_selectOptionByValue(newValue: string) {
 		const options = Array.from(this.children) as Array<IOption>;
@@ -450,7 +455,8 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	/**
-	 * Sets value option by an option.
+	 * Sets value by given option.
+	 * @param { IOption } option
 	 */
 	_setValueByOption(option: IOption) {
 		this.value = option.value || option.textContent || "";
@@ -496,7 +502,6 @@ class Select extends UI5Element implements IFormInputElement {
 	@property()
 	set value(newValue: string) {
 		this._valueStorage = newValue;
-		this._selectOptionByValue(newValue);
 	}
 
 	get value(): string {
