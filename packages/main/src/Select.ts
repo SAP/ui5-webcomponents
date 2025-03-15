@@ -224,7 +224,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	iconOnly?: string;
+	icon?: string;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.

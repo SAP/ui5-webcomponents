@@ -74,7 +74,7 @@ describe("Select - Popover", () => {
 describe("Select - Properties", () => {
 	it("Icon only is setting properly the required icon", () => {
 		cy.mount(
-			<Select iconOnly={download}>
+			<Select icon={download}>
 				<Option selected>Phone</Option>
 				<Option>Tablet</Option>
 				<Option>Desktop</Option>
