@@ -209,6 +209,7 @@ Will result in the shadow DOM as:
 The `accessibleDescription` property is currently supported in:
 * [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
 * [Tree](https://sap.github.io/ui5-webcomponents/nightly/components/Tree/)
+* [Input](https://sap.github.io/ui5-webcomponents/nightly/components/Input/)
 
 ---
 
@@ -233,6 +234,7 @@ Will result in the shadow DOM as:
 The `accessibleDescriptionRef` property is currently supported in:
 * [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
 * [Tree](https://sap.github.io/ui5-webcomponents/nightly/components/Tree/)
+* [Input](https://sap.github.io/ui5-webcomponents/nightly/components/Input/)
 
 ---
 

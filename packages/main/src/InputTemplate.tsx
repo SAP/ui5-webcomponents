@@ -102,6 +102,10 @@ export default function InputTemplate(this: Input, hooks?: { preContent: Templat
 						<span id="descr" class="ui5-hidden-text">{this.accInfo.ariaDescription}</span>
 					}
 
+					{this.accInfo.accessibleDescription &&
+						<span id="accessibleDescription" class="ui5-hidden-text">{this.accInfo.accessibleDescription}</span>
+					}
+
 					{this.hasValueState &&
 						<span id="valueStateDesc" class="ui5-hidden-text">{this.ariaValueStateHiddenText}</span>
 					}
