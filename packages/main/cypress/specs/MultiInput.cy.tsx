@@ -43,6 +43,8 @@ describe("MultiInput Web Component", () => {
 		cy.get("ui5-multi-input")
 			.find("ui5-token")
 			.should("have.length", 1)
-			.and("have.attr", "text", "ad");
+			.should(($token) => {
+				expect($token.attr("text")?.toLowerCase()).to.eq("ad"); // Bypass browser auto-capitalization
+			});
 	});
 });
