@@ -3,14 +3,6 @@ body {
 	height: 300px;
 }
 
-.hide {
-	display: none;
-}
-
-.show {
-	display: block;
-}
-
 ui5-icon {
 	color: var(--sapButton_IconColor);
 }
