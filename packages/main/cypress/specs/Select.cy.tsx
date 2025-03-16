@@ -108,6 +108,49 @@ describe("Select - value handling", () => {
 		// assert: First option is auto-selected
 		cy.get("#opt1").should("have.attr", "selected");
 	});
+
+	it("tests Select's value updated after user interaction", () => {
+		cy.mount(
+			<Select id="sel" value="option3">
+				<Option id="opt1" value="option1">Option 1</Option>
+				<Option id="opt2" value="option2">Option 2</Option>
+				<Option id="opt3" value="option3">Option 3</Option>
+			</Select>
+		);
+
+		cy.get("#sel")
+			.realClick();
+
+		cy.get("#sel")
+			.should("have.attr", "opened");
+
+		// act: select first option with click
+
+		cy.get("#sel")
+			.find("[ui5-option]")
+			.eq(0)
+			.realClick();
+
+		// assert: value is updated after user interaction
+		cy.get("#sel")
+			.should("have.attr", "value", "option1")
+			.invoke("prop", "value", "option1");
+
+		// act: select second option with keyboard
+		cy.get("#sel")
+			.realClick();
+
+		cy.get("#sel")
+			.realPress("ArrowDown");
+
+		cy.get("#sel")
+			.realPress("Enter");
+
+		// assert: value is updated after ArrowDown + Enter
+		cy.get("#sel")
+		.should("have.attr", "value", "option2")
+		.invoke("prop", "value", "option2");
+	});
 });
 
 describe("Select - Accessibility", () => {
