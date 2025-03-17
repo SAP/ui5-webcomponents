@@ -17,6 +17,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 
 import {
 	TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL,
+	TOOLBAR_POPOVER_AVAILABLE_VALUES,
 } from "./generated/i18n/i18n-defaults.js";
 
 import ToolbarTemplate from "./ToolbarTemplate.js";
@@ -252,6 +253,9 @@ class Toolbar extends UI5Element {
 					expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
 					hasPopup: "menu" as const,
 				},
+			},
+			popover: {
+				accessibleName: Toolbar.i18nBundle.getText(TOOLBAR_POPOVER_AVAILABLE_VALUES),
 			},
 		};
 	}

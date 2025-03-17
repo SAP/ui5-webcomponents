@@ -1,12 +1,9 @@
 import { customElement, property, slot } from "@ui5/webcomponents-base/dist/decorators.js";
 import TableCellBase from "./TableCellBase.js";
-import TableHeaderCellTemplate from "./generated/templates/TableHeaderCellTemplate.lit.js";
+import TableHeaderCellTemplate from "./TableHeaderCellTemplate.js";
 import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
-import Icon from "./Icon.js";
 import SortOrder from "@ui5/webcomponents-base/dist/types/SortOrder.js";
 import type TableHeaderCellActionBase from "./TableHeaderCellActionBase.js";
-import "@ui5/webcomponents-icons/dist/sort-ascending.js";
-import "@ui5/webcomponents-icons/dist/sort-descending.js";
 
 /**
  * @class
@@ -32,7 +29,6 @@ import "@ui5/webcomponents-icons/dist/sort-descending.js";
 	tag: "ui5-table-header-cell",
 	styles: [TableCellBase.styles, TableHeaderCellStyles],
 	template: TableHeaderCellTemplate,
-	dependencies: [Icon],
 })
 class TableHeaderCell extends TableCellBase {
 	/**
@@ -101,6 +97,19 @@ class TableHeaderCell extends TableCellBase {
 	sortIndicator: `${SortOrder}` = "None";
 
 	/**
+	 * Defines if the column is hidden in the popin.
+	 *
+	 * **Note:** Please be aware that hiding the column in the popin might lead to accessibility issues as
+	 * users might not be able to access the content of the column on small screens.
+	 *
+	 * @default false
+	 * @since 2.8.0
+	 * @public
+	 */
+	@property({ type: Boolean })
+	popinHidden: boolean = false;
+
+	/**
 	 * Defines the action of the column.
 	 *
 	 * **Note:** While multiple actions are technically possible, this is not supported.
@@ -134,12 +143,6 @@ class TableHeaderCell extends TableCellBase {
 			this.setAttribute("aria-sort", this.sortIndicator.toLowerCase());
 		} else if (this.hasAttribute("aria-sort")) {
 			this.removeAttribute("aria-sort");
-		}
-	}
-
-	get _sortIcon() {
-		if (this.sortIndicator !== SortOrder.None) {
-			return `sort-${this.sortIndicator.toLowerCase()}`;
 		}
 	}
 }

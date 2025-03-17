@@ -275,9 +275,8 @@ type InputSuggestionScrollEventDetail = {
  * @public
  * @since 2.0.0
  */
-@event("close", {
-	bubbles: true,
-})
+@event("close")
+
 class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
 	eventDetails!: {
 		"change": InputEventDetail,
@@ -598,7 +597,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_handleResizeBound: ResizeObserverCallback;
 	_keepInnerValue: boolean;
 	_shouldAutocomplete?: boolean;
-	_keyDown?: boolean;
+	_enterKeyDown?: boolean;
 	_isKeyNavigation?: boolean;
 	_indexOfSelectedItem: number;
 	_selectedText?: string;
@@ -800,6 +799,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		if (isEnter(e)) {
+			const isValueUnchanged = this.previousValue === this.getInputDOMRefSync()!.value;
+			this._enterKeyDown = true;
+
+			if (isValueUnchanged && this._internals.form) {
+				submitForm(this);
+			}
+
 			return this._handleEnter(e);
 		}
 
@@ -827,7 +833,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this._clearPopoverFocusAndSelection();
 		}
 
-		this._keyDown = true;
 		this._isKeyNavigation = false;
 	}
 
@@ -838,7 +843,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.value = (e.target as HTMLInputElement).value;
 		}
 
-		this._keyDown = false;
+		this._enterKeyDown = false;
 	}
 
 	get currentItemIndex() {
@@ -897,10 +902,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		if (!suggestionItemPressed) {
 			this.lastConfirmedValue = this.value;
-
-			if (this._internals.form) {
-				submitForm(this);
-			}
 
 			return;
 		}
@@ -1052,6 +1053,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 				this._changeToBeFired = true;
 			} else {
 				fireChange();
+
+				if (this._enterKeyDown && this._internals.form) {
+					submitForm(this);
+				}
 			}
 		}
 	}
@@ -1245,6 +1250,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		if (this._changeToBeFired && !this._isChangeTriggeredBySuggestion) {
+			this.previousValue = this.value;
 			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
 		} else {
 			this._isChangeTriggeredBySuggestion = false;
