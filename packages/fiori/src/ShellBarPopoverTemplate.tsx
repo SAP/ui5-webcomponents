@@ -13,7 +13,7 @@ export default function PopoversTemplate(this: ShellBar) {
 				onBeforeOpen={this._menuPopoverBeforeOpen}
 				onClose={this._menuPopoverAfterClose}
 			>
-				<List separators="None" selectionMode="Single" onSelectionChange={this._menuItemPress}>
+				<List separators="None" selectionMode="Single" onItemClick={this._menuItemPress}>
 					<slot name="menuItems"></slot>
 				</List>
 			</Popover>
@@ -36,6 +36,7 @@ export default function PopoversTemplate(this: ShellBar) {
 							type="Active"
 							onui5-_press={icon.press}
 							tooltip={icon.tooltip}
+							accessibilityAttributes={this.accInfo.search.accessibilityAttributes}
 						>
 							{icon.text}
 						</ListItemStandard>

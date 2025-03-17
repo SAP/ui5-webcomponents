@@ -35,6 +35,21 @@ describe("Select - Accessibility", () => {
 			.find("li.ui5-li-root")
 			.should("have.attr", "title", EXPECTED_TOOLTIP);
 	});
+
+	it("setting tooltip on the host is reflected on the select's shadow dom root", () => {
+		cy.mount(<Select tooltip="Go home">
+			<Option value="1">Option 1</Option>
+			<OptionCustom value="2">Option 2</OptionCustom>
+		</Select>);
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-root")
+			.as("select");
+
+		cy.get("@select")
+			.should("have.attr", "title", "Go home");
+	});
 });
 
 describe("Select - Popover", () => {

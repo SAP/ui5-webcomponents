@@ -11,8 +11,9 @@ export default function CarouselTemplate(this: Carousel) {
 				[`ui5-carousel-background-${this._backgroundDesign}`]: true,
 			}}
 			tabindex={0}
-			role="listbox"
+			role="list"
 			aria-label={this.ariaLabelTxt}
+			aria-roledescription={this._roleDescription}
 			aria-activedescendant={this.ariaActiveDescendant}
 			onFocusIn={this._onfocusin}
 			onKeyDown={this._onkeydown}
@@ -30,7 +31,7 @@ export default function CarouselTemplate(this: Carousel) {
 							}}
 							style={{ width: `${this._itemWidth || 0}px` }}
 							part="item"
-							role="option"
+							role="listitem"
 							aria-posinset={itemInfo.posinset}
 							aria-setsize={itemInfo.setsize}
 							aria-selected = {itemInfo.selected}

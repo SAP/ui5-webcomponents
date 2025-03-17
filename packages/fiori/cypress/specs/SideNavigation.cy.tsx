@@ -2,6 +2,7 @@ import SideNavigation from "../../src/SideNavigation.js";
 import SideNavigationItem from "../../src/SideNavigationItem.js";
 import SideNavigationSubItem from "../../src/SideNavigationSubItem.js";
 import group from "@ui5/webcomponents-icons/dist/group.js";
+import { NAVIGATION_MENU_POPOVER_HIDDEN_TEXT } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("Side Navigation Rendering", () => {
 	it("Tests rendering in collapsed mode", () => {
@@ -175,23 +176,40 @@ describe("Side Navigation interaction", () => {
 		// act
 		cy.get("#item1").realClick();
 
-		// assert
 		cy.get("#sideNav")
 			.shadow()
-			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
-			.should("have.attr", "expanded");
+			.find("[ui5-responsive-popover]")
+			.as("popover");
 
 		// assert
-		cy.get("#sideNav")
-			.shadow()
-			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+		cy.get("@popover")
+			.should("be.visible");
+
+		cy.get("@popover")
+			.find("[ui5-side-navigation-item][text='1']")
+			.should("be.visible");
+
+		cy.get("@popover")
+			.find("[ui5-side-navigation-sub-item][text='1.1']")
+			.should("be.visible");
+
+		// act
+		cy.get("@popover")
+			.find("[ui5-side-navigation-item][text='1']")
 			.realClick();
 
 		// assert
-		cy.get("#sideNav")
-			.shadow()
-			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
-			.should("have.attr", "expanded");
+		cy.get("@popover")
+			.should("be.visible");
+
+		// act
+		cy.get("@popover")
+			.find("[ui5-side-navigation-sub-item][text='1.1']")
+			.realClick();
+
+		// assert
+		cy.get("@popover")
+			.should("not.be.visible");
 	});
 
 	it("Tests isSelectable", () => {
@@ -698,5 +716,104 @@ describe("Side Navigation Accessibility", () => {
 			.shadow()
 			.find(".ui5-sn-item")
 			.should("not.have.attr", "aria-checked");
+	});
+
+	it("Tests accessible-name of overflow menu and sub menu", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true}>
+				<SideNavigationItem text="dummy item"></SideNavigationItem>
+				<SideNavigationItem text="1">
+					<SideNavigationSubItem text="1.1" />
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.invoke("attr", "style", "height: 100px");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-item-overflow")
+			.realClick();
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu")
+			.shadow()
+			.find(".ui5-menu-rp")
+			.invoke("attr", "accessible-name-ref")
+			.should("match", /navigationMenuPopoverText$/);
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='1']")
+			.realClick();
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='1']")
+			.shadow()
+			.find(".ui5-menu-rp")
+			.should("have.attr", "accessible-name", NAVIGATION_MENU_POPOVER_HIDDEN_TEXT.defaultText);
+	});
+});
+
+describe("Focusable items", () => {
+	it("Tests focusable items in popover", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true}>
+				<SideNavigationItem id="parentItem" text="1">
+					<SideNavigationSubItem text="1.1" />
+					<SideNavigationSubItem text="1.2" disabled={true} />
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#parentItem").realClick();
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "0");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "-1");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.2']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("not.have.attr", "tabindex");
+	});
+
+	it("Tests focusable items in popover of unselectable parent", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true}>
+				<SideNavigationItem id="unselectableParentItem" text="1" unselectable={true}>
+					<SideNavigationSubItem text="1.1" />
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#unselectableParentItem").realClick();
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-item][text='1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("not.have.attr", "tabindex");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.1']")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "0");
 	});
 });

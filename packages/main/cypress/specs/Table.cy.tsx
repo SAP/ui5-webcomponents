@@ -2,7 +2,7 @@ import Table from "../../src/Table.js";
 import TableHeaderRow from "../../src/TableHeaderRow.js";
 import TableCell from "../../src/TableCell.js";
 import TableRow from "../../src/TableRow.js";
-import TableSelection from "../../src/TableSelection.js";
+import TableSelectionMulti from "../../src/TableSelectionMulti.js";
 import TableHeaderCell from "../../src/TableHeaderCell.js";
 import TableHeaderCellActionAI from "../../src/TableHeaderCellActionAI.js";
 import Label from "../../src/Label.js";
@@ -531,7 +531,7 @@ describe("Table - Horizontal Scrolling", () => {
 	beforeEach(() => {
 		cy.mount(
 			<Table id="table" overflowMode="Scroll" stickyTop="0px" style={{ width: "300px", overflow: "auto" }} accessibleNameRef="title">
-				<TableSelection id="selection" selected="0 2" slot="features"></TableSelection>
+				<TableSelectionMulti id="selection" selected="0 2" slot="features"></TableSelectionMulti>
 				<TableHeaderRow slot="headerRow" sticky>
 					<TableHeaderCell id="produtCol" width="200px"><span>Product</span></TableHeaderCell>
 					<TableHeaderCell id="supplierCol" width="200px">Supplier</TableHeaderCell>
@@ -653,13 +653,13 @@ describe("Table - Navigated Rows", () => {
 			.shadow()
 			.find("#navigated-cell")
 			.should("exist")
-			.should("have.attr", "excluded-from-navigation", "");
+			.should("have.attr", "data-excluded-from-navigation");
 
 		cy.get("#row2")
 			.shadow()
 			.find("#navigated-cell")
 			.should("exist")
-			.should("have.attr", "excluded-from-navigation", "");
+			.should("have.attr", "data-excluded-from-navigation");
 
 		cy.get("#row1")
 			.shadow()
@@ -693,7 +693,7 @@ describe("Table - Interactive Rows", () => {
 	it("fires the row-click event", () => {
 		cy.mount(
 			<Table id="table1">
-				<TableSelection id="selection" selected="1 2" slot="features"></TableSelection>
+				<TableSelectionMulti id="selection" selected="1 2" slot="features"></TableSelectionMulti>
 				<TableHeaderRow id="headerRow" slot="headerRow">
 					<TableHeaderCell>ColumnA</TableHeaderCell>
 					<TableHeaderCell>ColumnB</TableHeaderCell>
@@ -737,25 +737,6 @@ describe("Table - Interactive Rows", () => {
 		cy.get("@row2button").realPress("Space");
 		cy.get("@buttonClickHandler").should("have.been.calledThrice");
 		cy.get("@rowClickHandler").should("have.been.calledThrice");
-
-		// move the following tests to the TableSelection.cy.tsx
-		cy.get("#headerRow").shadow().find("#selection-cell").as("headerRowSelectionCell");
-		cy.get("@headerRowSelectionCell").find("#selection-component").as("headerRowCheckBox");
-		cy.get("@headerRowCheckBox").should("have.attr", "checked");
-		cy.get("#table1").then($table => {
-			$table.append(
-				`<ui5-table-row id="row3" row-key="3">
-					<ui5-table-cell>Cell A</ui5-table-cell>
-					<ui5-table-cell>Cell B</ui5-table-cell>
-				</ui5-table-row>`
-			);
-		});
-		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
-		cy.get("#row3").invoke("remove");
-		cy.get("@headerRowCheckBox").should("have.attr", "checked");
-		cy.get("#row2").invoke("remove");
-		cy.get("#row1").invoke("remove");
-		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
 	});
 });
 
