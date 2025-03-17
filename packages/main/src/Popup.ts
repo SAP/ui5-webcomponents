@@ -298,6 +298,7 @@ abstract class Popup extends UI5Element {
 		}
 
 		if (!this.fireDecoratorEvent("before-open")) {
+			this.open = false;
 			return;
 		}
 
@@ -507,6 +508,7 @@ abstract class Popup extends UI5Element {
 		}
 
 		if (this.isConnected && !this.fireDecoratorEvent("before-close", { escPressed })) {
+			this.open = true;
 			return;
 		}
 
