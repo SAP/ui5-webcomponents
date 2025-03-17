@@ -220,6 +220,8 @@ class Select extends UI5Element implements IFormInputElement {
 	 *
 	 * Example:
 	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 *
+	 * **Note:** When using this property with a valid icon, Select will be rendered as icon only button and the label and the default arrow down won't be visible.
 	 * @default undefined
 	 * @public
 	 */
