@@ -1358,12 +1358,18 @@ class ShellBar extends UI5Element {
 	get startContent() {
 		// all items before the first spacer
 		const spacerIndex = this.content.findIndex(child => child.hasAttribute("ui5-shellbar-spacer"));
+		if (spacerIndex === -1) {
+			return this.content;
+		}
 		return this.content.slice(0, spacerIndex);
 	}
 
 	get endContent() {
 		// all items after the first spacer
 		const spacerIndex = this.content.findIndex(child => child.hasAttribute("ui5-shellbar-spacer"));
+		if (spacerIndex === -1) {
+			return [];
+		}
 		return this.content.slice(spacerIndex + 1);
 	}
 
