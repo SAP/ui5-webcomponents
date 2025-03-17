@@ -694,6 +694,18 @@ class List extends UI5Element {
 		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this) || this._getDescriptionForGroups();
 	}
 
+	get scrollContainer() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-list-scroll-container");
+	}
+
+	hasGrowingComponent(): boolean {
+		if (this.growsOnScroll && this.scrollContainer) {
+			return this.scrollContainer.clientHeight !== this.scrollContainer.scrollHeight;
+		}
+
+		return this.growsWithButton;
+	}
+
 	_getDescriptionForGroups(): string {
 		let description = "";
 
@@ -1048,8 +1060,7 @@ class List extends UI5Element {
 	}
 
 	loadMore() {
-		// don't fire load-more on initial mount
-		if (this.children.length > 0) {
+		if (this.hasGrowingComponent()) {
 			this.fireDecoratorEvent("load-more");
 		}
 	}

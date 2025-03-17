@@ -178,12 +178,12 @@ class Icon extends UI5Element implements IIcon {
 
 	/**
 	 * Defines the mode of the component.
-	 * @default "Image"
+	 * @default "Decorative"
 	 * @public
 	 * @since 2.0.0
 	 */
 	@property()
-	mode: `${IconMode}` = "Image";
+	mode: `${IconMode}` = "Decorative";
 
 	/**
 	 * @private
@@ -269,8 +269,7 @@ class Icon extends UI5Element implements IIcon {
 	async onBeforeRendering() {
 		const name = this.name;
 		if (!name) {
-			/* eslint-disable-next-line */
-			return console.warn("Icon name property is required", this);
+			return;
 		}
 
 		let iconData: typeof ICON_NOT_FOUND | IconData | undefined = getIconDataSync(name);
