@@ -11,7 +11,6 @@ import ListItemCustom from "@ui5/webcomponents/dist/ListItemCustom.js";
 import Panel from "@ui5/webcomponents/dist/Panel.js";
 import Bar from "@ui5/webcomponents/dist/Bar.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import edit from "@ui5/webcomponents-icons/dist/edit.js";
 import personPlaceholder from "@ui5/webcomponents-icons/dist/person-placeholder.js";
 import userSettings from "@ui5/webcomponents-icons/dist/user-settings.js";
@@ -25,11 +24,10 @@ export default function UserMenuTemplate(this: UserMenu) {
 		<ResponsivePopover
 			id="user-menu-rp"
 			class="ui5-user-menu-rp"
-			tabindex={-1}
-			initialFocus={"ui5-user-menu-list"}
 			placement="Bottom"
 			verticalAlign="Bottom"
 			horizontalAlign="End"
+			tabindex={-1}
 			accessibleName={this.accessibleNameText}
 			aria-labelledby={this.accessibleNameText}
 			open={this.open}
@@ -79,6 +77,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 			{this.menuItems.length > 0 &&
 					<List
 						id="ui5-user-menu-list"
+						tabindex={0}
 						class="ui5-user-menu-list"
 						selectionMode="None"
 						separators="None"
@@ -151,7 +150,7 @@ function otherAccountsContent(this: UserMenu) {
 function otherAccountsList(this: UserMenu) {
 	return (<>
 		<List onItemClick={this._handleAccountSwitch} aria-labelledby={this._ariaLabelledByActions} loadingDelay={0}
-			  loading={this._otherAccounts.some((account) => account.loading ===true)}>
+			  loading={this._otherAccounts.some(account => account.loading === true)}>
 			{this._otherAccounts.map((account, index) =>
 				<ListItemCustom
 					ref={this.captureRef.bind(account)}
