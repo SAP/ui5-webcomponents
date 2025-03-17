@@ -1565,8 +1565,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	get ariaDescriptionTextId() {
-		const hasAriaDescription = this.ariaDescriptionText !== "";
-		return hasAriaDescription ? "accessibleDescription" : "";
+		return this.ariaDescriptionText ? "accessibleDescription" : "";
 	}
 
 	get ariaDescribedByIds() {
