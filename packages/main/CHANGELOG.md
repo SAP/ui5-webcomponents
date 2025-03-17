@@ -3,6 +3,97 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.17](https://github.com/SAP/ui5-webcomponents/compare/v1.24.16...v1.24.17) (2025-03-04)
+
+
+### Bug Fixes
+
+* **ui5-button:** remove tap highlight on safari ([#10802](https://github.com/SAP/ui5-webcomponents/issues/10802)) ([c26d0fc](https://github.com/SAP/ui5-webcomponents/commit/c26d0fc3aba136317f8b0eea796e2aa37cc12be4)), closes [#10777](https://github.com/SAP/ui5-webcomponents/issues/10777) [#10786](https://github.com/SAP/ui5-webcomponents/issues/10786)
+* **ui5-carousel:** fix failing test ([#10940](https://github.com/SAP/ui5-webcomponents/issues/10940)) ([0742795](https://github.com/SAP/ui5-webcomponents/commit/07427953ed1caed1652c8b8af5a989303b01d1da))
+* **ui5-navigation-menu:** add missing dependencies ([#10874](https://github.com/SAP/ui5-webcomponents/issues/10874)) ([eaf68e8](https://github.com/SAP/ui5-webcomponents/commit/eaf68e8b9ae6e0cd807d33e930b84662e12d8892)), closes [#10841](https://github.com/SAP/ui5-webcomponents/issues/10841)
+* **ui5-popover, ui5-dialog:** fix finding keyboard focusable scroll containers ([#10937](https://github.com/SAP/ui5-webcomponents/issues/10937)) ([eb3a739](https://github.com/SAP/ui5-webcomponents/commit/eb3a739aebd0a2a5e6dea1d7af424772a4ac62c9))
+* **ui5-tokenizer:** hide visually hidden text from screen reader ([#10918](https://github.com/SAP/ui5-webcomponents/issues/10918)) ([731cfa2](https://github.com/SAP/ui5-webcomponents/commit/731cfa28e02a71171ba1848d7595095fd6a9dc09))
+
+
+
+
+
+## [1.24.16](https://github.com/SAP/ui5-webcomponents/compare/v1.24.15...v1.24.16) (2025-02-05)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** announce initials ([#10755](https://github.com/SAP/ui5-webcomponents/issues/10755)) ([39166a9](https://github.com/SAP/ui5-webcomponents/commit/39166a90bf44fdb09acb600d6b0958284e114285))
+* **ui5-popover:** popover arrow is aligned to the middle of the opener ([#10657](https://github.com/SAP/ui5-webcomponents/issues/10657)) ([c38aa13](https://github.com/SAP/ui5-webcomponents/commit/c38aa13c57cb441c742c629e4114dd7d0909e67b)), closes [#9886](https://github.com/SAP/ui5-webcomponents/issues/9886)
+
+
+
+
+
+## [1.24.15](https://github.com/SAP/ui5-webcomponents/compare/v1.24.14...v1.24.15) (2025-01-17)
+
+
+### Bug Fixes
+
+* **ui5-input:** open popup after toggling show-suggestions ([#10314](https://github.com/SAP/ui5-webcomponents/issues/10314)) ([0f6313b](https://github.com/SAP/ui5-webcomponents/commit/0f6313bda0dd8c0eff96d71d3b0d40e535e65fe4)), closes [#10265](https://github.com/SAP/ui5-webcomponents/issues/10265)
+* **ui5-input:** prevent setting tabindex to items ([#10355](https://github.com/SAP/ui5-webcomponents/issues/10355)) ([5571f28](https://github.com/SAP/ui5-webcomponents/commit/5571f28aa7da840c3a3175003971ade5e102e2e0))
+* **ui5-popover:** revert rtl correction fix ([#10428](https://github.com/SAP/ui5-webcomponents/issues/10428)) ([e127409](https://github.com/SAP/ui5-webcomponents/commit/e1274091e531628cc1893d07e6b2d88d71b5a3c7))
+
+
+
+
+
+## [1.24.14](https://github.com/SAP/ui5-webcomponents/compare/v1.24.13...v1.24.14) (2024-12-13)
+
+
+### Bug Fixes
+
+* **ui5-dialog:** width on mobile is not bigger than the phone width ([#10255](https://github.com/SAP/ui5-webcomponents/issues/10255)) ([50a918d](https://github.com/SAP/ui5-webcomponents/commit/50a918db2754f7e65307f45d03c0d2db5d83060a)), closes [#10000](https://github.com/SAP/ui5-webcomponents/issues/10000) [#10199](https://github.com/SAP/ui5-webcomponents/issues/10199)
+* **ui5-li:** address additional text contrast issue ([#10272](https://github.com/SAP/ui5-webcomponents/issues/10272)) ([6594706](https://github.com/SAP/ui5-webcomponents/commit/65947069a06a2d5c3f33a292fb30b7bb4bbbed62)), closes [#9869](https://github.com/SAP/ui5-webcomponents/issues/9869)
+* **ui5-popover:** fix arrow position in RTL direction ([#10316](https://github.com/SAP/ui5-webcomponents/issues/10316)) ([04a4cfd](https://github.com/SAP/ui5-webcomponents/commit/04a4cfd555a4af6c5bc5fc686027b299e82051d4))
+* **ui5-radio-button:** fix aria-disabled and focus of the read-only radio buttons ([#10257](https://github.com/SAP/ui5-webcomponents/issues/10257)) ([be55dc1](https://github.com/SAP/ui5-webcomponents/commit/be55dc1bf221643cb03b291bbed7ad9da77410f3)), closes [#10025](https://github.com/SAP/ui5-webcomponents/issues/10025) [#10111](https://github.com/SAP/ui5-webcomponents/issues/10111)
+* **ui5-slider:** up and down arrow behavior in RTL mode ([#10038](https://github.com/SAP/ui5-webcomponents/issues/10038)) ([fcb5c3c](https://github.com/SAP/ui5-webcomponents/commit/fcb5c3c97c6b529902f873754ad82fed23374d39)), closes [#9967](https://github.com/SAP/ui5-webcomponents/issues/9967)
+* **ui5-table:** text cut due to column overflow ([#10197](https://github.com/SAP/ui5-webcomponents/issues/10197)) ([cd7a73e](https://github.com/SAP/ui5-webcomponents/commit/cd7a73eb151581b0aec2d29bc6b4f965de68db8f)), closes [#10168](https://github.com/SAP/ui5-webcomponents/issues/10168)
+
+
+
+
+
+## [1.24.13](https://github.com/SAP/ui5-webcomponents/compare/v1.24.12...v1.24.13) (2024-11-07)
+
+
+### Bug Fixes
+
+* **ui5-badge:** correct parameters for Color Set 2 in high contrast themes ([#10094](https://github.com/SAP/ui5-webcomponents/issues/10094)) ([ab93ce7](https://github.com/SAP/ui5-webcomponents/commit/ab93ce7c7b6f91f34e46afff62ba3be9587b6430)), closes [#8942](https://github.com/SAP/ui5-webcomponents/issues/8942) [#8952](https://github.com/SAP/ui5-webcomponents/issues/8952)
+* **ui5-segmented-button:** remove overstyling when disabled and pressed) ([#10121](https://github.com/SAP/ui5-webcomponents/issues/10121)) ([4c1014c](https://github.com/SAP/ui5-webcomponents/commit/4c1014c33e83b207da53ec53f86c515476ffcb85)), closes [#10112](https://github.com/SAP/ui5-webcomponents/issues/10112)
+
+
+
+
+
+## [1.24.12](https://github.com/SAP/ui5-webcomponents/compare/v1.24.11...v1.24.12) (2024-10-30)
+
+**Note:** Version bump only for package @ui5/webcomponents
+
+
+
+
+
+## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-28)
+
+
+### Bug Fixes
+
+* **ui5-input:** enable preventDefault for input event ([#9946](https://github.com/SAP/ui5-webcomponents/issues/9946)) ([2d273b6](https://github.com/SAP/ui5-webcomponents/commit/2d273b69be405769dd974dbaf0f1fdf0599802d6)), closes [#9884](https://github.com/SAP/ui5-webcomponents/issues/9884)
+* **ui5-input:** properly change numeric input value using the arrow keys ([#10018](https://github.com/SAP/ui5-webcomponents/issues/10018)) ([9acc0ae](https://github.com/SAP/ui5-webcomponents/commit/9acc0aeea0d2efe0b6f84d2059e50d4d259d98a7)), closes [#9616](https://github.com/SAP/ui5-webcomponents/issues/9616)
+* **ui5-menu-li:** add font-size to the menu item text ([#9991](https://github.com/SAP/ui5-webcomponents/issues/9991)) ([f1221c7](https://github.com/SAP/ui5-webcomponents/commit/f1221c797ba625b3e1bbde090d83967b78a54979)), closes [#9986](https://github.com/SAP/ui5-webcomponents/issues/9986)
+* **ui5-menu:** fix focus steal of ui5-wizard in mozilla ([#9845](https://github.com/SAP/ui5-webcomponents/issues/9845)) ([c0c90b2](https://github.com/SAP/ui5-webcomponents/commit/c0c90b2c9a1d3b2f92b1b8b73832430377499870))
+* **ui5-popup:** add role attribute to focus helper element ([#10044](https://github.com/SAP/ui5-webcomponents/issues/10044)) ([e8b1c2a](https://github.com/SAP/ui5-webcomponents/commit/e8b1c2a4a5a12cb7a46486772699476ff59205f1)), closes [#9982](https://github.com/SAP/ui5-webcomponents/issues/9982)
+
+
+
+
+
 ## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-02)
 
 

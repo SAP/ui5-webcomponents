@@ -705,6 +705,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			});
 
 			this._listWidth = await this.Suggestions._getListWidth();
+
+			// disabled ItemNavigation from the list since we are not using it
+			const list = await this.Suggestions._getList();
+
+			list?._itemNavigation._getItems().forEach(item => {
+				item.forcedTabIndex = "-1";
+			});
 		}
 
 		if (this.shouldDisplayOnlyValueStateMessage) {
@@ -1032,7 +1039,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef!.value;
 		const eventType: string = (e as InputEvent).inputType
-			|| (e.detail as InputEventDetail).inputType
+			|| (e.detail && (e as CustomEvent<InputEventDetail>).detail.inputType)
 			|| "";
 		this._keepInnerValue = false;
 
@@ -1344,7 +1351,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeItemPreview = inputValue;
 
 		if (isUserInput) { // input
-			const prevented = !this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: e.inputType }, true);
+			const inputType = e.inputType || "";
+			const prevented = !this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType }, true);
 
 			if (prevented) {
 				this.value = valueBeforeInput;

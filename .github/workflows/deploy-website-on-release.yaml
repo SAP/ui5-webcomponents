@@ -12,9 +12,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4.0.1
+    - uses: actions/setup-node@v4.1.0
       with:
-        node-version: 18
+        node-version: 20
         cache: 'yarn'
 
     - name: Install and Build
@@ -38,3 +38,7 @@ jobs:
         folder: packages/website/build # The folder the action should deploy.
         target-folder: "v1"
         clean: true
+        clean-exclude: |
+          /*
+          /nightly/*
+          !/v1

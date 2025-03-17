@@ -609,16 +609,14 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	_handleActionKeyPressBase(e: KeyboardEvent, affectedPropName: string) {
-		const isUpAction = SliderBase._isIncreaseValueAction(e);
+		const isUpAction = SliderBase._isIncreaseValueAction(e, this.directionStart);
 		const isBigStep = SliderBase._isBigStepAction(e);
 
 		const currentValue = this[affectedPropName as keyof SliderBase] as number;
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 
-		// We need to take into consideration the effective direction of the slider - rtl or ltr.
-		// While in ltr, the left arrow key decreases the value, in rtl it should actually increase it.
-		let step = this.effectiveDir === "rtl" ? -this._effectiveStep : this._effectiveStep;
+		let step = this._effectiveStep;
 
 		// If the action key corresponds to a long step and the slider has more than 10 normal steps,
 		// make a jump of 1/10th of the Slider's length, otherwise just use the normal step property.
@@ -635,11 +633,11 @@ abstract class SliderBase extends UI5Element {
 		return isUpAction ? step : step * -1;
 	}
 
-	static _isDecreaseValueAction(e: KeyboardEvent) {
-		return isDown(e) || isDownCtrl(e) || isLeft(e) || isLeftCtrl(e) || isMinus(e) || isPageDown(e);
-	}
+	static _isIncreaseValueAction(e: KeyboardEvent, directionStart: DirectionStart) {
+		if (directionStart === "right") {
+			return isUp(e) || isUpCtrl(e) || isLeft(e) || isLeftCtrl(e) || isPlus(e) || isPageUp(e);
+		}
 
-	static _isIncreaseValueAction(e: KeyboardEvent) {
 		return isUp(e) || isUpCtrl(e) || isRight(e) || isRightCtrl(e) || isPlus(e) || isPageUp(e);
 	}
 

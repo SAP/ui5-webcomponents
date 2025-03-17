@@ -3,6 +3,75 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.17](https://github.com/SAP/ui5-webcomponents/compare/v1.24.16...v1.24.17) (2025-03-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [1.24.16](https://github.com/SAP/ui5-webcomponents/compare/v1.24.15...v1.24.16) (2025-02-05)
+
+
+### Bug Fixes
+
+* **ui5-popover:** popover arrow is aligned to the middle of the opener ([#10657](https://github.com/SAP/ui5-webcomponents/issues/10657)) ([c38aa13](https://github.com/SAP/ui5-webcomponents/commit/c38aa13c57cb441c742c629e4114dd7d0909e67b)), closes [#9886](https://github.com/SAP/ui5-webcomponents/issues/9886)
+
+
+
+
+
+## [1.24.15](https://github.com/SAP/ui5-webcomponents/compare/v1.24.14...v1.24.15) (2025-01-17)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [1.24.14](https://github.com/SAP/ui5-webcomponents/compare/v1.24.13...v1.24.14) (2024-12-13)
+
+
+### Bug Fixes
+
+* **ui5-bar:** add parts for content containers ([#10280](https://github.com/SAP/ui5-webcomponents/issues/10280)) ([da3432d](https://github.com/SAP/ui5-webcomponents/commit/da3432d0aad4d6bf8d5b9b3048b408fc726e1786)), closes [#10101](https://github.com/SAP/ui5-webcomponents/issues/10101)
+* **ui5-shellbar:** removed redundant avatar padding ([#10245](https://github.com/SAP/ui5-webcomponents/issues/10245)) ([1309bff](https://github.com/SAP/ui5-webcomponents/commit/1309bffc8b95e59625758432157bdc95bdfdb8ed)), closes [#10217](https://github.com/SAP/ui5-webcomponents/issues/10217)
+* **ui5-table:** text cut due to column overflow ([#10197](https://github.com/SAP/ui5-webcomponents/issues/10197)) ([cd7a73e](https://github.com/SAP/ui5-webcomponents/commit/cd7a73eb151581b0aec2d29bc6b4f965de68db8f)), closes [#10168](https://github.com/SAP/ui5-webcomponents/issues/10168)
+
+
+
+
+
+## [1.24.13](https://github.com/SAP/ui5-webcomponents/compare/v1.24.12...v1.24.13) (2024-11-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [1.24.12](https://github.com/SAP/ui5-webcomponents/compare/v1.24.11...v1.24.12) (2024-10-30)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-28)
+
+
+### Bug Fixes
+
+* **ui5-input:** enable preventDefault for input event ([#9946](https://github.com/SAP/ui5-webcomponents/issues/9946)) ([2d273b6](https://github.com/SAP/ui5-webcomponents/commit/2d273b69be405769dd974dbaf0f1fdf0599802d6)), closes [#9884](https://github.com/SAP/ui5-webcomponents/issues/9884)
+* **ui5-upload-collеction:** hide the upload icon when the height is too small ([#10050](https://github.com/SAP/ui5-webcomponents/issues/10050)) ([db3eae0](https://github.com/SAP/ui5-webcomponents/commit/db3eae02173b97270a6dd88af8d8ca5a185365e1)), closes [#9975](https://github.com/SAP/ui5-webcomponents/issues/9975)
+* **ui5-wizard:** disabled steps are no longer clickable ([#9706](https://github.com/SAP/ui5-webcomponents/issues/9706)) ([8136497](https://github.com/SAP/ui5-webcomponents/commit/8136497b68dec6e656b54e7fa8ae9dc0ddea6163)), closes [#9571](https://github.com/SAP/ui5-webcomponents/issues/9571)
+
+
+
+
+
 ## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-02)
 
 

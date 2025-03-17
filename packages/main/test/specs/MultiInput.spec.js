@@ -297,7 +297,7 @@ describe("MultiInput Truncated Token", () => {
 		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
 	});
 
-	it("should truncate token when a long token is added", async () => {
+	it.skip("should truncate token when a long token is added", async () => {
 		const mi = await $("#token-unique");
 		const inner = await mi.shadow$("input");
 

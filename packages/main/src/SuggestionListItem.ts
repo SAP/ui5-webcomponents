@@ -37,6 +37,7 @@ class SuggestionListItem extends StandardListItem {
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.hasTitle = !!this.titleText.length;
+		this.accessibleRole = "option";
 	}
 
 	get effectiveTitle() {
@@ -49,6 +50,10 @@ class SuggestionListItem extends StandardListItem {
 
 	get groupItem() {
 		return false;
+	}
+
+	get _effectiveTabIndex(): string {
+		return "-1";
 	}
 }
 
