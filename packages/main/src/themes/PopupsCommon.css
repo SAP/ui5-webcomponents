@@ -10,14 +10,6 @@
 	display: flex;
 }
 
-:host([open]:not([ui5-responsive-popover][on-phone])) {
-	opacity: 0;
-}
-
-:host([open][is-visible]:not([ui5-responsive-popover][on-phone])) {
-	opacity: 1;
-}
-
 .ui5-popup-root {
     background: inherit;
     border-radius: inherit;

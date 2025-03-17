@@ -332,7 +332,6 @@ class Dialog extends Popup {
 	_show() {
 		super._show();
 		this._center();
-		this.isVisible = true;
 	}
 
 	onBeforeRendering() {

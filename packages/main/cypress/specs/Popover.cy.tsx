@@ -62,6 +62,27 @@ describe("Popover opener", () => {
 		});
 		cy.get("#btnClosePopover").realClick();
 	});
+
+	it("tests calling _showOutsideViewport method", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open</Button>
+				<Popover id="popover" opener="btnOpen">
+					<Button id="btnClosePopover">Close</Button>
+				</Popover>
+			</>
+		);
+
+		cy.get("#popover").then(el => {
+			cy.spy<Popover>((el.get(0) as Popover), "_showOutsideViewport").as("showOutsideViewport");
+		});
+
+		// act
+		cy.get("#popover").invoke("prop", "open", "true");
+
+		cy.get("@showOutsideViewport")
+			.should("have.been.calledOnce");
+	});
 });
 
 describe("Popover interaction", () => {
