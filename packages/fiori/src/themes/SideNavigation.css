@@ -71,7 +71,7 @@
 }
 
 :host([in-popover]) .ui5-sn-list {
-	padding: var(--_ui5_side_navigation_parent_popup_padding);
+	padding: var(--_ui5_side_navigation_popup_padding);
 }
 
 .ui5-sn-item-overflow {

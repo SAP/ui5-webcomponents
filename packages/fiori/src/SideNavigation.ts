@@ -255,7 +255,7 @@ class SideNavigation extends UI5Element {
 		if (selectedItem) {
 			selectedItem.focus();
 		} else {
-			tree.items[0]?.focus();
+			tree.items[0]?.applyInitialFocusInPopover();
 		}
 	}
 
@@ -298,6 +298,10 @@ class SideNavigation extends UI5Element {
 
 	handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
 		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
+
+		if (isInstanceOfSideNavigationItem(associatedItem) && associatedItem.unselectable) {
+			return;
+		}
 
 		e.stopPropagation();
 

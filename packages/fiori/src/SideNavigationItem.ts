@@ -77,12 +77,20 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get selectableItems() : Array<SideNavigationSelectableItemBase> {
+		if (this.inPopover && this.unselectable && this.items.length) {
+			return [...this.items];
+		}
+
 		return [this, ...this.items];
 	}
 
 	get focusableItems() : Array<SideNavigationItemBase> {
 		if (this.sideNavCollapsed) {
 			return [this];
+		}
+
+		if (this.inPopover && this.unselectable && this.items.length) {
+			return [...this.items];
 		}
 
 		if (this.expanded) {
@@ -94,6 +102,14 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 
 	get allItems() : Array<SideNavigationItemBase> {
 		return [this, ...this.items];
+	}
+
+	get effectiveTabIndex() {
+		if (this.inPopover && this.unselectable) {
+			return undefined;
+		}
+
+		return super.effectiveTabIndex;
 	}
 
 	get _ariaHasPopup() {
@@ -154,6 +170,14 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		return this.selected;
 	}
 
+	applyInitialFocusInPopover() {
+		if (this.unselectable && this.items.length) {
+			this.items[0]?.focus();
+		} else {
+			this.focus();
+		}
+	}
+
 	_onToggleClick(e: CustomEvent) {
 		e.stopPropagation();
 
@@ -188,7 +212,11 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		super._onfocusin(e);
+		if (this.inPopover && this.unselectable && this.items.length) {
+			this.sideNavigation?.focusItem(this.items[0]);
+		} else {
+			super._onfocusin(e);
+		}
 	}
 
 	_onclick(e: MouseEvent) {
