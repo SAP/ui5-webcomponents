@@ -36,8 +36,8 @@
     "scopeStart:all": "npm-run-all --parallel watch:base scopeWatch:main scopeWatch:compat scopeWatch:ai scopeWatch:fiori dev",
     "start:website": "yarn ci:releasebuild && yarn workspace @ui5/webcomponents-website start",
 
-    "start": "npm-run-all --sequential generate start:all",
-    "build": "yarn ci:releasebuild",
+    "start": "npm-run-all --sequential generate start:all ci:test:prepare",
+    "build": "yarn ci:releasebuild && yarn ci:test:prepare",
     "test": "yarn wsrun --exclude-missing test",
     "test:prepare": "yarn ci:test:prepare && yarn generate",
     "ci:test:prepare": "yarn workspace @ui5/cypress-internal build && yarn workspace @ui5/cypress-ct-ui5-webc build",
