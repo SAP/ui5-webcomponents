@@ -255,7 +255,7 @@ describe("AccessibilityTextsHelper", () => {
 		// assert
 		cy.get("#inputDescRef")
 			.shadow()
-			.find("#descr")
+			.find("#accessibleDescription")
 			.should("have.text", "FirstDesc ThirdDesc");
 
 		// act - update text of referenced label
@@ -267,7 +267,7 @@ describe("AccessibilityTextsHelper", () => {
 		// assert
 		cy.get("#inputDescRef")
 			.shadow()
-			.find("#descr")
+			.find("#accessibleDescription")
 			.should("have.text", "First Label Desc ThirdDesc");
 
 		// act - update accessible-description-ref
@@ -277,7 +277,7 @@ describe("AccessibilityTextsHelper", () => {
 		// assert
 		cy.get("#inputDescRef")
 			.shadow()
-			.find("#descr")
+			.find("#accessibleDescription")
 			.should("have.text", "SecondDesc");
 
 		// act - update accessible-description-ref
@@ -287,7 +287,7 @@ describe("AccessibilityTextsHelper", () => {
 		// assert
 		cy.get("#inputDescRef")
 			.shadow()
-			.find("#descr")
+			.find("#accessibleDescription")
 			.should("have.text", "ThirdDesc");
 
 		// act - remove accessible-description-ref
@@ -297,7 +297,7 @@ describe("AccessibilityTextsHelper", () => {
 		// assert
 		cy.get("#inputDescRef")
 			.shadow()
-			.find("#descr")
+			.find("#accessibleDescription")
 			.should("not.have.text", "");
 	});
 
@@ -310,7 +310,7 @@ describe("AccessibilityTextsHelper", () => {
 		// assert
 		cy.get("#inputDesc")
 			.shadow()
-			.find("#descr")
+			.find("#accessibleDescription")
 			.should("have.text", "Some description added by accessibleDescription");
 
 		// act - update accessible-description
@@ -320,7 +320,7 @@ describe("AccessibilityTextsHelper", () => {
 		// assert
 		cy.get("#inputDesc")
 			.shadow()
-			.find("#descr")
+			.find("#accessibleDescription")
 			.should("have.text", "Some description added by accessibleDescription");
 
 		// act - remove accessible-description
@@ -330,7 +330,7 @@ describe("AccessibilityTextsHelper", () => {
 		// assert
 		cy.get("#inputDesc")
 			.shadow()
-			.find("#descr")
+			.find("#accessibleDescription")
 			.should("not.have.text", "");
 	});
 
@@ -347,7 +347,7 @@ describe("AccessibilityTextsHelper", () => {
 		// assert - accessibleDescription is used
 		cy.get("#inputDesc")
 			.shadow()
-			.find("#descr")
+			.find("#accessibleDescription")
 			.should("have.text", "FirstDesc");
 
 		// act - update text of referenced label
@@ -359,7 +359,7 @@ describe("AccessibilityTextsHelper", () => {
 		// assert - accessibleDescriptionRef is used
 		cy.get("#inputDesc")
 			.shadow()
-			.find("#descr")
+			.find("#accessibleDescription")
 			.should("have.text", "First Label Desc");
 
 		// act - remove accessible-description-ref
@@ -369,7 +369,7 @@ describe("AccessibilityTextsHelper", () => {
 		// assert - accessibleDescription is used
 		cy.get("#inputDesc")
 			.shadow()
-			.find("#descr")
+			.find("#accessibleDescription")
 			.should("have.text", "Some description added by accessibleDescription");
 
 		// act - remove accessible-description
@@ -379,7 +379,7 @@ describe("AccessibilityTextsHelper", () => {
 		// assert - accessibleDescriptionRef is used
 		cy.get("#inputDesc")
 			.shadow()
-			.find("#descr")
+			.find("#accessibleDescription")
 			.should("not.have.text", "");
 	});
 
