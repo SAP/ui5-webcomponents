@@ -4,7 +4,7 @@ Cypress.Commands.add("ui5DatePickerGetInnerInput", { prevSubject: true }, subjec
 
 	cy.get("@datePicker")
 		.shadow()
-		.find("ui5-input")
+		.find("ui5-datetime-input")
 		.shadow()
 		.find("input")
 		.as("innerInput");

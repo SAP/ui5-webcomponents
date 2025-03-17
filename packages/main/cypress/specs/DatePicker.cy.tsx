@@ -18,7 +18,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.should("be.visible");
 
 		cy.get<DatePicker>("@datePicker")
@@ -97,12 +97,12 @@ describe("Date Picker Tests", () => {
 
 		cy.get("@datePicker")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.should("have.attr", "value-state", "Negative");
 
 		cy.get("@datePicker")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.shadow()
 			.find(".ui5-input-content")
 			.should("be.visible");
@@ -145,7 +145,7 @@ describe("Date Picker Tests", () => {
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.should("have.attr", "required");
 
 		cy.get<DatePicker>("@datePicker")
@@ -902,7 +902,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.shadow()
 			.find(".ui5-input-content")
 			.should("be.visible");
@@ -924,7 +924,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.shadow()
 			.find(".ui5-input-content")
 			.should("be.visible");
@@ -960,7 +960,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.shadow()
 			.find(".ui5-input-content")
 			.should("be.visible");
@@ -1687,7 +1687,7 @@ describe("Legacy date customization and Islamic calendar type", () => {
 
 		cy.get("@datePicker")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.should("have.attr", "value-state", "None");
 	});
 });
