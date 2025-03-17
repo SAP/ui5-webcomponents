@@ -919,7 +919,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.isTyping = false;
 
 		if (this.value !== this.previousValue && this.value !== this.lastConfirmedValue && !this.open) {
+			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
 			this.fireDecoratorEvent(INPUT_EVENTS.INPUT);
+
+			return;
 		}
 
 		if (!isOpen) {
