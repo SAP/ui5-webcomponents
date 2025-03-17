@@ -77,7 +77,6 @@ export default function UserMenuTemplate(this: UserMenu) {
 			{this.menuItems.length > 0 &&
 					<List
 						id="ui5-user-menu-list"
-						tabindex={0}
 						class="ui5-user-menu-list"
 						selectionMode="None"
 						separators="None"
