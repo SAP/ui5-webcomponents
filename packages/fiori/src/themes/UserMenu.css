@@ -52,11 +52,8 @@
     overflow: hidden;
 }
 
-[on-phone] .ui5-user-menu--selected-account-avatar {
-    margin-block-start: 0.5rem;
-}
-
 .ui5-user-menu--selected-account-avatar {
+    margin-block-start: 0.25rem;
     margin-block-end: 0.5rem;
 }
 
