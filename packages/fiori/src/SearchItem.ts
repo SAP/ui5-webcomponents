@@ -47,7 +47,7 @@ class SearchItem extends ListItemBase {
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	icon = "";
 
 	/**
 	 * Defines whether the search item is selected.

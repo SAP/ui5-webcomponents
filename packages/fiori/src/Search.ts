@@ -60,7 +60,7 @@ type SearchEventDetails = {
  * `import "@ui5/webcomponents/fiori/dist/Search.js";`
  *
  * @constructor
- * @extends UI5Element
+ * @extends SearchField
  * @public
  * @since 2.9.0
  * @experimental
@@ -126,14 +126,14 @@ class Search extends SearchField {
 	 * @public
 	 */
 	@property()
-	headerText?: string;
+	headerText = "";
 
 	/**
 	 * Defines the subheader text to be placed in the search suggestions popup.
 	 * @public
 	 */
 	@property()
-	subheaderText?: string;
+	subheaderText = "";
 
 	/**
 	 * Defines whether the popup footer action button is shown.
@@ -148,7 +148,7 @@ class Search extends SearchField {
 	 * @public
 	 */
 	@property()
-	popupActionText?: string;
+	popupActionText = "";
 
 	/**
 	 * Defines the Search suggestion items.
@@ -168,7 +168,7 @@ class Search extends SearchField {
 
 	/**
 	 * Indicates whether the items picker is open.
-	 * @oublic
+	 * @public
 	 */
 	@property({ type: Boolean })
 	open = false;
