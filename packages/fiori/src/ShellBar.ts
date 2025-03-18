@@ -16,7 +16,7 @@ import {
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import List from "@ui5/webcomponents/dist/List.js";
-import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
+import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -41,8 +41,8 @@ import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHo
 import throttle from "@ui5/webcomponents-base/dist/util/throttle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
-
 import type ShellBarItem from "./ShellBarItem.js";
+import type { ShellBarItemAccessibilityAttributes } from "./ShellBarItem.js";
 
 // Templates
 import ShellBarTemplate from "./ShellBarTemplate.js";
@@ -131,6 +131,7 @@ interface IShelBarItemInfo extends IShellBarHidableItem {
 	order?: number,
 	profile?: boolean,
 	tooltip?: string,
+	accessibilityAttributes?: ShellBarItemAccessibilityAttributes,
 }
 
 interface IShellBarContentItem extends IShellBarHidableItem {
@@ -653,9 +654,9 @@ class ShellBar extends UI5Element {
 		return visibleAndInteractiveItems;
 	}
 
-	_menuItemPress(e: CustomEvent<ListSelectionChangeEventDetail>) {
+	_menuItemPress(e: CustomEvent<ListItemClickEventDetail>) {
 		const shouldContinue = this.fireDecoratorEvent("menu-item-click", {
-			item: e.detail.selectedItems[0],
+			item: e.detail.item,
 		});
 		if (shouldContinue) {
 			this.menuPopover!.open = false;
@@ -1085,6 +1086,7 @@ class ShellBar extends UI5Element {
 					title: item.title,
 					stableDomRef: item.stableDomRef,
 					tooltip: item.title || item.text,
+					accessibilityAttributes: item.accessibilityAttributes,
 				};
 			}),
 			{
@@ -1164,9 +1166,10 @@ class ShellBar extends UI5Element {
 	}
 
 	_observeContentItems() {
-		if (JSON.stringify(this.contentItems) === JSON.stringify(this._observableContent)) {
-			return false;
+		if (this.hasMatchingContent) {
+			return;
 		}
+
 		this.contentItems.forEach(item => {
 			if (!this._observableContent.includes(item)) {
 				this.contentItemsObserver.observe(item, {
@@ -1197,6 +1200,15 @@ class ShellBar extends UI5Element {
 		}
 
 		return itemInfo.classes.indexOf("ui5-shellbar-hidden-button") !== -1;
+	}
+
+	get hasMatchingContent() {
+		if (this._observableContent.length !== this.contentItems.length) {
+			return false;
+		}
+
+		const observableContentSet = new WeakSet(this._observableContent);
+		return this.contentItems.every(item => observableContentSet.has(item));
 	}
 
 	get contentItemsSorted() {

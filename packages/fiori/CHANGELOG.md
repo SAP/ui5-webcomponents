@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.1-rc.0...v2.9.0-rc.0) (2025-03-13)
+
+
+### Bug Fixes
+
+* **ui5-li-notification:** footer no longer overflows ([#11030](https://github.com/SAP/ui5-webcomponents/issues/11030)) ([41c23eb](https://github.com/SAP/ui5-webcomponents/commit/41c23eb908619dd426fa48275732c4152ca6288a))
+
+
+
+
+
+## [2.8.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0...v2.8.1-rc.0) (2025-03-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.8.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.3...v2.8.0) (2025-03-04)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** correct matching content check ([#10921](https://github.com/SAP/ui5-webcomponents/issues/10921)) ([8782951](https://github.com/SAP/ui5-webcomponents/commit/87829511dd2057b3cf7ff1f28fb04ce00df19ffc))
+* **ui5-shellbar:** menu-item-click click event is now properly fired ([#10983](https://github.com/SAP/ui5-webcomponents/issues/10983)) ([27c8bb7](https://github.com/SAP/ui5-webcomponents/commit/27c8bb7ba6e9d153d3da2ad2d976e7ab4cc13714)), closes [#10950](https://github.com/SAP/ui5-webcomponents/issues/10950)
+* **user-menu:** focus on user menu when it is opened ([#10967](https://github.com/SAP/ui5-webcomponents/issues/10967)) ([a9e2868](https://github.com/SAP/ui5-webcomponents/commit/a9e28689eb80c225244ee5a1f7587fdd6ec48319))
+
+
+### Features
+
+* **framework:** add `.currentTarget` to the type of event handler in TSX and UI5CustomEvent ([#10957](https://github.com/SAP/ui5-webcomponents/issues/10957)) ([f56753c](https://github.com/SAP/ui5-webcomponents/commit/f56753c5142d6e817b05d7e33bd160f09c2d5205))
+* **ui5-side-navigation:** improve interaction of unselectable parent items in collapsed mode ([#10939](https://github.com/SAP/ui5-webcomponents/issues/10939)) ([20507fa](https://github.com/SAP/ui5-webcomponents/commit/20507fa405c1af2469d98905d6b499e55067c7a6))
+* **user-menu:** change api name from showAddAccount to showEditAccounts ([#10966](https://github.com/SAP/ui5-webcomponents/issues/10966)) ([aa9cf2d](https://github.com/SAP/ui5-webcomponents/commit/aa9cf2d55af42ec6880d98452f6a627fc76e9b3b))
+
+
+
+
+
+# [2.8.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.2...v2.8.0-rc.3) (2025-02-27)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** update title font styles ([#10912](https://github.com/SAP/ui5-webcomponents/issues/10912)) ([6a85a53](https://github.com/SAP/ui5-webcomponents/commit/6a85a53f58bf0780975a5e41a1db69d05c9d1059)), closes [#10879](https://github.com/SAP/ui5-webcomponents/issues/10879)
+* **ui5-notification-list:** improve keyboard accessibility for the "More" button ([#10822](https://github.com/SAP/ui5-webcomponents/issues/10822)) ([b659fe2](https://github.com/SAP/ui5-webcomponents/commit/b659fe2faeb42eb052dafcc0c16215a3bf1f1926))
+* **ui5-shellbar:** adjust focus style of startButton ([#10908](https://github.com/SAP/ui5-webcomponents/issues/10908)) ([cc0be62](https://github.com/SAP/ui5-webcomponents/commit/cc0be62a675d22d6f63471c57d71964d395fd5d6)), closes [#10598](https://github.com/SAP/ui5-webcomponents/issues/10598)
+
+
+### Features
+
+* **ui5-search-field:** introduce base component ([#10922](https://github.com/SAP/ui5-webcomponents/issues/10922)) ([f4489c0](https://github.com/SAP/ui5-webcomponents/commit/f4489c0cecd8c0f2f7916b39e2183193f171f725))
+* **ui5-side-navigation:** visual design enhancements ([#10839](https://github.com/SAP/ui5-webcomponents/issues/10839)) ([09e3f35](https://github.com/SAP/ui5-webcomponents/commit/09e3f35f5973aca5b2104508a3f8d452d8380a76))
+* **ui5-user-settings-dialog:** introduce new components `UserSettingsDialog`, `UserSettingsItem`, and `UserSettingsView` ([#10832](https://github.com/SAP/ui5-webcomponents/issues/10832)) ([8b50b13](https://github.com/SAP/ui5-webcomponents/commit/8b50b134af44cb9b83a223bb1d0d9e3478f47c77))
+
+
+
+
+
+# [2.8.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.1...v2.8.0-rc.2) (2025-02-20)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** correct focus outline styles ([#10788](https://github.com/SAP/ui5-webcomponents/issues/10788)) ([59710df](https://github.com/SAP/ui5-webcomponents/commit/59710df6e37776531d09d285705ce99e3feb883c)), closes [#10670](https://github.com/SAP/ui5-webcomponents/issues/10670)
+
+
+
+
+
 # [2.8.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.0...v2.8.0-rc.1) (2025-02-13)
 
 
