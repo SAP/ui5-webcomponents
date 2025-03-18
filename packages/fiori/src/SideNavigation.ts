@@ -156,7 +156,7 @@ class SideNavigation extends UI5Element {
 	 * Defines the accessible ARIA name of the component.
 	 * @default undefined
 	 * @public
-	 * @since 2.8.1
+	 * @since 2.9.0
 	 */
 	@property()
 	accessibleName?: string;
