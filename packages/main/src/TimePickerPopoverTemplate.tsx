@@ -33,7 +33,7 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 			>
 				{ this._isPhone && header.call(this) }
 
-				{ this.shouldDisplayValueStateMessageInResponsivePopover && valueStateTextHeader.call(this) }
+				{ this.shouldDisplayValueStateMessageInResponsivePopover && valueStateTextHeader.call(this, { "width": "100%" }) }
 
 				<TimeSelectionClocks
 					id={`${this._id}-time-sel`}
@@ -115,7 +115,7 @@ function valueStateTextHeader(this: TimePicker, style?: Record<string, string>) 
 
 	return (
 		<div
-			slot="header"
+			slot={!this._isPhone ? "header" : undefined}
 			class={{
 				"ui5-popover-header": true,
 				"ui5-valuestatemessage-header": true,

@@ -29,7 +29,6 @@ export default function DatePickerPopoverTemplate(this: DatePicker, hooks?: { he
 			horizontalAlign="Start"
 			accessibleName={this.pickerAccessibleName}
 			hideArrow={true}
-			_hideHeader={!this.hasValueStateText}
 			onKeyDown={this._onkeydown}
 			onClose={this.onResponsivePopoverAfterClose}
 			onOpen={this.onResponsivePopoverAfterOpen}

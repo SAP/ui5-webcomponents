@@ -12,14 +12,8 @@ import TimeSelectionClocks from "./TimeSelectionClocks.js";
 export default function DateTimePickerTemplate(this: DateTimePicker) {
 	return [
 		DatePickerInputTemplate.call(this),
-		DatePickerPopoverTemplate.call(this, { header, content, footer }),
+		DatePickerPopoverTemplate.call(this, { header: undefined, content, footer }),
 	];
-}
-
-function header(this: DateTimePicker) {
-	return (
-		<></>
-	);
 }
 
 function content(this: DateTimePicker) {
