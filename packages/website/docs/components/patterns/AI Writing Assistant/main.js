@@ -66,7 +66,9 @@ const transitionToLoadState = () => {
 };
 
 const updateMenuVisibility = (menu, isOpen = false) => {
-	if (isOpen) menu.open = true;
+	if (isOpen) {
+		menu.open = true;
+	}
 }
 
 input.addEventListener('focus', () => updateIconVisibility(true));
@@ -92,7 +94,9 @@ icon.addEventListener("click", () => {
 [menuGenerate, menuRegenerate].forEach(menu => {
 	menu.addEventListener("before-close", () => {
 		icon.classList.remove("icon-pressed");
-		if (icon.name !== "stop") updateIconVisibility(false);
+		if (icon.name !== "stop") {
+			updateIconVisibility(false);
+		}
 	});
 	menu.addEventListener("item-click", transitionToLoadState);
 });
@@ -100,9 +104,15 @@ icon.addEventListener("click", () => {
 document.addEventListener('keydown', (event) => {
 	const isMac = navigator.userAgent.includes('Mac');
 
-	if (event.key === 'Escape') stopLoading();
+	if (event.key === 'Escape') {
+		stopLoading();
+	}
+
 	if (event.key === 'F4' && event.shiftKey && icon.name !== "stop") {
 		input.value.length ? updateMenuVisibility(menuRegenerate, true) : updateMenuVisibility(menuGenerate, true);
 	}
-	if (event.key === 'Enter' && (event.ctrlKey || (isMac && event.metaKey))) transitionToLoadState();
+
+	if (event.key === 'Enter' && (event.ctrlKey || (isMac && event.metaKey))) {
+		transitionToLoadState();
+	}
 });
