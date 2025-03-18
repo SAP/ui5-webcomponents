@@ -34,7 +34,7 @@ import {
 	VSD_SORT_TOOLTIP,
 	VSD_FILTER_TOOLTIP,
 	VSD_RESET_BUTTON_ACTION,
-	VSD_SELECTED_FILTER_COUNT,
+	VSD_FILTER_ITEM_LABEL_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -293,8 +293,12 @@ class ViewSettingsDialog extends UI5Element {
 		}
 	}
 
-	get _selectedFiltersLabel() {
-		return ` ${ViewSettingsDialog.i18nBundle.getText(VSD_SELECTED_FILTER_COUNT)}`;
+	_selectedFiltersLabel(item: FilterItem) {
+		if (item.additionalText) {
+			return ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_ITEM_LABEL_TEXT, item.text || "", item.additionalText || "");
+		}
+
+		return item.text;
 	}
 
 	get shouldBuildSort() {
