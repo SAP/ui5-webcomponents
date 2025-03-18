@@ -9,7 +9,7 @@ ui5-icon {
 
 ui5-icon[name="ai"]:hover {
 	background: var(--sapButton_Hover_Background);
-	border: 1px solid var(--sapButton_BorderColor);
+	border-left: 1px solid var(--sapButton_BorderColor);
 }
 
 ui5-icon[name="ai"].icon-pressed:not(:hover) {
