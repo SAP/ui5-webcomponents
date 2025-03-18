@@ -4,6 +4,7 @@ import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isInstanceOfTable, toggleAttribute } from "./TableUtils.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import TableRowBaseCss from "./generated/themes/TableRowBase.css.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type TableCellBase from "./TableCellBase.js";
 import type Table from "./Table.js";
@@ -35,6 +36,12 @@ abstract class TableRowBase extends UI5Element {
 
 	@property({ type: Boolean, noAttribute: true })
 	_renderNavigated = false;
+
+	@query("#selection-cell")
+	_selectionCell?: HTMLElement;
+
+	@query("#navigated-cell")
+	_navigatedCell?: HTMLElement;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -96,14 +103,6 @@ abstract class TableRowBase extends UI5Element {
 
 	get _hasRowSelector() {
 		return !!this._tableSelection?.isRowSelectorRequired();
-	}
-
-	get _selectionCell() {
-		return this.shadowRoot!.getElementById("selection-cell");
-	}
-
-	get _navigatedCell() {
-		return this.shadowRoot!.getElementById("navigated-cell");
 	}
 
 	get _visibleCells() {

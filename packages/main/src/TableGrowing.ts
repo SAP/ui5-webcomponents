@@ -215,10 +215,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 			return;
 		}
 
-		const lastElement = this._table.shadowRoot?.querySelector("#table-end-row");
-		if (lastElement) {
-			this._getIntersectionObserver().observe(lastElement);
-		}
+		this._getIntersectionObserver().observe(this._table._endRow);
 	}
 
 	/**

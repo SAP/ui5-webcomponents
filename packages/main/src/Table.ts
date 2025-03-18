@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
 	customElement, slot, property, eventStrict, i18n,
 } from "@ui5/webcomponents-base/dist/decorators.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import TableTemplate from "./TableTemplate.js";
 import TableStyles from "./generated/themes/Table.css.js";
@@ -380,6 +381,27 @@ class Table extends UI5Element {
 	@property({ type: Boolean, noAttribute: true })
 	_renderNavigated = false;
 
+	@query("[ui5-drop-indicator]")
+	dropIndicatorDOM!: DropIndicator;
+
+	@query("#nodata-row")
+	_nodataRow?: TableRow;
+
+	@query("#table-end-row")
+	_endRow!: TableRow;
+
+	@query("#table")
+	_tableElement!: HTMLElement;
+
+	@query("#before")
+	_beforeElement!: HTMLElement;
+
+	@query("#after")
+	_afterElement!: HTMLElement;
+
+	@query("#loading")
+	_loadingElement!: HTMLElement;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -564,10 +586,6 @@ class Table extends UI5Element {
 		this.fireDecoratorEvent("row-action-click", { action, row });
 	}
 
-	_$<T = HTMLElement>(selector: string): T {
-		return this.shadowRoot?.querySelector(selector) as T;
-	}
-
 	get styles() {
 		const virtualizer = this._getVirtualizer();
 		const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
@@ -616,30 +634,6 @@ class Table extends UI5Element {
 		}
 
 		return widths.join(" ");
-	}
-
-	get dropIndicatorDOM() {
-		return this._$<DropIndicator>("[ui5-drop-indicator]");
-	}
-
-	get _nodataRow() {
-		return this._$<TableRow>("#nodata-row");
-	}
-
-	get _beforeElement() {
-		return this._$("#before");
-	}
-
-	get _afterElement() {
-		return this._$("#after");
-	}
-
-	get _tableElement() {
-		return this._$("#table");
-	}
-
-	get _loadingElement() {
-		return this._$("#loading");
 	}
 
 	get _scrollContainer() {
