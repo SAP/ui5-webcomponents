@@ -550,10 +550,8 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	resetFocus() {
-		setTimeout(() => {
-			this._focusedElementBeforeOpen?.focus();
-			this._focusedElementBeforeOpen = null;
-		});
+		this._focusedElementBeforeOpen?.focus();
+		this._focusedElementBeforeOpen = null;
 	}
 
 	/**
