@@ -156,10 +156,6 @@
 	visibility: hidden;
 }
 
-:host([readonly]) {
-	border: var(--_ui5_input_readonly_border);
-};
-
 :host([disabled]) [inner-input]::-moz-placeholder {
 	visibility: hidden;
 }
@@ -230,7 +226,7 @@
 }
 
 :host([readonly]:not([disabled])) {
-	border-color: var(--_ui5_input_readonly_border_color);
+	border: var(--_ui5_input_readonly_border);
 	background: var(--sapField_ReadOnly_BackgroundStyle);
 	background-color: var(--_ui5_input_readonly_background);
 }
