@@ -6,11 +6,11 @@ import SearchItemGroupCss from "./generated/themes/SearchItemGroup.css.js";
 /**
  * @class
  * The `ui5-search-item-group` is type of suggestion item,
- * that can be used to split the `ui5-ui5-search-item` suggestions into groups.
+ * that can be used to split the `ui5-search-item` suggestions into groups.
  * @constructor
  * @extends ListItemGroup
  * @public
- * @since 2.4.0
+ * @since 2.9.0
  */
 @customElement({
 	tag: "ui5-search-item-group",

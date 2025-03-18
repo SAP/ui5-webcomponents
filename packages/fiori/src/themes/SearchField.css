@@ -9,6 +9,7 @@
 
 :host([expanded]) {
 	min-width: 18rem;
+	max-width: 36rem;
 	margin: 0;
 	height: 2.25rem;
 	color: var(--sapShell_TextColor);

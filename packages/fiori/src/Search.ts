@@ -36,6 +36,10 @@ interface ISearchSuggestionItem extends UI5Element {
 	items?: ISearchSuggestionItem[];
 }
 
+type SearchEventDetails = {
+	item?: ISearchSuggestionItem;
+}
+
 /**
  * @class
  *
@@ -58,7 +62,7 @@ interface ISearchSuggestionItem extends UI5Element {
  * @constructor
  * @extends UI5Element
  * @public
- * @since
+ * @since 2.9.0
  * @experimental
  */
 @customElement({
@@ -77,12 +81,29 @@ interface ISearchSuggestionItem extends UI5Element {
  *
  * @public
  */
-@event("load-more")
+@event("popup-action-press")
+
+/**
+ * Fired when the popup is opened.
+ *
+ * @public
+ */
+@event("open")
+
+/**
+ * Fired when the popup is closed.
+ *
+ * @public
+ */
+@event("close")
 
 class Search extends SearchField {
 	eventDetails!: SearchField["eventDetails"] & {
-		"load-more": void,
-	}
+		search: SearchEventDetails,
+		"popup-action-press": void,
+		"open": void,
+		"close": void,
+	};
 	/**
 	 * Defines the visualisation mode of the search component.
 	 *
@@ -93,24 +114,41 @@ class Search extends SearchField {
 	popupMode: `${SearchPopupMode}` = "List";
 
 	/**
-	 * Defines whether the value will be autcompleted to match an item
+	 * Defines whether the value will be autcompleted to match an item.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
 	noTypeahead = false;
 
+	/**
+	 * Defines the header text to be placed in the search suggestions popup.
+	 * @public
+	 */
 	@property()
 	headerText?: string;
 
+	/**
+	 * Defines the subheader text to be placed in the search suggestions popup.
+	 * @public
+	 */
 	@property()
 	subheaderText?: string;
 
+	/**
+	 * Defines whether the popup footer action button is shown.
+	 * @default false
+	 * @public
+	 */
 	@property({ type: Boolean })
-	showMore = false;
+	showPopupAction = false;
 
+	/**
+	 * Defines the popup footer action button text.
+	 * @public
+	 */
 	@property()
-	moreButtonText?: string;
+	popupActionText?: string;
 
 	/**
 	 * Defines the Search suggestion items.
@@ -130,32 +168,65 @@ class Search extends SearchField {
 
 	/**
 	 * Indicates whether the items picker is open.
-	 * @private
+	 * @oublic
 	 */
-	@property({ type: Boolean, noAttribute: true })
-	_open = false;
+	@property({ type: Boolean })
+	open = false;
 
 	/**
 	 * Defines the inner stored value of the component.
 	 *
-	 * **Note:** The property is updated upon typing. In some special cases the old value is kept (e.g. deleting the value after the dot in a float)
+	 * **Note:** The property is updated upon typing.
 	 * @default ""
 	 * @private
 	 */
 	@property({ noAttribute: true })
 	_innerValue = "";
 
+	/**
+	 * Based on the key pressed, determines if the autocomplete should be performed.
+	 * @private
+	 */
 	_shouldAutocomplete?: boolean;
+
+	/**
+	 * Determines whether a text selection should be performed.
+	 * @private
+	 */
 	_performTextSelection?: boolean;
-	typedInValue: string;
-	partialMatches: boolean;
+
+	/**
+	 * Determines whether the picker should open on user input. In some cases we need to close the picker,
+	 * (press on an item, or pressing Esc), but still focus the input. In this case we need to open the picker on input.
+	 * @private
+	 */
+	_openPickerOnInput?: boolean;
+
+	/**
+	 * Holds the typed value from the user.
+	 * @private
+	 */
+	_typedInValue: string;
+
+	/**
+	 * True if the first matching item is matched by starts with per term, rather than by starts with.
+	 * @private
+	 */
+	_matchedPerTerm: boolean;
+
+	/**
+	 * Holds the currently proposed item which will be selected if the user presses Enter.
+	 * @private
+	 */
+	_proposedItem?: ISearchSuggestionItem;
 
 	constructor() {
 		super();
 
 		// The typed in value.
-		this.typedInValue = "";
-		this.partialMatches = false;
+		this._typedInValue = "";
+		this._matchedPerTerm = false;
+		this._openPickerOnInput = false;
 	}
 
 	onBeforeRendering() {
@@ -167,35 +238,242 @@ class Search extends SearchField {
 		// If there is already a selection the autocomplete has already been performed
 		if (this._shouldAutocomplete && !autoCompletedChars) {
 			const item = this._getFirstMatchingItem(this.value);
+			this._proposedItem = item;
 
 			if (item) {
 				this._handleTypeAhead(item);
-				this.deselectItems();
+				this._deselectItems();
 				item.selected = true;
 			} else {
-				this.typedInValue = this.value;
+				this._typedInValue = this.value;
 			}
 		} else {
-			this.typedInValue = this.value;
+			this._typedInValue = this.value;
 		}
 
 		this._flattenItems.forEach(item => {
-			(item as SearchItem).highlightText = this.typedInValue;
+			(item as SearchItem).highlightText = this._typedInValue;
 		});
 
 		this._shouldAutocomplete = false;
 	}
 
-	get _flattenItems(): Array<ISearchSuggestionItem> {
-		return this.getSlottedNodes<ISearchSuggestionItem>("items").flatMap(item => {
-			return this._isGroupItem(item) ? [item, ...item.items!] : [item];
-		});
+	onAfterRendering(): void {
+		const innerInput = this.nativeInput!;
+
+		if (this._performTextSelection && innerInput.value !== this._innerValue) {
+			innerInput.value = this._innerValue;
+		}
+
+		if (this._performTextSelection && this._typedInValue.length && this.value.length) {
+			innerInput.setSelectionRange(this._typedInValue.length, this.value.length);
+		}
+
+		this._performTextSelection = false;
+
+		this.style.setProperty("--search_width", `${this.getBoundingClientRect().width}px`);
 	}
 
-	deselectItems() {
+	_handleTypeAhead(item: ISearchSuggestionItem) {
+		const originalValue = item.headingText || "";
+		let displayValue = originalValue;
+
+		if (!originalValue.toLowerCase().startsWith(this.value.toLowerCase())) {
+			this._matchedPerTerm = true;
+			displayValue = `${this.value} - ${originalValue}`;
+		} else {
+			this._matchedPerTerm = false;
+		}
+
+		this._typedInValue = this.value;
+		this._innerValue = displayValue;
+		this._performTextSelection = true;
+		this.value = displayValue;
+	}
+
+	_startsWithMatchingItems(str: string): Array<ISearchSuggestionItem> {
+		return StartsWith(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "headingText");
+	}
+
+	_startsWithPerTermMatchingItems(str: string): Array<ISearchSuggestionItem> {
+		return StartsWithPerTerm(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "headingText");
+	}
+
+	_isGroupItem(item: ISearchSuggestionItem) {
+		return item.hasAttribute("ui5-search-item-group");
+	}
+
+	_deselectItems() {
 		this._flattenItems.forEach(item => {
 			item.selected = false;
 		});
+	}
+
+	async _handleDown(e: KeyboardEvent) {
+		if (this.open) {
+			e.preventDefault();
+			await this._handleArrowDown();
+		}
+	}
+
+	async _handleArrowDown() {
+		const firstListItem = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[0];
+		const focusRef = firstListItem && this._isGroupItem(firstListItem) ? firstListItem.getFocusDomRef() : firstListItem;
+
+		if (this.open) {
+			this._deselectItems();
+			firstListItem && focusRef && this._getItemsList()?._itemNavigation.setCurrentItem(focusRef);
+			this.value = this._typedInValue || this.value;
+			this._innerValue = this.value;
+
+			// wait item navigation to apply correct tabindex
+			await renderFinished();
+			firstListItem?.focus();
+		}
+	}
+
+	_handleRight(e: KeyboardEvent) {
+		if (this._matchedPerTerm) {
+			e.preventDefault();
+			this.value = this._typedInValue;
+			this._innerValue = this._typedInValue;
+			this._proposedItem = undefined;
+		}
+	}
+
+	_handleEnter() {
+		const prevented = !this.fireDecoratorEvent("search", { item: this._proposedItem });
+
+		if (prevented) {
+			return;
+		}
+
+		const innerInput = this.nativeInput!;
+		if (this._matchedPerTerm) {
+			this.value = this._proposedItem?.headingText || this.value;
+			this._innerValue = this.value;
+			this._typedInValue = this.value;
+			this._matchedPerTerm = false;
+		}
+
+		innerInput.setSelectionRange(this.value.length, this.value.length);
+		this.open = false;
+		this._openPickerOnInput = true;
+	}
+
+	_handleSearchEvent() {
+		this.fireDecoratorEvent("search", { item: this._proposedItem });
+	}
+
+	_handleEscape() {
+		this.value = this._typedInValue || this.value;
+		this._innerValue = this.value;
+
+		this._openPickerOnInput = true;
+	}
+
+	_handleInput(e: InputEvent) {
+		super._handleInput(e);
+
+		if (!this._openPickerOnInput) {
+			return;
+		}
+
+		this.open = true;
+		this._openPickerOnInput = false;
+	}
+
+	_onItemKeydown(e: KeyboardEvent) {
+		const items = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items");
+		const isFirstItemGroup = items[1] === e.target && items[0]?.hasAttribute("ui5-li-group");
+		const isFirstItem = items[0] === e.target || isFirstItemGroup;
+		const isArrowUp = isUp(e);
+
+		e.preventDefault();
+
+		if (isFirstItem && isArrowUp) {
+			this.nativeInput?.focus();
+			this._shouldAutocomplete = true;
+		}
+	}
+
+	_onItemClick(e: CustomEvent) {
+		const item = e.detail.item as ISearchSuggestionItem;
+		const prevented = !this.fireDecoratorEvent("search", { item });
+
+		if (prevented) {
+			return;
+		}
+
+		this.value = item.headingText;
+		this._innerValue = this.value;
+		this._typedInValue = this.value;
+		this.open = false;
+		this._openPickerOnInput = true;
+		this.focus();
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		super._onkeydown(e);
+		this._shouldAutocomplete = !this.noTypeahead
+			&& !(isBackSpace(e) || isDelete(e) || isEscape(e) || isUp(e) || isDown(e) || isTabNext(e) || isEnter(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e) || isEscape(e));
+
+		if (isRight(e)) {
+			this._handleRight(e);
+		}
+
+		if (isDown(e)) {
+			this._handleDown(e);
+		}
+
+		if (isEscape(e)) {
+			this._handleEscape();
+		}
+	}
+
+	_onfocusin() {
+		super._onfocusin();
+
+		if (this._openPickerOnInput) {
+			return;
+		}
+
+		// prevent opening of empty picker on List Mode
+		if (this.popupMode === SearchPopupMode.List && !this.items.length) {
+			return;
+		}
+
+		this.open = true;
+	}
+
+	_onfocusout() {
+		super._onfocusout();
+		if (this._matchedPerTerm) {
+			this.value = this._typedInValue;
+			this._innerValue = this._typedInValue;
+		}
+		this._matchedPerTerm = false;
+
+		if (!this.matches(":focus-within")) {
+			this.open = false;
+		}
+	}
+
+	_handleSearchIconFocusOut() {
+		this.open = false;
+	}
+
+	_handleClose() {
+		this.open = false;
+		this.fireDecoratorEvent("close");
+	}
+
+	_handleOpen() {
+		this.fireDecoratorEvent("open");
+	}
+
+	_handleMore() {
+		this.fireDecoratorEvent("popup-action-press");
 	}
 
 	_getFirstMatchingItem(current: string): ISearchSuggestionItem | undefined {
@@ -219,141 +497,18 @@ class Search extends SearchField {
 			: partialMatches[0];
 	}
 
-	_handleTypeAhead(item: ISearchSuggestionItem) {
-		const originalValue = item.headingText || "";
-		let displayValue = originalValue;
-
-		if (!originalValue.toLowerCase().startsWith(this.value.toLowerCase())) {
-			this.partialMatches = true;
-			displayValue = `${this.value} - ${originalValue}`;
-		} else {
-			this.partialMatches = false;
-		}
-
-		this.typedInValue = this.value;
-		this._innerValue = displayValue;
-		this.value = displayValue;
-		this._performTextSelection = true;
-	}
-
-	_startsWithMatchingItems(str: string): Array<ISearchSuggestionItem> {
-		return StartsWith(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "headingText");
-	}
-
-	_startsWithPerTermMatchingItems(str: string): Array<ISearchSuggestionItem> {
-		return StartsWithPerTerm(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "headingText");
-	}
-
-	_isGroupItem(item: ISearchSuggestionItem) {
-		return item.hasAttribute("ui5-search-item-group");
-	}
-
-	_onkeydown(e: KeyboardEvent) {
-		this._shouldAutocomplete = !this.noTypeahead
-			&& !(isBackSpace(e) || isDelete(e) || isEscape(e) || isUp(e) || isDown(e) || isTabNext(e) || isEnter(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e) || isEscape(e));
-
-		if (isRight(e)) {
-			this.handleRight(e);
-		}
-
-		if (isDown(e)) {
-			this.handleDown(e);
-		}
-	}
-
-	async handleDown(e: KeyboardEvent) {
-		if (this._open) {
-			e.preventDefault();
-			await this._handleArrowDown();
-		}
-	}
-
-	async _handleArrowDown() {
-		const firstListItem = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[0];
-		const focusRef = firstListItem && this._isGroupItem(firstListItem) ? firstListItem.getFocusDomRef() : firstListItem;
-
-		if (this._open) {
-			firstListItem && focusRef && this._getItemsList()?._itemNavigation.setCurrentItem(focusRef);
-			this.value = this.typedInValue || this.value;
-
-			// wait item navigation to apply correct tabindex
-			await renderFinished();
-			firstListItem?.focus();
-		}
-	}
-
-	handleRight(e: KeyboardEvent) {
-		if (this.partialMatches) {
-			e.preventDefault();
-			this.value = this.typedInValue;
-			this._innerValue = this.typedInValue;
-		}
-	}
-
-	_onItemKeydown(e: KeyboardEvent) {
-		const isFirstItemGroup = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[1] === e.target && this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[0].hasAttribute("ui5-li-group");
-		const isFirstItem = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[0] === e.target || isFirstItemGroup;
-		const isArrowUp = isUp(e);
-
-		e.preventDefault();
-
-		if (isFirstItem && isArrowUp) {
-			this.nativeInput?.focus();
-			this._shouldAutocomplete = true;
-		}
-	}
-
 	_getPicker() {
-		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
+		return this.shadowRoot!.querySelector<Popover>("[ui5-responsive-popover]")!;
 	}
 
 	_getItemsList(): List {
 		return this._getPicker().querySelector(".ui5-search-list") as List;
 	}
 
-	onAfterRendering(): void {
-		const innerInput = this.nativeInput!;
-
-		if (this._performTextSelection) {
-			// this is required to syncronize lit-html input's value and user's input
-			// lit-html does not sync its stored value for the value property when the user is typing
-			if (innerInput.value !== this._innerValue) {
-				innerInput.value = this._innerValue;
-			}
-
-			if (this.typedInValue.length && this.value.length) {
-				innerInput.setSelectionRange(this.typedInValue.length, this.value.length);
-			}
-		}
-
-		this._performTextSelection = false;
-
-		this.style.setProperty("--search_width", `${this.getBoundingClientRect().width}px`);
-	}
-
-	_onfocusin() {
-		super._onfocusin();
-		this._open = true;
-	}
-
-	_onfocusout() {
-		super._onfocusout();
-
-		if (!this.matches(":focus-within")) {
-			this._open = false;
-		}
-	}
-
-	_handleSearchIconFocusOut() {
-		this._open = false;
-	}
-
-	_handleClose() {
-		this._open = false;
-	}
-
-	_handleMore() {
-		this.fireDecoratorEvent("load-more");
+	get _flattenItems(): Array<ISearchSuggestionItem> {
+		return this.getSlottedNodes<ISearchSuggestionItem>("items").flatMap(item => {
+			return this._isGroupItem(item) ? [item, ...item.items!] : [item];
+		});
 	}
 
 	get nativeInput() {
@@ -375,7 +530,7 @@ class Search extends SearchField {
 	}
 
 	get _effectiveGrowing() {
-		return this.showMore ? ListGrowingMode.Button : ListGrowingMode.None;
+		return this.showPopupAction ? ListGrowingMode.Button : ListGrowingMode.None;
 	}
 }
 

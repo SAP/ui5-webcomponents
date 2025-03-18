@@ -1,4 +1,4 @@
-import Popover from "@ui5/webcomponents/dist/Popover.js";
+import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type Search from "./Search.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Text from "@ui5/webcomponents/dist/Text.js";
@@ -11,14 +11,15 @@ import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js"
 
 export default function SearchPopoverTemplate(this: Search) {
 	return (
-		<Popover
+		<ResponsivePopover
 			hideArrow={true}
 			preventFocusRestore={true}
 			preventInitialFocus={true}
 			placement={PopoverPlacement.Bottom}
 			horizontalAlign={PopoverHorizontalAlign.Start}
-			open={this._open}
+			open={this.open}
 			opener={this}
+			onOpen={this._handleOpen}
 			onClose={this._handleClose}
 			class="ui5-search-popover"
 		>
@@ -42,15 +43,16 @@ export default function SearchPopoverTemplate(this: Search) {
 										class="ui5-search-list"
 										onLoadMore={this._handleMore}
 										separators={ListSeparator.None}
-										growingButtonText={this.moreButtonText}
+										growingButtonText={this.popupActionText}
 										growing={this._effectiveGrowing}
-										onKeyDown={this._onItemKeydown}>
+										onKeyDown={this._onItemKeydown}
+										onItemClick={this._onItemClick}>
 										<slot></slot>
 									</List>
 								</main>
 							</>
 						)
 				)}
-		</Popover>
+		</ResponsivePopover>
 	);
 }

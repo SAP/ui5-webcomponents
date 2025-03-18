@@ -20,7 +20,7 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
  * @constructor
  * @extends ListItemBase
  * @public
- * @since
+ * @since 2.9.0
  * @experimental
  */
 @customElement({
@@ -35,20 +35,38 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 })
 
 class SearchItem extends ListItemBase {
+	/**
+	 * Defines the heading text of the search item.
+	 * @public
+	 */
 	@property()
 	headingText = "";
 
+	/**
+	 * Defines the icon name of the search item.
+	 * @public
+	 */
 	@property()
 	icon?: string;
 
-	@property()
-	highlightText = "";
-
+	/**
+	 * Defines whether the search item is selected.
+	 * @default false
+	 * @public
+	 */
 	@property({ type: Boolean })
 	selected = false;
 
+	/**
+	 * Defines the scope of the search item
+	 * @default false
+	 * @public
+	 */
 	@property()
 	scopeName?: string;
+
+	@property()
+	highlightText = "";
 
 	_markupText = "";
 
