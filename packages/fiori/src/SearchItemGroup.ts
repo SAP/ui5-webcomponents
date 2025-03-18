@@ -11,6 +11,7 @@ import SearchItemGroupCss from "./generated/themes/SearchItemGroup.css.js";
  * @extends ListItemGroup
  * @public
  * @since 2.9.0
+ * @experimental
  */
 @customElement({
 	tag: "ui5-search-item-group",
