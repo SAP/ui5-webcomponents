@@ -29,14 +29,14 @@ describe("General interaction", () => {
 		);
 
 		cy.get("[ui5-multi-combobox]")
-		.shadow()
-		.find("input")
-		.type('t');
+			.shadow()
+			.find("input")
+			.type('t');
 
 		cy.get("[ui5-multi-combobox]")
-		.shadow()
-		.find("input")
-		.realPress('Enter');
+			.shadow()
+			.find("input")
+			.realPress('Enter');
 
 		cy.get("[ui5-multi-combobox]").shadow().find("[ui5-tokenizer]").then($tokenizer => {
 			$tokenizer[0].addEventListener("ui5-token-delete", cy.stub().as("tokenDelete"))
@@ -46,15 +46,14 @@ describe("General interaction", () => {
 			.shadow()
 			.find("input")
 			.realClick();
-		
+
 		cy.get("[ui5-multi-combobox]").shadow()
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]").shadow()
 			.find("[ui5-icon]").realClick();
 
 		cy.get("@tokenDelete").should("have.been.called");
-		
-	});		
+	});
 });
 
 describe("Value State", () => {
