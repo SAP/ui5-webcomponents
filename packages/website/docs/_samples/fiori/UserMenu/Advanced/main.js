@@ -60,9 +60,9 @@ menu.addEventListener("edit-accounts-click", function () {
 
 menu.addEventListener("change-account", function (event) {
 	console.log("Change account account", event.detail);
-	event.detail.selectedAccount.loading=true;
+	event.detail.selectedAccount.loading = true;
 	setTimeout(function(){
-		event.detail.selectedAccount.loading=false;
+		event.detail.selectedAccount.loading = false;
 	}, 1000);
 });
 

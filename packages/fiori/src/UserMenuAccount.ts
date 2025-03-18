@@ -78,7 +78,7 @@ class UserMenuAccount extends UI5Element {
 	 * Indicates whether a loading indicator should be shown.
 	 * @default false
 	 * @public
-	 * Since version 2.9.0
+	 * @since 2.9.0
 	 */
 	@property({ type: Boolean })
 	loading = false;
