@@ -144,8 +144,8 @@ const getScripts = (options) => {
 		},
 		generateAPI: {
 			default: tsOption ? "nps generateAPI.generateCEM generateAPI.validateCEM" : "",
-			generateCEM: `cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs" ${ options.dev ? "--dev" : "" }`,
-			validateCEM: `node "${LIB}/cem/validate.js" ${ options.dev ? "--dev" : "" }`,
+			generateCEM: `${options.dev ? "cross-env UI5_CEM_MODE='dev'" : ""} cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs"`,
+			validateCEM: `${options.dev ? "cross-env UI5_CEM_MODE='dev'" : ""} node "${LIB}/cem/validate.js"`,
 		},
 	};
 
