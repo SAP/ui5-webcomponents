@@ -89,7 +89,7 @@ function header(this: TimePicker) {
 	return (
 		<div slot="header" class="ui5-responsive-popover-header">
 			<div class="row">
-				<span>{this._headerTitleText}</span>
+				<span>{this.pickerAccessibleName}</span>
 				<Button
 					class="ui5-responsive-popover-close-btn"
 					icon={decline}

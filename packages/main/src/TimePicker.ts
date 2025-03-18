@@ -45,7 +45,6 @@ import {
 	TIMEPICKER_CANCEL_BUTTON,
 	TIMEPICKER_INPUT_DESCRIPTION,
 	TIMEPICKER_POPOVER_ACCESSIBLE_NAME,
-	INPUT_SUGGESTIONS_TITLE,
 	FORM_TEXTFIELD_REQUIRED,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_INFORMATION,
@@ -412,10 +411,6 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	get _isMobileDevice() {
 		return !isDesktop() && (isPhone() || isTablet());
-	}
-
-	get _headerTitleText() {
-		return TimePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get shouldDisplayValueStateMessageInResponsivePopover() {
