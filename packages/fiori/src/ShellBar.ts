@@ -863,11 +863,13 @@ class ShellBar extends UI5Element {
 		this._isAnimating = false;
 		this.searchField[0].removeEventListener("animationend", this._handleAnimationEndRef);
 		this._overflowActions();
+		this.shadowRoot!.querySelector("header")!.classList.remove("ui5-shellbar-animating");
 	}
 
 	_attachAnimationEndHandlers() {
 		const searchWrapper = this.shadowRoot!.querySelector(".ui5-shellbar-search-field");
 		this._isAnimating = true;
+		this.shadowRoot!.querySelector("header")!.classList.add("ui5-shellbar-animating");
 		searchWrapper?.addEventListener("animationend", this._handleAnimationEndRef);
 		setTimeout(() => {
 			if (this._isAnimating) {
@@ -1259,9 +1261,7 @@ class ShellBar extends UI5Element {
 		return {
 			wrapper: {
 				"ui5-shellbar-root": true,
-				"ui5-shellbar-with-searchfield": this.hasSearchField,
-
-				"ui5-shellbar-animating": this._isAnimating,
+				"ui5-shellbar-with-searchfield": this.hasSearchField
 			},
 			button: {
 				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,

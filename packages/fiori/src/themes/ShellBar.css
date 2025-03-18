@@ -54,6 +54,7 @@
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+	flex-shrink: 0;
 }
 
 ::slotted([ui5-toggle-button][slot="assistant"]) {
@@ -559,7 +560,9 @@ slot[name="profile"] {
 	margin-inline-start: 0;
 }
 
-.ui5-shellbar-animating .ui5-shellbar-hidden-button {
+
+
+.ui5-shellbar-animating .ui5-shellbar-content-item.ui5-shellbar-hidden-button {
 	animation: motion-hide 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);
 	animation-fill-mode: forwards;
 }
