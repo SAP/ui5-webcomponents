@@ -5,6 +5,7 @@ import SearchItemTemplate from "./SearchItemTemplate.js";
 import SearchItemCss from "./generated/themes/SearchItem.css.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 
 /**
  * @class
@@ -34,7 +35,17 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 	],
 })
 
+/**
+ * Fired when delete button is pressed.
+ *
+ * @public
+ */
+@event("delete")
+
 class SearchItem extends ListItemBase {
+	eventDetails!: ListItemBase["eventDetails"] & {
+		"delete": void,
+	};
 	/**
 	 * Defines the heading text of the search item.
 	 * @public
@@ -78,6 +89,10 @@ class SearchItem extends ListItemBase {
 
 	_onfocusout() {
 		this.selected = false;
+	}
+
+	_onDeleteButtonClick() {
+		this.fireDecoratorEvent("delete");
 	}
 
 	onBeforeRendering(): void {

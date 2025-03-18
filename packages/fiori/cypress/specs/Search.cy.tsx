@@ -793,4 +793,31 @@ describe("Events", () => {
 		cy.get("@closed")
 			.should("have.been.calledOnce");
 	});
+
+	it("delete event on search item", () => {
+		function onDelete(event: Event) {
+			(event.target as HTMLElement).remove();
+		}
+		cy.mount(
+			<Search expanded={true}>
+				<SearchItem headingText="Item 1" icon={history} onDelete={onDelete}/>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-search-item").eq(0)
+			.shadow()
+			.find("[ui5-button]")
+			.realClick();
+
+		cy.get("ui5-search-item").eq(0)
+			.should("not.exist")
+	});
 });

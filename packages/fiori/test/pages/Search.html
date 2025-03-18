@@ -65,6 +65,11 @@
 	</div>
 
 	<div class="container" style="padding-top: 1rem;">
+		<ui5-label>Search with Suggestions - Delete items on delete button click</ui5-label>
+		<ui5-search id="delete-search" expanded show-clear-icon></ui5-search>
+	</div>
+
+	<div class="container" style="padding-top: 1rem;">
 		<ui5-label>Search with Suggestions - Filter by typing</ui5-label>
 		<ui5-search id="filtering" expanded show-clear-icon placeholder="Start typing ..."></ui5-search>
 		<ui5-text style="padding-top: 0.25rem; font-style: italic;">The examples shows filtering per user input, highlighting user input and showcases "contains" and "starts with" typeahead. Type "a" to see "contains typeahead" or "t" to see "starts with typeahead"</ui5-text>
@@ -224,6 +229,36 @@
 				filters.focus();
 			}
 		});
+
+		const searchDelete = document.getElementById('delete-search');
+
+		function onDelete(event) {
+			const item = event.target;
+			if (item) {
+				item.remove();
+			}
+		}
+
+		const deleteData = [
+			{ name: 'Red Apple', category: 'Fruit' },
+			{ name: 'Apple', category: 'Fruit' },
+			{ name: 'Apel', category: 'Vegetable' },
+			{ name: 'Cucumber', category: 'Vegetable' },
+			{ name: 'Orange', category: 'Fruit' },
+			{ name: 'Tomato', category: 'Vegetable' },
+		];
+
+		function createItems(parent, deleteData) {
+			deleteData.forEach(item => {
+				const searchItem = document.createElement('ui5-search-item');
+				searchItem.headingText = item.name;
+				searchItem.icon = 'search';
+				searchItem.addEventListener('ui5-delete', onDelete);
+				parent.appendChild(searchItem);
+			});
+		}
+
+		createItems(searchDelete, deleteData);
 	</script>
 </body>
 </html>
