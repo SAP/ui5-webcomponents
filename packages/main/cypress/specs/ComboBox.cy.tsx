@@ -1,6 +1,7 @@
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ComboBox from "../../src/ComboBox.js";
 import ComboBoxItem from "../../src/ComboBoxItem.js";
+import ComboBoxItemGroup from "../../src/ComboBoxItemGroup.js";
 
 describe("Security", () => {
 	it("tests setting malicious text to items", () => {
@@ -892,5 +893,172 @@ describe("Event firing", () => {
 		cy.get("#another-cb").shadow().find("input").click();
 		cy.get("@changeStub").should("not.have.been.called");
 	});
+
+	it("Tests group filtering", () => {
+		cy.mount(
+			<ComboBox id="combo-grouping">
+				<ComboBoxItemGroup headerText="Group 1">
+					<ComboBoxItem text="Item 1.1" />
+					<ComboBoxItem text="Item 1.2" />
+					<ComboBoxItem text="Item 1.3" />
+				</ComboBoxItemGroup>
+				<ComboBoxItemGroup headerText="Group 2">
+					<ComboBoxItem text="Item 2.1" />
+					<ComboBoxItem text="Item 2.2" />
+					<ComboBoxItem text="Item 2.3" />
+				</ComboBoxItemGroup>
+
+				<ComboBoxItemGroup headerText="Group 3">
+					<ComboBoxItem text="Item 3.1" />
+					<ComboBoxItem text="Item 3.2" />
+					<ComboBoxItem text="Item 3.3" />
+				</ComboBoxItemGroup>
+
+				<ComboBoxItemGroup headerText="Group 4">
+					<ComboBoxItem text="Item 4.1" />
+					<ComboBoxItem text="Item 4.2" />
+				</ComboBoxItemGroup>
+			</ComboBox>
+		);
+
+		// Open the ComboBox
+		cy.get("#combo-grouping").shadow().find(".inputIcon").realClick();
+
+		// Check group items and normal items
+		cy.get("#combo-grouping")
+			.find("ui5-cb-item-group")
+			.filter((_, el: Element & { _isVisible?: boolean }) => !!el._isVisible)
+			.should("have.length", 4);
+		cy.get("#combo-grouping")
+			.find("ui5-cb-item")
+			.filter((_, el) => (el as any)._isVisible)
+			.should("have.length", 11);
+
+		cy.get("#combo-grouping").shadow().find("[inner-input]").type("Item 4");
+
+		// Confirm reduced counts
+		cy.get("#combo-grouping")
+			.find("ui5-cb-item-group")
+			.filter((_, el) => (el as any)._isVisible)
+			.should("have.length", 1);
+		cy.get("#combo-grouping")
+			.find("ui5-cb-item")
+			.filter((_, el) => (el as any)._isVisible)
+			.should("have.length", 2);
+	});
+
+	it("Tests group item focusability", () => {
+		cy.mount(
+			<ComboBox id="combo-grouping">
+				<ComboBoxItemGroup header-text="Group 1">
+					<ComboBoxItem text="Item 1.1" />
+					<ComboBoxItem text="Item 1.2" />
+				</ComboBoxItemGroup>
+			</ComboBox>
+		);
+
+		cy.get("#combo-grouping").shadow().find(".inputIcon").realClick();
+		cy.get("#combo-grouping").shadow().find("[inner-input]").realPress("ArrowDown");
+
+		cy.get("#combo-grouping")
+			.find("ui5-cb-item-group")
+			.first()
+			.should("have.prop", "focused", true);
+	});
+});
+
+describe("Grouping", () => {
+    it("Tests input value while group item is focused", () => {
+        cy.mount(
+            <ComboBox id="combo-grouping">
+                <ComboBoxItemGroup headerText="Group 1">
+                    <ComboBoxItem text="Item 1.1" />
+                    <ComboBoxItem text="Item 1.2" />
+                </ComboBoxItemGroup>
+                <ComboBoxItemGroup headerText="Group 2">
+                    <ComboBoxItem text="Item 2.1" />
+                    <ComboBoxItem text="Item 2.2" />
+                </ComboBoxItemGroup>
+            </ComboBox>
+        );
+
+        cy.get("#combo-grouping").shadow().find("[inner-input]").click();
+        cy.get("#combo-grouping").shadow().find("[inner-input]").type("i");
+
+		cy.get("#combo-grouping").shadow().find("[inner-input]").realPress("ArrowDown");
+		cy.get("#combo-grouping").shadow().find("[inner-input]").realPress("ArrowDown");
+
+        cy.get("#combo-grouping")
+            .find("ui5-cb-item-group")
+            .eq(1)
+            .should("have.prop", "focused", true);
+
+        cy.get("#combo-grouping").should("have.prop", "filterValue", "i");
+        cy.get("#combo-grouping").should("have.prop", "value", "");
+    });
+
+    it("Pressing enter on a group item should not close the picker", () => {
+        cy.mount(
+            <ComboBox id="combo-grouping">
+                <ComboBoxItemGroup headerText="Group 1">
+                    <ComboBoxItem text="Item 1.1" />
+                </ComboBoxItemGroup>
+            </ComboBox>
+        );
+
+        // Open
+        cy.get("#combo-grouping").shadow().find(".inputIcon").realClick();
+        // Move focus
+        cy.get("#combo-grouping").shadow().find("[inner-input]").realPress("ArrowDown");
+        // Press Enter
+        cy.get("#combo-grouping").shadow().find("[inner-input]").realPress("Enter");
+
+        // Confirm popover is still open
+        cy.get("#combo-grouping").shadow().find("ui5-responsive-popover").should("have.prop", "open", true);
+    });
+
+    it("Grouped items should be filtered and with the correct role attributes", () => {
+        cy.mount(
+            <ComboBox id="combo-grouping">
+                <ComboBoxItemGroup headerText="Group 1">
+                    <ComboBoxItem text="Item 1.1" />
+                    <ComboBoxItem text="Item 1.2" />
+                    <ComboBoxItem text="Item 1.3" />
+                </ComboBoxItemGroup>
+                <ComboBoxItemGroup headerText="Group 2">
+                    <ComboBoxItem text="Item 2.1" />
+                    <ComboBoxItem text="Item 2.2" />
+                    <ComboBoxItem text="Item 2.3" />
+                </ComboBoxItemGroup>
+                <ComboBoxItemGroup headerText="Group 3">
+                    <ComboBoxItem text="Item 3.1" />
+                    <ComboBoxItem text="Item 3.2" />
+                    <ComboBoxItem text="Item 3.3" />
+                </ComboBoxItemGroup>
+                <ComboBoxItemGroup headerText="Group 4">
+                    <ComboBoxItem text="Item 4.1" />
+                    <ComboBoxItem text="Item 4.2" />
+                </ComboBoxItemGroup>
+            </ComboBox>
+        );
+
+        cy.get("#combo-grouping").shadow().find("[inner-input]").click();
+        cy.get("#combo-grouping").shadow().find("[inner-input]").type("Item 2");
+
+        cy.get("#combo-grouping").shadow().find("ui5-responsive-popover").find("ui5-list")
+            .should("have.attr", "accessible-role", "ListBox");
+
+        cy.get("#combo-grouping").find("ui5-cb-item")
+            .filter((_, el: Element & { _isVisible?: boolean }) => !!el._isVisible)
+            .first()
+            .shadow()
+            .find("li")
+            .should("have.attr", "role", "option");
+
+        cy.get("#combo-grouping")
+            .find("ui5-cb-item")
+            .filter((_, el: Element & { _isVisible?: boolean }) => !!el._isVisible)
+            .should("have.length", 3);
+    });
 });
 
