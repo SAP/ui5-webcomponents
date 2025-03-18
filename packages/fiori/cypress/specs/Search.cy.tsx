@@ -817,7 +817,7 @@ describe("Events", () => {
 			.find("[ui5-button]")
 			.realClick();
 
-		cy.get("ui5-search-item").eq(0)
+		cy.get("ui5-search-item")
 			.should("not.exist")
 	});
 });
