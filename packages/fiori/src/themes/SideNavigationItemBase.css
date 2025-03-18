@@ -1,3 +1,7 @@
+:host {
+	display: block;
+}
+
 .ui5-sn-item-ul {
 	margin: 0;
 	padding: 0;
@@ -19,7 +23,9 @@
 	background-color: var(--sapList_Background);
 	border-radius: var(--_ui5_side_navigation_item_border_radius);
 	transition: var(--_ui5_side_navigation_item_transition);
+}
 
+:host(:not([in-popover])) .ui5-sn-item {
 	margin-block-end: var(--_ui5_side_navigation_item_bottom_margin);
 }
 
@@ -104,7 +110,11 @@ and there is an additional border that appears on hover. */
 	cursor: default;
 }
 
-.ui5-sn-item:not(.ui5-sn-item-disabled):hover {
+:host([ui5-side-navigation-item][in-popover][unselectable]) .ui5-sn-item {
+	cursor: unset;
+}
+
+:host(:not([ui5-side-navigation-item][in-popover][unselectable])) .ui5-sn-item:not(.ui5-sn-item-disabled):hover {
 	background: var(--sapList_Hover_Background);
 }
 
@@ -128,7 +138,7 @@ and there is an additional border that appears on hover. */
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected.ui5-sn-item-active,
-.ui5-sn-item:not(.ui5-sn-item-disabled):active,
+:host(:not([ui5-side-navigation-item][in-popover][unselectable])) .ui5-sn-item:not(.ui5-sn-item-disabled):active,
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-active,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected.ui5-sn-item-active {

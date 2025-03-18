@@ -40,7 +40,7 @@ class TableNavigation extends TableExtension {
 		return [row, ...row.shadowRoot!.children].map(element => {
 			return element.localName === "slot" ? (element as HTMLSlotElement).assignedElements() : element;
 		}).flat().filter(element => {
-			return element.localName.includes("ui5-table-") && !element.hasAttribute("excluded-from-navigation");
+			return element.localName.includes("ui5-table-") && !element.hasAttribute("data-excluded-from-navigation");
 		}) as HTMLElement[];
 	}
 
@@ -59,8 +59,8 @@ class TableNavigation extends TableExtension {
 			items.push(this._getNavigationItemsOfRow(this._table._nodataRow));
 		}
 
-		if (this._table._shouldRenderGrowing) {
-			items.push([this._table._growing.getFocusDomRef()]);
+		if (this._table.rows.length > 0 && this._table._getGrowing()?.hasGrowingComponent()) {
+			items.push([this._table._getGrowing()?.getFocusDomRef()]);
 			this._gridWalker.setLastRowPos(-1);
 		} else {
 			this._gridWalker.setLastRowPos(0);
