@@ -153,6 +153,15 @@ class SideNavigation extends UI5Element {
 	design: `${SideNavigationDesign}` = "Decorated";
 
 	/**
+	 * Defines the accessible ARIA name of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.8.1
+	 */
+	@property()
+	accessibleName?: string;
+
+	/**
 	 * Defines the main items of the component.
 	 *
 	 * @public
