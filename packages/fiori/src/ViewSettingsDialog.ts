@@ -294,11 +294,9 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	_selectedFiltersLabel(item: FilterItem) {
-		if (item.additionalText) {
-			return ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_ITEM_LABEL_TEXT, item.text || "", item.additionalText || "");
-		}
-
-		return item.text;
+		const text = item.text ? `${item.text},` : "";
+		const additionalText = item.additionalText ? `${item.additionalText},` : "";
+		return additionalText ? ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_ITEM_LABEL_TEXT, text, additionalText) : text;
 	}
 
 	get shouldBuildSort() {
