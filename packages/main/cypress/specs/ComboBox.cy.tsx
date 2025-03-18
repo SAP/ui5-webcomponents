@@ -893,7 +893,9 @@ describe("Event firing", () => {
 		cy.get("#another-cb").shadow().find("input").click();
 		cy.get("@changeStub").should("not.have.been.called");
 	});
+});
 
+describe("Grouping", () => {
 	it("Tests group filtering", () => {
 		cy.mount(
 			<ComboBox id="combo-grouping">
@@ -965,9 +967,7 @@ describe("Event firing", () => {
 			.first()
 			.should("have.prop", "focused", true);
 	});
-});
 
-describe("Grouping", () => {
     it("Tests input value while group item is focused", () => {
         cy.mount(
             <ComboBox id="combo-grouping">
