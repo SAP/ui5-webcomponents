@@ -436,7 +436,10 @@ class Select extends UI5Element implements IFormInputElement {
 	 */
 	_applySelectionByValue(value: string) {
 		if (value !== (this.selectedOption?.value || this.selectedOption?.textContent)) {
-			this._selectOptionByValue(value);
+			const options = Array.from(this.children) as Array<IOption>;
+			options.forEach(option => {
+				option.selected = !!((option.getAttribute("value") || option.textContent) === value);
+			});
 		}
 	}
 
@@ -453,16 +456,6 @@ class Select extends UI5Element implements IFormInputElement {
 				break;
 			}
 		}
-	}
-
-	/**
-	 * Selects an option by string value.
-	 */
-	_selectOptionByValue(newValue: string) {
-		const options = Array.from(this.children) as Array<IOption>;
-		options.forEach(option => {
-			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
-		});
 	}
 
 	/**
