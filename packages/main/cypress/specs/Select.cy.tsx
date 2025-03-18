@@ -1,6 +1,7 @@
 import Option from "../../src/Option.js";
 import OptionCustom from "../../src/OptionCustom.js";
 import Select from "../../src/Select.js";
+import download from "@ui5/webcomponents-icons/dist/download.js";
 
 describe("Select - value handling", () => {
 	it("tests selection via Select's value", () => {
@@ -218,5 +219,22 @@ describe("Select - Popover", () => {
 			.find("[slot=\"valueStateMessage\"]")
 			.should("be.visible")
 			.should("have.text", "Custom message");
+	});
+});
+
+describe("Select - Properties", () => {
+	it("Icon only is setting properly the required icon", () => {
+		cy.mount(
+			<Select icon={download}>
+				<Option selected>Phone</Option>
+				<Option>Tablet</Option>
+				<Option>Desktop</Option>
+			</Select>
+		);
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("[ui5-icon]")
+			.should("have.attr", "name", "download");
 	});
 });
