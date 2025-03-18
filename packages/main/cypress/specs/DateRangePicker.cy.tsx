@@ -21,6 +21,12 @@ describe("DateRangePicker general interaction", () => {
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value-state", "Negative");
+
+		cy.get("@dateRangePicker")
+			.shadow()
+			.find("[slot='header']")
+			.first()
+			.should("have.text", "Invalid entry");
 	});
 
 	it("Custom Validation None", () => {

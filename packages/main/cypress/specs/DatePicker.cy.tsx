@@ -99,6 +99,12 @@ describe("Date Picker Tests", () => {
 			.shadow()
 			.find("ui5-datetime-input")
 			.should("have.attr", "value-state", "Negative");
+		
+		cy.get("@datePicker")
+			.shadow()
+			.find("[slot='header']")
+			.first()
+			.should("have.text", "Invalid entry");
 
 		cy.get("@datePicker")
 			.shadow()
