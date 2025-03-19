@@ -27,6 +27,11 @@ class TableHeaderCellActionAI extends TableHeaderCellActionBase {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
+	onAfterRendering() {
+		super.onAfterRendering();
+		this.toggleAttribute("_popin", !this.parentElement?.hasAttribute("ui5-table-header-cell"));
+	}
+
 	getRenderInfo() {
 		return {
 			icon: "ai",
