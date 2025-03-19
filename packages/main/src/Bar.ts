@@ -5,12 +5,14 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type BarDesign from "./types/BarDesign.js";
+import type BarAccessibleRole from "./types/BarAccessibleRole.js";
 
 // Template
 import BarTemplate from "./BarTemplate.js";
 
 // Styles
 import BarCss from "./generated/themes/Bar.css.js";
+import type { AriaRole } from "@ui5/webcomponents-base/dist/types.js";
 
 /**
  * @class
@@ -66,6 +68,16 @@ class Bar extends UI5Element {
 	design: `${BarDesign}` = "Header";
 
 	/**
+	 * Used to define the role of the bar.
+	 * @private
+	 * @default "Toolbar"
+	 * @since 2.9.0
+	 *
+	 */
+	@property()
+	accessibleRole: `${BarAccessibleRole}` = "Toolbar";
+
+	/**
 	* Defines the content at the start of the bar.
 	* @public
 	*/
@@ -91,6 +103,7 @@ class Bar extends UI5Element {
 	get accInfo() {
 		return {
 			"label": this.design,
+			"role": this.effectiveRole,
 		};
 	}
 
@@ -124,6 +137,10 @@ class Bar extends UI5Element {
 		this.getDomRef()!.querySelectorAll(".ui5-bar-content-container").forEach(child => {
 			ResizeHandler.deregister(child as HTMLElement, this._handleResizeBound);
 		}, this);
+	 }
+
+	 get effectiveRole() {
+		return this.accessibleRole.toLowerCase() as AriaRole;
 	 }
 }
 
