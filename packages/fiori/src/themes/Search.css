@@ -35,7 +35,7 @@
 
 .ui5-search-popover-subheader {
 	font-size: .75rem;
-	color: #66798E
+	color: var(--sapContent_LabelColor);
 }
 
 :host([popup-mode="Loading"]) .ui5-search-popover {

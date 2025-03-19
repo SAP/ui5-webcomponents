@@ -171,7 +171,6 @@
 		const searchScope = document.getElementById('search-scope');
 		createScopeItems();
 		searchScope.addEventListener('ui5-scope-change', (event) => {
-			debugger;
 			let scope = event.detail.scope.text === "All" ? "" : event.detail.scope.text.toLowerCase();
 			
 			searchScope.getSlottedNodes("items").forEach(item => {

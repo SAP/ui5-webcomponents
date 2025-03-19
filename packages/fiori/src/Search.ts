@@ -454,7 +454,7 @@ class Search extends SearchField {
 		}
 		this._matchedPerTerm = false;
 
-		if (!this.matches(":focus-within")) {
+		if (!this.focusedInnerInput && !this._getPicker().matches(":focus-within")) {
 			this.open = false;
 		}
 	}
