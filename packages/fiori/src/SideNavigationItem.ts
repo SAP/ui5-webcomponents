@@ -7,6 +7,8 @@ import {
 	isRight,
 	isSpace,
 	isEnter,
+	isMinus,
+	isPlus,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
@@ -183,12 +185,12 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isLeft(e)) {
+		if (isLeft(e) || isMinus(e)) {
 			this.expanded = false;
 			return;
 		}
 
-		if (isRight(e)) {
+		if (isRight(e) || isPlus(e)) {
 			this.expanded = true;
 			return;
 		}

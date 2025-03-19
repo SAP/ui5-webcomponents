@@ -18,6 +18,15 @@
 	width: var(--_ui5_side_navigation_collapsed_width);
 }
 
+/* SideNavigationDesign */
+:host([design="Plain"]) {
+	box-shadow: none;
+}
+
+:host([design="Plain"][is-phone]) {
+	width: 100%;
+}
+
 .ui5-sn-root {
 	height: 100%;
 	display: flex;
@@ -62,7 +71,7 @@
 }
 
 :host([in-popover]) .ui5-sn-list {
-	padding: var(--_ui5_side_navigation_parent_popup_padding);
+	padding: var(--_ui5_side_navigation_popup_padding);
 }
 
 .ui5-sn-item-overflow {
