@@ -395,5 +395,4 @@ ui5AccDescribe("Automated accessibility tests", () => {
 
 		cy.ui5CheckA11y();
 	})
-	})
 });
