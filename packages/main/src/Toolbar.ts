@@ -149,6 +149,9 @@ class Toolbar extends UI5Element {
 	@property()
 	design: `${ToolbarDesign}` = "Solid"
 
+	@property({ type: Boolean })
+	popoverOpen = false;
+
 	/**
 	 * Defines the items of the component.
      *
@@ -163,7 +166,6 @@ class Toolbar extends UI5Element {
 	itemsToOverflow: Array<ToolbarItem> = [];
 	itemsWidth = 0;
 	minContentWidth = 0;
-	popoverOpen = false;
 	itemsWidthMeasured = false;
 
 	ITEMS_WIDTH_MAP: Map<string, number> = new Map();
@@ -250,7 +252,7 @@ class Toolbar extends UI5Element {
 				accessibleName: Toolbar.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
 				tooltip: Toolbar.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
 				accessibilityAttributes: {
-					expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
+					expanded: this.popoverOpen,
 					hasPopup: "menu" as const,
 				},
 			},
@@ -461,9 +463,6 @@ class Toolbar extends UI5Element {
 
 	onOverflowPopoverClosed() {
 		this.popoverOpen = false;
-		if (this.overflowButtonDOM) {
-			this.overflowButtonDOM.accessibilityAttributes.expanded = false;
-		}
 	}
 
 	onBeforeClose(e: UI5CustomEvent<Popover, "before-close">) {
@@ -472,9 +471,6 @@ class Toolbar extends UI5Element {
 
 	onOverflowPopoverOpened() {
 		this.popoverOpen = true;
-		if (this.overflowButtonDOM) {
-			this.overflowButtonDOM.accessibilityAttributes.expanded = true;
-		}
 	}
 
 	onResize() {

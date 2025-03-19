@@ -3,9 +3,8 @@ import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDr
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
 import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
-
-import type Table from "./Table.js";
 import TableExtension from "./TableExtension.js";
+import type Table from "./Table.js";
 
 export default class TableDragAndDrop extends TableExtension {
 	_table: Table;
@@ -25,7 +24,7 @@ export default class TableDragAndDrop extends TableExtension {
 			return;
 		}
 
-		this._table.dropIndicatorDOM!.targetReference = null;
+		this._table.dropIndicatorDOM.targetReference = null;
 	}
 
 	_ondragover(e: DragEvent) {
@@ -40,13 +39,13 @@ export default class TableDragAndDrop extends TableExtension {
 		);
 
 		if (!closestPosition) {
-			this._table.dropIndicatorDOM!.targetReference = null;
+			this._table.dropIndicatorDOM.targetReference = null;
 			return;
 		}
 
 		const { targetReference, placement } = handleDragOver(e, this._table, closestPosition, closestPosition.element, { crossDnD: true, originalEvent: true });
-		this._table.dropIndicatorDOM!.targetReference = targetReference;
-		this._table.dropIndicatorDOM!.placement = placement;
+		this._table.dropIndicatorDOM.targetReference = targetReference;
+		this._table.dropIndicatorDOM.placement = placement;
 	}
 
 	_ondrop(e: DragEvent) {

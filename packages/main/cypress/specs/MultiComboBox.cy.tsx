@@ -20,6 +20,42 @@ describe("Security", () => {
 	});
 });
 
+describe("General interaction", () => {
+	it("should be able to delete long tokens", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true}>
+				<MultiComboBoxItem text="This is a token with ridicilously long long long text which should be deletable when the 'x' icon is clicked"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.type('t');
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.realPress('Enter');
+
+		cy.get("[ui5-multi-combobox]").shadow().find("[ui5-tokenizer]").then($tokenizer => {
+			$tokenizer[0].addEventListener("ui5-token-delete", cy.stub().as("tokenDelete"))
+		});
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-multi-combobox]").shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]").shadow()
+			.find("[ui5-icon]").realClick();
+
+		cy.get("@tokenDelete").should("have.been.called");
+	});
+});
+
 describe("Value State", () => {
 	it("should be able to change value states upon typing", () => {
 		cy.mount(

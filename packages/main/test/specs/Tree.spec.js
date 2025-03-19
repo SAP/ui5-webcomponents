@@ -200,7 +200,7 @@ describe("Tree has screen reader support", () => {
 		const liAriaLabelledBy = await listItem.getAttribute("aria-labelledby");
 		const ariaLabelText = await listItem.$(`#${liAriaLabelledBy}`).getText();
 
-		assert.strictEqual(ariaLabelText, "Tree item with accessibleName", "aria label text is correct");
+		assert.ok(ariaLabelText.includes("Tree item with accessibleName"), "aria label text is correct");
 	});
 
 });

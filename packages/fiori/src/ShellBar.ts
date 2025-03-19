@@ -41,8 +41,8 @@ import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHo
 import throttle from "@ui5/webcomponents-base/dist/util/throttle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
-
 import type ShellBarItem from "./ShellBarItem.js";
+import type { ShellBarItemAccessibilityAttributes } from "./ShellBarItem.js";
 
 // Templates
 import ShellBarTemplate from "./ShellBarTemplate.js";
@@ -131,6 +131,7 @@ interface IShelBarItemInfo extends IShellBarHidableItem {
 	order?: number,
 	profile?: boolean,
 	tooltip?: string,
+	accessibilityAttributes?: ShellBarItemAccessibilityAttributes,
 }
 
 interface IShellBarContentItem extends IShellBarHidableItem {
@@ -1061,6 +1062,7 @@ class ShellBar extends UI5Element {
 					title: item.title,
 					stableDomRef: item.stableDomRef,
 					tooltip: item.title || item.text,
+					accessibilityAttributes: item.accessibilityAttributes,
 				};
 			}),
 			{
@@ -1201,32 +1203,34 @@ class ShellBar extends UI5Element {
 		return (this.showSearchField || this._autoRestoreSearchField) && !onFocus && isEmpty;
 	}
 
-	get showStartSeparatorInWrapper(): boolean {
-		// show separator at the beginning of content if more than one
-		// item is visible, otherwise, the separator is packed with the
-		// first visible item to be calculated with the next overflow action
-		const starContent = this.startContent;
-		const hiddenStartContentItems = this._contentInfo.filter(item => {
-			const isHidden = item.classes.indexOf("ui5-shellbar-hidden-button") !== -1;
-			const isInContent = starContent.find(contentItem => contentItem.slot === item.id);
-			return isHidden && isInContent;
-		}).map(item => item.id);
-
-		return (starContent.length - hiddenStartContentItems.length) > 0;
+	get startContentInfoSorted() {
+		return this._contentInfo
+			.filter(item => this.startContent.find(contentItem => contentItem.slot === item.id))
+			.sort((a, b) => a.hideOrder - b.hideOrder);
 	}
 
-	get showEndSeparatorInWrapper(): boolean {
-		// show separator at the end of content if more than one
-		// item is visible, otherwise, the separator is packed with the
-		// last visible item to be calculated with the next overflow
-		const endContent = this.endContent;
-		const hiddenEndContentItems = this._contentInfo.filter(item => {
-			const isHidden = item.classes.indexOf("ui5-shellbar-hidden-button") !== -1;
-			const isInContent = endContent.find(contentItem => contentItem.slot === item.id);
-			return isHidden && isInContent;
-		}).map(item => item.id);
+	get endContentInfoSorted() {
+		return this._contentInfo
+			.filter(item => this.endContent.find(contentItem => contentItem.slot === item.id))
+			.sort((a, b) => a.hideOrder - b.hideOrder);
+	}
 
-		return (endContent.length - hiddenEndContentItems.length) > 0;
+	get showStartSeparator(): boolean {
+		return this.startContentInfoSorted.some(item => !item.classes.includes("ui5-shellbar-hidden-button"));
+	}
+
+	get showEndSeparator(): boolean {
+		return this.endContentInfoSorted.some(item => !item.classes.includes("ui5-shellbar-hidden-button"));
+	}
+
+	shouldIncludeSeparator(itemInfo: IShellBarContentItem | undefined, contentInfo: IShellBarContentItem[]) {
+		// once the last item from the start/end content was hidden, the
+		// separator is "packed" with it in order to account for any next measurements
+		if (!itemInfo) {
+			return false;
+		}
+		const lastVisibleItem = contentInfo.at(-1);
+		return lastVisibleItem?.id === itemInfo.id && itemInfo.classes.indexOf("ui5-shellbar-hidden-button") > -1;
 	}
 
 	get classes(): ClassMap {
@@ -1356,12 +1360,18 @@ class ShellBar extends UI5Element {
 	get startContent() {
 		// all items before the first spacer
 		const spacerIndex = this.content.findIndex(child => child.hasAttribute("ui5-shellbar-spacer"));
+		if (spacerIndex === -1) {
+			return this.content;
+		}
 		return this.content.slice(0, spacerIndex);
 	}
 
 	get endContent() {
 		// all items after the first spacer
 		const spacerIndex = this.content.findIndex(child => child.hasAttribute("ui5-shellbar-spacer"));
+		if (spacerIndex === -1) {
+			return [];
+		}
 		return this.content.slice(spacerIndex + 1);
 	}
 
