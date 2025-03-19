@@ -2,6 +2,20 @@
 @import "./InputIcon.css";
 @import "./Input.css";
 
+:host([icon]) {
+	min-width: var(--_ui5_button_base_min_width);
+	width: var(--_ui5_button_base_min_width);
+}
+
+:host([icon]) .ui5-select-root {
+	min-width: var(--_ui5_button_base_min_width);
+}
+
+:host([icon]) .ui5-select-label-root {
+	min-width: 0;
+	padding-inline-start: 0;
+}
+
 .ui5-select-root {
 	min-width: calc(var(--_ui5_input_min_width) + (var(--_ui5-input-icons-count)*var(--_ui5_input_icon_width)));
 	width: 100%;
