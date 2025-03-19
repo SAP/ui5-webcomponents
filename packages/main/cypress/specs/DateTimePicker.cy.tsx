@@ -44,6 +44,9 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.get("#dtSeconds")
 			.shadow()
+			.as("DateTimePicker");
+
+		cy.get("@DateTimePicker")
 			.find("ui5-input")
 			.should("have.value", PREVIOUS_VALUE);
 
@@ -51,8 +54,14 @@ describe("DateTimePicker general interaction", () => {
 			// Click the currently selected day and then move to the next day.
 			cy.get("ui5-calendar")
 				.shadow()
+				.as("calendar");
+
+			cy.get("@calendar")
 				.find("ui5-daypicker")
 				.shadow()
+				.as("daypicker")
+
+			cy.get("@daypicker")
 				.find(".ui5-dp-item--selected")
 				.realClick()
 				.should("be.focused");
@@ -65,8 +74,7 @@ describe("DateTimePicker general interaction", () => {
 		});
 
 		// Only the date has changed; the time remains the same.
-		cy.get("#dtSeconds")
-			.shadow()
+		cy.get("@DateTimePicker")
 			.find("ui5-input")
 			.should("be.focused")
 			.should("have.attr", "value", "14/04/2020, 03:16:16 AM");
@@ -91,6 +99,9 @@ describe("DateTimePicker general interaction", () => {
 			// Adjust hours:
 			cy.get("ui5-time-selection-clocks")
 				.shadow()
+				.as("clocks");
+
+			cy.get("@clocks")
 				.find(`ui5-toggle-spin-button[data-ui5-clock="hours"]`)
 				.realClick()
 				.should("be.focused");
@@ -99,8 +110,7 @@ describe("DateTimePicker general interaction", () => {
 			cy.realPress("Space");
 
 			// Adjust minutes.
-			cy.get("ui5-time-selection-clocks")
-				.shadow()
+			cy.get("@clocks")
 				.find(`ui5-toggle-spin-button[data-ui5-clock="minutes"]`)
 				.realClick()
 				.should("be.focused");
@@ -110,8 +120,7 @@ describe("DateTimePicker general interaction", () => {
 			cy.realPress("Space");
 
 			// Adjust seconds.
-			cy.get("ui5-time-selection-clocks")
-				.shadow()
+			cy.get("@clocks")
 				.find(`ui5-toggle-spin-button[data-ui5-clock="seconds"]`)
 				.realClick()
 				.should("be.focused");
@@ -168,8 +177,14 @@ describe("DateTimePicker general interaction", () => {
 		cy.ui5DateTimePickerGetPopover("#dtSeconds").within(() => {
 			cy.get("ui5-calendar")
 				.shadow()
+				.as("calendar");
+			
+			cy.get("@calendar")
 				.find("ui5-daypicker")
 				.shadow()
+				.as("daypicker");
+			
+			cy.get("@daypicker")
 				.find(".ui5-dp-item--now")
 				.should("be.focused")
 				.then($el => {
@@ -240,6 +255,9 @@ describe("DateTimePicker general interaction", () => {
 		cy.ui5DateTimePickerGetPopover("#dt").within(() => {
 			cy.get("ui5-time-selection-clocks")
 				.shadow()
+				.as("clocks");
+
+			cy.get("@clocks")
 				.find(`ui5-time-picker-clock[data-ui5-clock="hours"]`)
 				.should("have.attr", "active", "");
 		});
@@ -261,29 +279,36 @@ describe("DateTimePicker general interaction", () => {
 			.within(() => {
 				cy.get("ui5-calendar")
 					.shadow()
+					.as("calendar");
+				
+				cy.get("@calendar")
 					.find("ui5-daypicker")
 					.shadow()
+					.as("daypicker");
+				
+				cy.get("@daypicker")
 					.find(".ui5-dp-item--selected")
 					.should("be.focused")
 					.realClick();
 
 				cy.get("ui5-time-selection-clocks")
 					.shadow()
+					.as("clocks");
+
+				cy.get("@clocks")
 					.find(`ui5-toggle-spin-button[data-ui5-clock="hours"]`)
 					.realClick()
 					.should("be.focused")
 					.realType("1")
 					.realType("2");
 
-				cy.get("ui5-time-selection-clocks")
-					.shadow()
+				cy.get("@clocks")
 					.find(`ui5-toggle-spin-button[data-ui5-clock="minutes"]`)
 					.should("be.focused")
 					.realType("3")
 					.realType("4");
 
-				cy.get("ui5-time-selection-clocks")
-					.shadow()
+				cy.get("@clocks")
 					.find(`ui5-toggle-spin-button[data-ui5-clock="seconds"]`)
 					.should("be.focused")
 					.realType("5")
@@ -318,8 +343,14 @@ describe("DateTimePicker general interaction", () => {
 			// Click the focused day and confirm the selection.
 			cy.get("ui5-calendar")
 				.shadow()
+				.as("calendar");
+
+			cy.get("@calendar")
 				.find("ui5-daypicker")
 				.shadow()
+				.as("daypicker");
+
+			cy.get("@daypicker")
 				.find("[data-sap-focus-ref]")
 				.should("be.focused")
 				.realClick();
@@ -348,12 +379,13 @@ describe("DateTimePicker general interaction", () => {
 			cy.get("ui5-calendar")
 				.shadow()
 				.find(".ui5-calheader")
+				.as("calHeader");
+
+			cy.get("@calHeader")
 				.find("div[data-ui5-cal-header-btn-prev]")
 				.should("have.class", "ui5-calheader-arrowbtn-disabled");
 
-			cy.get("ui5-calendar")
-				.shadow()
-				.find(".ui5-calheader")
+			cy.get("@calHeader")
 				.find("div[data-ui5-cal-header-btn-next]")
 				.should("have.class", "ui5-calheader-arrowbtn-disabled");
 		});
@@ -381,8 +413,14 @@ describe("DateTimePicker general interaction", () => {
 		cy.ui5DateTimePickerGetPopover("#dt").within(() => {
 			cy.get("ui5-calendar")
 				.shadow()
+				.as("calendar");
+
+			cy.get("@calendar")
 				.find("ui5-daypicker")
 				.shadow()
+				.as("daypicker");
+			
+			cy.get("@daypicker")
 				.find("[data-sap-focus-ref]")
 				.realClick()
 				.should("be.focused");
