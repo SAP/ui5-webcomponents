@@ -9,14 +9,14 @@ type Vialotation = {
     nodes: number,
 }
 
-type TestFails = {
+type TestVialotation = {
     testTitlePath: string[],
     violations: Vialotation[]
 }
 
 type TestReport = {
     testFile: string,
-    errors: TestFails[]
+    errors: TestVialotation[]
 }
 
 function checkA11TerminalLog(violations: typeof AxeResults.violations) {

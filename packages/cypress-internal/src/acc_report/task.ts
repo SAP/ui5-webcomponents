@@ -6,48 +6,50 @@ import * as path from "path";
 
 const outputPath = path.resolve("./cypress-logs/acc_log.json");
 
-const findExistingReport = (fileData: TestReport[], testFile: string) => fileData.find(report => report.testFile === testFile);
+const findExistingReport = (reportData: TestReport[], testFile: string) => reportData.find(report => report.testFile === testFile);
+
+const readReportFile = (): TestReport[] => {
+	try {
+		return JSON.parse(readFileSync(outputPath, { encoding: "utf-8" })) as TestReport[];
+	} catch (e) {
+		return [];
+	}
+}
 
 const log = (currentReport: TestReport) => {
-	let fileData: TestReport[] = [];
+	let reportData = readReportFile();
 
-	try {
-		fileData = JSON.parse(readFileSync(outputPath, { encoding: "utf-8" })) as TestReport[];
-	} catch (e) { }
-
-	const existingReport = findExistingReport(fileData, currentReport.testFile);
+	const existingReport = findExistingReport(reportData, currentReport.testFile);
 
 	if (existingReport) {
 		existingReport.errors.push(...currentReport.errors)
 	} else {
-		fileData.push(currentReport);
+		reportData.push(currentReport);
 	}
 
-	fileData.forEach(file => {
+	reportData.forEach(file => {
 		const paths = file.errors.map(error => error.testTitlePath.join(" "));
 		file.errors = file.errors.filter((error, index) => paths.indexOf(error.testTitlePath.join(" ")) === index);
 	})
 
-	saveReportFile(fileData);
+	saveReportFile(reportData);
 }
 
-const saveReportFile = (fileData: TestReport[]) => {
+const saveReportFile = (reportData: TestReport[]) => {
 	mkdirSync(path.dirname(outputPath), { recursive: true });
 
-	writeFileSync(outputPath, JSON.stringify(fileData, undefined, 4));
+	writeFileSync(outputPath, JSON.stringify(reportData, undefined, 4));
 };
 
 const reset = (testFile: string) => {
-	try {
-		let fileData = JSON.parse(readFileSync(outputPath, { encoding: "utf-8" })) as TestReport[];
-		const existingReport = findExistingReport(fileData, testFile);
+	let reportData = readReportFile();
+	const existingReport = findExistingReport(reportData, testFile);
 
-		if (existingReport) {
-			fileData.splice(fileData.indexOf(existingReport), 1)
+	if (existingReport) {
+		reportData.splice(reportData.indexOf(existingReport), 1)
 
-			saveReportFile(fileData);
-		}
-	} catch (e) { }
+		saveReportFile(reportData);
+	}
 }
 
 function accTask(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) {
