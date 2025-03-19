@@ -233,7 +233,6 @@ class SearchField extends UI5Element {
 		this.fireDecoratorEvent("search");
 	}
 
-
 	_handleInput(e: InputEvent) {
 		this.value = (e.target as HTMLInputElement).value;
 
