@@ -430,6 +430,10 @@ class MenuItem extends ListItem implements IMenuItem {
 	_afterPopoverClose() {
 		this.fireDecoratorEvent("close");
 	}
+
+	get isMenuItem(): boolean {
+		return true;
+	}
 }
 
 MenuItem.define();
