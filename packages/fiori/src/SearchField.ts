@@ -204,6 +204,8 @@ class SearchField extends UI5Element {
 		this.focusedInnerInput = false;
 	}
 
+	_onFocusOutSearch() {}
+
 	_handleEnter() {
 		if (this.value.length) {
 			this._handleSearchEvent();
@@ -231,7 +233,6 @@ class SearchField extends UI5Element {
 		this.fireDecoratorEvent("search");
 	}
 
-	_handleSearchIconFocusOut() {}
 
 	_handleInput(e: InputEvent) {
 		this.value = (e.target as HTMLInputElement).value;

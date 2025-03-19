@@ -11,7 +11,7 @@ import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 export default function SearchFieldTemplate(this: SearchField) {
 	return (
 		this.expanded ? (
-			<div class="ui5-search-field-root" role="search">
+			<div class="ui5-search-field-root" role="search" onFocusOut={this._onFocusOutSearch}>
 				<div class="ui5-search-field-content">
 					{this.mode === SearchMode.Scoped &&
 						<>
@@ -64,7 +64,6 @@ export default function SearchFieldTemplate(this: SearchField) {
 						showTooltip={true}
 						accessibleName={this._translations.searchIcon}
 						onClick={this._handleSearchIconPress}
-						onFocusOut={this._handleSearchIconFocusOut}
 					></Icon>
 				</div>
 			</div>
