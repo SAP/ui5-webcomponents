@@ -390,16 +390,11 @@ describe("Accessibility", () => {
 });
 
 ui5AccDescribe("Automated accessibility tests", () => {
-	it("1", () => {
+	it("Icon only", () => {
 		cy.wait(5000);
 		cy.mount(<Button icon="message-information"></Button>);
 
 		cy.ui5CheckA11y();
 	})
-
-	it("2", () => {
-		cy.mount(<Button icon="message-information"></Button>);
-
-		cy.ui5CheckA11y();
 	})
 });
