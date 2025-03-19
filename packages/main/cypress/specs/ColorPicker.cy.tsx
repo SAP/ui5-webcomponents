@@ -41,40 +41,41 @@ describe("Color Picker general interaction tests", () => {
 			.should("have.been.calledOnce");
 	});
 
-	it("should correctly parse colors in value property", () => {
-		cy.mount(<ColorPicker></ColorPicker>);
+	it("should correctly parse rgb value to color", () => {
+		cy.mount(<ColorPicker value="rgb(0, 255, 0)"></ColorPicker>);
 
 		cy.get("[ui5-color-picker]")
-			.as("colorPicker");
-
-		cy.get<ColorPicker>("@colorPicker")
-			.invoke("prop", "value", "rgb(0, 255, 0)");
-
-		cy.get<ColorPicker>("@colorPicker")
 			.ui5ColorPickerValidateInput(".ui5-color-picker-hex-input", "00ff00");
+	});
 
-		cy.get<ColorPicker>("@colorPicker")
-			.invoke("prop", "value", "rgba(255, 0, 255, 1)");
+	it("should correctly parse rgba value color", () => {
+		cy.mount(<ColorPicker value="rgba(255, 0, 255, 0.5)"></ColorPicker>);
 
-		cy.get<ColorPicker>("@colorPicker")
+		cy.get("[ui5-color-picker]")
 			.ui5ColorPickerValidateInput(".ui5-color-picker-hex-input", "ff00ff");
 
-		cy.get<ColorPicker>("@colorPicker")
-			.invoke("prop", "value", "#fafafa");
+		cy.get("[ui5-color-picker]")
+			.ui5ColorPickerValidateInput("#alpha", "0.5");
+	});
 
-		cy.get<ColorPicker>("@colorPicker")
+	it("should correctly parse HEX value to color", () => {
+		cy.mount(<ColorPicker value="#fafafa"></ColorPicker>);
+
+		cy.get("[ui5-color-picker]")
 			.ui5ColorPickerValidateInput(".ui5-color-picker-hex-input", "fafafa");
+	});
 
-		cy.get<ColorPicker>("@colorPicker")
-			.invoke("prop", "value", "#123");
+	it("should correctly parse short form HEX value to color", () => {
+		cy.mount(<ColorPicker value="#123"></ColorPicker>);
 
-		cy.get<ColorPicker>("@colorPicker")
+		cy.get("[ui5-color-picker]")
 			.ui5ColorPickerValidateInput(".ui5-color-picker-hex-input", "112233");
+	});
 
-		cy.get<ColorPicker>("@colorPicker")
-			.invoke("prop", "value", "gray");
+	it("should correctly parse CSS color value to color", () => {
+		cy.mount(<ColorPicker value="gray"></ColorPicker>);
 
-		cy.get<ColorPicker>("@colorPicker")
+		cy.get("[ui5-color-picker]")
 			.ui5ColorPickerValidateInput(".ui5-color-picker-hex-input", "808080");
 	});
 
