@@ -32,9 +32,10 @@ describe("FocusableElements", () => {
 			</>
 		);
 
-		// wait for item navigation to set tabindex
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(100);
+		cy.get("#subItem1")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "0");
 
 		cy.get("#container").then( async ($container) => {
 		   const firstFocusable = await getFirstFocusableElement($container.get(0));
