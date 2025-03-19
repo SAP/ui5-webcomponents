@@ -821,3 +821,44 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			.should("have.attr", "open");
 	});
 });
+
+describe("Accessibility", () => {
+	it("tests accessibleDescription property", () => {
+		cy.mount(
+			<Input accessibleDescription="This is an input"></Input>
+		);
+
+		cy.get("[ui5-input]").as("input");
+
+		cy.get("@input")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-describedby", "accessibleDescription");
+		
+		cy.get("@input")
+			.shadow()
+			.find("span#accessibleDescription")
+			.should("have.text", "This is an input");
+	});
+
+	it("tests accessibleDescriptionRef property", () => {
+		cy.mount(
+			<>
+				<p id="inputDescription">This is an input</p>
+				<Input accessibleDescriptionRef="inputDescription"></Input>
+			</>
+		);
+
+		cy.get("[ui5-input]").as("input");
+
+		cy.get("@input")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-describedby", "accessibleDescription");
+
+		cy.get("@input")
+			.shadow()
+			.find("span#accessibleDescription")
+			.should("have.text", "This is an input");
+	});
+});
