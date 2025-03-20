@@ -73,7 +73,7 @@ function iconBegin(this: MenuItem) {
 function listItemPostContent(this: MenuItem) {
 	return this.hasSubmenu && <ResponsivePopover
 		id={`${this._id}-menu-rp`}
-		class="ui5-menu-rp .ui5-menu-rp-sub-menu"
+		class="ui5-menu-rp ui5-menu-rp-sub-menu"
 		preventInitialFocus={true}
 		preventFocusRestore={true}
 		hideArrow={true}

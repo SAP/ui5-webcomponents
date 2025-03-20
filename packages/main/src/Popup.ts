@@ -549,11 +549,7 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	resetFocus() {
-		if (!this._focusedElementBeforeOpen) {
-			return;
-		}
-
-		this._focusedElementBeforeOpen.focus();
+		this._focusedElementBeforeOpen?.focus();
 		this._focusedElementBeforeOpen = null;
 	}
 

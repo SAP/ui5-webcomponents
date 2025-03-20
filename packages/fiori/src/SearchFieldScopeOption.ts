@@ -11,6 +11,7 @@ import type { ISearchFieldScopeOption } from "./SearchField.js";
  * @abstract
  * @implements {ISearchFieldScopeOption}
  * @public
+ * @since 2.9.0
  */
 @customElement("ui5-search-field-scope-option")
 class SearchFieldScopeOption extends UI5Element implements ISearchFieldScopeOption {
@@ -20,7 +21,7 @@ class SearchFieldScopeOption extends UI5Element implements ISearchFieldScopeOpti
 	 * @public
 	 */
 	@property()
-	text!: string
+	text!: string;
 
 	/**
 	 * Indicates whether the item is selected
