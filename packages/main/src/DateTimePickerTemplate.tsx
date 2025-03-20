@@ -19,7 +19,7 @@ export default function DateTimePickerTemplate(this: DateTimePicker) {
 function content(this: DateTimePicker) {
 	return (
 		<>
-			{ this.phone &&
+			{ this._phoneView &&
 				<div class="ui5-dt-picker-header">
 					<SegmentedButton class="ui5-dt-picker-toggle-button" onSelectionChange={this._dateTimeSwitchChange}>
 						<SegmentedButtonItem data-ui5-key="Date" selected={this.showDateView}>{this.btnDateLabel}</SegmentedButtonItem>
@@ -30,13 +30,13 @@ function content(this: DateTimePicker) {
 
 			<div class={{
 				"ui5-dt-picker-content": true,
-				"ui5-dt-picker-content--phone": this.phone,
+				"ui5-dt-picker-content--phone": this._phoneView,
 			}}>
 				<Calendar
 					class={{
 						"ui5-dt-cal": true,
-						"ui5-dt-cal--hidden": this.phone && this.showTimeView,
-						"ui5-dt-time--hidden": this.phone && this.showDateView,
+						"ui5-dt-cal--hidden": this._phoneView && this.showTimeView,
+						"ui5-dt-time--hidden": this._phoneView && this.showDateView,
 					}}
 					id={`${this._id}-calendar`}
 					primaryCalendarType={this._primaryCalendarType}
@@ -57,15 +57,15 @@ function content(this: DateTimePicker) {
 					)}
 				</Calendar>
 
-				{ !this.phone && <span class="ui5-dt-picker-separator"></span> }
+				{ !this._phoneView && <span class="ui5-dt-picker-separator"></span> }
 
 				{ this.showTimeView &&
 					<TimeSelectionClocks
 						id={`${this._id}-time-sel`}
 						class={{
 							"ui5-dt-time": true,
-							"ui5-dt-cal--hidden": this.phone && this.showTimeView,
-							"ui5-dt-time--hidden": this.phone && this.showDateView,
+							"ui5-dt-cal--hidden": this._phoneView && this.showTimeView,
+							"ui5-dt-time--hidden": this._phoneView && this.showDateView,
 						}}
 						formatPattern={this._formatPattern}
 						value={this._timeSelectionValue}
@@ -84,7 +84,7 @@ function footer(this: DateTimePicker) {
 			slot="footer"
 			class={{
 				"ui5-dt-picker-footer": true,
-				"ui5-dt-picker-footer-time-hidden": (this.phone && this.showTimeView) || (this.phone && this.showDateView)
+				"ui5-dt-picker-footer-time-hidden": (this._phoneView && this.showTimeView) || (this._phoneView && this.showDateView)
 			}}>
 			<Button
 				id="ok"

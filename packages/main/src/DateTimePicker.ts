@@ -234,14 +234,14 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	}
 
 	get showDateView() {
-		return this.phone ? !this._showTimeView : true;
+		return this._phoneView ? !this._showTimeView : true;
 	}
 
 	get showTimeView() {
-		return this.phone ? this._showTimeView : true;
+		return this._phoneView ? this._showTimeView : true;
 	}
 
-	get phone() {
+	get _phoneView() {
 		return super.phone || this._phoneMode;
 	}
 

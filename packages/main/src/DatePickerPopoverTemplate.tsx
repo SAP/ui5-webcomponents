@@ -37,7 +37,7 @@ export default function DatePickerPopoverTemplate(this: DatePicker, hooks?: { he
 		>
 			{ this.showHeader && header.call(this) }
 
-			{ valueStateTextHeader.call(this, { "width": "100%" }) }
+			{ valueStateTextHeader.call(this, this.phone ? { "width": "100%" } : { "width": "20rem" }) }
 
 			{ content.call(this) }
 
