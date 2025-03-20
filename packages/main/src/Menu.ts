@@ -625,7 +625,7 @@ class Menu extends UI5Element {
 
 	_itemMouseOut(e: MouseEvent) {
 		if (isDesktop()) {
-			const opener = e.target as OpenerStandardListItem;
+			const opener = e.currentTarget as OpenerStandardListItem;
 			const item = opener.associatedItem;
 
 			clearTimeout(this._timeout);
