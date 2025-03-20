@@ -29,6 +29,7 @@ export default function DatePickerPopoverTemplate(this: DatePicker, hooks?: { he
 			horizontalAlign="Start"
 			accessibleName={this.pickerAccessibleName}
 			hideArrow={true}
+			_hideHeader={this._shouldHideHeader}
 			onKeyDown={this._onkeydown}
 			onClose={this.onResponsivePopoverAfterClose}
 			onOpen={this.onResponsivePopoverAfterOpen}
@@ -49,7 +50,7 @@ function defaultHeader(this: DatePicker) {
 	return (
 		<div slot="header" class="ui5-responsive-popover-header">
 			<div class="row">
-				<span>{this.pickerAccessibleName}</span>
+				<span>{this._headerTitleText}</span>
 				<Button
 					class="ui5-responsive-popover-close-btn"
 					icon={decline}

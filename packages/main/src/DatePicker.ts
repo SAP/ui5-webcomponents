@@ -38,6 +38,7 @@ import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import {
 	DATEPICKER_OPEN_ICON_TITLE,
 	DATEPICKER_DATE_DESCRIPTION,
+	INPUT_SUGGESTIONS_TITLE,
 	FORM_TEXTFIELD_REQUIRED,
 	DATEPICKER_POPOVER_ACCESSIBLE_NAME,
 	VALUE_STATE_ERROR,
@@ -659,6 +660,10 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 */
 	get _placeholder() {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
+	}
+
+	get _headerTitleText() {
+		return DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get phone() {

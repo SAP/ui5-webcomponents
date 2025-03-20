@@ -6,7 +6,6 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
 import TimeSelectionInputs from "./TimeSelectionInputs.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import error from "@ui5/webcomponents-icons/dist/error.js";
 import alert from "@ui5/webcomponents-icons/dist/alert.js";
 import sysEnter2 from "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -23,6 +22,7 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				opener={this}
 				open={this.open}
 				allowTargetOverlap={true}
+				_hideHeader={true}
 				hideArrow={true}
 				accessibleName={this.pickerAccessibleName}
 				onClose={this.onResponsivePopoverAfterClose}
@@ -31,8 +31,6 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				onWheel={this._handleWheel}
 				onKeyDown={this._onkeydown}
 			>
-				{ this._isPhone && header.call(this) }
-
 				{ this.shouldDisplayValueStateMessageInResponsivePopover && valueStateTextHeader.call(this, { "width": "100%" }) }
 
 				<TimeSelectionClocks
@@ -82,23 +80,6 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				</Popover>
 			}
 		</>
-	);
-}
-
-function header(this: TimePicker) {
-	return (
-		<div slot="header" class="ui5-responsive-popover-header">
-			<div class="row">
-				<span>{this.pickerAccessibleName}</span>
-				<Button
-					class="ui5-responsive-popover-close-btn"
-					icon={decline}
-					design="Transparent"
-					onClick={this._togglePicker}
-				>
-				</Button>
-			</div>
-		</div>
 	);
 }
 
