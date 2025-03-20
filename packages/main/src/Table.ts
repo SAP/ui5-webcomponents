@@ -573,8 +573,11 @@ class Table extends UI5Element {
 		headerCell._popin = inPopin && this.overflowMode === TableOverflowMode.Popin;
 		headerCell._popinWidth = popinWidth;
 		this.rows.forEach(row => {
-			row.cells[headerIndex]._popinHidden = headerCell.popinHidden;
-			row.cells[headerIndex]._popin = headerCell._popin;
+			const cell = row.cells[headerIndex];
+			if (cell) {
+				row.cells[headerIndex]._popinHidden = headerCell.popinHidden;
+				row.cells[headerIndex]._popin = headerCell._popin;
+			}
 		});
 	}
 

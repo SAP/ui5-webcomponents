@@ -18,6 +18,17 @@
 	clip-path: inset(var(--sapContent_FocusWidth)); /* focus outline should not overlap sticky cells */
 }
 
+::slotted(ui5-table-cell:first-of-type),
+::slotted(ui5-table-header-cell:first-of-type),
+#popin-cell {
+	padding-left: var(--_ui5_first_table_cell_horizontal_padding);
+}
+
+[ui5-table-cell-base] + ::slotted([ui5-table-cell-base]:first-of-type),
+[ui5-table-cell-base] ~ #popin-cell {
+	padding-left: var(--_ui5_table_cell_horizontal_padding);
+}
+
 #selection-cell {
 	padding: 0;
 	left: 0;
