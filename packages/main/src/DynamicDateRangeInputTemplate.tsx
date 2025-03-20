@@ -16,13 +16,13 @@ export default function DynamicDateRangeInputTemplate(this: DynamicDateRange) {
 				class="ui5-dynamic-date-range-input"
 				// placeholder={this._placeholder}
 				// type={this.type}
-				// value={this.value}
+				value={this.value && this.getOption(this.value?.operator)?.format(this.value)}
 				// disabled={this.disabled}
 				// required={this.required}
 				// readonly={this.readonly}
 				// valueState={this.valueState}
 				// _inputAccInfo={this.accInfo}
-				// onChange={this._onInputChange}
+				onChange={this.onInputChange}
 				// onInput={this._onInputInput}
 				// onSubmit={this._onInputSubmit}
 				// onKeyDown={this._onkeydown}

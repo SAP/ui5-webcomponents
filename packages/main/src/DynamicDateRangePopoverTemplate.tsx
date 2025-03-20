@@ -39,7 +39,7 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 					// onMouseDown={this._itemMousedown}
 				>
 					{this._optionsTitles.map(optionTitle => {
-						return <ListItemStandard>{optionTitle}</ListItemStandard>;
+						return <ListItemStandard selected={optionTitle === this.value?.operator}>{optionTitle}</ListItemStandard>;
 					})}
 				</List>
 			</div>
@@ -50,7 +50,7 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 			}
 			{this._hasCurrentOptionTemplate &&
 				<div slot="footer">
-					<div slot="footer" class="ui5-vsd-footer">
+					<div slot="footer" class="ui5-ddr-footer">
 						<Button
 							design="Emphasized"
 							onClick={this._submitValue}

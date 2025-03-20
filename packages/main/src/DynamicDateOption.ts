@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import jsxRendererer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type DynamicDateRangeValue from "./DynamicDateRangeValue.js";
 /**
  * @class
  * @constructor
@@ -20,28 +21,29 @@ class DynamicDateRangeOption extends UI5Element {
     @property({ noAttribute: true })
     template?: JsxTemplate;
 
-    parse(value: string) {
-        return { operator: "", values: [] };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    parse(value: string): DynamicDateRangeValue | undefined {
+    	return undefined;
     }
 
-    format() {
-        return "";
+    format(value?: DynamicDateRangeValue): string {
+    	return String(value);
     }
 
     toDates() {
-        return [];
+    	return [];
     }
 
     get text(): string {
-        return "";
+    	return "";
     }
 
     get key() {
-        return "";
+    	return "";
     }
 
     get icon() {
-        return "";
+    	return "";
     }
 }
 DynamicDateRangeOption.define();

@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import DynamicDateRangeOption from "../DynamicDateOption.js";
+import DynamicDateRangeValue from "../DynamicDateRangeValue.js";
 /**
  * @class
  * @constructor
@@ -19,8 +20,12 @@ class DynamicDateRangeOptionToday extends DynamicDateRangeOption {
     @property()
     template?: JsxTemplate;
 
-    parse(value: string) {
-        return new Date();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    parse(value: string): DynamicDateRangeValue {
+        const returnValue = new DynamicDateRangeValue();
+        returnValue.operator = this.key;
+
+        return returnValue;
     }
 
     format() {
