@@ -1,10 +1,17 @@
 import { TestReport } from "./support.js";
-// @ts-ignore
+// @ts-expect-error
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
-// @ts-ignore
+// @ts-expect-error
 import * as path from "path";
+// @ts-expect-error
+import { fileURLToPath } from 'node:url';
 
-const outputPath = path.resolve("./cypress-logs/acc_log.json");
+// @ts-expect-error
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const outputPath = path.resolve("./cypress-logs/acc_logs.json");
+const outputPathIndex = path.resolve("./cypress-logs/index.html");
 
 const findExistingReport = (reportData: TestReport[], testFile: string) => reportData.find(report => report.testFile === testFile);
 
@@ -52,6 +59,14 @@ const reset = (testFile: string) => {
 	}
 }
 
+const prepare = () => {
+	const indexTemplate = readFileSync(path.join(__dirname, "index"), { encoding: "utf-8" });
+	writeFileSync(outputPathIndex, indexTemplate);
+
+	saveReportFile([]);
+
+}
+
 function accTask(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) {
 	if (config.env.UI5_ACC === true) {
 		on('before:run', () => {
@@ -59,7 +74,7 @@ function accTask(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) 
 			// This event is triggered when running tests with the `cypress open` command (behind an experimental flag).
 			// `config.isInteractive` helps us determine whether the tests are running in interactive mode (`cypress open`) or non-interactive mode (`cypress run`).
 			if (!config.isInteractive) {
-				saveReportFile([]);
+				prepare();
 			}
 		});
 
@@ -67,7 +82,7 @@ function accTask(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) 
 			// Reset the report file when tests are run with the `cypress open` command.
 			// `config.isInteractive` helps us determine whether the tests are running in interactive mode (`cypress open`) or non-interactive mode (`cypress run`).
 			if (config.isInteractive) {
-				saveReportFile([]);
+				prepare();
 			}
 		});
 

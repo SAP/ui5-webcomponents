@@ -4,7 +4,7 @@ declare global {
 
 globalThis.ui5AccDescribe = (title: string, fn: (this: Mocha.Suite) => void): Mocha.Suite | void => {
     if (Cypress.env('ui5AccTasksRegistered') === true) {
-        return describe.only(`[UI5-ACC-TESTS] ${title}`, function (this: Mocha.Suite) {
+        return describe.only(`${title}`, function (this: Mocha.Suite) {
             before(() => {
                 cy.injectAxe({ axeCorePath: "../../node_modules/axe-core/axe.min.js" });
             });
