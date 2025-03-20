@@ -13,8 +13,8 @@
     "clean": "rimraf dist",
     "build": "yarn build:definition && yarn build:mount",
     "prepublishOnly": "yarn build",
-    "build:mount": "tsc --p tsconfig.mount.json",
-    "build:definition": "tsc --p tsconfig.definition.json"
+    "build:mount": "tsc -p tsconfig.mount.json",
+    "build:definition": "tsc -p tsconfig.definition.json"
   },
   "devDependencies": {
     "typescript": "^5.6.2",
