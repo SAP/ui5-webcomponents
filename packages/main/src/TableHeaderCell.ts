@@ -38,8 +38,6 @@ class TableHeaderCell extends TableCellBase {
 	 * By default, the column will grow and shrink according to the available space.
 	 * This will distribute the space proportionally among all columns with no specific width set.
 	 *
-	 * **Note:** This property is ignored if the `maxWidth` or `minWidth` property is set.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -52,27 +50,11 @@ class TableHeaderCell extends TableCellBase {
 	 * If the table is in `Popin` mode and the minimum width does not fit anymore,
 	 * the column will move into the popin.
 	 *
-	 * **Notes:**
-	 * - This property expects absolute values.
-	 * - The column cannot be smaller than '3rem', even if the provided value is smaller.
-	 *
 	 * @public
-	 * @default undefined
+	 * @default "3rem"
 	 */
 	@property()
-	minWidth?: string;
-
-	/**
-	 * Defines the maximum width of the column.
-	 *
-	 * **Notes:**
-	 * - This property expects absolute values.
-	 *
-	 * @public
-	 * @default undefined
-	 */
-	@property()
-	maxWidth?: string;
+	minWidth = "3rem";
 
 	/**
 	 * Defines the importance of the column.

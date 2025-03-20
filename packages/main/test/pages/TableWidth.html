@@ -21,6 +21,7 @@
 		<ui5-title tabindex="0" level="H3" id="title" slot="startContent">My Selectable Products (3)</ui5-title>
 		<ui5-slider id="widthSlider" value="100" min="0" max="100" show-tickmarks label-interval="2"></ui5-slider>
 		<ui5-button id="update" design="Emphasized" slot="endContent">Update Widths</ui5-button>
+		<ui5-button id="popin" design="Emphasized" slot="endContent">Toggle popin</ui5-button>
 	</ui5-bar>
 
 	<div id="tableAutoTextExpected" class="text"></div>
@@ -237,6 +238,13 @@
 				updateActualText(id);
 			});
 		});
+
+		popin.addEventListener("click", () => {
+			tables.forEach((id) => {
+				const table = document.getElementById(id);
+				table.overflowMode = table.overflowMode == "Scroll" ? "Popin" : "Scroll";
+			});
+		})
 
 		tables.forEach((id) => {
 			updateExpectedText(id);

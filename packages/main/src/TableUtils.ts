@@ -99,6 +99,27 @@ const toggleAttribute = (element: HTMLElement, attribute: string, condition: boo
 	}
 };
 
+// Regex is based on https://developer.mozilla.org/en-US/docs/Web/CSS/length#absolute_length_units
+const absoluteUnitRegex = /^\d+(px|cm|mm|Q|in|pc|pt)$/;
+/**
+ * Determines whether the provided width is absolute or relative.
+ *
+ * Note: If the given width is invalid, the function will return null.
+ *
+ * @param width width string to check
+ * @returns {boolean | null} true if the width is absolute, false if it is relative, null if it is invalid
+ */
+const isAbsoluteColumnWidth = (width: string) => {
+	const element = document.createElement("div");
+	element.style.width = `max(3rem, ${width})`;
+
+	if (element.style.width !== `max(3rem, ${width})`) {
+		return null;
+	}
+
+	return absoluteUnitRegex.test(width);
+};
+
 export {
 	isInstanceOfTable,
 	isSelectionCheckbox,
@@ -109,4 +130,5 @@ export {
 	isFeature,
 	throttle,
 	toggleAttribute,
+	isAbsoluteColumnWidth,
 };

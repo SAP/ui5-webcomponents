@@ -11,7 +11,10 @@ import TableNavigation from "./TableNavigation.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableDragAndDrop from "./TableDragAndDrop.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
+import {
+	isAbsoluteColumnWidth, findVerticalScrollContainer, scrollElementIntoView, isFeature,
+	toggleAttribute,
+} from "./TableUtils.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type DropIndicator from "./DropIndicator.js";
@@ -402,12 +405,16 @@ class Table extends UI5Element {
 	@query("#loading")
 	_loadingElement!: HTMLElement;
 
+	@query("#dummy-area")
+	_dummyArea!: HTMLElement;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	_events = ["keydown", "keyup", "click", "focusin", "focusout", "dragenter", "dragleave", "dragover", "drop"];
 	_onEventBound: (e: Event) => void;
 	_onResizeBound: ResizeObserverCallback;
+	_toggleDummyAreaBound: ResizeObserverCallback;
 	_tableNavigation?: TableNavigation;
 	_tableDragAndDrop?: TableDragAndDrop;
 	_poppedIn: Array<{col: TableHeaderCell, width: float}> = [];
@@ -417,12 +424,10 @@ class Table extends UI5Element {
 		super();
 		this._onResizeBound = this._onResize.bind(this);
 		this._onEventBound = this._onEvent.bind(this);
+		this._toggleDummyAreaBound = this._toggleDummyArea.bind(this);
 	}
 
 	onEnterDOM() {
-		if (this.overflowMode === TableOverflowMode.Popin) {
-			ResizeHandler.register(this, this._onResizeBound);
-		}
 		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
 		this.features.forEach(feature => feature.onTableActivate?.(this));
 		this._tableNavigation = new TableNavigation(this);
@@ -433,9 +438,6 @@ class Table extends UI5Element {
 		this._tableNavigation = undefined;
 		this._tableDragAndDrop = undefined;
 		this._events.forEach(eventType => this.removeEventListener(eventType, this._onEventBound));
-		if (this.overflowMode === TableOverflowMode.Popin) {
-			ResizeHandler.deregister(this, this._onResizeBound);
-		}
 	}
 
 	onBeforeRendering(): void {
@@ -448,10 +450,19 @@ class Table extends UI5Element {
 		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
 		this._refreshPopinState();
 		this.features.forEach(feature => feature.onTableBeforeRendering?.(this));
+
+		if (this.getDomRef()) {
+			ResizeHandler.deregister(this, this._onResizeBound);
+			ResizeHandler.deregister(this, this._toggleDummyAreaBound);
+		}
 	}
 
 	onAfterRendering(): void {
 		this.features.forEach(feature => feature.onTableAfterRendering?.(this));
+		if (this.overflowMode === TableOverflowMode.Popin) {
+			ResizeHandler.register(this, this._onResizeBound);
+		}
+		ResizeHandler.register(this, this._toggleDummyAreaBound);
 	}
 
 	_findFeature<T>(featureName: string): T {
@@ -552,24 +563,18 @@ class Table extends UI5Element {
 	 * @private
 	 */
 	_refreshPopinState() {
-		this.headerRow[0]?.cells.forEach((header, index) => {
-			this.rows.forEach(row => {
-				const cell = row.cells[index];
-				if (cell) {
-					cell._popinHidden = header.popinHidden;
-					cell._popin = header._popin;
-				}
-			});
+		this.headerRow[0]?.cells.forEach(header => {
+			this._setHeaderPopinState(header, header._popin, header._popinWidth);
 		});
 	}
 
 	_setHeaderPopinState(headerCell: TableHeaderCell, inPopin: boolean, popinWidth: number) {
 		const headerIndex = this.headerRow[0].cells.indexOf(headerCell);
-		headerCell._popin = inPopin;
+		headerCell._popin = inPopin && this.overflowMode === TableOverflowMode.Popin;
 		headerCell._popinWidth = popinWidth;
 		this.rows.forEach(row => {
 			row.cells[headerIndex]._popinHidden = headerCell.popinHidden;
-			row.cells[headerIndex]._popin = inPopin;
+			row.cells[headerIndex]._popin = headerCell._popin;
 		});
 	}
 
@@ -584,6 +589,10 @@ class Table extends UI5Element {
 	_onRowActionClick(action: TableRowActionBase) {
 		const row = action.parentElement as TableRow;
 		this.fireDecoratorEvent("row-action-click", { action, row });
+	}
+
+	_toggleDummyArea() {
+		toggleAttribute(this._tableElement, "data-sap-ui-show-dummy-area", this._dummyArea.clientWidth > 0);
 	}
 
 	get styles() {
@@ -622,12 +631,17 @@ class Table extends UI5Element {
 
 		// Column Widths
 		widths.push(...visibleHeaderCells.map(cell => {
-			if (cell.minWidth || cell.maxWidth) {
-				const minWidth = cell.minWidth === "auto" || !cell.minWidth ? "3rem" : `max(3rem, ${cell.minWidth})`;
-				const maxWidth = cell.maxWidth ? cell.maxWidth : "1fr";
-				return `minmax(${minWidth}, ${maxWidth})`;
+			let width = `minmax(${cell.minWidth}, 1fr)`;
+			if (cell.width && cell.width !== "auto") {
+				const isAbsolute = isAbsoluteColumnWidth(cell.width);
+				if (isAbsolute === null) {
+					// eslint-disable-next-line no-console
+					console.warn(`Invalid column width: ${cell.width}`, cell);
+				} else {
+					width = isAbsolute ? cell.width : `minmax(${cell.minWidth}, ${cell.width})`;
+				}
 			}
-			return cell.width ? cell.width : `minmax(3rem, ${cell.width || "1fr"})`;
+			return width;
 		}));
 
 		// Row Action Cell Width
@@ -639,6 +653,8 @@ class Table extends UI5Element {
 		if (this._renderNavigated) {
 			widths.push(`var(${getScopedVarName("--_ui5_table_navigated_cell_width")})`);
 		}
+
+		widths.push("auto");
 
 		return widths.join(" ");
 	}

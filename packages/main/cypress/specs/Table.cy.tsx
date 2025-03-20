@@ -16,6 +16,12 @@ import Button from "../../src/Button.js";
 const ROLE_COLUMN_HEADER = "columnheader";
 
 describe("Table - Rendering", () => {
+	function checkWidth(id: string, expectedWidth: number) {
+		cy.get(id).then($cell => {
+			expect($cell.outerWidth()).to.be.equal(expectedWidth);
+		});
+	};
+
 	it("tests if table is rendered", () => {
 		cy.mount(
 			<Table id="table">
@@ -106,6 +112,39 @@ describe("Table - Rendering", () => {
 		});
 	});
 
+	it("columns have relative width set", () => {
+		cy.mount(
+			<Table style="width: 200px;" id="table">
+				<TableHeaderRow slot="headerRow">
+					<TableHeaderCell id="colA" width="10%"><span>ColumnA</span></TableHeaderCell>
+					<TableHeaderCell id="colB" width="25%"><span>ColumnB</span></TableHeaderCell>
+					<TableHeaderCell id="colC" width="25%"><span>ColumnC</span></TableHeaderCell>
+					<TableHeaderCell id="colD" width="40%"><span>ColumnD</span></TableHeaderCell>
+				</TableHeaderRow>
+				<TableRow>
+					<TableCell><Label>Cell A</Label></TableCell>
+					<TableCell><Label>Cell B</Label></TableCell>
+					<TableCell><Label>Cell C</Label></TableCell>
+					<TableCell><Label>Cell D</Label></TableCell>
+				</TableRow>
+			</Table>
+		);
+
+		checkWidth("#colA", 48);
+		checkWidth("#colB", 50);
+		checkWidth("#colC", 50);
+		checkWidth("#colD", 52);
+
+		cy.get("ui5-table").then($table => {
+			$table.css("width", "800px");
+		});
+
+		checkWidth("#colA", 80);
+		checkWidth("#colB", 200);
+		checkWidth("#colC", 200);
+		checkWidth("#colD", 320);
+	});
+
 	it("columns have min-width set", () => {
 		cy.mount(
 			<Table style="width: 800px;" id="table">
@@ -146,49 +185,16 @@ describe("Table - Rendering", () => {
 			const expectedWidth = 100;
 			expect($cell.outerWidth()).to.be.equal(expectedWidth);
 		});
-	})
-
-	it("columns have max-width set", () => {
-		cy.mount(
-			<Table style="width: 800px;" id="table">
-				<TableHeaderRow slot="headerRow">
-					<TableHeaderCell maxWidth="100px"><span>ColumnA</span></TableHeaderCell>
-					<TableHeaderCell maxWidth="100px"><span>ColumnB</span></TableHeaderCell>
-					<TableHeaderCell maxWidth="100px"><span>ColumnC</span></TableHeaderCell>
-					<TableHeaderCell><span>ColumnD</span></TableHeaderCell>
-				</TableHeaderRow>
-				<TableRow>
-					<TableCell><Label>Cell A</Label></TableCell>
-					<TableCell><Label>Cell B</Label></TableCell>
-					<TableCell><Label>Cell C</Label></TableCell>
-					<TableCell><Label>Cell D</Label></TableCell>
-				</TableRow>
-			</Table>
-		);
-
-		cy.get("ui5-table-header-cell").each(($cell, index) => {
-			if (index == 3) {
-				expect($cell.outerWidth()).to.be.equal(500);
-			} else {
-				expect($cell.outerWidth()).to.be.equal(100);
-			}
-		});
 	});
 
 	it("column width settings combined", () => {
-		function checkWidth(id: string, expectedWidth: number) {
-			cy.get(id).then($cell => {
-				expect($cell.outerWidth()).to.be.equal(expectedWidth);
-			});
-		};
-
 		cy.mount(
 			<Table style="width: 800px;" id="table">
 				<TableHeaderRow slot="headerRow">
-					<TableHeaderCell id="colA" maxWidth="300px" minWidth="100px"><span>ColumnA</span></TableHeaderCell>
-					<TableHeaderCell id="colB" maxWidth="100px" width="300px"><span>ColumnB</span></TableHeaderCell>
-					<TableHeaderCell id="colC" minWidth="200px" width="300px"><span>ColumnC</span></TableHeaderCell>
-					<TableHeaderCell id="colD" ><span>ColumnD</span></TableHeaderCell>
+					<TableHeaderCell id="colA" minWidth="50px"><span>ColumnA</span></TableHeaderCell>
+					<TableHeaderCell id="colB" width="300px"><span>ColumnB</span></TableHeaderCell>
+					<TableHeaderCell id="colC" minWidth="200px" width="50%"><span>ColumnC</span></TableHeaderCell>
+					<TableHeaderCell id="colD" width="2fr"><span>ColumnD</span></TableHeaderCell>
 				</TableHeaderRow>
 				<TableRow>
 					<TableCell><Label>Cell A</Label></TableCell>
@@ -199,20 +205,20 @@ describe("Table - Rendering", () => {
 			</Table>
 		);
 
-		checkWidth("#colA", 300);
-		checkWidth("#colB", 100);
-		checkWidth("#colC", 200);
-		checkWidth("#colD", 200);
+		checkWidth("#colA", 50);
+		checkWidth("#colB", 300);
+		checkWidth("#colC", 400);
+		checkWidth("#colD", 50);
 
 		cy.get("ui5-table").then($table => {
 			$table.css("width", "200px");
 		});
 
-		checkWidth("#colA", 100);
-		checkWidth("#colB", 48);
+		checkWidth("#colA", 50);
+		checkWidth("#colB", 300);
 		checkWidth("#colC", 200);
+		// 2fr is being ignored
 		checkWidth("#colD", 48);
-
 	});
 });
 
