@@ -22,7 +22,7 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				opener={this}
 				open={this.open}
 				allowTargetOverlap={true}
-				_hideHeader={true}
+				_hideHeader={!this.hasValueStateText}
 				hideArrow={true}
 				accessibleName={this.pickerAccessibleName}
 				onClose={this.onResponsivePopoverAfterClose}
@@ -31,7 +31,7 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				onWheel={this._handleWheel}
 				onKeyDown={this._onkeydown}
 			>
-				{ this.shouldDisplayValueStateMessageInResponsivePopover && valueStateTextHeader.call(this, { "width": "100%" }) }
+				{ this.shouldDisplayValueStateMessageInResponsivePopover && valueStateTextHeader.call(this) }
 
 				<TimeSelectionClocks
 					id={`${this._id}-time-sel`}
@@ -96,7 +96,7 @@ function valueStateTextHeader(this: TimePicker, style?: Record<string, string>) 
 
 	return (
 		<div
-			slot={!this._isPhone ? "header" : undefined}
+			slot="header"
 			class={{
 				"ui5-popover-header": true,
 				"ui5-valuestatemessage-header": true,
