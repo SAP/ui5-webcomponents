@@ -140,7 +140,7 @@ class Bar extends UI5Element {
 	 }
 
 	 get effectiveRole() {
-		return this.accessibleRole.toLowerCase() as AriaRole;
+		return this.accessibleRole.toLowerCase() === "toolbar" ? "toolbar" as AriaRole : undefined;
 	 }
 }
 
