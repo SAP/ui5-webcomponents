@@ -54,7 +54,13 @@ function listItemPostContent(this: TreeItemBase) {
 }
 
 function listItemContent() { }
-function imageBegin() { }
+function imageBegin(this: TreeItemBase) {
+	if (this.hasImage) {
+		return <div class="ui5-tree-item-image">
+			<slot name="image"></slot>
+		</div>;
+	}
+}
 function iconBegin(this: TreeItemBase) {
 	return this.icon ? <Icon part="icon" name={this.icon} class="ui5-li-icon" /> : <></>;
 }
