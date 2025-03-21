@@ -35,11 +35,19 @@ class TableHeaderCell extends TableCellBase {
 	/**
 	 * Defines the width of column.
 	 *
-	 * @default "auto"
+	 * By default, the column will grow and shrink according to the available space.
+	 * This will distribute the space proportionally among all columns with no specific width set.
+	 *
+	 * See [\<length\>](https://developer.mozilla.org/en-US/docs/Web/CSS/length) for possible width values.
+	 *
+	 * **Note:** When a relative column width is set (e.g. percentage or em), the table will ensure the column is at least
+	 * the defined `minWidth` or at maximum the defined relative `width`.
+	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	width = "auto";
+	width?: string;
 
 	/**
  	 * Defines the minimum width of the column.
@@ -47,22 +55,17 @@ class TableHeaderCell extends TableCellBase {
 	 * If the table is in `Popin` mode and the minimum width does not fit anymore,
 	 * the column will move into the popin.
 	 *
-	 * **Note:** If `minWidth` has the `auto` value, the table ensures that the column is wider than at least `3rem`.
+	 * By default, the table ensures that a column cannot be smaller than `3rem`.
+	 * Changing this value to a smaller value might lead to accessibility issues.
 	 *
-	 * @default "auto"
+	 * **Note:** This property does not take effect, if an absolute width has been defined.
+	 * See [Absolute length units](https://developer.mozilla.org/en-US/docs/Web/CSS/length#absolute_length_units) for more information.
+	 *
 	 * @public
+	 * @default "3rem"
 	 */
 	@property()
-	minWidth = "auto";
-
-	/**
-	 * Defines the maximum width of the column.
-	 *
-	 * @default "auto"
-	 * @public
-	 */
-	@property()
-	maxWidth = "auto";
+	minWidth = "3rem";
 
 	/**
 	 * Defines the importance of the column.
@@ -129,9 +132,6 @@ class TableHeaderCell extends TableCellBase {
 
 	onEnterDOM() {
 		super.onEnterDOM();
-		this.style.minWidth = this.minWidth;
-		this.style.maxWidth = this.maxWidth;
-		this.style.width = this.width;
 	}
 
 	onBeforeRendering() {
