@@ -8,6 +8,7 @@ import ListSeparator from "@ui5/webcomponents/dist/types/ListSeparator.js";
 import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
 import PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 
 export default function SearchPopoverTemplate(this: Search) {
 	return (
@@ -41,15 +42,23 @@ export default function SearchPopoverTemplate(this: Search) {
 								<main>
 									<List
 										class="ui5-search-list"
-										onLoadMore={this._handleMore}
 										separators={ListSeparator.None}
-										growingButtonText={this.popupActionText}
-										growing={this._effectiveGrowing}
 										onKeyDown={this._onItemKeydown}
 										onItemClick={this._onItemClick}>
 										<slot></slot>
 									</List>
 								</main>
+
+								{this._showFooter &&
+									<Button
+										slot="footer"
+										design="Transparent"
+										class="ui5-search-footer-button"
+										onKeyDown={this._onFooterButtonKeyDown}
+										onClick={this._onFooterButtonClick}>
+										{this.popupActionText}
+									</Button>
+								}
 							</>
 						)
 				)}
