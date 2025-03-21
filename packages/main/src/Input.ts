@@ -1018,6 +1018,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		this.lastConfirmedValue = "";
 		this.isTyping = false;
+
+		if (!this.showSuggestions && this.value !== this.previousValue) {
+			this._clearIconClicked = false;
+		}
 	}
 
 	_clearPopoverFocusAndSelection() {
