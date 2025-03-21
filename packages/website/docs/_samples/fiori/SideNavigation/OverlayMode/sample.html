@@ -17,7 +17,7 @@
 			primary-title="UI5 Web Components"
 			secondary-title="The Best Run SAP"
 		>
-			<ui5-button icon="menu" slot="startButton" id="menuBtn"></ui5-button>
+			<ui5-button icon="menu2" slot="startButton" id="menuBtn"></ui5-button>
 		</ui5-shellbar>
 		<ui5-responsive-popover id="respPopover" opener="menuBtn" placement="Bottom" accessible-name="Main Navigation">
 			<ui5-side-navigation id="sideNavigation" design="Plain">
@@ -108,6 +108,14 @@
 				</ui5-text>
 			</div>
 		</div>
+
+		<ui5-dialog header-text="Create New Item" draggable resizable id="quickActionDialog">
+			<ui5-text>Create new item...</ui5-text>
+			<ui5-bar slot="footer" design="Footer">
+				<ui5-button slot="endContent" design="Emphasized">Create</ui5-button>
+				<ui5-button slot="endContent" id="quickActionCloseBtn">Close</ui5-button>
+			</ui5-bar>
+		</ui5-dialog>
 	</ui5-page>
 	<!-- playground-fold -->
 	<script type="module" src="main.js"></script>
