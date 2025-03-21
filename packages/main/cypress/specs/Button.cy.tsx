@@ -41,6 +41,7 @@ describe("Button general interaction", () => {
 			.find(".ui5-button-icon")
 			.should("not.exist", "icon is not present");
 	});
+
 	it("tests button's endIon rendering", () => {
 		cy.mount(<Button>Action Bar Button</Button>);
 
@@ -386,4 +387,12 @@ describe("Accessibility", () => {
 		cy.get("@tag")
 			.should("have.text", "999+");
 	});
+});
+
+ui5AccDescribe("Automated accessibility tests", () => {
+	it("Icon only", () => {
+		cy.mount(<Button icon="message-information"></Button>);
+
+		cy.ui5CheckA11y();
+	})
 });
