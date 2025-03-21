@@ -465,9 +465,9 @@ slot[name="profile"] {
 .ui5-shellbar-search-full-width-wrapper {
 	position: absolute;
 	top: 0;
+	bottom: 0.0625rem; /* box-shadow height */
 	left: 0;
 	background: var(--sapShellColor);
-	height: 100%;
 	width: 100%;
 	z-index: 100;
 	display: flex;

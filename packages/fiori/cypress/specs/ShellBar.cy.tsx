@@ -92,6 +92,7 @@ describe("Responsiveness", () => {
 			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
 		</ShellBar>;
 	}
+
 	beforeEach(() => {
 		cy.mount(basicTemplate()).as("html");
 
@@ -284,7 +285,7 @@ describe("Responsiveness", () => {
 	});
 
 	it("tests XXL Breakpoint Search bar", () => {
-		cy.get("@shellbar").invoke("attr", "show-open-search-field", "true");
+		cy.get("@shellbar").invoke("attr", "show-search-field", "true");
 		cy.viewport(2560, 1080);
 		cy.get("[slot='searchField']")
 			.should("exist");
@@ -389,5 +390,46 @@ describe("Slots", () => {
 				.find("div[id='content-6'] > .ui5-shellbar-separator-end")
 				.should("not.exist");
 		});
+	});
+});
+
+
+describe("Edge cases", () => {
+	function templateWithNoContentOpenSearch() {
+		return <ShellBar
+		class="shellbar-example"
+		id="shellbar"
+		primary-title="Product Title"
+		secondary-title="Second title"
+		second-title="Second Title"
+		notifications-count="99+"
+		show-notifications
+		show-product-switch
+		show-search-field
+>
+
+			<ToggleButton icon="sap-icon://da" slot="assistant"></ToggleButton>
+
+			<Avatar slot="profile">
+				<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
+			</Avatar>
+
+			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
+
+			<Button icon="nav-back" slot="startButton" id="start-button"></Button>
+
+			<Input placeholder="Instructions" slot="searchField" show-suggestions value-state="Information">
+				<div slot="valueStateMessage">Instructions</div>
+			</Input>
+
+		</ShellBar>;
+	}
+	it("Test search bar responsiveness, when there is no content", () => {
+		cy.mount(templateWithNoContentOpenSearch()).as("html2");
+		cy.viewport(500, 1080);
+		cy.wait(200);
+		cy.viewport(1280, 1080);
+		cy.wait(200);
+		cy.get("#shellbar").should("have.prop", "showSearchField", true);
 	});
 });
