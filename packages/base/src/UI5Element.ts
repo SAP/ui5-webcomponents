@@ -25,7 +25,7 @@ import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
 import { kebabToCamelCase, camelToKebabCase, kebabToPascalCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
-import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
+import { getSlotName, getSlottedNodesList, getAutoSlot } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import executeTemplate from "./renderer/executeTemplate.js";
@@ -187,6 +187,7 @@ abstract class UI5Element extends HTMLElement {
 	_state: State;
 	_internals: ElementInternals;
 	_individualSlot?: string;
+	_autoSlot?: string;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
@@ -436,27 +437,6 @@ abstract class UI5Element extends HTMLElement {
 		const slottedChildrenMap = new Map<string, Array<{child: Node, idx: number }>>();
 
 		const allChildrenUpgraded = domChildren.map(async (child, idx) => {
-			// Determine the type of the child (mainly by the slot attribute)
-			const slotName = getSlotName(child);
-			const slotData = slotsMap[slotName];
-
-			// Check if the slotName is supported
-			if (slotData === undefined) {
-				if (slotName !== "default") {
-					const validValues = Object.keys(slotsMap).join(", ");
-					console.warn(`Unknown slotName: ${slotName}, ignoring`, child, `Valid values are: ${validValues}`); // eslint-disable-line
-				}
-
-				return;
-			}
-
-			// For children that need individual slots, calculate them
-			if (slotData.individualSlots) {
-				const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
-				autoIncrementMap.set(slotName, nextIndex);
-				(child as SlottedChild)._individualSlot = `${slotName}-${nextIndex}`;
-			}
-
 			// Await for not-yet-defined custom elements
 			if (child instanceof HTMLElement) {
 				const localName = child.localName;
@@ -475,6 +455,33 @@ abstract class UI5Element extends HTMLElement {
 					}
 					customElements.upgrade(child);
 				}
+			}
+
+			// Determine the type of the child (mainly by the slot attribute)
+			const slotName = getSlotName(child);
+			const slotData = slotsMap[slotName];
+
+			// Assign auto-slot if applicable
+			const autoSlot = getAutoSlot(child);
+			if (autoSlot) {
+				(child as UI5Element)._autoSlot = autoSlot; // If getAutoSlot returns a string, child is a UI5Element
+			}
+
+			// Check if the slotName is supported
+			if (slotData === undefined) {
+				if (slotName !== "default") {
+					const validValues = Object.keys(slotsMap).join(", ");
+					console.warn(`Unknown slotName: ${slotName}, ignoring`, child, `Valid values are: ${validValues}`); // eslint-disable-line
+				}
+
+				return;
+			}
+
+			// For children that need individual slots, calculate them
+			if (slotData.individualSlots) {
+				const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
+				autoIncrementMap.set(slotName, nextIndex);
+				(child as SlottedChild)._individualSlot = `${slotName}-${nextIndex}`;
 			}
 
 			child = (ctor.getMetadata().constructor as typeof UI5ElementMetadata).validateSlotValue(child, slotData);
@@ -805,7 +812,6 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	_render() {
 		const ctor = this.constructor as typeof UI5Element;
-		const hasIndividualSlots = ctor.getMetadata().hasIndividualSlots();
 
 		// restore properties that were initialized before `define` by calling the setter
 		if (this.initializedProperties.size > 0) {
@@ -863,9 +869,7 @@ abstract class UI5Element extends HTMLElement {
 		this._rendered = true;
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
-		if (hasIndividualSlots) {
-			this._assignIndividualSlotsToChildren();
-		}
+		this._assignSpecialSlotsToChildren();
 
 		// Call the onAfterRendering hook
 		this.onAfterRendering();
@@ -874,12 +878,14 @@ abstract class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_assignIndividualSlotsToChildren() {
+	_assignSpecialSlotsToChildren() {
 		const domChildren = Array.from(this.children);
 
 		domChildren.forEach((child: Record<string, any>) => {
 			if (child._individualSlot) {
 				child.setAttribute("slot", child._individualSlot);
+			} else if (child._autoSlot) {
+				child.setAttribute("slot", child._autoSlot);
 			}
 		});
 	}
