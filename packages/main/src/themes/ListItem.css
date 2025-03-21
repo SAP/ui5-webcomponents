@@ -148,12 +148,10 @@
 
 :host([description]) .ui5-li-singlesel-radiobtn {
 	align-self: flex-start;
-	margin-top: var(--_ui5_list_item_selection_btn_margin_top);
 }
 
 :host([description]) .ui5-li-multisel-cb {
 	align-self: flex-start;
-	margin-top: var(--_ui5_list_item_selection_btn_margin_top);
 }
 
 :host([_selection-mode="SingleStart"]) .ui5-li-root {
