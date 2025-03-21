@@ -17,22 +17,14 @@
 	box-sizing: border-box;
 }
 
-/* .ui5-ai-notice-indicator-inner {
-	width: 50%;
-	height: 50%;
-} */
-
 .ui5-ai-notice-indicator-toggle {
 	font-family: inherit;
 	font-size: inherit;
 }
 
-/* .ui5-ai-notice-indicator-footer {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-} */
+.ui5-ai-notice-indicator-toggle ui5-icon {
+    color: inherit; 
+}
 
 .ui5-ai-notice-indicator-inner {
 	width: 30rem;

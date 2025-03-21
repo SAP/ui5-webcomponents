@@ -21,7 +21,20 @@ import AINoticeIndicatorCss from "./generated/themes/AINoticeIndicator.css.js";
  * @class
  *
  * ### Overview
- *
+ * 
+ * The `ui5-ai-notice-indicator` component provides an AI-related notice that can include attribution and verification text.
+ * It allows users to toggle visibility and adjust its appearance based on different modes.
+ * 
+ * ### Usage
+ * 
+ * The component supports different display modes:
+ * - **Default**: Displays both attribution and verification text.
+ * - **Shortened**: Displays a condensed version of the notice.
+ * - **Emphasized**: Highlights the notice for better visibility.
+ * - **IconOnly**: Only shows an icon when no text is provided.
+ * 
+ * The `ui5-ai-notice-indicator` can be expanded or collapsed when interacted with, and includes a close button to dismiss it.
+ * 
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/AINoticeIndicator.js";`
@@ -31,12 +44,14 @@ import AINoticeIndicatorCss from "./generated/themes/AINoticeIndicator.css.js";
  * @public
  * @since 2.6.0
  */
+
 @customElement({
 	tag: "ui5-ai-notice-indicator",
 	renderer: jsxRender,
 	styles: AINoticeIndicatorCss,
 	template: AINoticeIndicatorTemplate,
 })
+
 class AINoticeIndicator extends UI5Element {
 	/**
 	 * Determines the AI attribution notice text.
@@ -71,10 +86,6 @@ class AINoticeIndicator extends UI5Element {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-    get _usePopover() {
-		return this.shadowRoot?.querySelector("[ui5-responsive-popover]") as HTMLElement;
-	}
-
 	get _verificationText() {
 		return this.verificationText;
 	}
@@ -91,19 +102,29 @@ class AINoticeIndicator extends UI5Element {
 		return AINoticeIndicator.i18nBundle.getText(POPOVER_TEXT);
 	}
 
+	get isShortened() {
+		return this.mode == AINoticeIndicatorMode.Shortened;
+	}
+
+	get isEmphasized() {
+		return this.mode == AINoticeIndicatorMode.Emphasized;
+	}
+
+	get isIconOnly() {
+		return this.mode == AINoticeIndicatorMode.IconOnly;
+	}
+
     getMode(): void {
-		if (this.attributionText && this.verificationText) {
+		if (!this.attributionText && !this.verificationText) {
             this.mode = AINoticeIndicatorMode.IconOnly;
 		}
-
-        this.mode = AINoticeIndicatorMode.Default;
 	}
 
     _handleCloseButtonClick(e: MouseEvent) {
 		this._expanded = false;
 		e.stopPropagation();
 	}
-
+	
 	_handleToggleClick() {
 		this._expanded = !this._expanded;
 	}
