@@ -18,6 +18,7 @@ import {
 	isHome,
 	isEnd,
 	isRight,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
 import SearchTemplate from "./SearchTemplate.js";
@@ -28,7 +29,7 @@ import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type SearchItem from "./SearchItem.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import ListGrowingMode from "@ui5/webcomponents/dist/types/ListGrowingMode.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
 
 interface ISearchSuggestionItem extends UI5Element {
 	selected: boolean;
@@ -137,6 +138,7 @@ class Search extends SearchField {
 
 	/**
 	 * Defines whether the popup footer action button is shown.
+	 * Note: The footer action button is displayed only when the `popupMode` is set to `List`.
 	 * @default false
 	 * @public
 	 */
@@ -383,17 +385,31 @@ class Search extends SearchField {
 		this._openPickerOnInput = false;
 	}
 
+	_onFooterButtonKeyDown(e: KeyboardEvent) {
+		if (isUp(e)) {
+			this._flattenItems[this._flattenItems.length - 1].focus();
+		}
+		if (isTabPrevious(e)) {
+			this._getItemsList().focus();
+		}
+	}
+
 	_onItemKeydown(e: KeyboardEvent) {
-		const items = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items");
-		const isFirstItemGroup = items[1] === e.target && items[0]?.hasAttribute("ui5-li-group");
-		const isFirstItem = items[0] === e.target || isFirstItemGroup;
+		const isFirstItem = this._flattenItems[0] === e.target;
+		const isLastItem = this._flattenItems[this._flattenItems.length - 1] === e.target;
 		const isArrowUp = isUp(e);
+		const isArrowDown = isDown(e);
+		const isTab = isTabNext(e);
 
 		e.preventDefault();
 
 		if (isFirstItem && isArrowUp) {
 			this.nativeInput?.focus();
 			this._shouldAutocomplete = true;
+		}
+
+		if ((isLastItem && isArrowDown) || isTab) {
+			this._getFooterButton()?.focus();
 		}
 	}
 
@@ -470,7 +486,7 @@ class Search extends SearchField {
 		this.fireDecoratorEvent("open");
 	}
 
-	_handleMore() {
+	_onFooterButtonClick() {
 		this.fireDecoratorEvent("popup-action-press");
 	}
 
@@ -503,6 +519,10 @@ class Search extends SearchField {
 		return this._getPicker().querySelector(".ui5-search-list") as List;
 	}
 
+	_getFooterButton(): Button {
+		return this._getPicker().querySelector(".ui5-search-footer-button") as Button;
+	}
+
 	get _flattenItems(): Array<ISearchSuggestionItem> {
 		return this.getSlottedNodes<ISearchSuggestionItem>("items").flatMap(item => {
 			return this._isGroupItem(item) ? [item, ...item.items!] : [item];
@@ -527,8 +547,8 @@ class Search extends SearchField {
 		return !!this.headerText;
 	}
 
-	get _effectiveGrowing() {
-		return this.showPopupAction ? ListGrowingMode.Button : ListGrowingMode.None;
+	get _showFooter() {
+		return !!this.showPopupAction && this.popupMode === SearchPopupMode.List;
 	}
 }
 
