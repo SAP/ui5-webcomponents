@@ -36,13 +36,17 @@
 //   }
 // }
 
+import "@ui5/cypress-internal/commands.js";
 import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Please keep this list in alphabetical order
 import "./commands/Calendar.commands.js";
 import "./commands/ColorPalette.commands.js";
 import "./commands/ColorPicker.commands.js";
+import "./commands/DateTimePicker.commands.js";
+import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
+import "./commands/SegmentedButton.commands.js";
 
 type SimulationDevices = "phone"
 
@@ -59,8 +63,23 @@ declare global {
 			ui5CalendarGetMonth(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
 			ui5ColorPickerToggleColorMode(): Chainable<void>
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
+			ui5ColorPickerValidateInput(name: string, value: string): Chainable<void>
 			ui5ColorPaletteCheckSelectedColor(colorPaletteItem: string, values: {r: string, g: string, b: string, a: string}): Chainable<void>
 			ui5ColorPaletteNavigateAndCheckSelectedColor(colorPalette: string, startIndex: number, key: string, expectedValue: string): Chainable<void>
+			ui5DatePickerGetInnerInput(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetPopoverDate(timestamp: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetDisplayedDay(index: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetFirstDisplayedDate(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetFirstDisplayedYear(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetDisplayedMonth(index: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetDisplayedYear(index: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetNextButton(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetPreviousButton(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetMonthButton(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetYearButton(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerValueHelpIconPress(): Chainable<void>
+			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
+			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
 		}
 	}
 }

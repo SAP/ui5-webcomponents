@@ -1,6 +1,7 @@
 import Option from "../../src/Option.js";
 import OptionCustom from "../../src/OptionCustom.js";
 import Select from "../../src/Select.js";
+import download from "@ui5/webcomponents-icons/dist/download.js";
 
 describe("Select - Accessibility", () => {
 	it("tests options tooltip is set displayed", () => {
@@ -35,6 +36,21 @@ describe("Select - Accessibility", () => {
 			.find("li.ui5-li-root")
 			.should("have.attr", "title", EXPECTED_TOOLTIP);
 	});
+
+	it("setting tooltip on the host is reflected on the select's shadow dom root", () => {
+		cy.mount(<Select tooltip="Go home">
+			<Option value="1">Option 1</Option>
+			<OptionCustom value="2">Option 2</OptionCustom>
+		</Select>);
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-root")
+			.as("select");
+
+		cy.get("@select")
+			.should("have.attr", "title", "Go home");
+	});
 });
 
 describe("Select - Popover", () => {
@@ -52,5 +68,22 @@ describe("Select - Popover", () => {
 			.find("[slot=\"valueStateMessage\"]")
 			.should("be.visible")
 			.should("have.text", "Custom message");
+	});
+});
+
+describe("Select - Properties", () => {
+	it("Icon only is setting properly the required icon", () => {
+		cy.mount(
+			<Select icon={download}>
+				<Option selected>Phone</Option>
+				<Option>Tablet</Option>
+				<Option>Desktop</Option>
+			</Select>
+		);
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("[ui5-icon]")
+			.should("have.attr", "name", "download");
 	});
 });

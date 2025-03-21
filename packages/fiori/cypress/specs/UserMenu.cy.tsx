@@ -75,15 +75,15 @@ describe("Initial rendering", () => {
 		cy.get("@userMenu").should("exist");
 		cy.get("@userMenu").shadow().find("[ui5-responsive-popover]").as("responsivePopover");
 		cy.get("@responsivePopover").should("exist");
-		cy.get("@responsivePopover").find("[ui5-panel]").contains(`${USER_MENU_OTHER_ACCOUNT_BUTTON_TXT.defaultText} (1)`);
+		cy.get("@responsivePopover").find("[ui5-panel]").contains(`${USER_MENU_OTHER_ACCOUNT_BUTTON_TXT.defaultText} (2)`);
 		cy.get("@responsivePopover").find("[ui5-button]").should("have.length", 1);
 	});
 
-	it("tests config show-add-account", () => {
+	it("tests config show-edit-accounts", () => {
 		cy.mount(
 			<>
 				<Button id="openUserMenuBtn">Open User Menu</Button>
-				<UserMenu open={true} opener="openUserMenuBtn" showOtherAccounts={true} showAddAccount={true}>
+				<UserMenu open={true} opener="openUserMenuBtn" showOtherAccounts={true} showEditAccounts={true}>
 					<UserMenuAccount
 						slot="accounts"
 						titleText="Alain Chevalier 1"
@@ -105,7 +105,7 @@ describe("Initial rendering", () => {
 		cy.get("@userMenu").should("exist");
 		cy.get("@userMenu").shadow().find("[ui5-responsive-popover]").as("responsivePopover");
 		cy.get("@responsivePopover").should("exist");
-		cy.get("@responsivePopover").find(".ui5-pm-add-account-btn").should("exist");
+		cy.get("@responsivePopover").find(".ui5-user-menu-add-account-btn").should("exist");
 		cy.get("@responsivePopover").find("[ui5-button]").should("have.length", 2);
 	});
 });
@@ -338,11 +338,11 @@ describe("Events", () => {
 		cy.get("@clicked").should("have.been.calledOnce");
 	});
 
-	it("tests add-account-click event", () => {
+	it("tests edit-accounts-click event", () => {
 		cy.mount(
 			<>
 				<Button id="openUserMenuBtn">Open User Menu</Button>
-				<UserMenu open={true} opener="openUserMenuBtn" showAddAccount={true} showOtherAccounts={true}>
+				<UserMenu open={true} opener="openUserMenuBtn" showEditAccounts={true} showOtherAccounts={true}>
 					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 				</UserMenu>
 			</>
@@ -351,12 +351,12 @@ describe("Events", () => {
 		cy.get("[ui5-user-menu]").as("userMenu");
 		cy.get("@userMenu")
 			.shadow()
-			.find(".ui5-pm-add-account-btn")
+			.find(".ui5-user-menu-add-account-btn")
 			.as("addAccountBtn");
 
 		cy.get("@userMenu")
 			.then($userMenu => {
-				$userMenu.get(0).addEventListener("add-account-click", cy.stub().as("clicked"));
+				$userMenu.get(0).addEventListener("edit-accounts-click", cy.stub().as("clicked"));
 			});
 
 		cy.get("@addAccountBtn").click();
@@ -369,8 +369,8 @@ describe("Events", () => {
 			<>
 				<Button id="openUserMenuBtn">Open User Menu</Button>
 				<UserMenu open={true} opener="openUserMenuBtn" showOtherAccounts={true}>
-					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 2"></UserMenuAccount>
+					<UserMenuAccount selected slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 				</UserMenu>
 			</>
 		);
@@ -390,7 +390,7 @@ describe("Events", () => {
 			.click();
 
 		cy.get("@otherAccounts")
-			.find("[ui5-li-custom]")
+			.find("[ui5-li-custom]").first()
 			.click();
 
 		cy.get("@changedAccount").should("have.been.calledOnce");
@@ -434,7 +434,7 @@ describe("Events", () => {
 		cy.get("@avatar").find("img").as("image");
 		cy.get("@image").should("have.length", 1);
 		cy.get("@image").should("have.attr", "src", "./../../test/pages/img/man_avatar_1.png");
-		cy.get("@avatar").should("have.class", "ui5-pm--selected-account-avatar");
+		cy.get("@avatar").should("have.class", "ui5-user-menu--selected-account-avatar");
 	});
 
 	it("tests item-click event", () => {
@@ -614,7 +614,7 @@ describe("Responsiveness", () => {
 				<UserMenu id="userMenuShellBar" open={true}
 					opener="openUserMenuBtn"
 					showManageAccount={true}
-					showAddAccount={true}>
+					showEditAccounts={true}>
 					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 					<UserMenuItem text="Setting1" data-id="setting1"></UserMenuItem>
 				</UserMenu>
@@ -623,7 +623,7 @@ describe("Responsiveness", () => {
 		cy.get("[ui5-user-menu]").as("userMenu");
 		cy.get("@userMenu").should("exist");
 		cy.get("@userMenu").shadow().find("[ui5-bar]").as("headerBar");
-		cy.get("@headerBar").should("have.class", "ui5-pm-phone-header");
+		cy.get("@headerBar").should("have.class", "ui5-user-menu-fixed-header");
 	});
 
 	it("tests scroll on phone", () => {
@@ -635,7 +635,7 @@ describe("Responsiveness", () => {
 					id="userMenuShellBar"
 					open={true} opener="openUserMenuBtn"
 					showManageAccount={true}
-					showAddAccount={true}
+					showEditAccounts={true}
 				>
 					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
 					<UserMenuItem text="Setting1" data-id="setting1"></UserMenuItem>

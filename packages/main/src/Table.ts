@@ -2,28 +2,29 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
 	customElement, slot, property, eventStrict, i18n,
 } from "@ui5/webcomponents-base/dist/decorators.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TableTemplate from "./generated/templates/TableTemplate.lit.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import TableTemplate from "./TableTemplate.js";
 import TableStyles from "./generated/themes/Table.css.js";
-import TableHeaderRow from "./TableHeaderRow.js";
-import TableRow from "./TableRow.js";
-import TableCell from "./TableCell.js";
 import TableExtension from "./TableExtension.js";
 import TableNavigation from "./TableNavigation.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableDragAndDrop from "./TableDragAndDrop.js";
-import DropIndicator from "./DropIndicator.js";
-import BusyIndicator from "./BusyIndicator.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import type DropIndicator from "./DropIndicator.js";
+import type TableHeaderRow from "./TableHeaderRow.js";
+import type TableRow from "./TableRow.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type TableHeaderCell from "./TableHeaderCell.js";
 import type TableSelection from "./TableSelection.js";
+import type TableSelectionBase from "./TableSelectionBase.js";
 import type TableRowActionBase from "./TableRowActionBase.js";
 import type TableVirtualizer from "./TableVirtualizer.js";
+import type TableGrowing from "./TableGrowing.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	TABLE_NO_DATA,
@@ -39,11 +40,17 @@ interface ITableFeature extends UI5Element {
 	readonly identifier: string;
 	/**
 	 * Called when the table is activated.
-	 * @param table table instance
+	 * @param table Table instance
 	 */
 	onTableActivate?(table: Table): void;
 	/**
-	 * Called when the table finished rendering.
+	 * Called every time before the table renders.
+	 * @param table Table instance
+	 */
+	onTableBeforeRendering?(table?: Table): void;
+	/**
+	 * Called every time after the table renders.
+	 * @param table Table instance
 	 */
 	onTableAfterRendering?(table?: Table): void;
 }
@@ -173,17 +180,10 @@ type TableRowActionClickEventDetail = {
  */
 @customElement({
 	tag: "ui5-table",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TableStyles,
 	template: TableTemplate,
 	fastNavigation: true,
-	dependencies: [
-		BusyIndicator,
-		TableHeaderRow,
-		TableCell,
-		TableRow,
-		DropIndicator,
-	],
 })
 
 /**
@@ -252,6 +252,7 @@ class Table extends UI5Element {
 		"move": TableMoveEventDetail;
 		"row-action-click": TableRowActionClickEventDetail;
 	}
+
 	/**
 	 * Defines the rows of the component.
 	 *
@@ -328,7 +329,6 @@ class Table extends UI5Element {
 	 * Available options are:
 	 *
 	 * <code>Scroll</code> - Columns are shown as regular columns and horizontal scrolling is enabled.
-	 *
 	 * <code>Popin</code> - Columns are shown as pop-ins instead of regular columns.
 	 *
 	 * @default "Scroll"
@@ -341,6 +341,7 @@ class Table extends UI5Element {
 	 * Defines if the loading indicator should be shown.
 	 *
 	 * **Note:** When the component is loading, it is not interactive.
+	 *
 	 * @default false
 	 * @public
 	 */
@@ -357,12 +358,6 @@ class Table extends UI5Element {
 	loadingDelay = 1000;
 
 	/**
-	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
-	 */
-	@property()
-	stickyTop = "0";
-
-	/**
 	 * Defines the maximum number of row actions that is displayed, which determines the width of the row action column.
 	 *
 	 * **Note:** It is recommended to use a maximum of 3 row actions, as exceeding this limit may take up too much space on smaller screens.
@@ -374,11 +369,38 @@ class Table extends UI5Element {
 	@property({ type: Number })
 	rowActionCount = 0;
 
+	/**
+	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
+	 */
+	@property()
+	stickyTop = "0";
+
 	@property({ type: Number, noAttribute: true })
 	_invalidate = 0;
 
 	@property({ type: Boolean, noAttribute: true })
 	_renderNavigated = false;
+
+	@query("[ui5-drop-indicator]")
+	dropIndicatorDOM!: DropIndicator;
+
+	@query("#nodata-row")
+	_nodataRow?: TableRow;
+
+	@query("#table-end-row")
+	_endRow!: TableRow;
+
+	@query("#table")
+	_tableElement!: HTMLElement;
+
+	@query("#before")
+	_beforeElement!: HTMLElement;
+
+	@query("#after")
+	_afterElement!: HTMLElement;
+
+	@query("#loading")
+	_loadingElement!: HTMLElement;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -390,7 +412,6 @@ class Table extends UI5Element {
 	_tableDragAndDrop?: TableDragAndDrop;
 	_poppedIn: Array<{col: TableHeaderCell, width: float}> = [];
 	_containerWidth = 0;
-	_rowsLength = 0;
 
 	constructor() {
 		super();
@@ -419,32 +440,34 @@ class Table extends UI5Element {
 
 	onBeforeRendering(): void {
 		this._renderNavigated = this.rows.some(row => row.navigated);
-		if (this.headerRow[0]) {
-			this.headerRow[0]._rowActionCount = this.rowActionCount;
-			if (this._getSelection()?.isMultiSelect() && this._rowsLength !== this.rows.length) {
-				this._rowsLength = this.rows.length;
-				this.headerRow[0]._invalidate++;
-			}
-		}
-		this.rows.forEach(row => {
+		[...this.headerRow, ...this.rows].forEach(row => {
 			row._renderNavigated = this._renderNavigated;
 			row._rowActionCount = this.rowActionCount;
 		});
 
 		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
 		this._refreshPopinState();
+		this.features.forEach(feature => feature.onTableBeforeRendering?.(this));
 	}
 
 	onAfterRendering(): void {
 		this.features.forEach(feature => feature.onTableAfterRendering?.(this));
 	}
 
-	_getSelection(): TableSelection | undefined {
-		return this.features.find(feature => isFeature<TableSelection>(feature, "TableSelection")) as TableSelection;
+	_findFeature<T>(featureName: string): T {
+		return this.features.find(feature => isFeature<T>(feature, featureName)) as T;
+	}
+
+	_getSelection(): TableSelectionBase | TableSelection | undefined {
+		return this._findFeature<TableSelectionBase>("TableSelectionBase") || this._findFeature<TableSelection>("TableSelection");
 	}
 
 	_getVirtualizer(): TableVirtualizer | undefined {
-		return this.features.find(feature => isFeature<TableVirtualizer>(feature, "TableVirtualizer")) as TableVirtualizer;
+		return this._findFeature<TableVirtualizer>("TableVirtualizer");
+	}
+
+	_getGrowing(): TableGrowing | undefined {
+		return this._findFeature<TableGrowing>("TableGrowing");
 	}
 
 	_onEvent(e: Event) {
@@ -506,7 +529,7 @@ class Table extends UI5Element {
 	}
 
 	_onGrow() {
-		this._growing?.loadMore();
+		this._getGrowing()?.loadMore();
 	}
 
 	_getPopinOrderedColumns(reverse: boolean) {
@@ -550,12 +573,8 @@ class Table extends UI5Element {
 		});
 	}
 
-	_isFeature(feature: any) {
-		return Boolean(feature.onTableActivate || feature.onTableAfterRendering);
-	}
-
 	_isGrowingFeature(feature: any) {
-		return Boolean(feature.loadMore && feature.hasGrowingComponent && this._isFeature(feature));
+		return Boolean(feature.loadMore && feature.hasGrowingComponent && isFeature<ITableGrowing>(feature, "TableGrowing"));
 	}
 
 	_onRowClick(row: TableRow) {
@@ -595,7 +614,7 @@ class Table extends UI5Element {
 
 		const widths = [];
 		const visibleHeaderCells = this.headerRow[0]._visibleCells as TableHeaderCell[];
-		if (this._getSelection()?.hasRowSelector()) {
+		if (this._getSelection()?.isRowSelectorRequired()) {
 			widths.push("min-content");
 		}
 		widths.push(...visibleHeaderCells.map(cell => {
@@ -617,32 +636,14 @@ class Table extends UI5Element {
 		return widths.join(" ");
 	}
 
-	get _tableOverflowX() {
-		return (this.overflowMode === TableOverflowMode.Popin) ? "clip" : "auto";
+	get _scrollContainer() {
+		return this._getVirtualizer() ? this._tableElement : findVerticalScrollContainer(this);
 	}
 
-	get _tableOverflowY() {
-		return "auto";
-	}
-
-	get _nodataRow() {
-		return this.shadowRoot!.getElementById("nodata-row") as TableRow;
-	}
-
-	get _beforeElement() {
-		return this.shadowRoot!.getElementById("before") as HTMLElement;
-	}
-
-	get _afterElement() {
-		return this.shadowRoot!.getElementById("after") as HTMLElement;
-	}
-
-	get _tableElement() {
-		return this.shadowRoot!.getElementById("table") as HTMLElement;
-	}
-
-	get _loadingElement() {
-		return this.shadowRoot!.getElementById("loading") as HTMLElement;
+	get _stickyElements() {
+		const stickyRows = this.headerRow.filter(row => row.sticky);
+		const stickyColumns = this.headerRow[0]._stickyCells as TableHeaderCell[];
+		return [...stickyRows, ...stickyColumns];
 	}
 
 	get _effectiveNoDataText() {
@@ -659,38 +660,11 @@ class Table extends UI5Element {
 
 	get _ariaMultiSelectable() {
 		const selection = this._getSelection();
-		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelect() : undefined;
-	}
-
-	get _shouldRenderGrowing() {
-		return this.rows.length && this._growing?.hasGrowingComponent();
-	}
-
-	get _growing() {
-		return this.features.find(feature => this._isGrowingFeature(feature)) as ITableGrowing;
-	}
-
-	get _stickyElements() {
-		const stickyRows = this.headerRow.filter(row => row.sticky);
-		const stickyColumns = this.headerRow[0]._stickyCells as TableHeaderCell[];
-
-		return [...stickyRows, ...stickyColumns];
-	}
-
-	get _scrollContainer() {
-		return this._getVirtualizer() ? this._tableElement : findVerticalScrollContainer(this);
+		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelectable() : undefined;
 	}
 
 	get isTable() {
 		return true;
-	}
-
-	get dropIndicatorDOM(): DropIndicator | null {
-		return this.shadowRoot!.querySelector("[ui5-drop-indicator]");
-	}
-
-	get _hasRowActions() {
-		return this.rowActionCount > 0;
 	}
 }
 

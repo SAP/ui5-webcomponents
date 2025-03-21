@@ -1,5 +1,6 @@
 import ShellBar from "../../src/ShellBar.js";
 import ShellBarItem from "../../src/ShellBarItem.js";
+import ShellBarSpacer from "@ui5/webcomponents-fiori/dist/ShellBarSpacer.js";
 import activities from "@ui5/webcomponents-icons/dist/activities.js";
 import navBack from "@ui5/webcomponents-icons/dist/nav-back.js";
 import sysHelp from "@ui5/webcomponents-icons/dist/sys-help.js";
@@ -30,12 +31,12 @@ describe("Responsiveness", () => {
 				<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
 			</Avatar>
 
-			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
+			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
 
 			<Button icon={navBack} slot="startButton" id="start-button"></Button>
 
 			<ShellBarItem id="disc" icon={activities} text="Disconnect"></ShellBarItem>
-			<ShellBarItem id="call" icon={sysHelp} text="Incoming Calls"></ShellBarItem>
+			<ShellBarItem id="call" icon={sysHelp} text="Incoming Calls" stable-dom-ref="call"></ShellBarItem>
 
 			<Input placeholder="Instructions" slot="searchField" showSuggestions={true} valueState="Information">
 				<div slot="valueStateMessage">Instructions</div>
@@ -66,7 +67,7 @@ describe("Responsiveness", () => {
 				<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
 			</Avatar>
 
-			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
+			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
 
 			<Button icon={navBack} slot="startButton" id="start-button"></Button>
 
@@ -88,7 +89,7 @@ describe("Responsiveness", () => {
 			showNotifications={true}
 			showProductSwitch={true}
 		>
-			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
+			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
 		</ShellBar>;
 	}
 	beforeEach(() => {
@@ -100,6 +101,9 @@ describe("Responsiveness", () => {
 
 		cy.get("#shellbar")
 			.as("shellbar");
+	});
+	afterEach(() => {
+		cy.viewport(1920, 1080);
 	});
 
 	it("tests XL Breakpoint 1920px", () => {
@@ -294,5 +298,96 @@ describe("Responsiveness", () => {
 			.shadow()
 			.find(".ui5-shellbar-overflow-button")
 			.should("be.hidden");
+	});
+
+	it("Test accessibility attributes on custom action buttons", () => {
+		cy.mount(basicTemplate()).as("html");
+
+		cy.get("@shellbar")
+			.shadow()
+			.find<Button>(`[data-ui5-stable="call"]`)
+			.as("call-button")
+			.then($el => {
+				$el.get(0).accessibilityAttributes = { "hasPopup": "dialog", "expanded": "true" };
+			});
+		cy.get("@call-button")
+			.shadow()
+			.find("button")
+			.should("have.attr", "aria-expanded", "true")
+			.should("have.attr", "aria-hasPopup", "dialog");
+	});
+});
+
+describe("Slots", () => {
+	describe("Content slot", () => {
+		it("Test separators visibility", () => {
+			function assertStartSeparatorVisibility(expectedExist: boolean) {
+				cy.get("#shellbar")
+					.shadow()
+					.find(".ui5-shellbar-overflow-container-right-inner > .ui5-shellbar-separator-start")
+					.should(expectedExist ? "exist" : "not.exist");
+			}
+			function assertEndSeparatorVisibility(expectedExist: boolean) {
+				cy.get("#shellbar")
+					.shadow()
+					.find(".ui5-shellbar-overflow-container-right-inner > .ui5-shellbar-separator-end")
+					.should(expectedExist ? "exist" : "not.exist");
+			}
+
+			cy.mount(
+				<ShellBar id="shellbar" primaryTitle="Product Title" showNotifications={true} showProductSwitch={true}>
+					<Button icon={navBack} slot="startButton"></Button>
+					<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					<Button slot="content">Start Button 1</Button>
+					<Button slot="content" data-hide-order="1">Start Button 2</Button>
+					<Button slot="content">Start Button 3</Button>
+					<ShellBarSpacer slot="content" />
+					<Button slot="content">End Button 1</Button>
+					<Button slot="content" data-hide-order="1">End Button 2</Button>
+					<Button slot="content">End Button 3</Button>
+				</ShellBar>
+			);
+
+			// both separators should be visible
+			assertStartSeparatorVisibility(true);
+			assertEndSeparatorVisibility(true);
+
+			cy.viewport(420, 1080);
+			// only end separator should be hidden
+			assertStartSeparatorVisibility(true);
+			assertEndSeparatorVisibility(false);
+
+			cy.viewport(320, 1080);
+			// both separators should be hidden
+			assertStartSeparatorVisibility(false);
+			assertEndSeparatorVisibility(false);
+
+			// once items are hidden, both separators should be rendered with the last visible item
+			cy.get("#shellbar")
+				.shadow()
+				.find("div[id='content-2'] > .ui5-shellbar-separator-start")
+				.should("exist");
+
+			cy.get("#shellbar")
+				.shadow()
+				.find("div[id='content-6'] > .ui5-shellbar-separator-end")
+				.should("exist");
+
+			cy.viewport(1920, 1080);
+			// both separators should be visible
+			assertStartSeparatorVisibility(true);
+			assertEndSeparatorVisibility(true);
+
+			// once items are shown, both separators shouldn't be rendered with the last visible item
+			cy.get("#shellbar")
+				.shadow()
+				.find("div[id='content-2'] > .ui5-shellbar-separator-start")
+				.should("not.exist");
+
+			cy.get("#shellbar")
+				.shadow()
+				.find("div[id='content-6'] > .ui5-shellbar-separator-end")
+				.should("not.exist");
+		});
 	});
 });

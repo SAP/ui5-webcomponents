@@ -45,6 +45,8 @@ import {
 	getAllAccessibleNameRefTexts,
 	registerUI5Element,
 	deregisterUI5Element,
+	getEffectiveAriaDescriptionText,
+	getAllAccessibleDescriptionRefTexts,
 } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
@@ -440,6 +442,24 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	accessibleNameRef?: string;
 
 	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.9.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that describe the input.
+	 * @default undefined
+	 * @public
+	 * @since 2.9.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
+
+	/**
 	 * Defines whether the clear icon of the input will be shown.
 	 * @default false
 	 * @public
@@ -514,6 +534,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_accessibleLabelsRefTexts?: string;
 
 	/**
+	 * Constantly updated value of texts collected from the associated labels
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_associatedDescriptionRefTexts?: string;
+
+	/**
 	 * @private
 	 */
 	@property({ type: Object })
@@ -570,7 +597,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_handleResizeBound: ResizeObserverCallback;
 	_keepInnerValue: boolean;
 	_shouldAutocomplete?: boolean;
-	_keyDown?: boolean;
+	_enterKeyDown?: boolean;
 	_isKeyNavigation?: boolean;
 	_indexOfSelectedItem: number;
 	_selectedText?: string;
@@ -772,6 +799,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		if (isEnter(e)) {
+			const isValueUnchanged = this.previousValue === this.getInputDOMRefSync()!.value;
+			this._enterKeyDown = true;
+
+			if (isValueUnchanged && this._internals.form) {
+				submitForm(this);
+			}
+
 			return this._handleEnter(e);
 		}
 
@@ -799,7 +833,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this._clearPopoverFocusAndSelection();
 		}
 
-		this._keyDown = true;
 		this._isKeyNavigation = false;
 	}
 
@@ -810,7 +843,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.value = (e.target as HTMLInputElement).value;
 		}
 
-		this._keyDown = false;
+		this._enterKeyDown = false;
 	}
 
 	get currentItemIndex() {
@@ -870,10 +903,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		if (!suggestionItemPressed) {
 			this.lastConfirmedValue = this.value;
 
-			if (this._internals.form) {
-				submitForm(this);
-			}
-
 			return;
 		}
 
@@ -915,6 +944,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		const isAutoCompleted = innerInput.selectionEnd! - innerInput.selectionStart! > 0;
 
 		this.isTyping = false;
+
+		if (this.value !== this.previousValue && this.value !== this.lastConfirmedValue && !this.open) {
+			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
+			this.fireDecoratorEvent(INPUT_EVENTS.INPUT);
+
+			return;
+		}
 
 		if (!isOpen) {
 			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
@@ -1024,6 +1060,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 				this._changeToBeFired = true;
 			} else {
 				fireChange();
+
+				if (this._enterKeyDown && this._internals.form) {
+					submitForm(this);
+				}
 			}
 		}
 	}
@@ -1191,6 +1231,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_updateAssociatedLabelsTexts() {
 		this._associatedLabelsTexts = getAssociatedLabelForTexts(this);
 		this._accessibleLabelsRefTexts = getAllAccessibleNameRefTexts(this);
+		this._associatedDescriptionRefTexts = getAllAccessibleDescriptionRefTexts(this);
 	}
 
 	_closePicker() {
@@ -1216,6 +1257,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		if (this._changeToBeFired && !this._isChangeTriggeredBySuggestion) {
+			this.previousValue = this.value;
 			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
 		} else {
 			this._isChangeTriggeredBySuggestion = false;
@@ -1516,21 +1558,48 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		return this.hasValueState ? `valueStateDesc` : "";
 	}
 
+	get _accInfoAriaDescription() {
+		return (this._inputAccInfo && this._inputAccInfo.ariaDescription) || "";
+	}
+
+	get _accInfoAriaDescriptionId() {
+		const hasAriaDescription = this._accInfoAriaDescription !== "";
+		return hasAriaDescription ? "descr" : "";
+	}
+
+	get ariaDescriptionText() {
+		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this);
+	}
+
+	get ariaDescriptionTextId() {
+		return this.ariaDescriptionText ? "accessibleDescription" : "";
+	}
+
+	get ariaDescribedByIds() {
+		return [
+			this.suggestionsTextId,
+			this.valueStateTextId,
+			this._inputAccInfo.ariaDescribedBy,
+			this._accInfoAriaDescriptionId,
+			this.ariaDescriptionTextId,
+		].filter(Boolean).join(" ");
+	}
+
 	get accInfo() {
 		const ariaHasPopupDefault = this.showSuggestions ? "dialog" : undefined;
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" as const : undefined;
-		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 
 		return {
 			"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
-			"ariaDescribedBy": ariaDescribedBy || undefined,
+			"ariaDescribedBy": this.ariaDescribedByIds || undefined,
 			"ariaInvalid": this.valueState === ValueState.Negative ? true : undefined,
 			"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
 			"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
 			"role": this._inputAccInfo && this._inputAccInfo.role,
 			"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
 			"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
-			"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
+			"ariaDescription": this._accInfoAriaDescription,
+			"accessibleDescription": this.ariaDescriptionText,
 			"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts || undefined,
 		};
 	}
