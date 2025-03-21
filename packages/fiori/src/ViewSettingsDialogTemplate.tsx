@@ -132,6 +132,7 @@ function ViewSettingsDialogTemplateContent(this: ViewSettingsDialog) {
 									class="ui5-vsd-filterItemList"
 									// selected={item.selected} TODO
 									additionalText={item.additionalText}
+									accessibleName={this._selectedFiltersLabel(item)}
 								>{item.text}</ListItemStandard>
 							))}
 						</ListItemGroup>
