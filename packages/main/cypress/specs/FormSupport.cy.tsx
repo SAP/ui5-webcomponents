@@ -563,16 +563,46 @@ describe("Form support", () => {
 				<Option value="" selected>Option 3</Option>
 			</Select>
 
+			<Select value="Option 1">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+
+			<Select value="option2">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+			<Select value="Option 3">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+
 			<Select id="select4" name="select4">
 				<Option selected>Option 1</Option>
 				<Option value="option2">Option 2</Option>
 				<Option value="">Option 3</Option>
 			</Select>
+
+			<Select id="select44" name="select44" value="Option 1">
+				<Option selected>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+
 			<Select id="select5" name="select5">
 				<Option>Option 1</Option>
 				<Option value="option2" selected>Option 2</Option>
 				<Option value="">Option 3</Option>
 			</Select>
+			<Select id="select55" name="select55" value="option2">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+
 			<Select id="select7" name="select7" required>
 				<Option selected>Option 1</Option>
 				<Option value="option2">Option 2</Option>
@@ -587,6 +617,22 @@ describe("Form support", () => {
 				<Option>Option 1</Option>
 				<Option value="option2">Option 2</Option>
 				<Option value="" selected>Option 3</Option>
+			</Select>
+
+			<Select id="select77" name="select77" required value="Option 1">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+			<Select id="select88" name="select88" required value="option2">
+				<Option>Option 1</Option>
+				<Option value="option2" selected>Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+			<Select id="select99" name="select99" required value="Option 3">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
 			</Select>
 
 			<button type="submit">Submits forms</button>
@@ -630,6 +676,17 @@ describe("Form support", () => {
 			.eq(1)
 			.realClick();
 
+		cy.get("#select99")
+			.realClick();
+
+		cy.get("#select99")
+			.should("have.attr", "opened");
+
+		cy.get("#select99")
+			.find("[ui5-option]")
+			.eq(1)
+			.realClick();
+
 		cy.get("button")
 			.realClick();
 
@@ -640,7 +697,7 @@ describe("Form support", () => {
 			.then($el => {
 				return getFormData($el.get(0));
 			})
-			.should("be.equal", "select4=Option 1&select5=option2&select6=&select7=Option 1&select8=option2&select9=option2");
+			.should("be.equal", "select4=Option 1&select44=Option 1&select5=option2&select55=option2&select6=&select7=Option 1&select8=option2&select9=option2&select77=Option 1&select88=option2&select99=option2");
 	});
 
 	it("ui5-slider in form", () => {
