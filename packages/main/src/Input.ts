@@ -1262,7 +1262,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		} else {
 			this._isChangeTriggeredBySuggestion = false;
 		}
-		this._changeToBeFired = false;
+
+		if (this.noTypeahead) {
+			this._changeToBeFired = false;
+		}
 
 		this.open = false;
 		this.isTyping = false;
