@@ -819,7 +819,7 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			.should("have.been.calledTwice");
 	});
 
-	it("Change event is triggered after clicking clear icon and reselecting the same suggestion", () => {
+	it("Change event is not triggered after clicking clear icon and reselecting the same suggestion", () => {
 		cy.mount(
 			<>
 				<Input showClearIcon={true} showSuggestions={true}>
@@ -863,6 +863,18 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 
 		cy.get("@input")
 			.realType("f");
+
+		cy.get("@input")
+			.realPress("Enter");
+
+		cy.get("@inputChange")
+			.should("have.been.calledOnce");
+
+		cy.get("@icon")
+			.realClick();
+
+		cy.get("@input")
+			.realType("s");
 
 		cy.get("@input")
 			.realPress("Enter");
