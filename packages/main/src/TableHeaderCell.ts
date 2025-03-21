@@ -38,7 +38,7 @@ class TableHeaderCell extends TableCellBase {
 	 * By default, the column will grow and shrink according to the available space.
 	 * This will distribute the space proportionally among all columns with no specific width set.
 	 *
-	 * See [<length>](https://developer.mozilla.org/en-US/docs/Web/CSS/length) for possible width values.
+	 * See [\<length\>](https://developer.mozilla.org/en-US/docs/Web/CSS/length) for possible width values.
 	 *
 	 * **Note:** When a relative column width is set (e.g. percentage or em), the table will ensure the column is at least
 	 * the defined `minWidth` or at maximum the defined relative `width`.
