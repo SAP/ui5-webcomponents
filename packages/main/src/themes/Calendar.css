@@ -11,7 +11,7 @@
 .ui5-cal-root {
     background: var(--sapList_Background);
     box-sizing: border-box;
-    min-height: var(--_ui5_calendar_height);
+    height: var(--_ui5_calendar_height);
     width: var(--_ui5_calendar_width);
     padding: var(--_ui5_calendar_top_bottom_padding) var(--_ui5_calendar_left_right_padding) 0;
     display: flex;

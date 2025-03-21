@@ -9,6 +9,9 @@ export default function YearRangePickerTemplate(this: YearRangePicker) {
 			aria-readonly="false"
 			aria-multiselectable="false"
 			onClick={this._selectYearRange}
+			onMouseOver={this._onmouseover}
+			onKeyDown={this._onkeydown}
+			onKeyUp={this._onkeyup}
 		>
 			{this._yearRanges.map(rangeRow =>
 				<div role="row" class="ui5-yrp-interval-container">
@@ -17,6 +20,7 @@ export default function YearRangePickerTemplate(this: YearRangePicker) {
 						tabindex={yearRange._tabIndex}
 						data-sap-focus-ref={yearRange.focusRef ? "true" : undefined}
 						class={yearRange.classes}
+						part={yearRange.parts}
 						role="gridcell"
 						aria-selected={yearRange.ariaSelected}
 						aria-disabled={yearRange.ariaDisabled}

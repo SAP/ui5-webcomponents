@@ -54,8 +54,7 @@ interface ICalendarPicker {
 	_hasPreviousPage: () => boolean,
 	_hasNextPage: () => boolean,
 	_autoFocus?: boolean,
-	_firstYear?: number,
-	_lastYear?: number,
+	_currentYearRange?: CalendarYearRangeT,
 }
 
 /**
@@ -81,6 +80,11 @@ type SpecialCalendarDateT = {
 	type: `${CalendarLegendItemType}`;
 	tooltip?: string;
 };
+
+type CalendarYearRangeT = {
+	startYear: number,
+	endYear: number,
+}
 
 /**
  * @class
@@ -185,7 +189,10 @@ type SpecialCalendarDateT = {
  * @csspart month-cell-selected-between - Used to style the day cells in between of selected months in range.
  * @csspart year-cell - Used to style the year cells.
  * @csspart year-cell-selected - Used to style the year cells when selected.
- * @csspart year-cell-selected-between - Used to style the day cells in between of selected years in range.
+ * @csspart year-cell-selected-between - Used to style the year cells in between of selected years in range.
+ * @csspart year-range-cell - Used to style the year range cells.
+ * @csspart year-range-cell-selected - Used to style the year range cells when selected.
+ * @csspart year-range-cell-selected-between - Used to style the year range cells in between of selected year ranges.
  * @since 1.0.0-rc.11
  */
 @customElement({
@@ -253,7 +260,7 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	@property()
-	_currentPicker: "day" | "month" | "year" | "year-range" = "day"
+	_currentPicker: "day" | "month" | "year" | "yearrange-" = "day"
 
 	@property({ type: Boolean })
 	_previousButtonDisabled = false;
@@ -271,7 +278,7 @@ class Calendar extends CalendarPart {
 	_headerYearButtonTextSecType?: string;
 
 	@property()
-	_headerYearRangeButtonText?: string; // todo - is there a reason why this is a property
+	_headerYearRangeButtonText?: string;
 
 	@property()
 	_headerYearRangeButtonTextSecType?: string;
@@ -280,6 +287,8 @@ class Calendar extends CalendarPart {
 	_pickersMode: `${CalendarPickersMode}` = "DAY_MONTH_YEAR";
 
 	_valueIsProcessed = false;
+
+	_rangeStartYear?: number;
 
 	/**
 	 * Defines the calendar legend of the component.
@@ -459,7 +468,7 @@ class Calendar extends CalendarPart {
 	 * Makes sure that _currentPicker is always set to a value, allowed by _pickersMode
 	 */
 	_normalizeCurrentPicker() {
-		if (this._currentPicker === "year-range") {
+		if (this._currentPicker === "yearrange-") {
 			return;
 		}
 
@@ -494,14 +503,12 @@ class Calendar extends CalendarPart {
 		this._headerMonthButtonText = localeData.getMonthsStandAlone("wide", this.primaryCalendarType)[this._calendarDate.getMonth()];
 		this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
 
-		if (this._currentPicker === "year") {
-			const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
-			const rangeEnd = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
-			rangeStart.setYear(this._currentPickerDOM._firstYear!);
-			rangeEnd.setYear(this._currentPickerDOM._lastYear!);
-
-			this._headerYearRangeButtonText = `${yearFormat.format(rangeStart.toLocalJSDate(), true)} - ${yearFormat.format(rangeEnd.toLocalJSDate(), true)}`;
-		}
+		const currentYearRange = this._currentYearRange;
+		const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
+		const rangeEnd = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
+		rangeStart.setYear(currentYearRange.startYear);
+		rangeEnd.setYear(currentYearRange.endYear);
+		this._headerYearRangeButtonText = `${yearFormat.format(rangeStart.toLocalJSDate())} - ${yearFormat.format(rangeEnd.toLocalJSDate())}`;
 
 		this._secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
 	}
@@ -548,7 +555,7 @@ class Calendar extends CalendarPart {
 
 	showYearRange() {
 		this._currentPickerDOM._autoFocus = false;
-		this._currentPicker = "year-range";
+		this._currentPicker = "yearrange-";
 	}
 
 	get _currentPickerDOM() {
@@ -582,18 +589,17 @@ class Calendar extends CalendarPart {
 		const yearFormatSecType = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
 		this._headerYearButtonTextSecType = String(yearFormatSecType.format(this._localDate, true));
 
-		if (this._currentPicker === "year") {
-			const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
-			const rangeEnd = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
-			rangeStart.setYear(this._currentPickerDOM._firstYear!);
-			rangeEnd.setYear(this._currentPickerDOM._lastYear!);
+		const currentYearRange = this._currentYearRange;
+		const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
+		const rangeEnd = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
+		rangeStart.setYear(currentYearRange.startYear);
+		rangeEnd.setYear(currentYearRange.endYear);
 
-			const rangeStartSecType = transformDateToSecondaryType(this.primaryCalendarType, this._secondaryCalendarType, rangeStart.valueOf() / 1000, true)
-				.firstDate;
-			const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this._secondaryCalendarType, rangeEnd.valueOf() / 1000, true)
-				.lastDate;
-			this._headerYearRangeButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate(), true)} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate(), true)}`;
-		}
+		const rangeStartSecType = transformDateToSecondaryType(this.primaryCalendarType, this._secondaryCalendarType, rangeStart.valueOf() / 1000, true)
+			.firstDate;
+		const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this._secondaryCalendarType, rangeEnd.valueOf() / 1000, true)
+			.lastDate;
+		this._headerYearRangeButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate())} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate())}`;
 	}
 
 	get secondaryCalendarTypeButtonText() {
@@ -651,7 +657,30 @@ class Calendar extends CalendarPart {
 	}
 
 	get _isYearRangePickerHidden() {
-		return this._currentPicker !== "year-range";
+		return this._currentPicker !== "yearrange-";
+	}
+
+	get _currentYearRange(): CalendarYearRangeT {
+		const rangeSize = this.hasSecondaryCalendarType ? 8 : 20;
+		const yearsOffset = this.hasSecondaryCalendarType ? 2 : 9;
+		const currentYear = this._calendarDate.getYear();
+
+		// On first load, current year should be the 3rd or 10th year in the range (depending on the calendar type)
+		if (!this._rangeStartYear) {
+			this._rangeStartYear = currentYear - yearsOffset;
+		}
+
+		// If page navigation occured, update the current range start year
+		if (currentYear < this._rangeStartYear) {
+			this._rangeStartYear -= rangeSize;
+		} else if (currentYear >= this._rangeStartYear + rangeSize) {
+			this._rangeStartYear += rangeSize;
+		}
+
+		return {
+			startYear: this._rangeStartYear,
+			endYear: this._rangeStartYear + rangeSize - 1,
+		};
 	}
 
 	_fireEventAndUpdateSelectedDates(selectedDates: Array<number>) {
@@ -713,9 +742,16 @@ class Calendar extends CalendarPart {
 			this.fireDecoratorEvent("show-month-view");
 		}
 
-		if (isF4Shift(e) && this._currentPicker !== "year") {
+		if (!isF4Shift(e)) {
+			return;
+		}
+
+		if (this._currentPicker !== "year") {
 			this._currentPicker = "year";
 			this.fireDecoratorEvent("show-year-view");
+		} else {
+			this._currentPicker = "yearrange-";
+			this.fireDecoratorEvent("show-year-range-view");
 		}
 	}
 
@@ -861,6 +897,7 @@ Calendar.define();
 export default Calendar;
 export type {
 	ICalendarPicker,
+	CalendarYearRangeT,
 	ICalendarSelectedDates,
 	CalendarSelectionChangeEventDetail,
 	SpecialCalendarDateT,

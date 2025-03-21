@@ -41,12 +41,12 @@
 	position: relative;
 	border: var(--_ui5_yearpicker_item_border);
 	border-radius: var(--_ui5_yearpicker_item_border_radius);
-	padding: 0.5rem;
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
 }
 
 .ui5-yrp-item-secondary-type {
 	flex-direction: column;
-	width: calc(50% - 0.125rem);
 }
 
 .ui5-yrp-item-sec-type {

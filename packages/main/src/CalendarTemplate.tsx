@@ -62,6 +62,7 @@ export default function CalendarTemplate(this: Calendar) {
 						minDate={this.minDate}
 						maxDate={this.maxDate}
 						timestamp={this._timestamp}
+						_currentYearRange = {this._currentYearRange}
 						onChange={this.onSelectedYearChange}
 						onNavigate={this.onNavigate}
 						exportparts="year-cell, year-cell-selected, year-cell-selected-between"
@@ -72,14 +73,17 @@ export default function CalendarTemplate(this: Calendar) {
 						hidden={this._isYearRangePickerHidden}
 						formatPattern={this._formatPattern}
 						selectedDates={this._selectedDatesTimestamps}
+						_selectionMode={this.selectionMode}
 						_hidden={this._isYearRangePickerHidden}
 						primaryCalendarType={this._primaryCalendarType}
 						secondaryCalendarType={this._secondaryCalendarType}
 						minDate={this.minDate}
 						maxDate={this.maxDate}
 						timestamp={this._timestamp}
+						_currentYearRange = {this._currentYearRange}
 						onChange={this.onSelectedYearRangeChange}
 						onNavigate={this.onNavigate}
+						exportparts="year-range-cell, year-range-cell-selected, year-range-cell-selected-between"
 					/>
 				</div>
 

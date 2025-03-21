@@ -21,10 +21,9 @@ import {
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CalendarPart from "./CalendarPart.js";
-import type { ICalendarPicker } from "./Calendar.js";
+import type { CalendarYearRangeT, ICalendarPicker } from "./Calendar.js";
 import { YEAR_PICKER_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -129,8 +128,10 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	@property({ type: Number })
 	_secondTimestamp?: number;
 
+	@property({ noAttribute: true })
+	_currentYearRange?: CalendarYearRangeT;
+
 	_firstYear?: number;
-	_lastYear?: number;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -161,8 +162,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		const locale = getLocale() as unknown as LocaleT;
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, locale);
 		const oYearFormatInSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType }, locale);
-		this._calculateFirstYear();
-		this._lastYear = this._firstYear! + pageSize - 1;
+		this._firstYear = this._currentYearRange!.startYear;
 
 		const calendarDate = this._calendarDate; // store the value of the expensive getter
 		const minDate = this._minDate; // store the value of the expensive getter
@@ -170,7 +170,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		const tempDate = new CalendarDate(calendarDate, this._primaryCalendarType);
 		let tempDateInSecType;
 		let textInSecType;
-		tempDate.setYear(this._firstYear!);
+		tempDate.setYear(this._firstYear);
 
 		const intervals: YearInterval = [];
 		let timestamp;
@@ -237,38 +237,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		}
 
 		this._yearsInterval = intervals;
-	}
-
-	_calculateFirstYear() {
-		const pageSize = this._getPageSize();
-		const absoluteMaxYear = getMaxCalendarDate(this._primaryCalendarType).getYear(); // 9999
-		const currentYear = this._calendarDate.getYear();
-
-		// 1. If first load - center the current year (set first year to be current year minus half page size)
-		if (!this._firstYear) {
-			this._firstYear = currentYear - pageSize / 2;
-		}
-
-		// 2. If out of range - change by a page (20) - do not center in order to keep the same position as the last page
-		if (currentYear < this._firstYear) {
-			this._firstYear -= pageSize;
-		} else if (currentYear >= this._firstYear + pageSize) {
-			this._firstYear += pageSize;
-		}
-
-		// 3. If the date was changed by more than 20 years - reset _firstYear completely
-		if (Math.abs(this._firstYear - currentYear) >= pageSize) {
-			this._firstYear = currentYear - pageSize / 2;
-		}
-
-		// Keep it in the range between the min and max year
-		this._firstYear = Math.max(this._firstYear, this._minDate.getYear());
-		this._firstYear = Math.min(this._firstYear, this._maxDate.getYear());
-
-		// If first year is > 9980, make it 9980 to not show any years beyond 9999
-		if (this._firstYear > absoluteMaxYear - pageSize + 1) {
-			this._firstYear = absoluteMaxYear - pageSize + 1;
-		}
 	}
 
 	onAfterRendering() {
