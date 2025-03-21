@@ -43,6 +43,7 @@ import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "./commands/Calendar.commands.js";
 import "./commands/ColorPalette.commands.js";
 import "./commands/ColorPicker.commands.js";
+import "./commands/DateTimePicker.commands.js";
 import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
 import "./commands/SegmentedButton.commands.js";
