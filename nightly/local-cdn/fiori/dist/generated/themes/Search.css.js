@@ -1,0 +1,8 @@
+import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
+import defaultThemeBase from "@ui5/webcomponents-theming/dist/generated/themes/sap_horizon/parameters-bundle.css.js";
+import defaultTheme from "./sap_horizon/parameters-bundle.css.js";
+registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_horizon", async () => defaultThemeBase);
+registerThemePropertiesLoader("@ui5/webcomponents-fiori", "sap_horizon", async () => defaultTheme);
+export default `.ui5-search-popover{width:var(--search_width);margin-top:.25rem;padding-top:.25rem;padding-bottom:.25rem;box-sizing:border-box}.ui5-search-popover-header{padding:.5rem;box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start;width:100%}.ui5-search-popover::part(header){padding:0;box-shadow:none;border-bottom:1px solid var(--sapGroup_TitleBorderColor);margin-left:.25rem;margin-right:.25rem}.ui5-search-popover::part(content){padding:0;box-shadow:none}:host([header-text]) .ui5-search-popover::part(content){padding-top:.25rem}.ui5-search-popover-subheader{font-size:.75rem;color:var(--sapContent_LabelColor)}:host([popup-mode="Loading"]) .ui5-search-popover{height:420px}.ui5-search-popover-loading-bi{width:100%;height:100%}.ui5-search-list{margin-left:.25rem;margin-right:.25rem;width:auto}.ui5-search-list::part(growing-button-inner){border-radius:.5rem}.ui5-search-list::part(growing-button){border-bottom:none;padding-top:.25rem;box-sizing:border-box}
+`;
+//# sourceMappingURL=Search.css.js.map
