@@ -1081,7 +1081,8 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const matchingItems: Array<IComboBoxItem> = this._startsWithMatchingItems(current);
 
 		if (matchingItems.length) {
-			return matchingItems[0];
+			const exactMatch = matchingItems.find(item => item.text === current);
+			return exactMatch ?? matchingItems[0];
 		}
 	}
 
