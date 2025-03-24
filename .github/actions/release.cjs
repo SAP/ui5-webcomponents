@@ -20,7 +20,13 @@ const OTP = options.otp;
 
 const run = async () => {
 	const { globby } = await import("globby");
-	let FILES = await globby(["packages/*/package.json", "!packages/playground/package.json", "!packages/website/package.json"]);
+	let FILES = await globby([
+		"packages/*/package.json",
+		"!packages/playground/package.json",
+		"!packages/website/package.json",
+		"!packages/cypress-internal/package.json",
+		"!packages/cypress-ct-ui5-webc/package.json"
+	]);
 
 	// Step 1: process package.json files
 	const pkgs = await Promise.all(FILES.map(processPackageJSON));
@@ -38,7 +44,7 @@ const processPackageJSON = async file => {
 	const fileContent = JSON.parse(fileRead.toString());
 	const name = fileContent.name;
 
-	const version = NEW_VERSION || `0.0.0-${gitRev.slice(0,9,)}`;
+	const version = NEW_VERSION || `0.0.0-${gitRev.slice(0, 9,)}`;
 
 	PACKAGES[name] = { name, file, fileContent, version, folder };
 	return PACKAGES[name];
