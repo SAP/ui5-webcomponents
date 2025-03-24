@@ -24,8 +24,7 @@ describe("Responsiveness", () => {
 			showNotifications={true}
 			showProductSwitch={true}
 		>
-			{/* <ToggleButton id="assistant" icon={da} slot="assistant" text="Button3"></ToggleButton> */}
-			<ToggleButton id="assistant" icon={da} slot="assistant">Button3</ToggleButton>
+			<ToggleButton id="assistant" icon={da} slot="assistant"></ToggleButton>
 
 			<Avatar slot="profile">
 				<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
@@ -198,8 +197,8 @@ describe("Responsiveness", () => {
 		cy.get("@productSwitchIcon").should("be.visible");
 	});
 
-	it("tests S Breakpoint and overflow 510px", () => {
-		cy.viewport(510, 1680);
+	it("tests S Breakpoint and overflow 520px", () => {
+		cy.viewport(520, 1680);
 
 		cy.get("@shellbar").should("have.prop", "breakpointSize", "S");
 
