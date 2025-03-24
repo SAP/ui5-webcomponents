@@ -1263,7 +1263,7 @@ class ShellBar extends UI5Element {
 		return {
 			wrapper: {
 				"ui5-shellbar-root": true,
-				"ui5-shellbar-with-searchfield": this.hasSearchField
+				"ui5-shellbar-with-searchfield": this.hasSearchField,
 			},
 			button: {
 				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
