@@ -132,6 +132,11 @@
 	display: none;
 }
 
+[inner-input]::-ms-reveal,
+[inner-input]::-ms-clear {
+	display: none;
+}
+
 .ui5-input-value-state-icon {
 	height: 100%;
 	display: var(--_ui5-input-value-state-icon-display);
