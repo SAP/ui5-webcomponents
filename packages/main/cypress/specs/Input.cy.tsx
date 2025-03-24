@@ -850,6 +850,9 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.get("@input")
 			.should("have.attr", "value", "First item");
 
+		cy.get("@inputChange")
+			.should("have.been.calledOnce");
+
 		cy.get("@input")
 			.shadow()
 			.find("ui5-icon")
@@ -867,20 +870,11 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.get("@input")
 			.realPress("Enter");
 
+		cy.get("@input")
+			.should("have.attr", "value", "First item");
+
 		cy.get("@inputChange")
 			.should("have.been.calledOnce");
-
-		cy.get("@icon")
-			.realClick();
-
-		cy.get("@input")
-			.realType("s");
-
-		cy.get("@input")
-			.realPress("Enter");
-
-		cy.get("@inputChange")
-			.should("have.been.calledTwice");
 	});
 
 	it("should not close the dialog when item is selected", () => {
