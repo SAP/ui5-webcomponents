@@ -522,7 +522,7 @@ export default {
 								}
 							})
 						})
-					});
+					}); 
 
 					typeReferences.forEach(reference => {
 						reference = JSON.parse(reference);
