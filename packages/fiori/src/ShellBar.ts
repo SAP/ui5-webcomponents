@@ -860,9 +860,9 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleAnimationEnd() {
+		this._overflowActions();
 		this._isAnimating = false;
 		this.searchField[0].removeEventListener("animationend", this._handleAnimationEndRef);
-		this._overflowActions();
 		this.shadowRoot!.querySelector("header")!.classList.remove("ui5-shellbar-animating");
 	}
 
