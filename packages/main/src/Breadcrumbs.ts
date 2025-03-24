@@ -555,10 +555,10 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	/**
-	 * Returns all items that should be displayed in popover on mobile devices
+	 * Returns all items that should be displayed in the popover on mobile devices
 	 * @private
 	 */
-	get _visibleItemsForMobile() {
+	get _mobilePopoverItems() {
 		return this._getItems()
 			.filter(item => this._isItemVisible(item))
 			.reverse();

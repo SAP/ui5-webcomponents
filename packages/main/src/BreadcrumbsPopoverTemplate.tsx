@@ -7,7 +7,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 
 export default function BreadcrumbsPopoverTemplate(this: Breadcrumbs) {
 	const itemsToDisplay = isPhone()
-		? this._visibleItemsForMobile
+		? this._mobilePopoverItems
 		: this._overflowItemsData;
 
 	return (
