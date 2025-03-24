@@ -427,9 +427,9 @@ describe("Edge cases", () => {
 	it("Test search bar responsiveness, when there is no content", () => {
 		cy.mount(templateWithNoContentOpenSearch()).as("html2");
 		cy.viewport(500, 1080);
-		cy.wait(300);
+		cy.wait(RESIZE_THROTTLE_RATE);
 		cy.viewport(1280, 1080);
-		cy.wait(300);
+		cy.wait(RESIZE_THROTTLE_RATE);
 		cy.get("#shellbar").should("have.prop", "showSearchField", true);
 	});
 });
