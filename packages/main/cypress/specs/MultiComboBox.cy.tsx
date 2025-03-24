@@ -20,6 +20,42 @@ describe("Security", () => {
 	});
 });
 
+describe("General interaction", () => {
+	it("should be able to delete long tokens", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true}>
+				<MultiComboBoxItem text="This is a token with ridicilously long long long text which should be deletable when the 'x' icon is clicked"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.type('t');
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.realPress('Enter');
+
+		cy.get("[ui5-multi-combobox]").shadow().find("[ui5-tokenizer]").then($tokenizer => {
+			$tokenizer[0].addEventListener("ui5-token-delete", cy.stub().as("tokenDelete"))
+		});
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-multi-combobox]").shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]").shadow()
+			.find("[ui5-icon]").realClick();
+
+		cy.get("@tokenDelete").should("have.been.called");
+	});
+});
+
 describe("Value State", () => {
 	it("should be able to change value states upon typing", () => {
 		cy.mount(
@@ -54,5 +90,73 @@ describe("Value State", () => {
 			.shadow()
 			.find(".ui5-valuestatemessage--information")
 			.should("not.exist");
+	});
+});
+
+describe("Event firing", () => {
+	it("tests if open and close events are fired correctly", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Bulgaria"></MultiComboBoxItem>
+				<MultiComboBoxItem text="England"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("ui5-multi-combobox")
+			.as("multiComboBox");
+
+		cy.get("@multiComboBox")
+			.then($mcb => {
+				$mcb[0].addEventListener("focusin", () => {
+					$mcb[0].setAttribute("open", "true");
+				});
+			});
+
+		cy.get("@multiComboBox")
+			.then($mcb => {
+				$mcb[0].addEventListener("ui5-open", cy.stub().as("mcbOpened"));
+			});
+
+		cy.get("@multiComboBox")
+			.then($mcb => {
+				$mcb[0].addEventListener("ui5-close", cy.stub().as("mcbClosed"));
+			});
+
+		cy.get("@multiComboBox")
+			.shadow()
+			.find("input")
+			.as("input");
+
+		cy.get("@input")
+			.click();
+
+		cy.get("@multiComboBox")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.as("respPopover");
+
+		cy.get("@respPopover")
+			.should("have.attr", "open");
+
+		cy.get("@mcbOpened")
+			.should("have.been.calledOnce");
+
+		cy.get("@multiComboBox")
+			.shadow()
+			.find("ui5-icon")
+			.as("icon");
+
+		cy.get("@icon")
+			.click();
+
+		cy.get("@icon")
+			.click();
+
+		cy.get("@mcbClosed")
+			.should("have.been.calledOnce");
+
+		cy.get("@mcbOpened")
+			.should("have.been.calledTwice");
 	});
 });

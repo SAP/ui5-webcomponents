@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.0...v2.9.0-rc.1) (2025-03-20)
+
+
+### Bug Fixes
+
+* keep export paths in base in sync ([#11082](https://github.com/SAP/ui5-webcomponents/issues/11082)) ([8620ac8](https://github.com/SAP/ui5-webcomponents/commit/8620ac8823256ecf34ba70b4c06210253a3e5d14))
+
+
+
+
+
+# [2.9.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.1-rc.0...v2.9.0-rc.0) (2025-03-13)
+
+
+### Bug Fixes
+
+* **ui5-tabcontainer:** allow browser refresh shortcut to work ([#11035](https://github.com/SAP/ui5-webcomponents/issues/11035)) ([a4a0f02](https://github.com/SAP/ui5-webcomponents/commit/a4a0f028f44a60fd6caea0f4ecdac49b0289270d))
+
+
+
+
+
 ## [2.8.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0...v2.8.1-rc.0) (2025-03-06)
 
 **Note:** Version bump only for package @ui5/webcomponents-base

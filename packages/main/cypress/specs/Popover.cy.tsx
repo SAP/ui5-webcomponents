@@ -62,6 +62,59 @@ describe("Popover opener", () => {
 		});
 		cy.get("#btnClosePopover").realClick();
 	});
+
+	it("tests calling _showOutsideViewport method", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open</Button>
+				<Popover id="popover" opener="btnOpen">
+					<Button id="btnClosePopover">Close</Button>
+				</Popover>
+			</>
+		);
+
+		cy.get("#popover").then(el => {
+			cy.spy<Popover>((el.get(0) as Popover), "_showOutsideViewport").as("showOutsideViewport");
+		});
+
+		// act
+		cy.get("#popover").invoke("prop", "open", "true");
+
+		cy.get("@showOutsideViewport")
+			.should("have.been.calledOnce");
+	});
+
+	it("tests calling _showOutsideViewport method, when popover is created dynamically", () => {
+		cy.mount(
+			<>
+				<div id="container"></div>
+				<Button id="btnOpen">Open</Button>
+			</>
+		);
+
+		cy.get("#container").then(container => {
+			const popover = document.createElement("ui5-popover");
+
+			cy.spy<Popover>((popover as Popover), "_showOutsideViewport").as("showOutsideViewport");
+
+			popover.id = "popover";
+			popover.headerText = "Popover Header";
+			popover.opener = "btnOpen";
+			popover.open = true;
+
+			const content = document.createElement("div");
+			content.innerHTML = "<button id='popoverBtn'>button</button>";
+			popover.appendChild(content);
+
+			container.get(0).appendChild(popover);
+		});
+
+		cy.get("#popover")
+			.should("be.visible");
+
+		cy.get("@showOutsideViewport")
+			.should("have.been.calledOnce");
+	});
 });
 
 describe("Popover interaction", () => {

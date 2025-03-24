@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.0...v2.9.0-rc.1) (2025-03-20)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** fix separators visibility when items are hidden ([#11058](https://github.com/SAP/ui5-webcomponents/issues/11058)) ([d721e87](https://github.com/SAP/ui5-webcomponents/commit/d721e87263313f34783636cb65aa325c18257ef6))
+* **ui5-shellbar:** sap home no longer hard coded in title readings ([#11034](https://github.com/SAP/ui5-webcomponents/issues/11034)) ([2810da6](https://github.com/SAP/ui5-webcomponents/commit/2810da6c54dc099eb693a804adfa7a6bb9d26048)), closes [#10970](https://github.com/SAP/ui5-webcomponents/issues/10970)
+
+
+### Features
+
+* **ui5-search:** introduce experimental component ([#11125](https://github.com/SAP/ui5-webcomponents/issues/11125)) ([48f16fb](https://github.com/SAP/ui5-webcomponents/commit/48f16fb1d05957b3779aeb4868f3cebe5cac5bc2))
+* **ui5-shellbar:** accessibility attributes added to action buttons ([#10951](https://github.com/SAP/ui5-webcomponents/issues/10951)) ([c8c3e19](https://github.com/SAP/ui5-webcomponents/commit/c8c3e1941ab98c02ffa97c4a700d38619cb0326f))
+* **ui5-side-navigation:** enable the web component in popover placement ([#10701](https://github.com/SAP/ui5-webcomponents/issues/10701)) ([a4565fe](https://github.com/SAP/ui5-webcomponents/commit/a4565fe3a3ecb5a3d150942ed72faabbbc770b4a))
+* **ui5-side-navigation:** update visual design ([#11046](https://github.com/SAP/ui5-webcomponents/issues/11046)) ([b5d83a8](https://github.com/SAP/ui5-webcomponents/commit/b5d83a8a0bab9a18d796d9a9515f8e9b5a47c38f))
+* **ui5-user-menu:** design enhancements ([#11124](https://github.com/SAP/ui5-webcomponents/issues/11124)) ([5164035](https://github.com/SAP/ui5-webcomponents/commit/516403532ac4fd0e1c12ca2c4ad79c4091f615ca))
+
+
+
+
+
+# [2.9.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.1-rc.0...v2.9.0-rc.0) (2025-03-13)
+
+
+### Bug Fixes
+
+* **ui5-li-notification:** footer no longer overflows ([#11030](https://github.com/SAP/ui5-webcomponents/issues/11030)) ([41c23eb](https://github.com/SAP/ui5-webcomponents/commit/41c23eb908619dd426fa48275732c4152ca6288a))
+
+
+
+
+
 ## [2.8.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0...v2.8.1-rc.0) (2025-03-06)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
