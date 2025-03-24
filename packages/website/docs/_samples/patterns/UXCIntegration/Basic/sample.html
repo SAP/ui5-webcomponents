@@ -11,10 +11,10 @@
 
 <body style="background-color: var(--sapBackgroundColor);height: 400px;">
     <!-- playground-fold-end -->
-    <ui5-navigation-layout side-collapsed>
+    <ui5-navigation-layout id="navigation-layout">
         <ui5-shellbar slot="header" id="shellbar" primary-title="VEGA CRM"
             notifications-count="4" show-notifications show-product-switch >
-            <ui5-button icon="menu2" slot="startButton"></ui5-button>
+            <ui5-button id="menu-button" icon="menu2" slot="startButton" tooltip="Toggle side navigation"></ui5-button>
             <img slot="logo" src="../assets/images/sap-logo-svg.svg" />
             <ui5-tag design="Set2" color-scheme="7" slot="content" data-hide-order="2">Trial</ui5-tag>
             <ui5-text slot="content" data-hide-order="1">30 days remaining</ui5-text>
@@ -44,22 +44,49 @@
         </ui5-popover>
         <ui5-side-navigation slot="sideContent">
             <ui5-side-navigation-item text="Home" icon="home" selected></ui5-side-navigation-item>
-            <ui5-side-navigation-item text="Favorites" expanded icon="favorite-list">
+            <ui5-side-navigation-item text="Favorites" expanded icon="favorite-list" unselectable>
                 <ui5-side-navigation-sub-item text="My Accounts"></ui5-side-navigation-sub-item>
                 <ui5-side-navigation-sub-item text="My Orders"></ui5-side-navigation-sub-item>
             </ui5-side-navigation-item>
-            <ui5-side-navigation-item text="Customer Management" icon="account" expanded>
+            <ui5-side-navigation-item text="Customer Management" icon="account" expanded unselectable>
                 <ui5-side-navigation-sub-item text="Contacts"></ui5-side-navigation-sub-item>
                 <ui5-side-navigation-sub-item text="Companies"></ui5-side-navigation-sub-item>
                 <ui5-side-navigation-sub-item text="Partners"></ui5-side-navigation-sub-item>
             </ui5-side-navigation-item>
-            <ui5-side-navigation-item text="Sales" icon="business-by-design" expanded>
+            <ui5-side-navigation-item text="Sales" icon="crm-sales" expanded unselectable>
                 <ui5-side-navigation-sub-item text="Leads"></ui5-side-navigation-sub-item>
                 <ui5-side-navigation-sub-item text="Opportunuties"></ui5-side-navigation-sub-item>
                 <ui5-side-navigation-sub-item text="Quotes"></ui5-side-navigation-sub-item>
+                <ui5-side-navigation-sub-item text="Orders"></ui5-side-navigation-sub-item>
+                <ui5-side-navigation-sub-item text="Invoices"></ui5-side-navigation-sub-item>
             </ui5-side-navigation-item>
+            <ui5-side-navigation-item text="Products" icon="s4hana" expanded unselectable>
+                <ui5-side-navigation-sub-item text="Product Catalog"></ui5-side-navigation-sub-item>
+                <ui5-side-navigation-sub-item text="Pricing"></ui5-side-navigation-sub-item>
+                <ui5-side-navigation-sub-item text="Inventory Management"></ui5-side-navigation-sub-item>
+            </ui5-side-navigation-item>
+            <ui5-side-navigation-item text="Marketing" icon="business-by-design" expanded unselectable>
+                <ui5-side-navigation-sub-item text="Campaigns"></ui5-side-navigation-sub-item>
+                <ui5-side-navigation-sub-item text="E-Mail Marketing"></ui5-side-navigation-sub-item>
+                <ui5-side-navigation-sub-item text="Marketing Automation"></ui5-side-navigation-sub-item>
+            </ui5-side-navigation-item>
+            <ui5-side-navigation-item text="Reports" icon="manager-insight" expanded unselectable>
+                <ui5-side-navigation-sub-item text="Sales Reports"></ui5-side-navigation-sub-item>
+                <ui5-side-navigation-sub-item text="Customer Reports"></ui5-side-navigation-sub-item>
+            </ui5-side-navigation-item>
+            <ui5-side-navigation-item slot="fixedItems" id="quickCreate" text="Quick Create" icon="add" design="Action" unselectable></ui5-side-navigation-item>
+            <ui5-side-navigation-item slot="fixedItems" text="Product Settings" icon="settings"></ui5-side-navigation-item>
         </ui5-side-navigation>
     </ui5-navigation-layout>
+
+    <ui5-dialog header-text="Create New Item" draggable resizable id="quickCreateDialog">
+		<ui5-text>Create new item...</ui5-text>
+		<ui5-bar slot="footer" design="Footer">
+			<ui5-button slot="endContent" design="Emphasized">Create</ui5-button>
+			<ui5-button slot="endContent" id="quickCreateDialogCloseBtn">Close</ui5-button>
+		</ui5-bar>
+	</ui5-dialog>
+
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>
 </body>
