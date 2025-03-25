@@ -93,17 +93,28 @@ type SelectLiveChangeEventDetail = {
  *
  * There are two main usages of the `ui5-select>`.
  *
- * 1. With Option (`ui5-option`) web component:
+ * - With Option (`ui5-option`) web component:
  *
  * The available options of the Select are defined by using the Option component.
  * The Option comes with predefined design and layout, including `icon`, `text` and `additional-text`.
  *
- * 2. With OptionCustom (`ui5-option-custom`) web component.
+ * - With OptionCustom (`ui5-option-custom`) web component.
  *
  * Options with custom content are defined by using the OptionCustom component
  * The OptionCustom component comes with no predefined layout and it expects consumers to define it.
  *
+ * ### Visual Appearance
+ *
+ * The `ui5-select` component comes in two visual appearances, depending on the `icon` property:
+ *
+ * - Default: If the `icon` property is not set,
+ *  the selected option's text is displayed with a dropdown arrow next to it.
+ *
+ * - Icon Only: If the `icon` property is set, only the specified icon is displayed,
+ * and the selected option's text along with the dropdown arrow are not displayed.
+ *
  * ### Keyboard Handling
+ *
  * The `ui5-select` provides advanced keyboard handling.
  *
  * - [F4] / [Alt] + [Up] / [Alt] + [Down] / [Space] or [Enter] - Opens/closes the drop-down.
@@ -114,6 +125,7 @@ type SelectLiveChangeEventDetail = {
  * - [End] - Navigates to the last option
  *
  * ### ES6 Module Import
+ *
  * `import "@ui5/webcomponents/dist/Select";`
  *
  * `import "@ui5/webcomponents/dist/Option";`
@@ -216,6 +228,9 @@ class Select extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component.
+	 * When set, the component will display the icon only - the selected option's text
+	 * the Select's "label" slot (if present) and the dropdown arrow won't be displayed.
+	 *
 	 * The SAP-icons font provides numerous options.
 	 *
 	 * Example:

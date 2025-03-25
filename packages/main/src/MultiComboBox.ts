@@ -645,15 +645,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		this.selectedItems = this._getItems().filter((item, idx, allItems) => MultiComboBox._groupItemFilter(item, ++idx, allItems, selectedItems) || selectedItems.indexOf(item) !== -1);
 	}
 
-	/**
-	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
-	 * @default false
-	 * @public
-	 */
-	get isOpen(): boolean {
-		return this.open;
-	}
-
 	get _showAllItemsButtonPressed(): boolean {
 		return this.filterSelected;
 	}

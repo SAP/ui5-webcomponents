@@ -81,6 +81,10 @@ class ShellBarItem extends UI5Element {
 	 * - **hasPopup**: Indicates the availability and type of interactive popup element,
 	 * such as menu or dialog, that can be triggered by the button.
 	 *
+	 * - **controls**: Identifies the element (or elements) whose contents
+	 * or presence are controlled by the component.
+	 * Accepts a lowercase string value, referencing the ID of the element it controls.
+	 *
 	 * @default {}
 	 * @public
 	 * @since 2.9.0
