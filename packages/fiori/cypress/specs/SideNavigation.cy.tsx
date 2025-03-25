@@ -66,6 +66,18 @@ describe("Side Navigation Rendering", () => {
 			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='3.1']")
 			.should("have.attr", "design", "Action");
 	});
+
+	it("Tests accessibility", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" accessible-name="Main">
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-root")
+			.should("have.attr", "aria-label", "Main");
+	});
 });
 
 describe("Side Navigation interaction", () => {

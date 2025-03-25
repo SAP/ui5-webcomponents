@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.0...v2.9.0-rc.1) (2025-03-20)
+
+
+### Bug Fixes
+
+* **ui5-carousel:** fix typo mistake ([#11107](https://github.com/SAP/ui5-webcomponents/issues/11107)) ([e23f746](https://github.com/SAP/ui5-webcomponents/commit/e23f746bca7b858b92b15d1d4903432d65289422)), closes [#11032](https://github.com/SAP/ui5-webcomponents/issues/11032)
+* **ui5-combobox:** properly navigate with arrow down keys ([#11097](https://github.com/SAP/ui5-webcomponents/issues/11097)) ([967ef56](https://github.com/SAP/ui5-webcomponents/commit/967ef56962aa9f341305ed00a09177d62405a785)), closes [#11029](https://github.com/SAP/ui5-webcomponents/issues/11029)
+* **ui5-input:** fire input event on escape key ([#11079](https://github.com/SAP/ui5-webcomponents/issues/11079)) ([8b85288](https://github.com/SAP/ui5-webcomponents/commit/8b852881dd9364216f5051b587f2e7e5102b4945)), closes [#11021](https://github.com/SAP/ui5-webcomponents/issues/11021)
+* **ui5-li:** announce active state ([#11064](https://github.com/SAP/ui5-webcomponents/issues/11064)) ([b6b70a9](https://github.com/SAP/ui5-webcomponents/commit/b6b70a9f8ab2a78bceb0a8bca8ed2c12c63ea13d))
+* **ui5-list-item-group-header:** typo fixed ([#11100](https://github.com/SAP/ui5-webcomponents/issues/11100)) ([e8af105](https://github.com/SAP/ui5-webcomponents/commit/e8af1059d118fc77dcaef0b7dd7012ad406fde7a))
+* **ui5-menu-item:** remove dot from class ([#11119](https://github.com/SAP/ui5-webcomponents/issues/11119)) ([66bedb4](https://github.com/SAP/ui5-webcomponents/commit/66bedb421036af054cfc45a512953342f9917cdb)), closes [#11043](https://github.com/SAP/ui5-webcomponents/issues/11043)
+* **ui5-menu:** fix menu item type fix ([#11129](https://github.com/SAP/ui5-webcomponents/issues/11129)) ([3e68c57](https://github.com/SAP/ui5-webcomponents/commit/3e68c576fb9a577e51acf99e0608691b15b213fb)), closes [#10933](https://github.com/SAP/ui5-webcomponents/issues/10933)
+* **ui5-multi-combobox:** fix deletion of long tokens ([#11080](https://github.com/SAP/ui5-webcomponents/issues/11080)) ([5c6d746](https://github.com/SAP/ui5-webcomponents/commit/5c6d746b2354acc09172a53b0a1507ab3ff4458e)), closes [#10977](https://github.com/SAP/ui5-webcomponents/issues/10977)
+* **ui5-multiinput:** correct failing test ([#11111](https://github.com/SAP/ui5-webcomponents/issues/11111)) ([b30330d](https://github.com/SAP/ui5-webcomponents/commit/b30330d38ae574f628611f21b9078ee98df7b592))
+* **ui5-tag:** fix click event ([#11102](https://github.com/SAP/ui5-webcomponents/issues/11102)) ([3eec3bb](https://github.com/SAP/ui5-webcomponents/commit/3eec3bbbfc2fcaf6a5b4c6e70c7fcb7cd7e1bcec)), closes [#11096](https://github.com/SAP/ui5-webcomponents/issues/11096)
+
+
+### Features
+
+* **ui5-input:** support accessible description ([#10821](https://github.com/SAP/ui5-webcomponents/issues/10821)) ([410f4d2](https://github.com/SAP/ui5-webcomponents/commit/410f4d2fbc2f62742e419e437824a435c79fc6ef)), closes [#10131](https://github.com/SAP/ui5-webcomponents/issues/10131)
+* **ui5-search:** introduce experimental component ([#11125](https://github.com/SAP/ui5-webcomponents/issues/11125)) ([48f16fb](https://github.com/SAP/ui5-webcomponents/commit/48f16fb1d05957b3779aeb4868f3cebe5cac5bc2))
+* **ui5-select:** "icon" property introduced ([#11060](https://github.com/SAP/ui5-webcomponents/issues/11060)) ([0b242e3](https://github.com/SAP/ui5-webcomponents/commit/0b242e3e0e6d7c03dcbebd4fc798338627ebeb09)), closes [#10859](https://github.com/SAP/ui5-webcomponents/issues/10859)
+* **ui5-side-navigation:** enable the web component in popover placement ([#10701](https://github.com/SAP/ui5-webcomponents/issues/10701)) ([a4565fe](https://github.com/SAP/ui5-webcomponents/commit/a4565fe3a3ecb5a3d150942ed72faabbbc770b4a))
+
+
+
+
+
 # [2.9.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.1-rc.0...v2.9.0-rc.0) (2025-03-13)
 
 
