@@ -11,7 +11,7 @@ describe("List Mobile Tests", () => {
 
         cy.mount(
             <List>
-                <ListItemStandard id="wrapping-item" wrapping text={longText}></ListItemStandard>
+                <ListItemStandard id="wrapping-item" wrappingType="Normal" text={longText}></ListItemStandard>
             </List>
         );
 

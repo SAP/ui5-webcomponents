@@ -185,14 +185,11 @@ describe("List - Wrapping Behavior", () => {
 		
 		cy.mount(
 			<List>
-				<ListItemStandard id="wrapping-item" wrapping text={longText} description={longDescription}></ListItemStandard>
+				<ListItemStandard id="wrapping-item" wrappingType="Normal" text={longText} description={longDescription}></ListItemStandard>
 			</List>
 		);
 
 		// Check wrapping attributes are set correctly
-		cy.get("#wrapping-item")
-			.should("have.attr", "wrapping");
-
 		cy.get("#wrapping-item")
 			.should("have.attr", "wrapping-type", "Normal");
 		
@@ -209,7 +206,7 @@ describe("List - Wrapping Behavior", () => {
 		
 		cy.mount(
 			<List>
-				<ListItemStandard id="wrapping-item" wrapping text={longText}></ListItemStandard>
+				<ListItemStandard id="wrapping-item" wrappingType="Normal" text={longText}></ListItemStandard>
 			</List>
 		);
 
@@ -222,19 +219,15 @@ describe("List - Wrapping Behavior", () => {
 			.should('eq', 300);
 	});
 
-	it("should switch wrapping type when wrapping prop is toggled", () => {
+	it("should render different nodes based on wrappingType prop", () => {
 		const longText = "This is a very long text that should be wrapped when the wrapping prop is enabled, and truncated when it's disabled. This is a very long text that should be wrapped when the wrapping prop is enabled, and truncated when it's disabled. This is a very long text that should be wrapped when the wrapping prop is enabled, and truncated when it's disabled. This is a very long text that should be wrapped when the wrapping prop is enabled, and truncated when it's disabled. This is a very long text that should be wrapped when the wrapping prop is enabled, and truncated when it's disabled. And now we're adding even more text to be extra certain that we have enough content to demonstrate the behavior properly.";
 		
 		// First render with wrapping enabled
 		cy.mount(
 			<List>
-				<ListItemStandard id="wrapping-item" wrapping text={longText}></ListItemStandard>
+				<ListItemStandard id="wrapping-item" wrappingType="Normal" text={longText}></ListItemStandard>
 			</List>
 		);
-
-		// Check that wrapping attribute is set
-		cy.get("#wrapping-item")
-			.should("have.attr", "wrapping");
 
 		// Check that wrapping-type attribute is set to Normal
 		cy.get("#wrapping-item")
@@ -246,17 +239,13 @@ describe("List - Wrapping Behavior", () => {
 			.find("ui5-expandable-text")
 			.should("exist");
 
-		// Remove the wrapping attribute from the existing component
+		// Set wrappingType to None
 		cy.get("#wrapping-item")
 			.then($el => {
-				$el[0].removeAttribute("wrapping");
+				$el[0].setAttribute("wrapping-type", "None");
 			});
 
-		// Check that wrapping attribute is removed
-		cy.get("#wrapping-item")
-			.should("not.have.attr", "wrapping");
-
-		// Now check the wrapping-type attribute in a separate command
+		// Check that wrapping-type attribute is set to None
 		cy.get("#wrapping-item")
 			.should("have.attr", "wrapping-type", "None");
 
