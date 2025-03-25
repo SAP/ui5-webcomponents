@@ -88,6 +88,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
+import type InputKeyHint from "./types/InputKeyHint.js";
 
 /**
  * Interface for components that represent a suggestion item, usable in `ui5-input`
@@ -493,6 +494,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 */
 	@property({ type: Boolean })
 	focused = false;
+
+	/**
+	 * @private
+	 */
+	@property()
+	hint?: `${InputKeyHint}`;
 
 	@property({ type: Boolean })
 	valueStateOpen = false;
@@ -947,7 +954,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		if (this.value !== this.previousValue && this.value !== this.lastConfirmedValue && !this.open) {
 			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
-			this.fireDecoratorEvent(INPUT_EVENTS.INPUT);
+			this.fireDecoratorEvent(INPUT_EVENTS.INPUT, { inputType: "" });
 
 			return;
 		}

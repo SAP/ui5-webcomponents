@@ -2,6 +2,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import SearchPopupMode from "@ui5/webcomponents/dist/types/SearchPopupMode.js";
 import type Popover from "@ui5/webcomponents/dist/Popover.js";
 import type List from "@ui5/webcomponents/dist/List.js";
@@ -26,10 +27,17 @@ import SearchCss from "./generated/themes/Search.css.js";
 import SearchField from "./SearchField.js";
 import { StartsWith, StartsWithPerTerm } from "@ui5/webcomponents/dist/Filters.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type SearchItem from "./SearchItem.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type Button from "@ui5/webcomponents/dist/Button.js";
+import type { InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
+import type Input from "@ui5/webcomponents/dist/Input.js";
+import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
+import {
+	SEARCH_CANCEL_BUTTON,
+} from "./generated/i18n/i18n-defaults.js";
 
 interface ISearchSuggestionItem extends UI5Element {
 	selected: boolean;
@@ -186,6 +194,14 @@ class Search extends SearchField {
 	_innerValue = "";
 
 	/**
+	 * Determines whether the item selection should be performed on mobile devices.
+	 * Similar to _performTextSelection on desktop
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_performItemSelectionOnMobile?: boolean;
+
+	/**
 	 * Based on the key pressed, determines if the autocomplete should be performed.
 	 * @private
 	 */
@@ -196,13 +212,6 @@ class Search extends SearchField {
 	 * @private
 	 */
 	_performTextSelection?: boolean;
-
-	/**
-	 * Determines whether the picker should open on user input. In some cases we need to close the picker,
-	 * (press on an item, or pressing Esc), but still focus the input. In this case we need to open the picker on input.
-	 * @private
-	 */
-	_openPickerOnInput?: boolean;
 
 	/**
 	 * Holds the typed value from the user.
@@ -222,13 +231,21 @@ class Search extends SearchField {
 	 */
 	_proposedItem?: ISearchSuggestionItem;
 
+	/**
+	 * Determines whether the item was focused after item selection.
+	 * @private
+	 */
+	_focusedByItemSelection?: boolean;
+
+	@i18n("@ui5/webcomponents-fiori")
+	static i18nBundle: I18nBundle;
+
 	constructor() {
 		super();
 
 		// The typed in value.
 		this._typedInValue = "";
 		this._matchedPerTerm = false;
-		this._openPickerOnInput = false;
 	}
 
 	onBeforeRendering() {
@@ -253,6 +270,16 @@ class Search extends SearchField {
 			this._typedInValue = this.value;
 		}
 
+		if (isPhone() && this.open) {
+			const item = this._getFirstMatchingItem(this.value);
+			this._proposedItem = item;
+			this._deselectItems();
+
+			if (item && this._performItemSelectionOnMobile) {
+				item.selected = true;
+			}
+		}
+
 		this._flattenItems.forEach(item => {
 			(item as SearchItem).highlightText = this._typedInValue;
 		});
@@ -274,6 +301,34 @@ class Search extends SearchField {
 		this._performTextSelection = false;
 
 		this.style.setProperty("--search_width", `${this.getBoundingClientRect().width}px`);
+	}
+
+	_handleMobileInput(e: CustomEvent<InputEventDetail>) {
+		this.value = (e.target as Input).value;
+		this._performItemSelectionOnMobile = this._shouldPerformSelectionOnMobile(e);
+
+		this.fireDecoratorEvent("input");
+	}
+
+	_shouldPerformSelectionOnMobile(e: CustomEvent<InputEventDetail>): boolean {
+		const eventType = e.detail.inputType;
+		const allowedEventTypes = [
+			"deleteWordBackward",
+			"deleteWordForward",
+			"deleteSoftLineBackward",
+			"deleteSoftLineForward",
+			"deleteEntireSoftLine",
+			"deleteHardLineBackward",
+			"deleteHardLineForward",
+			"deleteByDrag",
+			"deleteByCut",
+			"deleteContent",
+			"deleteContentBackward",
+			"deleteContentForward",
+			"historyUndo",
+		];
+
+		return !this.noTypeahead && !allowedEventTypes.includes(eventType || "");
 	}
 
 	_handleTypeAhead(item: ISearchSuggestionItem) {
@@ -360,7 +415,13 @@ class Search extends SearchField {
 
 		innerInput.setSelectionRange(this.value.length, this.value.length);
 		this.open = false;
-		this._openPickerOnInput = true;
+	}
+
+	_onMobileInputKeydown(e: KeyboardEvent) {
+		if (isEnter(e)) {
+			this._handleEnter();
+			this.blur();
+		}
 	}
 
 	_handleSearchEvent() {
@@ -370,19 +431,12 @@ class Search extends SearchField {
 	_handleEscape() {
 		this.value = this._typedInValue || this.value;
 		this._innerValue = this.value;
-
-		this._openPickerOnInput = true;
 	}
 
 	_handleInput(e: InputEvent) {
 		super._handleInput(e);
 
-		if (!this._openPickerOnInput) {
-			return;
-		}
-
 		this.open = true;
-		this._openPickerOnInput = false;
 	}
 
 	_onFooterButtonKeyDown(e: KeyboardEvent) {
@@ -425,8 +479,11 @@ class Search extends SearchField {
 		this._innerValue = this.value;
 		this._typedInValue = this.value;
 		this.open = false;
-		this._openPickerOnInput = true;
-		this.focus();
+
+		if (!isPhone()) {
+			this._focusedByItemSelection = true;
+			this.focus();
+		}
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -450,16 +507,16 @@ class Search extends SearchField {
 	_onfocusin() {
 		super._onfocusin();
 
-		if (this._openPickerOnInput) {
-			return;
-		}
-
 		// prevent opening of empty picker on List Mode
 		if (this.popupMode === SearchPopupMode.List && !this.items.length) {
 			return;
 		}
 
-		this.open = true;
+		if (!this._focusedByItemSelection) {
+			this.open = true;
+		}
+
+		this._focusedByItemSelection = false;
 	}
 
 	_onfocusout() {
@@ -544,7 +601,11 @@ class Search extends SearchField {
 	}
 
 	get _showHeader() {
-		return !!this.headerText;
+		return !!this.headerText || isPhone();
+	}
+
+	get cancelButtonText() {
+		return Search.i18nBundle.getText(SEARCH_CANCEL_BUTTON);
 	}
 
 	get _showFooter() {

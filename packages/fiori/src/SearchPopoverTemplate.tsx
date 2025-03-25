@@ -8,15 +8,19 @@ import ListSeparator from "@ui5/webcomponents/dist/types/ListSeparator.js";
 import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
 import PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
+import Input from "@ui5/webcomponents/dist/Input.js";
+import SuggestionItem from "@ui5/webcomponents/dist/SuggestionItem.js";
+import InputKeyHint from "@ui5/webcomponents/dist/types/InputKeyHint.js";
 
 export default function SearchPopoverTemplate(this: Search) {
 	return (
 		<ResponsivePopover
 			hideArrow={true}
 			preventFocusRestore={true}
-			preventInitialFocus={true}
+			preventInitialFocus={!isPhone()}
 			placement={PopoverPlacement.Bottom}
 			horizontalAlign={PopoverHorizontalAlign.Start}
 			open={this.open}
@@ -35,8 +39,18 @@ export default function SearchPopoverTemplate(this: Search) {
 							<>
 								{this._showHeader &&
 									(<header slot="header" class="ui5-search-popover-header">
-										<Title size={TitleLevel.H6}>{this.headerText}</Title>
-										<Text class="ui5-search-popover-subheader"><i>{this.subheaderText}</i></Text>
+										{isPhone() && <>
+											<div class="ui5-search-popover-searching-header">
+												<Input class="ui5-search-popover-search-field" onInput={this._handleMobileInput} showClearIcon={this.showClearIcon} noTypeahead={this.noTypeahead} hint={InputKeyHint.Search} onKeyDown={this._onMobileInputKeydown}>
+													{this.items.map(item => {
+														return (<SuggestionItem text={item.headingText}></SuggestionItem>);
+													})}
+												</Input>
+												<Button design={ButtonDesign.Transparent} onClick={this._handleClose}>{this.cancelButtonText}</Button>
+											</div>
+										</>}
+										{this.headerText && <Title size={TitleLevel.H6}>{this.headerText}</Title>}
+										{this.subheaderText && <Text class="ui5-search-popover-subheader"><i>{this.subheaderText}</i></Text>}
 									</header>)
 								}
 
