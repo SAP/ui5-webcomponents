@@ -95,6 +95,10 @@
 				<ui5-label show-colon>ensure overflow</ui5-label>
 				<ui5-checkbox id="ensure-overflow"></ui5-checkbox>
 			</div>
+			<div class="form-field">
+				<ui5-label show-colon>Compact Density</ui5-label>
+				<ui5-checkbox id="compact-density"></ui5-checkbox>
+			</div>
 		</div>
 	</div>
 
@@ -123,6 +127,10 @@
 
 		document.getElementById("ensure-overflow").addEventListener("ui5-change", function (event) {
 			document.getElementById("sn1").classList.toggle("ensure-overflow", event.target.checked);
+		});
+
+		document.getElementById("compact-density").addEventListener("ui5-change", function (event) {
+			document.body.classList.toggle("sapUiSizeCompact", event.target.checked);
 		});
 
 		sideNavigation.addEventListener("ui5-selection-change", function (event) {
