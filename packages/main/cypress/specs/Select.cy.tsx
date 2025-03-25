@@ -108,7 +108,7 @@ describe("Select - value handling", () => {
 
 		// assert: no option is selected - the Select is displayed empty
 		cy.get("#opt1").should("not.have.attr", "selected");
-		cy.get("#opt1").should("not.have.attr", "selected");
+		cy.get("#opt2").should("not.have.attr", "selected");
 	});
 
 	it("tests Select's value updated after user interaction", () => {
