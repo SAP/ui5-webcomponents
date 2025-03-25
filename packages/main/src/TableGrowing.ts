@@ -1,21 +1,15 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-
-import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import {
-	isSpace,
-	isEnter,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-
-import type Table from "./Table.js";
-import type { ITableGrowing } from "./Table.js";
+	customElement, property, eventStrict, i18n,
+} from "@ui5/webcomponents-base/dist/decorators.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import TableGrowingTemplate from "./TableGrowingTemplate.js";
 import TableGrowingCss from "./generated/themes/TableGrowing.css.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import type Table from "./Table.js";
+import type { ITableGrowing } from "./Table.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	TABLE_MORE,
 	TABLE_MORE_DESCRIPTION,
@@ -74,8 +68,8 @@ import {
  *
  * @public
  */
-@event("load-more", {
-	bubbles: true,
+@eventStrict("load-more", {
+	bubbles: false,
 })
 
 class TableGrowing extends UI5Element implements ITableGrowing {
@@ -221,10 +215,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 			return;
 		}
 
-		const lastElement = this._table.shadowRoot?.querySelector("#table-end-row");
-		if (lastElement) {
-			this._getIntersectionObserver().observe(lastElement);
-		}
+		this._getIntersectionObserver().observe(this._table._endRow);
 	}
 
 	/**

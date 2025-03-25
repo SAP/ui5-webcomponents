@@ -75,7 +75,6 @@ describe("SearchField general interaction", () => {
 
 			cy.get("@inner-button")
 				.should("have.attr", "title", SEARCH_FIELD_SEARCH_COLLAPSED.defaultText);
-
 			cy.get("@inner-button")
 				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_COLLAPSED.defaultText);
 		});
@@ -124,7 +123,6 @@ describe("SearchField general interaction", () => {
 			cy.get("@search-icon")
 				.find("title")
 				.should("contain.text", SEARCH_FIELD_SEARCH_EXPANDED.defaultText);
-
 			cy.get("@search-icon")
 				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_EXPANDED.defaultText);
 
@@ -157,7 +155,6 @@ describe("SearchField general interaction", () => {
 			cy.get("@search-icon")
 				.find("title")
 				.should("contain.text", SEARCH_FIELD_SEARCH_ICON.defaultText);
-
 			cy.get("@search-icon")
 				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_ICON.defaultText);
 		});
@@ -225,7 +222,6 @@ describe("SearchField general interaction", () => {
 			cy.get("@clear-icon")
 				.find("title")
 				.should("contain.text", SEARCH_FIELD_CLEAR_ICON.defaultText);
-
 			cy.get("@clear-icon")
 				.should("have.attr", "aria-label", SEARCH_FIELD_CLEAR_ICON.defaultText);
 		});

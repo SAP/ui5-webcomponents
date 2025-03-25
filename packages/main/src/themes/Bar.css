@@ -7,7 +7,6 @@
 }
 
 .ui5-bar-root {
-	container-type: size;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -73,17 +72,4 @@
 
 ::slotted(*) {
 	margin: 0 0.25rem;
-}
-
-@container (width < 600px) {
-	* {
-		--_ui5_bar-start-container-padding-start: var(--_ui5_bar-start-container-padding-start_S);
-		--_ui5_bar-end-container-padding-end: var(--_ui5_bar-end-container-padding-end_S)
-	}
-}
-@container (width > 1439px) {
-	* {
-		--_ui5_bar-start-container-padding-start: var(--_ui5_bar-start-container-padding-start_XL);
-		--_ui5_bar-end-container-padding-end: var(--_ui5_bar-end-container-padding-end_XL);
-	}
 }
