@@ -168,17 +168,17 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	/**
 	 * Defines the background color of the desired image.
-	 * @default "Accent6"
+	 * @default "Auto"
 	 * @public
 	 */
 	@property()
-	colorScheme: `${AvatarColorScheme}` = "Accent6";
+	colorScheme: `${AvatarColorScheme}` = "Auto";
 
 	/**
 	 * @private
 	 */
 	@property()
-	_colorScheme: `${AvatarColorScheme}` = "Accent6";
+	_colorScheme: `${AvatarColorScheme}` = "Auto";
 
 	/**
 	 * Defines the text alternative of the component.
@@ -264,10 +264,10 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	/**
 	 * Returns the effective background color.
-	 * @default "Accent6"
+	 * @default "Auto"
 	 * @private
 	 */
-	get еffectiveBackgroundColor(): AvatarColorScheme {
+	get effectiveBackgroundColor(): AvatarColorScheme {
 		// we read the attribute, because the "background-color" property will always have a default value
 		return this.getAttribute("color-scheme") as AvatarColorScheme || this._colorScheme;
 	}

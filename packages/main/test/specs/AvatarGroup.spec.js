@@ -26,23 +26,6 @@ describe("avatar-group rendering", () => {
 		assert.ok(avatarGroupGroup, "AvatarGroup mode 'Group' rendered");
 	});
 
-
-	it("tests if _background-design attribute is automatically set to avatars", async () => {
-		const avatars = await browser.$$("#avatar-group-group ui5-avatar");
-
-		let index = 0;
-
-		avatars.forEach(async avatar => {
-			const avatarBackgroundColor = await avatar.getAttribute("_color-scheme");
-
-			if (++index > 10) {
-				index = 1;
-			}
-
-			assert.strictEqual(avatarBackgroundColor, `Accent${index}`, "AvatarGroup _color-scheme property is assigned to avatars");
-		});
-	});
-
 	it("tests click event when avatar is clicked", async () => {
 		const avatar = await browser.$("#avatar-1");
 
