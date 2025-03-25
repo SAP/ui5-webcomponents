@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import AINoticeIndicatorMode from "./types/AINoticeIndicatorMode.js";
 import {
 	BUTTON_TEXT_CLOSE,
@@ -56,22 +57,22 @@ class AINoticeIndicator extends UI5Element {
 	/**
 	 * Determines the AI attribution notice text.
 	 *
-	 * @default undefined
+	 * @default "Created with AI."
 	 * @public
 	 */
-	@property()
-	attributionText?: string;
+	@property({ type: String })
+	attributionText = "Created with AI.";
 
-    /**
+	/**
 	 * Determines the verification prompt text.
 	 *
-	 * @default undefined
+	 * @default "Verify results before use."
 	 * @public
 	 */
-	@property()
-	verificationText?: string;
+	@property({ type: String })
+	verificationText = "Verify results before use.";
 
-    /**
+	/**
 	 * Determines whether the mode of AI icon.
 	 *
 	 * @default "Default"
@@ -81,25 +82,13 @@ class AINoticeIndicator extends UI5Element {
 	mode: `${AINoticeIndicatorMode}` = "Default"
 
 	@property({ type: Boolean })
-	_expanded = false;
+	_popoverOpen = false;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-	get _verificationText() {
-		return this.verificationText;
-	}
-
-	get _titleText() {
-		return this.attributionText;
-	}
-
-    get _closeButtonText() {
-		return AINoticeIndicator.i18nBundle.getText(BUTTON_TEXT_CLOSE);
-	}
-
-	get _popoverText() {
-		return AINoticeIndicator.i18nBundle.getText(POPOVER_TEXT);
+	get isIconOnly() {
+		return this.mode == AINoticeIndicatorMode.IconOnly;
 	}
 
 	get isShortened() {
@@ -110,27 +99,30 @@ class AINoticeIndicator extends UI5Element {
 		return this.mode == AINoticeIndicatorMode.Emphasized;
 	}
 
-	get isIconOnly() {
-		return this.mode == AINoticeIndicatorMode.IconOnly;
+	get _closeButtonText() {
+		return AINoticeIndicator.i18nBundle.getText(BUTTON_TEXT_CLOSE);
 	}
 
-    getMode(): void {
-		if (!this.attributionText && !this.verificationText) {
-            this.mode = AINoticeIndicatorMode.IconOnly;
+	get _popoverText() {
+		return AINoticeIndicator.i18nBundle.getText(POPOVER_TEXT);
+	}
+
+	get _popover() {
+		return this.shadowRoot?.querySelector("ui5-responsive-popover") as ResponsivePopover;
+	}
+
+	_handleToggleClick(e: Event) {
+		const popover = this._popover;
+		if (popover) {
+			popover.open = !popover.open;
 		}
 	}
 
-    _handleCloseButtonClick(e: MouseEvent) {
-		this._expanded = false;
-		e.stopPropagation();
-	}
-	
-	_handleToggleClick() {
-		this._expanded = !this._expanded;
-	}
-
 	_handlePopoverClose() {
-		this._expanded = false;
+		const popover = this._popover;
+		if (popover) {
+			popover.open = false;
+		}
 	}
 }
 
