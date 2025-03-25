@@ -439,10 +439,6 @@ class Select extends UI5Element implements IFormInputElement {
 
 		// Flow 2: "value" has been used - select the option by value or apply auto selection
 		this._applySelectionByValue(this._valueStorage);
-
-		if (!this.selectedOption) {
-			this._applyAutoSelection();
-		}
 	}
 
 	/**

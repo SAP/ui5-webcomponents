@@ -106,8 +106,9 @@ describe("Select - value handling", () => {
 			.should("have.attr", "value", "option3")
 			.invoke("prop", "value", "option3");
 
-		// assert: First option is auto-selected
-		cy.get("#opt1").should("have.attr", "selected");
+		// assert: no option is selected - the Select is displayed empty
+		cy.get("#opt1").should("not.have.attr", "selected");
+		cy.get("#opt1").should("not.have.attr", "selected");
 	});
 
 	it("tests Select's value updated after user interaction", () => {
