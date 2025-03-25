@@ -36,7 +36,7 @@ createScopeItems();
 searchScope.addEventListener("ui5-scope-change", (event) => {
     const scope = event.detail.scope.text === "All" ? "" : event.detail.scope.text.toLowerCase();
     
-    searchScope.getSlottedNodes("items").forEach(item => {
+    searchScope.items.forEach(item => {
         item.remove();
     });
 
