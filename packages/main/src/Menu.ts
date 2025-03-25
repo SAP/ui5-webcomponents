@@ -7,6 +7,10 @@ import {
 	isLeft,
 	isRight,
 	isEnter,
+	isTabNext,
+	isTabPrevious,
+	isDown,
+	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	isPhone,
@@ -80,6 +84,10 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * - `Arrow Right`, `Space` or `Enter` - Opens a sub-menu if there are menu items nested
  * in the currently clicked menu item.
  * - `Arrow Left` or `Escape` - Closes the currently opened sub-menu.
+ *
+ * when there is `endContent` :
+ * - `Arrow Left` or `ArrowRight` - Navigate between the menu item actions and the menu item itself
+ * - `Arrow Up` / `Arrow Down` - Navigates up and down the currently visible menu items
  *
  * Note: if the text ditrection is set to Right-to-left (RTL), `Arrow Right` and `Arrow Left` functionality is swapped.
  *
@@ -294,7 +302,7 @@ class Menu extends UI5Element {
 			// respect mouseover only on desktop
 			const item = e.target as MenuItem;
 
-			if (item.hasAttribute("ui5-menu-item")) {
+			if (this._isInstanceOfMenuItem(item)) {
 				item.focus();
 
 				// Opens submenu with 300ms delay
@@ -346,25 +354,43 @@ class Menu extends UI5Element {
 	}
 
 	_itemKeyDown(e: KeyboardEvent) {
-		if (!isLeft(e) && !isRight(e)) {
-			return;
-		}
-
-		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
-		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
+		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
 		const item = e.target as MenuItem;
 		const parentElement = item.parentElement as MenuItem;
+		const shouldItemNavigation = isUp(e) || isDown(e);
+		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
+		const shouldCloseMenu = !shouldItemNavigation && !shouldOpenMenu && this._isInstanceOfMenuItem(parentElement);
 
-		if (isEnter(e)) {
-			e.preventDefault();
+		if (this._isInstanceOfMenuItem(item)) {
+			if (isEnter(e) || isTabNextPrevious) {
+				e.preventDefault();
+			}
+
+			if (isRight(e) || isLeft(e)) {
+				item._navigateToEndContent(isLeft(e));
+			}
+
+			if (shouldOpenMenu) {
+				this._openItemSubMenu(item);
+			} else if ((shouldCloseMenu || isTabNextPrevious) && parentElement._popover) {
+				parentElement._popover.open = false;
+				parentElement.selected = false;
+				parentElement._popover.focusOpener();
+			}
+		} else if (isUp(e)) {
+			this._navigateOutOfEndContent(parentElement);
+		} else if (isDown(e)) {
+			this._navigateOutOfEndContent(parentElement, true);
 		}
-		if (shouldOpenMenu) {
-			this._openItemSubMenu(item);
-		} else if (shouldCloseMenu && parentElement.hasAttribute("ui5-menu-item") && parentElement._popover) {
-			parentElement._popover.open = false;
-			parentElement.selected = false;
-			(parentElement._popover.opener as HTMLElement)?.focus();
-		}
+	}
+
+	_navigateOutOfEndContent(menuItem: MenuItem, isDownwards?: boolean) {
+		const opener = menuItem?.parentElement as MenuItem | Menu;
+		const currentIndex = opener._menuItems.indexOf(menuItem);
+		const nextItem = isDownwards ? opener._menuItems[currentIndex + 1] : opener._menuItems[currentIndex - 1];
+		const itemToFocus = nextItem || opener._menuItems[currentIndex];
+
+		itemToFocus.focus();
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
@@ -393,6 +419,10 @@ class Menu extends UI5Element {
 	_afterPopoverClose() {
 		this.open = false;
 		this.fireDecoratorEvent("close");
+	}
+
+	_isInstanceOfMenuItem(object: any): object is MenuItem {
+		return "isMenuItem" in object;
 	}
 }
 

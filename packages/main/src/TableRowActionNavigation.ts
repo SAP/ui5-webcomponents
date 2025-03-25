@@ -1,16 +1,25 @@
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { customElement, property, i18n } from "@ui5/webcomponents-base/dist/decorators.js";
 import TableRowActionBase from "./TableRowActionBase.js";
-import { TABLE_NAVIGATION } from "./generated/i18n/i18n-defaults.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { TABLE_NAVIGATION } from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
- * The `TableRowActionNavigation` class defines a navigation actio‚n for table rows.
+ *
+ * ### Overview
+ *
+ * The `ui5-table-row-action-navigation` component defines a navigation action for table rows.
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/TableRowActionNavigation.js";`
+ *
  * @constructor
  * @extends TableRowActionBase
  * @since 2.7.0
  * @public
+ * @experimental
  */
 @customElement({ tag: "ui5-table-row-action-navigation" })
 
@@ -24,6 +33,13 @@ class TableRowActionNavigation extends TableRowActionBase {
 	@property({ type: Boolean })
 	interactive = false;
 
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
+	isFixedAction() {
+		return true;
+	}
+
 	getRenderInfo() {
 		return {
 			text: this._i18nNavigation,
@@ -32,12 +48,8 @@ class TableRowActionNavigation extends TableRowActionBase {
 		};
 	}
 
-	isFixedAction() {
-		return true;
-	}
-
 	get _i18nNavigation() {
-		return TableRowActionBase.i18nBundle.getText(TABLE_NAVIGATION);
+		return TableRowActionNavigation.i18nBundle.getText(TABLE_NAVIGATION);
 	}
 }
 

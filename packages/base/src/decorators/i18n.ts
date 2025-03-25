@@ -20,6 +20,14 @@ const i18n = (bundleName: string): i18nDecorator => {
 		if (!target.metadata.i18n) {
 			target.metadata.i18n = {};
 		}
+
+		Object.defineProperty(target, propertyName, {
+			get() {
+				return target.i18nBundles[bundleName];
+			},
+			set() {},
+		});
+
 		target.metadata.i18n[propertyName] = {
 			bundleName,
 			target,

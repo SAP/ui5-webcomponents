@@ -1,21 +1,15 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-
-import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import {
-	isSpace,
-	isEnter,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-
+	customElement, property, eventStrict, i18n,
+} from "@ui5/webcomponents-base/dist/decorators.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import TableGrowingMode from "./types/TableGrowingMode.js";
+import TableGrowingTemplate from "./TableGrowingTemplate.js";
+import TableGrowingCss from "./generated/themes/TableGrowing.css.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import type Table from "./Table.js";
 import type { ITableGrowing } from "./Table.js";
-import TableGrowingMode from "./types/TableGrowingMode.js";
-import TableGrowingTemplate from "./generated/templates/TableGrowingTemplate.lit.js";
-import TableGrowingCss from "./generated/themes/TableGrowing.css.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	TABLE_MORE,
 	TABLE_MORE_DESCRIPTION,
@@ -48,6 +42,10 @@ import {
  * </ui5-table>
  * ```
  *
+ * **Notes**:
+ * * When the `ui5-table-growing` component is used with the `Scroll` type and the table is currently not scrollable,
+ * the component will render a growing button instead to ensure growing capabilities until the table becomes scrollable.
+ *
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/TableGrowing.js";`
@@ -60,7 +58,7 @@ import {
  */
 @customElement({
 	tag: "ui5-table-growing",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TableGrowingTemplate,
 	styles: TableGrowingCss,
 })
@@ -70,8 +68,8 @@ import {
  *
  * @public
  */
-@event("load-more", {
-	bubbles: true,
+@eventStrict("load-more", {
+	bubbles: false,
 })
 
 class TableGrowing extends UI5Element implements ITableGrowing {
@@ -85,7 +83,8 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 *
 	 * Button - Shows a More button at the bottom of the table, pressing it will load more rows.
 	 *
-	 * Scroll - The rows are loaded automatically by scrolling to the bottom of the table. If the table is not scrollable, this option is the same as the Button.
+	 * Scroll - The rows are loaded automatically by scrolling to the bottom of the table. If the table is not scrollable,
+	 * a growing button will be rendered instead to ensure growing functionality.
 	 * @default "Button"
 	 * @public
 	 */
@@ -120,7 +119,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * Used for keyboard interaction.
 	 * @private
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, noAttribute: true })
 	_activeState = false;
 
 	@property({ type: Number, noAttribute: true })
@@ -216,10 +215,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 			return;
 		}
 
-		const lastElement = this._table.shadowRoot?.querySelector("#table-end-row");
-		if (lastElement) {
-			this._getIntersectionObserver().observe(lastElement);
-		}
+		this._getIntersectionObserver().observe(this._table._endRow);
 	}
 
 	/**

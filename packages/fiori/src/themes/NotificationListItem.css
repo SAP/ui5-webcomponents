@@ -57,6 +57,7 @@
 	border-right: var(--_ui5-notification_item-border-top-left-right);
 	border-top: var(--_ui5-notification_item-border-top-left-right);
 	border-radius: var(--_ui5-notification_item-border-radius);
+	list-style: none;
 }
 /* End */
 
@@ -155,7 +156,6 @@
 	font-size: var(--sapFontSize);
 	margin-top: var(--_ui5-notification_item-footer-margin-top);
 	box-sizing: border-box;
-	flex-wrap: wrap;
 	align-items: center;
 }
 
@@ -167,6 +167,7 @@
 
 .ui5-nli-footnotes {
 	display: flex;
+	min-width: 0; /* prevents overflowing footnotes */
 }
 
 .ui5-nli-footer-showMore {

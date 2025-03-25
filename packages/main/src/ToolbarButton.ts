@@ -5,7 +5,6 @@ import type { ButtonAccessibilityAttributes } from "./Button.js";
 import type ButtonDesign from "./types/ButtonDesign.js";
 
 import ToolbarItem from "./ToolbarItem.js";
-import type { IEventOptions } from "./ToolbarItem.js";
 import ToolbarButtonTemplate from "./ToolbarButtonTemplate.js";
 import ToolbarPopoverButtonTemplate from "./ToolbarPopoverButtonTemplate.js";
 
@@ -47,11 +46,7 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 	bubbles: true,
 	cancelable: true,
 })
-
 class ToolbarButton extends ToolbarItem {
-	eventDetails!: ToolbarItem["eventDetails"] & {
-		"click": void
-	}
 	/**
 	 * Defines if the action is disabled.
 	 *
@@ -161,6 +156,14 @@ class ToolbarButton extends ToolbarItem {
 	@property()
 	width?: string;
 
+	/**
+     * Defines if the toolbar button is hidden.
+     * @private
+     * @default false
+     */
+	@property({ type: Boolean })
+	hidden = false;
+
 	get styles() {
 		return {
 			width: this.width,
@@ -180,10 +183,12 @@ class ToolbarButton extends ToolbarItem {
 		return ToolbarPopoverButtonTemplate;
 	}
 
-	get subscribedEvents(): Map<string, IEventOptions> {
-		const map = new Map();
-		map.set("click", { preventClosing: false });
-		return map;
+	onClick(e: Event) {
+		e.stopImmediatePropagation();
+		const prevented = !this.fireDecoratorEvent("click", { targetRef: e.target as HTMLElement });
+		if (!prevented && !this.preventOverflowClosing) {
+			this.fireDecoratorEvent("close-overflow");
+		}
 	}
 }
 

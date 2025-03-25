@@ -39,8 +39,8 @@ import type {
 } from "./types.js";
 import { updateFormValue, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
-import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 import { getI18nBundle } from "./i18nBundle.js";
+import type I18nBundle from "./i18nBundle.js";
 import { fetchCldr } from "./asset-registries/LocaleData.js";
 import getLocale from "./locale/getLocale.js";
 
@@ -151,7 +151,13 @@ type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
 
 type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "autocomplete" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "inputmode" | "lang" | "nonce" | "part" | "exportparts" | "pattern" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate" | "ref" | "inert";
 type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
-type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: IsAny<T[Property], any, (e: CustomEvent<T[Property]>) => void> }
+type TargetedCustomEvent<D, T> = Omit<CustomEvent<D>, "currentTarget"> & { currentTarget: T };
+// define as method and extract the function signature from the method to make it bivariant so that inheritance of event handlers is not checked via strictFunctionTypes
+// https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-6.html#strict-function-types
+type TargetedEventHandler<D, T> = {
+	asMethod(e: TargetedCustomEvent<D, T>): void
+}["asMethod"];
+type Convert<T, K extends UI5Element> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: IsAny<T[Property], any, TargetedEventHandler<T[Property], K>> }
 
 /**
  * @class
@@ -164,7 +170,7 @@ abstract class UI5Element extends HTMLElement {
 	eventDetails!: NotEqual<this, UI5Element> extends true ? object : {
 		[k: string]: any
 	};
-	_jsxEvents!: Omit<JSX.DOMAttributes<this>, keyof Convert<this["eventDetails"]> | "onClose" | "onToggle" | "onChange" | "onSelect" | "onInput"> & Convert<this["eventDetails"]>
+	_jsxEvents!: Omit<JSX.DOMAttributes<this>, keyof Convert<this["eventDetails"], this> | "onClose" | "onToggle" | "onChange" | "onSelect" | "onInput"> & Convert<this["eventDetails"], this>
 	_jsxProps!: Pick<JSX.AllHTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & ElementProps<this> & Partial<this["_jsxEvents"]> & { key?: any };
 	__id?: string;
 	_suppressInvalidation: boolean;
@@ -1184,8 +1190,14 @@ abstract class UI5Element extends HTMLElement {
 						});
 
 						if (this._rendered) {
-							// is already rendered so it is not the constructor - can set the attribute synchronously
-							this._updateAttribute(prop, value);
+							// the component is already rendered, indicating it is not the constructor -
+							// therefore the attribute can be set synchronously.
+
+							// get the effective value of the property,
+							// as it might differ from the provided value
+							const newValue = origGet ? origGet.call(this) : this._state[prop];
+
+							this._updateAttribute(prop, newValue);
 						}
 
 						if (ctor.getMetadata().isFormAssociated()) {
@@ -1292,6 +1304,11 @@ abstract class UI5Element extends HTMLElement {
 
 	static asyncFinished: boolean;
 	static definePromise: Promise<void> | undefined;
+	static i18nBundleStorage: Record<string, I18nBundle> = {};
+
+	static get i18nBundles(): Record<string, I18nBundle> {
+		return this.i18nBundleStorage;
+	}
 
 	/**
 	 * Registers a UI5 Web Component in the browser window object
@@ -1307,25 +1324,14 @@ abstract class UI5Element extends HTMLElement {
 			]);
 			const [i18nBundles] = result;
 			Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
-				const propertyName = pair[0];
-				const targetClass = pair[1].target;
-				(targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
+				const bundleName = pair[1].bundleName;
+				this.i18nBundleStorage[bundleName] = i18nBundles[index];
 			});
 			this.asyncFinished = true;
 		};
 		this.definePromise = defineSequence();
 
 		const tag = this.getMetadata().getTag();
-
-		const features = this.getMetadata().getFeatures();
-
-		features.forEach(feature => {
-			if (getComponentFeature(feature)) {
-				this.cacheUniqueDependencies();
-			}
-
-			subscribeForFeatureLoad(feature, this, this.cacheUniqueDependencies.bind(this));
-		});
 
 		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);

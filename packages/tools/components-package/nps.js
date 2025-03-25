@@ -19,7 +19,7 @@ const getScripts = (options) => {
 	// The script creates the "src/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
     const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.set} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
 
-	const tsOption = !options.legacy;
+	const tsOption = !options.legacy || options.jsx;
 	const tsCommandOld = tsOption ? "tsc" : "";
 	let tsWatchCommandStandalone = tsOption ? "tsc --watch" : "";
 	// this command is only used for standalone projects. monorepo projects get their watch from vite, so opt-out here
@@ -122,8 +122,10 @@ const getScripts = (options) => {
 		},
 		start: "nps prepare watch.devServer",
 		test: `node "${LIB}/test-runner/test-runner.js"`,
-		"test-cy-ci": `yarn cypress run --component --browser chrome`,
-		"test-cy-open": `yarn cypress open --component --browser chrome`,
+		"test-cy-ci": `cross-env CYPRESS_COVERAGE=true yarn cypress run --component --browser chrome`,
+		"test-cy-ci-suite-1": `cross-env CYPRESS_COVERAGE=true TEST_SUITE=SUITE1 yarn cypress run --component --browser chrome`,
+		"test-cy-ci-suite-2": `cross-env CYPRESS_COVERAGE=true TEST_SUITE=SUITE2 yarn cypress run --component --browser chrome`,
+		"test-cy-open": `cross-env CYPRESS_COVERAGE=true yarn cypress open --component --browser chrome`,
 		"test-suite-1": `node "${LIB}/test-runner/test-runner.js" --suite suite1`,
 		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
 		startWithScope: "nps scope.prepare scope.watchWithBundle",
@@ -142,8 +144,8 @@ const getScripts = (options) => {
 		},
 		generateAPI: {
 			default: tsOption ? "nps generateAPI.generateCEM generateAPI.validateCEM" : "",
-			generateCEM: `cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs" ${ options.dev ? "--dev" : "" }`,
-			validateCEM: `node "${LIB}/cem/validate.js" ${ options.dev ? "--dev" : "" }`,
+			generateCEM: `${options.dev ? "cross-env UI5_CEM_MODE='dev'" : ""} cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs"`,
+			validateCEM: `${options.dev ? "cross-env UI5_CEM_MODE='dev'" : ""} node "${LIB}/cem/validate.js"`,
 		},
 	};
 

@@ -4,7 +4,7 @@
 The test framework of choice for UI5 Web Components is [WebdriverIO](https://webdriver.io/) or WDIO for short.
 It has a straightforward API - [https://webdriver.io/docs/api.html](https://webdriver.io/docs/api.html), and has excellent support for Web Components.
 
-The browser of choice for test execution is [Google Chrome](https://www.google.com/chrome/), respectively the WebDriver used is [ChromeDriver](https://chromedriver.chromium.org/).  
+The browser of choice for test execution is [Google Chrome](https://www.google.com/chrome/), respectively the WebDriver used is [ChromeDriver](https://chromedriver.chromium.org/).
 
 ### Prerequisites
 
@@ -16,24 +16,24 @@ You can install it with `npm`:
  - `npm i --save-dev chromedriver`
 
 or with `yarn`:
- - `yarn add -D chromedriver` 
+ - `yarn add -D chromedriver`
 
 **Note:** Google Chrome and ChromeDriver need to be the same version to work together. Whenever you update Google Chrome on
 your system (or it updates automatically, if allowed), you are expected to also update ChromeDriver to the respective version.
 
 ### Running the tests
 
-#### 1. Test configuration 
+#### 1. Test configuration
 
 The configuration for WDIO can be found in the `config/` directory under `wdio.conf.js`.
 
-As explained [here](./01-package.md) in the section about the `config/` directory, you can 
+As explained [here](./01-package.md) in the section about the `config/` directory, you can
 customize, or even completely replace the default configuration.
 
 However, before doing so, please note the following two benefits of working with the default configuration, provided by UI5 Web Components:
- - Hooks, synchronizing the execution of all relevant WDIO commands (e.g. `click`, `url`, `$`, `$$`) with the rendering of the framework to 
+ - Hooks, synchronizing the execution of all relevant WDIO commands (e.g. `click`, `url`, `$`, `$$`) with the rendering of the framework to
  ensure consistency when reading or changing the state of the components.
- - Additional API methods: `setProperty`, `setAttribute`, `removeAttribute`, `hasClass`. 
+ - Additional API methods: `setProperty`, `setAttribute`, `removeAttribute`, `hasClass`.
 
 So our recommendation would be to modify it, if necessary, but not completely replace it.
 
@@ -74,7 +74,7 @@ describe("ui5-demo rendering", async () => {
 		assert.ok(innerContent, "content rendered");
 	});
 });
-``` 
+```
 
 Key points:
    - Load the test page with the `browser.url` command. You can do this once for each test suite or for each individual test.
@@ -87,7 +87,7 @@ Key points:
 
 For WDIO capabilities, see:
    - Official API: [https://webdriver.io/docs/api.html](https://webdriver.io/docs/api.html).
-   - Additional commands provided in our standard WDIO configuration: `setProperty`, `setAttribute`, `removeAttribute`, `hasClass`.    
+   - Additional commands provided in our standard WDIO configuration: `setProperty`, `setAttribute`, `removeAttribute`, `hasClass`.
 
 **Note:** The standard WDIO configuration we provide automatically synchronizes all test commands' execution with the framework rendering cycle.
 Therefore, in the example above, the `shadow$` command will internally wait for all rendering to be over before being executed. The
@@ -100,11 +100,11 @@ Debugging with WDIO is really simple. Just follow these 3 steps:
 1. Change the WDIO configuration file `config/wdio.conf.js` to disable `headless` mode for Google Chrome as follows:
 
 	From:
-	
+
 	```js
 	module.exports = require("@ui5/webcomponents-tools/components-package/wdio.js");
 	```
-	
+
 	to:
 
 	```js
@@ -112,7 +112,7 @@ Debugging with WDIO is really simple. Just follow these 3 steps:
     result.config.capabilities[0]["goog:chromeOptions"].args = ['--disable-gpu']; // From: ['--disable-gpu', '--headless']
     module.exports = result;
     ```
-    
+
     If you happen to debug often, it's recommended to keep the file in this format and just comment out the middle line when you're done debugging.
 
 2. Set a breakpoint with `browser.debug` somewhere in your test:
@@ -124,29 +124,29 @@ Debugging with WDIO is really simple. Just follow these 3 steps:
         assert.ok(innerContent, "content rendered");
     });
 	```
-	
+
 	For more on `debug`, see [https://webdriver.io/docs/api/browser/debug.html](https://webdriver.io/docs/api/browser/debug.html).
 
 3. Run the single test spec and wait for the browser to open and pause on your breakpoint:
 
  - Run the dev server, if you haven't already:
-	
-	`yarn start` 
-	
-	or 
-	
+
+	`yarn start`
+
+	or
+
 	`npm run start`.
 
  - Run the single test spec:
-	
-	`yarn test test/specs/Demo.spec.js` 
-	
-	or 
-	
+
+	`yarn test test/specs/Demo.spec.js`
+
+	or
+
 	`npm run test test/specs/Demo.spec.js`.
-	  
-Google Chrome will then open in a new window, controlled by WDIO via the ChromeDriver, and your test will pause on your 
-breakpoint of choice. Proceed to debug normally.	 
+
+Google Chrome will then open in a new window, controlled by WDIO via the ChromeDriver, and your test will pause on your
+breakpoint of choice. Proceed to debug normally.
 
 ### Best practices for writing tests
 
@@ -174,7 +174,7 @@ Use:
 Preferred:
  ```js
 assert.ok(await browser.$(<SELECTOR>).isExisting())
-``` 
+```
 
 instead of:
 
@@ -225,21 +225,19 @@ For each package in your project, include a `cypress` folder at the root level w
 To write tests for a specific component, create a file in the respective package's specs folder:
 
 ```
-{packageName}/cypress/specs/MyComponent.cy.ts
+{packageName}/cypress/specs/MyComponent.cy.tsx
 ```
 
-We utilize component testing for UI5 web components, which involves mounting the component you intend to test. Our custom `mount` function leverages Lit for rendering components.
+We utilize component testing for UI5 web components, which involves mounting the component you intend to test. Our custom `mount` function leverages `preact` with `JSX` syntax for rendering components.
 
 **Example Test File:**
 
 ```typescript
-import { html } from "lit";
+describe("MyComponent Rendering", () => {
+  it("MyComponent exists", () => {
+    cy.mount(<MyComponent></MyComponent>);
 
-describe("Demo", () => {
-  it("Button exists", () => {
-    cy.mount(html`<ui5-test-generic></ui5-test-generic>`);
-
-    cy.get("[ui5-button]").should("exist");
+    cy.get("[my-component]").should("exist");
   });
 });
 ```
@@ -301,7 +299,7 @@ With Cypress component testing, we can efficiently verify if events are fired us
 **Example:**
 
 ```typescript
-cy.mount(html`<ui5-button></ui5-button>`);
+cy.mount(<Button></Button>`);
 
 cy.get("[ui5-button]").then(($button) => {
   cy.spy($button[0], "click").as("clickEvent");
@@ -332,7 +330,7 @@ describe("Configuration Example", () => {
   };
 
   before(() => {
-    cy.mount(html`<ui5-test-generic></ui5-test-generic>`, {
+    cy.mount(<MyComponent></MyComponent>, {
       ui5Configuration: config,
     });
 
@@ -381,7 +379,7 @@ To simulate mobile testing conditions, use the `ui5SimulateDevice` Cypress comma
 **Example:**
 
 ```typescript
-cy.mount(html`<ui5-button></ui5-button>`);
+cy.mount(<Button></Button>);
 
 cy.ui5SimulateDevice("phone"); // Simulates a phone device
 
@@ -426,10 +424,53 @@ import "./myComponentCommands";
 ```typescript
 describe("My Component Tests", () => {
   it("should click my component", () => {
-    cy.mount(html`<my-component></my-component>`);
+    cy.mount(<MyComponent></MyComponent>);
 
     cy.clickMyComponent("my-component");
   });
 });
 ```
 
+### Changing the language
+
+Locale-aware components often need to set the user's language for certain tests.
+
+Here is how you can do it:
+
+```typescript
+import Calendar from "../../src/Calendar.js";
+import "../../src/Assets.js"; // Do not forget to import the Assets.js module for the extra languages
+import { setLanguage, getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+
+describe("Test group", () => {
+	it("Test", () => {
+		// setLanguage("bg"); // Wrong, the promise will not be awaited!
+
+		cy.wrap({ setLanguage })
+			.invoke("setLanguage", "bg"); // Correct, the promise will be awaited!
+
+		cy.wrap({ getLanguage })
+			.invoke("getLanguage")
+			.should("equal", "bg");
+
+		cy.mount(<Calendar />); // This calendar will be in Bulgarian
+	});
+});
+```
+
+Notes:
+ - You must import the Assets module for the extra languages to work
+ - You must call `setLanguage` with `cy.wrap` to make sure it will be awaited until the desired language is completely set (CLDR assets are fetched)
+
+### Code coverage
+
+Cypress tests automatically run with instrumentation switched on. To see the code coverage report, run the following commands:
+```sh
+# build the project
+yarn build
+# run the tests for a pacakge
+cd packages/main
+yarn test:cypress
+# start a static server in the `coverage` folder and inspect the results in the browser
+http-server coverage
+```

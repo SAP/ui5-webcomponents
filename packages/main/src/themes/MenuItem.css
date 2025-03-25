@@ -108,6 +108,10 @@
 	inset-inline-end: var(--_ui5_menu_item_submenu_icon_right);
 }
 
+.ui5-menu-item-submenu-icon .ui5-menu-item-icon-end {
+	color: var(--sapContent_NonInteractiveIconColor);
+}
+
 .ui5-menu-item-dummy-icon {
 	min-width: var(--_ui5_list_item_icon_size);
 	min-height: var(--_ui5_list_item_icon_size);

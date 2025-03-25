@@ -33,6 +33,14 @@ class SpecialCalendarDate extends UI5Element {
 	 */
 	@property()
 	type: `${CalendarLegendItemType}` = "None";
+
+	/**
+	 * Defines a tooltip text for the special date.
+	 * @default ""
+	 * @private
+	 */
+	@property()
+	_tooltip = "";
 }
 
 SpecialCalendarDate.define();

@@ -299,11 +299,10 @@ abstract class Popup extends UI5Element {
 
 		const prevented = !this.fireDecoratorEvent("before-open");
 
-		if (prevented || this._opened) {
+		if (prevented) {
+			this.open = false;
 			return;
 		}
-
-		this._opened = true;
 
 		if (this.isModal) {
 			Popup.blockPageScrolling(this);
@@ -312,6 +311,7 @@ abstract class Popup extends UI5Element {
 		this._focusedElementBeforeOpen = getFocusedElement();
 
 		this._show();
+		this._opened = true;
 
 		if (this.getDomRef()) {
 			this._updateMediaRange();
@@ -325,9 +325,6 @@ abstract class Popup extends UI5Element {
 		await this.applyInitialFocus();
 
 		await renderFinished();
-
-		// initial focus, if focused element is dynamically created
-		await this.applyInitialFocus();
 
 		if (this.isConnected) {
 			this.fireDecoratorEvent("open");
@@ -515,6 +512,7 @@ abstract class Popup extends UI5Element {
 
 		const prevented = !this.fireDecoratorEvent("before-close", { escPressed });
 		if (prevented) {
+			this.open = true;
 			return;
 		}
 
@@ -551,11 +549,7 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	resetFocus() {
-		if (!this._focusedElementBeforeOpen) {
-			return;
-		}
-
-		this._focusedElementBeforeOpen.focus();
+		this._focusedElementBeforeOpen?.focus();
 		this._focusedElementBeforeOpen = null;
 	}
 

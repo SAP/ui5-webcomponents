@@ -213,7 +213,10 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	/**
 	 * Receives the desired `<img>` tag
 	 *
-	 * **Note:** If you experience flickering of the provided image, you can hide the component until it is being defined with the following CSS:
+	 * **Note:** If you experience flickering of the provided image, you can hide the component until it is defined with the following CSS:<br/>
+	 * `ui5-avatar:not(:defined) {`<br/>
+	 * &nbsp;&nbsp;&nbsp;&nbsp;`visibility: hidden;`<br/>
+	 * `}`
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -298,7 +301,9 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 			return this.accessibleName;
 		}
 
-		return Avatar.i18nBundle.getText(AVATAR_TOOLTIP) || undefined;
+		const defaultLabel = Avatar.i18nBundle.getText(AVATAR_TOOLTIP);
+
+		return this.initials ? `${defaultLabel} ${this.initials}`.trim() : defaultLabel;
 	}
 
 	get hasImage() {

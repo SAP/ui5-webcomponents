@@ -1,9 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import type NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
+import type NavigationMenu from "./NavigationMenu.js";
 import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -30,6 +31,7 @@ import { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 import type SideNavigationGroup from "./SideNavigationGroup.js";
+import type SideNavigationDesign from "./types/SideNavigationDesign.js";
 import SideNavigationTemplate from "./SideNavigationTemplate.js";
 
 import {
@@ -114,7 +116,7 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 	fastNavigation: true,
 	renderer: jsxRender,
 	template: SideNavigationTemplate,
-	styles: [SideNavigationCss, SideNavigationPopoverCss],
+	styles: [SideNavigationCss, SideNavigationPopoverCss, getEffectiveScrollbarStyle()],
 })
 /**
  * Fired when the selection has changed via user interaction
@@ -139,6 +141,25 @@ class SideNavigation extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	collapsed = false;
+
+	/**
+	 * Defines whether the control should have container styling or not.
+	 * **Note** In order to achieve the best user experience, it is recommended to use "Plain" value if SideNavigation is placed inside a responsive popover.
+	 *
+	 * @public
+	 * @default "Decorated"
+	 */
+	@property()
+	design: `${SideNavigationDesign}` = "Decorated";
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.9.0
+	 */
+	@property()
+	accessibleName?: string;
 
 	/**
 	 * Defines the main items of the component.
@@ -180,6 +201,13 @@ class SideNavigation extends UI5Element {
 
 	@property({ type: Object })
 	_menuPopoverItems: Array<SideNavigationItem> = [];
+
+	/**
+	 * Defines if the component is rendered on a mobile device.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	isPhone = isPhone();
 
 	_isOverflow = false;
 	_flexibleItemNavigation: ItemNavigation;
@@ -236,7 +264,7 @@ class SideNavigation extends UI5Element {
 		if (selectedItem) {
 			selectedItem.focus();
 		} else {
-			tree.items[0]?.focus();
+			tree.items[0]?.applyInitialFocusInPopover();
 		}
 	}
 
@@ -279,6 +307,10 @@ class SideNavigation extends UI5Element {
 
 	handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
 		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
+
+		if (isInstanceOfSideNavigationItem(associatedItem) && associatedItem.unselectable) {
+			return;
+		}
 
 		e.stopPropagation();
 
@@ -491,17 +523,19 @@ class SideNavigation extends UI5Element {
 
 			let itemDomRef;
 
-			if (isInstanceOfSideNavigationItemBase(item)) {
-				itemDomRef = item.getDomRef()!;
+			if (isInstanceOfSideNavigationItemBase(item) && item.getDomRef()) {
+				itemDomRef = item.getDomRef();
 			} else {
 				itemDomRef = item;
 			}
 
-			const { marginTop, marginBottom } = window.getComputedStyle(itemDomRef);
-			itemsHeight += itemDomRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+			if (itemDomRef) {
+				const { marginTop, marginBottom } = window.getComputedStyle(itemDomRef);
+				itemsHeight += itemDomRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
 
-			if (itemsHeight > listHeight) {
-				item.classList.add("ui5-sn-item-hidden");
+				if (itemsHeight > listHeight) {
+					item.classList.add("ui5-sn-item-hidden");
+				}
 			}
 		});
 
@@ -586,7 +620,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	_selectItem(item: SideNavigationSelectableItemBase) {
-		if (item.disabled) {
+		if (!item.isSelectable) {
 			return;
 		}
 

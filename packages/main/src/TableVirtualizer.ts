@@ -149,8 +149,10 @@ class TableVirtualizer extends UI5Element implements ITableFeature {
 	}
 
 	onExitDOM(): void {
-		this._scrollContainer.removeEventListener("scroll", this._onScrollBound);
-		this._table = undefined;
+		if (this._table) {
+			this._scrollContainer.removeEventListener("scroll", this._onScrollBound);
+			this._table = undefined;
+		}
 	}
 
 	/**
@@ -217,7 +219,7 @@ class TableVirtualizer extends UI5Element implements ITableFeature {
 		}
 
 		const firstRow = this._table.rows[0];
-		if (firstRow && firstRow.position > 0) {
+		if (firstRow && firstRow.position !== undefined && firstRow.position > 0) {
 			const transform = firstRow.position * this.rowHeight;
 			return `translateY(${transform}px)`;
 		}
