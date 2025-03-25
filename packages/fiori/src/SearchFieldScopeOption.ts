@@ -12,6 +12,7 @@ import type { ISearchFieldScopeOption } from "./SearchField.js";
  * @implements {ISearchFieldScopeOption}
  * @public
  * @since 2.9.0
+ * @experimental
  */
 @customElement("ui5-search-field-scope-option")
 class SearchFieldScopeOption extends UI5Element implements ISearchFieldScopeOption {
