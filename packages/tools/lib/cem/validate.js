@@ -49,6 +49,7 @@ if (devMode) {
 	if (validate(inputDataInternal)) {
 		console.log('Internal custom  element manifest is validated successfully');
 	} else {
+		console.log(validate.errors)
 		throw new Error(`Validation of internal custom elements manifest failed: ${validate.errors}`);
 	}
 }
