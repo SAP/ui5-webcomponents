@@ -666,10 +666,6 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
-	get phone() {
-		return isPhone();
-	}
-
 	get showHeader() {
 		return isPhone();
 	}

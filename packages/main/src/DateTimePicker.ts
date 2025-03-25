@@ -13,6 +13,7 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import type { SegmentedButtonSelectionChangeEventDetail } from "./SegmentedButton.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type {
 	DatePickerChangeEventDetail as DateTimePickerChangeEventDetail,
 	DatePickerInputEventDetail as DateTimePickerInputEventDetail,
@@ -242,7 +243,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	}
 
 	get _phoneView() {
-		return super.phone || this._phoneMode;
+		return isPhone() || this._phoneMode;
 	}
 
 	/**
