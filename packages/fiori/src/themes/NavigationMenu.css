@@ -1,7 +1,7 @@
 @import "./InvisibleTextStyles.css";
 
 ::slotted([ui5-navigation-menu-item]:not(:last-of-type)) {
-	margin-block-end: var(--_ui5_side_navigation_item_bottom_margin_in_popup);
+	margin-block-end: var(--_ui5_side_navigation_item_bottom_margin);
 }
 
 .ui5-navigation-menu .ui5-navigation-menu-main {
