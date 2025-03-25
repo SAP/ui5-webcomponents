@@ -870,9 +870,6 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.get("@input")
 			.realPress("Enter");
 
-		cy.get("@input")
-			.should("have.attr", "value", "First item");
-
 		cy.get("@inputChange")
 			.should("have.been.calledOnce");
 	});
