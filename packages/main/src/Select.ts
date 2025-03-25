@@ -228,7 +228,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component.
-	 * When set, the component will display the icon only - the selected option's text
+	 * When set, the component will display the icon only - the selected option's text,
 	 * the Select's "label" slot (if present) and the dropdown arrow won't be displayed.
 	 *
 	 * The SAP-icons font provides numerous options.
