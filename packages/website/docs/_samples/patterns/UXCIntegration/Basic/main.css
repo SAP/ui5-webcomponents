@@ -1,0 +1,7 @@
+#content {
+    padding: var(--sapContent_Gap);
+}
+
+#quickCreateDialog::part(footer) {
+	padding-inline: 0;
+}

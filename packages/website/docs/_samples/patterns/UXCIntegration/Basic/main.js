@@ -55,8 +55,15 @@ shellbar.addEventListener("ui5-profile-click", (event) => {
 /* Expand and collapse of the side navigation */
 const menuButton =  document.getElementById("menu-button");
 const navigationLayout = document.getElementById("navigation-layout");
-menuButton.addEventListener("click", function () {
+menuButton.addEventListener("click", () => {
 	navigationLayout.mode = navigationLayout.isSideCollapsed() ? NavigationLayoutMode.Expanded : NavigationLayoutMode.Collapsed;
+});
+
+/* Simulate change of page content */
+const sideNavigation = document.getElementById("side-navigation");
+sideNavigation.addEventListener("selection-change", event => {
+	const contentTitle = document.getElementById("contentTitle");
+	contentTitle.textContent = event.detail.item.text;
 });
 
 /* Quick create dialog */

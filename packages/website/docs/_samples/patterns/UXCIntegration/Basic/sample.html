@@ -6,10 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sample</title>
-    <link rel="stylesheet" href="./main.css">
+	<link rel="stylesheet" href="./main.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);height: 400px;">
+<body style="background-color: var(--sapBackgroundColor); height: 50rem;">
     <!-- playground-fold-end -->
     <ui5-navigation-layout id="navigation-layout">
         <ui5-shellbar slot="header" id="shellbar" primary-title="VEGA CRM"
@@ -28,6 +28,7 @@
                 <img src="../assets/images/avatars/man_avatar_3.png" />
             </ui5-avatar>
         </ui5-shellbar>
+
         <ui5-popover id="action-popover" placement="Bottom">
             <div class="action-popover-header">
                 <ui5-title style="padding: 0.25rem 1rem 0rem 1rem">An Kimura</ui5-title>
@@ -42,7 +43,8 @@
                 </ui5-list>
             </div>
         </ui5-popover>
-        <ui5-side-navigation slot="sideContent">
+
+        <ui5-side-navigation id="side-navigation" slot="sideContent">
             <ui5-side-navigation-item text="Home" icon="home" selected></ui5-side-navigation-item>
             <ui5-side-navigation-item text="Favorites" expanded icon="favorite-list" unselectable>
                 <ui5-side-navigation-sub-item text="My Accounts"></ui5-side-navigation-sub-item>
@@ -77,15 +79,23 @@
             <ui5-side-navigation-item slot="fixedItems" id="quickCreate" text="Quick Create" icon="add" design="Action" unselectable></ui5-side-navigation-item>
             <ui5-side-navigation-item slot="fixedItems" text="Product Settings" icon="settings"></ui5-side-navigation-item>
         </ui5-side-navigation>
+
+        <div id="content">
+            <ui5-title id="contentTitle">Home</ui5-title>
+            <br />
+            <ui5-text>
+                Content...
+            </ui5-text>
+        </div>
     </ui5-navigation-layout>
 
-    <ui5-dialog header-text="Create New Item" draggable resizable id="quickCreateDialog">
-		<ui5-text>Create new item...</ui5-text>
-		<ui5-bar slot="footer" design="Footer">
-			<ui5-button slot="endContent" design="Emphasized">Create</ui5-button>
-			<ui5-button slot="endContent" id="quickCreateDialogCloseBtn">Close</ui5-button>
-		</ui5-bar>
-	</ui5-dialog>
+    <ui5-dialog id="quickCreateDialog" header-text="Create New Item" draggable resizable>
+        <ui5-text>Create new item...</ui5-text>
+        <ui5-bar slot="footer" design="Footer">
+            <ui5-button slot="endContent" design="Emphasized">Create</ui5-button>
+            <ui5-button slot="endContent" id="quickCreateDialogCloseBtn">Close</ui5-button>
+        </ui5-bar>
+    </ui5-dialog>
 
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>
