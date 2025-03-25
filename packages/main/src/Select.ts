@@ -110,8 +110,8 @@ type SelectLiveChangeEventDetail = {
  * - The "value" property of the Select component
  * - The "selected" property on individual options
  *
- * **Note:** If the "value" property is set but does not match any option, the first option will be automatically selected.
- * However, the "value" property itself will remain unchanged.
+ * **Note:** If the "value" property is set but does not match any option,
+ * no option will be selected and the Select component will be displayed as empty.
  *
  * **Note:** when both "value" and "selected" are both used (although discouraged),
  * the "value" property will take precedence.
