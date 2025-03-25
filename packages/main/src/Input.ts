@@ -496,6 +496,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	focused = false;
 
 	/**
+	 * Used to define enterkeyhint of the inner input.
+	 * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/enterkeyhint
+	 *
 	 * @private
 	 */
 	@property()
