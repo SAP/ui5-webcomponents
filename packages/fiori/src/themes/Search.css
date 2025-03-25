@@ -74,11 +74,6 @@
 .ui5-search-footer-button {
 	width: 100%;
 }
-.ui5-search-list::part(growing-button) {
-	border-bottom: none;
-	padding-top: .25rem;
-	box-sizing: border-box;
-}
 
 .ui5-search-popover-search-field {
 	flex: 1;
