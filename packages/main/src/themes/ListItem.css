@@ -82,7 +82,7 @@
 	margin-inline-end: var(--_ui5_list_item_img_hn_margin);
 }
 
-:host(:not([wrapping])[description]) .ui5-li-root {
+:host([wrapping-type="None"][description]) .ui5-li-root {
 	padding: 1rem;
 }
 
@@ -211,70 +211,70 @@
 }
 
 /* wrapping */
-:host([wrapping][description]),
-:host([wrapping][has-title][description]),
-:host([wrapping][has-title][image]) {
+:host([wrapping-type="Normal"][description]),
+:host([wrapping-type="Normal"][has-title][description]),
+:host([wrapping-type="Normal"][has-title][image]) {
 	height: auto;
 	min-height: 5rem;
 }
 
-:host([wrapping][description]) .ui5-li-content,
-:host([wrapping][image]) .ui5-li-content {
+:host([wrapping-type="Normal"][description]) .ui5-li-content,
+:host([wrapping-type="Normal"][image]) .ui5-li-content {
 	height: auto;
 	min-height: 3rem;
 }
 
-:host([wrapping][has-title][description]) .ui5-li-title {
+:host([wrapping-type="Normal"][has-title][description]) .ui5-li-title {
 	padding-bottom: .75rem;
 }
 
-:host([wrapping][additional-text]) .ui5-li-additional-text {
+:host([wrapping-type="Normal"][additional-text]) .ui5-li-additional-text {
 	padding-inline-start: .75rem;
 }
 
-:host([wrapping]) .ui5-li-description-info-wrapper {
+:host([wrapping-type="Normal"]) .ui5-li-description-info-wrapper {
 	flex-direction: column;
 }
 
-:host([wrapping]) .ui5-li-description-info-wrapper .ui5-li-additional-text {
+:host([wrapping-type="Normal"]) .ui5-li-description-info-wrapper .ui5-li-additional-text {
 	white-space: normal;
 }
 
-:host([wrapping]) .ui5-li-title .ui5-li-title-exp-text {
+:host([wrapping-type="Normal"]) .ui5-li-title .ui5-li-title-exp-text {
 	font-size: var(--_ui5_list_item_title_size);
 }
 
-:host([wrapping]) .ui5-li-desc .ui5-li-desc-exp-text {
+:host([wrapping-type="Normal"]) .ui5-li-desc .ui5-li-desc-exp-text {
 	color: var(--sapContent_LabelColor);
 }
 
-:host([wrapping]) .ui5-li-multisel-cb,
-:host([wrapping]) .ui5-li-singlesel-radiobtn {
+:host([wrapping-type="Normal"]) .ui5-li-multisel-cb,
+:host([wrapping-type="Normal"]) .ui5-li-singlesel-radiobtn {
 	display: flex;
 	align-self: flex-start;
 }
 
-:host([wrapping][description]) .ui5-li-multisel-cb,
-:host([wrapping][description]) .ui5-li-singlesel-radiobtn {
+:host([wrapping-type="Normal"][description]) .ui5-li-multisel-cb,
+:host([wrapping-type="Normal"][description]) .ui5-li-singlesel-radiobtn {
 	margin-top: 0;
 }
 
-:host([wrapping]) .ui5-li-icon,
-:host([wrapping]) .ui5-li-image {
+:host([wrapping-type="Normal"]) .ui5-li-icon,
+:host([wrapping-type="Normal"]) .ui5-li-image {
 	display: flex;
 	align-self: flex-start;
 }
 
-:host([wrapping][icon-end]) .ui5-li-icon {
+:host([wrapping-type="Normal"][icon-end]) .ui5-li-icon {
 	margin-top: var(--_ui5_list_item_content_vertical_offset);
 }
 
-:host([wrapping]) .ui5-li-image {
+:host([wrapping-type="Normal"]) .ui5-li-image {
 	margin-top: 0;
 	margin-bottom: 0;
 }
 
-:host([wrapping]) .ui5-li-detailbtn,
-:host([wrapping]) .ui5-li-deletebtn {
+:host([wrapping-type="Normal"]) .ui5-li-detailbtn,
+:host([wrapping-type="Normal"]) .ui5-li-deletebtn {
 	margin-inline-start: .875rem;
 }

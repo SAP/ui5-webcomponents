@@ -31,7 +31,7 @@ function listItemContent(this: ListItemStandard) {
 }
 
 function renderTitle(this: ListItemStandard) {
-	if (this.wrapping) {
+	if (this.wrappingType === "Normal") {
 		return (
 			<span part="title" class="ui5-li-title">
 				<ExpandableText
@@ -57,7 +57,7 @@ function renderDescription(this: ListItemStandard) {
 		return null;
 	}
 
-	if (this.wrapping) {
+	if (this.wrappingType === "Normal") {
 		return (
 			<div class="ui5-li-description-info-wrapper">
 				<span part="description" class="ui5-li-desc">

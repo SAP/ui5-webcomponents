@@ -111,34 +111,27 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	movable = false;
 
 	/**
-	 * Defines whether the content of the list item should wrap when it's too long.
-	 * When set to true, the content (title, description) will be wrapped
+	 * Defines if the text of the component should wrap when it's too long.
+	 * When set to "Normal", the content (title, description) will be wrapped
 	 * using the `ui5-expandable-text` component.<br/>
 	 *
 	 * The text can wrap up to 100 characters on small screens (size S) and
 	 * up to 300 characters on larger screens (size M and above). When text exceeds
 	 * these limits, it truncates with an ellipsis followed by a text expansion trigger.
 	 *
-	 * @default false
+	 * Available options are:
+	 * - `None` (default) - The text will truncate with an ellipsis.
+	 * - `Normal` - The text will wrap (without truncation).
+	 *
+	 * @default "None"
 	 * @public
 	 * @since 2.9.0
-	 */
-	@property({ type: Boolean })
-	wrapping = false;
-
-	/**
-	 * Defines if the text of the component should wrap, they truncate by default.
-	 *
-	 * **Note:** this property takes affect only if text node is provided to default slot of the component
-	 * @default "None"
-	 * @private
-	 * @since 1.5.0
 	 */
 	@property()
 	wrappingType: `${WrappingType}` = "None";
 
 	/**
-	 * Defines the text alternative of the component.
+	 * Defines the text alternative of the component.<br/>
 	 * **Note:** If not provided a default text alternative will be set, if present.
 	 * @default undefined
 	 * @public
@@ -173,7 +166,6 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 		super.onBeforeRendering();
 		this.hasTitle = !!(this.text || this.textContent);
 		this._hasImage = this.hasImage;
-		this.wrappingType = this.wrapping ? "Normal" : "None";
 	}
 
 	/**
