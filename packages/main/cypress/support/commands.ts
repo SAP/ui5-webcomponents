@@ -43,6 +43,7 @@ import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "./commands/Calendar.commands.js";
 import "./commands/ColorPalette.commands.js";
 import "./commands/ColorPicker.commands.js";
+import "./commands/DateTimePicker.commands.js";
 import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
 import "./commands/SegmentedButton.commands.js";
@@ -62,6 +63,7 @@ declare global {
 			ui5CalendarGetMonth(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
 			ui5ColorPickerToggleColorMode(): Chainable<void>
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
+			ui5ColorPickerValidateInput(name: string, value: string): Chainable<void>
 			ui5ColorPaletteCheckSelectedColor(colorPaletteItem: string, values: {r: string, g: string, b: string, a: string}): Chainable<void>
 			ui5ColorPaletteNavigateAndCheckSelectedColor(colorPalette: string, startIndex: number, key: string, expectedValue: string): Chainable<void>
 			ui5DatePickerGetInnerInput(): Chainable<JQuery<HTMLElement>>

@@ -237,13 +237,6 @@ class UserMenu extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_manageAccountMovedToHeader = false;
-
-	/**
-	 * @default false
-	 * @private
-	 */
-	@property({ type: Boolean })
 	_isScrolled = false;
 
 	/**
@@ -310,17 +303,12 @@ class UserMenu extends UI5Element {
 			if (entry.isIntersecting) {
 				if (entry.target.id === "selected-account-title") {
 					this._titleMovedToHeader = false;
-				} else if (entry.target.id === "selected-account-manage-btn") {
-					this._manageAccountMovedToHeader = false;
 				}
-
 				return;
 			}
 
 			if (entry.target.id === "selected-account-title") {
 				this._titleMovedToHeader = true;
-			} else if (entry.target.id === "selected-account-manage-btn") {
-				this._manageAccountMovedToHeader = true;
 			}
 		}, this);
 	}
@@ -404,10 +392,6 @@ class UserMenu extends UI5Element {
 
 	_closeUserMenu() {
 		this.open = false;
-	}
-
-	get _manageAccountVisibleInHeader() {
-		return this.showManageAccount && this._manageAccountMovedToHeader;
 	}
 
 	get _otherAccounts() {

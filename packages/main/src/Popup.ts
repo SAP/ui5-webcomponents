@@ -304,8 +304,6 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		this._opened = true;
-
 		if (this.isModal) {
 			Popup.blockPageScrolling(this);
 		}
@@ -313,6 +311,7 @@ abstract class Popup extends UI5Element {
 		this._focusedElementBeforeOpen = getFocusedElement();
 
 		this._show();
+		this._opened = true;
 
 		if (this.getDomRef()) {
 			this._updateMediaRange();

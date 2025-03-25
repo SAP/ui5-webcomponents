@@ -39,12 +39,8 @@ export default function UserMenuTemplate(this: UserMenu) {
 			<>
 				<Bar class={{
 					"ui5-user-menu-fixed-header": true,
-					"ui5-user-menu-rp-scrolled": this._isScrolled || this._titleMovedToHeader || this._manageAccountVisibleInHeader
+					"ui5-user-menu-rp-scrolled": this._isScrolled || this._titleMovedToHeader
 				}} slot="header">
-					{this._manageAccountVisibleInHeader &&
-						<Button icon={userSettings} onClick={this._handleManageAccountClick} slot="startContent"></Button>
-					}
-
 					{this._titleMovedToHeader &&
 						<Title
 							level="H1"
