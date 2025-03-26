@@ -787,6 +787,9 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.get("@input")
 			.realPress("Enter");
 
+		cy.get("@inputChange")
+			.should("have.been.calledOnce");
+
 		cy.get("@input")
 			.shadow()
 			.find("ui5-icon")
@@ -804,7 +807,10 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.get("@input")
 			.realPress("Enter");
 
-			cy.get("@input")
+		cy.get("@inputChange")
+			.should("have.been.calledTwice");
+
+		cy.get("@input")
 			.shadow()
 			.find("ui5-icon")
 			.as("icon");
@@ -817,61 +823,6 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 
 		cy.get("@inputChange")
 			.should("have.been.calledTwice");
-	});
-
-	it("Change event is not triggered after clicking clear icon and reselecting the same suggestion", () => {
-		cy.mount(
-			<>
-				<Input showClearIcon={true} showSuggestions={true}>
-					<SuggestionItem text="First item"></SuggestionItem>
-					<SuggestionItem text="Second item"></SuggestionItem>
-					<SuggestionItem text="Third item"></SuggestionItem>
-				</Input>
-			</>
-		);
-
-		cy.get("ui5-input")
-			.as("input");
-
-		cy.get("@input")
-			.then($input => {
-				$input[0].addEventListener("ui5-change", cy.stub().as("inputChange"));
-			});
-
-		cy.get("@input")
-			.realClick();
-
-		cy.get("@input")
-			.realType("f");
-
-		cy.get("@input")
-			.realPress("Enter");
-
-		cy.get("@input")
-			.should("have.attr", "value", "First item");
-
-		cy.get("@inputChange")
-			.should("have.been.calledOnce");
-
-		cy.get("@input")
-			.shadow()
-			.find("ui5-icon")
-			.as("icon");
-
-		cy.get("@icon")
-			.realClick();
-
-		cy.get("@input")
-			.should("have.attr", "value", "");
-
-		cy.get("@input")
-			.realType("f");
-
-		cy.get("@input")
-			.realPress("Enter");
-
-		cy.get("@inputChange")
-			.should("have.been.calledOnce");
 	});
 
 	it("should not close the dialog when item is selected", () => {
