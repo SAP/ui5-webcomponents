@@ -3,11 +3,31 @@
 }
 
 [ui5-responsive-popover] {
-    width: 400px;
-    height: 600px;
+    width: 320px;
+    height: 512px;
 }
 
 [ui5-responsive-popover]::part(content) {
-    width: 400px;
-    height: 600px;
+    width: 320px;
+    height: 512px;
+}
+
+.ui5-dynamic-date-range-option-container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%;
+}
+
+.ui5-ddr-current-value {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 50px;
+    font-size: 1rem;
+    color: var(--sapContentLabelColor);
+    background-color: lightgray;
+    padding-inline-start: 10px;
 }

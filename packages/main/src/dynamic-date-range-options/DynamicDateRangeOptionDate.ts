@@ -33,6 +33,11 @@ class DynamicDateRangeOptionDate extends DynamicDateRangeOption {
 
 	format(value: DynamicDateRangeValue) {
 		const valuesArray = value?.values as Date[];
+
+		if (!valuesArray || valuesArray.length !== 1) {
+			return "";
+		}
+
 		const date = valuesArray[0];
 
 		return this.getFormat().format(date);
@@ -60,6 +65,7 @@ class DynamicDateRangeOptionDate extends DynamicDateRangeOption {
 		});
 	}
 }
+
 DynamicDateRangeOptionDate.define();
 
 export default DynamicDateRangeOptionDate;

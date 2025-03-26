@@ -46,6 +46,7 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 				:
 				<div class="ui5-dynamic-date-range-option-container">
 					{this._currentOption?.template?.call(this)}
+					<div class="ui5-ddr-current-value">{this.currentValueText}</div>
 				</div>
 			}
 			{this._hasCurrentOptionTemplate &&

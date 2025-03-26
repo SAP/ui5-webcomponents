@@ -73,31 +73,33 @@ class DynamicDateRange extends UI5Element {
 	options!: Array<DynamicDateRangeOption>;
 
     responsivePopover?: ResponsivePopover;
-    private _currentValue?: DynamicDateRangeValue;
 
-    get _optionsTitles(): Array<string> {
-    	return this.options.map(option => option.text);
-    }
+	@property({ type: Object })
+    currentValue?: DynamicDateRangeValue;
 
-    get openIconName() {
-    	return "appointment-2";
-    }
+	get _optionsTitles(): Array<string> {
+		return this.options.map(option => option.text);
+	}
 
-    /**
+	get openIconName() {
+		return "appointment-2";
+	}
+
+	/**
 	 * Defines whether the value help icon is hidden
 	 * @private
 	 */
-    get _iconMode() {
-    	return isDesktop() ? IconMode.Decorative : IconMode.Interactive;
-    }
+	get _iconMode() {
+		return isDesktop() ? IconMode.Decorative : IconMode.Interactive;
+	}
 
-    _togglePicker(): void {
-    	this.open = !this.open;
-    }
+	_togglePicker(): void {
+		this.open = !this.open;
+	}
 
-    _selectOption(e: any) {
-    	this._currentOption = this.options.find(option => option.text === e.detail.item.textContent);
-    }
+	_selectOption(e: any) {
+		this._currentOption = this.options.find(option => option.text === e.detail.item.textContent);
+	}
 
 	getOption(key: string) {
 		return this.options.find(option => option.text === key);
@@ -108,39 +110,47 @@ class DynamicDateRange extends UI5Element {
 		this.value = this.getOption(this.value.operator)?.parse(value) as DynamicDateRangeValue;
 	}
 
-    get _hasCurrentOptionTemplate(): boolean {
-    	return !!this._currentOption && !!this._currentOption.template;
-    }
+	get _hasCurrentOptionTemplate(): boolean {
+		return !!this._currentOption && !!this._currentOption.template;
+	}
 
-    _submitValue() {
-    	this._getInput().value = this._currentOption?.format(this._currentValue) as string;
-    	this._currentOption = undefined;
-    	this.open = false;
-		this.value = this._currentValue as DynamicDateRangeValue;
-    }
+	_submitValue() {
+		this._getInput().value = this._currentOption?.format(this.currentValue) as string;
+		this._currentOption = undefined;
+		this.open = false;
+		this.value = this.currentValue as DynamicDateRangeValue;
+	}
 
-    _close() {
-    	this._currentOption = undefined;
-    	this.open = false;
-    }
+	_close() {
+		this._currentOption = undefined;
+		this.open = false;
+	}
 
-    _getInput(): Input {
-    	return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
-    }
+	_getInput(): Input {
+		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
+	}
 
-    calendarSelectionChange(e: any) {
-    	const currentValue = new DynamicDateRangeValue();
+	get currentValueText() {
+		return `Selected: ${this._currentOption?.format(this.currentValue)}`;
+	}
 
-		if (e.srcElement.selectionMode === "Single") {
-			currentValue.operator = this._currentOption?.text as string;
-			currentValue.values = [new Date(e.detail.timestamp * 1000)];
-			this._currentValue = currentValue;
-		} else if (e.srcElement.selectionMode === "Range") {
-			currentValue.operator = this._currentOption?.text as string;
-			currentValue.values = [new Date(e.detail.selectedDates[0] * 1000), new Date(e.detail.selectedDates[1] * 1000)];
-			this._currentValue = currentValue;
+	calendarSelectionChange(e: any) {
+		const currentValue = new DynamicDateRangeValue();
+		currentValue.values = [];
+		currentValue.operator = this._currentOption?.text as string;
+
+		if (e.detail.selectedDates[0]) {
+			currentValue.values[0] = new Date(e.detail.selectedDates[0] * 1000);
 		}
-    }
+
+		if (e.srcElement.selectionMode === "Range") {
+			if (e.detail.selectedDates[1]) {
+				currentValue.values[1] = new Date(e.detail.selectedDates[1] * 1000);
+			}
+		}
+
+		this.currentValue = currentValue;
+	}
 }
 
 DynamicDateRange.define();

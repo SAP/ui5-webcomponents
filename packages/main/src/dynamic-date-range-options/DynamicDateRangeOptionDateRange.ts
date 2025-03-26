@@ -22,22 +22,22 @@ class DynamicDateRangeOptionDateRange extends DynamicDateRangeOption {
 	}
 
 	parse(value: string): DynamicDateRangeValue {
-		const values = this._splitValueByDelimiter(value);
-		const startDate = this.getFormat().parse(values[0]) as Date;
-		const endDate = this.getFormat().parse(values[1]) as Date;
 		const returnValue = new DynamicDateRangeValue();
 
 		returnValue.operator = this.key;
-		returnValue.values = [startDate, endDate];
+		returnValue.values = this.getFormat().parse(value) as Date[];
 
 		return returnValue;
 	}
 
 	format(value: DynamicDateRangeValue) {
 		const valuesArray = value?.values as Date[];
-		const startDate = valuesArray[0];
-		const endDate = valuesArray[1];
-		const formattedValue = `${this.getFormat().format(startDate)} - ${this.getFormat().format(endDate)}`;
+
+		if (!valuesArray || valuesArray.length !== 2) {
+			return "";
+		}
+
+		const formattedValue = this.getFormat().format(valuesArray);
 
 		return formattedValue;
 	}
@@ -61,24 +61,9 @@ class DynamicDateRangeOptionDateRange extends DynamicDateRangeOption {
 	getFormat(): DateFormat {
 	    return DateFormat.getDateInstance({
 			strictParsing: true,
+			interval: true,
+			intervalDelimiter: " - ",
 		});
-	}
-
-	_splitValueByDelimiter(value: string) {
-		const delimeter = "-";
-		const valuesArray: Array<string> = [];
-		const partsArray = value.split(delimeter);
-
-		// if format successfully parse the value, the value contains only single date
-		if (this.getFormat().parse(value)) {
-			valuesArray[0] = partsArray.join(delimeter);
-			valuesArray[1] = "";
-		} else {
-			valuesArray[0] = partsArray.slice(0, partsArray.length / 2).join(delimeter);
-			valuesArray[1] = partsArray.slice(partsArray.length / 2).join(delimeter);
-		}
-
-		return valuesArray;
 	}
 }
 DynamicDateRangeOptionDateRange.define();
