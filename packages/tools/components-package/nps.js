@@ -13,13 +13,13 @@ const cypressEnvVariables = (options, predefinedVars) => {
 	let variables = [];
 	const { cypress_code_coverage, cypress_acc_tests } = options.internal ?? {};
 
+	// Handle environment variables like TEST_SUITE  
 	if (predefinedVars) {
 		variables = [...predefinedVars];
 	}
 
-	if (cypress_code_coverage) {
-		variables.push("CYPRESS_COVERAGE=true");
-	}
+	// The coverage task is always registered and requires an explicit variable whether to generate a report or not
+	variables.push(`CYPRESS_COVERAGE=${!!cypress_code_coverage}`);
 
 	if (cypress_acc_tests) {
 		variables.push("CYPRESS_UI5_ACC=true");
