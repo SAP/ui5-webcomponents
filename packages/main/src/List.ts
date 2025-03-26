@@ -467,10 +467,11 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the current media query size.
+	 * @default "S" (Phone)
 	 * @private
 	 */
-	@property({ type: String })
-	mediaRange!: string;
+	@property()
+	mediaRange = "S";
 
 	/**
 	 * Defines the items of the component.
