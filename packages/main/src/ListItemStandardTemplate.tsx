@@ -3,6 +3,7 @@ import type ListItemStandard from "./ListItemStandard.js";
 import ListItemTemplate from "./ListItemTemplate.js";
 import type { ListItemHooks } from "./ListItemTemplate.js";
 import ExpandableText from "./ExpandableText.js";
+import WrappingType from "./types/WrappingType.js";
 
 const predefinedHooks: Partial<ListItemHooks> = {
 	imageBegin,
@@ -31,7 +32,7 @@ function listItemContent(this: ListItemStandard) {
 }
 
 function renderTitle(this: ListItemStandard) {
-	if (this.wrappingType === "Normal") {
+	if (this.wrappingType === WrappingType.Normal) {
 		return (
 			<span part="title" class="ui5-li-title">
 				<ExpandableText
@@ -57,7 +58,7 @@ function renderDescription(this: ListItemStandard) {
 		return null;
 	}
 
-	if (this.wrappingType === "Normal") {
+	if (this.wrappingType === WrappingType.Normal) {
 		return (
 			<div class="ui5-li-description-info-wrapper">
 				<span part="description" class="ui5-li-desc">
