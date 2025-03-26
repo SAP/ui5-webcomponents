@@ -1,5 +1,7 @@
 import "cypress-real-events";
 import '@cypress/code-coverage/support'
+import "./acc_report/support.js";
+import "./helpers.js"
 
 const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
 	cy.get(element)
