@@ -103,16 +103,6 @@ type SelectLiveChangeEventDetail = {
  * Options with custom content are defined by using the OptionCustom component
  * The OptionCustom component comes with no predefined layout and it expects consumers to define it.
  *
- * ### Visual Appearance
- *
- * The `ui5-select` component comes in two visual appearances, depending on the `icon` property:
- *
- * - Default: If the `icon` property is not set,
- *  the selected option's text is displayed with a dropdown arrow next to it.
- *
- * - Icon Only: If the `icon` property is set, only the specified icon is displayed,
- * and the selected option's text along with the dropdown arrow are not displayed.
- *
  * ### Keyboard Handling
  *
  * The `ui5-select` provides advanced keyboard handling.
@@ -238,7 +228,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 *
 	 * **Note:** When using this property with a valid icon, Select will be rendered as icon only button and the label and the default arrow down won't be visible.
 	 * @default undefined
-	 * @public
+	 * @private
 	 */
 	@property()
 	icon?: string;
