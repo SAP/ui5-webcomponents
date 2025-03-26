@@ -501,8 +501,7 @@ class List extends UI5Element {
 	_forwardingFocus: boolean;
 	resizeListenerAttached: boolean;
 	listEndObserved: boolean;
-	_handleResize: ResizeObserverCallback;
-	_handleMediaRangeUpdateBound: ResizeObserverCallback;
+	_handleResizeCallback: ResizeObserverCallback;
 	initialIntersection: boolean;
 	_selectionRequested?: boolean;
 	_groupCount: number;
@@ -537,9 +536,7 @@ class List extends UI5Element {
 			getItemsCallback: () => this.getEnabledItems(),
 		});
 
-		this._handleResize = this.checkListInViewport.bind(this);
-
-		this._handleMediaRangeUpdateBound = this._handleMediaRangeUpdate.bind(this);
+		this._handleResizeCallback = this._handleResize.bind(this);
 
 		// Indicates the List bottom most part has been detected by the IntersectionObserver
 		// for the first time.
@@ -571,15 +568,14 @@ class List extends UI5Element {
 	onEnterDOM() {
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
 		DragRegistry.subscribe(this);
-		ResizeHandler.register(this.getDomRef()!, this._handleMediaRangeUpdateBound);
+		ResizeHandler.register(this.getDomRef()!, this._handleResizeCallback);
 	}
 
 	onExitDOM() {
 		deregisterUI5Element(this);
 		this.unobserveListEnd();
 		this.resizeListenerAttached = false;
-		ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
-		ResizeHandler.deregister(this.getDomRef()!, this._handleMediaRangeUpdateBound);
+		ResizeHandler.deregister(this.getDomRef()!, this._handleResizeCallback);
 		DragRegistry.unsubscribe(this);
 	}
 
@@ -627,7 +623,7 @@ class List extends UI5Element {
 	attachForResize() {
 		if (!this.resizeListenerAttached) {
 			this.resizeListenerAttached = true;
-			ResizeHandler.register(this.getDomRef()!, this._handleResize);
+			ResizeHandler.register(this.getDomRef()!, this._handleResizeCallback);
 		}
 	}
 
@@ -1078,7 +1074,9 @@ class List extends UI5Element {
 		}
 	}
 
-	_handleMediaRangeUpdate() {
+	_handleResize() {
+		this.checkListInViewport();
+
 		const width = this.getBoundingClientRect().width;
 		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
