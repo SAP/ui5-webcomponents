@@ -1,4 +1,5 @@
 import Button from "./Button.js";
+import ButtonDesign from "./types/ButtonDesign.js";
 import type TableHeaderCellActionBase from "./TableHeaderCellActionBase.js";
 
 export default function TableHeaderCellActionBaseTemplate(this: TableHeaderCellActionBase) {
@@ -7,7 +8,7 @@ export default function TableHeaderCellActionBaseTemplate(this: TableHeaderCellA
 			icon={this._icon}
 			tooltip={this._tooltip}
 			onClick={this._onClick}
-			design="Transparent"
+			design={ButtonDesign.Transparent}
 		></Button>
 	);
 }

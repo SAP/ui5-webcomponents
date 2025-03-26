@@ -9,6 +9,7 @@
 
 :host([expanded]) {
 	min-width: 18rem;
+	max-width: 36rem;
 	margin: 0;
 	height: 2.25rem;
 	color: var(--sapShell_TextColor);
@@ -121,7 +122,7 @@
 	outline-offset: -0.3125rem;
 }
 
-:host(:not([show-scope])) .ui5-search-field-inner-input {
+:host(:not([mode="Scoped"])) .ui5-search-field-inner-input {
 	padding-inline-start: 0.875rem;
 }
 
@@ -142,7 +143,7 @@
 	padding-inline-start: 0.125rem;
 }
 
-:host([show-scope]) .ui5-search-field-inner-input {
+:host([mode="Scoped"]) .ui5-search-field-inner-input {
 	margin-inline-start: var(--_ui5_search_input_start_margin);
 }
 
@@ -177,14 +178,14 @@
 }
 
 /* copy paste all button styles - could be simplified */
-[ui5-button][desktop]:not([active])::part(button):after,
-[ui5-button]:not([active])::part(button):focus-visible:after,
-[ui5-button][desktop][active][design="Emphasized"]::part(button):focus-within:after,
-[ui5-button][active][design="Emphasized"]::part(button):focus-visible:after,
-[ui5-button][desktop][active]::part(button):focus-within:before,
-[ui5-button][active]::part(button):focus-visible:before,
-[ui5-button][design="Emphasized"][desktop]::part(button):focus-within:before,
-[ui5-button][design="Emphasized"]::part(button):focus-visible:before {
+.ui5-shell-search-field-button[desktop]:not([active])::part(button):after,
+.ui5-shell-search-field-button:not([active])::part(button):focus-visible:after,
+.ui5-shell-search-field-button[desktop][active][design="Emphasized"]::part(button):focus-within:after,
+.ui5-shell-search-field-button[active][design="Emphasized"]::part(button):focus-visible:after,
+.ui5-shell-search-field-button[desktop][active]::part(button):focus-within:before,
+.ui5-shell-search-field-button[active]::part(button):focus-visible:before,
+.ui5-shell-search-field-button[design="Emphasized"][desktop]::part(button):focus-within:before,
+.ui5-shell-search-field-button[design="Emphasized"]::part(button):focus-visible:before {
 	border-radius: var(--_ui5_search_icon_border_radius);
 }
 

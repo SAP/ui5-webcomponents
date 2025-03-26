@@ -128,8 +128,13 @@
 [inner-input][type="search"]::-webkit-search-decoration,
 [inner-input][type="search"]::-webkit-search-cancel-button,
 [inner-input][type="search"]::-webkit-search-results-button,
-[inner-input][type="search"]::-webkit-search-results-decoration { 
-	display: none; 
+[inner-input][type="search"]::-webkit-search-results-decoration {
+	display: none;
+}
+
+[inner-input]::-ms-reveal,
+[inner-input]::-ms-clear {
+	display: none;
 }
 
 .ui5-input-value-state-icon {

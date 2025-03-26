@@ -87,6 +87,18 @@ const throttle = (callback: () => void) => {
 	};
 };
 
+const toggleAttribute = (element: HTMLElement, attribute: string, condition: boolean | undefined, value?: string) => {
+	if (condition) {
+		if (value === undefined) {
+			element.toggleAttribute(attribute, true);
+		} else {
+			element.setAttribute(attribute, value);
+		}
+	} else if (element.hasAttribute(attribute)) {
+		element.removeAttribute(attribute);
+	}
+};
+
 export {
 	isInstanceOfTable,
 	isSelectionCheckbox,
@@ -96,4 +108,5 @@ export {
 	scrollElementIntoView,
 	isFeature,
 	throttle,
+	toggleAttribute,
 };

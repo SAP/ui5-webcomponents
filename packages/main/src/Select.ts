@@ -215,6 +215,20 @@ class Select extends UI5Element implements IFormInputElement {
 	disabled = false;
 
 	/**
+	 * Defines the icon, displayed as graphical element within the component.
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * Example:
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 *
+	 * **Note:** When using this property with a valid icon, Select will be rendered as icon only button and the label and the default arrow down won't be visible.
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	icon?: string;
+
+	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.

@@ -2,6 +2,7 @@ import SideNavigation from "../../src/SideNavigation.js";
 import SideNavigationItem from "../../src/SideNavigationItem.js";
 import SideNavigationSubItem from "../../src/SideNavigationSubItem.js";
 import group from "@ui5/webcomponents-icons/dist/group.js";
+import { NAVIGATION_MENU_POPOVER_HIDDEN_TEXT } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("Side Navigation Rendering", () => {
 	it("Tests rendering in collapsed mode", () => {
@@ -64,6 +65,18 @@ describe("Side Navigation Rendering", () => {
 			.shadow()
 			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='3.1']")
 			.should("have.attr", "design", "Action");
+	});
+
+	it("Tests accessibility", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" accessible-name="Main">
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-root")
+			.should("have.attr", "aria-label", "Main");
 	});
 });
 
@@ -714,6 +727,45 @@ describe("Side Navigation Accessibility", () => {
 			.shadow()
 			.find(".ui5-sn-item")
 			.should("not.have.attr", "aria-checked");
+	});
+
+	it("Tests accessible-name of overflow menu and sub menu", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true}>
+				<SideNavigationItem text="dummy item"></SideNavigationItem>
+				<SideNavigationItem text="1">
+					<SideNavigationSubItem text="1.1" />
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.invoke("attr", "style", "height: 100px");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-item-overflow")
+			.realClick();
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu")
+			.shadow()
+			.find(".ui5-menu-rp")
+			.invoke("attr", "accessible-name-ref")
+			.should("match", /navigationMenuPopoverText$/);
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='1']")
+			.realClick();
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='1']")
+			.shadow()
+			.find(".ui5-menu-rp")
+			.should("have.attr", "accessible-name", NAVIGATION_MENU_POPOVER_HIDDEN_TEXT.defaultText);
 	});
 });
 

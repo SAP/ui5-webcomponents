@@ -31,6 +31,7 @@ import { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 import type SideNavigationGroup from "./SideNavigationGroup.js";
+import type SideNavigationDesign from "./types/SideNavigationDesign.js";
 import SideNavigationTemplate from "./SideNavigationTemplate.js";
 
 import {
@@ -142,6 +143,25 @@ class SideNavigation extends UI5Element {
 	collapsed = false;
 
 	/**
+	 * Defines whether the control should have container styling or not.
+	 * **Note** In order to achieve the best user experience, it is recommended to use "Plain" value if SideNavigation is placed inside a responsive popover.
+	 *
+	 * @public
+	 * @default "Decorated"
+	 */
+	@property()
+	design: `${SideNavigationDesign}` = "Decorated";
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.9.0
+	 */
+	@property()
+	accessibleName?: string;
+
+	/**
 	 * Defines the main items of the component.
 	 *
 	 * @public
@@ -181,6 +201,13 @@ class SideNavigation extends UI5Element {
 
 	@property({ type: Object })
 	_menuPopoverItems: Array<SideNavigationItem> = [];
+
+	/**
+	 * Defines if the component is rendered on a mobile device.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	isPhone = isPhone();
 
 	_isOverflow = false;
 	_flexibleItemNavigation: ItemNavigation;

@@ -27,6 +27,7 @@ import {
 	CAROUSEL_DOT_TEXT,
 	CAROUSEL_PREVIOUS_ARROW_TEXT,
 	CAROUSEL_NEXT_ARROW_TEXT,
+	CAROUSEL_ARIA_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorType from "./types/CarouselPageIndicatorType.js";
@@ -698,6 +699,10 @@ class Carousel extends UI5Element {
 
 	get previousPageText() {
 		return Carousel.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
+	}
+
+	get _roleDescription() {
+		return Carousel.i18nBundle.getText(CAROUSEL_ARIA_ROLE_DESCRIPTION);
 	}
 
 	/**

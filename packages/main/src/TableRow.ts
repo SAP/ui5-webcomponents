@@ -1,7 +1,6 @@
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { customElement, slot, property } from "@ui5/webcomponents-base/dist/decorators.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { toggleAttribute } from "./TableUtils.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import TableRowTemplate from "./TableRowTemplate.js";
 import TableRowBase from "./TableRowBase.js";
@@ -79,12 +78,12 @@ class TableRow extends TableRowBase {
 	/**
 	 * Defines the position of the row related to the total number of rows within the table when the `ui5-table-virtualizer` feature is used.
 	 *
-     * @default -1
+     * @default undefined
 	 * @since 2.5.0
      * @public
      */
 	@property({ type: Number })
-	position = -1;
+	position?: number;
 
 	/**
 	 * Defines the interactive state of the row.
@@ -114,25 +113,12 @@ class TableRow extends TableRowBase {
 	@property({ type: Boolean })
 	movable = false;
 
-	@property({ type: Boolean, noAttribute: true })
-	_renderNavigated = false;
-
 	onBeforeRendering() {
 		super.onBeforeRendering();
-		this.toggleAttribute("_interactive", this._isInteractive);
-		if (this.position !== -1) {
-			this.setAttribute("aria-rowindex", `${this.position + 1}`);
-		}
-		if (this._renderNavigated && this.navigated) {
-			this.setAttribute("aria-current", "true");
-		} else {
-			this.removeAttribute("aria-current");
-		}
-		if (this.movable) {
-			this.setAttribute("draggable", "true");
-		} else {
-			this.removeAttribute("draggable");
-		}
+		toggleAttribute(this, "_interactive", this._isInteractive);
+		toggleAttribute(this, "aria-rowindex", this.position !== undefined, `${this.position! + 1}`);
+		toggleAttribute(this, "aria-current", this._renderNavigated && this.navigated, "true");
+		toggleAttribute(this, "draggable", this.movable, "true");
 	}
 
 	async focus(focusOptions?: FocusOptions | undefined): Promise<void> {
@@ -174,11 +160,6 @@ class TableRow extends TableRowBase {
 
 	get _isInteractive() {
 		return this.interactive;
-	}
-
-	get _hasRowActions() {
-		// even if there are no actions visible or fixed, we still need to render the action cell to ensure alignment
-		return this._rowActionCount > 0;
 	}
 
 	get _hasOverflowActions() {

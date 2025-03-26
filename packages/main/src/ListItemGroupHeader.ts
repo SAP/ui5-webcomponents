@@ -48,7 +48,7 @@ class ListItemGroupHeader extends ListItemBase {
 	@slot()
 	subItems!: Array<HTMLElement>;
 
-	@i18n("@ui5/wezbcomponents")
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get effectiveAccRole(): AriaRole {

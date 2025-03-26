@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
 	customElement, slot, property, eventStrict, i18n,
 } from "@ui5/webcomponents-base/dist/decorators.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import TableTemplate from "./TableTemplate.js";
 import TableStyles from "./generated/themes/Table.css.js";
@@ -251,6 +252,7 @@ class Table extends UI5Element {
 		"move": TableMoveEventDetail;
 		"row-action-click": TableRowActionClickEventDetail;
 	}
+
 	/**
 	 * Defines the rows of the component.
 	 *
@@ -327,7 +329,6 @@ class Table extends UI5Element {
 	 * Available options are:
 	 *
 	 * <code>Scroll</code> - Columns are shown as regular columns and horizontal scrolling is enabled.
-	 *
 	 * <code>Popin</code> - Columns are shown as pop-ins instead of regular columns.
 	 *
 	 * @default "Scroll"
@@ -340,6 +341,7 @@ class Table extends UI5Element {
 	 * Defines if the loading indicator should be shown.
 	 *
 	 * **Note:** When the component is loading, it is not interactive.
+	 *
 	 * @default false
 	 * @public
 	 */
@@ -356,12 +358,6 @@ class Table extends UI5Element {
 	loadingDelay = 1000;
 
 	/**
-	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
-	 */
-	@property()
-	stickyTop = "0";
-
-	/**
 	 * Defines the maximum number of row actions that is displayed, which determines the width of the row action column.
 	 *
 	 * **Note:** It is recommended to use a maximum of 3 row actions, as exceeding this limit may take up too much space on smaller screens.
@@ -373,11 +369,38 @@ class Table extends UI5Element {
 	@property({ type: Number })
 	rowActionCount = 0;
 
+	/**
+	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
+	 */
+	@property()
+	stickyTop = "0";
+
 	@property({ type: Number, noAttribute: true })
 	_invalidate = 0;
 
 	@property({ type: Boolean, noAttribute: true })
 	_renderNavigated = false;
+
+	@query("[ui5-drop-indicator]")
+	dropIndicatorDOM!: DropIndicator;
+
+	@query("#nodata-row")
+	_nodataRow?: TableRow;
+
+	@query("#table-end-row")
+	_endRow!: TableRow;
+
+	@query("#table")
+	_tableElement!: HTMLElement;
+
+	@query("#before")
+	_beforeElement!: HTMLElement;
+
+	@query("#after")
+	_afterElement!: HTMLElement;
+
+	@query("#loading")
+	_loadingElement!: HTMLElement;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -387,7 +410,7 @@ class Table extends UI5Element {
 	_onResizeBound: ResizeObserverCallback;
 	_tableNavigation?: TableNavigation;
 	_tableDragAndDrop?: TableDragAndDrop;
-	_poppedIn: Array<{col: TableHeaderCell, width: float}> = [];
+	_poppedIn: Array<{col: TableHeaderCell, width: number}> = [];
 	_containerWidth = 0;
 
 	constructor() {
@@ -417,10 +440,7 @@ class Table extends UI5Element {
 
 	onBeforeRendering(): void {
 		this._renderNavigated = this.rows.some(row => row.navigated);
-		if (this.headerRow[0]) {
-			this.headerRow[0]._rowActionCount = this.rowActionCount;
-		}
-		this.rows.forEach(row => {
+		[...this.headerRow, ...this.rows].forEach(row => {
 			row._renderNavigated = this._renderNavigated;
 			row._rowActionCount = this.rowActionCount;
 		});
@@ -616,32 +636,14 @@ class Table extends UI5Element {
 		return widths.join(" ");
 	}
 
-	get _tableOverflowX() {
-		return (this.overflowMode === TableOverflowMode.Popin) ? "clip" : "auto";
+	get _scrollContainer() {
+		return this._getVirtualizer() ? this._tableElement : findVerticalScrollContainer(this);
 	}
 
-	get _tableOverflowY() {
-		return "auto";
-	}
-
-	get _nodataRow() {
-		return this.shadowRoot!.getElementById("nodata-row") as TableRow;
-	}
-
-	get _beforeElement() {
-		return this.shadowRoot!.getElementById("before") as HTMLElement;
-	}
-
-	get _afterElement() {
-		return this.shadowRoot!.getElementById("after") as HTMLElement;
-	}
-
-	get _tableElement() {
-		return this.shadowRoot!.getElementById("table") as HTMLElement;
-	}
-
-	get _loadingElement() {
-		return this.shadowRoot!.getElementById("loading") as HTMLElement;
+	get _stickyElements() {
+		const stickyRows = this.headerRow.filter(row => row.sticky);
+		const stickyColumns = this.headerRow[0]._stickyCells as TableHeaderCell[];
+		return [...stickyRows, ...stickyColumns];
 	}
 
 	get _effectiveNoDataText() {
@@ -661,27 +663,8 @@ class Table extends UI5Element {
 		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelectable() : undefined;
 	}
 
-	get _stickyElements() {
-		const stickyRows = this.headerRow.filter(row => row.sticky);
-		const stickyColumns = this.headerRow[0]._stickyCells as TableHeaderCell[];
-
-		return [...stickyRows, ...stickyColumns];
-	}
-
-	get _scrollContainer() {
-		return this._getVirtualizer() ? this._tableElement : findVerticalScrollContainer(this);
-	}
-
 	get isTable() {
 		return true;
-	}
-
-	get dropIndicatorDOM(): DropIndicator | null {
-		return this.shadowRoot!.querySelector("[ui5-drop-indicator]");
-	}
-
-	get _hasRowActions() {
-		return this.rowActionCount > 0;
 	}
 }
 

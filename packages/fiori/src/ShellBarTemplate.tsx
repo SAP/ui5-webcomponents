@@ -76,17 +76,18 @@ export default function ShellBarTemplate(this: ShellBar) {
 					<div class="ui5-shellbar-overflow-container-right-inner">
 						{this.hasContentItems && (
 							<>
-								{this.showStartSeparatorInWrapper && (
+								{this.showStartSeparator && (
 									<div class={{
 										"ui5-shellbar-separator": true,
 										"ui5-shellbar-separator-start": true,
 									}}></div>
 								)}
-								{this.startContent.map((item, index) => {
+								{this.startContent.map(item => {
 									const itemInfo = this._contentInfo.find(info => info.id === item._individualSlot);
 									return (
 										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes}>
-											{!this.showStartSeparatorInWrapper && index === 0 && (
+											{this.shouldIncludeSeparator(itemInfo, this.startContentInfoSorted) && (
+												// never displayed, only "packed" with last item that was hidden, used for measurement purposes
 												<div class={{
 													"ui5-shellbar-separator": true,
 													"ui5-shellbar-separator-start": true,
@@ -97,12 +98,13 @@ export default function ShellBarTemplate(this: ShellBar) {
 									);
 								})}
 								<div class="ui5-shellbar-spacer"></div>
-								{this.endContent.map((item, index) => {
+								{this.endContent.map(item => {
 									const itemInfo = this._contentInfo.find(info => info.id === item._individualSlot);
 									return (
 										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes}>
 											<slot name={item._individualSlot}></slot>
-											{!this.showEndSeparatorInWrapper && index === this.endContent.length - 1 && (
+											{this.shouldIncludeSeparator(itemInfo, this.endContentInfoSorted) && (
+												// never displayed, only "packed" with last item that was hidden, used for measurement purposes
 												<div class={{
 													"ui5-shellbar-separator": true,
 													"ui5-shellbar-separator-end": true,
@@ -111,7 +113,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 										</div>
 									);
 								})}
-								{this.showEndSeparatorInWrapper && (
+								{this.showEndSeparator && (
 									<div class={{
 										"ui5-shellbar-separator": true,
 										"ui5-shellbar-separator-end": true,
@@ -194,6 +196,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 									data-ui5-external-action-item-id={item.refItemid}
 									data-ui5-stable={item.stableDomRef}
 									onClick={item.press}
+									accessibilityAttributes={item.accessibilityAttributes}
 								/>
 							))}
 						</div>

@@ -1,9 +1,5 @@
 @import "./InvisibleTextStyles.css";
 
-.ui5-side-navigation-popover {
-	--_ui5_popover_box_shadow: var(--_ui5_side_navigation_popup_box_shadow);
-}
-
 .ui5-side-navigation-popover::part(content) {
 	padding: 0;
 }

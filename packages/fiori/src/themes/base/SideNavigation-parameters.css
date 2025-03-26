@@ -13,13 +13,10 @@
 	--_ui5_side_navigation_border_right: 1px solid var(--sapGroup_ContentBorderColor);
 	--_ui5_side_navigation_box_shadow: none;
 	--_ui5_side_navigation_triangle_display: block;
-	--_ui5_side_navigation_phone_width: var(--_ui5_side_navigation_width);
-
 
 	--_ui5_side_navigation_icon_color: var(--sapContent_IconColor);
 	--_ui5_side_navigation_expand_icon_color: var(--sapContent_IconColor);
 	--_ui5_side_navigation_expand_icon_width: 2rem;
-	--_ui5_side_navigation_external_link_width: 3rem;
 	--_ui5_side_navigation_hover_border_style_color: none;
 	--_ui5_side_navigation_hover_border_width: 0;
 	--_ui5_side_navigation_group_border_style_color: solid var(--sapList_BorderColor);
@@ -30,6 +27,8 @@
 	--_ui5_side_navigation_last_item_border_style_color: none;
 	--_ui5_side_navigation_item_border_radius: 0;
 	--_ui5_side_navigation_item_bottom_margin: 0;
+	--_ui5_side_navigation_item_padding_start_in_popup: var(--_ui5_side_navigation_group_icon_width);
+	--_ui5_side_navigation_item_padding_start_in_overflow_popup: 0.75rem;
 	--_ui5_side_navigation_item_transition: none;
 	--_ui5_side_navigation_item_padding_left: 0.5rem;
 	--_ui5_side_navigation_no_icons_group_padding: 1rem;
@@ -48,20 +47,12 @@
 	--_ui5_side_navigation_group_icon_width: var(--_ui5_side_navigation_collapsed_width);
 	--_ui5_side_navigation_icon_padding_inline_end: 1rem;
 	--_ui5_side_navigation_group_bottom_border_color: var(--sapList_BorderColor);
-	--_ui5_side_navigation_group_text_weight: unset;
-	--_ui5_side_navigation_group_bottom_margin_in_popup: 0;
+	--_ui5_side_navigation_item_font_family: "72override", var(--sapFontFamily);
 	--_ui5_side_navigation_group_padding: 0.5rem;
 	--_ui5_side_navigation_padding-flexible: 0;
 	--_ui5_side_navigation_padding-fixed: 0;
-	--_ui5_side_navigation_parent_popup_padding: 0;
-	--_ui5_side_navigation_parent_popup_border_radius: var(--sapPopover_BorderCornerRadius);
-	--_ui5_side_navigation_popup_item_padding: 0 1rem;
-	--_ui5_side_navigation_popup_icon_width: 1rem;
-	--_ui5_side_navigation_popup_box_shadow: var(--sapContent_Shadow2);
-	--_ui5_side_navigation_popup_arrow_box_shadow: var(--sapContent_Shadow2);
-	--_ui5_side_navigation_popup_title_text_size: var(--sapFontSize);
+	--_ui5_side_navigation_popup_padding: 0;
 	--_ui5_side_navigation_popup_title_line_height: normal;
-	--_ui5_side_navigation_selection_indicator_display: none;
 	--_ui5_side_navigation_first_fixed_item_margin_top: 0;
 
 	--_ui5_side_navigation_item_expand_icon_visibility: none;

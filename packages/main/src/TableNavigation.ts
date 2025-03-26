@@ -4,10 +4,10 @@ import {
 import isElementHidden from "@ui5/webcomponents-base/dist/util/isElementHidden.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import type Table from "./Table.js";
-import type TableRowBase from "./TableRowBase.js";
 import TableExtension from "./TableExtension.js";
 import GridWalker from "./GridWalker.js";
+import type TableRowBase from "./TableRowBase.js";
+import type Table from "./Table.js";
 
 /**
  * Handles the keyboard navigation for the ui5-table.
@@ -55,7 +55,7 @@ class TableNavigation extends TableExtension {
 
 		if (this._table.rows.length) {
 			this._table.rows.forEach(row => items.push(this._getNavigationItemsOfRow(row)));
-		} else {
+		} else if (this._table._nodataRow) {
 			items.push(this._getNavigationItemsOfRow(this._table._nodataRow));
 		}
 

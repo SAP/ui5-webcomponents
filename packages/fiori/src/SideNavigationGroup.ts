@@ -5,6 +5,8 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import {
 	isLeft,
 	isRight,
+	isMinus,
+	isPlus,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -131,12 +133,12 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isLeft(e)) {
+		if (isLeft(e) || isMinus(e)) {
 			this.expanded = false;
 			return;
 		}
 
-		if (isRight(e)) {
+		if (isRight(e) || isPlus(e)) {
 			this.expanded = true;
 		}
 	}
