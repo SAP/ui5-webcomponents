@@ -209,6 +209,19 @@ class DynamicPage extends UI5Element {
 			this.dynamicPageTitle.hasSnappedTitleOnMobile = !!this.hasSnappedTitleOnMobile;
 			this.dynamicPageTitle.removeAttribute("hovered");
 		}
+		const titleHeight = this.dynamicPageTitle?.getBoundingClientRect().height || 0;
+		const headerHeight = this.dynamicPageHeader?.getBoundingClientRect().height || 0;
+
+		if (this.scrollContainer) {
+			this.scrollContainer.style.setProperty("scroll-padding-block-end",
+			  this.showFooter ? "4rem" : "0");
+
+			if (this._headerSnapped) {
+			  this.scrollContainer.style.setProperty("scroll-padding-block-start", `${titleHeight}px`);
+			} else {
+			  this.scrollContainer.style.setProperty("scroll-padding-block-start", `${headerHeight + titleHeight}px`);
+			}
+		}
 	}
 
 	get dynamicPageTitle(): DynamicPageTitle | null {
