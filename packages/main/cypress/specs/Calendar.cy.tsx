@@ -38,8 +38,8 @@ describe("Calendar general interaction", () => {
 		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
 		cy.mount(getDefaultCalendar(date));
 
-		cy.ui5CalendarGetDay("#calendar1", "974851200").
-			as("selectedDay");
+		cy.ui5CalendarGetDay("#calendar1", "974851200")
+			.as("selectedDay");
 
 		cy.get("@selectedDay")
 			.should("have.focus")
