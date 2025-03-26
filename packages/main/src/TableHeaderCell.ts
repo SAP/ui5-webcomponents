@@ -33,15 +33,13 @@ import type TableHeaderCellActionBase from "./TableHeaderCellActionBase.js";
 })
 class TableHeaderCell extends TableCellBase {
 	/**
-	 * Defines the width of column.
+	 * Defines the width of the column.
 	 *
 	 * By default, the column will grow and shrink according to the available space.
 	 * This will distribute the space proportionally among all columns with no specific width set.
 	 *
-	 * See [\<length\>](https://developer.mozilla.org/en-US/docs/Web/CSS/length) for possible width values.
-	 *
-	 * **Note:** When a relative column width is set (e.g. percentage or em), the table will ensure the column is at least
-	 * the defined `minWidth` or at maximum the defined relative `width`.
+	 * See [\<length\>](https://developer.mozilla.org/en-US/docs/Web/CSS/length) and
+	 * [\<percentage\>](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) for possible width values.
 	 *
 	 * @default undefined
 	 * @public
@@ -58,14 +56,13 @@ class TableHeaderCell extends TableCellBase {
 	 * By default, the table ensures that a column cannot be smaller than `3rem`.
 	 * Changing this value to a smaller value might lead to accessibility issues.
 	 *
-	 * **Note:** This property does not take effect, if an absolute width has been defined.
-	 * See [Absolute length units](https://developer.mozilla.org/en-US/docs/Web/CSS/length#absolute_length_units) for more information.
+	 * **Note:** This property only takes effect for columns with a [\<percentage\>](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) value.
 	 *
 	 * @public
-	 * @default "3rem"
+	 * @default undefined
 	 */
 	@property()
-	minWidth = "3rem";
+	minWidth?: string;
 
 	/**
 	 * Defines the importance of the column.
@@ -129,10 +126,6 @@ class TableHeaderCell extends TableCellBase {
 
 	protected ariaRole: string = "columnheader";
 	_popinWidth: number = 0;
-
-	onEnterDOM() {
-		super.onEnterDOM();
-	}
 
 	onBeforeRendering() {
 		super.onBeforeRendering();

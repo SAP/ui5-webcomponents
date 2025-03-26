@@ -12,8 +12,7 @@ import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableDragAndDrop from "./TableDragAndDrop.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import {
-	isAbsoluteColumnWidth, findVerticalScrollContainer, scrollElementIntoView, isFeature,
-	toggleAttribute,
+	findVerticalScrollContainer, scrollElementIntoView, isFeature, toggleAttribute, isValidColumnWidth,
 } from "./TableUtils.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
@@ -634,14 +633,13 @@ class Table extends UI5Element {
 
 		// Column Widths
 		widths.push(...visibleHeaderCells.map(cell => {
-			let width = `minmax(${cell.minWidth}, 1fr)`;
-			if (cell.width && cell.width !== "auto") {
-				const isAbsolute = isAbsoluteColumnWidth(cell.width);
-				if (isAbsolute === null) {
-					// eslint-disable-next-line no-console
-					console.warn(`Invalid column width: ${cell.width}`, cell);
+			const minWidth = `max(3rem, ${cell.minWidth ?? "3rem"})`;
+			let width = `minmax(${minWidth}, 1fr)`; // default width
+			if (cell.width && isValidColumnWidth(cell.width) && cell.width !== "auto") {
+				if (cell.width.includes("%")) {
+					width = `max(${minWidth}, ${cell.width})`;
 				} else {
-					width = isAbsolute ? cell.width : `minmax(${cell.minWidth}, ${cell.width})`;
+					width = cell.width;
 				}
 			}
 			return width;

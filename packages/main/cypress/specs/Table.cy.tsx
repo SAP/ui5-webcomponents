@@ -133,7 +133,7 @@ describe("Table - Rendering", () => {
 		checkWidth("#colA", 48);
 		checkWidth("#colB", 50);
 		checkWidth("#colC", 50);
-		checkWidth("#colD", 52);
+		checkWidth("#colD", 80);
 
 		cy.get("ui5-table").then($table => {
 			$table.css("width", "800px");
@@ -219,6 +219,58 @@ describe("Table - Rendering", () => {
 		checkWidth("#colC", 200);
 		// 2fr is being ignored
 		checkWidth("#colD", 48);
+	});
+
+	it("empty area is rendered when space is available", () => {
+		cy.mount(
+			<Table style="width: 500px;" id="table">
+				<TableHeaderRow slot="headerRow">
+					<TableHeaderCell id="colA" width="300px"><span>ColumnA</span></TableHeaderCell>
+					<TableHeaderCell id="colB" width="200px"><span>ColumnB</span></TableHeaderCell>
+				</TableHeaderRow>
+				<TableRow>
+					<TableCell><Label>Cell A</Label></TableCell>
+					<TableCell><Label>Cell B</Label></TableCell>
+				</TableRow>
+			</Table>
+		)
+
+		cy.get("#table")
+			.shadow()
+			.find("#dummy-area")
+			.should("exist")
+			.then($dummyArea => {
+				expect($dummyArea.outerWidth()).to.be.equal(0);
+			});
+		cy.get("#table")
+			.shadow()
+			.find("#dummy-header-cell")
+			.should("exist")
+			.then($dummyHeaderCell => {
+				expect($dummyHeaderCell.outerWidth()).to.be.equal(0);
+			});
+
+		cy.get("#colA")
+			.invoke("attr", "width", "100px");
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(50);
+	
+
+		cy.get("#table")
+			.shadow()
+			.find("#dummy-area")
+			.should("exist")
+			.then($dummyArea => {
+				expect($dummyArea.outerWidth()).to.be.equal(200);
+			});
+
+		cy.get("#table")
+			.shadow()
+			.find("#dummy-header-cell")
+			.should("exist")
+			.then($dummyHeaderCell => {
+				expect($dummyHeaderCell.outerWidth()).to.be.equal(200);
+			});
 	});
 });
 

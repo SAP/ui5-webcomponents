@@ -189,8 +189,36 @@
 			<ui5-table-cell>1</ui5-table-cell>
 		</ui5-table-row>
 	</ui5-table>
+
+	<br>
+
+	<div id="tablePercentageWidthTextExpected" class="text"></div>
+	<div id="tablePercentageWidthTextActual" class="text"></div>
+	<ui5-table id="tablePercentageWidth">
+		<ui5-table-header-row slot="headerRow" sticky>
+			<ui5-table-header-cell width="20%">Column A</ui5-table-header-cell>
+			<ui5-table-header-cell min-width="200px" width="30%">Column B</ui5-table-header-cell>
+			<ui5-table-header-cell width="10%">Column C</ui5-table-header-cell>
+			<ui5-table-header-cell width="15%">Column D</ui5-table-header-cell>
+			<ui5-table-header-cell width="25%">Column E</ui5-table-header-cell>
+		</ui5-table-header-row>
+		<ui5-table-row row-key="0">
+			<ui5-table-cell>Very Very Very Very Very Long Content</ui5-table-cell>
+			<ui5-table-cell>Average Content</ui5-table-cell>
+			<ui5-table-cell>Content</ui5-table-cell>
+			<ui5-table-cell>WoW</ui5-table-cell>
+			<ui5-table-cell>1</ui5-table-cell>
+		</ui5-table-row>
+		<ui5-table-row row-key="1">
+			<ui5-table-cell>Very Very Very Very Very Long Content</ui5-table-cell>
+			<ui5-table-cell>Average Content</ui5-table-cell>
+			<ui5-table-cell>Content</ui5-table-cell>
+			<ui5-table-cell>WoW</ui5-table-cell>
+			<ui5-table-cell>1</ui5-table-cell>
+		</ui5-table-row>
+	</ui5-table>
 	<script>
-		const tables = ["tableAuto", "tableWidthChange", "tableMinWidth", "tableMinWidthWidth", "tableMinMaxWidth", "tableFixedWidth"];
+		const tables = ["tableAuto", "tableWidthChange", "tableMinWidth", "tableMinWidthWidth", "tableMinMaxWidth", "tableFixedWidth", "tablePercentageWidth"];
 		const slider = document.getElementById("widthSlider");
 
 		function updateActualText(id) {
