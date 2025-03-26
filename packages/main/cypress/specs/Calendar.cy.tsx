@@ -7,14 +7,15 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
 const getDefaultCalendar = (date: Date) => {
 	const calDate = new Date(date);
-	const formattedDate = calDate.toLocaleDateString("default", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
 
-	return (<Calendar id="calendar1" timestamp={calDate.valueOf() / 1000}>
-		<CalendarDate value={formattedDate}></CalendarDate>
+	const day = String(calDate.getDate()).padStart(2, "0");
+	const month = String(calDate.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+	const year = calDate.getFullYear();
+
+	const value = `${day}/${month}/${year}`;
+
+	return (<Calendar id="calendar1" timestamp={calDate.valueOf() / 1000} formatPattern="dd/MM/yyyy">
+		<CalendarDate value={value}></CalendarDate>
 	</Calendar>);
 };
 
@@ -37,14 +38,19 @@ describe("Calendar general interaction", () => {
 		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
 		cy.mount(getDefaultCalendar(date));
 
-		cy.ui5CalendarGetDay("#calendar1", "974851200")
-			.should("have.focus");
+		cy.ui5CalendarGetDay("#calendar1", "974851200").
+			as("today");
 
-		cy.focused().realPress("Tab");
+		cy.get("@today")
+			.should("have.focus")
+			.realPress("Tab");
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
+			.as("calheader");
+		
+		cy.get("@calheader")
 			.find("[data-ui5-cal-header-btn-month]")
 			.should("have.focus");
 
