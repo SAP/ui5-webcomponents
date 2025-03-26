@@ -193,10 +193,11 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the current media query size.
+	 * @default "S" (Phone)
 	 * @private
 	 */
-	@property({ type: String })
-	mediaRange!: string;
+	@property()
+	mediaRange = "S";
 
 	/**
 	 * Defines the delete button, displayed in "Delete" mode.
