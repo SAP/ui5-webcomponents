@@ -61,26 +61,6 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	description?: string;
 
 	/**
-	 * Defines the additional text, displayed in the end of the list item.
-	 * @default undefined
-	 * @public
-	 * @since 1.0.0-rc.15
-	 */
-	@property()
-	additionalText?: string;
-
-	/**
-	 * Defines the state of the `additionalText`.
-	 *
-	 * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
-	 * @default "None"
-	 * @public
-	 * @since 1.0.0-rc.15
-	 */
-	@property()
-	additionalTextState: `${ValueState}` = "None";
-
-	/**
 	 * Defines the `icon` source URI.
 	 *
 	 * **Note:**
@@ -102,6 +82,26 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	iconEnd = false;
 
 	/**
+	 * Defines the `additionalText`, displayed in the end of the list item.
+	 * @default undefined
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	additionalText?: string;
+
+	/**
+	 * Defines the state of the `additionalText`.
+	 *
+	 * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
+	 * @default "None"
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	additionalTextState: `${ValueState}` = "None";
+
+	/**
 	 * Defines whether the item is movable.
 	 * @default false
 	 * @public
@@ -109,6 +109,16 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 */
 	@property({ type: Boolean })
 	movable = false;
+
+	/**
+	 * Defines the text alternative of the component.
+	 * Note: If not provided a default text alternative will be set, if present.
+	 * @default undefined
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	declare accessibleName?: string;
 
 	/**
 	 * Defines if the text of the component should wrap when it's too long.
@@ -129,16 +139,6 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 */
 	@property()
 	wrappingType: `${WrappingType}` = "None";
-
-	/**
-	 * Defines the text alternative of the component.<br/>
-	 * **Note:** If not provided a default text alternative will be set, if present.
-	 * @default undefined
-	 * @public
-	 * @since 1.0.0-rc.15
-	 */
-	@property()
-	accessibleName?: string;
 
 	/**
 	 * Indicates if the list item has text content.
