@@ -9,6 +9,18 @@ import type WrappingType from "./types/WrappingType.js";
 import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
 
 /**
+ * Maximum number of characters to display for small screens (Size S)
+ * @private
+ */
+const MAX_CHARACTERS_SIZE_S = 100;
+
+/**
+ * Maximum number of characters to display for medium and larger screens (Size M and above)
+ * @private
+ */
+const MAX_CHARACTERS_SIZE_M = 300;
+
+/**
  * @class
  * The `ui5-li` represents the simplest type of item for a `ui5-list`.
  *
@@ -183,7 +195,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @private
 	 */
 	get _maxCharacters(): number {
-		return this.mediaRange === "S" ? 100 : 300;
+		return this.mediaRange === "S" ? MAX_CHARACTERS_SIZE_S : MAX_CHARACTERS_SIZE_M;
 	}
 
 	get displayIconBegin(): boolean {
