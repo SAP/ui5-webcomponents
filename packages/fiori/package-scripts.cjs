@@ -18,6 +18,10 @@ const options = {
 	dev: true,
 	fioriPackage: true,
 	noWatchTS: true,
+	internal: {
+		cypress_code_coverage: false,
+		cypress_acc_tests: false,
+	},
 	illustrationsData: [
 		{
 			path: "src/illustrations",
