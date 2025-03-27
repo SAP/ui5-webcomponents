@@ -147,6 +147,7 @@
 
 :host(:not([color-scheme])),
 :host(:not([_has-image])),
+:host([color-scheme="Auto"]),
 :host([_color-scheme="Accent6"]),
 :host([ui5-avatar][color-scheme="Accent6"]) {
 	background-color: var(--ui5-avatar-accent6);
