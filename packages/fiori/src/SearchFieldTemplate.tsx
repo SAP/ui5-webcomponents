@@ -11,7 +11,7 @@ import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 export default function SearchFieldTemplate(this: SearchField) {
 	return (
 		this.expanded ? (
-			<div class="ui5-search-field-root" role="search">
+			<div class="ui5-search-field-root" role="search" onFocusOut={this._onFocusOutSearch}>
 				<div class="ui5-search-field-content">
 					{this.mode === SearchMode.Scoped &&
 						<>

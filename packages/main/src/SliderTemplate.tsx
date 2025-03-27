@@ -35,6 +35,7 @@ export function handles(this: Slider) {
 			<div class="ui5-slider-handle"
 				onFocusOut={this._onfocusout}
 				onFocusIn={this._onfocusin}
+				onKeyUp={this._onkeyup}
 				role="slider"
 				tabIndex={this._tabIndex}
 				aria-orientation="horizontal"

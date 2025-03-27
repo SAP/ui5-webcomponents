@@ -7,14 +7,15 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
 const getDefaultCalendar = (date: Date) => {
 	const calDate = new Date(date);
-	const formattedDate = calDate.toLocaleDateString("default", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
 
-	return (<Calendar id="calendar1" timestamp={calDate.valueOf() / 1000}>
-		<CalendarDate value={formattedDate}></CalendarDate>
+	const day = String(calDate.getDate()).padStart(2, "0");
+	const month = String(calDate.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+	const year = calDate.getFullYear();
+
+	const value = `${day}/${month}/${year}`;
+
+	return (<Calendar id="calendar1" timestamp={calDate.valueOf() / 1000} formatPattern="dd/MM/yyyy">
+		<CalendarDate value={value}></CalendarDate>
 	</Calendar>);
 };
 
@@ -38,35 +39,38 @@ describe("Calendar general interaction", () => {
 		cy.mount(getDefaultCalendar(date));
 
 		cy.ui5CalendarGetDay("#calendar1", "974851200")
-			.should("have.focus");
+			.as("selectedDay");
 
-		cy.focused().realPress("Tab");
+		cy.get("@selectedDay")
+			.should("have.focus")
+			.realPress("Tab");
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
+			.as("calheader");
+		
+		cy.get("@calheader")
 			.find("[data-ui5-cal-header-btn-month]")
-			.should("have.focus");
+			.as("monthBtn");
+		
+		cy.get("@monthBtn")
+			.should("have.focus")
+			.realPress("Tab");
 
-		cy.focused().realPress("Tab");
-
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find(".ui5-calheader")
+		cy.get("@calheader")
 			.find("[data-ui5-cal-header-btn-year]")
-			.should("have.focus");
+			.as("yearBtn");
+		
+		cy.get("@yearBtn")
+			.should("have.focus")
+			.realPress(["Shift", "Tab"]);
 
-		cy.focused().realPress(["Shift", "Tab"]);
+		cy.get("@monthBtn")
+			.should("have.focus")
+			.realPress(["Shift", "Tab"]);
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find(".ui5-calheader")
-			.find("[data-ui5-cal-header-btn-month]")
-			.should("have.focus");
-
-		cy.focused().realPress(["Shift", "Tab"]);
-
-		cy.ui5CalendarGetDay("#calendar1", "974851200")
+		cy.get("@selectedDay")
 			.should("have.focus");
 	});
 

@@ -151,3 +151,29 @@ describe("List Tests", () => {
 			.should("be.focused");
 	});
 });
+
+describe("List - Accessibility", () => {
+	it("tests active state announcement", () => {
+		cy.mount(
+			<List>
+				<ListItemStandard type="Active" id="active">Laptop Lenovo</ListItemStandard>
+				<ListItemStandard type="Inactive" id="inactive">Laptop Lenovo</ListItemStandard>
+			</List>
+		);
+
+		// assert
+		cy.get("#active").invoke("prop", "_id").then(_id => {
+			cy.get("#active")
+				.shadow()
+				.find(`#${_id}-invisibleText`)
+				.should("have.text", "Is Active");
+		});
+
+		cy.get("#inactive").invoke("prop", "_id").then(_id => {
+			cy.get("#inactive")
+				.shadow()
+				.find(`#${_id}-invisibleText`)
+				.should("not.have.text", "Is Active");
+		});
+	});
+});

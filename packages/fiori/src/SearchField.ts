@@ -93,11 +93,12 @@ type SearchFieldScopeSelectionChangeDetails = {
  */
 @event("search", {
 	bubbles: true,
+	cancelable: true,
 })
 
 class SearchField extends UI5Element {
 	eventDetails!: {
-		search: void,
+		search: object,
 		input: void,
 		"scope-change": SearchFieldScopeSelectionChangeDetails,
 	}
@@ -203,15 +204,17 @@ class SearchField extends UI5Element {
 		this.focusedInnerInput = false;
 	}
 
+	_onFocusOutSearch() {}
+
 	_handleEnter() {
 		if (this.value.length) {
-			this.fireDecoratorEvent("search");
+			this._handleSearchEvent();
 		}
 	}
 
 	_handleSearchIconPress() {
 		if (this.value.length) {
-			this.fireDecoratorEvent("search");
+			this._handleSearchEvent();
 			return;
 		}
 
@@ -224,6 +227,10 @@ class SearchField extends UI5Element {
 		setTimeout(() => {
 			this.focus();
 		}, 0);
+	}
+
+	_handleSearchEvent() {
+		this.fireDecoratorEvent("search");
 	}
 
 	_handleInput(e: InputEvent) {

@@ -21,8 +21,8 @@ export default "${collection}/${name}";
 export { pathData, ltr, accData };`;
 
 
-const iconAccTemplate = (name, pathData, ltr, accData, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-import { ${accData.key} } from "../generated/i18n/i18n-defaults.js";
+const iconAccTemplate = (name, pathData, ltr, accData, collection, packageName, versioned) => `import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import { ${accData.key} } from "${versioned ? "../" : "./"}generated/i18n/i18n-defaults.js";
 
 const name = "${name}";
 const pathData = "${pathData}";
@@ -84,8 +84,9 @@ const createIcons = async (file) => {
 		const acc = iconData.acc;
 		const packageName =  json.packageName;
 		const collection =  json.collection;
+		const versioned = json.version;
 
-		const content = acc ? iconAccTemplate(name, pathData, ltr, acc, collection, packageName) : iconTemplate(name, pathData, ltr, collection, packageName);
+		const content = acc ? iconAccTemplate(name, pathData, ltr, acc, collection, packageName, versioned) : iconTemplate(name, pathData, ltr, collection, packageName);
 
 		promises.push(fs.writeFile(path.join(destDir, `${name}.js`), content));
 		promises.push(fs.writeFile(path.join(destDir, `${name}.svg`), svgTemplate(pathData)));
@@ -96,7 +97,7 @@ const createIcons = async (file) => {
 		// - "@ui5/ui5-webcomponents-icons/dist/v5/accept.js"
 		// - "@ui5/ui5-webcomponents-icons/dist/v4/accept.js"
 
-		if (json.version) {
+		if (versioned) {
 			// The exported value from the top level (unversioned) icon module depends on whether the collection is the default,
 			// to add or not the collection name to the exported value:
 			// For the default collection (SAPIcons) we export just the icon name - "export default { 'accept' }"

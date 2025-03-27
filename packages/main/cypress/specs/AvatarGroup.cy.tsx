@@ -34,3 +34,18 @@ describe("Overflow", () => {
 			.should("equal", expectedHiddenItems);
 	});
 });
+
+describe("Avatars arrangement", () => {
+	it("checks if no unnecessary margin is applied of only one Avatar is available", () => {
+		cy.mount(<AvatarGroup id="ag2" type="Group">
+			<Avatar id="av1" initials="II"></Avatar>
+			<Avatar id="av2" initials="II"></Avatar>
+		</AvatarGroup>);
+
+		cy.get("#av2").invoke("remove");
+
+		cy.get("#av1")
+			.invoke("attr", "style")
+			.should("equal", "");
+	});
+});

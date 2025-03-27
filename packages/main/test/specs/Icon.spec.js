@@ -120,8 +120,9 @@ describe("Icon general interaction", () => {
 		const imageMode = "Image";
 		const decorativeMode = "Decorative";
 
-		assert.equal(await mode, imageMode, "Image mode is correctly set by default.");
-		assert.equal(await iconSVG.getAttribute("role"), "img", "The SVG for the image icon has the correct role.");
+		assert.equal(await mode, decorativeMode, "Decorative mode is correctly set by default.");
+		assert.equal(await iconSVG.getAttribute("role"), "presentation", "The SVG for the decorative icon has the correct role.");
+		assert.equal(await iconSVG.getAttribute("aria-hidden"), "true", "The SVG for the decorative icon includes aria-hidden=true as expected");
 
 		await icon.setProperty("mode", intercativeMode)
 		mode = await icon.getProperty("mode");
@@ -129,12 +130,9 @@ describe("Icon general interaction", () => {
 		assert.equal(await mode, intercativeMode, "Interactive mode is correctly set.");
 		assert.equal(await iconSVG.getAttribute("role"), "button", "The SVG for the interactive icon has the correct role.");
 
-		await icon.setProperty("mode", decorativeMode)
+		await icon.setProperty("mode", imageMode)
 		mode = await icon.getProperty("mode");
 
-		assert.equal(await mode, decorativeMode, "Decorative mode is correctly set.");
-		assert.equal(await iconSVG.getAttribute("role"), "presentation", "The SVG for the decorative icon has the correct role.");
-		assert.equal(await iconSVG.getAttribute("aria-hidden"), "true", "The SVG for the decorative icon includes aria-hidden=true as expected");
-
+		assert.equal(await iconSVG.getAttribute("role"), "img", "The SVG for the image icon has the correct role.");
 	});
 });

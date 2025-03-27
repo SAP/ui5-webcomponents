@@ -2,6 +2,7 @@
 target
 dist
 src/generated
+cypress/*
 lib
 test
 bundle.*.js

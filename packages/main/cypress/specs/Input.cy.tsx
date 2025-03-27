@@ -5,8 +5,10 @@ import SuggestionItemGroup from "../../src/SuggestionItemGroup.js";
 import Dialog from "../../src/Dialog.js";
 import Button from "../../src/Button.js";
 
+import add from "@ui5/webcomponents-icons/dist/add.js";
+
 describe("Input Tests", () => {
-	it("tets input event prevention", () => {
+	it("test input event prevention", () => {
 		cy.mount(
 			<Input></Input>
 		);
@@ -126,6 +128,45 @@ describe("Input Tests", () => {
 			.shadow()
 			.find("div")
 			.should("not.have.attr", "tabindex", "0");
+	});
+
+	it("tests tabindex of the div holding icon slot ", () => {
+		cy.mount(
+			<Input id="input"></Input>
+		);
+
+		cy.document().then(doc => {
+			const input = doc.querySelector<Input>("#input")!;
+			const icon = document.createElement("ui5-icon");
+			icon.setAttribute("slot", "icon");
+			icon.setAttribute("name", add);
+			icon.id = "icon";
+
+			input.addEventListener("focus", () => {
+				input.appendChild(icon);
+			});
+			input.addEventListener("focusout", () => {
+				input.removeChild(icon);
+			});
+		});
+
+		cy.get("[ui5-input]")
+			.as("input");
+
+		cy.get<Input>("@input").realClick();
+
+		cy.get("[ui5-icon]")
+			.as("icon");
+
+		cy.get("@icon")
+			.then($icon => {
+				$icon[0].addEventListener("click", cy.spy().as("click"));
+			});
+
+		cy.get("@icon").realClick();
+
+		cy.get("@click")
+			.should("have.been.calledOnce");
 	});
 
 	it("tests submit and change event order", () => {
@@ -389,6 +430,22 @@ describe("Input general interaction", () => {
 		cy.get("ui5-suggestion-item")
 			.eq(1)
 			.should("not.have.attr", "focused");
+	});
+
+	it("Should fire 'input' event when the value is cleared with ESC", () => {
+		cy.mount(
+			<Input></Input>
+		  );
+
+		  cy.get("[ui5-input]").then($input => {
+			  $input[0].addEventListener("ui5-input", cy.spy().as("inputEvent"));
+		  });
+
+		cy.get("[ui5-input]").realClick();
+		cy.get("[ui5-input]").realPress("a");
+		cy.get("[ui5-input]").realPress("Escape");
+
+		cy.get("@inputEvent").should("have.been.calledTwice");
 	});
 });
 
@@ -762,5 +819,46 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 
 		cy.get("@dialog")
 			.should("have.attr", "open");
+	});
+});
+
+describe("Accessibility", () => {
+	it("tests accessibleDescription property", () => {
+		cy.mount(
+			<Input accessibleDescription="This is an input"></Input>
+		);
+
+		cy.get("[ui5-input]").as("input");
+
+		cy.get("@input")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-describedby", "accessibleDescription");
+		
+		cy.get("@input")
+			.shadow()
+			.find("span#accessibleDescription")
+			.should("have.text", "This is an input");
+	});
+
+	it("tests accessibleDescriptionRef property", () => {
+		cy.mount(
+			<>
+				<p id="inputDescription">This is an input</p>
+				<Input accessibleDescriptionRef="inputDescription"></Input>
+			</>
+		);
+
+		cy.get("[ui5-input]").as("input");
+
+		cy.get("@input")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-describedby", "accessibleDescription");
+
+		cy.get("@input")
+			.shadow()
+			.find("span#accessibleDescription")
+			.should("have.text", "This is an input");
 	});
 });
