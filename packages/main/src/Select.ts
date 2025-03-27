@@ -505,7 +505,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * Mixed usage could result in unexpected behavior.
 	 *
 	 * **Note:** If the given value does not match any existing option,
-	 * the first option will get selected.
+	 * no option will be selected and the Select component will be displayed as empty.
 	 * @public
 	 * @default ""
 	 * @since 1.20.0
