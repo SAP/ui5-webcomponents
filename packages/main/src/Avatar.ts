@@ -168,6 +168,8 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	/**
 	 * Defines the background color of the desired image.
+	 * If `colorScheme` is set to `Auto`, the avatar will be displayed with the `Accent6` color.
+	 *
 	 * @default "Auto"
 	 * @public
 	 */
