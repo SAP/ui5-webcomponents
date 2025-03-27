@@ -241,13 +241,6 @@ class DynamicPage extends UI5Element {
 		return !this._headerSnapped;
 	}
 
-	get _accAttributesForHeaderActions() {
-		const headerElement = this.querySelector(`#${this._id}-header`);
-		return headerElement ? {
-		  controls: `${this._id}-header` as Lowercase<string>,
-		} : {};
-	}
-
 	get headerTabIndex() {
 		return (this._headerSnapped || this.showHeaderInStickArea) ? -1 : 0;
 	}
