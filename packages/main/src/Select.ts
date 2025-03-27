@@ -93,17 +93,18 @@ type SelectLiveChangeEventDetail = {
  *
  * There are two main usages of the `ui5-select>`.
  *
- * 1. With Option (`ui5-option`) web component:
+ * - With Option (`ui5-option`) web component:
  *
  * The available options of the Select are defined by using the Option component.
  * The Option comes with predefined design and layout, including `icon`, `text` and `additional-text`.
  *
- * 2. With OptionCustom (`ui5-option-custom`) web component.
+ * - With OptionCustom (`ui5-option-custom`) web component.
  *
  * Options with custom content are defined by using the OptionCustom component
  * The OptionCustom component comes with no predefined layout and it expects consumers to define it.
  *
  * ### Keyboard Handling
+ *
  * The `ui5-select` provides advanced keyboard handling.
  *
  * - [F4] / [Alt] + [Up] / [Alt] + [Down] / [Space] or [Enter] - Opens/closes the drop-down.
@@ -114,6 +115,7 @@ type SelectLiveChangeEventDetail = {
  * - [End] - Navigates to the last option
  *
  * ### ES6 Module Import
+ *
  * `import "@ui5/webcomponents/dist/Select";`
  *
  * `import "@ui5/webcomponents/dist/Option";`
@@ -216,6 +218,9 @@ class Select extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component.
+	 * When set, the component will display the icon only - the selected option's text,
+	 * the Select's "label" slot (if present) and the dropdown arrow won't be displayed.
+	 *
 	 * The SAP-icons font provides numerous options.
 	 *
 	 * Example:
@@ -223,7 +228,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 *
 	 * **Note:** When using this property with a valid icon, Select will be rendered as icon only button and the label and the default arrow down won't be visible.
 	 * @default undefined
-	 * @public
+	 * @private
 	 */
 	@property()
 	icon?: string;

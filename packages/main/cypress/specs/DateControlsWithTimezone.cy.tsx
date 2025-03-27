@@ -41,7 +41,7 @@ describe("Date related components in different timezone", () => {
 		now.setHours(now.getHours() + 13);
 		const hours = String(now.getHours()).padStart(2, "0");
 		const minutes = String(now.getMinutes()).padStart(2, "0");
-		const seconds = now.getSeconds();
+		const seconds = String(now.getSeconds()).padStart(2, "0");
 
 		const value = `${hours}:${minutes}:${seconds}`;
 
@@ -63,7 +63,7 @@ describe("Date related components in different timezone", () => {
 		const year = now.getFullYear();
 		const hours = String(now.getHours()).padStart(2, "0");
 		const minutes = String(now.getMinutes()).padStart(2, "0");
-		const seconds = now.getSeconds();
+		const seconds = String(now.getSeconds()).padStart(2, "0");
 
 		const value = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 
