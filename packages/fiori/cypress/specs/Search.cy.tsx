@@ -593,7 +593,7 @@ describe("Events", () => {
 
 	it("popup-action-press event", () => {
 		cy.mount(
-			<Search expanded={true} showPopupAction={true} popupActionText="Show All">
+			<Search expanded={true} showPopupAction={true} popupActionText="Show All" open={true}>
 				<SearchItem headingText="Item 1" icon={history} />
 			</Search>
 		);
@@ -602,11 +602,6 @@ describe("Events", () => {
 			.then(search => {
 				search.get(0).addEventListener("ui5-popup-action-press", cy.stub().as("actionPressed"));
 			});
-
-		cy.get("[ui5-search]")
-			.shadow()
-			.find("input")
-			.realClick();
 
 		cy.get("[ui5-search]")
 			.shadow()
