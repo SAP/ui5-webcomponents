@@ -61,6 +61,7 @@ const reset = (testFile: string) => {
 
 const prepare = () => {
 	const indexTemplate = readFileSync(path.join(__dirname, "index"), { encoding: "utf-8" });
+	mkdirSync(path.dirname(outputPath), { recursive: true });
 	writeFileSync(outputPathIndex, indexTemplate);
 
 	saveReportFile([]);
