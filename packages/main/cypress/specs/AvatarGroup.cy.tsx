@@ -50,7 +50,7 @@ describe("Avatars", () => {
 	});
 
 
-	it("tests if _color-scheme attribute is automatically set to avatars", async () => {
+	it("tests if _color-scheme attribute is automatically set to avatars", () => {
 		const avatarCount = 20;
 		cy.mount(<AvatarGroup id="ag" type="Group">
 			{Array.from({ length: avatarCount }, (_, i) => {
