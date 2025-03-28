@@ -34,6 +34,54 @@ describe("DateTimePicker general interaction", () => {
 		cy.ui5DateTimePickerIsOpen("#dt").should("equal", false);
 	});
 
+	it("tests change event is prevented on submit when prevent default is called", () => {
+		cy.mount(<DefaultDateTimePicker />);
+
+		// Prevent default behavior of ui5-change event.
+		cy.get("[ui5-datetime-picker]")
+			.as("dtp")
+			
+		cy.get("@dtp")
+			.then($el => {
+			$el[0].addEventListener("ui5-change", (ev: Event) => {
+				ev.preventDefault();
+			});
+		});
+
+		cy.ui5DateTimePickerOpen("#dt");
+
+		cy.ui5DateTimePickerGetPopover("#dt").within(() => {
+			// Click the focused day and confirm the selection.
+			cy.get("ui5-calendar")
+				.shadow()
+				.as("calendar");
+
+			cy.get("@calendar")
+				.find("ui5-daypicker")
+				.shadow()
+				.as("daypicker");
+
+			cy.get("@daypicker")
+				.find("[data-sap-focus-ref]")
+				.should("be.focused")
+				.realClick();
+
+			cy.get("#ok").realClick();
+		});
+
+		cy.get("@dtp")
+			.should("not.have.attr", "open", "");
+	
+		cy.get("@dtp")
+			.shadow()
+			.find("ui5-input")
+			.as("input");
+		
+		cy.get("@input")
+			.should("be.focused")
+			.should("have.attr", "value", "");
+	});
+
 	// Unstable but valid test, needs to be individually observed
 	it.skip("tests selection of new date", () => {
 		setAnimationMode(AnimationMode.None);
@@ -325,43 +373,6 @@ describe("DateTimePicker general interaction", () => {
 			.should("have.attr", "value", "13/04/2020, 12:34:56 AM");
 
 		setAnimationMode(AnimationMode.Full);
-	});
-
-	it("tests change event is prevented on submit when prevent default is called", () => {
-		cy.mount(<DefaultDateTimePicker />);
-
-		// Prevent default behavior of ui5-change event.
-		cy.get("#dt").then($el => {
-			$el[0].addEventListener("ui5-change", (ev: Event) => {
-				ev.preventDefault();
-			});
-		});
-
-		cy.ui5DateTimePickerOpen("#dt");
-
-		cy.ui5DateTimePickerGetPopover("#dt").within(() => {
-			// Click the focused day and confirm the selection.
-			cy.get("ui5-calendar")
-				.shadow()
-				.as("calendar");
-
-			cy.get("@calendar")
-				.find("ui5-daypicker")
-				.shadow()
-				.as("daypicker");
-
-			cy.get("@daypicker")
-				.find("[data-sap-focus-ref]")
-				.should("be.focused")
-				.realClick();
-			cy.get("#ok").realClick();
-		});
-
-		cy.get("#dt")
-			.shadow()
-			.find("ui5-input")
-			.should("be.focused")
-			.should("have.attr", "value", "");
 	});
 
 	it("Min and max dates are set, with no format pattern provided, using valid ISO format", () => {
