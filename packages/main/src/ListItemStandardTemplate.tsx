@@ -40,7 +40,8 @@ function renderTitle(this: ListItemStandard) {
 						"ui5-li-title-exp-text": true
 					}}
 					text={this._textContent}
-					maxCharacters={this._maxCharacters}>
+					maxCharacters={this._maxCharacters}
+					exportparts="text:title">
 				</ExpandableText>
 			</span>
 		);
@@ -67,7 +68,8 @@ function renderDescription(this: ListItemStandard) {
 							"ui5-li-desc-exp-text": true
 						}}
 						text={this.description}
-						maxCharacters={this._maxCharacters}>
+						maxCharacters={this._maxCharacters}
+						exportparts="text:description">
 					</ExpandableText>
 				</span>
 				{renderAdditionalText.call(this)}
