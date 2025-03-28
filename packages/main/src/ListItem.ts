@@ -193,7 +193,7 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the current media query size.
-	 * @default "S" (Phone)
+	 * @default "S"
 	 * @private
 	 */
 	@property()
