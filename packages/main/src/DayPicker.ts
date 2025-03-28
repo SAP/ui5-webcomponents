@@ -1,5 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
@@ -190,6 +191,9 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	@property({ type: Array })
 	specialCalendarDates: Array<SpecialCalendarDateT> = [];
+
+	@query("[data-sap-focus-ref]")
+	_focusableDay!: HTMLElement;
 
 	_autoFocus?: boolean;
 
@@ -404,16 +408,21 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		if (this._autoFocus && !this._hidden) {
 			this.focus();
 		}
+	}
 
-		const focusedDay = this.shadowRoot!.querySelector<HTMLElement>("[data-sap-focus-ref]");
-
-		if (focusedDay && document.activeElement !== focusedDay && this._specialCalendarDates.length === 0) {
-			focusedDay.focus();
+	_focusCorrectDay() {
+		if (this._shouldFocusDay) {
+			this._focusableDay.focus();
 		}
+	}
+
+	get _shouldFocusDay() {
+		return this._focusableDay && document.activeElement !== this._focusableDay && this._specialCalendarDates.length === 0;
 	}
 
 	_onfocusin() {
 		this._autoFocus = true;
+		this._focusCorrectDay();
 	}
 
 	_onfocusout() {

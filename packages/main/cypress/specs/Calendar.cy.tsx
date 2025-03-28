@@ -42,6 +42,9 @@ describe("Calendar general interaction", () => {
 			.as("selectedDay");
 
 		cy.get("@selectedDay")
+			.realClick();
+
+		cy.get("@selectedDay")
 			.should("have.focus")
 			.realPress("Tab");
 
