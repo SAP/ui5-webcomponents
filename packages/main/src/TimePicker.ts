@@ -758,24 +758,6 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return this.valueStateMessage.length > 0 && !this.open && !this._isMobileDevice;
 	}
 
-	get classes() {
-		return {
-			popover: {
-				"ui5-suggestions-popover": true,
-				"ui5-popover-with-value-state-header-phone": this._isPhone && this.hasValueStateText,
-				"ui5-popover-with-value-state-header": !this._isPhone && this.hasValueStateText,
-			},
-			popoverValueState: {
-				"ui5-valuestatemessage-header": true,
-				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
-				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
-			},
-		};
-	}
-
 	/**
 	 * @protected
 	 */
