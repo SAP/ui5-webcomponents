@@ -274,12 +274,6 @@ class SplitButton extends UI5Element {
 			return;
 		}
 
-		if (isSpace(e)) {
-			this._spacePressed = true;
-			this._shiftOrEscapePressedDuringSpace = false; // Reset whenever new Space action starts
-			return;
-		}
-
 		if ((isShift(e) || isEscape(e)) && this._spacePressed) {
 			e.preventDefault();
 			this._shiftOrEscapePressedDuringSpace = true;
@@ -417,7 +411,7 @@ class SplitButton extends UI5Element {
 
 		if (isSpace(e)) {
 			this._spacePressed = true;
-			this._shiftOrEscapePressedDuringSpace = false;
+			this._shiftOrEscapePressedDuringSpace = false; // Reset whenever new Space action starts
 			return;
 		}
 
