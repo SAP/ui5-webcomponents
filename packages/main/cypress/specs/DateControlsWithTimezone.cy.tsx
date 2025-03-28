@@ -28,7 +28,7 @@ describe("Date related components in different timezone", () => {
 
 		cy.get("#datePickerNow")
 			.shadow()
-			.find("ui5-input")
+			.find("[ui5-datetime-input]")
 			.should("have.attr", "value", value);
 	});
 
@@ -69,7 +69,7 @@ describe("Date related components in different timezone", () => {
 
 		cy.get("#dateTimePickerNow")
 			.shadow()
-			.find("[ui5-input]")
+			.find("[ui5-datetime-input]")
 			.should("have.attr", "value", value);
 	});
 });
