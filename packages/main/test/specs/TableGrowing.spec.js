@@ -198,7 +198,7 @@ describe('Table - Growing with Scroll', async () => {
 		await table.setProperty("style", `height: 200px; overflow: auto;`);
 
 		const tableGrowing = await browser.$("#growing");
-		await tableGrowing.setAttribute("type", "Scroll");
+		await tableGrowing.setAttribute("mode", "Scroll");
 	});
 
 	// Test Case: Check if table is scrollable (overflow-y: auto)
@@ -207,7 +207,7 @@ describe('Table - Growing with Scroll', async () => {
 		assert.ok(await table.isExisting(), "Table exists");
 
 		const tableGrowing = await browser.$("#growing");
-		assert.equal(await tableGrowing.getAttribute("type"), "Scroll", "Growing is of type Scroll");
+		assert.equal(await tableGrowing.getAttribute("mode"), "Scroll", "Growing is of mode Scroll");
 
 		// Check if div with ID "table" has overflow-y: auto
 		const innerTable = await table.shadow$("#table");
