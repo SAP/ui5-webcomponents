@@ -42,8 +42,6 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
  *
  * On phones, if the component is configured to display the full text in a popover, the popover will appear in full screen.
  *
- * @csspart text - Used to style the text content of the component
- *
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/ExpandableText";`
@@ -52,6 +50,7 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
  * @extends UI5Element
  * @public
  * @since 2.6.0
+ * @csspart text - Used to style the text content of the component
  */
 @customElement({
 	tag: "ui5-expandable-text",
