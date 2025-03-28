@@ -43,7 +43,7 @@ describe("TableGrowing - Button", () => {
 
 			cy.get("[ui5-table-growing]")
 				.shadow()
-				.find("#growing-button")
+				.find("#button")
 				.should("exist")
 				.should("have.attr", "role", "button")
 				.should("have.attr", "aria-labelledby", "text subtext");
@@ -77,7 +77,7 @@ describe("TableGrowing - Button", () => {
 
 			cy.get("[ui5-table-growing]")
 				.shadow()
-				.find("#growing-button")
+				.find("#button")
 				.should("exist")
 				.should("have.attr", "role", "button")
 				.should("have.attr", "aria-labelledby", "text subtext");
@@ -130,7 +130,7 @@ describe("TableGrowing - Button", () => {
 
 			cy.get<TableGrowing>("[ui5-table-growing]")
 				.shadow()
-				.find("#growing-button")
+				.find("#button")
 				.should("be.visible")
 				.focus();
 
@@ -141,7 +141,7 @@ describe("TableGrowing - Button", () => {
 
 			cy.get<TableGrowing>("[ui5-table-growing]")
 				.shadow()
-				.find("#growing-button")
+				.find("#button")
 				.should("be.visible")
 				.focus();
 
@@ -194,7 +194,7 @@ describe("TableGrowing - Scroll", () => {
 
 			cy.get("[ui5-table-growing]")
 				.shadow()
-				.find("#growing-button")
+				.find("#button")
 				.should("not.be.visible");
 
 			cy.get("[ui5-table]")
@@ -208,7 +208,7 @@ describe("TableGrowing - Scroll", () => {
 
 			cy.get("[ui5-table-growing]")
 				.shadow()
-				.find("#growing-button")
+				.find("#button")
 				.should("exist");
 
 			cy.get("[ui5-table]")
@@ -264,7 +264,7 @@ describe("TableGrowing - Scroll", () => {
 
 			cy.get("[ui5-table-growing]")
 				.shadow()
-				.find("#growing-button")
+				.find("#button")
 				.should("not.be.visible");
 
 			cy.get("[ui5-table]")

@@ -5,12 +5,12 @@
 	flex-grow: 1;
 }
 
-#growing-button:focus {
+#button:focus {
     outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
     outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
 
-#growing-button {
+#button {
     margin: 0;
     padding: 0;
     display: flex;
@@ -21,13 +21,13 @@
 }
 
 @media (hover: hover) {
-    #growing-button:hover {
+    #button:hover {
         background: var(--sapButton_Hover_Background);
     }
 }
 
-#growing-button:active,
-#growing-button[data-ui5-growing-active="true"] {
+#button:active,
+#button[data-ui5-growing-active="true"] {
     background: var(--sapList_Active_Background);
 }
 
