@@ -2,6 +2,7 @@ import type Calendar from "./Calendar.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
+import YearRangePicker from "./YearRangePicker.js";
 import CalendarHeaderTemplate from "./CalendarHeaderTemplate.js";
 
 export default function CalendarTemplate(this: Calendar) {
@@ -61,9 +62,28 @@ export default function CalendarTemplate(this: Calendar) {
 						minDate={this.minDate}
 						maxDate={this.maxDate}
 						timestamp={this._timestamp}
+						_currentYearRange = {this._currentYearRange}
 						onChange={this.onSelectedYearChange}
 						onNavigate={this.onNavigate}
 						exportparts="year-cell, year-cell-selected, year-cell-selected-between"
+					/>
+
+					<YearRangePicker
+						id={`${this._id}-YRP`}
+						hidden={this._isYearRangePickerHidden}
+						formatPattern={this._formatPattern}
+						selectedDates={this._selectedDatesTimestamps}
+						_selectionMode={this.selectionMode}
+						_hidden={this._isYearRangePickerHidden}
+						primaryCalendarType={this._primaryCalendarType}
+						secondaryCalendarType={this._secondaryCalendarType}
+						minDate={this.minDate}
+						maxDate={this.maxDate}
+						timestamp={this._timestamp}
+						_currentYearRange = {this._currentYearRange}
+						onChange={this.onSelectedYearRangeChange}
+						onNavigate={this.onNavigate}
+						exportparts="year-range-cell, year-range-cell-selected, year-range-cell-selected-between"
 					/>
 				</div>
 
