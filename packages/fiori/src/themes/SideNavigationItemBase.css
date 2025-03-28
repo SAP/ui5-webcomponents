@@ -186,7 +186,7 @@ and there is an additional border that appears on hover. */
 .ui5-sn-item-external-link-icon {
 	color: var(--_ui5_side_navigation_expand_icon_color);
 	min-width: 2rem;
-	height: 1rem;
+	height: 0.875rem;
 }
 
 :host([design="Action"]) .ui5-sn-item-toggle-icon,
