@@ -22,7 +22,7 @@ function TableGrowingSample(props: { rowCount: number, overflow: boolean }) {
 	return (
 		<div id="wrapper" style={{ height: "200px", overflow: props.overflow ? "auto" : "" }}>
 			<Table id="table">
-				<TableGrowing slot="features" type="Scroll"></TableGrowing>
+				<TableGrowing slot="features" mode="Scroll"></TableGrowing>
 				<TableHeaderRow slot="headerRow">
 					<TableHeaderCell><span>ColumnA</span></TableHeaderCell>
 				</TableHeaderRow>
