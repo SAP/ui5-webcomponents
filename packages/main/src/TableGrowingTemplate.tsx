@@ -3,7 +3,7 @@ import type TableGrowing from "./TableGrowing.js";
 export default function TableGrowingTemplate(this: TableGrowing) {
 	return (
 		<div
-			id="growing-button"
+			id="button"
 			tabindex={-1}
 			data-ui5-growing-active={this._activeState}
 			onClick={this.loadMore}
@@ -12,12 +12,12 @@ export default function TableGrowingTemplate(this: TableGrowing) {
 			onFocusOut={this._onFocusout}
 			role="button"
 			aria-labelledby="text subtext"
-			aria-describedby="growing-description">
-			<span id="text">{this._growingButtonText}</span>
+			aria-describedby="description">
+			<span id="text">{this._buttonText}</span>
 			{ this.subText &&
 				<span id="subtext">{this.subText}</span>
 			}
-			<span id="growing-description" class="ui5-hidden-text" aria-hidden="true">{this._growingButtonDescription}</span>
+			<span id="description" class="ui5-hidden-text" aria-hidden="true">{this._buttonDescription}</span>
 		</div>
 	);
 }

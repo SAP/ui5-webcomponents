@@ -272,15 +272,15 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 		this._activeState = false;
 	}
 
-	get _growingButtonText() {
+	get _buttonText() {
 		return this.text || TableGrowing.i18nBundle.getText(TABLE_MORE);
 	}
 
-	get _growingButtonDescription() {
+	get _buttonDescription() {
 		return TableGrowing.i18nBundle.getText(TABLE_MORE_DESCRIPTION);
 	}
 
-	get _hasGrowingButton() {
+	get _hasButton() {
 		return this.hasGrowingComponent();
 	}
 }
