@@ -46,7 +46,7 @@ describe("TableGrowing - Button", () => {
 				.find("#growing-button")
 				.should("exist")
 				.should("have.attr", "role", "button")
-				.should("have.attr", "aria-labelledby", "growing-text growing-subtext");
+				.should("have.attr", "aria-labelledby", "text subtext");
 
 			cy.get("[ui5-table")
 				.shadow()
@@ -55,17 +55,17 @@ describe("TableGrowing - Button", () => {
 
 			cy.get("[ui5-table-growing]")
 				.shadow()
-				.find("#growing-text")
+				.find("#text")
 				.should("have.text", "More");
 		});
 
 		it("tests correct custom texts are rendered", () => {
-			const growingText = "My Custom Growing Text",
-				growingSubtext = "My Custom Growing Subtext";
+			const text = "My Custom Growing Text",
+				subText = "My Custom Growing Subtext";
 
 			cy.mount(
 				<Table>
-					<TableGrowing slot="features" growingText={growingText} growingSubText={growingSubtext} />
+					<TableGrowing slot="features" text={text} subText={subText} />
 					<TableHeaderRow slot="headerRow">
 						<TableHeaderCell><span>ColumnA</span></TableHeaderCell>
 					</TableHeaderRow>
@@ -80,17 +80,17 @@ describe("TableGrowing - Button", () => {
 				.find("#growing-button")
 				.should("exist")
 				.should("have.attr", "role", "button")
-				.should("have.attr", "aria-labelledby", "growing-text growing-subtext");
+				.should("have.attr", "aria-labelledby", "text subtext");
 
 			cy.get("[ui5-table-growing]")
 				.shadow()
-				.find("#growing-text")
-				.should("have.text", growingText);
+				.find("#text")
+				.should("have.text", text);
 
 			cy.get("[ui5-table-growing]")
 				.shadow()
-				.find("#growing-subtext")
-				.should("have.text", growingSubtext);
+				.find("#subtext")
+				.should("have.text", subText);
 		});
 
 		it("tests growing button not shown when no data", () => {

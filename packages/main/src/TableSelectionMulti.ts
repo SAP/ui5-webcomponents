@@ -76,7 +76,7 @@ class TableSelectionMulti extends TableSelectionBase {
 		return this.getSelectedAsSet().has(rowKey);
 	}
 
-	setSelected(row: TableRowBase, selected: boolean, _fireEvent: boolean = false) {
+	setSelected(row: TableRowBase, selected: boolean, fireEvent: boolean = false) {
 		if (this._rangeSelection?.isMouse && this._rangeSelection.shiftPressed) {
 			return;
 		}
@@ -89,7 +89,7 @@ class TableSelectionMulti extends TableSelectionBase {
 		});
 
 		this.setSelectedAsSet(selectedSet);
-		_fireEvent && this.fireDecoratorEvent("change");
+		fireEvent && this.fireDecoratorEvent("change");
 	}
 
 	/**
@@ -103,8 +103,6 @@ class TableSelectionMulti extends TableSelectionBase {
 
 	/**
 	 * Determines whether all rows are selected.
-	 *
-	 * @public
 	 */
 	areAllRowsSelected(): boolean {
 		if (!this._table || !this._table.rows.length) {

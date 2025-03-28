@@ -31,14 +31,14 @@
     background: var(--sapList_Active_Background);
 }
 
-#growing-text {
+#text {
     padding: 1rem 0 1rem 0;
     font-size: var(--sapFontSize);
     color: var(--sapButton_TextColor);
     font-weight: bold;
 }
 
-#growing-subtext {
+#subtext {
     padding-bottom: 1rem;
     color: var(--sapButton_TextColor);
 }

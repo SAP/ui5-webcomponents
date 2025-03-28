@@ -64,10 +64,14 @@ describe("TableRowActions", () => {
 			cy.get("@row3").find("ui5-table-row-action-navigation").shadow().find("ui5-icon").should("have.attr", "name", "navigation-right-arrow");
 			cy.get("@row4").find("ui5-table-row-action-navigation").shadow().find("ui5-button").should("have.attr", "icon", "navigation-right-arrow");
 
+			cy.get("#addAction").invoke("on", "click", cy.stub().as("addActionClick"));
 			cy.get("#addAction").realClick();
+			cy.get("@addActionClick").should("have.been.calledOnce");
 			cy.get("@rowActionClick").invoke("getCall", 0).its("args.0.detail.row.id").should("equal", "addRow");
 			cy.get("@rowActionClick").invoke("getCall", 0).its("args.0.detail.action.id").should("equal", "addAction");
+			cy.get("#navigationAction").invoke("on", "click", cy.stub().as("navigationActionClick"));
 			cy.get("#navigationAction").realClick();
+			cy.get("@navigationActionClick").should("have.been.calledOnce");
 			cy.get("@rowActionClick").invoke("getCall", 1).its("args.0.detail.row.id").should("equal", "navigationRow");
 			cy.get("@rowActionClick").invoke("getCall", 1).its("args.0.detail.action.id").should("equal", "navigationAction");
 
@@ -104,7 +108,9 @@ describe("TableRowActions", () => {
 			cy.get("@menuItems").eq(1).should("have.attr", "text", "Edit").and("have.attr", "icon", "edit");
 			cy.get("@menuItems").eq(2).should("have.attr", "text", "Delete").and("have.attr", "icon", "delete");
 
+			cy.get("#addAction").invoke("on", "click", cy.stub().as("addActionClick"));
 			cy.get("@menuItems").eq(0).ui5MenuItemClick();
+			cy.get("@addActionClick").should("have.been.calledOnce");
 			cy.get("@rowActionClick").invoke("getCall", 0).its("args.0.detail.action.id").should("equal", "addAction");
 			cy.get("ui5-menu").invoke("get", 0).its("open").should("be.false");
 

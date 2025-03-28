@@ -28,7 +28,7 @@
     grid-column: 1 / -1;
 }
 
-#nodata-cell {
+#no-data-cell {
     grid-column: 1 / -1;
     justify-content: center;
 }
