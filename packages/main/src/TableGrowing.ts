@@ -38,7 +38,7 @@ import {
  *
  * ```html
  * <ui5-table>
- * 	<ui5-table-growing type="Button" growing-text="More" slot="features"></ui5-table-growing>
+ * 	<ui5-table-growing type="Button" text="More" slot="features"></ui5-table-growing>
  * </ui5-table>
  * ```
  *
@@ -102,17 +102,17 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * @public
 	 */
 	@property()
-	growingText?: string;
+	text?: string;
 
 	/**
-	 * Defines the text that will be displayed below the `growingText` inside the growing button.
+	 * Defines the text that will be displayed below the `text` inside the growing button.
 	 * Has no effect when type is set to Scroll.
 	 *
 	 * @default undefined
 	 * @public
 	 */
 	@property()
-	growingSubText?: string;
+	subText?: string;
 
 	/**
 	 * Defines the active state of the growing button.
@@ -273,7 +273,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	}
 
 	get _growingButtonText() {
-		return this.growingText || TableGrowing.i18nBundle.getText(TABLE_MORE);
+		return this.text || TableGrowing.i18nBundle.getText(TABLE_MORE);
 	}
 
 	get _growingButtonDescription() {

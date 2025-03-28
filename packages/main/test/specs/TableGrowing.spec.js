@@ -28,34 +28,34 @@ describe('Table - Growing with Button', async () => {
 		assert.ok(await growingButton.isExisting(), "Growing Button exists");
 	});
 
-	// Test Case: Check if the Growing Button is rendered with the correct growing-text and growing-sub-text
+	// Test Case: Check if the Growing Button is rendered with the correct text and growing-sub-text
 	it('Check if the Growing Button is rendered with the correct text', async () => {
 		const tableGrowing = await browser.$("#growing");
 
-		// Check the growing-text. The text is in growingButton. It's a direct child of the growing-button as seen in the TableGrowing.hbs file
-		const growingText = await tableGrowing.shadow$("#growing-text");
+		// Check the text. The text is in growingButton. It's a direct child of the growing-button as seen in the TableGrowing.hbs file
+		const growingText = await tableGrowing.shadow$("#text");
 		assert.ok(growingText.isExisting(), "Growing Text exists");
 		assert.strictEqual(await growingText.getText(), "Load More", "Growing Text is correct");
 
 		// Check the growing-sub-text. The text is in growingButton. It's a direct child of the growing-button as seen in the TableGrowing.hbs file
-		const growingSubText = await tableGrowing.shadow$("#growing-subtext");
+		const growingSubText = await tableGrowing.shadow$("#subtext");
 		assert.ok(await growingSubText.isExisting(), "Growing Sub Text exists");
 		assert.strictEqual(await growingSubText.getText(), "More Items Loading...", "Growing Sub Text is correct");
 	});
 
-	// Test Case: Changing the growing-text and growing-sub-text should result in the correct text
-	it('Changing the growing-text and growing-sub-text should result in the correct text', async () => {
+	// Test Case: Changing the text and growing-sub-text should result in the correct text
+	it('Changing the text and growing-sub-text should result in the correct text', async () => {
 		const tableGrowing = await browser.$("#growing");
 
-		// Change the growing-text
-		await tableGrowing.setAttribute("growing-text", "Load More Items");
+		// Change the text
+		await tableGrowing.setAttribute("text", "Load More Items");
 
-		const growingText = await tableGrowing.shadow$("#growing-text");
+		const growingText = await tableGrowing.shadow$("#text");
 		assert.strictEqual(await growingText.getText(), "Load More Items", "Growing Text is correct");
 
 		// Change the growing-sub-text
 		await tableGrowing.setAttribute("growing-sub-text", "More Items Loading... Please Wait");
-		const growingSubText = await tableGrowing.shadow$("#growing-subtext");
+		const growingSubText = await tableGrowing.shadow$("#subtext");
 		assert.strictEqual(await growingSubText.getText(), "More Items Loading... Please Wait", "Growing Sub Text is correct");
 	});
 
