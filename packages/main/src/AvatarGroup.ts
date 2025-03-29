@@ -41,7 +41,7 @@ import AvatarGroupTemplate from "./AvatarGroupTemplate.js";
  * @public
  */
 interface IAvatarGroupItem extends HTMLElement, ITabbable {
-	еffectiveBackgroundColor: AvatarColorScheme;
+	effectiveBackgroundColor: AvatarColorScheme;
 	size: `${AvatarSize}`;
 	effectiveSize: AvatarSize;
 	interactive: boolean;
@@ -256,7 +256,7 @@ class AvatarGroup extends UI5Element {
 	 * @public
 	 */
 	get colorScheme(): AvatarColorScheme[] {
-		return this.items.map(avatar => avatar.еffectiveBackgroundColor);
+		return this.items.map(avatar => avatar.effectiveBackgroundColor);
 	}
 
 	get _customOverflowButton() {
@@ -454,7 +454,7 @@ class AvatarGroup extends UI5Element {
 			const colorIndex = this._getNextBackgroundColor();
 			avatar.interactive = !this._isGroup;
 
-			if (!avatar.getAttribute("_color-scheme")) {
+			if (avatar.getAttribute("_color-scheme") === AvatarColorScheme.Auto) {
 				// AvatarGroup respects colors set to ui5-avatar
 				avatar.setAttribute("_color-scheme", AvatarColorScheme[`Accent${colorIndex}` as keyof typeof AvatarColorScheme]);
 			}
