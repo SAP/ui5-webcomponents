@@ -9,6 +9,25 @@ if (process.env.DEPLOY) {
 	websiteBaseUrl = "/ui5-webcomponents/nightly/";
 }
 
+const cypressEnvVariables = (options, predefinedVars) => {
+	let variables = [];
+	const { cypress_code_coverage, cypress_acc_tests } = options.internal ?? {};
+
+	// Handle environment variables like TEST_SUITE  
+	if (predefinedVars) {
+		variables = [...predefinedVars];
+	}
+
+	// The coverage task is always registered and requires an explicit variable whether to generate a report or not
+	variables.push(`CYPRESS_COVERAGE=${!!cypress_code_coverage}`);
+
+	if (cypress_acc_tests) {
+		variables.push("CYPRESS_UI5_ACC=true");
+	}
+
+	return variables.length ? `cross-env ${variables.join(" ")}` : "";
+}
+
 const getScripts = (options) => {
 
 	// The script creates all JS modules (dist/illustrations/{illustrationName}.js) out of the existing SVGs
@@ -17,7 +36,7 @@ const getScripts = (options) => {
 	const createIllustrationsJSImportsScript = illustrations.join(" && ");
 
 	// The script creates the "src/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
-    const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.set} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
+	const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.set} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
 
 	const tsOption = !options.legacy || options.jsx;
 	const tsCommandOld = tsOption ? "tsc" : "";
@@ -31,7 +50,7 @@ const getScripts = (options) => {
 	if (tsOption) {
 		try {
 			require("typescript");
-		} catch(e) {
+		} catch (e) {
 			console.error(`TypeScript is not found. Try to install it by running \`npm install --save-dev typescript\` if you are using npm or by running \`yarn add --dev typescript\` if you are using yarn.`);
 			process.exit(e.code);
 		}
@@ -122,10 +141,10 @@ const getScripts = (options) => {
 		},
 		start: "nps prepare watch.devServer",
 		test: `node "${LIB}/test-runner/test-runner.js"`,
-		"test-cy-ci": `cross-env CYPRESS_COVERAGE=true yarn cypress run --component --browser chrome`,
-		"test-cy-ci-suite-1": `cross-env CYPRESS_COVERAGE=true TEST_SUITE=SUITE1 yarn cypress run --component --browser chrome`,
-		"test-cy-ci-suite-2": `cross-env CYPRESS_COVERAGE=true TEST_SUITE=SUITE2 yarn cypress run --component --browser chrome`,
-		"test-cy-open": `cross-env CYPRESS_COVERAGE=true yarn cypress open --component --browser chrome`,
+		"test-cy-ci": `${cypressEnvVariables(options)} yarn cypress run --component --browser chrome`,
+		"test-cy-ci-suite-1": `${cypressEnvVariables(options, ["TEST_SUITE=SUITE1"])} yarn cypress run --component --browser chrome`,
+		"test-cy-ci-suite-2": `${cypressEnvVariables(options, ["TEST_SUITE=SUITE2"])} yarn cypress run --component --browser chrome`,
+		"test-cy-open": `${cypressEnvVariables(options)} yarn cypress open --component --browser chrome`,
 		"test-suite-1": `node "${LIB}/test-runner/test-runner.js" --suite suite1`,
 		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
 		startWithScope: "nps scope.prepare scope.watchWithBundle",

@@ -1,5 +1,5 @@
 import "cypress-real-events";
-import '@cypress/code-coverage/support'
+import '@cypress/code-coverage/support';
 import "./acc_report/support.js";
 import "./helpers.js"
 
