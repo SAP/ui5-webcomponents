@@ -9,6 +9,18 @@ import type WrappingType from "./types/WrappingType.js";
 import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
 
 /**
+ * Maximum number of characters to display for small screens (Size S)
+ * @private
+ */
+const MAX_CHARACTERS_SIZE_S = 100;
+
+/**
+ * Maximum number of characters to display for medium and larger screens (Size M and above)
+ * @private
+ */
+const MAX_CHARACTERS_SIZE_M = 300;
+
+/**
  * @class
  * The `ui5-li` represents the simplest type of item for a `ui5-list`.
  *
@@ -28,7 +40,9 @@ import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
  * @csspart checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode
  * @slot {Node[]} default - Defines the text of the component.
  *
- * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design. <br/>
+ * **Note:** Deprecated since version `2.9.0`. Use the `text` property instead. <br/>
+ * Only use the default slot if you need to apply custom text formatting with HTML elements (like `<b>`, `<i>`, etc.).
  * @constructor
  * @extends ListItem
  * @public
@@ -39,6 +53,16 @@ import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
 	template: ListItemStandardTemplate,
 })
 class ListItemStandard extends ListItem implements IAccessibleListItem {
+	/**
+	 * Defines the text of the component.
+	 *
+	 * @default undefined
+	 * @public
+	 * @since 2.9.0
+	 */
+	@property()
+	text?: string;
+
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
 	 * @default undefined
@@ -109,12 +133,21 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	declare accessibleName?: string;
 
 	/**
-	 * Defines if the text of the component should wrap, they truncate by default.
+	 * Defines if the text of the component should wrap when it's too long.
+	 * When set to "Normal", the content (title, description) will be wrapped
+	 * using the `ui5-expandable-text` component.<br/>
 	 *
-	 * **Note:** this property takes affect only if text node is provided to default slot of the component
+	 * The text can wrap up to 100 characters on small screens (size S) and
+	 * up to 300 characters on larger screens (size M and above). When text exceeds
+	 * these limits, it truncates with an ellipsis followed by a text expansion trigger.
+	 *
+	 * Available options are:
+	 * - `None` (default) - The text will truncate with an ellipsis.
+	 * - `Normal` - The text will wrap (without truncation).
+	 *
 	 * @default "None"
-	 * @private
-	 * @since 1.5.0
+	 * @public
+	 * @since 2.9.0
 	 */
 	@property()
 	wrappingType: `${WrappingType}` = "None";
@@ -143,8 +176,26 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 
 	onBeforeRendering() {
 		super.onBeforeRendering();
-		this.hasTitle = !!this.textContent;
+		this.hasTitle = !!(this.text || this.textContent);
 		this._hasImage = this.hasImage;
+	}
+
+	/**
+	 * Returns the content text, either from text property or from the default slot
+	 * @private
+	 */
+	get _textContent(): string {
+		return this.text || this.textContent || "";
+	}
+
+	/**
+	 * Determines the maximum characters to display based on the current media range.
+	 * - Size S: 100 characters
+	 * - Size M and larger: 300 characters
+	 * @private
+	 */
+	get _maxCharacters(): number {
+		return this.mediaRange === "S" ? MAX_CHARACTERS_SIZE_S : MAX_CHARACTERS_SIZE_M;
 	}
 
 	get displayIconBegin(): boolean {

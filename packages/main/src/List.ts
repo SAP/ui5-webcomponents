@@ -55,6 +55,7 @@ import type {
 	SelectionRequestEventDetail,
 } from "./ListItem.js";
 import ListSeparator from "./types/ListSeparator.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 
 // Template
 import ListTemplate from "./ListTemplate.js";
@@ -465,6 +466,14 @@ class List extends UI5Element {
 	_loadMoreActive = false;
 
 	/**
+	 * Defines the current media query size.
+	 * @default "S"
+	 * @private
+	 */
+	@property()
+	mediaRange = "S";
+
+	/**
 	 * Defines the items of the component.
 	 *
 	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
@@ -493,7 +502,7 @@ class List extends UI5Element {
 	_forwardingFocus: boolean;
 	resizeListenerAttached: boolean;
 	listEndObserved: boolean;
-	_handleResize: ResizeObserverCallback;
+	_handleResizeCallback: ResizeObserverCallback;
 	initialIntersection: boolean;
 	_selectionRequested?: boolean;
 	_groupCount: number;
@@ -528,9 +537,7 @@ class List extends UI5Element {
 			getItemsCallback: () => this.getEnabledItems(),
 		});
 
-		this._handleResize = this.checkListInViewport.bind(this);
-
-		this._handleResize = this.checkListInViewport.bind(this);
+		this._handleResizeCallback = this._handleResize.bind(this);
 
 		// Indicates the List bottom most part has been detected by the IntersectionObserver
 		// for the first time.
@@ -562,13 +569,14 @@ class List extends UI5Element {
 	onEnterDOM() {
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
 		DragRegistry.subscribe(this);
+		ResizeHandler.register(this.getDomRef()!, this._handleResizeCallback);
 	}
 
 	onExitDOM() {
 		deregisterUI5Element(this);
 		this.unobserveListEnd();
 		this.resizeListenerAttached = false;
-		ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
+		ResizeHandler.deregister(this.getDomRef()!, this._handleResizeCallback);
 		DragRegistry.unsubscribe(this);
 	}
 
@@ -616,7 +624,7 @@ class List extends UI5Element {
 	attachForResize() {
 		if (!this.resizeListenerAttached) {
 			this.resizeListenerAttached = true;
-			ResizeHandler.register(this.getDomRef()!, this._handleResize);
+			ResizeHandler.register(this.getDomRef()!, this._handleResizeCallback);
 		}
 	}
 
@@ -776,6 +784,8 @@ class List extends UI5Element {
 				(item as ListItem)._selectionMode = this.selectionMode;
 			}
 			item.hasBorder = showBottomBorder;
+
+			(item as ListItem).mediaRange = this.mediaRange;
 		});
 	}
 
@@ -1063,6 +1073,13 @@ class List extends UI5Element {
 		if (this.hasGrowingComponent()) {
 			this.fireDecoratorEvent("load-more");
 		}
+	}
+
+	_handleResize() {
+		this.checkListInViewport();
+
+		const width = this.getBoundingClientRect().width;
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
 	/*
