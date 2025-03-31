@@ -3,24 +3,34 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Option from "@ui5/webcomponents/dist/Option.js";
 import Select from "@ui5/webcomponents/dist/Select.js";
 import type SearchField from "./SearchField.js";
-import SearchMode from "./types/SearchMode.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import search from "@ui5/webcomponents-icons/dist/search.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 
 export default function SearchFieldTemplate(this: SearchField) {
 	return (
-		this.expanded ? (
-			<div class="ui5-search-field-root" role="search" onFocusOut={this._onFocusOutSearch}>
+		this.collapsed ? (
+			<Button
+				class="ui5-shell-search-field-button"
+				icon={search}
+				design={ButtonDesign.Transparent}
+				data-sap-focus-ref
+				onClick={this._handleSearchIconPress}
+				tooltip={this._translations.collapsedSearch}
+				accessibleName={this._translations.collapsedSearch}
+				accessibilityAttributes={this._searchButtonAccessibilityAttributes}
+			></Button>
+		) : (
+			<div class="ui5-search-field-root" role="search" onFocusOut={this._onFocusOutSearch} onClick={this._handleRootClick}>
 				<div class="ui5-search-field-content">
-					{this.mode === SearchMode.Scoped &&
+					{!!this.scopes.length &&
 						<>
 							<Select
 								onChange={this._handleScopeChange}
 								class="sapUiSizeCompact"
 								accessibleName={this._translations.scope}
 								tooltip={this._translations.scope}>
-								{this.scopeOptions.map(scopeOption => {
+								{this.scopes.map(scopeOption => {
 									return <Option
 										selected={scopeOption.selected}
 										data-ui5-stable={scopeOption.stableDomRef}
@@ -67,17 +77,6 @@ export default function SearchFieldTemplate(this: SearchField) {
 					></Icon>
 				</div>
 			</div>
-		) : (
-			<Button
-				class="ui5-shell-search-field-button"
-				icon={search}
-				design={ButtonDesign.Transparent}
-				data-sap-focus-ref
-				onClick={this._handleSearchIconPress}
-				tooltip={this._translations.collapsedSearch}
-				accessibleName={this._translations.collapsedSearch}
-				accessibilityAttributes={this._searchButtonAccessibilityAttributes}
-			></Button>
 		)
 	);
 }

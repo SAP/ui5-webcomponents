@@ -27,14 +27,14 @@ import {
  * Interface for components that may be slotted inside a `ui5-search`
  * @public
  */
-interface ISearchFieldScopeOption extends UI5Element {
+interface ISearchScope extends UI5Element {
 	text?: string,
 	selected: boolean,
 	stableDomRef: string,
 }
 
 type SearchFieldScopeSelectionChangeDetails = {
-	scope: ISearchFieldScopeOption | undefined;
+	scope: ISearchScope | undefined;
 }
 
 /**
@@ -104,14 +104,6 @@ class SearchField extends UI5Element {
 	}
 
 	/**
-	 * Defines the mode of the component.
-	 * @default "Default"
-	 * @public
-	 */
-	@property()
-	mode: `${SearchMode}` = "Default";
-
-	/**
 	 * Defines whether the clear icon of the search will be shown.
 	 * @default false
 	 * @public
@@ -120,22 +112,13 @@ class SearchField extends UI5Element {
 	showClearIcon = false;
 
 	/**
-	 * Defines whether the component is expanded.
+	 * Defines whether the component is collapsed.
 	 *
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	expanded = false;
-
-	/**
-	 * Determines whether the component is in a fixed state that is not
-	 * expandable/collapsible by user interaction.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	fixed = false;
+	collapsed = false;
 
 	/**
 	 * Defines the value of the component.
@@ -169,7 +152,7 @@ class SearchField extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, individualSlots: true, invalidateOnChildChange: true })
-	scopeOptions!: Array<ISearchFieldScopeOption>;
+	scopes!: Array<ISearchScope>;
 
 	/**
 	 * @private
@@ -212,17 +195,10 @@ class SearchField extends UI5Element {
 		}
 	}
 
+	_handleRootClick() {}
+
 	_handleSearchIconPress() {
-		if (this.value.length) {
-			this._handleSearchEvent();
-			return;
-		}
-
-		if (this.fixed) {
-			return;
-		}
-
-		this.expanded = !this.expanded;
+		this._handleSearchEvent();
 
 		setTimeout(() => {
 			this.focus();
@@ -247,7 +223,7 @@ class SearchField extends UI5Element {
 	}
 
 	_handleScopeChange(e: CustomEvent<SelectChangeEventDetail>) {
-		const item = e.detail.selectedOption as IOption & { scopeOption: ISearchFieldScopeOption };
+		const item = e.detail.selectedOption as IOption & { scopeOption: ISearchScope };
 		this.fireDecoratorEvent("scope-change", {
 			scope: item.scopeOption,
 		});
@@ -259,7 +235,7 @@ class SearchField extends UI5Element {
 
 	get _searchButtonAccessibilityAttributes() {
 		return {
-			expanded: this.expanded,
+			expanded: !this.collapsed,
 		};
 	}
 
@@ -283,4 +259,4 @@ SearchField.define();
 
 export default SearchField;
 
-export type { ISearchFieldScopeOption, SearchFieldScopeSelectionChangeDetails };
+export type { ISearchScope, SearchFieldScopeSelectionChangeDetails };

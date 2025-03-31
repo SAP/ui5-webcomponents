@@ -15,39 +15,63 @@
 </head>
 
 <body class="search sapUiSizeCompact">
+
+	<ui5-search>
+		<ui5-search-message-area slot="messageArea" description="Search for example “All my open Objects”" text="Try This!"></ui5-search-message-area>
+	
+		<ui5-search-item heading-text="List Item"></ui5-search-item>
+	
+		<ui5-illustrated-message slot="illustration"></ui5-illustrated-message>
+	
+		<ui5-search-scope text="All" slot="scopes"></ui5-search-scope>
+	
+		<ui5-search-item-group></ui5-search-item-group>
+	
+		<ui5-button design="Transparent" slot="action">Navigate to all results</ui5-button>
+	</ui5-search>
+
 	<div class="container">
 		<ui5-label>Search with Suggestions - Example No Results, but suggestions</ui5-label>
-		<ui5-search header-text="Oh, there are no results" subheader-text="You can try the following" expanded show-clear-icon>
-				<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
-				<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
-				<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
-				<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
-				<ui5-search-item heading-text="List Item" icon="globe" ></ui5-search-item>
-				<ui5-search-item heading-text="List Item" icon="globe" ></ui5-search-item>
-				<ui5-search-item heading-text="List Item" icon="globe" ></ui5-search-item>
+		<ui5-search show-clear-icon>
+			<ui5-search-message-area slot="messageArea" description="You can try the following" text="Oh, there are no results"></ui5-search-message-area>
+
+			<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item heading-text="List Item" icon="globe" ></ui5-search-item>
+			<ui5-search-item heading-text="List Item" icon="globe" ></ui5-search-item>
+			<ui5-search-item heading-text="List Item" icon="globe" ></ui5-search-item>
 		</ui5-search>
 	</div>
 
 	<div class="container" style="padding-top: 1rem;">
 		<ui5-label>Search - Initially collapsed with Busy State</ui5-label>
 		<div class="container" style="border: 1px solid black; display: flex; padding: 4px; justify-content: flex-end;">
-			<ui5-search popup-mode="Loading"></ui5-search>
+			<ui5-search id="expanding" loading collapsed></ui5-search>
 		</div>
 	</div>
 
 	<div class="container" style="padding-top: 1rem;">
 		<ui5-label>Search with Illustation Message - Example of no results, no suggestions</ui5-label>
-		<ui5-search expanded popup-mode="Illustration" show-clear-icon>
+		<ui5-search show-clear-icon loading>
+			<ui5-search-message-area slot="messageArea" description="Search for example “All my open Objects”" text="Try This!"></ui5-search-message-area>
+
 			<ui5-illustrated-message slot="illustration">
 				<ui5-title slot="title" level="H1">Oh, there are no results</ui5-title>
 				<div slot="subtitle">Change your search query</div>
 			</ui5-illustrated-message>
+
+			<ui5-button design="Transparent" slot="action">Search in other domains</ui5-button>
 		</ui5-search>
 	</div>
 
 	<div class="container" style="padding-top: 1rem;">
 		<ui5-label>Search with Grouped Suggestions and Show More Button</ui5-label>
-		<ui5-search id="search" show-popup-action popup-action-text="Show all search results [N]" header-text="Oh, there are no results" subheader-text="You can try the following" expanded show-clear-icon placeholder="Placeholder">
+		<ui5-search id="search" show-clear-icon placeholder="Placeholder">
+			<ui5-button design="Transparent" slot="action">Show all search results [N]</ui5-button>
+
+			<ui5-search-message-area slot="messageArea" description="You can try the following" text="Oh, there are no results"></ui5-search-message-area>
 			<ui5-search-item-group header-text="Group Header">
 				<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
 				<ui5-search-item heading-text="List Item" icon="search" ></ui5-search-item>
@@ -61,26 +85,26 @@
 
 	<div class="container" style="padding-top: 1rem;">
 		<ui5-label>Search with no initial items</ui5-label>
-		<ui5-search expanded show-clear-icon placeholder="Start typing ..."></ui5-search>
+		<ui5-search show-clear-icon placeholder="Start typing ..."></ui5-search>
 	</div>
 
 	<div class="container" style="padding-top: 1rem;">
 		<ui5-label>Search with Suggestions - Delete items on delete button click</ui5-label>
-		<ui5-search id="delete-search" expanded show-clear-icon></ui5-search>
+		<ui5-search id="delete-search" show-clear-icon></ui5-search>
 	</div>
 
 	<div class="container" style="padding-top: 1rem;">
 		<ui5-label>Search with Suggestions - Filter by typing</ui5-label>
-		<ui5-search id="filtering" expanded show-clear-icon placeholder="Start typing ..."></ui5-search>
+		<ui5-search id="filtering" show-clear-icon placeholder="Start typing ..."></ui5-search>
 		<ui5-text style="padding-top: 0.25rem; font-style: italic;">The examples shows filtering per user input, highlighting user input and showcases "contains" and "starts with" typeahead. Type "a" to see "contains typeahead" or "t" to see "starts with typeahead"</ui5-text>
 	</div>
 
 	<div class="container" style="padding-top: 1rem;">
 		<ui5-label>Search with Scoped Suggestions - Filter by scope</ui5-label>
-		<ui5-search id="search-scope" mode="Scoped" expanded show-clear-icon placeholder="Search Apps, Products">
-			<ui5-search-field-scope-option text="All" selected slot="scopeOptions"></ui5-search-field-scope-option>
-			<ui5-search-field-scope-option text="Apps" slot="scopeOptions"></ui5-search-field-scope-option>
-			<ui5-search-field-scope-option text="Products" slot="scopeOptions"></ui5-search-field-scope-option>
+		<ui5-search id="search-scope" show-clear-icon placeholder="Search Apps, Products">
+			<ui5-search-scope text="All" slot="scopes"></ui5-search-scope>
+			<ui5-search-scope text="Apps" selected slot="scopes"></ui5-search-scope>
+			<ui5-search-scope text="Products" slot="scopes"></ui5-search-scope>
 		</ui5-search>
 		<ui5-text style="padding-top: 0.25rem; font-style: italic;">The examples shows scoped search with scoped suggestions. Change scope to filter suggestions.</ui5-text>
 	</div>
@@ -88,7 +112,7 @@
 
 	<div class="container" style="padding-top: 1rem;">
 		<ui5-label>Search with Suggestions - Filters and noTypeAhead</ui5-label>
-		<ui5-search id="filters" expanded show-clear-icon placeholder="Start typing ..." no-type-ahead></ui5-search>
+		<ui5-search id="filters" show-clear-icon placeholder="Start typing ..." no-type-ahead></ui5-search>
 		<ui5-text style="padding-top: 0.25rem; font-style: italic;">
 			Showcasing search with custom filters. Available filters are "scope" and "apps".
 			Type "scope:" or "apps:" to see the popup and choose a suggestion.
@@ -258,6 +282,16 @@
 		}
 
 		createItems(searchDelete, deleteData);
+
+		document.getElementById('expanding').addEventListener('ui5-search', (e) => {
+			if (e.target.collapsed) {
+				e.target.collapsed = false;
+			} else {
+				if (!e.target.value) {
+					e.target.collapsed = true;
+				}
+			}
+		});
 	</script>
 </body>
 </html>

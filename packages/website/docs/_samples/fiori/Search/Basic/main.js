@@ -1,7 +1,7 @@
 
 import "@ui5/webcomponents-fiori/dist/Search.js";
 import "@ui5/webcomponents-fiori/dist/SearchItem.js";
-import "@ui5/webcomponents-fiori/dist/SearchFieldScopeOption.js";
+import "@ui5/webcomponents-fiori/dist/SearchScope.js";
 
 const scopeData = [
     { name: "Laptop", scope: "products" },
