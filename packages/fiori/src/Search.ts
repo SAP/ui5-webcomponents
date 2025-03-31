@@ -125,6 +125,7 @@ class Search extends SearchField {
 
 	/**
 	 * Defines the header text to be placed in the search suggestions popup.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -132,6 +133,7 @@ class Search extends SearchField {
 
 	/**
 	 * Defines the subheader text to be placed in the search suggestions popup.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
