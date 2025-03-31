@@ -5,7 +5,17 @@ import type { AccessibilityAttributes, AriaHasPopup, AriaRole } from "@ui5/webco
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isLeft,
+	isRight,
+	isEnter,
+	isSpace,
+	isTabNext,
+	isTabPrevious,
+	isDown,
+	isUp,
+} from "@ui5/webcomponents-base/dist/Keys.js";
+import { isDesktop, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -29,6 +39,8 @@ import menuItemCss from "./generated/themes/MenuItem.css.js";
 
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
+
+type MenuNavigateOutOfEndContentEventDetail = { isLast: boolean };
 
 type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeyShortcuts" | "role"> & ListItemAccessibilityAttributes;
 
@@ -89,6 +101,14 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
 })
 
 /**
+ * Fired when navigating out of end-content.
+ * @private
+ */
+@event("navigate-out", {
+	bubbles: true,
+})
+
+/**
  * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing.
  * @public
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
@@ -110,7 +130,8 @@ class MenuItem extends ListItem implements IMenuItem {
 		"open": void
 		"before-close": MenuBeforeCloseEventDetail
 		"close": void
-		"close-menu": void
+		"close-menu": void,
+		"navigate-out": MenuNavigateOutOfEndContentEventDetail,
 	}
 	/**
 	 * Defines the text of the tree item.
@@ -382,6 +403,61 @@ class MenuItem extends ListItem implements IMenuItem {
 		return this.items.filter((item): item is MenuItem => !item.isSeparator);
 	}
 
+	_itemMouseOver(e: MouseEvent) {
+		if (isDesktop()) {
+			// respect mouseover only on desktop
+			const item = e.target as MenuItem;
+
+			if (this._isInstanceOfMenuItem(item)) {
+				item.focus();
+
+				const menuItems = this._menuItems;
+				if (menuItems.indexOf(item) > -1) {
+					menuItems.forEach(menuItem => { menuItem !== item && menuItem._close(); });
+				}
+			}
+		}
+	}
+
+	_itemKeyDown(e: KeyboardEvent) {
+		const item = e.target as MenuItem;
+		const itemInMenuItems = this._menuItems.indexOf(item) > -1;
+		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
+		const isItemNavigation = isUp(e) || isDown(e);
+		const isItemSelection = isSpace(e) || isEnter(e);
+		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
+		const shouldCloseMenu = !(isItemNavigation || isItemSelection || shouldOpenMenu) || isTabNextPrevious;
+
+		if (itemInMenuItems && shouldCloseMenu) {
+			this._close();
+			this.focus();
+			e.stopPropagation();
+		}
+	}
+
+	_endContentKeyDown(e: KeyboardEvent) {
+		const shouldNavigateOutOfEndContent = isUp(e) || isDown(e);
+
+		if (shouldNavigateOutOfEndContent) {
+			this.fireDecoratorEvent("navigate-out", { isLast: isDown(e) });
+		}
+	}
+
+	_navigateOutOfEndContent(e: CustomEvent) {
+		const item = e.target as MenuItem;
+		const isLast = e.detail.isLast;
+		const menuItems = this._menuItems;
+		const itemIndex = menuItems.indexOf(item);
+
+		if (itemIndex > -1) {
+			const nextItem = isLast ? menuItems[itemIndex + 1] : menuItems[itemIndex - 1];
+			const itemToFocus = nextItem || menuItems[itemIndex];
+			itemToFocus?.focus();
+
+			e.stopPropagation();
+		}
+	}
+
 	_closeAll() {
 		if (this._popover) {
 			this._popover.open = false;
@@ -393,6 +469,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	_close() {
 		if (this._popover) {
 			this._popover.open = false;
+			this._menuItems.forEach(item => item._close());
 		}
 		this.selected = false;
 	}
@@ -429,6 +506,10 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	_afterPopoverClose() {
 		this.fireDecoratorEvent("close");
+	}
+
+	_isInstanceOfMenuItem(object: any): object is MenuItem {
+		return "isMenuItem" in object;
 	}
 
 	get isMenuItem(): boolean {
