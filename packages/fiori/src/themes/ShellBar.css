@@ -558,47 +558,58 @@ slot[name="profile"] {
 	padding-inline-start: 0;
 	border: 0;
 	margin-inline-start: 0;
-	transition: opacity,width 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);
+	transition: none;
 }
 
-.ui5-shellbar-content-item[data-hide-order = "1"]	{
-	transition-duration: 0.01s;
-}
-.ui5-shellbar-content-item[data-hide-order = "2"]	{
-	transition-duration: 0.1s;
-}
-.ui5-shellbar-content-item[data-hide-order = "3"]	{
-	transition-duration: 0.15s;
-}
-.ui5-shellbar-content-item[data-hide-order = "4"]	{
-	transition-duration: 0.2s;
-}
-.ui5-shellbar-content-item[data-hide-order = "5"]	{
-	transition-duration: 0.25s;
-}
-.ui5-shellbar-content-item[data-hide-order = "6"]	{
-	transition-duration: 0.3s;
-}
-.ui5-shellbar-content-item[data-hide-order = "7"]	{
-	transition-duration: 0.35s;
-}
-.ui5-shellbar-content-item[data-hide-order = "8"]	{
-	transition-duration: 0.4s;
-}
-.ui5-shellbar-content-item[data-hide-order = "9"]	{
-	transition-duration: 0.45s;
-}
-.ui5-shellbar-content-item[data-hide-order = "10"] {
-	transition-duration: 0.5s;
+.ui5-shellbar-animating .ui5-shellbar-content-item {
+	transition: var(--_ui5_shellbar_content_transition);
+	&[data-hide-order = "null"] {
+		transition-duration: 0.01s;
+	}
+
+	&[data-hide-order = "1"] {
+		transition-duration: 0.01s;
+	}
+	&[data-hide-order = "2"] {
+		transition-duration: 0.1s;
+	}
+	&[data-hide-order = "3"] {
+		transition-duration: 0.15s;
+	}
+	&[data-hide-order = "4"] {
+		transition-duration: 0.2s;
+	}
+	&[data-hide-order = "5"] {
+		transition-duration: 0.25s;
+	}
+	&[data-hide-order = "6"] {
+		transition-duration: 0.3s;
+	}
+	&[data-hide-order = "7"] {
+		transition-duration: 0.35s;
+	}
+	&[data-hide-order = "8"] {
+		transition-duration: 0.4s;
+	}
+	&[data-hide-order = "9"]	{
+		transition-duration: 0.45s;
+	}
+	&[data-hide-order = "10"] {
+		transition-duration: var(--_ui5_shellbar_max_animation_duration);
+	}
+	&.ui5-shellbar-hidden-button,
+	&.ui5-shellbar-invisible-button {
+		transition: var(--_ui5_shellbar_content_transition);
+	}
 }
 
 .ui5-shellbar-animating .ui5-shellbar-search-field {
-	animation: expand-shrink 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);
+	animation: var(--_ui5_shellbar_search_animation_expand);
 }
 
 :host([show-search-field]) .ui5-shellbar-animating .ui5-shellbar-search-field,
 :host([show-search-field]) .ui5-shellbar-animating .ui5-shellbar-search-full-width-wrapper {
- 	animation: expand-grow 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9) forwards;
+ 	animation: var(--_ui5_shellbar_search_animation_grow);
 }
 
 @keyframes expand-grow {
