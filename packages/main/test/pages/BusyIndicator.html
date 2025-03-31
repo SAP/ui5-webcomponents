@@ -38,11 +38,13 @@
 	<ui5-busy-indicator size="M" active id="indicator2"></ui5-busy-indicator>
 
 	<h2>With Text</h2>
-
-	<ui5-busy-indicator id="busy-indicator-text-placement-bottom" active text="Loading" class="busyindicator2auto"></ui5-busy-indicator>
-	<ui5-busy-indicator id="busy-indicator-text-placement-top" text="Loading" text-placement="Top" active class="busyindicator2auto"></ui5-busy-indicator>
+	<ui5-busy-indicator id="busy-indicator-text-placement-bottom" active text="Loading" class="busyindicator2auto redBorder"></ui5-busy-indicator>
+	<ui5-busy-indicator id="busy-indicator-text-placement-top" text="Loading" text-placement="Top" active class="busyindicator2auto redBorder"></ui5-busy-indicator>
+	<ui5-busy-indicator id="busy-indicator-text-placement-top" text="Very very very very very very very very very long text" active class="busyindicator2auto redBorder"></ui5-busy-indicator>
+	<ui5-busy-indicator id="busy-indicator-text-placement-top" text="Very very very very very very very very very long text" active class="redBorder"></ui5-busy-indicator>
 	<br />
 	<br />
+	<h2>With Text and Content (Not by Design)</h2>
 	<ui5-busy-indicator size="M" active text="Loading">
 		<ui5-checkbox text="Hello World"></ui5-checkbox>
 	</ui5-busy-indicator>
