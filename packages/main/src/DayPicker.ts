@@ -417,7 +417,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	get _shouldFocusDay() {
-		return this._focusableDay && document.activeElement !== this._focusableDay && this._specialCalendarDates.length === 0;
+		return document.activeElement !== this._focusableDay && this._specialCalendarDates.length === 0;
 	}
 
 	_onfocusin() {
