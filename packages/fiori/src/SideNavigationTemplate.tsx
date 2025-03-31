@@ -10,6 +10,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 			"ui5-sn-collapsed": this.collapsed,
 		}}
 		role={this._rootRole}
+		aria-label={this.accessibleName}
 		>
 			{header.call(this)}
 

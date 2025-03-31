@@ -36,6 +36,7 @@ export default function InputTemplate(this: Input, hooks?: { preContent: Templat
 						placeholder={this._placeholder}
 						maxlength={this.maxlength}
 						role={this.accInfo.role}
+						enterkeyhint={this.hint}
 						aria-controls={this.accInfo.ariaControls}
 						aria-invalid={this.accInfo.ariaInvalid}
 						aria-haspopup={this.accInfo.ariaHasPopup}
@@ -63,6 +64,7 @@ export default function InputTemplate(this: Input, hooks?: { preContent: Templat
 						<div
 							tabindex={-1}
 							class="ui5-input-clear-icon-wrapper inputIcon"
+							part="clear-icon-wrapper"
 							onClick={this._clear}
 							onMouseDown={this._iconMouseDown}
 						>

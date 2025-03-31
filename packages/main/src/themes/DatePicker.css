@@ -55,3 +55,7 @@
 :host(:not([disabled]):not([readonly])) .ui5-date-picker-input[focused] {
 	background-color: var(--_ui5-datepicker-hover-background);
 }
+
+.ui5-date-picker-popover::part(header) {
+	padding: 0;
+}

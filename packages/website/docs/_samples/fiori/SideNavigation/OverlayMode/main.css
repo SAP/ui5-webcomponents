@@ -15,3 +15,7 @@
 .contentItemVisible {
 	display: block;
 }
+
+#sideNavigation {
+	width: 18rem;
+}

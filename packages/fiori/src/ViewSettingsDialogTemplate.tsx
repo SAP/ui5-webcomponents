@@ -132,6 +132,7 @@ function ViewSettingsDialogTemplateContent(this: ViewSettingsDialog) {
 									class="ui5-vsd-filterItemList"
 									// selected={item.selected} TODO
 									additionalText={item.additionalText}
+									accessibleName={this._selectedFiltersLabel(item)}
 								>{item.text}</ListItemStandard>
 							))}
 						</ListItemGroup>
@@ -161,7 +162,7 @@ export default function ViewSettingsDialogTemplate(this: ViewSettingsDialog) {
 	return (
 		<Dialog
 			preventInitialFocus={true}
-			aria-label={this._dialogTitle}
+			accessibleName={this._dialogTitle}
 			onBeforeClose={this._restoreConfirmedOnEscape}
 			stretch={this._isPhone}
 			open={this.open}

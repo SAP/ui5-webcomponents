@@ -28,3 +28,21 @@ describe("Tree Tests", () => {
 			.and("have.attr", "accessible-description-ref", "lblDesc2");
 	});
 });
+
+describe("Tree Props", () => {
+	it("noDataText is properly rendered", () => {
+		cy.mount(
+			<>
+				<Tree noDataText="No data"></Tree>
+			</>
+		);
+
+		cy.get("[ui5-tree]")
+			.shadow()
+			.find("[ui5-tree-list]")
+			.shadow()
+			.find("[ui5-busy-indicator]")
+			.find(".ui5-list-nodata")
+			.should("exist")
+	});
+});

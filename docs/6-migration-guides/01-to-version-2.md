@@ -2315,13 +2315,11 @@ toast.addEventListener("close", (event) => {
 If you previously used the `show()` method:
 ```ts
 toast.show();
-});
 ```
 Now, you must use the `open` property:
 
 ```ts
-toast.open=true
-});
+toast.open=true;
 ```
 
 

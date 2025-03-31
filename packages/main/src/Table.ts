@@ -416,7 +416,7 @@ class Table extends UI5Element {
 	_toggleDummyAreaBound: ResizeObserverCallback;
 	_tableNavigation?: TableNavigation;
 	_tableDragAndDrop?: TableDragAndDrop;
-	_poppedIn: Array<{col: TableHeaderCell, width: float}> = [];
+	_poppedIn: Array<{col: TableHeaderCell, width: number}> = [];
 	_containerWidth = 0;
 
 	constructor() {
