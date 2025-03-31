@@ -363,11 +363,16 @@ describe("DateTimePicker general interaction", () => {
 		});
 
 		cy.get("@dtp")
-			.should("not.have.attr", "open", "");
-	
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should($rp => {
+				expect($rp.is(":popover-open")).to.be.false;
+			})
+			.and("not.have.attr", "open");
+
 		cy.get("@dtp")
 			.shadow()
-			.find("ui5-input")
+			.find("[ui5-datetime-input]")
 			.as("input");
 		
 		cy.get("@input")
