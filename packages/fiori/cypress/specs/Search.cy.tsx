@@ -403,12 +403,12 @@ describe("Properties", () => {
 		cy.get("[ui5-search]")
 			.shadow()
 			.find("[ui5-responsive-popover]")
-			.find("[ui5-list]")
-			.as("list");
+			.find(".ui5-search-footer-button")
+			.as("button");
 
-		cy.get("@list")
-			.should("have.attr", "growing", "Button")
-			.and("have.attr", "growing-button-text", "Show All");
+		cy.get("@button")
+			.should("exist")
+			.and("have.text", "Show All");
 	});
 });
 
@@ -593,7 +593,7 @@ describe("Events", () => {
 
 	it("popup-action-press event", () => {
 		cy.mount(
-			<Search expanded={true} showPopupAction={true} popupActionText="Show All">
+			<Search expanded={true} showPopupAction={true} popupActionText="Show All" open={true}>
 				<SearchItem headingText="Item 1" icon={history} />
 			</Search>
 		);
@@ -605,17 +605,11 @@ describe("Events", () => {
 
 		cy.get("[ui5-search]")
 			.shadow()
-			.find("input")
-			.realClick();
+			.find("[ui5-responsive-popover]")
+			.as("popup");
 
-		cy.get("[ui5-search]")
-			.shadow()
-			.find("[ui5-list]")
-			.as("list");
-
-		cy.get("@list")
-			.shadow()
-			.find(".ui5-growing-button")
+		cy.get("@popup")
+			.find(".ui5-search-footer-button")
 			.realClick();
 
 		cy.get("@actionPressed")

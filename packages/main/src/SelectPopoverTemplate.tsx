@@ -64,6 +64,7 @@ export default function SelectPopoverTemplate(this: Select) {
 						separators="None"
 						onMouseDown={this._itemMousedown}
 						onItemClick={this._handleItemPress}
+						accessibleRole="ListBox"
 					>
 						<slot></slot>
 					</List>

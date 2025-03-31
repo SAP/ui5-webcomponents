@@ -70,6 +70,11 @@
 			<ui5-title>DateRangePicker with CalendarWeekNumbering WesternTraditional</ui5-title>
 			<ui5-daterange-picker id="daterange-picker15" calendar-week-numbering="WesternTraditional"></ui5-daterange-picker>
 		</section>
+
+		<h3>daterange-picker with value state</h3>
+		<ui5-daterange-picker id="daterange-picker16" value-state="Negative">
+			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		</ui5-daterange-picker>
 	</div>
 	<script>
 		document.getElementById('daterange-picker1').addEventListener('ui5-change', function(e) {

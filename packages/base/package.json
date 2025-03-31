@@ -1,11 +1,11 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "2.9.0-rc.1",
+  "version": "2.9.0-rc.2",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "type": "module",
-  "module": "index.js",
+  "module": "./dist/index.js",
   "keywords": [
     "openui5",
     "sapui5",
@@ -25,8 +25,8 @@
       "default": "./dist/ssr-dom.js"
     },
     ".": {
-      "types": "./src/index.d.ts",
-      "default": "./index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./dist/*": {
       "production": "./dist/prod/*",
@@ -62,7 +62,7 @@
   "devDependencies": {
     "@openui5/sap.ui.core": "1.120.17",
     "@ui5/cypress-internal": "0.0.0",
-    "@ui5/webcomponents-tools": "2.9.0-rc.1",
+    "@ui5/webcomponents-tools": "2.9.0-rc.2",
     "chromedriver": "^133.0.0",
     "clean-css": "^5.2.2",
     "copy-and-watch": "^0.1.5",

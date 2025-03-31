@@ -178,14 +178,14 @@
 }
 
 /* copy paste all button styles - could be simplified */
-[ui5-button][desktop]:not([active])::part(button):after,
-[ui5-button]:not([active])::part(button):focus-visible:after,
-[ui5-button][desktop][active][design="Emphasized"]::part(button):focus-within:after,
-[ui5-button][active][design="Emphasized"]::part(button):focus-visible:after,
-[ui5-button][desktop][active]::part(button):focus-within:before,
-[ui5-button][active]::part(button):focus-visible:before,
-[ui5-button][design="Emphasized"][desktop]::part(button):focus-within:before,
-[ui5-button][design="Emphasized"]::part(button):focus-visible:before {
+.ui5-shell-search-field-button[desktop]:not([active])::part(button):after,
+.ui5-shell-search-field-button:not([active])::part(button):focus-visible:after,
+.ui5-shell-search-field-button[desktop][active][design="Emphasized"]::part(button):focus-within:after,
+.ui5-shell-search-field-button[active][design="Emphasized"]::part(button):focus-visible:after,
+.ui5-shell-search-field-button[desktop][active]::part(button):focus-within:before,
+.ui5-shell-search-field-button[active]::part(button):focus-visible:before,
+.ui5-shell-search-field-button[design="Emphasized"][desktop]::part(button):focus-within:before,
+.ui5-shell-search-field-button[design="Emphasized"]::part(button):focus-visible:before {
 	border-radius: var(--_ui5_search_icon_border_radius);
 }
 
