@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.1...v2.9.0-rc.2) (2025-03-27)
+
+
+### Bug Fixes
+
+* **framework:** .d.ts errors that require skipLibCheck ([#11189](https://github.com/SAP/ui5-webcomponents/issues/11189)) ([92f0e68](https://github.com/SAP/ui5-webcomponents/commit/92f0e68c3b3b71ff27f707621b8b3da2248a2719))
+* **ui5-bar:** remove responsive paddings ([#11105](https://github.com/SAP/ui5-webcomponents/issues/11105)) ([e2024b1](https://github.com/SAP/ui5-webcomponents/commit/e2024b1bb7caaf12452a7e20b863eb569405706f)), closes [#10012](https://github.com/SAP/ui5-webcomponents/issues/10012)
+* **ui5-breadcrumbs:** show all items in popover on mobile ([#11138](https://github.com/SAP/ui5-webcomponents/issues/11138)) ([4d75b7d](https://github.com/SAP/ui5-webcomponents/commit/4d75b7db79ede9beee7611dde03de818ba48ad61)), closes [#9697](https://github.com/SAP/ui5-webcomponents/issues/9697)
+* **ui5-date-*:** make tests stable ([#11191](https://github.com/SAP/ui5-webcomponents/issues/11191)) ([b1d9311](https://github.com/SAP/ui5-webcomponents/commit/b1d931167bf29b600797974b29b788fbc3405b1f)), closes [#11188](https://github.com/SAP/ui5-webcomponents/issues/11188)
+* **ui5-input:** remove additional icon in Edge ([#11114](https://github.com/SAP/ui5-webcomponents/issues/11114)) ([9d2dfb1](https://github.com/SAP/ui5-webcomponents/commit/9d2dfb1293194fce19c99157892ac2db6ceff62f))
+* **ui5-popover:** fix popover flickering ([#10955](https://github.com/SAP/ui5-webcomponents/issues/10955)) ([712aae4](https://github.com/SAP/ui5-webcomponents/commit/712aae458b0a9279646ea079cb734674ae3e7b4f))
+* **ui5-tree:** noDataText is now properly rendered ([#11095](https://github.com/SAP/ui5-webcomponents/issues/11095)) ([e1c152c](https://github.com/SAP/ui5-webcomponents/commit/e1c152cbec16a47dd42e9813c68c0052828d6cdf)), closes [#11073](https://github.com/SAP/ui5-webcomponents/issues/11073)
+
+
+
+
+
 # [2.9.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.0...v2.9.0-rc.1) (2025-03-20)
 
 

@@ -28,6 +28,7 @@
 	--_ui5_input_disabled_font_weight: normal;
 	--_ui5_input_disabled_border_color: var(--sapField_BorderColor);
 	--_ui5-input_disabled_background: var(--sapField_Background);
+	--_ui5_input_readonly_border: none;
 	--_ui5_input_readonly_border_color: var(--sapField_ReadOnly_BorderColor);
 	--_ui5_input_readonly_background: var(--sapField_ReadOnly_Background);
 	--_ui5_input_custom_icon_padding: .5625rem .625rem;
