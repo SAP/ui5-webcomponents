@@ -43,8 +43,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import type ShellBarItem from "./ShellBarItem.js";
 import type { ShellBarItemAccessibilityAttributes } from "./ShellBarItem.js";
-import { getTheme } from "../../base/src/config/Theme.js";
-
+import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 // Templates
 import ShellBarTemplate from "./ShellBarTemplate.js";
 
