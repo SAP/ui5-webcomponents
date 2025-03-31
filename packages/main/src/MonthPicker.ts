@@ -176,7 +176,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 			// If the current date of the current month is larger than this month, set the date to the last day of the previous month.
 			// This is needed because the date object will automatically switch to the next month if larger date is set.
 			if (tempDate.getMonth() !== i) {
-				tempDate.setMonth(i - 1);
+				tempDate.setMonth(tempDate.getMonth() - 1);
 				tempDate.setDate(this._calendarDate.getDate() - tempDate.getDate());
 			}
 
