@@ -779,7 +779,7 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			});
 
 		cy.get("@input")
-			.realClick();
+			.click();
 
 		cy.get("@input")
 			.realType("Albania");
@@ -796,7 +796,7 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			.as("icon");
 
 		cy.get("@icon")
-			.realClick();
+			.click();
 
 		cy.get("@input")
 			.should("have.attr", "value", "");
@@ -810,16 +810,14 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.get("@inputChange")
 			.should("have.been.calledTwice");
 
-		cy.get("@input")
-			.shadow()
-			.find("ui5-icon")
-			.as("icon");
-
 		cy.get("@icon")
-			.realClick();
+			.click();
 
 		cy.get("@input")
 			.realType("Argentina");
+
+		cy.get("@input")
+			.realPress("Enter");
 
 		cy.get("@inputChange")
 			.should("have.been.calledTwice");
