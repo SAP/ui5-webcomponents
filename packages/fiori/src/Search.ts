@@ -2,6 +2,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type Popover from "@ui5/webcomponents/dist/Popover.js";
 import type List from "@ui5/webcomponents/dist/List.js";
 import {
@@ -33,7 +35,6 @@ import type IllustratedMessage from "./IllustratedMessage.js";
 import type SearchItemGroup from "./SearchItemGroup.js";
 import type SearchMessageArea from "./SearchMessageArea.js";
 import { SEARCH_CANCEL_BUTTON } from "./generated/i18n/i18n-defaults.js";
-import { isPhone, type I18nBundle } from "@ui5/webcomponents-base";
 import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
 import type { InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
