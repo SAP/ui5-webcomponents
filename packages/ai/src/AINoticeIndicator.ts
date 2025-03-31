@@ -7,10 +7,11 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import AINoticeIndicatorMode from "./types/AINoticeIndicatorMode.js";
 import {
-	BUTTON_TEXT_CLOSE,
-	POPOVER_TEXT,
+	AI_NOTICE_INDICATOR_CLOSE_BUTTON_TEXT,
+	AI_NOTICE_INDICATOR_POPOVER_CONTENT,
+	AI_NOTICE_INDICATOR_ATTRIBUTIONTEXT,
+	AI_NOTICE_INDICATOR_VERIFICATIONTEXT
 } from "./generated/i18n/i18n-defaults.js";
-
 
 // Template
 import AINoticeIndicatorTemplate from "./AINoticeIndicatorTemplate.js";
@@ -24,17 +25,17 @@ import AINoticeIndicatorCss from "./generated/themes/AINoticeIndicator.css.js";
  * ### Overview
  * 
  * The `ui5-ai-notice-indicator` component provides an AI-related notice that can include attribution and verification text.
- * It allows users to toggle visibility and adjust its appearance based on different modes.
+ * Depending on the mode chosen, the user can configure which parts of the component will be visible.
  * 
  * ### Usage
  * 
  * The component supports different display modes:
  * - **Default**: Displays both attribution and verification text.
- * - **Shortened**: Displays a condensed version of the notice.
- * - **Emphasized**: Highlights the notice for better visibility.
- * - **IconOnly**: Only shows an icon when no text is provided.
+ * - **Shortened**: Displays a condensed version of the notice without verification text.
+ * - **Emphasized**: Includes an icon and both attribution and verification text.
+ * - **IconOnly**: Only displays an icon. Note: This mode is not recommended, we suggest always providing a text.
  * 
- * The `ui5-ai-notice-indicator` can be expanded or collapsed when interacted with, and includes a close button to dismiss it.
+ * The `ui5-ai-notice-indicator` opens a popover on interaction, and includes a close button to dismiss it.
  * 
  * ### ES6 Module Import
  *
@@ -57,20 +58,38 @@ class AINoticeIndicator extends UI5Element {
 	/**
 	 * Determines the AI attribution notice text.
 	 *
-	 * @default "Created with AI."
+	 * @default undefined
 	 * @public
 	 */
-	@property({ type: String })
-	attributionText = "Created with AI.";
+	@property()
+	attributionText?: string;
 
 	/**
 	 * Determines the verification prompt text.
 	 *
-	 * @default "Verify results before use."
+	 * @default undefined
 	 * @public
 	 */
-	@property({ type: String })
-	verificationText = "Verify results before use.";
+	@property()
+	verificationText?: string;
+
+	/**
+	 * Determines content of the popover.
+	 *
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	popoverText?: string;
+
+	/**
+	 * Determines text of the close button inside the popover.
+	 *
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	closeButtonText?: string;
 
 	/**
 	 * Determines whether the mode of AI icon.
@@ -99,12 +118,20 @@ class AINoticeIndicator extends UI5Element {
 		return this.mode == AINoticeIndicatorMode.Emphasized;
 	}
 
+	get _attributionText() {
+		return this.attributionText || AINoticeIndicator.i18nBundle.getText(AI_NOTICE_INDICATOR_ATTRIBUTIONTEXT);
+	}
+
+	get _verificationText() {
+		return this.verificationText || AINoticeIndicator.i18nBundle.getText(AI_NOTICE_INDICATOR_VERIFICATIONTEXT);
+	}
+
 	get _closeButtonText() {
-		return AINoticeIndicator.i18nBundle.getText(BUTTON_TEXT_CLOSE);
+		return this.closeButtonText || AINoticeIndicator.i18nBundle.getText(AI_NOTICE_INDICATOR_CLOSE_BUTTON_TEXT);
 	}
 
 	get _popoverText() {
-		return AINoticeIndicator.i18nBundle.getText(POPOVER_TEXT);
+		return this.popoverText || AINoticeIndicator.i18nBundle.getText(AI_NOTICE_INDICATOR_POPOVER_CONTENT);
 	}
 
 	get _popover() {
