@@ -212,10 +212,9 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * @override
 	 */
 	async _onInputSubmit() {
-		const input = this._getInput();
-		const caretPos = input.getCaretPosition();
+		const caretPos = this._dateTimeInput.getCaretPosition();
 		await renderFinished();
-		input.setCaretPosition(caretPos); // Return the caret on the previous position after rendering
+		this._dateTimeInput.setCaretPosition(caretPos); // Return the caret on the previous position after rendering
 	}
 
 	/**
@@ -282,8 +281,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 			return super._modifyDateValue(amount, unit, preserveDate);
 		}
 
-		const input = this._getInput();
-		let caretPos: number = input.getCaretPosition()!; // caret position is always number for input of type text;
+		let caretPos: number = this._dateTimeInput.getCaretPosition()!; // caret position is always number for input of type text;
 		let newValue: string;
 
 		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date -> change it and keep the second date
@@ -304,7 +302,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
 		await renderFinished();
-		input.setCaretPosition(caretPos); // Return the caret to the previous (or the adjusted, if dates flipped) position after rendering
+		this._dateTimeInput.setCaretPosition(caretPos); // Return the caret to the previous (or the adjusted, if dates flipped) position after rendering
 	}
 
 	get _effectiveDelimiter(): string {
