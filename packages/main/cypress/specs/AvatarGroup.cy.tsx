@@ -35,7 +35,7 @@ describe("Overflow", () => {
 	});
 });
 
-describe("Avatars arrangement", () => {
+describe("Avatars", () => {
 	it("checks if no unnecessary margin is applied of only one Avatar is available", () => {
 		cy.mount(<AvatarGroup id="ag2" type="Group">
 			<Avatar id="av1" initials="II"></Avatar>
@@ -47,5 +47,20 @@ describe("Avatars arrangement", () => {
 		cy.get("#av1")
 			.invoke("attr", "style")
 			.should("equal", "");
+	});
+
+
+	it("tests if _color-scheme attribute is automatically set to avatars", () => {
+		const avatarCount = 20;
+		cy.mount(<AvatarGroup id="ag" type="Group">
+			{Array.from({ length: avatarCount }, (_, i) => {
+				return <Avatar initials="II"></Avatar>;
+			})}
+		</AvatarGroup>);
+
+		Array.from({ length: avatarCount }, (_, i) => {
+			const index = (i % 10) + 1;
+			cy.get("ui5-avatar").eq(i).should("have.attr", "_color-scheme", `Accent${index}`);
+		});
 	});
 });

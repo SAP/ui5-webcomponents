@@ -53,12 +53,11 @@
 	width: auto;
 }
 
-.ui5-search-list::part(growing-button-inner) {
-	border-radius: .5rem;
+.ui5-search-popover::part(footer) {
+	padding-bottom: 0.25rem;
+	padding-top: 0.5rem;
 }
 
-.ui5-search-list::part(growing-button) {
-	border-bottom: none;
-	padding-top: .25rem;
-	box-sizing: border-box;
+.ui5-search-footer-button {
+	width: 100%;
 }

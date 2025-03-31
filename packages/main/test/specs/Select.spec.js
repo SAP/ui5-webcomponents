@@ -360,25 +360,25 @@ describe("Select general interaction", () => {
 		const btnSetValue = await browser.$("#btnSetValue");
 		const btnSetInvalidValue = await browser.$("#btnSetInvalidValue");
 		const selectText = await select.shadow$(".ui5-select-label-root");
-		const EXPECTED_SELECTION_TEXT1 = "Item1";
-		const EXPECTED_SELECTION_TEXT2 = "Item2";
-
+		const INVALID_VALUE = "NAN";
+		const EMPTY_VALUE = "";
+		const EXPECTED_SELECTION_TEXT = "Item2";
 
 		await btnSetValue.click();
 		let selectTextHtml = await selectText.getHTML(false);
 
 		assert.strictEqual(await select.getProperty("value"),
-			EXPECTED_SELECTION_TEXT2, "Second option is selected.");
-		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2,
-			"Select label is " + EXPECTED_SELECTION_TEXT2);
+			EXPECTED_SELECTION_TEXT, "Second option is selected.");
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT,
+			"Select label is " + EXPECTED_SELECTION_TEXT);
 
 		await btnSetInvalidValue.click();
 		selectTextHtml = await selectText.getHTML(false);
 
 		assert.strictEqual(await select.getProperty("value"),
-			EXPECTED_SELECTION_TEXT1, "First option is selected as value did not match any options.");
-		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1,
-			"Select label is " + EXPECTED_SELECTION_TEXT1);
+		INVALID_VALUE, "No option is selected as value did not match any options.");
+		assert.include(selectTextHtml, EMPTY_VALUE,
+			"Select label is empty string");
 	});
 
 	it("opens upon space", async () => {
