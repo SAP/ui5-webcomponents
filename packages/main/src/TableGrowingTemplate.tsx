@@ -14,8 +14,8 @@ export default function TableGrowingTemplate(this: TableGrowing) {
 			aria-labelledby="text subtext"
 			aria-describedby="description">
 			<span id="text">{this._buttonText}</span>
-			{ this.subText &&
-				<span id="subtext">{this.subText}</span>
+			{ this.subtext &&
+				<span id="subtext">{this.subtext}</span>
 			}
 			<span id="description" class="ui5-hidden-text" aria-hidden="true">{this._buttonDescription}</span>
 		</div>

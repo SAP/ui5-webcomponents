@@ -112,7 +112,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * @public
 	 */
 	@property()
-	subText?: string;
+	subtext?: string;
 
 	/**
 	 * Defines the active state of the growing button.

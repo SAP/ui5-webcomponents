@@ -61,11 +61,11 @@ describe("TableGrowing - Button", () => {
 
 		it("tests correct custom texts are rendered", () => {
 			const text = "My Custom Growing Text",
-				subText = "My Custom Growing Subtext";
+				subtext = "My Custom Growing Subtext";
 
 			cy.mount(
 				<Table>
-					<TableGrowing slot="features" text={text} subText={subText} />
+					<TableGrowing slot="features" text={text} subtext={subtext} />
 					<TableHeaderRow slot="headerRow">
 						<TableHeaderCell><span>ColumnA</span></TableHeaderCell>
 					</TableHeaderRow>
@@ -90,7 +90,7 @@ describe("TableGrowing - Button", () => {
 			cy.get("[ui5-table-growing]")
 				.shadow()
 				.find("#subtext")
-				.should("have.text", subText);
+				.should("have.text", subtext);
 		});
 
 		it("tests growing button not shown when no data", () => {
