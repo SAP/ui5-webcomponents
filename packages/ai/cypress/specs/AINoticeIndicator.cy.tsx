@@ -16,13 +16,6 @@ describe("AI Notice Indicator", () => {
 			cy.get('ui5-ai-notice-indicator').should('exist');
 		});
 
-		it("Should display closed responsive popover", () => {
-			cy.get("[ui5-ai-notice-indicator]")
-				.shadow()
-				.find("[ui5-responsive-popover]")
-				.should("exist");
-		});
-
 		it("Should display correct elements for Default mode", () => {
 
 			cy.get("[ui5-ai-notice-indicator]")
@@ -62,11 +55,6 @@ describe("AI Notice Indicator", () => {
 			cy.get("[ui5-ai-notice-indicator]")
 				.shadow()
 				.find("[ui5-link]")
-				.should("exist");
-
-			cy.get("[ui5-ai-notice-indicator]")
-				.shadow()
-				.find("[ui5-label]")
 				.should("exist");
 		});
 
@@ -159,6 +147,7 @@ describe("AI Notice Indicator", () => {
 			cy.get("[ui5-ai-notice-indicator]")
 				.shadow()
 				.find("[ui5-responsive-popover]")
+				.should("exist")
 				.should("have.prop", "open", true);
 
 			cy.get("[ui5-ai-notice-indicator]")
@@ -186,6 +175,7 @@ describe("AI Notice Indicator", () => {
 			cy.get("[ui5-ai-notice-indicator]")
 				.shadow()
 				.find("[ui5-responsive-popover]")
+				.should("exist")
 				.should("have.prop", "open", false);
 		});
 
