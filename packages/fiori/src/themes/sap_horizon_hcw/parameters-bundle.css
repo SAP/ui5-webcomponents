@@ -7,6 +7,7 @@
 @import "./ProductSwitchItem-parameters.css";
 @import "../sap_horizon_hcb/ShellBar-parameters.css";
 @import "./SideNavigation-parameters.css";
+@import "./NavigationLayout-parameters.css";
 @import "./TimelineItem-parameters.css";
 @import "./UploadCollection-parameters.css";
 @import "../base/ViewSettingsDialog-parameters.css";
