@@ -10,7 +10,7 @@ import {
 	AI_NOTICE_INDICATOR_CLOSE_BUTTON_TEXT,
 	AI_NOTICE_INDICATOR_POPOVER_CONTENT,
 	AI_NOTICE_INDICATOR_ATTRIBUTIONTEXT,
-	AI_NOTICE_INDICATOR_VERIFICATIONTEXT
+	AI_NOTICE_INDICATOR_VERIFICATIONTEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -23,20 +23,20 @@ import AINoticeIndicatorCss from "./generated/themes/AINoticeIndicator.css.js";
  * @class
  *
  * ### Overview
- * 
+ *
  * The `ui5-ai-notice-indicator` component provides an AI-related notice that can include attribution and verification text.
  * Depending on the mode chosen, the user can configure which parts of the component will be visible.
- * 
+ *
  * ### Usage
- * 
+ *
  * The component supports different display modes:
  * - **Default**: Displays both attribution and verification text.
  * - **Shortened**: Displays a condensed version of the notice without verification text.
  * - **Emphasized**: Includes an icon and both attribution and verification text.
  * - **IconOnly**: Only displays an icon. Note: This mode is not recommended, we suggest always providing a text.
- * 
+ *
  * The `ui5-ai-notice-indicator` opens a popover on interaction, and includes a close button to dismiss it.
- * 
+ *
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/AINoticeIndicator.js";`
@@ -107,15 +107,15 @@ class AINoticeIndicator extends UI5Element {
 	static i18nBundle: I18nBundle;
 
 	get isIconOnly() {
-		return this.mode == AINoticeIndicatorMode.IconOnly;
+		return this.mode === AINoticeIndicatorMode.IconOnly;
 	}
 
 	get isShortened() {
-		return this.mode == AINoticeIndicatorMode.Shortened;
+		return this.mode === AINoticeIndicatorMode.Shortened;
 	}
 
 	get isEmphasized() {
-		return this.mode == AINoticeIndicatorMode.Emphasized;
+		return this.mode === AINoticeIndicatorMode.Emphasized;
 	}
 
 	get _attributionText() {
@@ -134,11 +134,11 @@ class AINoticeIndicator extends UI5Element {
 		return this.popoverText || AINoticeIndicator.i18nBundle.getText(AI_NOTICE_INDICATOR_POPOVER_CONTENT);
 	}
 
-	get _popover() {
+	get _popover(): ResponsivePopover | null {
 		return this.shadowRoot?.querySelector("ui5-responsive-popover") as ResponsivePopover;
 	}
 
-	_handleToggleClick(e: Event) {
+	_handleToggleClick() {
 		const popover = this._popover;
 		if (popover) {
 			popover.open = !popover.open;

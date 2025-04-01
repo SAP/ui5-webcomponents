@@ -36,9 +36,11 @@ export default function AINoticeIndicatorTemplate(this: AINoticeIndicator) {
 						</Link>
 				}
 
-				<Label for="created-by-ai">
-					{!this.isShortened && !this.isIconOnly && this._verificationText}
-				</Label>
+				{!this.isShortened && !this.isIconOnly &&
+					<Label for="created-by-ai">
+						{this._verificationText}
+					</Label>
+				}
 			</div>
 
 			<ResponsivePopover

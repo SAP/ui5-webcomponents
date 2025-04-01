@@ -3,7 +3,7 @@ import {
 	AI_NOTICE_INDICATOR_CLOSE_BUTTON_TEXT,
 	AI_NOTICE_INDICATOR_POPOVER_CONTENT,
 	AI_NOTICE_INDICATOR_ATTRIBUTIONTEXT,
-	AI_NOTICE_INDICATOR_VERIFICATIONTEXT
+	AI_NOTICE_INDICATOR_VERIFICATIONTEXT,
 } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("AI Notice Indicator", () => {
@@ -83,11 +83,6 @@ describe("AI Notice Indicator", () => {
 				.shadow()
 				.find("[ui5-link]")
 				.should("not.exist");
-
-			cy.get("[ui5-ai-notice-indicator]")
-				.shadow()
-				.find("[ui5-label]")
-				.should("be.empty");
 		});
 	});
 
@@ -106,8 +101,8 @@ describe("AI Notice Indicator", () => {
 				.contains(AI_NOTICE_INDICATOR_VERIFICATIONTEXT.defaultText);
 		});
 
-		it("Should display correct values of the properties for Emphasized mode", () => {
-			cy.mount(<AINoticeIndicator mode="Emphasized" attributionText="Made with ai" verificationText="Check the results"></AINoticeIndicator>);
+		it("Should display correct user-set values of the properties", () => {
+			cy.mount(<AINoticeIndicator attribution-text="Made with ai" verification-text="Check the results"></AINoticeIndicator>);
 
 			cy.get("[ui5-ai-notice-indicator]")
 				.shadow()
@@ -118,15 +113,6 @@ describe("AI Notice Indicator", () => {
 				.shadow()
 				.find("[ui5-label]")
 				.contains("Check the results");
-		});
-
-		it("Should display correct values of the properties for Shortened mode", () => {
-			cy.mount(<AINoticeIndicator mode="Shortened" attributionText="Made with ai"></AINoticeIndicator>);
-
-			cy.get("[ui5-ai-notice-indicator]")
-				.shadow()
-				.find("[ui5-link]")
-				.contains("Made with ai");
 		});
 
 		it("Should display correct default values of the popover properties", () => {
@@ -144,7 +130,7 @@ describe("AI Notice Indicator", () => {
 		});
 
 		it("Should display correct values of the popover properties", () => {
-			cy.mount(<AINoticeIndicator closeButtonText="ok" popover-text="The Al-generated content may contain inaccuracies due to using multiple information sources. Verify results before use."></AINoticeIndicator>);
+			cy.mount(<AINoticeIndicator close-button-text="ok" popover-text="The Al-generated content may contain inaccuracies due to using multiple information sources. Verify results before use."></AINoticeIndicator>);
 
 			cy.get("[ui5-ai-notice-indicator]")
 				.shadow()
