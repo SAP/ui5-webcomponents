@@ -1,4 +1,5 @@
 :root {
 	--_ui5_busy_indicator_color: var(--sapContent_IconColor);
 	--_ui5_busy_indicator_focus_outline:  var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-	--_ui5_busy_indicator_block_layer: color-mix(in oklch, transparent, var(--sapBackgroundColor) calc((1 - var(--sapContent_DisabledOpacity)) * 100%));}
+	--_ui5_busy_indicator_block_layer: color-mix(in oklch, transparent, var(--sapBackgroundColor) calc((1 - var(--sapContent_DisabledOpacity)) * 100%));
+}
