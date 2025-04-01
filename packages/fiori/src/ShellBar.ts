@@ -132,6 +132,7 @@ interface IShelBarItemInfo extends IShellBarHidableItem {
 	profile?: boolean,
 	tooltip?: string,
 	accessibilityAttributes?: ShellBarItemAccessibilityAttributes,
+	accessibleName?: string,
 }
 
 interface IShellBarContentItem extends IShellBarHidableItem {
@@ -1063,6 +1064,7 @@ class ShellBar extends UI5Element {
 					stableDomRef: item.stableDomRef,
 					tooltip: item.title || item.text,
 					accessibilityAttributes: item.accessibilityAttributes,
+					accessibleName: item.count ? `${item.title || item.text}, ${item.count}` : (item.title || item.text),
 				};
 			}),
 			{
