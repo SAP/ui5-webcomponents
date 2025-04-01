@@ -10,7 +10,6 @@ import "@ui5/webcomponents/dist/Tag.js";
 import "@ui5/webcomponents/dist/Text.js";
 import "@ui5/webcomponents/dist/Bar.js";
 import "@ui5/webcomponents/dist/Dialog.js";
-import "@ui5/webcomponents/dist/Text.js";
 import "@ui5/webcomponents/dist/Link.js";
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
