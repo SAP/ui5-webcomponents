@@ -240,14 +240,6 @@
 	white-space: normal;
 }
 
-:host([wrapping-type="Normal"]) .ui5-li-title .ui5-li-title-exp-text {
-	font-size: var(--_ui5_list_item_title_size);
-}
-
-:host([wrapping-type="Normal"]) .ui5-li-desc .ui5-li-desc-exp-text {
-	color: var(--sapContent_LabelColor);
-}
-
 :host([wrapping-type="Normal"]) .ui5-li-multisel-cb,
 :host([wrapping-type="Normal"]) .ui5-li-singlesel-radiobtn {
 	display: flex;

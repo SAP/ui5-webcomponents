@@ -50,7 +50,6 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
  * @extends UI5Element
  * @public
  * @since 2.6.0
- * @csspart text - Used to style the text content of the component
  */
 @customElement({
 	tag: "ui5-expandable-text",
