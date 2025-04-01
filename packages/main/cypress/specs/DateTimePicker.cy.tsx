@@ -331,7 +331,11 @@ describe("DateTimePicker general interaction", () => {
 		cy.mount(<DefaultDateTimePicker />);
 
 		// Prevent default behavior of ui5-change event.
-		cy.get("#dt").then($el => {
+		cy.get("[ui5-datetime-picker]")
+			.as("dtp")
+			
+		cy.get("@dtp")
+			.then($el => {
 			$el[0].addEventListener("ui5-change", (ev: Event) => {
 				ev.preventDefault();
 			});
@@ -354,12 +358,24 @@ describe("DateTimePicker general interaction", () => {
 				.find("[data-sap-focus-ref]")
 				.should("be.focused")
 				.realClick();
+
 			cy.get("#ok").realClick();
 		});
 
-		cy.get("#dt")
+		cy.get("@dtp")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-responsive-popover]")
+			.should($rp => {
+				expect($rp.is(":popover-open")).to.be.false;
+			})
+			.and("not.have.attr", "open");
+
+		cy.get("@dtp")
+			.shadow()
+			.find("[ui5-datetime-input]")
+			.as("input");
+		
+		cy.get("@input")
 			.should("be.focused")
 			.should("have.attr", "value", "");
 	});

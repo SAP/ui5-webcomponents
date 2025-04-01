@@ -11,6 +11,7 @@
 @import "../base/SearchField-parameters.css";
 @import "./TimelineItem-parameters.css";
 @import "./SideNavigation-parameters.css";
+@import "./NavigationLayout-parameters.css";
 @import "./UploadCollection-parameters.css";
 @import "./Wizard-parameters.css";
 @import "./WizardTab-parameters.css";
