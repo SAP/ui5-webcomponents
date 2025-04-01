@@ -7,14 +7,15 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
 const getDefaultCalendar = (date: Date) => {
 	const calDate = new Date(date);
-	const formattedDate = calDate.toLocaleDateString("default", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
 
-	return (<Calendar id="calendar1" timestamp={calDate.valueOf() / 1000}>
-		<CalendarDate value={formattedDate}></CalendarDate>
+	const day = String(calDate.getDate()).padStart(2, "0");
+	const month = String(calDate.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+	const year = calDate.getFullYear();
+
+	const value = `${day}/${month}/${year}`;
+
+	return (<Calendar id="calendar1" timestamp={calDate.valueOf() / 1000} formatPattern="dd/MM/yyyy">
+		<CalendarDate value={value}></CalendarDate>
 	</Calendar>);
 };
 
@@ -38,35 +39,41 @@ describe("Calendar general interaction", () => {
 		cy.mount(getDefaultCalendar(date));
 
 		cy.ui5CalendarGetDay("#calendar1", "974851200")
-			.should("have.focus");
+			.as("selectedDay");
 
-		cy.focused().realPress("Tab");
+		cy.get("@selectedDay")
+			.realClick();
+
+		cy.get("@selectedDay")
+			.should("have.focus")
+			.realPress("Tab");
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
+			.as("calheader");
+		
+		cy.get("@calheader")
 			.find("[data-ui5-cal-header-btn-month]")
-			.should("have.focus");
+			.as("monthBtn");
+		
+		cy.get("@monthBtn")
+			.should("have.focus")
+			.realPress("Tab");
 
-		cy.focused().realPress("Tab");
-
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find(".ui5-calheader")
+		cy.get("@calheader")
 			.find("[data-ui5-cal-header-btn-year]")
-			.should("have.focus");
+			.as("yearBtn");
+		
+		cy.get("@yearBtn")
+			.should("have.focus")
+			.realPress(["Shift", "Tab"]);
 
-		cy.focused().realPress(["Shift", "Tab"]);
+		cy.get("@monthBtn")
+			.should("have.focus")
+			.realPress(["Shift", "Tab"]);
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find(".ui5-calheader")
-			.find("[data-ui5-cal-header-btn-month]")
-			.should("have.focus");
-
-		cy.focused().realPress(["Shift", "Tab"]);
-
-		cy.ui5CalendarGetDay("#calendar1", "974851200")
+		cy.get("@selectedDay")
 			.should("have.focus");
 	});
 
@@ -79,7 +86,7 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-year]")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -98,7 +105,7 @@ describe("Calendar general interaction", () => {
 		cy.mount(getDefaultCalendar(date));
 
 		cy.ui5CalendarGetDay("#calendar1", "974851200")
-			.click();
+			.realClick();
 
 		cy.focused().realPress("Tab");
 		cy.focused().realPress("Space");
@@ -125,7 +132,7 @@ describe("Calendar general interaction", () => {
 		cy.mount(getDefaultCalendar(date));
 
 		cy.ui5CalendarGetDay("#calendar1", "974851200")
-			.click();
+			.realClick();
 
 		cy.focused().realPress("Tab");
 		cy.focused().realPress("Tab");
@@ -158,7 +165,7 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-year]")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar2")
 			.shadow()
@@ -179,7 +186,7 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-month]")
-			.click();
+			.realClick();
 
 		cy.ui5CalendarGetMonth("#calendar2", todayTimestamp.toString())
 			.should("have.focus")
@@ -195,7 +202,7 @@ describe("Calendar general interaction", () => {
 			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
-			.click();
+			.realClick();
 
 		cy.focused().realPress("PageUp");
 
@@ -223,7 +230,7 @@ describe("Calendar general interaction", () => {
 			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
-			.click();
+			.realClick();
 
 		cy.focused().realPress(["Shift", "PageUp"]);
 
@@ -251,7 +258,7 @@ describe("Calendar general interaction", () => {
 			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
-			.click();
+			.realClick();
 
 		cy.focused().realPress(["Control", "Shift", "PageUp"]);
 
@@ -279,7 +286,7 @@ describe("Calendar general interaction", () => {
 			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
-			.click();
+			.realClick();
 
 		cy.focused().realPress("F4");
 		cy.focused().realPress("PageUp");
@@ -308,7 +315,7 @@ describe("Calendar general interaction", () => {
 			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
-			.click();
+			.realClick();
 
 		cy.focused().realPress(["Shift", "F4"]);
 		cy.focused().realPress("PageUp");
@@ -340,7 +347,7 @@ describe("Calendar general interaction", () => {
 			cy.ui5CalendarGetDay("#calendar1", _timestamp.toString())
 				.as("date");
 
-			cy.get("@date").click();
+			cy.get("@date").realClick();
 			cy.get("@date").should("have.class", "ui5-dp-item--selected");
 		});
 
@@ -381,10 +388,10 @@ describe("Calendar general interaction", () => {
 		const timestamps = [971740800, 971827200, 971913600];
 
 		cy.ui5CalendarGetDay("#calendar1", timestamps[0].toString())
-			.click();
+			.realClick();
 
 		cy.ui5CalendarGetDay("#calendar1", timestamps[2].toString())
-			.click();
+			.realClick();
 
 		cy.ui5CalendarGetDay("#calendar1", timestamps[0].toString())
 			.should("have.class", "ui5-dp-item--selected");
@@ -423,7 +430,7 @@ describe("Calendar general interaction", () => {
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-next]")
 			.should("not.have.class", "ui5-calheader-arrowbtn-disabled")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -441,13 +448,13 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-next]")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-next]")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -518,7 +525,7 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-month]")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -544,7 +551,7 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-year]")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -569,7 +576,7 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-year]")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -588,7 +595,7 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-year]")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -619,10 +626,10 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-month]")
-			.click();
+			.realClick();
 
 		cy.ui5CalendarGetMonth("#calendar1", timestamp.toString())
-			.click();
+			.realClick();
 
 		cy.ui5CalendarGetDay("#calendar1", timestamp.toString())
 			.should("have.focus");
