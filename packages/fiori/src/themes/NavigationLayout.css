@@ -17,7 +17,6 @@
 }
 
 .ui5-nl-header {
-	box-shadow: var(--sapShell_Shadow);
 	z-index: 2;
 }
 
@@ -39,6 +38,10 @@
 	left: 0;
 	bottom: 0;
 	width: 100%;
+}
+
+:host(:not([is-phone])) ::slotted([ui5-side-navigation][slot="sideContent"]) {
+	box-shadow: var(--_ui5_nl_side_navigation_box_shadow);
 }
 
 :host([is-phone]) ::slotted([ui5-side-navigation][slot="sideContent"]) {

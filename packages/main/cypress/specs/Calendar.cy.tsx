@@ -176,7 +176,7 @@ describe("Calendar general interaction", () => {
 			.should("not.have.class", "ui5-yp-item--selected");
 	});
 
-	it.skip("Calendar doesn't mark month as selected when there are no selected dates", () => {
+	it("Calendar doesn't mark month as selected when there are no selected dates", () => {
 		const todayDate = new Date();
 		const todayTimestamp = Date.UTC(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0, 0) / 1000;
 
