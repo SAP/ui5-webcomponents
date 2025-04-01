@@ -994,14 +994,13 @@ class TabContainer extends UI5Element {
 		const selectedTab = this._getRootTab(this._selectedTab);
 		const containerWidth = this._getTabStrip().offsetWidth;
 		const selectedTabDomRef = selectedTab?.getDomRefInStrip() as TabInStrip | undefined;
-		let visibleItemsDomRefs = itemsDomRefs.filter(item => !item.hidden);
+		const visibleItemsDomRefs = itemsDomRefs.filter(item => !item.hidden);
 
 		visibleItemsDomRefs.forEach(item => {
 			allVisibleItemsWidth += this._getItemWidth(item);
 		});
 
-		let changeTabPosition = visibleItemsDomRefs.length !== itemsDomRefs.length && this.isModeStartAndEnd && selectedTabDomRef && visibleItemsDomRefs.indexOf(selectedTabDomRef) !== -1 &&  allVisibleItemsWidth < containerWidth && this._getItemWidth(selectedTabDomRef) < containerWidth;
-
+		const changeTabPosition = visibleItemsDomRefs.length !== itemsDomRefs.length && this.isModeStartAndEnd && selectedTabDomRef && visibleItemsDomRefs.indexOf(selectedTabDomRef) !== -1 && allVisibleItemsWidth < containerWidth && this._getItemWidth(selectedTabDomRef) < containerWidth;
 
 		// make sure the overflows are hidden
 		this._getStartOverflow().setAttribute("hidden", "");
@@ -1009,7 +1008,7 @@ class TabContainer extends UI5Element {
 
 		let firstVisibleIndex;
 
-		if(changeTabPosition) {
+		if (changeTabPosition) {
 			firstVisibleIndex = itemsDomRefs.indexOf(visibleItemsDomRefs[0]);
 		}
 
@@ -1099,7 +1098,7 @@ class TabContainer extends UI5Element {
 			this._getStartOverflow().removeAttribute("hidden");
 			// width is changed
 			containerWidth = this._getTabStrip().offsetWidth;
-			if(!firstVisibleIndex) {
+			if (!firstVisibleIndex) {
 				firstVisibleIndex = this._findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width);
 			}
 
@@ -1117,7 +1116,7 @@ class TabContainer extends UI5Element {
 		this._getEndOverflow().removeAttribute("hidden");
 		// width is changed
 		containerWidth = this._getTabStrip().offsetWidth;
-		if(!firstVisibleIndex) {
+		if (!firstVisibleIndex) {
 			firstVisibleIndex = this._findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width, selectedItemIndexAndWidth.index - 1);
 		}
 		lastVisible = this._findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width, firstVisibleIndex);
@@ -1137,7 +1136,7 @@ class TabContainer extends UI5Element {
 		if (this._getStartOverflow().textContent !== "+0") {
 			return true;
 		}
-		if (selectedItemIndexAndWidth.index  === 0) {
+		if (selectedItemIndexAndWidth.index === 0) {
 			return false;
 		}
 
