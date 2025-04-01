@@ -990,10 +990,28 @@ class TabContainer extends UI5Element {
 		let allItemsWidth = 0;
 
 		const itemsDomRefs = this.items.map(item => item.getDomRefInStrip()) as Array<TabInStrip | TabSeparatorInStrip>;
+		let allVisibleItemsWidth = 0;
+		const selectedTab = this._getRootTab(this._selectedTab);
+		const containerWidth = this._getTabStrip().offsetWidth;
+		const selectedTabDomRef = selectedTab?.getDomRefInStrip() as TabInStrip | undefined;
+		let visibleItemsDomRefs = itemsDomRefs.filter(item => !item.hidden);
+
+		visibleItemsDomRefs.forEach(item => {
+			allVisibleItemsWidth += this._getItemWidth(item);
+		});
+
+		let changeTabPosition = visibleItemsDomRefs.length !== itemsDomRefs.length && this.isModeStartAndEnd && selectedTabDomRef && visibleItemsDomRefs.indexOf(selectedTabDomRef) !== -1 &&  allVisibleItemsWidth < containerWidth && this._getItemWidth(selectedTabDomRef) < containerWidth;
+
 
 		// make sure the overflows are hidden
 		this._getStartOverflow().setAttribute("hidden", "");
 		this._getEndOverflow().setAttribute("hidden", "");
+
+		let firstVisibleIndex;
+
+		if(changeTabPosition) {
+			firstVisibleIndex = itemsDomRefs.indexOf(visibleItemsDomRefs[0]);
+		}
 
 		// show all tabs
 		for (let i = 0; i < itemsDomRefs.length; i++) {
@@ -1012,7 +1030,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (this.isModeStartAndEnd) {
-			this._updateStartAndEndOverflow(itemsDomRefs);
+			this._updateStartAndEndOverflow(itemsDomRefs, firstVisibleIndex);
 			this._updateOverflowCounters();
 		} else {
 			this._updateEndOverflow(itemsDomRefs);
@@ -1049,14 +1067,13 @@ class TabContainer extends UI5Element {
 		this._endOverflowText = this.overflowButtonText;
 	}
 
-	_updateStartAndEndOverflow(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>) {
+	_updateStartAndEndOverflow(itemsDomRefs: Array<TabInStrip |TabSeparatorInStrip>, firstVisibleIndex?: number) {
 		let containerWidth = this._getTabStrip().offsetWidth;
 		const selectedTab = this._getRootTab(this._selectedTab);
 		const selectedTabDomRef = selectedTab?.getDomRefInStrip() as TabInStrip | undefined;
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
 		const hasEndOverflow = this._hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
-		let firstVisible;
 		let lastVisible;
 
 		// has "end", but no "start" overflow
@@ -1082,10 +1099,11 @@ class TabContainer extends UI5Element {
 			this._getStartOverflow().removeAttribute("hidden");
 			// width is changed
 			containerWidth = this._getTabStrip().offsetWidth;
+			if(!firstVisibleIndex) {
+				firstVisibleIndex = this._findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width);
+			}
 
-			firstVisible = this._findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width);
-
-			for (let i = firstVisible - 1; i >= 0; i--) {
+			for (let i = firstVisibleIndex - 1; i >= 0; i--) {
 				itemsDomRefs[i].setAttribute("hidden", "");
 				itemsDomRefs[i].setAttribute("start-overflow", "");
 			}
@@ -1099,11 +1117,12 @@ class TabContainer extends UI5Element {
 		this._getEndOverflow().removeAttribute("hidden");
 		// width is changed
 		containerWidth = this._getTabStrip().offsetWidth;
+		if(!firstVisibleIndex) {
+			firstVisibleIndex = this._findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width, selectedItemIndexAndWidth.index - 1);
+		}
+		lastVisible = this._findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width, firstVisibleIndex);
 
-		firstVisible = this._findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width, selectedItemIndexAndWidth.index - 1);
-		lastVisible = this._findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width, firstVisible);
-
-		for (let i = firstVisible - 1; i >= 0; i--) {
+		for (let i = firstVisibleIndex - 1; i >= 0; i--) {
 			itemsDomRefs[i].setAttribute("hidden", "");
 			itemsDomRefs[i].setAttribute("start-overflow", "");
 		}
@@ -1115,7 +1134,10 @@ class TabContainer extends UI5Element {
 	}
 
 	_hasStartOverflow(containerWidth: number, itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>, selectedItemIndexAndWidth: { width: number; index: number}) {
-		if (selectedItemIndexAndWidth.index === 0) {
+		if (this._getStartOverflow().textContent !== "+0") {
+			return true;
+		}
+		if (selectedItemIndexAndWidth.index  === 0) {
 			return false;
 		}
 
