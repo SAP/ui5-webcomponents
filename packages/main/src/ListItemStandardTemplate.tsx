@@ -34,16 +34,14 @@ function listItemContent(this: ListItemStandard) {
 function renderTitle(this: ListItemStandard) {
 	if (this.wrappingType === WrappingType.Normal) {
 		return (
-			<span part="title" class="ui5-li-title">
-				<ExpandableText
-					class={{
-						"ui5-li-title-exp-text": true
-					}}
-					text={this._textContent}
-					maxCharacters={this._maxCharacters}
-					exportparts="text:title">
-				</ExpandableText>
-			</span>
+			<ExpandableText
+				part="title"
+				class={{
+					"ui5-li-title": true,
+				}}
+				text={this._textContent}
+				maxCharacters={this._maxCharacters}>
+			</ExpandableText>
 		);
 	}
 
@@ -62,16 +60,14 @@ function renderDescription(this: ListItemStandard) {
 	if (this.wrappingType === WrappingType.Normal) {
 		return (
 			<div class="ui5-li-description-info-wrapper">
-				<span part="description" class="ui5-li-desc">
-					<ExpandableText
-						class={{
-							"ui5-li-desc-exp-text": true
-						}}
-						text={this.description}
-						maxCharacters={this._maxCharacters}
-						exportparts="text:description">
-					</ExpandableText>
-				</span>
+				<ExpandableText
+					part="description"
+					class={{
+						"ui5-li-desc": true,
+					}}
+					text={this.description}
+					maxCharacters={this._maxCharacters}>
+				</ExpandableText>
 				{renderAdditionalText.call(this)}
 			</div>
 		);
