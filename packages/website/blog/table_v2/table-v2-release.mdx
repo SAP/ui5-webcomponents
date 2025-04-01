@@ -1,0 +1,210 @@
+---
+title: The Table Web Component is Now Stable - Here's What's New
+tags: [table, experimental]
+slug: /stable-table-release
+date: 2025-03-26T10:00
+---
+
+# The Table Web Component is Now Stable - Here's What's New
+
+After its half year tenure as experimental component since the relase of UI5 Web Components 2.0, allowing us to gather feedback
+and improve upon the API, the Table component will finally leave its experimental state!
+
+This blog will update you on why we've decided to take this path, the improvements and new features of the `ui5-table`
+and will give you a rough idea of migration.
+
+## Going from Old to New
+
+Back in UI5 Web Components 1.x, the library already offered a Table component, which provided developers with capabilities to display
+data in a tabular structure.
+
+As we've decided to upgrade the component library to 2.0, the Table component was reevaluated and we've identified pain points, the biggest
+pain point being accessibility. Comparing the 1.x Table component with its equivalent UI5 Tables, accessibility features were not as sophisticated
+and often times differing from its counterpart.
+
+Upgrading to a new version gave us the chance to reassess and reimagine the component, allowing us to focus on three core points:
+1. Improve Accessibility
+2. Harmonize Web Component Table and UI5 Tables
+3. Improve existing APIs and incorporate new ideas
+
+As providing a completely new component with a fresh and new API might lead to issues, we've decided to publish the Table in an experimental state.
+Giving us time to manifest the final API, but most importantly providing us the chance to listen to your feedback and improve upon it.
+
+Finally, thanks to your feedback, we can lift the `ui5-table` out of its experimental state.
+
+## What's New?
+
+### Table and ARIA Structure
+
+We've revamped the structure of the `ui5-table` component. The new structure is heavily inspired by the HTML Table, instead of having a dedicated `<ui5-column>`, you'll
+define a `<ui5-table-header-row>`, which contains a `<ui5-table-header-cell>`:
+
+<table>
+	<tr>
+		<th>HTML Table</th>
+		<th>Web Component Table</th>
+	</tr>
+	<tr>
+		<td>
+```html
+<table>
+  <tr>
+    <th>Column A</th>
+    <th>Column B</th>
+  </tr>
+  <tr>
+    <td>Cell 1</td>
+    <td>Cell 2</td>
+  </tr>
+</table>
+```
+		</td>
+		<td>
+```html
+<ui5-table>
+  <ui5-table-header-row slot="headerRow">
+    <ui5-table-header-cell>Column A</ui5-table-header-cell>
+    <ui5-table-header-cell>Column B</ui5-table-header-cell>
+  </ui5-table-header-row>
+  <ui5-table-row>
+    <ui5-table-cell>Cell 1</ui5-table-cell>
+    <ui5-table-cell>Cell 2</ui5-table-cell>
+  </ui5-table-row>
+</ui5-table>
+```
+		</td>
+	</tr>
+</table>
+
+We've additionally decided to apply ARIA roles such as "row" or "gridcell" directly on the Web Components instead of hiding them in the Shadow DOM, applying
+the semantics directly to the Web Component. 
+This change in combination with the new structure enables a better Accessibility and Screen Reader Support, as the new Web Component Table now structurally
+and semantically resembles the HTML table, ensuring assitive technologies easier processing.
+
+### Keyboard Handling
+
+Apart from moving the ARIA roles from the Shadow DOM to the "light" DOM, allowing you to directly reference other components via `aria-labelledby`, accessibility
+is greatly improved in other areas as well.
+
+One major change you might notice is the updated keyboard handling for the Table. While previously, you were only able to navigate through the table row by row, the
+newly implemented keyboard specification allows you to navigate row by row **and** from cell to cell. This update aligns the Web Component Table with its counterparts
+in UI5 in terms of keyboard handling.
+
+![Keyboard Handling](./images/keyboard_handling.gif)
+
+Check the [Keyboard Handling Specification](https://help.sap.com/docs/SAPUI5/bc5a64aac808463baa95b4230f221716/10c137d404874350b886cc988aa63c1c.html?locale=en-US) for more information
+on the handling.
+
+### Feature Concept
+
+If you use the new `ui5-table` for the first time, you might notice that "core features" of the old Table implementation might be missing, such as growing capabilities or
+selection functionality.
+
+This discrepancy is intended, as we wanted to provide a light-weight component for users, that might not need such features.
+
+If you require selection or growing capabilities, you can extend your Table component by assigning *Features* to it. The core idea of a *Feature* is to provide a
+plug-and-play option for more complex features of the Table. This should allow you to keep the Table as light-weight as possible, ensuring only necessary
+code/functionality is being used.
+
+The `ui5-table` has a dedicated `features` slot to enable certain features, which are dedicated Web Components. We are currently offering the following features:
+[TableSelectionSingle](https://sap.github.io/ui5-webcomponents/components/TableSelectionSingle/), [TableSelectionMulti](https://sap.github.io/ui5-webcomponents/components/TableSelectionMulti/),
+ [TableGrowing](https://sap.github.io/ui5-webcomponents/components/TableGrowing/) and [TableVirtualizer](https://sap.github.io/ui5-webcomponents/components/TableVirtualizer/).
+
+```html
+<ui5-table>
+  ...
+  <ui5-table-selection-single slot="features" />
+  <ui5-table-virtualizer slot="features" />
+  ...
+</ui5-table>
+```
+
+#### Selection Feature
+
+As you may have noticed, there are now **two** selection features: `TableSelectionSingle` and `TableSelectionMulti`. Instead of a single, unified selection feature, we chose to separate
+them to keep the API minimal, clean, and better suited to their respective use cases. This approach also helps manage complexity, as each selection mode has distinct API requirements
+and behaviors.
+
+Additionally, selection is no longer handled at the row level. Previously, `ui5-table-row` had a `selected` property, but this has been removed. Instead, selection is now decoupled from
+the table, and the selection feature itself maintains a `selected` property containing the keys of selected rows. To enable this, you need to provide a `row-key` for your rows uniquely
+identifying them.
+
+For an example implementation, see [here](https://sap.github.io/ui5-webcomponents/components/TableSelectionMulti/#basic-sample).
+
+#### Virtualization
+
+`TableVirtualizer` is a new feature, that is currently still experimental. Its main purpose is to virtualize table rows, allowing you to display huge amounts of data without rendering
+everything straight to the browser compromising performance.
+
+This feature will ensure, that only the rows visible in the current viewport are rendered and updated during scrolling. To achieve this, the `TableVirtualizer` offers a
+`range-change` event, allowing you to exchange or update the row contexts and contents accordingly.
+
+A sample implementation can be found [here](https://sap.github.io/ui5-webcomponents/components/TableVirtualizer/#basic-sample).
+
+![Example of the Virtualizer](./images/virtualizer.gif)
+
+### New Functionalities
+
+### Overflow Mode
+
+The old Table component used by default "popin mode", a responsive display option optimal for small screen sizes. Defining a `minWidth` for the column, a minimum table width,
+allows the column to move into the "popin area", once the table is smaller than the specified `minWidth`.
+
+This overall behavior has changed now with the new `ui5-table`.
+
+First of all, the Table component introduces the `overflowMode`. This property allows you to switch between "popin mode" and horizontal scrolling, giving you flexibility
+in the overflow behavior of your table.
+
+Furthermore, the "popin configuration" has changed. Instead of defining a `minWidth` representing the "minimum table width", you can define `width` or `minWidth` for the
+column itself. Once the table overflows, the columns overflowing, e.g. not fitting into the table anymore, will be moved into the "popin area". This is a more natural
+overflow behavior, allowing you to just define the widths of your columns without worrying about the general table width.
+
+See [here](https://sap.github.io/ui5-webcomponents/components/Table/#overflow-mode) for a sample.
+
+### Row Actions
+
+The `ui5-table` newly introduces row actions. The `ui5-table-row` has a dedicated `actions` slot, which allows you to add custom row action to your rows.
+
+There are two row action options:
+1. Use [`TableRowActionNavigation`](https://sap.github.io/ui5-webcomponents/components/TableRowActionNavigation/) to define a navigation action.
+2. Use [`TableRowAction`](https://sap.github.io/ui5-webcomponents/components/TableRowAction/) to define a custom navigation. Provide a text and icon for your custom action.
+
+```html
+<ui5-table-row row-key="2">
+  <ui5-table-cell><ui5-label><b>Astro Laptop 216</b><br><a href="#">HT-1251</a></ui5-label></ui5-table-cell>
+  <ui5-table-row-action slot="actions" icon="delete" text="Delete" handler="onDelete"></ui5-table-row-action>
+  <ui5-table-row-action-navigation slot="actions" handler="onNavigate" interactive></ui5-table-row-action-navigation>
+</ui5-table-row>
+```
+
+![Row Actions Sample](./images/row_actions.png)
+
+### Drag And Drop
+
+The Table component is now drag and drop enabled! By utilizing the Table's `move-over` and `move` event, you are able to move table rows.
+
+This allows you to implement features such as row reordering, exchanging data between tables, and even more.
+
+![Drag And Drop](./images/drag_drop.gif)
+
+## What's coming?
+
+While these new features and functionalities are already quite a lot, we already have additional features planned for the future.
+
+Here is a quick sneak peek on what is about to come:
+
+- Grouping Functionality
+- Selection Improvements such as Clear All and better Select All
+- Separators
+- Row Span
+
+## Summary
+
+The `ui5-table` and its related components (except for `TableVirtualizer`) are finally graduating from their experimental state and will move into a stable state.
+The new table offers new and improved features, accessibility and user experience.
+
+For compatibility reasons, the old table is still available in the `compat` package, but please migrate to the new Table implementation to leverage the newest
+features and functionalities.
+
+If you are interested in learning more about the `ui5-table`, check the [documentation](https://sap.github.io/ui5-webcomponents/components/Table/) or join
+us at [UI5con](https://openui5.org/ui5con/)!
