@@ -16,6 +16,9 @@
 	"references": [
 		{
 			"path": "../"
+		},
+		{
+			"path": "../../main/cypress"
 		}
 	]
 }

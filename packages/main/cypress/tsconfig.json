@@ -3,6 +3,7 @@
 		"./**/*"
 	],
 	"compilerOptions": {
+		"composite": true,
 		"jsx": "react-jsx",
 		"jsxImportSource": "@ui5/webcomponents-base",
 		"module": "NodeNext",
