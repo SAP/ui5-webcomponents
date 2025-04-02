@@ -2,4 +2,7 @@
 
 :root {
 	--_ui5_shellbar_button_focused_border: 0.125rem dotted var(--sapContent_FocusColor);
+	--_ui5_shellbar_content_transition: none;
+	--_ui5_shellbar_search_animation_expand: none;
+	--_ui5_shellbar_search_animation_grow: none;
 }

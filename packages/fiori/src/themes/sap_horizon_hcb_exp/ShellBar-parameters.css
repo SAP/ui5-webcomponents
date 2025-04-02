@@ -9,4 +9,7 @@
 	--_ui5_shellbar_search_field_height: 2.25rem;
 	--_ui5_shellbar_search_field_outline_focused: none;
 	--_ui5_shellbar_menu_button_title_font_size: var(--sapFontHeader5Size);
+	--_ui5_shellbar_content_transition: none;
+	--_ui5_shellbar_search_animation_expand: none;
+	--_ui5_shellbar_search_animation_grow: none;
 }
