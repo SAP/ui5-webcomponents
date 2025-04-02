@@ -408,7 +408,7 @@ class MenuItem extends ListItem implements IMenuItem {
 			// respect mouseover only on desktop
 			const item = e.target as MenuItem;
 
-			if (this._isInstanceOfMenuItem(item)) {
+			if (MenuItem._isInstanceOfMenuItem(item)) {
 				item.focus();
 
 				const menuItems = this._menuItems;
@@ -508,12 +508,12 @@ class MenuItem extends ListItem implements IMenuItem {
 		this.fireDecoratorEvent("close");
 	}
 
-	_isInstanceOfMenuItem(object: any): object is MenuItem {
-		return "isMenuItem" in object;
-	}
-
 	get isMenuItem(): boolean {
 		return true;
+	}
+
+	static _isInstanceOfMenuItem(object: any): object is MenuItem {
+		return "isMenuItem" in object;
 	}
 }
 
