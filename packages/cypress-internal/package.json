@@ -5,7 +5,6 @@
   "private": true,
   "scripts": {
     "build": "tsc && node ./src/copy.js",
-    "generate": "yarn build",
     "clean": "rimraf dist"
   },
   "types": "./dist/",
