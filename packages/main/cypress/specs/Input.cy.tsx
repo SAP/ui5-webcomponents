@@ -763,6 +763,66 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		});
 	});
 
+	it("Change event fires after typing a new value following a clear icon click", () => {
+		cy.mount(
+			<>
+				<Input showClearIcon={true}></Input>
+			</>
+		);
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("@input")
+			.then($input => {
+				$input[0].addEventListener("ui5-change", cy.stub().as("inputChange"));
+			});
+
+		cy.get("@input")
+			.click();
+
+		cy.get("@input")
+			.realType("Albania");
+
+		cy.get("@input")
+			.realPress("Enter");
+
+		cy.get("@inputChange")
+			.should("have.been.calledOnce");
+
+		cy.get("@input")
+			.shadow()
+			.find("ui5-icon")
+			.as("icon");
+
+		cy.get("@icon")
+			.click();
+
+		cy.get("@input")
+			.should("have.attr", "value", "");
+
+		cy.get("@input")
+			.realType("Argentina");
+
+		cy.get("@input")
+			.realPress("Enter");
+
+		cy.get("@inputChange")
+			.should("have.been.calledTwice");
+
+		cy.get("@icon")
+			.click();
+
+		cy.get("@input")
+			.realType("Argentina");
+
+		cy.get("@input")
+			.realPress("Enter");
+
+		cy.get("@inputChange")
+			.should("have.been.calledTwice");
+	});
+
 	it("should not close the dialog when item is selected", () => {
 		cy.mount(
 			<>
@@ -834,7 +894,7 @@ describe("Accessibility", () => {
 			.shadow()
 			.find("input")
 			.should("have.attr", "aria-describedby", "accessibleDescription");
-		
+
 		cy.get("@input")
 			.shadow()
 			.find("span#accessibleDescription")
