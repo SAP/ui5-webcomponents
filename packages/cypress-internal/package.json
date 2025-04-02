@@ -8,6 +8,7 @@
     "generate": "yarn build",
     "clean": "rimraf dist"
   },
+  "types": "./dist/",
   "exports": {
     "./*": "./dist/*"
   },

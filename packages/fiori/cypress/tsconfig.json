@@ -1,43 +1,21 @@
 {
-	"extends": "@ui5/webcomponents-tools/tsconfig.json",
 	"include": [
 		"./**/*"
 	],
 	"compilerOptions": {
-		"composite": true,
-		"tsBuildInfoFile": "dist/.tsbuildinfobuild",
+		"jsx": "react-jsx",
+		"jsxImportSource": "@ui5/webcomponents-base",
 		"module": "NodeNext",
 		"moduleResolution": "nodenext",
-		"paths": {
-			"@ui5/webcomponents-base/dist/*": [
-				"../../base/src/*"
-			],
-			"@ui5/webcomponents/dist/*": [
-				"../../main/src/*"
-			],
-			"@ui5/webcomponents-localization/dist/*": [
-				"../../localization/src/*"
-			],
-			"@ui5/webcomponents-theming/dist/*": [
-				"../../theming/src/*"
-			],
-			"@ui5/webcomponents-icons/dist/*": [
-				"../../icons/src/*"
-			],
-			"@ui5/webcomponents-icons-business-suite/dist/*": [
-				"../../icons-business-suite/src/*"
-			],
-			"@ui5/webcomponents-icons-tnt/dist/*": [
-				"../../icons-tnt/src/*"
-			]
-		},
+		"types": [
+			"cypress",
+			"cypress-real-events",
+			"cypress-axe",
+		],
 	},
 	"references": [
 		{
 			"path": "../"
-		},
-		{
-			"path": "../../main/cypress"
 		}
 	]
 }
