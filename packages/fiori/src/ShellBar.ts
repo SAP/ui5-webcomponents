@@ -68,6 +68,7 @@ import {
 	SHELLBAR_SEARCH_BTN_OPEN,
 	SHELLBAR_PRODUCT_SWITCH_BTN,
 } from "./generated/i18n/i18n-defaults.js";
+import type Search from "./Search.js";
 
 type ShellBarLogoAccessibilityAttributes = {
 	role?: Extract<AriaRole, "button" | "link">,
@@ -111,6 +112,10 @@ type ShellBarContentItemVisibilityChangeEventDetail = {
 type ShellBarSearchButtonEventDetail = {
 	targetRef: HTMLElement;
 	searchFieldVisible: boolean;
+};
+
+type ShellBarSearchFieldExpandEventDetail = {
+	value: boolean;
 };
 
 interface IShellBarHidableItem {
@@ -262,6 +267,10 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
 	bubbles: true,
 })
 
+@event("search-field-expand", {
+	bubbles: true,
+})
+
 /**
  * Fired, when an item from the content slot is hidden or shown.
  * **Note:** The `content-item-visibility-change` event is in an experimental state and is a subject to change.
@@ -282,6 +291,7 @@ class ShellBar extends UI5Element {
 		"logo-click": ShellBarLogoClickEventDetail,
 		"menu-item-click": ShellBarMenuItemClickEventDetail,
 		"search-button-click": ShellBarSearchButtonEventDetail,
+		"search-field-expand": ShellBarSearchFieldExpandEventDetail,
 		"content-item-visibility-change": ShellBarContentItemVisibilityChangeEventDetail
 	}
 	/**
@@ -328,16 +338,6 @@ class ShellBar extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	showProductSwitch = false;
-
-	/**
-	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
-	 *
-	 * **Note:** By default the Search Field is not displayed.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	showSearchField = false;
 
 	/**
 	 * Defines additional accessibility attributes on different areas of the component.
@@ -458,7 +458,10 @@ class ShellBar extends UI5Element {
 	 * Defines the `ui5-input`, that will be used as a search field.
 	 * @public
 	 */
-	@slot()
+	@slot({
+		type: HTMLElement,
+		invalidateOnChildChange: true,
+	})
 	searchField!: Array<Input>;
 
 	/**
@@ -508,6 +511,7 @@ class ShellBar extends UI5Element {
 	_autoRestoreSearchField = false;
 
 	_headerPress: () => void;
+	_showSearchField = false;
 
 	static get FIORI_3_BREAKPOINTS() {
 		return [
@@ -568,14 +572,14 @@ class ShellBar extends UI5Element {
 		const spacerWidth = this.shadowRoot!.querySelector(".ui5-shellbar-spacer") ? this.shadowRoot!.querySelector(".ui5-shellbar-spacer")!.getBoundingClientRect().width : 0;
 		const searchFieldWidth = this.domCalculatedValues("--_ui5_shellbar_search_field_width");
 		if (this.showFullWidthSearch) {
-			this.showSearchField = false;
+			this.setSearchState(true);
 			return;
 		}
 		if ((spacerWidth <= searchFieldWidth && this.contentItemsHidden.length !== 0) && this.showSearchField) {
-			this.showSearchField = false;
+			this.setSearchState(false);
 			this._autoRestoreSearchField = true;
 		} else if (spacerWidth > searchFieldWidth && this._autoRestoreSearchField) {
-			this.showSearchField = true;
+			this.setSearchState(true);
 			this._autoRestoreSearchField = false;
 		}
 	}
@@ -736,6 +740,38 @@ class ShellBar extends UI5Element {
 		this._observeContentItems();
 	}
 
+	get showSearchField() {
+		if (this.hasAdvancedSearch) {
+			return this.advancedSearch.expanded;
+		}
+		return this._showSearchField;
+	}
+
+	/**
+	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
+	 *
+	 * **Note:** By default the Search Field is not displayed.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	set showSearchField(value) {
+		if (this.hasAdvancedSearch) {
+			console.warn("The 'showSearchField' property is not supported when 'ui5-search' is used.");
+			return;
+		}
+		this.setSearchState(value);
+	}
+
+	setSearchState(value: boolean) {
+		this.fireDecoratorEvent("search-field-expand", { value });
+		if (this.hasAdvancedSearch) {
+			this.advancedSearch.expanded = value;
+		} else {
+			this._showSearchField = value;
+		}
+	}
+
 	onAfterRendering() {
 		this._lastOffsetWidth = this.offsetWidth;
 		this._overflowActions();
@@ -833,7 +869,7 @@ class ShellBar extends UI5Element {
 		this._updateItemsInfo(itemsInfo);
 		this._updateContentInfo(contentInfo);
 		this._updateOverflowNotifications();
-		this.showFullWidthSearch = this.overflowed;
+		this.showFullWidthSearch = this.overflowed && this.showSearchField;
 	}
 
 	_toggleActionPopover() {
@@ -932,7 +968,8 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleCancelButtonPress() {
-		this.showSearchField = false;
+		this.showFullWidthSearch = false;
+		this.setSearchState(false);
 	}
 
 	_handleProductSwitchPress(e: MouseEvent) {
@@ -1249,6 +1286,7 @@ class ShellBar extends UI5Element {
 			},
 			search: {
 				"ui5-shellbar-hidden-button": this.isIconHidden("search"),
+				"ui5-shellbar-search-trigger": true,
 			},
 			overflow: {
 				"ui5-shellbar-hidden-button": this._hiddenIcons.length === 0,
@@ -1257,14 +1295,19 @@ class ShellBar extends UI5Element {
 				"ui5-shellbar-hidden-button": this.isIconHidden("assistant"),
 				"ui5-shellbar-assistant-button": true,
 			},
+			searchField: {
+				"ui5-shellbar-search-field": !this.hasAdvancedSearch || (this.hasAdvancedSearch && this.showFullWidthSearch),
+				"ui5-shellbar-search-trigger": this.hasAdvancedSearch,
+			},
 		};
 	}
 
 	get styles() {
+		const styles = {
+			"display": this.showSearchField ? "flex" : "none",
+		};
 		return {
-			searchField: {
-				"display": this.showSearchField ? "flex" : "none",
-			},
+			searchField: this.hasAdvancedSearch ? {} : styles,
 		};
 	}
 
@@ -1429,7 +1472,7 @@ class ShellBar extends UI5Element {
 	get hidableDomElements(): HTMLElement [] {
 		const items = Array.from(this.shadowRoot!.querySelectorAll<HTMLElement>(".ui5-shellbar-button:not(.ui5-shellbar-search-button):not(.ui5-shellbar-overflow-button):not(.ui5-shellbar-cancel-button):not(.ui5-shellbar-no-overflow-button)"));
 		const assistant = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-assistant-button");
-		const searchButton = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-search-button");
+		const searchTrigger = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-search-trigger");
 		const contentItems = this.contentItemsWrappersSorted;
 		const firstContentItem = contentItems.pop();
 		const prioritizeContent = this.showSearchField && this.hasSearchField;
@@ -1455,7 +1498,7 @@ class ShellBar extends UI5Element {
 				...items.toReversed(),
 				assistant,
 				...contentItems,
-				searchButton,
+				searchTrigger,
 				firstContentItem,
 			];
 		}
@@ -1530,6 +1573,14 @@ class ShellBar extends UI5Element {
 
 	get isSBreakPoint() {
 		return this.breakpointSize === "S";
+	}
+
+	get hasAdvancedSearch() {
+		return this.searchField[0] && !this.searchField[0].hasAttribute("ui5-input");
+	}
+
+	get advancedSearch() {
+		return this.searchField[0] as unknown as Search;
 	}
 }
 
