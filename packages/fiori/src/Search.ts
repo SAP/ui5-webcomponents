@@ -28,7 +28,6 @@ import SearchField from "./SearchField.js";
 import { StartsWith, StartsWithPerTerm } from "@ui5/webcomponents/dist/Filters.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type SearchItem from "./SearchItem.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type Button from "@ui5/webcomponents/dist/Button.js";
 import type IllustratedMessage from "./IllustratedMessage.js";

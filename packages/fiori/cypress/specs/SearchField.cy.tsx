@@ -4,8 +4,6 @@ import {
 	SEARCH_FIELD_SCOPE_SELECT_LABEL,
 	SEARCH_FIELD_CLEAR_ICON,
 	SEARCH_FIELD_SEARCH_ICON,
-	SEARCH_FIELD_SEARCH_COLLAPSED,
-	SEARCH_FIELD_SEARCH_EXPANDED,
 } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("SearchField general interaction", () => {
@@ -59,9 +57,9 @@ describe("SearchField general interaction", () => {
 				.should("have.attr", "aria-expanded", "false");
 
 			cy.get("@inner-button")
-				.should("have.attr", "title", SEARCH_FIELD_SEARCH_COLLAPSED.defaultText);
+				.should("have.attr", "title", SEARCH_FIELD_SEARCH_ICON.defaultText);
 			cy.get("@inner-button")
-				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_COLLAPSED.defaultText);
+				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_ICON.defaultText);
 		});
 
 		it("should fire search search on search icon click", () => {
@@ -114,9 +112,9 @@ describe("SearchField general interaction", () => {
 
 			cy.get("@search-icon")
 				.find("title")
-				.should("contain.text", SEARCH_FIELD_SEARCH_EXPANDED.defaultText);
+				.should("contain.text", SEARCH_FIELD_SEARCH_ICON.defaultText);
 			cy.get("@search-icon")
-				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_EXPANDED.defaultText);
+				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_ICON.defaultText);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
