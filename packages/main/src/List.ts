@@ -500,7 +500,6 @@ class List extends UI5Element {
 	static i18nBundle: I18nBundle;
 	_previouslyFocusedItem: ListItemBase | null;
 	_forwardingFocus: boolean;
-	resizeListenerAttached: boolean;
 	listEndObserved: boolean;
 	_handleResizeCallback: ResizeObserverCallback;
 	initialIntersection: boolean;
@@ -524,9 +523,6 @@ class List extends UI5Element {
 
 		// Indicates that the List is forwarding the focus before or after the internal ul.
 		this._forwardingFocus = false;
-
-		// Indicates that the List has already subscribed for resize.
-		this.resizeListenerAttached = false;
 
 		// Indicates if the IntersectionObserver started observing the List
 		this.listEndObserved = false;
@@ -575,7 +571,6 @@ class List extends UI5Element {
 	onExitDOM() {
 		deregisterUI5Element(this);
 		this.unobserveListEnd();
-		this.resizeListenerAttached = false;
 		ResizeHandler.deregister(this.getDomRef()!, this._handleResizeCallback);
 		DragRegistry.unsubscribe(this);
 	}
@@ -595,7 +590,6 @@ class List extends UI5Element {
 
 		if (this.grows) {
 			this.checkListInViewport();
-			this.attachForResize();
 		}
 	}
 
@@ -619,13 +613,6 @@ class List extends UI5Element {
 				item.removeEventListener("ui5-forward-before", this.onForwardBeforeBound as EventListener);
 			}
 		});
-	}
-
-	attachForResize() {
-		if (!this.resizeListenerAttached) {
-			this.resizeListenerAttached = true;
-			ResizeHandler.register(this.getDomRef()!, this._handleResizeCallback);
-		}
 	}
 
 	get shouldRenderH1() {
