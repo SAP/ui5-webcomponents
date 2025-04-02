@@ -1,5 +1,6 @@
 import Search from "../../src/Search.js";
 import SearchItem from "../../src/SearchItem.js";
+import SearchScope from "../../src/SearchScope.js";
 
 describe("Search Field on mobile device", () => {
 	beforeEach(() => {
@@ -46,14 +47,14 @@ describe("Search Field on mobile device", () => {
 
 		cy.get("[ui5-search]")
 			.shadow()
-			.find(".ui5-search-popover-searching-header [ui5-button]")
+			.find(".ui5-search-popup-searching-header [ui5-button]")
 			.realClick();
 
 		cy.get("[ui5-search]")
 			.should("have.prop", "open", false);
 	});
 
-	it("should fire search event without item with when user types value and hits enter / search on Virtual Keyboard", () => {
+	it("should fire search event without item when user types value and hits enter / search on Virtual Keyboard", () => {
 		const spy = cy.spy();
 		cy.mount(
 			<>
@@ -129,7 +130,7 @@ describe("Search Field on mobile device", () => {
 		}));
 	});
 
-	it("should revert value of search dialog is closed by cancel", () => {
+	it("should revert value of search if dialog is closed by cancel", () => {
 		cy.mount(
 			<>
 				<Search showClearIcon={true}>
@@ -158,14 +159,14 @@ describe("Search Field on mobile device", () => {
 
 		cy.get("[ui5-search]")
 			.shadow()
-			.find(".ui5-search-popover-searching-header [ui5-button]")
+			.find(".ui5-search-popup-searching-header [ui5-button]")
 			.realClick();
 
 		cy.get("[ui5-search]")
 			.should("have.prop", "value", "");
 	});
 
-	it ("should fill value if provided before open", () => {
+	it("should fill value if provided before open", () => {
 		cy.mount(
 			<>
 				<Search showClearIcon={true} value="initial">
@@ -181,5 +182,29 @@ describe("Search Field on mobile device", () => {
 			.shadow()
 			.find("[ui5-input]")
 			.should("have.prop", "value", "initial");
+	});
+
+	it("should not open when clicking on the scopes select", () => {
+		cy.mount(
+			<>
+				<Search showClearIcon={true} value="initial">
+					<SearchItem headingText="Item 1" />
+					<SearchScope slot="scopes" text="Scope 1" />
+				</Search>
+			</>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("[ui5-select]")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.should("have.prop", "open", false);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("[ui5-select]")
+			.should("have.prop", "opened", true);
 	});
 });

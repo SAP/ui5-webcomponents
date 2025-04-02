@@ -1,3 +1,4 @@
+@import "./InvisibleTextStyles.css";
 
 .ui5-search-popover {
 	width: var(--search_width);
@@ -5,7 +6,7 @@
 	box-sizing: border-box;
 }
 
-.ui5-search-popover-searching-header {
+.ui5-search-popup-searching-header {
 	display: flex;
 	gap: .5rem;
 	width: 100%;
@@ -13,12 +14,8 @@
 }
 
 .ui5-search-popover::part(header) {
-	padding: 0;
+	padding: 0.5rem 1rem;
 	box-shadow: none;
-	padding-inline-start: 1rem;
-	padding-top: .5rem;
-	padding-bottom: .5rem;
-	padding-inline-end: 1rem;
 	box-sizing: border-box;
 }
 
@@ -64,7 +61,6 @@
 	margin-bottom: .5rem;
 }
 
-[ui5-busy-indicator],
 .search-popover-busy-wrapper {
 	position: absolute;
 	left: 50%;
@@ -73,18 +69,20 @@
 	z-index: 42;
 	width: 100%;
 	height: 100%;
-	display: flex;
+	display: none;
 	justify-content: center;
 	align-items: center;
 	pointer-events: all;
 }
 
-.search-popover-busy-wrapper {
-	display: none;
-}
-
 :host([loading]) .search-popover-busy-wrapper {
 	display: flex;
+	width: 100%;
+	height: 100%;
+}
+
+.ui5-search-field-select {
+	--_ui5_input_focus_border_radius: var(--_ui5_search_input_border_radius);
 }
 
 .search-popover-busy-wrapper::after {
@@ -94,7 +92,8 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: var(--_ui5_busy_indicator_block_layer);
+	background: var(--_ui5-search-loading-overlay-background);
+	opacity: var(--_ui5-search-loading-overlay-transparency);
 	border-radius: var(--_ui5_popup_border_radius);
 }
 
@@ -106,6 +105,9 @@
 .ui5-search-popover-phone .ui5-search-popover-content {
 	position: relative;
 	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
 .ui5-search-popover-phone .search-popover-busy-wrapper::after {

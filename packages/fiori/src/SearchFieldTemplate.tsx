@@ -16,18 +16,18 @@ export default function SearchFieldTemplate(this: SearchField) {
 				design={ButtonDesign.Transparent}
 				data-sap-focus-ref
 				onClick={this._handleSearchIconPress}
-				tooltip={this._translations.collapsedSearch}
-				accessibleName={this._translations.collapsedSearch}
+				tooltip={this.searchIconTooltip || this._translations.searchIcon}
+				accessibleName={this.searchIconTooltip || this._translations.searchIcon}
 				accessibilityAttributes={this._searchButtonAccessibilityAttributes}
 			></Button>
 		) : (
-			<div class="ui5-search-field-root" role="search" onFocusOut={this._onFocusOutSearch} onClick={this._handleRootClick}>
+			<div class="ui5-search-field-root" role="search" onFocusOut={this._onFocusOutSearch}>
 				<div class="ui5-search-field-content">
 					{!!this.scopes.length &&
 						<>
 							<Select
 								onChange={this._handleScopeChange}
-								class="sapUiSizeCompact"
+								class="sapUiSizeCompact ui5-search-field-select"
 								accessibleName={this._translations.scope}
 								tooltip={this._translations.scope}>
 								{this.scopes.map(scopeOption => {
@@ -53,7 +53,8 @@ export default function SearchFieldTemplate(this: SearchField) {
 						onInput={this._handleInput}
 						onFocusIn={this._onfocusin}
 						onFocusOut={this._onfocusout}
-						onKeyDown={this._onkeydown} />
+						onKeyDown={this._onkeydown}
+						onClick={this._handleInnerClick} />
 
 					{this._effectiveShowClearIcon &&
 						<Icon
@@ -72,7 +73,7 @@ export default function SearchFieldTemplate(this: SearchField) {
 						}}
 						name={search}
 						showTooltip={true}
-						accessibleName={this._translations.searchIcon}
+						accessibleName={this.searchIconTooltip || this._translations.searchIcon}
 						onClick={this._handleSearchIconPress}
 					></Icon>
 				</div>

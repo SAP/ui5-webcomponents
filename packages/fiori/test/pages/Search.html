@@ -14,7 +14,7 @@
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 </head>
 
-<body class="search sapUiSizeCompact">
+<body class="search sapUiSizeCompact" style="background-color: var(--sapBackgroundColor);">
 
 	<ui5-search>
 		<ui5-search-message-area slot="messageArea" description="Search for example “All my open Objects”" text="Try This!"></ui5-search-message-area>
@@ -24,8 +24,6 @@
 		<ui5-illustrated-message slot="illustration"></ui5-illustrated-message>
 	
 		<ui5-search-scope text="All" slot="scopes"></ui5-search-scope>
-	
-		<ui5-search-item-group></ui5-search-item-group>
 	
 		<ui5-button design="Transparent" slot="action">Navigate to all results</ui5-button>
 	</ui5-search>

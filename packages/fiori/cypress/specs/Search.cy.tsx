@@ -756,3 +756,36 @@ describe("Events", () => {
 			.should("not.exist")
 	});
 });
+
+describe("Accessibility", () => {
+	it("should navigate through items to action button with Arrow keys", () => {
+		cy.mount(
+			<Search>
+				<SearchItem headingText="Item 1" icon={history} />
+				<Button design={ButtonDesign.Transparent} slot="action">Show All</Button>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realPress("I");
+
+		cy.realPress("ArrowDown");
+		cy.realPress("ArrowDown");
+
+		cy.get("[ui5-search] [ui5-button]")
+			.should("be.focused");
+
+		cy.realPress("ArrowUp");
+		cy.realPress("ArrowUp");
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+	});
+});

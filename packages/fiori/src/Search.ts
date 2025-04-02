@@ -34,11 +34,12 @@ import type Button from "@ui5/webcomponents/dist/Button.js";
 import type IllustratedMessage from "./IllustratedMessage.js";
 import type SearchItemGroup from "./SearchItemGroup.js";
 import type SearchMessageArea from "./SearchMessageArea.js";
-import { SEARCH_CANCEL_BUTTON } from "./generated/i18n/i18n-defaults.js";
+import { SEARCH_CANCEL_BUTTON, SEARCH_SUGGESTIONS } from "./generated/i18n/i18n-defaults.js";
 import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
 import type { InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { PopupBeforeCloseEventDetail } from "@ui5/webcomponents/dist/Popup.js";
+import type Select from "@ui5/webcomponents/dist/Select.js";
 
 interface ISearchSuggestionItem extends UI5Element {
 	selected: boolean;
@@ -365,25 +366,21 @@ class Search extends SearchField {
 		});
 	}
 
-	async _handleDown(e: KeyboardEvent) {
+	_handleDown(e: KeyboardEvent) {
 		if (this.open) {
 			e.preventDefault();
-			await this._handleArrowDown();
+			this._handleArrowDown();
 		}
 	}
 
-	async _handleArrowDown() {
+	_handleArrowDown() {
 		const firstListItem = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[0];
-		const focusRef = firstListItem && this._isGroupItem(firstListItem) ? firstListItem.getFocusDomRef() : firstListItem;
 
 		if (this.open) {
 			this._deselectItems();
-			firstListItem && focusRef && this._getItemsList()?._itemNavigation.setCurrentItem(focusRef);
 			this.value = this._typedInValue || this.value;
 			this._innerValue = this.value;
 
-			// wait item navigation to apply correct tabindex
-			await renderFinished();
 			firstListItem?.focus();
 		}
 	}
@@ -397,9 +394,17 @@ class Search extends SearchField {
 		}
 	}
 
-	_handleRootClick() {
+	_handleInnerClick() {
 		if (isPhone()) {
 			this.open = true;
+		}
+	}
+
+	_handleSearchIconPress() {
+		if (isPhone()) {
+			this.open = true;
+		} else {
+			super._handleSearchIconPress();
 		}
 	}
 
@@ -477,6 +482,10 @@ class Search extends SearchField {
 		const prevented = !this.fireDecoratorEvent("search", { item });
 
 		if (prevented) {
+			if (isPhone()) {
+				this.open = false;
+			}
+
 			return;
 		}
 
@@ -519,10 +528,14 @@ class Search extends SearchField {
 		this._matchedPerTerm = false;
 	}
 
-	_onFocusOutSearch() {
-		if (!this.matches(":focus-within")) {
-			this.open = false;
+	_onFocusOutSearch(e:FocusEvent) {
+		const target = e.relatedTarget as HTMLElement;
+
+		if (this._getPicker().contains(target) || this.contains(target)) {
+			return;
 		}
+
+		this.open = false;
 	}
 
 	_handleBeforeClose(e: CustomEvent<PopupBeforeCloseEventDetail>) {
@@ -551,6 +564,12 @@ class Search extends SearchField {
 	_handleOpen() {
 		this._valueBeforeOpen = this.value;
 		this.fireDecoratorEvent("open");
+	}
+
+	_handleActionKeydown(e: KeyboardEvent) {
+		if (isUp(e)) {
+			this._flattenItems[this._flattenItems.length - 1].focus();
+		}
 	}
 
 	_onFooterButtonClick() {
@@ -587,7 +606,7 @@ class Search extends SearchField {
 	}
 
 	_getFooterButton(): Button {
-		return this._getPicker().querySelector(".ui5-search-footer-button") as Button;
+		return this.action[0];
 	}
 
 	get _flattenItems(): Array<ISearchSuggestionItem> {
@@ -610,6 +629,16 @@ class Search extends SearchField {
 
 	get cancelButtonText() {
 		return Search.i18nBundle.getText(SEARCH_CANCEL_BUTTON);
+	}
+
+	get suggestionsText() {
+		return Search.i18nBundle.getText(SEARCH_SUGGESTIONS);
+	}
+
+	get scopeSelect() {
+		const domRef = this.shadowRoot;
+
+		return domRef ? domRef.querySelector<Select>(`[ui5-select]`) : null;
 	}
 }
 

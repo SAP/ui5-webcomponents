@@ -18,8 +18,6 @@ import {
 	SEARCH_FIELD_SCOPE_SELECT_LABEL,
 	SEARCH_FIELD_CLEAR_ICON,
 	SEARCH_FIELD_SEARCH_ICON,
-	SEARCH_FIELD_SEARCH_COLLAPSED,
-	SEARCH_FIELD_SEARCH_EXPANDED,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -147,6 +145,14 @@ class SearchField extends UI5Element {
 	accessibleName?: string;
 
 	/**
+	 * Defines the tooltip of the search icon component.
+	 * @public
+	 * @default undefined
+	 */
+	@property()
+	searchIconTooltip?: string;
+
+	/**
 	 * Defines the component scope options.
 	 * @public
 	 */
@@ -186,7 +192,7 @@ class SearchField extends UI5Element {
 		this.focusedInnerInput = false;
 	}
 
-	_onFocusOutSearch() {}
+	_onFocusOutSearch(e: FocusEvent) {} // eslint-disable-line
 
 	_handleEnter() {
 		if (this.value.length) {
@@ -194,7 +200,7 @@ class SearchField extends UI5Element {
 		}
 	}
 
-	_handleRootClick() {}
+	_handleInnerClick() {} // eslint-disable-line
 
 	_handleSearchIconPress() {
 		this._handleSearchEvent();
@@ -241,9 +247,8 @@ class SearchField extends UI5Element {
 	get _translations() {
 		return {
 			scope: SearchField.i18nBundle.getText(SEARCH_FIELD_SCOPE_SELECT_LABEL),
+			searchIcon: SearchField.i18nBundle.getText(SEARCH_FIELD_SEARCH_ICON),
 			clearIcon: SearchField.i18nBundle.getText(SEARCH_FIELD_CLEAR_ICON),
-			searchIcon: this._isSearchIcon ? SearchField.i18nBundle.getText(SEARCH_FIELD_SEARCH_ICON) : SearchField.i18nBundle.getText(SEARCH_FIELD_SEARCH_EXPANDED),
-			collapsedSearch: SearchField.i18nBundle.getText(SEARCH_FIELD_SEARCH_COLLAPSED),
 		};
 	}
 
