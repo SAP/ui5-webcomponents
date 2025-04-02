@@ -12,6 +12,7 @@ import SearchMessageAreaStyles from "./generated/themes/SearchMessageArea.css.js
  * @extends UI5Element
  * @public
  * @since 2.9.0
+ * @experimental
  */
 @customElement({
 	tag: "ui5-search-message-area",
