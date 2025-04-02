@@ -46,6 +46,26 @@
 		</ui5-list>
 	</section>
 
+	<section class="largeTopMargin">
+		<ui5-list id="listMultipleDnd" selection-mode="Multiple" header-text="List with multiple Selection">
+			<ui5-li movable>Item 1</ui5-li>
+			<ui5-li movable>Item 2</ui5-li>
+			<ui5-li movable>Item 3</ui5-li>
+			<ui5-li movable>Item 4</ui5-li>
+			<ui5-li movable>Item 5</ui5-li>
+			<ui5-li movable>Item 6</ui5-li>
+	</section>
+	
+	<section class="largeTopMargin">
+		<ui5-list id="listMultipleDnd1" selection-mode="Multiple" header-text="List with multiple Selection">
+			<ui5-li movable>Item 1</ui5-li>
+			<ui5-li movable>Item 2</ui5-li>
+			<ui5-li movable>Item 3</ui5-li>
+			<ui5-li movable>Item 4</ui5-li>
+			<ui5-li movable>Item 5</ui5-li>
+			<ui5-li movable>Item 6</ui5-li>
+	</section>
+
 	<script>
 		const list1 = document.getElementById("listDnd1");
 		const list2 = document.getElementById("listDnd2");
@@ -121,6 +141,46 @@
 			list1.items.forEach((item) => item.movable = e.target.checked);
 			list2.items.forEach((item) => item.movable = e.target.checked);
 			list3.items.forEach((item) => item.movable = e.target.checked);
+		});
+
+		// Multiple Selection
+		const listMultipleDnd = document.getElementById("listMultipleDnd");
+		const listMultipleDnd1 = document.getElementById("listMultipleDnd1");
+		let selectedItems = [];
+
+		const handleMoveMultiple = (e) => {
+			const { destination, source } = e.detail;
+
+			const movedElements = selectedItems.length > 1 ? selectedItems : [source.element]
+
+			switch (destination.placement) {
+			case "Before":
+				destination.element.before(...movedElements);
+				break;
+			case "After":
+				destination.element.after(...movedElements);
+				break;
+			case "On":
+				destination.element.prepend(...movedElements);
+				break;
+			}
+
+			updateDraggedItemsCount(listMultipleDnd);
+			updateDraggedItemsCount(listMultipleDnd1);
+
+		};
+
+		function updateDraggedItemsCount(list) {
+			list.draggedItemsCount = selectedItems.length;
+		}
+
+		[listMultipleDnd, listMultipleDnd1].forEach(list => {
+			list.addEventListener("ui5-move", handleMoveMultiple);
+			list.addEventListener("ui5-move-over", handleBeforeItemMove);
+
+			list.addEventListener("ui5-selection-change", () => {
+				updateDraggedItemsCount(list);
+			});
 		});
 	</script>
 </body>
