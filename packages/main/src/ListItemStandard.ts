@@ -7,6 +7,7 @@ import ListItem from "./ListItem.js";
 import type { IAccessibleListItem } from "./ListItem.js";
 import type WrappingType from "./types/WrappingType.js";
 import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
+import type { ExpandableTextTemplateParams } from "./types/ExpandableTextTemplateParams.js";
 
 /**
  * Maximum number of characters to display for small screens (Size S)
@@ -19,6 +20,9 @@ const MAX_CHARACTERS_SIZE_S = 100;
  * @private
  */
 const MAX_CHARACTERS_SIZE_M = 300;
+
+// Specific template type for expandable text
+type ExpandableTextTemplate = (this: ListItemStandard, params: ExpandableTextTemplateParams) => JSX.Element;
 
 /**
  * @class
@@ -163,6 +167,13 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	_hasImage = false;
 
 	/**
+	 * The expandableText template.
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	expandableTextTemplate?: ExpandableTextTemplate;
+
+	/**
 	 * **Note:** While the slot allows option for setting custom avatar, to match the
 	 * design guidelines, please use the `ui5-avatar` with it's default size - S.
 	 *
@@ -178,6 +189,19 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 		super.onBeforeRendering();
 		this.hasTitle = !!(this.text || this.textContent);
 		this._hasImage = this.hasImage;
+
+		// Only load ExpandableText if "Normal" wrapping is used
+		if (this.wrappingType === "Normal") {
+			// If feature is already loaded (preloaded by the user), use the existing template
+			if (ListItemStandard.ExpandableTextTemplate) {
+				this.expandableTextTemplate = ListItemStandard.ExpandableTextTemplate;
+			// If feature is not preloaded, load the template dynamically
+			} else {
+				import("./features/ListItemStandardExpandableTextTemplate.js").then(module => {
+					this.expandableTextTemplate = module.default;
+				});
+			}
+		}
 	}
 
 	/**
@@ -209,6 +233,8 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	get hasImage(): boolean {
 		return !!this.image.length;
 	}
+
+	static ExpandableTextTemplate?: ExpandableTextTemplate;
 }
 
 ListItemStandard.define();
