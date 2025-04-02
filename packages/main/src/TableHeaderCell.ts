@@ -53,10 +53,11 @@ class TableHeaderCell extends TableCellBase {
 	 * If the table is in `Popin` mode and the minimum width does not fit anymore,
 	 * the column will move into the popin.
 	 *
-	 * By default, the table ensures that a column cannot be smaller than `3rem`.
-	 * Changing this value to a smaller value might lead to accessibility issues.
+	 * By default, the table prevents the column from becoming too small.
+	 * Changing this value to a small value might lead to accessibility issues.
 	 *
-	 * **Note:** This property only takes effect for columns with a [\<percentage\>](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) value.
+	 * **Note:** This property only takes effect for columns with a [\<percentage\>](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) value
+	 * or the default width.
 	 *
 	 * @public
 	 * @default undefined

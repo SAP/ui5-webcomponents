@@ -12,7 +12,7 @@ import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableDragAndDrop from "./TableDragAndDrop.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import {
-	findVerticalScrollContainer, scrollElementIntoView, isFeature, toggleAttribute, isValidColumnWidth,
+	findVerticalScrollContainer, scrollElementIntoView, isFeature, isValidColumnWidth,
 } from "./TableUtils.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
@@ -404,16 +404,12 @@ class Table extends UI5Element {
 	@query("#loading")
 	_loadingElement!: HTMLElement;
 
-	@query("#dummy-area")
-	_dummyArea!: HTMLElement;
-
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	_events = ["keydown", "keyup", "click", "focusin", "focusout", "dragenter", "dragleave", "dragover", "drop"];
 	_onEventBound: (e: Event) => void;
 	_onResizeBound: ResizeObserverCallback;
-	_toggleDummyAreaBound: ResizeObserverCallback;
 	_tableNavigation?: TableNavigation;
 	_tableDragAndDrop?: TableDragAndDrop;
 	_poppedIn: Array<{col: TableHeaderCell, width: number}> = [];
@@ -423,7 +419,6 @@ class Table extends UI5Element {
 		super();
 		this._onResizeBound = this._onResize.bind(this);
 		this._onEventBound = this._onEvent.bind(this);
-		this._toggleDummyAreaBound = this._toggleDummyArea.bind(this);
 	}
 
 	onEnterDOM() {
@@ -452,7 +447,6 @@ class Table extends UI5Element {
 
 		if (this.getDomRef()) {
 			ResizeHandler.deregister(this, this._onResizeBound);
-			ResizeHandler.deregister(this, this._toggleDummyAreaBound);
 		}
 	}
 
@@ -461,7 +455,6 @@ class Table extends UI5Element {
 		if (this.overflowMode === TableOverflowMode.Popin) {
 			ResizeHandler.register(this, this._onResizeBound);
 		}
-		ResizeHandler.register(this, this._toggleDummyAreaBound);
 	}
 
 	_findFeature<T>(featureName: string): T {
@@ -593,10 +586,6 @@ class Table extends UI5Element {
 		this.fireDecoratorEvent("row-action-click", { action, row });
 	}
 
-	_toggleDummyArea() {
-		toggleAttribute(this._tableElement, "data-sap-ui-show-dummy-area", this._dummyArea.clientWidth > 0);
-	}
-
 	get styles() {
 		const virtualizer = this._getVirtualizer();
 		const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
@@ -633,14 +622,10 @@ class Table extends UI5Element {
 
 		// Column Widths
 		widths.push(...visibleHeaderCells.map(cell => {
-			const minWidth = `max(3rem, ${cell.minWidth ?? "3rem"})`;
+			const minWidth = cell.minWidth ?? "3rem";
 			let width = `minmax(${minWidth}, 1fr)`; // default width
-			if (cell.width && isValidColumnWidth(cell.width) && cell.width !== "auto") {
-				if (cell.width.includes("%")) {
-					width = `max(${minWidth}, ${cell.width})`;
-				} else {
-					width = cell.width;
-				}
+			if (isValidColumnWidth(cell.width)) {
+				width = cell.width.includes("%") ? `max(${minWidth}, ${cell.width})` : cell.width;
 			}
 			return width;
 		}));

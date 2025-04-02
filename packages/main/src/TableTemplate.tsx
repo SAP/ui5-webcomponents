@@ -16,12 +16,10 @@ export default function TableTemplate(this: Table) {
 				aria-multiselectable={this._ariaMultiSelectable}
 			>
 				<slot name="headerRow"></slot>
-				<div id="dummy-header-cell" class="dummy" role="none"></div>
 
 				<div id="rows">
 					<div id="spacer" style={this.styles.spacer}>
 						<slot></slot>
-						<div id="dummy-area" class="dummy" role="none"></div>
 					</div>
 				</div>
 

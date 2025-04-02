@@ -105,10 +105,10 @@ const toggleAttribute = (element: HTMLElement, attribute: string, condition: boo
  * @param width Width string to check
  * @returns {boolean} true if the width is valid, false otherwise
  */
-const isValidColumnWidth = (width: string) => {
+const isValidColumnWidth = (width: string | undefined): width is string => {
 	const element = document.createElement("div");
 	element.style.width = `max(3rem, ${width})`;
-	return element.style.width === `max(3rem, ${width})`;
+	return element.style.width !== "";
 };
 
 export {

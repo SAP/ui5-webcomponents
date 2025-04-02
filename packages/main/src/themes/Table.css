@@ -29,25 +29,6 @@
     grid-column: 1 / -1;
 }
 
-.dummy {
-    background: var(--sapList_Background);
-}
-
-#dummy-header-cell {
-    border-top: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
-    border-bottom: var(--sapList_BorderWidth) solid var(--sapList_HeaderBorderColor);
-}
-
-#dummy-area {
-    grid-column: -1;
-    grid-row: 1 / span 1000;
-    border-bottom: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
-}
-
-#table[data-sap-ui-show-dummy-area] .dummy {
-    border-left: var(--sapList_TableFixedColumnBorderWidth) solid var(--sapList_TableFixedBorderColor);
-}
-
 #nodata-cell {
     grid-column: 1 / -1;
     justify-content: center;
