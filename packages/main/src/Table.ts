@@ -286,7 +286,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@slot()
-	nodata!: Array<HTMLElement>;
+	noData!: Array<HTMLElement>;
 
 	/**
 	 * Defines the features of the component.
@@ -384,8 +384,8 @@ class Table extends UI5Element {
 	@query("[ui5-drop-indicator]")
 	dropIndicatorDOM!: DropIndicator;
 
-	@query("#nodata-row")
-	_nodataRow?: TableRow;
+	@query("#no-data-row")
+	_noDataRow?: TableRow;
 
 	@query("#table-end-row")
 	_endRow!: TableRow;
@@ -410,7 +410,7 @@ class Table extends UI5Element {
 	_onResizeBound: ResizeObserverCallback;
 	_tableNavigation?: TableNavigation;
 	_tableDragAndDrop?: TableDragAndDrop;
-	_poppedIn: Array<{col: TableHeaderCell, width: float}> = [];
+	_poppedIn: Array<{col: TableHeaderCell, width: number}> = [];
 	_containerWidth = 0;
 
 	constructor() {

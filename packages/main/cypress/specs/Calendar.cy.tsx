@@ -2,24 +2,22 @@ import Calendar from "../../src/Calendar.js";
 import CalendarDate from "../../src/CalendarDate.js";
 import CalendarDateRange from "../../src/CalendarDateRange.js";
 import SpecialCalendarDate from "../../src/SpecialCalendarDate.js";
-import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
-import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import YearRangePicker from "../../src/YearRangePicker.js";
 import YearPicker from "../../src/YearPicker.js";
-
-import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
 const getDefaultCalendar = (date: Date) => {
 	const calDate = new Date(date);
-	const formattedDate = calDate.toLocaleDateString("default", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
 
-	return (<Calendar id="calendar1" timestamp={calDate.valueOf() / 1000}>
-		<CalendarDate value={formattedDate}></CalendarDate>
+	const day = String(calDate.getDate()).padStart(2, "0");
+	const month = String(calDate.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+	const year = calDate.getFullYear();
+
+	const value = `${day}/${month}/${year}`;
+
+	return (<Calendar id="calendar1" timestamp={calDate.valueOf() / 1000} formatPattern="dd/MM/yyyy">
+		<CalendarDate value={value}></CalendarDate>
 	</Calendar>);
 };
 
@@ -43,35 +41,41 @@ describe("Calendar general interaction", () => {
 		cy.mount(getDefaultCalendar(date));
 
 		cy.ui5CalendarGetDay("#calendar1", "974851200")
-			.should("have.focus");
+			.as("selectedDay");
 
-		cy.focused().realPress("Tab");
+		cy.get("@selectedDay")
+			.realClick();
+
+		cy.get("@selectedDay")
+			.should("have.focus")
+			.realPress("Tab");
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
+			.as("calheader");
+		
+		cy.get("@calheader")
 			.find("[data-ui5-cal-header-btn-month]")
-			.should("have.focus");
+			.as("monthBtn");
+		
+		cy.get("@monthBtn")
+			.should("have.focus")
+			.realPress("Tab");
 
-		cy.focused().realPress("Tab");
-
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find(".ui5-calheader")
+		cy.get("@calheader")
 			.find("[data-ui5-cal-header-btn-year]")
-			.should("have.focus");
+			.as("yearBtn");
+		
+		cy.get("@yearBtn")
+			.should("have.focus")
+			.realPress(["Shift", "Tab"]);
 
-		cy.focused().realPress(["Shift", "Tab"]);
+		cy.get("@monthBtn")
+			.should("have.focus")
+			.realPress(["Shift", "Tab"]);
 
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find(".ui5-calheader")
-			.find("[data-ui5-cal-header-btn-month]")
-			.should("have.focus");
-
-		cy.focused().realPress(["Shift", "Tab"]);
-
-		cy.ui5CalendarGetDay("#calendar1", "974851200")
+		cy.get("@selectedDay")
 			.should("have.focus");
 	});
 
@@ -84,7 +88,7 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-year]")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -95,6 +99,61 @@ describe("Calendar general interaction", () => {
 			.then(_timestamp => {
 				const focusedYear = new Date(parseInt(_timestamp!) * 1000).getUTCFullYear();
 				expect(focusedYear).to.equal(1997);
+			});
+	});
+
+	it("Calendar focuses the selected month when monthpicker is opened with space", () => {
+		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
+		cy.mount(getDefaultCalendar(date));
+
+		cy.ui5CalendarGetDay("#calendar1", "974851200")
+			.realClick();
+
+		cy.focused().realPress("Tab");
+		cy.focused().realPress("Space");
+
+		cy.get<Calendar>("#calendar1")
+			.shadow()
+			.find("[ui5-monthpicker]")
+			.should("not.have.attr", "hidden");
+
+		cy.get<Calendar>("#calendar1")
+			.shadow()
+			.find("[ui5-monthpicker]")
+			.shadow()
+			.find("[tabindex='0']")
+			.invoke("attr", "data-sap-timestamp")
+			.then(_timestamp => {
+				const focusedMonth = new Date(parseInt(_timestamp!) * 1000).getUTCMonth();
+				expect(focusedMonth).to.equal(10);
+			});
+	});
+
+	it("Calendar focuses the selected year when yearpicker is opened with space", () => {
+		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
+		cy.mount(getDefaultCalendar(date));
+
+		cy.ui5CalendarGetDay("#calendar1", "974851200")
+			.realClick();
+
+		cy.focused().realPress("Tab");
+		cy.focused().realPress("Tab");
+		cy.focused().realPress("Space");
+
+		cy.get<Calendar>("#calendar1")
+			.shadow()
+			.find("[ui5-yearpicker]")
+			.should("not.have.attr", "hidden");
+
+		cy.get<Calendar>("#calendar1")
+			.shadow()
+			.find("[ui5-yearpicker]")
+			.shadow()
+			.find("[tabindex='0']")
+			.invoke("attr", "data-sap-timestamp")
+			.then(_timestamp => {
+				const focusedYear = new Date(parseInt(_timestamp!) * 1000).getUTCFullYear();
+				expect(focusedYear).to.equal(2000);
 			});
 	});
 
@@ -136,9 +195,46 @@ describe("Calendar general interaction", () => {
 			});
 	});
 
+	it("Calendar doesn't mark year as selected when there are no selected dates", () => {
+		const todayDate = new Date();
+		const todayTimestamp = Date.UTC(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0, 0) / 1000;
+
+		cy.mount(<Calendar id="calendar2"></Calendar>);
+
+		cy.get<Calendar>("#calendar2")
+			.shadow()
+			.find(".ui5-calheader")
+			.find("[data-ui5-cal-header-btn-year]")
+			.realClick();
+
+		cy.get<Calendar>("#calendar2")
+			.shadow()
+			.find("[ui5-yearpicker]")
+			.shadow()
+			.find(`[data-sap-timestamp=${todayTimestamp}]`)
+			.should("have.focus")
+			.should("not.have.class", "ui5-yp-item--selected");
+	});
+
+	it("Calendar doesn't mark month as selected when there are no selected dates", () => {
+		const todayDate = new Date();
+		const todayTimestamp = Date.UTC(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0, 0) / 1000;
+
+		cy.mount(<Calendar id="calendar2"></Calendar>);
+
+		cy.get<Calendar>("#calendar2")
+			.shadow()
+			.find(".ui5-calheader")
+			.find("[data-ui5-cal-header-btn-month]")
+			.realClick();
+
+		cy.ui5CalendarGetMonth("#calendar2", todayTimestamp.toString())
+			.should("have.focus")
+			.should("not.have.class", "ui5-mp-item--selected");
+	});
+
 	/* TODO: Test is unstable */
 	it("Should navigate to Year Picker when selecting a range in Year Range Picker", () => {
-		setAnimationMode(AnimationMode.None);
 		const YEAR = 1997;
 		const date = Date.UTC(YEAR);
 		const expectedRangeStart = 1948;
@@ -169,7 +265,7 @@ describe("Calendar general interaction", () => {
 				expect(spans[0]).to.have.text(`${expectedRangeStart} - ${expectedRangeEnd}`);
 			});
 
-		cy.get("@yearRangePickerItem")
+			cy.get("@yearRangePickerItem")
 			.realClick({position: "center"});
 
 		cy.get<Calendar>("@calendar")
@@ -197,99 +293,6 @@ describe("Calendar general interaction", () => {
 
 	});
 
-	it("Calendar focuses the selected month when monthpicker is opened with space", () => {
-		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
-		cy.mount(getDefaultCalendar(date));
-
-		cy.ui5CalendarGetDay("#calendar1", "974851200")
-			.click();
-
-		cy.focused().realPress("Tab");
-		cy.focused().realPress("Space");
-
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-monthpicker]")
-			.should("not.have.attr", "hidden");
-
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-monthpicker]")
-			.shadow()
-			.find("[tabindex='0']")
-			.invoke("attr", "data-sap-timestamp")
-			.then(_timestamp => {
-				const focusedMonth = new Date(parseInt(_timestamp!) * 1000).getUTCMonth();
-				expect(focusedMonth).to.equal(10);
-			});
-	});
-
-	it("Calendar focuses the selected year when yearpicker is opened with space", () => {
-		const date = new Date(Date.UTC(2000, 10, 22, 0, 0, 0));
-		cy.mount(getDefaultCalendar(date));
-
-		cy.ui5CalendarGetDay("#calendar1", "974851200")
-			.click();
-
-		cy.focused().realPress("Tab");
-		cy.focused().realPress("Tab");
-		cy.focused().realPress("Space");
-
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-yearpicker]")
-			.should("not.have.attr", "hidden");
-
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-yearpicker]")
-			.shadow()
-			.find("[tabindex='0']")
-			.invoke("attr", "data-sap-timestamp")
-			.then(_timestamp => {
-				const focusedYear = new Date(parseInt(_timestamp!) * 1000).getUTCFullYear();
-				expect(focusedYear).to.equal(2000);
-			});
-	});
-
-	it("Calendar doesn't mark year as selected when there are no selected dates", () => {
-		const todayDate = new Date();
-		const todayTimestamp = Date.UTC(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0, 0) / 1000;
-
-		cy.mount(<Calendar id="calendar2"></Calendar>);
-
-		cy.get<Calendar>("#calendar2")
-			.shadow()
-			.find(".ui5-calheader")
-			.find("[data-ui5-cal-header-btn-year]")
-			.click();
-
-		cy.get<Calendar>("#calendar2")
-			.shadow()
-			.find("[ui5-yearpicker]")
-			.shadow()
-			.find(`[data-sap-timestamp=${todayTimestamp}]`)
-			.should("have.focus")
-			.should("not.have.class", "ui5-yp-item--selected");
-	});
-
-	it("Calendar doesn't mark month as selected when there are no selected dates", () => {
-		const todayDate = new Date();
-		const todayTimestamp = Date.UTC(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0, 0) / 1000;
-
-		cy.mount(<Calendar id="calendar2"></Calendar>);
-
-		cy.get<Calendar>("#calendar2")
-			.shadow()
-			.find(".ui5-calheader")
-			.find("[data-ui5-cal-header-btn-month]")
-			.click();
-
-		cy.ui5CalendarGetMonth("#calendar2", todayTimestamp.toString())
-			.should("have.focus")
-			.should("not.have.class", "ui5-mp-item--selected");
-	});
-
 	it("Page up/down increments/decrements the month value", () => {
 		const date = new Date(Date.UTC(2000, 10, 1, 0, 0, 0));
 		cy.mount(getDefaultCalendar(date));
@@ -299,7 +302,7 @@ describe("Calendar general interaction", () => {
 			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
-			.click();
+			.realClick();
 
 		cy.focused().realPress("PageUp");
 
@@ -327,7 +330,7 @@ describe("Calendar general interaction", () => {
 			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
-			.click();
+			.realClick();
 
 		cy.focused().realPress(["Shift", "PageUp"]);
 
@@ -355,7 +358,7 @@ describe("Calendar general interaction", () => {
 			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
-			.click();
+			.realClick();
 
 		cy.focused().realPress(["Control", "Shift", "PageUp"]);
 
@@ -383,7 +386,7 @@ describe("Calendar general interaction", () => {
 			.find("[ui5-daypicker]")
 			.shadow()
 			.find("[tabindex='0']")
-			.click();
+			.realClick();
 
 		cy.focused().realPress("F4");
 		cy.focused().realPress("PageUp");
@@ -392,6 +395,35 @@ describe("Calendar general interaction", () => {
 			.invoke("prop", "timestamp")
 			.then(_timestamp => {
 				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(1999, 9, 1, 0, 0, 0)));
+			});
+
+		cy.focused().realPress("PageDown");
+
+		cy.get<Calendar>("#calendar1")
+			.invoke("prop", "timestamp")
+			.then(_timestamp => {
+				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
+			});
+	});
+
+	it("Page up/down increments/decrements the year range in the year picker", () => {
+		const date = new Date(Date.UTC(2000, 9, 1, 0, 0, 0));
+		cy.mount(getDefaultCalendar(date));
+
+		cy.get<Calendar>("#calendar1")
+			.shadow()
+			.find("[ui5-daypicker]")
+			.shadow()
+			.find("[tabindex='0']")
+			.realClick();
+
+		cy.focused().realPress(["Shift", "F4"]);
+		cy.focused().realPress("PageUp");
+
+		cy.get<Calendar>("#calendar1")
+			.invoke("prop", "timestamp")
+			.then(_timestamp => {
+				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(1980, 9, 1, 0, 0, 0)));
 			});
 
 		cy.focused().realPress("PageDown");
@@ -415,7 +447,7 @@ describe("Calendar general interaction", () => {
 			.then(_timestamp => {
 				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(1998, 9, 16, 0, 0, 0)));
 			});
-	
+
 		cy.focused().realPress("PageUp");
 
 		cy.get<Calendar>("#calendar1")
@@ -437,7 +469,7 @@ describe("Calendar general interaction", () => {
 			.then(_timestamp => {
 				expect(new Date(_timestamp * 1000)).to.deep.equal(new Date(Date.UTC(1998, 9, 16, 0, 0, 0)));
 			});
-	
+
 		cy.focused().realPress("PageDown");
 
 		cy.get<Calendar>("#calendar1")
@@ -459,7 +491,7 @@ describe("Calendar general interaction", () => {
 			cy.ui5CalendarGetDay("#calendar1", _timestamp.toString())
 				.as("date");
 
-			cy.get("@date").click();
+			cy.get("@date").realClick();
 			cy.get("@date").should("have.class", "ui5-dp-item--selected");
 		});
 
@@ -500,10 +532,10 @@ describe("Calendar general interaction", () => {
 		const timestamps = [971740800, 971827200, 971913600];
 
 		cy.ui5CalendarGetDay("#calendar1", timestamps[0].toString())
-			.click();
+			.realClick();
 
 		cy.ui5CalendarGetDay("#calendar1", timestamps[2].toString())
-			.click();
+			.realClick();
 
 		cy.ui5CalendarGetDay("#calendar1", timestamps[0].toString())
 			.should("have.class", "ui5-dp-item--selected");
@@ -542,7 +574,7 @@ describe("Calendar general interaction", () => {
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-next]")
 			.should("not.have.class", "ui5-calheader-arrowbtn-disabled")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -560,13 +592,13 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-next]")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-next]")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -601,7 +633,13 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Buttons for month and year in header are rendered with correct value", () => {
-		cy.mount(<Calendar id="calendar1" primaryCalendarType="Islamic" secondaryCalendarType="Gregorian"></Calendar>);
+		cy.mount(
+			<Calendar
+				id="calendar1"
+				primaryCalendarType="Islamic"
+				secondaryCalendarType="Gregorian"
+			></Calendar>
+		);
 		const timestamp = new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000;
 
 		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
@@ -628,7 +666,13 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar render two type for Month when MonthPicker is opened", () => {
-		cy.mount(<Calendar id="calendar1" primaryCalendarType='Islamic' secondaryCalendarType='Gregorian'></Calendar>);
+		cy.mount(
+			<Calendar
+				id="calendar1"
+				primaryCalendarType="Islamic"
+				secondaryCalendarType="Gregorian"
+			></Calendar>
+		);
 		const timestamp = new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).valueOf() / 1000;
 
 		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
@@ -637,7 +681,7 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-month]")
-			.click();
+			.realClick();
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -693,7 +737,7 @@ describe("Calendar general interaction", () => {
 				expect(spans[1]).to.have.text("1993 - 1994");
 			});
 	}); 
-	
+
 	it("Calendar renders secondary type for Year Range Picker", () => {
 		cy.mount(
 			<Calendar
@@ -730,6 +774,52 @@ describe("Calendar general interaction", () => {
 				expect(spans[0]).to.have.text("1398 AH - 1405 AH");
 				expect(spans[1]).to.have.text("1977 - 1984");
 			});
+	});
+
+	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", () => {
+		const maxDate = new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toISOString().split("T")[0];
+		cy.mount(<Calendar id="calendar1" maxDate={maxDate}></Calendar>);
+
+		cy.get<Calendar>("#calendar1")
+			.shadow()
+			.find(".ui5-calheader")
+			.find("[data-ui5-cal-header-btn-year]")
+			.realClick();
+
+		cy.get<Calendar>("#calendar1")
+			.shadow()
+			.find("[ui5-yearpicker]")
+			.shadow()
+			.find(".ui5-yp-root .ui5-yp-item")
+			.eq(11) // year 2025
+			.should("have.class", "ui5-yp-item--disabled");
+	});
+
+	it("Min and max dates are NOT set without format-pattern, because are not in ISO format (YYYY-MM-dd)", () => {
+		const maxDate = new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toString();
+		cy.mount(<Calendar id="calendar1" maxDate={maxDate} minDate="25.10.2018"></Calendar>);
+
+		cy.get<Calendar>("#calendar1")
+			.shadow()
+			.find(".ui5-calheader")
+			.find("[data-ui5-cal-header-btn-year]")
+			.realClick();
+
+		cy.get<Calendar>("#calendar1")
+			.shadow()
+			.find("[ui5-yearpicker]")
+			.shadow()
+			.find(".ui5-yp-root .ui5-yp-item")
+			.eq(3) // year 2016
+			.should("not.have.class", "ui5-yp-item--disabled");
+
+		cy.get<Calendar>("#calendar1")
+			.shadow()
+			.find("[ui5-yearpicker]")
+			.shadow()
+			.find(".ui5-yp-root .ui5-yp-item")
+			.eq(10) // year 2024
+			.should("not.have.class", "ui5-yp-item--disabled");
 	});
 
 	it("Year Ranges outside of the min and max dates are disabled", () => {
@@ -792,52 +882,6 @@ describe("Calendar general interaction", () => {
 			.should("not.have.class", "ui5-yrp-item--disabled");
 	});
 
-	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", () => {
-		const maxDate = new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toISOString().split("T")[0];
-		cy.mount(<Calendar id="calendar1" maxDate={maxDate}></Calendar>);
-
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find(".ui5-calheader")
-			.find("[data-ui5-cal-header-btn-year]")
-			.click();
-
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-yearpicker]")
-			.shadow()
-			.find(".ui5-yp-root .ui5-yp-item")
-			.eq(11) // year 2025
-			.should("have.class", "ui5-yp-item--disabled");
-	});
-
-	it("Min and max dates are NOT set without format-pattern, because are not in ISO format (YYYY-MM-dd)", () => {
-		const maxDate = new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toString();
-		cy.mount(<Calendar id="calendar1" maxDate={maxDate} minDate="25.10.2018"></Calendar>);
-
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find(".ui5-calheader")
-			.find("[data-ui5-cal-header-btn-year]")
-			.click();
-
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-yearpicker]")
-			.shadow()
-			.find(".ui5-yp-root .ui5-yp-item")
-			.eq(3) // year 2016
-			.should("not.have.class", "ui5-yp-item--disabled");
-
-		cy.get<Calendar>("#calendar1")
-			.shadow()
-			.find("[ui5-yearpicker]")
-			.shadow()
-			.find(".ui5-yp-root .ui5-yp-item")
-			.eq(10) // year 2024
-			.should("not.have.class", "ui5-yp-item--disabled");
-	});
-
 	it("Focus goes into first selected day of the range selection", () => {
 		cy.mount(
 			<Calendar id="calendar1" primaryCalendarType="Gregorian" secondaryCalendarType="Gregorian" selectionMode="Range">
@@ -850,10 +894,10 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-calheader")
 			.find("[data-ui5-cal-header-btn-month]")
-			.click();
+			.realClick();
 
 		cy.ui5CalendarGetMonth("#calendar1", timestamp.toString())
-			.click();
+			.realClick();
 
 		cy.ui5CalendarGetDay("#calendar1", timestamp.toString())
 			.should("have.focus");

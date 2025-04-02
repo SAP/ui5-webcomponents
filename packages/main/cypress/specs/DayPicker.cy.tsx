@@ -34,11 +34,11 @@ describe("Day Picker Tests", () => {
 		cy.get("#daypicker")
 			.shadow()
 			.find(".ui5-dp-item--now")
+			.realClick()
 			.should("be.focused")
 			.as("today");
 
 		cy.get("@today")
-			.realClick()
 			.should("be.focused")
 			.realPress("ArrowRight")
 			.realPress("Enter");

@@ -108,6 +108,63 @@ describe("Initial rendering", () => {
 		cy.get("@responsivePopover").find(".ui5-user-menu-add-account-btn").should("exist");
 		cy.get("@responsivePopover").find("[ui5-button]").should("have.length", 2);
 	});
+
+	it("tests scroll", () => {
+		cy.mount(
+			<>
+				<Button id="openUserMenuBtn">Open User Menu</Button>
+				<UserMenu
+					id="userMenuShellBar"
+					open={true} opener="openUserMenuBtn"
+					showManageAccount={true}
+					showEditAccounts={true}
+				>
+					<UserMenuAccount slot="accounts" titleText="Alain Chevalier 1"></UserMenuAccount>
+					<UserMenuItem text="Setting1" data-id="setting1"></UserMenuItem>
+					<UserMenuItem text="Setting2" data-id="setting2"></UserMenuItem>
+					<UserMenuItem text="Setting3" data-id="setting3"></UserMenuItem>
+					<UserMenuItem text="Setting4" data-id="setting4"></UserMenuItem>
+					<UserMenuItem text="Setting5" data-id="setting5"></UserMenuItem>
+					<UserMenuItem text="Setting6" data-id="setting6"></UserMenuItem>
+					<UserMenuItem text="Setting7" data-id="setting7"></UserMenuItem>
+					<UserMenuItem text="Setting8" data-id="setting8"></UserMenuItem>
+					<UserMenuItem text="Setting9" data-id="setting9"></UserMenuItem>
+					<UserMenuItem text="Setting10" data-id="setting10"></UserMenuItem>
+					<UserMenuItem text="Setting11" data-id="setting11"></UserMenuItem>
+					<UserMenuItem text="Setting12" data-id="setting12"></UserMenuItem>
+					<UserMenuItem text="Setting13" data-id="setting13"></UserMenuItem>
+					<UserMenuItem text="Setting14" data-id="setting14"></UserMenuItem>
+					<UserMenuItem text="Setting15" data-id="setting15"></UserMenuItem>
+					<UserMenuItem text="Setting16" data-id="setting16"></UserMenuItem>
+					<UserMenuItem text="Setting17" data-id="setting17"></UserMenuItem>
+					<UserMenuItem text="Setting18" data-id="setting18"></UserMenuItem>
+					<UserMenuItem text="Setting19" data-id="setting19"></UserMenuItem>
+					<UserMenuItem text="Setting20" data-id="setting20"></UserMenuItem>
+					<UserMenuItem text="Setting21" data-id="setting21"></UserMenuItem>
+					<UserMenuItem text="Setting22" data-id="setting22"></UserMenuItem>
+					<UserMenuItem text="Setting23" data-id="setting23"></UserMenuItem>
+					<UserMenuItem text="Setting24" data-id="setting24"></UserMenuItem>
+					<UserMenuItem text="Setting25" data-id="setting25"></UserMenuItem>
+					<UserMenuItem text="Setting26" data-id="setting26"></UserMenuItem>
+					<UserMenuItem text="Setting27" data-id="setting27"></UserMenuItem>
+					<UserMenuItem text="Setting28" data-id="setting28"></UserMenuItem>
+					<UserMenuItem text="Setting29" data-id="setting29"></UserMenuItem>
+					<UserMenuItem text="Setting30" data-id="setting30"></UserMenuItem>
+					<UserMenuItem text="Setting31" data-id="setting31"></UserMenuItem>
+					<UserMenuItem text="Setting32" data-id="setting32"></UserMenuItem>
+				</UserMenu>
+			</>
+		);
+
+		cy.get("[ui5-user-menu]")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.shadow()
+			.find(`div[part="content"]`)
+			.scrollTo("bottom");
+		cy.get("[ui5-user-menu]").shadow().find("[ui5-bar]").as("headerBar");
+		cy.get("@headerBar").find("[ui5-title]").contains("Alain Chevalier 1");
+	});
 });
 
 describe("Menu configuration", () => {
@@ -668,6 +725,6 @@ describe("Responsiveness", () => {
 			.scrollTo("bottom");
 		cy.get("[ui5-user-menu]").shadow().find("[ui5-bar]").as("headerBar");
 		cy.get("@headerBar").find("[ui5-title]").contains("Alain Chevalier 1");
-		cy.get("@headerBar").find("[ui5-button]").should("have.length", 2);
+		cy.get("@headerBar").find("[ui5-button]").should("have.length", 1);
 	});
 });

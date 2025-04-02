@@ -7,7 +7,7 @@
 }
 
 :host([in-popover]) ::slotted([ui5-side-navigation-sub-item]) {
-	margin-block-start: var(--_ui5_side_navigation_item_bottom_margin_in_popup);
+	margin-block-start: var(--_ui5_side_navigation_item_bottom_margin);
 }
 
 .ui5-sn-item-level1:not(:has(> .ui5-sn-item-icon)),

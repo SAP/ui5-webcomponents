@@ -65,7 +65,7 @@
 }
 
 .ui5-user-menu-selected-account-subtitleText {
-    margin-block: 0.25rem;
+	margin-bottom: 0.25rem;
     font-family: var(--sapFontFamily);
     font-size: var(--sapFontSize);
     color: var(--sapContent_LabelColor)
@@ -84,7 +84,6 @@
 }
 
 .ui5-user-menu-manage-account-btn {
-    margin-top: 0.5rem;
     font-family: var(--sapFontSemiboldFamily);
 }
 
