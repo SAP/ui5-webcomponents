@@ -2,7 +2,6 @@ import Icon from "./Icon.js";
 import type ListItemStandard from "./ListItemStandard.js";
 import ListItemTemplate from "./ListItemTemplate.js";
 import type { ListItemHooks } from "./ListItemTemplate.js";
-import ExpandableText from "./ExpandableText.js";
 import WrappingType from "./types/WrappingType.js";
 
 const predefinedHooks: Partial<ListItemHooks> = {
@@ -33,16 +32,12 @@ function listItemContent(this: ListItemStandard) {
 
 function renderTitle(this: ListItemStandard) {
 	if (this.wrappingType === WrappingType.Normal) {
-		return (
-			<ExpandableText
-				part="title"
-				class={{
-					"ui5-li-title": true,
-				}}
-				text={this._textContent}
-				maxCharacters={this._maxCharacters}>
-			</ExpandableText>
-		);
+		return this.expandableTextTemplate?.call(this, {
+			className: "ui5-li-title",
+			text: this._textContent,
+			maxCharacters: this._maxCharacters,
+			part: "title",
+		});
 	}
 
 	return (
@@ -60,14 +55,12 @@ function renderDescription(this: ListItemStandard) {
 	if (this.wrappingType === WrappingType.Normal) {
 		return (
 			<div class="ui5-li-description-info-wrapper">
-				<ExpandableText
-					part="description"
-					class={{
-						"ui5-li-desc": true,
-					}}
-					text={this.description}
-					maxCharacters={this._maxCharacters}>
-				</ExpandableText>
+				{this.expandableTextTemplate?.call(this, {
+					className: "ui5-li-desc",
+					text: this.description,
+					maxCharacters: this._maxCharacters,
+					part: "description",
+				})}
 				{renderAdditionalText.call(this)}
 			</div>
 		);
