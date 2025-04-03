@@ -207,4 +207,42 @@ describe("Search Field on mobile device", () => {
 			.find("[ui5-select]")
 			.should("have.prop", "opened", true);
 	});
+
+	it("should accept autocompleted text after pressing go/enter on virtual keyboard", () => {
+		cy.mount(
+			<>
+				<Search showClearIcon={true}>
+					<SearchItem text="Item 1" />
+					<SearchItem text="Item 2" />
+					<SearchItem text="Item 3" />
+					<SearchItem text="Item 4" />
+					<SearchItem text="Item 5" />
+					<SearchItem text="Item 6" />
+				</Search>
+			</>
+		);
+
+		cy.get("[ui5-search]")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("[ui5-input]")
+			.shadow()
+			.find("input")
+			.type("Ite");
+
+		cy.get("[ui5-search]")
+			.should("have.prop", "value", "Ite");
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("[ui5-input]")
+			.shadow()
+			.find("input")
+			.type("{enter}");
+
+		cy.get("[ui5-search]")
+			.should("have.prop", "value", "Item 1");
+	});
 });

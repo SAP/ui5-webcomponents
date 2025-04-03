@@ -589,9 +589,6 @@ describe("Events", () => {
 			.should("have.been.calledOnce");
 
 		cy.get("[ui5-search]")
-			.realPress("I");
-
-		cy.get("[ui5-search]")
 			.realPress("Escape");
 
 		cy.get("@closed")
@@ -644,7 +641,7 @@ describe("Events", () => {
 			.realPress("I");
 
 		cy.get("@opened")
-			.should("have.been.calledTwice");
+			.should("have.been.calledOnce");
 	});
 
 	it("close event", () => {

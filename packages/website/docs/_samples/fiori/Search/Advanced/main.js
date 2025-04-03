@@ -1,4 +1,6 @@
+import "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-fiori/dist/Search.js";
+import "@ui5/webcomponents-fiori/dist/SearchMessageArea.js";
 import "@ui5/webcomponents-fiori/dist/SearchItem.js";
 
 const data = [
@@ -34,10 +36,7 @@ filtering.addEventListener("ui5-input", (event) => {
 		item.name.toLowerCase().includes(value)
 	);
 
-	// clear search items
-	filtering.innerHTML = "";
-
-	filtering.getSlottedNodes("items").forEach((item) => {
+	filtering.items.forEach((item) => {
 		item.remove();
 	});
 

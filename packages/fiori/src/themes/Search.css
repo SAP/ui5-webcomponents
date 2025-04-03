@@ -81,10 +81,6 @@
 	height: 100%;
 }
 
-.ui5-search-field-select {
-	--_ui5_input_focus_border_radius: var(--_ui5_search_input_border_radius);
-}
-
 .search-popover-busy-wrapper::after {
 	content: "";
 	position: absolute;

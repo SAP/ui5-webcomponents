@@ -62,7 +62,6 @@ type SearchEventDetails = {
  * - Input field - for user input value
  * - Clear button - gives the possibility for deleting the entered value
  * - Search button - a primary button for performing search, when the user has entered a search term
- * - Expand/Collapse button - when there is no search term, the search button behaves as an expand/collapse button for the `ui5-search` component
  * - Suggestions - a list with available search suggestions
  *
  * ### ES6 Module Import
@@ -123,22 +122,6 @@ class Search extends SearchField {
 	 */
 	@property({ type: Boolean })
 	noTypeahead = false;
-
-	/**
-	 * Defines the header text to be placed in the search suggestions popup.
-	 * @default undefined
-	 * @public
-	 */
-	@property()
-	headerText?: string;
-
-	/**
-	 * Defines the subheader text to be placed in the search suggestions popup.
-	 * @default undefined
-	 * @public
-	 */
-	@property()
-	subheaderText?: string;
 
 	/**
 	 * Defines the Search suggestion items.
@@ -428,7 +411,9 @@ class Search extends SearchField {
 
 	_onMobileInputKeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
+			this.value = this.mobileInput?.value || this.value;
 			this._handleEnter();
+
 			this.blur();
 		}
 	}
@@ -445,7 +430,13 @@ class Search extends SearchField {
 	_handleInput(e: InputEvent) {
 		super._handleInput(e);
 
-		this.open = (e.currentTarget as HTMLInputElement).value.length > 0;
+		this.open = !isPhone() && ((e.currentTarget as HTMLInputElement).value.length > 0) && this._popoupHasAnyContent();
+	}
+
+	_popoupHasAnyContent() {
+		const item = this._getFirstMatchingItem(this.value);
+
+		return !!item || this.illustration.length > 0 || this.messageArea.length > 0 || this.loading || this.action.length > 0;
 	}
 
 	_onFooterButtonKeyDown(e: KeyboardEvent) {

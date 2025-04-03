@@ -16,8 +16,8 @@ export default function SearchFieldTemplate(this: SearchField) {
 				design={ButtonDesign.Transparent}
 				data-sap-focus-ref
 				onClick={this._handleSearchIconPress}
-				tooltip={this.searchIconTooltip || this._translations.searchIcon}
-				accessibleName={this.searchIconTooltip || this._translations.searchIcon}
+				tooltip={this._effectiveIconTooltip}
+				accessibleName={this._effectiveIconTooltip}
 				accessibilityAttributes={this._searchButtonAccessibilityAttributes}
 			></Button>
 		) : (
@@ -73,7 +73,7 @@ export default function SearchFieldTemplate(this: SearchField) {
 						}}
 						name={search}
 						showTooltip={true}
-						accessibleName={this.searchIconTooltip || this._translations.searchIcon}
+						accessibleName={this._effectiveIconTooltip}
 						onClick={this._handleSearchIconPress}
 					></Icon>
 				</div>

@@ -46,7 +46,6 @@ type SearchFieldScopeSelectionChangeDetails = {
  * - Input field - for user input value
  * - Clear button - gives the possibility for deleting the entered value
  * - Search button - a primary button for performing search, when the user has entered a search term
- * - Expand/Collapse button - when there is no search term, the search button behaves as an expand/collapse button for the `ui5-search-field` component
  *
  * ### ES6 Module Import
  *
@@ -250,6 +249,10 @@ class SearchField extends UI5Element {
 			searchIcon: SearchField.i18nBundle.getText(SEARCH_FIELD_SEARCH_ICON),
 			clearIcon: SearchField.i18nBundle.getText(SEARCH_FIELD_CLEAR_ICON),
 		};
+	}
+
+	get _effectiveIconTooltip() {
+		return this.searchIconTooltip || this._translations.searchIcon;
 	}
 
 	captureRef(ref: HTMLElement & { scopeOption?: UI5Element} | null) {

@@ -231,3 +231,7 @@
 	border-color: var(--sapButton_Emphasized_BorderColor);
 	color: var(--sapButton_Emphasized_TextColor);
 }
+
+.ui5-search-field-select {
+	--_ui5_input_focus_border_radius: var(--_ui5_search_input_border_radius);
+}
