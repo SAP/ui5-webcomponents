@@ -789,14 +789,17 @@ describe("Events", () => {
 	});
 
 	it("delete event on search item", () => {
-		function onDelete(event: Event) {
-			(event.target as HTMLElement).remove();
-		}
 		cy.mount(
 			<Search expanded={true}>
-				<SearchItem headingText="Item 1" icon={history} onDelete={onDelete}/>
+				<SearchItem headingText="Item 1" icon={history} />
 			</Search>
 		);
+
+
+		cy.get("[ui5-search-item]")
+			.then(searchItem => {
+				searchItem.get(0).addEventListener("ui5-delete", (event: Event) => (event.target as HTMLElement).remove());
+			});
 
 		cy.get("[ui5-search]")
 			.shadow()

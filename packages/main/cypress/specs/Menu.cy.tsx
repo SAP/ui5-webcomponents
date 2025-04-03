@@ -374,11 +374,16 @@ describe("Menu interaction", () => {
 			cy.mount(
 				<>
 					<Button id="btnOpen">Open Menu</Button>
-					<Menu opener="btnOpen" onui5-item-click={(e: CustomEvent) => e.preventDefault()}>
+					<Menu opener="btnOpen">
 						<MenuItem text="Item 1.0"></MenuItem>
 					</Menu>
 				</>
 			);
+
+			cy.get("[ui5-menu]")
+				.then(menu => {
+					menu.get(0).addEventListener("ui5-item-click", (e: CustomEvent) => e.preventDefault());
+				});
 
 			cy.get("[ui5-menu]")
 				.ui5MenuOpen();

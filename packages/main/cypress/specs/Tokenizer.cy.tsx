@@ -134,7 +134,7 @@ describe("Tokenizer - multi-line and Clear All", () => {
 
 	it("tests token removal", () => {
 		cy.mount(
-			<Tokenizer id="test-token-delete" style={{ width: "100px" }} onTokenDelete={onTokenDelete}>
+			<Tokenizer id="test-token-delete" style={{ width: "100px" }}>
 				<Token text="aute"></Token>
 				<Token text="ad"></Token>
 				<Token text="exercitation"></Token>
@@ -144,6 +144,11 @@ describe("Tokenizer - multi-line and Clear All", () => {
 				<Token text="excepteur"></Token>
 			</Tokenizer>
 		);
+
+		cy.get("[ui5-tokenizer]")
+			.then(tokenizer => {
+				tokenizer.get(0).addEventListener("ui5-token-delete", onTokenDelete);
+			});
 
 		cy.get("#test-token-delete")
 			.find("[ui5-token]")
