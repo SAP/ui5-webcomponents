@@ -419,7 +419,6 @@ class Select extends UI5Element implements IFormInputElement {
 		this._applySelection();
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
-		this.style.setProperty(getScopedVarName("--_ui5_list_item_title_size"), "var(--sapFontSize)");
 	}
 
 	onAfterRendering() {
