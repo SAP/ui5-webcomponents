@@ -188,7 +188,7 @@ describe("Drag and drop tests", () => {
 		);
 	});
 
-	it("Moving first strip item 'After' second", async () => {
+	it("Moving first strip item 'After' second", () => {
 		cy.ui5TabContainerDragAndDrop("tabOne", "After", "tabTwo")
 
 		cy.get("@handleMoveOverStub")
@@ -206,7 +206,7 @@ describe("Drag and drop tests", () => {
 			}));
 	});
 
-	it("Moving first strip item 'After' last", async () => {
+	it("Moving first strip item 'After' last", () => {
 		cy.get("#tabContainer")
 			.shadow()
 			.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
@@ -232,7 +232,7 @@ describe("Drag and drop tests", () => {
 			})
 	});
 
-	it("Moving last strip item 'Before' last but one", async () => {
+	it("Moving last strip item 'Before' last but one", () => {
 		cy.get("#tabContainer")
 			.shadow()
 			.find<TabInStrip>(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
@@ -257,7 +257,7 @@ describe("Drag and drop tests", () => {
 			})
 	});
 
-	it("Moving last strip item 'Before' first", async () => {
+	it("Moving last strip item 'Before' first", () => {
 		cy.get("#tabContainer")
 			.shadow()
 			.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
@@ -282,21 +282,21 @@ describe("Drag and drop tests", () => {
 			})
 	});
 
-	it ("Moving strip item 'On' another", async () => {
+	it ("Moving strip item 'On' another", () => {
 		cy.ui5TabContainerDragAndDrop("tabFive", "On", "tabSix");
 
 		cy.get("@handleMoveOverStub")
 			.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
 				const { source, destination } = event.detail;
 
-				return source.element.id === "tabOne" && destination.element.id === "tabTwo" && destination.placement === "On";
+				return source.element.id === "tabFive" && destination.element.id === "tabSix" && destination.placement === "On";
 			}));
 
 		cy.get("@handleMoveStub")
 			.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
 				const { source, destination } = event.detail;
 
-				return source.element.id === "tabOne" && destination.element.id === "tabTwo" && destination.placement === "On";
+				return source.element.id === "tabFive" && destination.element.id === "tabSix" && destination.placement === "On";
 			}));
 	});
 
