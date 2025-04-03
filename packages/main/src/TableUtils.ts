@@ -20,7 +20,11 @@ const findRowInPath = (composedPath: Array<EventTarget>) => {
 const findVerticalScrollContainer = (element: HTMLElement): HTMLElement => {
 	while (element) {
 		const { overflowY } = window.getComputedStyle(element);
-		if (overflowY === "auto" || overflowY === "scroll") {
+		if (overflowY === "auto") {
+			if (element.scrollHeight > element.clientHeight) {
+				return element;
+			}
+		} else if (overflowY === "scroll") {
 			return element;
 		}
 
