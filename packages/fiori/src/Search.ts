@@ -434,9 +434,7 @@ class Search extends SearchField {
 	}
 
 	_popoupHasAnyContent() {
-		const item = this._getFirstMatchingItem(this.value);
-
-		return !!item || this.illustration.length > 0 || this.messageArea.length > 0 || this.loading || this.action.length > 0;
+		return this.items.length > 0 || this.illustration.length > 0 || this.messageArea.length > 0 || this.loading || this.action.length > 0;
 	}
 
 	_onFooterButtonKeyDown(e: KeyboardEvent) {
