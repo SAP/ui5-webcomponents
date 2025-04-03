@@ -1,16 +1,5 @@
 
 import type MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
-import Tab from "../../../src/Tab.js";
-
-// Cypress.Commands.addQuery("ui5TabContainerGetDisplayedStripItems", function(subject: string) {
-// 	// return browser.$(`#${tabContainerId}`).shadow$$(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])");
-
-// 	return () => {
-// 		return cy.wrap(subject)
-// 			.shadow()
-// 			.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])");
-// 	}
-// });
 
 Cypress.Commands.add("ui5TabContainerOpenEndOverflow",{ prevSubject: true } , (subject) => {
 	cy.wrap(subject)
@@ -26,13 +15,13 @@ Cypress.Commands.add("ui5TabContainerOpenEndOverflow",{ prevSubject: true } , (s
 });
 
 Cypress.Commands.add("ui5TabContainerDragAndDrop", (elementToDrag, placement, target, orientation = "Horizontal") => {
-	const horizontalPlacementToPosition: Record<`${MovePlacement}`, "right" | "left" | "center" > = {
+	const horizontalPlacementToPosition: Record<`${MovePlacement}`, Cypress.PositionType > = {
 		"After": "right",
 		"Before": "left",
 		"On": "center"
 	};
 
-	const verticalPlacementToPosition: Record<`${MovePlacement}`, "top" | "bottom" | "center"> = {
+	const verticalPlacementToPosition: Record<`${MovePlacement}`, Cypress.PositionType> = {
 		"After": "bottom",
 		"Before": "top",
 		"On": "center"

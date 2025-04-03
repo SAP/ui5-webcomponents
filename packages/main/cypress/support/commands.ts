@@ -83,7 +83,6 @@ declare global {
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
 			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
 			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
-			ui5TabContainerGetDisplayedStripItems(): Chainable<void>,
 			ui5TabContainerOpenEndOverflow(): Chainable<void>,
 			ui5TabContainerDragAndDrop(elementToDrag: HTMLElement, placement: `${MovePlacement}`, target: HTMLElement, orientation?: `${Orientation}`): Chainable<void>,
 		}
