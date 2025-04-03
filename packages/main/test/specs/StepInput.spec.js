@@ -472,7 +472,15 @@ describe("'change' event firing", () => {
 		const innerInput = await input.shadow$("input");
 
 		await innerInput.click();
-		await innerInput.setValue("0.100");
+		await browser.keys("ArrowRight");
+		await browser.keys("ArrowRight");
+		await browser.keys("ArrowRight");
+		await browser.keys("Backspace");
+		await browser.keys("Backspace");
+		await browser.keys("Backspace");
+		await browser.keys("Backspace");
+		await browser.keys("Backspace");
+		await browser.keys("0.100");
 		await browser.keys("Enter");
 
 
