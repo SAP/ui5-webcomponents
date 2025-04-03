@@ -143,13 +143,23 @@ describe("Drag and drop tests", () => {
 				const lastButOneItem = $el[$el.length - 2];
 
 				cy.ui5TabContainerDragAndDrop(lastItem, "Before", lastButOneItem);
+				const helper = cy.stub();
+				cy.get<typeof helper>("@handleMoveOverStub")
+					.then((stub) => {
+						debugger
+						const event = stub.getCall(0).args[0];
 
-				cy.get("@handleMoveOverStub")
-					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
 						const { source, destination } = event.detail;
+						expect(source.element.id).to.equal(lastItem.realTabReference.id);
+						expect(destination.element.id).to.equal(lastButOneItem.realTabReference.id);
+						expect(destination.placement).to.equal("Before");
+					})
 
-						return source.element.id === lastItem.realTabReference.id && destination.element.id === lastButOneItem.realTabReference.id && destination.placement === "Before";
-					}));
+					// .should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
+					// 	const { source, destination } = event.detail;
+
+					// 	return source.element.id === lastItem.realTabReference.id && destination.element.id === lastButOneItem.realTabReference.id && destination.placement === "Before";
+					// }));
 
 				cy.get("@handleMoveStub")
 					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
