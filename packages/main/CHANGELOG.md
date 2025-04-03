@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.18](https://github.com/SAP/ui5-webcomponents/compare/v1.24.17...v1.24.18) (2025-04-03)
+
+
+### Bug Fixes
+
+* **ui5-carousel:** update roles to match ACC specification ([#11074](https://github.com/SAP/ui5-webcomponents/issues/11074)) ([4a31804](https://github.com/SAP/ui5-webcomponents/commit/4a31804ce38d240c9b8c74d5c8676c887e1d90a6)), closes [#10198](https://github.com/SAP/ui5-webcomponents/issues/10198) [#8624](https://github.com/SAP/ui5-webcomponents/issues/8624) [#11032](https://github.com/SAP/ui5-webcomponents/issues/11032)
+* **ui5-menu:** handle uncaught error on mouseout ([#11122](https://github.com/SAP/ui5-webcomponents/issues/11122)) ([fda7572](https://github.com/SAP/ui5-webcomponents/commit/fda75727d318183f82fad2d83f391ab75bdcfb17))
+* **ui5-select-menu:** handle late component definition ([#11049](https://github.com/SAP/ui5-webcomponents/issues/11049)) ([3db6022](https://github.com/SAP/ui5-webcomponents/commit/3db6022d4cdd6a81c260e5a7fd8c6a6dbb8ae9ce)), closes [#11019](https://github.com/SAP/ui5-webcomponents/issues/11019)
+
+
+
+
+
 ## [1.24.17](https://github.com/SAP/ui5-webcomponents/compare/v1.24.16...v1.24.17) (2025-03-04)
 
 
