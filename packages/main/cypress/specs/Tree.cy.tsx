@@ -1,5 +1,8 @@
 import Tree from "../../src/Tree.js";
 import "../../src/TreeItem.js";
+import TreeItem from "../../src/TreeItem.js";
+import Icon from "../../src/Icon.js";
+import bell from "@ui5/webcomponents-icons/dist/bell.js";
 
 describe("Tree Tests", () => {
 	it("tests accessibility properties forwarded to the list", () => {
@@ -26,6 +29,27 @@ describe("Tree Tests", () => {
 			.and("have.attr", "accessible-name-ref", "lblDesc1")
 			.and("have.attr", "accessible-description", "Description")
 			.and("have.attr", "accessible-description-ref", "lblDesc2");
+	});
+
+	it("Tests image slot", () => {
+		cy.mount(
+			<Tree>
+				<TreeItem id="image-slot-tree-item">
+					<Icon name={bell} slot="image" id="slotted-icon"></Icon>
+				</TreeItem>
+			</Tree>
+		);
+
+		cy.get("#image-slot-tree-item")
+			.shadow()
+			.find("slot[name='image']")
+			.should("exist")
+			.then($slot => {
+				const slotElement = $slot[0] as HTMLSlotElement;
+				const assignedNodes = slotElement.assignedNodes();
+				expect(assignedNodes.length).to.be.greaterThan(0);
+				cy.wrap(assignedNodes[0]).should("have.attr", "id", "slotted-icon");
+			});
 	});
 });
 
