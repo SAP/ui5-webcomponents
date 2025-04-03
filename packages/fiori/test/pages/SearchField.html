@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Search</title>
+	<title>Search Field</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 	<script data-ui5-config type="application/json">
@@ -33,9 +33,9 @@
 	<div class="container" style="padding-top: 1rem; display: flex; flex-direction: column;">
 		<ui5-label>Initially expanded fixed search with scope and placeholder:</ui5-label>
 		<ui5-search-field accessible-name="Global Search" id="scoped-search" fixed expanded mode="Scoped" placeholder="Placeholder">
-			<ui5-search-field-scope-option text="All" slot="scopeOptions"></ui5-search-field-scope-option>
-			<ui5-search-field-scope-option text="Apps" selected slot="scopeOptions"></ui5-search-field-scope-option>
-			<ui5-search-field-scope-option text="Products" slot="scopeOptions"></ui5-search-field-scope-option>
+			<ui5-search-scope text="All" slot="scopes"></ui5-search-scope>
+			<ui5-search-scope text="Apps" selected slot="scopes"></ui5-search-scope>
+			<ui5-search-scope text="Products" slot="scopes"></ui5-search-scope>
 		</ui5-search-field>
 	</div>
 	<div class="container" style="padding-top: 1rem; display: flex; flex-direction: column;">
@@ -58,9 +58,9 @@
 		<div class="container" style="padding-top: 1rem; display: flex; flex-direction: column;">
 			<ui5-label>Initially expanded search with scope</ui5-label>
 			<ui5-search-field accessible-name="Global Search"  expanded mode="Scoped">
-				<ui5-search-field-scope-option text="All" slot="scopeOptions"></ui5-search-field-scope-option>
-				<ui5-search-field-scope-option text="Apps" slot="scopeOptions"></ui5-search-field-scope-option>
-				<ui5-search-field-scope-option text="Products" selected slot="scopeOptions"></ui5-search-field-scope-option>
+				<ui5-search-scope text="All" slot="scopes"></ui5-search-scope>
+				<ui5-search-scope text="Apps" slot="scopes"></ui5-search-scope>
+				<ui5-search-scope text="Products" selected slot="scopes"></ui5-search-scope>
 			</ui5-search-field>
 		</div>
 		<div class="container" style="padding-top: 1rem; display: flex; flex-direction: column;">

@@ -11,6 +11,8 @@ export default function SearchFieldTemplate(this: SearchItem) {
 		<li
 			part="native-li"
 			class="ui5-li-root ui5-li--focusable"
+			aria-selected={this.selected}
+			role="option"
 			data-sap-focus-ref
 			draggable={this.movable}
 			tabindex={this._effectiveTabIndex}
