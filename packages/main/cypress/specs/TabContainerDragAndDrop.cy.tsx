@@ -1,9 +1,3 @@
-
-
-
-// import { assert } from "chai";
-// import tabContainer from "../pageobjects/TabContainerTestPage.js";
-
 import TabContainer from "../../src/TabContainer.js";
 import type { TabContainerMoveEventDetail } from "../../src/TabContainer.js";
 import Tab from "../../src/Tab.js";
@@ -11,105 +5,10 @@ import type { TabInStrip } from "../../src/Tab.js";
 import TabSeparator from "../../src/TabSeparator.js";
 import Button from "../../src/Button.js";
 
+// TODO: test not calling moveover preventDefault()
+// TODO: attempt to make failures more informative
+
 describe("Drag and drop tests", () => {
-// 	const getDragOffset = async (draggedElement, dropTargetElement, targetPosition) => {
-// 		const OFFSET = 5;
-// 		const draggedRectangle = {
-// 			...await draggedElement.getLocation(),
-// 			...await draggedElement.getSize()
-// 		};
-
-// 		const dropTargetElementRectangle = {
-// 			...await dropTargetElement.getLocation(),
-// 			...await dropTargetElement.getSize()
-// 		};
-
-// 		const draggedElementXCenter = draggedRectangle.x + draggedRectangle.width / 2;
-// 		const draggedElementYCenter = draggedRectangle.y + draggedRectangle.height / 2;
-
-// 		let dropTargetX;
-// 		let dropTargetY;
-
-// 		if (targetPosition === "Before") {
-// 			dropTargetX = dropTargetElementRectangle.x + OFFSET;
-// 			dropTargetY = dropTargetElementRectangle.y + OFFSET;
-// 		} else if (targetPosition === "After") {
-// 			dropTargetX = dropTargetElementRectangle.x + dropTargetElementRectangle.width - OFFSET;
-// 			dropTargetY = dropTargetElementRectangle.y + dropTargetElementRectangle.height - OFFSET;
-// 		} else { // "On"
-// 			dropTargetX = dropTargetElementRectangle.x + dropTargetElementRectangle.width / 2;
-// 			dropTargetY = dropTargetElementRectangle.y + dropTargetElementRectangle.height / 2;
-// 		}
-
-// 		const offsetToX = Math.round(dropTargetX - draggedElementXCenter);
-// 		const offsetToY = Math.round(dropTargetY - draggedElementYCenter);
-
-// 		return {
-// 			x: offsetToX,
-// 			y: offsetToY
-// 		};
-// 	};
-
-// 	const moveElementById = (items, id1, id2, targetPosition) => {
-// 		const findAndExecute = (items, matcher, cb) => {
-// 			const index = items.findIndex(matcher);
-
-// 			if (index !== -1) {
-// 				cb(items, index);
-// 				return;
-// 			}
-
-// 			items.forEach(item => {
-// 				if (!item.isSeparator) {
-// 					findAndExecute(item.items, matcher, cb);
-// 				}
-// 			});
-// 		}
-
-// 		let movedItem;
-
-// 		// remove the item
-// 		findAndExecute(
-// 			items,
-// 			(item) => item.id === id1,
-// 			(items, index) => [movedItem] = items.splice(index, 1)
-// 		);
-
-// 		// insert the item at new place
-// 		findAndExecute(
-// 			items,
-// 			(item) => item.id === id2,
-// 			(items, index) => {
-// 				if (targetPosition === "Before") {
-// 					items.splice(index, 0, movedItem);
-// 				} else if (targetPosition === "After") {
-// 					items.splice(index + 1, 0, movedItem);
-// 				} else { // On
-// 					items[index].items.unshift(movedItem);
-// 				}
-// 			}
-// 		);
-
-// 		return items;
-// 	};
-
-	// const dragAndDropInStrip = async (stripItemToDrag, stripDropTarget, placement) => {
-	// 	const dragOffset = await getDragOffset(stripItemToDrag, stripDropTarget, placement);
-
-	// 	await stripItemToDrag.dragAndDrop({ x: dragOffset.x, y: 0 });
-	// }
-
-// 	const dragAndDropInPopover = async (popoverItemToDrag, popoverDropTarget, placement) => {
-// 		const dragOffset = await getDragOffset(popoverItemToDrag, popoverDropTarget, placement);
-
-// 		await popoverItemToDrag.dragAndDrop({ x: 0, y: dragOffset.y });
-// 	}
-
-	// before(async () => {
-	// 	await browser.url(`test/pages/TabContainerDragAndDrop.html`);
-	// 	await browser.setWindowSize(1024, 1000);
-	// });
-
 	beforeEach(() => {
 		const handleMoveOver = cy.stub();
 		handleMoveOver.callsFake(function (e: CustomEvent<TabContainerMoveEventDetail>) {
@@ -189,7 +88,10 @@ describe("Drag and drop tests", () => {
 	});
 
 	it("Moving first strip item 'After' second", () => {
-		cy.ui5TabContainerDragAndDrop("tabOne", "After", "tabTwo")
+		cy.get<Tab>("#tabOne, #tabTwo")
+			.then(($el) => {
+				cy.ui5TabContainerDragAndDrop($el[0].getDomRefInStrip()!, "After", $el[1].getDomRefInStrip()!)
+			})
 
 		cy.get("@handleMoveOverStub")
 			.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
@@ -209,12 +111,12 @@ describe("Drag and drop tests", () => {
 	it("Moving first strip item 'After' last", () => {
 		cy.get("#tabContainer")
 			.shadow()
-			.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
-			.last<TabInStrip>()
+			.find<TabInStrip>(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
 			.then(($el) => {
-				const lastItem = $el[0];
+				const firstItem = $el[0];
+				const lastItem = $el[$el.length - 1];
 
-				cy.ui5TabContainerDragAndDrop("tabOne", "After", lastItem.realTabReference.id);
+				cy.ui5TabContainerDragAndDrop(firstItem, "After", lastItem, "Horizontal");
 
 				cy.get("@handleMoveOverStub")
 					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
@@ -240,7 +142,7 @@ describe("Drag and drop tests", () => {
 				const lastItem = $el[$el.length - 1];
 				const lastButOneItem = $el[$el.length - 2];
 
-				cy.ui5TabContainerDragAndDrop(lastItem.realTabReference.id, "Before", lastButOneItem.realTabReference.id);
+				cy.ui5TabContainerDragAndDrop(lastItem, "Before", lastButOneItem);
 
 				cy.get("@handleMoveOverStub")
 					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
@@ -260,12 +162,12 @@ describe("Drag and drop tests", () => {
 	it("Moving last strip item 'Before' first", () => {
 		cy.get("#tabContainer")
 			.shadow()
-			.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
-			.last<TabInStrip>()
+			.find<TabInStrip>(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
 			.then(($el) => {
-				const lastItem = $el[0];
+				const firstItem = $el[0];
+				const lastItem = $el[$el.length - 1];
 
-				cy.ui5TabContainerDragAndDrop(lastItem.realTabReference.id, "Before", "tabOne");
+				cy.ui5TabContainerDragAndDrop(lastItem, "Before", firstItem);
 
 				cy.get("@handleMoveOverStub")
 					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
@@ -283,7 +185,10 @@ describe("Drag and drop tests", () => {
 	});
 
 	it ("Moving strip item 'On' another", () => {
-		cy.ui5TabContainerDragAndDrop("tabFive", "On", "tabSix");
+		cy.get<Tab>("#tabFive, #tabSix")
+			.then(($el) => {
+				cy.ui5TabContainerDragAndDrop($el[0].getDomRefInStrip()!, "On", $el[1].getDomRefInStrip()!)
+			})
 
 		cy.get("@handleMoveOverStub")
 			.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
@@ -300,61 +205,91 @@ describe("Drag and drop tests", () => {
 			}));
 	});
 
-	// TODO: test moveover cancellation
+	it("Moving item 'After' another in end overflow popover", () => {
+		cy.get("#tabContainer")
+			.ui5TabContainerOpenEndOverflow();
 
-// 	it("Moving item After another in end overflow popover", async () => {
-// 		await tabContainer.getEndOverflow("tabContainer").click();
+		cy.get("#tabContainer")
+			.shadow()
+			.find<TabInStrip>(".ui5-tab-container-responsive-popover [ui5-li-custom]")
+			.then(($el) => {
+				const draggedPopoverItem = $el[0];
+				const dropTargetPopoverItem = $el[2];
+		
+				cy.ui5TabContainerDragAndDrop(draggedPopoverItem, "After", dropTargetPopoverItem, "Vertical");
 
-// 		let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainer");
-// 		let draggedPopoverItem = displayedPopoverItems[0];
-// 		let dropTargetPopoverItem = displayedPopoverItems[2];
-// 		let currentOrder = await tabContainer.getItemsIds("tabContainer");
-// 		let t1 = await tabContainer.getRealTabId(draggedPopoverItem);
-// 		let t2 = await tabContainer.getRealTabId(dropTargetPopoverItem);
+				cy.get("@handleMoveOverStub")
+					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
+						const { source, destination } = event.detail;
+		
+						return source.element.id === draggedPopoverItem.realTabReference.id && destination.element.id === dropTargetPopoverItem.realTabReference.id && destination.placement === "After";
+					}));
 
-// 		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "After");
-// 		let expectedOrder = moveElementById(currentOrder, t1, t2, "After");
-// 		currentOrder = await tabContainer.getItemsIds("tabContainer");
+				cy.get("@handleMoveStub")
+					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
+						const { source, destination } = event.detail;
 
-// 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
-// 	});
+						return source.element.id === draggedPopoverItem.realTabReference.id && destination.element.id === dropTargetPopoverItem.realTabReference.id && destination.placement === "After";
+					}));
+			});
+	});
 
-// 	it("Moving item Before another in end overflow popover", async () => {
-// 		let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainer");
-// 		let draggedPopoverItem = displayedPopoverItems[2];
-// 		let dropTargetPopoverItem = displayedPopoverItems[1];
-// 		let currentOrder = await tabContainer.getItemsIds("tabContainer");
-// 		let t1 = await tabContainer.getRealTabId(draggedPopoverItem);
-// 		let t2 = await tabContainer.getRealTabId(dropTargetPopoverItem);
+	it("Moving item 'Before' another in end overflow popover", () => {
+		cy.get("#tabContainer")
+			.ui5TabContainerOpenEndOverflow();
 
-// 		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "Before");
+		cy.get("#tabContainer")
+			.shadow()
+			.find<TabInStrip>(".ui5-tab-container-responsive-popover [ui5-li-custom]")
+			.then(($el) => {
+				const draggedPopoverItem = $el[1];
+				const dropTargetPopoverItem = $el[0];
 
-// 		let expectedOrder = moveElementById(currentOrder, t1, t2, "Before");
-// 		currentOrder = await tabContainer.getItemsIds("tabContainer");
-// 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
-// 	});
+				cy.ui5TabContainerDragAndDrop(draggedPopoverItem, "Before", dropTargetPopoverItem, "Vertical");
 
-// 	it("Moving item On another in end overflow popover", async () => {
-// 		let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainer");
-// 		let draggedPopoverItem = displayedPopoverItems[3];
-// 		let dropTargetPopoverItem = displayedPopoverItems[4];
-// 		let currentOrder = await tabContainer.getItemsIds("tabContainer");
-// 		let t1 = await tabContainer.getRealTabId(draggedPopoverItem);
-// 		let t2 = await tabContainer.getRealTabId(dropTargetPopoverItem);
-// 		console.error("POPOVER", await tabContainer.getRealTabId(draggedPopoverItem), "asd:", await tabContainer.getRealTabId(dropTargetPopoverItem))
+				cy.get("@handleMoveOverStub")
+					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
+						const { source, destination } = event.detail;
 
-// 		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "On");
-// 		let expectedOrder = moveElementById(currentOrder, t1, t2, "On");
-// 		currentOrder = await tabContainer.getItemsIds("tabContainer");
-// 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
+						return source.element.id === draggedPopoverItem.realTabReference.id && destination.element.id === dropTargetPopoverItem.realTabReference.id && destination.placement === "Before";
+					}));
+				cy.get("@handleMoveStub")
+					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
+						const { source, destination } = event.detail;
 
-// 		await dragAndDropInPopover(dropTargetPopoverItem, draggedPopoverItem, "On");
-// 		currentOrder = await tabContainer.getItemsIds("tabContainer");
-// 		assert.deepEqual(currentOrder, expectedOrder, "Items order has NOT changed when attempted to drag item on top of a child item");
+						return source.element.id === draggedPopoverItem.realTabReference.id && destination.element.id === dropTargetPopoverItem.realTabReference.id && destination.placement === "Before";
+					}));
+			});
+	});
 
-// 		// close the popover
-// 		await tabContainer.getEndOverflow("tabContainer").click();
-// 	});
+	it("Moving item 'On' another in end overflow popover", () => {
+		cy.get("#tabContainer")
+			.ui5TabContainerOpenEndOverflow();
+
+		cy.get("#tabContainer")
+			.shadow()
+			.find<TabInStrip>(".ui5-tab-container-responsive-popover [ui5-li-custom]")
+			.then(($el) => {
+				const draggedPopoverItem = $el[1];
+				const dropTargetPopoverItem = $el[5];
+
+				cy.ui5TabContainerDragAndDrop(draggedPopoverItem, "On", dropTargetPopoverItem, "Vertical");
+
+				cy.get("@handleMoveOverStub")
+					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
+						const { source, destination } = event.detail;
+
+						return source.element.id === draggedPopoverItem.realTabReference.id && destination.element.id === dropTargetPopoverItem.realTabReference.id && destination.placement === "On";
+					}));
+
+				cy.get("@handleMoveStub")
+					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
+						const { source, destination } = event.detail;
+
+						return source.element.id === draggedPopoverItem.realTabReference.id && destination.element.id === dropTargetPopoverItem.realTabReference.id && destination.placement === "On";
+					}));
+			});
+	});
 });
 
 // describe("Keyboard drag and drop tests", () => {
