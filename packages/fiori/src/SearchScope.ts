@@ -26,6 +26,7 @@ class SearchScope extends UI5Element implements ISearchScope {
 
 	/**
 	 * Indicates whether the item is selected
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })

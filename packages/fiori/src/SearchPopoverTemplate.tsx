@@ -39,7 +39,7 @@ export default function SearchPopoverTemplate(this: Search) {
 					<header slot="header" class="ui5-search-popup-searching-header">
 						<Input class="ui5-search-popover-search-field" onInput={this._handleMobileInput} showClearIcon={this.showClearIcon} noTypeahead={this.noTypeahead} hint={InputKeyHint.Search} onKeyDown={this._onMobileInputKeydown}>
 							{this._flattenItems.map(item => {
-								return (<SuggestionItem text={item.headingText}></SuggestionItem>);
+								return (<SuggestionItem text={item.text}></SuggestionItem>);
 							})}
 						</Input>
 						<Button design={ButtonDesign.Transparent} onClick={this._handleCancel}>{this.cancelButtonText}</Button>

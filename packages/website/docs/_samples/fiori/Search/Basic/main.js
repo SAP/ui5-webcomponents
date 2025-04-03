@@ -23,7 +23,7 @@ function createScopeItems(scope) {
 
     filterData.forEach(item => {
         const searchItem = document.createElement("ui5-search-item");
-        searchItem.headingText = item.name;
+        searchItem.text = item.name;
         searchItem.scopeName = item.scope;
         searchScope.appendChild(searchItem);
     });

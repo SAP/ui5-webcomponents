@@ -19,7 +19,7 @@
 	<ui5-search>
 		<ui5-search-message-area slot="messageArea" description="Search for example “All my open Objects”" text="Try This!"></ui5-search-message-area>
 	
-		<ui5-search-item heading-text="List Item"></ui5-search-item>
+		<ui5-search-item text="List Item"></ui5-search-item>
 	
 		<ui5-illustrated-message slot="illustration"></ui5-illustrated-message>
 	
@@ -33,13 +33,13 @@
 		<ui5-search show-clear-icon>
 			<ui5-search-message-area slot="messageArea" description="You can try the following" text="Oh, there are no results"></ui5-search-message-area>
 
-			<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
-			<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
-			<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
-			<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
-			<ui5-search-item heading-text="List Item" icon="globe" ></ui5-search-item>
-			<ui5-search-item heading-text="List Item" icon="globe" ></ui5-search-item>
-			<ui5-search-item heading-text="List Item" icon="globe" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="globe" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="globe" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="globe" ></ui5-search-item>
 		</ui5-search>
 	</div>
 
@@ -71,12 +71,12 @@
 
 			<ui5-search-message-area slot="messageArea" description="You can try the following" text="Oh, there are no results"></ui5-search-message-area>
 			<ui5-search-item-group header-text="Group Header">
-				<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
-				<ui5-search-item heading-text="List Item" icon="search" ></ui5-search-item>
+				<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+				<ui5-search-item text="List Item" icon="search" ></ui5-search-item>
 			</ui5-search-item-group>
 			<ui5-search-item-group header-text="Group Header">
-				<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
-				<ui5-search-item heading-text="List Item" icon="history" ></ui5-search-item>
+				<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+				<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
 			</ui5-search-item-group>
 		</ui5-search>
 	</div>
@@ -141,7 +141,7 @@
 		function createItems(parent, data) {
 			data.forEach(item => {
 				const searchItem = document.createElement('ui5-search-item');
-				searchItem.headingText = item.name;
+				searchItem.text = item.name;
 				searchItem.icon = 'search';
 				parent.appendChild(searchItem);
 			});
@@ -184,7 +184,7 @@
 
 			const searchItems = filterData.forEach(item => {
 				const searchItem = document.createElement('ui5-search-item');
-				searchItem.headingText = item.name;
+				searchItem.text = item.name;
 				searchItem.scopeName = item.scope;
 				searchScope.appendChild(searchItem);
 			});
@@ -213,7 +213,7 @@
 				item.items.forEach (subItem => {
 					const searchItem = document.createElement('ui5-search-item');
 					searchItem.scopeName = item.name;
-					searchItem.headingText = subItem;
+					searchItem.text = subItem;
 					parent.appendChild(searchItem);
 				});
 			});
@@ -245,7 +245,7 @@
 			if (event.detail.item) {
 				const lastColonIndex = filters.value.lastIndexOf(":");
         		const splicedString = lastColonIndex !== -1 ? filters.value.slice(0, lastColonIndex + 1) : filters.value;
-				filters.value = splicedString + event.detail.item.headingText;
+				filters.value = splicedString + event.detail.item.text;
 
 				filters.focus();
 			}
@@ -272,7 +272,7 @@
 		function createItems(parent, deleteData) {
 			deleteData.forEach(item => {
 				const searchItem = document.createElement('ui5-search-item');
-				searchItem.headingText = item.name;
+				searchItem.text = item.name;
 				searchItem.icon = 'search';
 				searchItem.addEventListener('ui5-delete', onDelete);
 				parent.appendChild(searchItem);

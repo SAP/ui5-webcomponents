@@ -19,7 +19,7 @@ function onDelete(event) {
 function createItems(parent, data) {
 	data.forEach((item) => {
 		const searchItem = document.createElement("ui5-search-item");
-		searchItem.headingText = item.name;
+		searchItem.text = item.name;
 		searchItem.icon = "search";
 		searchItem.addEventListener("ui5-delete", onDelete);
 		parent.appendChild(searchItem);

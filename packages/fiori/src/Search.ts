@@ -42,7 +42,7 @@ import type Select from "@ui5/webcomponents/dist/Select.js";
 
 interface ISearchSuggestionItem extends UI5Element {
 	selected: boolean;
-	headingText: string;
+	text: string;
 	items?: ISearchSuggestionItem[];
 }
 
@@ -331,7 +331,7 @@ class Search extends SearchField {
 	}
 
 	_handleTypeAhead(item: ISearchSuggestionItem) {
-		const originalValue = item.headingText || "";
+		const originalValue = item.text || "";
 		let displayValue = originalValue;
 
 		if (!originalValue.toLowerCase().startsWith(this.value.toLowerCase())) {
@@ -348,11 +348,11 @@ class Search extends SearchField {
 	}
 
 	_startsWithMatchingItems(str: string): Array<ISearchSuggestionItem> {
-		return StartsWith(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "headingText");
+		return StartsWith(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "text");
 	}
 
 	_startsWithPerTermMatchingItems(str: string): Array<ISearchSuggestionItem> {
-		return StartsWithPerTerm(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "headingText");
+		return StartsWithPerTerm(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "text");
 	}
 
 	_isGroupItem(item: ISearchSuggestionItem) {
@@ -416,7 +416,7 @@ class Search extends SearchField {
 
 		const innerInput = this.nativeInput!;
 		if (this._matchedPerTerm) {
-			this.value = this._proposedItem?.headingText || this.value;
+			this.value = this._proposedItem?.text || this.value;
 			this._innerValue = this.value;
 			this._typedInValue = this.value;
 			this._matchedPerTerm = false;
@@ -488,7 +488,7 @@ class Search extends SearchField {
 			return;
 		}
 
-		this.value = item.headingText;
+		this.value = item.text;
 		this._innerValue = this.value;
 		this._typedInValue = this.value;
 		this.open = false;

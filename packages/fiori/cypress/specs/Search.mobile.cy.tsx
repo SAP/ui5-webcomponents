@@ -11,12 +11,12 @@ describe("Search Field on mobile device", () => {
 		cy.mount(
 			<>
 				<Search showClearIcon={true}>
-					<SearchItem headingText="Item 1" />
-					<SearchItem headingText="Item 2" />
-					<SearchItem headingText="Item 3" />
-					<SearchItem headingText="Item 4" />
-					<SearchItem headingText="Item 5" />
-					<SearchItem headingText="Item 6" />
+					<SearchItem text="Item 1" />
+					<SearchItem text="Item 2" />
+					<SearchItem text="Item 3" />
+					<SearchItem text="Item 4" />
+					<SearchItem text="Item 5" />
+					<SearchItem text="Item 6" />
 				</Search>
 			</>
 		);
@@ -32,12 +32,12 @@ describe("Search Field on mobile device", () => {
 		cy.mount(
 			<>
 				<Search showClearIcon={true}>
-					<SearchItem headingText="Item 1" />
-					<SearchItem headingText="Item 2" />
-					<SearchItem headingText="Item 3" />
-					<SearchItem headingText="Item 4" />
-					<SearchItem headingText="Item 5" />
-					<SearchItem headingText="Item 6" />
+					<SearchItem text="Item 1" />
+					<SearchItem text="Item 2" />
+					<SearchItem text="Item 3" />
+					<SearchItem text="Item 4" />
+					<SearchItem text="Item 5" />
+					<SearchItem text="Item 6" />
 				</Search>
 			</>
 		);
@@ -59,7 +59,7 @@ describe("Search Field on mobile device", () => {
 		cy.mount(
 			<>
 				<Search showClearIcon={true}>
-					<SearchItem headingText="Item 1" />
+					<SearchItem text="Item 1" />
 				</Search>
 			</>
 		);
@@ -95,12 +95,12 @@ describe("Search Field on mobile device", () => {
 		cy.mount(
 			<>
 				<Search showClearIcon={true}>
-					<SearchItem headingText="Item 1" />
-					<SearchItem headingText="Item 2" />
-					<SearchItem headingText="Item 3" />
-					<SearchItem headingText="Item 4" />
-					<SearchItem headingText="Item 5" />
-					<SearchItem headingText="Item 6" />
+					<SearchItem text="Item 1" />
+					<SearchItem text="Item 2" />
+					<SearchItem text="Item 3" />
+					<SearchItem text="Item 4" />
+					<SearchItem text="Item 5" />
+					<SearchItem text="Item 6" />
 				</Search>
 			</>
 		);
@@ -126,7 +126,7 @@ describe("Search Field on mobile device", () => {
 
 		cy.get("@search").should("have.been.calledOnce");
 		cy.wrap(spy).should("have.been.calledWithMatch", Cypress.sinon.match(event => {
-			return event.detail.item.headingText === "Item 1";
+			return event.detail.item.text === "Item 1";
 		}));
 	});
 
@@ -134,12 +134,12 @@ describe("Search Field on mobile device", () => {
 		cy.mount(
 			<>
 				<Search showClearIcon={true}>
-					<SearchItem headingText="Item 1" />
-					<SearchItem headingText="Item 2" />
-					<SearchItem headingText="Item 3" />
-					<SearchItem headingText="Item 4" />
-					<SearchItem headingText="Item 5" />
-					<SearchItem headingText="Item 6" />
+					<SearchItem text="Item 1" />
+					<SearchItem text="Item 2" />
+					<SearchItem text="Item 3" />
+					<SearchItem text="Item 4" />
+					<SearchItem text="Item 5" />
+					<SearchItem text="Item 6" />
 				</Search>
 			</>
 		);
@@ -170,7 +170,7 @@ describe("Search Field on mobile device", () => {
 		cy.mount(
 			<>
 				<Search showClearIcon={true} value="initial">
-					<SearchItem headingText="Item 1" />
+					<SearchItem text="Item 1" />
 				</Search>
 			</>
 		);
@@ -188,7 +188,7 @@ describe("Search Field on mobile device", () => {
 		cy.mount(
 			<>
 				<Search showClearIcon={true} value="initial">
-					<SearchItem headingText="Item 1" />
+					<SearchItem text="Item 1" />
 					<SearchScope slot="scopes" text="Scope 1" />
 				</Search>
 			</>

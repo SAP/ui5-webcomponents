@@ -15,12 +15,12 @@ describe("Properties", () => {
 		cy.mount(
 			<Search>
 				<SearchItemGroup headerText="Group Header 1">
-					<SearchItem headingText="List Item" icon={history}></SearchItem>
-					<SearchItem headingText="List Item" icon={searchIcon}></SearchItem>
+					<SearchItem text="List Item" icon={history}></SearchItem>
+					<SearchItem text="List Item" icon={searchIcon}></SearchItem>
 				</SearchItemGroup>
 				<SearchItemGroup headerText="Group Header 2">
-					<SearchItem headingText="List Item" icon={history}></SearchItem>
-					<SearchItem headingText="List Item" icon={history}></SearchItem>
+					<SearchItem text="List Item" icon={history}></SearchItem>
+					<SearchItem text="List Item" icon={history}></SearchItem>
 				</SearchItemGroup>
 			</Search>
 		);
@@ -58,8 +58,8 @@ describe("Properties", () => {
 	it("items slot navigation", () => {
 		cy.mount(
 			<Search>
-				<SearchItem heading-text="List Item"></SearchItem>
-				<SearchItem heading-text="List Item"></SearchItem>
+				<SearchItem text="List Item"></SearchItem>
+				<SearchItem text="List Item"></SearchItem>
 			</Search>
 		);
 
@@ -90,7 +90,7 @@ describe("Properties", () => {
 	it("items should be shown instead of illustration of both present ", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
+				<SearchItem text="Item 1" icon={history} />
 				<IllustratedMessage slot="illustration">
 					<Title slot="title" level="H1">Oh, there are no results</Title>
 					<div slot="subtitle">Change your search query</div>
@@ -111,7 +111,7 @@ describe("Properties", () => {
 	it("tests loading property", () => {
 		cy.mount(
 			<Search loading={true}>
-				<SearchItem headingText="Item 1" icon={history} />
+				<SearchItem text="Item 1" icon={history} />
 				<IllustratedMessage slot="illustration">
 					<Title slot="title" level="H1">Oh, there are no results</Title>
 					<div slot="subtitle">Change your search query</div>
@@ -134,8 +134,8 @@ describe("Properties", () => {
 	it("noTypeahead", () => {
 		cy.mount(
 			<Search noTypeahead={true}>
-				<SearchItem headingText="Item 1" icon={history} />
-				<SearchItem scopeName="Items" headingText="Item 2" selected />
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
 			</Search>
 		);
 
@@ -160,8 +160,8 @@ describe("Properties", () => {
 	it("typeahead and value confirmation - autocomplete by starts with", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
-				<SearchItem scopeName="Items" headingText="Item 2" selected />
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
 			</Search>
 		);
 
@@ -186,8 +186,8 @@ describe("Properties", () => {
 	it("typeahead and Arrow Right - autocomplete by starts with", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
-				<SearchItem scopeName="Items" headingText="Item 2" selected />
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
 			</Search>
 		);
 
@@ -212,8 +212,8 @@ describe("Properties", () => {
 	it("typeahead and Escape - autocomplete by starts with", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
-				<SearchItem scopeName="Items" headingText="Item 2" selected />
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
 			</Search>
 		);
 
@@ -238,8 +238,8 @@ describe("Properties", () => {
 	it("typeahead and value confirmation - autocomplete by contains", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
-				<SearchItem scopeName="Items" headingText="Item 2" selected />
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
 			</Search>
 		);
 
@@ -264,8 +264,8 @@ describe("Properties", () => {
 	it("typeahead and Arrow Right - autocomplete by contains", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
-				<SearchItem scopeName="Items" headingText="Item 2" selected />
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
 			</Search>
 		);
 
@@ -290,8 +290,8 @@ describe("Properties", () => {
 	it("typeahead and Escape - autocomplete by contains", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
-				<SearchItem scopeName="Items" headingText="Item 2" selected />
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
 			</Search>
 		);
 
@@ -318,7 +318,7 @@ describe("Properties", () => {
 			<Search>
 				<SearchMessageArea text="Message" description="Secondary Message" slot="messageArea" />
 				<Button design={ButtonDesign.Transparent} slot="action">Show All</Button>
-				<SearchItem headingText="Item 1" icon={history} />
+				<SearchItem text="Item 1" icon={history} />
 			</Search>
 		);
 
@@ -343,8 +343,8 @@ describe("Events", () => {
 		const spy = cy.spy();
 		cy.mount(
 			<Search noTypeahead={true}>
-				<SearchItem headingText="Item 1" icon={history} />
-				<SearchItem scopeName="Items" headingText="Item 2" selected />
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
 			</Search>
 		);
 
@@ -380,8 +380,8 @@ describe("Events", () => {
 		const spy = cy.spy();
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
-				<SearchItem scopeName="Items" headingText="Item 2" selected />
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
 			</Search>
 		);
 
@@ -409,7 +409,7 @@ describe("Events", () => {
 			.should("have.been.calledOnce");
 
 		cy.wrap(spy).should("have.been.calledWithMatch", Cypress.sinon.match(event => {
-			return event.detail.item.headingText === "Item 1";
+			return event.detail.item.text === "Item 1";
 		}));
 	});
 
@@ -417,8 +417,8 @@ describe("Events", () => {
 		const spy = cy.spy();
 		cy.mount(
 			<Search noTypeahead={true}>
-				<SearchItem headingText="Item 1" icon={history} />
-				<SearchItem scopeName="Items" headingText="Item 2" selected />
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
 			</Search>
 		);
 
@@ -446,7 +446,7 @@ describe("Events", () => {
 			.should("have.been.calledOnce");
 
 		cy.wrap(spy).should("have.been.calledWithMatch", Cypress.sinon.match(event => {
-			return event.detail.item.headingText === "Item 1";
+			return event.detail.item.text === "Item 1";
 		}));
 	});
 
@@ -454,8 +454,8 @@ describe("Events", () => {
 		const spy = cy.spy();
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
-				<SearchItem scopeName="Items" headingText="Item 2" selected />
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
 			</Search>
 		);
 
@@ -483,15 +483,15 @@ describe("Events", () => {
 			.should("have.been.calledOnce");
 
 		cy.wrap(spy).should("have.been.calledWithMatch", Cypress.sinon.match(event => {
-			return event.detail.item.headingText === "Item 2";
+			return event.detail.item.text === "Item 2";
 		}));
 	});
 
 	it("search event prevention", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
-				<SearchItem scopeName="Items" headingText="Item 2" selected />
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
 			</Search>
 		);
 
@@ -523,7 +523,7 @@ describe("Events", () => {
 	it("open event", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
+				<SearchItem text="Item 1" icon={history} />
 			</Search>
 		);
 
@@ -567,7 +567,7 @@ describe("Events", () => {
 	it("open event - typing, pressing Escape, then typing again should reopen suggestions", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
+				<SearchItem text="Item 1" icon={history} />
 			</Search>
 		);
 
@@ -607,7 +607,7 @@ describe("Events", () => {
 	it("open event - typing, selecting an item, then typing again should reopen picker", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
+				<SearchItem text="Item 1" icon={history} />
 			</Search>
 		);
 
@@ -650,7 +650,7 @@ describe("Events", () => {
 	it("close event", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
+				<SearchItem text="Item 1" icon={history} />
 			</Search>
 		);
 
@@ -677,7 +677,7 @@ describe("Events", () => {
 	it("close event on Escape", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
+				<SearchItem text="Item 1" icon={history} />
 			</Search>
 		);
 
@@ -704,7 +704,7 @@ describe("Events", () => {
 	it("should close popup on Escape and return focus to the field", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
+				<SearchItem text="Item 1" icon={history} />
 			</Search>
 		);
 
@@ -732,7 +732,7 @@ describe("Events", () => {
 		}
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} onDelete={onDelete}/>
+				<SearchItem text="Item 1" icon={history} onDelete={onDelete}/>
 			</Search>
 		);
 
@@ -761,7 +761,7 @@ describe("Accessibility", () => {
 	it("should navigate through items to action button with Arrow keys", () => {
 		cy.mount(
 			<Search>
-				<SearchItem headingText="Item 1" icon={history} />
+				<SearchItem text="Item 1" icon={history} />
 				<Button design={ButtonDesign.Transparent} slot="action">Show All</Button>
 			</Search>
 		);
