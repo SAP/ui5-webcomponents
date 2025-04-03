@@ -1,0 +1,48 @@
+.sideNavigation:not([collapsed]):not([is-phone]) {
+    width: 18rem;
+}
+
+.mainContent {
+    padding: var(--sapContent_Gap);
+}
+
+.quickCreateDialog::part(footer) {
+	padding-inline: 0;
+}
+
+/* Notifications */
+.notificationsPopover {
+	width: 27rem;
+	max-height: 40rem;
+}
+
+.notificationsPopover::part(header) {
+	padding: 0;
+	box-shadow: none;
+}
+
+.notificationsPopover::part(content) {
+	padding: 0;
+}
+
+.notificationsPopoverHeader {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
+
+.notificationsPopoverList {
+	height: 100%;
+}
+
+.notificationsPopoverBar,
+.notificationsPopoverBar::part(bar) {
+	box-shadow: none;
+}
+
+.notificationsMessageStrip {
+	display: none;
+	margin: 0.5rem;
+	width: auto;
+}
+/* End notifications */
