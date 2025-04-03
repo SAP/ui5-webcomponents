@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.19](https://github.com/SAP/ui5-webcomponents/compare/v1.24.18...v1.24.19) (2025-04-03)
+
+
+### Bug Fixes
+
+* **framework:** fix fetching "id" (indonesian) language ([8dc60ae](https://github.com/SAP/ui5-webcomponents/commit/8dc60aeaada5d7666692c0f6f605d6428c48fb50)), closes [#11233](https://github.com/SAP/ui5-webcomponents/issues/11233)
+
+
+
+
+
 ## [1.24.18](https://github.com/SAP/ui5-webcomponents/compare/v1.24.17...v1.24.18) (2025-04-03)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
