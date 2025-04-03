@@ -10,6 +10,7 @@ let _enableDefaultTooltips: boolean;
  */
 const getEnableDefaultTooltips = (): boolean => {
 	if (_enableDefaultTooltips === undefined) {
+		debugger
 		_enableDefaultTooltips = getConfiguredEnableDefaultTooltips();
 	}
 
@@ -27,6 +28,7 @@ const getEnableDefaultTooltips = (): boolean => {
  * @param { boolean } enableDefaultTooltips
  */
 const setEnableDefaultTooltips = (enableDefaultTooltips: boolean) => {
+	debugger
 	_enableDefaultTooltips = enableDefaultTooltips;
 };
 
