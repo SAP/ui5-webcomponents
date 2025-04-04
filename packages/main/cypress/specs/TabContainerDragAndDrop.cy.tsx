@@ -4,11 +4,39 @@ import Tab from "../../src/Tab.js";
 import type { TabInStrip } from "../../src/Tab.js";
 import TabSeparator from "../../src/TabSeparator.js";
 import Button from "../../src/Button.js";
+import type MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 
 // TODO: test not calling moveover preventDefault()
-// TODO: attempt to make failures more informative
+// TODO: dragend
 
-describe("Drag and drop tests", () => {
+const verifyMoveOverEvent = (sourceElementId: string, destinationPlacement: `${MovePlacement}`,  destinationElementId: string) => {
+	cy.get<Cypress.Agent<sinon.SinonStub<any[], any>>>("@handleMoveOverStub")
+		.then((stub) => {
+			const event = stub.getCall(0).args[0];
+			const { source, destination } = event.detail;
+
+			expect(source.element.id).to.equal(sourceElementId);
+			expect(destination.element.id).to.equal(destinationElementId);
+			expect(destination.placement).to.equal(destinationPlacement);
+		});
+};
+
+const verifyMoveEvent = (sourceElementId: string, destinationPlacement: `${MovePlacement}`,  destinationElementId: string) => {
+	const helper = cy.stub();
+
+	cy.get<Cypress.Agent<sinon.SinonStub<any[], any>>>("@handleMoveOverStub")
+		.then((stub) => {
+			const event = stub.getCall(0).args[0];
+			const { source, destination } = event.detail;
+
+			expect(source.element.id).to.equal(sourceElementId);
+			expect(destination.element.id).to.equal(destinationElementId);
+			expect(destination.placement).to.equal(destinationPlacement);
+		});
+};
+
+describe("Drag and drop with mouse", () => {
+
 	beforeEach(() => {
 		const handleMoveOver = cy.stub();
 		handleMoveOver.callsFake(function (e: CustomEvent<TabContainerMoveEventDetail>) {
@@ -93,19 +121,8 @@ describe("Drag and drop tests", () => {
 				cy.ui5TabContainerDragAndDrop($el[0].getDomRefInStrip()!, "After", $el[1].getDomRefInStrip()!)
 			})
 
-		cy.get("@handleMoveOverStub")
-			.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-				const { source, destination } = event.detail;
-
-				return source.element.id === "tabOne" && destination.element.id === "tabTwo" && destination.placement === "After";
-			}));
-
-		cy.get("@handleMoveStub")
-			.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-				const { source, destination } = event.detail;
-
-				return source.element.id === "tabOne" && destination.element.id === "tabTwo" && destination.placement === "After";
-			}));
+		verifyMoveOverEvent("tabOne", "After", "tabTwo");
+		verifyMoveEvent("tabOne", "After", "tabTwo");
 	});
 
 	it("Moving first strip item 'After' last", () => {
@@ -116,22 +133,11 @@ describe("Drag and drop tests", () => {
 				const firstItem = $el[0];
 				const lastItem = $el[$el.length - 1];
 
-				cy.ui5TabContainerDragAndDrop(firstItem, "After", lastItem, "Horizontal");
+				cy.ui5TabContainerDragAndDrop(firstItem, "After", lastItem);
 
-				cy.get("@handleMoveOverStub")
-					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-						const { source, destination } = event.detail;
-		
-						return source.element.id === "tabOne" && destination.element.id === lastItem.realTabReference.id && destination.placement === "After";
-					}));
-		
-				cy.get("@handleMoveStub")
-					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-						const { source, destination } = event.detail;
-		
-						return source.element.id === "tabOne" && destination.element.id === lastItem.realTabReference.id && destination.placement === "After";
-					}));
-			})
+				verifyMoveOverEvent(firstItem.realTabReference.id, "After", lastItem.realTabReference.id);
+				verifyMoveEvent(firstItem.realTabReference.id, "After", lastItem.realTabReference.id);
+			});
 	});
 
 	it("Moving last strip item 'Before' last but one", () => {
@@ -143,30 +149,10 @@ describe("Drag and drop tests", () => {
 				const lastButOneItem = $el[$el.length - 2];
 
 				cy.ui5TabContainerDragAndDrop(lastItem, "Before", lastButOneItem);
-				const helper = cy.stub();
-				cy.get<typeof helper>("@handleMoveOverStub")
-					.then((stub) => {
-						debugger
-						const event = stub.getCall(0).args[0];
 
-						const { source, destination } = event.detail;
-						expect(source.element.id).to.equal(lastItem.realTabReference.id);
-						expect(destination.element.id).to.equal(lastButOneItem.realTabReference.id);
-						expect(destination.placement).to.equal("Before");
-					})
-
-					// .should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-					// 	const { source, destination } = event.detail;
-
-					// 	return source.element.id === lastItem.realTabReference.id && destination.element.id === lastButOneItem.realTabReference.id && destination.placement === "Before";
-					// }));
-
-				cy.get("@handleMoveStub")
-					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-						const { source, destination } = event.detail;
-						return source.element.id === lastItem.realTabReference.id && destination.element.id === lastButOneItem.realTabReference.id && destination.placement === "Before";
-					}));
-			})
+				verifyMoveOverEvent(lastItem.realTabReference.id, "Before", lastButOneItem.realTabReference.id);
+				verifyMoveEvent(lastItem.realTabReference.id, "Before", lastButOneItem.realTabReference.id);
+			});
 	});
 
 	it("Moving last strip item 'Before' first", () => {
@@ -179,40 +165,19 @@ describe("Drag and drop tests", () => {
 
 				cy.ui5TabContainerDragAndDrop(lastItem, "Before", firstItem);
 
-				cy.get("@handleMoveOverStub")
-					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-						const { source, destination } = event.detail;
-
-						return source.element.id === lastItem.realTabReference.id && destination.element.id === "tabOne" && destination.placement === "Before";
-					}));
-
-				cy.get("@handleMoveStub")
-					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-						const { source, destination } = event.detail;
-						return source.element.id === lastItem.realTabReference.id && destination.element.id === "tabOne" && destination.placement === "Before";
-					}));
-			})
+				verifyMoveOverEvent(lastItem.realTabReference.id, "Before", firstItem.realTabReference.id);
+				verifyMoveEvent(lastItem.realTabReference.id, "Before", firstItem.realTabReference.id);
+			});
 	});
 
-	it ("Moving strip item 'On' another", () => {
+	it("Moving strip item 'On' another", () => {
 		cy.get<Tab>("#tabFive, #tabSix")
 			.then(($el) => {
 				cy.ui5TabContainerDragAndDrop($el[0].getDomRefInStrip()!, "On", $el[1].getDomRefInStrip()!)
 			})
 
-		cy.get("@handleMoveOverStub")
-			.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-				const { source, destination } = event.detail;
-
-				return source.element.id === "tabFive" && destination.element.id === "tabSix" && destination.placement === "On";
-			}));
-
-		cy.get("@handleMoveStub")
-			.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-				const { source, destination } = event.detail;
-
-				return source.element.id === "tabFive" && destination.element.id === "tabSix" && destination.placement === "On";
-			}));
+		verifyMoveOverEvent("tabFive", "On", "tabSix");
+		verifyMoveEvent("tabFive", "On", "tabSix");
 	});
 
 	it("Moving item 'After' another in end overflow popover", () => {
@@ -228,19 +193,8 @@ describe("Drag and drop tests", () => {
 		
 				cy.ui5TabContainerDragAndDrop(draggedPopoverItem, "After", dropTargetPopoverItem, "Vertical");
 
-				cy.get("@handleMoveOverStub")
-					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-						const { source, destination } = event.detail;
-		
-						return source.element.id === draggedPopoverItem.realTabReference.id && destination.element.id === dropTargetPopoverItem.realTabReference.id && destination.placement === "After";
-					}));
-
-				cy.get("@handleMoveStub")
-					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-						const { source, destination } = event.detail;
-
-						return source.element.id === draggedPopoverItem.realTabReference.id && destination.element.id === dropTargetPopoverItem.realTabReference.id && destination.placement === "After";
-					}));
+				verifyMoveOverEvent(draggedPopoverItem.realTabReference.id, "After", dropTargetPopoverItem.realTabReference.id);
+				verifyMoveEvent(draggedPopoverItem.realTabReference.id, "After", dropTargetPopoverItem.realTabReference.id);
 			});
 	});
 
@@ -257,18 +211,8 @@ describe("Drag and drop tests", () => {
 
 				cy.ui5TabContainerDragAndDrop(draggedPopoverItem, "Before", dropTargetPopoverItem, "Vertical");
 
-				cy.get("@handleMoveOverStub")
-					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-						const { source, destination } = event.detail;
-
-						return source.element.id === draggedPopoverItem.realTabReference.id && destination.element.id === dropTargetPopoverItem.realTabReference.id && destination.placement === "Before";
-					}));
-				cy.get("@handleMoveStub")
-					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-						const { source, destination } = event.detail;
-
-						return source.element.id === draggedPopoverItem.realTabReference.id && destination.element.id === dropTargetPopoverItem.realTabReference.id && destination.placement === "Before";
-					}));
+				verifyMoveEvent(draggedPopoverItem.realTabReference.id, "Before", dropTargetPopoverItem.realTabReference.id);
+				verifyMoveOverEvent(draggedPopoverItem.realTabReference.id, "Before", dropTargetPopoverItem.realTabReference.id);
 			});
 	});
 
@@ -285,19 +229,8 @@ describe("Drag and drop tests", () => {
 
 				cy.ui5TabContainerDragAndDrop(draggedPopoverItem, "On", dropTargetPopoverItem, "Vertical");
 
-				cy.get("@handleMoveOverStub")
-					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-						const { source, destination } = event.detail;
-
-						return source.element.id === draggedPopoverItem.realTabReference.id && destination.element.id === dropTargetPopoverItem.realTabReference.id && destination.placement === "On";
-					}));
-
-				cy.get("@handleMoveStub")
-					.should("have.been.calledWithMatch", Cypress.sinon.match((event: CustomEvent<TabContainerMoveEventDetail>) => {
-						const { source, destination } = event.detail;
-
-						return source.element.id === draggedPopoverItem.realTabReference.id && destination.element.id === dropTargetPopoverItem.realTabReference.id && destination.placement === "On";
-					}));
+				verifyMoveEvent(draggedPopoverItem.realTabReference.id, "On", dropTargetPopoverItem.realTabReference.id);
+				verifyMoveOverEvent(draggedPopoverItem.realTabReference.id, "On", dropTargetPopoverItem.realTabReference.id);
 			});
 	});
 });
