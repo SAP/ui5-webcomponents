@@ -41,7 +41,7 @@ export default function MessageStripTemplate(this: MessageStrip) {
 					design="Transparent"
 					class="ui5-message-strip-close-button"
 					tooltip={this._closeButtonText}
-					accessible-name={this._closeButtonText}
+					accessibleName={this._closeButtonText}
 					onClick={this._closeClick}
 				/>
 			}
