@@ -294,7 +294,6 @@ describe("Accessibility", () => {
 	});
 
 	it("aria-describedby properly applied on the button tag", () => {
-		const hiddenTextTypeId = "ui5-button-hiddenText-type";
 		cy.mount(<Button design="Attention">Content</Button>);
 
 		cy.get("[ui5-button]")
@@ -304,11 +303,6 @@ describe("Accessibility", () => {
 			.shadow()
 			.find("button")
 			.should("have.attr", "aria-description", "Warning");
-
-		cy.get("@button")
-			.shadow()
-			.find(`span[id="${hiddenTextTypeId}"]`)
-			.should("exist");
 	});
 
 	it("accessibleDescription in combination with design property applied on the button tag", () => {

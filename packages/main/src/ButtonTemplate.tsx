@@ -66,10 +66,6 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 				/>
 			}
 
-			{this.hasButtonType &&
-				<span id="ui5-button-hiddenText-type" aria-hidden="true" class="ui5-hidden-text">{this.buttonTypeText}</span>
-			}
-
 			{this.shouldRenderBadge &&
 				<slot name="badge"/>
 			}
