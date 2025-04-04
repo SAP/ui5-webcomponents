@@ -736,11 +736,6 @@ describe("Events", () => {
 			</Search>
 		);
 
-		cy.get("[ui5-search-item]")
-			.then(searchItem => {
-				searchItem.get(0).addEventListener("ui5-delete", (event: Event) => (event.target as HTMLElement).remove());
-			});
-
 		cy.get("[ui5-search]")
 			.shadow()
 			.find("input")

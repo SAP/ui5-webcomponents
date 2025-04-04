@@ -6,16 +6,11 @@ import FilterItemOption from "../../src/FilterItemOption.js";
 describe("View settings dialog - selection", () => {
 	it("tests clicking on sort items (both on the text and radio button)", () => {
 		cy.mount(
-			<ViewSettingsDialog id="vsd">
+			<ViewSettingsDialog id="vsd" onConfirm={cy.stub().as("confirm")}>
 				<SortItem slot="sortItems" text="Name" selected={true}></SortItem>
 				<SortItem slot="sortItems" text="Position"></SortItem>
 			</ViewSettingsDialog>
 		);
-
-		cy.get("[ui5-view-settings-dialog]")
-			.then(vsd => {
-				vsd.get(0).addEventListener("ui5-confirm", cy.stub().as("confirm"));
-			});
 
 		// Open the dialog and wait until it's visible
 		cy.get("[ui5-view-settings-dialog]")
@@ -93,7 +88,7 @@ describe("View settings dialog - selection", () => {
 
 	it("tests clicking on filter items, and filter item options (both on the text and checkbox)", () => {
 		cy.mount(
-			<ViewSettingsDialog id="vsd">
+			<ViewSettingsDialog id="vsd" onConfirm={cy.stub().as("confirm")}>
 				<FilterItem slot="filterItems" text="Filter 1">
 					<FilterItemOption slot="values" text="Some filter 1"></FilterItemOption>
 					<FilterItemOption slot="values" text="Some filter 2"></FilterItemOption>
@@ -106,11 +101,6 @@ describe("View settings dialog - selection", () => {
 				</FilterItem>
 			</ViewSettingsDialog>
 		);
-
-		cy.get("[ui5-view-settings-dialog]")
-			.then(vsd => {
-				vsd.get(0).addEventListener("ui5-confirm", cy.stub().as("confirm"));
-			});
 
 		// Open the dialog and wait until it's visible
 		cy.get("[ui5-view-settings-dialog]")
