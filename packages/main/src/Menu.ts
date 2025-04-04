@@ -7,6 +7,7 @@ import {
 	isLeft,
 	isRight,
 	isEnter,
+	isSpace,
 	isTabNext,
 	isTabPrevious,
 	isDown,
@@ -24,8 +25,7 @@ import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
-import type MenuItem from "./MenuItem.js";
-import "./MenuItem.js";
+import MenuItem from "./MenuItem.js";
 import "./MenuSeparator.js";
 import type {
 	ListItemClickEventDetail,
@@ -285,24 +285,12 @@ class Menu extends UI5Element {
 		item.selected = true;
 	}
 
-	_closeItemSubMenu(item: MenuItem) {
-		if (item && item._popover) {
-			const openedSibling = item._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
-			if (openedSibling) {
-				this._closeItemSubMenu(openedSibling);
-			}
-
-			item._popover.open = false;
-			item.selected = false;
-		}
-	}
-
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {
 			// respect mouseover only on desktop
 			const item = e.target as MenuItem;
 
-			if (this._isInstanceOfMenuItem(item)) {
+			if (MenuItem._isInstanceOfMenuItem(item)) {
 				item.focus();
 
 				// Opens submenu with 300ms delay
@@ -326,10 +314,9 @@ class Menu extends UI5Element {
 		clearTimeout(this._timeout);
 
 		this._timeout = setTimeout(() => {
-			const opener = item.parentElement as MenuItem | Menu;
-			const openedSibling = opener && opener._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
-			if (openedSibling) {
-				this._closeItemSubMenu(openedSibling);
+			const menuItems = this._menuItems;
+			if (menuItems.indexOf(item) > -1) {
+				menuItems.forEach(menuItem => { menuItem !== item && menuItem._close(); });
 			}
 
 			this._openItemSubMenu(item);
@@ -355,42 +342,45 @@ class Menu extends UI5Element {
 
 	_itemKeyDown(e: KeyboardEvent) {
 		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
-		const item = e.target as MenuItem;
-		const parentElement = item.parentElement as MenuItem;
-		const shouldItemNavigation = isUp(e) || isDown(e);
+		const item = e.target as MenuItem; // Type assignment here is misleading, as item can also be EndContent
+		const menuItemInMenu = this._menuItems.indexOf(item) > -1;
+		const isItemNavigation = isUp(e) || isDown(e);
+		const isItemSelection = isEnter(e) || isSpace(e);
+		const isEndContentNavigation = isRight(e) || isLeft(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
-		const shouldCloseMenu = !shouldItemNavigation && !shouldOpenMenu && this._isInstanceOfMenuItem(parentElement);
+		const shouldCloseMenu = menuItemInMenu && !(isItemNavigation || isItemSelection || isEndContentNavigation);
 
-		if (this._isInstanceOfMenuItem(item)) {
-			if (isEnter(e) || isTabNextPrevious) {
-				e.preventDefault();
-			}
+		if (!MenuItem._isInstanceOfMenuItem(item)) {
+			return;
+		}
 
-			if (isRight(e) || isLeft(e)) {
-				item._navigateToEndContent(isLeft(e));
-			}
+		if (isEnter(e) || isTabNextPrevious) {
+			e.preventDefault();
+		}
 
-			if (shouldOpenMenu) {
-				this._openItemSubMenu(item);
-			} else if ((shouldCloseMenu || isTabNextPrevious) && parentElement._popover) {
-				parentElement._popover.open = false;
-				parentElement.selected = false;
-				parentElement._popover.focusOpener();
-			}
-		} else if (isUp(e)) {
-			this._navigateOutOfEndContent(parentElement);
-		} else if (isDown(e)) {
-			this._navigateOutOfEndContent(parentElement, true);
+		if (isEndContentNavigation) {
+			item._navigateToEndContent(isLeft(e));
+		}
+
+		if (shouldOpenMenu) {
+			this._openItemSubMenu(item);
+		} else if ((shouldCloseMenu || isTabNextPrevious)) {
+			this._close();
 		}
 	}
 
-	_navigateOutOfEndContent(menuItem: MenuItem, isDownwards?: boolean) {
-		const opener = menuItem?.parentElement as MenuItem | Menu;
-		const currentIndex = opener._menuItems.indexOf(menuItem);
-		const nextItem = isDownwards ? opener._menuItems[currentIndex + 1] : opener._menuItems[currentIndex - 1];
-		const itemToFocus = nextItem || opener._menuItems[currentIndex];
+	_navigateOutOfEndContent(e: CustomEvent) {
+		const item = e.target as MenuItem;
+		const isLast = e.detail.isLast;
+		const itemIndex = this._menuItems.indexOf(item);
 
-		itemToFocus.focus();
+		if (itemIndex > -1) {
+			const nextItem = isLast ? this._menuItems[itemIndex + 1] : this._menuItems[itemIndex - 1];
+			const itemToFocus = nextItem || this._menuItems[itemIndex];
+			itemToFocus?.focus();
+
+			e.stopPropagation();
+		}
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
@@ -419,10 +409,6 @@ class Menu extends UI5Element {
 	_afterPopoverClose() {
 		this.open = false;
 		this.fireDecoratorEvent("close");
-	}
-
-	_isInstanceOfMenuItem(object: any): object is MenuItem {
-		return "isMenuItem" in object;
 	}
 }
 
