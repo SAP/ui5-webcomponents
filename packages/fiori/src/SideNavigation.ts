@@ -6,6 +6,7 @@ import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type NavigationMenu from "./NavigationMenu.js";
 import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
+import type { SideNavigationItemClickEventDetail } from "./SideNavigationItemBase.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -565,7 +566,20 @@ class SideNavigation extends UI5Element {
 
 	_handleItemClick(e: KeyboardEvent | MouseEvent, item: SideNavigationSelectableItemBase) {
 		if (item.selected && !this.collapsed) {
-			item.fireDecoratorEvent("click");
+			const {
+				altKey,
+				ctrlKey,
+				shiftKey,
+			} = e;
+
+			const executeEvent = item.fireDecoratorEvent("click", {
+				altKey,
+				ctrlKey,
+				shiftKey,
+			});
+			if (!executeEvent) {
+				e.preventDefault();
+			}
 			return;
 		}
 
@@ -580,7 +594,21 @@ class SideNavigation extends UI5Element {
 
 			this.openPicker(item.getFocusDomRef() as HTMLElement);
 		} else {
-			item.fireDecoratorEvent("click");
+			const {
+				altKey,
+				ctrlKey,
+				shiftKey,
+			} = e;
+
+			const executeEvent = item.fireDecoratorEvent("click", {
+				altKey,
+				ctrlKey,
+				shiftKey,
+			});
+			if (!executeEvent) {
+				e.preventDefault();
+				return;
+			}
 
 			if (!item.selected) {
 				this._selectItem(item);

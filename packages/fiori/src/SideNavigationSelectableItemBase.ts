@@ -5,6 +5,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import type { SideNavigationItemClickEventDetail } from "./SideNavigationItemBase.js";
 
 type SideNavigationItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
@@ -12,9 +13,13 @@ type SideNavigationItemAccessibilityAttributes = Pick<AccessibilityAttributes, "
  * Fired when the component is activated either with a click/tap or by using the [Enter] or [Space] keys.
  *
  * @public
+ * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+ * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+ * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
 @event("click", {
 	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -30,7 +35,7 @@ type SideNavigationItemAccessibilityAttributes = Pick<AccessibilityAttributes, "
 @customElement()
 class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	eventDetails!: SideNavigationItemBase["eventDetails"] & {
-		"click": void
+		"click": SideNavigationItemClickEventDetail
 	}
 	/**
 	 * Defines the icon of the item.
@@ -232,10 +237,23 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	_activate(e: KeyboardEvent | MouseEvent) {
+		const {
+			altKey,
+			ctrlKey,
+			shiftKey,
+		} = e;
+
 		e.stopPropagation();
 
 		if (this.isOverflow) {
-			this.fireDecoratorEvent("click");
+			const executeEvent = this.fireDecoratorEvent("click", {
+				altKey,
+				ctrlKey,
+				shiftKey,
+			});
+			if (!executeEvent) {
+				e.preventDefault();
+			}
 		} else {
 			this.sideNavigation?._handleItemClick(e, this);
 		}
