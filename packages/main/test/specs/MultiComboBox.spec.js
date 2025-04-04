@@ -1791,6 +1791,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = $("#mcb-error");
+			let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-error");
 
 			// click on arrow
 			await mcb.shadow$("ui5-icon").click();
@@ -1803,7 +1804,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.keys("Space");
 
 			// get value state header
-			const valueStateHeader = await mcb.shadow$("ui5-responsive-popover div.ui5-valuestatemessage-header");
+			const valueStateHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
 
 			assert.notOk(await valueStateHeader.isExisting(), "Value state header should not be rendered");
 		});
