@@ -1,3 +1,4 @@
+import { mount } from '@ui5/cypress-ct-ui5-webc'
 import "cypress-real-events";
 import '@cypress/code-coverage/support';
 import "./acc_report/support.js";
@@ -29,3 +30,13 @@ const commands = [
 commands.forEach(cmd => {
 	Cypress.Commands.overwrite(cmd as any, realEventCmdCallback)
 });
+
+declare global {
+	namespace Cypress {
+		interface Chainable {
+			mount: typeof mount;
+		}
+	}
+}
+
+Cypress.Commands.add('mount', mount)

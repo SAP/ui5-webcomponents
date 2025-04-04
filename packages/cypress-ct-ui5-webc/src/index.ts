@@ -1,6 +1,7 @@
+/// <reference types="cypress" />
 import { setupHooks, getContainerEl } from "@cypress/mount-utils";
-import { render } from 'preact';
-import type { JSX } from 'preact';
+import { render } from '@ui5/webcomponents-base/dist/thirdparty/preact/preact.module.js';
+import type { JSX } from '@ui5/webcomponents-base/dist/thirdparty/preact/preact.module.js';
 
 type Options = Record<string, any>;
 

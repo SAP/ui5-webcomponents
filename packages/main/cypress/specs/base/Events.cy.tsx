@@ -15,6 +15,7 @@ import MultiComboBoxItem from "../../../src/MultiComboBoxItem.js";
 import CheckBox from "../../../src/CheckBox.js";
 import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import type ResponsivePopover from "../../../src/ResponsivePopover.js";
 
 describe("Event bubbling", () => {
 	before(() => {
@@ -83,6 +84,9 @@ describe("Event bubbling", () => {
 
 		cy.get("@dialog").invoke("attr", "open", true);
 
+		cy.get<Dialog>("@dialog")
+			.ui5DialogOpened()
+
 		// act - toggle Input suggestions
 		cy.get("@input")
 			.realClick();
@@ -91,6 +95,11 @@ describe("Event bubbling", () => {
 			.should("be.focused");
 
 		cy.realType("a");
+
+		cy.get("@input")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
 
 		cy.get("@input")
 			.find("[ui5-suggestion-item]")
