@@ -37,7 +37,7 @@
 
 <body>
 
-    <h1>Cypress Test Report</h1>
+    <h1>Cypress Accessibility Test Report</h1>
 
     <div>
         <ul id="test-report">
