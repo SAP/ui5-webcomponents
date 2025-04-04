@@ -211,10 +211,10 @@ class DynamicPage extends UI5Element {
 		}
 		const titleHeight = this.dynamicPageTitle?.getBoundingClientRect().height || 0;
 		const headerHeight = this.dynamicPageHeader?.getBoundingClientRect().height || 0;
+		const footerHeight = this.showFooter ? this.footerWrapper?.getBoundingClientRect().height : 0;
 
 		if (this.scrollContainer) {
-			this.scrollContainer.style.setProperty("scroll-padding-block-end",
-			  this.showFooter ? "4rem" : "0");
+			this.scrollContainer.style.setProperty("scroll-padding-block-end", `${footerHeight}px`);
 
 			if (this._headerSnapped) {
 			  this.scrollContainer.style.setProperty("scroll-padding-block-start", `${titleHeight}px`);
@@ -230,6 +230,10 @@ class DynamicPage extends UI5Element {
 
 	get dynamicPageHeader(): DynamicPageHeader | null {
 		return this.querySelector<DynamicPageHeader>("[ui5-dynamic-page-header]");
+	}
+
+	get footerWrapper() {
+		return this.shadowRoot?.querySelector(".ui5-dynamic-page-footer");
 	}
 
 	get actionsInTitle(): boolean {
