@@ -10,9 +10,9 @@ import type MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement
 // TODO: dragend
 
 const verifyMoveOverEvent = (sourceElementId: string, destinationPlacement: `${MovePlacement}`,  destinationElementId: string) => {
-	cy.get<Cypress.Agent<sinon.SinonStub<any[], any>>>("@handleMoveOverStub")
-		.then((stub) => {
-			const event = stub.getCall(0).args[0];
+	cy.get<Cypress.Agent<sinon.SinonSpy<any[], any>>>("@handleMoveOverSpy")
+		.then((spy) => {
+			const event = spy.getCall(0).args[0];
 			const { source, destination } = event.detail;
 
 			expect(source.element.id).to.equal(sourceElementId);
@@ -22,11 +22,9 @@ const verifyMoveOverEvent = (sourceElementId: string, destinationPlacement: `${M
 };
 
 const verifyMoveEvent = (sourceElementId: string, destinationPlacement: `${MovePlacement}`,  destinationElementId: string) => {
-	const helper = cy.stub();
-
-	cy.get<Cypress.Agent<sinon.SinonStub<any[], any>>>("@handleMoveOverStub")
-		.then((stub) => {
-			const event = stub.getCall(0).args[0];
+	cy.get<Cypress.Agent<sinon.SinonSpy<any[], any>>>("@handleMoveSpy")
+		.then((spy) => {
+			const event = spy.getCall(0).args[0];
 			const { source, destination } = event.detail;
 
 			expect(source.element.id).to.equal(sourceElementId);
@@ -36,22 +34,33 @@ const verifyMoveEvent = (sourceElementId: string, destinationPlacement: `${MoveP
 };
 
 describe("Drag and drop with mouse", () => {
-
 	beforeEach(() => {
-		const handleMoveOver = cy.stub();
-		handleMoveOver.callsFake(function (e: CustomEvent<TabContainerMoveEventDetail>) {
-			e.preventDefault();
-		});
-		handleMoveOver.as("handleMoveOverStub");
-		
-		const handleMove = cy.stub();
-		handleMove.callsFake((e: CustomEvent<TabContainerMoveEventDetail>) => {
-			e.preventDefault();
-		});
-		handleMove.as("handleMoveStub");
+		const handlers = {
+			moveOver: (e: CustomEvent<TabContainerMoveEventDetail>) => {
+				e.preventDefault();
+			},
+			move: (e: CustomEvent<TabContainerMoveEventDetail>) => {
+				const { destination, source } = e.detail;
+
+				switch (destination.placement) {
+					case "Before":
+						destination.element.before(source.element);
+						break;
+					case "After":
+						destination.element.after(source.element);
+						break;
+					case "On":
+						destination.element.prepend(source.element);
+						break;
+				}
+			}
+		};
+
+		cy.spy(handlers, "moveOver").as("handleMoveOverSpy");
+		cy.spy(handlers, "move").as("handleMoveSpy");
 
 		cy.mount(
-			<TabContainer id="tabContainer" collapsed={true} overflowMode="End" onMoveOver={handleMoveOver} onMove={handleMove}>
+			<TabContainer id="tabContainer" collapsed={true} overflowMode="End" onMoveOver={handlers.moveOver} onMove={handlers.move}>
 				<Tab id="tabOne" movable={true} design="Positive" text="One"></Tab>
 				<Tab id="tabTwo" movable={true} design="Negative" text="Two" disabled>
 					<Tab slot="items" movable={true} text="2.1"></Tab>
@@ -235,51 +244,250 @@ describe("Drag and drop with mouse", () => {
 	});
 });
 
-// describe("Keyboard drag and drop tests", () => {
-// 	before(async () => {
-// 		await browser.url(`test/pages/TabContainerDragAndDrop.html`);
-// 		await browser.setWindowSize(1024, 1000);
-// 	});
+describe("Drag and drop with keyboard", () => {
+	const waitUntilTabIsFocusedInStrip = (tabText: string) => {
+		cy.get("#tabContainer")
+			.shadow()
+			.find(".ui5-tab-strip-item")
+			.contains(tabText)
+			.closest(".ui5-tab-strip-item")
+			.should("have.focus")
+	};
 
-// 	describe("Moving strip items", () => {
-// 		it("Moving strip items with arrow keys", async () => {
-// 			await browser.$("#tabContainer").shadow$(".ui5-tab-strip-item").click();
-// 			const tab = await browser.$("#tabOne");
+	beforeEach(() => {
+		const handlers = {
+			moveOver: (e: CustomEvent<TabContainerMoveEventDetail>) => {
+				e.preventDefault();
+			},
+			move: (e: CustomEvent<TabContainerMoveEventDetail>) => {
+				const { destination, source } = e.detail;
 
-// 			assert.notOk(await tab.previousElement().isExisting(), "TabOne is the first tab");
+				switch (destination.placement) {
+					case "Before":
+						destination.element.before(source.element);
+						break;
+					case "After":
+						destination.element.after(source.element);
+						break;
+					case "On":
+						destination.element.prepend(source.element);
+						break;
+				}
+			}
+		};
 
-// 			await browser.keys(["Control", "ArrowRight"]);
-// 			assert.strictEqual(await tab.previousElement().getAttribute("id"), "tabTwo", "TabOne is after tabTwo");
+		cy.spy(handlers, "moveOver").as("handleMoveOverSpy");
+		cy.spy(handlers, "move").as("handleMoveSpy");
 
-// 			await browser.keys(["Control", "ArrowDown"]);
-// 			assert.strictEqual(await tab.previousElement().getAttribute("id"), "tabThree", "TabOne is after tabThree");
+		cy.mount(
+			<TabContainer id="tabContainer" collapsed={true} overflowMode="End" onMoveOver={handlers.moveOver} onMove={handlers.move}>
+				<Tab id="tabOne" movable={true} design="Positive" text="One"></Tab>
+				<Tab id="tabTwo" movable={true} design="Negative" text="Two" disabled>
+					<Tab slot="items" movable={true} text="2.1"></Tab>
+				</Tab>
+				<Tab id="tabThree" movable={true} design="Critical" text="Three">
+					<Tab id="tabThree1" slot="items" movable={true} design="Positive" text="3.1">
+						<Button>Button 3.1</Button>
+					</Tab>
+					<Tab id="tabThree2" slot="items" movable={true} design="Positive" text="3.2">
+						<Tab id="tabThree21" slot="items" movable={true} design="Positive" text="3.2.1">
+							<Button>Button 3.2.1</Button>
+						</Tab>
+						<Tab id="tabThree22" slot="items" movable={true} design="Positive" text="3.2.2">
+							<Button>Button 3.2.2</Button>
+						</Tab>
+						<Button>Button 3.2</Button>
+					</Tab>
+					<Tab id="tabThree3" slot="items" movable={true} design="Positive" text="3.3">
+						<Button>Button 3.3</Button>
+					</Tab>
+					content
+				</Tab>
+				<Tab id="tabFour" movable={true} text="Four (forbids nesting)"></Tab>
+				<Tab id="tabFive" movable={true} text="Five">
+					<Tab slot="items" movable={true} text="nested in Five">
+						<Tab slot="items" movable={true} text="nested deeper in Five">text</Tab>
+						text
+					</Tab>
+				</Tab>
+				<Tab id="tabSix" movable={true} text="Six"></Tab>
+				<Tab id="tabSeven" movable={true} text="Seven"></Tab>
+				<TabSeparator />
+				<Tab id="tabEight" movable={true} design="Positive" text="Eight"></Tab>
+				<Tab id="tabNine" movable={true} design="Negative" text="Nine"></Tab>
+				<Tab id="tabTen" movable={true} design="Critical" text="Ten"></Tab>
+				<Tab id="tabEleven" movable={true} text="Eleven"></Tab>
+				<TabSeparator />
+				<Tab id="tabTwelve" movable={true} text="Twelve"></Tab>
+				<Tab id="tabThirteen" movable={true} text="Thirteen" selected></Tab>
+				<Tab id="tabFourteen" movable={true} text="Fourteen"></Tab>
+				<Tab id="tabFifteen" movable={true} text="Fifteen"></Tab>
+				<Tab id="tabSixteen" movable={true} text="Sixteen"></Tab>
+				<Tab id="tabSeventeen" movable={true} text="Seventeen (forbids nesting)"></Tab>
+				<Tab id="tabEighteen" movable={true} text="Eighteen"></Tab>
+				<TabSeparator />
+				<Tab id="tabNinteen" movable={true} text="Nineteen"></Tab>
+				<Tab id="tabTwenty" movable={true} text="Twenty"></Tab>
+				<Tab id="tabTwentyOne" movable={true} text="Twenty One"></Tab>
+				<Tab id="tabTwentyTwo" movable={true} text="Twenty Two"></Tab>
+				<Tab id="tabTwentyThree" movable={true} text="Twenty Three"></Tab>
+				<Tab id="tabTwentyFour" movable={true} text="Twenty Four"></Tab>
+				<TabSeparator />
+				<Tab id="tabTwentyFive" movable={true} text="Twenty Five"></Tab>
+				<Tab id="tabTwentySix" movable={true} text="Twenty Six"></Tab>
+				<Tab id="tabTwentySeven" movable={true} text="Twenty Seven"></Tab>
+				<TabSeparator />
+				<Tab id="tabTwentyEight" movable={true} text="Twenty Eight"></Tab>
+				<Tab id="tabTwentyNine" movable={true} text="Twenty Nine"></Tab>
+				<Tab id="tabThirty" movable={true} text="Thirty"></Tab>
+			</TabContainer>
+		);
+	});
 
-// 			await browser.keys(["Control", "ArrowLeft"]);
-// 			assert.strictEqual(await tab.previousElement().getAttribute("id"), "tabTwo", "TabOne is after tabTwo");
+	describe("Moving strip items", () => {
+		it("Moving strip items using arrow keys", () => {
+			cy.get("#tabContainer")
+				.shadow()
+				.find(".ui5-tab-strip-item")
+				.first()
+				.click();
+				
+			// Act
+			waitUntilTabIsFocusedInStrip("One");
+			cy.realPress(["ControlLeft", "ArrowRight"]);
 
-// 			await browser.keys(["Control", "ArrowUp"]);
-// 			assert.notOk(await tab.previousElement().isExisting(), "TabOne is the first tab");
-// 		});
+			verifyMoveOverEvent("tabOne", "After", "tabTwo");
+			verifyMoveEvent("tabOne", "After", "tabTwo");
 
-// 		it("Moving strip item beyond the end with Arrow Right", async () => {
-// 			for (let i = 0; i < 20; i++) {
-// 				await browser.keys(["Control", "ArrowRight"]);
-// 			}
+			cy.get("#tabContainer")
+				.children().eq(0)
+				.should("have.id", "tabTwo")
+	
+			cy.get("#tabContainer")
+				.children().eq(1)
+				.should("have.id", "tabOne");
 
-// 			const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainer");
+			// Act
+			cy.get("@handleMoveOverSpy")
+				.invoke("resetHistory");
 
-// 			assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(-1)), "tabOne", "TabOne is last in the strip");
-// 		});
+			cy.get("@handleMoveSpy")
+				.invoke("resetHistory");
+			waitUntilTabIsFocusedInStrip("One");
+			cy.realPress(["ControlLeft", "ArrowDown"]);
 
-// 		it("Moving strip item beyond the beginning with Arrow Left", async () => {
-// 			for (let i = 0; i < 20; i++) {
-// 				await browser.keys(["Control", "ArrowLeft"]);
-// 			}
+			verifyMoveOverEvent("tabOne", "After", "tabThree");
+			verifyMoveEvent("tabOne", "After", "tabThree");
 
-// 			const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainer");
+			cy.get("#tabContainer")
+				.children().eq(1)
+				.should("have.id", "tabThree")
 
-// 			assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(0)), "tabOne", "TabOne is the first in the strip");
-// 		});
+			cy.get("#tabContainer")
+				.children().eq(2)
+				.should("have.id", "tabOne");
+
+			// Act
+			cy.get("@handleMoveOverSpy")
+				.invoke("resetHistory");
+
+			cy.get("@handleMoveSpy")
+				.invoke("resetHistory");
+			waitUntilTabIsFocusedInStrip("One");
+			cy.realPress(["ControlLeft", "ArrowLeft"]);
+
+			verifyMoveOverEvent("tabOne", "Before", "tabThree");
+			verifyMoveEvent("tabOne", "Before", "tabThree");
+
+			cy.get("#tabContainer")
+				.children().eq(1)
+				.should("have.id", "tabOne");
+
+			cy.get("#tabContainer")
+				.children().eq(2)
+				.should("have.id", "tabThree");
+
+			cy.get("@handleMoveOverSpy")
+				.invoke("resetHistory");
+
+			cy.get("@handleMoveSpy")
+				.invoke("resetHistory");
+
+			// Act
+			cy.get("@handleMoveOverSpy")
+				.invoke("resetHistory");
+
+			cy.get("@handleMoveSpy")
+				.invoke("resetHistory");
+			waitUntilTabIsFocusedInStrip("One");
+			cy.realPress(["ControlLeft", "ArrowUp"]);
+
+			verifyMoveOverEvent("tabOne", "Before", "tabTwo");
+			verifyMoveEvent("tabOne", "Before", "tabTwo");
+
+			cy.get("#tabContainer")
+				.children().eq(0)
+				.should("have.id", "tabOne")
+				.prev()
+				.should("not.exist");
+
+			cy.get("#tabContainer")
+				.children().eq(1)
+				.should("have.id", "tabTwo");
+		});
+
+		it("Moving strip item beyond the end using 'Arrow Right'", () => {
+			cy.get("#tabContainer")
+				.shadow()
+				.find(".ui5-tab-strip-item")
+				.first()
+				.click();
+
+			// Act
+			for (let i = 0; i < 20; i++) {
+				waitUntilTabIsFocusedInStrip("One");
+				cy.realPress(["ControlLeft", "ArrowRight"]);
+			}
+
+			cy.get("#tabContainer")
+				.shadow()
+				.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
+				.last<TabInStrip>()
+				.then($el => {
+					return $el[0].realTabReference.id;
+				})
+				.should("equal", "tabOne");
+		});
+
+		it("Moving strip item beyond the beginning with 'Arrow Left'", () => {
+			cy.get("#tabContainer")
+				.shadow()
+				.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow]")
+				.last<TabInStrip>()
+				.as("lastTabInStrip");
+
+			cy.get("@lastTabInStrip").click();
+
+			// Act
+			cy.get<TabInStrip>("@lastTabInStrip")
+				.then(($lastTab) => {
+					const lastTabText = $lastTab[0].realTabReference.text!;
+
+					for (let i = 0; i < 20; i++) {
+						waitUntilTabIsFocusedInStrip(lastTabText);
+						cy.realPress(["ControlLeft", "ArrowLeft"]);
+					}
+
+					cy.get("#tabContainer")
+						.shadow()
+						.find<TabInStrip>(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
+						.first()
+						.then($el => {
+							return $el[0].realTabReference.text;
+						})
+						.should("equal", lastTabText);
+				});
+		});
 
 // 		it("Moving strip item with End", async () => {
 // 			await tabContainer.focusItem("tabOne");
@@ -297,7 +505,7 @@ describe("Drag and drop with mouse", () => {
 
 // 			assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(0)), "tabOne", "TabOne is the first in the strip");
 // 		});
-// 	});
+	});
 
 // 	describe("Moving items in popover", () => {
 // 		it("Moving sub items with arrow keys", async () => {
@@ -357,7 +565,7 @@ describe("Drag and drop with mouse", () => {
 // 			displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainer");
 // 			assert.strictEqual(await displayedPopoverItems.at(0).getAttribute("id"), id, "item was moved first");
 // 		});
-// 	});
+	// });
 
 // 	describe("Moving strip items when there are fixed tabs", () => {
 // 		it("Moving strip items with arrow keys", async () => {
@@ -377,4 +585,4 @@ describe("Drag and drop with mouse", () => {
 // 			assert.strictEqual(await browser.$("#fixedTabsTabSix").previousElement().getAttribute("id"), "fixedTabsSeparatorOne", "Tab six is placed after fixed tabs");
 // 		});
 // 	});
-// });
+});
