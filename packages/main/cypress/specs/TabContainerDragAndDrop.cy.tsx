@@ -367,20 +367,28 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					.realClick()
 					.then(() => {
 						// Act
-						for (let i = 0; i < 20; i++) {
-							waitUntilTabIsFocusedInStrip("One");
-							cy.realPress(["ControlLeft", "ArrowRight"]);
-						}
-			
-						cy.get("#tabContainer")
-							.shadow()
-							.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
-							.last<TabInStrip>()
-							.then($el => {
-								return $el[0].realTabReference.id;
-							})
-							.should("equal", "tabOne");
+						const performDrag = (cnt: number) => {
+							if (cnt == 0) {
+								cy.get("#tabContainer")
+									.shadow()
+									.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
+									.last<TabInStrip>()
+									.then($el => {
+										return $el[0].realTabReference.id;
+									})
+									.should("equal", "tabOne");
+							} else {
+								waitUntilTabIsFocusedInStrip("One");
+								cy.realPress(["ControlLeft", "ArrowRight"])
+									.then(() => {
+										performDrag(cnt - 1)
+									});
 
+							}
+
+						};
+
+						performDrag(20)
 					});
 			});
 
@@ -456,6 +464,9 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 			
 								waitUntilTabIsFocusedInStrip(lastTabText);
 								cy.realPress(["ControlLeft", "Home"]);
+
+								verifyMoveOverEvent($lastTab[0].realTabReference.id, "Before", "tabOne");
+								verifyMoveEvent($lastTab[0].realTabReference.id, "Before", "tabOne");
 			
 								cy.get("#tabContainer")
 									.shadow()
