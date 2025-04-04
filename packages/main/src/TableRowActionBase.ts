@@ -35,6 +35,7 @@ let MenuItemConstructor: new () => MenuItem;
 	renderer: jsxRenderer,
 	styles: TableRowActionBaseStyles,
 	template: TableRowActionBaseTemplate,
+	autoSlot: "actions",
 })
 
 abstract class TableRowActionBase extends UI5Element {
