@@ -2,10 +2,6 @@
 @import "./InputIcon.css";
 @import "./Input.css";
 
-:host {
-    --_ui5_list_item_title_size: var(--sapFontSize);
-}
-
 :host([icon]) {
 	min-width: var(--_ui5_button_base_min_width);
 	width: var(--_ui5_button_base_min_width);
