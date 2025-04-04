@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.2...v2.9.0-rc.3) (2025-04-03)
+
+
+### Bug Fixes
+
+* **framework:** fix fetching "id" (indonesian) language ([#11251](https://github.com/SAP/ui5-webcomponents/issues/11251)) ([9a36df5](https://github.com/SAP/ui5-webcomponents/commit/9a36df5dc2191758abd665d6fb1014d645e322f7)), closes [#11233](https://github.com/SAP/ui5-webcomponents/issues/11233)
+* **ui5-avatar-group:** correct automatic colorScheme ([#11181](https://github.com/SAP/ui5-webcomponents/issues/11181)) ([be8925d](https://github.com/SAP/ui5-webcomponents/commit/be8925de1674aae140d9f81591ce5e50420f7ff7)), closes [#11113](https://github.com/SAP/ui5-webcomponents/issues/11113)
+* **ui5-calendar:** fix month timestamp calculations ([#11226](https://github.com/SAP/ui5-webcomponents/issues/11226)) ([99ce641](https://github.com/SAP/ui5-webcomponents/commit/99ce6417e9bd8f66ddbb1b88c5c42fcd813e0abb)), closes [#11222](https://github.com/SAP/ui5-webcomponents/issues/11222)
+* **ui5-calendar:** remove auto focus of current day on initial render ([#11213](https://github.com/SAP/ui5-webcomponents/issues/11213)) ([e57ab28](https://github.com/SAP/ui5-webcomponents/commit/e57ab2884890220b1179cde77d4dcf76f630cfbc)), closes [#10728](https://github.com/SAP/ui5-webcomponents/issues/10728)
+* **ui5-date-picker:** display value state message in the value help ([#10919](https://github.com/SAP/ui5-webcomponents/issues/10919)) ([87eaa35](https://github.com/SAP/ui5-webcomponents/commit/87eaa359d2a643868f0e4a6f399376601ea32e94))
+* **ui5-input:** change event firing after clear icon click ([#11147](https://github.com/SAP/ui5-webcomponents/issues/11147)) ([a02d941](https://github.com/SAP/ui5-webcomponents/commit/a02d941d4a97b1810d6bbb88ee74a29acd2e781d))
+* **ui5-select:** add listbox role to meet ARIA parent-child requirements ([#11156](https://github.com/SAP/ui5-webcomponents/issues/11156)) ([dcb4edc](https://github.com/SAP/ui5-webcomponents/commit/dcb4edcf972376f343046dd651e3cd82a78307ed)), closes [#11151](https://github.com/SAP/ui5-webcomponents/issues/11151) [#11152](https://github.com/SAP/ui5-webcomponents/issues/11152)
+
+
+### Features
+
+* **ui5-select:** enhance `value` property ([#10904](https://github.com/SAP/ui5-webcomponents/issues/10904)) ([23707c5](https://github.com/SAP/ui5-webcomponents/commit/23707c57dee10e6d206b1ac04f5907f775dc20d7))
+
+
+
+
+
+# [2.9.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.1...v2.9.0-rc.2) (2025-03-27)
+
+
+### Bug Fixes
+
+* **framework:** .d.ts errors that require skipLibCheck ([#11189](https://github.com/SAP/ui5-webcomponents/issues/11189)) ([92f0e68](https://github.com/SAP/ui5-webcomponents/commit/92f0e68c3b3b71ff27f707621b8b3da2248a2719))
+* **ui5-bar:** remove responsive paddings ([#11105](https://github.com/SAP/ui5-webcomponents/issues/11105)) ([e2024b1](https://github.com/SAP/ui5-webcomponents/commit/e2024b1bb7caaf12452a7e20b863eb569405706f)), closes [#10012](https://github.com/SAP/ui5-webcomponents/issues/10012)
+* **ui5-breadcrumbs:** show all items in popover on mobile ([#11138](https://github.com/SAP/ui5-webcomponents/issues/11138)) ([4d75b7d](https://github.com/SAP/ui5-webcomponents/commit/4d75b7db79ede9beee7611dde03de818ba48ad61)), closes [#9697](https://github.com/SAP/ui5-webcomponents/issues/9697)
+* **ui5-date-*:** make tests stable ([#11191](https://github.com/SAP/ui5-webcomponents/issues/11191)) ([b1d9311](https://github.com/SAP/ui5-webcomponents/commit/b1d931167bf29b600797974b29b788fbc3405b1f)), closes [#11188](https://github.com/SAP/ui5-webcomponents/issues/11188)
+* **ui5-input:** remove additional icon in Edge ([#11114](https://github.com/SAP/ui5-webcomponents/issues/11114)) ([9d2dfb1](https://github.com/SAP/ui5-webcomponents/commit/9d2dfb1293194fce19c99157892ac2db6ceff62f))
+* **ui5-popover:** fix popover flickering ([#10955](https://github.com/SAP/ui5-webcomponents/issues/10955)) ([712aae4](https://github.com/SAP/ui5-webcomponents/commit/712aae458b0a9279646ea079cb734674ae3e7b4f))
+* **ui5-tree:** noDataText is now properly rendered ([#11095](https://github.com/SAP/ui5-webcomponents/issues/11095)) ([e1c152c](https://github.com/SAP/ui5-webcomponents/commit/e1c152cbec16a47dd42e9813c68c0052828d6cdf)), closes [#11073](https://github.com/SAP/ui5-webcomponents/issues/11073)
+
+
+
+
+
 # [2.9.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.0...v2.9.0-rc.1) (2025-03-20)
 
 

@@ -17,7 +17,6 @@
 }
 
 .ui5-nl-header {
-	box-shadow: var(--sapShell_Shadow);
 	z-index: 2;
 }
 

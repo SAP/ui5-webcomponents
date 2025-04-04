@@ -25,64 +25,6 @@ function DateTimePickerWithSeconds({ initialValue }: { initialValue?: string }) 
 	);
 }
 describe("DateTimePicker general interaction", () => {
-	it("tests picker opens/closes programmatically", () => {
-		cy.mount(<DefaultDateTimePicker />);
-
-		cy.ui5DateTimePickerOpen("#dt");
-		cy.ui5DateTimePickerIsOpen("#dt").should("equal", true);
-		cy.ui5DateTimePickerClose("#dt");
-		cy.ui5DateTimePickerIsOpen("#dt").should("equal", false);
-	});
-
-	// Unstable but valid test, needs to be individually observed
-	it.skip("tests selection of new date", () => {
-		setAnimationMode(AnimationMode.None);
-		const PREVIOUS_VALUE = "13/04/2020, 03:16:16 AM";
-
-		cy.mount(<DateTimePicker id="dtSeconds" formatPattern="dd/MM/yyyy, hh:mm:ss a" value={PREVIOUS_VALUE} />);
-		cy.ui5DateTimePickerOpen("#dtSeconds");
-
-		cy.get("#dtSeconds")
-			.shadow()
-			.as("DateTimePicker");
-
-		cy.get("@DateTimePicker")
-			.find("ui5-input")
-			.should("have.value", PREVIOUS_VALUE);
-
-		cy.ui5DateTimePickerGetPopover("#dtSeconds").within(() => {
-			// Click the currently selected day and then move to the next day.
-			cy.get("ui5-calendar")
-				.shadow()
-				.as("calendar");
-
-			cy.get("@calendar")
-				.find("ui5-daypicker")
-				.shadow()
-				.as("daypicker")
-
-			cy.get("@daypicker")
-				.find(".ui5-dp-item--selected")
-				.realClick()
-				.should("be.focused");
-
-			cy.realPress("ArrowRight");
-			cy.realPress("Space");
-
-			// Confirm the change.
-			cy.get("#ok").realClick();
-		});
-
-		// Only the date has changed; the time remains the same.
-		cy.get("@DateTimePicker")
-			.find("ui5-input")
-			.should("be.focused")
-			.should("have.attr", "value", "14/04/2020, 03:16:16 AM");
-
-		cy.ui5DateTimePickerIsOpen("#dtSeconds").should("equal", false);
-		setAnimationMode(AnimationMode.Full);
-	});
-
 	it("tests time controls adjustments", () => {
 		setAnimationMode(AnimationMode.None);
 		const PREVIOUS_VALUE = "13/04/2020, 03:16:16 AM";
@@ -92,7 +34,7 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.get("#dtSeconds")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.should("have.value", PREVIOUS_VALUE);
 
 		cy.ui5DateTimePickerGetPopover("#dtSeconds").within(() => {
@@ -137,12 +79,70 @@ describe("DateTimePicker general interaction", () => {
 		// Only the time parts have been updated.
 		cy.get("#dtSeconds")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.should("be.focused")
 			.should("have.attr", "value", "13/04/2020, 02:14:19 PM");
 
 		cy.ui5DateTimePickerIsOpen("#dtSeconds").should("equal", false);
 
+		setAnimationMode(AnimationMode.Full);
+	});
+
+	it("tests picker opens/closes programmatically", () => {
+		cy.mount(<DefaultDateTimePicker />);
+
+		cy.ui5DateTimePickerOpen("#dt");
+		cy.ui5DateTimePickerIsOpen("#dt").should("equal", true);
+		cy.ui5DateTimePickerClose("#dt");
+		cy.ui5DateTimePickerIsOpen("#dt").should("equal", false);
+	});
+
+	// Unstable but valid test, needs to be individually observed
+	it.skip("tests selection of new date", () => {
+		setAnimationMode(AnimationMode.None);
+		const PREVIOUS_VALUE = "13/04/2020, 03:16:16 AM";
+
+		cy.mount(<DateTimePicker id="dtSeconds" formatPattern="dd/MM/yyyy, hh:mm:ss a" value={PREVIOUS_VALUE} />);
+		cy.ui5DateTimePickerOpen("#dtSeconds");
+
+		cy.get("#dtSeconds")
+			.shadow()
+			.as("DateTimePicker");
+
+		cy.get("@DateTimePicker")
+			.find("ui5-datetime-input")
+			.should("have.value", PREVIOUS_VALUE);
+
+		cy.ui5DateTimePickerGetPopover("#dtSeconds").within(() => {
+			// Click the currently selected day and then move to the next day.
+			cy.get("ui5-calendar")
+				.shadow()
+				.as("calendar");
+
+			cy.get("@calendar")
+				.find("ui5-daypicker")
+				.shadow()
+				.as("daypicker")
+
+			cy.get("@daypicker")
+				.find(".ui5-dp-item--selected")
+				.realClick()
+				.should("be.focused");
+
+			cy.realPress("ArrowRight");
+			cy.realPress("Space");
+
+			// Confirm the change.
+			cy.get("#ok").realClick();
+		});
+
+		// Only the date has changed; the time remains the same.
+		cy.get("@DateTimePicker")
+			.find("ui5-datetime-input")
+			.should("be.focused")
+			.should("have.attr", "value", "14/04/2020, 03:16:16 AM");
+
+		cy.ui5DateTimePickerIsOpen("#dtSeconds").should("equal", false);
 		setAnimationMode(AnimationMode.Full);
 	});
 
@@ -155,7 +155,7 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.get("#dtSeconds")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.should("have.value", PREVIOUS_VALUE);
 
 		// Simulate keyboard interactions
@@ -164,7 +164,7 @@ describe("DateTimePicker general interaction", () => {
 		cy.realPress("Backspace");
 		cy.get("#dtSeconds")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.realClick()
 			.should("be.focused");
 		cy.realType("wrongtext");
@@ -199,7 +199,7 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.get("#dtSeconds")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.should("be.focused")
 			.should("have.attr", "value", selectedDate + ", 02:14:19 PM");
 
@@ -320,7 +320,7 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.get("#dtSeconds")
 			.shadow()
-			.find("ui5-input")
+			.find("ui5-datetime-input")
 			.should("be.focused")
 			.should("have.attr", "value", "13/04/2020, 12:34:56 AM");
 
@@ -331,7 +331,11 @@ describe("DateTimePicker general interaction", () => {
 		cy.mount(<DefaultDateTimePicker />);
 
 		// Prevent default behavior of ui5-change event.
-		cy.get("#dt").then($el => {
+		cy.get("[ui5-datetime-picker]")
+			.as("dtp")
+			
+		cy.get("@dtp")
+			.then($el => {
 			$el[0].addEventListener("ui5-change", (ev: Event) => {
 				ev.preventDefault();
 			});
@@ -354,12 +358,24 @@ describe("DateTimePicker general interaction", () => {
 				.find("[data-sap-focus-ref]")
 				.should("be.focused")
 				.realClick();
+
 			cy.get("#ok").realClick();
 		});
 
-		cy.get("#dt")
+		cy.get("@dtp")
 			.shadow()
-			.find("ui5-input")
+			.find("[ui5-responsive-popover]")
+			.should($rp => {
+				expect($rp.is(":popover-open")).to.be.false;
+			})
+			.and("not.have.attr", "open");
+
+		cy.get("@dtp")
+			.shadow()
+			.find("[ui5-datetime-input]")
+			.as("input");
+		
+		cy.get("@input")
 			.should("be.focused")
 			.should("have.attr", "value", "");
 	});
@@ -397,6 +413,25 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.ui5DateTimePickerGetPopover("#dt")
 			.should("have.attr", "accessible-name", "Choose Date and Time");
+	});
+
+	it("value state", () => {
+		cy.mount(<DateTimePicker id="dtpValueState" valueState="Negative"></DateTimePicker>);
+		cy.get("[ui5-datetime-picker]")
+			.as("dateTimePicker");
+
+		cy.get<DateTimePicker>("@dateTimePicker")
+			.shadow()
+			.find("ui5-datetime-input")
+			.should("have.attr", "value-state", "Negative");
+
+		cy.ui5DateTimePickerOpen("#dtpValueState");
+
+		cy.get<DateTimePicker>("@dateTimePicker")
+			.shadow()
+			.find("[slot='header']")
+			.first()
+			.should("have.text", "Invalid entry");
 	});
 
 	// Unstable test, needs investigation
