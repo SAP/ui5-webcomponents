@@ -138,27 +138,29 @@ export default function ShellBarTemplate(this: ShellBar) {
 											</Button>
 										</div>
 									)}
-									<div class="ui5-shellbar-search-field" style={this.styles.searchField}>
+									<div id={this.hasAdvancedSearch ? `${this._id}-item-1` : undefined} class={this.classes.searchField} style={this.styles.searchField}>
 										<slot name="searchField"></slot>
 									</div>
-									<Button
-										id={`${this._id}-item-1`}
-										class={{
-											"ui5-shellbar-button": true,
-											"ui5-shellbar-search-button": true,
-											"ui5-shellbar-search-item-for-arrow-nav": true,
-											...this.classes.search,
-										}}
-										icon="sap-icon://search"
-										data-ui5-text="Search"
-										data-ui5-notifications-count={this.notificationsCount}
-										data-ui5-stable="toggle-search"
-										onClick={this._handleSearchIconPress}
-										tooltip={this._searchBtnOpen}
-										aria-label={this._searchBtnOpen}
-										aria-expanded={this.showSearchField}
-										accessibilityAttributes={this.accInfo.search.accessibilityAttributes}
-									/>
+									{!this.hasAdvancedSearch && (
+										<Button
+											id={`${this._id}-item-1`}
+											class={{
+												"ui5-shellbar-button": true,
+												"ui5-shellbar-search-button": true,
+												"ui5-shellbar-search-item-for-arrow-nav": true,
+												...this.classes.search,
+											}}
+											icon="sap-icon://search"
+											data-ui5-text="Search"
+											data-ui5-notifications-count={this.notificationsCount}
+											data-ui5-stable="toggle-search"
+											onClick={this._handleSearchIconPress}
+											tooltip={this._searchBtnOpen}
+											aria-label={this._searchBtnOpen}
+											aria-expanded={this.showSearchField}
+											accessibilityAttributes={this.accInfo.search.accessibilityAttributes}
+										/>
+									)}
 								</>
 							)}
 							{this.hasAssistant && (
