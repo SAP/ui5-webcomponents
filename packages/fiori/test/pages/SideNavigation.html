@@ -87,11 +87,15 @@
 			<div class="form-field">
 				<ui5-label show-colon>click event</ui5-label>
 				<ui5-input disabled id="click-counter" value="0"></ui5-input>
-				<ui5-text id="click-info"></ui5-text>
 			</div>
 			<div class="form-field">
 				<ui5-label show-colon>click event info</ui5-label>
-				<ui5-label id="click-info"></ui5-label>
+				<ui5-list id="click-info-list" style="width: 40%;">
+					<ui5-li id="altKeyInfo">altKey</ui5-li>
+					<ui5-li id="ctrlKeyInfo">ctrlKey</ui5-li>
+					<ui5-li id="metaKeyInfo">metaKey</ui5-li>
+					<ui5-li id="shiftKeyInfo">shiftKey</ui5-li>
+				</ui5-list>
 			</div>
 			<div class="form-field">
 				<ui5-label show-colon>prevent selection-change event</ui5-label>
@@ -116,7 +120,6 @@
 		var sideNavigation = document.querySelector("ui5-side-navigation"),
 			input = document.querySelector("#counter"),
 			clickInput = document.querySelector("#click-counter"),
-			clickInfo = document.querySelector("#click-info"),
 			preventDefaultCb = document.querySelector("#prevent-selection"),
 			preventClickCb = document.querySelector("#prevent-click"),
 			preventSelectionChange = false,
@@ -137,7 +140,11 @@
 				}
 
 				clickInput.value = `${++clickCounter}`;
-				clickInfo.innerHTML = event.detail;
+				["altKey", "ctrlKey", "metaKey", "shiftKey"].forEach(key => {
+					const listItem = document.getElementById(`${key}Info`);
+					listItem?.setAttribute("additional-text", event.detail?.[key]); 
+					listItem?.setAttribute("additional-text-state", event.detail?.[key] ? "Positive" : "Negative");
+				});
 			});
 		});
 
@@ -147,6 +154,8 @@
 
 		preventClickCb.addEventListener("ui5-change", function (event) {
 			preventClick = event.target.checked;
+			const list = document.getElementById("click-info-list");
+			preventClick ? list.style.opacity = 0.5 : list.style.opacity = 1;
 		});
 
 		document.getElementById("ensure-overflow").addEventListener("ui5-change", function (event) {

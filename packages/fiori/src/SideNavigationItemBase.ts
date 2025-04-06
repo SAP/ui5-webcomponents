@@ -9,6 +9,7 @@ import type SideNavigation from "./SideNavigation.js";
 type SideNavigationItemClickEventDetail = {
 	altKey: boolean;
 	ctrlKey: boolean;
+	metaKey: boolean;
 	shiftKey: boolean;
 }
 
@@ -144,6 +145,6 @@ const isInstanceOfSideNavigationItemBase = (object: any): object is SideNavigati
 
 export default SideNavigationItemBase;
 export type {
-	SideNavigationItemClickEventDetail
+	SideNavigationItemClickEventDetail,
 };
 export { isInstanceOfSideNavigationItemBase };

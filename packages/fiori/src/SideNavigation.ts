@@ -6,7 +6,6 @@ import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type NavigationMenu from "./NavigationMenu.js";
 import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
-import type { SideNavigationItemClickEventDetail } from "./SideNavigationItemBase.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -304,7 +303,24 @@ class SideNavigation extends UI5Element {
 
 		e.stopPropagation();
 
-		associatedItem.fireEvent("click");
+		const {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		} = e;
+
+		const executeEvent = associatedItem.fireDecoratorEvent("click", {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		});
+		if (!executeEvent) {
+			e.preventDefault();
+			return;
+		}
+
 		if (associatedItem.selected) {
 			this.closePicker();
 			return;
@@ -319,7 +335,9 @@ class SideNavigation extends UI5Element {
 	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
 		const associatedItem = e.detail?.item.associatedItem;
 
-		associatedItem.fireEvent("click");
+		if (!associatedItem.fireDecoratorEvent("click")) {
+			return;
+		}
 		if (associatedItem.selected) {
 			this.closeMenu();
 			return;
@@ -569,12 +587,14 @@ class SideNavigation extends UI5Element {
 			const {
 				altKey,
 				ctrlKey,
+				metaKey,
 				shiftKey,
 			} = e;
 
 			const executeEvent = item.fireDecoratorEvent("click", {
 				altKey,
 				ctrlKey,
+				metaKey,
 				shiftKey,
 			});
 			if (!executeEvent) {
@@ -597,12 +617,14 @@ class SideNavigation extends UI5Element {
 			const {
 				altKey,
 				ctrlKey,
+				metaKey,
 				shiftKey,
 			} = e;
 
 			const executeEvent = item.fireDecoratorEvent("click", {
 				altKey,
 				ctrlKey,
+				metaKey,
 				shiftKey,
 			});
 			if (!executeEvent) {

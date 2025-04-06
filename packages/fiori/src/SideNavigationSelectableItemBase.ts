@@ -15,6 +15,7 @@ type SideNavigationItemAccessibilityAttributes = Pick<AccessibilityAttributes, "
  * @public
  * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
  * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+ * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
  * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
 @event("click", {
@@ -240,6 +241,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		const {
 			altKey,
 			ctrlKey,
+			metaKey,
 			shiftKey,
 		} = e;
 
@@ -249,6 +251,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 			const executeEvent = this.fireDecoratorEvent("click", {
 				altKey,
 				ctrlKey,
+				metaKey,
 				shiftKey,
 			});
 			if (!executeEvent) {
