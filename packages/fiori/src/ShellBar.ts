@@ -68,7 +68,6 @@ import {
 	SHELLBAR_SEARCH_BTN_OPEN,
 	SHELLBAR_PRODUCT_SWITCH_BTN,
 } from "./generated/i18n/i18n-defaults.js";
-import type Search from "./Search.js";
 
 type ShellBarLogoAccessibilityAttributes = {
 	role?: Extract<AriaRole, "button" | "link">,
@@ -737,8 +736,8 @@ class ShellBar extends UI5Element {
 	}
 
 	get showSearchField() {
-		if (this.hasSelfCollapsibleSearch) {
-			return !this.selfCollapsibleSearch.collapsed;
+		if (isSelfCollapsibleSearch(this.search)) {
+			return !this.search.collapsed;
 		}
 		return this._showSearchField;
 	}
@@ -752,8 +751,8 @@ class ShellBar extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	set showSearchField(value: boolean) {
-		if (this.hasSelfCollapsibleSearch) {
-			this.selfCollapsibleSearch.collapsed = !value;
+		if (isSelfCollapsibleSearch(this.search)) {
+			this.search.collapsed = !value;
 		}
 		this._showSearchField = value;
 	}
@@ -1292,7 +1291,7 @@ class ShellBar extends UI5Element {
 			},
 			searchField: {
 				"ui5-shellbar-search-field": this.showSearchField,
-				"ui5-shellbar-search-trigger": this.hasSelfCollapsibleSearch,
+				"ui5-shellbar-search-trigger": isSelfCollapsibleSearch(this.search),
 				"ui5-shellbar-hidden-button": !this.showSearchField,
 			},
 		};
@@ -1303,7 +1302,7 @@ class ShellBar extends UI5Element {
 			"display": this.showSearchField ? "flex" : "none",
 		};
 		return {
-			searchField: this.hasSelfCollapsibleSearch ? {} : styles,
+			searchField: isSelfCollapsibleSearch(this.search) ? {} : styles,
 		};
 	}
 
@@ -1570,16 +1569,23 @@ class ShellBar extends UI5Element {
 	}
 
 	get hasSelfCollapsibleSearch() {
-		return this.hasSearchField && isSelfCollapsibleSearch(this.searchField[0]);
+		return isSelfCollapsibleSearch(this.search);
 	}
 
-	get selfCollapsibleSearch() {
-		return this.searchField[0] as unknown as Search;
+	get search() {
+		return this.searchField.length ? this.searchField[0] : null;
 	}
 }
 
-const isSelfCollapsibleSearch = (searchField: HTMLElement) => {
+type IShellBarSelfCollapsibleSearch = {
+	"collapsed": boolean;
+}
+
+const isSelfCollapsibleSearch = (searchField: any): searchField is IShellBarSelfCollapsibleSearch => {
+	if (searchField) {
 	return "collapsed" in searchField;
+	}
+	return false;
 };
 
 ShellBar.define(); 
