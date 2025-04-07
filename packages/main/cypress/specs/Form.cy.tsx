@@ -896,22 +896,22 @@ ui5AccDescribe("Automated accessibility tests", () => {
 				</div>
 				<FormItem>
 					<Label slot="labelContent">Name:</Label>
-					<Text>Red Point StoresText</Text>
+					<Text>Red Point Stores</Text>
 				</FormItem>
 				
 				<FormItem>
 					<Label slot="labelContent">ZIP Code/City:</Label>
-					<Text>411 MaintownText</Text>
+					<Text>411 Maintown</Text>
 				</FormItem>
 				
 				<FormItem>
 					<Label slot="labelContent">Street:</Label>
-					<Text>Main St 1618Text</Text>
+					<Text>Main St 1618</Text>
 				</FormItem>
 
 				<FormItem>
 					<Label slot="labelContent">Country:</Label>
-					<Text>GermanyText</Text>
+					<Text>Germany</Text>
 				</FormItem>
 			</Form>
 		);
