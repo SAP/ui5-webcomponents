@@ -227,7 +227,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	_getIntersectionObserver(): IntersectionObserver {
 		if (!this._observer) {
 			this._observer = new IntersectionObserver(this._onIntersection.bind(this), {
-				root: findVerticalScrollContainer(this._table?._endRow ?? document.body),
+				root: findVerticalScrollContainer(this._table ?? document.body),
 				rootMargin: "5px",
 			});
 		}
