@@ -1280,7 +1280,7 @@ class ShellBar extends UI5Element {
 			},
 			search: {
 				"ui5-shellbar-hidden-button": this.isIconHidden("search"),
-				"ui5-shellbar-search-trigger": true,
+				"ui5-shellbar-search-toggle": true,
 			},
 			overflow: {
 				"ui5-shellbar-hidden-button": this._hiddenIcons.length === 0,
@@ -1291,7 +1291,7 @@ class ShellBar extends UI5Element {
 			},
 			searchField: {
 				"ui5-shellbar-search-field": this.showSearchField,
-				"ui5-shellbar-search-trigger": isSelfCollapsibleSearch(this.search),
+				"ui5-shellbar-search-toggle": isSelfCollapsibleSearch(this.search),
 				"ui5-shellbar-hidden-button": !this.showSearchField,
 			},
 		};
@@ -1465,7 +1465,7 @@ class ShellBar extends UI5Element {
 	get hidableDomElements(): HTMLElement [] {
 		const items = Array.from(this.shadowRoot!.querySelectorAll<HTMLElement>(".ui5-shellbar-button:not(.ui5-shellbar-search-button):not(.ui5-shellbar-overflow-button):not(.ui5-shellbar-cancel-button):not(.ui5-shellbar-no-overflow-button)"));
 		const assistant = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-assistant-button");
-		const searchTrigger = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-search-trigger");
+		const searchToggle = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-search-toggle");
 		const contentItems = this.contentItemsWrappersSorted;
 		const firstContentItem = contentItems.pop();
 		const prioritizeContent = this.showSearchField && this.hasSearchField;
@@ -1491,7 +1491,7 @@ class ShellBar extends UI5Element {
 				...items.toReversed(),
 				assistant,
 				...contentItems,
-				searchTrigger,
+				searchToggle,
 				firstContentItem,
 			];
 		}
