@@ -856,3 +856,65 @@ describe("Accessibility", () => {
 			.should("be.focused");
 	});
 });
+
+
+ui5AccDescribe("Automated accessibility tests", () => {
+	it("with header text", () => {
+		cy.mount(
+			<Form header-text="Address">
+				<Formitem>
+					<Label slot="labelContent">Name:</Label>
+					<Text>Red Point Stores</Text>
+				</Formitem>
+				
+				<Formitem>
+					<Label slot="labelContent">ZIP Code/City:</Label>
+					<Text>411 Maintown</Text>
+				</Formitem>
+				
+				<Formitem>
+					<Label slot="labelContent">Street:</Label>
+					<Text>Main St 1618</Text>
+				</Formitem>
+
+				<Formitem>
+					<Label slot="labelContent">Country:</Label>
+					<Text>Germany</Text>
+				</Formitem>
+			</Form>
+		);
+
+		cy.ui5CheckA11y();
+	})
+
+	it("with customer header", () => {
+		cy.mount(
+			<Form>
+				<div slot="header">
+					<Title>Address</Title>
+				</div>
+				<Formitem>
+					<Label slot="labelContent">Name:</Label>
+					<Text>Red Point StoresText</Text>
+				</Formitem>
+				
+				<Formitem>
+					<Label slot="labelContent">ZIP Code/City:</Label>
+					<Text>411 MaintownText</Text>
+				</Formitem>
+				
+				<Formitem>
+					<Label slot="labelContent">Street:</Label>
+					<Text>Main St 1618Text</Text>
+				</Formitem>
+
+				<Formitem>
+					<Label slot="labelContent">Country:</Label>
+					<Text>GermanyText</Text>
+				</Formitem>
+			</Form>
+		);
+
+		cy.ui5CheckA11y();
+	})
+});
