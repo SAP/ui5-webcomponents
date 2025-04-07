@@ -10,9 +10,9 @@ describe("Rendering", () => {
 				<div id="icon1" tabindex="0" style="width: 10px; height: 10px; background:red;"></div>
 				<Popover id="popup"
 						 opener="icon1"
-						 header-text="Newsletter subscription"
+						 headerText="Newsletter subscription"
 						 placement="End"
-						 vertical-align="Top">
+						 verticalAlign="Top">
 					<Button id="btnClosePopover">Close</Button>
 				</Popover>
 			</>
