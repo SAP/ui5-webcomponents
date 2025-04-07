@@ -4,6 +4,7 @@ import FormItem from "../../src/FormItem.js";
 import FormGroup from "../../src/FormGroup.js";
 import Label from "../../src/Label.js";
 import Text from "../../src/Text.js";
+import Title from "../../src/Title.js";
 import Input from "../../src/Input.js";
 
 describe("General API", () => {
@@ -862,25 +863,25 @@ ui5AccDescribe("Automated accessibility tests", () => {
 	it("with header text", () => {
 		cy.mount(
 			<Form header-text="Address">
-				<Formitem>
+				<FormItem>
 					<Label slot="labelContent">Name:</Label>
 					<Text>Red Point Stores</Text>
-				</Formitem>
+				</FormItem>
 				
-				<Formitem>
+				<FormItem>
 					<Label slot="labelContent">ZIP Code/City:</Label>
 					<Text>411 Maintown</Text>
-				</Formitem>
+				</FormItem>
 				
-				<Formitem>
+				<FormItem>
 					<Label slot="labelContent">Street:</Label>
 					<Text>Main St 1618</Text>
-				</Formitem>
+				</FormItem>
 
-				<Formitem>
+				<FormItem>
 					<Label slot="labelContent">Country:</Label>
 					<Text>Germany</Text>
-				</Formitem>
+				</FormItem>
 			</Form>
 		);
 
@@ -893,25 +894,25 @@ ui5AccDescribe("Automated accessibility tests", () => {
 				<div slot="header">
 					<Title>Address</Title>
 				</div>
-				<Formitem>
+				<FormItem>
 					<Label slot="labelContent">Name:</Label>
 					<Text>Red Point StoresText</Text>
-				</Formitem>
+				</FormItem>
 				
-				<Formitem>
+				<FormItem>
 					<Label slot="labelContent">ZIP Code/City:</Label>
 					<Text>411 MaintownText</Text>
-				</Formitem>
+				</FormItem>
 				
-				<Formitem>
+				<FormItem>
 					<Label slot="labelContent">Street:</Label>
 					<Text>Main St 1618Text</Text>
-				</Formitem>
+				</FormItem>
 
-				<Formitem>
+				<FormItem>
 					<Label slot="labelContent">Country:</Label>
 					<Text>GermanyText</Text>
-				</Formitem>
+				</FormItem>
 			</Form>
 		);
 
