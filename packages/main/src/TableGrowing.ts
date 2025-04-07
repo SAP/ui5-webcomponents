@@ -39,12 +39,12 @@ import { findVerticalScrollContainer } from "./TableUtils.js";
  *
  * ```html
  * <ui5-table>
- * 	<ui5-table-growing type="Button" growing-text="More" slot="features"></ui5-table-growing>
+ * 	<ui5-table-growing mode="Button" text="More" slot="features"></ui5-table-growing>
  * </ui5-table>
  * ```
  *
  * **Notes**:
- * * When the `ui5-table-growing` component is used with the `Scroll` type and the table is currently not scrollable,
+ * * When the `ui5-table-growing` component is used with the `Scroll` mode and the table is currently not scrollable,
  * the component will render a growing button instead to ensure growing capabilities until the table becomes scrollable.
  *
  * ### ES6 Module Import
@@ -90,30 +90,30 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * @public
 	 */
 	@property()
-	type: `${TableGrowingMode}` = "Button";
+	mode: `${TableGrowingMode}` = "Button";
 
 	/**
 	 * Defines the text that will be displayed inside the growing button.
-	 * Has no effect when type is set to `Scroll`.
+	 * Has no effect when mode is set to `Scroll`.
 	 *
-	 * **Note:** When not provided and the type is set to Button, a default text is displayed, corresponding to the
+	 * **Note:** When not provided and the mode is set to Button, a default text is displayed, corresponding to the
 	 * current language.
 	 *
 	 * @default undefined
 	 * @public
 	 */
 	@property()
-	growingText?: string;
+	text?: string;
 
 	/**
-	 * Defines the text that will be displayed below the `growingText` inside the growing button.
-	 * Has no effect when type is set to Scroll.
+	 * Defines the text that will be displayed below the `text` inside the growing button.
+	 * Has no effect when mode is set to Scroll.
 	 *
 	 * @default undefined
 	 * @public
 	 */
 	@property()
-	growingSubText?: string;
+	subtext?: string;
 
 	/**
 	 * Defines the active state of the growing button.
@@ -182,11 +182,11 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	}
 
 	hasGrowingComponent(): boolean {
-		if (this.type === TableGrowingMode.Scroll) {
+		if (this.mode === TableGrowingMode.Scroll) {
 			return !!this._table && this._table._scrollContainer.clientHeight >= this._table._tableElement.scrollHeight;
 		}
 
-		return this.type === `${TableGrowingMode.Button}`;
+		return this.mode === `${TableGrowingMode.Button}`;
 	}
 
 	/**
@@ -204,7 +204,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	}
 
 	_hasScrollToLoad() {
-		return this.type === TableGrowingMode.Scroll;
+		return this.mode === TableGrowingMode.Scroll;
 	}
 
 	/**
@@ -276,15 +276,15 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 		this._activeState = false;
 	}
 
-	get _growingButtonText() {
-		return this.growingText || TableGrowing.i18nBundle.getText(TABLE_MORE);
+	get _buttonText() {
+		return this.text || TableGrowing.i18nBundle.getText(TABLE_MORE);
 	}
 
-	get _growingButtonDescription() {
+	get _buttonDescription() {
 		return TableGrowing.i18nBundle.getText(TABLE_MORE_DESCRIPTION);
 	}
 
-	get _hasGrowingButton() {
+	get _hasButton() {
 		return this.hasGrowingComponent();
 	}
 }
