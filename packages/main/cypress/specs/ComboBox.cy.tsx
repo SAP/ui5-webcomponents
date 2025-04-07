@@ -56,7 +56,7 @@ describe("Keyboard interaction", () => {
 	it("tests navigating with arrow down when item text is contained in the previous selected item (with grouping)", () => {
 		cy.mount(
 			<ComboBox>
-				<ComboBoxItemGroup header-text="Bulgaria">
+				<ComboBoxItemGroup headerText="Bulgaria">
 					<ComboBoxItem text="Bulgar"></ComboBoxItem>
 					<ComboBoxItem text="Bulg"></ComboBoxItem>
 					<ComboBoxItem text="Bul"></ComboBoxItem>

@@ -36,7 +36,7 @@ describe("Responsiveness", () => {
 			<Button icon={navBack} slot="startButton" id="start-button"></Button>
 
 			<ShellBarItem id="disc" icon={activities} text="Disconnect"></ShellBarItem>
-			<ShellBarItem id="call" icon={sysHelp} text="Incoming Calls" stable-dom-ref="call"></ShellBarItem>
+			<ShellBarItem id="call" icon={sysHelp} text="Incoming Calls" stableDomRef="call"></ShellBarItem>
 
 			<Input placeholder="Instructions" slot="searchField" showSuggestions={true} valueState="Information">
 				<div slot="valueStateMessage">Instructions</div>
