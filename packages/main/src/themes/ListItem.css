@@ -60,6 +60,13 @@
 	height: 3rem;
 }
 
+::slotted(img[slot="image"]){
+	width: var(--_ui5_list_item_img_size);
+	height: var(--_ui5_list_item_img_size);
+	border-radius: var(--ui5-avatar-border-radius);
+	object-fit: contain
+}
+
 ::slotted([ui5-icon][slot="image"]){
 	color: var(--sapContent_NonInteractiveIconColor);
 	min-width: var(--_ui5_list_item_icon_size);
