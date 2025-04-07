@@ -862,7 +862,7 @@ describe("Accessibility", () => {
 ui5AccDescribe("Automated accessibility tests", () => {
 	it("with header text", () => {
 		cy.mount(
-			<Form header-text="Address">
+			<Form headerText="Address">
 				<FormItem>
 					<Label slot="labelContent">Name:</Label>
 					<Text>Red Point Stores</Text>
