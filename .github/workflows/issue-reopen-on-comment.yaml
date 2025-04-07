@@ -1,0 +1,35 @@
+name: Reopen Issue on Comment
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  reopen-issue:
+    if: github.event.issue.state == 'closed'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Commenter
+        id: check_user
+        run: |
+          COMMENTER="${{ github.event.comment.user.login }}"
+          ALLOWED_USER="ui5-webcomponents-bot"
+
+          if [ "$COMMENTER" != "ui5-webcomponents-bot" ] && [ "$COMMENTER" != "github-actions[bot]" ]; then
+            echo "systemUser=false" >> $GITHUB_OUTPUT
+          else
+            echo "systemUser=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Reopen Issue
+        if: steps.check_user.outputs.systemUser == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              state: 'open'
+            })
