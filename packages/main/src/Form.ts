@@ -494,10 +494,10 @@ class Form extends UI5Element {
 	}
 
 	get hasHeader(): boolean {
-		return this.hasCustomHeader || this.hasInternalHeader;
+		return this.hasCustomHeader || this.hasHeaderText;
 	}
 
-	get hasInternalHeader(): boolean {
+	get hasHeaderText(): boolean {
 		return !!this.headerText;
 	}
 
@@ -506,7 +506,7 @@ class Form extends UI5Element {
 	}
 
 	get effectiveАccessibleNameRef(): string | undefined {
-		return this.hasInternalHeader && !this.hasCustomHeader ? `${this._id}-header-text` : undefined;
+		return this.hasHeaderText && !this.hasCustomHeader ? `${this._id}-header-text` : undefined;
 	}
 
 	get effectiveAccessibleRole() {

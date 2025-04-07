@@ -888,7 +888,7 @@ ui5AccDescribe("Automated accessibility tests", () => {
 		cy.ui5CheckA11y();
 	})
 
-	it("with customer header", () => {
+	it("with custom header", () => {
 		cy.mount(
 			<Form>
 				<div slot="header">
