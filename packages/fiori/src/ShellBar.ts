@@ -737,8 +737,8 @@ class ShellBar extends UI5Element {
 	}
 
 	get showSearchField() {
-		if (this.hasAdvancedSearch) {
-			return !this.advancedSearch.collapsed;
+		if (this.hasSelfCollapsibleSearch) {
+			return !this.selfCollapsibleSearch.collapsed;
 		}
 		return this._showSearchField;
 	}
@@ -752,8 +752,8 @@ class ShellBar extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	set showSearchField(value: boolean) {
-		if (this.hasAdvancedSearch) {
-			this.advancedSearch.collapsed = !value;
+		if (this.hasSelfCollapsibleSearch) {
+			this.selfCollapsibleSearch.collapsed = !value;
 		}
 		this._showSearchField = value;
 	}
@@ -1292,7 +1292,7 @@ class ShellBar extends UI5Element {
 			},
 			searchField: {
 				"ui5-shellbar-search-field": this.showSearchField,
-				"ui5-shellbar-search-trigger": this.hasAdvancedSearch,
+				"ui5-shellbar-search-trigger": this.hasSelfCollapsibleSearch,
 				"ui5-shellbar-hidden-button": !this.showSearchField,
 			},
 		};
@@ -1303,7 +1303,7 @@ class ShellBar extends UI5Element {
 			"display": this.showSearchField ? "flex" : "none",
 		};
 		return {
-			searchField: this.hasAdvancedSearch ? {} : styles,
+			searchField: this.hasSelfCollapsibleSearch ? {} : styles,
 		};
 	}
 
@@ -1569,14 +1569,18 @@ class ShellBar extends UI5Element {
 		return this.breakpointSize === "S";
 	}
 
-	get hasAdvancedSearch() {
-		return this.hasSearchField && !this.searchField[0].hasAttribute("ui5-input");
+	get hasSelfCollapsibleSearch() {
+		return this.hasSearchField && isSelfCollapsibleSearch(this.searchField[0]);
 	}
 
-	get advancedSearch() {
+	get selfCollapsibleSearch() {
 		return this.searchField[0] as unknown as Search;
 	}
 }
+
+const isSelfCollapsibleSearch = (searchField: HTMLElement) => {
+	return "collapsed" in searchField;
+};
 
 ShellBar.define(); 
 

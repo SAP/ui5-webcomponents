@@ -142,10 +142,10 @@ export default function ShellBarTemplate(this: ShellBar) {
 											</Button>
 										</div>
 									)}
-									<div id={this.hasAdvancedSearch ? `${this._id}-item-1` : undefined} class={this.classes.searchField} style={this.styles.searchField}>
+									<div id={this.hasSelfCollapsibleSearch ? `${this._id}-item-1` : undefined} class={this.classes.searchField} style={this.styles.searchField}>
 										<slot name="searchField"></slot>
 									</div>
-									{!this.hasAdvancedSearch && (
+									{!this.hasSelfCollapsibleSearch && (
 										<Button
 											id={`${this._id}-item-1`}
 											class={{
