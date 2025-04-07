@@ -1,7 +1,7 @@
 
 import "@ui5/webcomponents-fiori/dist/Search.js";
 import "@ui5/webcomponents-fiori/dist/SearchItem.js";
-import "@ui5/webcomponents-fiori/dist/SearchFieldScopeOption.js";
+import "@ui5/webcomponents-fiori/dist/SearchScope.js";
 
 const scopeData = [
     { name: "Laptop", scope: "products" },
@@ -23,7 +23,7 @@ function createScopeItems(scope) {
 
     filterData.forEach(item => {
         const searchItem = document.createElement("ui5-search-item");
-        searchItem.headingText = item.name;
+        searchItem.text = item.name;
         searchItem.scopeName = item.scope;
         searchScope.appendChild(searchItem);
     });
