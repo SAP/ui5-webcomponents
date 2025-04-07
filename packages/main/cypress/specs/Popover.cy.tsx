@@ -3,6 +3,40 @@ import Toolbar from "../../src/Toolbar.js";
 import Popover from "../../src/Popover.js";
 import Button from "../../src/Button.js";
 
+describe("Rendering", () => {
+	it("tests arrow positioning", () => {
+		cy.mount(
+			<>
+				<div id="icon1" tabindex="0" style="width: 10px; height: 10px; background:red;"></div>
+				<Popover id="popup"
+						 opener="icon1"
+						 header-text="Newsletter subscription"
+						 placement="End"
+						 vertical-align="Top">
+					<Button id="btnClosePopover">Close</Button>
+				</Popover>
+			</>
+		);
+
+		// act
+		cy.get("#popup")
+			.invoke("prop", "open", "true");
+
+		cy.get("#popup")
+			.should("be.visible");
+
+		cy.get("#popup")
+			.shadow()
+			.find(".ui5-popover-arrow")
+			.should("be.visible");
+
+		cy.get("#popup")
+			.shadow()
+			.find(".ui5-popover-arrow")
+			.should("have.css", "transform", "matrix(1, 0, 0, 1, 0, -43)");
+	});
+});
+
 describe("Popover opener", () => {
 	it("tests 'opener' set as string of abstract element's ID ", () => {
 		cy.mount(
