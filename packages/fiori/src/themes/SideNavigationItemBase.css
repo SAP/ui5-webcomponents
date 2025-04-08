@@ -214,13 +214,19 @@ and there is an additional border that appears on hover. */
 	height: var(--sapElement_Condensed_Height);
 }
 
+/* this is for the group item*/
 :host(:not([unselectable], [side-nav-collapsed]))  .ui5-sn-item-toggle-icon {
 	width: calc(var(--_ui5_side_navigation_expand_icon_width) + 4px); /*width of the icon + 4px padding*/
 }
 
+/* this is for the two-click item */
+:host(:not([unselectable], [side-nav-collapsed], [ui5-side-navigation-group]))  .ui5-sn-item-toggle-icon {
+	margin-inline-start: 1rem;
+	width: calc(var(--_ui5_side_navigation_expand_icon_width) + 5px); /*width of the icon + 1px separator + 4px padding*/
+}
+
 :host(:not([side-nav-collapsed])) .ui5-sn-item-toggle-icon::part(root) {
 	padding-block: 0.25rem; /* height of the separator (the border left) should be --sapElement_Condensed_Height which is equal to 1.375rem (22px) */
-	
 	border-inline-start: 0.0625rem solid var(--sapTextColor);
 	display: block;
 	height: 0.875rem;
