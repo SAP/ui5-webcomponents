@@ -423,7 +423,7 @@ class Table extends UI5Element {
 		if (this.overflowMode === TableOverflowMode.Popin) {
 			ResizeHandler.register(this, this._onResizeBound);
 		}
-		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
+		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound, { capture: true }));
 		this.features.forEach(feature => feature.onTableActivate?.(this));
 		this._tableNavigation = new TableNavigation(this);
 		this._tableDragAndDrop = new TableDragAndDrop(this);
