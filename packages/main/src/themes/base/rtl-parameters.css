@@ -19,7 +19,7 @@
 	--_ui5_menu_submenu_placement_type_left_margin_offset: 0.25rem 0;
 	--_ui5-menu_item_icon_float: right;
 
-	--_ui5-shellbar-notification-btn-count-offset: -0.125rem;
+	--_ui5-shellbar-notification-btn-count-offset: 0.125rem;
 }
 
 [dir="rtl"],
