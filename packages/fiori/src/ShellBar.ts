@@ -413,6 +413,9 @@ class ShellBar extends UI5Element {
 	@slot()
 	assistant!: Array<IButton>;
 
+	@slot()
+	branding!: Array<UI5Element>;
+
 	/**
 	 * Defines the `ui5-shellbar` additional items.
 	 *
@@ -1294,6 +1297,10 @@ class ShellBar extends UI5Element {
 
 	get hasAssistant() {
 		return !!this.assistant.length;
+	}
+
+	get hasBranding() {
+		return !!this.branding.length;
 	}
 
 	get hasSearchField() {

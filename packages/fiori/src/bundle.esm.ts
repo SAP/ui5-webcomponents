@@ -36,6 +36,7 @@ import Search from "./Search.js";
 import SearchMessageArea from "./SearchMessageArea.js";
 import SearchItem from "./SearchItem.js";
 import SearchItemGroup from "./SearchItemGroup.js";
+import ShellbarBranding from "./ShellBarBranding.js";
 import ShellBarSpacer from "./ShellBarSpacer.js";
 import ShellBarItem from "./ShellBarItem.js";
 import SideNavigation from "./SideNavigation.js";

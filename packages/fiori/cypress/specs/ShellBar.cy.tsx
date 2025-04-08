@@ -11,6 +11,7 @@ import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Switch from "@ui5/webcomponents/dist/Switch.js";
+import ShellbaBranding from "@ui5/webcomponents-fiori/dist/ShellbarBranding.js"
 
 const RESIZE_THROTTLE_RATE = 300; // ms
 
@@ -388,6 +389,31 @@ describe("Slots", () => {
 				.shadow()
 				.find("div[id='content-6'] > .ui5-shellbar-separator-end")
 				.should("not.exist");
+		});
+	});
+
+	describe("Branding slot", () => {
+		it("Test branding slot priority over logo", () => {
+			cy.mount(
+				<ShellBar id="shellbar" primaryTitle="Primary Title">
+					<img id="mainLogo" slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+
+					<ShellbaBranding brandingTitle="Branding Comp" href="https://www.w3schools.com" target="_blank" slot="branding">
+						<img id="brandingLogo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+					</ShellbaBranding>
+				</ShellBar>
+			)
+
+			 cy.get("#shellbar")
+				.find("#mainLogo")
+				.should('exist')
+				.should('not.be.visible');
+
+			cy.get("#shellbar")
+				.find("#brandingLogo")
+				.should('exist')
+				.should('be.visible');
+
 		});
 	});
 });

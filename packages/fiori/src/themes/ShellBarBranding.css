@@ -1,0 +1,37 @@
+:host(:not([hidden])) .ui5-shellbar-branding-root {
+    text-decoration: none;
+}
+
+:host(:not([hidden])) {
+    display: inline;
+}
+
+.ui5-shellbar-branding-root {
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	padding: .25rem .5rem .25rem .25rem;
+	box-sizing: border-box;
+	cursor: pointer;
+	background: var(--sapButton_Lite_Background);
+	border: 1px solid var(--sapButton_Lite_BorderColor);
+	color: var(--sapShell_TextColor);
+	/* fix cutting of the focus outline */
+	margin-inline-start: 0.125rem;
+}
+
+.ui5-shellbar-branding-root:focus {
+	outline: var(--_ui5_shellbar_logo_outline);
+	border-radius: var(--_ui5_shellbar_logo_border_radius);
+}
+
+.ui5-shellbar-branding-root:hover {
+	box-shadow: var(--_ui5_shellbar_button_box_shadow);
+	border-radius: var(--_ui5_shellbar_logo_border_radius);
+}
+
+.ui5-shellbar-branding-root:active:focus {
+	background: var(--sapShell_Active_Background);
+	border: 1px solid var(--sapButton_Lite_Active_BorderColor);
+	color: var(--sapShell_Active_TextColor);
+}
