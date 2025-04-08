@@ -74,7 +74,7 @@
 	position: absolute;
 	content: "";
 	inset: var(--_ui5_side_navigation_item_focus_border_offset);
-	z-index: 2;
+	z-index: 3;
 	pointer-events: none;
 	border-radius: var(--_ui5_side_navigation_item_focus_border_radius);
 }
@@ -277,7 +277,7 @@ and there is an additional border that appears on hover. */
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus {
 	width: var(--_ui5_side_navigation_item_collapsed_hover_focus_width);
 	box-shadow: var(--_ui5_side_navigation_box_shadow);
-	z-index: 1;
+	z-index: 2;
 	padding-inline-end: var(--_ui5_side_navigation_item_collapsed_padding_right);
 }
 

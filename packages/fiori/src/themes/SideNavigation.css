@@ -7,10 +7,12 @@
 	width: var(--_ui5_side_navigation_width);
 	max-width: 100%;
 	transition: width 0.3s, min-width 0.3s;
-	box-shadow: var(--_ui5_side_navigation_box_shadow);
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	background: var(--sapList_Background);
+	box-shadow: var(--_ui5_side_navigation_box_shadow);
+	border-inline-end: var(--_ui5_side_navigation_border_right);
+	box-sizing: border-box;
 }
 
 :host([collapsed]) {
@@ -18,12 +20,7 @@
 	width: var(--_ui5_side_navigation_collapsed_width);
 }
 
-/* SideNavigationDesign */
-:host([design="Plain"]) {
-	box-shadow: none;
-}
-
-:host([design="Plain"][is-phone]) {
+:host([is-phone]) {
 	width: 100%;
 }
 
@@ -31,9 +28,8 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	box-sizing: border-box;
+	box-sizing: inherit;
 	border-radius: inherit;
-	border-inline-end: var(--_ui5_side_navigation_border_right);
 }
 
 .ui5-sn-flexible {
