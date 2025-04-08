@@ -145,7 +145,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 									<div id={this.hasSelfCollapsibleSearch ? `${this._id}-item-1` : undefined} class={this.classes.searchField} style={this.styles.searchField}>
 										<slot name="searchField"></slot>
 									</div>
-									{!this.hasSelfCollapsibleSearch && (
+									{!(this.hasSelfCollapsibleSearch || this.hideSearchButton) && (
 										<Button
 											id={`${this._id}-item-1`}
 											class={{

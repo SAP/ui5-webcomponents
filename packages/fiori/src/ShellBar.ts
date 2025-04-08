@@ -293,6 +293,13 @@ class ShellBar extends UI5Element {
 		"search-field-expand": ShellBarSearchFieldExpandEventDetail,
 		"content-item-visibility-change": ShellBarContentItemVisibilityChangeEventDetail
 	}
+
+	@property({ type: Boolean })
+	hideSearchButton = false;
+
+	@property({ type: Boolean })
+	disableAutoSearchField = false;
+
 	/**
 	 * Defines the `primaryTitle`.
 	 *
@@ -1025,6 +1032,10 @@ class ShellBar extends UI5Element {
 		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="product-switch"]`);
 	}
 
+	get searchButtonDomRef(): HTMLElement | null {
+		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="toggle-search"]`);
+	}
+
 	_getContentInfo(): Array<IShellBarContentItem> {
 		return [
 			...this.contentItemsSorted.map(item => {
@@ -1232,8 +1243,12 @@ class ShellBar extends UI5Element {
 
 	get autoSearchField() {
 		const onFocus = document.activeElement === this.searchField[0];
-		const isEmpty = this.searchField[0]?.value?.length === 0;
-		return (this.showSearchField || this._autoRestoreSearchField) && !onFocus && isEmpty;
+		const hasValue = this.searchField[0]?.value?.length > 0;
+		const disableAutoSearchField = this.disableAutoSearchField || onFocus || hasValue;
+		if (disableAutoSearchField) {
+			return false;
+		}
+		return this.showSearchField || this._autoRestoreSearchField;
 	}
 
 	get startContentInfoSorted() {
@@ -1583,12 +1598,12 @@ type IShellBarSelfCollapsibleSearch = {
 
 const isSelfCollapsibleSearch = (searchField: any): searchField is IShellBarSelfCollapsibleSearch => {
 	if (searchField) {
-	return "collapsed" in searchField;
+		return "collapsed" in searchField;
 	}
 	return false;
 };
 
-ShellBar.define(); 
+ShellBar.define();
 
 export default ShellBar;
 
