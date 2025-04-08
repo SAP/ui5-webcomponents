@@ -60,7 +60,7 @@ class DynamicDateRangeOptionDate extends DynamicDateRangeOption {
 	}
 
 	getFormat(): DateFormat {
-	    return DateFormat.getDateInstance({
+		return DateFormat.getDateInstance({
 			strictParsing: true,
 		});
 	}

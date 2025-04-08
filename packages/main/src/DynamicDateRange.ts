@@ -99,6 +99,9 @@ class DynamicDateRange extends UI5Element {
 
 	_selectOption(e: any) {
 		this._currentOption = this.options.find(option => option.text === e.detail.item.textContent);
+		if (!this._currentOption?.template) {
+			this._submitValue();
+		}
 	}
 
 	getOption(key: string) {
