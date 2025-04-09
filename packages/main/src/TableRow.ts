@@ -156,6 +156,7 @@ class TableRow extends TableRowBase {
 	_onOverflowButtonClick(e: MouseEvent) {
 		const ctor = this.actions[0].constructor as typeof TableRowActionBase;
 		ctor.showMenu(this._overflowActions, e.target as HTMLElement);
+		e.stopPropagation();
 	}
 
 	get _isInteractive() {
