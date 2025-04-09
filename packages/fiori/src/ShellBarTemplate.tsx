@@ -138,8 +138,10 @@ export default function ShellBarTemplate(this: ShellBar) {
 											</Button>
 										</div>
 									)}
-									<div class="ui5-shellbar-search-field" style={this.styles.searchField}>
-										<slot name="searchField"></slot>
+									<div id="ui5-shellbar-search-field" class="ui5-shellbar-search-field" style={this.styles.searchField}>
+										<div class="ui5-shellbar-search-field-inner">
+											<slot name="searchField"></slot>
+										</div>
 									</div>
 									<Button
 										id={`${this._id}-item-1`}

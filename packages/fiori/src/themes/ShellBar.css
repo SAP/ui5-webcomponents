@@ -394,6 +394,7 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-content-item {
+	transition: opacity .2s ease-in-out;
 	display: flex;
 	align-items: center;
 	flex-shrink: 0;
@@ -446,10 +447,23 @@ slot[name="profile"] {
 
 .ui5-shellbar-search-field {
 	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
-	min-width: var(--_ui5_shellbar_search_field_width);
+	width: var(--_ui5_shellbar_search_field_width);
 	align-items: center;
 	flex-grow: 1;
 	margin-inline-start: 0.5rem;
+	position: relative;
+	overflow: hidden;
+}
+
+.ui5-shellbar-search-field-animated {
+	/* cant figure out why it can't work on the .ui5-shellbar-search-field */
+	transition: width .2s ease-in-out;
+}
+
+.ui5-shellbar-search-field-hidden {
+	width: 0;
+	padding: 0;
+	margin: 0;
 }
 
 .ui5-shellbar-overflow-container-right-child > :first-child,
@@ -539,7 +553,6 @@ slot[name="profile"] {
 .ui5-shellbar-invisible-button {
 	visibility: hidden;
 	order: -1;
-	opacity: 0;
 	min-width: 0;
 	width: 0;
 	margin: 0;
@@ -547,4 +560,8 @@ slot[name="profile"] {
 	padding-inline-start: 0;
 	border: 0;
 	margin-inline-start: 0;
+}
+
+.ui5-shellbar-hide-animation {
+	opacity: 0;
 }
