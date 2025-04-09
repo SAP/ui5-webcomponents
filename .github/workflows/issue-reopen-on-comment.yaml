@@ -21,8 +21,8 @@ jobs:
               issue_number: context.payload.issue.number
             });
 
-            const closedAt = new Date(issue.data.closed_at);
-            const commentAt = new Date(context.payload.comment.created_at);
+            const closedAt = new Date(issue.data.closed_at).getTime();
+            const commentAt = new Date(context.payload.comment.created_at).getTime();
             const commenter = context.payload.comment.user.login;
 
             // Allowed bots
