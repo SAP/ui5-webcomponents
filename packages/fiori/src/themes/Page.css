@@ -1,4 +1,3 @@
-
 :host(:not([hidden])) {
 	width: 100%;
 	height: 100%;
@@ -13,6 +12,8 @@
 	z-index: 0;
 	box-sizing: border-box;
 	background-color: inherit;
+	display: flex;
+	flex-direction: column;
 }
 
 .ui5-page-header-root {
@@ -21,39 +22,39 @@
 
 .ui5-page-content-root {
 	overflow: hidden auto;
-	position: absolute;
 	will-change: scroll-position;
 	width: 100%;
-	top: 2.75rem;
-	bottom: 0;
+	flex: 1 1 auto;
 	box-sizing: border-box;
 	font-size: var(--sapFontSize);
 	color: var(--sapTextColor);
 }
 
+/* Footer normal behavior */
 .ui5-page-footer-root {
 	width: 100%;
 	box-sizing: border-box;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	z-index: 2;
-	width: 100%;
 }
 
 :host(:not([fixed-footer])) .ui5-page-footer-root {
 	opacity: 1;
 	bottom: 0.5rem;
 }
-/*** Responsive paddings ***/
 
 ::slotted([ui5-bar][slot="footer"][design="FloatingFooter"]) {
-	margin: auto;
 	padding: 0;
+	position: absolute;
+	bottom: 10px;
+	box-sizing: border-box;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 95%;
+	z-index: 2;
 }
 
 /* S Size */
 @container (max-width: 599px) {
+
 	:host([floating-footer]) .ui5-page-footer-root,
 	.ui5-page-content-root {
 		padding: 0 1rem;
@@ -72,6 +73,7 @@
 
 /* M Size */
 @container (min-width: 600px) and (max-width: 1023px) {
+
 	:host([floating-footer]) .ui5-page-footer-root,
 	.ui5-page-content-root {
 		padding: 0 2rem;
@@ -90,6 +92,7 @@
 
 /* L Size */
 @container (min-width: 1024px) and (max-width: 1439px) {
+
 	:host([floating-footer]) .ui5-page-footer-root,
 	.ui5-page-content-root {
 		padding: 0 2rem;
@@ -108,6 +111,7 @@
 
 /* XL Size */
 @container (min-width: 1440px) {
+
 	:host([floating-footer]) .ui5-page-footer-root,
 	.ui5-page-content-root {
 		padding: 0 3rem;
@@ -122,22 +126,6 @@
 	::slotted([ui5-bar][design="FloatingFooter"]) {
 		width: calc(100% - 4.5rem);
 	}
-}
-
-:host([no-scrolling]) .ui5-page-content-root {
-	overflow: hidden;
-}
-
-:host([hide-footer][fixed-footer]) .ui5-page-footer-root {
-	display: none;
-}
-
-:host(:not([fixed-footer]):not([hide-footer])) .ui5-page-footer-root {
-	animation: bounceShow var(--_ui5-page-animation-duration) forwards ease-in-out;
-}
-
-:host(:not([fixed-footer])[hide-footer]) .ui5-page-footer-root {
-	animation: bounceHide var(--_ui5-page-animation-duration) forwards ease-in-out;
 }
 
 /* BackgroundDesign */
@@ -159,6 +147,7 @@
 		transform: translateY(100%);
 		opacity: 0;
 	}
+
 	100% {
 		opacity: 1;
 	}
@@ -169,6 +158,7 @@
 		transform: translateY(-5%);
 		opacity: 1;
 	}
+
 	100% {
 		transform: translateY(100%);
 		opacity: 0;
