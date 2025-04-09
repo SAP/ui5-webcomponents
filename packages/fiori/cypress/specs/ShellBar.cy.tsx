@@ -325,13 +325,13 @@ describe("Slots", () => {
 			function assertStartSeparatorVisibility(expectedExist: boolean) {
 				cy.get("#shellbar")
 					.shadow()
-					.find(".ui5-shellbar-overflow-container-right-inner > .ui5-shellbar-separator-start")
+					.find(".ui5-shellbar-content-items > .ui5-shellbar-separator-start")
 					.should(expectedExist ? "exist" : "not.exist");
 			}
 			function assertEndSeparatorVisibility(expectedExist: boolean) {
 				cy.get("#shellbar")
 					.shadow()
-					.find(".ui5-shellbar-overflow-container-right-inner > .ui5-shellbar-separator-end")
+					.find(".ui5-shellbar-content-items > .ui5-shellbar-separator-end")
 					.should(expectedExist ? "exist" : "not.exist");
 			}
 
