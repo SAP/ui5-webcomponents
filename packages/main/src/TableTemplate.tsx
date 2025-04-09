@@ -56,7 +56,9 @@ export default function TableTemplate(this: Table) {
 						delay={this.loadingDelay}
 						active={true}
 						data-sap-focus-ref
-					></BusyIndicator>
+					>
+						<div id="busy-indicator-background"></div>
+					</BusyIndicator>
 				}
 			</div>
 
