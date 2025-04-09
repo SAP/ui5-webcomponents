@@ -16,7 +16,6 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import type ResponsivePopover from "./ResponsivePopover.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import IconMode from "./types/IconMode.js";
-import type DynamicDateRangeOption from "./DynamicDateOption.js";
 import "./DynamicDateOption.js";
 import "./dynamic-date-range-options/DynamicDateRangeOptionToday.js";
 import "./dynamic-date-range-options/DynamicDateRangeOptionYesterday.js";
@@ -24,7 +23,8 @@ import "./dynamic-date-range-options/DynamicDateRangeOptionTomorrow.js";
 import "./dynamic-date-range-options/DynamicDateRangeOptionDate.js";
 import "./dynamic-date-range-options/DynamicDateRangeOptionDateRange.js";
 import type Input from "./Input.js";
-import DynamicDateRangeValue from "./DynamicDateRangeValue.js";
+import type DynamicDateRangeValue from "./DynamicDateRangeValue.js";
+import type { IDynamicDateRangeOption } from "./DynamicDateOption.js";
 
 /**
  * @class
@@ -51,7 +51,6 @@ import DynamicDateRangeValue from "./DynamicDateRangeValue.js";
 class DynamicDateRange extends UI5Element {
 	/**
 	 * Defines a formatted date value.
-     * // to do a type
 	 * @default undefined
 	 * @public
 	 */
@@ -67,10 +66,10 @@ class DynamicDateRange extends UI5Element {
 	open = false;
 
     @property({ type: Object })
-    _currentOption?: DynamicDateRangeOption;
+    _currentOption?: IDynamicDateRangeOption;
 
 	@slot({ type: HTMLElement, "default": true })
-	options!: Array<DynamicDateRangeOption>;
+	options!: Array<IDynamicDateRangeOption>;
 
     responsivePopover?: ResponsivePopover;
 
@@ -118,7 +117,7 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	_submitValue() {
-		this._getInput().value = this._currentOption?.format(this.currentValue) as string;
+		this._getInput().value = this._currentOption?.format(this.currentValue!) as string;
 		this._currentOption = undefined;
 		this.open = false;
 		this.value = this.currentValue as DynamicDateRangeValue;
@@ -134,25 +133,11 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	get currentValueText() {
-		return `Selected: ${this._currentOption?.format(this.currentValue)}`;
+		return `Selected: ${this._currentOption?.format(this.currentValue!)}`;
 	}
 
-	calendarSelectionChange(e: any) {
-		const currentValue = new DynamicDateRangeValue();
-		currentValue.values = [];
-		currentValue.operator = this._currentOption?.text as string;
-
-		if (e.detail.selectedDates[0]) {
-			currentValue.values[0] = new Date(e.detail.selectedDates[0] * 1000);
-		}
-
-		if (e.srcElement.selectionMode === "Range") {
-			if (e.detail.selectedDates[1]) {
-				currentValue.values[1] = new Date(e.detail.selectedDates[1] * 1000);
-			}
-		}
-
-		this.currentValue = currentValue;
+	calendarSelectionChange(e: CustomEvent) {
+		this.currentValue = this._currentOption?.handleSelectionChange && this._currentOption?.handleSelectionChange(e) as DynamicDateRangeValue;
 	}
 }
 

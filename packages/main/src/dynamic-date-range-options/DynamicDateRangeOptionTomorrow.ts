@@ -1,9 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
-import jsxRendererer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import DynamicDateRangeOption from "../DynamicDateOption.js";
+import type { IDynamicDateRangeOption } from "../DynamicDateOption.js";
 import DynamicDateRangeValue from "../DynamicDateRangeValue.js";
 /**
  * @class
@@ -18,37 +15,33 @@ import DynamicDateRangeValue from "../DynamicDateRangeValue.js";
 	// renderer: jsxRendererer,
 })
 
-class DynamicDateRangeOptionTomorrow extends DynamicDateRangeOption {
-    @property()
-    template?: JsxTemplate;
+class DynamicDateRangeOptionTomorrow extends UI5Element implements IDynamicDateRangeOption {
+	parse(): DynamicDateRangeValue {
+	    const returnValue = new DynamicDateRangeValue();
+	    returnValue.operator = this.key;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    parse(value: string): DynamicDateRangeValue {
-        const returnValue = new DynamicDateRangeValue();
-        returnValue.operator = this.key;
+	    return returnValue;
+	}
 
-        return returnValue;
-    }
+	format() {
+	    return "Tomorrow";
+	}
 
-    format() {
-        return "Tomorrow";
-    }
+	toDates() {
+	    return [];
+	}
 
-    toDates() {
-        return [];
-    }
+	get text(): string {
+	    return "Tomorrow";
+	}
 
-    get text(): string {
-        return "Tomorrow";
-    }
+	get key() {
+	    return "Tomorrow";
+	}
 
-    get key() {
-        return "Tomorrow";
-    }
-
-    get icon() {
-        return "";
-    }
+	get icon() {
+	    return "";
+	}
 }
 DynamicDateRangeOptionTomorrow.define();
 
