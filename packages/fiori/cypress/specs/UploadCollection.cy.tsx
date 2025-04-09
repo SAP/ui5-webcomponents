@@ -343,9 +343,9 @@ describe("Events", () => {
 
 		cy.get("#item")
 			.shadow()
-			.find(".ui5-input-inner", { includeShadowDom: true })
+			.find("#ui5-uci-edit-input")
 			.should("have.focus")
-			.type("fileNameSuffix");
+			.realType("fileNameSuffix");
 
 		cy.realPress("Enter");
 
@@ -392,7 +392,7 @@ describe("Events", () => {
 
 		cy.mount(
 			<UploadCollection id="uploadCollection">
-				<UploadCollectionItem id="item" onRetry={retryEventStub} fileName="File name" upload-state="Error" />
+				<UploadCollectionItem id="item" onRetry={retryEventStub} fileName="File name" uploadState="Error" />
 			</UploadCollection>);
 
 		cy.get("#item")
@@ -409,7 +409,7 @@ describe("Events", () => {
 
 		cy.mount(
 			<UploadCollection id="uploadCollection">
-				<UploadCollectionItem id="item" onTerminate={terminateEventStub} fileName="File name" upload-state="Uploading" />
+				<UploadCollectionItem id="item" onTerminate={terminateEventStub} fileName="File name" uploadState="Uploading" />
 			</UploadCollection>);
 
 		cy.get("#item")
@@ -498,9 +498,9 @@ describe("Edit - various file names", () => {
 
 		cy.get("#item")
 			.shadow()
-			.find(".ui5-input-inner", { includeShadowDom: true })
+			.find("#ui5-uci-edit-input")
 			.should("have.focus")
-			.type("last.reports-edited");
+			.realType("last.reports-edited");
 
 		cy.realPress("Enter");
 
@@ -526,9 +526,9 @@ describe("Edit - various file names", () => {
 
 		cy.get("#item")
 			.shadow()
-			.find(".ui5-input-inner", { includeShadowDom: true })
+			.find("#ui5-uci-edit-input")
 			.should("have.focus")
-			.type(newFileName);
+			.realType(newFileName);
 
 		cy.realPress("Enter");
 
@@ -544,9 +544,9 @@ describe("Edit - various file names", () => {
 
 		cy.get("#item")
 			.shadow()
-			.find(".ui5-input-inner", { includeShadowDom: true })
+			.find("#ui5-uci-edit-input")
 			.should("have.focus")
-			.type(newFileName2);
+			.realType(newFileName2);
 
 		cy.realPress("Enter");
 
@@ -559,7 +559,7 @@ describe("Edit - various file names", () => {
 	it("Tests that hidden file name is NOT considered as extension", () => {
 		cy.mount(
 			<UploadCollection id="uploadCollection">
-				<UploadCollectionItem id="item" file-name=".gitignore" type="Detail" />
+				<UploadCollectionItem id="item" fileName=".gitignore" type="Detail" />
 			</UploadCollection>);
 
 		cy.get("#item")
@@ -576,7 +576,7 @@ describe("Edit - various file names", () => {
 	it("Tests cancelling of name change via keyboard", () => {
 		cy.mount(
 			<UploadCollection id="uploadCollection">
-				<UploadCollectionItem id="item" file-name=".gitignore" type="Detail" />
+				<UploadCollectionItem id="item" fileName=".gitignore" type="Detail" />
 			</UploadCollection>);
 
 		cy.get("#item")
@@ -586,9 +586,9 @@ describe("Edit - various file names", () => {
 
 		cy.get("#item")
 			.shadow()
-			.find(".ui5-input-inner", { includeShadowDom: true })
+			.find("#ui5-uci-edit-input")
 			.should("have.focus")
-			.type("new name");
+			.realType("new name");
 
 		cy.realPress("Tab");
 		cy.realPress("Tab");
@@ -610,11 +610,10 @@ describe("Drag and Drop", () => {
 			</>
 		);
 
-		cy.get("#draggableElement").scrollIntoView();
-
 		const dataTransfer = new DataTransfer();
 
 		cy.get("#draggableElement").trigger("dragstart", { dataTransfer, bubbles: true });
+
 		cy.get("#uploadCollection").trigger("drop", { dataTransfer, bubbles: true });
 
 		cy.get("#uploadCollection")
