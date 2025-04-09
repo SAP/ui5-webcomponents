@@ -47,15 +47,14 @@ export default function ShellBarTemplate(this: ShellBar) {
 										)}
 										<Icon class="ui5-shellbar-menu-button-arrow" name={slimArrowDown} />
 									</button>
-
 								</>
 							)}
 						</>
 					)}
 
 					{this.hasMenuItems && (
-						// TODO: Is it expected for the secondary title to be visible when both menu items and the branding slot are present
-						// and the branding slot is visible due to its higher priority?
+						// The secondary title remains visible when both menu items and the branding slot are present,
+						// as the branding slot has higher priority and takes precedence in visibility.
 						<>
 							{this.secondaryTitle && !this.isSBreakPoint && (
 								<div style={{ display: "block" }} class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">
