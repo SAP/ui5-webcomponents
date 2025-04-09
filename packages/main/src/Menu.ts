@@ -286,17 +286,19 @@ class Menu extends UI5Element {
 	}
 
 	_itemMouseOver(e: MouseEvent) {
-		if (isDesktop()) {
-			// respect mouseover only on desktop
-			const item = e.target as MenuItem;
-
-			if (MenuItem._isInstanceOfMenuItem(item)) {
-				item.focus();
-
-				// Opens submenu with 300ms delay
-				this._startOpenTimeout(item);
-			}
+		if (!isDesktop()) {
+			return;
 		}
+
+		const item = e.target as MenuItem;
+		if (!MenuItem._isInstanceOfMenuItem(item)) {
+			return;
+		}
+
+		item.focus();
+
+		// Opens submenu with 300ms delay
+		this._startOpenTimeout(item);
 	}
 
 	async focus(focusOptions?: FocusOptions): Promise<void> {
@@ -310,14 +312,23 @@ class Menu extends UI5Element {
 		return super.focus(focusOptions);
 	}
 
+	_closeOtherSubMenus(item: MenuItem) {
+		const menuItems = this._menuItems;
+		if (menuItems.indexOf(item) < 0) {
+			return;
+		}
+		menuItems.forEach(menuItem => {
+			if (menuItem !== item) {
+				menuItem._close();
+			}
+		});
+	}
+
 	_startOpenTimeout(item: MenuItem) {
 		clearTimeout(this._timeout);
 
 		this._timeout = setTimeout(() => {
-			const menuItems = this._menuItems;
-			if (menuItems.indexOf(item) > -1) {
-				menuItems.forEach(menuItem => { menuItem !== item && menuItem._close(); });
-			}
+			this._closeOtherSubMenus(item);
 
 			this._openItemSubMenu(item);
 		}, MENU_OPEN_DELAY);
@@ -342,17 +353,18 @@ class Menu extends UI5Element {
 
 	_itemKeyDown(e: KeyboardEvent) {
 		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
-		const item = e.target as MenuItem; // Type assignment here is misleading, as item can also be EndContent
+		const item = e.target as MenuItem;
+
+		if (!MenuItem._isInstanceOfMenuItem(item)) {
+			return;
+		}
+
 		const menuItemInMenu = this._menuItems.indexOf(item) > -1;
 		const isItemNavigation = isUp(e) || isDown(e);
 		const isItemSelection = isEnter(e) || isSpace(e);
 		const isEndContentNavigation = isRight(e) || isLeft(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
 		const shouldCloseMenu = menuItemInMenu && !(isItemNavigation || isItemSelection || isEndContentNavigation);
-
-		if (!MenuItem._isInstanceOfMenuItem(item)) {
-			return;
-		}
 
 		if (isEnter(e) || isTabNextPrevious) {
 			e.preventDefault();
@@ -371,12 +383,13 @@ class Menu extends UI5Element {
 
 	_navigateOutOfEndContent(e: CustomEvent) {
 		const item = e.target as MenuItem;
-		const isLast = e.detail.isLast;
-		const itemIndex = this._menuItems.indexOf(item);
+		const shouldNavigateToNextItem = e.detail.shouldNavigateToNextItem;
+		const menuItems = this._menuItems;
+		const itemIndex = menuItems.indexOf(item);
 
 		if (itemIndex > -1) {
-			const nextItem = isLast ? this._menuItems[itemIndex + 1] : this._menuItems[itemIndex - 1];
-			const itemToFocus = nextItem || this._menuItems[itemIndex];
+			const nextItem = shouldNavigateToNextItem ? menuItems[itemIndex + 1] : menuItems[itemIndex - 1];
+			const itemToFocus = nextItem || menuItems[itemIndex];
 			itemToFocus?.focus();
 
 			e.stopPropagation();

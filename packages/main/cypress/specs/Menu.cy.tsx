@@ -569,9 +569,7 @@ describe("Menu interaction", () => {
 				.should("have.attr", "accessible-name", "Select an option from the menu");
 		});
 
-		/* The test is valid, but currently it is not stable. It will be reviewed further and stabilized afterwards. */
-
-		it.skip("Menu items - navigation in endContent", () => {
+		it("Menu items - navigation in endContent", () => {
 			cy.mount(
 				<>
 					<Button id="btnOpen">Open Menu</Button>

@@ -54,7 +54,7 @@ export default function MenuTemplate(this: Menu) {
 						onKeyDown={this._itemKeyDown}
 						// handles event from slotted children
 						onui5-close-menu={this._close}
-						onui5-navigate-out={this._navigateOutOfEndContent}
+						onui5-exit-end-content={this._navigateOutOfEndContent}
 					>
 						<slot></slot>
 					</List>)

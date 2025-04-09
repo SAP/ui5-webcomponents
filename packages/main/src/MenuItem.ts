@@ -40,7 +40,7 @@ import menuItemCss from "./generated/themes/MenuItem.css.js";
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
 
-type MenuNavigateOutOfEndContentEventDetail = { isLast: boolean };
+type MenuNavigateOutOfEndContentEventDetail = { shouldNavigateToNextItem: boolean };
 
 type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeyShortcuts" | "role"> & ListItemAccessibilityAttributes;
 
@@ -104,7 +104,7 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
  * Fired when navigating out of end-content.
  * @private
  */
-@event("navigate-out", {
+@event("exit-end-content", {
 	bubbles: true,
 })
 
@@ -131,7 +131,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		"before-close": MenuBeforeCloseEventDetail
 		"close": void
 		"close-menu": void,
-		"navigate-out": MenuNavigateOutOfEndContentEventDetail,
+		"exit-end-content": MenuNavigateOutOfEndContentEventDetail,
 	}
 	/**
 	 * Defines the text of the tree item.
@@ -293,10 +293,11 @@ class MenuItem extends ListItem implements IMenuItem {
 		});
 	}
 
-	_navigateToEndContent(isLast?: boolean) {
-		const item = isLast
-			? this._navigableItems[this._navigableItems.length - 1]
-			: this._navigableItems[0];
+	_navigateToEndContent(shouldNavigateToPreviousItem: boolean) {
+		const navigatableItems = this._navigableItems;
+		const item = shouldNavigateToPreviousItem
+			? navigatableItems[navigatableItems.length - 1]
+			: navigatableItems[0];
 
 		if (item) {
 			this._itemNavigation.setCurrentItem(item);
@@ -403,20 +404,31 @@ class MenuItem extends ListItem implements IMenuItem {
 		return this.items.filter((item): item is MenuItem => !item.isSeparator);
 	}
 
-	_itemMouseOver(e: MouseEvent) {
-		if (isDesktop()) {
-			// respect mouseover only on desktop
-			const item = e.target as MenuItem;
-
-			if (MenuItem._isInstanceOfMenuItem(item)) {
-				item.focus();
-
-				const menuItems = this._menuItems;
-				if (menuItems.indexOf(item) > -1) {
-					menuItems.forEach(menuItem => { menuItem !== item && menuItem._close(); });
-				}
-			}
+	_closeOtherSubMenus(item: MenuItem) {
+		const menuItems = this._menuItems;
+		if (menuItems.indexOf(item) === -1) {
+			return;
 		}
+
+		menuItems.forEach(menuItem => {
+			if (menuItem !== item) {
+				menuItem._close();
+			}
+		});
+	}
+
+	_itemMouseOver(e: MouseEvent) {
+		if (!isDesktop()) {
+			return;
+		}
+		const item = e.target as MenuItem;
+
+		if (!MenuItem._isInstanceOfMenuItem(item)) {
+			return;
+		}
+		item.focus();
+
+		this._closeOtherSubMenus(item);
 	}
 
 	_itemKeyDown(e: KeyboardEvent) {
@@ -439,18 +451,18 @@ class MenuItem extends ListItem implements IMenuItem {
 		const shouldNavigateOutOfEndContent = isUp(e) || isDown(e);
 
 		if (shouldNavigateOutOfEndContent) {
-			this.fireDecoratorEvent("navigate-out", { isLast: isDown(e) });
+			this.fireDecoratorEvent("exit-end-content", { shouldNavigateToNextItem: isDown(e) });
 		}
 	}
 
 	_navigateOutOfEndContent(e: CustomEvent) {
 		const item = e.target as MenuItem;
-		const isLast = e.detail.isLast;
+		const shouldNavigateToNextItem = e.detail.shouldNavigateToNextItem;
 		const menuItems = this._menuItems;
 		const itemIndex = menuItems.indexOf(item);
 
 		if (itemIndex > -1) {
-			const nextItem = isLast ? menuItems[itemIndex + 1] : menuItems[itemIndex - 1];
+			const nextItem = shouldNavigateToNextItem ? menuItems[itemIndex + 1] : menuItems[itemIndex - 1];
 			const itemToFocus = nextItem || menuItems[itemIndex];
 			itemToFocus?.focus();
 
