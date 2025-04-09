@@ -24,10 +24,10 @@ export default function TableTemplate(this: Table) {
 				</div>
 
 				{ this.rows.length === 0 &&
-					<TableRow id="nodata-row">
-						<TableCell id="nodata-cell" data-excluded-from-navigation horizontal-align="Center">
-							{ this.nodata.length > 0 ?
-								<slot name="nodata"></slot>
+					<TableRow id="no-data-row">
+						<TableCell id="no-data-cell" data-excluded-from-navigation horizontal-align="Center">
+							{ this.noData.length > 0 ?
+								<slot name="no-data"></slot>
 								:
 								this._effectiveNoDataText
 							}

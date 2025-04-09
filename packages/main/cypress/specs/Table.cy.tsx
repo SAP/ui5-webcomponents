@@ -906,14 +906,14 @@ describe("Table - Interactive Rows", () => {
 describe("Table - HeaderCell", () => {
 	beforeEach(() => {
 		cy.mount(
-			<Table overflow-mode="Popin">
+			<Table overflowMode="Popin">
 				<TableHeaderRow slot="headerRow">
-					<TableHeaderCell min-width="300px">Column A</TableHeaderCell>
-					<TableHeaderCell min-width="200px" sort-indicator="Ascending">
+					<TableHeaderCell minWidth="300px">Column A</TableHeaderCell>
+					<TableHeaderCell minWidth="200px" sortIndicator="Ascending">
 						<Label required wrappingType="None">Column B</Label>
 						<TableHeaderCellActionAI slot="action"></TableHeaderCellActionAI>
 					</TableHeaderCell>
-					<TableHeaderCell min-width="150px" popin-text="Popin Text">
+					<TableHeaderCell minWidth="150px" popinText="Popin Text">
 						<Label required>Column C</Label>
 					</TableHeaderCell>
 				</TableHeaderRow>

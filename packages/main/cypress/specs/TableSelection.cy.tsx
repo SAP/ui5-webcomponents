@@ -215,15 +215,10 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 			cy.get("@row0").shadow().find("#selection-component").realClick();
 			checkSelection(testConfigEntry.cases.RANGE_MOUSE.range_mouse_initial);
 
-			// Need to simulate keydown with SHIFT key to set range selection flag shiftKeyPressed
-			// Cypress does not trigger keydown when just calling realClick with shiftKey: true
-			// That is why selection of the row is not supressed, and we end up with 0 4 1 2 3
-			cy.get("@row4").trigger("keydown", { bubbles: true, key: "Shift", shiftKey: true });
 			cy.get("@row4").shadow().find("#selection-component").realClick({ shiftKey: true });
 			checkSelection(testConfigEntry.cases.RANGE_MOUSE.range_mouse_final);
 
-			cy.get("@row4").trigger("keydown", { bubbles: true, key: "Shift", shiftKey: true });
-			cy.get("@row0").shadow().find("#selection-component").realClick();
+			cy.get("@row0").shadow().find("#selection-component").realClick({ shiftKey: true });
 			checkSelection(testConfigEntry.cases.RANGE_MOUSE.range_mouse_edge);
 		});
 
