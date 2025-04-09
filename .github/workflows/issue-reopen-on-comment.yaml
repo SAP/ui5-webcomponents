@@ -10,20 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check Commenter
-        id: check_user
-        run: |
-          COMMENTER="${{ github.event.comment.user.login }}"
-          ALLOWED_USER="ui5-webcomponents-bot"
+      - name: Check and Compare Timestamps
+        id: check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number
+            });
 
-          if [ "$COMMENTER" != "ui5-webcomponents-bot" ] && [ "$COMMENTER" != "github-actions[bot]" ]; then
-            echo "systemUser=false" >> $GITHUB_OUTPUT
-          else
-            echo "systemUser=true" >> $GITHUB_OUTPUT
-          fi
+            const closedAt = new Date(issue.data.closed_at);
+            const commentAt = new Date(context.payload.comment.created_at);
+            const commenter = context.payload.comment.user.login;
+
+            // Allowed bots
+            const isSystemUser = ['ui5-webcomponents-bot', 'github-actions[bot]'].includes(commenter);
+
+            core.setOutput('shouldReopen', !isSystemUser && commentAt > closedAt);
 
       - name: Reopen Issue
-        if: steps.check_user.outputs.systemUser == 'false'
+        if: steps.check.outputs.shouldReopen == 'true'
         uses: actions/github-script@v7
         with:
           script: |
