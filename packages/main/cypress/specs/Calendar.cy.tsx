@@ -852,34 +852,34 @@ describe("Calendar general interaction", () => {
 		cy.get("@yearRangePickerItems")
 			.should("have.length", 8)
 
-		// Only the second and third items are enabled (1983 - 2002 and 2003 - 2022)
+		// Only the first 2 items are enabled (1998-2017 and 2018-2037)
 		cy.get("@yearRangePickerItems")
-			.first() // 1963 - 1982
+			.first() // 1998-2017
 			.as("firstItem");
 
 		cy.get("@firstItem")
-			.should("have.class", "ui5-yrp-item--disabled");
+			.should("not.have.class", "ui5-yrp-item--disabled");
 
 		cy.get("@yearRangePickerItems")
-			.last() // 2103 - 2122
-			.as("lastItem");
+			.first() // 2018-2037
+			.as("firstItem");
 
-		cy.get("@lastItem")
-			.should("have.class", "ui5-yrp-item--disabled");
+		cy.get("@firstItem")
+			.should("not.have.class", "ui5-yrp-item--disabled");
 
 		cy.get("@yearRangePickerItems")
-			.eq(1) // 1983 - 2002
-			.as("lastItem");
+			.eq(1) // 2038-2057
+			.as("secondItem");
 
-		cy.get("@lastItem")
+		cy.get("@secondItem")
 			.should("not.have.class", "ui5-yrp-item--disabled");
 
 		cy.get("@yearRangePickerItems")
 			.eq(2) // 2003 - 2022
-			.as("lastItem");
+			.as("thirdItem");
 
-		cy.get("@lastItem")
-			.should("not.have.class", "ui5-yrp-item--disabled");
+		cy.get("@thirdItem")
+			.should("have.class", "ui5-yrp-item--disabled");
 	});
 
 	it("Focus goes into first selected day of the range selection", () => {

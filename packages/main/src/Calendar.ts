@@ -22,6 +22,7 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 import CalendarDate from "./CalendarDate.js";
 import CalendarDateRange from "./CalendarDateRange.js";
 import "./SpecialCalendarDate.js";
@@ -675,6 +676,17 @@ class Calendar extends CalendarPart {
 			this._rangeStartYear -= rangeSize;
 		} else if (currentYear >= this._rangeStartYear + rangeSize) {
 			this._rangeStartYear += rangeSize;
+		}
+
+		// Normalize range start year to be between the min and absolute max year
+		const minYear = this._minDate.getYear();
+		if (currentYear - rangeSize < minYear) {
+			this._rangeStartYear = minYear;
+		}
+
+		const absoluteMaxYear = getMaxCalendarDate(this._primaryCalendarType).getYear();
+		if (currentYear + rangeSize > absoluteMaxYear) {
+			this._rangeStartYear = absoluteMaxYear - rangeSize + 1;
 		}
 
 		return {

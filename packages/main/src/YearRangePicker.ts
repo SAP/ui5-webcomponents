@@ -31,6 +31,7 @@ import YearRangePickerTemplate from "./YearRangePickerTemplate.js";
 
 // Styles
 import yearRangePickerStyles from "./generated/themes/YearRangePicker.css.js";
+import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 
 const isBetweenInclusive = (x: number, num1: number, num2: number) => x >= Math.min(num1, num2) && x <= Math.max(num1, num2);
 
@@ -191,6 +192,17 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 			this._gridStartYear -= pageSizeInYears;
 		} else if (currentStartYear >= this._gridStartYear + pageSizeInYears) {
 			this._gridStartYear += pageSizeInYears;
+		}
+
+		// Normalize grid start year to be between the min and absolute max year
+		const minYear = this._minDate.getYear();
+		if (currentStartYear - pageSizeInYears < minYear) {
+			this._gridStartYear = minYear;
+		}
+
+		const absoluteMaxYear = getMaxCalendarDate(this._primaryCalendarType).getYear();
+		if (currentStartYear + pageSizeInYears > absoluteMaxYear) {
+			this._gridStartYear = absoluteMaxYear - pageSizeInYears + 1;
 		}
 	}
 
