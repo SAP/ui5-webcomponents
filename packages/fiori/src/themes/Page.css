@@ -30,7 +30,6 @@
 	color: var(--sapTextColor);
 }
 
-/* Footer normal behavior */
 .ui5-page-footer-root {
 	width: 100%;
 	box-sizing: border-box;
