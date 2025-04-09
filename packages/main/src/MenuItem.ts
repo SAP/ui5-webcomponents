@@ -406,7 +406,7 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	_closeOtherSubMenus(item: MenuItem) {
 		const menuItems = this._menuItems;
-		if (menuItems.indexOf(item) === -1) {
+		if (menuItems.indexOf(item) < 0) {
 			return;
 		}
 

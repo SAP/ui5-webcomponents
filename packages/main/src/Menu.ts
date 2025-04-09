@@ -317,6 +317,7 @@ class Menu extends UI5Element {
 		if (menuItems.indexOf(item) < 0) {
 			return;
 		}
+
 		menuItems.forEach(menuItem => {
 			if (menuItem !== item) {
 				menuItem._close();
