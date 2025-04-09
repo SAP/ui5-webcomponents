@@ -114,7 +114,7 @@ type ShellBarSearchButtonEventDetail = {
 };
 
 type ShellBarSearchFieldExpandEventDetail = {
-	value: boolean;
+	expanded: boolean;
 };
 
 interface IShellBarHidableItem {
@@ -266,6 +266,12 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
 	bubbles: true,
 })
 
+/**
+ * Fired, when the search field is expanded or collapsed.
+ * @public
+ * @since 2.10.0
+ * @param {Boolean} expanded whether the search field is expanded
+ */
 @event("search-field-expand", {
 	bubbles: true,
 })
@@ -294,9 +300,21 @@ class ShellBar extends UI5Element {
 		"content-item-visibility-change": ShellBarContentItemVisibilityChangeEventDetail
 	}
 
+	/**
+	 * Defines the visibility state of the search button.
+	 * @public
+	 * **Note:** The `hideSearchButton` property is in an experimental state and is a subject to change.
+	 * @default false
+	 */
 	@property({ type: Boolean })
 	hideSearchButton = false;
 
+	/**
+	 * Disabled the automatic search field expansion/collapse when the available space is not enough.
+	 * @public
+	 * **Note:** The `disableAutoSearchField` property is in an experimental state and is a subject to change.
+	 * @default false
+	 */
 	@property({ type: Boolean })
 	disableAutoSearchField = false;
 
@@ -768,9 +786,9 @@ class ShellBar extends UI5Element {
 	 * Use this method to change the state of the search filed according to internal logic.
 	 * An event is fired to notify the change.
 	 */
-	setSearchState(value: boolean) {
-		this.fireDecoratorEvent("search-field-expand", { value });
-		this.showSearchField = value;
+	setSearchState(expanded: boolean) {
+		this.fireDecoratorEvent("search-field-expand", { expanded });
+		this.showSearchField = expanded;
 	}
 
 	onAfterRendering() {
@@ -1032,6 +1050,12 @@ class ShellBar extends UI5Element {
 		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="product-switch"]`);
 	}
 
+	/**
+	 * Returns the `search` icon DOM ref.
+	 * @public
+	 * @default null
+	 * @since 2.10.0
+	 */
 	get searchButtonDomRef(): HTMLElement | null {
 		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="toggle-search"]`);
 	}
@@ -1616,4 +1640,5 @@ export type {
 	ShellBarMenuItemClickEventDetail,
 	ShellBarAccessibilityAttributes,
 	ShellBarSearchButtonEventDetail,
+	ShellBarSearchFieldExpandEventDetail,
 };

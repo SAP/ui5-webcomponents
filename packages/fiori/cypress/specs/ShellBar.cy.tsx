@@ -11,6 +11,7 @@ import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Switch from "@ui5/webcomponents/dist/Switch.js";
+import Search from "../../src/Search.js";
 
 const RESIZE_THROTTLE_RATE = 300; // ms
 
@@ -388,6 +389,110 @@ describe("Slots", () => {
 				.shadow()
 				.find("div[id='content-6'] > .ui5-shellbar-separator-end")
 				.should("not.exist");
+		});
+	});
+
+	describe("Search field slot", () => {
+		it("Test search button is not visible when the search field slot is empty", () => {
+			cy.mount(
+				<ShellBar id="shellbar"></ShellBar>
+			);
+			cy.get("#shellbar")
+				.shadow()
+				.find(".ui5-shellbar-search-button")
+				.should("not.exist");
+		});
+
+		it("Test search button is visible when the search field slot is not empty", () => {
+			cy.mount(
+				<ShellBar id="shellbar">
+					<Input slot="searchField"></Input>
+				</ShellBar>
+			);
+			cy.get("#shellbar")
+				.shadow()
+				.find(".ui5-shellbar-search-button")
+				.should("exist");
+		});
+
+		it("Test search button is not visible when the hide-search-button property is set to true", () => {
+			cy.mount(
+				<ShellBar id="shellbar" hideSearchButton={true}>
+					<Input slot="searchField"></Input>
+				</ShellBar>
+			);
+			cy.get("#shellbar")
+				.shadow()
+				.find(".ui5-shellbar-search-button")
+				.should("not.exist");
+		});
+
+		it("Test search field is collapsed by default and expanded on click", () => {
+			cy.mount(
+				<ShellBar id="shellbar">
+					<Input slot="searchField"></Input>
+				</ShellBar>
+			);
+			cy.get("#shellbar").shadow().as("shellbar");
+			cy.get("@shellbar").find(".ui5-shellbar-search-field").should("not.exist");
+			cy.get("@shellbar").find(".ui5-shellbar-search-button").click();
+			cy.get("@shellbar").find(".ui5-shellbar-search-field").should("exist");
+		});
+
+		it("Test search field is expanded by default when show-search-field is set to true", () => {
+			cy.mount(
+				<ShellBar id="shellbar" showSearchField={true}>
+					<Input slot="searchField"></Input>
+				</ShellBar>
+			);
+			cy.get("#shellbar")
+				.shadow()
+				.find(".ui5-shellbar-search-field")
+				.should("exist");
+		});
+
+		it("Test search button is not visible when a self-collapsible search field slot is empty", () => {
+			cy.mount(
+				<ShellBar id="shellbar">
+					<Search slot="searchField"></Search>
+				</ShellBar>
+			);
+			cy.get("#shellbar")
+				.shadow()
+				.find(".ui5-shellbar-search-button")
+				.should("not.exist");
+		});
+
+		it("Test self-collapsible search is expanded and collapsed by the show-search-field property", () => {
+			cy.mount(
+				<ShellBar id="shellbar" showSearchField={true}>
+					<Search id="search" slot="searchField"></Search>
+				</ShellBar>
+			);
+			cy.get("#search").should("have.prop", "collapsed", false);
+			cy.get("#shellbar").invoke("prop", "showSearchField", false);
+			cy.get("#search").should("have.prop", "collapsed", true);
+		});
+
+
+		it("Test showSearchField property is true when using expanded search field", () => {
+			cy.mount(
+				<ShellBar id="shellbar">
+					<Search id="search" slot="searchField"></Search>
+				</ShellBar>
+			);
+			cy.get("#search").should("have.prop", "collapsed", false);
+			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", true);
+		});
+
+		it("Test showSearchField property is false when using collapsed search field", () => {
+			cy.mount(
+				<ShellBar id="shellbar">
+					<Search id="search" slot="searchField" collapsed></Search>
+				</ShellBar>
+			);
+			cy.get("#search").should("have.prop", "collapsed", true);
+			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", false);
 		});
 	});
 });
