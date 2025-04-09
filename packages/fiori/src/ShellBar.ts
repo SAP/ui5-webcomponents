@@ -310,7 +310,7 @@ class ShellBar extends UI5Element {
 	hideSearchButton = false;
 
 	/**
-	 * Disabled the automatic search field expansion/collapse when the available space is not enough.
+	 * Disables the automatic search field expansion/collapse when the available space is not enough.
 	 * @public
 	 * **Note:** The `disableAutoSearchField` property is in an experimental state and is a subject to change.
 	 * @default false
