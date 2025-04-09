@@ -146,6 +146,11 @@ describe("Search Field on mobile device", () => {
 
 		cy.get("[ui5-search]")
 			.realClick();
+		
+		cy.get("[ui5-search]")
+			.shadow()
+			.find(".ui5-search-popover-content")
+			.should("be.visible");
 
 		cy.get("[ui5-search]")
 			.shadow()
