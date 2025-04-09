@@ -127,6 +127,22 @@
 	}
 }
 
+:host([no-scrolling]) .ui5-page-content-root {
+	overflow: hidden;
+}
+
+:host([hide-footer][fixed-footer]) .ui5-page-footer-root {
+	display: none;
+}
+
+:host(:not([fixed-footer]):not([hide-footer])) .ui5-page-footer-root {
+	animation: bounceShow var(--_ui5-page-animation-duration) forwards ease-in-out;
+}
+
+:host(:not([fixed-footer])[hide-footer]) .ui5-page-footer-root {
+	animation: bounceHide var(--_ui5-page-animation-duration) forwards ease-in-out;
+}
+
 /* BackgroundDesign */
 :host([background-design="Solid"]) {
 	background-color: var(--sapBackgroundColor);
