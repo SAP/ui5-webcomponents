@@ -222,7 +222,7 @@ describe("UploadCollection Rendering", () => {
 					uploadState="Error" with retry button visible by default
 				</UploadCollectionItem>
 
-				<UploadCollectionItem id="uc3-error-hidden-retry" fileName="File name" uploadState="Error" hide-retry-button>
+				<UploadCollectionItem id="uc3-error-hidden-retry" fileName="File name" uploadState="Error" hideRetryButton>
 					<Icon name="document-text" slot="thumbnail"></Icon>
 					uploadState="Error" with hidden retry button
 				</UploadCollectionItem>
