@@ -233,7 +233,6 @@ describe("Calendar general interaction", () => {
 			.should("not.have.class", "ui5-mp-item--selected");
 	});
 
-	/* TODO: Test is unstable */
 	it("Should navigate to Year Picker when selecting a range in Year Range Picker", () => {
 		const YEAR = 1997;
 		const date = Date.UTC(YEAR);
