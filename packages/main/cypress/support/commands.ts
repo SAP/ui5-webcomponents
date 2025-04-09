@@ -50,6 +50,9 @@ import "./commands/ResponsivePopover.commands.js";
 import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
 import "./commands/SegmentedButton.commands.js";
+import "./commands/TabContainer.commands.js";
+import type MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 
 type SimulationDevices = "phone"
 
@@ -83,6 +86,8 @@ declare global {
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
 			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
 			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
+			ui5TabContainerOpenEndOverflow(): Chainable<void>,
+			ui5TabContainerDragAndDrop(elementToDrag: HTMLElement, placement: `${MovePlacement}`, target: HTMLElement, orientation?: `${Orientation}`): Chainable<void>,
 		}
 	}
 }
