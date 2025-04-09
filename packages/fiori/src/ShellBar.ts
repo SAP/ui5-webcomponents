@@ -1130,7 +1130,7 @@ class ShellBar extends UI5Element {
 		let overflowNotifications = null;
 
 		this._itemsInfo.forEach(item => {
-			if (item.count && item.classes.indexOf("ui5-shellbar-hidden-button") !== -1) {
+			if (item.count && item.classes.includes("ui5-shellbar-hidden-button")) {
 				notificationsArr.push(item.count);
 			}
 		});
@@ -1172,13 +1172,13 @@ class ShellBar extends UI5Element {
 	}
 
 	isIconHidden(name: string) {
-		const itemsWithThisIcon = this._itemsInfo.filter(item => item.icon === name);
+		const itemInfo = this._itemsInfo.find(item => item.icon === name);
 
-		if (!itemsWithThisIcon.length) {
+		if (!itemInfo) {
 			return false;
 		}
 
-		return itemsWithThisIcon.some(item => item.classes.indexOf("ui5-shellbar-hidden-button") !== -1);
+		return itemInfo.classes.indexOf("ui5-shellbar-hidden-button") !== -1;
 	}
 
 	get hasMatchingContent() {
