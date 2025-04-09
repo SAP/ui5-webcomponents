@@ -3,7 +3,6 @@
     position: relative;
     color: var(--sapList_TextColor);
     font: var(--sapFontSize) var(--sapFontFamily);
-    box-sizing: content-box;
 }
 
 :host([hidden]) {
