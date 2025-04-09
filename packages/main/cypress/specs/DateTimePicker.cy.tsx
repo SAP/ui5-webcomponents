@@ -1,6 +1,7 @@
 import DateTimePicker from "../../src/DateTimePicker.js";
 import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import type ResponsivePopover from "../../src/ResponsivePopover.js";
 
 function DefaultDateTimePicker() {
 	return (
@@ -12,7 +13,7 @@ function DateTimePickerWithMinutes() {
 	return <DateTimePicker
 		id="dtMinutes"
 		formatPattern="dd/MM/yyyy, hh:mm a"
-		value="13/04/2020, 09:16 AM"/>;
+		value="13/04/2020, 09:16 AM" />;
 }
 
 function DateTimePickerWithSeconds({ initialValue }: { initialValue?: string }) {
@@ -178,12 +179,12 @@ describe("DateTimePicker general interaction", () => {
 			cy.get("ui5-calendar")
 				.shadow()
 				.as("calendar");
-			
+
 			cy.get("@calendar")
 				.find("ui5-daypicker")
 				.shadow()
 				.as("daypicker");
-			
+
 			cy.get("@daypicker")
 				.find(".ui5-dp-item--now")
 				.should("be.focused")
@@ -280,12 +281,12 @@ describe("DateTimePicker general interaction", () => {
 				cy.get("ui5-calendar")
 					.shadow()
 					.as("calendar");
-				
+
 				cy.get("@calendar")
 					.find("ui5-daypicker")
 					.shadow()
 					.as("daypicker");
-				
+
 				cy.get("@daypicker")
 					.find(".ui5-dp-item--selected")
 					.should("be.focused")
@@ -331,11 +332,15 @@ describe("DateTimePicker general interaction", () => {
 		cy.mount(<DefaultDateTimePicker />);
 
 		// Prevent default behavior of ui5-change event.
-		cy.get("#dt").then($el => {
-			$el[0].addEventListener("ui5-change", (ev: Event) => {
-				ev.preventDefault();
+		cy.get("[ui5-datetime-picker]")
+			.as("dtp")
+
+		cy.get("@dtp")
+			.then($el => {
+				$el[0].addEventListener("ui5-change", (ev: Event) => {
+					ev.preventDefault();
+				});
 			});
-		});
 
 		cy.ui5DateTimePickerOpen("#dt");
 
@@ -354,12 +359,21 @@ describe("DateTimePicker general interaction", () => {
 				.find("[data-sap-focus-ref]")
 				.should("be.focused")
 				.realClick();
+
 			cy.get("#ok").realClick();
 		});
 
-		cy.get("#dt")
+		cy.get("@dtp")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@dtp")
+			.shadow()
+			.find("[ui5-datetime-input]")
+			.as("input");
+
+		cy.get("@input")
 			.should("be.focused")
 			.should("have.attr", "value", "");
 	});
@@ -438,7 +452,7 @@ describe("DateTimePicker general interaction", () => {
 				.find("ui5-daypicker")
 				.shadow()
 				.as("daypicker");
-			
+
 			cy.get("@daypicker")
 				.find("[data-sap-focus-ref]")
 				.realClick()

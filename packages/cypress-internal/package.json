@@ -5,9 +5,10 @@
   "private": true,
   "scripts": {
     "build": "tsc && node ./src/copy.js",
-    "generate": "yarn build",
+    "generate": "node ./src/copy.js",
     "clean": "rimraf dist"
   },
+  "types": "./dist/",
   "exports": {
     "./*": "./dist/*"
   },
