@@ -23,7 +23,7 @@ describe("General API", () => {
 		cy.mount(
 			<>
 				<Link style="width: 100px" id="wrapping-link">Eu enim consectetur do amet elit Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Link>
-				<Link style="width: 100px" id="non-wrapping-link" wrapping-type="None">Eu enim consectetur do amet elit Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Link>
+				<Link style="width: 100px" id="non-wrapping-link" wrappingType="None">Eu enim consectetur do amet elit Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Link>
 			</>
 		);
 
@@ -147,7 +147,7 @@ describe("General API", () => {
 	});
 
 	it("setting accessible-name applied on the host element is reflected on the anchor tag", () => {
-		cy.mount(<Link accessible-name="more info" tooltip="my tooltip">Click me</Link>);
+		cy.mount(<Link accessibleName="more info" tooltip="my tooltip">Click me</Link>);
 
 		cy.get("[ui5-link]")
 			.shadow()
@@ -200,7 +200,7 @@ describe("General API", () => {
 		cy.mount(
 			<>
 				<Link id="linkWithIcon" icon="employee">View employee profile</Link>
-				<Link id="linkWithEndIcon" end-icon="cloud">Weather today</Link>
+				<Link id="linkWithEndIcon" endIcon="cloud">Weather today</Link>
 			</>
 		);
 		cy.get("#linkWithIcon")

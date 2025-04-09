@@ -178,7 +178,7 @@ describe("Accessibility", () => {
 				<ToolbarButton text="Button 1"></ToolbarButton>
 				<ToolbarButton text="Button 2"></ToolbarButton>
 				<ToolbarButton text="Button 3"></ToolbarButton>
-				<ToolbarSelect accessible-name="Select">
+				<ToolbarSelect accessibleName="Select">
 					<ToolbarSelectOption>1</ToolbarSelectOption>
 					<ToolbarSelectOption>2</ToolbarSelectOption>
 					<ToolbarSelectOption>3</ToolbarSelectOption>

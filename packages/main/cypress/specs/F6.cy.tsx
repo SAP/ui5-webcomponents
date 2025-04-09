@@ -872,18 +872,18 @@ describe("F6 navigation", () => {
 			cy.mount(
 				<div>
 					<div class="section" data-sap-ui-fastnavgroup="true">
-						<ui5-button>Non group focusable</ui5-button>
+						<Button>Non group focusable</Button>
 					</div>
 					<div data-sap-ui-fastnavgroup-container="true">
 						<div class="section" data-sap-ui-fastnavgroup="true">
-							<ui5-button id="first">First group focusable</ui5-button>
+							<Button id="first">First group focusable</Button>
 						</div>
 						<div class="section" data-sap-ui-fastnavgroup="true">
-							<ui5-button id="second">Second group focusable</ui5-button>
+							<Button id="second">Second group focusable</Button>
 						</div>
 					</div>
 					<div class="section" data-sap-ui-fastnavgroup="true">
-						<ui5-button>Non group focusable</ui5-button>
+						<Button>Non group focusable</Button>
 					</div>
 				</div>
 			);

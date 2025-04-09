@@ -69,7 +69,7 @@ describe("Side Navigation Rendering", () => {
 
 	it("Tests accessibility", () => {
 		cy.mount(
-			<SideNavigation id="sideNav" accessible-name="Main">
+			<SideNavigation id="sideNav" accessibleName="Main">
 			</SideNavigation>
 		);
 
