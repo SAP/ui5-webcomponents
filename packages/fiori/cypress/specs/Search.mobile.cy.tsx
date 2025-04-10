@@ -1,3 +1,4 @@
+import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import Search from "../../src/Search.js";
 import SearchItem from "../../src/SearchItem.js";
 import SearchScope from "../../src/SearchScope.js";
@@ -47,6 +48,11 @@ describe("Search Field on mobile device", () => {
 
 		cy.get("[ui5-search]")
 			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("[ui5-search]")
+			.shadow()
 			.find(".ui5-search-popup-searching-header [ui5-button]")
 			.realClick();
 
@@ -75,10 +81,15 @@ describe("Search Field on mobile device", () => {
 
 		cy.get("[ui5-search]")
 			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("[ui5-search]")
+			.shadow()
 			.find("[ui5-input]")
 			.shadow()
 			.find("input")
-			.type("test{enter}");
+			.realType("test{enter}");
 
 		cy.get("[ui5-search]")
 			.should("have.prop", "open", false);
@@ -116,10 +127,15 @@ describe("Search Field on mobile device", () => {
 
 		cy.get("[ui5-search]")
 			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("[ui5-search]")
+			.shadow()
 			.find("[ui5-input]")
 			.shadow()
 			.find("input")
-			.type("Item 1{enter}");
+			.realType("Item 1{enter}");
 
 		cy.get("[ui5-search]")
 			.should("have.prop", "open", false);
@@ -146,11 +162,11 @@ describe("Search Field on mobile device", () => {
 
 		cy.get("[ui5-search]")
 			.realClick();
-		
+
 		cy.get("[ui5-search]")
 			.shadow()
-			.find(".ui5-search-popover-content")
-			.should("be.visible");
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
 
 		cy.get("[ui5-search]")
 			.shadow()
@@ -230,10 +246,15 @@ describe("Search Field on mobile device", () => {
 
 		cy.get("[ui5-search]")
 			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("[ui5-search]")
+			.shadow()
 			.find("[ui5-input]")
 			.shadow()
 			.find("input")
-			.type("Ite");
+			.realType("Ite");
 
 		cy.get("[ui5-search]")
 			.should("have.prop", "value", "Ite");
@@ -243,7 +264,7 @@ describe("Search Field on mobile device", () => {
 			.find("[ui5-input]")
 			.shadow()
 			.find("input")
-			.type("{enter}");
+			.realType("{enter}");
 
 		cy.get("[ui5-search]")
 			.should("have.prop", "value", "Item 1");
