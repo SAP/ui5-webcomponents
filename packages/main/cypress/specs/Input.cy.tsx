@@ -676,6 +676,64 @@ describe("Selection-change event", () => {
 			expect(eventCount).to.equal(2);
 		});
 	});
+
+	it("Fires selection-change when same item is reselected after input is changed", () => {
+		cy.mount(
+			<Input id="input-selection-change" showSuggestions>
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+				<SuggestionItem text="Condensed" />
+			</Input>
+		);
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("ui5-input")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		let eventCount = 0;
+
+		cy.get("@input").then($input => {
+			$input[0].addEventListener("ui5-selection-change", () => {
+				eventCount++;
+			});
+		});
+
+		cy.get("@innerInput")
+			.realClick();
+
+		cy.get("[ui5-suggestion-item")
+			.eq(0)
+			.as("suggestion-item");
+
+		cy.get("@innerInput")
+			.type("C");
+
+		cy.get("@suggestion-item")
+			.realClick();
+
+		cy.get("@innerInput")
+			.should("have.value", "Cozy");
+
+		cy.get("@innerInput")
+			.realClick();
+		cy.get("@innerInput")
+			.clear();
+		cy.get("@innerInput")
+			.type("C");
+		cy.get("@suggestion-item")
+			.realClick();
+
+		cy.get("@innerInput")
+			.should("have.value", "Cozy");
+
+		cy.then(() => {
+			expect(eventCount).to.equal(3);
+		});
+	});
 });
 
 describe("Change event behavior when selecting the same suggestion item", () => {
