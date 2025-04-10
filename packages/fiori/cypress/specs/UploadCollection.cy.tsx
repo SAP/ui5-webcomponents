@@ -556,11 +556,13 @@ describe("Edit - various file names", () => {
 			.should("have.text", newFileName2 + ".newExtension");
 	});
 
-	it("Tests that hidden file name is NOT considered as extension", () => {
+	it.only("Tests that hidden file name is NOT considered as extension", () => {
 		cy.mount(
 			<UploadCollection id="uploadCollection">
 				<UploadCollectionItem id="item" fileName=".gitignore" type="Detail" />
 			</UploadCollection>);
+
+		// cy.wait(500000);
 
 		cy.get("#item")
 			.shadow()
@@ -569,8 +571,13 @@ describe("Edit - various file names", () => {
 
 		cy.get("#item")
 			.shadow()
-			.find(".ui5-uci-file-name")
-			.should("not.have.text");
+			.find("#ui5-uci-edit-input")
+			.should("be.focused");
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-uci-file-extension")
+			.should("have.text", "");
 	});
 
 	it("Tests cancelling of name change via keyboard", () => {

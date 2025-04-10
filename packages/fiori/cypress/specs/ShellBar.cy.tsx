@@ -1,6 +1,6 @@
 import ShellBar from "../../src/ShellBar.js";
 import ShellBarItem from "../../src/ShellBarItem.js";
-import ShellBarSpacer from "@ui5/webcomponents-fiori/dist/ShellBarSpacer.js";
+import ShellBarSpacer from "../../src/ShellBarSpacer.js";
 import activities from "@ui5/webcomponents-icons/dist/activities.js";
 import navBack from "@ui5/webcomponents-icons/dist/nav-back.js";
 import sysHelp from "@ui5/webcomponents-icons/dist/sys-help.js";
