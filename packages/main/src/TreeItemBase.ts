@@ -197,7 +197,6 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * @private
-	 * @since 2.9.0
 	 */
 	@property({ type: Boolean })
 	_hasImage = false;
@@ -224,7 +223,7 @@ class TreeItemBase extends ListItem {
 	 *
 	 * **Note:** If bigger `ui5-avatar` needs to be used, then the size of the
 	 * `ui5-tree-item` should be customized in order to fit.
-	 * @since 2.9.0
+	 * @since 2.10.0
 	 * @public
 	 */
 	@slot()
