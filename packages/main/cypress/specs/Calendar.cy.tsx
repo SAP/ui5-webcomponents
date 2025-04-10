@@ -489,7 +489,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Buttons for month and year in header are rendered with correct value", () => {
-		cy.mount(<Calendar id="calendar1" primary-calendar-type="Islamic" secondary-calendar-type="Gregorian"></Calendar>);
+		cy.mount(<Calendar id="calendar1" primaryCalendarType="Islamic" secondaryCalendarType="Gregorian"></Calendar>);
 		const timestamp = new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000;
 
 		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
@@ -516,7 +516,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar render two type for Month when MonthPicker is opened", () => {
-		cy.mount(<Calendar id="calendar1" primary-calendar-type='Islamic' secondary-calendar-type='Gregorian'></Calendar>);
+		cy.mount(<Calendar id="calendar1" primaryCalendarType='Islamic' secondaryCalendarType='Gregorian'></Calendar>);
 		const timestamp = new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).valueOf() / 1000;
 
 		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);
@@ -542,7 +542,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar render two type for Year when Year Picker is opened", () => {
-		cy.mount(<Calendar id="calendar1" primary-calendar-type='Islamic' secondary-calendar-type='Gregorian'></Calendar>);
+		cy.mount(<Calendar id="calendar1" primaryCalendarType='Islamic' secondaryCalendarType='Gregorian'></Calendar>);
 		const timestamp = new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).valueOf() / 1000;
 
 		cy.get<Calendar>("#calendar1").invoke("prop", "timestamp", timestamp);

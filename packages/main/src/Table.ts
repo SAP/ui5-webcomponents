@@ -286,7 +286,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@slot()
-	nodata!: Array<HTMLElement>;
+	noData!: Array<HTMLElement>;
 
 	/**
 	 * Defines the features of the component.
@@ -384,8 +384,8 @@ class Table extends UI5Element {
 	@query("[ui5-drop-indicator]")
 	dropIndicatorDOM!: DropIndicator;
 
-	@query("#nodata-row")
-	_nodataRow?: TableRow;
+	@query("#no-data-row")
+	_noDataRow?: TableRow;
 
 	@query("#table-end-row")
 	_endRow!: TableRow;
@@ -423,7 +423,7 @@ class Table extends UI5Element {
 		if (this.overflowMode === TableOverflowMode.Popin) {
 			ResizeHandler.register(this, this._onResizeBound);
 		}
-		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
+		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound, { capture: true }));
 		this.features.forEach(feature => feature.onTableActivate?.(this));
 		this._tableNavigation = new TableNavigation(this);
 		this._tableDragAndDrop = new TableDragAndDrop(this);
