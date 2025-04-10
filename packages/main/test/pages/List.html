@@ -184,45 +184,25 @@
 	<br/><br/>
 
 	<ui5-list header-text="API: icon">
-		<ui5-li  icon="navigation-right-arrow">Option 1</ui5-li>
+		<ui5-li icon="navigation-right-arrow">Option 1</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
 	<hr />
 	<br/><br/>
 
-	<ui5-list header-text="API: image">
-		<ui5-li>Laptop HP
+	<ui5-list header-text="API: image slot">
+		<ui5-li>Avatar with src inside image slot
 			<ui5-avatar slot="image">
 				<img src="./img/HT-1000.jpg" alt="Woman image">
 			</ui5-avatar>
 		</ui5-li>
-		<ui5-li>laptop Lenovo
-			<ui5-avatar slot="image">
-				<img src="./img/HT-1010.jpg" alt="Woman image">
-			</ui5-avatar>
+		<ui5-li>Icon inside image slot
+			<ui5-icon slot="image" name="bell"> </ui5-icon>
 		</ui5-li>
-		<ui5-li>IPhone 3
-			<ui5-avatar slot="image">
-				<img src="./img/HT-1022.jpg" alt="Woman image">
-			</ui5-avatar>
-		</ui5-li>
-	</ui5-list>
-
-	<br/><br/>
-
-	<ui5-list header-text="API: image">
-		<ui5-li> Avatar inside image slot
-			<div slot="image">
-				<ui5-avatar shape="Square" initials="ABC" color-scheme="Accent2"></ui5-avatar>
-			</div>
-		</ui5-li>
-		<ui5-li> Avatar inside image slot
-			<div slot="image">
-				<ui5-avatar >
-					<img src="./img/woman_avatar_5.png" alt="Woman image">
-				</ui5-avatar>
-			</div>
+		<ui5-li>Icon and Avatar with initials inside image slot
+			<ui5-icon slot="image" name="bell"> </ui5-icon>
+			<ui5-avatar slot="image" initials="AB"></ui5-avatar>
 		</ui5-li>
 	</ui5-list>
 
