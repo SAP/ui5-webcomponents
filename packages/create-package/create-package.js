@@ -239,7 +239,7 @@ const createWebcomponentsPackage = async () => {
 			name: "testSetup",
 			message: "How would you like to set up testing?",
 			choices: [
-				{ title: "Cypress (recommended)", value: "cypress" },
+				{ title: "Cypress", value: "cypress" },
 				{ title: "I'll set it up manually", value: "manual" },
 			],
 			initial: 0,
