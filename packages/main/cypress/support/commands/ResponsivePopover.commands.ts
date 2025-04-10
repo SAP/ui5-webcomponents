@@ -1,13 +1,18 @@
 import type ResponsivePopover from "../../../src/ResponsivePopover.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { isPopupOpen } from "./utils/popup-open.js";
 
 Cypress.Commands.add("ui5ResponsivePopoverOpened", { prevSubject: true }, (subject: JQuery<ResponsivePopover>) => {
-	cy.wrap(subject)
-		.shadow()
-		.find("[ui5-popover], [ui5-dialog]")
-		.then($subject => {
-			isPopupOpen($subject);
-		})
+	if (isPhone()) {
+		cy.wrap(subject)
+			.shadow()
+			.find("[ui5-dialog]")
+			.then($dialog => {
+				isPopupOpen($dialog);
+			});
+	} else {
+		isPopupOpen(subject);
+	}
 });
 
 declare global {
