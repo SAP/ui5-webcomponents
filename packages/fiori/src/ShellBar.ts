@@ -1641,4 +1641,5 @@ export type {
 	ShellBarAccessibilityAttributes,
 	ShellBarSearchButtonEventDetail,
 	ShellBarSearchFieldToggleEventDetail,
+	IShellBarSelfCollapsibleSearch,
 };
