@@ -26,6 +26,6 @@
     "@cypress/mount-utils": "^4.0.0"
   },
   "peerDependencies": {
-    "@ui5/webocmponets-base": "^2.6.0"
+    "@ui5/webcomponents-base": "^2.6.0"
   }
 }
