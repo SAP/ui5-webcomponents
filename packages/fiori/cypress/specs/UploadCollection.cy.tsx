@@ -602,21 +602,76 @@ describe("Edit - various file names", () => {
 });
 
 describe("Drag and Drop", () => {
+	it("Tests drag and drop overlay when dragging a file", () => {
+		cy.mount(<UploadCollection id="uploadCollection" />);
+
+		const dataTransfer = new DataTransfer();
+		dataTransfer.items.add(new File([new Blob(["file content"], { type: "text/html" })], "test.txt"))
+
+		cy.document()
+			.then((document) => {
+				return document.body;
+			})
+			.trigger("dragenter", {
+				eventConstructor: "DragEvent",
+				force: true,
+				dataTransfer
+			});
+
+		cy.get("#uploadCollection")
+			.should("have.prop", "_dndOverlayMode", "Drag")
+			.shadow()
+			.find(".uc-dnd-overlay.uc-drag-overlay")
+			.should("be.visible");
+
+		cy.get("#uploadCollection")
+			.shadow()
+			.find(".uc-dnd-overlay")
+			.trigger("dragenter", {
+				eventConstructor: "DragEvent",
+				force: true,
+				dataTransfer
+			});
+
+		cy.get("#uploadCollection")
+			.should("have.prop", "_dndOverlayMode", "Drop")
+			.shadow()
+			.find(".uc-dnd-overlay.uc-drop-overlay")
+			.should("be.visible");
+
+		cy.get("#uploadCollection")
+			.shadow()
+			.find(".uc-dnd-overlay")
+			.trigger("drop", {
+				eventConstructor: "DragEvent",
+				force: true,
+				dataTransfer
+			});
+
+		cy.get("#uploadCollection")
+			.should("have.prop", "_dndOverlayMode", "None")
+			.shadow()
+			.find(".uc-dnd-overlay")
+			.should("not.exist");
+	});
+
 	it("Tests that drag and drop overlay is NOT shown when NOT dragging files", () => {
-		cy.mount(
-			<>
-				<UploadCollection id="uploadCollection" />
-				<p id="draggableElement" draggable="true">This element is draggable</p>
-			</>
-		);
+		cy.mount(<UploadCollection id="uploadCollection" />);
 
 		const dataTransfer = new DataTransfer();
 
-		cy.get("#draggableElement").trigger("dragstart", { dataTransfer, bubbles: true });
-
-		cy.get("#uploadCollection").trigger("drop", { dataTransfer, bubbles: true });
+		cy.document()
+			.then((document) => {
+				return document.body;
+			})
+			.trigger("dragenter", {
+				eventConstructor: "DragEvent",
+				force: true,
+				dataTransfer
+			});
 
 		cy.get("#uploadCollection")
+			.should("have.prop", "_dndOverlayMode", "None")
 			.shadow()
 			.find(".uc-dnd-overlay")
 			.should("not.exist");
