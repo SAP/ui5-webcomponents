@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.3...v2.9.0) (2025-04-04)
+
+
+### Bug Fixes
+
+* **ui5-multi-input:** announce value help ([#11221](https://github.com/SAP/ui5-webcomponents/issues/11221)) ([bdc746a](https://github.com/SAP/ui5-webcomponents/commit/bdc746a043489077daa5dd1a700067c028e4c489))
+* **ui5-select:** align option font size with field ([#11255](https://github.com/SAP/ui5-webcomponents/issues/11255)) ([dc8ff89](https://github.com/SAP/ui5-webcomponents/commit/dc8ff89263a72cd6c59d8011a6be410f884a1344)), closes [#11163](https://github.com/SAP/ui5-webcomponents/issues/11163)
+
+
+
+
+
 # [2.9.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.2...v2.9.0-rc.3) (2025-04-03)
 
 
