@@ -556,7 +556,7 @@ describe("Edit - various file names", () => {
 			.should("have.text", newFileName2 + ".newExtension");
 	});
 
-	it.only("Tests that hidden file name is NOT considered as extension", () => {
+	it("Tests that hidden file name is NOT considered as extension", () => {
 		cy.mount(
 			<UploadCollection id="uploadCollection">
 				<UploadCollectionItem id="item" fileName=".gitignore" type="Detail" />
