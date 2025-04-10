@@ -268,9 +268,9 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
 
 /**
  * Fired, when the search field is expanded or collapsed.
- * @public
  * @since 2.10.0
  * @param {Boolean} expanded whether the search field is expanded
+ * @public
  */
 @event("search-field-toggle", {
 	bubbles: true,
@@ -302,18 +302,20 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Defines the visibility state of the search button.
-	 * @public
+	 *
 	 * **Note:** The `hideSearchButton` property is in an experimental state and is a subject to change.
 	 * @default false
+	 * @public
 	 */
 	@property({ type: Boolean })
 	hideSearchButton = false;
 
 	/**
 	 * Disables the automatic search field expansion/collapse when the available space is not enough.
-	 * @public
+	 *
 	 * **Note:** The `disableAutoSearchField` property is in an experimental state and is a subject to change.
 	 * @default false
+	 * @public
 	 */
 	@property({ type: Boolean })
 	disableAutoSearchField = false;
