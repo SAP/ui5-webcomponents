@@ -172,6 +172,8 @@ describe("Component Behavior", () => {
 			it("tests search-button-click event", async () => {
 				await browser.setWindowSize(870, 1680); // search icon is not visible on XXL breakpoint
 				await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+				const shellBar = await browser.$("#shellbar");
+				await shellBar.setProperty('showSearchField', false);
 
 				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
 				const input = await browser.$("#press-input");
