@@ -43,7 +43,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import type ShellBarItem from "./ShellBarItem.js";
 import type { ShellBarItemAccessibilityAttributes } from "./ShellBarItem.js";
-
+import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 // Templates
 import ShellBarTemplate from "./ShellBarTemplate.js";
 
@@ -505,7 +505,11 @@ class ShellBar extends UI5Element {
 	_overflowNotifications: string | null;
 	_lastOffsetWidth = 0;
 	_observableContent: Array<HTMLElement> = [];
+	_isAnimating: boolean = false;
 	_autoRestoreSearchField = false;
+	_handleAnimationEndRef = this._handleAnimationEnd.bind(this);
+	_maxAnimationDuration = 0;
+	_performNoAnimation = false;
 
 	_headerPress: () => void;
 
@@ -711,13 +715,14 @@ class ShellBar extends UI5Element {
 		return Number(styleSet.getPropertyValue(propertyName).replace("rem", "")) * parseInt(getComputedStyle(document.body).getPropertyValue("font-size"));
 	}
 
-	_parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
-		return Number(styleSet.getPropertyValue(propertyName).replace("px", ""));
-	}
-
 	domCalculatedValues(cssVar: string): number {
 		const shellbarComputerStyle = getComputedStyle(this.getDomRef()!);
 		return this._calculateCSSREMValue(shellbarComputerStyle, getScopedVarName(cssVar)); // px
+	}
+
+	domCalculatedAnumationDuration(cssVar: string): number {
+		const shellbarComputerStyle = getComputedStyle(this.getDomRef()!);
+		return Number(shellbarComputerStyle.getPropertyValue(getScopedVarName(cssVar)).replace("s", "")) * 1000; // ms
 	}
 
 	onBeforeRendering() {
@@ -738,7 +743,9 @@ class ShellBar extends UI5Element {
 
 	onAfterRendering() {
 		this._lastOffsetWidth = this.offsetWidth;
-		this._overflowActions();
+		if (!this._isAnimating) {
+			this._overflowActions();
+		}
 		this.onInitialRendering();
 	}
 
@@ -748,6 +755,8 @@ class ShellBar extends UI5Element {
 			if (this.autoSearchField) {
 				this._updateSearchFieldState();
 			}
+			this._maxAnimationDuration = this.domCalculatedAnumationDuration("--_ui5_shellbar_max_animation_duration");
+			this._performNoAnimation = getTheme().includes("hcb") || getTheme().includes("hcw");
 		}
 		this._isInitialRendering = false;
 	}
@@ -786,7 +795,7 @@ class ShellBar extends UI5Element {
 
 	_resetItemsVisibility(items: Array<HTMLElement>) {
 		items.forEach(item => {
-			item.classList.remove("ui5-shellbar-hidden-button");
+			item.classList.contains("ui5-shellbar-hidden-button") && item.classList.remove("ui5-shellbar-hidden-button");
 		});
 	}
 
@@ -856,12 +865,38 @@ class ShellBar extends UI5Element {
 		ResizeHandler.deregister(this, this._handleResize);
 	}
 
+	_handleAnimationEnd() {
+		this._overflowActions();
+		this._isAnimating = false;
+		this.searchField[0].removeEventListener("animationend", this._handleAnimationEndRef);
+		setTimeout(() => this.shadowRoot!.querySelector("header")!.classList.remove("ui5-shellbar-animating"), this._maxAnimationDuration + 100); // adding 100ms buffer to cover animation time
+	}
+
+	_attachAnimationEndHandlers() {
+		if (!this._performNoAnimation) {
+			const searchWrapper = this.shadowRoot!.querySelector(".ui5-shellbar-search-field");
+			this._isAnimating = true;
+			this.shadowRoot!.querySelector("header")!.classList.add("ui5-shellbar-animating");
+
+			searchWrapper?.addEventListener("animationend", this._handleAnimationEndRef);
+			setTimeout(() => {
+				if (this._isAnimating) {
+					this._handleAnimationEnd();
+				}
+			}, RESIZE_THROTTLE_RATE);
+		} else {
+			this._overflowActions();
+		}
+	}
+
 	_handleSearchIconPress() {
 		const searchButtonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-search-button")!;
 		const defaultPrevented = !this.fireDecoratorEvent("search-button-click", {
 			targetRef: searchButtonRef,
 			searchFieldVisible: this.showSearchField,
 		});
+		this._attachAnimationEndHandlers();
+
 		if (defaultPrevented) {
 			return;
 		}
@@ -933,6 +968,7 @@ class ShellBar extends UI5Element {
 
 	_handleCancelButtonPress() {
 		this.showSearchField = false;
+		this._attachAnimationEndHandlers();
 	}
 
 	_handleProductSwitchPress(e: MouseEvent) {
@@ -1263,7 +1299,7 @@ class ShellBar extends UI5Element {
 	get styles() {
 		return {
 			searchField: {
-				"display": this.showSearchField ? "flex" : "none",
+				"display": this.showSearchField || this._isAnimating ? "flex" : "none",
 			},
 		};
 	}
@@ -1426,7 +1462,7 @@ class ShellBar extends UI5Element {
 		return this.contentItems.length > 0;
 	}
 
-	get hidableDomElements(): HTMLElement [] {
+	get hidableDomElements(): HTMLElement[] {
 		const items = Array.from(this.shadowRoot!.querySelectorAll<HTMLElement>(".ui5-shellbar-button:not(.ui5-shellbar-search-button):not(.ui5-shellbar-overflow-button):not(.ui5-shellbar-cancel-button):not(.ui5-shellbar-no-overflow-button)"));
 		const assistant = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-assistant-button");
 		const searchButton = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-search-button");

@@ -85,7 +85,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 								{this.startContent.map(item => {
 									const itemInfo = this._contentInfo.find(info => info.id === item._individualSlot);
 									return (
-										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes}>
+										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes} data-hide-order={`${item.getAttribute("data-hide-order")}`}>
 											{this.shouldIncludeSeparator(itemInfo, this.startContentInfoSorted) && (
 												// never displayed, only "packed" with last item that was hidden, used for measurement purposes
 												<div class={{
@@ -101,7 +101,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 								{this.endContent.map(item => {
 									const itemInfo = this._contentInfo.find(info => info.id === item._individualSlot);
 									return (
-										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes}>
+										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes} data-hide-order={item.getAttribute("data-hide-order")}>
 											<slot name={item._individualSlot}></slot>
 											{this.shouldIncludeSeparator(itemInfo, this.endContentInfoSorted) && (
 												// never displayed, only "packed" with last item that was hidden, used for measurement purposes

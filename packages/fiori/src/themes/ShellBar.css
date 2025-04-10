@@ -54,6 +54,7 @@
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+	flex-shrink: 0;
 }
 
 ::slotted([ui5-toggle-button][slot="assistant"]) {
@@ -445,11 +446,17 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-search-field {
-	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
-	min-width: var(--_ui5_shellbar_search_field_width);
 	align-items: center;
 	flex-grow: 1;
 	margin-inline-start: 0.5rem;
+	display: flex;
+	width: 0;
+	overflow: hidden;
+}
+
+:host([show-search-field]:not(.ui5-shellbar-animating)) .ui5-shellbar-search-field {
+	min-width: var(--_ui5_shellbar_search_field_width);
+	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
 }
 
 .ui5-shellbar-overflow-container-right-child > :first-child,
@@ -486,7 +493,6 @@ slot[name="profile"] {
 	color: var(--_ui5_shellbar_search_field_color);
 	height: 2.25rem;
 	width: 100%;
-	min-width: var(--_ui5_shellbar_search_field_width);
 }
 
 :host([breakpoint-size="M"]) ::slotted([ui5-input]),
@@ -533,12 +539,17 @@ slot[name="profile"] {
 	width: auto;
 }
 
+.ui5-shellbar-content-item {
+	width: auto;
+	opacity: 1;
+}
+
 /* if class contains ui5-shellbar-hidden-button */
 ::slotted(.ui5-shellbar-hidden-button),
 .ui5-shellbar-hidden-button,
 .ui5-shellbar-invisible-button {
-	visibility: hidden;
 	order: -1;
+	visibility: hidden;
 	opacity: 0;
 	min-width: 0;
 	width: 0;
@@ -547,4 +558,79 @@ slot[name="profile"] {
 	padding-inline-start: 0;
 	border: 0;
 	margin-inline-start: 0;
+	transition: none;
+}
+
+.ui5-shellbar-animating .ui5-shellbar-content-item {
+	transition: var(--_ui5_shellbar_content_transition);
+	&[data-hide-order = "null"] {
+		transition-duration: 0.01s;
+	}
+
+	&[data-hide-order = "1"] {
+		transition-duration: 0.01s;
+	}
+	&[data-hide-order = "2"] {
+		transition-duration: 0.1s;
+	}
+	&[data-hide-order = "3"] {
+		transition-duration: 0.15s;
+	}
+	&[data-hide-order = "4"] {
+		transition-duration: 0.2s;
+	}
+	&[data-hide-order = "5"] {
+		transition-duration: 0.25s;
+	}
+	&[data-hide-order = "6"] {
+		transition-duration: 0.3s;
+	}
+	&[data-hide-order = "7"] {
+		transition-duration: 0.35s;
+	}
+	&[data-hide-order = "8"] {
+		transition-duration: 0.4s;
+	}
+	&[data-hide-order = "9"]	{
+		transition-duration: 0.45s;
+	}
+	&[data-hide-order = "10"] {
+		transition-duration: var(--_ui5_shellbar_max_animation_duration);
+	}
+	&.ui5-shellbar-hidden-button,
+	&.ui5-shellbar-invisible-button {
+		transition: var(--_ui5_shellbar_content_transition);
+	}
+}
+
+.ui5-shellbar-animating .ui5-shellbar-search-field {
+	animation: var(--_ui5_shellbar_search_animation_expand);
+}
+
+:host([show-search-field]) .ui5-shellbar-animating .ui5-shellbar-search-field,
+:host([show-search-field]) .ui5-shellbar-animating .ui5-shellbar-search-full-width-wrapper {
+ 	animation: var(--_ui5_shellbar_search_animation_grow);
+}
+
+@keyframes expand-grow {
+	from {
+		min-width: 0;
+		opacity: 0;
+	}
+	to {
+		min-width: var(--_ui5_shellbar_search_field_width);
+		opacity: 1;
+	}
+}
+
+@keyframes expand-shrink {
+	from {
+		min-width: var(--_ui5_shellbar_search_field_width);
+		opacity: 1;
+	}
+	to {
+		min-width: 0;
+		opacity: 0;
+		padding-inline-start: 0;
+	}
 }
