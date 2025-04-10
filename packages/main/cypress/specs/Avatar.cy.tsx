@@ -21,7 +21,7 @@ describe("Accessibility", () => {
 		const ACCESSIBLE_NAME = "Supplier Icon";
 		const ICON_NAME = "supplier";
 
-		cy.mount(<Avatar id="avatar-with-icon" icon={ICON_NAME} accessible-name={ACCESSIBLE_NAME}></Avatar>);
+		cy.mount(<Avatar id="avatar-with-icon" icon={ICON_NAME} accessibleName={ACCESSIBLE_NAME}></Avatar>);
 
 		cy.get("#avatar-with-icon")
 			.shadow()

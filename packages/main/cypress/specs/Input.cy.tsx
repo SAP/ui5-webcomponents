@@ -342,7 +342,7 @@ describe("Input Tests", () => {
 describe("Input general interaction", () => {
 	it("handles suggestions selection cancel with ESC", () => {
 		cy.mount(
-			<Input id="myInputEsc" show-suggestions class="input3auto">
+			<Input id="myInputEsc" showSuggestions class="input3auto">
 				<SuggestionItem text="Chromium"></SuggestionItem>
 				<SuggestionItem text="Titanium"></SuggestionItem>
 				<SuggestionItem text="Iron"></SuggestionItem>

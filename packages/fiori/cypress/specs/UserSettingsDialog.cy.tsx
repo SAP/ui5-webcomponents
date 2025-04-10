@@ -20,7 +20,7 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests header-text provided", () => {
-		cy.mount(<UserSettingsDialog header-text="Settings" open>
+		cy.mount(<UserSettingsDialog headerText="Settings" open>
 		</UserSettingsDialog>);
 		cy.get("[ui5-user-settings-dialog]").as("settings");
 		cy.get("@settings").should("exist");
@@ -31,7 +31,7 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests show-search-field provided", () => {
-		cy.mount(<UserSettingsDialog show-search-field open>
+		cy.mount(<UserSettingsDialog showSearchField open>
 		</UserSettingsDialog>);
 		cy.get("[ui5-user-settings-dialog]").as("settings");
 		cy.get("@settings").should("exist");
@@ -133,7 +133,7 @@ describe("Initial rendering", () => {
 
 	it("tests setting header-text", () => {
 		cy.mount(<UserSettingsDialog open>
-			<UserSettingsItem header-text="Header title | Setting 3">
+			<UserSettingsItem headerText="Header title | Setting 3">
 				<UserSettingsView text="Setting1">
 				</UserSettingsView>
 			</UserSettingsItem>
@@ -452,7 +452,7 @@ describe("Events", () => {
 	});
 
 	it("tests search", () => {
-		cy.mount(<UserSettingsDialog show-search-field open>
+		cy.mount(<UserSettingsDialog showSearchField open>
 			<UserSettingsItem text="Setting">
 				<UserSettingsView text="Setting1">
 				</UserSettingsView>
