@@ -1616,8 +1616,8 @@ class ShellBar extends UI5Element {
 	}
 }
 
-type IShellBarSelfCollapsibleSearch = {
-	"collapsed": boolean;
+interface IShellBarSelfCollapsibleSearch {
+	collapsed: boolean;
 }
 
 const isSelfCollapsibleSearch = (searchField: any): searchField is IShellBarSelfCollapsibleSearch => {
