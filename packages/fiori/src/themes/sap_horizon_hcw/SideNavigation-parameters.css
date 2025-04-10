@@ -43,9 +43,8 @@
 	--_ui5_side_navigation_item_collapsed_hover_focus_width: fit-content;
 	--_ui5_side_navigation_item_collapsed_hover_focus_display: block;
 	--_ui5_side_navigation_item_collapsed_hover_focus_padding_right: 1rem;
-	--_ui5_side_navigation_item_collapsed_padding_right: 3.9375rem;
 	--_ui5_side_navigation_action_item_collapsed_padding: 1rem;
-	--_ui5_side_navigation_item_collapsed_unselectable_padding: 3rem;
+	--_ui5_side_navigation_item_collapsed_padding: 3rem;
 }
 
 [data-ui5-compact-size],
