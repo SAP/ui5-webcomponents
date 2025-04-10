@@ -2,8 +2,6 @@
 import RadioButton from "../../src/RadioButton.js";
 import Input from "../../src/Input.js";
 import Label from "../../src/Label.js";
-import Switch from "../../src/Switch.js";
-import Title from "../../src/Title.js";
 
 describe("Rendering", () => {
 	it("DOM structure", () => {
@@ -53,7 +51,7 @@ describe("Rendering", () => {
 
 describe("RadioButton general interaction", () => {
 	it("tests change event", () => {
-		const changeEventStub = cy.stub();
+		const changeEventStub = cy.stub().as("myStub");
 		cy.mount(<RadioButton id="rb1" onChange={changeEventStub}></RadioButton>);
 
 		cy.get("#rb1")
@@ -61,17 +59,17 @@ describe("RadioButton general interaction", () => {
 			.find(".ui5-radio-root")
 			.should("exist");
 
-		cy.get("#rb1").realClick();
-		cy.wrap(changeEventStub)
-			.should("have.been.called");
+		cy.get("@myStub").should("not.have.been.called");
 
 		cy.get("#rb1").realClick();
-		cy.wrap(changeEventStub)
-			.should("have.been.calledOnce");
+		cy.get("@myStub").should("have.been.called");
+
+		cy.get("#rb1").realClick();
+		cy.get("@myStub").should("have.been.calledOnce");
 	});
 
 	it("tests change event upon ENTER", () => {
-		const changeEventStub = cy.stub();
+		const changeEventStub = cy.stub().as("myStub");
 		cy.mount(
 			<>
 				<RadioButton id="rb1"></RadioButton>
@@ -84,6 +82,7 @@ describe("RadioButton general interaction", () => {
 			.should("exist");
 
 		cy.get("#rb1").realClick();
+		cy.get("#rb1").should("be.focused");
 		cy.get("#rb1").realPress("Tab");
 
 		cy.get("#rb2")
@@ -91,17 +90,16 @@ describe("RadioButton general interaction", () => {
 			.find(".ui5-radio-root")
 			.should("exist");
 
+		cy.get("@myStub").should("not.have.been.called");
 		cy.get("#rb2").realPress("Enter");
-		cy.wrap(changeEventStub)
-			.should("have.been.called");
+		cy.get("@myStub").should("have.been.called");
 
 		cy.get("#rb2").realPress("Enter");
-		cy.wrap(changeEventStub)
-			.should("have.been.calledOnce");
+		cy.get("@myStub").should("have.been.calledOnce");
 	});
 
 	it("tests change event upon SPACE", () => {
-		const changeEventStub = cy.stub();
+		const changeEventStub = cy.stub().as("myStub");
 		cy.mount(
 			<>
 				<RadioButton id="rb2" text="Option B"></RadioButton>
@@ -114,6 +112,7 @@ describe("RadioButton general interaction", () => {
 			.should("exist");
 
 		cy.get("#rb2").realClick();
+		cy.get("#rb2").should("be.focused");
 		cy.get("#rb2").realPress("Tab");
 
 		cy.get("#rb3")
@@ -121,17 +120,16 @@ describe("RadioButton general interaction", () => {
 			.find(".ui5-radio-root")
 			.should("exist");
 
+		cy.get("@myStub").should("not.have.been.called");
 		cy.get("#rb3").realPress("Space");
-		cy.wrap(changeEventStub)
-			.should("have.been.called");
+		cy.get("@myStub").should("have.been.called");
 
 		cy.get("#rb3").realPress("Space");
-		cy.wrap(changeEventStub)
-			.should("have.been.calledOnce");
+		cy.get("@myStub").should("have.been.calledOnce");
 	});
 
 	it("tests change event not fired, when disabled", () => {
-		const changeEventStub = cy.stub();
+		const changeEventStub = cy.stub().as("myStub");
 		cy.mount(<RadioButton id="rb4" disabled text="Option D" onChange={changeEventStub}></RadioButton>);
 
 		cy.get("#rb4")
@@ -140,11 +138,11 @@ describe("RadioButton general interaction", () => {
 			.should("exist");
 
 		cy.get("#rb4").realClick();
+		cy.get("#rb4").should("be.focused");
 		cy.get("#rb4").realPress("Space");
 		cy.get("#rb4").realPress("Enter");
 
-		cy.wrap(changeEventStub)
-			.should("not.have.been.called");
+		cy.get("@myStub").should("not.have.been.called");
 	});
 
 	it("tests radio buttons selection within group with ARROW-RIGHT key", () => {
@@ -152,12 +150,14 @@ describe("RadioButton general interaction", () => {
 			<>
 				<Input id="tabField"></Input>
 				<RadioButton id="groupRb1" name="a" wrappingType="None" text="Option A long long should shrink long long text text text text text text text text"></RadioButton>
+				<RadioButton id="groupRb2" name="a" disabled text="Option C"></RadioButton>
 				<RadioButton id="groupRb3" name="a" text="Option D"></RadioButton>
 				<RadioButton id="groupRbReadOnly" name="a" readonly text="Option E"></RadioButton>
 			</>);
 
 		cy.get("#tabField").should("exist");
 		cy.get("#tabField").realClick();
+		cy.get("#tabField").should("be.focused");
 		cy.get("#tabField").realPress("Tab");
 
 		cy.get("#groupRb1").should("exist");
@@ -180,6 +180,7 @@ describe("RadioButton general interaction", () => {
 		cy.mount(
 			<>
 				<RadioButton id="groupRb4" name="b" wrappingType="None" text="Option A long long should shrink long long text text text text text text text text"></RadioButton>
+				<RadioButton id="groupRb5" name="b" disabled text="Option C"></RadioButton>
 				<RadioButton id="groupRb6" name="b" text="Option D"></RadioButton>
 			</>);
 
@@ -286,16 +287,19 @@ describe("RadioButton general interaction", () => {
 	});
 
 	it("tests change event from radio buttons within group", () => {
-		const changeEventStub = cy.stub();
+		const changeEventStub = cy.stub().as("myStub");
 		cy.mount(<RadioButton id="groupRb7" text="None selected" onChange={changeEventStub} valueState="None" name="GroupB"></RadioButton>);
 
 		cy.get("#groupRb7")
 			.shadow()
 			.find(".ui5-radio-root")
 			.should("exist");
+
+		cy.get("@myStub").should("not.have.been.called");
+
 		cy.get("#groupRb7").realClick();
 
-		cy.wrap(changeEventStub).should("be.calledOnce");
+		cy.get("@myStub").should("be.calledOnce");
 		cy.get("#groupRb7").should("have.prop", "checked");
 	});
 
