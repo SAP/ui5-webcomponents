@@ -760,13 +760,6 @@ class ShellBar extends UI5Element {
 		this._observeContentItems();
 	}
 
-	get showSearchField() {
-		if (isSelfCollapsibleSearch(this.search)) {
-			return !this.search.collapsed;
-		}
-		return this._showSearchField;
-	}
-
 	/**
 	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
 	 *
@@ -780,6 +773,13 @@ class ShellBar extends UI5Element {
 			this.search.collapsed = !value;
 		}
 		this._showSearchField = value;
+	}
+
+	get showSearchField(): boolean {
+		if (isSelfCollapsibleSearch(this.search)) {
+			return !this.search.collapsed;
+		}
+		return this._showSearchField;
 	}
 
 	/**
