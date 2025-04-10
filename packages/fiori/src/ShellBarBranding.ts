@@ -14,20 +14,24 @@ import shellBarStyles from "./generated/themes/ShellBar.css.js";
 import ShellBarBrandingCss from "./generated/themes/ShellBarBranding.css.js";
 
 type ShellBarLogoAccessibilityAttributes = {
-	role?: Extract<AriaRole, "button" | "link">,
-	name?: string,
+	role?: Extract<AriaRole, "link" | "button">
 }
 
-type ShellBarAccessibilityAttributes = {
+type ShellBarBrandingAccessibilityAttributes = {
 	logo?: ShellBarLogoAccessibilityAttributes
 };
 
 /**
  * @class
  *
+ * ### Overview
+ * The `ui5-shellbar-branding` component is intended to be placed inside the branding slot of the
+ * `ui5-shellbar` component. Its content has higher priority than the `primaryTitle` property
+ * and the `logo` slot of `ui5-shellbar`.
+ *
  * @constructor
  * @extends UI5Element
- * @since
+ * @since 2.10.0
  * @public
  */
 @customElement({
@@ -87,15 +91,14 @@ class ShellBarBranding extends UI5Element {
 	 * The accessibility attributes support the following values:
 	 *
 	 * - **role**: Defines the accessible ARIA role of the logo area.
-	 * Accepts the following string values: `button` or `link`.
+	 * Accepts the following string values: `link` or `button`.
 	 *
 	 *
 	 * @default {}
 	 * @public
-	 * @since
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: ShellBarAccessibilityAttributes = {};
+	accessibilityAttributes: ShellBarBrandingAccessibilityAttributes = {};
 
 	/**
 	 * Defines the logo of the `ui5-shellbar`.

@@ -413,6 +413,14 @@ class ShellBar extends UI5Element {
 	@slot()
 	assistant!: Array<IButton>;
 
+	/**
+	 * Defines the branding slot.
+	 * The `ui5-shellbar-branding` component is intended to be placed inside this slot.
+	 * Content placed here takes precedence over the `primaryTitle` property and the `logo` content slot.
+	 *
+	 * @since 2.10.0
+	 * @public
+	 */
 	@slot()
 	branding!: Array<UI5Element>;
 
