@@ -89,7 +89,9 @@ describe("Search Field on mobile device", () => {
 			.find("[ui5-input]")
 			.shadow()
 			.find("input")
-			.realType("test{enter}");
+			.should("be.focused");
+
+		cy.realType("test{enter}");
 
 		cy.get("[ui5-search]")
 			.should("have.prop", "open", false);
@@ -135,7 +137,9 @@ describe("Search Field on mobile device", () => {
 			.find("[ui5-input]")
 			.shadow()
 			.find("input")
-			.realType("Item 1{enter}");
+			.should("be.focused");
+
+		cy.realType("Item 1{enter}");
 
 		cy.get("[ui5-search]")
 			.should("have.prop", "open", false);
@@ -171,7 +175,9 @@ describe("Search Field on mobile device", () => {
 		cy.get("[ui5-search]")
 			.shadow()
 			.find("[ui5-input]")
-			.realPress("T");
+			.should("be.focused");
+
+		cy.realPress("T");
 
 		cy.get("[ui5-search]")
 			.should("have.prop", "value", "T");
@@ -254,7 +260,9 @@ describe("Search Field on mobile device", () => {
 			.find("[ui5-input]")
 			.shadow()
 			.find("input")
-			.realType("Ite");
+			.should("be.focused");
+
+		cy.realType("Ite");
 
 		cy.get("[ui5-search]")
 			.should("have.prop", "value", "Ite");
@@ -264,7 +272,9 @@ describe("Search Field on mobile device", () => {
 			.find("[ui5-input]")
 			.shadow()
 			.find("input")
-			.realType("{enter}");
+			.should("be.focused");
+
+		cy.realType("{enter}");
 
 		cy.get("[ui5-search]")
 			.should("have.prop", "value", "Item 1");
