@@ -1,0 +1,12 @@
+:host(:not([hidden])) {
+	display: inline-block;
+	width: 100%;
+}
+
+#created-by-ai-text-link {
+	margin-inline-end: 4px;
+}
+
+#created-by-ai-text-link::part(icon) {
+	margin-inline-end: 4px; 
+}
