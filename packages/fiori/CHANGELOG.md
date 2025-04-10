@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0...v2.9.1-rc.0) (2025-04-10)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** adjust scroll padding for header/footer ([#11193](https://github.com/SAP/ui5-webcomponents/issues/11193)) ([d35b9ce](https://github.com/SAP/ui5-webcomponents/commit/d35b9ce60bc6e2af5ae5113b7018fc0a12489dc0)), closes [#10847](https://github.com/SAP/ui5-webcomponents/issues/10847)
+* **ui5-navigation-layout:** adjust `z-index` values ([#11212](https://github.com/SAP/ui5-webcomponents/issues/11212)) ([d7a368a](https://github.com/SAP/ui5-webcomponents/commit/d7a368a02ce3d8483d36e1f11fa4fc6b5ebc3ce3)), closes [#11174](https://github.com/SAP/ui5-webcomponents/issues/11174)
+* **ui5-search:** stabilitze mobile test ([#11292](https://github.com/SAP/ui5-webcomponents/issues/11292)) ([8a0d742](https://github.com/SAP/ui5-webcomponents/commit/8a0d74293cb20278049f6ba3f231207fc0a6a432))
+
+
+
+
+
 # [2.9.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.3...v2.9.0) (2025-04-04)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
