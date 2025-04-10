@@ -67,6 +67,21 @@
 	object-fit: contain
 }
 
+::slotted([ui5-icon][slot="image"]){
+	color: var(--sapContent_NonInteractiveIconColor);
+	min-width: var(--_ui5_list_item_icon_size);
+	min-height: var(--_ui5_list_item_icon_size);
+	padding-inline-end: var(--_ui5_list_item_icon_padding-inline-end);
+}
+
+::slotted([ui5-avatar][slot="image"]) {
+	min-width: var(--_ui5_list_item_img_size);
+	min-height: var(--_ui5_list_item_img_size);
+	margin-top: var(--_ui5_list_item_img_top_margin);
+	margin-bottom: var(--_ui5_list_item_img_bottom_margin);
+	margin-inline-end: var(--_ui5_list_item_img_hn_margin);
+}
+
 :host([description]) .ui5-li-root {
 	padding: 1rem;
 }
@@ -117,14 +132,6 @@
 
 :host([description]) .ui5-li-additional-text {
 	align-self: flex-end;
-}
-
-.ui5-li-image {
-	min-width: var(--_ui5_list_item_img_size);
-	min-height: var(--_ui5_list_item_img_size);
-	margin-top: var(--_ui5_list_item_img_top_margin);
-	margin-bottom: var(--_ui5_list_item_img_bottom_margin);
-	margin-inline-end: var(--_ui5_list_item_img_hn_margin);
 }
 
 .ui5-li-icon {
