@@ -113,7 +113,7 @@ type ShellBarSearchButtonEventDetail = {
 	searchFieldVisible: boolean;
 };
 
-type ShellBarSearchFieldExpandEventDetail = {
+type ShellBarSearchFieldToggleEventDetail = {
 	expanded: boolean;
 };
 
@@ -272,7 +272,7 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
  * @since 2.10.0
  * @param {Boolean} expanded whether the search field is expanded
  */
-@event("search-field-expand", {
+@event("search-field-toggle", {
 	bubbles: true,
 })
 
@@ -296,7 +296,7 @@ class ShellBar extends UI5Element {
 		"logo-click": ShellBarLogoClickEventDetail,
 		"menu-item-click": ShellBarMenuItemClickEventDetail,
 		"search-button-click": ShellBarSearchButtonEventDetail,
-		"search-field-expand": ShellBarSearchFieldExpandEventDetail,
+		"search-field-toggle": ShellBarSearchFieldToggleEventDetail,
 		"content-item-visibility-change": ShellBarContentItemVisibilityChangeEventDetail
 	}
 
@@ -787,7 +787,7 @@ class ShellBar extends UI5Element {
 	 * An event is fired to notify the change.
 	 */
 	setSearchState(expanded: boolean) {
-		this.fireDecoratorEvent("search-field-expand", { expanded });
+		this.fireDecoratorEvent("search-field-toggle", { expanded });
 		this.showSearchField = expanded;
 	}
 
@@ -1640,5 +1640,5 @@ export type {
 	ShellBarMenuItemClickEventDetail,
 	ShellBarAccessibilityAttributes,
 	ShellBarSearchButtonEventDetail,
-	ShellBarSearchFieldExpandEventDetail,
+	ShellBarSearchFieldToggleEventDetail,
 };
