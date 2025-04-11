@@ -496,3 +496,31 @@ describe("Slots", () => {
 		});
 	});
 });
+
+describe("Events", () => {
+	it("Test click on the search button fires search-button-click event", () => {
+		cy.mount(
+			<ShellBar>
+				<Input slot="searchField"></Input>
+			</ShellBar>
+		);
+		cy.get("[ui5-shellbar")
+			.as("shellbar");
+
+		cy.get("@shellbar")
+			.then(shellbar => {
+				shellbar.get(0).addEventListener("ui5-search-button-click", cy.stub().as("searchButtonClick"));
+			});
+
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-search-button")
+			.as("searchButton");
+		
+		cy.get("@searchButton")
+			.click();
+
+		cy.get("@searchButtonClick")
+			.should("have.been.calledOnce");
+	});
+});

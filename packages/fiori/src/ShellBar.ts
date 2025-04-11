@@ -789,8 +789,8 @@ class ShellBar extends UI5Element {
 	 * An event is fired to notify the change.
 	 */
 	setSearchState(expanded: boolean) {
-		this.fireDecoratorEvent("search-field-toggle", { expanded });
 		this.showSearchField = expanded;
+		this.fireDecoratorEvent("search-field-toggle", { expanded });
 	}
 
 	onAfterRendering() {
