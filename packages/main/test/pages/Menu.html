@@ -86,7 +86,7 @@
 		<ui5-menu-separator></ui5-menu-separator>
 		<ui5-menu-item text="Open" icon="open-folder" accessible-name="Choose platform">
 			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K">
-				<ui5-menu-item text="Open from C"></ui5-menu-item>
+				<ui5-menu-item text="Open from C" id="menuItemFromC"></ui5-menu-item>
 				<ui5-menu-item text="Open from D"></ui5-menu-item>
 				<ui5-menu-separator></ui5-menu-separator>
 				<ui5-menu-item text="Open from E" disabled></ui5-menu-item>
@@ -270,10 +270,6 @@
 		}
 
 		menuItemFromC.accessibilityAttributes = {
-			role: "menuitemcheckbox",
-		};
-
-		menuItemFromD.accessibilityAttributes = {
 			role: "menuitemcheckbox",
 		};
 
