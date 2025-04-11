@@ -162,7 +162,7 @@ export default function ViewSettingsDialogTemplate(this: ViewSettingsDialog) {
 	return (
 		<Dialog
 			preventInitialFocus={true}
-			aria-label={this._dialogTitle}
+			accessibleName={this._dialogTitle}
 			onBeforeClose={this._restoreConfirmedOnEscape}
 			stretch={this._isPhone}
 			open={this.open}

@@ -15,3 +15,9 @@
 .contentItemVisible {
 	display: block;
 }
+
+#sideNavigation {
+	width: 18rem;
+	box-shadow: none;
+	border-inline-end: none;
+}

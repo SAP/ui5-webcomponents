@@ -1,3 +1,10 @@
+.ui5-date-picker-popover {
+	width: 20rem;
+	.ui5-popover-header {
+		width: 100%;
+	}
+}
+
 [ui5-calendar] {
 	width: 100%;
 	display: flex;
