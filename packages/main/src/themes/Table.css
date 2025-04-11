@@ -54,6 +54,10 @@
     z-index: 2;
 }
 
-#loading[_is-busy] {
-	background-color: var(--_ui5_busy_indicator_block_layer);
+:host([loading]) #table ::slotted(*) {
+    opacity: var(--sapContent_DisabledOpacity);
+}
+
+:host([loading]) #table > :last-child {
+    opacity: 1;
 }
