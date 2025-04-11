@@ -394,7 +394,7 @@ describe("Slots", () => {
 });
 
 
-describe("Edge cases", () => {
+describe("Search field", () => {
 	function templateWithNoContentOpenSearch() {
 		return <ShellBar
 		class="shellbar-example"
@@ -424,7 +424,7 @@ describe("Edge cases", () => {
 
 		</ShellBar>;
 	}
-	it("Test search bar responsiveness, when there is no content", () => {
+	it("Test search field is auto expanded when there is enough space and the content slot is empty", () => {
 		cy.mount(templateWithNoContentOpenSearch()).as("html2");
 		cy.viewport(500, 1080);
 		cy.wait(RESIZE_THROTTLE_RATE);
