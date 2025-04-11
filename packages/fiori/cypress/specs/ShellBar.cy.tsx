@@ -391,3 +391,98 @@ describe("Slots", () => {
 		});
 	});
 });
+
+describe("ButtonBadge in ShellBar", () => {
+	it("Test if ShellBarItem count appears in ButtonBadge", () => {
+	  cy.mount(
+		<ShellBar id="shellbarwithitems">
+		  <ShellBarItem id="test-item" icon="accept" text="Item" count="42" />
+		</ShellBar>
+	  );
+	  
+	  cy.get("#shellbarwithitems")
+		.shadow()
+		.find(".ui5-shellbar-custom-item ui5-button-badge[slot='badge']")
+		.should("exist")
+		.should("have.attr", "text", "42");
+	});
+  
+	it("Test count updates propagate to ButtonBadge", () => {
+	  cy.mount(
+		<ShellBar id="test-invalidation">
+		  <ShellBarItem id="test-invalidation-item" icon="accept" text="Item" count="1" />
+		</ShellBar>
+	  );
+	  
+	  cy.get("#test-invalidation-item").invoke("attr", "count", "3");
+	  
+	  cy.get("#test-invalidation")
+		.shadow()
+		.find(".ui5-shellbar-custom-item ui5-button-badge[slot='badge']")
+		.should("have.attr", "text", "3");
+	});
+
+	it("Test if overflow button shows appropriate badge when items are overflowed", () => {
+		cy.mount(
+		  <ShellBar id="shellbar-with-overflow" 
+			primaryTitle="Product Title"
+			secondaryTitle="Secondary Title"
+			showNotifications={true}
+			showProductSwitch={true}
+			notificationsCount="10">
+			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+			<Button icon="nav-back" slot="startButton"></Button>
+			<ShellBarItem id="item1" icon="accept" text="Item 1" count="42" />
+			<ShellBarItem id="item2" icon="alert" text="Item 2" count="5" />
+			<ShellBarItem id="item3" icon="attachment" text="Item 3" />
+			<ShellBarItem id="item4" icon="bell" text="Item 4" />
+			<Avatar slot="profile">
+			  <img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
+			</Avatar>
+			<Input placeholder="Search" slot="searchField" />
+		  </ShellBar>
+		);
+		
+		cy.viewport(320, 800);
+		
+		cy.get("#shellbar-with-overflow")
+		  .shadow()
+		  .find(".ui5-shellbar-overflow-button")
+		  .should("be.visible");
+		
+		cy.get("#shellbar-with-overflow")
+		  .shadow()
+		  .find(".ui5-shellbar-overflow-button ui5-button-badge[slot='badge']")
+		  .should("exist")
+		  .should("have.attr", "design", "AttentionDot");
+		
+		cy.mount(
+		  <ShellBar id="shellbar-with-single-overflow"
+			primaryTitle="Product Title" 
+			secondaryTitle="Secondary Title"
+			showProductSwitch={true}>
+			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+			<Button icon="nav-back" slot="startButton"></Button>
+			<ShellBarItem id="single-item" icon="accept" text="Item" count="42" />
+			<ShellBarItem id="item3" icon="attachment" text="Item 3" />
+			<ShellBarItem id="item4" icon="bell" text="Item 4" />
+			<Avatar slot="profile">
+			  <img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
+			</Avatar>
+		  </ShellBar>
+		);
+		
+		cy.viewport(320, 800);
+		
+		cy.get("#shellbar-with-single-overflow")
+		  .shadow()
+		  .find(".ui5-shellbar-overflow-button")
+		  .should("be.visible");
+		
+		cy.get("#shellbar-with-single-overflow")
+		  .shadow()
+		  .find(".ui5-shellbar-overflow-button ui5-button-badge[slot='badge']")
+		  .should("exist")
+		  .should("have.attr", "text", "42");
+	});
+});
