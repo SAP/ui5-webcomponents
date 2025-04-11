@@ -300,7 +300,7 @@ describe("RadioButton general interaction", () => {
 		cy.get("#groupRb7").realClick();
 
 		cy.get("@myStub").should("be.calledOnce");
-		cy.get("#groupRb7").should("have.prop", "checked");
+		cy.get("#groupRb7").should("have.prop", "checked", true);
 	});
 
 	it("tests truncating and wrapping", () => {
@@ -412,7 +412,7 @@ describe("RadioButton general interaction", () => {
 		cy.get<HTMLFormElement>("#formWithRequiredRadio").then(($el) => {
 			return $el[0].checkValidity()
 		}).should("be.false");
-		cy.get("#formRadioBtnRequired").should("have.prop", "required");
+		cy.get("#formRadioBtnRequired").should("have.prop", "required", true);
 		cy.get("#formRadioBtnRequired").should("have.prop", "checked", false);
 
 		cy.get("#formRadioBtnRequired")
@@ -461,41 +461,39 @@ describe("RadioButton general interaction", () => {
 describe("RadioButton keyboard handling in RTL", () => {
 	it("Arrow Left", () => {
 		cy.mount(
-			<>
+			<div dir="rtl">
 				<RadioButton id="rtlOptionA" name="rtlGroup" text="Option A" checked></RadioButton>
 				<RadioButton id="rtlOptionB" name="rtlGroup" text="Option B"></RadioButton>
 				<RadioButton id="rtlOptionC" name="rtlGroup" text="Option C"></RadioButton>
-			</>);
+			</div>);
 
 		cy.get("#rtlOptionA").should("exist");
-		cy.get("#rtlOptionA").realClick();
-		cy.get("#rtlOptionA").realPress("ArrowLeft");
+		cy.get("#rtlOptionA").realClick().realPress("ArrowLeft");
 
-		cy.get("#rtlOptionB").should("have.prop", "checked");
+		cy.get("#rtlOptionB").should("have.prop", "checked", true);
 
 		cy.get("#rtlOptionB").should("exist");
 		cy.get("#rtlOptionB").realPress("ArrowLeft");
 
-		cy.get("#rtlOptionC").should("have.prop", "checked");
+		cy.get("#rtlOptionC").should("have.prop", "checked", true);
 	});
 
 	it("Arrow Right", () => {
 		cy.mount(
-			<>
+			<div dir="rtl">
 				<RadioButton id="rtlOptionA" name="rtlGroup" text="Option A" checked></RadioButton>
 				<RadioButton id="rtlOptionB" name="rtlGroup" text="Option B"></RadioButton>
 				<RadioButton id="rtlOptionC" name="rtlGroup" text="Option C"></RadioButton>
-			</>);
+			</div>);
 
 		cy.get("#rtlOptionA").should("exist");
-		cy.get("#rtlOptionA").realClick();
-		cy.get("#rtlOptionA").realPress("ArrowRight");
+		cy.get("#rtlOptionA").realClick().realPress("ArrowRight");
 
-		cy.get("#rtlOptionC").should("have.prop", "checked");
+		cy.get("#rtlOptionC").should("have.prop", "checked", true);
 
 		cy.get("#rtlOptionC").should("exist");
 		cy.get("#rtlOptionC").realPress("ArrowRight");
 
-		cy.get("#rtlOptionB").should("have.prop", "checked");
+		cy.get("#rtlOptionB").should("have.prop", "checked", true);
 	});
 });
