@@ -188,6 +188,11 @@ describe("Search Field on mobile device", () => {
 			.realClick();
 
 		cy.get("[ui5-search]")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverClosed();
+
+		cy.get("[ui5-search]")
 			.should("have.prop", "value", "");
 	});
 

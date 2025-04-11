@@ -14,6 +14,22 @@ const isPopupOpen = (subject: any) => {
 		.and("have.attr", "open");
 };
 
+const isPopupClosed = (subject: any) => {
+	cy.wrap(subject)
+		.as("popup");
+
+	cy.get("@popup")
+		.should("not.have.attr", "open");
+
+	cy.get("@popup")
+		.should($rp => {
+			expect($rp.is(":popover-open")).to.be.false;
+			expect($rp).not.be.visible;
+		})
+		.and("not.have.attr", "open");
+};
+
 export {
-	isPopupOpen
+	isPopupOpen,
+	isPopupClosed
 }
