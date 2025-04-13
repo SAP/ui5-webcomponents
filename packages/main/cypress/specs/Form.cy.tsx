@@ -199,6 +199,27 @@ describe("General API", () => {
 			.and("have.prop", "emptySpanXl", 1);
 	});
 
+	it("tests calculated state of Form item-spacing='Largr", () => {
+		cy.mount(<Form id="addressForm" item-spacing="Large">
+			<FormGroup id="formGroup">
+				<FormItem id="formItem">
+					<Label slot="labelContent">Name:</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+
+				<FormItem>
+					<Label slot="labelContent">Country:</Label>
+					<Text>Germany</Text>
+				</FormItem>
+			</FormGroup>
+		</Form>);
+
+		cy.get("#formGroup")
+			.should("have.prop", "itemSpacing", "Large");
+		cy.get("#formItem")
+			.should("have.prop", "itemSpacing", "Large");
+	});
+
 	it("tests calculated state of two FormGroups in layout='S1 M2 L3 XL4'", () => {
 		cy.mount(<Form headerText="WebC :: Supplier 2gr (S1 M2 L3 XL4)" layout="S1 M2 L3 XL4">
 			<FormGroup id="testFormGroup4" headerText="Address">
