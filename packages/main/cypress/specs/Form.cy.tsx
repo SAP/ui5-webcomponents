@@ -199,7 +199,7 @@ describe("General API", () => {
 			.and("have.prop", "emptySpanXl", 1);
 	});
 
-	it("tests calculated state of Form item-spacing='Largr", () => {
+	it("tests calculated state of Form item-spacing='Large'", () => {
 		cy.mount(<Form id="addressForm" item-spacing="Large">
 			<FormGroup id="formGroup">
 				<FormItem id="formItem">
