@@ -399,7 +399,7 @@ slot[name="profile"] {
     inset-inline-end: var(--_ui5-shellbar-notification-btn-count-offset);
 }
 
-.ui5-shellbar-overflow-container-right-child .ui5-shellbar-button:last-child [slot="badge"] {
+.ui5-shellbar-overflow-container-right-child .ui5-shellbar-custom-item [slot="badge"] {
     inset-inline-end: var(--_ui5-shellbar-notification-btn-count-offset);
 }
 
