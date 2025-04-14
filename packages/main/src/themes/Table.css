@@ -57,7 +57,3 @@
 :host([loading]) #table ::slotted(*) {
     opacity: var(--sapContent_DisabledOpacity);
 }
-
-:host([loading]) #table > :last-child {
-    opacity: 1;
-}
