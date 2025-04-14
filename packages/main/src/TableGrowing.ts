@@ -14,6 +14,7 @@ import {
 	TABLE_MORE,
 	TABLE_MORE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
+import { findVerticalScrollContainer } from "./TableUtils.js";
 
 // The documentation should be similar to the Table.ts class documentation!
 // Please only use that style where it uses markdown and the documentation is more readable.
@@ -225,7 +226,10 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 */
 	_getIntersectionObserver(): IntersectionObserver {
 		if (!this._observer) {
-			this._observer = new IntersectionObserver(this._onIntersection.bind(this), { root: document });
+			this._observer = new IntersectionObserver(this._onIntersection.bind(this), {
+				root: findVerticalScrollContainer(this._table ?? document.body),
+				rootMargin: "5px",
+			});
 		}
 		return this._observer;
 	}
