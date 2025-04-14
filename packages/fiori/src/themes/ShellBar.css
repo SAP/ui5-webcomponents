@@ -352,12 +352,18 @@ slot[name="profile"] {
 
 .ui5-shellbar-overflow-container-right-inner {
 	display: flex;
-	justify-content: flex-end;
-	align-items: center;
 	flex-grow: 1;
-	min-width: max-content;
 }
 
+.ui5-shellbar-content-items {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-grow: 1;
+	/* max-content prevents the container from overflowing
+	which is needed for the responsive logic */
+	min-width: max-content;
+}
 
 .ui5-shellbar-spacer {
 	flex-grow: 1;
