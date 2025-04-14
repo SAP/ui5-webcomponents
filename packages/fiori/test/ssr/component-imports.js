@@ -14,7 +14,7 @@ import Page from "../../dist/Page.js";
 import ProductSwitch from "../../dist/ProductSwitch.js";
 import ProductSwitchItem from "../../dist/ProductSwitchItem.js";
 import ShellBar from "../../dist/ShellBar.js";
-import ShellBarBranding from "../../dist/ShellbarBranding.js"
+import ShellBarBranding from "../../dist/ShellBarBranding.js"
 import ShellBarSpacer from "../../dist/ShellBarSpacer.js"
 import ShellBarItem from "../../dist/ShellBarItem.js";
 import SideNavigation from "../../dist/SideNavigation.js";

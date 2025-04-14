@@ -2,7 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import ShellBarBrandingTemplate from "./ShellbarBrandingTemplate.js";
+import ShellBarBrandingTemplate from "./ShellBarBrandingTemplate.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 import type {
@@ -125,3 +125,6 @@ class ShellBarBranding extends UI5Element {
 ShellBarBranding.define();
 
 export default ShellBarBranding;
+export type {
+	ShellBarBrandingAccessibilityAttributes,
+};

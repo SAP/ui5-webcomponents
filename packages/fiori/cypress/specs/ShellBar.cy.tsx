@@ -11,7 +11,7 @@ import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Switch from "@ui5/webcomponents/dist/Switch.js";
-import ShellbaBranding from "@ui5/webcomponents-fiori/dist/ShellbarBranding.js"
+import ShellbaBranding from "@ui5/webcomponents-fiori/dist/ShellBarBranding.js"
 
 const RESIZE_THROTTLE_RATE = 300; // ms
 
