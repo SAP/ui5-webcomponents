@@ -569,8 +569,16 @@ describe("Edit - various file names", () => {
 
 		cy.get("#item")
 			.shadow()
-			.find(".ui5-uci-file-name")
-			.should("not.have.text");
+			.find("#ui5-uci-edit-input")
+			.should("be.visible")
+			.and("be.focused")
+			.and("have.value", ".gitignore")
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-uci-file-extension")
+			.should("exist")
+			.and("have.text", "");
 	});
 
 	it("Tests cancelling of name change via keyboard", () => {
