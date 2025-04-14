@@ -111,6 +111,8 @@ slot[name="profile"] {
 	min-width: 0;
 	min-height: 2rem;
 	pointer-events: none;
+	font-size: var(--_ui5-v2-9-0-rc-2_avatar_fontsize_XS);
+	font-weight: normal;
 }
 
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive::-moz-focus-inner {
