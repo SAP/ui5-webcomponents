@@ -92,6 +92,27 @@
 		<ui5-input slot="searchField" value-state="Negative"></ui5-input>
 	</ui5-shellbar>
 
+	<ui5-shellbar
+		id="shellbarWithLogoClick"
+		class="shellbar-example"
+		data-ui5-static-stable="shellbarWithLogoClickStatic"
+		secondary-title="Brading Component"
+		show-notifications
+		show-product-switch
+	>
+		<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
+
+		<ui5-shellbar-branding branding-title="Branding Title" href="https://www.w3schools.com" target="_blank" slot="branding">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		</ui5-shellbar-branding>
+
+		<ui5-shellbar-item icon="activities" text="Tasks"></ui5-shellbar-item>
+		<ui5-shellbar-item icon="thing-type" text="Messages"></ui5-shellbar-item>
+		<ui5-shellbar-item icon="action-settings" text="Settings"></ui5-shellbar-item>
+		<ui5-shellbar-item icon="sys-help" text="Help"></ui5-shellbar-item>
+		<ui5-input slot="searchField" value-state="Negative"></ui5-input>
+	</ui5-shellbar>
+
 	<ui5-checkbox id="checkKeepPopoverOpen" text="keep popover open on menu-item click"></ui5-checkbox>
 	<ui5-shellbar
 			class="shellbar-example"
@@ -146,11 +167,11 @@
 
 		<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
 
-		<ui5-button icon="nav-back" slot="startButton"></ui5-button> 
+		<ui5-button icon="nav-back" slot="startButton"></ui5-button>
 
 		<ui5-shellbar-item icon="disconnected" text="Disconnect"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
-	
+
 		<ui5-li slot="menuItems" data-key="key1">Application 1</ui5-li>
 		<ui5-li slot="menuItems" data-key="key2">Application 2</ui5-li>
 		<ui5-li slot="menuItems" data-key="key3">Application 3</ui5-li>

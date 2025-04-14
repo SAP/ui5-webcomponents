@@ -16,7 +16,13 @@ export default function ShellBarTemplate(this: ShellBar) {
 				<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-left">
 					{this.startButton.length > 0 && <slot name="startButton"></slot>}
 
-					{this.hasMenuItems && (
+					{this.hasBranding && (
+						<span class="ui5-shellbar-branding">
+							<slot name="branding"></slot>
+						</span>
+					)}
+
+					{this.hasMenuItems && !this.hasBranding && (
 						<>
 							{!this.showLogoInMenuButton && this.hasLogo && singleLogo.call(this)}
 							{this.showTitleInMenuButton && <h1 class="ui5-hidden-text">{this.primaryTitle}</h1>}
@@ -43,23 +49,30 @@ export default function ShellBarTemplate(this: ShellBar) {
 										)}
 										<Icon class="ui5-shellbar-menu-button-arrow" name={slimArrowDown} />
 									</button>
-									{this.secondaryTitle && !this.isSBreakPoint && (
-										<div style={{ display: "block" }} class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">
-											{this.secondaryTitle}
-										</div>
-									)}
 								</>
+							)}
+						</>
+					)}
+
+					{this.hasMenuItems && (
+						// The secondary title remains visible when both menu items and the branding slot are present,
+						// as the branding slot has higher priority and takes precedence in visibility.
+						<>
+							{this.secondaryTitle && !this.isSBreakPoint && (
+								<div style={{ display: "block" }} class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">
+									{this.secondaryTitle}
+								</div>
 							)}
 						</>
 					)}
 
 					{!this.hasMenuItems && (
 						<>
-							{this.isSBreakPoint && this.hasLogo && singleLogo.call(this)}
+							{this.isSBreakPoint && this.hasLogo && !this.hasBranding && singleLogo.call(this)}
 							{!this.isSBreakPoint && (this.hasLogo || this.primaryTitle) && (
 								<>
-									{combinedLogo.call(this)}
-									{this.secondaryTitle && this.primaryTitle && (
+									{!this.hasBranding && combinedLogo.call(this)}
+									{this.secondaryTitle && (this.primaryTitle || this.hasBranding) && (
 										<h2 class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">
 											{this.secondaryTitle}
 										</h2>
