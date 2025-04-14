@@ -11,7 +11,7 @@ import type {
 
 // Styles
 import shellBarStyles from "./generated/themes/ShellBar.css.js";
-import ShellBarBrandingCss from "./generated/themes/ShellBarBranding.css.js";
+import shellBarBrandingCss from "./generated/themes/ShellBarBranding.css.js";
 
 type ShellBarLogoAccessibilityAttributes = {
 	role?: Extract<AriaRole, "link" | "button">
@@ -39,7 +39,7 @@ type ShellBarBrandingAccessibilityAttributes = {
 	languageAware: true,
 	renderer: jsxRenderer,
 	template: ShellBarBrandingTemplate,
-	styles: [shellBarStyles, ShellBarBrandingCss],
+	styles: [shellBarStyles, shellBarBrandingCss],
 })
 
 class ShellBarBranding extends UI5Element {
@@ -103,7 +103,6 @@ class ShellBarBranding extends UI5Element {
 	/**
 	 * Defines the logo of the `ui5-shellbar`.
 	 * For example, you can use `ui5-avatar` or `img` elements as logo.
-	 * @since
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement })

@@ -11,7 +11,7 @@ import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Switch from "@ui5/webcomponents/dist/Switch.js";
-import ShellbaBranding from "@ui5/webcomponents-fiori/dist/ShellBarBranding.js"
+import ShellBarBranding from "@ui5/webcomponents-fiori/dist/ShellarBranding.js"
 
 const RESIZE_THROTTLE_RATE = 300; // ms
 
@@ -398,9 +398,9 @@ describe("Slots", () => {
 				<ShellBar id="shellbar" primaryTitle="Primary Title">
 					<img id="mainLogo" slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
 
-					<ShellbaBranding brandingTitle="Branding Comp" href="https://www.w3schools.com" target="_blank" slot="branding">
+					<ShellBarBranding brandingTitle="Branding Comp" href="https://www.w3schools.com" target="_blank" slot="branding">
 						<img id="brandingLogo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
-					</ShellbaBranding>
+					</ShellBarBranding>
 				</ShellBar>
 			)
 
