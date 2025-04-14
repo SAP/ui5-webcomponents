@@ -31,7 +31,7 @@ type ShellBarBrandingAccessibilityAttributes = {
  *
  * @constructor
  * @extends UI5Element
- * @since 2.10.0
+ * @since 2.11.0
  * @public
  */
 @customElement({
