@@ -306,7 +306,9 @@ ${fixAssetPaths(_js)}`,
         previewRef.current.iframe.style.height = `${event.data.height}px`;
       }
     }
-    window.addEventListener("message", messageHandler);
+    if (!standalone) {
+      window.addEventListener("message", messageHandler);
+    }
 
     tabBarRef.current.project = projectRef.current;
     fileEditorRef.current.project = projectRef.current;
@@ -328,8 +330,10 @@ ${fixAssetPaths(_js)}`,
     }
 
     return function () {
-      // component cleanup
-      window.removeEventListener("message", messageHandler);
+      if (!standalone) {
+        // component cleanup
+        window.removeEventListener("message", messageHandler);
+      }
       projectRef.current.removeEventListener("compileStart", saveProject);
       returnProjectToPool(projectRef.current);
     }
@@ -383,7 +387,7 @@ ${fixAssetPaths(_js)}`,
             [styles['preview-standalone']]: standalone,
             [styles['preview-sample']]: !standalone,
           })}
-          style={{ height: "unset", minHeight: "7rem" }} ref={previewRef}
+          style={standalone ? undefined: { height: "unset", minHeight: "7rem" }} ref={previewRef}
         ></playground-preview>
       </>
     )
