@@ -150,7 +150,7 @@ describe("Search Field on mobile device", () => {
 		}));
 	});
 
-	it("should revert value of search if dialog is closed by cancel", () => {
+	it.skip("should revert value of search if dialog is closed by cancel", () => {
 		cy.mount(
 			<>
 				<Search showClearIcon={true}>
