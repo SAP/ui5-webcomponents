@@ -1,21 +1,21 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { ISearchFieldScopeOption } from "./SearchField.js";
+import type { ISearchScope } from "./SearchField.js";
 
 /**
  * @class
- * The `ui5-search-scope-option` represents the options for the scope in `ui5-search`.
+ * The `ui5-search-scope` represents the options for the scope in `ui5-search`.
  * @constructor
  * @extends UI5Element
  * @abstract
- * @implements {ISearchFieldScopeOption}
+ * @implements {ISearchScope}
  * @public
  * @since 2.9.0
  * @experimental
  */
-@customElement("ui5-search-field-scope-option")
-class SearchFieldScopeOption extends UI5Element implements ISearchFieldScopeOption {
+@customElement("ui5-search-scope")
+class SearchScope extends UI5Element implements ISearchScope {
 	/**
 	 * Defines the text of the component.
 	 * @default ""
@@ -26,7 +26,8 @@ class SearchFieldScopeOption extends UI5Element implements ISearchFieldScopeOpti
 
 	/**
 	 * Indicates whether the item is selected
-	 * @protected
+	 * @default false
+	 * @public
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
@@ -36,6 +37,6 @@ class SearchFieldScopeOption extends UI5Element implements ISearchFieldScopeOpti
 	}
 }
 
-SearchFieldScopeOption.define();
+SearchScope.define();
 
-export default SearchFieldScopeOption;
+export default SearchScope;
