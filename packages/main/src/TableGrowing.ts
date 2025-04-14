@@ -197,8 +197,8 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 		// remembers the last row. only do this when the table has a growing component rendered.
 		if (this._table && this.hasGrowingComponent()) {
 			this._currentLastRow = this._table.rows[this._table.rows.length - 1];
+			this._shouldFocusRow = true;
 		}
-		this._shouldFocusRow = true;
 
 		this.fireDecoratorEvent("load-more");
 	}
