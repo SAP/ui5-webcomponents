@@ -393,27 +393,29 @@ describe("Slots", () => {
 		});
 	});
 
-	describe("Branding slot", () => {
-		it("Test branding slot priority over logo", () => {
-			cy.mount(
-				<ShellBar id="shellbar" primaryTitle="Primary Title">
-					<img id="mainLogo" slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+describe("Branding slot", () => {
+	it("Test branding slot priority over logo", () => {
+		cy.mount(
+			<ShellBar id="shellbar" primaryTitle="Primary Title">
+				<img id="mainLogo" slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
 
-					<ShellBarBranding brandingTitle="Branding Comp" href="https://www.w3schools.com" target="_blank" slot="branding">
-						<img id="brandingLogo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
-					</ShellBarBranding>
-				</ShellBar>
-			)
+				<ShellBarBranding brandingTitle="Branding Comp" href="https://www.w3schools.com" target="_blank" slot="branding">
+					<img id="brandingLogo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+				</ShellBarBranding>
+			</ShellBar>
+		);
 
-			 cy.get("#shellbar")
-				.find("#mainLogo")
-				.should('exist')
-				.should('not.be.visible');
+		cy.get("#shellbar")
+			.find("#mainLogo")
+			.should('exist')
+			.should('not.be.visible');
 
-			cy.get("#shellbar")
-				.find("#brandingLogo")
-				.should('exist')
-				.should('be.visible');
+		cy.get("#shellbar")
+			.find("#brandingLogo")
+			.should('exist')
+			.should('be.visible');
+	});
+});
 
 	describe("Search field slot", () => {
 		it("Test search button is not visible when the search field slot is empty", () => {
