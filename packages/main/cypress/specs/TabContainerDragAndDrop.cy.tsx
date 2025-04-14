@@ -8,7 +8,7 @@ import type MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement
 
 // TODO: test not calling moveover preventDefault()
 // TODO: test moveOver and move events in keyboard tests also
-// TODO: dragend
+// TODO:  dragend
 
 const verifyMoveOverEvent = (sourceElementId: string, destinationPlacement: `${MovePlacement}`,  destinationElementId: string) => {
 	cy.get<Cypress.Agent<sinon.SinonSpy<any[], any>>>("@handleMoveOverSpy")
