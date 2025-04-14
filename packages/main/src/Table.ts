@@ -640,8 +640,6 @@ class Table extends UI5Element {
 			widths.push(`var(${getScopedVarName("--_ui5_table_navigated_cell_width")})`);
 		}
 
-		widths.push("auto");
-
 		return widths.join(" ");
 	}
 

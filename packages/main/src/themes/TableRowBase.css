@@ -1,7 +1,7 @@
 :host {
 	display: grid;
 	grid-template-columns: subgrid;
-	grid-column: 1 / -2;
+	grid-column: 1 / -1;
 	min-height: var(--_ui5_list_item_base_height);
 	box-sizing: border-box;
 	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
