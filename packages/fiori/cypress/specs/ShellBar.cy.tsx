@@ -11,11 +11,8 @@ import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Switch from "@ui5/webcomponents/dist/Switch.js";
-<<<<<<< HEAD
 import ShellBarBranding from "@ui5/webcomponents-fiori/dist/ShellBarBranding.js"
-=======
 import Search from "../../src/Search.js";
->>>>>>> origin/main
 
 const RESIZE_THROTTLE_RATE = 300; // ms
 
