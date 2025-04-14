@@ -847,7 +847,7 @@ describe("Table - Navigated Rows", () => {
 			.should($table => {
 				const gridTemplateColumns = $table[0].style.gridTemplateColumns;
 				// eslint-disable-next-line no-unused-expressions
-				expect(gridTemplateColumns.endsWith("table_navigated_cell_width) auto")).to.be.true;
+				expect(gridTemplateColumns.endsWith("table_navigated_cell_width)")).to.be.true;
 			});
 	});
 });
