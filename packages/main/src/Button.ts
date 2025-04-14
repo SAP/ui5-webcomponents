@@ -50,6 +50,10 @@ let activeButton: Button | null = null;
 
 type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls">;
 
+type ButtonClickEventDetail = {
+	nativeEvent: MouseEvent,
+}
+
 /**
  * @class
  *
@@ -93,6 +97,18 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 	shadowRootOptions: { delegatesFocus: true },
 })
 /**
+ * Fired when the component is activated either with a mouse/tap or by using the Enter or Space key.
+ *
+ * **Note:** The event will not be fired if the `disabled` property is set to `true`.
+ *
+ * @since 2.10.0
+ * @public
+ */
+@event("click", {
+	bubbles: true,
+	cancelable: true,
+})
+/**
  * Fired whenever the active state of the component changes.
  * @private
  */
@@ -102,6 +118,7 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 })
 class Button extends UI5Element implements IButton {
 	eventDetails!: {
+		"click": ButtonClickEventDetail,
 		"active-state-change": void,
 	};
 
@@ -380,8 +397,14 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	_onclick() {
+	_onclick(e: MouseEvent) {
+		e.stopImmediatePropagation();
+
 		if (this.nonInteractive) {
+			return;
+		}
+
+		if (!this.fireDecoratorEvent("click", { nativeEvent: e })) {
 			return;
 		}
 
@@ -548,5 +571,6 @@ Button.define();
 export default Button;
 export type {
 	ButtonAccessibilityAttributes,
+	ButtonClickEventDetail,
 	IButton,
 };
