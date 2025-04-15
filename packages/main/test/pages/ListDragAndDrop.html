@@ -8,6 +8,12 @@
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 	<link rel="stylesheet" type="text/css" href="./styles/List.css">
+
+	<style>
+		ui5-li-group ui5-li {
+			border: 1px solid red;
+		}
+	</style>
 </head>
 
 <body class="list1auto">
@@ -44,6 +50,32 @@
 			<ui5-li id="item8" movable>Item 8</ui5-li>
 			<ui5-li id="item9" movable>Item 9</ui5-li>
 		</ui5-list>
+	</section>
+
+	<section class="largeTopMargin">
+		<div style="display: flex; gap: 1rem">
+			<ui5-list id="listMultipleDnd" selection-mode="Multiple" header-text="Available Options">
+				<ui5-li movable>Sunroof</ui5-li>
+				<ui5-li movable>Navigation</ui5-li>
+		
+				<ui5-li-group id="group1" header-text="Seats" data-allows-nesting>
+					<ui5-li movable>Leather</ui5-li>
+					<ui5-li movable>Heated</ui5-li>
+					<ui5-li movable>Massage</ui5-li>
+				</ui5-li-group>
+		
+				<ui5-li-group id="group2" header-text="Headlights" data-allows-nesting>
+					<ui5-li movable>LED</ui5-li>
+					<ui5-li movable>Matrix</ui5-li>
+					<ui5-li movable>Laser</ui5-li>
+				</ui5-li-group>
+			</ui5-list>
+		
+			<ui5-list id="listMultipleDnd1" selection-mode="Multiple" header-text="Selected Options">
+				<ui5-li movable>Ceramic Brakes</ui5-li>
+				<ui5-li movable>Tinted Windows</ui5-li>
+			</ui5-list>	
+		</div>
 	</section>
 
 	<script>
@@ -92,15 +124,15 @@
 			const { destination, source } = e.detail;
 
 			switch (destination.placement) {
-			case "Before":
-				destination.element.before(source.element);
-				break;
-			case "After":
-				destination.element.after(source.element);
-				break;
-			case "On":
-				destination.element.prepend(source.element);
-				break;
+				case "Before":
+					destination.element.before(source.element);
+					break;
+				case "After":
+					destination.element.after(source.element);
+					break;
+				case "On":
+					destination.element.prepend(source.element);
+					break;
 			}
 		};
 
@@ -121,6 +153,44 @@
 			list1.items.forEach((item) => item.movable = e.target.checked);
 			list2.items.forEach((item) => item.movable = e.target.checked);
 			list3.items.forEach((item) => item.movable = e.target.checked);
+		});
+
+		// Multiple Selection
+		const listMultipleDnd = document.getElementById("listMultipleDnd");
+		const listMultipleDnd1 = document.getElementById("listMultipleDnd1");
+		const group1 = document.getElementById("group1");
+		const group2 = document.getElementById("group2");
+		let selectedItems = [];
+
+		function updateMovingItemsCount() {
+			listMultipleDnd.movingItemsCount = listMultipleDnd.getSelectedItems().length;
+			listMultipleDnd1.movingItemsCount = listMultipleDnd1.getSelectedItems().length;
+		}
+
+		const onMove = async (e) => {
+			const { destination, source, originalEvent } = e.detail;
+			const movedElements = selectedItems.length > 1 ? selectedItems : [source.element];
+			originalEvent?.stopPropagation();
+
+			if (destination.placement === "Before") {
+				destination.element.before(...movedElements);
+			} else if (destination.placement === "After") {
+				destination.element.after(...movedElements);
+			} else if (destination.placement === "On") {
+				destination.element.prepend(...movedElements);
+			}
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
+			updateMovingItemsCount();
+		};
+
+		[group1, group2, listMultipleDnd1, listMultipleDnd].forEach((el) => {
+			if (el.tagName === "UI5-LIST") {
+				el.addEventListener("dragstart", () => selectedItems = el.getSelectedItems());
+				el.addEventListener("ui5-selection-change", updateMovingItemsCount);
+				el.addEventListener("ui5-move-over", handleBeforeItemMove);
+			}
+
+			el.addEventListener("ui5-move", onMove);
 		});
 	</script>
 </body>

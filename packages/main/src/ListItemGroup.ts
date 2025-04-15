@@ -25,7 +25,8 @@ type ListItemGroupMoveEventDetail = {
 	destination: {
 		element: HTMLElement,
 		placement: `${MovePlacement}`,
-	}
+	},
+	originalEvent?: DragEvent,
 }
 
 /**
@@ -228,6 +229,7 @@ class ListItemGroup extends UI5Element {
 				element: this.dropIndicatorDOM!.targetReference!,
 				placement: this.dropIndicatorDOM!.placement,
 			},
+			originalEvent: e,
 		});
 
 		this.dropIndicatorDOM!.targetReference = null;

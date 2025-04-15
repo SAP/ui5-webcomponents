@@ -49,6 +49,10 @@ type SelectionRequestEventDetail = {
 	key?: string,
 }
 
+type MoveStartEventDetail = {
+	originalEvent: DragEvent,
+}
+
 type AccInfo = {
 	role?: AriaRole | undefined;
 	ariaExpanded?: boolean;
@@ -97,10 +101,14 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
 @event("selection-requested", {
 	bubbles: true,
 })
+@event("move-start", {
+	bubbles: true,
+})
 abstract class ListItem extends ListItemBase {
 	eventDetails!: ListItemBase["eventDetails"] & {
 		"detail-click": { item: ListItem, selected: boolean };
 		"selection-requested": SelectionRequestEventDetail,
+		"move-start": MoveStartEventDetail,
 	}
 	/**
 	 * Defines the visual indication and behavior of the list items.
@@ -325,6 +333,8 @@ abstract class ListItem extends ListItemBase {
 			this.setAttribute("data-moving", "");
 			e.dataTransfer.dropEffect = "move";
 			e.dataTransfer.effectAllowed = "move";
+
+			this.fireDecoratorEvent("move-start", { originalEvent: e });
 		}
 	}
 
@@ -514,4 +524,5 @@ export type {
 	IAccessibleListItem,
 	SelectionRequestEventDetail,
 	ListItemAccessibilityAttributes,
+	MoveStartEventDetail,
 };

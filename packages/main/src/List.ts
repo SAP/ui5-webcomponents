@@ -52,6 +52,7 @@ import type {
 import type DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
 import type {
+	MoveStartEventDetail,
 	SelectionRequestEventDetail,
 } from "./ListItem.js";
 import ListSeparator from "./types/ListSeparator.js";
@@ -69,6 +70,7 @@ import {
 	LOAD_MORE_TEXT, ARIA_LABEL_LIST_SELECTABLE,
 	ARIA_LABEL_LIST_MULTISELECTABLE,
 	ARIA_LABEL_LIST_DELETABLE,
+	LIST_DRAG_GHOST_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import type CheckBox from "./CheckBox.js";
 import type RadioButton from "./RadioButton.js";
@@ -298,6 +300,17 @@ class List extends UI5Element {
 		"move-over": ListMoveEventDetail,
 		"move": ListMoveEventDetail,
 	}
+
+	/**
+	 * Defines the number of dragged items. Use this property to indicate that multiple items are being dragged.
+	 * When a value greater than 1 is set, the component will display a custom ghost element that displays the number of dragged items.
+	 * @default 0
+	 * @public
+	 * @since 2.10.0
+	 */
+	@property({ type: Number })
+	movingItemsCount = 0;
+
 	/**
 	 * Defines the component header text.
 	 *
@@ -618,6 +631,18 @@ class List extends UI5Element {
 			this.resizeListenerAttached = true;
 			ResizeHandler.register(this.getDomRef()!, this._handleResize);
 		}
+	}
+
+	get dragGhost() {
+		return this.shadowRoot!.querySelector<UI5Element>(".ui5-list-drag-ghost");
+	}
+
+	get showDragGhost() {
+		return this.movingItemsCount > 1;
+	}
+
+	get dragGhostText() {
+		return List.i18nBundle.getText(LIST_DRAG_GHOST_TEXT, this.movingItemsCount);
 	}
 
 	get shouldRenderH1() {
@@ -1208,6 +1233,13 @@ class List extends UI5Element {
 		const afterElement = this.getAfterElement();
 
 		return afterElement && afterElement.id === elementId;
+	}
+
+	onItemMoveStart(e: CustomEvent<MoveStartEventDetail>) {
+		const originalEvent = e.detail.originalEvent;
+		if (this.dragGhost && originalEvent.dataTransfer) {
+			originalEvent.dataTransfer.setDragImage(this.dragGhost, 0, 0);
+		}
 	}
 
 	onItemTabIndexChange(e: CustomEvent) {

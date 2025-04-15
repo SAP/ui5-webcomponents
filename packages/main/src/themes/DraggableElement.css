@@ -6,3 +6,9 @@
 	cursor: grabbing !important;
 	opacity: var(--sapContent_DisabledOpacity);
 }
+
+[data-custom-drag-ghost] {
+	position: absolute;
+	transform: translate(-10000px);
+	width: 100%;
+}

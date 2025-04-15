@@ -1,6 +1,7 @@
 import BusyIndicator from "./BusyIndicator.js";
 import DropIndicator from "./DropIndicator.js";
 import type List from "./List.js";
+import ListItemStandard from "./ListItemStandard.js";
 
 export default function ListTemplate(this: List) {
 	return (
@@ -13,6 +14,7 @@ export default function ListTemplate(this: List) {
 			onDrop={this._ondrop}
 			onDragLeave={this._ondragleave}
 			// events bubbling from slotted items
+			onui5-move-start={this.onItemMoveStart}
 			onui5-close={this.onItemClose}
 			onui5-toggle={this.onItemToggle}
 			onui5-request-tabindex-change={this.onItemTabIndexChange}
@@ -52,6 +54,8 @@ export default function ListTemplate(this: List) {
 						aria-description={this.ariaDescriptionText}
 					>
 						<slot></slot>
+
+						{this.showDragGhost && dragGhost.call(this)}
 
 						{this.showNoDataText &&
 							<li tabindex={0} id={`${this._id}-nodata`} class="ui5-list-nodata" role="listitem">
@@ -109,6 +113,16 @@ function moreRow(this: List) {
 				}
 				<span id={`${this._id}-growingButton-text`} class="ui5-growing-button-text" growing-button-text>{this._growingButtonText}</span>
 			</div>
+		</div>
+	);
+}
+
+function dragGhost(this: List) {
+	return (
+		<div aria-hidden="true">
+			<ListItemStandard data-custom-drag-ghost class="ui5-list-drag-ghost">
+				{this.dragGhostText}
+			</ListItemStandard>
 		</div>
 	);
 }
