@@ -694,13 +694,7 @@ describe("Selection-change event", () => {
 			.find("input")
 			.as("innerInput");
 
-		let eventCount = 0;
-
-		cy.get("@input").then($input => {
-			$input[0].addEventListener("ui5-selection-change", () => {
-				eventCount++;
-			});
-		});
+		cy.get("@input") .then($input => { $input[0].addEventListener("ui5-change", cy.stub().as("inputChange")); });
 
 		cy.get("@innerInput")
 			.realClick();
@@ -730,9 +724,7 @@ describe("Selection-change event", () => {
 		cy.get("@innerInput")
 			.should("have.value", "Cozy");
 
-		cy.then(() => {
-			expect(eventCount).to.equal(3);
-		});
+		cy.get("@inputChange").should("have.been.calledTwice");
 	});
 });
 
