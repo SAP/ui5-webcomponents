@@ -137,7 +137,7 @@ describe("Carousel general interaction", () => {
 
 	it("Buttons are rendered in the navigation without hovering (arrows-placement)", () => {
 		cy.mount(
-			<Carousel id="carousel3" arrows-placement="Navigation">
+			<Carousel id="carousel3" arrowsPlacement="Navigation">
 				<Button>Button 1</Button>
 				<Button>Button 2</Button>
 				<Button>Button 3</Button>
@@ -218,7 +218,7 @@ describe("Carousel general interaction", () => {
 
 		cy.mount(
 			<>
-				<Carousel id="carousel5" items-per-page="S1 M4 L4 XL4">
+				<Carousel id="carousel5" itemsPerPage="S1 M4 L4 XL4">
 					<Button>Button 1</Button>
 					<Button>Button 2</Button>
 					<Button>Button 3</Button>
@@ -484,7 +484,7 @@ describe("Carousel general interaction", () => {
 	it("Event navigate fired when pressing navigation arrows", () => {
 		const navigateEventStub = cy.stub().as("myStub");
 		cy.mount(
-			<Carousel id="carousel8" items-per-page="S1 M4 L4 XL4" onNavigate={navigateEventStub}>
+			<Carousel id="carousel8" itemsPerPage="S1 M4 L4 XL4" onNavigate={navigateEventStub}>
 				<Button>Button 1</Button>
 				<Button>Button 2</Button>
 				<Button>Button 3</Button>
@@ -533,7 +533,7 @@ describe("Carousel general interaction", () => {
 
 	it("page-indicator-type property", () => {
 		cy.mount(
-			<Carousel id="carouselNumericPageIndicator" page-indicator-type="Numeric">
+			<Carousel id="carouselNumericPageIndicator" pageIndicatorType="Numeric">
 				<Button>Button 1</Button>
 				<Button>Button 2</Button>
 			</Carousel>);
@@ -588,54 +588,7 @@ describe("Carousel general interaction", () => {
 			.should("deep.equal", [1, 2]);
 	});
 
-	it.only("F7 keyboard navigation", () => {
-		// const carousel = await browser.$("#carouselF7");
-		// const button = await browser.$("#carouselF7Button");
-		// const input = await browser.$("#carouselF7Input");
-		// await carousel.scrollIntoView();
-
-		// await button.click();
-
-		// await browser.keys("F7");
-
-		// let innerFocusedElement = await browser.custom$("activeElement", "#carouselF7");
-
-		// assert.ok(await browser.$(innerFocusedElement).hasClass("Carousel-root"), "Carousel is focused");
-
-		// await browser.keys("F7");
-
-		// innerFocusedElement = innerFocusedElement = await browser.custom$("activeElement", "#carouselF7Button");
-
-		// assert.ok(await browser.$(innerFocusedElement).hasClass("ui5-button-root"), "Button is focused");
-
-		// await input.click();
-
-		// await browser.keys("F7");
-
-		// innerFocusedElement = await browser.custom$("activeElement", "#carouselF7");
-
-		// assert.ok(await browser.$(innerFocusedElement).hasClass("Carousel-root"), "Carousel is focused");
-
-		// await browser.keys("F7");
-
-		// innerFocusedElement = await browser.custom$("activeElement", "#carouselF7Input");
-
-		// assert.ok(await browser.$(innerFocusedElement).hasClass("Input-inner"), "Input is focused");
-
-		// await button.click();
-		// await browser.keys("F7");
-
-		// await browser.executeAsync(done => {
-		// 	document.getElementById("carouselF7").navigateTo(1);
-		// 	done();
-		// });
-
-		// await browser.keys("F7");
-
-		// innerFocusedElement = await browser.custom$("activeElement", "#carouselF7Input");
-
-		// assert.ok(await browser.$(innerFocusedElement).hasClass("Input-inner"), "Input is focused");
-
+	it("F7 keyboard navigation", () => {
 		cy.mount(
 			<Carousel id="carouselF7" itemsPerPage="S3 M3 L3 XL3">
 				<Card class="myCard">
@@ -700,33 +653,31 @@ describe("Carousel general interaction", () => {
 				</Card>
 			</Carousel>);
 
-		cy.get("#carouselF7Button")
-			.realClick();
-
-			cy.get("#carouselF7Button")
-			.should('be.focused')
-
-			// cy.wait(1000)
+		cy.get("#carouselF7Button").realClick();
+		cy.get("#carouselF7Button").should('be.focused');
 
 		cy.realPress("F7");
-
 		cy.focused().should("have.class", "ui5-carousel-root");
 
-		// cy.wait(1000);
-
 		cy.realPress("F7");
-
 		cy.focused().should("have.class", "ui5-button-root");
 
-		// Trigger F7 again to focus the input
+		cy.get("#carouselF7Input").realClick();
+		cy.realPress("F7");
+		cy.focused().should("have.class", "ui5-carousel-root");
 
-		// // Assert the input field is focused
-		// cy.focused()
-		// 	.should("have.class", "ui5-button-root")
-		// 	.and("be.focused");
+		cy.realPress("F7");
+		cy.focused().should("have.class", "ui5-input-inner");
 
-		//cy.focused().should("have.class", "ui5-button-root");
+		cy.get("#carouselF7Button").realClick();
+		cy.realPress("F7");
 
+		cy.get("#carouselF7").then((carousel) => {
+			const el = carousel[0] as HTMLElement & { navigateTo: (index: number) => void };
+			el.navigateTo(1);
+		});
+		cy.realPress("F7");
+		cy.focused().should("have.class", "ui5-input-inner");
 	});
 
 	it("Items per page", () => {
