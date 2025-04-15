@@ -4,8 +4,14 @@ import DynamicDateRangeOptionDateTemplate from "./DynamicDateRangeOptionDateTemp
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import DynamicDateRangeValue from "../DynamicDateRangeValue.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { property } from "@ui5/webcomponents-base/dist/decorators.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	DYNAMIC_DATE_RANGE_DATE_TEXT,
+} from "../generated/i18n/i18n-defaults.js";
+import { dateOptionToDates } from "./toDates.js";
+
 /**
  * @class
  * @constructor
@@ -19,6 +25,9 @@ import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 })
 
 class DynamicDateRangeOptionDate extends UI5Element implements IDynamicDateRangeOption {
+    @i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
 	template: JsxTemplate;
 
 	constructor() {
@@ -47,12 +56,12 @@ class DynamicDateRangeOptionDate extends UI5Element implements IDynamicDateRange
 		return this.getFormat().format(date);
 	}
 
-	toDates() {
-		return [];
+	toDates(value: DynamicDateRangeValue) {
+		return dateOptionToDates(value);
 	}
 
-	get text(): string {
-		return "DATE";
+	get text() {
+		return DynamicDateRangeOptionDate.i18nBundle.getText(DYNAMIC_DATE_RANGE_DATE_TEXT);
 	}
 
 	get key() {
@@ -60,7 +69,7 @@ class DynamicDateRangeOptionDate extends UI5Element implements IDynamicDateRange
 	}
 
 	get icon() {
-		return "";
+		return "appointment-2";
 	}
 
 	handleSelectionChange(e: CustomEvent) : DynamicDateRangeValue | undefined {

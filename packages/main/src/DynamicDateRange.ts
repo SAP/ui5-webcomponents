@@ -25,6 +25,12 @@ import "./dynamic-date-range-options/DynamicDateRangeOptionDateRange.js";
 import type Input from "./Input.js";
 import type DynamicDateRangeValue from "./DynamicDateRangeValue.js";
 import type { IDynamicDateRangeOption } from "./DynamicDateOption.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	DYNAMIC_DATE_RANGE_SELECTED_TEXT,
+	DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -49,6 +55,8 @@ import type { IDynamicDateRangeOption } from "./DynamicDateOption.js";
 })
 
 class DynamicDateRange extends UI5Element {
+    @i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
 	/**
 	 * Defines a formatted date value.
 	 * @default undefined
@@ -101,15 +109,23 @@ class DynamicDateRange extends UI5Element {
 		if (!this._currentOption?.template) {
 			this._submitValue();
 		}
+
+		if (this._currentOption?.key === this.value?.operator) {
+			this.currentValue = this.value;
+		}
 	}
 
 	getOption(key: string) {
-		return this.options.find(option => option.text === key);
+		return this.options.find(option => option.key === key);
 	}
 
 	onInputChange(e: any) {
 		const value = e.target.value as string;
 		this.value = this.getOption(this.value.operator)?.parse(value) as DynamicDateRangeValue;
+	}
+
+	onButtonBackClick() {
+		this._currentOption = undefined;
 	}
 
 	get _hasCurrentOptionTemplate(): boolean {
@@ -133,7 +149,11 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	get currentValueText() {
-		return `Selected: ${this._currentOption?.format(this.currentValue!)}`;
+		if (this.currentValue && this.currentValue.operator === this._currentOption?.key) {
+			return `${DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_SELECTED_TEXT)}: ${this._currentOption?.format(this.currentValue)}`;
+		}
+
+		return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT);
 	}
 
 	calendarSelectionChange(e: CustomEvent) {

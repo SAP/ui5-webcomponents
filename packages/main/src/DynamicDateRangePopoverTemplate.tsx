@@ -6,6 +6,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import ListItemStandard from "./ListItemStandard.js";
 import Button from "./Button.js";
+import Title from "./Title.js";
 
 export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) {
 	return (
@@ -16,17 +17,18 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 			allowTargetOverlap
 			placement="Bottom"
 			horizontalAlign="Start"
-			// accessibleName={this.pickerAccessibleName}
 			hideArrow={true}
 			_hideHeader={true}
-			// onKeyDown={this._onkeydown}
-			// onClose={this.onResponsivePopoverAfterClose}
-			// onOpen={this.onResponsivePopoverAfterOpen}
-			// onBeforeOpen={this.onResponsivePopoverBeforeOpen}
 		>
 			{this._hasCurrentOptionTemplate &&
-				<div slot="header">
-					{this._currentOption?.title}
+				<div slot="header" class="ui5-ddr-header">
+					<Button
+						iconOnly={true}
+						icon="slim-arrow-left"
+						design="Transparent"
+						onClick={this.onButtonBackClick}>
+					</Button>
+					<Title>{this._currentOption?.text}</Title>
 				</div>
 			}
 			{!this._hasCurrentOptionTemplate ? <div class="ui5-dynamic-date-range-options">
@@ -35,11 +37,9 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 					separators="None"
 					selectionMode="Single"
 					onItemClick={this._selectOption}
-					// onItemFocused={this._onItemFocus}
-					// onMouseDown={this._itemMousedown}
 				>
-					{this._optionsTitles.map(optionTitle => {
-						return <ListItemStandard selected={optionTitle === this.value?.operator}>{optionTitle}</ListItemStandard>;
+					{this.options.map(option => {
+						return <ListItemStandard selected={option.key === this.value?.operator} iconEnd={true} icon={option.icon}>{option.text}</ListItemStandard>;
 					})}
 				</List>
 			</div>
@@ -51,16 +51,14 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 			}
 			{this._hasCurrentOptionTemplate &&
 				<div slot="footer">
-					<div slot="footer" class="ui5-ddr-footer">
-						<Button
-							design="Emphasized"
-							onClick={this._submitValue}
-						>Submit</Button>
-						<Button
-							design="Transparent"
-							onClick={this._close}
-						>Close</Button>
-					</div>
+					<Button
+						design="Emphasized"
+						onClick={this._submitValue}
+					>Submit</Button>
+					<Button
+						design="Transparent"
+						onClick={this._close}
+					>Close</Button>
 				</div>
 			}
 		</ResponsivePopover>

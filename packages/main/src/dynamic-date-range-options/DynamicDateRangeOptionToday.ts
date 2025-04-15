@@ -2,6 +2,13 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import type { IDynamicDateRangeOption } from "../DynamicDateOption.js";
 import DynamicDateRangeValue from "../DynamicDateRangeValue.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { todayToDates } from "./toDates.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	DYNAMIC_DATE_RANGE_TODAY_TEXT,
+} from "../generated/i18n/i18n-defaults.js";
+
 /**
  * @class
  * @constructor
@@ -12,36 +19,38 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  */
 @customElement({
 	tag: "ui5-dynamic-date-range-option-today",
-	// renderer: jsxRendererer,
 })
 
 class DynamicDateRangeOptionToday extends UI5Element implements IDynamicDateRangeOption {
-	parse(): DynamicDateRangeValue {
+    @i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
+    parse(): DynamicDateRangeValue {
 	    const returnValue = new DynamicDateRangeValue();
 	    returnValue.operator = this.key;
 
 	    return returnValue;
-	}
+    }
 
-	format() {
+    format() {
 	    return "Today";
-	}
+    }
 
-	toDates() {
-	    return [];
-	}
+    toDates() {
+	    return todayToDates();
+    }
 
-	get text(): string {
+    get text() {
+	    return DynamicDateRangeOptionToday.i18nBundle.getText(DYNAMIC_DATE_RANGE_TODAY_TEXT);
+    }
+
+    get key() {
 	    return "Today";
-	}
+    }
 
-	get key() {
-	    return "Today";
-	}
-
-	get icon() {
+    get icon() {
 	    return "";
-	}
+    }
 }
 DynamicDateRangeOptionToday.define();
 
