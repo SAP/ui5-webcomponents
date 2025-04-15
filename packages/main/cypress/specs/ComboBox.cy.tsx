@@ -167,5 +167,48 @@ describe("Event firing", () => {
 		cy.get("#another-cb").shadow().find("input").click();
 		cy.get("@changeStub").should("not.have.been.called");
 	});
+
+	it("should fire selection-change with correct item when having items with same text", () => {
+		cy.mount(
+			<ComboBox>
+				<ComboBoxItem data-key="1" text="Algeria"></ComboBoxItem>
+				<ComboBoxItem data-key="2" text="Bulgaria"></ComboBoxItem>
+				<ComboBoxItem data-key="3" text="Algeria"></ComboBoxItem>
+			</ComboBox>
+		);
+
+		cy.get("ui5-combobox")
+			.as("combo");
+
+		cy.get("@combo").then($combo => {
+			$combo[0].addEventListener("ui5-selection-change", cy.stub().as("selectionChange"));
+		});
+
+		cy.get<ComboBox>("@combo")
+		.shadow()
+		.find("input")
+		.as("inner");
+
+		cy.get("@inner").focus();
+
+		cy.get("@combo")
+			.shadow()
+			.find("ui5-icon")
+			.click();
+
+		cy.get("@inner").realPress("ArrowDown");
+		cy.get("@inner").realPress("ArrowDown");
+		cy.get("@inner").realPress("ArrowDown");
+
+		cy.get("@selectionChange").then((stub) => {
+			const calls = stub.getCalls();
+			
+			calls.forEach((call, index) => {
+				const event = call.args;
+				expect(event[0].type).to.equal("ui5-selection-change");
+				expect(event[0].detail.item.getAttribute("data-key")).to.equal(`${index + 1}`);
+			});
+		});
+	});
 });
 

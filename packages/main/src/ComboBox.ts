@@ -667,7 +667,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		// autocomplete
 		if (shouldAutocomplete && !isAndroid()) {
-			this._handleTypeAhead(value, value, true);
+			this._handleTypeAhead(value, value, true, -1);
 		}
 
 		this.fireDecoratorEvent("input");
@@ -808,13 +808,13 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 		// autocomplete
-		this._handleTypeAhead(this.value, this.open ? this._userTypedValue : "", false);
+		this._handleTypeAhead(this.value, this.open ? this._userTypedValue : "", false, indexOfItem);
 
 		this.fireDecoratorEvent("input");
 	}
 
-	_handleTypeAhead(value: string, filterValue: string, checkForGroupItem: boolean) {
-		const item = this._getFirstMatchingItem(value);
+	_handleTypeAhead(value: string, filterValue: string, checkForGroupItem: boolean, itemIndex: number) {
+		const item = this._getItems()[itemIndex] || this._getFirstMatchingItem(value);
 
 		if (!item) {
 			return;
