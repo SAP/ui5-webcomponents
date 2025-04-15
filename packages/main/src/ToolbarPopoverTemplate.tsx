@@ -13,7 +13,8 @@ export default function ToolbarPopoverTemplate(this: Toolbar) {
 			hideArrow={true}
 		>
 			<div class={{
-				"ui5-overflow-list": true
+				"ui5-overflow-list": true,
+				"ui5-overflow-list--alignleft": this.hasItemWithText,
 			}}>
 				{ this.overflowItems.map(item => (
 					item.toolbarPopoverTemplate.call(item.context)

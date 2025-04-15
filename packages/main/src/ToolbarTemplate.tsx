@@ -1,6 +1,6 @@
 import Button from "./Button.js";
 import type Toolbar from "./Toolbar.js";
-import Popover from "./Popover.js";
+import toolbarPopoverTemplate from "./ToolbarPopoverTemplate.js";
 import overflowIcon from "@ui5/webcomponents-icons/dist/overflow.js";
 
 export default function ToolbarTemplate(this: Toolbar) {
@@ -14,8 +14,9 @@ export default function ToolbarTemplate(this: Toolbar) {
 			aria-label={this.accInfo.root.accessibleName}
 		>
 			{this.standardItems.map(item => (
-				<div class="ui5-tb-item"><slot name={item.context._individualSlot}></slot></div>
+				item.toolbarTemplate.call(item.context)
 			))}
+
 			<Button
 				aria-hidden={this.hideOverflowButton}
 				icon={overflowIcon}
@@ -32,22 +33,6 @@ export default function ToolbarTemplate(this: Toolbar) {
 			/>
 		</div>
 
-		<Popover
-			class="ui5-overflow-popover"
-			placement="Bottom"
-			horizontalAlign="End"
-			onClose={this.onOverflowPopoverClosed}
-			onOpen={this.onOverflowPopoverOpened}
-			accessibleName={this.accInfo.popover.accessibleName}
-			hideArrow={true}
-		>
-			<div class={{
-				"ui5-overflow-list": true
-			}}>
-				{ this.overflowItems.map(item => (
-					item.toolbarPopoverTemplate.call(item.context)
-				))}
-			</div>
-		</Popover>
+		{toolbarPopoverTemplate.call(this)}
 	</>);
 }
