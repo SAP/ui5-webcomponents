@@ -192,7 +192,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 
 		// Only load ExpandableText if "Normal" wrapping is used
 		if (this.wrappingType === "Normal") {
-			// If feature is already loaded (preloaded by the user), use the existing template
+			// If feature is already loaded (preloaded by the user via importing ListItemStandardExpandableText.js), the template is already available
 			if (ListItemStandard.ExpandableTextTemplate) {
 				this.expandableTextTemplate = ListItemStandard.ExpandableTextTemplate;
 			// If feature is not preloaded, load the template dynamically
