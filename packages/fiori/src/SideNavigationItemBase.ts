@@ -45,7 +45,9 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	/**
 	 * Defines the tooltip of the component.
 	 *
-	 * A tooltip attribute should be provided, in order to represent meaning/function, when the component is collapsed(icon only is visualized).
+	 * A tooltip attribute should be provided, in order to represent meaning/function,
+	 * when the component is collapsed (icon only is visualized) or the item text is truncated.
+	 *
 	 * @default undefined
 	 * @public
 	 * @since 2.0.0
