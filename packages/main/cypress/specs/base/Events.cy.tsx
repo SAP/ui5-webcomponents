@@ -150,7 +150,7 @@ describe("Event bubbling", () => {
 					</Select>
 
 					<Button id="btnOpen">Open Menu</Button>
-					<Menu id="myMenu" header-text="Menu" opener="btnOpen">
+					<Menu id="myMenu" headerText="Menu" opener="btnOpen">
 						<MenuItem text="New File"></MenuItem>
 						<MenuItem text="New Folder"></MenuItem>
 					</Menu>
