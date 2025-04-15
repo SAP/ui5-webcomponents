@@ -74,4 +74,10 @@ Cypress.Commands.add("ui5TabContainerDragAndDrop", (elementToDrag, placement, ta
 				eventConstructor: "DragEvent"
 			}
 		);
+
+	cy.wrap(Cypress.$(elementToDrag))
+		.trigger("dragend", {
+			force: true,
+			eventConstructor: "DragEvent",
+		});
 });
