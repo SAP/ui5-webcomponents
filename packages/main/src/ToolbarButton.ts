@@ -1,3 +1,4 @@
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -32,6 +33,8 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 @customElement({
 	tag: "ui5-toolbar-button",
 	styles: ToolbarButtonPopoverCss,
+	template: ToolbarButtonTemplate,
+	renderer: jsxRenderer,
 })
 
 /**
