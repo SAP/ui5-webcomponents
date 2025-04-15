@@ -79,8 +79,8 @@ class ShellBarBranding extends UI5Element {
 	 * @default undefined
 	 * @public
 	 */
-	@property()
-	brandingTitle?: string;
+	@slot({ type: HTMLElement, "default": true })
+	brandingTitle!: Array<HTMLElement>;
 
 	/**
 	 * Defines additional accessibility attributes to the component.
@@ -107,7 +107,7 @@ class ShellBarBranding extends UI5Element {
 	 * For example, you can use `ui5-avatar` or `img` elements as logo.
 	 * @public
 	 */
-	@slot({ "default": true, type: HTMLElement })
+	@slot({ type: HTMLElement })
 	logo!: Array<HTMLElement>;
 
 	get parsedRef() {
@@ -115,7 +115,10 @@ class ShellBarBranding extends UI5Element {
 	}
 
 	get _logoAreaText() {
-		return this.brandingTitle ?? "";
+		return Array.from(this.brandingTitle)
+			.map(node => node.textContent || "")
+			.join(" ")
+			.trim();
 	}
 
 	get accLogoRole() {
