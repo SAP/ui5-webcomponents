@@ -342,6 +342,9 @@ class Form extends UI5Element {
 
 		// Define how many columns a group should take.
 		this.setGroupsColSpan();
+
+		// Set item spacing
+		this.setItemSpacing();
 	}
 
 	onAfterRendering() {
@@ -487,6 +490,12 @@ class Form extends UI5Element {
 
 		// 7 cols & 3 groups => 3, 2, 2
 		return index === 0 ? MIN_COL_SPAN + (delta - groups) + 1 : MIN_COL_SPAN + 1;
+	}
+
+	setItemSpacing() {
+		this.items.forEach((item: IFormItem) => {
+			item.itemSpacing = this.itemSpacing;
+		});
 	}
 
 	get hasGroupItems(): boolean {
