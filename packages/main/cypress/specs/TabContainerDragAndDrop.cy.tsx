@@ -382,94 +382,92 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					});
 			});
 
-			// it("Moving strip item beyond the beginning with 'Arrow Left'", () => {
-			// 	cy.get("#tabContainer")
-			// 		.shadow()
-			// 		.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow]")
-			// 		.last<TabInStrip>()
-			// 		.as("lastTabInStrip");
+			it("Moving strip item beyond the beginning with 'Arrow Left'", () => {
+				cy.get("#tabContainer")
+					.shadow()
+					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow]")
+					.last<TabInStrip>()
+					.as("lastTabInStrip");
 
-			// 	cy.get("@lastTabInStrip")
-			// 		.realClick()
-			// 		.then(() => {
-			// 			// Act
-			// 			cy.get<TabInStrip>("@lastTabInStrip")
-			// 				.then(($lastTab) => {
-			// 					const lastTabText = $lastTab[0].realTabReference.text!;
+				cy.get("@lastTabInStrip")
+					.realClick()
+					.then(() => {
+						// Act
+						cy.get<TabInStrip>("@lastTabInStrip")
+							.then(($lastTab) => {
+								const lastTabText = $lastTab[0].realTabReference.text!;
 			
-			// 					for (let i = 0; i < 20; i++) {
-			// 						waitUntilTabIsFocusedInStrip(lastTabText);
-			// 						cy.realPress(["ControlLeft", "ArrowLeft"]);
-			// 					}
+								for (let i = 0; i < 20; i++) {
+									waitUntilTabIsFocusedInStrip(lastTabText);
+									cy.realPress(["ControlLeft", "ArrowLeft"]);
+								}
 			
-			// 					cy.get("#tabContainer")
-			// 						.shadow()
-			// 						.find<TabInStrip>(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
-			// 						.first()
-			// 						.then($el => {
-			// 							return $el[0].realTabReference.text;
-			// 						})
-			// 						.should("equal", lastTabText);
-			// 				});
-			// 		});
-			// });
+								cy.get("#tabContainer")
+									.shadow()
+									.find<TabInStrip>(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
+									.first()
+									.then($el => {
+										return $el[0].realTabReference.text;
+									})
+									.should("equal", lastTabText);
+							});
+					});
+			});
 
-			// it("Moving strip item with 'End'", () => {
-			// 	cy.get("#tabContainer")
-			// 		.shadow()
-			// 		.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
-			// 		.first()
-			// 		.realClick()
-			// 		.then(() => {
-			// 			// Act
-			// 			waitUntilTabIsFocusedInStrip("One");
-			// 			cy.realPress(["ControlLeft", "End"]);
+			it("Moving strip item with 'End'", () => {
+				cy.get("#tabContainer")
+					.shadow()
+					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
+					.first()
+					.realClick()
+					.then(() => {
+						waitUntilTabIsFocusedInStrip("One");
+						// Act
+						cy.realPress(["ControlLeft", "End"]);
 			
-			// 			// Assert
-			// 			cy.get("#tabContainer")
-			// 				.shadow()
-			// 				.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
-			// 				.last<TabInStrip>()
-			// 				.then($el => {
-			// 					return $el[0].realTabReference.id;
-			// 				})
-			// 				.should("equal", "tabOne");
-			// 		})
-			// });
+						// Assert
+						cy.get("#tabContainer")
+							.shadow()
+							.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
+							.last<TabInStrip>()
+							.then($el => {
+								return $el[0].realTabReference.id;
+							})
+							.should("equal", "tabOne");
+					});
+			});
 
-			// it("Moving strip item with 'Home'", () => {
-			// 	cy.get("#tabContainer")
-			// 		.shadow()
-			// 		.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow]")
-			// 		.last<TabInStrip>()
-			// 		.as("lastTabInStrip");
+			it("Moving strip item with 'Home'", () => {
+				cy.get("#tabContainer")
+					.shadow()
+					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow]")
+					.last<TabInStrip>()
+					.as("lastTabInStrip");
 
-			// 	cy.get("@lastTabInStrip")
-			// 		.realClick()
-			// 		.then(() => {
-			// 			// Act
-			// 			cy.get<TabInStrip>("@lastTabInStrip")
-			// 				.then(($lastTab) => {
-			// 					const lastTabText = $lastTab[0].realTabReference.text!;
-			
-			// 					waitUntilTabIsFocusedInStrip(lastTabText);
-			// 					cy.realPress(["ControlLeft", "Home"]);
+				cy.get("@lastTabInStrip")
+					.realClick();
 
-			// 					verifyMoveOverEvent($lastTab[0].realTabReference.id, "Before", "tabOne");
-			// 					verifyMoveEvent($lastTab[0].realTabReference.id, "Before", "tabOne");
-			
-			// 					cy.get("#tabContainer")
-			// 						.shadow()
-			// 						.find<TabInStrip>(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
-			// 						.first()
-			// 						.then($el => {
-			// 							return $el[0].realTabReference.text;
-			// 						})
-			// 						.should("equal", lastTabText);
-			// 				});
-			// 		})
+				// Act
+				cy.get<TabInStrip>("@lastTabInStrip")
+					.then(($lastTab) => {
+						const lastTabText = $lastTab[0].realTabReference.text!;
 
-			// });
+						waitUntilTabIsFocusedInStrip(lastTabText);
+
+						// Act
+						cy.realPress(["ControlLeft", "Home"]);
+
+						// Assert
+						cy.get("#tabContainer")
+							.shadow()
+							.find<TabInStrip>(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
+							.first()
+							.then($el => {
+								return $el[0].realTabReference.text;
+							})
+							.should("equal", lastTabText);
+					});
+			});
 		});
 
 	// 	describe("Moving items in popover", () => {
