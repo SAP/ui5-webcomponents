@@ -158,7 +158,9 @@ class Toolbar extends UI5Element {
      * **Note:** Currently only `ui5-toolbar-button`, `ui5-toolbar-select`, `ui5-toolbar-separator` and `ui5-toolbar-spacer` are allowed here.
 	 * @public
 	 */
-	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	@slot({
+		"default": true, type: HTMLElement, invalidateOnChildChange: true, individualSlots: true,
+	})
 	items!: Array<ToolbarItem>
 
 	_onResize!: ResizeObserverCallback;
@@ -500,8 +502,8 @@ class Toolbar extends UI5Element {
 		this.contentWidth = 0; // re-render
 	}
 
-	getItemsInfo(items: Array<ToolbarItem>) {
-		return items.map((item: ToolbarItem) => {
+	getItemsInfo(items: Array<UI5Element>) {
+		return items.map((item: UI5Element) => {
 			const ctor = item.constructor as typeof ToolbarItem;
 			const ElementClass = getRegisteredToolbarItem(ctor.getMetadata().getPureTag());
 
@@ -526,11 +528,11 @@ class Toolbar extends UI5Element {
 		}
 		const id: string = item._id;
 		// Measure rendered width for spacers with width, and for normal items
-		const renderedItem = this.getRegisteredToolbarItemByID(id);
+		const renderedItem = item;
 
 		let itemWidth = 0;
 
-		if (renderedItem) {
+		if (renderedItem && renderedItem.offsetWidth) {
 			const ItemCSSStyleSet = getComputedStyle(renderedItem);
 			itemWidth = renderedItem.offsetWidth + parsePxValue(ItemCSSStyleSet, "margin-inline-end")
 				+ parsePxValue(ItemCSSStyleSet, "margin-inline-start");
