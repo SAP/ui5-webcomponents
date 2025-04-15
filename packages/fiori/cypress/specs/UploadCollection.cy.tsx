@@ -329,18 +329,96 @@ describe("UploadCollection Rendering", () => {
 
 describe("Events", () => {
 	it("Tests that item fires 'rename'", () => {
+		const renameEventStub = cy.stub();
+
+		cy.mount(
+			<UploadCollection id="uploadCollection">
+				<UploadCollectionItem id="item" onRename={renameEventStub} fileName="File name" type="Detail" />
+			</UploadCollection>);
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-li-detailbtn")
+			.realClick();
+
+		cy.get("#item")
+			.shadow()
+			.find("#ui5-uci-edit-input")
+			.should("have.focus")
+			.realType("fileNameSuffix");
+
+		cy.realPress("Enter");
+
+		cy.wrap(renameEventStub)
+			.should("have.been.called");
 	});
 
 	it("Tests firing 'item-delete' regardless of the selectionMode", () => {
+		cy.mount(
+			<UploadCollection id="uploadCollection">
+				<UploadCollectionItem id="item" fileName="File name" />
+			</UploadCollection>);
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-upload-collection-deletebtn")
+			.realClick();
+
+		cy.get("#uploadCollection")
+			.shadow()
+			.find("#item")
+			.should("not.exist");
 	});
 
 	it("Tests firing 'item-delete' when 'DELETE' key is pressed on item", () => {
+		cy.mount(
+			<UploadCollection id="uploadCollection">
+				<UploadCollectionItem id="item" fileName="File name" />
+			</UploadCollection>);
+
+		cy.get("#item")
+			.realClick();
+
+		cy.realPress("Delete");
+
+		cy.get("#uploadCollection")
+			.shadow()
+			.find("#item")
+			.should("not.exist");
 	});
 
 	it("Tests that item fires 'retry'", () => {
+		const retryEventStub = cy.stub();
+
+		cy.mount(
+			<UploadCollection id="uploadCollection">
+				<UploadCollectionItem id="item" onRetry={retryEventStub} fileName="File name" uploadState="Error" />
+			</UploadCollection>);
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-uci-buttons ui5-button")
+			.realClick();
+
+		cy.wrap(retryEventStub)
+			.should("have.been.called");
 	});
 
 	it("Tests that item fires 'terminate'", () => {
+		const terminateEventStub = cy.stub();
+
+		cy.mount(
+			<UploadCollection id="uploadCollection">
+				<UploadCollectionItem id="item" onTerminate={terminateEventStub} fileName="File name" uploadState="Uploading" />
+			</UploadCollection>);
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-uci-buttons ui5-button")
+			.realClick();
+
+		cy.wrap(terminateEventStub)
+			.should("have.been.called");
 	});
 });
 
@@ -348,8 +426,13 @@ describe("Keyboard handling", () => {
 	it("Tests item tab order", () => {
 		cy.mount(<UploadCollectionStatesSample />);
 
+		cy.get("#hiddenFileName")
+			.shadow()
+			.find("li")
+			.should("have.attr", "tabindex", "-1");
+
 		cy.get("#hiddenFileName").realClick();
-		cy.get("#hiddenFileName").should("be.focused");
+		cy.get("#hiddenFileName").should("have.focus");
 
 		cy.realPress("Tab");
 		cy.get("#hiddenFileName")
@@ -377,24 +460,228 @@ describe("Keyboard handling", () => {
 	});
 
 	it("Tests Tab through empty upload collection", () => {
+		cy.mount(<>
+			<button id="tabStop1">Tab stop helper</button>
+			<UploadCollection id="uploadCollection" />
+			<button id="tabStop2">Tab stop helper</button>
+		</>);
+
+		cy.get("#tabStop1").realClick();
+		cy.realPress("Tab");
+		cy.realPress("Tab");
+
+		cy.get("#uploadCollection")
+			.shadow()
+			.find(".uc-no-files")
+			.should("have.attr", "forced-tab-index", "0");
+
+		cy.get("#uploadCollection")
+			.shadow()
+			.find(".uc-no-files")
+			.should("not.have.focus");
+
+		cy.get("#tabStop2").should("have.focus");
 	});
 });
 
 describe("Edit - various file names", () => {
 	it("Tests that dots are preserved in the file name", () => {
+		cy.mount(
+			<UploadCollection id="uploadCollection">
+				<UploadCollectionItem id="item" fileName="File name" type="Detail" upload-state="Error" />
+			</UploadCollection>);
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-li-detailbtn")
+			.realClick();
+
+		cy.get("#item")
+			.shadow()
+			.find("#ui5-uci-edit-input")
+			.should("have.focus")
+			.realType("last.reports-edited");
+
+		cy.realPress("Enter");
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-uci-file-name")
+			.should("have.text", "last.reports-edited");
 	});
 
 	it("Tests that extension is able to be added, if there isn't such", () => {
+		const newFileName = "newFileName.newExtension";
+		const newFileName2 = "newFileName2";
+
+		cy.mount(
+			<UploadCollection id="uploadCollection">
+				<UploadCollectionItem id="item" fileName="File name" type="Detail" />
+			</UploadCollection>);
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-li-detailbtn")
+			.realClick();
+
+		cy.get("#item")
+			.shadow()
+			.find("#ui5-uci-edit-input")
+			.should("have.focus")
+			.realType(newFileName);
+
+		cy.realPress("Enter");
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-uci-file-name")
+			.should("have.text", newFileName);
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-li-detailbtn")
+			.realClick();
+
+		cy.get("#item")
+			.shadow()
+			.find("#ui5-uci-edit-input")
+			.should("have.focus")
+			.realType(newFileName2);
+
+		cy.realPress("Enter");
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-uci-file-name")
+			.should("have.text", newFileName2 + ".newExtension");
 	});
 
 	it("Tests that hidden file name is NOT considered as extension", () => {
+		cy.mount(
+			<UploadCollection id="uploadCollection">
+				<UploadCollectionItem id="item" fileName=".gitignore" type="Detail" />
+			</UploadCollection>);
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-li-detailbtn")
+			.realClick();
+
+		cy.get("#item")
+			.shadow()
+			.find("#ui5-uci-edit-input")
+			.should("be.visible")
+			.and("be.focused")
+			.and("have.value", ".gitignore")
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-uci-file-extension")
+			.should("exist")
+			.and("have.text", "");
 	});
 
 	it("Tests cancelling of name change via keyboard", () => {
+		cy.mount(
+			<UploadCollection id="uploadCollection">
+				<UploadCollectionItem id="item" fileName=".gitignore" type="Detail" />
+			</UploadCollection>);
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-li-detailbtn")
+			.realClick();
+
+		cy.get("#item")
+			.shadow()
+			.find("#ui5-uci-edit-input")
+			.should("have.focus")
+			.realType("new name");
+
+		cy.realPress("Tab");
+		cy.realPress("Tab");
+		cy.realPress("Enter");
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-uci-file-name")
+			.should("have.text", ".gitignore");
 	});
 });
 
 describe("Drag and Drop", () => {
+	it("Tests drag and drop overlay when dragging a file", () => {
+		cy.mount(<UploadCollection id="uploadCollection" />);
+
+		const dataTransfer = new DataTransfer();
+		dataTransfer.items.add(new File([new Blob(["file content"], { type: "text/html" })], "test.txt"))
+
+		cy.document()
+			.then((document) => {
+				return document.body;
+			})
+			.trigger("dragenter", {
+				eventConstructor: "DragEvent",
+				force: true,
+				dataTransfer
+			});
+
+		cy.get("#uploadCollection")
+			.should("have.prop", "_dndOverlayMode", "Drag")
+			.shadow()
+			.find(".uc-dnd-overlay.uc-drag-overlay")
+			.should("be.visible");
+
+		cy.get("#uploadCollection")
+			.shadow()
+			.find(".uc-dnd-overlay")
+			.trigger("dragenter", {
+				eventConstructor: "DragEvent",
+				force: true,
+				dataTransfer
+			});
+
+		cy.get("#uploadCollection")
+			.should("have.prop", "_dndOverlayMode", "Drop")
+			.shadow()
+			.find(".uc-dnd-overlay.uc-drop-overlay")
+			.should("be.visible");
+
+		cy.get("#uploadCollection")
+			.shadow()
+			.find(".uc-dnd-overlay")
+			.trigger("drop", {
+				eventConstructor: "DragEvent",
+				force: true,
+				dataTransfer
+			});
+
+		cy.get("#uploadCollection")
+			.should("have.prop", "_dndOverlayMode", "None")
+			.shadow()
+			.find(".uc-dnd-overlay")
+			.should("not.exist");
+	});
+
 	it("Tests that drag and drop overlay is NOT shown when NOT dragging files", () => {
+		cy.mount(<UploadCollection id="uploadCollection" />);
+
+		const dataTransfer = new DataTransfer();
+
+		cy.document()
+			.then((document) => {
+				return document.body;
+			})
+			.trigger("dragenter", {
+				eventConstructor: "DragEvent",
+				force: true,
+				dataTransfer
+			});
+
+		cy.get("#uploadCollection")
+			.should("have.prop", "_dndOverlayMode", "None")
+			.shadow()
+			.find(".uc-dnd-overlay")
+			.should("not.exist");
 	});
 });

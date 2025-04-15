@@ -331,9 +331,20 @@ describe("DateTimePicker general interaction", () => {
 	it("tests change event is prevented on submit when prevent default is called", () => {
 		cy.mount(<DefaultDateTimePicker />);
 
-		// Prevent default behavior of ui5-change event.
 		cy.get("[ui5-datetime-picker]")
 			.as("dtp")
+
+		cy.get("@dtp")
+			.shadow()
+			.find("[ui5-datetime-input]")
+			.as("input");
+
+		cy.get("@dtp")
+			.shadow()
+			.find("ui5-responsive-popover ui5-calendar")
+			.shadow()
+			.find("ui5-daypicker")
+			.as("daypicker");
 
 		cy.get("@dtp")
 			.then($el => {
@@ -342,37 +353,29 @@ describe("DateTimePicker general interaction", () => {
 				});
 			});
 
+		// act: open the picker
 		cy.ui5DateTimePickerOpen("#dt");
 
-		cy.ui5DateTimePickerGetPopover("#dt").within(() => {
-			// Click the focused day and confirm the selection.
-			cy.get("ui5-calendar")
-				.shadow()
-				.as("calendar");
+		// act: click today's date
+		cy.get("@daypicker")
+			.shadow()
+			.find("[data-sap-focus-ref]")
+			.should("be.focused")
+			.realClick();
 
-			cy.get("@calendar")
-				.find("ui5-daypicker")
-				.shadow()
-				.as("daypicker");
-
-			cy.get("@daypicker")
-				.find("[data-sap-focus-ref]")
-				.should("be.focused")
-				.realClick();
-
-			cy.get("#ok").realClick();
-		});
-
+		// act: confirm selection
 		cy.get("@dtp")
 			.shadow()
-			.find<ResponsivePopover>("[ui5-responsive-popover]")
-			.ui5ResponsivePopoverOpened();
+			.find("ui5-responsive-popover #ok")
+			.realClick();
 
+		// assert: the picker is closed
 		cy.get("@dtp")
 			.shadow()
-			.find("[ui5-datetime-input]")
-			.as("input");
+			.find("ui5-responsive-popover")
+			.should("exist").and("not.be.visible");
 
+		// assert: the value is not changed
 		cy.get("@input")
 			.should("be.focused")
 			.should("have.attr", "value", "");
