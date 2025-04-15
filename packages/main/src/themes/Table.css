@@ -54,6 +54,6 @@
     z-index: 2;
 }
 
-:host([loading]) #table ::slotted(*) {
+:host([loading]) #table:has(#loading[_is-busy]) ::slotted(*) {
     opacity: var(--sapContent_DisabledOpacity);
 }
