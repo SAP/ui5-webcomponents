@@ -45,7 +45,7 @@ type ExpandableTextTemplate = (this: ListItemStandard, params: ExpandableTextTem
  * @slot {Node[]} default - Defines the text of the component.
  *
  * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design. <br/>
- * **Note:** Deprecated since version `2.9.0`. Use the `text` property instead. <br/>
+ * **Note:** Deprecated since version `2.10.0`. Use the `text` property instead. <br/>
  * Only use the default slot if you need to apply custom text formatting with HTML elements (like `<b>`, `<i>`, etc.).
  * @constructor
  * @extends ListItem
@@ -62,7 +62,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 *
 	 * @default undefined
 	 * @public
-	 * @since 2.9.0
+	 * @since 2.10.0
 	 */
 	@property()
 	text?: string;
@@ -151,7 +151,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 *
 	 * @default "None"
 	 * @public
-	 * @since 2.9.0
+	 * @since 2.10.0
 	 */
 	@property()
 	wrappingType: `${WrappingType}` = "None";
