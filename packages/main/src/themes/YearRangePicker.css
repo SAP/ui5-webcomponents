@@ -27,6 +27,7 @@
 .ui5-yrp-item {
 	display: flex;
 	margin: var(--_ui5_yearpicker_item_margin);
+	width: calc(50% - 0.125rem);
 	height: var(--_ui5_year_picker_item_height);
 	color: var(--sapButton_Lite_TextColor);
 	background-color: var(--sapButton_Lite_Background);
@@ -41,17 +42,22 @@
 	position: relative;
 	border: var(--_ui5_yearpicker_item_border);
 	border-radius: var(--_ui5_yearpicker_item_border_radius);
-	padding-left: 0.25rem;
-	padding-right: 0.25rem;
 }
 
 .ui5-yrp-item-secondary-type {
 	flex-direction: column;
+	width: calc(50% - 0.125rem);
 }
 
 .ui5-yrp-item-sec-type {
 	font-size: 0.75rem;
 	color: var(--sapNeutralElementColor);
+}
+
+.ui5-yrp-item-one-column-view {
+	width: initial;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
 }
 
 .ui5-yrp-item.ui5-yrp-item--selected,

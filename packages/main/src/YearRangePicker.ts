@@ -277,6 +277,10 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 				yearRange.classes += " ui5-yrp-item-secondary-type";
 			}
 
+			if (this._shouldShowOneColumn()) {
+				yearRange.classes += " ui5-yrp-item-one-column-view";
+			}
+
 			const intervalIndex = Math.floor(i / rowSize);
 
 			if (yearRanges[intervalIndex]) {
