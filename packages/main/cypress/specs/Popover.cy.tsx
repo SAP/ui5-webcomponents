@@ -33,7 +33,7 @@ describe("Rendering", () => {
 		cy.get("#popup")
 			.shadow()
 			.find(".ui5-popover-arrow")
-			.should("have.css", "transform", "matrix(1, 0, 0, 1, 0, -43)");
+			.should("have.css", "transform", "matrix(1, 0, 0, 1, 0, -42)");
 	});
 });
 
