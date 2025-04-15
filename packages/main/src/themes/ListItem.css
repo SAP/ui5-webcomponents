@@ -261,7 +261,7 @@
 	margin-top: var(--_ui5_list_item_content_vertical_offset);
 }
 
-:host([wrapping-type="Normal"]) .ui5-li-image {
+:host([wrapping-type="Normal"]) ::slotted([ui5-avatar][slot="image"]) {
 	margin-top: 0;
 	margin-bottom: 0;
 }
