@@ -4,6 +4,7 @@ import FormItem from "../../src/FormItem.js";
 import FormGroup from "../../src/FormGroup.js";
 import Label from "../../src/Label.js";
 import Text from "../../src/Text.js";
+import Title from "../../src/Title.js";
 import Input from "../../src/Input.js";
 
 describe("General API", () => {
@@ -196,6 +197,27 @@ describe("General API", () => {
 			.and("have.prop", "emptySpanM", 0)
 			.and("have.prop", "emptySpanL", 1)
 			.and("have.prop", "emptySpanXl", 1);
+	});
+
+	it("tests calculated state of Form item-spacing='Large'", () => {
+		cy.mount(<Form id="addressForm" item-spacing="Large">
+			<FormGroup id="formGroup">
+				<FormItem id="formItem">
+					<Label slot="labelContent">Name:</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+
+				<FormItem>
+					<Label slot="labelContent">Country:</Label>
+					<Text>Germany</Text>
+				</FormItem>
+			</FormGroup>
+		</Form>);
+
+		cy.get("#formGroup")
+			.should("have.prop", "itemSpacing", "Large");
+		cy.get("#formItem")
+			.should("have.prop", "itemSpacing", "Large");
 	});
 
 	it("tests calculated state of two FormGroups in layout='S1 M2 L3 XL4'", () => {
@@ -855,4 +877,66 @@ describe("Accessibility", () => {
 		cy.get("#nameInp")
 			.should("be.focused");
 	});
+});
+
+
+ui5AccDescribe("Automated accessibility tests", () => {
+	it("with header text", () => {
+		cy.mount(
+			<Form headerText="Address">
+				<FormItem>
+					<Label slot="labelContent">Name:</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+				
+				<FormItem>
+					<Label slot="labelContent">ZIP Code/City:</Label>
+					<Text>411 Maintown</Text>
+				</FormItem>
+				
+				<FormItem>
+					<Label slot="labelContent">Street:</Label>
+					<Text>Main St 1618</Text>
+				</FormItem>
+
+				<FormItem>
+					<Label slot="labelContent">Country:</Label>
+					<Text>Germany</Text>
+				</FormItem>
+			</Form>
+		);
+
+		cy.ui5CheckA11y();
+	})
+
+	it("with custom header", () => {
+		cy.mount(
+			<Form>
+				<div slot="header">
+					<Title>Address</Title>
+				</div>
+				<FormItem>
+					<Label slot="labelContent">Name:</Label>
+					<Text>Red Point Stores</Text>
+				</FormItem>
+				
+				<FormItem>
+					<Label slot="labelContent">ZIP Code/City:</Label>
+					<Text>411 Maintown</Text>
+				</FormItem>
+				
+				<FormItem>
+					<Label slot="labelContent">Street:</Label>
+					<Text>Main St 1618</Text>
+				</FormItem>
+
+				<FormItem>
+					<Label slot="labelContent">Country:</Label>
+					<Text>Germany</Text>
+				</FormItem>
+			</Form>
+		);
+
+		cy.ui5CheckA11y();
+	})
 });

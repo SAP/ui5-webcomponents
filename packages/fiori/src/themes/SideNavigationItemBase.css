@@ -244,6 +244,11 @@ and there is an additional border that appears on hover. */
 	border-inline-start: none;
 }
 
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon {
+	min-width: 3rem;
+}
+
 :host([in-popover]) .ui5-sn-item-toggle-icon {
 	display: none;
 }
@@ -284,17 +289,12 @@ and there is an additional border that appears on hover. */
 	width: var(--_ui5_side_navigation_item_collapsed_hover_focus_width);
 	box-shadow: var(--_ui5_side_navigation_box_shadow);
 	z-index: 2;
-	padding-inline-end: var(--_ui5_side_navigation_item_collapsed_padding_right);
+	padding-inline-end: var(--_ui5_side_navigation_item_collapsed_padding);
 }
 
 :host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover:not(.ui5-sn-item-with-expander),
 :host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander) {
 	padding-inline-end: 0;
-}
-
-:host([unselectable][side-nav-collapsed]) .ui5-sn-item.ui5-sn-item.ui5-sn-item-with-expander:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover,
-:host([unselectable][side-nav-collapsed]) .ui5-sn-item.ui5-sn-item.ui5-sn-item-with-expander:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus {
-	padding-inline-end: var(--_ui5_side_navigation_item_collapsed_unselectable_padding);
 }
 
 :host([unselectable][side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-with-expander):hover,

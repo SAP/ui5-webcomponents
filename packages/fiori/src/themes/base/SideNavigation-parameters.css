@@ -60,9 +60,8 @@
 	--_ui5_side_navigation_item_collapsed_hover_focus_width: auto;
 	--_ui5_side_navigation_item_collapsed_hover_focus_display: none;
 	--_ui5_side_navigation_item_collapsed_hover_focus_padding_right: 0;
-	--_ui5_side_navigation_item_collapsed_padding_right: 0;
 	--_ui5_side_navigation_action_item_collapsed_padding: 0;
-	--_ui5_side_navigation_item_collapsed_unselectable_padding: 0;
+	--_ui5_side_navigation_item_collapsed_padding: 0;
 	--_ui5_side_navigation_action_item_border_hover: var(--sapButton_BorderWidth) solid var(--sapButton_Hover_BorderColor);
 	--_ui5_side_navigation_action_item_border_active: var(--sapButton_BorderWidth) solid var(--sapButton_Active_BorderColor);
 
