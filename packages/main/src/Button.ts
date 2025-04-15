@@ -51,7 +51,11 @@ let activeButton: Button | null = null;
 type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls">;
 
 type ButtonClickEventDetail = {
-	nativeEvent: MouseEvent,
+	originalEvent: MouseEvent,
+	altKey: boolean;
+	ctrlKey: boolean;
+	metaKey: boolean;
+	shiftKey: boolean;
 }
 
 /**
@@ -103,6 +107,11 @@ type ButtonClickEventDetail = {
  *
  * @since 2.10.0
  * @public
+ * @param {Event} originalEvent Returns original event that comes from user's **click** interaction
+ * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+ * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+ * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+ * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
 @event("click", {
 	bubbles: true,
@@ -404,7 +413,22 @@ class Button extends UI5Element implements IButton {
 			return;
 		}
 
-		if (!this.fireDecoratorEvent("click", { nativeEvent: e })) {
+		const {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		} = e;
+
+		const prevented = !this.fireDecoratorEvent("click", {
+			originalEvent: e,
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		});
+
+		if (prevented) {
 			return;
 		}
 

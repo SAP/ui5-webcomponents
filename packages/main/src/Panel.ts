@@ -237,7 +237,7 @@ class Panel extends UI5Element {
 	}
 
 	_toggleButtonClick(e: UI5CustomEvent<Button, "click">) {
-		if (e.detail.nativeEvent.x === 0 && e.detail.nativeEvent.y === 0) {
+		if (e.detail.originalEvent.x === 0 && e.detail.originalEvent.y === 0) {
 			e.stopImmediatePropagation();
 		}
 	}
