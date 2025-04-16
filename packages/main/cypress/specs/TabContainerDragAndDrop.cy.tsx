@@ -76,29 +76,29 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 
 		cy.mount(
 			<TabContainer id="tabContainer" collapsed={true} overflowMode="End" style={{ width: "1000px" }} onMoveOver={handlers.moveOver} onMove={handlers.move}>
-				<Tab id="tabOne" movable={true} design="Positive" text="One"></Tab>
-				<Tab id="tabTwo" movable={true} design="Negative" text="Two" disabled>
+				<Tab id="tabOne" movable={true} text="One"></Tab>
+				<Tab id="tabTwo" movable={true} text="Two" disabled>
 					<Tab slot="items" movable={true} text="2.1"></Tab>
 				</Tab>
-				<Tab id="tabThree" movable={true} design="Critical" text="Three">
-					<Tab id="tabThree1" slot="items" movable={true} design="Positive" text="3.1">
+				<Tab id="tabThree" movable={true} text="Three">
+					<Tab id="tabThree1" slot="items" movable={true} text="3.1">
 						<Button>Button 3.1</Button>
 					</Tab>
-					<Tab id="tabThree2" slot="items" movable={true} design="Positive" text="3.2">
-						<Tab id="tabThree21" slot="items" movable={true} design="Positive" text="3.2.1">
+					<Tab id="tabThree2" slot="items" movable={true} text="3.2">
+						<Tab id="tabThree21" slot="items" movable={true} text="3.2.1">
 							<Button>Button 3.2.1</Button>
 						</Tab>
-						<Tab id="tabThree22" slot="items" movable={true} design="Positive" text="3.2.2">
+						<Tab id="tabThree22" slot="items" movable={true} text="3.2.2">
 							<Button>Button 3.2.2</Button>
 						</Tab>
 						<Button>Button 3.2</Button>
 					</Tab>
-					<Tab id="tabThree3" slot="items" movable={true} design="Positive" text="3.3">
+					<Tab id="tabThree3" slot="items" movable={true} text="3.3">
 						<Button>Button 3.3</Button>
 					</Tab>
 					content
 				</Tab>
-				<Tab id="tabFour" movable={true} text="Four (forbids nesting)"></Tab>
+				<Tab id="tabFour" movable={true} text="Four"></Tab>
 				<Tab id="tabFive" movable={true} text="Five">
 					<Tab slot="items" movable={true} text="nested in Five">
 						<Tab slot="items" movable={true} text="nested deeper in Five">text</Tab>
@@ -108,16 +108,16 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 				<Tab id="tabSix" movable={true} text="Six"></Tab>
 				<Tab id="tabSeven" movable={true} text="Seven"></Tab>
 				<TabSeparator />
-				<Tab id="tabEight" movable={true} design="Positive" text="Eight"></Tab>
-				<Tab id="tabNine" movable={true} design="Negative" text="Nine"></Tab>
-				<Tab id="tabTen" movable={true} design="Critical" text="Ten"></Tab>
+				<Tab id="tabEight" movable={true} text="Eight"></Tab>
+				<Tab id="tabNine" movable={true} text="Nine"></Tab>
+				<Tab id="tabTen" movable={true} text="Ten"></Tab>
 				<Tab id="tabEleven" movable={true} text="Eleven"></Tab>
 				<Tab id="tabTwelve" movable={true} text="Twelve"></Tab>
 				<Tab id="tabThirteen" movable={true} text="Thirteen"></Tab>
 				<Tab id="tabFourteen" movable={true} text="Fourteen"></Tab>
 				<Tab id="tabFifteen" movable={true} text="Fifteen"></Tab>
 				<Tab id="tabSixteen" movable={true} text="Sixteen"></Tab>
-				<Tab id="tabSeventeen" movable={true} text="Seventeen (forbids nesting)"></Tab>
+				<Tab id="tabSeventeen" movable={true} text="Seventeen"></Tab>
 				<Tab id="tabEighteen" movable={true} text="Eighteen"></Tab>
 				<TabSeparator />
 				<Tab id="tabNinteen" movable={true} text="Nineteen"></Tab>
@@ -451,8 +451,8 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 							.shadow()
 							.find<TabInStrip>(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
 							.first()
-							.should($firstTab => {
-								expect($firstTab[0].realTabReference.id).to.equal(lastTabId);
+							.should($firstItem => {
+								expect($firstItem[0].realTabReference.id).to.equal(lastTabId);
 							});
 					});
 			});
@@ -678,6 +678,8 @@ describe("TabContainer Drag and Drop when There are Fixed Tabs", () => {
 
 		tabShouldBeFocusedInStrip("tabTen");
 		cy.realPress(["ControlLeft", "Home"]);
+
+		verifyMoveEvent("tabTen", "Before", "tabFour");
 
 		cy.get("#tabTen")
 			.prev()
