@@ -173,7 +173,7 @@ class SplitButton extends UI5Element {
 	_spacePressed = false;
 
 	/**
-	 * Indicates if there is Shift key pressed while Space key is down.
+	 * Indicates if there is Shift or Escape key pressed while Space key is down.
 	 * @default false
 	 * @private
 	 */
