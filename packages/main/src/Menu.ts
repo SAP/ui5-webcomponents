@@ -314,7 +314,7 @@ class Menu extends UI5Element {
 
 	_closeOtherSubMenus(item: MenuItem) {
 		const menuItems = this._menuItems;
-		if (menuItems.indexOf(item) < 0) {
+		if (!menuItems.includes(item)) {
 			return;
 		}
 
@@ -360,7 +360,7 @@ class Menu extends UI5Element {
 			return;
 		}
 
-		const menuItemInMenu = this._menuItems.indexOf(item) > -1;
+		const menuItemInMenu = this._menuItems.includes(item);
 		const isItemNavigation = isUp(e) || isDown(e);
 		const isItemSelection = isEnter(e) || isSpace(e);
 		const isEndContentNavigation = isRight(e) || isLeft(e);

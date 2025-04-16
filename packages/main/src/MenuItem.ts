@@ -406,7 +406,7 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	_closeOtherSubMenus(item: MenuItem) {
 		const menuItems = this._menuItems;
-		if (menuItems.indexOf(item) < 0) {
+		if (!menuItems.includes(item)) {
 			return;
 		}
 
@@ -433,7 +433,7 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	_itemKeyDown(e: KeyboardEvent) {
 		const item = e.target as MenuItem;
-		const itemInMenuItems = this._menuItems.indexOf(item) > -1;
+		const itemInMenuItems = this._menuItems.includes(item);
 		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
 		const isItemNavigation = isUp(e) || isDown(e);
 		const isItemSelection = isSpace(e) || isEnter(e);
