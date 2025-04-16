@@ -46,7 +46,7 @@ function rightContent(this: MenuItem) {
 			</div>
 		);
 	case this.hasEndContent:
-		return <slot name="endContent"></slot>;
+		return <slot name="endContent" onKeyDown={this._endContentKeyDown}></slot>;
 	case !!this.additionalText:
 		return (
 			<span
@@ -123,8 +123,11 @@ function listItemPostContent(this: MenuItem) {
 						accessibleRole="Menu"
 						loading={this.loading}
 						loadingDelay={this.loadingDelay}
+						onMouseOver={this._itemMouseOver}
+						onKeyDown={this._itemKeyDown}
 						// handles event from slotted children
 						onui5-close-menu={this._close}
+						onui5-exit-end-content={this._navigateOutOfEndContent}
 					>
 						<slot></slot>
 					</List>
