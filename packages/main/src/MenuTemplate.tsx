@@ -12,6 +12,7 @@ export default function MenuTemplate(this: Menu) {
 			class="ui5-menu-rp"
 			placement="Bottom"
 			verticalAlign="Bottom"
+			horizontalAlign={this.horizontalAlign}
 			opener={this.opener}
 			open={this.open}
 			preventInitialFocus={true}

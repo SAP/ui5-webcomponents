@@ -22,6 +22,8 @@ const SRC_DIR = "template";
 const FILES_TO_RENAME = {
 	"npmrc": ".npmrc",
 	"gitignore": ".gitignore",
+	"tsconfig.template.json": "tsconfig.json",
+	"cypress/tsconfig.template.json": "cypress/tsconfig.json"
 };
 const FILES_TO_COPY = ["test/pages/img/logo.png"];
 

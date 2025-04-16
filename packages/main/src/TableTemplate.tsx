@@ -16,6 +16,7 @@ export default function TableTemplate(this: Table) {
 				aria-multiselectable={this._ariaMultiSelectable}
 			>
 				<slot name="headerRow"></slot>
+
 				<div id="rows">
 					<div id="spacer" style={this.styles.spacer}>
 						<slot></slot>

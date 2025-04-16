@@ -1534,6 +1534,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	fireResetSelectionChange() {
 		if (this._isLatestValueFromSuggestions) {
 			this.fireSelectionChange(null, false);
+			this.valueBeforeItemSelection = this.value;
 		}
 	}
 
