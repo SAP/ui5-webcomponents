@@ -68,10 +68,17 @@ class Bar extends UI5Element {
 	design: `${BarDesign}` = "Header";
 
 	/**
-	 * Used to define the role of the bar.
-	 * @private
+	 * Specifies the ARIA role applied to the component for accessibility purposes.
+	 * 
+	 * **Note:**
+	 * 
+	 * - Set accessibleRole to "toolbar" only when the component contains two or more active, interactive elements (such as buttons, links, or input fields) within the bar.
+	 * 
+	 * - If there is only one or no active element, it is recommended to avoid using the toolbar role, as it implies a grouping of multiple interactive controls.
+	 * 
+	 * @public
 	 * @default "Toolbar"
-	 * @since 2.9.0
+	 * @since 2.10.0
 	 *
 	 */
 	@property()
