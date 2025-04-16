@@ -11,10 +11,12 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
 import type WizardContentLayout from "./types/WizardContentLayout.js";
 import "./WizardStep.js";
 
@@ -602,7 +604,7 @@ class Wizard extends UI5Element {
 		}
 	}
 
-	_onOverflowStepButtonClick(e: MouseEvent) {
+	_onOverflowStepButtonClick(e: UI5CustomEvent<Button, "click">) {
 		const tabs = Array.from(this.stepsInHeaderDOM);
 		const eTarget = e.target as HTMLElement;
 		const stepRefId = eTarget.getAttribute("data-ui5-header-tab-ref-id");
