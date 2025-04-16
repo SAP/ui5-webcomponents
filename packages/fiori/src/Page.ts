@@ -126,7 +126,7 @@ class Page extends UI5Element {
 	}
 
 	get _contentPaddingBottom() {
-		return !this.fixedFooter && !this.hideFooter ? "3.5rem" : "0";
+		return !this.fixedFooter && !this.hideFooter ? "3.75rem" : "0";
 	}
 
 	get _contentTop() {
