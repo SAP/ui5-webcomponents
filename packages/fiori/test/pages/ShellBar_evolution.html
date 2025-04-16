@@ -245,7 +245,6 @@
 			console.log(e.detail.items);
 		})
 		
-
 		const menuSubsDynamic = document.getElementById("menuSubsDynamic");
 		const btnOpenBasicDynamic = document.getElementById("btnOpenBasicDynamic");
 
@@ -300,8 +299,8 @@
 		});
 
 		shellbar_hide_search.addEventListener('ui5-search-field-toggle', async (e) => {
-				shellbar_hide_search.hideSearchButton = e.detail.expanded;
-			});
+			shellbar_hide_search.hideSearchButton = e.detail.expanded;
+		});
 
 		shellbar_hide_search.addEventListener('ui5-search-button-click', async (e) => {
 			shellbar_hide_search.addEventListener('ui5-search-field-toggle', async (e) => {
