@@ -3,6 +3,8 @@ import SideNavigationItem from "../../src/SideNavigationItem.js";
 import SideNavigationSubItem from "../../src/SideNavigationSubItem.js";
 import group from "@ui5/webcomponents-icons/dist/group.js";
 import { NAVIGATION_MENU_POPOVER_HIDDEN_TEXT } from "../../src/generated/i18n/i18n-defaults.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
+import Label from "@ui5/webcomponents/dist/Label.js";
 
 describe("Side Navigation Rendering", () => {
 	it("Tests rendering in collapsed mode", () => {
@@ -77,6 +79,45 @@ describe("Side Navigation Rendering", () => {
 			.shadow()
 			.find(".ui5-sn-root")
 			.should("have.attr", "aria-label", "Main");
+	});
+
+	it("Tests header visibility", () => {
+		cy.mount(
+			<SideNavigation id="sn1" accessibleName="Main" collapsed={false}>
+				<div slot="header" class="header">
+					<Title>William Brown</Title>
+					<Label>UX expert</Label>
+				</div>
+			</SideNavigation>);
+
+		cy.get("#sn1").should("have.prop", "showHeader", true);
+
+		cy.get("#sn1").then(($el) => {
+			const sideNav = $el[0] as SideNavigation;
+			sideNav.collapsed = true;
+		});
+
+		cy.get("#sn1").should("have.prop", "showHeader", false);
+	});
+
+	it("Tests tooltips when expanded", () => {
+		const TOOLTIP_TEXT = "From My Team tooltip";
+		cy.mount(
+			<SideNavigation id="sn1" accessible-name="Main">
+				<SideNavigationItem id="item2" text="People" expanded icon="group">
+					<SideNavigationSubItem id="item21" text="From My Team" icon="employee-approvals" tooltip={TOOLTIP_TEXT}></SideNavigationSubItem>
+				</SideNavigationItem>
+			</SideNavigation>);
+
+		cy.get("#sn1")
+			.find("ui5-side-navigation-item,ui5-side-navigation-sub-item")
+			.eq(0)
+			.should("not.have.attr", "tooltip");
+
+		cy.get("#sn1")
+			.find("ui5-side-navigation-item,ui5-side-navigation-sub-item")
+			.eq(1)
+			.should("have.attr", "tooltip", TOOLTIP_TEXT);
 	});
 });
 
@@ -342,7 +383,7 @@ describe("Side Navigation interaction", () => {
 		cy.mount(
 			<SideNavigation id="sideNav">
 				<SideNavigationItem id="item" text="1" />
-				<SideNavigationItem id="unselectableItemWithLink" text="external link" unselectable={true} href="#test"/>
+				<SideNavigationItem id="unselectableItemWithLink" text="external link" unselectable={true} href="#test" />
 			</SideNavigation>
 		);
 
@@ -364,7 +405,7 @@ describe("Side Navigation interaction", () => {
 		cy.mount(
 			<SideNavigation>
 				<SideNavigationItem id="focusStart" text="focus start" />
-				<SideNavigationItem text="external link" unselectable={true} href="#test"/>
+				<SideNavigationItem text="external link" unselectable={true} href="#test" />
 			</SideNavigation>
 		);
 
@@ -388,7 +429,7 @@ describe("Side Navigation interaction", () => {
 		cy.mount(
 			<SideNavigation>
 				<SideNavigationItem id="focusStart" text="focus start" />
-				<SideNavigationItem id="linkItem" text="external link" unselectable={true} href="#test"/>
+				<SideNavigationItem id="linkItem" text="external link" unselectable={true} href="#test" />
 			</SideNavigation>
 		);
 
@@ -502,6 +543,20 @@ describe("Side Navigation interaction", () => {
 			// assert
 			cy.get("@selectionChangeHandler").should("have.callCount", expectedCallCount);
 		});
+	});
+
+	it("tests avoiding re-selecting already selected item", () => {
+		const selectionChangeHandler = cy.stub().as("selectionChangeHandler");
+		cy.mount(
+			<SideNavigation id="sideNav" onSelectionChange={selectionChangeHandler}>
+				<SideNavigationItem id="item" text="1" />
+			</SideNavigation>
+		);
+
+		cy.get("#item").realClick();
+		cy.get("#item").realClick();
+
+		cy.get("@selectionChangeHandler").should("have.been.calledOnce");
 	});
 });
 
@@ -689,10 +744,10 @@ describe("Side Navigation Accessibility", () => {
 			.should("have.attr", "aria-haspopup", "dialog");
 	});
 
-	it("SideNavigationItem aria-role in collapsed SideNavigation", () => {
+	it("SideNavigationItem aria attributes in collapsed SideNavigation", () => {
 		cy.mount(
 			<SideNavigation id="sideNav" collapsed={true}>
-				<SideNavigationItem id="item" text="1" />
+				<SideNavigationItem id="item" text="1" selected={false}/>
 				<SideNavigationItem id="unselectableItem" text="2" unselectable={true} />
 			</SideNavigation>
 		);
@@ -707,6 +762,16 @@ describe("Side Navigation Accessibility", () => {
 			.shadow()
 			.find(".ui5-sn-item")
 			.should("have.attr", "role", "menuitem");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-root")
+			.should("have.prop", "tagName", "NAV");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-flexible")
+			.should("have.attr", "aria-roledescription", "Navigation List Menu Bar");
 	});
 
 	it("SideNavigationItem aria-checked in collapsed SideNavigation", () => {
@@ -826,5 +891,17 @@ describe("Focusable items", () => {
 			.shadow()
 			.find(".ui5-sn-item")
 			.should("have.attr", "tabindex", "0");
+	});
+
+	it("Tests external link items", () => {
+		cy.mount(
+			<SideNavigation>
+				<SideNavigationItem id="externalLinkItem" text="External Link Unselectable" icon="chain-link" href="https://sap.com" unselectable target="_blank" />
+			</SideNavigation>);
+
+		cy.get("#externalLinkItem")
+			.shadow()
+			.find(".ui5-sn-item-external-link-icon")
+			.should("exist");
 	});
 });
