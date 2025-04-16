@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.1-rc.0...v2.10.0-rc.0) (2025-04-14)
+
+
+### Bug Fixes
+
+* **ui5-side-navigation:** remove separator line ([#11306](https://github.com/SAP/ui5-webcomponents/issues/11306)) ([6480a06](https://github.com/SAP/ui5-webcomponents/commit/6480a0619d9819146aa5e204a66190944e1a4c32))
+
+
+### Features
+
+* **ui5-tree-item:** image slot added ([#11106](https://github.com/SAP/ui5-webcomponents/issues/11106)) ([4d972c8](https://github.com/SAP/ui5-webcomponents/commit/4d972c8578395f2ebe4a2188397dd57cb581294d)), closes [#7481](https://github.com/SAP/ui5-webcomponents/issues/7481)
+
+
+
+
+
+## [2.9.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0...v2.9.1-rc.0) (2025-04-10)
+
+
+### Bug Fixes
+
+* change event is only called once for range selection ([#11192](https://github.com/SAP/ui5-webcomponents/issues/11192)) ([e913485](https://github.com/SAP/ui5-webcomponents/commit/e9134855822284c6bb6f1a178e0368b7d76d81f7))
+* **ui5-dynamic-page:** adjust scroll padding for header/footer ([#11193](https://github.com/SAP/ui5-webcomponents/issues/11193)) ([d35b9ce](https://github.com/SAP/ui5-webcomponents/commit/d35b9ce60bc6e2af5ae5113b7018fc0a12489dc0)), closes [#10847](https://github.com/SAP/ui5-webcomponents/issues/10847)
+* **ui5-form:** fix dangling aria-labelledby ([#11273](https://github.com/SAP/ui5-webcomponents/issues/11273)) ([d455af8](https://github.com/SAP/ui5-webcomponents/commit/d455af898f8a6235e2398321594e7a46366104f1)), closes [#11262](https://github.com/SAP/ui5-webcomponents/issues/11262)
+* **ui5-message-strip:** adjust accessibility ([#11267](https://github.com/SAP/ui5-webcomponents/issues/11267)) ([3311b17](https://github.com/SAP/ui5-webcomponents/commit/3311b1773dfe323a42f9c40ba503f8fbf461ca6e))
+* **ui5-navigation-layout:** adjust `z-index` values ([#11212](https://github.com/SAP/ui5-webcomponents/issues/11212)) ([d7a368a](https://github.com/SAP/ui5-webcomponents/commit/d7a368a02ce3d8483d36e1f11fa4fc6b5ebc3ce3)), closes [#11174](https://github.com/SAP/ui5-webcomponents/issues/11174)
+* **ui5-search:** stabilitze mobile test ([#11292](https://github.com/SAP/ui5-webcomponents/issues/11292)) ([8a0d742](https://github.com/SAP/ui5-webcomponents/commit/8a0d74293cb20278049f6ba3f231207fc0a6a432))
+* **ui5-table-growing:** add rootMargin to observer ([#11242](https://github.com/SAP/ui5-webcomponents/issues/11242)) ([da527cb](https://github.com/SAP/ui5-webcomponents/commit/da527cb42166c68c4f19742d54d7ee7d910d13dd))
+
+
+
+
+
+# [2.9.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.3...v2.9.0) (2025-04-04)
+
+
+### Bug Fixes
+
+* **ui5-multi-input:** announce value help ([#11221](https://github.com/SAP/ui5-webcomponents/issues/11221)) ([bdc746a](https://github.com/SAP/ui5-webcomponents/commit/bdc746a043489077daa5dd1a700067c028e4c489))
+* **ui5-select:** align option font size with field ([#11255](https://github.com/SAP/ui5-webcomponents/issues/11255)) ([dc8ff89](https://github.com/SAP/ui5-webcomponents/commit/dc8ff89263a72cd6c59d8011a6be410f884a1344)), closes [#11163](https://github.com/SAP/ui5-webcomponents/issues/11163)
+
+
+
+
+
 # [2.9.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.2...v2.9.0-rc.3) (2025-04-03)
 
 

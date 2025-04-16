@@ -321,6 +321,10 @@ class Tokenizer extends UI5Element {
 	@property({ type: Number })
 	_tokensCount = 0;
 
+	/**
+	 * Defines the tokens to be displayed.
+	 * @public
+	 */
 	@slot({
 		type: HTMLElement,
 		"default": true,
