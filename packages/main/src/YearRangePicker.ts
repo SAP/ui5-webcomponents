@@ -171,8 +171,11 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 			this._rangeSize = 8;
 		}
 
-		if (this._currentYearRange) {
-			this._rangeSize = this._currentYearRange.endYear - this._currentYearRange.startYear + 1;
+		const startYear = this._currentYearRange?.startYear;
+		const endYear = this._currentYearRange?.endYear;
+
+		if (startYear && endYear) {
+			this._rangeSize = endYear - startYear + 1;
 		}
 	}
 
@@ -180,7 +183,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 		const pageSize = this._getPageSize();
 		const pageSizeInYears = this._rangeSize * pageSize;
 		const yearsOffset = this._rangeSize * this._getInitialFocusedIndex();
-		const currentStartYear = this._currentYearRange!.startYear;
+		const currentStartYear = this._currentYearRange?.startYear ? this._currentYearRange?.startYear : this._calendarDate.getYear();
 
 		// On first load, current range should be the 3rd item in the grid
 		if (!this._gridStartYear) {

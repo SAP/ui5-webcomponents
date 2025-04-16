@@ -162,7 +162,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		const locale = getLocale() as unknown as LocaleT;
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, locale);
 		const oYearFormatInSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType }, locale);
-		this._firstYear = this._currentYearRange!.startYear;
+		this._firstYear = this._currentYearRange?.startYear ? this._currentYearRange?.startYear : this._calendarDate.getYear();
 
 		const calendarDate = this._calendarDate; // store the value of the expensive getter
 		const minDate = this._minDate; // store the value of the expensive getter
