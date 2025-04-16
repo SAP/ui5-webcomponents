@@ -1055,8 +1055,8 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Returns the `search` icon DOM ref.
+	 * @returns The search icon DOM ref
 	 * @public
-	 * @default null
 	 * @since 2.10.0
 	 */
 	async getSearchButtonDomRef(): Promise<HTMLElement | null> {
