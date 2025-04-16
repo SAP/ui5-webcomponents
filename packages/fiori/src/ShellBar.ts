@@ -788,8 +788,9 @@ class ShellBar extends UI5Element {
 	 * Use this method to change the state of the search filed according to internal logic.
 	 * An event is fired to notify the change.
 	 */
-	setSearchState(expanded: boolean) {
+	async setSearchState(expanded: boolean) {
 		this.showSearchField = expanded;
+		await renderFinished();
 		this.fireDecoratorEvent("search-field-toggle", { expanded });
 	}
 
@@ -1058,7 +1059,8 @@ class ShellBar extends UI5Element {
 	 * @default null
 	 * @since 2.10.0
 	 */
-	get searchButtonDomRef(): HTMLElement | null {
+	async getSearchButtonDomRef(): Promise<HTMLElement | null> {
+		await renderFinished();
 		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="toggle-search"]`);
 	}
 
