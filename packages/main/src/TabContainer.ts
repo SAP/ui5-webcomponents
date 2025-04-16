@@ -314,6 +314,9 @@ class TabContainer extends UI5Element {
 	@property({ type: Number, noAttribute: true })
 	_width?: number;
 
+	skipRearrangeCount: number = 0;
+	isOverflowClick: boolean = false;
+
 	/**
 	 * Defines the tabs.
 	 *
@@ -410,7 +413,11 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		this._setItemsForStrip();
+		if (this.skipRearrangeCount === 0) {
+			this._setItemsForStrip();
+		} else {
+			this.skipRearrangeCount--;
+		}
 
 		if (!this.shadowRoot!.contains(document.activeElement)) {
 			const focusStart = this._getRootTab(this._selectedTab);
@@ -735,6 +742,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (!tab.realTabReference.hasOwnContent && tab.realTabReference.tabs.length) {
+			this.isOverflowClick = false;
 			await this._togglePopover(tab);
 
 			return;
@@ -771,6 +779,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
+		this.isOverflowClick = false;
 		await this._togglePopover(opener, true);
 	}
 
@@ -855,12 +864,17 @@ class TabContainer extends UI5Element {
 
 	_onHeaderItemSelect(tab: HTMLElement) {
 		if (!tab.hasAttribute("disabled")) {
+			this.skipRearrangeCount = 2;
 			this._onItemSelect(tab.id);
 		}
 	}
 
 	async _onOverflowListItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		e.preventDefault(); // cancel the item selection
+
+		if (!this.isOverflowClick) {
+			this.skipRearrangeCount = 2;
+		}
 
 		this._onItemSelect(e.detail.item.id.slice(0, -3)); // strip "-li" from end of id
 		this._closePopover();
@@ -952,6 +966,7 @@ class TabContainer extends UI5Element {
 			opener = this.startOverflowButton[0] || this._getStartOverflowBtnDOM();
 		}
 
+		this.isOverflowClick = true;
 		await this._togglePopover(opener, true);
 	}
 
@@ -1343,6 +1358,7 @@ class TabContainer extends UI5Element {
 		const newItemsFlat = this._flatten(items);
 
 		if (!arraysAreEqual(this._popoverItemsFlat, newItemsFlat)) {
+			this.skipRearrangeCount = 1;
 			this._popoverItemsFlat = newItemsFlat;
 		}
 	}
