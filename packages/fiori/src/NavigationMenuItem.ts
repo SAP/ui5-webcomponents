@@ -79,6 +79,9 @@ class NavigationMenuItem extends MenuItem {
 	@property()
 	design: `${SideNavigationItemDesign}` = "Default";
 
+	@property({ type: Boolean, noAttribute: true })
+	_clickPrevented = false;
+
 	get isExternalLink() {
 		return this.href && this.target === "_blank";
 	}
@@ -105,6 +108,14 @@ class NavigationMenuItem extends MenuItem {
 		result.main["ui5-navigation-menu-item-root"] = true;
 
 		return result;
+	}
+
+	_onclick(e: MouseEvent) {
+		super._onclick(e);
+
+		if (this._clickPrevented && this.href) {
+			e.preventDefault();
+		}
 	}
 
 	get acessibleNameText() {

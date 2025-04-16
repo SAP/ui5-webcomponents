@@ -61,6 +61,7 @@ type PopupSideNavigationItem = SideNavigationItem & { associatedItem: SideNaviga
 type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 	item: Pick<MenuItemClickEventDetail, "item"> & {
 		associatedItem: SideNavigationSelectableItemBase,
+		_clickPrevented?: boolean,
 	}
 };
 
@@ -316,6 +317,7 @@ class SideNavigation extends UI5Element {
 			metaKey,
 			shiftKey,
 		});
+
 		if (!executeEvent) {
 			e.preventDefault();
 			return;
@@ -336,8 +338,11 @@ class SideNavigation extends UI5Element {
 		const associatedItem = e.detail?.item.associatedItem;
 
 		if (!associatedItem.fireDecoratorEvent("click")) {
+			e.detail.item._clickPrevented = true;
+			e.preventDefault();
 			return;
 		}
+
 		if (associatedItem.selected) {
 			this.closeMenu();
 			return;
@@ -597,9 +602,11 @@ class SideNavigation extends UI5Element {
 				metaKey,
 				shiftKey,
 			});
+
 			if (!executeEvent) {
 				e.preventDefault();
 			}
+
 			return;
 		}
 
@@ -627,6 +634,7 @@ class SideNavigation extends UI5Element {
 				metaKey,
 				shiftKey,
 			});
+
 			if (!executeEvent) {
 				e.preventDefault();
 				return;

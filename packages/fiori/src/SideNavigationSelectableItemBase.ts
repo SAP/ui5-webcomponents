@@ -38,6 +38,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	eventDetails!: SideNavigationItemBase["eventDetails"] & {
 		"click": SideNavigationItemClickEventDetail
 	}
+
 	/**
 	 * Defines the icon of the item.
 	 *
@@ -254,6 +255,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 				metaKey,
 				shiftKey,
 			});
+
 			if (!executeEvent) {
 				e.preventDefault();
 			}
