@@ -492,7 +492,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	}
 
 	_tokenizeText(value: string) {
-		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "<")
+		const tokenizedText = value.replace(/</gm, "<")
 			.replace(/>/gm, ">")
 			.split("\n");
 

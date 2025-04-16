@@ -154,8 +154,7 @@
 	max-height: 94vh;
 	min-height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 	word-break: break-all;
-	padding-top: var(--_ui5_textarea_padding_top);
-	padding-bottom: var(--_ui5_textarea_padding_bottom);
+	padding: var(--_ui5_textarea_padding_top) var(--_ui5_textarea_padding_right_and_left) var(--_ui5_textarea_padding_bottom);
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
 	white-space: pre-wrap;
