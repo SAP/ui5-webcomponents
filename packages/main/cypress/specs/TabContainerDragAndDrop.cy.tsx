@@ -31,13 +31,21 @@ const verifyMoveEvent = (sourceElementId: string, destinationPlacement: `${MoveP
 		});
 };
 
-const tabShouldBeFocusedInStrip = (tabText: string) => {
-	cy.get("#tabContainer")
-		.shadow()
-		.find(".ui5-tab-strip-item")
-		.contains(tabText)
-		.closest(".ui5-tab-strip-item")
-		.should("be.focused");
+const tabShouldBeFocusedInStrip = (id: string) => {
+	cy.focused()
+		.should(($el) => {
+			expect($el).to.have.class("ui5-tab-strip-item");
+			expect(($el[0] as TabInStrip).realTabReference.id).to.equal(id);
+		});
+};
+
+const tabShouldBeFocusedInPopover = (id: string) => {
+	cy.focused()
+		.closest(".ui5-tab-overflow-item")
+		.should(($el) => {
+			expect($el).to.have.class("ui5-tab-overflow-item");
+			expect(($el[0] as TabInOverflow).realTabReference.id).to.equal(id);
+		});
 };
 
 describe("TabContainer Drag and Drop Generic Tests", () => {
@@ -136,7 +144,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 			.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
 			.should(($elements) => {
 				$elements.each((index, element) => {
-					expect(element).to.have.attr('tabindex');
+					expect(element).to.have.attr("tabindex");
 				});
 			});
 	});
@@ -146,7 +154,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 			cy.get<Tab>("#tabOne, #tabTwo")
 				.then(($el) => {
 					cy.ui5TabContainerDragAndDrop($el[0].getDomRefInStrip()!, "After", $el[1].getDomRefInStrip()!)
-				})
+				});
 
 			verifyMoveOverEvent("tabOne", "After", "tabTwo");
 			verifyMoveEvent("tabOne", "After", "tabTwo");
@@ -201,7 +209,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 			cy.get<Tab>("#tabFive, #tabSix")
 				.then(($el) => {
 					cy.ui5TabContainerDragAndDrop($el[0].getDomRefInStrip()!, "On", $el[1].getDomRefInStrip()!)
-				})
+				});
 
 			verifyMoveOverEvent("tabFive", "On", "tabSix");
 			verifyMoveEvent("tabFive", "On", "tabSix");
@@ -270,9 +278,8 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					.find(".ui5-tab-strip-item")
 					.first()
 					.realClick();
-					
-				// Act
-				tabShouldBeFocusedInStrip("One");
+
+				tabShouldBeFocusedInStrip("tabOne");
 				cy.realPress(["ControlLeft", "ArrowRight"]);
 
 				verifyMoveOverEvent("tabOne", "After", "tabTwo");
@@ -286,13 +293,12 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					.children().eq(1)
 					.should("have.id", "tabOne");
 
-				// Act
 				cy.get("@handleMoveOverSpy")
 					.invoke("resetHistory");
 
 				cy.get("@handleMoveSpy")
 					.invoke("resetHistory");
-				tabShouldBeFocusedInStrip("One");
+				tabShouldBeFocusedInStrip("tabOne");
 				cy.realPress(["ControlLeft", "ArrowDown"]);
 
 				verifyMoveOverEvent("tabOne", "After", "tabThree");
@@ -306,13 +312,12 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					.children().eq(2)
 					.should("have.id", "tabOne");
 
-				// Act
 				cy.get("@handleMoveOverSpy")
 					.invoke("resetHistory");
 
 				cy.get("@handleMoveSpy")
 					.invoke("resetHistory");
-				tabShouldBeFocusedInStrip("One");
+				tabShouldBeFocusedInStrip("tabOne");
 				cy.realPress(["ControlLeft", "ArrowLeft"]);
 
 				verifyMoveOverEvent("tabOne", "Before", "tabThree");
@@ -332,13 +337,12 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 				cy.get("@handleMoveSpy")
 					.invoke("resetHistory");
 
-				// Act
 				cy.get("@handleMoveOverSpy")
 					.invoke("resetHistory");
 
 				cy.get("@handleMoveSpy")
 					.invoke("resetHistory");
-				tabShouldBeFocusedInStrip("One");
+				tabShouldBeFocusedInStrip("tabOne");
 				cy.realPress(["ControlLeft", "ArrowUp"]);
 
 				verifyMoveOverEvent("tabOne", "Before", "tabTwo");
@@ -355,113 +359,101 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					.should("have.id", "tabTwo");
 			});
 
-			it.skip("Moving strip item beyond the end using 'Arrow Right'", () => {
+			it("Moving strip item beyond the end using 'Arrow Right'", () => {
 				cy.get("#tabContainer")
 					.shadow()
 					.find(".ui5-tab-strip-item")
 					.first()
 					.realClick()
-					.then(() => {
-						for (let i = 0; i < 20; i++) {
-							tabShouldBeFocusedInStrip("One");
-							cy.realPress(["ControlLeft", "ArrowRight"]);
-						}
+	
+				for (let i = 0; i < 20; i++) {
+					tabShouldBeFocusedInStrip("tabOne");
+					cy.realPress(["ControlLeft", "ArrowRight"]);
+				}
 
-						cy.get("#tabContainer")
-							.shadow()
-							.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
-							.last<TabInStrip>()
-							.then($el => {
-								return $el[0].realTabReference.id;
-							})
-							.should("equal", "tabOne");
-					});
-			});
-
-			it.skip("Moving strip item beyond the beginning with 'Arrow Left'", () => {
-				cy.get("#tabContainer")
-					.shadow()
-					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow]")
-					.last<TabInStrip>()
-					.as("lastTabInStrip");
-
-				cy.get("@lastTabInStrip")
-					.realClick()
-					.then(() => {
-						// Act
-						cy.get<TabInStrip>("@lastTabInStrip")
-							.then(($lastTab) => {
-								const lastTabText = $lastTab[0].realTabReference.text!;
-			
-								for (let i = 0; i < 20; i++) {
-									tabShouldBeFocusedInStrip(lastTabText);
-									cy.realPress(["ControlLeft", "ArrowLeft"]);
-								}
-			
-								cy.get("#tabContainer")
-									.shadow()
-									.find<TabInStrip>(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
-									.first()
-									.then($el => {
-										return $el[0].realTabReference.text;
-									})
-									.should("equal", lastTabText);
-							});
-					});
-			});
-
-			it.skip("Moving strip item with 'End'", () => {
 				cy.get("#tabContainer")
 					.shadow()
 					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
-					.first()
-					.realClick()
-					.then(() => {
-						tabShouldBeFocusedInStrip("One");
-						// Act
-						cy.realPress(["ControlLeft", "End"]);
-			
-						// Assert
-						cy.get("#tabContainer")
-							.shadow()
-							.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
-							.last<TabInStrip>()
-							.then($el => {
-								return $el[0].realTabReference.id;
-							})
-							.should("equal", "tabOne");
+					.last<TabInStrip>()
+					.should($lastItem => {
+						expect($lastItem[0].realTabReference.id).to.equal("tabOne");
 					});
 			});
 
-			it.skip("Moving strip item with 'Home'", () => {
+			it("Moving strip item beyond the beginning with 'Arrow Left'", () => {
 				cy.get("#tabContainer")
 					.shadow()
 					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow]")
-					.last<TabInStrip>()
+					.last()
 					.as("lastTabInStrip");
 
 				cy.get("@lastTabInStrip")
 					.realClick();
 
-				// Act
 				cy.get<TabInStrip>("@lastTabInStrip")
 					.then(($lastTab) => {
-						const lastTabText = $lastTab[0].realTabReference.text!;
-
-						tabShouldBeFocusedInStrip(lastTabText);
-
-						// Act
-						cy.realPress(["ControlLeft", "Home"]);
-
-						// Assert
+						const lastTabId = $lastTab[0].realTabReference.id;
+	
+						for (let i = 0; i < 20; i++) {
+							tabShouldBeFocusedInStrip(lastTabId);
+							cy.realPress(["ControlLeft", "ArrowLeft"]);
+						}
+	
 						cy.get("#tabContainer")
 							.shadow()
 							.find<TabInStrip>(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
 							.first()
-							.then($el => {
-								return $el[0].realTabReference.text;
-							})
-							.should("equal", lastTabText);
+							.should($firstItem => {
+								expect($firstItem[0].realTabReference.id).to.equal(lastTabId);
+							});
+					});
+			});
+
+			it("Moving strip item with 'End'", () => {
+				cy.get("#tabContainer")
+					.shadow()
+					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
+					.first()
+					.realClick();
+
+				tabShouldBeFocusedInStrip("tabOne");
+
+				cy.realPress(["ControlLeft", "End"]);
+	
+				cy.get("#tabContainer")
+					.shadow()
+					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
+					.last<TabInStrip>()
+					.should($lastItem => {
+						expect($lastItem[0].realTabReference.id).to.equal("tabOne");
+					});
+			});
+
+			it("Moving strip item with 'Home'", () => {
+				cy.get("#tabContainer")
+					.shadow()
+					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow]")
+					.eq(-2) // get the item before the last to 'more' button appearance doesn't disturb the test
+					.as("lastTabInStrip");
+
+				cy.get("@lastTabInStrip")
+					.realClick();
+
+				cy.get<TabInStrip>("@lastTabInStrip")
+					.then(($lastTab) => {
+						const lastTabId = $lastTab[0].realTabReference.id;
+
+						tabShouldBeFocusedInStrip(lastTabId);
+
+						cy.realPress(["ControlLeft", "Home"]);
+
+						cy.get("#tabContainer")
+							.shadow()
+							.find<TabInStrip>(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
+							.first()
+							.should($firstTab => {
+								expect($firstTab[0].realTabReference.id).to.equal(lastTabId);
+							});
 					});
 			});
 		});
@@ -482,12 +474,14 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					.prev()
 					.should("not.exist");
 
+				tabShouldBeFocusedInPopover("tabThree1");
 				cy.realPress(["ControlLeft", "ArrowDown"]);
 
 				cy.get("#tabThree1")
 					.prev()
 					.should("have.id", "tabThree2");
 
+				tabShouldBeFocusedInPopover("tabThree1");
 				cy.realPress(["ControlLeft", "ArrowUp"]);
 
 				cy.get("#tabThree1")
@@ -496,6 +490,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 
 				cy.realPress(["ArrowDown"]);
 				cy.realPress(["ArrowDown"]);
+				tabShouldBeFocusedInPopover("tabThree21");
 
 				cy.get("#tabThree21")
 					.prev()
@@ -507,11 +502,13 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					.prev()
 					.should("have.id", "tabThree22");
 
+				tabShouldBeFocusedInPopover("tabThree21");
 				cy.realPress(["ControlLeft", "ArrowDown"]);
 				cy.get("#tabThree21")
 					.prev()
 					.should("have.id", "tabThree22");
 
+				tabShouldBeFocusedInPopover("tabThree21");
 				cy.realPress(["ControlLeft", "ArrowUp"]);
 				cy.get("#tabThree21")
 					.prev()
@@ -526,20 +523,22 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					.shadow()
 					.find<TabInOverflow>(".ui5-tab-container-responsive-popover [ui5-li-custom]")
 					.then(($el) => {
-						const firstItem = $el[0];
-						const secondItem = $el[1];
+						const firstItemId = $el[0].realTabReference.id;
+						const secondItemId = $el[1].realTabReference.id;
 
+						tabShouldBeFocusedInPopover(firstItemId);
 						cy.realPress(["ControlLeft", "ArrowDown"]);
 
-						cy.get(`#${firstItem.realTabReference.id}`)
+						cy.get(`#${firstItemId}`)
 							.prev()
-							.should("have.id", secondItem.realTabReference.id);
+							.should("have.id", secondItemId);
 
+						tabShouldBeFocusedInPopover(firstItemId);
 						cy.realPress(["ControlLeft", "ArrowUp"]);
 							
-						cy.get(`#${firstItem.realTabReference.id}`)
+						cy.get(`#${firstItemId}`)
 							.next()
-							.should("have.id", secondItem.realTabReference.id);
+							.should("have.id", secondItemId);
 					});
 			});
 
@@ -552,28 +551,32 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					.find<TabInOverflow>(".ui5-tab-container-responsive-popover [ui5-li-custom]")
 					.first()
 					.then(($firstItem) => {
+						const firstItemId = $firstItem[0].realTabReference.id;
+
+						tabShouldBeFocusedInPopover(firstItemId);
+
 						cy.realPress(["ControlLeft", "End"]);
 
 						cy.get("#tabContainer")
 							.children()
 							.last()
-							.should("have.id", $firstItem[0].realTabReference.id);
+							.should("have.id", firstItemId);
 					});
 			});
 
 			it("Moving overflow item with 'Home'", () => {
 				cy.get("#tabContainer")
 					.ui5TabContainerOpenEndOverflow();
-	
+
 				cy.get("#tabContainer")
 					.shadow()
 					.find(".ui5-tab-container-responsive-popover [ui5-li-custom]")
 					.last<TabInOverflow>()
 					.then(($lastItem) => {
+						const lastItemId = $lastItem[0].realTabReference.id;
+
 						cy.realPress("End");
-						
-						cy.wrap($lastItem)
-						.should("be.focused");
+						tabShouldBeFocusedInPopover(lastItemId);
 
 						cy.realPress(["ControlLeft", "Home"]);
 
@@ -581,10 +584,9 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 							.shadow()
 							.find<TabInOverflow>(".ui5-tab-container-responsive-popover [ui5-li-custom]")
 							.first()
-							.then(($firstItem) => {
-								return $firstItem[0].realTabReference.id;
-							})
-							.should("equal", $lastItem[0].realTabReference.id);
+							.should(($firstItem) => {
+								expect($firstItem[0].realTabReference.id).to.equal(lastItemId);
+							});
 					});
 			});
 		});
@@ -645,36 +647,36 @@ describe("TabContainer Drag and Drop when There are Fixed Tabs", () => {
 			.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
 			.should(($elements) => {
 				$elements.each((index, element) => {
-					expect(element).to.have.attr('tabindex');
+					expect(element).to.have.attr("tabindex");
 				});
 			});
 	});
 
 	it("Moving strip item beyond fixed items with arrow keys", () => {
-		cy.get<Tab>("#tabTen")
+		cy.get<Tab>("#tabNine")
 			.then(($el) => {
 				return $el[0].getDomRefInStrip();
 			})
 			.realClick();
 
 		for (let i = 0; i < 20; i++) {
-			tabShouldBeFocusedInStrip("Ten");
+			tabShouldBeFocusedInStrip("tabNine");
 			cy.realPress(["ControlLeft", "ArrowLeft"]);
 		}
 
-		cy.get("#tabTen")
+		cy.get("#tabNine")
 			.prev()
 			.should("have.id", "fixedItemsSeparator");
 	});
 
-	it("Moving strip item beyound fixed items with 'Home;", () => {
+	it("Moving strip item beyond fixed items with 'Home;", () => {
 		cy.get<Tab>("#tabTen")
 			.then(($el) => {
 				return $el[0].getDomRefInStrip();
 			})
 			.realClick();
 
-		tabShouldBeFocusedInStrip("Ten");
+		tabShouldBeFocusedInStrip("tabTen");
 		cy.realPress(["ControlLeft", "Home"]);
 
 		cy.get("#tabTen")
