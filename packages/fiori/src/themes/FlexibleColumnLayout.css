@@ -17,6 +17,7 @@
 	box-sizing: border-box;
 	will-change: width;
 	overflow-y: auto;
+	min-width: 15.5rem; /* as noted in our documentation */
 }
 
 /* disable pointer events on columns while dragging the separator
