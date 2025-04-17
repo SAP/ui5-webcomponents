@@ -17,6 +17,8 @@ import SideNavigationGroupTemplate from "./SideNavigationGroupTemplate.js";
 
 import {
 	SIDE_NAVIGATION_GROUP_HEADER_DESC,
+	SIDE_NAVIGATION_ICON_COLLAPSE,
+	SIDE_NAVIGATION_ICON_EXPAND,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -130,6 +132,11 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 	get accDescription() {
 		return SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_GROUP_HEADER_DESC);
+	}
+
+	get _arrowTooltip() {
+		return this.expanded ? SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_ICON_COLLAPSE)
+			: SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_ICON_EXPAND);
 	}
 
 	_onkeydown(e: KeyboardEvent) {
