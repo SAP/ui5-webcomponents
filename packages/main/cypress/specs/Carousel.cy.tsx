@@ -35,7 +35,7 @@ describe("Carousel general interaction", () => {
 
 	it("Carousel navigates left", () => {
 		cy.mount(
-			<Carousel id="carousel1" cyclic="true">
+			<Carousel id="carousel1" cyclic={true}>
 				<Button>Button 1</Button>
 				<Button>Button 2</Button>
 				<Button>Button 3</Button>
@@ -156,53 +156,10 @@ describe("Carousel general interaction", () => {
 
 	it("ItemsPerPage property is working properly", () => {
 		cy.mount(
-			<Carousel id="carousel4" arrowsPlacement="Navigation">
-				<Card id="card" class="myCard">
-					<CardHeader slot="header" titleText="Quick Links" subtitleText="quick links" interactive>
-					</CardHeader>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard>Template Based Segmentation</ListItemStandard>
-						<ListItemStandard>Segmentation Models</ListItemStandard>
-						<ListItemStandard>Marketing plans</ListItemStandard>
-					</List>
-
-					<Input id="field" value="0"></Input>
-				</Card>
-
-				<List headerText="API: ListItemGroup (2/3)" selectionMode="Multiple">
-					<ListItemGroup headerText="New Items">
-						<ListItemStandard>
-							Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam.
-							Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad
-							excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex
-							laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.
-							<Avatar slot="image" shape="Square">
-								<img src="./img/HT-1000.jpg" alt="Woman image" />
-							</Avatar>
-						</ListItemStandard>
-						<ListItemStandard>
-							Laptop Lenovo
-							<Avatar slot="image" shape="Square">
-								<img src="./img/HT-1010.jpg" alt="Woman image" />
-							</Avatar>
-						</ListItemStandard>
-						<ListItemStandard>
-							IPhone 3
-							<Avatar slot="image" shape="Square">
-								<img src="./img/HT-1022.jpg" alt="Woman image" />
-							</Avatar>
-						</ListItemStandard>
-					</ListItemGroup>
-				</List>
-
-				<List headerText="API: icon (3/3)">
-					<ListItemStandard>Option 1</ListItemStandard>
-					<ListItemStandard>Option 2</ListItemStandard>
-					<ListItemStandard>Option 3</ListItemStandard>
-					<ListItemStandard>Option 1</ListItemStandard>
-					<ListItemStandard>Option 2</ListItemStandard>
-					<ListItemStandard>Option 3</ListItemStandard>
-				</List>
+			<Carousel id="carousel4">
+				<span>page 1</span>
+				<span>page 2</span>
+				<span>page 3</span>
 			</Carousel>);
 
 		cy.get("#carousel4")
@@ -228,7 +185,7 @@ describe("Carousel general interaction", () => {
 					<Button>Button 7</Button>
 					<Button>Button 8</Button>
 				</Carousel>
-				<Carousel id="carouselAccName" cyclic="true" accessibleName="Buttons Carousel">
+				<Carousel id="carouselAccName" cyclic={true} accessibleName="Buttons Carousel">
 					<Button>Button 1</Button>
 					<Button>Button 2</Button>
 					<Button>Button 3</Button>
@@ -274,9 +231,9 @@ describe("Carousel general interaction", () => {
 			.should("have.attr", "aria-posinset", CAROUSEL_ITEM4_POS)
 			.and("have.attr", "aria-setsize", SETSIZE);
 
-		cy.get('#carousel5')
-			.then((carousel) => {
-				const el = carousel[0] as HTMLElement & { _id: string };
+		cy.get<Carousel>('#carousel5')
+			.then(($carousel) => {
+				const el = $carousel[0];
 
 				cy.get('#carousel5')
 					.shadow()
@@ -289,10 +246,9 @@ describe("Carousel general interaction", () => {
 			.find(".ui5-carousel-navigation-button:nth-child(2)")
 			.realClick();
 
-		cy.get('#carousel5')
-			.then((carousel) => {
-				const el = carousel[0] as HTMLElement & { _id: string };
-
+		cy.get<Carousel>('#carousel5')
+			.then(($carousel) => {
+				const el = $carousel[0];
 				cy.get('#carousel5')
 					.shadow()
 					.find('.ui5-carousel-root')
@@ -327,122 +283,10 @@ describe("Carousel general interaction", () => {
 
 	it("all visible elements in the current page have correct tabindex values", () => {
 		cy.mount(
-			<Carousel id="carouselCards" itemsPerPage="S1 M3 L4 XL8">
-				<Card id="card" class="myCard">
-					<CardHeader slot="header" titleText="Quick Links" subtitleText="quick links"
-						interactive>
-					</CardHeader>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard >Template Based Segmentation</ListItemStandard>
-						<ListItemStandard>Segmentation Models</ListItemStandard>
-						<ListItemStandard >Marketing plans</ListItemStandard>
-					</List>
-
-					<Input id="field" value="0"></Input>
-				</Card>
-
-				<Card id="card2" class="myCard">
-					<CardHeader slot="header" titleText="Quick Links" subtitleText="quick links">
-						<Icon name="group" slot="avatar"></Icon>
-					</CardHeader>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard >Template Based Segmentation</ListItemStandard>
-						<ListItemStandard>Segmentation Models</ListItemStandard>
-					</List>
-				</Card>
-
-				<Card class="myCard">
-					<CardHeader slot="header" titleText="Quick Links" subtitleText="quick links">
-					</CardHeader>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard>Template Based Segmentation</ListItemStandard>
-						<ListItemStandard>Segmentation Models</ListItemStandard>
-					</List>
-				</Card>
-
-				<Card id="card" class="myCard">
-					<CardHeader slot="header" titleText="Quick Links" subtitleText="quick links"
-						interactive>
-					</CardHeader>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard>Template Based Segmentation</ListItemStandard>
-						<ListItemStandard>Segmentation Models</ListItemStandard>
-						<ListItemStandard >Marketing plans</ListItemStandard>
-					</List>
-
-					<Input id="field" value="0"></Input>
-				</Card>
-
-				<Card id="card2" class="myCard">
-					<CardHeader slot="header" titleText="Quick Links" subtitleText="quick links">
-						<Icon name="group" slot="avatar"></Icon>
-					</CardHeader>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard>Template Based Segmentation</ListItemStandard>
-						<ListItemStandard>Segmentation Models</ListItemStandard>
-					</List>
-				</Card>
-
-				<Card class="myCard">
-					<CardHeader slot="header" titleText="Quick Links" subtitleText="quick links">
-					</CardHeader>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard>Template Based Segmentation</ListItemStandard>
-						<ListItemStandard>Segmentation Models</ListItemStandard>
-					</List>
-				</Card>
-
-				<Card id="card" class="myCard">
-					<CardHeader slot="header" titleText="Quick Links" subtitleText="quick links"
-						interactive>
-					</CardHeader>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard>Template Based Segmentation</ListItemStandard>
-						<ListItemStandard>Segmentation Models</ListItemStandard>
-						<ListItemStandard>Marketing plans</ListItemStandard>
-					</List>
-
-					<Input id="field" value="0"></Input>
-				</Card>
-
-				<Card id="card2" class="myCard">
-					<CardHeader slot="header" titleText="Quick Links" subtitleText="quick links">
-						<Icon name="group" slot="avatar"></Icon>
-					</CardHeader>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard>Template Based Segmentation</ListItemStandard>
-						<ListItemStandard>Segmentation Models</ListItemStandard>
-					</List>
-				</Card>
-
-				<Card class="myCard">
-					<CardHeader slot="header" titleText="Quick Links" subtitleText="quick links">
-					</CardHeader>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard>Template Based Segmentation</ListItemStandard>
-						<ListItemStandard>Segmentation Models</ListItemStandard>
-					</List>
-				</Card>
-
-				<Card id="card2" class="myCard">
-					<CardHeader slot="header" titleText="Quick Links" subtitleText="quick links">
-						<Icon name="group" slot="avatar"></Icon>
-					</CardHeader>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard>Template Based Segmentation</ListItemStandard>
-						<ListItemStandard>Segmentation Models</ListItemStandard>
-					</List>
-				</Card>
-
-				<Card class="myCard">
-					<CardHeader slot="header" titleText="Quick Links" subtitleText="quick links">
-					</CardHeader>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard>Template Based Segmentation</ListItemStandard>
-						<ListItemStandard>Segmentation Models</ListItemStandard>
-					</List>
-				</Card>
-
+			<Carousel id="carouselCards" itemsPerPage="S3 M3 L3 XL3">
+				<span>item 1</span>
+				<span>item 2</span>
+				<span>item 3</span>
 			</Carousel>);
 
 		cy.get("#carouselCards")
@@ -469,12 +313,12 @@ describe("Carousel general interaction", () => {
 
 		cy.get("#carousel6")
 			.shadow()
-			.find(".Carousel-navigation-wrapper")
+			.find(".ui5-carousel-navigation-wrapper")
 			.should("not.exist");
 
 		cy.get("#carousel6")
 			.shadow()
-			.find(".Carousel-navigation-arrows")
+			.find(".ui5-carousel-navigation-arrows")
 			.should("not.exist");
 
 		cy.get("#carousel6")
@@ -554,7 +398,7 @@ describe("Carousel general interaction", () => {
 
 		cy.get("#carouselHiddenPageIndicator")
 			.shadow()
-			.find(".Carousel-navigation > *")
+			.find(".ui5-carousel-navigation > *")
 			.should('have.length', 0);
 
 	});
@@ -578,9 +422,8 @@ describe("Carousel general interaction", () => {
 			.invoke("prop", "visibleItemsIndices")
 			.should("deep.equal", [0, 1]);
 
-		cy.get("#carousel9").then((carousel) => {
-			const el = carousel[0] as HTMLElement & { navigateTo: (index: number) => void };
-			el.navigateTo(1);
+		cy.get<Carousel>("#carousel9").then(($carousel) => {
+			$carousel[0].navigateTo(1);
 		});
 
 		cy.get("#carousel9")
@@ -672,9 +515,8 @@ describe("Carousel general interaction", () => {
 		cy.get("#carouselF7Button").realClick();
 		cy.realPress("F7");
 
-		cy.get("#carouselF7").then((carousel) => {
-			const el = carousel[0] as HTMLElement & { navigateTo: (index: number) => void };
-			el.navigateTo(1);
+		cy.get<Carousel>("#carouselF7").then(($carousel) => {
+			$carousel[0].navigateTo(1);
 		});
 		cy.realPress("F7");
 		cy.focused().should("have.class", "ui5-input-inner");
@@ -688,85 +530,12 @@ describe("Carousel general interaction", () => {
 				itemsPerPage="S1 M2 L3 XL4"
 				arrowsPlacement="Navigation"
 			>
-				<Card id="card" class="small">
-					<CardHeader
-						id="cardHeader"
-						slot="header"
-						additionalText="4 of 10"
-						titleText="Quick Links"
-						subtitleText="Quick links sub title"
-						interactive
-					/>
-					<List id="myList3" separators="Inner">
-						<ListItemStandard icon="horizontal-bullet-chart">Template Based Segmentation</ListItemStandard>
-						<ListItemStandard icon="opportunity">Segmentation Models</ListItemStandard>
-						<ListItemStandard icon="line-charts">Marketing plans</ListItemStandard>
-					</List>
-				</Card>
-
-				<Card class="small">
-					<CardHeader
-						slot="header"
-						titleText="David Williams"
-						subtitleText="Sales Manager"
-					>
-						<Avatar icon="employee" slot="avatar" />
-					</CardHeader>
-					<List separators="Inner">
-						<ListItemStandard icon="competitor" iconEnd>Personal Development</ListItemStandard>
-						<ListItemStandard icon="wallet" iconEnd>Finance</ListItemStandard>
-						<ListItemStandard icon="collaborate" iconEnd>Communications Skills</ListItemStandard>
-					</List>
-				</Card>
-
-				<Card class="medium">
-					<CardHeader
-						slot="header"
-						titleText="Team Dolphins"
-						subtitleText="Direct Reports"
-					>
-						<Icon name="group" slot="avatar" />
-					</CardHeader>
-					<List separators="None">
-						<ListItemStandard icon="employee" description="User Researcher">Alain Chevalier</ListItemStandard>
-						<ListItemStandard icon="employee" description="Artist">Monique Legrand</ListItemStandard>
-						<ListItemStandard icon="employee" description="UX Specialist">Michael Adams</ListItemStandard>
-					</List>
-				</Card>
-
-				<Card class="medium">
-					<CardHeader
-						slot="header"
-						titleText="Team Bears"
-						subtitleText="Direct Reports"
-						interactive
-					>
-						<Icon name="group" slot="avatar" />
-					</CardHeader>
-					<List separators="None">
-						<ListItemStandard icon="employee" description="Software Architect">Richard Wilson</ListItemStandard>
-						<ListItemStandard icon="employee" description="Visual Designer">Elena Petrova</ListItemStandard>
-						<ListItemStandard icon="employee" description="Quality Specialist">John Miller</ListItemStandard>
-					</List>
-				</Card>
-
-				<Card class="medium">
-					<CardHeader
-						slot="header"
-						titleText="Team Bears"
-						subtitleText="Direct Reports"
-						interactive
-					>
-						<Icon name="group" slot="avatar" />
-					</CardHeader>
-					<List separators="None">
-						<ListItemStandard icon="employee" description="Software Architect">Richard Wilson</ListItemStandard>
-						<ListItemStandard icon="employee" description="Visual Designer">Elena Petrova</ListItemStandard>
-						<ListItemStandard icon="employee" description="Quality Specialist">John Miller</ListItemStandard>
-					</List>
-				</Card>
-			</Carousel>
-		);
+				<span>item 1</span>
+				<span>item 2</span>
+				<span>item 3</span>
+				<span>item 4</span>
+				<span>item 5</span>
+			</Carousel>);
 
 		cy.viewport(500, 500);
 		cy.get("#itemsPerPage")
