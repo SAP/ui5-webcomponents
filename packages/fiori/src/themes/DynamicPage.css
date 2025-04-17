@@ -12,7 +12,7 @@
 }
 
 .ui5-dynamic-page-root {
-    container-type: size;
+    container-type: inline-size;
     height: inherit;
     overflow-y: hidden;
 }
