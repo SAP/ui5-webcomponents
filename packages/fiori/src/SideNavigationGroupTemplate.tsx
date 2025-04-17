@@ -30,7 +30,6 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 				onFocusIn={this._onfocusin}
 				tabIndex={this.effectiveTabIndex ? parseInt(this.effectiveTabIndex) : undefined}
 				aria-expanded={this._expanded}
-				aria-description={this.accDescription}
 				title={this._tooltip}
 				aria-owns={this._groupId}
 			>
@@ -45,6 +44,7 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 				<ul id={this._groupId}
 					class="ui5-sn-item-ul"
 					role="group"
+					aria-label={this.text}
 				>
 					<slot></slot>
 				</ul>
