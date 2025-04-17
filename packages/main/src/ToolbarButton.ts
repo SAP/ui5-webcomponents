@@ -11,8 +11,6 @@ import ToolbarPopoverButtonTemplate from "./ToolbarPopoverButtonTemplate.js";
 
 import ToolbarButtonPopoverCss from "./generated/themes/ToolbarButtonPopover.css.js";
 
-import { registerToolbarItem } from "./ToolbarRegistry.js";
-
 type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 
 /**
@@ -194,8 +192,6 @@ class ToolbarButton extends ToolbarItem {
 		}
 	}
 }
-
-registerToolbarItem(ToolbarButton);
 
 ToolbarButton.define();
 

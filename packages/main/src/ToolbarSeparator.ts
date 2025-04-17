@@ -1,9 +1,11 @@
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ToolbarSeparatorTemplate from "./ToolbarSeparatorTemplate.js";
 import ToolbarPopoverSeparatorTemplate from "./ToolbarPopoverSeparatorTemplate.js";
 
-import { registerToolbarItem } from "./ToolbarRegistry.js";
+// Styles
+import ToolbarSeparatorCss from "./generated/themes/ToolbarSeparator.css.js";
 
 import ToolbarItem from "./ToolbarItem.js";
 
@@ -21,6 +23,9 @@ import ToolbarItem from "./ToolbarItem.js";
  */
 @customElement({
 	tag: "ui5-toolbar-separator",
+	template: ToolbarSeparatorTemplate,
+	renderer: jsxRenderer,
+	styles: [ToolbarSeparatorCss],
 })
 
 class ToolbarSeparator extends ToolbarItem {
@@ -43,8 +48,6 @@ class ToolbarSeparator extends ToolbarItem {
 		return false;
 	}
 }
-
-registerToolbarItem(ToolbarSeparator);
 
 ToolbarSeparator.define();
 

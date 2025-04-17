@@ -5,8 +5,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
-import { registerToolbarItem } from "./ToolbarRegistry.js";
-
 // Templates
 
 import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
@@ -185,8 +183,6 @@ class ToolbarSelect extends ToolbarItem {
 		};
 	}
 }
-
-registerToolbarItem(ToolbarSelect);
 
 ToolbarSelect.define();
 

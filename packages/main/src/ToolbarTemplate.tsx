@@ -45,7 +45,7 @@ export default function ToolbarTemplate(this: Toolbar) {
 				"ui5-overflow-list": true
 			}}>
 				{ this.overflowItems.map(item => (
-					item.toolbarPopoverTemplate.call(item.context)
+					<div class="ui5-tb-popover-item"><slot name={item.context._individualSlot} class="ui5-tb-popover-item"></slot></div>
 				))}
 			</div>
 		</Popover>

@@ -32,11 +32,6 @@ import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js"
 import type ToolbarItem from "./ToolbarItem.js";
 import type ToolbarSeparator from "./ToolbarSeparator.js";
 
-import {
-	getRegisteredToolbarItem,
-	getRegisteredStyles,
-} from "./ToolbarRegistry.js";
-
 import type Button from "./Button.js";
 import type Popover from "./Popover.js";
 
@@ -173,11 +168,9 @@ class Toolbar extends UI5Element {
 	ITEMS_WIDTH_MAP: Map<string, number> = new Map();
 
 	static get styles() {
-		const styles = getRegisteredStyles();
 		return [
 			ToolbarCss,
 			ToolbarPopoverCss,
-			...styles,
 		];
 	}
 
@@ -504,16 +497,7 @@ class Toolbar extends UI5Element {
 
 	getItemsInfo(items: Array<UI5Element>) {
 		return items.map((item: UI5Element) => {
-			const ctor = item.constructor as typeof ToolbarItem;
-			const ElementClass = getRegisteredToolbarItem(ctor.getMetadata().getPureTag());
-
-			if (!ElementClass) {
-				return null;
-			}
-
 			const toolbarItem = {
-				toolbarTemplate: ElementClass.toolbarTemplate,
-				toolbarPopoverTemplate: ElementClass.toolbarPopoverTemplate,
 				context: item,
 			};
 

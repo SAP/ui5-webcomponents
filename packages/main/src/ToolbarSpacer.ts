@@ -1,10 +1,11 @@
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ToolbarSpacerTemplate from "./ToolbarSpacerTemplate.js";
 
-import ToolbarItem from "./ToolbarItem.js";
+import ToolbarCss from "./generated/themes/Toolbar.css.js";
 
-import { registerToolbarItem } from "./ToolbarRegistry.js";
+import ToolbarItem from "./ToolbarItem.js";
 
 /**
  * @class
@@ -20,6 +21,9 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  */
 @customElement({
 	tag: "ui5-toolbar-spacer",
+	template: ToolbarSpacerTemplate,
+	renderer: jsxRenderer,
+	styles: ToolbarCss,
 })
 
 class ToolbarSpacer extends ToolbarItem {
@@ -57,8 +61,6 @@ class ToolbarSpacer extends ToolbarItem {
 		return false;
 	}
 }
-
-registerToolbarItem(ToolbarSpacer);
 
 ToolbarSpacer.define();
 
