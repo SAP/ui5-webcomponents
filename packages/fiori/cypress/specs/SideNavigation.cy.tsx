@@ -92,37 +92,19 @@ describe("Side Navigation Rendering", () => {
 
 		cy.get("#sn1").should("have.prop", "showHeader", true);
 
-		cy.get("#sn1").then(($el) => {
-			const sideNav = $el[0] as SideNavigation;
+		cy.get<SideNavigation>("#sn1").then(($el) => {
+			const sideNav = $el[0];
 			sideNav.collapsed = true;
 		});
 
 		cy.get("#sn1").should("have.prop", "showHeader", false);
 	});
 
-	it("Tests tooltips when expanded", () => {
+	it("Tests tooltips", () => {
 		const TOOLTIP_TEXT = "From My Team tooltip";
 		cy.mount(
-			<SideNavigation id="sn1" accessible-name="Main">
-				<SideNavigationItem id="item1" text="People" expanded icon="group">
-					<SideNavigationSubItem id="item11" text="From My Team" icon="employee-approvals" tooltip={TOOLTIP_TEXT}></SideNavigationSubItem>
-					<SideNavigationSubItem id="item21" text="From My Team" icon="employee-approvals"></SideNavigationSubItem>
-				</SideNavigationItem>
-				<SideNavigationItem id="item2" text="People" expanded icon="group"  tooltip={TOOLTIP_TEXT}/>
-			</SideNavigation>);
-
-		cy.get("#item1").should("not.have.attr", "tooltip");
-		cy.get("#item2").should("have.attr", "tooltip", TOOLTIP_TEXT);
-
-		cy.get("#item11").should("have.attr", "tooltip", TOOLTIP_TEXT);
-		cy.get("#item21").should("not.have.attr", "tooltip");
-	});
-
-	it("Tests tooltips when collapsed", () => {
-		const TOOLTIP_TEXT = "From My Team tooltip";
-		cy.mount(
-			<SideNavigation id="sn1" accessible-name="Main" collapsed={true}>
-				<SideNavigationItem id="item1" text="People" icon="group" expanded={false}>
+			<SideNavigation id="sn1" accessibleName="Main" collapsed={false}>
+				<SideNavigationItem id="item1" text="People" icon="group" expanded={true}>
 					<SideNavigationSubItem id="item11" text="From My Team" icon="employee-approvals" tooltip={TOOLTIP_TEXT}></SideNavigationSubItem>
 					<SideNavigationSubItem id="item21" text="From My Team" icon="employee-approvals"></SideNavigationSubItem>
 				</SideNavigationItem>
@@ -763,7 +745,7 @@ describe("Side Navigation Accessibility", () => {
 	it("SideNavigationItem aria attributes in collapsed SideNavigation", () => {
 		cy.mount(
 			<SideNavigation id="sideNav" collapsed={true}>
-				<SideNavigationItem id="item" text="1" selected={false} />
+				<SideNavigationItem id="item" text="1" />
 				<SideNavigationItem id="unselectableItem" text="2" unselectable={true} />
 			</SideNavigation>
 		);

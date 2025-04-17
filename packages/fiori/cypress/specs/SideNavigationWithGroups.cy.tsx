@@ -20,8 +20,8 @@ describe("Component Behavior", () => {
 				.find(".ui5-sn-item")
 				.should("exist");
 
-			cy.get("#sn1").then(($el) => {
-				const sideNav = $el[0] as SideNavigation;
+			cy.get<SideNavigation>("#sn1").then(($el) => {
+				const sideNav = $el[0];
 				sideNav.collapsed = true;
 			});
 
