@@ -37,6 +37,7 @@
 			</div>
 
 			<!-- Items -->
+			<ui5-side-navigation-item slot="fixedItems" text="External Link _top" icon="chain-link" href="https://sap.com" target="_top"></ui5-side-navigation-item>
 			<ui5-side-navigation-item id="item1" text="Home" icon="home" tooltip="Home tooltip"></ui5-side-navigation-item>
 			<ui5-side-navigation-item id="item2" text="People" expanded icon="group">
 				<ui5-side-navigation-sub-item id="item21" text="From My Team" icon="employee-approvals" tooltip="From My Team tooltip"></ui5-side-navigation-sub-item>
@@ -65,6 +66,8 @@
 			</ui5-side-navigation-item>
 			<ui5-side-navigation-item design="Action" text="Quick Create" icon="write-new" disabled unselectable></ui5-side-navigation-item>
 			<ui5-side-navigation-item design="Action" href="https://sap.com" target="_blank" text="Quick Create" icon="write-new" unselectable></ui5-side-navigation-item>
+			<ui5-side-navigation-item id="externalLinkItem" text="External Link Unselectable" icon="chain-link" href="https://sap.com" unselectable target="_blank"></ui5-side-navigation-item>
+			<ui5-side-navigation-item id="externalLinkItem" text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>
 
 			<!-- Fixed Items -->
 			<ui5-side-navigation-item id="fixedItem1" slot="fixedItems" text="Useful Links" icon="chain-link" tooltip="Useful links tooltip">
@@ -88,8 +91,21 @@
 				<ui5-input disabled id="click-counter" value="0"></ui5-input>
 			</div>
 			<div class="form-field">
+				<ui5-label show-colon>click event info</ui5-label>
+				<ui5-list id="click-info-list" style="width: 40%;">
+					<ui5-li id="altKeyInfo">altKey</ui5-li>
+					<ui5-li id="ctrlKeyInfo">ctrlKey</ui5-li>
+					<ui5-li id="metaKeyInfo">metaKey</ui5-li>
+					<ui5-li id="shiftKeyInfo">shiftKey</ui5-li>
+				</ui5-list>
+			</div>
+			<div class="form-field">
 				<ui5-label show-colon>prevent selection-change event</ui5-label>
 				<ui5-checkbox id="prevent-selection"></ui5-checkbox>
+			</div>
+			<div class="form-field">
+				<ui5-label show-colon>prevent click event</ui5-label>
+				<ui5-checkbox id="prevent-click"></ui5-checkbox>
 			</div>
 			<div class="form-field">
 				<ui5-label show-colon>ensure overflow</ui5-label>
@@ -107,7 +123,9 @@
 			input = document.querySelector("#counter"),
 			clickInput = document.querySelector("#click-counter"),
 			preventDefaultCb = document.querySelector("#prevent-selection"),
+			preventClickCb = document.querySelector("#prevent-click"),
 			preventSelectionChange = false,
+			preventClick = false,
 			counter = 0,
 			clickCounter = 0;
 
@@ -117,12 +135,29 @@
 
 		document.querySelectorAll("ui5-side-navigation-item").forEach(function (item) {
 			item.addEventListener("ui5-click", function (event) {
+
+				if (preventClick) {
+					event.preventDefault();
+					return;
+				}
+
 				clickInput.value = `${++clickCounter}`;
+				["altKey", "ctrlKey", "metaKey", "shiftKey"].forEach(key => {
+					const listItem = document.getElementById(`${key}Info`);
+					listItem?.setAttribute("additional-text", event.detail?.[key]); 
+					listItem?.setAttribute("additional-text-state", event.detail?.[key] ? "Positive" : "Negative");
+				});
 			});
 		});
 
 		preventDefaultCb.addEventListener("ui5-change", function (event) {
 			preventSelectionChange = event.target.checked;
+		});
+
+		preventClickCb.addEventListener("ui5-change", function (event) {
+			preventClick = event.target.checked;
+			const list = document.getElementById("click-info-list");
+			preventClick ? list.style.opacity = 0.5 : list.style.opacity = 1;
 		});
 
 		document.getElementById("ensure-overflow").addEventListener("ui5-change", function (event) {

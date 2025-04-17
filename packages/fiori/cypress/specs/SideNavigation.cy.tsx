@@ -426,6 +426,69 @@ describe("Side Navigation interaction", () => {
 		cy.url().should("not.include", "#test");
 	});
 
+	it("Tests preventDefault of 'click' event", () => {
+		cy.mount(
+			<SideNavigation id="sideNav">
+				<SideNavigationItem id="linkItem" text="external link" href="#preventDefault" />
+			</SideNavigation>
+		);
+	
+		cy.url()
+			.should("not.include", "#preventDefault");
+		
+		cy.get("#sideNav")
+			.then(sideNav => {
+				sideNav.get(0).addEventListener("click", event => {
+					event.preventDefault();
+				});
+				sideNav.get(0).addEventListener("ui5-selection-change", cy.stub().as("selectionChangeHandler"));
+			});
+
+		// Act
+		cy.get("#linkItem").realClick();
+	
+		// Assert
+		cy.get("@selectionChangeHandler").should("not.have.been.called");
+		cy.url()
+			.should("not.include", "#preventDefault");
+	});
+
+	it("Tests key modifiers when item is clicked", () => {
+		cy.mount(
+			<SideNavigation id="sideNav">
+				<SideNavigationItem id="linkItem" text="external link" href="#testPreventDefault" />
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.then(sideNav => {
+				sideNav.get(0).addEventListener("click", cy.stub().as("clickHandler"));
+			});
+
+		// CTRL Key
+		cy.get("#sideNav")
+			.realClick({ ctrlKey: true });
+
+		cy.get("@clickHandler")
+			.should("be.calledWithMatch", { detail: { ctrlKey: true } });
+
+		// META Key
+		cy.get("#sideNav")
+			.realClick({ metaKey: true });
+
+		cy.get("@clickHandler")
+			.should("be.calledWithMatch", { detail: { metaKey: true } });
+
+		// ALT Key
+		cy.get("#sideNav")
+			.realClick({ altKey: true });
+
+		cy.get("@clickHandler")
+			.should("be.calledWithMatch", { detail: { altKey: true } });
+
+		// skip SHIFT Key because it causes cypress to download the test page
+	});
+
 	it("Tests 'selection-change' event", () => {
 		cy.mount(
 			<SideNavigation id="sideNav">
