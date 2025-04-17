@@ -6,6 +6,7 @@ import overflowIcon from "@ui5/webcomponents-icons/dist/overflow.js";
 export default function ToolbarTemplate(this: Toolbar) {
 	return (<>
 		<div
+			aria-live="polite"
 			class={{
 				"ui5-tb-items": true,
 				"ui5-tb-items-full-width": this.hasFlexibleSpacers,
