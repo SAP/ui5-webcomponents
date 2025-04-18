@@ -176,7 +176,6 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	onBeforeRendering(): void {
 		this._observer?.disconnect();
 		this._observer = undefined;
-		this._currentLastRow = undefined;
 		this._renderContent = this.hasGrowingComponent();
 		this._invalidateTable();
 	}
