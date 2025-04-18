@@ -48,7 +48,6 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 					name={this.icon}
 					mode="Decorative"
 					part="icon"
-					showTooltip={this.showIconTooltip}
 				/>
 			}
 

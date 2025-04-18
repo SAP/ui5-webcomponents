@@ -367,7 +367,8 @@ class Button extends UI5Element implements IButton {
 		this.hasEndIcon = !!this.endIcon;
 		this.iconOnly = this.isIconOnly;
 
-		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
+		const defaultTooltip = await this.getDefaultTooltip();
+		this.buttonTitle = this.iconOnly ? this.tooltip ?? defaultTooltip : this.tooltip;
 	}
 
 	_setBadgeOverlayStyle() {
