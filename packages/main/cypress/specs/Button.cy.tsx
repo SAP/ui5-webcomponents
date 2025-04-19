@@ -294,7 +294,6 @@ describe("Accessibility", () => {
 	});
 
 	it("aria-describedby properly applied on the button tag", () => {
-		const hiddenTextTypeId = "ui5-button-hiddenText-type";
 		cy.mount(<Button design="Attention">Content</Button>);
 
 		cy.get("[ui5-button]")
@@ -303,12 +302,19 @@ describe("Accessibility", () => {
 		cy.get("@button")
 			.shadow()
 			.find("button")
-			.should("have.attr", "aria-describedby", hiddenTextTypeId);
+			.should("have.attr", "aria-description", "Warning");
+	});
+
+	it("accessibleDescription in combination with design property applied on the button tag", () => {
+		cy.mount(<Button design="Negative" accessibleDescription="Decline">Content</Button>);
+
+		cy.get("[ui5-button]")
+			.as("button");
 
 		cy.get("@button")
 			.shadow()
-			.find(`span[id="${hiddenTextTypeId}"]`)
-			.should("exist");
+			.find("button")
+			.should("have.attr", "aria-description", "Negative Action Decline");
 	});
 
 	it("setting accessible-name-ref on the host is reflected on the button tag", () => {
