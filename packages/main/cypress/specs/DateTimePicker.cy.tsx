@@ -366,14 +366,14 @@ describe("DateTimePicker general interaction", () => {
 		// act: confirm selection
 		cy.get("@dtp")
 			.shadow()
-			.find("ui5-responsive-popover #ok")
+			.find("[ui5-responsive-popover] #ok")
 			.realClick();
 
 		// assert: the picker is closed
 		cy.get("@dtp")
 			.shadow()
-			.find("ui5-responsive-popover")
-			.should("exist").and("not.be.visible");
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverClosed();
 
 		// assert: the value is not changed
 		cy.get("@input")
