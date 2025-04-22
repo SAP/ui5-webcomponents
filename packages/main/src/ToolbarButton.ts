@@ -7,9 +7,6 @@ import type ButtonDesign from "./types/ButtonDesign.js";
 
 import ToolbarItem from "./ToolbarItem.js";
 import ToolbarButtonTemplate from "./ToolbarButtonTemplate.js";
-import ToolbarPopoverButtonTemplate from "./ToolbarPopoverButtonTemplate.js";
-
-import ToolbarButtonPopoverCss from "./generated/themes/ToolbarButtonPopover.css.js";
 
 type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 
@@ -30,7 +27,6 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
  */
 @customElement({
 	tag: "ui5-toolbar-button",
-	styles: ToolbarButtonPopoverCss,
 	template: ToolbarButtonTemplate,
 	renderer: jsxRenderer,
 })
@@ -174,14 +170,6 @@ class ToolbarButton extends ToolbarItem {
 
 	get containsText() {
 		return true;
-	}
-
-	static get toolbarTemplate() {
-		return ToolbarButtonTemplate;
-	}
-
-	static get toolbarPopoverTemplate() {
-		return ToolbarPopoverButtonTemplate;
 	}
 
 	onClick(e: Event) {

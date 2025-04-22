@@ -2,7 +2,6 @@ import Button from "./Button.js";
 import type Toolbar from "./Toolbar.js";
 import Popover from "./Popover.js";
 import overflowIcon from "@ui5/webcomponents-icons/dist/overflow.js";
-import ToolbarSpacer from "./ToolbarSpacer.js";
 
 export default function ToolbarTemplate(this: Toolbar) {
 	return (<>
@@ -14,9 +13,20 @@ export default function ToolbarTemplate(this: Toolbar) {
 			role={this.accInfo.root.role}
 			aria-label={this.accInfo.root.accessibleName}
 		>
-			{this.standardItems<ToolbarSpacer[]>.map(item => (
-				<div class="ui5-tb-item" style={item.context.styles}><slot name={item.context._individualSlot}></slot></div>
-			))}
+			{this.standardItems.map(item => {
+				if ("styles" in item.context) {
+					return (
+						<div class="ui5-tb-item" style={item.context.styles as string}>
+							<slot name={item.context._individualSlot}></slot>
+						</div>
+					);
+				}
+				return (
+					<div class="ui5-tb-item">
+						<slot name={item.context._individualSlot}></slot>
+					</div>
+				);
+			})}
 			<Button
 				aria-hidden={this.hideOverflowButton}
 				icon={overflowIcon}

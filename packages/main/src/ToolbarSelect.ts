@@ -6,9 +6,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 // Templates
-
 import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
-import ToolbarPopoverSelectTemplate from "./ToolbarPopoverSelectTemplate.js";
 import ToolbarItem from "./ToolbarItem.js";
 import type { ToolbarItemEventDetail } from "./ToolbarItem.js";
 import type ToolbarSelectOption from "./ToolbarSelectOption.js";
@@ -123,14 +121,6 @@ class ToolbarSelect extends ToolbarItem {
 	 */
 	@property()
 	accessibleNameRef?: string;
-
-	static get toolbarTemplate() {
-		return ToolbarSelectTemplate;
-	}
-
-	static get toolbarPopoverTemplate() {
-		return ToolbarPopoverSelectTemplate;
-	}
 
 	onClick(e: Event): void {
 		e.stopImmediatePropagation();

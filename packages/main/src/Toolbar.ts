@@ -495,8 +495,8 @@ class Toolbar extends UI5Element {
 		this.contentWidth = 0; // re-render
 	}
 
-	getItemsInfo(items: Array<UI5Element>) {
-		return items.map((item: UI5Element) => {
+	getItemsInfo(items: Array<ToolbarItem>) {
+		return items.map((item: ToolbarItem) => {
 			const toolbarItem = {
 				context: item,
 			};

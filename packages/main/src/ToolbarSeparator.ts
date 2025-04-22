@@ -32,14 +32,6 @@ class ToolbarSeparator extends ToolbarItem {
 	@property({ type: Boolean })
 	visible = false;
 
-	static get toolbarTemplate() {
-		return ToolbarSeparatorTemplate;
-	}
-
-	static get toolbarPopoverTemplate() {
-		return ToolbarPopoverSeparatorTemplate;
-	}
-
 	get isSeparator() {
 		return true;
 	}
