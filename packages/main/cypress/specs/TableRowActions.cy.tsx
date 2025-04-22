@@ -100,6 +100,10 @@ describe("TableRowActions", () => {
 			</>
 			);
 
+			cy.get("@table").then($table => {
+				$table[0].addEventListener("row-click", cy.stub().as("rowClick"));
+			});
+
 			cy.get("@headerRow").shadow().find("#actions-cell").should("exist");
 			checkTemplateColumn(`${8 + 36 + 4 + 36 + 8}px`);
 			cy.get("@row1").shadow().find("#actions-cell").children().as("actions");
@@ -166,6 +170,8 @@ describe("TableRowActions", () => {
 			checkTemplateColumn(`${8 + 36 + 8}px`);
 			cy.get("@actions").should("have.length", 1);
 			cy.get("@actions").eq(0).should("have.attr", "icon", "overflow");
+
+			cy.get("@rowClick").should("have.callCount", 0);
 		});
 
 		it("tests that invisible actions occupy space for alignment", () => {
