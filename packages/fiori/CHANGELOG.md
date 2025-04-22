@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.0...v2.10.0-rc.1) (2025-04-17)
+
+
+### Bug Fixes
+
+* **ui5-form:** propagate `itemSpacing` properly ([#11312](https://github.com/SAP/ui5-webcomponents/issues/11312)) ([32b4fb2](https://github.com/SAP/ui5-webcomponents/commit/32b4fb23ff3baab75978b29ae8eb8da6f90c0652)), closes [#11307](https://github.com/SAP/ui5-webcomponents/issues/11307)
+* **ui5-side-navigation:** update CSS styles ([#11208](https://github.com/SAP/ui5-webcomponents/issues/11208)) ([076f910](https://github.com/SAP/ui5-webcomponents/commit/076f910c16a530537ab60f145fce2343e6ca604b)), closes [#11171](https://github.com/SAP/ui5-webcomponents/issues/11171)
+
+
+### Features
+
+* **ui5-shellbar:** add branding area accessibility attributes ([#11238](https://github.com/SAP/ui5-webcomponents/issues/11238)) ([7d6fdeb](https://github.com/SAP/ui5-webcomponents/commit/7d6fdeb90b9914bef37b6e09f8cab2f2d7c03bc7)), closes [#6826](https://github.com/SAP/ui5-webcomponents/issues/6826) [#8708](https://github.com/SAP/ui5-webcomponents/issues/8708)
+* **ui5-shellbar:** introduce async search btn getter ([#11338](https://github.com/SAP/ui5-webcomponents/issues/11338)) ([d5526dc](https://github.com/SAP/ui5-webcomponents/commit/d5526dc13410fb9253701ce29fb9b946571d983d))
+
+
+
+
+
 # [2.10.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.1-rc.0...v2.10.0-rc.0) (2025-04-14)
 
 

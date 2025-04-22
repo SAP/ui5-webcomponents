@@ -26,6 +26,7 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import MenuItem from "./MenuItem.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import "./MenuSeparator.js";
 import type {
 	ListItemClickEventDetail,
@@ -184,13 +185,21 @@ class Menu extends UI5Element {
 	headerText?: string;
 
 	/**
-	 * Indicates if the menu is open
+	 * Indicates if the menu is open.
 	 * @public
 	 * @default false
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
 	open = false;
+
+	/**
+	 * Determines the horizontal alignment of the menu relative to its opener control.
+	 * @default "Start"
+	 * @public
+	 */
+	@property()
+	horizontalAlign: `${PopoverHorizontalAlign}` = "Start";
 
 	/**
 	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
@@ -202,7 +211,7 @@ class Menu extends UI5Element {
 	loading = false;
 
 	/**
-	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover..
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
