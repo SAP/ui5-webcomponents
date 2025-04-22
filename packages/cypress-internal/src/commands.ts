@@ -8,10 +8,10 @@ const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
 	cy.get(element)
 		.should($el => {
 			if ($el[0].tagName.includes("-") && $el[0].shadowRoot) {
-				const isShadowDomPopulated = $el[0].shadowRoot.hasChildNodes();
-				expect(isShadowDomPopulated, "Custom element's shadow DOM should have content before interaction").to.be.true;
+				expect($el[0].shadowRoot.hasChildNodes(), "Custom elements with shadow DOM have content in their shadow DOM").to.be.true;
 			}
 		})
+		.and("be.visible")
 		.then(() => {
 			return originalFn(element, ...args)
 		});
