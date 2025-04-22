@@ -2,7 +2,6 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ToolbarSeparatorTemplate from "./ToolbarSeparatorTemplate.js";
-import ToolbarPopoverSeparatorTemplate from "./ToolbarPopoverSeparatorTemplate.js";
 
 // Styles
 import ToolbarSeparatorCss from "./generated/themes/ToolbarSeparator.css.js";

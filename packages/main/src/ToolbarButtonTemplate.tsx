@@ -7,8 +7,8 @@ export default function ToolbarButtonTemplate(this: ToolbarButton) {
 			class="ui5-tb-button ui5-tb-item"
 			id={this.id}
 			style={{
-				width: this.width,
-				display: this.hidden ? "none" : "inline-block",
+				width: this.isInsideOverflowPopover ? "100%" : this.width,
+				display: this.hidden ? "none" : this.isInsideOverflowPopover ? "block" : "inline-block",
 			}}
 			icon={this.icon}
 			endIcon={this.endIcon}

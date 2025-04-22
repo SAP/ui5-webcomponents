@@ -55,9 +55,16 @@ export default function ToolbarTemplate(this: Toolbar) {
 			<div class={{
 				"ui5-overflow-list": true
 			}}>
-				{ this.overflowItems.map(item => (
-					<div class="ui5-tb-popover-item"><slot name={item.context._individualSlot} class="ui5-tb-popover-item"></slot></div>
-				))}
+				{this.overflowItems.map(item => {
+					if (!item.context.isSeparator) {
+						return (
+							<div class="ui5-tb-popover-item">
+								<slot name={item.context._individualSlot}></slot>
+							</div>
+						);
+					}
+					return false;
+				})}
 			</div>
 		</Popover>
 	</>);
