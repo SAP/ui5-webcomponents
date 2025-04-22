@@ -115,10 +115,15 @@ class ShellBarBranding extends UI5Element {
 	}
 
 	get _logoAreaText() {
-		return Array.from(this.brandingTitle)
-			.map(node => node.textContent || "")
-			.join(" ")
-			.trim();
+		const defaultSlot = this.shadowRoot!.querySelector("slot:not([name])") as HTMLSlotElement;
+		if (defaultSlot) {
+			const assignedNodes = defaultSlot.assignedNodes({ flatten: true });
+			const texts = assignedNodes
+			  .filter(n => n.nodeType === Node.TEXT_NODE)
+			  .map(n => n.textContent?.trim())
+			  .filter(Boolean);
+			return texts[0];
+		  }
 	}
 
 	get accLogoRole() {
