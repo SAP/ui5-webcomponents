@@ -766,6 +766,12 @@ describe("Side Navigation Accessibility", () => {
 			.shadow()
 			.find(".ui5-menu-rp")
 			.should("have.attr", "accessible-name", NAVIGATION_MENU_POPOVER_HIDDEN_TEXT.defaultText);
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='1']")
+			.find("[ui5-navigation-menu-item][text='1']")
+			.should("exist");
 	});
 });
 
