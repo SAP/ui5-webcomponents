@@ -12,6 +12,7 @@ import FormCss from "./generated/themes/Form.css.js";
 
 import type FormItemSpacing from "./types/FormItemSpacing.js";
 import type FormGroup from "./FormGroup.js";
+import type TitleLevel from "./types/TitleLevel.js";
 
 const additionalStylesMap = new Map<string, string>();
 
@@ -41,6 +42,7 @@ interface IFormItem extends UI5Element {
 	colsS?: number;
 	columnSpan?: number;
 	headerText?: string;
+	headerLevel?: `${TitleLevel}`;
 }
 
 type GroupItemsInfo = {
@@ -264,6 +266,15 @@ class Form extends UI5Element {
 	 */
 	@property()
 	headerText?: string;
+
+	/**
+	 * Defines the "aria-level" of component heading,
+	 * set by the `headerText`.
+	 * @default "H2"
+	 * @public
+	*/
+	@property()
+	headerLevel: `${TitleLevel}` = "H4";
 
 	/**
 	 * Defines the vertical spacing between form items.
