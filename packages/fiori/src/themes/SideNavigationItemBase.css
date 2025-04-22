@@ -114,7 +114,7 @@ and there is an additional border that appears on hover. */
 	cursor: unset;
 }
 
-:host(:not([ui5-side-navigation-item][in-popover][unselectable])) .ui5-sn-item:not(.ui5-sn-item-disabled):hover {
+:host(:not([ui5-side-navigation-item][in-popover][unselectable])) .ui5-sn-item:not(.ui5-sn-item-disabled):not(.ui5-sn-item-selected):hover {
 	background: var(--sapList_Hover_Background);
 }
 
