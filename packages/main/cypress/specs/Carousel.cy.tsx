@@ -496,6 +496,8 @@ describe("Carousel general interaction", () => {
 				</Card>
 			</Carousel>);
 
+		cy.get(".myCard").should("be.visible");
+
 		cy.get("#carouselF7Button").realClick();
 		cy.get("#carouselF7Button").should('be.focused');
 
