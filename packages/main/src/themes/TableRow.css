@@ -79,6 +79,10 @@
 	grid-column: 1 / -2;
 }
 
+#selection-cell ~ #popin-cell {
+	grid-column-start: 2;
+}
+
 #actions-cell {
 	display: flex;
 	align-items: center;
