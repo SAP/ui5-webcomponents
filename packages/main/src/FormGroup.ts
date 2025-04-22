@@ -49,7 +49,7 @@ class FormGroup extends UI5Element implements IFormItem {
 	headerText?: string;
 
 	/**
-	 * Defines the "aria-level" of component heading,
+	 * Defines the compoennt heading level,
 	 * set by the `headerText`.
 	 * @default "H6"
 	 * @public

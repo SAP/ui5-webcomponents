@@ -268,7 +268,7 @@ class Form extends UI5Element {
 	headerText?: string;
 
 	/**
-	 * Defines the "aria-level" of component heading,
+	 * Defines the compoennt heading level,
 	 * set by the `headerText`.
 	 * @default "H2"
 	 * @public
