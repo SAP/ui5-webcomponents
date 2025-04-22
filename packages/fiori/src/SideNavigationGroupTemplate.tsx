@@ -40,7 +40,6 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 						name={this.expanded ? navDownArrow : navRightArrow}
 						accessibleName={this._arrowTooltip}
 						showTooltip={true}
-						aria-hidden="true"
 					/>
 				}
 			</div>
