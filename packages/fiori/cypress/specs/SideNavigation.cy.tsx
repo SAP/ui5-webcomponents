@@ -92,10 +92,7 @@ describe("Side Navigation Rendering", () => {
 
 		cy.get("#sn1").should("have.prop", "showHeader", true);
 
-		cy.get<SideNavigation>("#sn1").then(($el) => {
-			const sideNav = $el[0];
-			sideNav.collapsed = true;
-		});
+		cy.get("#sn1").invoke("prop", "collapsed", true);
 
 		cy.get("#sn1").should("have.prop", "showHeader", false);
 	});
@@ -108,7 +105,7 @@ describe("Side Navigation Rendering", () => {
 					<SideNavigationSubItem id="item11" text="From My Team" icon="employee-approvals" tooltip={TOOLTIP_TEXT}></SideNavigationSubItem>
 					<SideNavigationSubItem id="item21" text="From My Team" icon="employee-approvals"></SideNavigationSubItem>
 				</SideNavigationItem>
-				<SideNavigationItem id="item2" text="People" expanded icon="group"  tooltip={TOOLTIP_TEXT}/>
+				<SideNavigationItem id="item2" text="People" expanded icon="group" tooltip={TOOLTIP_TEXT} />
 			</SideNavigation>);
 
 		cy.get("#item1").should("not.have.attr", "tooltip");

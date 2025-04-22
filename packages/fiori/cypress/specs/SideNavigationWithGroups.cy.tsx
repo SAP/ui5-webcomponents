@@ -20,10 +20,7 @@ describe("Component Behavior", () => {
 				.find(".ui5-sn-item")
 				.should("exist");
 
-			cy.get<SideNavigation>("#sn1").then(($el) => {
-				const sideNav = $el[0];
-				sideNav.collapsed = true;
-			});
+			cy.get("#sn1").invoke("prop", "collapsed", true);
 
 			cy.get("#group1")
 				.shadow()
