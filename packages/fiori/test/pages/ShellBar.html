@@ -102,7 +102,7 @@
 	>
 		<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
 
-		<ui5-shellbar-branding href="https://sap.github.io/ui5-webcomponents/" target="_blank" slot="branding">
+		<ui5-shellbar-branding id="sbBrandingComp" href="https://sap.github.io/ui5-webcomponents/" target="_blank" slot="branding">
 			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
 			Branding Title
 		</ui5-shellbar-branding>
@@ -113,6 +113,14 @@
 		<ui5-shellbar-item icon="sys-help" text="Help"></ui5-shellbar-item>
 		<ui5-input slot="searchField" value-state="Negative"></ui5-input>
 	</ui5-shellbar>
+
+	<script>
+		sbBrandingComp.accessibilityAttributes = {
+			logo: {
+				role: "button"
+			},
+		};
+	</script>
 
 	<ui5-checkbox id="checkKeepPopoverOpen" text="keep popover open on menu-item click"></ui5-checkbox>
 	<ui5-shellbar
