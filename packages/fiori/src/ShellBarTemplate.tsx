@@ -29,6 +29,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 										onClick={this._headerPress}
 										aria-haspopup="menu"
 										aria-expanded={this._menuPopoverExpanded}
+										aria-label={this._brandingText}
 										data-ui5-stable="menu"
 										tabIndex={0}>
 										{this.showLogoInMenuButton && (
@@ -75,7 +76,11 @@ export default function ShellBarTemplate(this: ShellBar) {
 				<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
 					<div class="ui5-shellbar-overflow-container-right-inner">
 						{this.hasContentItems && (
-							<>
+							<div
+								class="ui5-shellbar-content-items"
+								role={this._contentItemsRole}
+								aria-label={this._contentItemsText}
+							>
 								{this.showStartSeparator && (
 									<div class={{
 										"ui5-shellbar-separator": true,
@@ -119,7 +124,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 										"ui5-shellbar-separator-end": true,
 									}}></div>
 								)}
-							</>
+							</div>
 						)}
 						{!this.hasContentItems && <div class="ui5-shellbar-spacer"></div>}
 						<div class="ui5-shellbar-overflow-container-right-child" role={this._rightChildRole}>
@@ -138,27 +143,29 @@ export default function ShellBarTemplate(this: ShellBar) {
 											</Button>
 										</div>
 									)}
-									<div class="ui5-shellbar-search-field" style={this.styles.searchField}>
+									<div id={this.hasSelfCollapsibleSearch ? `${this._id}-item-1` : undefined} class={this.classes.searchField} style={this.styles.searchField}>
 										<slot name="searchField"></slot>
 									</div>
-									<Button
-										id={`${this._id}-item-1`}
-										class={{
-											"ui5-shellbar-button": true,
-											"ui5-shellbar-search-button": true,
-											"ui5-shellbar-search-item-for-arrow-nav": true,
-											...this.classes.search,
-										}}
-										icon="sap-icon://search"
-										data-ui5-text="Search"
-										data-ui5-notifications-count={this.notificationsCount}
-										data-ui5-stable="toggle-search"
-										onClick={this._handleSearchIconPress}
-										tooltip={this._searchBtnOpen}
-										aria-label={this._searchBtnOpen}
-										aria-expanded={this.showSearchField}
-										accessibilityAttributes={this.accInfo.search.accessibilityAttributes}
-									/>
+									{!(this.hasSelfCollapsibleSearch || this.hideSearchButton) && (
+										<Button
+											id={`${this._id}-item-1`}
+											class={{
+												"ui5-shellbar-button": true,
+												"ui5-shellbar-search-button": true,
+												"ui5-shellbar-search-item-for-arrow-nav": true,
+												...this.classes.search,
+											}}
+											icon="sap-icon://search"
+											data-ui5-text="Search"
+											data-ui5-notifications-count={this.notificationsCount}
+											data-ui5-stable="toggle-search"
+											onClick={this._handleSearchIconPress}
+											tooltip={this._searchBtnOpen}
+											aria-label={this._searchBtnOpen}
+											aria-expanded={this.showSearchField}
+											accessibilityAttributes={this.accInfo.search.accessibilityAttributes}
+										/>
+									)}
 								</>
 							)}
 							{this.hasAssistant && (
@@ -284,7 +291,7 @@ function combinedLogo(this: ShellBar) {
 			tabIndex={0}
 			onKeyDown={this._logoKeydown}
 			onKeyUp={this._logoKeyup}
-			aria-label={this._logoAreaText}>
+			aria-label={this.accessibilityAttributes.branding?.name || this._logoAreaText}>
 			{this.hasLogo && (
 				<span
 					class="ui5-shellbar-logo"

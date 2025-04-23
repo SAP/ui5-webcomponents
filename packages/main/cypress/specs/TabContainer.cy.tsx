@@ -4,7 +4,7 @@ import Tab from "../../src/Tab.js";
 describe("TabContainer general interaction", () => {
 	it("Tests no auto selection", () => {
 		cy.mount(
-			<TabContainer no-auto-selection id="tcNoAuto">
+			<TabContainer noAutoSelection id="tcNoAuto">
 				<Tab text="Products ID">
 					tab1
 				</Tab>
