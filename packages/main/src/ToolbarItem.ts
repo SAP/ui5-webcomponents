@@ -52,13 +52,6 @@ class ToolbarItem extends UI5Element {
 	preventOverflowClosing = false;
 
 	/**
-	 * @default false
-	 * @rivate
-	 */
-	@property({ type: Boolean })
-	isInsideOverflowPopover = false;
-
-	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
 	* @protected
 	*/

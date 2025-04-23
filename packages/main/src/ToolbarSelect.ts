@@ -169,7 +169,7 @@ class ToolbarSelect extends ToolbarItem {
 
 	get styles() {
 		return {
-			width: this.isInsideOverflowPopover ? "100%" : this.width,
+			width: this.width || "100%",
 		};
 	}
 }

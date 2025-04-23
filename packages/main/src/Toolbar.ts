@@ -418,10 +418,6 @@ class Toolbar extends UI5Element {
 			}
 		}
 
-		this.itemsToOverflow.forEach(item => {
-			item.isInsideOverflowPopover = true;
-		});
-
 		this.setSeperatorsVisibilityInOverflow();
 	}
 
