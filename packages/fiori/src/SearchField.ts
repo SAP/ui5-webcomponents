@@ -111,7 +111,7 @@ class SearchField extends UI5Element {
 	 * Defines whether the component is collapsed.
 	 *
 	 * @default false
-	 * @public
+	 * @private
 	 */
 	@property({ type: Boolean })
 	collapsed = false;
@@ -142,14 +142,6 @@ class SearchField extends UI5Element {
 	 */
 	@property()
 	accessibleName?: string;
-
-	/**
-	 * Defines the tooltip of the search icon component.
-	 * @public
-	 * @default undefined
-	 */
-	@property()
-	searchIconTooltip?: string;
 
 	/**
 	 * Defines the component scope options.
@@ -252,7 +244,7 @@ class SearchField extends UI5Element {
 	}
 
 	get _effectiveIconTooltip() {
-		return this.searchIconTooltip || this._translations.searchIcon;
+		return this._translations.searchIcon;
 	}
 
 	captureRef(ref: HTMLElement & { scopeOption?: UI5Element} | null) {
