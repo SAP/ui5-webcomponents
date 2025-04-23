@@ -546,9 +546,9 @@ class Button extends UI5Element implements IButton {
 		case "":
 			return badgeEffectiveText;
 		case "1":
-			return Button.i18nBundle.getText(BUTTON_BADGE_ONE_ITEM as I18nText, badgeEffectiveText);
+			return Button.i18nBundle.getText(BUTTON_BADGE_ONE_ITEM, badgeEffectiveText);
 		default:
-			return Button.i18nBundle.getText(BUTTON_BADGE_MANY_ITEMS as I18nText, badgeEffectiveText);
+			return Button.i18nBundle.getText(BUTTON_BADGE_MANY_ITEMS, badgeEffectiveText);
 		}
 	}
 
