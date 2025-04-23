@@ -110,6 +110,10 @@ class NavigationMenuItem extends MenuItem {
 	get acessibleNameText() {
 		return NavigationMenu.i18nBundle.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);
 	}
+
+	get ariaLabelledByText() {
+		return `${this.text || ""}`.trim();
+	}
 }
 
 NavigationMenuItem.define();
