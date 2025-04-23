@@ -238,6 +238,13 @@ describe("Accessibility", () => {
 			.should("have.attr", "title", "Download");
 	});
 
+	it("tooltip not displayed when there is a text", () => {
+		cy.mount(<Button icon="home">Action</Button>);
+
+		cy.get("[ui5-button]")	
+			.should("not.have.attr", "title");
+	});
+
 	it("aria-expanded is properly applied on the button tag", () => {
 		cy.mount(<Button icon="home" design="Emphasized">Action Bar Button</Button>);
 

@@ -367,7 +367,8 @@ class Button extends UI5Element implements IButton {
 		this.hasEndIcon = !!this.endIcon;
 		this.iconOnly = this.isIconOnly;
 
-		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
+		const defaultTooltip = await this.getDefaultTooltip();
+		this.buttonTitle = this.iconOnly ? this.tooltip ?? defaultTooltip : this.tooltip;
 	}
 
 	_setBadgeOverlayStyle() {
@@ -512,10 +513,6 @@ class Button extends UI5Element implements IButton {
 		}
 
 		return this.nonInteractive ? -1 : Number.parseInt(this.forcedTabIndex);
-	}
-
-	get showIconTooltip() {
-		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
 	}
 
 	get ariaLabelText() {
