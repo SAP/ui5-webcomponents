@@ -238,7 +238,7 @@ describe("Accessibility", () => {
 			.should("have.attr", "title", "Download");
 	});
 
-	it("tooltip not displayed when the there is text", () => {
+	it("tooltip not displayed when there is a text", () => {
 		cy.mount(<Button icon="home">Action</Button>);
 
 		cy.get("[ui5-button]")	
