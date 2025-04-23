@@ -36,7 +36,6 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 			aria-controls={this.accessibilityAttributes.controls}
 			aria-haspopup={this._hasPopup}
 			aria-label={this.ariaLabelText}
-			aria-describedby={this.ariaDescribedbyText}
 			aria-description={this.ariaDescriptionText}
 			title={this.buttonTitle}
 			part="button"
@@ -64,10 +63,6 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 					mode="Decorative"
 					part="endIcon"
 				/>
-			}
-
-			{this.hasButtonType &&
-				<span id="ui5-button-hiddenText-type" aria-hidden="true" class="ui5-hidden-text">{this.buttonTypeText}</span>
 			}
 
 			{this.shouldRenderBadge &&
