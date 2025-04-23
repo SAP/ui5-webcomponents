@@ -5,6 +5,10 @@ import ButtonBadge from "../../src/ButtonBadge.js";
 import download from "@ui5/webcomponents-icons/dist/download.js";
 import employee from "@ui5/webcomponents-icons/dist/employee.js";
 
+import {
+	BUTTON_ARIA_TYPE_REJECT,
+} from "../../src/generated/i18n/i18n-defaults.js";
+
 describe("Button general interaction", () => {
 	it("tests button's text rendering", () => {
 		cy.mount(<Button icon={download} design="Negative">Action Bar Button</Button>);
@@ -314,7 +318,7 @@ describe("Accessibility", () => {
 		cy.get("@button")
 			.shadow()
 			.find("button")
-			.should("have.attr", "aria-description", "Negative Action Decline");
+			.should("have.attr", "aria-description", `${BUTTON_ARIA_TYPE_REJECT.defaultText} Decline`);
 	});
 
 	it("setting accessible-name-ref on the host is reflected on the button tag", () => {
