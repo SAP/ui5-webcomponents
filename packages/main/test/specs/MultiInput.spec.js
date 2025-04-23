@@ -396,7 +396,7 @@ describe("ARIA attributes", () => {
 		const innerInput = await mi.shadow$("input");
 		const tokensCountITextId = `hiddenText-nMore`;
 		const suggestionsITextId = `suggestionsText`;
-		const ariaDescribedBy = `${tokensCountITextId} ${suggestionsITextId}`;
+		const valueHelpTextId = "hiddenText-value-help";
 
 		await browser.$("#suggestion-token").scrollIntoView();
 		await innerInput.click();
@@ -404,7 +404,11 @@ describe("ARIA attributes", () => {
 		await innerInput.keys("ArrowDown");
 		await innerInput.keys("Enter");
 
-		assert.strictEqual(await innerInput.getAttribute("aria-describedby"), ariaDescribedBy, "aria-describedby attribute contains multiple references");
+		const ariaDescribedBy = await innerInput.getAttribute("aria-describedby");
+
+		assert.ok(ariaDescribedBy.includes(tokensCountITextId), "aria-describedby should contain tokens count");
+		assert.ok(ariaDescribedBy.includes(suggestionsITextId), "aria-describedby should contain suggestions announcement when suggestions are enabled");
+		assert.ok(ariaDescribedBy.includes(valueHelpTextId), "aria-describedby should contain value help announcement when value help is enabled");
 	});
 
 	it("aria-roledescription is set properly", async () => {
