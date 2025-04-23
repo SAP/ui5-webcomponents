@@ -5,6 +5,10 @@ import ButtonBadge from "../../src/ButtonBadge.js";
 import download from "@ui5/webcomponents-icons/dist/download.js";
 import employee from "@ui5/webcomponents-icons/dist/employee.js";
 
+import {
+	BUTTON_ARIA_TYPE_REJECT,
+} from "../../src/generated/i18n/i18n-defaults.js";
+
 describe("Button general interaction", () => {
 	it("tests button's text rendering", () => {
 		cy.mount(<Button icon={download} design="Negative">Action Bar Button</Button>);
@@ -238,6 +242,13 @@ describe("Accessibility", () => {
 			.should("have.attr", "title", "Download");
 	});
 
+	it("tooltip not displayed when there is a text", () => {
+		cy.mount(<Button icon="home">Action</Button>);
+
+		cy.get("[ui5-button]")	
+			.should("not.have.attr", "title");
+	});
+
 	it("aria-expanded is properly applied on the button tag", () => {
 		cy.mount(<Button icon="home" design="Emphasized">Action Bar Button</Button>);
 
@@ -294,7 +305,6 @@ describe("Accessibility", () => {
 	});
 
 	it("aria-describedby properly applied on the button tag", () => {
-		const hiddenTextTypeId = "ui5-button-hiddenText-type";
 		cy.mount(<Button design="Attention">Content</Button>);
 
 		cy.get("[ui5-button]")
@@ -303,12 +313,19 @@ describe("Accessibility", () => {
 		cy.get("@button")
 			.shadow()
 			.find("button")
-			.should("have.attr", "aria-describedby", hiddenTextTypeId);
+			.should("have.attr", "aria-description", "Warning");
+	});
+
+	it("accessibleDescription in combination with design property applied on the button tag", () => {
+		cy.mount(<Button design="Negative" accessibleDescription="Decline">Content</Button>);
+
+		cy.get("[ui5-button]")
+			.as("button");
 
 		cy.get("@button")
 			.shadow()
-			.find(`span[id="${hiddenTextTypeId}"]`)
-			.should("exist");
+			.find("button")
+			.should("have.attr", "aria-description", `${BUTTON_ARIA_TYPE_REJECT.defaultText} Decline`);
 	});
 
 	it("setting accessible-name-ref on the host is reflected on the button tag", () => {
