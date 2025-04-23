@@ -514,10 +514,6 @@ class Button extends UI5Element implements IButton {
 		return this.nonInteractive ? -1 : Number.parseInt(this.forcedTabIndex);
 	}
 
-	get showIconTooltip() {
-		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
-	}
-
 	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
 	}
