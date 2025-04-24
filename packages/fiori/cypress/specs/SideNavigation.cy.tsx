@@ -122,7 +122,7 @@ describe("Side Navigation interaction", () => {
 			<SideNavigation>
 				<SideNavigationItem id="item1" text="1" icon={group}>
 					<SideNavigationSubItem id="subItem1" text="1.1" />
-					<SideNavigationSubItem id="subItem1" text="1.2" />
+					<SideNavigationSubItem id="subItem2" text="1.2" />
 				</SideNavigationItem>
 			</SideNavigation>
 		);
