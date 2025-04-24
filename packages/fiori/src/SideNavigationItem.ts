@@ -273,7 +273,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		if (this.items.length) {
 			this.expanded = !this.expanded;
 
-			if (this.expanded) {
+			if (!this.sideNavCollapsed && this.expanded) {
 				this.selected = false;
 			} else {
 				this.selected = true;
