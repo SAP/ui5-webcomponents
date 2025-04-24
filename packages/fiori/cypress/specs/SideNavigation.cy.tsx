@@ -121,8 +121,8 @@ describe("Side Navigation interaction", () => {
 		cy.mount(
 			<SideNavigation>
 				<SideNavigationItem id="item1" text="1" icon={group}>
-					<SideNavigationSubItem text="1.1" />
-					<SideNavigationSubItem text="1.2" />
+					<SideNavigationSubItem id="subItem1" text="1.1" />
+					<SideNavigationSubItem id="subItem1" text="1.2" />
 				</SideNavigationItem>
 			</SideNavigation>
 		);
@@ -134,10 +134,19 @@ describe("Side Navigation interaction", () => {
 		cy.get("#item1").should("have.attr", "expanded");
 
 		// act
+		cy.get("#subItem1").realClick();
 		cy.get("#item1").shadow().find(".ui5-sn-item-toggle-icon").realClick();
 
 		// assert
 		cy.get("#item1").should("not.have.attr", "expanded");
+		cy.get("#item1").should("have.attr", "selected");
+
+		// act
+		cy.get("#item1").shadow().find(".ui5-sn-item-toggle-icon").realClick();
+
+		// assert
+		cy.get("#item1").should("not.have.attr", "selected");
+
 	});
 
 	it("Tests expanding and collapsing of unselectable items", () => {

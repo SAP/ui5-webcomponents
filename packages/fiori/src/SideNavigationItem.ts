@@ -272,6 +272,12 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	_toggle() {
 		if (this.items.length) {
 			this.expanded = !this.expanded;
+
+			if (this.expanded) {
+				this.selected = false;
+			} else {
+				this.selected = true;
+			}
 		}
 	}
 }
