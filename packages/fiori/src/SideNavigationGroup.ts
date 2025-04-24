@@ -161,7 +161,9 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	}
 
 	_toggle() {
-		this.expanded = !this.expanded;
+		if (!this.disabled) {
+			this.expanded = !this.expanded;
+		}
 	}
 
 	get isSideNavigationGroup() {
