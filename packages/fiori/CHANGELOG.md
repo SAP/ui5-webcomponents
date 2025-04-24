@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.1...v2.10.0-rc.2) (2025-04-24)
+
+
+### Bug Fixes
+
+* **ui5-side-navigation:** change font-family of the text of the items to semi-bold ([89d9924](https://github.com/SAP/ui5-webcomponents/commit/89d99246f93af5d8d9263b5eba1008ff3c048bf2))
+* **ui5-side-navigation:** correct hover styles of selected items ([#11319](https://github.com/SAP/ui5-webcomponents/issues/11319)) ([3ce13c8](https://github.com/SAP/ui5-webcomponents/commit/3ce13c8b6a985523399daebff3c9ee618886b89c)), closes [#11297](https://github.com/SAP/ui5-webcomponents/issues/11297)
+* **ui5-side-navigation:** fix disabled items and tooltips ([#11333](https://github.com/SAP/ui5-webcomponents/issues/11333)) ([7151dae](https://github.com/SAP/ui5-webcomponents/commit/7151daef6abbf8a68ef8b0f7c0909134124d8b10))
+
+
+
+
+
 # [2.10.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.0...v2.10.0-rc.1) (2025-04-17)
 
 

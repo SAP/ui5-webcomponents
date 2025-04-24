@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.1...v2.10.0-rc.2) (2025-04-24)
+
+
+### Bug Fixes
+
+* **ui5-breadcrumbs:** dropdown arrow focused color fixed ([#11362](https://github.com/SAP/ui5-webcomponents/issues/11362)) ([d07b089](https://github.com/SAP/ui5-webcomponents/commit/d07b0891ef3f3e6c60354e07c9c12433ce1f14d5))
+* **ui5-button:** adjust tooltips display ([#11268](https://github.com/SAP/ui5-webcomponents/issues/11268)) ([9f0d907](https://github.com/SAP/ui5-webcomponents/commit/9f0d907e74a528ffcc6704a99b4d6cead1cb4adf)), closes [#10824](https://github.com/SAP/ui5-webcomponents/issues/10824)
+* **ui5-button:** announce aria description ([#11264](https://github.com/SAP/ui5-webcomponents/issues/11264)) ([f8e77cb](https://github.com/SAP/ui5-webcomponents/commit/f8e77cbf322e3ee75c5db481b2b7fbb17e81a5ea)), closes [#10899](https://github.com/SAP/ui5-webcomponents/issues/10899)
+* **ui5-input:** correct failing test ([#11388](https://github.com/SAP/ui5-webcomponents/issues/11388)) ([ba4da91](https://github.com/SAP/ui5-webcomponents/commit/ba4da91839452e896c4492af7ff61b491d91c73b))
+* **ui5-popover:** fix arrow positioning ([#11275](https://github.com/SAP/ui5-webcomponents/issues/11275)) ([858a870](https://github.com/SAP/ui5-webcomponents/commit/858a8706b065e667a26d7ae9849bd72dd5c04b93))
+* **ui5-table-growing:** prevent focus while scroll to grow ([#11358](https://github.com/SAP/ui5-webcomponents/issues/11358)) ([002f64f](https://github.com/SAP/ui5-webcomponents/commit/002f64f2f61a632428a712bd19a3825e78a16d45))
+* **ui5-table-growing:** remember correct last row with Enter ([#11361](https://github.com/SAP/ui5-webcomponents/issues/11361)) ([297da60](https://github.com/SAP/ui5-webcomponents/commit/297da604132d0e2a39f05c415343b04b8dbcb812))
+* **ui5-table:** fixes noData slot issue ([#11397](https://github.com/SAP/ui5-webcomponents/issues/11397)) ([1dda953](https://github.com/SAP/ui5-webcomponents/commit/1dda953a79a0d404b71e0fba88b6de8478520b03))
+* **ui5-tree:** add event validation to selection handler ([#11364](https://github.com/SAP/ui5-webcomponents/issues/11364)) ([551ef30](https://github.com/SAP/ui5-webcomponents/commit/551ef30de06fb7741533057664c423c658ec4229)), closes [#11352](https://github.com/SAP/ui5-webcomponents/issues/11352)
+
+
+
+
+
 # [2.10.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.0...v2.10.0-rc.1) (2025-04-17)
 
 
