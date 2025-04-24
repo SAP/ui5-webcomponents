@@ -18,10 +18,12 @@ const VERSION = JSON.parse(
 
 // Constants
 const SUPPORTED_TEST_SETUPS = ["cypress", "manual"];
-const SRC_DIR = "template";
+const SRC_DIR = path.join(__dirname, "template");
 const FILES_TO_RENAME = {
 	"npmrc": ".npmrc",
 	"gitignore": ".gitignore",
+	"tsconfig.template.json": "tsconfig.json",
+	"cypress/tsconfig.template.json": "cypress/tsconfig.json"
 };
 const FILES_TO_COPY = ["test/pages/img/logo.png"];
 

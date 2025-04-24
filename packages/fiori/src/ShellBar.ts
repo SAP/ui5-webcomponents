@@ -75,6 +75,7 @@ type ShellBarLogoAccessibilityAttributes = {
 }
 type ShellBarProfileAccessibilityAttributes = Pick<AccessibilityAttributes, "name" | "expanded" | "hasPopup">;
 type ShellBarAreaAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
+type ShellBarBrandingAccessibilityAttributes = Pick<AccessibilityAttributes, "name">;
 type ShellBarAccessibilityAttributes = {
 	logo?: ShellBarLogoAccessibilityAttributes
 	notifications?: ShellBarAreaAccessibilityAttributes
@@ -82,6 +83,7 @@ type ShellBarAccessibilityAttributes = {
 	product?: ShellBarAreaAccessibilityAttributes
 	search?: ShellBarAreaAccessibilityAttributes
 	overflow?: ShellBarAreaAccessibilityAttributes
+	branding?: ShellBarBrandingAccessibilityAttributes
 };
 
 type ShellBarNotificationsClickEventDetail = {
@@ -377,6 +379,7 @@ class ShellBar extends UI5Element {
 	 * - **product** - `product.expanded` and `product.hasPopup`.
 	 * - **search** - `search.hasPopup`.
 	 * - **overflow** - `overflow.expanded` and `overflow.hasPopup`.
+	 * - **branding** - `branding.name`.
 	 *
 	 * The accessibility attributes support the following values:
 	 *
@@ -788,8 +791,9 @@ class ShellBar extends UI5Element {
 	 * Use this method to change the state of the search filed according to internal logic.
 	 * An event is fired to notify the change.
 	 */
-	setSearchState(expanded: boolean) {
+	async setSearchState(expanded: boolean) {
 		this.showSearchField = expanded;
+		await renderFinished();
 		this.fireDecoratorEvent("search-field-toggle", { expanded });
 	}
 
@@ -1054,11 +1058,12 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Returns the `search` icon DOM ref.
+	 * @returns The search icon DOM ref
 	 * @public
-	 * @default null
 	 * @since 2.10.0
 	 */
-	get searchButtonDomRef(): HTMLElement | null {
+	async getSearchButtonDomRef(): Promise<HTMLElement | null> {
+		await renderFinished();
 		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="toggle-search"]`);
 	}
 
@@ -1499,6 +1504,10 @@ class ShellBar extends UI5Element {
 		return ShellBar.i18nBundle.getText(SHELLBAR_OVERFLOW);
 	}
 
+	get _brandingText() {
+		return this.accessibilityAttributes.branding?.name || this.primaryTitle;
+	}
+
 	get hasContentItems() {
 		return this.contentItems.length > 0;
 	}
@@ -1596,6 +1605,12 @@ class ShellBar extends UI5Element {
 				"accessibilityAttributes": {
 					hasPopup: this.accessibilityAttributes.overflow?.hasPopup || "menu" as const,
 					expanded: overflowExpanded === undefined ? this._overflowPopoverExpanded : overflowExpanded,
+				},
+			},
+			branding: {
+				"title": this._brandingText,
+				"accessibilityAttributes": {
+					name: this.accessibilityAttributes.branding?.name,
 				},
 			},
 		};

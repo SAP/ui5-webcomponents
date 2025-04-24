@@ -244,8 +244,7 @@
 		shellbar.addEventListener("content-item-visibility-change", (e) => {
 			console.log(e.detail.items);
 		})
-
-
+		
 		const menuSubsDynamic = document.getElementById("menuSubsDynamic");
 		const btnOpenBasicDynamic = document.getElementById("btnOpenBasicDynamic");
 
@@ -304,15 +303,16 @@
 		});
 
 		shellbar_hide_search.addEventListener('ui5-search-button-click', async (e) => {
-			await window["sap-ui-webcomponents-bundle"].renderFinished();
-			customSearchInput.focus();
+			shellbar_hide_search.addEventListener('ui5-search-field-toggle', async (e) => {
+				customSearchInput.focus();
+			}, { once: true });
 		});
 
 		customSearchClose.addEventListener('click', async () => {
 			shellbar_hide_search.showSearchField = false;
 			shellbar_hide_search.hideSearchButton = false;
-			await window["sap-ui-webcomponents-bundle"].renderFinished();
-			shellbar_hide_search.searchButtonDomRef.focus();
+			const searchButton = await shellbar_hide_search.getSearchButtonDomRef()
+			searchButton.focus();
 		});
 	</script>
 
