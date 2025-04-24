@@ -24,6 +24,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 					href={item.href}
 					target={item.target}
 					title={item.title}
+					tooltip={item._tooltip}
 					ref={this.captureRef.bind(item)}
 				>
 					{(item.children.length && !item.unselectable) ?
@@ -51,6 +52,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 							href={subItem.href}
 							target={subItem.target}
 							title={subItem.title}
+							tooltip={subItem._tooltip}
 							ref={this.captureRef.bind(subItem)}
 						/>
 					)}
