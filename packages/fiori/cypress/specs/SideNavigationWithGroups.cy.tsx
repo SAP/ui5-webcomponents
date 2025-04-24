@@ -66,7 +66,7 @@ describe("Component Behavior", () => {
 				.shadow()
 				.find(".ui5-sn-item")
 				.realClick();
-			cy.get("#group2").should("not.have.prop", "expanded");
+			cy.get("#group2").should("have.prop", "expanded", false);
 		});
 		
 	});
