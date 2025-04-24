@@ -45,12 +45,12 @@ describe("DateTimePicker general interaction", () => {
 			.ui5DateTimePickerGetPopover()
 			.within(() => {
 				// Adjust hours:
-				cy.get("ui5-time-selection-clocks")
+				cy.get("[ui5-time-selection-clocks]")
 					.shadow()
 					.as("clocks");
 
 				cy.get("@clocks")
-					.find(`ui5-toggle-spin-button[data-ui5-clock="hours"]`)
+					.find(`[ui5-toggle-spin-button][data-ui5-clock="hours"]`)
 					.realClick()
 					.should("be.focused");
 
@@ -59,7 +59,7 @@ describe("DateTimePicker general interaction", () => {
 
 				// Adjust minutes.
 				cy.get("@clocks")
-					.find(`ui5-toggle-spin-button[data-ui5-clock="minutes"]`)
+					.find(`[ui5-toggle-spin-button][data-ui5-clock="minutes"]`)
 					.realClick()
 					.should("be.focused");
 
@@ -69,7 +69,7 @@ describe("DateTimePicker general interaction", () => {
 
 				// Adjust seconds.
 				cy.get("@clocks")
-					.find(`ui5-toggle-spin-button[data-ui5-clock="seconds"]`)
+					.find(`[ui5-toggle-spin-button][data-ui5-clock="seconds"]`)
 					.realClick()
 					.should("be.focused");
 
@@ -90,7 +90,7 @@ describe("DateTimePicker general interaction", () => {
 			.should("have.attr", "value", "13/04/2020, 02:14:19 PM");
 
 		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerCheckOpen(false);
+			.ui5DateTimePickerExpectToBeClosed();
 
 		setAnimationMode(AnimationMode.Full);
 	});
@@ -103,13 +103,13 @@ describe("DateTimePicker general interaction", () => {
 			.ui5DateTimePickerOpen();
 
 		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerCheckOpen(true);
+			.ui5DateTimePickerExpectToBeOpen();
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerClose();
 
 		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerCheckOpen(false);
+			.ui5DateTimePickerExpectToBeClosed();
 	});
 
 	// Unstable but valid test, needs to be individually observed
@@ -136,7 +136,7 @@ describe("DateTimePicker general interaction", () => {
 			.ui5DateTimePickerGetPopover()
 			.within(() => {
 				// Click the currently selected day and then move to the next day.
-				cy.get("ui5-calendar")
+				cy.get("[ui5-calendar]")
 					.shadow()
 					.as("calendar");
 
@@ -164,7 +164,7 @@ describe("DateTimePicker general interaction", () => {
 			.should("be.focused")
 			.should("have.attr", "value", "14/04/2020, 03:16:16 AM");
 
-		cy.get<DateTimePicker>("@dtp").ui5DateTimePickerCheckOpen(false);
+		cy.get<DateTimePicker>("@dtp").ui5DateTimePickerExpectToBeClosed();
 
 		setAnimationMode(AnimationMode.Full);
 	});
@@ -209,14 +209,14 @@ describe("DateTimePicker general interaction", () => {
 			.ui5DateTimePickerOpen();
 
 		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerCheckOpen(true);
+			.ui5DateTimePickerExpectToBeOpen();
 
 		let selectedDate = "";
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetPopover()
 			.within(() => {
-				cy.get("ui5-calendar")
+				cy.get("[ui5-calendar]")
 					.shadow()
 					.as("calendar");
 
@@ -309,12 +309,12 @@ describe("DateTimePicker general interaction", () => {
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetPopover()
 			.within(() => {
-				cy.get("ui5-time-selection-clocks")
+				cy.get("[ui5-time-selection-clocks]")
 					.shadow()
 					.as("clocks");
 
 				cy.get("@clocks")
-					.find(`ui5-time-picker-clock[data-ui5-clock="hours"]`)
+					.find(`[ui5-time-picker-clock][data-ui5-clock="hours"]`)
 					.should("have.attr", "active", "");
 			});
 
@@ -322,7 +322,7 @@ describe("DateTimePicker general interaction", () => {
 			.ui5DateTimePickerClose();
 
 		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerCheckOpen(false);
+			.ui5DateTimePickerExpectToBeClosed();
 	});
 
 	// Unstable test, needs investigation
@@ -336,12 +336,12 @@ describe("DateTimePicker general interaction", () => {
 			.ui5DateTimePickerOpen();
 
 		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerCheckOpen(true);
+			.ui5DateTimePickerExpectToBeOpen();
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetPopover()
 			.within(() => {
-				cy.get("ui5-calendar")
+				cy.get("[ui5-calendar]")
 					.shadow()
 					.as("calendar");
 
@@ -355,25 +355,25 @@ describe("DateTimePicker general interaction", () => {
 					.should("be.focused")
 					.realClick();
 
-				cy.get("ui5-time-selection-clocks")
+				cy.get("[ui5-time-selection-clocks]")
 					.shadow()
 					.as("clocks");
 
 				cy.get("@clocks")
-					.find(`ui5-toggle-spin-button[data-ui5-clock="hours"]`)
+					.find(`[ui5-toggle-spin-button][data-ui5-clock="hours"]`)
 					.realClick()
 					.should("be.focused");
 
 				cy.realType("12")
 
 				cy.get("@clocks")
-					.find(`ui5-toggle-spin-button[data-ui5-clock="minutes"]`)
+					.find(`[ui5-toggle-spin-button][data-ui5-clock="minutes"]`)
 					.should("be.focused");
 
 				cy.realType("34");
 
 				cy.get("@clocks")
-					.find(`ui5-toggle-spin-button[data-ui5-clock="seconds"]`)
+					.find(`[ui5-toggle-spin-button][data-ui5-clock="seconds"]`)
 					.should("be.focused")
 
 				cy.realType("56a")
@@ -463,7 +463,7 @@ describe("DateTimePicker general interaction", () => {
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetPopover()
 			.within(() => {
-				cy.get("ui5-calendar")
+				cy.get("[ui5-calendar]")
 					.shadow()
 					.find(".ui5-calheader")
 					.as("calHeader");
@@ -523,12 +523,12 @@ describe("DateTimePicker general interaction", () => {
 			.ui5DateTimePickerOpen();
 
 		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerCheckOpen(true);
+			.ui5DateTimePickerExpectToBeOpen();
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetPopover()
 			.within(() => {
-				cy.get("ui5-calendar")
+				cy.get("[ui5-calendar]")
 					.shadow()
 					.as("calendar");
 
@@ -563,6 +563,6 @@ describe("DateTimePicker general interaction", () => {
 
 		// Verify the picker is closed
 		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerCheckOpen(false);
+			.ui5DateTimePickerExpectToBeClosed();
 	});
 });

@@ -16,21 +16,24 @@ Cypress.Commands.add("ui5DateTimePickerGetPopover", { prevSubject: true }, (subj
 		.find<ResponsivePopover>("[ui5-responsive-popover]");
 });
 
-Cypress.Commands.add("ui5DateTimePickerCheckOpen", { prevSubject: true }, (subject: JQuery<DateTimePicker>, open: boolean) => {
+Cypress.Commands.add("ui5DateTimePickerExpectToBeOpen", { prevSubject: true }, (subject: JQuery<DateTimePicker>) => {
 	cy.wrap(subject)
-		.should("have.prop", "open", open);
+		.should("have.prop", "open", true);
 
-	if (open) {
-		cy.wrap(subject)
-			.shadow()
-			.find<ResponsivePopover>("[ui5-responsive-popover]")
-			.ui5ResponsivePopoverOpened();
-	} else {
-		cy.wrap(subject)
-			.shadow()
-			.find<ResponsivePopover>("[ui5-responsive-popover]")
-			.ui5ResponsivePopoverClosed();
-	}
+	cy.wrap(subject)
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
+});
+
+Cypress.Commands.add("ui5DateTimePickerExpectToBeClosed", { prevSubject: true }, (subject: JQuery<DateTimePicker>) => {
+	cy.wrap(subject)
+		.should("have.prop", "open", false);
+
+	cy.wrap(subject)
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverClosed();
 });
 
 Cypress.Commands.add("ui5DateTimePickerGetSubmitButton", { prevSubject: true }, (subject: JQuery<DateTimePicker>) => {
@@ -50,35 +53,37 @@ Cypress.Commands.add("ui5DateTimePickerGetCancelButton", { prevSubject: true }, 
 Cypress.Commands.add("ui5DateTimePickerTimeSelectionClocksCount", { prevSubject: true }, (subject: JQuery<DateTimePicker>) => {
 	return cy.wrap(subject)
 		.shadow()
-		.find("ui5-responsive-popover")
-		.find("ui5-time-selection-clocks")
+		.find("[ui5-responsive-popover]")
+		.find("[ui5-time-selection-clocks]")
 		.shadow()
-		.find("ui5-time-picker-clock")
+		.find("[ui5-time-picker-clock]")
 		.its("length");
 });
 
 Cypress.Commands.add("ui5DateTimePickerPeriodSegmentedButtonCount", { prevSubject: true }, (subject: JQuery<DateTimePicker>) => {
 	return cy.wrap(subject)
 		.shadow()
-		.find("ui5-responsive-popover")
-		.find("ui5-time-selection-clocks")
+		.find("[ui5-responsive-popover]")
+		.find("[ui5-time-selection-clocks]")
 		.shadow()
-		.find("ui5-segmented-button")
+		.find("[ui5-segmented-button]")
 		.its("length");
 });
 
 declare global {
 	namespace Cypress {
 		interface Chainable {
-			ui5DateTimePickerCheckOpen(
-				this: Chainable<JQuery<DateTimePicker>>,
-				open: boolean,
-			): Chainable<void>;
 			ui5DateTimePickerOpen(
+				this: Chainable<JQuery<DateTimePicker>>,
+			): Chainable<void>;
+			ui5DateTimePickerExpectToBeOpen(
 				this: Chainable<JQuery<DateTimePicker>>,
 			): Chainable<void>;
 			ui5DateTimePickerClose(
 				this: Chainable<JQuery<DateTimePicker>>
+			): Chainable<void>;
+			ui5DateTimePickerExpectToBeClosed(
+				this: Chainable<JQuery<DateTimePicker>>,
 			): Chainable<void>;
 			ui5DateTimePickerGetPopover(
 				this: Chainable<JQuery<DateTimePicker>>
