@@ -123,11 +123,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	}
 
 	get belowGroupClassName() {
-		if (isInstanceOfSideNavigationGroup(this.previousElementSibling)) {
-			return "ui5-sn-item-group-below-group";
-		}
-
-		return "";
+		return this.previousElementSibling && isInstanceOfSideNavigationGroup(this.previousElementSibling) ? "ui5-sn-item-group-below-group" : "";
 	}
 
 	get accDescription() {
