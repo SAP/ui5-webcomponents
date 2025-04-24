@@ -51,8 +51,9 @@ class FormGroup extends UI5Element implements IFormItem {
 	/**
 	 * Defines the compoennt heading level,
 	 * set by the `headerText`.
-	 * @default "H6"
+	 * @default "H5"
 	 * @public
+	 * @since 2.10.0
 	*/
 	@property()
 	headerLevel: `${TitleLevel}` = "H5";

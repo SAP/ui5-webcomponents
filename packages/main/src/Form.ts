@@ -270,7 +270,8 @@ class Form extends UI5Element {
 	/**
 	 * Defines the compoennt heading level,
 	 * set by the `headerText`.
-	 * @default "H2"
+	 * @default "H4"
+	 * @since 2.10.0
 	 * @public
 	*/
 	@property()
