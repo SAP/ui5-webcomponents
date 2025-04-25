@@ -486,7 +486,8 @@ class FlexibleColumnLayout extends UI5Element {
 			return;
 		}
 		const pressedSeparator = (e.target as HTMLElement).closest(".ui5-fcl-separator") as HTMLElement;
-		if (pressedSeparator.classList.contains("ui5-fcl-separator-start") && !this.showStartSeparatorGrip) {
+		if ((pressedSeparator.classList.contains("ui5-fcl-separator-start") && !this.showStartSeparatorGrip)
+			|| (pressedSeparator.classList.contains("ui5-fcl-separator-end") && !this.showEndSeparatorGrip)) {
 			return;
 		}
 
@@ -1091,7 +1092,6 @@ class FlexibleColumnLayout extends UI5Element {
 		if (this.showEndSeparatorGrip) {
 			return 0;
 		}
-		return -1;
 	}
 
 	get media() {
