@@ -48,7 +48,7 @@ describe("SearchField general interaction", () => {
 			cy.get("[ui5-search-field]")
 				.shadow()
 				.find("input")
-				.should("have.attr", "aria-description", SEARCH_FIELD_LABEL.defaultText);
+				.should("have.attr", "aria-label", SEARCH_FIELD_LABEL.defaultText);
 		});
 
 		it("accessibleDescription should propagate if set", () => {
