@@ -1081,7 +1081,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const matchingItems: Array<IComboBoxItem> = this._startsWithMatchingItems(current);
 
 		if (matchingItems.length) {
-			const exactMatch = matchingItems.find(item => item.text === current);
+			const exactMatch = matchingItems.find(item => item.text === current && item.focused);
 			return exactMatch ?? matchingItems[0];
 		}
 	}
@@ -1101,7 +1101,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		this._filteredItems.forEach(item => {
 			if (!shouldSelectionBeCleared && !itemToBeSelected) {
-				itemToBeSelected = ((!item.isGroupItem && (item.text === this.value)) ? item : item?.items?.find(i => i.text === this.value));
+				itemToBeSelected = ((!item.isGroupItem && (item.text === this.value && item === currentlyFocusedItem)) ? item : item?.items?.find(i => i.text === this.value && i.focused));
 			}
 		});
 

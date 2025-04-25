@@ -85,6 +85,77 @@ describe("Keyboard interaction", () => {
 		cy.get("@combobox")
 			.find("[ui5-cb-item]").eq(2).should("have.prop", "selected", true);
 	});
+	it("tests navigating with arrow down and up when item text is the same as in the previous selected item", () => {
+		cy.mount(
+			<ComboBox>
+				<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+				<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+				<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+			</ComboBox>
+		);
+
+		cy.get("[ui5-combobox]").as("combobox");
+
+		cy.get<ComboBox>("@combobox")
+			.shadow()
+			.find("input")
+			.as("inner");
+
+		cy.get("@inner").focus();
+
+		cy.get("@inner").realPress("F4");
+		cy.get("@combobox")
+			.find("[ui5-cb-item]").eq(0).should("have.prop", "selected", true);
+
+		cy.get("@inner").realPress("ArrowDown");
+		cy.get("@combobox")
+			.find("[ui5-cb-item]").eq(1).should("have.prop", "selected", true);
+
+		cy.get("@inner").realPress("ArrowDown");
+		cy.get("@combobox")
+			.find("[ui5-cb-item]").eq(2).should("have.prop", "selected", true);
+
+		cy.get("@inner").realPress("ArrowUp");
+		cy.get("@combobox")
+			.find("[ui5-cb-item]").eq(1).should("have.prop", "selected", true);
+	});
+
+	it("tests navigating with arrow down and up when item text is the same as in the previous selected item (with grouping)", () => {
+		cy.mount(
+			<ComboBox>
+				<ComboBoxItemGroup header-text="Bulgaria">
+					<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+					<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+					<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+				</ComboBoxItemGroup>
+			</ComboBox>
+		);
+
+		cy.get("[ui5-combobox]").as("combobox");
+
+		cy.get<ComboBox>("@combobox")
+			.shadow()
+			.find("input")
+			.as("inner");
+
+		cy.get("@inner").focus();
+
+		cy.get("@inner").realPress("F4");
+		cy.get("@combobox")
+			.find("[ui5-cb-item]").eq(0).should("have.prop", "selected", true);
+
+		cy.get("@inner").realPress("ArrowDown");
+		cy.get("@combobox")
+			.find("[ui5-cb-item]").eq(1).should("have.prop", "selected", true);
+
+		cy.get("@inner").realPress("ArrowDown");
+		cy.get("@combobox")
+			.find("[ui5-cb-item]").eq(2).should("have.prop", "selected", true);
+
+		cy.get("@inner").realPress("ArrowUp");
+		cy.get("@combobox")
+			.find("[ui5-cb-item]").eq(1).should("have.prop", "selected", true);
+	});
 });
 
 describe("Event firing", () => {
