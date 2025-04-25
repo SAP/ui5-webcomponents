@@ -455,20 +455,20 @@ class FlexibleColumnLayout extends UI5Element {
 		const hasAnimation = getAnimationMode() !== AnimationMode.None && !this.initialRendering;
 		// animate the width
 		columnDOM.style.width = "0px";
-		columnDOM.classList.add("ui5-fcl-column-collapsing");
 
 		if (hasAnimation) {
 			// hide column with delay to allow the animation runs entirely
+			columnDOM.classList.add("ui5-fcl-column-collapse-animation");
 			columnDOM.addEventListener("transitionend", this.onColumnCollapseAnimationEnd);
 		} else {
-			this.onColumnCollapseAnimationEnd({ target: columnDOM } as unknown as Event);
+			columnDOM.classList.add("ui5-fcl-column--hidden");
 		}
 	}
 
 	onColumnCollapseAnimationEnd = (e: Event) => {
 		const columnDOM = e.target as HTMLElement;
 		columnDOM.classList.add("ui5-fcl-column--hidden");
-		columnDOM.classList.remove("ui5-fcl-column-collapsing");
+		columnDOM.classList.remove("ui5-fcl-column-collapse-animation");
 		columnDOM.removeEventListener("transitionend", this.onColumnCollapseAnimationEnd);
 	}
 
