@@ -69,6 +69,15 @@ describe("Columns resize", () => {
 				expect(widthAfterMove).to.be.equal($el.width()!);
 			});
 	});
+
+	it("sets dedicated class to hidden columns", () => {
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-column--end")
+			.should($el => {
+				expect($el).to.have.class("ui5-fcl-column--hidden");
+			});
+	});
 });
 
 describe("ACC", () => {
