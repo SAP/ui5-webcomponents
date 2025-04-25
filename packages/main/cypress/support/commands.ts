@@ -102,6 +102,10 @@ Cypress.Commands.add("ui5SimulateDevice", (device: SimulationDevices = "phone") 
 			return true;
 		});
 
+	if (device === "phone") {
+		cy.stub(internals, "windows").value(false);
+	}
+
 	cy.viewport(deviceName[device]);
 
 	cy.wrap({ isPhone })
