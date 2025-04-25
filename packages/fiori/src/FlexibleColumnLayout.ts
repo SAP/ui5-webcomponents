@@ -453,7 +453,6 @@ class FlexibleColumnLayout extends UI5Element {
 
 	collapseColumn(columnDOM: HTMLElement) {
 		const hasAnimation = getAnimationMode() !== AnimationMode.None && !this.initialRendering;
-		// animate the width
 		columnDOM.style.width = "0px";
 
 		if (hasAnimation) {
