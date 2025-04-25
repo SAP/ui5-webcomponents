@@ -254,8 +254,8 @@ class SideNavigation extends UI5Element {
 		items.forEach(item => {
 			const isGroup = isInstanceOfSideNavigationGroup(item);
 
-			if (isGroup && isPreviousItemGroup) {
-				item.belowGroup = true;
+			if (isGroup) {
+				item.belowGroup = isPreviousItemGroup;
 			}
 
 			isPreviousItemGroup = isGroup;

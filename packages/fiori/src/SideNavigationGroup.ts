@@ -58,7 +58,6 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	@property({ type: Boolean })
 	expanded = false;
 
-	@property({ type: Boolean })
 	belowGroup = false;
 
 	/**
