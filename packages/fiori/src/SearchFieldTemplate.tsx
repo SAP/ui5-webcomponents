@@ -53,8 +53,8 @@ export default function SearchFieldTemplate(this: SearchField, options?: SearchF
 					<input
 						class="ui5-search-field-inner-input"
 						role="searchbox"
-						aria-description={this.accessibleDescription || this._translations.searchFieldAriaLabel}
-						aria-label={this.accessibleName}
+						aria-description={this.accessibleDescription}
+						aria-label={this.accessibleName || this._translations.searchFieldAriaLabel}
 						value={this.value}
 						placeholder={this.placeholder}
 						data-sap-focus-ref
