@@ -66,7 +66,7 @@ type SearchEventDetails = {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/fiori/dist/Search.js";`
+ * `import "@ui5/webcomponents-fiori/dist/Search.js";`
  *
  * @constructor
  * @extends SearchField

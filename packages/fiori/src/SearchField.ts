@@ -18,6 +18,7 @@ import {
 	SEARCH_FIELD_SCOPE_SELECT_LABEL,
 	SEARCH_FIELD_CLEAR_ICON,
 	SEARCH_FIELD_SEARCH_ICON,
+	SEARCH_FIELD_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -49,7 +50,7 @@ type SearchFieldScopeSelectionChangeDetails = {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/fiori/dist/SearchField.js";`
+ * `import "@ui5/webcomponents-fiori/dist/SearchField.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -142,6 +143,14 @@ class SearchField extends UI5Element {
 	 */
 	@property()
 	accessibleName?: string;
+
+	/**
+	 * Defines the accessible ARIA description of the field.
+	 * @public
+	 * @default undefined
+	 */
+	@property()
+	accessibleDescription?: string;
 
 	/**
 	 * Defines the component scope options.
@@ -240,6 +249,7 @@ class SearchField extends UI5Element {
 			scope: SearchField.i18nBundle.getText(SEARCH_FIELD_SCOPE_SELECT_LABEL),
 			searchIcon: SearchField.i18nBundle.getText(SEARCH_FIELD_SEARCH_ICON),
 			clearIcon: SearchField.i18nBundle.getText(SEARCH_FIELD_CLEAR_ICON),
+			searchFieldAriaLabel: SearchField.i18nBundle.getText(SEARCH_FIELD_LABEL),
 		};
 	}
 

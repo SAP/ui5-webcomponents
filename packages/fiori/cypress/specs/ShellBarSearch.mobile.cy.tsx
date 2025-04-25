@@ -6,7 +6,7 @@ describe("Mobile Behaviour", () => {
 		cy.ui5SimulateDevice();
 	});
 
-	it("Should not close dialog upong focus out", () => {
+	it("Should not close dialog upon focus out", () => {
 		cy.mount(<ShellBarSearch />);
 
 		cy.get("[ui5-shellbar-search]")

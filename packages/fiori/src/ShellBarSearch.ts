@@ -14,6 +14,8 @@ import {
  * @constructor
  * @extends Search
  * @public
+ * @since 2.10.0
+ * @experimental
  */
 @customElement({
 	tag: "ui5-shellbar-search",

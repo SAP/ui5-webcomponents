@@ -4,6 +4,7 @@ import {
 	SEARCH_FIELD_SCOPE_SELECT_LABEL,
 	SEARCH_FIELD_CLEAR_ICON,
 	SEARCH_FIELD_SEARCH_ICON,
+	SEARCH_FIELD_LABEL
 } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("SearchField general interaction", () => {
@@ -39,6 +40,24 @@ describe("SearchField general interaction", () => {
 				.shadow()
 				.find("input")
 				.should("have.attr", "aria-label", attributeValue);
+		});
+
+		it("accessibleDescription should have default value if not set", () => {
+			cy.mount(<SearchField></SearchField>);
+
+			cy.get("[ui5-search-field]")
+				.shadow()
+				.find("input")
+				.should("have.attr", "aria-description", SEARCH_FIELD_LABEL.defaultText);
+		});
+
+		it("accessibleDescription should propagate if set", () => {
+			cy.mount(<SearchField accessibleDescription="Test"></SearchField>);
+
+			cy.get("[ui5-search-field]")
+				.shadow()
+				.find("input")
+				.should("have.attr", "aria-description", "Test");
 		});
 	});
 

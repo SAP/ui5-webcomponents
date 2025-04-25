@@ -6,7 +6,6 @@ import type SearchField from "./SearchField.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import search from "@ui5/webcomponents-icons/dist/search.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
-import type SearchScope from "./SearchScope.js";
 
 export type SearchFieldTemplateOptions = {
 	/**
@@ -31,14 +30,14 @@ export default function SearchFieldTemplate(this: SearchField, options?: SearchF
 		) : (
 			<div class="ui5-search-field-root" role="search" onFocusOut={this._onFocusOutSearch}>
 				<div class="ui5-search-field-content">
-					{!!this.getSlottedNodes<SearchScope>("scopes").length &&
+					{!!this.scopes.length &&
 						<>
 							<Select
 								onChange={this._handleScopeChange}
 								class="sapUiSizeCompact ui5-search-field-select"
 								accessibleName={this._translations.scope}
 								tooltip={this._translations.scope}>
-								{this.getSlottedNodes<SearchScope>("scopes").map(scopeOption => {
+								{this.scopes.map(scopeOption => {
 									return <Option
 										selected={scopeOption.selected}
 										data-ui5-stable={scopeOption.stableDomRef}
@@ -54,6 +53,7 @@ export default function SearchFieldTemplate(this: SearchField, options?: SearchF
 					<input
 						class="ui5-search-field-inner-input"
 						role="searchbox"
+						aria-description={this.accessibleDescription || this._translations.searchFieldAriaLabel}
 						aria-label={this.accessibleName}
 						value={this.value}
 						placeholder={this.placeholder}
