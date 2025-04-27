@@ -164,6 +164,9 @@ class ToolbarButton extends ToolbarItem {
 	@property({ type: Boolean })
 	hidden = false;
 
+	focusInRef = this.focusin.bind(this);
+	focusOutRef = this.focusout.bind(this);
+
 	get styles() {
 		return {
 			width: this.width,
@@ -181,6 +184,14 @@ class ToolbarButton extends ToolbarItem {
 
 	static get toolbarPopoverTemplate() {
 		return ToolbarPopoverButtonTemplate;
+	}
+
+	focusin() {
+		this.setAttribute("aria-live", "polite");
+	}
+
+	focusout() {
+		this.setAttribute("aria-live", "off");
 	}
 
 	onClick(e: Event) {

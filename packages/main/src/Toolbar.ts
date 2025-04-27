@@ -559,6 +559,14 @@ class Toolbar extends UI5Element {
 				?? this.getOverflowPopover().querySelector(`[data-ui5-stable*=${item.stableDomRef}]`)!;
 		});
 	}
+
+	focusin() {
+		this.setAttribute("aria-live", "polite");
+	}
+
+	focusout() {
+		this.setAttribute("aria-live", "off");
+	}
 }
 
 Toolbar.define();
