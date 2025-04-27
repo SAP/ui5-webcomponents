@@ -138,7 +138,7 @@ describe("Toolbar general interaction", () => {
 				button.get(0).addEventListener("click", cy.stub().as("clicked"));
 			});
 
-		cy.get("ui5-button", { includeShadowDom: true }).contains("Button 1")
+		cy.get("ui5-button").contains("Button 1")
 			.click();
 
 		cy.get("@clicked")

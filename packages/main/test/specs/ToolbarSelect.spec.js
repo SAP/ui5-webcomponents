@@ -7,7 +7,7 @@ describe("Toolbar general interaction", () => {
 
 	it("Should render the select with the correct attributes", async () => {
 		const toolbar = await browser.$("ui5-toolbar");
-		const select = await toolbar.shadow$("ui5-select");
+		const select = await toolbar.querySelector("ui5-select");
 		const valueState = await select.getAttribute("value-state");
 
 		assert.strictEqual(valueState, "Critical", "Select value state is correct");
@@ -15,7 +15,7 @@ describe("Toolbar general interaction", () => {
 
 	it("Should render the select with disabled property correctly", async () => {
 		const toolbar = await browser.$("ui5-toolbar");
-		const select = await toolbar.shadow$("ui5-select[disabled]");
+		const select = await toolbar.querySelector("ui5-select[disabled]");
 		const disabled = await select.getAttribute("disabled");
 
 		assert.strictEqual(disabled, "true", "Disabled select is rendered correctly");
@@ -23,7 +23,7 @@ describe("Toolbar general interaction", () => {
 
 	it("Should render accessible name correctly", async () => {
 		const toolbar = await browser.$("ui5-toolbar");
-		const select = await toolbar.shadow$("ui5-select");
+		const select = await toolbar.querySelector("ui5-select");
 
 		const accessibleName = await select.getAttribute("accessible-name");
 		const accessibleNameRef = await select.getAttribute("accessible-name-ref");
@@ -36,7 +36,7 @@ describe("Toolbar general interaction", () => {
 
 	it("Should fire change event on selection change", async () => {
 		const toolbar = await browser.$("ui5-toolbar");
-		const select = await toolbar.shadow$("ui5-select");
+		const select = await toolbar.querySelector("ui5-select");
 		const selectResult = await browser.$("input[placeholder='Changed']");
 
 		await select.click();
@@ -54,10 +54,10 @@ describe("Toolbar general interaction", () => {
 		await browser.setWindowSize(100, 1080);
 
 		const toolbar = await browser.$("ui5-toolbar");
-		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
+		const overflowButton = await toolbar.querySelector$(".ui5-tb-overflow-btn");
 		await overflowButton.click();
 
-		const popover = await toolbar.shadow$("ui5-popover");
+		const popover = await toolbar.querySelector$("ui5-popover");
 		const valueState = await popover.$("ui5-select").getAttribute("value-state");
 		const disabled = await popover.$("ui5-select[disabled]").getAttribute("disabled");
 
