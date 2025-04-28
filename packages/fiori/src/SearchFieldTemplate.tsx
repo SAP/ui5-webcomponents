@@ -23,25 +23,30 @@ export default function SearchFieldTemplate(this: SearchField) {
 		) : (
 			<div class="ui5-search-field-root" role="search" onFocusOut={this._onFocusOutSearch}>
 				<div class="ui5-search-field-content">
-					{!!this.scopes.length &&
+					{this.scopes?.length ? (
 						<>
 							<Select
 								onChange={this._handleScopeChange}
 								class="sapUiSizeCompact ui5-search-field-select"
 								accessibleName={this._translations.scope}
 								tooltip={this._translations.scope}>
-								{this.scopes.map(scopeOption => {
-									return <Option
+								{this.scopes.map(scopeOption => (
+									<Option
 										selected={scopeOption.selected}
 										data-ui5-stable={scopeOption.stableDomRef}
 										ref={this.captureRef.bind(scopeOption)}
-									>{scopeOption.text}</Option>;
-								},
-								this)}
+									>{scopeOption.text}
+									</Option>
+								))}
 							</Select>
 							<div class="ui5-search-field-separator"></div>
 						</>
-					}
+					) : this.advanced ? (
+						<>
+							<slot name="advanced"></slot>
+							<div class="ui5-search-field-separator"></div>
+						</>
+					) : null}
 
 					<input
 						class="ui5-search-field-inner-input"
