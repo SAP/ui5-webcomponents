@@ -1028,6 +1028,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		this.lastConfirmedValue = "";
 		this.isTyping = false;
+
+		if ((this.value !== this.previousValue) && this.showClearIcon) {
+			this._clearIconClicked = false;
+		}
 	}
 
 	_clearPopoverFocusAndSelection() {
@@ -1530,6 +1534,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	fireResetSelectionChange() {
 		if (this._isLatestValueFromSuggestions) {
 			this.fireSelectionChange(null, false);
+			this.valueBeforeItemSelection = this.value;
 		}
 	}
 

@@ -318,7 +318,7 @@ describe("Form support", () => {
 			<MultiComboBox id="multi_combobox8" name="multi_combobox8" value="ok">
 				<MultiComboBoxItem selected text="ok"></MultiComboBoxItem>
 			</MultiComboBox>
-			<MultiComboBox id="multi_combobox9" no-validation required
+			<MultiComboBox id="multi_combobox9" noValidation required
 				name="multi_combobox9"></MultiComboBox>
 			<MultiComboBox id="multi_combobox10" required name="multi_combobox10" value="ok"></MultiComboBox>
 			<MultiComboBox id="multi_combobox11" required name="multi_combobox11">
@@ -380,7 +380,7 @@ describe("Form support", () => {
 				<Token slot="tokens" text="ok"></Token>
 			</MultiInput>
 
-			<MultiInput id="multi_input9" allow-custom-values required name="multi_input9"></MultiInput>
+			<MultiInput id="multi_input9" required name="multi_input9"></MultiInput>
 			<MultiInput id="multi_input10" required name="multi_input10" value="ok"></MultiInput>
 			<MultiInput id="multi_input11" required name="multi_input11">
 				<Token slot="tokens" text="ok"></Token>
@@ -520,9 +520,9 @@ describe("Form support", () => {
 	it("ui5-range-slider in form", () => {
 		cy.mount(<form method="get">
 			<RangeSlider id="range_slider1"></RangeSlider>
-			<RangeSlider id="range_slider2" start-value="25" end-value="75"></RangeSlider>
+			<RangeSlider id="range_slider2" startValue={25} endValue={75}></RangeSlider>
 			<RangeSlider id="range_slider3" name="range_slider3"></RangeSlider>
-			<RangeSlider id="range_slider4" name="range_slider4" start-value="25" end-value="75"></RangeSlider>
+			<RangeSlider id="range_slider4" name="range_slider4" startValue={25} endValue={75}></RangeSlider>
 			<button type="submit">Submits forms</button>
 		</form>);
 

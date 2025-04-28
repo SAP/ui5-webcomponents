@@ -226,7 +226,9 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	}
 
 	/**
-	 * @override
+	 * Checks if a value is valid against the current date format of the DatePicker.
+	 * @public
+	 * @param value A value to be tested against the current date format
 	 */
 	isValid(value: string): boolean {
 		const parts = this._splitValueByDelimiter(value);
@@ -234,7 +236,9 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	}
 
 	/**
-	 * @override
+	 * Checks if a date is between the minimum and maximum date.
+	 * @public
+	 * @param value A value to be checked
 	 */
 	isInValidRange(value: string): boolean {
 		return this._splitValueByDelimiter(value).every(dateString => super.isInValidRange(dateString));

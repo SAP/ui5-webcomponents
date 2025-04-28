@@ -342,6 +342,9 @@ class Form extends UI5Element {
 
 		// Define how many columns a group should take.
 		this.setGroupsColSpan();
+
+		// Set item spacing
+		this.setItemSpacing();
 	}
 
 	onAfterRendering() {
@@ -489,12 +492,22 @@ class Form extends UI5Element {
 		return index === 0 ? MIN_COL_SPAN + (delta - groups) + 1 : MIN_COL_SPAN + 1;
 	}
 
+	setItemSpacing() {
+		this.items.forEach((item: IFormItem) => {
+			item.itemSpacing = this.itemSpacing;
+		});
+	}
+
 	get hasGroupItems(): boolean {
 		return this.items.some((item: IFormItem) => item.isGroup);
 	}
 
 	get hasHeader(): boolean {
-		return this.hasCustomHeader || !!this.headerText;
+		return this.hasCustomHeader || this.hasHeaderText;
+	}
+
+	get hasHeaderText(): boolean {
+		return !!this.headerText;
 	}
 
 	get hasCustomHeader(): boolean {
@@ -502,7 +515,7 @@ class Form extends UI5Element {
 	}
 
 	get effectiveАccessibleNameRef(): string | undefined {
-		return this.hasCustomHeader ? undefined : `${this._id}-header-text`;
+		return this.hasHeaderText && !this.hasCustomHeader ? `${this._id}-header-text` : undefined;
 	}
 
 	get effectiveAccessibleRole() {

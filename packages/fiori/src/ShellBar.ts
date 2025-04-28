@@ -75,6 +75,7 @@ type ShellBarLogoAccessibilityAttributes = {
 }
 type ShellBarProfileAccessibilityAttributes = Pick<AccessibilityAttributes, "name" | "expanded" | "hasPopup">;
 type ShellBarAreaAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
+type ShellBarBrandingAccessibilityAttributes = Pick<AccessibilityAttributes, "name">;
 type ShellBarAccessibilityAttributes = {
 	logo?: ShellBarLogoAccessibilityAttributes
 	notifications?: ShellBarAreaAccessibilityAttributes
@@ -82,6 +83,7 @@ type ShellBarAccessibilityAttributes = {
 	product?: ShellBarAreaAccessibilityAttributes
 	search?: ShellBarAreaAccessibilityAttributes
 	overflow?: ShellBarAreaAccessibilityAttributes
+	branding?: ShellBarBrandingAccessibilityAttributes
 };
 
 type ShellBarNotificationsClickEventDetail = {
@@ -113,6 +115,10 @@ type ShellBarSearchButtonEventDetail = {
 	searchFieldVisible: boolean;
 };
 
+type ShellBarSearchFieldToggleEventDetail = {
+	expanded: boolean;
+};
+
 interface IShellBarHidableItem {
 	classes: string,
 	id: string,
@@ -132,6 +138,7 @@ interface IShelBarItemInfo extends IShellBarHidableItem {
 	profile?: boolean,
 	tooltip?: string,
 	accessibilityAttributes?: ShellBarItemAccessibilityAttributes,
+	accessibleName?: string,
 }
 
 interface IShellBarContentItem extends IShellBarHidableItem {
@@ -262,6 +269,16 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
 })
 
 /**
+ * Fired, when the search field is expanded or collapsed.
+ * @since 2.10.0
+ * @param {Boolean} expanded whether the search field is expanded
+ * @public
+ */
+@event("search-field-toggle", {
+	bubbles: true,
+})
+
+/**
  * Fired, when an item from the content slot is hidden or shown.
  * **Note:** The `content-item-visibility-change` event is in an experimental state and is a subject to change.
  *
@@ -281,8 +298,30 @@ class ShellBar extends UI5Element {
 		"logo-click": ShellBarLogoClickEventDetail,
 		"menu-item-click": ShellBarMenuItemClickEventDetail,
 		"search-button-click": ShellBarSearchButtonEventDetail,
+		"search-field-toggle": ShellBarSearchFieldToggleEventDetail,
 		"content-item-visibility-change": ShellBarContentItemVisibilityChangeEventDetail
 	}
+
+	/**
+	 * Defines the visibility state of the search button.
+	 *
+	 * **Note:** The `hideSearchButton` property is in an experimental state and is a subject to change.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	hideSearchButton = false;
+
+	/**
+	 * Disables the automatic search field expansion/collapse when the available space is not enough.
+	 *
+	 * **Note:** The `disableAutoSearchField` property is in an experimental state and is a subject to change.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disableAutoSearchField = false;
+
 	/**
 	 * Defines the `primaryTitle`.
 	 *
@@ -329,16 +368,6 @@ class ShellBar extends UI5Element {
 	showProductSwitch = false;
 
 	/**
-	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
-	 *
-	 * **Note:** By default the Search Field is not displayed.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	showSearchField = false;
-
-	/**
 	 * Defines additional accessibility attributes on different areas of the component.
 	 *
 	 * The accessibilityAttributes object has the following fields,
@@ -350,6 +379,7 @@ class ShellBar extends UI5Element {
 	 * - **product** - `product.expanded` and `product.hasPopup`.
 	 * - **search** - `search.hasPopup`.
 	 * - **overflow** - `overflow.expanded` and `overflow.hasPopup`.
+	 * - **branding** - `branding.name`.
 	 *
 	 * The accessibility attributes support the following values:
 	 *
@@ -457,7 +487,10 @@ class ShellBar extends UI5Element {
 	 * Defines the `ui5-input`, that will be used as a search field.
 	 * @public
 	 */
-	@slot()
+	@slot({
+		type: HTMLElement,
+		invalidateOnChildChange: true,
+	})
 	searchField!: Array<Input>;
 
 	/**
@@ -507,6 +540,7 @@ class ShellBar extends UI5Element {
 	_autoRestoreSearchField = false;
 
 	_headerPress: () => void;
+	_showSearchField = false;
 
 	static get FIORI_3_BREAKPOINTS() {
 		return [
@@ -567,14 +601,14 @@ class ShellBar extends UI5Element {
 		const spacerWidth = this.shadowRoot!.querySelector(".ui5-shellbar-spacer") ? this.shadowRoot!.querySelector(".ui5-shellbar-spacer")!.getBoundingClientRect().width : 0;
 		const searchFieldWidth = this.domCalculatedValues("--_ui5_shellbar_search_field_width");
 		if (this.showFullWidthSearch) {
-			this.showSearchField = false;
+			this.setSearchState(true);
 			return;
 		}
 		if ((spacerWidth <= searchFieldWidth && this.contentItemsHidden.length !== 0) && this.showSearchField) {
-			this.showSearchField = false;
+			this.setSearchState(false);
 			this._autoRestoreSearchField = true;
 		} else if (spacerWidth > searchFieldWidth && this._autoRestoreSearchField) {
-			this.showSearchField = true;
+			this.setSearchState(true);
 			this._autoRestoreSearchField = false;
 		}
 	}
@@ -710,10 +744,6 @@ class ShellBar extends UI5Element {
 		return Number(styleSet.getPropertyValue(propertyName).replace("rem", "")) * parseInt(getComputedStyle(document.body).getPropertyValue("font-size"));
 	}
 
-	_parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
-		return Number(styleSet.getPropertyValue(propertyName).replace("px", ""));
-	}
-
 	domCalculatedValues(cssVar: string): number {
 		const shellbarComputerStyle = getComputedStyle(this.getDomRef()!);
 		return this._calculateCSSREMValue(shellbarComputerStyle, getScopedVarName(cssVar)); // px
@@ -733,6 +763,38 @@ class ShellBar extends UI5Element {
 		});
 
 		this._observeContentItems();
+	}
+
+	/**
+	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
+	 *
+	 * **Note:** By default the Search Field is not displayed.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	set showSearchField(value: boolean) {
+		if (isSelfCollapsibleSearch(this.search)) {
+			this.search.collapsed = !value;
+		}
+		this._showSearchField = value;
+	}
+
+	get showSearchField(): boolean {
+		if (isSelfCollapsibleSearch(this.search)) {
+			return !this.search.collapsed;
+		}
+		return this._showSearchField;
+	}
+
+	/**
+	 * Use this method to change the state of the search filed according to internal logic.
+	 * An event is fired to notify the change.
+	 */
+	async setSearchState(expanded: boolean) {
+		this.showSearchField = expanded;
+		await renderFinished();
+		this.fireDecoratorEvent("search-field-toggle", { expanded });
 	}
 
 	onAfterRendering() {
@@ -832,7 +894,7 @@ class ShellBar extends UI5Element {
 		this._updateItemsInfo(itemsInfo);
 		this._updateContentInfo(contentInfo);
 		this._updateOverflowNotifications();
-		this.showFullWidthSearch = this.overflowed;
+		this.showFullWidthSearch = this.overflowed && this.showSearchField;
 	}
 
 	_toggleActionPopover() {
@@ -864,7 +926,7 @@ class ShellBar extends UI5Element {
 		if (defaultPrevented) {
 			return;
 		}
-		this.showSearchField = !this.showSearchField;
+		this.setSearchState(!this.showSearchField);
 
 		if (!this.showSearchField) {
 			return;
@@ -931,7 +993,8 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleCancelButtonPress() {
-		this.showSearchField = false;
+		this.showFullWidthSearch = false;
+		this.setSearchState(false);
 	}
 
 	_handleProductSwitchPress(e: MouseEvent) {
@@ -991,6 +1054,17 @@ class ShellBar extends UI5Element {
 	 */
 	get productSwitchDomRef(): HTMLElement | null {
 		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="product-switch"]`);
+	}
+
+	/**
+	 * Returns the `search` icon DOM ref.
+	 * @returns The search icon DOM ref
+	 * @public
+	 * @since 2.10.0
+	 */
+	async getSearchButtonDomRef(): Promise<HTMLElement | null> {
+		await renderFinished();
+		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="toggle-search"]`);
 	}
 
 	_getContentInfo(): Array<IShellBarContentItem> {
@@ -1063,6 +1137,7 @@ class ShellBar extends UI5Element {
 					stableDomRef: item.stableDomRef,
 					tooltip: item.title || item.text,
 					accessibilityAttributes: item.accessibilityAttributes,
+					accessibleName: item.count ? `${item.title || item.text}, ${item.count}` : (item.title || item.text),
 				};
 			}),
 			{
@@ -1199,8 +1274,12 @@ class ShellBar extends UI5Element {
 
 	get autoSearchField() {
 		const onFocus = document.activeElement === this.searchField[0];
-		const isEmpty = this.searchField[0]?.value.length === 0;
-		return (this.showSearchField || this._autoRestoreSearchField) && !onFocus && isEmpty;
+		const hasValue = this.searchField[0]?.value?.length > 0;
+		const disableAutoSearchField = this.disableAutoSearchField || onFocus || hasValue;
+		if (disableAutoSearchField) {
+			return false;
+		}
+		return this.showSearchField || this._autoRestoreSearchField;
 	}
 
 	get startContentInfoSorted() {
@@ -1247,6 +1326,7 @@ class ShellBar extends UI5Element {
 			},
 			search: {
 				"ui5-shellbar-hidden-button": this.isIconHidden("search"),
+				"ui5-shellbar-search-toggle": true,
 			},
 			overflow: {
 				"ui5-shellbar-hidden-button": this._hiddenIcons.length === 0,
@@ -1255,14 +1335,20 @@ class ShellBar extends UI5Element {
 				"ui5-shellbar-hidden-button": this.isIconHidden("assistant"),
 				"ui5-shellbar-assistant-button": true,
 			},
+			searchField: {
+				"ui5-shellbar-search-field": this.showSearchField,
+				"ui5-shellbar-search-toggle": isSelfCollapsibleSearch(this.search),
+				"ui5-shellbar-hidden-button": !this.showSearchField,
+			},
 		};
 	}
 
 	get styles() {
+		const styles = {
+			"display": this.showSearchField ? "flex" : "none",
+		};
 		return {
-			searchField: {
-				"display": this.showSearchField ? "flex" : "none",
-			},
+			searchField: isSelfCollapsibleSearch(this.search) ? {} : styles,
 		};
 	}
 
@@ -1338,7 +1424,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get _contentItemsText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_ADDITIONAL_CONTEXT);
+		return this._enableContentAreaAccessibility ? ShellBar.i18nBundle.getText(SHELLBAR_ADDITIONAL_CONTEXT) : undefined;
 	}
 
 	get _searchFieldDescription() {
@@ -1346,11 +1432,13 @@ class ShellBar extends UI5Element {
 	}
 
 	get _contentItemsRole() {
-		if (this.contentItems.length === 1) {
-			return;
+		if (this._enableContentAreaAccessibility) {
+			return "group";
 		}
+	}
 
-		return "group";
+	get _enableContentAreaAccessibility() {
+		return this.contentItems.length > 1;
 	}
 
 	get contentItems() {
@@ -1400,10 +1488,6 @@ class ShellBar extends UI5Element {
 		return ShellBar.i18nBundle.getText(SHELLBAR_PRODUCT_SWITCH_BTN);
 	}
 
-	get isSearchFieldVisible() {
-		return this.searchField[0]?.offsetWidth || 0;
-	}
-
 	get _profileText() {
 		return this.accessibilityAttributes.profile?.name as string || ShellBar.i18nBundle.getText(SHELLBAR_PROFILE);
 	}
@@ -1420,6 +1504,10 @@ class ShellBar extends UI5Element {
 		return ShellBar.i18nBundle.getText(SHELLBAR_OVERFLOW);
 	}
 
+	get _brandingText() {
+		return this.accessibilityAttributes.branding?.name || this.primaryTitle;
+	}
+
 	get hasContentItems() {
 		return this.contentItems.length > 0;
 	}
@@ -1427,7 +1515,7 @@ class ShellBar extends UI5Element {
 	get hidableDomElements(): HTMLElement [] {
 		const items = Array.from(this.shadowRoot!.querySelectorAll<HTMLElement>(".ui5-shellbar-button:not(.ui5-shellbar-search-button):not(.ui5-shellbar-overflow-button):not(.ui5-shellbar-cancel-button):not(.ui5-shellbar-no-overflow-button)"));
 		const assistant = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-assistant-button");
-		const searchButton = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-search-button");
+		const searchToggle = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-search-toggle");
 		const contentItems = this.contentItemsWrappersSorted;
 		const firstContentItem = contentItems.pop();
 		const prioritizeContent = this.showSearchField && this.hasSearchField;
@@ -1453,7 +1541,7 @@ class ShellBar extends UI5Element {
 				...items.toReversed(),
 				assistant,
 				...contentItems,
-				searchButton,
+				searchToggle,
 				firstContentItem,
 			];
 		}
@@ -1519,6 +1607,12 @@ class ShellBar extends UI5Element {
 					expanded: overflowExpanded === undefined ? this._overflowPopoverExpanded : overflowExpanded,
 				},
 			},
+			branding: {
+				"title": this._brandingText,
+				"accessibilityAttributes": {
+					name: this.accessibilityAttributes.branding?.name,
+				},
+			},
 		};
 	}
 
@@ -1529,7 +1623,26 @@ class ShellBar extends UI5Element {
 	get isSBreakPoint() {
 		return this.breakpointSize === "S";
 	}
+
+	get hasSelfCollapsibleSearch() {
+		return isSelfCollapsibleSearch(this.search);
+	}
+
+	get search() {
+		return this.searchField.length ? this.searchField[0] : null;
+	}
 }
+
+interface IShellBarSelfCollapsibleSearch {
+	collapsed: boolean;
+}
+
+const isSelfCollapsibleSearch = (searchField: any): searchField is IShellBarSelfCollapsibleSearch => {
+	if (searchField) {
+		return "collapsed" in searchField;
+	}
+	return false;
+};
 
 ShellBar.define();
 
@@ -1544,4 +1657,6 @@ export type {
 	ShellBarMenuItemClickEventDetail,
 	ShellBarAccessibilityAttributes,
 	ShellBarSearchButtonEventDetail,
+	ShellBarSearchFieldToggleEventDetail,
+	IShellBarSelfCollapsibleSearch,
 };
