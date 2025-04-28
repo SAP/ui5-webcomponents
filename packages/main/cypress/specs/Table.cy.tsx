@@ -64,6 +64,26 @@ describe("Table - Rendering", () => {
 		cy.wait(500);
 	});
 
+	it("tests if table is rendered with no data slot", () => {
+		cy.mount(
+			<Table id="table">
+				<TableHeaderRow slot="headerRow">
+					<TableHeaderCell></TableHeaderCell>
+				</TableHeaderRow>
+				<div slot="noData" id="noData">
+					<Label>No data found</Label>
+				</div>
+			</Table>
+		);
+
+		cy.get("#table").shadow().find('slot[name=noData]').as("noDataSlot");
+		cy.get("@noDataSlot").should("exist");
+		cy.get("@noDataSlot").then(($noDataSlot) => {
+			const noDataElement = ($noDataSlot[0] as HTMLSlotElement).assignedElements()[0];
+			cy.wrap(noDataElement).should("have.attr", "id", "noData")
+		});
+	});
+
 	it("columns have equal widths width default width", () => {
 		cy.mount(
 			<Table style="width: 400px;" id="table">
