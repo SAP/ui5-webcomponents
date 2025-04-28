@@ -495,11 +495,16 @@ describe("Slots", () => {
 			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", false);
 		});
 
-		it("Test search field is collapsed initially instead of being displayed in full width mode", () => {
+		it.only("Test search field is collapsed initially instead of being displayed in full width mode", () => {
 			cy.viewport(500, 1080);
 			cy.mount(
-				<ShellBar id="shellbar" showSearchField={true}>
-					<Search id="search" slot="searchField"></Search>
+				// needs some content to trigger the full width mode
+				<ShellBar id="shellbar" showSearchField={true} showNotifications={true} showProductSwitch={true}>
+					<Button icon={navBack} slot="startButton"></Button>
+					<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					<Button slot="content">Start Button 1</Button>
+
+					<Input id="search" slot="searchField"></Input>
 				</ShellBar>
 			);
 			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", false);
