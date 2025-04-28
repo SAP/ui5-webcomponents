@@ -494,6 +494,16 @@ describe("Slots", () => {
 			cy.get("#search").should("have.prop", "collapsed", true);
 			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", false);
 		});
+
+		it("Test search field is collapsed initially instead of being displayed in full width mode", () => {
+			cy.viewport(500, 1080);
+			cy.mount(
+				<ShellBar id="shellbar" showSearchField={true}>
+					<Search id="search" slot="searchField"></Search>
+				</ShellBar>
+			);
+			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", false);
+		});
 	});
 });
 

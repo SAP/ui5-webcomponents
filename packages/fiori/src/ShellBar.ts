@@ -763,6 +763,12 @@ class ShellBar extends UI5Element {
 		});
 
 		this._observeContentItems();
+
+		// search field shouldn't be expanded initially in full width mode
+		if (this.showFullWidthSearch && this._isInitialRendering) {
+			this.setSearchState(false);
+			this._autoRestoreSearchField = true;
+		}
 	}
 
 	/**
@@ -792,6 +798,9 @@ class ShellBar extends UI5Element {
 	 * An event is fired to notify the change.
 	 */
 	async setSearchState(expanded: boolean) {
+		if (expanded === this.showSearchField) {
+			return;
+		}
 		this.showSearchField = expanded;
 		await renderFinished();
 		this.fireDecoratorEvent("search-field-toggle", { expanded });
