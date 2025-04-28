@@ -68,6 +68,28 @@ describe("Component Behavior", () => {
 				.realClick();
 			cy.get("#group2").should("have.prop", "expanded", false);
 		});
+
+		it("disabled", () => {
+			cy.mount(
+				<SideNavigation style="height: 90vh; " id="sn1">
+					<SideNavigationItem text="Item" />
+					<SideNavigationGroup id="group1" expanded text="Group 1">
+						<SideNavigationItem text="Home 1" />
+						<SideNavigationItem disabled text="Home 1" />
+					</SideNavigationGroup>
+				</SideNavigation>);
+
+			cy.get("#group1").should("not.have.attr", "disabled");
+			cy.get("#group1").invoke("prop", "disabled", true);
+			cy.get("#group1").should("have.attr", "disabled");
+			
+			cy.get("#group1").then(($group) => {
+				const group = $group[0] as SideNavigationGroup;
+				cy.wrap(group.items).each((item: SideNavigationItem) => {
+					cy.wrap(item).should("have.prop", "disabled", true);
+				});
+			});
+		});
 		
 	});
 });
