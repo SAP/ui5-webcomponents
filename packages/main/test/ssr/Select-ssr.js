@@ -1,17 +1,18 @@
 import { render } from "preact-render-to-string";
+import { jsx as jsx_ } from "@ui5/webcomponents-base/dist/jsx-runtime.js";
 import { prettify } from 'htmlfy'
 import "./config.js";
 import "../../dist/Assets.js";
 import "@ui5/webcomponents-icons/dist/AllIcons.js";
 import Select from "../../dist/Select.js";
 import Option from "../../dist/Option.js";
-import jsx from "./vdom-ssr.js";
+import withSsr from "@ui5/webcomponents-base/dist/h-ssr.js";
+
+const jsx = withSsr(jsx_);
 
 if (!Select.asyncFinished) {
     await Select.definePromise;
 }
-
-// const vdom = jsx(Option, { value: "1", children: "Option 1" })
 
 const vdom = jsx(Select, {
     design: "Negative",
