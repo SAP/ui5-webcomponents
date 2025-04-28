@@ -1,8 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import "@ui5/webcomponents-base/dist/ssr-dom.js";
-import { render } from "preact-render-to-string";
 import type { JSX } from "./jsx-runtime.js";
-import type { VNode } from "preact";
 import merge from "./thirdparty/merge.js";
 import { boot } from "./Boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
@@ -198,8 +196,6 @@ abstract class UI5Element extends HTMLElement {
 	// setters from the constructor should not set attributes, this is delegated after the first rendering but is async
 	// setters after the constructor can set attributes synchronously for more convinient development
 	_rendered = false;
-	_childNodesFromServer: ChildNode[] = [];
-	_childrenFromServer: Element[] = [];
 
 	constructor() {
 		super();
@@ -422,9 +418,7 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		const slotsMap = ctor.getMetadata().getSlots();
 		const canSlotText = ctor.getMetadata().canSlotText();
-		const _childNodes = isSSR ? (this._childNodesFromServer) : this.childNodes;
-		const _children = isSSR ? (this._childrenFromServer) : this.children;
-		const domChildren = Array.from(canSlotText ? _childNodes : _children) as Array<Node>;
+		const domChildren = Array.from(canSlotText ? this.childNodes : this.children) as Array<Node>;
 
 		const slotsCachedContentMap = new Map<string, Array<SlotValue>>(); // Store here the content of each slot before the mutation occurred
 		const propertyNameToSlotMap = new Map<string, string>(); // Used for reverse lookup to determine to which slot the property name corresponds
@@ -440,7 +434,7 @@ abstract class UI5Element extends HTMLElement {
 		const autoIncrementMap = new Map<string, number>();
 		const slottedChildrenMap = new Map<string, Array<{child: Node, idx: number }>>();
 
-		const allChildrenUpgraded = domChildren.map(async (child, idx) => {
+		domChildren.forEach((child, idx) => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -468,17 +462,18 @@ abstract class UI5Element extends HTMLElement {
 				const shouldWaitForCustomElement = !isSSR && localName.includes("-") && !shouldIgnoreCustomElement(localName);
 
 				if (shouldWaitForCustomElement) {
-					const isDefined = customElements.get(localName);
-					if (!isDefined) {
-						const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
-						let timeoutPromise = elementTimeouts.get(localName);
-						if (!timeoutPromise) {
-							timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
-							elementTimeouts.set(localName, timeoutPromise);
-						}
-						await Promise.race([whenDefinedPromise, timeoutPromise]);
-					}
-					customElements.upgrade(child);
+					throw new Error(`Custom element "${localName}" is not defined yet. Please make sure to import the definition before using it.`); // eslint-disable-line
+					// const isDefined = customElements.get(localName);
+					// if (!isDefined) {
+					// 	const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
+					// 	let timeoutPromise = elementTimeouts.get(localName);
+					// 	if (!timeoutPromise) {
+					// 		timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
+					// 		elementTimeouts.set(localName, timeoutPromise);
+					// 	}
+					// 	await Promise.race([whenDefinedPromise, timeoutPromise]);
+					// }
+					// customElements.upgrade(child);
 				}
 			}
 
@@ -506,7 +501,7 @@ abstract class UI5Element extends HTMLElement {
 			}
 		});
 
-		await Promise.all(allChildrenUpgraded);
+		// await Promise.all(allChildrenUpgraded);
 
 		// Distribute the child in the _state object, keeping the Light DOM order,
 		// not the order elements are defined.
@@ -543,6 +538,7 @@ abstract class UI5Element extends HTMLElement {
 				reason: "textcontent",
 			});
 		}
+		return Promise.resolve();
 	}
 
 	/**
@@ -830,7 +826,7 @@ abstract class UI5Element extends HTMLElement {
 
 			if (!this._rendered) {
 				// first time rendering, previous setters might have been initializers from the constructor - update attributes here
-				console.log("update attributes")
+				console.log("update attributes") // eslint-disable-line
 				this.updateAttributes();
 			}
 

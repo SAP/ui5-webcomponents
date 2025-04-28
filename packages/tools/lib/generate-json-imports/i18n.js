@@ -60,7 +60,7 @@ const generate = async () => {
 		const languagesKeysStringArray = languages.map(key => `"${key}",`).join("\n\t");
 
 		// Actual imports for json assets
-		const dynamicImportsString = languages.map(key => `		case "${key}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-messagebundle-${key}" */ "../assets/i18n/messagebundle_${key}.json")).default;`).join("\n");
+		const dynamicImportsString = languages.map(key => `		case "${key}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-messagebundle-${key}" */ "../assets/i18n/messagebundle_${key}.json", {with: { type: 'json'}})).default;`).join("\n");
 		const fetchMetaResolveString = languages.map(key => `		case "${key}": return (await fetch(new URL("../assets/i18n/messagebundle_${key}.json", import.meta.url))).json();`).join("\n");
 
 		// Resulting file content

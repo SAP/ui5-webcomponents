@@ -1,10 +1,10 @@
-// import { render } from "preact-render-to-string";
-import { jsx } from "@ui5/webcomponents-base/dist/jsx-runtime.js";
+import { prettify } from 'htmlfy';
 import "./config.js";
 import "../../dist/Assets.js";
-// import "@ui5/webcomponents-icons/dist/AllIcons.js";
+import "@ui5/webcomponents-icons/dist/AllIcons.js";
 import Button from "../../dist/Button.js";
-import { render } from "@ui5/webcomponents-base/dist/thirdparty/preact/preact.module.js";
+import jsx from "./vdom-ssr.js";
+import { render } from "preact-render-to-string";
 
 const renderComponent = async (component, props) => {
     return jsx(component, props);
@@ -41,6 +41,9 @@ await button._processChildren();
 // render
 
 // button.connectedCallback();
-console.log()
 const str = button._render()
 console.log(str);
+
+const vdom = jsx(Button, { design: "Negative", icon: "account", children: "alabala" });
+console.log("vdom", prettify(render(vdom)));
+console.log("!!", vdom.__instance.text);
