@@ -44,7 +44,7 @@ describe("Toolbar general interaction", () => {
 
 	it("Should render ui5-button by toolbar template, when slotting ui5-toolbar-button elements", async () => {
 		const otb = await browser.$("#otb_c");
-		const declineButton = await otb.shadow$(`[data-ui5-stable="tb-button-decline"]`);
+		const declineButton = await otb.$(`[stable-dom-ref="tb-button-decline"]`).shadow$(`[data-ui5-stable="tb-button-decline"]`);
 
 		assert.strictEqual(await declineButton.getTagName(), "ui5-button", false, "Toolbar button is properly rendered");
 	});
@@ -53,9 +53,10 @@ describe("Toolbar general interaction", () => {
 		const toolbar = await browser.$("#testEventpreventClosing-toolbar")
 		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
 		const popover = await toolbar.shadow$(".ui5-overflow-popover");
-		const select = await toolbar.shadow$("[ui5-select]");
 
 		await overflowButton.click();
+		const select = await browser.$("[ui5-toolbar-select]").shadow$("[ui5-select]");
+
 		await select.click();
 
 		assert.strictEqual(await popover.getProperty("open"), true, "Popover is opened");
@@ -63,7 +64,7 @@ describe("Toolbar general interaction", () => {
 
 	it("Should call child events only once", async () => {
 		const toolbar = await browser.$("#clickCountToolbar");
-		const countButton = await toolbar.shadow$("#clickCounter");
+		const countButton = await browser.$("#clickCounter");
 		const input = await browser.$("#input");
 
 		await input.setAttribute("value", "0");
