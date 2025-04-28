@@ -855,11 +855,6 @@ describe("Side Navigation Accessibility", () => {
 			.shadow()
 			.find(".ui5-sn-item-ul")
 			.should("have.attr", "role", "group");
-
-		cy.get("#group")
-			.shadow()
-			.find(".ui5-sn-item-ul")
-			.should("have.attr", "aria-label", "Group");
 	});
 });
 
