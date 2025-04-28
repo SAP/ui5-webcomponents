@@ -7,7 +7,7 @@ import chokidar from "chokidar";
 import scopeVariables from "./scope-variables.mjs";
 import { writeFileIfChanged, getFileContent } from "./shared.mjs";
 
-const tsMode = process.env.UI5_TS === "true";
+const tsMode = true;
 const extension = tsMode ? ".css.ts" : ".css.js";
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"))
@@ -22,7 +22,8 @@ let customPlugin = {
         build.onEnd(result => {
             result.outputFiles.forEach(async f => {
                 // scoping
-                const newText = scopeVariables(f.text, packageJSON);
+                let newText = scopeVariables(f.text, packageJSON);
+                newText = newText.replaceAll(/\\/g, "\\\\"); // Escape backslashes as they might appear in css rules
                 await mkdir(path.dirname(f.path), {recursive: true});
                 writeFile(f.path, newText);
 
