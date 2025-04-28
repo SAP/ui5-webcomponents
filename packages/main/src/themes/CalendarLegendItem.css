@@ -42,7 +42,7 @@
 
 :host([type="Selected"]) .ui5-calendar-legend-item-box {
 	background: var(--sapContent_Selected_Background);
-	border: 0.0625rem solid var(--sapContent_FocusColor);
+	border: 0.0625rem solid var(--sapList_SelectionBorderColor);
 }
 
 /* Dot in the middle of the box */
