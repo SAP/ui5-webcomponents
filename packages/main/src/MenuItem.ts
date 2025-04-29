@@ -423,7 +423,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		}
 		const item = e.target as MenuItem;
 
-		if (!MenuItem._isInstanceOfMenuItem(item)) {
+		if (!isInstanceOfMenuItem(item)) {
 			return;
 		}
 		item.focus();
@@ -523,13 +523,13 @@ class MenuItem extends ListItem implements IMenuItem {
 	get isMenuItem(): boolean {
 		return true;
 	}
-
-	static _isInstanceOfMenuItem(object: any): object is MenuItem {
-		return "isMenuItem" in object;
-	}
 }
 
 MenuItem.define();
+
+const isInstanceOfMenuItem = (object: any): object is MenuItem => {
+	return "isMenuItem" in object && object.isMenuItem;
+};
 
 export default MenuItem;
 
@@ -537,4 +537,8 @@ export type {
 	MenuBeforeCloseEventDetail,
 	MenuBeforeOpenEventDetail,
 	MenuItemAccessibilityAttributes,
+};
+
+export {
+	isInstanceOfMenuItem,
 };

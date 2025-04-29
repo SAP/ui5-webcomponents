@@ -25,7 +25,7 @@ import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
-import MenuItem from "./MenuItem.js";
+import MenuItem, { isInstanceOfMenuItem } from "./MenuItem.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import "./MenuSeparator.js";
 import type {
@@ -300,7 +300,7 @@ class Menu extends UI5Element {
 		}
 
 		const item = e.target as MenuItem;
-		if (!MenuItem._isInstanceOfMenuItem(item)) {
+		if (!isInstanceOfMenuItem(item)) {
 			return;
 		}
 
@@ -365,7 +365,7 @@ class Menu extends UI5Element {
 		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
 		const item = e.target as MenuItem;
 
-		if (!MenuItem._isInstanceOfMenuItem(item)) {
+		if (!isInstanceOfMenuItem(item)) {
 			return;
 		}
 
