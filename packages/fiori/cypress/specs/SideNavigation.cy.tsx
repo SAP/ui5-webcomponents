@@ -141,6 +141,7 @@ describe("Side Navigation interaction", () => {
 		// assert
 		cy.get("#item1").should("not.have.attr", "expanded");
 		cy.get("#item1").shadow().find(".ui5-sn-item-level1").should("have.class", "ui5-sn-item-selected");
+		cy.get("#item1").should("not.have.attr", "selected");
 
 		// act
 		cy.get("#item1").shadow().find(".ui5-sn-item-toggle-icon").realClick();
@@ -854,7 +855,7 @@ describe("Side Navigation Accessibility", () => {
 			.shadow()
 			.find(".ui5-sn-item-group")
 			.should("have.attr", "role", "treeitem");
-		
+
 		cy.get("#group")
 			.shadow()
 			.find(".ui5-sn-item-group")

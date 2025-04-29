@@ -172,7 +172,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _selected() {
-		if (this.sideNavCollapsed) {
+		if (this.sideNavCollapsed || !this.expanded) {
 			return this.selected || this.items.some(item => item.selected);
 		}
 
@@ -272,14 +272,6 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	_toggle() {
 		if (this.items.length) {
 			this.expanded = !this.expanded;
-
-			if (this.items.some(item => item.selected)) {
-				if (!this.sideNavCollapsed && this.expanded) {
-					this.getDomRef()!.querySelector(".ui5-sn-item-level1")!.classList.remove("ui5-sn-item-selected");
-				} else {
-					this.getDomRef()!.querySelector(".ui5-sn-item-level1")!.classList.add("ui5-sn-item-selected");
-				}
-			}
 		}
 	}
 }
