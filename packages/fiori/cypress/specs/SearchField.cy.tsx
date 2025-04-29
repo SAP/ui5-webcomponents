@@ -42,7 +42,7 @@ describe("SearchField general interaction", () => {
 				.should("have.attr", "aria-label", attributeValue);
 		});
 
-		it("accessibleDescription should have default value if not set", () => {
+		it("accessibleName should have default value if not set", () => {
 			cy.mount(<SearchField></SearchField>);
 
 			cy.get("[ui5-search-field]")
