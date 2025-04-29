@@ -1,7 +1,6 @@
 import directionArrows from "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import type RangeSlider from "./RangeSlider.js";
 import Icon from "./Icon.js";
-import Input from "./Input.js";
 import SliderBaseTemplate from "./SliderBaseTemplate.js";
 import SliderTooltip from "./SliderTooltip.js";
 

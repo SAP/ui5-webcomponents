@@ -560,7 +560,6 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this._endValueAtBeginningOfAction = undefined;
 	}
 
-
 	/**
 	 * Determines where the press occured and which values of the Range Slider
 	 * handles should be updated on further interaction.
@@ -777,7 +776,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 			? "[data-sap-ui-start-value]"
 			: "[data-sap-ui-end-value]";
 
-		const tooltip = this.shadowRoot!.querySelector(tooltipSelector) as any; // SliderTooltip
+		const tooltip = this.shadowRoot!.querySelector(tooltipSelector) as SliderTooltip;
 
 		if (tooltip?.hidePopover && tooltip?.showPopover) {
 			requestAnimationFrame(() => {
@@ -796,7 +795,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	_onTooltipChange(e: CustomEvent) {
 		const tooltip = e.target as SliderTooltip;
 		const isStart = tooltip.hasAttribute("data-sap-ui-start-value");
-		const inputValue = parseFloat(e.detail.value);
+		const inputValue = parseFloat(e.detail.value as string);
 
 		const clampedValue = Math.min(this.max, Math.max(this.min, inputValue));
 
@@ -830,7 +829,6 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this.bringToFrontTooltip(isStart ? "start" : "end");
 		this.update("value", this.startValue, this.endValue);
 	}
-
 
 	_onInputKeydown(): void { }
 
