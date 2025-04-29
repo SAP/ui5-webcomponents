@@ -88,7 +88,7 @@
 	--_ui5_list_item_base_height: var(--sapElement_LineHeight);
 	--_ui5_list_item_base_padding: 0 1rem;
 	--_ui5_list_item_icon_size: 1.125rem;
-	--_ui5_list_item_icon_padding-inline-end: 0.5rem;
+	--_ui5_list_item_icon_padding-inline-end: 0.75rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
 	--_ui5_list_item_content_vertical_offset: calc((var(--_ui5_list_item_base_height) - var(--_ui5_list_item_title_size)) / 2);
 	--_ui5_group_header_list_item_height: 2.75rem;
@@ -332,7 +332,7 @@
 	--_ui5_year_picker_item_height: 2rem;
 	--_ui5_panel_header_height: 2rem;
 	--_ui5_panel_button_root_height: 2rem;
-	--_ui5_panel_button_root_width: 2.5rem;
+	--_ui5_panel_button_root_width: 2.75rem;
 
 	--_ui5_token_height: 1.25rem;
 	--_ui5_token_right_margin: 0.25rem;
