@@ -133,7 +133,19 @@
 
 		<ui5-toggle-button  slot="content" text="PR9" data-hide-order="9">PR9</ui5-toggle-button>
 
-		<ui5-search slot="searchField"></ui5-search>
+		<ui5-shellbar-search slot="searchField">
+			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="globe" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="globe" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="globe" ></ui5-search-item>
+
+			<ui5-search-scope text="All" slot="scopes"></ui5-search-scope>
+			<ui5-search-scope text="Apps" selected slot="scopes"></ui5-search-scope>
+			<ui5-search-scope text="Products" slot="scopes"></ui5-search-scope>
+		</ui5-shellbar-search>
 
 		<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
 		<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
@@ -274,20 +286,6 @@
 		shellbarDynamicContent.addEventListener("content-item-visibility-change", (event) => {
 			const hiddenItems = event.detail.items;
 			displayMenuOpener(hiddenItems.indexOf(btnOpenBasicDynamic) > -1);
-		});
-
-		function handleSearchEvent(e) {
-			if (e.target.collapsed) {
-				e.target.collapsed = false;
-			} else {
-				if (!e.target.value) {
-					e.target.collapsed = true;
-				}
-			}
-		}
-		const searches = Array.from(document.querySelectorAll('ui5-search'));
-		searches.forEach((searchField) => {
-			searchField.addEventListener('ui5-search', handleSearchEvent);
 		});
 
 		["focus", "blur", "input"].forEach((event) => {

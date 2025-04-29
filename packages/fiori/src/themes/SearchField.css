@@ -1,11 +1,13 @@
 /* container */
-:host {
+:host,
+.ui5-shellbar-search-field-wrapper {
 	height: 2.25rem;
 	display: flex;
 	align-items: center;
 }
 
-:host(:not([collapsed])) {
+:host(:not([collapsed])),
+.ui5-shellbar-search-field-wrapper {
 	min-width: 18rem;
 	max-width: 36rem;
 	margin: 0;
@@ -23,8 +25,14 @@
 	position: relative;
 }
 
+.ui5-shellbar-search-field-wrapper {
+	flex: 1;
+	min-width: auto;
+}
+
 :host(:not([collapsed]):hover),
-:host(:not([collapsed]):focus-within) {
+:host(:not([collapsed]):focus-within),
+.ui5-shellbar-search-field-wrapper:focus-within {
 	box-shadow: var(--sapField_Hover_Shadow);
 	background: var(--_ui5-search-wrapper-hover-background);
 	background-color: var(--_ui5-search-wrapper-hover-background-color);
