@@ -315,12 +315,12 @@ class ShellBar extends UI5Element {
 	/**
 	 * Disables the automatic search field expansion/collapse when the available space is not enough.
 	 *
-	 * **Note:** The `disableAutoSearchField` property is in an experimental state and is a subject to change.
+	 * **Note:** The `disableSearchCollapse` property is in an experimental state and is a subject to change.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disableAutoSearchField = false;
+	disableSearchCollapse = false;
 
 	/**
 	 * Defines the `primaryTitle`.
@@ -1275,8 +1275,8 @@ class ShellBar extends UI5Element {
 	get autoSearchField() {
 		const onFocus = document.activeElement === this.searchField[0];
 		const hasValue = this.searchField[0]?.value?.length > 0;
-		const disableAutoSearchField = this.disableAutoSearchField || onFocus || hasValue;
-		if (disableAutoSearchField) {
+		const disableSearchCollapse = this.disableSearchCollapse || onFocus || hasValue;
+		if (disableSearchCollapse) {
 			return false;
 		}
 		return this.showSearchField || this._autoRestoreSearchField;
