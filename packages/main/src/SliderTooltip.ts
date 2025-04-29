@@ -150,6 +150,13 @@ class SliderTooltip extends UI5Element {
 		}
 	}
 
+	_onInputFocusin() {
+		requestAnimationFrame(() => {
+			this.hidePopover();
+			this.showPopover();
+		});
+	}
+
 	get inputRef() {
 		return this.shadowRoot?.querySelector("ui5-input") as Input;
 	}

@@ -68,6 +68,19 @@ export function handles(this: RangeSlider) {
 					slider-icon
 				></Icon>
 			</div>
+
+			<SliderTooltip
+				open={this._tooltipsOpen}
+				value={this.startValue.toString()}
+				min={this.min}
+				max={this.max}
+				data-sap-ui-start-value
+				editable={this.editableTooltip}
+				followRef={this._startHandle}
+				onChange={this._onTooltipChange}
+				onForwardFocus={this._onTooltopForwardFocus}
+			>
+			</SliderTooltip>
 		</div>
 		<div class="ui5-slider-handle-container" style={this.styles.endHandle} part="handle-container">
 			<div class="ui5-slider-handle ui5-slider-handle--end"
@@ -93,25 +106,14 @@ export function handles(this: RangeSlider) {
 
 			<SliderTooltip
 				open={this._tooltipsOpen}
-				value={this.startValue.toString()}
-				min={this.min}
-				max={this.max}
-				editable={this.editableTooltip}
-				followRef={this.shadowRoot?.querySelector(".ui5-slider-handle--start") as HTMLElement}
-				onChange={this._onTooltipChange}
-				// onForwardFocus={this._onTooltopForwardFocus}
-			>
-			</SliderTooltip>
-
-			<SliderTooltip
-				open={this._tooltipsOpen}
 				value={this.endValue.toString()}
 				min={this.min}
 				max={this.max}
+				data-sap-ui-end-value
 				editable={this.editableTooltip}
-				followRef={this.shadowRoot?.querySelector(".ui5-slider-handle--end") as HTMLElement}
+				followRef={this._endHandle}
 				onChange={this._onTooltipChange}
-				// onForwardFocus={this._onTooltopForwardFocus}
+				onForwardFocus={this._onTooltopForwardFocus}
 			>
 			</SliderTooltip>
 		</div>

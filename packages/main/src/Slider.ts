@@ -212,7 +212,7 @@ class Slider extends SliderBase implements IFormInputElement {
 		// value that was saved when it was first focused in
 		this._valueInitial = undefined;
 
-		if (this.showTooltip && !(e.relatedTarget as HTMLInputElement)?.hasAttribute("ui5-slider-tooltip")) {
+		if (this.showTooltip && !(e.relatedTarget as HTMLElement)?.hasAttribute("ui5-slider-tooltip")) {
 			this._tooltipsOpen = false;
 		}
 	}
