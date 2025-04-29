@@ -16,7 +16,6 @@ import type SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationGroupTemplate from "./SideNavigationGroupTemplate.js";
 
 import {
-	SIDE_NAVIGATION_GROUP_HEADER_DESC,
 	SIDE_NAVIGATION_ICON_COLLAPSE,
 	SIDE_NAVIGATION_ICON_EXPAND,
 } from "./generated/i18n/i18n-defaults.js";
@@ -128,10 +127,6 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		}
 
 		return "";
-	}
-
-	get accDescription() {
-		return SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_GROUP_HEADER_DESC);
 	}
 
 	get _arrowTooltip() {

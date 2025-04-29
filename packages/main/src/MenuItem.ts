@@ -307,10 +307,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		return this._popover?.open;
 	}
 
-	get ariaLabelledByText() {
-		return `${this.text} ${this.accessibleName}`.trim();
-	}
-
 	get menuHeaderTextPhone() {
 		return this.text;
 	}
