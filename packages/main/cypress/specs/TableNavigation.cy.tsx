@@ -118,11 +118,11 @@ describe("Table - Keyboard Navigation", () => {
 			{ element: cy.get("@rows").eq(1), type: "{pagedown}", condition: "be.focused" },
 			{ element: cy.get("@rows").eq(21), type: "{pagedown}", condition: "be.focused" },
 			{ element: cy.get("@rows").eq(24), type: "{pagedown}", condition: "be.focused" },
-			{ element: cy.get("#growing").shadow().find("#growing-button"), type: "{pageup}", condition: "be.focused" },
+			{ element: cy.get("#growing").shadow().find("#button"), type: "{pageup}", condition: "be.focused" },
 			{ element: cy.get("@rows").eq(5), type: "{pageup}", condition: "be.focused" },
 			{ element: cy.get("@rows").eq(0), type: "{end}", condition: "be.focused" },
 			{ element: cy.get("@rows").eq(24), type: "{end}", condition: "be.focused" },
-			{ element: cy.get("#growing").shadow().find("#growing-button"), type: "{home}", condition: "be.focused" },
+			{ element: cy.get("#growing").shadow().find("#button"), type: "{home}", condition: "be.focused" },
 			{ element: cy.get("@rows").eq(0), type: "{home}", condition: "be.focused" },
 			{ element: cy.get("@headerRow"), condition: "be.focused" }
 		]);
@@ -146,7 +146,7 @@ describe("Table - Keyboard Navigation", () => {
 			{ element: getCell(0, 0, true), type: "{pagedown}", condition: "be.focused" },
 			{ element: getCell(19, 0, false), type: "{pagedown}", condition: "be.focused" },
 			{ element: getCell(24, 0, false), type: "{pagedown}", condition: "be.focused" },
-			{ element: cy.get("#growing").shadow().find("#growing-button"), type: "{home}", condition: "be.focused" },
+			{ element: cy.get("#growing").shadow().find("#button"), type: "{home}", condition: "be.focused" },
 			{ element: cy.get("@rows").eq(0), type: "{home}", condition: "be.focused" },
 			{ element: cy.get("@headerRow"), type: "{downarrow}{rightarrow}", condition: "be.focused" },
 			{ element: getCell(0, 0, false), type: "{downarrow}{rightarrow}", condition: "be.focused" },

@@ -23,3 +23,7 @@
 .ui5-sn-item.ui5-sn-item-level1.ui5-sn-item-overflow {
 	margin-top: auto;
 }
+
+.ui5-sn-item-level1 .ui5-sn-item-text {
+	font-weight: bold;
+}

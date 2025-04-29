@@ -10,6 +10,9 @@
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	background: var(--sapList_Background);
+	box-shadow: var(--_ui5_side_navigation_box_shadow);
+	border-inline-end: var(--_ui5_side_navigation_border_right);
+	box-sizing: border-box;
 }
 
 :host([collapsed]) {
@@ -25,9 +28,8 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	box-sizing: border-box;
+	box-sizing: inherit;
 	border-radius: inherit;
-	border-inline-end: var(--_ui5_side_navigation_border_right);
 }
 
 .ui5-sn-flexible {

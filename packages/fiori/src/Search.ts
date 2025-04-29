@@ -2,7 +2,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import SearchPopupMode from "@ui5/webcomponents/dist/types/SearchPopupMode.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type Popover from "@ui5/webcomponents/dist/Popover.js";
 import type List from "@ui5/webcomponents/dist/List.js";
 import {
@@ -27,13 +28,21 @@ import SearchField from "./SearchField.js";
 import { StartsWith, StartsWithPerTerm } from "@ui5/webcomponents/dist/Filters.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type SearchItem from "./SearchItem.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type Button from "@ui5/webcomponents/dist/Button.js";
+import type IllustratedMessage from "./IllustratedMessage.js";
+import type SearchItemGroup from "./SearchItemGroup.js";
+import type SearchMessageArea from "./SearchMessageArea.js";
+import { SEARCH_CANCEL_BUTTON, SEARCH_SUGGESTIONS } from "./generated/i18n/i18n-defaults.js";
+import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
+import type { InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
+import type Input from "@ui5/webcomponents/dist/Input.js";
+import type { PopupBeforeCloseEventDetail } from "@ui5/webcomponents/dist/Popup.js";
+import type Select from "@ui5/webcomponents/dist/Select.js";
 
 interface ISearchSuggestionItem extends UI5Element {
 	selected: boolean;
-	headingText: string;
+	text: string;
 	items?: ISearchSuggestionItem[];
 }
 
@@ -53,12 +62,11 @@ type SearchEventDetails = {
  * - Input field - for user input value
  * - Clear button - gives the possibility for deleting the entered value
  * - Search button - a primary button for performing search, when the user has entered a search term
- * - Expand/Collapse button - when there is no search term, the search button behaves as an expand/collapse button for the `ui5-search` component
  * - Suggestions - a list with available search suggestions
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/fiori/dist/Search.js";`
+ * `import "@ui5/webcomponents-fiori/dist/Search.js";`
  *
  * @constructor
  * @extends SearchField
@@ -76,13 +84,6 @@ type SearchEventDetails = {
 		SearchCss,
 	],
 })
-
-/**
- * Fired when load more button is pressed.
- *
- * @public
- */
-@event("popup-action-press")
 
 /**
  * Fired when the popup is opened.
@@ -105,14 +106,14 @@ class Search extends SearchField {
 		"open": void,
 		"close": void,
 	};
+
 	/**
-	 * Defines the visualisation mode of the search component.
-	 *
-	 * @default "List"
+	 * Indicates whether a loading indicator should be shown in the popup.
+	 * @default false
 	 * @public
 	 */
-	@property()
-	popupMode: `${SearchPopupMode}` = "List";
+	@property({ type: Boolean })
+	loading = false;
 
 	/**
 	 * Defines whether the value will be autcompleted to match an item.
@@ -123,42 +124,20 @@ class Search extends SearchField {
 	noTypeahead = false;
 
 	/**
-	 * Defines the header text to be placed in the search suggestions popup.
-	 * @public
-	 */
-	@property()
-	headerText = "";
-
-	/**
-	 * Defines the subheader text to be placed in the search suggestions popup.
-	 * @public
-	 */
-	@property()
-	subheaderText = "";
-
-	/**
-	 * Defines whether the popup footer action button is shown.
-	 * Note: The footer action button is displayed only when the `popupMode` is set to `List`.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	showPopupAction = false;
-
-	/**
-	 * Defines the popup footer action button text.
-	 * @public
-	 */
-	@property()
-	popupActionText = "";
-
-	/**
 	 * Defines the Search suggestion items.
 	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<SearchItem>;
+	items!: Array<SearchItem | SearchItemGroup>;
+
+	/**
+	 * Defines the popup footer action button.
+	 *
+	 * @public
+	 */
+	@slot()
+	action!: Array<Button>;
 
 	/**
 	 * Defines the illustrated message to be shown in the popup.
@@ -166,7 +145,15 @@ class Search extends SearchField {
 	 * @public
 	 */
 	@slot()
-	illustration!: HTMLElement;
+	illustration!: Array<IllustratedMessage>;
+
+	/**
+	 * Defines the illustrated message to be shown in the popup.
+	 *
+	 * @public
+	 */
+	@slot()
+	messageArea!: Array<SearchMessageArea>;
 
 	/**
 	 * Indicates whether the items picker is open.
@@ -183,7 +170,15 @@ class Search extends SearchField {
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_innerValue = "";
+	_innerValue?: string;
+
+	/**
+	 * Determines whether the item selection should be performed on mobile devices.
+	 * Similar to _performTextSelection on desktop
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_performItemSelectionOnMobile?: boolean;
 
 	/**
 	 * Based on the key pressed, determines if the autocomplete should be performed.
@@ -198,17 +193,16 @@ class Search extends SearchField {
 	_performTextSelection?: boolean;
 
 	/**
-	 * Determines whether the picker should open on user input. In some cases we need to close the picker,
-	 * (press on an item, or pressing Esc), but still focus the input. In this case we need to open the picker on input.
-	 * @private
-	 */
-	_openPickerOnInput?: boolean;
-
-	/**
 	 * Holds the typed value from the user.
 	 * @private
 	 */
 	_typedInValue: string;
+
+	/**
+	 * Holds the typed value before opening the picker.
+	 * @private
+	 */
+	_valueBeforeOpen: string;
 
 	/**
 	 * True if the first matching item is matched by starts with per term, rather than by starts with.
@@ -222,13 +216,16 @@ class Search extends SearchField {
 	 */
 	_proposedItem?: ISearchSuggestionItem;
 
+	@i18n("@ui5/webcomponents-fiori")
+	static i18nBundle: I18nBundle;
+
 	constructor() {
 		super();
 
 		// The typed in value.
 		this._typedInValue = "";
 		this._matchedPerTerm = false;
-		this._openPickerOnInput = false;
+		this._valueBeforeOpen = this.getAttribute("value") || "";
 	}
 
 	onBeforeRendering() {
@@ -253,6 +250,16 @@ class Search extends SearchField {
 			this._typedInValue = this.value;
 		}
 
+		if (isPhone() && this.open) {
+			const item = this._getFirstMatchingItem(this.value);
+			this._proposedItem = item;
+			this._deselectItems();
+
+			if (item && this._performItemSelectionOnMobile) {
+				item.selected = true;
+			}
+		}
+
 		this._flattenItems.forEach(item => {
 			(item as SearchItem).highlightText = this._typedInValue;
 		});
@@ -261,23 +268,51 @@ class Search extends SearchField {
 	}
 
 	onAfterRendering(): void {
-		const innerInput = this.nativeInput!;
+		const innerInput = this.nativeInput;
 
-		if (this._performTextSelection && innerInput.value !== this._innerValue) {
-			innerInput.value = this._innerValue;
+		if (this._performTextSelection && innerInput && innerInput.value !== this._innerValue) {
+			innerInput.value = this._innerValue || "";
 		}
 
 		if (this._performTextSelection && this._typedInValue.length && this.value.length) {
-			innerInput.setSelectionRange(this._typedInValue.length, this.value.length);
+			innerInput?.setSelectionRange(this._typedInValue.length, this.value.length);
 		}
 
 		this._performTextSelection = false;
 
-		this.style.setProperty("--search_width", `${this.getBoundingClientRect().width}px`);
+		if (!this.collapsed) {
+			this.style.setProperty("--search_width", `${this.getBoundingClientRect().width}px`);
+		}
+	}
+
+	_handleMobileInput(e: CustomEvent<InputEventDetail>) {
+		this.value = (e.target as Input).value;
+		this._performItemSelectionOnMobile = this._shouldPerformSelectionOnMobile(e.detail.inputType);
+
+		this.fireDecoratorEvent("input");
+	}
+	_shouldPerformSelectionOnMobile(inputType: string): boolean {
+		const allowedEventTypes = [
+			"deleteWordBackward",
+			"deleteWordForward",
+			"deleteSoftLineBackward",
+			"deleteSoftLineForward",
+			"deleteEntireSoftLine",
+			"deleteHardLineBackward",
+			"deleteHardLineForward",
+			"deleteByDrag",
+			"deleteByCut",
+			"deleteContent",
+			"deleteContentBackward",
+			"deleteContentForward",
+			"historyUndo",
+		];
+
+		return !this.noTypeahead && !allowedEventTypes.includes(inputType || "");
 	}
 
 	_handleTypeAhead(item: ISearchSuggestionItem) {
-		const originalValue = item.headingText || "";
+		const originalValue = item.text || "";
 		let displayValue = originalValue;
 
 		if (!originalValue.toLowerCase().startsWith(this.value.toLowerCase())) {
@@ -294,11 +329,11 @@ class Search extends SearchField {
 	}
 
 	_startsWithMatchingItems(str: string): Array<ISearchSuggestionItem> {
-		return StartsWith(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "headingText");
+		return StartsWith(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "text");
 	}
 
 	_startsWithPerTermMatchingItems(str: string): Array<ISearchSuggestionItem> {
-		return StartsWithPerTerm(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "headingText");
+		return StartsWithPerTerm(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "text");
 	}
 
 	_isGroupItem(item: ISearchSuggestionItem) {
@@ -311,25 +346,21 @@ class Search extends SearchField {
 		});
 	}
 
-	async _handleDown(e: KeyboardEvent) {
+	_handleDown(e: KeyboardEvent) {
 		if (this.open) {
 			e.preventDefault();
-			await this._handleArrowDown();
+			this._handleArrowDown();
 		}
 	}
 
-	async _handleArrowDown() {
+	_handleArrowDown() {
 		const firstListItem = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[0];
-		const focusRef = firstListItem && this._isGroupItem(firstListItem) ? firstListItem.getFocusDomRef() : firstListItem;
 
 		if (this.open) {
 			this._deselectItems();
-			firstListItem && focusRef && this._getItemsList()?._itemNavigation.setCurrentItem(focusRef);
 			this.value = this._typedInValue || this.value;
 			this._innerValue = this.value;
 
-			// wait item navigation to apply correct tabindex
-			await renderFinished();
 			firstListItem?.focus();
 		}
 	}
@@ -343,6 +374,20 @@ class Search extends SearchField {
 		}
 	}
 
+	_handleInnerClick() {
+		if (isPhone()) {
+			this.open = true;
+		}
+	}
+
+	_handleSearchIconPress() {
+		if (isPhone()) {
+			this.open = true;
+		} else {
+			super._handleSearchIconPress();
+		}
+	}
+
 	_handleEnter() {
 		const prevented = !this.fireDecoratorEvent("search", { item: this._proposedItem });
 
@@ -352,7 +397,7 @@ class Search extends SearchField {
 
 		const innerInput = this.nativeInput!;
 		if (this._matchedPerTerm) {
-			this.value = this._proposedItem?.headingText || this.value;
+			this.value = this._proposedItem?.text || this.value;
 			this._innerValue = this.value;
 			this._typedInValue = this.value;
 			this._matchedPerTerm = false;
@@ -360,7 +405,15 @@ class Search extends SearchField {
 
 		innerInput.setSelectionRange(this.value.length, this.value.length);
 		this.open = false;
-		this._openPickerOnInput = true;
+	}
+
+	_onMobileInputKeydown(e: KeyboardEvent) {
+		if (isEnter(e)) {
+			this.value = this.mobileInput?.value || this.value;
+			this._handleEnter();
+
+			this.blur();
+		}
 	}
 
 	_handleSearchEvent() {
@@ -370,19 +423,20 @@ class Search extends SearchField {
 	_handleEscape() {
 		this.value = this._typedInValue || this.value;
 		this._innerValue = this.value;
-
-		this._openPickerOnInput = true;
 	}
 
 	_handleInput(e: InputEvent) {
 		super._handleInput(e);
 
-		if (!this._openPickerOnInput) {
+		if (isPhone()) {
 			return;
 		}
 
-		this.open = true;
-		this._openPickerOnInput = false;
+		this.open = ((e.currentTarget as HTMLInputElement).value.length > 0) && this._popoupHasAnyContent();
+	}
+
+	_popoupHasAnyContent() {
+		return this.items.length > 0 || this.illustration.length > 0 || this.messageArea.length > 0 || this.loading || this.action.length > 0;
 	}
 
 	_onFooterButtonKeyDown(e: KeyboardEvent) {
@@ -418,19 +472,27 @@ class Search extends SearchField {
 		const prevented = !this.fireDecoratorEvent("search", { item });
 
 		if (prevented) {
+			if (isPhone()) {
+				this.open = false;
+			}
+
 			return;
 		}
 
-		this.value = item.headingText;
+		this.value = item.text;
 		this._innerValue = this.value;
 		this._typedInValue = this.value;
 		this.open = false;
-		this._openPickerOnInput = true;
 		this.focus();
 	}
 
 	_onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
+
+		if (this.loading) {
+			return;
+		}
+
 		this._shouldAutocomplete = !this.noTypeahead
 			&& !(isBackSpace(e) || isDelete(e) || isEscape(e) || isUp(e) || isDown(e) || isTabNext(e) || isEnter(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e) || isEscape(e));
 
@@ -447,21 +509,6 @@ class Search extends SearchField {
 		}
 	}
 
-	_onfocusin() {
-		super._onfocusin();
-
-		if (this._openPickerOnInput) {
-			return;
-		}
-
-		// prevent opening of empty picker on List Mode
-		if (this.popupMode === SearchPopupMode.List && !this.items.length) {
-			return;
-		}
-
-		this.open = true;
-	}
-
 	_onfocusout() {
 		super._onfocusout();
 		if (this._matchedPerTerm) {
@@ -471,10 +518,26 @@ class Search extends SearchField {
 		this._matchedPerTerm = false;
 	}
 
-	_onFocusOutSearch() {
-		if (!this.matches(":focus-within")) {
-			this.open = false;
+	_onFocusOutSearch(e:FocusEvent) {
+		const target = e.relatedTarget as HTMLElement;
+
+		if (this._getPicker().contains(target) || this.contains(target)) {
+			return;
 		}
+
+		this.open = false;
+	}
+
+	_handleBeforeClose(e: CustomEvent<PopupBeforeCloseEventDetail>) {
+		if (e.detail.escPressed) {
+			this.focus();
+		}
+	}
+
+	_handleCancel() {
+		this._handleClose();
+		this.value = this._valueBeforeOpen;
+		this.fireDecoratorEvent("input");
 	}
 
 	_handleClose() {
@@ -482,8 +545,21 @@ class Search extends SearchField {
 		this.fireDecoratorEvent("close");
 	}
 
+	_handleBeforeOpen() {
+		if (isPhone() && this.mobileInput) {
+			this.mobileInput.value = this.value;
+		}
+	}
+
 	_handleOpen() {
+		this._valueBeforeOpen = this.value;
 		this.fireDecoratorEvent("open");
+	}
+
+	_handleActionKeydown(e: KeyboardEvent) {
+		if (isUp(e)) {
+			this._flattenItems[this._flattenItems.length - 1].focus();
+		}
 	}
 
 	_onFooterButtonClick() {
@@ -520,7 +596,7 @@ class Search extends SearchField {
 	}
 
 	_getFooterButton(): Button {
-		return this._getPicker().querySelector(".ui5-search-footer-button") as Button;
+		return this.action[0];
 	}
 
 	get _flattenItems(): Array<ISearchSuggestionItem> {
@@ -532,23 +608,27 @@ class Search extends SearchField {
 	get nativeInput() {
 		const domRef = this.getDomRef();
 
-		return domRef ? domRef.querySelector<HTMLInputElement>(`input`) : null;
+		return domRef?.querySelector<HTMLInputElement>(`input`);
 	}
 
-	get _showIllustration() {
-		return !!this.illustration && this.popupMode === SearchPopupMode.Illustration;
+	get mobileInput() {
+		const domRef = this.shadowRoot;
+
+		return domRef ? domRef.querySelector<Input>(`[ui5-input]`) : null;
 	}
 
-	get _showLoading() {
-		return this.popupMode === SearchPopupMode.Loading;
+	get cancelButtonText() {
+		return Search.i18nBundle.getText(SEARCH_CANCEL_BUTTON);
 	}
 
-	get _showHeader() {
-		return !!this.headerText;
+	get suggestionsText() {
+		return Search.i18nBundle.getText(SEARCH_SUGGESTIONS);
 	}
 
-	get _showFooter() {
-		return !!this.showPopupAction && this.popupMode === SearchPopupMode.List;
+	get scopeSelect() {
+		const domRef = this.shadowRoot;
+
+		return domRef ? domRef.querySelector<Select>(`[ui5-select]`) : null;
 	}
 }
 

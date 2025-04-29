@@ -17,7 +17,7 @@
 }
 
 .ui5-nl-header {
-	z-index: 2;
+	z-index: 3;
 }
 
 .ui5-nl-section {
@@ -29,7 +29,7 @@
 
 .ui5-nl-aside {
 	transition: transform 0.3s;
-	z-index: 1;
+	z-index: 2;
 }
 
 :host([is-phone]) .ui5-nl-aside {
@@ -38,10 +38,6 @@
 	left: 0;
 	bottom: 0;
 	width: 100%;
-}
-
-:host(:not([is-phone])) ::slotted([ui5-side-navigation][slot="sideContent"]) {
-	box-shadow: var(--_ui5_nl_side_navigation_box_shadow);
 }
 
 :host([is-phone]) ::slotted([ui5-side-navigation][slot="sideContent"]) {
