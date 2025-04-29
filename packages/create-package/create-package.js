@@ -21,6 +21,7 @@ const SUPPORTED_TEST_SETUPS = ["cypress", "manual"];
 const SRC_DIR = path.join(__dirname, "template");
 const FILES_TO_RENAME = {
 	"npmrc": ".npmrc",
+	"env": ".env",
 	"gitignore": ".gitignore",
 	"tsconfig.template.json": "tsconfig.json",
 	"cypress/tsconfig.template.json": "cypress/tsconfig.json"
@@ -28,7 +29,6 @@ const FILES_TO_RENAME = {
 const FILES_TO_COPY = ["test/pages/img/logo.png"];
 
 // Validation Patterns
-const ComponentNamePattern = /^[A-Z][A-Za-z0-9]+$/;
 const PackageNamePattern =
 	/^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 const TagPattern = /^[a-z0-9]+?-[a-zA-Z0-9\-_]+?[a-z0-9]$/;
@@ -36,8 +36,6 @@ const TagPattern = /^[a-z0-9]+?-[a-zA-Z0-9\-_]+?[a-z0-9]$/;
 // Utility Functions
 const isPackageNameValid = name =>
 	typeof name === "string" && PackageNamePattern.test(name);
-const isComponentNameValid = name =>
-	typeof name === "string" && ComponentNamePattern.test(name);
 const isTagValid = tag => typeof tag === "string" && TagPattern.test(tag);
 const isTestSetupValid = setup =>
 	typeof setup === "string" && SUPPORTED_TEST_SETUPS.includes(setup);
@@ -75,7 +73,7 @@ const generateFilesContent = async (
 				: "",
 		INIT_PACKAGE_CYPRESS_DEV_DEPS:
 			testSetup === "cypress"
-				? `"@ui5/cypress-ct-ui5-webc": "^0.0.3",\n"cypress": "^13.11.0",`
+				? `"@ui5/cypress-ct-ui5-webc": "^0.0.4",\n"cypress": "^13.11.0",`
 				: "",
 		INIT_PACKAGE_CYPRESS_TEST_COMMANDS:
 			testSetup === "cypress"
@@ -176,18 +174,6 @@ const createWebcomponentsPackage = async () => {
 		);
 	}
 
-	if (argv.componentName && !isComponentNameValid(argv.componentName)) {
-		throw new Error(
-			"The component name should be a string, starting with a capital letter [A-Z][a-z], for example: Button, MyButton, etc.",
-		);
-	}
-
-	if (argv.tag && !isTagValid(argv.tag)) {
-		throw new Error(
-			"The tag should be in kebab-case (f.e my-component) and it can't be a single word.",
-		);
-	}
-
 	if (argv.testSetup && !isTestSetupValid(argv.testSetup)) {
 		throw new Error(
 			`The test setup should be a string and one of the following options: ${SUPPORTED_TEST_SETUPS.join(", ")}`,
@@ -195,7 +181,7 @@ const createWebcomponentsPackage = async () => {
 	}
 
 	let packageName = argv.name || "my-package";
-	let componentName = argv.componentName || "MyComponent";
+	let componentName = "MyComponent";
 	let testSetup = argv.testSetup || "manual";
 	const skipSubfolder = !!argv.skipSubfolder;
 
@@ -219,20 +205,6 @@ const createWebcomponentsPackage = async () => {
 					: "Package name should be a string, starting with a letter and containing the following symbols [a-z, A-Z ,0-9, _, -].",
 		});
 		packageName = response.name;
-	}
-
-	if (!argv.componentName) {
-		response = await prompts({
-			type: "text",
-			name: "componentName",
-			message: "Component name:",
-			initial: "MyComponent",
-			validate: value =>
-				isComponentNameValid(value)
-					? true
-					: "Component name should follow PascalCase naming convention (f.e. Button, MyButton, etc.).",
-		});
-		componentName = response.componentName;
 	}
 
 	if (!argv.testSetup) {
