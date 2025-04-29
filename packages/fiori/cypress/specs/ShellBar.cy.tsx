@@ -495,7 +495,7 @@ describe("Slots", () => {
 			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", false);
 		});
 
-		it.only("Test search field is collapsed initially instead of being displayed in full width mode", () => {
+		it("Test search field is collapsed initially instead of being displayed in full width mode", () => {
 			cy.viewport(500, 1080);
 			cy.mount(
 				// needs some content to trigger the full width mode

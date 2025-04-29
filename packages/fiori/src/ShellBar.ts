@@ -25,7 +25,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import { isDesktop, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import search from "@ui5/webcomponents-icons/dist/search.js";
 import da from "@ui5/webcomponents-icons/dist/da.js";
 import bell from "@ui5/webcomponents-icons/dist/bell.js";
@@ -511,6 +511,9 @@ class ShellBar extends UI5Element {
 	@slot()
 	midContent!: Array<HTMLElement>;
 
+	@property({ type: Boolean })
+	showSearchField = false;
+
 	/**
 	 * Define the items displayed in the content area.
 	 *
@@ -540,6 +543,9 @@ class ShellBar extends UI5Element {
 	_autoRestoreSearchField = false;
 
 	_headerPress: () => void;
+	onSearchOpen: () => void;
+	onSearchClose: () => void;
+	onSearch: () => void;
 	_showSearchField = false;
 
 	static get FIORI_3_BREAKPOINTS() {
@@ -581,6 +587,20 @@ class ShellBar extends UI5Element {
 				const menuPopover = this._getMenuPopover();
 				menuPopover.opener = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!;
 				menuPopover.open = true;
+			}
+		};
+
+		this.onSearchOpen = () => {
+			this.setSearchState(true);
+		};
+
+		this.onSearchClose = () => {
+			this.setSearchState(false);
+		};
+
+		this.onSearch = () => {
+			if (!this.search?.value && !isPhone()) {
+				this.setSearchState(!this.showSearchField);
 			}
 		};
 
@@ -769,28 +789,14 @@ class ShellBar extends UI5Element {
 			this.setSearchState(false);
 			this._autoRestoreSearchField = true;
 		}
-	}
 
-	/**
-	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
-	 *
-	 * **Note:** By default the Search Field is not displayed.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	set showSearchField(value: boolean) {
 		if (isSelfCollapsibleSearch(this.search)) {
-			this.search.collapsed = !value;
+			if (isPhone()) {
+				this.search.open = this.showSearchField;
+			} else {
+				this.search.collapsed = !this.showSearchField;
+			}
 		}
-		this._showSearchField = value;
-	}
-
-	get showSearchField(): boolean {
-		if (isSelfCollapsibleSearch(this.search)) {
-			return !this.search.collapsed;
-		}
-		return this._showSearchField;
 	}
 
 	/**
@@ -915,6 +921,13 @@ class ShellBar extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResize);
+
+		if (isSelfCollapsibleSearch(this.search)) {
+			this.search.addEventListener("open", this.onSearchOpen);
+			this.search.addEventListener("close", this.onSearchClose);
+			this.search.addEventListener("search", this.onSearch);
+		}
+
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
@@ -924,6 +937,12 @@ class ShellBar extends UI5Element {
 		this.contentItemsObserver.disconnect();
 		this._observableContent = [];
 		ResizeHandler.deregister(this, this._handleResize);
+
+		if (isSelfCollapsibleSearch(this.search)) {
+			this.search.removeEventListener("open", this.onSearchOpen);
+			this.search.removeEventListener("close", this.onSearchClose);
+			this.search.removeEventListener("search", this.onSearch);
+		}
 	}
 
 	_handleSearchIconPress() {
@@ -1644,11 +1663,12 @@ class ShellBar extends UI5Element {
 
 interface IShellBarSelfCollapsibleSearch {
 	collapsed: boolean;
+	open: boolean;
 }
 
 const isSelfCollapsibleSearch = (searchField: any): searchField is IShellBarSelfCollapsibleSearch => {
 	if (searchField) {
-		return "collapsed" in searchField;
+		return "collapsed" in searchField && "open" in searchField;
 	}
 	return false;
 };
