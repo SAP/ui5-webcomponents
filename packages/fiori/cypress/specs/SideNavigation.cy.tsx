@@ -139,13 +139,13 @@ describe("Side Navigation interaction", () => {
 
 		// assert
 		cy.get("#item1").should("not.have.attr", "expanded");
-		cy.get("#item1").should("have.attr", "selected");
+		cy.get("#item1").shadow().find(".ui5-sn-item-level1").should("have.class", "ui5-sn-item-selected");
 
 		// act
 		cy.get("#item1").shadow().find(".ui5-sn-item-toggle-icon").realClick();
 
 		// assert
-		cy.get("#item1").should("not.have.attr", "selected");
+		cy.get("#item1").shadow().find(".ui5-sn-item-level1").should("not.have.class", "ui5-sn-item-selected");
 
 	});
 

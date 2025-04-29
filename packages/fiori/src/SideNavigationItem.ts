@@ -273,10 +273,12 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		if (this.items.length) {
 			this.expanded = !this.expanded;
 
-			if (!this.sideNavCollapsed && this.expanded) {
-				this.selected = false;
-			} else {
-				this.selected = true;
+			if (this.items.some(item => item.selected)) {
+				if (!this.sideNavCollapsed && this.expanded) {
+					this.getDomRef()!.querySelector(".ui5-sn-item-level1")!.classList.remove("ui5-sn-item-selected");
+				} else {
+					this.getDomRef()!.querySelector(".ui5-sn-item-level1")!.classList.add("ui5-sn-item-selected");
+				}
 			}
 		}
 	}
