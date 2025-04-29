@@ -114,6 +114,9 @@ type ListItemClickEventDetail = {
 
 type ListMoveEventDetail = MoveEventDetail;
 
+// Specific template type for the drag ghost
+type ListDragElementTemplate = (this: List) => JSX.Element;
+
 /**
  * @class
  *
@@ -487,6 +490,13 @@ class List extends UI5Element {
 	mediaRange = "S";
 
 	/**
+	 * The custom template for the drag ghost element.
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	dragElementTemplate?: ListDragElementTemplate;
+
+	/**
 	 * Defines the items of the component.
 	 *
 	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
@@ -591,6 +601,18 @@ class List extends UI5Element {
 	onBeforeRendering() {
 		this.detachGroupHeaderEvents();
 		this.prepareListItems();
+
+		if (this.showDragGhost) {
+			// If feature is already loaded (preloaded by the user via importing ListItemStandardExpandableText.js), the template is already available
+			if (List.ListDragElementTemplate) {
+				this.dragElementTemplate = List.ListDragElementTemplate;
+			// If feature is not preloaded, load the template dynamically
+			} else {
+				import("./features/ListDragElementTemplate.js").then(module => {
+					this.dragElementTemplate = module.default;
+				});
+			}
+		}
 	}
 
 	onAfterRendering() {
@@ -1462,6 +1484,8 @@ class List extends UI5Element {
 
 		return this.growingIntersectionObserver;
 	}
+
+	static ListDragElementTemplate?: ListDragElementTemplate;
 }
 
 List.define();

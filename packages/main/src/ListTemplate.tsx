@@ -1,7 +1,6 @@
 import BusyIndicator from "./BusyIndicator.js";
 import DropIndicator from "./DropIndicator.js";
 import type List from "./List.js";
-import ListItemStandard from "./ListItemStandard.js";
 
 export default function ListTemplate(this: List) {
 	return (
@@ -118,11 +117,5 @@ function moreRow(this: List) {
 }
 
 function dragGhost(this: List) {
-	return (
-		<div aria-hidden="true">
-			<ListItemStandard data-custom-drag-ghost class="ui5-list-drag-ghost">
-				{this.dragGhostText}
-			</ListItemStandard>
-		</div>
-	);
+	return this.dragElementTemplate?.call(this);
 }
