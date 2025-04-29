@@ -80,14 +80,19 @@ class SliderTooltip extends UI5Element {
 		this._repositionTooltipBound = this.repositionTooltip.bind(this);
 	}
 
-	onBeforeRendering(): void {
-		this.setAttribute("popover", "manual");
-		this.togglePopover(this.open);
+	onBeforeRendering(): void { }
+
+	onAfterRendering(): void {
+		if (!this.hasAttribute("popover")) {
+			this.setAttribute("popover", "manual");
+		}
 
 		if (this.open) {
+			this.showPopover();
 			this.repositionTooltip();
 			this.attachGlobalScrollHandler();
 		} else {
+			this.hidePopover();
 			this.detachGlobalScrollHandler();
 		}
 	}
