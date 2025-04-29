@@ -16,8 +16,6 @@ Usage:
 
 Options:
     --name <string>                      - defines the package name
-    --component-name <string>            - defines the component class name that will be created in your new package
-    --tag <string>                       - defines the tag name of the sample web component that will be created in your new package
     --test-setup <"cypress" | "manual">  - defines whether the predefined test setup should be added or it will be configured manually.
     --skip                               - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```
@@ -32,8 +30,6 @@ Usage:
     yarn create @ui5/webcomponents-package [OPTIONS]
 Options:
     --name <string>                      - defines the package name
-    --component-name <string>            - defines the component class name that will be created in your new package
-    --tag <string>                       - defines the tag name of the sample web component that will be created in your new package
     --test-setup <"cypress" | "manual">  - defines whether the predefined test setup should be added or it will be configured manually.
     --skip                               - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```

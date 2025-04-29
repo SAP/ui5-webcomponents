@@ -182,7 +182,7 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 		});
 
 		it("select row via SPACE", () => {
-			cy.get("@row0").realClick({ position: "left" });
+			cy.get("@row0").realClick();
 			cy.get("@row0").realPress("Space");
 			checkSelection(testConfigEntry.cases.SPACE.space_0);
 

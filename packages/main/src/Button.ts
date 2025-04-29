@@ -32,7 +32,12 @@ import ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import type ButtonBadge from "./ButtonBadge.js";
 import ButtonTemplate from "./ButtonTemplate.js";
-import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
+import {
+	BUTTON_ARIA_TYPE_ACCEPT,
+	BUTTON_ARIA_TYPE_REJECT,
+	BUTTON_ARIA_TYPE_EMPHASIZED,
+	BUTTON_ARIA_TYPE_ATTENTION,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
@@ -367,7 +372,8 @@ class Button extends UI5Element implements IButton {
 		this.hasEndIcon = !!this.endIcon;
 		this.iconOnly = this.isIconOnly;
 
-		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
+		const defaultTooltip = await this.getDefaultTooltip();
+		this.buttonTitle = this.iconOnly ? this.tooltip ?? defaultTooltip : this.tooltip;
 	}
 
 	_setBadgeOverlayStyle() {
@@ -481,6 +487,7 @@ class Button extends UI5Element implements IButton {
 			"Positive": BUTTON_ARIA_TYPE_ACCEPT,
 			"Negative": BUTTON_ARIA_TYPE_REJECT,
 			"Emphasized": BUTTON_ARIA_TYPE_EMPHASIZED,
+			"Attention": BUTTON_ARIA_TYPE_ATTENTION,
 		};
 	}
 
@@ -514,20 +521,16 @@ class Button extends UI5Element implements IButton {
 		return this.nonInteractive ? -1 : Number.parseInt(this.forcedTabIndex);
 	}
 
-	get showIconTooltip() {
-		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
-	}
-
 	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	get ariaDescribedbyText() {
-		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
-	}
-
 	get ariaDescriptionText() {
-		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
+		const ariaDescribedByText = this.hasButtonType ? this.buttonTypeText : "";
+		const accessibleDescription = this.accessibleDescription || "";
+		const ariaDescriptionText = `${ariaDescribedByText} ${accessibleDescription}`.trim();
+
+		return ariaDescriptionText || undefined;
 	}
 
 	get _isSubmit() {
