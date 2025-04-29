@@ -7,7 +7,7 @@ import chokidar from "chokidar";
 import scopeVariables from "./scope-variables.mjs";
 import { writeFileIfChanged, getFileContent } from "./shared.mjs";
 
-const tsMode = true;
+const tsMode = process.env.UI5_TS === "true";
 const extension = tsMode ? ".css.ts" : ".css.js";
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"))
