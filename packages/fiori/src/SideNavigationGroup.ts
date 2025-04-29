@@ -141,11 +141,13 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 	_onkeydown(e: KeyboardEvent) {
 		if (isLeft(e) || isMinus(e)) {
+			e.preventDefault();
 			this.expanded = false;
 			return;
 		}
 
 		if (isRight(e) || isPlus(e)) {
+			e.preventDefault();
 			this.expanded = true;
 		}
 	}

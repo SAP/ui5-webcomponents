@@ -1,7 +1,12 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter,
+	isLeft,
+	isRight,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
@@ -194,11 +199,21 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isSpace(e)) {
+		const isRTL = this.effectiveDir === "rtl";
+
+		if (isSpace(e) || isRight(e) || isLeft(e)) {
 			e.preventDefault();
 		}
 
 		if (isEnter(e)) {
+			this._activate(e);
+		}
+
+		if ((isRTL ? isLeft(e) : isRight(e)) && this.sideNavCollapsed) {
+			this._activate(e);
+		}
+
+		if ((isRTL ? isRight(e) : isLeft(e)) && !this.sideNavCollapsed) {
 			this._activate(e);
 		}
 	}
