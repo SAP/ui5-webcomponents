@@ -29,14 +29,21 @@ import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
 import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";
 import "@ui5/webcomponents-fiori/dist/illustrations/NoNotifications.js";
 
+import "@ui5/webcomponents-fiori/dist/UserMenu.js";
+import "@ui5/webcomponents-fiori/dist/UserMenuAccount.js";
+import "@ui5/webcomponents-fiori/dist/UserMenuItem.js";
+
+import "@ui5/webcomponents-icons/dist/globe.js";
+import "@ui5/webcomponents-icons/dist/collaborate.js";
+import "@ui5/webcomponents-icons/dist/official-service.js";
+import "@ui5/webcomponents-icons/dist/private.js";
+import "@ui5/webcomponents-icons/dist/accelerated.js";
+
 import "@ui5/webcomponents-icons/dist/da.js";
 import "@ui5/webcomponents-icons/dist/da-2.js";
 import "@ui5/webcomponents-icons/dist/menu2.js";
-import "@ui5/webcomponents-icons/dist/sys-find.js";
 import "@ui5/webcomponents-icons/dist/settings.js";
-import "@ui5/webcomponents-icons/dist/edit.js";
 import "@ui5/webcomponents-icons/dist/sys-help.js";
-import "@ui5/webcomponents-icons/dist/log.js";
 import "@ui5/webcomponents-icons/dist/home.js";
 import "@ui5/webcomponents-icons/dist/favorite-list.js";
 import "@ui5/webcomponents-icons/dist/account.js";
@@ -50,12 +57,6 @@ import "@ui5/webcomponents-icons/dist/sort.js"
 import "@ui5/webcomponents-icons/dist/expense-report.js";
 
 const shellbar = document.getElementById("shellbar");
-const actionPopover = document.getElementById("action-popover");
-
-shellbar.addEventListener("ui5-profile-click", (event) => {
-    actionPopover.opener = event.detail.targetRef;
-	actionPopover.open = true;
-});
 
 [...document.querySelectorAll("ui5-toggle-button")].forEach(el => {
 	el.addEventListener("click", event => {
@@ -195,3 +196,66 @@ btnOpenMenuSort.addEventListener("click", () => {
 	menu.open = true;
 });
 /* End Notifications */
+
+/* User Menu */
+const userMenu = document.getElementById("userMenu");
+
+shellbar.addEventListener("ui5-profile-click", (event) => {
+	userMenu.opener = event.detail.targetRef;
+	userMenu.open = true;
+});
+
+userMenu.addEventListener("item-click", function (event) {
+	const item = event.detail.item.getAttribute("data-id");
+
+	switch (item) {
+		case "setting":
+			console.log("Open Setting Dialog");
+			break;
+		case "privacy-policy":
+			console.log("Privacy Policy");
+			break;
+		case "terms-of-use":
+			console.log("Terms of Use");
+			break;
+		case "account-action1":
+			console.log("Product-specific account action 1");
+			break;
+		case "account-action2":
+			console.log("Product-specific account action 2");
+			break;
+		default:
+			console.log("Default");
+	}
+});
+
+userMenu.addEventListener("avatar-click", function () {
+	console.log("Avatar clicked");
+});
+
+userMenu.addEventListener("manage-account-click", function () {
+	console.log("Manage account clicked");
+});
+
+userMenu.addEventListener("edit-accounts-click", function () {
+	console.log("Edit accounts clicked");
+});
+
+userMenu.addEventListener("change-account", function (event) {
+	console.log("Change account account", event.detail);
+	event.detail.selectedAccount.loading = true;
+	setTimeout(function(){
+		event.detail.selectedAccount.loading = false;
+	}, 1000);
+});
+
+userMenu.addEventListener("sign-out-click", function (event) {
+	console.log("Sign Out clicked");
+
+	const result = prompt("Sign Out", "Are you sure you want to sign out?");
+	if (result) {
+		userMenu.open = false;
+	}
+	event.preventDefault();
+});
+/* End User Menu */
