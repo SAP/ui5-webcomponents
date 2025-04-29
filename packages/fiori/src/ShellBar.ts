@@ -368,6 +368,16 @@ class ShellBar extends UI5Element {
 	showProductSwitch = false;
 
 	/**
+	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
+	 *
+	 * **Note:** By default the Search Field is not displayed.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showSearchField = false;
+
+	/**
 	 * Defines additional accessibility attributes on different areas of the component.
 	 *
 	 * The accessibilityAttributes object has the following fields,
@@ -511,9 +521,6 @@ class ShellBar extends UI5Element {
 	@slot()
 	midContent!: Array<HTMLElement>;
 
-	@property({ type: Boolean })
-	showSearchField = false;
-
 	/**
 	 * Define the items displayed in the content area.
 	 *
@@ -546,7 +553,6 @@ class ShellBar extends UI5Element {
 	onSearchOpen: () => void;
 	onSearchClose: () => void;
 	onSearch: () => void;
-	_showSearchField = false;
 
 	static get FIORI_3_BREAKPOINTS() {
 		return [
