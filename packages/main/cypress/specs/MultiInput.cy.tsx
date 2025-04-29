@@ -1,6 +1,7 @@
 import SuggestionItem from "../../src/SuggestionItem.js";
 import MultiInput from "../../src/MultiInput.js";
 import "../../src/Token.js";
+import { MULTIINPUT_VALUE_HELP } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("MultiInput Web Component", () => {
 	it("creates only one token when typing 'ad' and pressing Enter", () => {
@@ -38,11 +39,34 @@ describe("MultiInput Web Component", () => {
 		cy.get("#suggestion-token")
 			.shadow()
 			.find("input")
-			.type("ad{enter}");
+			.realClick();
+
+		cy.realType("ad");
+		cy.realPress("Enter");
 
 		cy.get("ui5-multi-input")
 			.find("ui5-token")
 			.should("have.length", 1)
 			.and("have.attr", "text", "ad");
+	});
+
+	it("Value Help announcement", () => {
+		const valueHelpId = "hiddenText-value-help";
+
+		cy.mount(<MultiInput showValueHelpIcon={true}></MultiInput>);
+
+		cy.get("[ui5-multi-input]")
+			.as("multiInput");
+
+		cy.get("@multiInput")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-describedby")
+			.and("include", valueHelpId);
+
+		cy.get("@multiInput")
+			.shadow()
+			.find(`#${valueHelpId}`)
+			.should("have.text", MULTIINPUT_VALUE_HELP.defaultText);
 	});
 });

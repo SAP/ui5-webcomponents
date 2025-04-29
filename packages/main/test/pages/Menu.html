@@ -12,6 +12,14 @@
 	<link rel="stylesheet" type="text/css" href="./styles/Menu.css">
 </head>
 
+<style>
+	.center-content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>
+
 <body class="bg">
 	<ui5-button id="btnOpen">Open Menu</ui5-button> <br/>
 	<ui5-menu id="menu" header-text="My ui5-menu">
@@ -116,7 +124,19 @@
 	</ui5-popover>
 
 
-	<ui5-button id="btnAddOpenerDelay">Delayed</ui5-button>
+	<ui5-button id="btnAddOpenerDelay">Delayed</ui5-button> <br/><br/>
+
+	<ui5-title level="H5" class="header-title">Menu with right alignment</ui5-title>
+
+	<div class="center-content">
+		<ui5-button id="btnOpenRight">Open Menu</ui5-button> <br/>
+	</div>
+
+	<ui5-menu id="menuRight" header-text="Menu" horizontal-align="End">
+		<ui5-menu-item text="Open" icon="open-folder"></ui5-menu-item>
+		<ui5-menu-separator></ui5-menu-separator>
+		<ui5-menu-item text="Close" additional-text="Ctrl+W" ></ui5-menu-item>
+	</ui5-menu>
 
 	<script>
 		btnOpen.accessibilityAttributes = {
@@ -131,6 +151,11 @@
 		btnOpenEndContent.addEventListener("click", function() {
 			menuEndContent.opener = "btnOpenEndContent";
 			menuEndContent.open = !menu.open;
+		});
+
+		btnOpenRight.addEventListener ("click", function() {
+			menuRight.opener = "btnOpenRight";
+			menuRight.open = !menuRight.open;
 		});
 
 		btnAddOpener.addEventListener("click", function() {

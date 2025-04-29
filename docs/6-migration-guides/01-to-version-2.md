@@ -1684,7 +1684,7 @@ import PopoverPlacementType from "@ui5/webcomponents/dist/types/PopoverPlacement
 
 Now use `placement` instead:
 ```html
-<ui5-placement="Bottom"></ui5-popover>
+<ui5-popover placement="Bottom"></ui5-popover>
 ```
 ```js
 import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js";
@@ -2315,13 +2315,11 @@ toast.addEventListener("close", (event) => {
 If you previously used the `show()` method:
 ```ts
 toast.show();
-});
 ```
 Now, you must use the `open` property:
 
 ```ts
-toast.open=true
-});
+toast.open=true;
 ```
 
 

@@ -8,3 +8,7 @@
 .popin-colon {
     padding-inline-end: 0.5rem;
 }
+
+.popin-header {
+    display: contents;
+}

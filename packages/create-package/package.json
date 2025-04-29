@@ -1,9 +1,10 @@
 {
   "name": "@ui5/create-webcomponents-package",
-  "version": "2.8.0-rc.0",
+  "version": "2.10.0-rc.2",
   "description": "UI5 Web Components: create package",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
+  "type": "module",
   "private": false,
   "keywords": [
     "openui5",
@@ -19,8 +20,10 @@
     "directory": "packages/create-package"
   },
   "dependencies": {
+    "globby": "^13.1.1",
     "mkdirp": "^1.0.4",
     "npm-config-user-agent-parser": "^1.0.0",
+    "prettier": "^3.5.3",
     "prompts": "^2.4.1",
     "yargs": "^17.5.1"
   }

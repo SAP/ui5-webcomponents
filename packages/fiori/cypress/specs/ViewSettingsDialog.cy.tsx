@@ -168,3 +168,206 @@ describe("View settings dialog - selection", () => {
 			.should("not.be.visible");
 	});
 });
+
+describe("ViewSettingsDialog Tests", () => {
+	it("should open the ViewSettingsDialog and verify initial state", () => {
+		cy.mount(
+			<ViewSettingsDialog id="vsd">
+				<SortItem slot="sortItems" text="Name"></SortItem>
+				<SortItem slot="sortItems" text="Position"></SortItem>
+				<SortItem slot="sortItems" text="Company"></SortItem>
+				<SortItem slot="sortItems" text="Department"></SortItem>
+			</ViewSettingsDialog>
+		);
+
+		cy.get("[ui5-view-settings-dialog]")
+			.as("vsd")
+			.invoke("prop", "open", true);
+
+		cy.get("@vsd")
+			.shadow()
+			.find("[ui5-dialog]")
+			.shadow()
+			.find("[root-element='true']")
+			.first()
+			.should("have.attr", "aria-label", "View Settings");
+
+		cy.get("@vsd")
+			.shadow()
+			.find("ui5-list ui5-li[selected]")
+			.should("exist")
+			.should("contain.text", "Ascending");
+
+		cy.get("@vsd")
+			.shadow()
+			.find("[sort-by] ui5-li[selected]")
+			.should("not.exist");
+
+		cy.get("@vsd")
+			.invoke("prop", "open", false);
+	});
+
+	it("should change sortOrder and confirm selection", () => {
+		cy.mount(
+			<ViewSettingsDialog id="vsd">
+				<SortItem slot="sortItems" text="Name"></SortItem>
+				<SortItem slot="sortItems" text="Position"></SortItem>
+				<SortItem slot="sortItems" text="Company"></SortItem>
+				<SortItem slot="sortItems" text="Department"></SortItem>
+			</ViewSettingsDialog>
+		);
+
+		cy.get("[ui5-view-settings-dialog]")
+			.as("vsd")
+			.invoke("prop", "open", true);
+
+		cy.get("@vsd")
+			.shadow()
+			.find("ui5-list ui5-li")
+			.eq(1)
+			.realClick();
+
+		cy.get("@vsd")
+			.shadow()
+			.find(".ui5-vsd-footer ui5-button")
+			.realClick();
+
+		cy.get("[ui5-view-settings-dialog]")
+			.as("vsd")
+			.invoke("prop", "open", true);
+
+		cy.get("@vsd")
+			.shadow()
+			.find("ui5-list ui5-li[selected]")
+			.should("contain.text", "Descending");
+
+		cy.get("@vsd")
+			.invoke("prop", "open", false);
+	});
+
+	it("should change sortBy selection and verify persistence", () => {
+		cy.mount(
+			<ViewSettingsDialog id="vsd">
+				<SortItem slot="sortItems" text="Name"></SortItem>
+				<SortItem slot="sortItems" text="Position"></SortItem>
+				<SortItem slot="sortItems" text="Company"></SortItem>
+				<SortItem slot="sortItems" text="Department"></SortItem>
+			</ViewSettingsDialog>
+		);
+
+		cy.get("[ui5-view-settings-dialog]")
+			.as("vsd")
+			.invoke("prop", "open", true);
+
+		cy.get("@vsd")
+			.shadow()
+			.find("[sort-by] ui5-li")
+			.realClick();
+
+		cy.get("@vsd")
+			.shadow()
+			.find(".ui5-vsd-footer ui5-button")
+			.realClick();
+
+		cy.get("[ui5-view-settings-dialog]")
+			.as("vsd")
+			.invoke("prop", "open", true);
+
+		cy.get("@vsd")
+			.shadow()
+			.find("[sort-by] ui5-li[selected]")
+			.should("contain.text", "Name");
+
+		cy.get("@vsd")
+			.invoke("prop", "open", false);
+	});
+
+	it("should reset settings to initial values", () => {
+		cy.mount(
+			<ViewSettingsDialog id="vsd">
+				<SortItem slot="sortItems" text="Name"></SortItem>
+				<SortItem slot="sortItems" text="Position"></SortItem>
+				<SortItem slot="sortItems" text="Company"></SortItem>
+				<SortItem slot="sortItems" text="Department"></SortItem>
+			</ViewSettingsDialog>
+		);
+
+		cy.get("[ui5-view-settings-dialog]")
+			.as("vsd")
+			.invoke("prop", "open", true);
+
+		cy.get("@vsd")
+			.shadow()
+			.find(".ui5-vsd-header ui5-button")
+			.realClick();
+
+		cy.get("@vsd")
+			.shadow()
+			.find("ui5-list ui5-li[selected]")
+			.should("contain.text", "Ascending");
+
+		cy.get("@vsd")
+			.shadow()
+			.find("[sort-by] ui5-li[selected]")
+			.should("not.exist");
+
+		cy.get("@vsd")
+			.invoke("prop", "open", false);
+	});
+
+	it("should handle filter-only mode", () => {
+		cy.mount(
+			<ViewSettingsDialog id="vsdFilter">
+				<FilterItem slot="filterItems" text="Filter 1">
+					<FilterItemOption slot="values" text="Some filter 1"></FilterItemOption>
+					<FilterItemOption slot="values" text="Some filter 2"></FilterItemOption>
+					<FilterItemOption slot="values" text="Some filter 3"></FilterItemOption>
+				</FilterItem>
+				<FilterItem slot="filterItems" text="Filter 2">
+					<FilterItemOption slot="values" text="Some filter 4"></FilterItemOption>
+					<FilterItemOption slot="values" text="Some filter 5"></FilterItemOption>
+					<FilterItemOption slot="values" text="Some filter 6"></FilterItemOption>
+				</FilterItem>
+			</ViewSettingsDialog>
+		);
+
+		cy.get("#vsdFilter")
+			.as("vsd");
+
+		cy.get("@vsd")
+			.invoke("prop", "open", true);
+
+		cy.get("@vsd")
+			.shadow()
+			.find("[ui5-segmented-button]")
+			.should("not.exist");
+
+		cy.get("@vsd")
+			.invoke("prop", "open", false);
+	});
+
+	it("should handle sort-only mode", () => {
+		cy.mount(
+			<ViewSettingsDialog id="vsdSort">
+				<SortItem slot="sortItems" text="Name"></SortItem>
+				<SortItem slot="sortItems" text="Position"></SortItem>
+				<SortItem slot="sortItems" text="Company"></SortItem>
+				<SortItem slot="sortItems" text="Department"></SortItem>
+			</ViewSettingsDialog>
+		);
+
+		cy.get("#vsdSort")
+			.as("vsd");
+
+		cy.get("@vsd")
+			.invoke("prop", "open", true);
+
+		cy.get("@vsd")
+			.shadow()
+			.find("[ui5-segmented-button]")
+			.should("not.exist");
+
+		cy.get("@vsd")
+			.invoke("prop", "open", false);
+	});
+});

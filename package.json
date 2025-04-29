@@ -36,13 +36,16 @@
     "scopeStart:all": "npm-run-all --parallel watch:base scopeWatch:main scopeWatch:compat scopeWatch:ai scopeWatch:fiori dev",
     "start:website": "yarn ci:releasebuild && yarn workspace @ui5/webcomponents-website start",
 
-    "start": "npm-run-all --sequential generate start:all",
-    "build": "yarn ci:releasebuild",
+    "start": "npm-run-all --sequential generate ci:test:prepare start:all",
+    "build": "yarn ci:releasebuild && yarn ci:test:prepare",
     "test": "yarn wsrun --exclude-missing test",
+    "test:prepare": "yarn ci:test:prepare && yarn generate",
+    "ci:test:prepare": "yarn workspace @ui5/cypress-ct-ui5-webc build && yarn workspace @ui5/cypress-internal build",
+
 
     "ci:releasebuild": "npm-run-all --sequential generate ts generateProd generateAPI",
     "ci:lint": "npm-run-all --sequential generate lint",
-    "ci:testbuild": "npm-run-all --sequential generate ts generateProd bundle",
+    "ci:testbuild": "npm-run-all --sequential generate ts generateProd bundle ci:test:prepare",
     "ci:deploy": "DEPLOY=true yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build",
     "ci:deploy:nightly": "DEPLOY_NIGHTLY=true yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build:nightly",
 
@@ -88,6 +91,8 @@
   },
   "workspaces": [
     "packages/theming",
+    "packages/cypress-ct-ui5-webc",
+    "packages/cypress-internal",
     "packages/base",
     "packages/localization",
     "packages/main",

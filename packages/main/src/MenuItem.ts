@@ -209,7 +209,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: MenuItemAccessibilityAttributes = {};
+	declare accessibilityAttributes: MenuItemAccessibilityAttributes;
 
 	/**
 	 * Indicates whether any of the element siblings have icon.
@@ -305,10 +305,6 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	get isSubMenuOpen() {
 		return this._popover?.open;
-	}
-
-	get ariaLabelledByText() {
-		return `${this.text} ${this.accessibleName}`.trim();
 	}
 
 	get menuHeaderTextPhone() {
@@ -429,6 +425,10 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	_afterPopoverClose() {
 		this.fireDecoratorEvent("close");
+	}
+
+	get isMenuItem(): boolean {
+		return true;
 	}
 }
 

@@ -13,8 +13,16 @@ import Menu from "../../../src/Menu.js";
 import MultiComboBox from "../../../src/MultiComboBox.js";
 import MultiComboBoxItem from "../../../src/MultiComboBoxItem.js";
 import CheckBox from "../../../src/CheckBox.js";
+import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import type ResponsivePopover from "../../../src/ResponsivePopover.js";
 
 describe("Event bubbling", () => {
+	before(() => {
+		cy.wrap({ setAnimationMode })
+			.invoke("setAnimationMode", AnimationMode.None);
+	})
+
 	it("test bubbling events", () => {
 		cy.mount(
 			<div id="app">
@@ -76,12 +84,22 @@ describe("Event bubbling", () => {
 
 		cy.get("@dialog").invoke("attr", "open", true);
 
+		cy.get<Dialog>("@dialog")
+			.ui5DialogOpened()
+
 		// act - toggle Input suggestions
 		cy.get("@input")
 			.realClick();
 
 		cy.get("@input")
-			.realType("a");
+			.should("be.focused");
+
+		cy.realType("a");
+
+		cy.get("@input")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
 
 		cy.get("@input")
 			.find("[ui5-suggestion-item]")
@@ -98,16 +116,15 @@ describe("Event bubbling", () => {
 			.realClick();
 
 		// assert
-		// - the close event of the MessageStrip doesn't bubble
-		// - the close event of the Input bubbles: Input -> Dialog -> App
+		// - the close event of the Dialog is not triggered because MessageStrip and Input do not bubble
 		cy.get("@inpClosed")
 			.should("have.been.calledOnce");
 		cy.get("@msgClosed")
 			.should("have.been.calledOnce");
 		cy.get("@dialogClosed")
-			.should("have.been.calledOnce");
+			.should("have.been.not.called");
 		cy.get("@appClosed")
-			.should("have.been.calledOnce");
+			.should("have.been.not.called");
 
 		// act - toggle Panel
 		cy.get("@panel")
@@ -133,7 +150,7 @@ describe("Event bubbling", () => {
 					</Select>
 
 					<Button id="btnOpen">Open Menu</Button>
-					<Menu id="myMenu" header-text="Menu" opener="btnOpen">
+					<Menu id="myMenu" headerText="Menu" opener="btnOpen">
 						<MenuItem text="New File"></MenuItem>
 						<MenuItem text="New Folder"></MenuItem>
 					</Menu>
@@ -222,7 +239,7 @@ describe("Event bubbling", () => {
 
 		// assert - the open event of the MultiComboBox do not bubble
 		cy.get("@mcbOpened").should("have.been.calledOnce");
-		cy.get("@dialogOpened").should("have.been.calledTwice");
+		cy.get("@dialogOpened").should("have.been.calledOnce");
 
 		cy.get("@multiComboboxIcon")
 			.realClick();

@@ -168,17 +168,19 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	/**
 	 * Defines the background color of the desired image.
-	 * @default "Accent6"
+	 * If `colorScheme` is set to `Auto`, the avatar will be displayed with the `Accent6` color.
+	 *
+	 * @default "Auto"
 	 * @public
 	 */
 	@property()
-	colorScheme: `${AvatarColorScheme}` = "Accent6";
+	colorScheme: `${AvatarColorScheme}` = "Auto";
 
 	/**
 	 * @private
 	 */
 	@property()
-	_colorScheme: `${AvatarColorScheme}` = "Accent6";
+	_colorScheme: `${AvatarColorScheme}` = "Auto";
 
 	/**
 	 * Defines the text alternative of the component.
@@ -213,7 +215,10 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	/**
 	 * Receives the desired `<img>` tag
 	 *
-	 * **Note:** If you experience flickering of the provided image, you can hide the component until it is being defined with the following CSS:
+	 * **Note:** If you experience flickering of the provided image, you can hide the component until it is defined with the following CSS:<br/>
+	 * `ui5-avatar:not(:defined) {`<br/>
+	 * &nbsp;&nbsp;&nbsp;&nbsp;`visibility: hidden;`<br/>
+	 * `}`
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -261,10 +266,10 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	/**
 	 * Returns the effective background color.
-	 * @default "Accent6"
+	 * @default "Auto"
 	 * @private
 	 */
-	get еffectiveBackgroundColor(): AvatarColorScheme {
+	get effectiveBackgroundColor(): AvatarColorScheme {
 		// we read the attribute, because the "background-color" property will always have a default value
 		return this.getAttribute("color-scheme") as AvatarColorScheme || this._colorScheme;
 	}

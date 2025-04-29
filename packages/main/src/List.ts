@@ -44,7 +44,7 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
-import type ListAccessibleRole from "./types/ListAccessibleRole.js";
+import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import type ListItemBase from "./ListItemBase.js";
 import type {
 	ListItemBasePressEventDetail,
@@ -55,6 +55,7 @@ import type {
 	SelectionRequestEventDetail,
 } from "./ListItem.js";
 import ListSeparator from "./types/ListSeparator.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 
 // Template
 import ListTemplate from "./ListTemplate.js";
@@ -64,6 +65,8 @@ import listCss from "./generated/themes/List.css.js";
 
 // Texts
 import {
+	LIST_ROLE_LIST_GROUP_DESCRIPTION,
+	LIST_ROLE_LISTBOX_GROUP_DESCRIPTION,
 	LOAD_MORE_TEXT, ARIA_LABEL_LIST_SELECTABLE,
 	ARIA_LABEL_LIST_MULTISELECTABLE,
 	ARIA_LABEL_LIST_DELETABLE,
@@ -463,6 +466,14 @@ class List extends UI5Element {
 	_loadMoreActive = false;
 
 	/**
+	 * Defines the current media query size.
+	 * @default "S"
+	 * @private
+	 */
+	@property()
+	mediaRange = "S";
+
+	/**
 	 * Defines the items of the component.
 	 *
 	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
@@ -489,11 +500,12 @@ class List extends UI5Element {
 	static i18nBundle: I18nBundle;
 	_previouslyFocusedItem: ListItemBase | null;
 	_forwardingFocus: boolean;
-	resizeListenerAttached: boolean;
 	listEndObserved: boolean;
-	_handleResize: ResizeObserverCallback;
+	_handleResizeCallback: ResizeObserverCallback;
 	initialIntersection: boolean;
 	_selectionRequested?: boolean;
+	_groupCount: number;
+	_groupItemCount: number;
 	growingIntersectionObserver?: IntersectionObserver | null;
 	_itemNavigation: ItemNavigation;
 	_beforeElement?: HTMLElement | null;
@@ -512,9 +524,6 @@ class List extends UI5Element {
 		// Indicates that the List is forwarding the focus before or after the internal ul.
 		this._forwardingFocus = false;
 
-		// Indicates that the List has already subscribed for resize.
-		this.resizeListenerAttached = false;
-
 		// Indicates if the IntersectionObserver started observing the List
 		this.listEndObserved = false;
 
@@ -524,13 +533,13 @@ class List extends UI5Element {
 			getItemsCallback: () => this.getEnabledItems(),
 		});
 
-		this._handleResize = this.checkListInViewport.bind(this);
-
-		this._handleResize = this.checkListInViewport.bind(this);
+		this._handleResizeCallback = this._handleResize.bind(this);
 
 		// Indicates the List bottom most part has been detected by the IntersectionObserver
 		// for the first time.
 		this.initialIntersection = true;
+		this._groupCount = 0;
+		this._groupItemCount = 0;
 
 		this.onItemFocusedBound = this.onItemFocused.bind(this);
 		this.onForwardAfterBound = this.onForwardAfter.bind(this);
@@ -556,13 +565,13 @@ class List extends UI5Element {
 	onEnterDOM() {
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
 		DragRegistry.subscribe(this);
+		ResizeHandler.register(this.getDomRef()!, this._handleResizeCallback);
 	}
 
 	onExitDOM() {
 		deregisterUI5Element(this);
 		this.unobserveListEnd();
-		this.resizeListenerAttached = false;
-		ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
+		ResizeHandler.deregister(this.getDomRef()!, this._handleResizeCallback);
 		DragRegistry.unsubscribe(this);
 	}
 
@@ -581,7 +590,6 @@ class List extends UI5Element {
 
 		if (this.grows) {
 			this.checkListInViewport();
-			this.attachForResize();
 		}
 	}
 
@@ -605,13 +613,6 @@ class List extends UI5Element {
 				item.removeEventListener("ui5-forward-before", this.onForwardBeforeBound as EventListener);
 			}
 		});
-	}
-
-	attachForResize() {
-		if (!this.resizeListenerAttached) {
-			this.resizeListenerAttached = true;
-			ResizeHandler.register(this.getDomRef()!, this._handleResize);
-		}
 	}
 
 	get shouldRenderH1() {
@@ -685,7 +686,33 @@ class List extends UI5Element {
 	}
 
 	get ariaDescriptionText() {
-		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this);
+		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this) || this._getDescriptionForGroups();
+	}
+
+	get scrollContainer() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-list-scroll-container");
+	}
+
+	hasGrowingComponent(): boolean {
+		if (this.growsOnScroll && this.scrollContainer) {
+			return this.scrollContainer.clientHeight !== this.scrollContainer.scrollHeight;
+		}
+
+		return this.growsWithButton;
+	}
+
+	_getDescriptionForGroups(): string {
+		let description = "";
+
+		if (this._groupCount > 0) {
+			if (this.accessibleRole === ListAccessibleRole.List) {
+				description = List.i18nBundle.getText(LIST_ROLE_LIST_GROUP_DESCRIPTION, this._groupCount, this._groupItemCount);
+			} else if (this.accessibleRole === ListAccessibleRole.ListBox) {
+				description = List.i18nBundle.getText(LIST_ROLE_LISTBOX_GROUP_DESCRIPTION, this._groupCount);
+			}
+		}
+
+		return description;
 	}
 
 	get ariaLabelModeText(): string {
@@ -744,6 +771,8 @@ class List extends UI5Element {
 				(item as ListItem)._selectionMode = this.selectionMode;
 			}
 			item.hasBorder = showBottomBorder;
+
+			(item as ListItem).mediaRange = this.mediaRange;
 		});
 	}
 
@@ -850,15 +879,23 @@ class List extends UI5Element {
 		// drill down when we see ui5-li-group and get the items
 		const items: ListItemBase[] = [];
 		const slottedItems = this.getSlottedNodes<ListItemBase>("items");
+		let groupCount = 0;
+		let groupItemCount = 0;
 
 		slottedItems.forEach(item => {
 			if (isInstanceOfListItemGroup(item)) {
 				const groupItems = [item.groupHeaderItem, ...item.items.filter(listItem => listItem.assignedSlot)].filter(Boolean);
 				items.push(...groupItems);
+				groupCount++;
+				// subtract group itself for proper group header item count
+				groupItemCount += groupItems.length - 1;
 			} else {
 				item.assignedSlot && items.push(item);
 			}
 		});
+
+		this._groupCount = groupCount;
+		this._groupItemCount = groupItemCount;
 
 		return items;
 	}
@@ -1020,10 +1057,16 @@ class List extends UI5Element {
 	}
 
 	loadMore() {
-		// don't fire load-more on initial mount
-		if (this.children.length > 0) {
+		if (this.hasGrowingComponent()) {
 			this.fireDecoratorEvent("load-more");
 		}
+	}
+
+	_handleResize() {
+		this.checkListInViewport();
+
+		const width = this.getBoundingClientRect().width;
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
 	/*

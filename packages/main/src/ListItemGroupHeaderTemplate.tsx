@@ -2,9 +2,9 @@ import type ListItemGroupHeader from "./ListItemGroupHeader.js";
 
 export default function ListItemGroupHeaderTemplate(this: ListItemGroupHeader) {
 	return (
-		<ul
-			role="group"
+		<div
 			part="native-li"
+			role={this.effectiveAccRole}
 			tabindex={this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined}
 			class={{
 				"ui5-ghli-root": true,
@@ -18,6 +18,8 @@ export default function ListItemGroupHeaderTemplate(this: ListItemGroupHeader) {
 			<div id={`${this._id}-content`} class="ui5-li-content">
 				<span class="ui5-ghli-title"><slot></slot></span>
 			</div>
-		</ul>
+
+			{this.hasSubItems && <slot name="subItems"></slot>}
+		</div>
 	);
 }

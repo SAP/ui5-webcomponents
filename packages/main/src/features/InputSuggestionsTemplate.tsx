@@ -6,8 +6,13 @@ import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
 import Button from "../Button.js";
+import ListAccessibleRole from "../types/ListAccessibleRole.js";
 
-export default function InputSuggestionsTemplate(this: Input, valueStateMessage: (this: Input) => JsxTemplateResult, valueStateMessageInputIcon: (this: Input) => string) {
+export default function InputSuggestionsTemplate(this: Input, hooks?: { suggestionsList?: (this: Input) => JsxTemplateResult, valueStateMessage: (this: Input) => JsxTemplateResult, valueStateMessageInputIcon: (this: Input) => string }) {
+	const suggestionsList = hooks?.suggestionsList || defaultSuggestionsList;
+	const valueStateMessage = hooks?.valueStateMessage;
+	const valueStateMessageInputIcon = hooks?.valueStateMessageInputIcon;
+
 	return (
 		<ResponsivePopover
 			class={this.classes.popover}
@@ -55,8 +60,8 @@ export default function InputSuggestionsTemplate(this: Input, valueStateMessage:
 
 					{this.hasValueStateMessage &&
 					<div class={this.classes.popoverValueState} style={this.styles.suggestionPopoverHeader}>
-						<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)} />
-						{ this.open && valueStateMessage.call(this) }
+						<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon?.call(this)} />
+						{ this.open && valueStateMessage?.call(this) }
 					</div>
 					}
 				</>
@@ -72,8 +77,8 @@ export default function InputSuggestionsTemplate(this: Input, valueStateMessage:
 						}}
 						style={this.styles.suggestionPopoverHeader}
 					>
-						<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)} />
-						{ this.open && valueStateMessage.call(this) }
+						<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon?.call(this)} />
+						{ this.open && valueStateMessage?.call(this) }
 					</div>
 			}
 
@@ -93,9 +98,10 @@ export default function InputSuggestionsTemplate(this: Input, valueStateMessage:
 	);
 }
 
-function suggestionsList(this: Input) {
+function defaultSuggestionsList(this: Input) {
 	return (
 		<List
+			accessibleRole={ListAccessibleRole.ListBox}
 			separators={this.suggestionSeparators}
 			selectionMode="Single"
 			onMouseDown={this.onItemMouseDown}

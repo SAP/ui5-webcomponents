@@ -11,6 +11,9 @@ dist
 coverage
 .nyc_output
 
+# Cypress internal logs
+cypress-logs
+
 # scoping feature generated entry points for vite consumption
 packages/compat/test/pages/scoped
 packages/main/test/pages/scoped

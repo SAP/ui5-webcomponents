@@ -318,7 +318,7 @@ describe("Form support", () => {
 			<MultiComboBox id="multi_combobox8" name="multi_combobox8" value="ok">
 				<MultiComboBoxItem selected text="ok"></MultiComboBoxItem>
 			</MultiComboBox>
-			<MultiComboBox id="multi_combobox9" no-validation required
+			<MultiComboBox id="multi_combobox9" noValidation required
 				name="multi_combobox9"></MultiComboBox>
 			<MultiComboBox id="multi_combobox10" required name="multi_combobox10" value="ok"></MultiComboBox>
 			<MultiComboBox id="multi_combobox11" required name="multi_combobox11">
@@ -380,7 +380,7 @@ describe("Form support", () => {
 				<Token slot="tokens" text="ok"></Token>
 			</MultiInput>
 
-			<MultiInput id="multi_input9" allow-custom-values required name="multi_input9"></MultiInput>
+			<MultiInput id="multi_input9" required name="multi_input9"></MultiInput>
 			<MultiInput id="multi_input10" required name="multi_input10" value="ok"></MultiInput>
 			<MultiInput id="multi_input11" required name="multi_input11">
 				<Token slot="tokens" text="ok"></Token>
@@ -520,9 +520,9 @@ describe("Form support", () => {
 	it("ui5-range-slider in form", () => {
 		cy.mount(<form method="get">
 			<RangeSlider id="range_slider1"></RangeSlider>
-			<RangeSlider id="range_slider2" start-value="25" end-value="75"></RangeSlider>
+			<RangeSlider id="range_slider2" startValue={25} endValue={75}></RangeSlider>
 			<RangeSlider id="range_slider3" name="range_slider3"></RangeSlider>
-			<RangeSlider id="range_slider4" name="range_slider4" start-value="25" end-value="75"></RangeSlider>
+			<RangeSlider id="range_slider4" name="range_slider4" startValue={25} endValue={75}></RangeSlider>
 			<button type="submit">Submits forms</button>
 		</form>);
 
@@ -563,16 +563,46 @@ describe("Form support", () => {
 				<Option value="" selected>Option 3</Option>
 			</Select>
 
+			<Select value="Option 1">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+
+			<Select value="option2">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+			<Select value="Option 3">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+
 			<Select id="select4" name="select4">
 				<Option selected>Option 1</Option>
 				<Option value="option2">Option 2</Option>
 				<Option value="">Option 3</Option>
 			</Select>
+
+			<Select id="select44" name="select44" value="Option 1">
+				<Option selected>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+
 			<Select id="select5" name="select5">
 				<Option>Option 1</Option>
 				<Option value="option2" selected>Option 2</Option>
 				<Option value="">Option 3</Option>
 			</Select>
+			<Select id="select55" name="select55" value="option2">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+
 			<Select id="select7" name="select7" required>
 				<Option selected>Option 1</Option>
 				<Option value="option2">Option 2</Option>
@@ -587,6 +617,22 @@ describe("Form support", () => {
 				<Option>Option 1</Option>
 				<Option value="option2">Option 2</Option>
 				<Option value="" selected>Option 3</Option>
+			</Select>
+
+			<Select id="select77" name="select77" required value="Option 1">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+			<Select id="select88" name="select88" required value="option2">
+				<Option>Option 1</Option>
+				<Option value="option2" selected>Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+			<Select id="select99" name="select99" required value="Option 3">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
 			</Select>
 
 			<button type="submit">Submits forms</button>
@@ -630,6 +676,17 @@ describe("Form support", () => {
 			.eq(1)
 			.realClick();
 
+		cy.get("#select99")
+			.realClick();
+
+		cy.get("#select99")
+			.should("have.attr", "opened");
+
+		cy.get("#select99")
+			.find("[ui5-option]")
+			.eq(1)
+			.realClick();
+
 		cy.get("button")
 			.realClick();
 
@@ -640,7 +697,7 @@ describe("Form support", () => {
 			.then($el => {
 				return getFormData($el.get(0));
 			})
-			.should("be.equal", "select4=Option 1&select5=option2&select6=&select7=Option 1&select8=option2&select9=option2");
+			.should("be.equal", "select4=Option 1&select44=Option 1&select5=option2&select55=option2&select6=&select7=Option 1&select8=option2&select9=option2&select77=Option 1&select88=option2&select99=option2");
 	});
 
 	it("ui5-slider in form", () => {

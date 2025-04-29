@@ -54,7 +54,7 @@ export default function ListTemplate(this: List) {
 						<slot></slot>
 
 						{this.showNoDataText &&
-							<li tabindex={0} id={`${this._id}-nodata`} class="ui5-list-nodata">
+							<li tabindex={0} id={`${this._id}-nodata`} class="ui5-list-nodata" role="listitem">
 								<div id={`${this._id}-nodata-text`} class="ui5-list-nodata-text">
 									{this.noDataText}
 								</div>
@@ -102,6 +102,7 @@ function moreRow(this: List) {
 				{this.loading &&
 					<BusyIndicator
 						delay={this.loadingDelay}
+						part="growing-button-busy-indicator"
 						class="ui5-list-growing-button-busy-indicator"
 						active>
 					</BusyIndicator>

@@ -18,6 +18,7 @@ export default function ResponsivePopoverTemplate(this: ResponsivePopover) {
 			accessibleRole={this.accessibleRole}
 			stretch={true}
 			preventInitialFocus={this.preventInitialFocus}
+			preventFocusRestore={this.preventFocusRestore}
 			initialFocus={this.initialFocus}
 			onBeforeOpen={this._beforeDialogOpen}
 			onOpen={this._afterDialogOpen}

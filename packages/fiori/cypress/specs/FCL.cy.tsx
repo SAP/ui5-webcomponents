@@ -1,10 +1,11 @@
 import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import FlexibleColumnLayout from "../../src/FlexibleColumnLayout.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 
 describe("Columns resize", () => {
 	beforeEach(() => {
 		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", "none");
+			.invoke("setAnimationMode", AnimationMode.None);
 
 		cy.mount(
 			<FlexibleColumnLayout id="fcl" style={{ height: "300px" }} layout="TwoColumnsMidExpanded">
@@ -66,6 +67,15 @@ describe("Columns resize", () => {
 			.find(".ui5-fcl-column--start")
 			.should($el => {
 				expect(widthAfterMove).to.be.equal($el.width()!);
+			});
+	});
+
+	it("sets dedicated class to hidden columns", () => {
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-column--end")
+			.should($el => {
+				expect($el).to.have.class("ui5-fcl-column--hidden");
 			});
 	});
 });
