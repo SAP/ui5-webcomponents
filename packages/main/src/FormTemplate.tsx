@@ -6,6 +6,7 @@ export default function FormTemplate(this: Form) {
 		<div
 			class="ui5-form-root"
 			role={this.effectiveAccessibleRole}
+			aria-label={this.effectiveAccessibleName}
 			aria-labelledby={this.effectiveАccessibleNameRef}
 		>
 			{this.hasHeader &&

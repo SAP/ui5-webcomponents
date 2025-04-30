@@ -51,12 +51,12 @@ class FormGroup extends UI5Element implements IFormItem {
 	/**
 	 * Defines the compoennt heading level,
 	 * set by the `headerText`.
-	 * @default "H5"
+	 * @default "H3"
 	 * @public
 	 * @since 2.10.0
 	*/
 	@property()
-	headerLevel: `${TitleLevel}` = "H5";
+	headerLevel: `${TitleLevel}` = "H3";
 
 	/**
 	 * Defines column span of the component,
