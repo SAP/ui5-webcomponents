@@ -28,12 +28,14 @@ a.theme-link {
 	color: var(--sapButton_Emphasized_TextColor);
 	background-color: var(--sapButton_Emphasized_Background);
 	text-decoration: none;
+	border-radius: 0.25rem;
 }
 
 a.lang-link {
 	color: var(--sapButton_Attention_TextColor);
 	background-color: var(--sapButton_Attention_Background);
 	text-decoration: none;
+	border-radius: 0.25rem;
 }
 
 .app {
