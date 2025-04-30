@@ -198,7 +198,8 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* @default false
-	* @private
+	* @public
+ 	* @since 2.10.0
 	*/
 	@property({ type: Boolean })
 	decorative = false;
