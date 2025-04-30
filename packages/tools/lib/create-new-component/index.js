@@ -4,14 +4,14 @@ const Component = require("./Component.js");
 const ComponentTemplate= require("./ComponentTemplate.js");
 
 /**
- * Hyphanates the given PascalCase string, f.e.:
- * Foo -> "my-foo" (adds preffix)
- * FooBar -> "foo-bar"
+ * Hyphanates the given PascalCase string and adds prefix, f.e.:
+ * Foo -> "my-foo"
+ * FooBar -> "my-foo-bar"
  */
 const hyphaneteComponentName = (componentName) => {
 	const result = componentName.replace(/([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
 
-	return result.includes("-") ? result : `my-${result}`;
+	return `my-${result}`;
 };
 
 /**
