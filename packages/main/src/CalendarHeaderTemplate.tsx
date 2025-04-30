@@ -40,9 +40,13 @@ export default function CalendarTemplate(this: Calendar) {
 
 				<div
 					data-ui5-cal-header-btn-year
-					class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
+					class={{
+						"ui5-calheader-arrowbtn": true,
+						"ui5-calheader-middlebtn": true,
+						"ui5-calheader-yearbtn-disabled": this._isHeaderYearButtonDisabled,
+					}}
 					hidden={this._isHeaderYearButtonHidden}
-					tabindex={0}
+					tabindex={this._isHeaderYearButtonDisabled ? -1 : 0}
 					role="button"
 					onClick={this.onHeaderShowYearPress}
 					onKeyDown={this.onYearButtonKeyDown}

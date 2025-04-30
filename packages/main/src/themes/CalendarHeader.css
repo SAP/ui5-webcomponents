@@ -26,6 +26,25 @@
 	user-select: none;
 }
 
+/* Todo: Remove with introduction of YearRangePicker */
+.ui5-calheader-middlebtn.ui5-calheader-yearbtn-disabled:hover,
+.ui5-calheader-middlebtn.ui5-calheader-yearbtn-disabled:active,
+.ui5-calheader-middlebtn.ui5-calheader-yearbtn-disabled:focus,
+.ui5-calheader-middlebtn.ui5-calheader-yearbtn-disabled:focus:active,
+.ui5-calheader-middlebtn.ui5-calheader-yearbtn-disabled {
+	cursor: default;
+	outline: none;
+	background-color: var(--sapButton_Lite_Background);
+	color: var(--sapButton_Lite_TextColor);
+	border: transparent;
+	box-shadow: none;
+}
+
+/* Todo: Remove with introduction of YearRangePicker */
+.ui5-calheader-middlebtn.ui5-calheader-yearbtn-disabled:active .ui5-calheader-btn-sectext {
+	color: var(--sapNeutralElementColor);
+}
+
 .ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled:hover,
 .ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled:active,
 .ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled:focus,
@@ -35,6 +54,7 @@
 	outline: none;
 	background-color: var(--sapButton_Lite_Background);
 	color: var(--sapButton_Lite_TextColor);
+	box-shadow: none;
 }
 
 [hidden].ui5-calheader-arrowbtn.ui5-calheader-middlebtn {
@@ -73,7 +93,6 @@
 
 .ui5-calheader-arrowbtn:not(:active) .ui5-calheader-btn-sectext {
 	color: var(--sapNeutralElementColor);
-	font-size: var(--sapFontSmallSize);
 }
 
 .ui5-calheader-arrowicon {

@@ -601,6 +601,15 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	get _isHeaderYearButtonHidden(): boolean {
+		return false;
+	}
+
+	/**
+	 * The year button is non-interactive when the year picker is shown
+	 * Note: This will be removed with the introduction of the YearRangePicker
+	 * @private
+	 */
+	get _isHeaderYearButtonDisabled(): boolean {
 		return this._currentPicker === "year";
 	}
 
