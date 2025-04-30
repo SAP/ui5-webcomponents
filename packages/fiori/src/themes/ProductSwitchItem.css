@@ -95,7 +95,7 @@
 }
 
 .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-title {
-	font-size:var( --sapFontHeader6Size);
+	font-size:var(--sapFontHeader6Size);
 	color:var(--sapGroup_TitleTextColor);
 }
 
@@ -107,7 +107,7 @@
 }
 
 .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle {
-	font-size:var( --sapFontSmallSize);
+	font-size:var(--sapFontSmallSize);
 	color:var(--sapContent_LabelColor);
 }
 
