@@ -43,7 +43,6 @@
 @import "./RadioButton-parameters.css";
 @import "./Switch-parameters.css";
 @import "./Select-parameters.css";
-@import "./SelectPopover-parameters.css";
 @import "./SplitButton-parameters.css";
 @import "./TabContainer-parameters.css";
 @import "../base/Text-parameters.css";
@@ -55,7 +54,6 @@
 @import "./CalendarHeader-parameters.css";
 @import "./Token-parameters.css";
 @import "./Tokenizer-parameters.css";
-@import "../base/MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
 @import "./ValueStateMessage-parameters.css";
 @import "../base/Toolbar-parameters.css";
