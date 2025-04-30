@@ -27,7 +27,7 @@
 @import "./InputIcon-parameters.css";
 @import "./Link-parameters.css";
 @import "./List-parameters.css";
-@import "./ListItemBase-parameters.css";
+@import "../base/ListItemBase-parameters.css";
 @import "./Menu-parameters.css";
 @import "./MonthPicker-parameters.css";
 @import "./MessageStrip-parameters.css";
@@ -50,12 +50,12 @@
 @import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
-@import "./ToggleButton-parameters.css";
+@import "../base/ToggleButton-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";
 @import "./Token-parameters.css";
 @import "./Tokenizer-parameters.css";
-@import "./MultiComboBox-parameters.css";
+@import "../base/MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
 @import "./ValueStateMessage-parameters.css";
 @import "../base/Toolbar-parameters.css";
