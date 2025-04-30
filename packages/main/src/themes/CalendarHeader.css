@@ -54,7 +54,6 @@
 	outline: none;
 	background-color: var(--sapButton_Lite_Background);
 	color: var(--sapButton_Lite_TextColor);
-	box-shadow: none;
 }
 
 [hidden].ui5-calheader-arrowbtn.ui5-calheader-middlebtn {
