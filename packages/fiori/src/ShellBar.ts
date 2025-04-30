@@ -35,6 +35,7 @@ import type {
 	ClassMap,
 	AccessibilityAttributes,
 	AriaRole,
+	UI5CustomEvent,
 } from "@ui5/webcomponents-base";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
@@ -133,7 +134,7 @@ interface IShelBarItemInfo extends IShellBarHidableItem {
 	title?: string,
 	stableDomRef?: string,
 	refItemid?: string,
-	press: (e: MouseEvent) => void,
+	press: (e: UI5CustomEvent<Button, "click">) => void,
 	order?: number,
 	profile?: boolean,
 	tooltip?: string,
@@ -958,7 +959,7 @@ class ShellBar extends UI5Element {
 		this._defaultItemPressPrevented = false;
 	}
 
-	_handleCustomActionPress(e: MouseEvent) {
+	_handleCustomActionPress(e: UI5CustomEvent<Button, "click">) {
 		const target = e.target as HTMLElement;
 		const refItemId = target.getAttribute("data-ui5-external-action-item-id");
 
@@ -977,7 +978,7 @@ class ShellBar extends UI5Element {
 		this._toggleActionPopover();
 	}
 
-	_handleNotificationsPress(e: MouseEvent) {
+	_handleNotificationsPress(e: UI5CustomEvent<Button, "click">) {
 		const notificationIconRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-bell-button")!,
 			target = e.target as HTMLElement;
 
@@ -997,7 +998,7 @@ class ShellBar extends UI5Element {
 		this.setSearchState(false);
 	}
 
-	_handleProductSwitchPress(e: MouseEvent) {
+	_handleProductSwitchPress(e: UI5CustomEvent<Button, "click">) {
 		const buttonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-button-product-switch")!,
 			target = e.target as HTMLElement;
 
@@ -1512,7 +1513,7 @@ class ShellBar extends UI5Element {
 		return this.contentItems.length > 0;
 	}
 
-	get hidableDomElements(): HTMLElement [] {
+	get hidableDomElements(): HTMLElement[] {
 		const items = Array.from(this.shadowRoot!.querySelectorAll<HTMLElement>(".ui5-shellbar-button:not(.ui5-shellbar-search-button):not(.ui5-shellbar-overflow-button):not(.ui5-shellbar-cancel-button):not(.ui5-shellbar-no-overflow-button)"));
 		const assistant = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-assistant-button");
 		const searchToggle = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-search-toggle");
