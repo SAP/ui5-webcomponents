@@ -197,6 +197,9 @@ class IllustratedMessage extends UI5Element {
 	media?: string;
 
 	/**
+ 	* Defines whether the illustration is decorative.
+	* 
+	* When set to `true`, the attributes `role="presentation"` and `aria-hidden="true"` are applied to the SVG element.
 	* @default false
 	* @public
  	* @since 2.10.0
