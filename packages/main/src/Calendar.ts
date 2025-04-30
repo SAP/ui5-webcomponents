@@ -265,6 +265,12 @@ class Calendar extends CalendarPart {
 	@property()
 	_headerYearButtonTextSecType?: string;
 
+	@property()
+	_headerYearRangeButtonText?: string;
+
+	@property()
+	_headerYearRangeButtonTextSecType?: string;
+
 	@property({ noAttribute: true })
 	_pickersMode: `${CalendarPickersMode}` = "DAY_MONTH_YEAR";
 
@@ -477,6 +483,7 @@ class Calendar extends CalendarPart {
 		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		this._headerMonthButtonText = localeData.getMonthsStandAlone("wide", this.primaryCalendarType)[this._calendarDate.getMonth()];
+		this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
 
 		if (this._currentPicker === "year") {
 			const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
@@ -484,9 +491,7 @@ class Calendar extends CalendarPart {
 			rangeStart.setYear(this._currentPickerDOM._firstYear!);
 			rangeEnd.setYear(this._currentPickerDOM._lastYear!);
 
-			this._headerYearButtonText = `${yearFormat.format(rangeStart.toLocalJSDate(), true)} - ${yearFormat.format(rangeEnd.toLocalJSDate(), true)}`;
-		} else {
-			this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
+			this._headerYearRangeButtonText = `${yearFormat.format(rangeStart.toLocalJSDate(), true)} - ${yearFormat.format(rangeEnd.toLocalJSDate(), true)}`;
 		}
 
 		this._secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
@@ -553,6 +558,7 @@ class Calendar extends CalendarPart {
 
 	_setSecondaryCalendarTypeButtonText() {
 		const yearFormatSecType = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
+		this._headerYearButtonTextSecType = String(yearFormatSecType.format(this._localDate, true));
 
 		if (this._currentPicker === "year") {
 			const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
@@ -564,9 +570,7 @@ class Calendar extends CalendarPart {
 				.firstDate;
 			const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this._secondaryCalendarType, rangeEnd.valueOf() / 1000, true)
 				.lastDate;
-			this._headerYearButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate(), true)} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate(), true)}`;
-		} else {
-			this._headerYearButtonTextSecType = String(yearFormatSecType.format(this._localDate, true));
+			this._headerYearRangeButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate(), true)} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate(), true)}`;
 		}
 	}
 
@@ -597,20 +601,19 @@ class Calendar extends CalendarPart {
 	}
 
 	/**
-	 * The year button is hidden when the year picker is shown
+	 * The year range button is shown only in the year picker
 	 * @private
 	 */
-	get _isHeaderYearButtonHidden(): boolean {
-		return false;
+	get _isHeaderYearRangeButtonHidden(): boolean {
+		return this._currentPicker !== "year";
 	}
 
 	/**
-	 * The year button is non-interactive when the year picker is shown
-	 * Note: This will be removed with the introduction of the YearRangePicker
+	 * The year button is shown only in the day & month pickers
 	 * @private
 	 */
-	get _isHeaderYearButtonDisabled(): boolean {
-		return this._currentPicker === "year";
+	get _isHeaderYearButtonHidden(): boolean {
+		return !(this._currentPicker === "day" || this._currentPicker === "month");
 	}
 
 	get _isDayPickerHidden() {
