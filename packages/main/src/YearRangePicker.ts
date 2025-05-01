@@ -128,8 +128,6 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 
 	_gridStartYear?: number;
 
-	_rangeSize: number = 20;
-
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -142,7 +140,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 			return;
 		}
 
-		this._calculateRangeSize();
+		this._gridStartYear = this._calculateGridStartYear();
 		this._buildYears();
 	}
 
@@ -166,47 +164,39 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 		return 2;
 	}
 
-	_calculateRangeSize() {
-		if (this.hasSecondaryCalendarType) {
-			this._rangeSize = 8;
-		}
-
-		const startYear = this._currentYearRange?.startYear;
-		const endYear = this._currentYearRange?.endYear;
-
-		if (startYear && endYear) {
-			this._rangeSize = endYear - startYear + 1;
-		}
+	_getRangeSize() {
+		return this.hasSecondaryCalendarType ? 8 : 20;
 	}
 
 	_calculateGridStartYear() {
+		const rangeSize = this._getRangeSize();
 		const pageSize = this._getPageSize();
-		const pageSizeInYears = this._rangeSize * pageSize;
-		const yearsOffset = this._rangeSize * this._getInitialFocusedIndex();
+		const pageSizeInYears = rangeSize * pageSize;
+		const yearsOffset = rangeSize * this._getInitialFocusedIndex();
 		const currentStartYear = this._currentYearRange?.startYear ? this._currentYearRange?.startYear : this._calendarDate.getYear();
 
 		// On first load, current range should be the 3rd item in the grid
-		if (!this._gridStartYear) {
-			this._gridStartYear = currentStartYear - yearsOffset;
-		}
+		let gridStartYear = this._gridStartYear ? this._gridStartYear : currentStartYear - yearsOffset;
 
 		// If page navigation occured, update the current range start year
-		if (currentStartYear < this._gridStartYear) {
-			this._gridStartYear -= pageSizeInYears;
-		} else if (currentStartYear >= this._gridStartYear + pageSizeInYears) {
-			this._gridStartYear += pageSizeInYears;
+		if (currentStartYear < gridStartYear) {
+			gridStartYear -= pageSizeInYears;
+		} else if (currentStartYear >= gridStartYear + pageSizeInYears) {
+			gridStartYear += pageSizeInYears;
 		}
 
 		// Normalize grid start year to be between the min and absolute max year
 		const minYear = this._minDate.getYear();
 		if (currentStartYear - pageSizeInYears < minYear) {
-			this._gridStartYear = minYear;
+			gridStartYear = minYear;
 		}
 
 		const absoluteMaxYear = getMaxCalendarDate(this._primaryCalendarType).getYear();
 		if (currentStartYear + pageSizeInYears > absoluteMaxYear) {
-			this._gridStartYear = absoluteMaxYear - pageSizeInYears + 1;
+			gridStartYear = absoluteMaxYear - pageSizeInYears + 1;
 		}
+
+		return gridStartYear;
 	}
 
 	_buildYears() {
@@ -216,12 +206,12 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 
 		const pageSize = this._getPageSize();
 		const rowSize = this._getRowSize();
+		const rangeSize = this._getRangeSize();
 
 		const calendarDate = this._calendarDate;
 		const minYear = this._minDate.getYear();
 		const maxYear = this._maxDate.getYear();
 
-		this._calculateGridStartYear();
 		const tempDate = new CalendarDate(calendarDate, this._primaryCalendarType);
 		tempDate.setYear(this._gridStartYear!);
 
@@ -229,7 +219,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 
 		for (let i = 0; i < pageSize; i++) {
 			const endDate = new CalendarDate(tempDate, this._primaryCalendarType);
-			endDate.setYear(endDate.getYear() + this._rangeSize - 1);
+			endDate.setYear(endDate.getYear() + rangeSize - 1);
 
 			const timestamp = tempDate.valueOf() / 1000;
 			const endTimestamp = endDate.valueOf() / 1000;
@@ -292,7 +282,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 				yearRanges[intervalIndex] = [yearRange];
 			}
 
-			tempDate.setYear(tempDate.getYear() + this._rangeSize);
+			tempDate.setYear(tempDate.getYear() + rangeSize);
 		}
 
 		this._yearRanges = yearRanges;
@@ -462,7 +452,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 	 * @protected
 	 */
 	_hasNextPage(): boolean {
-		const amountInYears = this._getPageSize() * this._rangeSize;
+		const amountInYears = this._getPageSize() * this._getRangeSize();
 		return this._gridStartYear! + amountInYears - 1 < this._maxDate.getYear();
 	}
 
@@ -475,7 +465,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 		const pageSize = this._getPageSize();
 		this._modifyTimestampBy(-pageSize);
 
-		const amountInYears = this._getPageSize() * this._rangeSize;
+		const amountInYears = pageSize * this._getRangeSize();
 		this._modifyGridStartBy(-amountInYears);
 	}
 
@@ -485,9 +475,10 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 	 * @protected
 	 */
 	_showNextPage() {
-		this._modifyTimestampBy(this._getPageSize());
+		const pageSize = this._getPageSize();
+		this._modifyTimestampBy(pageSize);
 
-		const amountInYears = this._getPageSize() * this._rangeSize;
+		const amountInYears = pageSize * this._getRangeSize();
 		this._modifyGridStartBy(amountInYears);
 	}
 
@@ -498,7 +489,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_modifyTimestampBy(amount: number) {
 		// Modify the current timestamp
-		const amountInYears = amount * this._rangeSize;
+		const amountInYears = amount * this._getRangeSize();
 		this._safelyModifyTimestampBy(amountInYears, "year");
 
 		// Notify the calendar to update its timestamp

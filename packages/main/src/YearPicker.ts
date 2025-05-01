@@ -141,6 +141,11 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	onBeforeRendering() {
+		if (this._hidden) {
+			return;
+		}
+
+		this._firstYear = this._currentYearRange?.startYear ? this._currentYearRange?.startYear : this._calendarDate.getYear();
 		this._buildYears();
 	}
 
@@ -155,14 +160,10 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_buildYears() {
-		if (this._hidden) {
-			return;
-		}
 		const pageSize = this._getPageSize();
 		const locale = getLocale() as unknown as LocaleT;
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, locale);
 		const oYearFormatInSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType }, locale);
-		this._firstYear = this._currentYearRange?.startYear ? this._currentYearRange?.startYear : this._calendarDate.getYear();
 
 		const calendarDate = this._calendarDate; // store the value of the expensive getter
 		const minDate = this._minDate; // store the value of the expensive getter
@@ -170,7 +171,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		const tempDate = new CalendarDate(calendarDate, this._primaryCalendarType);
 		let tempDateInSecType;
 		let textInSecType;
-		tempDate.setYear(this._firstYear);
+		tempDate.setYear(this._firstYear!);
 
 		const intervals: YearInterval = [];
 		let timestamp;

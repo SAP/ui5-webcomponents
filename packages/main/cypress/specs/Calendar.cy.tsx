@@ -165,7 +165,7 @@ describe("Calendar general interaction", () => {
 		cy.mount(getDefaultCalendar(new Date(date)));
 
 		cy.get<Calendar>("[ui5-calendar]")
-			.as("calendar")
+			.as("calendar");
 
 		cy.get<Calendar>("@calendar")
 			.ui5CalendarShowYearRangePicker();
@@ -189,10 +189,8 @@ describe("Calendar general interaction", () => {
 
 		cy.get("@focusedYearRange")
 			.find("span")
-			.should("have.length", 1)
-			.then(spans => {
-				expect(spans[0]).to.have.text(`${expectedRangeStart} - ${expectedRangeEnd}`);
-			});
+			.first()
+			.should("have.text", `${expectedRangeStart} - ${expectedRangeEnd}`);
 	});
 
 	it("Calendar doesn't mark year as selected when there are no selected dates", () => {
@@ -241,7 +239,7 @@ describe("Calendar general interaction", () => {
 		cy.mount(getDefaultCalendar(new Date(date)));
 
 		cy.get<Calendar>("[ui5-calendar]")
-			.as("calendar")
+			.as("calendar");
 
 		cy.get<Calendar>("@calendar")
 			.ui5CalendarShowYearRangePicker();
@@ -259,12 +257,10 @@ describe("Calendar general interaction", () => {
 
 		cy.get("@yearRangePickerItem")
 			.find("span")
-			.should("have.length", 1)
-			.then(spans => {
-				expect(spans[0]).to.have.text(`${expectedRangeStart} - ${expectedRangeEnd}`);
-			});
+			.first()
+			.should("have.text", `${expectedRangeStart} - ${expectedRangeEnd}`);
 
-			cy.get("@yearRangePickerItem")
+		cy.get("@yearRangePickerItem")
 			.realClick({position: "center"});
 
 		cy.get<Calendar>("@calendar")
@@ -279,9 +275,9 @@ describe("Calendar general interaction", () => {
 			.shadow()
 			.find(".ui5-yp-item")
 			.first()
-			.as("yearPickerItem")
+			.as("yearPickerItem");
 
-		cy.wait(100)
+		cy.wait(100);
 
 		cy.get("@yearPickerItem")
 			.invoke("attr", "data-sap-timestamp")
@@ -439,7 +435,7 @@ describe("Calendar general interaction", () => {
 		cy.mount(getDefaultCalendar(date));
 
 		cy.get<Calendar>("#calendar1")
-			.ui5CalendarShowYearRangePicker()
+			.ui5CalendarShowYearRangePicker();
 
 		cy.get<Calendar>("#calendar1")
 			.invoke("prop", "timestamp")
@@ -461,7 +457,7 @@ describe("Calendar general interaction", () => {
 		cy.mount(getDefaultCalendar(date));
 
 		cy.get<Calendar>("#calendar1")
-			.ui5CalendarShowYearRangePicker()
+			.ui5CalendarShowYearRangePicker();
 
 		cy.get<Calendar>("#calendar1")
 			.invoke("prop", "timestamp")
@@ -737,7 +733,7 @@ describe("Calendar general interaction", () => {
 		);
 
 		cy.get<Calendar>("[ui5-calendar]")
-			.as("calendar")
+			.as("calendar");
 
 		cy.get<Calendar>("@calendar")
 			.ui5CalendarShowYearRangePicker();
@@ -821,7 +817,7 @@ describe("Calendar general interaction", () => {
 		);
 
 		cy.get<Calendar>("[ui5-calendar]")
-			.as("calendar")
+			.as("calendar");
 
 		cy.get<Calendar>("@calendar")
 			.ui5CalendarShowYearRangePicker();
@@ -837,7 +833,7 @@ describe("Calendar general interaction", () => {
 			.as("yearRangePickerItems");
 
 		cy.get("@yearRangePickerItems")
-			.should("have.length", 8)
+			.should("have.length", 8);
 
 		// Only the first 2 items are enabled (1998-2017 and 2018-2037)
 		cy.get("@yearRangePickerItems")
