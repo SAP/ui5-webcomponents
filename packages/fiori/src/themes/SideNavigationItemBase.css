@@ -218,8 +218,7 @@ and there is an additional border that appears on hover. */
 
 :host(:not([side-nav-collapsed])) .ui5-sn-item-toggle-icon::part(root) {
 	padding-block: 0.25rem; /* height of the separator (the border left) should be --sapElement_Condensed_Height which is equal to 1.375rem (22px) */
-	border-inline-start: var(--_ui5_side_navigation_icon_border_start);
-	border-inline-end: var(--_ui5_side_navigation_icon_border_end);
+	border-inline-start: 0.0625rem solid var(--sapTextColor);
 	display: block;
 	height: 0.875rem;
 	width: var(--_ui5_side_navigation_expand_icon_width);
@@ -234,7 +233,6 @@ and there is an additional border that appears on hover. */
 :host([unselectable][side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
 :host([unselectable][side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon {
 	border-inline-start: none;
-	border-inline-end: none;
 }
 
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
