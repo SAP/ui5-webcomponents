@@ -197,6 +197,17 @@ class IllustratedMessage extends UI5Element {
 	media?: string;
 
 	/**
+ 	* Defines whether the illustration is decorative.
+	*
+	* When set to `true`, the attributes `role="presentation"` and `aria-hidden="true"` are applied to the SVG element.
+	* @default false
+	* @public
+ 	* @since 2.10.0
+	*/
+	@property({ type: Boolean })
+	decorative = false;
+
+	/**
 	* Defines the title of the component.
 	*
 	* **Note:** Using this slot, the default title text of illustration and the value of `title` property will be overwritten.
@@ -354,7 +365,20 @@ class IllustratedMessage extends UI5Element {
 
 	_setSVGAccAttrs() {
 		const svg = this.shadowRoot!.querySelector(".ui5-illustrated-message-illustration svg");
-		if (svg) {
+
+		if (!svg) {
+			return;
+		}
+
+		if (this.decorative) {
+			svg.setAttribute("role", "presentation");
+			svg.setAttribute("aria-hidden", "true");
+			svg.removeAttribute("aria-label");
+		} else {
+			svg.removeAttribute("role");
+			svg.removeAttribute("aria-hidden");
+
+			// Set aria-label only when not decorative and text exists
 			if (this.ariaLabelText) {
 				svg.setAttribute("aria-label", this.ariaLabelText);
 			} else {

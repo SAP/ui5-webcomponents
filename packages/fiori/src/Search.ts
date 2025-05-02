@@ -66,7 +66,7 @@ type SearchEventDetails = {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/fiori/dist/Search.js";`
+ * `import "@ui5/webcomponents-fiori/dist/Search.js";`
  *
  * @constructor
  * @extends SearchField
@@ -287,13 +287,11 @@ class Search extends SearchField {
 
 	_handleMobileInput(e: CustomEvent<InputEventDetail>) {
 		this.value = (e.target as Input).value;
-		this._performItemSelectionOnMobile = this._shouldPerformSelectionOnMobile(e);
+		this._performItemSelectionOnMobile = this._shouldPerformSelectionOnMobile(e.detail.inputType);
 
 		this.fireDecoratorEvent("input");
 	}
-
-	_shouldPerformSelectionOnMobile(e: CustomEvent<InputEventDetail>): boolean {
-		const eventType = e.detail.inputType;
+	_shouldPerformSelectionOnMobile(inputType: string): boolean {
 		const allowedEventTypes = [
 			"deleteWordBackward",
 			"deleteWordForward",
@@ -310,7 +308,7 @@ class Search extends SearchField {
 			"historyUndo",
 		];
 
-		return !this.noTypeahead && !allowedEventTypes.includes(eventType || "");
+		return !this.noTypeahead && !allowedEventTypes.includes(inputType || "");
 	}
 
 	_handleTypeAhead(item: ISearchSuggestionItem) {
@@ -430,7 +428,11 @@ class Search extends SearchField {
 	_handleInput(e: InputEvent) {
 		super._handleInput(e);
 
-		this.open = !isPhone() && ((e.currentTarget as HTMLInputElement).value.length > 0) && this._popoupHasAnyContent();
+		if (isPhone()) {
+			return;
+		}
+
+		this.open = ((e.currentTarget as HTMLInputElement).value.length > 0) && this._popoupHasAnyContent();
 	}
 
 	_popoupHasAnyContent() {
@@ -606,7 +608,7 @@ class Search extends SearchField {
 	get nativeInput() {
 		const domRef = this.getDomRef();
 
-		return domRef ? domRef.querySelector<HTMLInputElement>(`input`) : null;
+		return domRef?.querySelector<HTMLInputElement>(`input`);
 	}
 
 	get mobileInput() {

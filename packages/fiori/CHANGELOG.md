@@ -3,6 +3,85 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.2...v2.10.0-rc.3) (2025-05-01)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** change the container-type ([#11325](https://github.com/SAP/ui5-webcomponents/issues/11325)) ([8402ec8](https://github.com/SAP/ui5-webcomponents/commit/8402ec8cd47c3cf2b3f1ff54f5703e8a1545d0f9)), closes [#11309](https://github.com/SAP/ui5-webcomponents/issues/11309)
+* **ui5-flexible-column-layout:** column visibility issue fixed ([#11416](https://github.com/SAP/ui5-webcomponents/issues/11416)) ([996de94](https://github.com/SAP/ui5-webcomponents/commit/996de9498bf6b4f4befaf0e15f0489c2d6cc47b9))
+* **ui5-flexible-column-layout:** disable resizing for both separators ([#11411](https://github.com/SAP/ui5-webcomponents/issues/11411)) ([ccd18b1](https://github.com/SAP/ui5-webcomponents/commit/ccd18b1d539857fad33b869523284df99724d77b)), closes [#11402](https://github.com/SAP/ui5-webcomponents/issues/11402)
+* **ui5-flexible-column-layout:** min width of column adjusted to spec ([#11367](https://github.com/SAP/ui5-webcomponents/issues/11367)) ([e424f4e](https://github.com/SAP/ui5-webcomponents/commit/e424f4ea83662758394946b27434afe13a62ae54)), closes [#10997](https://github.com/SAP/ui5-webcomponents/issues/10997)
+* **ui5-shellbar:** fixed avatar font-size ([#11316](https://github.com/SAP/ui5-webcomponents/issues/11316)) ([d672c15](https://github.com/SAP/ui5-webcomponents/commit/d672c15db8eb8843a2ce899bbb8af6b7561fd37a))
+* **ui5-shellbar:** fixed avatar font-size var ([#11424](https://github.com/SAP/ui5-webcomponents/issues/11424)) ([06d206e](https://github.com/SAP/ui5-webcomponents/commit/06d206eaefa8416c784efdacc8e9c8860f849311))
+* **ui5-side-navigation:** improve accessibility for groups ([#11357](https://github.com/SAP/ui5-webcomponents/issues/11357)) ([a5531de](https://github.com/SAP/ui5-webcomponents/commit/a5531de5237b475fa876efeac277811f8cdd8e7d)), closes [#11349](https://github.com/SAP/ui5-webcomponents/issues/11349)
+* **ui5-side-navigation:** update font-weight for first level items ([#11409](https://github.com/SAP/ui5-webcomponents/issues/11409)) ([a894216](https://github.com/SAP/ui5-webcomponents/commit/a894216adbb0bfdbb707bf869cf0309d0638d914)), closes [#11403](https://github.com/SAP/ui5-webcomponents/issues/11403)
+
+
+### Features
+
+* **ui5-button:** make click button preventable ([#11318](https://github.com/SAP/ui5-webcomponents/issues/11318)) ([1f4aa92](https://github.com/SAP/ui5-webcomponents/commit/1f4aa927d2841e0c51f665ab2bdb851b1d030c35))
+* **ui5-shellbar-search:** initial implementation ([#11398](https://github.com/SAP/ui5-webcomponents/issues/11398)) ([ca372d0](https://github.com/SAP/ui5-webcomponents/commit/ca372d0f4fa5a97ce82f3eb72d973ee2f0d54c0b))
+
+
+
+
+
+# [2.10.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.1...v2.10.0-rc.2) (2025-04-24)
+
+
+### Bug Fixes
+
+* **ui5-side-navigation:** change font-family of the text of the items to semi-bold ([89d9924](https://github.com/SAP/ui5-webcomponents/commit/89d99246f93af5d8d9263b5eba1008ff3c048bf2))
+* **ui5-side-navigation:** correct hover styles of selected items ([#11319](https://github.com/SAP/ui5-webcomponents/issues/11319)) ([3ce13c8](https://github.com/SAP/ui5-webcomponents/commit/3ce13c8b6a985523399daebff3c9ee618886b89c)), closes [#11297](https://github.com/SAP/ui5-webcomponents/issues/11297)
+* **ui5-side-navigation:** fix disabled items and tooltips ([#11333](https://github.com/SAP/ui5-webcomponents/issues/11333)) ([7151dae](https://github.com/SAP/ui5-webcomponents/commit/7151daef6abbf8a68ef8b0f7c0909134124d8b10))
+
+
+
+
+
+# [2.10.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.0...v2.10.0-rc.1) (2025-04-17)
+
+
+### Bug Fixes
+
+* **ui5-form:** propagate `itemSpacing` properly ([#11312](https://github.com/SAP/ui5-webcomponents/issues/11312)) ([32b4fb2](https://github.com/SAP/ui5-webcomponents/commit/32b4fb23ff3baab75978b29ae8eb8da6f90c0652)), closes [#11307](https://github.com/SAP/ui5-webcomponents/issues/11307)
+* **ui5-side-navigation:** update CSS styles ([#11208](https://github.com/SAP/ui5-webcomponents/issues/11208)) ([076f910](https://github.com/SAP/ui5-webcomponents/commit/076f910c16a530537ab60f145fce2343e6ca604b)), closes [#11171](https://github.com/SAP/ui5-webcomponents/issues/11171)
+
+
+### Features
+
+* **ui5-shellbar:** add branding area accessibility attributes ([#11238](https://github.com/SAP/ui5-webcomponents/issues/11238)) ([7d6fdeb](https://github.com/SAP/ui5-webcomponents/commit/7d6fdeb90b9914bef37b6e09f8cab2f2d7c03bc7)), closes [#6826](https://github.com/SAP/ui5-webcomponents/issues/6826) [#8708](https://github.com/SAP/ui5-webcomponents/issues/8708)
+* **ui5-shellbar:** introduce async search btn getter ([#11338](https://github.com/SAP/ui5-webcomponents/issues/11338)) ([d5526dc](https://github.com/SAP/ui5-webcomponents/commit/d5526dc13410fb9253701ce29fb9b946571d983d))
+
+
+
+
+
+# [2.10.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.1-rc.0...v2.10.0-rc.0) (2025-04-14)
+
+
+### Bug Fixes
+
+* **ui5-side-navigation:** remove separator line ([#11306](https://github.com/SAP/ui5-webcomponents/issues/11306)) ([6480a06](https://github.com/SAP/ui5-webcomponents/commit/6480a0619d9819146aa5e204a66190944e1a4c32))
+
+
+
+
+
+## [2.9.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0...v2.9.1-rc.0) (2025-04-10)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** adjust scroll padding for header/footer ([#11193](https://github.com/SAP/ui5-webcomponents/issues/11193)) ([d35b9ce](https://github.com/SAP/ui5-webcomponents/commit/d35b9ce60bc6e2af5ae5113b7018fc0a12489dc0)), closes [#10847](https://github.com/SAP/ui5-webcomponents/issues/10847)
+* **ui5-navigation-layout:** adjust `z-index` values ([#11212](https://github.com/SAP/ui5-webcomponents/issues/11212)) ([d7a368a](https://github.com/SAP/ui5-webcomponents/commit/d7a368a02ce3d8483d36e1f11fa4fc6b5ebc3ce3)), closes [#11174](https://github.com/SAP/ui5-webcomponents/issues/11174)
+* **ui5-search:** stabilitze mobile test ([#11292](https://github.com/SAP/ui5-webcomponents/issues/11292)) ([8a0d742](https://github.com/SAP/ui5-webcomponents/commit/8a0d74293cb20278049f6ba3f231207fc0a6a432))
+
+
+
+
+
 # [2.9.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.3...v2.9.0) (2025-04-04)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
