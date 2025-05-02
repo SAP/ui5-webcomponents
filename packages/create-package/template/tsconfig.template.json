@@ -5,9 +5,10 @@
 		"global.d.ts"
 	],
 	"compilerOptions": {
+		{{INIT_PACKAGE_CYPRESS_ROOT_TSCONFIG}}
 		"outDir": "dist",
 		"experimentalDecorators": true,
 		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
+		"moduleResolution": "NodeNext"
 	},
 }
