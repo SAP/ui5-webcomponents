@@ -140,10 +140,9 @@
 
 :host([growing]) .ui5-textarea-inner {
 	box-sizing: border-box;
-	height: 100%;
+	height: calc(100% - (2 * var(--_ui5_textarea_wrapper_padding)));
+	width: calc(100% - (2 * var(--_ui5_textarea_wrapper_padding)));
  	position: absolute;
-	top: 0;
-	left: 0;
 }
 
 .ui5-textarea-mirror {
@@ -153,7 +152,6 @@
 	width: 100%;
 	max-height: 94vh;
 	min-height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
-	word-break: break-all;
 	padding: var(--_ui5_textarea_padding_top) var(--_ui5_textarea_padding_right_and_left) var(--_ui5_textarea_padding_bottom);
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
