@@ -399,9 +399,8 @@ describe("Branding slot", () => {
 			<ShellBar id="shellbar" primaryTitle="Primary Title">
 				<img id="mainLogo" slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
 
-				<ShellBarBranding  href="https://www.w3schools.com" target="_blank" slot="branding">
+				<ShellBarBranding brandingTitle="Branding Comp" href="https://www.w3schools.com" target="_blank" slot="branding">
 					<img id="brandingLogo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
-					Branding Comp
 				</ShellBarBranding>
 			</ShellBar>
 		);

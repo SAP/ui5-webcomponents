@@ -13,11 +13,11 @@ export default function ShellBarBrandingTemplate(this: ShellBarBranding) {
 	  >
 			<slot name="logo"></slot>
 
-			<h1 class="ui5-shellbar-title">
-				<bdi>
-					<slot></slot>
-				</bdi>
-			</h1>
+			{this.brandingTitle && (
+				<h1 class="ui5-shellbar-title">
+					<bdi>{this.brandingTitle}</bdi>
+				</h1>
+			)}
 	  </a>
 	);
 }
