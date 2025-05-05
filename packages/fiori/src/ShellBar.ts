@@ -929,9 +929,9 @@ class ShellBar extends UI5Element {
 		ResizeHandler.register(this, this._handleResize);
 
 		if (isSelfCollapsibleSearch(this.search)) {
-			this.search.addEventListener("open", this.onSearchOpen);
-			this.search.addEventListener("close", this.onSearchClose);
-			this.search.addEventListener("search", this.onSearch);
+			this.search.addEventListener("ui5-open", this.onSearchOpen);
+			this.search.addEventListener("ui5-close", this.onSearchClose);
+			this.search.addEventListener("ui5-search", this.onSearch);
 		}
 
 		if (isDesktop()) {
@@ -945,9 +945,9 @@ class ShellBar extends UI5Element {
 		ResizeHandler.deregister(this, this._handleResize);
 
 		if (isSelfCollapsibleSearch(this.search)) {
-			this.search.removeEventListener("open", this.onSearchOpen);
-			this.search.removeEventListener("close", this.onSearchClose);
-			this.search.removeEventListener("search", this.onSearch);
+			this.search.removeEventListener("ui5-open", this.onSearchOpen);
+			this.search.removeEventListener("ui5-close", this.onSearchClose);
+			this.search.removeEventListener("ui5-search", this.onSearch);
 		}
 	}
 
