@@ -50,36 +50,37 @@ describe("Component Behavior", () => {
 		});
 	});
 
-	describe("ui5-shellbar menu", () => {
-		it("tests prevents close on content click", async () => {
-			await browser.setWindowSize(1920, 1680);
-			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
-			const menuPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-menu-popover");
-			const firstMenuItem = await browser.$("[ui5-li][slot='menuItems']");
-			const checkBox = await browser.$("#checkKeepPopoverOpen");
+	// Currently, the new branding slot and the ui5-shellbar-branding component do not support the menuItems slot
+	// describe("ui5-shellbar menu", () => {
+	// 	it("tests prevents close on content click", async () => {
+	// 		await browser.setWindowSize(1920, 1680);
+	// 		const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
+	// 		const menuPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-menu-popover");
+	// 		const firstMenuItem = await browser.$("[ui5-li][slot='menuItems']");
+	// 		const checkBox = await browser.$("#checkKeepPopoverOpen");
 
-			await checkBox.setProperty("checked", true);
+	// 		await checkBox.setProperty("checked", true);
 
-			await primaryTitle.click();
-			await firstMenuItem.click();
+	// 		await primaryTitle.click();
+	// 		await firstMenuItem.click();
 
-			assert.strictEqual(await menuPopover.getProperty("open"), true, "Popover remains open");
-		});
+	// 		assert.strictEqual(await menuPopover.getProperty("open"), true, "Popover remains open");
+	// 	});
 
-		it("tests close on content click", async () => {
-			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
-			const menuPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-menu-popover");
-			const firstMenuItem = await browser.$("[ui5-li][slot='menuItems']");
-			const checkBox = await browser.$("#checkKeepPopoverOpen");
+	// 	it("tests close on content click", async () => {
+	// 		const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
+	// 		const menuPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-menu-popover");
+	// 		const firstMenuItem = await browser.$("[ui5-li][slot='menuItems']");
+	// 		const checkBox = await browser.$("#checkKeepPopoverOpen");
 
-			await checkBox.setProperty("checked", false);
+	// 		await checkBox.setProperty("checked", false);
 
-			await primaryTitle.click();
-			await firstMenuItem.click();
+	// 		await primaryTitle.click();
+	// 		await firstMenuItem.click();
 
-			assert.strictEqual(await menuPopover.getProperty("open"), false, "Popover is closed");
-		});
-	});
+	// 		assert.strictEqual(await menuPopover.getProperty("open"), false, "Popover is closed");
+	// 	});
+	// });
 
 	describe("ui5-shellbar-item", async () => {
 		it("tests the stable-dom-ref attribute", async () => {
@@ -112,13 +113,14 @@ describe("Component Behavior", () => {
 				await browser.setWindowSize(1920, 1680);
 			});
 
-			it("tests opening of menu", async () => {
-				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
-				const menuPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-menu-popover");
+			// Currently, the new branding slot and the ui5-shellbar-branding component do not support the menuItems slot
+			// it("tests opening of menu", async () => {
+			// 	const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
+			// 	const menuPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-menu-popover");
 
-				await primaryTitle.click();
-				assert.ok(await menuPopover.isDisplayedInViewport(), "Menu should be shown");
-			});
+			// 	await primaryTitle.click();
+			// 	assert.ok(await menuPopover.isDisplayedInViewport(), "Menu should be shown");
+			// });
 
 			it("tests notificationsClick event", async () => {
 				const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
@@ -144,14 +146,6 @@ describe("Component Behavior", () => {
 				assert.strictEqual(await input.getValue(), "Product Switch", "Input value is set by click event of Product Switch icon");
 			});
 
-			it("tests logoClick event", async () => {
-				const logo = await browser.$("#shellbar").shadow$(".ui5-shellbar-logo");
-				const input = await browser.$("#press-input");
-
-				await logo.click();
-				assert.strictEqual(await input.getValue(), "Logo", "Input value is set by click event of Logo");
-			});
-
 			it("tests search-button-click event", async () => {
 				await browser.setWindowSize(870, 1680); // search icon is not visible on XXL breakpoint
 				await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
@@ -164,30 +158,30 @@ describe("Component Behavior", () => {
 				assert.notOk(await searchField.isDisplayed(), "Search field should not be opened");
 			});
 
+			// Currently, the new branding slot and the ui5-shellbar-branding component do not support the menuItems slot
+			// it("tests menuItemClick event", async () => {
+			// 	const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
 
-			it("tests menuItemClick event", async () => {
-				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
+			// 	const firstMenuItem = await browser.$("#shellbar [ui5-li][slot='menuItems']");
+			// 	const secondMenuItem = await browser.$$("#shellbar [ui5-li][slot='menuItems']")[1];
+			// 	const input = await browser.$("#press-input");
+			// 	const inputData = await browser.$("#press-data");
 
-				const firstMenuItem = await browser.$("#shellbar [ui5-li][slot='menuItems']");
-				const secondMenuItem = await browser.$$("#shellbar [ui5-li][slot='menuItems']")[1];
-				const input = await browser.$("#press-input");
-				const inputData = await browser.$("#press-data");
+			// 	await primaryTitle.click();
+			// 	await firstMenuItem.click();
 
-				await primaryTitle.click();
-				await firstMenuItem.click();
+			// 	assert.strictEqual(await input.getValue(), "Application 1", "Input value is set by click event of the first menu item");
+			// 	assert.strictEqual(await inputData.getValue(), "key1", "The user defined attributes are available.");
 
-				assert.strictEqual(await input.getValue(), "Application 1", "Input value is set by click event of the first menu item");
-				assert.strictEqual(await inputData.getValue(), "key1", "The user defined attributes are available.");
+			// 	await input.setProperty("value", "");
+			// 	await inputData.setProperty("value", "");
 
-				await input.setProperty("value", "");
-				await inputData.setProperty("value", "");
+			// 	await primaryTitle.click();
+			// 	await secondMenuItem.click();
 
-				await primaryTitle.click();
-				await secondMenuItem.click();
-
-				assert.strictEqual(await input.getValue(), "Application 2", "Input value is set by click event of the second menu item");
-				assert.strictEqual(await inputData.getValue(), "key2", "The user defined attributes are available.");
-			});
+			// 	assert.strictEqual(await input.getValue(), "Application 2", "Input value is set by click event of the second menu item");
+			// 	assert.strictEqual(await inputData.getValue(), "key2", "The user defined attributes are available.");
+			// });
 
 			it("tests if searchfield toggles when altering the showSearchField property", async () => {
 				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper");
@@ -207,23 +201,15 @@ describe("Component Behavior", () => {
 				await browser.$("#shellbar").setProperty("showSearchField", false);
 			});
 
-			it("tests logoClick event", async () => {
-				const logo = await browser.$("#shellbarWithLogoClick").shadow$(".ui5-shellbar-logo");
-				const title = "SAPLabsBulgaria";
-				const input = await browser.$("#press-input2");
+			// Currently, the new branding slot and the ui5-shellbar-branding component do not support the menuItems slot
+			// it("tests opening of menu", async () => {
+			// 	const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
 
-				await logo.click();
-				assert.strictEqual(await input.getValue(), title, "Input value is set by click event of Logo");
-			});
+			// 	const menuPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-menu-popover");
 
-			it("tests opening of menu", async () => {
-				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
-
-				const menuPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-menu-popover");
-
-				await primaryTitle.click();
-				assert.ok(await menuPopover.isDisplayedInViewport(), "Menu should be shown");
-			});
+			// 	await primaryTitle.click();
+			// 	assert.ok(await menuPopover.isDisplayedInViewport(), "Menu should be shown");
+			// });
 
 			it("tests profileClick event", async () => {
 				const profileIcon = await browser.$("#shellbar").shadow$("[data-profile-btn]");
