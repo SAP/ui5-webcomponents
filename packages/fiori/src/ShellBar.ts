@@ -597,15 +597,19 @@ class ShellBar extends UI5Element {
 		};
 
 		this.onSearchOpen = () => {
-			this.setSearchState(true);
+			if (isPhone()) {
+				this.setSearchState(true);
+			}
 		};
 
 		this.onSearchClose = () => {
-			this.setSearchState(false);
+			if (isPhone()) {
+				this.setSearchState(false);
+			}
 		};
 
 		this.onSearch = () => {
-			if (!this.search?.value && !isPhone()) {
+			if (!isPhone() && !this.search?.value) {
 				this.setSearchState(!this.showSearchField);
 			}
 		};
