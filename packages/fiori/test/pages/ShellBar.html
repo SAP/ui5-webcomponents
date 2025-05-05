@@ -59,10 +59,7 @@
 			secondary-title="Second Title"
 			id="shellbarwithitems"
 	>
-		<ui5-shellbar-branding slot="branding" branding-title="Custom Actions">
-			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
-		</ui5-shellbar-branding>
-
+		<ui5-shellbar-branding slot="branding" branding-title="Custom Actions"></ui5-shellbar-branding>
 		<ui5-shellbar-item icon="accelerated" text="Hello World!" title="Schedule" stable-dom-ref="schedule"></ui5-shellbar-item>
 		<ui5-shellbar-item id="accept" icon="accept" text="Hello World!" title="Approve" stable-dom-ref="accept"></ui5-shellbar-item>
 		<ui5-shellbar-item id="warning" icon="alert" text="Hello World!" title="Warning"></ui5-shellbar-item>
@@ -162,11 +159,12 @@
 		<ui5-shellbar-item icon="disconnected" text="Disconnect"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
 
-		<ui5-li slot="menuItems" data-key="key1">Application 1</ui5-li>
+		<!-- Currently, the new branding slot and the ui5-shellbar-branding component do not support the menuItems slot. -->
+		<!-- <ui5-li slot="menuItems" data-key="key1">Application 1</ui5-li>
 		<ui5-li slot="menuItems" data-key="key2">Application 2</ui5-li>
 		<ui5-li slot="menuItems" data-key="key3">Application 3</ui5-li>
 		<ui5-li slot="menuItems" data-key="key4">Application 4</ui5-li>
-		<ui5-li slot="menuItems" data-key="key5">Application 5</ui5-li>
+		<ui5-li slot="menuItems" data-key="key5">Application 5</ui5-li> -->
 	</ui5-shellbar>
 
 	<section class="ui5-content-density-compact">
@@ -174,18 +172,17 @@
 		<div>
 			<ui5-shellbar id="shelbarCompact" show-notifications show-product-switch>
 
-				<ui5-shellbar-branding slot="branding" branding-title="Product Title">
-					<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
-				</ui5-shellbar-branding>
-
+				<ui5-shellbar-branding slot="branding" branding-title="Product Title"></ui5-shellbar-branding>
 				<ui5-button icon="nav-back" slot="startButton" id="start-button"></ui5-button>
 				<ui5-shellbar-item icon="disconnected" text="Disconnect"></ui5-shellbar-item>
 				<ui5-shellbar-item icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
-				<ui5-li id="menu-item-1" slot="menuItems">Application 1</ui5-li>
+
+				<!-- Currently, the new branding slot and the ui5-shellbar-branding component do not support the menuItems slot. -->
+				<!-- <ui5-li id="menu-item-1" slot="menuItems">Application 1</ui5-li>
 				<ui5-li id="menu-item-2" slot="menuItems">Application 2</ui5-li>
 				<ui5-li slot="menuItems">Application 3</ui5-li>
 				<ui5-li slot="menuItems">Application 4</ui5-li>
-				<ui5-li slot="menuItems">Application 5</ui5-li>
+				<ui5-li slot="menuItems">Application 5</ui5-li> -->
 			</ui5-shellbar>
 		</div>
 	</section>
@@ -256,19 +253,17 @@
 	<ui5-shellbar
 			id="menuItemsSB"
 	>
-		<ui5-shellbar-branding slot="branding" branding-title="Menu Items">
-			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
-		</ui5-shellbar-branding>
-		<ui5-li id="mi-1" slot="menuItems" data-key="key1">App 1</ui5-li>
+		<ui5-shellbar-branding slot="branding" branding-title="Menu Items"></ui5-shellbar-branding>
+
+		<!-- Currently, the new branding slot and the ui5-shellbar-branding component do not support the menuItems slot. -->
+		<!-- <ui5-li id="mi-1" slot="menuItems" data-key="key1">App 1</ui5-li>
 		<ui5-li id="mi-2" slot="menuItems" data-key="key2">App 2</ui5-li>
 		<ui5-li id="mi-3" slot="menuItems" data-key="key3">App 3</ui5-li>
-		<ui5-li id="mi-4" slot="menuItems" data-key="key4">App 4</ui5-li>
+		<ui5-li id="mi-4" slot="menuItems" data-key="key4">App 4</ui5-li> -->
 	</ui5-shellbar>
 
 	<ui5-shellbar id="test-invalidation">
-		<ui5-shellbar-branding slot="branding" branding-title="UI5 Web Components">
-			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
-		</ui5-shellbar-branding>
+		<ui5-shellbar-branding slot="branding" branding-title="UI5 Web Components"></ui5-shellbar-branding>
 		<ui5-shellbar-item icon="discussion" count="2" id="test-invalidation-item"></ui5-shellbar-item>
 	</ui5-shellbar>
 
