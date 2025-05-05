@@ -21,11 +21,13 @@
 
 <body>
 
-<ui5-shellbar id="shellbar" primary-title="Corporate Portal">
+<ui5-shellbar id="shellbar">
+	<ui5-shellbar-branding slot="branding" branding-title="Corporate Portal">
+		<img slot="logo" src="./img/sap-logo-svg.svg" />
+	</ui5-shellbar-branding>
 	<ui5-avatar slot="profile">
 		<img src="./img/man_avatar_1.png"/>
 	</ui5-avatar>
-	<img slot="logo" src="./img/sap-logo-svg.svg" />
 </ui5-shellbar>
 <ui5-user-menu id="userMenuShellBar" show-manage-account show-other-accounts show-edit-accounts show-edit-button>
 	<ui5-user-menu-account slot="accounts"

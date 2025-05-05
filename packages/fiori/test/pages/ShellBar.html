@@ -17,30 +17,33 @@
 
 	<ui5-shellbar
 		class="shellbar-example"
-		primary-title="Product Title"
 		secondary-title="Second Title"
 	>
-		<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		<ui5-shellbar-branding slot="branding" branding-title="Product Title">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		</ui5-shellbar-branding>
 	</ui5-shellbar>
 
 	<ui5-shellbar
 		class="shellbar-example"
-		primary-title="Product Title"
 		secondary-title="Second Title"
 	>
 		<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
-		<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		<ui5-shellbar-branding slot="branding" branding-title="Product Title">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		</ui5-shellbar-branding>
 	</ui5-shellbar>
 
 	<ui5-shellbar
 		id="sbAccAttr"
 		class="shellbar-example"
-		primary-title="Product Title"
 		secondary-title="Second Title"
 		show-notifications
 		show-product-switch
 	>
-		<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		<ui5-shellbar-branding slot="branding" branding-title="Product Title">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		</ui5-shellbar-branding>
 	</ui5-shellbar>
 
 	<script>
@@ -53,10 +56,13 @@
 
 	<ui5-shellbar
 			class="shellbar-example"
-			primary-title="Custom Actions"
 			secondary-title="Second Title"
 			id="shellbarwithitems"
 	>
+		<ui5-shellbar-branding slot="branding" branding-title="Custom Actions">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		</ui5-shellbar-branding>
+
 		<ui5-shellbar-item icon="accelerated" text="Hello World!" title="Schedule" stable-dom-ref="schedule"></ui5-shellbar-item>
 		<ui5-shellbar-item id="accept" icon="accept" text="Hello World!" title="Approve" stable-dom-ref="accept"></ui5-shellbar-item>
 		<ui5-shellbar-item id="warning" icon="alert" text="Hello World!" title="Warning"></ui5-shellbar-item>
@@ -79,32 +85,13 @@
 		id="shellbarWithLogoClick"
 		class="shellbar-example"
 		data-ui5-static-stable="shellbarWithLogoClickStatic"
-		primary-title="SAP Labs Bulgaria"
-		show-notifications
-		show-product-switch
-	>
-		<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
-		<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
-		<ui5-shellbar-item icon="activities" text="Tasks"></ui5-shellbar-item>
-		<ui5-shellbar-item icon="thing-type" text="Messages"></ui5-shellbar-item>
-		<ui5-shellbar-item icon="action-settings" text="Settings"></ui5-shellbar-item>
-		<ui5-shellbar-item icon="sys-help" text="Help"></ui5-shellbar-item>
-		<ui5-input slot="searchField" value-state="Negative"></ui5-input>
-	</ui5-shellbar>
-
-	<ui5-shellbar
-		id="shellBarWithBrandingSlot"
-		class="shellbar-example"
-		data-ui5-static-stable="shellbarWithLogoClickStatic"
-		secondary-title="Brading Component"
 		show-notifications
 		show-product-switch
 	>
 		<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
 
-		<ui5-shellbar-branding id="sbBrandingComp" href="https://sap.github.io/ui5-webcomponents/" target="_blank" slot="branding">
+		<ui5-shellbar-branding slot="branding" branding-title="SAP Labs Bulgaria">
 			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
-			Branding Title
 		</ui5-shellbar-branding>
 
 		<ui5-shellbar-item icon="activities" text="Tasks"></ui5-shellbar-item>
@@ -114,19 +101,11 @@
 		<ui5-input slot="searchField" value-state="Negative"></ui5-input>
 	</ui5-shellbar>
 
-	<script>
-		sbBrandingComp.accessibilityAttributes = {
-			logo: {
-				role: "button"
-			},
-		};
-	</script>
 
 	<ui5-checkbox id="checkKeepPopoverOpen" text="keep popover open on menu-item click"></ui5-checkbox>
 	<ui5-shellbar
 			class="shellbar-example"
 			id="shellbar"
-			primary-title="Product Title"
 			secondary-title="Second title"
 			second-title="Second Title"
 			notifications-count="99+"
@@ -135,13 +114,15 @@
 			show-search-field
 	>
 
+		<ui5-shellbar-branding slot="branding" branding-title="Product Title">
+			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
+		</ui5-shellbar-branding>
+
 		<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
 
 		<ui5-avatar slot="profile">
 			<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
 		</ui5-avatar>
-
-		<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
 
 		<ui5-button icon="nav-back" slot="startButton" id="start-button"></ui5-button>
 
@@ -162,7 +143,6 @@
 	<ui5-shellbar
 		class="shellbar-example"
 		id="shellbarWithStartContent"
-		primary-title="Product Title"
 		secondary-title="Second title"
 		second-title="Second Title"
 		notifications-count="99+"
@@ -170,11 +150,12 @@
 		show-product-switch
 		show-search-field
 	>
+		<ui5-shellbar-branding slot="branding" branding-title="Product Title">
+			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
+		</ui5-shellbar-branding>
 		<ui5-button slot="content">Button 1</ui5-button>
 		<ui5-button slot="content">Button 2</ui5-button>
  		<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
-
-		<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
 
 		<ui5-button icon="nav-back" slot="startButton"></ui5-button>
 
@@ -191,7 +172,12 @@
 	<section class="ui5-content-density-compact">
 		<h3>ShellBar in Compact</h3>
 		<div>
-			<ui5-shellbar id="shelbarCompact" primary-title="Product Title" show-notifications show-product-switch>
+			<ui5-shellbar id="shelbarCompact" show-notifications show-product-switch>
+
+				<ui5-shellbar-branding slot="branding" branding-title="Product Title">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+				</ui5-shellbar-branding>
+
 				<ui5-button icon="nav-back" slot="startButton" id="start-button"></ui5-button>
 				<ui5-shellbar-item icon="disconnected" text="Disconnect"></ui5-shellbar-item>
 				<ui5-shellbar-item icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
@@ -269,15 +255,20 @@
 
 	<ui5-shellbar
 			id="menuItemsSB"
-			primary-title="Menu Items"
 	>
+		<ui5-shellbar-branding slot="branding" branding-title="Menu Items">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		</ui5-shellbar-branding>
 		<ui5-li id="mi-1" slot="menuItems" data-key="key1">App 1</ui5-li>
 		<ui5-li id="mi-2" slot="menuItems" data-key="key2">App 2</ui5-li>
 		<ui5-li id="mi-3" slot="menuItems" data-key="key3">App 3</ui5-li>
 		<ui5-li id="mi-4" slot="menuItems" data-key="key4">App 4</ui5-li>
 	</ui5-shellbar>
 
-	<ui5-shellbar primary-title="UI5 Web Components" id="test-invalidation">
+	<ui5-shellbar id="test-invalidation">
+		<ui5-shellbar-branding slot="branding" branding-title="UI5 Web Components">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		</ui5-shellbar-branding>
 		<ui5-shellbar-item icon="discussion" count="2" id="test-invalidation-item"></ui5-shellbar-item>
 	</ui5-shellbar>
 

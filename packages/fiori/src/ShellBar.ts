@@ -460,7 +460,9 @@ class ShellBar extends UI5Element {
 	 * The `ui5-shellbar-branding` component is intended to be placed inside this slot.
 	 * Content placed here takes precedence over the `primaryTitle` property and the `logo` content slot.
 	 *
-	 * @since 2.11.0
+	 * **Note:** The `branding` slot is in an experimental state and is a subject to change.
+	 *
+	 * @since 2.10.0
 	 * @public
 	 */
 	@slot()

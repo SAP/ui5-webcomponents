@@ -33,8 +33,9 @@ type ShellBarBrandingAccessibilityAttributes = {
  *
  * @constructor
  * @extends UI5Element
- * @since 2.11.0
+ * @since 2.10.0
  * @public
+ * @experimental
  */
 @customElement({
 	tag: "ui5-shellbar-branding",
@@ -79,8 +80,8 @@ class ShellBarBranding extends UI5Element {
 	 * @default undefined
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
-	brandingTitle!: Array<HTMLElement>;
+	@property()
+	brandingTitle?: string;
 
 	/**
 	 * Defines additional accessibility attributes to the component.
@@ -115,15 +116,7 @@ class ShellBarBranding extends UI5Element {
 	}
 
 	get _logoAreaText() {
-		const defaultSlot = this.shadowRoot!.querySelector("slot:not([name])") as HTMLSlotElement;
-		if (defaultSlot) {
-			const assignedNodes = defaultSlot.assignedNodes({ flatten: true });
-			const texts = assignedNodes
-			  .filter(n => n.nodeType === Node.TEXT_NODE)
-			  .map(n => n.textContent?.trim())
-			  .filter(Boolean);
-			return texts[0];
-		  }
+		return this.brandingTitle ?? "";
 	}
 
 	get accLogoRole() {
