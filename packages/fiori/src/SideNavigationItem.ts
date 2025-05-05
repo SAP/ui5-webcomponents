@@ -172,7 +172,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _selected() {
-		if (this.sideNavCollapsed) {
+		if (this.sideNavCollapsed || !this.expanded) {
 			return this.selected || this.items.some(item => item.selected);
 		}
 
