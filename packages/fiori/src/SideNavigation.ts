@@ -38,8 +38,8 @@ import {
 	SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC,
 	SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC,
 	SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME,
-	SIDE_NAVIGATION_PRIMARY_LIST_TEXT,
-	SIDE_NAVIGATION_FOOTER_LIST_TEXT,
+	SIDE_NAVIGATION_FLEXIBLE_LIST_LABEL,
+	SIDE_NAVIGATION_FIXED_LIST_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -293,11 +293,11 @@ class SideNavigation extends UI5Element {
 	}
 
 	get navigationMenuPrimaryHiddenText() {
-		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_PRIMARY_LIST_TEXT);
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_FLEXIBLE_LIST_LABEL);
 	}
 
 	get navigationMenuFooterHiddenText() {
-		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_FOOTER_LIST_TEXT);
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_FIXED_LIST_LABEL);
 	}
 
 	get overflowAccessibleName() {
