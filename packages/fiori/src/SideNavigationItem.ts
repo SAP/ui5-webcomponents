@@ -2,6 +2,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isLeft,
 	isRight,
@@ -13,6 +15,10 @@ import {
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
+import {
+	SIDE_NAVIGATION_ICON_COLLAPSE,
+	SIDE_NAVIGATION_ICON_EXPAND,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Templates
 import SideNavigationItemTemplate from "./SideNavigationItemTemplate.js";
@@ -71,6 +77,9 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationSubItem>;
+
+	@i18n("@ui5/webcomponents-fiori")
+	static i18nBundle: I18nBundle;
 
 	get overflowItems() : Array<SideNavigationItem> {
 		return [this];
@@ -163,11 +172,16 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _selected() {
-		if (this.sideNavCollapsed) {
+		if (this.sideNavCollapsed || !this.expanded) {
 			return this.selected || this.items.some(item => item.selected);
 		}
 
 		return this.selected;
+	}
+
+	get _arrowTooltip() {
+		return this.expanded ? SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_ICON_COLLAPSE)
+			: SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_ICON_EXPAND);
 	}
 
 	applyInitialFocusInPopover() {

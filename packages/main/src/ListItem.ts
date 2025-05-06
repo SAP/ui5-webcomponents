@@ -192,6 +192,14 @@ abstract class ListItem extends ListItemBase {
 	_selectionMode: `${ListSelectionMode}` = "None";
 
 	/**
+	 * Defines the current media query size.
+	 * @default "S"
+	 * @private
+	 */
+	@property()
+	mediaRange = "S";
+
+	/**
 	 * Defines the delete button, displayed in "Delete" mode.
 	 * **Note:** While the slot allows custom buttons, to match
 	 * design guidelines, please use the `ui5-button` component.
