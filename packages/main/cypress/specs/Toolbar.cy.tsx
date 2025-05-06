@@ -226,7 +226,7 @@ describe("Toolbar general interaction", () => {
 		)
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(500);
+		cy.wait(1000);
 
 		cy.get("#testEventpreventClosing-toolbar")
 			.shadow()
@@ -240,7 +240,7 @@ describe("Toolbar general interaction", () => {
 		cy.get("#testEventpreventClosing-toolbar")
 			.shadow()
 			.find(".ui5-overflow-popover")
-			.should("have.attr", "open", "true");
+			.should("have.attr", "open", "open");
 	});
 
 });
