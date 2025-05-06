@@ -808,13 +808,13 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 		// autocomplete
-		this._handleTypeAhead(this.value, this.open ? this._userTypedValue : "", false);
+		this._handleTypeAhead(this.value, this.open ? this._userTypedValue : "", false, nextItem);
 
 		this.fireDecoratorEvent("input");
 	}
 
-	_handleTypeAhead(value: string, filterValue: string, checkForGroupItem: boolean) {
-		const item = this._getFirstMatchingItem(value);
+	_handleTypeAhead(value: string, filterValue: string, checkForGroupItem: boolean, nextItem?: IComboBoxItem) {
+		const item = this._getMatchingItem(value, nextItem || {} as IComboBoxItem);
 
 		if (!item) {
 			return;
@@ -1069,7 +1069,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		return [...filteredItemGroups, ...filteredItems];
 	}
 
-	_getFirstMatchingItem(current: string): IComboBoxItem | void {
+	_getMatchingItem(current: string, nextItem: IComboBoxItem): IComboBoxItem | void {
 		const allItems = this._getItems();
 		const currentlyFocusedItem = allItems.find(item => item.focused === true);
 
@@ -1081,8 +1081,19 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const matchingItems: Array<IComboBoxItem> = this._startsWithMatchingItems(current);
 
 		if (matchingItems.length) {
-			const exactMatch = matchingItems.find(item => item.text === current && item.focused);
-			return exactMatch ?? matchingItems[0];
+			let exactMatch: IComboBoxItem | undefined;
+
+			if (this.open) {
+				exactMatch = matchingItems.find(item => item.text === current && item.focused);
+			} else {
+				const currentIndex = allItems.indexOf(nextItem);
+				const previousItem = allItems[currentIndex - 1];
+				const nextItemInList = allItems[currentIndex + 1];
+
+				exactMatch = matchingItems.find(item => item.text === current && (item === previousItem || item === nextItemInList));
+			}
+
+			return (exactMatch ?? matchingItems.find(item => item === currentlyFocusedItem) ?? matchingItems[0]);
 		}
 	}
 
@@ -1095,13 +1106,22 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_selectMatchingItem() {
-		const currentlyFocusedItem = this.items.find(item => item.focused);
+		 const allItems = this.items;
+		const currentlyFocusedItem = allItems.find(item => item.focused);
+		const currentlySelectedItem = allItems.find(item => (!isInstanceOfComboBoxItemGroup(item) ? item.selected : item.items?.some(i => i.selected)));
 		const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.isGroupItem;
 		let itemToBeSelected: IComboBoxItem | undefined;
 
 		this._filteredItems.forEach(item => {
 			if (!shouldSelectionBeCleared && !itemToBeSelected) {
-				itemToBeSelected = ((!item.isGroupItem && (item.text === this.value && item === currentlyFocusedItem)) ? item : item?.items?.find(i => i.text === this.value && i.focused));
+				if (currentlySelectedItem) {
+					const currentIndex = allItems.indexOf(currentlySelectedItem);
+					const previousItem = allItems[currentIndex - 1];
+					const nextItemInList = allItems[currentIndex + 1];
+					itemToBeSelected = ((!item.isGroupItem && (item.text === this.value) && (item === previousItem || item === nextItemInList)) ? item : item?.items?.find(i => i.text === this.value && (i === previousItem || i === nextItemInList)));
+				} else {
+					itemToBeSelected = ((!item.isGroupItem && (item.text === this.value)) ? item : item?.items?.find(i => i.text === this.value));
+				}
 			}
 		});
 
