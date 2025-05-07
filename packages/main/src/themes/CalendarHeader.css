@@ -131,3 +131,23 @@
 .ui5-calheader-middlebtn:focus:active::after {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
+
+/* Todo: Remove with introduction of YearRangePicker */
+.ui5-calheader-middlebtn.ui5-calheader-yearrange-btn-disabled:hover,
+.ui5-calheader-middlebtn.ui5-calheader-yearrange-btn-disabled:active,
+.ui5-calheader-middlebtn.ui5-calheader-yearrange-btn-disabled:focus,
+.ui5-calheader-middlebtn.ui5-calheader-yearrange-btn-disabled:focus:active,
+.ui5-calheader-middlebtn.ui5-calheader-yearrange-btn-disabled {
+	cursor: default;
+	outline: none;
+	background-color: var(--sapButton_Lite_Background);
+	color: var(--sapButton_Lite_TextColor);
+	border: transparent;
+	box-shadow: none;
+	pointer-events: none;
+}
+
+/* Todo: Remove with introduction of YearRangePicker */
+.ui5-calheader-middlebtn.ui5-calheader-yearrange-btn-disabled:active .ui5-calheader-btn-sectext {
+	color: var(--sapNeutralElementColor);
+}
