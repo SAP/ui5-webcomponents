@@ -13,7 +13,6 @@ import type {
 } from "./UI5ElementMetadata.js";
 import EventProvider from "./EventProvider.js";
 import updateShadowRoot from "./updateShadowRoot.js";
-import { shouldIgnoreCustomElement } from "./IgnoreCustomElements.js";
 import {
 	renderDeferred,
 	renderImmediately,
@@ -43,11 +42,11 @@ import { getI18nBundle } from "./i18nBundle.js";
 import type I18nBundle from "./i18nBundle.js";
 import { fetchCldr } from "./asset-registries/LocaleData.js";
 import getLocale from "./locale/getLocale.js";
+import childrenDefinedAndUpgraded from "./childrenDefinedAndUpgraded.js";
 
 const DEV_MODE = true;
 let autoId = 0;
 
-const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
 
 type Renderer = (instance: UI5Element, container: HTMLElement | DocumentFragment) => void;
@@ -307,8 +306,9 @@ abstract class UI5Element extends HTMLElement {
 
 		if (slotsAreManaged) {
 			// always register the observer before yielding control to the main thread (await)
+			await childrenDefinedAndUpgraded(this);
 			this._startObservingDOMChildren();
-			await this._processChildren();
+			this._processChildren();
 		}
 
 		if (!this._inDOM) { // Component removed from DOM while _processChildren was running
@@ -405,17 +405,17 @@ abstract class UI5Element extends HTMLElement {
 	 * Note: this method is also manually called by "compatibility/patchNodeValue.js"
 	 * @private
 	 */
-	async _processChildren() {
+	_processChildren() {
 		const hasSlots = (this.constructor as typeof UI5Element).getMetadata().hasSlots();
 		if (hasSlots) {
-			await this._updateSlots();
+			this._updateSlots();
 		}
 	}
 
 	/**
 	 * @private
 	 */
-	async _updateSlots() {
+	_updateSlots() {
 		const ctor = this.constructor as typeof UI5Element;
 		const slotsMap = ctor.getMetadata().getSlots();
 		const canSlotText = ctor.getMetadata().canSlotText();
@@ -435,7 +435,7 @@ abstract class UI5Element extends HTMLElement {
 		const autoIncrementMap = new Map<string, number>();
 		const slottedChildrenMap = new Map<string, Array<{child: Node, idx: number }>>();
 
-		const allChildrenUpgraded = domChildren.map(async (child, idx) => {
+		domChildren.forEach((child, idx) => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -455,26 +455,6 @@ abstract class UI5Element extends HTMLElement {
 				const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
 				autoIncrementMap.set(slotName, nextIndex);
 				(child as SlottedChild)._individualSlot = `${slotName}-${nextIndex}`;
-			}
-
-			// Await for not-yet-defined custom elements
-			if (child instanceof HTMLElement) {
-				const localName = child.localName;
-				const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
-
-				if (shouldWaitForCustomElement) {
-					const isDefined = customElements.get(localName);
-					if (!isDefined) {
-						const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
-						let timeoutPromise = elementTimeouts.get(localName);
-						if (!timeoutPromise) {
-							timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
-							elementTimeouts.set(localName, timeoutPromise);
-						}
-						await Promise.race([whenDefinedPromise, timeoutPromise]);
-					}
-					customElements.upgrade(child);
-				}
 			}
 
 			child = (ctor.getMetadata().constructor as typeof UI5ElementMetadata).validateSlotValue(child, slotData);
@@ -498,8 +478,6 @@ abstract class UI5Element extends HTMLElement {
 				slottedChildrenMap.set(propertyName, [{ child, idx }]);
 			}
 		});
-
-		await Promise.all(allChildrenUpgraded);
 
 		// Distribute the child in the _state object, keeping the Light DOM order,
 		// not the order elements are defined.
