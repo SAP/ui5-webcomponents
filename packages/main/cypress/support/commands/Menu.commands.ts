@@ -25,21 +25,12 @@ Cypress.Commands.add("ui5MenuOpened", { prevSubject: true }, subject => {
 	cy.get("@menu")
 		.shadow()
 		.find("[ui5-responsive-popover]")
-<<<<<<< HEAD
-		.should("have.attr", "open");
-
-	cy.get("@menu")
-		.find(" > [ui5-menu-item], > [ui5-menu-item-group]")
-		.first()
-		.should("be.visible");
-=======
 		.should($rp => {
 			expect($rp.is(":popover-open")).to.be.true;
 			expect($rp.width()).to.not.equal(0);
 			expect($rp.height()).to.not.equal(0);
 		})
 		.and("have.attr", "open");
->>>>>>> main
 });
 
 Cypress.Commands.add("ui5MenuItemClick", { prevSubject: true }, subject => {
