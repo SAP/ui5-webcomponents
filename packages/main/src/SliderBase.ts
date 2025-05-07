@@ -12,7 +12,7 @@ import {
 
 // Styles
 import sliderBaseStyles from "./generated/themes/SliderBase.css.js";
-import { getAssociatedLabelForTexts, getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 
 type StateStorage = {
 	[key: string]: number | undefined,
