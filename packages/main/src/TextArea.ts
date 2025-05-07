@@ -42,7 +42,6 @@ import {
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 type TokenizedText = Array<string>;
 type IndexedTokenizedText = Array<{
@@ -77,7 +76,7 @@ type ExceededText = {
 @customElement({
 	tag: "ui5-textarea",
 	languageAware: true,
-	styles: [browserScrollbarCSS, styles],
+	styles: [getEffectiveScrollbarStyle(), styles],
 	renderer: litRender,
 	template: TextAreaTemplate,
 	staticAreaTemplate: TextAreaPopoverTemplate,
@@ -529,7 +528,7 @@ class TextArea extends UI5Element implements IFormElement {
 		return {
 			root: {
 				"ui5-textarea-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
+				"ui5-content-custom-scrollbars": !!getEffectiveScrollbarStyle(),
 			},
 			valueStateMsg: {
 				"ui5-valuestatemessage-header": true,

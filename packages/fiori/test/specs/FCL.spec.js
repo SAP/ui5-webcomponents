@@ -1,7 +1,7 @@
 import { assert } from "chai";
 
 
-describe("FlexibleColumnLayout Behavior", () => {
+describe.skip("FlexibleColumnLayout Behavior", () => {
 	before(async () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});

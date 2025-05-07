@@ -79,3 +79,20 @@ ui5-date-picker,
     justify-content: space-between;
 }
 
+
+#divOpenAndScroll {
+    height: 300px;
+    overflow: auto;
+    border: 1px solid red;
+}
+
+#divOpenAndScroll > div {
+    height: 2000px;
+}
+
+.centered-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}

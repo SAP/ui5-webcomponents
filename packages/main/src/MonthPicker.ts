@@ -47,6 +47,7 @@ type Month = {
 	name: string,
 	nameInSecType: string,
 	disabled: boolean,
+	ariaDisabled: string | undefined,
 	classes: string,
 }
 
@@ -166,6 +167,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 				name: monthsNames[i],
 				nameInSecType: this.hasSecondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp).text,
 				disabled: isDisabled,
+				ariaDisabled: isDisabled ? "true" : undefined,
 				classes: "ui5-mp-item",
 			};
 

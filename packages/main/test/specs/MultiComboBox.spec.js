@@ -1786,6 +1786,28 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await $("#clear-icon-change-count").getText(), "0", "change event is not fired");
 			assert.strictEqual(await $("#clear-icon-input-count").getText(), "2", "input event is fired twice");
 		});
+
+		it("Should remove header when value state is reset", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = $("#mcb-error");
+			let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-error");
+
+			// click on arrow
+			await mcb.shadow$("ui5-icon").click();
+
+			// arrow down twice
+			await browser.keys("ArrowDown");
+			await browser.keys("ArrowDown");
+
+			// Enter to make selection
+			await browser.keys("Space");
+
+			// get value state header
+			const valueStateHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
+
+			assert.notOk(await valueStateHeader.isExisting(), "Value state header should not be rendered");
+		});
 	});
 
 	describe("MultiComboBox Truncated Token", () => {
@@ -1926,6 +1948,17 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.scrollIntoView();
 
 			assert.strictEqual(await innerInput.getAttribute("aria-label"), await mcbLabel.getHTML(false), "aria-label attribute is correct.");
+		});
+
+		it("Checks if tokenizer hidden text of tokenizer label has aria-hidden attribute", async () => {
+			const mcb = await browser.$("#mcb-compact");
+
+			await mcb.scrollIntoView();
+
+			const ariaHiddenText = await mcb.shadow$(".ui5-multi-combobox-tokenizer").shadow$(".ui5-hidden-text");
+			const ariaHiddenAttribute = await ariaHiddenText.getAttribute("aria-hidden");
+
+			assert.strictEqual(ariaHiddenAttribute, "true", "aria-hidden of invisible text is true");
 		});
 
 		it("Value state type should be added to the screen readers default value states announcement", async () => {

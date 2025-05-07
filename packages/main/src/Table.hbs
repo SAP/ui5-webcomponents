@@ -5,11 +5,13 @@
 	@ui5-_forward-before="{{_onForwardBefore}}"
 	@focusin="{{_onfocusin}}"
 >
+	<ui5-busy-indicator
+		id="{{_id}}-busyIndicator"
+		delay="{{busyDelay}}"
+		?active="{{busy}}"
+		class="ui5-table-busy-indicator"
+	>
 	<div id="{{_id}}-before" tabindex="0" class="ui5-table-focusarea"></div>
-
-	{{#if busy}}
-		{{> busyRow}}
-	{{/if}}
 
 	<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table" aria-label="{{tableAriaLabelText}}">
 		<thead>
@@ -73,6 +75,7 @@
 
 	<div id="{{_id}}-after" tabindex="0" class="ui5-table-focusarea"></div>
 </div>
+	</ui5-busy-indicator>
 
 {{#*inline "moreRow"}}
 <tr>
@@ -106,17 +109,4 @@
 			<span tabindex="-1" aria-hidden="true" class="ui5-table-end-marker"></span>
 		</td>
 	</tr>
-{{/inline}}
-
-{{#*inline "busyRow"}}
-	<div tabindex="-1" class="ui5-table-busy-row">
-		<ui5-busy-indicator
-			delay="{{busyDelay}}"
-			class="ui5-table-busy-ind"
-			style="{{styles.busy}}"
-			active
-			size="Medium"
-			data-sap-focus-ref
-		></ui5-busy-indicator>
-	</div>
 {{/inline}}

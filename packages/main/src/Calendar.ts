@@ -14,6 +14,7 @@ import {
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import CalendarDate from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
@@ -327,22 +328,21 @@ class Calendar extends CalendarPart {
 	}
 
 	get _specialCalendarDates() {
+		const hasSelectedType = this._specialDates.some(date => date.type === this._selectedItemType);
 		const validSpecialDates = this._specialDates.filter(date => {
 			const dateType = date.type;
 			const dateValue = date.value;
-			const isTypeMatch = this._selectedItemType !== "None" ? dateType === this._selectedItemType : true;
+			const isTypeMatch = hasSelectedType
+				? (dateType === this._selectedItemType || dateType === "Working" || dateType === "NonWorking")
+				: true;
 			return isTypeMatch && dateValue && this._isValidCalendarDate(dateValue);
 		});
-
-		if (validSpecialDates.length === 0) {
-			this._selectedItemType = "None";
-		}
 
 		const uniqueDates = new Set();
 		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
 
 		validSpecialDates.forEach(date => {
-			const dateFromValue = new Date(date.value);
+			const dateFromValue = this.getFormat().parse(date.value) as Date | UI5Date;
 			const timestamp = dateFromValue.getTime();
 
 			if (!uniqueDates.has(timestamp)) {
@@ -357,7 +357,12 @@ class Calendar extends CalendarPart {
 	}
 
 	_onCalendarLegendSelectionChange(e: CustomEvent<CalendarLegendItemSelectionChangeEventDetail>) {
+		const defaultTypes = ["Working", "NonWorking", "Selected", "Today"];
 		this._selectedItemType = e.detail.item.type;
+
+		if (defaultTypes.includes(this._selectedItemType)) {
+			this._selectedItemType = "None"; // In order to avoid filtering of default types
+		}
 		this._currentPickerDOM._autoFocus = false;
 	}
 

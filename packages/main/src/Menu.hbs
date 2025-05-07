@@ -91,9 +91,11 @@
 		</ui5-busy-indicator>
 	{{/if}}
 	</div>
-</ui5-responsive-popover>
 
-<div
-	class="ui5-menu-submenus"
->
-</div>
+	{{#if menuHasSubMenus}}
+	<div
+		class="ui5-menu-submenus"
+	>
+	</div>
+{{/if}}
+</ui5-responsive-popover>

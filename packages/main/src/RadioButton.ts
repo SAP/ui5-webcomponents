@@ -102,8 +102,8 @@ class RadioButton extends UI5Element implements IFormElement {
 	/**
 	 * Defines whether the component is read-only.
 	 *
-	 * **Note:** A read-only component is not editable,
-	 * but still provides visual feedback upon user interaction.
+	 * **Note:** A read-only component isn't editable or selectable.
+	 * However, because it's focusable, it still provides visual feedback upon user interaction.
 	 * @default false
 	 * @public
 	 */
@@ -125,6 +125,9 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * **Note:** The property value can be changed with user interaction,
 	 * either by clicking/tapping on the component,
 	 * or by using the Space or Enter key.
+	 *
+	 * **Note:** Only enabled radio buttons can be checked.
+	 * Read-only radio buttons are not selectable, and therefore are always unchecked.
 	 * @default false
 	 * @formEvents change
 	 * @formProperty
@@ -429,7 +432,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	}
 
 	get effectiveAriaDisabled() {
-		return this.disabled ? "true" : null;
+		return (this.disabled || this.readonly) ? "true" : null;
 	}
 
 	get ariaLabelText() {

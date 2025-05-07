@@ -255,6 +255,21 @@ describe("Input general interaction", () => {
 		await input.keys("Enter");
 	});
 
+	it("Input event is fired when user uses arrow keys to increase/decrease numeric value", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await browser.$("#input-number3");
+		await input.scrollIntoView();
+		await input.click();
+
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowDown");
+
+		const inputChangeCount = await browser.$("#input-number3-change-count");
+
+		assert.strictEqual( await inputChangeCount.getProperty("value"), "2", "Input event is fired when navigating with arrow keys");
+	});
+
 	it("tests value removal when Input type is 'Number'", async () => {
 		const input = await browser.$("#input-number3");
 		const btn = await browser.$("#input-number3-focusout");
@@ -1115,6 +1130,48 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await input.getValue(), "", "Input's value should be empty");
 		assert.strictEqual(await inner.getValue(), "", "Inner input's value should be empty");
 	});
+
+	it("Tests prevented input event", async () => {
+		const input = await $("#prevent-input-event");
+		const innerInput = await input.shadow$("input");
+
+		await input.click();
+
+		await innerInput.keys("a");
+		await innerInput.keys("b");
+		await innerInput.keys("c");
+		await innerInput.keys("d");
+
+		// forth input should be prevented
+		assert.strictEqual(await input.getValue(), "abc", "The value is correct");
+	});
+
+	it("Tests prevented input event with clear icon", async () => {
+		const input = await $("#prevent-input-event-clear-icon");
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
+
+		await clearIcon.click();
+
+		assert.strictEqual(await input.getValue(), "Test", "The value is not cleared");
+	});
+
+	it("Tests if toggling of show-suggestions attribute works correctly", async () => {
+		const input = await $("#clear-input-suggestions");
+		const button = await $("#toggle-suggestions");
+
+		await button.click();
+		await button.click();
+
+		await input.click();
+		await input.keys("a");
+
+		// check if popup is open
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#clear-input-suggestions");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// popover should be open
+		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
+	});
 });
 
 describe("Input arrow navigation", () => {
@@ -1635,5 +1692,51 @@ describe("Lazy loading", () => {
 		await inner.keys("b");
 
 		assert.strictEqual(await respPopover.getProperty("opened"), true, "Picker should not be open");
+	});
+});
+
+describe("Accsessibility", () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/Input.html`);
+	});
+
+	it("Checks suggestion item's tabindex", async () => {
+		const input = await $("#myInput2");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const item = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item")[0].shadow$("li");
+
+		await input.click();
+		await input.keys("c");
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await item.getAttribute("tabindex"), "-1", "The first suggestion item is should not have tabindex");
+	});
+
+	it("Checks suggetion item's role attribute", async () => {
+		const input = await $("#myInput2");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		
+		await input.click();
+		await input.keys("c");
+		
+		const item = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item")[0].shadow$("li");
+
+		assert.strictEqual(await item.getAttribute("role"), "option", "The first suggestion item has correct role attribute");
+	});
+
+	it("Checks group items tabindex", async () => {
+		const input = await $("#myInput");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput");
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		
+		await input.click();
+		await input.keys("a");
+		await input.keys("ArrowDown");
+
+		const item = await respPopover.$("ui5-list").$$("ui5-li-groupheader")[0].shadow$("ul");
+
+		assert.strictEqual(await item.getAttribute("tabindex"), "-1", "The first group item is should not have tabindex");
 	});
 });

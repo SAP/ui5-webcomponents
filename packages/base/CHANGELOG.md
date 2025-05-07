@@ -3,6 +3,150 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.21](https://github.com/SAP/ui5-webcomponents/compare/v1.24.20...v1.24.21) (2025-05-07)
+
+
+### Bug Fixes
+
+* **DragRegistry - TypeScript:** correct import ([#11389](https://github.com/SAP/ui5-webcomponents/issues/11389)) ([cc9738a](https://github.com/SAP/ui5-webcomponents/commit/cc9738a9c911e76b8251919282b74ce6cfc46680)), closes [#8677](https://github.com/SAP/ui5-webcomponents/issues/8677) [#11387](https://github.com/SAP/ui5-webcomponents/issues/11387)
+* **ui5-popover:** fix arrow positioning ([#11363](https://github.com/SAP/ui5-webcomponents/issues/11363)) ([05f33c0](https://github.com/SAP/ui5-webcomponents/commit/05f33c0220fe71e00852c300f61ef5b91096c8eb))
+
+
+
+
+
+## [1.24.20](https://github.com/SAP/ui5-webcomponents/compare/v1.24.19...v1.24.20) (2025-04-08)
+
+
+### Bug Fixes
+
+* update CLDR cdn url ([4f89797](https://github.com/SAP/ui5-webcomponents/commit/4f897974b4a36e8c46a21f46a51faf5b08f56d9e))
+
+
+
+
+
+## [1.24.19](https://github.com/SAP/ui5-webcomponents/compare/v1.24.18...v1.24.19) (2025-04-03)
+
+
+### Bug Fixes
+
+* **framework:** fix fetching "id" (indonesian) language ([8dc60ae](https://github.com/SAP/ui5-webcomponents/commit/8dc60aeaada5d7666692c0f6f605d6428c48fb50)), closes [#11233](https://github.com/SAP/ui5-webcomponents/issues/11233)
+
+
+
+
+
+## [1.24.18](https://github.com/SAP/ui5-webcomponents/compare/v1.24.17...v1.24.18) (2025-04-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+## [1.24.17](https://github.com/SAP/ui5-webcomponents/compare/v1.24.16...v1.24.17) (2025-03-04)
+
+
+### Bug Fixes
+
+* **ui5-popover, ui5-dialog:** fix finding keyboard focusable scroll containers ([#10937](https://github.com/SAP/ui5-webcomponents/issues/10937)) ([eb3a739](https://github.com/SAP/ui5-webcomponents/commit/eb3a739aebd0a2a5e6dea1d7af424772a4ac62c9))
+
+
+
+
+
+## [1.24.16](https://github.com/SAP/ui5-webcomponents/compare/v1.24.15...v1.24.16) (2025-02-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+## [1.24.15](https://github.com/SAP/ui5-webcomponents/compare/v1.24.14...v1.24.15) (2025-01-17)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+## [1.24.14](https://github.com/SAP/ui5-webcomponents/compare/v1.24.13...v1.24.14) (2024-12-13)
+
+
+### Bug Fixes
+
+* **ui5-table:** text cut due to column overflow ([#10197](https://github.com/SAP/ui5-webcomponents/issues/10197)) ([cd7a73e](https://github.com/SAP/ui5-webcomponents/commit/cd7a73eb151581b0aec2d29bc6b4f965de68db8f)), closes [#10168](https://github.com/SAP/ui5-webcomponents/issues/10168)
+
+
+
+
+
+## [1.24.13](https://github.com/SAP/ui5-webcomponents/compare/v1.24.12...v1.24.13) (2024-11-07)
+
+
+### Bug Fixes
+
+* patchPopup calls onFocusEvent with all params ([#10128](https://github.com/SAP/ui5-webcomponents/issues/10128)) ([8112148](https://github.com/SAP/ui5-webcomponents/commit/811214859f2a1a8d5dabbfc1300a0df934774b0e))
+
+
+
+
+
+## [1.24.12](https://github.com/SAP/ui5-webcomponents/compare/v1.24.11...v1.24.12) (2024-10-30)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-28)
+
+
+### Bug Fixes
+
+* **ui5-input:** enable preventDefault for input event ([#9946](https://github.com/SAP/ui5-webcomponents/issues/9946)) ([2d273b6](https://github.com/SAP/ui5-webcomponents/commit/2d273b69be405769dd974dbaf0f1fdf0599802d6)), closes [#9884](https://github.com/SAP/ui5-webcomponents/issues/9884)
+
+
+
+
+
+## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-02)
+
+
+### Bug Fixes
+
+* **ui5-input:** enable preventDefault for input event ([#9946](https://github.com/SAP/ui5-webcomponents/issues/9946)) ([2d273b6](https://github.com/SAP/ui5-webcomponents/commit/2d273b69be405769dd974dbaf0f1fdf0599802d6)), closes [#9884](https://github.com/SAP/ui5-webcomponents/issues/9884)
+
+
+
+
+
+## [1.24.10](https://github.com/SAP/ui5-webcomponents/compare/v1.24.9...v1.24.10) (2024-09-20)
+
+
+### Bug Fixes
+
+* **f6 navigation:** work properly when multiple runtimes ([#9811](https://github.com/SAP/ui5-webcomponents/issues/9811)) ([e51deb6](https://github.com/SAP/ui5-webcomponents/commit/e51deb6d0f1c72cc9bbbfb47c9673b2842661d97)), closes [#9795](https://github.com/SAP/ui5-webcomponents/issues/9795)
+* **ui5-*:** make ui5-content-native-scrollbar to take effect ([#9790](https://github.com/SAP/ui5-webcomponents/issues/9790)) ([f70cc11](https://github.com/SAP/ui5-webcomponents/commit/f70cc11f8424dfe22d5168dbb43c86309976f4ac)), closes [#9720](https://github.com/SAP/ui5-webcomponents/issues/9720) [#9695](https://github.com/SAP/ui5-webcomponents/issues/9695)
+
+
+
+
+
+## [1.24.9](https://github.com/SAP/ui5-webcomponents/compare/v1.24.8...v1.24.9) (2024-08-28)
+
+
+### Bug Fixes
+
+* **ui5-table:** fix border and focus overlap ([#9752](https://github.com/SAP/ui5-webcomponents/issues/9752)) ([f7085b5](https://github.com/SAP/ui5-webcomponents/commit/f7085b512e4b5f6bd0bda4b0defcb7ebebdc4ffc)), closes [#9526](https://github.com/SAP/ui5-webcomponents/issues/9526)
+
+
+
+
+
 ## [1.24.8](https://github.com/SAP/ui5-webcomponents/compare/v1.24.7...v1.24.8) (2024-08-02)
 
 

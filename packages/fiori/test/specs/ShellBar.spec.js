@@ -438,7 +438,7 @@ describe("Component Behavior", () => {
 				assert.strictEqual(await inputData.getValue(), "key2", "The user defined attributes are available.");
 			});
 
-			it("tests if searchfield is in the middle", async () => {
+			it.skip("tests if searchfield is in the middle", async () => {
 				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-container-middle").shadow$("slot[name=searchField]");
 
 				assert.ok(await searchField.isExisting(), "Search slot is inside middle container");

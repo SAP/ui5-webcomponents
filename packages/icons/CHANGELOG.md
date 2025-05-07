@@ -3,6 +3,121 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.21](https://github.com/SAP/ui5-webcomponents/compare/v1.24.20...v1.24.21) (2025-05-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.24.20](https://github.com/SAP/ui5-webcomponents/compare/v1.24.19...v1.24.20) (2025-04-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.24.19](https://github.com/SAP/ui5-webcomponents/compare/v1.24.18...v1.24.19) (2025-04-03)
+
+
+### Bug Fixes
+
+* **framework:** fix fetching "id" (indonesian) language ([8dc60ae](https://github.com/SAP/ui5-webcomponents/commit/8dc60aeaada5d7666692c0f6f605d6428c48fb50)), closes [#11233](https://github.com/SAP/ui5-webcomponents/issues/11233)
+
+
+
+
+
+## [1.24.18](https://github.com/SAP/ui5-webcomponents/compare/v1.24.17...v1.24.18) (2025-04-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.24.17](https://github.com/SAP/ui5-webcomponents/compare/v1.24.16...v1.24.17) (2025-03-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.24.16](https://github.com/SAP/ui5-webcomponents/compare/v1.24.15...v1.24.16) (2025-02-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.24.15](https://github.com/SAP/ui5-webcomponents/compare/v1.24.14...v1.24.15) (2025-01-17)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.24.14](https://github.com/SAP/ui5-webcomponents/compare/v1.24.13...v1.24.14) (2024-12-13)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.24.13](https://github.com/SAP/ui5-webcomponents/compare/v1.24.12...v1.24.13) (2024-11-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.24.12](https://github.com/SAP/ui5-webcomponents/compare/v1.24.11...v1.24.12) (2024-10-30)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-28)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.24.10](https://github.com/SAP/ui5-webcomponents/compare/v1.24.9...v1.24.10) (2024-09-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
+## [1.24.9](https://github.com/SAP/ui5-webcomponents/compare/v1.24.8...v1.24.9) (2024-08-28)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
 ## [1.24.8](https://github.com/SAP/ui5-webcomponents/compare/v1.24.7...v1.24.8) (2024-08-02)
 
 **Note:** Version bump only for package @ui5/webcomponents-icons

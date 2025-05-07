@@ -430,27 +430,27 @@
 	display: none;
 }
 
-:host :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	border-top-right-radius: var(--sapField_BorderCornerRadius);
 	border-bottom-right-radius: var(--sapField_BorderCornerRadius);
 }
 
-:host([value-state="Error"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host([value-state="Error"]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([value-state="Warning"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host([value-state="Warning"]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([value-state="Information"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host([value-state="Information"]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([value-state="Success"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host([value-state="Success"]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([focused]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host([focused]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	background-image: none;
 }

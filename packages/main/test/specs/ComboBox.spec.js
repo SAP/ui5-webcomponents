@@ -1040,11 +1040,17 @@ describe("Keyboard navigation", async () => {
 		const nextCombo = await browser.$("#combobox-two-column-layout");
 
 		await arrow.click();
+
+		assert.strictEqual(await combo.getProperty("focused"), true, "Initial combobox should be focused");
+
 		await combo.keys("Tab");
 
 		assert.strictEqual(await nextCombo.getProperty("focused"), true, "The next combobox should be focused");
 
 		await arrow.click();
+
+		assert.strictEqual(await combo.getProperty("focused"), true, "Initial combobox should be focused");
+
 		await browser.keys(["Shift", "Tab"]);
 
 		assert.strictEqual(await prevCombo.getProperty("focused"), true, "The previous combobox should be focused");

@@ -6,6 +6,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
 import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
@@ -19,7 +20,6 @@ import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegi
 // Template
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 // Styles
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 
@@ -86,7 +86,7 @@ type CalculatedPlacement = {
 @customElement({
 	tag: "ui5-popover",
 	styles: [
-		browserScrollbarCSS,
+		getEffectiveScrollbarStyle(),
 		PopupsCommonCss,
 		PopoverCss,
 	],
@@ -229,6 +229,7 @@ class Popover extends Popup {
 	_left?: number;
 	_oldPlacement?: CalculatedPlacement;
 	_width?: string;
+	_height?: string;
 
 	static get VIEWPORT_MARGIN() {
 		return 10; // px
@@ -430,6 +431,10 @@ class Popover extends Popup {
 		if (this.horizontalAlign === PopoverHorizontalAlign.Stretch && this._width) {
 			this.style.width = this._width;
 		}
+
+		if (this.verticalAlign === PopoverVerticalAlign.Stretch && this._height) {
+			this.style.height = this._height;
+		}
 	}
 
 	/**
@@ -509,6 +514,7 @@ class Popover extends Popup {
 			this._width = `${targetRect.width}px`;
 		} else if (this.verticalAlign === PopoverVerticalAlign.Stretch && !isVertical) {
 			popoverSize.height = targetRect.height;
+			this._height = `${targetRect.height}px`;
 		}
 
 		const arrowOffset = this.hideArrow ? 0 : ARROW_SIZE;
@@ -561,10 +567,10 @@ class Popover extends Popup {
 				left = clientWidth - Popover.VIEWPORT_MARGIN - popoverSize.width;
 			}
 		} else {
-			if (popoverSize.height > clientHeight || top < 0) { // eslint-disable-line
-				top = 0;
-			} else if (top + popoverSize.height > clientHeight) {
-				top -= top + popoverSize.height - clientHeight;
+			if (popoverSize.height > clientHeight || top < Popover.VIEWPORT_MARGIN) { // eslint-disable-line
+				top = Popover.VIEWPORT_MARGIN;
+			} else if (top + popoverSize.height > clientHeight - Popover.VIEWPORT_MARGIN) {
+				top = clientHeight - Popover.VIEWPORT_MARGIN - popoverSize.height;
 			}
 		}
 
@@ -625,14 +631,14 @@ class Popover extends Popup {
 
 		// Restricts the arrow's translate value along each dimension,
 		// so that the arrow does not clip over the popover's rounded borders.
-		const safeRangeForArrowY = popoverSize.height / 2 - borderRadius - ARROW_SIZE / 2;
+		const safeRangeForArrowY = popoverSize.height / 2 - borderRadius - ARROW_SIZE / 2 - 2;
 		arrowTranslateY = clamp(
 			arrowTranslateY,
 			-safeRangeForArrowY,
 			safeRangeForArrowY,
 		);
 
-		const safeRangeForArrowX = popoverSize.width / 2 - borderRadius - ARROW_SIZE / 2;
+		const safeRangeForArrowX = popoverSize.width / 2 - borderRadius - ARROW_SIZE / 2 - 2;
 		arrowTranslateX = clamp(
 			arrowTranslateX,
 			-safeRangeForArrowX,

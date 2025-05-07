@@ -3,6 +3,133 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.21](https://github.com/SAP/ui5-webcomponents/compare/v1.24.20...v1.24.21) (2025-05-07)
+
+
+### Bug Fixes
+
+* **ui5-popover:** fix arrow positioning ([#11363](https://github.com/SAP/ui5-webcomponents/issues/11363)) ([05f33c0](https://github.com/SAP/ui5-webcomponents/commit/05f33c0220fe71e00852c300f61ef5b91096c8eb))
+
+
+
+
+
+## [1.24.20](https://github.com/SAP/ui5-webcomponents/compare/v1.24.19...v1.24.20) (2025-04-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [1.24.19](https://github.com/SAP/ui5-webcomponents/compare/v1.24.18...v1.24.19) (2025-04-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [1.24.18](https://github.com/SAP/ui5-webcomponents/compare/v1.24.17...v1.24.18) (2025-04-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [1.24.17](https://github.com/SAP/ui5-webcomponents/compare/v1.24.16...v1.24.17) (2025-03-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [1.24.16](https://github.com/SAP/ui5-webcomponents/compare/v1.24.15...v1.24.16) (2025-02-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [1.24.15](https://github.com/SAP/ui5-webcomponents/compare/v1.24.14...v1.24.15) (2025-01-17)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [1.24.14](https://github.com/SAP/ui5-webcomponents/compare/v1.24.13...v1.24.14) (2024-12-13)
+
+
+### Bug Fixes
+
+* **ui5-table:** text cut due to column overflow ([#10197](https://github.com/SAP/ui5-webcomponents/issues/10197)) ([cd7a73e](https://github.com/SAP/ui5-webcomponents/commit/cd7a73eb151581b0aec2d29bc6b4f965de68db8f)), closes [#10168](https://github.com/SAP/ui5-webcomponents/issues/10168)
+
+
+
+
+
+## [1.24.13](https://github.com/SAP/ui5-webcomponents/compare/v1.24.12...v1.24.13) (2024-11-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [1.24.12](https://github.com/SAP/ui5-webcomponents/compare/v1.24.11...v1.24.12) (2024-10-30)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-28)
+
+
+### Bug Fixes
+
+* **ui5-input:** enable preventDefault for input event ([#9946](https://github.com/SAP/ui5-webcomponents/issues/9946)) ([2d273b6](https://github.com/SAP/ui5-webcomponents/commit/2d273b69be405769dd974dbaf0f1fdf0599802d6)), closes [#9884](https://github.com/SAP/ui5-webcomponents/issues/9884)
+
+
+
+
+
+## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-02)
+
+
+### Bug Fixes
+
+* **ui5-input:** enable preventDefault for input event ([#9946](https://github.com/SAP/ui5-webcomponents/issues/9946)) ([2d273b6](https://github.com/SAP/ui5-webcomponents/commit/2d273b69be405769dd974dbaf0f1fdf0599802d6)), closes [#9884](https://github.com/SAP/ui5-webcomponents/issues/9884)
+
+
+
+
+
+## [1.24.10](https://github.com/SAP/ui5-webcomponents/compare/v1.24.9...v1.24.10) (2024-09-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [1.24.9](https://github.com/SAP/ui5-webcomponents/compare/v1.24.8...v1.24.9) (2024-08-28)
+
+
+### Bug Fixes
+
+* **ui5-table:** fix border and focus overlap ([#9752](https://github.com/SAP/ui5-webcomponents/issues/9752)) ([f7085b5](https://github.com/SAP/ui5-webcomponents/commit/f7085b512e4b5f6bd0bda4b0defcb7ebebdc4ffc)), closes [#9526](https://github.com/SAP/ui5-webcomponents/issues/9526)
+
+
+
+
+
 ## [1.24.8](https://github.com/SAP/ui5-webcomponents/compare/v1.24.7...v1.24.8) (2024-08-02)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization

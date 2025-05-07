@@ -60,6 +60,7 @@ exports.config = {
 			// (see https://developers.google.com/web/updates/2017/04/headless-chrome)
 			args: [
 				'--headless',
+				'--disable-search-engine-choice-screen',
 				'--start-maximized',
 				'--no-sandbox',
 				'--disable-gpu',
@@ -233,6 +234,12 @@ exports.config = {
 			return browser.executeAsync((elem, attrName, done) => {
 				done(elem.hasAttribute(attrName));
 			}, this, attrName);
+		}, true);
+
+		await browser.addCommand("matches", async function(selector) {
+			return browser.executeAsync((elem, selector, done) => {
+				done(elem.matches(selector));
+			}, this, selector);
 		}, true);
 
 		await browser.addCommand("getStaticAreaItemClassName", async function(selector) {

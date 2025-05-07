@@ -20,7 +20,7 @@
 :host([actual-placement-type="Bottom"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
 	top: -0.5rem;
-	height: 0.5625rem;
+	height: 0.5rem;
 }
 
 :host([actual-placement-type="Bottom"]) .ui5-popover-arrow:after {

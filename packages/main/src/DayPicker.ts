@@ -270,7 +270,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
 				ariaLabel,
 				ariaSelected: String(isSelected || isSelectedBetween),
-				ariaDisabled: isOtherMonth ? "true" : undefined,
+				ariaDisabled: isDisabled || isOtherMonth ? "true" : undefined,
 				disabled: isDisabled,
 				type: specialDayType,
 			};
@@ -295,8 +295,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				day.classes += " ui5-dp-item--othermonth";
 			}
 
-			if (isWeekend) {
-				day.classes += " ui5-dp-item--weeekend";
+			if ((isWeekend || specialDayType === "NonWorking") && specialDayType !== "Working") {
+				day.classes += " ui5-dp-item--weekend";
 			}
 
 			if (isDisabled) {

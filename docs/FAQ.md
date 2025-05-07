@@ -2,13 +2,14 @@
 
 **Q: How can I play with UI5 Web Components easily?**
 
-**A:** Use this [Stackblitz](https://stackblitz.com/edit/js-vsrpnb?file=index.js,index.html).
+**A:** Use this [Playground](https://sap.github.io/ui5-webcomponents/v1/play/).
 
 
 **Q: Where is the documentation?**
 
 **A:** There are several resources:
-- [Web Components APIs](https://sap.github.io/ui5-webcomponents/playground/)
+- [Web Components APIs](https://sap.github.io/ui5-webcomponents/v1/components/)
+- [First steps](https://sap.github.io/ui5-webcomponents/v1/docs/getting-started/first-steps/)
 - [How to get started?](https://blogs.sap.com/2019/04/01/the-fastest-way-to-get-started-with-ui5-web-components/)
 
 **Q: Is there a CDN to load UI5 Web Components from?**

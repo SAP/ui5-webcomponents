@@ -19,6 +19,10 @@
 /* hovered */
 :host([actionable]:not([active]):not([selected]):hover) {
 	background : var(--sapList_Hover_Background);
+
+	.ui5-li-additional-text {
+		text-shadow: var(--sapContent_TextShadow);
+	}
 }
 
 /* focused */
@@ -47,6 +51,10 @@
 :host([active][actionable]) .ui5-li-desc,
 :host([active][actionable]) .ui5-li-additional-text {
 	color: var(--sapList_Active_TextColor);
+}
+
+:host([active][actionable]) .ui5-li-additional-text {
+	text-shadow: none;
 }
 
 /* [ui5-li]: additionalTextState */

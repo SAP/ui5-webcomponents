@@ -326,6 +326,10 @@ class Menu extends UI5Element {
 		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
+	get menuHasSubMenus() {
+		return !!this.items.filter(item => item.hasSubmenu).length;
+	}
+
 	get itemsWithChildren() {
 		return !!this._currentItems.filter(item => item.item.items.length).length;
 	}
@@ -503,7 +507,7 @@ class Menu extends UI5Element {
 	_getSubmenuReference(item: MenuItem) {
 		const index = (item.parentElement as Menu)?.items.indexOf(item);
 		return this.staticAreaItem
-			? this.staticAreaItem.shadowRoot!.querySelector(".ui5-menu-submenus")!.children[index] as Menu
+			? this.staticAreaItem.shadowRoot!.querySelector(`.ui5-menu-submenus > ui5-menu[id$=menu-item-${index}]`) as Menu
 			: undefined;
 	}
 
@@ -518,12 +522,12 @@ class Menu extends UI5Element {
 		return fragment;
 	}
 
-	_openItemSubMenu(item: MenuItem, opener: HTMLElement) {
+	async _openItemSubMenu(item: MenuItem, opener: HTMLElement) {
 		const mainMenu = this._findMainMenu(item);
 		mainMenu?.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
 			item,
 		}, false, false);
-		item._subMenu!.showAt(opener);
+		await item._subMenu!.showAt(opener);
 		item._preventSubMenuClose = true;
 		this._openedSubMenuItem = item;
 		this._subMenuOpenerId = opener.id;
@@ -558,7 +562,7 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_prepareSubMenu(item: MenuItem, opener: HTMLElement) {
+	async _prepareSubMenu(item: MenuItem, opener: HTMLElement) {
 		const menuItem = item.parentElement ? item : (opener as OpenerStandardListItem).associatedItem;
 		const parentMenuItem = this._getParentMenuItem(menuItem);
 
@@ -569,7 +573,7 @@ class Menu extends UI5Element {
 		if (menuItem && menuItem.hasSubmenu) {
 			// create new sub-menu
 			this._createSubMenu(menuItem, opener);
-			this._openItemSubMenu(menuItem, opener);
+			await this._openItemSubMenu(menuItem, opener);
 		}
 		if (parentMenuItem) {
 			parentMenuItem._preventSubMenuClose = true;
@@ -626,7 +630,7 @@ class Menu extends UI5Element {
 
 	_itemMouseOut(e: MouseEvent) {
 		if (isDesktop()) {
-			const opener = e.target as OpenerStandardListItem;
+			const opener = e.currentTarget as OpenerStandardListItem;
 			const item = opener.associatedItem;
 
 			clearTimeout(this._timeout);

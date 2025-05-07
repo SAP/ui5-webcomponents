@@ -8,11 +8,11 @@ type OpenUI5Popup = {
 
 const patchFocusEvent = (Popup: OpenUI5Popup) => {
 	const origFocusEvent = Popup.prototype.onFocusEvent;
-	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
+	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent, ...rest) {
 		const isTypeFocus = e.type === "focus" || e.type === "activate";
 		const target = e.target as HTMLElement;
 		if (!isTypeFocus || !target.closest("[ui5-popover],[ui5-responsive-popover],[ui5-dialog]")) {
-			origFocusEvent.call(this, e);
+			origFocusEvent.call(this, e, ...rest);
 		}
 	};
 };

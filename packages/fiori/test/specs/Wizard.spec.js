@@ -61,6 +61,19 @@ describe("Wizard general interaction", () => {
 			"Step has aria-label set to the number of the step and its title.");
 	});
 
+	it("Disabled step should not be interactive", async () => {
+		const wiz = await $("#wizTest");
+		const disabledStep = await wiz.shadow$(`[data-ui5-index="2"]`);
+
+		await disabledStep.click();
+
+		const isTabActiveElement = await browser.executeAsync((done) => {
+			done(document.activeElement.shadowRoot.activeElement === document.querySelector("#wizTest").shadowRoot.querySelector("[data-ui5-index='2']"));
+		});
+
+		assert.notOk(isTabActiveElement, "Second tab should not be active element");
+	});
+
 	it("move to next step by API", async () => {
 		const wiz = await browser.$("#wizTest");
 		const btnToStep2 = await browser.$("#toStep2");
@@ -121,15 +134,15 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(await step1InHeader.getAttribute("disabled"), null,
 			"First step in header is enabled.");
 
-		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
+		assert.ok(await firstFocusableElement.matches(":focus"), "The First focusable element in the step content is focused.");
 
 		await step1InHeader.keys(["Shift", "Tab"]);
 		await step2InHeader.keys("Space");
-		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
+		assert.ok(await firstFocusableElement.matches(":focus"), "The First focusable element in the step content is focused.");
 
 		await step1InHeader.keys(["Shift", "Tab"]);
 		await step2InHeader.keys("Enter");
-		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
+		assert.ok(await firstFocusableElement.matches(":focus"), "The First focusable element in the step content is focused.");
 
 		// assert - that second step in the content and in the header are not selected
 		assert.strictEqual(await step2.getAttribute("selected"), null,
@@ -316,6 +329,33 @@ describe("Wizard general interaction", () => {
 		// assert - The Wizard did not scroll to the very top of the step 1
 		assert.strictEqual(scrolPosBefore, scrolPosAfter,
 			"No scrolling occures after re-rendering when the selected step remains the same.");
+	});
+
+	it("Tests if initial focus is set on the second (selected) step", async () => {
+		browser.url("test/pages/WizardPageMode_test.html");
+
+		const wiz = await browser.$("#wiz2");
+
+		// open the dialog
+		const btnOpenDialog = await browser.$("#button");
+		await btnOpenDialog.click();
+
+		// go to second step
+		const step2 = await browser.$("#nextButton");
+		await step2.click();
+
+		// close the dialog by escape
+		await browser.keys("Escape");
+
+		// open the dialog again
+		await btnOpenDialog.click();
+
+		// check if second wizard tab is focused
+		const isTabActiveElement = await browser.executeAsync((done) => {
+			done(document.activeElement.shadowRoot.activeElement === document.querySelector("#wiz2").shadowRoot.querySelector("[data-ui5-index='2']"));
+		});
+
+		assert.ok(isTabActiveElement, "Second step is focused.");
 	});
 
 	it("Tests if second step is scrolled into view when first step's height is bigger than viewport", async () => {

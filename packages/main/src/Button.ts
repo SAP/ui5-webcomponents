@@ -21,13 +21,11 @@ import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 import {
-	isPhone,
-	isTablet,
-	isCombi,
 	isDesktop,
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
@@ -258,13 +256,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	iconOnly!: boolean;
 
 	/**
-	 * Indicates if the elements is on focus
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused!: boolean;
-
-	/**
 	 * Indicates if the elements has a slotted icon
 	 * @private
 	 */
@@ -272,7 +263,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	hasIcon!: boolean;
 
 	/**
-	 * Indicates if the element if focusable
+	 * Indicates if the element is focusable
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -355,7 +346,9 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	onEnterDOM() {
-		this._isTouch = (isPhone() || isTablet()) && !isCombi();
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	async onBeforeRendering() {
@@ -370,7 +363,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
 
-		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
+		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
 	}
 
 	_onclick(e: MouseEvent) {
@@ -393,7 +386,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	_onmousedown(e: MouseEvent) {
-		if (this.nonInteractive || this._isTouch) {
+		if (this.nonInteractive) {
 			return;
 		}
 
@@ -452,10 +445,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 		if (this.active) {
 			this._setActiveState(false);
 		}
-
-		if (isDesktop()) {
-			this.focused = false;
-		}
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -464,9 +453,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 		}
 
 		markEvent(e, "button");
-		if (isDesktop()) {
-			this.focused = true;
-		}
 	}
 
 	_setActiveState(active: boolean) {
@@ -507,6 +493,14 @@ class Button extends UI5Element implements IFormElement, IButton {
 		};
 	}
 
+	getDefaultTooltip() {
+		if (!getEnableDefaultTooltips()) {
+			return;
+		}
+
+		return getIconAccessibleName(this.icon);
+	}
+
 	get buttonTypeText() {
 		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
@@ -530,7 +524,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	get showIconTooltip() {
-		return this.iconOnly && !this.tooltip;
+		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
 	}
 
 	get ariaLabelText() {
