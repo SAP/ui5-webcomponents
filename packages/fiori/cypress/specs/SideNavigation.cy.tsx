@@ -463,22 +463,21 @@ describe("Side Navigation interaction", () => {
 	});
 
 	it("Tests preventDefault of 'click' event", () => {
+		const handleClick = (event: Event) => {
+			event.preventDefault();
+		};
+	
+		const handleSelectionChange = cy.stub().as("selectionChangeHandler");
+	
 		cy.mount(
-			<SideNavigation id="sideNav">
-				<SideNavigationItem id="linkItem" text="external link" href="#preventDefault" />
+			<SideNavigation id="sideNav" onClick={handleClick} onSelectionChange={handleSelectionChange}>
+				<SideNavigationItem id="linkItem" text="external link" unselectable={true} href="#preventDefault" />
+				<SideNavigationItem id="item" text="item"/>
 			</SideNavigation>
 		);
 	
 		cy.url()
 			.should("not.include", "#preventDefault");
-		
-		cy.get("#sideNav")
-			.then(sideNav => {
-				sideNav.get(0).addEventListener("click", event => {
-					event.preventDefault();
-				});
-				sideNav.get(0).addEventListener("ui5-selection-change", cy.stub().as("selectionChangeHandler"));
-			});
 
 		// Act
 		cy.get("#linkItem").realClick();
@@ -487,42 +486,110 @@ describe("Side Navigation interaction", () => {
 		cy.get("@selectionChangeHandler").should("not.have.been.called");
 		cy.url()
 			.should("not.include", "#preventDefault");
+
+		cy.get("#item").realClick();
+
+		// Assert
+		cy.get("@selectionChangeHandler").should("not.have.been.called");
+		cy.url()
+			.should("not.include", "#preventDefault");
 	});
 
-	it("Tests key modifiers when item is clicked", () => {
+	it("Tests preventDefault of items in overflow menu", () => {
+		const handleClick = (event: Event) => {
+			event.preventDefault();
+		};
+	
+		const handleSelectionChange = cy.stub().as("selectionChangeHandler");
+
 		cy.mount(
-			<SideNavigation id="sideNav">
-				<SideNavigationItem id="linkItem" text="external link" href="#testPreventDefault" />
+			<SideNavigation id="sideNav" collapsed={true} onClick={handleClick} onSelectionChange={handleSelectionChange}>
+				<SideNavigationItem unselectable={true} href="#test" text="link"></SideNavigationItem>
+				<SideNavigationItem text="item"></SideNavigationItem>
 			</SideNavigation>
 		);
 
 		cy.get("#sideNav")
-			.then(sideNav => {
-				sideNav.get(0).addEventListener("click", cy.stub().as("clickHandler"));
-			});
+			.invoke("attr", "style", "height: 50px");
 
-		// CTRL Key
 		cy.get("#sideNav")
-			.realClick({ ctrlKey: true });
+			.shadow()
+			.find(".ui5-sn-item-overflow")
+			.realClick();
 
-		cy.get("@clickHandler")
-			.should("be.calledWithMatch", { detail: { ctrlKey: true } });
-
-		// META Key
 		cy.get("#sideNav")
-			.realClick({ metaKey: true });
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='link']")
+			.realClick();
 
-		cy.get("@clickHandler")
-			.should("be.calledWithMatch", { detail: { metaKey: true } });
-
-		// ALT Key
+			cy.url()
+			.should("not.include", "#test");
+			
 		cy.get("#sideNav")
-			.realClick({ altKey: true });
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='item']")
+			.realClick();
+		
+		cy.get("@selectionChangeHandler").should("not.have.been.called");
+	});
 
-		cy.get("@clickHandler")
-			.should("be.calledWithMatch", { detail: { altKey: true } });
+	it("Tests preventDefault on child items in collapsed side navigation", () => {
+		const handleClick = (event: Event) => {
+			event.preventDefault();
+		};
+	
+		const handleSelectionChange = cy.stub().as("selectionChangeHandler");
 
-		// skip SHIFT Key because it causes cypress to download the test page
+		cy.mount(
+			<SideNavigation  onClick={handleClick} onSelectionChange={handleSelectionChange} id="sideNav" collapsed={true}>
+				<SideNavigationItem id="parentItem" text="2">
+					<SideNavigationItem text="child" />
+					<SideNavigationItem href="#test" text="link"></SideNavigationItem>
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#parentItem")
+			.realClick();
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='child']")
+			.realClick();
+
+		// Assert
+		cy.get("@selectionChangeHandler").should("not.have.been.called");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='link']")
+			.realClick();
+
+		cy.get("@selectionChangeHandler").should("not.have.been.called");
+		cy.url()
+			.should("not.include", "#test");
+	});
+
+	it("Tests key modifiers when item is clicked", () => {
+		const handleClick = cy.stub().as("clickHandler");
+
+		cy.mount(
+			<SideNavigation id="sideNav" onClick={e => {e.preventDefault(); handleClick(e);}}>
+				<SideNavigationItem id="linkItem" text="external link"/>
+			</SideNavigation>
+		);
+
+		const keyModifiers = [
+			{ key: "ctrlKey", options: { ctrlKey: true } },
+			{ key: "metaKey", options: { metaKey: true } },
+			{ key: "altKey", options: { altKey: true } },
+			{ key: "shiftKey", options: { shiftKey: true } },
+		];
+	
+		keyModifiers.forEach(({ key, options }) => {
+			cy.get("#sideNav").realClick(options);
+			cy.get("@clickHandler").should("be.calledWithMatch", { detail: { [key]: true } });
+		});
 	});
 
 	it("Tests 'selection-change' event", () => {

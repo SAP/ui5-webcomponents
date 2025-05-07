@@ -62,6 +62,7 @@
 				<ui5-side-navigation-sub-item text="Local 2"></ui5-side-navigation-sub-item>
 				<ui5-side-navigation-sub-item text="Others 3"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
+			<ui5-side-navigation-item text="Home 3" icon="chain-link" tooltip="Home 3 tooltip"></ui5-side-navigation-item>
 			<ui5-side-navigation-item design="Action" text="Quick Create parent test" icon="write-new" unselectable>
 				<ui5-side-navigation-sub-item design="Action" text="Quick Create child test" unselectable></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
@@ -136,18 +137,18 @@
 
 		document.querySelectorAll("ui5-side-navigation-item").forEach(function (item) {
 			item.addEventListener("ui5-click", function (event) {
-
+				["altKey", "ctrlKey", "metaKey", "shiftKey"].forEach(key => {
+					const listItem = document.getElementById(`${key}Info`);
+					listItem?.setAttribute("additional-text", event.detail?.[key]); 
+					listItem?.setAttribute("additional-text-state", event.detail?.[key] ? "Positive" : "Negative");
+				});
+				
 				if (preventClick) {
 					event.preventDefault();
 					return;
 				}
 
 				clickInput.value = `${++clickCounter}`;
-				["altKey", "ctrlKey", "metaKey", "shiftKey"].forEach(key => {
-					const listItem = document.getElementById(`${key}Info`);
-					listItem?.setAttribute("additional-text", event.detail?.[key]); 
-					listItem?.setAttribute("additional-text-state", event.detail?.[key] ? "Positive" : "Negative");
-				});
 			});
 		});
 

@@ -61,8 +61,7 @@ type PopupSideNavigationItem = SideNavigationItem & { associatedItem: SideNaviga
 type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 	item: Pick<MenuItemClickEventDetail, "item"> & {
 		associatedItem: SideNavigationSelectableItemBase,
-		_clickPrevented?: boolean,
-	}
+	},
 };
 
 /**
@@ -304,12 +303,10 @@ class SideNavigation extends UI5Element {
 
 		e.stopPropagation();
 
-		const {
-			altKey,
-			ctrlKey,
-			metaKey,
-			shiftKey,
-		} = e;
+		const altKey = (e.detail as any)?.altKey,
+			ctrlKey = (e.detail as any)?.ctrlKey,
+			metaKey = (e.detail as any)?.metaKey,
+			shiftKey = (e.detail as any)?.shiftKey;
 
 		const executeEvent = associatedItem.fireDecoratorEvent("click", {
 			altKey,
@@ -338,7 +335,6 @@ class SideNavigation extends UI5Element {
 		const associatedItem = e.detail?.item.associatedItem;
 
 		if (!associatedItem.fireDecoratorEvent("click")) {
-			e.detail.item._clickPrevented = true;
 			e.preventDefault();
 			return;
 		}
