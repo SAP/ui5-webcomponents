@@ -24,3 +24,23 @@ describe("General interactions", () => {
 		});
 	});
 });
+describe("Accessibility", () => {
+	it("should apply associated label text as aria-label on the slider element", () => {
+		cy.mount(
+			<>
+			<label for="slider">label for slider</label>
+			<Slider id="slider" min={0} max={20}></Slider>
+			</>
+		);
+
+		cy.get('label[for="slider"]')
+			.invoke('text')
+			.then((labelText) => {
+
+				cy.get("[ui5-slider]")
+					.shadow()
+					.find(".ui5-slider-handle")
+					.should("have.attr", "aria-label", labelText);
+			});
+	});
+});

@@ -12,6 +12,7 @@ import {
 
 // Styles
 import sliderBaseStyles from "./generated/themes/SliderBase.css.js";
+import { getAssociatedLabelForTexts, getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 
 type StateStorage = {
 	[key: string]: number | undefined,
@@ -788,6 +789,10 @@ abstract class SliderBase extends UI5Element {
 
 	get _ariaDescribedByHandleText() {
 		return this.editableTooltip ? "ui5-slider-InputDesc" : undefined;
+	}
+
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
 	}
 
 	get _ariaLabelledByHandleText() {
