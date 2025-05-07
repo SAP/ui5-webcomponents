@@ -29,6 +29,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 										onClick={this._headerPress}
 										aria-haspopup="menu"
 										aria-expanded={this._menuPopoverExpanded}
+										aria-label={this._brandingText}
 										data-ui5-stable="menu"
 										tabIndex={0}>
 										{this.showLogoInMenuButton && (
@@ -290,7 +291,7 @@ function combinedLogo(this: ShellBar) {
 			tabIndex={0}
 			onKeyDown={this._logoKeydown}
 			onKeyUp={this._logoKeyup}
-			aria-label={this._logoAreaText}>
+			aria-label={this.accessibilityAttributes.branding?.name || this._logoAreaText}>
 			{this.hasLogo && (
 				<span
 					class="ui5-shellbar-logo"

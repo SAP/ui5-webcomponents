@@ -35,6 +35,7 @@ import type {
 	ClassMap,
 	AccessibilityAttributes,
 	AriaRole,
+	UI5CustomEvent,
 } from "@ui5/webcomponents-base";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
@@ -75,6 +76,7 @@ type ShellBarLogoAccessibilityAttributes = {
 }
 type ShellBarProfileAccessibilityAttributes = Pick<AccessibilityAttributes, "name" | "expanded" | "hasPopup">;
 type ShellBarAreaAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
+type ShellBarBrandingAccessibilityAttributes = Pick<AccessibilityAttributes, "name">;
 type ShellBarAccessibilityAttributes = {
 	logo?: ShellBarLogoAccessibilityAttributes
 	notifications?: ShellBarAreaAccessibilityAttributes
@@ -82,6 +84,7 @@ type ShellBarAccessibilityAttributes = {
 	product?: ShellBarAreaAccessibilityAttributes
 	search?: ShellBarAreaAccessibilityAttributes
 	overflow?: ShellBarAreaAccessibilityAttributes
+	branding?: ShellBarBrandingAccessibilityAttributes
 };
 
 type ShellBarNotificationsClickEventDetail = {
@@ -131,7 +134,7 @@ interface IShelBarItemInfo extends IShellBarHidableItem {
 	title?: string,
 	stableDomRef?: string,
 	refItemid?: string,
-	press: (e: MouseEvent) => void,
+	press: (e: UI5CustomEvent<Button, "click">) => void,
 	order?: number,
 	profile?: boolean,
 	tooltip?: string,
@@ -313,12 +316,12 @@ class ShellBar extends UI5Element {
 	/**
 	 * Disables the automatic search field expansion/collapse when the available space is not enough.
 	 *
-	 * **Note:** The `disableAutoSearchField` property is in an experimental state and is a subject to change.
+	 * **Note:** The `disableSearchCollapse` property is in an experimental state and is a subject to change.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disableAutoSearchField = false;
+	disableSearchCollapse = false;
 
 	/**
 	 * Defines the `primaryTitle`.
@@ -377,6 +380,7 @@ class ShellBar extends UI5Element {
 	 * - **product** - `product.expanded` and `product.hasPopup`.
 	 * - **search** - `search.hasPopup`.
 	 * - **overflow** - `overflow.expanded` and `overflow.hasPopup`.
+	 * - **branding** - `branding.name`.
 	 *
 	 * The accessibility attributes support the following values:
 	 *
@@ -797,8 +801,9 @@ class ShellBar extends UI5Element {
 	 * Use this method to change the state of the search filed according to internal logic.
 	 * An event is fired to notify the change.
 	 */
-	setSearchState(expanded: boolean) {
+	async setSearchState(expanded: boolean) {
 		this.showSearchField = expanded;
+		await renderFinished();
 		this.fireDecoratorEvent("search-field-toggle", { expanded });
 	}
 
@@ -993,7 +998,7 @@ class ShellBar extends UI5Element {
 		this._defaultItemPressPrevented = false;
 	}
 
-	_handleCustomActionPress(e: MouseEvent) {
+	_handleCustomActionPress(e: UI5CustomEvent<Button, "click">) {
 		const target = e.target as HTMLElement;
 		const refItemId = target.getAttribute("data-ui5-external-action-item-id");
 
@@ -1012,7 +1017,7 @@ class ShellBar extends UI5Element {
 		this._toggleActionPopover();
 	}
 
-	_handleNotificationsPress(e: MouseEvent) {
+	_handleNotificationsPress(e: UI5CustomEvent<Button, "click">) {
 		const notificationIconRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-bell-button")!,
 			target = e.target as HTMLElement;
 
@@ -1032,7 +1037,7 @@ class ShellBar extends UI5Element {
 		this.setSearchState(false);
 	}
 
-	_handleProductSwitchPress(e: MouseEvent) {
+	_handleProductSwitchPress(e: UI5CustomEvent<Button, "click">) {
 		const buttonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-button-product-switch")!,
 			target = e.target as HTMLElement;
 
@@ -1093,11 +1098,12 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Returns the `search` icon DOM ref.
+	 * @returns The search icon DOM ref
 	 * @public
-	 * @default null
 	 * @since 2.10.0
 	 */
-	get searchButtonDomRef(): HTMLElement | null {
+	async getSearchButtonDomRef(): Promise<HTMLElement | null> {
+		await renderFinished();
 		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="toggle-search"]`);
 	}
 
@@ -1309,8 +1315,8 @@ class ShellBar extends UI5Element {
 	get autoSearchField() {
 		const onFocus = document.activeElement === this.searchField[0];
 		const hasValue = this.searchField[0]?.value?.length > 0;
-		const disableAutoSearchField = this.disableAutoSearchField || onFocus || hasValue;
-		if (disableAutoSearchField) {
+		const disableSearchCollapse = this.disableSearchCollapse || onFocus || hasValue;
+		if (disableSearchCollapse) {
 			return false;
 		}
 		return this.showSearchField || this._autoRestoreSearchField;
@@ -1538,6 +1544,10 @@ class ShellBar extends UI5Element {
 		return ShellBar.i18nBundle.getText(SHELLBAR_OVERFLOW);
 	}
 
+	get _brandingText() {
+		return this.accessibilityAttributes.branding?.name || this.primaryTitle;
+	}
+
 	get hasContentItems() {
 		return this.contentItems.length > 0;
 	}
@@ -1635,6 +1645,12 @@ class ShellBar extends UI5Element {
 				"accessibilityAttributes": {
 					hasPopup: this.accessibilityAttributes.overflow?.hasPopup || "menu" as const,
 					expanded: overflowExpanded === undefined ? this._overflowPopoverExpanded : overflowExpanded,
+				},
+			},
+			branding: {
+				"title": this._brandingText,
+				"accessibilityAttributes": {
+					name: this.accessibilityAttributes.branding?.name,
 				},
 			},
 		};
