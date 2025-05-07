@@ -10,6 +10,7 @@ import type { IColorPaletteItem } from "./ColorPalette.js";
 import ColorPaletteItemTemplate from "./ColorPaletteItemTemplate.js";
 import {
 	COLORPALETTE_COLOR_LABEL,
+	COLOR_PALETTE_ITEM_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -105,6 +106,10 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 
 	get colorLabel() {
 		return ColorPaletteItem.i18nBundle.getText(COLORPALETTE_COLOR_LABEL);
+	}
+
+	get colorPaletteItemSelectedText() {
+		return this.selected ? ColorPaletteItem.i18nBundle.getText(COLOR_PALETTE_ITEM_SELECTED) : undefined;
 	}
 
 	get styles() {

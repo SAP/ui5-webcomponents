@@ -10,6 +10,7 @@ export default function ColorPaletteItemTemplate(this: ColorPaletteItem) {
 			tabindex={parseInt(this.forcedTabIndex)}
 			role="button"
 			aria-label={`${this.colorLabel} - ${this.index}: ${this.value}`}
+			aria-description={this.colorPaletteItemSelectedText}
 			title={`${this.colorLabel} - ${this.index}: ${this.value}`}
 		></div>
 	);
