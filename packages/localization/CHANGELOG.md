@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.21](https://github.com/SAP/ui5-webcomponents/compare/v1.24.20...v1.24.21) (2025-05-07)
+
+
+### Bug Fixes
+
+* **ui5-popover:** fix arrow positioning ([#11363](https://github.com/SAP/ui5-webcomponents/issues/11363)) ([05f33c0](https://github.com/SAP/ui5-webcomponents/commit/05f33c0220fe71e00852c300f61ef5b91096c8eb))
+
+
+
+
+
 ## [1.24.20](https://github.com/SAP/ui5-webcomponents/compare/v1.24.19...v1.24.20) (2025-04-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization

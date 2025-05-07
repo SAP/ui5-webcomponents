@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.21](https://github.com/SAP/ui5-webcomponents/compare/v1.24.20...v1.24.21) (2025-05-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-theming
+
+
+
+
+
 ## [1.24.20](https://github.com/SAP/ui5-webcomponents/compare/v1.24.19...v1.24.20) (2025-04-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-theming

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.21](https://github.com/SAP/ui5-webcomponents/compare/v1.24.20...v1.24.21) (2025-05-07)
+
+
+### Features
+
+* **ui5-button:** provide focus support for mobile ([#11236](https://github.com/SAP/ui5-webcomponents/issues/11236)) ([d2ec2b0](https://github.com/SAP/ui5-webcomponents/commit/d2ec2b0c0e8cbd759ccc9305f42ef4dea23f542d)), closes [#11024](https://github.com/SAP/ui5-webcomponents/issues/11024) [#8414](https://github.com/SAP/ui5-webcomponents/issues/8414)
+
+
+
+
+
 ## [1.24.20](https://github.com/SAP/ui5-webcomponents/compare/v1.24.19...v1.24.20) (2025-04-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools

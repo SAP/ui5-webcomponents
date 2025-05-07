@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.21](https://github.com/SAP/ui5-webcomponents/compare/v1.24.20...v1.24.21) (2025-05-07)
+
+
+### Bug Fixes
+
+* **DragRegistry - TypeScript:** correct import ([#11389](https://github.com/SAP/ui5-webcomponents/issues/11389)) ([cc9738a](https://github.com/SAP/ui5-webcomponents/commit/cc9738a9c911e76b8251919282b74ce6cfc46680)), closes [#8677](https://github.com/SAP/ui5-webcomponents/issues/8677) [#11387](https://github.com/SAP/ui5-webcomponents/issues/11387)
+* **ui5-multi-combobox:** remove VS header after setting VH to None ([#11261](https://github.com/SAP/ui5-webcomponents/issues/11261)) ([5c00cdd](https://github.com/SAP/ui5-webcomponents/commit/5c00cdd73213bafe5deb203eb16e49b8aa704ebb)), closes [#9736](https://github.com/SAP/ui5-webcomponents/issues/9736)
+* **ui5-popover:** fix arrow positioning ([#11363](https://github.com/SAP/ui5-webcomponents/issues/11363)) ([05f33c0](https://github.com/SAP/ui5-webcomponents/commit/05f33c0220fe71e00852c300f61ef5b91096c8eb))
+
+
+### Features
+
+* **ui5-button:** provide focus support for mobile ([#11236](https://github.com/SAP/ui5-webcomponents/issues/11236)) ([d2ec2b0](https://github.com/SAP/ui5-webcomponents/commit/d2ec2b0c0e8cbd759ccc9305f42ef4dea23f542d)), closes [#11024](https://github.com/SAP/ui5-webcomponents/issues/11024) [#8414](https://github.com/SAP/ui5-webcomponents/issues/8414)
+
+
+
+
+
 ## [1.24.20](https://github.com/SAP/ui5-webcomponents/compare/v1.24.19...v1.24.20) (2025-04-08)
 
 
