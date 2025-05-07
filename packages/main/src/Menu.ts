@@ -390,7 +390,7 @@ class Menu extends UI5Element {
 
 		this._timeout = setTimeout(() => {
 			const opener = item.parentElement as MenuItem | Menu;
-			const menuItems = opener._allMenuItems;
+			const menuItems = opener && opener._allMenuItems;
 			const openedSibling = opener && menuItems && menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
 
 			if (openedSibling) {
