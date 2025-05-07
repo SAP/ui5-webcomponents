@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.5](https://github.com/SAP/ui5-webcomponents/compare/v2.7.4...v2.7.5) (2025-05-07)
+
+
+### Bug Fixes
+
+* **ui5-calendar:** show year range text in year view ([#11473](https://github.com/SAP/ui5-webcomponents/issues/11473)) ([3597cc3](https://github.com/SAP/ui5-webcomponents/commit/3597cc39eb461adc88332d5fc5d9d26f63e79ad9)), closes [#11468](https://github.com/SAP/ui5-webcomponents/issues/11468)
+
+
+
+
+
 ## [2.7.4](https://github.com/SAP/ui5-webcomponents/compare/v2.7.3...v2.7.4) (2025-03-04)
 
 
