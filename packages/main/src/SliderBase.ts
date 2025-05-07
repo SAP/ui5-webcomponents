@@ -792,7 +792,7 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
+		return getAssociatedLabelForTexts(this);
 	}
 
 	get _ariaLabelledByHandleText() {
