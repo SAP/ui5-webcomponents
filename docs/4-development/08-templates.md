@@ -1,877 +1,408 @@
 ---
 sidebar_label: Templates
 ---
+# JSX Templates
 
-# Handlebars Templates
+## Intro
+JSX is an embeddable XML-like syntax that is transformed into valid JavaScript. TypeScript supports embedding, type checking, and compiling JSX directly to JavaScript.
 
-The preferred way to write the renderers for UI5 Web Components (and supported directly by the build tools) is to use standard Handlebars templates with some additional custom syntax.
-
-
-## Handlebars compilation
-
-[Handlebars](https://handlebarsjs.com/guide/#simple-expressions) templates (`.hbs`) are compiled during build/development to [lit-html](https://lit.dev/docs/v1/lit-html/introduction/) templates (`.lit.js`) and the lit templates are what's actually executed during runtime.
-
-Example:
-
-The following `src/MyComponent.hbs` template
-
-```handlebars
-<button>{{text}}</button>
+Basic example:
+```tsx
+<div class="header">Hello World!</div>
 ```
 
-will be compiled to `dist/generated/templates/MyComponentTemplate.lit.js` with the following content,
-
-```js
-import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-const block0 = (context, tags, suffix) => html`<button>${ifDefined(context.text)}</button>`;
-export default block0;
+gets compiled to
+```ts
+import { jsx as _jsx } from "@ui5/webcomponents-base/jsx-runtime";
+_jsx("div", { class: "header", children: "Hello World!" });
 ```
 
-and later tree-shaken by the bundler and bundled along with the rest of the component's code.
+Code inside JSX is special code and not JavaScript. To jump out of JSX and use JavaScript into the template, you can use the `{}` notation
 
-Therefore, the `.hbs` file is there just for convenience, the end result will always be an optimized lit-html.
+```tsx
+const myClass = "header"
+const name = "World";
 
-## Design goals of the Handlebars templates
-
- - **Declarative**: write HTML in a form as close as possible to what will eventually be in the DOM (rather than writing template functions directly).
- - **Abstract**: the template could be compiled to other formats in the future (not just lit-html) so it should only use universal concepts and no lit-specific features.
- - **Separation of concerns**: the template must be as simple as possible with no complex expressions or calculations - variables that control structures (for example, `{{#if}}` statements) should be precalculated.
- 
-For these reasons, we would suggest you use `.hbs` templates and have them compiled to lit-html, instead of directly writing `lit-html` renderers, although that's also possible if you prefer so.
-
-## The Context
-
-### Global context
-
-The context in the `.hbs` file is the **web component instance**, and you do not have to write the `this` keyword (although you can).
-Therefore, you can directly use metadata entities (property, slot, event names) or any other JavaScript property on the component directly:
-
-In the `MyComponent.js` file:
-
-```js
-this.age = 30;
-this.fullName = `${this.name} ${this.lastName}`;
+<div class={myClass}>Hello {name}</div>
 ```
 
-In the `MyComponent.hbs` file you can just use them directly:
+## Writing a component template
 
-```handlebars
-<p>{{fullName}}</p>
-<p>{{age}}</p>
-```
+```tsx
+// PanelTemplate.tsx
+import type Panel from "./Panel.js";
 
-The following code will have exactly the same result:
-
-```handlebars
-<p>{{this.fullName}}</p>
-<p>{{this.age}}</p>
-```
-
-but `this` is optional, so it's almost never used.
-
-### Context in loops
-
-In a loop, the context is always the current item, and not the component itself. 
-
-Example:
-
-In the `MyComponent.js` file:
-
-```js
-this.items = [
-	{
-		id: "item1",
-		posinset: 1,
-		setsize: 5,
-		text: "Item 1"
-	},
-	{
-		id: "item2",
-		posinset: 2,
-		setsize: 5,
-		text: "Item 2"
-	}
-]
-```
-
-In the `MyComponent.hbs` file:
-
-```handlebars
-{{#each items}}
-	<div id="{{id}}"
-		 role="option"
-		 aria-posinset="{{posinset}}"
-		 aria-setsize="{{setsize}}"
-	>{{text}}</div>
-{{/each}}
-```
-
-Again, you can use the `this` keyword, but it's not necessary. The following code will be the same as the one above:
-```handlebars
-{{#each items}}
-	<div id="{{this.id}}"
-		 role="option"
-		 aria-posinset="{{this.posinset}}"
-		 aria-setsize="{{this.setsize}}"
-	>{{this.text}}</div>
-{{/each}}
-```
-
-The only use case where you must use the `this` keyword is when you want to refer to the looped over item directly (and not its properties).
-
-Example:
-
-```handlebars
-{{#each items}}
-	<div id="{{id}}"
-		 .item="{{this}}"
-	>{{text}}</div>
-{{/each}}
-```
-
-Here, each `div` inside the loop gets assigned an `item` property that points to the respective item from the array we're looping over.
-
-Here's another example for the `this` keyword:
-
-In the `MyComponent.js` file:
-
-```js
-this.numbers = [
-	[1, 2, 3],
-	[4, 5, 6]
-];
-```
-
-In the `MyComponent.hbs` file:
-
-```handlebars
-{{#each numbers}}
-	<div>
-		{{#each this}}
-			<span>{{this}}</span>
-		{{/each}}
-	</div>
-{{/each}}
-```
-
-The result in the DOM would be:
-
-```html
-<div><span>1</span><span>2</span><span>3</span></div>
-<div><span>4</span><span>5</span><span>6</span></div>
-```
-
-In this example, the first usage of `this` (in the nested `#each`) is the nested array (for example, `[1, 2, 3]`), and the second usage of `this` inside the `span` is the number itself.
-
-### Accessing the global context from loops  <a name="context_loops_accessing"></a>
-
-You can access the global context inside loops with the "one-level-up" expression: `../`
-
-Example:
-
-In the `MyComponent.js` file:
-
-```js
-this.name = "John Smith";
-this.items = [
-	{
-		id: "item1"
-	},
-	{
-		id: "item2"
-	}
-]
-```
-
-In the `MyComponent.hbs` file:
-
-```handlebars
-{{#each items}}
-	<div id="{{id}}">{{../name}}</div>
-{{/each}}
-```
-
-In this example, even though we're looping over an item from the array, we can still access the global context and use the `name` property of the web component instance.
-
-
-## The `.hbs` Syntax
-
-You can use the following features when writing `.hbs` templates:
-
-### Bindings
-
-You can access any property from the context (generally the web component instance) in your `.hbs` template with `{{` and `}}`.
-
-In the `MyComponent.js` file:
-
-```js
-this.tooltip = "Some tooltip";
-this.txt = "Some text";
-```
-
-In the `MyComponent.hbs` file:
-
-```handlebars
-<button title="{{tooltip}}">{{txt}}<button/>
-```
-
-*Note:* You must always create valid HTML, so you can only use bindings for attribute values or text nodes.
-
-For example, the following is **not allowed**:
-
-```handlebars
-<{{tag}} {{attr}}="Hello">This will not compile</{{tag}}>
-```
-
-You can access object properties:
-
-In the `MyComponent.js` file:
-
-```js
-this.person = {
-	name: "John",
-	lastName: "Smith"
+export default function (this: Panel) {
+    return <div>{this.headerText}</div>;
 }
 ```
 
-In the `MyComponent.hbs` file:
+Component templates should export a function as a default export. The framework will call the template with the component instance bound to `this` so you should describe the type of the `this` parameter like in the example above. After that, you get full type checking and code completion inside the template.
 
-```handlebars
-<p>{{person.name}} {{person.lastName}}</p>
+## Using components in templates
+
+TypeScript treats lower-case element names as intrinsic (known to the browser). Upper-case element names are value based and looked up as a variable in the JS scope. In order to render a web component, you should import it and use its class as a value in JSX
+
+```tsx
+import Button from "@ui5/webcomponents/dist/Button.js"
+<Button design="Positive">Submit</Button>
 ```
 
-but you cannot use expressions inside `.hbs` templates. The following is **not allowed**:
-
-```handlebars
-<p>{{person.name + " " + person.lastName}}</p>
+The component model comes from the browser, so the JSX runtime is not doing anything special with this value, other than rendering the real tag in the DOM. Behind the scenes, the above code get converted to
+```tsx
+<ui5-button design="Positive">Submit</ui5-button>
 ```
 
-Instead, you should precalculate the required value in the `.js` file and use it directly in the template:
+While you can technically use web component tags directly, they are not added to the `JSX.IntrinsicElements` set and TypeScript will show errors for them.
 
-In the `MyComponent.js` file:
+## Properties vs attributes
 
-```js
-get fullName() {
-	return `${this.person.name} ${this.person.lastName}`;
+TypeScript will check the types of intrinsic elements for known attributes (like `<div aria-role="link">`) and the runtime will correctly set them as attributes. For web components, the DOM operation will always use a property setter which works correctly for booleans and numbers
+
+```tsx
+<MyComponent
+    boolProp={false}
+    numberProp={5}
+></MyComponent>
+```
+
+since the types are known for all components, TypeScript will do the type checking and the runtime will check if a property exists and use it
+```tsx
+if ("boolProp" in domEl) {
+    domEl["boolProp"] = false;
 }
 ```
 
-In the `MyComponent.hbs` file:
+This simplifies templates a lot - there is no need to make a distinction between boolean attributes and string attributes - properties are always used and always type checked.
 
-```handlebars
-<p>{{fullName}}</p>
+**Pitfall**: Using dashes in JSX. When a property name is not a valid JS identifier, TypeScript will not check its type, and it will be assigned to the dom element as an attribute instead of a property.
+
+Don't:
+```tsx
+<Icon show-tooltip={false} />
+// this will result in the string "false" being assigned and treated as `true`
 ```
 
-By default, all content that you pass is _escaped_ for security purposes.
-However, you can pass **arbitrary HTML** with `{{{` and `}}}`:
-
-In the `MyComponent.js` file:
-
-```js
-this.unsafeMessage = `<span>This is unsafe content</span>`;
+Do:
+```tsx
+<Icon showTooltip={false} />
 ```
 
-In the `MyComponent.hbs` file:
+Always use camel case property names when working with components. There will also be a warning in the console if an existing property is used via its attribute.
 
-```handlebars
-<p>{{{unsafeMessage}}}</p>
-```
+### `class` and `style` properties
 
-The result in DOM would be:
+Classes can be set as a string or as an object, where the key is the class that will be added if the value is truthy.
 
-```html
-<p><span>This is unsafe content</span></p>
-```
-
-*Note:* Using `{{{` and `}}}` is strongly discouraged and should be avoided whenever possible. If you must use it, make sure you've sanitized
-your HTML manually beforehand. A common use-case for the `{{{` and `}}}` binding is to manually add `<strong>` tags to parts of a string
-to implement highlighting while the user is typing. Here's an example:
-
-In the `MyComponent.js` file:
-
-```js
-this.userInput = `<strong>Arg</strong>entina`;
-```
-
-In the `MyComponent.hbs` file:
-
-```handlebars
-<div>{{{userInput}}}</div>
-```
-
-Thus, if the user has typed "Arg" (while typing "Argentina"), this part of the name will be highlighted.
-
-Finally, it is possible to pass HTML elements (not just strings as in all examples above), and they will be rendered:
-
-In the `MyComponent.js` file:
-
-```js
-this.messageDiv = document.createElement("div");
-this.messageDiv.textContent = "Hello";
-```
-
-In the `MyComponent.hbs` file:
-
-```handlebars
-<p>{{messageDiv}}</p>
-```
-
-The result in DOM would be:
-
-```html
-<p><div>Hello</div></p>
-```
-
-*Note:* This is not to be confused with `{{{` and `}}}`. The `{{{` and `}}}` binding expects a _string, containing HTML_,
-while the example above demonstrates passing an _HTML element_ (hence `Object`, not `String`) directly.
-
-*Note:* Although this technique is allowed and has its uses (such as cloning slotted elements to another component),
-passing HTML directly is strongly discouraged. The best practice is to always write your HTML explicitly in the template. 
-
-### Conditions
-
-You can use `if`, `else` and `unless` to create conditions.
-
-Examples:
-
-```handlebars
-{{#if hasText}}
-	<label class="ui5-badge-text"><bdi><slot></slot></bdi></label>
-{{/if}}
-```
-
-or
-
-```handlebars
-{{#if hasText}}
-	<label class="has-text"><span>{{text}}</span></label>
-{{else}}
-	<label class="empty-label"></label>
-{{/if}}
-```
-
-or
-
-```handlebars
-{{#unless _isPhone}}
-	<p>Some content</p>
-{{/unless}}
-```
-
-You can chain if-else-if, as follows:
-
-```handlebars
-{{#if hasImage}}
-	<slot></slot>
-{{else if icon}}
-	<ui5-icon class="ui5-avatar-icon" name="{{icon}}" accessible-name="{{accessibleNameText}}"></ui5-icon>
-{{else if initials}}
-	<span class="ui5-avatar-initials">{{validInitials}}</span>
-{{/if}}
-```
-
-Again, you cannot use expressions, so the following is **not allowed**:
-
-```handlebars
-{{#if person.access === "admin" }}
-	<p>Show admin functionality</p>
-{{/if}}
-```
-
-Instead, you should have a precalculated value in your `.js file`, for example:
-
-In `MyComponent.js`:
-
-```js
-get isAdmin() {
-	return this.person.access === "admin";
-}
-```
-
-and then use this value in `MyComponent.hbs`:
-
-```handlebars
-{{#if isAdmin }}
-	<p>Show admin functionality</p>
-{{/if}}
-```
-
-### Loops
-
-You can use `each` to loop over arrays.
-
-In the `MyComponent.js` file:
-
-```js
-this.items = [
-	{
-		id: "item1",
-		posinset: 1,
-		setsize: 5,
-		text: "Item 1"
-	},
-	{
-		id: "item2",
-		posinset: 2,
-		setsize: 5,
-		text: "Item 2"
-	}
-]
-```
-
-In the `MyComponent.hbs` file:
-
-```handlebars
-{{#each items}}
-	<div id="{{id}}"
-		 role="option"
-		 aria-posinset="{{posinset}}"
-		 aria-setsize="{{setsize}}"
-	>{{text}}</div>
-{{/each}}
-```
-
-See the previous section (especially the [Context in loops](#context_loops) part) for more examples and the meaning of the `this` keyword in loops.
-
-You can access the index of the currently looped item with the special `{{@index}}` variable. Note that `{{@index}}` is zero-based.
-
-For example, the following template,
-
-```handlebars
-{{#each items}}
-	<div id="{{id}}"
-		 part="item-{{@index}}"
-	>{{text}}</div>
-{{/each}}
-```
-
-will produce:
-
-```html
-<div id="item1" part="item-0"></div>
-<div id="item2" part="item-1"></div>
-```
-
-This is a common technique to create unique [shadow parts](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) for items
-within a UI5 Web Component.
-
-### Property assignment (the `.` prefix)
-
-The `.` prefix allows you to bind by property, rather than by attribute.
-
-Consider the following example:
-
-```js
-this.id = "myId";
-this.someString = "Some data";
-this.item = {
-	a: 1,
-	b: 2
-};
-this.text = "Some text";
-```
-
-```handlebars
+```tsx
 <div
-		id="{{id}}"
-		data-info="{{someString}}"
-		.item="{{myItem}}"
+    class={{
+        "ui5-vsd-content": true,
+        "ui5-vsd-content-expand": this.expandContent,
+    }}
 >
-	{{text}}
-</div>
 ```
 
-While `data-info` is set as an attribute (default assignment), `item` is set as a property due to the `.` used.
-The result in the DOM would be:
-
-```html
-<div id="myId" data-info="Some data">Some text</div>
+Styles are also directly set as objects
+```tsx
+<div
+    style={{
+        "display": this._contentExpanded ? "block" : "none",
+    }}
+>
 ```
 
-There would be no `item` in the DOM at all, but the following code:
+## Conditional rendering (if/else)
 
-```js
-document.getElementById("myId").item
-```
+Since JSX is compiled to JavaStcript, there is no need for special conditional syntax - just use JavaScript
 
-would return the `item` object because it was set as a property.
-
-### Boolean attribute assignment (the `?` prefix) <a name="syntax_question_mark"></a>
-
-The `?` prefix signifies that an attribute must not be set in DOM at all, if the bound value is falsy.
-
-Consider the following example:
-
-```js
-this._id = "myCB";
-this.checked = false;
-this.readonly = false;
-this.disabled = false;
-```
-
-```handlebars
-<input
-	id="{{_id}}-CB"
-	type='checkbox'
-	?checked="{{checked}}"
-	?readonly="{{readonly}}"
-	?disabled="{{disabled}}"
-	tabindex="-1"
-	aria-hidden="true"
-	data-sap-no-tab-ref
-/>
-```
-
-Since the `checked`, `readonly`, and `disabled` attributes are all `Boolean`, they must not be in the DOM if we want the `<input>` to be interactive.
-
-The output in DOM would be:
-
-```html
-<input
-	id="myCB-CB"
-	type='checkbox'
-	tabindex="-1"
-	aria-hidden="true"
-	data-sap-no-tab-ref
-/>
-```
-
-All attributes that had the `?` prefix and were bound to a falsy value are gone from DOM.
-
-However, if you did not use the `?` prefix
-
-```handlebars
-<input
-	id="{{_id}}-CB"
-	type='checkbox'
-	checked="{{checked}}"
-	readonly="{{readonly}}"
-	disabled="{{disabled}}"
-	tabindex="-1"
-	aria-hidden="true"
-	data-sap-no-tab-ref
-/>
-```
-
-even though `checked`, `readonly`, and `disabled` are equal to `false`, the resulting DOM would be
-
-```html
-<input
-	id="myCB-CB"
-	type='checkbox'
-	checked=""
-	readonly=""
-	disabled=""
-	tabindex="-1"
-	aria-hidden="true"
-	data-sap-no-tab-ref
-/>
-```
-
-which is not what we want, since boolean HTML attributes don't need to have a value at all to be considered set, only their presence is required.
-Therefore, always bind boolean attributes with `?`. 
-
-### Event handlers assignment (the `@` prefix) <a name="syntax_at"></a>
-
-You can bind events as follows:
-
-In the `MyComponent.js` file:
-
-```js
-this.onClick = event => {};
-```
-
-In the `MyComponent.hbs` file:
-
-```handlebars
-<button @click="{{onClick}}"></button>
-```
-
-### Style maps
-
-Style maps are an easy and useful tool to apply multiple styles to an element dynamically.
-
-In order to use a style map in your `.hbs` template, you must bind a `styles` property (or as in the next example, a getter called `styles`).
-Any binding to a `styles` object on a `style` attribute will be treated as a style map.
-
-In the `MyComponent.js` file:
-
-```js
-get styles() {
-	return {
-		root: {
-			display: this.isBlock ? "block" : "inline",
-			width: `${this.x}px`,
-			height: `${this.y}px`
-		},
-		footer: {
-			backgroundColor: this.bgColor 
-		}
-	}
+```tsx
+{this.icon &&
+    <Icon name={this.icon} />
 }
 ```
 
-In the `MyComponent.hbs` file:
+If the condition evaluates to false, the second expression will not be rendered.
 
-```handlebars
-<div style="{{styles.root}}">
-	Some content
-	<footer style="{{styles.footer}}"></footer>
-</div>
-```
-
-After the following code is run, both the `div` and the `footer` will have the respective CSS styles applied to them.
-
-**Important:** do not build styles manually. Always use style maps as they are CSP-compliant and they will not build style strings and assign them,
-but will use JavaScript APIs to apply each style/CSS variable separately.
-
-The following is an anti-pattern and is **not allowed** in the latest version of the handlebars-to-lit compiler:
-
-```js
-this.display = "block";
-this.styles = "display: none; visibility: hidden";
-```
-
-```handlebars
-<div style="display: {{display}}"></div>
-<div style="{{styles}}"></div>
-```
-
-In the first example, we build a style value manually, and in the second example we pass hard-coded styles as a string. None of these are CSP-compliant.
-The correct way would be to pass objects (as in the first example), in which case a style map will be used.
-
-### Class maps
-
-Class maps are an easy tool to set multiple classes to an element - either conditionally, or unconditionally.
-
-In order to use a class map in your `.hbs` template, you must bind a `classes` property (or as in the next example, a getter called `classes`) to a `class` attribute:
-
-```js
-get classes() {
-	return {
-		main: {
-			"ui5-myComponent-main": true,
-			"ui5-myComponent-mobile": isPhone()
-		},
-		content :{
-			"ui5-content-wide": this.width > 1024	
-		},
-		section: {
-			"ui5-section": true,
-			"ui5-section-with-items": this.items.length > 0,
-			"ui5-section-desktop": !isPhone() && !isTablet()
-		}
-	}
+**Pitfall**: If you are checking an array and put the array length in the condional check, the framework will render a `0` instead of rendering nothing. Always check array length by comparing to 0, so the result of the expression is boolean
+```tsx
+{this.rows.length > 0 &&
+    <CheckBox ... />
 }
 ```
 
-```handlebars
-<article class="{{classes.main}}">
-	<div class="{{classes.content}}"></div>
-	<section class="{{classes.section}}"></section>
-</article>
+For if/else branches, use a ternary operator:
+
+```tsx
+{this.icon ?
+    <Icon class="ui5-tli-icon" name={this.icon}/>
+    :
+    <div class="ui5-tli-dummy-icon-container"></div>
+}
 ```
 
-Here, all 3 HTML elements will have their classes applied based on the conditions in the definition of the class map. Some entries in the class map
-are unconditional (`ui5-myComponent-main` and `ui5-section`) so these classes will always be set, however the rest are going to be set only if certain criteria are met.
+For more complex logic, you can extract the template in a function and use JavaScript
 
-### Partials <a name="syntax_partials"></a>
+## Iteration (loop)
 
-You can use partials to reuse code in `.hbs` templates:
+Like conditionals, iteration is also achieved with plain JavaScript. Use the `Array.map` function to return a list of templates
 
-You can define a partial with `{{#*inline "NAME"}}` and use it with `{{>NAME}}` where `NAME` is the name of the partial.
-
-Consider the following example:
-
-```handlebars
-<div>
-	{{>valueStateMessage}}
-</div>
-<p>Some more content</p>
-<div>
-	{{>valueStateMessage}}
-</div>
-
-{{#*inline "valueStateMessage"}}
-	{{#if msg}}
-		<span>{{msg}}</span>
-	{{/if}}
-{{/inline}}
+```tsx
+{this.items.map(item =>
+    <li class="ui5-timeline-list-item">
+        {item.text}
+    </li>
+}
 ```
 
-Here we define some common code in the `valueStateMessage` partial and use it twice within the template.
+### Keyed vs non-keyed iteration
 
-Partials are very often used to define **hooks** - extension points for other components.
+The code above is an example of a non-keyed iteartion. Most of the time, rendering lists directly is fine, but updating them will update the content of the elements instead of moving the actual elements around (for example deleting the first item will actually render the content of the second item in the first element and the last element will be removed from the DOM).
 
-Example:
+For performance reasons, or if you keep references to the items and expect the same item after DOM operations, you should always add a key.
 
-In `MyComponent.hbs`:
-
-```handlebars
-<section>
-	<span class="first-fe" data-ui5-focus-trap tabindex="0" @focusin={{forwardToLast}}></span>
-
-	{{> beforeContent}}
-
-	<div style="{{styles.content}}" class="{{classes.content}}"  @scroll="{{_scroll}}" part="content">
-		<slot></slot>
-	</div>
-
-	{{> afterContent}}
-
-	<span class="last-fe" data-ui5-focus-trap tabindex="0" @focusin={{forwardToFirst}}></span>
-</section>
-
-
-{{#*inline "beforeContent"}}{{/inline}}
-
-{{#*inline "afterContent"}}{{/inline}}
+```tsx
+this.tokens
+    .filter(token => token._isVisible)
+    .map(token => <ListItemStandard key={String(token._id)}
 ```
 
-Here we define two empty partials (`beforeContent` and `afterContent`) for others to implement.
+If you are iterating over other webcomponent instances, you can use the stable key generated by the framework for each element instance available via `this._id`. Otherwise, make sure the key is unique and stable - do not use the array index as a key.
 
-*Note:* Partials do not have their own context. When a partial is processed, its content is treated as if directly
-written at the partial's insertion point.
+## Partials
 
-### Include Template
+Partials again show the strength of JSX - use JavaScript for all standard concepts (like conditionals and iteration in the previous sections).
 
-You can include other `.hbs` files with `{{>include "PATH_TO_FILE"}}` where `PATH_TO_FILE` is a relative or absolute path to the `.hbs` file you want to include.
+Template partials in this case are just function calls that return other templates
 
-Example:
-
-```handlebars
-{{>include "./MyComponent.hbs"}}
+```tsx
+{this._isSideContentFirst ?
+    <>
+        { sideContent.call(this) }
+        { mainContent.call(this) }
+    </>
+    :
+    <>
+        { mainContent.call(this) }
+        { sideContent.call(this) }
+    </>
 ```
 
-Paths to `.hbs` files from other `node_modules/` libraries are also supported.
+**Note: Fragments**
+In the exaple above, we used a construct called a fragment. Use this in places where a single element is expected by the syntax, instead of wrapping the elements you have in unnecessary `span` elements.
 
-Example:
-
-```handlebars
-{{>include "@ui5/webcomponents/src/Popup.hbs"}}
+```tsx
+<></>
 ```
 
-The most common use case for `{{>include}}` is to include an `.hbs` file that has extension points (hooks) and implement them. Given the example from the previous section (about Partials), consider the following:
+### Injecting content when using templates with partials
 
-In `MyComponent2.hbs`:
+Other templating engines have mechanisms to include a template and replace part of it with a parital. In JSX, including a template is simply importing the module and calling the template function. Templates that provide partials for replacement, expect the partials to be passed as additional optional parameters
 
-```handlebars
-{{>include "./MyComponent.hbs"}}
-
-{{#*inline "beforeContent"}}
-	<span>Implementation here</span>
-{{/inline}}
-
-{{#*inline "afterContent"}}
-	<span>Another implementation here</span>
-{{/inline}}
+```tsx
+export default BaseTemplate(this: ComponentClass, headerContent?: Function) {
+    return <div>
+        {headerContent ?
+            headerContent.call(this)
+            :
+            <span>default header content</span
+        }
+    </div>
+}
 ```
 
-Then the `MyComponent2` component will use the `.hbs` file of the `MyComponent` component but with its own version of its partials.
+## Events
 
-## Using the `slot` element
+Event handlers are attached with the convention `onEventName`. Any property that starts with `on` is treated as an event handler and the rest of the string is taken as the event name. Standard DOM events are correctly converted from PascalCase to the DOM event name.
 
-### Rendering slots
-
-The [slot](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) element allows you to render children, nested in your web component, in a desired place in the shadow DOM. You should render each slot, defined in your component (see the [Slots](./04-slots.md)) section, somewhere in the `.hbs` template.
-
-- To render the default slot simply render a `slot` tag:
-
-```html
-<slot></slot>
+```
+onClick -> click
+onInput -> input
+onMouseMove -> mousemove
 ```
 
-- To render a named slot:
+Custom events dispatched from the web components follow the same convention when written in the template, with the difference that they are attached directly with the event name as it is and the framework takes care to match it by firing all events with PascalCase as well.
 
-```html
-<slot name="tabs"></slot>
+In template:
+```
+onSeclectionChange -> SelectionChange
+~~~~~~~~~~~~~~~~~~    ~~~~~~~~~~~~~~~
+     prop             event attached
 ```
 
-- Here's a real-world example of a "page" component:
+Event description in component
+```ts
+eventDetails!: {
+    "selection-change": void
+}
+```
 
-In `Page.js` (metadata object):
+When fired at runtime:
+```ts
+// fires `SelectionChange` as well so the TSX handler will work
+fireDecoratorEvent("selection-change")
+```
+
+In order for components to be usable in TSX templates, all events must be described in the `eventDetails` field of the class. This will generate the necessary types for the event handler property names.
+
+### Event handler parameter types
+
+When writing an event handler inline, the type of the event parameter will be inferred from the template usage
+
+```tsx
+<ResponsivePopover
+    onBeforeClose={e => e.detail.escPressed}
+//                               ~~~~~~~~~~
+//                    (property) escPressed: boolean
+/>
+```
+
+If however, you specify the handler as a method in the component, you have to provide the event parameter type yourself. For custom events, you can use the `UI5CustomEvent` type helper by providing two generic parameters - the component class and the event name
+
+```tsx
+<ResponsivePopover
+    onBeforeClose={this._beforeCloseHandler}
+/>
+
+import { type UI5CustomEvent } from "@ui5/webcomponents-base";
+class MyCompponent {
+    _beforePopoverClose(e: UI5CustomEvent<ResponsivePopover, "before-close">) {
+        e.detail.escPressed;
+//               ~~~~~~~~~~
+//      (property) escPressed: boolean
+    }
+}
+```
+
+For native browser events, the most common way is to simply specify `KeyboardEvent` or `MouseEvent`
+
+### Event handler `.currentTarget`
+
+When writing an inline event handler, `e.currentTarget` will be set to the element on which the handler is attached, and it will have the correct type. This removes the necessity to use type assertions which also might be wrong in case the same event handler is attached to a different element.
+
+```tsx
+// Before
+<Input onClick={(e => (e.target as Input))} />
+                     // ^^^^^^^^^^^^^^^^
+                     // Casting the event target to input might be wrong and is not checked
+
+// After
+<Input onClick={(e => e.currentTarget)} />
+                     // ^^^^^^^^^^^^^
+                     // instance of `Input` class
+```
+
+The same typing information is also available via the `UI5CustomEvent` type helper
 
 ```ts
-@slot()
-header!: Array<HTMLElement>;
+// Before
+handleInput(e: CustomEvent) {
+    console.log(e.target as Input);
+    //          ^^^^^^^^^^^^^^^^^
+    //          this is of type Input, but TypeScript will not check in case the handler is attached to a Slider
+}
 
-@slot({ type: Node, "default": true })
-content!: Array<Node>;
-
-@slot()
-footer!: Array<HTMLElement>;
+// After
+handleInput(e: UI5CustomEvent<Input, "input">) {
+    console.log(e.currentTarget);
+    //          ^^^^^^^^^^^^^^^
+    //          this is of type Input and checked
 }
 ```
 
-In `Page.hbs`:
-
-```handlebars
-<div class="ui5-page-root">
-	<header class="ui5-page-header-root" id="ui5-page-header">
-		<slot name="header"></slot>
-	</header>
-
-	<section part="content" class="ui5-page-content-root" style="{{styles.content}}">
-		<slot></slot>
-	</section>
-
-	<footer class="ui5-page-footer-root" style="{{styles.footer}}">
-		<slot name="footer"></slot>
-	</footer>
-</div>
-
+Typescript will check that the `handleInput` handler can only be attached on an Input element. If the same handler is attached on a Slider, you you will have to add it in the parameters
+```tsx
+handleInput(e: UI5CustomEvent<Input, "input"> | UI5CustomEvent<Slider, "input">) {
+    console.log(e.currentTarget);
+    //          ^^^^^^^^^^^^^^^
+    //          Input | Slider
+    console.log(e.currentTarget.value);
+    //          ^^^^^^^^^^^^^^^^^^^^^
+    //          string | number
+}
 ```
 
-We render 3 `slot` elements - a default slot (unnamed) and 2 named slots - respectively with `name` equal to `header` and `footer`.
+### Event handlers and `this`
 
-All children, passed to the component with no `slot` attribute, will then be rendered by the browser where the default `<slot></slot>` is,
-and all children with attributes `slot="header"` / `slot="footer"` will be rendered where the respective named `slot` is.
+UI5 Web Components are authored as classes and event handlers are methods, they usually access the component state via `this.prop`. In order for this to work when event handlers are attached to the DOM, the framework automatically binds all event handlers to the instance that is being rendered, so accessing `this` from the event handlers works as expected without any additional work.
 
-### Individual slots
+### Event bubbling
 
-All children assigned to a certain `slot`, are rendered by the browser next to each other in the exact order in which they were passed to the component.
-Sometimes, however, each child must be placed separately in the shadow root, potentially wrapped in other HTML elements, to satisfy the UX design of the component. 
+Event handler property names are only available on the component instance, it is not possible to use them on another component with event bubbling. Consider the following example:
 
-The `individualSlots` slot metadata configuration setting (see the [Slot](./04-slots.md) section) allows you to have a separate physical slot for each child belonging to a certain slot.
+```tsx
+<div
+    onDetailClick={this.handleDetailClick} // TS error - div does not have a `detail-click` event, so no `onDetailClick` property
+>
+    <ListItem
+        onDetailClick={this.handleDetailClick} // this works, the ListItem has an `onDetailClick` property
+    ></ListItem>
+</div>
+```
 
-However, setting `individualSlots: true` in the metadata configuration only creates an `_individualSlot` property on each element belonging to the slot, but does not create any slots automatically.
-The individual slots must be explicitly rendered by the developer in the `.hbs` template.
+The list item fires a `detail-click` event, the `ListItem` class correctly get a property `onDetailClick`, but if you want to attach the same handler higher in the DOM (to take advantage of event bubbling), you cannot use the same property name `onDetailClick` on another element like the `div`.
 
-To do so, simply render a `slot` with a `name` property equal to the `_individualSlot` value for each child.
+This is an example where using a dash in the property name is allowed - all custom events are also fired with a `ui5-` prefix and it is an allowed usage:
+```tsx
+<div
+    onui5-detail-click={this.handleDetailClick} // no error when using a dash (-), the event will be subscribed as `ui5-detail-click`
+>
+    <ListItem
+        onDetailClick={this.handleDetailClick}
+    ></ListItem>
+</div>
+```
 
-Here's an example:
+Another realistic example of this pattern is for events coming from child components in slots - they are coming from the light DOM of the component and there is no way to attach handlers to them in the template, but bubbling works.
 
-In `MyComponent.js` (metadata object):
+```tsx
+<List
+    // handles event from slotted children
+    onui5-close-menu={this._close}
+>
+    <slot></slot>
+</List>
+```
+
+## Refs
+
+It is sometimes necessary to get a reference to a DOM element in the code of the component, for example to associate the web component instance that rendered a specific DOM element. While it was previously possible to assign any propererty to any element in the template, with TSX you can no longer assign non-existant properties.
+
+```tsx
+<div
+    associatedItem={this} // TS error - divs don't have such a property
+></div>
+```
+
+The way to achieve the same in TSX is to use a `ref`
+
+`ref` properties accept an object with a `obj.current` property that will be assigned the DOM element, or a callback that will be executed with the element passed as an argument
+
+```tsx
+<div
+    ref={this.captureRef}
+></div>
+```
 
 ```ts
-@slot({
-	type: HTMLElement,
-	"default": true,
-	individualSlots: true,
-})
-items!: Array<HTMLElement>;
+class MyComponent {
+    captureRef(ref: HTMLElement & { associatedItem?: UI5Element} | null) {
+        if (ref) {
+            ref.associatedItem = this;
+        }
+    }
+}
 ```
 
-Since `propertyName` is set to `items`, the children of the default slot will be accessible on the web component instance with `this.items`;
-and since `individualSlots` is set to `true`, every child in `this.items` (every child slotted in the default slot) will have an `_individualSlots` property created by the framework. 
+Most of the time you want to pass an additional parameter besides the element that has a ref. This is done by binding the method (either `this` or an element that is iterated). Unlike event handlers, refs are never bound automatically, so make sure to use `.bind()` to set the correct `this`.
 
-In `MyComponent.hbs` you must render a slot for each child with `name` equal to the `_individualSlot` property value for this child:
-
-```handlebars
-{{#each items}}
-	 <div class="item-wrapper">
-		<slot name="{{_individualSlot}}"></slot>
-	</div>
-{{/each}}
+```tsx
+<ul
+    // captureListRef will be called with a `<ul>` as a parameter and `this` will be the element that renders the template
+    ref={this.captureListRef.bind(this)}
+    {this.items.map(item => (
+        // captureItemRef will be called with a `<li>` as a parameter and `this` will be the `item` that is iterated
+        <li ref={this.captureItemRef.bind(item)}></li>
+    ))}
+></ul>
 ```
-
-The resulting DOM from the loop above will look like this:
-
-```html
-<div class="item-wrapper"><slot name="items-1"></slot></div>
-<div class="item-wrapper"><slot name="items-2"></slot></div>
-<div class="item-wrapper"><slot name="items-3"></slot></div>
-```
-
-This allows you to have arbitrary DOM around each child and implement complex UX design, otherwise impossible if all children were just normally rendered next to each other in a single slot.
-

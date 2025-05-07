@@ -2,11 +2,11 @@ import type Table from "./Table.js";
 import type TableRow from "./TableRow.js";
 
 const isInstanceOfTable = (obj: any): obj is Table => {
-	return "isTable" in obj && !!obj.isTable;
+	return !!obj && "isTable" in obj && !!obj.isTable;
 };
 
 const isSelectionCheckbox = (e: Event) => {
-	return e.composedPath().some((el: EventTarget) => (el as HTMLElement).hasAttribute?.("ui5-table-selection-component"));
+	return e.composedPath().some((el: EventTarget) => (el as HTMLElement).hasAttribute?.("data-ui5-table-selection-component"));
 };
 
 const isHeaderSelector = (e: Event) => {
@@ -77,6 +77,40 @@ const isFeature = <T>(element: any, identifier: string): element is T => {
 	return element.identifier === identifier;
 };
 
+const throttle = (callback: () => void) => {
+	let timer: number;
+	return () => {
+		cancelAnimationFrame(timer);
+		timer = requestAnimationFrame(() => {
+			callback();
+		});
+	};
+};
+
+const toggleAttribute = (element: HTMLElement, attribute: string, condition: boolean | undefined, value?: string) => {
+	if (condition) {
+		if (value === undefined) {
+			element.toggleAttribute(attribute, true);
+		} else {
+			element.setAttribute(attribute, value);
+		}
+	} else if (element.hasAttribute(attribute)) {
+		element.removeAttribute(attribute);
+	}
+};
+
+/**
+ * Checks if a given width is valid for a column.
+ *
+ * @param width Width string to check
+ * @returns {boolean} true if the width is valid, false otherwise
+ */
+const isValidColumnWidth = (width: string | undefined): width is string => {
+	const element = document.createElement("div");
+	element.style.width = `max(3rem, ${width})`;
+	return element.style.width !== "";
+};
+
 export {
 	isInstanceOfTable,
 	isSelectionCheckbox,
@@ -85,4 +119,7 @@ export {
 	findVerticalScrollContainer,
 	scrollElementIntoView,
 	isFeature,
+	throttle,
+	toggleAttribute,
+	isValidColumnWidth,
 };

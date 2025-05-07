@@ -1,3 +1,7 @@
+:host {
+	display: block;
+}
+
 .ui5-sn-item-ul {
 	margin: 0;
 	padding: 0;
@@ -7,7 +11,7 @@
 .ui5-sn-item {
 	display: flex;
 	align-items: center;
-	width: 100%;
+	width: auto;
 	box-sizing: border-box;
 	text-decoration: none;
 	position: relative;
@@ -19,13 +23,45 @@
 	background-color: var(--sapList_Background);
 	border-radius: var(--_ui5_side_navigation_item_border_radius);
 	transition: var(--_ui5_side_navigation_item_transition);
+}
 
+:host(:not([in-popover])) .ui5-sn-item {
 	margin-block-end: var(--_ui5_side_navigation_item_bottom_margin);
 }
 
 :host(.ui5-sn-item-hidden[side-nav-collapsed]),
 :host([side-nav-collapsed]) .ui5-sn-item-hidden {
 	display: none;
+}
+
+:host([design="Action"]) {
+	color:  var(--sapButton_TextColor);
+}
+
+:host([design="Action"]) .ui5-sn-item:not(.ui5-sn-item-disabled):active [ui5-icon],
+:host([design="Action"]) .ui5-sn-item:not(.ui5-sn-item-disabled):active .ui5-sn-item-text {
+	color: var(--_ui5_side_navigation_active_text_color);
+}
+
+:host([design="Action"]) .ui5-sn-item {
+	border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
+	box-sizing: content-box;
+}
+
+:host([design="Action"]:not([side-nav-collapsed])) .ui5-sn-item {
+	max-width: -moz-available;
+	max-width: -webkit-fill-available;
+	max-width: fill-available;
+}
+
+:host([design="Action"]) .ui5-sn-item:not(.ui5-sn-item-disabled):hover {
+	border: var(--_ui5_side_navigation_action_item_border_hover);
+	background: var(--sapButton_Hover_Background);
+}
+
+:host([design="Action"]) .ui5-sn-item:not(.ui5-sn-item-disabled):active {
+	border: var(--_ui5_side_navigation_action_item_border_active);
+	background: var(--sapButton_Active_Background);
 }
 
 .ui5-sn-item:focus {
@@ -38,7 +74,7 @@
 	position: absolute;
 	content: "";
 	inset: var(--_ui5_side_navigation_item_focus_border_offset);
-	z-index: 2;
+	z-index: 3;
 	pointer-events: none;
 	border-radius: var(--_ui5_side_navigation_item_focus_border_radius);
 }
@@ -74,12 +110,16 @@ and there is an additional border that appears on hover. */
 	cursor: default;
 }
 
-.ui5-sn-item:not(.ui5-sn-item-disabled):hover {
+:host([ui5-side-navigation-item][in-popover][unselectable]) .ui5-sn-item {
+	cursor: unset;
+}
+
+:host(:not([ui5-side-navigation-item][in-popover][unselectable])) .ui5-sn-item:not(.ui5-sn-item-disabled):not(.ui5-sn-item-selected):hover {
 	background: var(--sapList_Hover_Background);
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected {
-	background: var(--sapList_SelectionBackgroundColor);
+	background: var(--_ui5_side_navigation_collapsed_selected_item_background);
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled):active .ui5-sn-item-text,
@@ -93,20 +133,16 @@ and there is an additional border that appears on hover. */
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:hover {
-	background: var(--sapList_Hover_SelectionBackground);
+	background: var(--_ui5_side_navigation_collapsed_selected_item_background_hover);
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected.ui5-sn-item-active,
-.ui5-sn-item:not(.ui5-sn-item-disabled):active,
+:host(:not([ui5-side-navigation-item][in-popover][unselectable])) .ui5-sn-item:not(.ui5-sn-item-disabled):active,
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-active,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected.ui5-sn-item-active {
 	background: var(--sapList_Active_Background);
-}
-
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected {
-	background: var(--_ui5_side_navigation_collapsed_selected_item_background);
 }
 
 .ui5-sn-item::before {
@@ -123,7 +159,7 @@ and there is an additional border that appears on hover. */
 	border-width: var(--_ui5_side_navigation_selected_border_width);
 }
 
-.ui5-sn-item:not(.ui5-sn-item-disabled):not(.ui5-sn-item-selected):hover::before {
+:host(:not([design="Action"])) .ui5-sn-item:not(.ui5-sn-item-disabled):not(.ui5-sn-item-selected):hover::before {
 	border: var(--_ui5_side_navigation_hover_border_style_color);
 	border-width: var(--_ui5_side_navigation_hover_border_width);
 }
@@ -138,8 +174,12 @@ and there is an additional border that appears on hover. */
 
 .ui5-sn-item-icon {
 	color: var(--_ui5_side_navigation_icon_color);
-	height: var(--_ui5_side_navigation_icon_font_size);
-	min-width: var(--_ui5_side_navigation_group_icon_width);
+	padding-inline-start: 1rem;
+	padding-inline-end: var(--_ui5_side_navigation_icon_padding_inline_end);
+}
+
+:host([design="Action"]) .ui5-sn-item-icon {
+	color: var(--sapButton_TextColor);
 }
 
 .ui5-sn-item-toggle-icon,
@@ -149,12 +189,58 @@ and there is an additional border that appears on hover. */
 	height: 0.875rem;
 }
 
+:host([design="Action"]) .ui5-sn-item-toggle-icon,
+:host([design="Action"]) .ui5-sn-item-external-link-icon {
+	color: var(--sapButton_TextColor);
+}
 .ui5-sn-item-external-link-icon {
-	color: var(--_ui5_side_navigation_external_link_icon_color);
+	min-width: 3rem;
 }
 
-.ui5-sn-item-fixed .ui5-sn-item-toggle-icon,
-.ui5-sn-item-fixed .ui5-sn-item-external-link-icon {
+:host(:not([side-nav-collapsed])) .ui5-sn-item-toggle-icon {
+	width: var(--_ui5_side_navigation_expand_icon_width);
+	padding-inline-end: 0.375rem;
+	padding-block: var(--_ui5_side_navigation_item_expand_arrow_padding);
+	margin-inline-start: 0.5rem;
+	height: var(--sapElement_Condensed_Height);
+}
+
+/* this is for the group item*/
+:host(:not([unselectable], [side-nav-collapsed]))  .ui5-sn-item-toggle-icon {
+	width: calc(var(--_ui5_side_navigation_expand_icon_width) + 4px); /*width of the icon + 4px padding*/
+}
+
+/* this is for the two-click item */
+:host(:not([unselectable], [side-nav-collapsed], [ui5-side-navigation-group]))  .ui5-sn-item-toggle-icon {
+	margin-inline-start: 1rem;
+	width: calc(var(--_ui5_side_navigation_expand_icon_width) + 5px); /*width of the icon + 1px separator + 4px padding*/
+}
+
+:host(:not([side-nav-collapsed])) .ui5-sn-item-toggle-icon::part(root) {
+	padding-block: 0.25rem; /* height of the separator (the border left) should be --sapElement_Condensed_Height which is equal to 1.375rem (22px) */
+	border-inline-start: 0.0625rem solid var(--sapTextColor);
+	display: block;
+	height: 0.875rem;
+	width: var(--_ui5_side_navigation_expand_icon_width);
+}
+
+:host(:not([unselectable], [side-nav-collapsed])) .ui5-sn-item-toggle-icon::part(root) {
+	padding-inline-start: 0.25rem;
+}
+
+:host([unselectable]:not([side-nav-collapsed])) .ui5-sn-item-toggle-icon::part(root), 
+:host(:not([side-nav-collapsed])) .ui5-sn-item-group .ui5-sn-item-toggle-icon::part(root),
+:host([unselectable][side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
+:host([unselectable][side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon {
+	border-inline-start: none;
+}
+
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon {
+	min-width: 3rem;
+}
+
+:host([in-popover]) .ui5-sn-item-toggle-icon {
 	display: none;
 }
 
@@ -162,24 +248,49 @@ and there is an additional border that appears on hover. */
 	justify-content: center;
 }
 
+:host([slot="fixedItems"]:not(side-nav-collapsed)) .ui5-sn-item.ui5-sn-item-level1 {
+	margin-top: var(--_ui5_side_navigation_first_fixed_item_margin_top); /* space for the focus*/
+ }
 :host([side-nav-collapsed]) .ui5-sn-item-icon {
-	padding: var(--_ui5_side_navigation_item_collapsed_icon_padding);
+	padding-inline-end: 1rem;
+}
+
+:host([design="Action"][side-nav-collapsed]) .ui5-sn-item-icon {
+	padding-inline-end: calc(1rem - 1px); /* minus the width of the border */
+	padding-inline-start: calc(1rem - 1px); /* minus the width of the border */
 }
 
 :host([side-nav-collapsed]) .ui5-sn-item-text {
 	display: none;
 }
 
-:host([side-nav-collapsed]) .ui5-sn-item-toggle-icon,
+ :host([side-nav-collapsed]) .ui5-sn-item-toggle-icon {
+	display: var(--_ui5_side_navigation_item_expand_icon_visibility);
+	font-size: 0.75rem;
+	position: absolute;
+	inset-inline-end: var(--_ui5_side_navigation_item_expand_icon_right);
+}
+
 :host([side-nav-collapsed]) .ui5-sn-item-external-link-icon {
 	display: none;
 }
 
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover,
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus {
 	width: var(--_ui5_side_navigation_item_collapsed_hover_focus_width);
 	box-shadow: var(--_ui5_side_navigation_box_shadow);
-	z-index: 1;
+	z-index: 2;
+	padding-inline-end: var(--_ui5_side_navigation_item_collapsed_padding);
+}
+
+:host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover:not(.ui5-sn-item-with-expander),
+:host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander) {
+	padding-inline-end: 0;
+}
+
+:host([unselectable][side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-with-expander):hover,
+:host([unselectable][side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-with-expander):focus {
+	padding-inline-end: var(--_ui5_side_navigation_action_item_collapsed_padding);
 }
 
 :host([side-nav-collapsed]) .ui5-sn-item.ui5-sn-item-selected:hover,
@@ -187,15 +298,17 @@ and there is an additional border that appears on hover. */
 	background: var(--sapList_SelectionBackgroundColor);
 }
 
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover:not(.ui5-sn-item-with-expander),
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander) {
+:host([side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover:not(.ui5-sn-item-with-expander),
+:host([side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander),
+:host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover:not(.ui5-sn-item-with-expander):not([target="_blank"]),
+:host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander):not([target="_blank"]) {
 	padding-inline-end: var(--_ui5_side_navigation_item_collapsed_hover_focus_padding_right);
 }
 
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-text,
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover .ui5-sn-item-text,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-text,
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-external-link-icon,
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover .ui5-sn-item-toggle-icon,
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover .ui5-sn-item-external-link-icon,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-external-link-icon {
 	display: var(--_ui5_side_navigation_item_collapsed_hover_focus_display);
@@ -203,10 +316,11 @@ and there is an additional border that appears on hover. */
 
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon {
-	display: var(--_ui5_side_navigation_item_collapsed_hover_focus_display);
+	left: var(--_ui5_side_navigation_item_expand_icon_hover_left);
+	right: var(--_ui5_side_navigation_item_expand_icon_hover_right);
 }
 
-.ui5-sn-item[aria-expanded=false] + .ui5-sn-item-ul {
+.ui5-sn-item[aria-expanded=false] ~  .ui5-sn-item-ul {
 	display: none;
 }
 
@@ -230,27 +344,6 @@ and there is an additional border that appears on hover. */
 	bottom: 0.125rem;
 }
 
-.ui5-sn-item-selection-icon {
-	display: none;
-	height: 0.5rem;
-	width: 0.5rem;
-	margin-inline: 0.5rem;
-	color: var(--sapList_SelectionBorderColor);
-}
-
-.ui5-sn-item[aria-expanded] .ui5-sn-item-selection-icon {
-	margin-inline: 0.5rem 0;
-}
-
-.ui5-sn-item-selected .ui5-sn-item-selection-icon {
-	display: var(--_ui5_side_navigation_selection_indicator_display);
-}
-
-:host([in-popover]) .ui5-sn-item {
-	padding: var(--_ui5_side_navigation_popup_item_padding);
-	width: auto;
-}
-
 .ui5-sn-item-separator {
-	min-height: 0.75rem;
+	min-height: 0.625rem;
 }

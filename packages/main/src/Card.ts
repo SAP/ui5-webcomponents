@@ -3,12 +3,10 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import CardTemplate from "./generated/templates/CardTemplate.lit.js";
-import Icon from "./Icon.js";
-import BusyIndicator from "./BusyIndicator.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import CardTemplate from "./CardTemplate.js";
 
 import {
 	ARIA_ROLEDESCRIPTION_CARD,
@@ -44,10 +42,9 @@ import cardCss from "./generated/themes/Card.css.js";
 @customElement({
 	tag: "ui5-card",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: CardTemplate,
 	styles: cardCss,
-	dependencies: [Icon, BusyIndicator],
 })
 class Card extends UI5Element {
 	/**
@@ -107,16 +104,6 @@ class Card extends UI5Element {
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	get classes() {
-		return {
-			root: {
-				"ui5-card-root": true,
-				"ui5-card--interactive": this._hasHeader && this.header[0].interactive,
-				"ui5-card--nocontent": !this.content.length,
-			},
-		};
-	}
 
 	get _hasHeader() {
 		return !!this.header.length;

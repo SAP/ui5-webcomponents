@@ -1,13 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
 import type { IColorPaletteItem } from "./ColorPalette.js";
-import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
+import ColorPaletteItemTemplate from "./ColorPaletteItemTemplate.js";
 import {
 	COLORPALETTE_COLOR_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
@@ -29,7 +29,7 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
  */
 @customElement({
 	tag: "ui5-color-palette-item",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: ColorPaletteItemCss,
 	template: ColorPaletteItemTemplate,
 	shadowRootOptions: { delegatesFocus: true },
@@ -108,6 +108,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	}
 
 	get styles() {
+		// Remove after deleting the hbs template, it's added in the jsx template
 		return {
 			root: {
 				"background-color": this.value,
@@ -116,6 +117,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	}
 
 	get classes() {
+		// Remove after deleting the hbs template, it's added in the jsx template
 		return {
 			root: {
 				"ui5-cp-item": true,

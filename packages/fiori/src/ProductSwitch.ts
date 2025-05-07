@@ -8,14 +8,14 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
 import {
 	isDown,
 	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
-import ProductSwitchTemplate from "./generated/templates/ProductSwitchTemplate.lit.js";
+import ProductSwitchTemplate from "./ProductSwitchTemplate.js";
 
 import {
 	PRODUCT_SWITCH_CONTAINER_LABEL,
@@ -64,7 +64,7 @@ interface IProductSwitchItem extends HTMLElement, ITabbable {
  */
 @customElement({
 	tag: "ui5-product-switch",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: ProductSwitchCss,
 	template: ProductSwitchTemplate,
 })

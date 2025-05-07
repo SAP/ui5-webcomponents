@@ -1,12 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
-import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown, isF2,
 	isEnter,
@@ -46,6 +44,10 @@ type DirectionStart = "left" | "right";
  * @public
  */
 abstract class SliderBase extends UI5Element {
+	eventDetails!: {
+		"change": void,
+		"input": void,
+	}
 	/**
 	 * Defines the minimum value of the slider.
 	 * @default 0
@@ -167,7 +169,6 @@ abstract class SliderBase extends UI5Element {
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
 	_upHandler: (e: TouchEvent | MouseEvent) => void;
 	_stateStorage: StateStorage;
-	_ontouchstart: PassiveEventListenerObject;
 	notResized = false;
 	_isUserInteraction = false;
 	_isInnerElementFocusing = false;
@@ -194,15 +195,6 @@ abstract class SliderBase extends UI5Element {
 			max: undefined,
 			labelInterval: undefined,
 		};
-
-		const handleTouchStartEvent = (e: TouchEvent) => {
-			this._onmousedown(e);
-		};
-
-		this._ontouchstart = {
-			handleEvent: handleTouchStartEvent,
-			passive: true,
-		};
 	}
 
 	_handleMove(e: TouchEvent | MouseEvent) {} // eslint-disable-line
@@ -217,11 +209,11 @@ abstract class SliderBase extends UI5Element {
 
 	// used in base template, but implemented in subclasses
 	abstract styles: {
-		label: object,
-		labelContainer: object,
+		label: Record<string, string>,
+		labelContainer: Record<string, string>,
 	};
 
-	abstract tickmarksObject: any;
+	abstract tickmarksObject: Array<boolean>;
 	abstract _ariaLabelledByText: string;
 
 	static get ACTION_KEYS() {
@@ -256,7 +248,7 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	static get renderer() {
-		return litRender;
+		return jsxRender;
 	}
 
 	static get styles() {
@@ -343,12 +335,12 @@ abstract class SliderBase extends UI5Element {
 
 	_onInputChange() {
 		if (this._valueOnInteractionStart !== this.value) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 	}
 
 	_onInputInput() {
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 	}
 
 	_updateValueFromInput(e: Event) {
@@ -791,7 +783,7 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	get _tabIndex() {
-		return this.disabled ? "-1" : "0";
+		return this.disabled ? -1 : 0;
 	}
 
 	get _ariaDescribedByHandleText() {

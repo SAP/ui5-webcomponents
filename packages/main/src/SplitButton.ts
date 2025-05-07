@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import {
@@ -16,13 +16,12 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
+import type { AriaHasPopup, UI5CustomEvent } from "@ui5/webcomponents-base";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import type ButtonDesign from "./types/ButtonDesign.js";
-import Button from "./Button.js";
+import type Button from "./Button.js";
 
 import {
 	SPLIT_BUTTON_DESCRIPTION,
@@ -31,7 +30,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import SplitButtonTemplate from "./generated/templates/SplitButtonTemplate.lit.js";
+import SplitButtonTemplate from "./SplitButtonTemplate.js";
 
 // Styles
 import SplitButtonCss from "./generated/themes/SplitButton.css.js";
@@ -75,6 +74,9 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/SplitButton.js";`
+ * @csspart button - Used to style the native button element
+ * @csspart icon - Used to style the icon in the native button element
+ * @csspart endIcon - Used to style the end icon in the native button element
  * @constructor
  * @extends UI5Element
  * @public
@@ -82,10 +84,9 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  */
 @customElement({
 	tag: "ui5-split-button",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: SplitButtonCss,
 	template: SplitButtonTemplate,
-	dependencies: [Button],
 })
 /**
  * Fired when the user clicks on the default action.
@@ -103,13 +104,17 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
 	bubbles: true,
 })
 class SplitButton extends UI5Element {
+	eventDetails!: {
+		click: void;
+		"arrow-click": void;
+	}
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
 	 * The SAP-icons font provides numerous options.
 	 *
 	 * Example:
 	 *
-	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * See all available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default undefined
 	 * @public
 	 */
@@ -156,8 +161,8 @@ class SplitButton extends UI5Element {
 	 * @default "0"
 	 * @private
 	 */
-	@property({ noAttribute: true })
-	_tabIndex = "0"
+	@property({ type: Number, noAttribute: true })
+	_tabIndex = 0
 
 	/**
 	 * Indicates if there is Space key pressed
@@ -192,6 +197,28 @@ class SplitButton extends UI5Element {
 	_activeArrowButton = false;
 
 	/**
+	 * Defines the display of the end icon as a graphical element within the default action of the component after the button text.
+	 * The SAP-icons font provides different options.
+	 *
+	 * Example:
+	 *
+	 * See all available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
+	 * @private
+	 */
+	@property({ type: String })
+	_endIcon?: string;
+
+	/**
+	 * Defines the visibility of the arrow button of the component.
+	 *
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_hideArrowButton = false;
+
+	/**
 	 * Defines the text of the component.
 	 *
 	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -200,35 +227,19 @@ class SplitButton extends UI5Element {
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>;
 
-	_textButtonPress: { handleEvent: (e: MouseEvent) => void, passive: boolean };
 	_isDefaultActionPressed = false;
 	_isKeyDownOperation = false;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-	constructor() {
-		super();
-
-		const handleTouchStartEvent = (e: MouseEvent) => {
-			e.stopPropagation();
-			this._textButtonActive = true;
-			this._tabIndex = "-1";
-		};
-
-		this._textButtonPress = {
-			handleEvent: handleTouchStartEvent,
-			passive: true,
-		};
-	}
-
 	onBeforeRendering() {
 		if (this.disabled) {
-			this._tabIndex = "-1";
+			this._tabIndex = -1;
 		}
 	}
 
-	_handleMouseClick(e: MouseEvent) {
+	_handleMouseClick(e: UI5CustomEvent<Button, "click">) {
 		this._fireClick(e);
 	}
 
@@ -246,6 +257,12 @@ class SplitButton extends UI5Element {
 			return;
 		}
 		this._shiftOrEscapePressed = false;
+	}
+
+	handleTouchStart(e: TouchEvent | MouseEvent) {
+		e.stopPropagation();
+		this._textButtonActive = true;
+		this._tabIndex = -1;
 	}
 
 	_onInnerButtonFocusIn(e: FocusEvent) {
@@ -275,7 +292,7 @@ class SplitButton extends UI5Element {
 			this._textButtonActive = false;
 		}
 
-		this._tabIndex = "-1";
+		this._tabIndex = -1;
 	}
 
 	_onKeyUp(e: KeyboardEvent) {
@@ -300,7 +317,7 @@ class SplitButton extends UI5Element {
 			this._handleShiftOrEscapePressed();
 		}
 
-		this._tabIndex = "-1";
+		this._tabIndex = -1;
 	}
 
 	_fireClick(e?: Event) {
@@ -319,26 +336,26 @@ class SplitButton extends UI5Element {
 
 	_textButtonRelease() {
 		this._textButtonActive = false;
-		this._tabIndex = "-1";
+		this._tabIndex = -1;
 	}
 
 	_arrowButtonPress(e: MouseEvent) {
 		e.stopPropagation();
 
-		this._tabIndex = "-1";
+		this._tabIndex = -1;
 	}
 
 	_arrowButtonRelease(e: MouseEvent) {
 		e.preventDefault();
 
-		this._tabIndex = "-1";
+		this._tabIndex = -1;
 	}
 
 	_setTabIndexValue(innerButtonPressed?: boolean) {
-		this._tabIndex = this.disabled ? "-1" : "0";
+		this._tabIndex = this.disabled ? -1 : 0;
 
-		if (this._tabIndex === "-1" && innerButtonPressed) {
-			this._tabIndex = "0";
+		if (this._tabIndex === -1 && innerButtonPressed) {
+			this._tabIndex = 0;
 		}
 	}
 
@@ -380,7 +397,7 @@ class SplitButton extends UI5Element {
 	 * @param e - keyboard event
 	 * @private
 	 */
-	_handleArrowButtonAction(e: KeyboardEvent | MouseEvent) {
+	_handleArrowButtonAction(e: UI5CustomEvent<Button, "click"> | KeyboardEvent) {
 		e.preventDefault();
 
 		this._fireArrowClick(e);
@@ -409,10 +426,11 @@ class SplitButton extends UI5Element {
 			}
 		} else {
 			this._textButtonActive = true;
-			this._fireClick();
 			if (wasSpacePressed) {
 				this._spacePressed = true;
+				return;
 			}
+			this._fireClick();
 		}
 	}
 
@@ -451,7 +469,8 @@ class SplitButton extends UI5Element {
 			arrowButton: {
 				"title": this.arrowButtonTooltip,
 				"accessibilityAttributes": {
-					"hasPopup": AriaHasPopup.Menu.toLocaleLowerCase(),
+					"hasPopup": "menu" as AriaHasPopup,
+					"expanded": this.effectiveActiveArrowButton,
 				},
 			},
 		};

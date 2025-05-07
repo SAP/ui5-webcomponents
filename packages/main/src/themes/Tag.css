@@ -14,7 +14,7 @@
 
 .ui5-tag-root {
 	display: flex;
-	align-items: center;
+	align-items: baseline;
 	justify-content: center;
 	width: 100%;
 	min-width: 1.125em;
@@ -72,11 +72,6 @@
 	color: inherit;
 	pointer-events: none;
 	align-self: flex-start;
-}
-
-:host([wrapping-type="None"]) [ui5-icon],
-:host([wrapping-type="None"]) ::slotted([ui5-icon]) {
-	align-self: auto;
 }
 
 /* Value State Design Types */
@@ -481,6 +476,16 @@
 	background-color: var(--ui5-tag-set2-color-scheme-9-background);
 	border-color: var(--ui5-tag-set2-color-scheme-9-border);
 	color: var(--ui5-tag-set2-color-scheme-9-color);
+}
+
+:host([interactive][design="Set2"][color-scheme="9"]) .ui5-tag-root:hover {
+	background-color: var(--ui5-tag-set2-color-scheme-9-hover-background);
+}
+
+:host([interactive][design="Set2"][color-scheme="9"]) .ui5-tag-root:active {
+	background-color: var(--ui5-tag-set2-color-scheme-9-active-background);
+	border-color: var(--ui5-tag-set2-color-scheme-9-active-border);
+	color: var(--ui5-tag-set2-color-scheme-9-active-color);
 }
 
 :host([interactive][design="Set2"][color-scheme="10"]) .ui5-tag-root:hover {

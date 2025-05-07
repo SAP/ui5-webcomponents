@@ -1,7 +1,8 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -9,7 +10,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import ListItem from "./ListItem.js";
-import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import {
@@ -19,7 +19,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import TreeItemBaseTemplate from "./generated/templates/TreeItemBaseTemplate.lit.js";
+import TreeItemBaseTemplate from "./TreeItemBaseTemplate.js";
 
 // Styles
 import treeItemCss from "./generated/themes/TreeItem.css.js";
@@ -41,14 +41,11 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  */
 @customElement({
 	languageAware: true,
+	renderer: jsxRenderer,
 	template: TreeItemBaseTemplate,
 	styles: [
 		ListItem.styles,
 		treeItemCss,
-	],
-	dependencies: [
-		...ListItem.dependencies,
-		Icon,
 	],
 })
 /**
@@ -56,10 +53,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the toggled item.
  * @protected
  */
-@event<TreeItemBaseToggleEventDetail>("toggle", {
-	detail: {
-		item: { type: HTMLElement },
-	},
+@event("toggle", {
 	bubbles: true,
 })
 
@@ -68,10 +62,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the item on which right arrow was pressed.
  * @protected
  */
-@event<TreeItemBaseStepInEventDetail>("step-in", {
-	detail: {
-		item: { type: HTMLElement },
-	},
+@event("step-in", {
 	bubbles: true,
 })
 
@@ -80,13 +71,15 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the item on which left arrow was pressed.
  * @protected
  */
-@event<TreeItemBaseStepOutEventDetail>("step-out", {
-	detail: {
-		item: { type: HTMLElement },
-	},
+@event("step-out", {
 	bubbles: true,
 })
 class TreeItemBase extends ListItem {
+	eventDetails!: ListItem["eventDetails"] & {
+		toggle: TreeItemBaseToggleEventDetail;
+		"step-in": TreeItemBaseStepInEventDetail;
+		"step-out": TreeItemBaseStepOutEventDetail;
+	}
 	/**
 	 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
 	 * @protected
@@ -203,6 +196,12 @@ class TreeItemBase extends ListItem {
 	_fixed = false;
 
 	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_hasImage = false;
+
+	/**
 	 * Defines the items of the component.
 	 *
 	 * **Note:** Use `ui5-tree-item` or `ui5-tree-item-custom`
@@ -218,11 +217,24 @@ class TreeItemBase extends ListItem {
 	})
 	items!: Array<TreeItemBase>;
 
+	/**
+	 * **Note:** While the slot allows option for setting custom avatar, to match the
+	 * design guidelines, please use the `ui5-avatar` with size XS.
+	 *
+	 * **Note:** If bigger `ui5-avatar` needs to be used, then the size of the
+	 * `ui5-tree-item` should be customized in order to fit.
+	 * @since 2.10.0
+	 * @public
+	 */
+	@slot()
+	image!: Array<HTMLElement>;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	onBeforeRendering() {
 		this.showToggleButton = this.requiresToggleButton;
+		this._hasImage = this.hasImage;
 	}
 
 	get classes(): ClassMap {
@@ -251,6 +263,10 @@ class TreeItemBase extends ListItem {
 		return this.level > 1;
 	}
 
+	get hasImage(): boolean {
+		return !!this.image.length;
+	}
+
 	get _toggleIconName() {
 		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
 	}
@@ -261,7 +277,7 @@ class TreeItemBase extends ListItem {
 
 	get _accInfo() {
 		const accInfoSettings = {
-			role: "treeitem",
+			role: "treeitem" as const,
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
 			ariaLevel: this.level,
 			posinset: this.forcedPosinset,
@@ -294,7 +310,7 @@ class TreeItemBase extends ListItem {
 
 	_toggleClick(e: MouseEvent | KeyboardEvent) {
 		e.stopPropagation();
-		this.fireDecoratorEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
+		this.fireDecoratorEvent("toggle", { item: this });
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
@@ -302,17 +318,17 @@ class TreeItemBase extends ListItem {
 
 		if (!this._fixed && this.showToggleButton && isRight(e)) {
 			if (!this.expanded) {
-				this.fireDecoratorEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
+				this.fireDecoratorEvent("toggle", { item: this });
 			} else {
-				this.fireDecoratorEvent<TreeItemBaseStepInEventDetail>("step-in", { item: this });
+				this.fireDecoratorEvent("step-in", { item: this });
 			}
 		}
 
 		if (!this._fixed && isLeft(e)) {
 			if (this.expanded) {
-				this.fireDecoratorEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
+				this.fireDecoratorEvent("toggle", { item: this });
 			} else if (this.hasParent) {
-				this.fireDecoratorEvent<TreeItemBaseStepOutEventDetail>("step-out", { item: this });
+				this.fireDecoratorEvent("step-out", { item: this });
 			}
 		}
 	}

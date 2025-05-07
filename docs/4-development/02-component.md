@@ -58,15 +58,15 @@ class MyDemoComponent extends UI5Element {
 **Note:** As per the HTML specification, the tag name must contain a dash ('-').
 
 ### renderer
-This option specifies the rendering engine for the component. UI5 Web Components are agnostic of the DOM rendering engine used. However, all standard UI5 Web Components (`@ui5/webcomponents`, `@ui5/webcomponents-fiori`, etc.) use [lit-html](https://github.com/Polymer/lit-html) as the rendering technology of choice.
+This option specifies the rendering engine for the component. UI5 Web Components are agnostic of the DOM rendering engine used. However, all standard UI5 Web Components (`@ui5/webcomponents`, `@ui5/webcomponents-fiori`, etc.) use [preact](https://github.com/preactjs/preact) as the rendering technology of choice.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
 @customElement({
-    renderer: litRender
+    renderer: jsxRenderer
 })
 class MyDemoComponent extends UI5Element {
     // class implementation
@@ -74,22 +74,22 @@ class MyDemoComponent extends UI5Element {
 ```
 
 ### template
-This option accepts a template in a format that your defined renderer will understand.
+This option accepts a template in a format that your defined renderer will understand. Standard UI5 Web Components use JSX templates.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import MyDemoComponentTemplate from "./generated/templates/MyDemoComponentTemplate.lit.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import MyDemoComponentTemplate from "./MyDemoComponentTemplate.js";
 
 @customElement({
+    renderer: jsxRenderer,
     template: MyDemoComponentTemplate
 })
 class MyDemoComponent extends UI5Element {
     // class implementation
 }
 ```
-
-**Note:** Standard UI5 Web Components use Handlebars templates that are automatically converted to `lit-html` syntax by the build script. If you have a `MyDemoComponentTemplate.hbs`, the build script will create a `generated/templates/DemoTemplate.lit.ts` file for you.
 
 ### styles
 This option accepts either component styles or an array of component styles that should be inserted inside the shadow root of the component.

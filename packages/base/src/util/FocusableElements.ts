@@ -1,11 +1,19 @@
 import isElementHidden from "./isElementHidden.js";
 import isElementClickable from "./isElementClickable.js";
 import { instanceOfUI5Element } from "../UI5Element.js";
+import { isSafari } from "../Device.js";
 
 type FocusableElementPromise = Promise<HTMLElement | null>;
 
 const isFocusTrap = (el: HTMLElement) => {
 	return el.hasAttribute("data-ui5-focus-trap");
+};
+
+const isScrollable = (el: HTMLElement) => {
+	const computedStyle = getComputedStyle(el);
+
+	return (el.scrollHeight > el.clientHeight && ["scroll", "auto"].indexOf(computedStyle.overflowY) >= 0)
+		|| (el.scrollWidth > el.clientWidth && ["scroll", "auto"].indexOf(computedStyle.overflowX) >= 0);
 };
 
 const getFirstFocusableElement = async (container: HTMLElement, startFromContainer?: boolean): FocusableElementPromise => {
@@ -26,6 +34,17 @@ const getLastFocusableElement = async (container: HTMLElement, startFromContaine
 
 const isElemFocusable = (el: HTMLElement) => {
 	return el.hasAttribute("data-ui5-focus-redirect") || !isElementHidden(el);
+};
+
+const isUI5ElementWithNegativeTabIndex = (el: HTMLElement) => {
+	if (instanceOfUI5Element(el)) {
+		const tabIndex = el.getAttribute("tabindex");
+		if (tabIndex !== null && parseInt(tabIndex) < 0) {
+			return true;
+		}
+	}
+
+	return false;
 };
 
 const findFocusableElement = async (container: HTMLElement, forward: boolean, startFromContainer?: boolean): FocusableElementPromise => {
@@ -52,22 +71,37 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 	while (child) {
 		const originalChild: HTMLElement | undefined = child;
 
-		if (instanceOfUI5Element(child)) {
-			child = await child.getFocusDomRefAsync();
-		}
-
-		if (!child) {
-			return null;
-		}
-
-		if (child.nodeType === 1 && isElemFocusable(child) && !isFocusTrap(child)) {
-			if (isElementClickable(child)) {
-				return (child && typeof child.focus === "function") ? child : null;
+		if (!isElementHidden(originalChild) && !isUI5ElementWithNegativeTabIndex(originalChild)) {
+			if (instanceOfUI5Element(child)) {
+				// getDomRef is used because some components mark their focusable ref in an inner
+				// html but there might also be focusable targets outside of it
+				// as an example - TreeItemBase
+				// div - root of the component returned by getDomRef()
+				// 	li.ui5-li-tree - returned by getFocusDomRef() and may not be focusable (ItemNavigation manages tabindex)
+				// 	ul.subtree - may still contain focusable targets (sub nodes of the tree item)
+				await child._waitForDomRef();
+				child = child.getDomRef();
 			}
 
-			focusableDescendant = await findFocusableElement(child, forward);
-			if (focusableDescendant) {
-				return (focusableDescendant && typeof focusableDescendant.focus === "function") ? focusableDescendant : null;
+			if (!child || isElementHidden(child)) {
+				return null;
+			}
+
+			if (child.nodeType === 1 && isElemFocusable(child) && !isFocusTrap(child)) {
+				if (isElementClickable(child)) {
+					return (child && typeof child.focus === "function") ? child : null;
+				}
+
+				focusableDescendant = await findFocusableElement(child, forward);
+
+				// check if it is a keyboard focusable scroll container
+				if (!isSafari() && !focusableDescendant && isScrollable(child)) {
+					return (child && typeof child.focus === "function") ? child : null;
+				}
+
+				if (focusableDescendant) {
+					return (focusableDescendant && typeof focusableDescendant.focus === "function") ? focusableDescendant : null;
+				}
 			}
 		}
 

@@ -1,23 +1,23 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import {
 	isLeft,
 	isRight,
+	isMinus,
+	isPlus,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
-import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
-import SideNavigationGroupTemplate from "./generated/templates/SideNavigationGroupTemplate.lit.js";
+import SideNavigationGroupTemplate from "./SideNavigationGroupTemplate.js";
 
 import {
-	SIDE_NAVIGATION_GROUP_HEADER_DESC,
+	SIDE_NAVIGATION_ICON_COLLAPSE,
+	SIDE_NAVIGATION_ICON_EXPAND,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -43,12 +43,9 @@ import SideNavigationGroupCss from "./generated/themes/SideNavigationGroup.css.j
  */
 @customElement({
 	tag: "ui5-side-navigation-group",
-	renderer: litRender,
+	renderer: jsxRender,
 	template: SideNavigationGroupTemplate,
 	styles: SideNavigationGroupCss,
-	dependencies: [
-		Icon,
-	],
 })
 class SideNavigationGroup extends SideNavigationItemBase {
 	/**
@@ -72,12 +69,12 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	static i18nBundle: I18nBundle;
 
 	get overflowItems() : Array<HTMLElement> {
-		const separator1 = this.shadowRoot!.querySelector(".ui5-sn-item-separator:first-child") as HTMLElement;
-		const separator2 = this.shadowRoot!.querySelector(".ui5-sn-item-separator:last-child") as HTMLElement;
+		const separator1 = this.shadowRoot!.querySelector<HTMLElement>(".ui5-sn-item-separator:first-child")!;
+		const separator2 = this.shadowRoot!.querySelector<HTMLElement>(".ui5-sn-item-separator:last-child")!;
 
 		const overflowItems = this.items.reduce((result, item) => {
 			return result.concat(item.overflowItems);
-		}, new Array<HTMLElement>());
+		}, new Array<SideNavigationItem>());
 
 		return [separator1, ...overflowItems, separator2];
 	}
@@ -124,10 +121,6 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		return this.expanded;
 	}
 
-	get _toggleIconName() {
-		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
-	}
-
 	get belowGroupClassName() {
 		if (isInstanceOfSideNavigationGroup(this.previousElementSibling)) {
 			return "ui5-sn-item-group-below-group";
@@ -136,26 +129,27 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		return "";
 	}
 
-	get accDescription() {
-		return SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_GROUP_HEADER_DESC);
+	get _arrowTooltip() {
+		return this.expanded ? SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_ICON_COLLAPSE)
+			: SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_ICON_EXPAND);
 	}
 
-	_onkeydown = (e: KeyboardEvent) => {
-		if (isLeft(e)) {
+	_onkeydown(e: KeyboardEvent) {
+		if (isLeft(e) || isMinus(e)) {
 			this.expanded = false;
 			return;
 		}
 
-		if (isRight(e)) {
+		if (isRight(e) || isPlus(e)) {
 			this.expanded = true;
 		}
 	}
 
-	_onclick = () => {
+	_onclick() {
 		this._toggle();
 	}
 
-	_onfocusin = (e: FocusEvent) => {
+	_onfocusin(e: FocusEvent) {
 		e.stopPropagation();
 
 		this.sideNavigation?.focusItem(this);

@@ -2,7 +2,7 @@
     position: sticky;
     top: 0;
      /* We need the z-index to be higher than in the header actions, to avoid overlapping by snap on scroll */
-    z-index: 110;
+    z-index: 98;
 }
 
 :host {
@@ -12,6 +12,7 @@
 }
 
 .ui5-dynamic-page-root {
+    container-type: inline-size;
     height: inherit;
     overflow-y: hidden;
 }
@@ -43,7 +44,8 @@
 /* Footer  */
 .ui5-dynamic-page-footer {
     position: sticky;
-    bottom: 0.5rem;
+    bottom: 0;
+    padding: 0 0.5rem 0.5rem 0.5rem;
     box-sizing: border-box;
     z-index: 110;
     opacity: 0;
@@ -70,7 +72,6 @@
     background-color: var(--_ui5_dynamic_page_header_background_color);
     box-sizing: content-box;
     width: auto;
-    margin: 0 0.5rem 0.5rem 0.5rem;
 }
 
 
@@ -80,50 +81,54 @@
 
 /* Responsive paddings */
 
-:host([media-range="S"]) .ui5-dynamic-page-fit-content {
-    padding: var(--_ui5_dynamic_page_content_padding_S);
+/* S Size */
+@container (max-width: 599px) {
+    .ui5-dynamic-page-fit-content {
+        padding: var(--_ui5_dynamic_page_content_padding_S);
+    }
+    ::slotted([slot="titleArea"]) {
+        padding: var(--_ui5_dynamic_page_title_padding_S);
+    }
+    ::slotted([slot="headerArea"]) {
+        padding: var(--_ui5_dynamic_page_header_padding_S);
+    }
 }
 
-:host([media-range="S"]) ::slotted([slot="titleArea"]) {
-    padding: var(--_ui5_dynamic_page_title_padding_S);
+/* M Size */
+@container (min-width: 600px) and (max-width: 1023px) {
+    .ui5-dynamic-page-fit-content {
+        padding: var(--_ui5_dynamic_page_content_padding_M);
+    }
+    ::slotted([slot="titleArea"]) {
+        padding: var(--_ui5_dynamic_page_title_padding_M);
+    }
+    ::slotted([slot="headerArea"]) {
+        padding: var(--_ui5_dynamic_page_header_padding_M);
+    }
 }
 
-:host([media-range="S"]) ::slotted([slot="headerArea"]) {
-    padding: var(--_ui5_dynamic_page_header_padding_S);
+/* L Size */
+@container (min-width: 1024px) and (max-width: 1439px) {
+    .ui5-dynamic-page-fit-content {
+        padding: var(--_ui5_dynamic_page_content_padding_L);
+    }
+    ::slotted([slot="titleArea"]) {
+        padding: var(--_ui5_dynamic_page_title_padding_L);
+    }
+    ::slotted([slot="headerArea"]) {
+        padding: var(--_ui5_dynamic_page_header_padding_L);
+    }
 }
 
-:host([media-range="M"]) .ui5-dynamic-page-fit-content {
-    padding: var(--_ui5_dynamic_page_content_padding_M);
-}
-
-:host([media-range="M"]) ::slotted([slot="titleArea"]) {
-    padding: var(--_ui5_dynamic_page_title_padding_M);
-}
-
-:host([media-range="M"]) ::slotted([slot="headerArea"]) {
-    padding: var(--_ui5_dynamic_page_header_padding_M);
-}
-
-:host([media-range="L"]) .ui5-dynamic-page-fit-content {
-    padding: var(--_ui5_dynamic_page_content_padding_L);
-}
-
-:host([media-range="L"]) ::slotted([slot="titleArea"]) {
-    padding: var(--_ui5_dynamic_page_title_padding_L);
-}
-
-:host([media-range="L"]) ::slotted([slot="headerArea"]) {
-    padding: var(--_ui5_dynamic_page_header_padding_L);
-}
-
-:host([media-range="XL"]) .ui5-dynamic-page-fit-content {
-    padding: var(--_ui5_dynamic_page_content_padding_XL);
-}
-
-:host([media-range="XL"]) ::slotted([slot="titleArea"]) {
-    padding: var(--_ui5_dynamic_page_title_padding_XL);
-}
-
-:host([media-range="XL"]) ::slotted([slot="headerArea"]) {
-    padding: var(--_ui5_dynamic_page_header_padding_XL);
+/* XL Size */
+@container (min-width: 1440px) {
+    .ui5-dynamic-page-fit-content {
+        padding: var(--_ui5_dynamic_page_content_padding_XL);
+    }
+    ::slotted([slot="titleArea"]) {
+        padding: var(--_ui5_dynamic_page_title_padding_XL);
+    }
+    ::slotted([slot="headerArea"]) {
+        padding: var(--_ui5_dynamic_page_header_padding_XL);
+    }
 }

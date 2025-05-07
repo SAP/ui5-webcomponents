@@ -2,14 +2,15 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import {
 	isSpace,
 	isEnter,
@@ -17,18 +18,19 @@ import {
 	isUp,
 	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
-import ColorPaletteItem from "./ColorPaletteItem.js";
-import Button from "./Button.js";
-import type Dialog from "./Dialog.js";
-import type ColorPaletteMoreColors from "./features/ColorPaletteMoreColors.js";
+import ColorPaletteTemplate from "./ColorPaletteTemplate.js";
+import type ColorPaletteItem from "./ColorPaletteItem.js";
+import type Button from "./Button.js";
 import type ColorPicker from "./ColorPicker.js";
+import "./ColorPaletteItem.js";
 
 import {
 	COLORPALETTE_CONTAINER_LABEL,
 	COLOR_PALETTE_MORE_COLORS_TEXT,
 	COLOR_PALETTE_DEFAULT_COLOR_TEXT,
+	COLOR_PALETTE_DIALOG_CANCEL_BUTTON,
+	COLOR_PALETTE_DIALOG_OK_BUTTON,
+	COLOR_PALETTE_DIALOG_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -39,7 +41,7 @@ import ColorPaletteDialogCss from "./generated/themes/ColorPaletteDialog.css.js"
  * Interface for components that may be used inside a `ui5-color-palette` or `ui5-color-palette-popover`
  * @public
  */
-interface IColorPaletteItem extends HTMLElement, ITabbable {
+interface IColorPaletteItem extends UI5Element, ITabbable {
 	value?: string,
 	index?: number,
 	selected?: boolean,
@@ -72,14 +74,9 @@ type ColorPaletteItemClickEventDetail = {
  */
 @customElement({
 	tag: "ui5-color-palette",
-	renderer: litRender,
-	features: ["ColorPaletteMoreColors"],
+	renderer: jsxRenderer,
 	template: ColorPaletteTemplate,
 	styles: [ColorPaletteCss, ColorPaletteDialogCss],
-	get dependencies() {
-		const colorPaletteMoreColors = getComponentFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-		return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
-	},
 })
 
 /**
@@ -88,17 +85,12 @@ type ColorPaletteItemClickEventDetail = {
  * @since 1.0.0-rc.15
  * @param {string} color the selected color
  */
-@event<ColorPaletteItemClickEventDetail>("item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		color: {
-			type: String,
-		},
-	},
-})
+@event("item-click")
 class ColorPalette extends UI5Element {
+	eventDetails!: {
+		"item-click": ColorPaletteItemClickEventDetail,
+	}
+
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
 	 * @private
@@ -110,7 +102,6 @@ class ColorPalette extends UI5Element {
 	/**
 	 * Defines whether the user can choose a custom color from a color picker
 	 *
-	 * **Note:** In order to use this property you need to import the following module: `"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"`
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -158,6 +149,26 @@ class ColorPalette extends UI5Element {
 	onPhone = false;
 
 	/**
+
+	 * The showMoreColors template.
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	showMoreColorsTemplate?: JsxTemplate;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	dialogOpen = false;
+
+	/**
+	 * @private
+	 */
+	@property()
+	colorPickerValue = "rgba(255,255,255,1)";
+
+	/**
 	 * Defines the `ui5-color-palette-item` elements.
 	 * @public
 	 */
@@ -173,7 +184,6 @@ class ColorPalette extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
-	moreColorsFeature?: ColorPaletteMoreColors;
 	_currentlySelected?: ColorPaletteItem;
 	_shouldFocusRecentColors = false;
 
@@ -211,18 +221,18 @@ class ColorPalette extends UI5Element {
 		});
 
 		if (this.showMoreColors) {
-			const ColorPaletteMoreColorsClass = getComponentFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-			ColorPaletteMoreColorsClass.i18nBundle = ColorPalette.i18nBundle;
-			if (ColorPaletteMoreColorsClass) {
-				this.moreColorsFeature = new ColorPaletteMoreColorsClass();
+			// If the feature is preloaded (the user manually imported ColorPaletteMoreColors.js), the teplate is already available on the constructor
+			if (ColorPalette.ColorPaletteMoreColorsTemplate) {
+				this.showMoreColorsTemplate = ColorPalette.ColorPaletteMoreColorsTemplate;
+			// If feature is not preloaded, load the template dynamically
+			} else {
+				import("./features/ColorPaletteMoreColorsTemplate.js").then(module => {
+					this.showMoreColorsTemplate = module.default;
+				});
 			}
 		}
 
 		this.onPhone = isPhone();
-	}
-
-	get _effectiveShowMoreColors() {
-		return !!(this.showMoreColors && this.moreColorsFeature);
 	}
 
 	onAfterRendering() {
@@ -263,7 +273,7 @@ class ColorPalette extends UI5Element {
 			}
 		}
 
-		this.fireDecoratorEvent<ColorPaletteItemClickEventDetail>("item-click", {
+		this.fireDecoratorEvent("item-click", {
 			color: this._selectedColor,
 		});
 	}
@@ -479,9 +489,12 @@ class ColorPalette extends UI5Element {
 		return this.colorPaletteNavigationElements[0];
 	}
 
+	onColorPickerChange(e: Event) {
+		this.colorPickerValue = (e.target as ColorPicker).value;
+	}
+
 	_chooseCustomColor() {
-		const colorPicker = this.getColorPicker();
-		this._setColor(colorPicker.value);
+		this._setColor(this.colorPickerValue);
 		this._closeDialog();
 		this._shouldFocusRecentColors = true;
 	}
@@ -496,13 +509,16 @@ class ColorPalette extends UI5Element {
 	}
 
 	_closeDialog() {
-		const dialog = this._getDialog();
-		dialog.open = false;
+		this.dialogOpen = false;
 	}
 
 	_openMoreColorsDialog() {
-		const dialog = this._getDialog();
-		dialog.open = true;
+		const value = this._currentlySelected ? this._currentlySelected.value : undefined;
+
+		if (value) {
+			this.colorPickerValue = value;
+		}
+		this.dialogOpen = true;
 	}
 
 	_onDefaultColorClick() {
@@ -529,15 +545,15 @@ class ColorPalette extends UI5Element {
 	}
 
 	get colorPaletteDialogTitle() {
-		return this.moreColorsFeature?.colorPaletteDialogTitle;
+		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_DIALOG_TITLE);
 	}
 
 	get colorPaletteDialogOKButton() {
-		return this.moreColorsFeature?.colorPaletteDialogOKButton;
+		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_DIALOG_OK_BUTTON);
 	}
 
 	get colorPaletteCancelButton() {
-		return this.moreColorsFeature?.colorPaletteCancelButton;
+		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON);
 	}
 
 	/**
@@ -562,10 +578,6 @@ class ColorPalette extends UI5Element {
 
 	get colorPaletteDefaultColorText() {
 		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_DEFAULT_COLOR_TEXT);
-	}
-
-	get _showMoreColors() {
-		return this.showMoreColors && this.moreColorsFeature;
 	}
 
 	get rowSize() {
@@ -623,6 +635,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get classes() {
+		// Remove after deleting the hbs template, it's added in the jsx template
 		return {
 			colorPaletteRoot: {
 				"ui5-cp-root": true,
@@ -631,14 +644,7 @@ class ColorPalette extends UI5Element {
 		};
 	}
 
-	_getDialog() {
-		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
-	}
-
-	getColorPicker() {
-		const dialog = this._getDialog();
-		return dialog.content[0].querySelector<ColorPicker>("[ui5-color-picker]")!;
-	}
+	static ColorPaletteMoreColorsTemplate?: JsxTemplate;
 }
 
 ColorPalette.define();

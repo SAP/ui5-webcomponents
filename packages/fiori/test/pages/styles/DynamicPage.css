@@ -63,6 +63,7 @@ html, body {
 }
 .snapped-title-heading [ui5-avatar] {
     position: absolute;
+    top: 0;
 }
 .snapped-title-heading [ui5-title] {
     font-family: var(--sapObjectHeader_Title_FontFamily);

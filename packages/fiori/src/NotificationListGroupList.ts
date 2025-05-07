@@ -1,6 +1,7 @@
 import List from "@ui5/webcomponents/dist/List.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
+import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 
 /**
  * @class
@@ -31,8 +32,24 @@ class NotificationListGroupList extends List {
 	onItemFocused() {
 	}
 
+	_onfocusin(e: FocusEvent) {
+		e.stopImmediatePropagation();
+	}
+
+	_onkeydown() {
+
+	}
+
 	focusItem(item: ListItemBase) {
 		item.focus();
+	}
+
+	_onLoadMoreKeydown(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.stopImmediatePropagation();
+		}
+
+		super._onLoadMoreKeydown(e);
 	}
 }
 

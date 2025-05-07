@@ -2,12 +2,12 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type BarDesign from "./types/BarDesign.js";
 
 // Template
-import BarTemplate from "./generated/templates/BarTemplate.lit.js";
+import BarTemplate from "./BarTemplate.js";
 
 // Styles
 import BarCss from "./generated/themes/Bar.css.js";
@@ -41,6 +41,9 @@ import BarCss from "./generated/themes/Bar.css.js";
  *
  * `import "@ui5/webcomponents/dist/Bar.js";`
  * @csspart bar - Used to style the wrapper of the content of the component
+ * @csspart startContent - Used to style the wrapper of the start content of the component
+ * @csspart midContent - Used to style the wrapper of the middle content of the component
+ * @csspart endContent - Used to style the wrapper of the end content of the component
  * @constructor
  * @extends UI5Element
  * @public
@@ -49,7 +52,7 @@ import BarCss from "./generated/themes/Bar.css.js";
 @customElement({
 	tag: "ui5-bar",
 	fastNavigation: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: BarCss,
 	template: BarTemplate,
 })
@@ -105,14 +108,6 @@ class Bar extends UI5Element {
 		});
 
 		bar.classList.toggle("ui5-bar-root-shrinked", needShrinked);
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-bar-root": true,
-			},
-		};
 	}
 
 	onEnterDOM() {

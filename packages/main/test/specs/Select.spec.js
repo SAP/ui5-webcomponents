@@ -360,25 +360,25 @@ describe("Select general interaction", () => {
 		const btnSetValue = await browser.$("#btnSetValue");
 		const btnSetInvalidValue = await browser.$("#btnSetInvalidValue");
 		const selectText = await select.shadow$(".ui5-select-label-root");
-		const EXPECTED_SELECTION_TEXT1 = "Item1";
-		const EXPECTED_SELECTION_TEXT2 = "Item2";
-
+		const INVALID_VALUE = "NAN";
+		const EMPTY_VALUE = "";
+		const EXPECTED_SELECTION_TEXT = "Item2";
 
 		await btnSetValue.click();
 		let selectTextHtml = await selectText.getHTML(false);
 
 		assert.strictEqual(await select.getProperty("value"),
-			EXPECTED_SELECTION_TEXT2, "Second option is selected.");
-		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2,
-			"Select label is " + EXPECTED_SELECTION_TEXT2);
+			EXPECTED_SELECTION_TEXT, "Second option is selected.");
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT,
+			"Select label is " + EXPECTED_SELECTION_TEXT);
 
 		await btnSetInvalidValue.click();
 		selectTextHtml = await selectText.getHTML(false);
 
 		assert.strictEqual(await select.getProperty("value"),
-			EXPECTED_SELECTION_TEXT1, "First option is selected as value did not match any options.");
-		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1,
-			"Select label is " + EXPECTED_SELECTION_TEXT1);
+		INVALID_VALUE, "No option is selected as value did not match any options.");
+		assert.include(selectTextHtml, EMPTY_VALUE,
+			"Select label is empty string");
 	});
 
 	it("opens upon space", async () => {
@@ -613,7 +613,7 @@ describe("Select general interaction", () => {
 	});
 
 	it("Tests if currently selected option is visible in the viewport when keyboard navigation is used", async () => {
-		await browser.setWindowSize(600, 100);
+		await browser.setWindowSize(600, 200);
 
 		const select = await browser.$("#warningSelect");
 		const popover = await select.shadow$("ui5-responsive-popover");
@@ -632,20 +632,20 @@ describe("Select general interaction", () => {
 	it("clears typed characters after selection is changed", async () => {
 		const select = await browser.$("#textAreaAriaLabel");
 		const selectText = await select.shadow$(".ui5-select-label-root");
-	
+
 		await select.click();
 		await select.keys("S");
-	
+
 		let selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, "Second", "Typing 'S' should select 'Second'");
-	
+
 		await select.keys("Enter");
-	
+
 		await select.keys("T");
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, "Third", "Typing 'T' should select 'Third' after previous selection");
-	
+
 		assert.strictEqual(await select.getProperty("value"), "Third", "The selection changed and typed characters were cleared");
 	});
-	
+
 });

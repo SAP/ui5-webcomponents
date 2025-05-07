@@ -87,6 +87,7 @@
 	font-size: var(--sapFontSize);
 	border: var(--_ui5_daypicker_item_border);
 	border-radius: var(--_ui5_daypicker_item_border_radius);
+	cursor: pointer;
 }
 
 .ui5-dp-item:hover {
@@ -210,7 +211,7 @@
 }
 
 .ui5-dp-item.ui5-dp-item--selected:hover {
-	background: var( --_ui5_daypicker_item_selected_hover);
+	background: var(--_ui5_daypicker_item_selected_hover);
 	color: var(--sapContent_ContrastTextColor);
 }
 
@@ -363,12 +364,12 @@
 	inset-block-start: var(--_ui5_daypicker_selected_item_now_special_day_top);
 }
 
-.ui5-dp-item[special-day].ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-daytext {
+.ui5-dp-item[data-ui5-special-day].ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-daytext {
 	border-radius: var(--_ui5-daypicker_item_selected_now_border_radius);
 }
 
-.ui5-dp-item[special-day].ui5-dp-item--selected.ui5-dp-item--now:focus::after,
-.ui5-dp-item[special-day].ui5-dp-item--now:focus::after {
+.ui5-dp-item[data-ui5-special-day].ui5-dp-item--selected.ui5-dp-item--now:focus::after,
+.ui5-dp-item[data-ui5-special-day].ui5-dp-item--now:focus::after {
 	margin: var(--_ui5_daypicker_item_now_focus_margin);
 }
 
@@ -383,15 +384,15 @@
 
 /* Styles for calendar with secondary calendar type and special dates */
 
-.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[special-day].ui5-dp-item--selected.ui5-dp-item--now::after,
-.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[special-day].ui5-dp-item--now::after {
+.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[data-ui5-special-day].ui5-dp-item--selected.ui5-dp-item--now::after,
+.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[data-ui5-special-day].ui5-dp-item--now::after {
 	inset: var(--_ui5_daypicker_twocalendar_item_special_day_now_inset);
 	border-radius: var(--_ui5_daypicker_twocalendar_item_special_day_now_border_radius);
 	border-width: var(--_ui5_daypicker_twocalendar_item_special_day_after_border_width);
 	border-color: var(--_ui5_daypicker_item_selected_focus_color);
 }
 
-.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[special-day].ui5-dp-item--now:not(.ui5-dp-item--selected)::after {
+.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[data-ui5-special-day].ui5-dp-item--now:not(.ui5-dp-item--selected)::after {
 	inset: 0.1875rem;
 }
 

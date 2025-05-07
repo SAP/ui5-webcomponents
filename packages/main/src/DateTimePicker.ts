@@ -10,18 +10,14 @@ import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/In
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import Button from "./Button.js";
-import type ResponsivePopover from "./ResponsivePopover.js";
-import ToggleButton from "./ToggleButton.js";
-import SegmentedButton from "./SegmentedButton.js";
-import Calendar from "./Calendar.js";
+import type { SegmentedButtonSelectionChangeEventDetail } from "./SegmentedButton.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type {
 	DatePickerChangeEventDetail as DateTimePickerChangeEventDetail,
 	DatePickerInputEventDetail as DateTimePickerInputEventDetail,
 } from "./DatePicker.js";
-import TimeSelectionClocks from "./TimeSelectionClocks.js";
 import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
 
 // i18n texts
@@ -35,7 +31,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import DateTimePickerTemplate from "./generated/templates/DateTimePickerTemplate.lit.js";
+import DateTimePickerTemplate from "./DateTimePickerTemplate.js";
 
 // Styles
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
@@ -120,14 +116,6 @@ type PreviewValues = {
 		DateTimePickerCss,
 		DateTimePickerPopoverCss,
 	],
-	dependencies: [
-		...DatePicker.dependencies,
-		Calendar,
-		Button,
-		ToggleButton,
-		SegmentedButton,
-		TimeSelectionClocks,
-	],
 })
 class DateTimePicker extends DatePicker implements IFormInputElement {
 	/**
@@ -202,25 +190,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		}
 	}
 
-	/**
-	 * Read-only getters
-	 */
-
-	get classes() {
-		return {
-			picker: {
-				"ui5-dt-picker-content--phone": this.phone,
-			},
-			dateTimeView: {
-				"ui5-dt-cal--hidden": this.phone && this.showTimeView,
-				"ui5-dt-time--hidden": this.phone && this.showDateView,
-			},
-			footer: {
-				"ui5-dt-picker-footer-time-hidden": (this.phone && this.showTimeView) || (this.phone && this.showDateView),
-			},
-		};
-	}
-
 	get _formatPattern() {
 		const hasHours = !!(this.formatPattern || "").match(/H/i);
 		const fallback = !this.formatPattern || !hasHours;
@@ -266,15 +235,15 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	}
 
 	get showDateView() {
-		return this.phone ? !this._showTimeView : true;
+		return this._phoneView ? !this._showTimeView : true;
 	}
 
 	get showTimeView() {
-		return this.phone ? this._showTimeView : true;
+		return this._phoneView ? this._showTimeView : true;
 	}
 
-	get phone() {
-		return super.phone || this._phoneMode;
+	get _phoneView() {
+		return isPhone() || this._phoneMode;
 	}
 
 	/**
@@ -369,9 +338,9 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	 * between the date and time views.
 	 * @param e
 	 */
-	_dateTimeSwitchChange(e: CustomEvent) { // Note: fix when SegmentedButton is implemented in TS
-		const target = e.target as HTMLElement;
-		this._showTimeView = target.getAttribute("key") === "Time";
+	_dateTimeSwitchChange(e: CustomEvent<SegmentedButtonSelectionChangeEventDetail>) { // Note: fix when SegmentedButton is implemented in TS
+		const selectedItem = e.detail.selectedItems[0];
+		this._showTimeView = selectedItem.getAttribute("data-ui5-key") === "Time";
 	}
 
 	/**
@@ -390,10 +359,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 
 		const newValue = this.formatValue(modifiedLocalDate);
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
-	}
-
-	getPicker() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	getSelectedDateTime() {

@@ -28,7 +28,7 @@ growing.addEventListener("load-more", () => {
 
 	counter++;
 	if (counter >= MAX_GROW) {
-		growing.disabled = true;
+		growing.remove();
 		return;
 	}
 });

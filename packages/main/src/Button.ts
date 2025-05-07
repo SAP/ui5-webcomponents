@@ -1,18 +1,18 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isSpace,
 	isEnter,
 	isEscape,
 	isShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import type { AccessibilityAttributes, AriaRole } from "@ui5/webcomponents-base";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -25,14 +25,19 @@ import {
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
+import ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
-import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
-import Icon from "./Icon.js";
-import IconMode from "./types/IconMode.js";
-
-import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
+import type ButtonBadge from "./ButtonBadge.js";
+import ButtonTemplate from "./ButtonTemplate.js";
+import {
+	BUTTON_ARIA_TYPE_ACCEPT,
+	BUTTON_ARIA_TYPE_REJECT,
+	BUTTON_ARIA_TYPE_EMPHASIZED,
+	BUTTON_ARIA_TYPE_ATTENTION,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
@@ -49,6 +54,14 @@ let isGlobalHandlerAttached = false;
 let activeButton: Button | null = null;
 
 type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls">;
+
+type ButtonClickEventDetail = {
+	originalEvent: MouseEvent,
+	altKey: boolean;
+	ctrlKey: boolean;
+	metaKey: boolean;
+	shiftKey: boolean;
+}
 
 /**
  * @class
@@ -76,6 +89,8 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
  *
  * `import "@ui5/webcomponents/dist/Button.js";`
  * @csspart button - Used to style the native button element
+ * @csspart icon - Used to style the icon in the native button element
+ * @csspart endIcon - Used to style the end icon in the native button element
  * @constructor
  * @extends UI5Element
  * @implements { IButton }
@@ -85,33 +100,42 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 	tag: "ui5-button",
 	formAssociated: true,
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: ButtonTemplate,
 	styles: buttonCss,
-	dependencies: [Icon],
 	shadowRootOptions: { delegatesFocus: true },
 })
 /**
- * Fired when the component is activated either with a
- * mouse/tap or by using the Enter or Space key.
+ * Fired when the component is activated either with a mouse/tap or by using the Enter or Space key.
  *
- * **Note:** The event will not be fired if the `disabled`
- * property is set to `true`.
+ * **Note:** The event will not be fired if the `disabled` property is set to `true`.
+ *
+ * @since 2.10.0
  * @public
- * @native
+ * @param {Event} originalEvent Returns original event that comes from user's **click** interaction
+ * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+ * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+ * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+ * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
 @event("click", {
 	bubbles: true,
+	cancelable: true,
 })
 /**
  * Fired whenever the active state of the component changes.
  * @private
  */
-@event("_active-state-change", {
+@event("active-state-change", {
 	bubbles: true,
 	cancelable: true,
 })
 class Button extends UI5Element implements IButton {
+	eventDetails!: {
+		"click": ButtonClickEventDetail,
+		"active-state-change": void,
+	};
+
 	/**
 	 * Defines the component design.
 	 * @default "Default"
@@ -220,6 +244,15 @@ class Button extends UI5Element implements IButton {
 	accessibilityAttributes: ButtonAccessibilityAttributes = {};
 
 	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
 	 * Defines whether the button has special form-related functionality.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
@@ -316,9 +349,15 @@ class Button extends UI5Element implements IButton {
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>;
 
-	_deactivate: () => void;
+	/**
+	 * Adds a badge to the button.
+	 * @since 2.7.0
+	 * @public
+	 */
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
+	badge!: Array<ButtonBadge>;
 
-	_ontouchstart: PassiveEventListenerObject;
+	_deactivate: () => void;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -336,19 +375,14 @@ class Button extends UI5Element implements IButton {
 
 			isGlobalHandlerAttached = true;
 		}
+	}
 
-		const handleTouchStartEvent = () => {
-			if (this.nonInteractive) {
-				return;
-			}
+	_ontouchstart() {
+		if (this.nonInteractive) {
+			return;
+		}
 
-			this._setActiveState(true);
-		};
-
-		this._ontouchstart = {
-			handleEvent: handleTouchStartEvent,
-			passive: true,
-		};
+		this._setActiveState(true);
 	}
 
 	onEnterDOM() {
@@ -358,15 +392,49 @@ class Button extends UI5Element implements IButton {
 	}
 
 	async onBeforeRendering() {
+		this._setBadgeOverlayStyle();
+
 		this.hasIcon = !!this.icon;
 		this.hasEndIcon = !!this.endIcon;
 		this.iconOnly = this.isIconOnly;
 
-		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
+		const defaultTooltip = await this.getDefaultTooltip();
+		this.buttonTitle = this.iconOnly ? this.tooltip ?? defaultTooltip : this.tooltip;
 	}
 
-	_onclick() {
+	_setBadgeOverlayStyle() {
+		const needsOverflowVisible = this.badge.length && (this.badge[0].design === ButtonBadgeDesign.AttentionDot || this.badge[0].design === ButtonBadgeDesign.OverlayText);
+
+		if (needsOverflowVisible) {
+			this._internals.states.add("has-overlay-badge");
+		} else {
+			this._internals.states.delete("has-overlay-badge");
+		}
+	}
+
+	_onclick(e: MouseEvent) {
+		e.stopImmediatePropagation();
+
 		if (this.nonInteractive) {
+			return;
+		}
+
+		const {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		} = e;
+
+		const prevented = !this.fireDecoratorEvent("click", {
+			originalEvent: e,
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		});
+
+		if (prevented) {
 			return;
 		}
 
@@ -440,7 +508,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	_setActiveState(active: boolean) {
-		const eventPrevented = !this.fireDecoratorEvent("_active-state-change");
+		const eventPrevented = !this.fireDecoratorEvent("active-state-change");
 
 		if (eventPrevented) {
 			return;
@@ -457,22 +525,6 @@ class Button extends UI5Element implements IButton {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
 
-	get iconMode() {
-		if (!this.icon) {
-			return "";
-		}
-
-		return IconMode.Decorative;
-	}
-
-	get endIconMode() {
-		if (!this.endIcon) {
-			return "";
-		}
-
-		return IconMode.Decorative;
-	}
-
 	get isIconOnly() {
 		return !willShowContent(this.text);
 	}
@@ -482,6 +534,7 @@ class Button extends UI5Element implements IButton {
 			"Positive": BUTTON_ARIA_TYPE_ACCEPT,
 			"Negative": BUTTON_ARIA_TYPE_REJECT,
 			"Emphasized": BUTTON_ARIA_TYPE_EMPHASIZED,
+			"Attention": BUTTON_ARIA_TYPE_ATTENTION,
 		};
 	}
 
@@ -497,8 +550,8 @@ class Button extends UI5Element implements IButton {
 		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
-	get effectiveAccRole() {
-		return this.accessibleRole.toLowerCase();
+	get effectiveAccRole(): AriaRole {
+		return toLowercaseEnumValue(this.accessibleRole);
 	}
 
 	get tabIndexValue() {
@@ -509,22 +562,22 @@ class Button extends UI5Element implements IButton {
 		const tabindex = this.getAttribute("tabindex");
 
 		if (tabindex) {
-			return tabindex;
+			return Number.parseInt(tabindex);
 		}
 
-		return this.nonInteractive ? "-1" : this.forcedTabIndex;
-	}
-
-	get showIconTooltip() {
-		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
+		return this.nonInteractive ? -1 : Number.parseInt(this.forcedTabIndex);
 	}
 
 	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	get ariaDescribedbyText() {
-		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
+	get ariaDescriptionText() {
+		const ariaDescribedByText = this.hasButtonType ? this.buttonTypeText : "";
+		const accessibleDescription = this.accessibleDescription || "";
+		const ariaDescriptionText = `${ariaDescribedByText} ${accessibleDescription}`.trim();
+
+		return ariaDescriptionText || undefined;
 	}
 
 	get _isSubmit() {
@@ -534,6 +587,10 @@ class Button extends UI5Element implements IButton {
 	get _isReset() {
 		return this.type === ButtonType.Reset;
 	}
+
+	get shouldRenderBadge() {
+		return !!this.badge.length && (!!this.badge[0].text.length || this.badge[0].design === ButtonBadgeDesign.AttentionDot);
+	}
 }
 
 Button.define();
@@ -541,5 +598,6 @@ Button.define();
 export default Button;
 export type {
 	ButtonAccessibilityAttributes,
+	ButtonClickEventDetail,
 	IButton,
 };

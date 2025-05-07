@@ -47,7 +47,7 @@
 }
 /*** Responsive paddings ***/
 
-::slotted([ui5-bar][design="FloatingFooter"]) {
+::slotted([ui5-bar][slot="footer"][design="FloatingFooter"]) {
 	margin: auto;
 	padding: 0;
 }

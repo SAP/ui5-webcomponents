@@ -41,9 +41,6 @@
 
 	/* ColorPalette */
 	--_ui5_color-palette-item-height: 1.25rem;
-	--_ui5_color-palette-item-focus-height: 1rem;
-	--_ui5_color-palette-item-container-sides-padding: 0.1875rem;
-	--_ui5_color-palette-item-container-rows-padding: 0.8125rem;
 	--_ui5_color-palette-item-hover-height: 1.625rem;
 	--_ui5_color-palette-item-margin: calc(((var(--_ui5_color-palette-item-hover-height) - var(--_ui5_color-palette-item-height)) / 2) + 0.0625rem);
 	--_ui5_color-palette-row-width: 8.75rem;
@@ -52,7 +49,6 @@
 	--_ui5_color-palette-row-height: 7.5rem;
 	--_ui5_color-palette-button-height: 2rem;
 	--_ui5_color-palette-item-before-focus-inset: -0.25rem;
-	--_ui5_color_picker_slider_container_margin_top: -9px;
 
 	/* DayPicker */
 	--_ui5_daypicker_selected_item_now_special_day_top: 1.5625rem;

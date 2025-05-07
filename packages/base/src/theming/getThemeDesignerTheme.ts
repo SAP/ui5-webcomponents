@@ -68,7 +68,8 @@ const processThemeMetadata = (metadata: ThemeMetadata): ThemeDescriptor | undefi
 	let baseThemeName;
 
 	try {
-		themeName = metadata.Path.match(/\.([^.]+)\.css_variables$/)![1];
+		const pathParts = metadata.Path.split(".");
+		themeName = pathParts.length === 4 ? pathParts[2] : getComputedStyle(document.body).getPropertyValue("--sapSapThemeId");
 		baseThemeName = metadata.Extends[0];
 	} catch (ex) {
 		if (!warnings.has("object")) {

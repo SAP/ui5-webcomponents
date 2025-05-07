@@ -1,0 +1,12 @@
+:host {
+	height: 40px;
+    margin-block: 0.5rem;
+}
+
+:host(:last-of-type) {
+    margin-bottom: 0;
+}
+
+:host(:first-of-type) {
+    margin-top: 0;
+}

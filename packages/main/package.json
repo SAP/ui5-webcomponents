@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents",
-  "version": "2.4.0",
+  "version": "2.10.0",
   "description": "UI5 Web Components: webcomponents.main",
   "ui5": {
     "webComponentsPackage": true
@@ -26,11 +26,15 @@
     "build": "wc-dev build",
     "bundle": "nps build.bundle",
     "test": "wc-dev test",
-    "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
     "test:suite-1": "wc-dev test-suite-1",
     "test:suite-2": "wc-dev test-suite-2",
     "test:cypress": "nps test-cy-ci",
+    "test:cypress:suite-1": "nps test-cy-ci-suite-1",
+    "test:cypress:suite-2": "nps test-cy-ci-suite-2",
     "test:cypress:open": "nps test-cy-open",
+    "test:cypress:single": "npx cypress run --component --browser chrome --spec",
+    "test:vitest": "yarn vitest run",
+    "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "tsc -b"
   },
@@ -50,16 +54,19 @@
     "directory": "packages/main"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "2.4.0",
-    "@ui5/webcomponents-icons": "2.4.0",
-    "@ui5/webcomponents-icons-business-suite": "2.4.0",
-    "@ui5/webcomponents-icons-tnt": "2.4.0",
-    "@ui5/webcomponents-localization": "2.4.0",
-    "@ui5/webcomponents-theming": "2.4.0"
+    "@ui5/webcomponents-base": "2.10.0",
+    "@ui5/webcomponents-icons": "2.10.0",
+    "@ui5/webcomponents-icons-business-suite": "2.10.0",
+    "@ui5/webcomponents-icons-tnt": "2.10.0",
+    "@ui5/webcomponents-localization": "2.10.0",
+    "@ui5/webcomponents-theming": "2.10.0"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "2.4.0",
-    "chromedriver": "^129.0.0",
-    "lit": "^2.0.0"
+    "@ui5/cypress-internal": "0.0.0",
+    "@ui5/webcomponents-tools": "2.10.0",
+    "chromedriver": "^135.0.0",
+    "jsdom": "^26.0.0",
+    "lit": "^2.0.0",
+    "vitest": "^3.0.2"
   }
 }

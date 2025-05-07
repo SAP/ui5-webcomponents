@@ -1,12 +1,15 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+
+type SideNavigationItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
 /**
- * Fired when the component is activated either with a
- * click/tap or by using the [Enter] or [Space] keys.
+ * Fired when the component is activated either with a click/tap or by using the [Enter] or [Space] keys.
  *
  * @public
  */
@@ -26,6 +29,9 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  */
 @customElement()
 class SideNavigationSelectableItemBase extends SideNavigationItemBase {
+	eventDetails!: SideNavigationItemBase["eventDetails"] & {
+		"click": void
+	}
 	/**
 	 * Defines the icon of the item.
 	 *
@@ -81,6 +87,52 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	target?: string;
 
 	/**
+	 * Item design.
+	 *
+	 * **Note:** Items with "Action" design must not have sub-items.
+	 *
+	 * @public
+	 * @default "Default"
+	 * @since 2.7.0
+	 */
+	@property()
+	design: `${SideNavigationItemDesign}` = "Default";
+
+	/**
+	 * Indicates whether the navigation item is selectable. By default all items are selectable unless specifically marked as unselectable.
+	 *
+	 * When a parent item is marked as unselectable, selecting it will only expand or collapse its sub-items.
+	 * To improve user experience do not mix unselectable parent items with selectable parent items in a single side navigation.
+	 *
+	 *
+	 * **Guidelines**:
+	 * - External links should be unselectable.
+	 * - Items that trigger actions (with design "Action") should be unselectable.
+	 *
+	 * @public
+	 * @default false
+	 * @since 2.7.0
+	 */
+	@property({ type: Boolean })
+	unselectable = false;
+
+	/**
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following fields are supported:
+	 *
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
+	 *
+	 * **Note:** Do not use it on parent items, as it will be overridden if the item is in the overflow menu.
+	 *
+	 * @public
+	 * @default {}
+	 * @since 2.7.0
+	 */
+	@property({ type: Object })
+	accessibilityAttributes: SideNavigationItemAccessibilityAttributes = {};
+
+	/**
 	 * @private
 	 * @default false
 	 */
@@ -89,10 +141,14 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 
 	get ariaRole() {
 		if (this.sideNavCollapsed) {
-			return this.isOverflow ? "menuitem" : "menuitemradio";
+			return this.isOverflow || this.unselectable ? "menuitem" : "menuitemradio";
 		}
 
 		return "treeitem";
+	}
+
+	get isSelectable() {
+		return !this.unselectable && !this.disabled;
 	}
 
 	get _href() {
@@ -150,10 +206,22 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._activate(e);
+
+			if (this.href && !e.defaultPrevented) {
+				const customEvent = new MouseEvent("click");
+
+				customEvent.stopImmediatePropagation();
+				if (this.getDomRef()!.querySelector("a")) {
+					this.getDomRef()!.querySelector("a")!.dispatchEvent(customEvent);
+				} else {
+					// when Side Navigation is collapsed and it is first level item we have directly <a> element
+					this.getDomRef()!.dispatchEvent(customEvent);
+				}
+			}
 		}
 	}
 
-	_onclick(e: PointerEvent) {
+	_onclick(e: MouseEvent) {
 		this._activate(e);
 	}
 
@@ -163,7 +231,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		this.sideNavigation?.focusItem(this);
 	}
 
-	_activate(e: KeyboardEvent | PointerEvent) {
+	_activate(e: KeyboardEvent | MouseEvent) {
 		e.stopPropagation();
 
 		if (this.isOverflow) {
@@ -183,4 +251,9 @@ const isInstanceOfSideNavigationSelectableItemBase = (object: any): object is Si
 };
 
 export default SideNavigationSelectableItemBase;
-export { isInstanceOfSideNavigationSelectableItemBase };
+export {
+	isInstanceOfSideNavigationSelectableItemBase,
+};
+export type {
+	SideNavigationItemAccessibilityAttributes,
+};

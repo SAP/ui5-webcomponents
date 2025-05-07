@@ -1,34 +1,10 @@
 import { registerThemePropertiesLoader } from "../../src/asset-registries/Themes.js";
 
-const defaultTheme = {
-	content: `:root{ --var1: grey; }`,
-	packageName: "",
-	fileName: "",
-};
-
-const fiori3 = {
-	content: `:root{ --var1: red; }`,
-	packageName: "",
-	fileName: "",
-};
-
-const fiori3Dark = {
-	content: `:root{ --var1: green; }`,
-	packageName: "",
-	fileName: "",
-};
-
-const fiori3Hcb = {
-	content: `:root{ --var1: yellow; }`,
-	packageName: "",
-	fileName: "",
-};
-
-const fiori3Hcw = {
-	content: `:root{ --var1: yellow; }`,
-	packageName: "",
-	fileName: "",
-};
+const defaultTheme = `:root{ --var1: grey; }`;
+const fiori3 = `:root{ --var1: red; }`;
+const fiori3Dark = `:root{ --var1: green; }`;
+const fiori3Hcb = `:root{ --var1: yellow; }`;
+const fiori3Hcw = `:root{ --var1: yellow; }`;
 
 registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_horizon", async () => Promise.resolve(defaultTheme));
 registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3", async () => Promise.resolve(fiori3));

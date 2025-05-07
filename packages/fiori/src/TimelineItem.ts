@@ -1,19 +1,27 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Link from "@ui5/webcomponents/dist/Link.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type Link from "@ui5/webcomponents/dist/Link.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITimelineItem } from "./Timeline.js";
-import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
-import TimelineLayout from "./types/TimelineLayout.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import TimelineItemTemplate from "./TimelineItemTemplate.js";
 // Styles
-import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
+import type TimelineLayout from "./types/TimelineLayout.js";
 
-const SHORT_LINE_WIDTH = "ShortLineWidth";
-const LARGE_LINE_WIDTH = "LargeLineWidth";
+import {
+	TIMELINE_ITEM_INFORMATION_STATE_TEXT,
+	TIMELINE_ITEM_POSITIVE_STATE_TEXT,
+	TIMELINE_ITEM_NEGATIVE_STATE_TEXT,
+	TIMELINE_ITEM_CRITICAL_STATE_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
+
+import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
 
 /**
  * @class
@@ -28,13 +36,9 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  */
 @customElement({
 	tag: "ui5-timeline-item",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TimelineItemCss,
 	template: TimelineItemTemplate,
-	dependencies: [
-		Icon,
-		Link,
-	],
 })
 /**
  * Fired when the item name is pressed either with a
@@ -48,6 +52,9 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 	bubbles: true,
 })
 class TimelineItem extends UI5Element implements ITimelineItem {
+	eventDetails!: {
+		"name-click": void
+	}
 	/**
 	 * Defines the icon to be displayed as graphical element within the `ui5-timeline-item`.
 	 * SAP-icons font provides numerous options.
@@ -90,6 +97,15 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 */
 	@property()
 	subtitleText?: string;
+
+	/**
+	 * Defines the state of the icon displayed in the `ui5-timeline-item`.
+	 * @default "None"
+	 * @public
+	 * @since 2.7.0
+	 */
+	@property()
+	state: `${ValueState}` = "None";
 
 	/**
 	 * Defines the content of the `ui5-timeline-item`.
@@ -154,12 +170,15 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	@property({ type: Number })
 	positionInGroup?: number;
 
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
 	constructor() {
 		super();
 	}
 
 	onNamePress() {
-		this.fireDecoratorEvent("name-click", {});
+		this.fireDecoratorEvent("name-click");
 	}
 
 	/**
@@ -169,19 +188,17 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 		this.shadowRoot!.querySelector<Link>("[ui5-link]")?.focus();
 	}
 
-	get classes() {
+	static typeTextMappings(): Record<string, I18nText> {
 		return {
-			indicator: {
-				"ui5-tli-indicator": true,
-				"ui5-tli-indicator-short-line": this.forcedLineWidth === SHORT_LINE_WIDTH,
-				"ui5-tli-indicator-large-line": this.forcedLineWidth === LARGE_LINE_WIDTH,
-			},
-			bubbleArrowPosition: {
-				"ui5-tli-bubble-arrow": true,
-				"ui5-tli-bubble-arrow--left": this.layout === TimelineLayout.Vertical,
-				"ui5-tli-bubble-arrow--top": this.layout === TimelineLayout.Horizontal,
-			},
+			"Information": TIMELINE_ITEM_INFORMATION_STATE_TEXT,
+			"Positive": TIMELINE_ITEM_POSITIVE_STATE_TEXT,
+			"Negative": TIMELINE_ITEM_NEGATIVE_STATE_TEXT,
+			"Critical": TIMELINE_ITEM_CRITICAL_STATE_TEXT,
 		};
+	}
+
+	get timelineItemStateText() {
+		return this.state !== "None" ? TimelineItem.i18nBundle.getText(TimelineItem.typeTextMappings()[this.state]) : undefined;
 	}
 
 	get isGroupItem() {

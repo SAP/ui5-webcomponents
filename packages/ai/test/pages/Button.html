@@ -27,10 +27,21 @@
 	<br/>
 	<br/>
 
+	<ui5-title level="H3">AI Button with split mode state</ui5-title>
+	<br/>
+
+	<ui5-ai-button id="myAiButtonSplit" state="generate">
+		<ui5-ai-button-state name="generate" text="Regenerate" icon="ai"></ui5-ai-button-state>
+		<ui5-ai-button-state name="generating" text="Stop Generating" icon="stop"></ui5-ai-button-state>
+		<ui5-ai-button-state name="revise" text="Regenerate" icon="ai" show-arrow-button></ui5-ai-button-state>
+	</ui5-ai-button>
+	<br/>
+	<br/>
+
 	<ui5-title level="H3">Icon-only AI Button with Menu</ui5-title>
 	<br/>
 
-	<ui5-ai-button id="myAiButtonIconOnly" state="revise">
+	<ui5-ai-button id="myAiButtonIconOnly" state="generate">
 		<ui5-ai-button-state name="generate" icon="ai"></ui5-ai-button-state>
 		<ui5-ai-button-state name="generating" icon="stop"></ui5-ai-button-state>
 		<ui5-ai-button-state name="revise" icon="ai" end-icon="navigation-down-arrow"></ui5-ai-button-state>
@@ -54,6 +65,11 @@
 			<ui5-menu-item text="German"></ui5-menu-item>
 			<ui5-menu-item text="Spanish"></ui5-menu-item>
 		</ui5-menu-item>
+	</ui5-menu>
+
+	<ui5-menu id="menuReg">
+		<ui5-menu-item text="Edit Prompt"></ui5-menu-item>
+		<ui5-menu-item text="Change Tone"></ui5-menu-item>
 	</ui5-menu>
 
 	<br/>
@@ -100,7 +116,7 @@
 			<ui5-menu-item text="Simplify"></ui5-menu-item>
 			<ui5-menu-item text="Expand"></ui5-menu-item>
 			<ui5-menu-item text="Rephrase"></ui5-menu-item>
-			<ui5-menu-item text="Summarise"></ui5-menu-item>
+			<ui5-menu-item text="Summarize"></ui5-menu-item>
 		</ui5-menu-item>
 		<ui5-menu-item text="Make Bulleted List"></ui5-menu-item>
 		<ui5-menu-item text="Translate">
@@ -119,6 +135,7 @@
 		var generationStopped = false;
 		var currentTextKey;
 		var translationKey = "en";
+		var prevTriggerState = "generate";
 		const sendButton = document.getElementById("footerBtnSend");
 		const toast = document.getElementById("quickPromptToast");
 		const predefinedTexts = data.predefinedTexts;
@@ -160,20 +177,73 @@
 			}
 		}
 
-		myAiButton.addEventListener("click", aiButtonClickHandler);
+		function aiButtonSplitClickHandler(evt) {
+			var button = evt.target;
 
-		myAiButtonIconOnly.addEventListener("click", aiButtonClickHandler);
+			switch(button.state) {
+				case "":
+				case "generate":
+					prevTriggerState = "generate";
+					button.state = "generating";
+					startGeneration(button);
+					break;
+				case "generating":
+					button.state = prevTriggerState;
+					stopGeneration();
+					break;
+				case "revise":
+					menuReg.open = false;
+					prevTriggerState = "revise";
+					button.state = "generating";
+					startGeneration(button);
+					break;
+			}
+		}
+
+		function aiButtonSplitArrowClickHandler(evt) {
+			var button = evt.target;
+
+			menuReg.opener = button;
+			menuReg.open = true;
+		}
 
 		menu.addEventListener("item-click", function(evt) {
 			var button = menu.opener;
+
 			if (evt.detail.text === "Regenerate") {
 				button.state = "generating";
 				startGeneration(button);
 			}
 		});
 
+		menuReg.addEventListener("item-click", function(evt) {
+			var button = menuReg.opener;
+
+			prevTriggerState = "revise";
+			button.state = "generating";
+			startGeneration(button);
+		});
+
+		menuReg.addEventListener("open", function(evt) {
+			var button = menuReg.opener;
+
+			button.arrowButtonPressed = true;
+		});
+
+		menuReg.addEventListener("close", function(evt) {
+			var button = menuReg.opener;
+
+			button.arrowButtonPressed = false;
+		});
+
+		myAiButton.addEventListener("click", aiButtonClickHandler);
+		myAiButtonSplit.addEventListener("click", aiButtonSplitClickHandler);
+		myAiButtonSplit.addEventListener("arrow-button-click", aiButtonSplitArrowClickHandler);
+		myAiButtonIconOnly.addEventListener("click", aiButtonClickHandler);
+
 		function aiQuickPromptButtonClickHandler(e) {
 			var button = e.target;
+
 			switch(button.state) {
 				case "":
 				case "generate":
@@ -219,6 +289,7 @@
 
 		sendButton.addEventListener("click", function() {
 			const output = document.getElementById("output");
+
 			if (output.value) {
 				toast.open = true;
 				output.valueState = "None";
@@ -242,6 +313,7 @@
 				case "Regenerate":
 					const keys = Object.keys(predefinedTexts[translationKey]);
 					const randomKey = keys[Math.floor(Math.random() * keys.length)];
+
 					currentTextKey = randomKey;
 					setStateAndGenerate(button, "generating", randomKey, predefinedTexts);
 					break;
@@ -266,7 +338,7 @@
 				case "Rephrase":
 					startTextGeneration(button, "reviseGenerating", predefinedTextsRephrased);
 					break;
-				case "Summarise":
+				case "Summarize":
 					startTextGeneration(button, "reviseGenerating", predefinedTextsSummarized);
 					break;
 				case "Bulgarian":
@@ -303,8 +375,9 @@
 		}
 
 		function setNegativeValueState(output) {
-			output.valueState = "Negative";
 			const div = document.createElement("div");
+
+			output.valueState = "Negative";
 			div.setAttribute("slot", "valueStateMessage");
 			div.textContent = "Spelling or grammar issues found, please try again!";
 
@@ -335,6 +408,7 @@
 			const output = document.getElementById("output");
 			const words = text.split(" ");
 			let currentWordIndex = 0;
+
 			output.value = "";
 			generationId = setInterval(() => {
 				if (currentWordIndex < words.length) {

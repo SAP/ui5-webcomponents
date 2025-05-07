@@ -3,6 +3,320 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.3...v2.10.0) (2025-05-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.10.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.2...v2.10.0-rc.3) (2025-05-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.10.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.1...v2.10.0-rc.2) (2025-04-24)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.10.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.0...v2.10.0-rc.1) (2025-04-17)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.10.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.1-rc.0...v2.10.0-rc.0) (2025-04-14)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+## [2.9.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0...v2.9.1-rc.0) (2025-04-10)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.9.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.3...v2.9.0) (2025-04-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.9.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.2...v2.9.0-rc.3) (2025-04-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.9.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.1...v2.9.0-rc.2) (2025-03-27)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.9.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.0...v2.9.0-rc.1) (2025-03-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.9.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.1-rc.0...v2.9.0-rc.0) (2025-03-13)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+## [2.8.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0...v2.8.1-rc.0) (2025-03-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.8.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.3...v2.8.0) (2025-03-04)
+
+
+### Features
+
+* **framework:** add `.currentTarget` to the type of event handler in TSX and UI5CustomEvent ([#10957](https://github.com/SAP/ui5-webcomponents/issues/10957)) ([f56753c](https://github.com/SAP/ui5-webcomponents/commit/f56753c5142d6e817b05d7e33bd160f09c2d5205))
+
+
+
+
+
+# [2.8.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.2...v2.8.0-rc.3) (2025-02-27)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.8.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.1...v2.8.0-rc.2) (2025-02-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.8.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.0...v2.8.0-rc.1) (2025-02-13)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.8.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0...v2.8.0-rc.0) (2025-02-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.7.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.2...v2.7.0) (2025-02-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.7.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.1...v2.7.0-rc.2) (2025-01-30)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.7.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.0...v2.7.0-rc.1) (2025-01-23)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.7.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2...v2.7.0-rc.0) (2025-01-16)
+
+
+### Bug Fixes
+
+* ai button and color palette bring their own items ([#10517](https://github.com/SAP/ui5-webcomponents/issues/10517)) ([11b9356](https://github.com/SAP/ui5-webcomponents/commit/11b9356a13d01ece1ebcf4185b61259b9ad6d364))
+
+
+
+
+
+## [2.6.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2-rc.0...v2.6.2) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+## [2.6.2-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.1...v2.6.2-rc.0) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+## [2.6.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0...v2.6.1) (2025-01-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.6.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.5...v2.6.0) (2025-01-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.6.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.4...v2.6.0-rc.5) (2025-01-07)
+
+
+### Bug Fixes
+
+* remove dependencies for TSX components and fix features ([#10449](https://github.com/SAP/ui5-webcomponents/issues/10449)) ([a2b5f6f](https://github.com/SAP/ui5-webcomponents/commit/a2b5f6fb768499a8b757a9b7abad5f19033a33a7))
+
+
+
+
+
+# [2.6.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.3...v2.6.0-rc.4) (2025-01-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.6.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.2...v2.6.0-rc.3) (2024-12-26)
+
+
+### Features
+
+* **ui5-ai-button:** implement split button functionality ([#10242](https://github.com/SAP/ui5-webcomponents/issues/10242)) ([55c9e4d](https://github.com/SAP/ui5-webcomponents/commit/55c9e4d67800d82a0d357eda8859b78d69dc25ab))
+
+
+
+
+
+# [2.6.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.1...v2.6.0-rc.2) (2024-12-19)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.6.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.0...v2.6.0-rc.1) (2024-12-16)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.6.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0...v2.6.0-rc.0) (2024-12-12)
+
+
+### Features
+
+* **framework:** add JSX template support with TypeScript ([#10046](https://github.com/SAP/ui5-webcomponents/issues/10046)) ([f42e7c1](https://github.com/SAP/ui5-webcomponents/commit/f42e7c18c846f923df4fec6ae02f1b4c20c006fa))
+
+
+
+
+
+# [2.5.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.3...v2.5.0) (2024-12-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.5.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.2...v2.5.0-rc.3) (2024-12-05)
+
+
+### Features
+
+* **framework:** add strict event type checking ([#10235](https://github.com/SAP/ui5-webcomponents/issues/10235)) ([4ff8ab7](https://github.com/SAP/ui5-webcomponents/commit/4ff8ab7c34db5058b92511767be1b96c69a91cb5))
+
+
+
+
+
+# [2.5.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.1...v2.5.0-rc.2) (2024-11-28)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.5.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.0...v2.5.0-rc.1) (2024-11-21)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.5.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.1-rc.0...v2.5.0-rc.0) (2024-11-14)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+## [2.4.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0...v2.4.1-rc.0) (2024-11-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
 # [2.4.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.4...v2.4.0) (2024-11-03)
 
 **Note:** Version bump only for package @ui5/webcomponents-ai

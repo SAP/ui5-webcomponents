@@ -3,6 +3,305 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.3...v2.10.0) (2025-05-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.10.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.2...v2.10.0-rc.3) (2025-05-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.10.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.1...v2.10.0-rc.2) (2025-04-24)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.10.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.0...v2.10.0-rc.1) (2025-04-17)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.10.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.1-rc.0...v2.10.0-rc.0) (2025-04-14)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+## [2.9.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0...v2.9.1-rc.0) (2025-04-10)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.9.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.3...v2.9.0) (2025-04-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.9.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.2...v2.9.0-rc.3) (2025-04-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.9.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.1...v2.9.0-rc.2) (2025-03-27)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.9.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.0...v2.9.0-rc.1) (2025-03-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.9.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.1-rc.0...v2.9.0-rc.0) (2025-03-13)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+## [2.8.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0...v2.8.1-rc.0) (2025-03-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.8.0](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.3...v2.8.0) (2025-03-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.8.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.2...v2.8.0-rc.3) (2025-02-27)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.8.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.1...v2.8.0-rc.2) (2025-02-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.8.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.8.0-rc.0...v2.8.0-rc.1) (2025-02-13)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.8.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0...v2.8.0-rc.0) (2025-02-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.7.0](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.2...v2.7.0) (2025-02-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.7.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.1...v2.7.0-rc.2) (2025-01-30)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.7.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.7.0-rc.0...v2.7.0-rc.1) (2025-01-23)
+
+
+### Features
+
+* update tnt/icons to v3.5 & 2.11 ([#10600](https://github.com/SAP/ui5-webcomponents/issues/10600)) ([5d4e3ba](https://github.com/SAP/ui5-webcomponents/commit/5d4e3ba1a74b2f4bea2321371656cbdbebc27975))
+
+
+
+
+
+# [2.7.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2...v2.7.0-rc.0) (2025-01-16)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+## [2.6.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2-rc.0...v2.6.2) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+## [2.6.2-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.1...v2.6.2-rc.0) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+## [2.6.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0...v2.6.1) (2025-01-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.6.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.5...v2.6.0) (2025-01-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.6.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.4...v2.6.0-rc.5) (2025-01-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.6.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.3...v2.6.0-rc.4) (2025-01-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.6.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.2...v2.6.0-rc.3) (2024-12-26)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.6.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.1...v2.6.0-rc.2) (2024-12-19)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.6.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.0...v2.6.0-rc.1) (2024-12-16)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.6.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0...v2.6.0-rc.0) (2024-12-12)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.5.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.3...v2.5.0) (2024-12-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.5.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.2...v2.5.0-rc.3) (2024-12-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.5.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.1...v2.5.0-rc.2) (2024-11-28)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.5.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.0...v2.5.0-rc.1) (2024-11-21)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [2.5.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.1-rc.0...v2.5.0-rc.0) (2024-11-14)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+## [2.4.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0...v2.4.1-rc.0) (2024-11-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
 # [2.4.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.4...v2.4.0) (2024-11-03)
 
 **Note:** Version bump only for package @ui5/webcomponents-icons-tnt

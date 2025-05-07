@@ -5,8 +5,6 @@
 	--_ui5-tag-text-transform: uppercase;
 	--_ui5-tag-icon-width: 0.75rem;
 	--_ui5-tag-icon-gap: 0.125rem;
-	--_ui5-tag-font-size: var(--sapFontSmallSize);
-	--_ui5-tag-font: "72override", var(--sapFontFamily);
 	--_ui5-tag-font-weight: bold;
 	--_ui5-tag-letter-spacing: 0.0125em;
 
@@ -100,6 +98,12 @@
 	--ui5-tag-set2-color-scheme-9-background: var(--sapIndicationColor_9b);
 	--ui5-tag-set2-color-scheme-9-border: var(--sapIndicationColor_9b_BorderColor);
 
+	--ui5-tag-set2-color-scheme-9-hover-background: var(--sapIndicationColor_9b_Hover_Background);
+
+	--ui5-tag-set2-color-scheme-9-active-color: var(--sapIndicationColor_9_Active_TextColor);
+	--ui5-tag-set2-color-scheme-9-active-background: var(--sapIndicationColor_9_Active_Background);
+	--ui5-tag-set2-color-scheme-9-active-border: var(--sapIndicationColor_9_Active_BorderColor);
+
 	--ui5-tag-set2-color-scheme-10-color: var(--sapIndicationColor_10);
 	--ui5-tag-set2-color-scheme-10-background: var(--sapIndicationColor_10b);
 	--ui5-tag-set2-color-scheme-10-border: var(--sapIndicationColor_10b_BorderColor);
@@ -118,5 +122,4 @@
 	--_ui5-tag-icon_min_height_size_l:1.25rem;
 	--_ui5-tag-icon_height_size_l: 1.25rem;
 	--_ui5-tag-text_padding_size_l: 0.125rem 0.25rem;
-	--_ui5-tag-text-height_size_l: 1.5rem;
 }

@@ -1,19 +1,18 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import Input from "@ui5/webcomponents/dist/Input.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
-import Link from "@ui5/webcomponents/dist/Link.js";
-import ProgressIndicator from "@ui5/webcomponents/dist/ProgressIndicator.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
+import type Input from "@ui5/webcomponents/dist/Input.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import {
 	isDelete,
 	isEnter,
@@ -36,7 +35,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
+import UploadCollectionItemTemplate from "./UploadCollectionItemTemplate.js";
 
 // Styles
 import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css.js";
@@ -59,16 +58,9 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 @customElement({
 	tag: "ui5-upload-collection-item",
 	languageAware: true,
+	renderer: jsxRenderer,
 	styles: [ListItem.styles, UploadCollectionItemCss],
 	template: UploadCollectionItemTemplate,
-	dependencies: [
-		...ListItem.dependencies,
-		Button,
-		Input,
-		Link,
-		Label,
-		ProgressIndicator,
-	],
 })
 
 /**
@@ -116,17 +108,26 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * @since 1.0.0-rc.8
  * @private
  */
-@event("_focus-requested", {
+@event("focus-requested", {
 	bubbles: true,
 })
 
 /**
  * @private
  */
-@event("_uci-delete", {
+@event("request-delete", {
 	bubbles: true,
 })
 class UploadCollectionItem extends ListItem {
+	eventDetails!: ListItem["eventDetails"] & {
+		"file-name-click": void;
+		"rename": void;
+		"terminate": void;
+		"retry": void;
+		"focus-requested": void;
+		"_uci-delete": void;
+		"request-delete": void;
+	}
 	/**
 	 * Holds an instance of `File` associated with this item.
 	 * @default null
@@ -157,7 +158,7 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare disableDeleteButton: boolean;
+	disableDeleteButton = false;
 
 	/**
 	 * Hides the delete button.
@@ -242,16 +243,21 @@ class UploadCollectionItem extends ListItem {
 	async _initInputField() {
 		await renderFinished();
 
-		const inp = this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input")!;
-		inp.value = this._fileNameWithoutExtension;
+		if (this.editInpElement) {
+			this.editInpElement.value = this._fileNameWithoutExtension;
+		}
 
 		await renderFinished();
 
-		const inpFocusDomRef = inp.getFocusDomRef() as HTMLInputElement;
+		const inpFocusDomRef = this.editInpElement?.getFocusDomRef();
 		if (inpFocusDomRef) {
 			inpFocusDomRef.focus();
-			inpFocusDomRef.setSelectionRange(0, this._fileNameWithoutExtension.length);
+			(inpFocusDomRef as HTMLInputElement).setSelectionRange(0, this._fileNameWithoutExtension.length);
 		}
+	}
+
+	get editInpElement() {
+		return this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input");
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -298,10 +304,10 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
-	async _onRenameCancel(e: KeyboardEvent) {
+	async _onRenameCancel(e: KeyboardEvent | UI5CustomEvent<Button, "click">) {
 		this._editing = false;
 
-		if (isEscape(e)) {
+		if (isEscape(e as KeyboardEvent)) {
 			await renderFinished();
 			this.shadowRoot!.querySelector<Button>(`#${this._id}-editing-button`)!.focus();
 		} else {
@@ -316,7 +322,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_focus() {
-		this.fireDecoratorEvent("_focus-requested");
+		this.fireDecoratorEvent("focus-requested");
 	}
 
 	_onFileNameClick() {
@@ -344,7 +350,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_onDelete() {
-		this.fireDecoratorEvent("_uci-delete");
+		this.fireDecoratorEvent("request-delete");
 	}
 
 	getFocusDomRef() {

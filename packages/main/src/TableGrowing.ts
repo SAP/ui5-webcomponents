@@ -1,25 +1,20 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-
-import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import {
-	isSpace,
-	isEnter,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-
+	customElement, property, eventStrict, i18n,
+} from "@ui5/webcomponents-base/dist/decorators.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import TableGrowingMode from "./types/TableGrowingMode.js";
+import TableGrowingTemplate from "./TableGrowingTemplate.js";
+import TableGrowingCss from "./generated/themes/TableGrowing.css.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import type Table from "./Table.js";
 import type { ITableGrowing } from "./Table.js";
-import TableGrowingMode from "./types/TableGrowingMode.js";
-import TableGrowingTemplate from "./generated/templates/TableGrowingTemplate.lit.js";
-import TableGrowingCss from "./generated/themes/TableGrowing.css.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	TABLE_MORE,
 	TABLE_MORE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
+import { findVerticalScrollContainer } from "./TableUtils.js";
 
 // The documentation should be similar to the Table.ts class documentation!
 // Please only use that style where it uses markdown and the documentation is more readable.
@@ -44,9 +39,13 @@ import {
  *
  * ```html
  * <ui5-table>
- * 	<ui5-table-growing type="Button" growing-text="More" slot="features"></ui5-table-growing>
+ * 	<ui5-table-growing mode="Button" text="More" slot="features"></ui5-table-growing>
  * </ui5-table>
  * ```
+ *
+ * **Notes**:
+ * * When the `ui5-table-growing` component is used with the `Scroll` mode and the table is currently not scrollable,
+ * the component will render a growing button instead to ensure growing capabilities until the table becomes scrollable.
  *
  * ### ES6 Module Import
  *
@@ -60,7 +59,7 @@ import {
  */
 @customElement({
 	tag: "ui5-table-growing",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TableGrowingTemplate,
 	styles: TableGrowingCss,
 })
@@ -70,11 +69,14 @@ import {
  *
  * @public
  */
-@event("load-more", {
-	bubbles: true,
+@eventStrict("load-more", {
+	bubbles: false,
 })
 
 class TableGrowing extends UI5Element implements ITableGrowing {
+	eventDetails!: {
+		"load-more": void;
+	}
 	/**
 	 * Defines the mode of the <code>ui5-table</code> growing.
 	 *
@@ -82,56 +84,54 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 *
 	 * Button - Shows a More button at the bottom of the table, pressing it will load more rows.
 	 *
-	 * Scroll - The rows are loaded automatically by scrolling to the bottom of the table. If the table is not scrollable, this option is the same as the Button.
+	 * Scroll - The rows are loaded automatically by scrolling to the bottom of the table. If the table is not scrollable,
+	 * a growing button will be rendered instead to ensure growing functionality.
 	 * @default "Button"
 	 * @public
 	 */
 	@property()
-	type: `${TableGrowingMode}` = "Button";
+	mode: `${TableGrowingMode}` = "Button";
 
 	/**
 	 * Defines the text that will be displayed inside the growing button.
-	 * Has no effect when type is set to `Scroll`.
+	 * Has no effect when mode is set to `Scroll`.
 	 *
-	 * **Note:** When not provided and the type is set to Button, a default text is displayed, corresponding to the
+	 * **Note:** When not provided and the mode is set to Button, a default text is displayed, corresponding to the
 	 * current language.
 	 *
 	 * @default undefined
 	 * @public
 	 */
 	@property()
-	growingText?: string;
+	text?: string;
 
 	/**
-	 * Defines the text that will be displayed below the `growingText` inside the growing button.
-	 * Has no effect when type is set to Scroll.
+	 * Defines the text that will be displayed below the `text` inside the growing button.
+	 * Has no effect when mode is set to Scroll.
 	 *
 	 * @default undefined
 	 * @public
 	 */
 	@property()
-	growingSubText?: string;
-
-	/**
-	 * Disables the growing feature.
-	 */
-	@property({ type: Boolean })
-	disabled = false;
+	subtext?: string;
 
 	/**
 	 * Defines the active state of the growing button.
 	 * Used for keyboard interaction.
 	 * @private
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, noAttribute: true })
 	_activeState = false;
+
+	@property({ type: Number, noAttribute: true })
+	_invalidate = 0;
 
 	readonly identifier = "TableGrowing";
 	_table?: Table;
 	_observer?: IntersectionObserver;
-	_individualSlot?: string;
 	_currentLastRow?: HTMLElement;
 	_shouldFocusRow?: boolean;
+	_renderContent = true;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -139,12 +139,9 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	onTableActivate(table: Table): void {
 		this._table = table;
 		this._shouldFocusRow = false;
-		if (this._hasScrollToLoad()) {
-			this._observeTableEnd();
-		}
 	}
 
-	onTableRendered(): void {
+	onTableAfterRendering(): void {
 		// Focus the first row after growing, when the growing button is used
 		if (this._shouldFocusRow) {
 			this._shouldFocusRow = false;
@@ -159,11 +156,12 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 			focusRow?.focus();
 		}
 
-		if (this.disabled) {
+		if (this._renderContent !== this.hasGrowingComponent()) {
+			this._invalidate++;
 			return;
 		}
 
-		if (this._hasScrollToLoad()) {
+		if (this._hasScrollToLoad() && !this.hasGrowingComponent() && !this._observer) {
 			this._observeTableEnd();
 		}
 	}
@@ -178,16 +176,16 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	onBeforeRendering(): void {
 		this._observer?.disconnect();
 		this._observer = undefined;
-		this._currentLastRow = undefined;
+		this._renderContent = this.hasGrowingComponent();
 		this._invalidateTable();
 	}
 
 	hasGrowingComponent(): boolean {
-		if (this._hasScrollToLoad()) {
-			return !(this._table && this._table._scrollContainer.scrollHeight > this._table._scrollContainer.clientHeight);
+		if (this.mode === TableGrowingMode.Scroll) {
+			return !!this._table && this._table._scrollContainer.clientHeight >= this._table._tableElement.scrollHeight;
 		}
 
-		return this.type === TableGrowingMode.Button && !this.disabled;
+		return this.mode === `${TableGrowingMode.Button}`;
 	}
 
 	/**
@@ -198,14 +196,14 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 		// remembers the last row. only do this when the table has a growing component rendered.
 		if (this._table && this.hasGrowingComponent()) {
 			this._currentLastRow = this._table.rows[this._table.rows.length - 1];
+			this._shouldFocusRow = true;
 		}
-		this._shouldFocusRow = true;
 
 		this.fireDecoratorEvent("load-more");
 	}
 
 	_hasScrollToLoad() {
-		return this.type === TableGrowingMode.Scroll;
+		return this.mode === TableGrowingMode.Scroll;
 	}
 
 	/**
@@ -217,10 +215,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 			return;
 		}
 
-		const lastElement = this._table.shadowRoot?.querySelector("#table-end-row");
-		if (lastElement) {
-			this._getIntersectionObserver().observe(lastElement);
-		}
+		this._getIntersectionObserver().observe(this._table._endRow);
 	}
 
 	/**
@@ -231,9 +226,8 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	_getIntersectionObserver(): IntersectionObserver {
 		if (!this._observer) {
 			this._observer = new IntersectionObserver(this._onIntersection.bind(this), {
-				root: document,
-				rootMargin: "10px",
-				threshold: 1.0,
+				root: findVerticalScrollContainer(this._table ?? document.body),
+				rootMargin: "5px",
 			});
 		}
 		return this._observer;
@@ -281,15 +275,15 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 		this._activeState = false;
 	}
 
-	get _growingButtonText() {
-		return this.growingText || TableGrowing.i18nBundle.getText(TABLE_MORE);
+	get _buttonText() {
+		return this.text || TableGrowing.i18nBundle.getText(TABLE_MORE);
 	}
 
-	get _growingButtonDescription() {
+	get _buttonDescription() {
 		return TableGrowing.i18nBundle.getText(TABLE_MORE_DESCRIPTION);
 	}
 
-	get _hasGrowingButton() {
+	get _hasButton() {
 		return this.hasGrowingComponent();
 	}
 }

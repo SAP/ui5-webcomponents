@@ -84,7 +84,7 @@ describe("Avatar", () => {
 		assert.strictEqual(await input3.getAttribute("value"), "0", "Mouse click event not thrown when avatar is interactive + disabled");
 	});
 
-	it("Tests noConflict 'ui5-click' event is thrown for interactive avatars", async () => {
+	it("Tests noConflict 'ui5-click' event for interactive avatars", async () => {
 		const avatarRoot = await browser.$("#interactive-avatar").shadow$(".ui5-avatar-root");
 		const input = await browser.$("#click-event");
 
@@ -98,18 +98,18 @@ describe("Avatar", () => {
 		assert.strictEqual(await input.getAttribute("value"), "3", "Space throws event");
 	  });
 
-	  it("Tests noConflict 'ui5-click' event is not thrown for non interactive avatars", async () => {
+	  it("Tests noConflict 'ui5-click' event for non interactive avatars", async () => {
 		const avatarRoot = await browser.$("#non-interactive-avatar").shadow$(".ui5-avatar-root");;
 		const input = await browser.$("#click-event");
 
 		await avatarRoot.click();
-		assert.strictEqual(await input.getAttribute("value"), "3", "Mouse click throws event");
+		assert.strictEqual(await input.getAttribute("value"), "4", "Mouse click thrown");
 
 		await avatarRoot.keys("Enter");
-		assert.strictEqual(await input.getAttribute("value"), "3", "Enter throws event");
+		assert.strictEqual(await input.getAttribute("value"), "4", "Enter does not throw event");
 
 		await avatarRoot.keys("Space");
-		assert.strictEqual(await input.getAttribute("value"), "3", "Space throws event");
+		assert.strictEqual(await input.getAttribute("value"), "4", "Space does not throw event");
 	});
 
 	it("Tests native 'click' event thrown", async () => {

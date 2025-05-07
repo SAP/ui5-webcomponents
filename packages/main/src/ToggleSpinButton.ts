@@ -1,12 +1,13 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type { AriaRole } from "@ui5/webcomponents-base";
 
 import Button from "./Button.js";
 import ToggleButton from "./ToggleButton.js";
 
 // Template
-import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemplate.lit.js";
+import ToggleSpinButtonTemplate from "./ToggleSpinButtonTemplate.js";
 
 /**
  * @class
@@ -23,7 +24,7 @@ import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemp
  */
 @customElement({
 	tag: "ui5-toggle-spin-button",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [Button.styles, ToggleButton.styles],
 	template: ToggleSpinButtonTemplate,
 })
@@ -65,7 +66,7 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Override
 	 */
-	get effectiveAccRole() {
+	get effectiveAccRole(): AriaRole {
 		return "spinbutton";
 	}
 }

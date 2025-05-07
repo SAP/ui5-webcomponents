@@ -2,17 +2,18 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
 import {
 	isPhone,
 	isTablet,
 	isCombi,
 } from "@ui5/webcomponents-base/dist/Device.js";
+import NavigationLayoutMode from "./types/NavigationLayoutMode.js";
 import type SideNavigation from "./SideNavigation.js";
 
 // Template
-import NavigationLayoutTemplate from "./generated/templates/NavigationLayoutTemplate.lit.js";
+import NavigationLayoutTemplate from "./NavigationLayoutTemplate.js";
 
 // Styles
 import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
@@ -31,9 +32,10 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
  *
  * ### Responsive Behavior
  *
- * On desktop and tablet devices, the side navigation remains visible and can
- * be expanded or collapsed using the `sideCollapsed` property. On phone devices, the side navigation
- * is hidden by default but can be displayed using the same `sideCollapsed` property.
+ * On desktop and tablet devices, the side navigation is visible
+ * by default and can be expanded or collapsed using the `mode` property.
+ * On phone devices, the side navigation is hidden by default and can
+ * be displayed using the `mode` property.
  *
  * ### ES6 Module Import
  *
@@ -46,7 +48,7 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
 @customElement({
 	tag: "ui5-navigation-layout",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [
 		browserScrollbarCSS,
 		NavigationLayoutCss,
@@ -54,7 +56,21 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
 	template: NavigationLayoutTemplate,
 })
 class NavigationLayout extends UI5Element {
-	_sideCollapsed = isPhone() || (isTablet() && !isCombi());
+	_defaultSideCollapsed = isPhone() || (isTablet() && !isCombi());
+
+	/**
+	 * Specifies the navigation layout mode.
+	 * @default "Auto"
+	 * @public
+	 */
+	@property()
+	mode: `${NavigationLayoutMode}` = "Auto";
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	sideCollapsed : boolean = this._defaultSideCollapsed;
 
 	/**
 	 * @private
@@ -69,27 +85,12 @@ class NavigationLayout extends UI5Element {
 	isTablet = isTablet() && !isCombi();
 
 	/**
-	 * Indicates whether the side navigation is collapsed.
-	 * @default false
+	 * Gets whether the side navigation is collapsed.
 	 * @public
 	 */
-	@property({ type: Boolean })
-	set sideCollapsed(value: boolean) {
-		this._sideCollapsed = value;
-
-		if (isPhone()) {
-			return;
-		}
-
-		const sideNavigation = this.sideContent[0];
-
-		if (sideNavigation) {
-			sideNavigation.collapsed = value;
-		}
-	}
-
-	get sideCollapsed() : boolean {
-		return this._sideCollapsed;
+	isSideCollapsed() : boolean {
+		this.calcSideCollapsed();
+		return this.sideCollapsed;
 	}
 
 	/**
@@ -114,6 +115,8 @@ class NavigationLayout extends UI5Element {
 	content!: Array<HTMLElement>;
 
 	onBeforeRendering() {
+		this.calcSideCollapsed();
+
 		if (isPhone()) {
 			return;
 		}
@@ -121,7 +124,15 @@ class NavigationLayout extends UI5Element {
 		const sideNavigation = this.sideContent[0];
 
 		if (sideNavigation) {
-			sideNavigation.collapsed = this.sideCollapsed;
+			sideNavigation.collapsed = this.isSideCollapsed();
+		}
+	}
+
+	calcSideCollapsed() {
+		if (this.mode === NavigationLayoutMode.Auto) {
+			this.sideCollapsed = this._defaultSideCollapsed;
+		} else {
+			this.sideCollapsed = this.mode === NavigationLayoutMode.Collapsed;
 		}
 	}
 }

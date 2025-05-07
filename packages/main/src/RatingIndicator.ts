@@ -1,9 +1,9 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isDown,
 	isUp,
@@ -14,7 +14,7 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
@@ -22,13 +22,11 @@ import {
 	RATING_INDICATOR_TOOLTIP_TEXT,
 	RATING_INDICATOR_ARIA_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
-import RatingIndicatorTemplate from "./generated/templates/RatingIndicatorTemplate.lit.js";
-import Icon from "./Icon.js";
-import "@ui5/webcomponents-icons/dist/favorite.js";
-import "@ui5/webcomponents-icons/dist/unfavorite.js";
+import RatingIndicatorTemplate from "./RatingIndicatorTemplate.js";
 
 // Styles
 import RatingIndicatorCss from "./generated/themes/RatingIndicator.css.js";
+import type RatingIndicatorSize from "./types/RatingIndicatorSize.js";
 
 type Star = {
 	selected: boolean,
@@ -74,10 +72,9 @@ type Star = {
 @customElement({
 	tag: "ui5-rating-indicator",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: RatingIndicatorCss,
 	template: RatingIndicatorTemplate,
-	dependencies: [Icon],
 })
 /**
  * The event is fired when the value changes.
@@ -88,6 +85,9 @@ type Star = {
 })
 
 class RatingIndicator extends UI5Element {
+	eventDetails!: {
+		change: void,
+	}
 	/**
 	 * The indicated value of the rating.
 	 *
@@ -110,6 +110,15 @@ class RatingIndicator extends UI5Element {
 	 */
 	@property({ type: Number })
 	max: number = 5;
+
+	/**
+	 * Defines the size of the component.
+	 * @default "M"
+	 * @public
+	 * @since 2.6.0
+	 */
+	@property()
+	size: `${RatingIndicatorSize}` = "M";
 
 	/**
 	 * Defines whether the component is disabled.
@@ -242,7 +251,11 @@ class RatingIndicator extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		if (this.disabled || this.readonly) {
-			e.preventDefault();
+			// prevent page scrolling
+			if (isSpace(e)) {
+				e.preventDefault();
+			}
+
 			return;
 		}
 
@@ -291,7 +304,12 @@ class RatingIndicator extends UI5Element {
 
 	get effectiveTabIndex() {
 		const tabindex = this.getAttribute("tabindex");
-		return this.disabled ? "-1" : tabindex || "0";
+
+		if (this.disabled) {
+			return -1;
+		}
+
+		return tabindex ? parseInt(tabindex) : 0;
 	}
 
 	get ratingTooltip(): string | undefined {
@@ -329,3 +347,4 @@ class RatingIndicator extends UI5Element {
 RatingIndicator.define();
 
 export default RatingIndicator;
+export type { Star };

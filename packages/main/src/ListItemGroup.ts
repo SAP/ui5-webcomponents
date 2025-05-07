@@ -1,23 +1,22 @@
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
-import DropIndicator from "./DropIndicator.js";
+import type DropIndicator from "./DropIndicator.js";
 import type ListItemBase from "./ListItemBase.js";
 
 // Template
-import ListItemGroupTemplate from "./generated/templates/ListItemGroupTemplate.lit.js";
+import ListItemGroupTemplate from "./ListItemGroupTemplate.js";
 
 // Styles
 import ListItemGroupCss from "./generated/themes/ListItemGroup.css.js";
-import ListItemStandard from "./ListItemStandard.js";
-import ListItemGroupHeader from "./ListItemGroupHeader.js";
+import type ListItemGroupHeader from "./ListItemGroupHeader.js";
 
 type ListItemGroupMoveEventDetail = {
 	source: {
@@ -46,11 +45,10 @@ type ListItemGroupMoveEventDetail = {
  */
 @customElement({
 	tag: "ui5-li-group",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	languageAware: true,
 	template: ListItemGroupTemplate,
 	styles: [ListItemGroupCss],
-	dependencies: [ListItemStandard, ListItemGroupHeader, DropIndicator],
 })
 
 /**
@@ -63,17 +61,7 @@ type ListItemGroupMoveEventDetail = {
  * @since 2.1.0
  */
 
-@event<ListItemGroupMoveEventDetail>("move-over", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move-over", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -87,21 +75,15 @@ type ListItemGroupMoveEventDetail = {
  * @public
  * @since 2.1.0
  */
-@event<ListItemGroupMoveEventDetail>("move", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move", {
 	bubbles: true,
 })
 
 class ListItemGroup extends UI5Element {
+	eventDetails!: {
+		"move-over": ListItemGroupMoveEventDetail,
+		"move": ListItemGroupMoveEventDetail,
+	}
 	/**
 	 * Defines the header text of the <code>ui5-li-group</code>.
 	 * @public
@@ -210,7 +192,7 @@ class ListItemGroup extends UI5Element {
 		}
 
 		const placementAccepted = placements.some(placement => {
-			const beforeItemMovePrevented = !this.fireDecoratorEvent<ListItemGroupMoveEventDetail>("move-over", {
+			const beforeItemMovePrevented = !this.fireDecoratorEvent("move-over", {
 				source: {
 					element: draggedElement,
 				},
@@ -238,7 +220,7 @@ class ListItemGroup extends UI5Element {
 	_ondrop(e: DragEvent) {
 		e.preventDefault();
 
-		this.fireDecoratorEvent<ListItemGroupMoveEventDetail>("move", {
+		this.fireDecoratorEvent("move", {
 			source: {
 				element: DragRegistry.getDraggedElement()!,
 			},

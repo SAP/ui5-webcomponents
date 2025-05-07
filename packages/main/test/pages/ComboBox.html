@@ -308,13 +308,13 @@
 		<ui5-combobox id="dynamic-items">
 			<ui5-cb-item text="Hello World"></ui5-cb-item>
 		</ui5-combobox>
-	
+
 		<ui5-button id="add-items-btn">Start adding items</ui5-button>
-	
+
 		<script>
 			const addItemsBtn = document.getElementById("add-items-btn");
 			const dynamicItemsCb = document.getElementById("dynamic-items");
-	
+
 			addItemsBtn.addEventListener("click", () => {
 				setInterval(() => {
 					const item = document.createElement("ui5-cb-item");
@@ -359,6 +359,21 @@
 			});
 		</script>
 	</div>
+	<div class="demo-section">
+		<span>Open ComboBox on focus</span>
+		<ui5-combobox id="comboFocus" class="combobox2auto" value="Bulgaria" accessible-name-ref="countryLabel">
+			<ui5-cb-item text="Algeria"></ui5-cb-item>
+			<ui5-cb-item text="Argentina"></ui5-cb-item>
+			<ui5-cb-item text="Bulgaria"></ui5-cb-item>
+			<ui5-cb-item text="Canada"></ui5-cb-item>
+			<ui5-cb-item text="Chile"></ui5-cb-item>
+		</ui5-combobox>
+		<script>
+			document.getElementById("comboFocus").addEventListener("focusin", () => {
+				document.getElementById("comboFocus").open = true;
+			});
+		</script>
+	</div>
 
 	<script type="module">
 		document.getElementById("lazy").addEventListener("ui5-input", async event => {
@@ -389,7 +404,9 @@
 
 			// remove busy state
 			event.target.loading = false;
-		});
+
+			// load the items once or turn off filtering
+		}, { once: true });
 	</script>
 
 	<script type="module">

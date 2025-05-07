@@ -1,11 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 
-import DropIndicatorTemplate from "./generated/templates/DropIndicatorTemplate.lit.js";
+import DropIndicatorTemplate from "./DropIndicatorTemplate.js";
 
 // Styles
 import DropIndicatorCss from "./generated/themes/DropIndicator.css.js";
@@ -27,10 +27,9 @@ import DropIndicatorCss from "./generated/themes/DropIndicator.css.js";
  */
 @customElement({
 	tag: "ui5-drop-indicator",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: DropIndicatorCss,
 	template: DropIndicatorTemplate,
-	dependencies: [],
 })
 class DropIndicator extends UI5Element {
 	/**
@@ -154,15 +153,6 @@ class DropIndicator extends UI5Element {
 		this.toggleAttribute("last", isLast);
 
 		Object.assign(this.style, style);
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-di-rect": this.placement === MovePlacement.On,
-				"ui5-di-needle": this.placement !== MovePlacement.On,
-			},
-		};
 	}
 }
 

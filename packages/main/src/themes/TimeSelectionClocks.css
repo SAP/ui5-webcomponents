@@ -18,7 +18,7 @@
 	width: 100%;
 }
 
-.ui5-time-picker-tsc-buttons span[separator] {
+.ui5-time-picker-tsc-buttons .ui5-time-selection-separator {
 	min-width: 0.5rem;
 	padding: 0 0.125rem;
 	text-align: center;

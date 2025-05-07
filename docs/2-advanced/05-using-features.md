@@ -20,29 +20,22 @@ You can import the feature file from the respective NPM package:
 
 `import "@ui5/<PACKAGE-NAME>/dist/features/<FEATURE-NAME>.js`
 
+As of `2.7.0` some component features are automatically loaded on demand, but can still be pre-loaded to skip the dynamic import, if that's what you prefer. Refer to the table below for details:
+
 ## Component Features
 
 Currently, only a few components offer additional features:
 
 | Package        | Affected Components                                | Feature Import                                                       | Description                                                                                             |
 |----------------|---------------------------------------------------|----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| `main`         | `ui5-color-palette`                               | `@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js`         | Adds support for a "more colors" dialog in the color palette component allowing users to choose specific colors not present in the predefined range.                                   |
-| `main`         | `ui5-input`                                       | `@ui5/webcomponents/dist/features/InputSuggestions.js`               | Adds support for input suggestions while typing                                                                  |
+| `main`         | `ui5-color-palette`                               | dynamically loaded if `showMoreColors` is set to `true` (to pre-load: `import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"` )        | Adds support for a "more colors" dialog in the color palette component allowing users to choose specific colors not present in the predefined range.                                   |
+| `main`         | `ui5-li`                                          | dynamically loaded if `wrappingType="Normal"` is set (to pre-load: `import "@ui5/webcomponents/dist/features/ListItemStandardExpandableText.js"` )  | Adds support for expandable text in list items when wrapping type is set to "Normal" mode.              |
+| `main`         | `ui5-input`                                       | dynamically loaded if `showSuggestions` is set to `true`(to pre-load: `import "@ui5/webcomponents/dist/features/InputSuggestions.js"` )              | Adds support for input suggestions while typing                                                                  |
 | `main`         | Multiple (e.g., `ui5-input`, `ui5-date-picker`)   | `@ui5/webcomponents/dist/features/InputElementsFormSupport.js`       | Adds support for the use of input components within forms                                                          |
 | `localization` | Multiple (e.g., `ui5-date-picker`)                | `@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js` | Adds support for the Buddhist calendars                                                                   |
 | `localization` | Multiple (e.g., `ui5-date-picker`)                | `@ui5/webcomponents-localization/dist/features/calendar/Islamic.js`  | Adds support for the Islamic calendars                                                                    |
 | `localization` | Multiple (e.g., `ui5-date-picker`)                | `@ui5/webcomponents-localization/dist/features/calendar/Japanese.js` | Adds support for the Japanese calendars                                                                   |
 | `localization` | Multiple (e.g., `ui5-date-picker`)                | `@ui5/webcomponents-localization/dist/features/calendar/Persian.js`  | Adds support for the Persian calendars                                                                    |
-
-**Note:** Features must be imported before all component modules to ensure the feature is enabled before to the components' definition. For example:
-
-```js
-import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js;";
-
-import "@ui5/webcomponents/dist/Button.js";
-import "@ui5/webcomponents/dist/Link.js";
-import "@ui5/webcomponents/dist/Input.js";
-```
 
 ## Framework Features
 

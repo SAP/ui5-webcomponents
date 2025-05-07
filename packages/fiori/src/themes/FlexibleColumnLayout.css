@@ -29,13 +29,18 @@
 	transition: width 560ms cubic-bezier(0.1, 0, 0.05, 1), visibility 560ms ease-in;
 }
 
+.ui5-fcl-column:not(.ui5-fcl-column-collapse-animation) {
+	min-width: 15.5rem; /* as noted in our documentation */
+}
+
 .ui5-fcl-column--hidden {
 	display: none;
 }
 
-/* arrow */
+/* separator */
 .ui5-fcl-separator {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	width: 1rem;
@@ -44,22 +49,42 @@
 	border-inline-end: var(--_ui5_fcl_column_border);
 	position: relative;
 	box-sizing: border-box;
+	z-index: 1;
 }
 
-.ui5-fcl-separator:focus {
-	border:var(--_ui5_fcl_separator_focus_border);
-	outline: none;
+.ui5-fcl-separator:focus { 
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
+
 .ui5-fcl-grip {
 	cursor: col-resize;
 	overflow: visible;
-	z-index: 1;
-	color: var(--sapButton_TextColor);
-	padding-top: 0.3125rem;
-	padding-bottom: 0.3125rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 1.5rem;
+	height: 2rem;
+	z-index: 10;
 }
 
-/* arrow decoration */
+.ui5-fcl-grip-icon {
+	color: var(--sapButton_TextColor);
+}
+
+.ui5-fcl-arrow {
+	position: absolute;
+    top: 1rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	min-width: 1.5rem;
+	will-change: transform;
+	overflow: visible;
+	z-index: 10;
+	cursor: pointer;
+}
+
+/* grip decoration */
 .ui5-fcl-grip:before {
 	background-image: var(--_ui5_fcl_decoration_top);
 	bottom: calc(50% + 1rem);
@@ -86,6 +111,11 @@
 .ui5-fcl-separator:hover .ui5-fcl-grip:before,
 .ui5-fcl-separator:hover .ui5-fcl-grip:after {
 	height: calc(50% - 1rem);
+}
+
+/* Only apply shorter height when arrow is visible */
+.ui5-fcl-separator:hover .ui5-fcl-arrow + .ui5-fcl-grip::before {
+    height: calc(40% - 1rem);
 }
 
 [aria-hidden] ::slotted([slot="startColumn"]),

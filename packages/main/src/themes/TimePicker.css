@@ -48,3 +48,7 @@
 	margin: inherit;
 	height: inherit;
 }
+
+.ui5-time-picker-popover::part(header) {
+	padding: 0;
+}

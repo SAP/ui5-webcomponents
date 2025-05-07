@@ -93,7 +93,7 @@ describe("Notification List Item Tests", () => {
 		const EXPECTED_RESULT_1 = "New order #2201";
 		const EXPECTED_RESULT_2 = "New order #2202";
 		const firstItem = await browser.$("#nli1");
-		const btnListItemClose = await firstItem.shadow$("[close-btn]");
+		const btnListItemClose = await firstItem.shadow$(".ui5-nli-close-btn");
 
 		// act
 		await btnListItemClose.click();
@@ -114,7 +114,7 @@ describe("Notification List Item Tests", () => {
 
 	it("tests click on ShowMore", async () => {
 		const firstItem = await browser.$("#nli3a");
-		const btnListItemShowMore = await firstItem.shadow$("[showMore-btn]");
+		const btnListItemShowMore = await firstItem.shadow$(".ui5-nli-footer-showMore");
 		const content = await firstItem.shadow$(".ui5-nli-content");
 		const title = await firstItem.shadow$(".ui5-nli-title-text");
 
@@ -148,7 +148,7 @@ describe("Notification List Item Tests", () => {
 
 	it("tests no ShowMore, when truncate is not enabled", async () => {
 		const thirdItem = await browser.$("#nli3");
-		const btnListItemShowMore = await thirdItem.shadow$("[showMore-btn]");
+		const btnListItemShowMore = await thirdItem.shadow$(".ui5-nli-footer-showMore");
 
 		assert.strictEqual(await btnListItemShowMore.getAttribute("hidden"), "true",
 			"The ShowMore button is not displayed.");
@@ -281,9 +281,9 @@ describe("Notification List Item Tests", () => {
 
 	it("tests List Item 'Close' button ACC attributes", async () => {
 		const firstItem = await browser.$("#nli1");
-		const btnListItemClose1 = await firstItem.shadow$("[close-btn]").shadow$("button");
+		const btnListItemClose1 = await firstItem.shadow$(".ui5-nli-close-btn").shadow$("button");
 		const thirdItem = await browser.$("#nli3");
-		const btnListItemClose3 = await thirdItem.shadow$("[close-btn]");
+		const btnListItemClose3 = await thirdItem.shadow$(".ui5-nli-close-btn");
 
 		assert.strictEqual(await btnListItemClose1.getAttribute("aria-label"), 'Close', "The aria-label is correct.");
 		assert.strictEqual(await btnListItemClose1.getAttribute("title"), 'Close', "The title is correct.");
@@ -294,7 +294,7 @@ describe("Notification List Item Tests", () => {
 
 	it("tests aria attributes click on ShowMore", async () => {
 		var firstItem = await browser.$("#nli3a");
-		var btnListItemShowMore = await firstItem.shadow$("[showMore-btn]");
+		var btnListItemShowMore = await firstItem.shadow$(".ui5-nli-footer-showMore");
 		var btnListItemShowMoreRoot = await btnListItemShowMore.shadow$(".ui5-link-root");
 
 		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-label"), 'More button. Show the full texts', "The aria-label is correct.");
@@ -327,7 +327,7 @@ describe("Notification List Item Tests", () => {
 		const loadingId =  `${await fourthGroupItem.getProperty("_id")}-loading`;
 		const EXPECTED_LOADING_ARIA_LABELLED_BY = `${loadingId}`;
 
-		assert.strictEqual(await firstGroupList.getAttribute("aria-labelledby"), id, "The aria-lebelledby is correct.");
+		assert.strictEqual(await firstGroupList.getAttribute("accessible-name-ref"), id, "The aria-lebelledby is correct.");
 		assert.strictEqual(await firstGroupRoot.getAttribute("aria-labelledby"), id, "The aria-lebelledby is correct.");
 		assert.strictEqual(await fourthGroupRoot.getAttribute("aria-labelledby"), EXPECTED_LOADING_ARIA_LABELLED_BY, "The aria-lebelledby is correct.");
 	});
@@ -466,7 +466,7 @@ describe("Keyboard navigation", () => {
 
 		await browser.keys("Tab");
 		res = await browser.executeAsync(done => {
-			done(document.getElementById("nli1").shadowRoot.querySelector("[close-btn]").matches(":focus"));
+			done(document.getElementById("nli1").shadowRoot.querySelector(".ui5-nli-close-btn").matches(":focus"));
 		});
 
 		assert.ok(res, "'close button' is focused.");

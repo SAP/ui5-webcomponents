@@ -1,16 +1,18 @@
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import { slot, property, customElement } from "@ui5/webcomponents-base/dist/decorators.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { AriaRole } from "@ui5/webcomponents-base/dist/types.js";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import ListItemBase from "./ListItemBase.js";
 
 import { GROUP_HEADER_TEXT } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import ListItemGroupHeaderTemplate from "./generated/templates/ListItemGroupHeaderTemplate.lit.js";
+import ListItemGroupHeaderTemplate from "./ListItemGroupHeaderTemplate.js";
 
 // Styles
 import ListItemGroupHeaderCss from "./generated/themes/ListItemGroupHeader.css.js";
+import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 
 /**
  * @class
@@ -29,6 +31,7 @@ import ListItemGroupHeaderCss from "./generated/themes/ListItemGroupHeader.css.j
 	styles: [ListItemBase.styles, ListItemGroupHeaderCss],
 })
 class ListItemGroupHeader extends ListItemBase {
+	eventDetails!: ListItemBase["eventDetails"];
 	/**
 	 * Defines the text alternative of the component.
 	 *
@@ -39,8 +42,18 @@ class ListItemGroupHeader extends ListItemBase {
 	@property()
 	accessibleName?: string;
 
+	@property()
+	accessibleRole: `${ListItemAccessibleRole}` = ListItemAccessibleRole.ListItem;
+
+	@slot()
+	subItems!: Array<HTMLElement>;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
+
+	get effectiveAccRole(): AriaRole {
+		return toLowercaseEnumValue(this.accessibleRole);
+	}
 
 	get groupItem() {
 		return true;
@@ -56,6 +69,10 @@ class ListItemGroupHeader extends ListItemBase {
 
 	get ariaLabelText() {
 		return [this.textContent, this.accessibleName].filter(Boolean).join(" ");
+	}
+
+	get hasSubItems() {
+		return this.subItems.length > 0;
 	}
 }
 

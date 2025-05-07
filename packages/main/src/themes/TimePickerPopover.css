@@ -17,3 +17,8 @@
 .ui5-time-picker-popover::part(content) {
 	padding: 0;
 }
+
+.ui5-time-picker-inputs-popover::part(header) {
+	padding: 0;
+	width: 100%;
+}

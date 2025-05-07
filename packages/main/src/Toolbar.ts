@@ -2,25 +2,25 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { event } from "@ui5/webcomponents-base/dist/decorators.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 
 import {
 	TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL,
+	TOOLBAR_POPOVER_AVAILABLE_VALUES,
 } from "./generated/i18n/i18n-defaults.js";
 
-import ToolbarTemplate from "./generated/templates/ToolbarTemplate.lit.js";
+import ToolbarTemplate from "./ToolbarTemplate.js";
 import ToolbarCss from "./generated/themes/Toolbar.css.js";
 
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
@@ -35,11 +35,10 @@ import type ToolbarSeparator from "./ToolbarSeparator.js";
 import {
 	getRegisteredToolbarItem,
 	getRegisteredStyles,
-	getRegisteredDependencies,
 } from "./ToolbarRegistry.js";
 
-import Button from "./Button.js";
-import Popover from "./Popover.js";
+import type Button from "./Button.js";
+import type Popover from "./Popover.js";
 
 type ToolbarMinWidthChangeEventDetail = {
 	minWidth: number,
@@ -77,21 +76,20 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 @customElement({
 	tag: "ui5-toolbar",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: ToolbarTemplate,
 })
 /**
  * @private
 */
-@event<ToolbarMinWidthChangeEventDetail>("_min-content-width-change", {
-	detail: {
-		minWidth: {
-			type: Number,
-		},
-	},
+@event("_min-content-width-change", {
 	bubbles: true,
 })
+
 class Toolbar extends UI5Element {
+	eventDetails!: {
+		"_min-content-width-change": ToolbarMinWidthChangeEventDetail
+	}
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -151,6 +149,9 @@ class Toolbar extends UI5Element {
 	@property()
 	design: `${ToolbarDesign}` = "Solid"
 
+	@property({ type: Boolean })
+	popoverOpen = false;
+
 	/**
 	 * Defines the items of the component.
      *
@@ -161,11 +162,10 @@ class Toolbar extends UI5Element {
 	items!: Array<ToolbarItem>
 
 	_onResize!: ResizeObserverCallback;
-	_onInteract!: EventListener;
+	_onCloseOverflow!: EventListener;
 	itemsToOverflow: Array<ToolbarItem> = [];
 	itemsWidth = 0;
 	minContentWidth = 0;
-	popoverOpen = false;
 	itemsWidthMeasured = false;
 
 	ITEMS_WIDTH_MAP: Map<string, number> = new Map();
@@ -179,20 +179,11 @@ class Toolbar extends UI5Element {
 		];
 	}
 
-	static get dependencies() {
-		const deps = getRegisteredDependencies();
-		return [
-			Popover,
-			Button,
-			...deps,
-		];
-	}
-
 	constructor() {
 		super();
 
 		this._onResize = this.onResize.bind(this);
-		this._onInteract = (e: Event) => this.onInteract(e as CustomEvent);
+		this._onCloseOverflow = this.closeOverflow.bind(this);
 	}
 
 	/**
@@ -207,14 +198,6 @@ class Toolbar extends UI5Element {
 		const toolbarComputedStyle = getComputedStyle(this.getDomRef()!);
 		return calculateCSSREMValue(toolbarComputedStyle, getScopedVarName("--_ui5-toolbar-padding-left"))
 			+ calculateCSSREMValue(toolbarComputedStyle, getScopedVarName("--_ui5-toolbar-padding-right"));
-	}
-
-	get subscribedEvents() {
-		return this.items
-			.map((item: ToolbarItem) => Array.from(item.subscribedEvents.keys()))
-			.flat()
-			// remove duplicates
-			.filter((value, index, self) => self.indexOf(value) === index);
 	}
 
 	get alwaysOverflowItems() {
@@ -239,23 +222,6 @@ class Toolbar extends UI5Element {
 		return this.itemsToOverflow.filter(item => !(item.ignoreSpace || item.isSeparator)).length === 0;
 	}
 
-	get classes() {
-		return {
-			items: {
-				"ui5-tb-items": true,
-				"ui5-tb-items-full-width": this.hasFlexibleSpacers,
-			},
-			overflow: {
-				"ui5-overflow-list--alignleft": this.hasItemWithText,
-			},
-			overflowButton: {
-				"ui5-tb-item": true,
-				"ui5-tb-overflow-btn": true,
-				"ui5-tb-overflow-btn-hidden": this.hideOverflowButton,
-			},
-		};
-	}
-
 	get interactiveItemsCount() {
 		return this.items.filter((item: ToolbarItem) => item.isInteractive).length;
 	}
@@ -269,7 +235,7 @@ class Toolbar extends UI5Element {
 	}
 
 	get accessibleRole() {
-		return this.hasAriaSemantics ? "toolbar" : undefined;
+		return this.hasAriaSemantics ? "toolbar" as const : undefined;
 	}
 
 	get ariaLabelText() {
@@ -286,9 +252,12 @@ class Toolbar extends UI5Element {
 				accessibleName: Toolbar.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
 				tooltip: Toolbar.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
 				accessibilityAttributes: {
-					expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
-					hasPopup: AriaHasPopup.Menu.toLowerCase(),
+					expanded: this.popoverOpen,
+					hasPopup: "menu" as const,
 				},
+			},
+			popover: {
+				accessibleName: Toolbar.i18nBundle.getText(TOOLBAR_POPOVER_AVAILABLE_VALUES),
 			},
 		};
 	}
@@ -382,9 +351,16 @@ class Toolbar extends UI5Element {
 	 */
 
 	processOverflowLayout() {
+		if (this.offsetWidth === 0) {
+			return;
+		}
 		const containerWidth = this.offsetWidth - this.padding;
 		const contentWidth = this.itemsWidth;
-		const overflowSpace = contentWidth - containerWidth + this.overflowButtonSize;
+		let overflowSpace = contentWidth - containerWidth + this.overflowButtonSize;
+
+		if (contentWidth <= containerWidth) {
+			overflowSpace = 0;
+		}
 
 		// skip calculation if the width has not been changed or if the items width has not been changed
 		if (this.width === containerWidth && this.contentWidth === contentWidth) {
@@ -411,7 +387,7 @@ class Toolbar extends UI5Element {
 
 		if (minWidth !== this.minContentWidth) {
 			const spaceAroundContent = this.offsetWidth - this.getDomRef()!.offsetWidth;
-			this.fireDecoratorEvent<ToolbarMinWidthChangeEventDetail>("_min-content-width-change", {
+			this.fireDecoratorEvent("_min-content-width-change", {
 				minWidth: minWidth + spaceAroundContent + this.overflowButtonSize,
 			});
 		}
@@ -487,16 +463,14 @@ class Toolbar extends UI5Element {
 
 	onOverflowPopoverClosed() {
 		this.popoverOpen = false;
-		if (this.overflowButtonDOM) {
-			this.overflowButtonDOM.accessibilityAttributes.expanded = false;
-		}
+	}
+
+	onBeforeClose(e: UI5CustomEvent<Popover, "before-close">) {
+		e.preventDefault();
 	}
 
 	onOverflowPopoverOpened() {
 		this.popoverOpen = true;
-		if (this.overflowButtonDOM) {
-			this.overflowButtonDOM.accessibilityAttributes.expanded = true;
-		}
 	}
 
 	onResize() {
@@ -508,57 +482,16 @@ class Toolbar extends UI5Element {
 		this.processOverflowLayout();
 	}
 
-	onInteract(e: CustomEvent) {
-		e.stopImmediatePropagation();
-		const target = e.target as HTMLElement;
-		const item = target.closest<ToolbarItem>(".ui5-tb-item") || target.closest<ToolbarItem>(".ui5-tb-popover-item");
-
-		if (target === this.overflowButtonDOM) {
-			this.toggleOverflow();
-			return;
-		}
-
-		if (!item) {
-			return;
-		}
-
-		const refItemId = target.getAttribute("data-ui5-external-action-item-id");
-
-		if (refItemId) {
-			const abstractItem = this.getItemByID(refItemId);
-			const eventType = e.type;
-			const eventTypeNonPrefixed: string = e.type.replace("ui5-", "");
-			const prevented = !abstractItem?.fireEvent(eventTypeNonPrefixed, e.detail, true);
-			const eventOptions = abstractItem?.subscribedEvents.get(eventType) || abstractItem?.subscribedEvents.get(eventTypeNonPrefixed);
-
-			if (prevented || abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {
-				return;
-			}
-
-			this.closeOverflow();
-		}
-	}
-
 	/**
 	 * Private members
 	 */
 
 	attachListeners() {
-		const popover = this.getOverflowPopover();
-
-		this.subscribedEvents.forEach((e: string) => {
-			this.itemsDOM?.addEventListener(e, this._onInteract);
-			popover?.addEventListener(e, this._onInteract);
-		});
+		this.addEventListener("close-overflow", this._onCloseOverflow);
 	}
 
 	detachListeners() {
-		const popover = this.getOverflowPopover();
-
-		this.subscribedEvents.forEach((e: string) => {
-			this.itemsDOM?.removeEventListener(e, this._onInteract);
-			popover?.removeEventListener(e, this._onInteract);
-		});
+		this.removeEventListener("close-overflow", this._onCloseOverflow);
 	}
 
 	onToolbarItemChange() {
@@ -577,12 +510,13 @@ class Toolbar extends UI5Element {
 			}
 
 			const toolbarItem = {
-				toolbarTemplate: executeTemplate(ElementClass.toolbarTemplate, item),
-				toolbarPopoverTemplate: executeTemplate(ElementClass.toolbarPopoverTemplate, item),
+				toolbarTemplate: ElementClass.toolbarTemplate,
+				toolbarPopoverTemplate: ElementClass.toolbarPopoverTemplate,
+				context: item,
 			};
 
 			return toolbarItem;
-		});
+		}).filter(item => !!item);
 	}
 
 	getItemWidth(item: ToolbarItem): number {

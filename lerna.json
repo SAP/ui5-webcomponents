@@ -14,7 +14,7 @@
     "packages/create-package",
     "packages/compat"
   ],
-  "version": "2.4.0",
+  "version": "2.10.0",
   "command": {
     "publish": {
       "allowBranch": "*",

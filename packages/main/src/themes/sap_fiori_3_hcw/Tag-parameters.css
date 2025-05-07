@@ -91,6 +91,8 @@
 	--ui5-tag-set2-color-scheme-9-background: var(--sapIndicationColor_9_Background);
 	--ui5-tag-set2-color-scheme-9-border: var(--sapIndicationColor_9_BorderColor);
 
+	--ui5-tag-set2-color-scheme-9-hover-background: var(--sapIndicationColor_9_Hover_Background);
+
 	--ui5-tag-set2-color-scheme-10-color: var(--sapIndicationColor_10_TextColor);
 	--ui5-tag-set2-color-scheme-10-background: var(--sapIndicationColor_10_Background);
 	--ui5-tag-set2-color-scheme-10-border: var(--sapIndicationColor_10_BorderColor);

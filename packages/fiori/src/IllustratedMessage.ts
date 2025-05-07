@@ -6,10 +6,9 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import IllustrationMessageDesign from "./types/IllustrationMessageDesign.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
@@ -19,7 +18,7 @@ import "./illustrations/BeforeSearch.js";
 import IllustratedMessageCss from "./generated/themes/IllustratedMessage.css.js";
 
 // Template
-import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
+import IllustratedMessageTemplate from "./IllustratedMessageTemplate.js";
 
 const getEffectiveIllustrationName = (name: string): string => {
 	if (name.startsWith("Tnt")) {
@@ -80,10 +79,9 @@ const getEffectiveIllustrationName = (name: string): string => {
 	tag: "ui5-illustrated-message",
 	languageAware: true,
 	themeAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: IllustratedMessageCss,
 	template: IllustratedMessageTemplate,
-	dependencies: [Title],
 })
 class IllustratedMessage extends UI5Element {
 	/**
@@ -197,6 +195,17 @@ class IllustratedMessage extends UI5Element {
 	*/
 	@property()
 	media?: string;
+
+	/**
+ 	* Defines whether the illustration is decorative.
+	*
+	* When set to `true`, the attributes `role="presentation"` and `aria-hidden="true"` are applied to the SVG element.
+	* @default false
+	* @public
+ 	* @since 2.10.0
+	*/
+	@property({ type: Boolean })
+	decorative = false;
 
 	/**
 	* Defines the title of the component.
@@ -356,7 +365,20 @@ class IllustratedMessage extends UI5Element {
 
 	_setSVGAccAttrs() {
 		const svg = this.shadowRoot!.querySelector(".ui5-illustrated-message-illustration svg");
-		if (svg) {
+
+		if (!svg) {
+			return;
+		}
+
+		if (this.decorative) {
+			svg.setAttribute("role", "presentation");
+			svg.setAttribute("aria-hidden", "true");
+			svg.removeAttribute("aria-label");
+		} else {
+			svg.removeAttribute("role");
+			svg.removeAttribute("aria-hidden");
+
+			// Set aria-label only when not decorative and text exists
 			if (this.ariaLabelText) {
 				svg.setAttribute("aria-label", this.ariaLabelText);
 			} else {

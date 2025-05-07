@@ -563,10 +563,10 @@ describe("List Tests", () => {
 		assert.strictEqual(ariaSelectedText, "Selected", "Selected state text is correct");
 	});
 
-	it('group headers should not be with role options', async () => {
-		const groupHeader = await browser.$(">>>#listSelectedItem #group .ui5-ghli-root");
+	it('group headers should be rendered as LI', async () => {
+		const groupHeader = await browser.$(">>>#listSelectedItem #group div.ui5-ghli-root");
 
-		assert.strictEqual(await groupHeader.getAttribute("role"), "group", "Item label is empty");
+		assert.ok(await groupHeader.isExisting(), "Group header is rendered as DIV");
 	});
 
 	it('anchor tabs should be accessible within list items', async () => {
@@ -589,7 +589,7 @@ describe("List Tests", () => {
 		assert.strictEqual(await itemCloseResult.getProperty("value"), "0", "item-close event is not fired when the button is pressed.");
 	});
 
-	it("List item fires _request-tabindex-change event and updates tabindex when inner element receives focus", async () => {
+	it("List item fires request-tabindex-change event and updates tabindex when inner element receives focus", async () => {
 		const innerElement = await browser.$("#effectiveTabindexChange #country11 button");
 		const listItem = await browser.$("#effectiveTabindexChange #country11");
 		const rootItemElement = await listItem.shadow$(".ui5-li-root");

@@ -22,6 +22,7 @@ import {
  * @public
  */
 class NotificationListItemBase extends ListItemBase {
+	eventDetails!: ListItemBase["eventDetails"];
 	/**
 	 * Defines the `titleText` of the item.
 	 * @default undefined

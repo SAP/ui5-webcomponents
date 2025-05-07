@@ -1,14 +1,12 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import Button from "./Button.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ButtonAccessibilityAttributes } from "./Button.js";
 import type ButtonDesign from "./types/ButtonDesign.js";
 
 import ToolbarItem from "./ToolbarItem.js";
-import type { IEventOptions } from "./ToolbarItem.js";
-import ToolbarButtonTemplate from "./generated/templates/ToolbarButtonTemplate.lit.js";
-import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverButtonTemplate.lit.js";
+import ToolbarButtonTemplate from "./ToolbarButtonTemplate.js";
+import ToolbarPopoverButtonTemplate from "./ToolbarPopoverButtonTemplate.js";
 
 import ToolbarButtonPopoverCss from "./generated/themes/ToolbarButtonPopover.css.js";
 
@@ -33,7 +31,6 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
  */
 @customElement({
 	tag: "ui5-toolbar-button",
-	dependencies: [Button],
 	styles: ToolbarButtonPopoverCss,
 })
 
@@ -45,7 +42,10 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
  * property is set to `true`.
  * @public
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+	cancelable: true,
+})
 class ToolbarButton extends ToolbarItem {
 	/**
 	 * Defines if the action is disabled.
@@ -156,6 +156,14 @@ class ToolbarButton extends ToolbarItem {
 	@property()
 	width?: string;
 
+	/**
+     * Defines if the toolbar button is hidden.
+     * @private
+     * @default false
+     */
+	@property({ type: Boolean })
+	hidden = false;
+
 	get styles() {
 		return {
 			width: this.width,
@@ -175,10 +183,12 @@ class ToolbarButton extends ToolbarItem {
 		return ToolbarPopoverButtonTemplate;
 	}
 
-	get subscribedEvents(): Map<string, IEventOptions> {
-		const map = new Map();
-		map.set("click", { preventClosing: false });
-		return map;
+	onClick(e: Event) {
+		e.stopImmediatePropagation();
+		const prevented = !this.fireDecoratorEvent("click", { targetRef: e.target as HTMLElement });
+		if (!prevented && !this.preventOverflowClosing) {
+			this.fireDecoratorEvent("close-overflow");
+		}
 	}
 }
 

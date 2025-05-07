@@ -14,16 +14,19 @@ describe("Interactions", () => {
 
 		// switch clocks by button
 		await buttons[0].click();
+		await browser.pause(800);
 		assert.ok(await clocks[0].getProperty("active"), "First clock is active");
 		assert.notOk(await clocks[1].getProperty("active"), "Second clock is not active");
 		assert.notOk(await clocks[2].getProperty("active"), "Third clock is not active");
 
 		await buttons[1].click();
+		await browser.pause(800);
 		assert.notOk(await clocks[0].getProperty("active"), "First clock is not active");
 		assert.ok(await clocks[1].getProperty("active"), "Second clock is active");
 		assert.notOk(await clocks[2].getProperty("active"), "Third clock is not active");
 
 		await buttons[2].click();
+		await browser.pause(800);
 		assert.notOk(await clocks[0].getProperty("active"), "First clock is not active");
 		assert.notOk(await clocks[1].getProperty("active"), "Second clock is not active");
 		assert.ok(await clocks[2].getProperty("active"), "Third clock is active");
@@ -88,6 +91,7 @@ describe("Interactions", () => {
 		const buttons = await clocksComponent.shadow$$("ui5-toggle-spin-button");
 
 		await buttons[0].click();
+		await browser.pause(800);
 
 		// change hours
 		await browser.keys("ArrowDown");
@@ -171,6 +175,7 @@ describe("Interactions", () => {
 		const buttons = await clocksComponent.shadow$$("ui5-toggle-spin-button");
 
 		await buttons[0].click();
+		await browser.pause(800);
 
 		await browser.keys(["0", "8", "2", "4", "1", "3"]);
 		assert.strictEqual(await clocks[0].getProperty("selectedValue"), 8, "value is changed");

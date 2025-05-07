@@ -1,23 +1,24 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
 import type WizardContentLayout from "./types/WizardContentLayout.js";
+import "./WizardStep.js";
 
 // Texts
 import {
@@ -34,11 +35,11 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Step in header and content
-import WizardTab from "./WizardTab.js";
-import WizardStep from "./WizardStep.js";
+import type WizardTab from "./WizardTab.js";
+import type WizardStep from "./WizardStep.js";
 
 // Template and Styles
-import WizardTemplate from "./generated/templates/WizardTemplate.lit.js";
+import WizardTemplate from "./WizardTemplate.js";
 import WizardCss from "./generated/themes/Wizard.css.js";
 import WizardPopoverCss from "./generated/themes/WizardPopover.css.js";
 
@@ -56,22 +57,11 @@ const STEP_SWITCH_THRESHOLDS = {
 	MAX: 1,
 };
 
-type ResponsiveBreakpoints = {
-	[key: string]: string,
-}
-
 type WizardStepChangeEventDetail = {
 	step: WizardStep,
 	previousStep: WizardStep,
 	withScroll: boolean,
 }
-
-const RESPONSIVE_BREAKPOINTS: ResponsiveBreakpoints = {
-	"0": "S",
-	"599": "M",
-	"1023": "L",
-	"1439": "XL",
-};
 
 type AccessibilityInformation = {
 	ariaSetsize: number,
@@ -92,7 +82,9 @@ type StepInfo = {
 	pos: number,
 	accInfo: AccessibilityInformation,
 	refStepId: string,
-	styles: object,
+	styles: {
+		zIndex: number
+	},
 }
 
 /**
@@ -184,19 +176,13 @@ type StepInfo = {
 	tag: "ui5-wizard",
 	languageAware: true,
 	fastNavigation: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [
 		WizardCss,
 		WizardPopoverCss,
 		getEffectiveScrollbarStyle(),
 	],
 	template: WizardTemplate,
-	dependencies: [
-		WizardTab,
-		WizardStep,
-		ResponsivePopover,
-		Button,
-	],
 })
 
 /**
@@ -207,25 +193,14 @@ type StepInfo = {
  * @param {boolean} withScroll true when the event occurs due to user scrolling.
  * @public
  */
-@event<WizardStepChangeEventDetail>("step-change", {
-	detail: {
-		/**
-		* @public
-		*/
-		step: { type: HTMLElement },
-		/**
-		* @public
-		*/
-		previousStep: { type: HTMLElement },
-		/**
-		* @public
-		*/
-		withScroll: { type: Boolean },
-	},
+@event("step-change", {
 	bubbles: true,
 })
 
 class Wizard extends UI5Element {
+	eventDetails!: {
+		"step-change": WizardStepChangeEventDetail
+	}
 	/**
 	 * Defines how the content of the `ui5-wizard` would be visualized.
 	 * @public
@@ -272,9 +247,6 @@ class Wizard extends UI5Element {
 	 */
 	@property({ type: Array })
 	_groupedTabs: Array<WizardTab> = [];
-
-	@property()
-	_breakpoint?: string
 
 	/**
 	 * Defines the steps.
@@ -337,19 +309,6 @@ class Wizard extends UI5Element {
 		});
 
 		this._onStepResize = this.onStepResize.bind(this);
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-wiz-root": true,
-			},
-			popover: {
-				"ui5-wizard-responsive-popover": true,
-				"ui5-wizard-popover": !isPhone(),
-				"ui5-wizard-dialog": isPhone(),
-			},
-		};
 	}
 
 	static get SCROLL_DEBOUNCE_RATE() {
@@ -469,7 +428,7 @@ class Wizard extends UI5Element {
 	 * **Note:** the handler is bound in the template.
 	 * @private
 	 */
-	onSelectionChangeRequested(e: MouseEvent) {
+	onSelectionChangeRequested(e: CustomEvent) {
 		this.selectionRequestedByClick = true;
 		this.changeSelectionByStepAction(e.target as WizardTab);
 	}
@@ -479,7 +438,7 @@ class Wizard extends UI5Element {
 	 * **Note:** the handler is bound in the template.
 	 * @private
 	 */
-	onScroll(e: MouseEvent) {
+	onScroll(e: Event) {
 		if (this.selectionRequestedByClick) {
 			this.selectionRequestedByClick = false;
 			return;
@@ -495,7 +454,7 @@ class Wizard extends UI5Element {
 	 * **Note:** the handler is bound in the template.
 	 * @private
 	 */
-	onStepInHeaderFocused(e: FocusEvent) {
+	onStepInHeaderFocused(e: CustomEvent) {
 		this._itemNavigation.setCurrentItem(e.target as WizardTab);
 	}
 
@@ -515,8 +474,6 @@ class Wizard extends UI5Element {
 
 		this._prevWidth = this.width;
 		this._prevContentHeight = this.contentHeight;
-
-		this._calcCurrentBreakpoint();
 	}
 
 	attachStepsResizeObserver() {
@@ -530,12 +487,6 @@ class Wizard extends UI5Element {
 		this.stepsDOM.forEach(stepDOM => {
 			ResizeHandler.deregister(stepDOM, this._onStepResize);
 		});
-	}
-
-	_calcCurrentBreakpoint() {
-		const breakpointDimensions = Object.keys(RESPONSIVE_BREAKPOINTS).reverse();
-		const breakpoint = breakpointDimensions.find((size: string) => Number(size) < this.width!);
-		this._breakpoint = breakpoint ? RESPONSIVE_BREAKPOINTS[breakpoint] : RESPONSIVE_BREAKPOINTS["0"];
 	}
 
 	/**
@@ -653,7 +604,7 @@ class Wizard extends UI5Element {
 		}
 	}
 
-	_onOverflowStepButtonClick(e: MouseEvent) {
+	_onOverflowStepButtonClick(e: UI5CustomEvent<Button, "click">) {
 		const tabs = Array.from(this.stepsInHeaderDOM);
 		const eTarget = e.target as HTMLElement;
 		const stepRefId = eTarget.getAttribute("data-ui5-header-tab-ref-id");
@@ -1037,7 +988,7 @@ class Wizard extends UI5Element {
 				stepToSelect.selected = true;
 			}
 
-			this.fireDecoratorEvent<WizardStepChangeEventDetail>("step-change", {
+			this.fireDecoratorEvent("step-change", {
 				step: stepToSelect,
 				previousStep: selectedStep,
 				withScroll,

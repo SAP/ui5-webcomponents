@@ -1,0 +1,40 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <div class="section">
+		<template id="rowTemplate">
+			<ui5-table-row position="-1" row-key="-1">
+				<ui5-table-cell data="name"></ui5-table-cell>
+				<ui5-table-cell data="height"></ui5-table-cell>
+				<ui5-table-cell data="weight"></ui5-table-cell>
+				<ui5-table-cell data="price"></ui5-table-cell>
+			</ui5-table-row>
+		</template>
+<!-- playground-fold-end -->
+		<ui5-table id="table" loading-delay="100" style="height: 150px;" class="ui5-content-density-compact">
+			<ui5-table-virtualizer id="virtualizer" slot="features" row-count="1000" row-height="32"></ui5-table-virtualizer>
+<!-- playground-fold -->
+			<ui5-table-selection slot="features"></ui5-table-selection>
+			<ui5-table-header-row slot="headerRow" sticky>
+				<ui5-table-header-cell min-width="150px">Product Name</ui5-table-header-cell>
+				<ui5-table-header-cell>Dimensions</ui5-table-header-cell>
+				<ui5-table-header-cell>Weight</ui5-table-header-cell>
+				<ui5-table-header-cell horizontal-align="Right">Price</ui5-table-header-cell>
+			</ui5-table-header-row>
+<!-- playground-fold-end -->
+		</ui5-table>
+<!-- playground-fold -->
+	</div>
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

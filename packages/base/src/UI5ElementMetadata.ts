@@ -29,7 +29,7 @@ type Property = {
 
 type PropertyValue = boolean | number | string | object | undefined | null;
 
-type EventData = Record<string, { detail: Record<string, object>, cancelable: boolean, bubbles: boolean }>;
+type EventData = Record<string, { detail?: Record<string, object>, cancelable?: boolean, bubbles?: boolean }>;
 
 type I18nBundleAccessorValue = {
 	bundleName: string,
@@ -105,14 +105,6 @@ class UI5ElementMetadata {
 	 */
 	getPureTag(): string {
 		return this.metadata.tag || "";
-	}
-
-	/**
-	 * Returns the tag of the UI5 Element without the scope
-	 * @private
-	 */
-	getFeatures(): Array<string> {
-		return this.metadata.features || [];
 	}
 
 	/**

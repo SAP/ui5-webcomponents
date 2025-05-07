@@ -22,13 +22,14 @@ let customPlugin = {
         build.onEnd(result => {
             result.outputFiles.forEach(async f => {
                 // scoping
-                const newText = scopeVariables(f.text, packageJSON);
+                let newText = scopeVariables(f.text, packageJSON);
+                newText = newText.replaceAll(/\\/g, "\\\\"); // Escape backslashes as they might appear in css rules
                 await mkdir(path.dirname(f.path), {recursive: true});
                 writeFile(f.path, newText);
 
                 // JS/TS
                 const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", extension);
-                const jsContent = getFileContent(tsMode, jsPath, packageJSON.name, "\`" + newText + "\`", true);
+                const jsContent = getFileContent(packageJSON.name, "\`" + newText + "\`", true);
                 writeFileIfChanged(jsPath, jsContent);
             });
         })

@@ -12,5 +12,7 @@
 		"inlineSources": true,
 		"strict": true,
 		"moduleResolution": "node",
+		"jsx": "react-jsx",
+		"jsxImportSource": "@ui5/webcomponents-base",
 	}
 }

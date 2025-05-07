@@ -6,31 +6,32 @@ Components use `CustomEvent` to inform developers of important state changes in 
 
 ## The `@event` Decorator
 
+There are two `@event` decorators available with the following imports:
+```ts
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js"; // recommended for new develompent
+// or
+import event from "@ui5/webcomponents-base/dist/decorators/event.js"; // deprecated
+```
+
 To define your own custom event, you need to use the `@event` decorator.
 
-The `event` decorator is a class decorator that takes one required argument as a string to define the event name and an optional argument as an object literal to describe details of the custom element.
-
-The details object allows developers to describe more information about the event.
+The `event` decorator is a class decorator that takes one required argument as a string to define the event name
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 
 @customElement("my-demo-component")
-@event("change", {
-	detail: {
-		valid: { type: Boolean },
-	},
-})
+@event("change")
 class MyDemoComponent extends UI5Element {}
 ```
 
-**Note:** This decorator is used only to describe the events of the component and is not meant to create emitters.
+**Note:** This decorator is used only to describe the events of the component and is not meant to create emitters. See `fireDecoratorEvent` below.
 
 ## Usage
 
-As mentioned earlier, the `@event` decorator doesn't create event emitters. To notify developers of component changes, we have to fire events ourselves. This can be done using the `fireEvent` and the newer `fireDecoratorEvent` methods that comes from the `UI5Element` class. The difference between the methods is explained below.
+As mentioned earlier, the `@event` decorator doesn't create event emitters. To notify developers of component changes, we have to fire events ourselves. This can be done using the `fireEventDecoratorEvent` and the deprecated `fireEvent` methods that come from the `UI5Element` class. The difference between the methods is explained below.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -53,7 +54,43 @@ class MyDemoComponent extends UI5Element {
 
 **Note:** By default, the `fireDecoratorEvent` (and `fireEvent`) method returns a boolean value that helps you understand whether the event was canceled (i.e., if the `preventDefault` method was called).
 
-## Event Detail
+## `eventDetails` (recommended)
+The `eventDetails` class field is used to describe the types of events that the component emits. The strict event decorator is using this information for type checking the names.
+
+```ts
+class MyComponent extends UI5Element {
+  eventDetails!: {
+    "selection-change": SelectionChangeDetails
+    "delete": void
+  }
+}
+```
+
+This field doesn't have runtime semantics, it is only used to provide type information about the events that the component is firing and the corresponding types of the detail parameter.
+
+### Extending the `eventDetails` with more events
+If your component extends another component and you try to add new events, you will get a TypeScript error that the new events cannot be assigned to the same field in the base class
+
+```ts
+class TimeSelectionClocks extends TimePickerInternals {
+  eventDetails!: { // ts-error
+    "close-picker": void,
+  };
+
+// Property 'eventDetails' in type 'TimeSelectionClocks' is not assignable to the same property in base type 'TimePickerInternals'.
+```
+
+In order to correctly extend the base class events, you need to add them as a type as well like this TimePickerInternals["eventDetails"]
+
+```ts
+class TimeSelectionClocks extends TimePickerInternals {
+  eventDetails!: TimePickerInternals["eventDetails"] & {
+    "close-picker": void,
+  };
+}
+```
+
+## Event Detail (deprecated)
 
 The `@event` decorator is generic and accepts a TypeScript type that describes its detail. This type is crucial for preventing incorrect detail data when the event is fired using `fireDecoratorEvent` and `fireEvent` methods (both generic) and for ensuring type safety when listening for the event, so you know what kind of detail data to expect.
 
@@ -83,7 +120,7 @@ class MyDemoComponent extends UI5Element {
     value = "";
 
     onNativeInputChange(e: Event) {
-        this.fireDecoratorEvent<MyDemoComponentChangeEventDetail>("change", {
+        this.fireEvent("change", {
             valid: true,
         });
     }
@@ -92,7 +129,7 @@ class MyDemoComponent extends UI5Element {
 export { MyDemoComponent };
 ```
 
-## Event Configuration
+## Event Configuration (both event decorators)
 
 ### Bubbling and Preventing
 
@@ -125,7 +162,7 @@ class MyDemoComponent extends UI5Element {
 
 ### The `fireDecoratorEvent` method
 
-The method is available since version `v2.4.0` and it fires a custom event and gets the configuration for the event from the `@event` decorator. In case you rely on the decorator settings, you must use the `fireDecoratorEvent` method.
+The method is available since version `v2.4.0` and it fires a custom event and gets the configuration for the event from the `@event` decorator. It also strictly checks the details parameter agains the `eventDetails` type for the same event name.
 
 Keep in mind that `cancelable` and `bubbles` are `false` by default and you must explicitly enable them in the `@event` decorator if required.
 
@@ -154,7 +191,7 @@ this.fireDecoratorEvent("change");
 this.fireDecoratorEvent("change");
 ```
 
-**Note:** since `v2.4.0` it's recommended to describe the event in the `@event` decorator and use the `fireDecoratorEvent` method. 
+**Note:** since `v2.4.0` it's recommended to describe the event in the `@event` decorator and use the `fireDecoratorEvent` method.
 
 ### The `fireEvent` method
 

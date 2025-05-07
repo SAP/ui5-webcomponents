@@ -1,27 +1,27 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	getRGBColor,
-	HSLToRGB,
-	HEXToRGB,
-	RGBToHSL,
+	getAlpha,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
 import type {
 	ColorHSL,
 	ColorRGB,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
-import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
-import Input from "./Input.js";
-import Slider from "./Slider.js";
-import Label from "./Label.js";
+import "@ui5/webcomponents-icons/dist/expand.js";
+import ColorValue from "./colorpicker-utils/ColorValue.js";
+import ColorPickerTemplate from "./ColorPickerTemplate.js";
+import type Input from "./Input.js";
+import type Slider from "./Slider.js";
 
 import {
 	COLORPICKER_ALPHA_SLIDER,
@@ -31,16 +31,29 @@ import {
 	COLORPICKER_GREEN,
 	COLORPICKER_BLUE,
 	COLORPICKER_ALPHA,
+	COLORPICKER_SATURATION,
+	COLORPICKER_LIGHT,
+	COLORPICKER_HUE,
+	COLORPICKER_TOGGLE_MODE_TOOLTIP,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import ColorPickerCss from "./generated/themes/ColorPicker.css.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/index.js";
 
 const PICKER_POINTER_WIDTH = 6.5;
 
 type ColorCoordinates = {
 	x: number,
 	y: number,
+}
+
+type ColorChannelInput = {
+	id: string,
+	value: number,
+	accessibleName: string
+	label: string,
+	showPercentSymbol?: boolean,
 }
 
 /**
@@ -71,15 +84,10 @@ type ColorCoordinates = {
 
 @customElement({
 	tag: "ui5-color-picker",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	formAssociated: true,
 	styles: ColorPickerCss,
 	template: ColorPickerTemplate,
-	dependencies: [
-		Input,
-		Slider,
-		Label,
-	],
 	shadowRootOptions: { delegatesFocus: true },
 })
 /**
@@ -90,6 +98,9 @@ type ColorCoordinates = {
 	bubbles: true,
 })
 class ColorPicker extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: void;
+	}
 	/**
 	 * Defines the currently selected color of the component.
 	 *
@@ -112,13 +123,13 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	name?: string;
 
 	/**
-	 * Defines the HEX code of the currently selected color
-	 *
-	 * **Note**: If Alpha(transperancy) is set it is not included in this property. Use `color` property.
-	 * @private
+	 * When set to `true`, the alpha slider and inputs for RGB values will not be displayed.
+	 * @default false
+	 * @public
+	 * @since 2.5.0
 	 */
-	@property({ noAttribute: true })
-	hex = "ffffff";
+	@property({ type: Boolean })
+	simplified = false;
 
 	/**
 	 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
@@ -128,11 +139,11 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	_mainValue: ColorRGB;
 
 	/**
-	 * Defines the currenty selected color from the main color section.
+	 * Defines the currenty selected color.
 	 * @private
 	 */
 	@property({ type: Object })
-	_value: ColorRGB = getRGBColor(this.value);
+	_colorValue: ColorValue;
 
 	/**
 	 * @private
@@ -170,6 +181,12 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	@property({ type: Boolean })
 	_wrongHEX = false;
 
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_displayHSL = false;
+
 	selectedHue: number;
 
 	mouseDown: boolean;
@@ -189,6 +206,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 
 	constructor() {
 		super();
+		this._colorValue = new ColorValue();
 
 		// Bottom Right corner
 		this._selectedCoordinates = {
@@ -210,11 +228,17 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	}
 
 	onBeforeRendering() {
-		// we have the color & ._mainValue properties here
-		this._value = getRGBColor(this.value);
-		const tempColor = `rgba(${this._value.r},${this._value.g},${this._value.b},1)`;
-		this._setHex();
-		this._setValues();
+		const valueAsRGB = getRGBColor(this.value);
+		if (!this._isColorValueEqual(valueAsRGB)) {
+			this._colorValue.RGB = valueAsRGB;
+		}
+		const alpha = getAlpha(this.value);
+		if (alpha !== this._colorValue.Alpha) {
+			this._colorValue.Alpha = alpha;
+			this._alpha = this._colorValue.Alpha;
+		}
+		const tempColor = this._colorValue.toRGBString();
+		this._updateColorGrid();
 		this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);
 	}
 
@@ -275,14 +299,17 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._changeSelectedColor(e.offsetX, e.offsetY);
 	}
 
-	_handleAlphaInput(e: CustomEvent) {
-		const aphaInputValue: string = (e.target as Input).value;
+	_handleAlphaInput(e: UI5CustomEvent<Input, "input"> | UI5CustomEvent<Slider, "input">) {
+		const aphaInputValue = String(e.currentTarget.value);
 		this._alpha = parseFloat(aphaInputValue);
 		if (Number.isNaN(this._alpha)) {
 			this._alpha = 1;
 		}
+		this._colorValue.Alpha = this._alpha;
 		this._isHueValueChanged = true;
-		this._setColor(this._value);
+
+		const color = this._colorValue.toRGBString();
+		this._setValue(color);
 	}
 
 	_handleHueInput(e: CustomEvent) {
@@ -291,18 +318,13 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._setMainColor(this._hue);
 		// Idication that changes to the hue value triggered as a result of user pressing over the hue slider.
 		this._isHueValueChanged = true;
+		this._colorValue.H = this._hue;
 
-		const x: number = this._selectedCoordinates.x + PICKER_POINTER_WIDTH;
-		const y: number = this._selectedCoordinates.y + PICKER_POINTER_WIDTH;
-		const tempColor = this._calculateColorFromCoordinates(x, y);
-
-		if (tempColor) {
-			this._setColor(HSLToRGB(tempColor));
-		}
+		const color = this._colorValue.toRGBString();
+		this._setValue(color);
 	}
 
 	_handleHEXChange(e: CustomEvent | KeyboardEvent) {
-		const hexRegex = new RegExp("^[<0-9 abcdef]+$");
 		const input: Input = (e.target as Input);
 		let inputValueLowerCase = input.value.toLowerCase();
 
@@ -311,78 +333,93 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			inputValueLowerCase = `${inputValueLowerCase[0]}${inputValueLowerCase[0]}${inputValueLowerCase[1]}${inputValueLowerCase[1]}${inputValueLowerCase[2]}${inputValueLowerCase[2]}`;
 		}
 
-		const isNewValueValid = inputValueLowerCase.length === 6 && hexRegex.test(inputValueLowerCase);
+		this._colorValue.HEX = inputValueLowerCase;
+		const isValidColor = this._colorValue.isColorValueValid();
 
-		if (isNewValueValid && input.value !== inputValueLowerCase) {
+		if (isValidColor && input.value !== inputValueLowerCase) {
 			this._wrongHEX = false;
 			input.value = inputValueLowerCase;
 		}
 
-		if (inputValueLowerCase === this.hex) {
-			return;
-		}
-
-		this.hex = inputValueLowerCase;
-
-		if (!isNewValueValid) {
+		if (!isValidColor) {
 			this._wrongHEX = true;
 		} else {
 			this._wrongHEX = false;
-			this._setColor(HEXToRGB(this.hex));
+
+			const color = this._colorValue.toRGBString();
+			this._setValue(color);
 		}
 	}
 
-	_handleRGBInputsChange(e: CustomEvent) {
+	_togglePickerMode() {
+		this._displayHSL = !this._displayHSL;
+	}
+
+	_handleColorInputChange(e: Event) {
 		const target = e.target as Input;
 		const targetValue = parseInt(target.value) || 0;
-		let tempColor;
+
 		switch (target.id) {
 		case "red":
-			tempColor = { ...this._value, r: targetValue };
+			this._colorValue.R = targetValue;
 			break;
 
 		case "green":
-			tempColor = { ...this._value, g: targetValue };
+			this._colorValue.G = targetValue;
 			break;
 
 		case "blue":
-			tempColor = { ...this._value, b: targetValue };
+			this._colorValue.B = targetValue;
 			break;
-		default:
-			tempColor = { ...this._value };
+
+		case "hue":
+			this._colorValue.H = targetValue;
+			break;
+
+		case "saturation":
+			this._colorValue.S = targetValue;
+			break;
+
+		case "light":
+			this._colorValue.L = targetValue;
+			break;
 		}
 
-		this._setColor(tempColor);
+		const color = this._colorValue.toRGBString();
+		this._setValue(color);
+		this._updateColorGrid();
 	}
 
 	_setMainColor(hueValue: number) {
-		if (hueValue <= 255) {
+		const hueValueMod = hueValue * 4.251;
+
+		if (hueValueMod <= 255) {
 			this._mainValue = {
 				r: 255,
-				g: hueValue,
+				g: hueValueMod,
 				b: 0,
 			};
-		} else if (hueValue <= 510) {
+		} else if (hueValueMod <= 510) {
 			this._mainValue = {
-				r: 255 - (hueValue - 255),
+				r: 255 - (hueValueMod - 255),
 				g: 255,
 				b: 0,
 			};
-		} else if (hueValue <= 765) {
+		} else if (hueValueMod <= 765) {
 			this._mainValue = {
 				r: 0,
 				g: 255,
-				b: hueValue - 510,
+				b: hueValueMod - 510,
 			};
-		} else if (hueValue <= 1020) {
+		} else if (hueValueMod <= 1020) {
 			this._mainValue = {
 				r: 0,
-				g: 765 - (hueValue - 255),
+				g: 765 - (hueValueMod - 255),
 				b: 255,
 			};
-		} else if (hueValue <= 1275) {
+		} else if (hueValueMod <= 1275) {
 			this._mainValue = {
-				r: hueValue - 1020,
+				r: hueValueMod - 1020,
 				g: 0,
 				b: 255,
 			};
@@ -390,7 +427,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			this._mainValue = {
 				r: 255,
 				g: 0,
-				b: 1275 - (hueValue - 255),
+				b: 1275 - (hueValueMod - 255),
 			};
 		}
 	}
@@ -398,6 +435,8 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	_handleAlphaChange() {
 		this._alpha = this._alpha < 0 ? 0 : this._alpha;
 		this._alpha = this._alpha > 1 ? 1 : this._alpha;
+
+		this._colorValue.Alpha = this._alpha;
 	}
 
 	_changeSelectedColor(x: number, y: number) {
@@ -411,7 +450,10 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 
 		const tempColor = this._calculateColorFromCoordinates(x, y);
 		if (tempColor) {
-			this._setColor(HSLToRGB(tempColor));
+			this._colorValue.HSL = tempColor;
+
+			const color = this._colorValue.toRGBString();
+			this._setValue(color);
 		}
 	}
 
@@ -426,59 +468,37 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		// and HSL format, the color will be parsed to RGB
 		// 0 ≤ H < 360
 		// 4.251 because with 4.25 we get out of the colors range.
-		const h = this._hue / 4.251;
+		const h = this._hue;
+		let s = +(1 - (y / 256)).toFixed(2);
+		let l = +(x / 256).toFixed(2);
 
-		// 0 ≤ S ≤ 1
-		const s = 1 - +(Math.round(parseFloat((y / 256) + "e+2")) + "e-2"); // eslint-disable-line
-
-		// 0 ≤ V ≤ 1
-		const l = +(Math.round(parseFloat((x / 256) + "e+2")) + "e-2"); // eslint-disable-line
-
-		if (!s || !l) {
+		if (Number.isNaN(s) || Number.isNaN(l)) {
 			// The event is finished out of the main color section
 			return;
 		}
 
+		// Normalize values to be between 0 and 1 in case of rounding issues
+		s = Math.max(0, Math.min(1, s));
+		l = Math.max(0, Math.min(1, l));
+
 		return {
-			h,
-			s,
-			l,
+			h: Math.round(h),
+			s: Math.round(s * 100),
+			l: Math.round(l * 100),
 		};
 	}
 
-	_setColor(color: ColorRGB = { r: 0, g: 0, b: 0 }) {
-		this.value = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
-		this._wrongHEX = !this.isValidRGBColor(color);
+	_setValue(color: string) {
+		this.value = color;
+		this._wrongHEX = !this._colorValue.isColorValueValid();
 		this.fireDecoratorEvent("change");
 	}
 
-	isValidRGBColor(color: ColorRGB) {
-		return color.r >= 0 && color.r <= 255 && color.g >= 0 && color.g <= 255 && color.b >= 0 && color.b <= 255;
-	}
-
-	_setHex() {
-		let red = this._value.r.toString(16),
-			green = this._value.g.toString(16),
-			blue = this._value.b.toString(16);
-
-		if (red.length === 1) {
-			red = `0${red}`;
-		}
-		if (green.length === 1) {
-			green = `0${green}`;
-		}
-		if (blue.length === 1) {
-			blue = `0${blue}`;
-		}
-
-		this.hex = red + green + blue;
-	}
-
-	_setValues() {
-		const hslColours: ColorHSL = RGBToHSL(this._value);
+	_updateColorGrid() {
+		const hslColours: ColorHSL = this._colorValue.HSL;
 		this._selectedCoordinates = {
-			x: ((Math.round(hslColours.l * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the width of the circle
-			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the height of the circle
+			x: ((hslColours.l * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the width of the circle
+			y: (256 - (hslColours.s * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the height of the circle
 		};
 
 		if (this._isSelectedColorChanged) { // We shouldn't update the hue value when user presses over the main color section.
@@ -487,10 +507,16 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			this._isHueValueChanged = false;
 			this._hue = this.selectedHue ? this.selectedHue : this._hue;
 		} else {
-			this._hue = Math.round(hslColours.h * 4.25);
+			this._hue = hslColours.h;
 		}
 
 		this._setMainColor(this._hue);
+	}
+
+	_isColorValueEqual(value: ColorRGB): boolean {
+		return this._colorValue.R === value.r
+			&& this._colorValue.G === value.g
+			&& this._colorValue.B === value.b;
 	}
 
 	get hueSliderLabel() {
@@ -517,31 +543,96 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		return ColorPicker.i18nBundle.getText(COLORPICKER_BLUE);
 	}
 
+	get hueInputLabel() {
+		return ColorPicker.i18nBundle.getText(COLORPICKER_HUE);
+	}
+
+	get saturationInputLabel() {
+		return ColorPicker.i18nBundle.getText(COLORPICKER_SATURATION);
+	}
+
+	get lightInputLabel() {
+		return ColorPicker.i18nBundle.getText(COLORPICKER_LIGHT);
+	}
+
 	get alphaInputLabel() {
 		return ColorPicker.i18nBundle.getText(COLORPICKER_ALPHA);
+	}
+
+	get toggleModeTooltip() {
+		return ColorPicker.i18nBundle.getText(COLORPICKER_TOGGLE_MODE_TOOLTIP);
 	}
 
 	get inputsDisabled() {
 		return this._wrongHEX ? true : undefined;
 	}
 
-	get hexInputErrorState() {
-		return this._wrongHEX ? "Error" : undefined;
+	get hexInputErrorState(): `${ValueState}` {
+		return this._wrongHEX ? "Negative" : "None";
 	}
 
-	get styles() {
-		return {
-			mainColor: {
-				"background-color": `rgb(${this._mainValue.r}, ${this._mainValue.g}, ${this._mainValue.b})`,
-			},
-			circle: {
-				left: `${this._selectedCoordinates.x}px`,
-				top: `${this._selectedCoordinates.y}px`,
-			},
-			colorSpan: {
-				"background-color": `rgba(${this._value.r}, ${this._value.g}, ${this._value.b}, ${this._alpha})`,
-			},
+	get rgbInputs(): Array<ColorChannelInput> {
+		const redInput = {
+			id: "red",
+			value: this._colorValue.R,
+			label: "R",
+			accessibleName: this.redInputLabel,
 		};
+
+		const greenInput = {
+			id: "green",
+			value: this._colorValue.G,
+			label: "G",
+			accessibleName: this.greenInputLabel,
+		};
+
+		const blueInput = {
+			id: "blue",
+			value: this._colorValue.B,
+			label: "B",
+			accessibleName: this.blueInputLabel,
+		};
+
+		return [redInput, greenInput, blueInput];
+	}
+
+	get hslInputs(): Array<ColorChannelInput> {
+		const hueInput = {
+			id: "hue",
+			value: this._colorValue.H,
+			label: "H",
+			accessibleName: this.hueInputLabel,
+		};
+
+		const saturationInput = {
+			id: "saturation",
+			value: this._colorValue.S,
+			label: "S",
+			accessibleName: this.saturationInputLabel,
+			showPercentSymbol: true,
+		};
+
+		const lightInput = {
+			id: "light",
+			value: this._colorValue.L,
+			label: "L",
+			accessibleName: this.lightInputLabel,
+			showPercentSymbol: true,
+		};
+
+		return [hueInput, saturationInput, lightInput];
+	}
+
+	get HEX(): string {
+		return this._colorValue.HEX;
+	}
+
+	get colorChannelInputs() {
+		return this._displayHSL ? this.hslInputs : this.rgbInputs;
+	}
+
+	get _isDefaultPickerMode() {
+		return !this.simplified;
 	}
 }
 

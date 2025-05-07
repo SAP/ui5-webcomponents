@@ -1,4 +1,5 @@
 import type UI5Element from "../../UI5Element.js";
+import type MovePlacement from "../../types/MovePlacement.js";
 
 let draggedElement: HTMLElement | null = null;
 let globalHandlersAttached = false;
@@ -75,6 +76,28 @@ const removeSelfManagedArea = (area: HTMLElement | ShadowRoot) => {
 	selfManagedDragAreas.delete(area);
 };
 
+type DragAndDropSettings = {
+	/**
+	 * Allow cross-browser and file drag and drop.
+	 */
+	crossDnD?: boolean;
+	/**
+	 * Pass the original event in the event parameters.
+	 */
+	originalEvent?: boolean;
+};
+
+type MoveEventDetail = {
+	originalEvent: Event,
+	source: {
+		element: HTMLElement,
+	},
+	destination: {
+		element: HTMLElement,
+		placement: `${MovePlacement}`,
+	}
+};
+
 const DragRegistry = {
 	subscribe,
 	unsubscribe,
@@ -86,4 +109,6 @@ const DragRegistry = {
 export default DragRegistry;
 export type {
 	SetDraggedElementFunction,
+	DragAndDropSettings,
+	MoveEventDetail,
 };

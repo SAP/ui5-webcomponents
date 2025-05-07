@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
@@ -50,7 +51,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
+import DayPickerTemplate from "./DayPickerTemplate.js";
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
@@ -68,13 +69,14 @@ type Day = {
 	timestamp: string,
 	day: number,
 	focusRef: boolean,
-	_tabIndex: string,
+	_tabIndex: number,
 	selected: boolean,
 	_isSecondaryCalendarType: boolean,
 	classes: string,
+	tooltip?: string,
 	ariaLabel: string,
-	ariaSelected: string,
-	ariaDisabled: string | undefined,
+	ariaSelected: boolean,
+	ariaDisabled: boolean | undefined,
 	disabled: boolean,
 	secondDay?: number,
 	weekNum?: number,
@@ -125,6 +127,11 @@ type DayPickerNavigateEventDetail = {
 	bubbles: true,
 })
 class DayPicker extends CalendarPart implements ICalendarPicker {
+	eventDetails!: CalendarPart["eventDetails"] & {
+		"change": DayPickerChangeEventDetail,
+		"navigate": DayPickerNavigateEventDetail,
+	};
+
 	/**
 	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 	 * @default []
@@ -185,6 +192,9 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	@property({ type: Array })
 	specialCalendarDates: Array<SpecialCalendarDateT> = [];
 
+	@query("[data-sap-focus-ref]")
+	_focusableDay!: HTMLElement;
+
 	_autoFocus?: boolean;
 
 	@i18n("@ui5/webcomponents")
@@ -233,6 +243,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 			const specialCalendarDate = specialCalendarDates.find(specialDate => specialDate.specialDateTimestamp === timestamp);
 			const specialDayType = specialCalendarDate ? specialCalendarDate.type : "";
+			const specialDayTooltip = specialCalendarDate ? specialCalendarDate.tooltip : "";
+			const unnamedCalendarTypeLabel = specialDayTooltip && !this._isDefaultCalendarLegendType(specialDayType) ? specialDayTooltip : "";
 
 			const isFocused = tempDate.getMonth() === calendarDate.getMonth() && tempDate.getDate() === calendarDate.getDate();
 			const isSelected = this._isDaySelected(timestamp);
@@ -243,29 +255,34 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			const isToday = tempDate.isSame(todayDate);
 			const isFirstDayOfWeek = tempDate.getDay() === firstDayOfWeek;
 
-			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
+			const nonWorkingAriaLabel = (isWeekend || specialDayType === "NonWorking") && specialDayType !== "Working"
+				? `${nonWorkingDayLabel} `
+				: "";
 			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
 
 			const tempSecondDateNumber = tempSecondDate ? tempSecondDate.getDate() : "";
 			const tempSecondYearNumber = tempSecondDate ? tempSecondDate.getYear() : "";
 			const secondaryMonthsNamesString = secondaryMonthsNames.length > 0 ? secondaryMonthsNames[tempSecondDate!.getMonth()] : "";
 
+			const tooltip = `${todayAriaLabel}${nonWorkingAriaLabel}${unnamedCalendarTypeLabel}`.trim();
+
 			const ariaLabel = this.hasSecondaryCalendarType
-				? `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}; ${secondaryMonthsNamesString} ${tempSecondDateNumber}, ${tempSecondYearNumber}`
-				: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`;
+				? `${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}; ${secondaryMonthsNamesString} ${tempSecondDateNumber}, ${tempSecondYearNumber} ${tooltip}`.trim()
+				: `${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()} ${tooltip}`.trim();
 
 			const day: Day = {
 				timestamp: timestamp.toString(),
 				focusRef: isFocused,
-				_tabIndex: isFocused ? "0" : "-1",
+				_tabIndex: isFocused ? 0 : -1,
 				selected: isSelected || isSelectedBetween,
 				day: tempDate.getDate(),
 				secondDay: this.hasSecondaryCalendarType ? (tempSecondDate as CalendarDate).getDate() : undefined,
 				_isSecondaryCalendarType: this.hasSecondaryCalendarType,
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
+				tooltip,
 				ariaLabel,
-				ariaSelected: String(isSelected || isSelectedBetween),
-				ariaDisabled: isDisabled || isOtherMonth ? "true" : undefined,
+				ariaSelected: isSelected || isSelectedBetween,
+				ariaDisabled: isDisabled || isOtherMonth,
 				disabled: isDisabled,
 				type: specialDayType,
 				parts: "day-cell",
@@ -391,16 +408,21 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		if (this._autoFocus && !this._hidden) {
 			this.focus();
 		}
+	}
 
-		const focusedDay = this.shadowRoot!.querySelector<HTMLElement>("[data-sap-focus-ref]");
-
-		if (focusedDay && document.activeElement !== focusedDay && this._specialCalendarDates.length === 0) {
-			focusedDay.focus();
+	_focusCorrectDay() {
+		if (this._shouldFocusDay) {
+			this._focusableDay.focus();
 		}
+	}
+
+	get _shouldFocusDay() {
+		return document.activeElement !== this._focusableDay && this._specialCalendarDates.length === 0;
 	}
 
 	_onfocusin() {
 		this._autoFocus = true;
+		this._focusCorrectDay();
 	}
 
 	_onfocusout() {
@@ -467,7 +489,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 		this._updateSelectedDates(timestamp, isShift);
 
-		this.fireDecoratorEvent<DayPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -517,7 +539,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			}
 		});
 
-		this.fireDecoratorEvent<DayPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -726,7 +748,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireDecoratorEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -737,7 +759,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
 		this._updateSecondTimestamp();
-		this.fireDecoratorEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -763,15 +785,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		return this.hideWeekNumbers;
 	}
 
-	get classes() {
-		return {
-			root: {
-				"ui5-dp-root": true,
-				"ui5-dp-twocalendartypes": this.hasSecondaryCalendarType,
-			},
-		};
-	}
-
 	_isWeekend(oDate: CalendarDate): boolean {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 
@@ -786,6 +799,10 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_isDayPressed(target: HTMLElement): boolean {
 		const targetParent = target.parentNode as HTMLElement;
 		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && targetParent.classList && targetParent.classList.contains("ui5-dp-item"));
+	}
+
+	_isDefaultCalendarLegendType(type: string): boolean {
+		return ["NonWorking", "Working", "Today", "Selected", "None"].includes(type);
 	}
 
 	_getSecondaryDay(tempDate: CalendarDate): CalendarDate {

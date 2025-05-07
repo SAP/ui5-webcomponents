@@ -56,7 +56,7 @@
 
 		<ui5-title>Test valueStateMessage slot</ui5-title>
 		<ui5-time-picker id="timepickerValueStateMessage" value-state="Negative">
-			<div slot="valueStateMessage" id="customValueStateMessage">Please provide valid value</div>
+			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 		</ui5-time-picker>
 		<ui5-button id="testBtn">btn for testing</ui5-button>
 
@@ -74,6 +74,21 @@
 				<ui5-time-picker></ui5-time-picker>
 			</div>
 		</section>
+
+		<ui5-title>Test valueStateMessage in header</ui5-title>
+		<ui5-time-picker id="timepickerValueStateMessage" value-state="Negative">
+			<div slot="valueStateMessage" id="customValueStateMessage">Please provide valid value</div>
+		</ui5-time-picker>
+
+		<ui5-time-picker></ui5-time-picker>
+
+		<ui5-time-picker id="timepickerValueStateMessageCritical" value-state="Critical">
+			<div slot="valueStateMessage" id="customValueStateMessageCritical">Please check this value</div>
+		</ui5-time-picker>
+
+		<ui5-time-picker id="timepickerValueStateMessageInformation" value-state="Information">
+			<div slot="valueStateMessage" id="customValueStateMessageInformation">Additional information</div>
+		</ui5-time-picker>
 
 		<script>
 				var counter = 0;

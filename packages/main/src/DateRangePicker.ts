@@ -9,18 +9,18 @@ import {
 	DATERANGE_DESCRIPTION,
 	DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
-import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
+import DateRangePickerTemplate from "./DateRangePickerTemplate.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
-import CalendarDateRange from "./CalendarDateRange.js";
 
 import type {
 	DatePickerChangeEventDetail as DateRangePickerChangeEventDetail,
 	DatePickerInputEventDetail as DateRangePickerInputEventDetail,
 } from "./DatePicker.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
+import type CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
 const DEFAULT_DELIMITER = "-";
 
@@ -60,7 +60,6 @@ const DEFAULT_DELIMITER = "-";
 	tag: "ui5-daterange-picker",
 	styles: [DatePicker.styles, DateRangePickerCss],
 	template: DateRangePickerTemplate,
-	dependencies: [...DatePicker.dependencies, CalendarDateRange],
 })
 class DateRangePicker extends DatePicker implements IFormInputElement {
 	 /**
@@ -136,7 +135,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * Required by DatePicker.js
 	 * @override
 	 */
-	get _calendarSelectionMode() {
+	get _calendarSelectionMode(): `${CalendarSelectionMode}` {
 		return "Range";
 	}
 
@@ -213,10 +212,9 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * @override
 	 */
 	async _onInputSubmit() {
-		const input = this._getInput();
-		const caretPos = input.getCaretPosition();
+		const caretPos = this._dateTimeInput.getCaretPosition();
 		await renderFinished();
-		input.setCaretPosition(caretPos); // Return the caret on the previous position after rendering
+		this._dateTimeInput.setCaretPosition(caretPos); // Return the caret on the previous position after rendering
 	}
 
 	/**
@@ -228,7 +226,9 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	}
 
 	/**
-	 * @override
+	 * Checks if a value is valid against the current date format of the DatePicker.
+	 * @public
+	 * @param value A value to be tested against the current date format
 	 */
 	isValid(value: string): boolean {
 		const parts = this._splitValueByDelimiter(value);
@@ -236,7 +236,9 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	}
 
 	/**
-	 * @override
+	 * Checks if a date is between the minimum and maximum date.
+	 * @public
+	 * @param value A value to be checked
 	 */
 	isInValidRange(value: string): boolean {
 		return this._splitValueByDelimiter(value).every(dateString => super.isInValidRange(dateString));
@@ -283,8 +285,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 			return super._modifyDateValue(amount, unit, preserveDate);
 		}
 
-		const input = this._getInput();
-		let caretPos: number = input.getCaretPosition()!; // caret position is always number for input of type text;
+		let caretPos: number = this._dateTimeInput.getCaretPosition()!; // caret position is always number for input of type text;
 		let newValue: string;
 
 		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date -> change it and keep the second date
@@ -305,7 +306,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
 		await renderFinished();
-		input.setCaretPosition(caretPos); // Return the caret to the previous (or the adjusted, if dates flipped) position after rendering
+		this._dateTimeInput.setCaretPosition(caretPos); // Return the caret to the previous (or the adjusted, if dates flipped) position after rendering
 	}
 
 	get _effectiveDelimiter(): string {

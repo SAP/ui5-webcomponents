@@ -3,12 +3,12 @@ import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { locationOpen } from "@ui5/webcomponents-base/dist/Location.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import {
@@ -21,27 +21,25 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
+import "./BreadcrumbsItem.js";
+import type BreadcrumbsItem from "./BreadcrumbsItem.js";
 import type BreadcrumbsSeparator from "./types/BreadcrumbsSeparator.js";
-import BreadcrumbsItem from "./BreadcrumbsItem.js";
+
 import {
 	BREADCRUMB_ITEM_POS,
 	BREADCRUMBS_ARIA_LABEL,
 	BREADCRUMBS_OVERFLOW_ARIA_LABEL,
 	BREADCRUMBS_CANCEL_BUTTON,
+	FORM_SELECTABLE_AVALIABLE_VALUES,
 } from "./generated/i18n/i18n-defaults.js";
-import Link from "./Link.js";
+import type Link from "./Link.js";
 import type { LinkClickEventDetail } from "./Link.js";
-import Label from "./Label.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import List from "./List.js";
+import type Label from "./Label.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
 import type { ListSelectionChangeEventDetail } from "./List.js";
-import ListItemStandard from "./ListItemStandard.js";
-import Icon from "./Icon.js";
-import Button from "./Button.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 // Templates
-import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.js";
+import BreadcrumbsTemplate from "./BreadcrumbsTemplate.js";
 
 // Styles
 import breadcrumbsCss from "./generated/themes/Breadcrumbs.css.js";
@@ -49,10 +47,10 @@ import breadcrumbsPopoverCss from "./generated/themes/BreadcrumbsPopover.css.js"
 
 type BreadcrumbsItemClickEventDetail = {
 	item: BreadcrumbsItem;
-	altKey: boolean;
-	ctrlKey: boolean;
-	metaKey: boolean;
-	shiftKey: boolean;
+	altKey?: boolean;
+	ctrlKey?: boolean;
+	metaKey?: boolean;
+	shiftKey?: boolean;
 }
 
 type FocusAdaptor = ITabbable & {
@@ -92,19 +90,9 @@ type FocusAdaptor = ITabbable & {
 @customElement({
 	tag: "ui5-breadcrumbs",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: BreadcrumbsTemplate,
 	styles: [breadcrumbsCss, breadcrumbsPopoverCss],
-	dependencies: [
-		BreadcrumbsItem,
-		Link,
-		Label,
-		ResponsivePopover,
-		List,
-		ListItemStandard,
-		Icon,
-		Button,
-	],
 })
 /**
  * Fires when a `BreadcrumbsItem` is clicked.
@@ -117,33 +105,14 @@ type FocusAdaptor = ITabbable & {
  * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  * @public
  */
-@event<BreadcrumbsItemClickEventDetail>("item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-		/**
-		 * @public
-		 */
-		altKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		ctrlKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		metaKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		shiftKey: { type: Boolean },
-	},
+@event("item-click", {
 	bubbles: true,
 	cancelable: true,
 })
 class Breadcrumbs extends UI5Element {
+	eventDetails!: {
+		"item-click": BreadcrumbsItemClickEventDetail,
+	}
 	/**
 	 * Defines the visual appearance of the last BreadcrumbsItem.
 	 *
@@ -280,6 +249,14 @@ class Breadcrumbs extends UI5Element {
 		return items;
 	}
 
+	/**
+	 * Returns the translatable accessible name for the popover
+	 * @private
+	 */
+	get _accessibleNamePopover() {
+		return Breadcrumbs.i18nBundle.getText(FORM_SELECTABLE_AVALIABLE_VALUES);
+	}
+
 	_onfocusin(e: FocusEvent) {
 		const target = e.target,
 			labelWrapper = this.getCurrentLocationLabelWrapper(),
@@ -404,7 +381,7 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e.detail;
 
-		if (!this.fireDecoratorEvent<BreadcrumbsItemClickEventDetail>("item-click", {
+		if (!this.fireDecoratorEvent("item-click", {
 			item,
 			altKey,
 			ctrlKey,
@@ -425,7 +402,7 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e;
 
-		this.fireDecoratorEvent<BreadcrumbsItemClickEventDetail>("item-click", {
+		this.fireDecoratorEvent("item-click", {
 			item,
 			altKey,
 			ctrlKey,
@@ -573,6 +550,16 @@ class Breadcrumbs extends UI5Element {
 	get _overflowItemsData() {
 		return this._getItems()
 			.slice(0, this._overflowSize)
+			.filter(item => this._isItemVisible(item))
+			.reverse();
+	}
+
+	/**
+	 * Returns all items that should be displayed in the popover on mobile devices
+	 * @private
+	 */
+	get _mobilePopoverItems() {
+		return this._getItems()
 			.filter(item => this._isItemVisible(item))
 			.reverse();
 	}
