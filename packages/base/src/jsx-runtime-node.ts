@@ -50,7 +50,8 @@ export function jsx(type: string | typeof UI5Element, props: Record<string, any>
 		Object.keys(props).forEach(prop => {
 			el[prop] = props[prop];
 		});
-		const template = _jsx("template", {children: el.render()});
+		el.onBeforeRendering();
+		const template = _jsx("template", {shadowrootmode: "open", children: [el.render(), _jsx("style", { dangerouslySetInnerHTML: { __html: type.styles.toString() } })]});
 		props.children = props.children || [];
 		props.children.push(template);
 	}

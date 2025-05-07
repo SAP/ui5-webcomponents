@@ -17,7 +17,19 @@ export default function withSsr(h: any) {
 				if (Array.isArray(props.children)) {
 					// @ts-expect-error
 					// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-					instance.children = props.children.map(child => child.__instance);
+					instance.children = props.children.map(child => {
+						let childInstance;
+						if (typeof child.type === "function") {
+							const vdom = child.type.call(instance, child.props);
+							// console.log("child vdom", vdom);
+							childInstance = vdom.__instance;
+						}
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+						return childInstance || child.__instance;
+					});
+					// @ts-expect-error
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+					instance.childNodes = instance.children.map(child => typeof child === "string" && { nodeType: 3, value: child });
 				}
 				if (typeof props.children === "string") {
 					instance.textContent = props.children;
@@ -49,15 +61,17 @@ export default function withSsr(h: any) {
 
 		if (shadowDom) {
 			props.children = props.children || [];
-			if (!Array.isArray(props.children)) {
-				props.children = [props.children];
+			if (props.children[0] && props.children[0].type !== "template") {
+				if (!Array.isArray(props.children)) {
+					props.children = [props.children];
+				}
+				props.children.unshift(h("template", { shadowrootmode: "open", children: [shadowDom, h("style", { dangerouslySetInnerHTML: { __html: (component as typeof UI5Element).styles } })] }));
 			}
-			props.children.unshift(h("template", { shadowrootmode: "open", children: shadowDom }));
 		}
 
 		const tag = typeof component === "string" ? component : component.getMetadata().getTag();
 		const vdom = h(tag, { ...props, ...attributes });
 		vdom.__instance = instance;
 		return vdom as unknown;
-	}
+	};
 }

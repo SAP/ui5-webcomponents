@@ -462,9 +462,9 @@ abstract class UI5Element extends HTMLElement {
 				const shouldWaitForCustomElement = !isSSR && localName.includes("-") && !shouldIgnoreCustomElement(localName);
 
 				if (shouldWaitForCustomElement) {
-					throw new Error(`Custom element "${localName}" is not defined yet. Please make sure to import the definition before using it.`); // eslint-disable-line
-					// const isDefined = customElements.get(localName);
-					// if (!isDefined) {
+					const isDefined = customElements.get(localName);
+					if (!isDefined) {
+						throw new Error(`Custom element "${localName}" is not defined yet. Please make sure to import the definition before using it.`); // eslint-disable-line
 					// 	const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
 					// 	let timeoutPromise = elementTimeouts.get(localName);
 					// 	if (!timeoutPromise) {
@@ -472,7 +472,7 @@ abstract class UI5Element extends HTMLElement {
 					// 		elementTimeouts.set(localName, timeoutPromise);
 					// 	}
 					// 	await Promise.race([whenDefinedPromise, timeoutPromise]);
-					// }
+					}
 					// customElements.upgrade(child);
 				}
 			}
@@ -482,7 +482,7 @@ abstract class UI5Element extends HTMLElement {
 			}
 
 			// Listen for any invalidation on the child if invalidateOnChildChange is true or an object (ignore when false or not set)
-			if (instanceOfUI5Element(child) && slotData.invalidateOnChildChange) {
+			if (!isSSR && instanceOfUI5Element(child) && slotData.invalidateOnChildChange) {
 				const childChangeListener = this._getChildChangeListener(slotName);
 				child.attachInvalidate.call(child, childChangeListener);
 			}
