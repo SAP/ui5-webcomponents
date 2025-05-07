@@ -308,8 +308,6 @@ class Menu extends UI5Element {
 			}
 		});
 
-		console.warn(items);
-
 		return items;
 	}
 

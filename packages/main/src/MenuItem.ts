@@ -447,8 +447,6 @@ class MenuItem extends ListItem implements IMenuItem {
 			}
 		});
 
-		console.warn(items);
-
 		return items;
 	}
 
