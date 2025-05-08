@@ -11,9 +11,11 @@
 <body style="background-color: var(--sapBackgroundColor)">
     <!-- playground-fold-end -->
 
-        <ui5-shellbar primary-title="Product name">
+        <ui5-shellbar>
+            <ui5-shellbar-branding slot="branding" branding-title="Product name">
+                <img slot="logo" src="../assets/images/sap-logo-svg.svg" />
+            </ui5-shellbar-branding>
             <ui5-button icon="nav-back" slot="startButton"></ui5-button>
-            <img slot="logo" src="../assets/images/sap-logo-svg.svg" />
 
             <ui5-tag color-scheme="7" slot="content" design="Information">Trial</ui5-tag>
             <ui5-text slot="content">EMEA</ui5-text>
