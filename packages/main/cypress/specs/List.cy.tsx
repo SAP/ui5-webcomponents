@@ -1,3 +1,4 @@
+import type UI5Element from "@ui5/webcomponents-base";
 import List from "../../src/List.js";
 import ListItemStandard from "../../src/ListItemStandard.js";
 
@@ -254,5 +255,55 @@ describe("List - Wrapping Behavior", () => {
 			.shadow()
 			.find("ui5-expandable-text")
 			.should("not.exist");
+	});
+});
+
+describe("List - getFocusDomRef Method", () => {
+	it("should return undefined when the list is empty", () => {
+		cy.mount(<List></List>);
+
+		cy.get<List>("[ui5-list]")
+			.then(($el) => {
+				expect($el[0].getFocusDomRef()).to.be.undefined;
+			});
+	});
+
+	it("should return first item if no item was focused before", () => {
+		cy.mount(
+			<List>
+				<ListItemStandard id="item1">Item 1</ListItemStandard>
+				<ListItemStandard>Item 2</ListItemStandard>
+				<ListItemStandard>Item 3</ListItemStandard>
+			</List>
+		);
+
+		cy.get<UI5Element>("[ui5-list], #item1")
+			.then(($el) => {
+				const list = $el[0];
+				const item = $el[1];
+
+				expect(list.getFocusDomRef()).to.equal(item.getFocusDomRef());
+			});
+	});
+
+	it("should return last focused item in the list", () => {
+		cy.mount(
+			<List>
+				<ListItemStandard>Item 1</ListItemStandard>
+				<ListItemStandard id="item2">Item 2</ListItemStandard>
+				<ListItemStandard>Item 3</ListItemStandard>
+			</List>
+		);
+
+		cy.get("#item2").click();
+		cy.get("#item2").should("be.focused");
+
+		cy.get<UI5Element>("[ui5-list], #item2")
+			.then(($el) => {
+				const list = $el[0];
+				const item = $el[1];
+
+				expect(list.getFocusDomRef()).to.equal(item.getFocusDomRef());
+			});
 	});
 });
