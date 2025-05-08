@@ -526,9 +526,10 @@ class Button extends UI5Element implements IButton {
 	get ariaLabelText() {
 		const ariaLabelText = getEffectiveAriaLabelText(this) || "";
 		const typeLabelText = this.hasButtonType ? this.buttonTypeText : "";
-		const internalLabelText = `${typeLabelText} ${this.effectiveBadgeDescriptionText}`.trim();
+		const internalLabelText = this.effectiveBadgeDescriptionText || "";
 
-		return `${ariaLabelText} ${internalLabelText}`.trim();
+		const labelParts = [ariaLabelText, typeLabelText, internalLabelText].filter(part => part);
+		return labelParts.join(" ");
 	}
 
 	get ariaDescriptionText() {
@@ -542,6 +543,9 @@ class Button extends UI5Element implements IButton {
 
 		const badgeEffectiveText = this.badge[0].effectiveText;
 
+		// Use distinct i18n keys for singular and plural badge values to ensure proper localization.
+		// Some languages have different grammatical rules for singular and plural forms,
+		// so separate keys (BUTTON_BADGE_ONE_ITEM and BUTTON_BADGE_MANY_ITEMS) are necessary.
 		switch (badgeEffectiveText) {
 		case "":
 			return badgeEffectiveText;
