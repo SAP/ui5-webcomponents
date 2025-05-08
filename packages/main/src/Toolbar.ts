@@ -322,11 +322,13 @@ class Toolbar extends UI5Element {
 		overflowPopover.opener = this.overflowButtonDOM!;
 		overflowPopover.open = true;
 		this.reverseOverflow = overflowPopover.actualPlacement === "Top";
+		this.overflowItems.forEach(item => item.context._isOverflowed = true);
 	}
 
 	closeOverflow() {
 		const overflowPopover = this.getOverflowPopover();
 		overflowPopover.open = false;
+		this.overflowItems.forEach(item => item.context._isOverflowed = false);
 	}
 
 	toggleOverflow() {
@@ -512,7 +514,7 @@ class Toolbar extends UI5Element {
 		}
 		const id: string = item._id;
 		// Measure rendered width for spacers with width, and for normal items
-		const renderedItem = item;
+		const renderedItem = this.shadowRoot!.querySelector<HTMLElement>(`#${item.slot}`);
 
 		let itemWidth = 0;
 

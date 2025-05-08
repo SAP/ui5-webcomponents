@@ -16,13 +16,13 @@ export default function ToolbarTemplate(this: Toolbar) {
 			{this.standardItems.map(item => {
 				if ("styles" in item.context) {
 					return (
-						<div class="ui5-tb-item" style={item.context.styles as string}>
+						<div class="ui5-tb-item" id={item.context._individualSlot} style={item.context.styles as string}>
 							<slot name={item.context._individualSlot}></slot>
 						</div>
 					);
 				}
 				return (
-					<div class="ui5-tb-item">
+					<div class="ui5-tb-item" id={item.context._individualSlot}>
 						<slot name={item.context._individualSlot}></slot>
 					</div>
 				);
@@ -58,13 +58,13 @@ export default function ToolbarTemplate(this: Toolbar) {
 				{this.overflowItems.map(item => {
 					if (item.context.isSeparator) {
 						return (
-							<div class="ui5-tb-popover-item ui5-tb-separator ui5-tb-separator-in-overflow">
+							<div class="ui5-tb-popover-item ui5-tb-separator ui5-tb-separator-in-overflow" id={item.context._individualSlot}>
 								<slot name={item.context._individualSlot}></slot>
 							</div>
 						);
 					}
 					return (
-						<div class="ui5-tb-popover-item">
+						<div class="ui5-tb-popover-item" id={item.context._individualSlot}>
 							<slot name={item.context._individualSlot}></slot>
 						</div>
 					);

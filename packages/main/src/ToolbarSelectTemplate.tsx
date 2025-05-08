@@ -5,7 +5,7 @@ import Option from "./Option.js";
 export default function ToolbarSelectTemplate(this: ToolbarSelect) {
 	return (
 		<Select
-			class="ui5-tb-item"
+			class={this.class}
 			style={this.styles}
 			data-ui5-external-action-item-id={this._id}
 			valueState={this.valueState}

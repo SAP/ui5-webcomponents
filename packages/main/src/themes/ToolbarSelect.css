@@ -2,6 +2,6 @@
     width: 100%;
 }
 
-:host [ui5-select] {
+.ui5-tb-popover-item {
     width: inherit;
 }

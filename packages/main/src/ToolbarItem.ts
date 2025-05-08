@@ -51,6 +51,8 @@ class ToolbarItem extends UI5Element {
 	@property({ type: Boolean })
 	preventOverflowClosing = false;
 
+	_isOverflowed: boolean = false;
+
 	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
 	* @protected
@@ -114,6 +116,11 @@ class ToolbarItem extends UI5Element {
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
+
+	get class() {
+		return this._isOverflowed ? "ui5-tb-popover-item" : "ui5-tb-item" as string;
+	}
+
 }
 
 export type {

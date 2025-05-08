@@ -4,7 +4,7 @@ import Button from "./Button.js";
 export default function ToolbarButtonTemplate(this: ToolbarButton) {
 	return (
 		<Button
-			class="ui5-tb-button ui5-tb-item"
+			class={this.class}
 			id={this.id}
 			style={{
 				width: this.width || "100%",

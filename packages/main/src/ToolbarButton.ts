@@ -179,6 +179,10 @@ class ToolbarButton extends ToolbarItem {
 			this.fireDecoratorEvent("close-overflow");
 		}
 	}
+
+	get class() {
+		return `${this._isOverflowed ? "ui5-tb-popover-item" : "ui5-tb-item"} ui5-tb-button`;
+	}
 }
 
 ToolbarButton.define();
