@@ -866,10 +866,6 @@ abstract class UI5Element extends HTMLElement {
 		// Update shadow root
 		if (ctor._needsShadowDOM()) {
 			updateShadowRoot(this);
-			if (!this.__shouldStartHydratation) {
-				// When the component is rendered for the first time
-				this.__shouldStartHydratation = true;
-			}
 		}
 		this._rendered = true;
 

@@ -15,9 +15,14 @@ const jsxRenderer: Renderer = (instance: UI5Element, container: HTMLElement | Do
 	}
 
 	const templateResult = instance.render();
-	const fn = instance.__shouldStartHydratation ? hydrate : render;
+	const vnode = jsx(ctx.Provider, { value: instance, children: templateResult });
 
-	fn(jsx(ctx.Provider, { value: instance, children: templateResult }), container);
+	if (instance.__shouldStartHydratation) {
+		hydrate(vnode, container);
+		instance.__shouldStartHydratation = false;
+	} else {
+		render(vnode, container);
+	}
 };
 
 export default jsxRenderer;
