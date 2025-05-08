@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import ToolbarSelectCss from "./generated/themes/ToolbarSelect.css.js";
 
 // Templates
 import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
@@ -35,6 +36,7 @@ type ToolbarSelectChangeEventDetail = ToolbarItemEventDetail & SelectChangeEvent
 	tag: "ui5-toolbar-select",
 	template: ToolbarSelectTemplate,
 	renderer: jsxRenderer,
+	styles: ToolbarSelectCss,
 })
 
 /**
