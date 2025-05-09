@@ -104,6 +104,7 @@
 
 	<div style="float: right">
 		<ui5-checkbox id="collapsed" text="Collapsed"></ui5-checkbox>
+		<ui5-checkbox id="disable" text="disable group 1"></ui5-checkbox>
 		<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
 		<br>
 		<ui5-label for="slider" show-colon>Change width</ui5-label>
@@ -122,6 +123,10 @@
 		const densityBtn = document.getElementById("density");
 		density.addEventListener("change", e => {
 			document.body.classList.toggle("ui5-content-density-compact", e.target.checked);
+		});
+
+		document.getElementById("disable").addEventListener("change", e => {
+			document.getElementById("group1").toggleAttribute("disabled", e.target.checked);
 		});
 
 		slider.addEventListener("ui5-input", function (event) {
