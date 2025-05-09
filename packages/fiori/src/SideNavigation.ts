@@ -142,6 +142,15 @@ class SideNavigation extends UI5Element {
 	collapsed = false;
 
 	/**
+	 * Defines the accessible ARIA name of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.9.0
+	 */
+	@property()
+	accessibleName?: string;
+
+	/**
 	 * Defines the main items of the component.
 	 *
 	 * @public
@@ -181,6 +190,13 @@ class SideNavigation extends UI5Element {
 
 	@property({ type: Object })
 	_menuPopoverItems: Array<SideNavigationItem> = [];
+
+	/**
+	 * Defines if the component is rendered on a mobile device.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	isPhone = isPhone();
 
 	_isOverflow = false;
 	_flexibleItemNavigation: ItemNavigation;
@@ -237,7 +253,7 @@ class SideNavigation extends UI5Element {
 		if (selectedItem) {
 			selectedItem.focus();
 		} else {
-			tree.items[0]?.focus();
+			tree.items[0]?.applyInitialFocusInPopover();
 		}
 	}
 
@@ -280,6 +296,10 @@ class SideNavigation extends UI5Element {
 
 	handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
 		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
+
+		if (isInstanceOfSideNavigationItem(associatedItem) && associatedItem.unselectable) {
+			return;
+		}
 
 		e.stopPropagation();
 
@@ -581,7 +601,7 @@ class SideNavigation extends UI5Element {
 
 		this.overflowItems.forEach(item => {
 			if (isInstanceOfSideNavigationItem(item) && item.classList.contains(overflowClass)) {
-				 result.push(item);
+				result.push(item);
 			}
 		});
 

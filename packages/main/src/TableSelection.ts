@@ -18,7 +18,7 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
  *
  * ### Overview
  *
- * The `ui5-table-selection` component is used inside the `ui5-table` ti add key-based selection capabilities to the `ui5-table`.
+ * The `ui5-table-selection` component is used inside the `ui5-table` to add key-based selection capabilities to the `ui5-table`.
  *
  * The component offers three selection modes:
  * * Single - select a single row.
@@ -48,11 +48,12 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
  * @since 2.0.0
  * @public
  * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
+ * @deprecated This component is deprecated and will be removed in future releases. Use the `ui5-table-selection-single` or `ui5-table-selection-multi` components instead.
  */
 @customElement({ tag: "ui5-table-selection" })
 
 /**
- * Fired when selection is changed by user interaction.
+ * Fired when the selection is changed by user interaction.
  *
  * @public
  */
@@ -84,6 +85,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 	readonly identifier = "TableSelection";
 	_table?: Table;
+	_rowsLength = 0;
 	_rangeSelection?: {selected: boolean, isUp: boolean | null, rows: TableRow[], isMouse: boolean, shiftPressed: boolean} | null;
 
 	onTableActivate(table: Table) {
@@ -101,20 +103,27 @@ class TableSelection extends UI5Element implements ITableFeature {
 		this._invalidateTableAndRows();
 	}
 
+	onTableBeforeRendering() {
+		if (this.isMultiSelectable() && this._table && this._table.headerRow[0] && this._rowsLength !== this._table.rows.length) {
+			this._rowsLength = this._table.rows.length;
+			this._table.headerRow[0]._invalidate++;
+		}
+	}
+
 	isSelectable(): boolean {
 		return this.mode !== TableSelectionMode.None;
 	}
 
-	isMultiSelect(): boolean {
+	isMultiSelectable(): boolean {
 		return this.mode === TableSelectionMode.Multiple;
 	}
 
-	hasRowSelector(): boolean {
+	isRowSelectorRequired(): boolean {
 		return this.mode !== TableSelectionMode.None;
 	}
 
-	getRowIdentifier(row: TableRow): string {
-		return row.rowKey;
+	getRowKey(row: TableRow): string {
+		return row.rowKey || "";
 	}
 
 	isSelected(row: TableRowBase): boolean {
@@ -126,8 +135,8 @@ class TableSelection extends UI5Element implements ITableFeature {
 			return this.areAllRowsSelected();
 		}
 
-		const rowIdentifier = this.getRowIdentifier(row as TableRow);
-		return this.selectedAsArray.includes(rowIdentifier);
+		const rowKey = this.getRowKey(row as TableRow);
+		return this.selectedAsArray.includes(rowKey);
 	}
 
 	hasSelectedRow(): boolean {
@@ -137,8 +146,8 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 		const selectedArray = this.selectedAsArray;
 		return this._table.rows.some(row => {
-			const rowIdentifier = this.getRowIdentifier(row);
-			return selectedArray.includes(rowIdentifier);
+			const rowKey = this.getRowKey(row);
+			return selectedArray.includes(rowKey);
 		});
 	}
 
@@ -149,20 +158,24 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 		const selectedArray = this.selectedAsArray;
 		return this._table.rows.every(row => {
-			const rowIdentifier = this.getRowIdentifier(row);
-			return selectedArray.includes(rowIdentifier);
+			const rowKey = this.getRowKey(row);
+			return selectedArray.includes(rowKey);
 		});
 	}
 
-	informSelectionChange(row: TableRowBase) {
+	setSelected(row: TableRowBase, selected: boolean, fireEvent = false) {
 		if (this._rangeSelection?.isMouse && this._rangeSelection.shiftPressed) {
 			return;
 		}
 
 		if (row.isHeaderRow()) {
-			this._informHeaderRowSelectionChange();
+			this._selectHeaderRow(selected);
 		} else {
-			this._informRowSelectionChange(row as TableRow);
+			this._selectRow(row as TableRow, selected);
+		}
+
+		if (fireEvent) {
+			this.fireDecoratorEvent("change");
 		}
 	}
 
@@ -183,31 +196,23 @@ class TableSelection extends UI5Element implements ITableFeature {
 	}
 
 	_selectRow(row: TableRow, selected: boolean) {
-		const rowIdentifier = this.getRowIdentifier(row);
+		const rowKey = this.getRowKey(row);
 		if (this.mode === TableSelectionMode.Multiple) {
 			const selectedSet = this.selectedAsSet;
-			selectedSet[selected ? "add" : "delete"](rowIdentifier);
+			selectedSet[selected ? "add" : "delete"](rowKey);
 			this.selectedAsSet = selectedSet;
 		} else {
-			this.selected = selected ? rowIdentifier : "";
+			this.selected = selected ? rowKey : "";
 		}
 	}
 
-	_informRowSelectionChange(row: TableRow) {
-		const isRowSelected = this.isMultiSelect() ? !this.isSelected(row) : true;
-		this._selectRow(row, isRowSelected);
-		this.fireDecoratorEvent("change");
-	}
-
-	_informHeaderRowSelectionChange() {
-		const isRowSelected = this.areAllRowsSelected();
+	_selectHeaderRow(selected: boolean) {
 		const selectedSet = this.selectedAsSet;
 		this._table!.rows.forEach(row => {
-			const rowIdentifier = this.getRowIdentifier(row);
-			selectedSet[isRowSelected ? "delete" : "add"](rowIdentifier);
+			const rowKey = this.getRowKey(row);
+			selectedSet[selected ? "add" : "delete"](rowKey);
 		});
 		this.selectedAsSet = selectedSet;
-		this.fireDecoratorEvent("change");
 	}
 
 	_invalidateTableAndRows() {
@@ -217,7 +222,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 		if (!this.isSelectable()) {
 			this.selected = "";
-		} else if (!this.isMultiSelect()) {
+		} else if (!this.isMultiSelectable()) {
 			this.selected = this.selectedAsArray.shift() || "";
 		}
 
@@ -227,7 +232,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (!this.isMultiSelect() || !this._table || !e.shiftKey) {
+		if (!this.isMultiSelectable() || !this._table || !e.shiftKey) {
 			return;
 		}
 
@@ -240,7 +245,8 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 		if (!this._rangeSelection) {
 			// If no range selection is active, start one
-			this._startRangeSelection(focusedElement as TableRow);
+			const row = focusedElement as TableRow;
+			this._startRangeSelection(row, this.isSelected(row));
 		} else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
 			const change = isUpShift(e) ? -1 : 1;
 			this._handleRangeSelection(focusedElement as TableRow, change);
@@ -267,7 +273,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	}
 
 	_onclick(e: MouseEvent) {
-		if (!this._table) {
+		if (!this._table || this.mode !== TableSelectionMode.Multiple) {
 			return;
 		}
 
@@ -292,6 +298,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			// Therefore, we need to manually set the checked attribute again, as clicking it would deselect it and leads to
 			// a visual inconsistency.
 			row.shadowRoot?.querySelector("#selection-component")?.toggleAttribute("checked", true);
+			e.stopImmediatePropagation();
 
 			if (startIndex === -1 || endIndex === -1 || row.rowKey === startRow.rowKey || row.rowKey === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].rowKey) {
 				return;
@@ -300,7 +307,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			const change = endIndex - startIndex;
 			this._handleRangeSelection(row, change);
 		} else if (row) {
-			this._startRangeSelection(row, true);
+			this._startRangeSelection(row, !this.isSelected(row), true);
 		}
 	}
 
@@ -309,13 +316,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	 * @param row starting row
 	 * @private
 	 */
-	_startRangeSelection(row: TableRow, isMouse = false) {
-		const selected = this.isSelected(row);
-		if (isMouse && !selected) {
-			// Do not initiate range selection if the row is not selected
-			return;
-		}
-
+	_startRangeSelection(row: TableRow, selected: boolean, isMouse = false) {
 		this._rangeSelection = {
 			selected,
 			isUp: null,

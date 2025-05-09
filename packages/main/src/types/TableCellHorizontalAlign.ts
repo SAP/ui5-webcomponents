@@ -2,6 +2,7 @@
  * Alignment of the &lt;ui5-table-cell&gt; component.
  *
  * @public
+ * @experimental
  */
 enum TableCellHorizontalAlign {
     /**

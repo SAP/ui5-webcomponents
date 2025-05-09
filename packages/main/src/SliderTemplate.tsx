@@ -35,6 +35,7 @@ export function handles(this: Slider) {
 			<div class="ui5-slider-handle"
 				onFocusOut={this._onfocusout}
 				onFocusIn={this._onfocusin}
+				onKeyUp={this._onkeyup}
 				role="slider"
 				tabIndex={this._tabIndex}
 				aria-orientation="horizontal"
@@ -43,7 +44,7 @@ export function handles(this: Slider) {
 				aria-valuenow={this.value}
 				aria-labelledby={this._ariaLabelledByHandleText}
 				aria-disabled={this._ariaDisabled}
-				aria-keyshortcuts="F2"
+				aria-keyshortcuts={this._ariaKeyshortcuts}
 				aria-describedby={this._ariaDescribedByHandleText}
 				data-sap-focus-ref
 				part="handle"

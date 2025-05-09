@@ -5,9 +5,10 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import type { LinkAccessibilityAttributes } from "./Link.js";
-import type ResponsivePopover from "./ResponsivePopover.js";
 import ExpandableTextOverflowMode from "./types/ExpandableTextOverflowMode.js";
+import type Button from "./Button.js";
 import type TextEmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 import {
 	EXPANDABLE_TEXT_SHOW_LESS,
@@ -169,15 +170,7 @@ class ExpandableText extends UI5Element {
 		this._expanded = !this._expanded;
 	}
 
-	_handleToggleMousedown(e: MouseEvent) {
-		if (this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")?.open) {
-			// Workaround for PopoverRegistry handler that closes the popover on mousedown,
-			//  resulting in "click" event with wrong _expanded state
-			e.stopPropagation();
-		}
-	}
-
-	_handleCloseButtonClick(e: MouseEvent) {
+	_handleCloseButtonClick(e: UI5CustomEvent<Button, "click">) {
 		this._expanded = false;
 		e.stopPropagation();
 	}

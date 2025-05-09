@@ -24,6 +24,7 @@ import {
 	DELETE,
 	ARIA_LABEL_LIST_ITEM_CHECKBOX,
 	ARIA_LABEL_LIST_ITEM_RADIO_BUTTON,
+	LIST_ITEM_ACTIVE,
 	LIST_ITEM_SELECTED,
 	LIST_ITEM_NOT_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
@@ -191,6 +192,14 @@ abstract class ListItem extends ListItemBase {
 	_selectionMode: `${ListSelectionMode}` = "None";
 
 	/**
+	 * Defines the current media query size.
+	 * @default "S"
+	 * @private
+	 */
+	@property()
+	mediaRange = "S";
+
+	/**
 	 * Defines the delete button, displayed in "Delete" mode.
 	 * **Note:** While the slot allows custom buttons, to match
 	 * design guidelines, please use the `ui5-button` component.
@@ -207,8 +216,6 @@ abstract class ListItem extends ListItemBase {
 	accessibleName?: string;
 	// used in ListItem template but implemented in TreeItemBase
 	indeterminate?: boolean;
-	// Used in UploadCollectionItem
-	disableDeleteButton?: boolean;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -416,17 +423,6 @@ abstract class ListItem extends ListItemBase {
 		return this._selectionMode === ListSelectionMode.Delete;
 	}
 
-	/**
-	 * Used in UploadCollectionItem
-	 */
-	get renderDeleteButton() {
-		return this.modeDelete;
-	}
-
-	/**
-	 * End
-	 */
-
 	get typeDetail() {
 		return this.type === ListItemType.Detail;
 	}
@@ -481,6 +477,16 @@ abstract class ListItem extends ListItemBase {
 
 		// accessibleName is not set - return _accInfo.listItemAriaLabel including content
 		return `${this._id}-content ${this._id}-invisibleText`;
+	}
+
+	get ariaLabelledByText() {
+		const texts = [
+			this._accInfo.listItemAriaLabel,
+			this.accessibleName,
+			this.typeActive ? ListItem.i18nBundle.getText(LIST_ITEM_ACTIVE) : undefined,
+		].filter(Boolean);
+
+		return texts.join(" ");
 	}
 
 	get _accInfo(): AccInfo {

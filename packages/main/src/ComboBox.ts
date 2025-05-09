@@ -7,12 +7,11 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone, isAndroid } from "@ui5/webcomponents-base/dist/Device.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/not-editable.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -174,6 +173,22 @@ type ComboBoxSelectionChangeEventDetail = {
 })
 
 /**
+ * Fired when the dropdown is opened.
+ * @since 2.9.0
+ * @public
+ */
+@event("open", {
+	bubbles: true,
+})
+
+/**
+ * Fired when the dropdown is closed.
+ * @since 2.9.0
+ * @public
+ */
+@event("close")
+
+/**
  * Fired when typing in input or clear icon is pressed.
  *
  * **Note:** filterValue property is updated, input is changed.
@@ -195,6 +210,8 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	eventDetails!: {
 		"change": void,
 		"input": void,
+		"open": void,
+		"close": void,
 		"selection-change": ComboBoxSelectionChangeEventDetail,
 	}
 	/**
@@ -364,10 +381,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Indicates whether the items picker is open.
-	 * @private
-	 * @since 2.0.0
+	 * @public
+	 * @since 2.9.0
 	 */
-	@property({ type: Boolean, noAttribute: true })
+	@property({ type: Boolean })
 	open = false;
 
 	/**
@@ -491,6 +508,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this.focused = true;
 		this._autocomplete = false;
 
+		if (!e.relatedTarget || (e.relatedTarget !== this.shadowRoot!.querySelector(".ui5-input-clear-icon"))) {
+			this._lastValue = this.value;
+		}
+
 		!isPhone() && (e.target as HTMLInputElement).setSelectionRange(0, this.value.length);
 	}
 
@@ -527,6 +548,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_afterOpenPopover() {
 		this._iconPressed = true;
 		this.inner.focus();
+		this.fireDecoratorEvent("open");
 	}
 
 	_afterClosePopover() {
@@ -546,6 +568,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		this.open = false;
+		this.fireDecoratorEvent("close");
 	}
 
 	_toggleRespPopover() {
@@ -1058,7 +1081,8 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const matchingItems: Array<IComboBoxItem> = this._startsWithMatchingItems(current);
 
 		if (matchingItems.length) {
-			return matchingItems[0];
+			const exactMatch = matchingItems.find(item => item.text === current);
+			return exactMatch ?? matchingItems[0];
 		}
 	}
 
@@ -1327,7 +1351,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get ariaLabelText(): string | undefined {
-		return getEffectiveAriaLabelText(this);
+		return getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
 	}
 
 	get clearIconAccessibleName() {

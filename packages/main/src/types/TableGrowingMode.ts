@@ -2,6 +2,7 @@
  * Growing mode of the &lt;ui5-table&gt; component.
  *
  * @public
+ * @experimental
  */
 enum TableGrowingMode {
 	/**

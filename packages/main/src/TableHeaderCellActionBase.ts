@@ -1,10 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { customElement, eventStrict } from "@ui5/webcomponents-base/dist/decorators.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TableHeaderCellActionBaseTemplate from "./generated/templates/TableHeaderCellActionBaseTemplate.lit.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
+import TableHeaderCellActionBaseTemplate from "./TableHeaderCellActionBaseTemplate.js";
 import TableHeaderCellActionBaseStyles from "./generated/themes/TableHeaderCellActionBase.css.js";
-import Button from "./Button.js";
 import type TableCell from "./TableCell.js";
+import type Button from "./Button.js";
 
 /**
  * Fired when a header cell action is clicked.
@@ -38,10 +39,9 @@ type TableHeaderCellActionClickEventDetail = {
  * @public
  */
 @customElement({
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TableHeaderCellActionBaseStyles,
 	template: TableHeaderCellActionBaseTemplate,
-	dependencies: [Button],
 })
 abstract class TableHeaderCellActionBase extends UI5Element {
 	eventDetails!: {
@@ -57,8 +57,9 @@ abstract class TableHeaderCellActionBase extends UI5Element {
 		this.toggleAttribute("_popin", !this.parentElement);
 	}
 
-	_onClick(e: MouseEvent) {
-		const action = this.parentElement ? this : ((this.getRootNode() as ShadowRoot).host as TableCell)._headerCell.action[0] as this;
+	_onClick(e: UI5CustomEvent<Button, "click">) {
+		// Retrieve the real action (if parent is header cell this instance is fine, otherwise retrieve it from the header cell)
+		const action = this.parentElement?.hasAttribute("ui5-table-header-cell") ? this : ((this.getRootNode() as ShadowRoot).host as TableCell)._headerCell.action[0] as this;
 		action.fireDecoratorEvent("click", { targetRef: e.target as HTMLElement });
 		e.stopPropagation();
 	}

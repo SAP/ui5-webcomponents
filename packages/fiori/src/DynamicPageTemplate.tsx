@@ -58,7 +58,6 @@ function headerActions(this: DynamicPage) {
 				snapped={this.headerSnapped}
 				pinned={this.headerPinned}
 				hidePinButton={this.hidePinButton}
-				accessibilityAttributes={this._accAttributesForHeaderActions}
 				onui5-expand-button-click={this.onExpandClick}
 				onui5-pin-button-click={this.onPinClick}
 				onui5-expand-button-hover-in={this.onExpandHoverIn}

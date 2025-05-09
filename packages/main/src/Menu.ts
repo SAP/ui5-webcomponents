@@ -24,6 +24,7 @@ import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import type MenuItem from "./MenuItem.js";
 import "./MenuItem.js";
 import "./MenuSeparator.js";
@@ -184,13 +185,21 @@ class Menu extends UI5Element {
 	headerText?: string;
 
 	/**
-	 * Indicates if the menu is open
+	 * Indicates if the menu is open.
 	 * @public
 	 * @default false
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
 	open = false;
+
+	/**
+	 * Determines the horizontal alignment of the menu relative to its opener control.
+	 * @default "Start"
+	 * @public
+	 */
+	@property()
+	horizontalAlign: `${PopoverHorizontalAlign}` = "Start";
 
 	/**
 	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
@@ -202,7 +211,7 @@ class Menu extends UI5Element {
 	loading = false;
 
 	/**
-	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover..
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
@@ -302,7 +311,7 @@ class Menu extends UI5Element {
 			// respect mouseover only on desktop
 			const item = e.target as MenuItem;
 
-			if (item.hasAttribute("ui5-menu-item")) {
+			if (this._isInstanceOfMenuItem(item)) {
 				item.focus();
 
 				// Opens submenu with 300ms delay
@@ -359,9 +368,9 @@ class Menu extends UI5Element {
 		const parentElement = item.parentElement as MenuItem;
 		const shouldItemNavigation = isUp(e) || isDown(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
-		const shouldCloseMenu = !shouldItemNavigation && !shouldOpenMenu && parentElement.hasAttribute("ui5-menu-item");
+		const shouldCloseMenu = !shouldItemNavigation && !shouldOpenMenu && this._isInstanceOfMenuItem(parentElement);
 
-		if (item.hasAttribute("ui5-menu-item")) {
+		if (this._isInstanceOfMenuItem(item)) {
 			if (isEnter(e) || isTabNextPrevious) {
 				e.preventDefault();
 			}
@@ -419,6 +428,10 @@ class Menu extends UI5Element {
 	_afterPopoverClose() {
 		this.open = false;
 		this.fireDecoratorEvent("close");
+	}
+
+	_isInstanceOfMenuItem(object: any): object is MenuItem {
+		return "isMenuItem" in object;
 	}
 }
 

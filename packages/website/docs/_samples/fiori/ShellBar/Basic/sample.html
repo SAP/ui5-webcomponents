@@ -12,19 +12,23 @@
     <!-- playground-fold-end -->
 
         <ui5-shellbar primary-title="Product name">
-            <ui5-tag color-scheme="7" slot="content" data-hide-order="4" design="Information">Trial</ui5-tag>
-            <ui5-text slot="content" data-hide-order="3">EMEA</ui5-text>
-            <ui5-shellbar-spacer slot="content"></ui5-shellbar-spacer>
-            <ui5-avatar slot="profile" icon="customer"></ui5-avatar>
-            <img slot="logo" src="../assets/images/sap-logo-svg.svg" />
-            <ui5-shellbar-spacer slot="content"></ui5-shellbar-spacer>
-            <ui5-button slot="content" text="Edit" data-hide-order="2">Edit</ui5-button>
-            <ui5-switch design="Textual" data-hide-order="1" text-on="new" text-off="old" slot="content" checked="true"></ui5-switch>
             <ui5-button icon="nav-back" slot="startButton"></ui5-button>
-            <ui5-input placeholder="Instructions" slot="searchField" show-suggestions value-state="Information">
-                <div slot="valueStateMessage">Instructions</div>
-            </ui5-input>
+            <img slot="logo" src="../assets/images/sap-logo-svg.svg" />
+
+            <ui5-tag color-scheme="7" slot="content" design="Information">Trial</ui5-tag>
+            <ui5-text slot="content">EMEA</ui5-text>
+
+            <ui5-shellbar-spacer slot="content"></ui5-shellbar-spacer>
+
+            <ui5-button slot="content">Edit</ui5-button>
+            <div slot="content" style="display: flex; align-items: center;">
+                <ui5-label>New Version</ui5-label>
+                <ui5-switch checked></ui5-switch>
+            </div>
+
+            <ui5-input placeholder="Instructions" slot="searchField"></ui5-input>
             <ui5-shellbar-item icon="feedback" text="Button5"></ui5-shellbar-item>
+            <ui5-avatar slot="profile" icon="customer"></ui5-avatar>
         </ui5-shellbar>
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>

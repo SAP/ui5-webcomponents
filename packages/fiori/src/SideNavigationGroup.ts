@@ -5,6 +5,8 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import {
 	isLeft,
 	isRight,
+	isMinus,
+	isPlus,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -14,7 +16,8 @@ import type SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationGroupTemplate from "./SideNavigationGroupTemplate.js";
 
 import {
-	SIDE_NAVIGATION_GROUP_HEADER_DESC,
+	SIDE_NAVIGATION_ICON_COLLAPSE,
+	SIDE_NAVIGATION_ICON_EXPAND,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -64,6 +67,28 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
+
+	_initialChildDisabledStates: Map<SideNavigationItemBase, boolean> = new Map();
+
+	onBeforeRendering() {
+		this.allItems.forEach(item => {
+			if (!this._initialChildDisabledStates.has(item)) {
+				this._initialChildDisabledStates.set(item, item.disabled);
+			}
+		});
+
+		this._updateChildItemsDisabledState();
+	}
+
+	_updateChildItemsDisabledState() {
+		this.allItems.forEach(item => {
+			if (this.disabled) {
+				item.disabled = true;
+			} else {
+				item.disabled = this._initialChildDisabledStates.get(item)!;
+			}
+		});
+	}
 
 	get overflowItems() : Array<HTMLElement> {
 		const separator1 = this.shadowRoot!.querySelector<HTMLElement>(".ui5-sn-item-separator:first-child")!;
@@ -126,17 +151,18 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		return "";
 	}
 
-	get accDescription() {
-		return SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_GROUP_HEADER_DESC);
+	get _arrowTooltip() {
+		return this.expanded ? SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_ICON_COLLAPSE)
+			: SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_ICON_EXPAND);
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isLeft(e)) {
+		if (isLeft(e) || isMinus(e)) {
 			this.expanded = false;
 			return;
 		}
 
-		if (isRight(e)) {
+		if (isRight(e) || isPlus(e)) {
 			this.expanded = true;
 		}
 	}
@@ -152,7 +178,9 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	}
 
 	_toggle() {
-		this.expanded = !this.expanded;
+		if (!this.disabled) {
+			this.expanded = !this.expanded;
+		}
 	}
 
 	get isSideNavigationGroup() {

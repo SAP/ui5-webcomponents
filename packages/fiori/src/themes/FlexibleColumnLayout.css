@@ -29,6 +29,10 @@
 	transition: width 560ms cubic-bezier(0.1, 0, 0.05, 1), visibility 560ms ease-in;
 }
 
+.ui5-fcl-column:not(.ui5-fcl-column-collapse-animation) {
+	min-width: 15.5rem; /* as noted in our documentation */
+}
+
 .ui5-fcl-column--hidden {
 	display: none;
 }
@@ -45,11 +49,12 @@
 	border-inline-end: var(--_ui5_fcl_column_border);
 	position: relative;
 	box-sizing: border-box;
+	z-index: 1;
 }
 
-.ui5-fcl-separator:focus {
-	border:var(--_ui5_fcl_separator_focus_border);
-	outline: none;
+.ui5-fcl-separator:focus { 
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
 
 .ui5-fcl-grip {

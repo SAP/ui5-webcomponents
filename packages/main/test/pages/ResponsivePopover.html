@@ -218,6 +218,20 @@
 		<span>Hello World!</span>
 	</ui5-responsive-popover>
 
+	<ui5-button id="btn">Open Responsive Popover With Inner Popover</ui5-button>
+
+	<ui5-responsive-popover id="responsivPopover1" opener="btn">
+		<div slot="header">
+			<ui5-bar>
+				<ui5-button id="btnInner">Open inner popover</ui5-button>
+			</ui5-bar>
+		</div>
+		<span>Content</span>
+	</ui5-responsive-popover>
+
+	<ui5-responsive-popover id="responsivPopover2" opener="btnInner">
+		<span>Content Inner</span>
+	</ui5-responsive-popover>
 	<script>
 		btnOpen.addEventListener("click", function(event) {
 			respPopover.opener = btnOpen;
@@ -323,6 +337,19 @@
 		btnRoleNone.addEventListener("click", function () {
 			rPNoneRole.opener = btnRoleNone;
 			rPNoneRole.open = true;
+		});
+
+		const btn = document.getElementById("btn");
+		const respPopoverNested = document.getElementById("responsivPopover1");;
+		const btnInner = document.getElementById("btnInner");
+		const respPopoverInner2 = document.getElementById("responsivPopover2");
+
+		btn.addEventListener("click", () => {
+			respPopoverNested.open = !respPopoverNested.open;
+		});
+
+		btnInner.addEventListener("click", () => {
+			respPopoverInner2.open = !respPopoverInner2.open;
 		});
 	</script>
 </body>

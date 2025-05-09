@@ -170,3 +170,25 @@ describe("Toolbar general interaction", () => {
 			.should("have.been.calledOnce");
 	});
 });
+
+describe("Accessibility", () => {
+	it("Should apply accessibile-name to the popover", () => {
+		cy.mount(
+			<Toolbar>
+				<ToolbarButton text="Button 1"></ToolbarButton>
+				<ToolbarButton text="Button 2"></ToolbarButton>
+				<ToolbarButton text="Button 3"></ToolbarButton>
+				<ToolbarSelect accessibleName="Select">
+					<ToolbarSelectOption>1</ToolbarSelectOption>
+					<ToolbarSelectOption>2</ToolbarSelectOption>
+					<ToolbarSelectOption>3</ToolbarSelectOption>
+				</ToolbarSelect>
+			</Toolbar>
+		);
+
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-overflow-popover")
+			.should("have.attr", "accessible-name", "Available Values");
+	});
+});

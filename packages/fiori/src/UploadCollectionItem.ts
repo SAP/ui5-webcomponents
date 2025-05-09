@@ -12,6 +12,7 @@ import type Input from "@ui5/webcomponents/dist/Input.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import {
 	isDelete,
 	isEnter,
@@ -157,7 +158,7 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare disableDeleteButton: boolean;
+	disableDeleteButton = false;
 
 	/**
 	 * Hides the delete button.
@@ -303,7 +304,7 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
-	async _onRenameCancel(e: KeyboardEvent | MouseEvent) {
+	async _onRenameCancel(e: KeyboardEvent | UI5CustomEvent<Button, "click">) {
 		this._editing = false;
 
 		if (isEscape(e as KeyboardEvent)) {

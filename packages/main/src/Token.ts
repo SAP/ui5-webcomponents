@@ -166,6 +166,14 @@ class Token extends UI5Element implements IToken {
 		this.fireDecoratorEvent("delete");
 	}
 
+	_onmousedown(e: MouseEvent) {
+		const target = e.currentTarget as HTMLElement;
+
+		if (target === this.shadowRoot?.querySelector("[ui5-icon]")) {
+			this.toBeDeleted = true;
+		}
+	}
+
 	_keydown(e: KeyboardEvent) {
 		const isBackSpacePressed = isBackSpace(e);
 		const isDeletePressed = isDelete(e);

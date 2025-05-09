@@ -1,4 +1,4 @@
-#  ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/main/docs/images/UI5_logo_water.png)UI5 Web Components
+#  ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/main/docs/images/Logo_wide_25.png)
 
 [![CI](https://github.com/SAP/ui5-webcomponents/actions/workflows/test.yaml/badge.svg)](https://github.com/SAP/ui5-webcomponents/actions/workflows/test.yaml)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)

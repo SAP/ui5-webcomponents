@@ -47,7 +47,7 @@ export default function HomepageDemoApps(): JSX.Element {
     <article className="demo-apps mainPageContainer">
         <div className="demo-apps__heading">
           <h2 className="demo-apps__title">Use the web framework of your choice</h2>
-          <p className="demo-apps__desc"> UI5 Web Componnents are framework agnostic, working seamlessly with all popular frameworks,
+          <p className="demo-apps__desc"> UI5 Web Components are framework agnostic, working seamlessly with all popular frameworks,
           including Angular, React, Vue, Svelte, etc.</p>
         </div>
         <div className="demo-apps__frameworks">

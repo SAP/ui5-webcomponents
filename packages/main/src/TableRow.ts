@@ -1,15 +1,14 @@
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { customElement, slot, property } from "@ui5/webcomponents-base/dist/decorators.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
-import Button from "./Button.js";
-import RadioButton from "./RadioButton.js";
-import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
+import { toggleAttribute } from "./TableUtils.js";
+import TableRowTemplate from "./TableRowTemplate.js";
 import TableRowBase from "./TableRowBase.js";
 import TableRowCss from "./generated/themes/TableRow.css.js";
-import TableCell from "./TableCell.js";
+import type TableCell from "./TableCell.js";
 import type TableRowActionBase from "./TableRowActionBase.js";
+import type Button from "./Button.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 
 /**
@@ -33,7 +32,6 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
 	tag: "ui5-table-row",
 	styles: [TableRowBase.styles, TableRowCss],
 	template: TableRowTemplate,
-	dependencies: [...TableRowBase.dependencies, RadioButton, TableCell, Button],
 })
 class TableRow extends TableRowBase {
 	/**
@@ -48,7 +46,7 @@ class TableRow extends TableRowBase {
 		"default": true,
 		individualSlots: true,
 		invalidateOnChildChange: {
-			properties: ["_popin"],
+			properties: ["_popin", "_popinHidden"],
 			slots: false,
 		},
 	})
@@ -71,21 +69,23 @@ class TableRow extends TableRowBase {
 	/**
 	 * Unique identifier of the row.
 	 *
-	 * @default ""
+	 * **Note:** For selection features to work properly, this property is mandatory, and its value must not contain spaces.
+	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	rowKey = "";
+	rowKey?: string;
 
 	/**
-	 * Defines the position of the row respect to the total number of rows within the table when the `ui5-table-virtualizer` feature is used.
+	 * Defines the position of the row related to the total number of rows within the table when the `ui5-table-virtualizer` feature is used.
 	 *
-     * @default -1
+	 * @default undefined
 	 * @since 2.5.0
-     * @public
-     */
+	 * @public
+	 */
 	@property({ type: Number })
-	position = -1;
+	position?: number;
 
 	/**
 	 * Defines the interactive state of the row.
@@ -115,25 +115,12 @@ class TableRow extends TableRowBase {
 	@property({ type: Boolean })
 	movable = false;
 
-	@property({ type: Boolean, noAttribute: true })
-	_renderNavigated = false;
-
 	onBeforeRendering() {
 		super.onBeforeRendering();
-		this.toggleAttribute("_interactive", this._isInteractive);
-		if (this.position !== -1) {
-			this.setAttribute("aria-rowindex", `${this.position + 1}`);
-		}
-		if (this._renderNavigated && this.navigated) {
-			this.setAttribute("aria-current", "true");
-		} else {
-			this.removeAttribute("aria-current");
-		}
-		if (this.movable) {
-			this.setAttribute("draggable", "true");
-		} else {
-			this.removeAttribute("draggable");
-		}
+		toggleAttribute(this, "_interactive", this._isInteractive);
+		toggleAttribute(this, "aria-rowindex", this.position !== undefined, `${this.position! + 1}`);
+		toggleAttribute(this, "aria-current", this._renderNavigated && this.navigated, "true");
+		toggleAttribute(this, "draggable", this.movable, "true");
 	}
 
 	async focus(focusOptions?: FocusOptions | undefined): Promise<void> {
@@ -168,17 +155,14 @@ class TableRow extends TableRowBase {
 		this.removeAttribute("_active");
 	}
 
-	_onOverflowButtonClick(e: PointerEvent) {
+	_onOverflowButtonClick(e: UI5CustomEvent<Button, "click">) {
 		const ctor = this.actions[0].constructor as typeof TableRowActionBase;
 		ctor.showMenu(this._overflowActions, e.target as HTMLElement);
+		e.stopPropagation();
 	}
 
 	get _isInteractive() {
 		return this.interactive;
-	}
-
-	get _hasRowActions() {
-		return this._rowActionCount > 0 && this.actions.some(action => action.isFixedAction() || !action.invisible);
 	}
 
 	get _hasOverflowActions() {
