@@ -55,6 +55,14 @@ let activeButton: Button | null = null;
 
 type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls">;
 
+type ButtonClickEventDetail = {
+	originalEvent: MouseEvent,
+	altKey: boolean;
+	ctrlKey: boolean;
+	metaKey: boolean;
+	shiftKey: boolean;
+}
+
 /**
  * @class
  *
@@ -98,6 +106,23 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 	shadowRootOptions: { delegatesFocus: true },
 })
 /**
+ * Fired when the component is activated either with a mouse/tap or by using the Enter or Space key.
+ *
+ * **Note:** The event will not be fired if the `disabled` property is set to `true`.
+ *
+ * @since 2.10.0
+ * @public
+ * @param {Event} originalEvent Returns original event that comes from user's **click** interaction
+ * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+ * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+ * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+ * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
+ */
+@event("click", {
+	bubbles: true,
+	cancelable: true,
+})
+/**
  * Fired whenever the active state of the component changes.
  * @private
  */
@@ -107,6 +132,7 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 })
 class Button extends UI5Element implements IButton {
 	eventDetails!: {
+		"click": ButtonClickEventDetail,
 		"active-state-change": void,
 	};
 
@@ -386,8 +412,29 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	_onclick() {
+	_onclick(e: MouseEvent) {
+		e.stopImmediatePropagation();
+
 		if (this.nonInteractive) {
+			return;
+		}
+
+		const {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		} = e;
+
+		const prevented = !this.fireDecoratorEvent("click", {
+			originalEvent: e,
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		});
+
+		if (prevented) {
 			return;
 		}
 
@@ -551,5 +598,6 @@ Button.define();
 export default Button;
 export type {
 	ButtonAccessibilityAttributes,
+	ButtonClickEventDetail,
 	IButton,
 };
