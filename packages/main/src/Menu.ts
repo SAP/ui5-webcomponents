@@ -25,7 +25,8 @@ import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
-import MenuItem, { isInstanceOfMenuItem } from "./MenuItem.js";
+import type MenuItemT from "./MenuItem.js";
+import * as MenuItem from "./MenuItem.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import "./MenuSeparator.js";
 import type {
@@ -53,11 +54,11 @@ interface IMenuItem extends UI5Element {
 }
 
 type MenuItemClickEventDetail = {
-	item: MenuItem,
+	item: MenuItemT,
 	text: string,
 }
 
-type MenuBeforeOpenEventDetail = { item?: MenuItem };
+type MenuBeforeOpenEventDetail = { item?: MenuItemT };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
 
 /**
@@ -260,7 +261,7 @@ class Menu extends UI5Element {
 	}
 
 	get _menuItems() {
-		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+		return this.items.filter((item): item is MenuItemT => !item.isSeparator);
 	}
 
 	get acessibleNameText() {
@@ -279,7 +280,7 @@ class Menu extends UI5Element {
 		this.open = false;
 	}
 
-	_openItemSubMenu(item: MenuItem) {
+	_openItemSubMenu(item: MenuItemT) {
 		clearTimeout(this._timeout);
 
 		if (!item._popover || item._popover.open) {
@@ -299,8 +300,8 @@ class Menu extends UI5Element {
 			return;
 		}
 
-		const item = e.target as MenuItem;
-		if (!isInstanceOfMenuItem(item)) {
+		const item = e.target as MenuItemT;
+		if (!MenuItem.isInstanceOfMenuItem(item)) {
 			return;
 		}
 
@@ -321,7 +322,7 @@ class Menu extends UI5Element {
 		return super.focus(focusOptions);
 	}
 
-	_closeOtherSubMenus(item: MenuItem) {
+	_closeOtherSubMenus(item: MenuItemT) {
 		const menuItems = this._menuItems;
 		if (!menuItems.includes(item)) {
 			return;
@@ -334,7 +335,7 @@ class Menu extends UI5Element {
 		});
 	}
 
-	_startOpenTimeout(item: MenuItem) {
+	_startOpenTimeout(item: MenuItemT) {
 		clearTimeout(this._timeout);
 
 		this._timeout = setTimeout(() => {
@@ -345,7 +346,7 @@ class Menu extends UI5Element {
 	}
 
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
-		const item = e.detail.item as MenuItem;
+		const item = e.detail.item as MenuItemT;
 
 		if (!item._popover) {
 			const prevented = !this.fireDecoratorEvent("item-click", {
@@ -363,9 +364,9 @@ class Menu extends UI5Element {
 
 	_itemKeyDown(e: KeyboardEvent) {
 		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
-		const item = e.target as MenuItem;
+		const item = e.target as MenuItemT;
 
-		if (!isInstanceOfMenuItem(item)) {
+		if (!MenuItem.isInstanceOfMenuItem(item)) {
 			return;
 		}
 
@@ -392,7 +393,7 @@ class Menu extends UI5Element {
 	}
 
 	_navigateOutOfEndContent(e: CustomEvent) {
-		const item = e.target as MenuItem;
+		const item = e.target as MenuItemT;
 		const shouldNavigateToNextItem = e.detail.shouldNavigateToNextItem;
 		const menuItems = this._menuItems;
 		const itemIndex = menuItems.indexOf(item);
