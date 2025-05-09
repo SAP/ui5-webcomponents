@@ -37,6 +37,8 @@ import {
 	BUTTON_ARIA_TYPE_REJECT,
 	BUTTON_ARIA_TYPE_EMPHASIZED,
 	BUTTON_ARIA_TYPE_ATTENTION,
+	BUTTON_BADGE_ONE_ITEM,
+	BUTTON_BADGE_MANY_ITEMS,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -569,15 +571,36 @@ class Button extends UI5Element implements IButton {
 	}
 
 	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
+		const ariaLabelText = getEffectiveAriaLabelText(this) || "";
+		const typeLabelText = this.hasButtonType ? this.buttonTypeText : "";
+		const internalLabelText = this.effectiveBadgeDescriptionText || "";
+
+		const labelParts = [ariaLabelText, typeLabelText, internalLabelText].filter(part => part);
+		return labelParts.join(" ");
 	}
 
 	get ariaDescriptionText() {
-		const ariaDescribedByText = this.hasButtonType ? this.buttonTypeText : "";
-		const accessibleDescription = this.accessibleDescription || "";
-		const ariaDescriptionText = `${ariaDescribedByText} ${accessibleDescription}`.trim();
+		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
+	}
 
-		return ariaDescriptionText || undefined;
+	get effectiveBadgeDescriptionText() {
+		if (!this.shouldRenderBadge) {
+			return "";
+		}
+
+		const badgeEffectiveText = this.badge[0].effectiveText;
+
+		// Use distinct i18n keys for singular and plural badge values to ensure proper localization.
+		// Some languages have different grammatical rules for singular and plural forms,
+		// so separate keys (BUTTON_BADGE_ONE_ITEM and BUTTON_BADGE_MANY_ITEMS) are necessary.
+		switch (badgeEffectiveText) {
+		case "":
+			return badgeEffectiveText;
+		case "1":
+			return Button.i18nBundle.getText(BUTTON_BADGE_ONE_ITEM, badgeEffectiveText);
+		default:
+			return Button.i18nBundle.getText(BUTTON_BADGE_MANY_ITEMS, badgeEffectiveText);
+		}
 	}
 
 	get _isSubmit() {

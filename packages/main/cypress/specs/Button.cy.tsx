@@ -6,7 +6,7 @@ import download from "@ui5/webcomponents-icons/dist/download.js";
 import employee from "@ui5/webcomponents-icons/dist/employee.js";
 
 import {
-	BUTTON_ARIA_TYPE_REJECT,
+	BUTTON_ARIA_TYPE_EMPHASIZED,
 } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("Button general interaction", () => {
@@ -304,28 +304,47 @@ describe("Accessibility", () => {
 			.should("have.attr", "role", "button");
 	});
 
-	it("aria-describedby properly applied on the button tag", () => {
-		cy.mount(<Button design="Attention">Content</Button>);
-
-		cy.get("[ui5-button]")
-			.as("button");
-
-		cy.get("@button")
-			.shadow()
-			.find("button")
-			.should("have.attr", "aria-description", "Warning");
-	});
-
 	it("accessibleDescription in combination with design property applied on the button tag", () => {
 		cy.mount(<Button design="Negative" accessibleDescription="Decline">Content</Button>);
 
 		cy.get("[ui5-button]")
+			.shadow()
+			.find("button")
 			.as("button");
 
 		cy.get("@button")
+			.should("have.attr", "aria-description", "Decline");
+	});
+
+
+	it("accessibleName when the button has a ui5-button-badge with more than 1 items", () => {
+		cy.mount(
+			<Button accessibleName="Download">
+				<ButtonBadge design="OverlayText" text="999+" slot="badge"></ButtonBadge>
+			</Button>
+		);
+		cy.get("[ui5-button]")
 			.shadow()
 			.find("button")
-			.should("have.attr", "aria-description", `${BUTTON_ARIA_TYPE_REJECT.defaultText} Decline`);
+			.as("button");
+
+		cy.get("@button")
+			.should("have.attr", "aria-label", `Download 999+ items`);
+	});
+
+	it("accessibleName when the button has a ui5-button-badge with 1 item", () => {
+		cy.mount(
+			<Button design="Emphasized" accessibleName="Download">
+				<ButtonBadge text="1" design="InlineText" slot="badge"></ButtonBadge>
+			</Button>
+		);
+		cy.get("[ui5-button]")
+			.shadow()
+			.find("button")
+			.as("button");
+
+		cy.get("@button")
+			.should("have.attr", "aria-label", `Download ${BUTTON_ARIA_TYPE_EMPHASIZED.defaultText} 1 item`);
 	});
 
 	it("setting accessible-name-ref on the host is reflected on the button tag", () => {
