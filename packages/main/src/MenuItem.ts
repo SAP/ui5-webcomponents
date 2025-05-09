@@ -12,7 +12,10 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
+import type MenuItemGroup from "./MenuItemGroup.js";
+import ItemCheckMode from "./types/ItemCheckMode.js";
 import type { ListItemAccessibilityAttributes } from "./ListItem.js";
+import type List from "./List.js";
 import ListItem from "./ListItem.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import type PopoverPlacement from "./types/PopoverPlacement.js";
@@ -104,6 +107,15 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
  * @since 1.10.0
  */
 @event("close")
+
+/**
+ * Fired when an item is being checked.
+ * @public
+ * @since 2.11.0
+ */
+@event("item-check", {
+	bubbles: true,
+})
 class MenuItem extends ListItem implements IMenuItem {
 	eventDetails!: ListItem["eventDetails"] & {
 		"before-open": MenuBeforeOpenEventDetail
@@ -111,7 +123,9 @@ class MenuItem extends ListItem implements IMenuItem {
 		"before-close": MenuBeforeCloseEventDetail
 		"close": void
 		"close-menu": void
+		"item-check": void
 	}
+
 	/**
 	 * Defines the text of the tree item.
 	 * @default undefined
@@ -197,6 +211,19 @@ class MenuItem extends ListItem implements IMenuItem {
 	tooltip?: string;
 
 	/**
+	 * Defines whether `ui5-menu-item` is in checked state.
+	 *
+	 * **Note:** checked state is only taken into account when `ui5-menu-item` is added to `ui5-menu-item-group`
+	 * with `itemCheckMode` other than `None`.
+	 * **Note:** A checked `ui5-menu-item` have check mark displayed ad its end.
+	 * @default false
+	 * @public
+	 * @since 2.11.0
+	 */
+	@property({ type: Boolean })
+	checked = false;
+
+	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
 	 * The following fields are supported:
 	 *
@@ -216,6 +243,14 @@ class MenuItem extends ListItem implements IMenuItem {
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	_siblingsWithIcon = false;
+
+	/**
+	 * Defines the component check mode.
+	 * @default "None"
+	 * @private
+	 */
+	@property()
+	_itemCheckMode: `${ItemCheckMode}` = "None";
 
 	/**
 	 * Defines the items of this component.
@@ -264,6 +299,30 @@ class MenuItem extends ListItem implements IMenuItem {
 		});
 	}
 
+	get _list() {
+		return this.shadowRoot!.querySelector<List>("[ui5-list]")!;
+	}
+
+	get _popover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	get isMenuItem(): boolean {
+		return true;
+	}
+
+	get isGroup(): boolean {
+		return false;
+	}
+
+	get isSeparator(): boolean {
+		return false;
+	}
+
+	get isRtl() {
+		return this.effectiveDir === "rtl";
+	}
+
 	get _navigableItems(): Array<HTMLElement> {
 		return [...this.endContent].filter(item => {
 			return item.hasAttribute("ui5-button")
@@ -272,23 +331,8 @@ class MenuItem extends ListItem implements IMenuItem {
 		});
 	}
 
-	_navigateToEndContent(isLast?: boolean) {
-		const item = isLast
-			? this._navigableItems[this._navigableItems.length - 1]
-			: this._navigableItems[0];
-
-		if (item) {
-			this._itemNavigation.setCurrentItem(item);
-			this._itemNavigation._focusCurrentItem();
-		}
-	}
-
 	get placement(): `${PopoverPlacement}` {
 		return this.isRtl ? "Start" : "End";
-	}
-
-	get isRtl() {
-		return this.effectiveDir === "rtl";
 	}
 
 	get hasSubmenu() {
@@ -327,31 +371,19 @@ class MenuItem extends ListItem implements IMenuItem {
 		return MenuItem.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
 	}
 
-	get isSeparator(): boolean {
-		return false;
-	}
-
-	onBeforeRendering() {
-		super.onBeforeRendering();
-		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
-
-		this._menuItems.forEach(item => {
-			item._siblingsWithIcon = siblingsWithIcon;
-		});
-	}
-
-	async focus(focusOptions?: FocusOptions): Promise<void> {
-		await renderFinished();
-
-		if (this.hasSubmenu && this.isSubMenuOpen) {
-			return this._menuItems[0].focus(focusOptions);
-		}
-
-		return super.focus(focusOptions);
-	}
-
 	get _focusable() {
 		return true;
+	}
+
+	get _role() {
+		switch (this._itemCheckMode) {
+		case ItemCheckMode.Single:
+			return "menuitemradio";
+		case ItemCheckMode.Multiple:
+			return "menuitemcheckbox";
+		default:
+			return "menuitem";
+		}
 	}
 
 	get _accInfo() {
@@ -360,22 +392,102 @@ class MenuItem extends ListItem implements IMenuItem {
 			ariaHaspopup?: `${AriaHasPopup}`;
 			ariaKeyShortcuts?: string;
 			ariaHidden?: boolean;
+			ariaChecked?: boolean;
 		} = {
-			role: this.accessibilityAttributes.role || "menuitem",
+			role: this.accessibilityAttributes.role || this._role,
 			ariaHaspopup: this.hasSubmenu ? "menu" : undefined,
 			ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
 			ariaHidden: !!this.additionalText && !!this.accessibilityAttributes.ariaKeyShortcuts ? true : undefined,
+			ariaChecked: this._markChecked ? true : undefined,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };
 	}
 
-	get _popover() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	get _markChecked() {
+		return !this.hasSubmenu && this.checked && this._itemCheckMode !== ItemCheckMode.None;
 	}
 
+	/** Returns menu item groups */
+	get _menuItemGroups() {
+		return this.items.filter((item) : item is MenuItemGroup => item.isGroup);
+	}
+
+	/** Returns menu items */
 	get _menuItems() {
 		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+	}
+
+	/** Returns all menu items (including those in groups */
+	get _allMenuItems() {
+		const items: MenuItem[] = [];
+
+		this.items.forEach(item => {
+			if (item.isGroup) {
+				items.push(...(item as MenuItemGroup)._menuItems);
+			} else if (!item.isSeparator) {
+				items.push(item as MenuItem);
+			}
+		});
+
+		return items;
+	}
+
+	/** Returns menu items included in the ItemNavigation */
+	get _navigatableMenuItems() {
+		const items: MenuItem[] = [];
+		const slottedItems = this.getSlottedNodes<MenuItem>("items");
+
+		slottedItems.forEach(item => {
+			if (item.isGroup) {
+				const groupItems = item.getSlottedNodes<MenuItem>("items");
+				items.push(...groupItems);
+			} else if (!item.isSeparator) {
+				items.push(item);
+			}
+		});
+
+		return items;
+	}
+
+	onBeforeRendering() {
+		super.onBeforeRendering();
+
+		const siblingsWithIcon = this._allMenuItems.some(menuItem => !!menuItem.icon);
+
+		this._setupItemNavigation();
+
+		this._allMenuItems.forEach(item => {
+			item._siblingsWithIcon = siblingsWithIcon;
+		});
+	}
+
+	async focus(focusOptions?: FocusOptions): Promise<void> {
+		await renderFinished();
+
+		if (this.hasSubmenu && this.isSubMenuOpen) {
+			const menuItems = this._menuItems;
+			return menuItems[0] && menuItems[0].focus(focusOptions);
+		}
+
+		return super.focus(focusOptions);
+	}
+
+	_navigateToEndContent(isLast?: boolean) {
+		const item = isLast
+			? this._navigableItems[this._navigableItems.length - 1]
+			: this._navigableItems[0];
+
+		if (item) {
+			this._itemNavigation.setCurrentItem(item);
+			this._itemNavigation._focusCurrentItem();
+		}
+	}
+
+	_setupItemNavigation() {
+		if (this._list) {
+			this._list._itemNavigation._getItems = () => this._navigatableMenuItems;
+		}
 	}
 
 	_closeAll() {
@@ -402,7 +514,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	_afterPopoverOpen() {
-		this.items[0]?.focus();
+		this._allMenuItems[0]?.focus();
 		this.fireDecoratorEvent("open");
 	}
 
@@ -427,8 +539,15 @@ class MenuItem extends ListItem implements IMenuItem {
 		this.fireDecoratorEvent("close");
 	}
 
-	get isMenuItem(): boolean {
-		return true;
+	_updateCheckedState() {
+		if (this._itemCheckMode === ItemCheckMode.None) {
+			return;
+		}
+
+		const newState = !this.checked;
+
+		this.fireDecoratorEvent("item-check");
+		this.checked = newState;
 	}
 }
 
