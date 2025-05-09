@@ -17,6 +17,7 @@ import {
 	isTabPrevious,
 	isSpace,
 	isEnter,
+	isDown,
 	isCtrlA,
 	isUpAlt,
 	isDownAlt,
@@ -854,6 +855,12 @@ class Table extends UI5Element {
 
 	onRowFocused(e: CustomEvent) {
 		this._itemNavigation.setCurrentItem(e.target as ITableRow);
+	}
+
+	onRowKeyDown(e: KeyboardEvent) {
+		if (this.growing === "Scroll" && isDown(e) && this.currentItemIdx === this.rows.length - 1) {
+			debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
+		}
 	}
 
 	_onColumnHeaderFocused() {

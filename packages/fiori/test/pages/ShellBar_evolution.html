@@ -290,7 +290,7 @@
 
 		["focus", "blur", "input"].forEach((event) => {
 			customSearchInput.addEventListener(event, () => {
-				shellbar_hide_search.disableAutoSearchField =
+				shellbar_hide_search.disableSearchCollapse =
 					customSearchInput.value || customSearchInput === document.activeElement;
 			});
 		});

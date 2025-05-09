@@ -24,23 +24,27 @@ describe("General interactions", () => {
 		});
 	});
 });
+
 describe("Accessibility", () => {
-	it("should apply associated label text as aria-label on the slider element", () => {
+	it("aria-keyshortcuts should not be set on regular slider", () => {
 		cy.mount(
-			<>
-			<label for="slider">label for slider</label>
-			<Slider id="slider" min={0} max={20}></Slider>
-			</>
+			<Slider min={0} max={20}></Slider>
 		);
 
-		cy.get('label[for="slider"]')
-			.invoke('text')
-			.then((labelText) => {
+		cy.get("[ui5-slider]")
+			.shadow()
+			.find(".ui5-slider-handle")
+			.should("not.have.attr", "aria-keyshortcuts");
+	});
 
-				cy.get("[ui5-slider]")
-					.shadow()
-					.find(".ui5-slider-handle")
-					.should("have.attr", "aria-label", labelText);
-			});
+	it("aria-keyshortcuts should be set on slider with editable tooltips", () => {
+		cy.mount(
+			<Slider editableTooltip={true} min={0} max={20}></Slider>
+		);
+
+		cy.get("[ui5-slider]")
+			.shadow()
+			.find(".ui5-slider-handle")
+			.should("have.attr", "aria-keyshortcuts");
 	});
 });
