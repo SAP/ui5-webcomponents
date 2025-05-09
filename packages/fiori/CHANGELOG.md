@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0...v2.11.0-rc.0) (2025-05-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.10.0](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.3...v2.10.0) (2025-05-07)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** change SVG inline styling to proper attributes ([#11455](https://github.com/SAP/ui5-webcomponents/issues/11455)) ([22f16c3](https://github.com/SAP/ui5-webcomponents/commit/22f16c3db20a7196d00ea44fa9f591107e4c977c)), closes [#11354](https://github.com/SAP/ui5-webcomponents/issues/11354)
+* **ui5-illustrated-message:** replace inline fill style with fill attribute ([#11448](https://github.com/SAP/ui5-webcomponents/issues/11448)) ([54389b5](https://github.com/SAP/ui5-webcomponents/commit/54389b5eb9a0dc8191af8b10320ef20a042d2592))
+* **ui5-side-navigation:** collapsed parent items appear as selected if one of its child items is selected ([#11400](https://github.com/SAP/ui5-webcomponents/issues/11400)) ([387e418](https://github.com/SAP/ui5-webcomponents/commit/387e418084539c87081afbbbe563fade84fb5d82))
+
+
+### Features
+
+* **ui5-illustrated-message:** decorative property added ([#11442](https://github.com/SAP/ui5-webcomponents/issues/11442)) ([d17d06b](https://github.com/SAP/ui5-webcomponents/commit/d17d06bae818055459d954fafd3cdb238d96cca0))
+
+
+
+
+
 # [2.10.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.2...v2.10.0-rc.3) (2025-05-01)
 
 

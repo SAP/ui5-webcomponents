@@ -75,7 +75,7 @@ const generateFiles = (componentName, tagName, library, packageName) => {
 
 	// Change the color of the output
 	console.warn('\x1b[33m%s\x1b[0m', `
-Now, import the component via: "import ${componentName} from "./${componentName}.js";
+Now, import the component in src/bundle.esm.ts via: "import ${componentName} from ./${componentName}.js";
 And, add it to your HTML: <${tagName}></${tagName}>.`);
 }
 
