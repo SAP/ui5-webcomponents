@@ -524,7 +524,7 @@ class MenuItem extends ListItem implements IMenuItem {
 MenuItem.define();
 
 const isInstanceOfMenuItem = (object: any): object is MenuItem => {
-	return "isMenuItem" in object && object.isMenuItem;
+	return "isMenuItem" in object;
 };
 
 export default MenuItem;
