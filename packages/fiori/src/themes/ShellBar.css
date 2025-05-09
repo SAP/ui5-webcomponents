@@ -487,6 +487,10 @@ slot[name="profile"] {
 	width: auto;
 }
 
+.ui5-shellbar-search-full-width-wrapper ::slotted([ui5-shellbar-search]) {
+	max-width: unset;
+}
+
 ::slotted([ui5-input]) {
 	background: var(--_ui5_shellbar_search_field_background);
 	border: var(--_ui5_shellbar_search_field_border);
