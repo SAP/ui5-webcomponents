@@ -1,3 +1,4 @@
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -6,11 +7,6 @@ import type ButtonDesign from "./types/ButtonDesign.js";
 
 import ToolbarItem from "./ToolbarItem.js";
 import ToolbarButtonTemplate from "./ToolbarButtonTemplate.js";
-import ToolbarPopoverButtonTemplate from "./ToolbarPopoverButtonTemplate.js";
-
-import ToolbarButtonPopoverCss from "./generated/themes/ToolbarButtonPopover.css.js";
-
-import { registerToolbarItem } from "./ToolbarRegistry.js";
 
 type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 
@@ -31,7 +27,8 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
  */
 @customElement({
 	tag: "ui5-toolbar-button",
-	styles: ToolbarButtonPopoverCss,
+	template: ToolbarButtonTemplate,
+	renderer: jsxRenderer,
 })
 
 /**
@@ -175,14 +172,6 @@ class ToolbarButton extends ToolbarItem {
 		return true;
 	}
 
-	static get toolbarTemplate() {
-		return ToolbarButtonTemplate;
-	}
-
-	static get toolbarPopoverTemplate() {
-		return ToolbarPopoverButtonTemplate;
-	}
-
 	onClick(e: Event) {
 		e.stopImmediatePropagation();
 		const prevented = !this.fireDecoratorEvent("click", { targetRef: e.target as HTMLElement });
@@ -190,9 +179,11 @@ class ToolbarButton extends ToolbarItem {
 			this.fireDecoratorEvent("close-overflow");
 		}
 	}
-}
 
-registerToolbarItem(ToolbarButton);
+	get class() {
+		return `${this._isOverflowed ? "ui5-tb-popover-item" : "ui5-tb-item"} ui5-tb-button`;
+	}
+}
 
 ToolbarButton.define();
 

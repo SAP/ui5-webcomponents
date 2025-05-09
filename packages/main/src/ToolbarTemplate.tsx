@@ -1,6 +1,6 @@
 import Button from "./Button.js";
 import type Toolbar from "./Toolbar.js";
-import toolbarPopoverTemplate from "./ToolbarPopoverTemplate.js";
+import Popover from "./Popover.js";
 import overflowIcon from "@ui5/webcomponents-icons/dist/overflow.js";
 
 export default function ToolbarTemplate(this: Toolbar) {
@@ -13,10 +13,20 @@ export default function ToolbarTemplate(this: Toolbar) {
 			role={this.accInfo.root.role}
 			aria-label={this.accInfo.root.accessibleName}
 		>
-			{this.standardItems.map(item => (
-				item.toolbarTemplate.call(item.context)
-			))}
-
+			{this.standardItems.map(item => {
+				if ("styles" in item.context) {
+					return (
+						<div class="ui5-tb-item" id={item.context._individualSlot} style={item.context.styles as string}>
+							<slot name={item.context._individualSlot}></slot>
+						</div>
+					);
+				}
+				return (
+					<div class="ui5-tb-item" id={item.context._individualSlot}>
+						<slot name={item.context._individualSlot}></slot>
+					</div>
+				);
+			})}
 			<Button
 				aria-hidden={this.hideOverflowButton}
 				icon={overflowIcon}
@@ -33,6 +43,33 @@ export default function ToolbarTemplate(this: Toolbar) {
 			/>
 		</div>
 
-		{toolbarPopoverTemplate.call(this)}
+		<Popover
+			class="ui5-overflow-popover"
+			placement="Bottom"
+			horizontalAlign="End"
+			onClose={this.onOverflowPopoverClosed}
+			onOpen={this.onOverflowPopoverOpened}
+			accessibleName={this.accInfo.popover.accessibleName}
+			hideArrow={true}
+		>
+			<div class={{
+				"ui5-overflow-list": true
+			}}>
+				{this.overflowItems.map(item => {
+					if (item.context.isSeparator) {
+						return (
+							<div class="ui5-tb-popover-item ui5-tb-separator ui5-tb-separator-in-overflow" id={item.context._individualSlot}>
+								<slot name={item.context._individualSlot}></slot>
+							</div>
+						);
+					}
+					return (
+						<div class="ui5-tb-popover-item" id={item.context._individualSlot}>
+							<slot name={item.context._individualSlot}></slot>
+						</div>
+					);
+				})}
+			</div>
+		</Popover>
 	</>);
 }

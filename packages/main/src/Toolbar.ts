@@ -32,11 +32,6 @@ import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js"
 import type ToolbarItem from "./ToolbarItem.js";
 import type ToolbarSeparator from "./ToolbarSeparator.js";
 
-import {
-	getRegisteredToolbarItem,
-	getRegisteredStyles,
-} from "./ToolbarRegistry.js";
-
 import type Button from "./Button.js";
 import type Popover from "./Popover.js";
 
@@ -158,7 +153,9 @@ class Toolbar extends UI5Element {
      * **Note:** Currently only `ui5-toolbar-button`, `ui5-toolbar-select`, `ui5-toolbar-separator` and `ui5-toolbar-spacer` are allowed here.
 	 * @public
 	 */
-	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	@slot({
+		"default": true, type: HTMLElement, invalidateOnChildChange: true, individualSlots: true,
+	})
 	items!: Array<ToolbarItem>
 
 	_onResize!: ResizeObserverCallback;
@@ -171,11 +168,9 @@ class Toolbar extends UI5Element {
 	ITEMS_WIDTH_MAP: Map<string, number> = new Map();
 
 	static get styles() {
-		const styles = getRegisteredStyles();
 		return [
 			ToolbarCss,
 			ToolbarPopoverCss,
-			...styles,
 		];
 	}
 
@@ -311,6 +306,9 @@ class Toolbar extends UI5Element {
 
 		this.storeItemsWidth();
 		this.processOverflowLayout();
+		this.getItemsInfo(this.items).forEach(item =>
+			 item.context._isOverflowed = this.overflowItems.map(overflowItem => overflowItem.context).indexOf(item.context) !== -1
+		);
 	}
 
 	/**
@@ -502,16 +500,7 @@ class Toolbar extends UI5Element {
 
 	getItemsInfo(items: Array<ToolbarItem>) {
 		return items.map((item: ToolbarItem) => {
-			const ctor = item.constructor as typeof ToolbarItem;
-			const ElementClass = getRegisteredToolbarItem(ctor.getMetadata().getPureTag());
-
-			if (!ElementClass) {
-				return null;
-			}
-
 			const toolbarItem = {
-				toolbarTemplate: ElementClass.toolbarTemplate,
-				toolbarPopoverTemplate: ElementClass.toolbarPopoverTemplate,
 				context: item,
 			};
 
@@ -526,11 +515,11 @@ class Toolbar extends UI5Element {
 		}
 		const id: string = item._id;
 		// Measure rendered width for spacers with width, and for normal items
-		const renderedItem = this.getRegisteredToolbarItemByID(id);
+		const renderedItem = this.shadowRoot!.querySelector<HTMLElement>(`#${item.slot}`);
 
 		let itemWidth = 0;
 
-		if (renderedItem) {
+		if (renderedItem && renderedItem.offsetWidth) {
 			const ItemCSSStyleSet = getComputedStyle(renderedItem);
 			itemWidth = renderedItem.offsetWidth + parsePxValue(ItemCSSStyleSet, "margin-inline-end")
 				+ parsePxValue(ItemCSSStyleSet, "margin-inline-start");
