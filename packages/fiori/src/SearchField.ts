@@ -159,6 +159,9 @@ class SearchField extends UI5Element {
 	@slot({ type: HTMLElement, individualSlots: true, invalidateOnChildChange: true })
 	scopes!: Array<ISearchScope>;
 
+	@slot()
+	advanced!: HTMLElement;
+
 	/**
 	 * @private
 	 */
