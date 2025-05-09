@@ -1,8 +1,8 @@
 import { prettify } from 'htmlfy';
 import { jsx as jsx_ } from "@ui5/webcomponents-base/dist/jsx-runtime.js";
 import "./config.js";
-import "../../dist/Assets.js";
-import "@ui5/webcomponents-icons/dist/AllIcons.js";
+import "../../dist/Assets-json-import.js";
+import "@ui5/webcomponents-icons/dist/AllIcons-json-import.js";
 import Button from "../../dist/Button.js";
 import withSsr from "@ui5/webcomponents-base/dist/h-ssr.js";
 import { render } from "preact-render-to-string";
