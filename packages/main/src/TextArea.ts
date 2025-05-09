@@ -496,10 +496,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 			.replace(/>/gm, ">")
 			.split("\n");
 
-		if (tokenizedText.length < this.rows) {
-			return this._mapTokenizedTextToObject([...tokenizedText, ...Array(this.rows - tokenizedText.length).fill("")] as TokenizedText);
-		}
-
 		return this._mapTokenizedTextToObject(tokenizedText);
 	}
 
