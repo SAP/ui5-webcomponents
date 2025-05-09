@@ -38,12 +38,9 @@
 	--ui5-avatar-accent8-border-color: var(--sapField_BorderColor);
 	--ui5-avatar-accent9-border-color: var(--sapField_BorderColor);
 	--ui5-avatar-accent10-border-color: var(--sapField_BorderColor);
-	--ui5-avatar-placeholder-border-color: var(--sapField_BorderColor);
 
 	--_ui5_avatar_outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	--_ui5_avatar_focus_offset: 0.0625rem;
-	--_ui5_avatar_focus_width: 0.0625rem;
-	--_ui5_avatar_focus_color: var(--sapContent_FocusColor);
 
 	--_ui5_avatar_overflow_button_focus_offset: 0.0625rem;
 
