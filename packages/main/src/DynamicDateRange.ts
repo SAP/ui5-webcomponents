@@ -13,7 +13,6 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import dynamicDateRangeCss from "./generated/themes/DynamicDateRange.css.js";
 import dynamicDateRangePopoverCss from "./generated/themes/DynamicDateRangePopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import type ResponsivePopover from "./ResponsivePopover.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import IconMode from "./types/IconMode.js";
 import "./DynamicDateOption.js";
@@ -31,6 +30,7 @@ import {
 	DYNAMIC_DATE_RANGE_SELECTED_TEXT,
 	DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 
 /**
  * @class
@@ -57,12 +57,13 @@ import {
 class DynamicDateRange extends UI5Element {
     @i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
+
 	/**
 	 * Defines a formatted date value.
 	 * @default undefined
 	 * @public
 	 */
-	@property()
+	@property({ noAttribute: true })
 	value!: DynamicDateRangeValue;
 
 	/**
@@ -76,13 +77,14 @@ class DynamicDateRange extends UI5Element {
     @property({ type: Object })
     _currentOption?: IDynamicDateRangeOption;
 
+	@property({ type: Object })
+    currentValue?: DynamicDateRangeValue;
+
 	@slot({ type: HTMLElement, "default": true })
 	options!: Array<IDynamicDateRangeOption>;
 
-    responsivePopover?: ResponsivePopover;
-
-	@property({ type: Object })
-    currentValue?: DynamicDateRangeValue;
+	@query("[ui5-input]")
+	_input?: Input;
 
 	get _optionsTitles(): Array<string> {
 		return this.options.map(option => option.text);
@@ -133,7 +135,10 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	_submitValue() {
-		this._getInput().value = this._currentOption?.format(this.currentValue!) as string;
+		if (this._input) {
+			this._input.value = this._currentOption?.format(this.currentValue!) as string;
+		}
+
 		this._currentOption = undefined;
 		this.open = false;
 		this.value = this.currentValue as DynamicDateRangeValue;
@@ -144,9 +149,9 @@ class DynamicDateRange extends UI5Element {
 		this.open = false;
 	}
 
-	_getInput(): Input {
-		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
-	}
+	// _getInput(): Input {
+	// 	return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
+	// }
 
 	get currentValueText() {
 		if (this.currentValue && this.currentValue.operator === this._currentOption?.key) {
