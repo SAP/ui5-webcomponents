@@ -297,7 +297,7 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 
 		this.setAttribute(ctor.getMetadata().getPureTag(), "");
-		if (ctor.getMetadata().supportsF6FastNavigation()) {
+		if (ctor.getMetadata().supportsF6FastNavigation() && !this.hasAttribute("data-sap-ui-fastnavgroup")) {
 			this.setAttribute("data-sap-ui-fastnavgroup", "true");
 		}
 

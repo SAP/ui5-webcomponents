@@ -56,7 +56,6 @@ import "@ui5/webcomponents/dist/Link.js";
 import "@ui5/webcomponents/dist/Input.js";
 ```
 
-
 ### F6 Navigation (fast navigation)
 
 The F6 Navigation feature allows users to navigate quickly between groups of DOM elements using keyboard shortcuts. When the focus is on a DOM element within a group and the `F6` key is pressed, the focus goes to the first focusable element of the next group. This navigation also works with nested groups, moving through them until reaching a focusable element in a different group. Pressing `Shift + F6` moves the focus back to the previous group.
@@ -68,3 +67,9 @@ Larger components like ui5-list, ui5-carousel, and ui5-tabcontainer create their
 Developers can create their own groups by marking UI5 web components or DOM elements as fast navigation groups using `data-sap-ui-fastnavgroup="true"`. This feature enhances accessibility and efficiency for users navigating through applications using UI5 Web Components.
 
 **Note:** To use this feature, you need to import the `@ui5/webcomponents-base/dist/features/F6Navigation.js` module.
+
+#### Bypassing Fast Navigation Groups
+
+To prevent a specific component or DOM element from being processed as a fast navigation group, set the attribute `data-sap-ui-fastnavgroup="false"`.
+
+**Note:** This only excludes the element it's set on. Nested fast navigation groups within it will still be processed. To fully bypass all fast navigation groups in a section, you must explicitly mark each one with `data-sap-ui-fastnavgroup="false"`.
