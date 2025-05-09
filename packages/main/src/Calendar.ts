@@ -507,8 +507,10 @@ class Calendar extends CalendarPart {
 		const currentYearRange = this._currentYearRange;
 		const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
 		const rangeEnd = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
+
 		rangeStart.setYear(currentYearRange.startYear);
 		rangeEnd.setYear(currentYearRange.endYear);
+
 		this._headerYearRangeButtonText = `${yearFormat.format(rangeStart.toLocalJSDate())} - ${yearFormat.format(rangeEnd.toLocalJSDate())}`;
 
 		this._secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
@@ -600,6 +602,7 @@ class Calendar extends CalendarPart {
 			.firstDate;
 		const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this._secondaryCalendarType, rangeEnd.valueOf() / 1000, true)
 			.lastDate;
+
 		this._headerYearRangeButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate())} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate())}`;
 	}
 

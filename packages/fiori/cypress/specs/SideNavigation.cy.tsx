@@ -1,5 +1,6 @@
 import SideNavigation from "../../src/SideNavigation.js";
 import SideNavigationItem from "../../src/SideNavigationItem.js";
+import SideNavigationGroup from "../../src/SideNavigationGroup.js";
 import SideNavigationSubItem from "../../src/SideNavigationSubItem.js";
 import group from "@ui5/webcomponents-icons/dist/group.js";
 import { NAVIGATION_MENU_POPOVER_HIDDEN_TEXT } from "../../src/generated/i18n/i18n-defaults.js";
@@ -121,8 +122,8 @@ describe("Side Navigation interaction", () => {
 		cy.mount(
 			<SideNavigation>
 				<SideNavigationItem id="item1" text="1" icon={group}>
-					<SideNavigationSubItem text="1.1" />
-					<SideNavigationSubItem text="1.2" />
+					<SideNavigationSubItem id="subItem1" text="1.1" />
+					<SideNavigationSubItem id="subItem2" text="1.2" />
 				</SideNavigationItem>
 			</SideNavigation>
 		);
@@ -134,10 +135,20 @@ describe("Side Navigation interaction", () => {
 		cy.get("#item1").should("have.attr", "expanded");
 
 		// act
+		cy.get("#subItem1").realClick();
 		cy.get("#item1").shadow().find(".ui5-sn-item-toggle-icon").realClick();
 
 		// assert
 		cy.get("#item1").should("not.have.attr", "expanded");
+		cy.get("#item1").shadow().find(".ui5-sn-item-level1").should("have.class", "ui5-sn-item-selected");
+		cy.get("#item1").should("not.have.attr", "selected");
+
+		// act
+		cy.get("#item1").shadow().find(".ui5-sn-item-toggle-icon").realClick();
+
+		// assert
+		cy.get("#item1").shadow().find(".ui5-sn-item-level1").should("not.have.class", "ui5-sn-item-selected");
+
 	});
 
 	it("Tests expanding and collapsing of unselectable items", () => {
@@ -826,6 +837,34 @@ describe("Side Navigation Accessibility", () => {
 			.shadow()
 			.find(".ui5-menu-rp")
 			.should("have.attr", "accessible-name", NAVIGATION_MENU_POPOVER_HIDDEN_TEXT.defaultText);
+	});
+
+	it("Tests SideNavigationGroup accessibility", () => {
+		cy.mount(
+			<SideNavigation>
+				<SideNavigationItem text="Home"></SideNavigationItem>
+				<SideNavigationGroup id="group" expanded={true} text="Group">
+					<SideNavigationItem text="1" />
+					<SideNavigationItem text="2" />
+				</SideNavigationGroup>
+			</SideNavigation>
+		);
+
+		// assert
+		cy.get("#group")
+			.shadow()
+			.find(".ui5-sn-item-group")
+			.should("have.attr", "role", "treeitem");
+
+		cy.get("#group")
+			.shadow()
+			.find(".ui5-sn-item-group")
+			.should("not.have.attr", "aria-description");
+
+		cy.get("#group")
+			.shadow()
+			.find(".ui5-sn-item-ul")
+			.should("have.attr", "role", "group");
 	});
 });
 
