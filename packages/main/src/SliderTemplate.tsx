@@ -42,9 +42,7 @@ export function handles(this: Slider) {
 				aria-valuemin={this.min}
 				aria-valuemax={this.max}
 				aria-valuenow={this.value}
-				{...(this.ariaLabelText
-					? { "aria-label": this.ariaLabelText }
-					: { "aria-labelledby": this._ariaLabelledByHandleText })}
+				aria-label={this._ariaLabel}
 				aria-disabled={this._ariaDisabled}
 				aria-keyshortcuts={this._ariaKeyshortcuts}
 				aria-describedby={this._ariaDescribedByHandleText}
