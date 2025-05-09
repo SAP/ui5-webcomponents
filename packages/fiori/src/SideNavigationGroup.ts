@@ -57,6 +57,8 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	@property({ type: Boolean })
 	expanded = false;
 
+	belowGroup = false;
+
 	/**
 	 * Defines nested items by passing `ui5-side-navigation-item` to the default slot.
 	 *
@@ -144,11 +146,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	}
 
 	get belowGroupClassName() {
-		if (isInstanceOfSideNavigationGroup(this.previousElementSibling)) {
-			return "ui5-sn-item-group-below-group";
-		}
-
-		return "";
+		return this.belowGroup ? "ui5-sn-item-group-below-group" : "";
 	}
 
 	get _arrowTooltip() {
