@@ -167,15 +167,18 @@
 	margin-top: var(--_ui5_list_item_selection_btn_margin_top);
 }
 
-:host([ui5-li][_selection-mode="SingleStart"]) .ui5-li-root {
+:host([ui5-li][_selection-mode="SingleStart"]) .ui5-li-root,
+:host([ui5-li-custom][_selection-mode="SingleStart"]) .ui5-li-root {
 	padding-inline: 0 1rem;
 }
 
-:host([ui5-li][_selection-mode="Multiple"]) .ui5-li-root {
+:host([ui5-li][_selection-mode="Multiple"]) .ui5-li-root,
+:host([ui5-li-custom][_selection-mode="Multiple"]) .ui5-li-root {
 	padding-inline: 0 1rem;
 }
 
-:host([ui5-li][_selection-mode="SingleEnd"]) .ui5-li-root {
+:host([ui5-li][_selection-mode="SingleEnd"]) .ui5-li-root,
+:host([ui5-li-custom][_selection-mode="SingleEnd"]) .ui5-li-root {
 	padding-inline: 1rem 0;
 }
 
