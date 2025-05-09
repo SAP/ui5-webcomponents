@@ -51,6 +51,14 @@ class ToolbarItem extends UI5Element {
 	@property({ type: Boolean })
 	preventOverflowClosing = false;
 
+	/**
+	 * Defines if the toolbar item is overflowed.
+	 * @default false
+	 * @private
+	 * @since 2.11.0
+	 */
+
+	@property({ type: Boolean })
 	_isOverflowed: boolean = false;
 
 	/**

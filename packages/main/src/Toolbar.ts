@@ -306,6 +306,9 @@ class Toolbar extends UI5Element {
 
 		this.storeItemsWidth();
 		this.processOverflowLayout();
+		this.getItemsInfo(this.items).forEach(item =>
+			 item.context._isOverflowed = this.overflowItems.map(overflowItem => overflowItem.context).indexOf(item.context) !== -1
+		);
 	}
 
 	/**
@@ -322,13 +325,11 @@ class Toolbar extends UI5Element {
 		overflowPopover.opener = this.overflowButtonDOM!;
 		overflowPopover.open = true;
 		this.reverseOverflow = overflowPopover.actualPlacement === "Top";
-		this.overflowItems.forEach(item => item.context._isOverflowed = true);
 	}
 
 	closeOverflow() {
 		const overflowPopover = this.getOverflowPopover();
 		overflowPopover.open = false;
-		this.overflowItems.forEach(item => item.context._isOverflowed = false);
 	}
 
 	toggleOverflow() {
