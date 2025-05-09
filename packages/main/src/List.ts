@@ -615,6 +615,10 @@ class List extends UI5Element {
 		});
 	}
 
+	getFocusDomRef() {
+		return this._itemNavigation._getCurrentItem();
+	}
+
 	get shouldRenderH1() {
 		return !this.header.length && this.headerText;
 	}
