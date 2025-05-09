@@ -13,6 +13,7 @@ export default function ListTemplate(this: List) {
 			onDrop={this._ondrop}
 			onDragLeave={this._ondragleave}
 			// events bubbling from slotted items
+			onui5-move-start={this.onItemMoveStart}
 			onui5-close={this.onItemClose}
 			onui5-toggle={this.onItemToggle}
 			onui5-request-tabindex-change={this.onItemTabIndexChange}
@@ -52,6 +53,8 @@ export default function ListTemplate(this: List) {
 						aria-description={this.ariaDescriptionText}
 					>
 						<slot></slot>
+
+						{this.showDragGhost && dragGhost.call(this)}
 
 						{this.showNoDataText &&
 							<li tabindex={0} id={`${this._id}-nodata`} class="ui5-list-nodata" role="listitem">
@@ -111,4 +114,8 @@ function moreRow(this: List) {
 			</div>
 		</div>
 	);
+}
+
+function dragGhost(this: List) {
+	return this.dragElementTemplate?.call(this);
 }

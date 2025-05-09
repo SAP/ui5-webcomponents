@@ -11,6 +11,7 @@ import GroupHeaders from "../../../_samples/main/List/GroupHeaders/GroupHeaders.
 import SeparationTypes from "../../../_samples/main/List/SeparationTypes/SeparationTypes.md";
 import DragAndDrop from "../../../_samples/main/List/DragAndDrop/DragAndDrop.md";
 import WrappingBehavior from "../../../_samples/main/List/WrappingBehavior/WrappingBehavior.md";
+import DragAndDropMultiple from "../../../_samples/main/List/DragAndDropMultiple/DragAndDropMultiple.md";
 
 <%COMPONENT_OVERVIEW%>
 
@@ -56,6 +57,11 @@ The <b>separators</b> options (<b>All</b>, <b>Inner</b>, <b>None</b>) allows the
 The list items are draggable through the use of the <b>movable</b> property on <b>ListItem</b>.
 
 <DragAndDrop />
+
+### Drag And Drop of Multiple Items
+You can show a multiple drag image by using the <b>movingItemsCount</b> property on <b>List</b>.
+
+<DragAndDropMultiple />
 
 ### Wrapping Behavior
 The standard list item `<ui5-li>` supports text wrapping through the <b>wrappingType</b> property. When set to "Normal", long text content (title and description) will wrap to multiple lines instead of truncating with an ellipsis. For very long content, the text is displayed with a "Show More/Show Less" mechanism.
