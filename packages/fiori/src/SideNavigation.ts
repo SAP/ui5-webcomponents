@@ -63,7 +63,7 @@ type PopupSideNavigationItem = SideNavigationItem & { associatedItem: SideNaviga
 type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 	item: Pick<MenuItemClickEventDetail, "item"> & {
 		associatedItem: SideNavigationSelectableItemBase,
-	}
+	},
 };
 
 /**
@@ -313,7 +313,23 @@ class SideNavigation extends UI5Element {
 
 		e.stopPropagation();
 
-		associatedItem.fireEvent("click");
+		const altKey = (e.detail as any)?.altKey,
+			ctrlKey = (e.detail as any)?.ctrlKey,
+			metaKey = (e.detail as any)?.metaKey,
+			shiftKey = (e.detail as any)?.shiftKey;
+
+		const executeEvent = associatedItem.fireDecoratorEvent("click", {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		});
+
+		if (!executeEvent) {
+			e.preventDefault();
+			return;
+		}
+
 		if (associatedItem.selected) {
 			this.closePicker();
 			return;
@@ -328,7 +344,11 @@ class SideNavigation extends UI5Element {
 	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
 		const associatedItem = e.detail?.item.associatedItem;
 
-		associatedItem.fireEvent("click");
+		if (!associatedItem.fireDecoratorEvent("click")) {
+			e.preventDefault();
+			return;
+		}
+
 		if (associatedItem.selected) {
 			this.closeMenu();
 			return;
@@ -575,7 +595,24 @@ class SideNavigation extends UI5Element {
 
 	_handleItemClick(e: KeyboardEvent | MouseEvent, item: SideNavigationSelectableItemBase) {
 		if (item.selected && !this.collapsed) {
-			item.fireDecoratorEvent("click");
+			const {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			} = e;
+
+			const executeEvent = item.fireDecoratorEvent("click", {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			});
+
+			if (!executeEvent) {
+				e.preventDefault();
+			}
+
 			return;
 		}
 
@@ -590,7 +627,24 @@ class SideNavigation extends UI5Element {
 
 			this.openPicker(item.getFocusDomRef() as HTMLElement);
 		} else {
-			item.fireDecoratorEvent("click");
+			const {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			} = e;
+
+			const executeEvent = item.fireDecoratorEvent("click", {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			});
+
+			if (!executeEvent) {
+				e.preventDefault();
+				return;
+			}
 
 			if (!item.selected) {
 				this._selectItem(item);

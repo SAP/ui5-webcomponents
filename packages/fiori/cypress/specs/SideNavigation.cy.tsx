@@ -473,6 +473,136 @@ describe("Side Navigation interaction", () => {
 		cy.url().should("not.include", "#test");
 	});
 
+	it("Tests preventDefault of 'click' event", () => {
+		const handleClick = (event: Event) => {
+			event.preventDefault();
+		};
+	
+		const handleSelectionChange = cy.stub().as("selectionChangeHandler");
+	
+		cy.mount(
+			<SideNavigation id="sideNav" onClick={handleClick} onSelectionChange={handleSelectionChange}>
+				<SideNavigationItem id="linkItem" text="external link" unselectable={true} href="#preventDefault" />
+				<SideNavigationItem id="item" text="item"/>
+			</SideNavigation>
+		);
+	
+		cy.url()
+			.should("not.include", "#preventDefault");
+
+		// Act
+		cy.get("#linkItem").realClick();
+	
+		// Assert
+		cy.get("@selectionChangeHandler").should("not.have.been.called");
+		cy.url()
+			.should("not.include", "#preventDefault");
+
+		cy.get("#item").realClick();
+
+		// Assert
+		cy.get("@selectionChangeHandler").should("not.have.been.called");
+		cy.url()
+			.should("not.include", "#preventDefault");
+	});
+
+	it("Tests preventDefault of items in overflow menu", () => {
+		const handleClick = (event: Event) => {
+			event.preventDefault();
+		};
+	
+		const handleSelectionChange = cy.stub().as("selectionChangeHandler");
+
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true} onClick={handleClick} onSelectionChange={handleSelectionChange}>
+				<SideNavigationItem unselectable={true} href="#test" text="link"></SideNavigationItem>
+				<SideNavigationItem text="item"></SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.invoke("attr", "style", "height: 50px");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-item-overflow")
+			.realClick();
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='link']")
+			.realClick();
+
+			cy.url()
+			.should("not.include", "#test");
+			
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='item']")
+			.realClick();
+		
+		cy.get("@selectionChangeHandler").should("not.have.been.called");
+	});
+
+	it("Tests preventDefault on child items in collapsed side navigation", () => {
+		const handleClick = (event: Event) => {
+			event.preventDefault();
+		};
+	
+		const handleSelectionChange = cy.stub().as("selectionChangeHandler");
+
+		cy.mount(
+			<SideNavigation  onClick={handleClick} onSelectionChange={handleSelectionChange} id="sideNav" collapsed={true}>
+				<SideNavigationItem id="parentItem" text="2">
+					<SideNavigationItem text="child" />
+					<SideNavigationItem href="#test" text="link"></SideNavigationItem>
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#parentItem")
+			.realClick();
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='child']")
+			.realClick();
+
+		// Assert
+		cy.get("@selectionChangeHandler").should("not.have.been.called");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='link']")
+			.realClick();
+
+		cy.get("@selectionChangeHandler").should("not.have.been.called");
+		cy.url()
+			.should("not.include", "#test");
+	});
+
+	it("Tests key modifiers when item is clicked", () => {
+		const handleClick = cy.stub().as("clickHandler");
+
+		cy.mount(
+			<SideNavigation id="sideNav" onClick={e => {e.preventDefault(); handleClick(e);}}>
+				<SideNavigationItem id="linkItem" text="external link"/>
+			</SideNavigation>
+		);
+
+		const keyModifiers = [
+			{ key: "ctrlKey", options: { ctrlKey: true } },
+			{ key: "metaKey", options: { metaKey: true } },
+			{ key: "altKey", options: { altKey: true } },
+			{ key: "shiftKey", options: { shiftKey: true } },
+		];
+	
+		keyModifiers.forEach(({ key, options }) => {
+			cy.get("#sideNav").realClick(options);
+			cy.get("@clickHandler").should("be.calledWithMatch", { detail: { [key]: true } });
+		});
+	});
+
 	it("Tests 'selection-change' event", () => {
 		cy.mount(
 			<SideNavigation id="sideNav">

@@ -5,6 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
 import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 import NavigationMenu from "./NavigationMenu.js";
+import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 
 // Templates
 import NavigationMenuItemTemplate from "./NavigationMenuItemTemplate.js";
@@ -79,6 +80,8 @@ class NavigationMenuItem extends MenuItem {
 	@property()
 	design: `${SideNavigationItemDesign}` = "Default";
 
+	associatedItem?: SideNavigationSelectableItemBase;
+
 	get isExternalLink() {
 		return this.href && this.target === "_blank";
 	}
@@ -105,6 +108,32 @@ class NavigationMenuItem extends MenuItem {
 		result.main["ui5-navigation-menu-item-root"] = true;
 
 		return result;
+	}
+
+	_onclick(e: MouseEvent) {
+		super._onclick(e);
+
+		const associatedItem = this.associatedItem;
+
+		const {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		} = e;
+
+		e.stopPropagation();
+
+		const executeEvent = associatedItem?.fireDecoratorEvent("click", {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		});
+
+		if (!executeEvent) {
+			e.preventDefault();
+		}
 	}
 
 	get acessibleNameText() {
