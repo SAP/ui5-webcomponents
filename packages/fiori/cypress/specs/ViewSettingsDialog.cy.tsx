@@ -186,6 +186,14 @@ describe("ViewSettingsDialog Tests", () => {
 
 		cy.get("@vsd")
 			.shadow()
+			.find("[ui5-dialog]")
+			.shadow()
+			.find("[root-element='true']")
+			.first()
+			.should("have.attr", "aria-label", "View Settings");
+
+		cy.get("@vsd")
+			.shadow()
 			.find("ui5-list ui5-li[selected]")
 			.should("exist")
 			.should("contain.text", "Ascending");

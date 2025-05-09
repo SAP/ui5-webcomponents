@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-compat",
-  "version": "2.9.0-rc.1",
+  "version": "2.11.0-rc.0",
   "description": "UI5 Web Components: webcomponents.compat",
   "ui5": {
     "webComponentsPackage": true
@@ -26,6 +26,9 @@
     "generateAPI": "nps generateAPI",
     "bundle": "nps build.bundle",
     "test": "wc-dev test",
+    "test:cypress": "nps test-cy-ci",
+    "test:cypress:single": "npx cypress run --component --browser chrome --spec",
+    "test:cypress:open": "nps test-cy-open",
     "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "tsc -b"
@@ -45,13 +48,14 @@
     "directory": "packages/compat"
   },
   "dependencies": {
-    "@ui5/webcomponents": "2.9.0-rc.1",
-    "@ui5/webcomponents-base": "2.9.0-rc.1",
-    "@ui5/webcomponents-icons": "2.9.0-rc.1",
-    "@ui5/webcomponents-theming": "2.9.0-rc.1"
+    "@ui5/webcomponents": "2.11.0-rc.0",
+    "@ui5/webcomponents-base": "2.11.0-rc.0",
+    "@ui5/webcomponents-icons": "2.11.0-rc.0",
+    "@ui5/webcomponents-theming": "2.11.0-rc.0"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "2.9.0-rc.1",
-    "chromedriver": "^133.0.0"
+    "@ui5/cypress-internal": "0.0.0",
+    "@ui5/webcomponents-tools": "2.11.0-rc.0",
+    "chromedriver": "^135.0.0"
   }
 }

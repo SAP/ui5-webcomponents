@@ -342,7 +342,7 @@ describe("Input Tests", () => {
 describe("Input general interaction", () => {
 	it("handles suggestions selection cancel with ESC", () => {
 		cy.mount(
-			<Input id="myInputEsc" show-suggestions class="input3auto">
+			<Input id="myInputEsc" showSuggestions class="input3auto">
 				<SuggestionItem text="Chromium"></SuggestionItem>
 				<SuggestionItem text="Titanium"></SuggestionItem>
 				<SuggestionItem text="Iron"></SuggestionItem>
@@ -384,13 +384,13 @@ describe("Input general interaction", () => {
 	it("tests selection-change with custom items", () => {
 		cy.mount(
 			<Input id="myInput2" showSuggestions class="input3auto">
-			  <SuggestionItem text="Cozy" />
-			  <SuggestionItem text="Compact" />
-			  <SuggestionItem text="Condensed" />
-			  <SuggestionItem text="Compact" />
-			  <SuggestionItem text="Condensed" />
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+				<SuggestionItem text="Condensed" />
+				<SuggestionItem text="Compact" />
+				<SuggestionItem text="Condensed" />
 			</Input>
-		  );
+		);
 
 		cy.get("ui5-input")
 			.as("input");
@@ -435,11 +435,11 @@ describe("Input general interaction", () => {
 	it("Should fire 'input' event when the value is cleared with ESC", () => {
 		cy.mount(
 			<Input></Input>
-		  );
+		);
 
-		  cy.get("[ui5-input]").then($input => {
-			  $input[0].addEventListener("ui5-input", cy.spy().as("inputEvent"));
-		  });
+		cy.get("[ui5-input]").then($input => {
+			$input[0].addEventListener("ui5-input", cy.spy().as("inputEvent"));
+		});
 
 		cy.get("[ui5-input]").realClick();
 		cy.get("[ui5-input]").realPress("a");
@@ -499,13 +499,13 @@ describe("Input arrow navigation", () => {
 	it("Should navigate up and down through the suggestions popover with arrow keys", () => {
 		cy.mount(
 			<Input id="myInput2" showSuggestions class="input3auto">
-			  <SuggestionItem text="Cozy" />
-			  <SuggestionItem text="Compact" />
-			  <SuggestionItem text="Condensed" />
-			  <SuggestionItem text="Compact" />
-			  <SuggestionItem text="Condensed" />
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+				<SuggestionItem text="Condensed" />
+				<SuggestionItem text="Compact" />
+				<SuggestionItem text="Condensed" />
 			</Input>
-		  );
+		);
 
 		cy.get("#myInput2")
 			.as("input");
@@ -551,7 +551,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 	beforeEach(() => {
 		cy.mount(
 			<Input id="myInput" showSuggestions placeholder="Search for a country ...">
-			  <SuggestionItemGroup headerText="A">
+				<SuggestionItemGroup headerText="A">
 					<SuggestionItem text="Afghanistan" />
 					<SuggestionItem text="Argentina" />
 					<SuggestionItem text="Albania" />
@@ -564,9 +564,9 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 					<SuggestionItem text="Azerbaijan" />
 					<SuggestionItem text="Aruba" />
 					<SuggestionItem text="Antigua and Barbuda" />
-			  </SuggestionItemGroup>
+				</SuggestionItemGroup>
 			</Input>
-		  );
+		);
 	});
 	it("Should focus the tenth item from the suggestions popover with PAGEDOWN", () => {
 		cy.get("ui5-input")
@@ -626,11 +626,11 @@ describe("Selection-change event", () => {
 	it("Selection-change event fires with null arguments when suggestion was selected but user alters input value to something else", () => {
 		cy.mount(
 			<Input id="input-selection-change" showSuggestions>
-			  <SuggestionItem text="Cozy" />
-			  <SuggestionItem text="Compact" />
-			  <SuggestionItem text="Condensed" />
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+				<SuggestionItem text="Condensed" />
 			</Input>
-		  );
+		);
 
 		cy.get("ui5-input")
 			.as("input");
@@ -676,6 +676,60 @@ describe("Selection-change event", () => {
 			expect(eventCount).to.equal(2);
 		});
 	});
+
+	it("Fires selection-change when same item is reselected after input is changed", () => {
+		cy.mount(
+			<Input id="input-selection-change" showSuggestions>
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+				<SuggestionItem text="Condensed" />
+			</Input>
+		);
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("ui5-input")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("@input").then($input => { $input[0].addEventListener("ui5-selection-change", cy.stub().as("inputSelectionChange")); });
+
+		cy.get("@innerInput")
+			.realClick();
+
+		cy.get("[ui5-suggestion-item")
+			.eq(0)
+			.as("suggestion-item");
+
+		cy.get("@innerInput")
+			.type("C");
+
+		cy.get("@suggestion-item")
+			.realClick();
+
+		cy.get("@inputSelectionChange").should("have.been.calledOnce");
+
+		cy.get("@innerInput")
+			.should("have.value", "Cozy");
+
+		cy.get("@innerInput")
+			.realClick();
+		cy.get("@innerInput").type("{selectall}{backspace}");
+
+		cy.get("@inputSelectionChange").should("have.been.calledTwice");
+
+		cy.get("@innerInput")
+			.type("C");
+		cy.get("@suggestion-item")
+			.realClick();
+
+		cy.get("@inputSelectionChange").should("have.been.calledThrice");
+
+		cy.get("@innerInput")
+			.should("have.value", "Cozy");
+	});
 });
 
 describe("Change event behavior when selecting the same suggestion item", () => {
@@ -684,15 +738,15 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 	beforeEach(() => {
 		cy.mount(
 			<Input id="myInput" showSuggestions placeholder="Search for a country ...">
-			  <SuggestionItemGroup headerText="A">
+				<SuggestionItemGroup headerText="A">
 					<SuggestionItem text="Afghanistan" />
 					<SuggestionItem text="Argentina" />
 					<SuggestionItem text="Albania" />
 					<SuggestionItem text="Armenia" />
 					<SuggestionItem text="Algeria" />
-			  </SuggestionItemGroup>
+				</SuggestionItemGroup>
 			</Input>
-		  );
+		);
 
 		cy.get("#myInput")
 			.as("input");
@@ -761,6 +815,66 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.then(() => {
 			expect(changeCount).to.equal(1);
 		});
+	});
+
+	it("Change event fires after typing a new value following a clear icon click", () => {
+		cy.mount(
+			<>
+				<Input showClearIcon={true}></Input>
+			</>
+		);
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("@input")
+			.then($input => {
+				$input[0].addEventListener("ui5-change", cy.stub().as("inputChange"));
+			});
+
+		cy.get("@input")
+			.click();
+
+		cy.get("@input")
+			.realType("Albania");
+
+		cy.get("@input")
+			.realPress("Enter");
+
+		cy.get("@inputChange")
+			.should("have.been.calledOnce");
+
+		cy.get("@input")
+			.shadow()
+			.find("ui5-icon")
+			.as("icon");
+
+		cy.get("@icon")
+			.click();
+
+		cy.get("@input")
+			.should("have.attr", "value", "");
+
+		cy.get("@input")
+			.realType("Argentina");
+
+		cy.get("@input")
+			.realPress("Enter");
+
+		cy.get("@inputChange")
+			.should("have.been.calledTwice");
+
+		cy.get("@icon")
+			.click();
+
+		cy.get("@input")
+			.realType("Argentina");
+
+		cy.get("@input")
+			.realPress("Enter");
+
+		cy.get("@inputChange")
+			.should("have.been.calledTwice");
 	});
 
 	it("should not close the dialog when item is selected", () => {
@@ -834,7 +948,7 @@ describe("Accessibility", () => {
 			.shadow()
 			.find("input")
 			.should("have.attr", "aria-describedby", "accessibleDescription");
-		
+
 		cy.get("@input")
 			.shadow()
 			.find("span#accessibleDescription")

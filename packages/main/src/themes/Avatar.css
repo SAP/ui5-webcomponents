@@ -147,6 +147,7 @@
 
 :host(:not([color-scheme])),
 :host(:not([_has-image])),
+:host([color-scheme="Auto"]), /* without [ui5-avatar] to be less specific than _color-scheme selectors */
 :host([_color-scheme="Accent6"]),
 :host([ui5-avatar][color-scheme="Accent6"]) {
 	background-color: var(--ui5-avatar-accent6);
@@ -312,7 +313,6 @@
 	color: var(--sapBackgroundColor);
 
 	--_ui5-tag-height: 1.125rem;
-	--_ui5-tag-border-radius: 50%;
 }
 
 :host([_size="L"]) ::slotted([slot="badge"]),

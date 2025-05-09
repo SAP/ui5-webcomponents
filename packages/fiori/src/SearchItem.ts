@@ -16,7 +16,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/fiori/dist/SearchItem.js";`
+ * `import "@ui5/webcomponents-fiori/dist/SearchItem.js";`
  *
  * @constructor
  * @extends ListItemBase
@@ -51,7 +51,7 @@ class SearchItem extends ListItemBase {
 	 * @public
 	 */
 	@property()
-	headingText = "";
+	text = "";
 
 	/**
 	 * Defines the icon name of the search item.
@@ -99,7 +99,7 @@ class SearchItem extends ListItemBase {
 		super.onBeforeRendering();
 
 		// bold the matched text
-		this._markupText = this.highlightText ? generateHighlightedMarkup(this.headingText, this.highlightText) : this.headingText;
+		this._markupText = this.highlightText ? generateHighlightedMarkup(this.text, this.highlightText) : this.text;
 	}
 }
 

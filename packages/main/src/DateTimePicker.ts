@@ -10,10 +10,10 @@ import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/In
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import type ResponsivePopover from "./ResponsivePopover.js";
 import type { SegmentedButtonSelectionChangeEventDetail } from "./SegmentedButton.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type {
 	DatePickerChangeEventDetail as DateTimePickerChangeEventDetail,
 	DatePickerInputEventDetail as DateTimePickerInputEventDetail,
@@ -190,26 +190,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		}
 	}
 
-	/**
-	 * Read-only getters
-	 */
-
-	get classes() {
-		return {
-			// Remove after deliting the hbs template, the classes are added in the jsx template
-			picker: {
-				"ui5-dt-picker-content--phone": this.phone,
-			},
-			dateTimeView: {
-				"ui5-dt-cal--hidden": this.phone && this.showTimeView,
-				"ui5-dt-time--hidden": this.phone && this.showDateView,
-			},
-			footer: {
-				"ui5-dt-picker-footer-time-hidden": (this.phone && this.showTimeView) || (this.phone && this.showDateView),
-			},
-		};
-	}
-
 	get _formatPattern() {
 		const hasHours = !!(this.formatPattern || "").match(/H/i);
 		const fallback = !this.formatPattern || !hasHours;
@@ -255,15 +235,15 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	}
 
 	get showDateView() {
-		return this.phone ? !this._showTimeView : true;
+		return this._phoneView ? !this._showTimeView : true;
 	}
 
 	get showTimeView() {
-		return this.phone ? this._showTimeView : true;
+		return this._phoneView ? this._showTimeView : true;
 	}
 
-	get phone() {
-		return super.phone || this._phoneMode;
+	get _phoneView() {
+		return isPhone() || this._phoneMode;
 	}
 
 	/**
@@ -379,10 +359,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 
 		const newValue = this.formatValue(modifiedLocalDate);
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
-	}
-
-	getPicker() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	getSelectedDateTime() {

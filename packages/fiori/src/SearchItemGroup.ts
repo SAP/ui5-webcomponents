@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import ListItemGroup from "@ui5/webcomponents/dist/ListItemGroup.js";
 import type ListItemGroupHeader from "@ui5/webcomponents/dist/ListItemGroupHeader.js";
 import SearchItemGroupCss from "./generated/themes/SearchItemGroup.css.js";
+import ListBoxItemGroupTemplate from "@ui5/webcomponents/dist/ListBoxItemGroupTemplate.js";
 
 /**
  * @class
@@ -19,6 +20,7 @@ import SearchItemGroupCss from "./generated/themes/SearchItemGroup.css.js";
 		ListItemGroup.styles,
 		SearchItemGroupCss,
 	],
+	template: ListBoxItemGroupTemplate,
 })
 class SearchItemGroup extends ListItemGroup {
 	get isGroupItem(): boolean {
