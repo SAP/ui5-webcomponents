@@ -1,4 +1,4 @@
-import { render, createContext } from "../thirdparty/preact/preact.module.js";
+import { hydrate, render, createContext } from "../thirdparty/preact/preact.module.js";
 import { jsx } from "../thirdparty/preact/jsxRuntime.module.js";
 import type UI5Element from "../UI5Element.js";
 import type { Renderer } from "../UI5Element.js";
@@ -13,8 +13,16 @@ const jsxRenderer: Renderer = (instance: UI5Element, container: HTMLElement | Do
 		ctx = createContext(instance);
 		instanceToContextMap.set(instance, ctx);
 	}
+
 	const templateResult = instance.render();
-	render(jsx(ctx.Provider, { value: instance, children: templateResult }), container);
+	const vnode = jsx(ctx.Provider, { value: instance, children: templateResult });
+
+	if (instance.__shouldStartHydratation) {
+		hydrate(vnode, container);
+		instance.__shouldStartHydratation = false;
+	} else {
+		render(vnode, container);
+	}
 };
 
 export default jsxRenderer;
