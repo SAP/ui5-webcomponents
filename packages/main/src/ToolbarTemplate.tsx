@@ -16,21 +16,22 @@ export default function ToolbarTemplate(this: Toolbar) {
 			{this.standardItems.map(item => (
 				item.toolbarTemplate.call(item.context)
 			))}
-
-			<Button
-				aria-hidden={this.hideOverflowButton}
-				icon={overflowIcon}
-				design="Transparent"
-				onClick={this.toggleOverflow}
-				class={{
-					"ui5-tb-item": true,
-					"ui5-tb-overflow-btn": true,
-					"ui5-tb-overflow-btn-hidden": this.hideOverflowButton,
-				}}
-				tooltip={this.accInfo.overflowButton.tooltip}
-				accessibleName={this.accInfo.overflowButton.accessibleName}
-				accessibilityAttributes={this.accInfo.overflowButton.accessibilityAttributes}
-			/>
+			<div aria-live="polite">
+				<Button
+					aria-hidden={this.hideOverflowButton}
+					icon={overflowIcon}
+					design="Transparent"
+					onClick={this.toggleOverflow}
+					class={{
+						"ui5-tb-item": true,
+						"ui5-tb-overflow-btn": true,
+						"ui5-tb-overflow-btn-hidden": this.hideOverflowButton,
+					}}
+					tooltip={this.accInfo.overflowButton.tooltip}
+					accessibleName={this.accInfo.overflowButton.accessibleName}
+					accessibilityAttributes={this.accInfo.overflowButton.accessibilityAttributes}
+				/>
+			</div>
 		</div>
 
 		{toolbarPopoverTemplate.call(this)}
