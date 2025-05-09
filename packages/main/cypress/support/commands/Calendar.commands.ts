@@ -41,6 +41,6 @@ Cypress.Commands.add("ui5CalendarShowYearRangePicker", { prevSubject: true }, su
 
 	cy.get(subject)
 		.shadow()
-		.find("[ui5-yearrange-picker]")
+		.find("[ui5-yearrangepicker]")
 		.should("be.visible");
 });

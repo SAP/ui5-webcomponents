@@ -172,7 +172,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("@calendar")
 			.shadow()
-			.find("[ui5-yearrange-picker]")
+			.find("[ui5-yearrangepicker]")
 			.as("yearRangePicker");
 
 		cy.get<YearRangePicker>("@yearRangePicker")
@@ -246,7 +246,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("@calendar")
 			.shadow()
-			.find("[ui5-yearrange-picker]")
+			.find("[ui5-yearrangepicker]")
 			.as("yearRangePicker");
 
 		cy.get<YearRangePicker>("@yearRangePicker")
@@ -740,7 +740,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("@calendar")
 			.shadow()
-			.find("[ui5-yearrange-picker]")
+			.find("[ui5-yearrangepicker]")
 			.as("yearRangePicker");
 
 		cy.get<YearRangePicker>("@yearRangePicker")
@@ -824,7 +824,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get<Calendar>("@calendar")
 			.shadow()
-			.find("[ui5-yearrange-picker]")
+			.find("[ui5-yearrangepicker]")
 			.as("yearRangePicker");
 
 		cy.get<YearRangePicker>("@yearRangePicker")

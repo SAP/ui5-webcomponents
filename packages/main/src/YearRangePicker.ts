@@ -68,7 +68,7 @@ type YearRangePickerNavigateEventDetail = {
  * @private
  */
 @customElement({
-	tag: "ui5-yearrange-picker",
+	tag: "ui5-yearrangepicker",
 	styles: [
 		yearRangePickerStyles,
 	],

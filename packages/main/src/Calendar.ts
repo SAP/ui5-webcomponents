@@ -261,7 +261,7 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	@property()
-	_currentPicker: "day" | "month" | "year" | "yearrange-" = "day"
+	_currentPicker: "day" | "month" | "year" | "yearrange" = "day"
 
 	@property({ type: Boolean })
 	_previousButtonDisabled = false;
@@ -469,7 +469,7 @@ class Calendar extends CalendarPart {
 	 * Makes sure that _currentPicker is always set to a value, allowed by _pickersMode
 	 */
 	_normalizeCurrentPicker() {
-		if (this._currentPicker === "yearrange-") {
+		if (this._currentPicker === "yearrange") {
 			return;
 		}
 
@@ -556,7 +556,7 @@ class Calendar extends CalendarPart {
 
 	showYearRange() {
 		this._currentPickerDOM._autoFocus = false;
-		this._currentPicker = "yearrange-";
+		this._currentPicker = "yearrange";
 	}
 
 	get _currentPickerDOM() {
@@ -658,7 +658,7 @@ class Calendar extends CalendarPart {
 	}
 
 	get _isYearRangePickerHidden() {
-		return this._currentPicker !== "yearrange-";
+		return this._currentPicker !== "yearrange";
 	}
 
 	get _currentYearRange(): CalendarYearRangeT {
@@ -762,7 +762,7 @@ class Calendar extends CalendarPart {
 			this._currentPicker = "year";
 			this.fireDecoratorEvent("show-year-view");
 		} else {
-			this._currentPicker = "yearrange-";
+			this._currentPicker = "yearrange";
 			this.fireDecoratorEvent("show-year-range-view");
 		}
 	}
