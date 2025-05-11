@@ -128,7 +128,6 @@ class ToolbarItem extends UI5Element {
 	get class() {
 		return this._isOverflowed ? "ui5-tb-popover-item" : "ui5-tb-item" as string;
 	}
-
 }
 
 export type {

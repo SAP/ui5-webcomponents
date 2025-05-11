@@ -306,9 +306,9 @@ class Toolbar extends UI5Element {
 
 		this.storeItemsWidth();
 		this.processOverflowLayout();
-		this.getItemsInfo(this.items).forEach(item =>
-			 item.context._isOverflowed = this.overflowItems.map(overflowItem => overflowItem.context).indexOf(item.context) !== -1
-		);
+		this.getItemsInfo(this.items).forEach(item => {
+			 item.context._isOverflowed = this.overflowItems.map(overflowItem => overflowItem.context).indexOf(item.context) !== -1;
+		});
 	}
 
 	/**
