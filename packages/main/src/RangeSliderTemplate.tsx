@@ -60,7 +60,7 @@ export function handles(this: RangeSlider) {
 				aria-labelledby={this._ariaLabelledByStartHandleText}
 				aria-disabled={this._ariaDisabled}
 				aria-describedby={this._ariaDescribedByHandleText}
-				aria-keyshortcuts="F2"
+				aria-keyshortcuts={this._ariaKeyshortcuts}
 			>
 				<Icon name={directionArrows}
 					mode="Decorative"
