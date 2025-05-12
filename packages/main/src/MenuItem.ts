@@ -12,7 +12,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
-import type MenuItemGroup from "./MenuItemGroup.js";
 import ItemCheckMode from "./types/ItemCheckMode.js";
 import type { ListItemAccessibilityAttributes } from "./ListItem.js";
 import type List from "./List.js";
@@ -417,7 +416,7 @@ class MenuItem extends ListItem implements IMenuItem {
 
 		this.items.forEach(item => {
 			if (isInstanceOfMenuItemGroup(item)) {
-				items.push(...(item as MenuItemGroup)._menuItems);
+				items.push(...item._menuItems);
 			} else if (!isInstanceOfMenuSeparator(item)) {
 				items.push(item as MenuItem);
 			}

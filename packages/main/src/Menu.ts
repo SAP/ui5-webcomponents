@@ -287,7 +287,7 @@ class Menu extends UI5Element {
 
 		this.items.forEach(item => {
 			if (isInstanceOfMenuItemGroup(item)) {
-				items.push(...(item as MenuItemGroup)._menuItems);
+				items.push(...item._menuItems);
 			} else if (!isInstanceOfMenuSeparator(item)) {
 				items.push(item as MenuItem);
 			}

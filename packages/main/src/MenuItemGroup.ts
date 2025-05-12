@@ -93,7 +93,7 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	 * @private
 	 */
 	_clearCheckedItems() {
-		this._menuItems.forEach((item: MenuItem) => item.checked = false);
+		this._menuItems.forEach((item: MenuItem) => { item.checked = false; });
 	}
 
 	/**
