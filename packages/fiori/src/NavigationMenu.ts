@@ -4,10 +4,6 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import {
-	isCtrl,
-	isShift,
-} from "@ui5/webcomponents-base/dist/Keys.js";
 import Menu from "@ui5/webcomponents/dist/Menu.js";
 import type MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
 import type NavigationMenuItem from "./NavigationMenuItem.js";
@@ -66,15 +62,6 @@ class NavigationMenu extends Menu {
 			// Opens submenu with 300ms delay
 			this._startOpenTimeout(item);
 		}
-	}
-
-	_itemKeyDown(e: KeyboardEvent) {
-		if (isShift(e) || isCtrl(e) || e.key === "Alt" || e.key === "Meta") {
-			e.preventDefault();
-			return;
-		}
-
-		super._itemKeyDown(e);
 	}
 
 	get accSideNavigationPopoverHiddenText() {

@@ -5,6 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
 import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 import NavigationMenu from "./NavigationMenu.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 
 // Templates
@@ -16,6 +17,7 @@ import navigationMenuItemCss from "./generated/themes/NavigationMenuItem.css.js"
 import {
 	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
+import type SideNavigationItem from "./SideNavigationItem.js";
 
 /**
  * @class
@@ -111,7 +113,15 @@ class NavigationMenuItem extends MenuItem {
 	}
 
 	_onclick(e: MouseEvent) {
-		super._onclick(e);
+		this._activate(e);
+	}
+
+	_activate(e: MouseEvent | KeyboardEvent) {
+		e.stopPropagation();
+
+		if (this.disabled) {
+			return;
+		}
 
 		const associatedItem = this.associatedItem;
 
@@ -122,8 +132,6 @@ class NavigationMenuItem extends MenuItem {
 			shiftKey,
 		} = e;
 
-		e.stopPropagation();
-
 		const executeEvent = associatedItem?.fireDecoratorEvent("click", {
 			altKey,
 			ctrlKey,
@@ -133,6 +141,64 @@ class NavigationMenuItem extends MenuItem {
 
 		if (!executeEvent) {
 			e.preventDefault();
+			return;
+		}
+
+		const sideNavigation = associatedItem?.sideNavigation;
+
+		if (!associatedItem) {
+			return;
+		}
+
+		if (associatedItem.selected) {
+			sideNavigation?.closeMenu();
+			return;
+		}
+
+		if (this.hasSubmenu) {
+			sideNavigation?.getOverflowPopover()._openItemSubMenu(this);
+		} else {
+			sideNavigation?._selectItem(associatedItem);
+			sideNavigation?.closeMenu();
+		}
+
+		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
+			const parent = associatedItem.parentElement as SideNavigationItem;
+			sideNavigation?.focusItem(parent);
+			parent?.focus();
+		} else {
+			sideNavigation?.focusItem(associatedItem);
+			associatedItem?.focus();
+		}
+	}
+
+	async _onkeydown(e: KeyboardEvent): Promise<void> {
+		if (isSpace(e)) {
+			e.preventDefault();
+		}
+
+		if (isEnter(e)) {
+			this._activate(e);
+		}
+
+		return Promise.resolve();
+	}
+
+	_onkeyup(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			this._activate(e);
+
+			if (this.href && !e.defaultPrevented) {
+				const customEvent = new MouseEvent("click");
+
+				customEvent.stopImmediatePropagation();
+				if (this.getDomRef()!.querySelector("a")) {
+					this.getDomRef()!.querySelector("a")!.dispatchEvent(customEvent);
+				} else {
+					// when Side Navigation is collapsed and it is first level item we have directly <a> element
+					this.getDomRef()!.dispatchEvent(customEvent);
+				}
+			}
 		}
 	}
 
