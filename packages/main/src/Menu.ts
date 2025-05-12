@@ -27,6 +27,7 @@ import type List from "./List.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import type MenuItem from "./MenuItem.js";
+import type MenuSeparator from "./MenuSeparator.js";
 import "./MenuItem.js";
 import "./MenuSeparator.js";
 import type MenuItemGroup from "./MenuItemGroup.js";
@@ -51,8 +52,9 @@ const MENU_OPEN_DELAY = 300;
  * @public
  */
 interface IMenuItem extends UI5Element {
-	isSeparator: boolean;
-	isGroup: boolean;
+	isMenuItem?: boolean;
+	isSeparator?: boolean;
+	isGroup?: boolean;
 }
 
 type MenuItemClickEventDetail = {
@@ -271,22 +273,22 @@ class Menu extends UI5Element {
 
 	/** Returns menu item groups */
 	get _menuItemGroups() {
-		return this.items.filter((item) : item is MenuItemGroup => item.isGroup);
+		return this.items.filter(isInstanceOfMenuItemGroup);
 	}
 
 	/** Returns menu items */
 	get _menuItems() {
-		return this.items.filter((item) : item is MenuItem => !item.isSeparator && !item.isGroup);
+		return this.items.filter(isInstanceOfMenuItem);
 	}
 
 	/** Returns all menu items (including those in groups */
 	get _allMenuItems() {
-		const items: Array<MenuItem> = [];
+		const items: MenuItem[] = [];
 
 		this.items.forEach(item => {
-			if (item.isGroup) {
+			if (isInstanceOfMenuItemGroup(item)) {
 				items.push(...(item as MenuItemGroup)._menuItems);
-			} else if (!item.isSeparator) {
+			} else if (!isInstanceOfMenuSeparator(item)) {
 				items.push(item as MenuItem);
 			}
 		});
@@ -296,14 +298,14 @@ class Menu extends UI5Element {
 
 	/** Returns menu items included in the ItemNavigation */
 	get _navigatableMenuItems() {
-		const items: Array<MenuItem> = [];
+		const items: MenuItem[] = [];
 		const slottedItems = this.getSlottedNodes<MenuItem>("items");
 
 		slottedItems.forEach(item => {
-			if (item.isGroup) {
+			if (isInstanceOfMenuItemGroup(item)) {
 				const groupItems = item.getSlottedNodes<MenuItem>("items");
 				items.push(...groupItems);
-			} else if (!item.isSeparator) {
+			} else if (!isInstanceOfMenuSeparator(item)) {
 				items.push(item);
 			}
 		});
@@ -376,7 +378,7 @@ class Menu extends UI5Element {
 			// respect mouseover only on desktop
 			const item = e.target as MenuItem;
 
-			if (this._isInstanceOfMenuItem(item)) {
+			if (isInstanceOfMenuItem(item)) {
 				item.focus();
 
 				// Opens submenu with 300ms delay
@@ -426,9 +428,9 @@ class Menu extends UI5Element {
 		const parentElement = item.parentElement as MenuItem;
 		const shouldItemNavigation = isUp(e) || isDown(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
-		const shouldCloseMenu = !shouldItemNavigation && !shouldOpenMenu && this._isInstanceOfMenuItem(parentElement);
+		const shouldCloseMenu = !shouldItemNavigation && !shouldOpenMenu && isInstanceOfMenuItem(parentElement);
 
-		if (this._isInstanceOfMenuItem(item)) {
+		if (isInstanceOfMenuItem(item)) {
 			if (isEnter(e) || isTabNextPrevious) {
 				e.preventDefault();
 			}
@@ -487,15 +489,24 @@ class Menu extends UI5Element {
 		this.open = false;
 		this.fireDecoratorEvent("close");
 	}
-
-	_isInstanceOfMenuItem(object: any): object is MenuItem {
-		return "isMenuItem" in object;
-	}
 }
+
+const isInstanceOfMenuItem = (object: any): object is MenuItem => {
+	return "isMenuItem" in object;
+};
+
+const isInstanceOfMenuSeparator = (object: any): object is MenuSeparator => {
+	return "isSeparator" in object;
+};
+
+const isInstanceOfMenuItemGroup = (object: any): object is MenuItemGroup => {
+	return "isGroup" in object;
+};
 
 Menu.define();
 
 export default Menu;
+export { isInstanceOfMenuItem, isInstanceOfMenuSeparator, isInstanceOfMenuItemGroup };
 export type {
 	MenuItemClickEventDetail,
 	MenuBeforeCloseEventDetail,

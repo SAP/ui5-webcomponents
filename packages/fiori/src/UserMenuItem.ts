@@ -1,5 +1,6 @@
 import { customElement, slot } from "@ui5/webcomponents-base/dist/decorators.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
+import { isInstanceOfMenuItem } from "@ui5/webcomponents/dist/Menu.js";
 
 import UserMenuItemTemplate from "./UserMenuItemTemplate.js";
 
@@ -45,7 +46,7 @@ class UserMenuItem extends MenuItem {
 	declare items: Array<UserMenuItem>;
 
 	get _menuItems() {
-		return this.items.filter(item => !item.isSeparator);
+		return this.items.filter(isInstanceOfMenuItem);
 	}
 }
 

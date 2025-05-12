@@ -19,6 +19,7 @@ import type List from "./List.js";
 import ListItem from "./ListItem.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import type PopoverPlacement from "./types/PopoverPlacement.js";
+import { isInstanceOfMenuItem, isInstanceOfMenuSeparator, isInstanceOfMenuItemGroup } from "./Menu.js";
 import MenuItemTemplate from "./MenuItemTemplate.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
@@ -109,8 +110,8 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
 @event("close")
 
 /**
- * Fired when an item is being checked.
- * @public
+ * Fired when an item is checked.
+ * @private
  * @since 2.11.0
  */
 @event("item-check", {
@@ -215,7 +216,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 *
 	 * **Note:** checked state is only taken into account when `ui5-menu-item` is added to `ui5-menu-item-group`
 	 * with `itemCheckMode` other than `None`.
-	 * **Note:** A checked `ui5-menu-item` have check mark displayed ad its end.
+	 * **Note:** A checked `ui5-menu-item` has a checkmark displayed at its end.
 	 * @default false
 	 * @public
 	 * @since 2.11.0
@@ -245,7 +246,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	_siblingsWithIcon = false;
 
 	/**
-	 * Defines the component check mode.
+	 * Defines the component's check mode.
 	 * @default "None"
 	 * @private
 	 */
@@ -300,23 +301,15 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	get _list() {
-		return this.shadowRoot!.querySelector<List>("[ui5-list]")!;
+		return this.shadowRoot && this.shadowRoot.querySelector<List>("[ui5-list]")!;
 	}
 
 	get _popover() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		return this.shadowRoot && this.shadowRoot.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	get isMenuItem(): boolean {
 		return true;
-	}
-
-	get isGroup(): boolean {
-		return false;
-	}
-
-	get isSeparator(): boolean {
-		return false;
 	}
 
 	get isRtl() {
@@ -410,12 +403,12 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	/** Returns menu item groups */
 	get _menuItemGroups() {
-		return this.items.filter((item) : item is MenuItemGroup => item.isGroup);
+		return this.items.filter(isInstanceOfMenuItemGroup);
 	}
 
 	/** Returns menu items */
 	get _menuItems() {
-		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+		return this.items.filter(isInstanceOfMenuItem);
 	}
 
 	/** Returns all menu items (including those in groups */
@@ -423,9 +416,9 @@ class MenuItem extends ListItem implements IMenuItem {
 		const items: MenuItem[] = [];
 
 		this.items.forEach(item => {
-			if (item.isGroup) {
+			if (isInstanceOfMenuItemGroup(item)) {
 				items.push(...(item as MenuItemGroup)._menuItems);
-			} else if (!item.isSeparator) {
+			} else if (!isInstanceOfMenuSeparator(item)) {
 				items.push(item as MenuItem);
 			}
 		});
@@ -439,10 +432,10 @@ class MenuItem extends ListItem implements IMenuItem {
 		const slottedItems = this.getSlottedNodes<MenuItem>("items");
 
 		slottedItems.forEach(item => {
-			if (item.isGroup) {
+			if (isInstanceOfMenuItemGroup(item)) {
 				const groupItems = item.getSlottedNodes<MenuItem>("items");
 				items.push(...groupItems);
-			} else if (!item.isSeparator) {
+			} else if (!isInstanceOfMenuSeparator(item)) {
 				items.push(item);
 			}
 		});

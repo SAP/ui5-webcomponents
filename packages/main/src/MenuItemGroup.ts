@@ -5,6 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import MenuItem from "./MenuItem.js";
 import MenuItemGroupTemplate from "./MenuItemGroupTemplate.js";
+import { isInstanceOfMenuItem } from "./Menu.js";
 import ItemCheckMode from "./types/ItemCheckMode.js";
 import type { IMenuItem } from "./Menu.js";
 
@@ -13,12 +14,16 @@ import type { IMenuItem } from "./Menu.js";
  *
  * ### Overview
  *
- * `ui5-menu-item-group` is the group of items to use inside a `ui5-menu`.
- * Items that belong to the same group should be enclosed by `ui5-menu-item-group`.
- * Each group can have itemCheckMode property, which defines the check mode of the items inside.
- * Possible values are 'None' (default), 'Single', 'Multiple'.
- * **Note:** If the itemCheckMode property is set to 'Single', only one item can be checked at a time.
- * If there is more than one item is marked as checked, the last one would be considered as the checked one.
+ * The `ui5-menu-item-group` component represents a group of items designed for use inside a `ui5-menu`.
+ * Items belonging to the same group should be wrapped by a `ui5-menu-item-group`.
+ * Each group can have an `itemCheckMode` property, which defines the check mode for the items within the group.
+ * The possible values for `itemCheckMode` are:
+ * - 'None' (default) - no items can be checked
+ * - 'Single' - Only one item can be checked at a time
+ * - 'Multiple' - Multiple items can be checked simultaneously
+ *
+ * **Note:** If the `itemCheckMode` property is set to 'Single', only one item can remain checked at any given time.
+ * If multiple items are marked as checked, the last checked item will take precedence.
  *
  * ### Usage
  *
@@ -42,7 +47,7 @@ import type { IMenuItem } from "./Menu.js";
 })
 class MenuItemGroup extends UI5Element implements IMenuItem {
 	/**
-	 * Defines the component check mode.
+	 * Defines the component's check mode.
 	 * @default "None"
 	 * @public
 	 */
@@ -51,22 +56,18 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 
 	/**
 	 * Defines the items of this component.
-	 * **Note:** The slot can hold `ui5-menu-item` and `ui5-menu-separator` items.
+	 * **Note:** The slot can hold any combination of components of type `ui5-menu-item` or `ui5-menu-separator` or both.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<IMenuItem>;
-
-	get isSeparator(): boolean {
-		return false;
-	}
 
 	get isGroup(): boolean {
 		return true;
 	}
 
 	get _menuItems() {
-		return this.items.filter((item) : item is MenuItem => !item.isSeparator);
+		return this.items.filter(isInstanceOfMenuItem);
 	}
 
 	onBeforeRendering() {
@@ -92,15 +93,12 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	 * @private
 	 */
 	_clearCheckedItems() {
-		this._menuItems.forEach((item: MenuItem) => {
-			if (!item.isSeparator && !item.isGroup) {
-				item.checked = false;
-			}
-		});
+		this._menuItems.forEach((item: MenuItem) => item.checked = false);
 	}
 
 	/**
-	 * Ensures that only one item is checked in the group (if there were any checked items).
+	 * Ensures that only one item can remain checked at any given time. If multiple items are marked as checked,
+	 * the last checked item will take precedence.
 	 * @private
 	 */
 	_ensureSingleItemIsChecked() {
