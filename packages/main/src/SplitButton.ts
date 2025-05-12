@@ -165,14 +165,6 @@ class SplitButton extends UI5Element {
 	_tabIndex = 0
 
 	/**
-	 * Indicates if there is Space key pressed
-	 * @default false
-	 * @private
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_spacePressed = false;
-
-	/**
 	 * Indicates if there is Shift or Escape key pressed while Space key is down.
 	 * @default false
 	 * @private
@@ -274,12 +266,12 @@ class SplitButton extends UI5Element {
 			return;
 		}
 
-		if ((isShift(e) || isEscape(e)) && this._spacePressed) {
+		if ((isShift(e) || isEscape(e)) && this._textButtonActive) {
 			e.preventDefault();
 			this._shiftOrEscapePressedDuringSpace = true;
 		}
 
-		if (isEscape(e)) {
+		if (isEscape(e) && !this._textButtonActive) {
 			this._resetActionButtonStates();
 		}
 
@@ -302,23 +294,21 @@ class SplitButton extends UI5Element {
 				this._fireClick();
 			}
 
-			this._spacePressed = false;
+			this._shiftOrEscapePressedDuringSpace = false;
 			return;
 		}
 
-		if (isEnter(e)) {
-			this._textButtonActive = false;
-			return;
-		}
+		const shouldToggleTextButtonActiveStateOff = isEnter(e) || (isShift(e) && this._textButtonActive);
 
-		if (isShift(e) && this._textButtonActive) {
-			this._textButtonActive = false;
+		if (shouldToggleTextButtonActiveStateOff) {
+			this._textButtonActive = !this._textButtonActive;
 		}
 	}
 
 	_resetActionButtonStates() {
 		this._activeArrowButton = false;
 		this._textButtonActive = false;
+		this._shiftOrEscapePressedDuringSpace = false;
 	}
 
 	_fireClick(e?: Event) {
@@ -408,12 +398,6 @@ class SplitButton extends UI5Element {
 		}
 
 		this._textButtonActive = true;
-
-		if (isSpace(e)) {
-			this._spacePressed = true;
-			this._shiftOrEscapePressedDuringSpace = false; // Reset whenever new Space action starts
-			return;
-		}
 
 		if (isEnter(e)) {
 			this._fireClick(e);
