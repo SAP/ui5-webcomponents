@@ -469,10 +469,6 @@ class Calendar extends CalendarPart {
 	 * Makes sure that _currentPicker is always set to a value, allowed by _pickersMode
 	 */
 	_normalizeCurrentPicker() {
-		if (this._currentPicker === "yearrange") {
-			return;
-		}
-
 		if (this._currentPicker === "day" && this._pickersMode !== CalendarPickersMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "month";
 		}
