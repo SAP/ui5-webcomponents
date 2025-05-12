@@ -912,39 +912,36 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		if (this._linkArray.length) {
 			this._linkArray.forEach(link => {
 				link.addEventListener("keydown", e => {
+					const currentIndex = this._linkArray.indexOf(link);
 					if (isTabNext(e) && this._handleLinkNavigation) {
 						e.preventDefault();
 						e.stopImmediatePropagation();
-						const currentIndex = this._linkArray.indexOf(link);
 						if (currentIndex !== this._linkArray.length - 1) {
 							this._linkArray[currentIndex + 1].focus();
 						} else {
 							this._linkArray[currentIndex].focus();
 						}
-						//console.log("tab" + link + " " + currentIndex);
 					}
 
 					if (isTabPrevious(e) && this._handleLinkNavigation) {
 						e.preventDefault();
 						e.stopImmediatePropagation();
-						const currentIndex = this._linkArray.indexOf(link);
-						if (currentIndex >= 0) {
+						if (currentIndex > 0) {
 							this._linkArray[currentIndex - 1].focus();
 						} else {
 							this._linkArray[0].focus();
 						}
-						//console.log("shift tab" + link + " " + currentIndex);
 					}
-					//if (isDown(e)) {
-					// 	const hasSuggestions = this.showSuggestions && !!this.Suggestions;
-					// 	const isOpen = hasSuggestions && this.open;
-					// 	if (hasSuggestions && isOpen && this._handleLinkNavigation) {
-					// 		e.preventDefault();
-					// 		e.stopPropagation();
-					// 		this._handleLinkNavigationDown(e);
-					// 	}
-					// }
-				 }, { once: true });
+					if (isDown(e) && this._handleLinkNavigation && currentIndex === this._linkArray.length - 1) {
+						//e.preventDefault();
+						//e.stopImmediatePropagation();
+						const hasSuggestions = this.showSuggestions && !!this.Suggestions;
+						const isOpen = hasSuggestions && this.open;
+						if (hasSuggestions && isOpen) {
+							this._handleLinkNavigationDown(e);
+						}
+					}
+				 });
 				if (link.tagName === "A") {
 					const addOutline = () => {
 						link.style.outline = "2px solid blue";
@@ -957,25 +954,18 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 						link.removeEventListener("blur", removeOutline);
 					};
 
-					link.addEventListener("blur", removeOutline, { once: true });
-					link.addEventListener("focus", addOutline, { once: true });
+					link.addEventListener("blur", removeOutline);
+					link.addEventListener("focus", addOutline);
 				}
 			});
 			this._linkArray[0].focus();
 		}
 	}
 
-	_handleTabInLinkNavigation(link: HTMLElement) {
-		link.focus();
-	}
-
-	_handleShiftTabInLinkNavigation(link: HTMLElement) {
-		link.focus();
-	}
-
 	_handleLinkNavigationDown(e: KeyboardEvent) {
 		if (this.Suggestions?.isOpened()) {
-			this.Suggestions.onDown(e, this.currentItemIndex);
+			this._handleLinkNavigation = false;
+			this.Suggestions.onDown(e, this.currentItemIndex + 1);
 		}
 	}
 
