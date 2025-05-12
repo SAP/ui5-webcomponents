@@ -301,7 +301,7 @@ class SplitButton extends UI5Element {
 		const shouldToggleTextButtonActiveStateOff = isEnter(e) || (isShift(e) && this._textButtonActive);
 
 		if (shouldToggleTextButtonActiveStateOff) {
-			this._textButtonActive = !this._textButtonActive;
+			this._textButtonActive = false;
 		}
 	}
 
