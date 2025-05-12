@@ -49,6 +49,7 @@ class SearchItem extends ListItemBase {
 	};
 	/**
 	 * Defines the heading text of the search item.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -64,6 +65,7 @@ class SearchItem extends ListItemBase {
 
 	/**
 	 * Defines the icon name of the search item.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
