@@ -19,7 +19,7 @@
 
 	<h2>Notification List with Menu</h2>
 	<ui5-notification-list id="notificationListWithMenu">
-		<ui5-li-notification
+		<ui5-li-notification id="navNotification"
 			show-close
 			priority="High"
 			state="Positive"
@@ -344,6 +344,9 @@
 	</div>
 
 	<script>
+		navNotification.addEventListener("click", function(event) {
+			console.log("Notification clicked");
+		});
 		notificationList.addEventListener("ui5-item-click", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.open = true;

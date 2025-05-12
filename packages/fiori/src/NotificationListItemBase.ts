@@ -1,4 +1,4 @@
-import { isSpace, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isEnter, isSpace, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -6,6 +6,7 @@ import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableE
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 
 // Texts
 import {
@@ -21,8 +22,19 @@ import {
  * @since 1.0.0-rc.8
  * @public
  */
+
+/**
+ * Fired, when the item is pressed.
+ * @public
+ */
+@event("click", {
+	bubbles: true,
+})
+
 class NotificationListItemBase extends ListItemBase {
-	eventDetails!: ListItemBase["eventDetails"];
+	eventDetails!: ListItemBase["eventDetails"] & {
+		"click": void
+	};
 	/**
 	 * Defines the `titleText` of the item.
 	 * @default undefined
@@ -75,17 +87,22 @@ class NotificationListItemBase extends ListItemBase {
 	 */
 	async _onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
+		const target = e.target as HTMLElement;
+		const focusDomRef = this.getHeaderDomRef()!;
 
 		if (isSpace(e) && this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			e.preventDefault();
 			return;
 		}
 
+		if (isEnter(e) && target === focusDomRef) {
+			this.fireDecoratorEvent("click");
+		}
+
 		if (isF2(e)) {
 			e.stopImmediatePropagation();
 
 			const activeElement = getActiveElement();
-			const focusDomRef = this.getHeaderDomRef()!;
 
 			if (activeElement === focusDomRef) {
 				const firstFocusable = await getFirstFocusableElement(focusDomRef);
@@ -104,6 +121,17 @@ class NotificationListItemBase extends ListItemBase {
 		const aContent = getTabbableElements(this.getHeaderDomRef()!);
 
 		return aContent.length === 0 || (aContent[aContent.length - 1] === getActiveElement());
+	}
+
+	_onkeyup(e: KeyboardEvent) {
+		const target = e.target as HTMLElement;
+		const focusDomRef = this.getHeaderDomRef()!;
+
+		super._onkeyup(e);
+
+		if (isSpace(e) && target === focusDomRef) {
+			this.fireDecoratorEvent("click");
+		}
 	}
 }
 

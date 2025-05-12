@@ -152,3 +152,26 @@ describe("Keyboard Navigation", () => {
 		cy.get("#item11").should("be.focused");
 	});
 });
+
+describe("Events", () => {
+	beforeEach(() => {
+		cy.mount(<Sample />);
+	});
+
+	it("Test click on NavigationListItem", () => {
+
+		cy.get("#item11")
+			.as("notificationLIstItem");
+
+		cy.get("@notificationLIstItem")
+			.then(nli => {
+				nli.get(0).addEventListener("click", cy.stub().as("clicked"));
+			});
+
+		cy.get("@notificationLIstItem")
+			.realClick();
+
+		cy.get("@clicked")
+			.should("be.called");
+	});
+});
