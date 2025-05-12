@@ -24,6 +24,10 @@ export default function SearchFieldTemplate(this: SearchItem) {
 		>
 			<div part="content" class="ui5-search-item-content">
 				<div class="ui5-search-item-begin-content">
+					{this.image.length > 0 && !this.icon &&
+						<slot name="image"></slot>
+					}
+
 					{this.icon &&
 						<Icon class="ui5-search-item-icon" name={this.icon}></Icon>
 					}
@@ -36,6 +40,8 @@ export default function SearchFieldTemplate(this: SearchItem) {
 
 					<div class="ui5-search-item-titles-container">
 						<span part="title" class="ui5-search-item-heading" dangerouslySetInnerHTML={{ __html: this._markupText }}></span>
+
+						<span part="subtitle" class="ui5-search-item-subheading">{this.description}</span>
 					</div>
 					{this.selected &&
 						<Button class="ui5-search-item-selected-delete" design={ButtonDesign.Transparent} icon={decline} onClick={this._onDeleteButtonClick}></Button>

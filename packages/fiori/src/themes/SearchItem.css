@@ -2,6 +2,10 @@
 	border: none;
 }
 
+:host {
+	border: none;
+}
+
 .ui5-search-item-content {
 	width: 100%;
 	height: 100%;
@@ -55,4 +59,30 @@
 	width: 1rem;
 	height: 1rem;
 	box-sizing: content-box;
+}
+
+:host([description]) {
+	height: auto;
+	min-height: var(--_ui5_list_item_base_height);
+}
+
+:host([description]) .ui5-search-item-content {
+	padding-top: var(--_ui5_search_item_content_top_bottom_padding);
+	padding-bottom: var(--_ui5_search_item_content_top_bottom_padding);
+}
+
+:host([description]) .ui5-search-item-subheading {
+	display: inline-block;
+}
+
+.ui5-search-item-subheading {
+	display: none;
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+	font-weight: normal;
+	color: var(--sapContent_LabelColor);
+	margin-top: .25rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
