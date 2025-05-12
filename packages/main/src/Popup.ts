@@ -293,7 +293,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	async openPopup() {
-		if (this._opened) {
+		if (this._opened || !this._fullyConnected) {
 			return;
 		}
 
