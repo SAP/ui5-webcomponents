@@ -28,6 +28,7 @@ import { isInstanceOfSideNavigationSelectableItemBase } from "./SideNavigationSe
 import { isInstanceOfSideNavigationItemBase } from "./SideNavigationItemBase.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
+import { isInstanceOfSideNavigationGroup } from "./SideNavigationGroup.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 import type SideNavigationGroup from "./SideNavigationGroup.js";
@@ -244,6 +245,23 @@ class SideNavigation extends UI5Element {
 				item.inPopover = this.inPopover;
 				item.sideNavigation = this;
 			});
+
+		this.initGroupsSettings(this.items);
+		this.initGroupsSettings(this.fixedItems);
+	}
+
+	initGroupsSettings(items: Array<SideNavigationItemBase>) {
+		let isPreviousItemGroup = false;
+
+		items.forEach(item => {
+			const isGroup = isInstanceOfSideNavigationGroup(item);
+
+			if (isGroup) {
+				item.belowGroup = isPreviousItemGroup;
+			}
+
+			isPreviousItemGroup = isGroup;
+		});
 	}
 
 	_onAfterPopoverOpen() {
