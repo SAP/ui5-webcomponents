@@ -407,11 +407,11 @@ describe("SearchField general interaction", () => {
 		});
 	});
 
-	describe("SearchField - Advanced and Scope Slot Rendering", () => {
-		it("renders the advanced slot content when only advanced filtering is provided", () => {
+	describe("SearchField - Advanced filter and Scope Slot Rendering", () => {
+		it("renders the advanced filter slot content when only advanced filtering is provided", () => {
 			cy.mount(
 				<SearchField value="test">
-					<Button slot="advanced" icon="filter"></Button>
+					<Button slot="advancedFilter" icon="filter"></Button>
 				</SearchField>
 			);
 
@@ -419,20 +419,21 @@ describe("SearchField general interaction", () => {
 
 			cy.get("@searchField")
 				.shadow()
-				.find('slot[name="advanced"]')
+				.find('slot[name="advancedFilter"]')
 				.should("exist");
 		});
 
-		it("renders the scope selector and omits advanced slot when both are provided", () => {
+		it("renders the scope selector and omits advanced fliter slot when both are provided", () => {
 			cy.mount(
 				<SearchField>
-					<Button slot="advanced" icon="filter"></Button>
+					<Button slot="advancedFilter" icon="filter"></Button>
 					<SearchScope text="All" slot="scopes"></SearchScope>
 					<SearchScope text="Apps" selected slot="scopes"></SearchScope>
 				</SearchField>
 			);
 
-			cy.get("ui5-search-field").as("searchField");
+			cy.get("ui5-search-field")
+				.as("searchField");
 
 			cy.get("@searchField")
 				.shadow()
@@ -441,7 +442,7 @@ describe("SearchField general interaction", () => {
 
 			cy.get("@searchField")
 				.shadow()
-				.find('slot[name="advanced"]')
+				.find('slot[name="advancedFilter"]')
 				.should("not.exist");
 		});
 	});

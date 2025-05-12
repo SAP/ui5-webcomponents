@@ -158,8 +158,12 @@ class SearchField extends UI5Element {
 	@slot({ type: HTMLElement, individualSlots: true, invalidateOnChildChange: true })
 	scopes!: Array<ISearchScope>;
 
+	/**
+ 	* Defines the slot for advanced filtering.
+ 	* @public
+ 	*/
 	@slot()
-	advanced!: HTMLElement;
+	advancedFilter!: HTMLElement;
 
 	/**
 	 * @private
