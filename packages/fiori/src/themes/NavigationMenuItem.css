@@ -60,6 +60,7 @@
 
 :host(.ui5-navigation-menu-item-root-parent)::part(content) {
 	font-weight: bold;
+	font-family: var(--_ui5_side_navigation_item_font_family);
 }
 
 :host([design="Action"]) .ui5-sn-item-external-link-icon {
