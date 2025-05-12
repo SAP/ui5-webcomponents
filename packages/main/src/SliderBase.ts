@@ -803,7 +803,7 @@ abstract class SliderBase extends UI5Element {
 			? `${this.accessibleName} ${this._ariaLabelledByText}`
 			: this._ariaLabelledByText;
 
-		if (associatedLabelText && !hasAccessibleName) {
+		if (!hasAccessibleName && associatedLabelText) {
 			labelText = `${associatedLabelText} ${labelText}`;
 		}
 

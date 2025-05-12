@@ -49,23 +49,19 @@ describe("Accessibility", () => {
 	});
 
 	it("should apply associated label text as aria-label on the slider element", () => {
+		const labelText = "label for slider";
 		cy.mount(
 			<>
-			<label for="slider">label for slider</label>
-			<Slider id="slider" min={0} max={20}></Slider>
+				<label for="slider">{labelText}</label>
+				<Slider id="slider" min={0} max={20}></Slider>
 			</>
 		);
 
-		cy.get('label[for="slider"]')
-			.invoke('text')
-			.then((labelText) => {
-
-				cy.get("[ui5-slider]")
-					.shadow()
-					.find(".ui5-slider-handle")
-					.should("have.attr", "aria-label", `${labelText} Slider handle`);
-			});
-	});
+		cy.get("[ui5-slider]")
+			.shadow()
+			.find(".ui5-slider-handle")
+			.should("have.attr", "aria-label", `${labelText} Slider handle`);
+});
 	it("Aria attributes are set correctly", () => {
 			cy.mount(
 				<Slider id="basic-slider" accessible-name="Basic Slider" min={0} max={10}></Slider>

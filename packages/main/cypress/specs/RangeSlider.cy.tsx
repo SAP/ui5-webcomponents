@@ -1,23 +1,19 @@
 import RangeSlider from "../../src/RangeSlider.js";
 
 describe("Accessibility", () => {
-    it("should apply associated label text as aria-label on the slider element", () => {
-        cy.mount(
+	it("should apply associated label text as aria-label on the slider element", () => {
+		const labelText = "basic range slider";
+		cy.mount(
 			<>
-			<label for="rs">basic range slider</label>
-			<RangeSlider id="rs" min={0} max={20}></RangeSlider>
+				<label for="rs">{labelText}</label>
+				<RangeSlider id="rs" min={0} max={20}></RangeSlider>
 			</>
 		);
 
-		cy.get('label[for="rs"]')
-			.invoke('text')
-			.then((labelText) => {
-
-				cy.get("[ui5-range-slider]")
-					.shadow()
-					.find(".ui5-slider-progress")
-					.should("have.attr", "aria-label", `${labelText} Range`);
-			});
+		cy.get("[ui5-range-slider]")
+			.shadow()
+			.find(".ui5-slider-progress")
+			.should("have.attr", "aria-label", `${labelText} Range`);
     });
 	it("Aria attributes of the progress bar are set correctly", () => {
 		cy.mount(
