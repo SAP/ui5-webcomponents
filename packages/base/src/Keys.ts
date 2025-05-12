@@ -228,6 +228,8 @@ const isF6Previous = (event: KeyboardEvent): boolean => ((event.key ? event.key 
 
 const isF7 = (event: KeyboardEvent): boolean => (event.key ? event.key === "F7" : event.keyCode === KeyCodes.F7) && !hasModifierKeys(event);
 
+const isCtrlAltF8 = (event: KeyboardEvent): boolean => (event.key ? event.key === "F1" : event.keyCode === KeyCodes.F8) && checkModifierKeys(event, true, true, false);
+
 const isShowByArrows = (event: KeyboardEvent): boolean => {
 	return ((event.key === "ArrowDown" || event.key === "Down") || (event.key === "ArrowUp" || event.key === "Up")) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false);
 };
@@ -316,4 +318,5 @@ export {
 	isInsertCtrl,
 	isNumber,
 	isColon,
+	isCtrlAltF8,
 };
