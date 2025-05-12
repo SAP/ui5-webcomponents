@@ -52,6 +52,7 @@ import type {
 import type DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
 import type {
+	MoveStartEventDetail,
 	SelectionRequestEventDetail,
 } from "./ListItem.js";
 import ListSeparator from "./types/ListSeparator.js";
@@ -70,6 +71,7 @@ import {
 	LOAD_MORE_TEXT, ARIA_LABEL_LIST_SELECTABLE,
 	ARIA_LABEL_LIST_MULTISELECTABLE,
 	ARIA_LABEL_LIST_DELETABLE,
+	LIST_DRAG_GHOST_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import type CheckBox from "./CheckBox.js";
 import type RadioButton from "./RadioButton.js";
@@ -111,6 +113,9 @@ type ListItemClickEventDetail = {
 }
 
 type ListMoveEventDetail = MoveEventDetail;
+
+// Specific template type for the drag ghost
+type ListDragElementTemplate = (this: List) => JSX.Element;
 
 /**
  * @class
@@ -299,6 +304,17 @@ class List extends UI5Element {
 		"move-over": ListMoveEventDetail,
 		"move": ListMoveEventDetail,
 	}
+
+	/**
+	 * Defines the number of dragged items. Use this property to indicate that multiple items are being dragged.
+	 * When a value greater than 1 is set, the component will display a custom ghost element that displays the number of dragged items.
+	 * @default 0
+	 * @public
+	 * @since 2.10.0
+	 */
+	@property({ type: Number })
+	movingItemsCount = 0;
+
 	/**
 	 * Defines the component header text.
 	 *
@@ -474,6 +490,13 @@ class List extends UI5Element {
 	mediaRange = "S";
 
 	/**
+	 * The custom template for the drag ghost element.
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	dragElementTemplate?: ListDragElementTemplate;
+
+	/**
 	 * Defines the items of the component.
 	 *
 	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
@@ -578,6 +601,18 @@ class List extends UI5Element {
 	onBeforeRendering() {
 		this.detachGroupHeaderEvents();
 		this.prepareListItems();
+
+		if (this.showDragGhost) {
+			// If feature is already loaded (preloaded by the user via importing ListItemStandardExpandableText.js), the template is already available
+			if (List.ListDragElementTemplate) {
+				this.dragElementTemplate = List.ListDragElementTemplate;
+			// If feature is not preloaded, load the template dynamically
+			} else {
+				import("./features/ListDragElementTemplate.js").then(module => {
+					this.dragElementTemplate = module.default;
+				});
+			}
+		}
 	}
 
 	onAfterRendering() {
@@ -613,6 +648,18 @@ class List extends UI5Element {
 				item.removeEventListener("ui5-forward-before", this.onForwardBeforeBound as EventListener);
 			}
 		});
+	}
+
+	get dragGhost() {
+		return this.shadowRoot!.querySelector<UI5Element>(".ui5-list-drag-ghost");
+	}
+
+	get showDragGhost() {
+		return this.movingItemsCount > 1;
+	}
+
+	get dragGhostText() {
+		return List.i18nBundle.getText(LIST_DRAG_GHOST_TEXT, this.movingItemsCount);
 	}
 
 	get shouldRenderH1() {
@@ -1214,6 +1261,13 @@ class List extends UI5Element {
 		return afterElement && afterElement.id === elementId;
 	}
 
+	onItemMoveStart(e: CustomEvent<MoveStartEventDetail>) {
+		const originalEvent = e.detail.originalEvent;
+		if (this.dragGhost && originalEvent.dataTransfer) {
+			originalEvent.dataTransfer.setDragImage(this.dragGhost, 0, 0);
+		}
+	}
+
 	onItemTabIndexChange(e: CustomEvent) {
 		e.stopPropagation();
 		const target = e.target as ListItemBase;
@@ -1430,6 +1484,8 @@ class List extends UI5Element {
 
 		return this.growingIntersectionObserver;
 	}
+
+	static ListDragElementTemplate?: ListDragElementTemplate;
 }
 
 List.define();
