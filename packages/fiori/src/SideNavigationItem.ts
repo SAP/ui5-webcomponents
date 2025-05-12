@@ -206,15 +206,27 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
-		if (isLeft(e) || isMinus(e)) {
+		if (isLeft(e)) {
 			e.preventDefault();
 			this.expanded = !!isRTL;
 			return;
 		}
 
-		if (isRight(e) || isPlus(e)) {
+		if (isRight(e)) {
 			e.preventDefault();
 			this.expanded = !isRTL;
+			return;
+		}
+
+		if (isMinus(e)) {
+			e.preventDefault();
+			this.expanded = false;
+			return;
+		}
+
+		if (isPlus(e)) {
+			e.preventDefault();
+			this.expanded = true;
 			return;
 		}
 
