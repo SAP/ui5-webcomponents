@@ -278,6 +278,32 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * @private
+	 * Sets on the host several attributes, unrelated to metadata properties
+	 */
+	setNonPropertyAttributes() {
+		const ctor = this.constructor as typeof UI5Element;
+
+		this.setAttribute(ctor.getMetadata().getPureTag(), "");
+		if (ctor.getMetadata().supportsF6FastNavigation()) {
+			this.setAttribute("data-sap-ui-fastnavgroup", "true");
+		}
+	}
+
+	/**
+	 * @private
+	 * Stripped down version of connectedCallback, usable in SSR scenarios
+	 */
+	serverRender() {
+		this.setNonPropertyAttributes(); // set pure tag attribute
+		this.onBeforeRendering(); // onBeforeRendering hook must run before updateAttributes (many private properties are set there)
+		this.updateAttributes(); // set property-related attributes
+		this._processChildren(); // set slots accessors
+		this._assignIndividualSlotsToChildren();
+		return updateShadowRoot(this); // render as string
+	}
+
+	/**
 	 * Do not call this method from derivatives of UI5Element, use "onEnterDOM" only
 	 * @private
 	 */
@@ -293,13 +319,9 @@ abstract class UI5Element extends HTMLElement {
 			}
 		}
 
+		this.setNonPropertyAttributes();
+
 		const ctor = this.constructor as typeof UI5Element;
-
-		this.setAttribute(ctor.getMetadata().getPureTag(), "");
-		if (ctor.getMetadata().supportsF6FastNavigation()) {
-			this.setAttribute("data-sap-ui-fastnavgroup", "true");
-		}
-
 		const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
 
 		this._inDOM = true;
@@ -783,7 +805,6 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	_render() {
 		const ctor = this.constructor as typeof UI5Element;
-		const hasIndividualSlots = ctor.getMetadata().hasIndividualSlots();
 
 		// restore properties that were initialized before `define` by calling the setter
 		if (this.initializedProperties.size > 0) {
@@ -841,9 +862,7 @@ abstract class UI5Element extends HTMLElement {
 		this._rendered = true;
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
-		if (hasIndividualSlots) {
-			this._assignIndividualSlotsToChildren();
-		}
+		this._assignIndividualSlotsToChildren();
 
 		// Call the onAfterRendering hook
 		this.onAfterRendering();
@@ -853,6 +872,11 @@ abstract class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_assignIndividualSlotsToChildren() {
+		const ctor = this.constructor as typeof UI5Element;
+		const hasIndividualSlots = ctor.getMetadata().hasIndividualSlots();
+		if (!hasIndividualSlots) {
+			return;
+		}
 		const domChildren = Array.from(this.children);
 
 		domChildren.forEach((child: Record<string, any>) => {
