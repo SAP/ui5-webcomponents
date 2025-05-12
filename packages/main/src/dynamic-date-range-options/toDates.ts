@@ -2,7 +2,7 @@ import type DynamicDateRangeValue from "../DynamicDateRangeValue.js";
 
 const dateOptionToDates = (value: DynamicDateRangeValue): Date[] => {
 	const startDate = value.values ? value.values[0] : new Date();
-	const endDate = startDate;
+	const endDate = new Date(startDate);
 
 	startDate?.setHours(0, 0, 0, 0);
 	endDate?.setHours(23, 59, 59, 999);

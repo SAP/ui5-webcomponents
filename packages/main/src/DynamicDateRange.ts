@@ -15,15 +15,9 @@ import dynamicDateRangePopoverCss from "./generated/themes/DynamicDateRangePopov
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import IconMode from "./types/IconMode.js";
-import "./DynamicDateOption.js";
-import "./dynamic-date-range-options/DynamicDateRangeOptionToday.js";
-import "./dynamic-date-range-options/DynamicDateRangeOptionYesterday.js";
-import "./dynamic-date-range-options/DynamicDateRangeOptionTomorrow.js";
-import "./dynamic-date-range-options/DynamicDateRangeOptionDate.js";
-import "./dynamic-date-range-options/DynamicDateRangeOptionDateRange.js";
 import type Input from "./Input.js";
-import type DynamicDateRangeValue from "./DynamicDateRangeValue.js";
 import type { IDynamicDateRangeOption } from "./DynamicDateOption.js";
+import type DynamicDateRangeValue from "./DynamicDateRangeValue.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
@@ -109,6 +103,7 @@ class DynamicDateRange extends UI5Element {
 	_selectOption(e: any) {
 		this._currentOption = this.options.find(option => option.text === e.detail.item.textContent);
 		if (!this._currentOption?.template) {
+			this.currentValue = this._currentOption?.parse(this._currentOption.text) as DynamicDateRangeValue;
 			this._submitValue();
 		}
 
@@ -130,6 +125,10 @@ class DynamicDateRange extends UI5Element {
 		this._currentOption = undefined;
 	}
 
+	toDates(value: DynamicDateRangeValue): Date[] {
+		return this.getOption(value.operator)?.toDates(value) as Date[];
+	}
+
 	get _hasCurrentOptionTemplate(): boolean {
 		return !!this._currentOption && !!this._currentOption.template;
 	}
@@ -139,19 +138,15 @@ class DynamicDateRange extends UI5Element {
 			this._input.value = this._currentOption?.format(this.currentValue!) as string;
 		}
 
+		this.value = this.currentValue as DynamicDateRangeValue;
 		this._currentOption = undefined;
 		this.open = false;
-		this.value = this.currentValue as DynamicDateRangeValue;
 	}
 
 	_close() {
 		this._currentOption = undefined;
 		this.open = false;
 	}
-
-	// _getInput(): Input {
-	// 	return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
-	// }
 
 	get currentValueText() {
 		if (this.currentValue && this.currentValue.operator === this._currentOption?.key) {
