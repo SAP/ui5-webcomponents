@@ -153,14 +153,6 @@ class ToolbarButton extends ToolbarItem {
 	@property()
 	width?: string;
 
-	/**
-     * Defines if the toolbar button is hidden.
-     * @private
-     * @default false
-     */
-	@property({ type: Boolean })
-	hidden = false;
-
 	get styles() {
 		return {
 			width: this.width,
@@ -180,8 +172,14 @@ class ToolbarButton extends ToolbarItem {
 		}
 	}
 
-	get class() {
-		return `${this._isOverflowed ? "ui5-tb-popover-item" : "ui5-tb-item"} ui5-tb-button`;
+	/**
+	 * @override
+	 */
+	get classes() {
+		return {
+		    ...super.classes,
+		    "ui5-tb-button": true
+		};
 	}
 }
 

@@ -54,27 +54,18 @@ class ToolbarItem extends UI5Element {
 	/**
 	 * Defines if the toolbar item is overflowed.
 	 * @default false
-	 * @private
+	 * @protected
 	 * @since 2.11.0
 	 */
 
 	@property({ type: Boolean })
-	_isOverflowed: boolean = false;
+	isOverflowed: boolean = false;
 
 	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
 	* @protected
 	*/
 	get ignoreSpace(): boolean {
-		return false;
-	}
-
-	/**
-	 * Returns if the item contains text. Used to position the text properly inside the popover.
-	 * Aligned left if the item has text, default aligned otherwise.
-	 * @protected
-	 */
-	get containsText(): boolean {
 		return false;
 	}
 
@@ -105,28 +96,15 @@ class ToolbarItem extends UI5Element {
 		return false;
 	}
 
-	/**
-	 * Returns the template for the toolbar item.
-	 * @protected
-	 */
-	static get toolbarTemplate(): TemplateFunction {
-		throw new Error("Template must be defined");
-	}
-
-	/**
-	 * Returns the template for the toolbar item popover.
-	 * @protected
-	 */
-	static get toolbarPopoverTemplate(): TemplateFunction {
-		throw new Error("Popover template must be defined");
-	}
-
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
 
-	get class() {
-		return this._isOverflowed ? "ui5-tb-popover-item" : "ui5-tb-item" as string;
+	get classes() {
+		return {
+		    "ui5-tb-popover-item": this.isOverflowed,
+		    "ui5-tb-item": true
+		};
 	}
 
 	getFocusDomRef(): HTMLElement | undefined {

@@ -163,7 +163,6 @@ class Toolbar extends UI5Element {
 	itemsToOverflow: Array<ToolbarItem> = [];
 	itemsWidth = 0;
 	minContentWidth = 0;
-	itemsWidthMeasured = false;
 
 	ITEMS_WIDTH_MAP: Map<string, number> = new Map();
 
@@ -265,14 +264,6 @@ class Toolbar extends UI5Element {
 		return this.shadowRoot!.querySelector(".ui5-tb-overflow-btn");
 	}
 
-	get itemsDOM() {
-		return this.shadowRoot!.querySelector(".ui5-tb-items");
-	}
-
-	get hasItemWithText(): boolean {
-		return this.itemsToOverflow.some((item: ToolbarItem) => item.containsText);
-	}
-
 	get hasFlexibleSpacers() {
 		return this.items.some((item: ToolbarItem) => item.hasFlexibleWidth);
 	}
@@ -298,7 +289,6 @@ class Toolbar extends UI5Element {
 		this.detachListeners();
 		this.attachListeners();
 
-		this.preprocessItems();
 	}
 
 	async onAfterRendering() {
@@ -307,7 +297,7 @@ class Toolbar extends UI5Element {
 		this.storeItemsWidth();
 		this.processOverflowLayout();
 		this.getItemsInfo(this.items).forEach(item => {
-			 item.context._isOverflowed = this.overflowItems.map(overflowItem => overflowItem.context).indexOf(item.context) !== -1;
+			 item.context.isOverflowed = this.overflowItems.map(overflowItem => overflowItem.context).indexOf(item.context) !== -1;
 		});
 	}
 
@@ -534,20 +524,6 @@ class Toolbar extends UI5Element {
 		return this.ITEMS_WIDTH_MAP.get(id);
 	}
 
-	getItemByID(id: string) {
-		return this.items.find(item => item._id === id);
-	}
-
-	getRegisteredToolbarItemByID(id: string): HTMLElement | null {
-		return this.itemsDOM!.querySelector(`[data-ui5-external-action-item-id="${id}"]`);
-	}
-
-	preprocessItems() {
-		this.items.forEach(item => {
-			item._getRealDomRef = () => this.getDomRef()!.querySelector(`[data-ui5-stable*=${item.stableDomRef}]`)
-				?? this.getOverflowPopover().querySelector(`[data-ui5-stable*=${item.stableDomRef}]`)!;
-		});
-	}
 }
 
 Toolbar.define();
