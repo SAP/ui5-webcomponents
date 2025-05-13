@@ -336,6 +336,7 @@ abstract class SliderBase extends UI5Element {
 		}
 
 		this.value = value;
+		this.fireDecoratorEvent("change");
 	}
 
 	_onKeyupBase() {

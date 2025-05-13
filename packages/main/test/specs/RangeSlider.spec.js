@@ -273,17 +273,17 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 		await browser.keys("ArrowUp");
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 1, "The start value is not changed on arrow up");
-		
+
 		await browser.keys("ArrowDown");
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 1, "The start value is not changed on arrow down");
-	
+
 		await rangeSlider.setProperty("endValue", 10);
 		await rangeSliderEndHandle.click();
 		await rangeSliderEndTooltipInput.click();
 
 		await browser.keys("ArrowUp");
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 10, "The end value is not changed on arrow up");
-		
+
 		await browser.keys("ArrowDown");
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 10, "The end value is not changed on arrow down");
 	});
@@ -377,7 +377,7 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 1, "The end value is now start value");
 		assert.strictEqual(await rangeSliderStartTooltipInput.getProperty("value"), "1", "The end input value is now start value");
 	});
-	
+
 	it("Invalid tooltip value should not be changed on 'Enter'", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
 		const rangeSliderTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--end ui5-input");

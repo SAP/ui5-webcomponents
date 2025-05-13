@@ -113,6 +113,9 @@ class SliderTooltip extends UI5Element {
 		const followRefMidX = followRefWidth / 2;
 
 		this.style.left = `${followRefRect.left + followRefMidX - tooltipMidX}px`;
+
+		// enable RTL support
+		this.style.right = "auto";
 	}
 
 	isValueValid(value: string): boolean {
@@ -160,6 +163,19 @@ class SliderTooltip extends UI5Element {
 			this.hidePopover();
 			this.showPopover();
 		});
+	}
+
+	_onInputFocusOut(e: FocusEvent) {
+		if (!this.isValueValid(this.inputRef.value)) {
+			const value = this.value;
+			this.inputRef.value = value || "";
+		}
+
+		const relatedTarget = e.relatedTarget as HTMLElement;
+
+		if (!this.parentElement?.contains(relatedTarget)) {
+			this.hidePopover();
+		}
 	}
 
 	get inputRef() {
