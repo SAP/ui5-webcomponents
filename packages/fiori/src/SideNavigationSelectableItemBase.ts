@@ -6,6 +6,8 @@ import {
 	isEnter,
 	isLeft,
 	isRight,
+	isMinus,
+	isPlus,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
@@ -206,6 +208,14 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		}
 
 		if (isEnter(e)) {
+			this._activate(e);
+		}
+
+		if (isMinus(e) && !this.sideNavCollapsed) {
+			this._activate(e);
+		}
+
+		if (isPlus(e) && this.sideNavCollapsed) {
 			this._activate(e);
 		}
 
