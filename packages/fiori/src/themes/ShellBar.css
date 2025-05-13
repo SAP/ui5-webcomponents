@@ -458,11 +458,12 @@ slot[name="profile"] {
 	flex-grow: 1;
 	margin-inline-start: 0.5rem;
 	display: flex;
-	width: 0;
 	overflow: hidden;
+	width: 0;
+	min-width: 1px;
 }
 
-:host([show-search-field]:not(.ui5-shellbar-animating)) .ui5-shellbar-search-field {
+:host([show-search-field]) .ui5-shellbar-search-field {
 	min-width: var(--_ui5_shellbar_search_field_width);
 	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
 }
@@ -550,6 +551,7 @@ slot[name="profile"] {
 .ui5-shellbar-content-item {
 	width: auto;
 	opacity: 1;
+	transition: opacity 0.4s cubic-bezier(0.2, 0.2, 0.38, 0.9);
 }
 
 /* if class contains ui5-shellbar-hidden-button */
@@ -569,7 +571,11 @@ slot[name="profile"] {
 	transition: none;
 }
 
-.ui5-shellbar-animating .ui5-shellbar-content-item {
+.ui5-shellbar-hide-animation {
+	opacity: 0;
+}
+
+.ui5-shellbar-content-item {
 	transition: var(--_ui5_shellbar_content_transition);
 	&[data-hide-order = "null"] {
 		transition-duration: 0.01s;
@@ -605,40 +611,5 @@ slot[name="profile"] {
 	&[data-hide-order = "10"] {
 		transition-duration: var(--_ui5_shellbar_max_animation_duration);
 	}
-	&.ui5-shellbar-hidden-button,
-	&.ui5-shellbar-invisible-button {
-		transition: var(--_ui5_shellbar_content_transition);
-	}
-}
 
-.ui5-shellbar-animating .ui5-shellbar-search-field {
-	animation: var(--_ui5_shellbar_search_animation_expand);
-}
-
-:host([show-search-field]) .ui5-shellbar-animating .ui5-shellbar-search-field,
-:host([show-search-field]) .ui5-shellbar-animating .ui5-shellbar-search-full-width-wrapper {
- 	animation: var(--_ui5_shellbar_search_animation_grow);
-}
-
-@keyframes expand-grow {
-	from {
-		min-width: 0;
-		opacity: 0;
-	}
-	to {
-		min-width: var(--_ui5_shellbar_search_field_width);
-		opacity: 1;
-	}
-}
-
-@keyframes expand-shrink {
-	from {
-		min-width: var(--_ui5_shellbar_search_field_width);
-		opacity: 1;
-	}
-	to {
-		min-width: 0;
-		opacity: 0;
-		padding-inline-start: 0;
-	}
 }
