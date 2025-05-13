@@ -119,48 +119,56 @@ class NavigationMenuItem extends MenuItem {
 	_activate(e: MouseEvent | KeyboardEvent) {
 		e.stopPropagation();
 
-		if (this.disabled) {
+		const item = this.associatedItem;
+
+		if (this.disabled || !item) {
 			return;
 		}
 
-		const associatedItem = this.associatedItem;
+		const sideNav = item.sideNavigation;
+		const overflowMenu = sideNav?.getOverflowPopover();
+		const isSelectable = item.isSelectable;
+		const isSelected = item.selected;
 
-		const {
-			altKey,
-			ctrlKey,
-			metaKey,
-			shiftKey,
-		} = e;
-
-		const executeEvent = associatedItem?.fireDecoratorEvent("click", {
-			altKey,
-			ctrlKey,
-			metaKey,
-			shiftKey,
+		const executeEvent = item.fireDecoratorEvent("click", {
+			altKey: e.altKey,
+			ctrlKey: e.ctrlKey,
+			metaKey: e.metaKey,
+			shiftKey: e.shiftKey,
 		});
 
 		if (!executeEvent) {
 			e.preventDefault();
+
+			if (this.hasSubmenu) {
+				overflowMenu?._openItemSubMenu(this);
+			} else {
+				sideNav?.closeMenu();
+			}
+
+			this._handleFocus(item);
 			return;
 		}
 
-		const sideNavigation = associatedItem?.sideNavigation;
-
-		if (!associatedItem) {
-			return;
-		}
-
-		if (associatedItem.selected) {
-			sideNavigation?.closeMenu();
-			return;
-		}
+		const shouldSelect = (!this.hasSubmenu && isSelectable)	|| (this.hasSubmenu && isSelectable && !isSelected);
 
 		if (this.hasSubmenu) {
-			sideNavigation?.getOverflowPopover()._openItemSubMenu(this);
-		} else {
-			sideNavigation?._selectItem(associatedItem);
-			sideNavigation?.closeMenu();
+			overflowMenu?._openItemSubMenu(this);
 		}
+
+		if (shouldSelect) {
+			sideNav?._selectItem(item);
+		}
+
+		if (!this.hasSubmenu || (this.hasSubmenu && isSelectable)) {
+			sideNav?.closeMenu();
+		}
+
+		this._handleFocus(item);
+	}
+
+	_handleFocus(associatedItem: SideNavigationSelectableItemBase) {
+		const sideNavigation = associatedItem.sideNavigation;
 
 		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
 			const parent = associatedItem.parentElement as SideNavigationItem;
