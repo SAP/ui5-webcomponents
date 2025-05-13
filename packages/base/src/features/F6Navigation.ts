@@ -134,9 +134,9 @@ class F6Navigation {
 
 	async _keydownHandler(event: KeyboardEvent) {
 		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
-		const isOpenUI5Loaded = openUI5Support ? openUI5Support.isOpenUI5Detected() : false;
+		const isOpenUI5Detected = openUI5Support && openUI5Support.isOpenUI5Detected();
 
-		if (isOpenUI5Loaded) {
+		if (isOpenUI5Detected) {
 			this.destroy();
 			return;
 		}
