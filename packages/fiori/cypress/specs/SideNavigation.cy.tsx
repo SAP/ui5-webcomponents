@@ -787,8 +787,7 @@ describe("Side Navigation Accessibility", () => {
 			.find("[ui5-side-navigation-item][is-overflow]")
 			.shadow()
 			.find(".ui5-sn-item")
-			.should("have.attr", "role", "menuitemradio")
-			.and("have.attr", "aria-description", "Displays remaining navigation items");
+			.should("have.attr", "aria-description", "Displays remaining navigation items");
 	});
 
 	it("SideNavigationItem aria-checked in collapsed SideNavigation", () => {

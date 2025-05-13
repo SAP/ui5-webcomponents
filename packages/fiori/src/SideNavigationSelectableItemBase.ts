@@ -141,7 +141,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 
 	get ariaRole() {
 		if (this.sideNavCollapsed) {
-			return this.unselectable ? "menuitem" : "menuitemradio";
+			return this.isOverflow || this.unselectable ? "menuitem" : "menuitemradio";
 		}
 
 		return "treeitem";
