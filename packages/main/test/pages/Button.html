@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
@@ -19,321 +18,368 @@
 </head>
 
 <body class="button1auto">
-	<ui5-button design="Default" type="Button" accessible-role="Button" ui5-button>
-		<template shadowrootmode="open">
-			<button type="button" class="ui5-button-root" data-sap-focus-ref="true" tabindex="0" part="button"
-				role="button">
-				<span id="ui5wc_5-content" class="ui5-button-text">
-					<bdi>
-						<slot></slot>
-					</bdi>
-				</span>
-			</button>
-			<style>
-				:host {
-					vertical-align: middle
-				}
-
-				.ui5-hidden-text {
-					position: absolute;
-					clip: rect(1px, 1px, 1px, 1px);
-					user-select: none;
-					left: -1000px;
-					top: -1000px;
-					pointer-events: none;
-					font-size: 0
-				}
-
-				:host(:not([hidden])) {
-					display: inline-block
-				}
-
-				:host {
-					min-width: var(--_ui5-v2-11-0-rc-0_button_base_min_width);
-					height: var(--_ui5-v2-11-0-rc-0_button_base_height);
-					line-height: normal;
-					font-family: var(--_ui5-v2-11-0-rc-0_button_fontFamily);
-					font-size: var(--sapFontSize);
-					text-shadow: var(--_ui5-v2-11-0-rc-0_button_text_shadow);
-					border-radius: var(--_ui5-v2-11-0-rc-0_button_border_radius);
-					cursor: pointer;
-					background-color: var(--sapButton_Background);
-					border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
-					color: var(--sapButton_TextColor);
-					box-sizing: border-box;
-					white-space: nowrap;
-					overflow: hidden;
-					text-overflow: ellipsis
-				}
-
-				.ui5-button-root {
-					min-width: inherit;
-					cursor: inherit;
-					height: 100%;
-					width: 100%;
-					box-sizing: border-box;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					outline: none;
-					padding: 0 var(--_ui5-v2-11-0-rc-0_button_base_padding);
-					position: relative;
-					background: transparent;
-					border: none;
-					color: inherit;
-					text-shadow: inherit;
-					font: inherit;
-					white-space: inherit;
-					overflow: inherit;
-					text-overflow: inherit;
-					letter-spacing: inherit;
-					word-spacing: inherit;
-					line-height: inherit;
-					-webkit-user-select: none;
-					-moz-user-select: none;
-					user-select: none
-				}
-
-				:host(:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
-				:host(:not([hidden]):not([disabled]).ui5_hovered) {
-					background: var(--sapButton_Hover_Background);
-					border: 1px solid var(--sapButton_Hover_BorderColor);
-					color: var(--sapButton_Hover_TextColor)
-				}
-
-				.ui5-button-icon,
-				.ui5-button-end-icon {
-					color: inherit;
-					flex-shrink: 0
-				}
-
-				.ui5-button-end-icon {
-					margin-inline-start: var(--_ui5-v2-11-0-rc-0_button_base_icon_margin)
-				}
-
-				: host([icon-only]:not([has-end-icon])) .ui5-button-root {
-					min-width: auto;
-					padding: 0
-				}
-
-				:host([icon-only]) .ui5-button-text {
-					display: none
-				}
-
-				.ui5-button-text {
-					outline: none;
-					position: relative;
-					white-space: inherit;
-					overflow: inherit;
-					text-overflow: inherit
-				}
-
-				:host([has-icon]:not(:empty)) .ui5-button-text {
-					margin-inline-start: var(--_ui5-v2-11-0-rc-0_button_base_icon_margin)
-				}
-
-				: host([has-end-icon]:not([has-icon]):empty) .ui5-button-end-icon {
-					margin-inline-start: 0
-				}
-
-				:host([disabled]) {
-					opacity: var(--sapContent_DisabledOpacity);
-					pointer-events: unset;
-					cursor: default
-				}
-
-				:host([has-icon]:not([icon-only]):not([has-end-icon])) .ui5-button-text {
-					min-width: calc(var(--_ui5-v2-11-0-rc-0_button_base_min_width) - var(--_ui5-v2-11-0-rc-0_button_base_icon_margin) - 1rem)
-				}
-
-				:host([disabled]:active) {
-					pointer-events: none
-				}
-
-				:host([desktop]:not([active])) .ui5-button-root:focus-within:after,
-				:host(:not([active])) .ui5-button-root:focus-visible:after,
-				:host([desktop][active][design="Emphasized"]) .ui5-button-root:focus-within:after,
-				:host([active][design="Emphasized"]) .ui5-button-root:focus-visible:after,
-				:host([desktop][active]) .ui5-button-root:focus-within:before,
-				:host([active]) .ui5-button-root:focus-visible:before {
-					content: "";
-					position: absolute;
-					box-sizing: border-box;
-					inset: .0625rem;
-					border: var(--_ui5-v2-11-0-rc-0_button_focused_border);
-					border-radius: var(--_ui5-v2-11-0-rc-0_button_focused_border_radius)
-				}
-
-				:host([desktop][active]) .ui5-button-root:focus-within:before,
-				:host([active]) .ui5-button-root:focus-visible:before {
-					border-color: var(--_ui5-v2-11-0-rc-0_button_pressed_focused_border_color)
-				}
-
-				:host([design="Emphasized"][desktop]) .ui5-button-root:focus-within:after,
-				:host([design="Emphasized"]) .ui5-button-root:focus-visible:after {
-					border-color: var(--_ui5-v2-11-0-rc-0_button_emphasized_focused_border_color)
-				}
-
-				:host([design="Emphasized"][desktop]) .ui5-button-root:focus-within:before,
-				:host([design="Emphasized"]) .ui5-button-root:focus-visible:before {
-					content: "";
-					position: absolute;
-					box-sizing: border-box;
-					inset: .0625rem;
-					border: var(--_ui5-v2-11-0-rc-0_button_emphasized_focused_border_before);
-					border-radius: var(--_ui5-v2-11-0-rc-0_button_focused_border_radius)
-				}
-
-				.ui5-button-root::-moz-focus-inner {
-					border: 0
-				}
-
-				bdi {
-					display: block;
-					white-space: inherit;
-					overflow: inherit;
-					text-overflow: inherit
-				}
-
-				:host([ui5-button][active]:not([disabled]):not([non-interactive])) {
-					background-image: none;
-					background-color: var(--sapButton_Active_Background);
-					border-color: var(--sapButton_Active_BorderColor);
-					color: var(--sapButton_Active_TextColor)
-				}
-
-				:host([design="Positive"]) {
-					background-color: var(--sapButton_Accept_Background);
-					border-color: var(--sapButton_Accept_BorderColor);
-					color: var(--sapButton_Accept_TextColor)
-				}
-
-				:host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
-				:host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
-					background-color: var(--sapButton_Accept_Hover_Background);
-					border-color: var(--sapButton_Accept_Hover_BorderColor);
-					color: var(--sapButton_Accept_Hover_TextColor)
-				}
-
-				:host([ui5-button][design="Positive"][active]:not([non-interactive])) {
-					background-color: var(--sapButton_Accept_Active_Background);
-					border-color: var(--sapButton_Accept_Active_BorderColor);
-					color: var(--sapButton_Accept_Active_TextColor)
-				}
-
-				:host([design="Negative"]) {
-					background-color: var(--sapButton_Reject_Background);
-					border-color: var(--sapButton_Reject_BorderColor);
-					color: var(--sapButton_Reject_TextColor)
-				}
-
-				:host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
-				:host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
-					background-color: var(--sapButton_Reject_Hover_Background);
-					border-color: var(--sapButton_Reject_Hover_BorderColor);
-					color: var(--sapButton_Reject_Hover_TextColor)
-				}
-
-				:host([ui5-button][design="Negative"][active]:not([non-interactive])) {
-					background-color: var(--sapButton_Reject_Active_Background);
-					border-color: var(--sapButton_Reject_Active_BorderColor);
-					color: var(--sapButton_Reject_Active_TextColor)
-				}
-
-				:host([design="Attention"]) {
-					background-color: var(--sapButton_Attention_Background);
-					border-color: var(--sapButton_Attention_BorderColor);
-					color: var(--sapButton_Attention_TextColor)
-				}
-
-				:host([design="Attention"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
-				:host([design="Attention"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
-					background-color: var(--sapButton_Attention_Hover_Background);
-					border-color: var(--sapButton_Attention_Hover_BorderColor);
-					color: var(--sapButton_Attention_Hover_TextColor)
-				}
-
-				:host([ui5-button][design="Attention"][active]:not([non-interactive])) {
-					background-color: var(--sapButton_Attention_Active_Background);
-					border-color: var(--sapButton_Attention_Active_BorderColor);
-					color: var(--sapButton_Attention_Active_TextColor)
-				}
-
-				:host([design="Emphasized"]) {
-					background-color: var(--sapButton_Emphasized_Background);
-					border-color: var(--sapButton_Emphasized_BorderColor);
-					border-width: var(--_ui5-v2-11-0-rc-0_button_emphasized_border_width);
-					color: var(--sapButton_Emphasized_TextColor);
-					font-family: var(--sapFontBoldFamily)
-				}
-
-				:host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
-				:host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
-					background-color: var(--sapButton_Emphasized_Hover_Background);
-					border-color: var(--sapButton_Emphasized_Hover_BorderColor);
-					border-width: var(--_ui5-v2-11-0-rc-0_button_emphasized_border_width);
-					color: var(--sapButton_Emphasized_Hover_TextColor)
-				}
-
-				:host([ui5-button][design="Empasized"][active]:not([non-interactive])) {
-					background-color: var(--sapButton_Emphasized_Active_Background);
-					border-color: var(--sapButton_Emphasized_Active_BorderColor);
-					color: var(--sapButton_Emphasized_Active_TextColor)
-				}
-
-				:host([design="Emphasized"][desktop]) .ui5-button-root:focus-within:after,
-				:host([design="Emphasized"]) .ui5-button-root:focus-visible:after {
-					border-color: var(--_ui5-v2-11-0-rc-0_button_emphasized_focused_border_color);
-					outline: none
-				}
-
-				:host([design="Emphasized"][desktop][active]:not([non-interactive])) .ui5-button-root:focus-within:after,
-				:host([design="Emphasized"][active]:not([non-interactive])) .ui5-button-root:focus-visible:after {
-					border-color: var(--_ui5-v2-11-0-rc-0_button_emphasized_focused_active_border_color)
-				}
-
-				:host([design="Transparent"]) {
-					background-color: var(--sapButton_Lite_Background);
-					color: var(--sapButton_Lite_TextColor);
-					border-color: var(--sapButton_Lite_BorderColor)
-				}
-
-				:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
-				:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
-					background-color: var(--sapButton_Lite_Hover_Background);
-					border-color: var(--sapButton_Lite_Hover_BorderColor);
-					color: var(--sapButton_Lite_Hover_TextColor)
-				}
-
-				:host([ui5-button][design="Transparent"][active]:not([non-interactive])) {
-					background-color: var(--sapButton_Lite_Active_Background);
-					border-color: var(--sapButton_Lite_Active_BorderColor);
-					color: var(--sapButton_Active_TextColor)
-				}
-
-				:host([ui5-segmented-button-item][active][desktop]) .ui5-button-root:focus-within:after,
-				:host([ui5-segmented-button-item][active]) .ui5-button-root:focus-visible:after,
-				:host([pressed][desktop]) .ui5-button-root:focus-within:after,
-				:host([pressed]) .ui5-button-root:focus-visible:after {
-					border-color: var(--_ui5-v2-11-0-rc-0_button_pressed_focused_border_color);
-					outline: none
-				}
-
-				:host([ui5-segmented-button-item][desktop]:not(:last-child)) .ui5-button-root:focus-within:after,
-				:host([ui5-segmented-button-item]:not(:last-child)) .ui5-button-root:focus-visible:after {
-					border-top-right-radius: var(--_ui5-v2-11-0-rc-0_button_focused_inner_border_radius);
-					border-bottom-right-radius: var(--_ui5-v2-11-0-rc-0_button_focused_inner_border_radius)
-				}
-
-				:host([ui5-segmented-button-item][desktop]:not(:first-child)) .ui5-button-root:focus-within:after,
-				:host([ui5-segmented-button-item]:not(:first-child)) .ui5-button-root:focus-visible:after {
-					border-top-left-radius: var(--_ui5-v2-11-0-rc-0_button_focused_inner_border_radius);
-					border-bottom-left-radius: var(--_ui5-v2-11-0-rc-0_button_focused_inner_border_radius)
-				}
-			</style>
-		</template>
-		asdffasdfasd
+	<ui5-button design="Negative" icon="decline">Reject</ui5-button>
+	<ui5-button design="Positive" icon="add">Add</ui5-button>
+	<ui5-button icon="home" id="icon-only-comment"><!----><!----></ui5-button>
+	<ui5-button icon="text" id="icon-only-blank-text"> </ui5-button>
+	<ui5-button accessible-role="Link" id="button-role-link"> Navigation Button </ui5-button>
+	<ui5-button>
+		<ui5-avatar id="btnImage" size="XS">
+			<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
+		</ui5-avatar>
 	</ui5-button>
-</body>
+	<ui5-icon name="invalid_name"></ui5-icon>
+	<ui5-button design="Emphasized" icon="invalid_name">Press</ui5-button>
 
+	<ui5-button id="download" icon="download" accessible-name="Download application"></ui5-button>
+	<ui5-button id="button1" icon="home" design="Emphasized">Action Bar Button</ui5-button>
+	<ui5-button class="button2auto">Primary <br> button</ui5-button>
+	<ui5-button class="button2auto button3auto" design="Transparent">Secondary <span >button</span></ui5-button>
+	<ui5-button disabled id="button-disabled">Inactive</ui5-button>
+	<ui5-button design="Positive">Accept</ui5-button>
+	<ui5-button design="Negative" accessible-description="Decline the action">Decline</ui5-button>
+
+	<br />
+	<br />
+
+	<div>
+		<ui5-toggle-button design="Positive" icon="add"></ui5-toggle-button>
+		<ui5-toggle-button design="Negative" icon="add"></ui5-toggle-button>
+	</div>
+
+	<br />
+	<br />
+
+	<ui5-input id="click-counter"></ui5-input>
+
+	<ui5-button id="button-with-slot" class="button2auto" design="Emphasized">Action<br> <i>Bar</i><br> Button</ui5-button>
+	<ui5-button>Primary button</ui5-button>
+	<ui5-button design="Transparent">Secondary button</ui5-button>
+	<ui5-button disabled>Inactive</ui5-button>
+	<ui5-button design="Positive">Agree</ui5-button>
+	<ui5-button design="Negative">Decline</ui5-button>
+	<ui5-button design="Attention">Warning</ui5-button>
+	<ui5-button id="attentionIconButton" design="Attention" icon="message-warning">Warning</ui5-button>
+	<ui5-button design="Attention" icon="message-warning"></ui5-button>
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-button icon="download" accessible-name="Download application"></ui5-button>
+	<ui5-button icon="employee" accessible-name="Download book">Action Bar Button</ui5-button>
+	<ui5-button icon="download"></ui5-button>
+
+	<ui5-button icon="employee" accessible-name="Download book" class="button4auto">Action Bar Button</ui5-button>
+	<ui5-button end-icon="employee" accessible-name="Download book" class="button4auto">Action Bar Button</ui5-button>
+
+	<ui5-label>Button with accessibleDescription:</ui5-label>
+	<ui5-button icon="bar-code" accessible-description="Scan bar code">Scan</ui5-button>
+
+	<br />
+	<br />
+
+	<ui5-label id="1download-text">Download Application</ui5-label>
+	<ui5-label id="download-text2">From This Button</ui5-label>
+
+	<ui5-button icon="employee" accessible-name="Help me">Action Bar Button</ui5-button>
+	<ui5-button id="buttonAccNameRef" icon="download" accessible-name="Help me" accessible-name-ref="1download-text"></ui5-button>
+
+	<ui5-button icon="employee" accessible-name-ref="1download-text download-text2">Action Bar Button</ui5-button>
+	<ui5-button icon="download" accessible-name-ref="1download-text"></ui5-button>
+
+
+
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-button design="Default" icon="employee">Default</ui5-button>
+	<ui5-button disabled design="Default" icon="employee">Default</ui5-button>
+	<br/>
+	<br/>
+
+	<ui5-button design="Positive" icon="employee">Agree</ui5-button>
+	<ui5-button disabled design="Positive" icon="employee">Agree</ui5-button>
+	<br/>
+	<br/>
+
+	<ui5-button design="Negative" icon="employee">Decline</ui5-button>
+	<ui5-button disabled design="Negative" icon="employee">Decline</ui5-button>
+	<br/>
+	<br/>
+
+	<ui5-button design="Transparent" icon="employee">Transparent</ui5-button>
+	<ui5-button disabled design="Transparent" icon="employee">Transparent
+	</ui5-button>
+	<br/>
+	<br/>
+
+	<ui5-title>Cozy</ui5-title>
+
+	<ui5-button icon="employee">Emphasized
+		<ui5-button-badge design="InlineText" text="72" slot="badge"></ui5-button-badge>
+	</ui5-button>
+
+	<ui5-button design="Emphasized" icon="employee">Emphasized
+		<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
+	</ui5-button>
+	<ui5-button icon="employee">Emphasized
+		<ui5-button-badge design="AttentionDot" slot="badge"></ui5-button-badge>
+	</ui5-button>
+
+	<br><br>
+
+	<ui5-title>Compact</ui5-title>
+
+	<div data-ui5-compact-size>
+		<ui5-button icon="employee">Emphasized
+			<ui5-button-badge design="InlineText" text="72" slot="badge"></ui5-button-badge>
+		</ui5-button>
+	
+		<ui5-button design="Emphasized" icon="employee">Emphasized
+			<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
+		</ui5-button>
+		<ui5-button icon="employee">Emphasized
+			<ui5-button-badge design="AttentionDot" slot="badge"></ui5-button-badge>
+		</ui5-button>
+	</div>
+
+	<div dir="rtl">
+		<ui5-title>Cozy</ui5-title>
+
+		<ui5-button icon="employee">Emphasized
+			<ui5-button-badge design="InlineText" text="72" slot="badge"></ui5-button-badge>
+		</ui5-button>
+	
+		<ui5-button design="Emphasized" icon="employee">Emphasized
+			<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
+		</ui5-button>
+		<ui5-button icon="employee">Emphasized
+			<ui5-button-badge design="AttentionDot" slot="badge"></ui5-button-badge>
+		</ui5-button>
+	
+		<br><br>
+	
+		<ui5-title>Compact</ui5-title>
+	
+		<div data-ui5-compact-size>
+			<ui5-button icon="employee">Emphasized
+				<ui5-button-badge design="InlineText" text="72" slot="badge"></ui5-button-badge>
+			</ui5-button>
+		
+			<ui5-button design="Emphasized" icon="employee">Emphasized
+				<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
+			</ui5-button>
+			<ui5-button icon="employee">Emphasized
+				<ui5-button-badge design="AttentionDot" slot="badge"></ui5-button-badge>
+			</ui5-button>
+		</div>
+	</div>
+
+	<br><br>
+
+	<ui5-button disabled design="Emphasized" icon="employee">Emphasized</ui5-button>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-button end-icon icon="employee">Icon last</ui5-button>
+	<ui5-button icon="employee" id="disabled-button-icon-only" disabled></ui5-button>
+	<ui5-button id="disabled-button-without-icon" disabled>Disabled Buton</ui5-button>
+
+
+
+	<ui5-checkbox text="Option A"></ui5-checkbox>
+	<ui5-checkbox disabled text="Option A"></ui5-checkbox>
+	<br/>
+	<ui5-label>"This is a label, this is a label"</ui5-label>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-toggle-button design="Emphasized">Action Bar Button</ui5-toggle-button>
+	<ui5-toggle-button>Primary button</ui5-toggle-button>
+	<ui5-toggle-button design="Transparent">Secondary button</ui5-toggle-button>
+	<ui5-toggle-button disabled>Inactive</ui5-toggle-button>
+	<ui5-toggle-button design="Positive">Agree</ui5-toggle-button>
+	<ui5-toggle-button design="Negative">Decline</ui5-toggle-button>
+
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-toggle-button icon="employee">Action Bar Button</ui5-toggle-button>
+	<ui5-toggle-button icon="download"></ui5-toggle-button>
+	<ui5-toggle-button icon="download"></ui5-toggle-button>
+
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-toggle-button design="Default" icon="employee">Default</ui5-toggle-button>
+	<ui5-toggle-button disabled design="Default" icon="employee">Default</ui5-toggle-button>
+	<br/>
+	<br/>
+
+	<ui5-toggle-button design="Positive" icon="employee">Agree</ui5-toggle-button>
+	<ui5-toggle-button disabled design="Positive" icon="employee">Agree</ui5-toggle-button>
+	<br/>
+	<br/>
+
+	<ui5-toggle-button design="Negative" icon="employee">Decline</ui5-toggle-button>
+	<ui5-toggle-button disabled design="Negative" icon="employee">Decline</ui5-toggle-button>
+	<br/>
+	<br/>
+
+	<ui5-toggle-button design="Transparent" icon="employee">Transparent</ui5-toggle-button>
+	<ui5-toggle-button disabled design="Transparent" icon="employee">Transparent</ui5-toggle-button>
+	<br/>
+	<br/>
+
+	<ui5-toggle-button design="Emphasized" icon="employee">Emphasized</ui5-toggle-button>
+	<ui5-toggle-button disabled design="Emphasized" icon="employee">Emphasized</ui5-toggle-button>
+
+	<br/>
+	<br/>
+	<ui5-button class="long-button long-button-begin" icon="download">Download</ui5-button>
+	<ui5-button class="long-button" icon="download">Download</ui5-button>
+	<ui5-button class="long-button long-button-end" icon="download">Download</ui5-button>
+
+	<br/>
+	<br/>
+	<ui5-title>Buttons with tooltip</ui5-title>
+	<br/>
+	<ui5-button id="customTooltip" icon="message-information" tooltip="Go home"></ui5-button>
+	<ui5-button icon="accept" tooltip="Accept terms & conditions"></ui5-button>
+	<ui5-button icon="action-settings" tooltip="Go to settings"></ui5-button>
+	<ui5-button icon="alert" tooltip="Fire an alert"></ui5-button>
+	<ui5-button icon="arrow-down" tooltip="Go down"></ui5-button>
+	<ui5-button icon="arrow-down" disabled tooltip="Go down"></ui5-button>
+
+
+	<br/>
+	<br/>
+	<ui5-title>Menu Buttons</ui5-title>
+	<br/>
+	<ui5-button id="menuButtonText" end-icon="navigation-down-arrow">Menu Button</ui5-button>
+	<ui5-button id="menuButtonIcon" icon="action-settings" end-icon="navigation-down-arrow"></ui5-button>
+	<ui5-button id="menuButtonTextIcon" icon="action-settings" end-icon="navigation-down-arrow">Menu Button</ui5-button>
+	<ui5-button id="menuButtonIconEnd" end-icon="navigation-down-arrow" tooltip="Menu Button with End Icon only"></ui5-button>
+
+	<ui5-menu id="menu">
+		<ui5-menu-item text="Item 1"></ui5-menu-item>
+		<ui5-menu-item text="Item 2"></ui5-menu-item>
+		<ui5-menu-item text="Item 3"></ui5-menu-item>
+	</ui5-menu>
+
+	<br/>
+	<br/>
+
+	<form>
+		<input value="Native input in a form">
+		<ui5-input value="UI5 Input in a form"></ui5-input>
+		<ui5-button type="Submit">Submit</ui5-button>
+		<ui5-button type="Reset">Reset</ui5-button>
+	</form>
+
+	<ui5-button id="openDialogButton" design="Emphasized">Show Registration Dialog</ui5-button>
+
+		<ui5-dialog id="registration-dialog" header-text="Register Form">
+			<section class="login-form">
+				<div>
+					<ui5-label for="username" required>Username: </ui5-label>
+					<ui5-input id="username"></ui5-input>
+				</div>
+
+				<div>
+					<ui5-label for="password" required>Password: </ui5-label>
+					<ui5-input id="password" type="Password" value-state="Negative"></ui5-input>
+				</div>
+
+				<div>
+					<ui5-label for="email" type="Email" required>Email: </ui5-label>
+					<ui5-input id="email"></ui5-input>
+				</div>
+
+				<div>
+					<ui5-label for="address">Address: </ui5-label>
+					<ui5-input id="address"></ui5-input>
+				</div>
+			</section>
+
+			<div slot="footer">
+				<div style="flex: 1;"></div>
+				<ui5-button id="closeDialogButton" design="Emphasized">Register</ui5-button>
+			</div>
+		</ui5-dialog>
+	<script>
+		var clickCounter = document.querySelector("#click-counter");
+		var button = document.querySelector("#button1");
+		var disabledButton = document.querySelector("#button-disabled");
+		var disabledButtonIconOnly = document.querySelector("#disabled-button-icon-only");
+		var disabledButtonWithoutIcon = document.querySelector("#disabled-button-without-icon")
+		var clickCount = 0;
+
+		[button, disabledButton, disabledButtonIconOnly, disabledButtonWithoutIcon].forEach(function (el) {
+			el.addEventListener("click", function(event) {
+				clickCount += 1;
+				clickCounter.value = clickCount;
+			});
+		});
+
+		button.accessibilityAttributes = {
+			expanded: "true"
+		};
+
+		button.addEventListener("click", function(event) {
+			button.accessibilityAttributes = {
+				expanded: button.accessibilityAttributes.expanded === "true" ? "false" : "true"
+			};
+		});
+
+		var dialogOpener = document.getElementById("openDialogButton");
+		var dialog = document.getElementById("registration-dialog");
+		var dialogCloser = document.getElementById("closeDialogButton");
+
+		dialogOpener.accessibilityAttributes = {
+			hasPopup: "dialog",
+			controls: dialog.id,
+		}
+
+		dialogOpener.addEventListener("click", function() {
+			dialog.open = true;
+		});
+
+		dialogCloser.addEventListener("click", function() {
+			dialog.open = false;
+		});
+
+		function showMenu(target) {
+			menu.opener = target;
+			menu.open = true;
+		}
+
+		menuButtonText.addEventListener("click", function(event) {
+			showMenu(event.target);
+		});
+
+		menuButtonIcon.addEventListener("click", function(event) {
+			showMenu(event.target);
+		});
+
+		menuButtonTextIcon.addEventListener("click", function(event) {
+			showMenu(event.target);
+		});
+
+		menuButtonIconEnd.addEventListener("click", function(event) {
+			showMenu(event.target);
+		});
+	</script>
+</body>
 </html>

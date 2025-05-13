@@ -17,9 +17,12 @@ const jsxRenderer: Renderer = (instance: UI5Element, container: HTMLElement | Do
 	const templateResult = instance.render();
 	const vnode = jsx(ctx.Provider, { value: instance, children: templateResult });
 
-	if (instance.__shouldStartHydratation) {
+	if (instance.__shouldHydrate) {
+		// Remove all server-generated style elements for component styles
+		// to avoid conflicts or duplication with styles added through adopted style sheets.
+		instance.shadowRoot?.querySelectorAll("style").forEach(style => style.remove());
 		hydrate(vnode, container);
-		instance.__shouldStartHydratation = false;
+		instance.__shouldHydrate = false;
 	} else {
 		render(vnode, container);
 	}

@@ -184,7 +184,7 @@ abstract class UI5Element extends HTMLElement {
 	_slotChangeListeners: Map<string, SlotChangeListener>;
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
-	__shouldStartHydratation = false;
+	__shouldHydrate = false;
 	_state: State;
 	_internals: ElementInternals;
 	_individualSlot?: string;
@@ -246,7 +246,7 @@ abstract class UI5Element extends HTMLElement {
 			} else {
 				// The shadow root is initially rendered. This applies to case where the component's template
 				// is inserted into the DOM declaratively using a <template> tag.
-				this.__shouldStartHydratation = true;
+				this.__shouldHydrate = true;
 			}
 
 			const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
