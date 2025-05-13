@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Dialog</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script>
+		// delete Document.prototype.adoptedStyleSheets
+	</script>
+
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+	<script>
+		function init() {
+			document.body.insertAdjacentHTML("beforeend",
+			`<ui5-dialog id="dialogOpen"
+					header-text="Dialog Header"
+					open
+					prevent-initial-focus>
+					<div>
+						<input>
+					</div>
+			 </ui5-dialog>`);
+		}
+	</script>
+</head>
+
+<body onload="init()">
+</body>
+
+</html>

@@ -255,6 +255,9 @@ abstract class Popup extends UI5Element {
 		if (this.open) {
 			this.showPopover();
 			this.openPopup();
+		} else {
+			this.hidePopover();
+			this.closePopup();
 		}
 	}
 
@@ -506,7 +509,7 @@ abstract class Popup extends UI5Element {
 	 * Closes the popup.
 	 */
 	closePopup(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
-		if (!this._opened) {
+		if (!this._opened || !this._fullyConnected) {
 			return;
 		}
 
