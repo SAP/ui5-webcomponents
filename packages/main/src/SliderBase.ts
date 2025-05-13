@@ -12,6 +12,7 @@ import {
 
 // Styles
 import sliderBaseStyles from "./generated/themes/SliderBase.css.js";
+import { getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 
 type StateStorage = {
 	[key: string]: number | undefined,
@@ -786,12 +787,27 @@ abstract class SliderBase extends UI5Element {
 		return this.disabled ? -1 : 0;
 	}
 
+	get _ariaKeyshortcuts() {
+		return this.editableTooltip ? "F2" : undefined;
+	}
+
 	get _ariaDescribedByHandleText() {
 		return this.editableTooltip ? "ui5-slider-InputDesc" : undefined;
 	}
 
-	get _ariaLabelledByHandleText() {
-		return this.accessibleName ? "ui5-slider-accName ui5-slider-sliderDesc" : "ui5-slider-sliderDesc";
+	get _ariaLabel() {
+		const associatedLabelText = getAssociatedLabelForTexts(this);
+		const hasAccessibleName = !!this.accessibleName;
+
+		let labelText = hasAccessibleName
+			? `${this.accessibleName} ${this._ariaLabelledByText}`
+			: this._ariaLabelledByText;
+
+		if (!hasAccessibleName && associatedLabelText) {
+			labelText = `${associatedLabelText} ${labelText}`;
+		}
+
+		return labelText;
 	}
 
 	get _ariaDescribedByInputText() {

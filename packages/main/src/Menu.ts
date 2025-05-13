@@ -7,6 +7,7 @@ import {
 	isLeft,
 	isRight,
 	isEnter,
+	isSpace,
 	isTabNext,
 	isTabPrevious,
 	isDown,
@@ -25,10 +26,13 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import type List from "./List.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
-import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import type MenuItem from "./MenuItem.js";
 import type MenuSeparator from "./MenuSeparator.js";
-import "./MenuItem.js";
+// The import below should be kept, as MenuItem is part of the Menu component.
+import { isInstanceOfMenuItem } from "./MenuItem.js";
+import { isInstanceOfMenuItemGroup } from "./MenuItemGroup.js";
+import { isInstanceOfMenuSeparator } from "./MenuSeparator.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import "./MenuSeparator.js";
 import type MenuItemGroup from "./MenuItemGroup.js";
 import type {
@@ -325,7 +329,7 @@ class Menu extends UI5Element {
 
 	async focus(focusOptions?: FocusOptions): Promise<void> {
 		await renderFinished();
-		const firstMenuItem = this._menuItems[0];
+		const firstMenuItem = this._allMenuItems[0];
 
 		if (firstMenuItem) {
 			return firstMenuItem.focus(focusOptions);
@@ -360,44 +364,53 @@ class Menu extends UI5Element {
 		item.selected = true;
 	}
 
-	_closeItemSubMenu(item: MenuItem) {
-		if (item && item._popover) {
-			const openedSibling = item._allMenuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
+	// _closeItemSubMenu(item: MenuItem) {
+	// 	if (item && item._popover) {
+	// 		const openedSibling = item._allMenuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
 
-			if (openedSibling) {
-				this._closeItemSubMenu(openedSibling);
-			}
+	// 		if (openedSibling) {
+	// 			this._closeItemSubMenu(openedSibling);
+	// 		}
 
-			item._popover.open = false;
-			item.selected = false;
-		}
-	}
+	// 		item._popover.open = false;
+	// 		item.selected = false;
+	// 	}
+	// }
 
 	_itemMouseOver(e: MouseEvent) {
-		if (isDesktop()) {
-			// respect mouseover only on desktop
-			const item = e.target as MenuItem;
-
-			if (isInstanceOfMenuItem(item)) {
-				item.focus();
-
-				// Opens submenu with 300ms delay
-				this._startOpenTimeout(item);
-			}
+		if (!isDesktop()) {
+			return;
 		}
+
+		const item = e.target as MenuItem;
+		if (!isInstanceOfMenuItem(item)) {
+			return;
+		}
+
+		item.focus();
+
+		// Opens submenu with 300ms delay
+		this._startOpenTimeout(item);
+	}
+
+	_closeOtherSubMenus(item: MenuItem) {
+		const menuItems = this._allMenuItems;
+		if (!menuItems.includes(item)) {
+			return;
+		}
+
+		menuItems.forEach(menuItem => {
+			if (menuItem !== item) {
+				menuItem._close();
+			}
+		});
 	}
 
 	_startOpenTimeout(item: MenuItem) {
 		clearTimeout(this._timeout);
 
 		this._timeout = setTimeout(() => {
-			const opener = item.parentElement as MenuItem | Menu;
-			const menuItems = opener && opener._allMenuItems;
-			const openedSibling = opener && menuItems && menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
-
-			if (openedSibling) {
-				this._closeItemSubMenu(openedSibling);
-			}
+			this._closeOtherSubMenus(item);
 
 			this._openItemSubMenu(item);
 		}, MENU_OPEN_DELAY);
@@ -425,41 +438,46 @@ class Menu extends UI5Element {
 	_itemKeyDown(e: KeyboardEvent) {
 		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
 		const item = e.target as MenuItem;
-		const parentElement = item.parentElement as MenuItem;
-		const shouldItemNavigation = isUp(e) || isDown(e);
+
+		if (!isInstanceOfMenuItem(item)) {
+			return;
+		}
+
+		const menuItemInMenu = this._menuItems.includes(item);
+		const isItemNavigation = isUp(e) || isDown(e);
+		const isItemSelection = isEnter(e) || isSpace(e);
+		const isEndContentNavigation = isRight(e) || isLeft(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
-		const shouldCloseMenu = !shouldItemNavigation && !shouldOpenMenu && isInstanceOfMenuItem(parentElement);
+		const shouldCloseMenu = menuItemInMenu && !(isItemNavigation || isItemSelection || isEndContentNavigation);
 
-		if (isInstanceOfMenuItem(item)) {
-			if (isEnter(e) || isTabNextPrevious) {
-				e.preventDefault();
-			}
+		if (isEnter(e) || isTabNextPrevious) {
+			e.preventDefault();
+		}
 
-			if (isRight(e) || isLeft(e)) {
-				item._navigateToEndContent(isLeft(e));
-			}
+		if (isEndContentNavigation) {
+			item._navigateToEndContent(isLeft(e));
+		}
 
-			if (shouldOpenMenu) {
-				this._openItemSubMenu(item);
-			} else if ((shouldCloseMenu || isTabNextPrevious) && parentElement._popover) {
-				parentElement._popover.open = false;
-				parentElement.selected = false;
-				parentElement._popover.focusOpener();
-			}
-		} else if (isUp(e)) {
-			this._navigateOutOfEndContent(parentElement);
-		} else if (isDown(e)) {
-			this._navigateOutOfEndContent(parentElement, true);
+		if (shouldOpenMenu) {
+			this._openItemSubMenu(item);
+		} else if ((shouldCloseMenu || isTabNextPrevious)) {
+			this._close();
 		}
 	}
 
-	_navigateOutOfEndContent(menuItem: MenuItem, isDownwards?: boolean) {
-		const opener = menuItem?.parentElement as MenuItem | Menu;
-		const currentIndex = opener._menuItems.indexOf(menuItem);
-		const nextItem = isDownwards ? opener._menuItems[currentIndex + 1] : opener._menuItems[currentIndex - 1];
-		const itemToFocus = nextItem || opener._menuItems[currentIndex];
+	_navigateOutOfEndContent(e: CustomEvent) {
+		const item = e.target as MenuItem;
+		const shouldNavigateToNextItem = e.detail.shouldNavigateToNextItem;
+		const menuItems = this._menuItems;
+		const itemIndex = menuItems.indexOf(item);
 
-		itemToFocus.focus();
+		if (itemIndex > -1) {
+			const nextItem = shouldNavigateToNextItem ? menuItems[itemIndex + 1] : menuItems[itemIndex - 1];
+			const itemToFocus = nextItem || menuItems[itemIndex];
+			itemToFocus?.focus();
+
+			e.stopPropagation();
+		}
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
@@ -491,22 +509,9 @@ class Menu extends UI5Element {
 	}
 }
 
-const isInstanceOfMenuItem = (object: any): object is MenuItem => {
-	return "isMenuItem" in object;
-};
-
-const isInstanceOfMenuSeparator = (object: any): object is MenuSeparator => {
-	return "isSeparator" in object;
-};
-
-const isInstanceOfMenuItemGroup = (object: any): object is MenuItemGroup => {
-	return "isGroup" in object;
-};
-
 Menu.define();
 
 export default Menu;
-export { isInstanceOfMenuItem, isInstanceOfMenuSeparator, isInstanceOfMenuItemGroup };
 export type {
 	MenuItemClickEventDetail,
 	MenuBeforeCloseEventDetail,
