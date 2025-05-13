@@ -288,7 +288,6 @@ class Toolbar extends UI5Element {
 	onBeforeRendering() {
 		this.detachListeners();
 		this.attachListeners();
-
 	}
 
 	async onAfterRendering() {
@@ -523,7 +522,6 @@ class Toolbar extends UI5Element {
 	getCachedItemWidth(id: string) {
 		return this.ITEMS_WIDTH_MAP.get(id);
 	}
-
 }
 
 Toolbar.define();

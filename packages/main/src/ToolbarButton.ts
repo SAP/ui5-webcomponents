@@ -175,8 +175,8 @@ class ToolbarButton extends ToolbarItem {
 		return {
 			item: {
 				...super.classes.item,
-				"ui5-tb-button": true
-			}
+				"ui5-tb-button": true,
+			},
 		};
 	}
 }

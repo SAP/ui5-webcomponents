@@ -104,8 +104,8 @@ class ToolbarItem extends UI5Element {
 		return {
 			item: {
 				"ui5-tb-popover-item": this.isOverflowed,
-				"ui5-tb-item": true
-			}
+				"ui5-tb-item": true,
+			},
 		};
 	}
 
