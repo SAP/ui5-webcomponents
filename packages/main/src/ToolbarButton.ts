@@ -160,10 +160,6 @@ class ToolbarButton extends ToolbarItem {
 		};
 	}
 
-	get containsText() {
-		return true;
-	}
-
 	onClick(e: Event) {
 		e.stopImmediatePropagation();
 		const prevented = !this.fireDecoratorEvent("click", { targetRef: e.target as HTMLElement });
@@ -177,8 +173,10 @@ class ToolbarButton extends ToolbarItem {
 	 */
 	get classes() {
 		return {
-		    ...super.classes,
-		    "ui5-tb-button": true
+			item: {
+				...super.classes.item,
+				"ui5-tb-button": true
+			}
 		};
 	}
 }
