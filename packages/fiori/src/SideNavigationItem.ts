@@ -18,7 +18,6 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 import {
 	SIDE_NAVIGATION_ICON_COLLAPSE,
 	SIDE_NAVIGATION_ICON_EXPAND,
-	SIDE_NAVIGATION_OVERFLOW_ITEM_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -183,10 +182,6 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	get _arrowTooltip() {
 		return this.expanded ? SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_ICON_COLLAPSE)
 			: SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_ICON_EXPAND);
-	}
-
-	get _overflowItemDescription() {
-		return SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ITEM_DESCRIPTION);
 	}
 
 	applyInitialFocusInPopover() {
