@@ -4,7 +4,7 @@ import CalendarDate from "../CalendarDate.js";
 
 export default function DynamicDateRangeOptionDateTemplate(this: DynamicDateRange) {
 	return (
-		<Calendar onSelectionChange={this.calendarSelectionChange}>
+		<Calendar onSelectionChange={this.handleSelectionChange}>
 			<CalendarDate
 				value={this.value && this.getOption(this.value?.operator)?.format(this.value)}
 			></CalendarDate>

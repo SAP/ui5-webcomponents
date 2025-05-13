@@ -2,7 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import type { IDynamicDateRangeOption } from "../DynamicDateOption.js";
 import DynamicDateRangeOptionDateTemplate from "./DynamicDateRangeOptionDateTemplate.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import DynamicDateRangeValue from "../DynamicDateRangeValue.js";
+import type { DynamicDateRangeValue } from "../DynamicDateRange.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -37,7 +37,7 @@ class DynamicDateRangeOptionDate extends UI5Element implements IDynamicDateRange
 
 	parse(value: string): DynamicDateRangeValue {
 		const date = this.getFormat().parse(value) as Date;
-		const returnValue = new DynamicDateRangeValue();
+		const returnValue = { operator: "", values: [] } as DynamicDateRangeValue;
 		returnValue.operator = this.key;
 		returnValue.values = [date];
 
@@ -73,7 +73,7 @@ class DynamicDateRangeOptionDate extends UI5Element implements IDynamicDateRange
 	}
 
 	handleSelectionChange(e: CustomEvent) : DynamicDateRangeValue | undefined {
-		const currentValue = new DynamicDateRangeValue();
+		const currentValue = { operator: "", values: [] } as DynamicDateRangeValue;
 		currentValue.values = [];
 		currentValue.operator = this.key;
 

@@ -1,7 +1,7 @@
-import type DynamicDateRangeValue from "../DynamicDateRangeValue.js";
+import type { DynamicDateRangeValue } from "../DynamicDateRange.js";
 
 const dateOptionToDates = (value: DynamicDateRangeValue): Date[] => {
-	const startDate = value.values ? value.values[0] : new Date();
+	const startDate = value.values ? value.values[0] as Date : new Date();
 	const endDate = new Date(startDate);
 
 	startDate?.setHours(0, 0, 0, 0);
@@ -11,8 +11,8 @@ const dateOptionToDates = (value: DynamicDateRangeValue): Date[] => {
 };
 
 const dateRangeOptionToDates = (value: DynamicDateRangeValue): Date[] => {
-	const startDate = value.values ? value.values[0] : new Date();
-	const endDate = value.values ? value.values[1] : new Date();
+	const startDate = value.values ? value.values[0] as Date : new Date();
+	const endDate = value.values ? value.values[1] as Date : new Date();
 
 	startDate?.setHours(0, 0, 0, 0);
 	endDate?.setHours(23, 59, 59, 999);

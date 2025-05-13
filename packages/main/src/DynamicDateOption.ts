@@ -1,5 +1,5 @@
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
-import type DynamicDateRangeValue from "./DynamicDateRangeValue.js";
+import type { DynamicDateRangeValue } from "./DynamicDateRange.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 /**

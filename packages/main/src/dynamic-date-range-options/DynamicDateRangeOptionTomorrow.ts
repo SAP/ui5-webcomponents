@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { IDynamicDateRangeOption } from "../DynamicDateOption.js";
-import DynamicDateRangeValue from "../DynamicDateRangeValue.js";
+import type { DynamicDateRangeValue } from "../DynamicDateRange.js";
 import { tomorrowToDates } from "./toDates.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -26,8 +26,9 @@ class DynamicDateRangeOptionTomorrow extends UI5Element implements IDynamicDateR
 	static i18nBundle: I18nBundle;
 
     parse(): DynamicDateRangeValue {
-	    const returnValue = new DynamicDateRangeValue();
+	    const returnValue = { operator: "", values: [] };
 	    returnValue.operator = this.key;
+	    returnValue.values = [];
 
 	    return returnValue;
     }

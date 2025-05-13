@@ -3,8 +3,19 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-// import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import DynamicDateRangeTemplate from "./DynamicDateRangeTemplate.js";
+import IconMode from "./types/IconMode.js";
+import type Input from "./Input.js";
+import type { IDynamicDateRangeOption } from "./DynamicDateOption.js";
+import {
+	DYNAMIC_DATE_RANGE_SELECTED_TEXT,
+	DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -13,18 +24,22 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import dynamicDateRangeCss from "./generated/themes/DynamicDateRange.css.js";
 import dynamicDateRangePopoverCss from "./generated/themes/DynamicDateRangePopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import IconMode from "./types/IconMode.js";
-import type Input from "./Input.js";
-import type { IDynamicDateRangeOption } from "./DynamicDateOption.js";
-import type DynamicDateRangeValue from "./DynamicDateRangeValue.js";
-import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import {
-	DYNAMIC_DATE_RANGE_SELECTED_TEXT,
-	DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT,
-} from "./generated/i18n/i18n-defaults.js";
-import query from "@ui5/webcomponents-base/dist/decorators/query.js";
+
+type DynamicDateRangeValue = {
+	/**
+	 * The key of the option.
+	 * @default ""
+	 * @public
+	 */
+	operator: string;
+
+    /**
+     * Values of the dynamic date range.
+     * @default []
+     * @public
+     */
+    values?: Date[] | number[];
+}
 
 /**
  * @class
@@ -58,7 +73,7 @@ class DynamicDateRange extends UI5Element {
 	 * @public
 	 */
 	@property({ noAttribute: true })
-	value!: DynamicDateRangeValue;
+	value?: DynamicDateRangeValue;
 
 	/**
 	 * Defines the open or closed state of the popover.
@@ -118,7 +133,14 @@ class DynamicDateRange extends UI5Element {
 
 	onInputChange(e: any) {
 		const value = e.target.value as string;
-		this.value = this.getOption(this.value.operator)?.parse(value) as DynamicDateRangeValue;
+		let currentOption = this.options.find(option => option.key === value);
+
+		if (currentOption) {
+			this.value = this.getOption(value)?.parse(value) as DynamicDateRangeValue;
+		} else {
+			currentOption = this.options.find(option => option.parse(value));
+			this.value = currentOption ? this.getOption(currentOption.key)?.parse(value) as DynamicDateRangeValue : undefined;
+		}
 	}
 
 	onButtonBackClick() {
@@ -156,7 +178,7 @@ class DynamicDateRange extends UI5Element {
 		return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT);
 	}
 
-	calendarSelectionChange(e: CustomEvent) {
+	handleSelectionChange(e: CustomEvent) {
 		this.currentValue = this._currentOption?.handleSelectionChange && this._currentOption?.handleSelectionChange(e) as DynamicDateRangeValue;
 	}
 }
@@ -164,3 +186,7 @@ class DynamicDateRange extends UI5Element {
 DynamicDateRange.define();
 
 export default DynamicDateRange;
+
+export type {
+	DynamicDateRangeValue,
+};
