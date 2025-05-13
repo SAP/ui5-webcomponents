@@ -26,19 +26,22 @@ class DynamicDateRangeOptionTomorrow extends UI5Element implements IDynamicDateR
 	static i18nBundle: I18nBundle;
 
     parse(): DynamicDateRangeValue {
-	    const returnValue = { operator: "", values: [] };
+	    const returnValue = { operator: "" };
 	    returnValue.operator = this.key;
-	    returnValue.values = [];
 
 	    return returnValue;
     }
 
-    format() {
+    format(): string {
 	    return "Tomorrow";
     }
 
-    toDates() {
+    toDates() : Date[] {
 	    return tomorrowToDates();
+    }
+
+    isValidString(value: string): boolean {
+	    return value === this.text;
     }
 
     get text() {

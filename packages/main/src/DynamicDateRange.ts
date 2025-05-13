@@ -133,14 +133,15 @@ class DynamicDateRange extends UI5Element {
 
 	onInputChange(e: any) {
 		const value = e.target.value as string;
-		let currentOption = this.options.find(option => option.key === value);
 
-		if (currentOption) {
-			this.value = this.getOption(value)?.parse(value) as DynamicDateRangeValue;
-		} else {
-			currentOption = this.options.find(option => option.parse(value));
-			this.value = currentOption ? this.getOption(currentOption.key)?.parse(value) as DynamicDateRangeValue : undefined;
+		if (!value) {
+			this.value = undefined;
+			return;
 		}
+
+		const currentOption = this.options.find(option => option.isValidString(value));
+
+		this.value = currentOption ? this.getOption(currentOption.key)?.parse(value) as DynamicDateRangeValue : undefined;
 	}
 
 	onButtonBackClick() {
@@ -156,11 +157,18 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	_submitValue() {
+		const stringValue = this._currentOption?.format(this.currentValue!) as string;
+
 		if (this._input) {
-			this._input.value = this._currentOption?.format(this.currentValue!) as string;
+			this._input.value = stringValue;
 		}
 
-		this.value = this.currentValue as DynamicDateRangeValue;
+		if (this._currentOption?.isValidString(stringValue)) {
+			this.value = this.currentValue as DynamicDateRangeValue;
+		} else {
+			this.value = undefined;
+		}
+
 		this._currentOption = undefined;
 		this.open = false;
 	}

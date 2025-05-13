@@ -18,4 +18,5 @@ export interface IDynamicDateRangeOption extends UI5Element {
     toDates: (value: DynamicDateRangeValue) => Date[];
     handleSelectionChange?: (event: CustomEvent) => DynamicDateRangeValue | undefined;
     template?: JsxTemplate;
+    isValidString: (value: string) => boolean;
 }

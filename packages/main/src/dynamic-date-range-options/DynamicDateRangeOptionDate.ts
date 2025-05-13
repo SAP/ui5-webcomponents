@@ -56,8 +56,18 @@ class DynamicDateRangeOptionDate extends UI5Element implements IDynamicDateRange
 		return this.getFormat().format(date);
 	}
 
-	toDates(value: DynamicDateRangeValue) {
+	toDates(value: DynamicDateRangeValue): Date[] {
 		return dateOptionToDates(value);
+	}
+
+	isValidString(value: string): boolean {
+		const date = this.getFormat().parse(value) as Date;
+
+		if (!date || Number.isNaN(date.getTime())) {
+			return false;
+		}
+
+		return true;
 	}
 
 	get text() {

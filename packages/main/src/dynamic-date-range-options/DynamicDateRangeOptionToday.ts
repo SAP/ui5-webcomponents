@@ -26,19 +26,22 @@ class DynamicDateRangeOptionToday extends UI5Element implements IDynamicDateRang
 	static i18nBundle: I18nBundle;
 
     parse(): DynamicDateRangeValue {
-	    const returnValue = { operator: "", values: [] };
+	    const returnValue = { operator: "" };
 	    returnValue.operator = this.key;
-	    returnValue.values = [];
 
 	    return returnValue;
     }
 
-    format() {
+    format(): string {
 	    return "Today";
     }
 
-    toDates() {
+    toDates(): Date[] {
 	    return todayToDates();
+    }
+
+    isValidString(value: string): boolean {
+	    return value === this.text;
     }
 
     get text() {

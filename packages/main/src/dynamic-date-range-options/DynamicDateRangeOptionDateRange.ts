@@ -56,7 +56,7 @@ class DynamicDateRangeOptionDateRange extends UI5Element implements IDynamicDate
 		return formattedValue;
 	}
 
-	toDates(value: DynamicDateRangeValue) {
+	toDates(value: DynamicDateRangeValue): Date[] {
 		return dateRangeOptionToDates(value);
 	}
 
@@ -70,6 +70,16 @@ class DynamicDateRangeOptionDateRange extends UI5Element implements IDynamicDate
 
 	get icon() {
 		return "appointment-2";
+	}
+
+	isValidString(value: string): boolean {
+		const dates = this.getFormat().parse(value) as Date[];
+
+		if (!dates[0] || !dates[1] || Number.isNaN(dates[0].getTime()) || Number.isNaN(dates[1].getTime())) {
+			return false;
+		}
+
+		return true;
 	}
 
 	getFormat(): DateFormat {
