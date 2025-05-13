@@ -876,6 +876,28 @@ describe("Side Navigation Accessibility", () => {
 			.find(".ui5-sn-item-ul")
 			.should("have.attr", "role", "group");
 	});
+
+	it("Tests Primary and Footer Navigation Lists accessibility", () => {
+		cy.mount(
+			<SideNavigation id="sn">
+				<SideNavigationItem text="Home"></SideNavigationItem>
+				<SideNavigationItem text="1" />
+				<SideNavigationItem slot="fixedItems" text="2" />
+				<SideNavigationItem slot="fixedItems" text="3" />
+			</SideNavigation>
+		);
+
+		// assert
+		cy.get("#sn")
+			.shadow()
+			.find(".ui5-sn-flexible")
+			.should("have.attr", "aria-label", "Primary Navigation Menu");
+
+			cy.get("#sn")
+			.shadow()
+			.find(".ui5-sn-fixed")
+			.should("have.attr", "aria-label", "Footer Navigation Menu");
+	});
 });
 
 describe("Focusable items", () => {
