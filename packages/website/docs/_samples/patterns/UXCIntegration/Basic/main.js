@@ -221,12 +221,7 @@ userMenu.addEventListener("item-click", function (event) {
 		case "terms-of-use":
 			console.log("Terms of Use");
 			break;
-		case "account-action1":
-			console.log("Product-specific account action 1");
-			break;
-		case "account-action2":
-			console.log("Product-specific account action 2");
-			break;
+// Removed unused cases for "account-action1" and "account-action2".
 		default:
 			console.log("Default");
 	}
