@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.6](https://github.com/SAP/ui5-webcomponents/compare/v2.7.5...v2.7.6) (2025-05-14)
+
+
+### Bug Fixes
+
+* **framework:** fix i18n bundle storage ([#10924](https://github.com/SAP/ui5-webcomponents/issues/10924)) ([c94922e](https://github.com/SAP/ui5-webcomponents/commit/c94922ebded8cc0921b3d4913b71c3620e48baf1))
+
+
+
+
+
 ## [2.7.5](https://github.com/SAP/ui5-webcomponents/compare/v2.7.4...v2.7.5) (2025-05-07)
 
 **Note:** Version bump only for package @ui5/webcomponents-base
