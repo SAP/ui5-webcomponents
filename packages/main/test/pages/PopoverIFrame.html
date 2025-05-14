@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class="popover1auto">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Popover</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN",
+			"libs": "sap.ui.webc.main"
+		}
+	</script>
+
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+	<script>
+		// delete Document.prototype.adoptedStyleSheets
+	</script>
+</head>
+
+<body class="popover2auto">
+	<div id="myDiv" style="width: 200px;" tabindex="0">
+		Hello
+		<custom-element style="display:block;" id="myCustomElement">
+			<!-- Shadow DOM will be automatically created by the custom element -->
+		</custom-element>
+		<button id="btn1">Open Popover</button>
+	</div>
+
+	<ui5-button id="btn">Open Popover</ui5-button>
+
+	<ui5-popover opener="myDiv" header-text="Newsletter subscription" prevent-initial-focus>
+		<div class="popover-content">
+			<ui5-label for="emailInput" required show-colon>Email</ui5-label>
+			<ui5-input id="emailInput" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+			<ui5-label>Note: If you open the page in mobile, a dialog would be displayed.</ui5-label>
+		</div>
+		<div slot="footer" class="popover-footer">
+			<ui5-button id="closePopoverButton" design="Emphasized">Subscribe</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<script>
+		const btn = [...document.getElementsByTagName("ui5-button")][0];
+		const popover = [...document.getElementsByTagName("ui5-popover")][0];
+
+		// Симулираме съществуването на iframe в Shadow DOM-а на custom-element
+		document.getElementById('myCustomElement').attachShadow({ mode: 'open' }).innerHTML = `
+  <iframe
+    sandbox
+    srcdoc="<p>There are two ways to use the <code>iframe</code> element:</p>
+<ol>
+<li><a href=&quot;about:srcdoc#embed_another&quot;>To embed content from another page</a></li>
+<li><a href=&quot;about:srcdoc#embed_user&quot;>To embed user-generated content</a></li>
+</ol>
+<h2 id=&quot;embed_another&quot;>Embedding content from another page</h2>
+<p>Use the <code>src</code> attribute to specify the URL of the page to embed:</p>
+<pre><code>&amp;lt;iframe src=&quot;https://example.org&quot;&amp;gt;&amp;lt;/iframe&amp;gt;</code></pre>
+<h2 id=&quot;embed_user&quot;>Embedding user-generated content</h2>
+<p>Use the <code>srcdoc</code> attribute to specify the content to embed. This post is already an example!</p>
+"
+    width="500"
+    height="250"
+></iframe>
+    `;
+
+		document.getElementById('myDiv').addEventListener("focus", () => {
+			popover.open = !popover.open;
+		});
+	</script>
+
+</body>
+
+</html>
