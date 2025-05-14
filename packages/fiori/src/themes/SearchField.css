@@ -97,12 +97,15 @@
 	background-color: var(--sapShellColor);
 }
 
+.ui5-advanced-wrapper {
+	--_ui5_button_focused_border_radius: var(--_ui5_search_advanced_button_border_radius);
+}
+
 /* advanced filter slot */
 ::slotted([slot="advancedFilter"]) {
 	min-width: var(--_ui5_search_icon_size);
 	height: var(--_ui5_search_icon_size);
 	border: var(--_ui5-search-icon-border);
-	border-radius: var(--_ui5_button_focused_border_radius);
 	color: var(--sapShell_InteractiveTextColor);
 	outline: none;
 	background: none;
@@ -113,6 +116,7 @@
 
 ::slotted([slot="advancedFilter"]:hover) {
 	box-shadow: var(--sapField_Hover_Shadow);
+	border-radius: var(--_ui5_button_focused_border_radius);
 	background-color: var(--_ui5-search-elements-active-background);
 }
 

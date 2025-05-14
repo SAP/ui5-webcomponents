@@ -43,7 +43,9 @@ export default function SearchFieldTemplate(this: SearchField) {
 						</>
 					) : this.advancedFilter ? (
 						<>
-							<slot name="advancedFilter"></slot>
+							<div class="ui5-advanced-wrapper" style="display: contents">
+								<slot name="advancedFilter"></slot>
+							</div>
 							<div class="ui5-search-field-separator"></div>
 						</>
 					) : null}
