@@ -29,7 +29,7 @@ export default function withSsr(h: any) {
 					});
 					// @ts-expect-error
 					// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-					instance.childNodes = instance.children.map(child => typeof child === "string" && { nodeType: 3, value: child });
+					instance.childNodes = instance.children.map(child => (typeof child === "string" ? { nodeType: 3, value: child } : child));
 				}
 				if (typeof props.children === "string") {
 					instance.textContent = props.children;
@@ -41,6 +41,9 @@ export default function withSsr(h: any) {
 
 			// set properties
 			Object.keys(props).forEach(prop => {
+				if (prop === "children") {
+					return;
+				}
 				// @ts-expect-error
 				instance[prop] = props[prop];
 			});
