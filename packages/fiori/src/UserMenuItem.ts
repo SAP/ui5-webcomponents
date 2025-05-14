@@ -1,6 +1,5 @@
 import { customElement, slot } from "@ui5/webcomponents-base/dist/decorators.js";
-import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
-import { isInstanceOfMenuItem } from "@ui5/webcomponents/dist/MenuItem.js";
+import MenuItem, { isInstanceOfMenuItem } from "@ui5/webcomponents/dist/MenuItem.js";
 
 import UserMenuItemTemplate from "./UserMenuItemTemplate.js";
 
