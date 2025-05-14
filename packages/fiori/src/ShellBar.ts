@@ -980,9 +980,9 @@ class ShellBar extends UI5Element {
 			});
 		});
 		if (this.showSearchField) {
-			animations.push(slideRight(this.searchFieldWrapper!).promise());
+			animations.push(this.slideRight(this.searchFieldWrapper!).promise());
 		} else {
-			animations.push(slideLeft(this.searchFieldWrapper!).promise());
+			animations.push(this.slideLeft(this.searchFieldWrapper!).promise());
 		}
 
 		Promise.all(animations).then(() => {
@@ -1712,20 +1712,9 @@ class ShellBar extends UI5Element {
 	get search() {
 		return this.searchField.length ? this.searchField[0] : null;
 	}
-}
 
-interface IShellBarSelfCollapsibleSearch {
-	collapsed: boolean;
-}
 
-const isSelfCollapsibleSearch = (searchField: any): searchField is IShellBarSelfCollapsibleSearch => {
-	if (searchField) {
-		return "collapsed" in searchField;
-	}
-	return false;
-};
-
-const slideRight = (element: HTMLElement) => {
+slideRight(element: HTMLElement) {
 	let computedStyles: CSSStyleDeclaration,
 		paddingInlineStart: number,
 		paddingInlineEnd: number,
@@ -1801,7 +1790,7 @@ const slideRight = (element: HTMLElement) => {
 	return animation;
 };
 
-const slideLeft = (element: HTMLElement) => {
+slideLeft(element: HTMLElement) {
 	let computedStyles: CSSStyleDeclaration,
 		paddingStart: number,
 		paddingEnd: number,
@@ -1816,6 +1805,7 @@ const slideLeft = (element: HTMLElement) => {
 		storedmarginEnd: string,
 		storedminwidth: string,
 		storedOpacity: string;
+	const searchFieldwidth: number = this.domCalculatedValues("--_ui5_shellbar_search_field_width");
 
 	const animation = animate({
 		beforeStart: () => {
@@ -1827,7 +1817,7 @@ const slideLeft = (element: HTMLElement) => {
 			paddingEnd = parseFloat(computedStyles.paddingInlineEnd);
 			marginStart = parseFloat(computedStyles.marginInlineStart);
 			marginEnd = parseFloat(computedStyles.marginInlineEnd);
-			minwidth = parseFloat(computedStyles.width);
+			minwidth = searchFieldwidth;
 			opacity = parseFloat(computedStyles.opacity);
 
 			// Store inline styles
@@ -1840,17 +1830,17 @@ const slideLeft = (element: HTMLElement) => {
 			storedmarginEnd = element.style.marginInlineEnd;
 
 
-			//el.style.overflow = "hidden";
+			el.style.overflow = "hidden";
 		},
 		duration,
 		element,
 		advance: progress => {
-			element.style.minWidth = `${(minwidth * progress)}px`;
-			element.style.opacity = `${(opacity * progress)}`;
-			element.style.paddingInlineStart = `${(paddingStart * progress)}px`;
-			element.style.paddingInlineEnd = `${(paddingEnd * progress)}px`;
-			element.style.marginInlineStart = `${(marginStart * progress)}px`;
-			element.style.marginInlineEnd = `${(marginEnd * progress)}px`;
+			element.style.minWidth = `${minwidth -(minwidth * progress)}px`;
+			element.style.opacity = `${opacity -(opacity * progress)}`;
+			element.style.paddingInlineStart = `${paddingStart -(paddingStart * progress)}px`;
+			element.style.paddingInlineEnd = `${paddingEnd -(paddingEnd * progress)}px`;
+			element.style.marginInlineStart = `${marginStart -(marginStart * progress)}px`;
+			element.style.marginInlineEnd = `${marginEnd -(marginEnd * progress)}px`;
 		},
 	});
 
@@ -1867,10 +1857,21 @@ const slideLeft = (element: HTMLElement) => {
 		}
 	});
 
-	element.classList.add(".ui5-shellbar-search-field-closed");
 	return animation;
 };
 
+}
+
+interface IShellBarSelfCollapsibleSearch {
+	collapsed: boolean;
+}
+
+const isSelfCollapsibleSearch = (searchField: any): searchField is IShellBarSelfCollapsibleSearch => {
+	if (searchField) {
+		return "collapsed" in searchField;
+	}
+	return false;
+};
 ShellBar.define();
 
 export default ShellBar;
