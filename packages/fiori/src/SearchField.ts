@@ -6,6 +6,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import SearchFieldTemplate from "./SearchFieldTemplate.js";
 import SearchFieldCss from "./generated/themes/SearchField.css.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { IOption, SelectChangeEventDetail } from "@ui5/webcomponents/dist/Select.js";
 
@@ -19,7 +20,6 @@ import {
 	SEARCH_FIELD_CLEAR_ICON,
 	SEARCH_FIELD_SEARCH_ICON,
 } from "./generated/i18n/i18n-defaults.js";
-import type Button from "@ui5/webcomponents/dist/Button.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-search`
@@ -162,9 +162,6 @@ class SearchField extends UI5Element {
 	/**
 	 * Defines the advanced filter slot, used to display an additional filtering button.
 	 * This slot is intended for passing a `ui5-button` with a filter icon to provide extended filtering options.
-	 *
-	 * **Note:** If no content is provided in this slot, the advanced filtering button will not be rendered.
-	 *
 	 * @public
 	 * @since 2.11.0
 	 */
