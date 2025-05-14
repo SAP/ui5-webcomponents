@@ -480,7 +480,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		await renderFinished();
 
 		if (this.hasSubmenu && this.isSubMenuOpen) {
-			const menuItems = this._menuItems;
+			const menuItems = this._allMenuItems;
 			return menuItems[0] && menuItems[0].focus(focusOptions);
 		}
 
@@ -534,7 +534,7 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	_itemKeyDown(e: KeyboardEvent) {
 		const item = e.target as MenuItem;
-		const itemInMenuItems = this._menuItems.includes(item);
+		const itemInMenuItems = this._allMenuItems.includes(item);
 		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
 		const isItemNavigation = isUp(e) || isDown(e);
 		const isItemSelection = isSpace(e) || isEnter(e);
@@ -559,7 +559,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	_navigateOutOfEndContent(e: CustomEvent) {
 		const item = e.target as MenuItem;
 		const shouldNavigateToNextItem = e.detail.shouldNavigateToNextItem;
-		const menuItems = this._menuItems;
+		const menuItems = this._allMenuItems;
 		const itemIndex = menuItems.indexOf(item);
 
 		if (itemIndex > -1) {
@@ -582,7 +582,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	_close() {
 		if (this._popover) {
 			this._popover.open = false;
-			this._menuItems.forEach(item => item._close());
+			this._allMenuItems.forEach(item => item._close());
 		}
 		this.selected = false;
 	}

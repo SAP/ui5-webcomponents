@@ -27,14 +27,11 @@ import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMRe
 import type List from "./List.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import type MenuItem from "./MenuItem.js";
-import type MenuSeparator from "./MenuSeparator.js";
 // The import below should be kept, as MenuItem is part of the Menu component.
 import { isInstanceOfMenuItem } from "./MenuItem.js";
 import { isInstanceOfMenuItemGroup } from "./MenuItemGroup.js";
 import { isInstanceOfMenuSeparator } from "./MenuSeparator.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-import "./MenuSeparator.js";
-import type MenuItemGroup from "./MenuItemGroup.js";
 import type {
 	ListItemClickEventDetail,
 } from "./List.js";
@@ -443,7 +440,7 @@ class Menu extends UI5Element {
 			return;
 		}
 
-		const menuItemInMenu = this._menuItems.includes(item);
+		const menuItemInMenu = this._allMenuItems.includes(item);
 		const isItemNavigation = isUp(e) || isDown(e);
 		const isItemSelection = isEnter(e) || isSpace(e);
 		const isEndContentNavigation = isRight(e) || isLeft(e);
@@ -468,7 +465,7 @@ class Menu extends UI5Element {
 	_navigateOutOfEndContent(e: CustomEvent) {
 		const item = e.target as MenuItem;
 		const shouldNavigateToNextItem = e.detail.shouldNavigateToNextItem;
-		const menuItems = this._menuItems;
+		const menuItems = this._allMenuItems;
 		const itemIndex = menuItems.indexOf(item);
 
 		if (itemIndex > -1) {

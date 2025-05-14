@@ -3,9 +3,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import MenuItem from "./MenuItem.js";
+import type MenuItem from "./MenuItem.js";
 import MenuItemGroupTemplate from "./MenuItemGroupTemplate.js";
-import { isInstanceOfMenuItem } from "./Menu.js";
+import { isInstanceOfMenuItem } from "./MenuItem.js";
 import ItemCheckMode from "./types/ItemCheckMode.js";
 import type { IMenuItem } from "./Menu.js";
 
@@ -43,7 +43,6 @@ import type { IMenuItem } from "./Menu.js";
 	tag: "ui5-menu-item-group",
 	renderer: jsxRenderer,
 	template: MenuItemGroupTemplate,
-	dependencies: [MenuItem],
 })
 class MenuItemGroup extends UI5Element implements IMenuItem {
 	/**
@@ -122,6 +121,14 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	}
 }
 
+const isInstanceOfMenuItemGroup = (object: any): object is MenuItemGroup => {
+	return "isGroup" in object;
+};
+
 MenuItemGroup.define();
 
 export default MenuItemGroup;
+
+export {
+	isInstanceOfMenuItemGroup,
+};
