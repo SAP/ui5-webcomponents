@@ -61,6 +61,7 @@ function MenuItemTemplate(this: SideNavigationItem) {
 				aria-haspopup={this._ariaHasPopup}
 				aria-checked={this._ariaChecked}
 				title={this._tooltip}
+				aria-label={this.isOverflow ? this._overflowItemLabel : undefined}
 			>
 				<Icon class="ui5-sn-item-icon" name={this.icon}/>
 				<div class="ui5-sn-item-text">{this.text}</div>
