@@ -118,9 +118,9 @@ class RadioButtonGroup {
 		const hasCheckedRadio = group.some(radioBtn => radioBtn.checked);
 
 		group.filter(radioBtn => !radioBtn.disabled).forEach((radioBtn, idx) => {
-			let activeElement: Element | RadioButton = getActiveElement()!;
+			let activeElement: Element | RadioButton | null = getActiveElement();
 
-			if (activeElement.classList.contains("ui5-radio-root")) {
+			if (activeElement?.classList.contains("ui5-radio-root")) {
 				activeElement = activeElement.getRootNode() as Element;
 				if (activeElement instanceof ShadowRoot) {
 					activeElement = activeElement.host;
@@ -128,7 +128,7 @@ class RadioButtonGroup {
 			}
 
 			if (hasCheckedRadio) {
-				if (activeElement.hasAttribute("ui5-radio-button") && (activeElement as RadioButton).readonly) {
+				if (activeElement?.hasAttribute("ui5-radio-button") && (activeElement as RadioButton).readonly) {
 					radioBtn._tabIndex = activeElement === radioBtn && radioBtn.readonly ? 0 : -1;
 				} else {
 					radioBtn._tabIndex = radioBtn.checked ? 0 : -1;
@@ -164,6 +164,8 @@ class RadioButtonGroup {
 	static selectItem(item: RadioButton, groupName: string) {
 		this.updateSelectionInGroup(item, groupName);
 		this.updateTabOrder(groupName);
+
+		this.updateFormValidity(groupName);
 	}
 
 	static updateSelectionInGroup(radioBtnToSelect: RadioButton, groupName: string) {

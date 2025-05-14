@@ -156,6 +156,14 @@ class ToolbarButton extends ToolbarItem {
 	@property()
 	width?: string;
 
+	/**
+     * Defines if the toolbar button is hidden.
+     * @private
+     * @default false
+     */
+	@property({ type: Boolean })
+	hidden = false;
+
 	get styles() {
 		return {
 			width: this.width,

@@ -11,10 +11,12 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
 import type WizardContentLayout from "./types/WizardContentLayout.js";
 import "./WizardStep.js";
 
@@ -55,22 +57,11 @@ const STEP_SWITCH_THRESHOLDS = {
 	MAX: 1,
 };
 
-type ResponsiveBreakpoints = {
-	[key: string]: string,
-}
-
 type WizardStepChangeEventDetail = {
 	step: WizardStep,
 	previousStep: WizardStep,
 	withScroll: boolean,
 }
-
-const RESPONSIVE_BREAKPOINTS: ResponsiveBreakpoints = {
-	"0": "S",
-	"599": "M",
-	"1023": "L",
-	"1439": "XL",
-};
 
 type AccessibilityInformation = {
 	ariaSetsize: number,
@@ -256,9 +247,6 @@ class Wizard extends UI5Element {
 	 */
 	@property({ type: Array })
 	_groupedTabs: Array<WizardTab> = [];
-
-	@property()
-	_breakpoint?: string
 
 	/**
 	 * Defines the steps.
@@ -486,8 +474,6 @@ class Wizard extends UI5Element {
 
 		this._prevWidth = this.width;
 		this._prevContentHeight = this.contentHeight;
-
-		this._calcCurrentBreakpoint();
 	}
 
 	attachStepsResizeObserver() {
@@ -501,12 +487,6 @@ class Wizard extends UI5Element {
 		this.stepsDOM.forEach(stepDOM => {
 			ResizeHandler.deregister(stepDOM, this._onStepResize);
 		});
-	}
-
-	_calcCurrentBreakpoint() {
-		const breakpointDimensions = Object.keys(RESPONSIVE_BREAKPOINTS).reverse();
-		const breakpoint = breakpointDimensions.find((size: string) => Number(size) < this.width!);
-		this._breakpoint = breakpoint ? RESPONSIVE_BREAKPOINTS[breakpoint] : RESPONSIVE_BREAKPOINTS["0"];
 	}
 
 	/**
@@ -624,7 +604,7 @@ class Wizard extends UI5Element {
 		}
 	}
 
-	_onOverflowStepButtonClick(e: MouseEvent) {
+	_onOverflowStepButtonClick(e: UI5CustomEvent<Button, "click">) {
 		const tabs = Array.from(this.stepsInHeaderDOM);
 		const eTarget = e.target as HTMLElement;
 		const stepRefId = eTarget.getAttribute("data-ui5-header-tab-ref-id");

@@ -74,6 +74,15 @@ class UserMenuAccount extends UI5Element {
 	@property({ type: Boolean })
 	selected = false;
 
+	/**
+	 * Indicates whether a loading indicator should be shown.
+	 * @default false
+	 * @public
+	 * @since 2.9.0
+	 */
+	@property({ type: Boolean })
+	loading = false;
+
 	get _initials() {
 		return this.avatarInitials || "undefined";
 	}

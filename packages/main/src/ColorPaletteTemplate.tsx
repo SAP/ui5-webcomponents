@@ -40,7 +40,7 @@ export default function ColorPaletteTemplate(this: ColorPalette) {
 					)}
 				</div>
 
-				{this._showMoreColors &&
+				{this.showMoreColors &&
 					<div class="ui5-cp-more-colors-wrapper">
 						<div class="ui5-cp-separator"></div>
 						<Button
@@ -66,7 +66,7 @@ export default function ColorPaletteTemplate(this: ColorPalette) {
 				}
 			</div>
 
-			{ this._effectiveShowMoreColors && this.moreColorsFeature?.template.call(this) }
+			{ this.showMoreColors && this.showMoreColorsTemplate?.call(this) }
 		</>
 	);
 }

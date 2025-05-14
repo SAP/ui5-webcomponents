@@ -1,4 +1,3 @@
-import type { JsxTemplate } from "@ui5/webcomponents-base";
 import type MenuItem from "./MenuItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Button from "./Button.js";
@@ -11,16 +10,12 @@ import Icon from "./Icon.js";
 import ListItemTemplate from "./ListItemTemplate.js";
 import type { ListItemHooks } from "./ListItemTemplate.js";
 
-export type MenuItemHooks = ListItemHooks & {
-	listItemPostContent: JsxTemplate,
-}
-
-const predefinedHooks: Partial<MenuItemHooks> = {
+const predefinedHooks: Partial<ListItemHooks> = {
 	listItemContent,
 	iconBegin,
 };
 
-export default function MenuItemTemplate(this: MenuItem, hooks?: Partial<MenuItemHooks>) {
+export default function MenuItemTemplate(this: MenuItem, hooks?: Partial<ListItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return <>
@@ -35,16 +30,6 @@ function listItemContent(this: MenuItem) {
 		{this.text && <div class="ui5-menu-item-text">{this.text}</div>}
 
 		{rightContent.call(this)}
-
-		{this.hasSubmenu && (
-			<div class="ui5-menu-item-submenu-icon" >
-				<Icon
-					part="subicon"
-					name={slimArrowRight}
-					class="ui5-menu-item-icon-end"
-				/>
-			</div>
-		)}
 	</>);
 }
 
@@ -61,7 +46,7 @@ function rightContent(this: MenuItem) {
 			</div>
 		);
 	case this.hasEndContent:
-		return <slot name="endContent"></slot>;
+		return <slot name="endContent" onKeyDown={this._endContentKeyDown}></slot>;
 	case !!this.additionalText:
 		return (
 			<span
@@ -88,7 +73,7 @@ function iconBegin(this: MenuItem) {
 function listItemPostContent(this: MenuItem) {
 	return this.hasSubmenu && <ResponsivePopover
 		id={`${this._id}-menu-rp`}
-		class="ui5-menu-rp .ui5-menu-rp-sub-menu"
+		class="ui5-menu-rp ui5-menu-rp-sub-menu"
 		preventInitialFocus={true}
 		preventFocusRestore={true}
 		hideArrow={true}
@@ -138,8 +123,11 @@ function listItemPostContent(this: MenuItem) {
 						accessibleRole="Menu"
 						loading={this.loading}
 						loadingDelay={this.loadingDelay}
+						onMouseOver={this._itemMouseOver}
+						onKeyDown={this._itemKeyDown}
 						// handles event from slotted children
 						onui5-close-menu={this._close}
+						onui5-exit-end-content={this._navigateOutOfEndContent}
 					>
 						<slot></slot>
 					</List>

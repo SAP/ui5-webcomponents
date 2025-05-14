@@ -11,7 +11,7 @@ function startGeneration(button) {
 	console.warn("startGeneration");
 	generationId = setTimeout(function() {
 		console.warn("Generation completed");
-		button.state = "revise";
+		button.state = "regenerate";
 	}, 3000);
 }
 
@@ -34,9 +34,9 @@ function aiButtonClickHandler(evt) {
 			button.state = prevTriggerState;
 			stopGeneration();
 			break;
-		case "revise":
+		case "regenerate":
 			menu.open = false;
-			prevTriggerState = "revise";
+			prevTriggerState = "regenerate";
 			button.state = "generating";
 			startGeneration(button);
 			break;
@@ -53,7 +53,7 @@ function aiButtonArrowClickHandler(evt) {
 function menuItemClickHandler(evt) {
 	var button = menu.opener;
 
-	prevTriggerState = "revise";
+	prevTriggerState = "regenerate";
 	button.state = "generating";
 	startGeneration(button);
 }
@@ -61,17 +61,17 @@ function menuItemClickHandler(evt) {
 function menuOpenHandler() {
 	var button = menu.opener;
 
-	button.activeArrowButton = true;
+	button.arrowButtonPressed = true;
 }
 
 function menuCloseHandler() {
 	var button = menu.opener;
 
-	button.activeArrowButton = false;
+	button.arrowButtonPressed = false;
 }
 
 myAiButton.addEventListener("click", aiButtonClickHandler);
-myAiButton.addEventListener("arrow-click", aiButtonArrowClickHandler);
+myAiButton.addEventListener("arrow-button-click", aiButtonArrowClickHandler);
 menu.addEventListener("item-click", menuItemClickHandler);
 menu.addEventListener("open", menuOpenHandler);
 menu.addEventListener("close", menuCloseHandler);

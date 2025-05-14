@@ -143,8 +143,8 @@
 }
 
 .ui5-split-text-button {
-	border-start-end-radius: var(--_ui5_split_button_hover_border_radius);
-	border-end-end-radius: var(--_ui5_split_button_hover_border_radius);
+	border-start-end-radius: var(--sapButton_Segment_BorderCornerRadius);
+	border-end-end-radius: var(--sapButton_Segment_BorderCornerRadius);
 	border-width: 0.0625rem;
 	border-inline-end-width: var(--_ui5_split_button_text_button_right_border_width);
 	border-color: var(--_ui5_split_text_button_border_color);
@@ -154,8 +154,8 @@
 }
 
 .ui5-split-text-button:hover {
-	border-start-end-radius: var(--_ui5_split_button_hover_border_radius);
-	border-end-end-radius: var(--_ui5_split_button_hover_border_radius);
+	border-start-end-radius: var(--sapButton_Segment_BorderCornerRadius);
+	border-end-end-radius: var(--sapButton_Segment_BorderCornerRadius);
 	background-color: var(--sapButton_Hover_Background);
 	box-shadow: none;
 	border: var(--_ui5_split_text_button_hover_border);
@@ -225,8 +225,8 @@
 }
 
 .ui5-split-arrow-button {
-	border-start-start-radius: var(--_ui5_split_button_hover_border_radius);
-	border-end-start-radius: var(--_ui5_split_button_hover_border_radius);
+	border-start-start-radius: var(--sapButton_Segment_BorderCornerRadius);
+	border-end-start-radius: var(--sapButton_Segment_BorderCornerRadius);
 	border-color: var(--_ui5_split_text_button_border_color);
 	background-color: var(--_ui5_split_text_button_background_color);
 	position: relative;
@@ -235,8 +235,8 @@
 }
 
 .ui5-split-arrow-button:hover {
-	border-start-start-radius: var(--_ui5_split_button_hover_border_radius);
-	border-end-start-radius: var(--_ui5_split_button_hover_border_radius);
+	border-start-start-radius: var(--sapButton_Segment_BorderCornerRadius);
+	border-end-start-radius: var(--sapButton_Segment_BorderCornerRadius);
 	background-color: var(--sapButton_Hover_Background);
 	box-shadow: none;
 	border: var(--_ui5_split_arrow_button_hover_border);

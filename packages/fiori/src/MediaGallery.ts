@@ -2,7 +2,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -23,13 +23,13 @@ import type MediaGalleryMenuVerticalAlign from "./types/MediaGalleryMenuVertical
 import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
 
 // Template
-import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit.js";
+import MediaGalleryTemplate from "./MediaGalleryTemplate.js";
 
 /**
  * Interface for components that can be slotted inside `ui5-media-gallery` as items.
  * @public
  */
-interface IMediaGalleryItem extends HTMLElement, ITabbable {
+interface IMediaGalleryItem extends UI5Element, ITabbable {
 	selected: boolean,
 	disabled: boolean,
 	displayedContent: HTMLElement | null;
@@ -86,7 +86,7 @@ const COLUMNS_COUNT: Record<string, number> = {
  */
 @customElement({
 	tag: "ui5-media-gallery",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [MediaGalleryCss],
 	template: MediaGalleryTemplate,
 	dependencies: [

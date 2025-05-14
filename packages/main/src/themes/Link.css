@@ -125,3 +125,12 @@
 	color: var(--_ui5_link_focused_hover_text_color);
 	text-decoration: var(--_ui5_link_focused_hover_text_decoration);
 }
+
+:host([interactive-area-size="Large"]) .ui5-link-root {
+	line-height: var(--_ui5_link_large_interactive_area_height);
+}
+
+:host([interactive-area-size="Large"])::part(icon), 
+:host([interactive-area-size="Large"])::part(endIcon) {
+	height: var(--_ui5_link_large_interactive_area_height);
+}

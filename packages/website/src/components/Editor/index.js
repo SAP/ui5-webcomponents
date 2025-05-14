@@ -270,8 +270,10 @@ ${fixAssetPaths(_js)}`,
         try {
           const savedConfig = JSON.parse(savedProject);
           savedConfig["index.html"].content = addHeadContent(fixAssetPaths(savedConfig["index.html"].content));
-          if (savedConfig["main.js"] && newConfig.files["main.ts"]) {
-            delete newConfig.files["main.ts"];
+          const oldMainFile = savedConfig["main.js"] || savedConfig["main.ts"];
+          if (oldMainFile && newConfig.files["main.tsx"]) {
+            // if the saved project has a main from an old default, and the default project has a main.tsx file, restore the saved one
+            delete newConfig.files["main.tsx"];
           }
           newConfig.files = {...newConfig.files, ...savedConfig};
         } catch (e) {
@@ -285,8 +287,10 @@ ${fixAssetPaths(_js)}`,
       try {
         const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
         sharedConfig["index.html"].content = addHeadContent(fixAssetPaths(sharedConfig["index.html"].content));
-        if (sharedConfig["main.js"] && newConfig.files["main.ts"]) {
-          delete newConfig.files["main.ts"];
+        const oldMainFile = sharedConfig["main.js"] || sharedConfig["main.ts"];
+        if (oldMainFile && newConfig.files["main.tsx"]) {
+            // if the shared project has a main from an old default, and the default project has a main.tsx file, restore the saved one
+          delete newConfig.files["main.tsx"];
         }
         newConfig.files = {...newConfig.files, ...sharedConfig};
       } catch (e) {
@@ -302,7 +306,9 @@ ${fixAssetPaths(_js)}`,
         previewRef.current.iframe.style.height = `${event.data.height}px`;
       }
     }
-    window.addEventListener("message", messageHandler);
+    if (!standalone) {
+      window.addEventListener("message", messageHandler);
+    }
 
     tabBarRef.current.project = projectRef.current;
     fileEditorRef.current.project = projectRef.current;
@@ -324,8 +330,10 @@ ${fixAssetPaths(_js)}`,
     }
 
     return function () {
-      // component cleanup
-      window.removeEventListener("message", messageHandler);
+      if (!standalone) {
+        // component cleanup
+        window.removeEventListener("message", messageHandler);
+      }
       projectRef.current.removeEventListener("compileStart", saveProject);
       returnProjectToPool(projectRef.current);
     }
@@ -379,7 +387,7 @@ ${fixAssetPaths(_js)}`,
             [styles['preview-standalone']]: standalone,
             [styles['preview-sample']]: !standalone,
           })}
-          style={{ height: "unset", minHeight: "7rem" }} ref={previewRef}
+          style={standalone ? undefined: { height: "unset", minHeight: "7rem" }} ref={previewRef}
         ></playground-preview>
       </>
     )

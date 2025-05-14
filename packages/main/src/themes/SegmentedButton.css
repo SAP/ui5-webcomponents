@@ -18,7 +18,7 @@
 }
 
 ::slotted([ui5-segmented-button-item]) {
-	border-radius: var(--_ui5_segmented_btn_inner_border_radius);
+	border-radius: var(--sapButton_Segment_BorderCornerRadius);
 	border-color: var(--_ui5_segmented_btn_border_color);
 	background-color: var(--_ui5_segmented_btn_background_color);
 	height: var(--_ui5_button_base_height);

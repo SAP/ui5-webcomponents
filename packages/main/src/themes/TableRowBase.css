@@ -5,8 +5,7 @@
 	min-height: var(--_ui5_list_item_base_height);
 	box-sizing: border-box;
 	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
-	border-right: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
-	border-left: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
+	overflow: clip;
 }
 
 :host([tabindex]:focus) {
@@ -17,6 +16,17 @@
 :host([tabindex]:focus) #selection-cell,
 :host([tabindex]:focus) #actions-cell {
 	clip-path: inset(var(--sapContent_FocusWidth)); /* focus outline should not overlap sticky cells */
+}
+
+::slotted([ui5-table-cell]:first-of-type),
+::slotted([ui5-table-header-cell]:first-of-type),
+#popin-cell {
+	padding-inline-start: var(--_ui5_first_table_cell_horizontal_padding);
+}
+
+#selection-cell + ::slotted([ui5-table-cell-base]:first-of-type),
+#selection-cell ~ #popin-cell {
+	padding-inline-start: var(--_ui5_table_cell_horizontal_padding);
 }
 
 #selection-cell {

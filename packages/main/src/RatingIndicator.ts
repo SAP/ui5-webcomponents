@@ -251,7 +251,11 @@ class RatingIndicator extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		if (this.disabled || this.readonly) {
-			e.preventDefault();
+			// prevent page scrolling
+			if (isSpace(e)) {
+				e.preventDefault();
+			}
+
 			return;
 		}
 

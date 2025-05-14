@@ -39,7 +39,6 @@ import type {
 } from "./types.js";
 import { updateFormValue, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
-import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 import { getI18nBundle } from "./i18nBundle.js";
 import type I18nBundle from "./i18nBundle.js";
 import { fetchCldr } from "./asset-registries/LocaleData.js";
@@ -141,20 +140,26 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 
 type NotEqual<X, Y> = true extends Equal<X, Y> ? false : true
 type Equal<X, Y> =
-  (<T>() => T extends X ? 1 : 2) extends
-  (<T>() => T extends Y ? 1 : 2) ? true : false
+	(<T>() => T extends X ? 1 : 2) extends
+	(<T>() => T extends Y ? 1 : 2) ? true : false
 
 // JSX support
 type IsAny<T, Y, N> = 0 extends (1 & T) ? Y : N
 // type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: T[Property] extends IsAny<T> ? any : (e: CustomEvent<T[Property]>) => void }
 type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}`
-? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
-: T;
+	? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
+	: T;
 type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
 
 type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "autocomplete" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "inputmode" | "lang" | "nonce" | "part" | "exportparts" | "pattern" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate" | "ref" | "inert";
 type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
-type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: IsAny<T[Property], any, (e: CustomEvent<T[Property]>) => void> }
+type TargetedCustomEvent<D, T> = Omit<CustomEvent<D>, "currentTarget"> & { currentTarget: T };
+// define as method and extract the function signature from the method to make it bivariant so that inheritance of event handlers is not checked via strictFunctionTypes
+// https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-6.html#strict-function-types
+type TargetedEventHandler<D, T> = {
+	asMethod(e: TargetedCustomEvent<D, T>): void
+}["asMethod"];
+type Convert<T, K extends UI5Element> = { [Property in keyof T as `on${KebabToPascal<string & Property>}`]: IsAny<T[Property], any, TargetedEventHandler<T[Property], K>> }
 
 /**
  * @class
@@ -167,7 +172,7 @@ abstract class UI5Element extends HTMLElement {
 	eventDetails!: NotEqual<this, UI5Element> extends true ? object : {
 		[k: string]: any
 	};
-	_jsxEvents!: Omit<JSX.DOMAttributes<this>, keyof Convert<this["eventDetails"]> | "onClose" | "onToggle" | "onChange" | "onSelect" | "onInput"> & Convert<this["eventDetails"]>
+	_jsxEvents!: Omit<JSX.DOMAttributes<this>, keyof Convert<this["eventDetails"], this> | "onClose" | "onToggle" | "onChange" | "onSelect" | "onInput"> & Convert<this["eventDetails"], this>
 	_jsxProps!: Pick<JSX.AllHTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & ElementProps<this> & Partial<this["_jsxEvents"]> & { key?: any };
 	__id?: string;
 	_suppressInvalidation: boolean;
@@ -181,6 +186,7 @@ abstract class UI5Element extends HTMLElement {
 	_slotChangeListeners: Map<string, SlotChangeListener>;
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
+	__shouldHydrate = false;
 	_state: State;
 	_internals: ElementInternals;
 	_individualSlot?: string;
@@ -237,7 +243,13 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		if (ctor._needsShadowDOM()) {
 			const defaultOptions = { mode: "open" } as ShadowRootInit;
-			this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
+			if (!this.shadowRoot) {
+				this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
+			} else {
+				// The shadow root is initially rendered. This applies to case where the component's template
+				// is inserted into the DOM declaratively using a <template> tag.
+				this.__shouldHydrate = true;
+			}
 
 			const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
 			if (slotsAreManaged) {
@@ -296,7 +308,7 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 
 		this.setAttribute(ctor.getMetadata().getPureTag(), "");
-		if (ctor.getMetadata().supportsF6FastNavigation()) {
+		if (ctor.getMetadata().supportsF6FastNavigation() && !this.hasAttribute("data-sap-ui-fastnavgroup")) {
 			this.setAttribute("data-sap-ui-fastnavgroup", "true");
 		}
 
@@ -352,25 +364,25 @@ abstract class UI5Element extends HTMLElement {
 	 * Called every time before the component renders.
 	 * @public
 	 */
-	onBeforeRendering(): void {}
+	onBeforeRendering(): void { }
 
 	/**
 	 * Called every time after the component renders.
 	 * @public
 	 */
-	onAfterRendering(): void {}
+	onAfterRendering(): void { }
 
 	/**
 	 * Called on connectedCallback - added to the DOM.
 	 * @public
 	 */
-	onEnterDOM(): void {}
+	onEnterDOM(): void { }
 
 	/**
 	 * Called on disconnectedCallback - removed from the DOM.
 	 * @public
 	 */
-	onExitDOM(): void {}
+	onExitDOM(): void { }
 
 	/**
 	 * @private
@@ -432,7 +444,7 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		const autoIncrementMap = new Map<string, number>();
-		const slottedChildrenMap = new Map<string, Array<{child: Node, idx: number }>>();
+		const slottedChildrenMap = new Map<string, Array<{ child: Node, idx: number }>>();
 
 		domChildren.forEach((child, idx) => {
 			// Determine the type of the child (mainly by the slot attribute)
@@ -792,7 +804,7 @@ abstract class UI5Element extends HTMLElement {
 	 *
 	 * @public
 	 */
-	onInvalidation(changeInfo: ChangeInfo): void {} // eslint-disable-line
+	onInvalidation(changeInfo: ChangeInfo): void { } // eslint-disable-line
 
 	updateAttributes() {
 		const ctor = this.constructor as typeof UI5Element;
@@ -821,7 +833,7 @@ abstract class UI5Element extends HTMLElement {
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
 
-		try	{
+		try {
 			this.onBeforeRendering();
 
 			if (!this._rendered) {
@@ -1197,8 +1209,14 @@ abstract class UI5Element extends HTMLElement {
 						});
 
 						if (this._rendered) {
-							// is already rendered so it is not the constructor - can set the attribute synchronously
-							this._updateAttribute(prop, value);
+							// the component is already rendered, indicating it is not the constructor -
+							// therefore the attribute can be set synchronously.
+
+							// get the effective value of the property,
+							// as it might differ from the provided value
+							const newValue = origGet ? origGet.call(this) : this._state[prop];
+
+							this._updateAttribute(prop, newValue);
 						}
 
 						if (ctor.getMetadata().isFormAssociated()) {
@@ -1325,24 +1343,14 @@ abstract class UI5Element extends HTMLElement {
 			]);
 			const [i18nBundles] = result;
 			Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
-				const propertyName = pair[0];
-				this.i18nBundleStorage[propertyName] = i18nBundles[index];
+				const bundleName = pair[1].bundleName;
+				this.i18nBundleStorage[bundleName] = i18nBundles[index];
 			});
 			this.asyncFinished = true;
 		};
 		this.definePromise = defineSequence();
 
 		const tag = this.getMetadata().getTag();
-
-		const features = this.getMetadata().getFeatures();
-
-		features.forEach(feature => {
-			if (getComponentFeature(feature)) {
-				this.cacheUniqueDependencies();
-			}
-
-			subscribeForFeatureLoad(feature, this, this.cacheUniqueDependencies.bind(this));
-		});
 
 		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);

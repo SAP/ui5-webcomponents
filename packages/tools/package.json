@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-tools",
-  "version": "2.7.0-rc.0",
+  "version": "2.11.0-rc.0",
   "description": "UI5 Web Components: webcomponents.tools",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -10,7 +10,6 @@
     "sapui5",
     "ui5"
   ],
-  "types": "./types/index.d.ts",
   "scripts": {},
   "bin": {
     "wc-dev": "bin/dev.js",
@@ -22,7 +21,7 @@
     "directory": "packages/tools"
   },
   "dependencies": {
-    "@custom-elements-manifest/analyzer": "^0.8.4",
+    "@custom-elements-manifest/analyzer": "^0.10.4",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "@wdio/cli": "^7.19.7",
@@ -42,12 +41,9 @@
     "concurrently": "^6.0.0",
     "cross-env": "^7.0.3",
     "custom-element-jet-brains-integration": "^1.4.4",
-    "cypress": "^13.11.0",
-    "cypress-real-events": "^1.12.0",
     "escodegen": "^2.0.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-cypress": "^3.4.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-no-leaked-values": "^0.1.24",
     "esprima": "^4.0.1",
@@ -72,6 +68,7 @@
     "rimraf": "^3.0.2",
     "slash": "3.0.0",
     "vite": "^5.4.8",
+    "vite-plugin-istanbul": "^6.0.2",
     "wdio-chromedriver-service": "^7.3.2"
   },
   "peerDependencies": {
@@ -84,9 +81,7 @@
     }
   },
   "devDependencies": {
-    "cypress-ct-lit": "^0.4.0",
-    "cypress-real-events": "^1.12.0",
-    "esbuild": "^0.19.9",
+    "esbuild": "^0.25.0",
     "yargs": "^17.5.1"
   }
 }

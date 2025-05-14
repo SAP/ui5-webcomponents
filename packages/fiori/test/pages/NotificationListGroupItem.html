@@ -39,7 +39,10 @@
 							   design="Negative">Something went wrong.</ui5-message-strip>
 		</div>
 		<ui5-notification-list class="notificationsPopoverList">
-			<ui5-li-notification-group id="notificationsListGroupGrowing" title-text="Orders" growing="Button">
+			<ui5-li-notification-group id="notificationsListGroupGrowing"
+									   title-text="Orders"
+									   loading-delay="0"
+									   growing="Button">
 				<ui5-li-notification show-close
 					title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 					state="Positive">
@@ -215,6 +218,7 @@
 			show-close
 			show-counter
 			growing="Button"
+			loading-delay="0"
 			title-text="Orders - test deprecated properties"
 			priority="High"
 		>
@@ -275,6 +279,7 @@
 		>
 			<ui5-li-notification
 				loading
+				loading-delay="0"
 				show-close
 				title-text="New order (#2900) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				state="Negative"
@@ -330,6 +335,7 @@
 		>
 			<ui5-li-notification
 				loading
+				loading-delay="0"
 				show-close
 				title-text="New order (#35001) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				state="Negative"
@@ -426,6 +432,7 @@
 			<ui5-li-notification
 				importance="Important"
 				loading
+				loading-delay="0"
 				title-text="Message 1"
 				state="Positive"
 				importance="Important"
@@ -460,6 +467,8 @@
 
 		<ui5-li-notification-group
 			loading
+			growing="Button"
+			loading-delay="0"
 			title-text="Last week"
 		>
 			<ui5-li-notification
@@ -669,7 +678,7 @@
 				setTimeout(() => {
 					notificationsListGroupGrowing.items[focusIndex].focus();
 				}, 500);
-			}, 500);
+			}, 2000);
 		});
 
 		btnShowMessageStrip.addEventListener("click", function() {
@@ -687,7 +696,7 @@
 				setTimeout(() => {
 					notificationListFirstGroup.items[focusIndex].focus();
 				}, 500);
-			}, 500);
+			}, 2000);
 		});
 	</script>
 </body>

@@ -1,5 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
@@ -72,6 +73,7 @@ type Day = {
 	selected: boolean,
 	_isSecondaryCalendarType: boolean,
 	classes: string,
+	tooltip?: string,
 	ariaLabel: string,
 	ariaSelected: boolean,
 	ariaDisabled: boolean | undefined,
@@ -190,6 +192,9 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	@property({ type: Array })
 	specialCalendarDates: Array<SpecialCalendarDateT> = [];
 
+	@query("[data-sap-focus-ref]")
+	_focusableDay!: HTMLElement;
+
 	_autoFocus?: boolean;
 
 	@i18n("@ui5/webcomponents")
@@ -238,6 +243,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 			const specialCalendarDate = specialCalendarDates.find(specialDate => specialDate.specialDateTimestamp === timestamp);
 			const specialDayType = specialCalendarDate ? specialCalendarDate.type : "";
+			const specialDayTooltip = specialCalendarDate ? specialCalendarDate.tooltip : "";
+			const unnamedCalendarTypeLabel = specialDayTooltip && !this._isDefaultCalendarLegendType(specialDayType) ? specialDayTooltip : "";
 
 			const isFocused = tempDate.getMonth() === calendarDate.getMonth() && tempDate.getDate() === calendarDate.getDate();
 			const isSelected = this._isDaySelected(timestamp);
@@ -248,16 +255,20 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			const isToday = tempDate.isSame(todayDate);
 			const isFirstDayOfWeek = tempDate.getDay() === firstDayOfWeek;
 
-			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
+			const nonWorkingAriaLabel = (isWeekend || specialDayType === "NonWorking") && specialDayType !== "Working"
+				? `${nonWorkingDayLabel} `
+				: "";
 			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
 
 			const tempSecondDateNumber = tempSecondDate ? tempSecondDate.getDate() : "";
 			const tempSecondYearNumber = tempSecondDate ? tempSecondDate.getYear() : "";
 			const secondaryMonthsNamesString = secondaryMonthsNames.length > 0 ? secondaryMonthsNames[tempSecondDate!.getMonth()] : "";
 
+			const tooltip = `${todayAriaLabel}${nonWorkingAriaLabel}${unnamedCalendarTypeLabel}`.trim();
+
 			const ariaLabel = this.hasSecondaryCalendarType
-				? `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}; ${secondaryMonthsNamesString} ${tempSecondDateNumber}, ${tempSecondYearNumber}`
-				: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`;
+				? `${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}; ${secondaryMonthsNamesString} ${tempSecondDateNumber}, ${tempSecondYearNumber} ${tooltip}`.trim()
+				: `${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()} ${tooltip}`.trim();
 
 			const day: Day = {
 				timestamp: timestamp.toString(),
@@ -268,6 +279,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				secondDay: this.hasSecondaryCalendarType ? (tempSecondDate as CalendarDate).getDate() : undefined,
 				_isSecondaryCalendarType: this.hasSecondaryCalendarType,
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
+				tooltip,
 				ariaLabel,
 				ariaSelected: isSelected || isSelectedBetween,
 				ariaDisabled: isDisabled || isOtherMonth,
@@ -396,16 +408,21 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		if (this._autoFocus && !this._hidden) {
 			this.focus();
 		}
+	}
 
-		const focusedDay = this.shadowRoot!.querySelector<HTMLElement>("[data-sap-focus-ref]");
-
-		if (focusedDay && document.activeElement !== focusedDay && this._specialCalendarDates.length === 0) {
-			focusedDay.focus();
+	_focusCorrectDay() {
+		if (this._shouldFocusDay) {
+			this._focusableDay.focus();
 		}
+	}
+
+	get _shouldFocusDay() {
+		return document.activeElement !== this._focusableDay && this._specialCalendarDates.length === 0;
 	}
 
 	_onfocusin() {
 		this._autoFocus = true;
+		this._focusCorrectDay();
 	}
 
 	_onfocusout() {
@@ -782,6 +799,10 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_isDayPressed(target: HTMLElement): boolean {
 		const targetParent = target.parentNode as HTMLElement;
 		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && targetParent.classList && targetParent.classList.contains("ui5-dp-item"));
+	}
+
+	_isDefaultCalendarLegendType(type: string): boolean {
+		return ["NonWorking", "Working", "Today", "Selected", "None"].includes(type);
 	}
 
 	_getSecondaryDay(tempDate: CalendarDate): CalendarDate {

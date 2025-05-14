@@ -10,4 +10,5 @@
 [ui5-icon] {
     display: flex;
     width: var(--_ui5_button_base_min_width);
+    height: 0.75rem;
 }

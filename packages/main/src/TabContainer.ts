@@ -29,7 +29,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
-import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPosition, findClosestPositionsByKey, isMovingKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
@@ -275,6 +275,18 @@ class TabContainer extends UI5Element {
 	tabsPlacement: `${TabContainerTabsPlacement}` = "Top";
 
 	/**
+	 * Defines if automatic tab selection is deactivated.
+	 *
+	 * **Note:** By default, if none of the child tabs have the `selected` property set, the first tab will be automatically selected.
+	 * Setting this property to `true` allows preventing this behavior.
+	 * @default false
+	 * @public
+	 * @since 2.9.0
+	 */
+	@property({ type: Boolean })
+	noAutoSelection = false;
+
+	/**
 	 * Defines the current media query size.
 	 * @private
 	 */
@@ -374,8 +386,10 @@ class TabContainer extends UI5Element {
 
 		if (selectedTab) {
 			this._selectedTab = selectedTab;
-		} else {
+		} else if (!this.noAutoSelection) {
 			this._selectedTab = this._itemsFlat[0] as Tab;
+		} else {
+			this._selectedTab = undefined;
 		}
 
 		walk(this.items, item => {
@@ -791,7 +805,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		if (isCtrl(e)) {
+		if (isCtrl(e) && tab.realTabReference.movable && isMovingKey(e.key)) {
 			this._moveHeaderItem(tab.realTabReference, e);
 			e.preventDefault();
 			return;
@@ -974,10 +988,6 @@ class TabContainer extends UI5Element {
 	_setItemsForStrip() {
 		const tabStrip = this._getTabStrip();
 		let allItemsWidth = 0;
-
-		if (!this._selectedTab) {
-			return;
-		}
 
 		const itemsDomRefs = this.items.map(item => item.getDomRefInStrip()) as Array<TabInStrip | TabSeparatorInStrip>;
 
@@ -1421,30 +1431,6 @@ class TabContainer extends UI5Element {
 		});
 
 		return (parent! ?? this).items;
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-tc-root": true,
-				"ui5-tc--textOnly": this.textOnly,
-				"ui5-tc--withAdditionalText": this.withAdditionalText,
-				"ui5-tc--standardTabLayout": this.standardTabLayout,
-			},
-			header: {
-				"ui5-tc__header": true,
-			},
-			tabStrip: {
-				"ui5-tc__tabStrip": true,
-			},
-			separator: {
-				"ui5-tc__separator": true,
-			},
-			content: {
-				"ui5-tc__content": true,
-				"ui5-tc__content--collapsed": this._contentCollapsed,
-			},
-		};
 	}
 
 	get mixedMode() {

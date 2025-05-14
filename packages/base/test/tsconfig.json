@@ -4,11 +4,12 @@
 		"./**/*"
 	],
 	"compilerOptions": {
-		"types": ["@ui5/webcomponents-tools"],
 		"outDir": "dist",
 		"composite": true,
 		"experimentalDecorators": true,
 		"tsBuildInfoFile": "dist/.tsbuildinfobuild",
+		"module": "NodeNext",
+		"moduleResolution": "nodenext",
 	},
 	"references": [
 		{

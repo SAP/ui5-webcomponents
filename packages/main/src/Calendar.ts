@@ -78,6 +78,7 @@ type CalendarSelectionChangeEventDetail = {
 type SpecialCalendarDateT = {
 	specialDateTimestamp: number;
 	type: `${CalendarLegendItemType}`;
+	tooltip?: string;
 };
 
 /**
@@ -264,6 +265,12 @@ class Calendar extends CalendarPart {
 	@property()
 	_headerYearButtonTextSecType?: string;
 
+	@property()
+	_headerYearRangeButtonText?: string;
+
+	@property()
+	_headerYearRangeButtonTextSecType?: string;
+
 	@property({ noAttribute: true })
 	_pickersMode: `${CalendarPickersMode}` = "DAY_MONTH_YEAR";
 
@@ -274,7 +281,7 @@ class Calendar extends CalendarPart {
 	 * @public
 	 * @since 1.23.0
 	 */
-	@slot({ type: HTMLElement })
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	calendarLegend!: Array<CalendarLegend>;
 
 	/**
@@ -409,6 +416,11 @@ class Calendar extends CalendarPart {
 			return isTypeMatch && dateValue && this._isValidCalendarDate(dateValue);
 		});
 
+		validSpecialDates.forEach(date => {
+			const refLegendItem = this.calendarLegend.length ? this.calendarLegend[0].items.find(item => item.type === date.type) : undefined;
+			date._tooltip = refLegendItem?.text || "";
+		});
+
 		const uniqueDates = new Set();
 		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
 
@@ -420,7 +432,8 @@ class Calendar extends CalendarPart {
 				uniqueDates.add(timestamp);
 				const specialDateTimestamp = CalendarDateComponent.fromLocalJSDate(dateFromValue).valueOf() / 1000;
 				const type = date.type;
-				uniqueSpecialDates.push({ specialDateTimestamp, type });
+				const tooltip = date._tooltip;
+				uniqueSpecialDates.push({ specialDateTimestamp, type, tooltip });
 			}
 		});
 
@@ -470,16 +483,16 @@ class Calendar extends CalendarPart {
 		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		this._headerMonthButtonText = localeData.getMonthsStandAlone("wide", this.primaryCalendarType)[this._calendarDate.getMonth()];
+		this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
 
 		if (this._currentPicker === "year") {
 			const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
 			const rangeEnd = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
+
 			rangeStart.setYear(this._currentPickerDOM._firstYear!);
 			rangeEnd.setYear(this._currentPickerDOM._lastYear!);
 
-			this._headerYearButtonText = `${yearFormat.format(rangeStart.toLocalJSDate(), true)} - ${yearFormat.format(rangeEnd.toLocalJSDate(), true)}`;
-		} else {
-			this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
+			this._headerYearRangeButtonText = `${yearFormat.format(rangeStart.toLocalJSDate())} - ${yearFormat.format(rangeEnd.toLocalJSDate())}`;
 		}
 
 		this._secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
@@ -546,6 +559,7 @@ class Calendar extends CalendarPart {
 
 	_setSecondaryCalendarTypeButtonText() {
 		const yearFormatSecType = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
+		this._headerYearButtonTextSecType = String(yearFormatSecType.format(this._localDate, true));
 
 		if (this._currentPicker === "year") {
 			const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
@@ -557,9 +571,8 @@ class Calendar extends CalendarPart {
 				.firstDate;
 			const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this._secondaryCalendarType, rangeEnd.valueOf() / 1000, true)
 				.lastDate;
-			this._headerYearButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate(), true)} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate(), true)}`;
-		} else {
-			this._headerYearButtonTextSecType = String(yearFormatSecType.format(this._localDate, true));
+
+			this._headerYearRangeButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate())} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate())}`;
 		}
 	}
 
@@ -572,7 +585,7 @@ class Calendar extends CalendarPart {
 		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
 		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this._secondaryCalendarType, this._timestamp);
 		const secondMonthInfo = convertMonthNumbersToMonthNames(dateInSecType.firstDate.getMonth(), dateInSecType.lastDate.getMonth(), this._secondaryCalendarType);
-		const secondYearText = secondYearFormat.format(localDate, true);
+		const secondYearText = secondYearFormat.format(localDate);
 
 		return {
 			yearButtonText: secondYearText,
@@ -606,6 +619,10 @@ class Calendar extends CalendarPart {
 	}
 
 	get _isYearPickerHidden() {
+		return this._currentPicker !== "year";
+	}
+
+	get _isHeaderYearRangeButtonHidden() {
 		return this._currentPicker !== "year";
 	}
 

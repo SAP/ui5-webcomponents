@@ -12,6 +12,7 @@ import type Input from "@ui5/webcomponents/dist/Input.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import {
 	isDelete,
 	isEnter,
@@ -157,7 +158,7 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare disableDeleteButton: boolean;
+	disableDeleteButton = false;
 
 	/**
 	 * Hides the delete button.
@@ -242,16 +243,21 @@ class UploadCollectionItem extends ListItem {
 	async _initInputField() {
 		await renderFinished();
 
-		const inp = this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input")!;
-		inp.value = this._fileNameWithoutExtension;
+		if (this.editInpElement) {
+			this.editInpElement.value = this._fileNameWithoutExtension;
+		}
 
 		await renderFinished();
 
-		const inpFocusDomRef = inp.getFocusDomRef() as HTMLInputElement;
+		const inpFocusDomRef = this.editInpElement?.getFocusDomRef();
 		if (inpFocusDomRef) {
 			inpFocusDomRef.focus();
-			inpFocusDomRef.setSelectionRange(0, this._fileNameWithoutExtension.length);
+			(inpFocusDomRef as HTMLInputElement).setSelectionRange(0, this._fileNameWithoutExtension.length);
 		}
+	}
+
+	get editInpElement() {
+		return this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input");
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -298,7 +304,7 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
-	async _onRenameCancel(e: KeyboardEvent | MouseEvent) {
+	async _onRenameCancel(e: KeyboardEvent | UI5CustomEvent<Button, "click">) {
 		this._editing = false;
 
 		if (isEscape(e as KeyboardEvent)) {

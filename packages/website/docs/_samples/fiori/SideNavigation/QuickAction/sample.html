@@ -1,0 +1,40 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sample</title>
+	<link rel="stylesheet" href="./main.css">
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+	<!-- playground-fold-end -->
+
+	<ui5-side-navigation>
+		<ui5-side-navigation-item text="Home" icon="home"></ui5-side-navigation-item>
+		<ui5-side-navigation-group text="Group 1" expanded>
+			<ui5-side-navigation-item text="People" expanded icon="group" unselectable>
+				<ui5-side-navigation-sub-item text="From My Team"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-sub-item text="From Other Teams"></ui5-side-navigation-sub-item>
+			</ui5-side-navigation-item>
+		</ui5-side-navigation-group>
+		<ui5-side-navigation-item slot="fixedItems" id="quickAction" text="Quick Action" design="Action" unselectable icon="write-new">
+		</ui5-side-navigation-item>
+		<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>
+	</ui5-side-navigation>
+
+	<ui5-dialog header-text="Create New Item" draggable resizable id="quickActionDialog">
+		<ui5-text>Create new item...</ui5-text>
+		<ui5-bar slot="footer" design="Footer">
+			<ui5-button slot="endContent" design="Emphasized">Create</ui5-button>
+			<ui5-button slot="endContent" id="quickActionCloseBtn">Close</ui5-button>
+		</ui5-bar>
+	</ui5-dialog>
+	<!-- playground-fold -->
+	<script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

@@ -9,6 +9,7 @@ export default function ToolbarPopoverTemplate(this: Toolbar) {
 			horizontalAlign="End"
 			onClose={this.onOverflowPopoverClosed}
 			onOpen={this.onOverflowPopoverOpened}
+			accessibleName={this.accInfo.popover.accessibleName}
 			hideArrow={true}
 		>
 			<div class={{

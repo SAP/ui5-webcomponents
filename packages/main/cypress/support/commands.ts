@@ -36,10 +36,20 @@
 //   }
 // }
 
+import "@ui5/cypress-internal/commands.js";
 import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import "./commands/Menu.commands.js";
-import "./commands/ColorPicker.commands.js";
+
+// Please keep this list in alphabetical order
+import "./commands/Calendar.commands.js";
 import "./commands/ColorPalette.commands.js";
+import "./commands/ColorPicker.commands.js";
+import "./commands/DateTimePicker.commands.js";
+import "./commands/Dialog.commands.ts";
+import "./commands/Popover.commands.ts";
+import "./commands/ResponsivePopover.commands.js";
+import "./commands/DatePicker.commands.js";
+import "./commands/Menu.commands.js";
+import "./commands/SegmentedButton.commands.js";
 
 type SimulationDevices = "phone"
 
@@ -52,9 +62,27 @@ declare global {
 			ui5MenuItemClick(): Chainable<void>
 			ui5DOMRef(): Chainable<void>
 			ui5MenuItemPress(key: any): Chainable<void>
+			ui5CalendarGetDay(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
+			ui5CalendarGetMonth(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
 			ui5ColorPickerToggleColorMode(): Chainable<void>
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
-			ui5ColorPaletteCheckSelectedColor(colorPaletteItem: string, values: {r: string, g: string, b: string, a: string}): Chainable<void>
+			ui5ColorPickerValidateInput(name: string, value: string): Chainable<void>
+			ui5ColorPaletteCheckSelectedColor(colorPaletteItem: string, values: { r: string, g: string, b: string, a: string }): Chainable<void>
+			ui5ColorPaletteNavigateAndCheckSelectedColor(colorPalette: string, startIndex: number, key: string, expectedValue: string): Chainable<void>
+			ui5DatePickerGetInnerInput(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetPopoverDate(timestamp: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetDisplayedDay(index: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetFirstDisplayedDate(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetFirstDisplayedYear(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetDisplayedMonth(index: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetDisplayedYear(index: number): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetNextButton(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetPreviousButton(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetMonthButton(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerGetYearButton(): Chainable<JQuery<HTMLElement>>
+			ui5DatePickerValueHelpIconPress(): Chainable<void>
+			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
+			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
 		}
 	}
 }
@@ -72,6 +100,10 @@ Cypress.Commands.add("ui5SimulateDevice", (device: SimulationDevices = "phone") 
 		.callsFake(() => {
 			return true;
 		});
+
+	if (device === "phone") {
+		cy.stub(internals, "windows").value(false);
+	}
 
 	cy.viewport(deviceName[device]);
 

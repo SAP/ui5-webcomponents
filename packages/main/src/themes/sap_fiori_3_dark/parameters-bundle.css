@@ -4,6 +4,7 @@
 @import "../base/Bar-parameters.css";
 @import "../base/BusyIndicator-parameters.css";
 @import "./Button-parameters.css";
+@import "../base/ButtonBadge-parameters.css";
 @import "../base/CalendarLegend-parameters.css";
 @import "../base/CalendarLegendItem-parameters.css";
 @import "../base/Card-parameters.css";
@@ -50,7 +51,6 @@
 @import "./Token-parameters.css";
 @import "../base/Tokenizer-parameters.css";
 @import "../base/ValueStateMessage-parameters.css";
-@import "./MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
 @import "../base/StepInput-parameters.css";
 @import "../base/rtl-parameters.css";

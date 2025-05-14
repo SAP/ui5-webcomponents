@@ -4,7 +4,6 @@
 
 :host([position]) {
 	height: var(--row-height);
-	overflow: clip;
 }
 
 :host([aria-selected=true]) {
@@ -78,6 +77,10 @@
 
 :host([navigated]) #popin-cell {
 	grid-column: 1 / -2;
+}
+
+#selection-cell ~ #popin-cell {
+	grid-column-start: 2;
 }
 
 #actions-cell {

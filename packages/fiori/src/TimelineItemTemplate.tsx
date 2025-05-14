@@ -59,7 +59,7 @@ function name(this: TimelineItem) {
 			{this.nameClickable ?
 				<Link
 					class="ui5-tli-title-name-clickable"
-					wrappingType="None"
+					wrappingType={this.layout === TimelineLayout.Horizontal ? "None" : "Normal"}
 					onClick={this.onNamePress}
 				>
 					{this.name}&nbsp;

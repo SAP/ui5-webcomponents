@@ -16,7 +16,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { AriaHasPopup } from "@ui5/webcomponents-base";
+import type { AriaHasPopup, UI5CustomEvent } from "@ui5/webcomponents-base";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -74,6 +74,9 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/SplitButton.js";`
+ * @csspart button - Used to style the native button element
+ * @csspart icon - Used to style the icon in the native button element
+ * @csspart endIcon - Used to style the end icon in the native button element
  * @constructor
  * @extends UI5Element
  * @public
@@ -236,7 +239,7 @@ class SplitButton extends UI5Element {
 		}
 	}
 
-	_handleMouseClick(e: MouseEvent) {
+	_handleMouseClick(e: UI5CustomEvent<Button, "click">) {
 		this._fireClick(e);
 	}
 
@@ -394,7 +397,7 @@ class SplitButton extends UI5Element {
 	 * @param e - keyboard event
 	 * @private
 	 */
-	_handleArrowButtonAction(e: KeyboardEvent | MouseEvent) {
+	_handleArrowButtonAction(e: UI5CustomEvent<Button, "click"> | KeyboardEvent) {
 		e.preventDefault();
 
 		this._fireArrowClick(e);

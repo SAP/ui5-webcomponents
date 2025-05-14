@@ -16,6 +16,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Tag                      | `ui5-tag`                   | `import "@ui5/webcomponents/dist/Tag.js";`                 |
 | Busy Indicator           | `ui5-busy-indicator`        | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
 | Button                   | `ui5-button`                | `import "@ui5/webcomponents/dist/Button.js";`              |
+| ButtonBadge              | `ui5-button-badge`          | `import "@ui5/webcomponents/dist/ButtonBadge.js";`         |
 | Calendar                 | `ui5-calendar`              | `import "@ui5/webcomponents/dist/Calendar.js";`            |
 | Calendar Date            | `ui5-date`                  | comes with `ui5-calendar`                                  |
 | Calendar Date Range      | `ui5-date-range`            | comes with `ui5-calendar`                                  |
@@ -93,37 +94,41 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 
 ## Provided features
 
-```js
-import "@ui5/webcomponents/dist/features/<FEATURE-NAME>.js
-```
-
-| Affects                                           | Feature Import                                                       | Description                                                                                             |
-|---------------------------------------------------|----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| `ui5-color-palette`                               | `@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js`         | Support for "more colors dialog" for the color palette component                                        |
-| `ui5-input`                                       | `@ui5/webcomponents/dist/features/InputSuggestions.js`               | Support for input suggestions while typing                                                              |
+| Feature name             | Affects                                               | Triggered by                            | Description                                                                                             |
+|--------------------------|-------------------------------------------------------|-----------------------------------------|---------------------------------------------------------------------------------------------------------|
+| More Colors Dialog       | `ui5-color-palette`, `ui5-color-palette-popover`      | Setting `showMoreColors` to `true`      | Support for "more colors dialog" for the color palette component                                        |
+| Input Suggestions        | `ui5-input`, `ui5-multi-input`                        | Setting `showSuggestions` to `true`     | Support for input suggestions while typing                                                              |
 
 ### Color Palette "More Colors" Feature
+
+The `ui5-color-palette` component has a `showMoreColors` property, that, when set to `true`, enables a "More colors" dialog.
+Since this functionality is not always needed, the "More colors" dialog and its children are not direct dependencies of the component by default,
+and are only loaded dynamically when `showMoreColors` is set to `true`.
+
+Feature import (optional as of `2.7.0`): 
 
 ```js
 import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js";
 ```
 
-The `ui5-color-palette` component has a `showMoreColors` property, that, when set to `true`, enables a "More colors" dialog.
-Since this is not always needed, in order to use this dialog, you must import the above feature.
+You can optionally pre-load the feature (thus avoiding the dynamic import), if you prefer so. 
 
 ### Input Suggestions Feature
-
-```js
-import "@ui5/webcomponents/dist/features/InputSuggestions.js";
-```
 
 The `<ui5-input>` element acts as an `<input>` with the Fiori design and added functionality, such as value state.
 
 The so-called "input suggestions" is an advanced feature that allows the user to choose from a list of predefined options while typing.
 Since input suggestions may not always be needed, they do not come as part of the `<ui5-input>` itself.
 
-To enable the functionality, import the above module into your app. This will also automatically import `ui5-suggestion-item`
-for your convenience.
+Setting the `showSuggestions` property to `true` loads the suggestions feature dynamically (as well as the `ui5-suggestion-item` component) for your convenience.
+
+Feature import (optional as of `2.7.0`):  
+
+```js
+import "@ui5/webcomponents/dist/features/InputSuggestions.js";
+```
+
+You can optionally pre-load the feature (thus avoiding the dynamic import), if you prefer so.
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/main/README.md)

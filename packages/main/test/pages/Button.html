@@ -18,6 +18,8 @@
 </head>
 
 <body class="button1auto">
+	<ui5-button design="Negative" icon="decline">Reject</ui5-button>
+	<ui5-button design="Positive" icon="add">Add</ui5-button>
 	<ui5-button icon="home" id="icon-only-comment"><!----><!----></ui5-button>
 	<ui5-button icon="text" id="icon-only-blank-text"> </ui5-button>
 	<ui5-button accessible-role="Link" id="button-role-link"> Navigation Button </ui5-button>
@@ -35,7 +37,7 @@
 	<ui5-button class="button2auto button3auto" design="Transparent">Secondary <span >button</span></ui5-button>
 	<ui5-button disabled id="button-disabled">Inactive</ui5-button>
 	<ui5-button design="Positive">Accept</ui5-button>
-	<ui5-button design="Negative">Decline</ui5-button>
+	<ui5-button design="Negative" accessible-description="Decline the action">Decline</ui5-button>
 
 	<br />
 	<br />
@@ -107,11 +109,75 @@
 	<br/>
 
 	<ui5-button design="Transparent" icon="employee">Transparent</ui5-button>
-	<ui5-button disabled design="Transparent" icon="employee">Transparent</ui5-button>
+	<ui5-button disabled design="Transparent" icon="employee">Transparent
+	</ui5-button>
 	<br/>
 	<br/>
 
-	<ui5-button design="Emphasized" icon="employee">Emphasized</ui5-button>
+	<ui5-title>Cozy</ui5-title>
+
+	<ui5-button icon="employee">Emphasized
+		<ui5-button-badge design="InlineText" text="72" slot="badge"></ui5-button-badge>
+	</ui5-button>
+
+	<ui5-button design="Emphasized" icon="employee">Emphasized
+		<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
+	</ui5-button>
+	<ui5-button icon="employee">Emphasized
+		<ui5-button-badge design="AttentionDot" slot="badge"></ui5-button-badge>
+	</ui5-button>
+
+	<br><br>
+
+	<ui5-title>Compact</ui5-title>
+
+	<div data-ui5-compact-size>
+		<ui5-button icon="employee">Emphasized
+			<ui5-button-badge design="InlineText" text="72" slot="badge"></ui5-button-badge>
+		</ui5-button>
+	
+		<ui5-button design="Emphasized" icon="employee">Emphasized
+			<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
+		</ui5-button>
+		<ui5-button icon="employee">Emphasized
+			<ui5-button-badge design="AttentionDot" slot="badge"></ui5-button-badge>
+		</ui5-button>
+	</div>
+
+	<div dir="rtl">
+		<ui5-title>Cozy</ui5-title>
+
+		<ui5-button icon="employee">Emphasized
+			<ui5-button-badge design="InlineText" text="72" slot="badge"></ui5-button-badge>
+		</ui5-button>
+	
+		<ui5-button design="Emphasized" icon="employee">Emphasized
+			<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
+		</ui5-button>
+		<ui5-button icon="employee">Emphasized
+			<ui5-button-badge design="AttentionDot" slot="badge"></ui5-button-badge>
+		</ui5-button>
+	
+		<br><br>
+	
+		<ui5-title>Compact</ui5-title>
+	
+		<div data-ui5-compact-size>
+			<ui5-button icon="employee">Emphasized
+				<ui5-button-badge design="InlineText" text="72" slot="badge"></ui5-button-badge>
+			</ui5-button>
+		
+			<ui5-button design="Emphasized" icon="employee">Emphasized
+				<ui5-button-badge design="OverlayText" text="999+" slot="badge"></ui5-button-badge>
+			</ui5-button>
+			<ui5-button icon="employee">Emphasized
+				<ui5-button-badge design="AttentionDot" slot="badge"></ui5-button-badge>
+			</ui5-button>
+		</div>
+	</div>
+
+	<br><br>
+
 	<ui5-button disabled design="Emphasized" icon="employee">Emphasized</ui5-button>
 
 	<br/>

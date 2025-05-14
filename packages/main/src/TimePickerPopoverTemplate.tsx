@@ -1,9 +1,15 @@
 import type TimePicker from "./TimePicker.js";
 import Button from "./Button.js";
 import Popover from "./Popover.js";
+import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
 import TimeSelectionInputs from "./TimeSelectionInputs.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import error from "@ui5/webcomponents-icons/dist/error.js";
+import alert from "@ui5/webcomponents-icons/dist/alert.js";
+import sysEnter2 from "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import information from "@ui5/webcomponents-icons/dist/information.js";
 
 export default function TimePickerPopoverTemplate(this: TimePicker) {
 	return (
@@ -16,14 +22,17 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 				opener={this}
 				open={this.open}
 				allowTargetOverlap={true}
-				_hideHeader={true}
+				_hideHeader={!this.hasValueStateText}
 				hideArrow={true}
 				accessibleName={this.pickerAccessibleName}
 				onClose={this.onResponsivePopoverAfterClose}
+				onBeforeOpen={this.onResponsivePopoverBeforeOpen}
 				onOpen={this.onResponsivePopoverAfterOpen}
 				onWheel={this._handleWheel}
 				onKeyDown={this._onkeydown}
 			>
+				{ this.shouldDisplayValueStateMessageInResponsivePopover && valueStateTextHeader.call(this) }
+
 				<TimeSelectionClocks
 					id={`${this._id}-time-sel`}
 					value={this._timeSelectionValue}
@@ -52,6 +61,8 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 					onWheel={this._handleWheel}
 					onKeyDown={this._onkeydown}
 				>
+					{ this.hasValueStateText && valueStateTextHeader.call(this, { "width": "100%" }) }
+
 					<div class="popover-content">
 						<TimeSelectionInputs
 							id={`${this._id}-time-sel-inputs`}
@@ -70,4 +81,46 @@ export default function TimePickerPopoverTemplate(this: TimePicker) {
 			}
 		</>
 	);
+}
+
+function valueStateMessage(this: TimePicker) {
+	return (
+		this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : <slot name="valueStateMessage"></slot>
+	);
+}
+
+function valueStateTextHeader(this: TimePicker, style?: Record<string, string>) {
+	if (!this.hasValueStateText) {
+		return;
+	}
+
+	return (
+		<div
+			slot="header"
+			class={{
+				"ui5-popover-header": true,
+				"ui5-valuestatemessage-header": true,
+				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			}}
+			style={style}
+		>
+			<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)}/>
+			{ valueStateMessage.call(this) }
+		</div>
+	);
+}
+
+function valueStateMessageInputIcon(this: TimePicker) {
+	const iconPerValueState = {
+		Negative: error,
+		Critical: alert,
+		Positive: sysEnter2,
+		Information: information,
+	};
+
+	return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 }

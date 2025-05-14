@@ -18,6 +18,7 @@ import icon3d from "@ui5/webcomponents-icons-business-suite/dist/3d.js";
 import icon3dv1 from "@ui5/webcomponents-icons-business-suite/dist/v1/3d.js";
 import icon3dv2 from "@ui5/webcomponents-icons-business-suite/dist/v2/3d.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
+import { getAllRegisteredTags } from "@ui5/webcomponents-base/dist/CustomElementsRegistry.js";
 
 // The SAP Icons V4 icon collection is set by default in sap_fiori_3,
 // but it's configurable:
@@ -34,6 +35,7 @@ import Bar from "./Bar.js";
 import Breadcrumbs from "./Breadcrumbs.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
+import ButtonBadge from "./ButtonBadge.js";
 import Card from "./Card.js";
 import CalendarLegend from "./CalendarLegend.js";
 import CardHeader from "./CardHeader.js";
@@ -55,9 +57,12 @@ import FormGroup from "./FormGroup.js";
 import FileUploader from "./FileUploader.js";
 import Table from "./Table.js";
 import TableHeaderCell from "./TableHeaderCell.js";
+import TableHeaderCellActionAI from "./TableHeaderCellActionAI.js";
 import TableHeaderRow from "./TableHeaderRow.js";
 import TableGrowing from "./TableGrowing.js";
 import TableSelection from "./TableSelection.js";
+import TableSelectionMulti from "./TableSelectionMulti.js";
+import TableSelectionSingle from "./TableSelectionSingle.js";
 import TableVirtualizer from "./TableVirtualizer.js";
 import TableRowAction from "./TableRowAction.js";
 import TableRowActionNavigation from "./TableRowActionNavigation.js";
@@ -68,8 +73,6 @@ import MultiInput from "./MultiInput.js";
 import Label from "./Label.js";
 import Link from "./Link.js";
 import Menu from "./Menu.js";
-import NavigationMenu from "./NavigationMenu.js";
-import NavigationMenuItem from "./NavigationMenuItem.js";
 import MenuItem from "./MenuItem.js";
 import MenuSeparator from "./MenuSeparator.js";
 import Popover from "./Popover.js";
@@ -102,7 +105,6 @@ import TimeSelectionClocks from "./TimeSelectionClocks.js";
 import Title from "./Title.js";
 import Toast from "./Toast.js";
 import ToggleButton from "./ToggleButton.js";
-// console.log({ToggleButton})
 import Toolbar from "./Toolbar.js";
 import ToolbarButton from "./ToolbarButton.js";
 import ToolbarSeparator from "./ToolbarSeparator.js";
@@ -114,15 +116,10 @@ import TreeList from "./TreeList.js";
 import TreeItem from "./TreeItem.js";
 import TreeItemCustom from "./TreeItemCustom.js";
 import List from "./List.js";
-// console.log({List})
 import ListItemStandard from "./ListItemStandard.js";
 import ListItemCustom from "./ListItemCustom.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ListItemGroup from "./ListItemGroup.js";
-
-// Features
-import "./features/ColorPaletteMoreColors.js";
-import "./features/InputSuggestions.js";
 
 const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon3d, icon3dv1, icon3dv2];
 
@@ -131,6 +128,7 @@ const testAssets = {
 	getAcceptIconPathData: getPathData,
 	generateHighlightedMarkup,
 	getExportedIconsValues: () => icons,
+	getAllRegisteredTags,
 };
 
 registerIconLoader("my-icons", () => {

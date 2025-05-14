@@ -5,22 +5,34 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	isTabNext,
 	isTabPrevious,
+	isSpace,
+	isEnter,
+	isUp,
+	isDown,
+	isLeft,
+	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
+import "./TimelineItem.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineTemplate from "./TimelineTemplate.js";
-import "./TimelineItem.js";
-import "./TimelineGroupItem.js";
-
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
+import process from "@ui5/webcomponents-icons/dist/process.js";
+import drillDown from "@ui5/webcomponents-icons/dist/drill-down.js";
 // Styles
 import TimelineCss from "./generated/themes/Timeline.css.js";
 import TimelineLayout from "./types/TimelineLayout.js";
+// Mode
+import TimelineGrowingMode from "./types/TimelineGrowingMode.js";
 
 /**
  * Interface for components that may be slotted inside `ui5-timeline` as items
@@ -43,6 +55,7 @@ interface ITimelineItem extends UI5Element, ITabbable {
 
 const SHORT_LINE_WIDTH = "ShortLineWidth";
 const LARGE_LINE_WIDTH = "LargeLineWidth";
+const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 /**
  * @class
@@ -66,7 +79,22 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 	styles: TimelineCss,
 	template: TimelineTemplate,
 })
+
+/**
+ * Fired when the user presses the `More` button or scrolls to the Timeline's end.
+ *
+ * **Note:** The event will be fired if `growing` is set to `Button` or `Scroll`.
+ * @public
+ * @since 2.7.0
+ */
+@event("load-more", {
+	bubbles: true,
+})
+
 class Timeline extends UI5Element {
+	eventDetails!: {
+		"load-more": void,
+	}
 	/**
 	 * Defines the items orientation.
 	 * @default "Vertical"
@@ -86,22 +114,75 @@ class Timeline extends UI5Element {
 	accessibleName?: string;
 
 	/**
+	 * Defines if the component should display a loading indicator over the Timeline.
+	 *
+	 * @default false
+	 * @since 2.7.0
+	 * @public
+	 */
+	@property({ type: Boolean })
+	loading = false;
+
+	/**
+	 * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
+	 * @default 1000
+	 * @public
+	 */
+	@property({ type: Number })
+	loadingDelay = 1000;
+
+	/**
+	 * Defines whether the Timeline will have growing capability either by pressing a "More" button,
+	 * or via user scroll. In both cases a `load-more` event is fired.
+	 *
+	 * Available options:
+	 *
+	 * `Button` - Displays a button at the end of the Timeline, which when pressed triggers the `load-more` event.
+	 *
+	 * `Scroll` -Triggers the `load-more` event when the user scrolls to the end of the Timeline.
+	 *
+	 * `None` (default) - The growing functionality is off.
+	 *
+	 * @default "None"
+	 * @since 2.7.0
+	 * @public
+	 */
+	@property()
+	growing: `${TimelineGrowingMode}` = "None";
+
+	/**
+	 * Defines the active state of the `More` button.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_loadMoreActive = false;
+
+	/**
 	 * Determines the content of the `ui5-timeline`.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, individualSlots: true, "default": true })
 	items!: Array<ITimelineItem>;
 
+	@query(".ui5-timeline-end-marker")
+	timelineEndMarker!: HTMLElement;
+
+	@query((`[id="ui5-timeline-growing-btn"]`))
+	growingButton!: HTMLElement;
+
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	_itemNavigation: ItemNavigation;
+	growingIntersectionObserver?: IntersectionObserver | null;
+	timeLineEndObserved = false;
+	initialIntersection = true;
 
 	constructor() {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this._navigatableItems,
+			getItemsCallback: () => this._navigableItems,
 		});
 	}
 
@@ -109,6 +190,101 @@ class Timeline extends UI5Element {
 		return this.accessibleName
 			? `${Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL)} ${this.accessibleName}`
 			: Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL);
+	}
+
+	get showBusyIndicatorOverlay() {
+		return !this.growsWithButton && this.loading;
+	}
+
+	get growsOnScroll(): boolean {
+		return this.growing === TimelineGrowingMode.Scroll;
+	}
+
+	get growingButtonIcon() {
+		return this.layout === TimelineLayout.Horizontal ? process : drillDown;
+	}
+
+	get growsWithButton(): boolean {
+		return this.growing === TimelineGrowingMode.Button;
+	}
+
+	onAfterRendering() {
+		if (this.growsOnScroll) {
+			this.observeTimelineEnd();
+		} else if (this.timeLineEndObserved) {
+			this.unobserveTimelineEnd();
+		}
+
+		this.growingIntersectionObserver = this.getIntersectionObserver();
+	}
+
+	onExitDOM() {
+		this.unobserveTimelineEnd();
+	}
+
+	async observeTimelineEnd() {
+		if (!this.timeLineEndObserved) {
+			await renderFinished();
+			this.getIntersectionObserver().observe(this.timelineEndMarker);
+			this.timeLineEndObserved = true;
+		}
+	}
+
+	unobserveTimelineEnd() {
+		if (this.growingIntersectionObserver) {
+			this.growingIntersectionObserver.disconnect();
+			this.growingIntersectionObserver = null;
+			this.timeLineEndObserved = false;
+		}
+	}
+
+	getIntersectionObserver(): IntersectionObserver {
+		if (!this.growingIntersectionObserver) {
+			this.growingIntersectionObserver = new IntersectionObserver(this.onIntersection.bind(this), {
+				root: null,
+				threshold: 1.0,
+			});
+		}
+
+		return this.growingIntersectionObserver;
+	}
+
+	onIntersection(entries: Array<IntersectionObserverEntry>) {
+		if (this.initialIntersection) {
+			this.initialIntersection = false;
+			return;
+		}
+
+		if (entries.some(entry => entry.isIntersecting)) {
+			debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
+		}
+	}
+
+	loadMore() {
+		this.fireDecoratorEvent("load-more");
+	}
+
+	_onLoadMoreKeydown(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
+			this._loadMoreActive = true;
+		}
+
+		if (isEnter(e)) {
+			this._onLoadMoreClick();
+			this._loadMoreActive = true;
+		}
+	}
+
+	_onLoadMoreKeyup(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			this._onLoadMoreClick();
+		}
+		this._loadMoreActive = false;
+	}
+
+	_onLoadMoreClick() {
+		this.fireDecoratorEvent("load-more");
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -169,6 +345,18 @@ class Timeline extends UI5Element {
 	_onkeydown(e: KeyboardEvent) {
 		const target = e.target as ITimelineItem;
 
+		if (isDown(e) || isRight(e)) {
+			this._handleDown();
+			e.preventDefault();
+			return;
+		}
+
+		if (isUp(e) || isLeft(e)) {
+			this._handleUp(e);
+			e.preventDefault();
+			return;
+		}
+
 		if (target.nameClickable && !target.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
@@ -188,8 +376,8 @@ class Timeline extends UI5Element {
 			updatedTarget = target.shadowRoot!.querySelector<ToggleButton>("[ui5-toggle-button]")!;
 		}
 
-		const nextTargetIndex = isNext ? this._navigatableItems.indexOf(updatedTarget) + 1 : this._navigatableItems.indexOf(updatedTarget) - 1;
-		const nextTarget = this._navigatableItems[nextTargetIndex];
+		const nextTargetIndex = isNext ? this._navigableItems.indexOf(updatedTarget) + 1 : this._navigableItems.indexOf(updatedTarget) - 1;
+		const nextTarget = this._navigableItems[nextTargetIndex];
 
 		if (!nextTarget) {
 			return;
@@ -202,7 +390,45 @@ class Timeline extends UI5Element {
 		}
 	}
 
-	get _navigatableItems() {
+	_handleDown() {
+		if (this.growsWithButton) {
+			this.focusGrowingButton();
+		}
+	}
+
+	focusGrowingButton() {
+		const items = this._navigableItems;
+		const lastIndex = items.length - 1;
+		const currentIndex = this._itemNavigation._currentIndex;
+
+		if (currentIndex !== -1 && currentIndex === lastIndex) {
+			this.growingButton?.focus();
+		}
+	}
+
+	_handleUp(e: KeyboardEvent) {
+		if (this.growingButton === e.target) {
+			const items = this._navigableItems;
+			const lastItem = items[items.length - 1];
+
+			this.focusItem(lastItem);
+
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		}
+	}
+
+	/**
+	 * Focuses a list item and sets its tabindex to "0" via the ItemNavigation
+	 * @protected
+	 * @param item
+	 */
+	focusItem(item: ITimelineItem | ToggleButton) {
+		this._itemNavigation.setCurrentItem(item);
+		item.focus();
+	}
+
+	get _navigableItems() {
 		const navigatableItems: Array<ITimelineItem | ToggleButton> = [];
 
 		if (!this.items.length) {

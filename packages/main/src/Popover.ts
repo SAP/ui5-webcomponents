@@ -150,14 +150,6 @@ class Popover extends Popup {
 	allowTargetOverlap = false;
 
 	/**
-	 * Defines whether the content is scrollable.
-	 * @default false
-	 * @private
-	 */
-	@property({ type: Boolean })
-	disableScrolling = false;
-
-	/**
 	 * Sets the X translation of the arrow
 	 * @private
 	 */
@@ -265,17 +257,21 @@ class Popover extends Popup {
 
 	isOpenerClicked(e: MouseEvent) {
 		const target = e.target as HTMLElement;
-		if (target === this._opener) {
+		const opener = this.getOpenerHTMLElement(this.opener);
+
+		if (!opener) {
+			return false;
+		}
+
+		if (target === opener) {
 			return true;
 		}
 
-		const ui5ElementTarget = target as UI5Element;
-
-		if (ui5ElementTarget.getFocusDomRef && ui5ElementTarget.getFocusDomRef() === this._opener) {
+		if (this._isUI5AbstractElement(target) && target.getFocusDomRef() === opener) {
 			return true;
 		}
 
-		return e.composedPath().indexOf(this._opener as EventTarget) > -1;
+		return e.composedPath().indexOf(opener) > -1;
 	}
 
 	/**
@@ -337,7 +333,7 @@ class Popover extends Popup {
 		let overflowsTop = false;
 
 		if (closedPopupParent instanceof Popover) {
-			const contentRect = closedPopupParent.contentDOM.getBoundingClientRect();
+			const contentRect = closedPopupParent.getBoundingClientRect();
 			overflowsBottom = openerRect.top > (contentRect.top + contentRect.height);
 			overflowsTop = (openerRect.top + openerRect.height) < contentRect.top;
 		}
@@ -496,6 +492,13 @@ class Popover extends Popup {
 	}
 
 	/**
+	 * @protected
+	 */
+	focusOpener() {
+		this.getOpenerHTMLElement(this.opener)?.focus();
+	}
+
+	/**
 	 * @private
 	 */
 	calcPlacement(targetRect: DOMRect, popoverSize: PopoverSize): CalculatedPlacement {
@@ -644,14 +647,14 @@ class Popover extends Popup {
 
 		// Restricts the arrow's translate value along each dimension,
 		// so that the arrow does not clip over the popover's rounded borders.
-		const safeRangeForArrowY = popoverSize.height / 2 - borderRadius - ARROW_SIZE / 2;
+		const safeRangeForArrowY = popoverSize.height / 2 - borderRadius - ARROW_SIZE / 2 - 2;
 		arrowTranslateY = clamp(
 			arrowTranslateY,
 			-safeRangeForArrowY,
 			safeRangeForArrowY,
 		);
 
-		const safeRangeForArrowX = popoverSize.width / 2 - borderRadius - ARROW_SIZE / 2;
+		const safeRangeForArrowX = popoverSize.width / 2 - borderRadius - ARROW_SIZE / 2 - 2;
 		arrowTranslateX = clamp(
 			arrowTranslateX,
 			-safeRangeForArrowX,

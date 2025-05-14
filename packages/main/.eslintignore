@@ -2,6 +2,7 @@
 target
 dist
 src/generated
+cypress/*
 lib
 test
 bundle.*.js
@@ -11,3 +12,4 @@ cypress.config.js
 postcss.config.cjs
 package-scripts.cjs
 .eslintrc.cjs
+vitest.config.js

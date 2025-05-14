@@ -5,9 +5,9 @@ import ColorPicker from "../ColorPicker.js";
 
 export default function ColorPaletteMoreColorsTemplate(this: ColorPalette) {
 	return (
-		<Dialog headerText={this.colorPaletteDialogTitle}>
+		<Dialog open={this.dialogOpen} headerText={this.colorPaletteDialogTitle} onClose={this._closeDialog}>
 			<div class="ui5-cp-dialog-content">
-				<ColorPicker />
+				<ColorPicker value={this.colorPickerValue} onChange={this.onColorPickerChange} />
 			</div>
 
 			<div slot="footer" class="ui5-cp-dialog-footer">

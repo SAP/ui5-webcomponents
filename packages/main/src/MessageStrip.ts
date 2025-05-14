@@ -87,9 +87,7 @@ type DesignCloseButtonTooltip = Record<MessageStripDesign, string>;
  * click/tap or by using the Enter or Space key.
  * @public
  */
-@event("close", {
-	bubbles: true,
-})
+@event("close")
 
 class MessageStrip extends UI5Element {
 	eventDetails!: {

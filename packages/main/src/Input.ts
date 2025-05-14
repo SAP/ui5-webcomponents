@@ -22,7 +22,6 @@ import {
 	isAndroid,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isUp,
 	isDown,
@@ -46,6 +45,8 @@ import {
 	getAllAccessibleNameRefTexts,
 	registerUI5Element,
 	deregisterUI5Element,
+	getEffectiveAriaDescriptionText,
+	getAllAccessibleDescriptionRefTexts,
 } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
@@ -87,6 +88,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
+import type InputKeyHint from "./types/InputKeyHint.js";
 
 /**
  * Interface for components that represent a suggestion item, usable in `ui5-input`
@@ -164,11 +166,6 @@ type InputSuggestionScrollEventDetail = {
  * When the user makes changes to the text, the change event is fired,
  * which enables you to react on any text change.
  *
- * **Note:** If you are using the `ui5-input` as a single npm module,
- * don't forget to import the `InputSuggestions` module from
- * "@ui5/webcomponents/dist/features/InputSuggestions.js"
- * to enable the suggestions functionality.
- *
  * ### Keyboard Handling
  * The `ui5-input` provides the following keyboard shortcuts:
  *
@@ -184,8 +181,6 @@ type InputSuggestionScrollEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Input.js";`
- *
- * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";` (optional - for input suggestions support)
  *
  * @constructor
  * @extends UI5Element
@@ -206,7 +201,6 @@ type InputSuggestionScrollEventDetail = {
 		ValueStateMessageCss,
 		SuggestionsCss,
 	],
-	features: ["InputSuggestions"],
 })
 
 /**
@@ -282,9 +276,8 @@ type InputSuggestionScrollEventDetail = {
  * @public
  * @since 2.0.0
  */
-@event("close", {
-	bubbles: true,
-})
+@event("close")
+
 class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
 	eventDetails!: {
 		"change": InputEventDetail,
@@ -414,8 +407,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	/**
 	 * Defines whether the component should show suggestions, if such are present.
 	 *
-	 * **Note:** You need to import the `InputSuggestions` module
-	 * from `"@ui5/webcomponents/dist/features/InputSuggestions.js"` to enable this functionality.
 	 * @default false
 	 * @public
 	 */
@@ -452,6 +443,24 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	accessibleNameRef?: string;
 
 	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.9.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that describe the input.
+	 * @default undefined
+	 * @public
+	 * @since 2.9.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
+
+	/**
 	 * Defines whether the clear icon of the input will be shown.
 	 * @default false
 	 * @public
@@ -485,6 +494,15 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 */
 	@property({ type: Boolean })
 	focused = false;
+
+	/**
+	 * Used to define enterkeyhint of the inner input.
+	 * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/enterkeyhint
+	 *
+	 * @private
+	 */
+	@property()
+	hint?: `${InputKeyHint}`;
 
 	@property({ type: Boolean })
 	valueStateOpen = false;
@@ -526,6 +544,19 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_accessibleLabelsRefTexts?: string;
 
 	/**
+	 * Constantly updated value of texts collected from the associated labels
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_associatedDescriptionRefTexts?: string;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Object })
+	Suggestions?: InputSuggestions;
+
+	/**
 	 * Defines the suggestion items.
 	 *
 	 * **Note:** The suggestions would be displayed only if the `showSuggestions`
@@ -533,11 +564,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 *
 	 * **Note:** The `<ui5-suggestion-item>`, `<ui5-suggestion-item-group>` and `ui5-suggestion-item-custom` are recommended to be used as suggestion items.
 	 *
-	 * **Note:** Importing the Input Suggestions Support feature:
-	 *
-	 * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";`
-	 *
-	 * automatically imports the `<ui5-suggestion-item>` and `<ui5-suggestion-item-group>` for your convenience.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -581,9 +607,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_handleResizeBound: ResizeObserverCallback;
 	_keepInnerValue: boolean;
 	_shouldAutocomplete?: boolean;
-	_keyDown?: boolean;
+	_enterKeyDown?: boolean;
 	_isKeyNavigation?: boolean;
-	Suggestions?: InputSuggestions;
+	_indexOfSelectedItem: number;
 	_selectedText?: string;
 	_clearIconClicked?: boolean;
 	_focusedAfterClear: boolean;
@@ -649,6 +675,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._isLatestValueFromSuggestions = false;
 
 		this._isChangeTriggeredBySuggestion = false;
+
+		this._indexOfSelectedItem = -1;
 
 		this._handleResizeBound = this._handleResize.bind(this);
 
@@ -728,6 +756,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			const item = this._getFirstMatchingItem(value);
 			if (item) {
 				this._handleTypeAhead(item);
+				this._selectMatchingItem(item);
 			}
 		}
 	}
@@ -780,6 +809,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		if (isEnter(e)) {
+			const isValueUnchanged = this.previousValue === this.getInputDOMRefSync()!.value;
+			this._enterKeyDown = true;
+
+			if (isValueUnchanged && this._internals.form) {
+				submitForm(this);
+			}
+
 			return this._handleEnter(e);
 		}
 
@@ -807,7 +843,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this._clearPopoverFocusAndSelection();
 		}
 
-		this._keyDown = true;
 		this._isKeyNavigation = false;
 	}
 
@@ -818,18 +853,25 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.value = (e.target as HTMLInputElement).value;
 		}
 
-		this._keyDown = false;
+		this._enterKeyDown = false;
+	}
+
+	get currentItemIndex() {
+		const allItems = this.Suggestions?._getItems() as IInputSuggestionItemSelectable[];
+		const currentItem = allItems.find(item => { return item.selected || item.focused; });
+		const indexOfCurrentItem = currentItem ? allItems.indexOf(currentItem) : -1;
+		return indexOfCurrentItem;
 	}
 
 	_handleUp(e: KeyboardEvent) {
 		if (this.Suggestions?.isOpened()) {
-			this.Suggestions.onUp(e);
+			this.Suggestions.onUp(e, this.currentItemIndex);
 		}
 	}
 
 	_handleDown(e: KeyboardEvent) {
 		if (this.Suggestions?.isOpened()) {
-			this.Suggestions.onDown(e);
+			this.Suggestions.onDown(e, this.currentItemIndex);
 		}
 	}
 
@@ -870,10 +912,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		if (!suggestionItemPressed) {
 			this.lastConfirmedValue = this.value;
-
-			if (this._internals.form) {
-				submitForm(this);
-			}
 
 			return;
 		}
@@ -916,6 +954,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		const isAutoCompleted = innerInput.selectionEnd! - innerInput.selectionStart! > 0;
 
 		this.isTyping = false;
+
+		if (this.value !== this.previousValue && this.value !== this.lastConfirmedValue && !this.open) {
+			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
+			this.fireDecoratorEvent(INPUT_EVENTS.INPUT, { inputType: "" });
+
+			return;
+		}
 
 		if (!isOpen) {
 			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
@@ -983,6 +1028,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		this.lastConfirmedValue = "";
 		this.isTyping = false;
+
+		if ((this.value !== this.previousValue) && this.showClearIcon) {
+			this._clearIconClicked = false;
+		}
 	}
 
 	_clearPopoverFocusAndSelection() {
@@ -1025,6 +1074,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 				this._changeToBeFired = true;
 			} else {
 				fireChange();
+
+				if (this._enterKeyDown && this._internals.form) {
+					submitForm(this);
+				}
 			}
 		}
 	}
@@ -1171,6 +1224,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.Suggestions?.onItemPress(e);
 	}
 
+	_selectMatchingItem(item: IInputSuggestionItemSelectable) {
+		item.selected = true;
+	}
+
 	_handleTypeAhead(item: IInputSuggestionItemSelectable) {
 		const value = item.text ? item.text : "";
 
@@ -1188,6 +1245,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_updateAssociatedLabelsTexts() {
 		this._associatedLabelsTexts = getAssociatedLabelForTexts(this);
 		this._accessibleLabelsRefTexts = getAllAccessibleNameRefTexts(this);
+		this._associatedDescriptionRefTexts = getAllAccessibleDescriptionRefTexts(this);
 	}
 
 	_closePicker() {
@@ -1212,10 +1270,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.focused = false;
 		}
 
-		if (this._changeToBeFired) {
+		if (this._changeToBeFired && !this._isChangeTriggeredBySuggestion) {
+			this.previousValue = this.value;
 			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
-			this._changeToBeFired = false;
+		} else {
+			this._isChangeTriggeredBySuggestion = false;
 		}
+		this._changeToBeFired = false;
 
 		this.open = false;
 		this.isTyping = false;
@@ -1228,7 +1289,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_handlePickerAfterOpen() {
-		this.Suggestions?._onOpen();
 		this.fireDecoratorEvent("open");
 	}
 
@@ -1258,10 +1318,19 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return;
 		}
 
-		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
-		if (Suggestions) {
+		const setup = (Suggestions: typeof InputSuggestions) => {
 			Suggestions.i18nBundle = Input.i18nBundle;
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
+		};
+
+		// If the feature is preloaded (the user manually imported InputSuggestions.js), it is already available on the constructor
+		if (Input.SuggestionsClass) {
+			setup(Input.SuggestionsClass);
+		// If feature is not preloaded, load it dynamically
+		} else {
+			import("./features/InputSuggestions.js").then(SuggestionsModule => {
+				setup(SuggestionsModule.default);
+			});
 		}
 	}
 
@@ -1404,7 +1473,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		if (shouldFireSelectionChange) {
 			this.fireSelectionChange(suggestionItem, true);
 		}
-
 		this.acceptSuggestion(suggestionItem, keyboardUsed);
 	}
 
@@ -1466,6 +1534,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	fireResetSelectionChange() {
 		if (this._isLatestValueFromSuggestions) {
 			this.fireSelectionChange(null, false);
+			this.valueBeforeItemSelection = this.value;
 		}
 	}
 
@@ -1504,21 +1573,48 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		return this.hasValueState ? `valueStateDesc` : "";
 	}
 
+	get _accInfoAriaDescription() {
+		return (this._inputAccInfo && this._inputAccInfo.ariaDescription) || "";
+	}
+
+	get _accInfoAriaDescriptionId() {
+		const hasAriaDescription = this._accInfoAriaDescription !== "";
+		return hasAriaDescription ? "descr" : "";
+	}
+
+	get ariaDescriptionText() {
+		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this);
+	}
+
+	get ariaDescriptionTextId() {
+		return this.ariaDescriptionText ? "accessibleDescription" : "";
+	}
+
+	get ariaDescribedByIds() {
+		return [
+			this.suggestionsTextId,
+			this.valueStateTextId,
+			this._inputAccInfo.ariaDescribedBy,
+			this._accInfoAriaDescriptionId,
+			this.ariaDescriptionTextId,
+		].filter(Boolean).join(" ");
+	}
+
 	get accInfo() {
 		const ariaHasPopupDefault = this.showSuggestions ? "dialog" : undefined;
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" as const : undefined;
-		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 
 		return {
 			"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
-			"ariaDescribedBy": ariaDescribedBy || undefined,
+			"ariaDescribedBy": this.ariaDescribedByIds || undefined,
 			"ariaInvalid": this.valueState === ValueState.Negative ? true : undefined,
 			"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
 			"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
 			"role": this._inputAccInfo && this._inputAccInfo.role,
 			"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
 			"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
-			"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
+			"ariaDescription": this._accInfoAriaDescription,
+			"accessibleDescription": this.ariaDescriptionText,
 			"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts || undefined,
 		};
 	}
@@ -1735,16 +1831,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		return value;
 	}
-}
 
-// declare module "@ui5/webcomponents-base/jsx-runtime" {
-// 	// eslint-disable-next-line @typescript-eslint/no-namespace
-// 	namespace JSX {
-// 		interface IntrinsicElements {
-// 			"ui5-input": Input["_jsxProps"];
-// 		}
-// 	}
-// }
+	static SuggestionsClass?: typeof InputSuggestions;
+}
 
 Input.define();
 

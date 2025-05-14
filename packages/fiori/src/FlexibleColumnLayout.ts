@@ -10,6 +10,8 @@ import { supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/vertical-grip.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
@@ -19,12 +21,15 @@ import {
 	isRightShift,
 	isHome,
 	isEnd,
+	isEnter,
+	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { PassiveEventListenerObject, AriaLandmarkRole } from "@ui5/webcomponents-base";
 import FCLLayout from "./types/FCLLayout.js";
 import type { LayoutConfiguration } from "./fcl-utils/FCLLayout.js";
 import {
 	getLayoutsByMedia,
+	getNextLayoutByArrowPress,
 } from "./fcl-utils/FCLLayout.js";
 
 // Texts
@@ -167,6 +172,7 @@ type UserDefinedColumnLayouts = {
 	renderer: jsxRenderer,
 	styles: FlexibleColumnLayoutCss,
 	template: FlexibleColumnLayoutTemplate,
+	dependencies: [Icon, Button],
 })
 
 /**
@@ -430,25 +436,39 @@ class FlexibleColumnLayout extends UI5Element {
 
 		// hide column: 33% to 0, 25% to 0, etc .
 		if (currentlyHidden) {
-			// animate the width
-			columnDOM.style.width = typeof columnWidth === "number" ? `${columnWidth}px` : columnWidth;
-
-			// hide column with delay to allow the animation runs entirely
-			columnDOM.addEventListener("transitionend", this.columnResizeHandler);
-
+			this.collapseColumn(columnDOM);
 			return;
 		}
 
 		// show column: from 0 to 33%, from 0 to 25%, etc.
 		if (previouslyHidden) {
-			columnDOM.removeEventListener("transitionend", this.columnResizeHandler);
-			columnDOM.classList.remove("ui5-fcl-column--hidden");
-			columnDOM.style.width = typeof columnWidth === "number" ? `${columnWidth}px` : columnWidth;
+			this.expandColumn(columnDOM, columnWidth);
 		}
 	}
 
-	columnResizeHandler = (e: Event) => {
-		(e.target as HTMLElement).classList.add("ui5-fcl-column--hidden");
+	expandColumn(columnDOM: HTMLElement, columnWidth: string | number) {
+		columnDOM.classList.remove("ui5-fcl-column--hidden");
+		columnDOM.style.width = typeof columnWidth === "number" ? `${columnWidth}px` : columnWidth;
+	}
+
+	collapseColumn(columnDOM: HTMLElement) {
+		const hasAnimation = getAnimationMode() !== AnimationMode.None && !this.initialRendering;
+		columnDOM.style.width = "0px";
+
+		if (hasAnimation) {
+			// hide column with delay to allow the animation runs entirely
+			columnDOM.classList.add("ui5-fcl-column-collapse-animation");
+			columnDOM.addEventListener("transitionend", this.onColumnCollapseAnimationEnd);
+		} else {
+			columnDOM.classList.add("ui5-fcl-column--hidden");
+		}
+	}
+
+	onColumnCollapseAnimationEnd = (e: Event) => {
+		const columnDOM = e.target as HTMLElement;
+		columnDOM.classList.add("ui5-fcl-column--hidden");
+		columnDOM.classList.remove("ui5-fcl-column-collapse-animation");
+		columnDOM.removeEventListener("transitionend", this.onColumnCollapseAnimationEnd);
 	}
 
 	nextColumnLayout(layout: `${FCLLayout}`) {
@@ -476,8 +496,12 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	onSeparatorPress(e: TouchEvent | MouseEvent) {
+		if (e.target as HTMLElement === this.startArrowDOM) {
+			return;
+		}
 		const pressedSeparator = (e.target as HTMLElement).closest(".ui5-fcl-separator") as HTMLElement;
-		if (pressedSeparator.classList.contains("ui5-fcl-separator-start") && !this.showStartSeparatorGrip) {
+		if ((pressedSeparator.classList.contains("ui5-fcl-separator-start") && !this.showStartSeparatorGrip)
+			|| (pressedSeparator.classList.contains("ui5-fcl-separator-end") && !this.showEndSeparatorGrip)) {
 			return;
 		}
 
@@ -654,11 +678,26 @@ class FlexibleColumnLayout extends UI5Element {
 		return columnLayoutToAdjust;
 	}
 
-	async _onkeydown(e: KeyboardEvent) {
+	_onArrowKeydown(e: KeyboardEvent) {
+		if (isEnter(e) || isSpace(e)) {
+		  e.preventDefault();
+		  const focusedElement = e.target as HTMLElement;
+		  if (focusedElement === this.startArrowDOM) {
+				this.switchLayoutOnArrowPress();
+		  }
+		}
+	  }
+
+	async _onSeparatorKeydown(e: KeyboardEvent) {
+		const separator = e.target as HTMLElement;
+		if (!separator.classList.contains("ui5-fcl-separator")) {
+			return;
+		}
 		const stepSize = 2,
 			bigStepSize = this._width,
 			isRTL = this.effectiveDir === "rtl";
 		let step = 0;
+
 		if (isLeft(e)) {
 			step = -stepSize * 10;
 		} else if (isRight(e)) {
@@ -679,7 +718,6 @@ class FlexibleColumnLayout extends UI5Element {
 			return;
 		}
 
-		const separator = e.target as HTMLElement;
 		if (!this.separatorMovementSession) {
 			this.separatorMovementSession = this.initSeparatorMovementSession(separator, 0, false);
 		}
@@ -693,7 +731,7 @@ class FlexibleColumnLayout extends UI5Element {
 		separator.focus();
 	}
 
-	_onkeyup() {
+	_onSeparatorKeyUp() {
 		if (this.separatorMovementSession) {
 			this.onSeparatorMoveEnd();
 		}
@@ -819,6 +857,30 @@ class FlexibleColumnLayout extends UI5Element {
 		}
 
 		if (moved({
+			separator: "start",
+			from: FCLLayout.ThreeColumnsStartHiddenMidExpanded,
+			forward: true,
+		}) && !isTablet && Math.ceil(startColumnPxWidth) >= COLUMN_MIN_WIDTH) {
+			return FCLLayout.ThreeColumnsMidExpanded;
+		}
+
+		if (moved({
+			separator: "end",
+			from: FCLLayout.ThreeColumnsStartHiddenMidExpanded,
+			forward: false,
+		}) && newColumnWidths.mid < newColumnWidths.end) {
+			return FCLLayout.ThreeColumnsStartHiddenEndExpanded;
+		}
+
+		if (moved({
+			separator: "end",
+			from: FCLLayout.ThreeColumnsStartHiddenEndExpanded,
+			forward: true,
+		}) && newColumnWidths.mid >= newColumnWidths.end) {
+			return FCLLayout.ThreeColumnsStartHiddenMidExpanded;
+		}
+
+		if (moved({
 			separator: "end",
 			from: FCLLayout.ThreeColumnsMidExpandedEndHidden,
 			forward: false,
@@ -878,6 +940,14 @@ class FlexibleColumnLayout extends UI5Element {
 		}
 
 		return fclLayoutBeforeMove; // no layout change
+	}
+
+	switchLayoutOnArrowPress() {
+		const lastUsedLayout = this.layout as FCLLayout;
+		this.layout = getNextLayoutByArrowPress()[lastUsedLayout as keyof typeof getNextLayoutByArrowPress];
+		if (this.layout !== lastUsedLayout) {
+			this.fireLayoutChange(true, false);
+		}
 	}
 
 	get _availableWidthForColumns() {
@@ -982,6 +1052,10 @@ class FlexibleColumnLayout extends UI5Element {
 		return this.disableResizing ? false : this.startSeparatorGripVisibility;
 	}
 
+	get showStartSeparatorArrow() {
+		return this.disableResizing ? false : this.startSeparatorArrowVisibility;
+	}
+
 	get showEndSeparatorGrip() {
 		return this.disableResizing ? false : this.endSeparatorGripVisibility;
 	}
@@ -992,6 +1066,18 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get endSeparatorGripVisibility() {
 		return this.effectiveSeparatorsInfo[1].gripVisible;
+	}
+
+	get startSeparatorArrowVisibility() {
+		return this.effectiveSeparatorsInfo[0].arrowVisible;
+	}
+
+	get startArrowDirection() {
+		return this.effectiveSeparatorsInfo[0].arrowDirection;
+	}
+
+	get startArrowDOM() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-arrow--start")!;
 	}
 
 	get effectiveSeparatorsInfo() {
@@ -1020,7 +1106,6 @@ class FlexibleColumnLayout extends UI5Element {
 		if (this.showEndSeparatorGrip) {
 			return 0;
 		}
-		return -1;
 	}
 
 	get media() {

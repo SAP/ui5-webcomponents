@@ -136,7 +136,7 @@
 								<ui5-segmented-button id="sb">
 									<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
 									<ui5-toggle-button>Medium</ui5-toggle-button>
-									<ui5-toggle-button>Largr</ui5-toggle-button>
+									<ui5-toggle-button>Large</ui5-toggle-button>
 								</ui5-segmented-button>
 							</div>
 						</div>
@@ -496,8 +496,62 @@
 		</div>
 	</ui5-flexible-column-layout>
 
-	<br><br>
 	<!-- ex7 -->
+	<br><br>
+	<ui5-title class="sectionTitle">Arrow Icon: Start Column Hidden by Default</ui5-title>
+	<br><br>
+
+		<ui5-flexible-column-layout id="fcl10" layout="ThreeColumnsStartHiddenMidExpanded">
+			<!-- start column -->
+			<div class="fcl4auto" slot="startColumn">
+				<div class="fcl5auto">
+					<ui5-title>Column 1</ui5-title>
+				</div>
+				<ui5-list>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+				</ui5-list>
+			</div>
+	
+			<!-- mid column -->
+			<div class="fcl4auto" slot="midColumn">
+				<div class="fcl5auto">
+					<ui5-title>Column 2</ui5-title>
+				</div>
+				<ui5-list>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+				</ui5-list>
+			</div>
+	
+			<!-- end column -->
+			<div class="fcl4auto" slot="endColumn">
+				<div class="fcl5auto">
+					<ui5-title>Column 3</ui5-title>
+				</div>
+	
+				<ui5-list>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+					<ui5-li>Hello worild!</ui5-li>
+				</ui5-list>
+			</div>
+		</ui5-flexible-column-layout>
+
+	<br><br>
+	<!-- ex8 -->
 	<ui5-flexible-column-layout id="fclApp" class="fcl14auto">
 		<!-- start column -->
 		<div class="col" slot="startColumn">

@@ -1,4 +1,4 @@
-import { registerFeature } from "../FeaturesRegistry.js";
+import { getFeature, registerFeature } from "../FeaturesRegistry.js";
 import { isF6Next, isF6Previous } from "../Keys.js";
 import { instanceOfUI5Element } from "../UI5Element.js";
 import { getFirstFocusableElement } from "../util/FocusableElements.js";
@@ -6,6 +6,7 @@ import getFastNavigationGroups from "../util/getFastNavigationGroups.js";
 import isElementClickable from "../util/isElementClickable.js";
 import { getCurrentRuntimeIndex, compareRuntimes } from "../Runtimes.js";
 import getSharedResource from "../getSharedResource.js";
+import type OpenUI5Support from "./OpenUI5Support.js";
 
 type F6Registry = {
 	instance?: F6Navigation,
@@ -132,6 +133,14 @@ class F6Navigation {
 	}
 
 	async _keydownHandler(event: KeyboardEvent) {
+		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
+		const isOpenUI5Detected = openUI5Support && openUI5Support.isOpenUI5Detected();
+
+		if (isOpenUI5Detected) {
+			this.destroy();
+			return;
+		}
+
 		const forward = isF6Next(event);
 		const backward = isF6Previous(event);
 		if (!(forward || backward)) {
@@ -172,8 +181,27 @@ class F6Navigation {
 	}
 
 	updateGroups() {
+		const container = this.findContainer();
+
 		this.setSelectedGroup();
-		this.groups = getFastNavigationGroups(document.body);
+		this.groups = getFastNavigationGroups(container);
+	}
+
+	findContainer() {
+		const htmlElement = window.document.querySelector("html");
+		let element = this.deepActive(window.document);
+
+		while (element && element !== htmlElement) {
+			const closestScopeEl = element.closest<HTMLElement>("[data-sap-ui-fastnavgroup-container='true']");
+
+			if (closestScopeEl) {
+				return closestScopeEl;
+			}
+
+			element = element.parentElement ? element.parentElement : (element.parentNode as ShadowRoot).host;
+		}
+
+		return document.body;
 	}
 
 	setSelectedGroup(root: DocumentOrShadowRoot = window.document) {

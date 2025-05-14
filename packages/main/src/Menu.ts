@@ -7,6 +7,11 @@ import {
 	isLeft,
 	isRight,
 	isEnter,
+	isSpace,
+	isTabNext,
+	isTabPrevious,
+	isDown,
+	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	isPhone,
@@ -21,7 +26,9 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import type MenuItem from "./MenuItem.js";
-import "./MenuItem.js";
+// The import below should be kept, as MenuItem is part of the Menu component.
+import { isInstanceOfMenuItem } from "./MenuItem.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import "./MenuSeparator.js";
 import type {
 	ListItemClickEventDetail,
@@ -80,6 +87,10 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * - `Arrow Right`, `Space` or `Enter` - Opens a sub-menu if there are menu items nested
  * in the currently clicked menu item.
  * - `Arrow Left` or `Escape` - Closes the currently opened sub-menu.
+ *
+ * when there is `endContent` :
+ * - `Arrow Left` or `ArrowRight` - Navigate between the menu item actions and the menu item itself
+ * - `Arrow Up` / `Arrow Down` - Navigates up and down the currently visible menu items
  *
  * Note: if the text ditrection is set to Right-to-left (RTL), `Arrow Right` and `Arrow Left` functionality is swapped.
  *
@@ -176,13 +187,21 @@ class Menu extends UI5Element {
 	headerText?: string;
 
 	/**
-	 * Indicates if the menu is open
+	 * Indicates if the menu is open.
 	 * @public
 	 * @default false
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
 	open = false;
+
+	/**
+	 * Determines the horizontal alignment of the menu relative to its opener control.
+	 * @default "Start"
+	 * @public
+	 */
+	@property()
+	horizontalAlign: `${PopoverHorizontalAlign}` = "Start";
 
 	/**
 	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
@@ -194,7 +213,7 @@ class Menu extends UI5Element {
 	loading = false;
 
 	/**
-	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover..
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
@@ -277,30 +296,20 @@ class Menu extends UI5Element {
 		item.selected = true;
 	}
 
-	_closeItemSubMenu(item: MenuItem) {
-		if (item && item._popover) {
-			const openedSibling = item._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
-			if (openedSibling) {
-				this._closeItemSubMenu(openedSibling);
-			}
-
-			item._popover.open = false;
-			item.selected = false;
-		}
-	}
-
 	_itemMouseOver(e: MouseEvent) {
-		if (isDesktop()) {
-			// respect mouseover only on desktop
-			const item = e.target as MenuItem;
-
-			if (item.hasAttribute("ui5-menu-item")) {
-				item.focus();
-
-				// Opens submenu with 300ms delay
-				this._startOpenTimeout(item);
-			}
+		if (!isDesktop()) {
+			return;
 		}
+
+		const item = e.target as MenuItem;
+		if (!isInstanceOfMenuItem(item)) {
+			return;
+		}
+
+		item.focus();
+
+		// Opens submenu with 300ms delay
+		this._startOpenTimeout(item);
 	}
 
 	async focus(focusOptions?: FocusOptions): Promise<void> {
@@ -314,15 +323,24 @@ class Menu extends UI5Element {
 		return super.focus(focusOptions);
 	}
 
+	_closeOtherSubMenus(item: MenuItem) {
+		const menuItems = this._menuItems;
+		if (!menuItems.includes(item)) {
+			return;
+		}
+
+		menuItems.forEach(menuItem => {
+			if (menuItem !== item) {
+				menuItem._close();
+			}
+		});
+	}
+
 	_startOpenTimeout(item: MenuItem) {
 		clearTimeout(this._timeout);
 
 		this._timeout = setTimeout(() => {
-			const opener = item.parentElement as MenuItem | Menu;
-			const openedSibling = opener && opener._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
-			if (openedSibling) {
-				this._closeItemSubMenu(openedSibling);
-			}
+			this._closeOtherSubMenus(item);
 
 			this._openItemSubMenu(item);
 		}, MENU_OPEN_DELAY);
@@ -346,24 +364,47 @@ class Menu extends UI5Element {
 	}
 
 	_itemKeyDown(e: KeyboardEvent) {
-		if (!isLeft(e) && !isRight(e)) {
+		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
+		const item = e.target as MenuItem;
+
+		if (!isInstanceOfMenuItem(item)) {
 			return;
 		}
 
-		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
+		const menuItemInMenu = this._menuItems.includes(item);
+		const isItemNavigation = isUp(e) || isDown(e);
+		const isItemSelection = isEnter(e) || isSpace(e);
+		const isEndContentNavigation = isRight(e) || isLeft(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
-		const item = e.target as MenuItem;
-		const parentElement = item.parentElement as MenuItem;
+		const shouldCloseMenu = menuItemInMenu && !(isItemNavigation || isItemSelection || isEndContentNavigation);
 
-		if (isEnter(e)) {
+		if (isEnter(e) || isTabNextPrevious) {
 			e.preventDefault();
 		}
+
+		if (isEndContentNavigation) {
+			item._navigateToEndContent(isLeft(e));
+		}
+
 		if (shouldOpenMenu) {
 			this._openItemSubMenu(item);
-		} else if (shouldCloseMenu && parentElement.hasAttribute("ui5-menu-item") && parentElement._popover) {
-			parentElement._popover.open = false;
-			parentElement.selected = false;
-			(parentElement._popover.opener as HTMLElement)?.focus();
+		} else if ((shouldCloseMenu || isTabNextPrevious)) {
+			this._close();
+		}
+	}
+
+	_navigateOutOfEndContent(e: CustomEvent) {
+		const item = e.target as MenuItem;
+		const shouldNavigateToNextItem = e.detail.shouldNavigateToNextItem;
+		const menuItems = this._menuItems;
+		const itemIndex = menuItems.indexOf(item);
+
+		if (itemIndex > -1) {
+			const nextItem = shouldNavigateToNextItem ? menuItems[itemIndex + 1] : menuItems[itemIndex - 1];
+			const itemToFocus = nextItem || menuItems[itemIndex];
+			itemToFocus?.focus();
+
+			e.stopPropagation();
 		}
 	}
 
