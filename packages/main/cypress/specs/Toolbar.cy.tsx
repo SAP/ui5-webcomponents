@@ -169,6 +169,48 @@ describe("Toolbar general interaction", () => {
 		cy.get("@closed")
 			.should("have.been.calledOnce");
 	});
+
+	it.only("Should close the popover when interacting with item in the overflow menu", () => {
+		cy.viewport(300, 1080);
+
+		cy.mount(
+			<Toolbar>
+				<ToolbarButton text="Example Button"></ToolbarButton>
+				<ToolbarButton text="Example Button"></ToolbarButton>
+				<ToolbarButton text="Example Button"></ToolbarButton>
+				<ToolbarButton text="Example Button"></ToolbarButton>
+				<ToolbarButton text="Example Button"></ToolbarButton>
+			</Toolbar>
+		);
+
+
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.as("overflowButton")
+
+		cy.get("@overflowButton")
+			.should("exist");
+
+		cy.get("@overflowButton")
+			.click();
+
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find("[ui5-popover]")
+			.as("popover")
+
+		cy.get("@popover")
+			.should("have.prop", "open", true);
+
+		cy.get("@popover")
+			.find("ui5-button")
+			.first()
+			.click();
+
+		cy.get("@popover")
+			.should("have.prop", "open", false);
+	});
 });
 
 describe("Accessibility", () => {
