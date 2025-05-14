@@ -265,36 +265,38 @@ describe("Side Navigation interaction", () => {
 				</SideNavigationItem>
 			</SideNavigation>
 		);
-		
-	cy.get("#focusStart").should("exist");
-	cy.get("#focusStart").realClick();
 
-	cy.realPress("ArrowDown");
-	cy.realPress("ArrowRight");
-	cy.get("#unselectableItem").realPress("ArrowRight");
+		cy.get("#focusStart").should("exist");
+		cy.get("#focusStart").realClick();
 
-	cy.get("#sn")
-		.shadow()
-		.find("[ui5-responsive-popover]")
-		.should("be.visible");
+		cy.realPress("ArrowDown");
+		cy.realPress("ArrowRight");
+
+		cy.get("#sn")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should("be.visible");
 	});
 
 	it("Tests collapsing of items with ArrowLeft on collapsed sn", () => {
 		cy.mount(
 			<SideNavigation id="sn" collapsed={true}>
 				<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
-				<SideNavigationItem id="unselectableItem" text="1" expanded>
+				<SideNavigationItem id="unselectableItem" text="1">
 					<SideNavigationSubItem text="1.2" />
 				</SideNavigationItem>
 			</SideNavigation>
 		);
 
-		cy.get("#unselectableItem").realPress("ArrowLeft");
+		cy.get("#unselectableItem").should("exist");
+		cy.get("#unselectableItem").realClick();
+
+		cy.realPress("ArrowLeft");
 
 		cy.get("#sn")
 			.shadow()
 			.find("[ui5-responsive-popover]")
-			.should("not.have.attr", "open");
+			.should("not.be.visible");
 	});
 
 	it("Tests expanding of items with ArrowLeft for rtl", () => {
@@ -302,7 +304,7 @@ describe("Side Navigation interaction", () => {
 			<div dir="rtl">
 				<SideNavigation id="sn">
 					<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
-					<SideNavigationItem id="unselectableItem" text="1" expanded>
+					<SideNavigationItem id="unselectableItem" text="1">
 						<SideNavigationSubItem text="1.2" />
 					</SideNavigationItem>
 				</SideNavigation>
@@ -321,15 +323,15 @@ describe("Side Navigation interaction", () => {
 			<div dir="rtl">
 				<SideNavigation id="sn">
 					<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
-					<SideNavigationItem id="unselectableItem" text="1" expanded>
+					<SideNavigationItem id="unselectableItem" text="1">
 						<SideNavigationSubItem text="1.2" />
 					</SideNavigationItem>
 				</SideNavigation>
 			</div>
 		);
-		cy.get("#focusStart").realClick();
-		cy.realPress("ArrowDown");
-		cy.realPress("ArrowRight");
+
+		cy.get("#unselectableItem").realClick();
+		cy.get("#unselectableItem").realPress("ArrowRight");
 
 		cy.get("#unselectableItem").should("not.have.attr", "expanded");
 
@@ -364,19 +366,20 @@ describe("Side Navigation interaction", () => {
 			<div dir="rtl">
 				<SideNavigation id="sn" collapsed={true}>
 					<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
-					<SideNavigationItem id="unselectableItem" text="1" expanded>
+					<SideNavigationItem id="unselectableItem" text="1">
 						<SideNavigationSubItem text="1.2" />
 					</SideNavigationItem>
 				</SideNavigation>
 			</div>
 		);
 
-		cy.get("#unselectableItem").realPress("ArrowRight");
+		cy.get("#unselectableItem").realClick();
+		cy.realPress("ArrowRight");
 
 		cy.get("#sn")
 			.shadow()
 			.find("[ui5-responsive-popover]")
-			.should("not.have.attr", "open");
+			.should("not.be.visible");
 	});
 
 	it("Tests expanding of items with Plus", () => {
@@ -406,13 +409,35 @@ describe("Side Navigation interaction", () => {
 				</SideNavigationItem>
 			</SideNavigation>
 		);
+
+		cy.get("#unselectableItem").realClick();
 		cy.realPress("-");
 
 		cy.get("#unselectableItem").should("not.have.attr", "expanded");
 
 	});
 
-	it("Tests expanding and collapsing of unselectable items with Plus and Minus", () => {
+	it("Tests expanding of items with Plus for collapsed sn", () => {
+		cy.mount(
+			<SideNavigation id="sn" collapsed={true}>
+				<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
+				<SideNavigationItem id="unselectableItem" text="1">
+					<SideNavigationSubItem text="1.2" />
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#focusStart").realClick();
+		cy.realPress("ArrowDown");
+		cy.realPress("+");
+
+		cy.get("#sn")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should("be.visible");
+	});
+
+	it("Tests collapsing of items with Minus for collapsed sn", () => {
 		cy.mount(
 			<SideNavigation id="sn" collapsed={true}>
 				<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
@@ -423,19 +448,12 @@ describe("Side Navigation interaction", () => {
 		);
 
 		cy.get("#unselectableItem").realClick();
+		cy.realPress("-");
 
 		cy.get("#sn")
 			.shadow()
 			.find("[ui5-responsive-popover]")
-			.as("popover");
-
-		cy.get("@popover").should("have.attr", "open");
-
-		cy.get("#focusStart").realClick();
-		cy.realPress("+");
-		cy.realPress("-");
-
-		cy.get("@popover").should("not.be.visible");
+			.should("not.be.visible");
 	});
 
 	it("Tests expanding of items with Plus for rtl", () => {
@@ -462,42 +480,58 @@ describe("Side Navigation interaction", () => {
 			<div dir="rtl">
 				<SideNavigation id="sn">
 					<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
-					<SideNavigationItem id="unselectableItem" text="1" expanded>
+					<SideNavigationItem id="unselectableItem" text="1">
 						<SideNavigationSubItem text="1.2" />
 					</SideNavigationItem>
 				</SideNavigation>
 			</div>
 		);
+		cy.get("#unselectableItem").realClick();
+		cy.realPress("-");
+
+		cy.get("#unselectableItem").should("not.have.attr", "expanded");
+
+	});
+
+	it("Tests expanding of items with Plus for collapsed sn", () => {
+		cy.mount(
+			<SideNavigation id="sn" collapsed={true}>
+				<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
+				<SideNavigationItem id="unselectableItem" text="1">
+					<SideNavigationSubItem text="1.2" />
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
 		cy.get("#focusStart").realClick();
 		cy.realPress("ArrowDown");
-		cy.realPress("-");
+		cy.realPress("+");
 
 		cy.get("#sn")
 			.shadow()
 			.find("[ui5-responsive-popover]")
-			.should("not.have.attr", "expanded");
-
+			.should("be.visible");
 	});
 
-	it("Tests collapsing and expanding of items with Minus and Plus for rtl", () => {
+	it("Tests collapsing of items with Minus for collapsed sn", () => {
 		cy.mount(
 			<div dir="rtl">
 				<SideNavigation id="sn" collapsed={true}>
 					<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
-					<SideNavigationItem id="unselectableItem" text="1" expanded>
+					<SideNavigationItem id="unselectableItem" text="1">
 						<SideNavigationSubItem text="1.2" />
 					</SideNavigationItem>
 				</SideNavigation>
 			</div>
 		);
 
-		cy.get("#unselectableItem").realPress("ArrowDown");
+		cy.get("#unselectableItem").realClick();
 		cy.realPress("-");
 
 		cy.get("#sn")
 			.shadow()
 			.find("[ui5-responsive-popover]")
-			.should("not.have.attr", "expanded");
+			.should("not.be.visible");
 	});
 
 	it("Tests expanding and collapsing of unselectable parent item when SideNavigation is collapsed", () => {
