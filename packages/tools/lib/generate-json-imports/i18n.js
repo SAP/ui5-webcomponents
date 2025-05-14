@@ -50,13 +50,13 @@ const generate = async () => {
 
 	let contentDynamic;
 	let contentFetchMetaResolve;
-	let contentDynamicImportJSONAssert;
+	let contentDynamicImportJSONAttr;
 
 	// No i18n - just import dependencies, if any
 	if (languages.length === 0) {
 		contentDynamic = "";
 		contentFetchMetaResolve = "";
-		contentDynamicImportJSONAssert = "";
+		contentDynamicImportJSONAttr = "";
 	// There is i18n - generate the full file
 	} else {
 		// Keys for the array
@@ -65,20 +65,20 @@ const generate = async () => {
 		// Actual imports for json assets
 		const dynamicImportsString = languages.map(key => `		case "${key}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-messagebundle-${key}" */ "../assets/i18n/messagebundle_${key}.json")).default;`).join("\n");
 		const fetchMetaResolveString = languages.map(key => `		case "${key}": return (await fetch(new URL("../assets/i18n/messagebundle_${key}.json", import.meta.url))).json();`).join("\n");
-		const dynamicImportJSONAssertString = languages.map(key => `		case "${key}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-messagebundle-${key}" */ "../assets/i18n/messagebundle_${key}.json", {with: { type: 'json'}})).default;`).join("\n");
+		const dynamicImportJSONAttrString = languages.map(key => `		case "${key}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-messagebundle-${key}" */ "../assets/i18n/messagebundle_${key}.json", {with: { type: 'json'}})).default;`).join("\n");
 
 		// Resulting file content
 
 		contentDynamic = getContent(dynamicImportsString, languagesKeysStringArray, packageName);
 		contentFetchMetaResolve = getContent(fetchMetaResolveString, languagesKeysStringArray, packageName);
-		contentDynamicImportJSONAssert = getContent(dynamicImportJSONAssertString, languagesKeysStringArray, packageName);
+		contentDynamicImportJSONAttr = getContent(dynamicImportJSONAttrString, languagesKeysStringArray, packageName);
 	}
 
 	await fs.mkdir(path.dirname(outputFileDynamic), { recursive: true });
 	return Promise.all([
 		fs.writeFile(outputFileDynamic, contentDynamic),
 		fs.writeFile(outputFileFetchMetaResolve, contentFetchMetaResolve),
-		fs.writeFile(outputFileDynamicImportJSONImport, contentDynamicImportJSONAssert),
+		fs.writeFile(outputFileDynamicImportJSONImport, contentDynamicImportJSONAttr),
 	]);
 }
 
