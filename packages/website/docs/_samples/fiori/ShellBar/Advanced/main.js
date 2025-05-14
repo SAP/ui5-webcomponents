@@ -66,9 +66,7 @@ createScopeItems();
 searchScope.addEventListener("ui5-scope-change", (event) => {
     const scope = event.detail.scope.text === "All" ? "" : event.detail.scope.text.toLowerCase();
     
-    searchScope.items.forEach(item => {
-        item.remove();
-    });
+    searchScope.innerHTML = "";
 
     createScopeItems(scope);
 });
