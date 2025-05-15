@@ -146,6 +146,14 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	@property({ type: Boolean })
 	isOverflow = false;
 
+	/**
+	 * Reference to the original side navigation item that opened the popover.
+	 *
+	 * @private
+	 */
+	@property({ type: Object })
+	associatedItem?: SideNavigationItemBase;
+
 	get ariaRole() {
 		if (this.sideNavCollapsed) {
 			return this.isOverflow || this.unselectable ? "menuitem" : "menuitemradio";
@@ -223,8 +231,8 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 			this._activate(e);
 		}
 
-		if ((isRTL ? isRight(e) : isLeft(e)) && !this.sideNavCollapsed) {
-			this._activate(e);
+		if ((isRTL ? isRight(e) : isLeft(e)) && this.inPopover) {
+			this.associatedItem?.sideNavigation?.closePicker();
 		}
 	}
 

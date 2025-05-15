@@ -159,7 +159,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 		if (isLeft(e)) {
 			e.preventDefault();
-			this.expanded = !!isRTL;
+			this.expanded = isRTL;
 			return;
 		}
 
