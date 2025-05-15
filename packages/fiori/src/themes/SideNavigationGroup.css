@@ -2,7 +2,6 @@
 
 :host {
 	font-size: var(--sapFontSmallSize);
-	font-family: var(--sapFontSemiboldFamily);
 	color: var(--sapContent_LabelColor);
 }
 
