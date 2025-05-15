@@ -26,6 +26,21 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 					tooltip={item._tooltip}
 					ref={this.captureRef.bind(item)}
 				>
+					{item.items.length > 0 && !item.unselectable &&
+						(<NavigationMenuItem
+							class="ui5-navigation-menu-item-root-parent"
+							accessibilityAttributes={item.accessibilityAttributes}
+							text={item.text}
+							design={item.design}
+							disabled={item.disabled}
+							href={item.href}
+							target={item.target}
+							title={item.title}
+							tooltip={item._tooltip}
+							ref={this.captureRef.bind(item)}
+						></NavigationMenuItem>)
+					}
+
 					{item.items.map(subItem =>
 						<NavigationMenuItem
 							accessibilityAttributes={subItem.accessibilityAttributes}
@@ -33,11 +48,11 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 							icon={subItem.icon}
 							design={subItem.design}
 							disabled={subItem.disabled}
-							ref={this.captureRef.bind(subItem)}
 							href={subItem.href}
 							target={subItem.target}
 							title={subItem.title}
 							tooltip={subItem._tooltip}
+							ref={this.captureRef.bind(subItem)}
 						/>
 					)}
 				</NavigationMenuItem>
