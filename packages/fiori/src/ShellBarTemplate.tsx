@@ -207,6 +207,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 									data-ui5-stable={item.stableDomRef}
 									onClick={item.press}
 									accessibilityAttributes={item.accessibilityAttributes}
+									accessibleName={item.accessibleName || ""}
 								>
 									{item.count && (
 										<ButtonBadge slot="badge" design="OverlayText" text={item.count} />
