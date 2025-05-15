@@ -52,13 +52,6 @@ export default function SliderBaseTemplate(this: SliderBase, hooks?: {
 
 				{(hooks?.handles || handles).call(this)}
 			</div>
-
-			{this.accessibleName &&
-				<span id="ui5-slider-accName" class="ui5-hidden-text">{this.accessibleName}</span>
-			}
-
-			<span id="ui5-slider-sliderDesc" class="ui5-hidden-text">{this._ariaLabelledByText}</span>
-
 			{this.editableTooltip && <>
 				<span id="ui5-slider-InputDesc" class="ui5-hidden-text">{this._ariaDescribedByInputText}</span>
 			</>}

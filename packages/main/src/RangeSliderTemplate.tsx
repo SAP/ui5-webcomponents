@@ -37,7 +37,7 @@ export function progressBar(this: RangeSlider) {
 				aria-valuemax={this.max}
 				aria-valuenow={this._ariaValueNow}
 				aria-valuetext={`From ${this.startValue} to ${this.endValue}`}
-				aria-labelledby="ui5-slider-sliderDesc"
+				aria-label={this._ariaLabel}
 				aria-disabled={this._ariaDisabled}
 			></div>
 		</div>

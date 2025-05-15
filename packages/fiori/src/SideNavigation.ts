@@ -5,7 +5,6 @@ import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEff
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type NavigationMenu from "./NavigationMenu.js";
-import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -28,6 +27,7 @@ import { isInstanceOfSideNavigationSelectableItemBase } from "./SideNavigationSe
 import { isInstanceOfSideNavigationItemBase } from "./SideNavigationItemBase.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
+import { isInstanceOfSideNavigationGroup } from "./SideNavigationGroup.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 import type SideNavigationGroup from "./SideNavigationGroup.js";
@@ -38,6 +38,8 @@ import {
 	SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC,
 	SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC,
 	SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME,
+	SIDE_NAVIGATION_FLEXIBLE_LIST_LABEL,
+	SIDE_NAVIGATION_FIXED_LIST_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -56,13 +58,6 @@ type SideNavigationSelectionChangeEventDetail = {
 };
 
 type PopupSideNavigationItem = SideNavigationItem & { associatedItem: SideNavigationSelectableItemBase };
-
-// used for the inner side navigation used in the SideNavigationPopoverTemplate
-type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
-	item: Pick<MenuItemClickEventDetail, "item"> & {
-		associatedItem: SideNavigationSelectableItemBase,
-	}
-};
 
 /**
  * @class
@@ -242,6 +237,23 @@ class SideNavigation extends UI5Element {
 				item.inPopover = this.inPopover;
 				item.sideNavigation = this;
 			});
+
+		this.initGroupsSettings(this.items);
+		this.initGroupsSettings(this.fixedItems);
+	}
+
+	initGroupsSettings(items: Array<SideNavigationItemBase>) {
+		let isPreviousItemGroup = false;
+
+		items.forEach(item => {
+			const isGroup = isInstanceOfSideNavigationGroup(item);
+
+			if (isGroup) {
+				item.belowGroup = isPreviousItemGroup;
+			}
+
+			isPreviousItemGroup = isGroup;
+		});
 	}
 
 	_onAfterPopoverOpen() {
@@ -290,6 +302,14 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(key);
 	}
 
+	get navigationMenuPrimaryHiddenText() {
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_FLEXIBLE_LIST_LABEL);
+	}
+
+	get navigationMenuFooterHiddenText() {
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_FIXED_LIST_LABEL);
+	}
+
 	get overflowAccessibleName() {
 		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME);
 	}
@@ -303,7 +323,23 @@ class SideNavigation extends UI5Element {
 
 		e.stopPropagation();
 
-		associatedItem.fireEvent("click");
+		const altKey = (e.detail as any)?.altKey,
+			ctrlKey = (e.detail as any)?.ctrlKey,
+			metaKey = (e.detail as any)?.metaKey,
+			shiftKey = (e.detail as any)?.shiftKey;
+
+		const executeEvent = associatedItem.fireDecoratorEvent("click", {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		});
+
+		if (!executeEvent) {
+			e.preventDefault();
+			return;
+		}
+
 		if (associatedItem.selected) {
 			this.closePicker();
 			return;
@@ -313,30 +349,6 @@ class SideNavigation extends UI5Element {
 		this.closePicker();
 
 		this._popoverContents.item?.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
-	}
-
-	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
-		const associatedItem = e.detail?.item.associatedItem;
-
-		associatedItem.fireEvent("click");
-		if (associatedItem.selected) {
-			this.closeMenu();
-			return;
-		}
-
-		this._selectItem(associatedItem);
-
-		this.closeMenu();
-
-		// When subitem is selected in collapsed mode parent element should be focused
-		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
-			const parent = associatedItem.parentElement as SideNavigationItem;
-			this.focusItem(parent);
-			parent?.focus();
-		} else {
-			this.focusItem(associatedItem);
-			associatedItem?.focus();
-		}
 	}
 
 	getOverflowPopover() {
@@ -565,7 +577,24 @@ class SideNavigation extends UI5Element {
 
 	_handleItemClick(e: KeyboardEvent | MouseEvent, item: SideNavigationSelectableItemBase) {
 		if (item.selected && !this.collapsed) {
-			item.fireDecoratorEvent("click");
+			const {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			} = e;
+
+			const executeEvent = item.fireDecoratorEvent("click", {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			});
+
+			if (!executeEvent) {
+				e.preventDefault();
+			}
+
 			return;
 		}
 
@@ -580,7 +609,24 @@ class SideNavigation extends UI5Element {
 
 			this.openPicker(item.getFocusDomRef() as HTMLElement);
 		} else {
-			item.fireDecoratorEvent("click");
+			const {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			} = e;
+
+			const executeEvent = item.fireDecoratorEvent("click", {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			});
+
+			if (!executeEvent) {
+				e.preventDefault();
+				return;
+			}
 
 			if (!item.selected) {
 				this._selectItem(item);

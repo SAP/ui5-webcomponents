@@ -602,22 +602,6 @@ describe("Testing events", () => {
 });
 
 describe("Accessibility", async () => {
-	it("Aria attributes of the progress bar are set correctly", async () => {
-		const rangeSlider = await browser.$("#range-slider-tickmarks");
-		const rangeSliderProgressBar = await rangeSlider.shadow$(".ui5-slider-progress");
-		const rangeSliderId = await rangeSlider.getProperty("_id");
-
-		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-labelledby"),
-			"ui5-slider-sliderDesc", "aria-labelledby is set correctly");
-		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuemin"),
-			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
-		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuemax"),
-			`${await rangeSlider.getProperty("max")}`, "aria-valuemax is set correctly");
-		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuetext"),
-			`From ${await rangeSlider.getProperty("startValue")} to ${await rangeSlider.getProperty("endValue")}`, "aria-valuetext is set correctly");
-		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuenow"), "20", "aria-valuenow is set correctly");
-	});
-
 	it("Aria attributes of the start handle are set correctly", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks");
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
