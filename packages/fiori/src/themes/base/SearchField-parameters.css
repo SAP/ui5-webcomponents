@@ -14,8 +14,10 @@
 	--_ui5_search_wrapper_outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapField_Active_BorderColor);
 	--_ui5_search_input_outline: none;
 	--_ui5_search_advanced_button_border_radius: 1.125rem;
-	--_ui5_search_advanced_button_border:none;
-	--_ui5_search_advanced_button_border_focused: none;
+	--_ui5_seach_advanced_button_border_hover: 1px solid var(--sapButton_Hover_BorderColor);
+	--_ui5_search_advanced_button_border: none;
+	--_ui5-search-advanced_button_background_color: inherit;
+	--ui5_search_advanced_button_background_active: inherit;
 	--_ui5_search_icon_size: 1.75rem;
 	--_ui5_search_icon_padding: 0.375rem;
 	--_ui5_search_icon_hover_padding: 0.3125rem;
