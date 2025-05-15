@@ -128,7 +128,6 @@ class NavigationMenuItem extends MenuItem {
 		const sideNav = item.sideNavigation;
 		const overflowMenu = sideNav?.getOverflowPopover();
 		const isSelectable = item.isSelectable;
-		const isSelected = item.selected;
 
 		const executeEvent = item.fireDecoratorEvent("click", {
 			altKey: e.altKey,
@@ -146,11 +145,10 @@ class NavigationMenuItem extends MenuItem {
 				sideNav?.closeMenu();
 			}
 
-			this._handleFocus(item);
 			return;
 		}
 
-		const shouldSelect = (!this.hasSubmenu && isSelectable)	|| (this.hasSubmenu && isSelectable && !isSelected);
+		const shouldSelect = !this.hasSubmenu && isSelectable;
 
 		if (this.hasSubmenu) {
 			overflowMenu?._openItemSubMenu(this);
@@ -160,11 +158,10 @@ class NavigationMenuItem extends MenuItem {
 			sideNav?._selectItem(item);
 		}
 
-		if (!this.hasSubmenu || (this.hasSubmenu && isSelectable)) {
+		if (!this.hasSubmenu) {
 			sideNav?.closeMenu();
+			this._handleFocus(item);
 		}
-
-		this._handleFocus(item);
 	}
 
 	_handleFocus(associatedItem: SideNavigationSelectableItemBase) {
