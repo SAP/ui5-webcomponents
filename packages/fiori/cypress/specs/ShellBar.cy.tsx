@@ -11,7 +11,7 @@ import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Switch from "@ui5/webcomponents/dist/Switch.js";
-import Search from "../../src/Search.js";
+import ShellBarSearch from "../../src/ShellBarSearch.js";
 
 const RESIZE_THROTTLE_RATE = 300; // ms
 
@@ -454,7 +454,7 @@ describe("Slots", () => {
 		it("Test search button is not visible when a self-collapsible search field slot is empty", () => {
 			cy.mount(
 				<ShellBar id="shellbar">
-					<Search slot="searchField"></Search>
+					<ShellBarSearch slot="searchField"></ShellBarSearch>
 				</ShellBar>
 			);
 			cy.get("#shellbar")
@@ -466,7 +466,7 @@ describe("Slots", () => {
 		it("Test self-collapsible search is expanded and collapsed by the show-search-field property", () => {
 			cy.mount(
 				<ShellBar id="shellbar" showSearchField={true}>
-					<Search id="search" slot="searchField"></Search>
+					<ShellBarSearch id="search" slot="searchField"></ShellBarSearch>
 				</ShellBar>
 			);
 			cy.get("#search").should("have.prop", "collapsed", false);
@@ -474,24 +474,28 @@ describe("Slots", () => {
 			cy.get("#search").should("have.prop", "collapsed", true);
 		});
 
-
-		it("Test showSearchField property is true when using expanded search field", () => {
-			cy.mount(
-				<ShellBar id="shellbar">
-					<Search id="search" slot="searchField"></Search>
-				</ShellBar>
-			);
-			cy.get("#search").should("have.prop", "collapsed", false);
-			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", true);
-		});
-
 		it("Test showSearchField property is false when using collapsed search field", () => {
 			cy.mount(
 				<ShellBar id="shellbar">
-					<Search id="search" slot="searchField" collapsed></Search>
+					<ShellBarSearch id="search" slot="searchField" collapsed></ShellBarSearch>
 				</ShellBar>
 			);
 			cy.get("#search").should("have.prop", "collapsed", true);
+			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", false);
+		});
+
+		it("Test search field is collapsed initially instead of being displayed in full width mode", () => {
+			cy.viewport(500, 1080);
+			cy.mount(
+				// needs some content to trigger the full width mode
+				<ShellBar id="shellbar" showSearchField={true} showNotifications={true} showProductSwitch={true}>
+					<Button icon={navBack} slot="startButton"></Button>
+					<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					<Button slot="content">Start Button 1</Button>
+
+					<Input id="search" slot="searchField"></Input>
+				</ShellBar>
+			);
 			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", false);
 		});
 	});

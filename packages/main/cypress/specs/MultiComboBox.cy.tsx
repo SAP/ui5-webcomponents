@@ -160,3 +160,30 @@ describe("Event firing", () => {
 			.should("have.been.calledTwice");
 	});
 });
+
+describe("Accessibility", () => {
+	it("should announce the associated label when MultiComboBox is focused", () => {
+		cy.mount(
+			<>
+				<label for="mcb">MultiComboBox aria-label</label>
+				<MultiComboBox id="mcb"></MultiComboBox>
+			</>
+		);
+
+		cy.get('label[for="mcb"]')
+			.invoke('text')
+			.then((labelText) => {
+
+				cy.get("[ui5-multi-combobox]")
+					.shadow()
+					.find("input")
+					.as("innerInput");
+
+				cy.get("@innerInput")
+					.click();
+
+				cy.get("@innerInput")
+					.should("have.attr", "aria-label", labelText);
+			});
+	});
+});
