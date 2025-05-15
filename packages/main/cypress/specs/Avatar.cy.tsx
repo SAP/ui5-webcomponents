@@ -30,4 +30,20 @@ describe("Accessibility", () => {
 			.find("svg")
 			.should("have.attr", "aria-label", ACCESSIBLE_NAME);
 	});
+
+	it("doesn't fire ui5-click event, when disabled property is set", () => {
+		cy.mount(
+			<div>
+				<Avatar interactive disabled initials="JD" id="diabled-avatar" onClick={increment}></Avatar>
+				<input value="0" id="click-event" />
+			</div>
+		);
+
+		function increment() {
+			const input = document.getElementById("click-event") as HTMLInputElement;
+			input.value = "1";
+		}
+		cy.get("#diabled-avatar").realClick();
+		cy.get("#click-event").should("have.value", "0");
+	});
 });
