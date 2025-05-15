@@ -6,6 +6,7 @@ import group from "@ui5/webcomponents-icons/dist/group.js";
 import { NAVIGATION_MENU_POPOVER_HIDDEN_TEXT } from "../../src/generated/i18n/i18n-defaults.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
+import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 
 describe("Side Navigation Rendering", () => {
 	it("Tests rendering in collapsed mode", () => {
@@ -266,16 +267,26 @@ describe("Side Navigation interaction", () => {
 			</SideNavigation>
 		);
 
-		cy.get("#focusStart").should("exist");
-		cy.get("#focusStart").realClick();
+		cy.get("#unselectableItem").realClick();
 
-		cy.realPress("ArrowDown");
+        cy.get("#sn")
+            .shadow()
+            .find(`[ui5-side-navigation-item][text="1"]`)
+            .should('be.focused'); 
+
+        cy.realPress("ArrowLeft");
+		cy.get("#unselectableItem").should('be.focused');
+
 		cy.realPress("ArrowRight");
+		cy.get("#sn")
+			.shadow()
+			.find(`[ui5-side-navigation-item][text="1"]`)
+			.should('be.focused');
 
 		cy.get("#sn")
 			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("be.visible");
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
 	});
 
 	it("Tests collapsing of items with ArrowLeft on collapsed sn", () => {
@@ -288,15 +299,21 @@ describe("Side Navigation interaction", () => {
 			</SideNavigation>
 		);
 
-		cy.get("#unselectableItem").should("exist");
 		cy.get("#unselectableItem").realClick();
-
-		cy.realPress("ArrowLeft");
 
 		cy.get("#sn")
 			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("not.be.visible");
+			.find(`[ui5-side-navigation-item][text="1"]`)
+			.should('be.focused'); // Фокуса на правилното място ли е след, като съм отворил popover?
+
+		cy.realPress("ArrowLeft"); // Ако фокуса е на правилното място, натисни ArrowLeft
+
+		cy.get("#unselectableItem").should('be.focused'); // След като съм натиснал ArrowLeft, провери дали фокуса е на правилното място
+
+		cy.get("#sn")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverClosed(); // Ако фокуса е на правилното място провери дали popover-a е затворен, защото така очаквам
 	});
 
 	it("Tests expanding of items with ArrowLeft for rtl", () => {
@@ -349,16 +366,27 @@ describe("Side Navigation interaction", () => {
 			</div>
 		);
 
-		cy.get("#focusStart").should("exist");
-		cy.get("#focusStart").realClick();
+		cy.get("#unselectableItem").realClick();
 
-		cy.realPress("ArrowDown");
+        cy.get("#sn")
+            .shadow()
+            .find(`[ui5-side-navigation-item][text="1"]`)
+            .should('be.focused'); 
+
+        cy.realPress("ArrowRight"); 
+
+        cy.get("#unselectableItem").should('be.focused');
+
 		cy.realPress("ArrowLeft");
+		cy.get("#sn")
+            .shadow()
+            .find(`[ui5-side-navigation-item][text="1"]`)
+            .should('be.focused');
 
 		cy.get("#sn")
 			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("be.visible");
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
 	});
 
 	it("Tests collapsing of items with ArrowRight on collapsed sn for rtl", () => {
@@ -374,12 +402,17 @@ describe("Side Navigation interaction", () => {
 		);
 
 		cy.get("#unselectableItem").realClick();
+		cy.get("#sn")
+			.shadow()
+			.find(`[ui5-side-navigation-item][text="1"]`)
+			.should('be.focused');
+
 		cy.realPress("ArrowRight");
 
 		cy.get("#sn")
 			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("not.be.visible");
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverClosed();
 	});
 
 	it("Tests expanding of items with Plus", () => {
@@ -417,26 +450,6 @@ describe("Side Navigation interaction", () => {
 
 	});
 
-	it("Tests expanding of items with Plus for collapsed sn", () => {
-		cy.mount(
-			<SideNavigation id="sn" collapsed={true}>
-				<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
-				<SideNavigationItem id="unselectableItem" text="1">
-					<SideNavigationSubItem text="1.2" />
-				</SideNavigationItem>
-			</SideNavigation>
-		);
-
-		cy.get("#focusStart").realClick();
-		cy.realPress("ArrowDown");
-		cy.realPress("+");
-
-		cy.get("#sn")
-			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("be.visible");
-	});
-
 	it("Tests collapsing of items with Minus for collapsed sn", () => {
 		cy.mount(
 			<SideNavigation id="sn" collapsed={true}>
@@ -448,12 +461,17 @@ describe("Side Navigation interaction", () => {
 		);
 
 		cy.get("#unselectableItem").realClick();
+		cy.get("#sn")
+			.shadow()
+			.find(`[ui5-side-navigation-item][text="1"]`)
+			.should('be.focused');
+
 		cy.realPress("-");
 
 		cy.get("#sn")
 			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("not.be.visible");
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverClosed();
 	});
 
 	it("Tests expanding of items with Plus for rtl", () => {
@@ -490,7 +508,6 @@ describe("Side Navigation interaction", () => {
 		cy.realPress("-");
 
 		cy.get("#unselectableItem").should("not.have.attr", "expanded");
-
 	});
 
 	it("Tests expanding of items with Plus for collapsed sn", () => {
@@ -503,35 +520,23 @@ describe("Side Navigation interaction", () => {
 			</SideNavigation>
 		);
 
+		cy.get("#focusStart").should("exist");
 		cy.get("#focusStart").realClick();
+		cy.get("#focusStart").should("be.focused");
+		
 		cy.realPress("ArrowDown");
+		cy.get("#unselectableItem").should("be.focused");
+
 		cy.realPress("+");
+		cy.get("#sn")
+            .shadow()
+            .find(`[ui5-side-navigation-item][text="1"]`)
+            .should('be.focused');
 
 		cy.get("#sn")
 			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("be.visible");
-	});
-
-	it("Tests collapsing of items with Minus for collapsed sn", () => {
-		cy.mount(
-			<div dir="rtl">
-				<SideNavigation id="sn" collapsed={true}>
-					<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
-					<SideNavigationItem id="unselectableItem" text="1">
-						<SideNavigationSubItem text="1.2" />
-					</SideNavigationItem>
-				</SideNavigation>
-			</div>
-		);
-
-		cy.get("#unselectableItem").realClick();
-		cy.realPress("-");
-
-		cy.get("#sn")
-			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("not.be.visible");
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
 	});
 
 	it("Tests expanding and collapsing of unselectable parent item when SideNavigation is collapsed", () => {
