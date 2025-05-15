@@ -152,7 +152,6 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	 *
 	 * @private
 	 */
-	@property({ type: Object })
 	associatedItem?: SideNavigationItemBase;
 
 	get ariaRole() {
