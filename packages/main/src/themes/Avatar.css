@@ -32,6 +32,7 @@
 
 :host([disabled]) {
 	opacity: var(--sapContent_DisabledOpacity);
+	pointer-events: none;
 }
 
 :host {
