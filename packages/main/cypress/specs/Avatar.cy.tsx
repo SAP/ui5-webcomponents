@@ -34,10 +34,11 @@ describe("Accessibility", () => {
 	it("doesn't fire ui5-click event, when disabled property is set", () => {
 		cy.mount(
 			<div>
-				<Avatar interactive disabled initials="JD" id="diabled-avatar" onClick={increment}></Avatar>
+				<Avatar interactive disabled initials="JD" id="diabled-avatar"></Avatar>
 				<input value="0" id="click-event" />
 			</div>
 		);
+		document.getElementById("diabled-avatar")?.addEventListener("ui5-click", increment);
 
 		function increment() {
 			const input = document.getElementById("click-event") as HTMLInputElement;
