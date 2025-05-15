@@ -204,12 +204,12 @@ class Toolbar extends UI5Element {
 
 	get overflowItems() {
 		// spacers are ignored
-		const overflowItems = this.getItemsInfo(this.itemsToOverflow.filter(item => !item.ignoreSpace));
+		const overflowItems = this.itemsToOverflow.filter(item => !item.ignoreSpace);
 		return this.reverseOverflow ? overflowItems.reverse() : overflowItems;
 	}
 
 	get standardItems() {
-		return this.getItemsInfo(this.items.filter(item => this.itemsToOverflow.indexOf(item) === -1));
+		return this.items.filter(item => this.itemsToOverflow.indexOf(item) === -1);
 	}
 
 	get hideOverflowButton() {
@@ -295,8 +295,8 @@ class Toolbar extends UI5Element {
 
 		this.storeItemsWidth();
 		this.processOverflowLayout();
-		this.getItemsInfo(this.items).forEach(item => {
-			 item.context.isOverflowed = this.overflowItems.map(overflowItem => overflowItem.context).indexOf(item.context) !== -1;
+		this.items.forEach(item => {
+			 item.isOverflowed = this.overflowItems.map(overflowItem => overflowItem).indexOf(item) !== -1;
 		});
 	}
 
@@ -485,16 +485,6 @@ class Toolbar extends UI5Element {
 		// some items were updated reset the cache and trigger a re-render
 		this.itemsToOverflow = [];
 		this.contentWidth = 0; // re-render
-	}
-
-	getItemsInfo(items: Array<ToolbarItem>) {
-		return items.map((item: ToolbarItem) => {
-			const toolbarItem = {
-				context: item,
-			};
-
-			return toolbarItem;
-		}).filter(item => !!item);
 	}
 
 	getItemWidth(item: ToolbarItem): number {
