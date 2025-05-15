@@ -10,7 +10,6 @@ import {
 	isPlus,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
-import { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
 import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
@@ -227,7 +226,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 			this._activate(e);
 		}
 
-		if ((isRTL ? isLeft(e) : isRight(e)) && this.sideNavCollapsed && isInstanceOfSideNavigationItem(this) && this.items.length) {
+		if ((isRTL ? isLeft(e) : isRight(e)) && this.hasSubItems) {
 			this._activate(e);
 		}
 

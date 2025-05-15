@@ -85,6 +85,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		return [this];
 	}
 
+	get hasSubItems() {
+		return this.items.length > 0;
+	}
+
 	get selectableItems() : Array<SideNavigationSelectableItemBase> {
 		if (this.inPopover && this.unselectable && this.items.length) {
 			return [...this.items];
