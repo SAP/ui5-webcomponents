@@ -199,6 +199,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (this.disabled) {
+			return;
+		}
+
 		if (isLeft(e) || isMinus(e)) {
 			this.expanded = false;
 			return;
@@ -270,7 +274,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_toggle() {
-		if (this.items.length) {
+		if (this.items.length && !this.disabled) {
 			this.expanded = !this.expanded;
 		}
 	}

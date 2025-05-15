@@ -155,6 +155,10 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (this.disabled) {
+			return;
+		}
+
 		if (isLeft(e) || isMinus(e)) {
 			this.expanded = false;
 			return;
