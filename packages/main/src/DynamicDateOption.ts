@@ -1,15 +1,13 @@
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import type { DynamicDateRangeValue } from "./DynamicDateRange.js";
-import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 /**
  * @interface
- * @extends UI5Element
  * @public
  * @since 2.0.0
  */
 
-export interface IDynamicDateRangeOption extends UI5Element {
+export interface IDynamicDateRangeOption {
 	icon: string;
     key: string;
     text: string;

@@ -2,7 +2,7 @@ import type DynamicDateRange from "../DynamicDateRange.js";
 import Calendar from "../Calendar.js";
 import CalendarDate from "../CalendarDate.js";
 
-export default function DynamicDateRangeOptionDateTemplate(this: DynamicDateRange) {
+export default function SingleDateTemplate(this: DynamicDateRange) {
 	return (
 		<Calendar onSelectionChange={this.handleSelectionChange}>
 			<CalendarDate

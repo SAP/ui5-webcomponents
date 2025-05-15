@@ -10,7 +10,7 @@ describe('DynamicDateRange Component', () => {
             <DynamicDateOptionDate/>
             <DynamicDateOptionToday/>
             <DynamicDateOptionDateRange/>
-       </DynamicDateRange>
+        </DynamicDateRange>
        );
     });
 

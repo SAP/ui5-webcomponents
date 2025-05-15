@@ -1,38 +1,26 @@
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type { IDynamicDateRangeOption } from "../DynamicDateOption.js";
-import DynamicDateRangeOptionDateTemplate from "./DynamicDateRangeOptionDateTemplate.js";
+import SingleDateTemplate from "./SingleDateTemplate.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import type { DynamicDateRangeValue } from "../DynamicDateRange.js";
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
-import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	DYNAMIC_DATE_RANGE_DATE_TEXT,
 } from "../generated/i18n/i18n-defaults.js";
 import { dateOptionToDates } from "./toDates.js";
+import DynamicDateRange from "../DynamicDateRange.js";
 
 /**
  * @class
  * @constructor
- * @extends UI5Element
- * @abstract
  * @public
  * @since 2.0.0
  */
-@customElement({
-	tag: "ui5-dynamic-date-range-option-date",
-})
 
-class DynamicDateRangeOptionDate extends UI5Element implements IDynamicDateRangeOption {
-    @i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
-
+class SingleDate implements IDynamicDateRangeOption {
 	template: JsxTemplate;
 
 	constructor() {
-		super();
-		this.template = DynamicDateRangeOptionDateTemplate;
+		this.template = SingleDateTemplate;
 	}
 
 	parse(value: string): DynamicDateRangeValue {
@@ -71,7 +59,7 @@ class DynamicDateRangeOptionDate extends UI5Element implements IDynamicDateRange
 	}
 
 	get text() {
-		return DynamicDateRangeOptionDate.i18nBundle.getText(DYNAMIC_DATE_RANGE_DATE_TEXT);
+		return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_DATE_TEXT);
 	}
 
 	get key() {
@@ -101,6 +89,6 @@ class DynamicDateRangeOptionDate extends UI5Element implements IDynamicDateRange
 	}
 }
 
-DynamicDateRangeOptionDate.define();
+DynamicDateRange.register("DATE", SingleDate);
 
-export default DynamicDateRangeOptionDate;
+export default SingleDate;

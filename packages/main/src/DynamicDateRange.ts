@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -83,20 +82,46 @@ class DynamicDateRange extends UI5Element {
 	@property({ type: Boolean })
 	open = false;
 
+	/**
+	 * Defines the options.
+	 * @public
+	 * @default ""
+	 */
+	@property({ type: String })
+	options = "";
+
     @property({ type: Object })
     _currentOption?: IDynamicDateRangeOption;
 
 	@property({ type: Object })
     currentValue?: DynamicDateRangeValue;
 
-	@slot({ type: HTMLElement, "default": true })
-	options!: Array<IDynamicDateRangeOption>;
+	static optionsClasses: Map<string, new () => IDynamicDateRangeOption> = new Map();
+
+	optionsObjects: IDynamicDateRangeOption[] = [];
 
 	@query("[ui5-input]")
 	_input?: Input;
 
+	onBeforeRendering() {
+		if (!this.optionsObjects.length) {
+			const optionKeys = this.options.split(",").map(option => option.trim());
+			this.optionsObjects = optionKeys.map(option => {
+				const OptionClass = DynamicDateRange.getOptionClass(option);
+
+				if (OptionClass) {
+					const optionObject = new OptionClass();
+
+					return optionObject;
+				}
+
+				return undefined;
+			}).filter(optionObject => optionObject !== undefined);
+		}
+	}
+
 	get _optionsTitles(): Array<string> {
-		return this.options.map(option => option.text);
+		return this.optionsObjects.map(option => option.text);
 	}
 
 	get openIconName() {
@@ -116,7 +141,7 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	_selectOption(e: any) {
-		this._currentOption = this.options.find(option => option.text === e.detail.item.textContent);
+		this._currentOption = this.optionsObjects.find(option => option.text === e.detail.item.textContent);
 		if (!this._currentOption?.template) {
 			this.currentValue = this._currentOption?.parse(this._currentOption.text) as DynamicDateRangeValue;
 			this._submitValue();
@@ -128,7 +153,20 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	getOption(key: string) {
-		return this.options.find(option => option.key === key);
+		const resultOption = this.optionsObjects.find(option => option.key === key);
+
+		if (!resultOption) {
+			const OptionClass = DynamicDateRange.getOptionClass(key);
+
+			if (OptionClass) {
+				const optionObject = new OptionClass();
+				this.optionsObjects.push(optionObject);
+
+				return optionObject;
+			}
+		}
+
+		return resultOption;
 	}
 
 	onInputChange(e: any) {
@@ -139,7 +177,7 @@ class DynamicDateRange extends UI5Element {
 			return;
 		}
 
-		const currentOption = this.options.find(option => option.isValidString(value));
+		const currentOption = this.optionsObjects.find(option => option.isValidString(value));
 
 		this.value = currentOption ? this.getOption(currentOption.key)?.parse(value) as DynamicDateRangeValue : undefined;
 	}
@@ -188,6 +226,18 @@ class DynamicDateRange extends UI5Element {
 
 	handleSelectionChange(e: CustomEvent) {
 		this.currentValue = this._currentOption?.handleSelectionChange && this._currentOption?.handleSelectionChange(e) as DynamicDateRangeValue;
+	}
+
+	static register(key: string, option: new () => IDynamicDateRangeOption): void {
+		key = key.toUpperCase();
+
+		if (!this.optionsClasses.has(key)) {
+			this.optionsClasses.set(key, option);
+		}
+	}
+
+	static getOptionClass(key: string): (new () => IDynamicDateRangeOption) | undefined {
+		return this.optionsClasses.get(key);
 	}
 }
 
