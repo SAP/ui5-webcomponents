@@ -875,6 +875,39 @@ describe("Form support", () => {
 			.should("be.equal", "time_picker3=ok&time_picker4=1:10:10 PM");
 	});
 
+	it("Button's click doesn't submit form on prevent default", () => {
+		cy.mount(<form method="get">
+			<Button id="b1" type="Submit">Preventable button</Button>
+		</form>);
+
+		cy.get("#b1")
+			.then($item => {
+				$item.get(0).addEventListener("ui5-click", e => e.preventDefault());
+				$item.get(0).addEventListener("ui5-click", cy.stub().as("click"));
+			});
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", e => e.preventDefault());
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("#b1")
+			.realClick();
+
+		cy.get("#b1")
+			.realPress("Enter");
+
+		cy.get("#b1")
+			.realPress("Space");
+
+		cy.get("@click")
+			.should("have.been.calledThrice");
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+	});
+
 	it("Normal button does not submit forms", () => {
 		cy.mount(<form method="get">
 			<Button id="b1">Does not submit forms</Button>

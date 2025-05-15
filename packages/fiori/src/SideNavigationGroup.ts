@@ -16,7 +16,6 @@ import type SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationGroupTemplate from "./SideNavigationGroupTemplate.js";
 
 import {
-	SIDE_NAVIGATION_GROUP_HEADER_DESC,
 	SIDE_NAVIGATION_ICON_COLLAPSE,
 	SIDE_NAVIGATION_ICON_EXPAND,
 } from "./generated/i18n/i18n-defaults.js";
@@ -58,6 +57,8 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	@property({ type: Boolean })
 	expanded = false;
 
+	belowGroup = false;
+
 	/**
 	 * Defines nested items by passing `ui5-side-navigation-item` to the default slot.
 	 *
@@ -68,6 +69,28 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
+
+	_initialChildDisabledStates: Map<SideNavigationItemBase, boolean> = new Map();
+
+	onBeforeRendering() {
+		this.allItems.forEach(item => {
+			if (!this._initialChildDisabledStates.has(item)) {
+				this._initialChildDisabledStates.set(item, item.disabled);
+			}
+		});
+
+		this._updateChildItemsDisabledState();
+	}
+
+	_updateChildItemsDisabledState() {
+		this.allItems.forEach(item => {
+			if (this.disabled) {
+				item.disabled = true;
+			} else {
+				item.disabled = this._initialChildDisabledStates.get(item)!;
+			}
+		});
+	}
 
 	get overflowItems() : Array<HTMLElement> {
 		const separator1 = this.shadowRoot!.querySelector<HTMLElement>(".ui5-sn-item-separator:first-child")!;
@@ -123,15 +146,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	}
 
 	get belowGroupClassName() {
-		if (isInstanceOfSideNavigationGroup(this.previousElementSibling)) {
-			return "ui5-sn-item-group-below-group";
-		}
-
-		return "";
-	}
-
-	get accDescription() {
-		return SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_GROUP_HEADER_DESC);
+		return this.belowGroup ? "ui5-sn-item-group-below-group" : "";
 	}
 
 	get _arrowTooltip() {
@@ -161,7 +176,9 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	}
 
 	_toggle() {
-		this.expanded = !this.expanded;
+		if (!this.disabled) {
+			this.expanded = !this.expanded;
+		}
 	}
 
 	get isSideNavigationGroup() {
