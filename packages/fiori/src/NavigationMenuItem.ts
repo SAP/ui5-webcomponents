@@ -5,6 +5,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
 import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 import NavigationMenu from "./NavigationMenu.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 
 // Templates
 import NavigationMenuItemTemplate from "./NavigationMenuItemTemplate.js";
@@ -15,6 +17,7 @@ import navigationMenuItemCss from "./generated/themes/NavigationMenuItem.css.js"
 import {
 	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
+import type SideNavigationItem from "./SideNavigationItem.js";
 
 /**
  * @class
@@ -79,6 +82,8 @@ class NavigationMenuItem extends MenuItem {
 	@property()
 	design: `${SideNavigationItemDesign}` = "Default";
 
+	associatedItem?: SideNavigationSelectableItemBase;
+
 	get isExternalLink() {
 		return this.href && this.target === "_blank";
 	}
@@ -105,6 +110,101 @@ class NavigationMenuItem extends MenuItem {
 		result.main["ui5-navigation-menu-item-root"] = true;
 
 		return result;
+	}
+
+	_onclick(e: MouseEvent) {
+		this._activate(e);
+	}
+
+	_activate(e: MouseEvent | KeyboardEvent) {
+		e.stopPropagation();
+
+		const item = this.associatedItem;
+
+		if (this.disabled || !item) {
+			return;
+		}
+
+		const sideNav = item.sideNavigation;
+		const overflowMenu = sideNav?.getOverflowPopover();
+		const isSelectable = item.isSelectable;
+
+		const executeEvent = item.fireDecoratorEvent("click", {
+			altKey: e.altKey,
+			ctrlKey: e.ctrlKey,
+			metaKey: e.metaKey,
+			shiftKey: e.shiftKey,
+		});
+
+		if (!executeEvent) {
+			e.preventDefault();
+
+			if (this.hasSubmenu) {
+				overflowMenu?._openItemSubMenu(this);
+			} else {
+				sideNav?.closeMenu();
+			}
+
+			return;
+		}
+
+		const shouldSelect = !this.hasSubmenu && isSelectable;
+
+		if (this.hasSubmenu) {
+			overflowMenu?._openItemSubMenu(this);
+		}
+
+		if (shouldSelect) {
+			sideNav?._selectItem(item);
+		}
+
+		if (!this.hasSubmenu) {
+			sideNav?.closeMenu();
+			this._handleFocus(item);
+		}
+	}
+
+	_handleFocus(associatedItem: SideNavigationSelectableItemBase) {
+		const sideNavigation = associatedItem.sideNavigation;
+
+		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
+			const parent = associatedItem.parentElement as SideNavigationItem;
+			sideNavigation?.focusItem(parent);
+			parent?.focus();
+		} else {
+			sideNavigation?.focusItem(associatedItem);
+			associatedItem?.focus();
+		}
+	}
+
+	async _onkeydown(e: KeyboardEvent): Promise<void> {
+		if (isSpace(e)) {
+			e.preventDefault();
+		}
+
+		if (isEnter(e)) {
+			this._activate(e);
+		}
+
+		return Promise.resolve();
+	}
+
+	_onkeyup(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			this._activate(e);
+
+			if (this.href && !e.defaultPrevented) {
+				const customEvent = new MouseEvent("click");
+
+				customEvent.stopImmediatePropagation();
+				if (this.getDomRef()!.querySelector("a")) {
+					this.getDomRef()!.querySelector("a")!.dispatchEvent(customEvent);
+				} else {
+					// when Side Navigation is collapsed and it is first level item we have directly <a> element
+					this.getDomRef()!.dispatchEvent(customEvent);
+				}
+			}
+		}
 	}
 
 	get acessibleNameText() {
