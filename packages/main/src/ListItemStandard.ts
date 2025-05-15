@@ -44,9 +44,10 @@ type ExpandableTextTemplate = (this: ListItemStandard, params: ExpandableTextTem
  * @csspart checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode
  * @slot {Node[]} default - Defines the custom formatted text of the component.
  *
- * **Note:** Strongly recommended to use the `text` property for optimal wrapping and consistent layout. <br/>
- * Use the `default` slot **only** when you need to apply custom formatting using HTML elements (e.g. `<b>`, `<i>`, etc.).
- * Keep in mind that when using custom formatted content via the `default` slot, the wrapping functionality (enabled via `wrappingType="Normal"`) may not work as expected.
+ * **Note:** For optimal text wrapping and a consistent layout, it is strongly recommended to use the `text` property.
+ *
+ * Use the `default` slot only when custom formatting with HTML elements (e.g., `<b>`, `<i>`) is required.
+ * Be aware that wrapping (via `wrappingType="Normal"`) may not function correctly with custom HTML content in the `default` slot.
  *
  * If both `text` and `default` slot are used, the `text` property takes precedence.
  * @constructor
