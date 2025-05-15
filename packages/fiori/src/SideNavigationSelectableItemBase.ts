@@ -226,7 +226,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 			this._activate(e);
 		}
 
-		if ((isRTL ? isLeft(e) : isRight(e)) && this.hasSubItems) {
+		if ((isRTL ? isLeft(e) : isRight(e)) && this.sideNavCollapsed && this.hasSubItems) {
 			this._activate(e);
 		}
 
