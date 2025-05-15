@@ -1178,7 +1178,6 @@ class ShellBar extends UI5Element {
 					stableDomRef: item.stableDomRef,
 					tooltip: item.title || item.text,
 					accessibilityAttributes: item.accessibilityAttributes,
-					accessibleName: (item.title || item.text) ? `${item.title || item.text},` : undefined,
 				};
 			}),
 			{
