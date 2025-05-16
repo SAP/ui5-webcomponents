@@ -1,3 +1,4 @@
+import Button from "@ui5/webcomponents/dist/Button.js";
 import SearchField from "../../src/SearchField.js";
 import SearchScope from "../../src/SearchScope.js";
 import {
@@ -422,6 +423,46 @@ describe("SearchField general interaction", () => {
 
 			cy.get("@scopeChanged")
 				.should("have.been.calledOnce");
+		});
+	});
+
+	describe("SearchField - Advanced filter and Scope Slot Rendering", () => {
+		it("renders the advanced filter slot content when only advanced filtering is provided", () => {
+			cy.mount(
+				<SearchField value="test">
+					<Button slot="advancedFilter" icon="filter"></Button>
+				</SearchField>
+			);
+
+			cy.get("ui5-search-field").as("searchField");
+
+			cy.get("@searchField")
+				.shadow()
+				.find('slot[name="advancedFilter"]')
+				.should("exist");
+		});
+
+		it("renders the scope selector and omits advanced fliter slot when both are provided", () => {
+			cy.mount(
+				<SearchField>
+					<Button slot="advancedFilter" icon="filter"></Button>
+					<SearchScope text="All" slot="scopes"></SearchScope>
+					<SearchScope text="Apps" selected slot="scopes"></SearchScope>
+				</SearchField>
+			);
+
+			cy.get("ui5-search-field")
+				.as("searchField");
+
+			cy.get("@searchField")
+				.shadow()
+				.find("ui5-select")
+				.should("exist");
+
+			cy.get("@searchField")
+				.shadow()
+				.find('slot[name="advancedFilter"]')
+				.should("not.exist");
 		});
 	});
 });
