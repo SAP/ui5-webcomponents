@@ -6,8 +6,6 @@ import {
 	isEnter,
 	isLeft,
 	isRight,
-	isMinus,
-	isPlus,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
