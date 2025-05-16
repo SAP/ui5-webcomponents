@@ -317,6 +317,12 @@ class SideNavigation extends UI5Element {
 	handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
 		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
 
+		if (associatedItem.disabled) {
+			e.stopPropagation();
+			e.preventDefault();
+			return;
+		}
+
 		if (isInstanceOfSideNavigationItem(associatedItem) && associatedItem.unselectable) {
 			return;
 		}
@@ -428,9 +434,7 @@ class SideNavigation extends UI5Element {
 				return;
 			}
 
-			if (!item.disabled) {
-				result.push(item);
-			}
+			result.push(item);
 		});
 
 		return result;
@@ -576,6 +580,12 @@ class SideNavigation extends UI5Element {
 	}
 
 	_handleItemClick(e: KeyboardEvent | MouseEvent, item: SideNavigationSelectableItemBase) {
+		if (item.disabled) {
+			e.stopPropagation();
+			e.preventDefault();
+			return;
+		}
+
 		if (item.selected && !this.collapsed) {
 			const {
 				altKey,

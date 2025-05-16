@@ -116,6 +116,28 @@ describe("Side Navigation Rendering", () => {
 		cy.get("#item11").should("have.attr", "tooltip", TOOLTIP_TEXT);
 		cy.get("#item21").should("not.have.attr", "tooltip");
 	});
+
+	it("Tests disabled parent item", () => {
+		cy.mount(
+			<SideNavigation id="sn1">
+				<SideNavigationItem id="parent" expanded={true} text="Group 1">
+					<SideNavigationSubItem text="child 1" />
+					<SideNavigationSubItem disabled={true} text="child 2" />
+				</SideNavigationItem>
+			</SideNavigation>);
+
+		cy.get("#parent").should("not.have.attr", "disabled");
+		cy.get("#parent").invoke("prop", "disabled", true);
+		cy.get("#parent").should("have.attr", "disabled");
+
+		cy.get("#parent").then(($itemRef) => {
+			const item = $itemRef[0] as SideNavigationItem;
+			cy.wrap(item.items).each((item: SideNavigationItem) => {
+				cy.wrap(item).should("have.prop", "disabled", true);
+			});
+		});
+	});
+
 });
 
 describe("Side Navigation interaction", () => {
@@ -1315,7 +1337,45 @@ describe("Focusable items", () => {
 			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.2']")
 			.shadow()
 			.find(".ui5-sn-item")
-			.should("not.have.attr", "tabindex");
+			.should("have.attr", "tabindex", "-1");
+	});
+
+	it("Tests focus of disabled items", () => {
+		cy.mount(
+			<SideNavigation id="sideNav">
+				<SideNavigationItem id="item" text="1"></SideNavigationItem>
+				<SideNavigationItem disabled={true} id="parentItem" expanded={true} text="2">
+					<SideNavigationSubItem id="childItem" text="2.1" disabled={true} />
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#item").realClick();
+		
+		cy.get("#item")
+			.should("be.focused")
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "0");
+
+		cy.realPress("ArrowDown");
+		
+		cy.get("#parentItem")
+			.should("be.focused")
+		cy.get("#parentItem")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "0");
+
+		cy.realPress("ArrowDown");
+	
+		cy.get("#childItem")
+			.should("be.focused")
+		cy.get("#childItem")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "0");
 	});
 
 	it("Tests focusable items in popover of unselectable parent", () => {
