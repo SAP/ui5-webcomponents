@@ -1072,6 +1072,25 @@ class FlexibleColumnLayout extends UI5Element {
 		return this.effectiveSeparatorsInfo[0].arrowVisible;
 	}
 
+	get startSeparatorValue() {
+		const startColumnWidth = this.startColumnWidth;
+		if (typeof startColumnWidth === "string" && startColumnWidth.endsWith("%")) {
+			return parseInt(startColumnWidth);
+		}
+		return 50;
+	}
+
+	get endSeparatorValue() {
+		const startColumnWidth = this.startColumnWidth;
+		const midColumnWidth = this.midColumnWidth;
+
+		if (typeof startColumnWidth === "string" && startColumnWidth.endsWith("%")
+			&& typeof midColumnWidth === "string" && midColumnWidth.endsWith("%")) {
+			return parseInt(startColumnWidth) + parseInt(midColumnWidth);
+		}
+		return 75;
+	}
+
 	get startArrowDirection() {
 		return this.effectiveSeparatorsInfo[0].arrowDirection;
 	}
