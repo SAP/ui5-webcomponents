@@ -15,6 +15,7 @@ import "@ui5/webcomponents/dist/Tag.js";
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarSpacer.js";
+import "@ui5/webcomponents-fiori/dist/ShellBarSearch.js";
 
 import "@ui5/webcomponents-icons/dist/customer.js";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
