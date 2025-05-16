@@ -1,15 +1,15 @@
 import type Select from "./Select.js";
-import List from "./List.js";
-import Button from "./Button.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import Popover from "./Popover.js";
-import Icon from "./Icon.js";
-import decline from "@ui5/webcomponents-icons/dist/decline.js";
+// import List from "./List.js";
+// import Button from "./Button.js";
+// import ResponsivePopover from "./ResponsivePopover.js";
+// import Popover from "./Popover.js";
+// import Icon from "./Icon.js";
+// import decline from "@ui5/webcomponents-icons/dist/decline.js";
 
 export default function SelectPopoverTemplate(this: Select) {
 	return (
 		<>
-			{this.options.length > 0 &&
+			{/* {this.options.length > 0 &&
 				<ResponsivePopover
 					class={{
 						"ui5-select-popover": true,
@@ -69,9 +69,9 @@ export default function SelectPopoverTemplate(this: Select) {
 						<slot></slot>
 					</List>
 				</ResponsivePopover>
-			}
+			} */}
 
-			{this.shouldOpenValueStateMessagePopover &&
+			{/* {this.shouldOpenValueStateMessagePopover &&
 				<Popover
 					part="popover"
 					class="ui5-valuestatemessage-popover"
@@ -90,7 +90,7 @@ export default function SelectPopoverTemplate(this: Select) {
 						{valueStateMessage.call(this)}
 					</div>
 				</Popover>
-			}
+			} */}
 		</>
 	);
 }
