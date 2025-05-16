@@ -116,6 +116,28 @@ describe("Side Navigation Rendering", () => {
 		cy.get("#item11").should("have.attr", "tooltip", TOOLTIP_TEXT);
 		cy.get("#item21").should("not.have.attr", "tooltip");
 	});
+
+	it("Tests disabled parent item", () => {
+		cy.mount(
+			<SideNavigation id="sn1">
+				<SideNavigationItem id="parent" expanded={true} text="Group 1">
+					<SideNavigationSubItem text="child 1" />
+					<SideNavigationSubItem disabled={true} text="child 2" />
+				</SideNavigationItem>
+			</SideNavigation>);
+
+		cy.get("#parent").should("not.have.attr", "disabled");
+		cy.get("#parent").invoke("prop", "disabled", true);
+		cy.get("#parent").should("have.attr", "disabled");
+
+		cy.get("#parent").then(($itemRef) => {
+			const item = $itemRef[0] as SideNavigationItem;
+			cy.wrap(item.items).each((item: SideNavigationItem) => {
+				cy.wrap(item).should("have.prop", "disabled", true);
+			});
+		});
+	});
+
 });
 
 describe("Side Navigation interaction", () => {
@@ -1318,7 +1340,7 @@ describe("Focusable items", () => {
 			.should("have.attr", "tabindex", "-1");
 	});
 
-	it.only("Tests focus of disabled items", () => {
+	it("Tests focus of disabled items", () => {
 		cy.mount(
 			<SideNavigation id="sideNav">
 				<SideNavigationItem id="item" text="1"></SideNavigationItem>

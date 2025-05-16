@@ -62,6 +62,10 @@
 	color: var(--sapButton_TextColor);
 }
 
+:host([disabled]) .ui5-sn-item-external-link-icon {
+	opacity: var(--sapContent_DisabledOpacity);
+}
+
 :host::part(icon) {
 	color: inherit;
 	min-width: 1rem;

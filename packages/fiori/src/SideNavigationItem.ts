@@ -81,6 +81,28 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
+	_initialChildDisabledStates: Map<SideNavigationItemBase, boolean> = new Map();
+
+	onBeforeRendering() {
+		this.items.forEach(item => {
+			if (!this._initialChildDisabledStates.has(item)) {
+				this._initialChildDisabledStates.set(item, item.disabled);
+			}
+		});
+
+		this._updateChildItemsDisabledState();
+	}
+
+	_updateChildItemsDisabledState() {
+		this.items.forEach(item => {
+			if (this.disabled) {
+				item.disabled = true;
+			} else {
+				item.disabled = this._initialChildDisabledStates.get(item)!;
+			}
+		});
+	}
+
 	get overflowItems() : Array<SideNavigationItem> {
 		return [this];
 	}
