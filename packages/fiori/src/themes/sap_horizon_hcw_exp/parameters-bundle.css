@@ -3,6 +3,7 @@
 @import "./MediaGallery-parameters.css";
 @import "../base/MediaGalleryItem-parameters.css";
 @import "./Page-parameters.css";
+@import "../base/SearchItem-parameters.css";
 @import "./ProductSwitchItem-parameters.css";
 @import "../sap_horizon_hcb/ShellBar-parameters.css";
 @import "./SideNavigation-parameters.css";

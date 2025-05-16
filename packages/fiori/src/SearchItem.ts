@@ -1,4 +1,5 @@
-import { property } from "@ui5/webcomponents-base/dist/decorators.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import SearchItemTemplate from "./SearchItemTemplate.js";
@@ -48,17 +49,27 @@ class SearchItem extends ListItemBase {
 	};
 	/**
 	 * Defines the heading text of the search item.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text = "";
+	text?: string;
+
+	/**
+	 * Defines the description displayed right under the item text, if such is present.
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	description?: string;
 
 	/**
 	 * Defines the icon name of the search item.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon = "";
+	icon?: string;
 
 	/**
 	 * Defines whether the search item is selected.
@@ -78,6 +89,15 @@ class SearchItem extends ListItemBase {
 
 	@property()
 	highlightText = "";
+
+	/**
+	 * **Note:** While the slot allows option for setting custom avatar, to match the
+	 * design guidelines, please use the `ui5-avatar` with size - XS.
+	 *
+	 * @public
+	 */
+	@slot()
+	image!: Array<HTMLElement>;
 
 	_markupText = "";
 
@@ -99,7 +119,7 @@ class SearchItem extends ListItemBase {
 		super.onBeforeRendering();
 
 		// bold the matched text
-		this._markupText = this.highlightText ? generateHighlightedMarkup(this.text, this.highlightText) : this.text;
+		this._markupText = this.highlightText ? generateHighlightedMarkup((this.text || ""), this.highlightText) : (this.text || "");
 	}
 }
 
