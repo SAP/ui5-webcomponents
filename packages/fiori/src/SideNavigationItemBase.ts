@@ -83,6 +83,10 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		return this.tooltip || undefined;
 	}
 
+	get hasSubItems() {
+		return false;
+	}
+
 	get classesArray() {
 		const classes = [];
 
