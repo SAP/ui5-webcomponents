@@ -1,8 +1,8 @@
 :host(:not([hidden])) {
-	width: 100%;
+    width: 100%;
 }
 
-:host [ui5-select] {
-	width: inherit;
+.ui5-tb-popover-item {
+    width: inherit;
 }
 
