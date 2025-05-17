@@ -1,0 +1,2 @@
+declare const _default: ":host{background:var(--sapList_HeaderBackground);border-top:var(--sapList_BorderWidth) solid var(--sapList_BorderColor);border-bottom:var(--sapList_BorderWidth) solid var(--sapList_HeaderBorderColor);grid-template-rows:auto 0px}:host([hidden]){display:none}:host([sticky]){position:sticky;top:var(--ui5-v2-11-0-rc-1_grid_sticky_top, 0);z-index:2}#popin-cell{padding:0;width:0;height:0}\n";
+export default _default;
