@@ -185,8 +185,12 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			: SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_ICON_EXPAND);
 	}
 
-	get _overflowItemLabel() {
-		return SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ITEM_LABEL);
+	get _ariaLabel() {
+		if (this.isOverflow) {
+			return SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ITEM_LABEL);
+		}
+
+		return undefined;
 	}
 
 	applyInitialFocusInPopover() {
