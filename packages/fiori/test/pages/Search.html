@@ -18,21 +18,13 @@
 
 	<ui5-search>
 		<ui5-search-message-area slot="messageArea" description="Search for example “All my open Objects”" text="Try This!"></ui5-search-message-area>
-		<ui5-search-item text="List Item" description="Byline"></ui5-search-item>
 
-		<ui5-search-item text="List item" description="Byline">
-			<ui5-avatar slot="image" size="XS">
-				<img src="./img/John_Miller.png" alt="John Miller">
-			</ui5-avatar>
-		</ui5-search-item>
+		<ui5-search-item text="List Item"></ui5-search-item>
 
-		<ui5-search-item text="List item" description="Byline" icon="globe">
-		</ui5-search-item>
-	
 		<ui5-illustrated-message slot="illustration"></ui5-illustrated-message>
-	
+
 		<ui5-search-scope text="All" slot="scopes"></ui5-search-scope>
-	
+
 		<ui5-button design="Transparent" slot="action">Navigate to all results</ui5-button>
 	</ui5-search>
 
@@ -124,6 +116,28 @@
 			Type "scope:" or "apps:" to see the popup and choose a suggestion.
 			Press space to close the popup and type the other filter in order to perform multiple filtering.
 		</ui5-text>
+	</div>
+
+	<div class="container" style="padding-top: 1rem;">
+		<ui5-label>Byline items</ui5-label>
+		<br>
+		<br>
+		<ui5-search show-clear-icon>
+			<ui5-search-item-group header-text="Suppliers (4)">
+				<ui5-search-item text="Danish Fishing Trading Company (100000043)" icon="customer-and-supplier" description="Byline"></ui5-search-item>
+				<ui5-search-item text="Daily Update Ltd. (290210057)" icon="customer-and-supplier" description="Byline"></ui5-search-item>
+				<ui5-search-item text="Damian United (120001884)" icon="customer-and-supplier" description="Byline"></ui5-search-item>
+				<ui5-search-item text="Troda Tech (100230044)" icon="customer-and-supplier" description="Byline"></ui5-search-item>
+			</ui5-search-item-group>
+
+			<ui5-search-item-group header-text="People (4)">
+				<ui5-search-item text="John Doe" description="Byline">
+					<ui5-avatar slot="image" size="XS">
+						<img src="./img/John_Miller.png" alt="John Miller">
+					</ui5-avatar>
+				</ui5-search-item>
+			</ui5-search-item-group>
+		</ui5-search>
 	</div>
 
 	<script>

@@ -35,7 +35,7 @@
 	}
 }
 
-.ui5-search-item-heading {
+.ui5-search-item-text {
 	display: inline-block;
 	font-size: var(--sapFontLargeSize);
 	font-family: var(--sapFontFamily);
@@ -56,7 +56,7 @@
 
 .ui5-search-item-icon {
 	padding: 0.375rem;
-	width: 1rem;
+	width: 1.25rem;
 	height: 1rem;
 	box-sizing: content-box;
 }
@@ -67,15 +67,15 @@
 }
 
 :host([description]) .ui5-search-item-content {
-	padding-top: var(--_ui5_search_item_content_top_bottom_padding);
-	padding-bottom: var(--_ui5_search_item_content_top_bottom_padding);
+	padding-top: .5rem;
+	padding-bottom: .5rem;
 }
 
-:host([description]) .ui5-search-item-subheading {
+:host([description]) .ui5-search-item-description {
 	display: inline-block;
 }
 
-.ui5-search-item-subheading {
+.ui5-search-item-description {
 	display: none;
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSize);

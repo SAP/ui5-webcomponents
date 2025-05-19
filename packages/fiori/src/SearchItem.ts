@@ -65,6 +65,7 @@ class SearchItem extends ListItemBase {
 
 	/**
 	 * Defines the icon name of the search item.
+	 * If provided, image slot will be ignored.
 	 * @default undefined
 	 * @public
 	 */

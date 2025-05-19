@@ -39,9 +39,9 @@ export default function SearchFieldTemplate(this: SearchItem) {
 					}
 
 					<div class="ui5-search-item-titles-container">
-						<span part="title" class="ui5-search-item-heading" dangerouslySetInnerHTML={{ __html: this._markupText }}></span>
+						<span part="title" class="ui5-search-item-text" dangerouslySetInnerHTML={{ __html: this._markupText }}></span>
 
-						<span part="subtitle" class="ui5-search-item-subheading">{this.description}</span>
+						<span part="subtitle" class="ui5-search-item-description">{this.description}</span>
 					</div>
 					{this.selected &&
 						<Button class="ui5-search-item-selected-delete" design={ButtonDesign.Transparent} icon={decline} onClick={this._onDeleteButtonClick}></Button>
