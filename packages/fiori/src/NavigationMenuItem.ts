@@ -159,7 +159,7 @@ class NavigationMenuItem extends MenuItem {
 		}
 
 		if (!this.hasSubmenu) {
-			sideNav?.closeMenu();
+			sideNav?.closeMenu(true);
 			this._handleFocus(item);
 		}
 	}
