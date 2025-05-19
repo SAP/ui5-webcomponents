@@ -17,9 +17,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 					{this.startButton.length > 0 && <slot name="startButton"></slot>}
 
 					{this.hasBranding && (
-						<span class="ui5-shellbar-branding">
-							<slot name="branding"></slot>
-						</span>
+						<slot name="branding"></slot>
 					)}
 
 					{this.hasMenuItems && !this.hasBranding && (

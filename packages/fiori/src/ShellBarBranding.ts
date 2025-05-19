@@ -12,7 +12,6 @@ import type {
 import ShellBarBrandingTemplate from "./ShellBarBrandingTemplate.js";
 
 // Styles
-import shellBarStyles from "./generated/themes/ShellBar.css.js";
 import shellBarBrandingCss from "./generated/themes/ShellBarBranding.css.js";
 
 type ShellBarLogoAccessibilityAttributes = {
@@ -42,7 +41,7 @@ type ShellBarBrandingAccessibilityAttributes = {
 	languageAware: true,
 	renderer: jsxRenderer,
 	template: ShellBarBrandingTemplate,
-	styles: [shellBarStyles, shellBarBrandingCss],
+	styles: shellBarBrandingCss,
 })
 
 class ShellBarBranding extends UI5Element {
@@ -119,7 +118,7 @@ class ShellBarBranding extends UI5Element {
 		return this.brandingTitle ?? "";
 	}
 
-	get accLogoRole() {
+	get accBrandingRole() {
 		return this.accessibilityAttributes.logo?.role || "link";
 	}
 }

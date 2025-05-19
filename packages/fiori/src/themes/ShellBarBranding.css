@@ -18,6 +18,7 @@
 	color: var(--sapShell_TextColor);
 	/* fix cutting of the focus outline */
 	margin-inline-start: 0.125rem;
+	margin-right: 8px;
 }
 
 .ui5-shellbar-branding-root:focus {
@@ -34,4 +35,35 @@
 	background: var(--sapShell_Active_Background);
 	border: 1px solid var(--sapButton_Lite_Active_BorderColor);
 	color: var(--sapShell_Active_TextColor);
+}
+
+.ui5-shellbar-title {
+	display: inline-block;
+	font-family: var(--sapFontSemiboldFamily);
+	margin: 0;
+	font-size: var(--_ui5_shellbar_menu_button_title_font_size);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: var(--sapShell_SubBrand_TextColor);
+}
+
+.ui5-shellbar-logo-area {
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	padding: .25rem .5rem .25rem .25rem;
+	box-sizing: border-box;
+	cursor: pointer;
+	background: var(--sapButton_Lite_Background);
+	border: 1px solid var(--sapButton_Lite_BorderColor);
+	color: var(--sapShell_TextColor);
+	/* fix cutting of the focus outline */
+	margin-inline-start: 0.125rem;
+}
+
+::slotted([slot="logo"]) {
+	max-height: 2rem;
+	max-width: 3.75rem;
+	pointer-events: none;
 }
