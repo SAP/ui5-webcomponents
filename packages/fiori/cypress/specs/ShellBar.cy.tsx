@@ -13,6 +13,7 @@ import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Switch from "@ui5/webcomponents/dist/Switch.js";
 import ShellBarBranding from "../../src/ShellBarBranding.js"
 import Search from "../../src/Search.js";
+import ShellBarSearch from "../../src/ShellBarSearch.js";
 
 const RESIZE_THROTTLE_RATE = 300; // ms
 
