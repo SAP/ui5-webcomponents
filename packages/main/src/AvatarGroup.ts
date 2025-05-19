@@ -3,6 +3,7 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -190,8 +191,8 @@ class AvatarGroup extends UI5Element {
 	 * @since 2.0.0
 	 * @default {}
 	 */
-	 @property({ type: Object })
-	 accessibilityAttributes: AvatarGroupAccessibilityAttributes = {};
+	@property({ type: Object })
+	accessibilityAttributes: AvatarGroupAccessibilityAttributes = {};
 
 	/**
 	 * @private
@@ -433,7 +434,7 @@ class AvatarGroup extends UI5Element {
 		e.stopPropagation();
 	}
 
-	onOverflowButtonClick(e: MouseEvent) {
+	onOverflowButtonClick(e: UI5CustomEvent<Button, "click">) {
 		e.stopPropagation();
 
 		this.fireDecoratorEvent("click", {

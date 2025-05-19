@@ -15,7 +15,7 @@
 	transition: var(--_ui5_side_navigation_item_transition);
 	color: var(--sapList_TextColor);
 	font-size: var(--sapFontSize);
-	font-family: var(--_ui5_side_navigation_item_font_family);
+	font-family: var(--_ui5_side_navigation_parent_item_font_family);
 }
 
 ::slotted([ui5-navigation-menu-item]) {

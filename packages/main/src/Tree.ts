@@ -440,6 +440,10 @@ class Tree extends UI5Element {
 	}
 
 	_onListSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
+		if (!e.detail || !e.detail.previouslySelectedItems || !e.detail.selectedItems) {
+			return;
+		}
+
 		const previouslySelectedItems = e.detail.previouslySelectedItems as Array<TreeItemBase>;
 		const selectedItems = e.detail.selectedItems as Array<TreeItemBase>;
 		const targetItem = e.detail.targetItem as TreeItemBase;

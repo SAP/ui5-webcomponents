@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import {
 	isPhone,
 	isTablet,
@@ -50,7 +50,7 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
 	languageAware: true,
 	renderer: jsxRenderer,
 	styles: [
-		browserScrollbarCSS,
+		getEffectiveScrollbarStyle(),
 		NavigationLayoutCss,
 	],
 	template: NavigationLayoutTemplate,

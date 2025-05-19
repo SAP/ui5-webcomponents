@@ -21,6 +21,5 @@
 	--_ui5_search_input_end_padding: 0.25rem;
 	--_ui5-search-input-start-padding: 0.625rem;
 	--_ui5-search-select-height: 2.25rem;
-	--_ui5-search_icon_border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
 	--_ui5-search-loading-overlay-transparency: 0.30;
 }

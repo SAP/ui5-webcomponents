@@ -111,6 +111,8 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
+						accessibleName={this._arrowTooltip}
+						showTooltip={true}
 						onClick={this._onToggleClick}
 					/>
 					}
@@ -143,6 +145,8 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
+						accessibleName={this._arrowTooltip}
+						showTooltip={true}
 						onClick={this._onToggleClick}
 					/>
 					}

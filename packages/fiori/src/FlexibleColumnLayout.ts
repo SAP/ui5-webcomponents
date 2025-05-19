@@ -436,25 +436,39 @@ class FlexibleColumnLayout extends UI5Element {
 
 		// hide column: 33% to 0, 25% to 0, etc .
 		if (currentlyHidden) {
-			// animate the width
-			columnDOM.style.width = typeof columnWidth === "number" ? `${columnWidth}px` : columnWidth;
-
-			// hide column with delay to allow the animation runs entirely
-			columnDOM.addEventListener("transitionend", this.columnResizeHandler);
-
+			this.collapseColumn(columnDOM);
 			return;
 		}
 
 		// show column: from 0 to 33%, from 0 to 25%, etc.
 		if (previouslyHidden) {
-			columnDOM.removeEventListener("transitionend", this.columnResizeHandler);
-			columnDOM.classList.remove("ui5-fcl-column--hidden");
-			columnDOM.style.width = typeof columnWidth === "number" ? `${columnWidth}px` : columnWidth;
+			this.expandColumn(columnDOM, columnWidth);
 		}
 	}
 
-	columnResizeHandler = (e: Event) => {
-		(e.target as HTMLElement).classList.add("ui5-fcl-column--hidden");
+	expandColumn(columnDOM: HTMLElement, columnWidth: string | number) {
+		columnDOM.classList.remove("ui5-fcl-column--hidden");
+		columnDOM.style.width = typeof columnWidth === "number" ? `${columnWidth}px` : columnWidth;
+	}
+
+	collapseColumn(columnDOM: HTMLElement) {
+		const hasAnimation = getAnimationMode() !== AnimationMode.None && !this.initialRendering;
+		columnDOM.style.width = "0px";
+
+		if (hasAnimation) {
+			// hide column with delay to allow the animation runs entirely
+			columnDOM.classList.add("ui5-fcl-column-collapse-animation");
+			columnDOM.addEventListener("transitionend", this.onColumnCollapseAnimationEnd);
+		} else {
+			columnDOM.classList.add("ui5-fcl-column--hidden");
+		}
+	}
+
+	onColumnCollapseAnimationEnd = (e: Event) => {
+		const columnDOM = e.target as HTMLElement;
+		columnDOM.classList.add("ui5-fcl-column--hidden");
+		columnDOM.classList.remove("ui5-fcl-column-collapse-animation");
+		columnDOM.removeEventListener("transitionend", this.onColumnCollapseAnimationEnd);
 	}
 
 	nextColumnLayout(layout: `${FCLLayout}`) {
@@ -486,7 +500,8 @@ class FlexibleColumnLayout extends UI5Element {
 			return;
 		}
 		const pressedSeparator = (e.target as HTMLElement).closest(".ui5-fcl-separator") as HTMLElement;
-		if (pressedSeparator.classList.contains("ui5-fcl-separator-start") && !this.showStartSeparatorGrip) {
+		if ((pressedSeparator.classList.contains("ui5-fcl-separator-start") && !this.showStartSeparatorGrip)
+			|| (pressedSeparator.classList.contains("ui5-fcl-separator-end") && !this.showEndSeparatorGrip)) {
 			return;
 		}
 
@@ -1091,7 +1106,6 @@ class FlexibleColumnLayout extends UI5Element {
 		if (this.showEndSeparatorGrip) {
 			return 0;
 		}
-		return -1;
 	}
 
 	get media() {

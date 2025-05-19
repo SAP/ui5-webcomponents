@@ -32,7 +32,7 @@
 
 .ui5-user-menu-fixed-header [ui5-button] {
     margin-inline: 0.5rem;
-    font-family: var(--sapFontSemiboldFamily);
+    font-family: var(--sapFontSemiboldDuplexFamily);
 }
 
 .ui5-user-menu-rp::part(content) {
@@ -78,18 +78,13 @@
     color: var(--sapContent_LabelColor)
 }
 
-.ui5-user-menu-decline-btn {
-    align-self: flex-end;
-    font-family: var(--sapFontSemiboldFamily);
-}
-
 .ui5-user-menu-manage-account-btn {
-    font-family: var(--sapFontSemiboldFamily);
+    font-family: var(--sapFontSemiboldDuplexFamily);
 }
 
 
 .ui5-user-menu-sign-out-btn {
-    font-family: var(--sapFontSemiboldFamily);
+    font-family: var(--sapFontSemiboldDuplexFamily);
 }
 
 .ui5-user-menu-other-accounts {

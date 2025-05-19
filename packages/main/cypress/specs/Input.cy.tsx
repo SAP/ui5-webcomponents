@@ -716,8 +716,7 @@ describe("Selection-change event", () => {
 
 		cy.get("@innerInput")
 			.realClick();
-		cy.get("@innerInput")
-			.clear();
+		cy.get("@innerInput").type("{selectall}{backspace}");
 
 		cy.get("@inputSelectionChange").should("have.been.calledTwice");
 

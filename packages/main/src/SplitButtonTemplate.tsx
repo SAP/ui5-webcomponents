@@ -10,7 +10,6 @@ export default function SplitButtonTemplate(this: SplitButton) {
 			tabindex={this._tabIndex}
 			aria-labelledby={`${this._id}-invisibleTextDefault ${this._id}}-invisibleText`}
 			onFocusOut={this._onFocusOut}
-			onFocusIn={this._onFocusIn}
 			onKeyDown={this._onKeyDown}
 			onKeyUp={this._onKeyUp}
 		>

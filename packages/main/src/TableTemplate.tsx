@@ -27,7 +27,7 @@ export default function TableTemplate(this: Table) {
 					<TableRow id="no-data-row">
 						<TableCell id="no-data-cell" data-excluded-from-navigation horizontal-align="Center">
 							{ this.noData.length > 0 ?
-								<slot name="no-data"></slot>
+								<slot name="noData"></slot>
 								:
 								this._effectiveNoDataText
 							}

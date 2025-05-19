@@ -5,6 +5,19 @@
 	display: inline-block;
 }
 
+:host([required]) {
+	vertical-align: middle;
+}
+
+:host([required]) .ui5-checkbox-label:after {
+	content:"*";
+	margin-inline-start: .125rem;
+	color: var(--sapField_RequiredColor);
+	font-size: var(--sapFontLargeSize);
+	font-family: var(--sapFontFamily);
+	font-weight: bold;
+}
+
 :host {
 	overflow: hidden;
 	max-width: 100%;

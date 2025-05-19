@@ -33,6 +33,7 @@ import ShellBar from "./ShellBar.js";
 import SearchField from "./SearchField.js";
 import SearchScope from "./SearchScope.js";
 import Search from "./Search.js";
+import ShellBarSearch from "./ShellBarSearch.js";
 import SearchMessageArea from "./SearchMessageArea.js";
 import SearchItem from "./SearchItem.js";
 import SearchItemGroup from "./SearchItemGroup.js";

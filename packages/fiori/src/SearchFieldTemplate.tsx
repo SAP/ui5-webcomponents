@@ -7,9 +7,16 @@ import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import search from "@ui5/webcomponents-icons/dist/search.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 
-export default function SearchFieldTemplate(this: SearchField) {
+export type SearchFieldTemplateOptions = {
+	/**
+	 * If set to true, the search field will be expanded.
+	 */
+	forceExpanded?: boolean;
+};
+
+export default function SearchFieldTemplate(this: SearchField, options?: SearchFieldTemplateOptions) {
 	return (
-		this.collapsed ? (
+		!options?.forceExpanded && this.collapsed ? (
 			<Button
 				class="ui5-shell-search-field-button"
 				icon={search}
@@ -46,7 +53,8 @@ export default function SearchFieldTemplate(this: SearchField) {
 					<input
 						class="ui5-search-field-inner-input"
 						role="searchbox"
-						aria-label={this.accessibleName}
+						aria-description={this.accessibleDescription}
+						aria-label={this.accessibleName || this._translations.searchFieldAriaLabel}
 						value={this.value}
 						placeholder={this.placeholder}
 						data-sap-focus-ref

@@ -412,9 +412,9 @@ Will result in the shadow DOM as:
 
 ## Testing Accessibility
 
-UI5 Web Components provide the prerequisites for screen reader support based on the HTML, ARIA, and WCAG standards. All screen readers that follow those standards should work fine. Nevertheless, there are deviations in the interpretation depending on the combination of browser and screen reader. UI5 Web Components focus on compliance with the standards by performing automated checks for accessibility and manual tests with reference testing environments.
+UI5 Web Components provide the prerequisites for screen reader support based on the HTML, ARIA 1.2, and WCAG 2.2 standards. All screen readers that follow those standards should work fine. Nevertheless, there are deviations in the interpretation depending on the combination of browser and screen reader. UI5 Web Components focus on compliance with the standards by performing automated checks for accessibility and manual tests with reference testing environments.
 
-For Screen Reader Support, we recommend using JAWS 2024 + Chrome (latest), and for HTML/ARIA validation the recommended testing tool is Access Assistant. UI5 Web Components support other environments to the extent of providing a valid HTML and ARIA implementation following the WCAG standards.
+For Screen Reader Support, we recommend using JAWS 2025 + Chrome (latest), and for HTML/ARIA validation the recommended testing tool is Access Assistant. UI5 Web Components support other environments to the extent of providing a valid HTML and ARIA 1.2 implementation following the WCAG 2.2 standards.
 
 Please note that reference testing environments may change over time to reflect changes in the usage of different browsers, their maintenance period, and increased accessibility compliance.
 

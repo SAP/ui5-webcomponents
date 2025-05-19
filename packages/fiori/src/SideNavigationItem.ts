@@ -2,6 +2,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isLeft,
 	isRight,
@@ -13,6 +15,10 @@ import {
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
+import {
+	SIDE_NAVIGATION_ICON_COLLAPSE,
+	SIDE_NAVIGATION_ICON_EXPAND,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Templates
 import SideNavigationItemTemplate from "./SideNavigationItemTemplate.js";
@@ -65,15 +71,22 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	_fixed = false;
 
 	/**
-     * Defines nested items by passing `ui5-side-navigation-sub-item` to the default slot.
+	 * Defines nested items by passing `ui5-side-navigation-sub-item` to the default slot.
 	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationSubItem>;
 
+	@i18n("@ui5/webcomponents-fiori")
+	static i18nBundle: I18nBundle;
+
 	get overflowItems() : Array<SideNavigationItem> {
 		return [this];
+	}
+
+	get hasSubItems() {
+		return this.items.length > 0;
 	}
 
 	get selectableItems() : Array<SideNavigationSelectableItemBase> {
@@ -163,11 +176,16 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _selected() {
-		if (this.sideNavCollapsed) {
+		if (this.sideNavCollapsed || !this.expanded) {
 			return this.selected || this.items.some(item => item.selected);
 		}
 
 		return this.selected;
+	}
+
+	get _arrowTooltip() {
+		return this.expanded ? SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_ICON_COLLAPSE)
+			: SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_ICON_EXPAND);
 	}
 
 	applyInitialFocusInPopover() {
@@ -185,12 +203,33 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isLeft(e) || isMinus(e)) {
+		const isRTL = this.effectiveDir === "rtl";
+
+		if (this.sideNavigation.classList.contains("ui5-side-navigation-in-popover") || this.sideNavCollapsed) {
+			super._onkeydown(e);
+			return;
+		}
+
+		if (isLeft(e)) {
+			e.preventDefault();
+			this.expanded = isRTL;
+			return;
+		}
+
+		if (isRight(e)) {
+			e.preventDefault();
+			this.expanded = !isRTL;
+			return;
+		}
+
+		if (isMinus(e)) {
+			e.preventDefault();
 			this.expanded = false;
 			return;
 		}
 
-		if (isRight(e) || isPlus(e)) {
+		if (isPlus(e)) {
+			e.preventDefault();
 			this.expanded = true;
 			return;
 		}

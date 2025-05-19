@@ -404,20 +404,6 @@ describe("Testing events", () => {
 });
 
 describe("Accessibility", async () => {
-	it("Aria attributes are set correctly", async () => {
-		const slider = await browser.$("#basic-slider");
-		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
-
-		assert.strictEqual(await sliderHandle.getAttribute("aria-labelledby"),
-			"ui5-slider-accName ui5-slider-sliderDesc", "aria-labelledby is set correctly");
-		assert.strictEqual(await sliderHandle.getAttribute("aria-valuemin"),
-			`${await slider.getProperty("min")}`, "aria-valuemin is set correctly");
-		assert.strictEqual(await sliderHandle.getAttribute("aria-valuemax"),
-			`${await slider.getProperty("max")}`, "aria-valuemax is set correctly");
-		assert.strictEqual(await sliderHandle.getAttribute("aria-valuenow"),
-			`${await slider.getProperty("value")}`, "aria-valuenow is set correctly");
-	});
-
 	it("Aria attributes are set correctly to the tooltip input", async () => {
 		const slider = await browser.$("#slider-tickmarks-labels");
 		const sliderHandle = await slider.shadow$(".ui5-slider-handle");

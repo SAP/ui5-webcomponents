@@ -397,7 +397,30 @@ describe("TextArea general interaction", () => {
 						.should("be.equal", initialTextareaSize);
 				});
 		});
+
+		it("should grow correctly when typing symbols (&)", () => {
+			cy.mount(<TextArea growing={true} value="&&&" style="width: 100px"></TextArea>);
+
+			cy.get("[ui5-textarea]")
+				.as("textarea");
+
+			cy.get("@textarea")
+				.realClick();
+
+			cy.get("@textarea")
+				.then(textarea => {
+					const initialTextareaSize = textarea.height();
+
+					cy.focused()
+						.realType("&");
+
+					cy.get("@textarea")
+						.invoke("height")
+						.should("be.equal", initialTextareaSize);
+				});
+		});
 	});
+
 
 	describe("When having max length set", () => {
 		it("prevents input when max is reached", () => {

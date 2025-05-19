@@ -53,6 +53,18 @@ export default function CalendarTemplate(this: Calendar) {
 						<span class="ui5-calheader-btn-sectext">{this._headerYearButtonTextSecType}</span>
 					}
 				</div>
+
+				<div
+					data-ui5-cal-header-btn-year-range
+					class="ui5-calheader-arrowbtn ui5-calheader-middlebtn ui5-calheader-yearrange-btn-disabled"
+					hidden={this._isHeaderYearRangeButtonHidden}
+					tabindex={-1}
+				>
+					<span>{this._headerYearRangeButtonText}</span>
+					{this.hasSecondaryCalendarType &&
+						<span class="ui5-calheader-btn-sectext">{this._headerYearRangeButtonTextSecType}</span>
+					}
+				</div>
 			</div>
 
 			<div

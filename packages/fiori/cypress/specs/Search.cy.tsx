@@ -4,7 +4,6 @@ import SearchItem from "../../src/SearchItem.js";
 import SearchItemGroup from "../../src/SearchItemGroup.js";
 import history from "@ui5/webcomponents-icons/dist/history.js";
 import IllustratedMessage from "../../src/IllustratedMessage.js";
-import SearchPopupMode from "@ui5/webcomponents/dist/types/SearchPopupMode.js";
 import searchIcon from "@ui5/webcomponents-icons/dist/search.js";
 import SearchMessageArea from "../../src/SearchMessageArea.js";
 import Button from "@ui5/webcomponents/dist/Button.js";

@@ -55,7 +55,7 @@
     "ci:test:main:cy:suite-1": "yarn workspace @ui5/webcomponents test:cypress:suite-1",
     "ci:test:main:cy:suite-2": "yarn workspace @ui5/webcomponents test:cypress:suite-2",
     "ci:test:fiori": "yarn workspace @ui5/webcomponents-fiori test:ssr && yarn workspace @ui5/webcomponents-fiori test:cypress && yarn workspace @ui5/webcomponents-fiori test",
-    "ci:test:compat": "yarn workspace @ui5/webcomponents-compat test:ssr && yarn workspace @ui5/webcomponents-compat test",
+    "ci:test:compat": "yarn workspace @ui5/webcomponents-compat test:ssr && yarn workspace @ui5/webcomponents-compat test:cypress && yarn workspace @ui5/webcomponents-compat test",
     "ci:test:ai": "yarn workspace @ui5/webcomponents-ai test:ssr && yarn workspace @ui5/webcomponents-ai test",
 
     "lint": "wsrun --exclude-missing lint",

@@ -11,7 +11,6 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 			id={`${this._id}-side-navigation-overflow-menu`}
 			onBeforeOpen={this._onBeforeMenuOpen}
 			onBeforeClose={this._onBeforeMenuClose}
-			onui5-item-click={this.handleOverflowItemClick} // TOFIX
 			class="ui5-side-navigation-popover ui5-side-navigation-overflow-menu"
 		>
 			{this._menuPopoverItems.map(item =>
@@ -24,6 +23,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 					href={item.href}
 					target={item.target}
 					title={item.title}
+					tooltip={item._tooltip}
 					ref={this.captureRef.bind(item)}
 				>
 					{item.items.map(subItem =>
@@ -37,6 +37,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 							href={subItem.href}
 							target={subItem.target}
 							title={subItem.title}
+							tooltip={subItem._tooltip}
 						/>
 					)}
 				</NavigationMenuItem>

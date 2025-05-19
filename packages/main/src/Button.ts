@@ -32,7 +32,14 @@ import ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import type ButtonBadge from "./ButtonBadge.js";
 import ButtonTemplate from "./ButtonTemplate.js";
-import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
+import {
+	BUTTON_ARIA_TYPE_ACCEPT,
+	BUTTON_ARIA_TYPE_REJECT,
+	BUTTON_ARIA_TYPE_EMPHASIZED,
+	BUTTON_ARIA_TYPE_ATTENTION,
+	BUTTON_BADGE_ONE_ITEM,
+	BUTTON_BADGE_MANY_ITEMS,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
@@ -49,6 +56,14 @@ let isGlobalHandlerAttached = false;
 let activeButton: Button | null = null;
 
 type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls">;
+
+type ButtonClickEventDetail = {
+	originalEvent: MouseEvent,
+	altKey: boolean;
+	ctrlKey: boolean;
+	metaKey: boolean;
+	shiftKey: boolean;
+}
 
 /**
  * @class
@@ -93,6 +108,23 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 	shadowRootOptions: { delegatesFocus: true },
 })
 /**
+ * Fired when the component is activated either with a mouse/tap or by using the Enter or Space key.
+ *
+ * **Note:** The event will not be fired if the `disabled` property is set to `true`.
+ *
+ * @since 2.10.0
+ * @public
+ * @param {Event} originalEvent Returns original event that comes from user's **click** interaction
+ * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+ * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+ * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+ * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
+ */
+@event("click", {
+	bubbles: true,
+	cancelable: true,
+})
+/**
  * Fired whenever the active state of the component changes.
  * @private
  */
@@ -102,6 +134,7 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 })
 class Button extends UI5Element implements IButton {
 	eventDetails!: {
+		"click": ButtonClickEventDetail,
 		"active-state-change": void,
 	};
 
@@ -367,7 +400,8 @@ class Button extends UI5Element implements IButton {
 		this.hasEndIcon = !!this.endIcon;
 		this.iconOnly = this.isIconOnly;
 
-		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
+		const defaultTooltip = await this.getDefaultTooltip();
+		this.buttonTitle = this.iconOnly ? this.tooltip ?? defaultTooltip : this.tooltip;
 	}
 
 	_setBadgeOverlayStyle() {
@@ -380,8 +414,29 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	_onclick() {
+	_onclick(e: MouseEvent) {
+		e.stopImmediatePropagation();
+
 		if (this.nonInteractive) {
+			return;
+		}
+
+		const {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		} = e;
+
+		const prevented = !this.fireDecoratorEvent("click", {
+			originalEvent: e,
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		});
+
+		if (prevented) {
 			return;
 		}
 
@@ -481,6 +536,7 @@ class Button extends UI5Element implements IButton {
 			"Positive": BUTTON_ARIA_TYPE_ACCEPT,
 			"Negative": BUTTON_ARIA_TYPE_REJECT,
 			"Emphasized": BUTTON_ARIA_TYPE_EMPHASIZED,
+			"Attention": BUTTON_ARIA_TYPE_ATTENTION,
 		};
 	}
 
@@ -514,20 +570,37 @@ class Button extends UI5Element implements IButton {
 		return this.nonInteractive ? -1 : Number.parseInt(this.forcedTabIndex);
 	}
 
-	get showIconTooltip() {
-		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
-	}
-
 	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
-	}
+		const ariaLabelText = getEffectiveAriaLabelText(this) || "";
+		const typeLabelText = this.hasButtonType ? this.buttonTypeText : "";
+		const internalLabelText = this.effectiveBadgeDescriptionText || "";
 
-	get ariaDescribedbyText() {
-		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
+		const labelParts = [ariaLabelText, typeLabelText, internalLabelText].filter(part => part);
+		return labelParts.join(" ");
 	}
 
 	get ariaDescriptionText() {
 		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
+	}
+
+	get effectiveBadgeDescriptionText() {
+		if (!this.shouldRenderBadge) {
+			return "";
+		}
+
+		const badgeEffectiveText = this.badge[0].effectiveText;
+
+		// Use distinct i18n keys for singular and plural badge values to ensure proper localization.
+		// Some languages have different grammatical rules for singular and plural forms,
+		// so separate keys (BUTTON_BADGE_ONE_ITEM and BUTTON_BADGE_MANY_ITEMS) are necessary.
+		switch (badgeEffectiveText) {
+		case "":
+			return badgeEffectiveText;
+		case "1":
+			return Button.i18nBundle.getText(BUTTON_BADGE_ONE_ITEM, badgeEffectiveText);
+		default:
+			return Button.i18nBundle.getText(BUTTON_BADGE_MANY_ITEMS, badgeEffectiveText);
+		}
 	}
 
 	get _isSubmit() {
@@ -548,5 +621,6 @@ Button.define();
 export default Button;
 export type {
 	ButtonAccessibilityAttributes,
+	ButtonClickEventDetail,
 	IButton,
 };

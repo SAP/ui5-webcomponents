@@ -16,7 +16,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/fiori/dist/SearchItem.js";`
+ * `import "@ui5/webcomponents-fiori/dist/SearchItem.js";`
  *
  * @constructor
  * @extends ListItemBase

@@ -75,6 +75,7 @@ import type CheckBox from "./CheckBox.js";
 import type RadioButton from "./RadioButton.js";
 import { isInstanceOfListItemGroup } from "./ListItemGroup.js";
 import type ListItemGroup from "./ListItemGroup.js";
+import { findVerticalScrollContainer } from "./TableUtils.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -613,6 +614,10 @@ class List extends UI5Element {
 				item.removeEventListener("ui5-forward-before", this.onForwardBeforeBound as EventListener);
 			}
 		});
+	}
+
+	getFocusDomRef() {
+		return this._itemNavigation._getCurrentItem();
 	}
 
 	get shouldRenderH1() {
@@ -1421,9 +1426,11 @@ class List extends UI5Element {
 
 	getIntersectionObserver() {
 		if (!this.growingIntersectionObserver) {
+			const scrollContainer = this.scrollContainer || findVerticalScrollContainer(this.getDomRef()!);
+
 			this.growingIntersectionObserver = new IntersectionObserver(this.onInteresection.bind(this), {
-				root: null,
-				rootMargin: "0px",
+				root: scrollContainer,
+				rootMargin: "5px",
 				threshold: 1.0,
 			});
 		}
