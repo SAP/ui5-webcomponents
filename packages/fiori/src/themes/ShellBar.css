@@ -609,7 +609,10 @@ slot[name="profile"] {
 		transition-duration: 0.45s;
 	}
 	&[data-hide-order = "10"] {
-		transition-duration: var(--_ui5_shellbar_max_animation_duration);
+		transition-duration: 0.5s;
 	}
+}
 
+.ui5-shellbar-no-animation .ui5-shellbar-content-item {
+	transition: none;
 }

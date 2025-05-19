@@ -35,5 +35,4 @@
 	--_ui5_shellbar_content_transition: opacity 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);
 	--_ui5_shellbar_search_animation_expand: expand-shrink 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);
 	--_ui5_shellbar_search_animation_grow: expand-grow 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);
-	--_ui5_shellbar_max_animation_duration: 0.5s;
 }

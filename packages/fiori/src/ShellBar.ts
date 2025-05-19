@@ -45,6 +45,8 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 import type ShellBarItem from "./ShellBarItem.js";
 import type { ShellBarItemAccessibilityAttributes } from "./ShellBarItem.js";
 import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 
 // Animations
 import animate, { duration } from "@ui5/webcomponents-base/dist/animations/animate.js";
@@ -544,7 +546,6 @@ class ShellBar extends UI5Element {
 	_observableContent: Array<HTMLElement> = [];
 	_isAnimating: boolean = false;
 	_autoRestoreSearchField = false;
-	_maxAnimationDuration = 0;
 	_performNoAnimation = false;
 	_headerPress: () => void;
 	_showSearchField = false;
@@ -758,11 +759,6 @@ class ShellBar extends UI5Element {
 		return this._calculateCSSREMValue(shellbarComputerStyle, getScopedVarName(cssVar)); // px
 	}
 
-	domCalculatedAnumationDuration(cssVar: string): number {
-		const shellbarComputerStyle = getComputedStyle(this.getDomRef()!);
-		return Number(shellbarComputerStyle.getPropertyValue(getScopedVarName(cssVar)).replace("s", "")) * 1000; // ms
-	}
-
 	onBeforeRendering() {
 		this.withLogo = this.hasLogo;
 
@@ -823,7 +819,10 @@ class ShellBar extends UI5Element {
 			if (this.autoSearchField) {
 				this._updateSearchFieldState();
 			}
-			this._performNoAnimation = getTheme().includes("hcb") || getTheme().includes("hcw");
+			this._performNoAnimation = getAnimationMode() === AnimationMode.None
+			|| getTheme().includes("hcb")
+			|| getTheme().includes("hcw")
+			|| this.hasSelfCollapsibleSearch;
 		}
 		this._isInitialRendering = false;
 	}
@@ -910,13 +909,6 @@ class ShellBar extends UI5Element {
 			// if an item has the hidden class in both the old (_contentInfo) and new state (contentInfo)
 			// it means that it is not changed and we don't need to animate it
 
-
-			// set the initial state of the search field
-			// this needs to somehow be done for both ways (expand/collapse)
-			// if (this.showSearchField && this.searchFieldWrapper?.style) {
-			// 	this.searchFieldWrapper.classList.add("ui5-shellbar-search-field-hidden");
-			// }
-
 			if (this._searchButtonHit) {
 				const hiddenContent = contentInfo.filter(item => {
 					const currentInfo = this._contentInfo.find(info => info.id === item.id);
@@ -962,21 +954,19 @@ class ShellBar extends UI5Element {
 
 		const animations: Array<Promise<void | Error>> = [];
 
-
-		changedItems.map((item, index)  => {
+		changedItems.map(item => {
 			const element = this.shadowRoot!.querySelector<HTMLElement>(`[id="${item.id}"]`);
 			return new Promise(resolve => {
-					if (element) {
-						element.addEventListener("transitionend", () => {
-							// reset animation class for next transition
-							element.classList.toggle("ui5-shellbar-hide-animation");
-							// once the transition is done, add the hidden class to off load the container
-							element.classList.add("ui5-shellbar-hidden-button");
-							resolve(true);
-						}, { once: true });
+				if (element) {
+					element.addEventListener("transitionend", () => {
+						// reset animation class for next transition
 						element.classList.toggle("ui5-shellbar-hide-animation");
-					}
-				// this is the delay for the animations
+						// once the transition is done, add the hidden class to off load the container
+						element.classList.add("ui5-shellbar-hidden-button");
+						resolve(true);
+					}, { once: true });
+					element.classList.toggle("ui5-shellbar-hide-animation");
+				}
 			});
 		});
 		if (this.showSearchField) {
@@ -1378,6 +1368,14 @@ class ShellBar extends UI5Element {
 		return this.endContentInfoSorted.some(item => !item.classes.includes("ui5-shellbar-hidden-button"));
 	}
 
+	get searchFieldDisplay() {
+		if (this.showSearchField) {
+			return "flex";
+		}
+
+		return !this._isAnimating ? "none" : "flex";
+	}
+
 	shouldIncludeSeparator(itemInfo: IShellBarContentItem | undefined, contentInfo: IShellBarContentItem[]) {
 		// once the last item from the start/end content was hidden, the
 		// separator is "packed" with it in order to account for any next measurements
@@ -1393,6 +1391,7 @@ class ShellBar extends UI5Element {
 			wrapper: {
 				"ui5-shellbar-root": true,
 				"ui5-shellbar-with-searchfield": this.hasSearchField,
+				"ui5-shellbar-no-animation": this._performNoAnimation,
 			},
 			button: {
 				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
@@ -1412,9 +1411,9 @@ class ShellBar extends UI5Element {
 				"ui5-shellbar-assistant-button": true,
 			},
 			searchField: {
-				"ui5-shellbar-search-field": true,
+				"ui5-shellbar-search-field": this.showSearchField,
 				"ui5-shellbar-search-toggle": isSelfCollapsibleSearch(this.search),
-				// "ui5-shellbar-hidden-button": !this.showSearchField,
+				"ui5-shellbar-hidden-button": !this.showSearchField,
 				"ui5-search": true,
 			},
 		};
@@ -1422,7 +1421,7 @@ class ShellBar extends UI5Element {
 
 	get styles() {
 		const styles = {
-			"display": this.showSearchField ? "flex" : "flex",
+			"display": this.searchFieldDisplay,
 		};
 		return {
 			searchField: isSelfCollapsibleSearch(this.search) ? {} : styles,
@@ -1713,153 +1712,150 @@ class ShellBar extends UI5Element {
 		return this.searchField.length ? this.searchField[0] : null;
 	}
 
+	slideRight(element: HTMLElement) {
+		let computedStyles: CSSStyleDeclaration,
+			paddingInlineStart: number,
+			paddingInlineEnd: number,
+			marginInlineStart: number,
+			marginBottom: number,
+			minwidth: number,
+			opacity: number;
+		let storedOverflow: string,
+			storedpaddingInlineStart: string,
+			storedpaddingInlineEnd: string,
+			storedmarginInlineStart: string,
+			storedMarginBottom: string,
+			storedMinwidth: string,
+			storedOpacity: string;
 
-slideRight(element: HTMLElement) {
-	let computedStyles: CSSStyleDeclaration,
-		paddingInlineStart: number,
-		paddingInlineEnd: number,
-		marginInlineStart: number,
-		marginBottom: number,
-		minwidth: number,
-		opacity: number;
-	let storedOverflow: string,
-		storedpaddingInlineStart: string,
-		storedpaddingInlineEnd: string,
-		storedmarginInlineStart: string,
-		storedMarginBottom: string,
-		storedMinwidth: string,
-		storedOpacity: string;
+		const animation = animate({
+			beforeStart: () => {
+				// Show the element to measure its properties
+				element.style.display = "block";
 
-	const animation = animate({
-		beforeStart: () => {
-			// Show the element to measure its properties
-			element.style.display = "block";
+				// Get Computed styles
+				computedStyles = getComputedStyle(element);
+				minwidth = parseFloat(computedStyles.minWidth);
+				opacity = parseFloat(computedStyles.opacity);
+				paddingInlineStart = parseFloat(computedStyles.paddingInlineStart);
+				paddingInlineEnd = parseFloat(computedStyles.paddingBottom);
+				marginInlineStart = parseFloat(computedStyles.marginInlineStart);
+				marginBottom = parseFloat(computedStyles.marginBottom);
 
-			// Get Computed styles
-			computedStyles = getComputedStyle(element);
-			minwidth = parseFloat(computedStyles.minWidth);
-			opacity = parseFloat(computedStyles.opacity);
-			paddingInlineStart = parseFloat(computedStyles.paddingInlineStart);
-			paddingInlineEnd = parseFloat(computedStyles.paddingBottom);
-			marginInlineStart = parseFloat(computedStyles.marginInlineStart);
-			marginBottom = parseFloat(computedStyles.marginBottom);
+				// Store inline styles
+				storedOverflow = element.style.overflow;
+				storedMinwidth = element.style.minWidth;
+				storedOpacity = element.style.opacity;
+				storedpaddingInlineStart = element.style.paddingInlineStart;
+				storedpaddingInlineEnd = element.style.paddingBottom;
+				storedmarginInlineStart = element.style.marginInlineStart;
+				storedMarginBottom = element.style.marginBottom;
 
-			// Store inline styles
-			storedOverflow = element.style.overflow;
-			storedMinwidth = element.style.minWidth;
-			storedOpacity = element.style.opacity;
-			storedpaddingInlineStart = element.style.paddingInlineStart;
-			storedpaddingInlineEnd = element.style.paddingBottom;
-			storedmarginInlineStart = element.style.marginInlineStart;
-			storedMarginBottom = element.style.marginBottom;
+				element.style.overflow = "hidden";
+				element.style.minWidth = "0";
+				element.style.opacity = "0";
+				element.style.paddingInlineStart = "0";
+				element.style.paddingBottom = "0";
+				element.style.marginInlineStart = "0";
+				element.style.marginBottom = "0";
+			},
+			duration,
+			element,
+			advance: progress => {
+				// WORKAROUND
+				element.style.display = "block";
+				// END OF WORKAROUND
 
-			element.style.overflow = "hidden";
-			element.style.minWidth = "0";
-			element.style.opacity = "0";
-			element.style.paddingInlineStart = "0";
-			element.style.paddingBottom = "0";
-			element.style.marginInlineStart = "0";
-			element.style.marginBottom = "0";
-		},
-		duration,
-		element,
-		advance: progress => {
-			// WORKAROUND
-			element.style.display = "block";
-			// END OF WORKAROUND
+				element.style.minWidth = `${(minwidth * progress)}px`;
+				element.style.opacity = `${(opacity * progress)}`;
+				element.style.paddingInlineStart = `${(paddingInlineStart * progress)}px`;
+				element.style.paddingInlineEnd = `${(paddingInlineEnd * progress)}px`;
+				element.style.marginInlineStart = `${(marginInlineStart * progress)}px`;
+				element.style.marginBottom = `${(marginBottom * progress)}px`;
+			},
+		});
 
-			element.style.minWidth = `${(minwidth * progress)}px`;
-			element.style.opacity = `${(opacity * progress)}`;
-			element.style.paddingInlineStart = `${(paddingInlineStart * progress)}px`;
-			element.style.paddingInlineEnd = `${(paddingInlineEnd * progress)}px`;
-			element.style.marginInlineStart = `${(marginInlineStart * progress)}px`;
-			element.style.marginBottom = `${(marginBottom * progress)}px`;
-		},
-	});
-
-	animation.promise().then(() => {
-		element.style.overflow = storedOverflow;
-		element.style.minWidth = storedMinwidth;
-		element.style.opacity = storedOpacity;
-		element.style.paddingInlineStart = storedpaddingInlineStart;
-		element.style.paddingBottom = storedpaddingInlineEnd;
-		element.style.marginInlineStart = storedmarginInlineStart;
-		element.style.marginBottom = storedMarginBottom;
-	});
-
-	return animation;
-};
-
-slideLeft(element: HTMLElement) {
-	let computedStyles: CSSStyleDeclaration,
-		paddingStart: number,
-		paddingEnd: number,
-		marginStart: number,
-		marginEnd: number,
-		minwidth: number,
-		opacity: number;
-	let storedOverflow: string,
-		storedpaddingStart: string,
-		storedpaddingEnd: string,
-		storedmarginStart: string,
-		storedmarginEnd: string,
-		storedminwidth: string,
-		storedOpacity: string;
-	const searchFieldwidth: number = this.domCalculatedValues("--_ui5_shellbar_search_field_width");
-
-	const animation = animate({
-		beforeStart: () => {
-			const el = element;
-
-			// Get Computed styles
-			computedStyles = getComputedStyle(element);
-			paddingStart = parseFloat(computedStyles.paddingInlineStart);
-			paddingEnd = parseFloat(computedStyles.paddingInlineEnd);
-			marginStart = parseFloat(computedStyles.marginInlineStart);
-			marginEnd = parseFloat(computedStyles.marginInlineEnd);
-			minwidth = searchFieldwidth;
-			opacity = parseFloat(computedStyles.opacity);
-
-			// Store inline styles
-			storedOverflow = element.style.overflow;
-			storedminwidth = element.style.minWidth;
-			storedOpacity = element.style.opacity;
-			storedpaddingStart = element.style.paddingInlineStart;
-			storedpaddingEnd = element.style.paddingInlineEnd;
-			storedmarginStart = element.style.marginInlineStart;
-			storedmarginEnd = element.style.marginInlineEnd;
-
-
-			el.style.overflow = "hidden";
-		},
-		duration,
-		element,
-		advance: progress => {
-			element.style.minWidth = `${minwidth -(minwidth * progress)}px`;
-			element.style.opacity = `${opacity -(opacity * progress)}`;
-			element.style.paddingInlineStart = `${paddingStart -(paddingStart * progress)}px`;
-			element.style.paddingInlineEnd = `${paddingEnd -(paddingEnd * progress)}px`;
-			element.style.marginInlineStart = `${marginStart -(marginStart * progress)}px`;
-			element.style.marginInlineEnd = `${marginEnd -(marginEnd * progress)}px`;
-		},
-	});
-
-	animation.promise().then(reason => {
-		if (!(reason instanceof Error)) {
+		animation.promise().then(() => {
 			element.style.overflow = storedOverflow;
-			element.style.minWidth = storedminwidth;
+			element.style.minWidth = storedMinwidth;
 			element.style.opacity = storedOpacity;
-			element.style.display = "none";
-			element.style.paddingInlineStart = storedpaddingStart;
-			element.style.paddingInlineEnd = storedpaddingEnd;
-			element.style.marginInlineStart = storedmarginStart;
-			element.style.marginInlineEnd = storedmarginEnd;
-		}
-	});
+			element.style.paddingInlineStart = storedpaddingInlineStart;
+			element.style.paddingBottom = storedpaddingInlineEnd;
+			element.style.marginInlineStart = storedmarginInlineStart;
+			element.style.marginBottom = storedMarginBottom;
+		});
 
-	return animation;
-};
+		return animation;
+	}
 
+	slideLeft(element: HTMLElement) {
+		let computedStyles: CSSStyleDeclaration,
+			paddingStart: number,
+			paddingEnd: number,
+			marginStart: number,
+			marginEnd: number,
+			minwidth: number,
+			opacity: number;
+		let storedOverflow: string,
+			storedpaddingStart: string,
+			storedpaddingEnd: string,
+			storedmarginStart: string,
+			storedmarginEnd: string,
+			storedminwidth: string,
+			storedOpacity: string;
+		const searchFieldwidth: number = this.domCalculatedValues("--_ui5_shellbar_search_field_width");
+
+		const animation = animate({
+			beforeStart: () => {
+				const el = element;
+
+				// Get Computed styles
+				computedStyles = getComputedStyle(element);
+				paddingStart = parseFloat(computedStyles.paddingInlineStart);
+				paddingEnd = parseFloat(computedStyles.paddingInlineEnd);
+				marginStart = parseFloat(computedStyles.marginInlineStart);
+				marginEnd = parseFloat(computedStyles.marginInlineEnd);
+				minwidth = searchFieldwidth;
+				opacity = parseFloat(computedStyles.opacity);
+
+				// Store inline styles
+				storedOverflow = element.style.overflow;
+				storedminwidth = element.style.minWidth;
+				storedOpacity = element.style.opacity;
+				storedpaddingStart = element.style.paddingInlineStart;
+				storedpaddingEnd = element.style.paddingInlineEnd;
+				storedmarginStart = element.style.marginInlineStart;
+				storedmarginEnd = element.style.marginInlineEnd;
+
+				el.style.overflow = "hidden";
+			},
+			duration,
+			element,
+			advance: progress => {
+				element.style.minWidth = `${minwidth - (minwidth * progress)}px`;
+				element.style.opacity = `${opacity - (opacity * progress)}`;
+				element.style.paddingInlineStart = `${paddingStart - (paddingStart * progress)}px`;
+				element.style.paddingInlineEnd = `${paddingEnd - (paddingEnd * progress)}px`;
+				element.style.marginInlineStart = `${marginStart - (marginStart * progress)}px`;
+				element.style.marginInlineEnd = `${marginEnd - (marginEnd * progress)}px`;
+			},
+		});
+
+		animation.promise().then(reason => {
+			if (!(reason instanceof Error)) {
+				element.style.overflow = storedOverflow;
+				element.style.minWidth = storedminwidth;
+				element.style.opacity = storedOpacity;
+				element.style.display = "none";
+				element.style.paddingInlineStart = storedpaddingStart;
+				element.style.paddingInlineEnd = storedpaddingEnd;
+				element.style.marginInlineStart = storedmarginStart;
+				element.style.marginInlineEnd = storedmarginEnd;
+			}
+		});
+
+		return animation;
+	}
 }
 
 interface IShellBarSelfCollapsibleSearch {
@@ -1872,6 +1868,7 @@ const isSelfCollapsibleSearch = (searchField: any): searchField is IShellBarSelf
 	}
 	return false;
 };
+
 ShellBar.define();
 
 export default ShellBar;
