@@ -1019,17 +1019,19 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_getRootTab(tab: Tab | undefined) {
-		while (tab?.hasAttribute("ui5-tab")) {
-			if (tab.parentElement!.hasAttribute("ui5-tabcontainer")) {
-				break;
-			}
+    _getRootTab(tab: Tab | undefined): Tab | undefined {
+        if (!tab?.parentElement) {
+            return undefined;
+        }
 
-			tab = tab.parentElement as Tab;
-		}
+        const parentElement = tab.parentElement as Tab;
+        const isRootTab = parentElement.hasAttribute("ui5-tabcontainer");
+        if (isRootTab) {
+            return tab;
+        }
 
-		return tab;
-	}
+        return this._getRootTab(parentElement);
+    }
 
 	_updateEndOverflow(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>) {
 		// show end overflow
