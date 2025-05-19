@@ -1,5 +1,4 @@
-import type { IDynamicDateRangeOption } from "../DynamicDateOption.js";
-import type { DynamicDateRangeValue } from "../DynamicDateRange.js";
+import type { DynamicDateRangeValue, IDynamicDateRangeOption } from "../DynamicDateRange.js";
 import { tomorrowToDates } from "./toDates.js";
 import {
 	DYNAMIC_DATE_RANGE_TOMORROW_TEXT,

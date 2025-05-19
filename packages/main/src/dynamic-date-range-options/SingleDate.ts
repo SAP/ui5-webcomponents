@@ -1,7 +1,6 @@
-import type { IDynamicDateRangeOption } from "../DynamicDateOption.js";
 import SingleDateTemplate from "./SingleDateTemplate.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import type { DynamicDateRangeValue } from "../DynamicDateRange.js";
+import type { DynamicDateRangeValue, IDynamicDateRangeOption } from "../DynamicDateRange.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import {
 	DYNAMIC_DATE_RANGE_DATE_TEXT,

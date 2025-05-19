@@ -1,6 +1,7 @@
 import type DynamicDateRange from "./DynamicDateRange.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
+import appointment from "@ui5/webcomponents-icons/dist/appointment-2.js";
 
 export default function DynamicDateRangeInputTemplate(this: DynamicDateRange) {
 	return (
@@ -17,16 +18,10 @@ export default function DynamicDateRangeInputTemplate(this: DynamicDateRange) {
 				value={this.value && this.getOption(this.value?.operator)?.format(this.value)}
 				onChange={this.onInputChange}
 			>
-
-				{/* {this.valueStateMessage.length > 0 &&
-					<slot name="valueStateMessage" slot="valueStateMessage"></slot>
-				} */}
-
-				{/* {!this.readonly && */}
 				<Icon
 					id={`${this._id}-value-help`}
 					slot="icon"
-					name={this.openIconName}
+					name={appointment}
 					tabindex={-1}
 					mode={this._iconMode}
 					onClick={this._togglePicker}
