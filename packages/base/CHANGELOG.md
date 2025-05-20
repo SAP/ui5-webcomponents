@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.7](https://github.com/SAP/ui5-webcomponents/compare/v2.7.6...v2.7.7) (2025-05-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
 ## [2.7.6](https://github.com/SAP/ui5-webcomponents/compare/v2.7.5...v2.7.6) (2025-05-14)
 
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.7](https://github.com/SAP/ui5-webcomponents/compare/v2.7.6...v2.7.7) (2025-05-20)
+
+
+### Bug Fixes
+
+* **ui5-avatar-group:** fixed focus outline ([#11023](https://github.com/SAP/ui5-webcomponents/issues/11023)) ([bc5ab6b](https://github.com/SAP/ui5-webcomponents/commit/bc5ab6bac3a693de7ef5df8606e4b8325954b0a4)), closes [#10963](https://github.com/SAP/ui5-webcomponents/issues/10963)
+* **ui5-avatar-group:** fixed unnecessary rendering of overflow button ([#10979](https://github.com/SAP/ui5-webcomponents/issues/10979)) ([900dc73](https://github.com/SAP/ui5-webcomponents/commit/900dc739217e4e3874ee2232ec5f399b910d9e15)), closes [#10948](https://github.com/SAP/ui5-webcomponents/issues/10948)
+
+
+
+
+
 ## [2.7.6](https://github.com/SAP/ui5-webcomponents/compare/v2.7.5...v2.7.6) (2025-05-14)
 
 
