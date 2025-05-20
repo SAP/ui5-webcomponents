@@ -3,6 +3,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
@@ -39,26 +40,54 @@ type DynamicDateRangeValue = {
     values?: Date[] | number[];
 }
 
+type DynamicDateRangeChangeEventDetail = {
+	value: DynamicDateRangeValue,
+}
+
 /**
  * Represents a dynamic date range option used by the `ui5-dynamic-date-range` component.
  *
- * This interface defines the structure for custom date range types including formatting,
- * parsing, validation, and UI rendering behavior.
- * @interface
+ * Represents a dynamic date range option used for handling dynamic date ranges.
+ * This interface defines the structure and behavior required for implementing
+ * dynamic date range options, including formatting, parsing, validation, and
+ * conversion of date range values.
+ *
+ *  * Properties:
+ * - `icon`: The icon associated with the dynamic date range option, typically used for UI representation.
+ * - `operator`: A unique operator identifying the dynamic date range option.
+ * - `text`: The display text for the dynamic date range option.
+ * - `template` (optional): A JSX template for rendering the dynamic date range option.
+ *
+ * Methods:
+ * - `format(value: DynamicDateRangeValue): string`: Formats the given dynamic date range value into a string representation.
+ * - `parse(value: string): DynamicDateRangeValue | undefined`: Parses a string into a dynamic date range value.
+ * - `toDates(value: DynamicDateRangeValue): Date[]`: Converts a dynamic date range value into an array of `Date` objects.
+ * - `handleSelectionChange?(event: CustomEvent): DynamicDateRangeValue | undefined`: (Optional) Handles selection changes in the UI of the dynamic date range option.
+ * - `isValidString(value: string): boolean`: Validates whether a given string is a valid representation of the dynamic date range value.
+ *
  * @public
- * @since 2.0.0
+ * @since 2.10.0
  */
 interface IDynamicDateRangeOption {
 	icon: string;
-    key: string;
-    text: string;
-    format: (value: DynamicDateRangeValue) => string;
-    parse: (value: string) => DynamicDateRangeValue | undefined;
-    toDates: (value: DynamicDateRangeValue) => Date[];
-    handleSelectionChange?: (event: CustomEvent) => DynamicDateRangeValue | undefined;
-    template?: JsxTemplate;
-    isValidString: (value: string) => boolean;
+	operator: string;
+	text: string;
+	format: (value: DynamicDateRangeValue) => string;
+	parse: (value: string) => DynamicDateRangeValue | undefined;
+	toDates: (value: DynamicDateRangeValue) => Date[];
+	handleSelectionChange?: (event: CustomEvent) => DynamicDateRangeValue | undefined;
+	template?: JsxTemplate;
+	isValidString: (value: string) => boolean;
 }
+
+/**
+ * Fired when the input operation has finished by pressing Enter or on focusout or a value is selected in the popover.
+ * @public
+ */
+@event("change", {
+	bubbles: true,
+	cancelable: true,
+})
 
 /**
  * @class
@@ -67,6 +96,23 @@ interface IDynamicDateRangeOption {
  *
  * The `ui5-dynamic-date-range` component provides a flexible interface to define date ranges using a combination of absolute dates, relative intervals, and preset ranges (e.g., "Today", "Yesterday", etc.).
  * It allows users to select a date range from a predefined set of options or enter custom dates.
+ *
+ * ### Usage
+ *
+ * The component is typically used in scenarios where users need to filter data based on date ranges, such as in reports, dashboards, or data analysis tools.
+ * It can be used with the predefined options or extended with custom options to suit specific requirements. You can create your own options by extending the `IDynamicDateRangeOption` interface.
+ * Every option should be registered using the `DynamicDateRange.register` method.
+ *
+ * If needed, you can also create a range of dates based on specific option using the `toDates` method.
+ *
+ * ### Standard Options
+ *
+ * The component comes with a set of standard options, including:
+ * - "TODAY" - Represents the current date. An example value is `{ operator: "TODAY"}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/Today.js";`
+ * - "YESTERDAY" - Represents the previous date. An example value is `{ operator: "YESTERDAY"}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/Yesterday.js";`
+ * - "TOMORROW" - Represents the next date. An example value is `{ operator: "TOMORROW"}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/Tomorrow.js";`
+ * - "DATE" - Represents a single date. An example value is `{ operator: "DATE", values: [new Date()]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/SingleDate.js";`
+ * - "DATERANGE" - Represents a range of dates. An example value is `{ operator: "DATERANGE", values: [new Date(), new Date()]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/DateRange.js";`
  *
  * ### ES6 Module Import
  *
@@ -90,6 +136,10 @@ interface IDynamicDateRangeOption {
 })
 
 class DynamicDateRange extends UI5Element {
+	eventDetails!: {
+		change: DynamicDateRangeChangeEventDetail,
+	}
+
     @i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -169,16 +219,16 @@ class DynamicDateRange extends UI5Element {
 			this._submitValue();
 		}
 
-		if (this._currentOption?.key === this.value?.operator) {
+		if (this._currentOption?.operator === this.value?.operator) {
 			this.currentValue = this.value;
 		}
 	}
 
-	getOption(key: string) {
-		const resultOption = this.optionsObjects.find(option => option.key === key);
+	getOption(operator: string) {
+		const resultOption = this.optionsObjects.find(option => option.operator === operator);
 
 		if (!resultOption) {
-			const OptionClass = DynamicDateRange.getOptionClass(key);
+			const OptionClass = DynamicDateRange.getOptionClass(operator);
 
 			if (OptionClass) {
 				const optionObject = new OptionClass();
@@ -201,7 +251,11 @@ class DynamicDateRange extends UI5Element {
 
 		const currentOption = this.optionsObjects.find(option => option.isValidString(value));
 
-		this.value = currentOption ? this.getOption(currentOption.key)?.parse(value) : undefined;
+		this.value = currentOption ? this.getOption(currentOption.operator)?.parse(value) : undefined;
+
+		if (this.value) {
+			this.fireDecoratorEvent("change", {	value: this.value });
+		}
 	}
 
 	onButtonBackClick() {
@@ -211,7 +265,6 @@ class DynamicDateRange extends UI5Element {
 	/**
 	 * Converts a `value` into concrete `startDate` and `endDate` JavaScript `Date` objects.
 	 *
-	 * @param value The value to convert.
 	 * @returns An array of two `Date` objects representing the start and end dates.
 	 */
 	toDates(value: DynamicDateRangeValue): Date[] {
@@ -231,6 +284,7 @@ class DynamicDateRange extends UI5Element {
 
 		if (this._currentOption?.isValidString(stringValue)) {
 			this.value = this.currentValue as DynamicDateRangeValue;
+			this.fireDecoratorEvent("change", { value: this.value });
 		} else {
 			this.value = undefined;
 		}
@@ -245,7 +299,7 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	get currentValueText() {
-		if (this.currentValue && this.currentValue.operator === this._currentOption?.key) {
+		if (this.currentValue && this.currentValue.operator === this._currentOption?.operator) {
 			return `${DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_SELECTED_TEXT)}: ${this._currentOption?.format(this.currentValue)}`;
 		}
 
@@ -256,16 +310,22 @@ class DynamicDateRange extends UI5Element {
 		this.currentValue = this._currentOption?.handleSelectionChange && this._currentOption?.handleSelectionChange(e) as DynamicDateRangeValue;
 	}
 
-	static register(key: string, option: new () => IDynamicDateRangeOption): void {
-		key = key.toUpperCase();
+	/**
+	 * Registers a new dynamic date range option with a unique key.
+	 *
+	 * Example:
+	 * DynamicDateRange.register("LASTWEEK", LastWeek);
+	 */
+	static register(operator: string, option: new () => IDynamicDateRangeOption): void {
+		operator = operator.toUpperCase();
 
-		if (!this.optionsClasses.has(key)) {
-			this.optionsClasses.set(key, option);
+		if (!this.optionsClasses.has(operator)) {
+			this.optionsClasses.set(operator, option);
 		}
 	}
 
-	static getOptionClass(key: string): (new () => IDynamicDateRangeOption) | undefined {
-		return this.optionsClasses.get(key);
+	static getOptionClass(operator: string): (new () => IDynamicDateRangeOption) | undefined {
+		return this.optionsClasses.get(operator);
 	}
 }
 
@@ -276,4 +336,5 @@ export default DynamicDateRange;
 export type {
 	DynamicDateRangeValue,
 	IDynamicDateRangeOption,
+	DynamicDateRangeChangeEventDetail,
 };

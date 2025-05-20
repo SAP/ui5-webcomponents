@@ -1,12 +1,10 @@
 import type DynamicDateRange from "./DynamicDateRange.js";
-// import Button from "./Button.js";
-// import Calendar from "./Calendar.js";
-// import CalendarDate from "./CalendarDate.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import ListItemStandard from "./ListItemStandard.js";
 import Button from "./Button.js";
 import Title from "./Title.js";
+import slimArrowLeft from "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 
 export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) {
 	return (
@@ -24,7 +22,7 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 				<div slot="header" class="ui5-ddr-header">
 					<Button
 						iconOnly={true}
-						icon="slim-arrow-left"
+						icon={slimArrowLeft}
 						design="Transparent"
 						onClick={this.onButtonBackClick}>
 					</Button>
@@ -39,7 +37,7 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 					onItemClick={this._selectOption}
 				>
 					{this.optionsObjects.map(option => {
-						return <ListItemStandard selected={option.key === this.value?.operator} iconEnd={true} icon={option.icon}>{option.text}</ListItemStandard>;
+						return <ListItemStandard selected={option.operator === this.value?.operator} iconEnd={true} icon={option.icon}>{option.text}</ListItemStandard>;
 					})}
 				</List>
 			</div>

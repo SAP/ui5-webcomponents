@@ -35,6 +35,7 @@ const tomorrowToDates = (): Date[] => {
 	const endDate = new Date();
 
 	startDate.setDate(startDate.getDate() + 1);
+	endDate.setDate(endDate.getDate() + 1);
 	startDate?.setHours(0, 0, 0, 0);
 	endDate?.setHours(23, 59, 59, 999);
 
@@ -46,6 +47,7 @@ const yesterdayToDates = (): Date[] => {
 	const endDate = new Date();
 
 	startDate.setDate(startDate.getDate() - 1);
+	endDate.setDate(endDate.getDate() - 1);
 	startDate?.setHours(0, 0, 0, 0);
 	endDate?.setHours(23, 59, 59, 999);
 

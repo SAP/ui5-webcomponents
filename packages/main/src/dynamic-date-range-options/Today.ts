@@ -14,7 +14,7 @@ import DynamicDateRange from "../DynamicDateRange.js";
 class Today implements IDynamicDateRangeOption {
 	parse(): DynamicDateRangeValue {
 	    const returnValue = { operator: "" };
-	    returnValue.operator = this.key;
+	    returnValue.operator = this.operator;
 
 	    return returnValue;
 	}
@@ -35,7 +35,7 @@ class Today implements IDynamicDateRangeOption {
 	    return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_TODAY_TEXT);
 	}
 
-	get key() {
+	get operator() {
 	    return "TODAY";
 	}
 

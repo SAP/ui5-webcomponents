@@ -25,7 +25,7 @@ class SingleDate implements IDynamicDateRangeOption {
 	parse(value: string): DynamicDateRangeValue {
 		const date = this.getFormat().parse(value) as Date;
 		const returnValue = { operator: "", values: [] } as DynamicDateRangeValue;
-		returnValue.operator = this.key;
+		returnValue.operator = this.operator;
 		returnValue.values = [date];
 
 		return returnValue;
@@ -61,7 +61,7 @@ class SingleDate implements IDynamicDateRangeOption {
 		return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_DATE_TEXT);
 	}
 
-	get key() {
+	get operator() {
 		return "DATE";
 	}
 
@@ -72,7 +72,7 @@ class SingleDate implements IDynamicDateRangeOption {
 	handleSelectionChange(e: CustomEvent) : DynamicDateRangeValue | undefined {
 		const currentValue = { operator: "", values: [] } as DynamicDateRangeValue;
 		currentValue.values = [];
-		currentValue.operator = this.key;
+		currentValue.operator = this.operator;
 
 		if (e.detail.selectedDates[0]) {
 			currentValue.values[0] = new Date(e.detail.selectedDates[0] * 1000);
