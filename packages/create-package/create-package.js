@@ -108,7 +108,10 @@ const generateFilesContent = async (
 };
 
 async function processFiles(destDir, replacements, testSetup) {
-	const files = await globby(`${SRC_DIR}/**/*`, { dot: true });
+	const files = await globby(`${SRC_DIR}/**/*`, {
+		dot: true,
+		ignore: ["**/Application Data", "**/AppData"],
+	});
 	const FILE_PATHS_TO_SKIP = [
 		testSetup !== "cypress" ? "cypress" : undefined,
 	].filter(Boolean);
