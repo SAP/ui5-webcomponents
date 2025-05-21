@@ -48,8 +48,8 @@ import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 
-// Animations
-import animate, { duration } from "@ui5/webcomponents-base/dist/animations/animate.js";
+import searchOpenAnimation from "./shellbar-utils/SearchOpenAnimation.js";
+import searchCloseAnimation from "./shellbar-utils/SearchCloseAnimation.js";
 
 // Templates
 import ShellBarTemplate from "./ShellBarTemplate.js";
@@ -949,33 +949,35 @@ class ShellBar extends UI5Element {
 		ResizeHandler.deregister(this, this._handleResize);
 	}
 
-	_startAnimations(changedItems: IShellBarContentItem[]) {
+	async _startAnimations(changedItems: IShellBarContentItem[]) {
 		this._isAnimating = true;
 
 		const animations: Array<Promise<void | Error>> = [];
-
-		changedItems.map(item => {
+		console.log(changedItems.length);
+		changedItems.map((item, index) => {
 			const element = this.shadowRoot!.querySelector<HTMLElement>(`[id="${item.id}"]`);
 			return new Promise(resolve => {
-				if (element) {
-					element.addEventListener("transitionend", () => {
-						// reset animation class for next transition
+				setTimeout(() => {
+					if (element) {
+						element.addEventListener("transitionend", () => {
+							// reset animation class for next transition
+							element.classList.toggle("ui5-shellbar-hide-animation");
+							// once the transition is done, add the hidden class to off load the container
+							element.classList.add("ui5-shellbar-hidden-button");
+							resolve(true);
+						}, { once: true });
 						element.classList.toggle("ui5-shellbar-hide-animation");
-						// once the transition is done, add the hidden class to off load the container
-						element.classList.add("ui5-shellbar-hidden-button");
-						resolve(true);
-					}, { once: true });
-					element.classList.toggle("ui5-shellbar-hide-animation");
-				}
+					}
+				}, index * 50);
 			});
 		});
 		if (this.showSearchField) {
-			animations.push(this.slideRight(this.searchFieldWrapper!).promise());
+			animations.push(searchOpenAnimation(this.searchFieldWrapper!).promise());
 		} else {
-			animations.push(this.slideLeft(this.searchFieldWrapper!).promise());
+			animations.push(searchCloseAnimation(this.searchFieldWrapper!, this.domCalculatedValues("--_ui5_shellbar_search_field_width")).promise());
 		}
 
-		Promise.all(animations).then(() => {
+		await Promise.all(animations).then(() => {
 			this._isAnimating = false;
 		});
 	}
@@ -1411,9 +1413,9 @@ class ShellBar extends UI5Element {
 				"ui5-shellbar-assistant-button": true,
 			},
 			searchField: {
-				"ui5-shellbar-search-field": this.showSearchField,
+				"ui5-shellbar-search-field": true,
 				"ui5-shellbar-search-toggle": isSelfCollapsibleSearch(this.search),
-				"ui5-shellbar-hidden-button": !this.showSearchField,
+				// "ui5-shellbar-hidden-button": !this.showSearchField,
 				"ui5-search": true,
 			},
 		};
@@ -1710,151 +1712,6 @@ class ShellBar extends UI5Element {
 
 	get search() {
 		return this.searchField.length ? this.searchField[0] : null;
-	}
-
-	slideRight(element: HTMLElement) {
-		let computedStyles: CSSStyleDeclaration,
-			paddingInlineStart: number,
-			paddingInlineEnd: number,
-			marginInlineStart: number,
-			marginBottom: number,
-			minwidth: number,
-			opacity: number;
-		let storedOverflow: string,
-			storedpaddingInlineStart: string,
-			storedpaddingInlineEnd: string,
-			storedmarginInlineStart: string,
-			storedMarginBottom: string,
-			storedMinwidth: string,
-			storedOpacity: string;
-
-		const animation = animate({
-			beforeStart: () => {
-				// Show the element to measure its properties
-				element.style.display = "block";
-
-				// Get Computed styles
-				computedStyles = getComputedStyle(element);
-				minwidth = parseFloat(computedStyles.minWidth);
-				opacity = parseFloat(computedStyles.opacity);
-				paddingInlineStart = parseFloat(computedStyles.paddingInlineStart);
-				paddingInlineEnd = parseFloat(computedStyles.paddingBottom);
-				marginInlineStart = parseFloat(computedStyles.marginInlineStart);
-				marginBottom = parseFloat(computedStyles.marginBottom);
-
-				// Store inline styles
-				storedOverflow = element.style.overflow;
-				storedMinwidth = element.style.minWidth;
-				storedOpacity = element.style.opacity;
-				storedpaddingInlineStart = element.style.paddingInlineStart;
-				storedpaddingInlineEnd = element.style.paddingBottom;
-				storedmarginInlineStart = element.style.marginInlineStart;
-				storedMarginBottom = element.style.marginBottom;
-
-				element.style.overflow = "hidden";
-				element.style.minWidth = "0";
-				element.style.opacity = "0";
-				element.style.paddingInlineStart = "0";
-				element.style.paddingBottom = "0";
-				element.style.marginInlineStart = "0";
-				element.style.marginBottom = "0";
-			},
-			duration,
-			element,
-			advance: progress => {
-				// WORKAROUND
-				element.style.display = "block";
-				// END OF WORKAROUND
-
-				element.style.minWidth = `${(minwidth * progress)}px`;
-				element.style.opacity = `${(opacity * progress)}`;
-				element.style.paddingInlineStart = `${(paddingInlineStart * progress)}px`;
-				element.style.paddingInlineEnd = `${(paddingInlineEnd * progress)}px`;
-				element.style.marginInlineStart = `${(marginInlineStart * progress)}px`;
-				element.style.marginBottom = `${(marginBottom * progress)}px`;
-			},
-		});
-
-		animation.promise().then(() => {
-			element.style.overflow = storedOverflow;
-			element.style.minWidth = storedMinwidth;
-			element.style.opacity = storedOpacity;
-			element.style.paddingInlineStart = storedpaddingInlineStart;
-			element.style.paddingBottom = storedpaddingInlineEnd;
-			element.style.marginInlineStart = storedmarginInlineStart;
-			element.style.marginBottom = storedMarginBottom;
-		});
-
-		return animation;
-	}
-
-	slideLeft(element: HTMLElement) {
-		let computedStyles: CSSStyleDeclaration,
-			paddingStart: number,
-			paddingEnd: number,
-			marginStart: number,
-			marginEnd: number,
-			minwidth: number,
-			opacity: number;
-		let storedOverflow: string,
-			storedpaddingStart: string,
-			storedpaddingEnd: string,
-			storedmarginStart: string,
-			storedmarginEnd: string,
-			storedminwidth: string,
-			storedOpacity: string;
-		const searchFieldwidth: number = this.domCalculatedValues("--_ui5_shellbar_search_field_width");
-
-		const animation = animate({
-			beforeStart: () => {
-				const el = element;
-
-				// Get Computed styles
-				computedStyles = getComputedStyle(element);
-				paddingStart = parseFloat(computedStyles.paddingInlineStart);
-				paddingEnd = parseFloat(computedStyles.paddingInlineEnd);
-				marginStart = parseFloat(computedStyles.marginInlineStart);
-				marginEnd = parseFloat(computedStyles.marginInlineEnd);
-				minwidth = searchFieldwidth;
-				opacity = parseFloat(computedStyles.opacity);
-
-				// Store inline styles
-				storedOverflow = element.style.overflow;
-				storedminwidth = element.style.minWidth;
-				storedOpacity = element.style.opacity;
-				storedpaddingStart = element.style.paddingInlineStart;
-				storedpaddingEnd = element.style.paddingInlineEnd;
-				storedmarginStart = element.style.marginInlineStart;
-				storedmarginEnd = element.style.marginInlineEnd;
-
-				el.style.overflow = "hidden";
-			},
-			duration,
-			element,
-			advance: progress => {
-				element.style.minWidth = `${minwidth - (minwidth * progress)}px`;
-				element.style.opacity = `${opacity - (opacity * progress)}`;
-				element.style.paddingInlineStart = `${paddingStart - (paddingStart * progress)}px`;
-				element.style.paddingInlineEnd = `${paddingEnd - (paddingEnd * progress)}px`;
-				element.style.marginInlineStart = `${marginStart - (marginStart * progress)}px`;
-				element.style.marginInlineEnd = `${marginEnd - (marginEnd * progress)}px`;
-			},
-		});
-
-		animation.promise().then(reason => {
-			if (!(reason instanceof Error)) {
-				element.style.overflow = storedOverflow;
-				element.style.minWidth = storedminwidth;
-				element.style.opacity = storedOpacity;
-				element.style.display = "none";
-				element.style.paddingInlineStart = storedpaddingStart;
-				element.style.paddingInlineEnd = storedpaddingEnd;
-				element.style.marginInlineStart = storedmarginStart;
-				element.style.marginInlineEnd = storedmarginEnd;
-			}
-		});
-
-		return animation;
 	}
 }
 

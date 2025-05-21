@@ -459,13 +459,17 @@ slot[name="profile"] {
 	margin-inline-start: 0.5rem;
 	display: flex;
 	overflow: hidden;
+	min-width: auto;
 	width: 0;
-	min-width: 1px;
 }
 
 :host([show-search-field]) .ui5-shellbar-search-field {
 	min-width: var(--_ui5_shellbar_search_field_width);
 	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
+}
+
+.ui5-shellbar-no-animation .ui5-shellbar-search-field {
+	width: auto;
 }
 
 .ui5-shellbar-overflow-container-right-child > :first-child,
@@ -578,11 +582,10 @@ slot[name="profile"] {
 .ui5-shellbar-content-item {
 	transition: var(--_ui5_shellbar_content_transition);
 	&[data-hide-order = "null"] {
-		transition-duration: 0.01s;
+		transition-duration: 0.05s;
 	}
-
 	&[data-hide-order = "1"] {
-		transition-duration: 0.01s;
+		transition-duration: 0.05s;
 	}
 	&[data-hide-order = "2"] {
 		transition-duration: 0.1s;
