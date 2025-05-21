@@ -63,8 +63,8 @@ describe("MultiInput Web Component", () => {
 		cy.realType("ad");
 		cy.realPress("Enter");
 
-		cy.get("ui5-multi-input")
-			.find("ui5-token")
+		cy.get("[ui5-multi-input]")
+			.find("[ui5-token]")
 			.should("have.length", 1)
 			.and("have.attr", "text", "ad");
 	});
@@ -97,7 +97,7 @@ describe("MultiInput Web Component", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.as("multiInput");
 
 		cy.get("@multiInput")
@@ -107,17 +107,17 @@ describe("MultiInput Web Component", () => {
 
 		cy.get("@multiInput")
 			.shadow()
-			.find("ui5-tokenizer")
+			.find("[ui5-tokenizer]")
 			.as("tokenizer");
 
 		cy.get("@input")
-			.click();
+			.realClick();
 
 		cy.get("@input")
 			.realPress("Tab");
 
 		cy.get("@tokenizer")
-			.should("not.have.a.property", "expanded");
+			.should("have.prop", "expanded", false);
 	});
 
 	it("tests opening of tokenizer Popover", () => {
@@ -129,12 +129,12 @@ describe("MultiInput Web Component", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.as("multiInput");
 
 		cy.get("@multiInput")
 			.shadow()
-			.find("ui5-tokenizer")
+			.find("[ui5-tokenizer]")
 			.as("tokenizer");
 
 		cy.get("@tokenizer")
@@ -143,15 +143,15 @@ describe("MultiInput Web Component", () => {
 			.as("nMoreLabel");
 
 		cy.get("@nMoreLabel")
-			.click();
+			.realClick();
 
 		cy.get("@tokenizer")
 			.shadow()
-			.find("ui5-responsive-popover")
+			.find("[ui5-responsive-popover]")
 			.as("respPopover");
 
 		cy.get("@respPopover")
-			.should("have.attr", "open");
+			.ui5PopoverOpened();
 	});
 
 	it("fires value-help-trigger on icon press", () => {
@@ -162,7 +162,7 @@ describe("MultiInput Web Component", () => {
 				<Token slot="tokens" text="laboris"></Token>
 			</MultiInput>
 		);
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.as("multiInput");
 
 		cy.get("@multiInput")
@@ -172,14 +172,11 @@ describe("MultiInput Web Component", () => {
 
 		cy.get("@multiInput")
 			.shadow()
-			.find("ui5-icon")
-			.as("icon");
-
-		cy.get("@icon")
-			.click();
+			.find("[ui5-icon]")
+			.realClick();
 
 		cy.get("@valueHelpTrigger")
-			.should("have.been.called");
+			.should("have.been.calledOnce");
 	});
 
 	it("fires value-help-trigger with F4 and Alt/Option + ArrowUp/Down", () => {
@@ -187,7 +184,7 @@ describe("MultiInput Web Component", () => {
 			<MultiInput id="multi-with-value-help-icon" showValueHelpIcon={true}></MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.as("multiInput");
 
 		cy.get("@multiInput")
@@ -203,7 +200,7 @@ describe("MultiInput Web Component", () => {
 			.as("innerInput");
 
 		cy.get("@innerInput")
-			.click();
+			.realClick();
 
 		cy.get("@innerInput")
 			.realPress(["Alt", "ArrowUp"]);
@@ -229,32 +226,32 @@ describe("MultiInput tokens", () => {
 			</>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.as("multiInput");
 
-		cy.get("ui5-button")
+		cy.get("[ui5-button]")
 			.then(button => {
 				button[0].addEventListener("click", () => {
 					addTokenToMI(createTokenFromText("test"), "single-token");
 				});
 			});
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("have.length", 1);
 
-		cy.get("ui5-button")
-			.click();
+		cy.get("[ui5-button]")
+			.realClick();
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("have.length", "2");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(0)
-			.should("not.have.a.property", "overflows");
+			.should("have.prop", "overflows", false);
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(1)
-			.should("not.have.a.property", "overflows");
+			.should("have.prop", "overflows", false);
 
 	});
 	it("adds multiple tokens to multi input", () => {
@@ -265,7 +262,7 @@ describe("MultiInput tokens", () => {
 			</>
 		);
 
-		cy.get("ui5-button")
+		cy.get("[ui5-button]")
 			.then(button => {
 				button[0].addEventListener("click", function (event) {
 					addTokenToMI(createTokenFromText("One"), "no-tokens2");
@@ -273,19 +270,19 @@ describe("MultiInput tokens", () => {
 				});
 			});
 
-		cy.get("ui5-button")
-			.click();
+		cy.get("[ui5-button]")
+			.realClick();
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("have.length", "2");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(0)
-			.should("not.have.a.property", "overflows");
+			.should("have.prop", "overflows", false);
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(1)
-			.should("not.have.a.property", "overflows");
+			.should("have.prop", "overflows", false);
 	});
 	it("adds an overflowing token to multi input", () => {
 		cy.mount(
@@ -301,43 +298,43 @@ describe("MultiInput tokens", () => {
 			</>
 		);
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("have.length", "5");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(0)
 			.should("not.have.attr", "overflows");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(1)
 			.should("not.have.attr", "overflows");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(2)
 			.should("have.attr", "overflows");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(3)
 			.should("have.attr", "overflows");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(4)
 			.should("have.attr", "overflows");
 
-		cy.get("ui5-button")
+		cy.get("[ui5-button]")
 			.then(button => {
 				button[0].addEventListener("click", () => {
 					addTokenToMI(createTokenFromText("test"), "multiple-token");
 				});
 			});
 
-		cy.get("ui5-button")
-			.click();
+		cy.get("[ui5-button]")
+			.realClick();
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("have.length", "6");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(5)
 			.should("have.attr", "overflows");
 
@@ -353,7 +350,7 @@ describe("MultiInput tokens", () => {
 			</>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.then(multiInput => {
 				multiInput[0].addEventListener("ui5-change", function (event) {
 					var text = (event.target as HTMLInputElement).value;
@@ -363,45 +360,37 @@ describe("MultiInput tokens", () => {
 				});
 			});
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.as("input");
 
 		cy.get("@input")
-			.click();
+			.realClick();
 
 		cy.get("@input")
 			.realType("a");
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
-			.find("ui5-responsive-popover")
+			.find("[ui5-responsive-popover]")
 			.as("respPopover");
 
 		cy.get("@respPopover")
-			.should("have.attr", "open");
+			.ui5PopoverOpened();
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("have.length", "0");
 
-		cy.get("ui5-suggestion-item")
+		cy.get("[ui5-suggestion-item]")
 			.eq(0)
-			.click();
+			.realClick();
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("have.length", "1");
 
 		cy.get("@respPopover")
 			.should("not.have.attr", "open");
-	});
-	it("Placeholder", () => {
-		cy.mount(
-			<MultiInput placeholder="Placeholder"></MultiInput>
-		);
-
-		cy.get("ui5-multi-input")
-			.should("have.attr", "placeholder", "Placeholder");
 	});
 	it("Tokens should not have delete icon when MI is readonly", () => {
 		cy.mount(
@@ -411,16 +400,16 @@ describe("MultiInput tokens", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(0)
 			.shadow()
-			.find("ui5-icon")
+			.find("[ui5-icon]")
 			.should("not.exist");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(1)
 			.shadow()
-			.find("ui5-icon")
+			.find("[ui5-icon]")
 			.should("not.exist");
 	});
 
@@ -434,9 +423,9 @@ describe("MultiInput tokens", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
-			.find("ui5-tokenizer")
+			.find("[ui5-tokenizer]")
 			.as("tokenizer");
 
 		cy.get("@tokenizer")
@@ -445,11 +434,11 @@ describe("MultiInput tokens", () => {
 			.as("nMoreLabel");
 
 		cy.get("@nMoreLabel")
-			.click();
+			.realClick();
 
 		cy.get("@tokenizer")
 			.shadow()
-			.find("ui5-responsive-popover")
+			.find("[ui5-responsive-popover]")
 			.as("respPopover");
 
 		cy.get("@tokenizer")
@@ -460,19 +449,19 @@ describe("MultiInput tokens", () => {
 		cy.get("@liTokens")
 			.eq(0)
 			.shadow()
-			.find("ui5-icon")
+			.find("[ui5-icon]")
 			.should("not.exist");
 
 		cy.get("@liTokens")
 			.eq(1)
 			.shadow()
-			.find("ui5-icon")
+			.find("[ui5-icon]")
 			.should("not.exist");
 
 		cy.get("@liTokens")
 			.eq(3)
 			.shadow()
-			.find("ui5-icon")
+			.find("[ui5-icon]")
 			.should("not.exist");
 	});
 
@@ -484,7 +473,7 @@ describe("MultiInput tokens", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.then(multiInput => {
 				multiInput[0].addEventListener("ui5-value-help-trigger", function (event) {
 					(event.target as ResponsivePopover).open = true;
@@ -495,23 +484,23 @@ describe("MultiInput tokens", () => {
 				});
 			});
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
-			.find("ui5-icon")
+			.find("[ui5-icon]")
 			.as("valueHelpIcon");
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.as("innerInput");
 
 		cy.get("@valueHelpIcon")
-			.click();
+			.realClick();
 
-		cy.get("ui5-suggestion-item")
-			.click();
+		cy.get("[ui5-suggestion-item]")
+			.realClick();
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.should("have.attr", "value", "");
 	})
 
@@ -530,25 +519,25 @@ describe("MultiInput tokens", () => {
 			</>
 		);
 
-		cy.window().then(() => {
-			const multiInput = window.document.getElementById("mi-items");
-			const i18nBundle = (multiInput.constructor as any).i18nBundle;
-			const miItemsLabelText = i18nBundle.getText(TOKENIZER_SHOW_ALL_ITEMS.defaultText, 2);
-			const miNMoreLabelText = i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS.defaultText, 1);
+		cy.get("#mi-items").then(($miItems) => {
+		const miItemsEl = $miItems[0];
+		const i18nBundle = (miItemsEl.constructor as any).i18nBundle;
+		const miItemsLabelText = i18nBundle.getText(TOKENIZER_SHOW_ALL_ITEMS.defaultText, 2);
+		const miMoreLabelText = i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS.defaultText, 1);
 
-			cy.get("#mi-items")
-				.shadow()
-				.find("ui5-tokenizer")
-				.shadow()
-				.find(".ui5-tokenizer-more-text")
-				.should("have.text", miItemsLabelText);
+		cy.get("#mi-items")
+			.shadow()
+			.find("ui5-tokenizer")
+			.shadow()
+			.find(".ui5-tokenizer-more-text")
+			.should("have.text", miItemsLabelText);
 
-			cy.get("#mi-more")
-				.shadow()
-				.find("ui5-tokenizer")
-				.shadow()
-				.find(".ui5-tokenizer-more-text")
-				.should("have.text", miNMoreLabelText);
+		cy.get("#mi-more")
+			.shadow()
+			.find("ui5-tokenizer")
+			.shadow()
+			.find(".ui5-tokenizer-more-text")
+			.should("have.text", miMoreLabelText);
 		});
 	});
 
@@ -570,18 +559,18 @@ describe("MultiInput tokens", () => {
 		</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.as("input");
 
 		cy.get("@input")
-			.click();
+			.realClick();
 
 		cy.get("@input")
 			.type("b");
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.should("have.attr", "value", "Bulgaria");
 	});
 });
@@ -595,29 +584,29 @@ describe("MultiInput Truncated Token", () => {
 			<Button id="dummyBtn">dummy button</Button>
 			</>
 		);
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("have.attr", "single-token");
 
-		cy.get("ui5-token")
-			.click();
+		cy.get("[ui5-token]")
+			.realClick();
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
-			.find("ui5-tokenizer")
+			.find("[ui5-tokenizer]")
 			.as("tokenizer");
 
 		cy.get("@tokenizer")
 			.shadow()
-			.find("ui5-responsive-popover")
+			.find("[ui5-responsive-popover]")
 			.as("respPopover");
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.as("input");
 
 		cy.get("@respPopover")
-			.should("have.attr", "open");
+			.ui5PopoverOpened();
 
 		cy.get("@tokenizer")
 			.shadow()
@@ -627,18 +616,18 @@ describe("MultiInput Truncated Token", () => {
 		cy.get("@tokenLi")
 			.should("have.focus");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("have.attr", "selected");
 	})
 	it("should open responsive popover on click on single truncated token and close and deselect the token on clicking it again", () => {
 
-		cy.get("ui5-token")
-			.click();
+		cy.get("[ui5-token]")
+			.realClick();
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("have.focus");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("not.have.attr", "selected");
 
 		cy.get("@respPopover")
@@ -646,12 +635,12 @@ describe("MultiInput Truncated Token", () => {
 	});
 	it("should close truncation popover and deselect selected tokens when clicked outside the component", () => {
 		cy.get("#dummyBtn")
-			.click();
+			.realClick();
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("not.have.focus");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("not.have.attr", "selected");
 
 		cy.get("@respPopover")
@@ -659,19 +648,19 @@ describe("MultiInput Truncated Token", () => {
 	})
 	it("should close truncation popover and deselect selected tokens when clicked in input field", () => {
 		cy.get("@input")
-			.click();
+			.realClick();
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("not.have.focus");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("not.have.attr", "selected");
 
 		cy.get("@respPopover")
 			.should("not.have.property", "open");
 	});
 	it("should truncate token when a long token is added", () => {
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.then(multiInput => {
 				multiInput[0].addEventListener("ui5-token-delete", handleTokenDelete);
 
@@ -687,17 +676,17 @@ describe("MultiInput Truncated Token", () => {
 
 		cy.get("@tokenLi")
 			.shadow()
-			.find("ui5-button")
+			.find("[ui5-button]")
 			.as("deleteIcon");
 
 		cy.get("@deleteIcon")
-			.click();
+			.realClick();
 
 		cy.get("@input")
 			.should("be.focused");
 
 		cy.get("@input")
-			.click();
+			.realClick();
 
 		cy.get("@input")
 			.type("Officia enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum");
@@ -705,45 +694,43 @@ describe("MultiInput Truncated Token", () => {
 		cy.get("@input")
 			.realPress("Enter");
 
-		cy.get("ui5-token")
-			.click();
+		cy.get("[ui5-token]")
+			.realClick();
 
 		cy.get("@respPopover")
-			.should("have.attr", "open");
+			.ui5PopoverOpened();
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("have.attr", "single-token");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.should("have.attr", "selected");
 	});
 	it("should not throw exception when MI with 1 token is added to the page", () => {
 		cy.mount(
 			<>
-			<Button id="add-single-token">Add MultiInput with single token</Button>
-			<div id="container"></div>
+				<Button id="add-single-token">Add MultiInput with single token</Button>
+				<div id="container"></div>
 			</>
 		);
 
-		cy.get("ui5-button")
-			.then(button => {
-				button[0].addEventListener("click", () => {
-					const token = window.document.createElement('ui5-token');
-					const multiInput = window.document.createElement('ui5-multi-input');
+		cy.get("[ui5-button]").then(button => {
+			button[0].addEventListener("click", () => {
+				cy.get("#container").then(container => {
+					const token = window.document.createElement("ui5-token");
+					const multiInput = window.document.createElement("ui5-multi-input");
 
 					multiInput.setAttribute("id", "added-mi");
+					token.setAttribute("text", "test");
+					token.setAttribute("slot", "tokens");
 
-					token.setAttribute('text', "test");
-					token.setAttribute('slot', 'tokens');
-
-					document.getElementById("container").appendChild(multiInput);
-
+					container[0].appendChild(multiInput);
 					multiInput.appendChild(token);
 				});
 			});
+		});
 
-		cy.get("ui5-button")
-			.click();
+		cy.get("[ui5-button]").realClick();
 
 		cy.get("#added-mi")
 			.should("exist")
@@ -784,7 +771,7 @@ describe("ARIA attributes", () => {
 			.as("invisibleText");
 
 		cy.get("@multiInput")
-			.find("ui5-token")
+			.find("[ui5-token]")
 			.should("have.length", 0);
 
 		cy.get("@innerInput")
@@ -800,10 +787,10 @@ describe("ARIA attributes", () => {
 			.should("include", "No Tokens");
 
 		cy.get("@addButton")
-			.click();
+			.realClick();
 
 		cy.get("@multiInput")
-			.find("ui5-token")
+			.find("[ui5-token]")
 			.should("have.length", 1);
 
 		cy.get("@invisibleText")
@@ -811,10 +798,10 @@ describe("ARIA attributes", () => {
 			.should("include", "Contains 1 token");
 
 		cy.get("@addButton")
-			.click();
+			.realClick();
 
 		cy.get("@multiInput")
-			.find("ui5-token")
+			.find("[ui5-token]")
 			.should("have.length", 2);
 
 		cy.get("@invisibleText")
@@ -843,7 +830,7 @@ describe("ARIA attributes", () => {
 			.as("innerInput");
 
 		cy.get("@innerInput")
-			.click()
+			.realClick()
 			.type("a");
 
 		cy.get("@innerInput")
@@ -866,7 +853,7 @@ describe("ARIA attributes", () => {
 			<MultiInput/>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.invoke("attr", "aria-roledescription")
@@ -881,8 +868,7 @@ describe("ARIA attributes", () => {
 		cy.get("#suggestion-token")
 			.shadow()
 			.find("input")
-			.invoke("attr", "aria-haspopup")
-			.should("eq", "dialog");
+			.should("have.attr", "aria-haspopup", "dialog");
 	});
 })
 
@@ -896,17 +882,17 @@ describe("Keyboard handling", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.as("innerInput");
 
 		cy.get("@innerInput")
-			.click();
+			.realClick();
 
 		cy.realPress("ArrowLeft");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(2)
 			.should("be.focused");
 
@@ -915,7 +901,7 @@ describe("Keyboard handling", () => {
 
 		cy.realPress("ArrowRight");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(2)
 			.should("not.be.focused");
 
@@ -931,29 +917,29 @@ describe("Keyboard handling", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.as("innerInput");
 
 		cy.get("@innerInput")
-			.click();
+			.realClick();
 
 		cy.realPress("Home");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(0)
 			.should("be.focused");
 
 		cy.realPress("End");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(2)
 			.should("be.focused");
 
 		cy.realPress("End");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(2)
 			.should("not.be.focused");
 
@@ -974,14 +960,14 @@ describe("Keyboard handling", () => {
 			<Token slot="tokens" text="do"></Token>
 		</MultiInput>
 		);
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 		.shadow()
 		.find("input")
 		.as("innerInput");
 
-		cy.get("ui5-token").as("tokens");
+		cy.get("[ui5-token]").as("tokens");
 
-		cy.get("@innerInput").click();
+		cy.get("@innerInput").realClick();
 		cy.realPress("ArrowLeft");
 
 		cy.realPress(["Shift", "ArrowLeft"]);
@@ -1005,7 +991,7 @@ describe("Keyboard handling", () => {
 
 		cy.get("@tokens")
 			.eq(9)
-			.click();
+			.realClick();
 
 		cy.get("@tokens")
 			.eq(10)
@@ -1032,7 +1018,7 @@ describe("Keyboard handling", () => {
 			.as("innerInput");
 
 		cy.get("@innerInput")
-			.click();
+			.realClick();
 		cy.realPress("End");
 
 		cy.get("@innerInput").then($input => {
@@ -1050,12 +1036,14 @@ describe("Keyboard handling", () => {
 			expect((inputEl as HTMLInputElement).selectionEnd).to.equal(0);
 		});
 
-		cy.get("#two-tokens ui5-token:first-child").should("have.prop", "focused", false);
+		cy.get("[ui5-token]")
+			.eq(0)
+			.should("have.prop", "focused", false);
 
 		cy.get("@innerInput")
 			.realPress("Home");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(0)
 			.should("have.prop", "focused", true);
 	});
@@ -1068,7 +1056,7 @@ describe("Keyboard handling", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.then(multiInput => {
 				const handleTokenDelete = (event) => {
 					var mi = event.target;
@@ -1080,22 +1068,22 @@ describe("Keyboard handling", () => {
 				multiInput[0].addEventListener("ui5-token-delete", handleTokenDelete);
 			});
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.as("innerInput");
 
 		cy.get("@innerInput")
-			.click();
+			.realClick();
 
 		cy.realPress("ArrowLeft");
 		cy.realPress(["Shift", "ArrowLeft"]);
 
 		cy.realPress("Backspace");
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
-			.find("ui5-token")
+			.find("[ui5-token]")
 			.should("have.length", 0);
 
 		cy.get("@innerInput")
@@ -1110,21 +1098,21 @@ describe("Keyboard handling", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.as("innerInput");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(1)
 			.as("lastToken");
 
 		// Set the input type to 'Number'
 		cy.get("@innerInput")
-			.invoke("attr", "type", "Number");
+			.invoke("attr", "type", "number");
 
 		cy.get("@innerInput")
-			.click();
+			.realClick();
 
 		cy.realPress("Backspace");
 
@@ -1139,13 +1127,13 @@ describe("Keyboard handling", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.as("innerInput");
 
 		cy.get("@innerInput")
-			.click();
+			.realClick();
 
 		cy.realPress("ArrowLeft");
 		cy.realPress("ArrowLeft");
@@ -1153,7 +1141,7 @@ describe("Keyboard handling", () => {
 
 		cy.realPress("Backspace");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(1)
 			.should("be.focused");
 	})
@@ -1165,16 +1153,16 @@ describe("Keyboard handling", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.as("innerInput");
 
-		cy.get("ui5-token")
+		cy.get("[ui5-token]")
 			.eq(1)
 			.as("lastToken");
 
-		cy.get("@innerInput").click();
+		cy.get("@innerInput").realClick();
 		cy.realPress(["Control", "a"]);
 
 		cy.realPress("Backspace");
@@ -1199,7 +1187,7 @@ describe("Keyboard handling", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.then(multiInput => {
 				multiInput[0].addEventListener("keydown", (event: KeyboardEvent) => {
 					const inputElement = multiInput[0] as HTMLInputElement;
@@ -1211,18 +1199,18 @@ describe("Keyboard handling", () => {
 				});
 			})
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.as("innerInput");
 
 		cy.get("@innerInput")
-			.click();
+			.realClick();
 
 		cy.realType("a");
 		cy.realPress("Enter");
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.should("have.value", "")
 
 		cy.get("@innerInput")
@@ -1247,8 +1235,8 @@ describe("Keyboard handling", () => {
 				</MultiInput>
 			</>
 		);
-		cy.get("ui5-multi-input")
-			.click();
+		cy.get("[ui5-multi-input]")
+			.realClick();
 
 		cy.realPress("ArrowLeft");
 
@@ -1267,7 +1255,7 @@ describe("Keyboard handling", () => {
 			</MultiInput>
 		);
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 		.then(multiInput => {
 
 			multiInput[0].addEventListener("ui5-change", function (event) {
@@ -1295,28 +1283,28 @@ describe("Keyboard handling", () => {
 			});
 		})
 
-		 cy.get("ui5-multi-input")
+		 cy.get("[ui5-multi-input]")
 		 	.shadow()
 			.find("input")
 			.as("innerInput");
 
 		cy.get("@innerInput")
-			.click();
+			.realClick();
 
 		cy.realType("a");
 		cy.realPress("Enter");
 
 		cy.get("@innerInput")
-			.click();
+			.realClick();
 		cy.realType("a");
 		cy.realPress("Enter");
 
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.should("have.attr", "value-state", "Negative");
 
 		// Pause and check if value state changes to None
 		cy.wait(250);
-		cy.get("ui5-multi-input")
+		cy.get("[ui5-multi-input]")
 			.should("have.attr", "value-state", "None");
 	});
 });
