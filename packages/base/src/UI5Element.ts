@@ -1325,7 +1325,7 @@ abstract class UI5Element extends HTMLElement {
 		const defineSequence = async () => {
 			await boot(); // boot must finish first, because it initializes configuration
 			const result = await Promise.all([
-				this.fetchI18nBundles(), // uses configurationq
+				this.fetchI18nBundles(), // uses configuration
 				this.fetchCLDR(),
 				this.onDefine(),
 			]);
