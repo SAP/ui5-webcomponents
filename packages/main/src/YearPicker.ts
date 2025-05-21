@@ -1,5 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type LocaleT from "sap/ui/core/Locale";
@@ -121,6 +122,9 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	@property({ type: Boolean, noAttribute: true })
 	_hidden = false;
 
+	@query("[data-sap-focus-ref]")
+	_focusableYear!: HTMLElement;
+
 	/**
 	 * When selectionMode="Range" and the first year in the range is selected, this is the currently hovered or focused year.
 	 *
@@ -141,6 +145,13 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	onBeforeRendering() {
 		this._buildYears();
+	}
+
+	/**
+	 * @override
+	 */
+	getFocusDomRef(): HTMLElement | undefined {
+		return this._focusableYear || this.getDomRef();
 	}
 
 	_getPageSize() {

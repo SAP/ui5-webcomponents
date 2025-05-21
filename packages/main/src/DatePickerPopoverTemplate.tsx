@@ -26,6 +26,7 @@ export default function DatePickerPopoverTemplate(this: DatePicker, hooks?: { he
 			opener={this}
 			open={this.open}
 			allowTargetOverlap
+			preventInitialFocus
 			placement="Bottom"
 			horizontalAlign="Start"
 			accessibleName={this.pickerAccessibleName}

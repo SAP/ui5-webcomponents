@@ -785,6 +785,13 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		return this.hideWeekNumbers;
 	}
 
+	/**
+	 * @override
+	 */
+	getFocusDomRef(): HTMLElement | undefined {
+		return this._focusableDay || this.getDomRef();
+	}
+
 	_isWeekend(oDate: CalendarDate): boolean {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 
