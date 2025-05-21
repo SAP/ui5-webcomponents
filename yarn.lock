@@ -4115,10 +4115,10 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@sap-theming/theming-base-content@11.12.0":
-  version "11.12.0"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.12.0.tgz#e62d2b6f9cc923447d2a3813b214ba6f0bedc7e4"
-  integrity sha512-kPHlziH8e6W8VjzljOiNjgBz81GuvC8WUAi7K6F5k+ZaRc1DUkDU12x9k6B0l4u9nPtprdZTse55r3PFGuELdQ==
+"@sap-theming/theming-base-content@11.29.3":
+  version "11.29.3"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.29.3.tgz#2ca5606e977cad85b5c485bff7a88ac8f59b61f9"
+  integrity sha512-0LVCUYqoTQGcKmgPShbxQLBoF8469ZojUrYtVm1k3op/1pgLA/FMN//bvgGEm7HTBJBu3gW2Ad2f4ASqEzLolA==
 
 "@semantic-release/error@^4.0.0":
   version "4.0.0"
