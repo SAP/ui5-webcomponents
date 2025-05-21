@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
@@ -125,9 +124,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	@property({ type: Boolean, noAttribute: true })
 	_hidden = false;
 
-	@query("[data-sap-focus-ref]")
-	_focusableMonth!: HTMLElement;
-
 	/**
 	 * When selectionMode="Range" and the first month in the range is selected, this is the currently hovered or focused month.
 	 *
@@ -151,13 +147,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		if (!this._hidden) {
 			this.focus();
 		}
-	}
-
-	/**
-	 * @override
-	 */
-	getFocusDomRef(): HTMLElement | undefined {
-		return this._focusableMonth || this.getDomRef();
 	}
 
 	get rowSize() {
