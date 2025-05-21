@@ -90,8 +90,8 @@ const generateFilesContent = async (
 		? packageName.slice(packageName.lastIndexOf("/") + 1)
 		: packageName;
 	const destDir = skipSubfolder
-		? path.join("./")
-		: path.join("./", packageBaseName);
+		? path.join(process.cwd())
+		: path.join(process.cwd(), packageBaseName);
 
 	await processFiles(destDir, vars, testSetup);
 
