@@ -277,7 +277,10 @@
 	<div class="sample-container">
 		<h1>Tokens + Suggestions</h1>
 
-		<ui5-multi-input show-suggestions show-value-help-icon id="suggestion-token">
+		<ui5-multi-input show-suggestions show-value-help-icon value-state="Negative" id="suggestion-token">
+			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>.<ui5-button></ui5-button> <ui5-link  href="#"> Link ui5-link</ui5-link><ui5-link  href="#"> Second Link ui5-link</ui5-link><ui5-link  href="#"> Third Link ui5-link</ui5-link> Extra long text used as an
+				information message. Extra long text used as an information message - 2. Extra long text used as an information
+				message - 3.</div>
 			<ui5-suggestion-item text="Aute"></ui5-suggestion-item>
 			<ui5-suggestion-item text="ad"></ui5-suggestion-item>
 			<ui5-suggestion-item text="exercitation"></ui5-suggestion-item>

@@ -627,13 +627,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * Indicates whether link navigation is being handled.
 	 * @private
 	 */
-	private _handleLinkNavigation: boolean = false;
+	_handleLinkNavigation: boolean = false;
 
 	/**
 	 * Stores the array of links in the value state hidden text.
 	 * @private
 	 */
-	private _linkArray: Array<HTMLElement> = [];
+	_linkArray: Array<HTMLElement> = [];
 
 	get formValidityMessage() {
 		return Input.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
@@ -913,13 +913,19 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this._linkArray.forEach(link => {
 				link.addEventListener("keydown", e => {
 					const currentIndex = this._linkArray.indexOf(link);
-					if (isTabNext(e) && this._handleLinkNavigation) {
-						e.preventDefault();
+					if (isTabNext(e)) {
 						e.stopImmediatePropagation();
-						if (currentIndex !== this._linkArray.length - 1) {
+						if (this._handleLinkNavigation && currentIndex !== this._linkArray.length - 1) {
+							e.preventDefault();
 							this._linkArray[currentIndex + 1].focus();
 						} else {
-							this._linkArray[currentIndex].focus();
+							this._handleLinkNavigation = false;
+							if (this.Suggestions?.isOpened()) {
+								this.Suggestions?.close();
+							} else {
+								this.closeValueStatePopover();
+							}
+							this.getInputDOMRef()!.focus();
 						}
 					}
 
@@ -932,39 +938,29 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 							this._linkArray[0].focus();
 						}
 					}
-					if (isDown(e) && this._handleLinkNavigation && currentIndex === this._linkArray.length - 1) {
-						//e.preventDefault();
-						//e.stopImmediatePropagation();
+					if (isDown(e)) {
 						const hasSuggestions = this.showSuggestions && !!this.Suggestions;
-						const isOpen = hasSuggestions && this.open;
-						if (hasSuggestions && isOpen) {
-							this._handleLinkNavigationDown(e);
+						if (this._handleLinkNavigation) {
+							this._handleLinkNavigation = false;
+							const isOpen = hasSuggestions && this.open;
+							if (hasSuggestions && isOpen) {
+								this._handleLinkNavigationDown(e);
+							}
+						} else {
+							this._handleDown(e);
 						}
 					}
 				 });
-				if (link.tagName === "A") {
-					const addOutline = () => {
-						link.style.outline = "2px solid blue";
-						link.style.outlineOffset = "2px";
-						link.removeEventListener("focus", addOutline);
-					};
-					const removeOutline = () => {
-						link.style.outline = "";
-						link.style.outlineOffset = "";
-						link.removeEventListener("blur", removeOutline);
-					};
-
-					link.addEventListener("blur", removeOutline);
-					link.addEventListener("focus", addOutline);
-				}
 			});
 			this._linkArray[0].focus();
 		}
 	}
 
 	_handleLinkNavigationDown(e: KeyboardEvent) {
+		this._handleLinkNavigation = false;
 		if (this.Suggestions?.isOpened()) {
-			this._handleLinkNavigation = false;
+			this.innerFocusIn();
+			(this.getInputDOMRef())!.focus();
 			this.Suggestions.onDown(e, this.currentItemIndex + 1);
 		}
 	}
@@ -1385,7 +1381,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	closeValueStatePopover() {
 		this.valueStateOpen = false;
-		this._handleLinkNavigation = false;
 	}
 
 	_handleValueStatePopoverAfterClose() {
@@ -1734,7 +1729,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		if (this.valueStateMessage) {
 			this.valueStateMessage.forEach(element => {
 				if (element.children.length)	{
-					element.querySelectorAll("a[href], ui5-link").forEach(link => {
+					element.querySelectorAll("ui5-link").forEach(link => {
 						linksArray.push(link as HTMLElement);
 					});
 				}
