@@ -8,7 +8,7 @@ const ext = isTypeScript ? 'ts' : 'js';
 const generate = async () => {
 	const inputFolder = path.normalize(process.argv[2]);
 	const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes.${ext}`);
-	const outputFileDynamicImportJSONAttr = path.normalize(`${process.argv[3]}/Themes-import-attributes.${ext}`);
+	const outputFileDynamicImportJSONAttr = path.normalize(`${process.argv[3]}/Themes-node.${ext}`);
 	const outputFileFetchMetaResolve = path.normalize(`${process.argv[3]}/Themes-fetch.${ext}`);
 
 // All supported optional themes

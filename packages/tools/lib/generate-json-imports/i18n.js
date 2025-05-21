@@ -39,7 +39,7 @@ const generate = async () => {
 	const inputFolder = path.normalize(process.argv[2]);
 	const outputFileDynamic = path.normalize(`${process.argv[3]}/i18n.${ext}`);
 	const outputFileFetchMetaResolve = path.normalize(`${process.argv[3]}/i18n-fetch.${ext}`);
-	const outputFileDynamicImportJSONImport = path.normalize(`${process.argv[3]}/i18n-import-attributes.${ext}`);
+	const outputFileDynamicImportJSONImport = path.normalize(`${process.argv[3]}/i18n-node.${ext}`);
 
 	// All languages present in the file system
 	const files = await fs.readdir(inputFolder);

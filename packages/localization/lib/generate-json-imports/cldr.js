@@ -38,7 +38,7 @@ const generate = async () => {
 	return Promise.all([
 		fs.writeFile("src/generated/json-imports/LocaleData.ts", contentDynamic(caseDynamicImports)),
 		fs.writeFile("src/generated/json-imports/LocaleData-fetch.ts", contentDynamic(caseFetchMetaResolve)),
-		fs.writeFile("src/generated/json-imports/LocaleData-import-attributes.ts", contentDynamic(caseDynamicImportJSONAttr)),
+		fs.writeFile("src/generated/json-imports/LocaleData-node.ts", contentDynamic(caseDynamicImportJSONAttr)),
 	]);
 }
 

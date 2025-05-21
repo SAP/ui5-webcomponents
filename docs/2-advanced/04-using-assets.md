@@ -18,7 +18,7 @@ Import the `dist/Assets.js` file of the respective NPM package:
 
 - `import "@ui5/<PACKAGE-NAME>/dist/Assets.js`
 - `import "@ui5/<PACKAGE-NAME>/dist/Assets-fetch.js`
-- `import "@ui5/<PACKAGE-NAME>/dist/Assets-import-attributes.js`
+- `import "@ui5/<PACKAGE-NAME>/dist/Assets-node.js`
 
 ** Note: read "Techcnocal aspects" below on how to choose which one to use**
 
@@ -78,7 +78,7 @@ The issue is how to get the correct URL for the fetch to work and this is solved
 
 The approach can be used with a bundler and for CDN usage.
 
-### Assets-import-attributes.js
+### Assets-node.js
 
 This module is an alternative to `Assets.js`, with added support for the `with: { type: 'json' }` import attribute, which is required in certain environments—such as Node.js with server-side rendering (SSR) — to properly load JSON files.
 

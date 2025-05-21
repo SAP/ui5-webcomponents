@@ -1,5 +1,5 @@
 /**
- * The `Assets-import-attributes` entry point is used to import all CLDR, theming, and i18n assets.
+ * The `Assets-node` entry point is used to import all CLDR, theming, and i18n assets.
  *
  * It serves as an alternative to the `Assets` and `Assets-fetch` modules and supports the
  * `with: { type: 'json' }` import attribute for loading JSON files.
@@ -11,8 +11,8 @@
  */
 
 // main package assets (transitively base, theming and icons)
-import "@ui5/webcomponents/dist/Assets-import-attributes.js";
+import "@ui5/webcomponents/dist/Assets-node.js";
 
 // own fiori package assets
-import "./generated/json-imports/Themes-import-attributes.js";
-import "./generated/json-imports/i18n-import-attributes.js";
+import "./generated/json-imports/Themes-node.js";
+import "./generated/json-imports/i18n-node.js";
