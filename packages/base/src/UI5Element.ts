@@ -285,7 +285,6 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * @private
 	 * Sets on the host several attributes, unrelated to metadata properties
 	 */
 	setNonPropertyAttributes() {
@@ -298,7 +297,6 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * @private
 	 * Stripped down version of connectedCallback, usable in SSR scenarios
 	 */
 	serverRender() {
