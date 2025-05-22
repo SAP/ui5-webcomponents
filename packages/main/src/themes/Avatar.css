@@ -32,6 +32,7 @@
 
 :host([disabled]) {
 	opacity: var(--sapContent_DisabledOpacity);
+	pointer-events: none;
 }
 
 :host {
@@ -302,7 +303,6 @@
 
 /* Slotted Badge */
 ::slotted([slot="badge"]) {
-	pointer-events: initial;
 	position: absolute;
 	bottom: 0;
 	right: 0;
@@ -313,6 +313,10 @@
 	color: var(--sapBackgroundColor);
 
 	--_ui5-tag-height: 1.125rem;
+}
+
+:host(:not([disabled])) ::slotted([slot="badge"]) {
+	pointer-events: initial;
 }
 
 :host([_size="L"]) ::slotted([slot="badge"]),
