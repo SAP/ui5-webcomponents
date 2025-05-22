@@ -310,6 +310,7 @@ class FlexibleColumnLayout extends UI5Element {
 	_handleResize: () => void;
 	_onSeparatorMove: (e: TouchEvent | MouseEvent) => void;
 	_onSeparatorMoveEnd: (e: TouchEvent | MouseEvent) => void;
+	onColumnCollapseAnimationEndRef: (e: TransitionEvent) => void;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
@@ -330,6 +331,7 @@ class FlexibleColumnLayout extends UI5Element {
 		this._handleResize = this.handleResize.bind(this);
 		this._onSeparatorMove = this.onSeparatorMove.bind(this);
 		this._onSeparatorMoveEnd = this.onSeparatorMoveEnd.bind(this);
+		this.onColumnCollapseAnimationEndRef = this.onColumnCollapseAnimationEnd.bind(this);
 
 		const handleTouchStartEvent = (e: TouchEvent) => {
 			this.onSeparatorPress(e);
@@ -456,9 +458,11 @@ class FlexibleColumnLayout extends UI5Element {
 		columnDOM.style.width = "0px";
 
 		if (hasAnimation) {
+			columnDOM.removeEventListener("transitionend", this.onColumnCollapseAnimationEndRef);
+
 			// hide column with delay to allow the animation runs entirely
 			columnDOM.classList.add("ui5-fcl-column-collapse-animation");
-			columnDOM.addEventListener("transitionend", this.onColumnCollapseAnimationEnd);
+			columnDOM.addEventListener("transitionend", this.onColumnCollapseAnimationEndRef);
 		} else {
 			columnDOM.classList.add("ui5-fcl-column--hidden");
 		}
@@ -468,7 +472,7 @@ class FlexibleColumnLayout extends UI5Element {
 		const columnDOM = e.target as HTMLElement;
 		columnDOM.classList.add("ui5-fcl-column--hidden");
 		columnDOM.classList.remove("ui5-fcl-column-collapse-animation");
-		columnDOM.removeEventListener("transitionend", this.onColumnCollapseAnimationEnd);
+		columnDOM.removeEventListener("transitionend", this.onColumnCollapseAnimationEndRef);
 	}
 
 	nextColumnLayout(layout: `${FCLLayout}`) {
