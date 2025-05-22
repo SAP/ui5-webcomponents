@@ -616,12 +616,12 @@ class Button extends UI5Element implements IButton {
 		// Some languages have different grammatical rules for singular and plural forms,
 		// so separate keys (BUTTON_BADGE_ONE_ITEM and BUTTON_BADGE_MANY_ITEMS) are necessary.
 		switch (badgeEffectiveText) {
-			case "":
-				return badgeEffectiveText;
-			case "1":
-				return Button.i18nBundle.getText(BUTTON_BADGE_ONE_ITEM, badgeEffectiveText);
-			default:
-				return Button.i18nBundle.getText(BUTTON_BADGE_MANY_ITEMS, badgeEffectiveText);
+		case "":
+			return badgeEffectiveText;
+		case "1":
+			return Button.i18nBundle.getText(BUTTON_BADGE_ONE_ITEM, badgeEffectiveText);
+		default:
+			return Button.i18nBundle.getText(BUTTON_BADGE_MANY_ITEMS, badgeEffectiveText);
 		}
 	}
 
