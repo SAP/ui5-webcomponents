@@ -179,15 +179,11 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 		let gridStartYear = this._gridStartYear ? this._gridStartYear : currentStartYear - yearsOffset;
 
 		// If page navigation occured, update the current range start year
-		if (currentStartYear < gridStartYear) {
-			gridStartYear -= pageSizeInYears;
-		} else if (currentStartYear >= gridStartYear + pageSizeInYears) {
-			gridStartYear += pageSizeInYears;
-		}
+		gridStartYear += Math.floor((currentStartYear - gridStartYear) / pageSizeInYears) * pageSizeInYears;
 
 		// Normalize grid start year to be between the min and absolute max year
 		const minYear = this._minDate.getYear();
-		if (currentStartYear - pageSizeInYears < minYear) {
+		if (currentStartYear - rangeSize < minYear) {
 			gridStartYear = minYear;
 		}
 
@@ -360,7 +356,11 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 
 	_onHomeOrEnd(homePressed: boolean) {
 		this._yearRanges.forEach(row => {
-			const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getYear() === this._calendarDate.getYear());
+			const indexInRow = row.findIndex((item) => {
+				const startYear = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getYear();
+				const currentYear = this._calendarDate.getYear();
+				return isBetweenInclusive (startYear, currentYear, currentYear + this._getRangeSize() - 1);
+			});
 			if (indexInRow !== -1) { // The current year is on this row
 				const index = homePressed ? 0 : this._getRowSize() - 1; // select the first (if Home) or last (if End) year on the row
 				this._setTimestamp(parseInt(row[index].timestamp));
@@ -429,10 +429,10 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	_getYearPickerCenteredTimestamp(oldTimestamp: number): number {
-		const yearPickerPageSize = this.hasSecondaryCalendarType ? 8 : 20;
+		const yearsOffset = this.hasSecondaryCalendarType ? 2 : 9;
 		const selectedDate = CalendarDate.fromTimestamp(oldTimestamp * 1000, this._primaryCalendarType);
 		const startYear = selectedDate.getYear();
-		const centeredYear = startYear + yearPickerPageSize / 2;
+		const centeredYear = startYear + yearsOffset;
 
 		selectedDate.setYear(centeredYear);
 

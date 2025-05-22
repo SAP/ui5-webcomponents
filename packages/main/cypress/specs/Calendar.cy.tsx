@@ -277,8 +277,6 @@ describe("Calendar general interaction", () => {
 			.first()
 			.as("yearPickerItem");
 
-		cy.wait(100);
-
 		cy.get("@yearPickerItem")
 			.invoke("attr", "data-sap-timestamp")
 			.then(_timestamp => {

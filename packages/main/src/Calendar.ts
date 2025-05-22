@@ -671,11 +671,7 @@ class Calendar extends CalendarPart {
 		}
 
 		// If page navigation occured, update the current range start year
-		if (currentYear < this._rangeStartYear) {
-			this._rangeStartYear -= rangeSize;
-		} else if (currentYear >= this._rangeStartYear + rangeSize) {
-			this._rangeStartYear += rangeSize;
-		}
+		this._rangeStartYear += Math.floor((currentYear - this._rangeStartYear) / rangeSize) * rangeSize;
 
 		// Normalize range start year to be between the min and absolute max year
 		const minYear = this._minDate.getYear();
