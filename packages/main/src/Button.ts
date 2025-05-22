@@ -360,6 +360,7 @@ class Button extends UI5Element implements IButton {
 	badge!: Array<ButtonBadge>;
 
 	_deactivate: () => void;
+	_clickBound: (e: MouseEvent) => void;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -371,6 +372,22 @@ class Button extends UI5Element implements IButton {
 				activeButton._setActiveState(false);
 			}
 		};
+
+		this._clickBound = e => {
+			if (e instanceof CustomEvent) {
+				return;
+			}
+
+			this._onclick(e);
+		};
+
+		this.addEventListener("click", (e: MouseEvent) => {
+			if (e instanceof CustomEvent) {
+				return;
+			}
+
+			this._onclick(e);
+		});
 
 		if (!isGlobalHandlerAttached) {
 			document.addEventListener("mouseup", this._deactivate);
@@ -388,9 +405,14 @@ class Button extends UI5Element implements IButton {
 	}
 
 	onEnterDOM() {
+		this.addEventListener("click", this._clickBound);
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
+	}
+
+	onExitDOM(): void {
+		this.removeEventListener("click", this._clickBound);
 	}
 
 	async onBeforeRendering() {
@@ -594,12 +616,12 @@ class Button extends UI5Element implements IButton {
 		// Some languages have different grammatical rules for singular and plural forms,
 		// so separate keys (BUTTON_BADGE_ONE_ITEM and BUTTON_BADGE_MANY_ITEMS) are necessary.
 		switch (badgeEffectiveText) {
-		case "":
-			return badgeEffectiveText;
-		case "1":
-			return Button.i18nBundle.getText(BUTTON_BADGE_ONE_ITEM, badgeEffectiveText);
-		default:
-			return Button.i18nBundle.getText(BUTTON_BADGE_MANY_ITEMS, badgeEffectiveText);
+			case "":
+				return badgeEffectiveText;
+			case "1":
+				return Button.i18nBundle.getText(BUTTON_BADGE_ONE_ITEM, badgeEffectiveText);
+			default:
+				return Button.i18nBundle.getText(BUTTON_BADGE_MANY_ITEMS, badgeEffectiveText);
 		}
 	}
 
