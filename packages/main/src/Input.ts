@@ -935,7 +935,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 						if (currentIndex > 0) {
 							this._linkArray[currentIndex - 1].focus();
 						} else {
-							this._linkArray[0].focus();
+							this._handleLinkNavigation = false;
+							this.getInputDOMRef()!.focus();
 						}
 					}
 					if (isDown(e)) {

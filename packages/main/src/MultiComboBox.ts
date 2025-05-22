@@ -758,7 +758,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_onPopoverFocusOut() {
-		if (!isPhone()) {
+		if (!isPhone() || !this._handleLinkNavigation) {
 			this._tokenizer.expanded = this.open;
 		}
 	}
@@ -841,7 +841,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		if (isCtrlAltF8(e)) {
-			return this._handleCtrlALtF8()
+			return this._handleCtrlALtF8();
 		}
 
 		if (
@@ -1213,20 +1213,22 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			this._linkArray.forEach(link => {
 				link.addEventListener("keydown", e => {
 					const currentIndex = this._linkArray.indexOf(link);
+
 					if (isTabNext(e)) {
-						e.stopImmediatePropagation();
 						if (this._handleLinkNavigation && currentIndex !== this._linkArray.length - 1) {
+							e.stopImmediatePropagation();
 							e.preventDefault();
-							if (currentIndex !== this._linkArray.length - 1) {
-								this._linkArray[currentIndex + 1].focus();
-							} else {
-								this._linkArray[currentIndex].focus();
-							}
+							this._linkArray[currentIndex + 1].focus();
 							this.focused = true;
-						} else {
-							this._handleLinkNavigation = false;
-							this.open = false;
 						}
+					} else {
+						this._handleLinkNavigation = false;
+						if (this.open) {
+							this.open = false;
+						} else {
+							this.valueStateOpen = false;
+						}
+						this._forwardFocusToInner();
 					}
 
 					if (isTabPrevious(e) && this._handleLinkNavigation) {
@@ -1235,7 +1237,9 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 						if (currentIndex > 0) {
 							this._linkArray[currentIndex - 1].focus();
 						} else {
-							this._linkArray[0].focus();
+							this.focused = false;
+							this._handleLinkNavigation = false;
+							//this._forwardFocusToInner();
 						}
 					}
 
@@ -1710,7 +1714,12 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	onAfterRendering() {
 		this._getList();
-		this.valueStateOpen = this.shouldDisplayOnlyValueStateMessage;
+		this.valueStateOpen = this.shouldDisplayOnlyValueStateMessage || this._handleLinkNavigation;
+		// console.log("this.shouldDisplayOnlyValueStateMessage " + this.shouldDisplayOnlyValueStateMessage);
+		// console.log("this._handleLinkNavigation " + this._handleLinkNavigation);
+		// console.log("this.focused " + this.focused);
+		// console.log("this.open " + this.open);
+		// console.log("this.valueStateOpen " + this.valueStateOpen);
 		this.storeResponsivePopoverWidth();
 
 		this._deleting = false;
@@ -1841,7 +1850,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const focusIsGoingInPopover = [responsivePopover, popover].some(popup => popup?.contains(e.relatedTarget as Node));
 		const focusIsGoingInValueStatePopup = this?.contains(e.relatedTarget as Node);
 
-		if (focusIsGoingInValueStatePopup) {
+		if (focusIsGoingInValueStatePopup || this._handleLinkNavigation) {
 			this.focused = false;
 			e.stopImmediatePropagation();
 			return;

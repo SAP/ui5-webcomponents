@@ -625,124 +625,201 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 
 describe("Input Ctrl + Alt + F8 navigation", () => {
 	beforeEach(() => {
-		cy.mount(<Input id="inputError" class="input2auto" valueState="Negative" placeholder="Input in error state">
+		cy.mount(<Input id="inputWithLinkInValueState" class="input2auto" valueState="Negative" placeholder="Input with Link in error value state">
 			<div slot="valueStateMessage">
 				Custom error value state message with a <Link href="#">Link</Link>.
 			</div>
 		</Input>);
 	});
-	// it("Should moves focus from the input to the first value state message link", () => {
-	// 	cy.get("ui5-input")
-	// 		.as("input");
+	it("Should moves focus from the input to the first value state message link", () => {
+		cy.get("ui5-input")
+			.shadow()
+			.find("input")
+			.as("innerInput");
 
-	// 	cy.get("@input")
-	// 		.realClick()
-	// 		.realPress(["Control", "Alt", "F8"]);
+		cy.get("ui5-input")
+		.as("input");
 
-	// 	cy.get("@input")
-	// 		.should("not.have.attr", "focused");
+		cy.get("@innerInput")
+			.realClick()
+			.realPress(["Control", "Alt", "F1"]);
 
-	// 	cy.get("@input")
-	// 		.shadow()
-	// 		.find("ui5-popover")
-	// 		.as("popover")
-	// 		.should("have.class", "ui5-valuestatemessage-popover");
+		cy.get("@input")
+			.shadow()
+			.find("ui5-popover")
+			.as("popover")
+			.should("have.class", "ui5-valuestatemessage-popover");
 
-	// 	cy.get("@popover")
-	// 		.should("have.attr", "open");
+		cy.get("@popover")
+			.should("have.attr", "open")
 
-	// 	cy.get("ui5-link")
-	// 		.should("have.focus");
-	// });
-	// it("When [Tab] moves focus to the next value state message link if available", () => {
-	// 	cy.mount(<Input id="inputError" class="input2auto" valueState="Negative" placeholder="Input in error state">
-	// 		<div slot="valueStateMessage">
-	// 			Custom error value state message with a <Link href="#">First Link</Link> <Link href="#">Second Link</Link>.
-	// 		</div>
-	// 	</Input>);
+		cy.get("ui5-link")
+			.should("have.focus");
+	});
+	it("When press [Tab] then move the focus to the next value state message link then on [Tab] close popup and move to the next input", () => {
+		cy.mount(<>
+			<Input id="inputError" class="input2auto" valueState="Negative" placeholder="Input in error state">
+				<div slot="valueStateMessage">
+					Custom error value state message with a <Link href="#">First Link</Link> <Link href="#">Second Link</Link>.
+				</div>
+			</Input>
+			<Input id="nextInput" class="input2auto" placeholder="Next input"></Input>
+		</>);
 
-	// 	cy.get("ui5-input")
-	// 		.as("input");
+		cy.get("ui5-input")
+			.eq(0)
+			.shadow()
+			.find("input")
+			.as("innerInput");
 
-	// 	cy.get("@input")
-	// 		.realClick()
-	// 		.realPress(["Control", "Alt", "F8"]);
+		cy.get("ui5-input")
+			.eq(0)
+			.as("input");
 
-	// 	cy.get("@input")
-	// 		.should("not.have.attr", "focused");
+		cy.get("ui5-input")
+			.eq(1)
+			.as("secondInput");
 
-	// 	cy.get("@input")
-	// 		.shadow()
-	// 		.find("ui5-popover")
-	// 		.as("ui5-popover")
-	// 		.should("have.attr", "open");
+		cy.get("@innerInput")
+			.realClick()
+			.realPress(["Control", "Alt", "F1"]);
 
-	// 	cy.get("ui5-link")
-	// 		.eq(0)
-	// 		.as("firstLink")
-	// 		.should("have.focus");
+		cy.get("@input")
+			.shadow()
+			.find("ui5-popover")
+			.as("ui5-popover")
+			.should("have.attr", "open");
 
-	// 	cy.focused().realPress("Tab");
+		cy.get("ui5-link")
+			.eq(0)
+			.as("firstLink")
+			.should("have.focus");
 
-	// 	cy.get("@firstLink")
-	// 		.should("not.have.focus");
+		cy.get("@firstLink")
+			.realPress("Tab");
 
-	// 	cy.get("ui5-link")
-	// 		.eq(1)
-	// 		.should("have.focus");
-	// });
-	// it("When [Tab] and only one link closes the value state message and moves the focus", () => {
-	// 	cy.get("ui5-input")
-	// 		.as("input");
+		cy.get("@firstLink")
+			.should("not.have.focus");
 
-	// 	cy.get("@input")
-	// 		.realClick()
-	// 		.realPress(["Control", "Alt", "F8"]);
+		cy.get("ui5-link")
+			.eq(1)
+			.as("secondLink")
+			.should("have.focus");
 
-	// 	cy.get("@input")
-	// 		.should("not.have.attr", "focused");
+		cy.get("@secondLink")
+		.realPress("Tab");
 
-	// 	cy.get("@input")
-	// 		.shadow()
-	// 		.find("ui5-popover")
-	// 		.as("ui5-popover");
+		cy.get("@secondInput")
+			.should("have.focus");
+	});
+	it("When pressing [SHIFT+TAB] moves focus from the second value state link to the first and when pressing again to the input", () => {
+		cy.mount(<Input id="inputError" class="input2auto" valueState="Negative" placeholder="Input in error state">
+			<div slot="valueStateMessage">
+				Custom error value state message with a <Link href="#">First Link</Link> <Link href="#">Second Link</Link>.
+			</div>
+		</Input>);
+		cy.get("ui5-input")
+		.eq(0)
+		.shadow()
+		.find("input")
+		.as("innerInput");
 
-	// 	cy.get("ui5-link")
-	// 		.should("not.have.focus");
+		cy.get("ui5-input")
+			.eq(0)
+			.as("input");
 
-	// 	cy.get("@ui5-popover")
-	// 		.should("have.attr", "open");
+		cy.get("@innerInput")
+		.realClick()
+		.realPress(["Control", "Alt", "F1"]);
 
-	// 	cy.focused().realPress("Tab");
+		cy.get("@input")
+			.shadow()
+			.find("ui5-popover")
+			.as("ui5-popover")
+			.should("have.attr", "open");
 
-	// 	cy.get("@ui5-popover")
-	// 		.should("not.have.attr", "open");
-	// });
-	// it("When [Ctrl] + [Alt] + [F8] and then pressing [SHIFT+TAB] moves focus from the first value state link to the input", () => {
-	// 	cy.get("ui5-input")
-	// 		.as("input");
+		cy.get("ui5-link")
+			.eq(0)
+			.as("firstLink")
+			.should("have.focus");
 
-	// 	cy.get("@input")
-	// 		.realClick()
-	// 		.realPress(["Control", "Alt", "F8"]);
+		cy.get("@firstLink")
+			.realPress("Tab");
 
-	// 	cy.get("@input")
-	// 		.should("not.have.attr", "focused");
+		cy.get("@firstLink")
+			.should("not.have.focus");
 
-	// 	cy.get("@input")
-	// 		.shadow()
-	// 		.find("ui5-popover")
-	// 		.as("ui5-popover");
+		cy.get("ui5-link")
+			.eq(1)
+			.as("secondLink")
+			.should("have.focus");
 
-	// 	cy.get("ui5-link")
-	// 		.should("have.attr", "focused");
+		cy.get("@secondLink")
+			.realPress(["Shift", "Tab"]);
 
-	// 	cy.focused().realPress(["Shift", "Tab"]);
+		cy.get("@firstLink")
+			.should("have.focus");
 
-	// 	cy.get("@input")
-	// 		.should("have.attr", "focused");
-	// });
+		cy.get("@firstLink")
+			.realPress(["Shift", "Tab"]);
+
+		cy.get("@innerInput")
+			.should("have.focus");
+
+	});
+	it("When press [ArrowDown] after focus is in the first value state message link and suggestions are open, to the next suggestion item ", () => {
+		cy.mount(
+			<Input id="myInputEsc" showSuggestions valueState="Critical" class="input3auto">
+				<div slot="valueStateMessage">
+					Custom warning value state message with a <Link href="#">First Link</Link>.
+				</div>
+				<SuggestionItem text="Chromium"></SuggestionItem>
+				<SuggestionItem text="Titanium"></SuggestionItem>
+				<SuggestionItem text="Iron"></SuggestionItem>
+				<SuggestionItem text="Gold"></SuggestionItem>
+				<SuggestionItem text="Silver"></SuggestionItem>
+			</Input>
+		);
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("ui5-input")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("@input")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.as("popover");
+
+		cy.get("@input")
+			.realClick();
+
+		cy.get("@input")
+			.realType("C");
+
+		cy.get("@popover")
+			.should("have.attr", "open");
+
+		cy.get("@innerInput")
+		.realClick()
+		.realPress(["Control", "Alt", "F1"]);
+
+		cy.get("ui5-link")
+			.as("firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress("ArrowDown");
+
+		cy.get("@input")
+			.should("have.attr", "value", "Titanium")
+			.should("have.focus");
+	});
 });
+
 
 describe("Selection-change event", () => {
 	it("Selection-change event fires with null arguments when suggestion was selected but user alters input value to something else", () => {
