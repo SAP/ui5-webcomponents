@@ -82,7 +82,7 @@ class SearchItem extends ListItemBase {
 
 	/**
 	 * Defines the scope of the search item
-	 * @default false
+	 * @default undefined
 	 * @public
 	 */
 	@property()
