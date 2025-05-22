@@ -1,5 +1,6 @@
 import Breadcrumbs from "../../src/Breadcrumbs.js";
 import BreadcrumbsItem from "../../src/BreadcrumbsItem.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 
 describe("breadcrumbs navigation", () => {
 
@@ -12,8 +13,10 @@ describe("breadcrumbs navigation", () => {
             </Breadcrumbs>
         );
 
-        cy.get("ui5-breadcrumbs")
-            cy.realPress("Tab");
+        cy.get("ui5-breadcrumbs").then( async ($container) => {
+		   const firstFocusable = await getFirstFocusableElement($container.get(0));
+		   await firstFocusable?.focus();
+		});
 
         cy.realPress("ArrowRight");
 
