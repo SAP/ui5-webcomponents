@@ -356,10 +356,10 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 
 	_onHomeOrEnd(homePressed: boolean) {
 		this._yearRanges.forEach(row => {
-			const indexInRow = row.findIndex((item) => {
+			const indexInRow = row.findIndex(item => {
 				const startYear = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getYear();
 				const currentYear = this._calendarDate.getYear();
-				return isBetweenInclusive (startYear, currentYear, currentYear + this._getRangeSize() - 1);
+				return isBetweenInclusive(startYear, currentYear, currentYear + this._getRangeSize() - 1);
 			});
 			if (indexInRow !== -1) { // The current year is on this row
 				const index = homePressed ? 0 : this._getRowSize() - 1; // select the first (if Home) or last (if End) year on the row
