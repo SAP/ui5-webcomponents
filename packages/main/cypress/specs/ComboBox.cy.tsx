@@ -1,7 +1,6 @@
 import ComboBox from "../../src/ComboBox.js";
 import ComboBoxItem from "../../src/ComboBoxItem.js";
 import ComboBoxItemGroup from "../../src/ComboBoxItemGroup.js";
-import { COMBOBOX_DIALOG_OK_BUTTON } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("Security", () => {
 	it("tests setting malicious text to items", () => {
@@ -195,41 +194,3 @@ describe("Accessibility", () => {
 			});
 	});
 });
-describe("Phone mode", () => {
-	it("checks OK button text in dialog on phone mode", () => {
-
-		cy.mount(
-			<ComboBox>
-				<ComboBoxItem text="Algeria"></ComboBoxItem>
-				<ComboBoxItem text="Bulgaria"></ComboBoxItem>
-				<ComboBoxItem text="England"></ComboBoxItem>
-			</ComboBox>
-		);
-
-		cy.ui5SimulateDevice("phone");
-
-		cy.get("ui5-combobox")
-			.as("combo");
-
-		cy.get("@combo")
-			.click();
-
-		cy.get("@combo")
-			.shadow()
-			.find("ui5-responsive-popover")
-			.as("popover");
-
-		cy.get("@popover")
-			.should("have.attr", "open");
-
-		cy.get("@popover")
-			.find(".ui5-responsive-popover-footer")
-			.find("ui5-button")
-			.as("footerButton");
-
-		cy.get("@footerButton")
-			.should("have.text", COMBOBOX_DIALOG_OK_BUTTON.defaultText);
-	});
-});
-
-

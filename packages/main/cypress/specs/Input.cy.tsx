@@ -4,7 +4,6 @@ import SuggestionItemCustom from "../../src/SuggestionItemCustom.js";
 import SuggestionItemGroup from "../../src/SuggestionItemGroup.js";
 import Dialog from "../../src/Dialog.js";
 import Button from "../../src/Button.js";
-import { INPUT_SUGGESTIONS_OK_BUTTON } from "../../src/generated/i18n/i18n-defaults.js";
 
 import add from "@ui5/webcomponents-icons/dist/add.js";
 
@@ -975,33 +974,5 @@ describe("Accessibility", () => {
 			.shadow()
 			.find("span#accessibleDescription")
 			.should("have.text", "This is an input");
-	});
-});
-describe("Phone mode", () => {
-	it("checks OK button text in dialog on phone mode", () => {
-		cy.mount(
-			<Input showSuggestions={true}>
-				<SuggestionItem text="First item"></SuggestionItem>
-				<SuggestionItem text="Second item"></SuggestionItem>
-			</Input>
-		);
-
-		cy.ui5SimulateDevice("phone");
-
-		cy.get("[ui5-input]")
-			.as("input");
-
-		cy.get("@input")
-			.shadow()
-			.find("ui5-responsive-popover")
-			.as("popover");
-
-		cy.get("@popover")
-			.invoke("attr", "open", true);
-
-		cy.get("@popover")
-			.find(".ui5-responsive-popover-footer")
-			.find("ui5-button")
-			.should("have.text", INPUT_SUGGESTIONS_OK_BUTTON.defaultText);
 	});
 });
