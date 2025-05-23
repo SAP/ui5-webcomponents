@@ -86,7 +86,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	onBeforeRendering() {
 		this.items.forEach(item => {
 			if (!this._initialChildDisabledStates.has(item)) {
-				this._initialChildDisabledStates.set(item, item.disabled);
+				this._initialChildDisabledStates.set(item, item._parentDisabled);
 			}
 		});
 
@@ -96,9 +96,9 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	_updateChildItemsDisabledState() {
 		this.items.forEach(item => {
 			if (this.disabled) {
-				item.disabled = true;
+				item._parentDisabled = true;
 			} else {
-				item.disabled = this._initialChildDisabledStates.get(item)!;
+				item._parentDisabled = this._initialChildDisabledStates.get(item)!;
 			}
 		});
 	}

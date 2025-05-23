@@ -37,11 +37,26 @@
 			</div>
 
 			<!-- Items -->
+			 <ui5-side-navigation-group id="grp" expanded text="Group 2">
+			<!-- Items -->
+				<ui5-side-navigation-item text="Home 1"
+										icon="home"
+										href="#home"
+										title="Home tooltip"></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="People 2" href="#people" expanded icon="group">
+					<ui5-side-navigation-sub-item href="#disabled" disabled text="Disabled" icon="employee-approvals" title="From My Team tooltip"></ui5-side-navigation-sub-item>
+					<ui5-side-navigation-sub-item text="From Other Teams 3" icon="employee-rejections"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation-group>
 			<ui5-side-navigation-item slot="fixedItems" text="External Link _top" icon="chain-link" href="https://sap.com" target="_top"></ui5-side-navigation-item>
 			<ui5-side-navigation-item id="item1" text="Home" icon="home" tooltip="Home tooltip"></ui5-side-navigation-item>
 			<ui5-side-navigation-item id="item2" text="People" expanded icon="group">
 				<ui5-side-navigation-sub-item id="item21" text="From My Team" icon="employee-approvals" tooltip="From My Team tooltip"></ui5-side-navigation-sub-item>
 				<ui5-side-navigation-sub-item id="item22" text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
+			</ui5-side-navigation-item>
+			<ui5-side-navigation-item id="item2-disabled" disabled text="People" expanded icon="group">
+				<ui5-side-navigation-sub-item text="From My Team" icon="employee-approvals" tooltip="From My Team tooltip"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-sub-item text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
 			<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
 			<ui5-side-navigation-item id="item3" text="Events lorem ipsum dolor sit amet, consectetur adipiscing elit" icon="calendar">
@@ -118,6 +133,10 @@
 				<ui5-checkbox id="ensure-overflow"></ui5-checkbox>
 			</div>
 			<div class="form-field">
+				<ui5-label show-colon>disable first item</ui5-label>
+				<ui5-checkbox id="disable-item"></ui5-checkbox>
+			</div>
+			<div class="form-field">
 				<ui5-label show-colon>Compact Density</ui5-label>
 				<ui5-checkbox id="compact-density"></ui5-checkbox>
 			</div>
@@ -130,6 +149,7 @@
 			clickInput = document.querySelector("#click-counter"),
 			preventDefaultCb = document.querySelector("#prevent-selection"),
 			preventClickCb = document.querySelector("#prevent-click"),
+			disableItemCb = document.querySelector("#disable-item"),
 			preventSelectionChange = false,
 			preventClick = false,
 			counter = 0,
@@ -164,6 +184,11 @@
 			preventClick = event.target.checked;
 			const list = document.getElementById("click-info-list");
 			preventClick ? list.style.opacity = 0.5 : list.style.opacity = 1;
+		});
+
+		disableItemCb.addEventListener("ui5-change", function (event) {
+			const item = document.getElementById("grp");
+			item.disabled = event.target.checked;
 		});
 
 		document.getElementById("ensure-overflow").addEventListener("ui5-change", function (event) {
