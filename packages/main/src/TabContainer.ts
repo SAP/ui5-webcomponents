@@ -1020,17 +1020,15 @@ class TabContainer extends UI5Element {
 	}
 
 	_getRootTab(tab: Tab | undefined): Tab | undefined {
-		if (!tab?.parentElement) {
-			return undefined;
+		while (tab?.hasAttribute("ui5-tab")) {
+			if (tab.parentElement?.hasAttribute("ui5-tabcontainer")) {
+				break;
+			}
+
+			tab = (tab.parentElement ?? undefined) as Tab | undefined;
 		}
 
-		const parentElement = tab.parentElement as Tab;
-		const isRootTab = parentElement.hasAttribute("ui5-tabcontainer");
-		if (isRootTab) {
-			return tab;
-		}
-
-		return this._getRootTab(parentElement);
+		return tab;
 	}
 
 	_updateEndOverflow(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>) {
