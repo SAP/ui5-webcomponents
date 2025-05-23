@@ -939,6 +939,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 							this.getInputDOMRef()!.focus();
 						}
 					}
+					if (isDown(e) || isUp(e)) {
+						e.preventDefault();
+					}
+
 					if (isDown(e)) {
 						const hasSuggestions = this.showSuggestions && !!this.Suggestions;
 						if (this._handleLinkNavigation) {

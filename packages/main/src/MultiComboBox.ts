@@ -1717,12 +1717,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	onAfterRendering() {
 		this._getList();
-		this.valueStateOpen = this.shouldDisplayOnlyValueStateMessage || this._handleLinkNavigation;
-		// console.log("this.shouldDisplayOnlyValueStateMessage " + this.shouldDisplayOnlyValueStateMessage);
-		// console.log("this._handleLinkNavigation " + this._handleLinkNavigation);
-		// console.log("this.focused " + this.focused);
-		// console.log("this.open " + this.open);
-		// console.log("this.valueStateOpen " + this.valueStateOpen);
+		this.valueStateOpen = this.shouldDisplayOnlyValueStateMessage || (this._handleLinkNavigation && !this.open);
 		this.storeResponsivePopoverWidth();
 
 		this._deleting = false;
