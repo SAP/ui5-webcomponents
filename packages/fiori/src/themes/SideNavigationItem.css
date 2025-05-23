@@ -25,5 +25,5 @@
 }
 
 .ui5-sn-item-level1 .ui5-sn-item-text {
-	font-weight: bold;
+	font-family: var(--_ui5_side_navigation_parent_item_font_family);
 }
