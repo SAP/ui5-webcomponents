@@ -37,6 +37,8 @@ import DateTimePickerTemplate from "./DateTimePickerTemplate.js";
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
+import type TimeSelectionClocks from "./TimeSelectionClocks.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
 
@@ -147,11 +149,24 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	@property({ type: Object })
 	_previewValues: PreviewValues = {};
 
+	@query("[ui5-time-selection-clocks]")
+	_clocks!: TimeSelectionClocks;
+
 	_handleResizeBound: ResizeObserverCallback;
 
 	constructor() {
 		super();
 		this._handleResizeBound = this._handleResize.bind(this);
+	}
+
+	onAfterRendering() {
+		if (isPhone() || this.showDateView) {
+			return;
+		}
+
+		// Focus the time part only in mobile view
+		const activeIndex = this._clocks._activeIndex;
+		this._clocks._buttonComponent(activeIndex)?.focus();
 	}
 
 	/**
@@ -285,6 +300,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 			calendarValue: e.detail.selectedValues[0],
 			timeSelectionValue: dateTimePickerContent.lastChild.value,
 		};
+		this._showTimeView = true;
 	}
 
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
