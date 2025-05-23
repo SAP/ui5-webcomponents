@@ -20,6 +20,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CalendarPart from "./CalendarPart.js";
 import type { ICalendarPicker, CalendarYearRangeT } from "./Calendar.js";
@@ -31,7 +32,6 @@ import YearRangePickerTemplate from "./YearRangePickerTemplate.js";
 
 // Styles
 import yearRangePickerStyles from "./generated/themes/YearRangePicker.css.js";
-import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 
 const isBetweenInclusive = (x: number, num1: number, num2: number) => x >= Math.min(num1, num2) && x <= Math.max(num1, num2);
 
@@ -140,16 +140,16 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 			return;
 		}
 
-		this._gridStartYear = this._calculateGridStartYear();
-		this._buildYears();
+		this._gridStartYear = this._getGridStartYear();
+		this._yearRanges = this._getYearRanges();
 	}
 
 	_shouldShowOneColumn() {
 		const locale = getLocale() as unknown as LocaleT;
 		const language = locale.getLanguage();
-		const longLanguage = language === "zh" || language === "ja" || language === "ko" || language === "bg" || language === "mk" || language === "ru";
+		const longLanguages = ["zh", "ja", "ko", "bg", "mk", "ru"];
 
-		return longLanguage && this.hasSecondaryCalendarType;
+		return longLanguages.includes(language) && this.hasSecondaryCalendarType;
 	}
 
 	_getPageSize() {
@@ -168,7 +168,11 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 		return this.hasSecondaryCalendarType ? 8 : 20;
 	}
 
-	_calculateGridStartYear() {
+	_getYearRangeFormattedText(startDate: CalendarDate, endDate: CalendarDate, yearFormat: DateFormat): string {
+		return `${yearFormat.format(startDate.toLocalJSDate())} - ${yearFormat.format(endDate.toLocalJSDate())}`;
+	}
+
+	_getGridStartYear() {
 		const rangeSize = this._getRangeSize();
 		const pageSize = this._getPageSize();
 		const pageSizeInYears = rangeSize * pageSize;
@@ -195,10 +199,10 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 		return gridStartYear;
 	}
 
-	_buildYears() {
+	_getYearRanges() {
 		const locale = getLocale() as unknown as LocaleT;
 		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, locale);
-		const yearFormatInSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType }, locale);
+		const yearFormatInSecType = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType }, locale);
 
 		const pageSize = this._getPageSize();
 		const rowSize = this._getRowSize();
@@ -225,50 +229,13 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 			const isSelected = this._isYearRangeSelected(timestamp, endTimestamp);
 			const isSelectedBetween = this._isInsideSelectionRange(timestamp);
 
-			const yearRangeText = `${yearFormat.format(tempDate.toLocalJSDate())} - ${yearFormat.format(endDate.toLocalJSDate())}`;
-			let secYearRangeText;
-			if (this.hasSecondaryCalendarType) {
-				secYearRangeText = `${yearFormatInSecType.format(tempDate.toLocalJSDate())} - ${yearFormatInSecType.format(endDate.toLocalJSDate())}`;
-			}
+			const yearRangeText = this._getYearRangeFormattedText(tempDate, endDate, yearFormat);
+			const secYearRangeText = this.hasSecondaryCalendarType ? this._getYearRangeFormattedText(tempDate, endDate, yearFormatInSecType) : undefined;
 
 			const isDisabled = !(isBetweenInclusive(tempDate.getYear(), minYear, maxYear)
 								|| isBetweenInclusive(endDate.getYear(), minYear, maxYear));
 
-			const yearRange: YearRange = {
-				timestamp: timestamp.toString(),
-				_tabIndex: isFocused ? 0 : -1,
-				focusRef: isFocused,
-				selected: isSelected || isSelectedBetween,
-				ariaSelected: isSelected || isSelectedBetween,
-				range: yearRangeText,
-				rangeInSecType: secYearRangeText,
-				disabled: isDisabled,
-				ariaDisabled: isDisabled,
-				classes: "ui5-yrp-item",
-				parts: "year-range-cell",
-			};
-
-			if (isSelected) {
-				yearRange.classes += " ui5-yrp-item--selected";
-				yearRange.parts += " year-range-cell-selected";
-			}
-
-			if (isSelectedBetween && !isSelected) {
-				yearRange.classes += " ui5-yrp-item--selected-between";
-				yearRange.parts += " year-range-cell-selected-between";
-			}
-
-			if (isDisabled) {
-				yearRange.classes += " ui5-yrp-item--disabled";
-			}
-
-			if (this.hasSecondaryCalendarType) {
-				yearRange.classes += " ui5-yrp-item-secondary-type";
-			}
-
-			if (this._shouldShowOneColumn()) {
-				yearRange.classes += " ui5-yrp-item-one-column-view";
-			}
+			const yearRange = this._getYearRange(timestamp, isFocused, isSelected, isSelectedBetween, yearRangeText, secYearRangeText, isDisabled);
 
 			const intervalIndex = Math.floor(i / rowSize);
 
@@ -281,7 +248,47 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 			tempDate.setYear(tempDate.getYear() + rangeSize);
 		}
 
-		this._yearRanges = yearRanges;
+		return yearRanges;
+	}
+
+	_getYearRange(timestamp: number, isFocused: boolean, isSelected: boolean, isSelectedBetween: boolean, yearRangeText: string, secYearRangeText: string | undefined, isDisabled: boolean) {
+		const yearRange: YearRange = {
+			timestamp: timestamp.toString(),
+			_tabIndex: isFocused ? 0 : -1,
+			focusRef: isFocused,
+			selected: isSelected || isSelectedBetween,
+			ariaSelected: isSelected || isSelectedBetween,
+			range: yearRangeText,
+			rangeInSecType: secYearRangeText,
+			disabled: isDisabled,
+			ariaDisabled: isDisabled,
+			classes: "ui5-yrp-item",
+			parts: "year-range-cell",
+		};
+
+		if (isSelected) {
+			yearRange.classes += " ui5-yrp-item--selected";
+			yearRange.parts += " year-range-cell-selected";
+		}
+
+		if (isSelectedBetween && !isSelected) {
+			yearRange.classes += " ui5-yrp-item--selected-between";
+			yearRange.parts += " year-range-cell-selected-between";
+		}
+
+		if (isDisabled) {
+			yearRange.classes += " ui5-yrp-item--disabled";
+		}
+
+		if (this.hasSecondaryCalendarType) {
+			yearRange.classes += " ui5-yrp-item-secondary-type";
+		}
+
+		if (this._shouldShowOneColumn()) {
+			yearRange.classes += " ui5-yrp-item-one-column-view";
+		}
+
+		return yearRange;
 	}
 
 	_isYearRangeSelected(startYear: number, endYear: number) {
