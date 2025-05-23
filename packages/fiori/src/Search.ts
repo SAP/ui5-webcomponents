@@ -546,13 +546,14 @@ class Search extends SearchField {
 	}
 
 	_handleBeforeOpen() {
+		this._valueBeforeOpen = this.value;
+
 		if (isPhone() && this.mobileInput) {
 			this.mobileInput.value = this.value;
 		}
 	}
 
 	_handleOpen() {
-		this._valueBeforeOpen = this.value;
 		this.fireDecoratorEvent("open");
 	}
 
