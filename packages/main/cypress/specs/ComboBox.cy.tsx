@@ -88,6 +88,7 @@ describe("Keyboard interaction", () => {
 			.find("[ui5-cb-item]").eq(2).should("have.prop", "selected", true);
 	});
 });
+
 describe("Keyboard interaction when Ctrl + Alt + F8 navigation", () => {
 	beforeEach(() => {
 		cy.mount(<>

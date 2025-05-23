@@ -1219,18 +1219,16 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 							e.stopImmediatePropagation();
 							e.preventDefault();
 							this._linkArray[currentIndex + 1].focus();
-							this.focused = true;
-						}
-					} else {
-						this._handleLinkNavigation = false;
-						if (this.open) {
-							this.open = false;
 						} else {
-							this.valueStateOpen = false;
+							this._handleLinkNavigation = false;
+							if (this.open) {
+								this.open = false;
+							} else {
+								this.valueStateOpen = false;
+							}
+							this._forwardFocusToInner();
 						}
-						this._forwardFocusToInner();
 					}
-
 					if (isTabPrevious(e) && this._handleLinkNavigation) {
 						e.preventDefault();
 						e.stopImmediatePropagation();
@@ -1239,7 +1237,12 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 						} else {
 							this.focused = false;
 							this._handleLinkNavigation = false;
-							//this._forwardFocusToInner();
+							if (this.open) {
+								this.open = false;
+							} else {
+								this.valueStateOpen = false;
+							}
+							this._forwardFocusToInner();
 						}
 					}
 
