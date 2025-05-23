@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -31,10 +32,12 @@ import {
 	isDelete,
 	isEscape,
 	isTabNext,
+	isTabPrevious,
 	isPageUp,
 	isPageDown,
 	isHome,
 	isEnd,
+	isCtrlAltF8,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -620,6 +623,18 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
+	/**
+	 * Indicates whether link navigation is being handled.
+	 * @private
+	 */
+	_handleLinkNavigation: boolean = false;
+
+	/**
+	 * Stores the array of links in the value state hidden text.
+	 * @private
+	 */
+	_linkArray: Array<HTMLElement> = [];
+
 	get formValidityMessage() {
 		return Input.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
 	}
@@ -839,6 +854,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return this._handleEscape();
 		}
 
+		if (isCtrlAltF8(e)) {
+			return this._handleCtrlAltF8();
+		}
+
 		if (this.showSuggestions) {
 			this._clearPopoverFocusAndSelection();
 		}
@@ -884,6 +903,70 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_handleTab() {
 		if (this.Suggestions && (this.previousValue !== this.value)) {
 			this.Suggestions.onTab();
+		}
+	}
+
+	_handleCtrlAltF8() {
+		this._handleLinkNavigation = true;
+		this._linkArray = this.linksInAriaValueStateHiddenText;
+		if (this._linkArray.length) {
+			this._linkArray.forEach(link => {
+				link.addEventListener("keydown", e => {
+					const currentIndex = this._linkArray.indexOf(link);
+					if (isTabNext(e)) {
+						e.stopImmediatePropagation();
+						if (this._handleLinkNavigation && currentIndex !== this._linkArray.length - 1) {
+							e.preventDefault();
+							this._linkArray[currentIndex + 1].focus();
+						} else {
+							this._handleLinkNavigation = false;
+							if (this.Suggestions?.isOpened()) {
+								this.Suggestions?.close();
+							} else {
+								this.closeValueStatePopover();
+							}
+							this.getInputDOMRef()!.focus();
+						}
+					}
+
+					if (isTabPrevious(e) && this._handleLinkNavigation) {
+						e.preventDefault();
+						e.stopImmediatePropagation();
+						if (currentIndex > 0) {
+							this._linkArray[currentIndex - 1].focus();
+						} else {
+							this._handleLinkNavigation = false;
+							this.getInputDOMRef()!.focus();
+						}
+					}
+					if (isDown(e) || isUp(e)) {
+						e.preventDefault();
+					}
+
+					if (isDown(e)) {
+						const hasSuggestions = this.showSuggestions && !!this.Suggestions;
+						if (this._handleLinkNavigation) {
+							this._handleLinkNavigation = false;
+							const isOpen = hasSuggestions && this.open;
+							if (hasSuggestions && isOpen) {
+								this._handleLinkNavigationDown(e);
+							}
+						} else {
+							this._handleDown(e);
+						}
+					}
+				 });
+			});
+			this._linkArray[0].focus();
+		}
+	}
+
+	_handleLinkNavigationDown(e: KeyboardEvent) {
+		this._handleLinkNavigation = false;
+		if (this.Suggestions?.isOpened()) {
+			this.innerFocusIn();
+			(this.getInputDOMRef())!.focus();
+			this.Suggestions.onDown(e, this.currentItemIndex + 1);
 		}
 	}
 
@@ -1307,6 +1390,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_handleValueStatePopoverAfterClose() {
 		this.valueStateOpen = false;
+		this._handleLinkNavigation = false;
 	}
 
 	_getValueStatePopover() {
@@ -1643,6 +1727,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	get itemSelectionAnnounce() {
 		return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : "";
+	}
+
+	get linksInAriaValueStateHiddenText() {
+		const linksArray: Array<HTMLElement> = [];
+		if (this.valueStateMessage) {
+			this.valueStateMessage.forEach(element => {
+				if (element.children.length)	{
+					element.querySelectorAll("ui5-link").forEach(link => {
+						linksArray.push(link as HTMLElement);
+					});
+				}
+			});
+		}
+		return linksArray;
 	}
 
 	get iconsCount(): number {
