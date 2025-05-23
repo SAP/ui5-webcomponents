@@ -6,8 +6,16 @@ export default function DateRangeRangeTemplate(this: DynamicDateRange) {
 	return (
 		<Calendar onSelectionChange={this.handleSelectionChange} selectionMode="Range">
 			<CalendarDateRange
-				startValue={this.value && this.getOption(this.value?.operator)?.format(this.value).split("-")[0]}
-				endValue={this.value && this.getOption(this.value?.operator)?.format(this.value).split("-")[1]}
+				startValue={
+					this.value?.operator === "DATERANGE"
+						? this.getOption(this.value.operator)?.format(this.value)?.split("-")[0] || undefined
+						: undefined
+				}
+				endValue={
+					this.value?.operator === "DATERANGE"
+						? this.getOption(this.value.operator)?.format(this.value)?.split("-")[1] || undefined
+						: undefined
+				}
 			></CalendarDateRange>
 		</Calendar>
 	);

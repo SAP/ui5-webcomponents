@@ -8,12 +8,14 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base";
+import { isF4, isShow } from "@ui5/webcomponents-base/dist/Keys.js";
 import DynamicDateRangeTemplate from "./DynamicDateRangeTemplate.js";
 import IconMode from "./types/IconMode.js";
 import type Input from "./Input.js";
 import {
 	DYNAMIC_DATE_RANGE_SELECTED_TEXT,
 	DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT,
+	DYNAMIC_DATE_RANGE_NAVIGATION_ICON_TOOLTIP,
 } from "./generated/i18n/i18n-defaults.js";
 
 // default calendar for bundling
@@ -41,7 +43,7 @@ type DynamicDateRangeValue = {
 }
 
 type DynamicDateRangeChangeEventDetail = {
-	value: DynamicDateRangeValue,
+	value: DynamicDateRangeValue | undefined,
 }
 
 /**
@@ -208,8 +210,16 @@ class DynamicDateRange extends UI5Element {
 		return isDesktop() ? IconMode.Decorative : IconMode.Interactive;
 	}
 
+	get tooltipNavigationIcon() {
+		return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_NAVIGATION_ICON_TOOLTIP);
+	}
+
 	_togglePicker(): void {
-		this.open = !this.open;
+		if (this.open) {
+			this.open = false;
+		} else {
+			this.open = true;
+		}
 	}
 
 	_selectOption(e: CustomEvent): void {
@@ -246,6 +256,8 @@ class DynamicDateRange extends UI5Element {
 
 		if (!value) {
 			this.value = undefined;
+			this.fireDecoratorEvent("change", { value: undefined });
+
 			return;
 		}
 
@@ -298,6 +310,16 @@ class DynamicDateRange extends UI5Element {
 		this.open = false;
 	}
 
+	onPopoverOpen() {
+		if (this.currentValue !== this.value) {
+			this.currentValue = this.value;
+		}
+	}
+
+	onPopoverClose() {
+		this._close();
+	}
+
 	get currentValueText() {
 		if (this.currentValue && this.currentValue.operator === this._currentOption?.operator) {
 			return `${DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_SELECTED_TEXT)}: ${this._currentOption?.format(this.currentValue)}`;
@@ -308,6 +330,26 @@ class DynamicDateRange extends UI5Element {
 
 	handleSelectionChange(e: CustomEvent) {
 		this.currentValue = this._currentOption?.handleSelectionChange && this._currentOption?.handleSelectionChange(e) as DynamicDateRangeValue;
+	}
+
+	onInputKeyDown(e: KeyboardEvent) {
+		if (isShow(e)) {
+			e.preventDefault();
+			if (this.open) {
+				if (!isF4(e)) {
+					this._toggleAndFocusInput();
+				}
+			} else {
+				this._toggleAndFocusInput();
+			}
+		}
+	}
+
+	_toggleAndFocusInput() {
+		this._togglePicker();
+		if (this.open) {
+			this._input?.focus();
+		}
 	}
 
 	/**

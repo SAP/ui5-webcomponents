@@ -17,6 +17,7 @@ export default function DynamicDateRangeInputTemplate(this: DynamicDateRange) {
 				class="ui5-dynamic-date-range-input"
 				value={this.value && this.getOption(this.value?.operator)?.format(this.value)}
 				onChange={this.onInputChange}
+				onKeyDown={this.onInputKeyDown}
 			>
 				<Icon
 					id={`${this._id}-value-help`}
@@ -25,6 +26,10 @@ export default function DynamicDateRangeInputTemplate(this: DynamicDateRange) {
 					tabindex={-1}
 					mode={this._iconMode}
 					onClick={this._togglePicker}
+					class={{
+						"inputIcon": true,
+						"inputIcon--pressed": this.open,
+					}}
 				/>
 
 			</Input>
