@@ -46,7 +46,7 @@ describe("Calendar general interaction", () => {
 
 		cy.get("@selectedDay")
 			.should("have.focus")
-			.realPress("Tab");
+			.realPress(["Shift", "Tab"]);
 
 		cy.get<Calendar>("#calendar1")
 			.shadow()
@@ -56,22 +56,19 @@ describe("Calendar general interaction", () => {
 		cy.get("@calheader")
 			.find("[data-ui5-cal-header-btn-month]")
 			.as("monthBtn");
-		
-		cy.get("@monthBtn")
-			.should("have.focus")
-			.realPress("Tab");
 
 		cy.get("@calheader")
 			.find("[data-ui5-cal-header-btn-year]")
 			.as("yearBtn");
-		
+
 		cy.get("@yearBtn")
 			.should("have.focus")
 			.realPress(["Shift", "Tab"]);
-
+		
 		cy.get("@monthBtn")
 			.should("have.focus")
-			.realPress(["Shift", "Tab"]);
+			.realPress("Tab")
+			.realPress("Tab");
 
 		cy.get("@selectedDay")
 			.should("have.focus");
@@ -107,7 +104,8 @@ describe("Calendar general interaction", () => {
 		cy.ui5CalendarGetDay("#calendar1", "974851200")
 			.realClick();
 
-		cy.focused().realPress("Tab");
+		cy.focused().realPress(["Shift", "Tab"]);
+		cy.focused().realPress(["Shift", "Tab"]);
 		cy.focused().realPress("Space");
 
 		cy.get<Calendar>("#calendar1")
@@ -134,8 +132,7 @@ describe("Calendar general interaction", () => {
 		cy.ui5CalendarGetDay("#calendar1", "974851200")
 			.realClick();
 
-		cy.focused().realPress("Tab");
-		cy.focused().realPress("Tab");
+		cy.focused().realPress(["Shift", "Tab"]);
 		cy.focused().realPress("Space");
 
 		cy.get<Calendar>("#calendar1")
