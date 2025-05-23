@@ -62,6 +62,7 @@ export default function CheckBoxTemplate(this: CheckBox) {
 				part="label"
 				class="ui5-checkbox-label"
 				wrappingType={this.wrappingType}
+				required={this.required}
 			>
 				{this.text}
 			</Label>
