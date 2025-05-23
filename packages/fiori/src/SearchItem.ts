@@ -56,16 +56,17 @@ class SearchItem extends ListItemBase {
 	text?: string;
 
 	/**
-	 * Defines the description displayed right under the item text, if such is present.
+	 * Defines the description that appears right under the item text, if available.
 	 * @default undefined
 	 * @public
+	 * @since 2.12.0
 	 */
 	@property()
 	description?: string;
 
 	/**
 	 * Defines the icon name of the search item.
-	 * If provided, image slot will be ignored.
+	 * **Note:** If provided, the image slot will be ignored.
 	 * @default undefined
 	 * @public
 	 */
@@ -92,10 +93,11 @@ class SearchItem extends ListItemBase {
 	highlightText = "";
 
 	/**
-	 * **Note:** While the slot allows option for setting custom avatar, to match the
-	 * design guidelines, please use the `ui5-avatar` with size - XS.
+	 * **Note:** While the slot allows the option of setting a custom avatar, to comply with the
+	 * design guidelines, use the `ui5-avatar` with size - XS.
 	 *
 	 * @public
+	 * @since 2.12.0
 	 */
 	@slot()
 	image!: Array<HTMLElement>;
