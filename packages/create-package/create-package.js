@@ -18,8 +18,11 @@ const VERSION = JSON.parse(
 
 // Constants
 const SUPPORTED_TEST_SETUPS = ["cypress", "manual"];
-const SRC_DIR = path.join(__dirname, "template");
+const SRC_DIR = "./template";
 const FILES_TO_RENAME = {
+	"eslintignore": ".eslintignore",
+	"eslintrc.cjs": ".eslintrc.cjs",
+	"npsrc.json": ".npsrc.json",
 	"npmrc": ".npmrc",
 	"env": ".env",
 	"gitignore": ".gitignore",
@@ -87,8 +90,8 @@ const generateFilesContent = async (
 		? packageName.slice(packageName.lastIndexOf("/") + 1)
 		: packageName;
 	const destDir = skipSubfolder
-		? path.join("./")
-		: path.join("./", packageBaseName);
+		? path.join(process.cwd())
+		: path.join(process.cwd(), packageBaseName);
 
 	await processFiles(destDir, vars, testSetup);
 
@@ -108,7 +111,7 @@ const generateFilesContent = async (
 };
 
 async function processFiles(destDir, replacements, testSetup) {
-	const files = await globby(`${SRC_DIR}/**/*`, { dot: true });
+	const files = await globby(`${SRC_DIR}/**/*`);
 	const FILE_PATHS_TO_SKIP = [
 		testSetup !== "cypress" ? "cypress" : undefined,
 	].filter(Boolean);
