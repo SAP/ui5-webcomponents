@@ -82,6 +82,28 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
+	_initialChildDisabledStates: Map<SideNavigationItemBase, boolean> = new Map();
+
+	onBeforeRendering() {
+		this.items.forEach(item => {
+			if (!this._initialChildDisabledStates.has(item)) {
+				this._initialChildDisabledStates.set(item, item._parentDisabled);
+			}
+		});
+
+		this._updateChildItemsDisabledState();
+	}
+
+	_updateChildItemsDisabledState() {
+		this.items.forEach(item => {
+			if (this.disabled) {
+				item._parentDisabled = true;
+			} else {
+				item._parentDisabled = this._initialChildDisabledStates.get(item)!;
+			}
+		});
+	}
+
 	get overflowItems() : Array<SideNavigationItem> {
 		return [this];
 	}
@@ -212,6 +234,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (this.disabled) {
+			return;
+		}
+
 		const isRTL = this.effectiveDir === "rtl";
 
 		if (this.sideNavigation.classList.contains("ui5-side-navigation-in-popover") || this.sideNavCollapsed) {
@@ -304,7 +330,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_toggle() {
-		if (this.items.length) {
+		if (this.items.length && !this.disabled) {
 			this.expanded = !this.expanded;
 		}
 	}

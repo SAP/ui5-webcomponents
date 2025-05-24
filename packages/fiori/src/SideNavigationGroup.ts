@@ -155,6 +155,10 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (this.disabled) {
+			return;
+		}
+
 		const isRTL = this.effectiveDir === "rtl";
 
 		if (isLeft(e)) {
