@@ -8,6 +8,7 @@ const ext = isTypeScript ? 'ts' : 'js';
 const generate = async () => {
 	const inputFolder = path.normalize(process.argv[2]);
 	const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes.${ext}`);
+	const outputFileDynamicImportJSONAssert = path.normalize(`${process.argv[3]}/Themes-json-import.${ext}`);
 	const outputFileFetchMetaResolve = path.normalize(`${process.argv[3]}/Themes-fetch.${ext}`);
 
 // All supported optional themes
@@ -24,6 +25,7 @@ const generate = async () => {
 
 	const availableThemesArray = `[${themesOnFileSystem.map(theme => `"${theme}"`).join(", ")}]`;
 	const dynamicImportLines = themesOnFileSystem.map(theme => `\t\tcase "${theme}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-${theme.replace("_", "-")}-parameters-bundle" */"../assets/themes/${theme}/parameters-bundle.css.json")).default;`).join("\n");
+	const dynamicImportJSONAssertLines = themesOnFileSystem.map(theme => `\t\tcase "${theme}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-${theme.replace("_", "-")}-parameters-bundle" */"../assets/themes/${theme}/parameters-bundle.css.json", {with: { type: 'json'}})).default;`).join("\n");
 	const fetchMetaResolveLines = themesOnFileSystem.map(theme => `\t\tcase "${theme}": return (await fetch(new URL("../assets/themes/${theme}/parameters-bundle.css.json", import.meta.url))).json();`).join("\n");
 
 // dynamic imports file content
@@ -54,6 +56,7 @@ ${availableThemesArray}
 	await fs.mkdir(path.dirname(outputFileDynamic), { recursive: true });
 	return Promise.all([
 		fs.writeFile(outputFileDynamic, contentDynamic(dynamicImportLines)),
+		fs.writeFile(outputFileDynamicImportJSONAssert, contentDynamic(dynamicImportJSONAssertLines)),
 		fs.writeFile(outputFileFetchMetaResolve, contentDynamic(fetchMetaResolveLines)),
 	]);
 };

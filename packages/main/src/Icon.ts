@@ -125,7 +125,7 @@ class Icon extends UI5Element implements IIcon {
 	 */
 	@property()
 	design: `${IconDesign}` = "Default";
-
+	private alablala = "abc";
 	/**
 	 * Defines the unique identifier (icon name) of the component.
 	 *
