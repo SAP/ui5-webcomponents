@@ -4,10 +4,40 @@
  */
 enum IllustrationMessageType {
 	/**
+	 * "Achievement" illustration type.
+	 * @public
+	 */
+	Achievement = "Achievement",
+	/**
+	 * "Adding Columns" illustration type.
+	 * @public
+	 */
+	AddingColumns = "AddingColumns",
+	/**
+	 * "Add People To Calendar" illustration type.
+	 * @public
+	 */
+	AddPeopleToCalendar = "AddPeopleToCalendar",
+	/**
 	 * "Before Search" illustration type.
 	 * @public
 	 */
 	BeforeSearch = "BeforeSearch",
+	/**
+	 * "Drag Files To Upload" illustration type.
+	 * @public
+	 */
+	DragFilesToUpload = "DragFilesToUpload",
+	/**
+	 * "Filtering Columns" illustration type.
+	 * @public
+	 */
+	FilteringColumns = "FilteringColumns",
+	/**
+	 * "Grouping Columns" illustration type.
+	 * @public
+	 */
+	GroupingColumns = "GroupingColumns",
 	/**
 	 * "New Mail" illustration type.
 	 * @public
@@ -154,6 +184,16 @@ enum IllustrationMessageType {
 	 */
 	GroupTable = "GroupTable",
 	/**
+	 * "Key Task" illustration type.
+	 * @public
+	 */
+	KeyTask = "KeyTask",
+	/**
+	 * "No Chart Data" illustration type.
+	 * @public
+	 */
+	NoChartData = "NoChartData",
+	/**
 	 * "No Filter Results" illustration type.
 	 * @public
 	 */
@@ -173,6 +213,16 @@ enum IllustrationMessageType {
 	 * @public
 	 */
 	ResizeColumn = "ResizeColumn",
+	/**
+	 * "Resizing Columns" illustration type.
+	 * @public
+	 */
+	ResizingColumns = "ResizingColumns",
+	/**
+	 * "Receive Appreciation" illustration type.
+	 * @public
+	 */
+	ReceiveAppreciation = "ReceiveAppreciation",
 	/**
 	 * "Search Earth" illustration type.
 	 * @public
@@ -269,6 +319,11 @@ enum IllustrationMessageType {
 	 */
 	SortColumn = "SortColumn",
 	/**
+	 * "Sorting Columns" illustration type.
+	 * @public
+	 */
+	SortingColumns = "SortingColumns",
+	/**
 	 * "Success Balloon" illustration type.
 	 * @public
 	 */
@@ -303,6 +358,11 @@ enum IllustrationMessageType {
 	 * @public
 	 */
 	UploadCollection = "UploadCollection",
+	/**
+	 * "User Has Signed Up" illustration type.
+	 * @public
+	 */
+	UserHasSignedUp = "UserHasSignedUp",
 	/**
 	* "TntAvatar" illustration type.
 	* @public
