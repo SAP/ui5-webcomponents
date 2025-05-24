@@ -387,8 +387,12 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 		await rangeSliderHandle.click();
 		await rangeSliderTooltipInput.click();
-		await rangeSliderTooltipInput.setProperty("value", "60");
-
+		// await rangeSliderTooltipInput.setProperty("value", "60");
+		await browser.keys("ArrowRight");
+		await browser.keys("ArrowRight");
+		await browser.keys("Backspace");
+		await browser.keys("Backspace");
+		await browser.keys("60");
 		await browser.keys("Enter");
 
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 12, "The slider's value is not changed when invalid");
