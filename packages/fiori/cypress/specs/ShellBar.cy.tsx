@@ -11,6 +11,7 @@ import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Switch from "@ui5/webcomponents/dist/Switch.js";
+import ShellBarBranding from "../../src/ShellBarBranding.js"
 import ShellBarSearch from "../../src/ShellBarSearch.js";
 
 const RESIZE_THROTTLE_RATE = 300; // ms
@@ -392,6 +393,30 @@ describe("Slots", () => {
 		});
 	});
 
+describe("Branding slot", () => {
+	it("Test branding slot priority over logo", () => {
+		cy.mount(
+			<ShellBar id="shellbar" primaryTitle="Primary Title">
+				<img id="mainLogo" slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+
+				<ShellBarBranding brandingTitle="Branding Comp" href="https://www.w3schools.com" target="_blank" slot="branding">
+					<img id="brandingLogo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+				</ShellBarBranding>
+			</ShellBar>
+		);
+
+		cy.get("#shellbar")
+			.find("#mainLogo")
+			.should('exist')
+			.should('not.be.visible');
+
+		cy.get("#shellbar")
+			.find("#brandingLogo")
+			.should('exist')
+			.should('be.visible');
+	});
+});
+
 	describe("Search field slot", () => {
 		it("Test search button is not visible when the search field slot is empty", () => {
 			cy.mount(
@@ -520,7 +545,7 @@ describe("Events", () => {
 			.shadow()
 			.find(".ui5-shellbar-search-button")
 			.as("searchButton");
-		
+
 		cy.get("@searchButton")
 			.click();
 
