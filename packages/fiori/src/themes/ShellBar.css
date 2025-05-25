@@ -576,11 +576,10 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-hide-animation {
-	opacity: 0;
+	transition: var(--_ui5_shellbar_content_transition);
 }
 
 .ui5-shellbar-content-item {
-	transition: var(--_ui5_shellbar_content_transition);
 	&[data-hide-order = "null"] {
 		transition-duration: 0.05s;
 	}

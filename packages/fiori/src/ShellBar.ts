@@ -914,7 +914,7 @@ class ShellBar extends UI5Element {
 					const currentInfo = this._contentInfo.find(info => info.id === item.id);
 					const newState = item.classes.indexOf("ui5-shellbar-hidden-button") !== -1;
 					const currentState = currentInfo?.classes.indexOf("ui5-shellbar-hidden-button") !== -1;
-					return newState && (newState !== currentState);
+					return newState !== currentState;
 				});
 				this._startAnimations(hiddenContent);
 				this._searchButtonHit = false;
@@ -963,7 +963,7 @@ class ShellBar extends UI5Element {
 							// reset animation class for next transition
 							element.classList.toggle("ui5-shellbar-hide-animation");
 							// once the transition is done, add the hidden class to off load the container
-							element.classList.add("ui5-shellbar-hidden-button");
+							element.classList.toggle("ui5-shellbar-hidden-button");
 							resolve(true);
 						}, { once: true });
 						element.classList.toggle("ui5-shellbar-hide-animation");
