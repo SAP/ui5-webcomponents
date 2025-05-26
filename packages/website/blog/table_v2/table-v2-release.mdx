@@ -109,8 +109,8 @@ The `ui5-table` has a dedicated `features` slot to enable certain features, whic
 <ui5-table>
   ...
   <ui5-table-selection-single slot="features" />
+  <ui5-table-growing slot="features" />
   <ui5-table-virtualizer slot="features" />
-  ...
 </ui5-table>
 ```
 
@@ -125,6 +125,18 @@ the table, and the selection feature itself maintains a `selected` property cont
 identify them.
 
 For an example implementation, see [here](https://sap.github.io/ui5-webcomponents/components/TableSelectionMulti/#basic-sample).
+
+#### Growing Feature
+
+Alongside revamping the selection behavior, we've decided to improve and adapt the growing behavior as well. `TableGrowing` enables growing capabilities and provides to different
+growing modes: `Button`, which will render a button that needs to be clicked to load more data, and `Scroll`, which loads more data upon scrolling to the end of the table.
+
+A slight improvement has been made to the `Scroll` behavior: If the table is not scrollable yet, the growing button will be rendered until the table is scrollable. This will always ensure,
+that the table offers its growing capabilities when using `TableGrowing`.
+
+You can check these samples to see implementations of both growing modes:
+- [Growing with a Button](https://sap.github.io/ui5-webcomponents/nightly/components/TableGrowing/#growing-with-a-button)
+- [Growing with Scrolling](https://sap.github.io/ui5-webcomponents/nightly/components/TableGrowing/#growing-with-scrolling)
 
 #### Virtualization
 
