@@ -1,5 +1,7 @@
+import Icon from "./Icon.js";
+import Tokenizer from "./Tokenizer.js";
+import Token from "./Token.js";
 import type FileUploader from "./FileUploader.js";
-import Input from "./Input.js";
 import FileUploaderPopoverTemplate from "./FileUploaderPopoverTemplate.js";
 
 export default function FileUploaderTemplate(this: FileUploader) {
@@ -17,29 +19,57 @@ export default function FileUploaderTemplate(this: FileUploader) {
 				onDragOver={this._ondrag}
 				onDrop={this._ondrop}
 			>
-				<div class="ui5-file-uploader-mask">
-					{!this.hideInput &&
-						<Input
-							value={this.value}
-							valueState={this.valueState}
-							placeholder={this.placeholder}
-							disabled={this.disabled}
-							tabindex={-1}
-							class="ui5-file-uploader-input"
+				<form class="ui5-file-uploader-form">
+					<input
+						type="file"
+						class="ui5-file-uploader-native-input"
+						multiple={this.multiple}
+						accept={this.accept}
+						disabled={this.disabled}
+						onChange={this._onChange}
+						tabindex={this.hideInput ? -1 : 0}
+					/>
+				</form>
+				{!this.hideInput ? (
+					<div class="ui5-file-uploader-display-container">
+						{this.selectedFileNames.length > 0 ? (
+							<>
+								<Tokenizer
+									class="ui5-file-uploader-tokenizer"
+									readonly
+								>
+									{this.selectedFileNames.map(fileName => (
+										<Token text={fileName} />
+									))}
+								</Tokenizer>
+								<Icon
+									name="decline"
+									class="ui5-file-uploader-close-icon inputIcon"
+									onClick={this._clearFileSelection}
+								/>
+							</>
+						) : (
+							<input
+								class="ui5-file-uploader-display-input"
+								tabindex={-1}
+								aria-hidden="true"
+								title={this.inputTitle}
+								placeholder={this.placeholder}
+								inner-input
+								readonly
+								onClick={this._openFileBrowser}
+							/>
+						)}
+						<Icon
+							name="value-help"
+							class="ui5-file-uploader-value-help-icon inputIcon"
+							onClick={this._openFileBrowser}
+							title={this.valueHelpTitle}
 						/>
-					}
+					</div>
+				) : (
 					<slot></slot>
-				</div>
-				<input
-					type="file"
-					tabindex={-1}
-					aria-hidden="true"
-					multiple={this.multiple}
-					accept={this.accept}
-					title={this.titleText}
-					disabled={this.disabled}
-					onChange={this._onChange}
-				/>
+				)}
 			</div>
 
 			{ FileUploaderPopoverTemplate.call(this) }

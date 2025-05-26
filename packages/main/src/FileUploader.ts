@@ -3,22 +3,30 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isUpAlt,
+	isDownAlt,
+	isEnter,
+	isEscape,
+	isF4,
+	isSpace,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
-	FILEUPLOAD_BROWSE,
-	FILEUPLOADER_TITLE,
+	FILEUPLOADER_INPUT_TOOLTIP,
+	FILEUPLOADER_VALUE_HELP_TOOLTIP,
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	FILEUPLOADER_DEFAULT_PLACEHOLDER,
 } from "./generated/i18n/i18n-defaults.js";
 
-import type Input from "./Input.js";
 import type Popover from "./Popover.js";
 
 // Template
@@ -214,6 +222,18 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
+	@query(".ui5-file-uploader-form")
+	_from!: HTMLFormElement;
+
+	@query("input[type=file]")
+	_input!: HTMLInputElement;
+
+	@query(".ui5-valuestatemessage-popover")
+	_messagePopover!: Popover;
+
+	@property({ type: Array, noAttribute: true })
+	private selectedFiles: Array<string> = [];
+
 	static emptyInput: HTMLInputElement;
 
 	@i18n("@ui5/webcomponents")
@@ -257,7 +277,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	_onclick() {
-		if (this.getFocusDomRef()?.matches(":focus-within")) {
+		if (this.getFocusDomRef()?.matches(":focus-within") && this.hideInput) {
 			this._input.click();
 		}
 	}
@@ -272,6 +292,12 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._input.click();
+			e.preventDefault();
+		} else if (isEscape(e) && !this.hideInput) {
+			this._clearFileSelection();
+			e.preventDefault();
+		} else if ((isF4(e) || isUpAlt(e) || isDownAlt(e)) && !this.hideInput) {
+			this._openFileBrowser();
 			e.preventDefault();
 		}
 	}
@@ -297,7 +323,8 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		}
 
 		this._input.files = validatedFiles;
-		this._updateValue(validatedFiles);
+		this.selectedFiles = this._fileNamesList(files);
+		this.value = this.computedValue;
 		this.fireDecoratorEvent("change", {
 			files: validatedFiles,
 		});
@@ -309,6 +336,17 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	_onfocusout() {
 		this.focused = false;
+	}
+
+	_openFileBrowser() {
+		this._input.click();
+	}
+
+	_clearFileSelection() {
+		this.selectedFiles = [];
+		this.value = "";
+		this.placeholder = FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER);
+		this._from?.reset();
 	}
 
 	/**
@@ -324,12 +362,26 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return FileUploader._emptyFilesList;
 	}
 
+	get selectedFileNames(): Array<string> {
+		return this.selectedFiles;
+	}
+
+	onBeforeRendering() {
+		this.placeholder = !this.selectedFiles.length
+			? FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER)
+			: undefined;
+	}
+
 	onAfterRendering() {
 		if (!this.value) {
 			this._input.value = "";
 		}
 
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
+	}
+
+	get computedValue(): string {
+		return this.selectedFiles.join(", ");
 	}
 
 	_onChange(e: Event) {
@@ -343,16 +395,15 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		this._updateValue(changedFiles);
+		this.selectedFiles = this._fileNamesList(changedFiles as FileList);
+		this.value = this.computedValue;
 		this.fireDecoratorEvent("change", {
 			files: changedFiles,
 		});
 	}
 
-	_updateValue(files: FileList | null) {
-		this.value = Array.from(files || []).reduce((acc, currFile) => {
-			return `${acc}"${currFile.name}" `;
-		}, "");
+	_fileNamesList(files: FileList) : Array<string> {
+		return Array.from(files).map(file => file.name);
 	}
 
 	/**
@@ -398,24 +449,16 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	openValueStatePopover() {
-		const popover = this._getPopover();
-
-		if (popover) {
-			popover.opener = this;
-			popover.open = true;
+		if (this._messagePopover) {
+			this._messagePopover.opener = this;
+			this._messagePopover.open = true;
 		}
 	}
 
 	closeValueStatePopover() {
-		const popover = this._getPopover();
-
-		if (popover) {
-			popover.open = false;
+		if (this._messagePopover) {
+			this._messagePopover.open = false;
 		}
-	}
-
-	_getPopover(): Popover {
-		return this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 	}
 
 	/**
@@ -430,16 +473,12 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return this.emptyInput.files;
 	}
 
-	get browseText(): string {
-		return FileUploader.i18nBundle.getText(FILEUPLOAD_BROWSE);
+	get inputTitle(): string {
+		return FileUploader.i18nBundle.getText(FILEUPLOADER_INPUT_TOOLTIP);
 	}
 
-	get titleText(): string {
-		return FileUploader.i18nBundle.getText(FILEUPLOADER_TITLE);
-	}
-
-	get _input(): HTMLInputElement {
-		return (this.shadowRoot!.querySelector<HTMLInputElement>("input[type=file]") || this.querySelector<HTMLInputElement>("input[type=file][data-ui5-form-support]"))!;
+	get valueHelpTitle(): string {
+		return FileUploader.i18nBundle.getText(FILEUPLOADER_VALUE_HELP_TOOLTIP);
 	}
 
 	get valueStateTextMappings(): Record<string, string> {
@@ -485,8 +524,8 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
-	get ui5Input() {
-		return this.shadowRoot!.querySelector<Input>(".ui5-file-uploader-input");
+	get fromElement() : HTMLFormElement | undefined {
+		return this._from;
 	}
 }
 
