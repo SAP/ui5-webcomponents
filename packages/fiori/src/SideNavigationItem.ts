@@ -71,7 +71,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	_fixed = false;
 
 	/**
-     * Defines nested items by passing `ui5-side-navigation-sub-item` to the default slot.
+	 * Defines nested items by passing `ui5-side-navigation-sub-item` to the default slot.
 	 *
 	 * @public
 	 */
@@ -83,6 +83,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 
 	get overflowItems() : Array<SideNavigationItem> {
 		return [this];
+	}
+
+	get hasSubItems() {
+		return this.items.length > 0;
 	}
 
 	get selectableItems() : Array<SideNavigationSelectableItemBase> {
@@ -199,12 +203,33 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isLeft(e) || isMinus(e)) {
+		const isRTL = this.effectiveDir === "rtl";
+
+		if (this.sideNavigation.classList.contains("ui5-side-navigation-in-popover") || this.sideNavCollapsed) {
+			super._onkeydown(e);
+			return;
+		}
+
+		if (isLeft(e)) {
+			e.preventDefault();
+			this.expanded = isRTL;
+			return;
+		}
+
+		if (isRight(e)) {
+			e.preventDefault();
+			this.expanded = !isRTL;
+			return;
+		}
+
+		if (isMinus(e)) {
+			e.preventDefault();
 			this.expanded = false;
 			return;
 		}
 
-		if (isRight(e) || isPlus(e)) {
+		if (isPlus(e)) {
+			e.preventDefault();
 			this.expanded = true;
 			return;
 		}

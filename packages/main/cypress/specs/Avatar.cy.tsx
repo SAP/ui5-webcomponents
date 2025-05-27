@@ -1,4 +1,6 @@
 import Avatar from "../../src/Avatar.js";
+import Tag from "../../src/Tag.js";
+import Icon from "../../src/Icon.js";
 import "@ui5/webcomponents-icons/dist/supplier.js";
 
 describe("Accessibility", () => {
@@ -29,5 +31,25 @@ describe("Accessibility", () => {
 			.shadow()
 			.find("svg")
 			.should("have.attr", "aria-label", ACCESSIBLE_NAME);
+	});
+
+	it("doesn't fire ui5-click event, when disabled property is set", () => {
+		cy.mount(
+			<div>
+				<Avatar interactive disabled initials="JD" id="diabled-avatar" onClick={increment}>
+				<Tag slot="badge">
+					<Icon slot="icon" name="accelerated"></Icon>
+				</Tag>
+				</Avatar>
+				<input value="0" id="click-event" />
+			</div>
+		);
+
+		function increment() {
+			const input = document.getElementById("click-event") as HTMLInputElement;
+			input.value = "1";
+		}
+		cy.get("#diabled-avatar").realClick();
+		cy.get("#click-event").should("have.value", "0");
 	});
 });
