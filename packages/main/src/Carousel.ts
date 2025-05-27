@@ -11,6 +11,7 @@ import {
 	isUp,
 	isF7,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
@@ -496,7 +497,7 @@ class Carousel extends UI5Element {
 		}
 	}
 
-	_navButtonClick(e: MouseEvent) {
+	_navButtonClick(e: UI5CustomEvent<Button, "click">) {
 		const button = e.target as Button;
 		if (button.hasAttribute("data-ui5-arrow-forward")) {
 			this.navigateRight();

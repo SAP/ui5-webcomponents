@@ -42,11 +42,14 @@ type ExpandableTextTemplate = (this: ListItemStandard, params: ExpandableTextTem
  * @csspart delete-button - Used to style the button rendered when the list item is in delete mode
  * @csspart radio - Used to style the radio button rendered when the list item is in single selection mode
  * @csspart checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode
- * @slot {Node[]} default - Defines the text of the component.
+ * @slot {Node[]} default - Defines the custom formatted text of the component.
  *
- * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design. <br/>
- * **Note:** Deprecated since version `2.10.0`. Use the `text` property instead. <br/>
- * Only use the default slot if you need to apply custom text formatting with HTML elements (like `<b>`, `<i>`, etc.).
+ * **Note:** For optimal text wrapping and a consistent layout, it is strongly recommended to use the `text` property.
+ *
+ * Use the `default` slot only when custom formatting with HTML elements (e.g., `<b>`, `<i>`) is required.
+ * Be aware that wrapping (via `wrappingType="Normal"`) may not function correctly with custom HTML content in the `default` slot.
+ *
+ * If both `text` and `default` slot are used, the `text` property takes precedence.
  * @constructor
  * @extends ListItem
  * @public
