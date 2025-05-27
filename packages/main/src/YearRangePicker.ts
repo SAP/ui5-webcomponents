@@ -24,7 +24,6 @@ import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/E
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CalendarPart from "./CalendarPart.js";
 import type { ICalendarPicker, CalendarYearRangeT } from "./Calendar.js";
-import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import { YEAR_RANGE_PICKER_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -100,17 +99,18 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 	 */
 	@property({ type: Array })
 	selectedDates: Array<number> = [];
-	/**
-	 * Defines the type of selection used in the parent calendar component.
-	 * Note that CalendarSelection is not available for the YearRangePicker, this property is only to visualize the selected dates.
-	 * @default "Single"
-	 * @since 2.2.0
-	 */
-	@property()
-	_selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	/**
-	 * When selectionMode="Range" and the first year in the range is selected, this is the currently hovered or focused year.
+	 * Defines if the YearRangePicker should visualize the selected dates as a range.
+	 * @default false
+	 *
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_showRangeSelection = false;
+
+	/**
+	 * When _showRangeSelection is "true" and the first year in the range is selected, this is the currently hovered or focused year range.
 	 *
 	 * @private
 	 */
@@ -302,7 +302,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 	  * @private
 	  */
 	_isInsideSelectionRange(timestamp: number): boolean {
-		if (this._selectionMode !== CalendarSelectionMode.Range || !this.selectedDates.length) {
+		if (!this._showRangeSelection || !this.selectedDates.length) {
 			return false;
 		}
 
@@ -384,7 +384,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 	_onmouseover(e: MouseEvent) {
 		const target = e.target as HTMLElement;
 		const hoveredItem = target.closest(".ui5-yrp-item") as HTMLElement;
-		if (hoveredItem && this._selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+		if (hoveredItem && this._showRangeSelection && this.selectedDates.length === 1) {
 			this._secondTimestamp = this._getTimestampFromDom(hoveredItem);
 		}
 	}
@@ -404,7 +404,7 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	_updateSecondTimestamp() {
-		if (this._selectionMode === CalendarSelectionMode.Range && (this.selectedDates.length === 1 || this.selectedDates.length === 2)) {
+		if (this._showRangeSelection && (this.selectedDates.length === 1 || this.selectedDates.length === 2)) {
 			this._secondTimestamp = this.timestamp;
 		}
 	}

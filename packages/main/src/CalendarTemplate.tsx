@@ -4,6 +4,7 @@ import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 import YearRangePicker from "./YearRangePicker.js";
 import CalendarHeaderTemplate from "./CalendarHeaderTemplate.js";
+import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
 export default function CalendarTemplate(this: Calendar) {
 	return (
@@ -73,7 +74,7 @@ export default function CalendarTemplate(this: Calendar) {
 						hidden={this._isYearRangePickerHidden}
 						formatPattern={this._formatPattern}
 						selectedDates={this._selectedDatesTimestamps}
-						_selectionMode={this.selectionMode}
+						_showRangeSelection={this.selectionMode === CalendarSelectionMode.Range}
 						_hidden={this._isYearRangePickerHidden}
 						primaryCalendarType={this._primaryCalendarType}
 						secondaryCalendarType={this._secondaryCalendarType}
