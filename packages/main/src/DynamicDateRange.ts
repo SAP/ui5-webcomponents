@@ -352,6 +352,19 @@ class DynamicDateRange extends UI5Element {
 		}
 	}
 
+	onKeyDownPopover(e: KeyboardEvent) {
+		if (isShow(e)) {
+			e.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
+			if (this.open) {
+				if (!isF4(e)) {
+					this._toggleAndFocusInput();
+				}
+			} else {
+				this._toggleAndFocusInput();
+			}
+		}
+	}
+
 	/**
 	 * Registers a new dynamic date range option with a unique key.
 	 *
