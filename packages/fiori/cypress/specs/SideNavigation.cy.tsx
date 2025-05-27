@@ -1193,6 +1193,16 @@ describe("Side Navigation Accessibility", () => {
 			.shadow()
 			.find(".ui5-sn-flexible")
 			.should("have.attr", "aria-roledescription", "Navigation List Menu Bar");
+
+		cy.get("#sideNav")
+			.invoke("attr", "style", "height: 100px");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find("[ui5-side-navigation-item][is-overflow]")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "aria-label", "Displays remaining navigation items");
 	});
 
 	it("SideNavigationItem aria-checked in collapsed SideNavigation", () => {

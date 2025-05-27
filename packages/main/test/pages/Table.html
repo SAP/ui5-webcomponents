@@ -80,7 +80,7 @@
 			table.style.width = selectedItem.textContent;
 		});
 		table.addEventListener("row-click", (e) => {
-			console.log(`${Date.now()}: Row with the row-key ${e.detail.row.row-key} is clicked`);
+			console.log(`${Date.now()}: Row with the row-key ${e.detail.row.rowKey} is clicked`);
 		});
 
 		const growing = document.getElementById("growing");
