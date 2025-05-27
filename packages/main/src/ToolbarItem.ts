@@ -101,15 +101,11 @@ class ToolbarItem extends UI5Element {
 
 	get classes() {
 		return {
-			item: {
+			root: {
 				"ui5-tb-popover-item": this.isOverflowed,
 				"ui5-tb-item": true,
 			},
 		};
-	}
-
-	getFocusDomRef(): HTMLElement | undefined {
-		return this.shadowRoot!.querySelector(".ui5-tb-item") as HTMLElement;
 	}
 }
 
