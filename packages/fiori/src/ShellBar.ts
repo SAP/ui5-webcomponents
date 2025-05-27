@@ -953,28 +953,27 @@ class ShellBar extends UI5Element {
 		this._isAnimating = true;
 
 		const animations: Array<Promise<void | Error>> = [];
-		console.log(changedItems.length);
 		changedItems.map((item, index) => {
 			const element = this.shadowRoot!.querySelector<HTMLElement>(`[id="${item.id}"]`);
-			return new Promise(resolve => {
+			return animations.push(new Promise(resolve => {
 				setTimeout(() => {
-					if (element) {
-						element.addEventListener("transitionend", () => {
-							// reset animation class for next transition
-							element.classList.toggle("ui5-shellbar-hide-animation");
-							// once the transition is done, add the hidden class to off load the container
-							element.classList.toggle("ui5-shellbar-hidden-button");
-							resolve(true);
-						}, { once: true });
-						element.classList.toggle("ui5-shellbar-hide-animation");
-					}
-				}, index * 50);
-			});
+				if (element) {
+					element.addEventListener("transitionend", () => {
+						// reset animation class for next transition
+						element.classList.remove("ui5-shellbar-hide-animation");
+						// once the transition is done, add the hidden class to off load the container
+						element.classList.toggle("ui5-shellbar-hidden-button");
+						resolve();
+					}, { once: true });
+					element.classList.add("ui5-shellbar-hide-animation");
+				}
+			}, index * 50);
+			}));
 		});
 		if (this.showSearchField) {
 			animations.push(searchOpenAnimation(this.searchFieldWrapper!).promise());
 		} else {
-			animations.push(searchCloseAnimation(this.searchFieldWrapper!, this.domCalculatedValues("--_ui5_shellbar_search_field_width")).promise());
+			animations.unshift(searchCloseAnimation(this.searchFieldWrapper!, this.domCalculatedValues("--_ui5_shellbar_search_field_width")).promise());
 		}
 
 		await Promise.all(animations).then(() => {
@@ -1375,7 +1374,7 @@ class ShellBar extends UI5Element {
 			return "flex";
 		}
 
-		return !this._isAnimating ? "none" : "flex";
+		return this._isAnimating ? "flex" : "none";
 	}
 
 	shouldIncludeSeparator(itemInfo: IShellBarContentItem | undefined, contentInfo: IShellBarContentItem[]) {
