@@ -1007,7 +1007,7 @@ class TabContainer extends UI5Element {
 		// show end overflow
 		this._getEndOverflow().removeAttribute("hidden");
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab?.getTabInStripDomRef()!;
+		const selectedTabDomRef = selectedTab?.getTabInStripDomRef() as ITab | undefined;
 		const containerWidth = this._getTabStrip().offsetWidth;
 
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
@@ -1024,7 +1024,7 @@ class TabContainer extends UI5Element {
 	_updateStartAndEndOverflow(itemsDomRefs: Array<ITab>) {
 		let containerWidth = this._getTabStrip().offsetWidth;
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab?.getTabInStripDomRef()!;
+		const selectedTabDomRef = selectedTab?.getTabInStripDomRef() as ITab | undefined;
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
 		const hasEndOverflow = this._hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
@@ -1143,7 +1143,14 @@ class TabContainer extends UI5Element {
 		return itemDomRef.offsetWidth + margins;
 	}
 
-	_getSelectedItemIndexAndWidth(itemsDomRefs: Array<ITab>, selectedTabDomRef: ITab) {
+	_getSelectedItemIndexAndWidth(itemsDomRefs: Array<ITab>, selectedTabDomRef: ITab | undefined) {
+		if (!selectedTabDomRef) {
+			return {
+				index: 0,
+				width: 0,
+			};
+		}
+
 		let index = itemsDomRefs.indexOf(selectedTabDomRef);
 		let width = selectedTabDomRef.offsetWidth;
 		let selectedSeparator;
