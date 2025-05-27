@@ -37,26 +37,11 @@
 			</div>
 
 			<!-- Items -->
-			 <ui5-side-navigation-group id="grp" expanded text="Group 2">
-			<!-- Items -->
-				<ui5-side-navigation-item text="Home 1"
-										icon="home"
-										href="#home"
-										title="Home tooltip"></ui5-side-navigation-item>
-				<ui5-side-navigation-item text="People 2" href="#people" expanded icon="group">
-					<ui5-side-navigation-sub-item href="#disabled" disabled text="Disabled" icon="employee-approvals" title="From My Team tooltip"></ui5-side-navigation-sub-item>
-					<ui5-side-navigation-sub-item text="From Other Teams 3" icon="employee-rejections"></ui5-side-navigation-sub-item>
-				</ui5-side-navigation-item>
-			</ui5-side-navigation-group>
 			<ui5-side-navigation-item slot="fixedItems" text="External Link _top" icon="chain-link" href="https://sap.com" target="_top"></ui5-side-navigation-item>
 			<ui5-side-navigation-item id="item1" text="Home" icon="home" tooltip="Home tooltip"></ui5-side-navigation-item>
 			<ui5-side-navigation-item id="item2" text="People" expanded icon="group">
 				<ui5-side-navigation-sub-item id="item21" text="From My Team" icon="employee-approvals" tooltip="From My Team tooltip"></ui5-side-navigation-sub-item>
 				<ui5-side-navigation-sub-item id="item22" text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
-			</ui5-side-navigation-item>
-			<ui5-side-navigation-item id="item2-disabled" disabled text="People" expanded icon="group">
-				<ui5-side-navigation-sub-item text="From My Team" icon="employee-approvals" tooltip="From My Team tooltip"></ui5-side-navigation-sub-item>
-				<ui5-side-navigation-sub-item text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
 			<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
 			<ui5-side-navigation-item id="item3" text="Events lorem ipsum dolor sit amet, consectetur adipiscing elit" icon="calendar">
@@ -186,17 +171,17 @@
 			preventClick ? list.style.opacity = 0.5 : list.style.opacity = 1;
 		});
 
-		disableItemCb.addEventListener("ui5-change", function (event) {
-			const item = document.getElementById("grp");
-			item.disabled = event.target.checked;
-		});
-
 		document.getElementById("ensure-overflow").addEventListener("ui5-change", function (event) {
 			document.getElementById("sn1").classList.toggle("ensure-overflow", event.target.checked);
 		});
 
 		document.getElementById("compact-density").addEventListener("ui5-change", function (event) {
 			document.body.classList.toggle("sapUiSizeCompact", event.target.checked);
+		});
+
+		disableItemCb.addEventListener("ui5-change", function (event) {
+			const item = document.getElementById("item2");
+			item.disabled = event.target.checked;
 		});
 
 		sideNavigation.addEventListener("ui5-selection-change", function (event) {

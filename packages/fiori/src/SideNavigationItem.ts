@@ -82,25 +82,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
-	_initialChildDisabledStates: Map<SideNavigationItemBase, boolean> = new Map();
 
 	onBeforeRendering() {
 		this.items.forEach(item => {
-			if (!this._initialChildDisabledStates.has(item)) {
-				this._initialChildDisabledStates.set(item, item._parentDisabled);
-			}
-		});
-
-		this._updateChildItemsDisabledState();
-	}
-
-	_updateChildItemsDisabledState() {
-		this.items.forEach(item => {
-			if (this.disabled) {
-				item._parentDisabled = true;
-			} else {
-				item._parentDisabled = this._initialChildDisabledStates.get(item)!;
-			}
+			item._parentDisabled = this.effectiveDisabled;
 		});
 	}
 
@@ -110,6 +95,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 
 	get hasSubItems() {
 		return this.items.length > 0;
+	}
+
+	get effectiveDisabled() {
+		return this.disabled || this._groupDisabled;
 	}
 
 	get selectableItems() : Array<SideNavigationSelectableItemBase> {
@@ -153,7 +142,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return this.accessibilityAttributes.hasPopup;
 		}
 
-		if (!this.disabled && this.sideNavCollapsed && this.items.length) {
+		if (!this.effectiveDisabled && this.sideNavCollapsed && this.items.length) {
 			return "tree";
 		}
 
@@ -187,7 +176,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	get classesArray() {
 		const classes = super.classesArray;
 
-		if (!this.disabled && this.sideNavigation?.collapsed && this.items.length) {
+		if (!this.effectiveDisabled && this.sideNavigation?.collapsed && this.items.length) {
 			classes.push("ui5-sn-item-with-expander");
 		}
 
@@ -234,7 +223,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (this.disabled) {
+		if (this.effectiveDisabled) {
 			return;
 		}
 
@@ -330,7 +319,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_toggle() {
-		if (this.items.length && !this.disabled) {
+		if (this.items.length && !this.effectiveDisabled) {
 			this.expanded = !this.expanded;
 		}
 	}

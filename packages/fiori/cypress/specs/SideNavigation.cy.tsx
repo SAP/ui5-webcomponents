@@ -126,12 +126,11 @@ describe("Side Navigation Rendering", () => {
 				</SideNavigationItem>
 			</SideNavigation>);
 
-		cy.get("#parent").should("not.have.attr", "disabled");
 		cy.get("#parent").invoke("prop", "disabled", true);
 
 		cy.get<SideNavigationItem>("#parent").then(($itemRef) => {
 			const item = $itemRef[0];
-			cy.wrap(item.items).each((item: SideNavigationItem) => {
+			cy.wrap(item.items).each((item) => {
 				cy.wrap(item).should("have.prop", "effectiveDisabled", true);
 			});
 		});

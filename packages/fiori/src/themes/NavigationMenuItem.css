@@ -72,6 +72,10 @@
 	min-height: 1rem;
 }
 
+:host([disabled][active][actionable]) .ui5-li-root .ui5-li-icon {
+	color: inherit;
+}
+
 :host([focused]):not([active]) {
 	background: none;
 }
