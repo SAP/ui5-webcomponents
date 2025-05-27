@@ -459,11 +459,6 @@ slot[name="profile"] {
 	margin-inline-start: 0.5rem;
 	display: flex;
 	overflow: hidden;
-	min-width: auto;
-	width: 0;
-}
-
-:host([show-search-field]) .ui5-shellbar-search-field {
 	min-width: var(--_ui5_shellbar_search_field_width);
 	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
 }
@@ -555,7 +550,6 @@ slot[name="profile"] {
 .ui5-shellbar-content-item {
 	width: auto;
 	opacity: 1;
-	transition: opacity 0.4s cubic-bezier(0.2, 0.2, 0.38, 0.9);
 }
 
 /* if class contains ui5-shellbar-hidden-button */
@@ -564,7 +558,6 @@ slot[name="profile"] {
 .ui5-shellbar-invisible-button {
 	order: -1;
 	visibility: hidden;
-	opacity: 0;
 	min-width: 0;
 	width: 0;
 	margin: 0;
@@ -572,14 +565,19 @@ slot[name="profile"] {
 	padding-inline-start: 0;
 	border: 0;
 	margin-inline-start: 0;
-	transition: none;
+	opacity: 0;
 }
 
 .ui5-shellbar-hide-animation {
-	transition: var(--_ui5_shellbar_content_transition);
+	transition: opacity 4s cubic-bezier(0.2, 0.2, 0.38, 0.9);
+	opacity: 0;
 }
 
-.ui5-shellbar-content-item {
+.ui5-shellbar-hide-animation.ui5-shellbar-hidden-button {
+	opacity: 1;
+}
+
+.ui5-shellbar-content-item.ui5-shellbar-hide-animation	{
 	&[data-hide-order = "null"] {
 		transition-duration: 0.05s;
 	}
