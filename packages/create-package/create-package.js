@@ -21,14 +21,14 @@ const SRC_DIR = path.join(__dirname, "template");
 const DEST_DIR = process.cwd();
 
 const FILES_TO_RENAME = {
-	"eslintignore": ".eslintignore",
-	"eslintrc.cjs": ".eslintrc.cjs",
-	"npsrc.json": ".npsrc.json",
-	"npmrc": ".npmrc",
-	"env": ".env",
-	"gitignore": ".gitignore",
-	"tsconfig.template.json": "tsconfig.json",
-	"cypress/tsconfig.template.json": "cypress/tsconfig.json"
+	[path.normalize("eslintignore")]: path.normalize(".eslintignore"),
+	[path.normalize("eslintrc.cjs")]: path.normalize(".eslintrc.cjs"),
+	[path.normalize("npsrc.json")]: path.normalize(".npsrc.json"),
+	[path.normalize("npmrc")]: path.normalize(".npmrc"),
+	[path.normalize("env")]: path.normalize(".env"),
+	[path.normalize("gitignore")]: path.normalize(".gitignore"),
+	[path.normalize("tsconfig.template.json")]: path.normalize("tsconfig.json"),
+	[path.normalize("cypress/tsconfig.template.json")]: path.normalize("cypress/tsconfig.json")
 };
 const FILES_TO_COPY = ["test/pages/img/logo.png"];
 
@@ -129,7 +129,7 @@ const generateFilesContent = async (
 async function processFiles(destDir, replacements, testSetup) {
 	const files = await collectFiles(SRC_DIR);
 	const FILE_PATHS_TO_SKIP = [
-		testSetup !== "cypress" ? "cypress" : undefined,
+		testSetup !== "cypress" ? path.normalize("cypress") : undefined,
 	].filter(Boolean);
 
 	for (const file of files) {
@@ -141,11 +141,11 @@ async function processFiles(destDir, replacements, testSetup) {
 			continue;
 		}
 
-		// Component related file based on the user input
-		destPath = destPath.replace(
-			"/MyFirstComponent",
-			`/${replacements.INIT_PACKAGE_VAR_CLASS_NAME}`,
-		);
+		// // Component related file based on the user input
+		// destPath = destPath.replace(
+		// 	"MyFirstComponent",
+		// 	replacements.INIT_PACKAGE_VAR_CLASS_NAME,
+		// );
 
 		// Files that need to be renamed
 		if (FILES_TO_RENAME[relativePath]) {
@@ -200,7 +200,7 @@ const createWebcomponentsPackage = async () => {
 	}
 
 	let packageName = argv.name || "my-package";
-	let componentName = "MyComponent";
+	let componentName = "MyFirstComponent";
 	let testSetup = argv.testSetup || "manual";
 	const skipSubfolder = !!argv.skipSubfolder;
 
