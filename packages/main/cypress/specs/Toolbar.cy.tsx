@@ -170,7 +170,7 @@ describe("Toolbar general interaction", () => {
 			.should("have.been.calledOnce");
 	});
 
-	it.only("Should close the popover when interacting with item in the overflow menu", () => {
+	it("Should close the popover when interacting with item in the overflow menu", () => {
 		cy.viewport(300, 1080);
 
 		cy.mount(
