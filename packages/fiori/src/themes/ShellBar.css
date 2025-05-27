@@ -123,7 +123,7 @@ slot[name="profile"] {
 .ui5-shellbar-menu-button-title,
 .ui5-shellbar-title {
 	display: inline-block;
-	font-family: var(--sapFontSemiboldFamily);
+	font-family: var(--sapFontSemiboldDuplexFamily);
 	margin: 0;
 	font-size: var(--_ui5_shellbar_menu_button_title_font_size);
 	white-space: nowrap;
@@ -485,6 +485,10 @@ slot[name="profile"] {
 
 .ui5-shellbar-search-full-width-wrapper .ui5-shellbar-button {
 	width: auto;
+}
+
+.ui5-shellbar-search-full-width-wrapper ::slotted([ui5-shellbar-search]) {
+	max-width: unset;
 }
 
 ::slotted([ui5-input]) {
