@@ -4,7 +4,6 @@ import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase
 import SideNavigationSubItemTemplate from "./SideNavigationSubItemTemplate.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
-
 // Styles
 import SideNavigationSubItemCss from "./generated/themes/SideNavigationSubItem.css.js";
 
