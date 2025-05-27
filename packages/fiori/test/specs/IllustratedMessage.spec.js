@@ -196,7 +196,7 @@ describe("Dot design resource handling", () => {
 		const illustration = await illustratedMsg.shadow$(".ui5-illustrated-message-illustration svg");
 
 		// Check
-		assert.strictEqual(await illustration.getProperty("id"), "sapIllus-Spot-TntUnableToLoad", "Spot SVG is used when no Dot is present");
+		assert.strictEqual(await illustration.getProperty("id"), "tnt-Spot-UnableToLoad", "Spot SVG is used when no Dot is present");
 	});
 
 	it("uses original Dot illustration", async () => {
