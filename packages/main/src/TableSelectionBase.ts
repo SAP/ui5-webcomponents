@@ -5,6 +5,7 @@ import type Table from "./Table.js";
 import type TableRowBase from "./TableRowBase.js";
 import type TableRow from "./TableRow.js";
 import type { ITableFeature } from "./Table.js";
+import TableSelectionBehavior from "./types/TableSelectionBehavior.js";
 
 /**
  * Fired when selection is changed by user interaction.
@@ -44,6 +45,16 @@ abstract class TableSelectionBase extends UI5Element implements ITableFeature {
 	@property()
 	selected?: string;
 
+	/**
+	 * Defines the selection behavior.
+	 *
+	 * @default "RowSelector"
+	 * @public
+	 * @since 2.11
+	 */
+	@property()
+	behavior: `${TableSelectionBehavior}` = "RowSelector";
+
 	readonly identifier = "TableSelection";
 	protected _table?: Table;
 
@@ -80,7 +91,7 @@ abstract class TableSelectionBase extends UI5Element implements ITableFeature {
 	 * Determines whether a row selector (for example, `radiobutton` or `checkbox`) is rendered.
 	 */
 	isRowSelectorRequired(): boolean {
-		return true;
+		return this.behavior === TableSelectionBehavior.RowSelector;
 	}
 
 	/**
@@ -122,13 +133,12 @@ abstract class TableSelectionBase extends UI5Element implements ITableFeature {
 
 	/**
 	 * Invalidates the table and its rows to re-evaluate the selection.
-	 *
-	 * @protected
 	 */
 	protected _invalidateTableAndRows() {
 		if (this._table) {
 			this._table._invalidate++;
 			this._table.rows.forEach(row => row._invalidate++);
+			this._table.headerRow.forEach(row => row._invalidate++);
 		}
 	}
 }

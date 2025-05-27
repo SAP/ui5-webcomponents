@@ -137,12 +137,6 @@ class TableSelectionMulti extends TableSelectionBase {
 		this.selected = [...selectedSet].join(" ");
 	}
 
-	_invalidateTableAndRows() {
-		super._invalidateTableAndRows();
-		const headerRow = this._table?.headerRow[0];
-		headerRow && headerRow._invalidate++;
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		if (!this._table || !e.shiftKey) {
 			return;

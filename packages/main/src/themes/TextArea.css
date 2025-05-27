@@ -422,22 +422,6 @@
 	border-bottom-right-radius: var(--sapField_BorderCornerRadius);
 }
 
-:host([value-state="Negative"]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
-	background-color: var(--sapScrollBar_TrackColor);
-}
-
-:host([value-state="Critical"]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
-	background-color: var(--sapScrollBar_TrackColor);
-}
-
-:host([value-state="Information"]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
-	background-color: var(--sapScrollBar_TrackColor);
-}
-
-:host([value-state="Positive"]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
-	background-color: var(--sapScrollBar_TrackColor);
-}
-
 :host([focused]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	background-image: none;
 }
