@@ -216,6 +216,12 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	_hasImage = false;
 
 	/**
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_imageLoadError = false;
+
+	/**
 	 * Receives the desired `<img>` tag
 	 *
 	 * **Note:** If you experience flickering of the provided image, you can hide the component until it is defined with the following CSS:<br/>
@@ -244,10 +250,16 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	static i18nBundle: I18nBundle;
 
 	_handleResizeBound: ResizeObserverCallback;
+	_handleImagesBound: () => void;
+	_onImageLoadBound: () => void;
+	_onImageErrorBound: () => void;
 
 	constructor() {
 		super();
 		this._handleResizeBound = this.handleResize.bind(this);
+		this._handleImagesBound = this._handleImages.bind(this);
+		this._onImageLoadBound = this._onImageLoad.bind(this);
+		this._onImageErrorBound = this._onImageError.bind(this);
 	}
 
 	onBeforeRendering() {
@@ -316,7 +328,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	get hasImage() {
-		return !!this.image.length;
+		return !!this.image.length && !this._imageLoadError;
 	}
 
 	get initialsContainer(): HTMLObjectElement | null {
@@ -341,11 +353,15 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 		this.initialsContainer && ResizeHandler.register(this.initialsContainer,
 			this._handleResizeBound);
+
+		this._observeImageSlot();
 	}
 
 	onExitDOM() {
 		this.initialsContainer && ResizeHandler.deregister(this.initialsContainer,
 			this._handleResizeBound);
+
+		this._disconnectImageSlotObserver();
 	}
 
 	handleResize() {
@@ -413,6 +429,71 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 		}
 
 		return ariaHaspopup;
+	}
+
+	_observeImageSlot() {
+		const imageSlot = this.shadowRoot?.querySelector("slot:not([name])") as HTMLSlotElement;
+		if (!imageSlot) {
+			return;
+		}
+
+		imageSlot.addEventListener("slotchange", this._handleImagesBound); // Event for future slot changes
+		this._handleImages(); // Immediate setup for existing images
+	}
+
+	_disconnectImageSlotObserver() {
+		const imageSlot = this.shadowRoot?.querySelector("slot:not([name])") as HTMLSlotElement;
+		if (imageSlot) {
+			imageSlot.removeEventListener("slotchange", this._handleImagesBound);
+		}
+		this._detachImageErrorHandler();
+	}
+
+	_attachImageErrorHandler() {
+		if (!this.image?.length) {
+			return;
+		}
+
+		this._imageLoadError = false; // Reset error state
+
+		this.image.forEach(imgEl => {
+			if (imgEl instanceof HTMLImageElement) {
+				imgEl.addEventListener("load", this._onImageLoadBound);
+				imgEl.addEventListener("error", this._onImageErrorBound);
+
+				// Handle already-loaded images
+				if (imgEl.complete && imgEl.naturalWidth === 0) {
+					this._onImageError(); // Already broken
+				} else if (imgEl.complete && imgEl.naturalWidth > 0) {
+					this._onImageLoad(); // Already loaded successfully
+				}
+			}
+		});
+	}
+
+	_detachImageErrorHandler() {
+		if (!this.image?.length) {
+			return;
+		}
+		this.image.forEach(imgEl => {
+			if (imgEl instanceof HTMLImageElement) {
+				imgEl.removeEventListener("load", this._onImageLoadBound);
+				imgEl.removeEventListener("error", this._onImageErrorBound);
+			}
+		});
+	}
+
+	_handleImages() {
+		this._detachImageErrorHandler(); // Clean up old listeners (if any)
+		this._attachImageErrorHandler(); // Attach new listeners
+	}
+
+	_onImageLoad = () => {
+		this._imageLoadError = false; // Sets error state
+	};
+
+	_onImageError() {
+		this._imageLoadError = true; // Clears error state
 	}
 }
 
