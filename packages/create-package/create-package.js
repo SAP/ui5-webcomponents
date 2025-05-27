@@ -4,7 +4,6 @@ import path, { dirname } from "path";
 import prompts from "prompts";
 import parser from "npm-config-user-agent-parser";
 import yargs from "yargs/yargs";
-import { globby } from "globby";
 import { hideBin } from "yargs/helpers";
 import { fileURLToPath } from "url";
 import * as prettier from "prettier";
@@ -18,7 +17,9 @@ const VERSION = JSON.parse(
 
 // Constants
 const SUPPORTED_TEST_SETUPS = ["cypress", "manual"];
-const SRC_DIR = "./template";
+const SRC_DIR = path.join(__dirname, "template");
+const DEST_DIR = process.cwd();
+
 const FILES_TO_RENAME = {
 	"eslintignore": ".eslintignore",
 	"eslintrc.cjs": ".eslintrc.cjs",
@@ -42,6 +43,21 @@ const isPackageNameValid = name =>
 const isTagValid = tag => typeof tag === "string" && TagPattern.test(tag);
 const isTestSetupValid = setup =>
 	typeof setup === "string" && SUPPORTED_TEST_SETUPS.includes(setup);
+
+async function collectFiles(dir, fileList = []) {
+	const entries = await fs.readdir(dir, { withFileTypes: true });
+
+	for (const entry of entries) {
+		const fullPath = path.join(dir, entry.name);
+		if (entry.isDirectory()) {
+			await collectFiles(fullPath, fileList);
+		} else if (entry.isFile()) {
+			fileList.push(fullPath);
+		}
+	}
+
+	return fileList;
+}
 
 /**
  * Hyphanates the given PascalCase string, f.e.:
@@ -90,8 +106,8 @@ const generateFilesContent = async (
 		? packageName.slice(packageName.lastIndexOf("/") + 1)
 		: packageName;
 	const destDir = skipSubfolder
-		? path.join(process.cwd())
-		: path.join(process.cwd(), packageBaseName);
+		? path.join(DEST_DIR)
+		: path.join(DEST_DIR, packageBaseName);
 
 	await processFiles(destDir, vars, testSetup);
 
@@ -111,7 +127,7 @@ const generateFilesContent = async (
 };
 
 async function processFiles(destDir, replacements, testSetup) {
-	const files = await globby(`${SRC_DIR}/**/*`);
+	const files = await collectFiles(SRC_DIR);
 	const FILE_PATHS_TO_SKIP = [
 		testSetup !== "cypress" ? "cypress" : undefined,
 	].filter(Boolean);
