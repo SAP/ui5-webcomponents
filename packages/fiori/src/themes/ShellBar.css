@@ -123,7 +123,7 @@ slot[name="profile"] {
 .ui5-shellbar-menu-button-title,
 .ui5-shellbar-title {
 	display: inline-block;
-	font-family: var(--sapFontSemiboldFamily);
+	font-family: var(--sapFontSemiboldDuplexFamily);
 	margin: 0;
 	font-size: var(--_ui5_shellbar_menu_button_title_font_size);
 	white-space: nowrap;
@@ -386,11 +386,6 @@ slot[name="profile"] {
 	margin-inline-start: 0.5rem;
 }
 
-.ui5-shellbar-overflow-container-right-child .ui5-shellbar-button[data-count]:has(+ .ui5-shellbar-overflow-button)::before {
-	inset-inline-end: var(--_ui5-shellbar-notification-btn-count-offset);
-}
-
-
 :host([breakpoint-size="S"]) .ui5-shellbar-overflow-container-right {
 	padding-inline-start: 0;
 }
@@ -408,44 +403,12 @@ slot[name="profile"] {
  	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
 }
 
-:host(:not([notifications-count])) .ui5-shellbar-bell-button {
-	position: relative;
+.ui5-shellbar-overflow-container-right-child .ui5-shellbar-bell-button [slot="badge"] {
+    inset-inline-end: var(--_ui5-shellbar-notification-btn-count-offset);
 }
 
-:host([notifications-count]:not([notifications-count=""])) .ui5-shellbar-bell-button::before,
-.ui5-shellbar-button[data-count]::before {
-	position: absolute;
-	width: auto;
-	height: 1rem;
-	min-width: 1rem;
-	background: var(--sapContent_BadgeBackground);
-	border: var(--_ui5_shellbar_button_badge_border);
-	color: var(--sapContent_BadgeTextColor);
-	top: -0.25rem;
-	right: -0.25rem;
-	padding: 0 0.3125rem;
-	border-radius: 0.5rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: var(--sapFontSmallSize);
-	font-family: "72override", var(--sapFontFamily);
-	z-index: 2;
-	box-sizing: border-box;
-}
-
-:host([notifications-count]:not([notifications-count=""])) .ui5-shellbar-bell-button::before {
-	content: attr(data-ui5-notifications-count);
-	inset-inline-end: var(--_ui5-shellbar-notification-btn-count-offset);
-}
-
-.ui5-shellbar-button[data-count]::before {
-	content: attr(data-count);
-}
-
-.ui5-shellbar-button[data-count=" "]::before {
-	height: 0.75rem;
-	min-width: 0.75rem;
+.ui5-shellbar-overflow-container-right-child .ui5-shellbar-custom-item [slot="badge"] {
+    inset-inline-end: var(--_ui5-shellbar-notification-btn-count-offset);
 }
 
 .ui5-shellbar-menu-button {
@@ -472,12 +435,12 @@ slot[name="profile"] {
 
 .ui5-shellbar-search-full-width-wrapper {
 	position: absolute;
-	top: 0;
+	bottom: 0.0625rem;
 	left: 0;
 	background: var(--sapShellColor);
 	height: 100%;
 	width: 100%;
-	z-index: 100;
+	z-index: 1001;
 	display: flex;
 	align-items: center;
 	box-sizing: border-box;

@@ -1,6 +1,5 @@
 import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/Button.js";
-import "@ui5/webcomponents/dist/Input.js";
 import "@ui5/webcomponents/dist/ListItemStandard.js";
 import "@ui5/webcomponents/dist/Popover.js";
 import "@ui5/webcomponents/dist/Title.js";
@@ -14,6 +13,10 @@ import "@ui5/webcomponents/dist/Link.js";
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";
+import "@ui5/webcomponents-fiori/dist/ShellBarSearch.js";
+import "@ui5/webcomponents-fiori/dist/SearchItem.js";
+import "@ui5/webcomponents-fiori/dist/SearchScope.js";
+
 import "@ui5/webcomponents-fiori/dist/NavigationLayout.js";
 import "@ui5/webcomponents-fiori/dist/SideNavigation.js";
 import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";
@@ -29,14 +32,21 @@ import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
 import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";
 import "@ui5/webcomponents-fiori/dist/illustrations/NoNotifications.js";
 
+import "@ui5/webcomponents-fiori/dist/UserMenu.js";
+import "@ui5/webcomponents-fiori/dist/UserMenuAccount.js";
+import "@ui5/webcomponents-fiori/dist/UserMenuItem.js";
+
+import "@ui5/webcomponents-icons/dist/globe.js";
+import "@ui5/webcomponents-icons/dist/collaborate.js";
+import "@ui5/webcomponents-icons/dist/official-service.js";
+import "@ui5/webcomponents-icons/dist/private.js";
+import "@ui5/webcomponents-icons/dist/accelerated.js";
+
 import "@ui5/webcomponents-icons/dist/da.js";
 import "@ui5/webcomponents-icons/dist/da-2.js";
 import "@ui5/webcomponents-icons/dist/menu2.js";
-import "@ui5/webcomponents-icons/dist/sys-find.js";
 import "@ui5/webcomponents-icons/dist/settings.js";
-import "@ui5/webcomponents-icons/dist/edit.js";
 import "@ui5/webcomponents-icons/dist/sys-help.js";
-import "@ui5/webcomponents-icons/dist/log.js";
 import "@ui5/webcomponents-icons/dist/home.js";
 import "@ui5/webcomponents-icons/dist/favorite-list.js";
 import "@ui5/webcomponents-icons/dist/account.js";
@@ -50,12 +60,6 @@ import "@ui5/webcomponents-icons/dist/sort.js"
 import "@ui5/webcomponents-icons/dist/expense-report.js";
 
 const shellbar = document.getElementById("shellbar");
-const actionPopover = document.getElementById("action-popover");
-
-shellbar.addEventListener("ui5-profile-click", (event) => {
-    actionPopover.opener = event.detail.targetRef;
-	actionPopover.open = true;
-});
 
 [...document.querySelectorAll("ui5-toggle-button")].forEach(el => {
 	el.addEventListener("click", event => {
@@ -195,3 +199,102 @@ btnOpenMenuSort.addEventListener("click", () => {
 	menu.open = true;
 });
 /* End Notifications */
+
+/* User Menu */
+const userMenu = document.getElementById("userMenu");
+
+shellbar.addEventListener("ui5-profile-click", (event) => {
+	userMenu.opener = event.detail.targetRef;
+	userMenu.open = true;
+});
+
+userMenu.addEventListener("item-click", function (event) {
+	const item = event.detail.item.getAttribute("data-id");
+
+	switch (item) {
+		case "setting":
+			console.log("Open Setting Dialog");
+			break;
+		case "privacy-policy":
+			console.log("Privacy Policy");
+			break;
+		case "terms-of-use":
+			console.log("Terms of Use");
+			break;
+		default:
+			console.log("Default");
+	}
+});
+
+userMenu.addEventListener("avatar-click", function () {
+	console.log("Avatar clicked");
+});
+
+userMenu.addEventListener("manage-account-click", function () {
+	console.log("Manage account clicked");
+});
+
+userMenu.addEventListener("edit-accounts-click", function () {
+	console.log("Edit accounts clicked");
+});
+
+userMenu.addEventListener("change-account", function (event) {
+	console.log("Change account account", event.detail);
+	event.detail.selectedAccount.loading = true;
+	setTimeout(function(){
+		event.detail.selectedAccount.loading = false;
+	}, 1000);
+});
+
+userMenu.addEventListener("sign-out-click", function (event) {
+	console.log("Sign Out clicked");
+
+	const result = prompt("Sign Out", "Are you sure you want to sign out?");
+	if (result) {
+		userMenu.open = false;
+	}
+	event.preventDefault();
+});
+/* End User Menu */
+
+/* Search */
+const scopeData = [
+    { name: "Laptop", scope: "products" },
+    { name: "Leave Requests", scope: "apps" },
+    { name: "Log work", scope: "apps" },
+    { name: "Manage Products", scope: "apps" },
+    { name: "Mobile Phones", scope: "products" },
+    { name: "Tablet", scope: "products" },
+];
+
+function createScopeItems(scope) {
+    let filterData = [];
+
+    if (!scope) {
+        filterData = scopeData;
+    } else {
+        filterData = scopeData.filter(item => item.scope === scope);
+    }
+
+    filterData.forEach(item => {
+        const searchItem = document.createElement("ui5-search-item");
+        searchItem.text = item.name;
+        searchItem.scopeName = item.scope;
+        searchScope.appendChild(searchItem);
+    });
+}
+
+const searchScope = document.getElementById("search-scope");
+
+createScopeItems();
+
+searchScope.addEventListener("ui5-scope-change", (event) => {
+    const scope = event.detail.scope.text === "All" ? "" : event.detail.scope.text.toLowerCase();
+    
+    searchScope.items.forEach(item => {
+        item.remove();
+    });
+
+    createScopeItems(scope);
+});
+/* End Search */

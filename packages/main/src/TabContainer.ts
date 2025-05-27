@@ -1019,13 +1019,13 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_getRootTab(tab: Tab | undefined) {
+	_getRootTab(tab: Tab | undefined): Tab | undefined {
 		while (tab?.hasAttribute("ui5-tab")) {
-			if (tab.parentElement!.hasAttribute("ui5-tabcontainer")) {
+			if (tab.parentElement?.hasAttribute("ui5-tabcontainer")) {
 				break;
 			}
 
-			tab = tab.parentElement as Tab;
+			tab = (tab.parentElement ?? undefined) as Tab | undefined;
 		}
 
 		return tab;
