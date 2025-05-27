@@ -128,10 +128,12 @@ For an example implementation, see [here](https://sap.github.io/ui5-webcomponent
 
 #### Growing Feature
 
-Alongside revamping the selection behavior, we've decided to improve and adapt the growing behavior as well. `TableGrowing` enables growing capabilities and provides to different
-growing modes: `Button`, which will render a button that needs to be clicked to load more data, and `Scroll`, which loads more data upon scrolling to the end of the table.
+In addtion to revamping the selection behavior, we've decided to improve and adapt the growing behavior as well. `TableGrowing` enables growing capabilities and provides two different
+growing modes:
+- `Button`: Renders a button to load more data
+- `Scroll`: Scroll to the bottom of the table to load more data
 
-A slight improvement has been made to the `Scroll` behavior: If the table is not scrollable yet, the growing button will be rendered until the table is scrollable. This will always ensure,
+We have slightly improved the `Scroll` behavior: If the table is not scrollable yet, the growing button will be rendered until the table is scrollable. This will always ensure,
 that the table offers its growing capabilities when using `TableGrowing`.
 
 You can check these samples to see implementations of both growing modes:
