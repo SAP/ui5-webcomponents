@@ -138,10 +138,10 @@
 	Designs:
 	<ui5-select id="sizeSelect">
 		<ui5-option>base</ui5-option>
-		<ui5-option>dot</ui5-option>
-		<ui5-option>spot</ui5-option>
-		<ui5-option>dialog</ui5-option>
-		<ui5-option selected>scene</ui5-option>
+		<ui5-option>extrasmall</ui5-option>
+		<ui5-option>small</ui5-option>
+		<ui5-option>medium</ui5-option>
+		<ui5-option selected>large</ui5-option>
 	</ui5-select>
 	<ui5-illustrated-message id="illustratedMsg1" class="border">
 		<ui5-button>Action 1</ui5-button>
@@ -215,13 +215,13 @@
 		const illustratedMessageContainer = document.getElementById("container");
 		const designs = {
 			base: 159,
-			dot: 259,
-			spot: 319,
-			dialog: 679,
-			scene: 1100,
+			extrasmall: 259,
+			small: 319,
+			medium: 679,
+			large: 1100,
 		}
 
-		illustratedMessage.style.width = `${designs.scene}px`;
+		illustratedMessage.style.width = `${designs.large}px`;
 
 		illustrationSelect.addEventListener("ui5-change", (event) => {
 			illustratedMessage.setAttribute("name", event.detail.selectedOption.textContent);
