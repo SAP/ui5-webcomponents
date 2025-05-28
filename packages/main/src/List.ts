@@ -403,6 +403,17 @@ class List extends UI5Element {
 	accessibleName?: string;
 
 	/**
+ 	* Defines the accessible name for the growing button.
+ 	* **Note:** If not specified, the growing button will use the `growingButtonText` as its accessible name.
+ 	* This property allows providing a more descriptive accessible name without changing the visual button text.
+ 	* @default undefined
+ 	* @since 2.10.0
+ 	* @public
+ 	*/
+	@property()
+	growingButtonAccessibleName?: string;
+
+	/**
 	 * Defines the IDs of the elements that label the component.
 	 * @default undefined
 	 * @public
