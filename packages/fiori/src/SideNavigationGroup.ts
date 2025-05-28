@@ -71,10 +71,10 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	static i18nBundle: I18nBundle;
 
 	onBeforeRendering() {
-        this.allItems.forEach(item => {
-            	item._groupDisabled = this.disabled;
-        });
-    }
+		this.allItems.forEach(item => {
+				item._groupDisabled = this.disabled;
+		});
+	}
 
 	get overflowItems() : Array<HTMLElement> {
 		const separator1 = this.shadowRoot!.querySelector<HTMLElement>(".ui5-sn-item-separator:first-child")!;

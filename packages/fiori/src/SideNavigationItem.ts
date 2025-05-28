@@ -82,7 +82,6 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
-
 	onBeforeRendering() {
 		this.items.forEach(item => {
 			item._parentDisabled = this.effectiveDisabled;

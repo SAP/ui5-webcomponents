@@ -97,7 +97,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	get effectiveDisabled() {
-    	return this.disabled;
+		return this.disabled;
 	}
 
 	get classesArray() {
