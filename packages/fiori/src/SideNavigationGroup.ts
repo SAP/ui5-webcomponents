@@ -72,7 +72,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 	onBeforeRendering() {
 		this.allItems.forEach(item => {
-				item._groupDisabled = this.disabled;
+			item._groupDisabled = this.disabled;
 		});
 	}
 
