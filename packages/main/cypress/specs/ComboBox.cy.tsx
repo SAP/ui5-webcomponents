@@ -89,7 +89,7 @@ describe("Keyboard interaction", () => {
 	});
 });
 
-describe("Keyboard interaction when Ctrl + Alt + F8 navigation", () => {
+describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", () => {
 	beforeEach(() => {
 		cy.mount(<>
 			<ComboBox valueState="Negative">
@@ -103,7 +103,7 @@ describe("Keyboard interaction when Ctrl + Alt + F8 navigation", () => {
 			<Input id="nextInput" class="input2auto" placeholder="Next input"></Input>
 		</>);
 	});
-	it("Should moves focus from the comboBox to the first link in value state message", () => {
+	it("Should move the focus from the ComboBox to the first link in the value state message", () => {
 		cy.get("ui5-combobox")
 			.shadow()
 			.find("input")
@@ -129,7 +129,7 @@ describe("Keyboard interaction when Ctrl + Alt + F8 navigation", () => {
 			.eq(0)
 			.should("have.focus");
 	});
-	it("When press [Tab] then move the focus to the next value state message link then on [Tab] close popup and move to the next input", () => {
+	it("When pressing [Tab], the focus moves to the next value state message link. Pressing [Tab] again closes the popup and moves the focus to the next input", () => {
 		cy.get("ui5-combobox")
 			.shadow()
 			.find("input")
@@ -173,7 +173,7 @@ describe("Keyboard interaction when Ctrl + Alt + F8 navigation", () => {
 		cy.get("@input")
 			.should("have.focus");
 	});
-	it("When pressing [SHIFT+TAB] moves focus from the second link to the first and when pressing again to the comboBox", () => {
+	it("Pressing [Shift+Tab] moves the focus from the second value state message link to the first. Pressing it again shifts the focus to the ComboBox", () => {
 		cy.get("ui5-combobox")
 			.shadow()
 			.find("input")
@@ -221,7 +221,7 @@ describe("Keyboard interaction when Ctrl + Alt + F8 navigation", () => {
 			.should("have.focus");
 
 	});
-	it("When press [ArrowDown] after focus is in the first value state message link and suggestions are open, to the next suggestion item ", () => {
+	it("When pressing [Down Arrow] while focused on the first value state message link and suggestions are open, the focus moves to the next suggestion item", () => {
 		cy.get("ui5-combobox")
 			.shadow()
 			.find("input")

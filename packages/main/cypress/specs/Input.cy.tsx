@@ -631,7 +631,7 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 			</div>
 		</Input>);
 	});
-	it("Should moves focus from the input to the first value state message link", () => {
+	it("Should move the focus from the input to the first link in the value state message", () => {
 		cy.get("ui5-input")
 			.shadow()
 			.find("input")
@@ -656,7 +656,7 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 		cy.get("ui5-link")
 			.should("have.focus");
 	});
-	it("When press [Tab] then move the focus to the next value state message link then on [Tab] close popup and move to the next input", () => {
+	it("When pressing [Tab], the focus moves to the next value state message link. Pressing [Tab] again closes the popup and moves the focus to the next input", () => {
 		cy.mount(<>
 			<Input id="inputError" class="input2auto" valueState="Negative" placeholder="Input in error state">
 				<div slot="valueStateMessage">
@@ -712,7 +712,7 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 		cy.get("@secondInput")
 			.should("have.focus");
 	});
-	it("When pressing [SHIFT+TAB] moves focus from the second value state link to the first and when pressing again to the input", () => {
+	it("Pressing [Shift+Tab] moves the focus from the second value state message link to the first one. Pressing it again shifts the focus to the input", () => {
 		cy.mount(<Input id="inputError" class="input2auto" valueState="Negative" placeholder="Input in error state">
 			<div slot="valueStateMessage">
 				Custom error value state message with a <Link href="#">First Link</Link> <Link href="#">Second Link</Link>.
@@ -767,7 +767,7 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 			.should("have.focus");
 
 	});
-	it("When press [ArrowDown] after focus is in the first value state message link and suggestions are open, to the next suggestion item ", () => {
+	it("When pressing [Down Arrow] while focused on the first value state message link and suggestions are open, the focus moves to the next suggestion item", () => {
 		cy.mount(
 			<Input id="myInputEsc" showSuggestions valueState="Critical" class="input3auto">
 				<div slot="valueStateMessage">
