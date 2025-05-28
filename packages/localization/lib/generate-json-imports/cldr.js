@@ -4,7 +4,7 @@ import assets from "@ui5/webcomponents-tools/assets-meta.js";
 const allLocales = assets.locales.all;
 
 const caseDynamicImports = allLocales.map(locale => `\t\tcase "${locale}": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-${locale}" */ "../assets/cldr/${locale}.json")).default;`).join("\n");
-const caseDynamicImportJSONAssert = allLocales.map(locale => `\t\tcase "${locale}": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-${locale}" */ "../assets/cldr/${locale}.json", {with: { type: 'json'}})).default;`).join("\n");
+const caseDynamicImportJSONAttr = allLocales.map(locale => `\t\tcase "${locale}": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-${locale}" */ "../assets/cldr/${locale}.json", {with: { type: 'json'}})).default;`).join("\n");
 const caseFetchMetaResolve = allLocales.map(locale => `\t\tcase "${locale}": return (await fetch(new URL("../assets/cldr/${locale}.json", import.meta.url))).json();`).join("\n");
 const localesKeysStrArray = allLocales.map(_ => `"${_}"`).join(",");
 
@@ -38,7 +38,7 @@ const generate = async () => {
 	return Promise.all([
 		fs.writeFile("src/generated/json-imports/LocaleData.ts", contentDynamic(caseDynamicImports)),
 		fs.writeFile("src/generated/json-imports/LocaleData-fetch.ts", contentDynamic(caseFetchMetaResolve)),
-		fs.writeFile("src/generated/json-imports/LocaleData-json-import.ts", contentDynamic(caseDynamicImportJSONAssert)),
+		fs.writeFile("src/generated/json-imports/LocaleData-node.ts", contentDynamic(caseDynamicImportJSONAttr)),
 	]);
 }
 
