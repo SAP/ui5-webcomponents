@@ -625,13 +625,17 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	/**
 	 * Indicates whether link navigation is being handled.
+	 * @default false
 	 * @private
+	 * @since 2.10.0
 	 */
 	_handleLinkNavigation: boolean = false;
 
 	/**
 	 * Stores the array of links in the value state hidden text.
+	 * @default []
 	 * @private
+	 * @since 2.10.0
 	 */
 	_linkArray: Array<HTMLElement> = [];
 
@@ -911,64 +915,60 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._linkArray = this.linksInAriaValueStateHiddenText;
 		if (this._linkArray.length) {
 			this._linkArray.forEach(link => {
-				link.addEventListener("keydown", e => {
-					const currentIndex = this._linkArray.indexOf(link);
-					if (isTabNext(e)) {
-						e.stopImmediatePropagation();
-						if (this._handleLinkNavigation && currentIndex !== this._linkArray.length - 1) {
-							e.preventDefault();
-							this._linkArray[currentIndex + 1].focus();
-						} else {
-							this._handleLinkNavigation = false;
-							if (this.Suggestions?.isOpened()) {
-								this.Suggestions?.close();
-							} else {
-								this.closeValueStatePopover();
-							}
-							this.getInputDOMRef()!.focus();
-						}
-					}
-
-					if (isTabPrevious(e) && this._handleLinkNavigation) {
-						e.preventDefault();
-						e.stopImmediatePropagation();
-						if (currentIndex > 0) {
-							this._linkArray[currentIndex - 1].focus();
-						} else {
-							this._handleLinkNavigation = false;
-							this.getInputDOMRef()!.focus();
-						}
-					}
-					if (isDown(e) || isUp(e)) {
-						e.preventDefault();
-					}
-
-					if (isDown(e)) {
-						const hasSuggestions = this.showSuggestions && !!this.Suggestions;
-						if (this._handleLinkNavigation) {
-							this._handleLinkNavigation = false;
-							const isOpen = hasSuggestions && this.open;
-							if (hasSuggestions && isOpen) {
-								this._handleLinkNavigationDown(e);
-							}
-						} else {
-							this._handleDown(e);
-						}
-					}
-				 });
+				link.removeEventListener("keydown", e => this._linkNavigationEventListener(e, link));
+				link.addEventListener("keydown", e => this._linkNavigationEventListener(e, link));
 			});
 			this._linkArray[0].focus();
 		}
 	}
 
-	_handleLinkNavigationDown(e: KeyboardEvent) {
-		this._handleLinkNavigation = false;
-		if (this.Suggestions?.isOpened()) {
-			this.innerFocusIn();
-			(this.getInputDOMRef())!.focus();
-			this.Suggestions.onDown(e, this.currentItemIndex + 1);
+	_linkNavigationEventListener(e: KeyboardEvent, link: HTMLElement) {
+		const currentIndex = this._linkArray.indexOf(link);
+		if (isTabNext(e)) {
+			e.stopImmediatePropagation();
+			if (this._handleLinkNavigation && currentIndex !== this._linkArray.length - 1) {
+				e.preventDefault();
+				this._linkArray[currentIndex + 1].focus();
+			} else {
+				this._handleLinkNavigation = false;
+				if (this.Suggestions?.isOpened()) {
+					this.Suggestions?.close();
+				} else {
+					this.closeValueStatePopover();
+				}
+				this.getInputDOMRef()!.focus();
+			}
 		}
-	}
+
+		if (isTabPrevious(e) && this._handleLinkNavigation) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			if (currentIndex > 0) {
+				this._linkArray[currentIndex - 1].focus();
+			} else {
+				this._handleLinkNavigation = false;
+				this.getInputDOMRef()!.focus();
+			}
+		}
+
+		if (isDown(e) || isUp(e)) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		}
+
+		if (isDown(e)) {
+			if (this._handleLinkNavigation) {
+				this._handleLinkNavigation = false;
+				if (this.Suggestions?.isOpened()) {
+					this.innerFocusIn();
+					(this.getInputDOMRef())!.focus();
+					this.Suggestions.onDown(e, this.currentItemIndex);
+				}
+			} else {
+				this._handleDown(e);
+			}
+		}
+	 }
 
 	_handleEnter(e: KeyboardEvent) {
 		// if a group item is focused, this is false
