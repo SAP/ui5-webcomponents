@@ -187,7 +187,6 @@ class DynamicDateRange extends UI5Element {
 
 	@query("[ui5-list]")
 	_list?: List;
-	private _lastOpenedOption: any;
 
 	onBeforeRendering() {
 		const optionKeys = this.options.split(",").map(option => option.trim());
@@ -202,6 +201,12 @@ class DynamicDateRange extends UI5Element {
 
 			return optionObject;
 		}).filter(optionObject => optionObject !== undefined);
+
+		// here, we should "normalize" the array of optionobjects and merge the options with the same constructor.
+		// then pass those options to this constructor with additional method.
+		// example: if we have LASTDAYS and LASTWEEKS, we should merge them into one optionObject, passing both as arguments to the constructor or with additional method.
+		// again, we should just check for same constructor, not for the same operator, because we can have different operators with the same constructor.
+		// and the dynamic date range should not care about the options, so no checks for "last" or "next" should be done here.
 
 		if (this.value) {
 			const selectedItem = this._list?.items.find(item => {
