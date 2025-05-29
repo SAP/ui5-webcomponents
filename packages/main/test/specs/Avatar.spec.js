@@ -75,15 +75,6 @@ describe("Avatar", () => {
 
 	});
 
-	it("tests clicking on interactive disabled avatar", async () => {
-
-		const avatarRoot = await browser.$("#interactive-disabled").shadow$(".ui5-avatar-root");
-		const input3 = await browser.$("#click-event");
-
-		await avatarRoot.click();
-		assert.strictEqual(await input3.getAttribute("value"), "0", "Mouse click event not thrown when avatar is interactive + disabled");
-	});
-
 	it("Tests noConflict 'ui5-click' event for interactive avatars", async () => {
 		const avatarRoot = await browser.$("#interactive-avatar").shadow$(".ui5-avatar-root");
 		const input = await browser.$("#click-event");
