@@ -9,39 +9,37 @@
     <link rel="stylesheet" href="./main.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);height: 400px;">
+<body style="background-color: var(--sapBackgroundColor);height: 500px;">
     <!-- playground-fold-end -->
 
-    <ui5-shellbar id="shellbar" primary-title="Corporate Portal" secondary-title="secondary title"
-        notifications-count="99+" show-notifications="">
+    <ui5-shellbar id="shellbar" primary-title="Corporate Portal" notifications-count="99+" show-notifications>
         <ui5-avatar slot="profile">
             <img src="../assets/images/avatars/woman_avatar_5.png" />
         </ui5-avatar>
 		<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
         <img slot="logo" src="../assets/images/sap-logo-svg.svg" />
         <ui5-button icon="nav-back" slot="startButton"></ui5-button>
-
-        <ui5-input slot="searchField"></ui5-input>
-        <ui5-li slot="menuItems">Application 1</ui5-li>
-        <ui5-li slot="menuItems">Application 2</ui5-li>
-        <ui5-li slot="menuItems">Application 3</ui5-li>
-        <ui5-li slot="menuItems">Application 4</ui5-li>
-        <ui5-li slot="menuItems">Application 5</ui5-li>
+        <ui5-shellbar-search slot="searchField" id="search-scope" show-clear-icon placeholder="Search Apps, Products">
+			<ui5-search-scope text="All" selected slot="scopes"></ui5-search-scope>
+			<ui5-search-scope text="Apps" slot="scopes"></ui5-search-scope>
+			<ui5-search-scope text="Products" slot="scopes"></ui5-search-scope>
+		</ui5-shellbar-search>
     </ui5-shellbar>
-    <ui5-popover id="action-popover" placement="Bottom">
-        <div class="action-popover-header">
-            <ui5-title style="padding: 0.25rem 1rem 0rem 1rem">An Kimura</ui5-title>
-        </div>
-        <div class="action-popover-content" style="margin-top: 1rem;">
-            <ui5-list separators="None">
-                <ui5-li icon="sys-find">App Finder</ui5-li>
-                <ui5-li icon="settings">Settings</ui5-li>
-                <ui5-li icon="edit">Edit Home Page</ui5-li>
-                <ui5-li icon="sys-help">Help</ui5-li>
-                <ui5-li icon="log">Sign out</ui5-li>
-            </ui5-list>
-        </div>
-    </ui5-popover>
+    <ui5-user-menu id="userMenu" opener="btnOpenUserMenu">
+        <ui5-user-menu-account slot="accounts"
+                               avatar-src="../assets/images/avatars/man_avatar_3.png"
+                               title-text="Alaina Chevalier"
+                               subtitle-text="aliana.chevalier@sap.com"
+                               description="Delivery Manager"
+                               selected>
+        </ui5-user-menu-account>
+        <ui5-user-menu-item icon="action-settings" text="Setting" data-id="setting"></ui5-user-menu-item>
+        <ui5-user-menu-item icon="official-service" text="Legal Information">
+            <ui5-user-menu-item text="Terms of Use" data-id="terms-of-use"></ui5-user-menu-item>
+            <ui5-user-menu-item text="Privacy Policy" data-id="privacy-policy"></ui5-user-menu-item>
+        </ui5-user-menu-item>
+        <ui5-user-menu-item icon="message-information" text="About" data-id="about"></ui5-user-menu-item>
+    </ui5-user-menu>
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>
 </body>

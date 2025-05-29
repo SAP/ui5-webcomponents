@@ -1,13 +1,13 @@
 /* container */
-:host {
-	--_ui5_input_focus_border_radius: var(--_ui5_search_input_border_radius);
-	--_ui5_input_focus_outline_color: var(--sapContent_FocusColor);
+:host,
+.ui5-shellbar-search-field-wrapper {
 	height: 2.25rem;
 	display: flex;
 	align-items: center;
 }
 
-:host([expanded]) {
+:host(:not([collapsed])),
+.ui5-shellbar-search-field-wrapper {
 	min-width: 18rem;
 	max-width: 36rem;
 	margin: 0;
@@ -25,8 +25,14 @@
 	position: relative;
 }
 
-:host([expanded]:hover),
-:host([expanded]:focus-within) {
+.ui5-shellbar-search-field-wrapper {
+	flex: 1;
+	min-width: auto;
+}
+
+:host(:not([collapsed]):hover),
+:host(:not([collapsed]):focus-within),
+.ui5-shellbar-search-field-wrapper:focus-within {
 	box-shadow: var(--sapField_Hover_Shadow);
 	background: var(--_ui5-search-wrapper-hover-background);
 	background-color: var(--_ui5-search-wrapper-hover-background-color);
@@ -97,6 +103,34 @@
 
 [ui5-select]::part(popover) {
 	background-color: var(--sapShellColor);
+}
+
+.ui5-advanced-wrapper {
+	--_ui5_button_focused_border_radius: var(--_ui5_search_advanced_button_border_radius);
+}
+
+/* advanced filter slot */
+::slotted([slot="advancedFilter"]) {
+	min-width: var(--_ui5_search_icon_size);
+	height: var(--_ui5_search_icon_size);
+	border: var(--_ui5_search_advanced_button_border);
+	border-radius: var(--_ui5_search_advanced_button_border_radius);
+	color: var(--sapShell_InteractiveTextColor);
+	outline: none;
+	background: var(--_ui5-search-advanced_button_background_color);
+	box-sizing: border-box;
+	margin-inline-end: 0.1875rem;
+	margin-inline-start: 0.25rem;
+}
+
+::slotted([slot="advancedFilter"]:focus-within) {
+	background-color: var(--ui5_search_advanced_button_background_active);
+	border: var(--_ui5_search_advanced_button_border);
+}
+
+::slotted([slot="advancedFilter"]:hover) {
+	background-color: var(--sapShell_Hover_Background);
+	border: var(--_ui5_seach_advanced_button_border_hover);
 }
 
 /* input */
@@ -232,4 +266,8 @@
 	background-color: var(--sapButton_Emphasized_Background);
 	border-color: var(--sapButton_Emphasized_BorderColor);
 	color: var(--sapButton_Emphasized_TextColor);
+}
+
+.ui5-search-field-select {
+	--_ui5_input_focus_border_radius: var(--_ui5_search_input_border_radius);
 }

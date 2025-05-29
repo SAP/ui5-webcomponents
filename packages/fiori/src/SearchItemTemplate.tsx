@@ -11,6 +11,8 @@ export default function SearchFieldTemplate(this: SearchItem) {
 		<li
 			part="native-li"
 			class="ui5-li-root ui5-li--focusable"
+			aria-selected={this.selected}
+			role="option"
 			data-sap-focus-ref
 			draggable={this.movable}
 			tabindex={this._effectiveTabIndex}
@@ -22,6 +24,10 @@ export default function SearchFieldTemplate(this: SearchItem) {
 		>
 			<div part="content" class="ui5-search-item-content">
 				<div class="ui5-search-item-begin-content">
+					{this.image.length > 0 && !this.icon &&
+						<slot name="image"></slot>
+					}
+
 					{this.icon &&
 						<Icon class="ui5-search-item-icon" name={this.icon}></Icon>
 					}
@@ -33,7 +39,9 @@ export default function SearchFieldTemplate(this: SearchItem) {
 					}
 
 					<div class="ui5-search-item-titles-container">
-						<span part="title" class="ui5-search-item-heading" dangerouslySetInnerHTML={{ __html: this._markupText }}></span>
+						<span part="title" class="ui5-search-item-text" dangerouslySetInnerHTML={{ __html: this._markupText }}></span>
+
+						<span part="subtitle" class="ui5-search-item-description">{this.description}</span>
 					</div>
 					{this.selected &&
 						<Button class="ui5-search-item-selected-delete" design={ButtonDesign.Transparent} icon={decline} onClick={this._onDeleteButtonClick}></Button>

@@ -6,6 +6,13 @@ import {
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type SideNavigation from "./SideNavigation.js";
 
+type SideNavigationItemClickEventDetail = {
+	altKey: boolean;
+	ctrlKey: boolean;
+	metaKey: boolean;
+	shiftKey: boolean;
+}
+
 /**
  * @class
  * Base class for the items that are accepted by the `ui5-side-navigation` component.
@@ -18,7 +25,7 @@ import type SideNavigation from "./SideNavigation.js";
  */
 class SideNavigationItemBase extends UI5Element implements ITabbable {
 	eventDetails!: {
-		click: void
+		click: SideNavigationItemClickEventDetail
 	}
 
 	/**
@@ -45,7 +52,9 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	/**
 	 * Defines the tooltip of the component.
 	 *
-	 * A tooltip attribute should be provided, in order to represent meaning/function, when the component is collapsed(icon only is visualized).
+	 * A tooltip attribute should be provided, in order to represent meaning/function,
+	 * when the component is collapsed ("icon only" design is visualized) or the item text is truncated.
+	 *
 	 * @default undefined
 	 * @public
 	 * @since 2.0.0
@@ -72,6 +81,10 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 
 	get _tooltip() {
 		return this.tooltip || undefined;
+	}
+
+	get hasSubItems() {
+		return false;
 	}
 
 	get classesArray() {
@@ -137,4 +150,7 @@ const isInstanceOfSideNavigationItemBase = (object: any): object is SideNavigati
 };
 
 export default SideNavigationItemBase;
+export type {
+	SideNavigationItemClickEventDetail,
+};
 export { isInstanceOfSideNavigationItemBase };

@@ -8,48 +8,48 @@ function Sample() {
 			title-text="Group 1"
 			id="group1"
 			growing="Button">
-			<NotificationListItem id="item11" show-close>
+			<NotificationListItem id="item11" showClose>
 				Group 1 Item 1
 			</NotificationListItem>
-			<NotificationListItem show-close>
+			<NotificationListItem showClose>
 				Group 1 Item 2
 			</NotificationListItem>
-			<NotificationListItem show-close>
+			<NotificationListItem showClose>
 				Group 1 Item 3
 			</NotificationListItem>
-			<NotificationListItem id="item1last" show-close>
+			<NotificationListItem id="item1last" showClose>
 				Group 1 Item 4
 			</NotificationListItem>
 		</NotificationListGroupItem>
 		<NotificationListGroupItem
 			id="group2"
 			title-text="Group 2">
-			<NotificationListItem id="item21" show-close>
+			<NotificationListItem id="item21" showClose>
 				Group 2 Item 1
 			</NotificationListItem>
-			<NotificationListItem show-close>
+			<NotificationListItem showClose>
 				Group 2 Item 2
 			</NotificationListItem>
-			<NotificationListItem show-close>
+			<NotificationListItem showClose>
 				Group 2 Item 3
 			</NotificationListItem>
-			<NotificationListItem id="item2last" show-close>
+			<NotificationListItem id="item2last" showClose>
 				Group 2 Item 4
 			</NotificationListItem>
 		</NotificationListGroupItem>
 		<NotificationListGroupItem
 			growing="Button"
 			title-text="Group 3">
-			<NotificationListItem show-close>
+			<NotificationListItem showClose>
 				Group 3 Item 1
 			</NotificationListItem>
-			<NotificationListItem show-close>
+			<NotificationListItem showClose>
 				Group 3 Item 2
 			</NotificationListItem>
-			<NotificationListItem show-close>
+			<NotificationListItem showClose>
 				Group 3 Item 3
 			</NotificationListItem>
-			<NotificationListItem show-close>
+			<NotificationListItem showClose>
 				Group 3 Item 4
 			</NotificationListItem>
 		</NotificationListGroupItem>

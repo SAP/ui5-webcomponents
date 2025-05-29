@@ -3,6 +3,124 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.2...v2.11.0-rc.3) (2025-05-29)
+
+
+### Features
+
+* **ui5-search-field:** introduce advanced filtering ([#11428](https://github.com/SAP/ui5-webcomponents/issues/11428)) ([bf8a158](https://github.com/SAP/ui5-webcomponents/commit/bf8a158d493cd7472938a66e2fe22d6091467be9))
+* **ui5-search-item:** byline item support ([#11503](https://github.com/SAP/ui5-webcomponents/issues/11503)) ([d8aec50](https://github.com/SAP/ui5-webcomponents/commit/d8aec50480222572df589c47df693d06e2887837))
+* **ui5-table:** behavior property added for selections ([#11520](https://github.com/SAP/ui5-webcomponents/issues/11520)) ([56b113b](https://github.com/SAP/ui5-webcomponents/commit/56b113bee378db91e8df69cbf6b4dd0bb903dad5)), closes [#10893](https://github.com/SAP/ui5-webcomponents/issues/10893) [#10893](https://github.com/SAP/ui5-webcomponents/issues/10893)
+
+
+
+
+
+# [2.11.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.1...v2.11.0-rc.2) (2025-05-22)
+
+**Note:** Version bump only for package @ui5/webcomponents-website
+
+
+
+
+
+# [2.11.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.0...v2.11.0-rc.1) (2025-05-15)
+
+
+### Features
+
+* **ui5-bar:** allow role change ([#11134](https://github.com/SAP/ui5-webcomponents/issues/11134)) ([db49d09](https://github.com/SAP/ui5-webcomponents/commit/db49d099e9f3a882d0fee403bf96a022b3223484)), closes [#10990](https://github.com/SAP/ui5-webcomponents/issues/10990)
+
+
+
+
+
+# [2.11.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0...v2.11.0-rc.0) (2025-05-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-website
+
+
+
+
+
+# [2.10.0](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.3...v2.10.0) (2025-05-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-website
+
+
+
+
+
+# [2.10.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.2...v2.10.0-rc.3) (2025-05-01)
+
+
+### Features
+
+* **ui5-shellbar-search:** initial implementation ([#11398](https://github.com/SAP/ui5-webcomponents/issues/11398)) ([ca372d0](https://github.com/SAP/ui5-webcomponents/commit/ca372d0f4fa5a97ce82f3eb72d973ee2f0d54c0b))
+
+
+
+
+
+# [2.10.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.1...v2.10.0-rc.2) (2025-04-24)
+
+
+### Bug Fixes
+
+* **ui5-table:** fixes noData slot issue ([#11397](https://github.com/SAP/ui5-webcomponents/issues/11397)) ([1dda953](https://github.com/SAP/ui5-webcomponents/commit/1dda953a79a0d404b71e0fba88b6de8478520b03))
+
+
+
+
+
+# [2.10.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.0...v2.10.0-rc.1) (2025-04-17)
+
+
+### Features
+
+* **ui5-li:** add text wrapping support ([#11108](https://github.com/SAP/ui5-webcomponents/issues/11108)) ([22d7d2f](https://github.com/SAP/ui5-webcomponents/commit/22d7d2f8264bcf908279b1feaff0e114f99d350f))
+* **ui5-menu:** introduce HorizontalAlign property ([#11313](https://github.com/SAP/ui5-webcomponents/issues/11313)) ([7a287a1](https://github.com/SAP/ui5-webcomponents/commit/7a287a1098c080c93f409e6685ebfd9f8017ab1e)), closes [#10765](https://github.com/SAP/ui5-webcomponents/issues/10765)
+* **ui5-table:** improve default column widths ([#11078](https://github.com/SAP/ui5-webcomponents/issues/11078)) ([1ec0be6](https://github.com/SAP/ui5-webcomponents/commit/1ec0be669633b2667222385674e6e602e08f580c))
+
+
+
+
+
+# [2.10.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.1-rc.0...v2.10.0-rc.0) (2025-04-14)
+
+
+### Features
+
+* **ui5-tree-item:** image slot added ([#11106](https://github.com/SAP/ui5-webcomponents/issues/11106)) ([4d972c8](https://github.com/SAP/ui5-webcomponents/commit/4d972c8578395f2ebe4a2188397dd57cb581294d)), closes [#7481](https://github.com/SAP/ui5-webcomponents/issues/7481)
+
+
+
+
+
+## [2.9.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0...v2.9.1-rc.0) (2025-04-10)
+
+**Note:** Version bump only for package @ui5/webcomponents-website
+
+
+
+
+
+# [2.9.0](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.3...v2.9.0) (2025-04-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-website
+
+
+
+
+
+# [2.9.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.2...v2.9.0-rc.3) (2025-04-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-website
+
+
+
+
+
 # [2.9.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.9.0-rc.1...v2.9.0-rc.2) (2025-03-27)
 
 

@@ -3,6 +3,40 @@ import Toolbar from "../../src/Toolbar.js";
 import Popover from "../../src/Popover.js";
 import Button from "../../src/Button.js";
 
+describe("Rendering", () => {
+	it("tests arrow positioning", () => {
+		cy.mount(
+			<>
+				<div id="icon1" tabindex="0" style="width: 10px; height: 10px; background:red;"></div>
+				<Popover id="popup"
+						 opener="icon1"
+						 headerText="Newsletter subscription"
+						 placement="End"
+						 verticalAlign="Top">
+					<Button id="btnClosePopover">Close</Button>
+				</Popover>
+			</>
+		);
+
+		// act
+		cy.get("#popup")
+			.invoke("prop", "open", "true");
+
+		cy.get("#popup")
+			.ui5PopoverOpened();
+
+		cy.get("#popup")
+			.shadow()
+			.find(".ui5-popover-arrow")
+			.should("be.visible");
+
+		cy.get("#popup")
+			.shadow()
+			.find(".ui5-popover-arrow")
+			.should("have.css", "transform", "matrix(1, 0, 0, 1, 0, -42)");
+	});
+});
+
 describe("Popover opener", () => {
 	it("tests 'opener' set as string of abstract element's ID ", () => {
 		cy.mount(
@@ -110,7 +144,7 @@ describe("Popover opener", () => {
 		});
 
 		cy.get("#popover")
-			.should("be.visible");
+			.ui5PopoverOpened();
 
 		cy.get("@showOutsideViewport")
 			.should("have.been.calledOnce");
@@ -129,7 +163,7 @@ describe("Popover interaction", () => {
 				</>
 			);
 
-			cy.get("#pop").should("be.visible");
+			cy.get("#pop").ui5PopoverOpened();
 
 			// act
 			cy.get("body").realClick();
@@ -148,13 +182,13 @@ describe("Popover interaction", () => {
 				</>
 			);
 
-			cy.get("#pop").should("be.visible");
+			cy.get("#pop").ui5PopoverOpened();
 
 			// act
 			cy.get("#opener").realClick();
 
 			// assert
-			cy.get("#pop").should("be.visible");
+			cy.get("#pop").ui5PopoverOpened();
 		});
 
 		it("tests clicking on the opener if both the popover and the opener are located in a shadow root", () => {
@@ -197,13 +231,13 @@ describe("Popover interaction", () => {
 			);
 
 			// assert
-			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").should("be.visible");
+			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").ui5PopoverOpened();
 
 			// act
 			cy.get("#openerShadowRooTest").shadow().find("button").realClick();
 
 			// assert
-			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").should("be.visible");
+			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").ui5PopoverOpened();
 		});
 
 		it("tests clicking outside the popover when 'mousedown' event propagation is stopped", () => {
@@ -217,7 +251,7 @@ describe("Popover interaction", () => {
 				</>
 			);
 
-			cy.get("#pop").should("be.visible");
+			cy.get("#pop").ui5PopoverOpened();
 			cy.get("#btn").then(btn => {
 				btn.get(0).addEventListener("mousedown", event => {
 					event.stopPropagation();
@@ -334,7 +368,7 @@ describe("Events", () => {
 			.invoke("prop", "open", true);
 
 		cy.get("#popoverId")
-			.should("be.visible");
+			.ui5PopoverOpened();
 	});
 
 	it("before-close", () => {
@@ -356,7 +390,7 @@ describe("Events", () => {
 			.invoke("prop", "open", true);
 
 		cy.get("#popoverId")
-			.should("be.visible");
+			.ui5PopoverOpened();
 
 		const preventDefault = (e : Event) => {
 			e.preventDefault();
@@ -370,7 +404,7 @@ describe("Events", () => {
 			.invoke("prop", "open", false);
 
 		cy.get("#popoverId")
-			.should("be.visible");
+			.ui5PopoverOpened();
 
 		cy.get("#popoverId").then($popover => {
 			$popover.get(0).removeEventListener("before-close", preventDefault);

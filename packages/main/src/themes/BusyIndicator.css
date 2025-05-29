@@ -94,8 +94,8 @@
 	border-radius: inherit;
 }
 
-:host(:not(:empty)) .ui5-busy-indicator-busy-area {
-	background-color: var(--_ui5_busy_indicator_block_layer);
+:host([active]) ::slotted(*) {
+	opacity: var(--sapContent_DisabledOpacity);	
 }
 
 :host([desktop]) .ui5-busy-indicator-busy-area:focus,
