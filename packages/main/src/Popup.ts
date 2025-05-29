@@ -293,7 +293,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	async openPopup() {
-		if (this._opened || !this._fullyConnected) {
+		if (this._opened) {
 			return;
 		}
 
@@ -446,7 +446,7 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	async applyInitialFocus() {
-		if (!this.preventInitialFocus) {
+		if (!this.hasAttribute("prevent-initial-focus")) {
 			await this.applyFocus();
 		}
 	}
