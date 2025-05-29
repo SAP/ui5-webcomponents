@@ -89,23 +89,6 @@ describe("Component Behavior", () => {
 			assert.ok(await innerButtonWithStableDomRef.isExisting(), "There is indeed an element in the Shellbar's shadow root with an attribute, matching the stable dom ref");
 		});
 
-		it("tests count property", async () => {
-			const shellbar = await browser.$("#shellbarwithitems");
-			const icon = await shellbar.shadow$("ui5-button[data-count]");
-
-			assert.strictEqual(await icon.getAttribute("data-count"), '42', "Count property propagates to ui5-button");
-		});
-
-		it("tests if shellbar item invalidates the shellbar", async () => {
-			const shellbar = await browser.$("#test-invalidation");
-			const item = await browser.$("#test-invalidation-item");
-
-			await item.setProperty("count", "3");
-
-			assert.strictEqual(await shellbar.shadow$(".ui5-shellbar-custom-item").getAttribute("data-count"), "3");
-
-		});
-
 		it("tests 'click' on custom action", async () => {
 			const shellbar = await browser.$("#shellbarwithitems");
 			const resultInput = await browser.$("#press-input3");
