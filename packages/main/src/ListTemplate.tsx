@@ -12,8 +12,8 @@ export default function ListTemplate(this: List) {
 			onDragOver={this._ondragover}
 			onDrop={this._ondrop}
 			onDragLeave={this._ondragleave}
+			onDragStart={this._ondragstart}
 			// events bubbling from slotted items
-			onui5-move-start={this.onItemMoveStart}
 			onui5-close={this.onItemClose}
 			onui5-toggle={this.onItemToggle}
 			onui5-request-tabindex-change={this.onItemTabIndexChange}
@@ -54,7 +54,7 @@ export default function ListTemplate(this: List) {
 					>
 						<slot></slot>
 
-						{this.showDragGhost && dragGhost.call(this)}
+						{this._dragGhostBehavior?.shouldShowDragGhost && dragGhost.call(this)}
 
 						{this.showNoDataText &&
 							<li tabindex={0} id={`${this._id}-nodata`} class="ui5-list-nodata" role="listitem">

@@ -22,12 +22,9 @@ import {
 	isDown,
 	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
-import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
-import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
 	getAllAccessibleDescriptionRefTexts,
@@ -42,6 +39,9 @@ import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEff
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
+import { createDragAndDropBehavior } from "./features/DragAndDropBehavior.js";
+import type { DragGhostProvider } from "./features/DragGhostBehavior.js";
+import { createDragGhostBehavior } from "./features/DragGhostBehavior.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListAccessibleRole from "./types/ListAccessibleRole.js";
@@ -52,7 +52,6 @@ import type {
 import type DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
 import type {
-	MoveStartEventDetail,
 	SelectionRequestEventDetail,
 } from "./ListItem.js";
 import ListSeparator from "./types/ListSeparator.js";
@@ -292,7 +291,7 @@ type ListDragElementTemplate = (this: List) => JSX.Element;
 @event("move", {
 	bubbles: true,
 })
-class List extends UI5Element {
+class List extends UI5Element implements DragGhostProvider {
 	eventDetails!: {
 		"item-click": ListItemClickEventDetail,
 		"item-close": ListItemCloseEventDetail,
@@ -539,6 +538,10 @@ class List extends UI5Element {
 	onForwardBeforeBound: (e: CustomEvent) => void;
 	onItemTabIndexChangeBound: (e: CustomEvent) => void;
 
+	// Private drag and drop behaviors
+	_dragAndDropBehavior?: ReturnType<typeof createDragAndDropBehavior<List>>;
+	_dragGhostBehavior?: ReturnType<typeof createDragGhostBehavior<List>>;
+
 	constructor() {
 		super();
 
@@ -568,6 +571,32 @@ class List extends UI5Element {
 		this.onForwardAfterBound = this.onForwardAfter.bind(this);
 		this.onForwardBeforeBound = this.onForwardBefore.bind(this);
 		this.onItemTabIndexChangeBound = this.onItemTabIndexChange.bind(this);
+
+		// Initialize drag and drop behaviors
+		this._dragAndDropBehavior = createDragAndDropBehavior(this, {
+			orientation: Orientation.Vertical,
+			getDraggableElements: () => this.getItems() as HTMLElement[],
+			getDropIndicator: () => {
+				if (this.dropIndicatorDOM) {
+					return {
+						targetReference: this.dropIndicatorDOM.targetReference,
+						placement: this.dropIndicatorDOM.placement,
+					};
+				}
+				return null;
+			},
+			setDropIndicator: (targetReference, placement) => {
+				if (this.dropIndicatorDOM) {
+					this.dropIndicatorDOM.targetReference = targetReference;
+					if (placement) {
+						this.dropIndicatorDOM.placement = placement;
+					}
+				}
+			},
+			settings: { originalEvent: true },
+		});
+
+		this._dragGhostBehavior = createDragGhostBehavior(this);
 	}
 
 	/**
@@ -587,7 +616,7 @@ class List extends UI5Element {
 
 	onEnterDOM() {
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
-		DragRegistry.subscribe(this);
+		this._dragAndDropBehavior?.initialize();
 		ResizeHandler.register(this.getDomRef()!, this._handleResizeCallback);
 	}
 
@@ -595,14 +624,16 @@ class List extends UI5Element {
 		deregisterUI5Element(this);
 		this.unobserveListEnd();
 		ResizeHandler.deregister(this.getDomRef()!, this._handleResizeCallback);
-		DragRegistry.unsubscribe(this);
+		this._dragAndDropBehavior?.cleanup();
 	}
 
 	onBeforeRendering() {
 		this.detachGroupHeaderEvents();
 		this.prepareListItems();
+		// this._dragGhostBehavior?.loadDragGhostTemplate();
 
-		if (this.showDragGhost) {
+		console.error("oNBefreo")
+		if (this._dragGhostBehavior?.shouldShowDragGhost) {
 			// If feature is already loaded (preloaded by the user via importing ListItemStandardExpandableText.js), the template is already available
 			if (List.ListDragElementTemplate) {
 				this.dragElementTemplate = List.ListDragElementTemplate;
@@ -648,18 +679,6 @@ class List extends UI5Element {
 				item.removeEventListener("ui5-forward-before", this.onForwardBeforeBound as EventListener);
 			}
 		});
-	}
-
-	get dragGhost() {
-		return this.shadowRoot!.querySelector<UI5Element>(".ui5-list-drag-ghost");
-	}
-
-	get showDragGhost() {
-		return this.movingItemsCount > 1;
-	}
-
-	get dragGhostText() {
-		return List.i18nBundle.getText(LIST_DRAG_GHOST_TEXT, this.movingItemsCount);
 	}
 
 	get shouldRenderH1() {
@@ -1201,46 +1220,23 @@ class List extends UI5Element {
 	}
 
 	_ondragenter(e: DragEvent) {
-		e.preventDefault();
+		this._dragAndDropBehavior?.onDragEnter(e);
 	}
 
 	_ondragleave(e: DragEvent) {
-		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
-			return;
-		}
-
-		this.dropIndicatorDOM!.targetReference = null;
+		this._dragAndDropBehavior?.onDragLeave(e);
 	}
 
 	_ondragover(e: DragEvent) {
-		if (!(e.target instanceof HTMLElement)) {
-			return;
-		}
-
-		const closestPosition = findClosestPosition(
-			this.items,
-			e.clientY,
-			Orientation.Vertical,
-		);
-
-		if (!closestPosition) {
-			this.dropIndicatorDOM!.targetReference = null;
-			return;
-		}
-
-		const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element, { originalEvent: true });
-		this.dropIndicatorDOM!.targetReference = targetReference;
-		this.dropIndicatorDOM!.placement = placement;
+		this._dragAndDropBehavior?.onDragOver(e);
 	}
 
 	_ondrop(e: DragEvent) {
-		if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
-			e.preventDefault();
-			return;
-		}
+		this._dragAndDropBehavior?.onDrop(e);
+	}
 
-		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement, { originalEvent: true });
-		this.dropIndicatorDOM.targetReference = null;
+	_ondragstart(e: DragEvent) {
+		this._dragGhostBehavior?.onDragStart(e);
 	}
 
 	isForwardElement(element: HTMLElement) {
@@ -1259,13 +1255,6 @@ class List extends UI5Element {
 		const afterElement = this.getAfterElement();
 
 		return afterElement && afterElement.id === elementId;
-	}
-
-	onItemMoveStart(e: CustomEvent<MoveStartEventDetail>) {
-		const originalEvent = e.detail.originalEvent;
-		if (this.dragGhost && originalEvent.dataTransfer) {
-			originalEvent.dataTransfer.setDragImage(this.dragGhost, 0, 0);
-		}
 	}
 
 	onItemTabIndexChange(e: CustomEvent) {
@@ -1483,6 +1472,15 @@ class List extends UI5Element {
 		}
 
 		return this.growingIntersectionObserver;
+	}
+
+	// Implement DragGhostProvider interface
+	getDragGhost(): HTMLElement | null {
+		return this.shadowRoot!.querySelector<HTMLElement>("[data-custom-drag-ghost]");
+	}
+
+	getDragGhostText(): string {
+		return List.i18nBundle.getText(LIST_DRAG_GHOST_TEXT, this.movingItemsCount);
 	}
 
 	static ListDragElementTemplate?: ListDragElementTemplate;

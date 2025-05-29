@@ -1,4 +1,4 @@
-import type List from "../List.js";
+import type { DragGhostProvider } from "./DragGhostBehavior.js";
 import ListItemStandard from "../ListItemStandard.js";
 
 /**
@@ -7,14 +7,14 @@ import ListItemStandard from "../ListItemStandard.js";
  *
  * @returns {JSX.Element} The rendered drag ghost
  */
-export default function ListDragElementTemplate(
-	this: List,
-): JSX.Element {
+function DragGhostTemplate<T extends DragGhostProvider>(this: T): JSX.Element {
 	return (
 		<div aria-hidden="true">
-			<ListItemStandard style="background-color: red;" data-custom-drag-ghost class="ui5-drag-ghost">
+			<ListItemStandard data-custom-drag-ghost class="ui5-drag-ghost">
 				{this.getDragGhostText()}
 			</ListItemStandard>
 		</div>
 	);
 }
+
+export default DragGhostTemplate;
