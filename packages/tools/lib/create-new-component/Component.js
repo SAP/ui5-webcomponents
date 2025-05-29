@@ -1,4 +1,4 @@
-const Component = (componentName, tagName, library, packageName) => {
+const Component = (componentName, tagName, library, packageName, stripJSDoc) => {
 	return `import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -10,7 +10,9 @@ import ${componentName}Template from "./${componentName}Template.js";
 
 // Styles
 import ${componentName}Css from "./generated/themes/${componentName}.css.js";
-
+${
+stripJSDoc ? "\n" :
+`
 /**
  * @class
  *
@@ -27,40 +29,49 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
  * @constructor
  * @extends UI5Element
  * @public
- */
+ */`}
 @customElement({
 	tag: "${tagName}",
 	renderer: jsxRenderer,
 	styles: ${componentName}Css,
 	template: ${componentName}Template,
 })
-
+${
+stripJSDoc ? "\n" :
+`
 /**
  * Example custom event.
  * Please keep in mind that all public events should be documented in the API Reference as shown below.
  *
  * @public
- */
+ */`
+}
 @event("interact")
 class ${componentName} extends UI5Element {
 	eventDetails!: {
 		"interact": void,
 	};
-
+${
+stripJSDoc ? "\n" :
+`
 	/**
 	 * Defines the value of the component.
 	 *
 	 * @default ""
 	 * @public
-	 */
+	 */`
+}
 	@property()
 	value?: string;
-
+${
+stripJSDoc ? "\n" :
+`
 	/**
 	 * Defines the text of the component.
 	 *
 	 * @public
 	 */
+}
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>;
 }

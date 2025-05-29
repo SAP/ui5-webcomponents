@@ -1,7 +1,7 @@
 const fs = require("fs");
 const prompts = require("prompts");
 const Component = require("./Component.js");
-const ComponentTemplate= require("./ComponentTemplate.js");
+const ComponentTemplate = require("./ComponentTemplate.js");
 
 /**
  * Hyphanates the given PascalCase string and adds prefix, f.e.:
@@ -9,7 +9,7 @@ const ComponentTemplate= require("./ComponentTemplate.js");
  * FooBar -> "my-foo-bar"
  */
 const hyphaneteComponentName = (componentName) => {
-	const result = componentName.replace(/([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
+	const result = componentName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
 	return `my-${result}`;
 };
@@ -27,13 +27,13 @@ const isNameValid = name => typeof name === "string" && PascalCasePattern.test(n
 
 const getPackageName = () => {
 	if (!fs.existsSync("./package.json")) {
-		throw("The current directory doesn't contain package.json file.");
+		throw ("The current directory doesn't contain package.json file.");
 	}
 
 	const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
 
 	if (!packageJSON.name) {
-		throw("The package.json file in the current directory doesn't have a name property");
+		throw ("The package.json file in the current directory doesn't have a name property");
 	}
 
 	return packageJSON.name;
@@ -57,7 +57,7 @@ const getLibraryName = packageName => {
 	return packageName.substr("webcomponents-".length);
 };
 
-const generateFiles = (componentName, tagName, library, packageName) => {
+const generateFiles = (componentName, tagName, library, packageName, stripJSDoc) => {
 	componentName = capitalizeFirstLetter(componentName);
 	const filePaths = {
 		"main": `./src/${componentName}.ts`,
@@ -65,7 +65,7 @@ const generateFiles = (componentName, tagName, library, packageName) => {
 		"template": `./src/${componentName}Template.tsx`,
 	};
 
-	fs.writeFileSync(filePaths.main, Component(componentName, tagName, library, packageName), { flag: "wx+" });
+	fs.writeFileSync(filePaths.main, Component(componentName, tagName, library, packageName, stripJSDoc), { flag: "wx+" });
 	fs.writeFileSync(filePaths.css, "", { flag: "wx+" });
 	fs.writeFileSync(filePaths.template, ComponentTemplate(componentName), { flag: "wx+" });
 
@@ -105,9 +105,18 @@ const createWebComponent = async () => {
 		}
 	}
 
+	response = await prompts({
+		type: 'confirm',
+		name: 'stripJSDoc',
+		message: 'Would you like to include JSDoc comments for your classes and class members?',
+		initial: true
+	});
+
+	const stripJSDoc = !response.stripJSDoc;
+
 	const tagName = hyphaneteComponentName(componentName);
 
-	generateFiles(componentName, tagName, library, packageName);
+	generateFiles(componentName, tagName, library, packageName, stripJSDoc);
 };
 
 createWebComponent();
