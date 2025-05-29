@@ -315,6 +315,10 @@ additionalDialogClosers.forEach(btn => {
 	});
 })
 
+themeSave.addEventListener("click", function () {
+	toast.open = true;
+});
+
 resetPersonalization.addEventListener("click", function () {
 	toastReset.open = true;
 });
@@ -338,10 +342,6 @@ settingsDialogItems.forEach((settingsDialogItem) => {
 	settingsDialogItem.addEventListener("selection-change", function (event) {
 		console.log(`Selection change: ${event.detail.view?.text}`, event.detail);
 	});
-});
-
-themeSave.addEventListener("click", function () {
-	toast.open = true;
 });
 
 settingsDialog.addEventListener("open", function (event) {
