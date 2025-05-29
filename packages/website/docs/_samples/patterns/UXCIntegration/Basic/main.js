@@ -10,6 +10,14 @@ import "@ui5/webcomponents/dist/Text.js";
 import "@ui5/webcomponents/dist/Bar.js";
 import "@ui5/webcomponents/dist/Dialog.js";
 import "@ui5/webcomponents/dist/Link.js";
+import "@ui5/webcomponents/dist/Icon.js";
+import "@ui5/webcomponents/dist/Label.js";
+import "@ui5/webcomponents/dist/Panel.js";
+import "@ui5/webcomponents/dist/ComboBox.js";
+import "@ui5/webcomponents/dist/ComboBoxItem.js";
+import "@ui5/webcomponents/dist/RadioButton.js";
+import "@ui5/webcomponents/dist/CheckBox.js";
+import "@ui5/webcomponents/dist/Toast.js";
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";
@@ -61,6 +69,7 @@ import "@ui5/webcomponents-icons/dist/add.js";
 import "@ui5/webcomponents-icons/dist/manager-insight.js";
 import "@ui5/webcomponents-icons/dist/action-settings.js"
 import "@ui5/webcomponents-icons/dist/sort.js"
+import "@ui5/webcomponents-icons/dist/message-information.js";
 import "@ui5/webcomponents-icons/dist/expense-report.js";
 import "@ui5/webcomponents-icons/dist/action-settings.js";
 import "@ui5/webcomponents-icons/dist/user-settings.js";
@@ -90,7 +99,7 @@ menuButton.addEventListener("click", () => {
 const sideNavigation = document.getElementById("side-navigation");
 sideNavigation.addEventListener("selection-change", event => {
 	const contentTitle = document.getElementById("content-title");
-	contentTitle.textContent = event.detail.item.text;
+	contentTitle.textContent = event.detail.item?.text;
 });
 /* End side navigation */
 
@@ -281,7 +290,7 @@ const additionalDialog = document.getElementById("additionalDialog");
 const additionalDialogClosers = [...additionalDialog.querySelectorAll(".dialogCloser")];
 const resetAll = document.getElementById("resetAll");
 const resetPersonalization = document.getElementById("resetPersonalization");
-const toast = [...document.getElementsByTagName("ui5-toast")][0];
+const toast = document.getElementById("toastThemeSave");
 const toastReset =  document.getElementById("toastReset");
 const toastResetAll =  document.getElementById("toastResetAll");
 const themeSave =document.getElementById("themeSave");
@@ -319,31 +328,24 @@ resetAll.addEventListener("click", function () {
 });
 
 settingsDialog.addEventListener("selection-change", function (event) {
-	console.log(`Selection change: ${event.detail.item.text}`, event.detail);
-	if(event.detail.item.text ==="Language & Region"){
+	console.log(`Selection change: ${event.detail.item?.text}`, event.detail);
+	if(event.detail.item?.text ==="Language & Region"){
 		event.detail.item.loading=true;
 		event.detail.item.loadingReason="Language & Region loading data...";
 		setTimeout(function(){
 			event.detail.item.loading=false;
-		}, 3000);
+		}, 1000);
 	}
 });
 
 settingsDialogItems.forEach((settingsDialogItem) => {
 	settingsDialogItem.addEventListener("selection-change", function (event) {
-		console.log(`Selection change: ${event.detail.view.text}`, event.detail);
+		console.log(`Selection change: ${event.detail.view?.text}`, event.detail);
 	});
 });
 
 settingsDialog.addEventListener("open", function (event) {
 	console.log("Settings dialog opened", event);
-});
-
-settingsDialog.addEventListener("before-close", function (event) {
-	console.log("Settings dialog before close", event.detail);
-	if (!confirm("Are you sure you want to close the dialog?")) {
-		event.preventDefault();
-	}
 });
 
 settingsDialog.addEventListener("close", function (event) {

@@ -271,8 +271,12 @@
 	<ui5-user-settings-dialog id="settings" header-text="Settings" show-search-field>
 		<ui5-user-settings-item icon="user-settings" text="User Account" tooltip="User Account" header-text="User Account">
 			<ui5-user-settings-view slot="pages">
-				<ui5-icon name="person-placeholder"></ui5-icon><ui5-title level="H3" size="H3" class="ua-name">Alain Chevalier</ui5-title>
+
 				<div class="container">
+					<ui5-avatar size="L" class="ua-info-profile">
+						<img src="../assets/images/avatars/man_avatar_3.png" />
+					</ui5-avatar>
+					<ui5-title level="H3" size="H3" class="ua-name ua-info-profile">Alain Chevalier</ui5-title>
 					<div class="ua-info-item">
 						<ui5-label for="name">Name:</ui5-label>
 						<ui5-text id="name">Alain Chevalier</ui5-text>
@@ -298,14 +302,15 @@
 
 		<ui5-user-settings-item icon="palette" text="Appearance" tooltip="Appearance" header-text="Appearance">
 			<ui5-user-settings-view text="Themes">
-				<ui5-list separators="Inner">
-					<ui5-li icon="palette">SAP Morning Horizon</ui5-li>
+				<ui5-list separators="Inner" selection-mode="Single">
+					<ui5-li icon="palette" selected>SAP Morning Horizon</ui5-li>
 					<ui5-li icon="palette">SAP Evening Horizon</ui5-li>
 					<ui5-li icon="palette">SAP High Contrast Black (SAP Horizon)</ui5-li>
 					<ui5-li icon="palette">SAP High Contrast White (SAP Horizon)</ui5-li>
 				</ui5-list>
 				<ui5-button id="themeSave" class="save-btn" design="Emphasized">Save</ui5-button>
-				<ui5-toast design="Emphasized">Changes applied.</ui5-toast>
+				<ui5-toast id="toastThemeSave" design="Emphasized">Changes applied.</ui5-toast>
+			</ui5-user-settings-view>
 			</ui5-user-settings-view>
 			<ui5-user-settings-view text="Display settings">
 				<ui5-checkbox checked text="Optimized for Touch Input"></ui5-checkbox>
@@ -323,8 +328,8 @@
 				<div class="container">
 					<div class="lr-item">
 						<ui5-label>Language and Region:</ui5-label>
-						<ui5-combobox placeholder="Language">
-							<ui5-cb-item text="Browse Language" selected></ui5-cb-item>
+						<ui5-combobox placeholder="Language" value="Browse Language">
+							<ui5-cb-item text="Browse Language"></ui5-cb-item>
 							<ui5-cb-item text="English"></ui5-cb-item>
 							<ui5-cb-item text="European Spanish"></ui5-cb-item>
 							<ui5-cb-item text="French (France)"></ui5-cb-item>
