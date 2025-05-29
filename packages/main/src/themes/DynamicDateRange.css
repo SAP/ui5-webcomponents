@@ -1,2 +1,7 @@
 @import "./InputIcon.css";
 @import "./InputSharedStyles.css";
+
+:host {
+    width: var(--_ui5_input_width, 12.5625rem);
+    display: inline-block;
+}

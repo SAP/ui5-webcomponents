@@ -25,6 +25,8 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import dynamicDateRangeCss from "./generated/themes/DynamicDateRange.css.js";
 import dynamicDateRangePopoverCss from "./generated/themes/DynamicDateRangePopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import type List from "./List.js";
+import type ListItem from "./ListItem.js";
 
 type DynamicDateRangeValue = {
 	/**
@@ -183,6 +185,10 @@ class DynamicDateRange extends UI5Element {
 	@query("[ui5-input]")
 	_input?: Input;
 
+	@query("[ui5-list]")
+	_list?: List;
+	private _lastOpenedOption: any;
+
 	onBeforeRendering() {
 		const optionKeys = this.options.split(",").map(option => option.trim());
 
@@ -196,6 +202,15 @@ class DynamicDateRange extends UI5Element {
 
 			return optionObject;
 		}).filter(optionObject => optionObject !== undefined);
+
+		if (this.value) {
+			const selectedItem = this._list?.items.find(item => {
+				const option = this.optionsObjects.find(x => x.operator === this.value?.operator);
+				return option && item.textContent === option.text;
+			}) as ListItem;
+
+			this._list?.focusItem(selectedItem);
+		}
 	}
 
 	get _optionsTitles(): Array<string> {
@@ -355,13 +370,7 @@ class DynamicDateRange extends UI5Element {
 	onKeyDownPopover(e: KeyboardEvent) {
 		if (isShow(e)) {
 			e.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
-			if (this.open) {
-				if (!isF4(e)) {
-					this._toggleAndFocusInput();
-				}
-			} else {
-				this._toggleAndFocusInput();
-			}
+			this._toggleAndFocusInput();
 		}
 	}
 
