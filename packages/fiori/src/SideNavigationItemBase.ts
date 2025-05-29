@@ -75,7 +75,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines if the item's group is disabled.
-	 * @protected
+	 * @private
 	 * @default false
 	 * @since 2.10.0
 	 */

@@ -317,7 +317,7 @@ class SideNavigation extends UI5Element {
 	handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
 		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
 
-		if (associatedItem.disabled) {
+		if (associatedItem.effectiveDisabled) {
 			e.stopPropagation();
 			e.preventDefault();
 			return;
@@ -580,7 +580,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	_handleItemClick(e: KeyboardEvent | MouseEvent, item: SideNavigationSelectableItemBase) {
-		if (item.disabled) {
+		if (item.effectiveDisabled) {
 			e.stopPropagation();
 			e.preventDefault();
 			return;

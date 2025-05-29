@@ -295,7 +295,7 @@ and there is an additional border that appears on hover. */
 	padding-inline-end: 0;
 }
 
-:host([unselectable][side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-with-expander):hover,
+:host([unselectable][side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):not(.ui5-sn-item-with-expander):hover,
 :host([unselectable][side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):not(.ui5-sn-item-with-expander):focus {
 	padding-inline-end: var(--_ui5_side_navigation_action_item_collapsed_padding);
 }
