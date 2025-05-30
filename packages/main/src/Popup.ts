@@ -446,7 +446,11 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	async applyInitialFocus() {
-		if (!this.preventInitialFocus) {
+		// In the scenario where the popup is initially open
+		// test the attribute rather than the property,
+		// as the component's complete state is not yet configured
+		// and the property might remain uninitialized
+		if (!this.hasAttribute("prevent-initial-focus")) {
 			await this.applyFocus();
 		}
 	}
