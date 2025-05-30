@@ -64,6 +64,7 @@ declare global {
 			ui5MenuItemPress(key: any): Chainable<void>
 			ui5CalendarGetDay(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
 			ui5CalendarGetMonth(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
+			ui5CalendarShowYearRangePicker(): Chainable<void>
 			ui5ColorPickerToggleColorMode(): Chainable<void>
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
 			ui5ColorPickerValidateInput(name: string, value: string): Chainable<void>
