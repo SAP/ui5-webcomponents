@@ -59,7 +59,7 @@ describe("Toggle Button general interaction tests", () => {
         cy.get("@toggleButton").should("not.have.attr", "pressed");
     });
 
-    it("should not fire click event on a disabled togglebutton", () => {
+    it("should not fire click event on a disabled toggle button", () => {
         cy.mount(<ToggleButton disabled>Disabled Toggle Button</ToggleButton>);
 
         cy.get("[ui5-toggle-button]").as("toggleButton");
