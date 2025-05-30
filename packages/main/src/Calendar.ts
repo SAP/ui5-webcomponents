@@ -54,6 +54,7 @@ interface ICalendarPicker {
 	_showNextPage: () => void,
 	_hasPreviousPage: () => boolean,
 	_hasNextPage: () => boolean,
+	getFocusDomRef: () => HTMLElement | undefined
 	_autoFocus?: boolean,
 	_currentYearRange?: CalendarYearRangeT,
 }
@@ -896,6 +897,14 @@ class Calendar extends CalendarPart {
 	 */
 	set selectedDates(selectedDates: Array<number>) {
 		this._setSelectedDates(selectedDates);
+	}
+
+	/**
+	 * @override
+	 */
+	getFocusDomRef(): HTMLElement | undefined {
+		const currentPicker = this._currentPickerDOM;
+		return currentPicker ? currentPicker.getFocusDomRef() : this.getDomRef();
 	}
 }
 
