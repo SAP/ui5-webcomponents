@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.2...v2.11.0-rc.3) (2025-05-29)
+
+
+### Features
+
+* **ui5-search-field:** introduce advanced filtering ([#11428](https://github.com/SAP/ui5-webcomponents/issues/11428)) ([bf8a158](https://github.com/SAP/ui5-webcomponents/commit/bf8a158d493cd7472938a66e2fe22d6091467be9))
+* **ui5-search-item:** byline item support ([#11503](https://github.com/SAP/ui5-webcomponents/issues/11503)) ([d8aec50](https://github.com/SAP/ui5-webcomponents/commit/d8aec50480222572df589c47df693d06e2887837))
+* **ui5-table:** behavior property added for selections ([#11520](https://github.com/SAP/ui5-webcomponents/issues/11520)) ([56b113b](https://github.com/SAP/ui5-webcomponents/commit/56b113bee378db91e8df69cbf6b4dd0bb903dad5)), closes [#10893](https://github.com/SAP/ui5-webcomponents/issues/10893) [#10893](https://github.com/SAP/ui5-webcomponents/issues/10893)
+
+
+
+
+
+# [2.11.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.1...v2.11.0-rc.2) (2025-05-22)
+
+**Note:** Version bump only for package @ui5/webcomponents-website
+
+
+
+
+
+# [2.11.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.0...v2.11.0-rc.1) (2025-05-15)
+
+
+### Features
+
+* **ui5-bar:** allow role change ([#11134](https://github.com/SAP/ui5-webcomponents/issues/11134)) ([db49d09](https://github.com/SAP/ui5-webcomponents/commit/db49d099e9f3a882d0fee403bf96a022b3223484)), closes [#10990](https://github.com/SAP/ui5-webcomponents/issues/10990)
+
+
+
+
+
 # [2.11.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0...v2.11.0-rc.0) (2025-05-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-website

@@ -30,7 +30,6 @@
 	--_ui5_side_navigation_selected_and_focused_border_style_color: none;
 	--_ui5_side_navigation_group_icon_width: 2.5rem;
 	--_ui5_side_navigation_icon_padding_inline_end: 0.5rem;
-	--_ui5_side_navigation_item_font_family: "72override", var(--sapFontSemiboldFamily);
 	--_ui5_side_navigation_group_padding: 1rem;
 	--_ui5_side_navigation_padding-flexible: 0.5rem 0.5rem 0 0.5rem; 
 	--_ui5_side_navigation_padding-fixed: 0 0.5rem 0.5rem 0.5rem;
