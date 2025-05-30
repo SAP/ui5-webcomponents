@@ -30,6 +30,10 @@ export default function PopupTemplate(this: Popup, hooks?: {
 				<slot></slot>
 			</div>
 
+			{this.ariaDescriptionText &&
+						<span id="accessibleDescription" class="ui5-hidden-text">{this.ariaDescriptionText}</span>
+			}
+
 			{(hooks?.afterContent || afterContent).call(this)}
 
 			<span class="last-fe" data-ui5-focus-trap role="none" tabIndex={0} onFocusIn={this.forwardToFirst}></span>
