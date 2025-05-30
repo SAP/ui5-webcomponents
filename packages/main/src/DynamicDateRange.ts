@@ -187,7 +187,6 @@ class DynamicDateRange extends UI5Element {
 
 	@query("[ui5-list]")
 	_list?: List;
-	private _lastOpenedOption: any;
 
 	onBeforeRendering() {
 		const optionKeys = this.options.split(",").map(option => option.trim());
