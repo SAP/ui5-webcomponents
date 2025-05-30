@@ -425,14 +425,6 @@ describe("Close", () => {
 				<div id="myDiv" style="width: 200px;" tabindex="0">
 					<div id="helloId">Hello</div>
 					<div id="customElId" style="height: 200px;">
-						<template shadowrootmode="open">
-							<iframe
-								sandbox
-								width="200"
-								height="200"
-								srcdoc="<div>IFrame content</div>"
-							></iframe>
-						</template>
 					</div>
 				</div>
 				<Popover id="popoverId"
