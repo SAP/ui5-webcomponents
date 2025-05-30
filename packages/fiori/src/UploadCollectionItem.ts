@@ -289,6 +289,12 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
+	_onInputKeyUp(e: KeyboardEvent) {
+		if (isDelete(e)) {
+			e.stopPropagation();
+		}
+	}
+
 	_onRename() {
 		const inp = this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input")!;
 		this.fileName = inp.value + this._fileExtension;
