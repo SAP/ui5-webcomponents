@@ -250,13 +250,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return this.getFocusDomRefAsync();
 	}
 
-	/**
-	 * @override
-	 */
-	getFocusDomRef(): HTMLElement | undefined {
-		return this.content[0];
-	}
-
 	get formFormattedValue() {
 		if (this.files && this.name) {
 			const formData = new FormData();
@@ -271,27 +264,15 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return null;
 	}
 
-	_onmouseover() {
-		this.content.forEach(item => {
-			item.classList.add("ui5_hovered");
-		});
-	}
-
-	_onmouseout() {
-		this.content.forEach(item => {
-			item.classList.remove("ui5_hovered");
-		});
-	}
-
 	_onclick() {
 		if (this.getFocusDomRef()?.matches(":focus-within") && this.hideInput) {
-			this._input.click();
+			this._openFileBrowser();
 		}
 	}
 
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
-			this._input.click();
+			this._openFileBrowser();
 			e.preventDefault();
 		}
 
@@ -299,29 +280,27 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		const token = this._tokenizer?.tokens.filter(token => !token.hasAttribute("overflows"))[0];
+		const firstToken = this._tokenizer?.tokens.filter(token => !token.hasAttribute("overflows"))[0];
 		const isToken = (<HTMLElement>e.target).hasAttribute("ui5-token");
 
-		if (isToken && e.target === token && isLeft(e)) {
+		if (isToken && e.target === firstToken && isLeft(e)) {
 			this._input.focus();
 			e.preventDefault();
 		}
 
 		if (!isToken && isRight(e)) {
-			token?.focus();
+			firstToken?.focus();
 			e.preventDefault();
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
-		if (isSpace(e)) {
-			this._input.click();
+		const shouldOpenFileBrowser = (isF4(e) || isUpAlt(e) || isDownAlt(e)) && !this.hideInput;
+		if (isSpace(e) || shouldOpenFileBrowser) {
+			this._openFileBrowser();
 			e.preventDefault();
 		} else if (isEscape(e) && !this.hideInput) {
 			this._clearFileSelection();
-			e.preventDefault();
-		} else if ((isF4(e) || isUpAlt(e) || isDownAlt(e)) && !this.hideInput) {
-			this._openFileBrowser();
 			e.preventDefault();
 		}
 	}
@@ -375,7 +354,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	_clearFileSelection() {
 		this.selectedFiles = [];
 		this.value = "";
-		this.placeholder = FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER);
 		this._from?.reset();
 		this.fireDecoratorEvent("change", {
 			files: this.files,
@@ -397,12 +375,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	get selectedFileNames(): Array<string> {
 		return this.selectedFiles;
-	}
-
-	onBeforeRendering() {
-		this.placeholder = !this.selectedFiles.length
-			? FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER)
-			: undefined;
 	}
 
 	onAfterRendering() {
@@ -516,6 +488,10 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	get clearIconTitle() : string {
 		return FileUploader.i18nBundle.getText(FILEUPLOADER_CLEAR_ICON_TOOLTIP);
+	}
+
+	get resolvedPlaceholder(): string {
+		return this.placeholder || FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER);
 	}
 
 	get valueStateTextMappings(): Record<string, string> {

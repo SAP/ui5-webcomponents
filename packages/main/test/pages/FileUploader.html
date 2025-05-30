@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=500px, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -18,27 +18,27 @@
 	<div>
 		<div>
 			<label>File Uploader:</label>
-			<ui5-file-uploader id="fileSelector" placeholder="Upload your files here" style="width: 350px;" multiple>
-				<ui5-button>Upload</ui5-button>
-			</ui5-file-uploader>
-		</div>
-		
-		<div>
-			<ui5-file-uploader placeholder="Upload your files here" multiple hide-input>
+			<ui5-file-uploader id="fileSelector" style="width: 350px;" multiple>
 				<ui5-button>Upload</ui5-button>
 			</ui5-file-uploader>
 		</div>
 
 		<div>
-			<ui5-file-uploader placeholder="Upload your files here" style="width: 350px;" multiple value-state="None"></ui5-file-uploader>
+			<ui5-file-uploader multiple hide-input>
+				<ui5-button>Upload</ui5-button>
+			</ui5-file-uploader>
 		</div>
 
 		<div>
-			<ui5-file-uploader placeholder="Upload your files here" style="width: 350px;" multiple disabled></ui5-file-uploader>
+			<ui5-file-uploader style="width: 350px;" multiple value-state="None"></ui5-file-uploader>
 		</div>
 
 		<div>
-			<ui5-file-uploader placeholder="Upload your files here" style="width: 350px;" multiple value-state="Negative"></ui5-file-uploader>
+			<ui5-file-uploader style="width: 350px;" multiple disabled></ui5-file-uploader>
+		</div>
+
+		<div>
+			<ui5-file-uploader style="width: 350px;" multiple value-state="Negative"></ui5-file-uploader>
 		</div>
 
 		<div>

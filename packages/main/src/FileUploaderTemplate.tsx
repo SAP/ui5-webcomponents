@@ -9,8 +9,6 @@ export default function FileUploaderTemplate(this: FileUploader) {
 		<>
 			<div
 				class="ui5-file-uploader-root"
-				onMouseOver={this._onmouseover}
-				onMouseOut={this._onmouseout}
 				onFocusIn={this._onfocusin}
 				onFocusOut={this._onfocusout}
 				onKeyDown={this._onkeydown}
@@ -56,7 +54,7 @@ export default function FileUploaderTemplate(this: FileUploader) {
 								tabindex={-1}
 								aria-hidden="true"
 								title={this.inputTitle}
-								placeholder={this.placeholder}
+								placeholder={this.resolvedPlaceholder}
 								inner-input
 								readonly
 								onClick={this._openFileBrowser}
