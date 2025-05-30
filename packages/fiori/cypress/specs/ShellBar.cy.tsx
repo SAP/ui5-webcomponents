@@ -528,6 +528,7 @@ describe("Events", () => {
 			.should("have.been.calledOnce");
 	});
 });
+
 describe("ButtonBadge in ShellBar", () => {
 	it("Test if ShellBarItem count appears in ButtonBadge", () => {
 	  cy.mount(
@@ -620,5 +621,17 @@ describe("ButtonBadge in ShellBar", () => {
 		  .find(".ui5-shellbar-overflow-button ui5-button-badge[slot='badge']")
 		  .should("exist")
 		  .should("have.attr", "text", "42");
+	});
+});
+
+describe("Keyboard Navigation", () => {
+	it("Test logo area elements are not rendered when no logo and primaryTitle are provided", () => {
+		cy.mount(<ShellBar></ShellBar>);
+		cy.wait(RESIZE_THROTTLE_RATE);
+
+		cy.get("[ui5-shellbar]")
+			.shadow()
+			.find(".ui5-shellbar-logo-area")
+			.should("not.exist");
 	});
 });
