@@ -76,7 +76,7 @@
 	border-radius: inherit;
 }
 
-:host(:not(:empty)) .ui5-busy-indicator-busy-area {
+.ui5-busy-indicator-busy-area.ui5-busy-indicator-busy-area-over-content {
 	position: absolute;
 	left: 0;
 	right: 0;
