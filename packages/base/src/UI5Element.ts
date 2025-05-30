@@ -49,6 +49,7 @@ let autoId = 0;
 
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
+const isSSR = typeof document === "undefined";
 
 type Renderer = (instance: UI5Element, container: HTMLElement | DocumentFragment) => void;
 
@@ -868,6 +869,10 @@ abstract class UI5Element extends HTMLElement {
 			updateShadowRoot(this);
 		}
 		this._rendered = true;
+
+		if(isSSR) {
+			return;
+		}
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		if (hasIndividualSlots) {
