@@ -386,7 +386,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	get computedValue(): string {
-		return this.selectedFiles.join(", ");
+		return this.selectedFiles.join(" ");
 	}
 
 	_onChange(e: Event) {
