@@ -56,7 +56,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 					{!this.hasMenuItems && (
 						<>
 							{this.isSBreakPoint && this.hasLogo && singleLogo.call(this)}
-							{!this.isSBreakPoint && (
+							{!this.isSBreakPoint && (this.hasLogo || this.primaryTitle) && (
 								<>
 									{combinedLogo.call(this)}
 									{this.secondaryTitle && this.primaryTitle && (
