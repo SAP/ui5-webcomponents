@@ -87,14 +87,17 @@ class SliderTooltip extends UI5Element {
 			this.setAttribute("popover", "manual");
 		}
 
-		if (this.open) {
-			this.showPopover();
-			this.repositionTooltip();
-			this.attachGlobalScrollHandler();
-		} else {
-			this.hidePopover();
-			this.detachGlobalScrollHandler();
+		if (this.isConnected) {
+			if (this.open) {
+				this.showPopover();
+				this.repositionTooltip();
+				this.attachGlobalScrollHandler();
+			} else {
+				this.hidePopover();
+				this.detachGlobalScrollHandler();
+			}
 		}
+
 	}
 
 	repositionTooltip(): void {

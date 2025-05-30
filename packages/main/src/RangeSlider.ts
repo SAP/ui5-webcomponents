@@ -828,6 +828,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 		this.bringToFrontTooltip(isStart ? "start" : "end");
 		this.update("value", this.startValue, this.endValue);
+		this.fireDecoratorEvent("change");
 	}
 
 	_onInputKeydown(): void { }
