@@ -870,7 +870,7 @@ abstract class UI5Element extends HTMLElement {
 		}
 		this._rendered = true;
 
-		if(isSSR) {
+		if (isSSR) {
 			return;
 		}
 
