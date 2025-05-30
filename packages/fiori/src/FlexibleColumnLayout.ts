@@ -64,6 +64,11 @@ const COLUMN = {
 	END: 2,
 } as const;
 
+const SEPARATOR_DEFAULT_VALUES = {
+	START: 50,
+	END: 75,
+} as const;
+
 const COLUMN_MIN_WIDTH = 248;
 
 type SeparatorMovementSession = {
@@ -1077,7 +1082,7 @@ class FlexibleColumnLayout extends UI5Element {
 		if (typeof startColumnWidth === "string" && startColumnWidth.endsWith("%")) {
 			return parseInt(startColumnWidth);
 		}
-		return 50;
+		return SEPARATOR_DEFAULT_VALUES.START;
 	}
 
 	get endSeparatorValue() {
@@ -1088,7 +1093,7 @@ class FlexibleColumnLayout extends UI5Element {
 			&& typeof midColumnWidth === "string" && midColumnWidth.endsWith("%")) {
 			return parseInt(startColumnWidth) + parseInt(midColumnWidth);
 		}
-		return 75;
+		return SEPARATOR_DEFAULT_VALUES.END;
 	}
 
 	get startArrowDirection() {
