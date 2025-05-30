@@ -266,5 +266,55 @@ describe("Component Behavior", () => {
 			cy.get("#group1").should("not.have.attr", "expanded");
 
 		});
+
+		it("Tests disabled group items", () => {
+			cy.mount(
+				<SideNavigation id="sn1">
+					<SideNavigationGroup id="group1" expanded text="Group">
+						<SideNavigationItem text="Home 1"
+							icon="home"
+							href="#home"
+							title="Home tooltip" />
+					</SideNavigationGroup>
+				</SideNavigation>);
+
+			cy.get("#group1").invoke("prop", "disabled", true);
+
+			cy.get<SideNavigationGroup>("#group1").then(($itemRef) => {
+				const item = $itemRef[0];
+				cy.wrap(item.items).each((item) => {
+					cy.wrap(item).should("have.prop", "effectiveDisabled", true);
+				});
+			});
+		});
+
+		it("Tests focus of disabled groups", () => {
+			cy.mount(
+				<SideNavigation id="sideNav">
+					<SideNavigationItem id="item" text="1"></SideNavigationItem>
+					<SideNavigationGroup id="group1" disabled={true} text="Group">
+						<SideNavigationItem id="item" text="1"></SideNavigationItem>
+					</SideNavigationGroup>
+				</SideNavigation>
+			);
+
+			cy.get("#item").realClick();
+
+			cy.get("#item")
+				.should("be.focused")
+			cy.get("#item")
+				.shadow()
+				.find(".ui5-sn-item")
+				.should("have.attr", "tabindex", "0");
+
+			cy.realPress("ArrowDown");
+
+			cy.get("#group1")
+				.should("be.focused")
+			cy.get("#group1")
+				.shadow()
+				.find(".ui5-sn-item.ui5-sn-item-group")
+				.should("have.attr", "tabindex", "0");
+		});
 	});
 });
