@@ -15,11 +15,16 @@ import {
 	isEscape,
 	isF4,
 	isSpace,
+	isRight,
+	isLeft,
+	isUp,
+	isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	FILEUPLOADER_INPUT_TOOLTIP,
 	FILEUPLOADER_VALUE_HELP_TOOLTIP,
+	FILEUPLOADER_CLEAR_ICON_TOOLTIP,
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
@@ -28,6 +33,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 import type Popover from "./Popover.js";
+import type Tokenizer from "./Tokenizer.js";
 
 // Template
 import FileUploaderTemplate from "./FileUploaderTemplate.js";
@@ -36,6 +42,7 @@ import FileUploaderTemplate from "./FileUploaderTemplate.js";
 import FileUploaderCss from "./generated/themes/FileUploader.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import type Token from "./Token.js";
 
 const convertBytesToMegabytes = (bytes: number) => (bytes / 1024) / 1024;
 
@@ -228,6 +235,9 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	@query("input[type=file]")
 	_input!: HTMLInputElement;
 
+	@query("[ui5-tokenizer]")
+	_tokenizer!: Tokenizer;
+
 	@query(".ui5-valuestatemessage-popover")
 	_messagePopover!: Popover;
 
@@ -287,6 +297,23 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			this._input.click();
 			e.preventDefault();
 		}
+
+		if (this.hideInput) {
+			return;
+		}
+
+		const token = this._tokenizer?.tokens.filter(token => !token.hasAttribute("overflows"))[0];
+		const isToken = (<HTMLElement>e.target).hasAttribute("ui5-token");
+
+		if (isToken && e.target === token && isLeft(e)) {
+			this._input.focus();
+			e.preventDefault();
+		}
+
+		if (!isToken && isRight(e)) {
+			token?.focus();
+			e.preventDefault();
+		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -332,10 +359,16 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	_onfocusin() {
 		this.focused = true;
+		if (this._tokenizer) {
+			this._tokenizer.expanded = true;
+		}
 	}
 
 	_onfocusout() {
 		this.focused = false;
+		if (this._tokenizer) {
+			this._tokenizer.expanded = false;
+		}
 	}
 
 	_openFileBrowser() {
@@ -347,6 +380,9 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		this.value = "";
 		this.placeholder = FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER);
 		this._from?.reset();
+		this.fireDecoratorEvent("change", {
+			files: this.files,
+		});
 	}
 
 	/**
@@ -479,6 +515,10 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	get valueHelpTitle(): string {
 		return FileUploader.i18nBundle.getText(FILEUPLOADER_VALUE_HELP_TOOLTIP);
+	}
+
+	get clearIconTitle() : string {
+		return FileUploader.i18nBundle.getText(FILEUPLOADER_CLEAR_ICON_TOOLTIP);
 	}
 
 	get valueStateTextMappings(): Record<string, string> {

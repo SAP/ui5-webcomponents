@@ -18,7 +18,7 @@
 	<div>
 		<div>
 			<label>File Uploader:</label>
-			<ui5-file-uploader placeholder="Upload your files here" style="width: 350px;" multiple>
+			<ui5-file-uploader id="fileSelector" placeholder="Upload your files here" style="width: 350px;" multiple>
 				<ui5-button>Upload</ui5-button>
 			</ui5-file-uploader>
 		</div>
@@ -56,7 +56,11 @@
 	</div>
 
 	<script>
-
+		document.getElementById("fileSelector").addEventListener("ui5-change", function (event) {
+			const files = event.detail.files;
+			console.log("Selected files:", files);
+			// Submit all file to the server
+		});
 	</script>
 </body>
 </html>

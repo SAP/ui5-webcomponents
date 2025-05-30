@@ -36,6 +36,7 @@ export default function FileUploaderTemplate(this: FileUploader) {
 							<>
 								<Tokenizer
 									class="ui5-file-uploader-tokenizer"
+									preventInitialFocus
 									readonly
 								>
 									{this.selectedFileNames.map(fileName => (
@@ -46,6 +47,7 @@ export default function FileUploaderTemplate(this: FileUploader) {
 									name="decline"
 									class="ui5-file-uploader-close-icon inputIcon"
 									onClick={this._clearFileSelection}
+									title={this.clearIconTitle}
 								/>
 							</>
 						) : (
