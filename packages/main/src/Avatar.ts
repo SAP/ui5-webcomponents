@@ -67,8 +67,8 @@ type AvatarAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
  *
  * **Note:** The event will not be fired if the `disabled`
  * property is set to `true`.
- * @private
- * @since 1.0.0-rc.11
+ * @public
+ * @since 2.11.0
  */
 @event("click", {
 	bubbles: true,
