@@ -41,7 +41,7 @@
 .ui5-file-uploader-display-container {
 	position: absolute;
 	top: 0;
-	left: 0;
+	inset-inline-start: 0;
 	width: inherit;
 	height: inherit;
 }
@@ -50,7 +50,7 @@
 .ui5-file-uploader-display-input {
 	position: absolute;
 	top: 0;
-	left: 0;
+	inset-inline-start: 0;
 	height: inherit;
 	border: none;
 	outline: none;
@@ -73,11 +73,11 @@
 }
 
 .ui5-file-uploader-close-icon {
-	right: var(--_ui5_input_icon_width);
+	inset-inline-end: var(--_ui5_input_icon_width);
 }
 
 .ui5-file-uploader-value-help-icon {
-	right: 0rem;
+	inset-inline-end: 0rem;
 }
 
 :host(:not([disabled]):active) [ui5-button] {

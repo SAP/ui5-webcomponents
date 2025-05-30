@@ -17,8 +17,6 @@ import {
 	isSpace,
 	isRight,
 	isLeft,
-	isUp,
-	isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
@@ -42,7 +40,6 @@ import FileUploaderTemplate from "./FileUploaderTemplate.js";
 import FileUploaderCss from "./generated/themes/FileUploader.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
-import type Token from "./Token.js";
 
 const convertBytesToMegabytes = (bytes: number) => (bytes / 1024) / 1024;
 
