@@ -1,5 +1,7 @@
 import MultiComboBox from "../../src/MultiComboBox.js";
 import MultiComboBoxItem from "../../src/MultiComboBoxItem.js";
+import Link from "../../src/Link.js";
+import Input from "../../src/Input.js";
 
 describe("Security", () => {
 	it("tests setting malicious text to items", () => {
@@ -90,6 +92,181 @@ describe("Value State", () => {
 			.shadow()
 			.find(".ui5-valuestatemessage--information")
 			.should("not.exist");
+	});
+});
+
+describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", () => {
+	beforeEach(() => {
+		cy.mount(<>
+			<MultiComboBox valueState="Negative">
+				<div slot="valueStateMessage">
+					Custom error value state message with a <Link href="#">Link</Link>  <Link href="#">Second Link</Link>.
+				</div>
+				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
+			</MultiComboBox>
+			<Input id="nextInput" class="input2auto" placeholder="Next input"></Input>
+		</>);
+	});
+	it("Should move the focus from the MultiComboBox to the first link in the value state message", () => {
+		cy.get("ui5-multi-combobox")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("ui5-multi-combobox")
+		.as("multi-combobox");
+
+		cy.get("@innerInput")
+			.realClick()
+			.realPress(["Control", "Alt", "F1"]);
+
+		cy.get("@multi-combobox")
+			.shadow()
+			.find("ui5-popover")
+			.as("popover")
+			.should("have.class", "ui5-valuestatemessage-popover");
+
+		cy.get("@popover")
+			.should("have.attr", "open")
+
+		cy.get("ui5-link")
+			.eq(0)
+			.should("have.focus");
+	});
+	it("When pressing [Tab], the focus moves to the next value state message link. Pressing [Tab] again closes the popup and moves the focus to the next input", () => {
+		cy.get("ui5-multi-combobox")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("ui5-multi-combobox")
+			.as("multi-combobox");
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("@innerInput")
+			.realClick()
+			.realPress(["Control", "Alt", "F1"]);
+
+		cy.get("@multi-combobox")
+			.shadow()
+			.find("ui5-popover")
+			.as("ui5-popover")
+			.should("have.attr", "open");
+
+		cy.get("ui5-link")
+			.eq(0)
+			.as("firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress("Tab");
+
+		cy.get("@firstLink")
+			.should("not.have.focus");
+
+		cy.get("ui5-link")
+			.eq(1)
+			.as("secondLink")
+			.should("have.focus");
+
+		cy.get("@secondLink")
+			.realPress("Tab");
+
+		cy.get("@input")
+			.should("have.focus");
+	});
+	it("Pressing [Shift + Tab] moves the focus from the second link in the value state message to the first one. Pressing it again shifts the focus to the MultiComboBox", () => {
+		cy.get("ui5-multi-combobox")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("ui5-multi-combobox")
+			.as("multi-combobox");
+
+		cy.get("@innerInput")
+			.realClick()
+			.realPress(["Control", "Alt", "F1"]);
+
+		cy.get("@multi-combobox")
+			.shadow()
+			.find("ui5-popover")
+			.as("ui5-popover")
+			.should("have.attr", "open");
+
+		cy.get("ui5-link")
+			.eq(0)
+			.as("firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress("Tab");
+
+		cy.get("@firstLink")
+			.should("not.have.focus");
+
+		cy.get("ui5-link")
+			.eq(1)
+			.as("secondLink")
+			.should("have.focus");
+
+		cy.get("@secondLink")
+			.realPress(["Shift", "Tab"]);
+
+		cy.get("@firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress(["Shift", "Tab"]);
+
+		cy.get("@innerInput")
+			.should("have.focus");
+
+	});
+	it("When pressing [Down Arrow] while focused on the first value state message link and suggestions are open, the focus shifts to the next suggestion item ", () => {
+		cy.get("ui5-multi-combobox")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("ui5-multi-combobox")
+			.as("multi-combobox");
+
+		cy.get("@innerInput")
+			.realClick()
+			.realPress(["Control", "Alt", "F1"]);
+
+		cy.get("@multi-combobox")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.as("popover");
+
+		cy.get("@multi-combobox")
+			.realClick();
+
+		cy.get("@multi-combobox")
+			.realType("i");
+
+		cy.get("@popover")
+			.should("have.attr", "open");
+
+		cy.get("@innerInput")
+			.realClick()
+			.realPress(["Control", "Alt", "F1"]);
+
+		cy.get("ui5-link")
+			.as("firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress("ArrowDown");
+
+		cy.get("@multi-combobox")
+			.should("have.attr", "value", "Item 1")
+			.should("have.focus");
 	});
 });
 

@@ -35,6 +35,7 @@ import {
 	isDelete,
 	isEscape,
 	isEnter,
+	isCtrlAltF8,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -510,6 +511,18 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
+	/**
+	 * Stores the array of links in the value state hidden text.
+	 * @private
+	 */
+		_linkArray: HTMLElement[] = [];
+
+	/**
+	 * Indicates whether link navigation is being handled.
+	 * @private
+	 */
+	_handleLinkNavigation: boolean = false;
+
 	get formValidityMessage() {
 		return MultiComboBox.i18nBundle.getText(FORM_MIXED_TEXTFIELD_REQUIRED);
 	}
@@ -745,7 +758,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_onPopoverFocusOut() {
-		if (!isPhone()) {
+		if (!isPhone() || !this._handleLinkNavigation) {
 			this._tokenizer.expanded = this.open;
 		}
 	}
@@ -825,6 +838,10 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 		if (isSpaceShift(e)) {
 			e.preventDefault();
+		}
+
+		if (isCtrlAltF8(e)) {
+			return this._handleCtrlALtF8();
 		}
 
 		if (
@@ -1186,6 +1203,59 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			firstListItem?.focus();
 		} else if (!this.readonly) {
 			this._navigateToNextItem();
+		}
+	}
+
+	_handleCtrlALtF8() {
+		this._handleLinkNavigation = true;
+		this._linkArray = this.linksInAriaValueStateHiddenText;
+		if (this._linkArray.length) {
+			this._linkArray.forEach(link => {
+				link.addEventListener("keydown", e => {
+					const currentIndex = this._linkArray.indexOf(link);
+
+					if (isTabNext(e)) {
+						if (this._handleLinkNavigation && currentIndex !== this._linkArray.length - 1) {
+							e.stopImmediatePropagation();
+							e.preventDefault();
+							this._linkArray[currentIndex + 1].focus();
+						} else {
+							this._handleLinkNavigation = false;
+							if (this.open) {
+								this.open = false;
+							} else {
+								this.valueStateOpen = false;
+							}
+							this._forwardFocusToInner();
+						}
+					}
+					if (isTabPrevious(e) && this._handleLinkNavigation) {
+						e.preventDefault();
+						e.stopImmediatePropagation();
+						if (currentIndex > 0) {
+							this._linkArray[currentIndex - 1].focus();
+						} else {
+							this.focused = false;
+							this._handleLinkNavigation = false;
+							if (this.open) {
+								this.open = false;
+							} else {
+								this.valueStateOpen = false;
+							}
+							this._forwardFocusToInner();
+						}
+					}
+
+					if (isDown(e)) {
+						this._handleLinkNavigation = false;
+						e.preventDefault();
+						e.stopImmediatePropagation();
+						this._forwardFocusToInner();
+						this._handleArrowDown();
+					}
+				});
+			});
+			this._linkArray[0].focus();
 		}
 	}
 
@@ -1647,7 +1717,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	onAfterRendering() {
 		this._getList();
-		this.valueStateOpen = this.shouldDisplayOnlyValueStateMessage;
+		this.valueStateOpen = this.shouldDisplayOnlyValueStateMessage || (this._handleLinkNavigation && !this.open);
 		this.storeResponsivePopoverWidth();
 
 		this._deleting = false;
@@ -1778,7 +1848,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const focusIsGoingInPopover = [responsivePopover, popover].some(popup => popup?.contains(e.relatedTarget as Node));
 		const focusIsGoingInValueStatePopup = this?.contains(e.relatedTarget as Node);
 
-		if (focusIsGoingInValueStatePopup) {
+		if (focusIsGoingInValueStatePopup || this._handleLinkNavigation) {
 			this.focused = false;
 			e.stopImmediatePropagation();
 			return;
@@ -1887,6 +1957,20 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			[ValueState.Positive]: "sys-enter-2",
 			[ValueState.Information]: "information",
 		}[valueState];
+	}
+
+	get linksInAriaValueStateHiddenText() {
+		const linksArray: Array<HTMLElement> = [];
+		if (this.valueStateMessage) {
+			this.valueStateMessage.forEach(element => {
+				if (element.children.length)	{
+					element.querySelectorAll("ui5-link").forEach(link => {
+						linksArray.push(link as HTMLElement);
+					});
+				}
+			});
+		}
+		return linksArray;
 	}
 
 	get _tokensCountText() {
