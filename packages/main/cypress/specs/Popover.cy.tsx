@@ -264,6 +264,51 @@ describe("Popover interaction", () => {
 			// assert
 			cy.get("#pop").should("not.be.visible");
 		});
+
+		it("click on opener, which is iframe inside a custom element", () => {
+			cy.mount(
+				<>
+					<div id="myDiv" style="width: 200px;" tabindex="0">
+						<div id="helloId">Hello</div>
+						<div id="customElId" style="height: 200px;">
+						</div>
+					</div>
+					<Popover id="popoverId"
+							 opener="myDiv"
+							 headerText="Newsletter subscription"
+							 preventInitialFocus>
+						<div>
+							Content
+						</div>
+					</Popover>
+				</>
+			);
+
+			cy.get("#popoverId")
+				.invoke("prop", "open", "true");
+
+			cy.get("#popoverId")
+				.should("be.visible");
+
+			cy.get("#customElId").then($customEl => {
+				$customEl.get(0).attachShadow({mode: 'open'}).innerHTML =
+					`<iframe
+	sandbox
+	width="200"
+	height="200"
+	srcdoc="<div tabindex='0' id='contentId'>IFrame content</div>"
+></iframe>`;
+			});
+
+			cy.get("#myDiv")
+				.realClick({x: 100, y: 50});
+
+			// eslint-disable-next-line cypress/no-unnecessary-waiting
+			cy.wait(200);
+
+			cy.get("#popoverId")
+				.should("be.visible");
+		});
 	});
 });
 
