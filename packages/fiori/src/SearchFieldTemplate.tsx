@@ -48,10 +48,10 @@ export default function SearchFieldTemplate(this: SearchField, options?: SearchF
 							</Select>
 							<div class="ui5-search-field-separator"></div>
 						</>
-					) : this.advancedFilter ? (
+					) : this.filterButton ? (
 						<>
-							<div class="ui5-advanced-wrapper" style="display: contents">
-								<slot name="advancedFilter"></slot>
+							<div class="ui5-filter-wrapper" style="display: contents">
+								<slot name="filterButton"></slot>
 							</div>
 							<div class="ui5-search-field-separator"></div>
 						</>
