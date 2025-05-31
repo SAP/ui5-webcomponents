@@ -44,6 +44,8 @@ import type I18nBundle from "./i18nBundle.js";
 import { fetchCldr } from "./asset-registries/LocaleData.js";
 import getLocale from "./locale/getLocale.js";
 
+const isSSR = typeof document === "undefined";
+
 const DEV_MODE = true;
 let autoId = 0;
 
@@ -251,7 +253,9 @@ abstract class UI5Element extends HTMLElement {
 
 			const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
 			if (slotsAreManaged) {
-				this.shadowRoot!.addEventListener("slotchange", this._onShadowRootSlotChange.bind(this));
+				if (!isSSR) {
+					this.shadowRoot!.addEventListener("slotchange", this._onShadowRootSlotChange.bind(this));
+				}
 			}
 		}
 	}
@@ -314,7 +318,7 @@ abstract class UI5Element extends HTMLElement {
 
 		if (slotsAreManaged) {
 			// always register the observer before yielding control to the main thread (await)
-			this._startObservingDOMChildren();
+			// this._startObservingDOMChildren();
 			await this._processChildren();
 		}
 
@@ -442,7 +446,7 @@ abstract class UI5Element extends HTMLElement {
 		const autoIncrementMap = new Map<string, number>();
 		const slottedChildrenMap = new Map<string, Array<{ child: Node, idx: number }>>();
 
-		const allChildrenUpgraded = domChildren.map(async (child, idx) => {
+		domChildren.forEach((child, idx) => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -467,33 +471,36 @@ abstract class UI5Element extends HTMLElement {
 			// Await for not-yet-defined custom elements
 			if (child instanceof HTMLElement) {
 				const localName = child.localName;
-				const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
+				const shouldWaitForCustomElement = !isSSR && localName.includes("-") && !shouldIgnoreCustomElement(localName);
 
 				if (shouldWaitForCustomElement) {
 					const isDefined = customElements.get(localName);
 					if (!isDefined) {
-						const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
-						let timeoutPromise = elementTimeouts.get(localName);
-						if (!timeoutPromise) {
-							timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
-							elementTimeouts.set(localName, timeoutPromise);
-						}
-						await Promise.race([whenDefinedPromise, timeoutPromise]);
+						throw new Error(`Custom element "${localName}" is not defined yet. Please make sure to import the definition before using it.`); // eslint-disable-line
+					// 	const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
+					// 	let timeoutPromise = elementTimeouts.get(localName);
+					// 	if (!timeoutPromise) {
+					// 		timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
+					// 		elementTimeouts.set(localName, timeoutPromise);
+					// 	}
+					// 	await Promise.race([whenDefinedPromise, timeoutPromise]);
 					}
-					customElements.upgrade(child);
+					// customElements.upgrade(child);
 				}
 			}
 
-			child = (ctor.getMetadata().constructor as typeof UI5ElementMetadata).validateSlotValue(child, slotData);
+			if (!isSSR) {
+				child = (ctor.getMetadata().constructor as typeof UI5ElementMetadata).validateSlotValue(child, slotData);
+			}
 
 			// Listen for any invalidation on the child if invalidateOnChildChange is true or an object (ignore when false or not set)
-			if (instanceOfUI5Element(child) && slotData.invalidateOnChildChange) {
+			if (!isSSR && instanceOfUI5Element(child) && slotData.invalidateOnChildChange) {
 				const childChangeListener = this._getChildChangeListener(slotName);
 				child.attachInvalidate.call(child, childChangeListener);
 			}
 
 			// Listen for the slotchange event if the child is a slot itself
-			if (child instanceof HTMLSlotElement) {
+			if (!isSSR && child instanceof HTMLSlotElement) {
 				this._attachSlotChange(child, slotName, !!slotData.invalidateOnChildChange);
 			}
 
@@ -506,7 +513,7 @@ abstract class UI5Element extends HTMLElement {
 			}
 		});
 
-		await Promise.all(allChildrenUpgraded);
+		// await Promise.all(allChildrenUpgraded);
 
 		// Distribute the child in the _state object, keeping the Light DOM order,
 		// not the order elements are defined.
@@ -543,6 +550,7 @@ abstract class UI5Element extends HTMLElement {
 				reason: "textcontent",
 			});
 		}
+		return Promise.resolve();
 	}
 
 	/**
@@ -830,6 +838,7 @@ abstract class UI5Element extends HTMLElement {
 
 			if (!this._rendered) {
 				// first time rendering, previous setters might have been initializers from the constructor - update attributes here
+				console.log("update attributes") // eslint-disable-line
 				this.updateAttributes();
 			}
 
@@ -865,6 +874,9 @@ abstract class UI5Element extends HTMLElement {
 
 		// Update shadow root
 		if (ctor._needsShadowDOM()) {
+			if (isSSR) {
+				return updateShadowRoot(this);
+			}
 			updateShadowRoot(this);
 		}
 		this._rendered = true;

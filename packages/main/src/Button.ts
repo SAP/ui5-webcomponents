@@ -373,7 +373,7 @@ class Button extends UI5Element implements IButton {
 		};
 
 		if (!isGlobalHandlerAttached) {
-			document.addEventListener("mouseup", this._deactivate);
+			// document.addEventListener("mouseup", this._deactivate);
 
 			isGlobalHandlerAttached = true;
 		}
@@ -399,6 +399,7 @@ class Button extends UI5Element implements IButton {
 		this.hasIcon = !!this.icon;
 		this.hasEndIcon = !!this.endIcon;
 		this.iconOnly = this.isIconOnly;
+		console.log("iconOnly", this.iconOnly);
 
 		const defaultTooltip = await this.getDefaultTooltip();
 		this.buttonTitle = this.iconOnly ? this.tooltip ?? defaultTooltip : this.tooltip;
