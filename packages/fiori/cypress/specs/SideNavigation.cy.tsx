@@ -516,7 +516,10 @@ describe("Side Navigation interaction", () => {
 		);
 
 		// act
-		cy.get("#item1").realClick();
+		cy.get("#item1")
+			.shadow()
+			.find(".ui5-sn-item")
+			.realClick();
 
 		cy.get("#sideNav")
 			.shadow()
@@ -538,6 +541,8 @@ describe("Side Navigation interaction", () => {
 		// act
 		cy.get("@popover")
 			.find("[ui5-side-navigation-item][text='1']")
+			.shadow()
+			.find(".ui5-sn-item")
 			.realClick();
 
 		// assert
@@ -547,6 +552,8 @@ describe("Side Navigation interaction", () => {
 		// act
 		cy.get("@popover")
 			.find("[ui5-side-navigation-sub-item][text='1.1']")
+			.shadow()
+			.find(".ui5-sn-item")
 			.realClick();
 
 		// assert
