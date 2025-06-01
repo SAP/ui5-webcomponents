@@ -106,8 +106,15 @@ and there is an additional border that appears on hover. */
 }
 
 .ui5-sn-item.ui5-sn-item-disabled {
-	opacity: var(--sapContent_DisabledOpacity);
 	cursor: default;
+}
+
+.ui5-sn-item.ui5-sn-item-disabled > * {
+	opacity: var(--sapContent_DisabledOpacity);
+}
+
+.ui5-sn-item.ui5-sn-item-disabled::after {
+	opacity: 1;
 }
 
 :host([ui5-side-navigation-item][in-popover][unselectable]) .ui5-sn-item {
@@ -235,8 +242,8 @@ and there is an additional border that appears on hover. */
 	border-inline-start: none;
 }
 
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon {
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover .ui5-sn-item-toggle-icon,
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):focus .ui5-sn-item-toggle-icon {
 	min-width: 3rem;
 }
 
@@ -276,7 +283,7 @@ and there is an additional border that appears on hover. */
 }
 
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover,
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus {
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):focus {
 	width: var(--_ui5_side_navigation_item_collapsed_hover_focus_width);
 	box-shadow: var(--_ui5_side_navigation_box_shadow);
 	z-index: 2;
@@ -284,12 +291,12 @@ and there is an additional border that appears on hover. */
 }
 
 :host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover:not(.ui5-sn-item-with-expander),
-:host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander) {
+:host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):focus:not(.ui5-sn-item-with-expander) {
 	padding-inline-end: 0;
 }
 
-:host([unselectable][side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-with-expander):hover,
-:host([unselectable][side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-with-expander):focus {
+:host([unselectable][side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):not(.ui5-sn-item-with-expander):hover,
+:host([unselectable][side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):not(.ui5-sn-item-with-expander):focus {
 	padding-inline-end: var(--_ui5_side_navigation_action_item_collapsed_padding);
 }
 
@@ -299,9 +306,9 @@ and there is an additional border that appears on hover. */
 }
 
 :host([side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover:not(.ui5-sn-item-with-expander),
-:host([side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander),
+:host([side-nav-collapsed]) div.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):focus:not(.ui5-sn-item-with-expander),
 :host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover:not(.ui5-sn-item-with-expander):not([target="_blank"]),
-:host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander):not([target="_blank"]) {
+:host([side-nav-collapsed]) a.ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):focus:not(.ui5-sn-item-with-expander):not([target="_blank"]) {
 	padding-inline-end: var(--_ui5_side_navigation_item_collapsed_hover_focus_padding_right);
 }
 
@@ -309,13 +316,13 @@ and there is an additional border that appears on hover. */
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-text,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover .ui5-sn-item-toggle-icon,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover .ui5-sn-item-external-link-icon,
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon,
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-external-link-icon {
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):focus .ui5-sn-item-toggle-icon,
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):focus .ui5-sn-item-external-link-icon {
 	display: var(--_ui5_side_navigation_item_collapsed_hover_focus_display);
 }
 
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
-:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon {
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):hover .ui5-sn-item-toggle-icon,
+:host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):not(.ui5-sn-item-disabled):focus .ui5-sn-item-toggle-icon {
 	left: var(--_ui5_side_navigation_item_expand_icon_hover_left);
 	right: var(--_ui5_side_navigation_item_expand_icon_hover_right);
 }
