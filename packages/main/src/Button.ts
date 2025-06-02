@@ -381,14 +381,6 @@ class Button extends UI5Element implements IButton {
 			this._onclick(e);
 		};
 
-		this.addEventListener("click", (e: MouseEvent) => {
-			if (e instanceof CustomEvent) {
-				return;
-			}
-
-			this._onclick(e);
-		});
-
 		if (!isGlobalHandlerAttached) {
 			document.addEventListener("mouseup", this._deactivate);
 
