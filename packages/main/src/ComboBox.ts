@@ -441,11 +441,15 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	/**
 	 * Stores the array of links in the value state hidden text.
 	 * @private
+	 * @since 2.11.0
+	 * @default []
 	 */
 	_linkArray: HTMLElement[] = [];
 
 	/**
 	 * Indicates whether link navigation is being handled.
+	 * @default false
+	 * @since 2.11.0
 	 * @private
 	 */
 	_handleLinkNavigation: boolean = false;

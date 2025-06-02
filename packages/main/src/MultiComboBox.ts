@@ -519,12 +519,16 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	/**
 	 * Stores the array of links in the value state hidden text.
 	 * @private
+	 * @since 2.11.0
+	 * @default []
 	 */
 		_linkArray: HTMLElement[] = [];
 
 	/**
 	 * Indicates whether link navigation is being handled.
 	 * @private
+	 * @since 2.11.0
+	 * @default false
 	 */
 	_handleLinkNavigation: boolean = false;
 
@@ -1943,7 +1947,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get valueStateTextId() {
-		return this.hasValueState ? `ui5-multi-combobox-valueStateDesc` : undefined;
+		return this.hasValueState ? `ui5-multi-combobox-valueStateDesc` : "";
 	}
 
 	get ariaLabelText() {

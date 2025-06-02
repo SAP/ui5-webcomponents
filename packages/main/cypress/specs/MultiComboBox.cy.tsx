@@ -119,7 +119,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F1"]);
+			.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@multi-combobox")
 			.shadow()
@@ -148,7 +148,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F1"]);
+			.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@multi-combobox")
 			.shadow()
@@ -189,7 +189,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F1"]);
+			.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@multi-combobox")
 			.shadow()
@@ -237,7 +237,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F1"]);
+			.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@multi-combobox")
 			.shadow()
@@ -255,7 +255,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F1"]);
+			.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("ui5-link")
 			.as("firstLink")

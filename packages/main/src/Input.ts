@@ -632,7 +632,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * Indicates whether link navigation is being handled.
 	 * @default false
 	 * @private
-	 * @since 2.10.0
+	 * @since 2.11.0
 	 */
 	_handleLinkNavigation: boolean = false;
 
@@ -640,7 +640,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * Stores the array of links in the value state hidden text.
 	 * @default []
 	 * @private
-	 * @since 2.10.0
+	 * @since 2.11.0
 	 */
 	_linkArray: Array<HTMLElement> = [];
 
