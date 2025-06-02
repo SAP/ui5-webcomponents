@@ -70,25 +70,9 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
-	_initialChildDisabledStates: Map<SideNavigationItemBase, boolean> = new Map();
-
 	onBeforeRendering() {
 		this.allItems.forEach(item => {
-			if (!this._initialChildDisabledStates.has(item)) {
-				this._initialChildDisabledStates.set(item, item.disabled);
-			}
-		});
-
-		this._updateChildItemsDisabledState();
-	}
-
-	_updateChildItemsDisabledState() {
-		this.allItems.forEach(item => {
-			if (this.disabled) {
-				item.disabled = true;
-			} else {
-				item.disabled = this._initialChildDisabledStates.get(item)!;
-			}
+			item._groupDisabled = this.disabled;
 		});
 	}
 
@@ -155,6 +139,10 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (this.disabled) {
+			return;
+		}
+
 		const isRTL = this.effectiveDir === "rtl";
 
 		if (isLeft(e)) {
