@@ -3,10 +3,6 @@ import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import DateRangePicker from "../../src/DateRangePicker.js";
 
 describe("DateRangePicker general interaction", () => {
-	afterEach(() => {
-		// eslint-disable-next-line
-		cy.wait(200);
-	});
 	it("Custom Validation Error", () => {
 		cy.mount(<DateRangePicker formatPattern="dd/MM/yyyy"></DateRangePicker>);
 
