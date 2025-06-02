@@ -44,7 +44,7 @@ class ToggleButton extends Button {
 	@property({ type: Boolean })
 	pressed = false;
 
-	_onclick() {
+	_onclickExtension() {
 		this.pressed = !this.pressed;
 
 		if (isSafari()) {
