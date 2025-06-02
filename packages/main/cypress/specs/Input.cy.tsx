@@ -451,7 +451,7 @@ describe("Input general interaction", () => {
 });
 
 describe("Input arrow navigation", () => {
-	it("Value state header and group headers should be included in the arrow navigation", () => {
+	it("Value state header and group headers should not be included in the arrow navigation", () => {
 		cy.mount(
 			<Input id="inputError" class="input2auto" showSuggestions valueState="Negative" placeholder="Search for a country ...">
 				<div slot="valueStateMessage">
@@ -484,7 +484,11 @@ describe("Input arrow navigation", () => {
 		cy.get("@ui5-responsive-popover")
 			.find("div")
 			.as("valueMessage")
-			.should("have.class", "ui5-responsive-popover-header--focused");
+			.should("not.have.class", "ui5-responsive-popover-header--focused");
+
+		cy.get("ui5-suggestion-item")
+			.eq(0)
+			.should("have.attr", "focused");
 
 		cy.get("@input")
 			.realPress("ArrowDown");
@@ -493,7 +497,7 @@ describe("Input arrow navigation", () => {
 			.should("not.have.class", "ui5-responsive-popover-header--focused");
 
 		cy.get("ui5-suggestion-item")
-			.eq(0)
+			.eq(1)
 			.should("have.attr", "focused");
 	});
 
@@ -642,7 +646,7 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F1"]);
+			.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@input")
 			.shadow()
@@ -682,7 +686,7 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F1"]);
+			.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@input")
 			.shadow()
@@ -730,7 +734,7 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 
 		cy.get("@innerInput")
 		.realClick()
-		.realPress(["Control", "Alt", "F1"]);
+		.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@input")
 			.shadow()
@@ -805,7 +809,7 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 
 		cy.get("@innerInput")
 		.realClick()
-		.realPress(["Control", "Alt", "F1"]);
+		.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("ui5-link")
 			.as("firstLink")
@@ -814,8 +818,12 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 		cy.get("@firstLink")
 			.realPress("ArrowDown");
 
+		cy.get("ui5-suggestion-item")
+			.eq(0)
+			.should("have.attr", "focused");
+
 		cy.get("@input")
-			.should("have.attr", "value", "Titanium")
+			.should("have.attr", "value", "Chromium")
 			.should("have.focus");
 	});
 });

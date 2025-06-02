@@ -21,6 +21,7 @@ import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.
 import {
 	isPhone,
 	isAndroid,
+	isMac,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
@@ -74,6 +75,10 @@ import {
 	VALUE_STATE_TYPE_INFORMATION,
 	VALUE_STATE_TYPE_ERROR,
 	VALUE_STATE_TYPE_WARNING,
+	VALUE_STATE_LINK,
+	VALUE_STATE_LINKS,
+	VALUE_STATE_LINK_MAC,
+	VALUE_STATE_LINKS_MAC,
 	INPUT_SUGGESTIONS,
 	INPUT_SUGGESTIONS_TITLE,
 	INPUT_SUGGESTIONS_ONE_HIT,
@@ -627,7 +632,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * Indicates whether link navigation is being handled.
 	 * @default false
 	 * @private
-	 * @since 2.10.0
+	 * @since 2.11.0
 	 */
 	_handleLinkNavigation: boolean = false;
 
@@ -635,7 +640,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * Stores the array of links in the value state hidden text.
 	 * @default []
 	 * @private
-	 * @since 2.10.0
+	 * @since 2.11.0
 	 */
 	_linkArray: Array<HTMLElement> = [];
 
@@ -915,7 +920,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._linkArray = this.linksInAriaValueStateHiddenText;
 		if (this._linkArray.length) {
 			this._linkArray.forEach(link => {
-				link.removeEventListener("keydown", e => this._linkNavigationEventListener(e, link));
+				// link.removeEventListener("keydown", this._linkNavigationEventListener.bind(this, link));
 				link.addEventListener("keydown", e => this._linkNavigationEventListener(e, link));
 			});
 			this._linkArray[0].focus();
@@ -1678,6 +1683,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		return [
 			this.suggestionsTextId,
 			this.valueStateTextId,
+			this._valueStateLinksShortcutsTextAccId,
 			this._inputAccInfo.ariaDescribedBy,
 			this._accInfoAriaDescriptionId,
 			this.ariaDescriptionTextId,
@@ -1741,6 +1747,23 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			});
 		}
 		return linksArray;
+	}
+
+	get valueStateLinksShortcutsTextAcc() {
+		const linksArray = this.linksInAriaValueStateHiddenText;
+		if (!linksArray.length) {
+			return "";
+		}
+
+		if (isMac()) {
+			return linksArray.length === 1 ? Input.i18nBundle.getText(VALUE_STATE_LINK_MAC) : Input.i18nBundle.getText(VALUE_STATE_LINKS_MAC);
+		}
+
+		return linksArray.length === 1 ? Input.i18nBundle.getText(VALUE_STATE_LINK) : Input.i18nBundle.getText(VALUE_STATE_LINKS);
+	}
+
+	get _valueStateLinksShortcutsTextAccId() {
+		return this.linksInAriaValueStateHiddenText.length > 0 ? `hiddenText-value-state-link-shortcut` : "";
 	}
 
 	get iconsCount(): number {
