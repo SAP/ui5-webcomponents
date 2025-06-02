@@ -108,6 +108,10 @@ export default function InputTemplate(this: Input, hooks?: { preContent: Templat
 						<span id="accessibleDescription" class="ui5-hidden-text">{this.accInfo.accessibleDescription}</span>
 					}
 
+					{this.linksInAriaValueStateHiddenText.length > 0 &&
+						<span id="hiddenText-value-state-link-shortcut" class="ui5-hidden-text">{this.valueStateLinksShortcutsTextAcc}</span>
+					}
+
 					{this.hasValueState &&
 						<span id="valueStateDesc" class="ui5-hidden-text">{this.ariaValueStateHiddenText}</span>
 					}

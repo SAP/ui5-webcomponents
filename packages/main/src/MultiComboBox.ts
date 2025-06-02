@@ -43,6 +43,7 @@ import {
 	isPhone,
 	isAndroid,
 	isFirefox,
+	isMac,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -79,6 +80,10 @@ import {
 	VALUE_STATE_TYPE_INFORMATION,
 	VALUE_STATE_TYPE_ERROR,
 	VALUE_STATE_TYPE_WARNING,
+	VALUE_STATE_LINK,
+	VALUE_STATE_LINKS,
+	VALUE_STATE_LINK_MAC,
+	VALUE_STATE_LINKS_MAC,
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
 	SHOW_SELECTED_BUTTON,
@@ -1916,6 +1921,10 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			return `${text} ${this.valueStateDefaultText || ""}`;
 		}
 
+		if (this.getValueStateLinksShortcutsTextAcc) {
+			return `${text}`.concat(" ", this.getValueStateLinksShortcutsTextAcc, " ", this.valueStateMessage.map(el => el.textContent).join(" "));
+		}
+
 		return `${text}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
 	}
 
@@ -1973,6 +1982,23 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		return linksArray;
 	}
 
+	get getValueStateLinksShortcutsTextAcc() {
+		const linksArray = this.linksInAriaValueStateHiddenText;
+		if (!linksArray.length) {
+			return "";
+		}
+
+		if (isMac()) {
+			return linksArray.length === 1 ? MultiComboBox.i18nBundle.getText(VALUE_STATE_LINK_MAC) : MultiComboBox.i18nBundle.getText(VALUE_STATE_LINKS_MAC);
+		}
+
+		return linksArray.length === 1 ? MultiComboBox.i18nBundle.getText(VALUE_STATE_LINK) : MultiComboBox.i18nBundle.getText(VALUE_STATE_LINKS);
+	}
+
+	get _valueStateLinksShortcutsTextAccId() {
+		return this.linksInAriaValueStateHiddenText.length > 0 ? `hiddenText-value-state-link-shortcut` : "";
+	}
+
 	get _tokensCountText() {
 		if (!this._tokenizer) {
 			return;
@@ -1990,7 +2016,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get ariaDescribedByText() {
-		return this.valueStateTextId ? `${this._tokensCountTextId} ${this.valueStateTextId}` : `${this._tokensCountTextId}`;
+		return `${this._tokensCountTextId} ${this.valueStateTextId} ${this._valueStateLinksShortcutsTextAccId}`.trim();
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
