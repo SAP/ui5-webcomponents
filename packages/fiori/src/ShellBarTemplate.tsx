@@ -3,6 +3,7 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import type ShellBar from "./ShellBar.js";
 import ShellBarPopoverTemplate from "./ShellBarPopoverTemplate.js";
 import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import ButtonBadge from "@ui5/webcomponents/dist/ButtonBadge.js";
 
 export default function ShellBarTemplate(this: ShellBar) {
 	return (
@@ -55,7 +56,7 @@ export default function ShellBarTemplate(this: ShellBar) {
 					{!this.hasMenuItems && (
 						<>
 							{this.isSBreakPoint && this.hasLogo && singleLogo.call(this)}
-							{!this.isSBreakPoint && (
+							{!this.isSBreakPoint && (this.hasLogo || this.primaryTitle) && (
 								<>
 									{combinedLogo.call(this)}
 									{this.secondaryTitle && this.primaryTitle && (
@@ -184,12 +185,15 @@ export default function ShellBarTemplate(this: ShellBar) {
 									}}
 									icon="sap-icon://bell"
 									data-ui5-text="Notifications"
-									data-ui5-notifications-count={this.notificationsCount}
 									onClick={this._handleNotificationsPress}
 									tooltip={this._notificationsText}
 									accessibilityAttributes={this.accInfo.notifications.accessibilityAttributes}
 									data-ui5-stable="notifications"
-								/>
+								>
+									{this.notificationsCount && (
+										<ButtonBadge slot="badge" design="OverlayText" text={this.notificationsCount} />
+									)}
+								</Button>
 							)}
 							{this.customItemsInfo.map(item => (
 								<Button
@@ -198,14 +202,16 @@ export default function ShellBarTemplate(this: ShellBar) {
 									class={`${item.classes} ui5-shellbar-items-for-arrow-nav`}
 									icon={item.icon}
 									tooltip={item.tooltip}
-									data-count={item.count}
 									data-ui5-notifications-count={this.notificationsCount}
 									data-ui5-external-action-item-id={item.refItemid}
 									data-ui5-stable={item.stableDomRef}
 									onClick={item.press}
 									accessibilityAttributes={item.accessibilityAttributes}
-									accessibleName={item.accessibleName}
-								/>
+								>
+									{item.count && (
+										<ButtonBadge slot="badge" design="OverlayText" text={item.count} />
+									)}
+								</Button>
 							))}
 						</div>
 					</div>
@@ -219,12 +225,20 @@ export default function ShellBarTemplate(this: ShellBar) {
 						...this.classes.overflow,
 					}}
 					icon="sap-icon://overflow"
-					data-count={this._overflowNotifications}
 					onClick={this._handleOverflowPress}
 					tooltip={this._overflowText}
 					accessibilityAttributes={this.accInfo.overflow.accessibilityAttributes}
 					data-ui5-stable="overflow"
-				/>
+				>
+					{this._overflowNotifications && (
+						<ButtonBadge
+							slot="badge"
+							design={this._overflowNotifications === " " ? "AttentionDot" : "OverlayText"}
+							text={this._overflowNotifications === " " ? "" : this._overflowNotifications}
+						/>
+					)}
+				</Button>
+
 				{this.hasProfile && profileButton.call(this)}
 				{this.showProductSwitch && (
 					<Button
