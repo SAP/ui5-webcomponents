@@ -361,6 +361,7 @@ class Button extends UI5Element implements IButton {
 
 	_deactivate: () => void;
 	_clickBound: (e: MouseEvent) => void;
+	clickHandlerAttached = false;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -381,6 +382,11 @@ class Button extends UI5Element implements IButton {
 			this._onclick(e);
 		};
 
+		if (!this.clickHandlerAttached) {
+			this.addEventListener("click", this._clickBound);
+			this.clickHandlerAttached = true;
+		}
+
 		if (!isGlobalHandlerAttached) {
 			document.addEventListener("mouseup", this._deactivate);
 
@@ -397,14 +403,21 @@ class Button extends UI5Element implements IButton {
 	}
 
 	onEnterDOM() {
-		this.addEventListener("click", this._clickBound);
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
+
+		if (!this.clickHandlerAttached) {
+			this.addEventListener("click", this._clickBound);
+			this.clickHandlerAttached = true;
+		}
 	}
 
-	onExitDOM(): void {
-		this.removeEventListener("click", this._clickBound);
+	onExitDOM() {
+		if (this.clickHandlerAttached) {
+			this.removeEventListener("click", this._clickBound);
+			this.clickHandlerAttached = false;
+		}
 	}
 
 	async onBeforeRendering() {
