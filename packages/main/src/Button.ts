@@ -454,11 +454,6 @@ class Button extends UI5Element implements IButton {
 			return;
 		}
 
-		// Allows subclasses to modify behavior after the click event
-		this._onclickExtension();
-	}
-
-	_onclickExtension() {
 		if (this._isSubmit) {
 			submitForm(this);
 		}
