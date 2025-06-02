@@ -263,7 +263,15 @@ describe("Toggle Button general interaction tests", () => {
 
         cy.get("[ui5-toggle-button]").as("toggleButton");
 
+        cy.get("@toggleButton")
+            .then(button => {
+                button.get(0).addEventListener("click", cy.stub().as("clicked"));
+            });
+
         cy.get("@toggleButton").realClick();
+
+        cy.get("@clicked")
+            .should("have.not.been.called")
 
         cy.get("@toggleButton").should("not.have.attr", "pressed");
     });
