@@ -40,6 +40,14 @@ type CalculatedPlacement = {
 	placement: `${PopoverPlacement}`,
 }
 
+const isElementCutOff = function (el: HTMLElement | null | undefined): boolean {
+	if (!el) {
+		return false;
+	}
+
+	return ["scroll", "auto"].indexOf(getComputedStyle(el).overflowY) > -1 && el.scrollHeight > el.clientHeight;
+};
+
 /**
  * @class
  *
@@ -692,20 +700,25 @@ class Popover extends Popup {
 	getActualPlacement(targetRect: DOMRect, popoverSize: PopoverSize): `${PopoverPlacement}` {
 		const placement = this.placement;
 		let actualPlacement = placement;
+		const isElementCut = isElementCutOff(this.getDomRef()?.querySelector(".ui5-popup-content"))
+			|| isElementCutOff(this.getDomRef()?.querySelector(".ui5-popup-header-root"));
 
 		const clientWidth = document.documentElement.clientWidth;
-		const clientHeight = document.documentElement.clientHeight;
+		const clientHeight = document.documentElement.clientHeight - Popover.VIEWPORT_MARGIN;
+
+		const arrowOffset = this.hideArrow ? 0 : ARROW_SIZE;
+		const popoverHeight = popoverSize.height + arrowOffset;
 
 		switch (placement) {
 		case PopoverPlacement.Top:
-			if (targetRect.top < popoverSize.height
-				&& targetRect.top < clientHeight - targetRect.bottom) {
+			if (isElementCut || (targetRect.top < popoverHeight
+				&& targetRect.top < clientHeight - targetRect.bottom)) {
 				actualPlacement = PopoverPlacement.Bottom;
 			}
 			break;
 		case PopoverPlacement.Bottom:
-			if (clientHeight - targetRect.bottom < popoverSize.height
-				&& clientHeight - targetRect.bottom < targetRect.top) {
+			if (isElementCut || (clientHeight - targetRect.bottom < popoverHeight
+				&& clientHeight - targetRect.bottom < targetRect.top)) {
 				actualPlacement = PopoverPlacement.Top;
 			}
 			break;
