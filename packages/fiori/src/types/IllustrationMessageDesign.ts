@@ -25,28 +25,28 @@ enum IllustrationMessageDesign {
 	/**
 	 * Dot <code>Illustration</code> size (XS breakpoint). Suitable for table rows.
 	 * @public
-	 * @deprecated use ExtraSmall instead
+	 * @deprecated Since 2.10.0, use ExtraSmall instead
 	 */
 	Dot = "Dot",
 
 	/**
 	 * Spot <code>Illustration</code> size (S breakpoint). Suitable for cards (four columns).
 	 * @public
-	 * @deprecated use Small instead
+	 * @deprecated Since 2.10.0, use Small instead
 	 */
 	Spot = "Spot",
 
 	/**
 	 * Dialog `Illustration` size (M breakpoint). Suitable for dialogs.
 	 * @public
-	 * @deprecated use Medium instead
+	 * @deprecated Since 2.10.0, use Medium instead
 	 */
 	Dialog = "Dialog",
 
 	/**
 	 * Scene `Illustration` size (L breakpoint). Suitable for a `Page` or a table.
 	 * @public
-	 * @deprecated use Large instead
+	 * @deprecated Since 2.10.0, use Large instead
 	 */
 	Scene = "Scene",
 

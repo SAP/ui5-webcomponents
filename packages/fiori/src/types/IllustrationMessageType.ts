@@ -66,7 +66,7 @@ enum IllustrationMessageType {
 	/**
 	 * "No Email v1" illustration type.
 	 * @public
-	 * @deprecated use NoMail instead
+	 * @deprecated Since 2.10.0, use NoMail instead
 	 */
 	NoMail_v1 = "NoMail_v1", // eslint-disable-line
 	/**
@@ -87,7 +87,7 @@ enum IllustrationMessageType {
 	/**
 	 * "No Saved Items v1" illustration type.
 	 * @public
-	 * @deprecated use NoSavedItems instead
+	 * @deprecated Since 2.10.0, use NoSavedItems instead
 	 */
 	NoSavedItems_v1 = "NoSavedItems_v1", // eslint-disable-line
 	/**
@@ -103,13 +103,13 @@ enum IllustrationMessageType {
 	/**
 	 * "No Tasks v1" illustration type.
 	 * @public
-	 * @deprecated use NoTasks instead
+	 * @deprecated Since 2.10.0, use NoTasks instead
 	 */
 	NoTasks_v1 = "NoTasks_v1", // eslint-disable-line
 	/**
 	 * "No Dimensions Set" illustration type.
 	 * @public
-	 * @deprecated use NoChartData instead
+	 * @deprecated Since 2.10.0, use NoChartData instead
 	 */
 	NoDimensionsSet = "NoDimensionsSet",
 	/**
@@ -135,13 +135,13 @@ enum IllustrationMessageType {
 	/**
 	 * "Add Column" illustration type.
 	 * @public
-	 * @deprecated use AddingColumns instead
+	 * @deprecated Since 2.10.0, use AddingColumns instead
 	 */
 	AddColumn = "AddColumn",
 	/**
 	 * "Add People" illustration type.
 	 * @public
-	 * @deprecated use AddPeopleToCalendar instead
+	 * @deprecated Since 2.10.0, use AddPeopleToCalendar instead
 	 */
 	AddPeople = "AddPeople",
 	/**
@@ -152,25 +152,25 @@ enum IllustrationMessageType {
 	/**
 	 * "Balloon Sky" illustration type.
 	 * @public
-	 * @deprecated use ReceiveAppreciation instead
+	 * @deprecated Since 2.10.0, use ReceiveAppreciation instead
 	 */
 	BalloonSky = "BalloonSky",
 	/**
 	 * "Connection" illustration type.
 	 * @public
-	 * @deprecated use UnableToLoad instead
+	 * @deprecated Since 2.10.0, use UnableToLoad instead
 	 */
 	Connection = "Connection",
 	/**
 	 * "Empty Calendar" illustration type.
 	 * @public
-	 * @deprecated use NoActivities instead
+	 * @deprecated Since 2.10.0, use NoActivities instead
 	 */
 	EmptyCalendar = "EmptyCalendar",
 	/**
 	 * "Empty List" illustration type.
 	 * @public
-	 * @deprecated use NoEntries instead
+	 * @deprecated Since 2.10.0, use NoEntries instead
 	 */
 	EmptyList = "EmptyList",
 	/**
@@ -181,19 +181,19 @@ enum IllustrationMessageType {
 	/**
 	 * "Error Screen" illustration type.
 	 * @public
-	 * @deprecated use UnableToUpload instead
+	 * @deprecated Since 2.10.0, use UnableToUpload instead
 	 */
 	ErrorScreen = "ErrorScreen",
 	/**
 	 * "Filter Table" illustration type.
 	 * @public
-	 * @deprecated use FilteringColumns instead
+	 * @deprecated Since 2.10.0, use FilteringColumns instead
 	 */
 	FilterTable = "FilterTable",
 	/**
 	 * "Group Table" illustration type.
 	 * @public
-	 * @deprecated use GroupingColumns instead
+	 * @deprecated Since 2.10.0, use GroupingColumns instead
 	 */
 	GroupTable = "GroupTable",
 	/**
@@ -219,13 +219,13 @@ enum IllustrationMessageType {
 	/**
 	 * "Reload Screen" illustration type.
 	 * @public
-	 * @deprecated use UnableToLoad instead
+	 * @deprecated Since 2.10.0, use UnableToLoad instead
 	 */
 	ReloadScreen = "ReloadScreen",
 	/**
 	 * "Resize Column" illustration type.
 	 * @public
-	 * @deprecated use ResizingColumns instead
+	 * @deprecated Since 2.10.0, use ResizingColumns instead
 	 */
 	ResizeColumn = "ResizeColumn",
 	/**
@@ -241,13 +241,13 @@ enum IllustrationMessageType {
 	/**
 	 * "Search Earth" illustration type.
 	 * @public
-	 * @deprecated use BeforeSearch instead
+	 * @deprecated Since 2.10.0, use BeforeSearch instead
 	 */
 	SearchEarth = "SearchEarth",
 	/**
 	 * "Search Folder" illustration type.
 	 * @public
-	 * @deprecated use NoSearchResults instead
+	 * @deprecated Since 2.10.0, use NoSearchResults instead
 	 */
 	SearchFolder = "SearchFolder",
 	/**
@@ -258,97 +258,97 @@ enum IllustrationMessageType {
 	/**
 	 * "Simple Balloon" illustration type.
 	 * @public
-	 * @deprecated use ReceiveAppreciation instead
+	 * @deprecated Since 2.10.0, use ReceiveAppreciation instead
 	 */
 	SimpleBalloon = "SimpleBalloon",
 	/**
 	 * "Simple Bell" illustration type.
 	 * @public
-	 * @deprecated use NoNotifications instead
+	 * @deprecated Since 2.10.0, use NoNotifications instead
 	 */
 	SimpleBell = "SimpleBell",
 	/**
 	 * "Simple Calendar" illustration type.
 	 * @public
-	 * @deprecated use NoActivities instead
+	 * @deprecated Since 2.10.0, use NoActivities instead
 	 */
 	SimpleCalendar = "SimpleCalendar",
 	/**
 	 * "Simple CheckMark" illustration type.
 	 * @public
-	 * @deprecated use KeyTask instead
+	 * @deprecated Since 2.10.0, use KeyTask instead
 	 */
 	SimpleCheckMark = "SimpleCheckMark",
 	/**
 	 * "Simple Connection" illustration type.
 	 * @public
-	 * @deprecated use UnableToLoad instead
+	 * @deprecated Since 2.10.0, use UnableToLoad instead
 	 */
 	SimpleConnection = "SimpleConnection",
 	/**
 	 * "Simple Empty Doc" illustration type.
 	 * @public
-	 * @deprecated use NoData instead
+	 * @deprecated Since 2.10.0, use NoData instead
 	 */
 	SimpleEmptyDoc = "SimpleEmptyDoc",
 	/**
 	 * "Simple Empty List" illustration type.
 	 * @public
-	 * @deprecated use NoEntries instead
+	 * @deprecated Since 2.10.0, use NoEntries instead
 	 */
 	SimpleEmptyList = "SimpleEmptyList",
 	/**
 	 * "Simple Error" illustration type.
 	 * @public
-	 * @deprecated use UnableToUpload instead
+	 * @deprecated Since 2.10.0, use UnableToUpload instead
 	 */
 	SimpleError = "SimpleError",
 	/**
 	 * "Simple Magnifier" illustration type.
 	 * @public
-	 * @deprecated use BeforeSearch instead
+	 * @deprecated Since 2.10.0, use BeforeSearch instead
 	 */
 	SimpleMagnifier = "SimpleMagnifier",
 	/**
 	 * "Simple Mail" illustration type.
 	 * @public
-	 * @deprecated use NoMail instead
+	 * @deprecated Since 2.10.0, use NoMail instead
 	 */
 	SimpleMail = "SimpleMail",
 	/**
 	 * "Simple No Saved Items" illustration type.
 	 * @public
-	 * @deprecated use NoSavedItems instead
+	 * @deprecated Since 2.10.0, use NoSavedItems instead
 	 */
 	SimpleNoSavedItems = "SimpleNoSavedItems",
 	/**
 	 * "Simple Not Found Magnifier" illustration type.
 	 * @public
-	 * @deprecated use NoSearchResults instead
+	 * @deprecated Since 2.10.0, use NoSearchResults instead
 	 */
 	SimpleNotFoundMagnifier = "SimpleNotFoundMagnifier",
 	/**
 	 * "Simple Reload" illustration type.
 	 * @public
-	 * @deprecated use UnableToLoad instead
+	 * @deprecated Since 2.10.0, use UnableToLoad instead
 	 */
 	SimpleReload = "SimpleReload",
 	/**
 	 * "Simple Task" illustration type.
 	 * @public
-	 * @deprecated use NoTasks instead
+	 * @deprecated Since 2.10.0, use NoTasks instead
 	 */
 	SimpleTask = "SimpleTask",
 	/**
 	 * "Sleeping Bell" illustration type.
 	 * @public
-	 * @deprecated use NoNotifications instead
+	 * @deprecated Since 2.10.0, use NoNotifications instead
 	 */
 	SleepingBell = "SleepingBell",
 	/**
 	 * "Sort Column" illustration type.
 	 * @public
-	 * @deprecated use SortingColumns instead
+	 * @deprecated Since 2.10.0, use SortingColumns instead
 	 */
 	SortColumn = "SortColumn",
 	/**
@@ -359,25 +359,25 @@ enum IllustrationMessageType {
 	/**
 	 * "Success Balloon" illustration type.
 	 * @public
-	 * @deprecated use ReceiveAppreciation instead
+	 * @deprecated Since 2.10.0, use ReceiveAppreciation instead
 	 */
 	SuccessBalloon = "SuccessBalloon",
 	/**
 	 * "Success CheckMark" illustration type.
 	 * @public
-	 * @deprecated use KeyTask instead
+	 * @deprecated Since 2.10.0, use KeyTask instead
 	 */
 	SuccessCheckMark = "SuccessCheckMark",
 	/**
 	 * "Success HighFive" illustration type.
 	 * @public
-	 * @deprecated use ReceiveAppreciation instead
+	 * @deprecated Since 2.10.0, use ReceiveAppreciation instead
 	 */
 	SuccessHighFive = "SuccessHighFive",
 	/**
 	 * "Success Screen" illustration type.
 	 * @public
-	 * @deprecated use KeyTask instead
+	 * @deprecated Since 2.10.0, use KeyTask instead
 	 */
 	SuccessScreen = "SuccessScreen",
 	/**
@@ -388,13 +388,13 @@ enum IllustrationMessageType {
 	/**
 	 * "Tent" illustration type.
 	 * @public
-	 * @deprecated use NoData instead
+	 * @deprecated Since 2.10.0, use NoData instead
 	 */
 	Tent = "Tent",
 	/**
 	 * "Upload Collection" illustration type.
 	 * @public
-	 * @deprecated use DragFilesToUpload instead
+	 * @deprecated Since 2.10.0, use DragFilesToUpload instead
 	 */
 	UploadCollection = "UploadCollection",
 	/**
