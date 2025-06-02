@@ -28,6 +28,7 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	FILEUPLOADER_DEFAULT_PLACEHOLDER,
+	FILEUPLOADER_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 import type Popover from "./Popover.js";
@@ -198,6 +199,14 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	valueState: `${ValueState}` = "None";
 
 	/**
+	 * Defines whether the component is required.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	required = false;
+
+	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -248,6 +257,13 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	async formElementAnchor() {
 		return this.getFocusDomRefAsync();
+	}
+
+	/**
+	 * @override
+	 */
+	getFocusDomRef(): HTMLElement | undefined {
+		return this.hideInput ? this.content[0] : this._input;
 	}
 
 	get formFormattedValue() {
@@ -335,6 +351,9 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	_onfocusin() {
 		this.focused = true;
+		// if (this.hideInput) {
+		// 	this._input.focus();
+		// }
 		if (this._tokenizer) {
 			this._tokenizer.expanded = true;
 		}
@@ -380,6 +399,12 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	onAfterRendering() {
 		if (!this.value) {
 			this._input.value = "";
+		}
+
+		if (this.hideInput && this.content.length > 0) {
+			this.content.forEach(element => {
+				element.setAttribute("tabindex", "-1");
+			});
 		}
 
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
@@ -486,12 +511,16 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return FileUploader.i18nBundle.getText(FILEUPLOADER_VALUE_HELP_TOOLTIP);
 	}
 
-	get clearIconTitle() : string {
+	get clearIconTitle(): string {
 		return FileUploader.i18nBundle.getText(FILEUPLOADER_CLEAR_ICON_TOOLTIP);
 	}
 
 	get resolvedPlaceholder(): string {
 		return this.placeholder || FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER);
+	}
+
+	get roleDescription(): string {
+		return FileUploader.i18nBundle.getText(FILEUPLOADER_ROLE_DESCRIPTION);
 	}
 
 	get valueStateTextMappings(): Record<string, string> {

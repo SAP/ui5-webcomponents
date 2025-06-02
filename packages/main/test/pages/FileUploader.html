@@ -17,46 +17,82 @@
 
 	<div>
 		<div>
-			<label>File Uploader:</label>
+			<ui5-label for="fileSelector">Choose files:</ui5-label>
 			<ui5-file-uploader id="fileSelector" style="width: 350px;" multiple>
 				<ui5-button>Upload</ui5-button>
 			</ui5-file-uploader>
 		</div>
 
 		<div>
-			<ui5-file-uploader multiple hide-input>
+			<ui5-label for="buttonOnly">Choose files:</ui5-label>
+			<ui5-file-uploader id="buttonOnly" multiple hide-input>
 				<ui5-button>Upload</ui5-button>
 			</ui5-file-uploader>
 		</div>
 
 		<div>
-			<ui5-file-uploader style="width: 350px;" multiple value-state="None"></ui5-file-uploader>
+			<ui5-label for="avatarOnly">Choose files:</ui5-label>
+			<ui5-file-uploader id="avatarOnly" multiple hide-input>
+				<ui5-avatar icon="product" interactive shape="Circle" size="M"></ui5-avatar>
+			</ui5-file-uploader>
 		</div>
 
 		<div>
-			<ui5-file-uploader style="width: 350px;" multiple disabled></ui5-file-uploader>
+			<ui5-label for="iconOnly">Choose files:</ui5-label>
+			<ui5-file-uploader id="iconOnly" multiple hide-input>
+				<ui5-icon name="value-help" mode="Interactive"></ui5-icon>
+			</ui5-file-uploader>
 		</div>
 
 		<div>
-			<ui5-file-uploader style="width: 350px;" multiple value-state="Negative"></ui5-file-uploader>
+			<ui5-label for="noneFile">Choose files:</ui5-label>
+			<ui5-file-uploader id="noneFile" style="width: 350px;" multiple value-state="None"></ui5-file-uploader>
 		</div>
 
 		<div>
-			<ui5-file-uploader placeholder="Upload your files here" style="width: 350px;" multiple value-state="Positive"></ui5-file-uploader>
+			<ui5-label for="disabledFile">Choose files:</ui5-label>
+			<ui5-file-uploader id="disabledFile" style="width: 350px;" multiple disabled></ui5-file-uploader>
 		</div>
 
 		<div>
-			<ui5-file-uploader placeholder="Upload your files here" style="width: 350px;" multiple value-state="Critical"></ui5-file-uploader>
+			<ui5-label for="negativeFile">Choose files:</ui5-label>
+			<ui5-file-uploader id="negativeFile" style="width: 350px;" multiple value-state="Negative"></ui5-file-uploader>
 		</div>
 
 		<div>
-			<ui5-file-uploader placeholder="Upload your files here" style="width: 350px;" multiple value-state="Information"></ui5-file-uploader>
+			<ui5-label for="positiveFile">Choose files:</ui5-label>
+			<ui5-file-uploader id="positiveFile" placeholder="Upload your files here" style="width: 350px;" multiple value-state="Positive"></ui5-file-uploader>
 		</div>
 
 		<div>
-			<ui5-date-picker></ui5-date-picker>
+			<ui5-label for="criticalFile">Choose files:</ui5-label>
+			<ui5-file-uploader id="criticalFile" placeholder="Upload your files here" style="width: 350px;" multiple value-state="Critical"></ui5-file-uploader>
 		</div>
-		
+
+		<div>
+			<ui5-label for="infoInput">Choose files:</ui5-label>
+			<ui5-file-uploader id="infoInput" placeholder="Upload your files here" style="width: 350px;" multiple value-state="Information"></ui5-file-uploader>
+		</div>
+
+		<div>
+			<ui5-label for="datePicker">Pick a date:</ui5-label>
+			<ui5-date-picker id="datePicker"></ui5-date-picker>
+		</div>
+
+		<div>
+			<ui5-label for="basicInput">Pick a date:</ui5-label>
+			<ui5-input id="basicInput"></ui5-input>
+		</div>
+
+		<div>
+			<label for="nativeInput">Pick a date:</label>
+			<input id="nativeInput"></input>
+		</div>
+
+		<div>
+			<label id="nativeFileLabel" for="nativeFile">Pick a file:</label>
+			<input type="file" id="nativeFile"></input>
+		</div>
 	</div>
 
 	<script>

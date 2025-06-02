@@ -24,8 +24,12 @@ export default function FileUploaderTemplate(this: FileUploader) {
 						multiple={this.multiple}
 						accept={this.accept}
 						disabled={this.disabled}
+						aria-roledescription={this.roleDescription}
+						title={this.inputTitle}
+						placeholder={this.resolvedPlaceholder}
 						onChange={this._onChange}
-						tabindex={this.hideInput ? -1 : 0}
+						// tabindex={this.hideInput ? -1 : 0}
+						data-sap-focus-ref
 					/>
 				</form>
 				{!this.hideInput ? (

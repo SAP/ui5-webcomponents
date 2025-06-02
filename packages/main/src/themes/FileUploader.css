@@ -88,7 +88,7 @@
 }
 
 /* Input styles overrides */
-:host([focused]:not([opened]):not([hide-input])) .ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus)::after {
+:host([focused]) .ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus)::after {
 	content: var(--ui5_input_focus_pseudo_element_content);
 	position: absolute;
 	pointer-events: none;
