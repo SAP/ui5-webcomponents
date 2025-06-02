@@ -11,7 +11,7 @@ enum Keys {
 describe("Toggle Button general interaction tests", () => {
     const toggleButton = <ToggleButton>Toggle Button</ToggleButton>;
 
-    function testKeyAction(key: Key) {
+    function testKeyActionOnFocusedButton(key: Key) {
         cy.mount(toggleButton);
 
         cy.get("[ui5-toggle-button]").as("toggleButton");
@@ -51,7 +51,7 @@ describe("Toggle Button general interaction tests", () => {
             .should("be.calledWithMatch", Cypress.sinon.match.has(key, true));
     }
 
-    function testPreventedClickWithKeyPressed(key: string) {
+    function testPreventedClickWithKeyPressed(key: Keys) {
         cy.mount(toggleButton);
 
         cy.get("[ui5-toggle-button]").as("toggleButton");
@@ -152,11 +152,11 @@ describe("Toggle Button general interaction tests", () => {
     });
 
     it("test press on keyboard space key on focused toggle button", () => {
-        testKeyAction("Space");
+        testKeyActionOnFocusedButton("Space");
     });
 
     it("test press on keyboard Enter key on focused toggle button", () => {
-       testKeyAction("Enter");
+        testKeyActionOnFocusedButton("Enter");
     });
 
     it("should not fire click event on a disabled toggle button", () => {
