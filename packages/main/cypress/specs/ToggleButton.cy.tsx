@@ -71,10 +71,10 @@ describe("Toggle Button general interaction tests", () => {
             .should("have.been.called");
 
         cy.get("@toggleButton")
-            .should("not.have.prop", "pressed");
+            .should("not.have.prop", "pressed", "prev state here");
     }
 
-    it("tests click event", () => {
+    it("test click event", () => {
         cy.mount(toggleButton);
 
         cy.get("[ui5-toggle-button]").as("toggleButton");
@@ -96,14 +96,18 @@ describe("Toggle Button general interaction tests", () => {
             .should("have.been.calledTwice");
     });
 
-    it("tests prevented click event", () => {
+    it("test prevented click event", () => {
         cy.mount(toggleButton);
 
         cy.get("[ui5-toggle-button]").as("toggleButton");
 
-        cy.get("@toggleButton").then(($item) => {
-            $item.get(0).addEventListener("click", e => e.preventDefault());
-            $item.get(0).addEventListener("ui5-click", cy.stub().as("click"));
+        cy.get("@toggleButton").then(($el) => {
+            const el = $el.get(0);
+            el.addEventListener("click", (e) => {
+                e.preventDefault();
+            });
+            const clickSpy = cy.stub().as("click");
+            el.addEventListener("click", clickSpy);
         });
 
         cy.get("@toggleButton").realClick();
@@ -115,43 +119,43 @@ describe("Toggle Button general interaction tests", () => {
             .should("not.have.prop", "pressed", "prev state here");
     });
 
-    it("tests click event with ctrl key pressed", () => {
+    it("test click event with ctrl key pressed", () => {
         testClickWithKeyPressed(Keys.CTRL_KEY);
     });
 
-    it("tests prevented click event with ctrl key pressed", () => {
+    it("test prevented click event with ctrl key pressed", () => {
         testPreventedClickWithKeyPressed(Keys.CTRL_KEY);
     });
 
-    it("tests click event with alt key pressed", () => {
+    it("test click event with alt key pressed", () => {
         testClickWithKeyPressed(Keys.ALT_KEY);
     });
 
-    it("tests prevented click event with alt key pressed", () => {
+    it("test prevented click event with alt key pressed", () => {
         testPreventedClickWithKeyPressed(Keys.ALT_KEY);
     });
 
-    it("tests click event with shift key pressed", () => {
+    it("test click event with shift key pressed", () => {
         testClickWithKeyPressed(Keys.SHIFT_KEY);
     });
 
-    it("tests prevented click event with shift key pressed", () => {
+    it("test prevented click event with shift key pressed", () => {
         testPreventedClickWithKeyPressed(Keys.SHIFT_KEY);
     });
 
-    it("tests click event with meta key pressed", () => {
+    it("test click event with meta key pressed", () => {
         testClickWithKeyPressed(Keys.META_KEY);
     });
 
-    it("tests prevented click event with meta key pressed", () => {
+    it("test prevented click event with meta key pressed", () => {
         testPreventedClickWithKeyPressed(Keys.META_KEY);
     });
 
-    it("tests press on keyboard space key on focused toggle button", () => {
+    it("test press on keyboard space key on focused toggle button", () => {
         testKeyActionOnFocusedButton("Space");
     });
 
-    it("tests press on keyboard Enter key on focused toggle button", () => {
+    it("test press on keyboard Enter key on focused toggle button", () => {
         testKeyActionOnFocusedButton("Enter");
     });
 
