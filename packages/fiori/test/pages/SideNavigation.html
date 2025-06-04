@@ -118,6 +118,10 @@
 				<ui5-checkbox id="ensure-overflow"></ui5-checkbox>
 			</div>
 			<div class="form-field">
+				<ui5-label show-colon>disable first item</ui5-label>
+				<ui5-checkbox id="disable-item"></ui5-checkbox>
+			</div>
+			<div class="form-field">
 				<ui5-label show-colon>Compact Density</ui5-label>
 				<ui5-checkbox id="compact-density"></ui5-checkbox>
 			</div>
@@ -130,6 +134,7 @@
 			clickInput = document.querySelector("#click-counter"),
 			preventDefaultCb = document.querySelector("#prevent-selection"),
 			preventClickCb = document.querySelector("#prevent-click"),
+			disableItemCb = document.querySelector("#disable-item"),
 			preventSelectionChange = false,
 			preventClick = false,
 			counter = 0,
@@ -172,6 +177,11 @@
 
 		document.getElementById("compact-density").addEventListener("ui5-change", function (event) {
 			document.body.classList.toggle("sapUiSizeCompact", event.target.checked);
+		});
+
+		disableItemCb.addEventListener("ui5-change", function (event) {
+			const item = document.getElementById("item2");
+			item.disabled = event.target.checked;
 		});
 
 		sideNavigation.addEventListener("ui5-selection-change", function (event) {
