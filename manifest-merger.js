@@ -7,12 +7,12 @@ const packages = [
     "@ui5/webcomponents",
     "@ui5/webcomponents-fiori",
     "@ui5/webcomponents-ai",
-    "@ui5/webcomponents-compat",
+    "@ui5/webcomponents-compat"
 ];
 function getCEM(packageName) {
     if (!cache.has(packageName)) {
         const require = createRequire(import.meta.url);
-        const customElementManifestPath = require.resolve(`${packageName}/dist/custom-elements-internal.json`);
+        const customElementManifestPath = require.resolve(`${packageName}/dist/custom-elements.json`);
         const customElementManifest = JSON.parse(readFileSync(customElementManifestPath, { encoding: 'utf-8' }));
         for (const module of customElementManifest.modules) {
             for (const declaration of module.declarations ?? []) {
@@ -65,6 +65,9 @@ function mergeArraysWithoutDuplicates(currentValues, newValue, superClass) {
     return currentValues;
 }
 function getSuperClassDeclaration(declaration) {
+    if (declaration.superclass.name === "HTMLElement") {
+        return null;
+    }
     if (declaration.superclass) {
         const cem = getCEM(declaration.superclass.package);
         const mod = cem.modules.find((mod) => mod.path === declaration.superclass.module);
@@ -76,11 +79,10 @@ function getSuperClassDeclaration(declaration) {
 }
 function resolveTree(declaration, acc = []) {
     const superclass = getSuperClassDeclaration(declaration);
-    if (!superclass) {
-        return acc;
+    if (superclass) {
+        acc.push(superclass);
+        resolveTree(superclass, acc);
     }
-    acc.push(superclass);
-    resolveTree(superclass, acc);
     return acc;
 }
 function resolveModule(mod) {
@@ -100,11 +102,6 @@ function resolveModule(mod) {
                 }
             }
         }
-        customElementDeclaration.superclass = {
-            "name": "UI5Element",
-            "package": "@ui5/webcomponents-base",
-            "module": "dist/UI5Element.js"
-        };
     }
 }
 function recursiveManifestResolver(pkgName) {
@@ -118,5 +115,26 @@ packages.forEach(packageName => {
     recursiveManifestResolver(packageName);
 });
 packages.forEach(packageName => {
+    const customElementManifest = getCEM(packageName);
+    for (const mod of customElementManifest.modules) {
+        for (const declaration of mod.declarations ?? []) {
+            if (!Boolean(declaration.customElement)) {
+                continue;
+            }
+            const customElementDeclaration = declaration;
+            if (customElementDeclaration.name === "UI5Element") {
+                customElementDeclaration.superclass = {
+                    "name": "HTMLElement",
+                };
+            }
+            else {
+                customElementDeclaration.superclass = {
+                    "name": "UI5Element",
+                    "package": "@ui5/webcomponents-base",
+                    "module": "dist/UI5Element.js"
+                };
+            }
+        }
+    }
     saveCEM(packageName);
 });

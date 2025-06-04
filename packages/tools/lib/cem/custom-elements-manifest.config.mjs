@@ -88,14 +88,21 @@ function processClass(ts, classNode, moduleDoc) {
 
 	if (hasTag(classParsedJsDoc, "extends")) {
 		const superclassTag = findTag(classParsedJsDoc, "extends");
-		currClass.superclass = getReference(ts, superclassTag.name, classNode, moduleDoc.path);
+		const customElement = superclassTag.name === "HTMLElement";
 
-		if (classNode?.heritageClauses?.[0]?.types?.[0]?.expression?.text !== superclassTag.name) {
-			logDocumentationError(moduleDoc.path, `@extends ${superclassTag.name} is used, but the class doesn't extend the corresponding superclass`)
-		}
-
-		if (currClass.superclass?.name === "UI5Element") {
+		if (customElement) {
+			currClass.superclass = { name: "HTMLElement" }
 			currClass.customElement = true;
+		} else {
+			currClass.superclass = getReference(ts, superclassTag.name, classNode, moduleDoc.path);
+
+			if (classNode?.heritageClauses?.[0]?.types?.[0]?.expression?.text !== superclassTag.name) {
+				logDocumentationError(moduleDoc.path, `@extends ${superclassTag.name} is used, but the class doesn't extend the corresponding superclass`)
+			}
+
+			if (currClass.superclass?.name === "UI5Element") {
+				currClass.customElement = true;
+			}
 		}
 	}
 
