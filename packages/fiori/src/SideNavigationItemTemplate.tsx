@@ -154,12 +154,13 @@ function TreeItemTemplate(this: SideNavigationItem) {
 				</div>
 			}
 			{!!this.items.length &&
-			<ul id={this._groupId}
-				class="ui5-sn-item-ul"
-				role="group"
-			>
-				<slot></slot>
-			</ul>
+				<ul id={this._groupId}
+					class="ui5-sn-item-ul"
+					aria-label={this.text}
+					role="group"
+				>
+					<slot></slot>
+				</ul>
 			}
 		</li>
 	);
