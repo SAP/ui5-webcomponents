@@ -642,7 +642,6 @@ abstract class Popup extends UI5Element {
 
 	get ariaDescribedByIds() {
 		return [
-			this._accInfoAriaDescriptionId,
 			this.ariaDescriptionTextId,
 		].filter(Boolean).join(" ");
 	}
