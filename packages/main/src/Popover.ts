@@ -45,7 +45,7 @@ const isElementCutOff = function (el: HTMLElement | null | undefined): boolean {
 		return false;
 	}
 
-	return ["scroll", "auto"].indexOf(getComputedStyle(el).overflowY) > -1 && el.scrollHeight > el.clientHeight;
+	return ["scroll", "auto"].indexOf(getComputedStyle(el).overflowY) < 0 && el.scrollHeight > el.clientHeight;
 };
 
 /**
