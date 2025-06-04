@@ -182,6 +182,7 @@ export interface Reference {
   name: string;
   package?: string;
   module?: string;
+  inheritedFrom?: Reference;
 }
 
 /**
@@ -414,6 +415,8 @@ export interface CssPart {
    * If the value is a string, it's the reason for the deprecation.
    */
   deprecated?: boolean | string;
+
+  inheritedFrom?: Reference;
 }
 
 export interface CssCustomProperty {

@@ -11,7 +11,7 @@
   "type": "module",
   "scripts": {
     "generate": "wsrun --exclude-missing generate",
-    "generateAPI": "wsrun --exclude-missing generateAPI",
+    "generateAPI": "wsrun --exclude-missing generateAPI && node manifest-merger.js && wsrun --exclude-missing validateAPI",
     "generateProd": "wsrun --exclude-missing generateProd",
     "ts": "tsc -b packages/compat/tsconfig.json packages/fiori/tsconfig.json packages/ai/tsconfig.json",
     "bundle": "wsrun --exclude-missing bundle",
