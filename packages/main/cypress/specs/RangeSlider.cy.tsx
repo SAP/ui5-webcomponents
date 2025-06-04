@@ -59,30 +59,6 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 		cy.get("@endTooltipInput")
 			.should("have.attr", "value", "12");
 	});
-	// it("Tooltip input should not be closed on focusout if input tooltip is clicked", () => {
-	// 	cy.mount(
-	// 		<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={8} endValue={12} showTooltip editableTooltip></RangeSlider>
-	// 	);
-
-	// 	cy.get("ui5-range-slider").as("rangeSlider");
-
-	// 	cy.get("@rangeSlider").realClick();
-
-	// 	cy.get("@rangeSlider")
-	// 		.shadow()
-	// 		.find('[data-sap-ui-start-value]')
-	// 		.shadow()
-	// 		.find("ui5-input")
-	// 		.as("startTooltipInput");
-
-	// 	cy.get("@rangeSlider")
-	// 		.should("have.attr", "_tooltipVisibility", "visible");
-
-	// 	cy.get("@startTooltipInput").realClick();
-
-	// 	cy.get("@startTooltipInput")
-	// 		.should("have.focus");
-	// });
 
 	it("Input tooltips value change should change the range slider's value", () => {
 		cy.mount(
@@ -173,34 +149,31 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 			.should("have.attr", "value-state", "Negative");
 	});
 
-	// it("Input tooltip should become hidden when input loses focus", () => {
-	// 	cy.mount(
-	// 		<>
-	// 			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={5} showTooltip editableTooltip></RangeSlider>
-	// 			<RangeSlider id="basic-range-slider" min={0} max={20}></RangeSlider>
-	// 		</>
-	// 	);
+	it("Input tooltip should become hidden when input loses focus", () => {
+		cy.mount(
+			<>
+				<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={5} showTooltip editableTooltip></RangeSlider>
+				<RangeSlider id="basic-range-slider" min={0} max={20}></RangeSlider>
+			</>
+		);
 
-	// 	cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
-	// 	cy.get("#basic-range-slider").as("anotherSlider");
+		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
+		cy.get("#basic-range-slider").as("anotherSlider");
 
-	// 	cy.get("@rangeSlider").realClick();
+		cy.get("@rangeSlider").realClick();
 
-	// 	cy.get("@rangeSlider")
-	// 		.shadow()
-	// 		.find('[data-sap-ui-start-value]')
-	// 		.shadow()
-	// 		.find("ui5-input")
-	// 		.as("startTooltipInput");
+		cy.get("@rangeSlider")
+			.shadow()
+			.find('[data-sap-ui-start-value]')
+			.as("startTooltip");
 
-	// 	cy.get("@startTooltipInput").realClick();
+		cy.get("@startTooltip").should("have.prop", "open", true);
 
-	// 	cy.get("@rangeSlider").should("have.attr", "_tooltipVisibility", "visible");
+		cy.get("@anotherSlider").realClick();
 
-	// 	cy.get("@anotherSlider").realClick();
+		cy.get("@startTooltip").should("have.prop", "open", false);
+	});
 
-	// 	cy.get("@rangeSlider").should("have.attr", "_tooltipVisibility", "hidden");
-	// });
 	it("F2 should switch the focus between the handle and the tooltip input", () => {
 		cy.mount(
 			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={5} showTooltip editableTooltip></RangeSlider>
@@ -220,17 +193,13 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 			.find("ui5-input")
 			.as("rangeSliderStartTooltipInput");
 
-		// Focus on the handle and press F2
 		cy.get("@rangeSliderHandle").realClick();
 		cy.realPress("F2");
 
-		// Assert that the tooltip input is focused
 		cy.get("@rangeSliderStartTooltipInput").should("have.focus");
 
-		// Press F2 again
 		cy.realPress("F2");
 
-		// Assert that the handle is focused
 		cy.get("@rangeSliderHandle").should("have.focus");
 	});
 
@@ -241,7 +210,6 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 		cy.get("ui5-range-slider").as("rangeSlider");
 
-		// Start value input
 		cy.get("@rangeSlider")
 			.shadow()
 			.find('[data-sap-ui-start-value]')
@@ -249,7 +217,6 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 			.find("ui5-input")
 			.as("startTooltipInput");
 
-		// End value input
 		cy.get("@rangeSlider")
 			.shadow()
 			.find('[data-sap-ui-end-value]')
@@ -257,61 +224,68 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 			.find("ui5-input")
 			.as("endTooltipInput");
 
-		// Start value handle
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--start")
 			.as("startHandle");
 
-		// End value handle
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--end")
 			.as("endHandle");
 
-		// Test arrow up/down on start value
 		cy.get("@startHandle").realClick();
 		cy.get("@startTooltipInput").realClick();
 		cy.realPress("ArrowUp");
-		cy.get("@rangeSlider").invoke("attr", "start-value").should("eq", "1");
-		cy.realPress("ArrowDown");
+
 		cy.get("@rangeSlider").invoke("attr", "start-value").should("eq", "1");
 
-		// Test arrow up/down on end value
+		cy.realPress("ArrowDown");
+
+		cy.get("@rangeSlider").invoke("attr", "start-value").should("eq", "1");
+
 		cy.get("@endHandle").realClick();
 		cy.get("@endTooltipInput").realClick();
 		cy.realPress("ArrowUp");
+
 		cy.get("@rangeSlider").invoke("attr", "end-value").should("eq", "10");
+
 		cy.realPress("ArrowDown");
+
 		cy.get("@rangeSlider").invoke("attr", "end-value").should("eq", "10");
 	});
-	// it("Tab on slider handle should not move the focus to the tooltip input", () => {
-	// 	cy.mount(
-	// 		<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={5} endValue={15} showTooltip editableTooltip></RangeSlider>
-	// 	);
 
-	// 	cy.get("ui5-range-slider").as("rangeSlider");
-	// 	cy.get("@rangeSlider").realClick();
+	it("Tab on slider handle should not move the focus to the tooltip input", () => {
+		cy.mount(
+			<>
+				<RangeSlider id="slider-tickmarks-labels" editableTooltip min={0} max={20} />
+			</>
+		);
 
-	// 	// Start value input
-	// 	cy.get("@rangeSlider")
-	// 		.shadow()
-	// 		.find('[data-sap-ui-start-value]')
-	// 		.as("startTooltipHandle");
+		cy.get("ui5-range-slider").as("rangeSlider");
 
+		// Start value handle and input
+		cy.get("@rangeSlider")
+			.shadow()
+			.find(".ui5-slider-handle--start")
+			.as("startHandle");
 
-	// 	cy.get("@startTooltipHandle").realClick();
-	// 	cy.get("@startTooltipHandle").realPress("Tab");
-	// 	// Assert that the focus is still on the start handle and not on the tooltip input
-	// 	cy.get("@rangeSlider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-handle--end")
-	// 		.should("have.focus");
-	// });
+		// End value handle and input
+		cy.get("@rangeSlider")
+			.shadow()
+			.find(".ui5-slider-handle--end")
+			.as("endHandle");
+
+		cy.get("@startHandle").realClick();
+
+		cy.realPress("Tab");
+
+		cy.get("@endHandle").should("be.focused");
+	});
 
 	it("Focus out with invalid value should reset it", () => {
 		cy.mount(
-				<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={2} showTooltip editableTooltip></RangeSlider>
+			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={2} showTooltip editableTooltip></RangeSlider>
 		);
 
 		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
@@ -332,126 +306,147 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 		cy.get("@startTooltipInput").should("have.attr", "value", "2");
 	});
 
-	// it("Input values should be swapped if the start value is bigger than the end value", async () => {
-	// 	const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
-	// 	const rangeSliderStartHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
-	// 	const rangeSliderEndHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
+	it("Input values should be swapped if the start value is bigger than the end value", () => {
+		cy.mount(
+			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={0} endValue={1} showTooltip editableTooltip></RangeSlider>
+		);
 
-	// 	const rangeSliderEndTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--end ui5-input");
-	// 	const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+		cy.get("ui5-range-slider").as("rangeSlider");
 
-	// 	await rangeSlider.setProperty("startValue", 0);
-	// 	await rangeSlider.setProperty("endValue", 1);
+		// Start value handle and input
+		cy.get("@rangeSlider")
+			.shadow()
+			.find(".ui5-slider-handle--start")
+			.as("startHandle");
 
-	// 	await rangeSliderStartHandle.click();
-	// 	await rangeSliderStartTooltipInput.click();
-	// 	await browser.keys("2");
-	// 	await browser.keys("Enter");
+		cy.get("@rangeSlider")
+			.shadow()
+			.find('[data-sap-ui-start-value]')
+			.shadow()
+			.find("ui5-input")
+			.as("startTooltipInput");
 
-	// 	assert.strictEqual(await rangeSlider.getProperty("endValue"), 20, "The start value is now end value");
-	// 	assert.strictEqual(await rangeSliderEndTooltipInput.getProperty("value"), "20", "The start input value is now end value");
+		// End value handle and input
+		cy.get("@rangeSlider")
+			.shadow()
+			.find(".ui5-slider-handle--end")
+			.as("endHandle");
 
-	// 	await rangeSliderEndHandle.click();
-	// 	await rangeSliderEndTooltipInput.click();
-	// 	await rangeSliderEndTooltipInput.setProperty("value", "3");
+		cy.get("@rangeSlider")
+			.shadow()
+			.find('[data-sap-ui-end-value]')
+			.shadow()
+			.find("ui5-input")
+			.as("endTooltipInput");
 
-	// 	await browser.keys("Enter");
+		// Set start value to 20
+		cy.get("@startHandle").realClick();
+		cy.get("@startTooltipInput").realClick().clear().realType("20");
+		cy.get("@startTooltipInput").realPress("Enter");
 
-	// 	assert.strictEqual(await rangeSlider.getProperty("endValue"), 3, "Slider value is changed on a followup input after initial swap interaction");
+		// Assert that start and end values are swapped
+		cy.get("@rangeSlider").invoke("attr", "end-value").should("eq", "20");
+		cy.get("@endTooltipInput").should("have.attr", "value", "20");
+	});
 
-	// 	await browser.keys("ArrowDown");
-	// 	await browser.keys("Enter");
+	it("Input values should be swapped if the end value is lower than the start value", () => {
+		cy.mount(
+			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={2} endValue={3} showTooltip editableTooltip></RangeSlider>
+		);
 
-	// 	await browser.keys("ArrowDown");
-	// 	await browser.keys("Enter");
+		cy.get("ui5-range-slider").as("rangeSlider");
 
-	// 	await browser.keys("ArrowDown");
-	// 	await browser.keys("Enter");
+		// Start value input
+		cy.get("@rangeSlider")
+			.shadow()
+			.find('[data-sap-ui-start-value]')
+			.shadow()
+			.find("ui5-input")
+			.as("startTooltipInput");
 
-	// 	assert.strictEqual(await rangeSlider.getProperty("endValue"), 1, "Slider value is changed on a followup keyboard actions after initial swap interaction");
-	// 	assert.strictEqual(await rangeSlider.getProperty("startValue"), 0, "Slider value is changed on a followup keyboard actions after initial swap interaction");
+		// End value input
+		cy.get("@rangeSlider")
+			.shadow()
+			.find('[data-sap-ui-end-value]')
+			.shadow()
+			.find("ui5-input")
+			.as("endTooltipInput");
 
-	// 	assert.strictEqual(await rangeSliderEndTooltipInput.getProperty("value"), "1", "Slider end value is changed on a followup keyboard actions after initial swap interaction");
-	// 	assert.strictEqual(await rangeSliderStartTooltipInput.getProperty("value"), "0", "Slider start value is changed on a followup keyboard actions after initial swap interaction");
-	// });
+		// End value handle
+		cy.get("@rangeSlider")
+			.shadow()
+			.find(".ui5-slider-handle--end")
+			.as("endHandle");
 
+		// Set end value to 1
+		cy.get("@endHandle").realClick();
+		cy.get("@endTooltipInput").realClick().clear().realType("1");
+		cy.get("@endTooltipInput").realPress("Enter");
 
-	// it("Input values should be swapped if the end value is lower than the start value", async () => {
-	// 	await browser.url(`test/pages/RangeSlider.html`);
+		// Assert that start and end values are swapped
+		cy.get("@rangeSlider").invoke("attr", "start-value").should("eq", "1");
+		cy.get("@startTooltipInput").should("have.attr", "value", "1");
+	});
 
-	// 	const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
-	// 	const rangeSliderEndHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
+	it("Invalid tooltip value should not be changed on 'Enter'", () => {
+		cy.mount(
+			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} endValue={12} showTooltip editableTooltip></RangeSlider>
+		);
 
-	// 	const rangeSliderEndTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--end ui5-input");
-	// 	const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+		cy.get("ui5-range-slider").as("rangeSlider");
 
-	// 	await rangeSlider.setProperty("startValue", 2);
-	// 	await rangeSlider.setProperty("endValue", 3);
+		cy.get("@rangeSlider")
+			.shadow()
+			.find('[data-sap-ui-end-value]')
+			.shadow()
+			.find("ui5-input")
+			.as("endTooltipInput");
 
-	// 	await rangeSliderEndHandle.click();
-	// 	await rangeSliderEndTooltipInput.click();
-	// 	await browser.keys("Delete");
-	// 	await browser.keys("1");
-	// 	await browser.keys("Enter");
+		cy.get("@rangeSlider")
+			.shadow()
+			.find(".ui5-slider-handle--end")
+			.as("endHandle");
 
-	// 	assert.strictEqual(await rangeSlider.getProperty("startValue"), 1, "The end value is now start value");
-	// 	assert.strictEqual(await rangeSliderStartTooltipInput.getProperty("value"), "1", "The end input value is now start value");
-	// });
+		cy.get("@endHandle").realClick();
+		cy.get("@endTooltipInput").realClick().clear().realType("60");
+		cy.get("@endTooltipInput").realPress("Enter");
 
-	// it("Invalid tooltip value should not be changed on 'Enter'", async () => {
-	// 	const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
-	// 	const rangeSliderTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--end ui5-input");
-	// 	const rangeSliderHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
+		cy.get("@rangeSlider").invoke("attr", "end-value").should("eq", "12");
 
-	// 	await rangeSlider.setProperty("endValue", 12);
+		cy.get("@endTooltipInput").should("have.attr", "value-state", "Negative");
 
-	// 	await rangeSliderHandle.click();
-	// 	await rangeSliderTooltipInput.click();
-	// 	await rangeSliderTooltipInput.setProperty("value", "60");
+		cy.get("@endTooltipInput").should("have.attr", "value", "60");
 
-	// 	await browser.keys("Enter");
+		cy.get("@endTooltipInput").realPress("Tab");
 
-	// 	assert.strictEqual(await rangeSlider.getProperty("endValue"), 12, "The slider's value is not changed when invalid");
-	// 	assert.strictEqual(await rangeSliderTooltipInput.getProperty("valueState"), "Negative", "The input value is not changed when invalid");
-	// 	assert.strictEqual(await rangeSliderTooltipInput.getProperty("value"), "60", "The input value is not changed when invalid");
-	// });
+		cy.get("@endTooltipInput").should("have.attr", "value", "12");
 
-	// it("Range Slider tooltips should stay visible when mouse is moved out but range slider is still focused", async () => {
-	// 	const rangeSlider = await browser.$("#basic-range-slider-with-tooltip");
-	// 	const rangeSliderStartTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--start");
-	// 	const rangeSliderEndTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--end");
-	// 	const otherRangeSlider = await browser.$("#basic-range-slider");
+	});
 
-	// 	await rangeSlider.moveTo();
-	// 	await otherRangeSlider.moveTo();
+	it("Range Slider tooltips should become hidden if the range slider loses focus", () => {
+		cy.mount(
+			<>
+				<RangeSlider id="basic-range-slider-with-tooltip" min={0} max={20} showTooltip editableTooltip />
+				<RangeSlider id="basic-range-slider" min={0} max={20} />
+			</>
+		);
 
-	// 	assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "visible", "Range Slider tooltips visibility property should be 'visible'");
-	// 	assert.strictEqual(await rangeSliderStartTooltip.getAttribute("style"), "visibility: visible;", "Range Slider start tooltip should be shown");
-	// 	assert.strictEqual(await rangeSliderEndTooltip.getAttribute("style"), "visibility: visible;", "Range Slider end tooltip should be shown");
-	// });
+		cy.get("#basic-range-slider-with-tooltip").as("rangeSlider");
+		cy.get("#basic-range-slider").as("anotherSlider");
 
-	// it("Range Slider tooltips should become hidden if the range slider looses the focus", async () => {
-	// 	const rangeSlider = await browser.$("#basic-range-slider-with-tooltip");
-	// 	const rangeSliderStartTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--start");
-	// 	const rangeSliderEndTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--end");
-	// 	const otherRangeSlider = await browser.$("#basic-range-slider");
+		cy.get("@rangeSlider").realClick();
 
-	// 	await otherRangeSlider.moveTo();
-	// 	await otherRangeSlider.click();
+		cy.get("@rangeSlider")
+			.shadow()
+			.find('[data-sap-ui-start-value]')
+			.as("startTooltip");
 
-	// 	assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "hidden", "Range Slider tooltips visibility property should be 'hidden'");
-	// 	assert.strictEqual(await rangeSliderStartTooltip.getAttribute("style"), "visibility: hidden;", "Range Slider start tooltip should be hidden");
-	// 	assert.strictEqual(await rangeSliderEndTooltip.getAttribute("style"), "visibility: hidden;", "Range Slider end tooltip should be hidden");
+		cy.get("@startTooltip").should("have.prop", "open", true);
 
-	// });
+		cy.get("@anotherSlider").realClick();
 
-	// it("Range Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", async () => {
-	// 	const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
-	// 	const labelsContainer = await rangeSlider.shadow$(".ui5-slider-labels");
-	// 	const numberOfLabels = (await labelsContainer.$$("li")).length;
-
-	// 	assert.strictEqual(numberOfLabels, 12, "12 labels should be rendered, 1 between every 4 tickmarks");
-	// });
+		cy.get("@startTooltip").should("have.prop", "open", false);
+	});
 });
 
 describe("Accessibility", () => {
@@ -469,6 +464,7 @@ describe("Accessibility", () => {
 			.find(".ui5-slider-progress")
 			.should("have.attr", "aria-label", `${labelText} Range`);
 	});
+
 	it("Aria attributes of the progress bar are set correctly", () => {
 		cy.mount(
 			<RangeSlider id="range-slider-tickmarks" min={0} max={40} step={1} end-value={20} show-tickmarks></RangeSlider>

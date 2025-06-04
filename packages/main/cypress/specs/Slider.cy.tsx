@@ -327,15 +327,13 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 			.find("ui5-input")
 			.as("sliderTooltipInput");
 
-		// cy.realPress("F2");
+		cy.realPress("F2");
 
-		// cy.get("@sliderTooltipInput").should("have.attr", "focused", "true");
+		cy.get("@sliderTooltipInput").should("have.focus");
 
-		// cy.get("@sliderTooltip").then($tooltip => { $tooltip[0].addEventListener("ui5-forward-focus", cy.stub().as("sliderTooltipFocus")); });
+		cy.realPress("F2");
 
-		// cy.realPress("F2");
-
-		// cy.get("@sliderTooltipFocus").should("have.been.calledOnce");
+		cy.get("@sliderHandle").should("have.focus");
 	});
 
 	it("Arrow up/down should not increase/decrease the value of the input", () => {
@@ -415,27 +413,6 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		cy.get("@sliderTooltipInput").should("have.value", "10");
 	});
 
-	// it("Slider Tooltip should stay visible when slider is focused and mouse moves away", () => {
-	// 	cy.mount(<Slider id="basic-slider-with-tooltip" showTooltip editableTooltip min={0} max={20} value={10} />);
-
-	// 	cy.get("#basic-slider-with-tooltip").as("slider");
-
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-tooltip")
-	// 		.as("sliderTooltip");
-
-	// 	cy.get("@slider").realClick();
-
-	// 	cy.get("@slider").invoke("prop", "_tooltipVisibility").should("equal", "visible");
-	// 	cy.get("@sliderTooltip").should("have.css", "visibility", "visible");
-
-	// 	cy.get("@slider").realMouseMove(0, -100);
-
-	// 	cy.get("@slider").invoke("prop", "_tooltipVisibility").should("equal", "visible");
-	// 	cy.get("@sliderTooltip").should("have.css", "visibility", "visible");
-	// });
-
 	it("Slider Tooltip should become hidden when slider loses focus", () => {
 		cy.mount(
 			<>
@@ -458,35 +435,30 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		cy.get("@sliderTooltip").should("have.prop", "open", false);
 	});
 
-	// TO DO
-	// it("Input tooltip should become hidden when input loses focus", () => {
-	// 	cy.mount(
-	// 		<>
-	// 			<Slider id="slider-tickmarks-labels" editableTooltip min={0} max={20} />
-	// 			<Slider id="basic-slider" min={0} max={20} />
-	// 		</>
-	// 	);
+	it("Input tooltip should become hidden when input loses focus", () => {
+		cy.mount(
+			<>
+				<Slider id="slider-tickmarks-labels" editableTooltip min={0} max={20} />
+				<Slider id="basic-slider" min={0} max={20} />
+			</>
+		);
 
-	// 	cy.get("#slider-tickmarks-labels").as("slider");
-	// 	cy.get("#basic-slider").as("anotherSlider");
+		cy.get("#slider-tickmarks-labels").as("slider");
+		cy.get("#basic-slider").as("anotherSlider");
 
-	// 	cy.get("@slider").realClick();
+		cy.get("@slider").realClick();
 
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find("ui5-slider-tooltip")
-	// 		.shadow()
-	// 		.find("ui5-input")
-	// 		.as("sliderTooltipInput");
+		cy.get("@slider")
+			.shadow()
+			.find("ui5-slider-tooltip")
+			.as("sliderTooltip");
 
-	// 	cy.get("@sliderTooltipInput").realClick();
+		cy.get("@sliderTooltip").should("have.prop", "open", true);
 
-	// 	cy.get("@slider").invoke("prop", "_tooltipVisibility").should("equal", "visible");
+		cy.get("@anotherSlider").realClick();
 
-	// 	cy.get("@anotherSlider").realClick();
-
-	// 	cy.get("@slider").invoke("prop", "_tooltipVisibility").should("equal", "hidden");
-	// });
+		cy.get("@sliderTooltip").should("have.prop", "open", false);
+	});
 
 	it("Should not 'stepify' current value if it is not a result of user interaction", () => {
 		cy.mount(<Slider id="tickmarks-slider" min={0} max={20} step={2} />);
@@ -557,6 +529,7 @@ describe("Accessibility", () => {
 			.find(".ui5-slider-handle")
 			.should("have.attr", "aria-label", `${labelText} Slider handle`);
 	});
+
 	it("Aria attributes are set correctly", () => {
 		cy.mount(
 			<Slider id="basic-slider" accessible-name="Basic Slider" min={0} max={10}></Slider>
@@ -818,124 +791,4 @@ describe("Accessibility: Testing keyboard handling", () => {
 
 		cy.get("#basic-slider-with-tooltip").should("have.value", 12);
 	});
-});
-
-
-describe("Testing resize handling and RTL support", () => {
-	// it("Testing RTL support", () => {
-	// 	cy.mount(<Slider id="basic-slider-rtl" min={0} max={10} value={0} />);
-
-	// 	cy.get("#basic-slider-rtl").as("slider");
-
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-handle-container")
-	// 		.should("have.css", "right", "0px");
-
-	// 	cy.get("@slider").invoke("prop", "value", 3);
-
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-handle-container")
-	// 		.should("have.attr", "style", "right: 30%;");
-
-	// 	cy.get("@slider").click();
-
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-handle-container")
-	// 		.should("have.attr", "style", "right: 50%;");
-
-	// 	cy.get("@slider").should("have.value", 5);
-
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-handle")
-	// 		.trigger("mousedown", { which: 1 })
-	// 		.trigger("mousemove", { clientX: -300, clientY: 1 })
-	// 		.trigger("mouseup");
-
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-handle-container")
-	// 		.should("have.attr", "style", "right: 80%;");
-
-	// 	cy.get("@slider").should("have.value", 8);
-	// });
-
-	// it("Testing RTL KBH support", () => {
-	// 	cy.mount(<Slider id="basic-slider-rtl" min={0} max={10} value={0} />);
-
-	// 	cy.get("#basic-slider-rtl").as("slider");
-
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-handle-container")
-	// 		.should("have.css", "right", "0px");
-
-	// 	cy.realPress("ArrowLeft");
-	// 	cy.realPress("ArrowLeft");
-
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-handle-container")
-	// 		.should("have.attr", "style", "right: 20%;");
-
-	// 	cy.get("@slider").should("have.value", 2);
-
-	// 	cy.realPress("ArrowRight");
-
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-handle-container")
-	// 		.should("have.attr", "style", "right: 10%;");
-
-	// 	cy.get("@slider").should("have.value", 1);
-	// });
-
-	// it("Testing RTL KBH support - arrow up and down", () => {
-	// 	cy.mount(<Slider id="basic-slider-rtl" min={0} max={10} value={0} />);
-
-	// 	cy.get("#basic-slider-rtl").as("slider");
-
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-handle-container")
-	// 		.should("have.css", "right", "0px");
-
-	// 	cy.realPress("ArrowUp");
-	// 	cy.realPress("ArrowUp");
-
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-handle-container")
-	// 		.should("have.attr", "style", "right: 20%;");
-
-	// 	cy.get("@slider").should("have.value", 2);
-
-	// 	cy.realPress("ArrowDown");
-
-	// 	cy.get("@slider")
-	// 		.shadow()
-	// 		.find(".ui5-slider-handle-container")
-	// 		.should("have.attr", "style", "right: 10%;");
-
-	// 	cy.get("@slider").should("have.value", 1);
-	// });
-
-	// it("Should hide all labels except the first and the last one, if there is not enough space for all of them", () => {
-	// 	cy.mount(
-	// 		<Slider id="slider-tickmarks-tooltips-labels" min={0} max={10} showTickmarks showTooltip />
-	// 	);
-
-	// 	cy.viewport(400, 2000);
-
-	// 	cy.get("#slider-tickmarks-tooltips-labels")
-	// 		.invoke("prop", "_labelsOverlapping")
-	// 		.should("be.true");
-
-	// 	cy.get("#slider-tickmarks-tooltips-labels")
-	// 		.invoke("prop", "_hiddenTickmarks")
-	// 		.should("be.true");
-	// });
 });
