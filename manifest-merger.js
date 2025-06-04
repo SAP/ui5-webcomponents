@@ -77,9 +77,6 @@ function getSuperClassDeclaration(declaration) {
 function resolveTree(declaration, acc = []) {
     const superclass = getSuperClassDeclaration(declaration);
     if (!superclass) {
-        return [];
-    }
-    if (declaration.name === "UI5Element" || superclass.name === "UI5Element") {
         return acc;
     }
     acc.push(superclass);
