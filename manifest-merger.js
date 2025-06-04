@@ -49,6 +49,10 @@ function saveCEM(packageName) {
 }
 function mergeArraysWithoutDuplicates(currentValues, newValue, superClass) {
     if (!currentValues.find((currentValue) => currentValue.name === newValue.name)) {
+        if ("inheritedFrom" in newValue) {
+            currentValues.push(newValue);
+            return currentValues;
+        }
         currentValues.push({
             ...newValue,
             ...{
