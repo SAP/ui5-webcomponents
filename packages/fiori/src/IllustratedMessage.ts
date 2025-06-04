@@ -424,6 +424,15 @@ class IllustratedMessage extends UI5Element {
 		case IllustrationMessageDesign.Dialog:
 			this.media = IllustratedMessage.MEDIA.DIALOG;
 			return;
+		case IllustrationMessageDesign.ExtraSmall:
+			this.media = IllustratedMessage.MEDIA.DOT;
+			return;
+		case IllustrationMessageDesign.Small:
+			this.media = IllustratedMessage.MEDIA.SPOT;
+			return;
+		case IllustrationMessageDesign.Medium:
+			this.media = IllustratedMessage.MEDIA.DIALOG;
+			return;
 		default:
 			this.media = IllustratedMessage.MEDIA.SCENE;
 		}

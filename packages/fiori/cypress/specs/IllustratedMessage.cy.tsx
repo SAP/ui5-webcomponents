@@ -34,3 +34,47 @@ describe("Accessibility", () => {
 
 	});
 });
+
+describe("design", () => {
+	it("Large design should evaluate to Scene media", () => {
+		cy.mount(
+			<IllustratedMessage design="Large" name="UnableToUpload">
+			</IllustratedMessage>
+		);
+
+		cy.get("[ui5-illustrated-message]")
+			.should("have.attr", "media", IllustratedMessage.MEDIA.SCENE);
+
+	});
+	it("Medium design should evaluate to Dialog media", () => {
+		cy.mount(
+			<IllustratedMessage design="Medium" name="UnableToUpload">
+			</IllustratedMessage>
+		);
+
+		cy.get("[ui5-illustrated-message]")
+			.should("have.attr", "media", IllustratedMessage.MEDIA.DIALOG);
+
+	});
+	it("Small design should evaluate to Spot media", () => {
+		cy.mount(
+			<IllustratedMessage design="Small" name="UnableToUpload">
+			</IllustratedMessage>
+		);
+
+		cy.get("[ui5-illustrated-message]")
+			.should("have.attr", "media", IllustratedMessage.MEDIA.SPOT);
+
+	});
+	it("ExtraSmall design should evaluate to Dot media", () => {
+		cy.mount(
+			<IllustratedMessage design="ExtraSmall" name="UnableToUpload">
+			</IllustratedMessage>
+		);
+
+		cy.get("[ui5-illustrated-message]")
+			.should("have.attr", "media", IllustratedMessage.MEDIA.DOT);
+
+	});
+
+});
