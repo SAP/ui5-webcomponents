@@ -57,7 +57,9 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	icon?: string;
 
 	/**
-	 * Defines whether the item is selected
+	 * Defines whether the item is selected.
+	 * 
+	 * Items that have a set href and target set to <code>_blank</code> should not be selectable.
 	 *
 	 * @public
 	 * @default false
@@ -90,6 +92,8 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	 * - `_search`
 	 *
 	 * **This property must only be used when the `href` property is set.**
+     * **Items that have a set href and target set to <code>_blank</code> should not have children.**
+	 * **Items that have a set href, should not use target for internal navigation.**
 	 *
 	 * @public
 	 * @default undefined
