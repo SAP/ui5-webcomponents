@@ -63,7 +63,7 @@
 
 			<ui5-button id="bigDanger">Super Danger !</ui5-button>
 
-			<ui5-popover id="bigDangerPop">
+			<ui5-popover id="bigDangerPop" accessible-description-ref="bigDanger">
 				<ui5-list>
 					<ui5-li>Hello</ui5-li>
 					<ui5-li>World</ui5-li>
@@ -91,7 +91,7 @@
 	<br>
 	<br>
 	<ui5-button id="btnOpenWithAttr">Open with Attribute</ui5-button>
-	<ui5-popover id="popoverAttr" opener="btnOpenWithAttr">
+	<ui5-popover id="popoverAttr" opener="btnOpenWithAttr" accessible-description="Popover opened by button">
 		<ui5-button id="btnCloseWithMethod">Close with Method</ui5-button>
 		<ui5-button id="btnCloseWithAttr">Close with Attribute</ui5-button>
 	</ui5-popover>

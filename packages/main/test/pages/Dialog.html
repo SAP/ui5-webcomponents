@@ -93,7 +93,7 @@
 		</div>
 	</ui5-dialog>
 
-	<ui5-dialog id="msg-dialog" header-text="Message dialog" class="dialog1auto">
+	<ui5-dialog id="msg-dialog" header-text="Message dialog" class="dialog1auto" accessible-description="Message dialog">
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
 			That´s OpenUI5.</p>
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
@@ -485,7 +485,7 @@
 	<div>
 		<ui5-label>Focus circularity</ui5-label>
 		<ui5-button id="btn-focus-circ">Dialog focus circularity</ui5-button>
-		<ui5-dialog id="focus-circ">
+		<ui5-dialog id="focus-circ" accessible-description-ref="btn-focus-circ">
 			<ui5-busy-indicator slot="header">
 				<ui5-button id="active-btn-1">1</ui5-button>
 			</ui5-busy-indicator>

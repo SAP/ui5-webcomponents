@@ -632,11 +632,6 @@ abstract class Popup extends UI5Element {
 		return this.ariaDescriptionText || "";
 	}
 
-	get _accInfoAriaDescriptionId() {
-		const hasAriaDescription = this._accInfoAriaDescription !== "";
-		return hasAriaDescription ? "descr" : "";
-	}
-
 	get ariaDescriptionText() {
 		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this);
 	}

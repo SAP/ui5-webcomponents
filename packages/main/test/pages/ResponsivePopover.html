@@ -39,7 +39,8 @@
 	<!-- with header-text and footer slot-->
 	<ui5-responsive-popover id="respPopover2"
 							initial-focus="emailInput2"
-							header-text="Newsletter subscription for very long period of time">
+							header-text="Newsletter subscription for very long period of time"
+							accessible-description="Responsive popover with header text">
 		<div class="popover-content">
 			<ui5-label for="emailInput2" required>Email: </ui5-label>
 			<ui5-input id="emailInput2" class="samples-margin-top responsivepopover3auto" placeholder="Enter Email"></ui5-input>
@@ -128,7 +129,7 @@
 		</div>
 	</ui5-responsive-popover>
 
-	<ui5-responsive-popover initial-focus="myInput" id="popoverAttr" opener="btnOpenWithAttr">
+	<ui5-responsive-popover initial-focus="myInput" id="popoverAttr" opener="btnOpenWithAttr" accessible-description-ref="btnOpenWithAttr">
 		<ui5-input id="myInput"></ui5-input>
 		<ui5-button id="btnCloseWithMethod">Close with Method</ui5-button>
 		<ui5-button id="btnCloseWithAttr">Close with Attribute</ui5-button>

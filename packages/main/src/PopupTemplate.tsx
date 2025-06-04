@@ -13,6 +13,7 @@ export default function PopupTemplate(this: Popup, hooks?: {
 			style={this.styles.root}
 			class={this.classes.root}
 			role={this._role}
+			aria-describedby={this.ariaDescribedByIds}
 			aria-modal={this._ariaModal}
 			aria-label={this._ariaLabel}
 			aria-labelledby={this._ariaLabelledBy}
