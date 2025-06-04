@@ -121,48 +121,6 @@ describe("Testing Range Slider interactions", () => {
 });
 
 describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
-	it("Tooltip input should not be closed on focusout if input tooltip is clicked", async () => {
-		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
-		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
-
-		await rangeSlider.click();
-		assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
-
-		await rangeSliderStartTooltipInput.click();
-
-		assert.strictEqual(await rangeSliderStartTooltipInput.getProperty("focused"), true, "The tooltip is not closed and the input is focused");
-	});
-
-	it("Range Slider tooltips should become visible when range slider is focused", async () => {
-		await browser.url(`test/pages/RangeSlider.html`);
-
-		const rangeSlider = await browser.$("#basic-range-slider-with-tooltip");
-		const rangeSliderStartTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--start");
-		const rangeSliderEndTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--end");
-		const otherRangeSlider = await browser.$("#basic-range-slider");
-
-		await otherRangeSlider.moveTo();
-		await otherRangeSlider.click();
-		await browser.keys("Tab");
-
-		assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "visible", "Range Slider tooltips visibility property should be 'visible'");
-		assert.strictEqual(await rangeSliderStartTooltip.getAttribute("style"), "visibility: visible;", "Range Slider start tooltip should be shown");
-		assert.strictEqual(await rangeSliderEndTooltip.getAttribute("style"), "visibility: visible;", "Range Slider end tooltip should be shown");
-	});
-
-	it("Range Slider tooltips should stay visible when mouse is moved out but range slider is still focused", async () => {
-		const rangeSlider = await browser.$("#basic-range-slider-with-tooltip");
-		const rangeSliderStartTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--start");
-		const rangeSliderEndTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--end");
-		const otherRangeSlider = await browser.$("#basic-range-slider");
-
-		await rangeSlider.moveTo();
-		await otherRangeSlider.moveTo();
-
-		assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "visible", "Range Slider tooltips visibility property should be 'visible'");
-		assert.strictEqual(await rangeSliderStartTooltip.getAttribute("style"), "visibility: visible;", "Range Slider start tooltip should be shown");
-		assert.strictEqual(await rangeSliderEndTooltip.getAttribute("style"), "visibility: visible;", "Range Slider end tooltip should be shown");
-	});
 
 	it("Range Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
@@ -342,7 +300,6 @@ describe("Accessibility", async () => {
 	it("Aria attributes of the end handle are set correctly", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks");
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
-		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await endHandle.getAttribute("aria-labelledby"),
 			"ui5-slider-endHandleDesc", "aria-labelledby is set correctly");
@@ -352,14 +309,6 @@ describe("Accessibility", async () => {
 			`${await rangeSlider.getProperty("max")}`, "aria-valuemax is set correctly");
 		assert.strictEqual(await endHandle.getAttribute("aria-valuenow"),
 			`${await rangeSlider.getProperty("endValue")}`, "aria-valuenow is set correctly");
-	});
-
-	it("Aria attributes are set correctly to the tooltip input", async () => {
-		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
-		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
-
-		assert.strictEqual(await rangeSliderStartTooltipInput.getAttribute("accessible-name-ref"),
-			"ui5-slider-InputLabel");
 	});
 
 	it("Aria-labelledby text is mapped correctly when values are swapped", async () => {

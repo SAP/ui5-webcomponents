@@ -1,63 +1,5 @@
 import { assert } from "chai";
 
-describe("Slider elements - tooltip, step, tickmarks, labels", () => {
-
-	it("Slider Tooltip should become visible when slider is focused", async () => {
-		const slider = await browser.$("#basic-slider-with-tooltip");
-		const sliderTooltip = await slider.shadow$(".ui5-slider-tooltip");
-		const basicSlider = await browser.$("#basic-slider");
-
-		await basicSlider.click();
-
-		// initial state
-		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "hidden", "Slider tooltip visibility property should be 'visible'");
-		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "hidden", "Slider tooltip should be shown");
-
-		await slider.click();
-
-		// slider is focused
-		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
-		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "visible", "Slider tooltip should be shown");
-	});
-
-	it("Slider Tooltip should not be closed on focusout if input tooltip is clicked", async () => {
-		const slider = await browser.$("#slider-tickmarks-labels");
-		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
-
-		await slider.click();
-		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
-
-		await sliderTooltipInput.click();
-
-		assert.strictEqual(await sliderTooltipInput.getProperty("focused"), true, "The tooltip is not closed and the input is focused");
-	});
-
-	it("Slider Tooltip should stay visible when slider is focused and mouse moves away", async () => {
-		const slider = await browser.$("#basic-slider-with-tooltip");
-		const sliderTooltip = await slider.shadow$(".ui5-slider-tooltip");
-
-		await slider.click();
-
-		// slider is focused
-		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
-		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "visible", "Slider tooltip should be shown");
-
-		// move mouse away - fires mouseout
-		await slider.moveTo(0, -100);
-
-		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
-		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "visible", "Slider tooltip should be shown");
-	});
-
-	it("Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", async () => {
-		const slider = await browser.$("#slider-tickmarks-tooltips-labels");
-		const labelsContainer = await slider.shadow$(".ui5-slider-labels");
-		const numberOfLabels = (await labelsContainer.$$("li")).length;
-
-		assert.strictEqual(numberOfLabels, 17, "17 labels should be rendered, 1 between each 3 tickmarks");
-	});
-});
-
 describe("Accessibility", async () => {
 
 	it("Click anywhere in the Slider should focus the Slider's handle", async () => {
@@ -72,40 +14,6 @@ describe("Accessibility", async () => {
 
 		assert.ok(await slider.isFocused(), "Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
-	});
-});
-
-
-describe("Accessibility: Testing keyboard handling", async () => {
-
-	it("Ctrl + Up arrow should increase the value of the slider with a big increment step", async () => {
-		const slider = await browser.$("#basic-slider-with-tooltip");
-
-		await browser.keys(["Control", "ArrowUp"]);
-		assert.strictEqual(await slider.getProperty("value"), 2, "Value is increased");
-	});
-
-	it("Ctrl + Down arrow should increase the value of the slider with a big increment step", async () => {
-		const slider = await browser.$("#basic-slider-with-tooltip");
-
-		await browser.keys(["Control", "ArrowDown"]);
-		assert.strictEqual(await slider.getProperty("value"), 0, "Value is decreased");
-	});
-
-	it("A numpad '+' key press should increase the value of the slider with a small increment step", async () => {
-		const slider = await browser.$("#basic-slider-with-tooltip");
-		const numpadAdd = "\uE025";
-
-		await browser.keys(numpadAdd);
-		assert.strictEqual(await slider.getProperty("value"), 1, "Value is increased");
-	});
-
-	it("A numpad '-' key press should decrease the value of the slider with a small increment step", async () => {
-		const slider = await browser.$("#basic-slider-with-tooltip");
-		const numpadSubtract = "\uE027";
-
-		await browser.keys(numpadSubtract);
-		assert.strictEqual(await slider.getProperty("value"), 0, "Value is decreased");
 	});
 });
 

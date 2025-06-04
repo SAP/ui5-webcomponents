@@ -197,7 +197,9 @@ class Slider extends SliderBase implements IFormInputElement {
 			this._valueInitial = this.value;
 		}
 
-		this._tooltipsOpen = true;
+		if (this.showTooltip) {
+			this._tooltipsOpen = true;
+		}
 	}
 
 	_onfocusout(e: FocusEvent) {

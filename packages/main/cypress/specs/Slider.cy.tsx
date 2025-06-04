@@ -695,6 +695,32 @@ describe("Accessibility: Testing keyboard handling", () => {
 		cy.get("#basic-slider-with-tooltip").should("have.value", 0);
 	});
 
+	it("Ctrl + Up arrow should increase the value of the slider with a big increment step", () => {
+		cy.mount(<Slider id="basic-slider-with-tooltip" min={0} max={20} value={0} />);
+
+		cy.get("#basic-slider-with-tooltip")
+			.shadow()
+			.find(".ui5-slider-handle")
+			.realClick();
+
+		cy.realPress(["ControlLeft", "ArrowUp"]);
+
+		cy.get("#basic-slider-with-tooltip").should("have.value", 2);
+	});
+
+	it("Ctrl + Down arrow should decrease the value of the slider with a big increment step", () => {
+		cy.mount(<Slider id="basic-slider-with-tooltip" min={0} max={20} value={2} />);
+
+		cy.get("#basic-slider-with-tooltip")
+			.shadow()
+			.find(".ui5-slider-handle")
+			.realClick();
+
+		cy.realPress(["ControlLeft", "ArrowDown"]);
+
+		cy.get("#basic-slider-with-tooltip").should("have.value", 0);
+	});
+
 	it("PageUp should increase the value of the slider with a big increment step", () => {
 		cy.mount(<Slider id="basic-slider-with-tooltip" min={0} max={20} value={0} />);
 
