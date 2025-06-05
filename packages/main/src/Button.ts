@@ -360,8 +360,8 @@ class Button extends UI5Element implements IButton {
 	badge!: Array<ButtonBadge>;
 
 	_deactivate: () => void;
-	_clickBound: (e: MouseEvent) => void;
-	clickHandlerAttached = false;
+	_onclickBound: (e: MouseEvent) => void;
+	_clickHandlerAttached = false;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -374,7 +374,7 @@ class Button extends UI5Element implements IButton {
 			}
 		};
 
-		this._clickBound = e => {
+		this._onclickBound = e => {
 			if (e instanceof CustomEvent) {
 				return;
 			}
@@ -382,9 +382,9 @@ class Button extends UI5Element implements IButton {
 			this._onclick(e);
 		};
 
-		if (!this.clickHandlerAttached) {
-			this.addEventListener("click", this._clickBound);
-			this.clickHandlerAttached = true;
+		if (!this._clickHandlerAttached) {
+			this.addEventListener("click", this._onclickBound);
+			this._clickHandlerAttached = true;
 		}
 
 		if (!isGlobalHandlerAttached) {
@@ -407,16 +407,16 @@ class Button extends UI5Element implements IButton {
 			this.setAttribute("desktop", "");
 		}
 
-		if (!this.clickHandlerAttached) {
-			this.addEventListener("click", this._clickBound);
-			this.clickHandlerAttached = true;
+		if (!this._clickHandlerAttached) {
+			this.addEventListener("click", this._onclickBound);
+			this._clickHandlerAttached = true;
 		}
 	}
 
 	onExitDOM() {
-		if (this.clickHandlerAttached) {
-			this.removeEventListener("click", this._clickBound);
-			this.clickHandlerAttached = false;
+		if (this._clickHandlerAttached) {
+			this.removeEventListener("click", this._onclickBound);
+			this._clickHandlerAttached = false;
 		}
 	}
 
