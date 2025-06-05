@@ -793,3 +793,127 @@ describe("Accessibility: Testing keyboard handling", () => {
 		cy.get("#basic-slider-with-tooltip").should("have.value", 12);
 	});
 });
+
+describe("Testing resize handling and RTL support", () => {
+	it("Testing RTL support", () => {
+		cy.mount(
+			<div dir="rtl">
+				<Slider id="basic-slider-rtl" min={0} max={10} value={0} />
+			</div>
+		);
+
+		cy.get("#basic-slider-rtl")
+			.shadow()
+			.find(".ui5-slider-handle-container")
+			.as("sliderHandleContainer");
+
+		cy.get("#basic-slider-rtl").invoke("prop", "value", 0);
+
+		cy.get("@sliderHandleContainer")
+			.should("have.attr", "style", "right: 0%;");
+
+		cy.get("#basic-slider-rtl").invoke("prop", "value", 3);
+
+		cy.get("@sliderHandleContainer")
+			.should("have.attr", "style", "right: 30%;");
+
+		cy.get("#basic-slider-rtl").realClick();
+
+		cy.get("@sliderHandleContainer")
+			.should("have.attr", "style", "right: 50%;");
+
+		cy.get("#basic-slider-rtl").should("have.value", 5);
+
+		dragSliderHandle("#basic-slider-rtl", { x: -300, y: 1 });
+
+		cy.get("@sliderHandleContainer")
+			.should("have.attr", "style", "right: 80%;");
+
+		cy.get("#basic-slider-rtl").should("have.value", 8);
+
+		dragSliderHandle("#basic-slider-rtl", { x: -100, y: 1 });
+
+		cy.get("@sliderHandleContainer")
+			.should("have.attr", "style", "right: 90%;");
+
+		cy.get("#basic-slider-rtl").should("have.value", 9);
+
+		dragSliderHandle("#basic-slider-rtl", { x: -150, y: 1 });
+
+		cy.get("@sliderHandleContainer")
+			.should("have.attr", "style", "right: 100%;");
+
+		cy.get("#basic-slider-rtl").should("have.value", 10);
+	});
+
+	it("Testing RTL KBH support", () => {
+		cy.mount(
+			<div dir="rtl">
+				<Slider id="basic-slider-rtl" min={0} max={10} value={0} />
+			</div>
+		);
+		cy.get("#basic-slider-rtl")
+			.shadow()
+			.find(".ui5-slider-handle-container")
+			.as("sliderHandleContainer");
+
+		cy.get("@sliderHandleContainer")
+			.should("have.attr", "style", "right: 0%;");
+
+		cy.get("#basic-slider-rtl")
+			.shadow()
+			.find(".ui5-slider-handle")
+			.realClick();
+
+		cy.realPress("ArrowLeft");
+		cy.realPress("ArrowLeft");
+
+		cy.get("@sliderHandleContainer")
+			.should("have.attr", "style", "right: 20%;");
+
+		cy.get("#basic-slider-rtl").should("have.value", 2);
+
+		cy.realPress("ArrowRight");
+
+		cy.get("@sliderHandleContainer")
+			.should("have.attr", "style", "right: 10%;");
+
+		cy.get("#basic-slider-rtl").should("have.value", 1);
+	});
+
+	it("Testing RTL KBH support - arrow up and down", () => {
+		cy.mount(
+			<div dir="rtl">
+				<Slider id="basic-slider-rtl" min={0} max={10} value={0} />
+			</div>
+		);
+
+		cy.get("#basic-slider-rtl")
+			.shadow()
+			.find(".ui5-slider-handle-container")
+			.as("sliderHandleContainer");
+
+		cy.get("@sliderHandleContainer")
+			.should("have.attr", "style", "right: 0%;");
+
+			cy.get("#basic-slider-rtl")
+			.shadow()
+			.find(".ui5-slider-handle")
+			.realClick();
+
+		cy.realPress("ArrowUp");
+		cy.realPress("ArrowUp");
+
+		cy.get("@sliderHandleContainer")
+			.should("have.attr", "style", "right: 20%;");
+
+		cy.get("#basic-slider-rtl").should("have.value", 2);
+
+		cy.realPress("ArrowDown");
+
+		cy.get("@sliderHandleContainer")
+			.should("have.attr", "style", "right: 10%;");
+
+		cy.get("#basic-slider-rtl").should("have.value", 1);
+	});
+});
