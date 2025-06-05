@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.22](https://github.com/SAP/ui5-webcomponents/compare/v1.24.21...v1.24.22) (2025-06-05)
+
+
+### Bug Fixes
+
+* **ui5-menu:** provide accessible name to the popover  ([#9650](https://github.com/SAP/ui5-webcomponents/issues/9650)) ([f878db1](https://github.com/SAP/ui5-webcomponents/commit/f878db1c5f5850dc1a92f38d8130750acc98eb4f)), closes [#9313](https://github.com/SAP/ui5-webcomponents/issues/9313)
+* **ui5-tabcontainer:** handle tab not having a parent element ([#11582](https://github.com/SAP/ui5-webcomponents/issues/11582)) ([0322e3b](https://github.com/SAP/ui5-webcomponents/commit/0322e3bc708145850cc5539d8c5cf39559857896)), closes [#11543](https://github.com/SAP/ui5-webcomponents/issues/11543)
+
+
+
+
+
 ## [1.24.21](https://github.com/SAP/ui5-webcomponents/compare/v1.24.20...v1.24.21) (2025-05-07)
 
 
