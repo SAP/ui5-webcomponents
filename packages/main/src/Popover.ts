@@ -40,14 +40,6 @@ type CalculatedPlacement = {
 	placement: `${PopoverPlacement}`,
 }
 
-const isElementCutOff = function (el: HTMLElement | null | undefined): boolean {
-	if (!el) {
-		return false;
-	}
-
-	return ["scroll", "auto"].indexOf(getComputedStyle(el).overflowY) < 0 && el.scrollHeight > el.clientHeight;
-};
-
 /**
  * @class
  *
@@ -476,10 +468,22 @@ class Popover extends Popup {
 		return top + (Number.parseInt(this.style.top || "0") - actualTop);
 	}
 
-	getPopoverSize(): PopoverSize {
-		const rect = this.getBoundingClientRect(),
-			width = rect.width,
-			height = rect.height;
+	getPopoverSize(calcScrollHeight: boolean = false): PopoverSize {
+		const rect = this.getBoundingClientRect();
+		const width = rect.width;
+		let height = rect.height;
+
+		const domRef = this.getDomRef();
+
+		if (calcScrollHeight && domRef) {
+			const header = domRef.querySelector(".ui5-popup-header-root");
+			const content = domRef.querySelector(".ui5-popup-content");
+			const footer = domRef.querySelector(".ui5-popup-footer-root");
+
+			height = content!.scrollHeight;
+			height += header ? header.scrollHeight : 0;
+			height += footer ? footer.scrollHeight : 0;
+		}
 
 		return { width, height };
 	}
@@ -520,7 +524,7 @@ class Popover extends Popup {
 		let maxHeight = clientHeight;
 		let maxWidth = clientWidth;
 
-		const placement = this.getActualPlacement(targetRect, popoverSize);
+		const placement = this.getActualPlacement(targetRect);
 
 		this._preventRepositionAndClose = this.shouldCloseDueToNoOpener(targetRect) || this.shouldCloseDueToOverflow(placement, targetRect);
 
@@ -697,11 +701,10 @@ class Popover extends Popup {
 		}
 	}
 
-	getActualPlacement(targetRect: DOMRect, popoverSize: PopoverSize): `${PopoverPlacement}` {
+	getActualPlacement(targetRect: DOMRect): `${PopoverPlacement}` {
 		const placement = this.placement;
 		let actualPlacement = placement;
-		const isElementCut = isElementCutOff(this.getDomRef()?.querySelector(".ui5-popup-content"))
-			|| isElementCutOff(this.getDomRef()?.querySelector(".ui5-popup-header-root"));
+		const popoverSize = this.getPopoverSize(true);
 
 		const clientWidth = document.documentElement.clientWidth;
 		const clientHeight = document.documentElement.clientHeight - Popover.VIEWPORT_MARGIN;
@@ -711,14 +714,14 @@ class Popover extends Popup {
 
 		switch (placement) {
 		case PopoverPlacement.Top:
-			if (isElementCut || (targetRect.top < popoverHeight
-				&& targetRect.top < clientHeight - targetRect.bottom)) {
+			if (targetRect.top < popoverHeight
+				&& targetRect.top < clientHeight - targetRect.bottom) {
 				actualPlacement = PopoverPlacement.Bottom;
 			}
 			break;
 		case PopoverPlacement.Bottom:
-			if (isElementCut || (clientHeight - targetRect.bottom < popoverHeight
-				&& clientHeight - targetRect.bottom < targetRect.top)) {
+			if (clientHeight - targetRect.bottom < popoverHeight
+				&& clientHeight - targetRect.bottom < targetRect.top) {
 				actualPlacement = PopoverPlacement.Top;
 			}
 			break;
