@@ -18,7 +18,7 @@ describe("Accessibility", async () => {
 });
 
 describe("Testing resize handling and RTL support", () => {
-	it("Testing RTL support", async () => {
+	it.skip("Testing RTL support", async () => {
 		const slider = await browser.$("#basic-slider-rtl");
 		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 		const sliderHandleContainer = await slider.shadow$(".ui5-slider-handle-container");

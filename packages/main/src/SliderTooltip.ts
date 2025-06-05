@@ -97,7 +97,6 @@ class SliderTooltip extends UI5Element {
 				this.detachGlobalScrollHandler();
 			}
 		}
-
 	}
 
 	repositionTooltip(): void {
