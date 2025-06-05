@@ -37,7 +37,6 @@ function listItemContent(this: UploadCollectionItem) {
 								data-sap-focus-ref
 								onFocusIn={this._onInputFocusin}
 								onKeyDown={this._onInputKeyDown}
-								onKeyUp={this._onInputKeyUp}
 							/>
 							<span class="ui5-uci-file-extension">{this._fileExtension}</span>
 						</div>
