@@ -11,10 +11,13 @@ export default function Splitter({ preview, editor }) {
             if (!moving) return;
 
             const containerRect = containerRef.current.getBoundingClientRect();
-            const offsetX = e.clientX - containerRect.left;
+            const clientX = e.touches?.length > 0 ? e.touches[0].clientX : e.clientX;
+            const offsetX = clientX - containerRect.left;
 
             const leftPercent = Math.round((offsetX / containerRect.width) * 100);
             const rightPercent = 100 - leftPercent;
+
+            console.log(leftPercent, rightPercent)
 
             setLeftColumnSize(`calc(${leftPercent}% - 0.5rem)`);
             setRightColumnSize(`calc(${rightPercent}% - 0.5rem)`);
@@ -25,13 +28,17 @@ export default function Splitter({ preview, editor }) {
         };
 
         if (moving) {
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseup', handleMouseUp);
+            document.addEventListener("mousemove", handleMouseMove);
+            document.addEventListener("mouseup", handleMouseUp);
+            document.addEventListener("touchmove", handleMouseMove);
+            document.addEventListener("touchend", handleMouseUp);
         }
 
         return () => {
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
+            document.removeEventListener("touchmove", handleMouseMove);
+            document.removeEventListener("touchend", handleMouseUp);
         };
     }, [moving]);
 
@@ -64,6 +71,7 @@ export default function Splitter({ preview, editor }) {
                         cursor: "col-resize"
                     }}
                     onMouseDown={mousedownHandler}
+                    onTouchStart={mousedownHandler}
                 >
                     <svg viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
                         <g role="presentation">
