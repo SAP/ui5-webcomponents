@@ -50,6 +50,8 @@ import "./commands/ResponsivePopover.commands.js";
 import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
 import "./commands/SegmentedButton.commands.js";
+import "./commands/ToggleButton.commands.js";
+import { ModifierKey } from "./commands/common/types.js";
 
 type SimulationDevices = "phone"
 
@@ -83,7 +85,8 @@ declare global {
 			ui5DatePickerGetYearButton(): Chainable<JQuery<HTMLElement>>
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
 			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
-			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
+			ui5SegmentedButtonFocusFirstItem(): Chainable<void>,
+			ui5ToggleButtonRealClick(isClickPrevented: boolean, pressedKey?: ModifierKey): Chainable<JQuery<HTMLElement>>
 		}
 	}
 }
