@@ -90,7 +90,7 @@ export default function InputSuggestionsTemplate(this: Input, hooks?: { suggesti
 						design="Transparent"
 						onClick={this._closePicker}
 					>
-						OK
+						{this._suggestionsOkButtonText}
 					</Button>
 				</div>
 			}
