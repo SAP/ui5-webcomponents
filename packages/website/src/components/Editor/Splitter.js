@@ -59,7 +59,7 @@ export default function Splitter({ preview, editor }) {
                 />
             )}
             <div style={{ display: "flex", height: "90vh", minHeight: "600px" }} ref={containerRef}>
-                <div style={{ width: leftColumnSize, minWidth: "10%", transition: "width 0.15s ease" }}>{preview}</div>
+                <div style={{ width: leftColumnSize, minWidth: "10%", transition: "width 0.15s linear" }}>{preview}</div>
                 <div
                     style={{
                         width: "1rem",
@@ -68,6 +68,7 @@ export default function Splitter({ preview, editor }) {
                         alignItems: "center",
                         flexShrink: 0,
                         userSelect: "none",
+                        touchAction: "none",
                         cursor: "col-resize"
                     }}
                     onMouseDown={mousedownHandler}
@@ -79,7 +80,7 @@ export default function Splitter({ preview, editor }) {
                         </g>
                     </svg>
                 </div>
-                <div style={{ width: rightColumnSize, minWidth: "10%", transition: "width 0.15s ease" }}>{editor}</div>
+                <div style={{ width: rightColumnSize, minWidth: "10%", transition: "width 0.15s linear" }}>{editor}</div>
             </div>
         </>
     );
