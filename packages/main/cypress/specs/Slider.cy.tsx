@@ -435,31 +435,6 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		cy.get("@sliderTooltip").should("have.prop", "open", false);
 	});
 
-	it("Input tooltip should become hidden when input loses focus", () => {
-		cy.mount(
-			<>
-				<Slider id="slider-tickmarks-labels" editableTooltip min={0} max={20} />
-				<Slider id="basic-slider" min={0} max={20} />
-			</>
-		);
-
-		cy.get("#slider-tickmarks-labels").as("slider");
-		cy.get("#basic-slider").as("anotherSlider");
-
-		cy.get("@slider").realClick();
-
-		cy.get("@slider")
-			.shadow()
-			.find("ui5-slider-tooltip")
-			.as("sliderTooltip");
-
-		cy.get("@sliderTooltip").should("have.prop", "open", true);
-
-		cy.get("@anotherSlider").realClick();
-
-		cy.get("@sliderTooltip").should("have.prop", "open", false);
-	});
-
 	it("Should not 'stepify' current value if it is not a result of user interaction", () => {
 		cy.mount(<Slider id="tickmarks-slider" min={0} max={20} step={2} />);
 

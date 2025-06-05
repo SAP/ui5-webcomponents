@@ -18,10 +18,12 @@ describe("Accessibility", async () => {
 });
 
 describe("Testing resize handling and RTL support", () => {
-	it.skip("Testing RTL support", async () => {
+	it("Testing RTL support", async () => {
 		const slider = await browser.$("#basic-slider-rtl");
 		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 		const sliderHandleContainer = await slider.shadow$(".ui5-slider-handle-container");
+
+		await slider.setProperty("value", 0);
 
 		assert.strictEqual((await sliderHandleContainer.getCSSProperty("right")).value, "0px", "Initially if no value is set, the Slider handle is at the right of the Slider");
 
