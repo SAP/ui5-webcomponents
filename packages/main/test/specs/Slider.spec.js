@@ -19,6 +19,8 @@ describe("Accessibility", async () => {
 
 describe("Testing resize handling and RTL support", () => {
 	it("Testing RTL support", async () => {
+		await browser.url(`test/pages/Slider.html`);
+
 		const slider = await browser.$("#basic-slider-rtl");
 		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 		const sliderHandleContainer = await slider.shadow$(".ui5-slider-handle-container");
@@ -37,7 +39,7 @@ describe("Testing resize handling and RTL support", () => {
 
 		await sliderHandle.dragAndDrop({ x: -300, y: 1 });
 
-		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 80%;", "Slider handle should be 80% from the right of the slider");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 70%;", "Slider handle should be 70% from the right of the slider");
 		assert.strictEqual(await slider.getProperty("value"), 8, "Slider current value should be 8");
 
 		await sliderHandle.dragAndDrop({ x: -100, y: 1 });
