@@ -22,6 +22,7 @@ import "@ui5/webcomponents/dist/Toast.js";
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarSearch.js";
+import "@ui5/webcomponents-fiori/dist/ShellBarSpacer.js";
 import "@ui5/webcomponents-fiori/dist/SearchItem.js";
 import "@ui5/webcomponents-fiori/dist/SearchScope.js";
 
