@@ -264,8 +264,6 @@ class Slider extends SliderBase implements IFormInputElement {
 		this._valueOnInteractionStart = this.value;
 	}
 
-	_updateInputValue() {}
-
 	/** Determines if the press is over the handle
 	 * @private
 	 */

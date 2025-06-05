@@ -831,8 +831,6 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this.fireDecoratorEvent("change");
 	}
 
-	_onInputKeydown(): void { }
-
 	_getFormattedValue(value: string) {
 		const valueNumber = parseFloat(value);
 		const ctor = this.constructor as typeof RangeSlider;
