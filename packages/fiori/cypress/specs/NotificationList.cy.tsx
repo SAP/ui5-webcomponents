@@ -2,8 +2,6 @@ import Menu from "@ui5/webcomponents/dist/Menu.js";
 import NotificationList from "../../src/NotificationList.js";
 import NotificationListGroupItem from "../../src/NotificationListGroupItem.js";
 import NotificationListItem from "../../src/NotificationListItem.js";
-import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
-import Input from "@ui5/webcomponents/dist/Input.js";
 
 function Sample() {
 	return <NotificationList id="nl1">
@@ -60,20 +58,9 @@ function Sample() {
 }
 
 describe("Notification List Item Tests", () => {
-	// before(() => {
-	// 	await browser.url(`test/pages/NotificationList_test_page.html`);
-	// });
-
-	// Notification Group List Item specific tests follows
-
 	it("tests itemToggle fired", () => {
 		const stub = cy.stub().as("myStub");
-		cy.mount(
-			<NotificationList id="notificationList">
-				<NotificationListGroupItem id="nlgi1" onClick={stub}>
-				</NotificationListGroupItem>
-			</NotificationList>
-		);
+		cy.mount(<NotificationListGroupItem id="nlgi1" onClick={stub} />);
 
 		cy.get("#nlgi1")
 			.shadow()
@@ -87,8 +74,7 @@ describe("Notification List Item Tests", () => {
 		cy.mount(
 			<NotificationList id="notificationList">
 				<NotificationListGroupItem id="nlgi3" collapsed>
-					<NotificationListItem id="nli5">
-					</NotificationListItem>
+					<NotificationListItem id="nli5" />
 				</NotificationListGroupItem>
 			</NotificationList>
 		);
@@ -140,14 +126,7 @@ describe("Notification List Item Tests", () => {
 
 	it("tests itemClick fired", () => {
 		const itemClick = cy.stub().as("myStub");
-		cy.mount(
-			<NotificationList id="notificationList">
-				<NotificationListGroupItem id="nlgi1">
-					<NotificationListItem id="nli1" onClick={itemClick}>
-					</NotificationListItem>
-				</NotificationListGroupItem>
-			</NotificationList>
-		);
+		cy.mount(<NotificationListItem id="nli1" onClick={itemClick} />);
 
 		cy.get("#nli1").realClick();
 		cy.get("@myStub").should("have.been.calledOnce");
@@ -158,10 +137,8 @@ describe("Notification List Item Tests", () => {
 		const itemClose2 = cy.stub().as("myStub2");
 		cy.mount(
 			<NotificationList id="notificationList">
-				<NotificationListItem id="nli1" onClose={itemClose} show-close>
-				</NotificationListItem>
-				<NotificationListItem id="nli2" onClose={itemClose2} show-close>
-				</NotificationListItem>
+				<NotificationListItem id="nli1" onClose={itemClose} show-close />
+				<NotificationListItem id="nli2" onClose={itemClose2} show-close />
 			</NotificationList>
 		);
 
@@ -179,6 +156,20 @@ describe("Notification List Item Tests", () => {
 	});
 
 	it("tests click on ShowMore", () => {
+		cy.mount(
+			<NotificationListItem
+				id="nli3a"
+				importance="Important"
+				title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
+				state="Information"
+			/>
+		);
+
+		cy.get("#nli3a")
+			.shadow()
+			.find(".ui5-nli-footer-showMore")
+			.realClick();
+
 		// const firstItem = await browser.$("#nli3a");
 		// const btnListItemShowMore = await firstItem.shadow$(".ui5-nli-footer-showMore");
 		// const content = await firstItem.shadow$(".ui5-nli-content");
@@ -216,23 +207,16 @@ describe("Notification List Item Tests", () => {
 		cy.mount(
 			<NotificationListItem
 				id="nli3"
-				importance="Important"
-				wrapping-type="Normal"
 				title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
-				state="Negative"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 			</NotificationListItem>
 		);
+
 		cy.get("#nli3")
 			.shadow()
 			.find(".ui5-nli-footer-showMore")
-			.should("have.attr", "hidden", true);
-		// const thirdItem = await browser.$("#nli3");
-		// const btnListItemShowMore = await thirdItem.shadow$(".ui5-nli-footer-showMore");
-
-		// assert.strictEqual(await btnListItemShowMore.getAttribute("hidden"), "true",
-		// 	"The ShowMore button is not displayed.");
+			.should("have.attr", "hidden");
 	});
 
 	it("tests busy indicator is displayed", () => {
@@ -247,10 +231,8 @@ describe("Notification List Item Tests", () => {
 	it("tests state", () => {
 		cy.mount(
 			<NotificationList>
-				<NotificationListItem id="nli2" state="Critical">
-				</NotificationListItem>
-				<NotificationListItem id="nli3" state="Negative">
-				</NotificationListItem>
+				<NotificationListItem id="nli2" state="Critical" />
+				<NotificationListItem id="nli3" state="Negative" />
 			</NotificationList>
 		);
 
@@ -379,52 +361,138 @@ describe("Notification List Item Tests", () => {
 	});
 
 	it("tests List Item ACC invisible texts", () => {
-		// const firstItem = await browser.$("#nli1");
-		// const secondItem = await browser.$("#nli2");
-		// const invisibleTextStatus1 = await firstItem.shadow$(".ui5-nli-root").$$(".ui5-hidden-text")[0];
-		// const tooltipStatus1 = await firstItem.shadow$(".ui5-nli-root").$(".ui5-state-icon");
-		// const invisibleTextItem1 = await firstItem.shadow$(".ui5-nli-root").$$(".ui5-hidden-text")[1];
-		// const invisibleTextStatus2 = await secondItem.shadow$(".ui5-nli-root").$$(".ui5-hidden-text")[0];
-		// const tooltipStatus2 = await secondItem.shadow$(".ui5-nli-root").$(".ui5-state-icon");
-		// const invisibleTextItem2 = await secondItem.shadow$(".ui5-nli-root").$$(".ui5-hidden-text")[1];
+		cy.mount(
+			<NotificationListGroupItem>
+				<NotificationListItem id="nli1" state="Positive" />
+				<NotificationListItem id="nli2" read state="Critical" />
+			</NotificationListGroupItem>
+		);
 
-		// // assert
-		// assert.strictEqual(await invisibleTextStatus1.getText(), "Status Positive", "The invisible text for the status is correct.");
-		// assert.strictEqual(await invisibleTextItem1.getText(), "Unread", "The invisible text for the Notification item  is correct.");
-		// assert.strictEqual(await tooltipStatus1.getAttribute("accessible-name"), "Status Positive", "The tooltip (aria-label) text for the status is correct.");
+		cy.get('#nli1')
+			.shadow()
+			.find('.ui5-nli-root')
+			.find('.ui5-hidden-text')
+			.first()
+			.should("have.text", "Status Positive");
 
-		// assert.strictEqual(await invisibleTextStatus2.getText(), "Status Critical", "The invisible text for the status is correct.");
-		// assert.strictEqual(await invisibleTextItem2.getText(), "Read", "The invisible text for the Notification item  is correct.");
-		// assert.strictEqual(await tooltipStatus2.getAttribute("accessible-name"), "Status Critical", "The tooltip (aria-label) text for the status is correct.");
+		cy.get('#nli1')
+			.shadow()
+			.find('.ui5-nli-root')
+			.find('.ui5-hidden-text')
+			.eq(1)
+			.should("have.text", "Unread");
+
+		cy.get('#nli1')
+			.shadow()
+			.find('.ui5-nli-root')
+			.find('.ui5-state-icon')
+			.should("have.attr", "accessible-name", "Status Positive");
+
+		cy.get('#nli2')
+			.shadow()
+			.find('.ui5-nli-root')
+			.find('.ui5-hidden-text')
+			.first()
+			.should("have.text", "Status Critical");
+
+		cy.get('#nli2')
+			.shadow()
+			.find('.ui5-nli-root')
+			.find('.ui5-hidden-text')
+			.eq(1)
+			.should("have.text", "Read");
+
+		cy.get('#nli2')
+			.shadow()
+			.find('.ui5-nli-root')
+			.find('.ui5-state-icon')
+			.should("have.attr", "accessible-name", "Status Critical");
 	});
 
 	it("tests Menu (actions / '...') button ACC attributes", () => {
-		// const firstItem = await browser.$("#nli1");
-		// const menuButton = await firstItem.shadow$(".ui5-nli-menu-btn").shadow$("button");
-		// const thirdItem = await browser.$("#nli3");
-		// const btnListItemMenu3 = await thirdItem.shadow$(".ui5-nli-menu-btn");
+		cy.mount(
+			<NotificationList>
+				<NotificationListGroupItem>
+					<NotificationListItem id="nli1">
+						<Menu />
+					</NotificationListItem>
+				</NotificationListGroupItem>
 
-		// // assert
-		// assert.strictEqual(await menuButton.getAttribute("title"), 'Actions', "The tooltip text is correct.");
-		// assert.strictEqual(await menuButton.getAttribute("aria-haspopup"), 'menu', "The aria-haspopup text is correct.");
+				<NotificationListGroupItem>
+					<NotificationListItem id="nli3" />
+				</NotificationListGroupItem>
+			</NotificationList>
+		);
+		cy.get("#nli1")
+			.shadow()
+			.find(".ui5-nli-menu-btn")
+			.shadow()
+			.find("button")
+			.should("have.attr", "title", 'Actions')
+			.and("have.attr", "aria-haspopup", 'menu');
 
-		// assert.notOk(await btnListItemMenu3.isExisting(), "There is no '...' button rendered");
+		cy.get("#nli3")
+			.shadow()
+			.find(".ui5-nli-menu-btn")
+			.should("not.exist");
 	});
 
 	it("tests List Item 'Close' button ACC attributes", () => {
-		// const firstItem = await browser.$("#nli1");
-		// const btnListItemClose1 = await firstItem.shadow$(".ui5-nli-close-btn").shadow$("button");
-		// const thirdItem = await browser.$("#nli3");
-		// const btnListItemClose3 = await thirdItem.shadow$(".ui5-nli-close-btn");
+		cy.mount(
+			<NotificationList>
+				<NotificationListGroupItem>
+					<NotificationListItem id="nli1" show-close />
+				</NotificationListGroupItem>
 
-		// assert.strictEqual(await btnListItemClose1.getAttribute("aria-label"), 'Close', "The aria-label is correct.");
-		// assert.strictEqual(await btnListItemClose1.getAttribute("title"), 'Close', "The title is correct.");
-		// assert.strictEqual(await btnListItemClose1.getAttribute("role"), 'button', "The role is correct.");
+				<NotificationListGroupItem>
+					<NotificationListItem id="nli3" />
+				</NotificationListGroupItem>
+			</NotificationList>
+		);
 
-		// assert.notOk(await btnListItemClose3.isExisting(), "There is no 'Close' button rendered");
+		cy.get("#nli1")
+			.shadow()
+			.find(".ui5-nli-close-btn")
+			.shadow()
+			.find("button")
+			.should("have.attr", "aria-label", 'Close')
+			.and("have.attr", "title", 'Close')
+			.and("have.attr", "role", 'button');
+
+		cy.get("#nli3")
+			.shadow()
+			.find(".ui5-nli-close-btn")
+			.should("not.exist");
 	});
 
 	it("tests aria attributes click on ShowMore", () => {
+		cy.mount(<NotificationListItem id="nli3a"
+			importance="Important"
+			title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
+			state="Information" />);
+
+		cy.get("#nli3a")
+			.shadow()
+			.find(".ui5-nli-footer-showMore")
+			.shadow()
+			.find(".ui5-link-root")
+			.should("have.attr", "aria-label", 'More button. Show the full texts')
+			.and("have.attr", "role", "button")
+			.and("have.attr", "aria-expanded", "false");
+
+		cy.get("#nli3a")
+			.shadow()
+			.find(".ui5-nli-footer-showMore")
+			.scrollIntoView()
+			.realClick();
+
+		cy.get("#nli3a")
+			.shadow()
+			.find(".ui5-nli-footer-showMore")
+			.shadow()
+			.find(".ui5-link-root")
+			.should("have.attr", "aria-label", 'Less button. Show the texts with truncation')
+			.and("have.attr", "aria-expanded", true);
 		// var firstItem = await browser.$("#nli3a");
 		// var btnListItemShowMore = await firstItem.shadow$(".ui5-nli-footer-showMore");
 		// var btnListItemShowMoreRoot = await btnListItemShowMore.shadow$(".ui5-link-root");
@@ -452,6 +520,81 @@ describe("Notification List Item Tests", () => {
 	});
 
 	it("tests Group List aria-labelledby", () => {
+		cy.mount(
+			<NotificationList>
+				<NotificationListGroupItem
+					id="nlgi1"
+					title-text="Orders"
+				>
+					<NotificationListItem
+						id="nli1"
+						show-close
+						title-text="New order #2201"
+						state="Positive"
+					>
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+
+						<span slot="footnotes">Office Notifications</span>
+						<span slot="footnotes">3 Days</span>
+
+
+					</NotificationListItem>
+
+					<NotificationListItem
+						id="nli2"
+						read
+						show-close
+						title-text="New order #2202"
+						state="Critical"
+					>
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+
+						<span slot="footnotes">Office Notifications</span>
+						<span slot="footnotes">3 Days</span>
+
+					</NotificationListItem>
+
+				</NotificationListGroupItem>
+
+				<NotificationListGroupItem
+					id="nlgi4"
+					title-text="Collapsed loading"
+					collapsed
+					loading
+				>
+					<NotificationListItem
+						id="nli5"
+						wrapping-type="Normal"
+						show-close
+						title-text="New payment #2900"
+						state="Negative"
+					>
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+
+						<span slot="footnotes">Office Notifications</span>
+						<span slot="footnotes">3 Days</span>
+
+					</NotificationListItem>
+				</NotificationListGroupItem>
+			</NotificationList>
+		);
+
+		// cy.get('#nlgi1')
+		// 	.invoke('attr', 'id')
+		// 	.then((sId) => {
+		// 		cy.get(`#${sId}`)
+		// 		.shadow()
+		// 		.find('.ui5-nli-group-items')
+		// 		.invoke('attr', 'accessible-name-ref')
+		// 		.then((actualRef) => {
+		// 			cy.get("#nlgi1")
+		// 			.shadow()
+		// 			.find(".ui5-nli-group-items")
+		// 			.should("have.attr", "accessible-name-ref", actualRef);
+		// 		});
+		// 	});
+
+
 		// const firstGroupItem = await browser.$("#nlgi1");
 		// const firstGroupList =  await browser.$("#nlgi1").shadow$(".ui5-nli-group-items");
 		// const firstGroupRoot =  await browser.$("#nlgi1").shadow$(".ui5-nli-group-root");
@@ -496,30 +639,55 @@ describe("Notification List Item Tests", () => {
 	});
 
 	it("tests List Group Header ACC attributes when collapsed and expanded", () => {
-		// const groupItem2 = await browser.$("#nlgi2");
-		// const groupItemsList2ID = await groupItem2.shadow$(".ui5-nli-group-items").getAttribute("id");
-		// const groupItemHeader = await groupItem2.shadow$(".ui5-nli-group-header");
-		// const groupItemHeaderIcon = await groupItem2.shadow$(".ui5-nli-group-toggle-icon").shadow$("svg");
+		cy.mount(
+			<NotificationListGroupItem id="nlgi2" />);
 
-		// // assert
-		// assert.strictEqual(await groupItemHeader.getAttribute("aria-expanded"), "true", "The aria-expanded value is correct.");
-		// assert.strictEqual(await groupItemHeader.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
-		// assert.strictEqual(await groupItemHeader.getAttribute("role"), "button", "The tooltip value is correct.");
-		// assert.strictEqual(await groupItemHeader.getAttribute("title"), "Expand/Collapse", "The title of the header is correct.");
-		// assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-hidden"), "true", "The aria-hidden of the icon is correct.");
+		cy.get("#nlgi2")
+			.shadow()
+			.find(".ui5-nli-group-items")
+			.invoke("attr", "id")
+			.then((id) => {
+				cy.get("#nlgi2")
+					.shadow()
+					.find(".ui5-nli-group-header")
+					.should("have.attr", "aria-expanded", "true")
+					.and("have.attr", "aria-controls", id)
+					.and("have.attr", "role", "button")
+					.and("have.attr", "title", "Expand/Collapse");
+			});
 
-		// // act
-		// await groupItemHeader.click();
+		cy.get("#nlgi2")
+			.shadow()
+			.find(".ui5-nli-group-toggle-icon")
+			.shadow()
+			.find("svg")
+			.should("have.attr", "aria-hidden", "true");
 
-		// // assert
-		// assert.strictEqual(await groupItemHeader.getAttribute("aria-expanded"), "false", "The aria-expanded value is correct.");
-		// assert.strictEqual(await groupItemHeader.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
-		// assert.strictEqual(await groupItemHeader.getAttribute("role"), "button", "The tooltip value is correct.");
-		// assert.strictEqual(await groupItemHeader.getAttribute("title"), "Expand/Collapse", "The title of the header is correct.");
-		// assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-hidden"), "true", "The aria-hidden of the icon is correct.");
+		cy.get("#nlgi2")
+			.shadow()
+			.find(".ui5-nli-group-header")
+			.realClick();
 
-		// // reset
-		// await groupItemHeader.click();
+		cy.get("#nlgi2")
+			.shadow()
+			.find(".ui5-nli-group-items")
+			.invoke("attr", "id")
+			.then((id) => {
+				cy.get("#nlgi2")
+					.shadow()
+					.find(".ui5-nli-group-header")
+					.should("have.attr", "aria-expanded", "false")
+					.and("have.attr", "aria-controls", id)
+					.and("have.attr", "role", "button")
+					.and("have.attr", "title", "Expand/Collapse");
+			});
+
+		cy.get("#nlgi2")
+			.shadow()
+			.find(".ui5-nli-group-toggle-icon")
+			.shadow()
+			.find("svg")
+			.should("have.attr", "aria-hidden", "true");
 	});
 });
 
@@ -623,27 +791,21 @@ describe("Keyboard Navigation", () => {
 		cy.mount(
 			<NotificationList id="notificationList">
 				<NotificationListGroupItem id="nlgi1">
-					<NotificationListItem id="nli1">
-					</NotificationListItem>
+					<NotificationListItem id="nli1" />
 
-					<NotificationListItem id="nli2">
-					</NotificationListItem>
+					<NotificationListItem id="nli2" />
 				</NotificationListGroupItem>
 
 				<NotificationListGroupItem id="nlgi2">
-					<NotificationListItem id="nli3">
-					</NotificationListItem>
+					<NotificationListItem id="nli3" />
 
-					<NotificationListItem id="nli3a">
-					</NotificationListItem>
+					<NotificationListItem id="nli3a" />
 
-					<NotificationListItem id="nli4">
-					</NotificationListItem>
+					<NotificationListItem id="nli4" />
 				</NotificationListGroupItem>
 
 				<NotificationListGroupItem id="nlgi3" collapsed>
-					<NotificationListItem id="nli5">
-					</NotificationListItem>
+					<NotificationListItem id="nli5" />
 				</NotificationListGroupItem>
 
 			</NotificationList>
@@ -749,6 +911,7 @@ describe("Keyboard Navigation", () => {
 
 		cy.get("#nli1").realClick();
 		cy.realPress("Tab");
+
 		//cy.get("#menuWithActions")
 		// .shadow()
 		// .find("#menuWithActions")
@@ -788,7 +951,7 @@ describe("Keyboard Navigation", () => {
 		// assert.ok(res, "'show more' is focused.");
 	});
 
-	it.only("Focusing same item on next row", () => {
+	it("Focusing same item on next row", () => {
 		cy.mount(
 			<NotificationList
 				id="notificationList"
@@ -854,6 +1017,11 @@ describe("Keyboard Navigation", () => {
 		cy.realPress("Tab");
 		cy.realPress("ArrowDown");
 
+		cy.get("#nli2")
+			.shadow()
+			.find(".ui5-nli-footer-showMore")
+			.should("be.focused");
+
 		// await browser.$("#nli1").click();
 		// await browser.keys("Tab");
 		// await browser.keys("ArrowDown");
@@ -894,9 +1062,7 @@ describe("Notification List Item Without a Group", () => {
 		cy.mount(
 			<NotificationList id="notificationListWithMenu">
 				<NotificationListItem>
-					<Menu slot="menu">
-						<MenuItem text="View"></MenuItem>
-					</Menu>
+					<Menu />
 				</NotificationListItem>
 			</NotificationList>
 		);
