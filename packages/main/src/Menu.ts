@@ -24,12 +24,14 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
+import type List from "./List.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import type MenuItem from "./MenuItem.js";
 // The import below should be kept, as MenuItem is part of the Menu component.
 import { isInstanceOfMenuItem } from "./MenuItem.js";
+import { isInstanceOfMenuItemGroup } from "./MenuItemGroup.js";
+import { isInstanceOfMenuSeparator } from "./MenuSeparator.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-import "./MenuSeparator.js";
 import type {
 	ListItemClickEventDetail,
 } from "./List.js";
@@ -51,7 +53,9 @@ const MENU_OPEN_DELAY = 300;
  * @public
  */
 interface IMenuItem extends UI5Element {
-	isSeparator: boolean;
+	isMenuItem?: boolean;
+	isSeparator?: boolean;
+	isGroup?: boolean;
 }
 
 type MenuItemClickEventDetail = {
@@ -257,24 +261,84 @@ class Menu extends UI5Element {
 		return isPhone();
 	}
 
-	get _popover() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
-	}
-
-	get _menuItems() {
-		return this.items.filter((item): item is MenuItem => !item.isSeparator);
-	}
-
 	get acessibleNameText() {
 		return Menu.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
 	}
 
-	onBeforeRendering() {
-		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
+	get _popover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+	get _list() {
+		return this.shadowRoot!.querySelector<List>("[ui5-list]");
+	}
 
-		this._menuItems.forEach(item => {
+	/** Returns menu item groups */
+	get _menuItemGroups() {
+		return this.items.filter(isInstanceOfMenuItemGroup);
+	}
+
+	/** Returns menu items */
+	get _menuItems() {
+		return this.items.filter(isInstanceOfMenuItem);
+	}
+
+	/** Returns all menu items (including those in groups */
+	get _allMenuItems() {
+		const items: MenuItem[] = [];
+
+		this.items.forEach(item => {
+			if (isInstanceOfMenuItemGroup(item)) {
+				items.push(...item._menuItems);
+			} else if (!isInstanceOfMenuSeparator(item)) {
+				items.push(item as MenuItem);
+			}
+		});
+
+		return items;
+	}
+
+	/** Returns menu items included in the ItemNavigation */
+	get _navigatableMenuItems() {
+		const items: MenuItem[] = [];
+		const slottedItems = this.getSlottedNodes<MenuItem>("items");
+
+		slottedItems.forEach(item => {
+			if (isInstanceOfMenuItemGroup(item)) {
+				const groupItems = item.getSlottedNodes<MenuItem>("items");
+				items.push(...groupItems);
+			} else if (!isInstanceOfMenuSeparator(item)) {
+				items.push(item);
+			}
+		});
+
+		return items;
+	}
+
+	onBeforeRendering() {
+		const siblingsWithIcon = this._allMenuItems.some(menuItem => !!menuItem.icon);
+
+		this._setupItemNavigation();
+
+		this._allMenuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
+	}
+
+	async focus(focusOptions?: FocusOptions): Promise<void> {
+		await renderFinished();
+		const firstMenuItem = this._allMenuItems[0];
+
+		if (firstMenuItem) {
+			return firstMenuItem.focus(focusOptions);
+		}
+
+		return super.focus(focusOptions);
+	}
+
+	_setupItemNavigation() {
+		if (this._list) {
+			this._list._itemNavigation._getItems = () => this._navigatableMenuItems;
+		}
 	}
 
 	_close() {
@@ -291,10 +355,24 @@ class Menu extends UI5Element {
 		this.fireDecoratorEvent("before-open", {
 			item,
 		});
+
 		item._popover.opener = item;
 		item._popover.open = true;
 		item.selected = true;
 	}
+
+	// _closeItemSubMenu(item: MenuItem) {
+	// 	if (item && item._popover) {
+	// 		const openedSibling = item._allMenuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
+
+	// 		if (openedSibling) {
+	// 			this._closeItemSubMenu(openedSibling);
+	// 		}
+
+	// 		item._popover.open = false;
+	// 		item.selected = false;
+	// 	}
+	// }
 
 	_itemMouseOver(e: MouseEvent) {
 		if (!isDesktop()) {
@@ -312,19 +390,8 @@ class Menu extends UI5Element {
 		this._startOpenTimeout(item);
 	}
 
-	async focus(focusOptions?: FocusOptions): Promise<void> {
-		await renderFinished();
-		const firstMenuItem = this._menuItems[0];
-
-		if (firstMenuItem) {
-			return firstMenuItem.focus(focusOptions);
-		}
-
-		return super.focus(focusOptions);
-	}
-
 	_closeOtherSubMenus(item: MenuItem) {
-		const menuItems = this._menuItems;
+		const menuItems = this._allMenuItems;
 		if (!menuItems.includes(item)) {
 			return;
 		}
@@ -349,6 +416,8 @@ class Menu extends UI5Element {
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as MenuItem;
 
+		item._updateCheckedState();
+
 		if (!item._popover) {
 			const prevented = !this.fireDecoratorEvent("item-click", {
 				"item": item,
@@ -371,7 +440,7 @@ class Menu extends UI5Element {
 			return;
 		}
 
-		const menuItemInMenu = this._menuItems.includes(item);
+		const menuItemInMenu = this._allMenuItems.includes(item);
 		const isItemNavigation = isUp(e) || isDown(e);
 		const isItemSelection = isEnter(e) || isSpace(e);
 		const isEndContentNavigation = isRight(e) || isLeft(e);
@@ -396,7 +465,7 @@ class Menu extends UI5Element {
 	_navigateOutOfEndContent(e: CustomEvent) {
 		const item = e.target as MenuItem;
 		const shouldNavigateToNextItem = e.detail.shouldNavigateToNextItem;
-		const menuItems = this._menuItems;
+		const menuItems = this._allMenuItems;
 		const itemIndex = menuItems.indexOf(item);
 
 		if (itemIndex > -1) {
@@ -418,7 +487,7 @@ class Menu extends UI5Element {
 	}
 
 	_afterPopoverOpen() {
-		this._menuItems[0]?.focus();
+		this._allMenuItems[0]?.focus();
 		this.fireDecoratorEvent("open");
 	}
 
