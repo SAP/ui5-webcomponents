@@ -464,6 +464,7 @@ class Button extends UI5Element implements IButton {
 		});
 
 		if (prevented) {
+			e.preventDefault();
 			return;
 		}
 

@@ -70,6 +70,7 @@ class ToggleButton extends Button {
 		});
 
 		if (prevented) {
+			e.preventDefault();
 			// value should be restored if click is prevented
 			this.pressed = oldValue;
 			return;
