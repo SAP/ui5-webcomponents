@@ -71,5 +71,4 @@
 
 :host([value-state]:not([value-state="None"], [value-state="Positive"])) .ui5-select-icon-root {
 	height: var(--_ui5_select_icon_wrapper_state_height);
-	padding: 0;
 }
