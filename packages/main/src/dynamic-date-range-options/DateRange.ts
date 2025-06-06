@@ -12,7 +12,7 @@ import DynamicDateRange from "../DynamicDateRange.js";
  * @class
  * @constructor
  * @public
- * @since 2.0.0
+ * @since 2.11.0
  */
 
 class DateRangeRange implements IDynamicDateRangeOption {
@@ -23,7 +23,7 @@ class DateRangeRange implements IDynamicDateRangeOption {
 	}
 
 	parse(value: string): DynamicDateRangeValue {
-	    const returnValue = { operator: "", values: [] } as DynamicDateRangeValue;
+		const returnValue = { operator: "", values: [] } as DynamicDateRangeValue;
 
 		returnValue.operator = this.operator;
 		returnValue.values = this.getFormat().parse(value) as Date[];
@@ -70,14 +70,14 @@ class DateRangeRange implements IDynamicDateRangeOption {
 	}
 
 	getFormat(): DateFormat {
-	    return DateFormat.getDateInstance({
+		return DateFormat.getDateInstance({
 			strictParsing: true,
 			interval: true,
 			intervalDelimiter: " - ",
 		});
 	}
 
-	handleSelectionChange(e: CustomEvent) : DynamicDateRangeValue | undefined {
+	handleSelectionChange(e: CustomEvent): DynamicDateRangeValue | undefined {
 		const currentValue = { operator: "", values: [] } as DynamicDateRangeValue;
 		currentValue.values = [];
 		currentValue.operator = this.operator;
