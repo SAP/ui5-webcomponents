@@ -44,10 +44,6 @@ type DynamicDateRangeValue = {
 	values?: Date[] | number[];
 }
 
-type DynamicDateRangeChangeEventDetail = {
-	value: DynamicDateRangeValue | undefined,
-}
-
 /**
  * Represents a dynamic date range option used by the `ui5-dynamic-date-range` component.
  *
@@ -132,7 +128,6 @@ interface IDynamicDateRangeOption {
 
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout or a value is selected in the popover.
- * @param {string} value TBD
  * @public
  */
 @event("change", {
@@ -141,7 +136,7 @@ interface IDynamicDateRangeOption {
 })
 class DynamicDateRange extends UI5Element {
 	eventDetails!: {
-		change: DynamicDateRangeChangeEventDetail,
+		change: void,
 	}
 
 	@i18n("@ui5/webcomponents")
@@ -270,7 +265,7 @@ class DynamicDateRange extends UI5Element {
 
 		if (!value) {
 			this.value = undefined;
-			this.fireDecoratorEvent("change", { value: undefined });
+			this.fireDecoratorEvent("change");
 
 			return;
 		}
@@ -280,7 +275,7 @@ class DynamicDateRange extends UI5Element {
 		this.value = currentOption ? this.getOption(currentOption.operator)?.parse(value) : undefined;
 
 		if (this.value) {
-			this.fireDecoratorEvent("change", { value: this.value });
+			this.fireDecoratorEvent("change");
 		}
 	}
 
@@ -292,7 +287,7 @@ class DynamicDateRange extends UI5Element {
 	 * Converts a `value` into concrete `startDate` and `endDate` JavaScript `Date` objects.
 	 *
 	 * @public
-	 * @param value TBD
+	 * @param value The option to convert into an array of date ranges
 	 * @returns An array of two `Date` objects representing the start and end dates.
 	 */
 	toDates(value: DynamicDateRangeValue): Date[] {
@@ -312,7 +307,7 @@ class DynamicDateRange extends UI5Element {
 
 		if (this._currentOption?.isValidString(stringValue)) {
 			this.value = this.currentValue as DynamicDateRangeValue;
-			this.fireDecoratorEvent("change", { value: this.value });
+			this.fireDecoratorEvent("change");
 		} else {
 			this.value = undefined;
 		}
@@ -401,5 +396,4 @@ export default DynamicDateRange;
 export type {
 	DynamicDateRangeValue,
 	IDynamicDateRangeOption,
-	DynamicDateRangeChangeEventDetail,
 };
