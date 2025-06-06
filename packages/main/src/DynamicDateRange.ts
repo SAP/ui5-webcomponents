@@ -292,7 +292,7 @@ class DynamicDateRange extends UI5Element {
 	 * Converts a `value` into concrete `startDate` and `endDate` JavaScript `Date` objects.
 	 *
 	 * @public
-	 * @param {value} TBD
+	 * @param value TBD
 	 * @returns An array of two `Date` objects representing the start and end dates.
 	 */
 	toDates(value: DynamicDateRangeValue): Date[] {
