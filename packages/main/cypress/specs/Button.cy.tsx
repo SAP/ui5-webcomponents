@@ -215,6 +215,36 @@ describe("Button general interaction", () => {
 			.find("[ui5-icon]")
 			.should("have.attr", "mode", "Decorative");
 	});
+
+	it("Prevents native behavior when click event is prevented", () => {
+		cy.mount(<a href="#navigation">
+			<Button onClick={e => e.preventDefault()}>Click me</Button>
+		</a>);
+
+		cy.location("hash")
+			.should("not.eq", "#navigation");
+
+		cy.get("[ui5-button]")
+			.realClick();
+
+		cy.location("hash")
+			.should("not.eq", "#navigation");
+	});
+
+	it("Allows native behavior when click event is not prevented", () => {
+		cy.mount(<a href="#navigation">
+			<Button>Click me</Button>
+		</a>);
+
+		cy.location("hash")
+			.should("not.eq", "#navigation");
+
+		cy.get("[ui5-button]")
+			.realClick();
+
+		cy.location("hash")
+			.should("eq", "#navigation");
+	});
 });
 
 describe("Accessibility", () => {
@@ -245,7 +275,7 @@ describe("Accessibility", () => {
 	it("tooltip not displayed when there is a text", () => {
 		cy.mount(<Button icon="home">Action</Button>);
 
-		cy.get("[ui5-button]")	
+		cy.get("[ui5-button]")
 			.should("not.have.attr", "title");
 	});
 
