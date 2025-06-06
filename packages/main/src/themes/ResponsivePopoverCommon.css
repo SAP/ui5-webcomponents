@@ -70,12 +70,12 @@
 
 /* Input placeholder */
 [inner-input]::-webkit-input-placeholder {
-	font-style: italic;
+	font-style: var(--_ui5_input_placeholder_style);
 	color: var(--sapField_PlaceholderTextColor);
 }
 
 [inner-input]::-moz-placeholder {
-	font-style: italic;
+	font-style: var(--_ui5_input_placeholder_style);
 	color: var(--sapField_PlaceholderTextColor);
 }
 
