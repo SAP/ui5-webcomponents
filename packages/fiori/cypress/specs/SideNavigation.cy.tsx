@@ -828,6 +828,43 @@ describe("Side Navigation interaction", () => {
 		cy.get("@selectionChangeHandler").should("not.have.been.called");
 	});
 
+	it.only("Tests key modifiers on overflow menu", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true}>
+				<SideNavigationItem text="item"></SideNavigationItem>
+				<SideNavigationItem text="1" design="Action"></SideNavigationItem>
+				<SideNavigationItem text="2" href="https://sap.com" target="_blank" design="Action"></SideNavigationItem>
+				<SideNavigationItem text="3">
+					<SideNavigationSubItem text="3.1" design="Action"></SideNavigationSubItem>
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.invoke("attr", "style", "height: 100px");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-item-overflow:not(.ui5-sn-item-hidden)")
+			.realClick();
+
+		const keyModifiers = ["Control", "Meta", "Alt", "Shift"];
+
+		keyModifiers.forEach((modifier) => {
+			cy.get("#sideNav")
+				.shadow()
+				.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='item']")
+				.should("have.focus")
+				.realPress(modifier as any);
+
+			cy.get("#sideNav")
+				.shadow()
+				.find("[ui5-navigation-menu]")
+				.should("be.visible");
+		});
+
+	});
+
 	it("Tests preventDefault on child items in collapsed side navigation", () => {
 		const handleClick = (event: Event) => {
 			event.preventDefault();
