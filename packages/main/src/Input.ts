@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -20,6 +21,7 @@ import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.
 import {
 	isPhone,
 	isAndroid,
+	isMac,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
@@ -31,10 +33,12 @@ import {
 	isDelete,
 	isEscape,
 	isTabNext,
+	isTabPrevious,
 	isPageUp,
 	isPageDown,
 	isHome,
 	isEnd,
+	isCtrlAltF8,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -71,6 +75,10 @@ import {
 	VALUE_STATE_TYPE_INFORMATION,
 	VALUE_STATE_TYPE_ERROR,
 	VALUE_STATE_TYPE_WARNING,
+	VALUE_STATE_LINK,
+	VALUE_STATE_LINKS,
+	VALUE_STATE_LINK_MAC,
+	VALUE_STATE_LINKS_MAC,
 	INPUT_SUGGESTIONS,
 	INPUT_SUGGESTIONS_TITLE,
 	INPUT_SUGGESTIONS_ONE_HIT,
@@ -621,6 +629,22 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
+	/**
+	 * Indicates whether link navigation is being handled.
+	 * @default false
+	 * @private
+	 * @since 2.11.0
+	 */
+	_handleLinkNavigation: boolean = false;
+
+	/**
+	 * Stores the array of links in the value state hidden text.
+	 * @default []
+	 * @private
+	 * @since 2.11.0
+	 */
+	_linkArray: Array<HTMLElement> = [];
+
 	get formValidityMessage() {
 		return Input.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
 	}
@@ -840,6 +864,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return this._handleEscape();
 		}
 
+		if (isCtrlAltF8(e)) {
+			return this._handleCtrlAltF8();
+		}
+
 		if (this.showSuggestions) {
 			this._clearPopoverFocusAndSelection();
 		}
@@ -887,6 +915,66 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.Suggestions.onTab();
 		}
 	}
+
+	_handleCtrlAltF8() {
+		this._handleLinkNavigation = true;
+		this._linkArray = this.linksInAriaValueStateHiddenText;
+		if (this._linkArray.length) {
+			this._linkArray.forEach(link => {
+				// link.removeEventListener("keydown", this._linkNavigationEventListener.bind(this, link));
+				link.addEventListener("keydown", e => this._linkNavigationEventListener(e, link));
+			});
+			this._linkArray[0].focus();
+		}
+	}
+
+	_linkNavigationEventListener(e: KeyboardEvent, link: HTMLElement) {
+		const currentIndex = this._linkArray.indexOf(link);
+		if (isTabNext(e)) {
+			e.stopImmediatePropagation();
+			if (this._handleLinkNavigation && currentIndex !== this._linkArray.length - 1) {
+				e.preventDefault();
+				this._linkArray[currentIndex + 1].focus();
+			} else {
+				this._handleLinkNavigation = false;
+				if (this.Suggestions?.isOpened()) {
+					this.Suggestions?.close();
+				} else {
+					this.closeValueStatePopover();
+				}
+				this.getInputDOMRef()!.focus();
+			}
+		}
+
+		if (isTabPrevious(e) && this._handleLinkNavigation) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			if (currentIndex > 0) {
+				this._linkArray[currentIndex - 1].focus();
+			} else {
+				this._handleLinkNavigation = false;
+				this.getInputDOMRef()!.focus();
+			}
+		}
+
+		if (isDown(e) || isUp(e)) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		}
+
+		if (isDown(e)) {
+			if (this._handleLinkNavigation) {
+				this._handleLinkNavigation = false;
+				if (this.Suggestions?.isOpened()) {
+					this.innerFocusIn();
+					(this.getInputDOMRef())!.focus();
+					this.Suggestions.onDown(e, this.currentItemIndex);
+				}
+			} else {
+				this._handleDown(e);
+			}
+		}
+	 }
 
 	_handleEnter(e: KeyboardEvent) {
 		// if a group item is focused, this is false
@@ -1308,6 +1396,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_handleValueStatePopoverAfterClose() {
 		this.valueStateOpen = false;
+		this._handleLinkNavigation = false;
 	}
 
 	_getValueStatePopover() {
@@ -1599,6 +1688,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		return [
 			this.suggestionsTextId,
 			this.valueStateTextId,
+			this._valueStateLinksShortcutsTextAccId,
 			this._inputAccInfo.ariaDescribedBy,
 			this._accInfoAriaDescriptionId,
 			this.ariaDescriptionTextId,
@@ -1648,6 +1738,37 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	get itemSelectionAnnounce() {
 		return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : "";
+	}
+
+	get linksInAriaValueStateHiddenText() {
+		const linksArray: Array<HTMLElement> = [];
+		if (this.valueStateMessage) {
+			this.valueStateMessage.forEach(element => {
+				if (element.children.length)	{
+					element.querySelectorAll("ui5-link").forEach(link => {
+						linksArray.push(link as HTMLElement);
+					});
+				}
+			});
+		}
+		return linksArray;
+	}
+
+	get valueStateLinksShortcutsTextAcc() {
+		const linksArray = this.linksInAriaValueStateHiddenText;
+		if (!linksArray.length) {
+			return "";
+		}
+
+		if (isMac()) {
+			return linksArray.length === 1 ? Input.i18nBundle.getText(VALUE_STATE_LINK_MAC) : Input.i18nBundle.getText(VALUE_STATE_LINKS_MAC);
+		}
+
+		return linksArray.length === 1 ? Input.i18nBundle.getText(VALUE_STATE_LINK) : Input.i18nBundle.getText(VALUE_STATE_LINKS);
+	}
+
+	get _valueStateLinksShortcutsTextAccId() {
+		return this.linksInAriaValueStateHiddenText.length > 0 ? `hiddenText-value-state-link-shortcut` : "";
 	}
 
 	get iconsCount(): number {
