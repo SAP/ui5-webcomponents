@@ -1,3 +1,4 @@
+import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import Avatar from "../../src/Avatar.js";
 import Button from "../../src/Button.js";
 import Label from "../../src/Label.js";
@@ -244,6 +245,39 @@ describe("Button general interaction", () => {
 
 		cy.location("hash")
 			.should("eq", "#navigation");
+	});
+
+	it.only("Native event is always fired", () => {
+		cy.mount(<div onClick={cy.stub().as("nativeClick")}>
+			<Button>Click me</Button>
+		</div>);
+
+		cy.wrap({ setNoConflict })
+			.invoke("setNoConflict", true)
+
+		cy.get("[ui5-button]")
+			.realClick();
+
+		cy.get("@nativeClick")
+			.should("have.been.calledOnce")
+			.and("be.calledWithMatch", {
+				type: "click"
+			});
+
+		cy.get('@nativeClick')
+			.invoke('resetHistory')
+
+		cy.wrap({ setNoConflict })
+			.invoke("setNoConflict", false)
+
+		cy.get("[ui5-button]")
+			.realClick();
+
+		cy.get("@nativeClick")
+			.should("have.been.calledOnce")
+			.and("be.calledWithMatch", {
+				type: "click"
+			});
 	});
 });
 
