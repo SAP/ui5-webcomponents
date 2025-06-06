@@ -50,6 +50,7 @@ import "./commands/ResponsivePopover.commands.js";
 import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
 import "./commands/SegmentedButton.commands.js";
+import "./commands/StepInput.commands.js";
 
 type SimulationDevices = "phone"
 
@@ -84,6 +85,10 @@ declare global {
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
 			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
 			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
+			ui5StepInputChangeValueWithArrowKeys(expectedValue: number, decreaseValue?: boolean): Chainable<void>
+			ui5StepInputChangeValueWithButtons(expectedValue: number, decreaseValue?: boolean): Chainable<void>
+			ui5StepInputAttachHandler(eventName: string, stubName: string): Chainable<void>
+			ui5StepInputCheckInnerInputProperty(propName: string, expectedValue: any): Chainable<void>
 		}
 	}
 }
