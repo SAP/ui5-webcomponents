@@ -31,6 +31,12 @@ type ItemNavigationOptions = {
 	affectedPropertiesNames?: Array<string>,
 };
 
+// Registry for ItemNavigation instances and their boundary states
+interface NavigationBoundaryInfo {
+	isAtLeftBoundary: boolean,
+	isAtRightBoundary: boolean,
+}
+
 /**
  * The ItemNavigation class manages the calculations to determine the correct "tabindex" for a group of related items inside a root component.
  * Important: ItemNavigation only does the calculations and does not change "tabindex" directly, this is a responsibility of the developer.
@@ -65,6 +71,9 @@ type ItemNavigationOptions = {
  * @public
  */
 class ItemNavigation {
+	// Static registry to track all ItemNavigation instances
+	static _instances: Set<ItemNavigation> = new Set();
+
 	rootWebComponent: UI5Element;
 
 	_getItems: () => Array<ITabbable>;
@@ -82,6 +91,43 @@ class ItemNavigation {
 	_skipItemsSize: number | null;
 
 	_initBound: () => void;
+
+	/**
+	 * Checks if an element is managed by any ItemNavigation instance and returns boundary information
+	 * @public
+	 * @param element The element to check
+	 * @returns Object with navigation information or null if not managed by ItemNavigation
+	 */
+	static getNavigationInfo(element: HTMLElement): NavigationBoundaryInfo | null {
+		const instances = Array.from(ItemNavigation._instances);
+		const instance = instances.find(itemNavigation => {
+			const currentItem = itemNavigation._getCurrentItem();
+			return currentItem && (currentItem === element || currentItem.contains(element));
+		});
+
+		if (!instance) {
+			return null;
+		}
+
+		const items = instance._getItems();
+		const currentIndex = instance._currentIndex;
+
+		// For horizontal navigation
+		const isHorizontal = instance._navigationMode === NavigationMode.Horizontal
+			|| instance._navigationMode === NavigationMode.Auto;
+
+		if (!isHorizontal) {
+			return null; // Only handle horizontal navigation
+		}
+
+		const isAtLeftBoundary = currentIndex === 0;
+		const isAtRightBoundary = currentIndex === items.length - 1;
+
+		return {
+			isAtLeftBoundary,
+			isAtRightBoundary,
+		};
+	}
 
 	/**
 	 *
@@ -118,6 +164,18 @@ class ItemNavigation {
 		this._navigationMode = options.navigationMode || NavigationMode.Auto;
 		this._affectedPropertiesNames = options.affectedPropertiesNames || [];
 		this._skipItemsSize = options.skipItemsSize || null;
+
+		// Register this instance
+		ItemNavigation._instances.add(this);
+
+		// Clean up when component is destroyed
+		if (this.rootWebComponent.onExitDOM) {
+			const originalOnExitDOM = this.rootWebComponent.onExitDOM.bind(this.rootWebComponent);
+			this.rootWebComponent.onExitDOM = () => {
+				ItemNavigation._instances.delete(this);
+				originalOnExitDOM();
+			};
+		}
 	}
 
 	/**

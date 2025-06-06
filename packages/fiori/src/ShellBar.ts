@@ -7,6 +7,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import {
 	isSpace,
 	isEnter,
@@ -647,12 +648,26 @@ class ShellBar extends UI5Element {
 	}
 
 	_onKeyDown(e: KeyboardEvent) {
-		const items = this._getVisibleAndInteractiveItems();
+		if (!isLeft(e) && !isRight(e)) {
+			return;
+		}
+
 		const activeElement = getActiveElement();
+		if (!activeElement) {
+			return;
+		}
+
+		// Check if the active element is an input field or has its own arrow navigation
+		if (this._allowChildNavigation(activeElement as HTMLElement, e)) {
+			return;
+		}
+
+		const items = this._getVisibleAndInteractiveItems();
 		const currentIndex = items.findIndex(el => el === activeElement);
 
-		if (isLeft(e) || isRight(e)) {
-			e.preventDefault();// Prevent the default behavior to avoid any further automatic focus movemen
+		// Only handle arrow navigation if the focus is on a ShellBar item
+		if (currentIndex !== -1) {
+			e.preventDefault();
 
 			// Focus navigation based on the key pressed
 			if (isLeft(e)) {
@@ -661,6 +676,48 @@ class ShellBar extends UI5Element {
 				this._focusNextItem(items, currentIndex);
 			}
 		}
+	}
+
+	/**
+	 * Determines if child component should handle its own arrow navigation
+	 * @param activeElement - The currently focused element
+	 * @param e - The keyboard event
+	 * @returns true if child should handle navigation, false if ShellBar should handle it
+	 */
+	_allowChildNavigation(activeElement: HTMLElement, e: KeyboardEvent): boolean {
+		if (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA") {
+			return this._allowInputNavigation(activeElement as HTMLInputElement | HTMLTextAreaElement, e);
+		}
+
+		return this._allowItemNavigation(activeElement, e);
+	}
+
+	_allowInputNavigation(inputElement: HTMLInputElement | HTMLTextAreaElement, e: KeyboardEvent): boolean {
+		const cursorPosition = inputElement.selectionStart || 0;
+		const textLength = inputElement.value.length;
+
+		// Allow internal navigation if cursor is not at the boundaries
+		if ((isLeft(e) && cursorPosition > 0)
+		|| (isRight(e) && cursorPosition < textLength)) {
+			return true;
+		}
+
+		// Let ShellBar handle navigation if at boundaries
+		return false;
+	}
+
+	_allowItemNavigation(element: HTMLElement, e: KeyboardEvent): boolean {
+		const direction = isLeft(e) ? "left" : "right";
+
+		const navInfo = ItemNavigation.getNavigationInfo(element);
+		if (!navInfo) {
+			// The component is not managed by ItemNavigation
+			// allow ShellBar to handle the navigation
+			return false;
+		}
+
+		// If not at the boundary, allow child to handle navigation
+		return direction === "left" ? !navInfo.isAtLeftBoundary : !navInfo.isAtRightBoundary;
 	}
 
 	_focusNextItem(items: HTMLElement[], currentIndex: number) {
