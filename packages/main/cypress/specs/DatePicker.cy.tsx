@@ -5,11 +5,6 @@ import DatePicker from "../../src/DatePicker.js";
 import Label from "../../src/Label.js";
 
 describe("Date Picker Tests", () => {
-	afterEach(() => {
-		// eslint-disable-next-line
-		cy.wait(200);
-	});
-
 	it("input renders", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
@@ -1547,11 +1542,6 @@ describe("Date Picker Tests", () => {
 });
 
 describe("Legacy date customization and Islamic calendar type", () => {
-	afterEach(() => {
-		// eslint-disable-next-line
-		cy.wait(200);
-	});
-
 	const configurationObject = {
 		"formatSettings": {
 			"legacyDateCalendarCustomizing": [
