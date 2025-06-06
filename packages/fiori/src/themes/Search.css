@@ -81,6 +81,10 @@
 	height: 100%;
 }
 
+.search-popover-busy-wrapper [ui5-busy-indicator] {
+	z-index: 1;
+}
+
 .search-popover-busy-wrapper::after {
 	content: "";
 	position: absolute;
