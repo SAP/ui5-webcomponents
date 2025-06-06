@@ -17,6 +17,7 @@ import {
 	getEffectiveAriaLabelText,
 	getEffectiveAriaDescriptionText,
 	getAllAccessibleDescriptionRefTexts,
+	deregisterUI5Element,
 } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -297,6 +298,7 @@ abstract class Popup extends UI5Element {
 		}
 
 		ResizeHandler.deregister(this, this._resizeHandler);
+		deregisterUI5Element(this);
 	}
 
 	/**
