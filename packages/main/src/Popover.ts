@@ -471,7 +471,7 @@ class Popover extends Popup {
 	getPopoverSize(calcScrollHeight: boolean = false): PopoverSize {
 		const rect = this.getBoundingClientRect();
 		const width = rect.width;
-		let height = rect.height;
+		let height;
 
 		const domRef = this.getDomRef();
 
@@ -480,9 +480,11 @@ class Popover extends Popup {
 			const content = domRef.querySelector(".ui5-popup-content");
 			const footer = domRef.querySelector(".ui5-popup-footer-root");
 
-			height = content!.scrollHeight;
-			height += header ? header.scrollHeight : 0;
-			height += footer ? footer.scrollHeight : 0;
+			height = content?.scrollHeight || 0;
+			height += header?.scrollHeight || 0;
+			height += footer?.scrollHeight || 0;
+		} else {
+			height = rect.height;
 		}
 
 		return { width, height };
@@ -704,13 +706,18 @@ class Popover extends Popup {
 	getActualPlacement(targetRect: DOMRect): `${PopoverPlacement}` {
 		const placement = this.placement;
 		let actualPlacement = placement;
-		const popoverSize = this.getPopoverSize(true);
+		const isVertical = placement === PopoverPlacement.Top
+			|| placement === PopoverPlacement.Bottom;
+		const popoverSize = this.getPopoverSize(!this.allowTargetOverlap);
 
 		const clientWidth = document.documentElement.clientWidth;
-		const clientHeight = document.documentElement.clientHeight - Popover.VIEWPORT_MARGIN;
+		let clientHeight = document.documentElement.clientHeight;
+		let popoverHeight = popoverSize.height;
 
-		const arrowOffset = this.hideArrow ? 0 : ARROW_SIZE;
-		const popoverHeight = popoverSize.height + arrowOffset;
+		if (isVertical) {
+			popoverHeight += this.hideArrow ? 0 : ARROW_SIZE;
+			clientHeight -= Popover.VIEWPORT_MARGIN;
+		}
 
 		switch (placement) {
 		case PopoverPlacement.Top:

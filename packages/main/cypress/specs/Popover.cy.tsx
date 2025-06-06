@@ -462,3 +462,39 @@ describe("Events", () => {
 			.should("not.be.visible");
 	});
 });
+
+describe("Placement", () => {
+	it("placement=Bottom, but not enough bottom space", () => {
+		cy.viewport(600, 600);
+		cy.mount(
+			<>
+				<Button id="btnOpenPopover"
+						style="position: absolute; top: 300px;">Open</Button>
+				<Popover id="popoverId"
+						 headerText="Popover"
+						 opener="btnOpenPopover"
+						 placement="Bottom">
+					<div style="height: 200px;">
+						<button id="first">First group focusable</button>
+					</div>
+				</Popover>
+			</>
+		);
+
+		cy.get("#popoverId")
+			.invoke("prop", "open", true);
+
+		cy.get("#popoverId")
+			.should("be.visible");
+
+		// wait for the popover to be positioned
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(200);
+
+		cy.get("#popoverId")
+			.then($el => $el.position().top)
+			.then(top => {
+				expect(top).to.be.lt(100)
+			});
+	});
+});
