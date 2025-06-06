@@ -36,12 +36,12 @@ type DynamicDateRangeValue = {
 	 */
 	operator: string;
 
-    /**
-     * Values of the dynamic date range.
-     * @default []
-     * @public
-     */
-    values?: Date[] | number[];
+	/**
+	 * Values of the dynamic date range.
+	 * @default []
+	 * @public
+	 */
+	values?: Date[] | number[];
 }
 
 type DynamicDateRangeChangeEventDetail = {
@@ -70,7 +70,7 @@ type DynamicDateRangeChangeEventDetail = {
  * - `isValidString(value: string): boolean`: Validates whether a given string is a valid representation of the dynamic date range value.
  *
  * @public
- * @since 2.10.0
+ * @since 2.11.0
  */
 interface IDynamicDateRangeOption {
 	icon: string;
@@ -83,15 +83,6 @@ interface IDynamicDateRangeOption {
 	template?: JsxTemplate;
 	isValidString: (value: string) => boolean;
 }
-
-/**
- * Fired when the input operation has finished by pressing Enter or on focusout or a value is selected in the popover.
- * @public
- */
-@event("change", {
-	bubbles: true,
-	cancelable: true,
-})
 
 /**
  * @class
@@ -125,8 +116,8 @@ interface IDynamicDateRangeOption {
  * @constructor
  * @extends UI5Element
  * @public
+ * @since 2.11.0
  */
-
 @customElement({
 	tag: "ui5-dynamic-date-range",
 	languageAware: true,
@@ -139,12 +130,21 @@ interface IDynamicDateRangeOption {
 	],
 })
 
+/**
+ * Fired when the input operation has finished by pressing Enter or on focusout or a value is selected in the popover.
+ * @param {string} value TBD
+ * @public
+ */
+@event("change", {
+	bubbles: true,
+	cancelable: true,
+})
 class DynamicDateRange extends UI5Element {
 	eventDetails!: {
 		change: DynamicDateRangeChangeEventDetail,
 	}
 
-    @i18n("@ui5/webcomponents")
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	/**
@@ -172,11 +172,11 @@ class DynamicDateRange extends UI5Element {
 	@property({ type: Boolean })
 	open = false;
 
-    @property({ type: Object })
-    _currentOption?: IDynamicDateRangeOption;
+	@property({ type: Object })
+	_currentOption?: IDynamicDateRangeOption;
 
 	@property({ type: Object })
-    currentValue?: DynamicDateRangeValue;
+	currentValue?: DynamicDateRangeValue;
 
 	optionsObjects: IDynamicDateRangeOption[] = [];
 
@@ -280,7 +280,7 @@ class DynamicDateRange extends UI5Element {
 		this.value = currentOption ? this.getOption(currentOption.operator)?.parse(value) : undefined;
 
 		if (this.value) {
-			this.fireDecoratorEvent("change", {	value: this.value });
+			this.fireDecoratorEvent("change", { value: this.value });
 		}
 	}
 
