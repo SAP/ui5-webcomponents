@@ -9,8 +9,8 @@ const dynamicDateRange = document.getElementById("dynamicDateRange");
 const selectedValueInput = document.getElementById("selectedValue");
 const convertedDatesInput = document.getElementById("convertedDates");
 
-dynamicDateRange.addEventListener("change", () => {
-    const selectedValue = dynamicDateRange.value;
+dynamicDateRange.addEventListener("ui5-change", (e) => {
+    const selectedValue = e.target.value;
 
     selectedValueInput.value = JSON.stringify(selectedValue);
 
