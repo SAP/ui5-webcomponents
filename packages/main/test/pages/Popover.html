@@ -63,7 +63,7 @@
 
 			<ui5-button id="bigDanger">Super Danger !</ui5-button>
 
-			<ui5-popover id="bigDangerPop" accessible-description-ref="bigDanger">
+			<ui5-popover id="bigDangerPop">
 				<ui5-list>
 					<ui5-li>Hello</ui5-li>
 					<ui5-li>World</ui5-li>
@@ -91,7 +91,7 @@
 	<br>
 	<br>
 	<ui5-button id="btnOpenWithAttr">Open with Attribute</ui5-button>
-	<ui5-popover id="popoverAttr" opener="btnOpenWithAttr" accessible-description="Popover opened by button">
+	<ui5-popover id="popoverAttr" opener="btnOpenWithAttr">
 		<ui5-button id="btnCloseWithMethod">Close with Method</ui5-button>
 		<ui5-button id="btnCloseWithAttr">Close with Attribute</ui5-button>
 	</ui5-popover>
@@ -226,6 +226,28 @@ z-index: 1;
 
 		<div slot="footer">
 			<ui5-button id="focusMe">Close</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<br>
+	<br>
+	<ui5-button id="btnAccessibleDescrRefPopover">Accessible Description Ref</ui5-button>
+	<ui5-popover id="accessibleDescrRefPopover" initial-focus="focusMe" header-text="Popover header"  accessible-description-ref="btnAccessibleDescrRefPopover">
+		<ui5-title level="H3">Hello World!</ui5-title>
+
+		<div slot="footer">
+			<ui5-button id="btnAccessibleDescrRefPopoverSubmit">Close</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<br>
+	<br>
+	<ui5-button id="btnAccessibleDescrPopover">Accessible Description</ui5-button>
+	<ui5-popover id="accessibleDescrPopover" initial-focus="focusMe" header-text="Popover header" accessible-description="Accessible Description">
+		<ui5-title level="H3">Hello World!</ui5-title>
+
+		<div slot="footer">
+			<ui5-button id="btnAccessibleDescrPopoverSubmit">Close</ui5-button>
 		</div>
 	</ui5-popover>
 
@@ -668,6 +690,24 @@ z-index: 1;
 		btnPopFocus.addEventListener("click", function (event) {
 			popFocus.opener = btnPopFocus;
 			popFocus.open = true;
+		});
+
+		btnAccessibleDescrRefPopover.addEventListener("click", function (event) {
+			accessibleDescrRefPopover.opener = btnAccessibleDescrRefPopover;
+			accessibleDescrRefPopover.open = true;
+		});
+
+		btnAccessibleDescrRefPopoverSubmit.addEventListener("click", function (event) {
+			accessibleDescrRefPopover.open = false;
+		});
+
+		btnAccessibleDescrPopover.addEventListener("click", function (event) {
+			accessibleDescrPopover.opener = btnAccessibleDescrPopover;
+			accessibleDescrPopover.open = true;
+		});
+
+		btnAccessibleDescrPopoverSubmit.addEventListener("click", function (event) {
+			accessibleDescrPopover.open = false;
 		});
 
 		document.getElementById("many-items").innerHTML = [].map.call("Ullamco ea ad fugiat enim elit dolore ullamco ad magna excepteur cupidatat.", function (item, index) {

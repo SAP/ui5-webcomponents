@@ -107,6 +107,11 @@ describe("Accessibility", () => {
 		// assert
 		cy.get("#popover")
 			.shadow()
+			.find(".ui5-popup-root")
+			.should("have.attr", "aria-describedby",  "accessibleDescription");
+
+		cy.get("#popover")
+			.shadow()
 			.find("#accessibleDescription")
 			.should("have.text", "Some description added by accessibleDescription");
 

@@ -113,6 +113,11 @@ describe("Accessibility", () => {
 		// assert
 		cy.get("#dialog")
 			.shadow()
+			.find(".ui5-popup-root")
+			.should("have.attr", "aria-describedby",  "accessibleDescription");
+
+		cy.get("#dialog")
+			.shadow()
 			.find("#accessibleDescription")
 			.should("have.text", "Some description added by accessibleDescription");
 
