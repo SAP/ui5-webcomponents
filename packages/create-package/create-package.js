@@ -36,6 +36,7 @@ const FILES_TO_COPY = ["test/pages/img/logo.png"];
 const PackageNamePattern =
 	/^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 const TagPattern = /^[a-z0-9]+?-[a-zA-Z0-9\-_]+?[a-z0-9]$/;
+const JSDocPattern = /\/\*\*\s*([^\*]|(\*(?!\/)))*\*\//g;
 
 // Utility Functions
 const isPackageNameValid = name =>
@@ -79,6 +80,7 @@ const generateFilesContent = async (
 	componentName,
 	skipSubfolder,
 	testSetup,
+	stripJSDoc
 ) => {
 	// All variables that will be replaced in the content of the template folder/
 	const vars = {
@@ -109,7 +111,7 @@ const generateFilesContent = async (
 		? path.join(DEST_DIR)
 		: path.join(DEST_DIR, packageBaseName);
 
-	await processFiles(destDir, vars, testSetup);
+	await processFiles(destDir, vars, testSetup, stripJSDoc);
 
 	console.log("\nPackage successfully created!\nNext steps:\n");
 	console.log(`$ cd ${destDir}`);
@@ -126,7 +128,7 @@ const generateFilesContent = async (
 	console.log("\n");
 };
 
-async function processFiles(destDir, replacements, testSetup) {
+async function processFiles(destDir, replacements, testSetup, stripJSDoc) {
 	const files = await collectFiles(SRC_DIR);
 	const FILE_PATHS_TO_SKIP = [
 		testSetup !== "cypress" ? path.normalize("cypress") : undefined,
@@ -161,7 +163,12 @@ async function processFiles(destDir, replacements, testSetup) {
 			// Image like files that doesn't need proccessing
 			await fs.copyFile(file, destPath);
 		} else {
-			const content = await fs.readFile(file, { encoding: "utf8" });
+			let content = await fs.readFile(file, { encoding: "utf8" });
+
+			if (stripJSDoc) {
+				content = content.replaceAll(JSDocPattern, "");
+			}
+
 			const replaced = replacePlaceholders(content, replacements);
 			let formatted;
 			try {
@@ -210,6 +217,7 @@ const createWebcomponentsPackage = async () => {
 			componentName,
 			skipSubfolder,
 			testSetup,
+			false,
 		);
 	}
 
@@ -241,11 +249,21 @@ const createWebcomponentsPackage = async () => {
 		testSetup = response.testSetup;
 	}
 
+	response = await prompts({
+		type: 'confirm',
+		name: 'stripJSDoc',
+		message: 'Would you like to include JSDoc comments for your classes and class members?',
+		initial: true
+	});
+
+	const stripJSDoc = !response.stripJSDoc;
+
 	return generateFilesContent(
 		packageName,
 		componentName,
 		skipSubfolder,
 		testSetup,
+		stripJSDoc,
 	);
 };
 
