@@ -13,6 +13,10 @@ export default function CalendarTemplate(this: Calendar) {
 				class="ui5-cal-root"
 				onKeyDown={this._onkeydown}
 			>
+				<div class="ui5-calheader">
+					{ CalendarHeaderTemplate.call(this) }
+				</div>
+
 				<div id={`${this._id}-content`} class="ui5-cal-content">
 					<DayPicker
 						id={`${this._id}-daypicker`}
@@ -88,9 +92,6 @@ export default function CalendarTemplate(this: Calendar) {
 					/>
 				</div>
 
-				<div class="ui5-calheader">
-					{ CalendarHeaderTemplate.call(this) }
-				</div>
 			</div>
 
 			<div
