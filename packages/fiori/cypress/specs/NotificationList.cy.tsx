@@ -290,8 +290,13 @@ describe("Notification List Item Tests", () => {
 			.should("not.have.attr", "open");
 
 		cy.get("#nli1").realClick();
+		//cy.get("#nli1").should('have.focus');
 
-		cy.realPress(['Shift', 'F10']);
+		//cy.get("#nli1").realPress(["Shift", "F10"]);
+		cy.get('#nli1')
+			//.focus()
+			.realPress(['Shift', 'F10']);
+
 
 		cy.get("#nli1")
 			.find("ui5-menu")
@@ -322,42 +327,74 @@ describe("Notification List Item Tests", () => {
 	// Accessibility tests follows
 
 	it("tests List Item ACC ariaLabelledBy and ariaDescribedBy", () => {
-		// const firstItem = await browser.$("#nli1");
-		// const firstItemRoot = await firstItem.shadow$(".ui5-nli-root");
+		cy.mount(
+			<NotificationListGroupItem>
+				<NotificationListItem id="nli1" title-text="New order #2201">
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 
-		// const thirdItem = await browser.$("#nli3");
-		// const thirdItemRoot = await thirdItem.shadow$(".ui5-nli-root");
+					<span slot="footnotes">Office Notifications</span>
 
-		// const loadingItem = await browser.$("#nli4");
-		// const loadingItemRoot = await loadingItem.shadow$(".ui5-nli-root");
+				</NotificationListItem>
 
-		// const titleTextId = `${await firstItem.getProperty("_id")}-title-text`;
-		// const readId = `${await firstItem.getProperty("_id")}-read`;
-		// const descriptionId = `${await firstItem.getProperty("_id")}-description`;
-		// const footerId = `${await firstItem.getProperty("_id")}-footnotes`;
-		// const EXPECTED_ARIA_LABELLED_BY = `${titleTextId} ${readId} ${descriptionId} ${footerId}`;
+				<NotificationListItem
+					id="nli3"
+					importance="Important"
+					title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
+				>
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 
-		// const importantId3 = `${await thirdItem.getProperty("_id")}-importance`;
-		// const titleTextId3 = `${await thirdItem.getProperty("_id")}-title-text`;
-		// const readId3 = `${await thirdItem.getProperty("_id")}-read`;
-		// const descriptionId3 = `${await thirdItem.getProperty("_id")}-description`;
-		// const footerId3 = `${await thirdItem.getProperty("_id")}-footnotes`;
-		// const EXPECTED_ARIA_LABELLED_BY3 = `${importantId3} ${titleTextId3} ${readId3} ${descriptionId3} ${footerId3}`;
+					<span slot="footnotes">Office Notifications</span>
 
-		// const loadingId4 = `${await loadingItem.getProperty("_id")}-loading`;
-		// const EXPECTED_LOADING_ARIA_LABELLED_BY = `${loadingId4}`;
+				</NotificationListItem>
 
-		// // assert
-		// assert.strictEqual(await firstItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY,
-		// 	"The ariaLabelledBy text is correct.");
-		// assert.strictEqual(await firstItemRoot.getAttribute("aria-level"), "2",
-		// 	"The ariaLevel text is correct.");
+				<NotificationListItem id="nli3a" importance="Important" />
 
-		// assert.strictEqual(await thirdItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY3,
-		// 	"The ariaLabelledBy text is correct.");
+				<NotificationListItem id="nli4" loading />
+			</NotificationListGroupItem>
+		);
 
-		// assert.strictEqual(await loadingItemRoot.getAttribute("aria-labelledby"), EXPECTED_LOADING_ARIA_LABELLED_BY,
-		// 	"The ariaLabelledBy text is correct.");
+		cy.get('#nli1')
+			.shadow()
+			.find('[id$="-title-text"]')
+			.invoke('attr', 'id')
+			.then((fullId) => {
+				const id1 = fullId.replace('-title-text', '');
+				const EXPECTED_ARIA_LABELLED_BY = `${id1}-title-text ${id1}-read ${id1}-description ${id1}-footnotes`;
+
+				cy.get('#nli1')
+					.shadow()
+					.find('.ui5-nli-root')
+					.should('have.attr', 'aria-labelledby', EXPECTED_ARIA_LABELLED_BY)
+					.and('have.attr', 'aria-level', '2');
+			});
+
+		cy.get('#nli3')
+			.shadow()
+			.find('[id$="-title-text"]')
+			.invoke('attr', 'id')
+			.then((fullId) => {
+				const id1 = fullId.replace('-title-text', '');
+				const EXPECTED_ARIA_LABELLED_BY = `${id1}-importance ${id1}-title-text ${id1}-read ${id1}-description ${id1}-footnotes`;
+
+				cy.get('#nli3')
+					.shadow()
+					.find('.ui5-nli-root')
+					.should('have.attr', 'aria-labelledby', EXPECTED_ARIA_LABELLED_BY);
+			});
+
+		cy.get('#nli4')
+			.shadow()
+			.find('[id$="-loading"]')
+			.invoke('attr', 'id')
+			.then((fullId) => {
+				const id4 = fullId.replace('-loading', '');
+				const EXPECTED_LOADING_ARIA_LABELLED_BY = `${id4}-loading`;
+
+				cy.get('#nli4')
+					.shadow()
+					.find('.ui5-nli-root')
+					.should('have.attr', 'aria-labelledby', EXPECTED_LOADING_ARIA_LABELLED_BY);
+			});
 	});
 
 	it("tests List Item ACC invisible texts", () => {
@@ -522,92 +559,38 @@ describe("Notification List Item Tests", () => {
 	it("tests Group List aria-labelledby", () => {
 		cy.mount(
 			<NotificationList>
-				<NotificationListGroupItem
-					id="nlgi1"
-					title-text="Orders"
-				>
-					<NotificationListItem
-						id="nli1"
-						show-close
-						title-text="New order #2201"
-						state="Positive"
-					>
-						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+				<NotificationListGroupItem id="nlgi1" title-text="Orders" />
 
-						<span slot="footnotes">Office Notifications</span>
-						<span slot="footnotes">3 Days</span>
-
-
-					</NotificationListItem>
-
-					<NotificationListItem
-						id="nli2"
-						read
-						show-close
-						title-text="New order #2202"
-						state="Critical"
-					>
-						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-
-						<span slot="footnotes">Office Notifications</span>
-						<span slot="footnotes">3 Days</span>
-
-					</NotificationListItem>
-
-				</NotificationListGroupItem>
-
-				<NotificationListGroupItem
-					id="nlgi4"
-					title-text="Collapsed loading"
-					collapsed
-					loading
-				>
-					<NotificationListItem
-						id="nli5"
-						wrapping-type="Normal"
-						show-close
-						title-text="New payment #2900"
-						state="Negative"
-					>
-						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-
-						<span slot="footnotes">Office Notifications</span>
-						<span slot="footnotes">3 Days</span>
-
-					</NotificationListItem>
-				</NotificationListGroupItem>
+				<NotificationListGroupItem id="nlgi4" loading />
 			</NotificationList>
 		);
 
-		// cy.get('#nlgi1')
-		// 	.invoke('attr', 'id')
-		// 	.then((sId) => {
-		// 		cy.get(`#${sId}`)
-		// 		.shadow()
-		// 		.find('.ui5-nli-group-items')
-		// 		.invoke('attr', 'accessible-name-ref')
-		// 		.then((actualRef) => {
-		// 			cy.get("#nlgi1")
-		// 			.shadow()
-		// 			.find(".ui5-nli-group-items")
-		// 			.should("have.attr", "accessible-name-ref", actualRef);
-		// 		});
-		// 	});
+		cy.get('#nlgi1')
+			.shadow()
+			.find('[id$="-title-text"]')
+			.invoke('attr', 'id')
+			.then((fullId) => {
+				cy.get('#nlgi1')
+					.shadow()
+					.find('.ui5-nli-group-items')
+					.should('have.attr', 'accessible-name-ref', fullId);
 
+				cy.get('#nlgi1')
+					.shadow()
+					.find('.ui5-nli-group-root')
+					.should('have.attr', 'aria-labelledby', fullId);
+			});
 
-		// const firstGroupItem = await browser.$("#nlgi1");
-		// const firstGroupList =  await browser.$("#nlgi1").shadow$(".ui5-nli-group-items");
-		// const firstGroupRoot =  await browser.$("#nlgi1").shadow$(".ui5-nli-group-root");
-		// const id = `${await firstGroupItem.getProperty("_id")}-title-text`;
-
-		// const fourthGroupItem = await browser.$("#nlgi4");
-		// const fourthGroupRoot =  await browser.$("#nlgi4").shadow$(".ui5-nli-group-root");
-		// const loadingId =  `${await fourthGroupItem.getProperty("_id")}-loading`;
-		// const EXPECTED_LOADING_ARIA_LABELLED_BY = `${loadingId}`;
-
-		// assert.strictEqual(await firstGroupList.getAttribute("accessible-name-ref"), id, "The aria-lebelledby is correct.");
-		// assert.strictEqual(await firstGroupRoot.getAttribute("aria-labelledby"), id, "The aria-lebelledby is correct.");
-		// assert.strictEqual(await fourthGroupRoot.getAttribute("aria-labelledby"), EXPECTED_LOADING_ARIA_LABELLED_BY, "The aria-lebelledby is correct.");
+		cy.get('#nlgi4')
+			.shadow()
+			.find('[id$="-loading"]')
+			.invoke('attr', 'id')
+			.then((loadingId) => {
+				cy.get('#nlgi4')
+					.shadow()
+					.find('.ui5-nli-group-root')
+					.should('have.attr', 'aria-labelledby', loadingId);
+			});
 	});
 
 	it("tests Group Item 'aria-description' and 'aria-level'", () => {
