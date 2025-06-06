@@ -591,14 +591,6 @@ class Tokenizer extends UI5Element {
 	}
 
 	handleBeforeClose() {
-		const tokensArray = this._tokens;
-
-		if (isPhone()) {
-			tokensArray.forEach(token => {
-				token.selected = false;
-			});
-		}
-
 		if (!this._tokenDeleting && !this._preventCollapse) {
 			this._preventCollapse = false;
 			this.expanded = false;
