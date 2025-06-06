@@ -430,8 +430,9 @@ class FlexibleColumnLayout extends UI5Element {
 		const currentlyHidden = this._isColumnHidden(columnWidth);
 		const previouslyHidden = this._isColumnHidden(columnDOM.style.width);
 
-		// no change
+		// ensure columns are properly hidden despite minimum column width constraint.
 		if (currentlyHidden && previouslyHidden) {
+			columnDOM.classList.add("ui5-fcl-column--hidden");
 			return;
 		}
 
