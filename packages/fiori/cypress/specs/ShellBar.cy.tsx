@@ -527,6 +527,56 @@ describe("Events", () => {
 		cy.get("@searchButtonClick")
 			.should("have.been.calledOnce");
 	});
+
+	it("Test logo click fires logo-click event only once", () => {
+		cy.mount(
+			<ShellBar primaryTitle="Product Title" secondaryTitle="Secondary Title">
+				<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+			</ShellBar>
+		);
+		
+		cy.get("[ui5-shellbar]")
+			.as("shellbar");
+
+		cy.get("@shellbar")
+			.then(shellbar => {
+				shellbar.get(0).addEventListener("ui5-logo-click", cy.stub().as("logoClick"));
+			});
+
+		// Test clicking on the logo area in large screens (combined logo layout)
+		cy.viewport(1920, 1080);
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-logo-area")
+			.as("logoArea")
+			.should("exist");
+
+		cy.get("@logoArea")
+			.click();
+
+		cy.get("@logoClick")
+			.should("have.been.calledOnce");
+
+		// Reset the stub for the next test
+		cy.get("@shellbar")
+			.then(shellbar => {
+				shellbar.get(0).addEventListener("ui5-logo-click", cy.stub().as("logoClickSmall"));
+			});
+
+		// Test clicking on the logo in small screens (single logo layout)
+		cy.viewport(500, 1080);
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-logo")
+			.as("logo")
+			.should("exist");
+
+		cy.get("@logo")
+			.click();
+
+		cy.get("@logoClickSmall")
+			.should("have.been.calledOnce");
+	});
 });
 
 describe("ButtonBadge in ShellBar", () => {
