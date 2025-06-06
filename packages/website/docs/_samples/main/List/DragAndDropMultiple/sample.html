@@ -1,0 +1,43 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-fold-end -->
+
+    <div style="display: flex; gap: 1rem">
+        <ui5-list id="listMultipleDnd" selection-mode="Multiple" header-text="Available Options">
+            <ui5-li movable>Sunroof</ui5-li>
+            <ui5-li movable>Navigation</ui5-li>
+    
+            <ui5-li-group id="group1" header-text="Seats" data-allows-nesting>
+                <ui5-li movable>Leather</ui5-li>
+                <ui5-li movable>Heated</ui5-li>
+                <ui5-li movable>Massage</ui5-li>
+            </ui5-li-group>
+    
+            <ui5-li-group id="group2" header-text="Headlights" data-allows-nesting>
+                <ui5-li movable>LED</ui5-li>
+                <ui5-li movable>Matrix</ui5-li>
+                <ui5-li movable>Laser</ui5-li>
+            </ui5-li-group>
+        </ui5-list>
+    
+        <ui5-list id="listMultipleDnd1" selection-mode="Multiple" header-text="Selected Options">
+            <ui5-li movable>Ceramic Brakes</ui5-li>
+            <ui5-li movable>Tinted Windows</ui5-li>
+        </ui5-list>	
+    </div>
+
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->
