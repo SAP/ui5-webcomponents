@@ -327,7 +327,7 @@
 		var clickCount = 0;
 
 		[button, disabledButton, disabledButtonIconOnly, disabledButtonWithoutIcon].forEach(function (el) {
-			el.addEventListener("click", function(event) {
+			el.addEventListener("ui5-click", function(event) {
 				clickCount += 1;
 				clickCounter.value = clickCount;
 			});
@@ -337,7 +337,7 @@
 			expanded: "true"
 		};
 
-		button.addEventListener("click", function(event) {
+		button.addEventListener("ui5-click", function(event) {
 			button.accessibilityAttributes = {
 				expanded: button.accessibilityAttributes.expanded === "true" ? "false" : "true"
 			};
@@ -352,11 +352,11 @@
 			controls: dialog.id,
 		}
 
-		dialogOpener.addEventListener("click", function() {
+		dialogOpener.addEventListener("ui5-click", function() {
 			dialog.open = true;
 		});
 
-		dialogCloser.addEventListener("click", function() {
+		dialogCloser.addEventListener("ui5-click", function() {
 			dialog.open = false;
 		});
 
@@ -365,19 +365,19 @@
 			menu.open = true;
 		}
 
-		menuButtonText.addEventListener("click", function(event) {
+		menuButtonText.addEventListener("ui5-click", function(event) {
 			showMenu(event.target);
 		});
 
-		menuButtonIcon.addEventListener("click", function(event) {
+		menuButtonIcon.addEventListener("ui5-click", function(event) {
 			showMenu(event.target);
 		});
 
-		menuButtonTextIcon.addEventListener("click", function(event) {
+		menuButtonTextIcon.addEventListener("ui5-click", function(event) {
 			showMenu(event.target);
 		});
 
-		menuButtonIconEnd.addEventListener("click", function(event) {
+		menuButtonIconEnd.addEventListener("ui5-click", function(event) {
 			showMenu(event.target);
 		});
 	</script>
