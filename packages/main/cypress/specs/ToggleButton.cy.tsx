@@ -21,7 +21,12 @@ function testClick(shouldPreventClick: boolean, pressedKey?: ModifierKey) {
 		.should("have.been.called");
 
 	if (pressedKey) {
-		cy.get("@clicked").should("be.calledWithMatch", Cypress.sinon.match.has(pressedKey, true));
+		cy.get("@clicked")
+			.should("be.calledWithMatch", {
+				detail: {
+					[pressedKey]: true
+				},
+			});
 	}
 }
 
