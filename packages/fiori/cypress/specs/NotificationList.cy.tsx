@@ -157,12 +157,14 @@ describe("Notification List Item Tests", () => {
 
 	it("tests click on ShowMore", () => {
 		cy.mount(
-			<NotificationListItem
-				id="nli3a"
-				importance="Important"
-				title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
-				state="Information"
-				style="width: 25rem;" />
+			<NotificationList>
+				<NotificationListItem
+					id="nli3a"
+					importance="Important"
+					title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
+					state="Information"
+					style="width: 25rem;" />
+			</NotificationList>
 		);
 
 		cy.get('#nli3a')
@@ -196,7 +198,6 @@ describe("Notification List Item Tests", () => {
 										expect(heightAfterTitle).to.be.greaterThan(heightBeforeTitle);
 
 										cy.get('#nli3a')
-											//   .realClick()
 											.realPress(['Shift', 'Enter']);
 
 										cy.get('#nli3a')
@@ -218,39 +219,6 @@ describe("Notification List Item Tests", () => {
 							});
 					});
 			});
-
-
-		// const firstItem = await browser.$("#nli3a");
-		// const btnListItemShowMore = await firstItem.shadow$(".ui5-nli-footer-showMore");
-		// const content = await firstItem.shadow$(".ui5-nli-content");
-		// const title = await firstItem.shadow$(".ui5-nli-title-text");
-
-		// const hightBeforeContent = await content.getSize("height");
-		// const hightBeforeTitle = await title.getSize("height");
-
-		// // act
-		// await btnListItemShowMore.click();
-
-		// const hightAfterContent = await content.getSize("height");
-		// const hightAfterTitle = await title.getSize("height");
-
-		// // assert
-		// assert.isAbove(hightAfterContent, hightBeforeContent,
-		// 	"The content has been expanded by the ShowMore button.");
-		// assert.isAbove(hightAfterTitle, hightBeforeTitle,
-		// 	"The title has been expanded by the ShowMore button.");
-
-		// // act
-		// await firstItem.click();
-		// await firstItem.keys(["Enter", "Shift"]);
-
-		// const hightAfterKeysContent = await content.getSize("height");
-		// const hightAfterKeysTitle = await title.getSize("height");
-		// // assert
-		// assert.isAbove(hightAfterContent, hightAfterKeysContent,
-		// 	"The content has been collapsed by the Shift+Enter keyboard combination.");
-		// assert.isAbove(hightAfterTitle, hightAfterKeysTitle,
-		// 	"The title has been collapsed by the Shift+Enter keyboard combination.");
 	});
 
 	it("tests no ShowMore, when truncate is not enabled", () => {
@@ -318,10 +286,15 @@ describe("Notification List Item Tests", () => {
 
 	it("tests menu", () => {
 		cy.mount(
-			<NotificationListItem id="nli1">
-				<Menu slot="menu" id="menuWithActions">
-				</Menu>
-			</NotificationListItem>
+			<NotificationList>
+				<NotificationListGroupItem>
+					<NotificationListItem id="nli1" show-close>
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+
+						<Menu slot="menu" id="menuWithActions" />
+					</NotificationListItem>
+				</NotificationListGroupItem>
+			</NotificationList>
 		);
 
 		cy.get("#nli1")
@@ -340,38 +313,11 @@ describe("Notification List Item Tests", () => {
 			.should("not.have.attr", "open");
 
 		cy.get("#nli1").realClick();
-		//cy.get("#nli1").should('have.focus');
-
-		//cy.get("#nli1").realPress(["Shift", "F10"]);
-		cy.get('#nli1')
-			//.focus()
-			.realPress(['Shift', 'F10']);
-
+		cy.realPress(["F10", "Shift"]);
 
 		cy.get("#nli1")
 			.find("ui5-menu")
 			.should("have.attr", "open");
-		// const firstItem = await browser.$("#nli1");
-		// const menuButton = await firstItem.shadow$(".ui5-nli-menu-btn");
-
-		// // act
-		// await menuButton.click();
-		// const menu1 = await firstItem.$("ui5-menu").hasAttribute("open");
-		// // assert
-		// assert.ok(await menu1, "There is open menu.");
-
-		// // act
-		// await firstItem.click();
-		// const menu2 = await firstItem.$("ui5-menu").hasAttribute("open");
-		// // assert
-		// assert.notOk(await menu2, "There is no menu.");
-
-		// // act
-		// await firstItem.click();
-		// await firstItem.keys(["F10", "Shift"]);
-		// const menu3 = await firstItem.$("ui5-menu").hasAttribute("open");
-		// // assert
-		// assert.ok(await menu3, "There is open menu with shift+F10.");
 	});
 
 	// Accessibility tests follows
@@ -892,21 +838,21 @@ describe("Keyboard Navigation", () => {
 	it("Tab and F2 navigation", () => {
 		cy.mount(
 			<NotificationList>
-			<NotificationListGroupItem
-				id="nlgi1"
-				style="width: 25rem;"
-			>
-				<NotificationListItem
-					id="nli1"
-					show-close
+				<NotificationListGroupItem
+					id="nlgi1"
+					style="width: 25rem;"
 				>
-					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+					<NotificationListItem
+						id="nli1"
+						show-close
+					>
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 
-					<Menu />
-				</NotificationListItem>
+						<Menu />
+					</NotificationListItem>
 
-			</NotificationListGroupItem>
-			
+				</NotificationListGroupItem>
+
 			</NotificationList>
 		);
 
@@ -940,32 +886,32 @@ describe("Keyboard Navigation", () => {
 	it("Focusing same item on next row", () => {
 		cy.mount(
 			<NotificationList style="width: 25rem;">
-			<NotificationListGroupItem id="nlgi1">
-				<NotificationListItem id="nli1">
-					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-					<Menu/>
-				</NotificationListItem>
+				<NotificationListGroupItem id="nlgi1">
+					<NotificationListItem id="nli1">
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+						<Menu />
+					</NotificationListItem>
 
-				<NotificationListItem id="nli2" show-close>
-					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-					<Menu/>
-				</NotificationListItem>
-			</NotificationListGroupItem>
-			<NotificationListGroupItem id="nlgi2"/>
-		</NotificationList>
+					<NotificationListItem id="nli2" show-close>
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+						<Menu />
+					</NotificationListItem>
+				</NotificationListGroupItem>
+				<NotificationListGroupItem id="nlgi2" />
+			</NotificationList>
 		);
 
 		cy.get("#nli1")
 			.shadow()
 			.find(".ui5-nli-footer-showMore")
-			.realClick();	
+			.realClick();
 
 		cy.realPress("ArrowDown");
 
 		cy.get("#nli2")
 			.shadow()
 			.find(".ui5-nli-footer-showMore")
-			.should("be.focused");	
+			.should("be.focused");
 
 		cy.get("#nli2")
 			.shadow()
