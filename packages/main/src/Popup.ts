@@ -252,6 +252,7 @@ abstract class Popup extends UI5Element {
 	_focusedElementBeforeOpen?: HTMLElement | null;
 	_opened = false;
 	_open = false;
+	isEnteredInDom = false;
 
 	constructor() {
 		super();
@@ -282,6 +283,7 @@ abstract class Popup extends UI5Element {
 		}
 
 		this.tabIndex = -1;
+		this.isEnteredInDom = true;
 
 		if (this.open) {
 			this.showPopover();
@@ -296,6 +298,8 @@ abstract class Popup extends UI5Element {
 			Popup.unblockPageScrolling(this);
 			this._removeOpenedPopup();
 		}
+
+		this.isEnteredInDom = false;
 
 		ResizeHandler.deregister(this, this._resizeHandler);
 		deregisterUI5Element(this);
@@ -327,7 +331,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	async openPopup() {
-		if (!this.parentNode || this._opened) {
+		if (!this.isEnteredInDom || this._opened) {
 			return;
 		}
 
@@ -480,11 +484,7 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	async applyInitialFocus() {
-		// In the scenario where the popup is initially open
-		// test the attribute rather than the property,
-		// as the component's complete state is not yet configured
-		// and the property might remain uninitialized
-		if (!this.hasAttribute("prevent-initial-focus")) {
+		if (!this.preventInitialFocus) {
 			await this.applyFocus();
 		}
 	}
