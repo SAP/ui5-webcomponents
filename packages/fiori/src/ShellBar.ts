@@ -45,6 +45,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import type ShellBarItem from "./ShellBarItem.js";
 import type { ShellBarItemAccessibilityAttributes } from "./ShellBarItem.js";
+import type ShellBarBranding from "./ShellBarBranding.js";
 
 // Templates
 import ShellBarTemplate from "./ShellBarTemplate.js";
@@ -466,7 +467,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	@slot()
-	branding!: Array<UI5Element>;
+	branding!: Array<ShellBarBranding>;
 
 	/**
 	 * Defines the `ui5-shellbar` additional items.
@@ -875,6 +876,10 @@ class ShellBar extends UI5Element {
 		if (this.breakpointSize !== mappedSize) {
 			this.breakpointSize = mappedSize;
 		}
+
+		this.branding.forEach(brandingEl => {
+			brandingEl.isSBreakPoint = this.isSBreakPoint;
+		});
 	}
 
 	_hideItems(items: IShellBarHidableItem[]) {

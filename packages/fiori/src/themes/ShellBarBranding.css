@@ -39,7 +39,7 @@
 
 .ui5-shellbar-title {
 	display: inline-block;
-	font-family: var(--sapFontSemiboldFamily);
+	font-family: var(--sapFontSemiboldDuplexFamily);
 	margin: 0;
 	font-size: var(--_ui5_shellbar_menu_button_title_font_size);
 	white-space: nowrap;
