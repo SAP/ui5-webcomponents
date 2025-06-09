@@ -54,7 +54,6 @@ export default function SliderBaseTemplate(this: SliderBase, hooks?: {
 			</div>
 			{this.editableTooltip && <>
 				<span id="ui5-slider-InputDesc" class="ui5-hidden-text">{this._ariaDescribedByInputText}</span>
-				<span id="ui5-slider-InputLabel" class="ui5-hidden-text">{this._ariaLabelledByInputText}</span>
 			</>}
 
 		</div>
