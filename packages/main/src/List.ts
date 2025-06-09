@@ -1171,6 +1171,7 @@ class List extends UI5Element {
 	}
 
 	_ondragover(e: DragEvent) {
+		const target = e.target as HTMLElement;
 		if (!(e.target instanceof HTMLElement)) {
 			return;
 		}
@@ -1189,6 +1190,7 @@ class List extends UI5Element {
 		const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element, { originalEvent: true });
 		this.dropIndicatorDOM!.targetReference = targetReference;
 		this.dropIndicatorDOM!.placement = placement;
+		target.style.cursor = "not-allowed";
 	}
 
 	_ondrop(e: DragEvent) {
