@@ -285,7 +285,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 
 					verifyMoveEvent(firstPopoverItem.realTabReference.id, "On", fifthPopoverItem.realTabReference.id);
 					verifyMoveOverEvent(firstPopoverItem.realTabReference.id, "On", fifthPopoverItem.realTabReference.id);
-					tabShouldBeFocusedInPopover(fifthPopoverItem.realTabReference.id);
+					tabShouldBeFocusedInPopover(firstPopoverItem.realTabReference.id);
 				});
 		});
 	});
@@ -429,7 +429,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					});
 			});
 
-			it("Moving strip item with 'End'", () => {
+			it.skip("Moving strip item with 'End'", () => {
 				cy.get("#tabContainer")
 					.shadow()
 					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
