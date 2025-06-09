@@ -12,7 +12,13 @@ import {
 	isPhone,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import {
+	registerUI5Element,
+	getEffectiveAriaLabelText,
+	getEffectiveAriaDescriptionText,
+	getAllAccessibleDescriptionRefTexts,
+	deregisterUI5Element,
+} from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
@@ -172,6 +178,31 @@ abstract class Popup extends UI5Element {
 	accessibleRole: `${PopupAccessibleRole}` = "Dialog";
 
 	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.11.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that describe the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.11.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
+
+	/**
+	 * Constantly updated value of texts collected from the associated labels.
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_associatedDescriptionRefTexts?: string;
+
+	/**
 	 * Defines the current media query size.
 	 * @private
 	 */
@@ -256,6 +287,8 @@ abstract class Popup extends UI5Element {
 			this.showPopover();
 			this.openPopup();
 		}
+
+		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
 	}
 
 	onExitDOM() {
@@ -265,6 +298,7 @@ abstract class Popup extends UI5Element {
 		}
 
 		ResizeHandler.deregister(this, this._resizeHandler);
+		deregisterUI5Element(this);
 	}
 
 	/**
@@ -498,6 +532,10 @@ abstract class Popup extends UI5Element {
 		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
 	}
 
+	_updateAssociatedLabelsTexts() {
+		this._associatedDescriptionRefTexts = getAllAccessibleDescriptionRefTexts(this);
+	}
+
 	/**
 	 * Adds the popup to the "opened popups registry"
 	 * @protected
@@ -594,6 +632,24 @@ abstract class Popup extends UI5Element {
 	 */
 	get _ariaLabel() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get _accInfoAriaDescription() {
+		return this.ariaDescriptionText || "";
+	}
+
+	get ariaDescriptionText() {
+		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this);
+	}
+
+	get ariaDescriptionTextId() {
+		return this.ariaDescriptionText ? "accessibleDescription" : "";
+	}
+
+	get ariaDescribedByIds() {
+		return [
+			this.ariaDescriptionTextId,
+		].filter(Boolean).join(" ");
 	}
 
 	get _root(): HTMLElement {
