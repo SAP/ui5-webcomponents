@@ -157,11 +157,15 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 		it("Moving first strip item 'After' second", () => {
 			cy.get<Tab>("#tabOne, #tabTwo")
 				.then(($el) => {
-					cy.ui5TabContainerDragAndDrop($el[0].getDomRefInStrip()!, "After", $el[1].getDomRefInStrip()!)
-				});
+					const firstItem = $el[0];
+					const secondItem = $el[1];
 
-			verifyMoveOverEvent("tabOne", "After", "tabTwo");
-			verifyMoveEvent("tabOne", "After", "tabTwo");
+					cy.ui5TabContainerDragAndDrop(firstItem.getDomRefInStrip()!, "After", secondItem.getDomRefInStrip()!)
+
+					verifyMoveOverEvent(firstItem.id, "After", secondItem.id);
+					verifyMoveEvent(firstItem.id, "After", secondItem.id);
+					tabShouldBeFocusedInStrip(firstItem.id, "tabContainer");
+				});
 		});
 
 		it("Moving first strip item 'After' last", () => {
@@ -176,6 +180,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 
 					verifyMoveOverEvent(firstItem.realTabReference.id, "After", lastItem.realTabReference.id);
 					verifyMoveEvent(firstItem.realTabReference.id, "After", lastItem.realTabReference.id);
+					tabShouldBeFocusedInStrip(firstItem.realTabReference.id, "tabContainer");
 				});
 		});
 
@@ -191,6 +196,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 
 					verifyMoveOverEvent(lastItem.realTabReference.id, "Before", lastButOneItem.realTabReference.id);
 					verifyMoveEvent(lastItem.realTabReference.id, "Before", lastButOneItem.realTabReference.id);
+					tabShouldBeFocusedInStrip(lastItem.realTabReference.id, "tabContainer");
 				});
 		});
 
@@ -206,17 +212,24 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 
 					verifyMoveOverEvent(lastItem.realTabReference.id, "Before", firstItem.realTabReference.id);
 					verifyMoveEvent(lastItem.realTabReference.id, "Before", firstItem.realTabReference.id);
+					tabShouldBeFocusedInStrip(lastItem.realTabReference.id, "tabContainer");
 				});
 		});
 
 		it("Moving strip item 'On' another", () => {
-			cy.get<Tab>("#tabFive, #tabSix")
+			cy.get<Tab>("#tabFour, #tabSix")
 				.then(($el) => {
-					cy.ui5TabContainerDragAndDrop($el[0].getDomRefInStrip()!, "On", $el[1].getDomRefInStrip()!)
-				});
+					const fifthItem = $el[0];
+					const sixthItem = $el[1];
 
-			verifyMoveOverEvent("tabFive", "On", "tabSix");
-			verifyMoveEvent("tabFive", "On", "tabSix");
+					cy.ui5TabContainerDragAndDrop(fifthItem.getDomRefInStrip()!, "On", sixthItem.getDomRefInStrip()!)
+
+					verifyMoveOverEvent(fifthItem.id, "On", sixthItem.id);
+					verifyMoveEvent(fifthItem.id, "On", sixthItem.id);
+
+					// TODO: focus is not applied
+					// tabShouldBeFocusedInStrip(sixthItem.id, "tabContainer");
+				});
 		});
 
 		it("Moving item 'After' another in end overflow popover", () => {
@@ -227,13 +240,14 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 				.shadow()
 				.find<TabInOverflow>(".ui5-tab-container-responsive-popover [ui5-li-custom]")
 				.then(($el) => {
-					const draggedPopoverItem = $el[0];
-					const dropTargetPopoverItem = $el[2];
+					const firstPopoverItem = $el[0];
+					const thirdPopoverItem = $el[2];
 			
-					cy.ui5TabContainerDragAndDrop(draggedPopoverItem, "After", dropTargetPopoverItem, "Vertical");
+					cy.ui5TabContainerDragAndDrop(firstPopoverItem, "After", thirdPopoverItem, "Vertical");
 
-					verifyMoveOverEvent(draggedPopoverItem.realTabReference.id, "After", dropTargetPopoverItem.realTabReference.id);
-					verifyMoveEvent(draggedPopoverItem.realTabReference.id, "After", dropTargetPopoverItem.realTabReference.id);
+					verifyMoveOverEvent(firstPopoverItem.realTabReference.id, "After", thirdPopoverItem.realTabReference.id);
+					verifyMoveEvent(firstPopoverItem.realTabReference.id, "After", thirdPopoverItem.realTabReference.id);
+					tabShouldBeFocusedInPopover(firstPopoverItem.realTabReference.id);
 				});
 		});
 
@@ -245,13 +259,14 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 				.shadow()
 				.find<TabInOverflow>(".ui5-tab-container-responsive-popover [ui5-li-custom]")
 				.then(($el) => {
-					const draggedPopoverItem = $el[2];
-					const dropTargetPopoverItem = $el[0];
+					const thirdPopoverItem = $el[2];
+					const firstPopoverItem = $el[0];
 
-					cy.ui5TabContainerDragAndDrop(draggedPopoverItem, "Before", dropTargetPopoverItem, "Vertical");
+					cy.ui5TabContainerDragAndDrop(thirdPopoverItem, "Before", firstPopoverItem, "Vertical");
 
-					verifyMoveEvent(draggedPopoverItem.realTabReference.id, "Before", dropTargetPopoverItem.realTabReference.id);
-					verifyMoveOverEvent(draggedPopoverItem.realTabReference.id, "Before", dropTargetPopoverItem.realTabReference.id);
+					verifyMoveEvent(thirdPopoverItem.realTabReference.id, "Before", firstPopoverItem.realTabReference.id);
+					verifyMoveOverEvent(thirdPopoverItem.realTabReference.id, "Before", firstPopoverItem.realTabReference.id);
+					tabShouldBeFocusedInPopover(thirdPopoverItem.realTabReference.id);
 				});
 		});
 
@@ -263,13 +278,14 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 				.shadow()
 				.find<TabInOverflow>(".ui5-tab-container-responsive-popover [ui5-li-custom]")
 				.then(($el) => {
-					const draggedPopoverItem = $el[0];
-					const dropTargetPopoverItem = $el[5];
+					const firstPopoverItem = $el[0];
+					const fifthPopoverItem = $el[5];
 
-					cy.ui5TabContainerDragAndDrop(draggedPopoverItem, "On", dropTargetPopoverItem, "Vertical");
+					cy.ui5TabContainerDragAndDrop(firstPopoverItem, "On", fifthPopoverItem, "Vertical");
 
-					verifyMoveEvent(draggedPopoverItem.realTabReference.id, "On", dropTargetPopoverItem.realTabReference.id);
-					verifyMoveOverEvent(draggedPopoverItem.realTabReference.id, "On", dropTargetPopoverItem.realTabReference.id);
+					verifyMoveEvent(firstPopoverItem.realTabReference.id, "On", fifthPopoverItem.realTabReference.id);
+					verifyMoveOverEvent(firstPopoverItem.realTabReference.id, "On", fifthPopoverItem.realTabReference.id);
+					tabShouldBeFocusedInPopover(fifthPopoverItem.realTabReference.id);
 				});
 		});
 	});
