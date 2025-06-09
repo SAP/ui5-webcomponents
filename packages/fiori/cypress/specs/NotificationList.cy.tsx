@@ -175,13 +175,12 @@ describe("Notification List Item Tests", () => {
 					.find('.ui5-nli-title-text')
 					.invoke('outerHeight')
 					.then((heightBeforeTitle) => {
-						// Act: Click ShowMore button
+
 						cy.get('#nli3a')
 							.shadow()
 							.find('.ui5-nli-footer-showMore')
 							.click();
 
-						// Measure after click
 						cy.get('#nli3a')
 							.shadow()
 							.find('.ui5-nli-content')
@@ -196,12 +195,10 @@ describe("Notification List Item Tests", () => {
 									.then((heightAfterTitle) => {
 										expect(heightAfterTitle).to.be.greaterThan(heightBeforeTitle);
 
-										// Act: simulate Shift+Enter key press
 										cy.get('#nli3a')
 											//   .realClick()
 											.realPress(['Shift', 'Enter']);
 
-										// Measure after collapse via keyboard
 										cy.get('#nli3a')
 											.shadow()
 											.find('.ui5-nli-content')
@@ -894,213 +891,107 @@ describe("Keyboard Navigation", () => {
 
 	it("Tab and F2 navigation", () => {
 		cy.mount(
-			<NotificationList id="notificationList" style="width: 25rem;">
-				<NotificationListGroupItem id="nlgi1">
-					<NotificationListItem id="nli1">
-						<Menu slot="menu" id="menuWithActions">
-						</Menu>
-					</NotificationListItem>
-
-					<NotificationListItem id="nli2">
-					</NotificationListItem>
-				</NotificationListGroupItem>
-
-				<NotificationListGroupItem id="nlgi2">
-					<NotificationListItem id="nli3">
-					</NotificationListItem>
-
-					<NotificationListItem id="nli3a">
-					</NotificationListItem>
-
-					<NotificationListItem id="nli4">
-					</NotificationListItem>
-				</NotificationListGroupItem>
-
-				<NotificationListGroupItem id="nlgi3" collapsed>
-					<NotificationListItem id="nli5">
-					</NotificationListItem>
-				</NotificationListGroupItem>
-
-			</NotificationList>
-		);
-
-		cy.get('#nli1').click();
-
-		// First Tab → focus 'show more'
-		cy.realPress('Tab');
-		cy.get('#nli1')
-			.shadow()
-			.find('.ui5-nli-footer-showMore')
-			.should('have.focus');
-
-		// Second Tab → focus 'menu button'
-		cy.realPress('Tab');
-		cy.get('#nli1')
-			.shadow()
-			.find('.ui5-nli-menu-btn')
-			.should('be.focused');
-
-		// Third Tab → focus 'close button'
-		cy.realPress('Tab');
-		cy.get('#nli1')
-			.shadow()
-			.find('.ui5-nli-close-btn')
-			.should('match', ':focus');
-
-		// Press F2 → focus goes back to the list item root
-		cy.realPress('F2');
-		cy.get('#nli1').should('have.focus');
-
-		// Press F2 again → focus goes back to 'show more'
-		cy.realPress('F2');
-		cy.get('#nli1')
-			.shadow()
-			.find('.ui5-nli-footer-showMore')
-			.should('match', ':focus');
-
-	//cy.get("#menuWithActions")
-	// .shadow()
-	// .find("#menuWithActions")
-	// .should("have.focus");
-
-	// await browser.$("#nli1").click();
-	// await browser.keys("Tab");
-
-	// let res = await browser.executeAsync(done => {
-	// 	done(document.getElementById("nli1").shadowRoot.querySelector(".ui5-nli-footer-showMore").matches(":focus"));
-	// });
-
-	// assert.ok(res, "'show more' is focused.");
-
-	// await browser.keys("Tab");
-	// res = await browser.executeAsync(done => {
-	// 	done(document.getElementById("nli1").shadowRoot.querySelector(".ui5-nli-menu-btn").matches(":focus"));
-	// });
-
-	// assert.ok(res, "'menu button' is focused.");
-
-	// await browser.keys("Tab");
-	// res = await browser.executeAsync(done => {
-	// 	done(document.getElementById("nli1").shadowRoot.querySelector(".ui5-nli-close-btn").matches(":focus"));
-	// });
-
-	// assert.ok(res, "'close button' is focused.");
-
-	// await browser.keys("F2");
-	// assert.ok(await browser.$("#nli1").isFocused(), "First item is focused.");
-
-	// await browser.keys("F2");
-	// res = await browser.executeAsync(done => {
-	// 	done(document.getElementById("nli1").shadowRoot.querySelector(".ui5-nli-footer-showMore").matches(":focus"));
-	// });
-
-	// assert.ok(res, "'show more' is focused.");
-});
-
-it("Focusing same item on next row", () => {
-	cy.mount(
-		<NotificationList
-			id="notificationList"
-			class="notificationlist_test_page2auto">
+			<NotificationList>
 			<NotificationListGroupItem
 				id="nlgi1"
-				title-text="Orders"
+				style="width: 25rem;"
 			>
 				<NotificationListItem
 					id="nli1"
 					show-close
-					title-text="New order #2201"
-					state="Positive"
 				>
-				</NotificationListItem>
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 
-				<NotificationListItem
-					id="nli2"
-					read
-					show-close
-					title-text="New order #2202"
-					state="Critical"
-				>
+					<Menu />
 				</NotificationListItem>
 
 			</NotificationListGroupItem>
+			
+			</NotificationList>
+		);
 
-			<NotificationListGroupItem
-				id="nlgi2"
-				title-text="Payments"
-			>
-				<NotificationListItem
-					id="nli3"
-					importance="Important"
-					wrapping-type="Normal"
-					title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
-					state="Negative"
-				>
+		cy.get("#nli1")
+			.shadow()
+			.find(".ui5-nli-footer-showMore")
+			.realClick();;
+
+		cy.realPress("Tab");
+		cy.get("#nli1")
+			.shadow()
+			.find(".ui5-nli-menu-btn")
+			.should("be.focused");
+
+		cy.realPress("Tab");
+		cy.get('#nli1')
+			.shadow()
+			.find(".ui5-nli-close-btn")
+			.should("be.focused");
+
+		cy.realPress("F2");
+		cy.get("#nli1").should("be.focused");
+
+		cy.realPress("F2");
+		cy.get("#nli1")
+			.shadow()
+			.find(".ui5-nli-footer-showMore")
+			.should("be.focused");
+	});
+
+	it("Focusing same item on next row", () => {
+		cy.mount(
+			<NotificationList style="width: 25rem;">
+			<NotificationListGroupItem id="nlgi1">
+				<NotificationListItem id="nli1">
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+					<Menu/>
 				</NotificationListItem>
 
-				<NotificationListItem
-					id="nli3a"
-					importance="Important"
-					title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
-					state="Information"
-				>
-				</NotificationListItem>
-
-				<NotificationListItem
-					id="nli4"
-					wrapping-type="Normal"
-					loading
-					show-close
-					title-text="New payment #2901"
-					state="None"
-				>
+				<NotificationListItem id="nli2" show-close>
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+					<Menu/>
 				</NotificationListItem>
 			</NotificationListGroupItem>
+			<NotificationListGroupItem id="nlgi2"/>
 		</NotificationList>
-	);
+		);
 
-	cy.get("#nli1").realClick();
-	cy.realPress("Tab");
-	cy.realPress("ArrowDown");
+		cy.get("#nli1")
+			.shadow()
+			.find(".ui5-nli-footer-showMore")
+			.realClick();	
 
-	cy.get("#nli2")
-		.shadow()
-		.find(".ui5-nli-footer-showMore")
-		.should("be.focused");
+		cy.realPress("ArrowDown");
 
-	// await browser.$("#nli1").click();
-	// await browser.keys("Tab");
-	// await browser.keys("ArrowDown");
+		cy.get("#nli2")
+			.shadow()
+			.find(".ui5-nli-footer-showMore")
+			.should("be.focused");	
 
-	// let res = await browser.executeAsync(done => {
-	// 	done(document.getElementById("nli2").shadowRoot.querySelector(".ui5-nli-footer-showMore").matches(":focus"));
-	// });
+		cy.get("#nli2")
+			.shadow()
+			.find(".ui5-nli-footer-showMore")
+			.should("be.focused");
 
-	// assert.ok(res, "'show more' is focused.");
+		cy.realPress("ArrowDown");
+		cy.get("#nlgi2").should("have.focus");
 
-	// await browser.keys("ArrowDown");
-	// assert.ok(await browser.$("#nlgi2").isFocused(), "Second group is focused.");
+		cy.realPress("ArrowUp");
+		cy.realPress(["Tab", "Tab"]);
 
-	// await browser.keys("ArrowUp");
-	// await browser.keys("Tab");
-	// await browser.keys("Tab");
+		cy.get("#nli2")
+			.shadow()
+			.find(".ui5-nli-menu-btn")
+			.should("be.focused");
 
-	// res = await browser.executeAsync(done => {
-	// 	done(document.getElementById("nli2").shadowRoot.querySelector(".ui5-nli-menu-btn").matches(":focus"));
-	// });
+		cy.realPress("ArrowUp");
+		cy.get("#nli1")
+			.shadow()
+			.find(".ui5-nli-menu-btn")
+			.should("be.focused");
 
-	// assert.ok(res, "'menu button' is focused.");
-
-	// await browser.keys("ArrowUp");
-	// res = await browser.executeAsync(done => {
-	// 	done(document.getElementById("nli1").shadowRoot.querySelector(".ui5-nli-menu-btn").matches(":focus"));
-	// });
-
-	// assert.ok(res, "'menu button' is focused.");
-
-	// await browser.keys("ArrowUp");
-	// assert.ok(await browser.$("#nlgi1").isFocused(), "First group is focused.");
-});
+		cy.realPress("ArrowUp");
+		cy.get("#nlgi1").should("be.focused");
+	});
 });
 
 describe("Notification List Item Without a Group", () => {
