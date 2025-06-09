@@ -13,34 +13,34 @@ import DynamicDateRange from "../DynamicDateRange.js";
  */
 class Today implements IDynamicDateRangeOption {
 	parse(): DynamicDateRangeValue {
-	    const returnValue = { operator: "" };
-	    returnValue.operator = this.operator;
+		const returnValue = { operator: "" };
+		returnValue.operator = this.operator;
 
-	    return returnValue;
+		return returnValue;
 	}
 
 	format(): string {
-	    return "Today";
+		return "Today";
 	}
 
-	toDates(): Date[] {
-	    return todayToDates();
+	toDates(): Array<Date> {
+		return todayToDates();
 	}
 
 	isValidString(value: string): boolean {
-	    return value === this.text;
+		return value === this.text;
 	}
 
 	get text() {
-	    return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_TODAY_TEXT);
+		return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_TODAY_TEXT);
 	}
 
 	get operator() {
-	    return "TODAY";
+		return "TODAY";
 	}
 
 	get icon() {
-	    return "";
+		return "";
 	}
 }
 

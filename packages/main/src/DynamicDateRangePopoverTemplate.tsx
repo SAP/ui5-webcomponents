@@ -6,8 +6,13 @@ import Button from "./Button.js";
 import Title from "./Title.js";
 import slimArrowLeft from "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import ListItemType from "./types/ListItemType.js";
+import { isGroupedOption } from "./DynamicDateRangeUtils.js";
+import DynamicDateRangeUnifiedOptionTemplate from "./DynamicDateRangeUnifiedOptionTemplate.js";
 
 export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) {
+	// Check if current option is a merged/grouped option
+	const isCurrentGroupedOption = this._currentOption && isGroupedOption(this._currentOption);
+
 	return (
 		<ResponsivePopover
 			id={`${this._id}-responsive-popover`}
@@ -42,11 +47,16 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 					onItemClick={this._selectOption}
 				>
 					{this.optionsObjects.map(option => {
+						const isOptionGrouped = isGroupedOption(option);
+						const isSelected = option.operator === this.value?.operator ||
+							(isOptionGrouped && option._availableOptions.some(availableOption => availableOption.operator === this.value?.operator));
+
 						return <ListItemStandard
-							selected={option.operator === this.value?.operator}
+							selected={isSelected}
 							iconEnd={true}
 							icon={option.icon}
-							type={!option.template ? ListItemType.Active : ListItemType.Navigation}>
+							wrappingType="Normal"
+							type={!option.template && !isOptionGrouped ? ListItemType.Active : ListItemType.Navigation}>
 							{option.text}
 						</ListItemStandard>;
 					})}
@@ -54,7 +64,7 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 			</div>
 				:
 				<div class="ui5-dynamic-date-range-option-container">
-					{this._currentOption?.template?.call(this)}
+					{isCurrentGroupedOption ? DynamicDateRangeUnifiedOptionTemplate.call(this) : this._currentOption?.template?.call(this)}
 					<div class="ui5-ddr-current-value">{this.currentValueText}</div>
 				</div>
 			}
