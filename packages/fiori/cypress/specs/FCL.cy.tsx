@@ -69,6 +69,15 @@ describe("Columns resize", () => {
 				expect(widthAfterMove).to.be.equal($el.width()!);
 			});
 	});
+
+	it("sets dedicated class to hidden columns", () => {
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-column--end")
+			.should($el => {
+				expect($el).to.have.class("ui5-fcl-column--hidden");
+			});
+	});
 });
 
 describe("ACC", () => {
@@ -96,5 +105,28 @@ describe("ACC", () => {
 			.shadow()
 			.find("slot[name=endColumn]")
 			.should("have.attr", "aria-hidden");
+	});
+	
+	it("verifies that aria-valuenow is set on separators", () => {
+		cy.mount(
+			<FlexibleColumnLayout id="fcl" style={{ height: "300px" }} layout="ThreeColumnsMidExpanded">
+				<div class="column" id="startColumn" slot="startColumn">some content</div>
+				<div class="column" id="midColumn" slot="midColumn">some content</div>
+				<div class="column" id="endColumn" slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.as("fcl");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("have.attr", "aria-valuenow");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-end")
+			.should("have.attr", "aria-valuenow");
 	});
 });

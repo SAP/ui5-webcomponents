@@ -59,8 +59,9 @@ function mountTestpage(selectionMode: string) {
 	);
 
 	cy.get("#table0").children("ui5-table-header-row").first().as("headerRow");
-	cy.get("#table0").children("ui5-table-row").get("[row-key=\"0\"]").as("row0");
-	cy.get("#table0").children("ui5-table-row").get("[row-key=\"4\"]").as("row4");
+	[0, 1, 2, 4].forEach(key => {
+		cy.get(`#table0`).children(`ui5-table-row[row-key="${key}"]`).as(`row${key}`);
+	});
 }
 
 describe("Mode - None", () => {
@@ -115,7 +116,12 @@ const testConfig = {
 				"block_1": "0",
 				"block_2": "3",
 			},
-		},
+			"ROWONLY": {
+				"click": "0",
+				"space": "1",
+				"enter": "2"
+			}
+		}
 	},
 	"Multiple": {
 		"config": {
@@ -154,6 +160,11 @@ const testConfig = {
 				"initial": "0",
 				"block_1": "0 1",
 				"block_2": "0 1 3 4"
+			},
+			"ROWONLY": {
+				"click": "0",
+				"space": "0 1",
+				"enter": "0 1 2"
 			}
 		}
 	}
@@ -207,7 +218,7 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 		});
 
 		it("select row via SPACE", () => {
-			cy.get("@row0").realClick({ position: "left" });
+			cy.get("@row0").realClick();
 			cy.get("@row0").realPress("Space");
 			checkSelection(testConfigEntry.cases.SPACE.space_0);
 			checkSelectionChangeSpy(1);
@@ -292,6 +303,46 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 			checkSelectionChangeSpy(callCount);
 		});
 	});
+
+	describe(`Behavior - ${mode}`, () => {
+        beforeEach(() => {
+            mountTestpage(testConfigEntry.config.mode);
+
+			cy.get("@row0").invoke("prop", "interactive", true);
+			cy.get("@row1").invoke("prop", "interactive", true);
+			cy.get("@row2").invoke("prop", "interactive", true);
+			cy.get("#selection").invoke("attr", "behavior", "RowWÓnly");
+			cy.get("#table0").invoke("on", "row-click", cy.stub().as("rowClickSpy"));
+			cy.get("#selection").invoke("on", "change", cy.stub().as("selectionChangeSpy"));
+        });
+
+		it("renders neither selection cell nor selection component", () => {
+			cy.get("@headerRow").shadow().find("#selection-cell").should("not.exist");
+			cy.get("@row0").shadow().find("#selection-cell").should("not.exist");
+
+			cy.get("@headerRow").shadow().find("#selection-component").should("not.exist");
+			cy.get("@row0").shadow().find("#selection-component").should("not.exist");
+		});
+
+		it("selects row via click, space or enter", () => {
+			cy.get("@row0").realClick();
+			checkSelection(testConfigEntry.cases.ROWONLY.click);
+			checkSelectionChangeSpy(1);
+
+			cy.get("@row0").realPress("ArrowDown");
+			cy.get("@row1").realPress("Space");
+			checkSelection(testConfigEntry.cases.ROWONLY.space);
+			checkSelectionChangeSpy(2);
+
+			cy.get("@row1").realPress("ArrowDown");
+			cy.get("@row2").realPress("Enter");
+			checkSelection(testConfigEntry.cases.ROWONLY.enter);
+			checkSelectionChangeSpy(3);
+
+			cy.get("@rowClickSpy").should("not.have.callCount");
+		});
+    });
+
 });
 
 describe("TableSelectionMulti", () => {

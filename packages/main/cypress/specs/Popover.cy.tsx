@@ -2,6 +2,189 @@ import ToolbarButton from "../../src/ToolbarButton.js";
 import Toolbar from "../../src/Toolbar.js";
 import Popover from "../../src/Popover.js";
 import Button from "../../src/Button.js";
+import Label from "../../src/Label.js";
+
+describe("Rendering", () => {
+	it("tests arrow positioning", () => {
+		cy.mount(
+			<>
+				<div id="icon1" tabindex="0" style="width: 10px; height: 10px; background:red;"></div>
+				<Popover id="popup"
+						 opener="icon1"
+						 headerText="Newsletter subscription"
+						 placement="End"
+						 verticalAlign="Top">
+					<Button id="btnClosePopover">Close</Button>
+				</Popover>
+			</>
+		);
+
+		// act
+		cy.get("#popup")
+			.invoke("prop", "open", "true");
+
+		cy.get("#popup")
+			.ui5PopoverOpened();
+
+		cy.get("#popup")
+			.shadow()
+			.find(".ui5-popover-arrow")
+			.should("be.visible");
+
+		cy.get("#popup")
+			.shadow()
+			.find(".ui5-popover-arrow")
+			.should("have.css", "transform", "matrix(1, 0, 0, 1, 0, -42)");
+	});
+});
+
+describe("Accessibility", () => {
+	it("Popover accessibleDescriptionRef Tests", () => {
+		cy.mount(
+			<>
+				<Label id="lblDesc1">FirstDesc</Label>
+				<Label id="lblDesc2">SecondDesc</Label>
+				<Label id="lblDesc3">ThirdDesc</Label>
+				<Popover id="popover" accessibleDescriptionRef="lblDesc1 lblDesc3"></Popover>
+			</>
+		);
+
+		// assert
+		cy.get("#popover")
+			.shadow()
+			.find("#accessibleDescription")
+			.should("have.text", "FirstDesc ThirdDesc");
+
+		// act - update text of referenced label
+		cy.get("#lblDesc1")
+			.then($el => {
+				$el.get(0).innerHTML = "First Label Desc";
+			});
+
+		// assert
+		cy.get("#popover")
+			.shadow()
+			.find("#accessibleDescription")
+			.should("have.text", "First Label Desc ThirdDesc");
+
+		// act - update accessible-description-ref
+		cy.get("#popover")
+			.invoke("attr", "accessible-description-ref", "lblDesc2");
+
+		// assert
+		cy.get("#popover")
+			.shadow()
+			.find("#accessibleDescription")
+			.should("have.text", "SecondDesc");
+
+		// act - update accessible-description-ref
+		cy.get("#popover")
+			.invoke("attr", "accessible-description-ref", "lblDesc3");
+
+		// assert
+		cy.get("#popover")
+			.shadow()
+			.find("#accessibleDescription")
+			.should("have.text", "ThirdDesc");
+
+		// act - remove accessible-description-ref
+		cy.get("#popover")
+			.invoke("removeAttr", "accessible-description-ref");
+
+		// assert
+		cy.get("#popover")
+			.shadow()
+			.find("#accessibleDescription")
+			.should("not.have.text", "");
+	});
+
+	it("Popover accessibleDescription Tests", () => {
+		cy.mount(
+			<>
+				<Popover id="popover" accessibleDescription="Some description added by accessibleDescription"></Popover>
+			</>
+		);
+		// assert
+		cy.get("#popover")
+			.shadow()
+			.find(".ui5-popup-root")
+			.should("have.attr", "aria-describedby",  "accessibleDescription");
+
+		cy.get("#popover")
+			.shadow()
+			.find("#accessibleDescription")
+			.should("have.text", "Some description added by accessibleDescription");
+
+		// act - update accessible-description
+		cy.get("#popover")
+			.invoke("attr", "accessible-description", "Some description added by accessibleDescription");
+
+		// assert
+		cy.get("#popover")
+			.shadow()
+			.find("#accessibleDescription")
+			.should("have.text", "Some description added by accessibleDescription");
+
+		// act - remove accessible-description
+		cy.get("#popover")
+			.invoke("removeAttr", "accessible-description");
+
+		// assert
+		cy.get("#popover")
+			.shadow()
+			.find("#accessibleDescription")
+			.should("not.have.text", "");
+	});
+
+	// both
+	it("Popover accessibleDescriptionRef and accessibleDescription Tests", () => {
+		cy.mount(
+			<>
+				<Label id="lblDesc1">FirstDesc</Label>
+				<Label id="lblDesc2">SecondDesc</Label>
+				<Popover id="popover" accessibleDescriptionRef="lblDesc1" accessibleDescription="Some description added by accessibleDescription"></Popover>
+			</>
+		);
+
+		// assert - accessibleDescription is used
+		cy.get("#popover")
+			.shadow()
+			.find("#accessibleDescription")
+			.should("have.text", "FirstDesc");
+
+		// act - update text of referenced label
+		cy.get("#lblDesc1")
+			.then($el => {
+				$el.get(0).innerHTML = "First Label Desc";
+			});
+
+		// assert - accessibleDescriptionRef is used
+		cy.get("#popover")
+			.shadow()
+			.find("#accessibleDescription")
+			.should("have.text", "First Label Desc");
+
+		// act - remove accessible-description-ref
+		cy.get("#popover")
+			.invoke("removeAttr", "accessible-description-ref");
+
+		// assert - accessibleDescription is used
+		cy.get("#popover")
+			.shadow()
+			.find("#accessibleDescription")
+			.should("have.text", "Some description added by accessibleDescription");
+
+		// act - remove accessible-description
+		cy.get("#popover")
+			.invoke("removeAttr", "accessible-description");
+
+		// assert - accessibleDescriptionRef is used
+		cy.get("#popover")
+			.shadow()
+			.find("#accessibleDescription")
+			.should("not.have.text", "");
+	});
+});
 
 describe("Popover opener", () => {
 	it("tests 'opener' set as string of abstract element's ID ", () => {
@@ -110,7 +293,7 @@ describe("Popover opener", () => {
 		});
 
 		cy.get("#popover")
-			.should("be.visible");
+			.ui5PopoverOpened();
 
 		cy.get("@showOutsideViewport")
 			.should("have.been.calledOnce");
@@ -129,7 +312,7 @@ describe("Popover interaction", () => {
 				</>
 			);
 
-			cy.get("#pop").should("be.visible");
+			cy.get("#pop").ui5PopoverOpened();
 
 			// act
 			cy.get("body").realClick();
@@ -148,13 +331,13 @@ describe("Popover interaction", () => {
 				</>
 			);
 
-			cy.get("#pop").should("be.visible");
+			cy.get("#pop").ui5PopoverOpened();
 
 			// act
 			cy.get("#opener").realClick();
 
 			// assert
-			cy.get("#pop").should("be.visible");
+			cy.get("#pop").ui5PopoverOpened();
 		});
 
 		it("tests clicking on the opener if both the popover and the opener are located in a shadow root", () => {
@@ -197,13 +380,13 @@ describe("Popover interaction", () => {
 			);
 
 			// assert
-			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").should("be.visible");
+			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").ui5PopoverOpened();
 
 			// act
 			cy.get("#openerShadowRooTest").shadow().find("button").realClick();
 
 			// assert
-			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").should("be.visible");
+			cy.get("#openerShadowRooTest").shadow().find("[ui5-popover]").ui5PopoverOpened();
 		});
 
 		it("tests clicking outside the popover when 'mousedown' event propagation is stopped", () => {
@@ -217,7 +400,7 @@ describe("Popover interaction", () => {
 				</>
 			);
 
-			cy.get("#pop").should("be.visible");
+			cy.get("#pop").ui5PopoverOpened();
 			cy.get("#btn").then(btn => {
 				btn.get(0).addEventListener("mousedown", event => {
 					event.stopPropagation();
@@ -229,6 +412,51 @@ describe("Popover interaction", () => {
 
 			// assert
 			cy.get("#pop").should("not.be.visible");
+		});
+
+		it("click on opener, which is iframe inside a custom element", () => {
+			cy.mount(
+				<>
+					<div id="myDiv" style="width: 200px;" tabindex="0">
+						<div id="helloId">Hello</div>
+						<div id="customElId" style="height: 200px;">
+						</div>
+					</div>
+					<Popover id="popoverId"
+							 opener="myDiv"
+							 headerText="Newsletter subscription"
+							 preventInitialFocus>
+						<div>
+							Content
+						</div>
+					</Popover>
+				</>
+			);
+
+			cy.get("#popoverId")
+				.invoke("prop", "open", "true");
+
+			cy.get("#popoverId")
+				.should("be.visible");
+
+			cy.get("#customElId").then($customEl => {
+				$customEl.get(0).attachShadow({mode: 'open'}).innerHTML =
+					`<iframe
+	sandbox
+	width="200"
+	height="200"
+	srcdoc="<div tabindex='0' id='contentId'>IFrame content</div>"
+></iframe>`;
+			});
+
+			cy.get("#myDiv")
+				.realClick({x: 100, y: 50});
+
+			// eslint-disable-next-line cypress/no-unnecessary-waiting
+			cy.wait(200);
+
+			cy.get("#popoverId")
+				.should("be.visible");
 		});
 	});
 });
@@ -334,7 +562,7 @@ describe("Events", () => {
 			.invoke("prop", "open", true);
 
 		cy.get("#popoverId")
-			.should("be.visible");
+			.ui5PopoverOpened();
 	});
 
 	it("before-close", () => {
@@ -356,7 +584,7 @@ describe("Events", () => {
 			.invoke("prop", "open", true);
 
 		cy.get("#popoverId")
-			.should("be.visible");
+			.ui5PopoverOpened();
 
 		const preventDefault = (e : Event) => {
 			e.preventDefault();
@@ -370,7 +598,7 @@ describe("Events", () => {
 			.invoke("prop", "open", false);
 
 		cy.get("#popoverId")
-			.should("be.visible");
+			.ui5PopoverOpened();
 
 		cy.get("#popoverId").then($popover => {
 			$popover.get(0).removeEventListener("before-close", preventDefault);

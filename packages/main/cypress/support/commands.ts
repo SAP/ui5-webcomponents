@@ -67,6 +67,7 @@ declare global {
 			ui5MenuItemPress(key: any): Chainable<void>
 			ui5CalendarGetDay(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
 			ui5CalendarGetMonth(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
+			ui5CalendarShowYearRangePicker(): Chainable<void>
 			ui5ColorPickerToggleColorMode(): Chainable<void>
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
 			ui5ColorPickerValidateInput(name: string, value: string): Chainable<void>
@@ -105,6 +106,10 @@ Cypress.Commands.add("ui5SimulateDevice", (device: SimulationDevices = "phone") 
 		.callsFake(() => {
 			return true;
 		});
+
+	if (device === "phone") {
+		cy.stub(internals, "windows").value(false);
+	}
 
 	cy.viewport(deviceName[device]);
 

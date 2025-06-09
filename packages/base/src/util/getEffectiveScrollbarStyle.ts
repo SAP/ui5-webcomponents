@@ -6,7 +6,8 @@ const getEffectiveScrollbarStyle = () => {
 		return "";
 	}
 
-	return `::-webkit-scrollbar:horizontal {
+	return `
+::-webkit-scrollbar:horizontal {
 	height: var(--sapScrollBar_Dimension);
 }
 
@@ -22,6 +23,7 @@ const getEffectiveScrollbarStyle = () => {
 ::-webkit-scrollbar-thumb {
 	border-radius: var(--sapElement_BorderCornerRadius);
 	background-color: var(--sapScrollBar_FaceColor);
+	border: 0.125rem solid var(--sapScrollBar_TrackColor);
 }
 
 ::-webkit-scrollbar-thumb:hover {

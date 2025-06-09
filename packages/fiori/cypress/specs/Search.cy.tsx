@@ -4,11 +4,12 @@ import SearchItem from "../../src/SearchItem.js";
 import SearchItemGroup from "../../src/SearchItemGroup.js";
 import history from "@ui5/webcomponents-icons/dist/history.js";
 import IllustratedMessage from "../../src/IllustratedMessage.js";
-import SearchPopupMode from "@ui5/webcomponents/dist/types/SearchPopupMode.js";
 import searchIcon from "@ui5/webcomponents-icons/dist/search.js";
 import SearchMessageArea from "../../src/SearchMessageArea.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
+import Avatar from "@ui5/webcomponents/dist/Avatar.js";
+import AvatarSize from "@ui5/webcomponents/dist/types/AvatarSize.js";
 
 describe("Properties", () => {
 	it("items slot with groups", () => {
@@ -334,6 +335,58 @@ describe("Properties", () => {
 			.should("be.visible");
 
 		cy.get("[ui5-search] [ui5-button]")
+			.should("be.visible");
+	});
+
+	it("Displays item's icon when both image and icon are set", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="Item 1" icon={history}>
+					<Avatar slot="image" size={AvatarSize.XS} initials="JM"/>
+				</SearchItem>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.realPress("I");
+
+		cy.get("[ui5-search]")
+			.find("ui5-search-item")
+			.shadow()
+			.find("ui5-icon")
+			.should("be.visible");
+
+		cy.get("[ui5-search]")
+			.find("ui5-search-item")
+			.find("ui5-avatar")
+			.should("not.be.visible");
+	});
+
+	it("Displays item's image if set", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="Item 1">
+					<Avatar slot="image" size={AvatarSize.XS} initials="JM"/>
+				</SearchItem>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.realPress("I");
+
+		cy.get("[ui5-search]")
+			.find("ui5-search-item")
+			.find("ui5-avatar")
 			.should("be.visible");
 	});
 });

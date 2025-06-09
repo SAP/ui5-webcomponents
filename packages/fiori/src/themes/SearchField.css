@@ -1,11 +1,13 @@
 /* container */
-:host {
+:host,
+.ui5-shellbar-search-field-wrapper {
 	height: 2.25rem;
 	display: flex;
 	align-items: center;
 }
 
-:host(:not([collapsed])) {
+:host(:not([collapsed])),
+.ui5-shellbar-search-field-wrapper {
 	min-width: 18rem;
 	max-width: 36rem;
 	margin: 0;
@@ -23,8 +25,14 @@
 	position: relative;
 }
 
+.ui5-shellbar-search-field-wrapper {
+	flex: 1;
+	min-width: auto;
+}
+
 :host(:not([collapsed]):hover),
-:host(:not([collapsed]):focus-within) {
+:host(:not([collapsed]):focus-within),
+.ui5-shellbar-search-field-wrapper:focus-within {
 	box-shadow: var(--sapField_Hover_Shadow);
 	background: var(--_ui5-search-wrapper-hover-background);
 	background-color: var(--_ui5-search-wrapper-hover-background-color);
@@ -95,6 +103,34 @@
 
 [ui5-select]::part(popover) {
 	background-color: var(--sapShellColor);
+}
+
+.ui5-filter-wrapper {
+	--_ui5_button_focused_border_radius: var(--_ui5_search_filter_button_border_radius);
+}
+
+/*filter button slot */
+::slotted([slot="filterButton"]) {
+	min-width: var(--_ui5_search_icon_size);
+	height: var(--_ui5_search_icon_size);
+	border: var(--_ui5_search_filter_button_border);
+	border-radius: var(--_ui5_search_filter_button_border_radius);
+	color: var(--sapShell_InteractiveTextColor);
+	outline: none;
+	background: var(--_ui5-search-filter_button_background_color);
+	box-sizing: border-box;
+	margin-inline-end: 0.1875rem;
+	margin-inline-start: 0.25rem;
+}
+
+::slotted([slot="filterButton"]:focus-within) {
+	background-color: var(--ui5_search_filter_button_background_active);
+	border: var(--_ui5_search_filter_button_border);
+}
+
+::slotted([slot="filterButton"]:hover) {
+	background-color: var(--sapShell_Hover_Background);
+	border: var(--_ui5_seach_filter_button_border_hover);
 }
 
 /* input */

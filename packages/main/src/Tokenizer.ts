@@ -17,6 +17,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import {
 	isSpace,
 	isSpaceCtrl,
@@ -56,6 +57,7 @@ import type Token from "./Token.js";
 import type { IToken } from "./MultiInput.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
 import TokenizerTemplate from "./TokenizerTemplate.js";
+import type Button from "./Button.js";
 import {
 	MULTIINPUT_SHOW_MORE_TOKENS,
 	TOKENIZER_ARIA_LABEL,
@@ -65,6 +67,8 @@ import {
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
 	TOKENIZER_SHOW_ALL_ITEMS,
 	TOKENIZER_CLEAR_ALL,
+	TOKENIZER_DIALOG_OK_BUTTON,
+	TOKENIZER_DIALOG_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -321,6 +325,10 @@ class Tokenizer extends UI5Element {
 	@property({ type: Number })
 	_tokensCount = 0;
 
+	/**
+	 * Defines the tokens to be displayed.
+	 * @public
+	 */
 	@slot({
 		type: HTMLElement,
 		"default": true,
@@ -583,14 +591,6 @@ class Tokenizer extends UI5Element {
 	}
 
 	handleBeforeClose() {
-		const tokensArray = this._tokens;
-
-		if (isPhone()) {
-			tokensArray.forEach(token => {
-				token.selected = false;
-			});
-		}
-
 		if (!this._tokenDeleting && !this._preventCollapse) {
 			this._preventCollapse = false;
 			this.expanded = false;
@@ -612,7 +612,7 @@ class Tokenizer extends UI5Element {
 		this._focusedElementBeforeOpen = null;
 	}
 
-	handleDialogButtonPress(e: MouseEvent) {
+	handleDialogButtonPress(e: UI5CustomEvent<Button, "click">) {
 		const isOkButton = (e.target as HTMLElement).hasAttribute("data-ui5-tokenizer-dialog-ok-button");
 		const confirm = !!isOkButton;
 
@@ -1067,6 +1067,14 @@ class Tokenizer extends UI5Element {
 	get tokenizerLabel() {
 		const effectiveLabelText = getEffectiveAriaLabelText(this);
 		return effectiveLabelText || Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
+	}
+
+	get _okButtonText() {
+		return Tokenizer.i18nBundle.getText(TOKENIZER_DIALOG_OK_BUTTON);
+	}
+
+	get _cancelButtonText() {
+		return Tokenizer.i18nBundle.getText(TOKENIZER_DIALOG_CANCEL_BUTTON);
 	}
 
 	get tokenizerAriaDescription() {
