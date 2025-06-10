@@ -9,11 +9,16 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realType("invalid input")
-			.realPress("Enter");
+			.should("be.focused");
+
+		cy.realType("invalid input");
+
+		cy.realPress("Enter");
+
+		cy.get("@dateRangePicker")
+			.should("have.value", "invalid input")
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value-state", "Negative");
@@ -31,11 +36,16 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realType("09/09/2020 - 10/10/2020")
-			.realPress("Enter");
+			.should("be.focused");
+
+		cy.realType("09/09/2020 - 10/10/2020");
+
+		cy.realPress("Enter");
+
+		cy.get("@dateRangePicker")
+			.should("have.value", "09/09/2020 - 10/10/2020")
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value-state", "None");
@@ -49,17 +59,22 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realType("09/09/2020 - 10/10/2020")
-			.realPress("Enter");
+			.should("be.focused");
+
+		cy.realType("09/09/2020 - 10/10/2020");
+
+		cy.realPress("Enter");
+
+		cy.get("@dateRangePicker")
+			.should("have.value", "09/09/2020 - 10/10/2020")
 
 		cy.get<DateRangePicker>("@dateRangePicker")
 			.shadow()
-			.find("ui5-calendar")
+			.find("[ui5-calendar]")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.should("have.attr", "timestamp", timestamp_9_Sep_2020.toString());
 	});
 
@@ -69,11 +84,16 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realType("Feb 25, 2022 @ Feb 28, 2022")
-			.realPress("Enter");
+			.should("be.focused");
+
+		cy.realType("Feb 25, 2022 @ Feb 28, 2022");
+
+		cy.realPress("Enter");
+
+		cy.get("@dateRangePicker")
+			.should("have.value", "Feb 25, 2022 @ Feb 28, 2022")
 
 		cy.get<DateRangePicker>("@dateRangePicker")
 			.invoke("attr", "delimiter", "###")
@@ -86,11 +106,16 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realType("27/09/2019 - 10/10/2019")
-			.realPress("Enter");
+			.should("be.focused");
+
+		cy.realType("27/09/2019 - 10/10/2019")
+
+		cy.realPress("Enter");
+
+		cy.get("@dateRangePicker")
+			.should("have.value", "27/09/2019 - 10/10/2019")
 
 		cy.get<DateRangePicker>("@dateRangePicker")
 			.then($datePicker => {
@@ -100,14 +125,14 @@ describe("DateRangePicker general interaction", () => {
 				})
 					.as("dates")
 					.invoke("startDateValue")
-					.then(date => {
+					.should(date => {
 						const timestamp = date ? date.getTime() : new Date().getTime();
 						expect(new Date(timestamp)).to.deep.equal(new Date(2019, 8, 27));
 					});
 
 				cy.get("@dates")
 					.invoke("endDateValue")
-					.then(date => {
+					.should(date => {
 						const timestamp = date ? date.getTime() : new Date().getTime();
 						expect(new Date(timestamp as number)).to.deep.equal(new Date(2019, 9, 10));
 					});
@@ -120,11 +145,16 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realType("05/08/2020 - 05/08/2020")
-			.realPress("Enter");
+			.should("be.focused");
+
+		cy.realType("05/08/2020 - 05/08/2020");
+
+		cy.realPress("Enter");
+
+		cy.get("@dateRangePicker")
+			.should("have.value", "05/08/2020 - 05/08/2020");
 
 		cy.get<DateRangePicker>("@dateRangePicker")
 			.then($el => {
@@ -134,14 +164,14 @@ describe("DateRangePicker general interaction", () => {
 				})
 					.as("dates")
 					.invoke("startDateValue")
-					.then(date => {
+					.should(date => {
 						const timestamp = date ? date.getTime() : new Date().getTime();
 						expect(new Date(timestamp)).to.deep.equal(new Date(2020, 7, 5));
 					});
 
 				cy.get("@dates")
 					.invoke("endDateValue")
-					.then(date => {
+					.should(date => {
 						const timestamp = date ? date.getTime() : new Date().getTime();
 						expect(new Date(timestamp as number)).to.deep.equal(new Date(2020, 7, 5));
 					});
@@ -154,9 +184,9 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-calendar")
+			.find("[ui5-calendar]")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(".ui5-dp-root .ui5-dp-content div > .ui5-dp-item")
 			.as("items")
@@ -169,10 +199,11 @@ describe("DateRangePicker general interaction", () => {
 
 		cy.get("@dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realPress("F4");
+			.should("be.focused");
+
+		cy.realPress("F4");
 
 		cy.get("@dateRangePicker")
 			.then($dateRangePicker => {
@@ -195,31 +226,31 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.as("input")
 			.realClick()
-			.should("be.focused")
-			.realPress("End")
-			.realPress("PageDown");
+			.should("be.focused");
+
+		cy.realPress("End")
+
+		cy.realPress("PageDown");
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 28, 2020");
 
-		cy.get("@input")
-			.realPress("PageUp");
+		cy.realPress("PageUp");
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 29, 2020");
 
-		cy.get("@input")
-			.realPress("Home")
-			.realPress("PageDown");
+		cy.realPress("Home");
+
+		cy.realPress("PageDown");
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 15, 2020 @ Jul 29, 2020");
 
-		cy.get("@input")
-			.realPress("PageUp");
+		cy.realPress("PageUp");
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 29, 2020");
@@ -235,31 +266,31 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.as("input")
 			.realClick()
-			.should("be.focused")
-			.realPress("End")
-			.realPress(["Shift", "PageUp"]);
+			.should("be.focused");
+
+		cy.realPress("End")
+
+		cy.realPress(["Shift", "PageUp"]);
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Aug 29, 2020");
 
-		cy.get("@input")
-			.realPress(["Shift", "PageDown"]);
+		cy.realPress(["Shift", "PageDown"]);
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 29, 2020");
 
-		cy.get("@input")
-			.realPress("Home")
-			.realPress(["Shift", "PageDown"]);
+		cy.realPress("Home");
+
+		cy.realPress(["Shift", "PageDown"]);
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jun 16, 2020 @ Jul 29, 2020");
 
-		cy.get("@input")
-			.realPress(["Shift", "PageUp"]);
+		cy.realPress(["Shift", "PageUp"]);
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 29, 2020");
@@ -275,31 +306,31 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.as("input")
 			.realClick()
-			.should("be.focused")
-			.realPress("End")
-			.realPress(["Control", "Shift", "PageUp"]);
+			.should("be.focused");
+
+		cy.realPress("End");
+
+		cy.realPress(["Control", "Shift", "PageUp"]);
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 29, 2021");
 
-		cy.get("@input")
-			.realPress(["Control", "Shift", "PageDown"]);
+		cy.realPress(["Control", "Shift", "PageDown"]);
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 29, 2020");
 
-		cy.get("@input")
-			.realPress("Home")
-			.realPress(["Control", "Shift", "PageDown"]);
+		cy.realPress("Home");
+
+		cy.realPress(["Control", "Shift", "PageDown"]);
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2019 @ Jul 29, 2020");
 
-		cy.get("@input")
-			.realPress(["Control", "Shift", "PageUp"]);
+		cy.realPress(["Control", "Shift", "PageUp"]);
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 29, 2020");
@@ -311,27 +342,38 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realType("Jul 17, 2020 @ Jul 16, 2020")
-			.realPress("Enter");
+			.should("be.focused");
+
+		cy.realType("Jul 17, 2020 @ Jul 16, 2020");
+
+		cy.realPress("Enter");
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 17, 2020");
 	});
 
 	it("Focus out of the input field confirms the date range", () => {
-		cy.mount(<DateRangePicker formatPattern="MMM d, y" delimiter="@"></DateRangePicker>);
+		cy.mount(
+			<>
+				<DateRangePicker formatPattern="MMM d, y" delimiter="@"></DateRangePicker>
+				<button id="after">After</button>
+			</>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realType("Jul 17, 2020 @ Jul 16, 2020")
-			.realPress("Tab");
+			.should("be.focused");
+
+		cy.realType("Jul 17, 2020 @ Jul 16, 2020");
+
+		cy.realPress("Tab");
+
+		cy.get("#after")
+			.should("be.focused");
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 17, 2020");
@@ -343,11 +385,16 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realType("2020-09-09 - 2020-10-10")
-			.realPress("Enter");
+			.should("be.focused");
+
+		cy.realType("2020-09-09 - 2020-10-10");
+
+		cy.realPress("Enter");
+
+		cy.get("@dateRangePicker")
+			.should("have.value", "2020-09-09 - 2020-10-10")
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value-state", "None");
@@ -359,7 +406,7 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-calendar")
+			.find("[ui5-calendar]")
 			.as("calendar")
 			.shadow()
 			.find(".ui5-calheader")
@@ -367,10 +414,11 @@ describe("DateRangePicker general interaction", () => {
 
 		cy.get("@dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realPress("F4");
+			.should("be.focused");
+
+		cy.realPress("F4");
 
 		cy.get("@calendarHeader")
 			.find("[data-ui5-cal-header-btn-next]")
@@ -395,14 +443,14 @@ describe("DateRangePicker general interaction", () => {
 				})
 					.as("dates")
 					.invoke("startDateValue")
-					.then(date => {
+					.should(date => {
 						const timestamp = date ? date.getTime() : new Date().getTime();
 						expect(new Date(timestamp)).to.deep.equal(new Date(2019, 8, 27));
 					});
 
 				cy.get("@dates")
 					.invoke("endDateValue")
-					.then(date => {
+					.should(date => {
 						expect(date.toString()).to.be.equal("Invalid Date");
 					});
 			});
@@ -414,41 +462,50 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realPress("F4");
+			.should("be.focused");
+
+		cy.realPress("F4");
 
 		cy.get("@dateRangePicker")
 			.shadow()
-			.find("ui5-responsive-popover")
+			.find("[ui5-responsive-popover]")
 			.should("have.attr", "accessible-name", "Choose Date Range");
 	});
 
 	it("Selected days: accessibility semantics", () => {
 		cy.wrap({ setLanguage })
-			.invoke("setLanguage", "en");
+			.then(api => {
+				return api.setLanguage("en");
+			})
 
 		cy.mount(<DateRangePicker formatPattern="dd/MM/yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realType("09/06/2024 - 15/06/2024")
-			.realPress("Enter")
-			.realPress("F4");
+			.should("be.focused");
+
+		cy.realType("09/06/2024 - 15/06/2024");
+
+		cy.realPress("Enter")
+
+		cy.get<DateRangePicker>("@dateRangePicker")
+			.should("have.value", "09/06/2024 - 15/06/2024");
+
+		cy.realPress("F4");
 
 		cy.get<DateRangePicker>("@dateRangePicker")
 			.shadow()
-			.find("ui5-calendar")
+			.find("[ui5-calendar]")
 			.shadow()
-			.find("ui5-daypicker")
+			.find("[ui5-daypicker]")
 			.shadow()
 			.find(".ui5-dp-root .ui5-dp-content div > .ui5-dp-item")
-			.then(days => {
+			.should(days => {
 				const startSelectionDay = days[14];
 				const dayInBetween = days[15];
 				const endSelectionDay = days[20];
@@ -461,20 +518,24 @@ describe("DateRangePicker general interaction", () => {
 
 	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", () => {
 		cy.wrap({ setLanguage })
-			.invoke("setLanguage", "bg");
+			.then(api => {
+				return api.setLanguage("bg");
+			})
 
 		cy.mount(<DateRangePicker minDate="2023-02-10" maxDate="2023-07-22"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.shadow()
 			.find("input")
 			.realClick()
-			.should("be.focused")
-			.realType("10.02.2023 - 25.07.2023")
-			.realPress("Enter");
+			.should("be.focused");
+
+		cy.realType("10.02.2023 - 25.07.2023");
+
+		cy.realPress("Enter");
 
 		cy.get("@dateRangePicker")
 			.should("have.attr", "value-state", "Negative");
@@ -486,44 +547,55 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realPress("F4");
+			.should("be.focused");
+
+		cy.realPress("F4");
 
 		cy.get("@dateRangePicker")
 			.shadow()
-			.find("ui5-calendar")
+			.find("[ui5-calendar]")
 			.shadow()
-			.find("ui5-monthpicker")
+			.find("[ui5-monthpicker]")
 			.should("exist")
 			.and("be.visible");
 	});
 
 	it("Select month range in MonthPicker", () => {
 		cy.wrap({ setLanguage })
-			.invoke("setLanguage", "en");
+			.then(api => {
+				return api.setLanguage("en");
+			})
 
 		cy.mount(<DateRangePicker formatPattern="MM.yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realType("09.2024 - 11.2024")
-			.realPress("Enter")
-			.realPress("F4");
+
+		cy.get("@dateRangePicker")
+			.should("be.focused");
+
+		cy.realType("09.2024 - 11.2024");
+
+		cy.realPress("Enter");
+
+		cy.get("@dateRangePicker")
+			.should("have.value", "09.2024 - 11.2024")
+
+		cy.realPress("F4");
 
 		cy.get<DateRangePicker>("@dateRangePicker")
 			.shadow()
-			.find("ui5-calendar")
+			.find("[ui5-calendar]")
 			.shadow()
-			.find("ui5-monthpicker")
+			.find("[ui5-monthpicker]")
 			.shadow()
 			.find(".ui5-mp-root .ui5-mp-item")
-			.then(months => {
+			.should(months => {
 				const startSelectionMonth = months[8];
 				const monthInBetween = months[9];
 				const endSelectionMonth = months[10];
@@ -540,44 +612,53 @@ describe("DateRangePicker general interaction", () => {
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realPress("F4");
+			.should("be.focused");
+
+		cy.realPress("F4");
 
 		cy.get("@dateRangePicker")
 			.shadow()
-			.find("ui5-calendar")
+			.find("[ui5-calendar]")
 			.shadow()
-			.find("ui5-yearpicker")
+			.find("[ui5-yearpicker]")
 			.should("exist")
 			.and("be.visible");
 	});
 
 	it("Select year range in YearPicker", () => {
 		cy.wrap({ setLanguage })
-			.invoke("setLanguage", "en");
+			.then(api => {
+				return api.setLanguage("en");
+			})
 
 		cy.mount(<DateRangePicker formatPattern="yyyy"></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.realClick()
-			.should("be.focused")
-			.realType("0001 - 0006")
-			.realPress("Enter")
-			.realPress("F4");
+			.should("be.focused");
+
+		cy.realType("0001 - 0006");
+
+		cy.realPress("Enter");
+
+		cy.get<DateRangePicker>("[ui5-daterange-picker]")
+			.should("have.value", "0001 - 0006")
+
+		cy.realPress("F4");
 
 		cy.get<DateRangePicker>("@dateRangePicker")
 			.shadow()
-			.find("ui5-calendar")
+			.find("[ui5-calendar]")
 			.shadow()
-			.find("ui5-yearpicker")
+			.find("[ui5-yearpicker]")
 			.shadow()
 			.find(".ui5-yp-root .ui5-yp-item")
-			.then(years => {
+			.should(years => {
 				const startSelectionYear = years[0];
 				const yearInBetween = years[4];
 				const endSelectionYear = years[5];
