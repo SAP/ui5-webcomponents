@@ -10,14 +10,6 @@
 	background-color: var(--_ui5_input_readonly_background);
 }
 
-:host([disabled]) {
-	opacity: var(--_ui5_input_disabled_opacity);
-	cursor: default;
-	pointer-events: none;
-	background-color: var(--_ui5-input_disabled_background);
-	border-color: var(--_ui5_input_disabled_border_color);
-}
-
 :host([value-state="Negative"]) .inputIcon:not(.inputIcon--pressed):not(:active):hover {
 	box-shadow: var(--_ui5_input_error_icon_box_shadow);
 }
