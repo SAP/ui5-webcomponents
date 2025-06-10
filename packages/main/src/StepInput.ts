@@ -353,9 +353,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	onBeforeRendering() {
 		this._setButtonState();
-		if (this._previousValue === undefined) {
-			this._previousValue = this.value;
-		}
 	}
 
 	get input(): Input {
@@ -388,9 +385,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	_onInputFocusIn() {
 		this._inputFocused = true;
-		if (this.value !== this._previousValue) {
-			this._previousValue = this.value;
-		}
 	}
 
 	_onInputFocusOut() {
@@ -536,10 +530,12 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	_onfocusin() {
 		this.focused = true;
+		this._previousValue = this.value;
 	}
 
 	_onfocusout() {
 		this.focused = false;
+		this._previousValue = undefined;
 	}
 
 	_onkeydown(e: KeyboardEvent) {

@@ -586,6 +586,30 @@ describe("StepInput events", () => {
 		cy.get("@change")
 			.should("have.been.calledOnce");
 	});
+
+	it.only("should fire 'change' after value propety is programatically set and then changed with +/- keys", () => {
+		cy.mount(
+			<StepInput value={5}></StepInput>
+		);		
+
+		cy.get("[ui5-step-input]")
+			.as("stepInput");
+
+		cy.get<StepInput>("@stepInput")
+			.ui5StepInputAttachHandler("ui5-change", "change");
+
+		cy.get<StepInput>("@stepInput")
+			.invoke("prop", "value", 4);
+
+		cy.get("@change")
+			.should("not.have.been.called");
+
+		cy.get<StepInput>("@stepInput")
+			.ui5StepInputChangeValueWithButtons(5);
+
+		cy.get("@change")
+			.should("have.been.calledOnce");
+	});
 });
 
 describe("StepInput property propagation", () => {
