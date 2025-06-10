@@ -201,6 +201,26 @@ class AvatarGroup extends UI5Element {
 	_overflowButtonText?: string;
 
 	/**
+ 	* Defines the accessible name of the AvatarGroup.
+ 	* When provided, this will override the default aria-label text.
+ 	* @default undefined
+ 	* @public
+ 	* @since 2.11.0
+ 	*/
+	@property()
+	accessibleName?: string;
+
+	/**
+ 	* Receives id(s) of the elements that describe the AvatarGroup.
+ 	* When provided, this will be used as aria-labelledby instead of aria-label.
+ 	* @default undefined
+ 	* @public
+ 	* @since 2.11.0
+ 	*/
+	@property()
+	accessibleNameRef?: string;
+
+	/**
 	 * Defines the items of the component. Use the `ui5-avatar` component as an item.
 	 *
 	 * **Note:** The UX guidelines recommends using avatars with "Circle" shape.
@@ -265,6 +285,18 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get _ariaLabelText() {
+		// If accessibleName is provided, use it directly
+		if (this.accessibleName) {
+			return this.accessibleName;
+		}
+
+		// If accessibleNameRef is provided, don't return aria-label text
+		// (aria-labelledby will be used instead)
+		if (this.accessibleNameRef) {
+			return undefined;
+		}
+
+		// Fallback to existing default behavior
 		const hiddenItemsCount = this.hiddenItems.length;
 		const typeLabelKey = this._isGroup ? AVATAR_GROUP_ARIA_LABEL_GROUP : AVATAR_GROUP_ARIA_LABEL_INDIVIDUAL;
 
@@ -283,6 +315,10 @@ class AvatarGroup extends UI5Element {
 		}
 
 		return text;
+	}
+
+	get _ariaLabelledBy() {
+		return this.accessibleNameRef;
 	}
 
 	get _overflowButtonAriaLabelText() {
