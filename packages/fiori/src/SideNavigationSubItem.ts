@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import SideNavigationSubItemTemplate from "./SideNavigationSubItemTemplate.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
 // Styles
 import SideNavigationSubItemCss from "./generated/themes/SideNavigationSubItem.css.js";
@@ -30,6 +31,15 @@ import SideNavigationSubItemCss from "./generated/themes/SideNavigationSubItem.c
 	styles: SideNavigationSubItemCss,
 })
 class SideNavigationSubItem extends SideNavigationSelectableItemBase {
+	/**
+	 * Defines if the item's parent is disabled.
+	 * @private
+	 * @default false
+	 * @since 2.10.0
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_parentDisabled: boolean = false;
+
 	_onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 	}
@@ -46,11 +56,19 @@ class SideNavigationSubItem extends SideNavigationSelectableItemBase {
 		super._onclick(e);
 	}
 
+	get effectiveDisabled() {
+		return this.disabled || this._parentDisabled;
+	}
+
 	get classesArray() {
 		const classes = super.classesArray;
 
 		if (this.icon) {
 			classes.push("ui5-sn-item-has-icon");
+		}
+
+		if (this.effectiveDisabled) {
+			classes.push("ui5-sn-item-disabled");
 		}
 
 		return classes;

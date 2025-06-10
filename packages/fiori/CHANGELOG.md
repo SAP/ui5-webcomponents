@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.4...v2.11.0) (2025-06-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.11.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.3...v2.11.0-rc.4) (2025-06-05)
+
+
+### Bug Fixes
+
+* **ui5-combobox/tokenizer/wizard/input:** extract button texts to vars ([#11549](https://github.com/SAP/ui5-webcomponents/issues/11549)) ([c8daa25](https://github.com/SAP/ui5-webcomponents/commit/c8daa25854c5b9c737b2995df43b562230ee3c88))
+* **ui5-flexible-column-layout:** add aria-valuenow attribute to separators ([#11540](https://github.com/SAP/ui5-webcomponents/issues/11540)) ([3ba75d6](https://github.com/SAP/ui5-webcomponents/commit/3ba75d6a40d70af29cb479e8323d4e0472bcae01)), closes [#11533](https://github.com/SAP/ui5-webcomponents/issues/11533)
+* **ui5-shellbar:** remove empty logo from tab chain ([#11623](https://github.com/SAP/ui5-webcomponents/issues/11623)) ([51661f0](https://github.com/SAP/ui5-webcomponents/commit/51661f05a6557adbe55b15ffbc7babb1e4d64cb5)), closes [#11595](https://github.com/SAP/ui5-webcomponents/issues/11595)
+* **ui5-side-navigation:** group name is now announced by screen reader ([#11600](https://github.com/SAP/ui5-webcomponents/issues/11600)) ([4848317](https://github.com/SAP/ui5-webcomponents/commit/48483179d43b5c94f003584d03fe8809f7e5be31)), closes [#11599](https://github.com/SAP/ui5-webcomponents/issues/11599)
+
+
+### Features
+
+* **ui5-illustrated-message:** added new illustration types ([#11560](https://github.com/SAP/ui5-webcomponents/issues/11560)) ([5517e2c](https://github.com/SAP/ui5-webcomponents/commit/5517e2c84add4d88077e8dda7c82641eb672d7ee))
+* **ui5-side-navigation:** make disabled items focusable ([#11530](https://github.com/SAP/ui5-webcomponents/issues/11530)) ([617cef5](https://github.com/SAP/ui5-webcomponents/commit/617cef5c221fafcc1acfb8bec377ae7e7a8cba00))
+
+
+
+
+
+# [2.11.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.2...v2.11.0-rc.3) (2025-05-29)
+
+
+### Bug Fixes
+
+* **ui5-search:** preserve value before open on mobile ([#11571](https://github.com/SAP/ui5-webcomponents/issues/11571)) ([8ee0387](https://github.com/SAP/ui5-webcomponents/commit/8ee0387ea8083897c1c2e7c64bebd44d4fdb7e18)), closes [#11314](https://github.com/SAP/ui5-webcomponents/issues/11314)
+
+
+### Features
+
+* add `Assets-node` module for node/ssr env ([#11522](https://github.com/SAP/ui5-webcomponents/issues/11522)) ([4a874cc](https://github.com/SAP/ui5-webcomponents/commit/4a874cc1f88e440f8bce4f9f0757df1af2a04314))
+* **ui5-search-field:** introduce advanced filtering ([#11428](https://github.com/SAP/ui5-webcomponents/issues/11428)) ([bf8a158](https://github.com/SAP/ui5-webcomponents/commit/bf8a158d493cd7472938a66e2fe22d6091467be9))
+* **ui5-search-item:** byline item support ([#11503](https://github.com/SAP/ui5-webcomponents/issues/11503)) ([d8aec50](https://github.com/SAP/ui5-webcomponents/commit/d8aec50480222572df589c47df693d06e2887837))
+* **ui5-shellbar:** replace custom badges with ButtonBadge ([#11284](https://github.com/SAP/ui5-webcomponents/issues/11284)) ([4574d87](https://github.com/SAP/ui5-webcomponents/commit/4574d87917f08ee0658eb8dbd0425ff2ff68590d))
+
+
+
+
+
 # [2.11.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.1...v2.11.0-rc.2) (2025-05-22)
 
 

@@ -153,7 +153,7 @@ describe("Page general interaction", () => {
 
     it("allows toggle the footer", async () => {
         const footer = await browser.$("#page").shadow$(".ui5-dynamic-page-footer");
-        const toggleFooterButton = await browser.$("#actionsToolbar").shadow$("#toggleFooterBtn");
+        const toggleFooterButton = await browser.$("#actionsToolbar").$("#toggleFooterBtn");
 
         assert.ok(await footer.isDisplayedInViewport(), "Footer should be visible.");
 

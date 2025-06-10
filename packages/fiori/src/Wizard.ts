@@ -32,6 +32,7 @@ import {
 	WIZARD_STEP_ARIA_LABEL,
 	WIZARD_STEP_ACTIVE,
 	WIZARD_STEP_INACTIVE,
+	WIZARD_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Step in header and content
@@ -808,6 +809,10 @@ class Wizard extends UI5Element {
 
 	get ariaLabelText() {
 		return Wizard.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
+	}
+
+	get _dialogCancelButtonText() {
+		return Wizard.i18nBundle.getText(WIZARD_CANCEL_BUTTON);
 	}
 
 	get effectiveStepSwitchThreshold() {
