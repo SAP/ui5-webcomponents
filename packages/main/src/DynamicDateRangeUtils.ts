@@ -191,7 +191,7 @@ function createGroupedOption(options: Array<IDynamicDateRangeOption>, direction:
 }
 
 /**
- * Creates a DynamicDateRangeValue with date values (final API format).
+ * Creates a DynamicDateRangeValue with date values.
  */
 export function createValueWithDates(operator: string, dates: Array<Date>): DynamicDateRangeValue {
 	return {
@@ -217,7 +217,6 @@ export function getStoredSelectionForPattern(
 	value: DynamicDateRangeValue,
 	lastGroupedSelections: Record<string, DynamicDateRangeValue>,
 ): DynamicDateRangeValue | null {
-	// Handle undefined/null value or operator
 	if (!value || !value.operator) {
 		return null;
 	}
@@ -242,7 +241,6 @@ export function restoreNumberFromDates(value: DynamicDateRangeValue): DynamicDat
 	const diffInMilliseconds = Math.abs(endDate.getTime() - startDate.getTime());
 	const diffInDays = Math.round(diffInMilliseconds / (1000 * 60 * 60 * 24));
 
-	// Switch based on operator type for cleaner code
 	let estimatedNumber = diffInDays;
 
 	switch (true) {
@@ -259,7 +257,6 @@ export function restoreNumberFromDates(value: DynamicDateRangeValue): DynamicDat
 		estimatedNumber = Math.round(diffInDays / 365);
 		break;
 	default:
-		// DAYS or unknown - use diffInDays as is
 		break;
 	}
 

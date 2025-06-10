@@ -2,6 +2,7 @@ import type DynamicDateRange from "./DynamicDateRange.js";
 import { isGroupedOption, handleGroupedStepInputChange, handleGroupedSelectChange } from "./DynamicDateRangeUtils.js";
 import StepInput from "./StepInput.js";
 import Select from "./Select.js";
+import type { SelectChangeEventDetail } from "./Select.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
 
@@ -45,7 +46,7 @@ export default function DynamicDateRangeUnifiedOptionTemplate(this: DynamicDateR
 		handleGroupedStepInputChange(e, this.currentValue, this.updateCurrentValue.bind(this), this._lastGroupedSelections);
 	};
 
-	const handleSelectChange = (e: CustomEvent) => {
+	const handleSelectChange = (e: CustomEvent<SelectChangeEventDetail>) => {
 		handleGroupedSelectChange(e, this.currentValue, this.updateCurrentValue.bind(this), this._lastGroupedSelections);
 	};
 

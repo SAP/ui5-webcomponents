@@ -1,4 +1,5 @@
 import type { DynamicDateRangeValue, IDynamicDateRangeOption } from "../DynamicDateRange.js";
+import DynamicDateRangeDirection from "../types/DynamicDateRangeDirection.js";
 
 const dateOptionToDates = (value: DynamicDateRangeValue): Array<Date> => {
 	const startDate = value.values ? value.values[0] as Date : new Date();
@@ -54,13 +55,13 @@ const yesterdayToDates = (): Array<Date> => {
 	return [startDate, endDate];
 };
 
-const lastNextToDates = (value: DynamicDateRangeValue, unit: string, direction: "last" | "next"): Array<Date> => {
+const lastNextToDates = (value: DynamicDateRangeValue, unit: string, direction: `${DynamicDateRangeDirection}`): Array<Date> => {
 	const today = new Date();
 	const startDate = new Date(today);
 	const endDate = new Date(today);
 	const amount = value.values?.[0] as number || 1;
 
-	if (direction === "last") {
+	if (direction === DynamicDateRangeDirection.Last) {
 		switch (unit) {
 		case "days":
 			startDate.setDate(today.getDate() - amount);
@@ -115,7 +116,7 @@ const toDatesLastNext = (value: DynamicDateRangeValue, option: IDynamicDateRange
 	if (!option.timeUnit || !option.direction) {
 		return todayToDates();
 	}
-	return lastNextToDates(value, option.timeUnit as string, option.direction as "last" | "next");
+	return lastNextToDates(value, option.timeUnit as string, option.direction as `${DynamicDateRangeDirection}`);
 };
 
 export {
