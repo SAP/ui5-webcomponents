@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Simple Drag Demo</title>
+    <script src="%VITE_BUNDLE_PATH%" type="module"></script>
+    <style>
+        .demo-container {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        .demo-section {
+            max-width: 300px;
+        }
+        .selected-item {
+            background-color: var(--sapList_SelectionBackgroundColor, #e5f0ff);
+        }
+        .info {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <!-- List 1: ui5-li with DragRegistry -->
+        <div class="demo-section">
+            <h3>ui5-li (DragRegistry)</h3>
+            <div class="info">
+                Selected: <span id="count1">0</span><br>
+                Click to select, drag for multiple
+            </div>
+            
+            <ui5-list id="list1" header-text="Standard Items">
+                <ui5-li movable data-id="1">Item 1</ui5-li>
+                <ui5-li movable data-id="2">Item 2</ui5-li>
+                <ui5-li movable data-id="3">Item 3</ui5-li>
+                <ui5-li movable data-id="4">Item 4</ui5-li>
+            </ui5-list>
+        </div>
+
+        <!-- List 2: ui5-li-custom with DragRegistry -->
+        <div class="demo-section">
+            <h3>ui5-li-custom (DragRegistry)</h3>
+            <div class="info">
+                Selected: <span id="count2">0</span><br>
+                Red drag image from component
+            </div>
+            
+            <ui5-list id="list2" header-text="Custom Items">
+                <ui5-li-custom movable data-id="5">Custom 1</ui5-li-custom>
+                <ui5-li-custom movable data-id="6">Custom 2</ui5-li-custom>
+                <ui5-li-custom movable data-id="7">Custom 3</ui5-li-custom>
+                <ui5-li-custom movable data-id="8">Custom 4</ui5-li-custom>
+            </ui5-list>
+        </div>
+
+        <!-- List 3: ui5-li without DragRegistry -->
+        <div class="demo-section">
+            <h3>ui5-li (Direct)</h3>
+            <div class="info">
+                Selected: <span id="count3">0</span><br>
+                Purple drag image from app
+            </div>
+            
+            <ui5-list id="list3" header-text="Direct Drag">
+                <ui5-li movable data-id="9">Direct 1</ui5-li>
+                <ui5-li movable data-id="10">Direct 2</ui5-li>
+                <ui5-li movable data-id="11">Direct 3</ui5-li>
+                <ui5-li movable data-id="12">Direct 4</ui5-li>
+            </ui5-list>
+        </div>
+
+        <!-- List 4: ui5-li-custom with Direct -->
+        <div class="demo-section">
+            <h3>ui5-li-custom (Direct)</h3>
+            <div class="info">
+                Selected: <span id="count4">0</span><br>
+                Green drag image from app
+            </div>
+            
+            <ui5-list id="list4" header-text="Custom Direct">
+                <ui5-li-custom movable data-id="13">Custom Direct 1</ui5-li-custom>
+                <ui5-li-custom movable data-id="14">Custom Direct 2</ui5-li-custom>
+                <ui5-li-custom movable data-id="15">Custom Direct 3</ui5-li-custom>
+                <ui5-li-custom movable data-id="16">Custom Direct 4</ui5-li-custom>
+            </ui5-list>
+        </div>
+    </div>
+
+    <script type="module">
+        // import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+        
+        const selected = [new Set(), new Set(), new Set(), new Set()];
+        const lists = [
+            document.getElementById("list1"),
+            document.getElementById("list2"), 
+            document.getElementById("list3"),
+            document.getElementById("list4")
+        ];
+        const counters = [
+            document.getElementById("count1"),
+            document.getElementById("count2"),
+            document.getElementById("count3"),
+            document.getElementById("count4")
+        ];
+
+        function updateUI(listIndex) {
+            counters[listIndex].textContent = selected[listIndex].size;
+            lists[listIndex].querySelectorAll('[data-id]').forEach(item => {
+                item.classList.toggle('selected-item', selected[listIndex].has(item.dataset.id));
+            });
+        }
+
+        function setupSelection(listIndex) {
+            lists[listIndex].addEventListener("ui5-item-click", (e) => {
+                const id = e.detail.item.dataset.id;
+                if (selected[listIndex].has(id)) {
+                    selected[listIndex].delete(id);
+                } else {
+                    selected[listIndex].add(id);
+                }
+                updateUI(listIndex);
+            });
+        }
+
+        function createPurpleDragImage(count) {
+            const element = document.createElement("div");
+            element.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+                    border: 2px solid #7c3aed;
+                    border-radius: 0.5rem;
+                    padding: 1rem 1.5rem;
+                    font-family: var(--sapFontFamily);
+                    font-size: 0.875rem;
+                    font-weight: 600;
+                    color: white;
+                    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+                    white-space: nowrap;
+                ">
+                    ${count} Direct Items
+                </div>
+            `;
+            element.style.cssText = "position: absolute; top: -1000px; left: -1000px;";
+            document.body.appendChild(element);
+            return element;
+        }
+
+        function createGreenDragImage(count) {
+            const element = document.createElement("div");
+            element.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #34d399, #10b981);
+                    border: 2px solid #059669;
+                    border-radius: 0.5rem;
+                    padding: 1rem 1.5rem;
+                    font-family: var(--sapFontFamily);
+                    font-size: 0.875rem;
+                    font-weight: 600;
+                    color: white;
+                    box-shadow: 0 4px 12px rgba(52, 211, 153, 0.4);
+                    white-space: nowrap;
+                ">
+                    ${count} Custom Direct Items
+                </div>
+            `;
+            element.style.cssText = "position: absolute; top: -1000px; left: -1000px;";
+            document.body.appendChild(element);
+            return element;
+        }
+
+        // Setup List 1: Standard items with DragRegistry
+        setupSelection(0);
+        lists[0].addEventListener("dragstart", (e) => {
+            const id = e.target.dataset.id;
+            if (!selected[0].has(id)) {
+                selected[0].clear();
+                selected[0].add(id);
+                updateUI(0);
+            }
+            if (selected[0].size > 1) {
+                DragRegistry.startMultipleDrag(e, selected[0].size);
+            }
+        });
+
+        // Setup List 2: Custom items with DragRegistry (component handles drag image)
+        setupSelection(1);
+        lists[1].addEventListener("dragstart", (e) => {
+            const id = e.target.dataset.id;
+            if (!selected[1].has(id)) {
+                selected[1].clear();
+                selected[1].add(id);
+                updateUI(1);
+            }
+            // ListItemCustom component will handle the drag image
+            if (selected[1].size > 1) {
+                DragRegistry.startMultipleDrag(e, selected[1].size);
+            }
+        });
+
+        // Setup List 3: Direct drag image (no DragRegistry)
+        setupSelection(2);
+        lists[2].addEventListener("dragstart", (e) => {
+            const id = e.target.dataset.id;
+            if (!selected[2].has(id)) {
+                selected[2].clear();
+                selected[2].add(id);
+                updateUI(2);
+            }
+            if (selected[2].size > 1) {
+                const dragElement = createPurpleDragImage(selected[2].size);
+                e.dataTransfer.setDragImage(dragElement, 30, 15);
+                requestAnimationFrame(() => {
+                    if (dragElement.parentNode) {
+                        dragElement.parentNode.removeChild(dragElement);
+                    }
+                });
+            }
+        });
+
+        // Setup List 4: Custom direct drag image (no DragRegistry)
+        setupSelection(3);
+        lists[3].addEventListener("dragstart", (e) => {
+            const id = e.target.dataset.id;
+            if (!selected[3].has(id)) {
+                selected[3].clear();
+                selected[3].add(id);
+                updateUI(3);
+            }
+            if (selected[3].size > 1) {
+                const dragElement = createGreenDragImage(selected[3].size);
+                e.dataTransfer.setDragImage(dragElement, 30, 15);
+                requestAnimationFrame(() => {
+                    if (dragElement.parentNode) {
+                        dragElement.parentNode.removeChild(dragElement);
+                    }
+                });
+            }
+        });
+
+        // Initialize
+        [0, 1, 2, 3].forEach(updateUI);
+    </script>
+</body>
+</html>
