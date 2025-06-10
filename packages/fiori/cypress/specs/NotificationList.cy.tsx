@@ -82,13 +82,14 @@ describe("Notification List Item Tests", () => {
 		cy.get("#nlgi3")
 			.shadow()
 			.find(".ui5-nli-group-items")
-			.should("have.css", "display", 'none');
+			.should("not.be.visible");
 		cy.get("#nlgi3").realClick();
+		cy.get("#nlgi3").should("be.focused");
 
 		cy.get("#nlgi3")
 			.shadow()
 			.find(".ui5-nli-group-items")
-			.should("have.css", "display", 'block');
+			.should("be.visible");
 		cy.get("#nlgi3").realPress("ArrowLeft");
 
 		cy.get("#nlgi3")
@@ -149,6 +150,7 @@ describe("Notification List Item Tests", () => {
 		cy.get("@myStub").should("have.been.calledOnce");
 
 		cy.get("#nli1").realClick();
+		cy.get("#nli1").should("be.focused");
 		cy.realPress("ArrowDown");
 		cy.realPress("Delete");
 
@@ -859,7 +861,9 @@ describe("Keyboard Navigation", () => {
 		cy.get("#nli1")
 			.shadow()
 			.find(".ui5-nli-footer-showMore")
-			.realClick();;
+			.realClick();
+
+		cy.get("#nli1").should("have.focus");
 
 		cy.realPress("Tab");
 		cy.get("#nli1")
@@ -905,6 +909,8 @@ describe("Keyboard Navigation", () => {
 			.shadow()
 			.find(".ui5-nli-footer-showMore")
 			.realClick();
+
+		cy.get("#nli1").should("have.focus");
 
 		cy.realPress("ArrowDown");
 
