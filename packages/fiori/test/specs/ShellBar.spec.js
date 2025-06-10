@@ -229,17 +229,18 @@ describe("Component Behavior", () => {
 				assert.strictEqual(await input.getValue(), "Product Switch", "Input value is set by click event of Product Switch icon");
 			});
 
-			it("tests preventDefault of click on a button with default behavior prevented", async () => {
-				const overflowButton = await browser.$("#shellbarWithStartContent").shadow$(".ui5-shellbar-overflow-button");
+			// Currently, the new branding slot and the ui5-shellbar-branding component do not support the menuItems slot
+			// it("tests preventDefault of click on a button with default behavior prevented", async () => {
+			// 	const overflowButton = await browser.$("#shellbarWithStartContent").shadow$(".ui5-shellbar-overflow-button");
 
-				const overflowPopover = await browser.$(`#shellbarWithStartContent`).shadow$(".ui5-shellbar-overflow-popover");
-				const notificationsIcon = await overflowPopover.$("ui5-list ui5-li:nth-child(3)");
+			// 	const overflowPopover = await browser.$(`#shellbarWithStartContent`).shadow$(".ui5-shellbar-overflow-popover");
+			// 	const notificationsIcon = await overflowPopover.$("ui5-list ui5-li:nth-child(3)");
 
-				await overflowButton.click();
-				await notificationsIcon.click();
+			// 	await overflowButton.click();
+			// 	await notificationsIcon.click();
 
-				assert.ok(await overflowPopover.isDisplayed(), "overflow popover should not be closed");
-			});
+			// 	assert.ok(await overflowPopover.isDisplayed(), "overflow popover should not be closed");
+			// });
 		});
 	});
 });
