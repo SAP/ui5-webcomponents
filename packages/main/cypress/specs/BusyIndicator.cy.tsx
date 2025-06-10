@@ -5,6 +5,31 @@ import List from "../../src/List.js";
 import Tree from "../../src/Tree.js";
 import TreeItem from "../../src/TreeItem.js";
 
+describe("Rendering", () => {
+	it("Rendering without content", () => {
+		cy.mount(<BusyIndicator id="busyInd" active></BusyIndicator>);
+
+		cy.get("#busyInd")
+			.shadow()
+			.find(".ui5-busy-indicator-busy-area:not(.ui5-busy-indicator-busy-area-over-content)")
+			.should("exist");
+
+	});
+
+	it("Rendering with content", () => {
+		cy.mount(
+			<BusyIndicator id="busyInd" active>
+				<span>content</span>
+			</BusyIndicator>
+		);
+
+		cy.get("#busyInd")
+			.shadow()
+			.find(".ui5-busy-indicator-busy-area.ui5-busy-indicator-busy-area-over-content")
+			.should("exist");
+	});
+});
+
 describe("BusyIndicator general interaction", () => {
 	it("tests event propagation", () => {
 		const onClickStub = cy.stub().as("myStub");;
