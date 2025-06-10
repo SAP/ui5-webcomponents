@@ -205,7 +205,7 @@ class AvatarGroup extends UI5Element {
  	* When provided, this will override the default aria-label text.
  	* @default undefined
  	* @public
- 	* @since 2.11.0
+ 	* @since 2.12.0
  	*/
 	@property()
 	accessibleName?: string;
@@ -215,7 +215,7 @@ class AvatarGroup extends UI5Element {
  	* When provided, this will be used as aria-labelledby instead of aria-label.
  	* @default undefined
  	* @public
- 	* @since 2.11.0
+ 	* @since 2.12.0
  	*/
 	@property()
 	accessibleNameRef?: string;
