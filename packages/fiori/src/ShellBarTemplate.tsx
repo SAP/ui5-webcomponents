@@ -310,9 +310,6 @@ function combinedLogo(this: ShellBar) {
 				<span
 					class="ui5-shellbar-logo"
 					title={this._logoText}
-					onClick={this._logoPress}
-					onKeyDown={this._logoKeydown}
-					onKeyUp={this._logoKeyup}
 					data-ui5-stable="logo">
 					<slot name="logo"></slot>
 				</span>

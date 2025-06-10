@@ -1288,7 +1288,8 @@ describe("Side Navigation Accessibility", () => {
 		cy.get("#group")
 			.shadow()
 			.find(".ui5-sn-item-ul")
-			.should("have.attr", "role", "group");
+			.should("have.attr", "role", "group")
+			.should("have.attr", "aria-label", "Group");
 	});
 
 	it("Tests Primary and Footer Navigation Lists accessibility", () => {

@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.4...v2.11.0) (2025-06-05)
+
+**Note:** Version bump only for package @ui5/webcomponents
+
+
+
+
+
+# [2.11.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.3...v2.11.0-rc.4) (2025-06-05)
+
+
+### Bug Fixes
+
+* **ui5-avatar-group:** focus outline visible in overflow:hidden ([#11535](https://github.com/SAP/ui5-webcomponents/issues/11535)) ([95e81ab](https://github.com/SAP/ui5-webcomponents/commit/95e81ab9cfe1de07972e5e13679d3e1f42a21aaa)), closes [#10551](https://github.com/SAP/ui5-webcomponents/issues/10551)
+* **ui5-combobox/tokenizer/wizard/input:** extract button texts to vars ([#11549](https://github.com/SAP/ui5-webcomponents/issues/11549)) ([c8daa25](https://github.com/SAP/ui5-webcomponents/commit/c8daa25854c5b9c737b2995df43b562230ee3c88))
+* **ui5-date-picker:** align width to vd specs ([#11602](https://github.com/SAP/ui5-webcomponents/issues/11602)) ([e497d6f](https://github.com/SAP/ui5-webcomponents/commit/e497d6f369e13ad151b670e66a967b2745e6d1ff)), closes [#11561](https://github.com/SAP/ui5-webcomponents/issues/11561)
+* **ui5-dynamic-date-range:** remove redundant property ([#11620](https://github.com/SAP/ui5-webcomponents/issues/11620)) ([6aff749](https://github.com/SAP/ui5-webcomponents/commit/6aff74906b31a913fa6c7eef17ba88010b0d55f0))
+* **ui5-popover:** don't close popover when click on opener iframe ([#11517](https://github.com/SAP/ui5-webcomponents/issues/11517)) ([ce89e8e](https://github.com/SAP/ui5-webcomponents/commit/ce89e8efda220f9f95d91c9a22c9a847951decc8))
+
+
+### Features
+
+* **ui5-avatar, ui5-icon:** make click events public ([#11591](https://github.com/SAP/ui5-webcomponents/issues/11591)) ([b82eac9](https://github.com/SAP/ui5-webcomponents/commit/b82eac9a8cfdaffa9e706c33b38b9246faad61e9))
+* **ui5-calendar:** introduce Year Range Picker ([#11167](https://github.com/SAP/ui5-webcomponents/issues/11167)) ([d9a40d2](https://github.com/SAP/ui5-webcomponents/commit/d9a40d2be2ef0ecb95e161f92ff3f98a843a5dd1)), closes [#3200](https://github.com/SAP/ui5-webcomponents/issues/3200) [#10867](https://github.com/SAP/ui5-webcomponents/issues/10867)
+* **ui5-dynamic-date-range:** work in progress ([#10895](https://github.com/SAP/ui5-webcomponents/issues/10895)) ([7c8ece9](https://github.com/SAP/ui5-webcomponents/commit/7c8ece95d740e1d43468b99184a56b9a9ae9b2a1))
+* **ui5-illustrated-message:** added new illustration types ([#11560](https://github.com/SAP/ui5-webcomponents/issues/11560)) ([5517e2c](https://github.com/SAP/ui5-webcomponents/commit/5517e2c84add4d88077e8dda7c82641eb672d7ee))
+
+
+
+
+
 # [2.11.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.2...v2.11.0-rc.3) (2025-05-29)
 
 
