@@ -1171,6 +1171,7 @@ class List extends UI5Element {
 	}
 
 	_ondragover(e: DragEvent) {
+		e.preventDefault();
 		const target = e.target as HTMLElement;
 		if (!(e.target instanceof HTMLElement)) {
 			return;
