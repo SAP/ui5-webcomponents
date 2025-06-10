@@ -58,10 +58,6 @@ type DynamicDateRangeValue = {
 	values?: Array<Date> | Array<number>;
 }
 
-type DynamicDateRangeChangeEventDetail = {
-	value: DynamicDateRangeValue | undefined,
-}
-
 /**
  * Represents a dynamic date range option used by the `ui5-dynamic-date-range` component.
  *
@@ -86,7 +82,7 @@ type DynamicDateRangeChangeEventDetail = {
  * - `isValidString(value: string): boolean`: Validates whether a given string is a valid representation of the dynamic date range value.
  *
  * @public
- * @since 2.10.0
+ * @since 2.11.0
  */
 interface IDynamicDateRangeOption {
 	icon: string;
@@ -101,15 +97,6 @@ interface IDynamicDateRangeOption {
 	timeUnit?: `${DynamicDateRangeTimeUnit}`;
 	direction?: `${DynamicDateRangeDirection}`;
 }
-
-/**
- * Fired when the input operation has finished by pressing Enter or on focusout or a value is selected in the popover.
- * @public
- */
-@event("change", {
-	bubbles: true,
-	cancelable: true,
-})
 
 /**
  * @class
@@ -153,8 +140,8 @@ interface IDynamicDateRangeOption {
  * @constructor
  * @extends UI5Element
  * @public
+ * @since 2.11.0
  */
-
 @customElement({
 	tag: "ui5-dynamic-date-range",
 	languageAware: true,
@@ -167,9 +154,17 @@ interface IDynamicDateRangeOption {
 	],
 })
 
+/**
+ * Fired when the input operation has finished by pressing Enter or on focusout or a value is selected in the popover.
+ * @public
+ */
+@event("change", {
+	bubbles: true,
+	cancelable: true,
+})
 class DynamicDateRange extends UI5Element {
 	eventDetails!: {
-		change: DynamicDateRangeChangeEventDetail,
+		change: void,
 	}
 
 	@i18n("@ui5/webcomponents")
@@ -404,7 +399,8 @@ class DynamicDateRange extends UI5Element {
 
 		if (!value) {
 			this.value = undefined;
-			this.fireDecoratorEvent("change", { value: undefined });
+			this.fireDecoratorEvent("change");
+
 			return;
 		}
 
@@ -448,6 +444,8 @@ class DynamicDateRange extends UI5Element {
 	/**
 	 * Converts a `value` into concrete `startDate` and `endDate` JavaScript `Date` objects.
 	 *
+	 * @public
+	 * @param value The option to convert into an array of date ranges
 	 * @returns An array of two `Date` objects representing the start and end dates.
 	 */
 	toDates(value: DynamicDateRangeValue): Array<Date> {
@@ -472,7 +470,6 @@ class DynamicDateRange extends UI5Element {
 		this._currentOption = undefined;
 		this.open = false;
 	}
-
 	_processOptionSubmission() {
 		if (!this._currentOption || !this.currentValue) {
 			return null;
@@ -746,5 +743,4 @@ export default DynamicDateRange;
 export type {
 	DynamicDateRangeValue,
 	IDynamicDateRangeOption,
-	DynamicDateRangeChangeEventDetail,
 };

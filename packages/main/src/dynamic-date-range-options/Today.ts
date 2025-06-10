@@ -9,7 +9,7 @@ import DynamicDateRange from "../DynamicDateRange.js";
  * @class
  * @constructor
  * @public
- * @since 2.0.0
+ * @since 2.11.0
  */
 class Today implements IDynamicDateRangeOption {
 	parse(): DynamicDateRangeValue {

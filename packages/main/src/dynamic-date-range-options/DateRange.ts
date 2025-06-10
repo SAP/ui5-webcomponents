@@ -12,7 +12,7 @@ import DynamicDateRange from "../DynamicDateRange.js";
  * @class
  * @constructor
  * @public
- * @since 2.0.0
+ * @since 2.11.0
  */
 
 class DateRange implements IDynamicDateRangeOption {
@@ -88,7 +88,7 @@ class DateRange implements IDynamicDateRangeOption {
 		});
 	}
 
-	handleSelectionChange(e: CustomEvent) : DynamicDateRangeValue | undefined {
+	handleSelectionChange(e: CustomEvent): DynamicDateRangeValue | undefined {
 		const currentValue = { operator: "", values: [] } as DynamicDateRangeValue;
 		currentValue.values = [];
 		currentValue.operator = this.operator;

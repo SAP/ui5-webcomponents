@@ -1,15 +1,13 @@
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-
-import { registerToolbarItem } from "./ToolbarRegistry.js";
+import ToolbarSelectCss from "./generated/themes/ToolbarSelect.css.js";
 
 // Templates
-
 import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
-import ToolbarPopoverSelectTemplate from "./ToolbarPopoverSelectTemplate.js";
 import ToolbarItem from "./ToolbarItem.js";
 import type { ToolbarItemEventDetail } from "./ToolbarItem.js";
 import type ToolbarSelectOption from "./ToolbarSelectOption.js";
@@ -36,6 +34,9 @@ type ToolbarSelectChangeEventDetail = ToolbarItemEventDetail & SelectChangeEvent
  */
 @customElement({
 	tag: "ui5-toolbar-select",
+	template: ToolbarSelectTemplate,
+	renderer: jsxRenderer,
+	styles: ToolbarSelectCss,
 })
 
 /**
@@ -123,14 +124,6 @@ class ToolbarSelect extends ToolbarItem {
 	@property()
 	accessibleNameRef?: string;
 
-	static get toolbarTemplate() {
-		return ToolbarSelectTemplate;
-	}
-
-	static get toolbarPopoverTemplate() {
-		return ToolbarPopoverSelectTemplate;
-	}
-
 	onClick(e: Event): void {
 		e.stopImmediatePropagation();
 		const prevented = !this.fireDecoratorEvent("click", { targetRef: e.target as HTMLElement });
@@ -182,8 +175,6 @@ class ToolbarSelect extends ToolbarItem {
 		};
 	}
 }
-
-registerToolbarItem(ToolbarSelect);
 
 ToolbarSelect.define();
 
