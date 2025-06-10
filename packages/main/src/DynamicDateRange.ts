@@ -414,7 +414,7 @@ class DynamicDateRange extends UI5Element {
 		}
 
 		if (this.value) {
-			this.fireDecoratorEvent("change", { value: this.value });
+			this.fireDecoratorEvent("change");
 		}
 	}
 
@@ -470,6 +470,7 @@ class DynamicDateRange extends UI5Element {
 		this._currentOption = undefined;
 		this.open = false;
 	}
+
 	_processOptionSubmission() {
 		if (!this._currentOption || !this.currentValue) {
 			return null;
@@ -489,7 +490,7 @@ class DynamicDateRange extends UI5Element {
 
 		if (isValid) {
 			this.value = this.currentValue;
-			this.fireDecoratorEvent("change", { value: this.value });
+			this.fireDecoratorEvent("change");
 		} else {
 			this.value = undefined;
 		}
@@ -516,7 +517,7 @@ class DynamicDateRange extends UI5Element {
 
 			if (result.isValid) {
 				this.value = result.finalValue;
-				this.fireDecoratorEvent("change", { value: this.value });
+				this.fireDecoratorEvent("change");
 			} else {
 				this.value = undefined;
 			}
@@ -543,7 +544,7 @@ class DynamicDateRange extends UI5Element {
 
 		if (result.isValid) {
 			this.value = result.finalValue;
-			this.fireDecoratorEvent("change", { value: this.value });
+			this.fireDecoratorEvent("change");
 		} else {
 			this.value = undefined;
 		}
