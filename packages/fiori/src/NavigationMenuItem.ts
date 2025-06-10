@@ -179,9 +179,9 @@ class NavigationMenuItem extends MenuItem {
 
 	async _onkeydown(e: KeyboardEvent): Promise<void> {
 		if (e.key === "Control" || e.key === "Shift" || e.key === "Alt" || e.key === "Meta") {
-            e.preventDefault();
+			e.preventDefault();
 			e.stopPropagation();
-        }
+		}
 
 		if (isSpace(e)) {
 			e.preventDefault();
