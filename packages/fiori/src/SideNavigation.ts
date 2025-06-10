@@ -5,7 +5,6 @@ import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEff
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type NavigationMenu from "./NavigationMenu.js";
-import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -59,13 +58,6 @@ type SideNavigationSelectionChangeEventDetail = {
 };
 
 type PopupSideNavigationItem = SideNavigationItem & { associatedItem: SideNavigationSelectableItemBase };
-
-// used for the inner side navigation used in the SideNavigationPopoverTemplate
-type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
-	item: Pick<MenuItemClickEventDetail, "item"> & {
-		associatedItem: SideNavigationSelectableItemBase,
-	}
-};
 
 /**
  * @class
@@ -325,13 +317,35 @@ class SideNavigation extends UI5Element {
 	handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
 		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
 
+		if (associatedItem.effectiveDisabled) {
+			e.stopPropagation();
+			e.preventDefault();
+			return;
+		}
+
 		if (isInstanceOfSideNavigationItem(associatedItem) && associatedItem.unselectable) {
 			return;
 		}
 
 		e.stopPropagation();
 
-		associatedItem.fireEvent("click");
+		const altKey = (e.detail as any)?.altKey,
+			ctrlKey = (e.detail as any)?.ctrlKey,
+			metaKey = (e.detail as any)?.metaKey,
+			shiftKey = (e.detail as any)?.shiftKey;
+
+		const executeEvent = associatedItem.fireDecoratorEvent("click", {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		});
+
+		if (!executeEvent) {
+			e.preventDefault();
+			return;
+		}
+
 		if (associatedItem.selected) {
 			this.closePicker();
 			return;
@@ -341,30 +355,6 @@ class SideNavigation extends UI5Element {
 		this.closePicker();
 
 		this._popoverContents.item?.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
-	}
-
-	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
-		const associatedItem = e.detail?.item.associatedItem;
-
-		associatedItem.fireEvent("click");
-		if (associatedItem.selected) {
-			this.closeMenu();
-			return;
-		}
-
-		this._selectItem(associatedItem);
-
-		this.closeMenu();
-
-		// When subitem is selected in collapsed mode parent element should be focused
-		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
-			const parent = associatedItem.parentElement as SideNavigationItem;
-			this.focusItem(parent);
-			parent?.focus();
-		} else {
-			this.focusItem(associatedItem);
-			associatedItem?.focus();
-		}
 	}
 
 	getOverflowPopover() {
@@ -444,9 +434,7 @@ class SideNavigation extends UI5Element {
 				return;
 			}
 
-			if (!item.disabled) {
-				result.push(item);
-			}
+			result.push(item);
 		});
 
 		return result;
@@ -592,8 +580,31 @@ class SideNavigation extends UI5Element {
 	}
 
 	_handleItemClick(e: KeyboardEvent | MouseEvent, item: SideNavigationSelectableItemBase) {
+		if (item.effectiveDisabled) {
+			e.stopPropagation();
+			e.preventDefault();
+			return;
+		}
+
 		if (item.selected && !this.collapsed) {
-			item.fireDecoratorEvent("click");
+			const {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			} = e;
+
+			const executeEvent = item.fireDecoratorEvent("click", {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			});
+
+			if (!executeEvent) {
+				e.preventDefault();
+			}
+
 			return;
 		}
 
@@ -608,7 +619,24 @@ class SideNavigation extends UI5Element {
 
 			this.openPicker(item.getFocusDomRef() as HTMLElement);
 		} else {
-			item.fireDecoratorEvent("click");
+			const {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			} = e;
+
+			const executeEvent = item.fireDecoratorEvent("click", {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			});
+
+			if (!executeEvent) {
+				e.preventDefault();
+				return;
+			}
 
 			if (!item.selected) {
 				this._selectItem(item);

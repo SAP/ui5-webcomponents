@@ -6,6 +6,13 @@ import {
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type SideNavigation from "./SideNavigation.js";
 
+type SideNavigationItemClickEventDetail = {
+	altKey: boolean;
+	ctrlKey: boolean;
+	metaKey: boolean;
+	shiftKey: boolean;
+}
+
 /**
  * @class
  * Base class for the items that are accepted by the `ui5-side-navigation` component.
@@ -18,7 +25,7 @@ import type SideNavigation from "./SideNavigation.js";
  */
 class SideNavigationItemBase extends UI5Element implements ITabbable {
 	eventDetails!: {
-		click: void
+		click: SideNavigationItemClickEventDetail
 	}
 
 	/**
@@ -66,6 +73,15 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 
 	_sideNavigation!: SideNavigation;
 
+	/**
+	 * Defines if the item's group is disabled.
+	 * @private
+	 * @default false
+	 * @since 2.10.0
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_groupDisabled: boolean = false;
+
 	onEnterDOM() {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
@@ -76,10 +92,18 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		return this.tooltip || undefined;
 	}
 
+	get hasSubItems() {
+		return false;
+	}
+
+	get effectiveDisabled() {
+		return this.disabled;
+	}
+
 	get classesArray() {
 		const classes = [];
 
-		if (this.disabled) {
+		if (this.effectiveDisabled) {
 			classes.push("ui5-sn-item-disabled");
 		}
 
@@ -91,11 +115,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	get effectiveTabIndex() {
-		if (this.disabled) {
-			return undefined;
-		}
-
-		return this.forcedTabIndex;
+		return this.forcedTabIndex || undefined;
 	}
 
 	get sideNavigation() {
@@ -139,4 +159,7 @@ const isInstanceOfSideNavigationItemBase = (object: any): object is SideNavigati
 };
 
 export default SideNavigationItemBase;
+export type {
+	SideNavigationItemClickEventDetail,
+};
 export { isInstanceOfSideNavigationItemBase };
