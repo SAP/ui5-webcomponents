@@ -27,18 +27,16 @@ describe("Clock API", () => {
 			.as("disabled");
 
 		cy.get("@disabled")
-			.click(210, 50, { force: true });
+			.realClick({x: 210, y: 50});
 
 		cy.get("#myHours12Disabled")
-			.invoke("prop", "selectedValue")
-			.should("eq", 12);
+			.should("have.prop", "selectedValue", 12);
 
 		cy.get("@enabled")
-			.click(210, 50, { force: true });
+			.realClick({x: 210, y: 50});
 
 		cy.get("#myHours12")
-			.invoke("prop", "selectedValue")
-			.should("eq", 1);
+			.should("have.prop", "selectedValue", 1);
 	});
 
 	it("'active' property", () => {
@@ -56,12 +54,12 @@ describe("Clock API", () => {
 		cy.get("#myMinutes")
 			.shadow()
 			.find(".ui5-tp-clock")
-			.should("have.css", "display", "block");
+			.should("be.visible");
 
 		cy.get("#myMinutesInactive")
 			.shadow()
 			.find(".ui5-tp-clock")
-			.should("have.css", "display", "none");
+			.should("not.be.visible");
 	});
 
 	it("'displayStep' and 'valueStep' properties", () => {
@@ -130,11 +128,10 @@ describe("Clock API", () => {
 		cy.get("#myHours12")
 			.shadow()
 			.find(".ui5-tp-clock-cover")
-			.click(200, 200, { force: true });
+			.realClick({x: 200, y: 200});
 
 		cy.get("#myHours12")
-			.invoke("prop", "selectedValue")
-			.should("eq", 12);
+			.should("have.prop", "selectedValue", 12);
 	});
 
 	it("should keep selected value after clicking same number", () => {
@@ -149,7 +146,7 @@ describe("Clock API", () => {
 		cy.get("#myHours12")
 			.shadow()
 			.find(".ui5-tp-clock-cover")
-			.click(45, 110, { force: true });
+			.realClick({x: 45, y: 110});
 
 		cy.get("#myHours12")
 			.invoke("prop", "selectedValue")
@@ -157,11 +154,10 @@ describe("Clock API", () => {
 				cy.get("#myHours12")
 					.shadow()
 					.find(".ui5-tp-clock-cover")
-					.click(45, 110, { force: true });
+					.realClick({x: 45, y: 110});
 
 				cy.get("#myHours12")
-					.invoke("prop", "selectedValue")
-					.should("eq", val);
+					.should("have.prop", "selectedValue", val);
 			});
 	});
 });
@@ -186,25 +182,21 @@ describe("Clock item selection", () => {
 			.as("hours12Cover");
 
 		cy.get("@hours12Cover")
-			.click(210, 50, { force: true });
+			.realClick({x: 210, y: 50});
 
 		cy.get("#myHours12")
-			.invoke("prop", "selectedValue")
-			.should("eq", 1);
+			.should("have.prop", "selectedValue", 1);
 
 		cy.get("@changed")
 			.should("have.been.calledOnce");
 
 		cy.get("@hours12Cover")
-			.click(150, 35, { force: true });
+			.realClick({x: 150, y: 35});
 
 		cy.get("#myHours12")
-			.invoke("prop", "selectedValue")
-			.should("eq", 12);
+			.should("have.prop", "selectedValue", 12);
 
 		cy.get("@changed")
 			.should("have.been.calledTwice");
-
-
 	});
 });
