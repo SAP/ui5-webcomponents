@@ -17,7 +17,6 @@ import navigationMenuItemCss from "./generated/themes/NavigationMenuItem.css.js"
 import {
 	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
-import type SideNavigationItem from "./SideNavigationItem.js";
 
 /**
  * @class
