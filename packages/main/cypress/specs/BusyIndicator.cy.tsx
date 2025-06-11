@@ -65,7 +65,7 @@ describe("BusyIndicator general interaction", () => {
 
 	it("test activation", () => {
 		cy.mount(
-			<BusyIndicator id="busy-container" class="busyindicator4auto" text="Loading">
+			<BusyIndicator id="busy-container">
 				<span id="fetch-list"></span>
 			</BusyIndicator>
 		);
@@ -108,8 +108,6 @@ describe("BusyIndicator general interaction", () => {
 	it("tests internal focused element attributes", () => {
 		cy.mount(<BusyIndicator active id="indicator1" />);
 
-		cy.get("#indicator1").realClick();
-
 		cy.get("#indicator1")
 			.shadow()
 			.find(".ui5-busy-indicator-busy-area")
@@ -122,7 +120,7 @@ describe("BusyIndicator general interaction", () => {
 
 	it("tests content is not reachable with keyboard when active in both directions", () => {
 		cy.mount(
-			<div id="test">
+			<div>
 				<Button id="beforeIndicatorWithBtn">focus stop before</Button>
 				<BusyIndicator id="indicatorWithBtn" active>
 					<Button id="helloBtn">Hello World</Button>
@@ -139,16 +137,15 @@ describe("BusyIndicator general interaction", () => {
 			.should("exist");
 
 		cy.realPress("Tab");
+
 		cy.get("#indicatorWithBtn").should("have.focus");
+
 		cy.realPress("Tab");
 
 		cy.get("#helloBtn").should("not.have.focus");
+		cy.get("#afterIndicatorWithBtn").should("have.focus");
 
 		cy.realPress(["Shift", "Tab"]);
-		cy.get("#indicatorWithBtn")
-			.shadow()
-			.find(".ui5-busy-indicator-busy-area")
-			.should("exist");
 
 		cy.get("#indicatorWithBtn").should("have.focus");
 		cy.get("#helloBtn").should("not.have.focus");
