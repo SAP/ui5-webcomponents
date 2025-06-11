@@ -5,6 +5,7 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
 import { isUpShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import type TableRow from "./TableRow.js";
 import type TableRowBase from "./TableRowBase.js";
+import type TableSelectionMultiHeaderSelector from "./types/TableSelectionMultiHeaderSelector.js";
 
 /**
  * @class
@@ -47,6 +48,16 @@ class TableSelectionMulti extends TableSelectionBase {
 	@property()
 	selected?: string;
 
+	/**
+	 * Defines the selector of the header row.
+	 *
+	 * @default "SelectAll"
+	 * @public
+	 * @since 2.12
+	 */
+	@property()
+	headerSelector: `${TableSelectionMultiHeaderSelector}` = "SelectAll";
+
 	private _rowsLength = 0;
 	private _rangeSelection?: {
 		selected: boolean,
@@ -69,7 +80,7 @@ class TableSelectionMulti extends TableSelectionBase {
 
 	isSelected(row: TableRowBase): boolean {
 		if (row.isHeaderRow()) {
-			return this.areAllRowsSelected();
+			return this.headerSelector === "ClearAll" ? true : this.areAllRowsSelected();
 		}
 
 		const rowKey = this.getRowKey(row as TableRow);
@@ -81,15 +92,26 @@ class TableSelectionMulti extends TableSelectionBase {
 			return;
 		}
 
+		let selectionChanged = false;
 		const tableRows = row.isHeaderRow() ? this._table!.rows : [row as TableRow];
 		const selectedSet = this.getSelectedAsSet();
 		tableRows.forEach(tableRow => {
 			const rowKey = this.getRowKey(tableRow);
+			if (!rowKey) {
+				return;
+			}
+
+			const setSize = selectedSet.size;
 			selectedSet[selected ? "add" : "delete"](rowKey);
+			if (!selectionChanged && setSize !== selectedSet.size) {
+				selectionChanged = true;
+			}
 		});
 
-		this.setSelectedAsSet(selectedSet);
-		fireEvent && this.fireDecoratorEvent("change");
+		if (selectionChanged) {
+			this.setSelectedAsSet(selectedSet);
+			fireEvent && this.fireDecoratorEvent("change");
+		}
 	}
 
 	/**

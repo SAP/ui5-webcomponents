@@ -20,3 +20,8 @@
     width: 0;
     height: 0;
 }
+
+#selection-cell [ui5-icon] {
+	width: var(--_ui5_checkbox_inner_width_height);
+    height: var(--_ui5_checkbox_inner_width_height);
+}
