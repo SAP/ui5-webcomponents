@@ -18,6 +18,7 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 import {
 	SIDE_NAVIGATION_ICON_COLLAPSE,
 	SIDE_NAVIGATION_ICON_EXPAND,
+	SIDE_NAVIGATION_OVERFLOW_ITEM_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -71,7 +72,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	_fixed = false;
 
 	/**
-     * Defines nested items by passing `ui5-side-navigation-sub-item` to the default slot.
+	 * Defines nested items by passing `ui5-side-navigation-sub-item` to the default slot.
 	 *
 	 * @public
 	 */
@@ -81,8 +82,22 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
+	onBeforeRendering() {
+		this.items.forEach(item => {
+			item._parentDisabled = this.effectiveDisabled;
+		});
+	}
+
 	get overflowItems() : Array<SideNavigationItem> {
 		return [this];
+	}
+
+	get hasSubItems() {
+		return this.items.length > 0;
+	}
+
+	get effectiveDisabled() {
+		return this.disabled || this._groupDisabled;
 	}
 
 	get selectableItems() : Array<SideNavigationSelectableItemBase> {
@@ -126,7 +141,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return this.accessibilityAttributes.hasPopup;
 		}
 
-		if (!this.disabled && this.sideNavCollapsed && this.items.length) {
+		if (!this.effectiveDisabled && this.sideNavCollapsed && this.items.length) {
 			return "tree";
 		}
 
@@ -160,7 +175,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	get classesArray() {
 		const classes = super.classesArray;
 
-		if (!this.disabled && this.sideNavigation?.collapsed && this.items.length) {
+		if (!this.effectiveDisabled && this.sideNavigation?.collapsed && this.items.length) {
 			classes.push("ui5-sn-item-with-expander");
 		}
 
@@ -172,7 +187,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _selected() {
-		if (this.sideNavCollapsed) {
+		if (this.sideNavCollapsed || !this.expanded) {
 			return this.selected || this.items.some(item => item.selected);
 		}
 
@@ -182,6 +197,14 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	get _arrowTooltip() {
 		return this.expanded ? SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_ICON_COLLAPSE)
 			: SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_ICON_EXPAND);
+	}
+
+	get _ariaLabel() {
+		if (this.isOverflow) {
+			return SideNavigationItem.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ITEM_LABEL);
+		}
+
+		return undefined;
 	}
 
 	applyInitialFocusInPopover() {
@@ -199,12 +222,37 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isLeft(e) || isMinus(e)) {
+		if (this.effectiveDisabled) {
+			return;
+		}
+
+		const isRTL = this.effectiveDir === "rtl";
+
+		if (this.sideNavigation.classList.contains("ui5-side-navigation-in-popover") || this.sideNavCollapsed) {
+			super._onkeydown(e);
+			return;
+		}
+
+		if (isLeft(e)) {
+			e.preventDefault();
+			this.expanded = isRTL;
+			return;
+		}
+
+		if (isRight(e)) {
+			e.preventDefault();
+			this.expanded = !isRTL;
+			return;
+		}
+
+		if (isMinus(e)) {
+			e.preventDefault();
 			this.expanded = false;
 			return;
 		}
 
-		if (isRight(e) || isPlus(e)) {
+		if (isPlus(e)) {
+			e.preventDefault();
 			this.expanded = true;
 			return;
 		}
@@ -270,7 +318,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_toggle() {
-		if (this.items.length) {
+		if (this.items.length && !this.effectiveDisabled) {
 			this.expanded = !this.expanded;
 		}
 	}

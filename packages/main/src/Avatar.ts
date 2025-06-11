@@ -67,8 +67,8 @@ type AvatarAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
  *
  * **Note:** The event will not be fired if the `disabled`
  * property is set to `true`.
- * @private
- * @since 1.0.0-rc.11
+ * @public
+ * @since 2.11.0
  */
 @event("click", {
 	bubbles: true,
@@ -209,6 +209,9 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	@property({ noAttribute: true })
 	forcedTabIndex?: string;
 
+	/**
+	 * @private
+	 */
 	@property({ type: Boolean })
 	_hasImage = false;
 
@@ -245,6 +248,10 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	constructor() {
 		super();
 		this._handleResizeBound = this.handleResize.bind(this);
+	}
+
+	onBeforeRendering() {
+		this._hasImage = this.hasImage;
 	}
 
 	get tabindex() {
@@ -309,8 +316,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	get hasImage() {
-		this._hasImage = !!this.image.length;
-		return this._hasImage;
+		return !!this.image.length;
 	}
 
 	get initialsContainer(): HTMLObjectElement | null {

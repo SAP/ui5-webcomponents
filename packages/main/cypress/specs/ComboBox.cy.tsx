@@ -168,4 +168,29 @@ describe("Event firing", () => {
 		cy.get("@changeStub").should("not.have.been.called");
 	});
 });
+describe("Accessibility", () => {
+	it("should announce the associated label when ComboBox is focused", () => {
+		cy.mount(
+			<>
+				<label for="cb">Should be the aria-label</label>
+				<ComboBox id="cb"/>
+			</>
+		);
 
+		cy.get('label[for="cb"]')
+			.invoke('text')
+			.then((labelText) => {
+
+				cy.get("[ui5-combobox]")
+					.shadow()
+					.find("input")
+					.as("innerInput");
+
+				cy.get("@innerInput")
+					.click();
+
+				cy.get("@innerInput")
+					.should("have.attr", "aria-label", labelText);
+			});
+	});
+});
