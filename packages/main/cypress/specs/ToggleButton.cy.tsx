@@ -1,6 +1,6 @@
 import { Key } from "@ui5/webcomponents-base/dist/thirdparty/preact/preact.module.js";
-import ToggleButton from "../../src/ToggleButton.js";
 import { ModifierKey } from "../support/commands/common/types.js";
+import ToggleButton from "../../src/ToggleButton.js";
 
 function testClick(shouldPreventClick: boolean, pressedKey?: ModifierKey) {
 	cy.mount(<ToggleButton>Toggle Button</ToggleButton>);
@@ -15,10 +15,11 @@ function testClick(shouldPreventClick: boolean, pressedKey?: ModifierKey) {
 			$button.get(0).addEventListener("click", cy.stub().as("clicked"));
 		});
 
-	cy.get("@toggleButton").ui5ToggleButtonRealClick(shouldPreventClick, pressedKey);
+	cy.get("@toggleButton")
+		.ui5ToggleButtonRealClick(shouldPreventClick, pressedKey);
 
 	cy.get("@clicked")
-		.should("have.been.called");
+		.should("have.been.calledOnce");
 
 	if (pressedKey) {
 		cy.get("@clicked")
@@ -49,7 +50,8 @@ describe("Toggle Button general interaction tests", () => {
 				$button.get(0).addEventListener("click", cy.stub().as("clicked"));
 			});
 
-		cy.get("@toggleButton").realClick();
+		cy.get("@toggleButton")
+			.realClick();
 
 		cy.get("@clicked")
 			.should("have.not.been.called")
@@ -59,7 +61,7 @@ describe("Toggle Button general interaction tests", () => {
 	});
 });
 
-describe("Toggle Button general key interaction tests", () => {
+describe("Toggle Button keyboard interaction tests", () => {
 	function testKeyActionOnFocusedButton(key: Key) {
 		cy.mount(<ToggleButton>Toggle Button</ToggleButton>);
 
