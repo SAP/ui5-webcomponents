@@ -4,6 +4,11 @@
 	- readonly and disabled states
 */
 
+:host([disabled]) {
+	cursor: default;
+	pointer-events: none;
+}
+
 :host([readonly]:not([disabled])) {
 	border-color: var(--_ui5_input_readonly_border_color);
 	background: var(--sapField_ReadOnly_BackgroundStyle);
