@@ -165,7 +165,7 @@ describe("Notification List Item Tests", () => {
 					importance="Important"
 					title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
 					state="Information"
-					style="width: 25rem;" />
+					style={{ width: '25rem' }} />
 			</NotificationList>
 		);
 
@@ -309,14 +309,14 @@ describe("Notification List Item Tests", () => {
 			.should("have.attr", "open");
 
 		cy.get("#nli1").realClick();
-
+		
+		cy.wait(500);
 		cy.get("#nli1")
 			.find("ui5-menu")
 			.should("not.have.attr", "open");
 
 		cy.get("#nli1").realClick();
 		cy.realPress(["F10", "Shift"]);
-
 		cy.get("#nli1")
 			.find("ui5-menu")
 			.should("have.attr", "open");
@@ -504,7 +504,7 @@ describe("Notification List Item Tests", () => {
 		cy.mount(
 			<NotificationListItem id="nli3a"
 				title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
-				style="width: 25rem;" />
+				style={{ width: '25rem' }} />
 		);
 
 		cy.get("#nli3a")
@@ -842,7 +842,7 @@ describe("Keyboard Navigation", () => {
 			<NotificationList>
 				<NotificationListGroupItem
 					id="nlgi1"
-					style="width: 25rem;"
+					style={{ width: '25rem' }}
 				>
 					<NotificationListItem
 						id="nli1"
@@ -889,7 +889,7 @@ describe("Keyboard Navigation", () => {
 
 	it("Focusing same item on next row", () => {
 		cy.mount(
-			<NotificationList style="width: 25rem;">
+			<NotificationList style={{ width: '25rem' }}>
 				<NotificationListGroupItem id="nlgi1">
 					<NotificationListItem id="nli1">
 						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
