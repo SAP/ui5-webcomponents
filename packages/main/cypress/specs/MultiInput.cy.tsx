@@ -682,7 +682,7 @@ describe("MultiInput Truncated Token", () => {
 		cy.get("@deleteIcon")
 			.realClick();
 
-		cy.get("@input")
+		cy.get("[ui5-multi-input]")
 			.should("be.focused");
 
 		cy.get("@input")
@@ -894,9 +894,9 @@ describe("Keyboard handling", () => {
 
 		cy.get("[ui5-token]")
 			.eq(2)
-			.should("have.attr", "focused");
+			.should("be.focused");
 
-		cy.get("@innerInput")
+		cy.get("[ui5-multi-input]")
 			.should("not.be.focused");
 
 		cy.realPress("ArrowRight");
@@ -905,7 +905,7 @@ describe("Keyboard handling", () => {
 			.eq(2)
 			.should("not.have.attr", "focused");
 
-		cy.get("@innerInput")
+		cy.get("[ui5-multi-input]")
 			.should("be.focused");
 	});
 	it("home/end navigation", () => {
@@ -1086,7 +1086,7 @@ describe("Keyboard handling", () => {
 			.find("[ui5-token]")
 			.should("have.length", 0);
 
-		cy.get("@innerInput")
+		cy.get("[ui5-multi-input]")
 			.should("be.focused");
 	});
 
@@ -1170,7 +1170,7 @@ describe("Keyboard handling", () => {
 
 		cy.realPress("Backspace");
 
-		cy.get("@innerInput").should("not.be.focused");
+		cy.get("[ui5-multi-input]").should("not.be.focused");
 		cy.get("@lastToken").should("be.focused");
 	});
 	it("should change input's value when set in selection change event", () => {
@@ -1216,13 +1216,13 @@ describe("Keyboard handling", () => {
 		cy.get("@innerInput")
 			.realPress("ArrowLeft")
 
-		cy.get("@innerInput")
+		cy.get("[ui5-multi-input]")
 			.should("not.be.focused");
 
 		cy.get("@innerInput")
 			.realPress("ArrowRight")
 
-		cy.get("@innerInput")
+		cy.get("[ui5-multi-input]")
 			.should("be.focused");
 	});
 
