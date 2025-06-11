@@ -142,7 +142,7 @@ class TableRow extends TableRowBase {
 
 	_onclick() {
 		if (this === getActiveElement()) {
-			if (this._isSelectable && !this._hasRowSelector) {
+			if (this._isSelectable && !this._hasSelector) {
 				this._onSelectionChange();
 			} else 	if (this.interactive) {
 				this._table?._onRowClick(this);
@@ -165,7 +165,7 @@ class TableRow extends TableRowBase {
 	}
 
 	get _isInteractive() {
-		return this.interactive || (this._isSelectable && !this._hasRowSelector);
+		return this.interactive || (this._isSelectable && !this._hasSelector);
 	}
 
 	get _hasOverflowActions() {
