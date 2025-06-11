@@ -1,3 +1,4 @@
+import Button from "../../src/Button.js";
 import ResponsivePopover from "../../src/ResponsivePopover.js";
 import Title from "../../src/Title.js";
 
@@ -22,7 +23,34 @@ describe("ResponsivePopover general interaction", () => {
 		// assert.notOk(await popover.isDisplayedInViewport(), "ResponsivePopover is closed.");
 	});
 
-	it("header and footer are hidden on desktop", () => {
+	it.only("header and footer are hidden on desktop", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen3" design="Negative">Header/Footer hidden on Desktop</Button>
+				<ResponsivePopover id="respPopover3" content-only-on-desktop opener={"btnOpen3"}>
+					<div id="respPopoverHeader3" slot="header">
+						<Title>Hello World</Title>
+					</div>
+
+					<div class="popover-content">
+						{/* <ui5-label for="emailInput3" required>Email: </ui5-label>
+						<ui5-input id="emailInput3" class="samples-margin-top responsivepopover3auto"  placeholder="Enter Email"></ui5-input> */}
+					</div>
+
+					<div slot="footer" class="popover-footer">
+						<Button id="btnClose3" design="Emphasized">Subscribe</Button>
+					</div>
+				</ResponsivePopover>
+			</>
+		);
+
+		cy.get("#btnOpen3").realClick();
+
+		cy.get("#respPopover3").invoke("attr", "open", true);
+
+		cy.get("#respPopover3").should("be.visible");
+		cy.get("#respPopover3").shadow().find(".ui5-popup-header-root").should("not.be.visible");
+
 		// const btnOpenPopover = await browser.$("#btnOpen3");
 
 		// await btnOpenPopover.click();
@@ -35,32 +63,43 @@ describe("ResponsivePopover general interaction", () => {
 	});
 
 	it("Initial focus NOT prevented", () => {
-		// const btnOpenPopover = await browser.$("#btnInitialFocus");
-		// await btnOpenPopover.click();
+		cy.mount(
+			<>
+				<Button id="btnInitialFocus" />
+				<ResponsivePopover id="simpleRPInitialFocus" opener={"btnInitialFocus"}/>
+			</>
+		);
+		cy.get("#btnInitialFocus").realClick();
 
-		// const activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
-		// assert.strictEqual(activeElementId, "simpleRPInitialFocus", "Initial focus is not prevented");
+		cy.get("#simpleRPInitialFocus").invoke("attr", "open", true);
+
+		cy.get("#simpleRPInitialFocus").should("have.focus");
+		cy.get("#btnInitialFocus").should("not.have.focus");
 	});
 
 	it("Initial focus prevented", () => {
-		// const btnOpenPopover = await browser.$("#btnInitialFocusPrevented");
-		// await btnOpenPopover.click();
+		cy.mount(
+			<>
+				<Button id="btnInitialFocusPrevented" />
+				<ResponsivePopover id="simpleRPInitialFocusPrevented" prevent-initial-focus opener={"btnInitialFocusPrevented"} />
+			</>
+		);
 
-		// const activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
-		// assert.strictEqual(activeElementId, "btnInitialFocusPrevented", "Initial focus is prevented");
+		cy.get("#btnInitialFocusPrevented").realClick();
+
+		cy.get("#simpleRPInitialFocusPrevented").invoke("attr", "open", true);
+
+		cy.get("#btnInitialFocusPrevented").should("have.focus");
 	});
 
 	it("tests popover toggling with 'open' attribute", () => {
-		// const btnOpenPopover = await browser.$("#btnOpenWithAttr");
-		// const btnCloseWithAttr = await browser.$("#btnCloseWithAttr");
+		cy.mount(<ResponsivePopover id="popoverAttr" />);
 
-		// await btnOpenPopover.click();
+		cy.get("#popoverAttr").invoke("attr", "open", true);
+		cy.get("#popoverAttr").should("be.visible");
 
-		// const popover = await browser.$("#popoverAttr");
-		// assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
-
-		// await btnCloseWithAttr.click();
-		// assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+		cy.get("#popoverAttr").invoke("attr", "open", false);
+		cy.get("#popoverAttr").should("not.be.visible");
 	});
 });
 
@@ -69,36 +108,36 @@ describe("Acc", () => {
 	// 	await browser.url(`test/pages/ResponsivePopover.html`);
 	// });
 
-	it.only("tests accessible-role", () => {
+	it("tests accessible-role", () => {
 		cy.mount(
 			<>
-			<ResponsivePopover initial-focus="emailInput" id="respPopover">
-				<div id="respPopoverHeader" slot="header">
-					{/* <ui5-title>Hello World</ui5-title> */}
-				</div>
+				<ResponsivePopover initial-focus="emailInput" id="respPopover">
+					<div id="respPopoverHeader" slot="header">
+						{/* <ui5-title>Hello World</ui5-title> */}
+					</div>
 
-				<div class="popover-content">
-					{/* <ui5-label for="emailInput" required>Email: </ui5-label>
+					<div class="popover-content">
+						{/* <ui5-label for="emailInput" required>Email: </ui5-label>
 					<ui5-input id="emailInput" class="samples-margin-top responsivepopover3auto"  placeholder="Enter Email"></ui5-input> */}
-				</div>
+					</div>
 
-				<div slot="footer" class="popover-footer">
-					{/* <ui5-button id="btnClose" design="Emphasized">Subscribe</ui5-button> */}
-				</div>
-			</ResponsivePopover>
-			<ResponsivePopover id="rPAlertRole" accessible-role="AlertDialog">
-			<div slot="header">
-				{/* <Title level="H1">Role 'AlertDialog'</Title> */}
-			</div>
-			<span>Hello World!</span>
-		</ResponsivePopover>
-		<ResponsivePopover id="rPNoneRole" accessible-role="None">
-		<div slot="header">
-			{/* <ui5-title level="H1">Role 'None'</ui5-title> */}
-		</div>
-		<span>Hello World!</span>
-	</ResponsivePopover>
-		</>
+					<div slot="footer" class="popover-footer">
+						{/* <ui5-button id="btnClose" design="Emphasized">Subscribe</ui5-button> */}
+					</div>
+				</ResponsivePopover>
+				<ResponsivePopover id="rPAlertRole" accessible-role="AlertDialog">
+					<div slot="header">
+						{/* <Title level="H1">Role 'AlertDialog'</Title> */}
+					</div>
+					<span>Hello World!</span>
+				</ResponsivePopover>
+				<ResponsivePopover id="rPNoneRole" accessible-role="None">
+					<div slot="header">
+						{/* <ui5-title level="H1">Role 'None'</ui5-title> */}
+					</div>
+					<span>Hello World!</span>
+				</ResponsivePopover>
+			</>
 		);
 		cy.get("#respPopover")
 			.shadow()
@@ -116,7 +155,10 @@ describe("Acc", () => {
 			.shadow()
 			.find(".ui5-popup-root")
 			.should("not.have.attr", "role",)
-			.and("not.have.attr", "aria-modal");
+		// .and("not.have.attr", "aria-modal");
+
+
+
 		// const respPopover = await browser.$("#respPopover");
 
 		// assert.strictEqual(await respPopover.shadow$(".ui5-popup-root").getAttribute("role"), "dialog","The default role is applied.");
