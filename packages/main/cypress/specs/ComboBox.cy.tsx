@@ -194,5 +194,3 @@ describe("Accessibility", () => {
 			});
 	});
 });
-
-

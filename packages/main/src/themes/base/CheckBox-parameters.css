@@ -32,7 +32,7 @@
 --_ui5_checkbox_inner_success_border: var(--sapField_BorderWidth) solid var(--sapField_SuccessColor);
 --_ui5_checkbox_inner_readonly_border: 0.125rem solid var(--sapField_ReadOnly_BorderColor);
 --_ui5_checkbox_inner_background: var(--sapField_Background);
---_ui5_checkbox_wrapped_focus_padding: .375rem;
+--_ui5_checkbox_wrapped_focus_padding: .5rem;
 --_ui5_checkbox_wrapped_focus_inset_block: var(--_ui5_checkbox_focus_position);
 --_ui5_checkbox_compact_wrapper_padding: .5rem;
 --_ui5_checkbox_compact_width_height: 2rem;
@@ -44,4 +44,10 @@
 --_ui5_checkbox_default_focus_border: none;
 --_ui5_checkbox_focus_outline_display: block;
 --_ui5_checkbox_right_focus_distance: 0;
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	--_ui5_checkbox_label_offset: var(--_ui5_checkbox_compact_wrapper_padding);
 }

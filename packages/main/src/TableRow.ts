@@ -26,7 +26,6 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
  * @extends TableRowBase
  * @since 2.0.0
  * @public
- * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 @customElement({
 	tag: "ui5-table-row",
@@ -137,13 +136,17 @@ class TableRow extends TableRowBase {
 
 		if (eventOrigin === this && this._isInteractive && isEnter(e)) {
 			this.toggleAttribute("_active", true);
-			this._table?._onRowClick(this);
+			this._onclick();
 		}
 	}
 
 	_onclick() {
-		if (this._isInteractive && this === getActiveElement()) {
-			this._table?._onRowClick(this);
+		if (this === getActiveElement()) {
+			if (this._isSelectable && !this._hasRowSelector) {
+				this._onSelectionChange();
+			} else 	if (this.interactive) {
+				this._table?._onRowClick(this);
+			}
 		}
 	}
 
@@ -162,7 +165,7 @@ class TableRow extends TableRowBase {
 	}
 
 	get _isInteractive() {
-		return this.interactive;
+		return this.interactive || (this._isSelectable && !this._hasRowSelector);
 	}
 
 	get _hasOverflowActions() {
