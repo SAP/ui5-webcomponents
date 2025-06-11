@@ -516,7 +516,7 @@ describe("DateRangePicker general interaction", () => {
 			});
 	});
 
-	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", () => {
+	it("Min and max dates are set without format-pattern by using ISO (yyyy-MM-dd) format", () => {
 		cy.wrap({ setLanguage })
 			.then(api => {
 				return api.setLanguage("bg");
