@@ -72,6 +72,14 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 						destination.element.prepend(source.element);
 						break;
 				}
+
+				const newParent = source.element.parentElement;
+
+				if (newParent.hasAttribute("ui5-tab")) {
+					source.element.slot = "items";
+				} else {
+					source.element.slot = "";
+				}
 			}
 		};
 
@@ -226,9 +234,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 
 					verifyMoveOverEvent(fifthItem.id, "On", sixthItem.id);
 					verifyMoveEvent(fifthItem.id, "On", sixthItem.id);
-
-					// TODO: focus is not applied
-					// tabShouldBeFocusedInStrip(sixthItem.id, "tabContainer");
+					// tabShouldBeFocusedInStrip(sixthItem.id, "tabContainer"); // TODO: uncomment after focus issue is resolved
 				});
 		});
 
@@ -634,6 +640,14 @@ describe("TabContainer Drag and Drop when There are Fixed Tabs", () => {
 					case "On":
 						destination.element.prepend(source.element);
 						break;
+				}
+
+				const newParent = source.element.parentElement;
+
+				if (newParent.hasAttribute("ui5-tab")) {
+					source.element.slot = "items";
+				} else {
+					source.element.slot = "";
 				}
 			}
 		};
