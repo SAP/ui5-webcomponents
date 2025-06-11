@@ -158,7 +158,7 @@ class NavigationMenuItem extends MenuItem {
 		}
 
 		if (!this.hasSubmenu) {
-			sideNav?.closeMenu(true);
+			sideNav?.closeMenu(shouldSelect);
 		}
 	}
 
