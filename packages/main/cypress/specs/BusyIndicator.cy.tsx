@@ -1,9 +1,6 @@
 import BusyIndicator from "../../src/BusyIndicator.js";
 import Button from "../../src/Button.js";
 import Dialog from "../../src/Dialog.js";
-import List from "../../src/List.js";
-import Tree from "../../src/Tree.js";
-import TreeItem from "../../src/TreeItem.js";
 
 describe("Rendering", () => {
 	it("Rendering without content", () => {
@@ -32,32 +29,44 @@ describe("Rendering", () => {
 
 describe("BusyIndicator general interaction", () => {
 	it("tests event propagation", () => {
-		const onClickStub = cy.stub().as("myStub");;
+		const onClickStub = cy.stub().as("clickStub");
 		cy.mount(
-			<BusyIndicator id="busy-tree" class="busyindicator8auto">
-				<Tree id="treeDynamic">
-					<TreeItem id="treeItem" text="Has preloaded children" onClick={onClickStub}>
-						<TreeItem text="Child 1"></TreeItem>
-						<TreeItem text="Child 2"></TreeItem>
-					</TreeItem>
-				</Tree>
+			<BusyIndicator>
+				<button id="btn" onClick={onClickStub} />
 			</BusyIndicator>
 		);
 
-		cy.get("#treeItem")
-			.shadow()
-			.find("ui5-icon.ui5-li-tree-toggle-icon")
-			.realClick();
+		cy.get("#btn").realClick();
 
 		cy.realPress("Space");
 
-		cy.get("@myStub").should("not.have.been.called");
+		cy.get("@clickStub").should("have.been.called");
+	});
+
+	it("tests event propagation when busy indicator is active", () => {
+		const onClickStub = cy.stub().as("clickStub");
+		cy.mount(
+			<BusyIndicator active={true} delay={0}>
+				<button id="btn" onClick={onClickStub} />
+			</BusyIndicator>
+		);
+
+		cy.get("[ui5-busy-indicator]")
+			.shadow()
+			.find(".ui5-busy-indicator-busy-area")
+			.should("exist");
+
+		cy.get("#btn").realClick();
+
+		cy.realPress("Space");
+
+		cy.get("@clickStub").should("not.have.been.called");
 	});
 
 	it("test activation", () => {
 		cy.mount(
-			<BusyIndicator id="busy-container" class="busyindicator4auto" size="M" text="Loading">
-				<List id="fetch-list" no-data-text="No Data" header-text="Available Items" class="busyindicator5auto"></List>
+			<BusyIndicator id="busy-container" class="busyindicator4auto" text="Loading">
+				<span id="fetch-list"></span>
 			</BusyIndicator>
 		);
 
@@ -68,8 +77,6 @@ describe("BusyIndicator general interaction", () => {
 
 		cy.get("#busy-container")
 			.invoke("attr", "active", "");
-
-		cy.wait(3000);
 
 		cy.get("#busy-container")
 			.shadow()
@@ -86,18 +93,20 @@ describe("BusyIndicator general interaction", () => {
 	});
 
 	it("tests focus handling", () => {
-		cy.mount(<BusyIndicator size="M" active id="indicator1"></BusyIndicator>);
-
-		cy.get("#indicator1").realClick();
+		cy.mount(<BusyIndicator active id="indicator1" />);
 
 		cy.get("#indicator1")
 			.shadow()
 			.find(".ui5-busy-indicator-busy-area")
 			.should("exist");
+
+		cy.get("#indicator1").realClick();
+
+		cy.get("#indicator1").should("have.focus");
 	});
 
 	it("tests internal focused element attributes", () => {
-		cy.mount(<BusyIndicator size="M" active id="indicator1"></BusyIndicator>);
+		cy.mount(<BusyIndicator active id="indicator1" />);
 
 		cy.get("#indicator1").realClick();
 
@@ -115,27 +124,34 @@ describe("BusyIndicator general interaction", () => {
 		cy.mount(
 			<div id="test">
 				<Button id="beforeIndicatorWithBtn">focus stop before</Button>
-				<BusyIndicator id="indicatorWithBtn" size="M" active>
-					<Button>Hello World</Button>
+				<BusyIndicator id="indicatorWithBtn" active>
+					<Button id="helloBtn">Hello World</Button>
 				</BusyIndicator>
 				<Button id="afterIndicatorWithBtn" >focus stop after</Button>
 			</div>
 		);
 
 		cy.get("#beforeIndicatorWithBtn").realClick();
+
+		cy.get("#indicatorWithBtn")
+			.shadow()
+			.find(".ui5-busy-indicator-busy-area")
+			.should("exist");
+
+		cy.realPress("Tab");
+		cy.get("#indicatorWithBtn").should("have.focus");
 		cy.realPress("Tab");
 
-		cy.get("#test")
-			.find("[active]")
-			.should("have.id", "indicatorWithBtn");
-
-		cy.realPress("Tab");
-		cy.get("#afterIndicatorWithBtn").should("have.focus");
+		cy.get("#helloBtn").should("not.have.focus");
 
 		cy.realPress(["Shift", "Tab"]);
-		cy.get("#test")
-			.find("[active]")
-			.should("have.id", "indicatorWithBtn");
+		cy.get("#indicatorWithBtn")
+			.shadow()
+			.find(".ui5-busy-indicator-busy-area")
+			.should("exist");
+
+		cy.get("#indicatorWithBtn").should("have.focus");
+		cy.get("#helloBtn").should("not.have.focus");
 
 		cy.realPress(["Shift", "Tab"]);
 
