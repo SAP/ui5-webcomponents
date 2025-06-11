@@ -270,6 +270,6 @@ describe("TableSelection - Multi", () => {
 		cy.get("@headerRowCheckBox").should("have.attr", "checked");
 		cy.get("#row2").invoke("remove");
 		cy.get("#row1").invoke("remove");
-		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
+		cy.get("#headerRow").shadow().find("#selection-cell").should("not.exist");
 	});
 });
