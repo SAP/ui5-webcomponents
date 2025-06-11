@@ -86,7 +86,7 @@ declare global {
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
 			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
 			ui5SegmentedButtonFocusFirstItem(): Chainable<void>,
-			ui5ToggleButtonRealClick(isClickPrevented: boolean, pressedKey?: ModifierKey): Chainable<JQuery<void>>
+			ui5ToggleButtonRealClick(isClickPrevented: boolean, pressedKey?: ModifierKey): Chainable<void>
 		}
 	}
 }
