@@ -290,6 +290,23 @@ class SideNavigation extends UI5Element {
 		(popover?.opener as HTMLElement)?.classList.remove("ui5-sn-item-active");
 	}
 
+	_bn?: SideNavigationSelectableItemBase;
+
+	_onMenuClose() {
+		const menu = this.getOverflowPopover();
+		if (!menu._popover.preventFocusRestore) {
+			return;
+		}
+
+		const selectedItem = this._findSelectedItem(this.items as Array<SideNavigationItem | SideNavigationGroup>);
+
+		// const selectedItem = this._flexibleItemNavigation._getCurrentItem();
+		if (selectedItem) {
+			this.focusItem(selectedItem);
+			selectedItem.focus();
+		}
+	}
+
 	get accSideNavigationPopoverHiddenText() {
 		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT);
 	}

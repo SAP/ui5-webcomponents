@@ -160,20 +160,6 @@ class NavigationMenuItem extends MenuItem {
 
 		if (!this.hasSubmenu) {
 			sideNav?.closeMenu(true);
-			this._handleFocus(item);
-		}
-	}
-
-	_handleFocus(associatedItem: SideNavigationSelectableItemBase) {
-		const sideNavigation = associatedItem.sideNavigation;
-
-		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
-			const parent = associatedItem.parentElement as SideNavigationItem;
-			sideNavigation?.focusItem(parent);
-			parent?.focus();
-		} else {
-			sideNavigation?.focusItem(associatedItem);
-			associatedItem?.focus();
 		}
 	}
 
