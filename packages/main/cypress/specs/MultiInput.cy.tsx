@@ -894,7 +894,7 @@ describe("Keyboard handling", () => {
 
 		cy.get("[ui5-token]")
 			.eq(2)
-			.should("be.focused");
+			.should("have.attr", "focused");
 
 		cy.get("@innerInput")
 			.should("not.be.focused");
@@ -903,7 +903,7 @@ describe("Keyboard handling", () => {
 
 		cy.get("[ui5-token]")
 			.eq(2)
-			.should("not.be.focused");
+			.should("not.have.attr", "focused");
 
 		cy.get("@innerInput")
 			.should("be.focused");
