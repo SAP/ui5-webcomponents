@@ -87,7 +87,7 @@ describe("ResponsivePopover general interaction", () => {
 });
 
 describe("Acc", () => {
-	it.only("tests accessible-role", () => {
+	it("tests accessible-role", () => {
 		cy.mount(
 			<>
 				<ResponsivePopover id="respPopover" />
