@@ -48,7 +48,8 @@ describe("General accesibility attributes", () => {
 		cy.get("[ui5-switch]")
 			.ui5SwitchCheckAttribute("role", "switch");
 
-		cy.get("[ui5-switch]").as('switch').ui5SwitchCheckAttribute("aria-label", "Geographical location No");
+		cy.get("[ui5-switch]").as('switch')
+			.ui5SwitchCheckAttribute("aria-label", "Geographical location No");
 
 	});
 
