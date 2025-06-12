@@ -56,7 +56,7 @@ describe("StepInput keyboard interaction tests", () => {
 			.should("have.prop", "value", 5);
 	});
 
-	it("should set the value to the 'min' with 'Shift+PagedDown'", () => {
+	it("should set the value to the 'min' with 'Shift+PageDown'", () => {
 		cy.mount(
 			<StepInput min={0} value={5}></StepInput>
 		);
