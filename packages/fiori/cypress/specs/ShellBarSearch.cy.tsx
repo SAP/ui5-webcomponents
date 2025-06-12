@@ -23,7 +23,7 @@ describe("Behaviour", () => {
 			.realClick();
 
 		cy.get("[ui5-shellbar-search]")
-			.should("not.have.a.property", "collapsed");
+			.should("have.prop", "collapsed", false);
 	});
 
 	it("Tests icon tooltips for diffrent states", () => {
