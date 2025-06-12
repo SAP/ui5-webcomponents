@@ -587,7 +587,7 @@ describe("StepInput events", () => {
 			.should("have.been.calledOnce");
 	});
 
-	it.only("should fire 'change' after value propety is programatically set and then changed with +/- keys", () => {
+	it("should fire 'change' after value propety is programatically set and then changed with +/- keys", () => {
 		cy.mount(
 			<StepInput value={5}></StepInput>
 		);		
