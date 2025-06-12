@@ -1,6 +1,6 @@
 import MultiComboBox from "../../src/MultiComboBox.js";
 import MultiComboBoxItem from "../../src/MultiComboBoxItem.js";
-import ResponsivePopover from "../../src/ResponsivePopover.js";
+import type ResponsivePopover from "../../src/ResponsivePopover.js";
 
 describe("Security", () => {
 	it("tests setting malicious text to items", () => {
