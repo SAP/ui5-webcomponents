@@ -42,6 +42,7 @@ import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 // Please keep this list in alphabetical order
 import "./commands/Calendar.commands.js";
 import "./commands/ColorPalette.commands.js";
+import "./commands/ColorPalettePopover.commands.js";
 import "./commands/ColorPicker.commands.js";
 import "./commands/DateTimePicker.commands.js";
 import "./commands/Dialog.commands.ts";

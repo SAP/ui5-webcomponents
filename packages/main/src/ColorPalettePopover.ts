@@ -7,7 +7,6 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
-import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
 import ColorPalettePopoverTemplate from "./ColorPalettePopoverTemplate.js";
 
 // Styles
@@ -18,8 +17,6 @@ import {
 	COLOR_PALETTE_DIALOG_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
-import type ResponsivePopover from "./ResponsivePopover.js";
-import type ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail, IColorPaletteItem } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
 
@@ -144,18 +141,6 @@ class ColorPalettePopover extends UI5Element {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-	constructor() {
-		super();
-	}
-
-	get responsivePopover() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
-	}
-
-	get respPopover() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
-	}
-
 	closePopover() {
 		this.open = false;
 	}
@@ -165,30 +150,9 @@ class ColorPalettePopover extends UI5Element {
 		this.fireDecoratorEvent("close");
 	}
 
-	onAfterOpen() {
-		const colorPalette = this._colorPalette;
-		if (colorPalette._currentlySelected) {
-			colorPalette._currentlySelected?.focus();
-		} else if (colorPalette.showRecentColors && colorPalette.recentColorsElements.length) {
-			colorPalette.recentColorsElements[0].focus();
-		} else if (colorPalette.showDefaultColor) {
-			colorPalette.colorPaletteNavigationElements[0].focus();
-		}
-
-		// since height is dynamically determined by padding-block-start
-		colorPalette.allColorsInPalette.forEach((item: IColorPaletteItem) => {
-			const itemHeight = item.offsetHeight + 4; // adding 4px for the offsets on top and bottom
-			item.style.setProperty(getScopedVarName("--_ui5_color_palette_item_height"), `${itemHeight}px`);
-		});
-	}
-
 	onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>) {
 		this.closePopover();
 		this.fireDecoratorEvent("item-click", e.detail);
-	}
-
-	get _colorPalette() {
-		return this.responsivePopover.content[0].querySelector<ColorPalette>("[ui5-color-palette]")!;
 	}
 
 	/**
@@ -210,10 +174,6 @@ class ColorPalettePopover extends UI5Element {
 
 	get _cancelButtonLabel() {
 		return ColorPalettePopover.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON);
-	}
-
-	get _open() {
-		return this.open || undefined;
 	}
 }
 
