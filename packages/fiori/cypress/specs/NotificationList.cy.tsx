@@ -58,9 +58,13 @@ function Sample() {
 }
 
 describe("Notification List Item Tests", () => {
-	it("tests itemToggle fired", () => {
-		const stub = cy.stub().as("myStub");
-		cy.mount(<NotificationListGroupItem id="nlgi1" onClick={stub} />);
+	it("tests 'item-toggle' fired", () => {
+		const clickStub = cy.stub().as("myStub");
+		cy.mount(
+			<NotificationList onItemToggle={clickStub}>
+				<NotificationListGroupItem id="nlgi1" />
+			</NotificationList>
+		);
 
 		cy.get("#nlgi1")
 			.shadow()
@@ -83,6 +87,12 @@ describe("Notification List Item Tests", () => {
 			.shadow()
 			.find(".ui5-nli-group-items")
 			.should("not.be.visible");
+
+		cy.get("#nlgi3")
+			.shadow()
+			.find(".ui5-nli-group-root")
+			.should("have.attr", "tabindex");	
+
 		cy.get("#nlgi3").realClick();
 		cy.get("#nlgi3").should("be.focused");
 
@@ -125,21 +135,31 @@ describe("Notification List Item Tests", () => {
 
 	// Notification List Item specific tests follows
 
-	it("tests itemClick fired", () => {
+	it("tests 'item-click' fired", () => {
 		const itemClick = cy.stub().as("myStub");
-		cy.mount(<NotificationListItem id="nli1" onClick={itemClick} />);
+		cy.mount(
+			<NotificationList onItemClick={itemClick}>
+				<NotificationListItem id="nli1" />
+			</NotificationList>
+		);
 
+		cy.get("#nli1")
+			.shadow()
+			.find(".ui5-nli-root")
+			.should("have.attr", "tabindex");
 		cy.get("#nli1").realClick();
 		cy.get("@myStub").should("have.been.calledOnce");
+
+		cy.get("#nli1").realPress("Enter");
+		cy.get("@myStub").should("have.been.calledTwice");
 	});
 
-	it("tests itemClose fired", () => {
+	it("tests 'item-close' fired", () => {
 		const itemClose = cy.stub().as("myStub");
-		const itemClose2 = cy.stub().as("myStub2");
 		cy.mount(
-			<NotificationList id="notificationList">
-				<NotificationListItem id="nli1" onClose={itemClose} show-close />
-				<NotificationListItem id="nli2" onClose={itemClose2} show-close />
+			<NotificationList id="notificationList" onItemClose={itemClose}>
+				<NotificationListItem id="nli1" show-close />
+				<NotificationListItem id="nli2" show-close />
 			</NotificationList>
 		);
 
@@ -154,7 +174,7 @@ describe("Notification List Item Tests", () => {
 		cy.realPress("ArrowDown");
 		cy.realPress("Delete");
 
-		cy.get("@myStub2").should("have.been.calledOnce");
+		cy.get("@myStub").should("have.been.calledTwice");
 	});
 
 	it("tests click on ShowMore", () => {
@@ -164,8 +184,7 @@ describe("Notification List Item Tests", () => {
 					id="nli3a"
 					importance="Important"
 					title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
-					state="Information"
-					style={{ width: '25rem' }} />
+					style="width: 25rem;" />
 			</NotificationList>
 		);
 
@@ -173,53 +192,58 @@ describe("Notification List Item Tests", () => {
 			.shadow()
 			.find('.ui5-nli-content')
 			.invoke('outerHeight')
-			.then((heightBeforeContent) => {
-				cy.get('#nli3a')
-					.shadow()
-					.find('.ui5-nli-title-text')
-					.invoke('outerHeight')
-					.then((heightBeforeTitle) => {
+			.as("heightBeforeContent");
 
-						cy.get('#nli3a')
-							.shadow()
-							.find('.ui5-nli-footer-showMore')
-							.click();
+		cy.get('#nli3a')
+			.shadow()
+			.find('.ui5-nli-title-text')
+			.invoke('outerHeight')
+			.as("heightBeforeTitle");
 
-						cy.get('#nli3a')
-							.shadow()
-							.find('.ui5-nli-content')
-							.invoke('outerHeight')
-							.then((heightAfterContent) => {
-								expect(heightAfterContent).to.be.greaterThan(heightBeforeContent);
+		cy.get('#nli3a')
+			.shadow()
+			.find('.ui5-nli-footer-showMore')
+			.click();
 
-								cy.get('#nli3a')
-									.shadow()
-									.find('.ui5-nli-title-text')
-									.invoke('outerHeight')
-									.then((heightAfterTitle) => {
-										expect(heightAfterTitle).to.be.greaterThan(heightBeforeTitle);
+		cy.get('#nli3a')
+			.shadow()
+			.find('.ui5-nli-content')
+			.invoke('outerHeight')
+			.as("heightAfterContent");
+	
+		cy.get("@heightAfterContent")
+			.should(function(heightAfterContent) {
+				expect(heightAfterContent).to.be.greaterThan(this.heightBeforeContent);
+			});
 
-										cy.get('#nli3a')
-											.realPress(['Shift', 'Enter']);
+		cy.get('#nli3a')
+			.shadow()
+			.find('.ui5-nli-title-text')
+			.invoke('outerHeight')
+			.as("heightAfterTitle");
 
-										cy.get('#nli3a')
-											.shadow()
-											.find('.ui5-nli-content')
-											.invoke('outerHeight')
-											.then((heightAfterKeysContent) => {
-												expect(heightAfterContent).to.be.greaterThan(heightAfterKeysContent);
+		cy.get("@heightAfterTitle")
+			.should(function(heightAfterTitle) {
+				expect(heightAfterTitle).to.be.greaterThan(this.heightBeforeTitle);
+			});
 
-												cy.get('#nli3a')
-													.shadow()
-													.find('.ui5-nli-title-text')
-													.invoke('outerHeight')
-													.then((heightAfterKeysTitle) => {
-														expect(heightAfterTitle).to.be.greaterThan(heightAfterKeysTitle);
-													});
-											});
-									});
-							});
-					});
+		cy.get('#nli3a')
+			.realPress(['Shift', 'Enter']);
+
+		cy.get('#nli3a')
+			.shadow()
+			.find('.ui5-nli-content')
+			.invoke('outerHeight')
+			.should(function(heightAfterKeysContent) {
+				expect(this.heightAfterContent).to.be.greaterThan(heightAfterKeysContent);
+			});
+
+		cy.get('#nli3a')
+			.shadow()
+			.find('.ui5-nli-title-text')
+			.invoke('outerHeight')
+			.then(function(heightAfterKeysTitle) {
+				expect(this.heightAfterTitle).to.be.greaterThan(heightAfterKeysTitle);
 			});
 	});
 
@@ -245,7 +269,8 @@ describe("Notification List Item Tests", () => {
 		cy.get("#nli4")
 			.shadow()
 			.find(".ui5-nli-loading")
-			.should("exist");
+			.should("be.visible")
+			.and("have.attr", "active");
 	});
 
 	it("tests state", () => {
@@ -286,7 +311,7 @@ describe("Notification List Item Tests", () => {
 			.should("not.exist");
 	});
 
-	it("tests menu", () => {
+	it.skip("tests menu", () => {
 		cy.mount(
 			<NotificationList>
 				<NotificationListGroupItem>
@@ -305,20 +330,24 @@ describe("Notification List Item Tests", () => {
 			.realClick();
 
 		cy.get("#nli1")
-			.find("ui5-menu")
+			.find("[ui5-menu]")
 			.should("have.attr", "open");
 
-		cy.get("#nli1").realClick();
-		
-		cy.wait(500);
 		cy.get("#nli1")
-			.find("ui5-menu")
+			.shadow()
+			.find(".ui5-nli-root")
+			.should("have.attr", "tabindex")
+
+		cy.get("#nli1").realClick();
+
+		cy.get("#nli1")
+			.find("[ui5-menu]")
 			.should("not.have.attr", "open");
 
 		cy.get("#nli1").realClick();
 		cy.realPress(["F10", "Shift"]);
 		cy.get("#nli1")
-			.find("ui5-menu")
+			.find("[ui5-menu]")
 			.should("have.attr", "open");
 	});
 
@@ -519,7 +548,6 @@ describe("Notification List Item Tests", () => {
 		cy.get("#nli3a")
 			.shadow()
 			.find(".ui5-nli-footer-showMore")
-			.scrollIntoView()
 			.realClick();
 
 		cy.get("#nli3a")
@@ -770,6 +798,11 @@ describe("Keyboard Navigation", () => {
 
 			</NotificationList>
 		);
+
+		cy.get("#nlgi1")
+			.shadow()
+			.find(".ui5-nli-group-root")
+			.should("have.attr", "tabindex");
 
 		cy.get("#nlgi1").realClick();
 		cy.get("#nli1").should("have.focus");

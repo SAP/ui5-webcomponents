@@ -2,8 +2,8 @@ import NotificationListGroupItem from "../../src/NotificationListGroupItem.js";
 
 describe("Notification List Group Item Tests", () => {
 	it("tests click growing button", () => {
-		const myStub = cy.stub().as("myStub");
-		cy.mount(<NotificationListGroupItem id="notificationListFirstGroup" growing="Button" onLoadMore={myStub} />);
+		const loadMoreStub = cy.stub().as("myStub");
+		cy.mount(<NotificationListGroupItem id="notificationListFirstGroup" growing="Button" onLoadMore={loadMoreStub} />);
 
 		cy.get('#notificationListFirstGroup')
 			.find('[id$="growing-btn"]', { includeShadowDom: true })
