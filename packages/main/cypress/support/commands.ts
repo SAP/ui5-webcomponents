@@ -85,8 +85,6 @@ declare global {
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
 			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
 			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
-			ui5TimeSelectionClocksInnerButton(name: string, index: number): Chainable<JQuery<HTMLElement>>
-			ui5TimeSelectionClocksIsActiveClock(name: string, index: number): Chainable<boolean>
 		}
 	}
 }
