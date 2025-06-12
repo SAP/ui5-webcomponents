@@ -50,6 +50,7 @@ import "./commands/ResponsivePopover.commands.js";
 import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
 import "./commands/SegmentedButton.commands.js";
+import "./commands/Switch.commands.js";
 
 type SimulationDevices = "phone"
 
@@ -84,6 +85,7 @@ declare global {
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
 			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
 			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
+			ui5SwitchCheckAttribute(attrName: string, attrValue: string): Chainable<void>
 		}
 	}
 }
