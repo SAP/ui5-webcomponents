@@ -4,6 +4,7 @@ export default function YearPickerTemplate(this: YearPicker) {
 	return (
 		<div
 			class="ui5-yp-root"
+			part="year-picker-root"
 			role="grid"
 			aria-roledescription={this.roleDescription}
 			aria-readonly="false"
