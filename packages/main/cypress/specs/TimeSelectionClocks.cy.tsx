@@ -1,916 +1,506 @@
+import { setAnimationMode } from "@ui5/webcomponents-base";
 import TimeSelectionClocks from "../../src/TimeSelectionClocks.js";
+import { TIMEPICKER_HOURS_LABEL, TIMEPICKER_MINUTES_LABEL, TIMEPICKER_SECONDS_LABEL } from "../../src/generated/i18n/i18n-defaults.js";
+
+type TimeSelectionClocksTemplateOptions = Partial<{
+	formatPattern: string,
+	value: string;
+	onChange: () => void;
+}>
+
+function TimeSelectionClocksTemplate(options: TimeSelectionClocksTemplateOptions) {
+	return <div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action:">
+		<TimeSelectionClocks {...options} />
+	</div>
+}
 
 describe("TimeSelectionClocks Interactions", () => {
-    it("switch active clock", () => {
-        cy.mount(
-            <>
-                <div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action:">
-                    <TimeSelectionClocks
-                        id="myClocks"
-                        formatPattern="HH:mm:ss"
-                        value="12:20:40"
-                    ></TimeSelectionClocks>
-                </div>
-            </>
-        );
+	before(() => {
+		cy.wrap({ setAnimationMode })
+			.then(api => {
+				return api.setAnimationMode("none");
+			})
+	})
+
+	it("switch active clock (by buttons)", () => {
+		cy.mount(<TimeSelectionClocksTemplate formatPattern="HH:mm:ss" value="12:20:40" />);
+
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-time-picker-clock]")
+			.should("have.length", 3);
+
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-toggle-spin-button]")
+			.as("buttons");
+
+		["hours", "minutes", "seconds"].forEach((clock, idx) => {
+			cy.get("@buttons")
+				.eq(idx)
+				.realClick();
+
+			cy.wait(800);
+
+			// @ts-expect-error
+			cy.ui5TimeSelectionClocksIsActiveClock("[ui5-time-selection-clocks]", clock);
+		});
+	});
+
+	it("switch active clock (by pressing colon :)", () => {
+		cy.mount(<TimeSelectionClocksTemplate formatPattern="HH:mm:ss" value="12:20:40" />);
 
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-time-picker-clock")
-            .as("clocks");
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-time-picker-clock]")
+			.should("have.length", 3);
 
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-toggle-spin-button")
-            .as("buttons");
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-toggle-spin-button]")
+			.as("buttons")
+			.eq(0)
+			.realClick();
 
-        cy.get("@clocks")
-            .should("have.length", 3);
+		cy.get("@buttons")
+			.eq(0)
+			.should("be.focused");
+
+		["hours", "minutes", "seconds", "hours"].forEach((clock, idx) => {
+			// @ts-expect-error
+			cy.ui5TimeSelectionClocksIsActiveClock("[ui5-time-selection-clocks]", clock);
+
+			cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", idx % 3);
 
-        // switch clocks by button
-        cy.get("@buttons")
-            .eq(0)
-            .realClick();
+			cy.realPress(["Shift", ":"])
+		});
+	});
 
-        cy.wait(800);
+	it("switch active clock (by pressing space)", () => {
+		cy.mount(<TimeSelectionClocksTemplate formatPattern="HH:mm:ss" value="12:20:40" />);
 
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 0);
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-time-picker-clock]")
+			.should("have.length", 3);
+
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-toggle-spin-button]")
+			.as("buttons")
+			.eq(0)
+			.realClick();
+
+		cy.get("@buttons")
+			.eq(0)
+			.should("be.focused");
 
-        cy.get("@buttons")
-            .eq(1)
-            .realClick();
+		["hours", "minutes", "seconds", "hours"].forEach((clock, idx) => {
+			// @ts-expect-error
+			cy.ui5TimeSelectionClocksIsActiveClock("[ui5-time-selection-clocks]", clock);
 
-        cy.wait(800);
+			cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", idx % 3)
+
+			cy.realPress("Space")
+		});
+	});
 
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 1);
+	it("switch AM/PM", () => {
+		cy.mount(<TimeSelectionClocksTemplate formatPattern="hh:mm:ss a" value="12:20:40 PM" />);
 
-        cy.get("@buttons")
-            .eq(2)
-            .realClick();
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-segmented-button-item]")
+			.as("segBtnItems");
 
-        cy.wait(800);
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-toggle-spin-button]")
+			.first()
+			.as("button");
 
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 2);
+		cy.get("@button")
+			.realClick();
 
-        // switch clock by pressing colon (:)
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 2)
-            .type("{shift+:}");
+		cy.get("@button")
+			.should("be.focused");
 
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 0);
+		cy.get("@segBtnItems")
+			.contains("AM")
+			.should("not.have.attr", "selected");
 
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("{shift+:}");
+		cy.get("@segBtnItems")
+			.contains("PM")
+			.should("have.attr", "selected");
 
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 1);
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 1)
-            .type("{shift+:}");
+		cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", 0)
 
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 2);
-
-        // switch clock by pressing space
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 2)
-            .type(" ");
-
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 0);
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type(" ");
-
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 1);
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 1)
-            .type(" ");
-
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 2);
-    });
-
-    it("switch AM/PM", () => {
-        cy.mount(
-            <>
-                <div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action:">
-                    <TimeSelectionClocks
-                        id="myClocksAmPm"
-                        formatPattern="hh:mm:ss a"
-                        value="12:20:40 PM"
-                    ></TimeSelectionClocks>
-                </div>
-            </>
-        );
+		cy.realPress("a");
 
-        cy.get("#myClocksAmPm")
-            .shadow()
-            .find("ui5-segmented-button")
-            .as("segBtn");
-
-        cy.get("@segBtn")
-            .find("ui5-segmented-button-item")
-            .eq(0)
-            .as("amBtn");
-
-        cy.get("@segBtn")
-            .find("ui5-segmented-button-item")
-            .eq(1)
-            .as("pmBtn");
-
-        cy.get("#myClocksAmPm")
-            .shadow()
-            .find("ui5-toggle-spin-button")
-            .as("buttons");
-
-        cy.get("@buttons")
-            .eq(0)
-            .realClick();
-
-        cy.get("@amBtn")
-            .should("not.have.attr", "selected");
-
-        cy.get("@pmBtn")
-            .should("have.attr", "selected");
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocksAmPm", 0)
-            .type("a");
-
-        cy.get("@amBtn")
-            .should("have.attr", "selected");
-
-        cy.get("@pmBtn")
-            .should("not.have.attr", "selected");
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocksAmPm", 0)
-            .type("p");
-
-        cy.get("@amBtn")
-            .should("not.have.attr", "selected");
-
-        cy.get("@pmBtn")
-            .should("have.attr", "selected");
-    });
-
-    it("arrow keys", () => {
-        cy.mount(
-            <>
-                <div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action:">
-                    <TimeSelectionClocks
-                        id="myClocks"
-                        formatPattern="HH:mm:ss"
-                        value="12:20:40"
-                    ></TimeSelectionClocks>
-                </div>
-            </>
-        );
-
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-time-picker-clock")
-            .as("clocks");
-
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-toggle-spin-button")
-            .as("buttons");
-
-        cy.get("@buttons")
-            .eq(0)
-            .realClick();
-
-        // change hours
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("{downarrow}");
-
-        cy.get("@clocks")
-            .eq(0)
-            .should("have.prop", "selectedValue", 11);
-
-        cy.get("@buttons")
-            .eq(0)
-            .should("contain.text", "11");
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("{uparrow}");
-
-        cy.get("@clocks")
-            .eq(0)
-            .should("have.prop", "selectedValue", 12);
-
-        cy.get("@buttons")
-            .eq(0)
-            .should("contain.text", "12");
-
-        // change minutes
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("{shift+:}");
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 1)
-            .type("{downarrow}");
-
-        cy.get("@clocks")
-            .eq(1)
-            .should("have.prop", "selectedValue", 19);
-
-        cy.get("@buttons")
-            .eq(1)
-            .should("contain.text", "19");
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 1)
-            .type("{uparrow}");
-
-        cy.get("@clocks")
-            .eq(1)
-            .should("have.prop", "selectedValue", 20);
-
-        cy.get("@buttons")
-            .eq(1)
-            .should("contain.text", "20");
-
-        // change seconds
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 1)
-            .type("{shift+:}");
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 2)
-            .type("{downarrow}");
-
-        cy.get("@clocks")
-            .eq(2)
-            .should("have.prop", "selectedValue", 39);
-
-        cy.get("@buttons")
-            .eq(2)
-            .should("contain.text", "39");
-
-        cy.get("@buttons")
-            .eq(2)
-            .shadow()
-            .find("button")
-            .type("{uparrow}");
-
-        cy.get("@clocks")
-            .eq(2)
-            .should("have.prop", "selectedValue", 40);
-
-        cy.get("@buttons")
-            .eq(2)
-            .should("contain.text", "40");
-    });
-
-    it("pageup/pagedown", () => {
-        cy.mount(
-            <>
-                <div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action:">
-                    <TimeSelectionClocks
-                        id="myClocks"
-                        formatPattern="HH:mm:ss"
-                        value="12:20:40"
-                    ></TimeSelectionClocks>
-                </div>
-            </>
-        );
-
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-time-picker-clock")
-            .as("clocks");
-
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-toggle-spin-button")
-            .as("buttons");
-
-        cy.get("@buttons")
-            .eq(0)
-            .realClick();
-
-        // change hours
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("{pagedown}");
-
-        cy.get("@clocks")
-            .eq(0)
-            .should("have.prop", "selectedValue", 11);
-
-        cy.get("@buttons")
-            .eq(0)
-            .should("contain.text", "11");
-
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 0);
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("{pageup}");
-
-        cy.get("@clocks")
-            .eq(0)
-            .should("have.prop", "selectedValue", 12);
-
-        cy.get("@buttons")
-            .eq(0)
-            .should("contain.text", "12");
-
-        // change minutes
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("{shift}{pagedown}{shift}");
-
-        cy.get("@clocks")
-            .eq(1)
-            .should("have.prop", "selectedValue", 19);
-
-        cy.get("@buttons")
-            .eq(1)
-            .should("contain.text", "19");
-
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 1);
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 1)
-            .type("{shift}{pageup}{shift}");
-
-        cy.get("@clocks")
-            .eq(1)
-            .should("have.prop", "selectedValue", 20);
-
-        cy.get("@buttons")
-            .eq(1)
-            .should("contain.text", "20");
-
-        // change seconds
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 1)
-            .type("{ctrl}{shift}{pagedown}{ctrl}{shift}");
-
-        cy.get("@clocks")
-            .eq(2)
-            .should("have.prop", "selectedValue", 39);
-
-        cy.get("@buttons")
-            .eq(2)
-            .should("contain.text", "39");
-
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 2);
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 2)
-            .type("{ctrl}{shift}{pageup}{ctrl}{shift}");
-
-        cy.get("@clocks")
-            .eq(2)
-            .should("have.prop", "selectedValue", 40);
-
-        cy.get("@buttons")
-            .eq(2)
-            .should("contain.text", "40");
-    });
-
-    it("direct number typing", () => {
-        cy.mount(
-            <>
-                <div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action:">
-                    <TimeSelectionClocks
-                        id="myClocks"
-                        formatPattern="HH:mm:ss"
-                        value="12:20:40"
-                    ></TimeSelectionClocks>
-                </div>
-            </>
-        );
-
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-time-picker-clock")
-            .as("clocks");
-
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-toggle-spin-button")
-            .as("buttons");
-
-        cy.get("@buttons")
-            .eq(0)
-            .realClick();
-
-        cy.wait(800);
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("082413");
-
-        cy.get("@clocks")
-            .eq(0)
-            .should("have.prop", "selectedValue", 8);
-
-        cy.get("@clocks")
-            .eq(1)
-            .should("have.prop", "selectedValue", 24);
-
-        cy.get("@clocks")
-            .eq(2)
-            .should("have.prop", "selectedValue", 13);
+		cy.get("@segBtnItems")
+			.contains("AM")
+			.should("have.attr", "selected");
 
-        cy.get("@buttons")
-            .eq(0)
-            .should("contain.text", "08");
+		cy.get("@segBtnItems")
+			.contains("PM")
+			.should("not.have.attr", "selected");
 
-        cy.get("@buttons")
-            .eq(1)
-            .should("contain.text", "24");
+		cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", 0)
 
-        cy.get("@buttons")
-            .eq(2)
-            .should("contain.text", "13");
+		cy.realPress("p");
 
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 2);
+		cy.get("@segBtnItems")
+			.contains("AM")
+			.should("not.have.attr", "selected");
 
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 2)
-            .type("{shift+:}");
+		cy.get("@segBtnItems")
+			.contains("PM")
+			.should("have.attr", "selected");
+	});
 
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("368");
+	it("arrow keys", () => {
+		cy.mount(<TimeSelectionClocksTemplate formatPattern="HH:mm:ss" value="12:12:12" />);
 
-        cy.get("@clocks")
-            .eq(0)
-            .should("have.prop", "selectedValue", 3);
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-toggle-spin-button]")
+			.as("buttons");
 
-        cy.get("@clocks")
-            .eq(1)
-            .should("have.prop", "selectedValue", 6);
+		["hours", "minutes", "seconds"].forEach((clock, idx) => {
+			cy.get("@buttons")
+				.eq(idx)
+				.realClick();
 
-        cy.get("@clocks")
-            .eq(2)
-            .should("have.prop", "selectedValue", 8);
+			cy.get("@buttons")
+				.eq(idx)
+				.should("be.focused");
 
-        cy.get("@buttons")
-            .eq(0)
-            .should("contain.text", "03");
+			// change hours
+			cy.realPress("ArrowDown");
 
-        cy.get("@buttons")
-            .eq(1)
-            .should("contain.text", "06");
+			cy.get("[ui5-time-selection-clocks]")
+				.shadow()
+				.find("[ui5-time-picker-clock]")
+				.as("clocks")
+				.eq(idx)
+				.should("have.prop", "selectedValue", 11);
 
-        cy.get("@buttons")
-            .eq(2)
-            .should("contain.text", "08");
+			cy.get("@buttons")
+				.eq(idx)
+				.should("contain.text", "11");
 
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 2);
+			cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", idx)
 
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 2)
-            .type("{shift+:}");
+			cy.realPress("ArrowUp");
 
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("118");
+			cy.get("@clocks")
+				.eq(idx)
+				.should("have.prop", "selectedValue", 12);
 
-        cy.get("@clocks")
-            .eq(0)
-            .should("have.prop", "selectedValue", 11);
+			cy.get("@buttons")
+				.eq(idx)
+				.should("contain.text", "12");
 
-        cy.get("@clocks")
-            .eq(1)
-            .should("have.prop", "selectedValue", 8);
+			cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", 0)
 
-        cy.get("@buttons")
-            .eq(0)
-            .should("contain.text", "11");
+			cy.realPress(["Shift", ":"])
+		})
+	});
 
-        cy.get("@buttons")
-            .eq(1)
-            .should("contain.text", "08");
+	it("pageup/pagedown", () => {
+		cy.mount(<TimeSelectionClocksTemplate formatPattern="HH:mm:ss" value="12:12:12" />);
 
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 2);
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-time-picker-clock]")
+			.as("clocks");
 
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 2)
-            .type("{shift+:}");
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-toggle-spin-button]")
+			.as("buttons");
 
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("25");
+		[
+			{ clock: "hours", keyCombination: [] },
+			{ clock: "minutes", keyCombination: ["Shift"] },
+			{ clock: "seconds", keyCombination: ["Shift", "Control"] }
+		].forEach(({ clock, keyCombination }, idx) => {
+			cy.get("@buttons")
+				.eq(idx)
+				.realClick();
 
-        cy.get("@clocks")
-            .eq(0)
-            .should("have.prop", "selectedValue", 2);
+			cy.get("@buttons")
+				.eq(idx)
+				.should("be.focused");
 
-        cy.get("@clocks")
-            .eq(1)
-            .should("have.prop", "selectedValue", 5);
+			cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", idx)
 
-        cy.get("@buttons")
-            .eq(0)
-            .should("contain.text", "02");
+			// @ts-expect-error
+			cy.realPress([...keyCombination, "PageDown"]);
 
-        cy.get("@buttons")
-            .eq(1)
-            .should("contain.text", "05");
+			cy.get("@clocks")
+				.eq(idx)
+				.should("have.prop", "selectedValue", 11);
 
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 1);
+			cy.get("@buttons")
+				.eq(idx)
+				.should("contain.text", "11");
 
-        cy.wait(1500);
+			// @ts-expect-error
+			cy.ui5TimeSelectionClocksIsActiveClock("[ui5-time-selection-clocks]", clock);
 
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 1)
-            .type("3210");
+			cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", idx)
 
-        cy.get("@clocks")
-            .eq(0)
-            .should("have.prop", "selectedValue", 2);
+			// @ts-expect-error
+			cy.realPress([...keyCombination, "PageUp"]);
 
-        cy.get("@clocks")
-            .eq(1)
-            .should("have.prop", "selectedValue", 32);
+			cy.get("@clocks")
+				.eq(idx)
+				.should("have.prop", "selectedValue", 12);
 
-        cy.get("@clocks")
-            .eq(2)
-            .should("have.prop", "selectedValue", 10);
+			cy.get("@buttons")
+				.eq(idx)
+				.should("contain.text", "12");
+		})
+	});
 
-        cy.get("@buttons")
-            .eq(0)
-            .should("contain.text", "02");
+	it("direct number typing", () => {
+		cy.mount(<TimeSelectionClocksTemplate formatPattern="HH:mm:ss" value="12:20:40" />);
 
-        cy.get("@buttons")
-            .eq(1)
-            .should("contain.text", "32");
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-time-picker-clock]")
+			.as("clocks");
 
-        cy.get("@buttons")
-            .eq(2)
-            .should("contain.text", "10");
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-toggle-spin-button]")
+			.as("buttons");
 
-        cy.ui5TimeSelectionClocksIsActiveClock("#myClocks", 2);
-    });
+		cy.get("@buttons")
+			.eq(0)
+			.realClick();
+
+		cy.get("@buttons")
+			.eq(0)
+			.should("be.focused");
+
+		[
+			["08", "24", "13"],
+			["3", "6", "9"],
+			["11", "8"],
+		].forEach(numbers => {
+			cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", 0);
+
+			cy.realType(numbers.join(""));
+
+			numbers.forEach((num, idx) => {
+				cy.get("@clocks")
+					.eq(idx)
+					.should("have.prop", "selectedValue", parseInt(num));
+
+				cy.get("@buttons")
+					.eq(idx)
+					.should("contain.text", parseInt(num) < 10 ? `0${parseInt(num)}` : num);
+			})
+
+			cy.ui5TimeSelectionClocksIsActiveClock("[ui5-time-selection-clocks]", "seconds");
+
+			cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", 2);
+
+			cy.realPress(["Shift", ":"]);
+
+			cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", 0);
+		});
+
+		cy.realType(["2", "5"].join(""));
+
+		["2", "5"].forEach((num, idx) => {
+			cy.get("@clocks")
+				.eq(idx)
+				.should("have.prop", "selectedValue", parseInt(num));
+
+			cy.get("@buttons")
+				.eq(idx)
+				.should("contain.text", parseInt(num) < 10 ? `0${parseInt(num)}` : num);
+		})
+
+		cy.ui5TimeSelectionClocksIsActiveClock("[ui5-time-selection-clocks]", "minutes");
+
+		cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", 1);
+
+		cy.wait(1500);
+
+		cy.realType("3210");
+
+		["2", "32", "10"].forEach((num, idx) => {
+			cy.get("@clocks")
+				.eq(idx)
+				.should("have.prop", "selectedValue", parseInt(num));
+
+			cy.get("@buttons")
+				.eq(idx)
+				.should("contain.text", parseInt(num) < 10 ? `0${parseInt(num)}` : num);
+		})
+
+		cy.ui5TimeSelectionClocksIsActiveClock("[ui5-time-selection-clocks]", "seconds");
+
+		cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", 2);
+	});
 });
 
 describe("TimeSelectionClocks Accessibility", () => {
-    it("accessibility-related attributes", () => {
-        cy.mount(
-            <>
-                <div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action:">
-                    <TimeSelectionClocks
-                        id="myClocks"
-                        formatPattern="HH:mm:ss"
-                        value="12:20:40"
-                    ></TimeSelectionClocks>
-                </div>
-            </>
-        );
+	it("accessibility-related attributes", () => {
+		cy.mount(<TimeSelectionClocksTemplate formatPattern="HH:mm:ss" value="12:20:40" />);
 
-        cy.get("#myClocks")
-            .shadow()
-            .find(".ui5-time-picker-tsc-clocks")
-            .should("have.attr", "role", "img");
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find(".ui5-time-picker-tsc-clocks")
+			.should("have.attr", "role", "img");
 
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-toggle-spin-button")
-            .as("buttons");
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-toggle-spin-button]")
+			.as("buttons");
 
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-time-picker-clock")
-            .as("clocks");
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-time-picker-clock]")
+			.as("clocks");
 
-        // Hours button
-        cy.get("@buttons")
-            .eq(0)
-            .should("have.attr", "value-min", "0");
+		[
+			{ min: 0, max: 23, label: TIMEPICKER_HOURS_LABEL.defaultText },
+			{ min: 0, max: 59, label: TIMEPICKER_MINUTES_LABEL.defaultText },
+			{ min: 0, max: 59, label: TIMEPICKER_SECONDS_LABEL.defaultText },
+		].forEach(({ min, max, label }, idx) => {
+			cy.get("@buttons")
+				.eq(idx)
+				.should("have.attr", "value-min", min);
 
-        cy.get("@buttons")
-            .eq(0)
-            .should("have.attr", "value-max", "23");
+			cy.get("@buttons")
+				.eq(idx)
+				.should("have.attr", "value-max", max);
 
-        cy.get("@buttons")
-            .eq(0)
-            .invoke("attr", "value-now")
-            .then(val =>
-                cy.get("@clocks")
-                    .eq(0)
-                    .should("have.prop", "selectedValue", Number(val))
-            );
+			cy.get("@buttons")
+				.eq(idx)
+				.invoke("attr", "value-now")
+				.then(val =>
+					cy.get("@clocks")
+						.eq(idx)
+						.should("have.prop", "selectedValue", Number(val))
+				);
 
-        cy.get("@buttons")
-            .eq(0)
-            .should("have.attr", "accessible-name");
+			cy.get("@buttons")
+				.eq(idx)
+				.should("have.attr", "accessible-name", label);
 
-        cy.get("@buttons")
-            .eq(0)
-            .invoke("attr", "value-text")
-            .then(val =>
-                cy.get("@buttons")
-                    .eq(0)
-                    .invoke("attr", "value-now")
-                    .then(now =>
-                        cy.get("@buttons")
-                            .eq(0)
-                            .invoke("attr", "accessible-name")
-                            .then(name =>
-                                expect(val).to.eq(`${now} ${name}`)
-                            )
-                    )
-            );
+			cy.get("@buttons")
+				.eq(idx)
+				.invoke("attr", "value-text")
+				.then(val =>
+					cy.get("@buttons")
+						.eq(idx)
+						.invoke("attr", "value-now")
+						.should(now =>
+							expect(val).to.eq(`${now} ${label}`)
+						)
+				);
+		})
+	});
 
-        // Minutes button
-        cy.get("@buttons")
-            .eq(1)
-            .should("have.attr", "value-min", "0");
+	it("change of accessibility-related attributes during interactions", () => {
+		cy.mount(<TimeSelectionClocksTemplate formatPattern="HH:mm:ss" value="12:12:12" />);
 
-        cy.get("@buttons")
-            .eq(1)
-            .should("have.attr", "value-max", "59");
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-toggle-spin-button]")
+			.as("buttons");
 
-        cy.get("@buttons")
-            .eq(1)
-            .invoke("attr", "value-now")
-            .then(val =>
-                cy.get("@clocks")
-                    .eq(1)
-                    .should("have.prop", "selectedValue", Number(val))
-            );
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-time-picker-clock]")
+			.as("clocks");
 
-        cy.get("@buttons")
-            .eq(1)
-            .should("have.attr", "accessible-name");
+		[
+			{ label: TIMEPICKER_HOURS_LABEL.defaultText },
+			{ label: TIMEPICKER_MINUTES_LABEL.defaultText },
+			{ label: TIMEPICKER_SECONDS_LABEL.defaultText },
+		].forEach(({ label }, idx) => {
+			cy.get("@buttons")
+				.eq(idx)
+				.realClick();
 
-        cy.get("@buttons")
-            .eq(1)
-            .invoke("attr", "value-text")
-            .then(val =>
-                cy.get("@buttons")
-                    .eq(1)
-                    .invoke("attr", "value-now")
-                    .then(now =>
-                        cy.get("@buttons")
-                            .eq(1)
-                            .invoke("attr", "accessible-name")
-                            .then(name =>
-                                expect(val).to.eq(`${now} ${name}`)
-                            )
-                    )
-            );
+			cy.get("@buttons")
+				.eq(idx)
+				.should("be.focused")
 
-        // Seconds button
-        cy.get("@buttons")
-            .eq(2)
-            .should("have.attr", "value-min", "0");
+			// Hours button
+			cy.get("@buttons")
+				.eq(idx)
+				.invoke("attr", "value-now", "12")
 
-        cy.get("@buttons")
-            .eq(2)
-            .should("have.attr", "value-max", "59");
+			cy.get("@clocks")
+				.eq(idx)
+				.should("have.prop", "selectedValue", Number(12))
 
-        cy.get("@buttons")
-            .eq(2)
-            .invoke("attr", "value-now")
-            .then(val =>
-                cy.get("@clocks")
-                    .eq(2)
-                    .should("have.prop", "selectedValue", Number(val))
-            );
+			cy.get("@buttons")
+				.eq(idx)
+				.should("attr", "value-text", `${12} ${label}`)
 
-        cy.get("@buttons")
-            .eq(2)
-            .should("have.attr", "accessible-name");
+			cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", idx);
 
-        cy.get("@buttons")
-            .eq(2)
-            .invoke("attr", "value-text")
-            .then(val =>
-                cy.get("@buttons")
-                    .eq(2)
-                    .invoke("attr", "value-now")
-                    .then(now =>
-                        cy.get("@buttons")
-                            .eq(2)
-                            .invoke("attr", "accessible-name")
-                            .then(name =>
-                                expect(val).to.eq(`${now} ${name}`)
-                            )
-                    )
-            );
-    });
+			cy.realPress("ArrowDown");
 
-    it("change of accessibility-related attributes during interactions", () => {
-        cy.mount(
-            <>
-                <div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action:">
-                    <TimeSelectionClocks
-                        id="myClocks"
-                        formatPattern="HH:mm:ss"
-                        value="12:20:40"
-                    ></TimeSelectionClocks>
-                </div>
-            </>
-        );
+			cy.get("@buttons")
+				.eq(idx)
+				.invoke("attr", "value-now", "11")
 
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-toggle-spin-button")
-            .as("buttons");
+			cy.get("@clocks")
+				.eq(idx)
+				.should("have.prop", "selectedValue", Number(11))
 
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-time-picker-clock")
-            .as("clocks");
+			cy.get("@buttons")
+				.eq(idx)
+				.should("attr", "value-text", `${11} ${label}`)
 
-        cy.get("@buttons")
-            .eq(0)
-            .realClick();
 
-        // Hours button
-        cy.get("@buttons")
-            .eq(0)
-            .invoke("attr", "value-now")
-            .then(val =>
-                cy.get("@clocks")
-                    .eq(0)
-                    .should("have.prop", "selectedValue", Number(val))
-            );
+			cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", 0);
 
-        cy.get("@buttons")
-            .eq(0)
-            .invoke("attr", "value-text")
-            .then(val =>
-                cy.get("@buttons")
-                    .eq(0)
-                    .invoke("attr", "value-now")
-                    .then(now =>
-                        cy.get("@buttons")
-                            .eq(0)
-                            .invoke("attr", "accessible-name")
-                            .then(name =>
-                                expect(val).to.eq(`${now} ${name}`)
-                            )
-                    )
-            );
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("{downarrow}");
-        cy.get("@buttons")
-            .eq(0)
-            .invoke("attr", "value-now")
-            .then(val =>
-                cy.get("@clocks")
-                    .eq(0)
-                    .should("have.prop", "selectedValue", Number(val))
-            );
-        cy.get("@buttons")
-            .eq(0)
-            .invoke("attr", "value-text")
-            .then(val =>
-                cy.get("@buttons")
-                    .eq(0)
-                    .invoke("attr", "value-now")
-                    .then(now =>
-                        cy.get("@buttons")
-                            .eq(0)
-                            .invoke("attr", "accessible-name")
-                            .then(name =>
-                                expect(val).to.eq(`${now} ${name}`)
-                            )
-                    )
-            );
-
-        // Minutes button
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("{shift+:}");
-        cy.get("@buttons")
-            .eq(1)
-            .invoke("attr", "value-now")
-            .then(val =>
-                cy.get("@clocks")
-                    .eq(1)
-                    .should("have.prop", "selectedValue", Number(val))
-            );
-        cy.get("@buttons")
-            .eq(1)
-            .invoke("attr", "value-text")
-            .then(val =>
-                cy.get("@buttons")
-                    .eq(1)
-                    .invoke("attr", "value-now")
-                    .then(now =>
-                        cy.get("@buttons")
-                            .eq(1)
-                            .invoke("attr", "accessible-name")
-                            .then(name =>
-                                expect(val).to.eq(`${now} ${name}`)
-                            )
-                    )
-            );
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 1)
-            .type("{downarrow}");
-        cy.get("@buttons")
-            .eq(1)
-            .invoke("attr", "value-now")
-            .then(val =>
-                cy.get("@clocks")
-                    .eq(1)
-                    .should("have.prop", "selectedValue", Number(val))
-            );
-        cy.get("@buttons")
-            .eq(1)
-            .invoke("attr", "value-text")
-            .then(val =>
-                cy.get("@buttons")
-                    .eq(1)
-                    .invoke("attr", "value-now")
-                    .then(now =>
-                        cy.get("@buttons")
-                            .eq(1)
-                            .invoke("attr", "accessible-name")
-                            .then(name =>
-                                expect(val).to.eq(`${now} ${name}`)
-                            )
-                    )
-            );
-
-        // Seconds button
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 1)
-            .type("{shift+:}");
-        cy.get("@buttons")
-            .eq(2)
-            .invoke("attr", "value-now")
-            .then(val =>
-                cy.get("@clocks")
-                    .eq(2)
-                    .should("have.prop", "selectedValue", Number(val))
-            );
-        cy.get("@buttons")
-            .eq(2)
-            .invoke("attr", "value-text")
-            .then(val =>
-                cy.get("@buttons")
-                    .eq(2)
-                    .invoke("attr", "value-now")
-                    .then(now =>
-                        cy.get("@buttons")
-                            .eq(2)
-                            .invoke("attr", "accessible-name")
-                            .then(name =>
-                                expect(val).to.eq(`${now} ${name}`)
-                            )
-                    )
-            );
-
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 2)
-            .type("{downarrow}");
-        cy.get("@buttons")
-            .eq(2)
-            .invoke("attr", "value-now")
-            .then(val =>
-                cy.get("@clocks")
-                    .eq(2)
-                    .should("have.prop", "selectedValue", Number(val))
-            );
-        cy.get("@buttons")
-            .eq(2)
-            .invoke("attr", "value-text")
-            .then(val =>
-                cy.get("@buttons")
-                    .eq(2)
-                    .invoke("attr", "value-now")
-                    .then(now =>
-                        cy.get("@buttons")
-                            .eq(2)
-                            .invoke("attr", "accessible-name")
-                            .then(name =>
-                                expect(val).to.eq(`${now} ${name}`)
-                            )
-                    )
-            );
-    });
+			cy.realPress(["Shift", ":"]);
+		})
+	});
 });
 
 describe("TimeSelectionClocks Events", () => {
-    it("'change' event", () => {
-        cy.mount(
-            <>
-                <div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action:">
-                    <TimeSelectionClocks
-                        id="myClocks"
-                        formatPattern="hh:mm:ss a"
-                        value="12:20:40"
-                    ></TimeSelectionClocks>
-                </div>
-            </>
-        );
+	it("'change' event", () => {
+		cy.mount(<TimeSelectionClocksTemplate formatPattern="hh:mm:ss a" value="12:20:40" onChange={cy.stub().as("changed")} />);
 
-        cy.get("#myClocks")
-            .shadow()
-            .find("ui5-toggle-spin-button")
-            .as("buttons");
+		cy.get("[ui5-time-selection-clocks]")
+			.shadow()
+			.find("[ui5-toggle-spin-button]")
+			.as("buttons")
+			.eq(0)
+			.realClick();
 
-        cy.get("#myClocks")
-            .then(tpc => {
-                tpc.get(0).addEventListener("ui5-change", cy.stub().as("changed"));
-            });
+		cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", 0);
 
-        cy.get("@buttons")
-            .eq(0)
-            .realClick();
+		cy.realPress("PageDown");
 
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("{pagedown}");
+		cy.get("@changed")
+			.should("have.been.calledOnce");
 
-        cy.get("@changed")
-            .should("have.been.calledOnce");
+		cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", 0);
 
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 0)
-            .type("{shift}{pagedown}{shift}");
+		cy.realPress(["Shift", "PageDown"]);
 
-        cy.get("@changed")
-            .should("have.been.calledTwice");
+		cy.get("@changed")
+			.should("have.been.calledTwice");
 
-        cy.ui5TimeSelectionClocksInnerButton("#myClocks", 1)
-            .type("{ctrl}{shift}{pagedown}{ctrl}{shift}");
+		cy.ui5TimeSelectionClocksInnerButton("[ui5-time-selection-clocks]", 1);
 
-        cy.get("@changed")
-            .should("have.been.calledThrice");
-    });
+		cy.realPress(["Control", "Shift", "PageDown"]);
+
+		cy.get("@changed")
+			.should("have.been.calledThrice");
+	});
 });

@@ -87,9 +87,12 @@ declare global {
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
 			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
 			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
+<<<<<<< cypress-toggle-button-tests
 			ui5TimeSelectionClocksInnerButton(name: string, index: number): Chainable<JQuery<HTMLElement>>
 			ui5TimeSelectionClocksIsActiveClock(name: string, index: number): Chainable<boolean>
       ui5ToggleButtonRealClick(isClickPrevented: boolean, pressedKey?: ModifierKey): Chainable<void>
+=======
+>>>>>>> main
 		}
 	}
 }
