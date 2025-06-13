@@ -1,6 +1,8 @@
 import getConstructableStyle from "./theming/getConstructableStyle.js";
 import type UI5Element from "./UI5Element.js";
 
+const isClient = typeof document !== "undefined";
+
 /**
  * Updates the shadow root of a UI5Element or its static area item
  * @param element
@@ -13,9 +15,11 @@ const updateShadowRoot = (element: UI5Element) => {
 		console.warn(`There is no shadow root to update`); // eslint-disable-line
 		return;
 	}
-
-	shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor);
-	ctor.renderer(element, shadowRoot);
+	console.log({ isClient });
+	if (isClient) {
+		shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor);
+	}
+	return ctor.renderer(element, shadowRoot);
 };
 
 export default updateShadowRoot;

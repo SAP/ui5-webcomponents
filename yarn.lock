@@ -11176,6 +11176,11 @@ html-webpack-plugin@^5.5.3:
     pretty-error "^4.0.0"
     tapable "^2.0.0"
 
+htmlfy@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/htmlfy/-/htmlfy-0.7.2.tgz#6f0f08a6205c489beef43879a06649747ef67273"
+  integrity sha512-SFzjlaqADHKv8Iq/r+AU9h9ovU8Kn4mAEG5Th41OOw0M2sPkJw9h6jc+ryXSU+ruBz/ZyTOD2QnFNwK9gWYoRw==
+
 htmlparser2@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-6.1.0.tgz#c4d762b6c3371a05dbe65e94ae43a9f845fb8fb7"
@@ -16121,6 +16126,11 @@ postinstall-postinstall@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/postinstall-postinstall/-/postinstall-postinstall-2.1.0.tgz#4f7f77441ef539d1512c40bd04c71b06a4704ca3"
   integrity sha512-7hQX6ZlZXIoRiWNrbMQaLzUUfH+sSx39u8EJ9HYuDc1kLo9IXKWjM5RSquZN1ad5GnH8CGFM78fsAAQi3OKEEQ==
+
+preact-render-to-string@^6.5.13:
+  version "6.5.13"
+  resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-6.5.13.tgz#cb9eb4a0df3576e7bfd78ef5f3d3bd57480e79ee"
+  integrity sha512-iGPd+hKPMFKsfpR2vL4kJ6ZPcFIoWZEcBf0Dpm3zOpdVvj77aY8RlLiQji5OMrngEyaxGogeakTb54uS2FvA6w==
 
 preact@^10.25.4:
   version "10.25.4"
