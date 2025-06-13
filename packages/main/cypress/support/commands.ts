@@ -44,6 +44,7 @@ import "./commands/Calendar.commands.js";
 import "./commands/ColorPalette.commands.js";
 import "./commands/ColorPicker.commands.js";
 import "./commands/DateTimePicker.commands.js";
+import "./commands/DateRangePicker.commands.js";
 import "./commands/Dialog.commands.ts";
 import "./commands/Popover.commands.ts";
 import "./commands/ResponsivePopover.commands.js";
