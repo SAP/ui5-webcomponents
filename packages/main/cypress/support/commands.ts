@@ -50,6 +50,7 @@ import "./commands/ResponsivePopover.commands.js";
 import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
 import "./commands/SegmentedButton.commands.js";
+import "./commands/TimeSelectionClocks.commands.js";
 
 type SimulationDevices = "phone"
 
@@ -64,6 +65,7 @@ declare global {
 			ui5MenuItemPress(key: any): Chainable<void>
 			ui5CalendarGetDay(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
 			ui5CalendarGetMonth(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
+			ui5CalendarShowYearRangePicker(): Chainable<void>
 			ui5ColorPickerToggleColorMode(): Chainable<void>
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
 			ui5ColorPickerValidateInput(name: string, value: string): Chainable<void>
@@ -83,6 +85,8 @@ declare global {
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
 			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
 			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
+			ui5TimeSelectionClocksInnerButton(name: string, index: number): Chainable<JQuery<HTMLElement>>
+			ui5TimeSelectionClocksIsActiveClock(name: string, index: number): Chainable<boolean>
 		}
 	}
 }
