@@ -661,7 +661,7 @@ class ViewSettingsDialog extends UI5Element {
 		this._restoreSettings(this._initialSettings);
 		this._recentlyFocused = this._sortOrder!;
 		this._focusRecentlyUsedControl();
-		announce(this._resetButtonAction, InvisibleMessageMode.Polite);
+		announce(this._resetButtonAction, InvisibleMessageMode.Assertive);
 	}
 
 	/**
