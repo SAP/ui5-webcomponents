@@ -63,14 +63,16 @@ describe("Toggle Button general interaction tests", () => {
 
 describe("Toggle Button keyboard interaction tests", () => {
 	function testKeyActionOnFocusedButton(key: Key) {
-		cy.mount(<ToggleButton>Toggle Button</ToggleButton>);
+		cy.mount(<ToggleButton pressed>Toggle Button</ToggleButton>);
 
 		cy.get("[ui5-toggle-button]").as("toggleButton");
 
-		cy.get<ToggleButton>("@toggleButton")
-			.shadow()
-			.find("button")
-			.focus();
+		cy.get("@toggleButton")
+			.realClick();
+
+		cy.get("@toggleButton")
+			.should("be.focused")
+			.should("not.have.attr", "pressed");
 
 		cy.realPress(key);
 
