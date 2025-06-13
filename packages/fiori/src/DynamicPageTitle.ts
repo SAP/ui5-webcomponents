@@ -278,6 +278,10 @@ class DynamicPageTitle extends UI5Element {
 		return (this.navigationBar.length > 0 && this.actionsBar.length > 0);
 	}
 
+	get forAriaExpanded() {
+		return this.interactive ? this._headerExpanded : undefined;
+	}
+
 	prepareLayoutActions() {
 		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']"),
 			isWideScreen = this.offsetWidth >= 1280;
