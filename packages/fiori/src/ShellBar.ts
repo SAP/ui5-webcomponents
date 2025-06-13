@@ -552,10 +552,11 @@ class ShellBar extends UI5Element {
 	_observableContent: Array<HTMLElement> = [];
 	_autoRestoreSearchField = false;
 
+	_onSearchOpenBound = this._onSearchOpen.bind(this);
+	_onSearchCloseBound = this._onSearchClose.bind(this);
+	_onSearchBound = this._onSearch.bind(this);
+
 	_headerPress: () => void;
-	onSearchOpen: () => void;
-	onSearchClose: () => void;
-	onSearch: () => void;
 
 	static get FIORI_3_BREAKPOINTS() {
 		return [
@@ -599,24 +600,6 @@ class ShellBar extends UI5Element {
 			}
 		};
 
-		this.onSearchOpen = () => {
-			if (isPhone()) {
-				this.setSearchState(true);
-			}
-		};
-
-		this.onSearchClose = () => {
-			if (isPhone()) {
-				this.setSearchState(false);
-			}
-		};
-
-		this.onSearch = () => {
-			if (!isPhone() && !this.search?.value) {
-				this.setSearchState(!this.showSearchField);
-			}
-		};
-
 		this._handleResize = throttle(() => {
 			this.menuPopover = this._getMenuPopover();
 			this.overflowPopover = this._getOverflowPopover();
@@ -628,6 +611,33 @@ class ShellBar extends UI5Element {
 				}
 			}
 		}, RESIZE_THROTTLE_RATE);
+	}
+
+	_onSearchOpen(e: Event) {
+		if (e.target !== this.search) {
+			return;
+		}
+		if (isPhone()) {
+			this.setSearchState(true);
+		}
+	}
+
+	_onSearchClose(e: Event) {
+		if (e.target !== this.search) {
+			return;
+		}
+		if (isPhone()) {
+			this.setSearchState(false);
+		}
+	}
+
+	_onSearch(e: Event) {
+		if (e.target !== this.search) {
+			return;
+		}
+		if (!isPhone() && !this.search?.value) {
+			this.setSearchState(!this.showSearchField);
+		}
 	}
 
 	_updateSearchFieldState() {
@@ -935,27 +945,29 @@ class ShellBar extends UI5Element {
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResize);
 
-		if (isSelfCollapsibleSearch(this.search)) {
-			this.search.addEventListener("ui5-open", this.onSearchOpen);
-			this.search.addEventListener("ui5-close", this.onSearchClose);
-			this.search.addEventListener("ui5-search", this.onSearch);
-		}
-
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
+		this._attachSearchFieldListeners();
 	}
 
 	onExitDOM() {
 		this.contentItemsObserver.disconnect();
 		this._observableContent = [];
 		ResizeHandler.deregister(this, this._handleResize);
+		this._detachSearchFieldListeners();
+	}
 
-		if (isSelfCollapsibleSearch(this.search)) {
-			this.search.removeEventListener("ui5-open", this.onSearchOpen);
-			this.search.removeEventListener("ui5-close", this.onSearchClose);
-			this.search.removeEventListener("ui5-search", this.onSearch);
-		}
+	_attachSearchFieldListeners() {
+		this.addEventListener("ui5-open", this._onSearchOpenBound);
+		this.addEventListener("ui5-close", this._onSearchCloseBound);
+		this.addEventListener("ui5-search", this._onSearchBound);
+	}
+
+	_detachSearchFieldListeners() {
+		this.removeEventListener("ui5-open", this._onSearchOpenBound);
+		this.removeEventListener("ui5-close", this._onSearchCloseBound);
+		this.removeEventListener("ui5-search", this._onSearchBound);
 	}
 
 	_handleSearchIconPress() {
@@ -1673,7 +1685,7 @@ class ShellBar extends UI5Element {
 	}
 }
 
-interface IShellBarSelfCollapsibleSearch {
+interface IShellBarSelfCollapsibleSearch extends UI5Element {
 	collapsed: boolean;
 	open: boolean;
 }
