@@ -121,8 +121,6 @@ document.getElementById("quick-create-dialog-close").addEventListener("click", (
 /* Notifications */
 const notificationsPopover = document.querySelector(".notificationsPopover");
 const notificationList = document.querySelector(".notificationsPopoverList");
-const notificationsPopoverMessageStrip = document.querySelector(".notificationsMessageStrip");
-const btnShowMessageStrip = document.querySelector("#show-message-strip");
 const btnClearAll = document.querySelector("#clear-all");
 const clearAllDialog = document.querySelector("#clear-all-dialog");
 var dialogClosers = [...clearAllDialog.querySelectorAll(".dialogCloser")];
@@ -187,14 +185,6 @@ notificationsListGroupGrowing.addEventListener("load-more", (e) => {
 			notificationsListGroupGrowing.items[focusIndex].focus();
 		}, 500);
 	}, 2000);
-});
-
-btnShowMessageStrip.addEventListener("click", function() {
-	notificationsPopoverMessageStrip.style.display = "inline-block";
-});
-
-notificationsPopoverMessageStrip.addEventListener("close", function() {
-	notificationsPopoverMessageStrip.style.display = "none";
 });
 
 btnClearAll.accessibilityAttributes = {
