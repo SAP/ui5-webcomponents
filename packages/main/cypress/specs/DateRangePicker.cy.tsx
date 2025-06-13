@@ -2,7 +2,14 @@ import "../../dist/Assets.js";
 import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import DateRangePicker from "../../src/DateRangePicker.js";
 
-type DateTimePickerTemplateOptions = any
+type DateTimePickerTemplateOptions = Partial<{
+	formatPattern: string;
+	delimiter: string;
+	onChange: () => void;
+	value: string;
+	minDate: string;
+	maxDate: string;
+}>
 
 function DateRangePickerTemplate(options: DateTimePickerTemplateOptions) {
 	return <DateRangePicker {...options} />
