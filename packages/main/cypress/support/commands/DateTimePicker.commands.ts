@@ -4,10 +4,14 @@ import type ResponsivePopover from "../../../src/ResponsivePopover.js";
 
 Cypress.Commands.add("ui5DateTimePickerOpen", { prevSubject: true }, (subject: JQuery<DateTimePicker>) => {
 	cy.wrap(subject).invoke("prop", "open", true);
+
+	cy.wrap(subject).ui5DateTimePickerExpectToBeOpen()
 });
 
 Cypress.Commands.add("ui5DateTimePickerClose", { prevSubject: true }, (subject: JQuery<DateTimePicker>) => {
 	cy.wrap(subject).invoke("prop", "open", false);
+
+	cy.wrap(subject).ui5DateTimePickerExpectToBeClosed()
 });
 
 Cypress.Commands.add("ui5DateTimePickerGetPopover", { prevSubject: true }, (subject: JQuery<DateTimePicker>) => {
