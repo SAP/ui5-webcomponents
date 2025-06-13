@@ -11,6 +11,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 			id={`${this._id}-side-navigation-overflow-menu`}
 			onBeforeOpen={this._onBeforeMenuOpen}
 			onBeforeClose={this._onBeforeMenuClose}
+			onClose={this._onMenuClose}
 			class="ui5-side-navigation-popover ui5-side-navigation-overflow-menu"
 		>
 			{this._menuPopoverItems.map(item =>
