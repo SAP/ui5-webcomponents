@@ -1,115 +1,109 @@
 import TimePickerClock from "../../src/TimePickerClock.js";
-import Input from "../../src/Input.js";
 
+type TimePickerClockTemplateOptions = Partial<{
+	label: string;
+	itemMin: number;
+	itemMax: number;
+	lastItemReplacement: number;
+	valueStep: number;
+	displayStep: number;
+	selectedValue: number;
+	active: boolean;
+	disabled: boolean;
+	prependZero: boolean;
+	onChange: () => void;
+}>;
+
+function TimePickerClockTemplate(options: TimePickerClockTemplateOptions) {
+	return <div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
+		<TimePickerClock id="myHours12" {...options} />
+	</div>
+}
 
 describe("Clock API", () => {
+	it("without 'disabled' property", () => {
+		cy.mount(<TimePickerClockTemplate label="myHours12" itemMin={1} itemMax={12} displayStep={1} selectedValue={12} active />);
 
-	it("'disabled' property", () => {
-		cy.mount(
-			<>
-				<div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
-					<TimePickerClock id="myHours12" label="myHours12" itemMin={1} itemMax={12} displayStep={1} selectedValue={12} active></TimePickerClock>
-				</div>
-				<div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
-					<TimePickerClock id="myHours12Disabled" label="myHours12 (disabled)" itemMin={1} itemMax={12} displayStep={1} selectedValue={12} active disabled></TimePickerClock>
-				</div>
-			</>
-		);
-
-		cy.get("#myHours12")
+		cy.get("[ui5-time-picker-clock]")
 			.shadow()
 			.find(".ui5-tp-clock-cover")
-			.as("enabled");
+			.realClick({ x: 210, y: 50 });
 
-		cy.get("#myHours12Disabled")
-			.shadow()
-			.find(".ui5-tp-clock-cover")
-			.as("disabled");
-
-		cy.get("@disabled")
-			.realClick({x: 210, y: 50});
-
-		cy.get("#myHours12Disabled")
-			.should("have.prop", "selectedValue", 12);
-
-		cy.get("@enabled")
-			.realClick({x: 210, y: 50});
-
-		cy.get("#myHours12")
+		cy.get("[ui5-time-picker-clock]")
 			.should("have.prop", "selectedValue", 1);
 	});
 
-	it("'active' property", () => {
-		cy.mount(
-			<>
-				<div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
-					<TimePickerClock id="myMinutes" label="myMinutes" itemMin={1} itemMax={60} lastItemReplacement={0} selectedValue={0} active></TimePickerClock>
-				</div>
-				<div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
-					<TimePickerClock id="myMinutesInactive" label="myMinutes" itemMin={1} itemMax={60} lastItemReplacement={0} selectedValue={0}></TimePickerClock>
-				</div>
-			</>
-		);
+	it("with 'disabled' property", () => {
+		cy.mount(<TimePickerClockTemplate label="myHours12 (disabled)" itemMin={1} itemMax={12} displayStep={1} selectedValue={12} active disabled />);
 
-		cy.get("#myMinutes")
+		cy.get("[ui5-time-picker-clock]")
+			.shadow()
+			.find(".ui5-tp-clock-cover")
+			.realClick({ x: 210, y: 50 });
+
+		cy.get("[ui5-time-picker-clock]")
+			.should("have.prop", "selectedValue", 12);
+	});
+
+	it("with 'active' property", () => {
+		cy.mount(<TimePickerClockTemplate label="myMinutes" itemMin={1} itemMax={60} lastItemReplacement={0} selectedValue={0} active />);
+
+		cy.get("[ui5-time-picker-clock]")
 			.shadow()
 			.find(".ui5-tp-clock")
 			.should("be.visible");
+	});
 
-		cy.get("#myMinutesInactive")
+	it("without 'active' property", () => {
+		cy.mount(<TimePickerClockTemplate label="myMinutes" itemMin={1} itemMax={60} lastItemReplacement={0} selectedValue={0} />);
+
+		cy.get("[ui5-time-picker-clock]")
 			.shadow()
 			.find(".ui5-tp-clock")
 			.should("not.be.visible");
 	});
 
-	it("'displayStep' and 'valueStep' properties", () => {
-		cy.mount(
-			<>
-				<div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
-					<TimePickerClock id="myHours12" label="myHours12" itemMin={1} itemMax={12} displayStep={1} selectedValue={12} active></TimePickerClock>
-				</div>
-				<div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
-					<TimePickerClock id="myMinutes" label="myMinutes" itemMin={1} itemMax={60} lastItemReplacement={0} selectedValue={0} active></TimePickerClock>
-				</div>
-				<div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
-					<TimePickerClock id="myMinutes10" label="myMinutes10" itemMin={1} itemMax={60} lastItemReplacement={0} selectedValue={10} displayStep={10} valueStep={10} active></TimePickerClock>
-				</div>
-			</>
-		);
+	it("'displayStep' and 'valueStep' properties - hours", () => {
+		cy.mount(<TimePickerClockTemplate label="myHours12" itemMin={1} itemMax={12} displayStep={1} selectedValue={12} active />);
 
-		cy.get("#myHours12")
+		cy.get("[ui5-time-picker-clock]")
 			.shadow()
 			.find(".ui5-tp-clock-items .ui5-tp-clock-item:not(.ui5-tp-clock-item-with-marker) .ui5-tp-clock-number")
 			.should("have.length", 12);
+	});
 
-		cy.get("#myMinutes")
+	it("'displayStep' and 'valueStep' properties - minutes (5)", () => {
+		cy.mount(<TimePickerClockTemplate label="myMinutes" itemMin={1} itemMax={60} lastItemReplacement={0} selectedValue={0} active />);
+
+		cy.get("[ui5-time-picker-clock]")
 			.shadow()
 			.find(".ui5-tp-clock-items .ui5-tp-clock-item:not(.ui5-tp-clock-item-with-marker) .ui5-tp-clock-number")
 			.should("have.length", 12);
-		cy.get("#myMinutes10")
+	});
+
+	it("'displayStep' and 'valueStep' properties - minutes (10)", () => {
+		cy.mount(<TimePickerClockTemplate label="myMinutes10" itemMin={1} itemMax={60} lastItemReplacement={0} selectedValue={10} displayStep={10} valueStep={10} active />);
+
+		cy.get("[ui5-time-picker-clock]")
 			.shadow()
 			.find(".ui5-tp-clock-items .ui5-tp-clock-item:not(.ui5-tp-clock-item-with-marker) .ui5-tp-clock-number")
 			.should("have.length", 6);
 	});
 
-	it("'lastItemReplacement' and 'prependZero' properties", () => {
-		cy.mount(
-			<>
-				<div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
-					<TimePickerClock id="myHours24" label="myHours24" itemMin={1} itemMax={24} lastItemReplacement={0} displayStep={1} selectedValue={1} prependZero active></TimePickerClock>
-				</div>
-				<div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
-					<TimePickerClock id="myMinutes" label="myMinutes" itemMin={1} itemMax={60} lastItemReplacement={0} selectedValue={0} active></TimePickerClock>
-				</div>
-			</>
-		);
+	it("'lastItemReplacement' and 'prependZero' properties - hours", () => {
+		cy.mount(<TimePickerClockTemplate label="myHours24" itemMin={1} itemMax={24} lastItemReplacement={0} displayStep={1} selectedValue={1} prependZero active />);
 
-		cy.get("#myHours24")
+		cy.get("[ui5-time-picker-clock]")
 			.shadow()
 			.find(".ui5-tp-clock-items .ui5-tp-clock-item:not(.ui5-tp-clock-item-with-marker) .ui5-tp-clock-number")
 			.last()
 			.should("have.text", "0");
-		cy.get("#myMinutes")
+	});
+
+	it("'lastItemReplacement' and 'prependZero' properties - minutes", () => {
+		cy.mount(<TimePickerClockTemplate label="myMinutes" itemMin={1} itemMax={60} lastItemReplacement={0} selectedValue={0} active />);
+
+		cy.get("[ui5-time-picker-clock]")
 			.shadow()
 			.find(".ui5-tp-clock-items .ui5-tp-clock-item:not(.ui5-tp-clock-item-with-marker) .ui5-tp-clock-number")
 			.last()
@@ -117,46 +111,34 @@ describe("Clock API", () => {
 	});
 
 	it("should not select value when clicking outside clock numbers", () => {
-		cy.mount(
-			<>
-				<div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
-					<TimePickerClock id="myHours12" label="myHours12" itemMin={1} itemMax={12} displayStep={1} selectedValue={12} active></TimePickerClock>
-				</div>
-			</>
-		);
+		cy.mount(<TimePickerClockTemplate label="myHours12" itemMin={1} itemMax={12} displayStep={1} selectedValue={12} active />);
 
-		cy.get("#myHours12")
+		cy.get("[ui5-time-picker-clock]")
 			.shadow()
 			.find(".ui5-tp-clock-cover")
-			.realClick({x: 200, y: 200});
+			.realClick({ x: 200, y: 200 });
 
-		cy.get("#myHours12")
+		cy.get("[ui5-time-picker-clock]")
 			.should("have.prop", "selectedValue", 12);
 	});
 
 	it("should keep selected value after clicking same number", () => {
-		cy.mount(
-			<>
-				<div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
-					<TimePickerClock id="myHours12" label="myHours12" itemMin={1} itemMax={12} displayStep={1} selectedValue={12} active></TimePickerClock>
-				</div>
-			</>
-		);
+		cy.mount(<TimePickerClockTemplate label="myHours12" itemMin={1} itemMax={12} displayStep={1} selectedValue={12} active />);
 
-		cy.get("#myHours12")
+		cy.get("[ui5-time-picker-clock]")
 			.shadow()
 			.find(".ui5-tp-clock-cover")
-			.realClick({x: 45, y: 110});
+			.realClick({ x: 45, y: 110 });
 
-		cy.get("#myHours12")
+		cy.get("[ui5-time-picker-clock]")
 			.invoke("prop", "selectedValue")
 			.then(val => {
-				cy.get("#myHours12")
+				cy.get("[ui5-time-picker-clock]")
 					.shadow()
 					.find(".ui5-tp-clock-cover")
-					.realClick({x: 45, y: 110});
+					.realClick({ x: 45, y: 110 });
 
-				cy.get("#myHours12")
+				cy.get("[ui5-time-picker-clock]")
 					.should("have.prop", "selectedValue", val);
 			});
 	});
@@ -164,36 +146,24 @@ describe("Clock API", () => {
 
 describe("Clock item selection", () => {
 	it("select clock item and 'change' event", () => {
-		cy.mount(
-			<>
-				<div style="display: inline-block; text-align: center; width: 18rem; height: 18rem; touch-action: none; margin: 2rem;">
-					<TimePickerClock id="myHours12" label="myHours12" itemMin={1} itemMax={12} displayStep={1} selectedValue={12} active></TimePickerClock>
-				</div>
-			</>
-		);
+		cy.mount(<TimePickerClockTemplate label="myHours12" itemMin={1} itemMax={12} displayStep={1} selectedValue={12} active onChange={cy.stub().as("changed")} />);
 
-		cy.get("#myHours12").then(tpc => {
-			tpc.get(0).addEventListener("ui5-change", cy.stub().as("changed"));
-		});
-
-		cy.get("#myHours12")
+		cy.get("[ui5-time-picker-clock]")
 			.shadow()
 			.find(".ui5-tp-clock-cover")
-			.as("hours12Cover");
+			.as("hours12Cover")
+			.realClick({ x: 210, y: 50 });
 
-		cy.get("@hours12Cover")
-			.realClick({x: 210, y: 50});
-
-		cy.get("#myHours12")
+		cy.get("[ui5-time-picker-clock]")
 			.should("have.prop", "selectedValue", 1);
 
 		cy.get("@changed")
 			.should("have.been.calledOnce");
 
 		cy.get("@hours12Cover")
-			.realClick({x: 150, y: 35});
+			.realClick({ x: 150, y: 35 });
 
-		cy.get("#myHours12")
+		cy.get("[ui5-time-picker-clock]")
 			.should("have.prop", "selectedValue", 12);
 
 		cy.get("@changed")
