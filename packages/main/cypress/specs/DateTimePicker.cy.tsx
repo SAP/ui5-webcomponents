@@ -217,6 +217,10 @@ describe("DateTimePicker general interaction", () => {
 			.then(() => {
 				cy.get<DateTimePicker>("@dtp")
 					.ui5DateTimePickerGetSubmitButton()
+					.should("have.prop", "disabled", false);
+
+				cy.get<DateTimePicker>("@dtp")
+					.ui5DateTimePickerGetSubmitButton()
 					.realClick();
 
 				cy.get("[ui5-datetime-picker]")
@@ -349,6 +353,10 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetSubmitButton()
+			.should("have.prop", "disabled", false);
+
+		cy.get<DateTimePicker>("@dtp")
+			.ui5DateTimePickerGetSubmitButton()
 			.realClick();
 
 		cy.get<DateTimePicker>("@dtp")
@@ -393,6 +401,10 @@ describe("DateTimePicker general interaction", () => {
 			.realClick();
 
 		// act: confirm selection
+		cy.get<DateTimePicker>("@dtp")
+			.ui5DateTimePickerGetSubmitButton()
+			.should("have.prop", "disabled", false);
+
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetSubmitButton()
 			.realClick();
@@ -466,8 +478,6 @@ describe("DateTimePicker general interaction", () => {
 	it("tests change event is fired on submit", () => {
 		cy.mount(<DateTimePickerTemplate onChange={cy.stub().as("changeStub")} />);
 
-		const changeStub = cy.stub();
-
 		cy.get<DateTimePicker>("[ui5-datetime-picker]")
 			.as("dtp")
 			.ui5DateTimePickerOpen();
@@ -492,6 +502,10 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetSubmitButton()
+			.should("have.prop", "disabled", false);
+
+		cy.get<DateTimePicker>("@dtp")
+			.ui5DateTimePickerGetSubmitButton()
 			.realClick();
 
 		cy.get<DateTimePicker>("@dtp")
@@ -503,6 +517,10 @@ describe("DateTimePicker general interaction", () => {
 		// Re-open the picker and submit without making a change
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerOpen();
+
+		cy.get<DateTimePicker>("@dtp")
+			.ui5DateTimePickerGetSubmitButton()
+			.should("have.prop", "disabled", false);
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetSubmitButton()
