@@ -16,6 +16,10 @@ attachConfigurationReset(() => {
 	fetchDefaultLanguage = undefined;
 });
 
+let languageChangePending = false;
+
+const getLanguageChangePending = () => languageChangePending;
+
 /**
  * Returns the currently configured language, or the browser language as a fallback.
  * @public
@@ -41,9 +45,13 @@ const setLanguage = async (language: string): Promise<void> => {
 		return;
 	}
 
+	languageChangePending = true;
 	curLanguage = language;
 
 	await fireLanguageChange(language);
+
+	languageChangePending = false;
+
 	if (isBooted()) {
 		await reRenderAllUI5Elements({ languageAware: true });
 	}
@@ -92,4 +100,5 @@ export {
 	getDefaultLanguage,
 	setFetchDefaultLanguage,
 	getFetchDefaultLanguage,
+	getLanguageChangePending,
 };
