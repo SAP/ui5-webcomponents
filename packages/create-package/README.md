@@ -17,7 +17,6 @@ Usage:
 Options:
     --name <string>                      - defines the package name
     --test-setup <"cypress" | "manual">  - defines whether the predefined test setup should be added or it will be configured manually.
-    --skip                               - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```
 
 The script creates a new directory, and fills it with a `package.json` file and all necessary source files, and resources for a new
@@ -31,7 +30,6 @@ Usage:
 Options:
     --name <string>                      - defines the package name
     --test-setup <"cypress" | "manual">  - defines whether the predefined test setup should be added or it will be configured manually.
-    --skip                               - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```
 
 The script creates a new directory, and fills it with a `package.json` file and all necessary source files, and resources for a new
