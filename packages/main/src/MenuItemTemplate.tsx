@@ -30,7 +30,20 @@ function listItemContent(this: MenuItem) {
 		{this.text && <div class="ui5-menu-item-text">{this.text}</div>}
 
 		{rightContent.call(this)}
+		{checkmarkContent.call(this)}
 	</>);
+}
+
+function checkmarkContent(this: MenuItem) {
+	return !this._markChecked ? "" : (
+		<div class="ui5-menu-item-checked">
+			<Icon
+				part="checked"
+				name="accept"
+				class="ui5-menu-item-icon-checked"
+			/>
+		</div>
+	);
 }
 
 function rightContent(this: MenuItem) {

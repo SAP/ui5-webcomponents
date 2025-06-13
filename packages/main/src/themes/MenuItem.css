@@ -117,6 +117,18 @@
 	min-height: var(--_ui5_list_item_icon_size);
 	display: inline-block;
 	vertical-align: middle;
-	padding-inline-end: 0.5rem;
+	padding-inline-end: 0.75rem;
 	pointer-events: none;
+}
+
+.ui5-menu-item-checked {
+	padding-inline-start: 0.5rem;
+	padding-inline-end: 0;
+	font-weight: normal;
+	text-align: center;
+}
+
+.ui5-menu-item-icon-checked {
+	color: var(--sapContent_BusyColor);
+	padding-top: 0.25rem;
 }
