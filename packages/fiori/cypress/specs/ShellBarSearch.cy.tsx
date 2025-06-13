@@ -6,28 +6,27 @@ import {
 } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("Behaviour", () => {
-	it ("Toggles collapsed property upon icon press", () => {
+	it("Toggles collapsed property upon icon press", () => {
 		cy.mount(<ShellBarSearch />);
 
 		cy.get("[ui5-shellbar-search]")
 			.shadow()
-			.find("[ui5-icon]")
-			.as("searchIcon");
-
-		cy.get("@searchIcon")
+			.find("[ui5-icon][name=\"search\"]")
 			.realClick();
 
 		cy.get("[ui5-shellbar-search]")
 			.should("have.prop", "collapsed", true);
 
-		cy.get("@searchIcon")
+		cy.get("[ui5-shellbar-search]")
+			.shadow()
+			.find("[ui5-button][icon=\"search\"]")
 			.realClick();
 
 		cy.get("[ui5-shellbar-search]")
-			.should("not.have.a.property", "collapsed");
+			.should("have.prop", "collapsed", false);
 	});
 
-	it ("Tests icon tooltips for diffrent states", () => {
+	it("Tests icon tooltips for diffrent states", () => {
 		cy.mount(<ShellBarSearch />);
 
 		cy.get("[ui5-shellbar-search]")
