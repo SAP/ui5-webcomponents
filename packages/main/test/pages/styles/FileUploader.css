@@ -6,3 +6,9 @@ body > div {
     border: 1px solid black;
     padding: 1rem;
 }
+
+
+.Test:has(button:focus) {
+	/* font-family: cursive; */
+    background-color: red;
+}
