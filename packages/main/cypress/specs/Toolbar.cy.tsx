@@ -133,12 +133,15 @@ describe("Toolbar general interaction", () => {
 			</Toolbar>
 		);
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(500);
+
 		cy.get("ui5-toolbar-button[text='Button 1']")
 			.then(button => {
 				button.get(0).addEventListener("click", cy.stub().as("clicked"));
 			});
 
-		cy.get("ui5-button", { includeShadowDom: true }).contains("Button 1")
+			cy.get("ui5-button", { includeShadowDom: true }).contains("Button 1")
 			.click();
 
 		cy.get("@clicked")
@@ -168,6 +171,76 @@ describe("Toolbar general interaction", () => {
 			.should("have.been.calledOnce");
 		cy.get("@closed")
 			.should("have.been.calledOnce");
+	});
+
+	it("Should move button with alwaysOverflow priority to overflow popover", async () => {
+
+		cy.mount(
+			<Toolbar id="otb_d">
+				<ToolbarButton text="Add" icon={add} overflow-priority="AlwaysOverflow" stableDomRef="tb-button-add-d"></ToolbarButton>
+				<ToolbarButton text="Employee" icon={employee} overflow-priority="AlwaysOverflow" stableDomRef="tb-button-employee-d"></ToolbarButton>
+			</Toolbar>
+		);
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(500);
+
+		const otb = cy.get("#otb_d");
+
+		cy.get("otb")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.click();
+		const overflowButton = otb.shadow().find(".ui5-tb-overflow-btn");
+
+		cy.get("#otb_d")
+			.shadow()
+			.find(".ui5-overflow-popover")
+			.should("have.attr", "open", "true");
+		overflowButton.click();
+		cy.wait(500);
+
+		cy.get("@popover")
+			.find(".ui5-tb-popover-item")
+			.should("have.length", 2);
+
+		cy.get("@popover")
+			.find(`[stable-dom-ref="tb-button-employee-d"]`)
+			.should("have.class", "ui5-tb-popover-item");
+	});
+
+	it("Should properly prevent the closing of the overflow menu when preventClosing = true", () => {
+		cy.mount(
+			<div style="width: 250px;">
+				<Toolbar id="testEventpreventClosing-toolbar">
+					<ToolbarButton text="Some longer title text">
+
+					</ToolbarButton>
+					<ToolbarSelect>
+						<ToolbarSelectOption>
+							test
+						</ToolbarSelectOption>
+					</ToolbarSelect>
+				</Toolbar>
+			</div>
+		)
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(1000);
+
+		cy.get("#testEventpreventClosing-toolbar")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.click();
+		cy.get("[ui5-toolbar-select]")
+			.shadow()
+			.find("[ui5-select]")
+			.click();
+
+		cy.get("#testEventpreventClosing-toolbar")
+			.shadow()
+			.find(".ui5-overflow-popover")
+			.should("have.attr", "open", "open");
 	});
 
 	it("Should close the popover when interacting with item in the overflow menu", () => {
@@ -203,9 +276,10 @@ describe("Toolbar general interaction", () => {
 		cy.get("@popover")
 			.should("have.prop", "open", true);
 
-		cy.get("@popover")
-			.find("ui5-button")
+		cy.get("[ui5-toolbar-button]")
 			.first()
+			.shadow()
+			.find("[ui5-button]")
 			.click();
 
 		cy.get("@popover")
@@ -227,10 +301,109 @@ describe("Accessibility", () => {
 				</ToolbarSelect>
 			</Toolbar>
 		);
+		cy.wait(1000);
 
 		cy.get("ui5-toolbar")
 			.shadow()
 			.find(".ui5-overflow-popover")
 			.should("have.attr", "accessible-name", "Available Values");
+	});
+});
+
+//ToolbarSelect
+describe("Toolbar Select", () => {
+	it("Should render the select with the correct attributes inside the popover", () => {
+		cy.mount(
+			<div style="width: 250px;">
+				<Toolbar id="otb_e">
+					<ToolbarSelect value-state="Critical" accessible-name="Add" accessible-name-ref="title" id="toolbar-select">
+						<ToolbarSelectOption>1</ToolbarSelectOption>
+						<ToolbarSelectOption selected>2</ToolbarSelectOption>
+						<ToolbarSelectOption>3</ToolbarSelectOption>
+					</ToolbarSelect>
+
+
+					<ToolbarSelect disabled class="custom-class">
+						<ToolbarSelectOption>1</ToolbarSelectOption>
+						<ToolbarSelectOption selected>2</ToolbarSelectOption>
+						<ToolbarSelectOption>3</ToolbarSelectOption>
+					</ToolbarSelect>
+				</Toolbar>
+			</div>
+		);
+
+		const otb = cy.get("#otb_e").as("otb");
+
+		cy.get("@otb")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.click();
+		const overflowButton = otb.shadow().find(".ui5-tb-overflow-btn");
+
+		cy.get("@otb")
+			.shadow()
+			.find(".ui5-overflow-popover").as("popover")
+			.should("have.attr", "open", "open");
+		overflowButton.click();
+		cy.wait(500);
+
+		cy.get("@otb")
+		.find("#toolbar-select")
+			.should("have.attr", "value-state", "Critical")
+
+			.should("have.attr", "accessible-name", "Add")
+
+			.should("have.attr", "accessible-name-ref", "title")
+
+		cy.get("@otb")
+		.find(".custom-class")
+		.should("have.attr", "disabled", "disabled");
+
+	});
+
+	//ToolbarButton
+	it("Should render the button with the correct text inside the popover", async () => {
+		cy.viewport(200, 1080);
+
+		cy.get("#otb_d").within(() => {
+			cy.get(".ui5-tb-overflow-btn").click();
+			cy.get("ui5-popover").shadow().within(() => {
+				cy.get("ui5-toolbar-button").shadow().within(() => {
+					cy.get("ui5-button").then($button => {
+						expect($button).to.have.text("Back");
+						expect($button).to.have.attr("design", "Emphasized");
+						expect($button).to.have.attr("disabled", "true");
+						expect($button).to.have.attr("icon", "sap-icon://add");
+						expect($button).to.have.attr("end-icon", "sap-icon://employee");
+						expect($button).to.have.attr("tooltip", "Add");
+					});
+				});
+			});
+		});
+	});
+
+	it ("Should render the button with the correct accessible name inside the popover", async () => {
+		cy.viewport(100, 1080);
+
+		cy.get("#otb_d").within(() => {
+			cy.get(".ui5-tb-overflow-btn").click();
+			cy.get("ui5-popover").shadow().within(() => {
+				cy.get("ui5-button[accessible-name]").then($button => {
+					expect($button).to.have.attr("accessible-name", "Add");
+					expect($button).to.have.attr("accessible-name-ref", "btn");
+				});
+			});
+		});
+	});
+
+	it("Should render the button with the correct accessibilityAttributes inside the popover", async () => {
+		cy.viewport(100, 1080);
+
+		cy.get("#otb_d").within(() => {
+			cy.get(".ui5-tb-overflow-btn").click();
+			cy.get("ui5-popover").shadow().within(() => {
+				cy.get("ui5-button[accessible-name]").invoke("prop", "accessibilityAttributes").should("have.property", "expanded", "true");
+			});
+		});
 	});
 });

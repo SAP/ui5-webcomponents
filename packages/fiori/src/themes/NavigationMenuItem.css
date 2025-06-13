@@ -62,10 +62,18 @@
 	color: var(--sapButton_TextColor);
 }
 
+:host([disabled]) .ui5-sn-item-external-link-icon {
+	opacity: var(--sapContent_DisabledOpacity);
+}
+
 :host::part(icon) {
 	color: inherit;
 	min-width: 1rem;
 	min-height: 1rem;
+}
+
+:host([disabled][active][actionable]) .ui5-li-root .ui5-li-icon {
+	color: inherit;
 }
 
 :host([focused]):not([active]) {

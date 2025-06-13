@@ -167,15 +167,15 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	get isSelectable() {
-		return !this.unselectable && !this.disabled;
+		return !this.unselectable && !this.effectiveDisabled;
 	}
 
 	get _href() {
-		return (!this.disabled && this.href) ? this.href : undefined;
+		return (!this.effectiveDisabled && this.href) ? this.href : undefined;
 	}
 
 	get _target() {
-		return (!this.disabled && this.target) ? this.target : undefined;
+		return (!this.effectiveDisabled && this.target) ? this.target : undefined;
 	}
 
 	get isExternalLink() {
@@ -189,7 +189,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	get classesArray() {
 		const classes = [];
 
-		if (this.disabled) {
+		if (this.effectiveDisabled) {
 			classes.push("ui5-sn-item-disabled");
 		}
 

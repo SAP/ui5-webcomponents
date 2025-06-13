@@ -26,7 +26,6 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
  * @extends TableRowBase
  * @since 2.0.0
  * @public
- * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 @customElement({
 	tag: "ui5-table-row",

@@ -216,6 +216,12 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	_hasImage = false;
 
 	/**
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_imageLoadError = false;
+
+	/**
 	 * Receives the desired `<img>` tag
 	 *
 	 * **Note:** If you experience flickering of the provided image, you can hide the component until it is defined with the following CSS:<br/>
@@ -244,13 +250,19 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	static i18nBundle: I18nBundle;
 
 	_handleResizeBound: ResizeObserverCallback;
+	_onImageLoadBound: (e: Event) => void;
+	_onImageErrorBound: (e: Event) => void;
 
 	constructor() {
 		super();
+
 		this._handleResizeBound = this.handleResize.bind(this);
+		this._onImageLoadBound = this._onImageLoad.bind(this);
+		this._onImageErrorBound = this._onImageError.bind(this);
 	}
 
 	onBeforeRendering() {
+		this._attachImageEventHandlers();
 		this._hasImage = this.hasImage;
 	}
 
@@ -316,7 +328,11 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	get hasImage() {
-		return !!this.image.length;
+		return !!this.image.length && !this._imageLoadError;
+	}
+
+	get imageEl(): HTMLImageElement | null {
+		return this.image?.[0] instanceof HTMLImageElement ? this.image[0] : null;
 	}
 
 	get initialsContainer(): HTMLObjectElement | null {
@@ -346,6 +362,8 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	onExitDOM() {
 		this.initialsContainer && ResizeHandler.deregister(this.initialsContainer,
 			this._handleResizeBound);
+
+		this._detachImageEventHandlers();
 	}
 
 	handleResize() {
@@ -413,6 +431,67 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 		}
 
 		return ariaHaspopup;
+	}
+
+	_attachImageEventHandlers() {
+		const imgEl = this.imageEl;
+		if (!imgEl) {
+			this._imageLoadError = false;
+			return;
+		}
+
+		// Remove previous handlers to avoid duplicates
+		imgEl.removeEventListener("load", this._onImageLoadBound);
+		imgEl.removeEventListener("error", this._onImageErrorBound);
+
+		// Attach new handlers
+		imgEl.addEventListener("load", this._onImageLoadBound);
+		imgEl.addEventListener("error", this._onImageErrorBound);
+
+		// Check existing image state
+		this._checkExistingImageState();
+	}
+
+	_checkExistingImageState() {
+		const imgEl = this.imageEl;
+		if (!imgEl) {
+			this._imageLoadError = false;
+			return;
+		}
+
+		if (imgEl.complete && imgEl.naturalWidth === 0) {
+			this._imageLoadError = true; // Already broken
+		} else if (imgEl.complete && imgEl.naturalWidth > 0) {
+			this._imageLoadError = false; // Already loaded
+		} else {
+			this._imageLoadError = false; // Pending load
+		}
+	}
+
+	_detachImageEventHandlers() {
+		const imgEl = this.imageEl;
+		if (!imgEl) {
+			return;
+		}
+
+		imgEl.removeEventListener("load", this._onImageLoadBound);
+		imgEl.removeEventListener("error", this._onImageErrorBound);
+	}
+
+	_onImageLoad(e: Event) {
+		if (e.target !== this.imageEl) {
+			(e.target as HTMLImageElement)?.removeEventListener("load", this._onImageLoadBound);
+			return;
+		}
+		this._imageLoadError = false;
+	}
+
+	_onImageError(e: Event) {
+		if (e.target !== this.imageEl) {
+			(e.target as HTMLImageElement)?.removeEventListener("error", this._onImageErrorBound);
+			return;
+		}
+		this._imageLoadError = true;
 	}
 }
 

@@ -6,40 +6,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sample</title>
-    <link rel="stylesheet" href="./main.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);height: 500px;">
+<body style="background-color: var(--sapBackgroundColor);height: 200px;">
     <!-- playground-fold-end -->
 
-    <ui5-shellbar id="shellbar" primary-title="Corporate Portal" notifications-count="99+" show-notifications>
-        <ui5-avatar slot="profile">
-            <img src="../assets/images/avatars/woman_avatar_5.png" />
-        </ui5-avatar>
-		<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
-        <img slot="logo" src="../assets/images/sap-logo-svg.svg" />
-        <ui5-button icon="nav-back" slot="startButton"></ui5-button>
-        <ui5-shellbar-search slot="searchField" id="search-scope" show-clear-icon placeholder="Search Apps, Products">
-			<ui5-search-scope text="All" selected slot="scopes"></ui5-search-scope>
-			<ui5-search-scope text="Apps" slot="scopes"></ui5-search-scope>
-			<ui5-search-scope text="Products" slot="scopes"></ui5-search-scope>
-		</ui5-shellbar-search>
-    </ui5-shellbar>
-    <ui5-user-menu id="userMenu" opener="btnOpenUserMenu">
-        <ui5-user-menu-account slot="accounts"
-                               avatar-src="../assets/images/avatars/man_avatar_3.png"
-                               title-text="Alaina Chevalier"
-                               subtitle-text="aliana.chevalier@sap.com"
-                               description="Delivery Manager"
-                               selected>
-        </ui5-user-menu-account>
-        <ui5-user-menu-item icon="action-settings" text="Setting" data-id="setting"></ui5-user-menu-item>
-        <ui5-user-menu-item icon="official-service" text="Legal Information">
-            <ui5-user-menu-item text="Terms of Use" data-id="terms-of-use"></ui5-user-menu-item>
-            <ui5-user-menu-item text="Privacy Policy" data-id="privacy-policy"></ui5-user-menu-item>
-        </ui5-user-menu-item>
-        <ui5-user-menu-item icon="message-information" text="About" data-id="about"></ui5-user-menu-item>
-    </ui5-user-menu>
+        <ui5-shellbar primary-title="Product Identifier" notifications-count="72" show-notifications show-product-switch>
+            <ui5-button icon="menu2" slot="startButton"></ui5-button>
+            <ui5-button icon="nav-back" slot="startButton"></ui5-button>
+
+            <img slot="logo" src="../assets/images/sap-logo-svg.svg" />
+
+            <ui5-tag design="Set2" color-scheme="7" slot="content">Trial</ui5-tag>
+            <ui5-text slot="content">30 days remaining</ui5-text>
+            <ui5-shellbar-spacer slot="content"></ui5-shellbar-spacer>
+            <div slot="content" style="display: flex; gap: 0 5px; align-items: center;">
+                <ui5-switch></ui5-switch>
+                <ui5-label>Try Beta Version</ui5-label>
+            </div>
+
+            <ui5-shellbar-search slot="searchField" show-clear-icon placeholder="Search Apps, Products"></ui5-shellbar-search>
+
+            <ui5-shellbar-item icon="sys-help" text="Help"></ui5-shellbar-item>
+            <ui5-toggle-button icon="sap-icon://da" tooltip="Joule" slot="assistant"></ui5-toggle-button>
+            <ui5-avatar slot="profile">
+                <img src="../assets/images/avatars/man_avatar_3.png"/>
+            </ui5-avatar>
+        </ui5-shellbar>
+
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>
 </body>
