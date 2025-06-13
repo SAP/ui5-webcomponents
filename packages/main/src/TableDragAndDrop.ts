@@ -1,59 +1,60 @@
-import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { createDragAndDropBehavior } from "./features/DragAndDropBehavior.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
-import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
-import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
 import TableExtension from "./TableExtension.js";
 import type Table from "./Table.js";
 
 export default class TableDragAndDrop extends TableExtension {
 	_table: Table;
+	private _dragAndDropBehavior: ReturnType<typeof createDragAndDropBehavior<Table>>;
 
 	constructor(table: Table) {
 		super();
 		this._table = table;
-		DragRegistry.subscribe(this._table); // TODO: Where unsubscribe?
+
+		// Create drag and drop behavior with table-specific configuration
+		this._dragAndDropBehavior = createDragAndDropBehavior(this._table, {
+			orientation: Orientation.Vertical,
+			getDraggableElements: () => this._table.rows,
+			getDropIndicator: () => {
+				if (this._table.dropIndicatorDOM) {
+					return {
+						targetReference: this._table.dropIndicatorDOM.targetReference,
+						placement: this._table.dropIndicatorDOM.placement,
+					};
+				}
+				return null;
+			},
+			setDropIndicator: (targetReference, placement) => {
+				this._table.dropIndicatorDOM.targetReference = targetReference;
+				if (placement) {
+					this._table.dropIndicatorDOM.placement = placement;
+				}
+			},
+			settings: { crossDnD: true, originalEvent: true },
+		});
+	}
+
+	initialize() {
+		this._dragAndDropBehavior.initialize();
+	}
+
+	cleanup() {
+		this._dragAndDropBehavior.cleanup();
 	}
 
 	_ondragenter(e: DragEvent) {
-		e.preventDefault();
+		this._dragAndDropBehavior.onDragEnter(e);
 	}
 
 	_ondragleave(e: DragEvent) {
-		if (e.relatedTarget instanceof Node && this._table.shadowRoot!.contains(e.relatedTarget)) {
-			return;
-		}
-
-		this._table.dropIndicatorDOM.targetReference = null;
+		this._dragAndDropBehavior.onDragLeave(e);
 	}
 
 	_ondragover(e: DragEvent) {
-		if (!(e.target instanceof HTMLElement)) {
-			return;
-		}
-
-		const closestPosition = findClosestPosition(
-			this._table.rows,
-			e.clientY,
-			Orientation.Vertical,
-		);
-
-		if (!closestPosition) {
-			this._table.dropIndicatorDOM.targetReference = null;
-			return;
-		}
-
-		const { targetReference, placement } = handleDragOver(e, this._table, closestPosition, closestPosition.element, { crossDnD: true, originalEvent: true });
-		this._table.dropIndicatorDOM.targetReference = targetReference;
-		this._table.dropIndicatorDOM.placement = placement;
+		this._dragAndDropBehavior.onDragOver(e);
 	}
 
 	_ondrop(e: DragEvent) {
-		if (!this._table.dropIndicatorDOM?.targetReference || !this._table.dropIndicatorDOM?.placement) {
-			return;
-		}
-
-		handleDrop(e, this._table, this._table.dropIndicatorDOM.targetReference, this._table.dropIndicatorDOM.placement);
-		this._table.dropIndicatorDOM.targetReference = null;
+		this._dragAndDropBehavior.onDrop(e);
 	}
 }
