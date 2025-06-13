@@ -218,7 +218,6 @@ slot[name="profile"] {
 	overflow: hidden;
 	cursor: pointer;
 	max-height: 2rem;
-	max-width: 3.75rem;
 }
 
 .ui5-shellbar-logo-area {
