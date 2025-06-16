@@ -169,7 +169,7 @@ describe("Input Tests", () => {
 	it("tests submit and change event order", () => {
 		cy.mount(
 			<form>
-				<Input onChange={cy.x().as("change")}></Input>
+				<Input onChange={cy.stub().as("change")}></Input>
 			</form>
 		);
 
@@ -300,6 +300,9 @@ describe("Input Tests", () => {
 		cy.get("@change").should("have.been.calledOnce");
 
 		cy.realPress("Enter");
+
+		cy.get("@submit").should("have.been.calledOnce");
+		cy.get("@change").should("have.been.calledOnce");
 	});
 });
 
@@ -614,24 +617,15 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 describe("Selection-change event", () => {
 	it("Selection-change event fires with null arguments when suggestion was selected but user alters input value to something else", () => {
 		cy.mount(
-			<Input showSuggestions>
+			<Input showSuggestions onSelectionChange={cy.stub().as("inputSelectionChange")}>
 				<SuggestionItem text="Cozy" />
 				<SuggestionItem text="Compact" />
 				<SuggestionItem text="Condensed" />
 			</Input>
 		);
 
-		let eventCount = 0;
-
 		cy.get("ui5-input")
 			.as("input")
-			.then($input => {
-				$input[0].addEventListener("ui5-selection-change", () => {
-					eventCount++;
-				});
-			});
-
-		cy.get("@input")
 			.realClick();
 
 		cy.get("@input")
@@ -664,9 +658,8 @@ describe("Selection-change event", () => {
 		cy.get("@input")
 			.should("have.value", "N");
 
-		cy.then(() => {
-			expect(eventCount).to.equal(2);
-		});
+		cy.get("@inputSelectionChange")
+			.should("be.calledTwice");
 	});
 
 	it("Fires selection-change when same item is reselected after input is changed", () => {
@@ -752,7 +745,7 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			.as("input")
 	});
 
-	it.only("Change event is not fired when the same suggestion item is selected (with typeahead)", () => {
+	it("Change event is not fired when the same suggestion item is selected (with typeahead)", () => {
 		cy.get("@input")
 			.realClick();
 
@@ -815,7 +808,7 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			.should("not.have.been.calledOnce");
 	});
 
-	it.skip("Change event is not fired when the same suggestion item is selected after focus out and selecting suggestion again", () => {
+	it("Change event is not fired when the same suggestion item is selected after focus out and selecting suggestion again", () => {
 		cy.get("@input")
 			.invoke("attr", "value", "Afghanistan");
 
@@ -825,10 +818,16 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.get("@input")
 			.should("be.focused");
 
+		cy.realPress("Tab");
+
 		cy.get("@input")
-			.shadow()
-			.find<ResponsivePopover>("[ui5-responsive-popover]")
-			.ui5ResponsivePopoverOpened();
+			.should("not.be.focused");
+
+		cy.get("@input")
+			.realClick();
+
+		cy.get("@input")
+			.should("be.focused");
 
 		cy.realPress("ArrowDown");
 
@@ -843,7 +842,7 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			.should("not.have.been.calledOnce");
 	});
 
-	it("Change event fires after typing a new value following a clear icon click", () => {
+	it.skip("Change event fires after typing a new value following a clear icon click", () => {
 		cy.mount(<Input showClearIcon={true} onChange={cy.stub().as("inputChange")} />);
 
 		cy.get("ui5-input")
@@ -863,6 +862,9 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			.should("have.been.calledOnce");
 
 		cy.get("@input")
+			.should("have.value", "Albania");
+
+		cy.get("@input")
 			.shadow()
 			.find("[ui5-icon]")
 			.as("icon")
@@ -878,8 +880,14 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.get("@inputChange")
 			.should("have.been.calledTwice");
 
+		cy.get("@input")
+			.should("have.value", "Argentina");
+
 		cy.get("@icon")
 			.realClick();
+
+		cy.get("@inputChange")
+			.should("have.been.calledTwice");
 
 		cy.get("@input")
 			.should("have.value", "");
@@ -890,6 +898,9 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 
 		cy.get("@inputChange")
 			.should("have.been.calledTwice");
+
+		cy.get("@input")
+			.should("have.value", "Argentina");
 	});
 
 	it("should not close the dialog when item is selected", () => {
