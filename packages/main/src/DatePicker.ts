@@ -657,9 +657,8 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	get _lastDayOfTheYear() {
-		const lastDayOfTheYear = new Date(new Date().getFullYear(), 11, 31);
-
-		return this.getFormat().format(lastDayOfTheYear);
+		const lastDayOfTheYear = CalendarDate.fromLocalJSDate(new Date(new Date().getFullYear(), 11, 31));
+		return this.getFormat().format(lastDayOfTheYear.toUTCJSDate());
 	}
 
 	/**

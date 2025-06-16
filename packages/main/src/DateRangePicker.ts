@@ -189,10 +189,10 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	}
 
 	get _lastDateRangeForTheCurrentYear() {
-		const lastDayOfTheYear = new Date(new Date().getFullYear(), 11, 31);
-		const lastDayOfTheYear4DaysBefore = new Date(new Date().getFullYear(), 11, 27);
+		const lastDayOfTheYear = CalendarDate.fromLocalJSDate(new Date(new Date().getFullYear(), 11, 31));
+		const lastDayOfTheYear7DaysBefore = CalendarDate.fromLocalJSDate(new Date(new Date().getFullYear(), 11, 24));
 
-		return `${this.getFormat().format(lastDayOfTheYear4DaysBefore)} ${this._effectiveDelimiter} ${this.getFormat().format(lastDayOfTheYear)}`;
+		return `${this.getFormat().format(lastDayOfTheYear7DaysBefore.toUTCJSDate())} ${this._effectiveDelimiter} ${this.getFormat().format(lastDayOfTheYear.toUTCJSDate())}`;
 	}
 
 	/**
