@@ -892,12 +892,12 @@ describe("Keyboard handling", () => {
 
 		cy.realPress("ArrowLeft");
 
+		cy.get("[ui5-multi-input]")
+			.should("not.be.focused");
+
 		cy.get("[ui5-token]")
 			.eq(2)
 			.should("be.focused");
-
-		cy.get("[ui5-multi-input]")
-			.should("not.be.focused");
 
 		cy.realPress("ArrowRight");
 
