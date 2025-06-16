@@ -615,6 +615,7 @@ class ShellBar extends UI5Element {
 
 	_onSearchOpen(e: Event) {
 		if (e.target !== this.search) {
+			this._detachSearchFieldListeners(e.target as HTMLElement);
 			return;
 		}
 		if (isPhone()) {
@@ -624,6 +625,7 @@ class ShellBar extends UI5Element {
 
 	_onSearchClose(e: Event) {
 		if (e.target !== this.search) {
+			this._detachSearchFieldListeners(e.target as HTMLElement);
 			return;
 		}
 		if (isPhone()) {
@@ -633,6 +635,7 @@ class ShellBar extends UI5Element {
 
 	_onSearch(e: Event) {
 		if (e.target !== this.search) {
+			this._detachSearchFieldListeners(e.target as HTMLElement);
 			return;
 		}
 		if (!isPhone() && !this.search?.value) {
@@ -819,6 +822,9 @@ class ShellBar extends UI5Element {
 			} else {
 				this.search.collapsed = !this.showSearchField;
 			}
+
+			this._detachSearchFieldListeners(this.search);
+			this._attachSearchFieldListeners(this.search);
 		}
 	}
 
@@ -948,26 +954,32 @@ class ShellBar extends UI5Element {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
-		this._attachSearchFieldListeners();
+		this._attachSearchFieldListeners(this.search);
 	}
 
 	onExitDOM() {
 		this.contentItemsObserver.disconnect();
 		this._observableContent = [];
 		ResizeHandler.deregister(this, this._handleResize);
-		this._detachSearchFieldListeners();
+		this._detachSearchFieldListeners(this.search);
 	}
 
-	_attachSearchFieldListeners() {
-		this.addEventListener("ui5-open", this._onSearchOpenBound);
-		this.addEventListener("ui5-close", this._onSearchCloseBound);
-		this.addEventListener("ui5-search", this._onSearchBound);
+	_attachSearchFieldListeners(searchField: HTMLElement | null) {
+		if (!searchField) {
+			return;
+		}
+		searchField.addEventListener("ui5-open", this._onSearchOpenBound);
+		searchField.addEventListener("ui5-close", this._onSearchCloseBound);
+		searchField.addEventListener("ui5-search", this._onSearchBound);
 	}
 
-	_detachSearchFieldListeners() {
-		this.removeEventListener("ui5-open", this._onSearchOpenBound);
-		this.removeEventListener("ui5-close", this._onSearchCloseBound);
-		this.removeEventListener("ui5-search", this._onSearchBound);
+	_detachSearchFieldListeners(searchField: HTMLElement | null) {
+		if (!searchField) {
+			return;
+		}
+		searchField.removeEventListener("ui5-open", this._onSearchOpenBound);
+		searchField.removeEventListener("ui5-close", this._onSearchCloseBound);
+		searchField.removeEventListener("ui5-search", this._onSearchBound);
 	}
 
 	_handleSearchIconPress() {
