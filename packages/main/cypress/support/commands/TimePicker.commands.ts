@@ -48,7 +48,7 @@ Cypress.Commands.add("ui5TimePickerGetClock", { prevSubject: true }, (subject, c
 		.find("ui5-responsive-popover")
 		.find("ui5-time-selection-clocks")
 		.shadow()
-		.find(`ui5-time-picker-clock[data-ui5-clock="${clockType}"]`);
+		.find(`ui5-toggle-spin-button[data-ui5-clock="${clockType}"]`);
 });
 
 Cypress.Commands.add("ui5TimePickerGetSubmitButton", { prevSubject: true }, subject => {

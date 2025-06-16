@@ -3,10 +3,18 @@ import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import TimePicker from "../../src/TimePicker.js";
 import Label from "../../src/Label.js";
 
+function pressKeyNTimes(key: "ArrowDown" | "ArrowUp" | "Space" | "Tab" | "Enter", n: number) {
+	for (let i = 0; i < n; i++) {
+		cy.realPress(key);
+	}
+}
+
 describe("TimePicker Tests", () => {
 	it("input receives value in format pattern depending on the set language", () => {
 		cy.wrap({ setLanguage })
-			.invoke("setLanguage", "bg");
+		.then(api => {
+			return api.setLanguage("bg")
+		})
 
 		cy.mount(<TimePicker value="03:16:16"></TimePicker>);
 
@@ -30,25 +38,19 @@ describe("TimePicker Tests", () => {
 
 		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetClock("hours")
-			.should("have.prop", "selectedValue", 11);
+			.should("have.prop", "valueNow", 11);
 
 		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetClock("minutes")
-			.should("have.prop", "selectedValue", 12);
+			.should("have.prop", "valueNow", 12);
 
 		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetClock("seconds")
-			.should("have.prop", "selectedValue", 13);
+			.should("have.prop", "valueNow", 13);
 	});
 
 	it("tests clocks submit value", () => {
 		cy.mount(<TimePicker formatPattern="hh:mm:ss" value="12:00:01"></TimePicker>);
-
-		function pressKeyNTimes(key: "ArrowDown" | "ArrowUp" | "Space" | "Tab" | "Enter", n: number) {
-			for (let i = 0; i < n; i++) {
-				cy.realPress(key);
-			}
-		}
 
 		cy.get("[ui5-time-picker]")
 			.as("timePicker")
@@ -56,7 +58,9 @@ describe("TimePicker Tests", () => {
 
 		cy.get("@timePicker")
 			.ui5TimePickerGetClock("hours")
-			.realClick();
+			.realClick()
+			.should("be.focused")
+
 
 		pressKeyNTimes("ArrowDown", 10);
 		cy.realPress("Space");
@@ -88,26 +92,22 @@ describe("TimePicker Tests", () => {
 			.as("timePicker")
 			.ui5TimePickerGetInnerInput()
 			.realClick()
-			.should("be.focused")
-			.realType("123123123")
-			.realPress("Enter");
+			.should("be.focused");
+
+		cy.realType("123123123");
+		cy.realPress("Enter");
 
 		cy.get<TimePicker>("@timePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.should("have.attr", "value-state", "Negative");
 	});
 
 	it("tests change event", () => {
-		cy.mount(<TimePicker formatPattern="HH:mm" value="12:00"></TimePicker>);
-
-		const changeStub = cy.stub().as("changeStub");
+		cy.mount(<TimePicker formatPattern="HH:mm" value="12:00" onChange={cy.stub().as("changeStub")}></TimePicker>);
 
 		cy.get("[ui5-time-picker]")
-			.as("timePicker")
-			.then($el => {
-				$el[0].addEventListener("ui5-change", changeStub);
-			});
+			.as("timePicker");
 
 		// Open picker and submit without changes
 		cy.get("@timePicker")
@@ -127,18 +127,11 @@ describe("TimePicker Tests", () => {
 		cy.get("@timePicker")
 			.ui5TimePickerGetClock("hours")
 			.realClick()
-			.realPress("PageDown") // select 11
-			.realPress("ArrowDown")
-			.realPress("ArrowDown")
-			.realPress("ArrowDown")
-			.realPress("ArrowDown")
-			.realPress("ArrowDown")
-			.realPress("ArrowDown")
-			.realPress("ArrowDown")
-			.realPress("ArrowDown")
-			.realPress("ArrowDown")
-			.realPress("ArrowDown")
-			.realPress("Space");
+			.should("be.focused")
+			.realPress("PageDown"); // select 11
+
+		pressKeyNTimes("ArrowDown", 10);
+		cy.realPress("Space");
 
 		cy.get("@timePicker")
 			.ui5TimePickerGetSubmitButton()
@@ -165,6 +158,7 @@ describe("TimePicker Tests", () => {
 		cy.get("@timePicker")
 			.ui5TimePickerGetClock("hours")
 			.realClick()
+			.should("be.focused")
 			.realPress("ArrowDown") // select 00
 			.realPress("Space");
 
@@ -199,13 +193,14 @@ describe("TimePicker Tests", () => {
 		// Clear the input
 		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetInnerInput()
-			.clear();
+			.realClick({ clickCount: 2 })
+			.realPress("Backspace");
 
 		cy.get("body").realClick(); // Click outside to trigger blur
 
 		cy.get<TimePicker>("@timePicker")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.should("have.attr", "value-state", "None");
 	});
 
