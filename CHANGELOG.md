@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0...v2.12.0-rc.0) (2025-06-12)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** add dynamic image error handling with fallback logic ([#11642](https://github.com/SAP/ui5-webcomponents/issues/11642)) ([cbf0dfe](https://github.com/SAP/ui5-webcomponents/commit/cbf0dfecf3f4e48de3a8a4b5b818b384dc42a73d)), closes [#11140](https://github.com/SAP/ui5-webcomponents/issues/11140)
+* **ui5-busy-indicator:** make text and circles determine indicator dimensions when there is no content ([#11223](https://github.com/SAP/ui5-webcomponents/issues/11223)) ([10c0cfd](https://github.com/SAP/ui5-webcomponents/commit/10c0cfddf56ceea2c4481e0c971b30a2a26f602c))
+* **ui5-button, ui5-toggle-button:** fire event with correct type ([#11563](https://github.com/SAP/ui5-webcomponents/issues/11563)) ([4414126](https://github.com/SAP/ui5-webcomponents/commit/4414126ab58c53e10a0130eb146d019d164b7ec9))
+* **ui5-button:** prevents native behavior when click prevented ([#11678](https://github.com/SAP/ui5-webcomponents/issues/11678)) ([b8ac221](https://github.com/SAP/ui5-webcomponents/commit/b8ac221d240b53a7ad85e450b3da4fcb82b4675b))
+* **ui5-checkbox:** correct spacing between checkbox and label in compact ([#11671](https://github.com/SAP/ui5-webcomponents/issues/11671)) ([a879720](https://github.com/SAP/ui5-webcomponents/commit/a879720a8aee881f783c537068b44aa184f5d2ce)), closes [#11664](https://github.com/SAP/ui5-webcomponents/issues/11664)
+* **ui5-checkbox:** correct the height of the checkbox in compact ([#11681](https://github.com/SAP/ui5-webcomponents/issues/11681)) ([e9a1fa2](https://github.com/SAP/ui5-webcomponents/commit/e9a1fa232d7f69a6e349dfa633dc501b8059b63e)), closes [#11674](https://github.com/SAP/ui5-webcomponents/issues/11674)
+* **ui5-responsive-popover:** use parameter for inner input font-style ([#11640](https://github.com/SAP/ui5-webcomponents/issues/11640)) ([f32bf1d](https://github.com/SAP/ui5-webcomponents/commit/f32bf1d4f80fc782b77bb139b69ddf1c27e31570)), closes [#11628](https://github.com/SAP/ui5-webcomponents/issues/11628)
+* **ui5-select:** fix icon vertical alignment ([#11672](https://github.com/SAP/ui5-webcomponents/issues/11672)) ([5327814](https://github.com/SAP/ui5-webcomponents/commit/53278149b2858c6d5debd6bae4fa21865ccf5554)), closes [#11584](https://github.com/SAP/ui5-webcomponents/issues/11584)
+* **ui5-shellbar:** prevent logo click event from firing twice ([#11631](https://github.com/SAP/ui5-webcomponents/issues/11631)) ([5b08a48](https://github.com/SAP/ui5-webcomponents/commit/5b08a48abb2177dd00ebab93bb2b62eef4e64e77)), closes [#11506](https://github.com/SAP/ui5-webcomponents/issues/11506)
+* **ui5-slider:** implement tooltips with Popover API ([#10994](https://github.com/SAP/ui5-webcomponents/issues/10994)) ([5d8b44e](https://github.com/SAP/ui5-webcomponents/commit/5d8b44ed81a4fb3b38e2b789b9634d62d051148b))
+* **ui5-tokenizer:** fix token selection on mobile ([#11667](https://github.com/SAP/ui5-webcomponents/issues/11667)) ([55efab8](https://github.com/SAP/ui5-webcomponents/commit/55efab8a5651d771d92422f503a875673393f8a3))
+* **ui5-upload-collection:** prevent `item-delete` event from firing when item name is deleted ([#11625](https://github.com/SAP/ui5-webcomponents/issues/11625)) ([fe048b0](https://github.com/SAP/ui5-webcomponents/commit/fe048b0d304a42620d738d0822d07e8b292be043))
+
+
+### Features
+
+* **popups:** provide accessibleDescription/accessibleDescriptionRef for Dialog, Resp/Popover ([#11624](https://github.com/SAP/ui5-webcomponents/issues/11624)) ([70c0ea9](https://github.com/SAP/ui5-webcomponents/commit/70c0ea960202f78b487ede4dc162795ca8614d15))
+
+
+
+
+
 # [2.11.0](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.4...v2.11.0) (2025-06-05)
 
 **Note:** Version bump only for package ui5-webcomponents
