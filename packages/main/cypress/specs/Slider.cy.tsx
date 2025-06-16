@@ -466,8 +466,10 @@ describe("Testing events", () => {
 		cy.mount(<Slider id="test-slider" min={0} max={10} value={5} />);
 
 		cy.get("#test-slider").as("slider");
+		cy.get("@slider").then($slider => { $slider[0].addEventListener("ui5-change", cy.stub().as("sliderChange")); });
 
 		cy.get("@slider").realClick();
+		cy.get("@sliderChange").should("have.not.been.called");
 
 		cy.get("@slider").should("have.value", 5, "Change event is not fired if the value is the same as before the start of the action");
 	});
