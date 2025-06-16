@@ -38,6 +38,7 @@ import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import {
 	DATEPICKER_OPEN_ICON_TITLE,
 	DATEPICKER_DATE_DESCRIPTION,
+	DATETIME_COMPONENTS_PLACEHOLDER_PREFIX,
 	INPUT_SUGGESTIONS_TITLE,
 	FORM_TEXTFIELD_REQUIRED,
 	DATEPICKER_POPOVER_ACCESSIBLE_NAME,
@@ -655,11 +656,22 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return this.getFormat().oFormatOptions.pattern as string;
 	}
 
+	get _lastDayOfTheYear() {
+		const lastDayOfTheYear = new Date(new Date().getFullYear(), 11, 31);
+
+		return this.getFormat().format(lastDayOfTheYear);
+	}
+
 	/**
 	 * @protected
 	 */
 	get _placeholder() {
-		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
+		if (this.placeholder) {
+			return this.placeholder;
+		}
+
+		// translatable placeholder – for example "e.g. 2025-12-31"
+		return `${DatePicker.i18nBundle.getText(DATETIME_COMPONENTS_PLACEHOLDER_PREFIX)} ${this._lastDayOfTheYear}`;
 	}
 
 	get _headerTitleText() {
