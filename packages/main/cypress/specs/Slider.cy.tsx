@@ -447,12 +447,18 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 });
 
 describe("Testing events", () => {
-	it("Should fire input event on user interaction and change event after user interaction finishes", () => {
+	it("Should fire input and change event on user interaction", () => {
 		cy.mount(<Slider id="test-slider" min={0} max={10} value={0} />);
 
 		cy.get("#test-slider").as("slider");
 
+		cy.get("@slider").then($slider => { $slider[0].addEventListener("ui5-change", cy.stub().as("sliderChange")); });
+		cy.get("@slider").then($slider => { $slider[0].addEventListener("ui5-input", cy.stub().as("sliderInput")); });
+
 		cy.get("@slider").realClick();
+
+		cy.get("@sliderChange").should("have.been.calledOnce");
+		cy.get("@sliderInput").should("have.been.calledOnce");
 		cy.get("@slider").should("have.value", 5, "Both input event and change event are fired after user interaction");
 	});
 
