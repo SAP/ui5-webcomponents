@@ -866,8 +866,9 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.get("@input")
 			.should("have.value", "Albania");
 
-		// cy.get("@innerInput")
-		// 	.should("have.value", "Albania");
+		// TODO: Could be fixed once rendering is moved to sync
+		cy.get("@innerInput")
+			.should("have.value", "Albania");
 
 		cy.get("@input")
 			.shadow()
