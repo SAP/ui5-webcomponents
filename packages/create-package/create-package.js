@@ -112,7 +112,7 @@ const generateFilesContent = async (
 	await processFiles(destDir, vars, testSetup);
 
 	console.log("\nPackage successfully created!\nNext steps:\n");
-	console.log(`$ cd ${destDir}`);
+	console.log(`$ cd ${packageBaseName}`);
 
 	try {
 		const userAgent = parser(process.env.npm_config_user_agent);
