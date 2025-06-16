@@ -54,6 +54,7 @@ describe("Toast - test popover API", () => {
 					opener="openResponsivePopoverBtn">
 					<Button id="openToastBtn">Open Toast</Button>
 				</ResponsivePopover>
+				<Toast open id="toast" duration={-1} placement="BottomCenter">Toast Text</Toast>
 			</>
 		);
 
@@ -72,27 +73,27 @@ describe("Toast - test popover API", () => {
 
 		cy.get("#openToastBtn").then($button => {
 			$button[0].addEventListener("click", () => {
-				cy.window().then((win) => {
-					const toast = win.document.createElement('ui5-toast') as Toast;
+				cy.get("[ui5-toast]").then($toast => {
+					const toast = $toast[0] as Toast;
 					toast.setAttribute("open", "true");
-					toast.setAttribute("duration", "1000");
-					toast.textContent = "Toast from responsive popover";
-					win.document.getElementById("responsivePopover")?.appendChild(toast);
-
-					cy.get("[ui5-toast]").should("exist").then(($toast) => {
-						$toast[0].addEventListener("close", cy.stub().as("toastClose"));
-					});
 				});
 			});
-			cy.get("#openResponsivePopoverBtn")
-				.realClick();
-			cy.get("#openToastBtn")
-				.realClick();
-
-			cy.get("@toastClose")
-				.should("be.calledOnce");
-			cy.get("@popoverClose")
-				.should("not.have.been.called");
 		});
+
+		cy.get("[ui5-toast]").should("exist").then(($toast) => {
+			$toast[0].addEventListener("close", cy.stub().as("toastClose"));
+		});
+
+		cy.get("#openResponsivePopoverBtn")
+			.realClick();
+
+		cy.get("#openToastBtn")
+			.realClick();
+
+		cy.get("@toastClose")
+			.should("be.calledOnce");
+
+		cy.get("@popoverClose")
+			.should("not.have.been.called");
 	});
 });
