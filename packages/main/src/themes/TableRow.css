@@ -54,7 +54,7 @@
 :host([navigated]) #navigated {
 	position: absolute;
 	inset: 0;
-    background-color: var(--sapList_SelectionBorderColor);
+	background-color: var(--sapList_SelectionBorderColor);
 }
 
 :host([tabindex]:focus) #navigated {

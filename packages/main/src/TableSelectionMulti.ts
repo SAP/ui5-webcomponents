@@ -92,21 +92,18 @@ class TableSelectionMulti extends TableSelectionBase {
 			return;
 		}
 
-		let selectionChanged = false;
 		const tableRows = row.isHeaderRow() ? this._table!.rows : [row as TableRow];
 		const selectedSet = this.getSelectedAsSet();
-		tableRows.forEach(tableRow => {
+		const selectionChanged = tableRows.reduce((selectedSetChanged, tableRow) => {
 			const rowKey = this.getRowKey(tableRow);
 			if (!rowKey) {
-				return;
+				return selectedSetChanged;
 			}
 
 			const setSize = selectedSet.size;
 			selectedSet[selected ? "add" : "delete"](rowKey);
-			if (!selectionChanged && setSize !== selectedSet.size) {
-				selectionChanged = true;
-			}
-		});
+			return selectedSetChanged || setSize !== selectedSet.size;
+		}, false);
 
 		if (selectionChanged) {
 			this.setSelectedAsSet(selectedSet);
