@@ -6,6 +6,10 @@
     <title>Simple Drag Demo</title>
     <script src="%VITE_BUNDLE_PATH%" type="module"></script>
     <style>
+        body {
+            background-color: var(--sapBackgroundColor);
+            color: var(--sapList_TextColor);
+        }
         .demo-container {
             padding: 2rem;
             display: grid;
@@ -15,12 +19,9 @@
         .demo-section {
             max-width: 300px;
         }
-        .selected-item {
-            background-color: var(--sapList_SelectionBackgroundColor, #e5f0ff);
-        }
         .info {
             font-size: 0.875rem;
-            color: #666;
+            color: #a9a7a7;
             margin-bottom: 1rem;
         }
     </style>
@@ -32,10 +33,10 @@
             <h3>ui5-li (DragRegistry)</h3>
             <div class="info">
                 Selected: <span id="count1">0</span><br>
-                Click to select, drag for multiple
+                Multiple selection mode, drag for multiple
             </div>
             
-            <ui5-list id="list1" header-text="Standard Items">
+            <ui5-list id="list1" header-text="Standard Items" selection-mode="Multiple">
                 <ui5-li movable data-id="1">Item 1</ui5-li>
                 <ui5-li movable data-id="2">Item 2</ui5-li>
                 <ui5-li movable data-id="3">Item 3</ui5-li>
@@ -48,10 +49,10 @@
             <h3>ui5-li-custom (DragRegistry)</h3>
             <div class="info">
                 Selected: <span id="count2">0</span><br>
-                Red drag image from component
+                Multiple selection, red drag image
             </div>
             
-            <ui5-list id="list2" header-text="Custom Items">
+            <ui5-list id="list2" header-text="Custom Items" selection-mode="Multiple">
                 <ui5-li-custom movable data-id="5">Custom 1</ui5-li-custom>
                 <ui5-li-custom movable data-id="6">Custom 2</ui5-li-custom>
                 <ui5-li-custom movable data-id="7">Custom 3</ui5-li-custom>
@@ -64,10 +65,10 @@
             <h3>ui5-li (Direct)</h3>
             <div class="info">
                 Selected: <span id="count3">0</span><br>
-                Purple drag image from app
+                Multiple selection, purple drag image
             </div>
             
-            <ui5-list id="list3" header-text="Direct Drag">
+            <ui5-list id="list3" header-text="Direct Drag" selection-mode="Multiple">
                 <ui5-li movable data-id="9">Direct 1</ui5-li>
                 <ui5-li movable data-id="10">Direct 2</ui5-li>
                 <ui5-li movable data-id="11">Direct 3</ui5-li>
@@ -80,10 +81,10 @@
             <h3>ui5-li-custom (Direct)</h3>
             <div class="info">
                 Selected: <span id="count4">0</span><br>
-                Green drag image from app
+                Multiple selection, green drag image
             </div>
             
-            <ui5-list id="list4" header-text="Custom Direct">
+            <ui5-list id="list4" header-text="Custom Direct" selection-mode="Multiple">
                 <ui5-li-custom movable data-id="13">Custom Direct 1</ui5-li-custom>
                 <ui5-li-custom movable data-id="14">Custom Direct 2</ui5-li-custom>
                 <ui5-li-custom movable data-id="15">Custom Direct 3</ui5-li-custom>
@@ -93,9 +94,8 @@
     </div>
 
     <script type="module">
-        // import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+        import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
         
-        const selected = [new Set(), new Set(), new Set(), new Set()];
         const lists = [
             document.getElementById("list1"),
             document.getElementById("list2"), 
@@ -109,21 +109,17 @@
             document.getElementById("count4")
         ];
 
-        function updateUI(listIndex) {
-            counters[listIndex].textContent = selected[listIndex].size;
-            lists[listIndex].querySelectorAll('[data-id]').forEach(item => {
-                item.classList.toggle('selected-item', selected[listIndex].has(item.dataset.id));
-            });
+        function getSelectedItems(list) {
+            return list.getItems().filter(item => item.selected);
         }
 
-        function setupSelection(listIndex) {
-            lists[listIndex].addEventListener("ui5-item-click", (e) => {
-                const id = e.detail.item.dataset.id;
-                if (selected[listIndex].has(id)) {
-                    selected[listIndex].delete(id);
-                } else {
-                    selected[listIndex].add(id);
-                }
+        function updateUI(listIndex) {
+            const selectedItems = getSelectedItems(lists[listIndex]);
+            counters[listIndex].textContent = selectedItems.length;
+        }
+
+        function setupSelectionChangeListener(listIndex) {
+            lists[listIndex].addEventListener("ui5-selection-change", () => {
                 updateUI(listIndex);
             });
         }
@@ -175,45 +171,63 @@
         }
 
         // Setup List 1: Standard items with DragRegistry
-        setupSelection(0);
+        setupSelectionChangeListener(0);
         lists[0].addEventListener("dragstart", (e) => {
-            const id = e.target.dataset.id;
-            if (!selected[0].has(id)) {
-                selected[0].clear();
-                selected[0].add(id);
+            const selectedItems = getSelectedItems(lists[0]);
+            const draggedItem = e.target;
+            
+            // If dragged item is not selected, select only it
+            if (!draggedItem.selected) {
+                // Clear all selections first
+                selectedItems.forEach(item => item.selected = false);
+                draggedItem.selected = true;
                 updateUI(0);
             }
-            if (selected[0].size > 1) {
-                DragRegistry.startMultipleDrag(e, selected[0].size);
+            
+            const currentSelected = getSelectedItems(lists[0]);
+            if (currentSelected.length > 1) {
+                DragRegistry.startMultipleDrag(e, currentSelected.length);
             }
         });
 
         // Setup List 2: Custom items with DragRegistry (component handles drag image)
-        setupSelection(1);
+        setupSelectionChangeListener(1);
         lists[1].addEventListener("dragstart", (e) => {
-            const id = e.target.dataset.id;
-            if (!selected[1].has(id)) {
-                selected[1].clear();
-                selected[1].add(id);
+            const selectedItems = getSelectedItems(lists[1]);
+            const draggedItem = e.target;
+            
+            // If dragged item is not selected, select only it
+            if (!draggedItem.selected) {
+                // Clear all selections first
+                selectedItems.forEach(item => item.selected = false);
+                draggedItem.selected = true;
                 updateUI(1);
             }
+            
+            const currentSelected = getSelectedItems(lists[1]);
             // ListItemCustom component will handle the drag image
-            if (selected[1].size > 1) {
-                DragRegistry.startMultipleDrag(e, selected[1].size);
+            if (currentSelected.length > 1) {
+                DragRegistry.startMultipleDrag(e, currentSelected.length);
             }
         });
 
         // Setup List 3: Direct drag image (no DragRegistry)
-        setupSelection(2);
+        setupSelectionChangeListener(2);
         lists[2].addEventListener("dragstart", (e) => {
-            const id = e.target.dataset.id;
-            if (!selected[2].has(id)) {
-                selected[2].clear();
-                selected[2].add(id);
+            const selectedItems = getSelectedItems(lists[2]);
+            const draggedItem = e.target;
+            
+            // If dragged item is not selected, select only it
+            if (!draggedItem.selected) {
+                // Clear all selections first
+                selectedItems.forEach(item => item.selected = false);
+                draggedItem.selected = true;
                 updateUI(2);
             }
-            if (selected[2].size > 1) {
-                const dragElement = createPurpleDragImage(selected[2].size);
+            
+            const currentSelected = getSelectedItems(lists[2]);
+            if (currentSelected.length > 1) {
+                const dragElement = createPurpleDragImage(currentSelected.length);
                 e.dataTransfer.setDragImage(dragElement, 30, 15);
                 requestAnimationFrame(() => {
                     if (dragElement.parentNode) {
@@ -224,16 +238,22 @@
         });
 
         // Setup List 4: Custom direct drag image (no DragRegistry)
-        setupSelection(3);
+        setupSelectionChangeListener(3);
         lists[3].addEventListener("dragstart", (e) => {
-            const id = e.target.dataset.id;
-            if (!selected[3].has(id)) {
-                selected[3].clear();
-                selected[3].add(id);
+            const selectedItems = getSelectedItems(lists[3]);
+            const draggedItem = e.target;
+            
+            // If dragged item is not selected, select only it
+            if (!draggedItem.selected) {
+                // Clear all selections first
+                selectedItems.forEach(item => item.selected = false);
+                draggedItem.selected = true;
                 updateUI(3);
             }
-            if (selected[3].size > 1) {
-                const dragElement = createGreenDragImage(selected[3].size);
+            
+            const currentSelected = getSelectedItems(lists[3]);
+            if (currentSelected.length > 1) {
+                const dragElement = createGreenDragImage(currentSelected.length);
                 e.dataTransfer.setDragImage(dragElement, 30, 15);
                 requestAnimationFrame(() => {
                     if (dragElement.parentNode) {

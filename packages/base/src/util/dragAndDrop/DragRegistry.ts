@@ -1,5 +1,8 @@
 import type UI5Element from "../../UI5Element.js";
 import type MovePlacement from "../../types/MovePlacement.js";
+import MultipleDragGhostCss from "../../generated/css/MultipleDragGhost.css.js";
+
+import { getI18nBundle } from "../../i18nBundle.js";
 
 let draggedElement: HTMLElement | null = null;
 let customDragTemplate: HTMLElement | null = null;
@@ -40,25 +43,26 @@ const setCustomDragTemplate = (element: HTMLElement) => {
 	customDragTemplate = element;
 };
 
-const createDefaultMultiDragElement = (count: number): HTMLElement => {
-	// Create a ui5-li element programmatically
-	const listItem = document.createElement("ui5-li");
-	listItem.textContent = `${count} items`;
+const createDefaultMultiDragElement = async (count: number): Promise<HTMLElement> => {
+	const dragElement = document.createElement("div");
+	const i18nBundle = await getI18nBundle("@ui5/webcomponents");
 
-	// Style the element to look like a drag preview
-	listItem.style.cssText = `
-		position: absolute;
-		top: -1000px;
-		left: -1000px;
-	`;
+	const dragElementShadow = dragElement.attachShadow({ mode: "open" });
 
-	// Add to document body temporarily
-	document.body.appendChild(listItem);
+	const styles = new CSSStyleSheet();
+	styles.replaceSync(MultipleDragGhostCss);
 
-	return listItem;
+	dragElementShadow.adoptedStyleSheets = [styles];
+	const I18nText = {
+		key: "DRAG_DROP_MULTIPLE_TEXT",
+		defaultText: "{0} items",
+	};
+	dragElementShadow.innerHTML = i18nBundle.getText(I18nText, count);
+
+	return dragElement;
 };
 
-const startMultipleDrag = (dragEvent: DragEvent, count: number): void => {
+const startMultipleDrag = async (dragEvent: DragEvent, count: number): Promise<void> => {
 	if (count <= 0 || !dragEvent.dataTransfer) {
 		return;
 	}
@@ -66,7 +70,7 @@ const startMultipleDrag = (dragEvent: DragEvent, count: number): void => {
 	if (customDragTemplate) {
 		// Use component's custom template
 		customDragTemplate.style.display = "flex";
-		dragEvent.dataTransfer.setDragImage(customDragTemplate, 20, 10);
+		dragEvent.dataTransfer.setDragImage(customDragTemplate, 0, 0);
 
 		// Clean up after drag starts
 		requestAnimationFrame(() => {
@@ -77,14 +81,16 @@ const startMultipleDrag = (dragEvent: DragEvent, count: number): void => {
 		});
 	} else {
 		// Use default template
-		const customDragElement = createDefaultMultiDragElement(count);
-		dragEvent.dataTransfer.setDragImage(customDragElement, 20, 10);
+		const defaultDragElement = await createDefaultMultiDragElement(count);
+
+		// Add to document body temporarily
+		document.body.appendChild(defaultDragElement);
+
+		dragEvent.dataTransfer.setDragImage(defaultDragElement, 0, 0);
 
 		// Clean up the temporary element after the drag operation starts
 		requestAnimationFrame(() => {
-			if (customDragElement) {
-				customDragElement.remove();
-			}
+			defaultDragElement.remove();
 		});
 	}
 };
@@ -165,7 +171,7 @@ const DragRegistry = {
 	setCustomDragTemplate,
 };
 
-window.DragRegistry = DragRegistry;
+// window.DragRegistry = DragRegistry;
 
 export default DragRegistry;
 export type {
