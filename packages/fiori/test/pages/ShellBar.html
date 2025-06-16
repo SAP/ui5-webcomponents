@@ -19,7 +19,7 @@
 		class="shellbar-example"
 		secondary-title="Second Title"
 	>
-		<ui5-shellbar-branding slot="branding" branding-title="Product Title">
+		<ui5-shellbar-branding slot="branding" branding-title="Product Title" href="https://sap.github.io/ui5-webcomponents/" target="_blank" accessible-name="Branding Label">
 			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
 		</ui5-shellbar-branding>
 	</ui5-shellbar>
@@ -103,6 +103,7 @@
 	<ui5-shellbar
 			class="shellbar-example"
 			id="shellbar"
+			primary-title="Primary Title"
 			secondary-title="Second title"
 			second-title="Second Title"
 			notifications-count="99+"
@@ -111,9 +112,7 @@
 			show-search-field
 	>
 
-		<ui5-shellbar-branding slot="branding" branding-title="Product Title">
-			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
-		</ui5-shellbar-branding>
+		<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
 
 		<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
 
@@ -289,16 +288,13 @@
 			});
 		});
 
-		mySearch.addEventListener("ui5-selection-change", function (event) {
-			console.log(event);
+		test.addEventListener("click", function (event) {
+			console.error("event");
 		});
 
-		[shellbarWithStartContent, shellbar].forEach((shellbar) => {
-			shellbar.addEventListener("ui5-profile-click", function(event) {
-				popover.opener = event.detail.targetRef;
-				popover.open = true;
-				window["press-input"].value = "Profile";
-			});
+		[test, shellbar].forEach((shellbar) => {
+			shellbar.addEventListener("click", function(event) {
+				console.error("hdhdhdh");
 		});
 
 		[shellbarWithStartContent, shellbar].forEach((shellbar) => {

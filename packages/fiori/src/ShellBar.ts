@@ -463,7 +463,7 @@ class ShellBar extends UI5Element {
 	 *
 	 * **Note:** The `branding` slot is in an experimental state and is a subject to change.
 	 *
-	 * @since 2.10.0
+	 * @since 2.12.0
 	 * @public
 	 */
 	@slot()
@@ -878,7 +878,7 @@ class ShellBar extends UI5Element {
 		}
 
 		this.branding.forEach(brandingEl => {
-			brandingEl.isSBreakPoint = this.isSBreakPoint;
+			brandingEl._isSBreakPoint = this.isSBreakPoint;
 		});
 	}
 

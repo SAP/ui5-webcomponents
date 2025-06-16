@@ -51,6 +51,14 @@ describe("ShellBarBranding", () => {
 				.should("exist")
 				.and("contain.text", "Branding Comp");
 		});
+
+		it("Test ui5-shellbar-branding accessibleName property", () => {
+			basicTemplate({ accessibleName: "Accessible Name" });
+
+			cy.get("@shellbarBranding")
+				.find("a")
+				.should("have.attr", "aria-label", "Accessible Name");
+		});
 	});
 
 	describe("Slots", () => {
@@ -68,22 +76,20 @@ describe("ShellBarBranding", () => {
 	});
 
 	describe("Accessibility", () => {
-		it("Test ui5-shellbar-branding accessibility - default logo role", () => {
+		it("Test ui5-shellbar-branding accessibility - role when href is not added", () => {
 			basicTemplate();
 
 			cy.get("@shellbarBranding")
 				.find("a")
-				.should("have.attr", "role", "link");
+				.should("have.attr", "role", "button");
 		});
 
-		it("Test ui5-shellbar-branding accessibility - custom logo role", () => {
-			basicTemplate({
-				accessibilityAttributes: { logo: { role: "button" } }
-			});
+		it("Test ui5-shellbar-branding accessibility - role when href is added", () => {
+			basicTemplate({ href: "https://sap.github.io/ui5-webcomponents/" });
 
 			cy.get("@shellbarBranding")
 				.find("a")
-				.should("have.attr", "role", "button");
+				.should("have.attr", "role", "link");
 		});
 
 		it("Test ui5-shellbar-branding accessibility - aria-label", () => {
