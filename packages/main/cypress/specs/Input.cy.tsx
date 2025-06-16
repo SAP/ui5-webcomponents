@@ -842,65 +842,80 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			.should("not.have.been.calledOnce");
 	});
 
-	it.skip("Change event fires after typing a new value following a clear icon click", () => {
+	it("Change event fires after typing a new value following a clear icon click", () => {
 		cy.mount(<Input showClearIcon={true} onChange={cy.stub().as("inputChange")} />);
 
-		cy.get("ui5-input")
-			.as("input")
+		cy.get("@input")
+			.shadow()
+			.find("#inner")
+			.as("innerInput")
+
+		cy.get("@input")
 			.realClick();
 
 		cy.get("@input")
 			.should("be.focused");
 
-		cy.get("@input")
-			.realType("Albania");
+		cy.realType("Albania");
 
-		cy.get("@input")
-			.realPress("Enter");
+		cy.realPress("Enter");
 
 		cy.get("@inputChange")
 			.should("have.been.calledOnce");
-
+		// Check input value
 		cy.get("@input")
 			.should("have.value", "Albania");
+
+		// cy.get("@innerInput")
+		// 	.should("have.value", "Albania");
 
 		cy.get("@input")
 			.shadow()
 			.find("[ui5-icon]")
 			.as("icon")
 			.realClick();
-
+		// Check input value
 		cy.get("@input")
 			.should("have.value", "");
 
+		// TODO: Could be fixed once rendering is moved to sync
+		cy.get("@innerInput")
+			.should("have.value", "");
+
 		cy.realType("Argentina");
-
-		cy.realPress("Enter");
-
-		cy.get("@inputChange")
-			.should("have.been.calledTwice");
-
+		// Check input value
 		cy.get("@input")
 			.should("have.value", "Argentina");
+
+		// TODO: Could be fixed once rendering is moved to sync
+		cy.get("@innerInput")
+			.should("have.value", "Argentina");
+
+		cy.realPress("Enter");
 
 		cy.get("@icon")
 			.realClick();
-
-		cy.get("@inputChange")
-			.should("have.been.calledTwice");
-
+		// Check input value
 		cy.get("@input")
 			.should("have.value", "");
 
+		// TODO: Could be fixed once rendering is moved to sync
+		cy.get("@innerInput")
+			.should("have.value", "");
+
 		cy.realType("Argentina");
+		// Check input value
+		cy.get("@input")
+			.should("have.value", "Argentina");
+
+		// TODO: Could be fixed once rendering is moved to sync
+		cy.get("@innerInput")
+			.should("have.value", "Argentina");
 
 		cy.realPress("Enter");
 
 		cy.get("@inputChange")
 			.should("have.been.calledTwice");
-
-		cy.get("@input")
-			.should("have.value", "Argentina");
 	});
 
 	it("should not close the dialog when item is selected", () => {
@@ -914,6 +929,9 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 
 		cy.get("[ui5-dialog]")
 			.as("dialog");
+
+		cy.get<Dialog>("@dialog")
+			.ui5DialogOpened();
 
 		cy.get("[ui5-input]")
 			.as("input")
