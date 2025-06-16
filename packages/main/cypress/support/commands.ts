@@ -38,12 +38,14 @@
 
 import "@ui5/cypress-internal/commands.js";
 import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { ModifierKey } from "./commands/common/types.js";
 
 // Please keep this list in alphabetical order
 import "./commands/Calendar.commands.js";
 import "./commands/ColorPalette.commands.js";
 import "./commands/ColorPicker.commands.js";
 import "./commands/DateTimePicker.commands.js";
+import "./commands/DateRangePicker.commands.js";
 import "./commands/Dialog.commands.ts";
 import "./commands/Popover.commands.ts";
 import "./commands/ResponsivePopover.commands.js";
@@ -51,6 +53,7 @@ import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
 import "./commands/SegmentedButton.commands.js";
 import "./commands/TimeSelectionClocks.commands.js";
+import "./commands/ToggleButton.commands.js";
 
 type SimulationDevices = "phone"
 
@@ -87,6 +90,7 @@ declare global {
 			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
 			ui5TimeSelectionClocksInnerButton(name: string, index: number): Chainable<JQuery<HTMLElement>>
 			ui5TimeSelectionClocksIsActiveClock(name: string, index: number): Chainable<boolean>
+			ui5ToggleButtonRealClick(isClickPrevented: boolean, pressedKey?: ModifierKey): Chainable<void>
 		}
 	}
 }
