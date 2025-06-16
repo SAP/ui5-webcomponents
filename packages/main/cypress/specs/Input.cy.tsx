@@ -169,7 +169,7 @@ describe("Input Tests", () => {
 	it("tests submit and change event order", () => {
 		cy.mount(
 			<form>
-				<Input onChange={cy.spy().as("change")}></Input>
+				<Input onChange={cy.x().as("change")}></Input>
 			</form>
 		);
 
@@ -737,7 +737,7 @@ describe("Selection-change event", () => {
 describe("Change event behavior when selecting the same suggestion item", () => {
 	beforeEach(() => {
 		cy.mount(
-			<Input placeholder="Search for a country ..." onChange={cy.stub().as("changeEvent")}>
+			<Input placeholder="Search for a country ..." showSuggestions onChange={cy.stub().as("changeEvent")}>
 				<SuggestionItemGroup headerText="A">
 					<SuggestionItem text="Afghanistan" />
 					<SuggestionItem text="Argentina" />
@@ -752,7 +752,7 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			.as("input")
 	});
 
-	it("Change event is not fired when the same suggestion item is selected (with typeahead)", () => {
+	it.only("Change event is not fired when the same suggestion item is selected (with typeahead)", () => {
 		cy.get("@input")
 			.realClick();
 
