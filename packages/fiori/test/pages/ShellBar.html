@@ -82,15 +82,12 @@
 		id="shellbarWithLogoClick"
 		class="shellbar-example"
 		data-ui5-static-stable="shellbarWithLogoClickStatic"
+		primary-title="SAP Labs Bulgaria"
 		show-notifications
 		show-product-switch
 	>
 		<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
-
-		<ui5-shellbar-branding slot="branding" branding-title="SAP Labs Bulgaria">
-			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
-		</ui5-shellbar-branding>
-
+		<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
 		<ui5-shellbar-item icon="activities" text="Tasks"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="thing-type" text="Messages"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="action-settings" text="Settings"></ui5-shellbar-item>
@@ -98,12 +95,11 @@
 		<ui5-input slot="searchField" value-state="Negative"></ui5-input>
 	</ui5-shellbar>
 
-
 	<ui5-checkbox id="checkKeepPopoverOpen" text="keep popover open on menu-item click"></ui5-checkbox>
 	<ui5-shellbar
 			class="shellbar-example"
 			id="shellbar"
-			primary-title="Primary Title"
+			primary-title="Product Title"
 			secondary-title="Second title"
 			second-title="Second Title"
 			notifications-count="99+"
@@ -112,13 +108,13 @@
 			show-search-field
 	>
 
-		<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
-
 		<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
 
 		<ui5-avatar slot="profile">
 			<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
 		</ui5-avatar>
+
+		<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"/>
 
 		<ui5-button icon="nav-back" slot="startButton" id="start-button"></ui5-button>
 
@@ -136,7 +132,7 @@
 		<ui5-li slot="menuItems" data-key="key5">Application 5</ui5-li>
 	</ui5-shellbar>
 
-	<ui5-shellbar
+<ui5-shellbar
 		class="shellbar-example"
 		id="shellbarWithStartContent"
 		secondary-title="Second title"
@@ -169,18 +165,15 @@
 		<h3>ShellBar in Compact</h3>
 		<div>
 			<ui5-shellbar id="shelbarCompact" show-notifications show-product-switch>
-
 				<ui5-shellbar-branding slot="branding" branding-title="Product Title"></ui5-shellbar-branding>
 				<ui5-button icon="nav-back" slot="startButton" id="start-button"></ui5-button>
 				<ui5-shellbar-item icon="disconnected" text="Disconnect"></ui5-shellbar-item>
 				<ui5-shellbar-item icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
-
-				<!-- Currently, the new branding slot and the ui5-shellbar-branding component do not support the menuItems slot. -->
-				<!-- <ui5-li id="menu-item-1" slot="menuItems">Application 1</ui5-li>
+				<ui5-li id="menu-item-1" slot="menuItems">Application 1</ui5-li>
 				<ui5-li id="menu-item-2" slot="menuItems">Application 2</ui5-li>
 				<ui5-li slot="menuItems">Application 3</ui5-li>
 				<ui5-li slot="menuItems">Application 4</ui5-li>
-				<ui5-li slot="menuItems">Application 5</ui5-li> -->
+				<ui5-li slot="menuItems">Application 5</ui5-li>
 			</ui5-shellbar>
 		</div>
 	</section>
@@ -251,13 +244,12 @@
 	<ui5-shellbar
 			id="menuItemsSB"
 	>
-		<ui5-shellbar-branding slot="branding" branding-title="Menu Items"></ui5-shellbar-branding>
+	<ui5-shellbar-branding slot="branding" branding-title="Menu Items"></ui5-shellbar-branding>
 
-		<!-- Currently, the new branding slot and the ui5-shellbar-branding component do not support the menuItems slot. -->
-		<!-- <ui5-li id="mi-1" slot="menuItems" data-key="key1">App 1</ui5-li>
+	<ui5-li id="mi-1" slot="menuItems" data-key="key1">App 1</ui5-li>
 		<ui5-li id="mi-2" slot="menuItems" data-key="key2">App 2</ui5-li>
 		<ui5-li id="mi-3" slot="menuItems" data-key="key3">App 3</ui5-li>
-		<ui5-li id="mi-4" slot="menuItems" data-key="key4">App 4</ui5-li> -->
+		<ui5-li id="mi-4" slot="menuItems" data-key="key4">App 4</ui5-li>
 	</ui5-shellbar>
 
 	<ui5-shellbar id="test-invalidation">
@@ -288,13 +280,16 @@
 			});
 		});
 
-		test.addEventListener("click", function (event) {
-			console.error("event");
+		mySearch.addEventListener("ui5-selection-change", function (event) {
+			console.log(event);
 		});
 
-		[test, shellbar].forEach((shellbar) => {
-			shellbar.addEventListener("click", function(event) {
-				console.error("hdhdhdh");
+		[shellbarWithStartContent, shellbar].forEach((shellbar) => {
+			shellbar.addEventListener("ui5-profile-click", function(event) {
+				popover.opener = event.detail.targetRef;
+				popover.open = true;
+				window["press-input"].value = "Profile";
+			});
 		});
 
 		[shellbarWithStartContent, shellbar].forEach((shellbar) => {

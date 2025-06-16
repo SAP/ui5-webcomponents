@@ -144,6 +144,14 @@ describe("Component Behavior", () => {
 				assert.strictEqual(await input.getValue(), "Product Switch", "Input value is set by click event of Product Switch icon");
 			});
 
+			it("tests logoClick event", async () => {
+				const logo = await browser.$("#shellbar").shadow$(".ui5-shellbar-logo");
+				const input = await browser.$("#press-input");
+
+				await logo.click();
+				assert.strictEqual(await input.getValue(), "Logo", "Input value is set by click event of Logo");
+			});
+
 			it("tests search-button-click event", async () => {
 				await browser.setWindowSize(870, 1680); // search icon is not visible on XXL breakpoint
 				await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
@@ -155,6 +163,7 @@ describe("Component Behavior", () => {
 				await searchButton .click();
 				assert.notOk(await searchField.isDisplayed(), "Search field should not be opened");
 			});
+
 
 			it("tests menuItemClick event", async () => {
 				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
@@ -196,6 +205,15 @@ describe("Component Behavior", () => {
 			beforeEach(async () => {
 				await browser.setWindowSize(510, 1680);
 				await browser.$("#shellbar").setProperty("showSearchField", false);
+			});
+
+			it("tests logoClick event", async () => {
+				const logo = await browser.$("#shellbarWithLogoClick").shadow$(".ui5-shellbar-logo");
+				const title = "SAPLabsBulgaria";
+				const input = await browser.$("#press-input2");
+
+				await logo.click();
+				assert.strictEqual(await input.getValue(), title, "Input value is set by click event of Logo");
 			});
 
 			it("tests opening of menu", async () => {
