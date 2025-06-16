@@ -7,6 +7,7 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
 import ColorPalettePopoverTemplate from "./ColorPalettePopoverTemplate.js";
 
 // Styles
@@ -17,6 +18,7 @@ import {
 	COLOR_PALETTE_DIALOG_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
+import type ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail, IColorPaletteItem } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
 
@@ -150,9 +152,22 @@ class ColorPalettePopover extends UI5Element {
 		this.fireDecoratorEvent("close");
 	}
 
+	onAfterOpen() {
+		const colorPalette = this._colorPalette;
+		// since height is dynamically determined by padding-block-start
+		colorPalette.allColorsInPalette.forEach((item: IColorPaletteItem) => {
+			const itemHeight = item.offsetHeight + 4; // adding 4px for the offsets on top and bottom
+			item.style.setProperty(getScopedVarName("--_ui5_color_palette_item_height"), `${itemHeight}px`);
+		});
+	}
+
 	onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>) {
 		this.closePopover();
 		this.fireDecoratorEvent("item-click", e.detail);
+	}
+
+	get _colorPalette() {
+		return this.shadowRoot!.querySelector<ColorPalette>("[ui5-color-palette]")!;
 	}
 
 	/**

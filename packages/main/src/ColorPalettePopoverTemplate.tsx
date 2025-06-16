@@ -13,6 +13,7 @@ export default function ColorPalettePopoverTemplate(this: ColorPalettePopover) {
 			opener={this.opener}
 			open={this.open}
 			onClose={this.onAfterClose}
+			onOpen={this.onAfterOpen}
 		>
 			<div slot="header" class="ui5-cp-header">
 				<Title level="H1" wrappingType="None">
