@@ -16,7 +16,7 @@ describe("StepInput keyboard interaction tests", () => {
 
 		cy.get<StepInput>("@stepInput")
 			.ui5StepInputChangeValueWithArrowKeys(5);
-	
+
 		cy.get<StepInput>("@stepInput")
 			.ui5StepInputChangeValueWithArrowKeys(5);
 	});
@@ -31,7 +31,7 @@ describe("StepInput keyboard interaction tests", () => {
 
 		cy.get<StepInput>("@stepInput")
 			.realClick();
-		
+
 		cy.get<StepInput>("@stepInput")
 			.ui5StepInputChangeValueWithArrowKeys(5, decreaseValue);
 
@@ -48,8 +48,9 @@ describe("StepInput keyboard interaction tests", () => {
 			.as("stepInput");
 
 		cy.get<StepInput>("@stepInput")
-			.realClick();
-		
+			.realClick()
+			.should("be.focused");
+
 		cy.realPress(['Shift', 'PageUp']);
 
 		cy.get<StepInput>("@stepInput")
@@ -65,8 +66,9 @@ describe("StepInput keyboard interaction tests", () => {
 			.as("stepInput");
 
 		cy.get<StepInput>("@stepInput")
-			.realClick();
-		
+			.realClick()
+			.should("be.focused");
+
 		cy.realPress(['Shift', 'PageDown']);
 
 		cy.get<StepInput>("@stepInput")
@@ -82,8 +84,9 @@ describe("StepInput keyboard interaction tests", () => {
 			.as("stepInput");
 
 		cy.get<StepInput>("@stepInput")
-			.realClick();
-		
+			.realClick()
+			.should("be.focused");
+
 		cy.realPress(['Control', 'Shift', 'ArrowUp']);
 
 		cy.get<StepInput>("@stepInput")
@@ -99,8 +102,9 @@ describe("StepInput keyboard interaction tests", () => {
 			.as("stepInput");
 
 		cy.get<StepInput>("@stepInput")
-			.realClick();
-		
+			.realClick()
+			.should("be.focused");
+
 		cy.realPress(['Control', 'Shift', 'ArrowDown']);
 
 		cy.get<StepInput>("@stepInput")
@@ -120,7 +124,7 @@ describe("StepInput keyboard interaction tests", () => {
 
 		cy.get<StepInput>("@stepInput")
 			.ui5StepInputChangeValueWithArrowKeys(6);
-		
+
 		cy.realPress("Escape");
 
 		cy.get<StepInput>("@stepInput")
@@ -136,7 +140,8 @@ describe("StepInput keyboard interaction tests", () => {
 			.as("stepInput");
 
 		cy.get<StepInput>("@stepInput")
-			.realClick({ "clickCount": 2 });
+			.realClick({ "clickCount": 2 })
+			.should("be.focused");
 
 		cy.realType("23");
 		cy.realPress("Enter");
@@ -154,10 +159,10 @@ describe("StepInput keyboard interaction tests", () => {
 			.as("stepInput");
 
 		cy.get<StepInput>("@stepInput")
-			.realClick({ "clickCount": 2 });
+			.realClick({ "clickCount": 2 })
+			.should("be.focused");
 
-		cy.realType("Backspace");
-		
+		cy.realPress("Backspace");
 		cy.realPress("Enter");
 
 		cy.get<StepInput>("@stepInput")
@@ -231,10 +236,11 @@ describe("StepInput misc interaction tests", () => {
 			.as("stepInput");
 
 		cy.get<StepInput>("@stepInput")
-			.realClick({ "clickCount": 2 });
+			.realClick({ "clickCount": 2 })
+			.should("be.focused");
 
 		cy.realType("23.034");
-			
+
 		cy.realPress("Enter");
 	
 		cy.get<StepInput>("@stepInput")
@@ -245,7 +251,7 @@ describe("StepInput misc interaction tests", () => {
 describe("StepInput events", () => {
 	it("should not change value state when 'value-state-change' event is prevented", () => {
 		const valueState = "Positive";
-		
+
 		cy.mount(
 			<StepInput valueState={valueState}></StepInput>
 		);
@@ -293,7 +299,8 @@ describe("StepInput events", () => {
 			});
 
 		cy.get<StepInput>("@stepInput")
-			.realClick();
+			.realClick()
+			.should("be.focused");
 
 		cy.realPress("1");
 
@@ -331,7 +338,7 @@ describe("StepInput events", () => {
 	it("should fire 'change' after 'Enter' is pressed", () => {
 		cy.mount(
 			<StepInput></StepInput>
-		);		
+		);
 
 		cy.get("[ui5-step-input]")
 			.as("stepInput");
@@ -447,7 +454,7 @@ describe("StepInput events", () => {
 
 		cy.get("@decreaseButton")
 			.realClick();
-	
+
 		cy.get("@change")
 			.should("have.been.calledOnce");
 
@@ -515,13 +522,14 @@ describe("StepInput events", () => {
 			.ui5StepInputAttachHandler("ui5-change", "change");
 
 		cy.get<StepInput>("@stepInput")
-			.realClick({ "clickCount": 2 });
+			.realClick({ "clickCount": 2 })
+			.should("be.focused");
 
 		cy.realType("23");
 
 		cy.get("@change")
 			.should("not.have.been.called");
-		
+
 		cy.realPress("Enter");
 
 		cy.get<StepInput>("@stepInput")
@@ -543,13 +551,14 @@ describe("StepInput events", () => {
 			.ui5StepInputAttachHandler("ui5-change", "change");
 
 		cy.get<StepInput>("@stepInput")
-			.realClick({ "clickCount": 2 });
+			.realClick({ "clickCount": 2 })
+			.should("be.focused");
 
 		cy.realType("23");
 
 		cy.get("@change")
 			.should("not.have.been.called");
-		
+
 		cy.realPress("Tab");
 
 		cy.get<StepInput>("@stepInput")
@@ -571,13 +580,14 @@ describe("StepInput events", () => {
 			.ui5StepInputAttachHandler("ui5-change", "change");
 
 		cy.get<StepInput>("@stepInput")
-			.realClick({ "clickCount": 2 });
+			.realClick({ "clickCount": 2 })
+			.should("be.focused");
 
-		cy.realType("Backspace");
+		cy.realPress("Backspace");
 
 		cy.get("@change")
 			.should("not.have.been.called");
-		
+
 		cy.realPress("Tab");
 
 		cy.get<StepInput>("@stepInput")
@@ -590,7 +600,7 @@ describe("StepInput events", () => {
 	it("should fire 'change' after value propety is programatically set and then changed with +/- keys", () => {
 		cy.mount(
 			<StepInput value={5}></StepInput>
-		);		
+		);
 
 		cy.get("[ui5-step-input]")
 			.as("stepInput");
