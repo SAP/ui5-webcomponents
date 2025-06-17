@@ -3,7 +3,8 @@ Cypress.Commands.add("ui5StepInputChangeValueWithArrowKeys", { prevSubject: true
 
 	cy.wrap(subject)
 		.as("stepInput")
-		.should("be.visible");
+		.should("be.visible")
+		.should("be.focused");
 
 	cy.realPress(key);
 
@@ -22,7 +23,7 @@ Cypress.Commands.add("ui5StepInputChangeValueWithButtons", { prevSubject: true }
 		.shadow()
 		.find(buttonClass)
 		.as("button");
-    
+
 	cy.get("@button")
 		.realClick();
 
@@ -51,13 +52,21 @@ Cypress.Commands.add("ui5StepInputCheckInnerInputProperty", { prevSubject: true 
 	cy.get("@stepInput")
 		.shadow()
 		.find("[ui5-input]")
-		.as("input");
-
-	cy.get("@input")
 		.shadow()
 		.find("input")
 		.as("innerInput");
-    
+
 	cy.get("@innerInput")
 		.should("have.prop", propName, expectedValue);
 });
+
+declare global {
+	namespace Cypress {
+		interface Chainable {
+			ui5StepInputChangeValueWithArrowKeys(expectedValue: number, decreaseValue?: boolean): Chainable<void>
+			ui5StepInputChangeValueWithButtons(expectedValue: number, decreaseValue?: boolean): Chainable<void>
+			ui5StepInputAttachHandler(eventName: string, stubName: string): Chainable<void>
+			ui5StepInputCheckInnerInputProperty(propName: string, expectedValue: any): Chainable<void>
+		}
+	}
+}
