@@ -89,7 +89,7 @@ describe("Accessibility", () => {
 			.and("not.have.attr", "aria-labelledby");
 	});
 
-	it("checks if accessibleNameRef is properly set and applied as aria-labelledby", () => {
+	it("checks if accessibleNameRef is properly set and applied as aria-label", () => {
 		const labelId = "team-header";
 		
 		cy.mount(
@@ -102,19 +102,24 @@ describe("Accessibility", () => {
 				</AvatarGroup>
 			</>
 		);
-
+	
 		cy.get("#ag")
 			.should("have.attr", "accessible-name-ref", labelId)
 			.then(($el) => {
 				const avatarGroup = $el.get(0) as AvatarGroup;
 				expect(avatarGroup.accessibleNameRef).to.equal(labelId);
 			});
-
+	
 		cy.get("#ag")
 			.shadow()
 			.find(".ui5-avatar-group-items")
-			.should("have.attr", "aria-labelledby", labelId);
-
+			.should("have.attr", "aria-label", "Quality Assurance Team");
+		
+		cy.get("#ag")
+			.shadow()
+			.find(".ui5-avatar-group-items")
+			.should("not.have.attr", "aria-labelledby");
+		
 		cy.get(`#${labelId}`).should("exist");
 	});
 });

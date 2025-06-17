@@ -10,7 +10,6 @@ export default function AvatarGroupTemplate(this: AvatarGroup) {
 				role={this._role}
 				tabindex={this._groupTabIndex}
 				aria-label={this._ariaLabelText}
-				aria-labelledby={this._ariaLabelledBy}
 				aria-haspopup={this._containerAriaHasPopup}
 				onClick={this._onClick}
 				onKeyUp={this._onkeyup}

@@ -36,6 +36,7 @@ import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 
 // Template
 import AvatarGroupTemplate from "./AvatarGroupTemplate.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as `ui5-avatar-group`
@@ -285,11 +286,9 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get _ariaLabelText() {
-		// If accessibleName is provided, use it directly
-		if (this.accessibleName) {
-			return this.accessibleName;
+		if (this.accessibleName || this.accessibleNameRef) {
+			return getEffectiveAriaLabelText(this);
 		}
-
 		// Fallback to existing default behavior
 		const hiddenItemsCount = this.hiddenItems.length;
 		const typeLabelKey = this._isGroup ? AVATAR_GROUP_ARIA_LABEL_GROUP : AVATAR_GROUP_ARIA_LABEL_INDIVIDUAL;
@@ -309,10 +308,6 @@ class AvatarGroup extends UI5Element {
 		}
 
 		return text;
-	}
-
-	get _ariaLabelledBy() {
-		return this.accessibleNameRef;
 	}
 
 	get _overflowButtonAriaLabelText() {
