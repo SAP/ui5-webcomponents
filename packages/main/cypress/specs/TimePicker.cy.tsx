@@ -18,7 +18,7 @@ describe("TimePicker Tests", () => {
 
 		cy.mount(<TimePicker value="03:16:16"></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker");
 
 		cy.get<TimePicker>("@timePicker")
@@ -34,7 +34,7 @@ describe("TimePicker Tests", () => {
 	it("tests clocks value", () => {
 		cy.mount(<TimePicker formatPattern="HH:mm:ss" value="11:12:13"></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker")
 			.ui5TimePickerValueHelpIconPress();
 
@@ -54,11 +54,11 @@ describe("TimePicker Tests", () => {
 	it("tests clocks submit value", () => {
 		cy.mount(<TimePicker formatPattern="hh:mm:ss" value="12:00:01"></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker")
 			.ui5TimePickerValueHelpIconPress();
 
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetClock("hours")
 			.realClick()
 			.should("be.focused")
@@ -67,7 +67,7 @@ describe("TimePicker Tests", () => {
 		pressKeyNTimes("ArrowDown", 2);
 		cy.realPress("Space");
 
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetClock("minutes");
 
 		pressKeyNTimes("ArrowDown", 5);
@@ -75,7 +75,7 @@ describe("TimePicker Tests", () => {
 
 		cy.realPress("Space");
 
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetClock("seconds");
 
 		pressKeyNTimes("ArrowUp", 4);
@@ -83,14 +83,14 @@ describe("TimePicker Tests", () => {
 		cy.realPress("Tab");
 		cy.realPress("Enter");
 
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.should("have.value", "10:57:05");
 	});
 
 	it("tests submit wrong value", () => {
 		cy.mount(<TimePicker></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker")
 			.ui5TimePickerGetInnerInput()
 			.realClick()
@@ -108,14 +108,14 @@ describe("TimePicker Tests", () => {
 	it("tests change event", () => {
 		cy.mount(<TimePicker formatPattern="HH:mm" value="12:00" onChange={cy.stub().as("changeStub")}></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker");
 
 		// Open picker and submit without changes
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerValueHelpIconPress();
 
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetSubmitButton()
 			.realClick();
 
@@ -123,10 +123,10 @@ describe("TimePicker Tests", () => {
 		cy.get("@changeStub").should("not.have.been.called");
 
 		// Open picker, change time and submit
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerValueHelpIconPress();
 
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetClock("hours")
 			.realClick()
 			.should("be.focused")
@@ -136,7 +136,7 @@ describe("TimePicker Tests", () => {
 		pressKeyNTimes("ArrowDown", 2);
 		cy.realPress("Space");
 
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetSubmitButton()
 			.realClick();
 
@@ -144,10 +144,10 @@ describe("TimePicker Tests", () => {
 		cy.get("@changeStub").should("have.been.calledOnce");
 
 		// Open picker and submit without changes
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerValueHelpIconPress();
 
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetSubmitButton()
 			.realClick();
 
@@ -155,17 +155,17 @@ describe("TimePicker Tests", () => {
 		cy.get("@changeStub").should("have.been.calledOnce");
 
 		// Open picker, change time and submit
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerValueHelpIconPress();
 
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetClock("hours")
 			.realClick()
 			.should("be.focused")
 			.realPress("ArrowDown") // select 00
 			.realPress("Space");
 
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetSubmitButton()
 			.realClick();
 
@@ -173,7 +173,7 @@ describe("TimePicker Tests", () => {
 		cy.get("@changeStub").should("have.been.calledTwice");
 
 		// Test direct input change
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetInnerInput()
 			.realClick()
 			.should("be.focused")
@@ -188,7 +188,7 @@ describe("TimePicker Tests", () => {
 	it("tests value state", () => {
 		cy.mount(<TimePicker></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker")
 			.ui5TimePickerGetInnerInput()
 			.realClick();
@@ -210,7 +210,7 @@ describe("TimePicker Tests", () => {
 	it("tests input keyboard handling", () => {
 		cy.mount(<TimePicker formatPattern="hh:mm:ss" value="02:40:05"></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker")
 			.ui5TimePickerGetInnerInput()
 			.realClick()
@@ -275,7 +275,7 @@ describe("TimePicker Tests", () => {
 	it("test closing the picker with the keyboard", () => {
 		cy.mount(<TimePicker></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker")
 			.ui5TimePickerValueHelpIconPress();
 
@@ -288,7 +288,7 @@ describe("TimePicker Tests", () => {
 	it("the value 'now' returns the current time, instead of the string 'now'", () => {
 		cy.mount(<TimePicker></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker")
 			.ui5TimePickerGetInnerInput()
 			.realClick()
@@ -304,7 +304,7 @@ describe("TimePicker Tests", () => {
 	it("opening time picker's value-help, sets the 'open' property to true", () => {
 		cy.mount(<TimePicker></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker")
 			.ui5TimePickerValueHelpIconPress();
 
@@ -319,7 +319,7 @@ describe("TimePicker Tests", () => {
 	it("setting time picker's open property to true, opens the value-help", () => {
 		cy.mount(<TimePicker></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker");
 
 		cy.get<TimePicker>("@timePicker")
@@ -333,7 +333,7 @@ describe("TimePicker Tests", () => {
 	it("picker popover should have accessible name", () => {
 		cy.mount(<TimePicker></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker")
 			.ui5TimePickerGetInnerInput()
 			.realClick()
@@ -353,7 +353,7 @@ describe("TimePicker Tests", () => {
 			</>
 		);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.ui5TimePickerGetInnerInput()
 			.should("have.attr", "aria-label", "Pick a time");
 	});
@@ -361,7 +361,7 @@ describe("TimePicker Tests", () => {
 	it("should apply aria-label from the accessibleName property", () => {
 		cy.mount(<TimePicker accessibleName="Pick a time"></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.ui5TimePickerGetInnerInput()
 			.should("have.attr", "aria-label", "Pick a time");
 	});
@@ -369,11 +369,11 @@ describe("TimePicker Tests", () => {
 	it("displays value state message header in popover when value state is set", () => {
 		cy.mount(<TimePicker valueState="Negative"></TimePicker>);
 
-		cy.get("[ui5-time-picker]")
+		cy.get<TimePicker>("[ui5-time-picker]")
 			.as("timePicker")
 			.ui5TimePickerValueHelpIconPress();
 
-		cy.get("@timePicker")
+		cy.get<TimePicker>("@timePicker")
 			.ui5TimePickerGetPopover()
 			.find(".ui5-valuestatemessage-header")
 			.should("exist")

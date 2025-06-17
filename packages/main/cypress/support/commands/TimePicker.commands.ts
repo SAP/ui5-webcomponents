@@ -1,3 +1,6 @@
+import Button from "../../../src/Button.js";
+import TimePicker from "../../../src/TimePicker.js";
+
 Cypress.Commands.add("ui5TimePickerGetInnerInput", { prevSubject: true }, subject => {
 	cy.wrap(subject)
 		.as("timePicker");
@@ -21,6 +24,9 @@ Cypress.Commands.add("ui5TimePickerValueHelpIconPress", { prevSubject: true }, s
 		.find("[ui5-datetime-input]")
 		.find(".ui5-time-picker-input-icon-button")
 		.realClick();
+
+	cy.get<TimePicker>("@timePicker")
+		.ui5TimePickerGetPopover();
 });
 
 Cypress.Commands.add("ui5TimePickerGetPopover", { prevSubject: true }, subject => {
@@ -68,21 +74,21 @@ declare global {
 	namespace Cypress {
 		interface Chainable {
 			ui5TimePickerGetInnerInput(
-				this: Chainable<JQuery<Element>>
-			): Chainable<JQuery<Element>>;
+				this: Chainable<JQuery<TimePicker>>
+			): Chainable<JQuery<HTMLInputElement>>;
 			ui5TimePickerValueHelpIconPress(
-				this: Chainable<JQuery<Element>>
+				this: Chainable<JQuery<TimePicker>>
 			): Chainable<void>;
 			ui5TimePickerGetPopover(
-				this: Chainable<JQuery<Element>>
+				this: Chainable<JQuery<TimePicker>>
 			): Chainable<JQuery<Element>>;
 			ui5TimePickerGetClock(
-				this: Chainable<JQuery<Element>>,
+				this: Chainable<JQuery<TimePicker>>,
 				clockType: string
-			): Chainable<JQuery<Element>>;
+			): Chainable<JQuery<TimePicker>>;
 			ui5TimePickerGetSubmitButton(
-				this: Chainable<JQuery<Element>>
-			): Chainable<JQuery<Element>>;
+				this: Chainable<JQuery<TimePicker>>
+			): Chainable<JQuery<Button>>;
 		}
 	}
 } 
