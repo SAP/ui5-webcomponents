@@ -473,18 +473,18 @@ describe("Menu interaction", () => {
 				<Button id="btnOpen">Open Menu</Button>
 				<Menu open opener="btnOpen">
 					<MenuItem text="Item 1" checked></MenuItem>
-					<MenuItemGroup itemCheckMode="Single" id="groupSingle">
+					<MenuItemGroup checkMode="Single" id="groupSingle">
 						<MenuItem text="Item 2" checked></MenuItem>
 						<MenuItem text="Item 3" checked></MenuItem>
 					</MenuItemGroup>
-					<MenuItemGroup id="groupMulti" itemCheckMode="Multiple">
+					<MenuItemGroup id="groupMulti" checkMode="Multiple">
 						<MenuItem text="Item 4" checked></MenuItem>
 						<MenuItem text="Item 5" checked></MenuItem>
 						<MenuItem text="Item 6" checked>
 							<MenuItem text="Item 6.1"></MenuItem>
 						</MenuItem>
 					</MenuItemGroup>
-					<MenuItemGroup id="groupNone" itemCheckMode="None">
+					<MenuItemGroup id="groupNone" checkMode="None">
 						<MenuItem text="Item 7" checked></MenuItem>
 						<MenuItem text="Item 8" checked></MenuItem>
 					</MenuItemGroup>
@@ -586,11 +586,11 @@ describe("Menu interaction", () => {
 				.should("not.exist");
 		});
 
-		it("Select/deselect items (Single mode)", () => {
+		it("Select/deselect items (checkMode=Single)", () => {
 			cy.mount(<>
 				<Button id="btnOpen">Open Menu</Button>
 				<Menu opener="btnOpen">
-					<MenuItemGroup itemCheckMode="Single" id="groupSingle">
+					<MenuItemGroup checkMode="Single" id="groupSingle">
 						<MenuItem text="Item 2" checked></MenuItem>
 						<MenuItem text="Item 3"></MenuItem>
 					</MenuItemGroup>
@@ -664,11 +664,11 @@ describe("Menu interaction", () => {
 				.should("not.exist");
 		});
 
-		it("Select/deselect items (Multiple mode) ", () => {
+		it("Select/deselect items (checkMode=Multiple) ", () => {
 			cy.mount(<>
 				<Button id="btnOpen">Open Menu</Button>
 				<Menu opener="btnOpen">
-					<MenuItemGroup id="groupMulti" itemCheckMode="Multiple">
+					<MenuItemGroup id="groupMulti" checkMode="Multiple">
 						<MenuItem text="Item 4" checked></MenuItem>
 						<MenuItem text="Item 5" checked></MenuItem>
 					</MenuItemGroup>
@@ -749,11 +749,11 @@ describe("Menu interaction", () => {
 				.should("exist");
 		});
 
-		it("Select item (None mode) ", () => {
+		it("Select item (checkMode=None) ", () => {
 			cy.mount(<>
 				<Button id="btnOpen">Open Menu</Button>
 				<Menu open opener="btnOpen">
-					<MenuItemGroup id="groupNone" itemCheckMode="None">
+					<MenuItemGroup id="groupNone" checkMode="None">
 						<MenuItem text="Item 6"></MenuItem>
 					</MenuItemGroup>
 				</Menu>
@@ -779,15 +779,15 @@ describe("Menu interaction", () => {
 					<Button id="btnOpen">Open Menu</Button>
 					<Menu open opener="btnOpen">
 						<MenuItem text="Item 1" checked></MenuItem>
-						<MenuItemGroup itemCheckMode="Single" id="groupSingle">
+						<MenuItemGroup checkMode="Single" id="groupSingle">
 							<MenuItem text="Item 2" checked></MenuItem>
 							<MenuItem text="Item 3"></MenuItem>
 						</MenuItemGroup>
-						<MenuItemGroup id="groupMulti" itemCheckMode="Multiple">
+						<MenuItemGroup id="groupMulti" checkMode="Multiple">
 							<MenuItem text="Item 4" checked></MenuItem>
 							<MenuItem text="Item 5"></MenuItem>
 						</MenuItemGroup>
-						<MenuItemGroup id="groupNone" itemCheckMode="None">
+						<MenuItemGroup id="groupNone" checkMode="None">
 							<MenuItem text="Item 6" checked></MenuItem>
 							<MenuItem text="Item 7"></MenuItem>
 						</MenuItemGroup>

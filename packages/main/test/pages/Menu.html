@@ -123,20 +123,20 @@
 		<ui5-menu-item text="New Text">
 			<ui5-menu-item text="Item 1"></ui5-menu-item>
 			<ui5-menu-separator></ui5-menu-separator>
-			<ui5-menu-item-group item-check-mode="Single">
+			<ui5-menu-item-group check-mode="Single">
 				<ui5-menu-item text="Item 2" icon="bold-text" checked></ui5-menu-item>
 				<ui5-menu-item text="Item 3"></ui5-menu-item>
 				<ui5-menu-item text="Item 4" icon="add-document"></ui5-menu-item>
 			</ui5-menu-item-group>
 			<ui5-menu-separator></ui5-menu-separator>
 			<ui5-menu-item text="New submenu" icon="add-document" checked>
-				<ui5-menu-item-group item-check-mode="Multiple">
+				<ui5-menu-item-group check-mode="Multiple">
 					<ui5-menu-item text="Item 5" checked></ui5-menu-item>
 					<ui5-menu-item text="Item 6"></ui5-menu-item>
 					<ui5-menu-item text="Item 7"></ui5-menu-item>
 				</ui5-menu-item-group>
 				<ui5-menu-item text="Item 8" checked>
-					<ui5-menu-item-group item-check-mode="Multiple">
+					<ui5-menu-item-group check-mode="Multiple">
 						<ui5-menu-item text="Item 8.1"></ui5-menu-item>
 						<ui5-menu-item text="Item 8.2"></ui5-menu-item>
 						<ui5-menu-item text="Item 8.3"></ui5-menu-item>
@@ -145,7 +145,7 @@
 			</ui5-menu-item>
 		</ui5-menu-item>
 		<ui5-menu-separator></ui5-menu-separator>
-		<ui5-menu-item-group item-check-mode="Multiple">
+		<ui5-menu-item-group check-mode="Multiple">
 			<ui5-menu-item text="Bold" icon="bold-text" checked>
 				<ui5-button id="newLock2" slot="endContent" icon="locked" design="Transparent"></ui5-button>
 			</ui5-menu-item>
@@ -153,7 +153,7 @@
 			<ui5-menu-item text="Underline" icon="underline-text" checked></ui5-menu-item>
 		</ui5-menu-item-group>
 		<ui5-menu-separator></ui5-menu-separator>
-		<ui5-menu-item-group item-check-mode="Single">
+		<ui5-menu-item-group check-mode="Single">
 			<ui5-menu-item text="Left Alignment" icon="text-align-left" checked></ui5-menu-item>
 			<ui5-menu-item text="Center Alignment" icon="text-align-center" checked></ui5-menu-item>
 			<ui5-menu-item text="Right Alignment" icon="text-align-right" checked></ui5-menu-item>
@@ -350,6 +350,11 @@
 		menuItemFromC.accessibilityAttributes = {
 			role: "menuitemcheckbox",
 		};
+
+		menuGroups.addEventListener("ui5-item-click", function(event) {
+			console.warn("Item clicked: " + event.detail.item.text);
+			console.warn("Item checked: " + event.detail.item.checked);
+		});
 
 	</script>
 

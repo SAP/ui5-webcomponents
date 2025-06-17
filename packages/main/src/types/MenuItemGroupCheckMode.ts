@@ -1,9 +1,9 @@
 /**
  * Menu item group check modes.
- * @since 2.11.0
+ * @since 2.12.0
  * @public
  */
-enum ItemCheckMode {
+enum MenuItemGroupCheckMode {
 	/**
 	 * default type (items in a group cannot be checked)
 	 * @public
@@ -23,4 +23,4 @@ enum ItemCheckMode {
 	Multiple = "Multiple",
 }
 
-export default ItemCheckMode;
+export default MenuItemGroupCheckMode;

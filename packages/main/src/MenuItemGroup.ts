@@ -6,7 +6,7 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type MenuItem from "./MenuItem.js";
 import MenuItemGroupTemplate from "./MenuItemGroupTemplate.js";
 import { isInstanceOfMenuItem } from "./MenuItem.js";
-import ItemCheckMode from "./types/ItemCheckMode.js";
+import MenuItemGroupCheckMode from "./types/MenuItemGroupCheckMode.js";
 import type { IMenuItem } from "./Menu.js";
 
 /**
@@ -16,13 +16,13 @@ import type { IMenuItem } from "./Menu.js";
  *
  * The `ui5-menu-item-group` component represents a group of items designed for use inside a `ui5-menu`.
  * Items belonging to the same group should be wrapped by a `ui5-menu-item-group`.
- * Each group can have an `itemCheckMode` property, which defines the check mode for the items within the group.
- * The possible values for `itemCheckMode` are:
+ * Each group can have an `checkMode` property, which defines the check mode for the items within the group.
+ * The possible values for `checkMode` are:
  * - 'None' (default) - no items can be checked
  * - 'Single' - Only one item can be checked at a time
  * - 'Multiple' - Multiple items can be checked simultaneously
  *
- * **Note:** If the `itemCheckMode` property is set to 'Single', only one item can remain checked at any given time.
+ * **Note:** If the `checkMode` property is set to 'Single', only one item can remain checked at any given time.
  * If multiple items are marked as checked, the last checked item will take precedence.
  *
  * ### Usage
@@ -36,7 +36,7 @@ import type { IMenuItem } from "./Menu.js";
  * @constructor
  * @extends UI5Element
  * @implements {IMenuItem}
- * @since 2.11.0
+ * @since 2.12.0
  * @public
  */
 @customElement({
@@ -51,7 +51,7 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	 * @public
 	 */
 	@property()
-	itemCheckMode: `${ItemCheckMode}` = "None";
+	checkMode: `${MenuItemGroupCheckMode}` = "None";
 
 	/**
 	 * Defines the items of this component.
@@ -72,18 +72,18 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	onBeforeRendering() {
 		this._updateItemsCheckMode();
 
-		if (this.itemCheckMode === ItemCheckMode.Single) {
+		if (this.checkMode === MenuItemGroupCheckMode.Single) {
 			this._ensureSingleItemIsChecked();
 		}
 	}
 
 	/**
-	 * Sets <code>_itemCheckMode</code> property of all menu items in the group.
+	 * Sets <code>_checkMode</code> property of all menu items in the group.
 	 * @private
 	 */
 	_updateItemsCheckMode() {
 		this._menuItems.forEach((item: MenuItem) => {
-			item._itemCheckMode = this.itemCheckMode;
+			item._checkMode = this.checkMode;
 		});
 	}
 
@@ -114,7 +114,7 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	 * @private
 	 */
 	_handleItemCheck(e: CustomEvent) {
-		if (this.itemCheckMode === ItemCheckMode.Single) {
+		if (this.checkMode === MenuItemGroupCheckMode.Single) {
 			this._clearCheckedItems();
 			(e.target as MenuItem).checked = true;
 		}

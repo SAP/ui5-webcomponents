@@ -361,19 +361,6 @@ class Menu extends UI5Element {
 		item.selected = true;
 	}
 
-	// _closeItemSubMenu(item: MenuItem) {
-	// 	if (item && item._popover) {
-	// 		const openedSibling = item._allMenuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
-
-	// 		if (openedSibling) {
-	// 			this._closeItemSubMenu(openedSibling);
-	// 		}
-
-	// 		item._popover.open = false;
-	// 		item.selected = false;
-	// 	}
-	// }
-
 	_itemMouseOver(e: MouseEvent) {
 		if (!isDesktop()) {
 			return;

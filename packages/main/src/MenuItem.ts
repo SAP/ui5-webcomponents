@@ -22,7 +22,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
-import ItemCheckMode from "./types/ItemCheckMode.js";
+import MenuItemGroupCheckMode from "./types/MenuItemGroupCheckMode.js";
 import type { ListItemAccessibilityAttributes } from "./ListItem.js";
 import type List from "./List.js";
 import ListItem from "./ListItem.js";
@@ -84,7 +84,7 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
  * **Note:** Since 1.14.0 the event is also fired before a sub-menu opens.
  * @public
  * @since 1.10.0
- * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
+ * @param { HTMLElement } item The menu item that triggers opening of the sub-menu or undefined when fired upon root menu opening.
  */
 @event("before-open", {
 	cancelable: true,
@@ -132,7 +132,7 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
 /**
  * Fired when an item is checked.
  * @private
- * @since 2.11.0
+ * @since 2.12.0
  */
 @event("item-check", {
 	bubbles: true,
@@ -185,9 +185,9 @@ class MenuItem extends ListItem implements IMenuItem {
 	icon?: string;
 
 	/**
-	 * Defines whether `ui5-menu-item` is in disabled state.
+	 * Defines whether menu item is in disabled state.
 	 *
-	 * **Note:** A disabled `ui5-menu-item` is noninteractive.
+	 * **Note:** A disabled menu item is noninteractive.
 	 * @default false
 	 * @public
 	 */
@@ -195,9 +195,9 @@ class MenuItem extends ListItem implements IMenuItem {
 	disabled = false;
 
 	/**
-	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding menu popover.
 	 *
-	 * **Note:** If set to `true` a `ui5-busy-indicator` component will be displayed into the related one to the current `ui5-menu-item` sub-menu popover.
+	 * **Note:** If set to `true` a busy indicator component will be displayed into the related one to the current menu item sub-menu popover.
 	 * @default false
 	 * @public
 	 * @since 1.13.0
@@ -206,7 +206,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	loading = false;
 
 	/**
-	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding menu popover.
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
@@ -233,14 +233,15 @@ class MenuItem extends ListItem implements IMenuItem {
 	tooltip?: string;
 
 	/**
-	 * Defines whether `ui5-menu-item` is in checked state.
+	 * Defines whether menu item is in checked state.
 	 *
-	 * **Note:** checked state is only taken into account when `ui5-menu-item` is added to `ui5-menu-item-group`
-	 * with `itemCheckMode` other than `None`.
-	 * **Note:** A checked `ui5-menu-item` has a checkmark displayed at its end.
+	 * **Note:** checked state is only taken into account when menu item is added to menu item group
+	 * with `checkMode` other than `None`.
+	 *
+	 * **Note:** A checked menu item has a checkmark displayed at its end.
 	 * @default false
 	 * @public
-	 * @since 2.11.0
+	 * @since 2.12.0
 	 */
 	@property({ type: Boolean })
 	checked = false;
@@ -252,7 +253,6 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * - **ariaKeyShortcuts**: Indicated the availability of a keyboard shortcuts defined for the menu item.
 	 *
 	 * - **role**: Defines the role of the menu item. If not set, menu item will have default role="menuitem".
-	 *
 	 * @public
 	 * @since 2.1.0
 	 * @default {}
@@ -272,12 +272,12 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @private
 	 */
 	@property()
-	_itemCheckMode: `${ItemCheckMode}` = "None";
+	_checkMode: `${MenuItemGroupCheckMode}` = "None";
 
 	/**
 	 * Defines the items of this component.
 	 *
-	 * **Note:** The slot can hold `ui5-menu-item` and `ui5-menu-separator` items.
+	 * **Note:** The slot can hold menu item and menu separator items.
 	 *
 	 * If there are items added to this slot, an arrow will be displayed at the end
 	 * of the item in order to indicate that there are items added. In that case components added
@@ -390,10 +390,10 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	get _role() {
-		switch (this._itemCheckMode) {
-		case ItemCheckMode.Single:
+		switch (this._checkMode) {
+		case MenuItemGroupCheckMode.Single:
 			return "menuitemradio";
-		case ItemCheckMode.Multiple:
+		case MenuItemGroupCheckMode.Multiple:
 			return "menuitemcheckbox";
 		default:
 			return "menuitem";
@@ -419,7 +419,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	get _markChecked() {
-		return !this.hasSubmenu && this.checked && this._itemCheckMode !== ItemCheckMode.None;
+		return !this.hasSubmenu && this.checked && this._checkMode !== MenuItemGroupCheckMode.None;
 	}
 
 	/** Returns menu item groups */
@@ -622,7 +622,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	_updateCheckedState() {
-		if (this._itemCheckMode === ItemCheckMode.None) {
+		if (this._checkMode === MenuItemGroupCheckMode.None) {
 			return;
 		}
 
