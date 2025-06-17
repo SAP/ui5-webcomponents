@@ -4,11 +4,10 @@ import Switch from "../../src/Switch.js";
 
 describe("General events interactions", () => {
 	it("Should fire change event", () => {
-		cy.mount(<Switch>Click me</Switch>);
+		cy.mount(<Switch onChange={cy.stub().as("changed")}>Click me</Switch>);
 
 		cy.get("[ui5-switch]")
 			.as("switch")
-			.then($switch => $switch.get(0).addEventListener("change", cy.stub().as("changed")));
 
 		cy.get("@switch")
 			.realClick();
@@ -20,14 +19,14 @@ describe("General events interactions", () => {
 			.should("have.attr", "checked");
 	});
 
-	it("Should not fire change event when event is prevented", () => {
+	it("Should not change checked property", () => {
 		cy.mount(<Switch>Click me</Switch>);
 
 		cy.get("[ui5-switch]")
 			.as("switch")
 			.then($switch => {
-				$switch.get(0).addEventListener("change", (e) => e.preventDefault());
-				$switch.get(0).addEventListener("change", cy.stub().as("changed"));
+				$switch.get(0).addEventListener("ui5-change", (e) => e.preventDefault());
+				$switch.get(0).addEventListener("ui5-change", cy.stub().as("changed"));
 			});
 
 		cy.get("@switch")
@@ -45,11 +44,11 @@ describe("General accesibility attributes", () => {
 	it("Should set correct 'accessible-name' attribute on the root", () => {
 		cy.mount(<Switch accessible-name="Geographical location" text-on="Yes" text-off="No"></Switch>);
 
-		cy.get("[ui5-switch]")
-			.ui5SwitchCheckAttribute("role", "switch");
+		cy.get("[ui5-switch]").as("switch")
+			.ui5SwitchCheckAttributeInShadowDomRoot("role", "switch");
 
-		cy.get("[ui5-switch]").as('switch')
-			.ui5SwitchCheckAttribute("aria-label", "Geographical location No");
+		cy.get("@switch")
+			.ui5SwitchCheckAttributeInShadowDomRoot("aria-label", "Geographical location No");
 
 	});
 
@@ -61,40 +60,39 @@ describe("General accesibility attributes", () => {
 			</>
 		);
 
-		cy.get("[ui5-switch]")
-			.ui5SwitchCheckAttribute("role", "switch");
+		cy.get("[ui5-switch]").as("switch")
+			.ui5SwitchCheckAttributeInShadowDomRoot("role", "switch");
 
-		cy.get("[ui5-switch]")
-			.ui5SwitchCheckAttribute("aria-label", "Use GPS location No");
+		cy.get("@switch")
+			.ui5SwitchCheckAttributeInShadowDomRoot("aria-label", "Use GPS location No");
 	});
 
 	it("Should set correct correct tooltip on the root", () => {
 		cy.mount(<Switch tooltip="Use GPS location" text-on="Yes" text-off="No"></Switch>);
 
 		cy.get("[ui5-switch]")
-			.ui5SwitchCheckAttribute("title", "Use GPS location");
+			.ui5SwitchCheckAttributeInShadowDomRoot("title", "Use GPS location");
 	});
 
 	it("Should set correct attribute 'aria-label' when 'text-on' and 'text-off' attributes aren't set", () => {
 		cy.mount(<Switch></Switch>);
 
 		cy.get("[ui5-switch]")
-			.ui5SwitchCheckAttribute("aria-label", "");
+			.ui5SwitchCheckAttributeInShadowDomRoot("aria-label", "");
 	});
 
 	it("Should propagate 'required' attribute properly on the root", () => {
-		cy.mount(
-			<>
-				<Switch id="requredSwitch" required></Switch>
-				<Switch id="preventedSwitch"></Switch>
-			</>
-		);
+		cy.mount(<Switch required></Switch>);
 
-		cy.get("#requredSwitch")
-			.ui5SwitchCheckAttribute("aria-required", "true");
+		cy.get("[ui5-switch]")
+			.ui5SwitchCheckAttributeInShadowDomRoot("aria-required", "true");
+	});
 
-		cy.get("#preventedSwitch")
-			.ui5SwitchCheckAttribute("aria-required", "false");
+	it("Should not propagate 'required' attribute on the root", () => {
+		cy.mount(<Switch></Switch>);
+
+		cy.get("[ui5-switch]")
+			.ui5SwitchCheckAttributeInShadowDomRoot("aria-required", "false");
 	});
 });
 
@@ -113,7 +111,7 @@ describe("General interactions in form", () => {
 		}).should("be.false");
 
 		cy.get("#requiredTestSwitch")
-			.click();
+			.realClick();
 
 		cy.get<HTMLFormElement>("#switchForm").then(($form) => {
 			return $form[0].checkValidity()
