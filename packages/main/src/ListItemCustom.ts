@@ -3,7 +3,6 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import ListItem from "./ListItem.js";
 import ListItemCustomTemplate from "./ListItemCustomTemplate.js";
 
@@ -75,17 +74,6 @@ class ListItemCustom extends ListItem {
 		}
 
 		super._onkeyup(e);
-	}
-
-	_ondragstart(e: DragEvent) {
-		super._ondragstart(e);
-
-		if (e.dataTransfer && e.target === this._listItem) {
-			const dragElement = this.shadowRoot?.querySelector(".ui5-li-custom-drag-element") as HTMLElement;
-			if (dragElement) {
-				DragRegistry.setCustomDragTemplate(dragElement);
-			}
-		}
 	}
 
 	get classes(): ClassMap {

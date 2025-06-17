@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Simple Drag Demo</title>
+    <title>Multiple Drag Demo</title>
     <script src="%VITE_BUNDLE_PATH%" type="module"></script>
     <style>
         body {
@@ -44,51 +44,19 @@
             </ui5-list>
         </div>
 
-        <!-- List 2: ui5-li-custom with DragRegistry -->
-        <div class="demo-section">
-            <h3>ui5-li-custom (DragRegistry)</h3>
-            <div class="info">
-                Selected: <span id="count2">0</span><br>
-                Multiple selection, red drag image
-            </div>
-            
-            <ui5-list id="list2" header-text="Custom Items" selection-mode="Multiple">
-                <ui5-li-custom movable data-id="5">Custom 1</ui5-li-custom>
-                <ui5-li-custom movable data-id="6">Custom 2</ui5-li-custom>
-                <ui5-li-custom movable data-id="7">Custom 3</ui5-li-custom>
-                <ui5-li-custom movable data-id="8">Custom 4</ui5-li-custom>
-            </ui5-list>
-        </div>
-
         <!-- List 3: ui5-li without DragRegistry -->
         <div class="demo-section">
             <h3>ui5-li (Direct)</h3>
             <div class="info">
-                Selected: <span id="count3">0</span><br>
+                Selected: <span id="count2">0</span><br>
                 Multiple selection, purple drag image
             </div>
             
-            <ui5-list id="list3" header-text="Direct Drag" selection-mode="Multiple">
+            <ui5-list id="list2" header-text="Direct Drag" selection-mode="Multiple">
                 <ui5-li movable data-id="9">Direct 1</ui5-li>
                 <ui5-li movable data-id="10">Direct 2</ui5-li>
                 <ui5-li movable data-id="11">Direct 3</ui5-li>
                 <ui5-li movable data-id="12">Direct 4</ui5-li>
-            </ui5-list>
-        </div>
-
-        <!-- List 4: ui5-li-custom with Direct -->
-        <div class="demo-section">
-            <h3>ui5-li-custom (Direct)</h3>
-            <div class="info">
-                Selected: <span id="count4">0</span><br>
-                Multiple selection, green drag image
-            </div>
-            
-            <ui5-list id="list4" header-text="Custom Direct" selection-mode="Multiple">
-                <ui5-li-custom movable data-id="13">Custom Direct 1</ui5-li-custom>
-                <ui5-li-custom movable data-id="14">Custom Direct 2</ui5-li-custom>
-                <ui5-li-custom movable data-id="15">Custom Direct 3</ui5-li-custom>
-                <ui5-li-custom movable data-id="16">Custom Direct 4</ui5-li-custom>
             </ui5-list>
         </div>
     </div>
@@ -99,14 +67,10 @@
         const lists = [
             document.getElementById("list1"),
             document.getElementById("list2"), 
-            document.getElementById("list3"),
-            document.getElementById("list4")
         ];
         const counters = [
             document.getElementById("count1"),
             document.getElementById("count2"),
-            document.getElementById("count3"),
-            document.getElementById("count4")
         ];
 
         function getSelectedItems(list) {
@@ -147,29 +111,6 @@
             return element;
         }
 
-        function createGreenDragImage(count) {
-            const element = document.createElement("div");
-            element.innerHTML = `
-                <div style="
-                    background: linear-gradient(135deg, #34d399, #10b981);
-                    border: 2px solid #059669;
-                    border-radius: 0.5rem;
-                    padding: 1rem 1.5rem;
-                    font-family: var(--sapFontFamily);
-                    font-size: 0.875rem;
-                    font-weight: 600;
-                    color: white;
-                    box-shadow: 0 4px 12px rgba(52, 211, 153, 0.4);
-                    white-space: nowrap;
-                ">
-                    ${count} Custom Direct Items
-                </div>
-            `;
-            element.style.cssText = "position: absolute; top: -1000px; left: -1000px;";
-            document.body.appendChild(element);
-            return element;
-        }
-
         // Setup List 1: Standard items with DragRegistry
         setupSelectionChangeListener(0);
         lists[0].addEventListener("dragstart", (e) => {
@@ -190,7 +131,7 @@
             }
         });
 
-        // Setup List 2: Custom items with DragRegistry (component handles drag image)
+        // Setup List 2: Direct drag image (no DragRegistry)
         setupSelectionChangeListener(1);
         lists[1].addEventListener("dragstart", (e) => {
             const selectedItems = getSelectedItems(lists[1]);
@@ -201,31 +142,10 @@
                 // Clear all selections first
                 selectedItems.forEach(item => item.selected = false);
                 draggedItem.selected = true;
-                updateUI(1);
-            }
-            
-            const currentSelected = getSelectedItems(lists[1]);
-            // ListItemCustom component will handle the drag image
-            if (currentSelected.length > 1) {
-                DragRegistry.startMultipleDrag(e, currentSelected.length);
-            }
-        });
-
-        // Setup List 3: Direct drag image (no DragRegistry)
-        setupSelectionChangeListener(2);
-        lists[2].addEventListener("dragstart", (e) => {
-            const selectedItems = getSelectedItems(lists[2]);
-            const draggedItem = e.target;
-            
-            // If dragged item is not selected, select only it
-            if (!draggedItem.selected) {
-                // Clear all selections first
-                selectedItems.forEach(item => item.selected = false);
-                draggedItem.selected = true;
                 updateUI(2);
             }
             
-            const currentSelected = getSelectedItems(lists[2]);
+            const currentSelected = getSelectedItems(lists[1]);
             if (currentSelected.length > 1) {
                 const dragElement = createPurpleDragImage(currentSelected.length);
                 e.dataTransfer.setDragImage(dragElement, 30, 15);
@@ -237,34 +157,9 @@
             }
         });
 
-        // Setup List 4: Custom direct drag image (no DragRegistry)
-        setupSelectionChangeListener(3);
-        lists[3].addEventListener("dragstart", (e) => {
-            const selectedItems = getSelectedItems(lists[3]);
-            const draggedItem = e.target;
-            
-            // If dragged item is not selected, select only it
-            if (!draggedItem.selected) {
-                // Clear all selections first
-                selectedItems.forEach(item => item.selected = false);
-                draggedItem.selected = true;
-                updateUI(3);
-            }
-            
-            const currentSelected = getSelectedItems(lists[3]);
-            if (currentSelected.length > 1) {
-                const dragElement = createGreenDragImage(currentSelected.length);
-                e.dataTransfer.setDragImage(dragElement, 30, 15);
-                requestAnimationFrame(() => {
-                    if (dragElement.parentNode) {
-                        dragElement.parentNode.removeChild(dragElement);
-                    }
-                });
-            }
-        });
 
         // Initialize
-        [0, 1, 2, 3].forEach(updateUI);
+        [0, 1].forEach(updateUI);
     </script>
 </body>
 </html>
