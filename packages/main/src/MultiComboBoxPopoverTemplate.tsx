@@ -119,6 +119,8 @@ export default function MultiComboBoxPopoverTemplate(this: MultiComboBox) {
 				tabIndex={-1}
 				open={this.valueStateOpen}
 				opener={this}
+				onOpen={this._addLinksEventListeners}
+				onClose={this._removeLinksEventListeners}
 			>
 				<div slot="header" class={this.classes.popoverValueState} style={this.styles.popoverHeader}>
 					<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}></Icon>

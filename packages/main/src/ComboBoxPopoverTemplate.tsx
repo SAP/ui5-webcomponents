@@ -77,7 +77,6 @@ export default function ComboBoxPopoverTemplate(this: ComboBox) {
 					slot="header"
 					class={{
 						"ui5-responsive-popover-header": true,
-						"ui5-responsive-popover-header--focused": this._isValueStateFocused,
 						...this.classes.popoverValueState,
 					}}
 					style={this.styles.suggestionPopoverHeader}
@@ -119,6 +118,7 @@ export default function ComboBoxPopoverTemplate(this: ComboBox) {
 			horizontalAlign={this._valueStatePopoverHorizontalAlign}
 			placement="Bottom"
 			opener={this}
+			onOpen={this._addLinksEventListeners}
 			open={this.valueStateOpen}
 			onClose={this._handleValueStatePopoverAfterClose}
 			onFocusOut={this._handleValueStatePopoverFocusout}

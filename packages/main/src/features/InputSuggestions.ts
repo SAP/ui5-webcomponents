@@ -306,16 +306,6 @@ class Suggestions {
 
 		const previousSelectedIdx = this.selectedItemIndex;
 
-		if (this._hasValueState && previousSelectedIdx === -1 && !this.component._isValueStateFocused) {
-			this._focusValueState();
-			return;
-		}
-
-		if ((previousSelectedIdx === -1 && !this._hasValueState) || this.component._isValueStateFocused) {
-			this._clearValueStateFocus();
-			this.selectedItemIndex = -1;
-		}
-
 		if (previousSelectedIdx !== -1 && previousSelectedIdx + 1 > itemsCount - 1) {
 			return;
 		}
@@ -326,20 +316,6 @@ class Suggestions {
 	_selectPreviousItem() {
 		const items = this._getItems();
 		const previousSelectedIdx = this.selectedItemIndex;
-
-		if (this._hasValueState && previousSelectedIdx === 0 && !this.component._isValueStateFocused) {
-			this.component.hasSuggestionItemSelected = false;
-			this.component._isValueStateFocused = true;
-			this.selectedItemIndex = 0;
-
-			items[0].focused = false;
-
-			if (items[0].hasAttribute("ui5-suggestion-item")) {
-				(items[0] as SuggestionItem).selected = false;
-			}
-
-			return;
-		}
 
 		if (this.component._isValueStateFocused) {
 			this.component.focused = true;
