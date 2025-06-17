@@ -1,5 +1,6 @@
 import MultiComboBox from "../../src/MultiComboBox.js";
 import MultiComboBoxItem from "../../src/MultiComboBoxItem.js";
+import type ResponsivePopover from "../../src/ResponsivePopover.js";
 import Link from "../../src/Link.js";
 import Input from "../../src/Input.js";
 
@@ -13,11 +14,22 @@ describe("Security", () => {
 			</MultiComboBox>
 		);
 
-		cy.get("ui5-mcb-item").eq(0).shadow().find(".ui5-li-title")
+		cy.get("[ui5-mcb-item]")
+			.eq(0)
+			.shadow()
+			.find(".ui5-li-title")
 			.should("have.text", "<script>alert('XSS')</script>");
-		cy.get("ui5-mcb-item").eq(1).shadow().find(".ui5-li-title")
+
+		cy.get("[ui5-mcb-item]")
+			.eq(1)
+			.shadow()
+			.find(".ui5-li-title")
 			.should("have.text", "<b onmouseover=alert('XSS')></b>");
-		cy.get("ui5-mcb-item").eq(2).shadow().find(".ui5-li-title")
+
+		cy.get("[ui5-mcb-item]")
+			.eq(2)
+			.shadow()
+			.find(".ui5-li-title")
 			.should("have.text", "Albania<button onClick='alert(1)'>alert</button>");
 	});
 });
@@ -31,30 +43,40 @@ describe("General interaction", () => {
 		);
 
 		cy.get("[ui5-multi-combobox]")
-			.shadow()
-			.find("input")
-			.type('t');
-
-		cy.get("[ui5-multi-combobox]")
-			.shadow()
-			.find("input")
-			.realPress('Enter');
-
-		cy.get("[ui5-multi-combobox]").shadow().find("[ui5-tokenizer]").then($tokenizer => {
-			$tokenizer[0].addEventListener("ui5-token-delete", cy.stub().as("tokenDelete"))
-		});
-
-		cy.get("[ui5-multi-combobox]")
-			.shadow()
-			.find("input")
+			.as("mcb")
 			.realClick();
 
-		cy.get("[ui5-multi-combobox]").shadow()
-			.find("[ui5-tokenizer]")
-			.find("[ui5-token]").shadow()
-			.find("[ui5-icon]").realClick();
+		cy.get("@mcb")
+			.should("be.focused");
 
-		cy.get("@tokenDelete").should("have.been.called");
+		cy.realPress("t");
+
+		cy.realPress('Enter');
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.then($tokenizer => {
+				$tokenizer[0].addEventListener("ui5-token-delete", cy.stub().as("tokenDelete"))
+			});
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.should("exist")
+			.and("have.length", 1);
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.shadow()
+			.find("[ui5-icon]")
+			.realClick();
+
+		cy.get("@tokenDelete")
+			.should("have.been.called");
 	});
 });
 
@@ -68,27 +90,36 @@ describe("Value State", () => {
 		);
 
 		// add event listener
-		cy.get("ui5-multi-combobox")
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
 			.then(mcb => {
 				mcb.get(0).addEventListener("input", e => {
 					(mcb.get(0) as MultiComboBox).valueState = (e.target as MultiComboBox).value.length ? "Negative" : "Information";
 				});
 			});
 
+		cy.get("@mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
 		// type "f"
-		cy.get("ui5-multi-combobox")
+		cy.realType("f");
+
+		cy.get("@mcb")
 			.shadow()
-			.find("input")
-			.realType("f");
+			.find(".ui5-valuestatemessage--error")
 
 		cy.realPress("Backspace");
 
-		cy.get("ui5-multi-combobox")
+		cy.get("@mcb")
 			.shadow()
-			.find("input")
-			.realPress("f");
+			.find(".ui5-valuestatemessage--information")
 
-		cy.get("ui5-multi-combobox")
+		cy.realPress("f");
+
+		cy.get("@mcb")
 			.shadow()
 			.find(".ui5-valuestatemessage--information")
 			.should("not.exist");
@@ -273,62 +304,52 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 describe("Event firing", () => {
 	it("tests if open and close events are fired correctly", () => {
 		cy.mount(
-			<MultiComboBox>
+			<MultiComboBox onOpen={cy.stub().as("mcbOpened")} onClose={cy.stub().as("mcbClosed")}>
 				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
 				<MultiComboBoxItem text="Bulgaria"></MultiComboBoxItem>
 				<MultiComboBoxItem text="England"></MultiComboBoxItem>
 			</MultiComboBox>
 		);
 
-		cy.get("ui5-multi-combobox")
-			.as("multiComboBox");
-
-		cy.get("@multiComboBox")
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
 			.then($mcb => {
 				$mcb[0].addEventListener("focusin", () => {
 					$mcb[0].setAttribute("open", "true");
 				});
 			});
 
-		cy.get("@multiComboBox")
-			.then($mcb => {
-				$mcb[0].addEventListener("ui5-open", cy.stub().as("mcbOpened"));
-			});
+		cy.get("@mcb")
+			.realClick();
 
-		cy.get("@multiComboBox")
-			.then($mcb => {
-				$mcb[0].addEventListener("ui5-close", cy.stub().as("mcbClosed"));
-			});
-
-		cy.get("@multiComboBox")
+		cy.get("@mcb")
 			.shadow()
-			.find("input")
-			.as("input");
-
-		cy.get("@input")
-			.click();
-
-		cy.get("@multiComboBox")
-			.shadow()
-			.find("ui5-responsive-popover")
-			.as("respPopover");
-
-		cy.get("@respPopover")
-			.should("have.attr", "open");
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.ui5ResponsivePopoverOpened()
 
 		cy.get("@mcbOpened")
 			.should("have.been.calledOnce");
 
-		cy.get("@multiComboBox")
+		cy.get("@mcb")
 			.shadow()
-			.find("ui5-icon")
+			.find("[ui5-icon]")
 			.as("icon");
 
 		cy.get("@icon")
-			.click();
+			.realClick();
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.ui5ResponsivePopoverClosed();
 
 		cy.get("@icon")
-			.click();
+			.realClick();
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.ui5ResponsivePopoverOpened()
 
 		cy.get("@mcbClosed")
 			.should("have.been.calledOnce");
@@ -340,27 +361,18 @@ describe("Event firing", () => {
 
 describe("Accessibility", () => {
 	it("should announce the associated label when MultiComboBox is focused", () => {
+		const label = "MultiComboBox aria-label";
+
 		cy.mount(
 			<>
-				<label for="mcb">MultiComboBox aria-label</label>
+				<label for="mcb">{label}</label>
 				<MultiComboBox id="mcb"></MultiComboBox>
 			</>
 		);
 
-		cy.get('label[for="mcb"]')
-			.invoke('text')
-			.then((labelText) => {
-
-				cy.get("[ui5-multi-combobox]")
-					.shadow()
-					.find("input")
-					.as("innerInput");
-
-				cy.get("@innerInput")
-					.click();
-
-				cy.get("@innerInput")
-					.should("have.attr", "aria-label", labelText);
-			});
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-label", label);
 	});
 });

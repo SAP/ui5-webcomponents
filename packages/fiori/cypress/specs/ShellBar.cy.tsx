@@ -527,4 +527,231 @@ describe("Events", () => {
 		cy.get("@searchButtonClick")
 			.should("have.been.calledOnce");
 	});
+
+	it("Test logo click fires logo-click event only once", () => {
+		cy.mount(
+			<ShellBar primaryTitle="Product Title" secondaryTitle="Secondary Title">
+				<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+			</ShellBar>
+		);
+		
+		cy.get("[ui5-shellbar]")
+			.as("shellbar");
+
+		cy.get("@shellbar")
+			.then(shellbar => {
+				shellbar.get(0).addEventListener("ui5-logo-click", cy.stub().as("logoClick"));
+			});
+
+		// Test clicking on the logo area in large screens (combined logo layout)
+		cy.viewport(1920, 1080);
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-logo-area")
+			.as("logoArea")
+			.should("exist");
+
+		cy.get("@logoArea")
+			.click();
+
+		cy.get("@logoClick")
+			.should("have.been.calledOnce");
+
+		// Reset the stub for the next test
+		cy.get("@shellbar")
+			.then(shellbar => {
+				shellbar.get(0).addEventListener("ui5-logo-click", cy.stub().as("logoClickSmall"));
+			});
+
+		// Test clicking on the logo in small screens (single logo layout)
+		cy.viewport(500, 1080);
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-logo")
+			.as("logo")
+			.should("exist");
+
+		cy.get("@logo")
+			.click();
+
+		cy.get("@logoClickSmall")
+			.should("have.been.calledOnce");
+	});
+});
+
+describe("ButtonBadge in ShellBar", () => {
+	it("Test if ShellBarItem count appears in ButtonBadge", () => {
+	  cy.mount(
+		<ShellBar id="shellbarwithitems">
+		  <ShellBarItem id="test-item" icon="accept" text="Item" count="42" />
+		</ShellBar>
+	  );
+	  
+	  cy.get("#shellbarwithitems")
+		.shadow()
+		.find(".ui5-shellbar-custom-item ui5-button-badge[slot='badge']")
+		.should("exist")
+		.should("have.attr", "text", "42");
+	});
+  
+	it("Test count updates propagate to ButtonBadge", () => {
+	  cy.mount(
+		<ShellBar id="test-invalidation">
+		  <ShellBarItem id="test-invalidation-item" icon="accept" text="Item" count="1" />
+		</ShellBar>
+	  );
+	  
+	  cy.get("#test-invalidation-item").invoke("attr", "count", "3");
+	  
+	  cy.get("#test-invalidation")
+		.shadow()
+		.find(".ui5-shellbar-custom-item ui5-button-badge[slot='badge']")
+		.should("have.attr", "text", "3");
+	});
+
+	it("Test if overflow button shows appropriate badge when items are overflowed", () => {
+		cy.mount(
+		  <ShellBar id="shellbar-with-overflow" 
+			primaryTitle="Product Title"
+			secondaryTitle="Secondary Title"
+			showNotifications={true}
+			showProductSwitch={true}
+			notificationsCount="10">
+			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+			<Button icon="nav-back" slot="startButton"></Button>
+			<ShellBarItem id="item1" icon="accept" text="Item 1" count="42" />
+			<ShellBarItem id="item2" icon="alert" text="Item 2" count="5" />
+			<ShellBarItem id="item3" icon="attachment" text="Item 3" />
+			<ShellBarItem id="item4" icon="bell" text="Item 4" />
+			<Avatar slot="profile">
+			  <img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
+			</Avatar>
+			<Input placeholder="Search" slot="searchField" />
+		  </ShellBar>
+		);
+		
+		cy.viewport(320, 800);
+		
+		cy.get("#shellbar-with-overflow")
+		  .shadow()
+		  .find(".ui5-shellbar-overflow-button")
+		  .should("be.visible");
+		
+		cy.get("#shellbar-with-overflow")
+		  .shadow()
+		  .find(".ui5-shellbar-overflow-button ui5-button-badge[slot='badge']")
+		  .should("exist")
+		  .should("have.attr", "design", "AttentionDot");
+		
+		cy.mount(
+		  <ShellBar id="shellbar-with-single-overflow"
+			primaryTitle="Product Title" 
+			secondaryTitle="Secondary Title"
+			showProductSwitch={true}>
+			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+			<Button icon="nav-back" slot="startButton"></Button>
+			<ShellBarItem id="single-item" icon="accept" text="Item" count="42" />
+			<ShellBarItem id="item3" icon="attachment" text="Item 3" />
+			<ShellBarItem id="item4" icon="bell" text="Item 4" />
+			<Avatar slot="profile">
+			  <img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
+			</Avatar>
+		  </ShellBar>
+		);
+		
+		cy.viewport(320, 800);
+		
+		cy.get("#shellbar-with-single-overflow")
+		  .shadow()
+		  .find(".ui5-shellbar-overflow-button")
+		  .should("be.visible");
+		
+		cy.get("#shellbar-with-single-overflow")
+		  .shadow()
+		  .find(".ui5-shellbar-overflow-button ui5-button-badge[slot='badge']")
+		  .should("exist")
+		  .should("have.attr", "text", "42");
+	});
+});
+
+describe("Keyboard Navigation", () => {
+	it("Test logo area elements are not rendered when no logo and primaryTitle are provided", () => {
+		cy.mount(<ShellBar></ShellBar>);
+		cy.wait(RESIZE_THROTTLE_RATE);
+
+		cy.get("[ui5-shellbar]")
+			.shadow()
+			.find(".ui5-shellbar-logo-area")
+			.should("not.exist");
+	});
+
+	it("Test arrow navigation within search input respects cursor position", () => {
+		cy.mount(
+			<ShellBar showSearchField={true}>
+				<Button id="button" slot="content">Test Button</Button>
+				<ShellBarSearch slot="searchField" value="test value"></ShellBarSearch>
+				<ShellBarItem icon={activities} text="Action 1"></ShellBarItem>
+			</ShellBar>
+		);
+		cy.wait(RESIZE_THROTTLE_RATE);
+
+		function placeAtStartOfInput() {
+			cy.get("[ui5-shellbar] [slot='searchField']")
+				.shadow()
+				.find("input")
+				.then($input => {
+					$input[0].setSelectionRange(0, 0);
+				});
+		}
+		function placeAtEndOfInput() {
+			cy.get("[ui5-shellbar] [slot='searchField']")
+				.shadow()
+				.find("input")
+				.then($input => {
+					const inputLength = $input.val().toString().length;
+					$input[0].setSelectionRange(inputLength, inputLength);
+				});
+		}
+		function placeInMiddleOfInput() {
+			cy.get("[ui5-shellbar] [slot='searchField']")
+				.shadow()
+				.find("input")
+				.then($input => {
+					const inputLength = $input.val().toString().length;
+					const middlePosition = Math.floor(inputLength / 2);
+					$input[0].setSelectionRange(middlePosition, middlePosition);
+				});
+		}
+
+		// Focus the search input
+		cy.get("[ui5-shellbar] [slot='searchField']")
+			.realClick()
+			.shadow()
+			.find("input")
+			.as("nativeInput");
+
+		placeAtStartOfInput();
+		// Press left arrow - should move focus away from input since cursor is at start
+		cy.get("@nativeInput").type("{leftArrow}");
+		// Verify focus is now on the button
+		cy.get("[ui5-shellbar] [ui5-button]").should("be.focused");
+
+
+		placeAtEndOfInput();
+		// Press right arrow - should move focus away from input since cursor is at end
+		cy.get("@nativeInput").type("{rightArrow}");
+		// Verify focus is now on the ShellBarItem
+		cy.get("[ui5-shellbar]")
+			.shadow()
+			.find(".ui5-shellbar-custom-item")
+			.should("be.focused");
+
+		placeInMiddleOfInput();
+		// Press left arrow - should stay focused on input since cursor is in the middle
+		cy.get("@nativeInput").type("{leftArrow}");
+		cy.get("@nativeInput").should("be.focused");
+		// Press right arrow - should stay focused on input since cursor is in the middle
+		cy.get("@nativeInput").type("{rightArrow}");
+		cy.get("@nativeInput").should("be.focused");
+	});
 });

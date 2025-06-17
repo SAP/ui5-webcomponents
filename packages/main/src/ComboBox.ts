@@ -56,6 +56,7 @@ import {
 	VALUE_STATE_LINKS_MAC,
 	INPUT_SUGGESTIONS_TITLE,
 	COMBOBOX_AVAILABLE_OPTIONS,
+	COMBOBOX_DIALOG_OK_BUTTON,
 	SELECT_OPTIONS,
 	LIST_ITEM_POSITION,
 	LIST_ITEM_GROUP_HEADER,
@@ -1300,6 +1301,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	get _popupLabel() {
 		return ComboBox.i18nBundle.getText(COMBOBOX_AVAILABLE_OPTIONS);
+	}
+
+	get _dialogOkButtonText() {
+		return ComboBox.i18nBundle.getText(COMBOBOX_DIALOG_OK_BUTTON);
 	}
 
 	get inner(): HTMLInputElement {

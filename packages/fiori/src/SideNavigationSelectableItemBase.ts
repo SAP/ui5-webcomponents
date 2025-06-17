@@ -1,10 +1,16 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter,
+	isLeft,
+	isRight,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import type { SideNavigationItemClickEventDetail } from "./SideNavigationItemBase.js";
 
 type SideNavigationItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
@@ -12,9 +18,14 @@ type SideNavigationItemAccessibilityAttributes = Pick<AccessibilityAttributes, "
  * Fired when the component is activated either with a click/tap or by using the [Enter] or [Space] keys.
  *
  * @public
+ * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+ * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+ * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+ * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
 @event("click", {
 	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -30,8 +41,9 @@ type SideNavigationItemAccessibilityAttributes = Pick<AccessibilityAttributes, "
 @customElement()
 class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	eventDetails!: SideNavigationItemBase["eventDetails"] & {
-		"click": void
+		"click": SideNavigationItemClickEventDetail
 	}
+
 	/**
 	 * Defines the icon of the item.
 	 *
@@ -139,6 +151,13 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	@property({ type: Boolean })
 	isOverflow = false;
 
+	/**
+	 * Reference to the original side navigation item that opened the popover.
+	 *
+	 * @private
+	 */
+	associatedItem?: SideNavigationItemBase;
+
 	get ariaRole() {
 		if (this.sideNavCollapsed) {
 			return this.isOverflow || this.unselectable ? "menuitem" : "menuitemradio";
@@ -148,15 +167,15 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	get isSelectable() {
-		return !this.unselectable && !this.disabled;
+		return !this.unselectable && !this.effectiveDisabled;
 	}
 
 	get _href() {
-		return (!this.disabled && this.href) ? this.href : undefined;
+		return (!this.effectiveDisabled && this.href) ? this.href : undefined;
 	}
 
 	get _target() {
-		return (!this.disabled && this.target) ? this.target : undefined;
+		return (!this.effectiveDisabled && this.target) ? this.target : undefined;
 	}
 
 	get isExternalLink() {
@@ -170,7 +189,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	get classesArray() {
 		const classes = [];
 
-		if (this.disabled) {
+		if (this.effectiveDisabled) {
 			classes.push("ui5-sn-item-disabled");
 		}
 
@@ -194,12 +213,22 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isSpace(e)) {
+		const isRTL = this.effectiveDir === "rtl";
+
+		if (isSpace(e) || isRight(e) || isLeft(e)) {
 			e.preventDefault();
 		}
 
 		if (isEnter(e)) {
 			this._activate(e);
+		}
+
+		if ((isRTL ? isLeft(e) : isRight(e)) && this.sideNavCollapsed && this.hasSubItems) {
+			this._activate(e);
+		}
+
+		if ((isRTL ? isRight(e) : isLeft(e)) && this.inPopover) {
+			this.associatedItem?.sideNavigation?.closePicker();
 		}
 	}
 
@@ -232,10 +261,26 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	_activate(e: KeyboardEvent | MouseEvent) {
+		const {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		} = e;
+
 		e.stopPropagation();
 
 		if (this.isOverflow) {
-			this.fireDecoratorEvent("click");
+			const executeEvent = this.fireDecoratorEvent("click", {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			});
+
+			if (!executeEvent) {
+				e.preventDefault();
+			}
 		} else {
 			this.sideNavigation?._handleItemClick(e, this);
 		}

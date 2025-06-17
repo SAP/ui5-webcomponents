@@ -103,7 +103,7 @@ export default function ComboBoxPopoverTemplate(this: ComboBox) {
 				<Button
 					design="Transparent"
 					onClick={this._closeRespPopover}
-				>OK</Button>
+				>{this._dialogOkButtonText}</Button>
 			</div>
 				}
 			</ResponsivePopover>

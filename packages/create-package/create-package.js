@@ -4,7 +4,6 @@ import path, { dirname } from "path";
 import prompts from "prompts";
 import parser from "npm-config-user-agent-parser";
 import yargs from "yargs/yargs";
-import { globby } from "globby";
 import { hideBin } from "yargs/helpers";
 import { fileURLToPath } from "url";
 import * as prettier from "prettier";
@@ -19,12 +18,17 @@ const VERSION = JSON.parse(
 // Constants
 const SUPPORTED_TEST_SETUPS = ["cypress", "manual"];
 const SRC_DIR = path.join(__dirname, "template");
+const DEST_DIR = process.cwd();
+
 const FILES_TO_RENAME = {
-	"npmrc": ".npmrc",
-	"env": ".env",
-	"gitignore": ".gitignore",
-	"tsconfig.template.json": "tsconfig.json",
-	"cypress/tsconfig.template.json": "cypress/tsconfig.json"
+	[path.normalize("eslintignore")]: path.normalize(".eslintignore"),
+	[path.normalize("eslintrc.cjs")]: path.normalize(".eslintrc.cjs"),
+	[path.normalize("npsrc.json")]: path.normalize(".npsrc.json"),
+	[path.normalize("npmrc")]: path.normalize(".npmrc"),
+	[path.normalize("env")]: path.normalize(".env"),
+	[path.normalize("gitignore")]: path.normalize(".gitignore"),
+	[path.normalize("tsconfig.template.json")]: path.normalize("tsconfig.json"),
+	[path.normalize("cypress/tsconfig.template.json")]: path.normalize("cypress/tsconfig.json")
 };
 const FILES_TO_COPY = ["test/pages/img/logo.png"];
 
@@ -39,6 +43,21 @@ const isPackageNameValid = name =>
 const isTagValid = tag => typeof tag === "string" && TagPattern.test(tag);
 const isTestSetupValid = setup =>
 	typeof setup === "string" && SUPPORTED_TEST_SETUPS.includes(setup);
+
+async function collectFiles(dir, fileList = []) {
+	const entries = await fs.readdir(dir, { withFileTypes: true });
+
+	for (const entry of entries) {
+		const fullPath = path.join(dir, entry.name);
+		if (entry.isDirectory()) {
+			await collectFiles(fullPath, fileList);
+		} else if (entry.isFile()) {
+			fileList.push(fullPath);
+		}
+	}
+
+	return fileList;
+}
 
 /**
  * Hyphanates the given PascalCase string, f.e.:
@@ -87,8 +106,8 @@ const generateFilesContent = async (
 		? packageName.slice(packageName.lastIndexOf("/") + 1)
 		: packageName;
 	const destDir = skipSubfolder
-		? path.join("./")
-		: path.join("./", packageBaseName);
+		? path.join(DEST_DIR)
+		: path.join(DEST_DIR, packageBaseName);
 
 	await processFiles(destDir, vars, testSetup);
 
@@ -108,9 +127,9 @@ const generateFilesContent = async (
 };
 
 async function processFiles(destDir, replacements, testSetup) {
-	const files = await globby(`${SRC_DIR}/**/*`, { dot: true });
+	const files = await collectFiles(SRC_DIR);
 	const FILE_PATHS_TO_SKIP = [
-		testSetup !== "cypress" ? "cypress" : undefined,
+		testSetup !== "cypress" ? path.normalize("cypress") : undefined,
 	].filter(Boolean);
 
 	for (const file of files) {
@@ -122,11 +141,11 @@ async function processFiles(destDir, replacements, testSetup) {
 			continue;
 		}
 
-		// Component related file based on the user input
-		destPath = destPath.replace(
-			"/MyFirstComponent",
-			`/${replacements.INIT_PACKAGE_VAR_CLASS_NAME}`,
-		);
+		// // Component related file based on the user input
+		// destPath = destPath.replace(
+		// 	"MyFirstComponent",
+		// 	replacements.INIT_PACKAGE_VAR_CLASS_NAME,
+		// );
 
 		// Files that need to be renamed
 		if (FILES_TO_RENAME[relativePath]) {
@@ -181,7 +200,7 @@ const createWebcomponentsPackage = async () => {
 	}
 
 	let packageName = argv.name || "my-package";
-	let componentName = "MyComponent";
+	let componentName = "MyFirstComponent";
 	let testSetup = argv.testSetup || "manual";
 	const skipSubfolder = !!argv.skipSubfolder;
 

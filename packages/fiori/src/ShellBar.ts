@@ -14,12 +14,14 @@ import {
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import ButtonBadge from "@ui5/webcomponents/dist/ButtonBadge.js";
 import Menu from "@ui5/webcomponents/dist/Menu.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
@@ -198,6 +200,7 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
 		Popover,
 		ListItemStandard,
 		Menu,
+		ButtonBadge,
 	],
 })
 /**
@@ -645,12 +648,32 @@ class ShellBar extends UI5Element {
 	}
 
 	_onKeyDown(e: KeyboardEvent) {
-		const items = this._getVisibleAndInteractiveItems();
+		if (!isLeft(e) && !isRight(e)) {
+			return;
+		}
+
+		const domRef = this.getDomRef();
+		if (!domRef) {
+			// If the component is not rendered yet, we should not handle the keydown event
+			return;
+		}
+
 		const activeElement = getActiveElement();
+		if (!activeElement) {
+			return;
+		}
+
+		// Check if the active elements should "steal" the navigation
+		if (this._allowChildNavigation(activeElement as HTMLElement, e)) {
+			return;
+		}
+
+		const items = getTabbableElements(domRef).filter(el => this._isVisible(el));
 		const currentIndex = items.findIndex(el => el === activeElement);
 
-		if (isLeft(e) || isRight(e)) {
-			e.preventDefault();// Prevent the default behavior to avoid any further automatic focus movemen
+		// Only handle arrow navigation if the focus is on a ShellBar item
+		if (currentIndex !== -1) {
+			e.preventDefault();
 
 			// Focus navigation based on the key pressed
 			if (isLeft(e)) {
@@ -659,6 +682,28 @@ class ShellBar extends UI5Element {
 				this._focusNextItem(items, currentIndex);
 			}
 		}
+	}
+
+	private _allowChildNavigation(activeElement: HTMLElement, e: KeyboardEvent): boolean {
+		if (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA") {
+			return this._allowInputNavigation(activeElement as HTMLInputElement | HTMLTextAreaElement, e);
+		}
+
+		return false; // Default to false for other elements
+	}
+
+	private _allowInputNavigation(inputElement: HTMLInputElement | HTMLTextAreaElement, e: KeyboardEvent): boolean {
+		const cursorPosition = inputElement.selectionStart || 0;
+		const textLength = inputElement.value.length;
+
+		// Allow internal navigation if cursor is not at the boundaries
+		if ((isLeft(e) && cursorPosition > 0)
+		|| (isRight(e) && cursorPosition < textLength)) {
+			return true;
+		}
+
+		// Let ShellBar handle navigation if at boundaries
+		return false;
 	}
 
 	_focusNextItem(items: HTMLElement[], currentIndex: number) {
@@ -679,26 +724,6 @@ class ShellBar extends UI5Element {
 		return style.display !== "none" && style.visibility !== "hidden" && element.offsetWidth > 0 && element.offsetHeight > 0;
 	}
 
-	_getNavigableContent() {
-		const elements = [
-			...this.startButton,
-			...this.logo,
-			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo"),
-			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo-area"),
-			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-menu-button"),
-			...this.contentItems,
-			...this._getRightChildItems(),
-		] as HTMLElement[];
-
-		return elements.map((element: HTMLElement) => {
-			const component = element as UI5Element;
-			if (component.isUI5Element) {
-				return component.getFocusDomRef();
-			}
-			return element;
-		}).filter(el => !!el);
-	}
-
 	_getRightChildItems() {
 		return [
 			...this.searchField,
@@ -706,15 +731,6 @@ class ShellBar extends UI5Element {
 			...this.assistant,
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-items-for-arrow-nav"),
 		] as HTMLElement[];
-	}
-
-	_getVisibleAndInteractiveItems() {
-		const items = this._getNavigableContent();
-		const visibleAndInteractiveItems = items.filter(item => {
-			return this._isVisible(item) && item.tabIndex === 0;
-		});
-
-		return visibleAndInteractiveItems;
 	}
 
 	_menuItemPress(e: CustomEvent<ListItemClickEventDetail>) {
@@ -1176,7 +1192,6 @@ class ShellBar extends UI5Element {
 					stableDomRef: item.stableDomRef,
 					tooltip: item.title || item.text,
 					accessibilityAttributes: item.accessibilityAttributes,
-					accessibleName: item.count ? `${item.title || item.text}, ${item.count}` : (item.title || item.text),
 				};
 			}),
 			{
@@ -1241,7 +1256,7 @@ class ShellBar extends UI5Element {
 		let overflowNotifications = null;
 
 		this._itemsInfo.forEach(item => {
-			if (item.count && this.isIconHidden(item.icon!)) {
+			if (item.count && item.classes.includes("ui5-shellbar-hidden-button")) {
 				notificationsArr.push(item.count);
 			}
 		});

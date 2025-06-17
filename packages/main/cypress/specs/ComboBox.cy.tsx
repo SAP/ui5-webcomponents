@@ -372,5 +372,3 @@ describe("Accessibility", () => {
 			});
 	});
 });
-
-

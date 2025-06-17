@@ -207,3 +207,4 @@ describe("Tokenizer - multi-line and Clear All", () => {
 			.should("be.visible");
 	});
 });
+
