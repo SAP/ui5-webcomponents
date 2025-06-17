@@ -113,9 +113,8 @@ describe("Accessibility", () => {
 		cy.get("#ag")
 			.shadow()
 			.find(".ui5-avatar-group-items")
-			.should("have.attr", "aria-labelledby", labelId)
-			.and("not.have.attr", "aria-label");
-		
+			.should("have.attr", "aria-labelledby", labelId);
+
 		cy.get(`#${labelId}`).should("exist");
 	});
 });

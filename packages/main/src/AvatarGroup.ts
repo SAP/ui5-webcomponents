@@ -290,12 +290,6 @@ class AvatarGroup extends UI5Element {
 			return this.accessibleName;
 		}
 
-		// If accessibleNameRef is provided, don't return aria-label text
-		// (aria-labelledby will be used instead)
-		if (this.accessibleNameRef) {
-			return undefined;
-		}
-
 		// Fallback to existing default behavior
 		const hiddenItemsCount = this.hiddenItems.length;
 		const typeLabelKey = this._isGroup ? AVATAR_GROUP_ARIA_LABEL_GROUP : AVATAR_GROUP_ARIA_LABEL_INDIVIDUAL;
