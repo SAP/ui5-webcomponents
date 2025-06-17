@@ -109,16 +109,15 @@ describe("General interactions in form", () => {
 			</form>
 		);
 
-		cy.get<HTMLFormElement>("#switchForm").then(($form) => {
-			return $form[0].checkValidity()
-		}).should("be.false");
+		cy.get<HTMLFormElement>("#switchForm").should(($form) => {
+			expect($form[0].checkValidity()).to.be.false;
+		});
 
 		cy.get("#requiredTestSwitch")
 			.realClick();
 
-		cy.get<HTMLFormElement>("#switchForm").then(($form) => {
-			return $form[0].checkValidity()
-		}).should("be.true");
-
+		cy.get<HTMLFormElement>("#switchForm").should(($form) => {
+			expect($form[0].checkValidity()).to.be.true;
+		});
 	});
 });
