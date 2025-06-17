@@ -22,9 +22,7 @@ describe("API", () => {
 			.should("have.text", initialHeader);
 
 		cy.get("[ui5-panel]")
-			.then($panel => {
-				$panel[0].setAttribute("header-text", newHeader);
-			});
+			.invoke("prop", "headerText", newHeader);
 
 		cy.get("@header")
 			.should("have.text", newHeader);
@@ -33,7 +31,8 @@ describe("API", () => {
 
 describe("Interaction", () => {
 	it("Collapsing fixed panel is not possible", () => {
-		cy.mount(<Panel fixed={true} headerText="Fixed Panel">
+		const toggleEventStub = cy.stub();
+		cy.mount(<Panel fixed={true} headerText="Fixed Panel" onToggle={toggleEventStub}>
 			<Title level={TitleLevel.H2}>Content</Title>
 		</Panel>);
 
@@ -51,10 +50,19 @@ describe("Interaction", () => {
 			.as("header");
 
 		cy.get("@header")
-			.click();
+			.realClick();
 
 		cy.get("@content")
 			.should("be.visible");
+
+		cy.wrap(toggleEventStub)
+			.should("not.have.been.called");
+
+		cy.get("[ui5-panel]")
+			.should("not.have.attr", "collapsed");
+
+		cy.get("@header")
+			.should("be.focused");
 
 		cy.get("@header")
 			.realPress("Space")
@@ -62,11 +70,26 @@ describe("Interaction", () => {
 		cy.get("@content")
 			.should("be.visible");
 
+		cy.get("[ui5-panel]")
+			.should("not.have.attr", "collapsed");
+
+		cy.wrap(toggleEventStub)
+			.should("not.have.been.called");
+
+		cy.get("@header")
+			.should("be.focused");
+
 		cy.get("@header")
 			.realPress("Enter")
 
 		cy.get("@content")
 			.should("be.visible");
+
+		cy.wrap(toggleEventStub)
+			.should("not.have.been.called");
+
+		cy.get("[ui5-panel]")
+			.should("not.have.attr", "collapsed");
 	});
 
 	it("Collapsing fixed panel is possible when not fixed", () => {
@@ -88,13 +111,16 @@ describe("Interaction", () => {
 			.as("header");
 
 		cy.get("@header")
-			.click();
+			.realClick();
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(50);
 
 		cy.get("@content")
 			.should("not.be.visible");
+
+		cy.get("@header")
+			.should("be.focused");
 
 		cy.get("@header")
 			.realPress("Space");
@@ -104,6 +130,9 @@ describe("Interaction", () => {
 
 		cy.get("@content")
 			.should("be.visible");
+
+		cy.get("@header")
+			.should("be.focused");
 
 		cy.get("@header")
 			.realPress("Enter");
@@ -118,6 +147,7 @@ describe("Interaction", () => {
 	it("Sticky header when scrolling inner content", () => {
 		cy.document().then((doc) => {
 			const style = doc.createElement('style');
+			style.id = "panel-stickyHeader-style";
 			style.innerHTML = `
 				#panel-stickyHeader::part(content) {
 					max-height: 70px;
@@ -163,6 +193,14 @@ describe("Interaction", () => {
 						expect(headerTopAfter).to.eq(headerTopBefore);
 					});
 			});
+
+		// Clean up the style attribute
+		cy.window()
+			.then($el => {
+				const styleTag = $el.document.head.querySelector("style[id='panel-stickyHeader-style']");
+
+				styleTag?.remove();
+			})
 	});
 
 	it("Sticky header when scrolling outer container", () => {
@@ -231,9 +269,7 @@ describe("Interaction", () => {
 			.should("have.class", "ui5-panel-header-button-animated");
 
 		cy.get("[ui5-panel]")
-			.then(panel => {
-				panel.get(0).setAttribute("no-animation", "");
-			});
+			.invoke("prop", "noAnimation", true);
 
 		cy.get("@icon")
 			.should("not.have.class", "ui5-panel-header-button-animated");
@@ -242,7 +278,8 @@ describe("Interaction", () => {
 
 describe("Events", () => {
 	it("Toggle Event upon header click", () => {
-		cy.mount(<Panel headerText="Fixed Panel">
+		const toggleEventStub = cy.stub();
+		cy.mount(<Panel headerText="Fixed Panel" onToggle={toggleEventStub}>
 			<Title level={TitleLevel.H2}>Content</Title>
 		</Panel>);
 
@@ -251,20 +288,16 @@ describe("Events", () => {
 			.find(".ui5-panel-header")
 			.as("header");
 
-		cy.get("[ui5-panel]")
-			.then(panel => {
-				panel.get(0).addEventListener("ui5-toggle", cy.stub().as("toggled"));
-			});
-
 		cy.get("@header")
-			.click();
+			.realClick();
 
-		cy.get("@toggled")
+		cy.wrap(toggleEventStub)
 			.should("have.been.calledOnce");
 	});
 
 	it("Toggle Event upon custom header", () => {
-		cy.mount(<Panel>
+		const toggleEventStub = cy.stub();
+		cy.mount(<Panel onToggle={toggleEventStub}>
 			<div slot="header">
 				<Title level={TitleLevel.H2}>Custom Header</Title>
             </div>
@@ -275,15 +308,10 @@ describe("Events", () => {
 			.find(".ui5-panel-header-button")
 			.as("icon");
 
-		cy.get("[ui5-panel]")
-			.then(panel => {
-				panel.get(0).addEventListener("ui5-toggle", cy.stub().as("toggled"));
-			});
-
 		cy.get("@icon")
-			.click();
+			.realClick();
 
-		cy.get("@toggled")
+		cy.wrap(toggleEventStub)
 			.should("have.been.calledOnce");
 	});
 });
@@ -390,9 +418,7 @@ describe("Accessibility", () => {
 			.should("not.have.attr", "role", "heading");
 
 		cy.get("[ui5-panel]")
-			.then($panel => {
-				$panel[0].setAttribute("accessible-name", accessibleNamePanel);
-			});
+			.invoke("prop", "accessibleName", accessibleNamePanel);
 
 		cy.get("[ui5-panel]")
 			.shadow()
@@ -403,9 +429,7 @@ describe("Accessibility", () => {
 			.should("not.have.attr", "aria-label", accessibleNamePanel);
 
 		cy.get("[ui5-panel]")
-			.then($panel => {
-				$panel[0].setAttribute("use-accessible-name-for-toggle-button", "");
-			});
+			.invoke("prop", "useAccessibleNameForToggleButton", true);
 
 		cy.get("@innerButton")
 			.should("have.attr", "aria-label", accessibleNamePanel);
@@ -424,8 +448,10 @@ describe("Accessibility", () => {
 					.shadow()
 					.find(".ui5-panel-header")
 					.should("have.attr", "aria-labelledby", `${el._id}-header-title`);
-				el.setAttribute("accessible-name", accessibleNamePanel);
 			});
+
+		cy.get("[ui5-panel]")
+			.invoke("prop", "accessibleName", accessibleNamePanel);
 
 		cy.get("[ui5-panel]")
 			.shadow()
@@ -433,9 +459,7 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-label", accessibleNamePanel);
 
 		cy.get("[ui5-panel]")
-			.then($panel => {
-				$panel[0].setAttribute("fixed", "");
-			});
+			.invoke("prop", "fixed", true);
 
 		cy.get("[ui5-panel]")
 			.shadow()
