@@ -1,6 +1,8 @@
 import Toast from "../../src/Toast.js";
 import List from "../../src/List.js";
 import ListItemStandard from "../../src/ListItemStandard.js";
+import ResponsivePopover from "../../src/ResponsivePopover.js";
+import Button from "../../src/Button.js";
 
 describe("Toast - test popover API", () => {
 	it("Should verify the toast has the popover attribute set to manual", () => {
@@ -41,5 +43,57 @@ describe("Toast - test popover API", () => {
 						expect(isOverlapping).to.be.true;
 					});
 			});
+	});
+
+	it("Should open toast from popover and only toast should fire close event", () => {
+		cy.mount(
+			<>
+				<Button id="openResponsivePopoverBtn">Open Popover</Button>
+				<ResponsivePopover
+					id="responsivePopover"
+					opener="openResponsivePopoverBtn">
+					<Button id="openToastBtn">Open Toast</Button>
+				</ResponsivePopover>
+				<Toast open id="toast" duration={-1} placement="BottomCenter">Toast Text</Toast>
+			</>
+		);
+
+		cy.get("[ui5-responsive-popover]").then(popover => {
+			popover[0].addEventListener("close", cy.stub().as("popoverClose"));
+		});
+
+		cy.get("#openResponsivePopoverBtn").then($button => {
+			$button[0].addEventListener("click", () => {
+				cy.get("[ui5-responsive-popover]").then($popover => {
+					const popover = $popover[0] as ResponsivePopover;
+					popover.setAttribute("open", "true");
+				});
+			});
+		});
+
+		cy.get("#openToastBtn").then($button => {
+			$button[0].addEventListener("click", () => {
+				cy.get("[ui5-toast]").then($toast => {
+					const toast = $toast[0] as Toast;
+					toast.setAttribute("open", "true");
+				});
+			});
+		});
+
+		cy.get("[ui5-toast]").should("exist").then(($toast) => {
+			$toast[0].addEventListener("close", cy.stub().as("toastClose"));
+		});
+
+		cy.get("#openResponsivePopoverBtn")
+			.realClick();
+
+		cy.get("#openToastBtn")
+			.realClick();
+
+		cy.get("@toastClose")
+			.should("be.calledOnce");
+
+		cy.get("@popoverClose")
+			.should("not.have.been.called");
 	});
 });

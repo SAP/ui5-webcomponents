@@ -684,4 +684,74 @@ describe("Keyboard Navigation", () => {
 			.find(".ui5-shellbar-logo-area")
 			.should("not.exist");
 	});
+
+	it("Test arrow navigation within search input respects cursor position", () => {
+		cy.mount(
+			<ShellBar showSearchField={true}>
+				<Button id="button" slot="content">Test Button</Button>
+				<ShellBarSearch slot="searchField" value="test value"></ShellBarSearch>
+				<ShellBarItem icon={activities} text="Action 1"></ShellBarItem>
+			</ShellBar>
+		);
+		cy.wait(RESIZE_THROTTLE_RATE);
+
+		function placeAtStartOfInput() {
+			cy.get("[ui5-shellbar] [slot='searchField']")
+				.shadow()
+				.find("input")
+				.then($input => {
+					$input[0].setSelectionRange(0, 0);
+				});
+		}
+		function placeAtEndOfInput() {
+			cy.get("[ui5-shellbar] [slot='searchField']")
+				.shadow()
+				.find("input")
+				.then($input => {
+					const inputLength = $input.val().toString().length;
+					$input[0].setSelectionRange(inputLength, inputLength);
+				});
+		}
+		function placeInMiddleOfInput() {
+			cy.get("[ui5-shellbar] [slot='searchField']")
+				.shadow()
+				.find("input")
+				.then($input => {
+					const inputLength = $input.val().toString().length;
+					const middlePosition = Math.floor(inputLength / 2);
+					$input[0].setSelectionRange(middlePosition, middlePosition);
+				});
+		}
+
+		// Focus the search input
+		cy.get("[ui5-shellbar] [slot='searchField']")
+			.realClick()
+			.shadow()
+			.find("input")
+			.as("nativeInput");
+
+		placeAtStartOfInput();
+		// Press left arrow - should move focus away from input since cursor is at start
+		cy.get("@nativeInput").type("{leftArrow}");
+		// Verify focus is now on the button
+		cy.get("[ui5-shellbar] [ui5-button]").should("be.focused");
+
+
+		placeAtEndOfInput();
+		// Press right arrow - should move focus away from input since cursor is at end
+		cy.get("@nativeInput").type("{rightArrow}");
+		// Verify focus is now on the ShellBarItem
+		cy.get("[ui5-shellbar]")
+			.shadow()
+			.find(".ui5-shellbar-custom-item")
+			.should("be.focused");
+
+		placeInMiddleOfInput();
+		// Press left arrow - should stay focused on input since cursor is in the middle
+		cy.get("@nativeInput").type("{leftArrow}");
+		cy.get("@nativeInput").should("be.focused");
+		// Press right arrow - should stay focused on input since cursor is in the middle
+		cy.get("@nativeInput").type("{rightArrow}");
+		cy.get("@nativeInput").should("be.focused");
+	});
 });
