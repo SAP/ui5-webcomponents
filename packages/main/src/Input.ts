@@ -33,13 +33,13 @@ import {
 	isDelete,
 	isEscape,
 	isTabNext,
-	isTabPrevious,
 	isPageUp,
 	isPageDown,
 	isHome,
 	isEnd,
 	isCtrlAltF8,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { attachListeners } from "@ui5/webcomponents-base/dist/util/valueStateNavigation.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -565,6 +565,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	Suggestions?: InputSuggestions;
 
 	/**
+	 * @private
+	 */
+	@property({ type: Array })
+	_linksListenersArray: Array<(args: any) => void> = [];
+
+	/**
 	 * Defines the suggestion items.
 	 *
 	 * **Note:** The suggestions would be displayed only if the `showSuggestions`
@@ -635,14 +641,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @since 2.11.0
 	 */
 	_handleLinkNavigation: boolean = false;
-
-	/**
-	 * Stores the array of links in the value state hidden text.
-	 * @default []
-	 * @private
-	 * @since 2.11.0
-	 */
-	_linkArray: Array<HTMLElement> = [];
 
 	get formValidityMessage() {
 		return Input.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
@@ -917,63 +915,59 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_handleCtrlAltF8() {
 		this._handleLinkNavigation = true;
-		this._linkArray = this.linksInAriaValueStateHiddenText;
-		if (this._linkArray.length) {
-			this._linkArray.forEach(link => {
-				// link.removeEventListener("keydown", this._linkNavigationEventListener.bind(this, link));
-				link.addEventListener("keydown", e => this._linkNavigationEventListener(e, link));
-			});
-			this._linkArray[0].focus();
+		const links = this.linksInAriaValueStateHiddenText;
+
+		if (links.length) {
+			links[0].focus();
 		}
 	}
 
-	_linkNavigationEventListener(e: KeyboardEvent, link: HTMLElement) {
-		const currentIndex = this._linkArray.indexOf(link);
-		if (isTabNext(e)) {
-			e.stopImmediatePropagation();
-			if (this._handleLinkNavigation && currentIndex !== this._linkArray.length - 1) {
-				e.preventDefault();
-				this._linkArray[currentIndex + 1].focus();
-			} else {
-				this._handleLinkNavigation = false;
-				if (this.Suggestions?.isOpened()) {
-					this.Suggestions?.close();
-				} else {
-					this.closeValueStatePopover();
-				}
-				this.getInputDOMRef()!.focus();
-			}
-		}
+	_addLinksEventListeners() {
+		const links = this.linksInAriaValueStateHiddenText;
 
-		if (isTabPrevious(e) && this._handleLinkNavigation) {
-			e.preventDefault();
-			e.stopImmediatePropagation();
-			if (currentIndex > 0) {
-				this._linkArray[currentIndex - 1].focus();
-			} else {
-				this._handleLinkNavigation = false;
-				this.getInputDOMRef()!.focus();
-			}
-		}
-
-		if (isDown(e) || isUp(e)) {
-			e.preventDefault();
-			e.stopImmediatePropagation();
-		}
-
-		if (isDown(e)) {
-			if (this._handleLinkNavigation) {
-				this._handleLinkNavigation = false;
-				if (this.Suggestions?.isOpened()) {
-					this.innerFocusIn();
-					(this.getInputDOMRef())!.focus();
-					this.Suggestions.onDown(e, this.currentItemIndex);
-				}
-			} else {
-				this._handleDown(e);
-			}
-		}
+		links.forEach((link, index) => {
+			this._linksListenersArray.push((e: KeyboardEvent) => {
+				attachListeners(e, links, index, {
+					closeValueState: () => {
+						if (this.Suggestions?.isOpened()) {
+							this.Suggestions?.close();
+						}
+						if (this.valueStateOpen) {
+							this.closeValueStatePopover();
+						}
+					},
+					focusInput: () => {
+						this._handleLinkNavigation = false;
+						this.getInputDOMRef()!.focus();
+					},
+					navigateToItem: () => {
+						if (this._handleLinkNavigation) {
+							this._handleLinkNavigation = false;
+							if (this.Suggestions?.isOpened()) {
+								this.innerFocusIn();
+								(this.getInputDOMRef())!.focus();
+								this.Suggestions.onDown(e, this.currentItemIndex);
+							}
+						} else {
+							this._handleDown(e);
+						}
+					},
+				});
+			});
+			link.addEventListener("keydown", this._linksListenersArray[index]);
+		});
 	 }
+
+	 _removeLinksEventListeners() {
+		const links = this.linksInAriaValueStateHiddenText;
+
+		links.forEach((link, index) => {
+			link.removeEventListener("keydown", this._linksListenersArray[index]);
+		});
+
+		this._linksListenersArray = [];
+		this._handleLinkNavigation = false;
+	}
 
 	_handleEnter(e: KeyboardEvent) {
 		// if a group item is focused, this is false
@@ -1347,6 +1341,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		this._handlePickerAfterOpen();
+		this._addLinksEventListeners();
 	}
 
 	_afterClosePicker() {
@@ -1372,7 +1367,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		if (this.hasSuggestionItemSelected) {
 			this.focus();
 		}
-
+		this._removeLinksEventListeners();
 		this._handlePickerAfterClose();
 	}
 
@@ -1396,6 +1391,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_handleValueStatePopoverAfterClose() {
 		this.valueStateOpen = false;
 		this._handleLinkNavigation = false;
+		this._removeLinksEventListeners();
 	}
 
 	_getValueStatePopover() {

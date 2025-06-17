@@ -36,6 +36,8 @@ import {
 	isEnd,
 	isCtrlAltF8,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { attachListeners } from "@ui5/webcomponents-base/dist/util/valueStateNavigation.js";
+
 import type { IIcon } from "./Icon.js";
 import * as Filters from "./Filters.js";
 
@@ -386,24 +388,18 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	open = false;
 
 	/**
-	 * Stores the array of links in the value state hidden text.
-	 * @private
-	 * @since 2.11.0
-	 * @default []
-	 */
-	_linkArray: HTMLElement[] = [];
-
-	/**
 	 * Indicates whether link navigation is being handled.
 	 * @default false
 	 * @since 2.11.0
 	 * @private
 	 */
+	@property({ type: Boolean })
 	_handleLinkNavigation: boolean = false;
 
 	/**
 	 * @private
 	 */
+	@property({ type: Array })
 	_linksListenersArray: Array<(args: any) => void> = [];
 
 	/**
@@ -997,66 +993,46 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_fnLinkListeners(e: KeyboardEvent, links: Array<HTMLElement>, index: number) {
-		if (isTabNext(e)) {
-			if (index !== links.length - 1) {
-				e.stopImmediatePropagation();
-				e.preventDefault();
-				links[index + 1].focus();
-			} else {
-				this._handleLinkNavigation = false;
-				if (this.open) {
-					this._closeRespPopover();
-				}
-				if (this.valueStateOpen) {
-					this.valueStateOpen = false;
-				}
-				this.inner.focus();
-			}
-		}
-
-		if (isTabPrevious(e)) {
-			e.preventDefault();
-			e.stopImmediatePropagation();
-			if (index > 0) {
-				links[index - 1].focus();
-			} else {
-				this._handleLinkNavigation = false;
-				this.inner.focus();
-			}
-		}
-
-		if (isDown(e)) {
-			this._handleLinkNavigation = false;
-			e.preventDefault();
-			e.stopImmediatePropagation();
-			if (this.open) {
-				this.inner.focus();
-				this.handleNavKeyPress(e);
-			}
-		}
-	}
-
 	_addLinksEventListeners() {
 		const links = this.linksInAriaValueStateHiddenText;
 
-		if (links.length) {
-			links.forEach((link, index) => {
-				this._linksListenersArray.push((e: KeyboardEvent) => this._fnLinkListeners(e, links, index));
-				link.addEventListener("keydown", this._linksListenersArray[index]);
+		links.forEach((link, index) => {
+			this._linksListenersArray.push((e: KeyboardEvent) => {
+				attachListeners(e, links, index, {
+					closeValueState: () => {
+						if (this.open) {
+							this._closeRespPopover();
+						}
+						if (this.valueStateOpen) {
+							this.valueStateOpen = false;
+						}
+					},
+					navigateToItem: () => {
+						this._handleLinkNavigation = false;
+						if (this.open) {
+							this.inner.focus();
+							this.handleNavKeyPress(e);
+						}
+					},
+					focusInput: () => {
+						this._handleLinkNavigation = false;
+						this.inner.focus();
+					},
+				});
 			});
-		}
+
+			link.addEventListener("keydown", this._linksListenersArray[index]);
+		});
 	}
 
 	_removeLinksEventListeners() {
 		const links = this.linksInAriaValueStateHiddenText;
-		if (links.length) {
-			links.forEach((link, index) => {
-				link.removeEventListener("keydown", this._linksListenersArray[index]);
-			});
 
-			this._linksListenersArray = [];
-		}
+		links.forEach((link, index) => {
+			link.removeEventListener("keydown", this._linksListenersArray[index]);
+		});
+
+		this._linksListenersArray = [];
 		this._handleLinkNavigation = false;
 	}
 

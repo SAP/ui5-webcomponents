@@ -27,6 +27,7 @@ export default function InputPopoverTemplate(this: Input, hooks?: { suggestionsL
 					horizontalAlign={this._valueStatePopoverHorizontalAlign}
 					opener={this}
 					open={this.valueStateOpen}
+					onOpen={this._addLinksEventListeners}
 					onClose={this._handleValueStatePopoverAfterClose}
 				>
 					<div slot="header" class={this.classes.popoverValueState} style={this.styles.popoverHeader}>
