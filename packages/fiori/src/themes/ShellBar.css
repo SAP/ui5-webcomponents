@@ -568,8 +568,8 @@ slot[name="profile"] {
 	opacity: 0;
 }
 
-.ui5-shellbar-hide-animation {
-	transition: opacity 4s cubic-bezier(0.2, 0.2, 0.38, 0.9);
+.ui5-shellbar-hide-animation.ui5-shellbar-content-item {
+	transition: opacity 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);
 	opacity: 0;
 }
 

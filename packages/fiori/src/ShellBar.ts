@@ -861,7 +861,10 @@ class ShellBar extends UI5Element {
 
 	_resetItemsVisibility(items: Array<HTMLElement>) {
 		items.forEach(item => {
-			item.classList.contains("ui5-shellbar-hidden-button") && item.classList.remove("ui5-shellbar-hidden-button");
+			if (item.classList.contains("ui5-shellbar-hidden-button")) {
+				item.classList.remove("ui5-shellbar-hidden-button");
+				item.classList.contains("ui5-shellbar-content-item") && (item.classList.add("opacity-0"));
+			}
 		});
 	}
 
