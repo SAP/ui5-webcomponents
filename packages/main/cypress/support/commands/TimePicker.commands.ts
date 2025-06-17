@@ -4,7 +4,7 @@ Cypress.Commands.add("ui5TimePickerGetInnerInput", { prevSubject: true }, subjec
 
 	cy.get("@timePicker")
 		.shadow()
-		.find("ui5-datetime-input")
+		.find("[ui5-datetime-input]")
 		.shadow()
 		.find("input")
 		.as("innerInput");
@@ -18,7 +18,7 @@ Cypress.Commands.add("ui5TimePickerValueHelpIconPress", { prevSubject: true }, s
 
 	cy.get("@timePicker")
 		.shadow()
-		.find("ui5-datetime-input")
+		.find("[ui5-datetime-input]")
 		.find(".ui5-time-picker-input-icon-button")
 		.realClick();
 });
@@ -32,7 +32,7 @@ Cypress.Commands.add("ui5TimePickerGetPopover", { prevSubject: true }, subject =
 
 	return cy.get("@timePicker")
 		.shadow()
-		.find("ui5-responsive-popover")
+		.find("[ui5-responsive-popover]")
 		.should("be.visible");
 });
 
@@ -45,8 +45,8 @@ Cypress.Commands.add("ui5TimePickerGetClock", { prevSubject: true }, (subject, c
 
 	return cy.get("@timePicker")
 		.shadow()
-		.find("ui5-responsive-popover")
-		.find("ui5-time-selection-clocks")
+		.find("[ui5-responsive-popover]")
+		.find("[ui5-time-selection-clocks]")
 		.shadow()
 		.find(`ui5-toggle-spin-button[data-ui5-clock="${clockType}"]`);
 });
@@ -60,7 +60,7 @@ Cypress.Commands.add("ui5TimePickerGetSubmitButton", { prevSubject: true }, subj
 
 	return cy.get("@timePicker")
 		.shadow()
-		.find("ui5-responsive-popover")
+		.find("[ui5-responsive-popover]")
 		.find("#submit");
 });
 

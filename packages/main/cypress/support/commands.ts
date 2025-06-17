@@ -86,11 +86,6 @@ declare global {
 			ui5DatePickerGetMonthButton(): Chainable<JQuery<HTMLElement>>
 			ui5DatePickerGetYearButton(): Chainable<JQuery<HTMLElement>>
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
-			ui5TimePickerGetInnerInput(): Chainable<JQuery<HTMLElement>>
-			ui5TimePickerValueHelpIconPress(): Chainable<void>
-			ui5TimePickerGetPopover(): Chainable<JQuery<HTMLElement>>
-			ui5TimePickerGetClock(clockType: string): Chainable<JQuery<HTMLElement>>
-			ui5TimePickerGetSubmitButton(): Chainable<JQuery<HTMLElement>>
 			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
 			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
 			ui5TimeSelectionClocksInnerButton(name: string, index: number): Chainable<JQuery<HTMLElement>>

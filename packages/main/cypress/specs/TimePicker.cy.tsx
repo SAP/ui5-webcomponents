@@ -26,7 +26,9 @@ describe("TimePicker Tests", () => {
 			.should("have.value", "3:16:16 ч.");
 
 		cy.wrap({ setLanguage })
-			.invoke("setLanguage", "en");
+			.then(api => {
+				return api.setLanguage("en");
+			});
 	});
 
 	it("tests clocks value", () => {
@@ -62,13 +64,13 @@ describe("TimePicker Tests", () => {
 			.should("be.focused")
 
 
-		pressKeyNTimes("ArrowDown", 10);
+		pressKeyNTimes("ArrowDown", 2);
 		cy.realPress("Space");
 
 		cy.get("@timePicker")
 			.ui5TimePickerGetClock("minutes");
 
-		pressKeyNTimes("ArrowDown", 22);
+		pressKeyNTimes("ArrowDown", 5);
 		pressKeyNTimes("ArrowUp", 2);
 
 		cy.realPress("Space");
@@ -82,7 +84,7 @@ describe("TimePicker Tests", () => {
 		cy.realPress("Enter");
 
 		cy.get("@timePicker")
-			.should("have.value", "02:40:05");
+			.should("have.value", "10:57:05");
 	});
 
 	it("tests submit wrong value", () => {
@@ -128,9 +130,10 @@ describe("TimePicker Tests", () => {
 			.ui5TimePickerGetClock("hours")
 			.realClick()
 			.should("be.focused")
-			.realPress("PageDown"); // select 11
 
-		pressKeyNTimes("ArrowDown", 10);
+		cy.realPress("PageDown");
+
+		pressKeyNTimes("ArrowDown", 2);
 		cy.realPress("Space");
 
 		cy.get("@timePicker")
@@ -309,8 +312,7 @@ describe("TimePicker Tests", () => {
 			.should("have.attr", "open");
 
 		cy.get<TimePicker>("@timePicker")
-			.shadow()
-			.find("ui5-responsive-popover")
+			.ui5TimePickerGetPopover()
 			.should("have.attr", "open");
 	});
 
@@ -321,13 +323,10 @@ describe("TimePicker Tests", () => {
 			.as("timePicker");
 
 		cy.get<TimePicker>("@timePicker")
-			.then($el => {
-				$el.prop("open", true);
-			});
+			.invoke("prop", "open", true);
 
 		cy.get<TimePicker>("@timePicker")
-			.shadow()
-			.find("ui5-responsive-popover")
+			.ui5TimePickerGetPopover()
 			.should("have.attr", "open");
 	});
 
@@ -342,8 +341,7 @@ describe("TimePicker Tests", () => {
 			.realPress("F4");
 
 		cy.get<TimePicker>("@timePicker")
-			.shadow()
-			.find("ui5-responsive-popover")
+			.ui5TimePickerGetPopover()
 			.should("have.attr", "accessible-name", "Choose Time");
 	});
 
@@ -376,8 +374,7 @@ describe("TimePicker Tests", () => {
 			.ui5TimePickerValueHelpIconPress();
 
 		cy.get("@timePicker")
-			.shadow()
-			.find("ui5-responsive-popover")
+			.ui5TimePickerGetPopover()
 			.find(".ui5-valuestatemessage-header")
 			.should("exist")
 			.and("have.class", "ui5-valuestatemessage--error");
