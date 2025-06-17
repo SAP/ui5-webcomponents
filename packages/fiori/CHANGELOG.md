@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0...v2.12.0-rc.0) (2025-06-12)
+
+
+### Bug Fixes
+
+* **ui5-busy-indicator:** make text and circles determine indicator dimensions when there is no content ([#11223](https://github.com/SAP/ui5-webcomponents/issues/11223)) ([10c0cfd](https://github.com/SAP/ui5-webcomponents/commit/10c0cfddf56ceea2c4481e0c971b30a2a26f602c))
+* **ui5-shellbar:** prevent logo click event from firing twice ([#11631](https://github.com/SAP/ui5-webcomponents/issues/11631)) ([5b08a48](https://github.com/SAP/ui5-webcomponents/commit/5b08a48abb2177dd00ebab93bb2b62eef4e64e77)), closes [#11506](https://github.com/SAP/ui5-webcomponents/issues/11506)
+* **ui5-upload-collection:** prevent `item-delete` event from firing when item name is deleted ([#11625](https://github.com/SAP/ui5-webcomponents/issues/11625)) ([fe048b0](https://github.com/SAP/ui5-webcomponents/commit/fe048b0d304a42620d738d0822d07e8b292be043))
+
+
+
+
+
 # [2.11.0](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.4...v2.11.0) (2025-06-05)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
