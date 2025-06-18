@@ -16,6 +16,13 @@ attachConfigurationReset(() => {
 	fetchDefaultLanguage = undefined;
 });
 
+// Flag indicating that a language change is in progress and not yet complete.
+// While this flag is true, language-aware components will not re-render.
+// These components may rely on language-specific data (e.g., CLDR, language bundles),
+// which might be unavailable during the loading phase.
+// During this phase, all re-rendering is postponed.
+// Once all necessary language data has been loaded, the language change
+// will trigger a re-render of all language-aware components.
 let languageChangePending = false;
 
 const getLanguageChangePending = () => languageChangePending;

@@ -114,6 +114,9 @@ function _invalidate(this: UI5Element, changeInfo: ChangeInfo) {
 
 	const ctor = this.constructor as typeof UI5Element;
 
+	// Skip re-rendering of language-aware components while language-specific data (e.g., CLDR, language bundles) is still loading.
+	// Once all necessary language data has been loaded, the language change
+	// will trigger a re-render of all language-aware components.
 	if (ctor.getMetadata().isLanguageAware() && getLanguageChangePending()) {
 		return;
 	}
