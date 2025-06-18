@@ -59,7 +59,7 @@ function Sample() {
 
 describe("Notification List Item Tests", () => {
 	it("tests 'item-toggle' fired", () => {
-		const clickStub = cy.stub().as("myStub");
+		const clickStub = cy.stub().as("clickStub");
 		cy.mount(
 			<NotificationList onItemToggle={clickStub}>
 				<NotificationListGroupItem id="nlgi1" />
@@ -71,7 +71,7 @@ describe("Notification List Item Tests", () => {
 			.find(".ui5-nli-group-header")
 			.realClick();
 
-		cy.get("@myStub").should("have.been.calledOnce");
+		cy.get("@clickStub").should("have.been.calledOnce");
 	});
 
 	it("tests Group List Header keyboard shortcuts ", () => {
@@ -136,7 +136,7 @@ describe("Notification List Item Tests", () => {
 	// Notification List Item specific tests follows
 
 	it("tests 'item-click' fired", () => {
-		const itemClick = cy.stub().as("myStub");
+		const itemClick = cy.stub().as("itemClick");
 		cy.mount(
 			<NotificationList onItemClick={itemClick}>
 				<NotificationListItem id="nli1" />
@@ -148,14 +148,14 @@ describe("Notification List Item Tests", () => {
 			.find(".ui5-nli-root")
 			.should("have.attr", "tabindex");
 		cy.get("#nli1").realClick();
-		cy.get("@myStub").should("have.been.calledOnce");
+		cy.get("@itemClick").should("have.been.calledOnce");
 
 		cy.get("#nli1").realPress("Enter");
-		cy.get("@myStub").should("have.been.calledTwice");
+		cy.get("@itemClick").should("have.been.calledTwice");
 	});
 
 	it("tests 'item-close' fired", () => {
-		const itemClose = cy.stub().as("myStub");
+		const itemClose = cy.stub().as("itemClose");
 		cy.mount(
 			<NotificationList id="notificationList" onItemClose={itemClose}>
 				<NotificationListItem id="nli1" show-close />
@@ -167,14 +167,14 @@ describe("Notification List Item Tests", () => {
 			.shadow()
 			.find(".ui5-nli-close-btn")
 			.realClick();
-		cy.get("@myStub").should("have.been.calledOnce");
+		cy.get("@itemClose").should("have.been.calledOnce");
 
 		cy.get("#nli1").realClick();
 		cy.get("#nli1").should("be.focused");
 		cy.realPress("ArrowDown");
 		cy.realPress("Delete");
 
-		cy.get("@myStub").should("have.been.calledTwice");
+		cy.get("@itemClose").should("have.been.calledTwice");
 	});
 
 	it("tests click on ShowMore", () => {
