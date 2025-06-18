@@ -30,9 +30,23 @@ describe("API", () => {
 });
 
 describe("Interaction", () => {
+	function addPageStyles(styles: string) {
+		cy.document().then((doc) => {
+			const style = doc.createElement('style');
+			style.id = "panel-styles";
+			style.innerHTML = styles;
+			doc.head.appendChild(style);
+		});
+	}
+	function clearPageStyles() {
+		cy.window()
+			.then($el => {
+				const styleTag = $el.document.head.querySelector("style[id='panel-styles']");
+				styleTag?.remove();
+			});
+	}
 	it("Collapsing fixed panel is not possible", () => {
-		const toggleEventStub = cy.stub();
-		cy.mount(<Panel fixed={true} headerText="Fixed Panel" onToggle={toggleEventStub}>
+		cy.mount(<Panel fixed={true} headerText="Fixed Panel" onToggle={cy.stub().as("toggleEvent")}>
 			<Title level={TitleLevel.H2}>Content</Title>
 		</Panel>);
 
@@ -55,7 +69,7 @@ describe("Interaction", () => {
 		cy.get("@content")
 			.should("be.visible");
 
-		cy.wrap(toggleEventStub)
+		cy.get("@toggleEvent")
 			.should("not.have.been.called");
 
 		cy.get("[ui5-panel]")
@@ -73,7 +87,7 @@ describe("Interaction", () => {
 		cy.get("[ui5-panel]")
 			.should("not.have.attr", "collapsed");
 
-		cy.wrap(toggleEventStub)
+		cy.get("@toggleEvent")
 			.should("not.have.been.called");
 
 		cy.get("@header")
@@ -85,7 +99,7 @@ describe("Interaction", () => {
 		cy.get("@content")
 			.should("be.visible");
 
-		cy.wrap(toggleEventStub)
+		cy.get("@toggleEvent")
 			.should("not.have.been.called");
 
 		cy.get("[ui5-panel]")
@@ -145,16 +159,12 @@ describe("Interaction", () => {
 	});
 
 	it("Sticky header when scrolling inner content", () => {
-		cy.document().then((doc) => {
-			const style = doc.createElement('style');
-			style.id = "panel-stickyHeader-style";
-			style.innerHTML = `
-				#panel-stickyHeader::part(content) {
-					max-height: 70px;
-				}
-			`;
-			doc.head.appendChild(style);
-		  });
+		addPageStyles(`
+			#panel-stickyHeader::part(content) {
+				max-height: 70px;
+				overflow: auto;
+			}
+		`);
 		cy.mount(<Panel headerText="Fixed Panel" stickyHeader={true} id="panel-stickyHeader">
 			<Label wrappingType="Normal">Lorem ipsum dolor sit amet, tamquam invidunt cu sed, unum regione mel ea, quo ea alia novum. Ne qui illud zril
 				nostrum, vel ea sint dicant postea. Vel ne facete tritani, neglegentur concludaturque sed te. His animal dolorum ut.
@@ -194,27 +204,23 @@ describe("Interaction", () => {
 					});
 			});
 
-		// Clean up the style attribute
-		cy.window()
-			.then($el => {
-				const styleTag = $el.document.head.querySelector("style[id='panel-stickyHeader-style']");
-
-				styleTag?.remove();
-			})
+		// Clean up the style tag
+		clearPageStyles();
 	});
 
 	it("Sticky header when scrolling outer container", () => {
-		cy.document().then((doc) => {
-			const style = doc.createElement('style');
-			style.innerHTML = `
-				#panel-stickyHeader::part(content) {
-					max-height: 70px;
-				}
-			`;
-			doc.head.appendChild(style);
-		  });
+		addPageStyles(`
+			#my-div {
+				height: 1000px;
+				overflow: scroll;
+			}
+			#panel-stickyHeader::part(content) {
+				max-height: 70px;
+				overflow: auto;
+			}
+		`);
 		cy.mount(
-		<div id="my-div" style={{ height: "1000px", overflow: "scroll" }}>
+		<div id="my-div">
 			<Panel headerText="Fixed Panel" stickyHeader={true} id="panel-stickyHeader">
 				<Label wrappingType="Normal">Lorem ipsum dolor sit amet, tamquam invidunt cu sed, unum regione mel ea, quo ea alia novum. Ne qui illud zril
 				nostrum, vel ea sint dicant postea. Vel ne facete tritani, neglegentur concludaturque sed te. His animal dolorum ut.
@@ -253,6 +259,9 @@ describe("Interaction", () => {
 						expect(headerTopAfter).to.eq(headerTopBefore);
 					});
 			});
+
+		// Clean up the style tag
+		clearPageStyles();
 	});
 
 	it("Tests toggle expand/collapse animation", () => {
@@ -278,8 +287,7 @@ describe("Interaction", () => {
 
 describe("Events", () => {
 	it("Toggle Event upon header click", () => {
-		const toggleEventStub = cy.stub();
-		cy.mount(<Panel headerText="Fixed Panel" onToggle={toggleEventStub}>
+		cy.mount(<Panel headerText="Fixed Panel" onToggle={cy.stub().as("toggleEvent")}>
 			<Title level={TitleLevel.H2}>Content</Title>
 		</Panel>);
 
@@ -291,13 +299,12 @@ describe("Events", () => {
 		cy.get("@header")
 			.realClick();
 
-		cy.wrap(toggleEventStub)
+		cy.get("@toggleEvent")
 			.should("have.been.calledOnce");
 	});
 
 	it("Toggle Event upon custom header", () => {
-		const toggleEventStub = cy.stub();
-		cy.mount(<Panel onToggle={toggleEventStub}>
+		cy.mount(<Panel onToggle={cy.stub().as("toggleEvent")}>
 			<div slot="header">
 				<Title level={TitleLevel.H2}>Custom Header</Title>
             </div>
@@ -311,7 +318,7 @@ describe("Events", () => {
 		cy.get("@icon")
 			.realClick();
 
-		cy.wrap(toggleEventStub)
+		cy.get("@toggleEvent")
 			.should("have.been.calledOnce");
 	});
 });
