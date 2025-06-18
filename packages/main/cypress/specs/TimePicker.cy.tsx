@@ -2,6 +2,7 @@ import "../../src/Assets.js";
 import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import TimePicker from "../../src/TimePicker.js";
 import Label from "../../src/Label.js";
+import ResponsivePopover from "../../src/ResponsivePopover.js";
 
 function pressKeyNTimes(key: "ArrowDown" | "ArrowUp" | "Space" | "Tab" | "Enter", n: number) {
 	for (let i = 0; i < n; i++) {
@@ -310,10 +311,6 @@ describe("TimePicker Tests", () => {
 
 		cy.get<TimePicker>("@timePicker")
 			.should("have.attr", "open");
-
-		cy.get<TimePicker>("@timePicker")
-			.ui5TimePickerGetPopover()
-			.should("have.attr", "open");
 	});
 
 	it("setting time picker's open property to true, opens the value-help", () => {
@@ -326,8 +323,9 @@ describe("TimePicker Tests", () => {
 			.invoke("prop", "open", true);
 
 		cy.get<TimePicker>("@timePicker")
-			.ui5TimePickerGetPopover()
-			.should("have.attr", "open");
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened()
 	});
 
 	it("picker popover should have accessible name", () => {
@@ -341,7 +339,13 @@ describe("TimePicker Tests", () => {
 			.realPress("F4");
 
 		cy.get<TimePicker>("@timePicker")
-			.ui5TimePickerGetPopover()
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get<TimePicker>("@timePicker")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
 			.should("have.attr", "accessible-name", "Choose Time");
 	});
 
@@ -374,7 +378,13 @@ describe("TimePicker Tests", () => {
 			.ui5TimePickerValueHelpIconPress();
 
 		cy.get<TimePicker>("@timePicker")
-			.ui5TimePickerGetPopover()
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get<TimePicker>("@timePicker")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
 			.find(".ui5-valuestatemessage-header")
 			.should("exist")
 			.and("have.class", "ui5-valuestatemessage--error");

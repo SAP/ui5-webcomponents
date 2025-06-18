@@ -24,22 +24,6 @@ Cypress.Commands.add("ui5TimePickerValueHelpIconPress", { prevSubject: true }, s
 		.find("[ui5-datetime-input]")
 		.find(".ui5-time-picker-input-icon-button")
 		.realClick();
-
-	cy.get<TimePicker>("@timePicker")
-		.ui5TimePickerGetPopover();
-});
-
-Cypress.Commands.add("ui5TimePickerGetPopover", { prevSubject: true }, subject => {
-	cy.wrap(subject)
-		.as("timePicker");
-
-	cy.get("@timePicker")
-		.should("have.attr", "open");
-
-	return cy.get("@timePicker")
-		.shadow()
-		.find("[ui5-responsive-popover]")
-		.should("be.visible");
 });
 
 Cypress.Commands.add("ui5TimePickerGetClock", { prevSubject: true }, (subject, clockType) => {
@@ -79,9 +63,6 @@ declare global {
 			ui5TimePickerValueHelpIconPress(
 				this: Chainable<JQuery<TimePicker>>
 			): Chainable<void>;
-			ui5TimePickerGetPopover(
-				this: Chainable<JQuery<TimePicker>>
-			): Chainable<JQuery<Element>>;
 			ui5TimePickerGetClock(
 				this: Chainable<JQuery<TimePicker>>,
 				clockType: string
