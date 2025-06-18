@@ -64,3 +64,62 @@ describe("Avatars", () => {
 		});
 	});
 });
+
+describe("Accessibility", () => {
+	it("checks if accessibleName is properly set and applied as aria-label", () => {
+		const customLabel = "Development Team Members";
+		
+		cy.mount(<AvatarGroup id="ag" accessible-name={customLabel}>
+			<Avatar initials="JD"></Avatar>
+			<Avatar initials="SM"></Avatar>
+			<Avatar initials="KL"></Avatar>
+		</AvatarGroup>);
+
+		cy.get("#ag")
+			.should("have.attr", "accessible-name", customLabel)
+			.then(($el) => {
+				const avatarGroup = $el.get(0) as AvatarGroup;
+				expect(avatarGroup.accessibleName).to.equal(customLabel);
+			});
+
+		cy.get("#ag")
+			.shadow()
+			.find(".ui5-avatar-group-items")
+			.should("have.attr", "aria-label", customLabel)
+			.and("not.have.attr", "aria-labelledby");
+	});
+
+	it("checks if accessibleNameRef is properly set and applied as aria-label", () => {
+		const labelId = "team-header";
+		
+		cy.mount(
+			<>
+				<h3 id={labelId}>Quality Assurance Team</h3>
+				<AvatarGroup id="ag" accessible-name-ref={labelId}>
+					<Avatar initials="AB"></Avatar>
+					<Avatar initials="CD"></Avatar>
+					<Avatar initials="EF"></Avatar>
+				</AvatarGroup>
+			</>
+		);
+	
+		cy.get("#ag")
+			.should("have.attr", "accessible-name-ref", labelId)
+			.then(($el) => {
+				const avatarGroup = $el.get(0) as AvatarGroup;
+				expect(avatarGroup.accessibleNameRef).to.equal(labelId);
+			});
+	
+		cy.get("#ag")
+			.shadow()
+			.find(".ui5-avatar-group-items")
+			.should("have.attr", "aria-label", "Quality Assurance Team");
+		
+		cy.get("#ag")
+			.shadow()
+			.find(".ui5-avatar-group-items")
+			.should("not.have.attr", "aria-labelledby");
+		
+		cy.get(`#${labelId}`).should("exist");
+	});
+});
