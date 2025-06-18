@@ -186,6 +186,14 @@ class Switch extends UI5Element implements IFormInputElement {
 	@property()
 	name?: string;
 
+	/**
+	 * Defines the form value of the component.
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	value = "";
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -202,7 +210,11 @@ class Switch extends UI5Element implements IFormInputElement {
 	}
 
 	get formFormattedValue() {
-		return this.checked ? "on" : null;
+		if (this.checked) {
+			return this.value || "on";
+		}
+
+		return null;
 	}
 
 	get sapNextIcon() {
