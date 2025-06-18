@@ -6,22 +6,22 @@ describe("ResponsivePopover general interaction", () => {
 		cy.mount(
 			<>
 				<Button id="btnOpen" />
-				<ResponsivePopover id="respPopover" opener={"btnOpen"}>
+				<ResponsivePopover opener={"btnOpen"}>
 					<div slot="header" />
 					<div slot="footer" />
 				</ResponsivePopover>
 			</>
 		);
 
-		cy.get("#respPopover").invoke("attr", "open", true);
-		cy.get("#respPopover").should("be.visible");
+		cy.get("[ui5-responsive-popover]").invoke("attr", "open", true);
+		cy.get<ResponsivePopover>("[ui5-responsive-popover]").ui5ResponsivePopoverOpened();
 
-		cy.get("#respPopover")
+		cy.get("[ui5-responsive-popover]")
 			.shadow()
 			.find(".ui5-popup-header-root")
 			.should("exist");
 
-		cy.get("#respPopover")
+		cy.get("[ui5-responsive-popover]")
 			.shadow()
 			.find(".ui5-popup-footer-root")
 			.should("exist");
@@ -31,83 +31,93 @@ describe("ResponsivePopover general interaction", () => {
 		cy.mount(
 			<>
 				<Button id="btnOpen3" />
-				<ResponsivePopover id="respPopover3" content-only-on-desktop opener={"btnOpen3"}>
+				<ResponsivePopover content-only-on-desktop opener="btnOpen3">
 					<div slot="header" />
 				</ResponsivePopover>
 			</>
 		);
 
-		cy.get("#btnOpen3").realClick();
+		cy.get("[ui5-responsive-popover]").invoke("attr", "open", true);
 
-		cy.get("#respPopover3").invoke("attr", "open", true);
-
-		cy.get("#respPopover3").should("be.visible");
-		cy.get("#respPopover3").shadow().find(".ui5-popup-header-root").should("not.exist");
+		cy.get<ResponsivePopover>("[ui5-responsive-popover]").ui5ResponsivePopoverOpened();
+		cy.get("[ui5-responsive-popover]").shadow().find(".ui5-popup-header-root").should("not.exist");
 	});
 
 	it("Initial focus NOT prevented", () => {
 		cy.mount(
 			<>
 				<Button id="btnInitialFocus" />
-				<ResponsivePopover id="simpleRPInitialFocus" opener={"btnInitialFocus"} />
+				<ResponsivePopover opener={"btnInitialFocus"} />
 			</>
 		);
-		cy.get("#btnInitialFocus").realClick();
 
-		cy.get("#simpleRPInitialFocus").invoke("attr", "open", true);
+		cy.get("[ui5-responsive-popover]").invoke("attr", "open", true);
+		cy.get<ResponsivePopover>("[ui5-responsive-popover]").ui5ResponsivePopoverOpened();
 
-		cy.get("#simpleRPInitialFocus").should("have.focus");
-		cy.get("#btnInitialFocus").should("not.have.focus");
+		cy.get("[ui5-responsive-popover]").should("have.focus");
+		cy.get("[ui5-button]").should("not.have.focus");
 	});
 
 	it("Initial focus prevented", () => {
 		cy.mount(
 			<>
 				<Button id="btnInitialFocusPrevented" />
-				<ResponsivePopover id="simpleRPInitialFocusPrevented" prevent-initial-focus opener={"btnInitialFocusPrevented"} />
+				<ResponsivePopover prevent-initial-focus opener={"btnInitialFocusPrevented"} />
 			</>
 		);
 
-		cy.get("#btnInitialFocusPrevented").realClick();
+		cy.get("[ui5-button]").realClick();
 
-		cy.get("#simpleRPInitialFocusPrevented").invoke("attr", "open", true);
+		cy.get("[ui5-responsive-popover]").invoke("attr", "open", true);
+		cy.get<ResponsivePopover>("[ui5-responsive-popover]").ui5ResponsivePopoverOpened();
 
-		cy.get("#btnInitialFocusPrevented").should("have.focus");
+		cy.get("[ui5-button]").should("have.focus");
 	});
 
 	it("tests popover toggling with 'open' attribute", () => {
-		cy.mount(<ResponsivePopover id="popoverAttr" />);
+		cy.mount(
+			<>
+				<Button id="btnInitialFocusPrevented" />
+				<ResponsivePopover opener={"btnInitialFocusPrevented"} />
+			</>
+		);
 
-		cy.get("#popoverAttr").invoke("attr", "open", true);
-		cy.get("#popoverAttr").should("be.visible");
+		cy.get("[ui5-responsive-popover]").invoke("attr", "open", true);
+		cy.get<ResponsivePopover>("[ui5-responsive-popover]").ui5ResponsivePopoverOpened();
 
-		cy.get("#popoverAttr").invoke("attr", "open", false);
-		cy.get("#popoverAttr").should("not.be.visible");
+		cy.get("[ui5-responsive-popover]").invoke("attr", "open", false);
+		cy.get<ResponsivePopover>("[ui5-responsive-popover]").ui5ResponsivePopoverClosed();
 	});
 });
 
 describe("Acc", () => {
-	it("tests accessible-role", () => {
-		cy.mount(
-			<>
-				<ResponsivePopover id="respPopover" />
-				<ResponsivePopover id="rPAlertRole" accessible-role="AlertDialog" />
-				<Button id="btnRoleNone" />
-				<ResponsivePopover id="rPNoneRole" accessible-role="None" opener={"btnRoleNone"} />
-			</>
-		);
+	it("tests accessible-role=Dialog", () => {
+		cy.mount(<ResponsivePopover id="respPopover" />);
 
-		cy.get("#respPopover")
+		cy.get("[ui5-responsive-popover]")
 			.shadow()
 			.find(".ui5-popup-root")
 			.should("have.attr", "role", "dialog")
 			.and("have.attr", "aria-modal", "true");
+	});
+
+	it("tests accessible-role=AlertDialog", () => {
+		cy.mount(<ResponsivePopover id="rPAlertRole" accessible-role="AlertDialog" />);
 
 		cy.get("#rPAlertRole")
 			.shadow()
 			.find(".ui5-popup-root")
 			.should("have.attr", "role", "alertdialog")
 			.and("have.attr", "aria-modal", "true");
+	});
+
+	it("tests none accessible-role", () => {
+		cy.mount(
+			<>
+				<Button id="btnRoleNone" />
+				<ResponsivePopover id="rPNoneRole" accessible-role="None" opener={"btnRoleNone"} />
+			</>
+		);
 
 		cy.get("#rPNoneRole")
 			.shadow()
