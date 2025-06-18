@@ -7,6 +7,7 @@ import isElementClickable from "../util/isElementClickable.js";
 import { getCurrentRuntimeIndex, compareRuntimes } from "../Runtimes.js";
 import getSharedResource from "../getSharedResource.js";
 import type OpenUI5Support from "./OpenUI5Support.js";
+import getParentElement from "../util/getParentElement.js";
 
 type F6Registry = {
 	instance?: F6Navigation,
@@ -198,7 +199,7 @@ class F6Navigation {
 				return closestScopeEl;
 			}
 
-			element = element.parentElement ? element.parentElement : (element.parentNode as ShadowRoot).host;
+			element = getParentElement(element);
 		}
 
 		return document.body;
@@ -206,10 +207,10 @@ class F6Navigation {
 
 	setSelectedGroup(root: DocumentOrShadowRoot = window.document) {
 		const htmlElement = window.document.querySelector("html");
-		let element: Element | null | ParentNode = this.deepActive(root);
+		let element: Element | null = this.deepActive(root);
 
-		while (element && (element as Element).getAttribute("data-sap-ui-fastnavgroup") !== "true" && element !== htmlElement) {
-			element = element.parentElement ? element.parentNode : (element.parentNode as ShadowRoot).host;
+		while (element && element.getAttribute("data-sap-ui-fastnavgroup") !== "true" && element !== htmlElement) {
+			element = getParentElement(element);
 		}
 
 		this.selectedGroup = element as HTMLElement;
