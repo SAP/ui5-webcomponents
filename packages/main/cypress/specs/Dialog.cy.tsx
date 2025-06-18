@@ -1,8 +1,46 @@
 import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import Dialog from "../../src/Dialog.js";
 import Label from "../../src/Label.js";
+import Toolbar from "../../src/Toolbar.js";
+import ToolbarButton from "../../src/ToolbarButton.js";
 
 describe("Keyboard", () => {
+	it("TAB navigation", () => {
+		cy.mount(
+			<>
+				<button id="buttonId"></button>
+				<Dialog id="dialogId">
+					<Toolbar slot="footer">
+						<ToolbarButton
+							id="toolbarButtonId"
+							design="Emphasized"
+							text="Submit"
+						></ToolbarButton>
+					</Toolbar>
+				</Dialog>
+			</>
+		);
+
+		cy.get("#dialogId")
+			.invoke("prop", "open", true);
+
+		cy.get("#dialogId")
+			.should("be.visible");
+
+		cy.get("#toolbarButtonId")
+			.should("be.focused");
+
+		cy.realPress(["Tab"]);
+
+		cy.get("#toolbarButtonId")
+			.should("be.focused");
+
+		cy.realPress(["Shift", "Tab"]);
+
+		cy.get("#toolbarButtonId")
+			.should("be.focused");
+	});
+
 	it("F6 navigation", () => {
 		cy.mount(
 			<>
