@@ -55,10 +55,28 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Determines the format, displayed in the input field.
 	 * @default undefined
+	 * @deprecated
 	 * @public
 	 */
 	@property()
 	formatPattern?: string;
+
+	/**
+	 * Determines the format, displayed in the input field.
+	 * @default undefined
+	 * @since 1.0.0-rc.6
+	 * @public
+	 */
+	@property()
+	displayFormat?: string;
+
+	/**
+	 * Determines the format, used for the value attribute.
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	valueFormat?: string;
 
 	/**
 	 * Determines the minimum date available for selection.
@@ -143,6 +161,14 @@ class DateComponentBase extends UI5Element {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
+	get _isValueFormatPattern() {
+		return this._valueFormat !== "medium" && this._valueFormat !== "short" && this._valueFormat !== "long";
+	}
+
+	get _isDisplayFormatPattern() {
+		return this._displayFormat !== "medium" && this._displayFormat !== "short" && this._displayFormat !== "long";
+	}
+
 	get hasSecondaryCalendarType() {
 		return !!this.secondaryCalendarType && this.secondaryCalendarType !== this.primaryCalendarType;
 	}
@@ -187,6 +213,50 @@ class DateComponentBase extends UI5Element {
 			: DateFormat.getDateInstance({
 				strictParsing: true,
 				style: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			});
+	}
+
+	get _displayFormat() {
+		return this.displayFormat || this._formatPattern;
+	}
+
+	get _valueFormat() {
+		if (this.valueFormat) {
+			return this.valueFormat;
+		}
+
+		return this._formatPattern || "ISO";
+	}
+
+	getDisplayFormat() {
+		return this._isDisplayFormatPattern
+			? DateFormat.getDateInstance({
+				strictParsing: true,
+				pattern: this._displayFormat,
+				calendarType: this._primaryCalendarType,
+			})
+			: DateFormat.getDateInstance({
+				strictParsing: true,
+				style: this._displayFormat,
+				calendarType: this._primaryCalendarType,
+			});
+	}
+
+	getValueFormat() {
+		if (!this.valueFormat) {
+			return this.getISOFormat();
+		}
+
+		return this._isValueFormatPattern
+			? DateFormat.getDateInstance({
+				strictParsing: true,
+				pattern: this._valueFormat,
+				calendarType: this._primaryCalendarType,
+			})
+			: DateFormat.getDateInstance({
+				strictParsing: true,
+				style: this._valueFormat,
 				calendarType: this._primaryCalendarType,
 			});
 	}
