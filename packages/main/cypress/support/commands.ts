@@ -52,6 +52,7 @@ import "./commands/ResponsivePopover.commands.js";
 import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
 import "./commands/SegmentedButton.commands.js";
+import "./commands/StepInput.commands.js";
 import "./commands/TimeSelectionClocks.commands.js";
 import "./commands/ToggleButton.commands.js";
 
