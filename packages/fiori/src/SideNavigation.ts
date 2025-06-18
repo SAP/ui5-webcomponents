@@ -300,7 +300,6 @@ class SideNavigation extends UI5Element {
 
 		const selectedItem = this._findSelectedItem(this.items as Array<SideNavigationItem | SideNavigationGroup>);
 
-		// const selectedItem = this._flexibleItemNavigation._getCurrentItem();
 		if (selectedItem) {
 			this.focusItem(selectedItem);
 			selectedItem.focus();
