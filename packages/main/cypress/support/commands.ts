@@ -53,8 +53,11 @@ import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
 import "./commands/SegmentedButton.commands.js";
 import "./commands/StepInput.commands.js";
+import "./commands/TabContainer.commands.js";
 import "./commands/TimeSelectionClocks.commands.js";
 import "./commands/ToggleButton.commands.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import type MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 
 type SimulationDevices = "phone"
 
@@ -89,6 +92,8 @@ declare global {
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
 			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
 			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
+			ui5TabContainerOpenEndOverflow(): Chainable<void>,
+			ui5TabContainerDragAndDrop(elementToDrag: HTMLElement, placement: `${MovePlacement}`, target: HTMLElement, orientation?: `${Orientation}`): Chainable<void>,
 			ui5TimeSelectionClocksInnerButton(name: string, index: number): Chainable<JQuery<HTMLElement>>
 			ui5TimeSelectionClocksIsActiveClock(name: string, index: number): Chainable<boolean>
 			ui5ToggleButtonRealClick(isClickPrevented: boolean, pressedKey?: ModifierKey): Chainable<void>
