@@ -502,7 +502,15 @@ describe("Menu interaction", () => {
 				.shadow()
 				.find("li")
 				.should("have.attr", "role", "menuitem")
-				.and("have.attr", "aria-haspopup", "menu");
+				.and("have.attr", "aria-haspopup", "menu")
+				.and("have.attr", "aria-expanded", "false");
+
+			cy.get("@items")
+				.eq(0)
+				.ui5MenuItemClick()
+				.shadow()
+				.find("li")
+				.should("have.attr", "aria-expanded", "true");
 
 			cy.get("@items")
 				.eq(1)
