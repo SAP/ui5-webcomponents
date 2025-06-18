@@ -6,7 +6,7 @@ describe("Rendering", () => {
 	it("Rendering without content", () => {
 		cy.mount(<BusyIndicator id="busyInd" active></BusyIndicator>);
 
-		cy.get("#busyInd")
+		cy.get("[ui5-busy-indicator]")
 			.shadow()
 			.find(".ui5-busy-indicator-busy-area:not(.ui5-busy-indicator-busy-area-over-content)")
 			.should("exist");
@@ -20,7 +20,7 @@ describe("Rendering", () => {
 			</BusyIndicator>
 		);
 
-		cy.get("#busyInd")
+		cy.get("[ui5-busy-indicator]")
 			.shadow()
 			.find(".ui5-busy-indicator-busy-area.ui5-busy-indicator-busy-area-over-content")
 			.should("exist");
@@ -32,11 +32,12 @@ describe("BusyIndicator general interaction", () => {
 		const onClickStub = cy.stub().as("clickStub");
 		cy.mount(
 			<BusyIndicator>
-				<button id="btn" onClick={onClickStub} />
+				<Button onClick={onClickStub} />
 			</BusyIndicator>
 		);
 
-		cy.get("#btn").realClick();
+		cy.get("[ui5-button]").realClick();
+		cy.get("[ui5-button]").should("have.focus");
 
 		cy.realPress("Space");
 
@@ -44,10 +45,9 @@ describe("BusyIndicator general interaction", () => {
 	});
 
 	it("tests event propagation when busy indicator is active", () => {
-		const onClickStub = cy.stub().as("clickStub");
 		cy.mount(
 			<BusyIndicator active={true} delay={0}>
-				<button id="btn" onClick={onClickStub} />
+				<Button onClick={cy.stub().as("clickStub")} />
 			</BusyIndicator>
 		);
 
@@ -56,7 +56,11 @@ describe("BusyIndicator general interaction", () => {
 			.find(".ui5-busy-indicator-busy-area")
 			.should("exist");
 
-		cy.get("#btn").realClick();
+		cy.get("[ui5-button]").realClick();
+		cy.get("[ui5-busy-indicator]")
+			.shadow()
+			.find(".ui5-busy-indicator-busy-area")
+			.should("have.focus");
 
 		cy.realPress("Space");
 
@@ -65,28 +69,28 @@ describe("BusyIndicator general interaction", () => {
 
 	it("test activation", () => {
 		cy.mount(
-			<BusyIndicator id="busy-container">
+			<BusyIndicator>
 				<span id="fetch-list"></span>
 			</BusyIndicator>
 		);
 
-		cy.get("#busy-container")
+		cy.get("[ui5-busy-indicator]")
 			.shadow()
 			.find(".ui5-busy-indicator-busy-area")
 			.should("not.exist");
 
-		cy.get("#busy-container")
+		cy.get("[ui5-busy-indicator]")
 			.invoke("attr", "active", "");
 
-		cy.get("#busy-container")
+		cy.get("[ui5-busy-indicator]")
 			.shadow()
 			.find(".ui5-busy-indicator-busy-area")
 			.should("exist");
 
-		cy.get("#busy-container")
+		cy.get("[ui5-busy-indicator]")
 			.invoke("removeAttr", "active");
 
-		cy.get("#busy-container")
+		cy.get("[ui5-busy-indicator]")
 			.shadow()
 			.find(".ui5-busy-indicator-busy-area")
 			.should("not.exist");
@@ -95,20 +99,20 @@ describe("BusyIndicator general interaction", () => {
 	it("tests focus handling", () => {
 		cy.mount(<BusyIndicator active id="indicator1" />);
 
-		cy.get("#indicator1")
+		cy.get("[ui5-busy-indicator]")
 			.shadow()
 			.find(".ui5-busy-indicator-busy-area")
 			.should("exist");
 
-		cy.get("#indicator1").realClick();
+		cy.get("[ui5-busy-indicator]").realClick();
 
-		cy.get("#indicator1").should("have.focus");
+		cy.get("[ui5-busy-indicator]").should("have.focus");
 	});
 
 	it("tests internal focused element attributes", () => {
 		cy.mount(<BusyIndicator active id="indicator1" />);
 
-		cy.get("#indicator1")
+		cy.get("[ui5-busy-indicator]")
 			.shadow()
 			.find(".ui5-busy-indicator-busy-area")
 			.should("have.attr", "role", "progressbar")
@@ -130,15 +134,16 @@ describe("BusyIndicator general interaction", () => {
 		);
 
 		cy.get("#beforeIndicatorWithBtn").realClick();
+		cy.get("#beforeIndicatorWithBtn").should("have.focus");
 
-		cy.get("#indicatorWithBtn")
+		cy.get("[ui5-busy-indicator]")
 			.shadow()
 			.find(".ui5-busy-indicator-busy-area")
 			.should("exist");
 
 		cy.realPress("Tab");
 
-		cy.get("#indicatorWithBtn").should("have.focus");
+		cy.get("[ui5-busy-indicator]").should("have.focus");
 
 		cy.realPress("Tab");
 
@@ -147,7 +152,7 @@ describe("BusyIndicator general interaction", () => {
 
 		cy.realPress(["Shift", "Tab"]);
 
-		cy.get("#indicatorWithBtn").should("have.focus");
+		cy.get("[ui5-busy-indicator]").should("have.focus");
 		cy.get("#helloBtn").should("not.have.focus");
 
 		cy.realPress(["Shift", "Tab"]);
@@ -169,11 +174,10 @@ describe("BusyIndicator general interaction", () => {
 			</Dialog>
 		);
 
-		cy.get("#dialog-inactive-indicator")
-			.invoke("attr", "open", true);
+		cy.get("#dialog-inactive-indicator").invoke("attr", "open", true);
+		cy.get<Dialog>("[ui5-dialog]").ui5DialogOpened();
 
-		cy.get("#dialog-inactive-indicator-focused-button")
-			.should("have.focus");
+		cy.get("#dialog-inactive-indicator-focused-button").should("have.focus");
 	});
 
 	it("delayed indicator in dialog - shouldn't attempt to focus before the indicator is visible", () => {
@@ -186,14 +190,11 @@ describe("BusyIndicator general interaction", () => {
 			</Dialog>
 		);
 
-		cy.get("#dialog-delayed-indicator-indicator")
-			.invoke("attr", "active", true);
+		cy.get("[ui5-busy-indicator]").invoke("attr", "active", true);
 
-		cy.get("#dialog-delayed-indicator")
-			.invoke("attr", "open", true);
+		cy.get("[ui5-dialog]").invoke("attr", "open", true);
 
-		cy.get("#dialog-delayed-indicator-focus-stop")
-			.should("have.focus");
+		cy.get("[ui5-button]").should("have.focus");
 	});
 
 	it("Height of the root element depends on the height of the Busy Indicator - issue 6668", () => {
