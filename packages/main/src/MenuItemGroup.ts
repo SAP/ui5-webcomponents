@@ -130,12 +130,12 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	 * @private
 	 */
 	_handleItemCheck(e: CustomEvent) {
-		const item = e.target as MenuItem;
-		const isChecked = item.checked;
+		const clickedItem = e.target as MenuItem;
+		const isChecked = clickedItem.checked;
 
 		if (this.checkMode === MenuItemGroupCheckMode.Single) {
 			this._clearCheckedItems();
-			item.checked = isChecked;
+			clickedItem.checked = isChecked;
 		}
 
 		this.fireDecoratorEvent("check-change", {
