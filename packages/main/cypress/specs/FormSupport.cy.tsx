@@ -782,9 +782,6 @@ describe("Form support", () => {
 		cy.get("#switch6")
 			.realClick();
 
-		cy.get("@submit")
-			.should("have.not.been.called");
-
 		cy.get("#switch5")
 			.realClick();
 

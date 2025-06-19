@@ -189,6 +189,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the form value of the component.
 	 * @default ""
+	 * @since 2.12.0
 	 * @public
 	 */
 	@property()
