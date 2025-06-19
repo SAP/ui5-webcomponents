@@ -498,13 +498,13 @@ describe("Wizard general interaction", () => {
             .find(".ui5-wiz-content")
             .scrollTo("bottom");
 
+        cy.get("[ui5-wizard-step]")
+            .eq(1)
+            .should("have.attr", "selected");
+
         cy.get("[ui5-wizard]")
             .shadow()
             .find("[data-ui5-index='2']")
-            .should("have.attr", "selected");
-
-        cy.get("[ui5-wizard-step]")
-            .eq(1)
             .should("have.attr", "selected");
     });
 
@@ -620,7 +620,7 @@ describe("Wizard inside Dialog", () => {
             .realPress("Escape");
 
         cy.get("#button")
-            .realClick();
+            .click();
 
         cy.get("[ui5-wizard]")
             .shadow()
@@ -739,7 +739,7 @@ describe("Wizard inside Dialog", () => {
             });
 
         cy.get("#prevButton")
-            .realClick();
+            .click();
 
          cy.get("[ui5-wizard-step]")
             .eq(0)
