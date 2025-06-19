@@ -762,6 +762,7 @@ describe("Form support", () => {
 			<Switch id="switch2" textOn="ui5-switch without name and value" checked></Switch>
 			<Switch id="switch3" name="switch3" textOn="ui5-switch with name and without value"></Switch>
 			<Switch id="switch4" name="switch4" checked textOn="ui5-switch with name and value"></Switch>
+			<Switch id="switch6" name="switch6" value="test"></Switch>
 			<Switch id="switch5" name="switch5" required textOn="ui5-switch with name, value and required"></Switch>
 			<button type="submit">Submits forms</button>
 		</form>);
@@ -773,6 +774,12 @@ describe("Form support", () => {
 			});
 
 		cy.get("button")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("#switch6")
 			.realClick();
 
 		cy.get("@submit")
@@ -791,7 +798,7 @@ describe("Form support", () => {
 			.then($el => {
 				return getFormData($el.get(0));
 			})
-			.should("be.equal", "switch4=on&switch5=on");
+			.should("be.equal", "switch4=on&switch6=test&switch5=on");
 	});
 
 	it("ui5-textarea in form", () => {
