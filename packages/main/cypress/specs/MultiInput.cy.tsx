@@ -88,6 +88,7 @@ describe("MultiInput Web Component", () => {
 			.find(`#${valueHelpId}`)
 			.should("have.text", MULTIINPUT_VALUE_HELP.defaultText);
 	});
+
 	it("tests expanding of tokenizer", () => {
 		cy.mount(
 			<MultiInput id="basic-overflow">
@@ -189,8 +190,6 @@ describe("MultiInput Web Component", () => {
 
 		cy.get("@multiInput")
 			.then($multiInput => {
-				console.log("called");
-
 				$multiInput[0].addEventListener("value-help-trigger", cy.stub().as("valueHelpTrigger"));
 			});
 
@@ -215,6 +214,7 @@ describe("MultiInput Web Component", () => {
 			.should("have.been.calledTwice");
 	});
 })
+
 describe("MultiInput tokens", () => {
 	it("adds a token to multi input", () => {
 		cy.mount(
@@ -251,9 +251,13 @@ describe("MultiInput tokens", () => {
 
 		cy.get("[ui5-token]")
 			.eq(1)
+			.as("secondToken");
+
+		cy.get("@secondToken")
 			.should("have.prop", "overflows", false);
 
 	});
+
 	it("adds multiple tokens to multi input", () => {
 		cy.mount(
 			<>
@@ -284,6 +288,7 @@ describe("MultiInput tokens", () => {
 			.eq(1)
 			.should("have.prop", "overflows", false);
 	});
+
 	it("adds an overflowing token to multi input", () => {
 		cy.mount(
 			<>
@@ -338,7 +343,8 @@ describe("MultiInput tokens", () => {
 			.eq(5)
 			.should("have.attr", "overflows");
 
-	})
+	});
+
 	it("Should create a token on change event", () => {
 		cy.mount(
 			<>
@@ -392,6 +398,7 @@ describe("MultiInput tokens", () => {
 		cy.get("@respPopover")
 			.should("not.have.attr", "open");
 	});
+
 	it("Tokens should not have delete icon when MI is readonly", () => {
 		cy.mount(
 			<MultiInput id="readonly-mi" readonly>
@@ -467,7 +474,7 @@ describe("MultiInput tokens", () => {
 
 	it("should empty the field when value is cleared in the change handler", () => {
 		cy.mount(
-			<MultiInput show-suggestions id="token-unique" show-value-help-icon>
+			<MultiInput showSuggestions id="token-unique" showValueHelpIcon>
 				<div slot="valueStateMessage" id="value-state-wrapper">Token is already in the list</div>
 				<SuggestionItem text="Argentina"></SuggestionItem>
 			</MultiInput>
@@ -502,7 +509,7 @@ describe("MultiInput tokens", () => {
 
 		cy.get("[ui5-multi-input]")
 			.should("have.attr", "value", "");
-	})
+	});
 
 	it("Should apply correct text to the tokens overflow indicator", () => {
 
@@ -543,7 +550,7 @@ describe("MultiInput tokens", () => {
 
 	it("Tests autocomplete(type-ahead) of custom suggestions", () => {
 		cy.mount(
-			<MultiInput id="mi-custom-suggestions" show-suggestions>
+			<MultiInput id="mi-custom-suggestions" showSuggestions>
 			<SuggestionItemCustom text="Bulgaria">
 				<span>Bulgaria</span>
 			</SuggestionItemCustom>
@@ -618,7 +625,8 @@ describe("MultiInput Truncated Token", () => {
 
 		cy.get("[ui5-token]")
 			.should("have.attr", "selected");
-	})
+	});
+
 	it("should open responsive popover on click on single truncated token and close and deselect the token on clicking it again", () => {
 
 		cy.get("[ui5-token]")
@@ -633,6 +641,7 @@ describe("MultiInput Truncated Token", () => {
 		cy.get("@respPopover")
 			.should("not.have.property", "open");
 	});
+
 	it("should close truncation popover and deselect selected tokens when clicked outside the component", () => {
 		cy.get("#dummyBtn")
 			.realClick();
@@ -645,7 +654,8 @@ describe("MultiInput Truncated Token", () => {
 
 		cy.get("@respPopover")
 			.should("not.have.property", "open");
-	})
+	});
+
 	it("should close truncation popover and deselect selected tokens when clicked in input field", () => {
 		cy.get("@input")
 			.realClick();
@@ -659,6 +669,7 @@ describe("MultiInput Truncated Token", () => {
 		cy.get("@respPopover")
 			.should("not.have.property", "open");
 	});
+
 	it("should truncate token when a long token is added", () => {
 		cy.get("[ui5-multi-input]")
 			.then(multiInput => {
@@ -667,8 +678,7 @@ describe("MultiInput Truncated Token", () => {
 				multiInput[0].addEventListener("keydown", (event: KeyboardEvent) => {
 					const inputElement = multiInput[0].shadowRoot.querySelector("input") as HTMLInputElement;
 					if (event.key === "Enter" && inputElement && inputElement.value) {
-						const token = createTokenFromText(inputElement.value);
-						multiInput[0].appendChild(token);
+						addTokenToMI(createTokenFromText(inputElement.value), "truncated-token")
 						inputElement.value = "";
 					}
 				});
@@ -697,15 +707,18 @@ describe("MultiInput Truncated Token", () => {
 		cy.get("[ui5-token]")
 			.realClick();
 
-		cy.get("@respPopover")
-			.ui5PopoverOpened();
+		cy.get("[ui5-token]")
+			.should("have.attr", "selected");
 
 		cy.get("[ui5-token]")
 			.should("have.attr", "single-token");
 
-		cy.get("[ui5-token]")
-			.should("have.attr", "selected");
+		cy.get("@tokenizer")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.ui5PopoverOpened();
 	});
+
 	it("should not throw exception when MI with 1 token is added to the page", () => {
 		cy.mount(
 			<>
@@ -717,15 +730,11 @@ describe("MultiInput Truncated Token", () => {
 		cy.get("[ui5-button]").then(button => {
 			button[0].addEventListener("click", () => {
 				cy.get("#container").then(container => {
-					const token = window.document.createElement("ui5-token");
 					const multiInput = window.document.createElement("ui5-multi-input");
-
 					multiInput.setAttribute("id", "added-mi");
-					token.setAttribute("text", "test");
-					token.setAttribute("slot", "tokens");
 
+					addTokenToMI(createTokenFromText("test"), "added-mi");
 					container[0].appendChild(multiInput);
-					multiInput.appendChild(token);
 				});
 			});
 		});
@@ -745,10 +754,7 @@ describe("ARIA attributes", () => {
 				<MultiInput id="no-tokens" />
 				<Button id="add-tokens" onClick={() => {
 					const mi = document.getElementById("no-tokens");
-					const token = document.createElement("ui5-token");
-					token.setAttribute("text", "new token");
-					token.setAttribute("slot", "tokens");
-					mi.appendChild(token);
+					addTokenToMI(createTokenFromText("new token"), "no-tokens");
 				}}>
 					Add Token
 				</Button>
@@ -908,6 +914,7 @@ describe("Keyboard handling", () => {
 		cy.get("[ui5-multi-input]")
 			.should("be.focused");
 	});
+
 	it("home/end navigation", () => {
 		cy.mount(
 			<MultiInput id="basic-overflow">
@@ -944,6 +951,7 @@ describe("Keyboard handling", () => {
 			.should("not.be.focused");
 
 	});
+
 	it("should select tokens with key modifiers (Shift + [Ctrl])", () => {
 		cy.mount(
 			<MultiInput id="basic-overflow">
@@ -1119,6 +1127,7 @@ describe("Keyboard handling", () => {
 		cy.get("@lastToken")
 			.should("be.focused");
 	});
+
 	it("should focus token last token when caret is at the beginning of the value", () => {
 		cy.mount(
 			<MultiInput id="two-tokens" value="abc">
@@ -1144,7 +1153,8 @@ describe("Keyboard handling", () => {
 		cy.get("[ui5-token]")
 			.eq(1)
 			.should("be.focused");
-	})
+	});
+
 	it("should delete value on backspace", () => {
 		cy.mount(
 			<MultiInput id="two-tokens" value="abc">
@@ -1173,6 +1183,7 @@ describe("Keyboard handling", () => {
 		cy.get("[ui5-multi-input]").should("not.be.focused");
 		cy.get("@lastToken").should("be.focused");
 	});
+
 	it("should change input's value when set in selection change event", () => {
 		cy.mount(
 			<MultiInput showSuggestions showValueHelpIcon>
@@ -1281,7 +1292,7 @@ describe("Keyboard handling", () => {
 				(event.target as HTMLElement).appendChild(createTokenFromText((event.target as HTMLInputElement).value));
 				(event.target as HTMLInputElement).value = "";
 			});
-		})
+		});
 
 		 cy.get("[ui5-multi-input]")
 		 	.shadow()
