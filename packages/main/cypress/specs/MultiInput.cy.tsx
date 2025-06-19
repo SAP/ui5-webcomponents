@@ -991,24 +991,29 @@ describe("Keyboard handling", () => {
 		cy.get("[ui5-token]").as("tokens");
 
 		cy.get("@innerInput").realClick();
+
 		cy.realPress("ArrowLeft");
 
 		cy.realPress(["Shift", "ArrowLeft"]);
 
-		cy.get("@tokens").eq(10)
-			.should("have.attr", "selected");
-		cy.get("@tokens").eq(9)
-			.should("have.attr", "selected");
 		cy.get("@tokens").eq(8)
 			.should("not.have.attr", "selected");
+
+		cy.get("@tokens").eq(10)
+			.should("have.attr", "selected");
+
+		cy.get("@tokens").eq(9)
+			.should("have.attr", "selected");
 
 		// Press Ctrl + Shift + ArrowLeft to select three tokens
 		cy.realPress(["Control", "Shift", "ArrowLeft"]);
 
 		cy.get("@tokens").eq(10)
 			.should("have.attr", "selected");
+
 		cy.get("@tokens").eq(9)
 			.should("have.attr", "selected");
+
 		cy.get("@tokens").eq(8)
 			.should("have.attr", "selected");
 
@@ -1019,9 +1024,11 @@ describe("Keyboard handling", () => {
 		cy.get("@tokens")
 			.eq(10)
 			.should("not.have.attr", "selected");
+
 		cy.get("@tokens")
 			.eq(9)
 			.should("not.have.attr", "selected");
+
 		cy.get("@tokens")
 			.eq(8)
 			.should("not.have.attr", "selected");
