@@ -3,7 +3,7 @@ import "cypress-real-events";
 import '@cypress/code-coverage/support';
 import "./acc_report/support.js";
 import "./helpers.js"
-// @ts-expect-error
+// @ts-ignore
 import { renderFinished } from "@ui5/webcomponents-base";
 
 const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
@@ -45,7 +45,7 @@ Cypress.Commands.add('mount', mount);
 
 Cypress.on('command:start:async', async (command) => {
 	const name = command.attributes.name;
-	// @ts-expect-error
+	// @ts-ignore
 	if (!['log', 'screenshot', 'task'].includes(name)) {
 		await renderFinished();
 	}
