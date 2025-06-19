@@ -264,6 +264,10 @@ class MenuItem extends ListItem implements IMenuItem {
 	 *
 	 * The priority of what will be displayed at the end of the menu item is as follows:
 	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
+	 *
+	 * Application developers are responsible for ensuring that interactive elements placed in the `endContent` slot
+	 * have the correct accessibility behaviour, including their enabled or disabled states.
+	 * The `ui5-menu` does not manage these aspects when the menu item state changes.
 	 * @public
 	 * @since 2.0.0
 	 */
