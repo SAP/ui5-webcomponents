@@ -625,7 +625,7 @@ describe("Wizard inside Dialog", () => {
         cy.get("[ui5-wizard]")
             .shadow()
             .find("[data-ui5-index='2']")
-            .should("have.focus");
+            .should("be.focused");
     });
 
     it("Tests if second step is scrolled into view when first step's height is bigger than viewport", () => {
