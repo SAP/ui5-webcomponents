@@ -7,8 +7,8 @@ import "./helpers.js"
 const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
 	cy.get(element)
 		.should($el => {
-			if ($el[0].tagName.includes("-") && $el[0].shadowRoot) {
-				expect($el[0].shadowRoot.hasChildNodes(), "Custom elements with shadow DOM have content in their shadow DOM").to.be.true;
+			if ($el[0].tagName.includes("-") && "getFocusDomRef" in $el[0]) {
+				expect($el[0].getFocusDomRef(), "Custom elements with shadow DOM have content in their shadow DOM").to.exist;
 			}
 		})
 		.and("be.visible")
