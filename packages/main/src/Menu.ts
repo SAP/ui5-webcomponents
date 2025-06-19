@@ -96,7 +96,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  *
  * Application developers are responsible for ensuring that interactive elements placed in the `endContent` slot
  * have the correct accessibility behaviour, including their enabled or disabled states.
- * The `ui5-menu` does not manage these aspects when the menu item state changes.
+ * The menu does not manage these aspects when the menu item state changes.
  *
  * ### ES6 Module Import
  *
