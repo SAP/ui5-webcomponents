@@ -130,7 +130,7 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
 @event("close")
 
 /**
- * Fired when an item is checked.
+ * Fired when an item is checked or unchecked.
  * @private
  * @since 2.12.0
  */
@@ -325,18 +325,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		return this.shadowRoot && this.shadowRoot.querySelector<List>("[ui5-list]")!;
 	}
 
-	get _popover() {
-		return this.shadowRoot && this.shadowRoot.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
-	}
-
-	get isMenuItem(): boolean {
-		return true;
-	}
-
-	get isRtl() {
-		return this.effectiveDir === "rtl";
-	}
-
 	get _navigableItems(): Array<HTMLElement> {
 		return [...this.endContent].filter(item => {
 			return item.hasAttribute("ui5-button")
@@ -345,8 +333,24 @@ class MenuItem extends ListItem implements IMenuItem {
 		});
 	}
 
+	_navigateToEndContent(shouldNavigateToPreviousItem: boolean) {
+		const navigatableItems = this._navigableItems;
+		const item = shouldNavigateToPreviousItem
+			? navigatableItems[navigatableItems.length - 1]
+			: navigatableItems[0];
+
+		if (item) {
+			this._itemNavigation.setCurrentItem(item);
+			this._itemNavigation._focusCurrentItem();
+		}
+	}
+
 	get placement(): `${PopoverPlacement}` {
 		return this.isRtl ? "Start" : "End";
+	}
+
+	get isRtl() {
+		return this.effectiveDir === "rtl";
 	}
 
 	get hasSubmenu() {
@@ -385,6 +389,29 @@ class MenuItem extends ListItem implements IMenuItem {
 		return MenuItem.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
 	}
 
+	onBeforeRendering() {
+		super.onBeforeRendering();
+
+		const siblingsWithIcon = this._allMenuItems.some(menuItem => !!menuItem.icon);
+
+		this._setupItemNavigation();
+
+		this._allMenuItems.forEach(item => {
+			item._siblingsWithIcon = siblingsWithIcon;
+		});
+	}
+
+	async focus(focusOptions?: FocusOptions): Promise<void> {
+		await renderFinished();
+
+		if (this.hasSubmenu && this.isSubMenuOpen) {
+			const menuItems = this._allMenuItems;
+			return menuItems[0] && menuItems[0].focus(focusOptions);
+		}
+
+		return super.focus(focusOptions);
+	}
+
 	get _focusable() {
 		return true;
 	}
@@ -416,6 +443,10 @@ class MenuItem extends ListItem implements IMenuItem {
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };
+	}
+
+	get _popover() {
+		return this.shadowRoot && this.shadowRoot.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	get _markChecked() {
@@ -462,41 +493,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		});
 
 		return items;
-	}
-
-	onBeforeRendering() {
-		super.onBeforeRendering();
-
-		const siblingsWithIcon = this._allMenuItems.some(menuItem => !!menuItem.icon);
-
-		this._setupItemNavigation();
-
-		this._allMenuItems.forEach(item => {
-			item._siblingsWithIcon = siblingsWithIcon;
-		});
-	}
-
-	async focus(focusOptions?: FocusOptions): Promise<void> {
-		await renderFinished();
-
-		if (this.hasSubmenu && this.isSubMenuOpen) {
-			const menuItems = this._allMenuItems;
-			return menuItems[0] && menuItems[0].focus(focusOptions);
-		}
-
-		return super.focus(focusOptions);
-	}
-
-	_navigateToEndContent(shouldNavigateToPreviousItem: boolean) {
-		const navigatableItems = this._navigableItems;
-		const item = shouldNavigateToPreviousItem
-			? navigatableItems[navigatableItems.length - 1]
-			: navigatableItems[0];
-
-		if (item) {
-			this._itemNavigation.setCurrentItem(item);
-			this._itemNavigation._focusCurrentItem();
-		}
 	}
 
 	_setupItemNavigation() {
@@ -621,6 +617,10 @@ class MenuItem extends ListItem implements IMenuItem {
 		this.fireDecoratorEvent("close");
 	}
 
+	get isMenuItem(): boolean {
+		return true;
+	}
+
 	_updateCheckedState() {
 		if (this._checkMode === MenuItemGroupCheckMode.None) {
 			return;
@@ -628,8 +628,8 @@ class MenuItem extends ListItem implements IMenuItem {
 
 		const newState = !this.checked;
 
-		this.fireDecoratorEvent("item-check");
 		this.checked = newState;
+		this.fireDecoratorEvent("item-check");
 	}
 }
 

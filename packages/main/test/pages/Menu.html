@@ -353,7 +353,12 @@
 
 		menuGroups.addEventListener("ui5-item-click", function(event) {
 			console.warn("Item clicked: " + event.detail.item.text);
-			console.warn("Item checked: " + event.detail.item.checked);
+
+		});
+
+		menuGroups.addEventListener("ui5-check-change", function(event) {
+			console.warn(event.target);
+			console.warn("Checked items: " + event.detail.checkedItems.map(item => item.text).join(", "));
 		});
 
 	</script>

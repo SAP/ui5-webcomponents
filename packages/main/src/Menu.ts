@@ -261,10 +261,6 @@ class Menu extends UI5Element {
 		return isPhone();
 	}
 
-	get acessibleNameText() {
-		return Menu.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
-	}
-
 	get _popover() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
@@ -314,6 +310,10 @@ class Menu extends UI5Element {
 		return items;
 	}
 
+	get acessibleNameText() {
+		return Menu.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
+	}
+
 	onBeforeRendering() {
 		const siblingsWithIcon = this._allMenuItems.some(menuItem => !!menuItem.icon);
 
@@ -322,17 +322,6 @@ class Menu extends UI5Element {
 		this._allMenuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
-	}
-
-	async focus(focusOptions?: FocusOptions): Promise<void> {
-		await renderFinished();
-		const firstMenuItem = this._allMenuItems[0];
-
-		if (firstMenuItem) {
-			return firstMenuItem.focus(focusOptions);
-		}
-
-		return super.focus(focusOptions);
 	}
 
 	_setupItemNavigation() {
@@ -377,6 +366,17 @@ class Menu extends UI5Element {
 		this._startOpenTimeout(item);
 	}
 
+	async focus(focusOptions?: FocusOptions): Promise<void> {
+		await renderFinished();
+		const firstMenuItem = this._allMenuItems[0];
+
+		if (firstMenuItem) {
+			return firstMenuItem.focus(focusOptions);
+		}
+
+		return super.focus(focusOptions);
+	}
+
 	_closeOtherSubMenus(item: MenuItem) {
 		const menuItems = this._allMenuItems;
 		if (!menuItems.includes(item)) {
@@ -403,16 +403,15 @@ class Menu extends UI5Element {
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as MenuItem;
 
-		item._updateCheckedState();
-
 		if (!item._popover) {
 			const prevented = !this.fireDecoratorEvent("item-click", {
 				"item": item,
 				"text": item.text || "",
 			});
 
-			if (!prevented && this._popover) {
-				item.fireDecoratorEvent("close-menu");
+			if (!prevented) {
+				item._updateCheckedState();
+				this._popover && item.fireDecoratorEvent("close-menu");
 			}
 		} else {
 			this._openItemSubMenu(item);
