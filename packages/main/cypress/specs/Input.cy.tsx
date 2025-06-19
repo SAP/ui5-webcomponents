@@ -938,7 +938,12 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			.as("input")
 			.realClick();
 
+		// TODO: Check why it's not working directly
+		// cy.get("@input")
+		// 	.should("be.focused");
 		cy.get("@input")
+			.shadow()
+			.find("input[inner-input]")
 			.should("be.focused");
 
 		cy.realType("f");
