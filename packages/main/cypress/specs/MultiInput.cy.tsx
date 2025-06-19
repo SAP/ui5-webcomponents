@@ -708,6 +708,9 @@ describe("MultiInput Truncated Token", () => {
 			.realClick();
 
 		cy.get("[ui5-token]")
+			.should("exist");
+
+		cy.get("[ui5-token]")
 			.should("have.attr", "selected");
 
 		cy.get("[ui5-token]")
@@ -896,10 +899,22 @@ describe("Keyboard handling", () => {
 		cy.get("@innerInput")
 			.realClick();
 
+		cy.get("[ui5-multi-input]")
+			.should("exist");
+
+		cy.get("[ui5-multi-input]")
+			.should("be.focused");
+
 		cy.realPress("ArrowLeft");
 
 		cy.get("[ui5-multi-input]")
+			.should("exist");
+
+		cy.get("[ui5-multi-input]")
 			.should("not.be.focused");
+
+		cy.get("[ui5-token]")
+			.should("exist");
 
 		cy.get("[ui5-token]")
 			.eq(2)
