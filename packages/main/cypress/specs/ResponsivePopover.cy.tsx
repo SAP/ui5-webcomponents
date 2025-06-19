@@ -31,7 +31,7 @@ describe("ResponsivePopover general interaction", () => {
 		cy.mount(
 			<>
 				<Button id="btnOpen3" />
-				<ResponsivePopover content-only-on-desktop opener="btnOpen3">
+				<ResponsivePopover contentOnlyOnDesktop={true} opener="btnOpen3">
 					<div slot="header" />
 				</ResponsivePopover>
 			</>
@@ -62,7 +62,7 @@ describe("ResponsivePopover general interaction", () => {
 		cy.mount(
 			<>
 				<Button id="btnInitialFocusPrevented" />
-				<ResponsivePopover prevent-initial-focus opener={"btnInitialFocusPrevented"} />
+				<ResponsivePopover preventInitialFocus={true} opener={"btnInitialFocusPrevented"} />
 			</>
 		);
 
@@ -102,7 +102,7 @@ describe("Acc", () => {
 	});
 
 	it("tests accessible-role=AlertDialog", () => {
-		cy.mount(<ResponsivePopover id="rPAlertRole" accessible-role="AlertDialog" />);
+		cy.mount(<ResponsivePopover id="rPAlertRole" accessibleRole="AlertDialog" />);
 
 		cy.get("#rPAlertRole")
 			.shadow()
@@ -115,7 +115,7 @@ describe("Acc", () => {
 		cy.mount(
 			<>
 				<Button id="btnRoleNone" />
-				<ResponsivePopover id="rPNoneRole" accessible-role="None" opener={"btnRoleNone"} />
+				<ResponsivePopover id="rPNoneRole" accessibleRole="None" opener={"btnRoleNone"} />
 			</>
 		);
 
