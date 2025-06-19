@@ -961,11 +961,10 @@ class ShellBar extends UI5Element {
 			return animations.push(new Promise(resolve => {
 				setTimeout(() => {
 					if (element) {
-						element.addEventListener("transitionend", () => {
+						element.addEventListener("animationend", () => {
 							// reset animation class for next transition
 							element.classList.remove("ui5-shellbar-hide-animation");
 							// once the transition is done, add the hidden class to off load the container
-							element.classList.remove("ui5-shellbar-hidden-button");
 							resolve();
 						}, { once: true });
 						element.classList.add("ui5-shellbar-hide-animation");

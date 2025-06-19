@@ -457,13 +457,13 @@ slot[name="profile"] {
 	align-items: center;
 	flex-grow: 1;
 	margin-inline-start: 0.5rem;
-	display: flex;
 	overflow: hidden;
 	min-width: var(--_ui5_shellbar_search_field_width);
 	padding-inline-start: var(--_ui5-shellbar-content-margin-start);
 }
 
 .ui5-shellbar-no-animation .ui5-shellbar-search-field {
+	min-width: auto;
 	width: auto;
 }
 
@@ -550,6 +550,7 @@ slot[name="profile"] {
 .ui5-shellbar-content-item {
 	width: auto;
 	opacity: 1;
+
 }
 
 /* if class contains ui5-shellbar-hidden-button */
@@ -568,16 +569,32 @@ slot[name="profile"] {
 	opacity: 0;
 }
 
-.ui5-shellbar-hide-animation.ui5-shellbar-content-item {
-	transition: opacity 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);
-	opacity: 0;
+.ui5-shellbar-no-animation .ui5-shellbar-content-item {
+	transition: none;
 }
 
 .ui5-shellbar-hide-animation.ui5-shellbar-hidden-button {
-	opacity: 1;
+	animation: buttonAnimationReverse 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);;
 }
 
+.ui5-shellbar-hide-animation{
+	animation: buttonAnimation 0.2s cubic-bezier(0.2, 0.2, 0.38, 0.9);;
+}
 
-.ui5-shellbar-no-animation .ui5-shellbar-content-item {
-	transition: none;
+@keyframes buttonAnimation {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes buttonAnimationReverse {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
