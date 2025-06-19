@@ -3,6 +3,8 @@ import "cypress-real-events";
 import '@cypress/code-coverage/support';
 import "./acc_report/support.js";
 import "./helpers.js"
+// @ts-expect-error
+import { renderFinished } from "@ui5/webcomponents-base";
 
 const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
 	cy.get(element)
@@ -39,4 +41,12 @@ declare global {
 	}
 }
 
-Cypress.Commands.add('mount', mount)
+Cypress.Commands.add('mount', mount);
+
+Cypress.on('command:start:async', async (command) => {
+	const name = command.attributes.name;
+	// @ts-expect-error
+	if (!['log', 'screenshot', 'task'].includes(name)) {
+		await renderFinished();
+	}
+});

@@ -92,7 +92,7 @@ const generateFilesContent = async (
 				: "",
 		INIT_PACKAGE_CYPRESS_DEV_DEPS:
 			testSetup === "cypress"
-				? `"@ui5/cypress-ct-ui5-webc": "^0.0.4",\n"cypress": "^13.11.0",`
+				? `"@ui5/cypress-ct-ui5-webc": "^0.0.4",\n"cypress": "^14.5.0",`
 				: "",
 		INIT_PACKAGE_CYPRESS_TEST_COMMANDS:
 			testSetup === "cypress"
