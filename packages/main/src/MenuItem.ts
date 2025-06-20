@@ -385,11 +385,13 @@ class MenuItem extends ListItem implements IMenuItem {
 			role: AriaRole;
 			ariaHaspopup?: `${AriaHasPopup}`;
 			ariaKeyShortcuts?: string;
+			ariaExpanded?: boolean;
 			ariaHidden?: boolean;
 		} = {
 			role: this.accessibilityAttributes.role || "menuitem",
 			ariaHaspopup: this.hasSubmenu ? "menu" : undefined,
 			ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
+			ariaExpanded: this.hasSubmenu ? this.isSubMenuOpen : undefined,
 			ariaHidden: !!this.additionalText && !!this.accessibilityAttributes.ariaKeyShortcuts ? true : undefined,
 		};
 
