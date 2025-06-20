@@ -203,6 +203,8 @@
 	margin: 0;
 	padding: 0;
 	white-space: nowrap;
+	display: flex;
+	justify-content: space-between;
 }
 
 .ui5-slider-labels li {
@@ -222,6 +224,14 @@
 	justify-content: center;
 	align-items: center;
 	vertical-align: top;
+	visibility: hidden;
+}
+
+.ui5-slider-labels li::after {
+	content: attr(data-counter);
+	position: absolute;
+	top: 0;
+	visibility: visible;
 }
 
 .ui5-slider-hidden-labels li:not(:first-child):not(:last-child) {
