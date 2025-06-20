@@ -92,7 +92,11 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * - `Arrow Left` or `ArrowRight` - Navigate between the menu item actions and the menu item itself
  * - `Arrow Up` / `Arrow Down` - Navigates up and down the currently visible menu items
  *
- * Note: if the text ditrection is set to Right-to-left (RTL), `Arrow Right` and `Arrow Left` functionality is swapped.
+ * **Note:** If the text direction is set to Right-to-left (RTL), `Arrow Right` and `Arrow Left` functionality is swapped.
+ *
+ * Application developers are responsible for ensuring that interactive elements placed in the `endContent` slot
+ * have the correct accessibility behaviour, including their enabled or disabled states.
+ * The menu does not manage these aspects when the menu item state changes.
  *
  * ### ES6 Module Import
  *
