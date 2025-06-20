@@ -3,6 +3,8 @@ import "cypress-real-events";
 import '@cypress/code-coverage/support';
 import "./acc_report/support.js";
 import "./helpers.js"
+// @ts-ignore
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 
 const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
 	cy.get(element)
@@ -17,6 +19,27 @@ const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
 		});
 };
 
+const realEventCmdCallback2 = (originalFn: any, element: any, ...args: any) => {
+	cy.wrap({ renderFinished })
+		.then(api => api.renderFinished())
+		.then(() => {
+			return originalFn(element, ...args)
+		});
+};
+
+const commands2 = [
+	"realClick",
+	"realHover",
+	"realPress",
+	"realTouch",
+	"realType",
+	"realSwipe",
+	"realMouseDown",
+	"realMouseUp",
+	"realMouseMove",
+	"realMouseWheel",
+];
+
 const commands = [
 	"realClick",
 	"realHover",
@@ -30,6 +53,11 @@ const commands = [
 commands.forEach(cmd => {
 	Cypress.Commands.overwrite(cmd as any, realEventCmdCallback)
 });
+
+commands2.forEach(cmd => {
+	Cypress.Commands.overwrite(cmd as any, realEventCmdCallback2)
+});
+
 
 declare global {
 	namespace Cypress {

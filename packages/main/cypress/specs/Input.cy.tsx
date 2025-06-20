@@ -730,15 +730,19 @@ describe("Selection-change event", () => {
 describe("Change event behavior when selecting the same suggestion item", () => {
 	beforeEach(() => {
 		cy.mount(
-			<Input placeholder="Search for a country ..." showSuggestions onChange={cy.stub().as("changeEvent")}>
-				<SuggestionItemGroup headerText="A">
-					<SuggestionItem text="Afghanistan" />
-					<SuggestionItem text="Argentina" />
-					<SuggestionItem text="Albania" />
-					<SuggestionItem text="Armenia" />
-					<SuggestionItem text="Algeria" />
-				</SuggestionItemGroup>
-			</Input>
+			<>
+				<button>before</button>
+				<Input placeholder="Search for a country ..." showSuggestions onChange={cy.stub().as("changeEvent")}>
+					<SuggestionItemGroup headerText="A">
+						<SuggestionItem text="Afghanistan" />
+						<SuggestionItem text="Argentina" />
+						<SuggestionItem text="Albania" />
+						<SuggestionItem text="Armenia" />
+						<SuggestionItem text="Algeria" />
+					</SuggestionItemGroup>
+				</Input>
+				<button>after</button>
+			</>
 		);
 
 		cy.get("[ui5-input]")
@@ -820,6 +824,10 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 
 		cy.realPress("Tab");
 
+		cy.get("button")
+			.contains("after")
+			.should("be.focused");
+
 		cy.get("@input")
 			.should("not.be.focused");
 
@@ -866,10 +874,6 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.get("@input")
 			.should("have.value", "Albania");
 
-		// TODO: Could be fixed once rendering is moved to sync
-		cy.get("@innerInput")
-			.should("have.value", "Albania");
-
 		cy.get("@input")
 			.shadow()
 			.find("[ui5-icon]")
@@ -879,17 +883,9 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.get("@input")
 			.should("have.value", "");
 
-		// TODO: Could be fixed once rendering is moved to sync
-		cy.get("@innerInput")
-			.should("have.value", "");
-
 		cy.realType("Argentina");
 		// Check input value
 		cy.get("@input")
-			.should("have.value", "Argentina");
-
-		// TODO: Could be fixed once rendering is moved to sync
-		cy.get("@innerInput")
 			.should("have.value", "Argentina");
 
 		cy.realPress("Enter");
@@ -900,17 +896,9 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 		cy.get("@input")
 			.should("have.value", "");
 
-		// TODO: Could be fixed once rendering is moved to sync
-		cy.get("@innerInput")
-			.should("have.value", "");
-
 		cy.realType("Argentina");
 		// Check input value
 		cy.get("@input")
-			.should("have.value", "Argentina");
-
-		// TODO: Could be fixed once rendering is moved to sync
-		cy.get("@innerInput")
 			.should("have.value", "Argentina");
 
 		cy.realPress("Enter");
