@@ -239,3 +239,16 @@ describe("Select - Properties", () => {
 			.should("have.attr", "name", "download");
 	});
 });
+
+describe("Select - Properties", () => {
+	it("It returns empty string as a valid value, similar to native select behavior", () => {
+		cy.mount(
+			<Select>
+				<Option selected value="">Phone</Option>
+				<Option>Tablet</Option>
+				<Option>Desktop</Option>
+			</Select>		);
+
+		cy.get("[ui5-select]").should("have.prop", "formFormattedValue", "");
+	});
+});
