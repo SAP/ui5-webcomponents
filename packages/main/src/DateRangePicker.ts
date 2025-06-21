@@ -8,6 +8,7 @@ import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/get
 import {
 	DATERANGE_DESCRIPTION,
 	DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME,
+	DATETIME_COMPONENTS_PLACEHOLDER_PREFIX,
 } from "./generated/i18n/i18n-defaults.js";
 import DateRangePickerTemplate from "./DateRangePickerTemplate.js";
 
@@ -187,11 +188,23 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		return this._calendarSelectedDates[1] || "";
 	}
 
+	get _lastDateRangeForTheCurrentYear() {
+		const lastDayOfTheYear = CalendarDate.fromLocalJSDate(new Date(new Date().getFullYear(), 11, 31));
+		const sevenDaysBeforeLastDayOfYear = CalendarDate.fromLocalJSDate(new Date(new Date().getFullYear(), 11, 24));
+
+		return `${this.getFormat().format(sevenDaysBeforeLastDayOfYear.toUTCJSDate())} ${this._effectiveDelimiter} ${this.getFormat().format(lastDayOfTheYear.toUTCJSDate())}`;
+	}
+
 	/**
 	 * @override
 	 */
 	get _placeholder() {
-		return this.placeholder !== undefined ? this.placeholder : `${this._displayFormat} ${this._effectiveDelimiter} ${this._displayFormat}`;
+		if (this.placeholder) {
+			return this.placeholder;
+		}
+
+		// translatable placeholder – for example "e.g. 2025-12-27 - 2025-12-31"
+		return `${DateRangePicker.i18nBundle.getText(DATETIME_COMPONENTS_PLACEHOLDER_PREFIX)} ${this._lastDateRangeForTheCurrentYear}`;
 	}
 
 	/**
