@@ -680,6 +680,15 @@
 	</ui5-dialog>
 	<br>
 	<br>
+	<ui5-button onclick="dialogWithTokenizer.open = true;">Open Dialog With Tokenizer</ui5-button>
+	<ui5-dialog id="dialogWithTokenizer" header-text="Tokens">
+		<ui5-tokenizer id="tokenizer">
+			<ui5-token text="Token 1"></ui5-token>
+			<ui5-token text="Token 2"></ui5-token>
+		</ui5-tokenizer>
+	</ui5-dialog>
+	<br>
+	<br>
 	<div>
 		<ui5-title level="H3">Open Dialog from list</ui5-title>
 		<ui5-list id="listContainerId" selection-mode="Single">
