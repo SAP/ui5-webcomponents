@@ -22,7 +22,6 @@
 	--ui5-avatar-accent8: var(--sapAvatar_8_Background);
 	--ui5-avatar-accent9: var(--sapAvatar_9_Background);
 	--ui5-avatar-accent10: var(--sapAvatar_10_Background);
-	--ui5-avatar-placeholder: var(--sapContent_ImagePlaceholderBackground);
 
 	--ui5-avatar-accent1-color: var(--sapAvatar_1_TextColor);
 	--ui5-avatar-accent2-color: var(--sapAvatar_2_TextColor);
@@ -34,7 +33,6 @@
 	--ui5-avatar-accent8-color: var(--sapAvatar_8_TextColor);
 	--ui5-avatar-accent9-color: var(--sapAvatar_9_TextColor);
 	--ui5-avatar-accent10-color:  var(--sapAvatar_10_TextColor);
-	--ui5-avatar-placeholder-color:  var(--sapAvatar_Lite_Background);
 
 	--ui5-avatar-accent1-border-color: var(--sapAvatar_1_BorderColor);
 	--ui5-avatar-accent2-border-color: var(--sapAvatar_2_BorderColor);
