@@ -247,7 +247,7 @@ describe("Button general interaction", () => {
 			.should("eq", "#navigation");
 	});
 
-	it.only("Native event is always fired", () => {
+	it("Native event is always fired", () => {
 		cy.mount(<div onClick={cy.stub().as("nativeClick")}>
 			<Button>Click me</Button>
 		</div>);

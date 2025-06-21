@@ -373,7 +373,7 @@ describe("Events", () => {
 			.should("not.exist");
 	});
 
-	it.only("Tests that 'item-delete' is NOT fired when 'DELETE' key is pressed during rename", () => {
+	it("Tests that 'item-delete' is NOT fired when 'DELETE' key is pressed during rename", () => {
 		const itemDeleteStub = cy.stub();
 
 		cy.mount(
