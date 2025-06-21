@@ -346,7 +346,7 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 });
 
 describe("TableSelectionMulti", () => {
-	it("updates the header row checkbox when rows are added or removed", () => {
+	beforeEach(() => {
 		cy.mount(
 			<Table id="table1">
 				<TableSelectionMulti id="selection" selected="1 2" slot="features"></TableSelectionMulti>
@@ -361,10 +361,14 @@ describe("TableSelectionMulti", () => {
 				</TableRow>
 			</Table>
 		);
-
 		cy.get("#headerRow").shadow().find("#selection-cell").as("headerRowSelectionCell");
-		cy.get("@headerRowSelectionCell").find("#selection-component").as("headerRowCheckBox");
+		cy.get("#selection").invoke("on", "change", cy.stub().as("selectionChangeSpy"));
+	});
+
+	it("updates the header row checkbox when rows are added or removed", () => {
+		cy.get("@headerRowSelectionCell").children().first().as("headerRowCheckBox");
 		cy.get("@headerRowCheckBox").should("have.attr", "checked");
+		cy.get("@headerRowCheckBox").should("have.attr", "title", "Deselect All Rows");
 		cy.get("#table1").then($table => {
 			$table.append(
 				`<ui5-table-row id="row3" row-key="3">
@@ -374,10 +378,51 @@ describe("TableSelectionMulti", () => {
 			);
 		});
 		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
+		cy.get("@headerRowCheckBox").should("have.attr", "title", "Select All Rows");
 		cy.get("#row3").invoke("remove");
 		cy.get("@headerRowCheckBox").should("have.attr", "checked");
+		cy.get("@headerRowCheckBox").should("have.attr", "title", "Deselect All Rows");
+		cy.get("#row2").invoke("remove");
+		cy.get("@headerRowCheckBox").should("have.attr", "checked");
+		cy.get("#row1").invoke("remove");
+		cy.get("#headerRow").shadow().find("#selection-cell").should("not.exist");
+	});
+
+	it("should handle header-selector=ClearAll", () => {
+		cy.get("#headerRow").shadow().find("#selection-cell").children().first().as("headerRowIcon");
+		function checkClearAll(hasSelection: boolean) {
+			cy.get("@headerRowIcon").should("have.attr", "name", "clear-all");
+			cy.get("@headerRowIcon").should("have.attr", "mode", "Decorative");
+			cy.get("@headerRowIcon").should(hasSelection ? "have.attr" : "not.have.attr", "show-tooltip");
+			cy.get("@headerRowIcon").should("have.attr", "design", hasSelection ? "Default" : "NonInteractive");
+			if (hasSelection) {
+				cy.get("@headerRowIcon").should("have.attr", "accessible-name", "Deselect All Rows");
+			} else {
+				cy.get("@headerRowIcon").should("not.have.attr", "accessible-name");
+			}
+		}
+
+		cy.get("#selection").invoke("attr", "header-selector", "ClearAll");
+		checkClearAll(true);
+		checkSelectionChangeSpy(0);
+
+		cy.get("@headerRowIcon").realClick();
+		checkClearAll(false)
+		checkSelection("");
+		checkSelectionChangeSpy(1);
+
+		cy.get("#row1").shadow().find("#selection-component").realClick();
+		checkClearAll(true);
+		checkSelection("1");
+		checkSelectionChangeSpy(2);
+
+		cy.get("@headerRowIcon").realPress("Space");
+		checkClearAll(false)
+		checkSelection("");
+		checkSelectionChangeSpy(3);
+
 		cy.get("#row2").invoke("remove");
 		cy.get("#row1").invoke("remove");
-		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
+		cy.get("#headerRow").shadow().find("#selection-cell").should("not.exist");
 	});
 });

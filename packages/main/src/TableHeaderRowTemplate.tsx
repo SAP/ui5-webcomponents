@@ -1,24 +1,41 @@
 import CheckBox from "./CheckBox.js";
 import TableHeaderCell from "./TableHeaderCell.js";
+import Icon from "./Icon.js";
+import IconMode from "./types/IconMode.js";
+import ClearAll from "@ui5/webcomponents-icons/dist/clear-all.js";
+import IconDesign from "./types/IconDesign.js";
 import type TableHeaderRow from "./TableHeaderRow.js";
 
 export default function TableHeaderRowTemplate(this: TableHeaderRow) {
 	return (
 		<>
-			{ this._hasRowSelector &&
+			{ this._hasSelector &&
 				<TableHeaderCell id="selection-cell"
 					aria-selected={this._isSelected}
 					aria-label={this._i18nSelection}
 					data-ui5-table-cell-fixed
 					data-ui5-table-selection-component
 				>
-					{ this._isMultiSelect &&
-						<CheckBox id="selection-component"
-							tabindex={-1}
-							checked={this._isSelected}
-							onChange={this._onSelectionChange}
-							accessibleName={this._i18nRowSelector}
-						></CheckBox>
+					{ !this._isMultiSelect ?
+						<></>
+						:
+						this._shouldRenderClearAll ?
+							<Icon
+								name={ClearAll}
+								mode={IconMode.Decorative}
+								showTooltip={this._hasSelectedRows}
+								accessibleName={this._hasSelectedRows ? this._i18nDeselectAllRows : undefined}
+								design={this._hasSelectedRows ? IconDesign.Default : IconDesign.NonInteractive}
+								onClick={this._onSelectionChange}
+							></Icon>
+							:
+							<CheckBox id="selection-component"
+								tabindex={-1}
+								checked={this._isSelected}
+								onChange={this._onSelectionChange}
+								accessibleName={this._i18nRowSelector}
+								title={this._isSelected ? this._i18nDeselectAllRows : this._i18nSelectAllRows}
+							></CheckBox>
 					}
 				</TableHeaderCell>
 			}
