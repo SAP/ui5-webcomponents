@@ -1,0 +1,2 @@
+declare const _default: ":host{width:calc(100% - .5rem);border-bottom:1px solid var(--sapGroup_TitleBorderColor);box-sizing:border-box;display:inline-block;margin-left:.25rem;margin-right:.25rem}.ui5-search-message-area-wrapper{padding:.5rem;box-sizing:border-box}.ui5-search-message-area-description{margin-top:.25rem;font-size:.75rem;color:var(--sapContent_LabelColor)}\n";
+export default _default;
