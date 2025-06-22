@@ -49,6 +49,7 @@ export default function CheckBoxTemplate(this: CheckBox) {
 				id={`${this._id}-CB`}
 				type="checkbox"
 				checked={this.checked}
+				value={this.value || undefined}
 				readonly={this.readonly}
 				disabled={this.disabled}
 				tabindex={-1}
