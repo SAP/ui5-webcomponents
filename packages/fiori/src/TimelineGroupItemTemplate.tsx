@@ -18,18 +18,24 @@ export default function TimelineGroupItemTemplate(this: TimelineGroupItem) {
 					<div class="ui5-tlgi-line"></div>
 				</div>
 
-				<ToggleButton
-					class="ui5-tlgi-btn"
-					icon={getEffectiveGroupIcon.call(this, this.layout, this.collapsed)}
-					pressed={this.collapsed}
-					onClick={this.onGroupItemClick}
+				<div
+					role="treeitem"
+					aria-expanded={!this.collapsed}
+					aria-label={`${this.groupName || "Group"}, ${this.collapsed ? "collapsed" : "expanded"}`}
 				>
-					{this.groupName}
-				</ToggleButton>
+					<ToggleButton
+						class="ui5-tlgi-btn"
+						icon={getEffectiveGroupIcon.call(this, this.layout, this.collapsed)}
+						pressed={this.collapsed}
+						onClick={this.onGroupItemClick}
+					>
+						{this.groupName}
+					</ToggleButton>
+				</div>
 			</div>
-			<ul class="ui5-tl-group-item">
+			<ul class="ui5-tl-group-item" role="group" aria-label={`${this.groupName || "Group"} items`}>
 				{this.items.map(item =>
-					<li class="ui5-timeline-group-list-item">
+					<li class="ui5-timeline-group-list-item" role="treeitem">
 						<slot name={item._individualSlot}></slot>
 					</li>
 				)}

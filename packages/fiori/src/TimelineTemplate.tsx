@@ -3,8 +3,16 @@ import type Timeline from "./Timeline.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 
 export default function TimelineTemplate(this: Timeline) {
+	const hasGroupItems = this.items.some(item => item.isGroupItem);
+
+	// Determine roles based on content structure
+	const listRole: "list" | "tree" = hasGroupItems ? "tree" : "list";
+	const itemRole: "listitem" | "treeitem" = hasGroupItems ? "treeitem" : "listitem";
+
 	return (
 		<div class="ui5-timeline-root"
+			role="region"
+			aria-label="Timeline"
 			onFocusIn={this._onfocusin}
 			onKeyDown={this._onkeydown}
 		>
@@ -16,9 +24,13 @@ export default function TimelineTemplate(this: Timeline) {
 			>
 				<div class="ui5-timeline-scroll-container">
 
-					<ul class="ui5-timeline-list" aria-live="polite" aria-label={this.ariaLabel}>
+					<ul class="ui5-timeline-list"
+						role={listRole}
+						aria-live="polite"
+						aria-label={this.ariaLabel}
+					>
 						{this.items.map(item =>
-							<li class="ui5-timeline-list-item">
+							<li class="ui5-timeline-list-item" role={itemRole}>
 								<slot name={item._individualSlot}></slot>
 							</li>
 						)}
