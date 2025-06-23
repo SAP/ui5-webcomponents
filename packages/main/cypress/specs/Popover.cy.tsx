@@ -3,6 +3,7 @@ import Toolbar from "../../src/Toolbar.js";
 import Popover from "../../src/Popover.js";
 import Button from "../../src/Button.js";
 import Label from "../../src/Label.js";
+import DatePicker from "../../src/DatePicker.js";
 
 describe("Rendering", () => {
 	it("tests arrow positioning", () => {
@@ -230,78 +231,36 @@ describe("Accessibility", () => {
 			.should("not.have.text", "");
 	});
 
-	it.only("tests aria-labelledby and aria-label", () => {
+	it("tests aria-labelledby and aria-label", () => {
 		cy.mount(
-			<Popover id="pop" class="popover6auto" placement="Top" accessible-name="This popover is important">
-		{/* <div slot="header">
-			<ui5-button id="first-focusable">I am in the header</ui5-button>
-		</div>
-
-		<ui5-list>
-			<ui5-li>Hello</ui5-li>
-			<ui5-li>World</ui5-li>
-			<ui5-li>Again</ui5-li>
-		</ui5-list>
-
-		<br>
-		<br>
-
-		<ui5-button id="popbtn">Open Popover</ui5-button>
-
-		<ui5-popover placement="Bottom" hide-arrow id="danger">
-
-			<ui5-list>
-				<ui5-li>Hello</ui5-li>
-				<ui5-li>World</ui5-li>
-				<ui5-li>Again</ui5-li>
-			</ui5-list>
-
-			<br>
-			<br>
-
-			<ui5-button id="bigDanger">Super Danger !</ui5-button>
-
-			<ui5-popover id="bigDangerPop">
-				<ui5-list>
-					<ui5-li>Hello</ui5-li>
-					<ui5-li>World</ui5-li>
-					<ui5-li>Again</ui5-li>
-				</ui5-list>
-			</ui5-popover>
-		</ui5-popover>
-
-		<br>
-		<br>
-
-		<ui5-select>
-			<ui5-option>Hello</ui5-option>
-			<ui5-option>World</ui5-option>
-		</ui5-select>
-
-		<br>
-		<br>
-
-		<div slot="footer">
-			<ui5-button>I am in the footer</ui5-button>
-		</div> */}
-	</Popover>
-			);
+			<Popover accessibleName="This popover is important">
+				<div slot="header" />
+			</Popover>
+		);
 
 		cy.get("[ui5-popover]").invoke("removeAttr", "accessible-name");
+
 		cy.get("[ui5-popover]")
 			.shadow()
 			.find(".ui5-popup-root")
-			.should("have.attr", "aria-labelledby")
-			.and("not.have.attr", "aria-label");
+			.should("have.attr", "aria-labelledby");
 
-		// const popover = await browser.$("ui5-popover");
-		// await popover.removeAttribute("accessible-name");
-		// assert.ok(await popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover has aria-labelledby.");
-		// assert.notOk(await popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover does not have aria-label.");
+		cy.get("[ui5-popover]")
+			.shadow()
+			.find(".ui5-popup-root")
+			.should("not.have.attr", "aria-label");
 
-		// await popover.setAttribute("accessible-name", "text");
-		// assert.notOk(await popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover does not have aria-labelledby.");
-		// assert.ok(await popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover has aria-label.");
+		cy.get("[ui5-popover]").invoke("attr", "accessible-name", "text");
+
+		cy.get("[ui5-popover]")
+			.shadow()
+			.find(".ui5-popup-root")
+			.should("not.have.attr", "aria-labelledby");
+
+		cy.get("[ui5-popover]")
+			.shadow()
+			.find(".ui5-popup-root")
+			.should("have.attr", "aria-label");
 	});
 
 	it("tests accessible-name-ref", () => {
@@ -350,7 +309,7 @@ describe("Popover opener", () => {
 				<Popover id="popup" opener="btnOpenMenu">
 					<Button id="btnClosePopover">Close</Button>
 				</Popover>
-			</>``
+			</>
 		);
 
 		// ac
@@ -452,29 +411,36 @@ describe("Popover opener", () => {
 	});
 
 	it("tests popover toggling", () => {
-		// const btnOpenPopover = await browser.$("#btn");
-		// const field = await browser.$("#field");
+		cy.mount(
+			<>
+				<Button id="btn" />
+				<Popover opener="btn" />
+				<br />
+				<DatePicker />
+			</>);
 
-		// await btnOpenPopover.click();
+		cy.get("[ui5-popover]").invoke("prop", "open", "true");
 
-		// const popover = await browser.$("ui5-popover");
-		// assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+		cy.get<Popover>("[ui5-popover]").ui5PopoverOpened();
 
-		// await field.click();
-		// assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+		cy.get("[ui5-date-picker]").realClick();
+		cy.get("[ui5-popover]").should("not.have.attr", "open");
 	});
 
 	it("tests popover toggling with 'open' attribute", () => {
-		// const btnOpenPopover = await browser.$("#btnOpenWithAttr");
-		// const btnCloseWithAttr = await browser.$("#btnCloseWithAttr");
+		cy.mount(
+			<>
+				<Button id="btnOpenWithAttr" />
+				<Popover opener="btnOpenWithAttr" />
+			</>
+		);
 
-		// await btnOpenPopover.click();
+		cy.get("[ui5-popover]").invoke("prop", "open", "true");
 
-		// const popover = await browser.$("#popoverAttr");
-		// assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+		cy.get<Popover>("[ui5-popover]").ui5PopoverOpened();
 
-		// await btnCloseWithAttr.click();
-		// assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+		cy.get("[ui5-popover]").invoke("removeAttr", "open");
+		cy.get("[ui5-popover]").should("not.have.attr", "open");
 	});
 
 	it("tests popover is closed after click outside of it after multiple 'open = true'", () => {
