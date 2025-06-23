@@ -59,8 +59,6 @@
     </div>
 
     <script type="module">
-        import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-        
         const lists = [
             document.getElementById("list1"),
             document.getElementById("list2"), 
@@ -124,7 +122,7 @@
             
             const currentSelected = getSelectedItems(lists[0]);
             if (currentSelected.length > 1) {
-                DragRegistry.startMultipleDrag(e, currentSelected.length);
+                window["sap-ui-webcomponents-bundle"].startMultipleDrag(currentSelected.length);
             }
         });
 

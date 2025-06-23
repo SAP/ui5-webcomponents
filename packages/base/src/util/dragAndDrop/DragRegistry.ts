@@ -8,6 +8,9 @@ import {
 	DRAG_DROP_MULTIPLE_TEXT,
 } from "../../generated/i18n/i18n-defaults.js";
 
+const MIN_MULTI_DRAG_COUNT = 2;
+
+let customDragElementPromise: Promise<HTMLElement> | null = null;
 let draggedElement: HTMLElement | null = null;
 let globalHandlersAttached = false;
 const subscribers = new Set<UI5Element>();
@@ -21,14 +24,34 @@ const ondragstart = (e: DragEvent) => {
 	if (!selfManagedDragAreas.has(e.target)) {
 		draggedElement = e.target;
 	}
+
+	handleMultipleDrag(e);
+};
+
+const handleMultipleDrag = async (e: DragEvent) => {
+	if (!customDragElementPromise || !e.dataTransfer) {
+		return;
+	}
+	const dragElement = await customDragElementPromise;
+	// Add to document body temporarily
+	document.body.appendChild(dragElement);
+
+	e.dataTransfer.setDragImage(dragElement, 0, 0);
+
+	// Clean up the temporary element after the drag operation starts
+	requestAnimationFrame(() => {
+		dragElement.remove();
+	});
 };
 
 const ondragend = () => {
 	draggedElement = null;
+	customDragElementPromise = null;
 };
 
 const ondrop = () => {
 	draggedElement = null;
+	customDragElementPromise = null;
 };
 
 const setDraggedElement = (element: HTMLElement | null) => {
@@ -55,22 +78,20 @@ const createDefaultMultiDragElement = async (count: number): Promise<HTMLElement
 	return dragElement;
 };
 
-const startMultipleDrag = async (dragEvent: DragEvent, count: number): Promise<void> => {
-	if (count <= 0 || !dragEvent.dataTransfer) {
+/**
+ * Starts a multiple drag operation by creating a drag ghost element.
+ * The drag ghost will be displayed when dragging multiple items.
+ *
+ * @param {number} count - The number of items being dragged.
+ * @public
+ */
+const startMultipleDrag = (count: number): void => {
+	if (count < MIN_MULTI_DRAG_COUNT) {
+		console.warn(`Cannot start multiple drag with count ${count}. Minimum is ${MIN_MULTI_DRAG_COUNT}.`); // eslint-disable-line
 		return;
 	}
 
-	const defaultDragElement = await createDefaultMultiDragElement(count);
-
-	// Add to document body temporarily
-	document.body.appendChild(defaultDragElement);
-
-	dragEvent.dataTransfer.setDragImage(defaultDragElement, 0, 0);
-
-	// Clean up the temporary element after the drag operation starts
-	requestAnimationFrame(() => {
-		defaultDragElement.remove();
-	});
+	customDragElementPromise = createDefaultMultiDragElement(count);
 };
 
 const attachGlobalHandlers = () => {
@@ -148,9 +169,10 @@ const DragRegistry = {
 	startMultipleDrag,
 };
 
-// window.DragRegistry = DragRegistry;
-
 export default DragRegistry;
+export {
+	startMultipleDrag,
+};
 export type {
 	SetDraggedElementFunction,
 	DragAndDropSettings,
