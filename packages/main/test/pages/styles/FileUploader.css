@@ -12,3 +12,7 @@ body > div {
 	/* font-family: cursive; */
     background-color: red;
 }
+
+#nativeFileContainer:has(#nativeFile:focus) {
+    background-color: yellow;
+}

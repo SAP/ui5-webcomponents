@@ -28,51 +28,61 @@ export default function FileUploaderTemplate(this: FileUploader) {
 						title={this.inputTitle}
 						placeholder={this.resolvedPlaceholder}
 						onChange={this._onChange}
-						// tabindex={this.hideInput ? -1 : 0}
 						data-sap-focus-ref
 					/>
 				</form>
-				{!this.hideInput ? (
-					<div class="ui5-file-uploader-display-container">
-						{this.selectedFileNames.length > 0 ? (
-							<>
-								<Tokenizer
-									class="ui5-file-uploader-tokenizer"
-									preventInitialFocus
-									readonly
-								>
-									{this.selectedFileNames.map(fileName => (
-										<Token text={fileName} />
-									))}
-								</Tokenizer>
-								<Icon
-									name="decline"
-									class="ui5-file-uploader-close-icon inputIcon"
-									onClick={this._clearFileSelection}
-									title={this.clearIconTitle}
-								/>
-							</>
-						) : (
-							<input
-								class="ui5-file-uploader-display-input"
-								tabindex={-1}
-								aria-hidden="true"
-								title={this.inputTitle}
-								placeholder={this.resolvedPlaceholder}
-								inner-input
-								readonly
-								onClick={this._openFileBrowser}
-							/>
-						)}
-						<Icon
-							name="value-help"
-							class="ui5-file-uploader-value-help-icon inputIcon"
-							onClick={this._openFileBrowser}
-							title={this.valueHelpTitle}
-						/>
-					</div>
-				) : (
+
+				{this.hideInput ? (
 					<slot></slot>
+				) : (
+					<div class="ui5-file-uploader-display-container">
+						<div class="ui5-file-uploader-display-elements">
+							{this._selectedFilesNames.length > 0 ? (
+								<>
+									<Tokenizer
+										class="ui5-file-uploader-tokenizer"
+										preventInitialFocus
+										readonly
+										open={this._tokenizerOpen}
+										onKeyDown={this._onTokenizerKeyDown}
+										onKeyUp={this._onTokenizerKeyUp}
+									>
+										{this._selectedFilesNames.map(fileName => (
+											<Token
+												text={fileName}
+											/>
+										))}
+									</Tokenizer>
+									<Icon
+										name="decline"
+										class="ui5-file-uploader-close-icon inputIcon"
+										onClick={this._clearFileSelection}
+										title={this.clearIconTitle}
+									/>
+								</>
+							) : (
+								<input
+									class="ui5-file-uploader-display-input"
+									tabindex={-1}
+									aria-hidden="true"
+									title={this.inputTitle}
+									placeholder={this.resolvedPlaceholder}
+									inner-input
+									readonly
+									onClick={this._openFileBrowser}
+								/>
+							)}
+
+							<Icon
+								name="value-help"
+								class="ui5-file-uploader-value-help-icon inputIcon"
+								onClick={this._openFileBrowser}
+								title={this.valueHelpTitle}
+							/>
+						</div>
+
+						<slot></slot>
+					</div>
 				)}
 			</div>
 

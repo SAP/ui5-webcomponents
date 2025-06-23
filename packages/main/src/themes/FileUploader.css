@@ -9,15 +9,6 @@
 :host([hide-input]) {
 	width: max-content;
 	height: max-content;
-	box-shadow: none;
-	background: none;
-}
-
-.ui5-file-uploader-root,
-.ui5-file-uploader-form {
-	position: relative;
-	width: inherit;
-	height: inherit;
 }
 
 :host([hide-input]) .ui5-file-uploader-form {
@@ -27,6 +18,13 @@
 	width: 100%;
 	height: 100%;
 	display: block;
+}
+
+.ui5-file-uploader-root,
+.ui5-file-uploader-form {
+	position: relative;
+	width: inherit;
+	height: inherit;
 }
 
 .ui5-file-uploader-root .ui5-file-uploader-native-input {
@@ -44,6 +42,16 @@
 	inset-inline-start: 0;
 	width: inherit;
 	height: inherit;
+	display: flex;
+	column-gap: 0.5rem;
+	align-items: center;
+}
+
+.ui5-file-uploader-display-elements {
+	height: inherit;
+	flex: 1;
+	display: flex;
+	position: relative;
 }
 
 .ui5-file-uploader-tokenizer,
@@ -57,7 +65,6 @@
 	cursor: pointer;
 }
 
-/* Display parts styles */
 .ui5-file-uploader-close-icon,
 .ui5-file-uploader-value-help-icon {
 	position: absolute;
@@ -80,15 +87,85 @@
 	inset-inline-end: 0rem;
 }
 
-:host(:not([disabled]):active) [ui5-button] {
-	background-color: var(--sapButton_Active_Background);
-	border-color: var(--sapButton_Active_BorderColor);
-	color: var(--sapButton_Active_TextColor);
-	text-shadow: none;
+/* Input styles overrides */
+:host(:not([readonly])),
+:host([readonly][disabled]),
+:host([value-state="None"]:not([readonly]):hover),
+:host([value-state="Negative"]:not([readonly]):not([disabled])),
+:host([value-state="Negative"]:not([readonly])[focused][opened]:hover),
+:host([value-state="Negative"]:not([readonly]):not([focused]):hover),
+:host([value-state="Critical"]:not([readonly]):not([disabled])),
+:host([value-state="Critical"]:not([readonly])[focused][opened]:hover),
+:host([value-state="Critical"]:not([readonly]):not([focused]):hover),
+:host([value-state="Positive"]:not([readonly]):not([disabled])),
+:host([value-state="Positive"]:not([readonly])[focused][opened]:hover),
+:host([value-state="Positive"]:not([readonly]):not([focused]):hover),
+:host([value-state="Information"]:not([readonly]):not([disabled])),
+:host([value-state="Information"]:not([readonly])[focused][opened]:hover),
+:host([value-state="Information"]:not([readonly]):not([focused]):hover),
+:host(:not([value-state]):not([readonly]):hover) {
+	box-shadow: none;
+	background: none;
 }
 
-/* Input styles overrides */
-:host([focused]) .ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus)::after {
+:host(:not([readonly])) .ui5-file-uploader-display-elements,
+:host([readonly][disabled]) .ui5-file-uploader-display-elements {
+	box-shadow: var(--sapField_Shadow);
+	border: var(--_ui5-input-border);
+	border-radius: var(--_ui5_input_border_radius);
+	background: var(--sapField_BackgroundStyle);
+}
+
+/* Value state styles */
+:host([value-state="Negative"]:not([readonly]):not([disabled])) .ui5-file-uploader-display-elements {
+	box-shadow: var(--sapField_InvalidShadow);
+	background: var(--sapField_InvalidBackgroundStyle);
+	background-color: var(--sapField_InvalidBackground);
+}
+
+:host([value-state="Critical"]:not([readonly]):not([disabled])) .ui5-file-uploader-display-elements {
+	box-shadow: var(--sapField_WarningShadow);
+	background: var(--sapField_WarningBackgroundStyle);
+	background-color: var(--sapField_WarningBackground);
+}
+
+:host([value-state="Positive"]:not([readonly]):not([disabled])) .ui5-file-uploader-display-elements {
+	box-shadow: var(--sapField_SuccessShadow);
+	background: var(--sapField_SuccessBackgroundStyle);
+	background-color: var(--sapField_SuccessBackground);
+}
+
+:host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-file-uploader-display-elements {
+	box-shadow: var(--sapField_InformationShadow);
+	background: var(--sapField_InformationBackgroundStyle);
+	background-color: var(--sapField_InformationBackground);
+}
+
+/* Value state hover styles */
+:host([value-state="None"]:not([readonly]):hover) .ui5-file-uploader-display-elements,
+:host(:not([value-state]):not([readonly]):hover) .ui5-file-uploader-display-elements {
+	box-shadow: var(--sapField_Hover_Shadow);
+	background: var(--sapField_Hover_BackgroundStyle);
+}
+
+:host([value-state="Negative"]:not([readonly]):not([focused]):hover) .ui5-file-uploader-display-elements,
+:host([value-state="Negative"]:not([readonly])[focused][opened]:hover) .ui5-file-uploader-display-elements {
+	background-color: var(--_ui5_input_value_state_error_hover_background);
+	box-shadow: var(--sapField_Hover_InvalidShadow);
+}
+
+:host([value-state="Positive"]:not([readonly]):not([focused]):hover) .ui5-file-uploader-display-elements,
+:host([value-state="Positive"]:not([readonly])[focused][opened]:hover) .ui5-file-uploader-display-elements,
+:host([value-state="Critical"]:not([readonly]):not([focused]):hover) .ui5-file-uploader-display-elements,
+:host([value-state="Critical"]:not([readonly])[focused][opened]:hover) .ui5-file-uploader-display-elements,
+:host([value-state="Information"]:not([readonly]):not([focused]):hover) .ui5-file-uploader-display-elements,
+:host([value-state="Information"]:not([readonly])[focused][opened]:hover) .ui5-file-uploader-display-elements {
+	background-color: var(--sapField_Hover_Background);
+}
+
+/* Value state focus styles */
+:host([focused][hide-input]) .ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus)::after,
+:host([focused]) .ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus) .ui5-file-uploader-display-elements::after {
 	content: var(--ui5_input_focus_pseudo_element_content);
 	position: absolute;
 	pointer-events: none;
@@ -101,28 +178,17 @@
 	right: var(--_ui5_input_focus_offset);
 }
 
-:host(:not([value-state]):not([readonly])[focused]:not([opened]):hover),
-:host([value-state="None"]:not([readonly])[focused]:not([opened]):hover) {
-	box-shadow: var(--sapField_Shadow);
-}
-
-:host([value-state="Negative"][focused]:not([opened]):not([readonly]):not([hide-input])) .ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus)::after {
+:host([value-state="Negative"][focused]:not([opened]):not([readonly]):not([hide-input]))
+.ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus) .ui5-file-uploader-display-elements::after {
 	border-color: var(--_ui5_input_focused_value_state_error_focus_outline_color);
 }
 
-:host([value-state="Critical"][focused]:not([opened]):not([readonly]):not([hide-input])) .ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus)::after {
+:host([value-state="Critical"][focused]:not([opened]):not([readonly]):not([hide-input]))
+.ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus) .ui5-file-uploader-display-elements::after {
 	border-color: var(--_ui5_input_focused_value_state_warning_focus_outline_color);
 }
 
-:host([value-state="Positive"][focused]:not([opened]):not([readonly]):not([hide-input])) .ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus)::after {
+:host([value-state="Positive"][focused]:not([opened]):not([readonly]):not([hide-input]))
+.ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus) .ui5-file-uploader-display-elements::after {
 	border-color: var(--_ui5_input_focused_value_state_success_focus_outline_color);
-}
-
-:host([value-state="None"][hide-input]:not([readonly]):hover),
-:host([value-state="Negative"][hide-input]:not([readonly]):hover),
-:host([value-state="Positive"][hide-input]:not([readonly]):hover),
-:host([value-state="Information"][hide-input]:not([readonly]):hover),
-:host([value-state="Critical"][hide-input]:not([readonly]):hover) {
-	box-shadow: none;
-	background: none;
 }

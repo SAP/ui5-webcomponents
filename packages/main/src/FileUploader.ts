@@ -248,7 +248,13 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	_messagePopover!: Popover;
 
 	@property({ type: Array, noAttribute: true })
-	private selectedFiles: Array<string> = [];
+	_selectedFilesNames: Array<string> = [];
+
+	@property({ type: Array, noAttribute: true })
+	_clearTokens: boolean = true;
+
+	@property({ type: Boolean, noAttribute: true })
+	_tokenizerOpen = false;
 
 	static emptyInput: HTMLInputElement;
 
@@ -281,41 +287,35 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	_onclick() {
-		if (this.getFocusDomRef()?.matches(":focus-within") && this.hideInput) {
+		if (this.getDomRef()?.matches(":focus-within")) {
 			this._openFileBrowser();
 		}
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isEnter(e)) {
-			this._openFileBrowser();
-			e.preventDefault();
-		}
+		const firstToken = this._tokenizer?.tokens.filter(token => !token.hasAttribute("overflows"))[0];
+		const isToken = (<HTMLElement>e.target).hasAttribute("ui5-token");
+		const isArrowNavigation = this.effectiveDir === "ltr" ? isRight(e) : isLeft(e);
 
 		if (this.hideInput) {
 			return;
 		}
 
-		const firstToken = this._tokenizer?.tokens.filter(token => !token.hasAttribute("overflows"))[0];
-		const isToken = (<HTMLElement>e.target).hasAttribute("ui5-token");
-
-		if (isToken && e.target === firstToken && isLeft(e)) {
-			this._input.focus();
+		if (isArrowNavigation && !isToken) {
 			e.preventDefault();
-		}
-
-		if (!isToken && isRight(e)) {
 			firstToken?.focus();
-			e.preventDefault();
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
-		const shouldOpenFileBrowser = (isF4(e) || isUpAlt(e) || isDownAlt(e)) && !this.hideInput;
-		if (isSpace(e) || shouldOpenFileBrowser) {
+		if (this.hideInput) {
+			return;
+		}
+
+		if (isSpace(e) || isF4(e) || isUpAlt(e) || isDownAlt(e)) {
 			this._openFileBrowser();
 			e.preventDefault();
-		} else if (isEscape(e) && !this.hideInput) {
+		} else if (isEscape(e) && this._clearTokens) {
 			this._clearFileSelection();
 			e.preventDefault();
 		}
@@ -342,7 +342,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		}
 
 		this._input.files = validatedFiles;
-		this.selectedFiles = this._fileNamesList(files);
+		this._selectedFilesNames = this._fileNamesList(files);
 		this.value = this.computedValue;
 		this.fireDecoratorEvent("change", {
 			files: validatedFiles,
@@ -351,9 +351,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	_onfocusin() {
 		this.focused = true;
-		// if (this.hideInput) {
-		// 	this._input.focus();
-		// }
 		if (this._tokenizer) {
 			this._tokenizer.expanded = true;
 		}
@@ -371,12 +368,43 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	_clearFileSelection() {
-		this.selectedFiles = [];
+		this._selectedFilesNames = [];
 		this.value = "";
 		this._from?.reset();
 		this.fireDecoratorEvent("change", {
 			files: this.files,
 		});
+	}
+
+	_onTokenizerKeyUp(e: KeyboardEvent) {
+		const isToken = (<HTMLElement>e.target).hasAttribute("ui5-token");
+		if ((isDownAlt(e) || isUpAlt(e)) && isToken) {
+			this._tokenizerOpen = !this._tokenizerOpen;
+			e.stopPropagation();
+		}
+
+		if (isSpace(e)) {
+			e.stopPropagation();
+		}
+	}
+
+	_onTokenizerKeyDown(e: KeyboardEvent) {
+		const isToken = (<HTMLElement>e.target).hasAttribute("ui5-token");
+		const firstToken = this._tokenizer?.tokens.filter(token => !token.hasAttribute("overflows"))[0];
+		const isArrowNavigation = this.effectiveDir === "ltr" ? isLeft(e) : isRight(e);
+
+		if (isEscape(e)) {
+			this._clearTokens = isToken;
+		}
+
+		if (isEnter(e)) {
+			e.stopPropagation();
+		}
+
+		if (e.target === firstToken && isArrowNavigation) {
+			this._input.focus();
+			e.preventDefault();
+		}
 	}
 
 	/**
@@ -390,10 +418,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		}
 
 		return FileUploader._emptyFilesList;
-	}
-
-	get selectedFileNames(): Array<string> {
-		return this.selectedFiles;
 	}
 
 	onAfterRendering() {
@@ -411,7 +435,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	get computedValue(): string {
-		return this.selectedFiles.join(" ");
+		return this._selectedFilesNames.join(" ");
 	}
 
 	_onChange(e: Event) {
@@ -425,7 +449,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		this.selectedFiles = this._fileNamesList(changedFiles as FileList);
+		this._selectedFilesNames = this._fileNamesList(changedFiles as FileList);
 		this.value = this.computedValue;
 		this.fireDecoratorEvent("change", {
 			files: changedFiles,
