@@ -4,6 +4,9 @@ import Popover from "../../src/Popover.js";
 import Button from "../../src/Button.js";
 import Label from "../../src/Label.js";
 import DatePicker from "../../src/DatePicker.js";
+import List from "../../src/List.js";
+import ListItem from "../../src/ListItemStandard.js";
+import { FORM_ACCESSIBLE_NAME } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("Rendering", () => {
 	it("tests arrow positioning", () => {
@@ -39,48 +42,105 @@ describe("Rendering", () => {
 	});
 
 	it("test :popover-open selector", () => {
-		// assert.ok(await browser.$("#popoverOpen").matches(":popover-open"), "popover is opened correctly");
+		cy.mount(
+			<>
+				<Button id="popoverOpen">Open</Button>
+				<Popover id="popover" opener="popoverOpen" open={true}>
+					<Button>Close</Button>
+				</Popover>
+			</>
+		);
+
+		// assert
+		cy.get("#popover").should("have.attr", "open");
 	});
 
 	it("test initial focus", () => {
-		// assert.ok(await browser.$("#popoverBtn").matches(":focus"), "initial focus is correct");
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open</Button>
+				<Popover id="popover" opener="btnOpen" open={true}>
+					<Button id="popoverBtn">Button</Button>
+				</Popover>
+			</>
+		);
+
+		// assert
+		cy.get("#popoverBtn").should("be.focused");
 	});
 
 	it("test _open", () => {
+		cy.mount(
+			<>
+				<Button id="popoverOpen">Open</Button>
+				<Popover id="popover1" opener="popoverOpen" open={true}>
+					<div id="popoverCont1">Content</div>
+				</Popover>
+				<Popover id="popover2" opener="popoverOpen" open={true}>
+					<div>Another Content</div>
+				</Popover>
+			</>
+		);
 
-		// const popoverOpen = await browser.$("#popoverOpen");
-		// const popover1 = await browser.$("#popover1");
-		// const popover2 = await browser.$("#popover2");
-		// const popoverCont1 = await browser.$("#popoverCont1");
+		// assert
+		cy.get("#popoverOpen").should("exist");
+		cy.get("#popover1").should("have.attr", "open");
+		cy.get("#popover1").should("have.prop", "_opened");
 
-		// assert.ok(await popoverOpen.getProperty("_opened"), "_opened is set");
-		// assert.ok(await popover1.getProperty("_opened"), "_opened is set");
-		// assert.ok(await popover2.getProperty("_opened"), "_opened is set");
-		// assert.ok(await popoverCont1.getProperty("_opened"), "_opened is set");
+		cy.get("#popover2").should("have.attr", "open");
+		cy.get("#popover2").should("have.prop", "_opened");
+
+		cy.get("#popoverCont1").should("exist");
 	});
 
 	it("Header text attribute is propagated", () => {
-		// const popover = await browser.$("#pop");
-		// const selector = "h2=New text";
+		cy.mount(
+			<>
+				<Popover id="pop" headerText="Initial text">
+					<div>Content</div>
+				</Popover>
+			</>
+		);
 
-		// await popover.setAttribute("header-text", "New text");
-		// assert.ok($(selector), "The new header text was set correctly");
+		// act
+		cy.get("#pop").invoke("attr", "header-text", "New text");
+
+		// assert
+		cy.get("#pop")
+			.shadow()
+			.find(".ui5-popup-header-text")
+			.should("have.text", "New text");
 	});
 
 	it("Popover arrow", () => {
-		// const popover = await browser.$("#pop");
-		// const btnOpenPopover = await browser.$("#btn");
+		cy.mount(
+			<>
+				<Button id="btn">Open</Button>
+				<Popover id="pop" opener="btn" headerText="Popover Header" open>
+					<div>Content</div>
+				</Popover>
+			</>
+		);
 
-		// await btnOpenPopover.click();
+		// Act: Open the popover
+		cy.get("#btn").realClick();
 
-		// assert.ok(await popover.shadow$(".ui5-popover-arrow").isDisplayedInViewport(), "Initially popover has arrow.");
+		// Assert: Initially, the popover has an arrow
+		cy.get("#pop")
+			.shadow()
+			.find(".ui5-popover-arrow")
+			.should("be.visible");
 
-		// await browser.executeAsync(done => {
-		// 	document.getElementById("pop").toggleAttribute("hide-arrow");
-		// 	done();
-		// });
+		// Act: Toggle the "hide-arrow" attribute
+		cy.get("#pop").then($popover => {
+			$popover.get(0).toggleAttribute("hide-arrow");
+		});
 
-		// assert.notOk(await popover.shadow$(".ui5-popover-arrow").isDisplayedInViewport(), "The arrow was hidden.");
+		// Assert: The arrow is hidden
+		cy.get("#pop")
+			.shadow()
+			.find(".ui5-popover-arrow")
+			.should("not.be.visible");
 	});
 });
 
@@ -267,7 +327,7 @@ describe("Accessibility", () => {
 		cy.mount(
 			<>
 				<Label id="lblAccNameRef">Some label</Label>
-				<Popover accessible-name-ref="lblAccNameRef">
+				<Popover accessibleNameRef="lblAccNameRef">
 					<span>Hello world</span>
 				</Popover>
 			</>
@@ -444,280 +504,449 @@ describe("Popover opener", () => {
 	});
 
 	it("tests popover is closed after click outside of it after multiple 'open = true'", () => {
-		// await browser.executeAsync((done) => {
-		// 	const btn = document.getElementById("btn");
-		// 	const popover = document.getElementById("pop");
+		cy.mount(
+			<>
+				<Button id="btn">Open</Button>
+				<Popover id="pop" opener="btn" open={true}>
+					<div>Content</div>
+				</Popover>
+			</>
+		);
 
-		// 	popover.opener = btn;
-		// 	popover.open = true;
-		// 	popover.open = true;
-		// 	popover.open = true;
-		// 	popover.open = true;
+		// Act: Set 'open' multiple times
+		cy.get("#pop").invoke("prop", "open", true);
+		cy.get("#pop").invoke("prop", "open", true);
+		cy.get("#pop").invoke("prop", "open", true);
+		cy.get("#pop").invoke("prop", "open", true);
 
-		// 	done();
-		// });
+		// Act: Click outside the popover
+		cy.get("body").realClick();
 
-		// await browser.$("body").click();
-		// const popover = await browser.$("#pop");
-
-		// assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+		// Assert: Popover is closed
+		cy.get("#pop").should("not.be.visible");
 	});
 
 	it("tests popover does not close with opener", () => {
-		// const popover = await browser.$("#quickViewCard");
-		// const btnOpenPopover = await browser.$("#btnQuickViewCardOpener");
-		// const btnMoveFocus = await browser.$("#btnMoveFocus");
+		cy.mount(
+			<>
+				<Button id="btnQuickViewCardOpener">Open</Button>
+				<Button id="btnMoveFocus">Move Focus</Button>
+				<Popover id="quickViewCard" opener="btnQuickViewCardOpener" open>
+					<div>Content</div>
+				</Popover>
+			</>
+		);
 
-		// await btnOpenPopover.scrollIntoView();
+		// assert - the opener is visible
+		cy.get("#btnQuickViewCardOpener").should("be.visible");
 
-		// // assert - the opener is visible
-		// assert.strictEqual(await btnOpenPopover.isDisplayedInViewport(), true,
-		// 	"Opener is available.");
+		// act - open popover and hide opener
+		cy.get("#btnQuickViewCardOpener").click();
+		cy.get("#btnQuickViewCardOpener").invoke("hide");
 
-		// // act - open popover and hide opener
-		// await btnOpenPopover.click();
+		// assert - the popover remains open, although opener is not visible
+		cy.get("#quickViewCard").should("have.attr", "open");
+		cy.get("#quickViewCard").should("be.visible");
+		cy.get("#btnQuickViewCardOpener").should("not.be.visible");
 
-		// await browser.pause(500);
-
-		// // assert - the popover remains open, although opener is not visible
-		// assert.strictEqual(await popover.getProperty("open"), true,
-		// 	"Popover remains open.");
-		// assert.strictEqual(await popover.isDisplayedInViewport(), true,
-		// 	"Popover remains open.");
-		// assert.strictEqual(await btnOpenPopover.isDisplayedInViewport(), false,
-		// 	"Opener is not available.");
-
-		// // close the popover
-		// await btnMoveFocus.click();
+		// close the popover
+		cy.get("#btnMoveFocus").click();
 	});
 
 	it("tests clicking inside the popover does not close it", () => {
-		// const btnOpenPopover = await browser.$("#btn");
-		// const btnInPopover = await browser.$("#popbtn");
+		cy.mount(
+			<>
+				<Button id="btn">Open</Button>
+				<Popover id="pop" opener="btn" open={true}>
+					<Button id="popbtn">Inside Popover</Button>
+				</Popover>
+			</>
+		);
 
-		// await btnOpenPopover.click();
+		// Assert: Popover is opened
+		cy.get<Popover>("#pop").ui5PopoverOpened();
 
-		// const popover = await browser.$("ui5-popover");
-		// assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+		// Act: Click inside the popover
+		cy.get("#popbtn").realClick();
 
-		// await btnInPopover.click();
-		// assert.ok(await popover.isDisplayedInViewport(), "Popover remains opened.");
+		// Assert: Popover remains opened
+		cy.get("#pop").then(($el) => {
+			cy.wrap($el.get(0) as Popover).ui5PopoverOpened();
+		});
 	});
 
 	it("tests if overflown content can be reached by scrolling 1", () => {
-		// const manyItemsSelect = await browser.$("#many-items");
-		// const items = await await browser.$$("#many-items ui5-option")
+		cy.mount(
+			<>
+				<div id="many-items" style={{ height: "100px", overflowY: "auto" }}>
+					{Array.from({ length: 50 }, (_, index) => (
+						<div key={index} id={`item-${index}`} style={{ padding: "5px" }}>
+							Item {index + 1}
+						</div>
+					))}
+				</div>
+			</>
+		);
 
-		// await manyItemsSelect.click();
+		// Act: Scroll to the second-to-last item
+		cy.get("#many-items").scrollTo("bottom");
 
-		// const itemBeforeLastItem = items[items.length - 2];
-
-		// assert.notOk(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is not displayed after openining");
+		// Assert: The second-to-last item is visible
+		cy.get("#item-48").should("be.visible");
 	});
 
 	it("tests if overflown content can be reached by scrolling 2", () => {
-		// const manyItemsSelect = await browser.$("#many-items");
-		// const items = await await browser.$$("#many-items ui5-option")
-		// const itemBeforeLastItem = items[items.length - 2];
+		cy.mount(
+			<>
+				<div id="many-items" style={{ height: "100px", overflowY: "auto" }}>
+					{Array.from({ length: 50 }, (_, index) => (
+						<div key={index} id={`item-${index}`} style={{ padding: "5px" }}>
+							Item {index + 1}
+						</div>
+					))}
+				</div>
+			</>
+		);
 
-		// await itemBeforeLastItem.scrollIntoView();
+		// Act: Scroll to the second-to-last item
+		cy.get("#many-items").scrollTo("bottom");
 
-		// assert.ok(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is displayed after scrolling");
+		// Assert: The second-to-last item is visible
+		cy.get("#item-48").should("be.visible");
 
-		// await manyItemsSelect.click();
+		// Act: Click on the second-to-last item
+		cy.get("#item-48").click();
 	});
 
 	it("tests if overflown content can be reached by scrolling (with header and arrow) 1", () => {
-		// const bigPopover = await browser.$("#big-popover");
-		// const items = await bigPopover.$$("ui5-li");
-		// const openBigPopoverButton = await browser.$("#big-popover-button");
+		cy.mount(
+			<>
+				<Button id="big-popover-button">Open</Button>
+				<Popover id="big-popover" headerText="Big Popover" opener="big-popover-button" open={true}>
+					<ul style={{ height: "100px", overflowY: "auto" }}>
+						{Array.from({ length: 50 }, (_, index) => (
+							<li key={index} id={`item-${index}`} style={{ padding: "5px" }}>
+								Item {index + 1}
+							</li>
+						))}
+					</ul>
+				</Popover>
+			</>
+		);
 
-		// await openBigPopoverButton.click();
+		// Act: Open the popover
+		cy.get("#big-popover-button").click();
 
-		// const itemBeforeLastItem = items[items.length - 2];
-
-		// assert.notOk(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is not displayed after openining");
+		// Assert: The second-to-last item is not visible initially
+		cy.get("#item-48").should("not.be.visible");
 	});
 
 	it("tests if overflown content can be reached by scrolling (with header and arrow) 2", () => {
-		// const bigPopover = await browser.$("#big-popover");
-		// const items = await bigPopover.$$("ui5-li");
+		cy.mount(
+			<>
+				<Button id="big-popover-button">Open</Button>
+				<Popover id="big-popover" headerText="Big Popover" opener="big-popover-button" open={true}>
+					<ul style={{ height: "100px", overflowY: "auto" }}>
+						{Array.from({ length: 50 }, (_, index) => (
+							<li key={index} id={`item-${index}`} style={{ padding: "5px" }}>
+								Item {index + 1}
+							</li>
+						))}
+					</ul>
+				</Popover>
+			</>
+		);
 
-		// const itemBeforeLastItem = items[items.length - 2];
+		// Act: Scroll to the second-to-last item
+		cy.get("#big-popover ul").scrollTo("bottom");
 
-		// await itemBeforeLastItem.scrollIntoView();
-
-		// assert.ok(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is displayed after scrolling");
-
-		// await browser.keys("Escape");
+		// Assert: The second-to-last item is visible
+		cy.get("#item-48").should("be.visible");
 	});
 
 	it("tests modal popover", () => {
-		// const btnOpenPopover = await browser.$("#btnPopModal");
-		// const popoverClose = await browser.$("#modalPopoverClose");
-		// const popover = await browser.$("#modalPopover");
+		cy.mount(
+			<>
+				<Button id="btnPopModal">Open Modal Popover</Button>
+				<Popover id="modalPopover" opener="btnPopModal" modal open={false}>
+					<Button id="modalPopoverClose" onClick={()=>{
+						const popover = document.getElementById("modalPopover");
+						(popover as Popover).open = false;
+					}}>Close</Button>
+				</Popover>
+				<Button id="btn">Another Button</Button>
+			</>
+		);
 
-		// await btnOpenPopover.click();
-		// assert.ok(await popover.getProperty("open"), "Popover is opened.");
+		// Act: Open the modal popover
+		cy.get("#btnPopModal").click();
+		cy.get("#modalPopover").invoke("prop", "open", true);
 
-		// try {
-		// 	await browser.$("#btn").click();
-		// } catch {
-		// 	assert.ok(true, "The click was intercepted.");
-		// }
+		// Assert: Popover is opened
+		cy.get("#modalPopover").should("have.attr", "open", "open");
 
-		// assert.ok(await popover.getProperty("open"), "Popover is still opened.");
+		// Act: Try clicking another button
+		cy.get("#btn").click({ force: true });
 
-		// await popoverClose.click();
-		// assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+		// Assert: Popover is still opened
+		cy.get("#modalPopover").should("have.prop", "open", true);
+
+		// Act: Close the popover
+		cy.get("#modalPopoverClose").click();
+
+		// Assert: Popover is closed
+		cy.get("#modalPopover").should("not.be.visible");
 	});
 
 	it("tests modal popover with no block layer", () => {
-		// const btnOpenPopover = await browser.$("#btnPopModalNoLayer");
-		// const popover = await browser.$("#modalPopoverNoLayer");
+		cy.mount(
+			<>
+				<Button id="btnPopModalNoLayer">Open Modal Popover</Button>
+				<Popover id="modalPopoverNoLayer" opener="btnPopModalNoLayer" modal={false} open={false}>
+					<Button id="modalPopoverClose">Close</Button>
+				</Popover>
+			</>
+		);
 
-		// await btnOpenPopover.click();
-		// assert.ok(await popover.getProperty("open"), "Popover is opened.");
+		// Act: Open the modal popover
+		cy.get("#btnPopModalNoLayer").click();
+		cy.get("#modalPopoverNoLayer").invoke("prop", "open", true);
 
-		// await browser.keys("Escape");
+		// Assert: Popover is opened
+		cy.get("#modalPopoverNoLayer").should("have.attr", "open", "open");
+
+		// Act: Close the popover using Escape key
+		cy.get("body").realPress("Escape");
+
+		// Assert: Popover is closed
+		cy.get("#modalPopoverNoLayer").should("not.be.visible");
 	});
 
 	it("tests initial focus", () => {
-		// const focusedButton = await browser.$("#focusMe");
-		// const btnOpenPopover = await browser.$("#btnPopFocus");
+		cy.mount(
+			<>
+				<Button id="btnPopFocus">Open</Button>
+				<Popover id="popoverFocus" opener="btnPopFocus" open={true}>
+					<Button id="focusMe">Focus Me</Button>
+				</Popover>
+			</>
+		);
 
-		// await btnOpenPopover.click();
+		// Assert: The button inside the popover is focused
+		cy.get("#focusMe").should("be.focused");
 
-		// assert.ok(await focusedButton.matches(":focus"), "The button is focused.");
+		// Act: Close the popover using Escape key
+		cy.get("body").realPress("Escape");
 
-		// await browser.keys("Escape");
+		// Assert: Popover is closed
+		cy.get("#popoverFocus").should("not.be.visible");
 	});
 
 	it("tests focus trapping using TAB", () => {
-		// const btn = await browser.$("#btn");
-		// const ff = await browser.$("#first-focusable");
+		cy.mount(
+			<>
+				<Button id="btn">Open</Button>
+				<Popover id="popoverId" opener="btn" open={true}>
+					<div slot="header">
+						<Button id="first-focusable"> Button</Button>
+					</div>
+					<List>
+						<ListItem >First</ListItem>
+						<ListItem>Second</ListItem>
+						<ListItem>Third</ListItem>
+					</List>
+				</Popover>
+			</>
+		);
 
-		// await btn.click();
+		// Assert: The first focusable element is focused
+		cy.get("#first-focusable").should("be.focused");
 
-		// assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
+		// Act: Press TAB to move focus
+		cy.realPress("Tab");
 
-		// // list
-		// await browser.keys("Tab");
+		// Assert: The first focusable element is no longer focused
+		cy.get("#first-focusable").should("not.be.focused");
 
-		// assert.notOk(await ff.matches(":focus"), "The first focusable element is focused.");
+		// Act: Press TAB to move focus further
+		cy.realPress("Tab");
 
-		// // button
-		// await browser.keys("Tab");
+		// Assert: The first focusable element is focused
+		cy.get("#first-focusable").should("be.focused");
 
-		// assert.notOk(await ff.matches(":focus"), "The first focusable element is focused.");
+		// Act: Press TAB to cycle back to the first focusable element
+		cy.realPress("Tab");
+		cy.realPress("Tab");
 
-		// // select
-		// await browser.keys("Tab");
+		// Assert: The first focusable element is focused again
+		cy.get("#first-focusable").should("be.focused");
 
-		// // footer button
-		// await browser.keys("Tab");
+		// Act: Close the popover using Escape key
+		cy.realPress("Escape");
 
-		// // goes to first focusable again
-		// await browser.keys("Tab");
-
-		// assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
-
-		// await browser.keys("Escape");
+		// Assert: Popover is closed
+		cy.get("#popoverId").should("not.be.visible");
 	});
 
 	it("tests focus trapping using SHIFT TAB", () => {
-		// const btn = await browser.$("#btn");
-		// const ff = await browser.$("#first-focusable");
+		cy.mount(
+			<>
+				<Button id="btn">Open</Button>
+				<Popover id="popoverId" opener="btn" open={true}>
+					<div slot="header">
+						<Button id="first-focusable">Header Button</Button>
+					</div>
+					<List>
+						<ListItem>First</ListItem>
+						<ListItem>Second</ListItem>
+						<ListItem>Third</ListItem>
+					</List>
+					<Button id="footer-button">Footer Button</Button>
+				</Popover>
+			</>
+		);
 
-		// await btn.click();
+		// Assert: The first focusable element is focused
+		cy.get("#first-focusable").should("be.focused");
 
-		// assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
+		// Act: Press SHIFT+TAB to move focus backward
+		cy.realPress(["Shift", "Tab"]);
+		cy.realPress(["Shift", "Tab"]);
+		cy.realPress(["Shift", "Tab"]);
 
-		// // footer button
-		// await browser.keys(["Shift", "Tab"]);
+		// Assert: The first focusable element is focused again
+		cy.get("#first-focusable").should("be.focused");
 
-		// // select
-		// await browser.keys(["Shift", "Tab"]);
+		// Act: Close the popover using Escape key
+		cy.realPress("Escape");
 
-		// // button
-		// await browser.keys(["Shift", "Tab"]);
-
-		// // list
-		// await browser.keys(["Shift", "Tab"]);
-
-		// // header button
-		// await browser.keys(["Shift", "Tab"]);
-
-		// assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
-
-		// await browser.keys("Escape");
+		// Assert: Popover is closed
+		cy.get("#popoverId").should("not.be.visible");
 	});
 
 	it("tests focus when there is no focusable content", () => {
-		// const firstBtn = await browser.$("#firstBtn");
-		// const popoverId = "popNoFocusableContent";
+		cy.mount(
+			<>
+				<Button id="firstBtn">Open</Button>
+				<Popover id="popNoFocusableContent" opener="firstBtn" open={true}>
+					<div>Non-focusable content</div>
+				</Popover>
+			</>
+		);
 
-		// await firstBtn.click();
+		// Assert: Popover is focused
+		cy.get("#popNoFocusableContent").should("be.focused");
 
-		// let activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
+		// Act: Press SHIFT+TAB
+		cy.realPress(["Shift", "Tab"]);
 
-		// assert.strictEqual(activeElementId, popoverId, "Popover is focused");
+		// Assert: Popover remains focused
+		cy.get("#popNoFocusableContent").should("be.focused");
 
-		// await browser.keys(["Shift", "Tab"]);
+		// Act: Close the popover using Escape key
+		cy.realPress("Escape");
 
-		// activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
-
-		// assert.equal(activeElementId, popoverId, "Popover remains focused");
-
-		// await browser.keys("Escape");
+		// Assert: Popover is closed
+		cy.get("#popNoFocusableContent").should("not.be.visible");
 	});
 
 	it("tests focus when content, which can't be focused is clicked", () => {
-		// await browser.$("#btnOpenPopoverWithDiv").click();
-		// await browser.$("#divContent").click();
+		cy.mount(
+			<>
+				<Button id="btnOpenPopoverWithDiv">Open</Button>
+				<Popover id="popWithDiv" opener="btnOpenPopoverWithDiv" open={true}>
+					<div id="divContent">Non-focusable content</div>
+				</Popover>
+			</>
+		);
 
-		// const popoverId = "popWithDiv";
-		// const activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
+		// Act: Click on the non-focusable content
+		cy.get("#divContent").click();
 
-		// assert.strictEqual(activeElementId, popoverId, "Popover is focused");
+		// Assert: Popover remains focused
+		cy.get("#popWithDiv").should("be.focused");
 
-		// await browser.keys("Escape");
+		// Act: Close the popover using Escape key
+		cy.realPress("Escape");
+
+		// Assert: Popover is closed
+		cy.get("#popWithDiv").should("not.be.visible");
 	});
 
 	it("tests that dynamically created popover is opened", () => {
-		// const btnOpenDynamic = await browser.$("#btnOpenDynamic");
-		// await btnOpenDynamic.click();
-		// const popover = await browser.$('#dynamic-popover');
+		cy.mount(
+			<>
+				<Button id="btnOpenDynamic">Open Dynamic Popover</Button>
+				<div id="container"></div>
+			</>
+		);
 
-		// await browser.waitUntil(
-		// 	async () => (await popover.getCSSProperty("top")).parsed.value > 0 && (await popover.getCSSProperty("left")).parsed.value > 0,
-		// 	{
-		// 		timeout: 500,
-		// 		timeoutMsg: "popover was not opened after a timeout"
-		// 	}
-		// );
+		cy.get("#container").then(container => {
+			const popover = document.createElement("ui5-popover");
+			popover.id = "dynamic-popover";
+			popover.headerText = "Dynamic Popover";
+			popover.opener = "btnOpenDynamic";
+			popover.open = false;
 
-		// assert.ok(true, "popover is opened");
+			const content = document.createElement("div");
+			content.innerHTML = "<button id='popoverBtn'>button</button>";
+			popover.appendChild(content);
 
-		// await browser.keys("Escape");
+			container.get(0).appendChild(popover);
+		});
+
+		// Act: Open the dynamic popover
+		cy.get("#btnOpenDynamic").click();
+		cy.get("#dynamic-popover").invoke("prop", "open", true);
+
+		// Assert: Popover is opened
+		cy.get("#dynamic-popover").should("be.visible");
+
+		// Act: Close the popover using Escape key
+		cy.get("body").realPress("Escape");
+
+		// Assert: Popover is closed
+		cy.get("#dynamic-popover").should("not.be.visible");
 	});
 
 	it("tests that dynamically created popover opened by dynamically created opener is opened", () => {
-		// const btnDynamicOpenerAndPopover = await browser.$("#btnDynamicOpenerAndPopover");
-		// await btnDynamicOpenerAndPopover.click();
-		// const popover = await browser.$("#dynamic-popover-dynamic-opener0");
+		cy.get("body").then(body => {
+			let container = document.createElement("div");
+			container.id = "container";
+			body.get(0).appendChild(container);
 
-		// await browser.waitUntil(
-		// 	async () => (await popover.getCSSProperty("top")).parsed.value > 0 && (await popover.getCSSProperty("left")).parsed.value > 0,
-		// 	{
-		// 		timeout: 500,
-		// 		timeoutMsg: "popover was not opened after a timeout"
-		// 	}
-		// );
+			const button = document.createElement("button");
+			button.id = "btnDynamicOpenerAndPopover";
+			button.textContent = "Open Dynamic Popover";
+			container.appendChild(button);
+		});
 
-		// assert.ok(true, "popover is opened");
+		cy.get("#container").then(container => {
+			const popover = document.createElement("ui5-popover");
+			popover.id = "dynamic-popover-dynamic-opener0";
+			popover.headerText = "Dynamic Popover";
+			popover.open = false;
+			popover.opener = "btnDynamicOpenerAndPopover";
 
-		// await browser.keys("Escape");
+			const content = document.createElement("div");
+			content.innerHTML = "<button id='popoverBtn'>button</button>";
+			popover.appendChild(content);
+
+			container.get(0).appendChild(popover);
+		});
+
+		// Act: Open the dynamic popover
+		cy.get("#btnDynamicOpenerAndPopover").click();
+		cy.get("#dynamic-popover-dynamic-opener0").invoke("prop", "open", true);
+
+		// Assert: Popover is opened
+		cy.get("#dynamic-popover-dynamic-opener0").should("be.visible");
+
+		// Act: Close the popover using Escape key
+		cy.get("body").realPress("Escape");
+
+		// Assert: Popover is closed
+		cy.get("#dynamic-popover-dynamic-opener0").should("not.be.visible");
 	});
 
 	it("tests that ENTER on list item that opens another popover doesn't trigger click event inside the focused element of that popover", () => {
