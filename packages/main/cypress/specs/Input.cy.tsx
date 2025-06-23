@@ -868,7 +868,8 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 	it("Change event fires after typing a new value following a clear icon click", () => {
 		cy.mount(<Input showClearIcon={true} onChange={cy.stub().as("inputChange")} />);
 
-		cy.get("@input")
+		cy.get("[ui5-input]")
+			.as("input")
 			.shadow()
 			.find("#inner")
 			.as("innerInput")
