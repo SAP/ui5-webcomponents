@@ -498,6 +498,39 @@ describe("Slots", () => {
 			);
 			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", false);
 		});
+
+		it("Test search field added after delay still works with events", () => {
+			cy.mount(
+				<ShellBar id="shellbar" primaryTitle="Product Title" showNotifications={true}></ShellBar>
+			);
+			
+			cy.get("#shellbar").as("shellbar");
+			
+			// Add search field after a timeout (simulating real-world scenario)
+			cy.get("@shellbar").then(shellbar => {
+				setTimeout(() => {
+					const searchField = document.createElement("ui5-shellbar-search");
+					searchField.setAttribute("slot", "searchField");
+					searchField.setAttribute("id", "delayed-search");
+					shellbar.get(0).appendChild(searchField);
+				}, 100);
+			});
+			
+			// Wait for the search field to be added
+			cy.get("#delayed-search", { timeout: 1000 }).should("exist");
+			
+			// Search should now be visible and collapsed
+			cy.get("#shellbar [slot='searchField']")
+				.should("exist")
+				.should("have.prop", "collapsed", true);
+			
+			// click the searchField to expand it
+			cy.get("#shellbar [slot='searchField']")
+				.click()
+				.should("have.prop", "collapsed", false);
+			// check shellbar's showSearchField property is also updated
+			cy.get("@shellbar").invoke("prop", "showSearchField").should("equal", true);
+		});
 	});
 });
 
