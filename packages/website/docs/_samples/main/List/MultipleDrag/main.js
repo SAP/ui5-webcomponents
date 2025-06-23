@@ -72,45 +72,22 @@ function handleMove(event) {
     const sourceList = source.element.closest('ui5-list');
     const selectedItems = getSelectedItems(sourceList);
     
-    // If multiple items are selected, move all of them
-    if (selectedItems.length > 1 && selectedItems.includes(source.element)) {
-        // Move all selected items together
-        selectedItems.forEach((item, index) => {
-            switch (destination.placement) {
-                case MovePlacement.Before:
-                    if (index === 0) {
-                        destination.element.before(item);
-                    } else {
-                        // Place subsequent items after the previous one
-                        selectedItems[index - 1].after(item);
-                    }
-                    break;
-                case MovePlacement.After:
-                    if (index === 0) {
-                        destination.element.after(item);
-                    } else {
-                        // Place subsequent items after the previous one
-                        selectedItems[index - 1].after(item);
-                    }
-                    break;
-                case MovePlacement.On:
-                    destination.element.prepend(item);
-                    break;
-            }
-        });
-    } else {
-        // Single item move
-        switch (destination.placement) {
-            case MovePlacement.Before:
-                destination.element.before(source.element);
-                break;
-            case MovePlacement.After:
-                destination.element.after(source.element);
-                break;
-            case MovePlacement.On:
-                destination.element.prepend(source.element);
-                break;
-        }
+    // Determine which items to move: all selected items or just the dragged item
+    const itemsToMove = selectedItems.length > 1 && selectedItems.includes(source.element) 
+        ? selectedItems 
+        : [source.element];
+    
+    // Move the items using spread operator
+    switch (destination.placement) {
+        case MovePlacement.Before:
+            destination.element.before(...itemsToMove);
+            break;
+        case MovePlacement.After:
+            destination.element.after(...itemsToMove);
+            break;
+        case MovePlacement.On:
+            destination.element.prepend(...itemsToMove);
+            break;
     }
     
     // Update selection counts after move
