@@ -105,6 +105,34 @@
 	background-color: var(--sapShellColor);
 }
 
+.ui5-filter-wrapper {
+	--_ui5_button_focused_border_radius: var(--_ui5_search_filter_button_border_radius);
+}
+
+/*filter button slot */
+::slotted([slot="filterButton"]) {
+	min-width: var(--_ui5_search_icon_size);
+	height: var(--_ui5_search_icon_size);
+	border: var(--_ui5_search_filter_button_border);
+	border-radius: var(--_ui5_search_filter_button_border_radius);
+	color: var(--sapShell_InteractiveTextColor);
+	outline: none;
+	background: var(--_ui5-search-filter_button_background_color);
+	box-sizing: border-box;
+	margin-inline-end: 0.1875rem;
+	margin-inline-start: 0.25rem;
+}
+
+::slotted([slot="filterButton"]:focus-within) {
+	background-color: var(--ui5_search_filter_button_background_active);
+	border: var(--_ui5_search_filter_button_border);
+}
+
+::slotted([slot="filterButton"]:hover) {
+	background-color: var(--sapShell_Hover_Background);
+	border: var(--_ui5_seach_filter_button_border_hover);
+}
+
 /* input */
 .ui5-search-field-inner-input {
 	font-size: var(--sapFontSize);

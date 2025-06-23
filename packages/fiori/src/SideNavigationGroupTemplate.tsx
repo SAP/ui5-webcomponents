@@ -45,6 +45,7 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 			{!!this.items.length &&
 				<ul id={this._groupId}
 					class="ui5-sn-item-ul"
+					aria-label={this.text}
 					role="group"
 				>
 					<slot></slot>

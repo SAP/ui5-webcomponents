@@ -1,5 +1,6 @@
 import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import Button from "../../src/Button.js";
+import Bar from "../../src/Bar.js";
 
 describe("F6 navigation", () => {
 	describe("F6 Forward navigation", () => {
@@ -900,6 +901,76 @@ describe("F6 navigation", () => {
 			cy.realPress(["Shift", "F6"]);
 
 			cy.get("#first")
+				.should("be.focused");
+		});
+	});
+
+
+	describe.only("Bypass groups", () => {
+		it("Custom defined groups", () => {
+			cy.mount(
+				<div>
+					<div class="section">
+						<button id="before">Before element</button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="false">
+						<Button>Skipped element</Button>
+					</div>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="first">First focusable</Button>
+					</div>
+				</div>
+			);
+
+			// act
+			cy.get("#before").focus();
+			cy.realPress("F6");
+
+			// assert 1st group is focused
+			cy.get("#first")
+				.should("be.focused");
+		});
+
+		it("Built-in groups", () => {
+			cy.mount(
+				<div>
+					<div class="section">
+						<button id="before">Before element</button>
+					</div>
+					<Bar>
+						<Button id="first">First focusable element</Button>
+					</Bar>
+
+					<Bar data-sap-ui-fastnavgroup="false" id="skippedBar">
+						<Button>Skipped element</Button>
+					</Bar>
+					<div class="section">
+						<Button>Something focusable</Button>
+					</div>
+					<div class="section" data-sap-ui-fastnavgroup="true">
+						<Button id="second">Second focusable</Button>
+					</div>
+				</div>
+			);
+
+			// act
+			cy.get("#before").focus();
+			cy.realPress("F6");
+
+			// assert 1st group is focused
+			cy.get("#first")
+				.should("be.focused");
+
+			cy.get("#skippedBar")
+				.should("have.attr", "data-sap-ui-fastnavgroup", "false");
+
+			cy.realPress("F6");
+
+			// assert 2nd group is focused
+			cy.get("#second")
 				.should("be.focused");
 		});
 	});

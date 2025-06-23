@@ -6,6 +6,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import SearchFieldTemplate from "./SearchFieldTemplate.js";
 import SearchFieldCss from "./generated/themes/SearchField.css.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { IOption, SelectChangeEventDetail } from "@ui5/webcomponents/dist/Select.js";
 
@@ -158,6 +159,17 @@ class SearchField extends UI5Element {
 	 */
 	@slot({ type: HTMLElement, individualSlots: true, invalidateOnChildChange: true })
 	scopes!: Array<ISearchScope>;
+
+	/**
+	 * Defines the filter button slot, used to display an additional filtering button.
+	 * This slot is intended for passing a `ui5-button` with a filter icon to provide extended filtering options.
+	 *
+	 * **Note:** Scope button and Filter button are mutually exclusive.
+	 * @public
+	 * @since 2.11.0
+	 */
+	@slot()
+	filterButton!: Array<Button>;
 
 	/**
 	 * @private

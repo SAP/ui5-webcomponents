@@ -5,11 +5,6 @@ import DatePicker from "../../src/DatePicker.js";
 import Label from "../../src/Label.js";
 
 describe("Date Picker Tests", () => {
-	afterEach(() => {
-		// eslint-disable-next-line
-		cy.wait(200);
-	});
-
 	it("input renders", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
@@ -753,7 +748,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker prev page extreme values min", () => {
-		cy.mount(<DatePicker value="Jan 1, 0012" formatPattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker value="Jan 1, 0026" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -765,7 +760,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedYear()
-			.should("have.text", "0002");
+			.should("have.text", "0017");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPreviousButton()
@@ -781,7 +776,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker next page extreme values max", () => {
-		cy.mount(<DatePicker value="Dec 31, 9986" formatPattern="MMM d, y"></DatePicker>);
+		cy.mount(<DatePicker value="Dec 31, 9974" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
@@ -793,7 +788,7 @@ describe("Date Picker Tests", () => {
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedYear()
-			.should("have.text", "9976");
+			.should("have.text", "9965");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetNextButton()
@@ -820,23 +815,15 @@ describe("Date Picker Tests", () => {
 			.realClick();
 
 		cy.get<DatePicker>("@datePicker")
-			.ui5DatePickerGetDisplayedYear(10)
+			.ui5DatePickerGetDisplayedYear(6)
 			.should("have.text", "9986");
 
 		cy.get<DatePicker>("@datePicker")
-			.ui5DatePickerGetDisplayedYear(10)
-			.realClick();
-
-		cy.get<DatePicker>("@datePicker")
-			.ui5DatePickerGetYearButton()
-			.realClick();
-
-		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedYear()
-			.should("have.text", "9976");
+			.should("have.text", "9980");
 	});
 
-	it("yearpicker click extreme values min year above 10", () => {
+	it("yearpicker click extreme values min", () => {
 		cy.mount(<DatePicker value="Jan 1, 0012" formatPattern="MMM d, y"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -848,20 +835,8 @@ describe("Date Picker Tests", () => {
 			.realClick();
 
 		cy.get<DatePicker>("@datePicker")
-			.ui5DatePickerGetDisplayedYear(2)
-			.should("have.text", "0004");
-	});
-
-	it("yearpicker click extreme values min year below 10", () => {
-		cy.mount(<DatePicker value="Jan 1, 0004" formatPattern="MMM d, y"></DatePicker>);
-
-		cy.get("[ui5-date-picker]")
-			.as("datePicker")
-			.ui5DatePickerValueHelpIconPress();
-
-		cy.get<DatePicker>("@datePicker")
-			.ui5DatePickerGetYearButton()
-			.realClick();
+			.ui5DatePickerGetDisplayedYear(11)
+			.should("have.text", "0012");
 
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetFirstDisplayedYear()
@@ -989,12 +964,12 @@ describe("Date Picker Tests", () => {
 			.realClick();
 
 		cy.get<DatePicker>("@datePicker")
-			.ui5DatePickerGetDisplayedYear(11)
+			.ui5DatePickerGetDisplayedYear(10)
 			.should("have.class", "ui5-yp-item--disabled")
 			.and("not.have.focus");
 
 		cy.get<DatePicker>("@datePicker")
-			.ui5DatePickerGetDisplayedYear(10)
+			.ui5DatePickerGetDisplayedYear(9)
 			.as("year")
 			.should("have.focus");
 
@@ -1567,11 +1542,6 @@ describe("Date Picker Tests", () => {
 });
 
 describe("Legacy date customization and Islamic calendar type", () => {
-	afterEach(() => {
-		// eslint-disable-next-line
-		cy.wait(200);
-	});
-
 	const configurationObject = {
 		"formatSettings": {
 			"legacyDateCalendarCustomizing": [

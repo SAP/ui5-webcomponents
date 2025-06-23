@@ -1,3 +1,4 @@
+import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import Avatar from "../../src/Avatar.js";
 import Button from "../../src/Button.js";
 import Label from "../../src/Label.js";
@@ -6,7 +7,7 @@ import download from "@ui5/webcomponents-icons/dist/download.js";
 import employee from "@ui5/webcomponents-icons/dist/employee.js";
 
 import {
-	BUTTON_ARIA_TYPE_REJECT,
+	BUTTON_ARIA_TYPE_EMPHASIZED,
 } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("Button general interaction", () => {
@@ -215,6 +216,69 @@ describe("Button general interaction", () => {
 			.find("[ui5-icon]")
 			.should("have.attr", "mode", "Decorative");
 	});
+
+	it("Prevents native behavior when click event is prevented", () => {
+		cy.mount(<a href="#navigation">
+			<Button onClick={e => e.preventDefault()}>Click me</Button>
+		</a>);
+
+		cy.location("hash")
+			.should("not.eq", "#navigation");
+
+		cy.get("[ui5-button]")
+			.realClick();
+
+		cy.location("hash")
+			.should("not.eq", "#navigation");
+	});
+
+	it("Allows native behavior when click event is not prevented", () => {
+		cy.mount(<a href="#navigation">
+			<Button>Click me</Button>
+		</a>);
+
+		cy.location("hash")
+			.should("not.eq", "#navigation");
+
+		cy.get("[ui5-button]")
+			.realClick();
+
+		cy.location("hash")
+			.should("eq", "#navigation");
+	});
+
+	it.only("Native event is always fired", () => {
+		cy.mount(<div onClick={cy.stub().as("nativeClick")}>
+			<Button>Click me</Button>
+		</div>);
+
+		cy.wrap({ setNoConflict })
+			.invoke("setNoConflict", true)
+
+		cy.get("[ui5-button]")
+			.realClick();
+
+		cy.get("@nativeClick")
+			.should("have.been.calledOnce")
+			.and("be.calledWithMatch", {
+				type: "click"
+			});
+
+		cy.get('@nativeClick')
+			.invoke('resetHistory')
+
+		cy.wrap({ setNoConflict })
+			.invoke("setNoConflict", false)
+
+		cy.get("[ui5-button]")
+			.realClick();
+
+		cy.get("@nativeClick")
+			.should("have.been.calledOnce")
+			.and("be.calledWithMatch", {
+				type: "click"
+			});
+	});
 });
 
 describe("Accessibility", () => {
@@ -245,7 +309,7 @@ describe("Accessibility", () => {
 	it("tooltip not displayed when there is a text", () => {
 		cy.mount(<Button icon="home">Action</Button>);
 
-		cy.get("[ui5-button]")	
+		cy.get("[ui5-button]")
 			.should("not.have.attr", "title");
 	});
 
@@ -304,28 +368,47 @@ describe("Accessibility", () => {
 			.should("have.attr", "role", "button");
 	});
 
-	it("aria-describedby properly applied on the button tag", () => {
-		cy.mount(<Button design="Attention">Content</Button>);
-
-		cy.get("[ui5-button]")
-			.as("button");
-
-		cy.get("@button")
-			.shadow()
-			.find("button")
-			.should("have.attr", "aria-description", "Warning");
-	});
-
 	it("accessibleDescription in combination with design property applied on the button tag", () => {
 		cy.mount(<Button design="Negative" accessibleDescription="Decline">Content</Button>);
 
 		cy.get("[ui5-button]")
+			.shadow()
+			.find("button")
 			.as("button");
 
 		cy.get("@button")
+			.should("have.attr", "aria-description", "Decline");
+	});
+
+
+	it("accessibleName when the button has a ui5-button-badge with more than 1 items", () => {
+		cy.mount(
+			<Button accessibleName="Download">
+				<ButtonBadge design="OverlayText" text="999+" slot="badge"></ButtonBadge>
+			</Button>
+		);
+		cy.get("[ui5-button]")
 			.shadow()
 			.find("button")
-			.should("have.attr", "aria-description", `${BUTTON_ARIA_TYPE_REJECT.defaultText} Decline`);
+			.as("button");
+
+		cy.get("@button")
+			.should("have.attr", "aria-label", `Download 999+ items`);
+	});
+
+	it("accessibleName when the button has a ui5-button-badge with 1 item", () => {
+		cy.mount(
+			<Button design="Emphasized" accessibleName="Download">
+				<ButtonBadge text="1" design="InlineText" slot="badge"></ButtonBadge>
+			</Button>
+		);
+		cy.get("[ui5-button]")
+			.shadow()
+			.find("button")
+			.as("button");
+
+		cy.get("@button")
+			.should("have.attr", "aria-label", `Download ${BUTTON_ARIA_TYPE_EMPHASIZED.defaultText} 1 item`);
 	});
 
 	it("setting accessible-name-ref on the host is reflected on the button tag", () => {

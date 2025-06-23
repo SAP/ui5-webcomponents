@@ -48,22 +48,32 @@ export default function SelectTemplate(this: Select) {
 				</div>
 
 				{this.icon &&
-					<Icon
-						name={this.icon}
-						class={{
-							"inputIcon": true,
-							"inputIcon--pressed": this._iconPressed,
-						}} />
+					<div class={{
+						"ui5-select-icon-root": true,
+						"inputIcon": true,
+						"inputIcon--pressed": this._iconPressed,
+					}}>
+						<Icon
+							name={this.icon}
+							class={{
+								"ui5-select-icon": true,
+							}} />
+					</div>
 				}
 
 				{!this.icon && !this.readonly &&
-					<Icon
-						part="icon"
-						name={slimArrowDown}
-						class={{
-							"inputIcon": true,
-							"inputIcon--pressed": this._iconPressed,
-						}} />
+					<div class={{
+						"ui5-select-icon-root": true,
+						"inputIcon": true,
+						"inputIcon--pressed": this._iconPressed,
+					}}>
+						<Icon
+							part="icon"
+							name={slimArrowDown}
+							class={{
+								"ui5-select-icon": true,
+							}} />
+					</div>
 				}
 
 				{this.hasValueState &&

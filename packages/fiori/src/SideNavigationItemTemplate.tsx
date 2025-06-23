@@ -61,6 +61,7 @@ function MenuItemTemplate(this: SideNavigationItem) {
 				aria-haspopup={this._ariaHasPopup}
 				aria-checked={this._ariaChecked}
 				title={this._tooltip}
+				aria-label={this._ariaLabel}
 			>
 				<Icon class="ui5-sn-item-icon" name={this.icon}/>
 				<div class="ui5-sn-item-text">{this.text}</div>
@@ -153,12 +154,13 @@ function TreeItemTemplate(this: SideNavigationItem) {
 				</div>
 			}
 			{!!this.items.length &&
-			<ul id={this._groupId}
-				class="ui5-sn-item-ul"
-				role="group"
-			>
-				<slot></slot>
-			</ul>
+				<ul id={this._groupId}
+					class="ui5-sn-item-ul"
+					aria-label={this.text}
+					role="group"
+				>
+					<slot></slot>
+				</ul>
 			}
 		</li>
 	);

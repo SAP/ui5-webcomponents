@@ -3,6 +3,81 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.0...v2.12.0-rc.1) (2025-06-19)
+
+**Note:** Version bump only for package @ui5/create-webcomponents-package
+
+
+
+
+
+# [2.12.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0...v2.12.0-rc.0) (2025-06-12)
+
+**Note:** Version bump only for package @ui5/create-webcomponents-package
+
+
+
+
+
+# [2.11.0](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.4...v2.11.0) (2025-06-05)
+
+**Note:** Version bump only for package @ui5/create-webcomponents-package
+
+
+
+
+
+# [2.11.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.3...v2.11.0-rc.4) (2025-06-05)
+
+**Note:** Version bump only for package @ui5/create-webcomponents-package
+
+
+
+
+
+# [2.11.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.2...v2.11.0-rc.3) (2025-05-29)
+
+
+### Bug Fixes
+
+* create new package script on windows ([#11555](https://github.com/SAP/ui5-webcomponents/issues/11555)) ([2a60bc0](https://github.com/SAP/ui5-webcomponents/commit/2a60bc09d76d08a6d168ae2041d8c472d38e7cc1))
+
+
+
+
+
+# [2.11.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.1...v2.11.0-rc.2) (2025-05-22)
+
+**Note:** Version bump only for package @ui5/create-webcomponents-package
+
+
+
+
+
+# [2.11.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.0...v2.11.0-rc.1) (2025-05-15)
+
+**Note:** Version bump only for package @ui5/create-webcomponents-package
+
+
+
+
+
+# [2.11.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0...v2.11.0-rc.0) (2025-05-08)
+
+**Note:** Version bump only for package @ui5/create-webcomponents-package
+
+
+
+
+
+# [2.10.0](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.3...v2.10.0) (2025-05-07)
+
+**Note:** Version bump only for package @ui5/create-webcomponents-package
+
+
+
+
+
 # [2.10.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.10.0-rc.2...v2.10.0-rc.3) (2025-05-01)
 
 **Note:** Version bump only for package @ui5/create-webcomponents-package

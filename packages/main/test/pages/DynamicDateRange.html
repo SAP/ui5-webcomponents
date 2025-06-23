@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>DynamicDateRange test page</title>
+
+	<script>
+		// delete Document.prototype.adoptedStyleSheets;
+	</script>
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+	<link rel="stylesheet" type="text/css">
+</head>
+<body >
+	<div>
+        <ui5-dynamic-date-range options="TODAY, TOMORROW, YESTERDAY, DATE, DATERANGE">
+        </ui5-dynamic-date-range>
+        <ui5-date-picker></ui5-date-picker>
+	</div>
+</body>
+</html>
