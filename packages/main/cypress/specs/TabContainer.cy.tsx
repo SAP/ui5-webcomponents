@@ -1076,7 +1076,7 @@ describe("TabContainer keyboard handling", () => {
 		});
 	});
 
-	it("tests [Arrow Down] on two-click area tab", async () => {
+	it("tests [Arrow Down] on two-click area tab", () => {
 		cy.mount(nestedTabsContainer);
 
 		cy.get("#tabContainerNestedTabs").as("tabContainer");
