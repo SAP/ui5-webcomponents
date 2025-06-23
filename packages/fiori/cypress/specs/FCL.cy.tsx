@@ -2,11 +2,15 @@ import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import FlexibleColumnLayout from "../../src/FlexibleColumnLayout.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 
+before(() => {
+	cy.wrap({ setAnimationMode })
+	  .then(api => {
+		return api.setAnimationMode("none");
+	  });
+  });
+
 describe("Columns resize", () => {
 	beforeEach(() => {
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.None);
-
 		cy.mount(
 			<FlexibleColumnLayout id="fcl" style={{ height: "300px" }} layout="TwoColumnsMidExpanded">
 				<div class="column" id="startColumn" slot="startColumn">some content</div>
@@ -133,9 +137,6 @@ describe("ACC", () => {
 
 describe("FlexibleColumnLayout Behavior", () => {
 	beforeEach(() => {
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.None);
-
 		cy.viewport(1000, 1080);
 
 		cy.mount(
@@ -174,9 +175,6 @@ describe("FlexibleColumnLayout Behavior", () => {
 
 describe("Layout API Tests", () => {
 	beforeEach(() => {
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.None);
-
 		cy.viewport(1600, 1080);
 
 		cy.mount(
@@ -243,9 +241,6 @@ describe("Layout API Tests", () => {
 
 describe("Column Expansion Tests", () => {
 	beforeEach(() => {
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.None);
-
 		cy.viewport(1600, 1080);
 
 		cy.mount(
@@ -285,9 +280,6 @@ describe("Column Expansion Tests", () => {
 
 describe("Start Column Expansion Test", () => {
 	beforeEach(() => {
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.None);
-
 		cy.viewport(1600, 1080);
 
 		cy.mount(
@@ -366,9 +358,6 @@ describe("Start Column Expansion Test", () => {
 
 describe("Layout change by dragging end-separator on desktop", () => {
 	beforeEach(() => {
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.None);
-
 		cy.viewport(1600, 1080);
 
 		cy.mount(
@@ -423,9 +412,6 @@ describe("Layout change by dragging end-separator on desktop", () => {
 
 describe("Layout change by dragging start-separator on tablet", () => {
 	beforeEach(() => {
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.None);
-
 		cy.viewport(1000, 1080);
 
 		cy.mount(
@@ -500,9 +486,6 @@ describe("Layout change by dragging start-separator on tablet", () => {
 
 describe("Tablet Layout Tests", () => {
 	beforeEach(() => {
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.None);
-
 		cy.viewport(1000, 1080);
 
 		cy.mount(
@@ -577,9 +560,6 @@ describe("Tablet Layout Tests", () => {
 
 describe("Layout change by dragging end-separator on tablet", () => {
 	beforeEach(() => {
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.None);
-
 		cy.viewport(1000, 1080);
 
 		cy.mount(
@@ -634,9 +614,6 @@ describe("Layout change by dragging end-separator on tablet", () => {
 
 describe("Preserves column min-width", () => {
 	beforeEach(() => {
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.None);
-
 		cy.viewport(1400, 1080);
 
 		cy.mount(
@@ -875,9 +852,6 @@ describe("Preserves column min-width", () => {
 
 describe("Accessibility with Animation Disabled", () => {
 	beforeEach(() => {
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.None);
-
 		cy.mount(
 			<FlexibleColumnLayout id="fclAcc" style={{ height: "300px" }} layout="ThreeColumnsMidExpandedEndHidden">
 				<div class="column" id="startColumn" slot="startColumn">some content</div>
@@ -1017,9 +991,6 @@ describe("Accessibility with Animation Disabled", () => {
 
 describe("First column closing arrow behavior", () => {
 	beforeEach(() => {
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.None);
-
 		cy.viewport(1400, 1080);
 
 		cy.mount(
