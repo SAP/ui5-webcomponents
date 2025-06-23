@@ -23,8 +23,8 @@ export default function TableHeaderRowTemplate(this: TableHeaderRow) {
 							<Icon
 								name={ClearAll}
 								mode={IconMode.Decorative}
-								showTooltip={this._hasSelectedRows}
-								accessibleName={this._hasSelectedRows ? this._i18nDeselectAllRows : undefined}
+								showTooltip={true}
+								accessibleName={this._i18nDeselectAllRows}
 								design={this._hasSelectedRows ? IconDesign.Default : IconDesign.NonInteractive}
 								onClick={this._onSelectionChange}
 							></Icon>

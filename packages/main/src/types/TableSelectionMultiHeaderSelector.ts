@@ -6,13 +6,13 @@
  */
 enum TableSelectionMultiHeaderSelector {
 	/**
-	 * Renders a checkbox in the table header row to toggle the selection of all rows.
+	 * Renders a checkbox in the table header row that toggles the selection of all rows.
 	 * @public
 	 */
 	SelectAll = "SelectAll",
 
 	/**
-	 * Renders an icon in the table header row to remove the selection of all rows.
+	 * Renders an icon in the table header row that removes the selection of all rows.
 	 * @public
 	 */
 	ClearAll = "ClearAll",

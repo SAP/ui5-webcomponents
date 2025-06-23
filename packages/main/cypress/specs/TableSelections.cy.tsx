@@ -393,18 +393,19 @@ describe("TableSelectionMulti", () => {
 		function checkClearAll(hasSelection: boolean) {
 			cy.get("@headerRowIcon").should("have.attr", "name", "clear-all");
 			cy.get("@headerRowIcon").should("have.attr", "mode", "Decorative");
-			cy.get("@headerRowIcon").should(hasSelection ? "have.attr" : "not.have.attr", "show-tooltip");
+			cy.get("@headerRowIcon").should("have.attr", "show-tooltip");
+			cy.get("@headerRowIcon").should("have.attr", "accessible-name", "Deselect All Rows");
 			cy.get("@headerRowIcon").should("have.attr", "design", hasSelection ? "Default" : "NonInteractive");
-			if (hasSelection) {
-				cy.get("@headerRowIcon").should("have.attr", "accessible-name", "Deselect All Rows");
-			} else {
-				cy.get("@headerRowIcon").should("not.have.attr", "accessible-name");
-			}
 		}
 
 		cy.get("#selection").invoke("attr", "header-selector", "ClearAll");
 		checkClearAll(true);
 		checkSelectionChangeSpy(0);
+
+		cy.get("@headerRowIcon").realClick();
+		checkClearAll(false)
+		checkSelection("");
+		checkSelectionChangeSpy(1);
 
 		cy.get("@headerRowIcon").realClick();
 		checkClearAll(false)
