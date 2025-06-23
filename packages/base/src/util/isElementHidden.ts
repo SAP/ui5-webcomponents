@@ -3,11 +3,7 @@ const isElementHidden = (el: HTMLElement) => {
 		return false;
 	}
 
-	const computedStyle = window.getComputedStyle(el);
-
-	return (el.offsetWidth <= 0 && el.offsetHeight <= 0)
-		|| (computedStyle.visibility === "hidden")
-		|| (computedStyle.display === "none");
+	return (el.offsetWidth <= 0 && el.offsetHeight <= 0) || (window.getComputedStyle(el).visibility === "hidden");
 };
 
 export default isElementHidden;
