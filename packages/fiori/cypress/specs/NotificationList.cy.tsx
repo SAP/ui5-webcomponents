@@ -158,8 +158,8 @@ describe("Notification List Item Tests", () => {
 		const itemClose = cy.stub().as("itemClose");
 		cy.mount(
 			<NotificationList id="notificationList" onItemClose={itemClose}>
-				<NotificationListItem id="nli1" show-close />
-				<NotificationListItem id="nli2" show-close />
+				<NotificationListItem id="nli1" showClose={true} />
+				<NotificationListItem id="nli2" showClose={true} />
 			</NotificationList>
 		);
 
@@ -315,7 +315,7 @@ describe("Notification List Item Tests", () => {
 		cy.mount(
 			<NotificationList>
 				<NotificationListGroupItem>
-					<NotificationListItem id="nli1" show-close>
+					<NotificationListItem id="nli1" showClose={true}>
 						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 
 						<Menu slot="menu" id="menuWithActions" />
@@ -496,7 +496,7 @@ describe("Notification List Item Tests", () => {
 		cy.mount(
 			<NotificationList>
 				<NotificationListGroupItem>
-					<NotificationListItem id="nli1" show-close />
+					<NotificationListItem id="nli1" showClose={true} />
 				</NotificationListGroupItem>
 
 				<NotificationListGroupItem>
@@ -870,7 +870,7 @@ describe("Keyboard Navigation", () => {
 				>
 					<NotificationListItem
 						id="nli1"
-						show-close
+						showClose={true}
 					>
 						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 
@@ -920,7 +920,7 @@ describe("Keyboard Navigation", () => {
 						<Menu />
 					</NotificationListItem>
 
-					<NotificationListItem id="nli2" show-close>
+					<NotificationListItem id="nli2" showClose={true}>
 						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 						<Menu />
 					</NotificationListItem>
