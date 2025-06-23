@@ -97,9 +97,10 @@ describe("Initial Focus", () => {
 			</>
 		);
 
-		// Wait tokenizer item navigation to be initialized
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(100);
+		cy.get("#token1")
+			.shadow()
+			.find(".ui5-token--wrapper")
+			.should("have.attr", "tabindex", "0");
 
 		cy.get("#dialogId")
 			.invoke("prop", "open", true);
