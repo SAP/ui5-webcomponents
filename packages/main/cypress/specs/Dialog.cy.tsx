@@ -3,6 +3,8 @@ import Dialog from "../../src/Dialog.js";
 import Label from "../../src/Label.js";
 import Toolbar from "../../src/Toolbar.js";
 import ToolbarButton from "../../src/ToolbarButton.js";
+import Tokenizer from "../../src/Tokenizer.js";
+import Token from "../../src/Token.js";
 
 describe("Keyboard", () => {
 	it("TAB navigation", () => {
@@ -78,6 +80,35 @@ describe("Keyboard", () => {
 		cy.realPress("F6");
 
 		cy.get("#first")
+			.should("be.focused");
+	});
+});
+
+describe("Initial Focus", () => {
+	it("Tokenizer focusing", () => {
+		cy.mount(
+			<>
+				<Dialog id="dialogId" headerText="Tokens">
+					<Tokenizer id="tokenizer">
+						<Token text="Token 1" id="token1"/>
+						<Token text="Token 2" id="token2"/>
+					</Tokenizer>
+				</Dialog>
+			</>
+		);
+
+		cy.get("#token1")
+			.shadow()
+			.find(".ui5-token--wrapper")
+			.should("have.attr", "tabindex", "0");
+
+		cy.get("#dialogId")
+			.invoke("prop", "open", true);
+
+		cy.get("#token1")
+			.should("be.visible");
+
+		cy.get("#token1")
 			.should("be.focused");
 	});
 });
