@@ -12,9 +12,6 @@
         }
         .demo-container {
             padding: 2rem;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
         }
         .demo-section {
             max-width: 300px;
@@ -142,7 +139,7 @@
                 // Clear all selections first
                 selectedItems.forEach(item => item.selected = false);
                 draggedItem.selected = true;
-                updateUI(2);
+                updateUI(1);
             }
             
             const currentSelected = getSelectedItems(lists[1]);
