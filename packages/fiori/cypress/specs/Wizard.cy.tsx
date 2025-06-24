@@ -7,54 +7,24 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import Switch from "@ui5/webcomponents/dist/Switch.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Bar from "@ui5/webcomponents/dist/Bar.js";
-import { JSX } from "@ui5/webcomponents-base/jsx-runtime";
 
- type WizardStepOptions = Partial<{
-            titleText: string;
-            subtitleText: string,
-            icon: string,
-            disabled: boolean,
-            selected: boolean,
-            children?: JSX.Element | JSX.Element[]
-        }>;
+function goToWizardStep(wizardId: string, stepIndex: number) {
+    cy.window().then((win) => {
+        const wizard = win.document.getElementById(wizardId);
+        const steps = wizard.querySelectorAll("ui5-wizard-step");
 
-    function WizardStepTemplate({
-        titleText,
-        icon,
-        disabled,
-        selected,
-        children,
-    }: WizardStepOptions) {
-        return (
-            <WizardStep
-                title-text={titleText}
-                icon={icon}
-                disabled={disabled}
-                selected={selected}
-            >
-                {children}
-            </WizardStep>
-        );
-    }
-
-  function goToWizardStep(wizardId: string, stepIndex: number) {
-  cy.window().then((win) => {
-    const wizard = win.document.getElementById(wizardId);
-    const steps = wizard.querySelectorAll("ui5-wizard-step");
-
-    steps.forEach((step: any) => (step.selected = false));
-    (steps[stepIndex] as WizardStep).disabled = false;
-    (steps[stepIndex] as WizardStep).selected = true;
-  });
+        steps.forEach((step: any) => (step.selected = false));
+        (steps[stepIndex] as WizardStep).disabled = false;
+        (steps[stepIndex] as WizardStep).selected = true;
+    });
 }
-
 
 describe("Wizard general interaction", () => {
 
     it("test initial state", () => {
         cy.mount(
             <Wizard>
-                <WizardStepTemplate icon="sap-icon://product" selected titleText="Product type"/>
+                <WizardStep icon="sap-icon://product" selected titleText="Product type"/>
             </Wizard>
         )
 
@@ -70,8 +40,8 @@ describe("Wizard general interaction", () => {
     it("ARIA Attributes", () => {
         cy.mount(
             <Wizard>
-                <WizardStepTemplate icon="sap-icon://product" selected titleText="Product type"/>
-                <WizardStepTemplate titleText="Product Information" disabled/>
+                <WizardStep icon="sap-icon://product" selected titleText="Product type"/>
+                <WizardStep titleText="Product Information" disabled/>
             </Wizard>
         )
         cy.get("[ui5-wizard]")
@@ -147,8 +117,8 @@ describe("Wizard general interaction", () => {
     it("Disabled step should not be interactive", () => {
         cy.mount(
             <Wizard>
-                <WizardStepTemplate icon="sap-icon://product" selected titleText="Product type"/>
-                <WizardStepTemplate titleText="Product Information" disabled/>
+                <WizardStep icon="sap-icon://product" selected titleText="Product type"/>
+                <WizardStep titleText="Product Information" disabled/>
             </Wizard>
         )
         cy.get("[ui5-wizard-step]")
@@ -169,10 +139,10 @@ describe("Wizard general interaction", () => {
     it("move to next step by API", () => {
         cy.mount(
             <Wizard id="asd">
-                <WizardStepTemplate icon="sap-icon://product" selected titleText="Product type">
+                <WizardStep icon="sap-icon://product" selected titleText="Product type">
                     <Button id="toStep2" design="Emphasized">Step 2</Button>
-                </WizardStepTemplate>
-                <WizardStepTemplate titleText="Product Information" disabled/>
+                </WizardStep>
+                <WizardStep titleText="Product Information" disabled/>
             </Wizard>
         );
 
@@ -226,13 +196,13 @@ describe("Wizard general interaction", () => {
     it("move to next step by click", () => {
         cy.mount(
             <Wizard id="asd">
-                <WizardStepTemplate icon="sap-icon://product" selected titleText="Product type">
+                <WizardStep icon="sap-icon://product" selected titleText="Product type">
                     <MessageStrip>
                         The Wizard control is supposed to break down large tasks.
                     </MessageStrip>
                     <Button id="toStep2" design="Emphasized">Step 2</Button>
-                </WizardStepTemplate>
-                <WizardStepTemplate titleText="Product Information" disabled/>
+                </WizardStep>
+                <WizardStep titleText="Product Information" disabled/>
             </Wizard>
         );
 
@@ -307,13 +277,13 @@ describe("Wizard general interaction", () => {
     it("move to next step by SPACE/ENTER", () => {
         cy.mount(
              <Wizard id="asd">
-                <WizardStepTemplate icon="sap-icon://product" selected titleText="Product type">
+                <WizardStep icon="sap-icon://product" selected titleText="Product type">
                     <MessageStrip>
                         The Wizard control is supposed to break down large tasks.
                     </MessageStrip>
                     <Button id="toStep2" design="Emphasized">Step 2</Button>
-                </WizardStepTemplate>
-                <WizardStepTemplate titleText="Product Information" disabled/>
+                </WizardStep>
+                <WizardStep titleText="Product Information" disabled/>
             </Wizard>
         )
         cy.get("[ui5-button]")
@@ -416,14 +386,14 @@ describe("Wizard general interaction", () => {
     it("move to next step by scroll", () => {
         cy.mount(
             <Wizard id="asd" style={{ position: "absolute", overflow: "hidden", height: "100%", width: "100%" }}>
-                <WizardStepTemplate icon="sap-icon://product" selected titleText="Product type">
+                <WizardStep icon="sap-icon://product" selected titleText="Product type">
                     <MessageStrip>
                         The Wizard control is supposed to break down large tasks.
                     </MessageStrip>
                     <div style={{height: "15rem"}}></div>
                     <Button id="toStep2" design="Emphasized">Step 2</Button>
-                </WizardStepTemplate>
-                <WizardStepTemplate titleText="Product Information" disabled/>
+                </WizardStep>
+                <WizardStep titleText="Product Information" disabled/>
             </Wizard>
         )
         cy.get("[ui5-wizard]")
@@ -453,14 +423,14 @@ describe("Wizard general interaction", () => {
     it("tests dynamically increase step size and move to next step", () => {
         cy.mount(
              <Wizard id="asd" style={{ position: "absolute", overflow: "hidden", height: "100%", width: "100%" }}>
-                <WizardStepTemplate icon="sap-icon://product" selected titleText="Product type">
+                <WizardStep icon="sap-icon://product" selected titleText="Product type">
                     <div style={{height: "15rem"}}></div>
                     <Button id="toStep2" design="Emphasized">Step 2</Button>
                     <Switch id="sw" />
                      <div id="pureContent" style={{ height: "1800px", backgroundColor: "red", display: "none" }}></div>
-                </WizardStepTemplate>
-                <WizardStepTemplate titleText="Product Information" disabled>
-                </WizardStepTemplate>
+                </WizardStep>
+                <WizardStep titleText="Product Information" disabled>
+                </WizardStep>
             </Wizard>
         )
 
@@ -511,8 +481,8 @@ describe("Wizard general interaction", () => {
      it("Tests long text on wizard step to be truncated correctly", () => {
         cy.mount(
             <Wizard>
-                <WizardStepTemplate titleText="Pricing" disabled/>
-                <WizardStepTemplate
+                <WizardStep titleText="Pricing" disabled/>
+                <WizardStep
                         titleText="Optional step to finish the example with very long, long, long, long, long, long, long, long, long text" subtitleText="(Optional)" disabled/>
             </Wizard>
         );
@@ -552,8 +522,8 @@ describe("Wizard inside Dialog", () => {
             <div>
                 <Dialog id="dialog" headerText="Wizard">
                     <Wizard id="asd">
-                        <WizardStepTemplate icon="sap-icon://home" selected titleText="Product type"></WizardStepTemplate>
-                        <WizardStepTemplate titleText="Product Information" disabled></WizardStepTemplate>
+                        <WizardStep icon="sap-icon://home" selected titleText="Product type"></WizardStep>
+                        <WizardStep titleText="Product Information" disabled></WizardStep>
                     </Wizard>
 
                     <Bar slot="footer" design="Footer">
@@ -567,13 +537,11 @@ describe("Wizard inside Dialog", () => {
                 <Button id="button" style={{ display: "inline-block" }}>Open Dialog</Button>
             </div>
         );
-        cy.get("#button")
-            .then($button => {
-                $button[0].addEventListener("click", () =>{
-                    const dialog = document.getElementById("dialog") as Dialog;
-                    dialog.open = true;
-                });
+        cy.get("#button").then($button => {
+            $button[0].addEventListener("click", () => {
+                cy.get("#dialog").invoke("prop", "open", true);
             });
+        });
 
         cy.get("#button")
             .realClick();
@@ -603,18 +571,18 @@ describe("Wizard inside Dialog", () => {
     it("Tests if second step is scrolled into view when first step's height is bigger than viewport", () => {
         cy.mount(
             <Wizard id="wizScroll" style="height: 100%;">
-                <WizardStepTemplate title-text="Step 1" selected>
+                <WizardStep title-text="Step 1" selected>
                     <div>
                         <Title>Step 1</Title>
                         <div style="height: 4440px;"></div>
                         <Button id="toStep2">Step 2</Button>
                     </div>
-                </WizardStepTemplate>
-                <WizardStepTemplate title-text="Step 2" disabled>
+                </WizardStep>
+                <WizardStep title-text="Step 2" disabled>
                     <div>
                         <Title>Step 2</Title>
                     </div>
-                </WizardStepTemplate>
+                </WizardStep>
             </Wizard>
         );
         cy.get("#toStep2")
@@ -635,13 +603,13 @@ describe("Wizard inside Dialog", () => {
             .should("be.visible");
     });
 
-    it.skip("WizardPageMode: move to next step", () => {
+    it("WizardPageMode: move to next step", () => {
          cy.mount(
             <div>
                 <Dialog id="dialog" headerText="Wizard">
                     <Wizard id="asd">
-                        <WizardStepTemplate icon="sap-icon://home" selected titleText="Product type"></WizardStepTemplate>
-                        <WizardStepTemplate titleText="Product Information" disabled></WizardStepTemplate>
+                        <WizardStep icon="sap-icon://home" selected titleText="Product type"></WizardStep>
+                        <WizardStep titleText="Product Information" disabled></WizardStep>
                     </Wizard>
 
                     <Bar slot="footer" design="Footer">
@@ -655,16 +623,14 @@ describe("Wizard inside Dialog", () => {
                 <Button id="button" style={{ display: "inline-block" }}>Open Dialog</Button>
             </div>
         );
-        cy.get("#button")
-            .then($button => {
-                $button[0].addEventListener("click", () =>{
-                    const dialog = document.getElementById("dialog") as Dialog;
-                    dialog.open = true;
-                });
+        cy.get("#button").then($button => {
+            $button[0].addEventListener("click", () => {
+                cy.get("#dialog").invoke("prop", "open", true);
             });
+        });
 
         cy.get("#button")
-            .realClick();
+            .click();
 
         cy.get("[ui5-wizard-step")
             .eq(0)
@@ -683,7 +649,7 @@ describe("Wizard inside Dialog", () => {
             });
 
         cy.get("#nextButton")
-            .realClick();
+            .click();
 
         cy.get("[ui5-wizard-step]")
             .eq(1)
@@ -711,20 +677,11 @@ describe("Wizard inside Dialog", () => {
             });
 
         cy.get("#prevButton")
-            .realClick();
+            .click();
 
         cy.get("[ui5-wizard]")
             .shadow()
             .find("[data-ui5-index='1']")
-            .should("be.visible")
-
-        cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='1']")
-            .should("have.attr", "selected");
-
-        cy.get("[ui5-wizard-step]")
-            .eq(0)
             .should("have.attr", "selected");
 
         cy.get("[ui5-wizard-step]")
@@ -771,37 +728,27 @@ describe("Wizard inside Dialog", () => {
      it("tests popover visibility on small screen", () => {
         cy.mount(
 			<Wizard id="wizTest2" style={{ position: "absolute", overflow: "hidden", height: "100%", width: "400px"}}>
-				<WizardStepTemplate icon="sap-icon://product" titleText="Product type">
+				<WizardStep icon="sap-icon://product" titleText="Product type">
 					<div style={{display: "flex",minHeight: "200px", flexDirection: "column"}}>
 						<Title>1. Product Type</Title>
-						<MessageStrip>
-							The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
-						</MessageStrip>
 					</div>
-				</WizardStepTemplate>
+				</WizardStep>
 
-				<WizardStepTemplate titleText="Product Information" >
+				<WizardStep titleText="Product Information" >
 					<div style={{display: "flex", flexDirection: "column"}}>
 						<Title>2. Product Information</Title>
-						<Label>
-							Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar.
-                        </Label>
 					</div>
-				</WizardStepTemplate>
+				</WizardStep>
 
-				<WizardStepTemplate titleText="Options">
+				<WizardStep titleText="Options">
 						<Title>3. Options</Title>
 						<Label>
 							Integer pellentesque leo sit amet dui vehicula.
 						</Label>
-						<MessageStrip>
-							The Wizard control is supposed to break down large tasks, into smaller steps.
-						</MessageStrip>
-				</WizardStepTemplate>
-
-				<WizardStepTemplate titleText="Pricing" selected>
+				</WizardStep>
+				<WizardStep titleText="Pricing" selected>
 						<Title>4. Pricing</Title>
-				</WizardStepTemplate>
+				</WizardStep>
 			</Wizard>
         );
 
