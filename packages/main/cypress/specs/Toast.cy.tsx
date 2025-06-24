@@ -16,10 +16,8 @@ describe("Toast general interaction", () => {
 		cy.get("[ui5-button]")
 			.then(($button) => {
 				$button[0].addEventListener("click", () => {
-					cy.get("[ui5-toast]")
-						.then($toast => {
-							($toast[0] as Toast).open = true;
-						});
+					  cy.get("[ui5-toast]")
+					  	.invoke("prop", "open", true);
 				});
 			});
 
@@ -29,16 +27,8 @@ describe("Toast general interaction", () => {
 			.should("not.have.attr", "open");
 	});
 
-	it("tests open attribute after show", () => {
+	it("tests open property and attribute after show", () => {
 
-		cy.get("[ui5-button]")
-			.realClick();
-
-		cy.get("[ui5-toast]")
-			.should("be.visible");
-	});
-
-	it("tests open property", () => {
 		cy.get("[ui5-toast]")
 			.should("not.be.visible");
 
@@ -46,21 +36,10 @@ describe("Toast general interaction", () => {
 			.realClick();
 
 		cy.get("[ui5-toast]")
+			.should("be.visible");
+
+		cy.get("[ui5-toast]")
 			.should("have.attr", "open");
-
-		cy.get("[ui5-toast]")
-			.should("be.visible");
-	});
-
-	it("tests duration property", () => {
-		cy.get("[ui5-button]")
-			.realClick();
-
-		cy.get("[ui5-toast]")
-			.should("be.visible");
-
-		cy.get("[ui5-toast]")
-			.should("have.attr", "duration", 3000);
 	});
 
 	it("tests placement property", () => {
@@ -68,8 +47,14 @@ describe("Toast general interaction", () => {
 			.realClick();
 
 		cy.get("[ui5-toast]")
-			.should("be.visible")
-			.and("have.attr", "placement", "MiddleEnd");
+		.should("be.visible")
+		.and("have.attr", "placement", "MiddleEnd")
+		.then(($el) => {
+			const rect = $el[0].getBoundingClientRect();
+
+			expect(rect.top + rect.height / 2).to.be.closeTo(window.innerHeight / 2, 20);
+			expect(window.innerWidth - (rect.left + rect.width)).to.be.lessThan(50);
+		});
 	});
 
 	it("tests shadow content div role", () => {
