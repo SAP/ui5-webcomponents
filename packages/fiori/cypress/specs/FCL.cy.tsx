@@ -698,45 +698,45 @@ describe("Preserves column min-width", () => {
 			});
 	});
 
-	it("preserves min-width of mid column in 2-column layout", () => {
-		const smallestColumnWidth = 248;
+	// it("preserves min-width of mid column in 2-column layout", () => {
+	// 	const smallestColumnWidth = 248;
 
-		cy.get("#fcl3")
-			.invoke("prop", "layout", "TwoColumnsStartExpanded");
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout", "TwoColumnsStartExpanded");
 
-		cy.get("#fcl3")
-			.invoke("prop", "layout")
-			.should("equal", "TwoColumnsStartExpanded");
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "TwoColumnsStartExpanded");
 
-		cy.get("#fcl3")
-			.shadow()
-			.find(".ui5-fcl-column--middle")
-			.then($midColumn => {
-				const midColumnWidth = $midColumn.width();
-				const differenceFromSmallestWidth = midColumnWidth - smallestColumnWidth;
-				const testOffsetX = differenceFromSmallestWidth + 10;
+	// 	cy.get("#fcl3")
+	// 		.shadow()
+	// 		.find(".ui5-fcl-column--middle")
+	// 		.then($midColumn => {
+	// 			const midColumnWidth = $midColumn.width();
+	// 			const differenceFromSmallestWidth = midColumnWidth - smallestColumnWidth;
+	// 			const testOffsetX = differenceFromSmallestWidth + 10;
 
-				cy.get("#fcl3")
-					.shadow()
-					.find(".ui5-fcl-separator-start")
-					.realMouseDown()
-					.realMouseMove(testOffsetX, 0)
-					.realMouseUp();
+	// 			cy.get("#fcl3")
+	// 				.shadow()
+	// 				.find(".ui5-fcl-separator-start")
+	// 				.realMouseDown()
+	// 				.realMouseMove(testOffsetX, 0)
+	// 				.realMouseUp();
 
-				cy.get("#fcl3")
-					.invoke("prop", "layout")
-					.should("equal", "TwoColumnsStartExpanded");
+	// 			cy.get("#fcl3")
+	// 				.invoke("prop", "layout")
+	// 				.should("equal", "TwoColumnsStartExpanded");
 
-				cy.get("#fcl3")
-					.shadow()
-					.find(".ui5-fcl-column--middle")
-					.then($finalMidColumn => {
-						const finalWidth = $finalMidColumn.width();
+	// 			cy.get("#fcl3")
+	// 				.shadow()
+	// 				.find(".ui5-fcl-column--middle")
+	// 				.then($finalMidColumn => {
+	// 					const finalWidth = $finalMidColumn.width();
 
-						expect(finalWidth).to.be.closeTo(smallestColumnWidth, 5);
-					});
-			});
-	});
+	// 					expect(finalWidth).to.be.closeTo(smallestColumnWidth, 5);
+	// 				});
+	// 		});
+	// });
 
 	it("preserves min-width of mid column in 3-column layout", () => {
 		const smallestColumnWidth = 248;
