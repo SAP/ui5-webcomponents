@@ -448,7 +448,7 @@ describe("Wizard general interaction", () => {
 
         cy.get("@stepChange")
             .should("have.callCount", 1);
-    })
+    });
 
     it("tests dynamically increase step size and move to next step", () => {
         cy.mount(
@@ -507,34 +507,6 @@ describe("Wizard general interaction", () => {
             .find("[data-ui5-index='2']")
             .should("have.attr", "selected");
     });
-
-    //TO BE LOOKED AT AGAIN
-    // it("tests no scrolling to step, if the step was not changed", () => {
-    //     cy.get("#toStep2")
-    //         .realClick();
-
-    //     cy.get("@wizardContent")
-    //         .scrollTo(0, 50);
-
-    //     cy.get("@wizardContent")
-    //         .then(($content) => {
-    //             const contentEl = $content[0];
-    //             const scrollPosBefore = contentEl.scrollTop;
-
-    //             cy.window().then((win) => {
-    //                 const wizard = win.document.querySelector("#wizTest");
-    //                 (wizard as Wizard).onAfterRendering();
-    //             });
-
-    //             cy.get("@wizardContent")
-    //                 .then(($contentAfter) => {
-    //                     const scrollPosAfter = $contentAfter[0].scrollTop;
-    //                     console.log(scrollPosAfter);
-
-    //                     expect(scrollPosAfter).to.equal(scrollPosBefore);
-    //                 });
-    //         });
-    // });
 
      it("Tests long text on wizard step to be truncated correctly", () => {
         cy.mount(
@@ -741,16 +713,21 @@ describe("Wizard inside Dialog", () => {
         cy.get("#prevButton")
             .realClick();
 
-         cy.get("[ui5-wizard-step]")
-            .eq(0)
-            .should("have.attr", "selected");
+        cy.get("[ui5-wizard]")
+            .shadow()
+            .find("[data-ui5-index='1']")
+            .should("be.visible")
 
         cy.get("[ui5-wizard]")
             .shadow()
             .find("[data-ui5-index='1']")
             .should("have.attr", "selected");
 
-         cy.get("[ui5-wizard-step]")
+        cy.get("[ui5-wizard-step]")
+            .eq(0)
+            .should("have.attr", "selected");
+
+        cy.get("[ui5-wizard-step]")
             .eq(1)
             .should("not.have.attr", "selected");
 
