@@ -54,18 +54,15 @@ describe("Accessibility", () => {
 		cy.get("#illustratedMsg5")
 			.shadow()
 			.find(".ui5-illustrated-message-root")
-			.then($contents => {
+			.should(($contents) => {
 				const scrollHeight = $contents[0].scrollHeight;
 				const offsetHeight = $contents[0].offsetHeight;
-
 				expect(scrollHeight).to.be.lessThan(newContainerHeight);
-
 				expect(scrollHeight).to.equal(offsetHeight);
 			});
 
 		cy.get("#illustratedMsg5")
-			.invoke("prop", "media")
-			.should("equal", expectedMedia);
+			.should("have.prop", "media", expectedMedia);
 	});
 });
 
@@ -130,21 +127,19 @@ describe("IllustratedMessage 'design' property", () => {
 
 		cy.get("#illustratedMsg4")
 			.invoke("prop", "media")
-			.then((initialMedia) => {
-				cy.get("#panel1")
-					.invoke("prop", "collapsed", true);
 
-				cy.get("#illustratedMsg4")
-					.invoke("prop", "media")
-					.should("equal", "base");
+		cy.get("#panel1")
+			.invoke("prop", "collapsed", true);
 
-				cy.get("#panel1")
-					.invoke("prop", "collapsed", false);
+		cy.get("#illustratedMsg4")
+			.should("have.prop", "media", "base");
 
-				cy.get("#illustratedMsg4")
-					.invoke("prop", "media")
-					.should("not.equal", "base");
-			});
+		cy.get("#panel1")
+			.invoke("prop", "collapsed", false);
+
+		cy.get("#illustratedMsg4")
+			.invoke("prop", "media")
+			.should("not.equal", "base");
 	});
 });
 
@@ -167,18 +162,16 @@ describe("Vertical responsiveness", () => {
 		cy.get("#illustratedMsg5")
 			.shadow()
 			.find(".ui5-illustrated-message-root")
-			.then($contents => {
+			.should(($contents) => {
 				const scrollHeight = $contents[0].scrollHeight;
 				const offsetHeight = $contents[0].offsetHeight;
 
 				expect(scrollHeight).to.be.lessThan(newContainerHeight);
-
 				expect(scrollHeight).to.equal(offsetHeight);
 			});
 
 		cy.get("#illustratedMsg5")
-			.invoke("prop", "media")
-			.should("equal", expectedMedia);
+			.should("have.prop", "media", expectedMedia);
 	});
 
 	it("content with auto design expands to fit the parent container", () => {
@@ -199,18 +192,15 @@ describe("Vertical responsiveness", () => {
 		cy.get("#illustratedMsg5")
 			.shadow()
 			.find(".ui5-illustrated-message-root")
-			.then($contents => {
+			.should(($contents) => {
 				const scrollHeight = $contents[0].scrollHeight;
 				const offsetHeight = $contents[0].offsetHeight;
-
 				expect(scrollHeight).to.be.lessThan(newContainerHeight);
-
 				expect(scrollHeight).to.equal(offsetHeight);
 			});
 
 		cy.get("#illustratedMsg5")
-			.invoke("prop", "media")
-			.should("equal", expectedMedia);
+			.should("have.prop", "media", expectedMedia);
 	});
 
 	it("content with fixed design fits the parent container", () => {
@@ -234,18 +224,15 @@ describe("Vertical responsiveness", () => {
 		cy.get("#illustratedMsg5")
 			.shadow()
 			.find(".ui5-illustrated-message-root")
-			.then($contents => {
+			.should(($contents) => {
 				const scrollHeight = $contents[0].scrollHeight;
 				const offsetHeight = $contents[0].offsetHeight;
-
 				expect(scrollHeight).to.be.lessThan(newContainerHeight);
-
 				expect(scrollHeight).to.equal(offsetHeight);
 			});
 
 		cy.get("#illustratedMsg5")
-			.invoke("prop", "media")
-			.should("equal", expectedMedia);
+			.should("have.prop", "media", expectedMedia);
 	});
 
 	it("shows image with unconstrained height when container has auto height", () => {
@@ -286,7 +273,7 @@ describe("Vertical responsiveness", () => {
 		cy.get("#illustratedMsg1")
 			.shadow()
 			.find(".ui5-illustrated-message-illustration svg")
-			.then($illustration => {
+			.should(($illustration) => {
 				const scrollHeight = $illustration[0].scrollHeight;
 				expect(scrollHeight).to.not.equal(0);
 			});
@@ -315,7 +302,7 @@ describe("Vertical responsiveness", () => {
 		cy.get("#illustratedMsg4")
 			.shadow()
 			.find(".ui5-illustrated-message-illustration svg")
-			.then($illustration => {
+			.should(($illustration) => {
 				const scrollHeight = $illustration[0].scrollHeight;
 				expect(scrollHeight).to.not.equal(0);
 			});
