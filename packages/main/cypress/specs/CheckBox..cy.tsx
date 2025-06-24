@@ -9,7 +9,7 @@ describe('CheckBox Component', () => {
 			.should('have.attr', 'value', 'testValue');
 	});
 
-	it('should omit value attribute in shadow dom when no value is provided', () => {
+	it('should omit value attribute in shadow dom when checkbox has default value', () => {
 		cy.mount(<CheckBox />);
 		cy.get("[ui5-checkbox]")
 			.shadow()
