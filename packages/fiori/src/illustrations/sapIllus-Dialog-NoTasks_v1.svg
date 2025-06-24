@@ -1,5 +1,5 @@
 <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-NoTasks_v1">
-<mask id="mask0_396_4982" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="6" width="148" height="148">
+<mask id="mask0_396_4982" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="6" width="148" height="148">
 <circle cx="73.9925" cy="79.9925" r="73.9925" fill="var(--sapContent_Illustrative_Color7)"/>
 </mask>
 <g mask="url(#mask0_396_4982)">
@@ -10,7 +10,7 @@
 <rect x="22.9725" y="39.582" width="45" height="57" rx="5" fill="var(--sapContent_Illustrative_Color18)"/>
 <rect x="25.9725" y="42.582" width="39" height="51" rx="3" fill="var(--sapContent_Illustrative_Color7)"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M62.9725 93.4113V42.7527C64.1377 43.1645 64.9725 44.2758 64.9725 45.582V90.582C64.9725 91.8882 64.1377 92.9994 62.9725 93.4113Z" fill="var(--sapContent_Illustrative_Color19)"/>
-<mask id="mask1_396_4982" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="25" y="42" width="40" height="52">
+<mask id="mask1_396_4982" mask-type="alpha" maskUnits="userSpaceOnUse" x="25" y="42" width="40" height="52">
 <rect x="25.9725" y="42.582" width="39" height="51" rx="3" fill="var(--sapContent_Illustrative_Color7)"/>
 </mask>
 <g mask="url(#mask1_396_4982)">

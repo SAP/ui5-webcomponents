@@ -1,9 +1,9 @@
 <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-BalloonSky">
-<mask id="mask0_11_124" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="6" width="154" height="154">
+<mask id="mask0_11_124" mask-type="alpha" maskUnits="userSpaceOnUse" x="3" y="6" width="154" height="154">
 <circle cx="79.9442" cy="83.0558" r="76.9442" fill="var(--sapContent_Illustrative_Color7)"/>
 </mask>
 <g mask="url(#mask0_11_124)">
-<mask id="mask1_11_124" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="6" width="247" height="154">
+<mask id="mask1_11_124" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="6" width="247" height="154">
 <path d="M235.792 6.11158H11.8126C10.3527 6.11023 8.90681 6.39663 7.5576 6.95439C6.2084 7.51215 4.98235 8.33035 3.94954 9.36221C2.91672 10.3941 2.09739 11.6194 1.53839 12.9681C0.979377 14.3167 0.69165 15.7624 0.69165 17.2223V148.879C0.69165 151.828 1.86332 154.657 3.94891 156.743C6.0345 158.828 8.86318 160 11.8126 160H235.792C238.742 160 241.57 158.828 243.656 156.743C245.741 154.657 246.913 151.828 246.913 148.879V17.2223C246.913 15.7624 246.625 14.3167 246.066 12.9681C245.507 11.6194 244.688 10.3941 243.655 9.36221C242.622 8.33035 241.396 7.51215 240.047 6.95439C238.698 6.39663 237.252 6.11023 235.792 6.11158V6.11158Z" fill="var(--sapContent_Illustrative_Color7)"/>
 </mask>
 <g mask="url(#mask1_11_124)">
