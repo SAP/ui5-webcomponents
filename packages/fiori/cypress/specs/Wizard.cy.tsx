@@ -328,12 +328,12 @@ describe("Wizard general interaction", () => {
             });
 
         cy.get("[ui5-button]")
-            .click();
+            .realClick();
 
         cy.get("[ui5-wizard]")
             .shadow()
             .find("[data-ui5-index='1']")
-            .click();
+            .realClick();
 
         cy.get("[ui5-wizard]")
             .shadow()
@@ -374,7 +374,7 @@ describe("Wizard general interaction", () => {
         cy.get("[ui5-wizard]")
             .shadow()
             .find("[data-ui5-index='1']")
-            .click();
+            .realClick();
 
         cy.get("[ui5-wizard]")
             .shadow()
@@ -439,7 +439,7 @@ describe("Wizard general interaction", () => {
             });
 
         cy.get("[ui5-button]")
-            .click();
+            .realClick();
 
         cy.get("[ui5-wizard]")
             .shadow()
@@ -620,12 +620,12 @@ describe("Wizard inside Dialog", () => {
             .realPress("Escape");
 
         cy.get("#button")
-            .click();
+            .realClick();
 
         cy.get("[ui5-wizard]")
             .shadow()
             .find("[data-ui5-index='2']")
-            .should("be.focused");
+            .should("be.selected");
     });
 
     it("Tests if second step is scrolled into view when first step's height is bigger than viewport", () => {
@@ -739,7 +739,7 @@ describe("Wizard inside Dialog", () => {
             });
 
         cy.get("#prevButton")
-            .click();
+            .realClick();
 
          cy.get("[ui5-wizard-step]")
             .eq(0)
