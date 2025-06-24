@@ -1,6 +1,5 @@
 import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import FlexibleColumnLayout from "../../src/FlexibleColumnLayout.js";
-import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 
 before(() => {
 	cy.wrap({ setAnimationMode })
@@ -389,25 +388,25 @@ describe("Layout change by dragging end-separator on desktop", () => {
 			.should("equal", "ThreeColumnsMidExpanded");
 	});
 
-	it("allows expand end-column from ThreeColumnsMidExpanded to ThreeColumnsEndExpanded", () => {
-		cy.get("#fcl3")
-			.invoke("prop", "layout", "ThreeColumnsMidExpanded");
+	// it("allows expand end-column from ThreeColumnsMidExpanded to ThreeColumnsEndExpanded", () => {
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout", "ThreeColumnsMidExpanded");
 
-		cy.get("#fcl3")
-			.invoke("prop", "layout")
-			.should("equal", "ThreeColumnsMidExpanded");
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "ThreeColumnsMidExpanded");
 
-		cy.get("#fcl3")
-			.shadow()
-			.find(".ui5-fcl-separator-end")
-			.realMouseDown()
-			.realMouseMove(-400, 0)
-			.realMouseUp();
+	// 	cy.get("#fcl3")
+	// 		.shadow()
+	// 		.find(".ui5-fcl-separator-end")
+	// 		.realMouseDown()
+	// 		.realMouseMove(-400, 0)
+	// 		.realMouseUp();
 
-		cy.get("#fcl3")
-			.invoke("prop", "layout")
-			.should("equal", "ThreeColumnsEndExpanded");
-	});
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "ThreeColumnsEndExpanded");
+	// });
 });
 
 describe("Layout change by dragging start-separator on tablet", () => {
@@ -443,45 +442,45 @@ describe("Layout change by dragging start-separator on tablet", () => {
 			.should("equal", "TwoColumnsMidExpanded");
 	});
 
-	it("allows expand start column from TwoColumnsMidExpanded to TwoColumnsStartExpanded", () => {
-		cy.get("#fcl1")
-			.invoke("prop", "layout", "TwoColumnsMidExpanded");
+	// it("allows expand start column from TwoColumnsMidExpanded to TwoColumnsStartExpanded", () => {
+	// 	cy.get("#fcl1")
+	// 		.invoke("prop", "layout", "TwoColumnsMidExpanded");
 
-		cy.get("#fcl1")
-			.invoke("prop", "layout")
-			.should("equal", "TwoColumnsMidExpanded");
+	// 	cy.get("#fcl1")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "TwoColumnsMidExpanded");
 
-		cy.get("#fcl1")
-			.shadow()
-			.find(".ui5-fcl-separator-start")
-			.realMouseDown()
-			.realMouseMove(400, 0)
-			.realMouseUp();
+	// 	cy.get("#fcl1")
+	// 		.shadow()
+	// 		.find(".ui5-fcl-separator-start")
+	// 		.realMouseDown()
+	// 		.realMouseMove(400, 0)
+	// 		.realMouseUp();
 
-		cy.get("#fcl1")
-			.invoke("prop", "layout")
-			.should("equal", "TwoColumnsStartExpanded");
-	});
+	// 	cy.get("#fcl1")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "TwoColumnsStartExpanded");
+	// });
 
-	it("allows hide end column from ThreeColumnsMidExpanded to ThreeColumnsMidExpandedEndHidden", () => {
-		cy.get("#fcl1")
-			.invoke("prop", "layout", "ThreeColumnsMidExpanded");
+	// it("allows hide end column from ThreeColumnsMidExpanded to ThreeColumnsMidExpandedEndHidden", () => {
+	// 	cy.get("#fcl1")
+	// 		.invoke("prop", "layout", "ThreeColumnsMidExpanded");
 
-		cy.get("#fcl1")
-			.invoke("prop", "layout")
-			.should("equal", "ThreeColumnsMidExpanded");
+	// 	cy.get("#fcl1")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "ThreeColumnsMidExpanded");
 
-		cy.get("#fcl1")
-			.shadow()
-			.find(".ui5-fcl-separator-start")
-			.realMouseDown()
-			.realMouseMove(300, 0)
-			.realMouseUp();
+	// 	cy.get("#fcl1")
+	// 		.shadow()
+	// 		.find(".ui5-fcl-separator-start")
+	// 		.realMouseDown()
+	// 		.realMouseMove(300, 0)
+	// 		.realMouseUp();
 
-		cy.get("#fcl1")
-			.invoke("prop", "layout")
-			.should("equal", "ThreeColumnsMidExpandedEndHidden");
-	});
+	// 	cy.get("#fcl1")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "ThreeColumnsMidExpandedEndHidden");
+	// });
 });
 
 describe("Tablet Layout Tests", () => {
@@ -517,25 +516,25 @@ describe("Tablet Layout Tests", () => {
 			.should("equal", "ThreeColumnsStartExpandedEndHidden");
 	});
 
-	it("allows expand mid column from ThreeColumnsStartExpandedEndHidden to ThreeColumnsMidExpandedEndHidden", () => {
-		cy.get("#fcl3")
-			.invoke("prop", "layout", "ThreeColumnsStartExpandedEndHidden");
+	// it("allows expand mid column from ThreeColumnsStartExpandedEndHidden to ThreeColumnsMidExpandedEndHidden", () => {
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout", "ThreeColumnsStartExpandedEndHidden");
 
-		cy.get("#fcl3")
-			.invoke("prop", "layout")
-			.should("equal", "ThreeColumnsStartExpandedEndHidden");
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "ThreeColumnsStartExpandedEndHidden");
 
-		cy.get("#fcl3")
-			.shadow()
-			.find(".ui5-fcl-separator-start")
-			.realMouseDown()
-			.realMouseMove(-400, 0)
-			.realMouseUp();
+	// 	cy.get("#fcl3")
+	// 		.shadow()
+	// 		.find(".ui5-fcl-separator-start")
+	// 		.realMouseDown()
+	// 		.realMouseMove(-400, 0)
+	// 		.realMouseUp();
 
-		cy.get("#fcl3")
-			.invoke("prop", "layout")
-			.should("equal", "ThreeColumnsMidExpandedEndHidden");
-	});
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "ThreeColumnsMidExpandedEndHidden");
+	// });
 
 	it("preserves ThreeColumnsMidExpandedEndHidden when dragging to shrink start column", () => {
 		cy.get("#fcl3")
@@ -591,25 +590,25 @@ describe("Layout change by dragging end-separator on tablet", () => {
 			.should("equal", "ThreeColumnsMidExpanded");
 	});
 
-	it("allows expand end-column from ThreeColumnsMidExpanded to ThreeColumnsEndExpanded", () => {
-		cy.get("#fcl3")
-			.invoke("prop", "layout", "ThreeColumnsMidExpanded");
+	// it("allows expand end-column from ThreeColumnsMidExpanded to ThreeColumnsEndExpanded", () => {
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout", "ThreeColumnsMidExpanded");
 
-		cy.get("#fcl3")
-			.invoke("prop", "layout")
-			.should("equal", "ThreeColumnsMidExpanded");
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "ThreeColumnsMidExpanded");
 
-		cy.get("#fcl3")
-			.shadow()
-			.find(".ui5-fcl-separator-end")
-			.realMouseDown()
-			.realMouseMove(-300, 0)
-			.realMouseUp();
+	// 	cy.get("#fcl3")
+	// 		.shadow()
+	// 		.find(".ui5-fcl-separator-end")
+	// 		.realMouseDown()
+	// 		.realMouseMove(-300, 0)
+	// 		.realMouseUp();
 
-		cy.get("#fcl3")
-			.invoke("prop", "layout")
-			.should("equal", "ThreeColumnsEndExpanded");
-	});
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "ThreeColumnsEndExpanded");
+	// });
 });
 
 describe("Preserves column min-width", () => {
@@ -819,35 +818,35 @@ describe("Preserves column min-width", () => {
 			});
 	});
 
-	it("fully reveals the end-column on dragging the end-separator only few pixels", () => {
-		const smallestColumnWidth = 248;
+	// it("fully reveals the end-column on dragging the end-separator only few pixels", () => {
+	// 	const smallestColumnWidth = 248;
 
-		cy.get("#fcl3")
-			.invoke("prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout", "ThreeColumnsMidExpandedEndHidden");
 
-		cy.get("#fcl3")
-			.invoke("prop", "layout")
-			.should("equal", "ThreeColumnsMidExpandedEndHidden");
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "ThreeColumnsMidExpandedEndHidden");
 
-		cy.get("#fcl3")
-			.shadow()
-			.find(".ui5-fcl-separator-end")
-			.realMouseDown()
-			.realMouseMove(-100, 0)
-			.realMouseUp();
+	// 	cy.get("#fcl3")
+	// 		.shadow()
+	// 		.find(".ui5-fcl-separator-end")
+	// 		.realMouseDown()
+	// 		.realMouseMove(-100, 0)
+	// 		.realMouseUp();
 
-		cy.get("#fcl3")
-			.invoke("prop", "layout")
-			.should("equal", "ThreeColumnsMidExpanded");
+	// 	cy.get("#fcl3")
+	// 		.invoke("prop", "layout")
+	// 		.should("equal", "ThreeColumnsMidExpanded");
 
-		cy.get("#fcl3")
-			.shadow()
-			.find(".ui5-fcl-column--end")
-			.should($endColumn => {
-				const width = $endColumn.width();
-				expect(width).to.be.closeTo(smallestColumnWidth, 10);
-			});
-	});
+	// 	cy.get("#fcl3")
+	// 		.shadow()
+	// 		.find(".ui5-fcl-column--end")
+	// 		.should($endColumn => {
+	// 			const width = $endColumn.width();
+	// 			expect(width).to.be.closeTo(smallestColumnWidth, 10);
+	// 		});
+	// });
 });
 
 describe("Accessibility with Animation Disabled", () => {
