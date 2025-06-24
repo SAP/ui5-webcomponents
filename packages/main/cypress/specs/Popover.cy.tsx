@@ -669,7 +669,7 @@ describe("Popover opener", () => {
 			<>
 				<Button id="btnPopModal">Open Modal Popover</Button>
 				<Popover id="modalPopover" opener="btnPopModal" modal open={false}>
-					<Button id="modalPopoverClose" onClick={()=>{
+					<Button id="modalPopoverClose" onClick={() => {
 						const popover = document.getElementById("modalPopover");
 						(popover as Popover).open = false;
 					}}>Close</Button>
@@ -1535,6 +1535,56 @@ describe("Alignment", () => {
 		});
 
 		it("Arrow centering when opener is to the right edge", () => {
+			cy.mount(
+				<>
+					<Button id="btnRightEdgeTop">...</Button>
+					<Popover headerText="My Heading" id="popFullWidthTop" class="popover6auto" placement="Top" opener="btnRightEdgeTop">
+						<div slot="header">
+							<Button id="first-focusable">I am in the header</Button>
+						</div>
+
+						<List>
+							<ListItem>Hello</ListItem>
+							<ListItem>World</ListItem>
+							<ListItem>Again</ListItem>
+						</List>
+					</Popover>
+				</>
+			);
+
+			cy.get("[ui5-popover]").invoke("prop", "open", "true");
+			cy.get('#popFullWidthTop').then(($popover) => {
+			// 	// Use Cypress to enter the shadow DOM
+			// 	const arrowSelector = '.ui5-popover-arrow';
+
+			// 	// Check if the arrow is centered with respect to the opener
+			// 	cy.get('#popFullWidthTop').shadow().find(arrowSelector).then(($arrow) => {
+			// 		cy.get('#btnRightEdgeTop').then(($opener) => {
+			// 			const arrowLeft = $arrow.offset().left + $arrow.width() / 2;
+			// 			const openerLeft = $opener.offset().left + $opener.width() / 2;
+
+			// 			// Assert that arrow is horizontally centered with the opener
+			// 			expect(arrowLeft).to.equal(openerLeft);
+			// 			//expect(Math.abs(arrowLeft - openerLeft)).to.be.lessThan(1);
+			// 		});
+			// 	});
+			// });
+			// cy.get("[ui5-popover]")
+			// 	.shadow()
+			// 	.find(".ui5-popover-arrow")
+			// 	.then($el => {
+			// 		// Get the element's viewport offsets
+			// 		const offset = $el.offset();
+			// 		const elWidth = $el.outerWidth();
+			// 		const parentWidth = $el.parent().innerWidth();
+
+			// 		const leftOffset = offset.left;
+			// 		const rightOffset = parentWidth - (leftOffset + elWidth);
+
+			// 		// Check if it's centered
+			// 		expect(Math.abs(leftOffset - rightOffset)).to.be.lessThan(1);
+			//   });;
+
 			// const opener = await browser.$("#btnRightEdgeTop");
 			// await opener.click();
 			// const popover = await browser.$("#popFullWidthTop");
@@ -1548,26 +1598,19 @@ describe("Alignment", () => {
 });
 
 describe("Responsive paddings", () => {
-	// let oldScreenHeight, oldScreenWidth;
-
-	// before(async () => {
-	// 	const browserSize = await browser.getWindowSize();
-	// 	oldScreenHeight = browserSize.height;
-	// 	oldScreenWidth = browserSize.width;
-	// 	await browser.url(`test/pages/Popover.html`);
-	// 	await browser.setWindowSize(1000, 400);
-	// });
-
-	// after(async () => {
-	// 	await browser.setWindowSize(oldScreenWidth, oldScreenHeight);
-	// });
-
 	it("tests media-range", () => {
-		// const popover = await browser.$("#popXRightWide");
-		// const btnOpenPopover = await browser.$("#btnOpenXRightWide");
+		cy.viewport(1000, 400);
 
-		// await btnOpenPopover.click();
+		cy.mount(
+			<>
+				<Button id="btnOpenXRightWide">Open</Button>
+				<Popover id="popXRightWide" placement="Bottom" horizontalAlign="End" opener="btnOpenXRightWide">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni architecto tenetur quia nam reprehenderit quas eveniet possimus similique quisquam culpa distinctio ex doloremque molestiae maxime sed harum, in exercitationem! Incidunt?
+				</Popover>
+			</>
+		);
 
-		// assert.strictEqual(await popover.getAttribute("media-range"), "M", "Popover has correct media range");
+		cy.get("[ui5-popover]").invoke("prop", "open", "true");
+		cy.get("[ui5-popover]").should("have.attr", "media-range", "M");
 	});
 });
