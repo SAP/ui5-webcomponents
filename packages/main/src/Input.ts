@@ -953,6 +953,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 							this._handleDown(e);
 						}
 					},
+					isPopoverOpen: () => { return (this.Suggestions && this.Suggestions?.isOpened()) || false; },
 				});
 			});
 			link.addEventListener("keydown", this._linksListenersArray[index]);
@@ -1737,30 +1738,34 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	get linksInAriaValueStateHiddenText() {
-		const linksArray: Array<HTMLElement> = [];
+		const links: Array<HTMLElement> = [];
 		if (this.valueStateMessage) {
 			this.valueStateMessage.forEach(element => {
 				if (element.children.length)	{
 					element.querySelectorAll("ui5-link").forEach(link => {
-						linksArray.push(link as HTMLElement);
+						links.push(link as HTMLElement);
 					});
 				}
 			});
 		}
-		return linksArray;
+		return links;
 	}
 
 	get valueStateLinksShortcutsTextAcc() {
-		const linksArray = this.linksInAriaValueStateHiddenText;
-		if (!linksArray.length) {
+		const links = this.linksInAriaValueStateHiddenText;
+		if (!links.length) {
 			return "";
 		}
 
 		if (isMac()) {
-			return linksArray.length === 1 ? Input.i18nBundle.getText(VALUE_STATE_LINK_MAC) : Input.i18nBundle.getText(VALUE_STATE_LINKS_MAC);
+			return links.length === 1
+				? Input.i18nBundle.getText(VALUE_STATE_LINK_MAC)
+				: Input.i18nBundle.getText(VALUE_STATE_LINKS_MAC);
 		}
 
-		return linksArray.length === 1 ? Input.i18nBundle.getText(VALUE_STATE_LINK) : Input.i18nBundle.getText(VALUE_STATE_LINKS);
+		return links.length === 1
+			? Input.i18nBundle.getText(VALUE_STATE_LINK)
+			: Input.i18nBundle.getText(VALUE_STATE_LINKS);
 	}
 
 	get _valueStateLinksShortcutsTextAccId() {

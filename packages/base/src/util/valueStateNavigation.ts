@@ -9,6 +9,7 @@ interface ControlHandlers {
 	closeValueState: () => void;
 	focusInput: () => void;
 	navigateToItem: () => void;
+	isPopoverOpen: () => boolean;
 }
 
 const attachListeners = (e: KeyboardEvent, links: Array<HTMLElement>, index: number, handlers: ControlHandlers) => {
@@ -36,6 +37,7 @@ const attachListeners = (e: KeyboardEvent, links: Array<HTMLElement>, index: num
 	if (isUp(e)) {
 		e.preventDefault();
 		e.stopImmediatePropagation();
+		handlers.isPopoverOpen() && handlers.focusInput();
 	}
 
 	if (isDown(e)) {

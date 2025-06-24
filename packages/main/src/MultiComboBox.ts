@@ -1613,6 +1613,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 						this._handleLinkNavigation = false;
 						this._forwardFocusToInner();
 					},
+					isPopoverOpen: () => this.open,
 				});
 			});
 
@@ -1968,30 +1969,34 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get linksInAriaValueStateHiddenText() {
-		const linksArray: Array<HTMLElement> = [];
+		const links: Array<HTMLElement> = [];
 		if (this.valueStateMessage) {
 			this.valueStateMessage.forEach(element => {
 				if (element.children.length)	{
 					element.querySelectorAll("ui5-link").forEach(link => {
-						linksArray.push(link as HTMLElement);
+						links.push(link as HTMLElement);
 					});
 				}
 			});
 		}
-		return linksArray;
+		return links;
 	}
 
 	get getValueStateLinksShortcutsTextAcc() {
-		const linksArray = this.linksInAriaValueStateHiddenText;
-		if (!linksArray.length) {
+		const links = this.linksInAriaValueStateHiddenText;
+		if (!links.length) {
 			return "";
 		}
 
 		if (isMac()) {
-			return linksArray.length === 1 ? MultiComboBox.i18nBundle.getText(VALUE_STATE_LINK_MAC) : MultiComboBox.i18nBundle.getText(VALUE_STATE_LINKS_MAC);
+			return links.length === 1
+				? MultiComboBox.i18nBundle.getText(VALUE_STATE_LINK_MAC)
+				: MultiComboBox.i18nBundle.getText(VALUE_STATE_LINKS_MAC);
 		}
 
-		return linksArray.length === 1 ? MultiComboBox.i18nBundle.getText(VALUE_STATE_LINK) : MultiComboBox.i18nBundle.getText(VALUE_STATE_LINKS);
+		return links.length === 1
+			? MultiComboBox.i18nBundle.getText(VALUE_STATE_LINK)
+			: MultiComboBox.i18nBundle.getText(VALUE_STATE_LINKS);
 	}
 
 	get _valueStateLinksShortcutsTextAccId() {

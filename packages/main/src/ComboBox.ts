@@ -1019,6 +1019,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 						this._handleLinkNavigation = false;
 						this.inner.focus();
 					},
+					isPopoverOpen: () => this.open,
 				});
 			});
 
@@ -1398,30 +1399,34 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get linksInAriaValueStateHiddenText() {
-		const linksArray: Array<HTMLElement> = [];
+		const links: Array<HTMLElement> = [];
 		if (this.valueStateMessage) {
 			this.valueStateMessage.forEach(element => {
 				if (element.children.length)	{
 					element.querySelectorAll("ui5-link").forEach(link => {
-						linksArray.push(link as HTMLElement);
+						links.push(link as HTMLElement);
 					});
 				}
 			});
 		}
-		return linksArray;
+		return links;
 	}
 
 	get valueStateLinksShortcutsTextAcc() {
-		const linksArray = this.linksInAriaValueStateHiddenText;
-		if (!linksArray.length) {
+		const links = this.linksInAriaValueStateHiddenText;
+		if (!links.length) {
 			return "";
 		}
 
 		if (isMac()) {
-			return linksArray.length === 1 ? ComboBox.i18nBundle.getText(VALUE_STATE_LINK_MAC) : ComboBox.i18nBundle.getText(VALUE_STATE_LINKS_MAC);
+			return links.length === 1
+				? ComboBox.i18nBundle.getText(VALUE_STATE_LINK_MAC)
+				: ComboBox.i18nBundle.getText(VALUE_STATE_LINKS_MAC);
 		}
 
-		return linksArray.length === 1 ? ComboBox.i18nBundle.getText(VALUE_STATE_LINK) : ComboBox.i18nBundle.getText(VALUE_STATE_LINKS);
+		return links.length === 1
+			? ComboBox.i18nBundle.getText(VALUE_STATE_LINK)
+			: ComboBox.i18nBundle.getText(VALUE_STATE_LINKS);
 	}
 
 	get ariaDescribedByText() {
