@@ -237,11 +237,11 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * When a form containing  `ui5-checkbox` elements is submitted, the values of the checked checkboxes are sent to the server.
 	 * This property is especially useful for groups of checkboxes with the same name, where each checkbox can have a different value.
 	 *
-	 * @default ""
+	 * @default "on"
 	 * @public
 	 */
 	@property()
-	value = "";
+	value = "on";
 
 	/**
 	 * Defines the active state (pressed or not) of the component.
@@ -268,7 +268,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 
 	get formFormattedValue() {
 		if (this.checked) {
-			return this.value || "on";
+			return this.value;
 		}
 		return null;
 	}
