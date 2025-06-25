@@ -57,6 +57,7 @@ import "./commands/Switch.commands.js";
 import "./commands/TabContainer.commands.js";
 import "./commands/TimeSelectionClocks.commands.js";
 import "./commands/ToggleButton.commands.js";
+import "./commands/TimePicker.commands.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import type MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 
