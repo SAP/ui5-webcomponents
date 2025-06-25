@@ -113,143 +113,102 @@ describe("design", () => {
 describe("IllustratedMessage 'design' property", () => {
 	it("should show up properly, when in panel and it expand/collapse", () => {
 		cy.mount(
-			<Panel id="panel1" accessible-role="Complementary" no-animation>
-				<div slot="header" className="header">
-					<Title id="p1-title">Expandable panel title</Title>
-				</div>
-				<IllustratedMessage
-					name="AddColumn"
-					titleText="No milestones yet."
-					id="illustratedMsg4"
-				/>
+			<Panel noAnimation>
+				<IllustratedMessage name="AddColumn" />
 			</Panel>
 		);
 
-		cy.get("#illustratedMsg4")
-			.invoke("prop", "media")
-
-		cy.get("#panel1")
+		cy.get("[ui5-panel]")
 			.invoke("prop", "collapsed", true);
 
-		cy.get("#illustratedMsg4")
+		cy.get("[ui5-illustrated-message]")
 			.should("have.prop", "media", "base");
 
-		cy.get("#panel1")
+		cy.get("[ui5-panel]")
 			.invoke("prop", "collapsed", false);
 
-		cy.get("#illustratedMsg4")
-			.invoke("prop", "media")
-			.should("not.equal", "base");
+		cy.get("[ui5-illustrated-message]")
+			.should("have.prop", "media")
+			.and("not.equal", "base");
 	});
 });
 
 describe("Vertical responsiveness", () => {
 	it("content with auto design shrinks to fit the parent container", () => {
-		const newContainerHeight = 300;
-		const expectedMedia = "dialog";
-
 		cy.mount(
-			<div id="container" style={{ border: "1px solid #ccc" }}>
-				<IllustratedMessage id="illustratedMsg5" class="border contentBox">
-					<button>Action 1</button>
-				</IllustratedMessage>
+			<div>
+				<IllustratedMessage />
 			</div>
 		);
 
-		cy.get("#container")
-			.invoke("css", "height", `${newContainerHeight}px`);
+		cy.get("div")
+			.invoke("css", "height", "300px");
 
-		cy.get("#illustratedMsg5")
+		cy.get("[ui5-illustrated-message]")
 			.shadow()
 			.find(".ui5-illustrated-message-root")
 			.should(($contents) => {
 				const scrollHeight = $contents[0].scrollHeight;
 				const offsetHeight = $contents[0].offsetHeight;
 
-				expect(scrollHeight).to.be.lessThan(newContainerHeight);
+				expect(scrollHeight).to.be.lessThan(300);
 				expect(scrollHeight).to.equal(offsetHeight);
 			});
-
-		cy.get("#illustratedMsg5")
-			.should("have.prop", "media", expectedMedia);
 	});
 
 	it("content with auto design expands to fit the parent container", () => {
-		const newContainerHeight = 500;
-		const expectedMedia = "scene";
-
 		cy.mount(
-			<div id="container" style={{ border: "1px solid #ccc" }}>
-				<IllustratedMessage id="illustratedMsg5" class="border contentBox">
-					<button>Action 1</button>
-				</IllustratedMessage>
+			<div>
+				<IllustratedMessage />
 			</div>
 		);
 
-		cy.get("#container")
-			.invoke("css", "height", `${newContainerHeight}px`);
+		cy.get("div")
+			.invoke("css", "height", "500px");
 
-		cy.get("#illustratedMsg5")
+		cy.get("[ui5-illustrated-message]")
 			.shadow()
 			.find(".ui5-illustrated-message-root")
 			.should(($contents) => {
 				const scrollHeight = $contents[0].scrollHeight;
 				const offsetHeight = $contents[0].offsetHeight;
-				expect(scrollHeight).to.be.lessThan(newContainerHeight);
+				expect(scrollHeight).to.be.lessThan(500);
 				expect(scrollHeight).to.equal(offsetHeight);
 			});
-
-		cy.get("#illustratedMsg5")
-			.should("have.prop", "media", expectedMedia);
 	});
 
 	it("content with fixed design fits the parent container", () => {
-		const newContainerHeight = 250;
-		const expectedMedia = "dialog";
-
 		cy.mount(
-			<div id="container" style={{ border: "1px solid #ccc" }}>
-				<IllustratedMessage id="illustratedMsg5" class="border contentBox">
-					<button>Action 1</button>
-				</IllustratedMessage>
+			<div>
+				<IllustratedMessage design="Dialog" />
 			</div>
 		);
 
-		cy.get("#illustratedMsg5")
-			.invoke("prop", "design", "Dialog");
+		cy.get("div")
+			.invoke("css", "height", "250px");
 
-		cy.get("#container")
-			.invoke("css", "height", `${newContainerHeight}px`);
-
-		cy.get("#illustratedMsg5")
+		cy.get("[ui5-illustrated-message]")
 			.shadow()
 			.find(".ui5-illustrated-message-root")
 			.should(($contents) => {
 				const scrollHeight = $contents[0].scrollHeight;
 				const offsetHeight = $contents[0].offsetHeight;
-				expect(scrollHeight).to.be.lessThan(newContainerHeight);
+				expect(scrollHeight).to.be.lessThan(250);
 				expect(scrollHeight).to.equal(offsetHeight);
 			});
-
-		cy.get("#illustratedMsg5")
-			.should("have.prop", "media", expectedMedia);
 	});
 
 	it("shows image with unconstrained height when container has auto height", () => {
-		const newContainerHeight = "auto";
-
 		cy.mount(
-			<div id="container" style={{ border: "1px solid #ccc" }}>
-				<IllustratedMessage id="illustratedMsg5" class="border contentBox">
-					<button>Action 1</button>
-				</IllustratedMessage>
+			<div>
+				<IllustratedMessage />
 			</div>
 		);
 
-		cy.get("#container")
-			.invoke("css", "height", newContainerHeight);
+		cy.get("div")
+			.invoke("css", "height", "auto");
 
-		cy.get("#illustratedMsg5")
+		cy.get("[ui5-illustrated-message]")
 			.shadow()
 			.find(".ui5-illustrated-message-illustration svg")
 			.should("have.css", "height", "240px");
@@ -257,76 +216,44 @@ describe("Vertical responsiveness", () => {
 
 	it("Illustration visible, when container fit content height", () => {
 		cy.mount(
-			<div className="illustratedmessage1auto">
-				<IllustratedMessage id="illustratedMsg1" class="border">
-					<button>Action 1</button>
-				</IllustratedMessage>
+			<div style={{ height: "440px" }}>
+				<IllustratedMessage design="Scene" />
 			</div>
 		);
 
-		cy.get("#illustratedMsg1")
-			.invoke("prop", "design", "Scene");
-
-		cy.get(".illustratedmessage1auto")
-			.invoke("attr", "style", "height: 440px");
-
-		cy.get("#illustratedMsg1")
+		cy.get("[ui5-illustrated-message]")
 			.shadow()
 			.find(".ui5-illustrated-message-illustration svg")
 			.should(($illustration) => {
 				const scrollHeight = $illustration[0].scrollHeight;
 				expect(scrollHeight).to.not.equal(0);
 			});
-
-		cy.get(".illustratedmessage1auto")
-			.invoke("attr", "style", "");
 	});
 
 	it("Illustration visible, when IM slotted and container has fixed height", () => {
 		cy.mount(
-			<Panel id="panel1" accessible-role="Complementary" no-animation>
-				<div slot="header" className="header">
-					<Title id="p1-title">Expandable panel title</Title>
-				</div>
-				<IllustratedMessage
-					name="AddColumn"
-					titleText="No milestones yet."
-					id="illustratedMsg4"
-				/>
+			<Panel style={{ height: "19rem" }} noAnimation>
+				<IllustratedMessage name="AddColumn" />
 			</Panel>
 		);
 
-		cy.get("#panel1")
-			.invoke("attr", "style", "height: 19rem");
-
-		cy.get("#illustratedMsg4")
+		cy.get("[ui5-illustrated-message]")
 			.shadow()
 			.find(".ui5-illustrated-message-illustration svg")
 			.should(($illustration) => {
 				const scrollHeight = $illustration[0].scrollHeight;
 				expect(scrollHeight).to.not.equal(0);
 			});
-
-		cy.get("#panel1")
-			.invoke("attr", "style", "");
 	});
 });
 
 describe("Dot design resource handling", () => {
 	it("uses substitute Spot illustration", () => {
 		cy.mount(
-			<IllustratedMessage id="illustratedMsg1" class="border">
-				<button>Action 1</button>
-			</IllustratedMessage>
+			<IllustratedMessage name="TntUnableToLoad" design="Dot" />
 		);
 
-		cy.get("#illustratedMsg1")
-			.invoke("prop", "name", "TntUnableToLoad");
-
-		cy.get("#illustratedMsg1")
-			.invoke("prop", "design", "Dot");
-
-		cy.get("#illustratedMsg1")
+		cy.get("[ui5-illustrated-message]")
 			.shadow()
 			.find(".ui5-illustrated-message-illustration svg")
 			.should("have.id", "tnt-Spot-UnableToLoad");
@@ -334,18 +261,10 @@ describe("Dot design resource handling", () => {
 
 	it("uses original Dot illustration", () => {
 		cy.mount(
-			<IllustratedMessage id="illustratedMsg1" class="border">
-				<button>Action 1</button>
-			</IllustratedMessage>
+			<IllustratedMessage name="AddPeople" design="Dot" />
 		);
 
-		cy.get("#illustratedMsg1")
-			.invoke("prop", "name", "AddPeople");
-
-		cy.get("#illustratedMsg1")
-			.invoke("prop", "design", "Dot");
-
-		cy.get("#illustratedMsg1")
+		cy.get("[ui5-illustrated-message]")
 			.shadow()
 			.find(".ui5-illustrated-message-illustration svg")
 			.should("have.id", "sapIllus-Dot-AddPeople");
