@@ -959,10 +959,6 @@ abstract class UI5Element extends HTMLElement {
 	async focus(focusOptions?: FocusOptions): Promise<void> {
 		await this._waitForDomRef();
 
-		if (!this.isConnected) {
-			return;
-		}
-
 		const focusDomRef = this.getFocusDomRef();
 		if (focusDomRef === this) {
 			HTMLElement.prototype.focus.call(this, focusOptions);
