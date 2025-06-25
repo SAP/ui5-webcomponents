@@ -376,8 +376,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	get _lastAvailableTime() {
-		const date = UI5Date.getInstance();
-		date.setHours(23, 59, 59, 999); // set to the last available time of the day
+		const date = new Date();
+		date.setHours(23, 59, 59, 999);
 		return this.getFormat().format(date);
 	}
 
