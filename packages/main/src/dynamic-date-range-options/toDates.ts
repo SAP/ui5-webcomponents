@@ -1,5 +1,4 @@
 import type { DynamicDateRangeValue, IDynamicDateRangeOption } from "../DynamicDateRange.js";
-import DynamicDateRangeDirection from "../types/DynamicDateRangeDirection.js";
 
 const dateOptionToDates = (value: DynamicDateRangeValue): Array<Date> => {
 	const startDate = value.values ? value.values[0] as Date : new Date();
@@ -55,16 +54,18 @@ const yesterdayToDates = (): Array<Date> => {
 	return [startDate, endDate];
 };
 
-const lastNextToDates = (value: DynamicDateRangeValue, unit: string, direction: `${DynamicDateRangeDirection}`): Array<Date> => {
+const lastNextToDates = (value: DynamicDateRangeValue, unit: string, direction: "last" | "next"): Array<Date> => {
 	const today = new Date();
 	const startDate = new Date(today);
 	const endDate = new Date(today);
 	const amount = value.values?.[0] as number || 1;
 
-	if (direction === DynamicDateRangeDirection.Last) {
+	if (direction === "last") {
 		switch (unit) {
 		case "days":
-			startDate.setDate(today.getDate() - (amount - 1));
+			// For "Last X Days": start X-1 days before today, end today
+			// "Last 1 Day" = today only, "Last 2 Days" = yesterday + today, etc.
+			startDate.setTime(today.getTime() - (amount - 1) * 24 * 60 * 60 * 1000);
 			break;
 		case "weeks": {
 			const currentDayOfWeek = today.getDay();
@@ -94,7 +95,9 @@ const lastNextToDates = (value: DynamicDateRangeValue, unit: string, direction: 
 		// For "next", start date is today
 		switch (unit) {
 		case "days":
-			endDate.setDate(today.getDate() + (amount - 1));
+			// For "Next X Days": start today, end X-1 days after today
+			// "Next 1 Day" = today only, "Next 2 Days" = today + tomorrow, etc.
+			endDate.setTime(today.getTime() + (amount - 1) * 24 * 60 * 60 * 1000);
 			break;
 		case "weeks": {
 			const currentDayOfWeek = today.getDay();
@@ -129,14 +132,40 @@ const lastNextToDates = (value: DynamicDateRangeValue, unit: string, direction: 
 
 /**
  * Converts DynamicDateRangeValue to dates for Last/Next options.
- * Safe function that returns today's date range if timeUnit or direction are missing.
+ * Uses operator name to determine time unit and direction.
  */
 const toDatesLastNext = (value: DynamicDateRangeValue, option: IDynamicDateRangeOption): Array<Date> => {
-	// Safe fallback - return today's date range if required properties are missing
-	if (!option.timeUnit || !option.direction) {
+	const operator = option.operator;
+
+	// Extract direction from operator name
+	let direction: "last" | "next";
+	if (operator.startsWith("LAST")) {
+		direction = "last";
+	} else if (operator.startsWith("NEXT")) {
+		direction = "next";
+	} else {
+		// Not a LastNext option, return today's date range
 		return todayToDates();
 	}
-	return lastNextToDates(value, option.timeUnit as string, option.direction as `${DynamicDateRangeDirection}`);
+
+	// Extract time unit from operator name
+	let unit: string;
+	if (operator.includes("DAYS")) {
+		unit = "days";
+	} else if (operator.includes("WEEKS")) {
+		unit = "weeks";
+	} else if (operator.includes("MONTHS")) {
+		unit = "months";
+	} else if (operator.includes("QUARTERS")) {
+		unit = "quarters";
+	} else if (operator.includes("YEARS")) {
+		unit = "years";
+	} else {
+		// Unknown time unit, return today's date range as fallback
+		return todayToDates();
+	}
+
+	return lastNextToDates(value, unit, direction);
 };
 
 export {

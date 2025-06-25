@@ -8,7 +8,7 @@ import { toDatesLastNext } from "./toDates.js";
  * @param option - The option instance
  * @returns Parsed DynamicDateRangeValue
  */
-export function parseLastNext(value: string, option: IDynamicDateRangeOption): DynamicDateRangeValue {
+export function parseLastNext(value: string, option: IDynamicDateRangeOption): DynamicDateRangeValue | undefined {
 	const returnValue = { operator: "", values: [] } as DynamicDateRangeValue;
 	returnValue.operator = option.operator;
 

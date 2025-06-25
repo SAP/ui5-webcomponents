@@ -2,9 +2,8 @@ import DynamicDateRange from '../../src/DynamicDateRange.js';
 import SingleDate from '../../src/dynamic-date-range-options/SingleDate.js';
 import DateRange from '../../src/dynamic-date-range-options/DateRange.js';
 import Today from '../../src/dynamic-date-range-options/Today.js';
-import LastDays from '../../src/dynamic-date-range-options/LastDays.js';
-import NextWeeks from '../../src/dynamic-date-range-options/NextWeeks.js';
-import LastMonths from '../../src/dynamic-date-range-options/LastMonths.js';
+import LastOptions from '../../src/dynamic-date-range-options/LastOptions.js';
+import NextOptions from '../../src/dynamic-date-range-options/NextOptions.js';
 
 describe('DynamicDateRange Component', () => {
     beforeEach(() => {
@@ -144,9 +143,9 @@ describe('DynamicDateRange Last/Next Options', () => {
 
     it('selects Last X Days option with custom number input', () => {
         const mockOptions = [
-            new LastDays(),
-            new NextWeeks(),
-            new LastMonths()
+            new LastOptions.Days(),
+            new NextOptions.Weeks(),
+            new LastOptions.Months()
         ];
 
         cy.get('[ui5-dynamic-date-range]').as("ddr");
@@ -177,9 +176,9 @@ describe('DynamicDateRange Last/Next Options', () => {
 
     it('handles Next X Weeks option and verifies date range calculation', () => {
         const mockOptions = [
-            new LastDays(),
-            new NextWeeks(),
-            new LastMonths()
+            new LastOptions.Days(),
+            new NextOptions.Weeks(),
+            new LastOptions.Months()
         ];
 
         cy.window().then((win) => {
@@ -212,10 +211,10 @@ describe('DynamicDateRange Last/Next Options', () => {
         cy.get('[ui5-dynamic-date-range]').as("ddr");
         cy.get("@ddr").shadow().find('[ui5-input]').as("input");
 
-        cy.get("@input").shadow().find("input").clear().realType('Last 6 Months');
+        cy.get("@input").shadow().find("input").clear().realType('Last 6 Days');
         cy.get("@input").shadow().find("input").realPress("Enter");
 
-        cy.get("@input").shadow().find("input").should('have.value', 'Last 6 Months');
+        cy.get("@input").shadow().find("input").should('have.value', 'Last 6 Days');
 
         cy.get("@input").find('[ui5-icon]').realClick();
 

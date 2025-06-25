@@ -1,4 +1,4 @@
-import type DynamicDateRange from "./DynamicDateRange.js";
+import DynamicDateRange from "./DynamicDateRange.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import ListItemStandard from "./ListItemStandard.js";
@@ -6,13 +6,8 @@ import Button from "./Button.js";
 import Title from "./Title.js";
 import slimArrowLeft from "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import ListItemType from "./types/ListItemType.js";
-import { isGroupedOption } from "./DynamicDateRangeUtils.js";
-import DynamicDateRangeUnifiedOptionTemplate from "./DynamicDateRangeUnifiedOptionTemplate.js";
 
 export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) {
-	// Check if current option is a merged/grouped option
-	const isCurrentGroupedOption = this._currentOption && isGroupedOption(this._currentOption);
-
 	return (
 		<ResponsivePopover
 			id={`${this._id}-responsive-popover`}
@@ -47,16 +42,30 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 					onItemClick={this._selectOption}
 				>
 					{this.optionsObjects.map(option => {
-						const isOptionGrouped = isGroupedOption(option);
-						const isSelected = option.operator === this.value?.operator ||
-							(isOptionGrouped && option._availableOptions.some(availableOption => availableOption.operator === this.value?.operator));
+						// For grouped options, check if this option can handle the current value's operator
+						let isSelected = false;
+						if (this.value?.operator) {
+							if (option.operator === this.value.operator) {
+								// Direct match
+								isSelected = true;
+							} else {
+								// Check if this option can handle the current operator (for grouped options)
+								const currentOptions = this.options.split(",").map(s => s.trim());
+								const selectedConstructor = option.constructor;
+								const relatedOperators = currentOptions.filter(op => {
+									const OptionClass = DynamicDateRange.getOptionClass(op);
+									return OptionClass && new OptionClass().constructor === selectedConstructor;
+								});
+								isSelected = relatedOperators.includes(this.value.operator);
+							}
+						}
 
 						return <ListItemStandard
 							selected={isSelected}
 							iconEnd={true}
 							icon={option.icon}
 							wrappingType="Normal"
-							type={!option.template && !isOptionGrouped ? ListItemType.Active : ListItemType.Navigation}>
+							type={option.template ? ListItemType.Navigation : ListItemType.Active}>
 							{option.text}
 						</ListItemStandard>;
 					})}
@@ -64,7 +73,7 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 			</div>
 				:
 				<div class="ui5-dynamic-date-range-option-container">
-					{isCurrentGroupedOption ? DynamicDateRangeUnifiedOptionTemplate.call(this) : this._currentOption?.template?.call(this)}
+					{this._currentOption?.template?.call(this)}
 					<div class="ui5-ddr-current-value">{this.currentValueText}</div>
 				</div>
 			}
