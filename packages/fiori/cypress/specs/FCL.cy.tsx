@@ -3,10 +3,10 @@ import FlexibleColumnLayout from "../../src/FlexibleColumnLayout.js";
 
 before(() => {
 	cy.wrap({ setAnimationMode })
-	  .then(api => {
-		return api.setAnimationMode("none");
-	  });
-  });
+		.then(api => {
+			return api.setAnimationMode("none");
+		});
+});
 
 describe("Columns resize", () => {
 	beforeEach(() => {
@@ -437,8 +437,17 @@ describe("Layout change by dragging start-separator on tablet", () => {
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
 			.find(".ui5-fcl-separator-start")
-			.realMouseDown()
-			.realMouseMove(400, 0)
+			.should("be.visible")
+			.as("separator");
+
+		// Separate the drag operations
+		cy.get("@separator")
+			.realMouseDown();
+
+		cy.get("@separator")
+			.realMouseMove(400, 0);
+
+		cy.get("@separator")
 			.realMouseUp();
 
 		cy.get("[ui5-flexible-column-layout]")
@@ -455,8 +464,16 @@ describe("Layout change by dragging start-separator on tablet", () => {
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
 			.find(".ui5-fcl-separator-start")
-			.realMouseDown()
-			.realMouseMove(300, 0)
+			.should("be.visible")
+			.as("startSeparator");
+
+		cy.get("@startSeparator")
+			.realMouseDown();
+
+		cy.get("@startSeparator")
+			.realMouseMove(300, 0);
+
+		cy.get("@startSeparator")
 			.realMouseUp();
 
 		cy.get("[ui5-flexible-column-layout]")
@@ -505,8 +522,16 @@ describe("Tablet Layout Tests", () => {
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
 			.find(".ui5-fcl-separator-start")
-			.realMouseDown()
-			.realMouseMove(-400, 0)
+			.should("be.visible")
+			.as("separator");
+
+		cy.get("@separator")
+			.realMouseDown();
+
+		cy.get("@separator")
+			.realMouseMove(-400, 0);
+
+		cy.get("@separator")
 			.realMouseUp();
 
 		cy.get("[ui5-flexible-column-layout]")
@@ -573,8 +598,16 @@ describe("Layout change by dragging end-separator on tablet", () => {
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
 			.find(".ui5-fcl-separator-end")
-			.realMouseDown()
-			.realMouseMove(-300, 0)
+			.should("be.visible")
+			.as("endSeparator");
+
+		cy.get("@endSeparator")
+			.realMouseDown();
+
+		cy.get("@endSeparator")
+			.realMouseMove(-300, 0);
+
+		cy.get("@endSeparator")
 			.realMouseUp();
 
 		cy.get("[ui5-flexible-column-layout]")
@@ -676,17 +709,25 @@ describe("Preserves column min-width", () => {
 
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("be.visible")
+			.as("separator");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
 			.find(".ui5-fcl-column--middle")
 			.then($midColumn => {
 				const midColumnWidth = $midColumn.width();
 				const differenceFromSmallestWidth = midColumnWidth - smallestColumnWidth;
 				const testOffsetX = differenceFromSmallestWidth + 10;
 
-				cy.get("[ui5-flexible-column-layout]")
-					.shadow()
-					.find(".ui5-fcl-separator-start")
-					.realMouseDown()
-					.realMouseMove(testOffsetX, 0)
+				cy.get("@separator")
+					.realMouseDown();
+
+				cy.get("@separator")
+					.realMouseMove(testOffsetX, 0);
+
+				cy.get("@separator")
 					.realMouseUp();
 
 				cy.get("[ui5-flexible-column-layout]")
@@ -695,9 +736,8 @@ describe("Preserves column min-width", () => {
 				cy.get("[ui5-flexible-column-layout]")
 					.shadow()
 					.find(".ui5-fcl-column--middle")
-					.then($finalMidColumn => {
+					.should($finalMidColumn => {
 						const finalWidth = $finalMidColumn.width();
-
 						expect(finalWidth).to.be.closeTo(smallestColumnWidth, 5);
 					});
 			});
@@ -781,23 +821,31 @@ describe("Preserves column min-width", () => {
 
 	it("fully reveals the end-column on dragging the end-separator only few pixels", () => {
 		const smallestColumnWidth = 248;
-
+	
 		cy.get("[ui5-flexible-column-layout]")
 			.invoke("prop", "layout", "ThreeColumnsMidExpandedEndHidden");
-
+	
 		cy.get("[ui5-flexible-column-layout]")
 			.should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
-
+	
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
 			.find(".ui5-fcl-separator-end")
-			.realMouseDown()
-			.realMouseMove(-100, 0)
+			.should("be.visible")
+			.as("endSeparator");
+	
+		cy.get("@endSeparator")
+			.realMouseDown();
+	
+		cy.get("@endSeparator")
+			.realMouseMove(-100, 0);
+	
+		cy.get("@endSeparator")
 			.realMouseUp();
-
+	
 		cy.get("[ui5-flexible-column-layout]")
 			.should("have.prop", "layout", "ThreeColumnsMidExpanded");
-
+	
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
 			.find(".ui5-fcl-column--end")
