@@ -67,7 +67,7 @@ describe("DynamicPage", () => {
       .find("ui5-dynamic-page-header-actions")
       .should("have.prop", "snapped", true);
     
-    cy.get("[custom-tag='ui5-dynamic-page-title']")
+    cy.get("[ui5-dynamic-page-title]")
       .should("have.prop", "snapped", true);
     
     cy.get("@dynamicPage")
@@ -78,7 +78,7 @@ describe("DynamicPage", () => {
       .find("ui5-dynamic-page-header-actions")
       .should("have.prop", "snapped", false);
     
-    cy.get("[custom-tag='ui5-dynamic-page-title']")
+    cy.get("[ui5-dynamic-page-title]")
       .should("have.prop", "snapped", false);
   });
 
@@ -421,7 +421,7 @@ describe("Page general interaction", () => {
     cy.get("@dynamicPage")
       .should("have.prop", "headerSnapped", true);
   
-    cy.get("[custom-tag='ui5-dynamic-page-title']").click();
+    cy.get("[ui5-dynamic-page-title]").click();
   
     cy.get("@dynamicPage")
       .should("have.prop", "headerSnapped", false);
@@ -431,7 +431,7 @@ describe("Page general interaction", () => {
     cy.get("@dynamicPage")
       .invoke("prop", "headerSnapped", false);
   
-    cy.get("[custom-tag='ui5-dynamic-page-title']")
+    cy.get("[ui5-dynamic-page-title]")
       .shadow()
       .find(".ui5-dynamic-page-title-focus-area")
       .click(50, 50);
@@ -447,7 +447,7 @@ describe("Page general interaction", () => {
     cy.get("@dynamicPage")
       .should("have.prop", "headerSnapped", true);
   
-    cy.get("[custom-tag='ui5-dynamic-page-title']")
+    cy.get("[ui5-dynamic-page-title]")
       .shadow()
       .find(".ui5-dynamic-page-title-focus-area")
       .focus()
@@ -464,7 +464,7 @@ describe("Page general interaction", () => {
     cy.get("@dynamicPage")
       .should("have.prop", "headerSnapped", false);
   
-    cy.get("[custom-tag='ui5-dynamic-page-title']")
+    cy.get("[ui5-dynamic-page-title]")
       .shadow()
       .find(".ui5-dynamic-page-title-focus-area")
       .focus()
@@ -519,7 +519,7 @@ describe("Page layout when content has 100% height", () => {
     cy.get("@dynamicPage")
       .should("have.prop", "showFooter", true);
   
-    cy.get("[custom-tag='ui5-dynamic-page-header']")
+    cy.get("[ui5-dynamic-page-header]")
       .then(($header) => {
         const headerBottom = $header[0].getBoundingClientRect().bottom;
         
@@ -617,21 +617,21 @@ describe("ARIA attributes", () => {
       .should("have.attr", "aria-label", "Header Expanded")
       .should("have.attr", "aria-expanded", "true");
 
-    cy.get("[custom-tag='ui5-dynamic-page-header']")
+    cy.get("[ui5-dynamic-page-header]")
       .shadow()
       .find(".ui5-dynamic-page-header-root")
       .should("have.attr", "role", "region");
 
-    cy.get("[custom-tag='ui5-dynamic-page-title']")
+    cy.get("[ui5-dynamic-page-title]")
       .shadow()
       .find(".ui5-dynamic-page-title-focus-area")
       .should("have.attr", "aria-expanded", "true")
       .should("have.attr", "role", "button");
 
-    cy.get("[custom-tag='ui5-dynamic-page-title']")
+    cy.get("[ui5-dynamic-page-title]")
       .invoke("prop", "__id")
       .then((titleId) => {
-        cy.get("[custom-tag='ui5-dynamic-page-title']")
+        cy.get("[ui5-dynamic-page-title]")
           .shadow()
           .find(".ui5-dynamic-page-title-focus-area")
           .should("have.attr", "aria-describedby", `${titleId}-toggle-description`);
@@ -676,16 +676,16 @@ describe("ARIA attributes", () => {
       .should("have.attr", "aria-label", "Header Snapped")
       .should("have.attr", "aria-expanded", "false");
   
-    cy.get("[custom-tag='ui5-dynamic-page-title']")
+    cy.get("[ui5-dynamic-page-title]")
       .shadow()
       .find(".ui5-dynamic-page-title-focus-area")
       .should("have.attr", "aria-expanded", "false")
       .should("have.attr", "role", "button");
   
-    cy.get("[custom-tag='ui5-dynamic-page-title']")
+    cy.get("[ui5-dynamic-page-title]")
       .invoke("prop", "__id")
       .then((titleId) => {
-        cy.get("[custom-tag='ui5-dynamic-page-title']")
+        cy.get("[ui5-dynamic-page-title]")
           .shadow()
           .find(".ui5-dynamic-page-title-focus-area")
           .should("have.attr", "aria-describedby", `${titleId}-toggle-description`);
