@@ -34,14 +34,12 @@ describe("DynamicPage", () => {
       .invoke("prop", "headerSnapped", false);
     
     cy.get("@dynamicPage")
-      .invoke("prop", "headerPinned")
-      .should("be.false");
+      .should("have.prop", "headerPinned", false);
   });
 
   it("toggles the header-snapped state with 'headerSnapped' property", () => {
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
     
     cy.get("@dynamicPage")
       .shadow()
@@ -62,18 +60,15 @@ describe("DynamicPage", () => {
       .invoke("prop", "headerSnapped", true);
     
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.true");
+      .should("have.prop", "headerSnapped", true);
     
     cy.get("@dynamicPage")
       .shadow()
       .find("ui5-dynamic-page-header-actions")
-      .invoke("prop", "snapped")
-      .should("be.true");
+      .should("have.prop", "snapped", true);
     
-    cy.get("ui5-dynamic-page-title")
-      .invoke("prop", "snapped")
-      .should("be.true");
+    cy.get("[custom-tag='ui5-dynamic-page-title']")
+      .should("have.prop", "snapped", true);
     
     cy.get("@dynamicPage")
       .invoke("prop", "headerSnapped", false);
@@ -81,18 +76,15 @@ describe("DynamicPage", () => {
     cy.get("@dynamicPage")
       .shadow()
       .find("ui5-dynamic-page-header-actions")
-      .invoke("prop", "snapped")
-      .should("be.false");
+      .should("have.prop", "snapped", false);
     
-    cy.get("ui5-dynamic-page-title")
-      .invoke("prop", "snapped")
-      .should("be.false");
+    cy.get("[custom-tag='ui5-dynamic-page-title']")
+      .should("have.prop", "snapped", false);
   });
 
   it("toggles the header-pinned state with 'headerPinned' property", () => {
     cy.get("@dynamicPage")
-      .invoke("prop", "headerPinned")
-      .should("be.false");
+      .should("have.prop", "headerPinned", false);
     
     cy.get("@dynamicPage")
       .shadow()
@@ -123,14 +115,12 @@ describe("DynamicPage", () => {
       .invoke("prop", "headerPinned", true);
     
     cy.get("@dynamicPage")
-      .invoke("prop", "headerPinned")
-      .should("be.true");
+      .should("have.prop", "headerPinned", true);
     
     cy.get("@dynamicPage")
       .shadow()
       .find("ui5-dynamic-page-header-actions")
-      .invoke("prop", "pinned")
-      .should("be.true");
+      .should("have.prop", "pinned", true);
     
     cy.get("@dynamicPage")
       .invoke("prop", "headerPinned", false);
@@ -138,20 +128,17 @@ describe("DynamicPage", () => {
     cy.get("@dynamicPage")
       .shadow()
       .find("ui5-dynamic-page-header-actions")
-      .invoke("prop", "pinned")
-      .should("be.false");
+      .should("have.prop", "pinned", false);
   });
 
   it("toggles the pin-button visibility with 'hidePinButton' property", () => {
     cy.get("@dynamicPage")
-      .invoke("prop", "hidePinButton")
-      .should("be.false");
+      .should("have.prop", "hidePinButton", false);
     
     cy.get("@dynamicPage")
       .shadow()
       .find("ui5-dynamic-page-header-actions")
-      .invoke("prop", "hidePinButton")
-      .should("be.false");
+      .should("have.prop", "hidePinButton", false);
     
     cy.get("@dynamicPage")
       .invoke("prop", "hidePinButton", true);
@@ -159,8 +146,7 @@ describe("DynamicPage", () => {
     cy.get("@dynamicPage")
       .shadow()
       .find("ui5-dynamic-page-header-actions")
-      .invoke("prop", "hidePinButton")
-      .should("be.true");
+      .should("have.prop", "hidePinButton", true);
   });
 });
 
@@ -193,8 +179,7 @@ describe("Scroll", () => {
       .scrollTo(0, 500);
     
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.true");
+      .should("have.prop", "headerSnapped", true);
   });
 
   it("expands the header upon scroll", () => {
@@ -207,12 +192,10 @@ describe("Scroll", () => {
       .scrollTo(0, 0);
     
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
     
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
   });
 });
 
@@ -246,8 +229,7 @@ describe("Page general interaction", () => {
       .invoke("prop", "scrollTop", 20);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
   
     cy.get("@dynamicPage")
       .shadow()
@@ -258,12 +240,10 @@ describe("Page general interaction", () => {
       .click();
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.true");
+      .should("have.prop", "headerSnapped", true);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "showHeaderInStickArea")
-      .should("be.true");
+      .should("have.prop", "showHeaderInStickArea", true);
   
     cy.get("@dynamicPage")
       .shadow()
@@ -274,12 +254,10 @@ describe("Page general interaction", () => {
       .click();
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "showHeaderInStickArea")
-      .should("be.false");
+      .should("have.prop", "showHeaderInStickArea", false);
   
     cy.get("@dynamicPage")
       .shadow()
@@ -305,8 +283,7 @@ describe("Page general interaction", () => {
 
   it("snaps the header upon pressing the snap button", () => {
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
   
     cy.get("@dynamicPage")
       .shadow()
@@ -324,8 +301,7 @@ describe("Page general interaction", () => {
       .click();
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.true");
+      .should("have.prop", "headerSnapped", true);
   });
 
   it("expands the header upon pressing the expand button", () => {
@@ -333,8 +309,7 @@ describe("Page general interaction", () => {
       .invoke("prop", "headerSnapped", true);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.true");
+      .should("have.prop", "headerSnapped", true);
   
     cy.get("@dynamicPage")
       .shadow()
@@ -350,8 +325,7 @@ describe("Page general interaction", () => {
       .click();
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
   
     cy.get("@dynamicPage")
       .shadow()
@@ -364,8 +338,7 @@ describe("Page general interaction", () => {
       .invoke("prop", "headerSnapped", true);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerInContent")
-      .should("be.false");
+      .should("have.prop", "headerInContent", false);
   
     cy.get("@dynamicPage")
       .shadow()
@@ -376,8 +349,7 @@ describe("Page general interaction", () => {
       .click();
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
   
     cy.get("@dynamicPage")
       .shadow()
@@ -395,12 +367,10 @@ describe("Page general interaction", () => {
       .click();
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerPinned")
-      .should("be.true");
+      .should("have.prop", "headerPinned", true);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
   });
 
   it("keeps the pinned header expanded during scroll", () => {
@@ -413,12 +383,10 @@ describe("Page general interaction", () => {
       .scrollTo(0, 500);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerPinned")
-      .should("be.true");
+      .should("have.prop", "headerPinned", true);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
   
     cy.get("@dynamicPage")
       .shadow()
@@ -440,12 +408,10 @@ describe("Page general interaction", () => {
       .click();
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.true");
+      .should("have.prop", "headerSnapped", true);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerPinned")
-      .should("be.false");
+      .should("have.prop", "headerPinned", false);
   });
 
   it("expands the title with click", () => {
@@ -453,28 +419,25 @@ describe("Page general interaction", () => {
       .invoke("prop", "headerSnapped", true);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.true");
+      .should("have.prop", "headerSnapped", true);
   
-    cy.get("ui5-dynamic-page-title").click();
+    cy.get("[custom-tag='ui5-dynamic-page-title']").click();
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
   });
 
   it("snaps the title with click", () => {
     cy.get("@dynamicPage")
       .invoke("prop", "headerSnapped", false);
   
-    cy.get("ui5-dynamic-page-title")
+    cy.get("[custom-tag='ui5-dynamic-page-title']")
       .shadow()
       .find(".ui5-dynamic-page-title-focus-area")
       .click(50, 50);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.true");
+      .should("have.prop", "headerSnapped", true);
   });
 
   it("expands the title using keyboard", () => {
@@ -482,18 +445,16 @@ describe("Page general interaction", () => {
       .invoke("prop", "headerSnapped", true);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.true");
+      .should("have.prop", "headerSnapped", true);
   
-    cy.get("ui5-dynamic-page-title")
+    cy.get("[custom-tag='ui5-dynamic-page-title']")
       .shadow()
       .find(".ui5-dynamic-page-title-focus-area")
       .focus()
       .realPress('Enter');
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
   });
 
   it("snaps the title using keyboard", () => {
@@ -501,18 +462,16 @@ describe("Page general interaction", () => {
       .invoke("prop", "headerSnapped", false);
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
   
-    cy.get("ui5-dynamic-page-title")
+    cy.get("[custom-tag='ui5-dynamic-page-title']")
       .shadow()
       .find(".ui5-dynamic-page-title-focus-area")
       .focus()
       .realPress('Enter');
   
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.true");
+      .should("have.prop", "headerSnapped", true);
   });
 });
 
@@ -541,8 +500,7 @@ describe("Page layout when content has 100% height", () => {
 
   it("footer does not hide the content", () => {
     cy.get("@dynamicPage")
-      .invoke("prop", "showFooter")
-      .should("be.true");
+      .should("have.prop", "showFooter", true);
 
     cy.get("#content")
       .then(($content) => {
@@ -559,10 +517,9 @@ describe("Page layout when content has 100% height", () => {
 
   it("content expands to fill the space between header and footer", () => {
     cy.get("@dynamicPage")
-      .invoke("prop", "showFooter")
-      .should("be.true");
+      .should("have.prop", "showFooter", true);
   
-    cy.get("ui5-dynamic-page-header")
+    cy.get("[custom-tag='ui5-dynamic-page-header']")
       .then(($header) => {
         const headerBottom = $header[0].getBoundingClientRect().bottom;
         
@@ -612,8 +569,7 @@ describe("Page layout when content overflows", () => {
 
   it("footer does not hide the content", () => {
     cy.get("@dynamicPage")
-      .invoke("prop", "showFooter")
-      .should("be.true");
+      .should("have.prop", "showFooter", true);
 
     cy.get("@dynamicPage")
       .shadow()
@@ -653,8 +609,7 @@ describe("ARIA attributes", () => {
 
   it("sets expanded state attributes", () => {
     cy.get("@dynamicPage")
-      .invoke("prop", "headerSnapped")
-      .should("be.false");
+      .should("have.prop", "headerSnapped", false);
 
     cy.get("@dynamicPage")
       .shadow()
@@ -662,21 +617,21 @@ describe("ARIA attributes", () => {
       .should("have.attr", "aria-label", "Header Expanded")
       .should("have.attr", "aria-expanded", "true");
 
-    cy.get("ui5-dynamic-page-header")
+    cy.get("[custom-tag='ui5-dynamic-page-header']")
       .shadow()
       .find(".ui5-dynamic-page-header-root")
       .should("have.attr", "role", "region");
 
-    cy.get("ui5-dynamic-page-title")
+    cy.get("[custom-tag='ui5-dynamic-page-title']")
       .shadow()
       .find(".ui5-dynamic-page-title-focus-area")
       .should("have.attr", "aria-expanded", "true")
       .should("have.attr", "role", "button");
 
-    cy.get("ui5-dynamic-page-title")
+    cy.get("[custom-tag='ui5-dynamic-page-title']")
       .invoke("prop", "__id")
       .then((titleId) => {
-        cy.get("ui5-dynamic-page-title")
+        cy.get("[custom-tag='ui5-dynamic-page-title']")
           .shadow()
           .find(".ui5-dynamic-page-title-focus-area")
           .should("have.attr", "aria-describedby", `${titleId}-toggle-description`);
@@ -687,32 +642,28 @@ describe("ARIA attributes", () => {
       .find("ui5-dynamic-page-header-actions")
       .shadow()
       .find("ui5-button.ui5-dynamic-page-header-action-expand")
-      .invoke("prop", "accessibleName")
-      .should("equal", "Snap Header");
+      .should("have.prop", "accessibleName", "Snap Header");
 
     cy.get("@dynamicPage")
       .shadow()
       .find("ui5-dynamic-page-header-actions")
       .shadow()
       .find("ui5-button.ui5-dynamic-page-header-action-expand")
-      .invoke("prop", "tooltip")
-      .should("equal", "Snap Header");
+      .should("have.prop", "tooltip", "Snap Header");
 
     cy.get("@dynamicPage")
       .shadow()
       .find("ui5-dynamic-page-header-actions")
       .shadow()
       .find("ui5-toggle-button.ui5-dynamic-page-header-action-pin")
-      .invoke("prop", "accessibleName")
-      .should("equal", "Pin Header");
+      .should("have.prop", "accessibleName", "Pin Header");
 
     cy.get("@dynamicPage")
       .shadow()
       .find("ui5-dynamic-page-header-actions")
       .shadow()
       .find("ui5-toggle-button.ui5-dynamic-page-header-action-pin")
-      .invoke("prop", "tooltip")
-      .should("equal", "Pin Header");
+      .should("have.prop", "tooltip", "Pin Header");
   });
 
   it("sets snapped state attributes", () => {
@@ -725,16 +676,16 @@ describe("ARIA attributes", () => {
       .should("have.attr", "aria-label", "Header Snapped")
       .should("have.attr", "aria-expanded", "false");
   
-    cy.get("ui5-dynamic-page-title")
+    cy.get("[custom-tag='ui5-dynamic-page-title']")
       .shadow()
       .find(".ui5-dynamic-page-title-focus-area")
       .should("have.attr", "aria-expanded", "false")
       .should("have.attr", "role", "button");
   
-    cy.get("ui5-dynamic-page-title")
+    cy.get("[custom-tag='ui5-dynamic-page-title']")
       .invoke("prop", "__id")
       .then((titleId) => {
-        cy.get("ui5-dynamic-page-title")
+        cy.get("[custom-tag='ui5-dynamic-page-title']")
           .shadow()
           .find(".ui5-dynamic-page-title-focus-area")
           .should("have.attr", "aria-describedby", `${titleId}-toggle-description`);
@@ -752,15 +703,13 @@ describe("ARIA attributes", () => {
       .find("ui5-dynamic-page-header-actions")
       .shadow()
       .find("ui5-button")
-      .invoke("prop", "accessibleName")
-      .should("equal", "Expand Header");
+      .should("have.prop", "accessibleName", "Expand Header");
   
     cy.get("@dynamicPage")
       .shadow()
       .find("ui5-dynamic-page-header-actions")
       .shadow()
       .find("ui5-button")
-      .invoke("prop", "tooltip")
-      .should("equal", "Expand Header");
+      .should("have.prop", "tooltip", "Expand Header");
   });
 });
