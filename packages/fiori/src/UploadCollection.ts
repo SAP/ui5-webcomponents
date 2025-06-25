@@ -63,17 +63,6 @@ type UploadCollectionItemDeleteEventDetail = {
 	styles: UploadCollectionCss,
 	template: UploadCollectionTemplate,
 })
-/**
- * Fired when an element is dropped inside the drag and drop overlay.
- *
- * **Note:** The `drop` event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the `ui5-upload-collection`.
- * @param {DataTransfer} dataTransfer The `drop` event operation data.
- * @public
- * @native
- */
-// @event("drop", {
-// 	bubbles: true,
-// })
 
 /**
  * Fired when the delete button of any item is pressed.
