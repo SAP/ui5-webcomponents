@@ -106,7 +106,7 @@ class LastOptions implements IDynamicDateRangeOption {
 				const normalizedEnd = new Date(endDate);
 				normalizedStart.setHours(0, 0, 0, 0);
 				normalizedEnd.setHours(0, 0, 0, 0);
-				
+
 				const diffInDays = Math.round((normalizedEnd.getTime() - normalizedStart.getTime()) / (1000 * 60 * 60 * 24));
 				return diffInDays + 1;
 			}
