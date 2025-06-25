@@ -83,6 +83,7 @@ import Menu from "./Menu.js";
 import MenuItem from "./MenuItem.js";
 import MenuSeparator from "./MenuSeparator.js";
 import NextOptions from "./dynamic-date-range-options/NextOptions.js";
+import MenuItemGroup from "./MenuItemGroup.js";
 import Popover from "./Popover.js";
 import Panel from "./Panel.js";
 import RadioButton from "./RadioButton.js";

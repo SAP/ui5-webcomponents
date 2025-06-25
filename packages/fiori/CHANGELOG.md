@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.0...v2.12.0-rc.1) (2025-06-19)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** remove aria-expanded and aria-label when no header content is present ([#11626](https://github.com/SAP/ui5-webcomponents/issues/11626)) ([1cdcdd4](https://github.com/SAP/ui5-webcomponents/commit/1cdcdd461484c2a8d801c1f68db8ba5666c8ea0b)), closes [#11570](https://github.com/SAP/ui5-webcomponents/issues/11570)
+* **ui5-shellbar:** allow custom logo width ([#11727](https://github.com/SAP/ui5-webcomponents/issues/11727)) ([2645efe](https://github.com/SAP/ui5-webcomponents/commit/2645efeb9fa4a9e490074c33d5c0b7c28a36731b))
+* **ui5-shellbar:** arrow key navigation inputs support ([#11684](https://github.com/SAP/ui5-webcomponents/issues/11684)) ([404e96b](https://github.com/SAP/ui5-webcomponents/commit/404e96b24fcb2f49b8e21d9c05939209cbee9b71))
+* **ui5-wizard:** define min-width for header steps separators ([#11581](https://github.com/SAP/ui5-webcomponents/issues/11581)) ([cbd2a54](https://github.com/SAP/ui5-webcomponents/commit/cbd2a54ba1ce0f9a39c0599c0179c47daa039d27)), closes [#9672](https://github.com/SAP/ui5-webcomponents/issues/9672)
+
+
+
+
+
+# [2.12.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0...v2.12.0-rc.0) (2025-06-12)
+
+
+### Bug Fixes
+
+* **ui5-busy-indicator:** make text and circles determine indicator dimensions when there is no content ([#11223](https://github.com/SAP/ui5-webcomponents/issues/11223)) ([10c0cfd](https://github.com/SAP/ui5-webcomponents/commit/10c0cfddf56ceea2c4481e0c971b30a2a26f602c))
+* **ui5-shellbar:** prevent logo click event from firing twice ([#11631](https://github.com/SAP/ui5-webcomponents/issues/11631)) ([5b08a48](https://github.com/SAP/ui5-webcomponents/commit/5b08a48abb2177dd00ebab93bb2b62eef4e64e77)), closes [#11506](https://github.com/SAP/ui5-webcomponents/issues/11506)
+* **ui5-upload-collection:** prevent `item-delete` event from firing when item name is deleted ([#11625](https://github.com/SAP/ui5-webcomponents/issues/11625)) ([fe048b0](https://github.com/SAP/ui5-webcomponents/commit/fe048b0d304a42620d738d0822d07e8b292be043))
+
+
+
+
+
 # [2.11.0](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0-rc.4...v2.11.0) (2025-06-05)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

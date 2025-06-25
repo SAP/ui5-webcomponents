@@ -17,7 +17,6 @@ import navigationMenuItemCss from "./generated/themes/NavigationMenuItem.css.js"
 import {
 	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
-import type SideNavigationItem from "./SideNavigationItem.js";
 
 /**
  * @class
@@ -159,21 +158,7 @@ class NavigationMenuItem extends MenuItem {
 		}
 
 		if (!this.hasSubmenu) {
-			sideNav?.closeMenu();
-			this._handleFocus(item);
-		}
-	}
-
-	_handleFocus(associatedItem: SideNavigationSelectableItemBase) {
-		const sideNavigation = associatedItem.sideNavigation;
-
-		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
-			const parent = associatedItem.parentElement as SideNavigationItem;
-			sideNavigation?.focusItem(parent);
-			parent?.focus();
-		} else {
-			sideNavigation?.focusItem(associatedItem);
-			associatedItem?.focus();
+			sideNav?.closeMenu(shouldSelect);
 		}
 	}
 
