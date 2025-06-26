@@ -1,3 +1,6 @@
+import Bar from "../../src/Bar.js";
+import Button from "../../src/Button.js";
+import Dialog from "../../src/Dialog.js";
 import Link from "../../src/Link.js";
 
 describe("General API", () => {
@@ -212,5 +215,44 @@ describe("General API", () => {
 			.shadow()
 			.find("[ui5-icon]")
 			.should("exist");
+	});
+
+	it("should open the dialog when the link is clicked", () => {
+		// Mount the components
+		cy.mount(<>
+				<Link accessible-role="button" id="signInLink">Sign in</Link>
+				<Dialog id="signInDialog">
+					<Bar slot="header" design="Header">
+						<Button design="Transparent" id="closeDialogButton" slot="endContent"
+							icon="decline"></Button>
+					</Bar>
+				</Dialog>
+			</>
+		);
+
+		cy.get("#signInLink").as("signInLink");
+		cy.get("#signInDialog").as("signInDialog");
+
+		cy.get("@signInDialog").should("not.be.visible");
+	
+		cy.get("@signInLink")
+			.then($link => {
+				$link[0].addEventListener("click", () => {
+					cy.get("#signInDialog").invoke("attr", "open", true);
+				});
+			});
+
+		cy.get("@signInDialog")
+			.find("[ui5-bar]")
+			.find("#closeDialogButton")
+			.then($button => {
+				$button[0].addEventListener("click", () => {
+					cy.get("#signInDialog").invoke("attr", "open", false);
+			});
+		});
+
+		cy.get("@signInLink").realPress("Enter");
+
+		cy.get("@signInDialog").should("be.visible");
 	});
 });
