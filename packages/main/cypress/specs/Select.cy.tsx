@@ -238,9 +238,7 @@ describe("Select - Properties", () => {
 			.find("[ui5-icon]")
 			.should("have.attr", "name", "download");
 	});
-});
-
-describe("Select - Properties", () => {
+	
 	it("It returns empty string as a valid value, similar to native select behavior", () => {
 		cy.mount(
 			<Select>
