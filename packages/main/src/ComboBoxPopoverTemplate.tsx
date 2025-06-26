@@ -118,7 +118,6 @@ export default function ComboBoxPopoverTemplate(this: ComboBox) {
 			horizontalAlign={this._valueStatePopoverHorizontalAlign}
 			placement="Bottom"
 			opener={this}
-			onOpen={this._addLinksEventListeners}
 			open={this.valueStateOpen}
 			onClose={this._handleValueStatePopoverAfterClose}
 			onFocusOut={this._handleValueStatePopoverFocusout}

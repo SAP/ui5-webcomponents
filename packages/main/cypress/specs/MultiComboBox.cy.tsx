@@ -146,7 +146,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 			.as("innerInput");
 
 		cy.get("ui5-multi-combobox")
-		.as("multi-combobox");
+			.as("multi-combobox");
 
 		cy.get("@innerInput")
 			.realClick()
@@ -167,15 +167,12 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 	});
 	it("When pressing [Tab], the focus moves to the next value state message link. Pressing [Tab] again closes the popup and moves the focus to the next input", () => {
 		cy.get("ui5-multi-combobox")
+			.as("multi-combobox");
+
+		cy.get("@multi-combobox")
 			.shadow()
 			.find("input")
 			.as("innerInput");
-
-		cy.get("ui5-multi-combobox")
-			.as("multi-combobox");
-
-		cy.get("ui5-input")
-			.as("input");
 
 		cy.get("@innerInput")
 			.realClick()
@@ -205,6 +202,9 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 
 		cy.get("@secondLink")
 			.realPress("Tab");
+
+		cy.get("ui5-input")
+			.as("input");
 
 		cy.get("@input")
 			.should("have.focus");
@@ -257,35 +257,30 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 			.should("have.focus");
 
 	});
-	it("When pressing [Down Arrow] while focused on the first value state message link and suggestions are open, the focus shifts to the next suggestion item ", () => {
-		cy.get("ui5-multi-combobox")
-			.shadow()
-			.find("input")
-			.as("innerInput");
-
+	it("When list item is selected and pressing [Ctrl + Alt + F8], first link is focused. [Arrow Down] moves focus to the first list item", () => {
 		cy.get("ui5-multi-combobox")
 			.as("multi-combobox");
 
-		cy.get("@innerInput")
-			.realClick()
-			.realPress(["Control", "Alt", "F8"]);
+		cy.get("@multi-combobox")
+			.shadow()
+			.find("input")
+			.as("innerInput");
 
 		cy.get("@multi-combobox")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.as("popover");
 
+		// open the popover and focus first item
 		cy.get("@multi-combobox")
-			.realClick();
-
-		cy.get("@multi-combobox")
-			.realType("i");
+			.realClick()
+			.realPress("F4");
 
 		cy.get("@popover")
 			.should("have.attr", "open");
 
-		cy.get("@innerInput")
-			.realClick()
+		cy.get("ui5-mcb-item")
+			.eq(0)
 			.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("ui5-link")
@@ -295,9 +290,9 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 		cy.get("@firstLink")
 			.realPress("ArrowDown");
 
-		cy.get("@multi-combobox")
-			.should("have.attr", "value", "Item 1")
-			.should("have.focus");
+		cy.get("ui5-mcb-item").then($el => {
+			expect($el[0]).to.equal(document.activeElement);
+		});
 	});
 });
 

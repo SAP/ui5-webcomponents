@@ -443,7 +443,7 @@ describe("Input arrow navigation", () => {
 		cy.get("@input")
 			.should("be.focused");
 
-		cy.realType("a");
+		cy.realType("c");
 
 		cy.realPress("ArrowDown");
 
@@ -459,17 +459,17 @@ describe("Input arrow navigation", () => {
 			.should("not.have.class", "ui5-responsive-popover-header--focused");
 
 		cy.get("ui5-suggestion-item")
-			.eq(0)
+			.eq(1)
 			.should("have.attr", "focused");
 
 		cy.get("@input")
-			.realPress("ArrowDown");
+			.realPress("ArrowUp")
+			.realPress("ArrowUp");
 
 		cy.get("@valueMessage")
 			.should("not.have.class", "ui5-responsive-popover-header--focused");
 
-		cy.get("[ui5-suggestion-item]")
-			.eq(0)
+		cy.get("@input")
 			.should("have.attr", "focused");
 	});
 

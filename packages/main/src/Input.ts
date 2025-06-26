@@ -40,6 +40,7 @@ import {
 	isCtrlAltF8,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { attachListeners } from "@ui5/webcomponents-base/dist/util/valueStateNavigation.js";
+import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -632,6 +633,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_performTextSelection?: boolean;
 	_isLatestValueFromSuggestions: boolean;
 	_isChangeTriggeredBySuggestion: boolean;
+	_valueStateLinks: Array<HTMLElement>;
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -705,6 +707,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		this._keepInnerValue = false;
 		this._focusedAfterClear = false;
+		this._valueStateLinks = [];
 	}
 
 	onEnterDOM() {
@@ -715,6 +718,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResizeBound);
 		deregisterUI5Element(this);
+		this._removeLinksEventListeners();
 	}
 
 	_highlightSuggestionItem(item: SuggestionItem) {
@@ -809,6 +813,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		this._performTextSelection = false;
+
+		if (!arraysAreEqual(this._valueStateLinks, this.linksInAriaValueStateHiddenText)) {
+			this._removeLinksEventListeners();
+			this._addLinksEventListeners();
+			this._valueStateLinks = this.linksInAriaValueStateHiddenText;
+		}
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -1343,7 +1353,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		this._handlePickerAfterOpen();
-		this._addLinksEventListeners();
 	}
 
 	_afterClosePicker() {
@@ -1369,7 +1378,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		if (this.hasSuggestionItemSelected) {
 			this.focus();
 		}
-		this._removeLinksEventListeners();
 		this._handlePickerAfterClose();
 	}
 
@@ -1393,7 +1401,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_handleValueStatePopoverAfterClose() {
 		this.valueStateOpen = false;
 		this._handleLinkNavigation = false;
-		this._removeLinksEventListeners();
 	}
 
 	_getValueStatePopover() {

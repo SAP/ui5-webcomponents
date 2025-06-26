@@ -131,15 +131,12 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 	});
 	it("When pressing [Tab], the focus moves to the next value state message link. Pressing [Tab] again closes the popup and moves the focus to the next input", () => {
 		cy.get("ui5-combobox")
+			.as("combobox");
+
+		cy.get("@combobox")
 			.shadow()
 			.find("input")
 			.as("innerInput");
-
-		cy.get("ui5-combobox")
-			.as("combobox");
-
-		cy.get("ui5-input")
-			.as("input");
 
 		cy.get("@innerInput")
 			.realClick()
@@ -169,6 +166,10 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 
 		cy.get("@secondLink")
 			.realPress("Tab");
+
+
+		cy.get("ui5-input")
+			.as("input");
 
 		cy.get("@input")
 			.should("have.focus");

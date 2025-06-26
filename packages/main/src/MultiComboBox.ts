@@ -53,6 +53,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import { getAssociatedLabelForTexts, getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -529,6 +530,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_itemToFocus?: IMultiComboBoxItem;
 	_itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
 	selectedItems: Array<IMultiComboBoxItem>;
+	_valueStateLinks: Array<HTMLElement>;
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -579,6 +581,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		this.valueBeforeAutoComplete = "";
 		this._lastValue = this.getAttribute("value") || "";
 		this.currentItemIdx = -1;
+		this._valueStateLinks = [];
 	}
 
 	onEnterDOM() {
@@ -587,6 +590,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResizeBound);
+		this._removeLinksEventListeners();
 	}
 
 	_handleResize() {
@@ -1047,13 +1051,9 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		if (isArrowUp || isUpCtrl(e)) {
-			if (e.target === this.valueStateHeader || !this.valueStateHeader) {
+			if (e.target === this.valueStateHeader || (this.showSelectAll && isSelectAllFocused)) {
 				this._shouldAutocomplete = true;
 				return this._inputDom.focus();
-			}
-
-			if (this.showSelectAll && isSelectAllFocused) {
-				this.valueStateHeader?.focus();
 			}
 		}
 	}
@@ -1105,6 +1105,10 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		e.preventDefault();
+
+		if (isCtrlAltF8(e)) {
+			return this._handleCtrlALtF8();
+		}
 
 		if (isDownShift(e) || isUpShift(e)) {
 			this._handleItemRangeSelection(e);
@@ -1562,7 +1566,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		this._iconPressed = false;
 		this._preventTokenizerToggle = false;
 		this.filterSelected = false;
-		this._removeLinksEventListeners();
 	}
 
 	_beforeOpen() {
@@ -1584,8 +1587,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			const selectedItems = this._filteredItems.filter(item => item.selected);
 			this.selectedItems = this._getItems().filter((item, idx, allItems) => MultiComboBox._groupItemFilter(item, ++idx, allItems, selectedItems) || selectedItems.indexOf(item) !== -1);
 		}
-
-		this._addLinksEventListeners();
 	}
 
 	_addLinksEventListeners() {
@@ -1736,6 +1737,12 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 		if (this._tokenizer.expanded && this.hasAttribute("focused")) {
 			this._tokenizer.scrollToEnd();
+		}
+
+		if (!arraysAreEqual(this._valueStateLinks, this.linksInAriaValueStateHiddenText)) {
+			this._removeLinksEventListeners();
+			this._addLinksEventListeners();
+			this._valueStateLinks = this.linksInAriaValueStateHiddenText;
 		}
 	}
 

@@ -37,6 +37,7 @@ import {
 	isCtrlAltF8,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { attachListeners } from "@ui5/webcomponents-base/dist/util/valueStateNavigation.js";
+import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
 
 import type { IIcon } from "./Icon.js";
 import * as Filters from "./Filters.js";
@@ -446,6 +447,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_lastValue: string;
 	_selectedItemText = "";
 	_userTypedValue = "";
+	_valueStateLinks: Array<HTMLElement> = [];
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -518,6 +520,16 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		this.storeResponsivePopoverWidth();
+
+		if (!arraysAreEqual(this._valueStateLinks, this.linksInAriaValueStateHiddenText)) {
+			this._removeLinksEventListeners();
+			this._addLinksEventListeners();
+			this._valueStateLinks = this.linksInAriaValueStateHiddenText;
+		}
+	}
+
+	onExitDOM() {
+		this._removeLinksEventListeners();
 	}
 
 	_focusin(e: FocusEvent) {
@@ -559,7 +571,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		if (isPhone()) {
 			this._getPickerInput().value = this.value;
 		}
-		this._addLinksEventListeners();
 	}
 
 	_afterOpenPopover() {
@@ -586,7 +597,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		this.open = false;
 		this.fireDecoratorEvent("close");
-		this._removeLinksEventListeners();
 	}
 
 	_toggleRespPopover() {
@@ -611,7 +621,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_handleValueStatePopoverAfterClose() {
 		this.valueStateOpen = false;
-		this._removeLinksEventListeners();
 	}
 
 	_getValueStatePopover() {
