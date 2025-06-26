@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.1...v2.12.0-rc.2) (2025-06-26)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** correct search visibility toggle ([#11724](https://github.com/SAP/ui5-webcomponents/issues/11724)) ([8c3cba9](https://github.com/SAP/ui5-webcomponents/commit/8c3cba9681136c70c81d8c8cf09e0a588a025a9a))
+* **ui5-side-navigation:** focus is correct after selecting overflow item ([#11702](https://github.com/SAP/ui5-webcomponents/issues/11702)) ([bb22451](https://github.com/SAP/ui5-webcomponents/commit/bb2245177bf388fe5bc972ca65839ca41ccb82bc))
+
+
+### Features
+
+* **ui5-menu:** menu item groups with checkable menu items ([#10028](https://github.com/SAP/ui5-webcomponents/issues/10028)) ([161af0f](https://github.com/SAP/ui5-webcomponents/commit/161af0fe9912145ddd4fe19f4d71c8aa23db2e15))
+
+
+
+
+
 # [2.12.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.0...v2.12.0-rc.1) (2025-06-19)
 
 
