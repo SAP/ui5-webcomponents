@@ -360,50 +360,84 @@ describe("Toolbar Select", () => {
 		.should("have.attr", "disabled", "disabled");
 
 	});
+});
 
-	//ToolbarButton
-	it("Should render the button with the correct text inside the popover", async () => {
-		cy.viewport(200, 1080);
+//ToolbarButton
+describe("ToolbarButton", () => {
+	beforeEach(() => {
 
-		cy.get("#otb_d").within(() => {
-			cy.get(".ui5-tb-overflow-btn").click();
-			cy.get("ui5-popover").shadow().within(() => {
-				cy.get("ui5-toolbar-button").shadow().within(() => {
-					cy.get("ui5-button").then($button => {
-						expect($button).to.have.text("Back");
-						expect($button).to.have.attr("design", "Emphasized");
-						expect($button).to.have.attr("disabled", "true");
-						expect($button).to.have.attr("icon", "sap-icon://add");
-						expect($button).to.have.attr("end-icon", "sap-icon://employee");
-						expect($button).to.have.attr("tooltip", "Add");
-					});
-				});
-			});
-		});
-	});
+		cy.mount(
+			<Toolbar id="otb_d">
+            <ToolbarButton
+                text="Back"
+                design="Emphasized"
+                disabled
+                icon="sap-icon://add"
+                end-icon="sap-icon://employee"
+                tooltip="Add"
+            ></ToolbarButton>
 
-	it ("Should render the button with the correct accessible name inside the popover", async () => {
+            <ToolbarButton
+                icon="sap-icon://add"
+                accessible-name="Add"
+                accessible-name-ref="btn"
+            ></ToolbarButton>
+        </Toolbar>
+		).then(() =>	{
+			const accButton = document.querySelector(
+				"ui5-toolbar-button[accessible-name]"
+			) as ToolbarButton;
+			accButton.accessibilityAttributes = {
+				expanded: "true",
+				controls: "btn",
+				hasPopup: "dialog",
+			};
+		})
+	})
+
+
+	it("Should render the button with the correct text inside the popover", () => {
 		cy.viewport(100, 1080);
 
-		cy.get("#otb_d").within(() => {
-			cy.get(".ui5-tb-overflow-btn").click();
-			cy.get("ui5-popover").shadow().within(() => {
-				cy.get("ui5-button[accessible-name]").then($button => {
-					expect($button).to.have.attr("accessible-name", "Add");
-					expect($button).to.have.attr("accessible-name-ref", "btn");
-				});
-			});
-		});
+		cy.get("#otb_d")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.click();
+
+		cy.get("ui5-toolbar-button").first().shadow().find("ui5-button")
+			.should("have.text", "Back")
+			.should("have.attr", "design", "Emphasized")
+			.should("have.attr", "disabled", "disabled")
+			.should("have.attr", "icon", "sap-icon://add")
+			.should("have.attr", "end-icon", "sap-icon://employee")
+			.should("have.attr", "tooltip", "Add");
 	});
 
-	it("Should render the button with the correct accessibilityAttributes inside the popover", async () => {
+	it("Should render the button with the correct accessible name inside the popover", () => {
 		cy.viewport(100, 1080);
 
-		cy.get("#otb_d").within(() => {
-			cy.get(".ui5-tb-overflow-btn").click();
-			cy.get("ui5-popover").shadow().within(() => {
-				cy.get("ui5-button[accessible-name]").invoke("prop", "accessibilityAttributes").should("have.property", "expanded", "true");
-			});
-		});
+		cy.get("#otb_d")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.click();
+
+			cy.get("ui5-toolbar-button[accessible-name]").shadow().find("ui5-button")
+				.should("have.attr", "accessible-name", "Add")
+				.should("have.attr", "accessible-name-ref", "btn");
 	});
+
+	it("Should render the button with the correct accessibilityAttributes inside the popover", () => {
+		cy.viewport(100, 1080);
+
+		cy.get("#otb_d")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.click();
+
+		cy.get("ui5-toolbar-button[accessible-name]").shadow().find("ui5-button")
+				.invoke("prop", "accessibilityAttributes")
+				.should("deep.equal", { expanded: "true",
+					controls: "btn",
+					hasPopup: "dialog" });
+		});
 });
