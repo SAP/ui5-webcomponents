@@ -7,6 +7,7 @@ import DatePicker from "../../src/DatePicker.js";
 import List from "../../src/List.js";
 import ListItem from "../../src/ListItemStandard.js";
 import { FORM_ACCESSIBLE_NAME } from "../../src/generated/i18n/i18n-defaults.js";
+import RadioButton from "../../src/RadioButton.js";
 
 describe("Rendering", () => {
 	it("tests arrow positioning", () => {
@@ -1401,198 +1402,293 @@ describe("Placement", () => {
 });
 
 describe("Alignment", () => {
-	// const EPS = 2; // 2px
-
-	// const isHorizontallyCentered = (element, opener) => {
-	// 	const elemRect = {
-	// 		...await element.getLocation(),
-	// 		...await element.getSize()
-	// 	};
-	// 	const openerRect = {
-	// 		...await opener.getLocation(),
-	// 		...await opener.getSize()
-	// 	};
-	// 	const openerCenter = openerRect.x + openerRect.width / 2;
-	// 	const expectedElemX = openerCenter - elemRect.width / 2;
-
-	// 	return Math.abs(elemRect.x - expectedElemX) < EPS;
-	// }
-
-	// const isHorizontallyLeftAligned = (popover, opener) => {
-	// 	const popoverRect = {
-	// 		...await popover.getLocation(),
-	// 		...await popover.getSize()
-	// 	};
-	// 	const openerRect = {
-	// 		...await opener.getLocation(),
-	// 		...await opener.getSize()
-	// 	};
-
-	// 	return Math.abs(openerRect.x - popoverRect.x) < EPS;
-	// }
-
-	// const isHorizontallyRightAligned = (popover, opener) => {
-	// 	const popoverRect = {
-	// 		...await popover.getLocation(),
-	// 		...await popover.getSize()
-	// 	};
-	// 	const openerRect = {
-	// 		...await opener.getLocation(),
-	// 		...await opener.getSize()
-	// 	};
-	// 	const openerRight = openerRect.x + openerRect.width;
-	// 	const popoverRight = popoverRect.x + popoverRect.width;
-
-	// 	return Math.abs(openerRight - popoverRight) < EPS;
-	// }
-
 	describe("Horizontal Alignment", () => {
-		// before(async () => {
-		// 	await browser.url(`test/pages/Popover.html`);
-		// });
-
 		it("Center", () => {
-			// await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Center']").click();
-			// await browser.$("#horizontalAlignBtn").click();
-			// const popover = await browser.$("#popoverHorizontalAlign");
-			// const opener = await browser.$("#targetOpener");
+			cy.mount(
+				<>
+					<Button id="horizontalAlignBtn">Open horizontally aligned popover</Button>
+					<Popover id="popoverHorizontalAlign" placement="Top" opener="horizontalAlignBtn" horizontalAlign="Center">
+						<span></span>
+					</Popover>
+				</>);
 
-			// assert.ok(await isHorizontallyCentered(popover, opener), `Popover should be centered`);
+			cy.get("[ui5-popover]").invoke("prop", "open", "true");
+
+			cy.get('[ui5-popover]').should('exist');
+
+			let popover;
+			cy.get('[ui5-popover]')
+				.then($popover => {
+					popover = $popover;
+				});
+
+			cy.get('#horizontalAlignBtn').should($opener => {
+				const openerRect = $opener[0].getBoundingClientRect();
+				const openerCenter = openerRect.left + openerRect.width / 2;
+
+				const popoverRect = popover[0].getBoundingClientRect();
+				const popoverCenter = popoverRect.left + popoverRect.width / 2;
+
+				expect(Math.abs(popoverCenter - openerCenter)).to.be.lessThan(1);
+			});
 		});
 
 		it("Start", () => {
-			// await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Start']").click();
-			// await browser.$("#horizontalAlignBtn").click();
-			// const popover = await browser.$("#popoverHorizontalAlign");
-			// const opener = await browser.$("#targetOpener");
+			cy.mount(
+				<>
+					<Button id="horizontalAlignBtn">Open horizontally aligned popover</Button>
+					<Popover id="popoverHorizontalAlign" placement="Top" opener="horizontalAlignBtn" horizontalAlign="Start">
+						<span></span>
+					</Popover>
+				</>);
 
-			// assert.ok(await isHorizontallyLeftAligned(popover, opener), `Popover should be left aligned`);
+			cy.get("[ui5-popover]").invoke("prop", "open", "true");
+
+			cy.get('[ui5-popover]').should('exist');
+
+			let popover;
+			cy.get('[ui5-popover]')
+				.then($popover => {
+					popover = $popover;
+				});
+
+			cy.get('#horizontalAlignBtn').should($opener => {
+				const popoverRect = popover[0].getBoundingClientRect();
+				const openerRect = $opener[0].getBoundingClientRect();
+
+				const openerRightEdge = openerRect.left;
+				const popoverRightEdge = popoverRect.left;
+
+				expect(Math.abs(openerRightEdge - popoverRightEdge)).to.be.lessThan(2.5);
+			});
 		});
 
 		it("End", () => {
-			// await browser.$("[ui5-radio-button][name='horizontalAlign'][text='End']").click();
-			// await browser.$("#horizontalAlignBtn").click();
-			// const popover = await browser.$("#popoverHorizontalAlign");
-			// const opener = await browser.$("#targetOpener");
+			cy.mount(
+				<>
+					<Button id="horizontalAlignBtn">Open horizontally aligned popover</Button>
+					<Popover id="popoverHorizontalAlign" placement="Top" opener="horizontalAlignBtn" horizontalAlign="End">
+						<span></span>
+					</Popover>
+				</>);
 
-			// assert.ok(await isHorizontallyRightAligned(popover, opener), `Popover should be right aligned`);
+			cy.get("[ui5-popover]").invoke("prop", "open", "true");
+
+			cy.get('[ui5-popover]').should('exist');
+
+			let popover;
+			cy.get('[ui5-popover]')
+				.then($popover => {
+					popover = $popover;
+				});
+
+			cy.get('#horizontalAlignBtn').should($opener => {
+				const popoverRect = popover[0].getBoundingClientRect();
+				const openerRect = $opener[0].getBoundingClientRect();
+
+				const openerRightEdge = openerRect.right;
+				const popoverRightEdge = popoverRect.right;
+
+				expect(Math.abs(openerRightEdge - popoverRightEdge)).to.be.lessThan(1);
+			});
 		});
 
 		it("Center, in RTL", () => {
-			// await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Center']").click();
-			// await browser.$("#rtlCb").click();
-			// await browser.$("#horizontalAlignBtn").click();
-			// const popover = await browser.$("#popoverHorizontalAlign");
-			// const opener = await browser.$("#targetOpener");
+			cy.mount(
+				<div dir="rtl">
+					<Button id="horizontalAlignBtn">Open horizontally aligned popover</Button>
+					<Popover id="popoverHorizontalAlign" placement="Top" opener="horizontalAlignBtn" horizontalAlign="Center">
+						<span></span>
+					</Popover>
+				</div>);
 
-			// assert.ok(await isHorizontallyCentered(popover, opener), `Popover should be centered`);
+			cy.get("[ui5-popover]").invoke("prop", "open", "true");
+
+			cy.get('[ui5-popover]').should('exist');
+
+			let popover;
+			cy.get('[ui5-popover]')
+				.then($popover => {
+					popover = $popover;
+				});
+
+			cy.get('#horizontalAlignBtn').should($opener => {
+				const openerRect = $opener[0].getBoundingClientRect();
+				const openerCenter = openerRect.left + openerRect.width / 2;
+
+				const popoverRect = popover[0].getBoundingClientRect();
+				const popoverCenter = popoverRect.left + popoverRect.width / 2;
+
+				expect(Math.abs(popoverCenter - openerCenter)).to.be.lessThan(1);
+			});
 		});
 
 		it("Start, in RTL", () => {
-			// await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Start']").click();
-			// await browser.$("#horizontalAlignBtn").click();
-			// const popover = await browser.$("#popoverHorizontalAlign");
-			// const opener = await browser.$("#targetOpener");
+			cy.mount(
+				<div dir="rtl">
+					<Button id="horizontalAlignBtn">Open horizontally aligned popover</Button>
+					<Popover id="popoverHorizontalAlign" placement="Top" opener="horizontalAlignBtn" horizontalAlign="Start">
+						<span></span>
+					</Popover>
+				</div>);
 
-			// assert.ok(isHorizontallyRightAligned(popover, opener), `Popover should be right aligned, flipped by RTL direction`);
+			cy.get("[ui5-popover]").invoke("prop", "open", "true");
+
+			cy.get('[ui5-popover]').should('exist');
+
+			let popover;
+			cy.get('[ui5-popover]')
+				.then($popover => {
+					popover = $popover;
+				});
+
+			cy.get('#horizontalAlignBtn').should($opener => {
+				const popoverRect = popover[0].getBoundingClientRect();
+				const openerRect = $opener[0].getBoundingClientRect();
+
+				const openerRightEdge = openerRect.right;
+				const popoverRightEdge = popoverRect.right;
+
+				expect(Math.abs(openerRightEdge - popoverRightEdge)).to.be.lessThan(2.5);
+			});
 		});
 
 		it("End, in RTL", () => {
-			// await browser.$("[ui5-radio-button][name='horizontalAlign'][text='End']").click();
-			// await browser.$("#horizontalAlignBtn").click();
-			// const popover = await browser.$("#popoverHorizontalAlign");
-			// const opener = await browser.$("#targetOpener");
+			cy.mount(
+				<div dir="rtl">
+					<Button id="horizontalAlignBtn">Open horizontally aligned popover</Button>
+					<Popover id="popoverHorizontalAlign" placement="Top" opener="horizontalAlignBtn" horizontalAlign="End">
+						<span></span>
+					</Popover>
+				</div>);
 
-			// assert.ok(await isHorizontallyLeftAligned(popover, opener), `Popover should be left aligned, flipped by RTL direction`);
+			cy.get("[ui5-popover]").invoke("prop", "open", "true");
+
+			cy.get('[ui5-popover]').should('exist');
+
+			let popover;
+			cy.get('[ui5-popover]')
+				.then($popover => {
+					popover = $popover;
+				});
+
+			cy.get('#horizontalAlignBtn').should($opener => {
+				const popoverRect = popover[0].getBoundingClientRect();
+				const openerRect = $opener[0].getBoundingClientRect();
+
+				const openerRightEdge = openerRect.left;
+				const popoverRightEdge = popoverRect.left;
+
+				expect(Math.abs(openerRightEdge - popoverRightEdge)).to.be.lessThan(1);
+			});
 		});
 	});
 
 	describe("Arrow Horizontal Alignment", () => {
-		// before(async () => {
-		// 	await browser.url(`test/pages/Popover.html`);
-		// });
 
 		it("Arrow centering when opener has big width", () => {
-			// const opener = await browser.$("#btnFullWidthTop");
-			// await opener.click();
-			// const popover = await browser.$("#popFullWidthTop");
-			// const arrow = await popover.shadow$(".ui5-popover-arrow");
-
-			// assert.ok(await isHorizontallyCentered(arrow, opener), `Arrow should be centered`);
-
-			// await browser.keys("Escape");
-		});
-
-		it("Arrow centering when opener is to the left edge", () => {
-			// const opener = await browser.$("#btnLeftEdgeTop");
-			// await opener.click();
-			// const popover = await browser.$("#popFullWidthTop");
-			// const arrow = await popover.shadow$(".ui5-popover-arrow");
-
-			// assert.ok(await isHorizontallyCentered(arrow, opener), `Arrow should be centered`);
-
-			// await browser.keys("Escape");
-		});
-
-		it("Arrow centering when opener is to the right edge", () => {
 			cy.mount(
 				<>
-					<Button id="btnRightEdgeTop">...</Button>
-					<Popover headerText="My Heading" id="popFullWidthTop" class="popover6auto" placement="Top" opener="btnRightEdgeTop">
+					<Button id="btnFullWidthTop" class="fullWidth">Click me !</Button>
+					<Popover placement="Top" opener="btnFullWidthTop">
 						<div slot="header">
 							<Button id="first-focusable">I am in the header</Button>
 						</div>
-
-						<List>
-							<ListItem>Hello</ListItem>
-							<ListItem>World</ListItem>
-							<ListItem>Again</ListItem>
-						</List>
 					</Popover>
 				</>
 			);
 
 			cy.get("[ui5-popover]").invoke("prop", "open", "true");
-			cy.get('#popFullWidthTop').then(($popover) => {
-			// 	// Use Cypress to enter the shadow DOM
-			// 	const arrowSelector = '.ui5-popover-arrow';
 
-			// 	// Check if the arrow is centered with respect to the opener
-			// 	cy.get('#popFullWidthTop').shadow().find(arrowSelector).then(($arrow) => {
-			// 		cy.get('#btnRightEdgeTop').then(($opener) => {
-			// 			const arrowLeft = $arrow.offset().left + $arrow.width() / 2;
-			// 			const openerLeft = $opener.offset().left + $opener.width() / 2;
+			cy.get('[ui5-popover]').should('exist');
 
-			// 			// Assert that arrow is horizontally centered with the opener
-			// 			expect(arrowLeft).to.equal(openerLeft);
-			// 			//expect(Math.abs(arrowLeft - openerLeft)).to.be.lessThan(1);
-			// 		});
-			// 	});
-			// });
-			// cy.get("[ui5-popover]")
-			// 	.shadow()
-			// 	.find(".ui5-popover-arrow")
-			// 	.then($el => {
-			// 		// Get the element's viewport offsets
-			// 		const offset = $el.offset();
-			// 		const elWidth = $el.outerWidth();
-			// 		const parentWidth = $el.parent().innerWidth();
+			let arrow;
+			cy.get('[ui5-popover]')
+				.shadow()
+				.find('.ui5-popover-arrow')
+				.then($arrow => {
+					arrow = $arrow;
+				});
 
-			// 		const leftOffset = offset.left;
-			// 		const rightOffset = parentWidth - (leftOffset + elWidth);
+			cy.get('#btnFullWidthTop').should($opener => {
+				const openerRect = $opener[0].getBoundingClientRect();
+				const openerCenter = openerRect.left + openerRect.width / 2;
 
-			// 		// Check if it's centered
-			// 		expect(Math.abs(leftOffset - rightOffset)).to.be.lessThan(1);
-			//   });;
+				const arrowRect = arrow[0].getBoundingClientRect();
+				const arrowCenter = arrowRect.left + arrowRect.width / 2;
 
-			// const opener = await browser.$("#btnRightEdgeTop");
-			// await opener.click();
-			// const popover = await browser.$("#popFullWidthTop");
-			// const arrow = await popover.shadow$(".ui5-popover-arrow");
+				expect(Math.abs(arrowCenter - openerCenter)).to.be.lessThan(1.5);
+			});
+		});
 
-			// assert.ok(await isHorizontallyCentered(arrow, opener), `Arrow should be centered`);
+		it("Arrow centering when opener is to the left edge", () => {
+			cy.mount(
+				<>
+					<Button id="btnLeftEdgeTop" />
+					<Popover placement="Top" opener="btnLeftEdgeTop">
+						<div slot="header">
+							<Button id="first-focusable">I am in the header</Button>
+						</div>
+					</Popover>
+				</>
+			);
 
-			// await browser.keys("Escape");
+			cy.get("[ui5-popover]").invoke("prop", "open", "true");
+
+			cy.get('[ui5-popover]').should('exist');
+
+			let arrow;
+			cy.get('[ui5-popover]')
+				.shadow()
+				.find('.ui5-popover-arrow')
+				.then($arrow => {
+					arrow = $arrow;
+				});
+
+			cy.get('#btnLeftEdgeTop').should($opener => {
+				const openerRect = $opener[0].getBoundingClientRect();
+				const openerCenter = openerRect.left + openerRect.width / 2;
+
+				const arrowRect = arrow[0].getBoundingClientRect();
+				const arrowCenter = arrowRect.left + arrowRect.width / 2;
+
+				expect(Math.abs(arrowCenter - openerCenter)).to.be.lessThan(1);
+			});
+		});
+
+		it("Arrow centering when opener is to the right edge", () => {
+			cy.mount(
+				<>
+					<Button id="btnRightEdgeTop" />
+					<Popover placement="Top" opener="btnRightEdgeTop">
+						<div slot="header">
+							<Button id="first-focusable">I am in the header</Button>
+						</div>
+					</Popover>
+				</>
+			);
+
+			cy.get("[ui5-popover]").invoke("prop", "open", "true");
+
+			cy.get('[ui5-popover]').should('exist');
+
+			let arrow;
+			cy.get('[ui5-popover]')
+				.shadow()
+				.find('.ui5-popover-arrow')
+				.then($arrow => {
+					arrow = $arrow;
+				});
+
+			cy.get('#btnRightEdgeTop').should($opener => {
+				const openerRect = $opener[0].getBoundingClientRect();
+				const openerCenter = openerRect.left + openerRect.width / 2;
+
+				const arrowRect = arrow[0].getBoundingClientRect();
+				const arrowCenter = arrowRect.left + arrowRect.width / 2;
+
+				expect(Math.abs(arrowCenter - openerCenter)).to.be.lessThan(1);
+			});
 		});
 	});
 });
