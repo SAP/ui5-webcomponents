@@ -8,6 +8,10 @@ import Table from "../../src/Table.js";
 import TableCell from "../../src/TableCell.js";
 import TableRow from "../../src/TableRow.js";
 import TableHeaderCell from "../../src/TableHeaderCell.js";
+import "@ui5/webcomponents-icons/dist/employee.js"
+import "@ui5/webcomponents-icons/dist/menu.js"
+import "@ui5/webcomponents-icons/dist/menu2.js"
+import "@ui5/webcomponents-icons/dist/card.js"
 import "../../test/pages/styles/TabContainer.css"
 
 const tabContainerEndOverflow = <TabContainer id="tabContainerEndOverflow" overflowMode="End">
@@ -246,13 +250,13 @@ describe("TabContainer general interaction", () => {
 	it("tests tabSelect event", () => {
 		cy.mount(
 			<TabContainer id="tabContainer1" collapsed>
-				<Tab stable-dom-ref="products-ref" text="Products" additional-text="125"></Tab>
-				<Tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25"></Tab>
+				<Tab stable-dom-ref="products-ref" text="Products" additionalText="125"></Tab>
+				<Tab icon="sap-icon://menu2" text="Laptops" design="Positive" additionalText="25"></Tab>
 				<Tab icon="sap-icon://menu" text="Monitors" selected design="Critical"></Tab>
-				<Tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15"></Tab>
-				<Tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40"></Tab>
-				<Tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40"></Tab>
-				<Tab icon="sap-icon://menu2" text="Default" additional-text="40"></Tab>
+				<Tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additionalText="15"></Tab>
+				<Tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additionalText="40"></Tab>
+				<Tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additionalText="40"></Tab>
+				<Tab icon="sap-icon://menu2" text="Default" additionalText="40"></Tab>
 			</TabContainer>
 		)
 		cy.get("#tabContainer1").shadow().find(".ui5-tab-strip-item:nth-child(2)").as("tab");
@@ -275,13 +279,13 @@ describe("TabContainer general interaction", () => {
 		};
 		cy.mount(
 			<TabContainer id="tabContainer1" collapsed onTabSelect={handleTabSelect}>
-				<Tab stable-dom-ref="products-ref" text="Products" additional-text="125"></Tab>
-				<Tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25"></Tab>
+				<Tab stable-dom-ref="products-ref" text="Products" additionalText="125"></Tab>
+				<Tab icon="sap-icon://menu2" text="Laptops" design="Positive" additionalText="25"></Tab>
 				<Tab icon="sap-icon://menu" text="Monitors" selected design="Critical"></Tab>
-				<Tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15"></Tab>
-				<Tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40"></Tab>
-				<Tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40"></Tab>
-				<Tab icon="sap-icon://menu2" text="Default" additional-text="40"></Tab>
+				<Tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additionalText="15"></Tab>
+				<Tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additionalText="40"></Tab>
+				<Tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additionalText="40"></Tab>
+				<Tab icon="sap-icon://menu2" text="Default" additionalText="40"></Tab>
 			</TabContainer>
 		)
 
@@ -381,14 +385,14 @@ describe("TabContainer general interaction", () => {
 	it("tests ARIA attributes", () => {
 		cy.mount(
 			<TabContainer id="tabContainer1" collapsed>
-				<Tab stable-dom-ref="products-ref" text="Products" additional-text="125"></Tab>
+				<Tab stable-dom-ref="products-ref" text="Products" additionalText="125"></Tab>
 				<Separator></Separator>
-				<Tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25"></Tab>
+				<Tab icon="sap-icon://menu2" text="Laptops" design="Positive" additionalText="25"></Tab>
 				<Tab icon="sap-icon://menu" text="Monitors" selected design="Critical"></Tab>
-				<Tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15"></Tab>
-				<Tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40"></Tab>
-				<Tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40"></Tab>
-				<Tab icon="sap-icon://menu2" text="Default" additional-text="40"></Tab>
+				<Tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additionalText="15"></Tab>
+				<Tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additionalText="40"></Tab>
+				<Tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additionalText="40"></Tab>
+				<Tab icon="sap-icon://menu2" text="Default" additionalText="40"></Tab>
 			</TabContainer>
 		);
 
@@ -523,8 +527,8 @@ describe("TabContainer general interaction", () => {
 			<TabContainer class="tabContainerNoContentPaddings" style="padding-left: 0px; padding-right: 0px;">
 				<Tab icon="sap-icon://card" selected>
 					<Table>
-					<TableHeaderCell slot="columns">Source</TableHeaderCell>
-					<TableHeaderCell slot="columns">Method</TableHeaderCell>
+					<TableHeaderCell slot="default">Source</TableHeaderCell>
+					<TableHeaderCell slot="default">Method</TableHeaderCell>
 						<TableRow>
 							<TableCell>Cell 1</TableCell>
 							<TableCell>Cell 2</TableCell>
@@ -549,8 +553,8 @@ describe("TabContainer general interaction", () => {
 				</Tab>
 				<Tab icon="sap-icon://employee">
 					<Table>
-					<TableHeaderCell slot="columns">Source</TableHeaderCell>
-					<TableHeaderCell slot="columns">Method</TableHeaderCell>
+					<TableHeaderCell slot="default">Source</TableHeaderCell>
+					<TableHeaderCell slot="default">Method</TableHeaderCell>
 						<TableRow>
 							<TableCell>Cell 3</TableCell>
 							<TableCell>Cell 4</TableCell>
@@ -630,7 +634,7 @@ describe("TabContainer general interaction", () => {
 
 	it("tests custom overflow buttons via slots", () => {
 		cy.mount(
-			<TabContainer id="tabContainerCustomOverflowButtons" overflow-mode="StartAndEnd" collapsed>
+			<TabContainer id="tabContainerCustomOverflowButtons" overflowMode="StartAndEnd" collapsed>
 				<Button slot="startOverflowButton" id="startOverflowButton">Start</Button>
 				<Button slot="overflowButton" id="endOverflowButton">End</Button>
 				<Tab text="One"></Tab>
@@ -898,14 +902,14 @@ describe("TabContainer general interaction", () => {
 	it("tests tabs dom ref", () => {
 		cy.mount(
 			<TabContainer id="tabContainer1Compact" collapsed>
-				<Tab stable-dom-ref="products-ref" text="Products" additional-text="125"></Tab>
+				<Tab stable-dom-ref="products-ref" text="Products" additionalText="125"></Tab>
 				<Separator></Separator>
-				<Tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25"></Tab>
-				<Tab icon="sap-icon://menu" text="Monitors" selected design="Critical" additional-text="45"></Tab>
-				<Tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15"></Tab>
-				<Tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40"></Tab>
-				<Tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40"></Tab>
-				<Tab icon="sap-icon://menu2" text="Default" additional-text="40"></Tab>
+				<Tab icon="sap-icon://menu2" text="Laptops" design="Positive" additionalText="25"></Tab>
+				<Tab icon="sap-icon://menu" text="Monitors" selected design="Critical" additionalText="45"></Tab>
+				<Tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additionalText="15"></Tab>
+				<Tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additionalText="40"></Tab>
+				<Tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additionalText="40"></Tab>
+				<Tab icon="sap-icon://menu2" text="Default" additionalText="40"></Tab>
 			</TabContainer>
 		);
 
@@ -929,18 +933,18 @@ describe("TabContainer general interaction", () => {
 
 	it("tests inline visualization", () => {
 		cy.mount(
-			<TabContainer tab-layout="Inline" id="tabContainerInlineTab">
-				<Tab icon="sap-icon://card" text="Tab 1" additional-text="123">
+			<TabContainer tabLayout="Inline" id="tabContainerInlineTab">
+				<Tab icon="sap-icon://card" text="Tab 1" additionalText="123">
 					<div class="tabcontainer2auto">
 						<h4>Content with set height: 300px</h4>
 						<Button>Button 11</Button>
 						<Button>Button 12</Button>
 					</div>
 				</Tab>
-				<Tab icon="sap-icon://menu2" text="Tab 2" additional-text="444" selected>
+				<Tab icon="sap-icon://menu2" text="Tab 2" additionalText="444" selected>
 					<Button>Button 2</Button>
 				</Tab>
-				<Tab icon="sap-icon://employee" text="Tab 3" additional-text="123">
+				<Tab icon="sap-icon://employee" text="Tab 3" additionalText="123">
 					<Button>Button 3</Button>
 				</Tab>
 			</TabContainer>
@@ -986,7 +990,7 @@ describe("TabContainer general interaction", () => {
 
 	it("test focus() on tab in overflow", () => {
 		cy.mount(
-			<TabContainer id="narrowTabContainer" overflow-mode="End" style="width: 200px;">
+			<TabContainer id="narrowTabContainer" overflowMode="End" style="width: 200px;">
 				<Tab text="Tab 1"></Tab>
 				<Tab text="Tab 2"></Tab>
 				<Tab text="Tab 3"></Tab>
