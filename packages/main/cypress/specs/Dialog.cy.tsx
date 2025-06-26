@@ -7,8 +7,48 @@ import Input from "../../src/Input.js";
 import List from "../../src/List.js";
 import ListItem from "../../src/ListItemStandard.js";
 import "../../test/pages/styles/Dialog.css"
+import Toolbar from "../../src/Toolbar.js";
+import ToolbarButton from "../../src/ToolbarButton.js";
+import Tokenizer from "../../src/Tokenizer.js";
+import Token from "../../src/Token.js";
 
 describe("Keyboard", () => {
+	it("TAB navigation", () => {
+		cy.mount(
+			<>
+				<button id="buttonId"></button>
+				<Dialog id="dialogId">
+					<Toolbar slot="footer">
+						<ToolbarButton
+							id="toolbarButtonId"
+							design="Emphasized"
+							text="Submit"
+						></ToolbarButton>
+					</Toolbar>
+				</Dialog>
+			</>
+		);
+
+		cy.get("#dialogId")
+			.invoke("prop", "open", true);
+
+		cy.get("#dialogId")
+			.should("be.visible");
+
+		cy.get("#toolbarButtonId")
+			.should("be.focused");
+
+		cy.realPress(["Tab"]);
+
+		cy.get("#toolbarButtonId")
+			.should("be.focused");
+
+		cy.realPress(["Shift", "Tab"]);
+
+		cy.get("#toolbarButtonId")
+			.should("be.focused");
+	});
+
 	it("F6 navigation", () => {
 		cy.mount(
 			<>
@@ -46,6 +86,35 @@ describe("Keyboard", () => {
 		cy.realPress("F6");
 
 		cy.get("#first")
+			.should("be.focused");
+	});
+});
+
+describe("Initial Focus", () => {
+	it("Tokenizer focusing", () => {
+		cy.mount(
+			<>
+				<Dialog id="dialogId" headerText="Tokens">
+					<Tokenizer id="tokenizer">
+						<Token text="Token 1" id="token1"/>
+						<Token text="Token 2" id="token2"/>
+					</Tokenizer>
+				</Dialog>
+			</>
+		);
+
+		cy.get("#token1")
+			.shadow()
+			.find(".ui5-token--wrapper")
+			.should("have.attr", "tabindex", "0");
+
+		cy.get("#dialogId")
+			.invoke("prop", "open", true);
+
+		cy.get("#token1")
+			.should("be.visible");
+
+		cy.get("#token1")
 			.should("be.focused");
 	});
 });
