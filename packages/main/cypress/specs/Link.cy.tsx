@@ -251,7 +251,7 @@ describe("General API", () => {
 			});
 		});
 
-		cy.get("@signInLink").realPress("Enter");
+		cy.get("@signInLink").shadow().find("a").focus().realPress("Enter");
 
 		cy.get("@signInDialog").should("be.visible");
 	});
