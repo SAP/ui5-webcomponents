@@ -229,15 +229,20 @@ describe("General API", () => {
 			</>
 		);
 
-		cy.get("#signInLink").as("signInLink");
-		cy.get("#signInDialog").as("signInDialog");
+		cy.get("#signInLink")
+			.as("signInLink");
 
-		cy.get("@signInDialog").should("not.be.visible");
+		cy.get("#signInDialog")
+			.as("signInDialog");
+
+		cy.get("@signInDialog")
+			.should("not.be.visible");
 	
 		cy.get("@signInLink")
 			.then($link => {
 				$link[0].addEventListener("click", () => {
-					cy.get("#signInDialog").invoke("attr", "open", true);
+					cy.get("#signInDialog")
+						.invoke("attr", "open", true);
 				});
 			});
 
@@ -246,12 +251,18 @@ describe("General API", () => {
 			.find("#closeDialogButton")
 			.then($button => {
 				$button[0].addEventListener("click", () => {
-					cy.get("#signInDialog").invoke("attr", "open", false);
+					cy.get("#signInDialog")
+						.invoke("attr", "open", false);
 			});
 		});
 
-		cy.get("@signInLink").shadow().find("a").focus().realPress("Enter");
+		cy.get("@signInLink")
+			.shadow()
+			.find("a")
+			.focus()
+			.realPress("Enter");
 
-		cy.get("@signInDialog").should("be.visible");
+		cy.get("@signInDialog")
+			.should("be.visible");
 	});
 });
