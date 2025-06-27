@@ -219,20 +219,17 @@ describe("General API", () => {
 
 	it("should open the dialog when the link is clicked", () => {
 		cy.mount(<>
-				<Link accessible-role="button" id="signInLink">Sign in</Link>
-				<Dialog id="signInDialog">
-					<Bar slot="header" design="Header">
-						<Button design="Transparent" id="closeDialogButton" slot="endContent"
-							icon="decline"></Button>
-					</Bar>
+				<Link>Sign in</Link>
+				<Dialog>
+					<Button ></Button>
 				</Dialog>
 			</>
 		);
 
-		cy.get("#signInLink")
+		cy.get("[ui5-link]")
 			.as("signInLink");
 
-		cy.get("#signInDialog")
+		cy.get("[ui5-dialog]")
 			.as("signInDialog");
 
 		cy.get("@signInDialog")
@@ -241,8 +238,7 @@ describe("General API", () => {
 		cy.get("@signInLink")
 			.then($link => {
 				$link[0].addEventListener("click", () => {
-					cy.get("#signInDialog")
-						.invoke("attr", "open", true);
+					(document.querySelector("ui5-dialog") as Dialog).open = true;
 				});
 			});
 
@@ -251,8 +247,7 @@ describe("General API", () => {
 			.find("#closeDialogButton")
 			.then($button => {
 				$button[0].addEventListener("click", () => {
-					cy.get("#signInDialog")
-						.invoke("attr", "open", false);
+					(document.querySelector("ui5-dialog") as Dialog).open = false;
 			});
 		});
 
@@ -260,6 +255,7 @@ describe("General API", () => {
 			.shadow()
 			.find("a")
 			.focus()
+			.should("be.focused")
 			.realPress("Enter");
 
 		cy.get("@signInDialog")
