@@ -32,8 +32,7 @@ describe("Keyboard", () => {
 		cy.get("#dialogId")
 			.invoke("prop", "open", true);
 
-		cy.get("#dialogId")
-			.should("be.visible");
+		cy.get<Dialog>("#dialogId").ui5DialogOpened();
 
 		cy.get("#toolbarButtonId")
 			.should("be.focused");
@@ -110,6 +109,8 @@ describe("Initial Focus", () => {
 
 		cy.get("#dialogId")
 			.invoke("prop", "open", true);
+
+		cy.get<Dialog>("#dialogId").ui5DialogOpened();
 
 		cy.get("#token1")
 			.should("be.visible");
@@ -305,9 +306,8 @@ describe("Events", () => {
 
 		cy.get("#dialogId")
 			.invoke("prop", "open", true);
-
-		cy.get("#dialogId")
-			.should("be.visible");
+			
+		cy.get<Dialog>("#dialogId").ui5DialogOpened();;
 	});
 
 	it("before-close", () => {
@@ -327,8 +327,7 @@ describe("Events", () => {
 		cy.get("#dialogId")
 			.invoke("prop", "open", true);
 
-		cy.get("#dialogId")
-			.should("be.visible");
+		cy.get<Dialog>("#dialogId").ui5DialogOpened();
 
 		const preventDefault = (e: Event) => {
 			e.preventDefault();
@@ -341,8 +340,7 @@ describe("Events", () => {
 		cy.get("#dialogId")
 			.invoke("prop", "open", false);
 
-		cy.get("#dialogId")
-			.should("be.visible");
+		cy.get<Dialog>("#dialogId").ui5DialogOpened();
 
 		cy.get("#dialogId").then($dialog => {
 			$dialog.get(0).removeEventListener("before-close", preventDefault);
@@ -375,8 +373,7 @@ describe("Dialog general interaction", () => {
 			.should("not.be.visible");
 		cy.get("#dialog")
 			.invoke("prop", "open", true);
-		cy.get("#dialog")
-			.should("be.visible");
+		cy.get<Dialog>("#dialog").ui5DialogOpened();
 		cy.get("#dialog").invoke("prop", "open", false);
 		cy.get("#dialog")
 			.should("not.be.visible");
@@ -398,7 +395,7 @@ describe("Dialog general interaction", () => {
 
 		// Open dialog
 		cy.get("#dialog").invoke("attr", "open", true);
-		cy.get("#dialog").should("be.visible");
+		cy.get<Dialog>("#dialog").ui5DialogOpened();
 
 		// Capture position before resize
 		cy.get("#dialog")
@@ -429,9 +426,9 @@ describe("Dialog general interaction", () => {
 		const dragDialog = (dialogSelector: string, x: number, y: number) => {
 			cy.get(dialogSelector)
 				.find("#header-slot")
-				.trigger("mousedown", { which: 1 })
-				.trigger("mousemove", { clientX: x, clientY: y })
-				.trigger("mouseup");
+				.realMouseDown()
+				.realMouseMove(x, y)
+				.realMouseUp();
 		};
 
 		cy.mount(
@@ -448,7 +445,7 @@ describe("Dialog general interaction", () => {
 
 		// Open dialog
 		cy.get("#draggable-and-resizable-dialog").invoke("attr", "open", true);
-		cy.get("#draggable-and-resizable-dialog").should("be.visible");
+		cy.get<Dialog>("#draggable-and-resizable-dialog").ui5DialogOpened();
 
 		// Drag dialog
 		dragDialog("#draggable-and-resizable-dialog", 150, 150);
@@ -490,7 +487,7 @@ describe("Dialog general interaction", () => {
 
 		// Open dialog
 		cy.get("#draggable-dialog").invoke("attr", "open", true);
-		cy.get("#draggable-dialog").should("be.visible");
+		cy.get<Dialog>("#draggable-dialog").ui5DialogOpened();
 
 		// Capture position before dragging
 		cy.get("#draggable-dialog")
@@ -548,7 +545,7 @@ describe("Dialog general interaction", () => {
 
 		// Open dialog
 		cy.get("#draggable-dialog").invoke("attr", "open", true);
-		cy.get("#draggable-dialog").should("be.visible");
+		cy.get<Dialog>("#draggable-dialog").ui5DialogOpened();
 
 		// Capture initial position
 		cy.get("#draggable-dialog")
@@ -683,7 +680,7 @@ describe("Dialog general interaction", () => {
 
 		// Open dialog
 		cy.get("#resizable-dialog").invoke("attr", "open", true);
-		cy.get("#resizable-dialog").should("be.visible");
+		cy.get<Dialog>("#resizable-dialog").ui5DialogOpened();
 
 		// Capture initial dimensions
 		cy.get("#resizable-dialog").then(dialog => {
@@ -801,7 +798,7 @@ describe("Dialog general interaction", () => {
 
 		// Open dialog by clicking the list item
 		cy.get("#listContainerItemId").click();
-		cy.get("#listContainerDialogId").should("be.visible");
+		cy.get<Dialog>("#listContainerDialogId").ui5DialogOpened();
 
 		// Close dialog using Escape key
 		cy.get("#listContainerDialogId").realPress("Escape");
@@ -810,7 +807,7 @@ describe("Dialog general interaction", () => {
 		// Navigate to list item and press Enter
 		cy.get("#listContainerItemId").focused().realPress("ArrowDown");
 		cy.get("#listContainerItemId").focused().realPress("Enter");
-		cy.get("#listContainerDialogId").should("be.visible");
+		cy.get<Dialog>("#listContainerDialogId").ui5DialogOpened();
 
 		// Close dialog using Escape key again
 		cy.get("#listContainerDialogId").realPress("Escape");
@@ -847,7 +844,7 @@ describe("Dialog general interaction", () => {
 
 		// Open dialog
 		cy.get("#focus-circ").invoke("attr", "open", true);
-		cy.get("#focus-circ").should("be.visible");
+		cy.get<Dialog>("#focus-circ").ui5DialogOpened();
 
 		// Assert initial focus is on the first button
 		cy.get("#active-btn-1").should("be.focused");
@@ -951,7 +948,7 @@ describe("Acc", () => {
 
 		// Open dialog
 		cy.get("#draggable-dialog").invoke("attr", "open", true);
-		cy.get("#draggable-dialog").should("be.visible");
+		cy.get<Dialog>("#draggable-dialog").ui5DialogOpened();
 
 		// Assert aria-labelledby and aria attributes
 		cy.get("#draggable-dialog")
@@ -992,7 +989,7 @@ describe("Acc", () => {
 
 		// Open dialog
 		cy.get("#resizable-dialog").invoke("attr", "open", true);
-		cy.get("#resizable-dialog").should("be.visible");
+		cy.get<Dialog>("#resizable-dialog").ui5DialogOpened();
 
 		// Assert aria-describedby and aria-roledescription attributes
 		cy.get("#resizable-dialog")
@@ -1030,7 +1027,7 @@ describe("Acc", () => {
 
 		// Open dialog
 		cy.get("#resizable-dialog-custom-header").invoke("attr", "open", true);
-		cy.get("#resizable-dialog-custom-header").should("be.visible");
+		cy.get<Dialog>("#resizable-dialog-custom-header").ui5DialogOpened();
 
 		// Assert aria-describedby and aria-roledescription attributes
 		cy.get("#resizable-dialog-custom-header")
