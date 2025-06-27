@@ -3,23 +3,36 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isUpAlt,
+	isDownAlt,
+	isEnter,
+	isEscape,
+	isF4,
+	isSpace,
+	isRight,
+	isLeft,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
-	FILEUPLOAD_BROWSE,
-	FILEUPLOADER_TITLE,
+	FILEUPLOADER_INPUT_TOOLTIP,
+	FILEUPLOADER_VALUE_HELP_TOOLTIP,
+	FILEUPLOADER_CLEAR_ICON_TOOLTIP,
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	FILEUPLOADER_DEFAULT_PLACEHOLDER,
+	FILEUPLOADER_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
-import type Input from "./Input.js";
 import type Popover from "./Popover.js";
+import type Tokenizer from "./Tokenizer.js";
 
 // Template
 import FileUploaderTemplate from "./FileUploaderTemplate.js";
@@ -186,6 +199,14 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	valueState: `${ValueState}` = "None";
 
 	/**
+	 * Defines whether the component is required.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	required = false;
+
+	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -214,6 +235,27 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
+	@query(".ui5-file-uploader-form")
+	_from!: HTMLFormElement;
+
+	@query("input[type=file]")
+	_input!: HTMLInputElement;
+
+	@query("[ui5-tokenizer]")
+	_tokenizer!: Tokenizer;
+
+	@query(".ui5-valuestatemessage-popover")
+	_messagePopover!: Popover;
+
+	@property({ type: Array, noAttribute: true })
+	_selectedFilesNames: Array<string> = [];
+
+	@property({ type: Array, noAttribute: true })
+	_clearTokens: boolean = true;
+
+	@property({ type: Boolean, noAttribute: true })
+	_tokenizerOpen = false;
+
 	static emptyInput: HTMLInputElement;
 
 	@i18n("@ui5/webcomponents")
@@ -227,7 +269,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @override
 	 */
 	getFocusDomRef(): HTMLElement | undefined {
-		return this.content[0];
+		return this.hideInput ? this.content[0] : this._input;
 	}
 
 	get formFormattedValue() {
@@ -244,34 +286,37 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return null;
 	}
 
-	_onmouseover() {
-		this.content.forEach(item => {
-			item.classList.add("ui5_hovered");
-		});
-	}
-
-	_onmouseout() {
-		this.content.forEach(item => {
-			item.classList.remove("ui5_hovered");
-		});
-	}
-
 	_onclick() {
-		if (this.getFocusDomRef()?.matches(":focus-within")) {
-			this._input.click();
+		if (this.getDomRef()?.matches(":focus-within")) {
+			this._openFileBrowser();
 		}
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isEnter(e)) {
-			this._input.click();
+		const firstToken = this._tokenizer?.tokens.filter(token => !token.hasAttribute("overflows"))[0];
+		const isToken = (<HTMLElement>e.target).hasAttribute("ui5-token");
+		const isArrowNavigation = this.effectiveDir === "ltr" ? isRight(e) : isLeft(e);
+
+		if (this.hideInput) {
+			return;
+		}
+
+		if (isArrowNavigation && !isToken) {
 			e.preventDefault();
+			firstToken?.focus();
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
-		if (isSpace(e)) {
-			this._input.click();
+		if (this.hideInput) {
+			return;
+		}
+
+		if (isSpace(e) || isF4(e) || isUpAlt(e) || isDownAlt(e)) {
+			this._openFileBrowser();
+			e.preventDefault();
+		} else if (isEscape(e) && this._clearTokens) {
+			this._clearFileSelection();
 			e.preventDefault();
 		}
 	}
@@ -297,7 +342,8 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		}
 
 		this._input.files = validatedFiles;
-		this._updateValue(validatedFiles);
+		this._selectedFilesNames = this._fileNamesList(files);
+		this.value = this.computedValue;
 		this.fireDecoratorEvent("change", {
 			files: validatedFiles,
 		});
@@ -305,10 +351,60 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	_onfocusin() {
 		this.focused = true;
+		if (this._tokenizer) {
+			this._tokenizer.expanded = true;
+		}
 	}
 
 	_onfocusout() {
 		this.focused = false;
+		if (this._tokenizer) {
+			this._tokenizer.expanded = false;
+		}
+	}
+
+	_openFileBrowser() {
+		this._input.click();
+	}
+
+	_clearFileSelection() {
+		this._selectedFilesNames = [];
+		this.value = "";
+		this._from?.reset();
+		this.fireDecoratorEvent("change", {
+			files: this.files,
+		});
+	}
+
+	_onTokenizerKeyUp(e: KeyboardEvent) {
+		const isToken = (<HTMLElement>e.target).hasAttribute("ui5-token");
+		if ((isDownAlt(e) || isUpAlt(e)) && isToken) {
+			this._tokenizerOpen = !this._tokenizerOpen;
+			e.stopPropagation();
+		}
+
+		if (isSpace(e)) {
+			e.stopPropagation();
+		}
+	}
+
+	_onTokenizerKeyDown(e: KeyboardEvent) {
+		const isToken = (<HTMLElement>e.target).hasAttribute("ui5-token");
+		const firstToken = this._tokenizer?.tokens.filter(token => !token.hasAttribute("overflows"))[0];
+		const isArrowNavigation = this.effectiveDir === "ltr" ? isLeft(e) : isRight(e);
+
+		if (isEscape(e)) {
+			this._clearTokens = isToken;
+		}
+
+		if (isEnter(e)) {
+			e.stopPropagation();
+		}
+
+		if (e.target === firstToken && isArrowNavigation) {
+			this._input.focus();
+			e.preventDefault();
+		}
 	}
 
 	/**
@@ -329,7 +425,17 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			this._input.value = "";
 		}
 
+		if (this.hideInput && this.content.length > 0) {
+			this.content.forEach(element => {
+				element.setAttribute("tabindex", "-1");
+			});
+		}
+
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
+	}
+
+	get computedValue(): string {
+		return this._selectedFilesNames.join(" ");
 	}
 
 	_onChange(e: Event) {
@@ -343,16 +449,15 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		this._updateValue(changedFiles);
+		this._selectedFilesNames = this._fileNamesList(changedFiles as FileList);
+		this.value = this.computedValue;
 		this.fireDecoratorEvent("change", {
 			files: changedFiles,
 		});
 	}
 
-	_updateValue(files: FileList | null) {
-		this.value = Array.from(files || []).reduce((acc, currFile) => {
-			return `${acc}"${currFile.name}" `;
-		}, "");
+	_fileNamesList(files: FileList) : Array<string> {
+		return Array.from(files).map(file => file.name);
 	}
 
 	/**
@@ -398,24 +503,16 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	openValueStatePopover() {
-		const popover = this._getPopover();
-
-		if (popover) {
-			popover.opener = this;
-			popover.open = true;
+		if (this._messagePopover) {
+			this._messagePopover.opener = this;
+			this._messagePopover.open = true;
 		}
 	}
 
 	closeValueStatePopover() {
-		const popover = this._getPopover();
-
-		if (popover) {
-			popover.open = false;
+		if (this._messagePopover) {
+			this._messagePopover.open = false;
 		}
-	}
-
-	_getPopover(): Popover {
-		return this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 	}
 
 	/**
@@ -430,16 +527,24 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return this.emptyInput.files;
 	}
 
-	get browseText(): string {
-		return FileUploader.i18nBundle.getText(FILEUPLOAD_BROWSE);
+	get inputTitle(): string {
+		return FileUploader.i18nBundle.getText(FILEUPLOADER_INPUT_TOOLTIP);
 	}
 
-	get titleText(): string {
-		return FileUploader.i18nBundle.getText(FILEUPLOADER_TITLE);
+	get valueHelpTitle(): string {
+		return FileUploader.i18nBundle.getText(FILEUPLOADER_VALUE_HELP_TOOLTIP);
 	}
 
-	get _input(): HTMLInputElement {
-		return (this.shadowRoot!.querySelector<HTMLInputElement>("input[type=file]") || this.querySelector<HTMLInputElement>("input[type=file][data-ui5-form-support]"))!;
+	get clearIconTitle(): string {
+		return FileUploader.i18nBundle.getText(FILEUPLOADER_CLEAR_ICON_TOOLTIP);
+	}
+
+	get resolvedPlaceholder(): string {
+		return this.placeholder || FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER);
+	}
+
+	get roleDescription(): string {
+		return FileUploader.i18nBundle.getText(FILEUPLOADER_ROLE_DESCRIPTION);
 	}
 
 	get valueStateTextMappings(): Record<string, string> {
@@ -485,8 +590,8 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
-	get ui5Input() {
-		return this.shadowRoot!.querySelector<Input>(".ui5-file-uploader-input");
+	get fromElement() : HTMLFormElement | undefined {
+		return this._from;
 	}
 }
 
