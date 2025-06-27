@@ -381,30 +381,22 @@ describe("ToolbarButton", () => {
                 icon="sap-icon://add"
                 accessible-name="Add"
                 accessible-name-ref="btn"
+				accessibilityAttributes={{ expanded: "true", controls: "btn", hasPopup: "dialog" }}
             ></ToolbarButton>
         </Toolbar>
-		).then(() =>	{
-			const accButton = document.querySelector(
-				"ui5-toolbar-button[accessible-name]"
-			) as ToolbarButton;
-			accButton.accessibilityAttributes = {
-				expanded: "true",
-				controls: "btn",
-				hasPopup: "dialog",
-			};
-		})
+		);
 	})
 
 
 	it("Should render the button with the correct text inside the popover", () => {
 		cy.viewport(100, 1080);
 
-		cy.get("#otb_d")
+		cy.get("[ui5-toolbar]")
 			.shadow()
 			.find(".ui5-tb-overflow-btn")
-			.click();
+			.realClick();
 
-		cy.get("ui5-toolbar-button").first().shadow().find("ui5-button")
+		cy.get("[text='Back']").first().shadow().find(".ui5-tb-button")
 			.should("have.text", "Back")
 			.should("have.attr", "design", "Emphasized")
 			.should("have.attr", "disabled", "disabled")
@@ -416,12 +408,12 @@ describe("ToolbarButton", () => {
 	it("Should render the button with the correct accessible name inside the popover", () => {
 		cy.viewport(100, 1080);
 
-		cy.get("#otb_d")
+		cy.get("[ui5-toolbar]")
 			.shadow()
 			.find(".ui5-tb-overflow-btn")
-			.click();
+			.realClick();
 
-			cy.get("ui5-toolbar-button[accessible-name]").shadow().find("ui5-button")
+			cy.get("ui5-toolbar-button[accessible-name]").shadow().find(".ui5-tb-button")
 				.should("have.attr", "accessible-name", "Add")
 				.should("have.attr", "accessible-name-ref", "btn");
 	});
@@ -429,12 +421,12 @@ describe("ToolbarButton", () => {
 	it("Should render the button with the correct accessibilityAttributes inside the popover", () => {
 		cy.viewport(100, 1080);
 
-		cy.get("#otb_d")
+		cy.get("[ui5-toolbar]")
 			.shadow()
 			.find(".ui5-tb-overflow-btn")
-			.click();
+			.realClick();
 
-		cy.get("ui5-toolbar-button[accessible-name]").shadow().find("ui5-button")
+		cy.get("ui5-toolbar-button[accessible-name]").shadow().find(".ui5-tb-button")
 				.invoke("prop", "accessibilityAttributes")
 				.should("deep.equal", { expanded: "true",
 					controls: "btn",
