@@ -218,7 +218,6 @@ describe("General API", () => {
 	});
 
 	it("should open the dialog when the link is clicked", () => {
-		// Mount the components
 		cy.mount(<>
 				<Link accessible-role="button" id="signInLink">Sign in</Link>
 				<Dialog id="signInDialog">
