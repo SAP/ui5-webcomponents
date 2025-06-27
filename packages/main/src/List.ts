@@ -705,6 +705,14 @@ class List extends UI5Element {
 		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this) || this._getDescriptionForGroups();
 	}
 
+	get growingButtonAriaLabel() {
+		return this.growingButtonAccessibleName;
+	}
+
+	get growingButtonAriaLabelledBy() {
+		return this.growingButtonAccessibleName ? undefined : `${this._id}-growingButton-text`;
+	}
+
 	get scrollContainer() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-list-scroll-container");
 	}

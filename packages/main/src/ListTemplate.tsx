@@ -92,8 +92,8 @@ function moreRow(this: List) {
 					"ui5-growing-button-inner": true,
 					"ui5-growing-button-inner-active": this._loadMoreActive,
 				}}
-				aria-label={this.growingButtonAccessibleName || undefined}
-				aria-labelledby={this.growingButtonAccessibleName ? undefined : `${this._id}-growingButton-text`}
+				aria-label={this.growingButtonAriaLabel}
+				aria-labelledby={this.growingButtonAriaLabelledBy}
 				onClick={this._onLoadMoreClick}
 				onKeyDown={this._onLoadMoreKeydown}
 				onKeyUp={this._onLoadMoreKeyup}
