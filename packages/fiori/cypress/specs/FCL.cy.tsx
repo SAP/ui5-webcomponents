@@ -78,6 +78,44 @@ describe("Columns resize", () => {
 				expect($el).to.have.class("ui5-fcl-column--hidden");
 			});
 	});
+
+	it("keeps hidden class on columns after rerendering", () => {
+		// Get a reference to the FCL first
+		cy.get("[ui5-flexible-column-layout]")
+			.as("fcl");
+		
+		// Verify initial state
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-column--end")
+			.should("have.class", "ui5-fcl-column--hidden");
+
+		// Change animation mode to "full"
+		cy.wrap({ setAnimationMode })
+			.invoke("setAnimationMode", AnimationMode.Full);
+
+		// Verify the end column has the animation class after changing animation mode
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-column--end")
+			.should("have.class", "ui5-fcl-column-animation");
+
+		// Verify the end column still has the hidden class after rerendering
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-column--end")
+			.should("have.class", "ui5-fcl-column--hidden");
+
+		// Change height by 10px
+		cy.get("@fcl")
+			.invoke("css", "height", "310px");
+
+		// Verify the end column still has the hidden class after height change
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-column--end")
+			.should("have.class", "ui5-fcl-column--hidden");
+	});
 });
 
 describe("ACC", () => {

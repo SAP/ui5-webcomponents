@@ -27,6 +27,10 @@
 		<ui5-label show-colon>Switch RTL: </ui5-label>
 		<ui5-switch id="swRTL"></ui5-switch>
 	</div>
+	<div>
+		<ui5-label show-colon>Switch Animations: </ui5-label>
+		<ui5-switch id="swAnimations" checked></ui5-switch>
+	</div>
 	<br><br>
 
 	<ui5-flexible-column-layout id="fcl1" class="fcl3auto" layout="TwoColumnsStartExpanded">
@@ -1045,6 +1049,13 @@
 			} else {
 				setDir("ltr");
 			}
+		});
+
+		const animationsSwitch = document.getElementById("swAnimations");
+
+		animationsSwitch.addEventListener("ui5-change", (e) => {
+			const newMode = e.target.checked ? "full" : "none";
+			window["sap-ui-webcomponents-bundle"].configuration.setAnimationMode(newMode);
 		});
 	</script>
 </body>
