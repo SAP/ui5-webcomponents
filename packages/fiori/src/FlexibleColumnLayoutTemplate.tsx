@@ -18,7 +18,7 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 					"ui5-fcl-column": true,
 					"ui5-fcl-column-animation": hasAnimation,
 					"ui5-fcl-column--start": true,
-					"ui5-fcl-column--hidden": !this.startColumnVisible && !this.isStartColumnCollapsing,
+					"ui5-fcl-column--hidden": isColumnHidden(this.startColumnVisible, this.isStartColumnCollapsing),
 				}}
 				aria-hidden={this._accAttributes.columns.start.ariaHidden}
 				aria-labelledby={`${this._id}-startColumnText`}
@@ -49,7 +49,7 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 					"ui5-fcl-column": true,
 					"ui5-fcl-column-animation": hasAnimation,
 					"ui5-fcl-column--middle": true,
-					"ui5-fcl-column--hidden": !this.midColumnVisible && !this.isMidColumnCollapsing,
+					"ui5-fcl-column--hidden": isColumnHidden(this.midColumnVisible, this.isMidColumnCollapsing),
 				}}
 				aria-hidden={this._accAttributes.columns.middle.ariaHidden}
 				aria-labelledby={`${this._id}-midColumnText`}
@@ -79,7 +79,7 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 					"ui5-fcl-column": true,
 					"ui5-fcl-column-animation": hasAnimation,
 					"ui5-fcl-column--end": true,
-					"ui5-fcl-column--hidden": !this.endColumnVisible && !this.isEndColumnCollapsing,
+					"ui5-fcl-column--hidden": isColumnHidden(this.endColumnVisible, this.isEndColumnCollapsing),
 				}}
 				aria-hidden={this._accAttributes.columns.end.ariaHidden}
 				aria-labelledby={`${this._id}-endColumnText`}
@@ -127,4 +127,8 @@ function gripEnd(this: FlexibleColumnLayout) {
 			/>
 		</div>
 	);
+}
+
+function isColumnHidden(isColumnVisible: boolean, isColumnCollapseInProgress: boolean): boolean {
+	return !isColumnVisible && !isColumnCollapseInProgress;
 }
