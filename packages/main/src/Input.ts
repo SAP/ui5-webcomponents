@@ -517,13 +517,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	@property({ type: Boolean })
 	valueStateOpen = false;
 
-	/**
-	 * Indicates whether the visual focus is on the value state header
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_isValueStateFocused = false;
-
 	@property({ type: Object })
 	_inputAccInfo: InputAccInfo = {};
 
@@ -1074,10 +1067,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.value = this.typedInValue;
 		}
 
-		if (this._isValueStateFocused) {
-			this._isValueStateFocused = false;
-			this.focused = true;
-		}
+		this.focused = true;
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -1133,7 +1123,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return;
 		}
 
-		this._isValueStateFocused = false;
 		this.hasSuggestionItemSelected = false;
 
 		this.Suggestions?._deselectItems();
@@ -1289,7 +1278,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.fireEventByAction(INPUT_ACTIONS.ACTION_ENTER, e as InputEvent);
 
 		this.hasSuggestionItemSelected = false;
-		this._isValueStateFocused = false;
 
 		if (this.Suggestions) {
 			this.Suggestions.updateSelectedItemPosition(-1);

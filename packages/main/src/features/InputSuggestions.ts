@@ -20,7 +20,6 @@ import type SuggestionItemGroup from "../SuggestionItemGroup.js";
 import type { IInputSuggestionItem, IInputSuggestionItemSelectable } from "../Input.js";
 
 interface SuggestionComponent extends UI5Element {
-	_isValueStateFocused: boolean;
 	focused: boolean;
 	hasSuggestionItemSelected: boolean;
 	value: string;
@@ -123,8 +122,8 @@ class Suggestions {
 
 		const isItemIndexValid = this.selectedItemIndex - 10 > -1;
 
-		if (this._hasValueState && !isItemIndexValid) {
-			this._focusValueState();
+		if (!isItemIndexValid) {
+			this.component.focused = true;
 			return true;
 		}
 
@@ -140,8 +139,7 @@ class Suggestions {
 		const lastItemIndex = items.length - 1;
 		const isItemIndexValid = this.selectedItemIndex + 10 <= lastItemIndex;
 
-		if (this._hasValueState && !items) {
-			this._focusValueState();
+		if (!items) {
 			return true;
 		}
 
@@ -153,11 +151,6 @@ class Suggestions {
 	onHome(e: KeyboardEvent) {
 		e.preventDefault();
 
-		if (this._hasValueState) {
-			this._focusValueState();
-			return true;
-		}
-
 		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex = 0);
 		return true;
 	}
@@ -167,8 +160,7 @@ class Suggestions {
 
 		const lastItemIndex = this._getItems().length - 1;
 
-		if (this._hasValueState && !lastItemIndex) {
-			this._focusValueState();
+		if (!lastItemIndex) {
 			return true;
 		}
 
@@ -317,14 +309,6 @@ class Suggestions {
 		const items = this._getItems();
 		const previousSelectedIdx = this.selectedItemIndex;
 
-		if (this.component._isValueStateFocused) {
-			this.component.focused = true;
-			this.component._isValueStateFocused = false;
-			this.selectedItemIndex = 0;
-
-			return;
-		}
-
 		if (previousSelectedIdx === -1 || previousSelectedIdx === null) {
 			return;
 		}
@@ -357,7 +341,6 @@ class Suggestions {
 		}
 
 		this.component.focused = false;
-		this._clearValueStateFocus();
 
 		const selectedItem = this._getItems()[this.selectedItemIndex];
 
@@ -502,20 +485,6 @@ class Suggestions {
 
 	get _hasValueState() {
 		return this.component.hasValueStateMessage;
-	}
-
-	_focusValueState() {
-		this.component._isValueStateFocused = true;
-		this.component.focused = false;
-		this.component.hasSuggestionItemSelected = false;
-		this.selectedItemIndex = 0;
-		this.component.value = this.component.typedInValue;
-
-		this._deselectItems();
-	}
-
-	_clearValueStateFocus() {
-		this.component._isValueStateFocused = false;
 	}
 
 	_clearSelectedSuggestionAndaccInfo() {

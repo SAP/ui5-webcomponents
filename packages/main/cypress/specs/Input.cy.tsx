@@ -450,14 +450,6 @@ describe("Input arrow navigation", () => {
 		cy.get("@input")
 			.should("not.have.attr", "focused");
 
-		cy.get("@input")
-			.shadow()
-			.find("[ui5-responsive-popover]")
-			.as("ui5-responsive-popover")
-			.find("div")
-			.as("valueMessage")
-			.should("not.have.class", "ui5-responsive-popover-header--focused");
-
 		cy.get("ui5-suggestion-item")
 			.eq(1)
 			.should("have.attr", "focused");
@@ -465,9 +457,6 @@ describe("Input arrow navigation", () => {
 		cy.get("@input")
 			.realPress("ArrowUp")
 			.realPress("ArrowUp");
-
-		cy.get("@valueMessage")
-			.should("not.have.class", "ui5-responsive-popover-header--focused");
 
 		cy.get("@input")
 			.should("have.attr", "focused");
