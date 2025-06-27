@@ -920,8 +920,8 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 	});
 
 	it("should not close the dialog when item is selected", () => {
-		cy.mount(<Dialog open>
-			<Input showSuggestions={true}>
+		cy.mount(<Dialog open initialFocus="test">
+			<Input showSuggestions={true} id="test">
 				<SuggestionItem text="First item"></SuggestionItem>
 				<SuggestionItem text="Second item"></SuggestionItem>
 			</Input>
@@ -933,10 +933,6 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 
 		cy.get<Dialog>("@dialog")
 			.ui5DialogOpened();
-
-		cy.get("[ui5-input]")
-			.as("input")
-			.realClick();
 
 		cy.get("@input")
 			.should("be.focused");
