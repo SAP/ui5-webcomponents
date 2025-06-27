@@ -367,13 +367,13 @@ describe("ToolbarButton", () => {
 	beforeEach(() => {
 
 		cy.mount(
-			<Toolbar id="otb_d">
+			<Toolbar>
             <ToolbarButton
                 text="Back"
                 design="Emphasized"
                 disabled
                 icon="sap-icon://add"
-                end-icon="sap-icon://employee"
+                endIcon="sap-icon://employee"
                 tooltip="Add"
             ></ToolbarButton>
 
@@ -413,7 +413,7 @@ describe("ToolbarButton", () => {
 			.find(".ui5-tb-overflow-btn")
 			.realClick();
 
-			cy.get("ui5-toolbar-button[accessible-name]").shadow().find(".ui5-tb-button")
+			cy.get("[ui5-toolbar-button][accessible-name]").shadow().find(".ui5-tb-button")
 				.should("have.attr", "accessible-name", "Add")
 				.should("have.attr", "accessible-name-ref", "btn");
 	});
