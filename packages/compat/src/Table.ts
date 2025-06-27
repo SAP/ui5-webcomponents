@@ -168,7 +168,7 @@ enum TableFocusTargetElement {
  * @constructor
  * @extends UI5Element
  * @public
- * @deprecated deprecated since 2.12.0, it's recommended to use `@ui5/webcomponents/dist/Table.js`, please use `@ui5/webcomponents/dist/Table.js` instead. All future development will focus on this module.
+ * @deprecated Deprecated as of version 2.12.0, use `@ui5/webcomponents/dist/Table.js` instead.
  */
 @customElement({
 	tag: "ui5-table",
