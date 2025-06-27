@@ -27,7 +27,7 @@
 	background-color: var(--sapField_InvalidBackground);
 }
 
-:host(:not([disabled]):hover) {
+:host(:not([disabled]):not([readonly]):hover) {
 	background: var(--sapField_Hover_Background);
 }
 
