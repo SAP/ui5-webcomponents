@@ -62,6 +62,7 @@ type TableRowF7PressEventDetail = {
  * @public
  * @csspart row - Used to style the native `tr` element
  * @csspart popin-row - Used to style the `tr` element when a row pops in
+ * @deprecated Deprecated as of version 2.12.0, use `@ui5/webcomponents/dist/TableRow.js` instead.
  */
 @customElement({
 	tag: "ui5-table-row",
