@@ -9,9 +9,12 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base";
 import { isF4, isShow } from "@ui5/webcomponents-base/dist/Keys.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import DynamicDateRangeTemplate from "./DynamicDateRangeTemplate.js";
 import IconMode from "./types/IconMode.js";
 import type Input from "./Input.js";
+import type List from "./List.js";
+import type ListItem from "./ListItem.js";
 import {
 	DYNAMIC_DATE_RANGE_SELECTED_TEXT,
 	DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT,
@@ -25,8 +28,6 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import dynamicDateRangeCss from "./generated/themes/DynamicDateRange.css.js";
 import dynamicDateRangePopoverCss from "./generated/themes/DynamicDateRangePopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import type List from "./List.js";
-import type ListItem from "./ListItem.js";
 
 type DynamicDateRangeValue = {
 	/**
@@ -41,7 +42,7 @@ type DynamicDateRangeValue = {
 	 * @default []
 	 * @public
 	 */
-	values?: Date[] | number[];
+	values?: Array<Date> | Array<number>;
 }
 
 /**
@@ -61,7 +62,7 @@ type DynamicDateRangeValue = {
  * Methods:
  * - `format(value: DynamicDateRangeValue): string`: Formats the given dynamic date range value into a string representation.
  * - `parse(value: string): DynamicDateRangeValue | undefined`: Parses a string into a dynamic date range value.
- * - `toDates(value: DynamicDateRangeValue): Date[]`: Converts a dynamic date range value into an array of `Date` objects.
+ * - `toDates(value: DynamicDateRangeValue): Array<Date>`: Converts a dynamic date range value into an array of `Date` objects.
  * - `handleSelectionChange?(event: CustomEvent): DynamicDateRangeValue | undefined`: (Optional) Handles selection changes in the UI of the dynamic date range option.
  * - `isValidString(value: string): boolean`: Validates whether a given string is a valid representation of the dynamic date range value.
  *
@@ -74,7 +75,7 @@ interface IDynamicDateRangeOption {
 	text: string;
 	format: (value: DynamicDateRangeValue) => string;
 	parse: (value: string) => DynamicDateRangeValue | undefined;
-	toDates: (value: DynamicDateRangeValue) => Date[];
+	toDates: (value: DynamicDateRangeValue) => Array<Date>;
 	handleSelectionChange?: (event: CustomEvent) => DynamicDateRangeValue | undefined;
 	template?: JsxTemplate;
 	isValidString: (value: string) => boolean;
@@ -104,6 +105,16 @@ interface IDynamicDateRangeOption {
  * - "TOMORROW" - Represents the next date. An example value is `{ operator: "TOMORROW"}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/Tomorrow.js";`
  * - "DATE" - Represents a single date. An example value is `{ operator: "DATE", values: [new Date()]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/SingleDate.js";`
  * - "DATERANGE" - Represents a range of dates. An example value is `{ operator: "DATERANGE", values: [new Date(), new Date()]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/DateRange.js";`
+ * - "LASTDAYS" - Represents last X days from today. An example value is `{ operator: "LASTDAYS", values: [new Date("2025-06-02"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastDays.js";`
+ * - "NEXTDAYS" - Represents next X days from today. An example value is `{ operator: "NEXTDAYS", values: [new Date("2025-06-05"), new Date("2025-06-12")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextDays.js";`
+ * - "LASTWEEKS" - Represents last X weeks from today. An example value is `{ operator: "LASTWEEKS", values: [new Date("2025-05-22"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastWeeks.js";`
+ * - "NEXTWEEKS" - Represents next X weeks from today. An example value is `{ operator: "NEXTWEEKS", values: [new Date("2025-06-05"), new Date("2025-06-19")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextWeeks.js";`
+ * - "LASTMONTHS" - Represents last X months from today. An example value is `{ operator: "LASTMONTHS", values: [new Date("2025-03-05"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastMonths.js";`
+ * - "NEXTMONTHS" - Represents next X months from today. An example value is `{ operator: "NEXTMONTHS", values: [new Date("2025-06-05"), new Date("2025-09-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextMonths.js";`
+ * - "LASTQUARTERS" - Represents last X quarters from today. An example value is `{ operator: "LASTQUARTERS", values: [new Date("2025-01-01"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastQuarters.js";`
+ * - "NEXTQUARTERS" - Represents next X quarters from today. An example value is `{ operator: "NEXTQUARTERS", values: [new Date("2025-06-05"), new Date("2025-09-30")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextQuarters.js";`
+ * - "LASTYEARS" - Represents last X years from today. An example value is `{ operator: "LASTYEARS", values: [new Date("2024-06-05"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastYears.js";`
+ * - "NEXTYEARS" - Represents next X years from today. An example value is `{ operator: "NEXTYEARS", values: [new Date("2025-06-05"), new Date("2026-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextYears.js";`
  *
  * ### ES6 Module Import
  *
@@ -173,7 +184,7 @@ class DynamicDateRange extends UI5Element {
 	@property({ type: Object })
 	currentValue?: DynamicDateRangeValue;
 
-	optionsObjects: IDynamicDateRangeOption[] = [];
+	optionsObjects: Array<IDynamicDateRangeOption> = [];
 
 	static optionsClasses: Map<string, new () => IDynamicDateRangeOption> = new Map();
 
@@ -183,28 +194,82 @@ class DynamicDateRange extends UI5Element {
 	@query("[ui5-list]")
 	_list?: List;
 
+	// Store all available options for context - this allows options to detect their siblings
+	_allAvailableOptions: Array<IDynamicDateRangeOption> = [];
+
+	// Static reference to current instance for options to access context
+	static _currentInstance?: DynamicDateRange;
+
+	// Store last selected values for state restoration
+	_lastSelectedValue?: DynamicDateRangeValue;
+
 	onBeforeRendering() {
+		DynamicDateRange._currentInstance = this;
 		const optionKeys = this.options.split(",").map(option => option.trim());
+		const rawOptions = optionKeys
+			.map(option => {
+				const OptionClass = DynamicDateRange.getOptionClass(option);
+				return OptionClass ? new OptionClass() : null;
+			})
+			.filter((option): option is IDynamicDateRangeOption => option !== null);
 
-		this.optionsObjects = optionKeys.map(option => {
-			const OptionClass = DynamicDateRange.getOptionClass(option);
-			let optionObject;
+		this.optionsObjects = this._normalizeOptions(rawOptions);
+		this._focusSelectedItem();
+	}
 
-			if (OptionClass) {
-				optionObject = new OptionClass();
-			}
+	/**
+	 * Static method for options to get the current component's options string
+	 */
+	static getCurrentOptions(): string {
+		return DynamicDateRange._currentInstance?.options || "";
+	}
 
-			return optionObject;
-		}).filter(optionObject => optionObject !== undefined);
+	/**
+	 * Builds the normalized options array by parsing and creating raw options.
+	 *
+	 * @returns Array of normalized options ready for display
+	 */
+	_buildNormalizedOptions() {
+		const optionKeys = this.options.split(",").map(option => option.trim());
+		const rawOptions = this._createRawOptions(optionKeys);
+		return this._normalizeOptions(rawOptions);
+	}
 
-		if (this.value) {
-			const selectedItem = this._list?.items.find(item => {
-				const option = this.optionsObjects.find(x => x.operator === this.value?.operator);
-				return option && item.textContent === option.text;
-			}) as ListItem;
+	/**
+	 * Creates raw option instances from option keys by instantiating their classes.
+	 * Filters out any invalid or unregistered options.
+	 *
+	 * @param optionKeys - Array of option key strings from the options property
+	 * @returns Array of instantiated option objects, filtered for valid ones only
+	 */
+	_createRawOptions(optionKeys: Array<string>) {
+		const rawOptions = optionKeys
+			.map(option => {
+				const OptionClass = DynamicDateRange.getOptionClass(option);
+				return OptionClass ? new OptionClass() : null;
+			})
+			.filter((option): option is IDynamicDateRangeOption => option !== null);
 
-			this._list?.focusItem(selectedItem);
+		return rawOptions;
+	}
+
+	_focusSelectedItem() {
+		if (!this.value) {
+			return;
 		}
+
+		const selectedItem = this._findSelectedListItem();
+		if (selectedItem) {
+			this._list?.focusItem(selectedItem as ListItem);
+		}
+	}
+
+	/**
+	 * Finds the list item element that corresponds to the current value.
+	 */
+	_findSelectedListItem() {
+		const option = this.optionsObjects.find(x => x.operator === this.value?.operator);
+		return option ? this._list?.items.find(item => item.textContent === option.text) : undefined;
 	}
 
 	get _optionsTitles(): Array<string> {
@@ -224,59 +289,52 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	_togglePicker(): void {
-		if (this.open) {
-			this.open = false;
-		} else {
-			this.open = true;
-		}
+		this.open = !this.open;
 	}
 
 	_selectOption(e: CustomEvent): void {
-		this._currentOption = this.optionsObjects.find(option => option.text === e.detail.item.textContent);
-		if (!this._currentOption?.template) {
-			this.currentValue = this._currentOption?.parse(this._currentOption.text);
-			this._submitValue();
-		}
+		const itemText = e.detail.item.textContent;
+		const selectedOption = this.optionsObjects.find(option => option.text === itemText);
 
-		if (this._currentOption?.operator === this.value?.operator) {
-			this.currentValue = this.value;
-		}
-	}
-
-	getOption(operator: string) {
-		const resultOption = this.optionsObjects.find(option => option.operator === operator);
-
-		if (!resultOption) {
-			const OptionClass = DynamicDateRange.getOptionClass(operator);
-
-			if (OptionClass) {
-				const optionObject = new OptionClass();
-				this.optionsObjects.push(optionObject);
-
-				return optionObject;
-			}
-		}
-
-		return resultOption;
-	}
-
-	onInputChange(e: Event): void {
-		const value = (e.target as Input)?.value;
-
-		if (!value) {
-			this.value = undefined;
-			this.fireDecoratorEvent("change");
-
+		if (!selectedOption) {
 			return;
 		}
 
-		const currentOption = this.optionsObjects.find(option => option.isValidString(value));
+		this._currentOption = selectedOption;
 
-		this.value = currentOption ? this.getOption(currentOption.operator)?.parse(value) : undefined;
+		const shouldRestore = this._shouldRestorePreviousState(selectedOption);
 
-		if (this.value) {
-			this.fireDecoratorEvent("change");
+		if (shouldRestore) {
+			this.currentValue = this._lastSelectedValue;
+		} else if (selectedOption.template) {
+			this.currentValue = { operator: selectedOption.operator, values: [1] };
+		} else {
+			// Simple options submit immediately
+			this.currentValue = selectedOption.parse(selectedOption.text);
+			this._submitValue();
 		}
+	}
+
+	_shouldRestorePreviousState(selectedOption: IDynamicDateRangeOption): boolean {
+		if (!this.value || !this._lastSelectedValue) {
+			return false;
+		}
+
+		if (this.value.operator === selectedOption.operator) {
+			return true;
+		}
+
+		const currentOptions = this.options.split(",").map(option => option.trim());
+		const selectedConstructor = selectedOption.constructor;
+
+		// Find all options with the same constructor
+		const relatedOperators = currentOptions.filter(operator => {
+			const OptionClass = DynamicDateRange.getOptionClass(operator);
+			return OptionClass && new OptionClass().constructor === selectedConstructor;
+		});
+
+		// Check if current value's operator is in the related operators
+		return relatedOperators.includes(this.value.operator);
 	}
 
 	onButtonBackClick() {
@@ -290,8 +348,19 @@ class DynamicDateRange extends UI5Element {
 	 * @param value The option to convert into an array of date ranges
 	 * @returns An array of two `Date` objects representing the start and end dates.
 	 */
-	toDates(value: DynamicDateRangeValue): Date[] {
-		return this.getOption(value.operator)?.toDates(value) as Date[];
+	toDates(value: DynamicDateRangeValue): Array<Date> {
+		const option = this.getOption(value.operator);
+
+		if (!option) {
+			return [];
+		}
+
+		if (value.values && value.values.length === 2
+			&& value.values[0] instanceof Date && value.values[1] instanceof Date) {
+			return value.values as Array<Date>;
+		}
+
+		return option.toDates(value);
 	}
 
 	get _hasCurrentOptionTemplate(): boolean {
@@ -299,21 +368,38 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	_submitValue() {
-		const stringValue = this._currentOption?.format(this.currentValue!) as string;
-
-		if (this._input) {
-			this._input.value = stringValue;
+		if (!this._currentOption || !this.currentValue) {
+			return;
 		}
 
-		if (this._currentOption?.isValidString(stringValue)) {
-			this.value = this.currentValue as DynamicDateRangeValue;
+		const result = this._processOptionSubmission();
+
+		if (this._input && result) {
+			this._input.value = result.stringValue;
+		}
+
+		this._currentOption = undefined;
+		this.open = false;
+	}
+
+	_processOptionSubmission() {
+		if (!this._currentOption || !this.currentValue) {
+			return null;
+		}
+
+		const stringValue = this._currentOption.format(this.currentValue);
+		const isValid = this._currentOption.isValidString(stringValue);
+
+		if (isValid) {
+			const dates = this._currentOption.toDates(this.currentValue);
+			this.value = { operator: this.currentValue.operator, values: dates };
+			this._lastSelectedValue = { ...this.currentValue };
 			this.fireDecoratorEvent("change");
 		} else {
 			this.value = undefined;
 		}
 
-		this._currentOption = undefined;
-		this.open = false;
+		return { stringValue };
 	}
 
 	_close() {
@@ -322,7 +408,9 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	onPopoverOpen() {
-		if (this.currentValue !== this.value) {
+		if (this.value && this._lastSelectedValue) {
+			this.currentValue = this._lastSelectedValue;
+		} else if (this.value) {
 			this.currentValue = this.value;
 		}
 	}
@@ -332,15 +420,42 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	get currentValueText() {
-		if (this.currentValue && this.currentValue.operator === this._currentOption?.operator) {
-			return `${DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_SELECTED_TEXT)}: ${this._currentOption?.format(this.currentValue)}`;
+		if (!this.currentValue || !this._currentOption) {
+			return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT);
 		}
 
-		return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT);
+		const selectedText = DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_SELECTED_TEXT);
+
+		// For template options with numeric values, show the calculated date range
+		if (this._currentOption.template && this.currentValue.values && typeof this.currentValue.values[0] === "number") {
+			const dates = this._currentOption.toDates(this.currentValue);
+			if (dates.length === 2) {
+				const dateFormat = DateFormat.getDateInstance({
+					interval: true,
+					intervalDelimiter: " - ",
+				});
+				const formattedRange = dateFormat.format(dates);
+				return `${selectedText}: ${formattedRange}`;
+			}
+		}
+
+		// Default: show the option's formatted text
+		const formattedValue = this._currentOption.format(this.currentValue);
+		return `${selectedText}: ${formattedValue}`;
+	}
+
+	/**
+	 * Generic method to update current value - used by option templates.
+	 */
+	updateCurrentValue(newValue: DynamicDateRangeValue): void {
+		this.currentValue = newValue;
 	}
 
 	handleSelectionChange(e: CustomEvent) {
-		this.currentValue = this._currentOption?.handleSelectionChange && this._currentOption?.handleSelectionChange(e) as DynamicDateRangeValue;
+		const newValue = this._currentOption?.handleSelectionChange?.(e);
+		if (newValue) {
+			this.currentValue = newValue;
+		}
 	}
 
 	onInputKeyDown(e: KeyboardEvent) {
@@ -386,6 +501,82 @@ class DynamicDateRange extends UI5Element {
 
 	static getOptionClass(operator: string): (new () => IDynamicDateRangeOption) | undefined {
 		return this.optionsClasses.get(operator);
+	}
+
+	get displayValue(): string {
+		if (!this.value) {
+			return "";
+		}
+
+		const option = this.getOption(this.value.operator);
+		if (!option) {
+			return "";
+		}
+
+		return option.format(this.value);
+	}
+
+	getOption(operator: string): IDynamicDateRangeOption | undefined {
+		const resultOption = this.optionsObjects.find(option => option.operator === operator);
+		if (resultOption) {
+			return resultOption;
+		}
+
+		const OptionClass = DynamicDateRange.getOptionClass(operator);
+		return OptionClass ? new OptionClass() : undefined;
+	}
+
+	onInputChange(e: Event): void {
+		const value = (e.target as Input)?.value;
+
+		if (!value) {
+			this.value = undefined;
+			this._lastSelectedValue = undefined;
+			this.fireDecoratorEvent("change");
+			return;
+		}
+
+		const currentOption = this.optionsObjects.find(option => option.isValidString(value));
+		const parsedValue = currentOption?.parse(value);
+
+		if (parsedValue && currentOption) {
+			this._lastSelectedValue = { ...parsedValue };
+
+			const dates = currentOption.toDates(parsedValue);
+			this.value = { operator: parsedValue.operator, values: dates };
+		} else {
+			this.value = undefined;
+			this._lastSelectedValue = undefined;
+		}
+
+		if (this.value) {
+			this.fireDecoratorEvent("change");
+		}
+	}
+
+	/**
+	 * Groups options by constructor and keeps only one representative per type.
+	 */
+	_normalizeOptions(options: Array<IDynamicDateRangeOption>): Array<IDynamicDateRangeOption> {
+		this._allAvailableOptions = options;
+
+		const normalizedOptions: Array<IDynamicDateRangeOption> = [];
+		const groupedOptions: Map<new () => IDynamicDateRangeOption, Array<IDynamicDateRangeOption>> = new Map();
+
+		// Group by constructor
+		options.forEach(option => {
+			const constructor = option.constructor as new () => IDynamicDateRangeOption;
+			if (!groupedOptions.has(constructor)) {
+				groupedOptions.set(constructor, []);
+			}
+			groupedOptions.get(constructor)!.push(option);
+		});
+
+		groupedOptions.forEach(groupOptions => {
+			normalizedOptions.push(groupOptions[0]);
+		});
+
+		return normalizedOptions;
 	}
 }
 

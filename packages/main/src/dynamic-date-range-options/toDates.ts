@@ -1,6 +1,6 @@
-import type { DynamicDateRangeValue } from "../DynamicDateRange.js";
+import type { DynamicDateRangeValue, IDynamicDateRangeOption } from "../DynamicDateRange.js";
 
-const dateOptionToDates = (value: DynamicDateRangeValue): Date[] => {
+const dateOptionToDates = (value: DynamicDateRangeValue): Array<Date> => {
 	const startDate = value.values ? value.values[0] as Date : new Date();
 	const endDate = new Date(startDate);
 
@@ -10,7 +10,7 @@ const dateOptionToDates = (value: DynamicDateRangeValue): Date[] => {
 	return [startDate, endDate];
 };
 
-const dateRangeOptionToDates = (value: DynamicDateRangeValue): Date[] => {
+const dateRangeOptionToDates = (value: DynamicDateRangeValue): Array<Date> => {
 	const startDate = value.values ? value.values[0] as Date : new Date();
 	const endDate = value.values ? value.values[1] as Date : new Date();
 
@@ -20,7 +20,7 @@ const dateRangeOptionToDates = (value: DynamicDateRangeValue): Date[] => {
 	return [startDate, endDate];
 };
 
-const todayToDates = (): Date[] => {
+const todayToDates = (): Array<Date> => {
 	const startDate = new Date();
 	const endDate = new Date();
 
@@ -30,7 +30,7 @@ const todayToDates = (): Date[] => {
 	return [startDate, endDate];
 };
 
-const tomorrowToDates = (): Date[] => {
+const tomorrowToDates = (): Array<Date> => {
 	const startDate = new Date();
 	const endDate = new Date();
 
@@ -42,7 +42,7 @@ const tomorrowToDates = (): Date[] => {
 	return [startDate, endDate];
 };
 
-const yesterdayToDates = (): Date[] => {
+const yesterdayToDates = (): Array<Date> => {
 	const startDate = new Date();
 	const endDate = new Date();
 
@@ -54,10 +54,126 @@ const yesterdayToDates = (): Date[] => {
 	return [startDate, endDate];
 };
 
+const lastNextToDates = (value: DynamicDateRangeValue, unit: string, direction: "last" | "next"): Array<Date> => {
+	const today = new Date();
+	const startDate = new Date(today);
+	const endDate = new Date(today);
+	const amount = value.values?.[0] as number || 1;
+
+	if (direction === "last") {
+		switch (unit) {
+		case "days":
+			// For "Last X Days": start X-1 days before today, end today
+			// "Last 1 Day" = today only, "Last 2 Days" = yesterday + today, etc.
+			startDate.setTime(today.getTime() - (amount - 1) * 24 * 60 * 60 * 1000);
+			break;
+		case "weeks": {
+			const currentDayOfWeek = today.getDay();
+			const daysToStartOfWeek = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
+			startDate.setDate(today.getDate() - daysToStartOfWeek - ((amount - 1) * 7));
+			break;
+		}
+		case "months":
+			startDate.setMonth(today.getMonth() - (amount - 1));
+			startDate.setDate(1); // Start of the month
+			break;
+		case "quarters": {
+			const currentQuarter = Math.floor(today.getMonth() / 3);
+			const quarterStartMonth = currentQuarter * 3 - ((amount - 1) * 3);
+			startDate.setMonth(quarterStartMonth);
+			startDate.setDate(1); // Start of the quarter
+			break;
+		}
+		case "years":
+			startDate.setFullYear(today.getFullYear() - (amount - 1));
+			startDate.setMonth(0); // January
+			startDate.setDate(1); // Start of the year
+			break;
+		}
+		// For "last", end date is today
+	} else {
+		// For "next", start date is today
+		switch (unit) {
+		case "days":
+			// For "Next X Days": start today, end X-1 days after today
+			// "Next 1 Day" = today only, "Next 2 Days" = today + tomorrow, etc.
+			endDate.setTime(today.getTime() + (amount - 1) * 24 * 60 * 60 * 1000);
+			break;
+		case "weeks": {
+			const currentDayOfWeek = today.getDay();
+			const daysToEndOfWeek = currentDayOfWeek === 0 ? 0 : 7 - currentDayOfWeek;
+			endDate.setDate(today.getDate() + daysToEndOfWeek + ((amount - 1) * 7));
+			break;
+		}
+		case "months":
+			endDate.setMonth(today.getMonth() + amount);
+			endDate.setDate(0); // Last day of the previous month (the target month)
+			break;
+		case "quarters": {
+			const currentQuarter = Math.floor(today.getMonth() / 3);
+			const quarterEndMonth = (currentQuarter + 1) * 3 - 1 + ((amount - 1) * 3);
+			endDate.setMonth(quarterEndMonth + 1);
+			endDate.setDate(0); // Last day of the quarter
+			break;
+		}
+		case "years":
+			endDate.setFullYear(today.getFullYear() + amount);
+			endDate.setMonth(0); // January of the next year
+			endDate.setDate(0); // Last day of December of the target year
+			break;
+		}
+	}
+
+	startDate.setHours(0, 0, 0, 0);
+	endDate.setHours(23, 59, 59, 999);
+
+	return [startDate, endDate];
+};
+
+/**
+ * Converts DynamicDateRangeValue to dates for Last/Next options.
+ * Uses operator name to determine time unit and direction.
+ */
+const toDatesLastNext = (value: DynamicDateRangeValue, option: IDynamicDateRangeOption): Array<Date> => {
+	const operator = option.operator;
+
+	// Extract direction from operator name
+	let direction: "last" | "next";
+	if (operator.startsWith("LAST")) {
+		direction = "last";
+	} else if (operator.startsWith("NEXT")) {
+		direction = "next";
+	} else {
+		// Not a LastNext option, return today's date range
+		return todayToDates();
+	}
+
+	// Extract time unit from operator name
+	let unit: string;
+	if (operator.includes("DAYS")) {
+		unit = "days";
+	} else if (operator.includes("WEEKS")) {
+		unit = "weeks";
+	} else if (operator.includes("MONTHS")) {
+		unit = "months";
+	} else if (operator.includes("QUARTERS")) {
+		unit = "quarters";
+	} else if (operator.includes("YEARS")) {
+		unit = "years";
+	} else {
+		// Unknown time unit, return today's date range as fallback
+		return todayToDates();
+	}
+
+	return lastNextToDates(value, unit, direction);
+};
+
 export {
 	dateOptionToDates,
 	dateRangeOptionToDates,
 	todayToDates,
 	tomorrowToDates,
 	yesterdayToDates,
+	lastNextToDates,
+	toDatesLastNext,
 };
