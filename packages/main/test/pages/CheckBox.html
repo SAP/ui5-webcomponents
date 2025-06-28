@@ -73,10 +73,10 @@
 
 	<br />
 	<ui5-title>Form submission</ui5-title>
-	<form id="cbForm">
-		<ui5-checkbox id="cbItem1" text="Option 1" checked></ui5-checkbox>
-		<ui5-checkbox id="cbItem2" text="Option 2" checked></ui5-checkbox>
-		<ui5-checkbox id="cbItem3" text="Option 3" required></ui5-checkbox>
+	<form id="cbForm" method="get">
+		<ui5-checkbox id="cbItem1" text="Option 1" checked value="option1" name="option"></ui5-checkbox>
+		<ui5-checkbox id="cbItem2" text="Option 2" checked value="option2" name="option"></ui5-checkbox>
+		<ui5-checkbox id="cbItem3" text="Option 3" required value="option3" name="option"></ui5-checkbox>
 		<br><br>
 		<ui5-button id="cbSubmit" type="Submit">Submit</ui5-button>
 		<input type="hidden" id="cbFormSubmitted" value="false" />
@@ -121,7 +121,11 @@
 		cbForm.addEventListener("submit", function (event) {
 			event.preventDefault();
 			cbFormSubmitted.value = true;
-			alert("Form submitted!");
+
+			const formData = new FormData(cbForm);
+			const queryString = new URLSearchParams(formData).toString();
+
+			alert("Form submitted with query string: " + queryString);
 		});
 	</script>
 </body>
