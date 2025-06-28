@@ -198,4 +198,46 @@ describe("Accessibility", () => {
 			.find("input")
 			.should("have.attr", "aria-label", label);
 	});
+
+	it("checkbox should be presentational", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Bulgaria"></MultiComboBoxItem>
+				<MultiComboBoxItem text="England"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("ui5-multi-combobox")
+			.as("multiComboBox");
+
+		cy.get("@multiComboBox")
+			.shadow()
+			.find("ui5-icon")
+			.as("icon");
+
+		cy.get("@icon")
+			.click();
+
+		cy.get("ui5-mcb-item")
+			.eq(0)
+			.shadow()
+			.find("ui5-checkbox")
+			.as("checkbox");
+
+		cy.get("@checkbox")
+			.shadow()
+			.find("input[type='checkbox']")
+			.should("not.exist");
+		
+		cy.get("@checkbox")
+			.shadow()
+			.find(".ui5-checkbox-root")
+			.should("have.attr", "role", "presentation");
+
+		cy.get("@checkbox")
+			.shadow()
+			.find(".ui5-checkbox-root")
+			.should("not.have.attr", "tabindex");
+	});
 });
