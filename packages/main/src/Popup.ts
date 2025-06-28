@@ -252,6 +252,7 @@ abstract class Popup extends UI5Element {
 	_focusedElementBeforeOpen?: HTMLElement | null;
 	_opened = false;
 	_open = false;
+	isEnteredInDom = false;
 
 	constructor() {
 		super();
@@ -282,6 +283,7 @@ abstract class Popup extends UI5Element {
 		}
 
 		this.tabIndex = -1;
+		this.isEnteredInDom = true;
 
 		if (this.open) {
 			this.showPopover();
@@ -296,6 +298,8 @@ abstract class Popup extends UI5Element {
 			Popup.unblockPageScrolling(this);
 			this._removeOpenedPopup();
 		}
+
+		this.isEnteredInDom = false;
 
 		ResizeHandler.deregister(this, this._resizeHandler);
 		deregisterUI5Element(this);
@@ -327,7 +331,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	async openPopup() {
-		if (this._opened) {
+		if (!this.isEnteredInDom || this._opened) {
 			return;
 		}
 
