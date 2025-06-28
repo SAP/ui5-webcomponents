@@ -1,5 +1,6 @@
 import Avatar from "../../src/Avatar.js";
 import AvatarGroup from "../../src/AvatarGroup.js";
+import type UI5Element from "@ui5/webcomponents-base";
 
 describe("Overflow", () => {
 	it("checks if overflow button is hiding properly", () => {
@@ -68,7 +69,7 @@ describe("Avatars", () => {
 describe("Accessibility", () => {
 	it("checks if accessibleName is properly set and applied as aria-label", () => {
 		const customLabel = "Development Team Members";
-		
+
 		cy.mount(<AvatarGroup id="ag" accessible-name={customLabel}>
 			<Avatar initials="JD"></Avatar>
 			<Avatar initials="SM"></Avatar>
@@ -91,7 +92,7 @@ describe("Accessibility", () => {
 
 	it("checks if accessibleNameRef is properly set and applied as aria-label", () => {
 		const labelId = "team-header";
-		
+
 		cy.mount(
 			<>
 				<h3 id={labelId}>Quality Assurance Team</h3>
@@ -102,24 +103,72 @@ describe("Accessibility", () => {
 				</AvatarGroup>
 			</>
 		);
-	
+
 		cy.get("#ag")
 			.should("have.attr", "accessible-name-ref", labelId)
 			.then(($el) => {
 				const avatarGroup = $el.get(0) as AvatarGroup;
 				expect(avatarGroup.accessibleNameRef).to.equal(labelId);
 			});
-	
+
 		cy.get("#ag")
 			.shadow()
 			.find(".ui5-avatar-group-items")
 			.should("have.attr", "aria-label", "Quality Assurance Team");
-		
+
 		cy.get("#ag")
 			.shadow()
 			.find(".ui5-avatar-group-items")
 			.should("not.have.attr", "aria-labelledby");
-		
+
 		cy.get(`#${labelId}`).should("exist");
 	});
+
+	describe("AvatarGroup - getFocusDomRef Method", () => {
+	it("should return undefined when the AvatarGroup is empty", () => {
+		cy.mount(<AvatarGroup></AvatarGroup>);
+
+		cy.get<AvatarGroup>("[ui5-avatar-group]")
+			.then(($el) => {
+				expect($el[0].getFocusDomRef()).to.be.undefined;
+			});
+	});
+
+	it("should return first avatar if no item was focused before", () => {
+		cy.mount(
+			<AvatarGroup type="Individual">
+				<Avatar id="av1" initials="II"></Avatar>
+				<Avatar initials="II"></Avatar>
+			</AvatarGroup>
+		);
+
+		cy.get<UI5Element>("[ui5-avatar-group], #av1")
+			.then(($el) => {
+				const avGroup = $el[0];
+				const avatar = $el[1];
+
+				expect(avGroup.getFocusDomRef()).to.equal(avatar.getFocusDomRef());
+			});
+	});
+
+	it("should return last focused avatar in the AvatarGroup", () => {
+		cy.mount(
+			<AvatarGroup type="Individual">
+				<Avatar initials="II"></Avatar>
+				<Avatar id="av2" initials="II"></Avatar>
+			</AvatarGroup>
+		);
+
+		cy.get("#av2").click();
+		cy.get("#av2").should("be.focused");
+
+		cy.get<UI5Element>("[ui5-avatar-group], #av2")
+			.then(($el) => {
+				const avGroup = $el[0];
+				const avatar = $el[1];
+
+				expect(avGroup.getFocusDomRef()).to.equal(avatar.getFocusDomRef());
+			});
+	});
+});
 });
