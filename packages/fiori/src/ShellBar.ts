@@ -46,6 +46,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import type ShellBarItem from "./ShellBarItem.js";
 import type { ShellBarItemAccessibilityAttributes } from "./ShellBarItem.js";
+import type ShellBarBranding from "./ShellBarBranding.js";
 
 // Templates
 import ShellBarTemplate from "./ShellBarTemplate.js";
@@ -455,6 +456,19 @@ class ShellBar extends UI5Element {
 	 */
 	@slot()
 	assistant!: Array<IButton>;
+
+	/**
+	 * Defines the branding slot.
+	 * The `ui5-shellbar-branding` component is intended to be placed inside this slot.
+	 * Content placed here takes precedence over the `primaryTitle` property and the `logo` content slot.
+	 *
+	 * **Note:** The `branding` slot is in an experimental state and is a subject to change.
+	 *
+	 * @since 2.12.0
+	 * @public
+	 */
+	@slot()
+	branding!: Array<ShellBarBranding>;
 
 	/**
 	 * Defines the `ui5-shellbar` additional items.
@@ -892,6 +906,10 @@ class ShellBar extends UI5Element {
 		if (this.breakpointSize !== mappedSize) {
 			this.breakpointSize = mappedSize;
 		}
+
+		this.branding.forEach(brandingEl => {
+			brandingEl._isSBreakPoint = this.isSBreakPoint;
+		});
 	}
 
 	_hideItems(items: IShellBarHidableItem[]) {
@@ -1456,6 +1474,10 @@ class ShellBar extends UI5Element {
 
 	get hasAssistant() {
 		return !!this.assistant.length;
+	}
+
+	get hasBranding() {
+		return !!this.branding.length;
 	}
 
 	get hasSearchField() {
