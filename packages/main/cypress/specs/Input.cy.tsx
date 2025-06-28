@@ -728,7 +728,7 @@ describe("Selection-change event", () => {
 });
 
 describe("Change event behavior when selecting the same suggestion item", () => {
-	beforeEach(() => {
+	it("Change event is not fired when the same suggestion item is selected (with typeahead)", () => {
 		cy.mount(
 			<Input placeholder="Search for a country ..." showSuggestions onChange={cy.stub().as("changeEvent")}>
 				<SuggestionItemGroup headerText="A">
@@ -743,10 +743,6 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 
 		cy.get("[ui5-input]")
 			.as("input")
-	});
-
-	it("Change event is not fired when the same suggestion item is selected (with typeahead)", () => {
-		cy.get("@input")
 			.realClick();
 
 		cy.get("@input")
@@ -779,7 +775,21 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 	});
 
 	it("Change event is not fired when the same suggestion item is selected (no-typeahead)", () => {
-		cy.get("@input").invoke("attr", "value", "Afghanistan");
+		cy.mount(
+			<Input placeholder="Search for a country ..." showSuggestions onChange={cy.stub().as("changeEvent")}>
+				<SuggestionItemGroup headerText="A">
+					<SuggestionItem text="Afghanistan" />
+					<SuggestionItem text="Argentina" />
+					<SuggestionItem text="Albania" />
+					<SuggestionItem text="Armenia" />
+					<SuggestionItem text="Algeria" />
+				</SuggestionItemGroup>
+			</Input>
+		);
+
+		cy.get("[ui5-input]")
+			.as("input")
+			.invoke("attr", "value", "Afghanistan");
 		cy.get("@input").invoke("attr", "no-typeahead", true);
 
 		cy.get("@input")
@@ -809,7 +819,20 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 	});
 
 	it("Change event is not fired when the same suggestion item is selected after focus out and selecting suggestion again", () => {
-		cy.get("@input")
+		cy.mount(
+			<Input placeholder="Search for a country ..." showSuggestions onChange={cy.stub().as("changeEvent")}>
+				<SuggestionItemGroup headerText="A">
+					<SuggestionItem text="Afghanistan" />
+					<SuggestionItem text="Argentina" />
+					<SuggestionItem text="Albania" />
+					<SuggestionItem text="Armenia" />
+					<SuggestionItem text="Algeria" />
+				</SuggestionItemGroup>
+			</Input>
+		);
+
+		cy.get("[ui5-input]")
+			.as("input")
 			.invoke("attr", "value", "Afghanistan");
 
 		cy.get("@input")
@@ -845,7 +868,8 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 	it("Change event fires after typing a new value following a clear icon click", () => {
 		cy.mount(<Input showClearIcon={true} onChange={cy.stub().as("inputChange")} />);
 
-		cy.get("@input")
+		cy.get("[ui5-input]")
+			.as("input")
 			.shadow()
 			.find("#inner")
 			.as("innerInput")
@@ -920,8 +944,8 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 	});
 
 	it("should not close the dialog when item is selected", () => {
-		cy.mount(<Dialog open>
-			<Input showSuggestions={true}>
+		cy.mount(<Dialog open initialFocus="test">
+			<Input showSuggestions={true} id="test">
 				<SuggestionItem text="First item"></SuggestionItem>
 				<SuggestionItem text="Second item"></SuggestionItem>
 			</Input>
@@ -936,9 +960,6 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 
 		cy.get("[ui5-input]")
 			.as("input")
-			.realClick();
-
-		cy.get("@input")
 			.should("be.focused");
 
 		cy.realType("f");
@@ -954,7 +975,7 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 
 		cy.get<Dialog>("@dialog")
 			.ui5DialogOpened();
-	});
+	})
 });
 
 describe("Accessibility", () => {
