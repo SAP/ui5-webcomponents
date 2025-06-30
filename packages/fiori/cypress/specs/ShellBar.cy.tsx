@@ -498,6 +498,39 @@ describe("Slots", () => {
 			);
 			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", false);
 		});
+
+		it("Test search field added after delay still works with events", () => {
+			cy.mount(
+				<ShellBar id="shellbar" primaryTitle="Product Title" showNotifications={true}></ShellBar>
+			);
+			
+			cy.get("#shellbar").as("shellbar");
+			
+			// Add search field after a timeout (simulating real-world scenario)
+			cy.get("@shellbar").then(shellbar => {
+				setTimeout(() => {
+					const searchField = document.createElement("ui5-shellbar-search");
+					searchField.setAttribute("slot", "searchField");
+					searchField.setAttribute("id", "delayed-search");
+					shellbar.get(0).appendChild(searchField);
+				}, 100);
+			});
+			
+			// Wait for the search field to be added
+			cy.get("#delayed-search", { timeout: 1000 }).should("exist");
+			
+			// Search should now be visible and collapsed
+			cy.get("#shellbar [slot='searchField']")
+				.should("exist")
+				.should("have.prop", "collapsed", true);
+			
+			// click the searchField to expand it
+			cy.get("#shellbar [slot='searchField']")
+				.click()
+				.should("have.prop", "collapsed", false);
+			// check shellbar's showSearchField property is also updated
+			cy.get("@shellbar").invoke("prop", "showSearchField").should("equal", true);
+		});
 	});
 });
 
@@ -525,6 +558,56 @@ describe("Events", () => {
 			.click();
 
 		cy.get("@searchButtonClick")
+			.should("have.been.calledOnce");
+	});
+
+	it("Test logo click fires logo-click event only once", () => {
+		cy.mount(
+			<ShellBar primaryTitle="Product Title" secondaryTitle="Secondary Title">
+				<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+			</ShellBar>
+		);
+		
+		cy.get("[ui5-shellbar]")
+			.as("shellbar");
+
+		cy.get("@shellbar")
+			.then(shellbar => {
+				shellbar.get(0).addEventListener("ui5-logo-click", cy.stub().as("logoClick"));
+			});
+
+		// Test clicking on the logo area in large screens (combined logo layout)
+		cy.viewport(1920, 1080);
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-logo-area")
+			.as("logoArea")
+			.should("exist");
+
+		cy.get("@logoArea")
+			.click();
+
+		cy.get("@logoClick")
+			.should("have.been.calledOnce");
+
+		// Reset the stub for the next test
+		cy.get("@shellbar")
+			.then(shellbar => {
+				shellbar.get(0).addEventListener("ui5-logo-click", cy.stub().as("logoClickSmall"));
+			});
+
+		// Test clicking on the logo in small screens (single logo layout)
+		cy.viewport(500, 1080);
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-logo")
+			.as("logo")
+			.should("exist");
+
+		cy.get("@logo")
+			.click();
+
+		cy.get("@logoClickSmall")
 			.should("have.been.calledOnce");
 	});
 });
@@ -633,5 +716,75 @@ describe("Keyboard Navigation", () => {
 			.shadow()
 			.find(".ui5-shellbar-logo-area")
 			.should("not.exist");
+	});
+
+	it("Test arrow navigation within search input respects cursor position", () => {
+		cy.mount(
+			<ShellBar showSearchField={true}>
+				<Button id="button" slot="content">Test Button</Button>
+				<ShellBarSearch slot="searchField" value="test value"></ShellBarSearch>
+				<ShellBarItem icon={activities} text="Action 1"></ShellBarItem>
+			</ShellBar>
+		);
+		cy.wait(RESIZE_THROTTLE_RATE);
+
+		function placeAtStartOfInput() {
+			cy.get("[ui5-shellbar] [slot='searchField']")
+				.shadow()
+				.find("input")
+				.then($input => {
+					$input[0].setSelectionRange(0, 0);
+				});
+		}
+		function placeAtEndOfInput() {
+			cy.get("[ui5-shellbar] [slot='searchField']")
+				.shadow()
+				.find("input")
+				.then($input => {
+					const inputLength = $input.val().toString().length;
+					$input[0].setSelectionRange(inputLength, inputLength);
+				});
+		}
+		function placeInMiddleOfInput() {
+			cy.get("[ui5-shellbar] [slot='searchField']")
+				.shadow()
+				.find("input")
+				.then($input => {
+					const inputLength = $input.val().toString().length;
+					const middlePosition = Math.floor(inputLength / 2);
+					$input[0].setSelectionRange(middlePosition, middlePosition);
+				});
+		}
+
+		// Focus the search input
+		cy.get("[ui5-shellbar] [slot='searchField']")
+			.realClick()
+			.shadow()
+			.find("input")
+			.as("nativeInput");
+
+		placeAtStartOfInput();
+		// Press left arrow - should move focus away from input since cursor is at start
+		cy.get("@nativeInput").type("{leftArrow}");
+		// Verify focus is now on the button
+		cy.get("[ui5-shellbar] [ui5-button]").should("be.focused");
+
+
+		placeAtEndOfInput();
+		// Press right arrow - should move focus away from input since cursor is at end
+		cy.get("@nativeInput").type("{rightArrow}");
+		// Verify focus is now on the ShellBarItem
+		cy.get("[ui5-shellbar]")
+			.shadow()
+			.find(".ui5-shellbar-custom-item")
+			.should("be.focused");
+
+		placeInMiddleOfInput();
+		// Press left arrow - should stay focused on input since cursor is in the middle
+		cy.get("@nativeInput").type("{leftArrow}");
+		cy.get("@nativeInput").should("be.focused");
+		// Press right arrow - should stay focused on input since cursor is in the middle
+		cy.get("@nativeInput").type("{rightArrow}");
+		cy.get("@nativeInput").should("be.focused");
 	});
 });

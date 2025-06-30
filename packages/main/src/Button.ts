@@ -360,6 +360,8 @@ class Button extends UI5Element implements IButton {
 	badge!: Array<ButtonBadge>;
 
 	_deactivate: () => void;
+	_onclickBound: (e: MouseEvent) => void;
+	_clickHandlerAttached = false;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -371,6 +373,19 @@ class Button extends UI5Element implements IButton {
 				activeButton._setActiveState(false);
 			}
 		};
+
+		this._onclickBound = e => {
+			if (e instanceof CustomEvent) {
+				return;
+			}
+
+			this._onclick(e);
+		};
+
+		if (!this._clickHandlerAttached) {
+			this.addEventListener("click", this._onclickBound);
+			this._clickHandlerAttached = true;
+		}
 
 		if (!isGlobalHandlerAttached) {
 			document.addEventListener("mouseup", this._deactivate);
@@ -390,6 +405,18 @@ class Button extends UI5Element implements IButton {
 	onEnterDOM() {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
+		}
+
+		if (!this._clickHandlerAttached) {
+			this.addEventListener("click", this._onclickBound);
+			this._clickHandlerAttached = true;
+		}
+	}
+
+	onExitDOM() {
+		if (this._clickHandlerAttached) {
+			this.removeEventListener("click", this._onclickBound);
+			this._clickHandlerAttached = false;
 		}
 	}
 
@@ -437,6 +464,7 @@ class Button extends UI5Element implements IButton {
 		});
 
 		if (prevented) {
+			e.preventDefault();
 			return;
 		}
 
