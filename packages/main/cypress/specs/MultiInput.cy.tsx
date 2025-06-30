@@ -214,31 +214,42 @@ describe("MultiInput Web Component", () => {
 })
 
 describe("MultiInput tokens", () => {
-
-	it("Simulate adding token to the multiinput", () => {
+	it("adds a token to multi input", () => {
 		cy.mount(
 			<>
 				<MultiInput id="single-token">
-					<Token slot="tokens" text="Amet" />
+					<Token slot="tokens" text="Amet"></Token>
 				</MultiInput>
 				<Button id="add-to-single">Add more tokens</Button>
 			</>
 		);
 
-		const addTokenSpy = cy.stub().as("addTokenSpy");
+		cy.get("[ui5-multi-input]")
+			.as("multiInput");
 
-		cy.get("[ui5-button]").then(button => {
-			button[0].addEventListener("click", () => {
-				addTokenSpy();
+		cy.get("[ui5-button]")
+			.then(button => {
+				button[0].addEventListener("click", () => {
+					addTokenToMI(createTokenFromText("test"), "single-token");
+				});
 			});
-		});
+
+		cy.get("[ui5-token]")
+			.should("have.length", 1);
 
 		cy.get("[ui5-button]")
 			.realClick();
 
-		cy.get("@addTokenSpy")
-			.should("have.been.calledOnce");
+		cy.get("[ui5-token]")
+			.should("have.length", "2");
 
+		cy.get("[ui5-token]")
+			.eq(0)
+			.should("have.prop", "overflows", false);
+
+		cy.get("[ui5-token]")
+			.eq(1)
+			.should("have.prop", "overflows", false);
 	});
 
 	it("adds multiple tokens to multi input", () => {
