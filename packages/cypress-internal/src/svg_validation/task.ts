@@ -19,8 +19,6 @@ const svgTask = (on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) 
 }
 
 const findAndValidateSvgFiles = () => {
-	const startTime = performance.now();
-
 	const illustrationsDir = path.join(__dirname, '../../../fiori/src/illustrations');
 	const illustrationsV5Dir = path.join(__dirname, '../../../fiori/src/illustrations-v5');
 
@@ -36,35 +34,31 @@ const findAndValidateSvgFiles = () => {
 			file: filePath,
 			isValid: !hasStyleAttribute && !hasStyleTag,
 			violations: {
-				styleAttributes: hasStyleAttribute,
-				styleTags: hasStyleTag
+				hasStyleAttribute,
+				hasStyleTag
 			}
 		}
 	})
-	
-	const endTime = performance.now();
-	const executionTime = endTime - startTime;
-	console.log(`SVG validation task completed in ${executionTime.toFixed(2)} milliseconds (${(executionTime / 1000).toFixed(2)} seconds)`);
-	
-	return results
+
+	return results;
 }
 
 function findSvgFiles(dir: string): string[] {
-      let results: string[] = []
-      const files = readdirSync(dir)
-      
-      for (const file of files) {
-        const fullPath = path.join(dir, file)
-        const stat = statSync(fullPath)
+	let results: string[] = []
+	const files = readdirSync(dir)
 
-        if (stat.isDirectory()) {
-          results = results.concat(findSvgFiles(fullPath))
-        } else if (file.endsWith('.svg')) {
-          results.push(fullPath)
-        }
-      }
-      
-      return results
-    }
+	for (const file of files) {
+		const fullPath = path.join(dir, file)
+		const stat = statSync(fullPath)
+
+		if (stat.isDirectory()) {
+			results = results.concat(findSvgFiles(fullPath))
+		} else if (file.endsWith('.svg')) {
+			results.push(fullPath)
+		}
+	}
+
+	return results;
+}
 
 export default svgTask;
