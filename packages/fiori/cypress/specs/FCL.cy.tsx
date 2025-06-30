@@ -388,7 +388,7 @@ describe("Layout change by dragging end-separator on desktop", () => {
 			.shadow()
 			.find(".ui5-fcl-separator-end")
 			.realMouseDown()
-			.realMouseMove(-400, 0)
+			.realMouseMove(-600, 0)
 			.realMouseUp();
 
 		cy.get("[ui5-flexible-column-layout]")
@@ -445,7 +445,7 @@ describe("Layout change by dragging start-separator on tablet", () => {
 			.realMouseDown();
 
 		cy.get("@separator")
-			.realMouseMove(400, 0);
+			.realMouseMove(600, 0)
 
 		cy.get("@separator")
 			.realMouseUp();
@@ -529,7 +529,7 @@ describe("Tablet Layout Tests", () => {
 			.realMouseDown();
 
 		cy.get("@separator")
-			.realMouseMove(-400, 0);
+			.realMouseMove(-600, 0)
 
 		cy.get("@separator")
 			.realMouseUp();
@@ -605,7 +605,7 @@ describe("Layout change by dragging end-separator on tablet", () => {
 			.realMouseDown();
 
 		cy.get("@endSeparator")
-			.realMouseMove(-300, 0);
+			.realMouseMove(-500, 0)
 
 		cy.get("@endSeparator")
 			.realMouseUp();
@@ -838,7 +838,7 @@ describe("Preserves column min-width", () => {
 			.realMouseDown();
 	
 		cy.get("@endSeparator")
-			.realMouseMove(-100, 0);
+			.realMouseMove(-150, 0)
 	
 		cy.get("@endSeparator")
 			.realMouseUp();
