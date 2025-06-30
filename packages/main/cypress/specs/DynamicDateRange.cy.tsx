@@ -1,5 +1,5 @@
 import DynamicDateRange from '../../src/DynamicDateRange.js';
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import DateFormat from '../../../localization/src/DateFormat.js';
 import SingleDate from '../../src/dynamic-date-range-options/SingleDate.js';
 import DateRange from '../../src/dynamic-date-range-options/DateRange.js';
 import Today from '../../src/dynamic-date-range-options/Today.js';
@@ -76,37 +76,118 @@ describe('DynamicDateRange Component', () => {
         cy.get("@input").should('have.value', 'Today');
     });
 
+
     it('selects the Date option and updates the current value', () => {
-        const currentDate = new Date();
-        currentDate.setUTCHours(0, 0, 0, 0);
-        const timestamp = Math.round(currentDate.getTime() / 1000);
-        const dateFormat = DateFormat.getDateInstance();
-        const result = dateFormat.format(currentDate);
+        cy.get('[ui5-dynamic-date-range]')
+            .as("ddr");
 
-        cy.get('[ui5-dynamic-date-range]').as("ddr");
-        cy.get("@ddr").shadow().find('[ui5-input]').as("input");
+        cy.get("@ddr")
+            .shadow()
+            .find('[ui5-input]')
+            .as("input");
     
-        cy.get("@input").should('exist');
+        cy.get("@input")
+            .should('exist');
     
-        cy.get("@input").find('[ui5-icon]').as("icon");
-        cy.get("@icon").realClick();
-    
-        cy.get("@ddr").shadow().find("[ui5-responsive-popover]").as("popover");
-        cy.get("@popover").should('exist');
+        cy.get("@input")
+            .find('[ui5-icon]')
+            .as("icon");
 
-        cy.get("@popover").find("[ui5-list]").as("list");
-        cy.get("@list").find("[ui5-li]").contains('Date').realClick();
+        cy.get("@icon")
+            .realClick();
     
-        cy.get("@popover").find("[ui5-calendar]").as("calendar");
-        cy.get("@calendar").should('exist');
+        cy.get("@ddr")
+            .shadow()
+            .find("[ui5-responsive-popover]")
+            .as("popover");
+
+        cy.get("@popover")
+            .should('exist');
+
+        cy.get("@popover")
+            .find("[ui5-list]")
+            .as("list");
+
+        cy.get("@list")
+            .find("[ui5-li]")
+            .contains('Date')
+            .realClick();
     
-        cy.get("@calendar").shadow().find("ui5-daypicker").as("dayPicker");
-        cy.get("@dayPicker").shadow().find(`div[data-sap-timestamp='${timestamp}']`).realClick();
+        cy.get("@popover")
+            .find("[ui5-calendar]")
+            .as("calendar");
 
-        cy.get("@popover").find("[ui5-button][design='Emphasized']").as("submitButton");
-        cy.get("@submitButton").should('exist').realClick();
+        cy.get("@calendar")
+            .should('exist');
 
-        cy.get("@input").shadow().find("input").should('have.value', result);
+        cy.realPress("Tab");
+        cy.realPress("Tab");
+        cy.realPress("Tab");
+        
+        cy.get("@calendar")
+            .shadow()
+            .find("[data-ui5-cal-header-btn-year]")
+            .as("yearButton");
+
+        cy.get("@yearButton")
+            .should("be.focused");
+        
+        cy.realPress("Space");
+        
+        cy.get("@calendar")
+            .shadow()
+            .find("ui5-yearpicker")
+            .as("yearPicker");
+
+        cy.get("@yearPicker")
+            .shadow()
+            .find("div[data-sap-timestamp='2066774400']")
+            .realClick();
+
+        cy.realPress("Tab");
+        
+        cy.get("@calendar")
+            .shadow()
+            .find("[data-ui5-cal-header-btn-month]")
+            .as("monthButton");
+
+        cy.get("@monthButton")
+            .should("be.focused");
+
+        cy.realPress("Space");
+
+        cy.get("@calendar")
+            .shadow()
+            .find("ui5-monthpicker")
+            .as("monthPicker");
+
+        cy.get("@monthPicker")
+            .shadow()
+            .find("div[data-sap-timestamp='2064096000']")
+            .realClick();
+
+        cy.get("@calendar")
+            .shadow()
+            .find("ui5-daypicker")
+            .as("dayPicker");
+
+        cy.get("@dayPicker")
+            .shadow()
+            .find("div[data-sap-timestamp='2063318400']")
+            .realClick();
+
+        cy.get("@popover")
+            .find("[ui5-button][design='Emphasized']")
+            .as("submitButton");
+
+        cy.get("@submitButton")
+            .should('exist')
+            .realClick();
+
+        cy.get("@input")
+            .shadow()
+            .find("input")
+            .should('have.value', 'May 21, 2035');
     });
 
     it('writes a date in the input and verifies it is selected in the calendar for the Date option', () => {
