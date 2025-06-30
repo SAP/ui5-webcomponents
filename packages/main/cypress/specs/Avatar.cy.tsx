@@ -315,11 +315,11 @@ describe("Avatar", () => {
 		cy.mount(
 			<div>
 				<Avatar id="myAvatar1">
-					<img src="./img/woman_avatar_5.png" alt="Woman image" />
+				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==" alt="Woman image" />
 				</Avatar>
 				<Avatar id="myAvatar2" icon="filter"></Avatar>
 				<Avatar id="myAvatar3" icon="filter" initials="SF">
-					<img src="./img/woman_avatar_5.png" alt="Woman image" />
+				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==" alt="Woman image" />
 				</Avatar>
 				<Avatar id="myAvatar4" initials="SF" shape="Square" size="M"></Avatar>
 				<Avatar id="myAvatar5" initials="WWW" shape="Square" size="M"></Avatar>
@@ -360,7 +360,7 @@ describe("Avatar", () => {
 			.shadow()
 			.find(".ui5-avatar-root slot:not([name])") 
 			.should("exist");
-	
+
 		cy.get("#myAvatar1")
 			.shadow()
 			.find("ui5-avatar-icon")
