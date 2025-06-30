@@ -243,8 +243,7 @@ describe("General API", () => {
 			});
 
 		cy.get("@signInDialog")
-			.find("[ui5-bar]")
-			.find("#closeDialogButton")
+			.find("[ui5-button]")
 			.then($button => {
 				$button[0].addEventListener("click", () => {
 					(document.querySelector("ui5-dialog") as Dialog).open = false;
