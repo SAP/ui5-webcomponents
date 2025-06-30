@@ -358,7 +358,7 @@ describe("Avatar", () => {
 	it("tests rendering of image", () => {
 		cy.get("#myAvatar1")
 			.shadow()
-			.find('slot:not([name="badge"])')
+			.find("slot:not([name])")
 			.should("exist");
 
 		cy.get("#myAvatar1")
@@ -375,14 +375,14 @@ describe("Avatar", () => {
 
 		cy.get("#myAvatar2")
 			.shadow()
-			.find('slot:not([name="badge"])')
+			.find("slot:not([name])")
 			.should("not.exist");
 	});
 
 	it("tests rendering of image, when all set", () => {
 		cy.get("#myAvatar3")
 			.shadow()
-			.find('slot:not([name="badge"])')
+			.find("slot:not([name])")
 			.should("exist");
 
 		cy.get("#myAvatar3")
