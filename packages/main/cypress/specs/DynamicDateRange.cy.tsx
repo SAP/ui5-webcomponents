@@ -1,5 +1,4 @@
 import DynamicDateRange from '../../src/DynamicDateRange.js';
-import DateFormat from '../../../localization/src/DateFormat.js';
 import SingleDate from '../../src/dynamic-date-range-options/SingleDate.js';
 import DateRange from '../../src/dynamic-date-range-options/DateRange.js';
 import Today from '../../src/dynamic-date-range-options/Today.js';
