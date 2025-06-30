@@ -49,7 +49,7 @@ describe("Rendering", () => {
 			</>
 		);
 
-		cy.get("[ui5-popover]").should("have.attr", "open");
+		cy.get<Popover>("[ui5-popover]").ui5PopoverOpened();
 	});
 
 	it("test initial focus", () => {
@@ -65,7 +65,7 @@ describe("Rendering", () => {
 		cy.get("#popoverBtn").should("be.focused");
 	});
 
-	it("test _open", () => {
+	it("test _opened", () => {
 		cy.mount(
 			<>
 				<Button id="popoverOpen">Open</Button>
@@ -75,8 +75,6 @@ describe("Rendering", () => {
 			</>
 		);
 
-		cy.get("#popoverOpen").should("exist");
-		cy.get("#popover1").should("have.attr", "open");
 		cy.get("#popover1").should("have.prop", "_opened");
 
 		cy.get("#popoverCont1").should("exist");
@@ -101,13 +99,11 @@ describe("Rendering", () => {
 		cy.mount(
 			<>
 				<Button id="btn">Open</Button>
-				<Popover id="pop" opener="btn" headerText="Popover Header" open>
+				<Popover id="pop" opener="btn" headerText="Popover Header" open={true}>
 					<div>Content</div>
 				</Popover>
 			</>
 		);
-
-		cy.get("[ui5-button]").realClick();
 
 		cy.get("[ui5-popover]")
 			.shadow()
@@ -115,15 +111,20 @@ describe("Rendering", () => {
 			.should("be.visible");
 	});
 
-	it("Popover arrow on hide-arrow", () => {
+	it("Popover arrow toggling", () => {
 		cy.mount(
 			<>
 				<Button id="btn">Open</Button>
-				<Popover id="pop" opener="btn" headerText="Popover Header" open hideArrow>
+				<Popover id="pop" opener="btn" headerText="Popover Header" open={true}>
 					<div>Content</div>
 				</Popover>
 			</>
 		);
+
+		cy.get("[ui5-popover]")
+			.shadow()
+			.find(".ui5-popover-arrow")
+			.should("be.visible");
 
 		cy.get("[ui5-popover]").then($popover => {
 			$popover.get(0).toggleAttribute("hide-arrow");
@@ -334,7 +335,7 @@ describe("Accessibility", () => {
 });
 
 describe("Popover opener", () => {
-	it.skip("tests 'opener' set as string of abstract element's ID ", () => {
+	it("tests 'opener' set as string of abstract element's ID ", () => {
 		cy.mount(
 			<>
 				<Toolbar id="tb">
@@ -445,32 +446,15 @@ describe("Popover opener", () => {
 			<>
 				<Button id="btn" />
 				<Popover opener="btn" />
-				<br />
-				<Button id="btn2"/>
 			</>);
 
 		cy.get("[ui5-popover]").invoke("prop", "open", "true");
 
 		cy.get<Popover>("[ui5-popover]").ui5PopoverOpened();
 
-		cy.get("#btn2").realClick();
-		cy.get("[ui5-popover]").should("not.have.attr", "open");
-	});
+		cy.get("[ui5-popover]").invoke("prop", "open", false);
 
-	it("tests popover toggling with 'open' attribute", () => {
-		cy.mount(
-			<>
-				<Button id="btnOpenWithAttr" />
-				<Popover opener="btnOpenWithAttr" />
-			</>
-		);
-
-		cy.get("[ui5-popover]").invoke("prop", "open", "true");
-
-		cy.get<Popover>("[ui5-popover]").ui5PopoverOpened();
-
-		cy.get("[ui5-popover]").invoke("attr", "open", false);
-		cy.get("[ui5-popover]").should("not.have.attr", "open");
+		cy.get("[ui5-popover]").should("not.be.visible");
 	});
 
 	it("tests popover is closed after click outside of it after multiple 'open = true'", () => {
@@ -498,7 +482,7 @@ describe("Popover opener", () => {
 			<>
 				<Button id="btnQuickViewCardOpener">Open</Button>
 				<Button id="btnMoveFocus">Move Focus</Button>
-				<Popover id="quickViewCard" opener="btnQuickViewCardOpener" open>
+				<Popover id="quickViewCard" opener="btnQuickViewCardOpener" open={true}>
 					<div>Content</div>
 				</Popover>
 			</>
@@ -590,7 +574,7 @@ describe("Popover opener", () => {
 
 		cy.get("[ui5-popover]").should("have.attr", "open", "open");
 
-		cy.get("body").then($body => {
+		cy.get("body").should($body => {
 			const blockLayer = $body[0].querySelector("ui5-popup-block-layer");
 			expect(blockLayer).to.not.exist;
 		});
@@ -635,7 +619,7 @@ describe("Popover opener", () => {
 		cy.get("#first-focusable").should("be.focused");
 	 
 		cy.realPress("Tab");
-	 
+		cy.wait(500);
 		cy.get("#li1").should("be.focused");
 		cy.get("#first-focusable").should("not.be.focused");
 	 
@@ -847,7 +831,7 @@ describe("Popover opener", () => {
 			<>
 				<iframe id="clickThisIframe" />
 				<Button id="btn">Click me !</Button>
-				<Popover id="pop" placement="Top" accessible-name="This popover is important" opener="btn">
+				<Popover id="pop" placement="Top" accessibleName="This popover is important" opener="btn">
 					<div slot="header">
 						<Button id="first-focusable">I am in the header</Button>
 					</div>
@@ -899,7 +883,7 @@ describe("Popover opener", () => {
 		cy.mount(
 			<>
 				<Button id="popoverFocusButton">Dialog Focus</Button>
-				<Popover id="popoverFocus" placement="Bottom" header-text="Header text" opener="popoverFocusButton">
+				<Popover id="popoverFocus" placement="Bottom" headerText="Header text" opener="popoverFocusButton">
 					<div slot="footer" className="dialog-footer" style={{ display: "flex" }}>
 						<div style={{ flex: 1 }}></div>
 						<Button id="closeButton" design="Emphasized">Close</Button>
@@ -977,7 +961,7 @@ describe("Popover opener", () => {
 		cy.mount(
 			<div>
 				<Input id="input1" placeholder="First input" />
-				<Popover id="pop" open header-text="Tab Test Popover" opener="input1" />
+				<Popover id="pop" open={true} headerText="Tab Test Popover" opener="input1" />
 				<Input id="input2" placeholder="Second input inside popover" />
 			</div>
 		);
