@@ -12,20 +12,22 @@ import Icon from "./Icon.js";
 import Button from "./Button.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 
 // Styles
 import AINoticeIndicatorCss from "./generated/themes/AINoticeIndicator.css.js";
 
 /**
  * @class
- *
+ * ### Overview
  * AI Notice control is identifying AI-generated text, providing explanations, or collecting user feedback.
  *
  * <h3>Responsive Behavior</h3>
  *
  * The AI notice can be shortened if the available horizontal space becomes insufficient due to resizing of the screen or collision with bordering UI elements.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
  * Use for AI-specific interactions like identifying AI-generated text, providing explanations, or collecting user feedback.
  *
@@ -51,7 +53,18 @@ import AINoticeIndicatorCss from "./generated/themes/AINoticeIndicator.css.js";
 		Link,
 	],
 })
+/**
+ * Fired on mouseup, space and enter if ai-notice is interactive
+ *
+ * **Note:** The event will not be fired if the `disabled`
+ * property is set to `true`.
+ * @public
+ */
+@event("click")
 class AINoticeIndicator extends UI5Element {
+	eventDetails!: {
+		click: { targetRef: HTMLElement },
+	}
 	/**
 	 * Link text for AI Notice Control
 	 *
@@ -76,39 +89,17 @@ class AINoticeIndicator extends UI5Element {
 	 * @public
 	 * @default false
 	*/
-	@property({
-		type: Boolean,
-		converter: {
-			fromAttribute(value) {
-				return value !== null && value !== "false";
-			},
-			toAttribute(value: unknown) {
-				// If value is true, include the attribute, else omit it
-				return value ? "" : null;
-			},
-		},
-	})
+	@property({ type: Boolean })
 	showIcon: boolean = false;
 
 	/**
 	 * Enable/Disable action on click - showing popup
 	 *
 	 * @public
-	 * @default true
+	 * @default false
 	*/
-	@property({
-		type: Boolean,
-		converter: {
-			fromAttribute(value) {
-				return value !== null && value !== "false";
-			},
-			toAttribute(value: unknown) {
-				// If value is true, include the attribute, else omit it
-				return value ? "" : null;
-			},
-		},
-	})
-	enabled = true;
+	@property({ type: Boolean })
+	disabled = false;
 
 	/**
 	 * Determines how <code>AINoticeIndicator</code> will be displayed.
@@ -128,7 +119,6 @@ class AINoticeIndicator extends UI5Element {
 
 	_controlNeededWidth: number = 0;
 	_onResize!: ResizeObserverCallback;
-	_popoverAnchor!: Button | Link;
 
 	constructor() {
 		super();
@@ -158,14 +148,6 @@ class AINoticeIndicator extends UI5Element {
 		}
 	}
 
-	_handlePopoverToggleClick = () => {
-		if (this._popover.length) {
-			const popover = this._popover[0] as Popover;
-			popover.opener = this._popoverAnchor;
-			popover.openPopup();
-		}
-	}
-
 	_getNeededWidthToDisplayControlFully = () => {
 		if (!this.shadowRoot) {
 			return;
@@ -185,6 +167,17 @@ class AINoticeIndicator extends UI5Element {
 		const labelWidth = label?.offsetWidth || 0;
 
 		this._controlNeededWidth = buttonWidth + linkWidth + labelWidth;
+	}
+
+	_onLinkPress(e: UI5CustomEvent<Button | Link, "click">) {
+		e.stopPropagation();
+		this.fireDecoratorEvent("click", { targetRef: e.target as HTMLElement });
+	}
+
+	get _showIconButton() {
+		return this.displayMode === AINoticeIndicatorDisplayMode.Emphasized
+			|| this.displayMode === AINoticeIndicatorDisplayMode.IconOnly
+			|| (!this.attributionText && !this.verificationText);
 	}
 
 	/**
