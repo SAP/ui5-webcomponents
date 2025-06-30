@@ -358,9 +358,9 @@ describe("Avatar", () => {
 	it("tests rendering of image", () => {
 		cy.get("#myAvatar1")
 			.shadow()
-			.find("slot:not([name])")
+			.find(".ui5-avatar-root slot:not([name])") 
 			.should("exist");
-
+	
 		cy.get("#myAvatar1")
 			.shadow()
 			.find("ui5-avatar-icon")
@@ -382,7 +382,7 @@ describe("Avatar", () => {
 	it("tests rendering of image, when all set", () => {
 		cy.get("#myAvatar3")
 			.shadow()
-			.find("slot:not([name])")
+			.find(".ui5-avatar-root slot:not([name])")
 			.should("exist");
 
 		cy.get("#myAvatar3")
