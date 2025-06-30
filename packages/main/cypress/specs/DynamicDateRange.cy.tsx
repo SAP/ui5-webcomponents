@@ -1,4 +1,5 @@
 import DynamicDateRange from '../../src/DynamicDateRange.js';
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import SingleDate from '../../src/dynamic-date-range-options/SingleDate.js';
 import DateRange from '../../src/dynamic-date-range-options/DateRange.js';
 import Today from '../../src/dynamic-date-range-options/Today.js';
@@ -75,11 +76,12 @@ describe('DynamicDateRange Component', () => {
         cy.get("@input").should('have.value', 'Today');
     });
 
-    // Unstable test, needs investigation
-    it.skip('selects the Date option and updates the current value', () => {
-        cy.window().then((win) => {
-            cy.stub(win.Date, 'now').returns(new Date(2025, 4, 15).getTime());
-          });
+    it('selects the Date option and updates the current value', () => {
+        const currentDate = new Date();
+        currentDate.setUTCHours(0, 0, 0, 0);
+        const timestamp = Math.round(currentDate.getTime() / 1000);
+        const dateFormat = DateFormat.getDateInstance();
+        const result = dateFormat.format(currentDate);
 
         cy.get('[ui5-dynamic-date-range]').as("ddr");
         cy.get("@ddr").shadow().find('[ui5-input]').as("input");
@@ -99,12 +101,12 @@ describe('DynamicDateRange Component', () => {
         cy.get("@calendar").should('exist');
     
         cy.get("@calendar").shadow().find("ui5-daypicker").as("dayPicker");
-        cy.get("@dayPicker").shadow().find("div[data-sap-timestamp='1747785600']").realClick();
+        cy.get("@dayPicker").shadow().find(`div[data-sap-timestamp='${timestamp}']`).realClick();
 
         cy.get("@popover").find("[ui5-button][design='Emphasized']").as("submitButton");
         cy.get("@submitButton").should('exist').realClick();
 
-        cy.get("@input").shadow().find("input").should('have.value', 'May 21, 2025');
+        cy.get("@input").shadow().find("input").should('have.value', result);
     });
 
     it('writes a date in the input and verifies it is selected in the calendar for the Date option', () => {
