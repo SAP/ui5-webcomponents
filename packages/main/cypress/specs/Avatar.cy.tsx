@@ -39,9 +39,9 @@ describe("Accessibility", () => {
 		cy.mount(
 			<div>
 				<Avatar interactive disabled initials="JD" id="diabled-avatar" onClick={increment}>
-				<Tag slot="badge">
-					<Icon slot="icon" name="accelerated"></Icon>
-				</Tag>
+					<Tag slot="badge">
+						<Icon slot="icon" name="accelerated"></Icon>
+					</Tag>
 				</Avatar>
 				<input value="0" id="click-event" />
 			</div>
@@ -304,5 +304,185 @@ describe("Fallback Logic", () => {
 			.shadow()
 			.find(".ui5-avatar-icon-fallback")
 			.should("have.class", "ui5-avatar-fallback-icon-hidden");
+	});
+});
+
+describe("Avatar", () => {
+	let sharedInputValue = 0;
+	let sharedInputValue2 = 0;
+
+	beforeEach(() => {
+		cy.mount(
+			<div>
+				<Avatar id="myAvatar1">
+					<img src="./img/woman_avatar_5.png" alt="Woman image" />
+				</Avatar>
+				<Avatar id="myAvatar2" icon="filter"></Avatar>
+				<Avatar id="myAvatar3" icon="filter" initials="SF">
+					<img src="./img/woman_avatar_5.png" alt="Woman image" />
+				</Avatar>
+				<Avatar id="myAvatar4" initials="SF" shape="Square" size="M"></Avatar>
+				<Avatar id="myAvatar5" initials="WWW" shape="Square" size="M"></Avatar>
+				<Avatar id="myAvatar6" initials="IOU" colorScheme="Accent1"></Avatar>
+				<Avatar id="myAvatar7" fallbackIcon="alert" initials="WWW" shape="Circle" size="L"></Avatar>
+				<Avatar id="interactive-avatar" interactive initials="XS" size="XS"></Avatar>
+				<Avatar id="non-interactive-avatar" initials="S" size="S"></Avatar>
+				<Avatar id="myInteractiveAvatar" interactive initials="L" size="L"></Avatar>
+				<input id="click-event" defaultValue={sharedInputValue.toString()} />
+				<input id="click-event-2" defaultValue={sharedInputValue2.toString()} />
+			</div>
+		);
+
+		cy.get("#interactive-avatar").then(($avatar) => {
+			$avatar[0].addEventListener("ui5-click", function() {
+				const input = document.getElementById("click-event") as HTMLInputElement;
+				input.value = `${++sharedInputValue}`;
+			});
+		});
+
+		cy.get("#non-interactive-avatar").then(($avatar) => {
+			$avatar[0].addEventListener("ui5-click", function() {
+				const input = document.getElementById("click-event") as HTMLInputElement;
+				input.value = `${++sharedInputValue}`;
+			});
+		});
+
+		cy.get("#myInteractiveAvatar").then(($avatar) => {
+			$avatar[0].addEventListener("ui5-click", function() {
+				const input = document.getElementById("click-event-2") as HTMLInputElement;
+				input.value = `${++sharedInputValue2}`;
+			});
+		});
+	});
+
+	it("tests rendering of image", () => {
+		cy.get("#myAvatar1")
+			.shadow()
+			.find('slot:not([name="badge"])')
+			.should("exist");
+
+		cy.get("#myAvatar1")
+			.shadow()
+			.find("ui5-avatar-icon")
+			.should("not.exist");
+	});
+
+	it("tests rendering of icon", () => {
+		cy.get("#myAvatar2")
+			.shadow()
+			.find(".ui5-avatar-icon")
+			.should("exist");
+
+		cy.get("#myAvatar2")
+			.shadow()
+			.find('slot:not([name="badge"])')
+			.should("not.exist");
+	});
+
+	it("tests rendering of image, when all set", () => {
+		cy.get("#myAvatar3")
+			.shadow()
+			.find('slot:not([name="badge"])')
+			.should("exist");
+
+		cy.get("#myAvatar3")
+			.shadow()
+			.find(".ui5-avatar-icon")
+			.should("not.exist");
+
+		cy.get("#myAvatar3")
+			.shadow()
+			.find(".ui5-avatar-initials")
+			.should("not.exist");
+	});
+
+	it("tests rendering of initials", () => {
+		cy.get("#myAvatar4")
+			.shadow()
+			.find(".ui5-avatar-initials")
+			.should("exist");
+	});
+
+	it("tests rendering of accented characters", () => {
+		cy.get("#myAvatar6")
+			.shadow()
+			.find(".ui5-avatar-initials")
+			.should("exist");
+	});
+
+	it("tests rendering of default fallback icon when initials are overflowing", () => {
+		cy.get("#myAvatar5")
+			.shadow()
+			.find(".ui5-avatar-icon")
+			.should("exist")
+			.should("have.attr", "name", "employee");
+	});
+
+	it("tests rendering of custom fallback icon when initials are overflowing", () => {
+		cy.get("#myAvatar7")
+			.shadow()
+			.find(".ui5-avatar-icon-fallback")
+			.should("exist")
+			.should("have.attr", "name", "alert");
+	});
+
+	it("Tests noConflict 'ui5-click' event for interactive avatars", () => {
+		cy.get("#interactive-avatar")
+			.shadow()
+			.find(".ui5-avatar-root")
+			.realClick();
+		
+		cy.get("#click-event")
+			.should("have.value", "1");
+
+		cy.get("#interactive-avatar")
+			.shadow()
+			.find(".ui5-avatar-root")
+			.realPress("Enter");
+		
+		cy.get("#click-event")
+			.should("have.value", "2");
+
+		cy.get("#interactive-avatar")
+			.shadow()
+			.find(".ui5-avatar-root")
+			.realPress("Space");
+		
+		cy.get("#click-event")
+			.should("have.value", "3");
+	});
+
+	it("Tests noConflict 'ui5-click' event for non interactive avatars", () => {
+		cy.get("#non-interactive-avatar")
+			.shadow()
+			.find(".ui5-avatar-root")
+			.realClick();
+		
+		cy.get("#click-event")
+			.should("have.value", "4");
+
+		cy.get("#non-interactive-avatar")
+			.shadow()
+			.find(".ui5-avatar-root")
+			.realPress("Enter");
+		
+		cy.get("#click-event")
+			.should("have.value", "4");
+
+		cy.get("#non-interactive-avatar")
+			.shadow()
+			.find(".ui5-avatar-root")
+			.realPress("Space");
+		
+		cy.get("#click-event")
+			.should("have.value", "4");
+	});
+
+	it("Tests native 'click' event thrown", () => {
+		cy.get("#myInteractiveAvatar")
+			.realClick();
+		
+		cy.get("#click-event-2")
+			.should("have.value", "1");
 	});
 });
