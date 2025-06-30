@@ -348,7 +348,7 @@ describe("Start Column Expansion Test", () => {
 
 describe("Layout change by dragging end-separator on desktop", () => {
 	beforeEach(() => {
-		cy.viewport(1600, 1080);
+		cy.viewport(1400, 1080);
 
 		cy.mount(
 			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsMidExpandedEndHidden">
@@ -388,7 +388,7 @@ describe("Layout change by dragging end-separator on desktop", () => {
 			.shadow()
 			.find(".ui5-fcl-separator-end")
 			.realMouseDown()
-			.realMouseMove(-600, 0)
+			.realMouseMove(-400, 0)
 			.realMouseUp();
 
 		cy.get("[ui5-flexible-column-layout]")
@@ -398,7 +398,7 @@ describe("Layout change by dragging end-separator on desktop", () => {
 
 describe("Layout change by dragging start-separator on tablet", () => {
 	beforeEach(() => {
-		cy.viewport(1000, 1080);
+		cy.viewport(800, 1080);
 
 		cy.mount(
 			<FlexibleColumnLayout style={{ height: "300px" }} layout="TwoColumnsStartExpanded">
@@ -445,7 +445,7 @@ describe("Layout change by dragging start-separator on tablet", () => {
 			.realMouseDown();
 
 		cy.get("@separator")
-			.realMouseMove(600, 0)
+			.realMouseMove(400, 0);
 
 		cy.get("@separator")
 			.realMouseUp();
@@ -483,7 +483,7 @@ describe("Layout change by dragging start-separator on tablet", () => {
 
 describe("Tablet Layout Tests", () => {
 	beforeEach(() => {
-		cy.viewport(1000, 1080);
+		cy.viewport(800, 1080);
 
 		cy.mount(
 			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsMidExpandedEndHidden">
@@ -529,7 +529,7 @@ describe("Tablet Layout Tests", () => {
 			.realMouseDown();
 
 		cy.get("@separator")
-			.realMouseMove(-600, 0)
+			.realMouseMove(-400, 0);
 
 		cy.get("@separator")
 			.realMouseUp();
@@ -559,7 +559,7 @@ describe("Tablet Layout Tests", () => {
 
 describe("Layout change by dragging end-separator on tablet", () => {
 	beforeEach(() => {
-		cy.viewport(1000, 1080);
+		cy.viewport(800, 1080);
 
 		cy.mount(
 			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsMidExpandedEndHidden">
@@ -605,7 +605,7 @@ describe("Layout change by dragging end-separator on tablet", () => {
 			.realMouseDown();
 
 		cy.get("@endSeparator")
-			.realMouseMove(-500, 0)
+			.realMouseMove(-300, 0);
 
 		cy.get("@endSeparator")
 			.realMouseUp();
@@ -838,7 +838,7 @@ describe("Preserves column min-width", () => {
 			.realMouseDown();
 	
 		cy.get("@endSeparator")
-			.realMouseMove(-150, 0)
+			.realMouseMove(-100, 0);
 	
 		cy.get("@endSeparator")
 			.realMouseUp();
