@@ -123,6 +123,7 @@ class Suggestions {
 		const isItemIndexValid = this.selectedItemIndex - 10 > -1;
 
 		if (!isItemIndexValid) {
+			this._deselectItems();
 			this.component.focused = true;
 			return true;
 		}
@@ -136,12 +137,13 @@ class Suggestions {
 		e.preventDefault();
 
 		const items = this._getItems();
-		const lastItemIndex = items.length - 1;
-		const isItemIndexValid = this.selectedItemIndex + 10 <= lastItemIndex;
 
 		if (!items) {
 			return true;
 		}
+
+		const lastItemIndex = items.length - 1;
+		const isItemIndexValid = this.selectedItemIndex + 10 <= lastItemIndex;
 
 		this._moveItemSelection(this.selectedItemIndex,
 			isItemIndexValid ? this.selectedItemIndex += 10 : this.selectedItemIndex = lastItemIndex);

@@ -1107,7 +1107,7 @@ describe("Input HOME navigation", () => {
 		assert.strictEqual(await firstListItem.getProperty("focused"), true, "First list item is focused");
 	});
 
-	it.only("Should focus the value state header from the suggestions popover with HOME", async () => {
+	it("Should focus the first item from the suggestions popover with HOME", async () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#inputError");
@@ -1119,13 +1119,11 @@ describe("Input HOME navigation", () => {
 		await suggestionsInput.keys("ArrowDown");
 		await suggestionsInput.keys("Home");
 
-		const firstListItem = suggestionsInput.$("ui5-suggestion-item");
 		const groupHeader = suggestionsInput.$("ui5-suggestion-item-group");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "a", "Input's value should be the typed-in value");
-		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
-		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
-		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
+		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
+		assert.strictEqual(await groupHeader.getProperty("focused"), true, "Group header is focused because it is the first item");
 	});
 
 	it("Should focus the group header from the suggestions popover with HOME", async () => {

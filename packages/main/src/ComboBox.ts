@@ -869,7 +869,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_handleArrowUp(e: KeyboardEvent, indexOfItem: number) {
 		const isOpen = this.open;
 
-		if (indexOfItem === 0 ) {
+		if (indexOfItem === 0) {
 			this._clearFocus();
 			this._itemFocused = false;
 			this.focused = true;

@@ -774,7 +774,6 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$(".inputIcon");
-			const popover = await mcb.shadow$("ui5-responsive-popover");
 			const listItem = (await getVisibleItems(mcb))[0];
 
 			await icon.click();
