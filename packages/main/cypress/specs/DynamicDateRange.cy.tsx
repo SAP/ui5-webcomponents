@@ -126,7 +126,7 @@ describe('DynamicDateRange Component', () => {
         
         cy.get("@calendar")
             .shadow()
-            .find("[data-ui5-cal-header-btn-year]")
+            .find("[data-ui5-cal-header-btn-year='true']")
             .as("yearButton");
 
         cy.get("@yearButton")
@@ -145,10 +145,11 @@ describe('DynamicDateRange Component', () => {
             .realClick();
 
         cy.realPress("Tab");
+        cy.realPress("Tab");
         
         cy.get("@calendar")
             .shadow()
-            .find("[data-ui5-cal-header-btn-month]")
+            .find("[data-ui5-cal-header-btn-month='true']")
             .as("monthButton");
 
         cy.get("@monthButton")
