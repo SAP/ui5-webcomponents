@@ -33,10 +33,6 @@ const findAndValidateSvgFiles = () => {
 		return {
 			file: filePath,
 			isValid: !hasStyleAttribute && !hasStyleTag,
-			violations: {
-				hasStyleAttribute,
-				hasStyleTag
-			}
 		}
 	})
 
