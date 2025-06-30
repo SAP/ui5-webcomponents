@@ -131,10 +131,10 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
 
 /**
  * Fired when an item is checked or unchecked.
- * @private
+ * @public
  * @since 2.12.0
  */
-@event("item-check", {
+@event("check", {
 	bubbles: true,
 })
 class MenuItem extends ListItem implements IMenuItem {
@@ -144,7 +144,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		"before-close": MenuBeforeCloseEventDetail
 		"close": void
 		"close-menu": void
-		"item-check": void
+		"check": void
 		"exit-end-content": MenuNavigateOutOfEndContentEventDetail
 	}
 
@@ -635,7 +635,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		const newState = !this.checked;
 
 		this.checked = newState;
-		this.fireDecoratorEvent("item-check");
+		this.fireDecoratorEvent("check");
 	}
 }
 

@@ -371,6 +371,36 @@ describe("Menu interaction", () => {
 				.should("have.been.calledOnce");
 		});
 
+		it("Event firing - 'ui5-check' after 'click' on menu item", () => {
+			cy.mount(
+				<>
+					<Button id="btnOpen">Open Menu</Button>
+					<Menu opener="btnOpen">
+						<MenuItemGroup checkMode="Single">
+							<MenuItem text="Item 1"></MenuItem>
+						</MenuItemGroup>
+					</Menu>
+				</>
+			);
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpen();
+
+			cy.get("[ui5-menu]")
+				.then($item => {
+					$item.get(0).addEventListener("ui5-check", cy.stub().as("checked"));
+				});
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpened();
+
+			cy.get("[ui5-menu-item]")
+				.ui5MenuItemClick();
+
+			cy.get("@checked")
+				.should("have.been.calledOnce");
+		});
+
 		it("Prevent menu closing on item press", () => {
 			cy.mount(
 				<>
