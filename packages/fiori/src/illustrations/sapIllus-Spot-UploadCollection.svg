@@ -1,5 +1,5 @@
 <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Spot-UploadCollection">
-<mask id="mask0_1663_6963" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128">
+<mask id="mask0_1663_6963" class="sapIllus_MaskTypeAlpha" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128">
 <circle cx="64" cy="64" r="64" fill="var(--sapContent_Illustrative_Color7)"/>
 </mask>
 <g mask="url(#mask0_1663_6963)">
