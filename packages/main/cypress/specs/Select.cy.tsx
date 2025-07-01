@@ -238,4 +238,15 @@ describe("Select - Properties", () => {
 			.find("[ui5-icon]")
 			.should("have.attr", "name", "download");
 	});
+	
+	it("It returns empty string as a valid value, similar to native select behavior", () => {
+		cy.mount(
+			<Select>
+				<Option selected value="">Phone</Option>
+				<Option>Tablet</Option>
+				<Option>Desktop</Option>
+			</Select>		);
+
+		cy.get("[ui5-select]").should("have.prop", "formFormattedValue", "");
+	});
 });

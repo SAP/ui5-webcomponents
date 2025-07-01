@@ -25,6 +25,7 @@ import {
  * @extends UI5Element
  * @public
  * @csspart cell - Used to style the native `td` element
+ * @deprecated Deprecated as of version 2.12.0, use `@ui5/webcomponents/dist/TableCell.js` instead.
  */
 @customElement({
 	tag: "ui5-table-cell",
