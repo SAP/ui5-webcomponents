@@ -103,6 +103,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 			<Input id="nextInput" class="input2auto" placeholder="Next input"></Input>
 		</>);
 	});
+
 	it("Should move the focus from the ComboBox to the first link in the value state message", () => {
 		cy.get("ui5-combobox")
 			.shadow()
@@ -110,11 +111,13 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 			.as("innerInput");
 
 		cy.get("ui5-combobox")
-		.as("combobox");
+			.as("combobox");
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F8"]);
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@combobox")
 			.shadow()
@@ -129,7 +132,8 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 			.eq(0)
 			.should("have.focus");
 	});
-	it("When pressing [Tab], the focus moves to the next value state message link. Pressing [Tab] again closes the popup and moves the focus to the next input", () => {
+
+	it("Pressing [Tab] moves the focus to the next value state message link. Pressing [Tab] again closes the popup and moves the focus to the next input", () => {
 		cy.get("ui5-combobox")
 			.as("combobox");
 
@@ -140,7 +144,9 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F8"]);
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@combobox")
 			.shadow()
@@ -174,6 +180,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 		cy.get("@input")
 			.should("have.focus");
 	});
+
 	it("Pressing [Shift+Tab] moves the focus from the second value state message link to the first. Pressing it again shifts the focus to the ComboBox", () => {
 		cy.get("ui5-combobox")
 			.shadow()
@@ -185,7 +192,9 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F8"]);
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@combobox")
 			.shadow()
@@ -220,8 +229,8 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 
 		cy.get("@innerInput")
 			.should("have.focus");
-
 	});
+
 	it("When pressing [Down Arrow] while focused on the first value state message link and suggestions are open, the focus moves to the next suggestion item", () => {
 		cy.get("ui5-combobox")
 			.shadow()
@@ -233,7 +242,9 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F8"]);
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@combobox")
 			.shadow()
@@ -241,17 +252,19 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 			.as("popover");
 
 		cy.get("@combobox")
-			.realClick();
+			.realClick()
+			.should("be.focused");
 
-		cy.get("@combobox")
-			.realType("A");
+		cy.realType("A");
 
 		cy.get("@popover")
 			.should("have.attr", "open");
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F8"]);
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("ui5-link")
 			.as("firstLink")
@@ -261,8 +274,10 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 			.realPress("ArrowDown");
 
 		cy.get("@combobox")
-			.should("have.attr", "value", "Albania")
-			.should("have.focus");
+			.should("have.attr", "value", "Albania");
+
+		cy.get("@combobox")
+			.find("[ui5-cb-item]").eq(2).should("have.prop", "focused", true);
 	});
 });
 
@@ -347,6 +362,7 @@ describe("Event firing", () => {
 		cy.get("@changeStub").should("not.have.been.called");
 	});
 });
+
 describe("Accessibility", () => {
 	it("should announce the associated label when ComboBox is focused", () => {
 		cy.mount(

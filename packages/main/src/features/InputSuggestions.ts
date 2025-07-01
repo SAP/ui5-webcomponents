@@ -122,12 +122,6 @@ class Suggestions {
 
 		const isItemIndexValid = this.selectedItemIndex - 10 > -1;
 
-		if (!isItemIndexValid) {
-			this._deselectItems();
-			this.component.focused = true;
-			return true;
-		}
-
 		this._moveItemSelection(this.selectedItemIndex,
 			isItemIndexValid ? this.selectedItemIndex -= 10 : this.selectedItemIndex = 0);
 		return true;

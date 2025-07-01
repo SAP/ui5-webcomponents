@@ -616,6 +616,7 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 			</div>
 		</Input>);
 	});
+
 	it("Should move the focus from the input to the first link in the value state message", () => {
 		cy.get("ui5-input")
 			.shadow()
@@ -623,11 +624,13 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 			.as("innerInput");
 
 		cy.get("ui5-input")
-		.as("input");
+			.as("input");
 
 		cy.get("@innerInput")
 			.realClick()
-			.realPress(["Control", "Alt", "F8"]);
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@input")
 			.shadow()
@@ -641,6 +644,7 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 		cy.get("ui5-link")
 			.should("have.focus");
 	});
+
 	it("When pressing [Tab], the focus moves to the next value state message link. Pressing [Tab] again closes the popup and moves the focus to the next input", () => {
 		cy.mount(<>
 			<Input id="inputError" class="input2auto" valueState="Negative" placeholder="Input in error state">
@@ -697,6 +701,7 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 		cy.get("@secondInput")
 			.should("have.focus");
 	});
+
 	it("Pressing [Shift+Tab] moves the focus from the second value state message link to the first one. Pressing it again shifts the focus to the input", () => {
 		cy.mount(<Input id="inputError" class="input2auto" valueState="Negative" placeholder="Input in error state">
 			<div slot="valueStateMessage">
@@ -704,18 +709,20 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 			</div>
 		</Input>);
 		cy.get("ui5-input")
-		.eq(0)
-		.shadow()
-		.find("input")
-		.as("innerInput");
+			.eq(0)
+			.shadow()
+			.find("input")
+			.as("innerInput");
 
 		cy.get("ui5-input")
 			.eq(0)
 			.as("input");
 
 		cy.get("@innerInput")
-		.realClick()
-		.realPress(["Control", "Alt", "F8"]);
+			.realClick()
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("@input")
 			.shadow()
@@ -750,8 +757,8 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 
 		cy.get("@innerInput")
 			.should("have.focus");
-
 	});
+
 	it("When pressing [Down Arrow] while focused on the first value state message link and suggestions are open, the focus moves to the next suggestion item", () => {
 		cy.mount(
 			<Input id="myInputEsc" showSuggestions valueState="Critical" class="input3auto">
@@ -780,7 +787,8 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 			.as("popover");
 
 		cy.get("@input")
-			.realClick();
+			.realClick()
+			.should("be.focused");
 
 		cy.get("@input")
 			.realType("C");
@@ -789,8 +797,10 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 			.should("have.attr", "open");
 
 		cy.get("@innerInput")
-		.realClick()
-		.realPress(["Control", "Alt", "F8"]);
+			.realClick()
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
 
 		cy.get("ui5-link")
 			.as("firstLink")
@@ -808,7 +818,6 @@ describe("Input Ctrl + Alt + F8 navigation", () => {
 			.should("have.focus");
 	});
 });
-
 
 describe("Selection-change event", () => {
 	it("Selection-change event fires with null arguments when suggestion was selected but user alters input value to something else", () => {

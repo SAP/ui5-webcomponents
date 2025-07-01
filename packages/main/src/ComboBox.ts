@@ -891,12 +891,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		indexOfItem = isProposedIndexValid ? indexOfItem - SKIP_ITEMS_SIZE : 0;
 		const shouldMoveForward = isInstanceOfComboBoxItemGroup(allItems[indexOfItem]) && !this.open;
 
-		if (!isProposedIndexValid && this.open) {
-			this._clearFocus();
-			this._itemFocused = false;
-			return;
-		}
-
 		this._handleItemNavigation(e, indexOfItem, shouldMoveForward);
 	}
 
@@ -913,13 +907,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_handleHome(e: KeyboardEvent) {
 		const shouldMoveForward = isInstanceOfComboBoxItemGroup(this._filteredItems[0]) && !this.open;
-
-		if (this.hasValueStateText && this.open) {
-			this._clearFocus();
-			this._itemFocused = false;
-			this._announceValueStateText();
-			return;
-		}
 
 		this._handleItemNavigation(e, 0, shouldMoveForward);
 	}

@@ -3,6 +3,7 @@ import {
 	isUp,
 	isTabNext,
 	isTabPrevious,
+	isEscape,
 } from "../Keys.js";
 
 interface ControlHandlers {
@@ -44,6 +45,11 @@ const attachListeners = (e: KeyboardEvent, links: Array<HTMLElement>, index: num
 		e.preventDefault();
 		e.stopImmediatePropagation();
 		handlers.navigateToItem();
+	}
+
+	if (isEscape(e)) {
+		e.preventDefault();
+		e.stopImmediatePropagation();
 	}
 };
 
