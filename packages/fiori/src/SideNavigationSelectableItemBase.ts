@@ -59,7 +59,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	/**
 	 * Defines whether the item is selected.
 	 *
-	 * Items that have a set href and target set to <code>_blank</code> should not be selectable.
+	 * **Note:** Items that have a set `href` and `target` set to `_blank` should not be selectable.
 	 *
 	 * @public
 	 * @default false
@@ -83,16 +83,16 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	/**
 	 * Defines the component target.
 	 *
-	 * **Notes:**
+	 * Possible values:
 	 *
 	 * - `_self`
 	 * - `_top`
 	 * - `_blank`
 	 * - `_parent`
-	 * - `_search`
+	 * - `framename`
 	 *
-	 * **This property must only be used when the `href` property is set.**
-	 * **Items that have a set href and target set to <code>_blank</code> should not have children.**
+	 * **Note:** Items that have a defined `href` and `target`
+	 * attribute set to `_blank` should not be selectable.
 	 *
 	 * @public
 	 * @default undefined
