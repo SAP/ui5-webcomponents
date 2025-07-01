@@ -11,20 +11,20 @@ export default function AINoticeIndicatorTemplate(this: AINoticeIndicator) {
 				<Button
 					icon="ai"
 					disabled={this.disabled}
-					id="ui5-ai-notice-indicator-icon-button"
 					onClick={this._onLinkPress}>
 				</Button>
 			}
 			{this.displayMode !== AINoticeIndicatorDisplayMode.IconOnly &&
+                this.attributionText &&
 				(<>
 					<Link
 						onClick={this._onLinkPress}
 						disabled={this.disabled}
-						icon={this.showIcon ? "ai" : ""}
-						id="ui5-ai-notice-indicator-link">
+						icon={this.showIcon ? "ai" : ""}>
 						{this.attributionText}
 					</Link>
 					{this.displayMode !== AINoticeIndicatorDisplayMode.Shortened &&
+                        this.verificationText &&
 						<Label>
 							{this.verificationText}
 						</Label>
