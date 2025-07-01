@@ -53,7 +53,10 @@ describe("Form support", () => {
 
 		cy.get("#cb5")
 			.then($el => {
-				expect(($el[0] as CheckBox).validity.valueMissing).to.be.true;
+				const checkbox = $el[0] as CheckBox;
+				expect(checkbox.validity.valueMissing).to.be.true;
+				expect(checkbox.checkValidity()).to.be.false;
+				expect(checkbox.reportValidity()).to.be.false;
 			});
 
 		cy.get("form :invalid") // select using :invalid CSS pseudo-class
@@ -675,7 +678,10 @@ describe("Form support", () => {
 
 		cy.get("#select9")
 			.then($el => {
-				expect(($el[0] as Select).validity.valueMissing).to.be.true;
+				const select = $el[0] as Select;
+				expect(select.validity.valueMissing).to.be.true;
+				expect(select.checkValidity()).to.be.false;
+				expect(select.reportValidity()).to.be.false;
 			});
 
 		cy.get("form :invalid") // select using :invalid CSS pseudo-class
