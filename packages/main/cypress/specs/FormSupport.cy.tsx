@@ -8,6 +8,7 @@ import DateTimePicker from "../../src/DateTimePicker.js";
 import Input from "../../src/Input.js";
 import MultiComboBox from "../../src/MultiComboBox.js";
 import MultiComboBoxItem from "../../src/MultiComboBoxItem.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import MultiInput from "../../src/MultiInput.js";
 import Token from "../../src/Token.js";
 import RadioButton from "../../src/RadioButton.js";
@@ -26,6 +27,13 @@ const getFormData = ($form: HTMLFormElement) => {
 	return entries.map(entry => {
 		return `${entry[0]}=${entry[1] as string}`;
 	}).join("&");
+};
+
+const checkElementValidation = (element: UI5Element, validityOptions: { valueMissing?: boolean } = {}) => {
+	const valueMissing = validityOptions.valueMissing ?? false;
+	expect(element.validity.valueMissing).to.equal(valueMissing);
+	expect(element.checkValidity()).to.equal(!valueMissing);
+	expect(element.reportValidity()).to.equal(!valueMissing);
 };
 
 describe("Form support", () => {
@@ -53,17 +61,19 @@ describe("Form support", () => {
 
 		cy.get("#cb5")
 			.then($el => {
-				const checkbox = $el[0] as CheckBox;
-				expect(checkbox.validity.valueMissing).to.be.true;
-				expect(checkbox.checkValidity()).to.be.false;
-				expect(checkbox.reportValidity()).to.be.false;
+				checkElementValidation($el[0] as CheckBox, { valueMissing: true });
 			});
 
-		cy.get("form :invalid") // select using :invalid CSS pseudo-class
-			.should("have.id", "cb5");
+		cy.get("#cb5:invalid") // select using :invalid CSS pseudo-class
+			.should("exist");
 
 		cy.get("#cb5")
 			.realClick();
+
+		cy.get("#cb5")
+			.then($el => {
+				checkElementValidation($el[0] as CheckBox, { valueMissing: false });
+			});
 
 		cy.get("button")
 			.realClick();
@@ -678,14 +688,11 @@ describe("Form support", () => {
 
 		cy.get("#select9")
 			.then($el => {
-				const select = $el[0] as Select;
-				expect(select.validity.valueMissing).to.be.true;
-				expect(select.checkValidity()).to.be.false;
-				expect(select.reportValidity()).to.be.false;
+				checkElementValidation($el[0] as Select, { valueMissing: true });
 			});
 
-		cy.get("form :invalid") // select using :invalid CSS pseudo-class
-			.should("have.id", "select9");
+		cy.get("#select9:invalid") // select using :invalid CSS pseudo-class
+			.should("exist");
 
 		cy.get("#select9")
 			.realClick();
@@ -708,6 +715,11 @@ describe("Form support", () => {
 			.find("[ui5-option]")
 			.eq(1)
 			.realClick();
+
+		cy.get("#select9")
+			.then($el => {
+				checkElementValidation($el[0] as Select, { valueMissing: false });
+			});
 
 		cy.get("button")
 			.realClick();
