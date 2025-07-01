@@ -13,178 +13,179 @@ import "@ui5/webcomponents-icons/dist/menu.js"
 import "@ui5/webcomponents-icons/dist/menu2.js"
 import "@ui5/webcomponents-icons/dist/card.js"
 import "../../test/pages/styles/TabContainer.css"
+import ResponsivePopover from "../../src/ResponsivePopover.js";
 
 const tabContainerEndOverflow = <TabContainer id="tabContainerEndOverflow" overflowMode="End">
-				<Tab design="Positive" text="One">
-					<Button id="#buttonAddTab">Add Tab</Button>
-				</Tab>
-				<Tab design="Negative" text="Two" disabled>
-					<Tab slot="items" text="2.1"></Tab>
-				</Tab>
-				<Tab design="Critical" text="Three">
-					<Tab slot="items" design="Positive" text="3.1">
-						<Button>Button 3</Button>
-					</Tab>
-				</Tab>
-				<Tab text="Four"></Tab>
-				<Tab text="Five">
-					<Tab slot="items" text="nested in Five">
-						<Tab slot="items" text="nested deeper in Five">text</Tab>
-						text
-					</Tab>
-				</Tab>
-				<Tab text="Six"></Tab>
-				<Tab text="Seven"></Tab>
-				<Separator></Separator>
-				<Tab design="Positive" text="Eight"></Tab>
-				<Tab design="Negative" text="Nine"></Tab>
-				<Tab design="Critical" text="Ten"></Tab>
-				<Tab text="Eleven"></Tab>
-				<Separator></Separator>
-				<Tab text="Twelve"></Tab>
-				<Tab text="Thirteen" selected></Tab>
-				<Tab text="Fourteen"></Tab>
-				<Tab text="Fifteen"></Tab>
-				<Tab text="Sixteen"></Tab>
-				<Tab text="Seventeen"></Tab>
-				<Tab text="Eighteen"></Tab>
-				<Separator></Separator>
-				<Tab text="Nineteen"></Tab>
-				<Tab text="Twenty"></Tab>
-				<Tab text="Twenty One"></Tab>
-				<Tab text="Twenty Two"></Tab>
-				<Tab text="Twenty Three"></Tab>
-				<Tab text="Twenty Four"></Tab>
-				<Separator></Separator>
-				<Tab text="Twenty Five"></Tab>
-				<Tab text="Twenty Six"></Tab>
-				<Tab text="Twenty Seven"></Tab>
-				<Separator></Separator>
-				<Tab text="Twenty Eight"></Tab>
-				<Tab text="Twenty Nine"></Tab>
-				<Tab text="Thirty"></Tab>
-			</TabContainer>
+	<Tab design="Positive" text="One">
+		<Button id="#buttonAddTab">Add Tab</Button>
+	</Tab>
+	<Tab design="Negative" text="Two" disabled>
+		<Tab slot="items" text="2.1"></Tab>
+	</Tab>
+	<Tab design="Critical" text="Three">
+		<Tab slot="items" design="Positive" text="3.1">
+			<Button>Button 3</Button>
+		</Tab>
+	</Tab>
+	<Tab text="Four"></Tab>
+	<Tab text="Five">
+		<Tab slot="items" text="nested in Five">
+			<Tab slot="items" text="nested deeper in Five">text</Tab>
+			text
+		</Tab>
+	</Tab>
+	<Tab text="Six"></Tab>
+	<Tab text="Seven"></Tab>
+	<Separator></Separator>
+	<Tab design="Positive" text="Eight"></Tab>
+	<Tab design="Negative" text="Nine"></Tab>
+	<Tab design="Critical" text="Ten"></Tab>
+	<Tab text="Eleven"></Tab>
+	<Separator></Separator>
+	<Tab text="Twelve"></Tab>
+	<Tab text="Thirteen" selected></Tab>
+	<Tab text="Fourteen"></Tab>
+	<Tab text="Fifteen"></Tab>
+	<Tab text="Sixteen"></Tab>
+	<Tab text="Seventeen"></Tab>
+	<Tab text="Eighteen"></Tab>
+	<Separator></Separator>
+	<Tab text="Nineteen"></Tab>
+	<Tab text="Twenty"></Tab>
+	<Tab text="Twenty One"></Tab>
+	<Tab text="Twenty Two"></Tab>
+	<Tab text="Twenty Three"></Tab>
+	<Tab text="Twenty Four"></Tab>
+	<Separator></Separator>
+	<Tab text="Twenty Five"></Tab>
+	<Tab text="Twenty Six"></Tab>
+	<Tab text="Twenty Seven"></Tab>
+	<Separator></Separator>
+	<Tab text="Twenty Eight"></Tab>
+	<Tab text="Twenty Nine"></Tab>
+	<Tab text="Thirty"></Tab>
+</TabContainer>
 
 const nestedTabsContainer = <TabContainer id="tabContainerNestedTabs">
-			<Tab text="One">
-				<Button>Button 1</Button>
+	<Tab text="One">
+		<Button>Button 1</Button>
+	</Tab>
+	<Separator></Separator>
+	<Tab text="Two">
+		<Button id="button2">Button 2</Button>
+		<Tab slot="items" text="2.1">
+			<Button id="button21">Button 21</Button>
+			<Tab slot="items" text="2.1.1" selected>
+				<Button id="button211">Button 211</Button>
 			</Tab>
-			<Separator></Separator>
-			<Tab text="Two">
-				<Button id="button2">Button 2</Button>
-				<Tab slot="items" text="2.1">
-					<Button id="button21">Button 21</Button>
-					<Tab slot="items" text="2.1.1" selected>
-						<Button id="button211">Button 211</Button>
-					</Tab>
-					<Separator slot="items"></Separator>
-					<Tab slot="items" text="2.1.2">
-						<Tab slot="items" text="2.1.2.1">
-							<Button id="button2121">Button 2121</Button>
-						</Tab>
-						<Button id="button212">Button 212</Button>
-					</Tab>
+			<Separator slot="items"></Separator>
+			<Tab slot="items" text="2.1.2">
+				<Tab slot="items" text="2.1.2.1">
+					<Button id="button2121">Button 2121</Button>
 				</Tab>
-				<Tab text="2.2" slot="items">
-					Text for 2.2
-				</Tab>
+				<Button id="button212">Button 212</Button>
 			</Tab>
-			<Tab text="Three">
-				<Tab slot="items" icon="sap-icon://menu2" text="3.1">
-					<Button>Button 3.1</Button>
-					<Tab slot="items" icon="sap-icon://menu2" text="3.1.1">
-						<Button>Button 3.1.1</Button>
-					</Tab>
-					<Separator slot="items"></Separator>
-					<Tab slot="items" icon="sap-icon://menu2" text="3.1.2">
-						<Button>Button 3.1.2</Button>
-					</Tab>
-				</Tab>
+		</Tab>
+		<Tab text="2.2" slot="items">
+			Text for 2.2
+		</Tab>
+	</Tab>
+	<Tab text="Three">
+		<Tab slot="items" icon="sap-icon://menu2" text="3.1">
+			<Button>Button 3.1</Button>
+			<Tab slot="items" icon="sap-icon://menu2" text="3.1.1">
+				<Button>Button 3.1.1</Button>
 			</Tab>
-			<Tab text="Four">
-				<Button>Button 4</Button>
+			<Separator slot="items"></Separator>
+			<Tab slot="items" icon="sap-icon://menu2" text="3.1.2">
+				<Button>Button 3.1.2</Button>
+			</Tab>
+		</Tab>
+	</Tab>
+	<Tab text="Four">
+		<Button>Button 4</Button>
+		<Separator slot="items"></Separator>
+		<Tab slot="items" text="Four 1">
+			<Button>Button 41</Button>
+			<Separator slot="items"></Separator>
+			<Tab design="Positive" slot="items" text="Four 1.1">
+				<Button>Button 411</Button>
 				<Separator slot="items"></Separator>
-				<Tab slot="items" text="Four 1">
-					<Button>Button 41</Button>
+				<Tab slot="items" text="Four 1.1.1">
+					<Button>Button 4111</Button>
 					<Separator slot="items"></Separator>
-					<Tab design="Positive" slot="items" text="Four 1.1">
-						<Button>Button 411</Button>
+					<Tab slot="items" text="Four 1.1.1.1">
+						<Button>Button 41111</Button>
 						<Separator slot="items"></Separator>
-						<Tab slot="items" text="Four 1.1.1">
-							<Button>Button 4111</Button>
-							<Separator slot="items"></Separator>
-							<Tab slot="items" text="Four 1.1.1.1">
-								<Button>Button 41111</Button>
-								<Separator slot="items"></Separator>
-							</Tab>
-						</Tab>
 					</Tab>
 				</Tab>
 			</Tab>
-			<Tab text="Five">Tab Content</Tab>
-			<Tab text="Six">Tab Content</Tab>
-			<Tab text="Seven"></Tab>
-			<Separator>Tab Content</Separator>
-			<Tab text="Eight">Tab Content</Tab>
-			<Tab text="Nine">Tab Content</Tab>
-			<Tab text="Ten">Tab Content
-				<Tab slot="items" text="Ten 1">Tab 10.1 Content
-					<Tab slot="items" text="Ten 1.1">Tab 10.1.1 Content
-						<Separator slot="items"></Separator>
-						<Tab slot="items" text="Ten 1.1.1">Tab Content
-							<Tab slot="items" text="Ten 1.1.1.1"></Tab>
-						</Tab>
-					</Tab>
+		</Tab>
+	</Tab>
+	<Tab text="Five">Tab Content</Tab>
+	<Tab text="Six">Tab Content</Tab>
+	<Tab text="Seven"></Tab>
+	<Separator>Tab Content</Separator>
+	<Tab text="Eight">Tab Content</Tab>
+	<Tab text="Nine">Tab Content</Tab>
+	<Tab text="Ten">Tab Content
+		<Tab slot="items" text="Ten 1">Tab 10.1 Content
+			<Tab slot="items" text="Ten 1.1">Tab 10.1.1 Content
+				<Separator slot="items"></Separator>
+				<Tab slot="items" text="Ten 1.1.1">Tab Content
+					<Tab slot="items" text="Ten 1.1.1.1"></Tab>
 				</Tab>
 			</Tab>
-			<Tab text="Eleven"></Tab>
-			<Separator></Separator>
-			<Tab text="Twelve"></Tab>
-			<Tab text="Thirteen"></Tab>
-			<Tab text="Fourteen">
-				<Tab slot="items" text="Fourteen 1">1
-					<Tab slot="items" text="Fourteen 1.1">1.1</Tab>
-				</Tab>
-				<Tab slot="items" text="Fourteen 2">2
-					<Tab slot="items" text="Fourteen 2.1">2.1
-						<Tab slot="items" text="Fourteen 2.1.1">2.1.1</Tab>
-					</Tab>
-					<Tab slot="items" text="Fourteen 2.2">2.2</Tab>
-				</Tab>
+		</Tab>
+	</Tab>
+	<Tab text="Eleven"></Tab>
+	<Separator></Separator>
+	<Tab text="Twelve"></Tab>
+	<Tab text="Thirteen"></Tab>
+	<Tab text="Fourteen">
+		<Tab slot="items" text="Fourteen 1">1
+			<Tab slot="items" text="Fourteen 1.1">1.1</Tab>
+		</Tab>
+		<Tab slot="items" text="Fourteen 2">2
+			<Tab slot="items" text="Fourteen 2.1">2.1
+				<Tab slot="items" text="Fourteen 2.1.1">2.1.1</Tab>
 			</Tab>
-			<Tab text="Fifteen"></Tab>
-			<Tab text="Sixteen"></Tab>
-			<Tab text="Seventeen"></Tab>
-			<Separator></Separator>
-			<Tab text="Eighteen"></Tab>
-		</TabContainer>;
+			<Tab slot="items" text="Fourteen 2.2">2.2</Tab>
+		</Tab>
+	</Tab>
+	<Tab text="Fifteen"></Tab>
+	<Tab text="Sixteen"></Tab>
+	<Tab text="Seventeen"></Tab>
+	<Separator></Separator>
+	<Tab text="Eighteen"></Tab>
+</TabContainer>;
 
 const tabContainerIconOnly = <TabContainer id="tabContainerIconOnly">
-				<Tab icon="sap-icon://card">
-					<Button>Button 11</Button>
-					<Button>Button 12</Button>
-				</Tab>
-				<Tab icon="sap-icon://employee">
-					<Button>Button 3</Button>
-				</Tab>
-				<Tab icon="sap-icon://employee">
-					<Button>Button 3</Button>
-				</Tab>
-				<Tab icon="sap-icon://employee">
-					<Button>Button 3</Button>
-				</Tab>
-				<Tab icon="sap-icon://employee">
-					<Button>Button 3</Button>
-				</Tab>				<Tab icon="sap-icon://employee">
-					<Button>Button 3</Button>
-				</Tab>				<Tab icon="sap-icon://employee">
-					<Button>Button 3</Button>
-				</Tab>				<Tab icon="sap-icon://employee">
-					<Button>Button 3</Button>
-				</Tab>				<Tab icon="sap-icon://employee">
-					<Button>Button 3</Button>
-				</Tab>
-			</TabContainer>
+	<Tab icon="sap-icon://card">
+		<Button>Button 11</Button>
+		<Button>Button 12</Button>
+	</Tab>
+	<Tab icon="sap-icon://employee">
+		<Button>Button 3</Button>
+	</Tab>
+	<Tab icon="sap-icon://employee">
+		<Button>Button 3</Button>
+	</Tab>
+	<Tab icon="sap-icon://employee">
+		<Button>Button 3</Button>
+	</Tab>
+	<Tab icon="sap-icon://employee">
+		<Button>Button 3</Button>
+	</Tab>				<Tab icon="sap-icon://employee">
+		<Button>Button 3</Button>
+	</Tab>				<Tab icon="sap-icon://employee">
+		<Button>Button 3</Button>
+	</Tab>				<Tab icon="sap-icon://employee">
+		<Button>Button 3</Button>
+	</Tab>				<Tab icon="sap-icon://employee">
+		<Button>Button 3</Button>
+	</Tab>
+</TabContainer>
 
 describe("TabContainer general interaction", () => {
 	it("Tests no auto selection", () => {
@@ -241,8 +242,8 @@ describe("TabContainer general interaction", () => {
 
 	it("tests empty tab container", () => {
 		cy.mount(
-		<TabContainer id="tabContainerEmpty">
-		</TabContainer>
+			<TabContainer id="tabContainerEmpty">
+			</TabContainer>
 		)
 		cy.get("#tabContainerEmpty").should("be.visible");
 	});
@@ -274,7 +275,7 @@ describe("TabContainer general interaction", () => {
 	});
 
 	it("tests preventing tabSelect", () => {
-		const handleTabSelect = (e:CustomEvent) => {
+		const handleTabSelect = (e: CustomEvent) => {
 			e.preventDefault(); // Prevents the tab from being selected
 		};
 		cy.mount(
@@ -527,8 +528,8 @@ describe("TabContainer general interaction", () => {
 			<TabContainer class="tabContainerNoContentPaddings" style="padding-left: 0px; padding-right: 0px;">
 				<Tab icon="sap-icon://card" selected>
 					<Table>
-					<TableHeaderCell slot="default">Source</TableHeaderCell>
-					<TableHeaderCell slot="default">Method</TableHeaderCell>
+						<TableHeaderCell slot="default">Source</TableHeaderCell>
+						<TableHeaderCell slot="default">Method</TableHeaderCell>
 						<TableRow>
 							<TableCell>Cell 1</TableCell>
 							<TableCell>Cell 2</TableCell>
@@ -553,8 +554,8 @@ describe("TabContainer general interaction", () => {
 				</Tab>
 				<Tab icon="sap-icon://employee">
 					<Table>
-					<TableHeaderCell slot="default">Source</TableHeaderCell>
-					<TableHeaderCell slot="default">Method</TableHeaderCell>
+						<TableHeaderCell slot="default">Source</TableHeaderCell>
+						<TableHeaderCell slot="default">Method</TableHeaderCell>
 						<TableRow>
 							<TableCell>Cell 3</TableCell>
 							<TableCell>Cell 4</TableCell>
@@ -769,7 +770,7 @@ describe("TabContainer general interaction", () => {
 
 		cy.get("@tabContainer").find("#firstTab").should("be.visible", "First tab is now visible in the strip");
 		cy.get("@tabContainer").find("#lastTab").should("not.be.visible", "Last tab is not visible in the strip");
-			cy.get("#tcSmall").then((tc) => {
+		cy.get("#tcSmall").then((tc) => {
 			const tabContainer = tc.get(0) as TabContainer;
 			const SELECTED_TAB_TEXT = "First tab";
 			const selectedTab = tabContainer._selectedTab;
@@ -850,12 +851,12 @@ describe("TabContainer general interaction", () => {
 	it("tests effective selected tab when there is no explicitly selected tab", () => {
 		const addNewTab = () => {
 			const tabContainer = document.getElementById("tabContainerNoExplicitlySelectedTab") as TabContainer;
-				tabContainer.appendChild(
-					Object.assign(document.createElement("ui5-tab"), {
-						text: `New Tab`,
-					})
-				)
-			};
+			tabContainer.appendChild(
+				Object.assign(document.createElement("ui5-tab"), {
+					text: `New Tab`,
+				})
+			)
+		};
 		cy.mount(
 			<TabContainer id="tabContainerNoExplicitlySelectedTab">
 				<Tab text="Tab 0">
@@ -916,10 +917,11 @@ describe("TabContainer general interaction", () => {
 		cy.get("#tabContainer1Compact").as("tabContainer");
 
 		cy.get("@tabContainer").find("[stable-dom-ref='products-ref']").then((element) => {
-				cy.get("@tabContainer").find("[stable-dom-ref='products-ref']").first().then((stableElement) => {
+			cy.get("@tabContainer").find("[stable-dom-ref='products-ref']").first().then((stableElement) => {
 				expect(element.get(0)).to.equal(stableElement.get(0), "The tab's dom ref and stable dom ref should be the same");
 			}
-		)})
+			)
+		})
 
 		cy.get("@tabContainer").then(tc => {
 			const tabContainer = tc.get(0) as TabContainer;
@@ -1015,15 +1017,17 @@ describe("TabContainer general interaction", () => {
 		cy.get("#tabContainerNestedTabs").as("tabContainer");
 		cy.get("@tabContainer").shadow().find(".ui5-tc__tabStrip").as("tabStrip");
 		cy.get("@tabStrip").find(".ui5-tab-strip-item").eq(2).as("thirdItem");
-		cy.get("@thirdItem").click();
+		cy.get("@thirdItem").realClick();
+		cy.wait(500);
 		cy.get("@thirdItem").type("{downarrow}");
 
 		cy.get("@tabContainer").shadow().find("ui5-responsive-popover").as("popover");
 		cy.get("@popover").find("ui5-list").as("list");
+		cy.get<ResponsivePopover>("@popover").ui5PopoverOpened();
 		cy.get("@list").find("ui5-li-custom").eq(3).as("thirdPopoverItem");
 		cy.get("@thirdPopoverItem").should("exist");
 		cy.get("@thirdPopoverItem").should("not.have.prop", "selected", "Third item in the popover is not selected");
-		cy.get("@thirdPopoverItem").click();
+		cy.get("@thirdPopoverItem").realClick();
 
 		cy.get("@thirdItem").type("{downarrow}");
 		cy.get("@thirdItem").type("{esc}");
