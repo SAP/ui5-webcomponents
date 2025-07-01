@@ -52,6 +52,14 @@ describe("Form support", () => {
 			.should("have.not.been.called");
 
 		cy.get("#cb5")
+			.then($el => {
+				expect(($el[0] as CheckBox).validity.valueMissing).to.be.true;
+			});
+
+		cy.get("form :invalid") // select using :invalid CSS pseudo-class
+			.should("have.id", "cb5");
+
+		cy.get("#cb5")
 			.realClick();
 
 		cy.get("button")
@@ -664,6 +672,14 @@ describe("Form support", () => {
 
 		cy.get("@submit")
 			.should("have.not.been.called");
+
+		cy.get("#select9")
+			.then($el => {
+				expect(($el[0] as Select).validity.valueMissing).to.be.true;
+			});
+
+		cy.get("form :invalid") // select using :invalid CSS pseudo-class
+			.should("have.id", "select9");
 
 		cy.get("#select9")
 			.realClick();
