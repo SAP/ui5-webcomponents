@@ -7,6 +7,7 @@ import type TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
 
 // Styles
 import tableColumnStyles from "./generated/themes/TableColumn.css.js";
+import { patcher } from "./utils/LegacyCustomElementsScope.js";
 
 /**
  * @class
@@ -86,6 +87,8 @@ class TableColumn extends UI5Element {
 	@property({ type: Boolean })
 	last = false;
 }
+
+patcher(TableColumn);
 
 TableColumn.define();
 

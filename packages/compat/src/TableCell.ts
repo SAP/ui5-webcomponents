@@ -14,6 +14,7 @@ import tableCellStyles from "./generated/themes/TableCell.css.js";
 import {
 	ARIA_LABEL_EMPTY_CELL,
 } from "./generated/i18n/i18n-defaults.js";
+import { patcher } from "./utils/LegacyCustomElementsScope.js";
 
 /**
  * @class
@@ -70,6 +71,8 @@ class TableCell extends UI5Element {
 		return TableCell.i18nBundle.getText(ARIA_LABEL_EMPTY_CELL);
 	}
 }
+
+patcher(TableCell);
 
 TableCell.define();
 
