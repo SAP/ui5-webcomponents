@@ -16,7 +16,7 @@ import {
 
 // Styles
 import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
-import { patcher } from "./utils/LegacyCustomElementsScope.js";
+import { legacyScopingPatcher } from "./utils/LegacyCustomElementsScope.js";
 
 /**
  * @class
@@ -110,7 +110,7 @@ class TableGroupRow extends UI5Element implements ITableRow {
 	}
 }
 
-patcher(TableGroupRow);
+legacyScopingPatcher(TableGroupRow);
 
 TableGroupRow.define();
 

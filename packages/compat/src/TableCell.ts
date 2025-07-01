@@ -14,7 +14,7 @@ import tableCellStyles from "./generated/themes/TableCell.css.js";
 import {
 	ARIA_LABEL_EMPTY_CELL,
 } from "./generated/i18n/i18n-defaults.js";
-import { patcher } from "./utils/LegacyCustomElementsScope.js";
+import { legacyScopingPatcher } from "./utils/LegacyCustomElementsScope.js";
 
 /**
  * @class
@@ -72,7 +72,7 @@ class TableCell extends UI5Element {
 	}
 }
 
-patcher(TableCell);
+legacyScopingPatcher(TableCell);
 
 TableCell.define();
 

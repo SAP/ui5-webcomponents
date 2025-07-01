@@ -59,7 +59,7 @@ import TableTemplate from "./TableTemplate.js";
 
 // Styles
 import tableStyles from "./generated/themes/Table.css.js";
-import { patcher } from "./utils/LegacyCustomElementsScope.js";
+import { legacyScopingPatcher } from "./utils/LegacyCustomElementsScope.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-table` as rows
@@ -1195,7 +1195,7 @@ class Table extends UI5Element {
 	}
 }
 
-patcher(Table);
+legacyScopingPatcher(Table);
 
 Table.define();
 

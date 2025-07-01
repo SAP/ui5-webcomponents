@@ -4,7 +4,7 @@ import TableCell from "../../src/TableCell.js";
 import TableRow from "../../src/TableRow.js";
 import TableGroupRow from "../../src/TableGroupRow.js";
 import TableColumn from "../../src/TableColumn.js";
-import { modifyTag } from "./utils/tag.js";
+import modifyTag from "./utils/modifyTag.js";
 
 describe("Table", () => {
 	it("tests doesn't fire loadMore with ArrowDown on last row", () => {
@@ -30,7 +30,7 @@ describe("Table", () => {
 			TableRow.getMetadata().getPureTag(),
 			TableGroupRow.getMetadata().getPureTag(),
 			TableColumn.getMetadata().getPureTag()
-		].map(modifyTag)
+		].map(tag => modifyTag(tag, "legacy", "demo"))
 			.forEach(tag => {
 				cy.get(tag)
 					.should("exist");
