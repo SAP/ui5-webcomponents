@@ -8,7 +8,7 @@ import type TableRow from "./TableRow.js";
 export default function TableRowTemplate(this: TableRow) {
 	return (
 		<>
-			{ this._hasRowSelector &&
+			{ this._hasSelector &&
 				<TableCell
 					id="selection-cell"
 					aria-selected={this._isSelected}

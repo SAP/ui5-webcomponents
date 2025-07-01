@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.1...v2.12.0-rc.2) (2025-06-26)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** correct search visibility toggle ([#11724](https://github.com/SAP/ui5-webcomponents/issues/11724)) ([8c3cba9](https://github.com/SAP/ui5-webcomponents/commit/8c3cba9681136c70c81d8c8cf09e0a588a025a9a))
+* **ui5-side-navigation:** focus is correct after selecting overflow item ([#11702](https://github.com/SAP/ui5-webcomponents/issues/11702)) ([bb22451](https://github.com/SAP/ui5-webcomponents/commit/bb2245177bf388fe5bc972ca65839ca41ccb82bc))
+
+
+### Features
+
+* **ui5-menu:** menu item groups with checkable menu items ([#10028](https://github.com/SAP/ui5-webcomponents/issues/10028)) ([161af0f](https://github.com/SAP/ui5-webcomponents/commit/161af0fe9912145ddd4fe19f4d71c8aa23db2e15))
+
+
+
+
+
+# [2.12.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.0...v2.12.0-rc.1) (2025-06-19)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** remove aria-expanded and aria-label when no header content is present ([#11626](https://github.com/SAP/ui5-webcomponents/issues/11626)) ([1cdcdd4](https://github.com/SAP/ui5-webcomponents/commit/1cdcdd461484c2a8d801c1f68db8ba5666c8ea0b)), closes [#11570](https://github.com/SAP/ui5-webcomponents/issues/11570)
+* **ui5-shellbar:** allow custom logo width ([#11727](https://github.com/SAP/ui5-webcomponents/issues/11727)) ([2645efe](https://github.com/SAP/ui5-webcomponents/commit/2645efeb9fa4a9e490074c33d5c0b7c28a36731b))
+* **ui5-shellbar:** arrow key navigation inputs support ([#11684](https://github.com/SAP/ui5-webcomponents/issues/11684)) ([404e96b](https://github.com/SAP/ui5-webcomponents/commit/404e96b24fcb2f49b8e21d9c05939209cbee9b71))
+* **ui5-wizard:** define min-width for header steps separators ([#11581](https://github.com/SAP/ui5-webcomponents/issues/11581)) ([cbd2a54](https://github.com/SAP/ui5-webcomponents/commit/cbd2a54ba1ce0f9a39c0599c0179c47daa039d27)), closes [#9672](https://github.com/SAP/ui5-webcomponents/issues/9672)
+
+
+
+
+
 # [2.12.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0...v2.12.0-rc.0) (2025-06-12)
 
 
