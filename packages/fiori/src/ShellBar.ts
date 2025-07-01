@@ -53,6 +53,7 @@ import ShellBarTemplate from "./ShellBarTemplate.js";
 // Styles
 import shellBarStyles from "./generated/themes/ShellBar.css.js";
 import ShellBarPopoverCss from "./generated/themes/ShellBarPopover.css.js";
+import ShellBarAnimations from "./ShellBarAnimations.js";
 
 import {
 	SHELLBAR_LABEL,
@@ -552,6 +553,8 @@ class ShellBar extends UI5Element {
 	_lastOffsetWidth = 0;
 	_observableContent: Array<HTMLElement> = [];
 	_autoRestoreSearchField = false;
+	// Animation controller
+	_animations: ShellBarAnimations;
 
 	_onSearchOpenBound = this._onSearchOpen.bind(this);
 	_onSearchCloseBound = this._onSearchClose.bind(this);
@@ -585,6 +588,7 @@ class ShellBar extends UI5Element {
 		this._hiddenIcons = [];
 		this._isInitialRendering = true;
 		this._overflowNotifications = null;
+		this._animations = new ShellBarAnimations();
 
 		// marks if preventDefault() is called in item's press handler
 		this._defaultItemPressPrevented = false;
@@ -845,17 +849,63 @@ class ShellBar extends UI5Element {
 	/**
 	 * Use this method to change the state of the search filed according to internal logic.
 	 * An event is fired to notify the change.
+	 * Now with JavaScript animation support
 	 */
-	async setSearchState(expanded: boolean) {
+	async setSearchState(expanded: boolean, useAnimation: boolean = false) {
 		if (expanded === this.showSearchField) {
 			return;
 		}
-		this.showSearchField = expanded;
+
+		if (useAnimation) {
+			// toggle search filed hidden class to make measurements
+			const searchField = this.shadowRoot!.querySelector<Input>(".ui5-shellbar-search-field")!;
+			if (searchField) {
+				searchField.classList.toggle("ui5-shellbar-hidden-button", !expanded);
+			}
+			const { contentInfo } = this._handleActionsOverflow(expanded);
+			// restore search field hidden class
+			if (searchField && expanded) {
+				searchField.classList.toggle("ui5-shellbar-hidden-button", expanded);
+			}
+
+			// get newly hidden or shown content, compare this._itemsInfo before we cache it
+			const newlyHiddenItemsInfo = contentInfo.filter(item => {
+				const isHidden = item.classes.indexOf("ui5-shellbar-hidden-button") !== -1;
+				const wasHidden = this._contentInfo.some(info => info.id === item.id && info.classes.indexOf("ui5-shellbar-hidden-button") !== -1);
+				return isHidden && !wasHidden;
+			});
+			const newlyShownItemsInfo = contentInfo.filter(item => {
+				const isShown = item.classes.indexOf("ui5-shellbar-hidden-button") === -1;
+				const wasShown = this._contentInfo.some(info => info.id === item.id && info.classes.indexOf("ui5-shellbar-hidden-button") === -1);
+				return isShown && !wasShown;
+			});
+
+			const newlyHiddenItems = newlyHiddenItemsInfo.map(item => this.shadowRoot!.querySelector<HTMLElement>(`#${item.id}`)).filter(item => item !== null);
+			const newlyShownItems = newlyShownItemsInfo.map(item => this.shadowRoot!.querySelector<HTMLElement>(`#${item.id}`)).filter(item => item !== null);
+
+			if (expanded) {
+				await this._animations.animateResponsiveReflow(
+					newlyHiddenItems,
+					newlyShownItems,
+					searchField,
+					expanded,
+				);
+			} else {
+				await this._animations.animateResponsiveRestore(
+					newlyHiddenItems,
+					newlyShownItems,
+					searchField,
+					expanded,
+				);
+			}
+		}
+
+		this.showSearchField = expanded; // actual rerendering
 		await renderFinished();
 		this.fireDecoratorEvent("search-field-toggle", { expanded });
 	}
 
-	onAfterRendering() {
+	 onAfterRendering() {
 		this._lastOffsetWidth = this.offsetWidth;
 		this._overflowActions();
 		this.onInitialRendering();
@@ -904,19 +954,32 @@ class ShellBar extends UI5Element {
 	}
 
 	_resetItemsVisibility(items: Array<HTMLElement>) {
-		items.forEach(item => {
+		const hiddenItems = items.filter(item => item.classList.contains("ui5-shellbar-hidden-button"));
+		hiddenItems.forEach(item => {
 			item.classList.remove("ui5-shellbar-hidden-button");
+		});
+		return hiddenItems;
+	}
+
+	_restoreItemsVisibility(allItems: Array<HTMLElement>, hiddenItems: Array<HTMLElement>) {
+		allItems.forEach(item => {
+			item.classList.toggle("ui5-shellbar-hidden-button", hiddenItems.includes(item));
 		});
 	}
 
-	_handleActionsOverflow() {
+	/**
+	 * Returns the items that are hidden in the overflow area.
+	 * @returns {Array<HTMLElement>} Array of hidden items
+	 * @private
+	 */
+	_handleActionsOverflow(hideContentFirst = this.showSearchField && this.hasSearchField) {
 		const inner = this.overflowInner;
 		const wrapper = this.overflowWrapper;
-		const hidableDomElements = this.hidableDomElements;
+		const hidableDomElements = this.hidableDomElements(hideContentFirst);
 		const hiddenItems: string[] = [];
 		let lastHiddenIndex = 0;
 
-		this._resetItemsVisibility(hidableDomElements);
+		const oldState = this._resetItemsVisibility(hidableDomElements);
 
 		for (let i = 0; i < hidableDomElements.length; i++) {
 			if (inner?.offsetWidth === wrapper?.offsetWidth) {
@@ -929,12 +992,16 @@ class ShellBar extends UI5Element {
 			item.classList.add("ui5-shellbar-hidden-button");
 		}
 
-		if (hiddenItems.length === 1 && !this.showSearchField) {
-			const nextItemToHide = hidableDomElements[++lastHiddenIndex];
+		if (hiddenItems.length === 1 && !hideContentFirst) {
+			// only one item is hidden ant it is one of the actions/overflow items
+			// we need to hide two items to make space for the overflow button
+			const nextItemToHide = hidableDomElements[lastHiddenIndex];
 			if (nextItemToHide) {
 				hiddenItems.push(nextItemToHide.id);
 			}
 		}
+
+		this._restoreItemsVisibility(hidableDomElements, oldState);
 
 		const itemsInfo = this._getItemsInfo().filter(item => item.show && item.classes.indexOf("ui5-shellbar-no-overflow-button") === -1);
 		const contentInfo = this._getContentInfo().sort((a, b) => a.hideOrder - b.hideOrder);
@@ -996,7 +1063,7 @@ class ShellBar extends UI5Element {
 		searchField.removeEventListener("ui5-search", this._onSearchBound);
 	}
 
-	_handleSearchIconPress() {
+	async _handleSearchIconPress() {
 		const searchButtonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-search-button")!;
 		const defaultPrevented = !this.fireDecoratorEvent("search-button-click", {
 			targetRef: searchButtonRef,
@@ -1005,7 +1072,7 @@ class ShellBar extends UI5Element {
 		if (defaultPrevented) {
 			return;
 		}
-		this.setSearchState(!this.showSearchField);
+		await this.setSearchState(!this.showSearchField, true);
 
 		if (!this.showSearchField) {
 			return;
@@ -1414,7 +1481,7 @@ class ShellBar extends UI5Element {
 				"ui5-shellbar-assistant-button": true,
 			},
 			searchField: {
-				"ui5-shellbar-search-field": this.showSearchField,
+				"ui5-shellbar-search-field": true,
 				"ui5-shellbar-search-toggle": isSelfCollapsibleSearch(this.search),
 				"ui5-shellbar-hidden-button": !this.showSearchField,
 			},
@@ -1423,7 +1490,8 @@ class ShellBar extends UI5Element {
 
 	get styles() {
 		const styles = {
-			"display": this.showSearchField ? "flex" : "none",
+			// Remove display toggle to allow CSS animations to handle visibility
+			"display": "flex",
 		};
 		return {
 			searchField: isSelfCollapsibleSearch(this.search) ? {} : styles,
@@ -1590,19 +1658,18 @@ class ShellBar extends UI5Element {
 		return this.contentItems.length > 0;
 	}
 
-	get hidableDomElements(): HTMLElement[] {
+	hidableDomElements(hideContentFirst: boolean): HTMLElement[] {
 		const items = Array.from(this.shadowRoot!.querySelectorAll<HTMLElement>(".ui5-shellbar-button:not(.ui5-shellbar-search-button):not(.ui5-shellbar-overflow-button):not(.ui5-shellbar-cancel-button):not(.ui5-shellbar-no-overflow-button)"));
 		const assistant = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-assistant-button");
 		const searchToggle = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-search-toggle");
 		const contentItems = this.contentItemsWrappersSorted;
 		const firstContentItem = contentItems.pop();
-		const prioritizeContent = this.showSearchField && this.hasSearchField;
 
 		// order here is important for the responsive behavior, the items will be
 		// measured and hidden in the order they are returned until no overlap is detected
 		let itemsToHide = [];
 
-		if (prioritizeContent) {
+		if (hideContentFirst) {
 			// search field was toggled, the content items should make space for it
 			const overflowItems = [...items, assistant];
 			const visibleItems = overflowItems.filter(item => item && !item.classList.contains("ui5-shellbar-hidden-button"));
@@ -1708,6 +1775,27 @@ class ShellBar extends UI5Element {
 
 	get search() {
 		return this.searchField.length ? this.searchField[0] : null;
+	}
+
+	/**
+	 * Animate search field expansion/collapse with Promise control
+	 * @param expand - Whether to expand or collapse the search field
+	 * @param config - Animation configuration options
+	 * @returns Promise that resolves when animation completes
+	 * @public
+	 */
+	async animateSearchFieldToggle(expand: boolean, config?: {
+		duration?: number;
+		easing?: string;
+		onStart?: () => void;
+		onComplete?: () => void;
+	}): Promise<void> {
+		const searchField = this.shadowRoot?.querySelector(".ui5-shellbar-search-field") as HTMLElement;
+		if (!searchField) {
+			throw new Error("Search field not found");
+		}
+
+		return this._animations.animateSearchField(searchField, expand, config);
 	}
 }
 

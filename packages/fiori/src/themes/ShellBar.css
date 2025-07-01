@@ -395,7 +395,6 @@ slot[name="profile"] {
 
 ::slotted([hidden]) {
 	visibility: hidden;
-	order: -1;
 	position: absolute;
 }
 
@@ -514,14 +513,17 @@ slot[name="profile"] {
 ::slotted(.ui5-shellbar-hidden-button),
 .ui5-shellbar-hidden-button,
 .ui5-shellbar-invisible-button {
-	visibility: hidden;
-	order: -1;
 	opacity: 0;
+}
+
+::slotted(.ui5-shellbar-hidden-button:not(.ui5-shellbar-button-animating)),
+.ui5-shellbar-hidden-button:not(.ui5-shellbar-button-animating),
+.ui5-shellbar-invisible-button:not(.ui5-shellbar-button-animating) {
 	min-width: 0;
 	width: 0;
 	margin: 0;
 	padding: 0;
-	padding-inline-start: 0;
 	border: 0;
+	padding-inline-start: 0;
 	margin-inline-start: 0;
 }
