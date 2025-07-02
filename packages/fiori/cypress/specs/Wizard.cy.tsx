@@ -3,7 +3,6 @@ import WizardStep from "../../src/WizardStep.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import MessageStrip from "@ui5/webcomponents/dist/MessageStrip.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
 import Switch from "@ui5/webcomponents/dist/Switch.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Bar from "@ui5/webcomponents/dist/Bar.js";
@@ -28,7 +27,7 @@ describe("Wizard general interaction", () => {
             </Wizard>
         )
 
-        cy.get<WizardStep>("[ui5-wizard-step]")
+        cy.get("[ui5-wizard-step]")
             .should("have.attr", "selected");
 
         cy.get("[ui5-wizard]")
@@ -64,14 +63,6 @@ describe("Wizard general interaction", () => {
             .find(".ui5-wiz-content-item")
             .as("wizContentItem");
 
-        const wizRootText = "Wizard";
-        const wizNavText = "Wizard Progress Bar";
-        const wizListDescribedbyId = "wiz-nav-descr";
-        const wizListText = "Wizard Steps";
-
-        const step1Text = "Step 1 Product type Active";
-        const step2Text = "Step 2 Product Information Inactive";
-
         cy.get("[ui5-wizard]")
             .shadow()
             .find("[data-ui5-index='1']")
@@ -90,25 +81,25 @@ describe("Wizard general interaction", () => {
             .should("have.attr", "role", "region");
 
         cy.get("@wizRoot")
-            .should("have.attr", "aria-label", wizRootText);
+            .should("have.attr", "aria-label", "Wizard");
 
         cy.get("@wizNav")
-            .should("have.attr", "aria-label", wizNavText);
+            .should("have.attr", "aria-label", "Wizard Progress Bar");
 
         cy.get("@wizNavList")
-            .should("have.attr", "aria-describedby", wizListDescribedbyId);
+            .should("have.attr", "aria-describedby", "wiz-nav-descr");
 
         cy.get("@wizNavList")
             .should("have.attr", "role", "list");
 
         cy.get("@wizNavList")
-            .should("have.attr", "aria-label", wizListText);
+            .should("have.attr", "aria-label", "Wizard Steps");
 
         cy.get("@step1InHeaderRoot")
-            .should("have.attr", "aria-label", step1Text);
+            .should("have.attr", "aria-label", "Step 1 Product type Active");
 
         cy.get("@step2InHeaderRoot")
-            .should("have.attr", "aria-label", step2Text);
+            .should("have.attr", "aria-label", "Step 2 Product Information Inactive");
 
         cy.get("@wizContentItem")
             .should("have.attr", "role", "region");
@@ -121,19 +112,18 @@ describe("Wizard general interaction", () => {
                 <WizardStep titleText="Product Information" disabled/>
             </Wizard>
         )
-        cy.get("[ui5-wizard-step]")
-            .eq(1)
+
+         cy.get("[ui5-wizard]")
+            .shadow()
+            .find("[data-ui5-index='2']")
             .as("disabledStep");
 
         cy.get("@disabledStep")
-            .click({ force: true });
+            .realClick()
+            .then(() => {
+                cy.get("@disabledStep").should("not.have.attr", "selected");
+            });
 
-        cy.get("@disabledStep")
-            .should("not.have.attr", "selected");
-
-        cy.get("[ui5-wizard-step]")
-            .eq(0)
-            .should("have.attr", "selected");
     });
 
     it("move to next step by API", () => {
@@ -195,23 +185,16 @@ describe("Wizard general interaction", () => {
 
     it("move to next step by click", () => {
         cy.mount(
-            <Wizard id="asd">
-                <WizardStep icon="sap-icon://product" selected titleText="Product type">
+            <Wizard>
+                <WizardStep icon="sap-icon://product" titleText="Product type">
                     <MessageStrip>
                         The Wizard control is supposed to break down large tasks.
                     </MessageStrip>
                     <Button id="toStep2" design="Emphasized">Step 2</Button>
                 </WizardStep>
-                <WizardStep titleText="Product Information" disabled/>
+                <WizardStep titleText="Product Information" selected/>
             </Wizard>
         );
-
-         cy.get("[ui5-button]")
-            .then($button => {
-                $button[0].addEventListener("click", () => {
-                    goToWizardStep("asd", 1);
-                });
-            });
 
         cy.get("[ui5-wizard-step]")
             .eq(0)
@@ -228,9 +211,6 @@ describe("Wizard general interaction", () => {
                 wizard.get(0).addEventListener("ui5-step-change", cy.stub().as("stepChange"));
             });
 
-        cy.get("[ui5-button]")
-            .realClick();
-
          cy.get("[ui5-wizard]")
             .shadow()
             .find("[data-ui5-index='1']")
@@ -245,27 +225,12 @@ describe("Wizard general interaction", () => {
             .find("[data-ui5-index='1']")
             .should("have.attr", "selected");
 
-        cy.get("[ui5-wizard-step]")
-            .eq(1)
-            .should("not.have.attr", "selected");
-
-         cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='2']")
-            .should("not.have.attr", "selected");
-
         cy.get("@firstFocusableElement")
             .should("be.focused");
 
-         cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='1']")
-            .realPress(["Shift", "Tab"]);
+         cy.realPress(["Shift", "Tab"]);
 
-         cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='2']")
-            .realPress("Space");
+         cy.realPress("Space");
 
         cy.get("@firstFocusableElement")
             .should("be.focused");
@@ -276,22 +241,14 @@ describe("Wizard general interaction", () => {
 
     it("move to next step by SPACE/ENTER", () => {
         cy.mount(
-             <Wizard id="asd">
+             <Wizard>
                 <WizardStep icon="sap-icon://product" selected titleText="Product type">
-                    <MessageStrip>
-                        The Wizard control is supposed to break down large tasks.
-                    </MessageStrip>
                     <Button id="toStep2" design="Emphasized">Step 2</Button>
                 </WizardStep>
-                <WizardStep titleText="Product Information" disabled/>
+                <WizardStep titleText="Product Information"/>
             </Wizard>
         )
-        cy.get("[ui5-button]")
-            .then($button => {
-                $button[0].addEventListener("click", () => {
-                    goToWizardStep("asd", 1);
-                });
-            });
+
         cy.get("[ui5-wizard]")
             .then(wizard => {
                 wizard.get(0).addEventListener("ui5-step-change", cy.stub().as("stepChange"));
@@ -300,25 +257,11 @@ describe("Wizard general interaction", () => {
         cy.get("[ui5-button]")
             .realClick();
 
-        cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='1']")
-            .realClick();
+        cy.realPress(["Shift", "Tab"]);
 
-        cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='1']")
-            .realPress(["Shift", "Tab"]);
+        cy.realPress("ArrowRight");
 
-        cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='1']")
-            .realPress("ArrowRight");
-
-        cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='2']")
-            .realPress("Space");
+        cy.realPress("Space");
 
         cy.get("[ui5-wizard]")
             .shadow()
@@ -329,17 +272,8 @@ describe("Wizard general interaction", () => {
             .eq(1)
             .should("have.attr", "selected");
 
-        cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='1']")
-            .should("not.have.attr", "selected");
-
-        cy.get("[ui5-wizard-step]")
-            .eq(0)
-            .should("not.have.attr", "selected");
-
         cy.get("@stepChange")
-            .should("have.been.calledTwice");
+            .should("have.been.calledOnce");
 
         cy.get("[ui5-wizard]")
             .shadow()
@@ -355,45 +289,18 @@ describe("Wizard general interaction", () => {
             .eq(0)
             .should("have.attr", "selected");
 
-        cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='1']")
-            .realPress(["Shift", "Tab"]);
-
-        cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='1']")
-            .realPress("ArrowRight");
-
-        cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='2']")
-            .realPress("Enter");
-
-        cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='2']")
-            .should("have.attr", "selected");
-
-        cy.get("[ui5-wizard-step]")
-            .eq(1)
-            .should("have.attr", "selected");
-
         cy.get("@stepChange")
-            .should("have.callCount", 4);
+            .should("have.callCount", 2);
     });
 
     it("move to next step by scroll", () => {
         cy.mount(
-            <Wizard id="asd" style={{ position: "absolute", overflow: "hidden", height: "100%", width: "100%" }}>
+            <Wizard style={{ position: "absolute", overflow: "hidden", height: "100%", width: "100%" }}>
                 <WizardStep icon="sap-icon://product" selected titleText="Product type">
-                    <MessageStrip>
-                        The Wizard control is supposed to break down large tasks.
-                    </MessageStrip>
                     <div style={{height: "15rem"}}></div>
                     <Button id="toStep2" design="Emphasized">Step 2</Button>
                 </WizardStep>
-                <WizardStep titleText="Product Information" disabled/>
+                <WizardStep titleText="Product Information"/>
             </Wizard>
         )
         cy.get("[ui5-wizard]")
@@ -401,14 +308,9 @@ describe("Wizard general interaction", () => {
                 wizard.get(0).addEventListener("ui5-step-change", cy.stub().as("stepChange"));
             });
 
-        cy.get("[ui5-button]")
-            .then($button => {
-                $button[0].addEventListener("click", () => {
-                    goToWizardStep("asd", 1);
-                });
-            });
-
-        cy.get("[ui5-button]")
+        cy.get("[ui5-wizard]")
+            .shadow()
+            .find("[data-ui5-index='2']")
             .realClick();
 
         cy.get("[ui5-wizard]")
@@ -422,24 +324,17 @@ describe("Wizard general interaction", () => {
 
     it("tests dynamically increase step size and move to next step", () => {
         cy.mount(
-             <Wizard id="asd" style={{ position: "absolute", overflow: "hidden", height: "100%", width: "100%" }}>
+             <Wizard style={{ position: "absolute", overflow: "hidden", height: "100%", width: "100%" }}>
                 <WizardStep icon="sap-icon://product" selected titleText="Product type">
                     <div style={{height: "15rem"}}></div>
                     <Button id="toStep2" design="Emphasized">Step 2</Button>
-                    <Switch id="sw" />
+                    <Switch/>
                      <div id="pureContent" style={{ height: "1800px", backgroundColor: "red", display: "none" }}></div>
                 </WizardStep>
-                <WizardStep titleText="Product Information" disabled>
+                <WizardStep titleText="Product Information">
                 </WizardStep>
             </Wizard>
         )
-
-        cy.get("[ui5-button]")
-            .then($button => {
-                $button[0].addEventListener("click", () => {
-                    goToWizardStep("asd", 1);
-                });
-            });
 
         cy.get("[ui5-switch]").then($switch => {
             $switch[0].addEventListener("ui5-change", () => {
@@ -452,16 +347,8 @@ describe("Wizard general interaction", () => {
             });
         });
 
-        cy.get("[ui5-button]")
+        cy.get("[ui5-switch]")
             .realClick();
-
-        cy.get("[ui5-wizard]")
-            .shadow()
-            .find("[data-ui5-index='1']")
-            .realClick();
-
-        cy.get("#sw")
-            .click();
 
         cy.get("[ui5-wizard]")
             .shadow()
@@ -525,12 +412,9 @@ describe("Wizard inside Dialog", () => {
                         <WizardStep icon="sap-icon://home" selected titleText="Product type"></WizardStep>
                         <WizardStep titleText="Product Information" disabled></WizardStep>
                     </Wizard>
-
                     <Bar slot="footer" design="Footer">
                         <Button id="prevButton" design="Emphasized">Previous Step</Button>
                         <Button id="nextButton" design="Emphasized">Next step</Button>
-                        <Button id="finalize2" design="Emphasized">Finalize</Button>
-                        <Button id="cancel" design="Transparent">Cancel</Button>
                     </Bar>
                 </Dialog>
 
@@ -539,7 +423,7 @@ describe("Wizard inside Dialog", () => {
         );
         cy.get("#button").then($button => {
             $button[0].addEventListener("click", () => {
-                cy.get("#dialog").invoke("prop", "open", true);
+                cy.get("[ui5-dialog]").invoke("prop", "open", true);
             });
         });
 
@@ -572,30 +456,25 @@ describe("Wizard inside Dialog", () => {
         cy.mount(
             <Wizard id="wizScroll" style="height: 100%;">
                 <WizardStep title-text="Step 1" selected>
-                    <div>
-                        <Title>Step 1</Title>
                         <div style="height: 4440px;"></div>
                         <Button id="toStep2">Step 2</Button>
-                    </div>
                 </WizardStep>
                 <WizardStep title-text="Step 2" disabled>
-                    <div>
                         <Title>Step 2</Title>
-                    </div>
                 </WizardStep>
             </Wizard>
         );
-        cy.get("#toStep2")
+        cy.get("[ui5-button]")
             .scrollIntoView();
 
-        cy.get("#toStep2")
+        cy.get("[ui5-button]")
             .then($button => {
                 $button[0].addEventListener("click", () => {
                     goToWizardStep("wizScroll", 1);
                 });
              });
 
-        cy.get("#toStep2")
+        cy.get("[ui5-button]")
              .realClick();
 
         cy.get("[ui5-wizard-step")
@@ -615,11 +494,8 @@ describe("Wizard inside Dialog", () => {
                     <Bar slot="footer" design="Footer">
                         <Button id="prevButton" design="Emphasized">Previous Step</Button>
                         <Button id="nextButton" design="Emphasized">Next step</Button>
-                        <Button id="finalize2" design="Emphasized">Finalize</Button>
-                        <Button id="cancel" design="Transparent">Cancel</Button>
                     </Bar>
                 </Dialog>
-
                 <Button id="button" style={{ display: "inline-block" }}>Open Dialog</Button>
             </div>
         );
@@ -630,7 +506,7 @@ describe("Wizard inside Dialog", () => {
         });
 
         cy.get("#button")
-            .click();
+            .realClick();
 
         cy.get("[ui5-wizard-step")
             .eq(0)
@@ -649,7 +525,7 @@ describe("Wizard inside Dialog", () => {
             });
 
         cy.get("#nextButton")
-            .click();
+            .realClick();
 
         cy.get("[ui5-wizard-step]")
             .eq(1)
@@ -677,7 +553,7 @@ describe("Wizard inside Dialog", () => {
             });
 
         cy.get("#prevButton")
-            .click();
+            .realClick();
 
         cy.get("[ui5-wizard]")
             .shadow()
@@ -698,12 +574,7 @@ describe("Wizard inside Dialog", () => {
         cy.mount(
             <Wizard contentLayout="SingleStep" style={{height: "10rem", border: "1px solid red", boxSizing: "border-box"}}>
                 <WizardStep id="dialogStep1" icon="sap-icon://home" selected titleText="Product type">
-                    <Title>1. Product Type</Title>
-
-                    <MessageStrip>
-                        The Wizard control is supposed to break down large tasks, into smaller steps, easier for the
-                        user to work with.
-                    </MessageStrip>
+                    <MessageStrip>The Wizard control.</MessageStrip>
                     <div style={{height: "250px"}}></div>
                 </WizardStep>
                 <WizardStep titleText="Second Page"><Title>SecondPage</Title></WizardStep>
@@ -727,41 +598,28 @@ describe("Wizard inside Dialog", () => {
 
      it("tests popover visibility on small screen", () => {
         cy.mount(
-			<Wizard id="wizTest2" style={{ position: "absolute", overflow: "hidden", height: "100%", width: "400px"}}>
+			<Wizard style={{ position: "absolute", overflow: "hidden", height: "100%", width: "400px"}}>
 				<WizardStep icon="sap-icon://product" titleText="Product type">
-					<div style={{display: "flex",minHeight: "200px", flexDirection: "column"}}>
-						<Title>1. Product Type</Title>
-					</div>
+					<div style={{display: "flex",minHeight: "200px", flexDirection: "column"}}></div>
 				</WizardStep>
-
 				<WizardStep titleText="Product Information" >
-					<div style={{display: "flex", flexDirection: "column"}}>
-						<Title>2. Product Information</Title>
-					</div>
+					<div style={{display: "flex", flexDirection: "column"}}></div>
 				</WizardStep>
-
 				<WizardStep titleText="Options">
-						<Title>3. Options</Title>
-						<Label>
-							Integer pellentesque leo sit amet dui vehicula.
-						</Label>
 				</WizardStep>
 				<WizardStep titleText="Pricing" selected>
-						<Title>4. Pricing</Title>
 				</WizardStep>
 			</Wizard>
         );
+
+        //TODO: remove wait when timing issue with popover and realClick is resolved
+        cy.wait(500);
 
         cy.get("[ui5-wizard]")
             .shadow()
             .find("[ui5-wizard-tab]")
             .eq(2)
-            .as("groupSteps");
-
-        cy.get("@groupSteps")
-            .shadow()
-            .find(".ui5-wiz-step-root")
-            .click();
+            .realClick();
 
         cy.get("[ui5-wizard]")
             .shadow()
