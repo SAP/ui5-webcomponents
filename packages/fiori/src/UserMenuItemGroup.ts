@@ -1,4 +1,3 @@
-import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import MenuItemGroup from "@ui5/webcomponents/dist/MenuItemGroup.js";
 import UserMenuItemGroupTemplate from "./UserMenuItemGroupTemplate.js";
