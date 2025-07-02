@@ -17,9 +17,9 @@ export default function ShellBarBrandingTemplate(this: ShellBarBranding) {
 				<slot name="logo"></slot>
 			</span>
 
-			{!this._isSBreakPoint && this.brandingTitle && (
+			{!this._isSBreakPoint && (
 				<bdi class="ui5-shellbar-title">
-					{this.brandingTitle}
+					<slot></slot>
 				</bdi>
 			)}
 	  </a>

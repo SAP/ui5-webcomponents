@@ -81,11 +81,12 @@ class ShellBarBranding extends UI5Element {
 	/**
 	 * Defines the title for the ui5-shellbar-branding component.
 	 *
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 * @default undefined
 	 * @public
 	 */
-	@property()
-	brandingTitle?: string;
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<HTMLElement>;
 
 	/**
 	 * Defines the text alternative of the component.
@@ -121,7 +122,14 @@ class ShellBarBranding extends UI5Element {
 	}
 
 	get accessibleNameText() {
-		return this.accessibleName || this.brandingTitle;
+		if (this.accessibleName) {
+			return this.accessibleName;
+		}
+
+		const defaultSlot = this.shadowRoot?.querySelector("slot:not([name])") as HTMLSlotElement;
+		return defaultSlot?.assignedNodes({ flatten: true })
+			.find(n => n.nodeType === Node.TEXT_NODE && n.textContent?.trim())
+			?.textContent!.trim();
 	}
 
 	_fireClick() {

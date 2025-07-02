@@ -10,7 +10,6 @@ describe("ShellBarBranding", () => {
 
 		const defaultBrandingProps = {
 			id: "shellbarBranding",
-			brandingTitle: "Branding Comp",
 			slot: "branding",
 			...brandingProps
 		};
@@ -18,6 +17,7 @@ describe("ShellBarBranding", () => {
 		cy.mount(
 			<ShellBar {...defaultShellBarProps}>
 				<ShellBarBranding {...defaultBrandingProps}>
+					Branding Comp
 					<img id="brandingLogo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
 				</ShellBarBranding>
 			</ShellBar>
@@ -43,15 +43,6 @@ describe("ShellBarBranding", () => {
 				.should("have.attr", "target", "_blank");
 		});
 
-		it("Test ui5-shellbar-branding brandingTitle property", () => {
-			basicTemplate();
-
-			cy.get("@shellbarBranding")
-				.find(".ui5-shellbar-title")
-				.should("exist")
-				.and("contain.text", "Branding Comp");
-		});
-
 		it("Test ui5-shellbar-branding accessibleName property", () => {
 			basicTemplate({ accessibleName: "Accessible Name" });
 
@@ -73,6 +64,16 @@ describe("ShellBarBranding", () => {
 				.find("slot[name='logo']")
 				.should("exist");
 		});
+
+		it("Test ui5-shellbar-branding default content slot", () => {
+		basicTemplate();
+
+		cy.get("@shellbarBranding")
+		 	.find(".ui5-shellbar-title")
+			.find("slot")
+			.should("exist");
+		});
+
 	});
 
 	describe("Accessibility", () => {
@@ -92,7 +93,7 @@ describe("ShellBarBranding", () => {
 				.should("have.attr", "role", "link");
 		});
 
-		it("Test ui5-shellbar-branding accessibility - aria-label", () => {
+		it("Test ui5-shellbar-branding accessibility - default aria-label", () => {
 			basicTemplate();
 
 			cy.get("@shellbarBranding")
