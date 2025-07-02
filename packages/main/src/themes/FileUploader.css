@@ -154,12 +154,16 @@
 	box-shadow: var(--sapField_Hover_InvalidShadow);
 }
 
+:host([value-state="Negative"][focused]:not([opened]):not([readonly])) .ui5-file-uploader-display-elements,
 :host([value-state="Positive"]:not([readonly]):not([focused]):hover) .ui5-file-uploader-display-elements,
 :host([value-state="Positive"]:not([readonly])[focused][opened]:hover) .ui5-file-uploader-display-elements,
+:host([value-state="Positive"][focused]:not([opened]):not([readonly])) .ui5-file-uploader-display-elements,
 :host([value-state="Critical"]:not([readonly]):not([focused]):hover) .ui5-file-uploader-display-elements,
 :host([value-state="Critical"]:not([readonly])[focused][opened]:hover) .ui5-file-uploader-display-elements,
+:host([value-state="Critical"][focused]:not([opened]):not([readonly])) .ui5-file-uploader-display-elements,
 :host([value-state="Information"]:not([readonly]):not([focused]):hover) .ui5-file-uploader-display-elements,
-:host([value-state="Information"]:not([readonly])[focused][opened]:hover) .ui5-file-uploader-display-elements {
+:host([value-state="Information"]:not([readonly])[focused][opened]:hover) .ui5-file-uploader-display-elements,
+:host([value-state="Information"][focused]:not([opened]):not([readonly])) .ui5-file-uploader-display-elements{
 	background-color: var(--sapField_Hover_Background);
 }
 

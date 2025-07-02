@@ -14,6 +14,7 @@ export default function FileUploaderTemplate(this: FileUploader) {
 				onKeyDown={this._onkeydown}
 				onKeyUp={this._onkeyup}
 				onClick={this._onclick}
+				onMouseDown={this._onmousedown}
 				onDragOver={this._ondrag}
 				onDrop={this._ondrop}
 			>
@@ -43,7 +44,11 @@ export default function FileUploaderTemplate(this: FileUploader) {
 										class="ui5-file-uploader-tokenizer"
 										preventInitialFocus
 										readonly
+										expanded={this._tokenizerExpanded}
 										open={this._tokenizerOpen}
+										popoverMinWidth={this._formWidth}
+										onClick={this._onTokenizerClick}
+										onMouseDown={this._onTokenizerMouseDown}
 										onKeyDown={this._onTokenizerKeyDown}
 										onKeyUp={this._onTokenizerKeyUp}
 									>
@@ -56,7 +61,7 @@ export default function FileUploaderTemplate(this: FileUploader) {
 									<Icon
 										name="decline"
 										class="ui5-file-uploader-close-icon inputIcon"
-										onClick={this._clearFileSelection}
+										onClick={this._onClearIconClick}
 										title={this.clearIconTitle}
 									/>
 								</>
@@ -69,14 +74,12 @@ export default function FileUploaderTemplate(this: FileUploader) {
 									placeholder={this.resolvedPlaceholder}
 									inner-input
 									readonly
-									onClick={this._openFileBrowser}
 								/>
 							)}
 
 							<Icon
 								name="value-help"
 								class="ui5-file-uploader-value-help-icon inputIcon"
-								onClick={this._openFileBrowser}
 								title={this.valueHelpTitle}
 							/>
 						</div>
