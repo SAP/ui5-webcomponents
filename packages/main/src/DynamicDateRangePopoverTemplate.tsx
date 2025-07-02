@@ -65,7 +65,8 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 							iconEnd={true}
 							icon={option.icon}
 							wrappingType="Normal"
-							type={option.template ? ListItemType.Navigation : ListItemType.Active}>
+							type={option.template ? ListItemType.Navigation : ListItemType.Active}
+						>
 							{option.text}
 						</ListItemStandard>;
 					})}

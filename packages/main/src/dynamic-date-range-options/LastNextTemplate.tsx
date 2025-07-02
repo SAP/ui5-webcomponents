@@ -5,6 +5,8 @@ import Select from "../Select.js";
 import type { SelectChangeEventDetail } from "../Select.js";
 import Option from "../Option.js";
 import Label from "../Label.js";
+import type LastOptions from "./LastOptions.js";
+import type NextOptions from "./NextOptions.js";
 
 export default function LastNextTemplate(this: DynamicDateRange) {
 	const currentOption = this._currentOption;
@@ -13,7 +15,7 @@ export default function LastNextTemplate(this: DynamicDateRange) {
 	}
 
 	// Check if there are multiple options available (grouped)
-	const availableOptions = (currentOption as any).availableOptions;
+	const availableOptions = (currentOption as LastOptions | NextOptions).availableOptions;
 	const isGrouped = Boolean(availableOptions && availableOptions.length > 1);
 
 	// Extract current values

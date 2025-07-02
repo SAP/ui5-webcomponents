@@ -64,8 +64,21 @@ class NextOptions implements IDynamicDateRangeOption {
 	}
 
 	get text(): string {
-		const units = this.availableOptions.map(info => info.unitText);
-		return units.length > 1 ? `Next X ${units.join(" / ")}` : DynamicDateRange.i18nBundle.getText(this.i18nKey);
+		const currentOptions = DynamicDateRange.getCurrentOptions();
+		if (currentOptions) {
+			const nextOptions = currentOptions.split(",")
+				.map(s => s.trim())
+				.filter(s => s.startsWith("NEXT"));
+
+			if (nextOptions.length > 1) {
+				const units = this.availableOptions
+					.filter(info => nextOptions.includes(info.operator))
+					.map(info => info.unitText);
+				return `Next X ${units.join(" / ")} (included)`;
+			}
+		}
+
+		return `${DynamicDateRange.i18nBundle.getText(this.i18nKey)} (included)`;
 	}
 
 	get icon(): string {
@@ -74,7 +87,6 @@ class NextOptions implements IDynamicDateRangeOption {
 
 	// Simple getter that provides all available Next options based on current component options
 	get availableOptions() {
-		const currentOptions = DynamicDateRange.getCurrentOptions().split(",").map(s => s.trim());
 		const allOptions = [
 			{ operator: "NEXTDAYS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_DAYS_TEXT, unitText: "Days" },
 			{ operator: "NEXTWEEKS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_WEEKS_TEXT, unitText: "Weeks" },
@@ -83,13 +95,13 @@ class NextOptions implements IDynamicDateRangeOption {
 			{ operator: "NEXTYEARS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_YEARS_TEXT, unitText: "Years" },
 		];
 
-		return allOptions
-			.filter(info => currentOptions.includes(info.operator))
-			.map(info => ({
-				operator: info.operator,
-				unitText: info.unitText,
-				text: DynamicDateRange.i18nBundle.getText(info.i18nKey),
-			}));
+		// Always include all Next options - this ensures validation works for grouped options
+		// and individual validation during fallback. The component handles the actual filtering.
+		return allOptions.map(info => ({
+			operator: info.operator,
+			unitText: info.unitText,
+			text: DynamicDateRange.i18nBundle.getText(info.i18nKey),
+		}));
 	}
 
 	private _getNumberFromValue(value: DynamicDateRangeValue): number {
