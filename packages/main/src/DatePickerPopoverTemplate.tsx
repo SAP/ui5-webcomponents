@@ -52,13 +52,13 @@ function defaultHeader(this: DatePicker) {
 		<div slot="header" class="ui5-responsive-popover-header">
 			<div class="row">
 				<span>{this._headerTitleText}</span>
-				{ <Button
+				<Button
 					class="ui5-responsive-popover-close-btn"
 					icon={decline}
 					design="Transparent"
 					onClick={this._togglePicker}
 				>
-				</Button> }
+				</Button>
 			</div>
 		</div>
 	);
