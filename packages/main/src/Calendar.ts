@@ -188,12 +188,15 @@ type CalendarYearRangeT = {
  * @csspart month-cell - Used to style the month cells.
  * @csspart month-cell-selected - Used to style the month cells when selected.
  * @csspart month-cell-selected-between - Used to style the day cells in between of selected months in range.
+ * @csspart month-picker-root - Used to style the month picker root container.
  * @csspart year-cell - Used to style the year cells.
  * @csspart year-cell-selected - Used to style the year cells when selected.
  * @csspart year-cell-selected-between - Used to style the year cells in between of selected years in range.
+ * @csspart year-picker-root - Used to style the year picker root container.
  * @csspart year-range-cell - Used to style the year range cells.
  * @csspart year-range-cell-selected - Used to style the year range cells when selected.
  * @csspart year-range-cell-selected-between - Used to style the year range cells in between of selected year ranges.
+ * @csspart calendar-header-middle-button - Used to style the calendar header middle buttons (month/year/year-range buttons).
  * @since 1.0.0-rc.11
  */
 @customElement({

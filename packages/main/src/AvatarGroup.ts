@@ -36,6 +36,7 @@ import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 
 // Template
 import AvatarGroupTemplate from "./AvatarGroupTemplate.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as `ui5-avatar-group`
@@ -201,6 +202,26 @@ class AvatarGroup extends UI5Element {
 	_overflowButtonText?: string;
 
 	/**
+ 	* Defines the accessible name of the AvatarGroup.
+ 	* When provided, this will override the default aria-label text.
+ 	* @default undefined
+ 	* @public
+ 	* @since 2.12.0
+ 	*/
+	@property()
+	accessibleName?: string;
+
+	/**
+ 	* Receives id(s) of the elements that describe the AvatarGroup.
+ 	* When provided, this will be used as aria-labelledby instead of aria-label.
+ 	* @default undefined
+ 	* @public
+ 	* @since 2.12.0
+ 	*/
+	@property()
+	accessibleNameRef?: string;
+
+	/**
 	 * Defines the items of the component. Use the `ui5-avatar` component as an item.
 	 *
 	 * **Note:** The UX guidelines recommends using avatars with "Circle" shape.
@@ -265,6 +286,10 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get _ariaLabelText() {
+		if (this.accessibleName || this.accessibleNameRef) {
+			return getEffectiveAriaLabelText(this);
+		}
+		// Fallback to existing default behavior
 		const hiddenItemsCount = this.hiddenItems.length;
 		const typeLabelKey = this._isGroup ? AVATAR_GROUP_ARIA_LABEL_GROUP : AVATAR_GROUP_ARIA_LABEL_INDIVIDUAL;
 
@@ -472,6 +497,10 @@ class AvatarGroup extends UI5Element {
 
 	_onfocusin(e: FocusEvent) {
 		this._itemNavigation.setCurrentItem(e.target as IAvatarGroupItem);
+	}
+
+	getFocusDomRef() {
+		return this._itemNavigation._getCurrentItem();
 	}
 
 	/**

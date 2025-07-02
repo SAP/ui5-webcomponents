@@ -81,6 +81,7 @@ import Link from "./Link.js";
 import Menu from "./Menu.js";
 import MenuItem from "./MenuItem.js";
 import MenuSeparator from "./MenuSeparator.js";
+import MenuItemGroup from "./MenuItemGroup.js";
 import Popover from "./Popover.js";
 import Panel from "./Panel.js";
 import RadioButton from "./RadioButton.js";
