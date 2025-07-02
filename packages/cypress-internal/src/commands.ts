@@ -68,7 +68,6 @@ Cypress.on("command:start:async", (e) => {
 		"realMouseDown",
 		"realMouseUp",
 		"realMouseMove",
-		"get"
 		// @ts-ignore
 	].includes(e.attributes.name)) {
 		return new Cypress.Promise<boolean>(resolve => {
