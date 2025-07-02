@@ -43,12 +43,15 @@ import {
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
+import ToolbarButtonTemplate from "./ToolbarButtonTemplate.js";
+import type { IToolbarItem } from "./ToolbarItem.js";
+import type Toolbar from "./Toolbar.js";
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
  * @public
  */
-interface IButton extends HTMLElement, ITabbable {
+interface IButton extends HTMLElement, ITabbable, IToolbarItem {
 	nonInteractive: boolean;
 }
 
@@ -368,6 +371,7 @@ class Button extends UI5Element implements IButton {
 
 	constructor() {
 		super();
+		const toolbarItem = this as IToolbarItem;
 		this._deactivate = () => {
 			if (activeButton) {
 				activeButton._setActiveState(false);
@@ -392,6 +396,7 @@ class Button extends UI5Element implements IButton {
 
 			isGlobalHandlerAttached = true;
 		}
+		toolbarItem.toolbarTemplate = ToolbarButtonTemplate;
 	}
 
 	_ontouchstart() {
@@ -642,6 +647,7 @@ class Button extends UI5Element implements IButton {
 	get shouldRenderBadge() {
 		return !!this.badge.length && (!!this.badge[0].text.length || this.badge[0].design === ButtonBadgeDesign.AttentionDot);
 	}
+
 }
 
 Button.define();

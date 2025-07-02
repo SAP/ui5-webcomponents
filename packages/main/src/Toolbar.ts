@@ -29,7 +29,8 @@ import type ToolbarAlign from "./types/ToolbarAlign.js";
 import type ToolbarDesign from "./types/ToolbarDesign.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
-import type ToolbarItem from "./ToolbarItem.js";
+import type { IToolbarItem } from "./ToolbarItem.js";
+
 import type ToolbarSeparator from "./ToolbarSeparator.js";
 
 import type Button from "./Button.js";
@@ -156,11 +157,11 @@ class Toolbar extends UI5Element {
 	@slot({
 		"default": true, type: HTMLElement, invalidateOnChildChange: true, individualSlots: true,
 	})
-	items!: Array<ToolbarItem>
+	items!: Array<IToolbarItem>
 
 	_onResize!: ResizeObserverCallback;
 	_onCloseOverflow!: EventListener;
-	itemsToOverflow: Array<ToolbarItem> = [];
+	itemsToOverflow: Array<IToolbarItem> = [];
 	itemsWidth = 0;
 	minContentWidth = 0;
 
@@ -195,11 +196,11 @@ class Toolbar extends UI5Element {
 	}
 
 	get alwaysOverflowItems() {
-		return this.items.filter((item: ToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.AlwaysOverflow);
+		return this.items.filter((item: IToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.AlwaysOverflow);
 	}
 
 	get movableItems() {
-		return this.items.filter((item: ToolbarItem) => item.overflowPriority !== ToolbarItemOverflowBehavior.AlwaysOverflow && item.overflowPriority !== ToolbarItemOverflowBehavior.NeverOverflow);
+		return this.items.filter((item: IToolbarItem) => item.overflowPriority !== ToolbarItemOverflowBehavior.AlwaysOverflow && item.overflowPriority !== ToolbarItemOverflowBehavior.NeverOverflow);
 	}
 
 	get overflowItems() {
@@ -217,7 +218,7 @@ class Toolbar extends UI5Element {
 	}
 
 	get interactiveItemsCount() {
-		return this.items.filter((item: ToolbarItem) => item.isInteractive).length;
+		return this.items.filter((item: IToolbarItem) => item.isInteractive).length;
 	}
 
 	/**
@@ -265,7 +266,7 @@ class Toolbar extends UI5Element {
 	}
 
 	get hasFlexibleSpacers() {
-		return this.items.some((item: ToolbarItem) => item.hasFlexibleWidth);
+		return this.items.some((item: IToolbarItem) => item.hasFlexibleWidth);
 	}
 
 	/**
@@ -363,7 +364,7 @@ class Toolbar extends UI5Element {
 		let totalWidth = 0,
 			minWidth = 0;
 
-		this.items.forEach((item: ToolbarItem) => {
+		this.items.forEach((item: IToolbarItem) => {
 			const itemWidth = this.getItemWidth(item);
 			totalWidth += itemWidth;
 			if (item.overflowPriority === ToolbarItemOverflowBehavior.NeverOverflow) {
@@ -414,7 +415,7 @@ class Toolbar extends UI5Element {
 	}
 
 	distributeItemsThatAlwaysOverflow() {
-		this.alwaysOverflowItems.forEach((item: ToolbarItem) => {
+		this.alwaysOverflowItems.forEach((item: IToolbarItem) => {
 			this.itemsToOverflow.push(item);
 		});
 	}
@@ -427,7 +428,7 @@ class Toolbar extends UI5Element {
 		});
 	}
 
-	shouldShowSeparatorInOverflow(separatorIdx: number, overflowItems: Array<ToolbarItem>) {
+	shouldShowSeparatorInOverflow(separatorIdx: number, overflowItems: Array<IToolbarItem>) {
 		let foundPrevNonSeparatorItem = false;
 		let foundNextNonSeperatorItem = false;
 
@@ -487,7 +488,7 @@ class Toolbar extends UI5Element {
 		this.contentWidth = 0; // re-render
 	}
 
-	getItemWidth(item: ToolbarItem): number {
+	getItemWidth(item: IToolbarItem): number {
 		// Spacer width - always 0 for flexible spacers, so that they shrink, otherwise - measure the width normally
 		if (item.ignoreSpace || item.isSeparator) {
 			return 0;

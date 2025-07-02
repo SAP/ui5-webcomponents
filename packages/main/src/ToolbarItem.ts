@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 
 import type ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
@@ -107,10 +108,29 @@ class ToolbarItem extends UI5Element {
 			},
 		};
 	}
+
+	/**
+	 * Returns the template for the toolbar item.
+	 * @protected
+	 */
+	static get toolbarTemplate(): TemplateFunction {
+		throw new Error("Template must be defined");
+	}
 }
 
 export type {
 	IEventOptions,
 	ToolbarItemEventDetail,
+	IToolbarItem,
 };
-export default ToolbarItem;
+
+interface IToolbarItem extends HTMLElement {
+	overflowPriority?: `${ToolbarItemOverflowBehavior}`,
+	preventOverflowClosing?: boolean,
+	isOverflowed?: boolean,
+	ignoreSpace?: boolean,
+	hasFlexibleWidth?: boolean,
+	isInteractive?: boolean,
+	isSeparator?: boolean,
+	toolbarTemplate?: TemplateFunction
+}

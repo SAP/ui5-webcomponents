@@ -6,7 +6,8 @@ import ToolbarSeparatorTemplate from "./ToolbarSeparatorTemplate.js";
 // Styles
 import ToolbarSeparatorCss from "./generated/themes/ToolbarSeparator.css.js";
 
-import ToolbarItem from "./ToolbarItem.js";
+import type { IToolbarItem } from "./ToolbarItem.js";
+import UI5Element from "@ui5/webcomponents-base";
 
 /**
  * @class
@@ -27,7 +28,7 @@ import ToolbarItem from "./ToolbarItem.js";
 	styles: [ToolbarSeparatorCss],
 })
 
-class ToolbarSeparator extends ToolbarItem {
+class ToolbarSeparator extends UI5Element implements IToolbarItem {
 	@property({ type: Boolean })
 	visible = false;
 

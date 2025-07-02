@@ -8,10 +8,11 @@ import ToolbarSelectCss from "./generated/themes/ToolbarSelect.css.js";
 
 // Templates
 import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
-import ToolbarItem from "./ToolbarItem.js";
+import type { IToolbarItem } from "./ToolbarItem.js";
 import type { ToolbarItemEventDetail } from "./ToolbarItem.js";
 import type ToolbarSelectOption from "./ToolbarSelectOption.js";
 import type { SelectChangeEventDetail } from "./Select.js";
+import UI5Element from "@ui5/webcomponents-base";
 
 type ToolbarSelectChangeEventDetail = ToolbarItemEventDetail & SelectChangeEventDetail;
 
@@ -62,8 +63,8 @@ type ToolbarSelectChangeEventDetail = ToolbarItemEventDetail & SelectChangeEvent
  * @public
  */
 @event("close")
-class ToolbarSelect extends ToolbarItem {
-	eventDetails!: ToolbarItem["eventDetails"] & {
+class ToolbarSelect extends UI5Element implements IToolbarItem {
+	eventDetails!: {
 		change: ToolbarSelectChangeEventDetail;
 		open: ToolbarItemEventDetail;
 		close: ToolbarItemEventDetail;

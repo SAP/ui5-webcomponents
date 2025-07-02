@@ -5,8 +5,9 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ButtonAccessibilityAttributes } from "./Button.js";
 import type ButtonDesign from "./types/ButtonDesign.js";
 
-import ToolbarItem from "./ToolbarItem.js";
+import type { IToolbarItem } from "./ToolbarItem.js";
 import ToolbarButtonTemplate from "./ToolbarButtonTemplate.js";
+import UI5Element from "@ui5/webcomponents-base";
 
 type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 
@@ -43,7 +44,7 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 	bubbles: true,
 	cancelable: true,
 })
-class ToolbarButton extends ToolbarItem {
+class ToolbarButton extends UI5Element implements IToolbarItem {
 	/**
 	 * Defines if the action is disabled.
 	 *

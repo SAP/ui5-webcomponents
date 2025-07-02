@@ -3,7 +3,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 
 import ToolbarCss from "./generated/themes/Toolbar.css.js";
 
-import ToolbarItem from "./ToolbarItem.js";
+import type { IToolbarItem } from "./ToolbarItem.js";
+import UI5Element from "@ui5/webcomponents-base";
 
 /**
  * @class
@@ -22,7 +23,7 @@ import ToolbarItem from "./ToolbarItem.js";
 	styles: ToolbarCss,
 })
 
-class ToolbarSpacer extends ToolbarItem {
+class ToolbarSpacer extends UI5Element implements IToolbarItem {
 	/**
 	 * Defines the width of the spacer.
 	 *

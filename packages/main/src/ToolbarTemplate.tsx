@@ -63,11 +63,11 @@ export default function ToolbarTemplate(this: Toolbar) {
 							</div>
 						);
 					}
-					return (
-						<div class="ui5-tb-popover-item" id={item._individualSlot}>
-							<slot name={item._individualSlot}></slot>
-						</div>
-					);
+
+					if (item.toolbarTemplate) {
+						return (<div class="ui5-tb-popover-item" id={item._individualSlot}>{item.toolbarTemplate?.call(item)}</div>);
+					}
+					return (<div class="ui5-tb-popover-item" id={item._individualSlot}><slot name={item._individualSlot}></slot></div>);
 				})}
 			</div>
 		</Popover>

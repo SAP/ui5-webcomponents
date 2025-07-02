@@ -16,6 +16,11 @@
 ::slotted([slot^="default"])::part(button) {
 	width: 100%;
 	display: block;
+	text-align: left;
+}
+
+::slotted([slot^="default"]) {
+	width: 100%;
 }
 
 .ui5-tb-popover-item:not(:last-child) {
