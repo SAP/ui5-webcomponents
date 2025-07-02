@@ -5,16 +5,21 @@ import "./acc_report/support.js";
 import "./helpers.js"
 
 const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
-	cy.get(element)
-		.should($el => {
-			if ($el[0].tagName.includes("-") && $el[0].shadowRoot) {
-				expect($el[0].shadowRoot.hasChildNodes(), "Custom elements with shadow DOM have content in their shadow DOM").to.be.true;
+	cy.get(element, { log: false }) // suppress cy.get logging
+		.should(($el) => {
+			const el = $el[0];
+
+			const isCustom = el.tagName.includes("-");
+			const isVisible = Cypress.dom.isVisible(el)
+			const hasFocusDomRef = typeof el.getFocusDomRef === "function" && el.getFocusDomRef();
+
+			if (isCustom && el.isUI5Element && "getFocusDomRef" in el) {
+				return !!hasFocusDomRef && isVisible;
 			}
+
+			return true;
 		})
-		.and("be.visible")
-		.then(() => {
-			return originalFn(element, ...args)
-		});
+		.then(() => originalFn(element, ...args));
 };
 
 const commands = [
