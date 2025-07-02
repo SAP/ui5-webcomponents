@@ -663,7 +663,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	get _headerTitleText() {
-		return DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME);
+		return this._inputLabelTexts || DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get showHeader() {
@@ -729,9 +729,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	get pickerAccessibleName() {
-		return isPhone()
-			? `${this._inputLabelTexts} ${DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME)}`.trim()
-			: DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME);
+		return `${this._inputLabelTexts} ${DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME)}`.trim();
 	}
 
 	/**
