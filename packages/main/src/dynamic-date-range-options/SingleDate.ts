@@ -34,7 +34,7 @@ class SingleDate implements IDynamicDateRangeOption {
 	format(value: DynamicDateRangeValue) {
 		const valuesArray = value?.values as Array<Date>;
 
-		if (!valuesArray || valuesArray.length !== 1) {
+		if (!valuesArray) {
 			return "";
 		}
 
