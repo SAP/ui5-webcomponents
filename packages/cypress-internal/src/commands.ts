@@ -11,9 +11,10 @@ const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
 
 			const isCustom = el.tagName.includes("-");
 			const isVisible = Cypress.dom.isVisible(el)
+			const isUI5Element = el.isUI5Element;
 			const hasFocusDomRef = typeof el.getFocusDomRef === "function" && el.getFocusDomRef();
 
-			if (isCustom && el.isUI5Element && "getFocusDomRef" in el) {
+			if (isCustom && isUI5Element) {
 				return !!hasFocusDomRef && isVisible;
 			}
 
