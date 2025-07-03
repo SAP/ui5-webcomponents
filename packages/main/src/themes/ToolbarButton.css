@@ -1,0 +1,3 @@
+:host([disabled]:active) {
+	pointer-events: none;
+}
