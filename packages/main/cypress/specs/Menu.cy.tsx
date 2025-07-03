@@ -286,6 +286,39 @@ describe("Menu interaction", () => {
 			.should("be.focused");
 	});
 
+
+	it("Prevent menu closing on item press in checkable group with Shift", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open Menu</Button>
+				<Menu opener="btnOpen">
+					<MenuItem text="Outside"></MenuItem>
+					<MenuItemGroup checkMode="Single">
+						<MenuItem text="Single"></MenuItem>
+					</MenuItemGroup>
+					<MenuItemGroup checkMode="Multiple">
+						<MenuItem text="Multiple"></MenuItem>
+					</MenuItemGroup>
+					<MenuItemGroup checkMode="None">
+						<MenuItem text="None"></MenuItem>
+					</MenuItemGroup>
+				</Menu>
+			</>
+		);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuItemCheckShiftClickAndPress("[text='Single']", "have.attr");
+
+		cy.get("[ui5-menu]")
+			.ui5MenuItemCheckShiftClickAndPress("[text='Multiple']", "have.attr");
+
+		cy.get("[ui5-menu]")
+			.ui5MenuItemCheckShiftClickAndPress("[text='None']", "not.have.attr");
+
+		cy.get("[ui5-menu]")
+			.ui5MenuItemCheckShiftClickAndPress("[text='Outside']", "not.have.attr");
+	});
+
 	describe("Event firing", () => {
 		it("Event firing - 'ui5-item-click' after 'click' on menu item", () => {
 			cy.mount(

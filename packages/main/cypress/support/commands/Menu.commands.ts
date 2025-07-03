@@ -50,3 +50,39 @@ Cypress.Commands.add("ui5MenuItemPress", { prevSubject: true }, (subject, key) =
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 	cy.realPress(key);
 });
+
+Cypress.Commands.add("ui5MenuItemCheckShiftClickAndPress", { prevSubject: true }, (subject, menuItem, shouldStatement) => {
+	cy.get(subject)
+		.as("menu");
+
+	cy.get("@menu")
+		.find(menuItem)
+		.as("menuItem");
+
+	cy.get("@menu")
+		.ui5MenuOpen();
+
+	cy.get("@menuItem")
+		.realClick({ shiftKey: true });
+
+	cy.get("@menu")
+		.should(shouldStatement, "open");
+
+	cy.get("@menu")
+		.ui5MenuOpen();
+
+	cy.get("@menuItem")
+		.realPress(["Shift", "Enter"]);
+
+	cy.get("@menu")
+		.should(shouldStatement, "open");
+
+	cy.get("@menu")
+		.ui5MenuOpen();
+
+	cy.get("@menuItem")
+		.realPress(["Shift", "Space"]);
+
+	cy.get("@menu")
+		.should(shouldStatement, "open");
+});

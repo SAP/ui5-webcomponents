@@ -12,6 +12,7 @@ import {
 	isSpace,
 	isEnterShift,
 	isSpaceShift,
+	isShift,
 	isTabNext,
 	isTabPrevious,
 	isDown,
@@ -566,6 +567,12 @@ class MenuItem extends ListItem implements IMenuItem {
 			this._close();
 			this.focus();
 			e.stopPropagation();
+		}
+	}
+
+	_itemKeyUp(e: KeyboardEvent) {
+		if (isShift(e)) {
+			this._shiftPressed = false;
 		}
 	}
 
