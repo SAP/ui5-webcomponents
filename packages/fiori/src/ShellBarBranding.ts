@@ -79,16 +79,6 @@ class ShellBarBranding extends UI5Element {
 	target?: string;
 
 	/**
-	 * Defines the title for the ui5-shellbar-branding component.
-	 *
-	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 * @default undefined
-	 * @public
-	 */
-	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>;
-
-	/**
 	 * Defines the text alternative of the component.
 	 * If not provided a default text alternative will be set, if present.
 	 * @default undefined
@@ -104,6 +94,15 @@ class ShellBarBranding extends UI5Element {
      */
 	@property({ type: Boolean })
 	_isSBreakPoint = false;
+
+	/**
+	 * Defines the title for the ui5-shellbar-branding component.
+	 *
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<HTMLElement>;
 
 	/**
 	 * Defines the logo of the `ui5-shellbar`.
