@@ -43,6 +43,7 @@ import { getI18nBundle } from "./i18nBundle.js";
 import type I18nBundle from "./i18nBundle.js";
 import { fetchCldr } from "./asset-registries/LocaleData.js";
 import getLocale from "./locale/getLocale.js";
+import { getLanguageChangePending } from "./config/Language.js";
 
 const DEV_MODE = true;
 let autoId = 0;
@@ -108,6 +109,15 @@ function _invalidate(this: UI5Element, changeInfo: ChangeInfo) {
 	// Invalidation should be suppressed: 1) before the component is rendered for the first time 2) and during the execution of onBeforeRendering
 	// This is necessary not only as an optimization, but also to avoid infinite loops on invalidation between children and parents (when invalidateOnChildChange is used)
 	if (this._suppressInvalidation) {
+		return;
+	}
+
+	const ctor = this.constructor as typeof UI5Element;
+
+	// Skip re-rendering of language-aware components while language-specific data (e.g., CLDR, language bundles) is still loading.
+	// Once all necessary language data has been loaded, the language change
+	// will trigger a re-render of all language-aware components.
+	if (ctor.getMetadata().isLanguageAware() && getLanguageChangePending()) {
 		return;
 	}
 
@@ -318,12 +328,12 @@ abstract class UI5Element extends HTMLElement {
 			await this._processChildren();
 		}
 
-		if (!this._inDOM) { // Component removed from DOM while _processChildren was running
-			return;
-		}
-
 		if (!ctor.asyncFinished) {
 			await ctor.definePromise;
+		}
+
+		if (!this._inDOM) { // Component removed from DOM while _processChildren was running
+			return;
 		}
 
 		renderImmediately(this);
