@@ -140,7 +140,8 @@ describe('DynamicDateRange Component', () => {
 
         cy.get("@yearPicker")
             .shadow()
-            .find("div[data-sap-timestamp='2066774400']")
+            .find(".ui5-dp-yeartext")
+            .contains('2035')
             .realClick();
 
         cy.realPress("Tab");
@@ -163,7 +164,8 @@ describe('DynamicDateRange Component', () => {
 
         cy.get("@monthPicker")
             .shadow()
-            .find("div[data-sap-timestamp='2064096000']")
+            .find(".ui5-dp-monthtext")
+            .contains('May')
             .realClick();
 
         cy.get("@calendar")
@@ -173,7 +175,8 @@ describe('DynamicDateRange Component', () => {
 
         cy.get("@dayPicker")
             .shadow()
-            .find("div[data-sap-timestamp='2063318400']")
+            .find(".ui5-dp-daytext")
+            .eq(22) // May 21, 2035 is the 21st day
             .realClick();
 
         cy.get("@popover")
