@@ -173,39 +173,40 @@ describe("Toolbar general interaction", () => {
 			.should("have.been.calledOnce");
 	});
 
-	it("Should move button with alwaysOverflow priority to overflow popover", async () => {
-
+	it("Should move button with alwaysOverflow priority to overflow popover", () => {
 		cy.mount(
-			<Toolbar id="otb_d">
+			<Toolbar>
 				<ToolbarButton text="Add" icon={add} overflow-priority="AlwaysOverflow" stableDomRef="tb-button-add-d"></ToolbarButton>
 				<ToolbarButton text="Employee" icon={employee} overflow-priority="AlwaysOverflow" stableDomRef="tb-button-employee-d"></ToolbarButton>
 			</Toolbar>
 		);
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		// Wait for the toolbar to render
 		cy.wait(500);
 
-		const otb = cy.get("#otb_d");
-
-		cy.get("otb")
+		// Select the toolbar by tag name
+		cy.get("ui5-toolbar")
 			.shadow()
 			.find(".ui5-tb-overflow-btn")
 			.click();
-		const overflowButton = otb.shadow().find(".ui5-tb-overflow-btn");
 
-		cy.get("#otb_d")
+		// Verify the overflow popover is open
+		cy.get("ui5-toolbar")
 			.shadow()
 			.find(".ui5-overflow-popover")
-			.should("have.attr", "open", "true");
-		overflowButton.click();
-		cy.wait(500);
+			.should("have.attr", "open", "open");
 
-		cy.get("@popover")
+		// Verify the popover contains the correct number of items
+		cy.get("ui5-toolbar")
+			.shadow()
 			.find(".ui5-tb-popover-item")
 			.should("have.length", 2);
 
-		cy.get("@popover")
-			.find(`[stable-dom-ref="tb-button-employee-d"]`)
+		// Verify the specific button is in the popover
+		cy.get("ui5-toolbar")
+			.find(`[stabledomref="tb-button-employee-d"]`)
+			.shadow()
+			.find(`[ui5-button]`)
 			.should("have.class", "ui5-tb-popover-item");
 	});
 
