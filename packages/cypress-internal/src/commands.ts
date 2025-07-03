@@ -20,7 +20,7 @@ const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
 		.and("be.visible")
 		.then(() => {
 			return originalFn(element, ...args)
-		})
+		});
 };
 
 const commands = [
