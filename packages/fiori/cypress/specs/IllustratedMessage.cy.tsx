@@ -1,6 +1,8 @@
 import IllustratedMessage from "../../src/IllustratedMessage.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js"
+import Panel from "@ui5/webcomponents/dist/Panel.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
 
 describe("Accessibility", () => {
 	it("should add aria-hidden and role=presetation to the SVG when decorative is true", () => {
@@ -32,6 +34,35 @@ describe("Accessibility", () => {
 			.find("svg")
 			.should("not.have.attr", "aria-label");
 
+	});
+
+	it("content with auto design shrinks to fit the parent container", () => {
+		const newContainerHeight = 300;
+		const expectedMedia = "dialog";
+
+		cy.mount(
+			<div id="container" style={{ border: "1px solid #ccc" }}>
+				<IllustratedMessage id="illustratedMsg5" class="border contentBox">
+					<button>Action 1</button>
+				</IllustratedMessage>
+			</div>
+		);
+
+		cy.get("#container")
+			.invoke("css", "height", `${newContainerHeight}px`);
+
+		cy.get("#illustratedMsg5")
+			.shadow()
+			.find(".ui5-illustrated-message-root")
+			.should(($contents) => {
+				const scrollHeight = $contents[0].scrollHeight;
+				const offsetHeight = $contents[0].offsetHeight;
+				expect(scrollHeight).to.be.lessThan(newContainerHeight);
+				expect(scrollHeight).to.equal(offsetHeight);
+			});
+
+		cy.get("#illustratedMsg5")
+			.should("have.prop", "media", expectedMedia);
 	});
 });
 
@@ -77,4 +108,165 @@ describe("design", () => {
 
 	});
 
+});
+
+describe("IllustratedMessage 'design' property", () => {
+	it("should show up properly, when in panel and it expand/collapse", () => {
+		cy.mount(
+			<Panel noAnimation>
+				<IllustratedMessage name="AddColumn" />
+			</Panel>
+		);
+
+		cy.get("[ui5-panel]")
+			.invoke("prop", "collapsed", true);
+
+		cy.get("[ui5-illustrated-message]")
+			.should("have.prop", "media", "base");
+
+		cy.get("[ui5-panel]")
+			.invoke("prop", "collapsed", false);
+
+		cy.get("[ui5-illustrated-message]")
+			.should("have.prop", "media")
+			.and("not.equal", "base");
+	});
+});
+
+describe("Vertical responsiveness", () => {
+	it("content with auto design shrinks to fit the parent container", () => {
+		cy.mount(
+			<div>
+				<IllustratedMessage />
+			</div>
+		);
+
+		cy.get("div")
+			.invoke("css", "height", "300px");
+
+		cy.get("[ui5-illustrated-message]")
+			.shadow()
+			.find(".ui5-illustrated-message-root")
+			.should(($contents) => {
+				const scrollHeight = $contents[0].scrollHeight;
+				const offsetHeight = $contents[0].offsetHeight;
+
+				expect(scrollHeight).to.be.lessThan(300);
+				expect(scrollHeight).to.equal(offsetHeight);
+			});
+	});
+
+	it("content with auto design expands to fit the parent container", () => {
+		cy.mount(
+			<div>
+				<IllustratedMessage />
+			</div>
+		);
+
+		cy.get("div")
+			.invoke("css", "height", "500px");
+
+		cy.get("[ui5-illustrated-message]")
+			.shadow()
+			.find(".ui5-illustrated-message-root")
+			.should(($contents) => {
+				const scrollHeight = $contents[0].scrollHeight;
+				const offsetHeight = $contents[0].offsetHeight;
+				expect(scrollHeight).to.be.lessThan(500);
+				expect(scrollHeight).to.equal(offsetHeight);
+			});
+	});
+
+	it("content with fixed design fits the parent container", () => {
+		cy.mount(
+			<div>
+				<IllustratedMessage design="Dialog" />
+			</div>
+		);
+
+		cy.get("div")
+			.invoke("css", "height", "250px");
+
+		cy.get("[ui5-illustrated-message]")
+			.shadow()
+			.find(".ui5-illustrated-message-root")
+			.should(($contents) => {
+				const scrollHeight = $contents[0].scrollHeight;
+				const offsetHeight = $contents[0].offsetHeight;
+				expect(scrollHeight).to.be.lessThan(250);
+				expect(scrollHeight).to.equal(offsetHeight);
+			});
+	});
+
+	it("shows image with unconstrained height when container has auto height", () => {
+		cy.mount(
+			<div>
+				<IllustratedMessage />
+			</div>
+		);
+
+		cy.get("div")
+			.invoke("css", "height", "auto");
+
+		cy.get("[ui5-illustrated-message]")
+			.shadow()
+			.find(".ui5-illustrated-message-illustration svg")
+			.should("have.css", "height", "240px");
+	});
+
+	it("Illustration visible, when container fit content height", () => {
+		cy.mount(
+			<div style={{ height: "440px" }}>
+				<IllustratedMessage design="Scene" />
+			</div>
+		);
+
+		cy.get("[ui5-illustrated-message]")
+			.shadow()
+			.find(".ui5-illustrated-message-illustration svg")
+			.should(($illustration) => {
+				const scrollHeight = $illustration[0].scrollHeight;
+				expect(scrollHeight).to.not.equal(0);
+			});
+	});
+
+	it("Illustration visible, when IM slotted and container has fixed height", () => {
+		cy.mount(
+			<Panel style={{ height: "19rem" }} noAnimation>
+				<IllustratedMessage name="AddColumn" />
+			</Panel>
+		);
+
+		cy.get("[ui5-illustrated-message]")
+			.shadow()
+			.find(".ui5-illustrated-message-illustration svg")
+			.should(($illustration) => {
+				const scrollHeight = $illustration[0].scrollHeight;
+				expect(scrollHeight).to.not.equal(0);
+			});
+	});
+});
+
+describe("Dot design resource handling", () => {
+	it("uses substitute Spot illustration", () => {
+		cy.mount(
+			<IllustratedMessage name="TntUnableToLoad" design="Dot" />
+		);
+
+		cy.get("[ui5-illustrated-message]")
+			.shadow()
+			.find(".ui5-illustrated-message-illustration svg")
+			.should("have.id", "tnt-Spot-UnableToLoad");
+	});
+
+	it("uses original Dot illustration", () => {
+		cy.mount(
+			<IllustratedMessage name="AddPeople" design="Dot" />
+		);
+
+		cy.get("[ui5-illustrated-message]")
+			.shadow()
+			.find(".ui5-illustrated-message-illustration svg")
+			.should("have.id", "sapIllus-Dot-AddPeople");
+	});
 });
