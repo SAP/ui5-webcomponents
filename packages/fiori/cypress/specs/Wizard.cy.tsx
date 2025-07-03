@@ -552,22 +552,29 @@ describe("Wizard inside Dialog", () => {
                 });
             });
 
+        //TO DO: remove wait when timing issue is resolved
+        cy.wait(500);
+
         cy.get("#prevButton")
             .realClick();
 
         cy.get("[ui5-wizard]")
             .shadow()
             .find("[data-ui5-index='1']")
-            .should("have.attr", "selected");
+            .should("be.selected");
+
+        cy.get("[ui5-wizard-step]")
+            .eq(0)
+            .should("be.selected");
 
         cy.get("[ui5-wizard-step]")
             .eq(1)
-            .should("not.have.attr", "selected");
+            .should("not.be.selected");
 
         cy.get("[ui5-wizard]")
             .shadow()
             .find("[data-ui5-index='2']")
-            .should("not.have.attr", "selected");
+            .should("not.be.selected");
     });
 
     it("WizardPageMode: prevent page change upon scrolling", () => {
