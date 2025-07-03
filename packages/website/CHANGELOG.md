@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.2...v2.12.0-rc.3) (2025-07-03)
+
+
+### Features
+
+* **ui5-checkbox:** add value property ([#11775](https://github.com/SAP/ui5-webcomponents/issues/11775)) ([cc00019](https://github.com/SAP/ui5-webcomponents/commit/cc00019023a8ae90b2c45f4dc9e533ad536e8c4f))
+* **ui5-user-menu:** add item groups with checkable menu items ([#11832](https://github.com/SAP/ui5-webcomponents/issues/11832)) ([d0758fd](https://github.com/SAP/ui5-webcomponents/commit/d0758fd8c7af19dc25c5463c2dd8bb57b7599f52))
+
+
+
+
+
 # [2.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.1...v2.12.0-rc.2) (2025-06-26)
 
 
