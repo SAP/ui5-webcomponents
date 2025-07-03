@@ -7,35 +7,6 @@
     <meta charset="utf-8">
     <title>AINoticeIndicator</title>
     <script src="%VITE_BUNDLE_PATH%" type="module"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const allPopovers = document.querySelectorAll("ui5-popover");
-            const allAINoticeIndicators = document.querySelectorAll("ui5-ai-notice-indicator");
-
-            allAINoticeIndicators.forEach((aiNotice) => {
-                aiNotice.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    if (e.detail.targetRef) {
-                        const popover = aiNotice.querySelector("ui5-popover");
-                        popover.opener = e.detail.targetRef;
-                        popover.open = true;
-                    }
-                })
-
-                const closeButton = aiNotice.querySelector('ui5-button');
-                if (closeButton) {
-                    const popover = aiNotice.querySelector("ui5-popover");
-
-                    closeButton.addEventListener("click", () => {
-                        popover.open = false;
-                    });
-                }
-
-            })
-        });
-    </script>
 </head>
 
 <body>
@@ -205,6 +176,33 @@
             </div>
         </ui5-popover>
     </ui5-ai-notice-indicator>
+
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const allPopovers = document.querySelectorAll("ui5-popover");
+            const allAINoticeIndicators = document.querySelectorAll("ui5-ai-notice-indicator");
+
+            allAINoticeIndicators.forEach((aiNotice) => {
+                aiNotice.addEventListener('ui5-notice-press', (e) => {
+                    if (e.target && e.target.shadowRoot) {
+                        const popover = aiNotice.querySelector("ui5-popover");
+                        popover.opener = e.target.shadowRoot.querySelector("ui5-button") || e.target.shadowRoot.querySelector("ui5-link");
+                        popover.open = true;
+                    }
+                })
+
+                const closeButton = aiNotice.querySelector('ui5-button');
+                if (closeButton) {
+                    const popover = aiNotice.querySelector("ui5-popover");
+
+                    closeButton.addEventListener("ui5-click", () => {
+                        popover.open = false;
+                    });
+                }
+
+            })
+        });
+    </script>
 </body>
 
 </html>

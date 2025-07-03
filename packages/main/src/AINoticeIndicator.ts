@@ -13,7 +13,6 @@ import Button from "./Button.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 
 // Styles
 import AINoticeIndicatorCss from "./generated/themes/AINoticeIndicator.css.js";
@@ -60,13 +59,13 @@ import AINoticeIndicatorCss from "./generated/themes/AINoticeIndicator.css.js";
  * property is set to `true`.
  * @public
  */
-@event("click")
+@event("notice-press")
 class AINoticeIndicator extends UI5Element {
 	eventDetails!: {
-		click: { targetRef: HTMLElement },
+		"notice-press": void
 	}
 	/**
-	 * Link text for AI Notice Control
+	 * Link text for AI Notice Component
 	 *
 	 * @public
 	 * @default ""
@@ -75,7 +74,7 @@ class AINoticeIndicator extends UI5Element {
 	attributionText: string = "";
 
 	/**
-	 * Description text for AI Notice Control
+	 * Description text for AI Notice Component
 	 *
 	 * @public
 	 * @default ""
@@ -84,7 +83,7 @@ class AINoticeIndicator extends UI5Element {
 	verificationText: string = "";
 
 	/**
-	 * Show icon for AI Notice Control link text
+	 * Show icon for AI Notice Component link text
 	 *
 	 * @public
 	 * @default false
@@ -127,13 +126,7 @@ class AINoticeIndicator extends UI5Element {
 	}
 
 	_handleResize() {
-		if (!this.shadowRoot) {
-			return;
-		}
-
-		const label = this.shadowRoot.querySelector<HTMLElement>("ui5-label");
-
-		if (!label) {
+		if (!this._label) {
 			return;
 		}
 
@@ -142,36 +135,27 @@ class AINoticeIndicator extends UI5Element {
 
 		// Compare total width to container width
 		if (this._controlNeededWidth + margin > containerWidth) {
-			label.style.display = "none";
+			this._label.style.display = "none";
 		} else {
-			label.style.display = "";
+			this._label.style.display = "";
 		}
 	}
 
 	_getNeededWidthToDisplayControlFully = () => {
-		if (!this.shadowRoot) {
-			return;
-		}
-
-		const button = this.shadowRoot.querySelector<HTMLElement>("ui5-button");
-		const link = this.shadowRoot.querySelector<HTMLElement>("ui5-link");
-		const label = this.shadowRoot.querySelector<HTMLElement>("ui5-label");
-
-		if (!label) {
+		if (!this._label) {
 			return;
 		}
 
 		// Get widths
-		const buttonWidth = button?.offsetWidth || 0;
-		const linkWidth = link?.offsetWidth || 0;
-		const labelWidth = label?.offsetWidth || 0;
+		const buttonWidth = this._button?.offsetWidth || 0;
+		const linkWidth = this._label?.offsetWidth || 0;
+		const labelWidth = this._label?.offsetWidth || 0;
 
 		this._controlNeededWidth = buttonWidth + linkWidth + labelWidth;
 	}
 
-	_onLinkPress(e: UI5CustomEvent<Button | Link, "click">) {
-		e.stopPropagation();
-		this.fireDecoratorEvent("click", { targetRef: e.target as HTMLElement });
+	_onLinkPress() {
+		this.fireDecoratorEvent("notice-press");
 	}
 
 	get _showIconButton() {
@@ -193,6 +177,18 @@ class AINoticeIndicator extends UI5Element {
 	onExitDOM() {
 		this._controlNeededWidth = 0;
 		ResizeHandler.deregister(this, this._onResize);
+	}
+
+	get _button() {
+		return this.shadowRoot?.querySelector<HTMLElement>("ui5-button");
+	}
+
+	get _link() {
+		return this.shadowRoot?.querySelector<HTMLElement>("ui5-link");
+	}
+
+	get _label() {
+		return this.shadowRoot?.querySelector<HTMLElement>("ui5-label");
 	}
 }
 
