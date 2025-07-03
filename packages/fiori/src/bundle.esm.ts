@@ -55,6 +55,7 @@ import UploadCollectionItem from "./UploadCollectionItem.js";
 import UserMenu from "./UserMenu.js";
 import UserMenuAccount from "./UserMenuAccount.js";
 import UserMenuItem from "./UserMenuItem.js";
+import UserMenuItemGroup from "./UserMenuItemGroup.js";
 import ViewSettingsDialog from "./ViewSettingsDialog.js";
 import Wizard from "./Wizard.js";
 
