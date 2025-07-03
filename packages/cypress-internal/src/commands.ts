@@ -15,10 +15,8 @@ const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
 			const hasFocusDomRef = typeof el.getFocusDomRef === "function" && el.getFocusDomRef();
 
 			if (isCustom && isUI5Element) {
-				return !!hasFocusDomRef && isVisible;
+				expect(!!hasFocusDomRef && isVisible , "Custom elements with shadow DOM have content in their shadow DOM and to be visible").to.be.true;
 			}
-
-			return true;
 		})
 		.then(() => originalFn(element, ...args));
 };
