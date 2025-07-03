@@ -5,8 +5,8 @@ import TableGroupRow from "../../src/TableGroupRow.js";
 import TableColumn from "../../src/TableColumn.js";
 import modifyTag from "./utils/modifyTag.js";
 
-describe("Table", () => {
-	it("tests doesn't fire loadMore with ArrowDown on last row", () => {
+describe("Package compatibility scoping", () => {
+	it("Without suffix", () => {
 		cy.mount(
 			<Table>
 				<TableColumn slot="columns">

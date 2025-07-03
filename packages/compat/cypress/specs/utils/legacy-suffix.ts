@@ -1,3 +1,3 @@
-import { setLegacyCustomElementsScopingSuffix } from "../../../src/utils/LegacyCustomElementsScope.js";
+import { setCompatCustomElementsScopingSuffix } from "../../../src/utils/CompatCustomElementsScope.js";
 
-setLegacyCustomElementsScopingSuffix("legacy")
+setCompatCustomElementsScopingSuffix("compat")

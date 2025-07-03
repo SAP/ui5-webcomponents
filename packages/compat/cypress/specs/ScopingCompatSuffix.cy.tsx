@@ -6,8 +6,8 @@ import TableGroupRow from "../../src/TableGroupRow.js";
 import TableColumn from "../../src/TableColumn.js";
 import modifyTag from "./utils/modifyTag.js";
 
-describe("Table", () => {
-	it("tests doesn't fire loadMore with ArrowDown on last row", () => {
+describe("Package compatibility scoping", () => {
+	it("Compat suffix", () => {
 		cy.mount(
 			<Table>
 				<TableColumn slot="columns">
@@ -30,7 +30,7 @@ describe("Table", () => {
 			TableRow.getMetadata().getPureTag(),
 			TableGroupRow.getMetadata().getPureTag(),
 			TableColumn.getMetadata().getPureTag()
-		].map(tag => modifyTag(tag, "legacy"))
+		].map(tag => modifyTag(tag, "compat"))
 			.forEach(tag => {
 				cy.get(tag)
 					.should("exist");

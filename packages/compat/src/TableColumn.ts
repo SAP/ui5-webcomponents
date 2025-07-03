@@ -7,7 +7,7 @@ import type TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
 
 // Styles
 import tableColumnStyles from "./generated/themes/TableColumn.css.js";
-import { legacyScopingPatcher } from "./utils/LegacyCustomElementsScope.js";
+import { compatScopingPatcher } from "./utils/CompatCustomElementsScope.js";
 
 /**
  * @class
@@ -88,7 +88,7 @@ class TableColumn extends UI5Element {
 	last = false;
 }
 
-legacyScopingPatcher(TableColumn);
+compatScopingPatcher(TableColumn);
 
 TableColumn.define();
 
