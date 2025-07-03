@@ -10,12 +10,12 @@ const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
 			const el = $el[0];
 
 			const isCustom = el.tagName.includes("-");
-			const isVisible = Cypress.dom.isVisible(el)
 			const isUI5Element = el.isUI5Element;
-			const hasFocusDomRef = typeof el.getFocusDomRef === "function" && el.getFocusDomRef();
+			const focusRef = typeof el.getFocusDomRef === "function" && el.getFocusDomRef();
+			const isVisible = Cypress.dom.isVisible(focusRef)
 
 			if (isCustom && isUI5Element) {
-				expect(!!hasFocusDomRef && isVisible , "Custom elements with shadow DOM have content in their shadow DOM and to be visible").to.be.true;
+				expect(!!focusRef && isVisible , "Custom elements with shadow DOM have content in their shadow DOM and to be visible").to.be.true;
 			}
 		})
 		.then(() => originalFn(element, ...args));
