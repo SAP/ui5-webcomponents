@@ -11,13 +11,14 @@ const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
 
 			const isCustom = el.tagName.includes("-");
 			const isUI5Element = el.isUI5Element;
+			const isVisible = !Cypress.dom.isHidden(el);
 			const domRef = typeof el.getDomRef === "function" && el.getDomRef();
 
 			if (isCustom && isUI5Element) {
-				expect(domRef, "Custom elements with shadow DOM have content in their shadow DOM and to be visible").to.be.exist;
+				expect(domRef, "DOM Reference exists").to.exist;
+				expect(isVisible, "Be visible").to.be.true;
 			}
 		})
-		.and("be.visible")
 		.then(() => {
 			return originalFn(element, ...args)
 		});
