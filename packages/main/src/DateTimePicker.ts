@@ -293,6 +293,10 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		};
 		this._showTimeView = true;
 
+		if (this.showDateView) {
+			return;
+		}
+
 		await renderFinished();
 		this._clocks.focus();
 	}
