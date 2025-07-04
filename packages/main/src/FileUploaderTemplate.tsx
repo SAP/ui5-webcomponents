@@ -22,7 +22,9 @@ export default function FileUploaderTemplate(this: FileUploader) {
 					<input
 						type="file"
 						class="ui5-file-uploader-native-input"
+						aria-label={this.inputLabelText}
 						multiple={this.multiple}
+						required={this.required}
 						accept={this.accept}
 						disabled={this.disabled}
 						aria-roledescription={this.roleDescription}

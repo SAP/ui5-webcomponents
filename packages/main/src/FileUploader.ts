@@ -5,6 +5,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -12,7 +13,7 @@ import {
 	isUpAlt,
 	isDownAlt,
 	isEnter,
-	isEscape,
+	isDelete,
 	isF4,
 	isSpace,
 	isRight,
@@ -201,7 +202,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines whether the component is required.
 	 * @default false
-	 * @private
+	 * @public
 	 */
 	@property({ type: Boolean })
 	required = false;
@@ -249,9 +250,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	@property({ type: Array, noAttribute: true })
 	_selectedFilesNames: Array<string> = [];
-
-	@property({ type: Array, noAttribute: true })
-	_clearTokens: boolean = true;
 
 	@property({ type: Boolean, noAttribute: true })
 	_tokenizerOpen = false;
@@ -326,7 +324,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 		if (isSpace(e) || isF4(e) || isUpAlt(e) || isDownAlt(e)) {
 			this._openFileBrowser();
-		} else if (isEscape(e) && this._clearTokens) {
+		} else if (isDelete(e)) {
 			this._clearFileSelection();
 		}
 	}
@@ -370,24 +368,19 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	_onTokenizerKeyUp(e: KeyboardEvent) {
-		if ((isDownAlt(e) || isUpAlt(e))) {
-			this._tokenizerOpen = !this._tokenizer.open;
+		if ((isDownAlt(e) || isUpAlt(e)) || isF4(e)) {
 			e.stopPropagation();
+			this._tokenizerOpen = !this._tokenizer.open;
 		}
 
-		if (isSpace(e)) {
+		if (isSpace(e) || isDelete(e) || isF4(e)) {
 			e.stopPropagation();
 		}
 	}
 
 	_onTokenizerKeyDown(e: KeyboardEvent) {
-		const isToken = (<HTMLElement>e.target).hasAttribute("ui5-token");
 		const firstToken = this._tokenizer?.tokens.find(token => !token.hasAttribute("overflows"));
 		const isArrowNavigation = this.effectiveDir === "ltr" ? isLeft(e) : isRight(e);
-
-		if (isEscape(e)) {
-			this._clearTokens = isToken;
-		}
 
 		if (isEnter(e)) {
 			e.stopPropagation();
@@ -551,6 +544,10 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			this.emptyInput.type = "file";
 		}
 		return this.emptyInput.files;
+	}
+
+	get inputLabelText(): string | undefined {
+		return getAssociatedLabelForTexts(this);
 	}
 
 	get inputTitle(): string {
