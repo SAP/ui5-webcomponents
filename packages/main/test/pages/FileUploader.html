@@ -34,6 +34,7 @@
 			<ui5-label for="fileSelector3">Choose files:</ui5-label>
 			<ui5-file-uploader id="fileSelector3" style="width: 350px;" multiple value-state="Positive">
 				<ui5-button>Upload</ui5-button>
+				<div slot="valueStateMessage">The selected files are uploaded successfully</div>
 			</ui5-file-uploader>
 		</div>
 
@@ -55,9 +56,6 @@
 			<ui5-label for="buttonOnly">Choose files:</ui5-label>
 			<ui5-file-uploader id="buttonOnly" multiple hide-input>
 				<ui5-button>Upload</ui5-button>
-				<ui5-button>Upload</ui5-button>
-				<ui5-button>Upload</ui5-button>
-				<ui5-button>Upload</ui5-button>
 			</ui5-file-uploader>
 		</div>
 
@@ -77,17 +75,17 @@
 
 		<div>
 			<ui5-label for="noneFile">Choose files:</ui5-label>
-			<ui5-file-uploader id="noneFile" style="width: 350px;" multiple value-state="None"></ui5-file-uploader>
+			<ui5-file-uploader id="noneFile" style="width: 350px;" value-state="None"></ui5-file-uploader>
 		</div>
 
 		<div>
 			<ui5-label for="disabledFile">Choose files:</ui5-label>
-			<ui5-file-uploader id="disabledFile" style="width: 350px;" multiple disabled></ui5-file-uploader>
+			<ui5-file-uploader id="disabledFile" style="width: 350px;" disabled></ui5-file-uploader>
 		</div>
 
 		<div>
 			<ui5-label for="negativeFile">Choose files:</ui5-label>
-			<ui5-file-uploader id="negativeFile" style="width: 350px;" multiple value-state="Negative"></ui5-file-uploader>
+			<ui5-file-uploader id="negativeFile" style="width: 350px;" value-state="Negative"></ui5-file-uploader>
 		</div>
 
 		<div>

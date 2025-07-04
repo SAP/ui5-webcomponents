@@ -22,13 +22,15 @@ export default function FileUploaderTemplate(this: FileUploader) {
 					<input
 						type="file"
 						class="ui5-file-uploader-native-input"
-						aria-label={this.inputLabelText}
 						multiple={this.multiple}
-						required={this.required}
 						accept={this.accept}
 						disabled={this.disabled}
-						aria-roledescription={this.roleDescription}
 						title={this.inputTitle}
+						aria-roledescription={this.accInfo.ariaRoledescription}
+						aria-haspopup={this.accInfo.ariaHasPopup}
+						aria-label={this.accInfo.ariaLabel}
+						aria-required={this.accInfo.ariaRequired}
+						aria-invalid={this.accInfo.ariaInvalid}
 						placeholder={this.resolvedPlaceholder}
 						onChange={this._onChange}
 						data-sap-focus-ref
@@ -44,8 +46,6 @@ export default function FileUploaderTemplate(this: FileUploader) {
 								<>
 									<Tokenizer
 										class="ui5-file-uploader-tokenizer"
-										preventInitialFocus
-										readonly
 										expanded={this._tokenizerExpanded}
 										open={this._tokenizerOpen}
 										popoverMinWidth={this._formWidth}
@@ -53,6 +53,8 @@ export default function FileUploaderTemplate(this: FileUploader) {
 										onMouseDown={this._onTokenizerMouseDown}
 										onKeyDown={this._onTokenizerKeyDown}
 										onKeyUp={this._onTokenizerKeyUp}
+										preventInitialFocus
+										readonly
 									>
 										{this._selectedFilesNames.map(fileName => (
 											<Token

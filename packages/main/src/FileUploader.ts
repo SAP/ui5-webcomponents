@@ -29,9 +29,11 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	FILEUPLOADER_DEFAULT_PLACEHOLDER,
+	FILEUPLOADER_DEFAULT_MULTIPLE_PLACEHOLDER,
 	FILEUPLOADER_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
+import type { InputAccInfo } from "./Input.js";
 import type Popover from "./Popover.js";
 import type Tokenizer from "./Tokenizer.js";
 
@@ -550,8 +552,14 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return this.emptyInput.files;
 	}
 
-	get inputLabelText(): string | undefined {
-		return getAssociatedLabelForTexts(this);
+	get accInfo(): InputAccInfo {
+		return {
+			"ariaRoledescription": FileUploader.i18nBundle.getText(FILEUPLOADER_ROLE_DESCRIPTION),
+			"ariaRequired": this.required || undefined,
+			"ariaInvalid": this.valueState === ValueState.Negative || undefined,
+			"ariaHasPopup": "dialog",
+			"ariaLabel": getAssociatedLabelForTexts(this) || undefined,
+		};
 	}
 
 	get inputTitle(): string {
@@ -567,11 +575,10 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	get resolvedPlaceholder(): string {
-		return this.placeholder || FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER);
-	}
-
-	get roleDescription(): string {
-		return FileUploader.i18nBundle.getText(FILEUPLOADER_ROLE_DESCRIPTION);
+		return this.placeholder
+			|| this.multiple
+			? FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_MULTIPLE_PLACEHOLDER)
+			: FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER);
 	}
 
 	get valueStateTextMappings(): Record<string, string> {
