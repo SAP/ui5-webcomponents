@@ -26,6 +26,17 @@ describe("Validation inside a form", () => {
 			<button type="submit" > Submits forms </button>
 		</form>);
 
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("button")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
 		cy.get("#cb")
 			.then($el => {
 				const checkbox = $el[0] as CheckBox;
