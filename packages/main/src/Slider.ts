@@ -318,13 +318,6 @@ class Slider extends SliderBase implements IFormInputElement {
 			handle: {
 				[this.directionStart]: `${this._handlePositionFromStart}%`,
 			},
-			label: {
-				"width": `${this._labelWidth}%`,
-			},
-			labelContainer: {
-				"width": `100%`,
-				[this.directionStart]: `-${this._labelWidth / 2}%`,
-			},
 		};
 	}
 
