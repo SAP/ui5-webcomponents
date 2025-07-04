@@ -264,10 +264,23 @@ describe("Select - Validation", () => {
 			</form>
 		);
 
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("button")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
 		cy.get("#sel1")
 			.then($el => {
 				const select = $el[0] as Select;
-				expect(select.validity.valueMissing, "Required Select with empty value should have valueMissing=true").to.be.true;
+				expect(select.formValidity.valueMissing, "Required Select with empty value should have formValidity with valueMissing=true").to.be.true;
+				expect(select.validity.valueMissing, "Required Select with empty value should have validity with valueMissing=true").to.be.true;
+				expect(select.validity.valid, "Required Select with empty value should have validity with valid=false").to.be.false;
 				expect(select.checkValidity(), "Required Select with empty value should fail validity check").to.be.false;
 				expect(select.reportValidity(), "Required Select with empty value should fail report validity").to.be.false;
 			});
@@ -285,7 +298,9 @@ describe("Select - Validation", () => {
 		cy.get("#sel1")
 			.then($el => {
 				const select = $el[0] as Select;
-				expect(select.validity.valueMissing, "Required Select with non-empty value should have valueMissing=false").to.be.false;
+				expect(select.formValidity.valueMissing, "Required Select with non-empty value should have formValidity with valueMissing=false").to.be.false;
+				expect(select.validity.valueMissing, "Required Select with non-empty value should have validity with valueMissing=false").to.be.false;
+				expect(select.validity.valid, "Required Select with non-empty value should have validity with valid=true").to.be.true;
 				expect(select.checkValidity(), "Required Select with non-empty value should pass validity check").to.be.true;
 				expect(select.reportValidity(), "Required Select with non-empty value should pass report validity").to.be.true;
 			});
