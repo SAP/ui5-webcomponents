@@ -29,7 +29,7 @@ describe("Validation inside a form", () => {
 		cy.get("#cb")
 			.then($el => {
 				const checkbox = $el[0] as CheckBox;
-				expect(checkbox.validity.valueMissing, "Unchecked required checkbox should have valueMissing=true").to.be.true;
+				expect(checkbox.formValidity.valueMissing, "Unchecked required checkbox should have valueMissing=true").to.be.true;
 				expect(checkbox.checkValidity(), "Unchecked required checkbox should fail validity check").to.be.false;
 				expect(checkbox.reportValidity(), "Unchecked required checkbox should fail report validity").to.be.false;
 			});
@@ -43,7 +43,7 @@ describe("Validation inside a form", () => {
 		cy.get("#cb")
 			.then($el => {
 				const checkbox = $el[0] as CheckBox;
-				expect(checkbox.validity.valueMissing, "Checked required checkbox should have valueMissing=false").to.be.false;
+				expect(checkbox.formValidity.valueMissing, "Checked required checkbox should have valueMissing=false").to.be.false;
 				expect(checkbox.checkValidity(), "Checked required checkbox should pass validity check").to.be.true;
 				expect(checkbox.reportValidity(), "Checked required checkbox should pass report validity").to.be.true;
 			});
