@@ -757,7 +757,7 @@ describe("Calendar general interaction", () => {
 			});
 	});
 
-	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", () => {
+	it("Min and max dates are set without format-pattern by using ISO (yyyy-MM-dd) format", () => {
 		const maxDate = new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toISOString().split("T")[0];
 		cy.mount(<Calendar id="calendar1" maxDate={maxDate}></Calendar>);
 
@@ -776,7 +776,7 @@ describe("Calendar general interaction", () => {
 			.should("have.class", "ui5-yp-item--disabled");
 	});
 
-	it("Min and max dates are NOT set without format-pattern, because are not in ISO format (YYYY-MM-dd)", () => {
+	it("Min and max dates are NOT set without format-pattern, because are not in ISO format (yyyy-MM-dd)", () => {
 		const maxDate = new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toString();
 		cy.mount(<Calendar id="calendar1" maxDate={maxDate} minDate="25.10.2018"></Calendar>);
 
