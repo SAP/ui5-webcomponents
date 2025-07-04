@@ -1,4 +1,3 @@
-import { assert } from "chai";
 import FileUploader from "../../src/FileUploader.js";
 import Button from "../../src/Button.js";
 import Label from "../../src/Label.js";
