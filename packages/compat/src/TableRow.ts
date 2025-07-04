@@ -29,7 +29,7 @@ import {
 
 // Styles
 import tableRowStyles from "./generated/themes/TableRow.css.js";
-import { compatScopingPatcher } from "./utils/CompatCustomElementsScope.js";
+import { patchScopingSuffix } from "./utils/CompatCustomElementsScope.js";
 
 type TableRowClickEventDetail = {
 	row: TableRow,
@@ -453,7 +453,7 @@ class TableRow extends UI5Element implements ITableRow {
 	}
 }
 
-compatScopingPatcher(TableRow);
+patchScopingSuffix(TableRow);
 
 TableRow.define();
 

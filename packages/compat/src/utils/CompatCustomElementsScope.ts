@@ -21,17 +21,22 @@ const getCompatCustomElementsScopingSuffix = () => {
 	return suf;
 };
 
-const compatScopingPatcher = (klass: typeof UI5Element) => {
+const patchScopingSuffix = (klass: typeof UI5Element) => {
 	const metadata = klass.getMetadata();
 	// eslint-disable-next-line @typescript-eslint/unbound-method
 	const originalGetTag = metadata.getTag;
 
 	metadata.getTag = function () {
 		const originalTag = originalGetTag.call(this);
+
+		if (!originalTag) {
+			return "";
+		}
+
 		const compatSuffix = getCompatCustomElementsScopingSuffix();
 		const suffix = getCustomElementsScopingSuffix();
 
-		if (!compatSuffix || !originalTag) {
+		if (!compatSuffix) {
 			return originalTag;
 		}
 
@@ -46,5 +51,5 @@ const compatScopingPatcher = (klass: typeof UI5Element) => {
 export {
 	setCompatCustomElementsScopingSuffix,
 	getCompatCustomElementsScopingSuffix,
-	compatScopingPatcher,
+	patchScopingSuffix,
 };
