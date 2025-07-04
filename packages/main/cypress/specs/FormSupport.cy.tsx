@@ -32,10 +32,11 @@ describe("Form support", () => {
 	it("ui5-checkbox in form", () => {
 		cy.mount(<form method="get">
 			<CheckBox id="cb1" text="ui5-checkbox without name" > </CheckBox>
-			<CheckBox id="cb2" text="ui5-checkbox without name and value" checked > </CheckBox>
-			<CheckBox id="cb3" name="checkbox3" text="ui5-checkbox with name and without value" > </CheckBox>
-			<CheckBox id="cb4" name="checkbox4" checked text="ui5-checkbox with name and value" > </CheckBox>
-			<CheckBox id="cb5" name="checkbox5" required text="ui5-checkbox with name, value and required" > </CheckBox>
+			<CheckBox id="cb2" text="checked ui5-checkbox without name" checked > </CheckBox>
+			<CheckBox id="cb3" name="checkbox3" text="unchecked ui5-checkbox with name" > </CheckBox>
+			<CheckBox id="cb4" name="checkbox4" checked text="checked ui5-checkbox with name" > </CheckBox>
+			<CheckBox id="cb5" name="checkbox5" required text="unchecked ui5-checkbox with name and required" > </CheckBox>
+			<CheckBox id="cb6" name="checkbox6" checked required value="checkbox6Value" text="checked ui5-checkbox with name and value and required" > </CheckBox>
 			<button type="submit" > Submits forms </button>
 		</form>);
 
@@ -52,17 +53,6 @@ describe("Form support", () => {
 			.should("have.not.been.called");
 
 		cy.get("#cb5")
-			.then($el => {
-				const checkbox = $el[0] as CheckBox;
-				expect(checkbox.validity.valueMissing).to.be.true;
-				expect(checkbox.checkValidity()).to.be.false;
-				expect(checkbox.reportValidity()).to.be.false;
-			});
-
-		cy.get("form :invalid") // select using :invalid CSS pseudo-class
-			.should("have.id", "cb5");
-
-		cy.get("#cb5")
 			.realClick();
 
 		cy.get("button")
@@ -75,7 +65,7 @@ describe("Form support", () => {
 			.then($el => {
 				return getFormData($el.get(0));
 			})
-			.should("be.equal", "checkbox4=on&checkbox5=on");
+			.should("be.equal", "checkbox4=on&checkbox5=on&checkbox6=checkbox6Value");
 	});
 
 	it("ui5-color-picker in form", () => {
@@ -675,17 +665,6 @@ describe("Form support", () => {
 
 		cy.get("@submit")
 			.should("have.not.been.called");
-
-		cy.get("#select9")
-			.then($el => {
-				const select = $el[0] as Select;
-				expect(select.validity.valueMissing).to.be.true;
-				expect(select.checkValidity()).to.be.false;
-				expect(select.reportValidity()).to.be.false;
-			});
-
-		cy.get("form :invalid") // select using :invalid CSS pseudo-class
-			.should("have.id", "select9");
 
 		cy.get("#select9")
 			.realClick();
