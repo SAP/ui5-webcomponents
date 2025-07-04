@@ -14,6 +14,10 @@ function preContent(this: MultiInput) {
 	return (
 		<>
 			<span id="hiddenText-nMore" class="ui5-hidden-text">{this._tokensCountText}</span>
+
+			{this.showValueHelpIcon &&
+				<span id="hiddenText-value-help" class="ui5-hidden-text">{this._valueHelpText}</span>
+			}
 			<Tokenizer
 				class="ui5-multi-input-tokenizer"
 				opener={this.morePopoverOpener}

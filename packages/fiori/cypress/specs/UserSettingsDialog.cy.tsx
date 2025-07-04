@@ -20,7 +20,7 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests header-text provided", () => {
-		cy.mount(<UserSettingsDialog header-text="Settings" open>
+		cy.mount(<UserSettingsDialog headerText="Settings" open>
 		</UserSettingsDialog>);
 		cy.get("[ui5-user-settings-dialog]").as("settings");
 		cy.get("@settings").should("exist");
@@ -31,7 +31,7 @@ describe("Initial rendering", () => {
 	});
 
 	it("tests show-search-field provided", () => {
-		cy.mount(<UserSettingsDialog show-search-field open>
+		cy.mount(<UserSettingsDialog showSearchField open>
 		</UserSettingsDialog>);
 		cy.get("[ui5-user-settings-dialog]").as("settings");
 		cy.get("@settings").should("exist");
@@ -133,7 +133,7 @@ describe("Initial rendering", () => {
 
 	it("tests setting header-text", () => {
 		cy.mount(<UserSettingsDialog open>
-			<UserSettingsItem header-text="Header title | Setting 3">
+			<UserSettingsItem headerText="Header title | Setting 3">
 				<UserSettingsView text="Setting1">
 				</UserSettingsView>
 			</UserSettingsItem>
@@ -298,9 +298,11 @@ describe("Events", () => {
 				settings.get(0).addEventListener("before-close", cy.stub().as("beforeClosed"));
 			});
 
-		cy.get("@settings").shadow().find("[ui5-toolbar]").shadow()
-			.find("[ui5-button]")
+		cy.get("@settings").shadow().find("[ui5-toolbar]")
+			.find("[ui5-toolbar-button]")
 			.first()
+			.shadow()
+			.find("[ui5-button]")
 			.as("closeButton");
 		cy.get("@closeButton")
 			.click();
@@ -320,9 +322,11 @@ describe("Events", () => {
 				settings.get(0).addEventListener("close", cy.stub().as("closed"));
 			});
 
-		cy.get("@settings").shadow().find("[ui5-toolbar]").shadow()
-			.find("[ui5-button]")
+		cy.get("@settings").shadow().find("[ui5-toolbar]")
+			.find("[ui5-toolbar-button]")
 			.first()
+			.shadow()
+			.find("[ui5-button]")
 			.as("closeButton");
 		cy.get("@closeButton")
 			.click();
@@ -452,7 +456,7 @@ describe("Events", () => {
 	});
 
 	it("tests search", () => {
-		cy.mount(<UserSettingsDialog show-search-field open>
+		cy.mount(<UserSettingsDialog showSearchField open>
 			<UserSettingsItem text="Setting">
 				<UserSettingsView text="Setting1">
 				</UserSettingsView>
@@ -487,9 +491,11 @@ describe("Responsiveness", () => {
 			});
 		cy.get("@settings").shadow().find("[ui5-dialog]").should("exist");
 		cy.get("@settings").shadow().find("[ui5-toolbar]").should("exist");
-		cy.get("@settings").shadow().find("[ui5-toolbar]").shadow()
-			.find("[ui5-button]")
+		cy.get("@settings").shadow().find("[ui5-toolbar]")
+			.find("[ui5-toolbar-button]")
 			.first()
+			.shadow()
+			.find("[ui5-button]")
 			.as("closeButton");
 		cy.get("@closeButton")
 			.click();
@@ -523,9 +529,11 @@ describe("Responsiveness", () => {
 			.find("[ui5-li]")
 			.as("item");
 		cy.get("@item").should("have.attr", "type", "Navigation");
-		cy.get("@settings").shadow().find("[ui5-toolbar]").shadow()
-			.find("[ui5-button]")
+		cy.get("@settings").shadow().find("[ui5-toolbar]")
+			.find("[ui5-toolbar-button]")
 			.first()
+			.shadow()
+			.find("[ui5-button]")
 			.as("closeButton");
 		cy.get("@closeButton")
 			.click();

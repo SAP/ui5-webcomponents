@@ -12,6 +12,7 @@ export default function MenuTemplate(this: Menu) {
 			class="ui5-menu-rp"
 			placement="Bottom"
 			verticalAlign="Bottom"
+			horizontalAlign={this.horizontalAlign}
 			opener={this.opener}
 			open={this.open}
 			preventInitialFocus={true}
@@ -54,6 +55,7 @@ export default function MenuTemplate(this: Menu) {
 						onKeyDown={this._itemKeyDown}
 						// handles event from slotted children
 						onui5-close-menu={this._close}
+						onui5-exit-end-content={this._navigateOutOfEndContent}
 					>
 						<slot></slot>
 					</List>)

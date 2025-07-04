@@ -20,7 +20,15 @@ const generate = async () => {
 		SuccessScreen: "SuccessScreen",
 		NoMail: "NoMail",
 		NoSavedItems: "NoSavedItems",
-		NoTasks: "NoTasks"
+		NoTasks: "NoTasks",
+		NoDimensionsSet: "NoDimensionsSet",
+		AddPeople: "AddPeople",
+		AddColumn: "AddColumn",
+		SortColumn: "SortColumn",
+		FilterTable: "FilterTable",
+		ResizeColumn: "ResizeColumn",
+		GroupTable: "GroupTable",
+		UploadCollection: "UploadCollection"
 	};
 
 	const FALLBACK_TEXTS = {
@@ -47,6 +55,16 @@ const generate = async () => {
 		SimpleNotFoundMagnifier: ORIGINAL_TEXTS.NoSearchResults,
 		SimpleReload: ORIGINAL_TEXTS.UnableToLoad,
 		SimpleTask: ORIGINAL_TEXTS.NoTasks,
+		NoChartData: ORIGINAL_TEXTS.NoDimensionsSet,
+		AddingColumns: ORIGINAL_TEXTS.AddColumn,
+		SortingColumns: ORIGINAL_TEXTS.SortColumn,
+		FilteringColumns: ORIGINAL_TEXTS.FilterTable,
+		ResizingColumns: ORIGINAL_TEXTS.ResizeColumn,
+		GroupingColumns: ORIGINAL_TEXTS.GroupTable,
+		AddPeopleToCalendar: ORIGINAL_TEXTS.AddPeople,
+		DragFilesToUpload: ORIGINAL_TEXTS.UploadCollection,
+		KeyTask: ORIGINAL_TEXTS.SuccessScreen,
+		ReceiveAppreciation: ORIGINAL_TEXTS.BalloonSky,
 		SuccessBalloon: ORIGINAL_TEXTS.BalloonSky,
 		SuccessCheckMark: ORIGINAL_TEXTS.SuccessScreen,
 		SuccessHighFive: ORIGINAL_TEXTS.BalloonSky

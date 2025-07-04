@@ -43,7 +43,7 @@ const setCustomElementsScopingSuffix = (suffix: string) => {
  * @public
  * @returns {String|undefined}
  */
-const getCustomElementsScopingSuffix = () => {
+const getCustomElementsScopingSuffix = (): string | undefined => {
 	return suf;
 };
 

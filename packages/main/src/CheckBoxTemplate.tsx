@@ -49,6 +49,7 @@ export default function CheckBoxTemplate(this: CheckBox) {
 				id={`${this._id}-CB`}
 				type="checkbox"
 				checked={this.checked}
+				value={this.value}
 				readonly={this.readonly}
 				disabled={this.disabled}
 				tabindex={-1}
@@ -62,6 +63,7 @@ export default function CheckBoxTemplate(this: CheckBox) {
 				part="label"
 				class="ui5-checkbox-label"
 				wrappingType={this.wrappingType}
+				required={this.required}
 			>
 				{this.text}
 			</Label>

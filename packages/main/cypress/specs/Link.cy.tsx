@@ -1,3 +1,6 @@
+import Bar from "../../src/Bar.js";
+import Button from "../../src/Button.js";
+import Dialog from "../../src/Dialog.js";
 import Link from "../../src/Link.js";
 
 describe("General API", () => {
@@ -23,7 +26,7 @@ describe("General API", () => {
 		cy.mount(
 			<>
 				<Link style="width: 100px" id="wrapping-link">Eu enim consectetur do amet elit Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Link>
-				<Link style="width: 100px" id="non-wrapping-link" wrapping-type="None">Eu enim consectetur do amet elit Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Link>
+				<Link style="width: 100px" id="non-wrapping-link" wrappingType="None">Eu enim consectetur do amet elit Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Link>
 			</>
 		);
 
@@ -147,7 +150,7 @@ describe("General API", () => {
 	});
 
 	it("setting accessible-name applied on the host element is reflected on the anchor tag", () => {
-		cy.mount(<Link accessible-name="more info" tooltip="my tooltip">Click me</Link>);
+		cy.mount(<Link accessibleName="more info" tooltip="my tooltip">Click me</Link>);
 
 		cy.get("[ui5-link]")
 			.shadow()
@@ -200,7 +203,7 @@ describe("General API", () => {
 		cy.mount(
 			<>
 				<Link id="linkWithIcon" icon="employee">View employee profile</Link>
-				<Link id="linkWithEndIcon" end-icon="cloud">Weather today</Link>
+				<Link id="linkWithEndIcon" endIcon="cloud">Weather today</Link>
 			</>
 		);
 		cy.get("#linkWithIcon")
@@ -212,5 +215,49 @@ describe("General API", () => {
 			.shadow()
 			.find("[ui5-icon]")
 			.should("exist");
+	});
+
+	it("should open the dialog when the link is clicked", () => {
+		cy.mount(<>
+				<Link>Sign in</Link>
+				<Dialog>
+					<Button ></Button>
+				</Dialog>
+			</>
+		);
+
+		cy.get("[ui5-link]")
+			.as("signInLink");
+
+		cy.get("[ui5-dialog]")
+			.as("signInDialog");
+
+		cy.get("@signInDialog")
+			.should("not.be.visible");
+	
+		cy.get("@signInLink")
+			.then($link => {
+				$link[0].addEventListener("click", () => {
+					(document.querySelector("ui5-dialog") as Dialog).open = true;
+				});
+			});
+
+		cy.get("@signInDialog")
+			.find("[ui5-button]")
+			.then($button => {
+				$button[0].addEventListener("click", () => {
+					(document.querySelector("ui5-dialog") as Dialog).open = false;
+			});
+		});
+
+		cy.get("@signInLink")
+			.shadow()
+			.find("a")
+			.focus()
+			.should("be.focused")
+			.realPress("Enter");
+
+		cy.get("@signInDialog")
+			.should("be.visible");
 	});
 });

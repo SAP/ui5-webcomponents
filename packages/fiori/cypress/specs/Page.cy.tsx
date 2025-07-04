@@ -7,7 +7,6 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 describe("Page general interaction", () => {
 	beforeEach(() => {
 		cy.mount(
-			// <ui5-page style="height: 300px;" show-footer>
 			<Page style="height: 300px;">
 				<Bar slot="header">
 					<Button slot="startContent">Header button</Button>

@@ -55,7 +55,7 @@ function iconEnd(this: NavigationMenuItem) {
 		/>;
 	}
 
-	if (this.href) {
+	if (this.isExternalLink) {
 		return <Icon
 			class="ui5-sn-item-external-link-icon"
 			name={arrowRightIcon}

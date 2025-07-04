@@ -15,7 +15,7 @@
 	transition: var(--_ui5_side_navigation_item_transition);
 	color: var(--sapList_TextColor);
 	font-size: var(--sapFontSize);
-	font-family: var(--_ui5_side_navigation_item_font_family);
+	font-family: var(--_ui5_side_navigation_parent_item_font_family);
 }
 
 ::slotted([ui5-navigation-menu-item]) {
@@ -62,10 +62,18 @@
 	color: var(--sapButton_TextColor);
 }
 
+:host([disabled]) .ui5-sn-item-external-link-icon {
+	opacity: var(--sapContent_DisabledOpacity);
+}
+
 :host::part(icon) {
 	color: inherit;
 	min-width: 1rem;
 	min-height: 1rem;
+}
+
+:host([disabled][active][actionable]) .ui5-li-root .ui5-li-icon {
+	color: inherit;
 }
 
 :host([focused]):not([active]) {

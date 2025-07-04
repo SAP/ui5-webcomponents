@@ -47,8 +47,8 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
  * @extends UI5Element
  * @since 2.0.0
  * @public
- * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  * @deprecated This component is deprecated and will be removed in future releases. Use the `ui5-table-selection-single` or `ui5-table-selection-multi` components instead.
+ * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 @customElement({ tag: "ui5-table-selection" })
 
@@ -245,7 +245,8 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 		if (!this._rangeSelection) {
 			// If no range selection is active, start one
-			this._startRangeSelection(focusedElement as TableRow);
+			const row = focusedElement as TableRow;
+			this._startRangeSelection(row, this.isSelected(row));
 		} else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
 			const change = isUpShift(e) ? -1 : 1;
 			this._handleRangeSelection(focusedElement as TableRow, change);
@@ -272,7 +273,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	}
 
 	_onclick(e: MouseEvent) {
-		if (!this._table) {
+		if (!this._table || this.mode !== TableSelectionMode.Multiple) {
 			return;
 		}
 
@@ -297,6 +298,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			// Therefore, we need to manually set the checked attribute again, as clicking it would deselect it and leads to
 			// a visual inconsistency.
 			row.shadowRoot?.querySelector("#selection-component")?.toggleAttribute("checked", true);
+			e.stopImmediatePropagation();
 
 			if (startIndex === -1 || endIndex === -1 || row.rowKey === startRow.rowKey || row.rowKey === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].rowKey) {
 				return;
@@ -305,7 +307,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			const change = endIndex - startIndex;
 			this._handleRangeSelection(row, change);
 		} else if (row) {
-			this._startRangeSelection(row, true);
+			this._startRangeSelection(row, !this.isSelected(row), true);
 		}
 	}
 
@@ -314,13 +316,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	 * @param row starting row
 	 * @private
 	 */
-	_startRangeSelection(row: TableRow, isMouse = false) {
-		const selected = this.isSelected(row);
-		if (isMouse && !selected) {
-			// Do not initiate range selection if the row is not selected
-			return;
-		}
-
+	_startRangeSelection(row: TableRow, selected: boolean, isMouse = false) {
 		this._rangeSelection = {
 			selected,
 			isUp: null,

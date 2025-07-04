@@ -208,7 +208,7 @@ describe("Select - Accessibility", () => {
 describe("Select - Popover", () => {
 	it("Popover should render custom value state", () => {
 		cy.mount(
-			<Select id="warningSelect" value-state="Critical">
+			<Select id="warningSelect" valueState="Critical">
 				<Option>This option has text bigger than ui5-select's width</Option>
 				<div slot="valueStateMessage">Custom message</div>
 			</Select>
@@ -237,5 +237,16 @@ describe("Select - Properties", () => {
 			.shadow()
 			.find("[ui5-icon]")
 			.should("have.attr", "name", "download");
+	});
+	
+	it("It returns empty string as a valid value, similar to native select behavior", () => {
+		cy.mount(
+			<Select>
+				<Option selected value="">Phone</Option>
+				<Option>Tablet</Option>
+				<Option>Desktop</Option>
+			</Select>		);
+
+		cy.get("[ui5-select]").should("have.prop", "formFormattedValue", "");
 	});
 });

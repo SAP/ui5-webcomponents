@@ -182,7 +182,7 @@ describe("TextArea general interaction", () => {
 
 	describe("when enabled", () => {
 		it("shows value state message", () => {
-			cy.mount(<TextArea value-state="Negative"></TextArea>);
+			cy.mount(<TextArea valueState="Negative"></TextArea>);
 
 			cy.get("[ui5-textarea]")
 				.as("textarea");
@@ -201,7 +201,7 @@ describe("TextArea general interaction", () => {
 		});
 
 		it("does not show value state msg when valueState='None'", () => {
-			cy.mount(<TextArea value-state="None"></TextArea>);
+			cy.mount(<TextArea valueState="None"></TextArea>);
 
 			cy.get("[ui5-textarea]")
 				.as("textarea");
@@ -219,7 +219,7 @@ describe("TextArea general interaction", () => {
 		});
 
 		it("Should not open value state message when textarea is in readonly state", () => {
-			cy.mount(<TextArea readonly value-state="Negative"></TextArea>);
+			cy.mount(<TextArea readonly valueState="Negative"></TextArea>);
 
 			cy.get("[ui5-textarea]")
 				.as("textarea");
@@ -397,7 +397,30 @@ describe("TextArea general interaction", () => {
 						.should("be.equal", initialTextareaSize);
 				});
 		});
+
+		it("should grow correctly when typing symbols (&)", () => {
+			cy.mount(<TextArea growing={true} value="&&&" style="width: 100px"></TextArea>);
+
+			cy.get("[ui5-textarea]")
+				.as("textarea");
+
+			cy.get("@textarea")
+				.realClick();
+
+			cy.get("@textarea")
+				.then(textarea => {
+					const initialTextareaSize = textarea.height();
+
+					cy.focused()
+						.realType("&");
+
+					cy.get("@textarea")
+						.invoke("height")
+						.should("be.equal", initialTextareaSize);
+				});
+		});
 	});
+
 
 	describe("When having max length set", () => {
 		it("prevents input when max is reached", () => {

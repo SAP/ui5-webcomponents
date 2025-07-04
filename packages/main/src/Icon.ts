@@ -107,8 +107,8 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
  * Fired on mouseup, `SPACE` and `ENTER`.
  * - on mouse click, the icon fires native `click` event
  * - on `SPACE` and `ENTER`, the icon fires custom `click` event
- * @private
- * @since 1.0.0-rc.8
+ * @public
+ * @since 2.11.0
  */
 @event("click", {
 	bubbles: true,

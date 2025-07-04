@@ -248,6 +248,10 @@ class ListItemBase extends UI5Element implements ITabbable {
 		}
 		return this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined;
 	}
+
+	get isListItemBase() {
+		return true;
+	}
 }
 
 export default ListItemBase;

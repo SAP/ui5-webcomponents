@@ -3,9 +3,6 @@
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
-	/* SplitButton */
-	--_ui5_split_button_text_button_width: 2.25rem;
-
 	/* ColorPicker */
 	--_ui5_color_picker_slider_handle_container_margin_top: 0.0625rem;
 

@@ -30,7 +30,6 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 				onFocusIn={this._onfocusin}
 				tabIndex={this.effectiveTabIndex ? parseInt(this.effectiveTabIndex) : undefined}
 				aria-expanded={this._expanded}
-				aria-description={this.accDescription}
 				title={this._tooltip}
 				aria-owns={this._groupId}
 			>
@@ -38,12 +37,15 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 				{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
+						accessibleName={this._arrowTooltip}
+						showTooltip={true}
 					/>
 				}
 			</div>
 			{!!this.items.length &&
 				<ul id={this._groupId}
 					class="ui5-sn-item-ul"
+					aria-label={this.text}
 					role="group"
 				>
 					<slot></slot>

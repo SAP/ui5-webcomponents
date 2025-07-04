@@ -11,7 +11,7 @@ export default function DynamicPageTitleTemplate(this: DynamicPageTitle) {
 				onKeyDown={this._onkeydown}
 				onClick={this.onTitleClick}
 				role="button"
-				aria-expanded={this._headerExpanded}
+				aria-expanded={this.forAriaExpanded}
 				aria-labelledby={this._ariaLabelledBy}
 				aria-describedby={`${this._id}-toggle-description`}
 			></span>

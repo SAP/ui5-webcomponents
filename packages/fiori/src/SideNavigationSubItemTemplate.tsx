@@ -17,6 +17,7 @@ export default function SideNavigationSubItemTemplate(this: SideNavigationSubIte
 					aria-current={this._ariaCurrent}
 					aria-selected={this.selected}
 					title={this._tooltip}
+					aria-disabled={this.effectiveDisabled}
 					href={this._href}
 					target={this._target}
 				>

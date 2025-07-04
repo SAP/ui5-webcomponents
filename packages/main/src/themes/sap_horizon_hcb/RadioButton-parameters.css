@@ -9,7 +9,6 @@
 	--_ui5_radio_button_hover_fill_information: var(--sapField_Selector_Hover_InformationBackground);
 	--_ui5_radio_button_border_width: 0.125rem;
 	--_ui5_radio_button_warning_error_border_dash: 5;
-	--_ui5_radio_button_read_only_border_type: none;
 	--_ui5_radio_button_inner_ring_radius: 27.5%;
 	--_ui5_radio_button_inner_ring_color: var(--sapContent_Selected_ForegroundColor);
 	--_ui5_radio_button_outer_ring_width: 2px; /* px used due to bug in Safari on zoom */

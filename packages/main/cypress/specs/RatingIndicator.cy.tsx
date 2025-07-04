@@ -173,7 +173,7 @@ describe("RatingIndicator", () => {
 			cy.mount(
 				<>
 					<label id="label-acc-name-ref">{ACCESSIBLE_NAME_REF_TEXT}</label>
-					<RatingIndicator id="rating-indicator-acc-name-ref" accessible-name-ref="label-acc-name-ref"></RatingIndicator>
+					<RatingIndicator id="rating-indicator-acc-name-ref" accessibleNameRef="label-acc-name-ref"></RatingIndicator>
 				</>
 			);
 

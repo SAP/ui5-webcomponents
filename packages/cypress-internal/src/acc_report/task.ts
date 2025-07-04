@@ -61,10 +61,10 @@ const reset = (testFile: string) => {
 
 const prepare = () => {
 	const indexTemplate = readFileSync(path.join(__dirname, "index"), { encoding: "utf-8" });
-	writeFileSync(outputPathIndex, indexTemplate);
-
 	saveReportFile([]);
 
+	// Add log visualizer page.
+	writeFileSync(outputPathIndex, indexTemplate);
 }
 
 function accTask(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) {

@@ -354,6 +354,8 @@ class UserMenu extends UI5Element {
 	_handleMenuItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as UserMenuItem; // imrove: improve this ideally without "as" cating
 
+		item._updateCheckedState();
+
 		if (!item._popover) {
 			const eventPrevented = !this.fireDecoratorEvent("item-click", {
 				"item": item,

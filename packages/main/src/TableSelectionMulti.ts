@@ -5,6 +5,7 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
 import { isUpShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import type TableRow from "./TableRow.js";
 import type TableRowBase from "./TableRowBase.js";
+import type TableSelectionMultiHeaderSelector from "./types/TableSelectionMultiHeaderSelector.js";
 
 /**
  * @class
@@ -47,6 +48,16 @@ class TableSelectionMulti extends TableSelectionBase {
 	@property()
 	selected?: string;
 
+	/**
+	 * Defines the selector of the header row.
+	 *
+	 * @default "SelectAll"
+	 * @public
+	 * @since 2.12
+	 */
+	@property()
+	headerSelector: `${TableSelectionMultiHeaderSelector}` = "SelectAll";
+
 	private _rowsLength = 0;
 	private _rangeSelection?: {
 		selected: boolean,
@@ -69,7 +80,7 @@ class TableSelectionMulti extends TableSelectionBase {
 
 	isSelected(row: TableRowBase): boolean {
 		if (row.isHeaderRow()) {
-			return this.areAllRowsSelected();
+			return this.headerSelector === "ClearAll" ? true : this.areAllRowsSelected();
 		}
 
 		const rowKey = this.getRowKey(row as TableRow);
@@ -83,13 +94,21 @@ class TableSelectionMulti extends TableSelectionBase {
 
 		const tableRows = row.isHeaderRow() ? this._table!.rows : [row as TableRow];
 		const selectedSet = this.getSelectedAsSet();
-		tableRows.forEach(tableRow => {
+		const selectionChanged = tableRows.reduce((selectedSetChanged, tableRow) => {
 			const rowKey = this.getRowKey(tableRow);
-			selectedSet[selected ? "add" : "delete"](rowKey);
-		});
+			if (!rowKey) {
+				return selectedSetChanged;
+			}
 
-		this.setSelectedAsSet(selectedSet);
-		fireEvent && this.fireDecoratorEvent("change");
+			const setSize = selectedSet.size;
+			selectedSet[selected ? "add" : "delete"](rowKey);
+			return selectedSetChanged || setSize !== selectedSet.size;
+		}, false);
+
+		if (selectionChanged) {
+			this.setSelectedAsSet(selectedSet);
+			fireEvent && this.fireDecoratorEvent("change");
+		}
 	}
 
 	/**
@@ -137,12 +156,6 @@ class TableSelectionMulti extends TableSelectionBase {
 		this.selected = [...selectedSet].join(" ");
 	}
 
-	_invalidateTableAndRows() {
-		super._invalidateTableAndRows();
-		const headerRow = this._table?.headerRow[0];
-		headerRow && headerRow._invalidate++;
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		if (!this._table || !e.shiftKey) {
 			return;
@@ -157,7 +170,8 @@ class TableSelectionMulti extends TableSelectionBase {
 
 		if (!this._rangeSelection) {
 			// If no range selection is active, start one
-			this._startRangeSelection(focusedElement as TableRow);
+			const row = focusedElement as TableRow;
+			this._startRangeSelection(row, this.isSelected(row));
 		} else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
 			const change = isUpShift(e) ? -1 : 1;
 			this._handleRangeSelection(focusedElement as TableRow, change);
@@ -209,6 +223,7 @@ class TableSelectionMulti extends TableSelectionBase {
 			// Therefore, we need to manually set the checked attribute again, as clicking it would deselect it and leads to
 			// a visual inconsistency.
 			row.shadowRoot?.querySelector("#selection-component")?.toggleAttribute("checked", true);
+			e.stopImmediatePropagation();
 
 			if (startIndex === -1 || endIndex === -1 || row.rowKey === startRow.rowKey || row.rowKey === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].rowKey) {
 				return;
@@ -217,7 +232,7 @@ class TableSelectionMulti extends TableSelectionBase {
 			const change = endIndex - startIndex;
 			this._handleRangeSelection(row, change);
 		} else if (row) {
-			this._startRangeSelection(row, true);
+			this._startRangeSelection(row, !this.isSelected(row), true);
 		}
 	}
 
@@ -226,13 +241,7 @@ class TableSelectionMulti extends TableSelectionBase {
 	 * @param row starting row
 	 * @private
 	 */
-	_startRangeSelection(row: TableRow, isMouse = false) {
-		const selected = this.isSelected(row);
-		if (isMouse && !selected) {
-			// Do not initiate range selection if the row is not selected
-			return;
-		}
-
+	_startRangeSelection(row: TableRow, selected: boolean, isMouse = false) {
 		this._rangeSelection = {
 			selected,
 			isUp: null,

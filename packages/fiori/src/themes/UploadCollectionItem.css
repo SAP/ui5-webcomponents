@@ -76,6 +76,7 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+	width: fit-content;
 }
 
 .ui5-uci-file-name-text {

@@ -8,6 +8,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
@@ -38,6 +39,7 @@ import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import {
 	DATEPICKER_OPEN_ICON_TITLE,
 	DATEPICKER_DATE_DESCRIPTION,
+	DATETIME_COMPONENTS_PLACEHOLDER_PREFIX,
 	INPUT_SUGGESTIONS_TITLE,
 	FORM_TEXTFIELD_REQUIRED,
 	DATEPICKER_POPOVER_ACCESSIBLE_NAME,
@@ -655,11 +657,22 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return this.getFormat().oFormatOptions.pattern as string;
 	}
 
+	get _lastDayOfTheYear() {
+		const currentYear = UI5Date.getInstance().getFullYear();
+		const lastDayOfTheYear = UI5Date.getInstance(currentYear, 11, 31, 23, 59, 59);
+		return this.getFormat().format(lastDayOfTheYear);
+	}
+
 	/**
 	 * @protected
 	 */
 	get _placeholder() {
-		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
+		if (this.placeholder) {
+			return this.placeholder;
+		}
+
+		// translatable placeholder – for example "e.g. 2025-12-31"
+		return `${DatePicker.i18nBundle.getText(DATETIME_COMPONENTS_PLACEHOLDER_PREFIX)} ${this._lastDayOfTheYear}`;
 	}
 
 	get _headerTitleText() {

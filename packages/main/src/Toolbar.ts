@@ -32,11 +32,6 @@ import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js"
 import type ToolbarItem from "./ToolbarItem.js";
 import type ToolbarSeparator from "./ToolbarSeparator.js";
 
-import {
-	getRegisteredToolbarItem,
-	getRegisteredStyles,
-} from "./ToolbarRegistry.js";
-
 import type Button from "./Button.js";
 import type Popover from "./Popover.js";
 
@@ -158,7 +153,9 @@ class Toolbar extends UI5Element {
      * **Note:** Currently only `ui5-toolbar-button`, `ui5-toolbar-select`, `ui5-toolbar-separator` and `ui5-toolbar-spacer` are allowed here.
 	 * @public
 	 */
-	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	@slot({
+		"default": true, type: HTMLElement, invalidateOnChildChange: true, individualSlots: true,
+	})
 	items!: Array<ToolbarItem>
 
 	_onResize!: ResizeObserverCallback;
@@ -166,16 +163,13 @@ class Toolbar extends UI5Element {
 	itemsToOverflow: Array<ToolbarItem> = [];
 	itemsWidth = 0;
 	minContentWidth = 0;
-	itemsWidthMeasured = false;
 
 	ITEMS_WIDTH_MAP: Map<string, number> = new Map();
 
 	static get styles() {
-		const styles = getRegisteredStyles();
 		return [
 			ToolbarCss,
 			ToolbarPopoverCss,
-			...styles,
 		];
 	}
 
@@ -210,12 +204,12 @@ class Toolbar extends UI5Element {
 
 	get overflowItems() {
 		// spacers are ignored
-		const overflowItems = this.getItemsInfo(this.itemsToOverflow.filter(item => !item.ignoreSpace));
+		const overflowItems = this.itemsToOverflow.filter(item => !item.ignoreSpace);
 		return this.reverseOverflow ? overflowItems.reverse() : overflowItems;
 	}
 
 	get standardItems() {
-		return this.getItemsInfo(this.items.filter(item => this.itemsToOverflow.indexOf(item) === -1));
+		return this.items.filter(item => this.itemsToOverflow.indexOf(item) === -1);
 	}
 
 	get hideOverflowButton() {
@@ -270,14 +264,6 @@ class Toolbar extends UI5Element {
 		return this.shadowRoot!.querySelector(".ui5-tb-overflow-btn");
 	}
 
-	get itemsDOM() {
-		return this.shadowRoot!.querySelector(".ui5-tb-items");
-	}
-
-	get hasItemWithText(): boolean {
-		return this.itemsToOverflow.some((item: ToolbarItem) => item.containsText);
-	}
-
 	get hasFlexibleSpacers() {
 		return this.items.some((item: ToolbarItem) => item.hasFlexibleWidth);
 	}
@@ -302,8 +288,6 @@ class Toolbar extends UI5Element {
 	onBeforeRendering() {
 		this.detachListeners();
 		this.attachListeners();
-
-		this.preprocessItems();
 	}
 
 	async onAfterRendering() {
@@ -311,6 +295,9 @@ class Toolbar extends UI5Element {
 
 		this.storeItemsWidth();
 		this.processOverflowLayout();
+		this.items.forEach(item => {
+			 item.isOverflowed = this.overflowItems.map(overflowItem => overflowItem).indexOf(item) !== -1;
+		});
 	}
 
 	/**
@@ -487,36 +474,17 @@ class Toolbar extends UI5Element {
 	 */
 
 	attachListeners() {
-		this.addEventListener("close-overflow", this._onCloseOverflow);
+		this.addEventListener("ui5-close-overflow", this._onCloseOverflow);
 	}
 
 	detachListeners() {
-		this.removeEventListener("close-overflow", this._onCloseOverflow);
+		this.removeEventListener("ui5-close-overflow", this._onCloseOverflow);
 	}
 
 	onToolbarItemChange() {
 		// some items were updated reset the cache and trigger a re-render
 		this.itemsToOverflow = [];
 		this.contentWidth = 0; // re-render
-	}
-
-	getItemsInfo(items: Array<ToolbarItem>) {
-		return items.map((item: ToolbarItem) => {
-			const ctor = item.constructor as typeof ToolbarItem;
-			const ElementClass = getRegisteredToolbarItem(ctor.getMetadata().getPureTag());
-
-			if (!ElementClass) {
-				return null;
-			}
-
-			const toolbarItem = {
-				toolbarTemplate: ElementClass.toolbarTemplate,
-				toolbarPopoverTemplate: ElementClass.toolbarPopoverTemplate,
-				context: item,
-			};
-
-			return toolbarItem;
-		}).filter(item => !!item);
 	}
 
 	getItemWidth(item: ToolbarItem): number {
@@ -526,11 +494,11 @@ class Toolbar extends UI5Element {
 		}
 		const id: string = item._id;
 		// Measure rendered width for spacers with width, and for normal items
-		const renderedItem = this.getRegisteredToolbarItemByID(id);
+		const renderedItem = this.shadowRoot!.querySelector<HTMLElement>(`#${item.slot}`);
 
 		let itemWidth = 0;
 
-		if (renderedItem) {
+		if (renderedItem && renderedItem.offsetWidth) {
 			const ItemCSSStyleSet = getComputedStyle(renderedItem);
 			itemWidth = renderedItem.offsetWidth + parsePxValue(ItemCSSStyleSet, "margin-inline-end")
 				+ parsePxValue(ItemCSSStyleSet, "margin-inline-start");
@@ -543,21 +511,6 @@ class Toolbar extends UI5Element {
 
 	getCachedItemWidth(id: string) {
 		return this.ITEMS_WIDTH_MAP.get(id);
-	}
-
-	getItemByID(id: string) {
-		return this.items.find(item => item._id === id);
-	}
-
-	getRegisteredToolbarItemByID(id: string): HTMLElement | null {
-		return this.itemsDOM!.querySelector(`[data-ui5-external-action-item-id="${id}"]`);
-	}
-
-	preprocessItems() {
-		this.items.forEach(item => {
-			item._getRealDomRef = () => this.getDomRef()!.querySelector(`[data-ui5-stable*=${item.stableDomRef}]`)
-				?? this.getOverflowPopover().querySelector(`[data-ui5-stable*=${item.stableDomRef}]`)!;
-		});
 	}
 }
 

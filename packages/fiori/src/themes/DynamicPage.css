@@ -12,7 +12,7 @@
 }
 
 .ui5-dynamic-page-root {
-    container-type: size;
+    container-type: inline-size;
     height: inherit;
     overflow-y: hidden;
 }
@@ -44,7 +44,8 @@
 /* Footer  */
 .ui5-dynamic-page-footer {
     position: sticky;
-    bottom: 0.5rem;
+    bottom: 0;
+    padding: 0 0.5rem 0.5rem 0.5rem;
     box-sizing: border-box;
     z-index: 110;
     opacity: 0;
@@ -71,7 +72,6 @@
     background-color: var(--_ui5_dynamic_page_header_background_color);
     box-sizing: content-box;
     width: auto;
-    margin: 0 0.5rem 0.5rem 0.5rem;
 }
 
 

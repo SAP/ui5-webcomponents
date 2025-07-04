@@ -166,7 +166,7 @@ class Breadcrumbs extends UI5Element {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			navigationMode: NavigationMode.Horizontal,
+			navigationMode: NavigationMode.Auto,
 			getItemsCallback: () => this._getFocusableItems(),
 		});
 
@@ -225,7 +225,7 @@ class Breadcrumbs extends UI5Element {
 	_initItemNavigation() {
 		if (!this._itemNavigation) {
 			this._itemNavigation = new ItemNavigation(this, {
-				navigationMode: NavigationMode.Horizontal,
+				navigationMode: NavigationMode.Auto,
 				getItemsCallback: () => this._getFocusableItems(),
 			});
 		}

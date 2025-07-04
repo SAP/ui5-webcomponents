@@ -208,6 +208,7 @@ describe("Tokenizer - multi-line and Clear All", () => {
 	});
 });
 
+<<<<<<< HEAD
 describe("Tokenizer - Popover List Item Text Updates", () => {
 	it("updates list item text in popover when token text changes", () => {
 		cy.mount(
@@ -314,3 +315,5 @@ describe("Tokenizer - Popover List Item Text Updates", () => {
 			.should("contain.text", "Token 3");
 	});
 });
+=======
+>>>>>>> main

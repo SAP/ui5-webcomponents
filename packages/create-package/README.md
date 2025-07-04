@@ -15,10 +15,9 @@ Usage:
     npm init @ui5/webcomponents-package -- [OPTIONS]
 
 Options:
-    --name <string>     - defines the package name
-    --component-name <string>      - defines the component class name that will be created in your new package
-    --tag <string>      - defines the tag name of the sample web component that will be created in your new package. The tag will be derived from the component name if not provided.
-    --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
+    --name <string>                      - defines the package name
+    --test-setup <"cypress" | "manual">  - defines whether the predefined test setup should be added or it will be configured manually.
+    --skip                               - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```
 
 The script creates a new directory, and fills it with a `package.json` file and all necessary source files, and resources for a new
@@ -30,10 +29,9 @@ components package.
 Usage:
     yarn create @ui5/webcomponents-package [OPTIONS]
 Options:
-    --name <string>     - defines the package name
-    --component-name <string>      - defines the component class name that will be created in your new package
-    --tag <string>      - defines the tag name of the sample web component that will be created in your new package
-    --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
+    --name <string>                      - defines the package name
+    --test-setup <"cypress" | "manual">  - defines whether the predefined test setup should be added or it will be configured manually.
+    --skip                               - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```
 
 The script creates a new directory, and fills it with a `package.json` file and all necessary source files, and resources for a new

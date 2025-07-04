@@ -1,6 +1,7 @@
 import UserMenu from "../../src/UserMenu.js";
 import UserMenuAccount from "../../src/UserMenuAccount.js";
 import UserMenuItem from "../../src/UserMenuItem.js";
+import UserMenuItemGroup from "../../src/UserMenuItemGroup.js";
 
 import actionSettings from "@ui5/webcomponents-icons/dist/action-settings.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -727,4 +728,32 @@ describe("Responsiveness", () => {
 		cy.get("@headerBar").find("[ui5-title]").contains("Alain Chevalier 1");
 		cy.get("@headerBar").find("[ui5-button]").should("have.length", 1);
 	});
+
+	it("Event firing - 'ui5-check' after 'click' on user menu item", () => {
+			cy.mount(
+				<>
+					<Button id="btnOpen">Open UserMenu</Button>
+					<UserMenu open={true} opener="btnOpen">
+						<UserMenuItemGroup checkMode="Single">
+							<UserMenuItem text="Item 1"></UserMenuItem>
+						</UserMenuItemGroup>
+					</UserMenu>
+				</>
+			);
+
+			cy.get("[ui5-user-menu]").as("userMenu");
+			cy.get("@userMenu")
+				.find("[ui5-user-menu-item]")
+				.as("userMenuItem");
+
+			cy.get("@userMenu")
+				.then($userMenu => {
+					$userMenu.get(0).addEventListener("ui5-check", cy.stub().as("checked"));
+				});
+
+			cy.get("@userMenuItem").first().click();
+
+			cy.get("@checked")
+				.should("have.been.calledOnce");
+		});
 });
