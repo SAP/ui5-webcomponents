@@ -281,12 +281,29 @@ class SideNavigation extends UI5Element {
 
 	_onBeforeMenuOpen() {
 		const popover = this.getOverflowPopover();
+		popover._popover.preventFocusRestore = false;
 		(popover?.opener as HTMLElement)?.classList.add("ui5-sn-item-active");
 	}
 
 	_onBeforeMenuClose() {
 		const popover = this.getOverflowPopover();
 		(popover?.opener as HTMLElement)?.classList.remove("ui5-sn-item-active");
+	}
+
+	_bn?: SideNavigationSelectableItemBase;
+
+	_onMenuClose() {
+		const menu = this.getOverflowPopover();
+		if (!menu._popover.preventFocusRestore) {
+			return;
+		}
+
+		const selectedItem = this._findSelectedItem(this.items as Array<SideNavigationItem | SideNavigationGroup>);
+
+		if (selectedItem) {
+			this.focusItem(selectedItem);
+			selectedItem.focus();
+		}
 	}
 
 	get accSideNavigationPopoverHiddenText() {
@@ -317,6 +334,12 @@ class SideNavigation extends UI5Element {
 	handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
 		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
 
+		if (associatedItem.effectiveDisabled) {
+			e.stopPropagation();
+			e.preventDefault();
+			return;
+		}
+
 		if (isInstanceOfSideNavigationItem(associatedItem) && associatedItem.unselectable) {
 			return;
 		}
@@ -346,9 +369,11 @@ class SideNavigation extends UI5Element {
 		}
 
 		this._selectItem(associatedItem);
-		this.closePicker();
 
-		this._popoverContents.item?.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
+		setTimeout(() => {
+			this.closePicker();
+			this._popoverContents.item?.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
+		});
 	}
 
 	getOverflowPopover() {
@@ -380,8 +405,9 @@ class SideNavigation extends UI5Element {
 		responsivePopover.open = false;
 	}
 
-	closeMenu() {
+	closeMenu(preventFocusRestore: boolean = false) {
 		const menu = this.getOverflowPopover();
+		menu._popover.preventFocusRestore = preventFocusRestore;
 		menu.open = false;
 	}
 
@@ -428,9 +454,7 @@ class SideNavigation extends UI5Element {
 				return;
 			}
 
-			if (!item.disabled) {
-				result.push(item);
-			}
+			result.push(item);
 		});
 
 		return result;
@@ -576,6 +600,12 @@ class SideNavigation extends UI5Element {
 	}
 
 	_handleItemClick(e: KeyboardEvent | MouseEvent, item: SideNavigationSelectableItemBase) {
+		if (item.effectiveDisabled) {
+			e.stopPropagation();
+			e.preventDefault();
+			return;
+		}
+
 		if (item.selected && !this.collapsed) {
 			const {
 				altKey,
@@ -638,7 +668,7 @@ class SideNavigation extends UI5Element {
 		this._isOverflow = true;
 		this._menuPopoverItems = this._getOverflowItems();
 
-		this.openOverflowMenu(this._overflowItem!.getFocusDomRef() as HTMLElement);
+		this.openOverflowMenu(this._overflowItem!);
 	}
 
 	_getOverflowItems(): Array<SideNavigationItem> {

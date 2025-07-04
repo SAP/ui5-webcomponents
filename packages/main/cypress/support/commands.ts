@@ -38,18 +38,28 @@
 
 import "@ui5/cypress-internal/commands.js";
 import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { ModifierKey } from "./commands/common/types.js";
 
 // Please keep this list in alphabetical order
 import "./commands/Calendar.commands.js";
 import "./commands/ColorPalette.commands.js";
 import "./commands/ColorPicker.commands.js";
 import "./commands/DateTimePicker.commands.js";
+import "./commands/DateRangePicker.commands.js";
 import "./commands/Dialog.commands.ts";
 import "./commands/Popover.commands.ts";
 import "./commands/ResponsivePopover.commands.js";
 import "./commands/DatePicker.commands.js";
 import "./commands/Menu.commands.js";
 import "./commands/SegmentedButton.commands.js";
+import "./commands/StepInput.commands.js";
+import "./commands/Switch.commands.js";
+import "./commands/TabContainer.commands.js";
+import "./commands/TimeSelectionClocks.commands.js";
+import "./commands/ToggleButton.commands.js";
+import "./commands/TimePicker.commands.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import type MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 
 type SimulationDevices = "phone"
 
@@ -64,6 +74,7 @@ declare global {
 			ui5MenuItemPress(key: any): Chainable<void>
 			ui5CalendarGetDay(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
 			ui5CalendarGetMonth(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
+			ui5CalendarShowYearRangePicker(): Chainable<void>
 			ui5ColorPickerToggleColorMode(): Chainable<void>
 			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
 			ui5ColorPickerValidateInput(name: string, value: string): Chainable<void>
@@ -83,6 +94,12 @@ declare global {
 			ui5DatePickerValueHelpIconPress(): Chainable<void>
 			ui5SegmentedButtonItemToggleSelect(deselect?: boolean): Chainable<void>
 			ui5SegmentedButtonFocusFirstItem(): Chainable<void>
+			ui5SwitchCheckAttributeInShadowDomRoot(attrName: string, attrValue: string): Chainable<void>
+			ui5TabContainerOpenEndOverflow(): Chainable<void>,
+			ui5TabContainerDragAndDrop(elementToDrag: HTMLElement, placement: `${MovePlacement}`, target: HTMLElement, orientation?: `${Orientation}`): Chainable<void>,
+			ui5TimeSelectionClocksInnerButton(name: string, index: number): Chainable<JQuery<HTMLElement>>
+			ui5TimeSelectionClocksIsActiveClock(name: string, index: number): Chainable<boolean>
+			ui5ToggleButtonRealClick(isClickPrevented: boolean, pressedKey?: ModifierKey): Chainable<void>
 		}
 	}
 }

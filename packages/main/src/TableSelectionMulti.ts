@@ -5,6 +5,7 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
 import { isUpShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import type TableRow from "./TableRow.js";
 import type TableRowBase from "./TableRowBase.js";
+import type TableSelectionMultiHeaderSelector from "./types/TableSelectionMultiHeaderSelector.js";
 
 /**
  * @class
@@ -47,6 +48,16 @@ class TableSelectionMulti extends TableSelectionBase {
 	@property()
 	selected?: string;
 
+	/**
+	 * Defines the selector of the header row.
+	 *
+	 * @default "SelectAll"
+	 * @public
+	 * @since 2.12
+	 */
+	@property()
+	headerSelector: `${TableSelectionMultiHeaderSelector}` = "SelectAll";
+
 	private _rowsLength = 0;
 	private _rangeSelection?: {
 		selected: boolean,
@@ -69,7 +80,7 @@ class TableSelectionMulti extends TableSelectionBase {
 
 	isSelected(row: TableRowBase): boolean {
 		if (row.isHeaderRow()) {
-			return this.areAllRowsSelected();
+			return this.headerSelector === "ClearAll" ? true : this.areAllRowsSelected();
 		}
 
 		const rowKey = this.getRowKey(row as TableRow);
@@ -83,13 +94,21 @@ class TableSelectionMulti extends TableSelectionBase {
 
 		const tableRows = row.isHeaderRow() ? this._table!.rows : [row as TableRow];
 		const selectedSet = this.getSelectedAsSet();
-		tableRows.forEach(tableRow => {
+		const selectionChanged = tableRows.reduce((selectedSetChanged, tableRow) => {
 			const rowKey = this.getRowKey(tableRow);
-			selectedSet[selected ? "add" : "delete"](rowKey);
-		});
+			if (!rowKey) {
+				return selectedSetChanged;
+			}
 
-		this.setSelectedAsSet(selectedSet);
-		fireEvent && this.fireDecoratorEvent("change");
+			const setSize = selectedSet.size;
+			selectedSet[selected ? "add" : "delete"](rowKey);
+			return selectedSetChanged || setSize !== selectedSet.size;
+		}, false);
+
+		if (selectionChanged) {
+			this.setSelectedAsSet(selectedSet);
+			fireEvent && this.fireDecoratorEvent("change");
+		}
 	}
 
 	/**
@@ -135,12 +154,6 @@ class TableSelectionMulti extends TableSelectionBase {
 	 */
 	setSelectedAsSet(selectedSet: Set<string>): void {
 		this.selected = [...selectedSet].join(" ");
-	}
-
-	_invalidateTableAndRows() {
-		super._invalidateTableAndRows();
-		const headerRow = this._table?.headerRow[0];
-		headerRow && headerRow._invalidate++;
 	}
 
 	_onkeydown(e: KeyboardEvent) {

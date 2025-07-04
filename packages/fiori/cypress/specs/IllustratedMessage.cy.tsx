@@ -34,3 +34,66 @@ describe("Accessibility", () => {
 
 	});
 });
+
+describe("design", () => {
+	it("Large design should evaluate to Scene media", () => {
+		cy.mount(
+			<IllustratedMessage design="Large" name="UnableToUpload">
+			</IllustratedMessage>
+		);
+
+		cy.get("[ui5-illustrated-message]")
+			.should("have.attr", "media", IllustratedMessage.MEDIA.SCENE);
+
+	});
+	it("Medium design should evaluate to Dialog media", () => {
+		cy.mount(
+			<IllustratedMessage design="Medium" name="UnableToUpload">
+			</IllustratedMessage>
+		);
+
+		cy.get("[ui5-illustrated-message]")
+			.should("have.attr", "media", IllustratedMessage.MEDIA.DIALOG);
+
+	});
+	it("Small design should evaluate to Spot media", () => {
+		cy.mount(
+			<IllustratedMessage design="Small" name="UnableToUpload">
+			</IllustratedMessage>
+		);
+
+		cy.get("[ui5-illustrated-message]")
+			.should("have.attr", "media", IllustratedMessage.MEDIA.SPOT);
+
+	});
+	it("ExtraSmall design should evaluate to Dot media", () => {
+		cy.mount(
+			<IllustratedMessage design="ExtraSmall" name="UnableToUpload">
+			</IllustratedMessage>
+		);
+
+		cy.get("[ui5-illustrated-message]")
+			.should("have.attr", "media", IllustratedMessage.MEDIA.DOT);
+
+	});
+
+});
+
+describe('SVG CSP Compliance', () => {
+  it('should verify all SVG files are CSP compliant', () => {
+    cy.task('findAndValidateSvgFiles').then((results: any[]) => {
+      // Check if there are any invalid SVG files
+      const invalidFiles = results.filter(result => !result.isValid);
+
+      if (invalidFiles.length > 0) {
+        const violationReport = invalidFiles
+          .map(v => `${v.file}: has violations`)
+          .join('\n')
+        
+        throw new Error(`Found ${invalidFiles.length} SVG files with CSP violations:\n${violationReport}`)
+      }
+
+      cy.log(`✅ Validated ${results.length} SVG files - all CSP compliant`);
+    })
+  })
+})

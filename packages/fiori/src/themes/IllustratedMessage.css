@@ -180,6 +180,10 @@
     left: -9999px;
 }
 
+.sapIllus_BlendModeMultiply { 
+    mix-blend-mode: multiply; 
+}
+
 .sapIllus_MaskTypeAlpha {
 	mask-type:alpha;
 }

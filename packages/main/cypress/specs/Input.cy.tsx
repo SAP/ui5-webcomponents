@@ -3,29 +3,25 @@ import SuggestionItem from "../../src/SuggestionItem.js";
 import SuggestionItemCustom from "../../src/SuggestionItemCustom.js";
 import SuggestionItemGroup from "../../src/SuggestionItemGroup.js";
 import Dialog from "../../src/Dialog.js";
-import Button from "../../src/Button.js";
 
 import add from "@ui5/webcomponents-icons/dist/add.js";
+import type ResponsivePopover from "../../src/ResponsivePopover.js";
 
 describe("Input Tests", () => {
 	it("test input event prevention", () => {
-		cy.mount(
-			<Input></Input>
-		);
+		const inputHandler = e => {
+			e.preventDefault();
+			(e.target as Input).value = "test";
+		}
+
+		cy.mount(<Input onInput={inputHandler} />);
 
 		cy.get("[ui5-input]")
-			.as("input");
-
-		cy.get<Input>("@input")
-			.then($input => {
-				$input.get(0).addEventListener("input", e => {
-					e.preventDefault();
-					(e.target as Input).value = "test";
-				});
-			});
-
-		cy.get<Input>("@input")
+			.as("input")
 			.realClick();
+
+		cy.get<Input>("@input")
+			.should("be.focused");
 
 		cy.realPress("a");
 
@@ -47,21 +43,22 @@ describe("Input Tests", () => {
 		cy.get("[ui5-input]")
 			.as("input");
 
-		cy.get<Input>("@input")
-			.shadow()
-			.find("input")
-			.as("inner");
+		cy.get("@input")
+			.realClick();
 
-		cy.get("@inner").realClick();
-		cy.get("@inner").realType("i");
-		cy.get("@inner").realPress("ArrowDown");
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realPress("i");
+
+		cy.realPress("ArrowDown");
 
 		cy.get("@input")
 			.find("[ui5-suggestion-item-custom]")
 			.shadow()
 			.find("li")
 			.should("not.have.attr", "tabindex", "0")
-			.should("have.attr", "role", "option");
+			.and("have.attr", "role", "option");
 	});
 
 	it("tests regular suggestion items tabindex", () => {
@@ -74,23 +71,25 @@ describe("Input Tests", () => {
 		);
 
 		cy.get("[ui5-input]")
-			.as("input");
-
-		cy.get<Input>("@input")
+			.as("input")
 			.shadow()
-			.find("input")
-			.as("inner");
 
-		cy.get("@inner").realClick();
-		cy.get("@inner").realType("i");
-		cy.get("@inner").realPress("ArrowDown");
+		cy.get("@input")
+			.realClick();
+
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realType("i");
+
+		cy.realPress("ArrowDown");
 
 		cy.get("@input")
 			.find("ui5-suggestion-item")
 			.shadow()
 			.find("li")
 			.should("not.have.attr", "tabindex", "0")
-			.should("have.attr", "role", "option");
+			.and("have.attr", "role", "option");
 	});
 
 	it("tests suggestion group items tabindex", () => {
@@ -112,14 +111,14 @@ describe("Input Tests", () => {
 		cy.get("[ui5-input]")
 			.as("input");
 
-		cy.get<Input>("@input")
-			.shadow()
-			.find("input")
-			.as("inner");
+		cy.get("@input")
+			.realClick();
 
-		cy.get("@inner").realClick();
-		cy.get("@inner").realType("i");
-		cy.get("@inner").realPress("ArrowDown");
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realType("i");
+		cy.realPress("ArrowDown");
 
 		cy.get("@input")
 			.find("[ui5-suggestion-item-group]")
@@ -131,12 +130,10 @@ describe("Input Tests", () => {
 	});
 
 	it("tests tabindex of the div holding icon slot ", () => {
-		cy.mount(
-			<Input id="input"></Input>
-		);
+		cy.mount(<Input />);
 
 		cy.document().then(doc => {
-			const input = doc.querySelector<Input>("#input")!;
+			const input = doc.querySelector<Input>("[ui5-input]")!;
 			const icon = document.createElement("ui5-icon");
 			icon.setAttribute("slot", "icon");
 			icon.setAttribute("name", add);
@@ -172,34 +169,28 @@ describe("Input Tests", () => {
 	it("tests submit and change event order", () => {
 		cy.mount(
 			<form>
-				<Input></Input>
+				<Input onChange={cy.stub().as("change")}></Input>
 			</form>
 		);
 
-		cy.get("form")
-			.as("form");
-
-		cy.get("[ui5-input]")
-			.as("input");
-
-		// spy change event
-		cy.get<Input>("@input")
-			.then($input => {
-				$input.get(0).addEventListener("change", cy.spy().as("change"));
-			});
-
 		// spy submit event and prevent it
-		cy.get("@form")
+		cy.get("form")
 			.then($form => {
 				$form.get(0).addEventListener("submit", e => e.preventDefault());
 				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
 			});
 
 		// check if submit is triggered after change
-		cy.get<Input>("@input")
-			.shadow()
-			.find("input")
-			.type("test{enter}");
+		cy.get("[ui5-input]")
+			.as("input")
+			.realClick();
+
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realType("test");
+
+		cy.realPress("Enter");
 
 		cy.get("@change").should("have.been.calledBefore", cy.get("@submit"));
 		cy.get("@submit").should("have.been.calledOnce");
@@ -209,34 +200,29 @@ describe("Input Tests", () => {
 	it("tests if pressing enter twice fires submit 2 times and change once", () => {
 		cy.mount(
 			<form>
-				<Input></Input>
+				<Input onChange={cy.spy().as("change")}></Input>
 			</form>
 		);
 
-		cy.get("form")
-			.as("form");
-
-		cy.get("[ui5-input]")
-			.as("input");
-
-		// spy change event
-		cy.get<Input>("@input")
-			.then($input => {
-				$input.get(0).addEventListener("change", cy.spy().as("change"));
-			});
-
 		// spy submit event and prevent it
-		cy.get("@form")
+		cy.get("form")
 			.then($form => {
 				$form.get(0).addEventListener("submit", e => e.preventDefault());
 				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
 			});
 
-		// check if submit is triggered after change
-		cy.get<Input>("@input")
-			.shadow()
-			.find("input")
-			.type("test{enter}{enter}");
+		cy.get("[ui5-input]")
+			.as("input")
+			.realClick();
+
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realType("test");
+
+		cy.realPress("Enter");
+
+		cy.realPress("Enter");
 
 		cy.get("@change").should("have.been.calledBefore", cy.get("@submit"));
 		cy.get("@submit").should("have.been.calledTwice");
@@ -246,44 +232,35 @@ describe("Input Tests", () => {
 	it("tests if submit is fired in case of autocomplete", () => {
 		cy.mount(
 			<form>
-				<Input showSuggestions={true}>
+				<Input showSuggestions={true} onChange={cy.spy().as("change")}>
 					<SuggestionItem text="Hello"></SuggestionItem>
 				</Input>
 			</form>
 		);
 
-		cy.get("form")
-			.as("form");
-
-		cy.get("[ui5-input]")
-			.as("input");
-
-		// spy change event
-		cy.get<Input>("@input")
-			.then($input => {
-				$input.get(0).addEventListener("change", cy.spy().as("change"));
-			});
-
 		// spy submit event and prevent it
-		cy.get("@form")
+		cy.get("form")
 			.then($form => {
 				$form.get(0).addEventListener("submit", e => e.preventDefault());
 				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
 			});
 
 		// checks when the submit is triggered
-		cy.get<Input>("@input")
-			.shadow()
-			.find("input")
-			.as("inner");
+		cy.get("[ui5-input]")
+			.as("input")
+			.realClick();
 
-		cy.get("@inner").realClick();
-		cy.get("@inner").type("H{enter}");
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realType("H");
+
+		cy.realPress("Enter");
 
 		cy.get("@submit").should("have.not.been.called");
 		cy.get("@change").should("have.been.calledOnce");
 
-		cy.get("@inner").realPress("Enter");
+		cy.realPress("Enter");
 
 		cy.get("@submit").should("have.been.calledOnce");
 		cy.get("@change").should("have.been.calledOnce");
@@ -292,47 +269,37 @@ describe("Input Tests", () => {
 	it("tests if submit event is fired upon item selection", () => {
 		cy.mount(
 			<form>
-				<Input showSuggestions={true}>
+				<Input showSuggestions={true} onChange={cy.spy().as("change")}>
 					<SuggestionItem text="Hello"></SuggestionItem>
 				</Input>
 			</form>
 		);
 
-		cy.get("form")
-			.as("form");
-
-		cy.get("[ui5-input]")
-			.as("input");
-
-		// spy change event
-		cy.get<Input>("@input")
-			.then($input => {
-				$input.get(0).addEventListener("change", cy.spy().as("change"));
-			});
-
 		// spy submit event and prevent it
-		cy.get("@form")
+		cy.get("form")
 			.then($form => {
 				$form.get(0).addEventListener("submit", e => e.preventDefault());
 				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
 			});
 
 		// checks when the submit is triggered
-		cy.get<Input>("@input")
-			.shadow()
-			.find("input")
-			.as("inner");
+		cy.get("[ui5-input]")
+			.as("input")
+			.realClick();
 
-		cy.get("@inner").realClick();
-		cy.get("@inner").type("H{downArrow}{enter}");
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realType("H");
+
+		cy.realPress("ArrowDown");
+
+		cy.realPress("Enter");
 
 		cy.get("@submit").should("have.not.been.called");
 		cy.get("@change").should("have.been.calledOnce");
 
-		cy.get<Input>("@input")
-			.shadow()
-			.find("input")
-			.type("{enter}");
+		cy.realPress("Enter");
 
 		cy.get("@submit").should("have.been.calledOnce");
 		cy.get("@change").should("have.been.calledOnce");
@@ -342,7 +309,7 @@ describe("Input Tests", () => {
 describe("Input general interaction", () => {
 	it("handles suggestions selection cancel with ESC", () => {
 		cy.mount(
-			<Input id="myInputEsc" showSuggestions class="input3auto">
+			<Input showSuggestions>
 				<SuggestionItem text="Chromium"></SuggestionItem>
 				<SuggestionItem text="Titanium"></SuggestionItem>
 				<SuggestionItem text="Iron"></SuggestionItem>
@@ -351,22 +318,26 @@ describe("Input general interaction", () => {
 			</Input>
 		);
 
-		cy.get("ui5-input")
-			.as("input");
-
-		cy.get("@input")
+		cy.get("[ui5-input]")
+			.as("input")
 			.shadow()
-			.find("ui5-responsive-popover")
+			.find("[ui5-responsive-popover]")
 			.as("popover");
 
 		cy.get("@input")
 			.realClick();
 
 		cy.get("@input")
+			.should("be.focused");
+
+		cy.get("@input")
 			.realType("C");
 
-		cy.get("@popover")
-			.should("have.attr", "open");
+		cy.get("@input")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
 
 		cy.get("@input")
 			.realPress("ArrowDown");
@@ -383,7 +354,7 @@ describe("Input general interaction", () => {
 
 	it("tests selection-change with custom items", () => {
 		cy.mount(
-			<Input id="myInput2" showSuggestions class="input3auto">
+			<Input showSuggestions>
 				<SuggestionItem text="Cozy" />
 				<SuggestionItem text="Compact" />
 				<SuggestionItem text="Condensed" />
@@ -393,21 +364,20 @@ describe("Input general interaction", () => {
 		);
 
 		cy.get("ui5-input")
-			.as("input");
-
-		cy.get("@input")
-			.shadow()
-			.find("ui5-responsive-popover")
-			.as("popover");
-
-		cy.get("@input")
+			.as("input")
 			.realClick();
+
+		cy.get("@input")
+			.should("be.focused");
 
 		cy.get("@input")
 			.realType("c");
 
-		cy.get("@popover")
-			.should("have.attr", "open");
+		cy.get("@input")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened()
 
 		cy.get("@input")
 			.realPress("ArrowDown");
@@ -433,17 +403,18 @@ describe("Input general interaction", () => {
 	});
 
 	it("Should fire 'input' event when the value is cleared with ESC", () => {
-		cy.mount(
-			<Input></Input>
-		);
-
-		cy.get("[ui5-input]").then($input => {
-			$input[0].addEventListener("ui5-input", cy.spy().as("inputEvent"));
-		});
+		cy.mount(<Input onInput={cy.spy().as("inputEvent")} />);
 
 		cy.get("[ui5-input]").realClick();
-		cy.get("[ui5-input]").realPress("a");
-		cy.get("[ui5-input]").realPress("Escape");
+
+		cy.get("[ui5-input]")
+			.should("be.focused");
+
+		cy.get("[ui5-input]")
+			.realPress("a");
+
+		cy.get("[ui5-input]")
+			.realPress("Escape");
 
 		cy.get("@inputEvent").should("have.been.calledTwice");
 	});
@@ -452,7 +423,7 @@ describe("Input general interaction", () => {
 describe("Input arrow navigation", () => {
 	it("Value state header and group headers should be included in the arrow navigation", () => {
 		cy.mount(
-			<Input id="inputError" class="input2auto" showSuggestions valueState="Negative" placeholder="Search for a country ...">
+			<Input showSuggestions valueState="Negative" placeholder="Search for a country ...">
 				<div slot="valueStateMessage">
 					Custom error value state message with a <a href="#">Link</a>.
 				</div>
@@ -464,23 +435,24 @@ describe("Input arrow navigation", () => {
 			</Input>
 		);
 
-		cy.get("ui5-input")
-			.as("input");
+		cy.get("[ui5-input]")
+			.as("input")
+			.realClick();
 
 		cy.get("@input")
-			.realClick()
-			.realType("a")
-			.realPress("ArrowDown");
+			.should("be.focused");
+
+		cy.realType("a");
+
+		cy.realPress("ArrowDown");
 
 		cy.get("@input")
 			.should("not.have.attr", "focused");
 
 		cy.get("@input")
 			.shadow()
-			.find("ui5-responsive-popover")
-			.as("ui5-responsive-popover");
-
-		cy.get("@ui5-responsive-popover")
+			.find("[ui5-responsive-popover]")
+			.as("ui5-responsive-popover")
 			.find("div")
 			.as("valueMessage")
 			.should("have.class", "ui5-responsive-popover-header--focused");
@@ -491,14 +463,14 @@ describe("Input arrow navigation", () => {
 		cy.get("@valueMessage")
 			.should("not.have.class", "ui5-responsive-popover-header--focused");
 
-		cy.get("ui5-suggestion-item")
+		cy.get("[ui5-suggestion-item]")
 			.eq(0)
 			.should("have.attr", "focused");
 	});
 
 	it("Should navigate up and down through the suggestions popover with arrow keys", () => {
 		cy.mount(
-			<Input id="myInput2" showSuggestions class="input3auto">
+			<Input showSuggestions>
 				<SuggestionItem text="Cozy" />
 				<SuggestionItem text="Compact" />
 				<SuggestionItem text="Condensed" />
@@ -507,50 +479,65 @@ describe("Input arrow navigation", () => {
 			</Input>
 		);
 
-		cy.get("#myInput2")
-			.as("input");
+		cy.get("[ui5-input]")
+			.as("input")
+			.realClick();
+
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realType("c");
 
 		cy.get("@input")
 			.shadow()
-			.find("ui5-responsive-popover")
-			.as("popover");
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
 
-		cy.get("@input").realClick();
-		cy.get("@input").realType("c");
+		cy.realPress("ArrowDown");
 
-		cy.get("@popover")
-			.should("have.attr", "open");
-
-		cy.get("@input").realPress("ArrowDown");
-
-		cy.get("ui5-suggestion-item").eq(1).should("have.attr", "text", "Compact");
-		cy.get("@input").should("not.have.attr", "focused");
-		cy.get("ui5-suggestion-item").eq(1).should("have.attr", "focused");
+		cy.get("[ui5-suggestion-item]")
+			.eq(1)
+			.should("have.attr", "text", "Compact");
 
 		cy.get("@input")
-			.realPress("ArrowDown");
+			.should("not.have.attr", "focused");
 
-		cy.get("ui5-suggestion-item").eq(2).should("have.attr", "focused");
-		cy.get("ui5-suggestion-item").eq(1).should("not.have.attr", "focused");
+		cy.get("[ui5-suggestion-item]")
+			.eq(1).should("have.attr", "focused");
+
+		cy.realPress("ArrowDown");
+
+		cy.get("[ui5-suggestion-item]").eq(2).should("have.attr", "focused");
+		cy.get("[ui5-suggestion-item]").eq(1).should("not.have.attr", "focused");
+
+		cy.realPress("ArrowUp");
+
+		cy.get("[ui5-suggestion-item]")
+			.eq(1)
+			.should("have.attr", "focused");
+
+		cy.get("[ui5-suggestion-item]")
+			.eq(2)
+			.should("not.have.attr", "focused");
+
+		cy.realPress("ArrowUp");
+
+		cy.realPress("ArrowUp");
 
 		cy.get("@input")
-			.realPress("ArrowUp");
+			.should("have.attr", "focused");
 
-		cy.get("ui5-suggestion-item").eq(1).should("have.attr", "focused");
-		cy.get("ui5-suggestion-item").eq(2).should("not.have.attr", "focused");
-
-		cy.get("@input").realPress("ArrowUp");
-		cy.get("@input").realPress("ArrowUp");
-
-		cy.get("@input").should("have.attr", "focused");
-		cy.get("ui5-suggestion-item").first().should("not.have.attr", "focused");
+		cy.get("[ui5-suggestion-item]")
+			.first()
+			.should("not.have.attr", "focused");
 	});
 });
 
 describe("Input PAGEUP/PAGEDOWN navigation", () => {
 	beforeEach(() => {
 		cy.mount(
-			<Input id="myInput" showSuggestions placeholder="Search for a country ...">
+			<Input showSuggestions placeholder="Search for a country ...">
 				<SuggestionItemGroup headerText="A">
 					<SuggestionItem text="Afghanistan" />
 					<SuggestionItem text="Argentina" />
@@ -569,54 +556,59 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		);
 	});
 	it("Should focus the tenth item from the suggestions popover with PAGEDOWN", () => {
-		cy.get("ui5-input")
-			.as("input");
-
-		cy.get("@input")
+		cy.get("[ui5-input]")
+			.as("input")
 			.realClick();
 
 		cy.get("@input")
-			.realType("a");
+			.should("be.focused");
+
+		cy.realType("a");
 
 		cy.get("@input")
-			.realPress("ArrowDown");
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
 
-		cy.get("@input")
-			.realPress("PageDown");
+		cy.realPress("ArrowDown");
 
-		cy.get("ui5-suggestion-item")
+		cy.realPress("PageDown");
+
+		cy.get("[ui5-suggestion-item]")
 			.eq(11)
 			.should("have.attr", "text", "Antigua and Barbuda");
 
-		cy.get("ui5-suggestion-item")
+		cy.get("[ui5-suggestion-item]")
 			.eq(11)
 			.should("have.attr", "focused");
 	});
 
 	it("Should focus the -10 item/group header from the suggestions popover with PAGEUP", () => {
-		cy.get("ui5-input")
-			.as("input");
-
-		cy.get("@input")
+		cy.get("[ui5-input]")
+			.as("input")
 			.realClick();
 
 		cy.get("@input")
-			.realType("a");
+			.should("be.focused");
+
+		cy.realType("a");
 
 		cy.get("@input")
-			.realPress("ArrowUp");
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
 
-		cy.get("ui5-suggestion-item-group")
+		cy.realPress("ArrowUp");
+
+		cy.get("[ui5-suggestion-item-group]")
 			.eq(0)
 			.should("have.attr", "focused");
 
-		cy.get("@input")
-			.realPress("PageDown");
+		cy.realPress("PageDown");
 
-		cy.get("@input")
-			.realPress("PageUp");
+		cy.realPress("PageUp");
 
-		cy.get("ui5-suggestion-item-group")
+		cy.get("[ui5-suggestion-item-group]")
 			.eq(0)
 			.should("have.attr", "focused");
 	});
@@ -625,7 +617,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 describe("Selection-change event", () => {
 	it("Selection-change event fires with null arguments when suggestion was selected but user alters input value to something else", () => {
 		cy.mount(
-			<Input id="input-selection-change" showSuggestions>
+			<Input showSuggestions onSelectionChange={cy.stub().as("inputSelectionChange")}>
 				<SuggestionItem text="Cozy" />
 				<SuggestionItem text="Compact" />
 				<SuggestionItem text="Condensed" />
@@ -633,53 +625,46 @@ describe("Selection-change event", () => {
 		);
 
 		cy.get("ui5-input")
-			.as("input");
-
-		cy.get("ui5-input")
-			.shadow()
-			.find("input")
-			.as("innerInput");
-
-		let eventCount = 0;
-
-		cy.get("@input").then($input => {
-			$input[0].addEventListener("ui5-selection-change", () => {
-				eventCount++;
-			});
-		});
-
-		cy.get("@innerInput")
+			.as("input")
 			.realClick();
-		cy.get("@innerInput")
-			.type("C");
-		cy.get("@innerInput")
-			.realPress("ArrowDown");
-		cy.get("@innerInput")
-			.realPress("Enter");
 
-		cy.get("@innerInput")
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realType("C");
+
+		cy.get("@input")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		cy.realPress("ArrowDown");
+
+		cy.realPress("Enter");
+
+		cy.get("@input")
 			.should("have.value", "Compact");
 
-		cy.get("@innerInput")
-			.realClick();
-		cy.get("@innerInput")
-			.clear();
-		cy.get("@innerInput")
-			.type("N");
-		cy.get("@innerInput")
-			.realPress("Enter");
+		cy.get("@input")
+			.realClick({ clickCount: 3 }); // select single word
 
-		cy.get("@innerInput")
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realType("N");
+
+		cy.realPress("Enter");
+
+		cy.get("@input")
 			.should("have.value", "N");
 
-		cy.then(() => {
-			expect(eventCount).to.equal(2);
-		});
+		cy.get("@inputSelectionChange")
+			.should("be.calledTwice");
 	});
 
 	it("Fires selection-change when same item is reselected after input is changed", () => {
 		cy.mount(
-			<Input id="input-selection-change" showSuggestions>
+			<Input showSuggestions onSelectionChange={cy.stub().as("inputSelectionChange")}>
 				<SuggestionItem text="Cozy" />
 				<SuggestionItem text="Compact" />
 				<SuggestionItem text="Condensed" />
@@ -687,57 +672,65 @@ describe("Selection-change event", () => {
 		);
 
 		cy.get("ui5-input")
-			.as("input");
-
-		cy.get("ui5-input")
-			.shadow()
-			.find("input")
-			.as("innerInput");
-
-		cy.get("@input").then($input => { $input[0].addEventListener("ui5-selection-change", cy.stub().as("inputSelectionChange")); });
-
-		cy.get("@innerInput")
+			.as("input")
 			.realClick();
+
+		cy.get("@input")
+			.should("be.focused");
 
 		cy.get("[ui5-suggestion-item")
 			.eq(0)
 			.as("suggestion-item");
 
-		cy.get("@innerInput")
-			.type("C");
+		cy.realType("C");
+
+		cy.get("@input")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
 
 		cy.get("@suggestion-item")
 			.realClick();
 
-		cy.get("@inputSelectionChange").should("have.been.calledOnce");
+		cy.get("@inputSelectionChange")
+			.should("have.been.calledOnce");
 
-		cy.get("@innerInput")
+		cy.get("@input")
 			.should("have.value", "Cozy");
 
-		cy.get("@innerInput")
-			.realClick();
-		cy.get("@innerInput").type("{selectall}{backspace}");
+		cy.get("@input")
+			.realClick({ clickCount: 3 }); // select all
 
-		cy.get("@inputSelectionChange").should("have.been.calledTwice");
+		cy.get("@input")
+			.should("be.focused");
 
-		cy.get("@innerInput")
-			.type("C");
+		cy.realPress("Backspace");
+
+		cy.get("@inputSelectionChange")
+			.should("have.been.calledTwice");
+
+		cy.realType("C");
+
+		cy.get("@input")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
 		cy.get("@suggestion-item")
 			.realClick();
 
-		cy.get("@inputSelectionChange").should("have.been.calledThrice");
+		cy.get("@inputSelectionChange")
+			.should("have.been.calledThrice");
 
-		cy.get("@innerInput")
+		cy.get("@input")
 			.should("have.value", "Cozy");
 	});
 });
 
 describe("Change event behavior when selecting the same suggestion item", () => {
-	let changeCount = 0;
-
 	beforeEach(() => {
 		cy.mount(
-			<Input id="myInput" showSuggestions placeholder="Search for a country ...">
+			<Input placeholder="Search for a country ..." showSuggestions onChange={cy.stub().as("changeEvent")}>
 				<SuggestionItemGroup headerText="A">
 					<SuggestionItem text="Afghanistan" />
 					<SuggestionItem text="Argentina" />
@@ -748,14 +741,8 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			</Input>
 		);
 
-		cy.get("#myInput")
-			.as("input");
-
-		cy.get("@input").then($el => {
-			$el[0].addEventListener("change", () => {
-				changeCount++;
-			});
-		});
+		cy.get("[ui5-input]")
+			.as("input")
 	});
 
 	it("Change event is not fired when the same suggestion item is selected (with typeahead)", () => {
@@ -763,36 +750,62 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			.realClick();
 
 		cy.get("@input")
-			.realType("a");
+			.should("be.focused");
 
-		cy.get("@input").realPress("Enter");
+		cy.realType("a");
+
+		cy.get("@input")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		cy.realPress("Enter");
+
+		cy.get("@input")
+			.should("have.value", "Afghanistan");
+
+		cy.realPress("Backspace");
+
+		cy.realPress("ArrowDown");
+
+		cy.realPress("ArrowDown");
+
+		cy.realPress("Enter");
+
 		cy.get("@input").should("have.value", "Afghanistan");
 
-		cy.get("@input").realPress("Backspace");
-		cy.get("@input").realPress("ArrowDown");
-		cy.get("@input").realPress("ArrowDown");
-		cy.get("@input").realPress("Enter");
-
-		cy.get("@input").should("have.value", "Afghanistan");
-		cy.then(() => {
-			expect(changeCount).to.equal(1);
-		});
+		cy.get("@changeEvent")
+			.should("have.been.calledOnce");
 	});
 
 	it("Change event is not fired when the same suggestion item is selected (no-typeahead)", () => {
 		cy.get("@input").invoke("attr", "value", "Afghanistan");
 		cy.get("@input").invoke("attr", "no-typeahead", true);
 
-		cy.get("@input").realPress("Backspace");
+		cy.get("@input")
+			.realClick();
 
-		cy.get("@input").realPress("ArrowDown");
-		cy.get("@input").realPress("ArrowDown");
-		cy.get("@input").realPress("Enter");
+		cy.get("@input")
+			.should("be.focused");
 
-		cy.get("@input").should("have.value", "Afghanistan");
-		cy.then(() => {
-			expect(changeCount).to.equal(1);
-		});
+		cy.realPress("Backspace");
+
+		cy.get("@input")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		cy.realPress("ArrowDown");
+
+		cy.realPress("ArrowDown");
+
+		cy.realPress("Enter");
+
+		cy.get("@input")
+			.should("have.value", "Afghanistan");
+
+		cy.get("@changeEvent")
+			.should("not.have.been.calledOnce");
 	});
 
 	it("Change event is not fired when the same suggestion item is selected after focus out and selecting suggestion again", () => {
@@ -800,151 +813,152 @@ describe("Change event behavior when selecting the same suggestion item", () => 
 			.invoke("attr", "value", "Afghanistan");
 
 		cy.get("@input")
-			.realPress("Tab");
+			.realClick();
+
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realPress("Tab");
+
+		cy.get("@input")
+			.should("not.be.focused");
 
 		cy.get("@input")
 			.realClick();
-		cy.get("@input")
-			.realPress("ArrowDown");
-		cy.get("@input")
-			.realPress("ArrowDown");
-		cy.get("@input")
-			.realPress("Enter");
 
-		cy.get("@input").should("have.value", "Afghanistan");
-		cy.then(() => {
-			expect(changeCount).to.equal(1);
-		});
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realPress("ArrowDown");
+
+		cy.realPress("ArrowDown");
+
+		cy.realPress("Enter");
+
+		cy.get("@input")
+			.should("have.value", "Afghanistan");
+
+		cy.get("@changeEvent")
+			.should("not.have.been.calledOnce");
 	});
 
 	it("Change event fires after typing a new value following a clear icon click", () => {
-		cy.mount(
-			<>
-				<Input showClearIcon={true}></Input>
-			</>
-		);
-
-		cy.get("ui5-input")
-			.as("input");
-
-		cy.get("@input")
-			.then($input => {
-				$input[0].addEventListener("ui5-change", cy.stub().as("inputChange"));
-			});
-
-		cy.get("@input")
-			.click();
-
-		cy.get("@input")
-			.realType("Albania");
-
-		cy.get("@input")
-			.realPress("Enter");
-
-		cy.get("@inputChange")
-			.should("have.been.calledOnce");
+		cy.mount(<Input showClearIcon={true} onChange={cy.stub().as("inputChange")} />);
 
 		cy.get("@input")
 			.shadow()
-			.find("ui5-icon")
-			.as("icon");
-
-		cy.get("@icon")
-			.click();
+			.find("#inner")
+			.as("innerInput")
 
 		cy.get("@input")
-			.should("have.attr", "value", "");
+			.realClick();
 
 		cy.get("@input")
-			.realType("Argentina");
+			.should("be.focused");
 
-		cy.get("@input")
-			.realPress("Enter");
+		cy.realType("Albania");
+
+		cy.realPress("Enter");
 
 		cy.get("@inputChange")
-			.should("have.been.calledTwice");
+			.should("have.been.calledOnce");
+		// Check input value
+		cy.get("@input")
+			.should("have.value", "Albania");
+
+		// TODO: Could be fixed once rendering is moved to sync
+		cy.get("@innerInput")
+			.should("have.value", "Albania");
+
+		cy.get("@input")
+			.shadow()
+			.find("[ui5-icon]")
+			.as("icon")
+			.realClick();
+		// Check input value
+		cy.get("@input")
+			.should("have.value", "");
+
+		// TODO: Could be fixed once rendering is moved to sync
+		cy.get("@innerInput")
+			.should("have.value", "");
+
+		cy.realType("Argentina");
+		// Check input value
+		cy.get("@input")
+			.should("have.value", "Argentina");
+
+		// TODO: Could be fixed once rendering is moved to sync
+		cy.get("@innerInput")
+			.should("have.value", "Argentina");
+
+		cy.realPress("Enter");
 
 		cy.get("@icon")
-			.click();
-
+			.realClick();
+		// Check input value
 		cy.get("@input")
-			.realType("Argentina");
+			.should("have.value", "");
 
+		// TODO: Could be fixed once rendering is moved to sync
+		cy.get("@innerInput")
+			.should("have.value", "");
+
+		cy.realType("Argentina");
+		// Check input value
 		cy.get("@input")
-			.realPress("Enter");
+			.should("have.value", "Argentina");
+
+		// TODO: Could be fixed once rendering is moved to sync
+		cy.get("@innerInput")
+			.should("have.value", "Argentina");
+
+		cy.realPress("Enter");
 
 		cy.get("@inputChange")
 			.should("have.been.calledTwice");
 	});
 
 	it("should not close the dialog when item is selected", () => {
-		cy.mount(
-			<>
-				<Button>Open</Button>
-				<Dialog>
-					<Input showSuggestions={true}>
-						<SuggestionItem text="First item"></SuggestionItem>
-						<SuggestionItem text="Second item"></SuggestionItem>
-					</Input>
-				</Dialog>
-			</>
-		);
+		cy.mount(<Dialog open initialFocus="test">
+			<Input showSuggestions={true} id="test">
+				<SuggestionItem text="First item"></SuggestionItem>
+				<SuggestionItem text="Second item"></SuggestionItem>
+			</Input>
+		</Dialog>);
 
-		cy.get("[ui5-button]")
-			.as("button");
 
 		cy.get("[ui5-dialog]")
 			.as("dialog");
 
-		cy.get("[ui5-input]")
-			.as("input");
-
-		cy.get("@button")
-			.then($btn => {
-				$btn[0].addEventListener("click", () => {
-					cy.get("@dialog").then($dialog => {
-						$dialog[0].setAttribute("open", "");
-					});
-				});
-			});
-
-		cy.get("@dialog")
-			.then($dialog => {
-				$dialog[0].addEventListener("close", () => {
-					$dialog[0].removeAttribute("open");
-				});
-			});
-
-		cy.get("@button")
-			.realClick();
+		cy.get<Dialog>("@dialog")
+			.ui5DialogOpened();
 
 		cy.get("@input")
-			.realClick();
+			.should("be.focused");
+
+		cy.realType("f");
 
 		cy.get("@input")
-			.realType("f");
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
 
 		cy.get("[ui5-suggestion-item")
 			.eq(0)
-			.as("suggestion-item");
+			.realClick();
 
-		cy.get("@suggestion-item")
-			.click();
-
-		cy.get("@dialog")
-			.should("have.attr", "open");
+		cy.get<Dialog>("@dialog")
+			.ui5DialogOpened();
 	});
 });
 
 describe("Accessibility", () => {
 	it("tests accessibleDescription property", () => {
-		cy.mount(
-			<Input accessibleDescription="This is an input"></Input>
-		);
+		cy.mount(<Input accessibleDescription="This is an input" />);
 
-		cy.get("[ui5-input]").as("input");
-
-		cy.get("@input")
+		cy.get("[ui5-input]")
+			.as("input")
 			.shadow()
 			.find("input")
 			.should("have.attr", "aria-describedby", "accessibleDescription");
@@ -963,9 +977,8 @@ describe("Accessibility", () => {
 			</>
 		);
 
-		cy.get("[ui5-input]").as("input");
-
-		cy.get("@input")
+		cy.get("[ui5-input]")
+			.as("input")
 			.shadow()
 			.find("input")
 			.should("have.attr", "aria-describedby", "accessibleDescription");
