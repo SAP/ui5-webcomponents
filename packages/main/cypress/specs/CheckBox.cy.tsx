@@ -29,13 +29,13 @@ describe("Validation inside a form", () => {
 		cy.get("#cb")
 			.then($el => {
 				const checkbox = $el[0] as CheckBox;
-				expect(checkbox.validity.valueMissing).to.be.true;
-				expect(checkbox.checkValidity()).to.be.false;
-				expect(checkbox.reportValidity()).to.be.false;
+				expect(checkbox.validity.valueMissing, "Unchecked required checkbox should have valueMissing=true").to.be.true;
+				expect(checkbox.checkValidity(), "Unchecked required checkbox should fail validity check").to.be.false;
+				expect(checkbox.reportValidity(), "Unchecked required checkbox should fail report validity").to.be.false;
 			});
 
 		cy.get("#cb:invalid") // select using :invalid CSS pseudo-class
-			.should("exist");
+			.should("exist", "Unchecked required checkbox should have :invalid CSS class");
 
 		cy.get("#cb") // check the required checkbox
 			.realClick();
@@ -43,12 +43,12 @@ describe("Validation inside a form", () => {
 		cy.get("#cb")
 			.then($el => {
 				const checkbox = $el[0] as CheckBox;
-				expect(checkbox.validity.valueMissing).to.be.false;
-				expect(checkbox.checkValidity()).to.be.true;
-				expect(checkbox.reportValidity()).to.be.true;
+				expect(checkbox.validity.valueMissing, "Checked required checkbox should have valueMissing=false").to.be.false;
+				expect(checkbox.checkValidity(), "Checked required checkbox should pass validity check").to.be.true;
+				expect(checkbox.reportValidity(), "Checked required checkbox should pass report validity").to.be.true;
 			});
 
-		cy.get("#cb:invalid").should("not.exist");
+		cy.get("#cb:invalid").should("not.exist", "Checked required checkbox should not have :invalid CSS class");
 	});
 });
 

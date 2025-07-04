@@ -267,12 +267,12 @@ describe("Select - Validation", () => {
 		cy.get("#sel1")
 			.then($el => {
 				const select = $el[0] as Select;
-				expect(select.validity.valueMissing).to.be.true;
-				expect(select.checkValidity()).to.be.false;
-				expect(select.reportValidity()).to.be.false;
+				expect(select.validity.valueMissing, "Required Select with empty value should have valueMissing=true").to.be.true;
+				expect(select.checkValidity(), "Required Select with empty value should fail validity check").to.be.false;
+				expect(select.reportValidity(), "Required Select with empty value should fail report validity").to.be.false;
 			});
 
-		cy.get("#sel1:invalid").should("exist");
+		cy.get("#sel1:invalid").should("exist", "Required Select with empty value should have :invalid CSS class");
 
 		// select an option with a non-empty value
 		// this should make the Select valid
@@ -285,11 +285,11 @@ describe("Select - Validation", () => {
 		cy.get("#sel1")
 			.then($el => {
 				const select = $el[0] as Select;
-				expect(select.validity.valueMissing).to.be.false;
-				expect(select.checkValidity()).to.be.true;
-				expect(select.reportValidity()).to.be.true;
+				expect(select.validity.valueMissing, "Required Select with non-empty value should have valueMissing=false").to.be.false;
+				expect(select.checkValidity(), "Required Select with non-empty value should pass validity check").to.be.true;
+				expect(select.reportValidity(), "Required Select with non-empty value should pass report validity").to.be.true;
 			});
 
-		cy.get("#sel1:invalid").should("not.exist");
+		cy.get("#sel1:invalid").should("not.exist", "Required Select with non-empty value should not have :invalid CSS class");
 	});
 });
