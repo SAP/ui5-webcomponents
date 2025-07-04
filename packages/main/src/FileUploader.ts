@@ -130,6 +130,8 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	/**
 	 * If set to "true", the input field of component will not be rendered. Only the default slot that is passed will be rendered.
+	 *
+	 * **Note:** Use this property in combination with the default slot to achieve a button-only file uploader design.
 	 * @default false
 	 * @public
 	 */
@@ -214,10 +216,12 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	focused = false;
 
 	/**
-	 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
+	 * This slot allows you to add custom content to the component, such as a button or any other interactive element to trigger the file selection dialog.
 	 *
-	 * **Note:** If no content is provided in this slot, the component will only consist of an input field and will not be interactable using the keyboard.
-	 * Also it is not recommended to use any non-interactable components, as it may lead to poor accessibility experience.
+	 * **Note:** For best accessibility experience, set a `tabindex` of "-1" on your interactive element, or it will be set automatically.
+	 * This slot is intended for use cases where you want a button-only file uploader.
+	 * It is recommended to set the `hideInput` property to "true" when using this slot.
+	 * Not setting `hideInput` may negatively impact accessibility.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
