@@ -11,9 +11,13 @@
 <body style="background-color: var(--sapBackgroundColor)">
     <!-- playground-fold-end -->
 
-        <ui5-shellbar primary-title="Product Identifier" style="margin-bottom: 1rem;" notifications-count="72" show-notifications>
+        <ui5-shellbar style="margin-bottom: 1rem;" notifications-count="72" show-notifications>
+            <ui5-shellbar-branding slot="branding">
+                Product Identifier
+                <img slot="logo" src="../assets/images/sap-logo-svg.svg" />
+            </ui5-shellbar-branding>
+
             <ui5-button icon="menu2" slot="startButton"></ui5-button>
-            <img slot="logo" src="../assets/images/sap-logo-svg.svg" />
 
             <ui5-tag design="Set2" color-scheme="8" slot="content">Q System</ui5-tag>
             <ui5-text slot="content">Region EMEA</ui5-text>
