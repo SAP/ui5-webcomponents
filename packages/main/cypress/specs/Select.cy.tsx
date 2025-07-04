@@ -250,3 +250,46 @@ describe("Select - Properties", () => {
 		cy.get("[ui5-select]").should("have.prop", "formFormattedValue", "");
 	});
 });
+
+describe("Select - Validation", () => {
+	it("has correct validity", () => {
+		cy.mount(
+			<form method="get">
+				<Select id="sel1" name="select1" required>
+					<Option value="">Select an option</Option>
+					<Option value="option1">Option 1</Option>
+					<Option value="option2">Option 2</Option>
+				</Select>
+				<button type="submit">Submit</button>
+			</form>
+		);
+
+		cy.get("#sel1")
+			.then($el => {
+				const select = $el[0] as Select;
+				expect(select.validity.valueMissing).to.be.true;
+				expect(select.checkValidity()).to.be.false;
+				expect(select.reportValidity()).to.be.false;
+			});
+
+		cy.get("#sel1:invalid").should("exist");
+
+		// select an option with a non-empty value
+		// this should make the Select valid
+		cy.get("#sel1")
+			.realClick()
+			.get("[ui5-option]")
+			.eq(1)
+			.realClick();
+
+		cy.get("#sel1")
+			.then($el => {
+				const select = $el[0] as Select;
+				expect(select.validity.valueMissing).to.be.false;
+				expect(select.checkValidity()).to.be.true;
+				expect(select.reportValidity()).to.be.true;
+			});
+
+		cy.get("#sel1:invalid").should("not.exist");
+	});
+});

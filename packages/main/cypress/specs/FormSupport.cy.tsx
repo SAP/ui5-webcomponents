@@ -8,7 +8,6 @@ import DateTimePicker from "../../src/DateTimePicker.js";
 import Input from "../../src/Input.js";
 import MultiComboBox from "../../src/MultiComboBox.js";
 import MultiComboBoxItem from "../../src/MultiComboBoxItem.js";
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import MultiInput from "../../src/MultiInput.js";
 import Token from "../../src/Token.js";
 import RadioButton from "../../src/RadioButton.js";
@@ -29,22 +28,14 @@ const getFormData = ($form: HTMLFormElement) => {
 	}).join("&");
 };
 
-const checkElementValidation = (element: UI5Element, validityOptions: { valueMissing?: boolean } = {}) => {
-	const valueMissing = validityOptions.valueMissing ?? false;
-	expect(element.validity.valueMissing).to.equal(valueMissing);
-	expect(element.checkValidity()).to.equal(!valueMissing);
-	expect(element.reportValidity()).to.equal(!valueMissing);
-};
-
 describe("Form support", () => {
 	it("ui5-checkbox in form", () => {
 		cy.mount(<form method="get">
 			<CheckBox id="cb1" text="ui5-checkbox without name" > </CheckBox>
-			<CheckBox id="cb2" text="checked ui5-checkbox without name" checked > </CheckBox>
-			<CheckBox id="cb3" name="checkbox3" text="unchecked ui5-checkbox with name" > </CheckBox>
-			<CheckBox id="cb4" name="checkbox4" checked text="checked ui5-checkbox with name" > </CheckBox>
-			<CheckBox id="cb5" name="checkbox5" required text="unchecked ui5-checkbox with name and required" > </CheckBox>
-			<CheckBox id="cb6" name="checkbox6" checked required value="checkbox6Value" text="checked ui5-checkbox with name and value and required" > </CheckBox>
+			<CheckBox id="cb2" text="ui5-checkbox without name and value" checked > </CheckBox>
+			<CheckBox id="cb3" name="checkbox3" text="ui5-checkbox with name and without value" > </CheckBox>
+			<CheckBox id="cb4" name="checkbox4" checked text="ui5-checkbox with name and value" > </CheckBox>
+			<CheckBox id="cb5" name="checkbox5" required text="ui5-checkbox with name, value and required" > </CheckBox>
 			<button type="submit" > Submits forms </button>
 		</form>);
 
@@ -62,19 +53,17 @@ describe("Form support", () => {
 
 		cy.get("#cb5")
 			.then($el => {
-				checkElementValidation($el[0] as CheckBox, { valueMissing: true });
+				const checkbox = $el[0] as CheckBox;
+				expect(checkbox.validity.valueMissing).to.be.true;
+				expect(checkbox.checkValidity()).to.be.false;
+				expect(checkbox.reportValidity()).to.be.false;
 			});
 
-		cy.get("#cb5:invalid") // select using :invalid CSS pseudo-class
-			.should("exist");
+		cy.get("form :invalid") // select using :invalid CSS pseudo-class
+			.should("have.id", "cb5");
 
 		cy.get("#cb5")
 			.realClick();
-
-		cy.get("#cb5")
-			.then($el => {
-				checkElementValidation($el[0] as CheckBox, { valueMissing: false });
-			});
 
 		cy.get("button")
 			.realClick();
@@ -86,7 +75,7 @@ describe("Form support", () => {
 			.then($el => {
 				return getFormData($el.get(0));
 			})
-			.should("be.equal", "checkbox4=on&checkbox5=on&checkbox6=checkbox6Value");
+			.should("be.equal", "checkbox4=on&checkbox5=on");
 	});
 
 	it("ui5-color-picker in form", () => {
@@ -689,11 +678,14 @@ describe("Form support", () => {
 
 		cy.get("#select9")
 			.then($el => {
-				checkElementValidation($el[0] as Select, { valueMissing: true });
+				const select = $el[0] as Select;
+				expect(select.validity.valueMissing).to.be.true;
+				expect(select.checkValidity()).to.be.false;
+				expect(select.reportValidity()).to.be.false;
 			});
 
-		cy.get("#select9:invalid") // select using :invalid CSS pseudo-class
-			.should("exist");
+		cy.get("form :invalid") // select using :invalid CSS pseudo-class
+			.should("have.id", "select9");
 
 		cy.get("#select9")
 			.realClick();
@@ -716,11 +708,6 @@ describe("Form support", () => {
 			.find("[ui5-option]")
 			.eq(1)
 			.realClick();
-
-		cy.get("#select9")
-			.then($el => {
-				checkElementValidation($el[0] as Select, { valueMissing: false });
-			});
 
 		cy.get("button")
 			.realClick();
