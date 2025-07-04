@@ -234,8 +234,7 @@
     transform: translateX(-50%);
 }
 
-.ui5-slider-hidden-labels li:not(:first-child):after,
-.ui5-slider-hidden-labels li:not(:last-child):after {
+.ui5-slider-hidden-labels li:not(:first-child):not(:last-child)::after {
 	visibility: hidden;
 }
 
