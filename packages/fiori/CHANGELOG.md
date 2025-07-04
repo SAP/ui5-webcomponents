@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.3...v2.12.0) (2025-07-04)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** prevent layout issue ([#11805](https://github.com/SAP/ui5-webcomponents/issues/11805)) ([5b17cc8](https://github.com/SAP/ui5-webcomponents/commit/5b17cc8a4f3391b8b5735a9c679bc7fd48ae55ed))
+
+
+### Features
+
+* **ui5-shellbar-branding:** introduce new component ([#11320](https://github.com/SAP/ui5-webcomponents/issues/11320)) ([951aa44](https://github.com/SAP/ui5-webcomponents/commit/951aa446da159e466dc672cfd87a338380e62521))
+
+
+
+
+
 # [2.12.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.2...v2.12.0-rc.3) (2025-07-03)
 
 
