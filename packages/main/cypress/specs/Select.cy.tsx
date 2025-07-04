@@ -221,6 +221,86 @@ describe("Select - Popover", () => {
 			.should("be.visible")
 			.should("have.text", "Custom message");
 	});
+
+	it("ResponsivePopover should not have accessible name on desktop", () => {
+		cy.mount(
+			<Select id="desktopSelect">
+				<Option value="option1">Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="option3">Option 3</Option>
+			</Select>
+		);
+
+		// Open the popover
+		cy.get("#desktopSelect").realClick();
+
+		// Check that the ResponsivePopover does not have an accessible name on desktop
+		cy.get("#desktopSelect")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should("not.have.attr", "accessible-name");
+	});
+
+	it("should focus the selected option when popover opens", () => {
+		cy.mount(
+			<Select id="focusSelect" value="option2">
+				<Option id="opt1" value="option1">Option 1</Option>
+				<Option id="opt2" value="option2">Option 2</Option>
+				<Option id="opt3" value="option3">Option 3</Option>
+			</Select>
+		);
+
+		// Open the popover
+		cy.get("#focusSelect").realClick();
+
+		// The selected option should be focused
+		cy.get("#opt2").should("have.attr", "focused");
+	});
+
+	it("should apply focus to the correct option when selection changes", () => {
+		cy.mount(
+			<Select id="changeFocusSelect">
+				<Option id="opt1" value="option1">Option 1</Option>
+				<Option id="opt2" value="option2">Option 2</Option>
+				<Option id="opt3" value="option3">Option 3</Option>
+			</Select>
+		);
+
+		// Programmatically change the value and check focus
+		cy.get("#changeFocusSelect").then(($select) => {
+			const select = $select[0] as any;
+			select.value = "option2";
+		});
+
+		// Open the popover
+		cy.get("#changeFocusSelect").realClick();
+
+		// The newly selected option should be focused
+		cy.get("#opt2").should("have.attr", "focused");
+	});
+
+	it("should maintain focus on keyboard navigation", () => {
+		cy.mount(
+			<Select id="keyboardFocusSelect" value="option1">
+				<Option id="kopt1" value="option1">Option 1</Option>
+				<Option id="kopt2" value="option2">Option 2</Option>
+				<Option id="kopt3" value="option3">Option 3</Option>
+			</Select>
+		);
+
+		// Open the popover
+		cy.get("#keyboardFocusSelect").realClick();
+
+		// Initially, option 1 should be focused
+		cy.get("#kopt1").should("have.attr", "focused");
+
+		// Navigate down with arrow key
+		cy.get("#keyboardFocusSelect").realPress("ArrowDown");
+
+		// Now option 2 should be focused
+		cy.get("#kopt2").should("have.attr", "focused");
+		cy.get("#kopt1").should("not.have.attr", "focused");
+	});
 });
 
 describe("Select - Properties", () => {
