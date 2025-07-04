@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.2...v2.12.0-rc.3) (2025-07-03)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** button styles for compact aligned ([#11801](https://github.com/SAP/ui5-webcomponents/issues/11801)) ([6cdc498](https://github.com/SAP/ui5-webcomponents/commit/6cdc498b9f7856f7c3e624906f8e6ce4eb7939eb))
+* **ui5-user-menu:** correct design inconsistencies ([#11829](https://github.com/SAP/ui5-webcomponents/issues/11829)) ([32e4284](https://github.com/SAP/ui5-webcomponents/commit/32e428440dcfa4416673d1a4dd461521e67b7ccb))
+* **ui5-view-settings-dialog:** change announce type for the screen reader when view settings are reset ([#11668](https://github.com/SAP/ui5-webcomponents/issues/11668)) ([6793d09](https://github.com/SAP/ui5-webcomponents/commit/6793d098bc9e8d242acbf4f8b23fb5af6f46ff77))
+
+
+### Features
+
+* **ui5-avatar-group, ui5-product-switch:** getFocusDomRef added ([#11762](https://github.com/SAP/ui5-webcomponents/issues/11762)) ([0954f33](https://github.com/SAP/ui5-webcomponents/commit/0954f331ee36eeea785347bfbede98f186fb04b0)), closes [#11483](https://github.com/SAP/ui5-webcomponents/issues/11483)
+* **ui5-user-menu:** add item groups with checkable menu items ([#11832](https://github.com/SAP/ui5-webcomponents/issues/11832)) ([d0758fd](https://github.com/SAP/ui5-webcomponents/commit/d0758fd8c7af19dc25c5463c2dd8bb57b7599f52))
+
+
+
+
+
+# [2.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.1...v2.12.0-rc.2) (2025-06-26)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** correct search visibility toggle ([#11724](https://github.com/SAP/ui5-webcomponents/issues/11724)) ([8c3cba9](https://github.com/SAP/ui5-webcomponents/commit/8c3cba9681136c70c81d8c8cf09e0a588a025a9a))
+* **ui5-side-navigation:** focus is correct after selecting overflow item ([#11702](https://github.com/SAP/ui5-webcomponents/issues/11702)) ([bb22451](https://github.com/SAP/ui5-webcomponents/commit/bb2245177bf388fe5bc972ca65839ca41ccb82bc))
+
+
+### Features
+
+* **ui5-menu:** menu item groups with checkable menu items ([#10028](https://github.com/SAP/ui5-webcomponents/issues/10028)) ([161af0f](https://github.com/SAP/ui5-webcomponents/commit/161af0fe9912145ddd4fe19f4d71c8aa23db2e15))
+
+
+
+
+
 # [2.12.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.0...v2.12.0-rc.1) (2025-06-19)
 
 
