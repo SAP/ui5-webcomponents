@@ -64,7 +64,7 @@ export default function FileUploaderTemplate(this: FileUploader) {
 									</Tokenizer>
 									<Icon
 										name="decline"
-										class="ui5-file-uploader-close-icon inputIcon"
+										class="ui5-file-uploader-clear-icon inputIcon"
 										onClick={this._onClearIconClick}
 										title={this.clearIconTitle}
 									/>

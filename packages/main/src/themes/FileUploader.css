@@ -65,7 +65,7 @@
 	cursor: pointer;
 }
 
-.ui5-file-uploader-close-icon,
+.ui5-file-uploader-clear-icon,
 .ui5-file-uploader-value-help-icon {
 	position: absolute;
 	cursor: pointer;
@@ -79,7 +79,7 @@
 	width: var(--_ui5_file_uploader_display_input_width);
 }
 
-.ui5-file-uploader-close-icon {
+.ui5-file-uploader-clear-icon {
 	inset-inline-end: var(--_ui5_input_icon_width);
 }
 
