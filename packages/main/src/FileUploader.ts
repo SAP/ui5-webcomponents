@@ -276,7 +276,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @override
 	 */
 	getFocusDomRef(): HTMLElement | undefined {
-		return this.hideInput ? this.content[0] : this._input;
+		return this._input;
 	}
 
 	get formFormattedValue() {
@@ -379,7 +379,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			this._tokenizerOpen = !this._tokenizer.open;
 		}
 
-		if (isSpace(e) || isDelete(e) || isF4(e)) {
+		if (isSpace(e) || isDelete(e)) {
 			e.stopPropagation();
 		}
 	}

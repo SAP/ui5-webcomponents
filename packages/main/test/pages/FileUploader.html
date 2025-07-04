@@ -102,34 +102,5 @@
 			<ui5-label for="infoInput">Choose files:</ui5-label>
 			<ui5-file-uploader id="infoInput" placeholder="Upload your files here" style="width: 350px;" multiple value-state="Information"></ui5-file-uploader>
 		</div>
-
-		<div>
-			<ui5-label for="datePicker">Pick a date:</ui5-label>
-			<ui5-date-picker id="datePicker"></ui5-date-picker>
-		</div>
-
-		<div>
-			<ui5-label for="basicInput">Pick a date:</ui5-label>
-			<ui5-input id="basicInput"></ui5-input>
-		</div>
-
-		<div>
-			<label for="nativeInput">Pick a date:</label>
-			<input id="nativeInput"></input>
-		</div>
-
-		<div id="nativeFileContainer">
-			<label id="nativeFileLabel" for="nativeFile">Pick a file:</label>
-			<input type="file" id="nativeFile"></input>
-		</div>
-	</div>
-
-	<script>
-		document.getElementById("fileSelector1").addEventListener("ui5-change", function (event) {
-			const files = event.detail.files;
-			console.log("Selected files:", files);
-			// Submit all file to the server
-		});
-	</script>
 </body>
 </html>
