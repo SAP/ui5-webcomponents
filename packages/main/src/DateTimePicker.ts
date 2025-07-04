@@ -39,6 +39,7 @@ import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.c
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import type TimeSelectionClocks from "./TimeSelectionClocks.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
+import { renderFinished } from "@ui5/webcomponents-base";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
 
@@ -157,16 +158,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	constructor() {
 		super();
 		this._handleResizeBound = this._handleResize.bind(this);
-	}
-
-	onAfterRendering() {
-		if (isPhone() || this.showDateView) {
-			return;
-		}
-
-		// Focus the time part only in mobile view
-		const activeIndex = this._clocks._activeIndex;
-		this._clocks._buttonComponent(activeIndex)?.focus();
 	}
 
 	/**
@@ -290,7 +281,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * @override
 	 */
-	onSelectedDatesChange(e: CustomEvent<CalendarSelectionChangeEventDetail>) {
+	async onSelectedDatesChange(e: CustomEvent<CalendarSelectionChangeEventDetail>) {
 		e.preventDefault();
 		// @ts-ignore Needed for FF
 		const dateTimePickerContent = e.path ? e.path[1] : e.composedPath()[1];
@@ -301,6 +292,9 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 			timeSelectionValue: dateTimePickerContent.lastChild.value,
 		};
 		this._showTimeView = true;
+
+		await renderFinished();
+		this._clocks.focus();
 	}
 
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
