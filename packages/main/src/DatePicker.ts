@@ -8,6 +8,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
@@ -657,8 +658,8 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	get _lastDayOfTheYear() {
-		const currentYear = new Date().getFullYear();
-		const lastDayOfTheYear = new Date(currentYear, 11, 31);
+		const currentYear = UI5Date.getInstance().getFullYear();
+		const lastDayOfTheYear = UI5Date.getInstance(currentYear, 11, 31, 23, 59, 59);
 		return this.getFormat().format(lastDayOfTheYear);
 	}
 
