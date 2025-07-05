@@ -2,6 +2,7 @@ import FileUploader from "../../src/FileUploader.js";
 import Button from "../../src/Button.js";
 import Label from "../../src/Label.js";
 import "@ui5/webcomponents-icons/dist/upload.js";
+import { FILEUPLOADER_DEFAULT_MULTIPLE_PLACEHOLDER, FILEUPLOADER_DEFAULT_PLACEHOLDER } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("API", () => {
 	it("files property", () => {
@@ -82,6 +83,39 @@ describe("API", () => {
 			.shadow()
 			.find("input[type='file']")
 			.should("have.attr", "accept", ".txt,.docx");
+	});
+
+	it("placeholder property", () => {
+		cy.mount(
+			<FileUploader placeholder="Custom placeholder"></FileUploader>
+		);
+
+		cy.get("[ui5-file-uploader]")
+			.shadow()
+			.find("input[type='file']")
+			.should("have.attr", "placeholder", "Custom placeholder");
+	});
+
+	it("default single placeholder", () => {
+		cy.mount(
+			<FileUploader></FileUploader>
+		);
+
+		cy.get("[ui5-file-uploader]")
+			.shadow()
+			.find("input[type='file']")
+			.should("have.attr", "placeholder", FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER));
+	});
+
+	it("default multiple placeholder", () => {
+		cy.mount(
+			<FileUploader multiple></FileUploader>
+		);
+
+		cy.get("[ui5-file-uploader]")
+			.shadow()
+			.find("input[type='file']")
+			.should("have.attr", "placeholder", FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_MULTIPLE_PLACEHOLDER));
 	});
 });
 

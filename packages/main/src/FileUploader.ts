@@ -590,10 +590,9 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	get resolvedPlaceholder(): string {
-		return this.placeholder
-			|| this.multiple
-			? FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_MULTIPLE_PLACEHOLDER)
-			: FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER);
+		const singlePlaceholder = FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER);
+		const multiplePlaceholder = FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_MULTIPLE_PLACEHOLDER);
+		return this.placeholder ?? (this.multiple ? multiplePlaceholder : singlePlaceholder);
 	}
 
 	get valueStateTextMappings(): Record<string, string> {
