@@ -263,7 +263,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	valueStateMessage!: Array<HTMLElement>;
 
 	@query(".ui5-file-uploader-form")
-	_from!: HTMLFormElement;
+	_form!: HTMLFormElement;
 
 	@query("input[type=file]")
 	_input!: HTMLInputElement;
@@ -433,7 +433,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	_clearFileSelection() {
 		this._selectedFilesNames = [];
 		this.value = "";
-		this._from?.reset();
+		this._form?.reset();
 		this.fireDecoratorEvent("change", {
 			files: this.files,
 		});
@@ -473,7 +473,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	get _formWidth() : number {
-		return this._from ? this._from.offsetWidth : 0;
+		return this._form ? this._form.offsetWidth : 0;
 	}
 
 	_onChange(e: Event) {
