@@ -612,16 +612,12 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return this.valueState !== ValueState.None;
 	}
 
-	get hasValueStateText(): boolean {
-		return this.hasValueState && this.valueState !== ValueState.Positive;
-	}
-
 	get shouldDisplayDefaultValueStateMessage(): boolean {
-		return !this.valueStateMessage.length && this.hasValueStateText;
+		return !this.valueStateMessage.length && this.hasValueState;
 	}
 
 	get shouldOpenValueStateMessagePopover(): boolean {
-		return this.focused && this.hasValueStateText && !this.hideInput && !this._tokenizerOpen;
+		return this.focused && this.hasValueState && !this.hideInput && !this._tokenizerOpen;
 	}
 
 	/**

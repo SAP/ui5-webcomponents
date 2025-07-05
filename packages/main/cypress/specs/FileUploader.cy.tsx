@@ -170,11 +170,11 @@ describe("Interaction", () => {
 			.should("have.attr", "tabindex", "-1");
 	});
 
-	it("focus into critical value state file uploader", () => {
+	it("focus into positive value state file uploader", () => {
 		cy.mount(
 			<>
-				<Label for="critical-uploader">Application context</Label>
-				<FileUploader id="critical-uploader" value-state="Critical"></FileUploader>
+				<Label for="positive-uploader">Application context</Label>
+				<FileUploader id="positive-uploader" value-state="Positive"></FileUploader>
 			</>
 		);
 
@@ -194,7 +194,7 @@ describe("Interaction", () => {
 
 		cy.get("@popover")
 			.find(".ui5-valuestatemessage-root")
-			.should("have.class", "ui5-valuestatemessage--warning");
+			.should("have.class", "ui5-valuestatemessage--success");
 	});
 
 	it("LTR focus in and out of the tokenizer", () => {
