@@ -163,200 +163,200 @@ describe("Interaction", () => {
 			.should("have.class", "ui5-valuestatemessage--warning");
 	});
 
-    it("LTR focus in and out of the tokenizer", () => {
-        cy.mount(
+	it("LTR focus in and out of the tokenizer", () => {
+		cy.mount(
 			<>
 				<Label for="uploader">Application context</Label>
 				<FileUploader id="uploader"></FileUploader>
 			</>
 		);
 
-        cy.get("[ui5-file-uploader]")
-            .as("uploader")
-            .shadow()
-            .find("input[type='file']")
-            .selectFile([
-                {
-                    contents: Cypress.Buffer.from("file content"),
-                    fileName: "test.txt",
-                    mimeType: "text/plain"
-                },
-            ], { force: true });
+		cy.get("[ui5-file-uploader]")
+			.as("uploader")
+			.shadow()
+			.find("input[type='file']")
+			.selectFile([
+				{
+					contents: Cypress.Buffer.from("file content"),
+					fileName: "test.txt",
+					mimeType: "text/plain"
+				},
+			], { force: true });
 
-        cy.get("@uploader")
-            .shadow()
-            .find("[ui5-tokenizer]")
-            .as("tokenizer")
-            .should("exist");
+		cy.get("@uploader")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.as("tokenizer")
+			.should("exist");
 
-        cy.get("[ui5-label]")
+		cy.get("[ui5-label]")
 			.realClick();
 
-        cy.get("@uploader")
-            .realPress("ArrowRight");
+		cy.get("@uploader")
+			.realPress("ArrowRight");
 
 
-        cy.get("@tokenizer")
-            .find("[ui5-token]")
-            .first()
-            .should("exist")
-            .and("be.focused");
+		cy.get("@tokenizer")
+			.find("[ui5-token]")
+			.first()
+			.should("exist")
+			.and("be.focused");
 
-        cy.get("@uploader")
-            .realPress("ArrowLeft");
+		cy.get("@uploader")
+			.realPress("ArrowLeft");
 
-        cy.get("@uploader")
-            .should("be.focused");
-    });
+		cy.get("@uploader")
+			.should("be.focused");
+	});
 
-    it("RTL focus in and out of the tokenizer", () => {
-        cy.mount(
+	it("RTL focus in and out of the tokenizer", () => {
+		cy.mount(
 			<div dir="rtl">
 				<Label for="uploader">Application context</Label>
 				<FileUploader id="uploader"></FileUploader>
 			</div>
 		);
 
-        cy.get("[ui5-file-uploader]")
-            .as("uploader")
-            .shadow()
-            .find("input[type='file']")
-            .selectFile([
-                {
-                    contents: Cypress.Buffer.from("file content"),
-                    fileName: "test.txt",
-                    mimeType: "text/plain"
-                },
-            ], { force: true });
+		cy.get("[ui5-file-uploader]")
+			.as("uploader")
+			.shadow()
+			.find("input[type='file']")
+			.selectFile([
+				{
+					contents: Cypress.Buffer.from("file content"),
+					fileName: "test.txt",
+					mimeType: "text/plain"
+				},
+			], { force: true });
 
-        cy.get("@uploader")
-            .shadow()
-            .find("[ui5-tokenizer]")
-            .as("tokenizer")
-            .should("exist");
+		cy.get("@uploader")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.as("tokenizer")
+			.should("exist");
 
-        cy.get("[ui5-label]")
+		cy.get("[ui5-label]")
 			.realClick();
 
-        cy.get("@uploader")
-            .realPress("ArrowLeft");
+		cy.get("@uploader")
+			.realPress("ArrowLeft");
 
 
-        cy.get("@tokenizer")
-            .find("[ui5-token]")
-            .first()
-            .should("exist")
-            .and("be.focused");
+		cy.get("@tokenizer")
+			.find("[ui5-token]")
+			.first()
+			.should("exist")
+			.and("be.focused");
 
-        cy.get("@uploader")
-            .realPress("ArrowRight");
+		cy.get("@uploader")
+			.realPress("ArrowRight");
 
-        cy.get("@uploader")
-            .should("be.focused");
-    });
+		cy.get("@uploader")
+			.should("be.focused");
+	});
 
-    it("clear all tokens via mouse", () => {
-        cy.mount(
-            <FileUploader id="uploader" multiple></FileUploader>
+	it("clear all tokens via mouse", () => {
+		cy.mount(
+			<FileUploader id="uploader" multiple></FileUploader>
 		);
 
-        cy.get("[ui5-file-uploader]")
-            .as("uploader")
-            .shadow()
-            .find("input[type='file']")
-            .selectFile([
-                {
-                    contents: Cypress.Buffer.from("file content"),
-                    fileName: "one.txt",
-                    mimeType: "text/plain"
-                },
-                {
-                    contents: Cypress.Buffer.from("file content"),
-                    fileName: "two.txt",
-                    mimeType: "text/plain"
-                },
-            ], { force: true });
+		cy.get("[ui5-file-uploader]")
+			.as("uploader")
+			.shadow()
+			.find("input[type='file']")
+			.selectFile([
+				{
+					contents: Cypress.Buffer.from("file content"),
+					fileName: "one.txt",
+					mimeType: "text/plain"
+				},
+				{
+					contents: Cypress.Buffer.from("file content"),
+					fileName: "two.txt",
+					mimeType: "text/plain"
+				},
+			], { force: true });
 
-        cy.get("@uploader")
-            .shadow()
-            .find("[ui5-tokenizer]")
-            .as("tokenizer")
-            .find("[ui5-token]")
-            .should("have.length", 2);
+		cy.get("@uploader")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.as("tokenizer")
+			.find("[ui5-token]")
+			.should("have.length", 2);
 
-        cy.get("@uploader")
-            .shadow()
-            .find(".ui5-file-uploader-clear-icon")
-            .realClick();
+		cy.get("@uploader")
+			.shadow()
+			.find(".ui5-file-uploader-clear-icon")
+			.realClick();
 
-        cy.get("@tokenizer")
-            .should("not.exist");
-    });
+		cy.get("@tokenizer")
+			.should("not.exist");
+	});
 
-    it("clear all tokens via keyboard", () => {
-        cy.mount(
+	it("clear all tokens via keyboard", () => {
+		cy.mount(
 			<>
 				<Label for="uploader">Application context</Label>
 				<FileUploader id="uploader" multiple></FileUploader>
 			</>
 		);
 
-        cy.get("[ui5-file-uploader]")
-            .as("uploader")
-            .shadow()
-            .find("input[type='file']")
-            .selectFile([
-                {
-                    contents: Cypress.Buffer.from("file content"),
-                    fileName: "one.txt",
-                    mimeType: "text/plain"
-                },
-                {
-                    contents: Cypress.Buffer.from("file content"),
-                    fileName: "two.txt",
-                    mimeType: "text/plain"
-                },
-            ], { force: true });
+		cy.get("[ui5-file-uploader]")
+			.as("uploader")
+			.shadow()
+			.find("input[type='file']")
+			.selectFile([
+				{
+					contents: Cypress.Buffer.from("file content"),
+					fileName: "one.txt",
+					mimeType: "text/plain"
+				},
+				{
+					contents: Cypress.Buffer.from("file content"),
+					fileName: "two.txt",
+					mimeType: "text/plain"
+				},
+			], { force: true });
 
-        cy.get("@uploader")
-            .shadow()
-            .find("[ui5-tokenizer]")
-            .as("tokenizer")
-            .find("[ui5-token]")
-            .should("have.length", 2);
+		cy.get("@uploader")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.as("tokenizer")
+			.find("[ui5-token]")
+			.should("have.length", 2);
 
-        cy.get("[ui5-label]")
+		cy.get("[ui5-label]")
 			.realClick();
 
-        cy.get("@uploader")
-            .realPress("Delete");
+		cy.get("@uploader")
+			.realPress("Delete");
 
-        cy.get("@tokenizer")
-            .should("not.exist");
-    });
+		cy.get("@tokenizer")
+			.should("not.exist");
+	});
 
-    it("file size exceeds limit", () => {
-        cy.mount(
-            <FileUploader id="uploader" max-file-size="1"></FileUploader>
+	it("file size exceeds limit", () => {
+		cy.mount(
+			<FileUploader id="uploader" max-file-size="1"></FileUploader>
 		);
 
-        cy.get("[ui5-file-uploader]")
-            .as("uploader")
-            .shadow()
-            .find("input[type='file']")
-            .selectFile([
-                {
-                    contents: new Uint8Array(2 * 1024 * 1024), // 2 MB buffer
-                    fileName: "one.txt",
-                    mimeType: "text/plain"
-                }
-            ], { force: true });
+		cy.get("[ui5-file-uploader]")
+			.as("uploader")
+			.shadow()
+			.find("input[type='file']")
+			.selectFile([
+				{
+					contents: new Uint8Array(2 * 1024 * 1024), // 2 MB buffer
+					fileName: "one.txt",
+					mimeType: "text/plain"
+				}
+			], { force: true });
 
-        cy.get("@uploader")
-            .shadow()
-            .find("[ui5-tokenizer]")
-            .should("not.exist");
-    });
+		cy.get("@uploader")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.should("not.exist");
+	});
 });
 
 describe("Accessibility", () => {
@@ -379,9 +379,9 @@ describe("Accessibility", () => {
 			.and("have.attr", "data-sap-focus-ref", "true");
 	});
 
-    it("accessibleName", () => {
+	it("accessibleName", () => {
 		cy.mount(
-            <FileUploader accessible-name="Application context"></FileUploader>
+			<FileUploader accessible-name="Application context"></FileUploader>
 		);
 
 		cy.get("[ui5-file-uploader]")
@@ -391,7 +391,7 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-label", "Application context");
 	});
 
-    it("accessibleNameRef", () => {
+	it("accessibleNameRef", () => {
 		cy.mount(
 			<>
 				<Label id="uploaderLabel">Application context</Label>
