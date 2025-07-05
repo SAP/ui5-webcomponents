@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.23](https://github.com/SAP/ui5-webcomponents/compare/v1.24.22...v1.24.23) (2025-07-05)
+
+
+### Bug Fixes
+
+* **ui5-combobox:** add translations ([#11798](https://github.com/SAP/ui5-webcomponents/issues/11798)) ([fcd216c](https://github.com/SAP/ui5-webcomponents/commit/fcd216cbd481cb76bc0eacbfe2454d7ace5ec5d2))
+
+
+
+
+
 ## [1.24.22](https://github.com/SAP/ui5-webcomponents/compare/v1.24.21...v1.24.22) (2025-06-05)
 
 
