@@ -266,7 +266,6 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			</div>
 		);
 
-		// Focus the input and move cursor to the middle
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
 			.shadow()
@@ -274,22 +273,18 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.as("input")
 			.realClick();
 
-		// Move cursor to position 2 (middle of "test text")
 		cy.get("@input").then(($input) => {
 			($input[0] as HTMLInputElement).setSelectionRange(2, 2);
 		});
 
-		// Press right arrow - should NOT move focus to token since cursor is not at start
 		cy.get("@input").realPress("ArrowRight");
 
-		// Verify input is still focused (cursor should move within text)
 		cy.get("@input")
 			.should("be.focused")
 			.should(($input) => {
 				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(1);
 			});
 
-		// Verify no token is focused
 		cy.get("@mcb")
 			.shadow()
 			.find("[ui5-tokenizer]")
@@ -308,7 +303,6 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			</div>
 		);
 
-		// Focus the input and select all text
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
 			.shadow()
@@ -316,22 +310,17 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.as("input")
 			.realClick();
 
-		// Select all text
 		cy.get("@input").realPress(["Control", "a"]);
 
-		// Verify text is selected
 		cy.get("@input").should(($input) => {
 			expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
-			expect(($input[0] as HTMLInputElement).selectionEnd).to.equal(4); // "test".length
+			expect(($input[0] as HTMLInputElement).selectionEnd).to.equal(4);
 		});
 
-		// Press right arrow - should NOT move focus to token since text is selected
 		cy.get("@input").realPress("ArrowRight");
 
-		// Verify input is still focused
 		cy.get("@input").should("be.focused");
 
-		// Verify no token is focused
 		cy.get("@mcb")
 			.shadow()
 			.find("[ui5-tokenizer]")
@@ -404,6 +393,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.get("@lastToken").realPress("ArrowRight");
 		cy.get("@input").should("be.focused");
 	});
+
 
 	it("should handle empty input case in RTL mode", () => {
 		cy.mount(
