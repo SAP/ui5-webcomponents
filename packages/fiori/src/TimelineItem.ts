@@ -204,6 +204,28 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	get isGroupItem() {
 		return false;
 	}
+
+	get _getAccessibleLabel() {
+		const parts = [];
+
+		if (this.name) {
+			parts.push(this.name);
+		}
+
+		if (this.titleText) {
+			parts.push(this.titleText);
+		}
+
+		if (this.subtitleText) {
+			parts.push(this.subtitleText);
+		}
+
+		if (this.timelineItemStateText) {
+			parts.push(this.timelineItemStateText);
+		}
+
+		return parts.join(", ");
+	}
 }
 
 TimelineItem.define();
