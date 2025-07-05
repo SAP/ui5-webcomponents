@@ -22,6 +22,7 @@ export default function FileUploaderTemplate(this: FileUploader) {
 					<input
 						type="file"
 						class="ui5-file-uploader-native-input"
+						name={this.name}
 						multiple={this.multiple}
 						accept={this.accept}
 						disabled={this.disabled}

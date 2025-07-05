@@ -497,7 +497,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	_fileNamesList(files: FileList) : Array<string> {
 		return Array.from(files)
 			.map(file => file.name)
-			.sort((a, b) => a.length - b.length); // workaround for incident #11824
+			.sort((a, b) => a.length - b.length || a.localeCompare(b)); // workaround for incident #11824
 	}
 
 	/**
