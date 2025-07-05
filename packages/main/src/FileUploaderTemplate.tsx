@@ -72,6 +72,7 @@ export default function FileUploaderTemplate(this: FileUploader) {
 								</>
 							) : (
 								<input
+									id="display-inner"
 									class="ui5-file-uploader-display-input"
 									tabindex={-1}
 									aria-hidden="true"
