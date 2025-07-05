@@ -314,9 +314,13 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	_onclick() {
-		if (this.getDomRef()?.matches(":focus-within")) {
+		if (this.getFocusDomRef()?.matches(":focus-within")) {
 			this._openFileBrowser();
 		}
+	}
+
+	_onNativeInputClick(e: MouseEvent) {
+		e.stopPropagation();
 	}
 
 	_onmousedown(e: MouseEvent) {
@@ -331,6 +335,11 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 		if (this.hideInput) {
 			return;
+		}
+
+		if (isEnter(e)) {
+			e.preventDefault();
+			this._openFileBrowser();
 		}
 
 		if (isSpace(e)) {

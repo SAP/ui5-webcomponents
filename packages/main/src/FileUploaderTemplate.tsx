@@ -33,6 +33,7 @@ export default function FileUploaderTemplate(this: FileUploader) {
 						aria-required={this.accInfo.ariaRequired}
 						aria-invalid={this.accInfo.ariaInvalid}
 						placeholder={this.resolvedPlaceholder}
+						onClick={this._onNativeInputClick}
 						onChange={this._onChange}
 						data-sap-focus-ref
 					/>
