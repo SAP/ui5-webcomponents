@@ -22,7 +22,7 @@ export default function FileUploaderPopoverTemplate(this: FileUploader) {
 					"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 				}}
 				style={{
-					"width": `${this._formWidth}px`,
+					...(this._formWidth > 0 ? { width: `${this._formWidth}px` } : {})
 				}}
 			>
 				{
