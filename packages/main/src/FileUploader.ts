@@ -5,7 +5,11 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import {
+	getEffectiveAriaLabelText,
+	getAssociatedLabelForTexts,
+	getAllAccessibleNameRefTexts,
+} from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -210,6 +214,22 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 */
 	@property({ type: Boolean })
 	required = false;
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	accessibleName?: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that label the input.
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * @private
@@ -553,7 +573,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			"ariaRequired": this.required || undefined,
 			"ariaInvalid": this.valueState === ValueState.Negative || undefined,
 			"ariaHasPopup": "dialog",
-			"ariaLabel": getAssociatedLabelForTexts(this) || undefined,
+			"ariaLabel": getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || undefined,
 		};
 	}
 

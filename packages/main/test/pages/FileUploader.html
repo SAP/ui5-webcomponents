@@ -24,15 +24,15 @@
 		</div>
 
 		<div>
-			<ui5-label for="fileSelector2">Choose files:</ui5-label>
-			<ui5-file-uploader id="fileSelector2" style="width: 350px;" multiple value-state="Negative">
+			<ui5-label>Choose files:</ui5-label>
+			<ui5-file-uploader id="fileSelector2" style="width: 350px;" accessible-name="Choose Files" multiple value-state="Negative">
 				<ui5-button>Upload</ui5-button>
 			</ui5-file-uploader>
 		</div>
 
 		<div>
-			<ui5-label for="fileSelector3">Choose files:</ui5-label>
-			<ui5-file-uploader id="fileSelector3" style="width: 350px;" multiple value-state="Positive">
+			<ui5-label id="labelForUploader3">Choose files:</ui5-label>
+			<ui5-file-uploader id="fileSelector3" style="width: 350px;" accessible-name-ref="labelForUploader3" multiple value-state="Positive">
 				<ui5-button>Upload</ui5-button>
 				<div slot="valueStateMessage">The selected files are uploaded successfully</div>
 			</ui5-file-uploader>

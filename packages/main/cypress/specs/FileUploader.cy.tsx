@@ -378,4 +378,31 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-invalid", "true")
 			.and("have.attr", "data-sap-focus-ref", "true");
 	});
+
+    it("accessibleName", () => {
+		cy.mount(
+            <FileUploader accessible-name="Application context"></FileUploader>
+		);
+
+		cy.get("[ui5-file-uploader]")
+			.as("uploader")
+			.shadow()
+			.find("input[type='file']")
+			.should("have.attr", "aria-label", "Application context");
+	});
+
+    it("accessibleNameRef", () => {
+		cy.mount(
+			<>
+				<Label id="uploaderLabel">Application context</Label>
+				<FileUploader id="uploader" accessible-name-ref="uploaderLabel"></FileUploader>
+			</>
+		);
+
+		cy.get("[ui5-file-uploader]")
+			.as("uploader")
+			.shadow()
+			.find("input[type='file']")
+			.should("have.attr", "aria-label", "Application context");
+	});
 });
