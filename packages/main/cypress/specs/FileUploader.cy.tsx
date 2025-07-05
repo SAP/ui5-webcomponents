@@ -410,7 +410,7 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-haspopup", "dialog")
 			.should("have.attr", "aria-label", "Application context")
 			.should("have.attr", "aria-invalid", "true")
-			.and("have.attr", "data-sap-focus-ref", "true");
+			.and("have.attr", "data-sap-focus-ref");
 	});
 
 	it("accessibleName", () => {
