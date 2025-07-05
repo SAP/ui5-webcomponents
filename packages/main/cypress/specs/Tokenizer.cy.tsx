@@ -236,7 +236,7 @@ describe("Tokenizer - Popover List Item Text Updates", () => {
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(0)
-			.should("contain.text", "Original Text");
+			.should("have.attr", "text", "Original Text");
 
 		cy.get("#token-to-modify").then($token => {
 			const token = $token.get(0) as Token;
@@ -247,13 +247,13 @@ describe("Tokenizer - Popover List Item Text Updates", () => {
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(0)
-			.should("contain.text", "Updated Text");
+			.should("have.attr", "text", "Updated Text");
 
 		cy.get("#test-token-text-update")
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(0)
-			.should("not.contain.text", "Original Text");
+			.should("not.have.attr", "text", "Original Text");
 	});
 
 	it("updates multiple list items when multiple token texts change", () => {
@@ -276,13 +276,13 @@ describe("Tokenizer - Popover List Item Text Updates", () => {
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(0)
-			.should("contain.text", "Token 1");
+			.should("have.attr", "text", "Token 1");
 
 		cy.get("#test-multiple-token-updates")
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(1)
-			.should("contain.text", "Token 2");
+			.should("have.attr", "text", "Token 2");
 
 		cy.get("#token-1").then($token => {
 			const token = $token.get(0) as Token;
@@ -298,19 +298,19 @@ describe("Tokenizer - Popover List Item Text Updates", () => {
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(0)
-			.should("contain.text", "Modified Token 1");
+			.should("have.attr", "text", "Modified Token 1");
 
 		cy.get("#test-multiple-token-updates")
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(1)
-			.should("contain.text", "Modified Token 2");
+			.should("have.attr", "text", "Modified Token 2");
 
 		// Verify unchanged token remains the same
 		cy.get("#test-multiple-token-updates")
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(2)
-			.should("contain.text", "Token 3");
+			.should("have.attr", "text", "Token 3");
 	});
 });
