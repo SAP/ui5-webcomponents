@@ -15,7 +15,7 @@ export default function DynamicDateRangeInputTemplate(this: DynamicDateRange) {
 				data-sap-focus-ref
 				id={`${this._id}-inner`}
 				class="ui5-dynamic-date-range-input"
-				value={this.value && this.getOption(this.value?.operator)?.format(this.value)}
+				value={this.displayValue}
 				onChange={this.onInputChange}
 				onKeyDown={this.onInputKeyDown}
 			>
