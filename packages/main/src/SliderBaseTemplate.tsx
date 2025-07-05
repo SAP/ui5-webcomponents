@@ -41,8 +41,13 @@ export default function SliderBaseTemplate(this: SliderBase, hooks?: {
 							}}
 							style={this.styles.labelContainer}
 							>
-								{this._labels.map(l =>
-									<li style={this.styles.label}>{l}</li>
+								{this._hiddenTickmarks ? (
+									<>
+										<li data-counter={this._effectiveMin}></li>
+										<li data-counter={this._effectiveMax}></li>
+									</>
+								) : this._labels.map(l =>
+									<li data-counter={l}>|</li>
 								)}
 							</ul>
 					}

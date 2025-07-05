@@ -637,7 +637,9 @@ abstract class SliderBase extends UI5Element {
 
 		const labelInterval = this.labelInterval;
 		const step = this._effectiveStep;
-		const newNumberOfLabels = (this._effectiveMax - this._effectiveMin) / (step * labelInterval);
+
+		// tickmarks = ((max - min) / step) + 1
+		const newNumberOfLabels = ((this._effectiveMax - this._effectiveMin) / step) + 1;
 
 		// If the required labels are already rendered
 		if (newNumberOfLabels === this._oldNumberOfLabels && this._oldMin === this._effectiveMin && this._oldMax === this._effectiveMax) {
@@ -657,7 +659,7 @@ abstract class SliderBase extends UI5Element {
 		// calculation to be precize (exactly the same as the distance between the tickmarks).
 		// That's ok as the loop stop condition is set to an integer, so it will practically
 		// "floor" the number of labels anyway.
-		for (let i = 0; i <= newNumberOfLabels; i++) {
+		for (let i = 0; i < newNumberOfLabels; i++) {
 			// Format the label numbers with the same decimal precision as the value of the step property
 			const labelItemNumber = ((i * step * labelInterval) + this._effectiveMin).toFixed(stepPrecision);
 			this._labelValues.push(labelItemNumber);
@@ -710,7 +712,7 @@ abstract class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_spaceBetweenTickmarks() {
-		return this.getBoundingClientRect().width / this._tickmarksCount;
+		return (this.getBoundingClientRect().width - (this._tickmarksCount * 8)) / this._tickmarksCount;
 	}
 
 	/**
