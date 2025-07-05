@@ -42,7 +42,7 @@ export default function TokenizerPopoverTemplate(this: Tokenizer) {
 				onItemDelete={this.itemDelete}
 			>
 				{this._tokens
-					.map(token => <ListItemStandard key={String(token._id)} data-ui5-token-ref-id={token._id} wrappingType="Normal">{token.text}</ListItemStandard>)}
+					.map(token => <ListItemStandard key={String(token._id)} data-ui5-token-ref-id={token._id} wrappingType="Normal" text={token.text}></ListItemStandard>)}
 			</List>
 
 			{this._isPhone &&

@@ -333,6 +333,10 @@ class Tokenizer extends UI5Element {
 		type: HTMLElement,
 		"default": true,
 		individualSlots: true,
+		invalidateOnChildChange: {
+			properties: ["text"],
+			slots: false,
+		},
 	})
 	tokens!: Array<Token>;
 
