@@ -92,7 +92,7 @@ describe("API", () => {
 
 		cy.get("[ui5-file-uploader]")
 			.shadow()
-			.find("input[type='file']")
+			.find("input.ui5-file-uploader-display-input")
 			.should("have.attr", "placeholder", "Custom placeholder");
 	});
 
@@ -103,7 +103,7 @@ describe("API", () => {
 
 		cy.get("[ui5-file-uploader]")
 			.shadow()
-			.find("input[type='file']")
+			.find("input.ui5-file-uploader-display-input")
 			.should("have.attr", "placeholder", FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_PLACEHOLDER));
 	});
 
@@ -114,7 +114,7 @@ describe("API", () => {
 
 		cy.get("[ui5-file-uploader]")
 			.shadow()
-			.find("input[type='file']")
+			.find("input.ui5-file-uploader-display-input")
 			.should("have.attr", "placeholder", FileUploader.i18nBundle.getText(FILEUPLOADER_DEFAULT_MULTIPLE_PLACEHOLDER));
 	});
 });
@@ -390,6 +390,34 @@ describe("Interaction", () => {
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.should("not.exist");
+	});
+
+	it("supports drag and drop", () => {
+		cy.mount(<FileUploader id="uploader" multiple></FileUploader>);
+
+		cy.get("[ui5-file-uploader]")
+			.as("uploader")
+			.shadow()
+			.find("input[type='file']")
+			.then($input => {
+				const dataTransfer = new DataTransfer();
+				const file = new File(["file content"], "dragged.txt", { type: "text/plain" });
+				dataTransfer.items.add(file);
+
+				const dropEvent = new Event("drop", { bubbles: true });
+				Object.defineProperty(dropEvent, "dataTransfer", {
+					value: dataTransfer,
+				});
+
+				$input[0].dispatchEvent(dropEvent);
+			});
+
+		cy.get("@uploader")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.should("exist")
+			.find("[ui5-token]")
+			.should("have.length", 1);
 	});
 });
 
