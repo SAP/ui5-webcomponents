@@ -122,9 +122,9 @@
 :host([value-state="Critical"]:not([readonly]):not([disabled])) .ui5-file-uploader-display-elements,
 :host([value-state="Positive"]:not([readonly]):not([disabled])) .ui5-file-uploader-display-elements,
 :host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-file-uploader-display-elements {
-    box-shadow: var(--ui5_value_state-box-shadow);
-    background: var(--ui5_value_state-background);
-    background-color: var(--ui5_value_state-background-color);
+	box-shadow: var(--ui5_value_state-box-shadow);
+	background: var(--ui5_value_state-background);
+	background-color: var(--ui5_value_state-background-color);
 }
 
 /* Value state hover styles */
@@ -169,6 +169,6 @@
 }
 
 :host([focused]:not([opened]):not([readonly]):not([hide-input]))
-    .ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus) .ui5-file-uploader-display-elements::after {
-    border-color: var(--ui5_value_state-focus-outline, var(--_ui5_input_focus_outline_color));
+	.ui5-file-uploader-root:has(.ui5-file-uploader-native-input:focus) .ui5-file-uploader-display-elements::after {
+	border-color: var(--ui5_value_state-focus-outline, var(--_ui5_input_focus_outline_color));
 }
