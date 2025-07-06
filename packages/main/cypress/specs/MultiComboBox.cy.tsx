@@ -213,6 +213,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			});
 
 		cy.get("@input").realPress("ArrowRight");
+		cy.wait(100); // Wait for the focus to be set - stabilizes remote execution
 
 		cy.get("@mcb")
 			.shadow()
@@ -253,6 +254,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			});
 
 		cy.get("@input").realPress("ArrowLeft");
+		cy.wait(100); // Wait for the focus to be set - stabilizes remote execution
 
 		cy.get("@mcb")
 			.shadow()
@@ -330,9 +332,9 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			});
 
 		cy.get("@input").realPress("ArrowRight");
+		cy.wait(100); // Wait for the focus to be set - stabilizes remote execution
 
 		cy.get("@input").should("have.focus");
-
 		cy.get("@mcb")
 			.shadow()
 			.find("[ui5-tokenizer]")
@@ -361,6 +363,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.should("have.focus");
 
 		cy.get("@input").realPress("ArrowRight");
+		cy.wait(100); // Wait for the focus to be set - stabilizes remote execution
 
 		cy.get("@mcb")
 			.shadow()
@@ -396,6 +399,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.should("have.focus");
 
 		cy.get("@input").realPress("ArrowLeft");
+		cy.wait(100); // Wait for the focus to be set - stabilizes remote execution
 
 		cy.get("@mcb")
 			.shadow()
@@ -436,6 +440,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			});
 
 		cy.get("@input").realPress("ArrowRight");
+		cy.wait(100); // Wait for the focus to be set - stabilizes remote execution
 
 		cy.get("@mcb")
 			.shadow()

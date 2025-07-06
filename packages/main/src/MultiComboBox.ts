@@ -734,6 +734,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 		return this.placeholder || "";
 	}
+
 	// If the input is focused and the cursor is at the beginning/end of the input,
 	// focus the last token if the direction is LTR/ RTL
 	get _shouldFocusLastToken(): boolean {
@@ -744,16 +745,18 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		return cursorPosition === 0 && !isTextSelected;
 	}
 
-	_handleArrowLeft() {
-		if (this._shouldFocusLastToken && this.effectiveDir === "ltr") {
+	_handleArrowKey(direction: string) {
+		if (this._shouldFocusLastToken && this.effectiveDir === direction) {
 			this._tokenizer._focusLastToken();
 		}
 	}
 
+	_handleArrowLeft() {
+		this._handleArrowKey("ltr");
+	}
+
 	_handleArrowRight() {
-		if (this._shouldFocusLastToken && this.effectiveDir === "rtl") {
-			this._tokenizer._focusLastToken();
-		}
+		this._handleArrowKey("rtl");
 	}
 
 	_onPopoverFocusOut() {
