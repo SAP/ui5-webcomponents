@@ -18,7 +18,7 @@ export default function FileUploaderTemplate(this: FileUploader) {
 				onDragOver={this._ondrag}
 				onDrop={this._ondrop}
 			>
-				<form class="ui5-file-uploader-form">
+				<form class="ui5-file-uploader-form" onSubmit={this._onFormSubmit}>
 					<input
 						type="file"
 						class="ui5-file-uploader-native-input"
