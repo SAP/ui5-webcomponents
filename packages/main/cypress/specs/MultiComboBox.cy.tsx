@@ -254,7 +254,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			});
 
 		cy.get("@input").realPress("ArrowLeft");
-		cy.wait(100); // Wait for the focus to be set - stabilizes remote execution
+		cy.wait(150); // Wait for the focus to be set - stabilizes remote execution
 
 		cy.get("@mcb")
 			.shadow()
