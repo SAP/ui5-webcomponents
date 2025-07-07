@@ -15,10 +15,10 @@ These components support drag and drop:
 ### Lists and Trees
 - `ui5-list` - Lists with movable items
 - `ui5-li` - List items you can drag
-- `ui5-li-custom` - Custom list items that support drag events
+- `ui5-li-custom` - Custom list items you can drag
 - `ui5-tree` - Trees with movable items
 - `ui5-tree-item` - Tree items you can drag
-- `ui5-tree-item-custom` - Custom tree items that support drag events
+- `ui5-tree-item-custom` - Custom tree items you can drag
 
 ### Tables
 - `ui5-table` - Tables with movable rows
