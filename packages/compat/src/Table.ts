@@ -59,6 +59,7 @@ import TableTemplate from "./TableTemplate.js";
 
 // Styles
 import tableStyles from "./generated/themes/Table.css.js";
+import { patchScopingSuffix } from "./utils/CompatCustomElementsScope.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-table` as rows
@@ -1193,6 +1194,8 @@ class Table extends UI5Element {
 		return this.columnHeader && getLastTabbableElement(this.columnHeader);
 	}
 }
+
+patchScopingSuffix(Table);
 
 Table.define();
 
