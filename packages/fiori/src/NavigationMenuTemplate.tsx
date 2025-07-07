@@ -14,7 +14,6 @@ export default function NavigationMenuTemplate(this: NavigationMenu) {
 			opener={this.opener}
 			open={this.open}
 			preventInitialFocus={true}
-			preventFocusRestore={true}
 			accessibleNameRef={`${this._id}-navigationMenuPopoverText`}
 			onBeforeOpen={this._beforePopoverOpen}
 			onOpen={this._afterPopoverOpen}
