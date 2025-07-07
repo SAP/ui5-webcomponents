@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.3...v2.12.0) (2025-07-04)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** remove redundant placeholder variables from horizon themes ([#11765](https://github.com/SAP/ui5-webcomponents/issues/11765)) ([9e8c35a](https://github.com/SAP/ui5-webcomponents/commit/9e8c35a092260820a460bd63091b4c8e46cd2c51)), closes [#11750](https://github.com/SAP/ui5-webcomponents/issues/11750)
+* **ui5-date-picker, ui5-time-picker:** adjust styles ([#11704](https://github.com/SAP/ui5-webcomponents/issues/11704)) ([eb18c32](https://github.com/SAP/ui5-webcomponents/commit/eb18c327dd4b1cdd04d16377721cfa2c8f422795)), closes [#11605](https://github.com/SAP/ui5-webcomponents/issues/11605) [#11609](https://github.com/SAP/ui5-webcomponents/issues/11609)
+
+
+### Features
+
+* **ui5-date/time*:** introduce translatable fallback placeholder ([#11739](https://github.com/SAP/ui5-webcomponents/issues/11739)) ([02dfbcc](https://github.com/SAP/ui5-webcomponents/commit/02dfbccf73d2cd13464858e38eaf2fb733df3dc8))
+
+
+
+
+
 # [2.12.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.2...v2.12.0-rc.3) (2025-07-03)
 
 
