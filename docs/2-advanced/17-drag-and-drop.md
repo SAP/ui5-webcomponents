@@ -151,35 +151,73 @@ list.addEventListener("dragstart", (event) => {
 });
 ```
 
+Remember to move the selected items in the `move` event instead of just the dragged item:
+
+```javascript
+function handleMove(event) {
+    const { source, destination } = event.detail;
+    
+    // Get the source list to find all selected items
+    const sourceList = source.element.closest('ui5-list');
+    const selectedItems = sourceList.getItems().filter(item => item.selected);
+    
+    // Determine which items to move: all selected items or just the dragged item
+    const itemsToMove = selectedItems.length > 1 && selectedItems.includes(source.element) 
+        ? selectedItems 
+        : [source.element];
+    
+    // Move the items using spread operator
+    switch (destination.placement) {
+        case MovePlacement.Before:
+            destination.element.before(...itemsToMove);
+            break;
+        case MovePlacement.After:
+            destination.element.after(...itemsToMove);
+            break;
+        case MovePlacement.On:
+            destination.element.prepend(...itemsToMove);
+            break;
+    }
+}
+```
 ## Advanced Features
 
 ### Custom Drag Images
 
 You can create custom drag images for better visual feedback:
 
+```css
+.drag-image {
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    border: 2px solid #7c3aed;
+    border-radius: 0.5rem;
+    padding: 1rem 1.5rem;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+    white-space: nowrap;
+    position: absolute;
+    top: -1000px; /* Hide off-screen */
+    left: -1000px; /* Hide off-screen */
+}
+```
+
+Then create a custom drag image element in JavaScript:
+
 ```javascript
 function createCustomDragImage(count) {
     const element = document.createElement("div");
     element.innerHTML = `
-        <div style="
-            background: linear-gradient(135deg, #8b5cf6, #a855f7);
-            border: 2px solid #7c3aed;
-            border-radius: 0.5rem;
-            padding: 1rem 1.5rem;
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
-        ">
+        <div class="drag-image">
             ${count} Items
         </div>
     `;
-    element.style.cssText = "position: absolute; top: -1000px; left: -1000px;";
     document.body.appendChild(element);
     return element;
 }
 
 list.addEventListener("dragstart", (event) => {
-    const selectedItems = getSelectedItems();
+    const selectedItems = list.getItems().filter(item => item.selected);
     if (selectedItems.length > 1) {
         const dragElement = createCustomDragImage(selectedItems.length);
         event.dataTransfer.setDragImage(dragElement, 30, 15);
@@ -316,77 +354,12 @@ Make sure drag and drop works for everyone:
 - Use proper ARIA labels and descriptions
 - Announce drag operations to screen readers
 
-## Complete Example
-
-Here's a working example with multiple selection:
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <script src="@ui5/webcomponents/dist/bundle.esm.js" type="module"></script>
-</head>
-<body>
-    <ui5-list id="dragDropList" header-text="Drag & Drop Demo" selection-mode="Multiple">
-        <ui5-li movable data-id="1">Task 1</ui5-li>
-        <ui5-li movable data-id="2">Task 2</ui5-li>
-        <ui5-li movable data-id="3">Task 3</ui5-li>
-        <ui5-li movable data-id="4">Task 4</ui5-li>
-    </ui5-list>
-
-    <script>
-        const list = document.getElementById("dragDropList");
-
-        // Handle drag start for multiple selection
-        list.addEventListener("dragstart", (event) => {
-            const selectedItems = list.getItems().filter(item => item.selected);
-            const draggedItem = event.target;
-            
-            if (!draggedItem.selected) {
-                selectedItems.forEach(item => item.selected = false);
-                draggedItem.selected = true;
-            }
-            
-            const currentSelected = list.getItems().filter(item => item.selected);
-            if (currentSelected.length > 1) {
-                window["sap-ui-webcomponents-bundle"].startMultipleDrag(currentSelected.length);
-            }
-        });
-
-        // Validate drop operations
-        list.addEventListener("ui5-move-over", (event) => {
-            const { destination, source } = event.detail;
-            
-            if (destination.placement === "Before" || destination.placement === "After") {
-                event.preventDefault();
-            }
-        });
-
-        // Handle successful drops
-        list.addEventListener("ui5-move", (event) => {
-            const { destination, source } = event.detail;
-            
-            switch (destination.placement) {
-                case "Before":
-                    destination.element.before(source.element);
-                    break;
-                case "After":
-                    destination.element.after(source.element);
-                    break;
-            }
-        });
-    </script>
-</body>
-</html>
-```
-
 ## TypeScript Support
 
 When using TypeScript, import the right types:
 
 ```typescript
 import type { ListMoveEventDetail } from "@ui5/webcomponents/dist/List.js";
-import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 
 const handleMove = (event: CustomEvent<ListMoveEventDetail>) => {
     const { source, destination } = event.detail;
