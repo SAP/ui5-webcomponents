@@ -21,6 +21,22 @@
             color: #a9a7a7;
             margin-bottom: 1rem;
         }
+
+        .direct-drag-image {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            border: 2px solid #7c3aed;
+            border-radius: 0.5rem;
+            padding: 1rem 1.5rem;
+            font-family: var(--sapFontFamily);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+            white-space: nowrap;
+            position: absolute; 
+            top: -1000px; 
+            left: -1000px;
+        }
     </style>
 </head>
 <body>
@@ -86,22 +102,10 @@
         function createPurpleDragImage(count) {
             const element = document.createElement("div");
             element.innerHTML = `
-                <div style="
-                    background: linear-gradient(135deg, #8b5cf6, #a855f7);
-                    border: 2px solid #7c3aed;
-                    border-radius: 0.5rem;
-                    padding: 1rem 1.5rem;
-                    font-family: var(--sapFontFamily);
-                    font-size: 0.875rem;
-                    font-weight: 600;
-                    color: white;
-                    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
-                    white-space: nowrap;
-                ">
+                <div class="direct-drag-image">
                     ${count} Direct Items
                 </div>
             `;
-            element.style.cssText = "position: absolute; top: -1000px; left: -1000px;";
             document.body.appendChild(element);
             return element;
         }
