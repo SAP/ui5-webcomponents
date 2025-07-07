@@ -6,7 +6,7 @@ title: Drag and Drop
 
 *UI5 Web Components has built-in drag and drop for lists, trees, tables, and tabs. This guide shows you how to use it.*
 
-You can drag items to reorder them or move them between components. The framework handles visual feedback and multiple selections for you.
+You can drag items to reorder them or move them between components. The framework handles visual feedback and multiple selection for you.
 
 ## Supported Components
 
@@ -15,8 +15,10 @@ These components support drag and drop:
 ### Lists and Trees
 - `ui5-list` - Lists with movable items
 - `ui5-li` - List items you can drag
+- `ui5-li-custom` - Custom list items that support drag events
 - `ui5-tree` - Trees with movable items
 - `ui5-tree-item` - Tree items you can drag
+- `ui5-tree-item-custom` - Custom tree items that support drag events
 
 ### Tables
 - `ui5-table` - Tables with movable rows
@@ -130,7 +132,7 @@ You can drag multiple selected items at once when using lists with multiple sele
 When you select multiple items and drag one of them, all selected items move together:
 
 ```javascript
-import { startMultipleDrag } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import { startMultipleDrag } from "@ui5/webcomponents-base/dist/DragAndDrop.js";
 
 list.addEventListener("dragstart", (event) => {
     const selectedItems = list.getItems().filter(item => item.selected);
@@ -292,7 +294,7 @@ list2.addEventListener("ui5-move-over", handleCrossListMove);
 For advanced cases, use the DragRegistry API to control multiple drag operations programmatically:
 
 ```javascript
-import { startMultipleDrag } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import { startMultipleDrag } from "@ui5/webcomponents-base/dist/DragAndDrop.js";
 
 // Start a multiple drag operation
 startMultipleDrag(itemCount);

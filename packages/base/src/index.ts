@@ -15,7 +15,7 @@ import {
 } from "./config/Icons.js";
 import { RegisteredIconCollection } from "./asset-registries/util/IconCollectionsByTheme.js";
 import getEffectiveIconCollection from "./asset-registries/util/getIconCollectionByTheme.js";
-import { startMultipleDrag } from "./util/dragAndDrop/DragRegistry.js";
+import { startMultipleDrag } from "./DragAndDrop.js";
 import {
 	getLanguage,
 	setLanguage,

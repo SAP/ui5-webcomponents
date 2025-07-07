@@ -2,7 +2,7 @@ import "@ui5/webcomponents/dist/List.js";
 import "@ui5/webcomponents/dist/ListItemStandard.js";
 import "@ui5/webcomponents-icons/dist/task.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
-import { startMultipleDrag } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import { startMultipleDrag } from "@ui5/webcomponents-base/dist/DragAndDrop.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 
 const lists = [

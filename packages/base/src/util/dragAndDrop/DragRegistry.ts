@@ -73,7 +73,7 @@ const createDefaultMultiDragElement = async (count: number): Promise<HTMLElement
 	styles.replaceSync(MultipleDragGhostCss);
 
 	dragElementShadow.adoptedStyleSheets = [styles];
-	dragElementShadow.innerHTML = i18nBundle.getText(DRAG_DROP_MULTIPLE_TEXT, count);
+	dragElementShadow.textContent = i18nBundle.getText(DRAG_DROP_MULTIPLE_TEXT, count);
 
 	return dragElement;
 };
