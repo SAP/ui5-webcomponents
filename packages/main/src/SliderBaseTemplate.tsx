@@ -35,15 +35,15 @@ export default function SliderBaseTemplate(this: SliderBase, hooks?: {
 						</>)}
 					</ul>
 					{!!this.labelInterval &&
-							<ul class={{
-								"ui5-slider-labels": true,
-								"ui5-slider-hidden-labels": this._labelsOverlapping,
-							}}
-							>
-							    {this._labels.map(l =>
-									<li data-counter={l}></li>
-								)}
-							</ul>
+						<ul class={{
+							"ui5-slider-labels": true,
+							"ui5-slider-hidden-labels": this._labelsOverlapping,
+						}}
+						>
+							{this._labels.map(l =>
+								<li data-counter={l}></li>
+							)}
+						</ul>
 					}
 				</>}
 
