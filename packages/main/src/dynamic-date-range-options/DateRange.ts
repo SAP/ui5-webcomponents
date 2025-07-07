@@ -26,18 +26,7 @@ class DateRange implements IDynamicDateRangeOption {
 		const returnValue = { operator: "", values: [] } as DynamicDateRangeValue;
 
 		returnValue.operator = this.operator;
-		const parsedDates = this.getFormat().parse(value) as Array<Date>;
-
-		// Handle backwards date ranges by automatically flipping them, e.g June 10th - June 5th => June 5th - June 10th
-		if (parsedDates && parsedDates.length === 2 && parsedDates[0] && parsedDates[1]) {
-			if (parsedDates[0].getTime() > parsedDates[1].getTime()) {
-				returnValue.values = [parsedDates[1], parsedDates[0]];
-			} else {
-				returnValue.values = parsedDates;
-			}
-		} else {
-			returnValue.values = parsedDates;
-		}
+		returnValue.values = this.getFormat().parse(value) as Date[];
 
 		return returnValue;
 	}
