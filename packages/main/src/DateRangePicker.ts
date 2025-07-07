@@ -21,6 +21,7 @@ import type {
 } from "./DatePicker.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import type CalendarSelectionMode from "./types/CalendarSelectionMode.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 
 const DEFAULT_DELIMITER = "-";
 
@@ -128,7 +129,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	}
 
 	get _tempTimestamp() {
-		return this._tempValue && (this.getFormat().parse(this._tempValue, true) as Date).getTime() / 1000;
+		return this._tempValue && (this.getValueFormat().parse(this._tempValue, true) as Date).getTime() / 1000; // valueformat
 	}
 
 	/**
@@ -318,7 +319,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		const partsArray = value.split(this._prevDelimiter || this._effectiveDelimiter);
 
 		// if format successfully parse the value, the value contains only single date
-		if (this.getFormat().parse(value)) {
+		if (this.getValueFormat().parse(value)) {
 			valuesArray[0] = partsArray.join(this._effectiveDelimiter);
 			valuesArray[1] = "";
 		} else {
@@ -327,6 +328,38 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		}
 
 		return valuesArray;
+	}
+
+	getDisplayFormat() {
+		return this._isDisplayFormatPattern
+			? DateFormat.getDateInstance({
+				strictParsing: true,
+				pattern: this._displayFormat,
+				calendarType: this._primaryCalendarType,
+				interval: true,
+			})
+			: DateFormat.getDateInstance({
+				strictParsing: true,
+				style: this._displayFormat,
+				calendarType: this._primaryCalendarType,
+				interval: true,
+			});
+	}
+
+	getValueFormat() {
+		return this._isValueFormatPattern
+			? DateFormat.getDateInstance({
+				strictParsing: true,
+				pattern: this._valueFormat,
+				calendarType: this._primaryCalendarType,
+				interval: true,
+			})
+			: DateFormat.getDateInstance({
+				strictParsing: true,
+				style: this._valueFormat,
+				calendarType: this._primaryCalendarType,
+				interval: true,
+			});
 	}
 
 	/**
@@ -340,7 +373,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 
 		const dateStrings = this._splitValueByDelimiter(value); // at least one item guaranteed due to the checks above (non-empty and valid)
 
-		const parsedDate = this.getFormat().parse(dateStrings[0], true) as Date;
+		const parsedDate = this.getValueFormat().parse(dateStrings[0], true) as Date;
 		return parsedDate.getTime() / 1000;
 	}
 
@@ -355,7 +388,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 
 		const dateStrings = this._splitValueByDelimiter(value);
 		if (dateStrings[1]) {
-			const parsedDate = this.getFormat().parse(dateStrings[1], true) as Date;
+			const parsedDate = this.getValueFormat().parse(dateStrings[1], true) as Date;
 			return parsedDate.getTime() / 1000;
 		}
 

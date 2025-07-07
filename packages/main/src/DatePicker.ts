@@ -616,7 +616,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			return true;
 		}
 
-		return !!this.getFormat().parse(value); //value or display
+		return !!this.getFormat().parse(value);
 	}
 
 	/**

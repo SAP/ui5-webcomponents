@@ -185,7 +185,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		if (this.open) {
 			this._previewValues = {
 				...this._previewValues,
-				timeSelectionValue: this.value || this.getFormat().format(UI5Date.getInstance()),
+				timeSelectionValue: this.value || this.getValueFormat().format(UI5Date.getInstance()),
 			};
 		}
 	}
@@ -317,7 +317,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	_submitClick() {
 		const selectedDate = this.getSelectedDateTime();
 
-		const value = this.getFormat().format(selectedDate);
+		const value = this.getValueFormat().format(selectedDate);
 		if (this.value !== value) {
 			this._updateValueAndFireEvents(value, true, ["change", "value-changed"]);
 		}
@@ -362,8 +362,8 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	}
 
 	getSelectedDateTime() {
-		const selectedDate = this.getFormat().parse(this._calendarSelectedDates[0]) as Date;
-		const selectedTime = this.getFormat().parse(this._timeSelectionValue) as Date;
+		const selectedDate = this.getValueFormat().parse(this._calendarSelectedDates[0]) as Date;
+		const selectedTime = this.getValueFormat().parse(this._timeSelectionValue) as Date;
 		if (selectedTime) {
 			selectedDate.setHours(selectedTime.getHours());
 			selectedDate.setMinutes(selectedTime.getMinutes());
