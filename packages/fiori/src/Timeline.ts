@@ -51,6 +51,7 @@ interface ITimelineItem extends UI5Element, ITabbable {
 	lastItem: boolean;
 	isNextItemGroup?: boolean;
 	firstItemInTimeline?: boolean;
+	effectiveRole?: string;
 }
 
 const SHORT_LINE_WIDTH = "ShortLineWidth";
@@ -304,8 +305,14 @@ class Timeline extends UI5Element {
 			return;
 		}
 
+		const hasGroupItems = this.items.some(item => item.isGroupItem);
+
 		for (let i = 0; i < this.items.length; i++) {
 			this.items[i].layout = this.layout;
+			if (hasGroupItems) {
+				this.items[i].effectiveRole = "treeitem";
+			}
+
 			if (this.items[i + 1] && !!this.items[i + 1].icon) {
 				this.items[i].forcedLineWidth = SHORT_LINE_WIDTH;
 			} else if (this.items[i].icon && this.items[i + 1] && !this.items[i + 1].icon) {

@@ -164,6 +164,12 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	hidden = false;
 
 	/**
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	effectiveRole: "listitem" | "treeitem" = "listitem";
+
+	/**
 	 * Defines the position of the item in a group.
 	 * @private
 	 */

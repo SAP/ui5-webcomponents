@@ -4,10 +4,6 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 
 export default function TimelineItemTemplate(this: TimelineItem) {
-	// Determine if this item is in a tree structure
-	const isInTree = this.positionInGroup !== undefined;
-	const itemRole = isInTree ? "treeitem" : "listitem";
-
 	// Create accessible label with status information
 	const accessibleLabel = this._getAccessibleLabel;
 
@@ -34,7 +30,7 @@ export default function TimelineItemTemplate(this: TimelineItem) {
 				<div
 					data-sap-focus-ref
 					class="ui5-tli-bubble"
-					role={itemRole}
+					role={this.effectiveRole}
 					tabindex={parseInt(this.forcedTabIndex)}
 					aria-label={accessibleLabel}
 					aria-description={this.timelineItemStateText}
