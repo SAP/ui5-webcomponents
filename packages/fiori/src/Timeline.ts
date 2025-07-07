@@ -305,11 +305,9 @@ class Timeline extends UI5Element {
 			return;
 		}
 
-		const hasGroupItems = this.items.some(item => item.isGroupItem);
-
 		for (let i = 0; i < this.items.length; i++) {
 			this.items[i].layout = this.layout;
-			if (hasGroupItems) {
+			if (this.hasGroupItems) {
 				this.items[i].effectiveRole = "treeitem";
 			}
 
@@ -433,6 +431,10 @@ class Timeline extends UI5Element {
 	focusItem(item: ITimelineItem | ToggleButton) {
 		this._itemNavigation.setCurrentItem(item);
 		item.focus();
+	}
+
+	get hasGroupItems() {
+		return this.items.some(item => item.isGroupItem);
 	}
 
 	get _navigableItems() {

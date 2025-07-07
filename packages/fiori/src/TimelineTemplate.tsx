@@ -3,11 +3,8 @@ import type Timeline from "./Timeline.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 
 export default function TimelineTemplate(this: Timeline) {
-	const hasGroupItems = this.items.some(item => item.isGroupItem);
-
 	// Determine roles based on content structure
-	const listRole: "list" | "tree" = hasGroupItems ? "tree" : "list";
-	const itemRole: "listitem" | "treeitem" = hasGroupItems ? "treeitem" : "listitem";
+	const listRole: "list" | "tree" = this.hasGroupItems ? "tree" : "list";
 
 	return (
 		<div class="ui5-timeline-root"
