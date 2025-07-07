@@ -689,7 +689,7 @@ describe("Popover opener", () => {
 		cy.get("[ui5-popover]").should("not.be.visible");
 	});
 
-	[...Array(100)].forEach(() => {  it.only("tests focus when content, which can't be focused is clicked", () => {
+	it("tests focus when content, which can't be focused is clicked", () => {
 		cy.mount(
 			<>
 				<Button id="btnOpenPopoverWithDiv">Open</Button>
@@ -711,7 +711,6 @@ describe("Popover opener", () => {
 
 		cy.get("[ui5-popover]").should("not.be.visible");
 	});
-});
 
 	it("tests that dynamically created popover is opened", () => {
 		cy.mount(
