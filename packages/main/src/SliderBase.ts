@@ -401,8 +401,8 @@ abstract class SliderBase extends UI5Element {
 		// Check if there are any overlapping labels.
 		// If so - only the first and the last one should be visible
 
-		const remInPx = parseFloat(getComputedStyle(document.documentElement).fontSize); // calculate 1 rem in pixcels
-		const childWidthPx = 2 * remInPx; // as specified label must be 2 rems so calculate one child width in pixcels
+		const remInPx = parseFloat(getComputedStyle(document.documentElement).fontSize); // calculate 1 rem in pixels
+		const childWidthPx = 2 * remInPx; // as specified label must be 2 rems so calculate one child width in pixels
 
 		const labelItemsParent = this.shadowRoot!.querySelector(".ui5-slider-labels") as HTMLElement;
 
