@@ -1,4 +1,7 @@
 import CheckBox from "../../src/CheckBox.js";
+import Input from "../../src/Input.js";
+import Title from "../../src/Title.js";
+import Button from "../../src/Button.js";
 
 describe('CheckBox Component', () => {
 	it('should have correct type and value attributes in shadow dom', () => {
@@ -18,11 +21,6 @@ describe('CheckBox Component', () => {
 	});
 
 });
-
-import CheckBox from "../../src/CheckBox.js";
-import Input from "../../src/Input.js";
-import Title from "../../src/Title.js";
-import Button from "../../src/Button.js";
 
 describe("CheckBox general interaction", () => {
 	it("tests checked default value is false", () => {
