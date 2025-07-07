@@ -387,6 +387,38 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 			});
 	}
 
+	getDisplayFormat() {
+		return this._isDisplayFormatPattern
+			? DateFormat.getDateTimeInstance({
+				strictParsing: true,
+				pattern: this._displayFormat,
+				calendarType: this._primaryCalendarType,
+			})
+			: DateFormat.getDateTimeInstance({
+				strictParsing: true,
+				style: this._displayFormat,
+				calendarType: this._primaryCalendarType,
+			});
+	}
+
+	getValueFormat() {
+		if (!this.valueFormat) {
+			return this.getISOFormat();
+		}
+
+		return this._isValueFormatPattern
+			? DateFormat.getDateTimeInstance({
+				strictParsing: true,
+				pattern: this._valueFormat,
+				calendarType: this._primaryCalendarType,
+			})
+			: DateFormat.getDateTimeInstance({
+				strictParsing: true,
+				style: this._valueFormat,
+				calendarType: this._primaryCalendarType,
+			});
+	}
+
 	/**
 	 * @override
 	 */
