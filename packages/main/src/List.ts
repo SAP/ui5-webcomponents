@@ -22,12 +22,11 @@ import {
 	isDown,
 	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
-import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import createDragAndDropMixin from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragAndDropMixin.js";
+import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
 	getAllAccessibleDescriptionRefTexts,
@@ -517,6 +516,12 @@ class List extends UI5Element {
 	onForwardBeforeBound: (e: CustomEvent) => void;
 	onItemTabIndexChangeBound: (e: CustomEvent) => void;
 
+	_ondragenter!: (e: DragEvent) => void;
+	_ondragleave!: (e: DragEvent) => void;
+	_ondragover!: (e: DragEvent) => void;
+	_ondrop!: (e: DragEvent) => void;
+	_cleanupDragAndDrop!: () => void;
+
 	constructor() {
 		super();
 
@@ -546,6 +551,30 @@ class List extends UI5Element {
 		this.onForwardAfterBound = this.onForwardAfter.bind(this);
 		this.onForwardBeforeBound = this.onForwardBefore.bind(this);
 		this.onItemTabIndexChangeBound = this.onItemTabIndexChange.bind(this);
+
+		const dragDropMixin = createDragAndDropMixin({
+			getItemsForDragDrop: () => this.items,
+			getOrientation: () => Orientation.Vertical,
+			getDropIndicator: () => (this.dropIndicatorDOM ? {
+				targetReference: this.dropIndicatorDOM.targetReference,
+				placement: this.dropIndicatorDOM.placement,
+			} : null),
+			setDropIndicator: (targetReference: HTMLElement | null, placement?: any) => {
+				if (this.dropIndicatorDOM) {
+					this.dropIndicatorDOM.targetReference = targetReference;
+					if (placement !== undefined) {
+						this.dropIndicatorDOM.placement = placement;
+					}
+				}
+			},
+			getDragAndDropSettings: () => ({ originalEvent: true }),
+		});
+
+		this._ondragenter = dragDropMixin._ondragenter.bind(this);
+		this._ondragleave = dragDropMixin._ondragleave.bind(this);
+		this._ondragover = dragDropMixin._ondragover.bind(this);
+		this._ondrop = dragDropMixin._ondrop.bind(this);
+		this._cleanupDragAndDrop = dragDropMixin._cleanupDragAndDrop;
 	}
 
 	/**
@@ -574,6 +603,11 @@ class List extends UI5Element {
 		this.unobserveListEnd();
 		ResizeHandler.deregister(this.getDomRef()!, this._handleResizeCallback);
 		DragRegistry.unsubscribe(this);
+
+		// Clean up drag and drop mixin to prevent memory leaks
+		if (this._cleanupDragAndDrop) {
+			this._cleanupDragAndDrop();
+		}
 	}
 
 	onBeforeRendering() {
@@ -1156,49 +1190,6 @@ class List extends UI5Element {
 
 		e.stopImmediatePropagation();
 		this.setForwardingFocus(false);
-	}
-
-	_ondragenter(e: DragEvent) {
-		e.preventDefault();
-	}
-
-	_ondragleave(e: DragEvent) {
-		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
-			return;
-		}
-
-		this.dropIndicatorDOM!.targetReference = null;
-	}
-
-	_ondragover(e: DragEvent) {
-		if (!(e.target instanceof HTMLElement)) {
-			return;
-		}
-
-		const closestPosition = findClosestPosition(
-			this.items,
-			e.clientY,
-			Orientation.Vertical,
-		);
-
-		if (!closestPosition) {
-			this.dropIndicatorDOM!.targetReference = null;
-			return;
-		}
-
-		const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element, { originalEvent: true });
-		this.dropIndicatorDOM!.targetReference = targetReference;
-		this.dropIndicatorDOM!.placement = placement;
-	}
-
-	_ondrop(e: DragEvent) {
-		if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
-			e.preventDefault();
-			return;
-		}
-
-		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement, { originalEvent: true });
-		this.dropIndicatorDOM.targetReference = null;
 	}
 
 	isForwardElement(element: HTMLElement) {
