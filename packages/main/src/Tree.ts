@@ -333,7 +333,7 @@ class Tree extends UI5Element {
 			getOrientation: () => Orientation.Vertical,
 			getDropIndicator: () => (this.dropIndicatorDOM ? {
 				targetReference: this.dropIndicatorDOM.targetReference,
-				placement: this.dropIndicatorDOM.placement,
+				placement: this.dropIndicatorDOM.placement as MovePlacement,
 			} : null),
 			setDropIndicator: (targetReference: HTMLElement | null, placement?: any) => {
 				if (this.dropIndicatorDOM) {

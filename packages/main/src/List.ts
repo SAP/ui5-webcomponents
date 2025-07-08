@@ -25,6 +25,7 @@ import {
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import type MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import createDragAndDropMixin from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragAndDropMixin.js";
 import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -557,7 +558,7 @@ class List extends UI5Element {
 			getOrientation: () => Orientation.Vertical,
 			getDropIndicator: () => (this.dropIndicatorDOM ? {
 				targetReference: this.dropIndicatorDOM.targetReference,
-				placement: this.dropIndicatorDOM.placement,
+				placement: this.dropIndicatorDOM.placement as MovePlacement,
 			} : null),
 			setDropIndicator: (targetReference: HTMLElement | null, placement?: any) => {
 				if (this.dropIndicatorDOM) {

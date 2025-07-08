@@ -1,5 +1,5 @@
 import type UI5Element from "../../UI5Element.js";
-import type MovePlacement from "../../types/MovePlacement.js";
+import MovePlacement from "../../types/MovePlacement.js";
 import Orientation from "../../types/Orientation.js";
 import type { DragAndDropSettings } from "./DragRegistry.js";
 import DragRegistry from "./DragRegistry.js";
@@ -10,8 +10,8 @@ import { findClosestPosition } from "./findClosestPosition.js";
 type DragAndDropCallbacks = {
 	getItemsForDragDrop: () => Array<HTMLElement>;
 	getOrientation: () => Orientation;
-	getDropIndicator: () => { targetReference: HTMLElement | null; placement: any } | null;
-	setDropIndicator: (targetReference: HTMLElement | null, placement?: any) => void;
+	getDropIndicator: () => { targetReference: HTMLElement | null; placement: MovePlacement } | null;
+	setDropIndicator: (targetReference: HTMLElement | null, placement?: MovePlacement) => void;
 	shouldContainsDraggedElement?: (draggedElement: HTMLElement, targetElement: HTMLElement) => boolean;
 	getDragAndDropSettings?: () => DragAndDropSettings;
 	getTargetFromPosition?: (element: HTMLElement) => HTMLElement;
@@ -75,13 +75,13 @@ function createDragAndDropMixin<T extends UI5Element>(callbacks: DragAndDropCall
 
 			// Filter out "On" placement if dropping on the dragged element itself
 			if (closestPosition.element === draggedElement) {
-				closestPosition.placements = closestPosition.placements.filter(placement => placement !== "On" as MovePlacement);
+				closestPosition.placements = closestPosition.placements.filter(placement => placement !== MovePlacement.On);
 			}
 
 			const settings = callbacks.getDragAndDropSettings?.() || {};
 			const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element, settings);
 
-			callbacks.setDropIndicator(targetReference, placement);
+			callbacks.setDropIndicator(targetReference, placement as MovePlacement);
 		},
 
 		_ondrop(this: T, e: DragEvent) {
