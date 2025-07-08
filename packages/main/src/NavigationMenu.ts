@@ -72,7 +72,7 @@ class NavigationMenu extends Menu {
 			// respect mouseover only on desktop
 			opener = e.target as OpenerStandardListItem;
 
-			// If the opener is a <ui5-icon> inside a StandardListItem, we need to get the parent StandardListItem
+			// If the opener is a <ui5-icon> inside a Navigation item, we need to get the parent Navigation Item
 			if (opener.tagName === "UI5-ICON" && opener.parentElement) {
 				opener = opener.parentElement;
 			}
