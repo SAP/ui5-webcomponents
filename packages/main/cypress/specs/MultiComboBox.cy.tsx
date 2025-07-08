@@ -198,13 +198,14 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
+			.realClick();
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
 			.shadow()
 			.find("input")
-			.as("input");
-
-		cy.get("@input")
-			.realClick()
-			.should("have.focus")
+			.as("input")
 			.then(($input) => {
 				($input[0] as HTMLInputElement).setSelectionRange(0, 0);
 			})
@@ -212,17 +213,15 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
 			});
 
-		cy.get("@input").realPress("ArrowRight");
-		cy.wait(100); // Wait for the focus to be set - stabilizes remote execution
-
+		cy.get("@mcb").realPress("ArrowRight");
 		cy.get("@mcb")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.last()
 			.should("be.visible")
-			.should("have.focus");
-	});
+			.should("be.focused");
+		});
 
 	it("should focus last token on arrow left in LTR mode when input is at start", () => {
 		cy.mount(
@@ -239,11 +238,15 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+			
+		cy.get("@mcb")
 			.shadow()
 			.find("input")
-			.as("input");
-
-		cy.get("@input")
+			.as("input")
 			.realClick()
 			.should("have.focus")
 			.then(($input) => {
@@ -253,8 +256,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
 			});
 
-		cy.get("@input").realPress("ArrowLeft");
-		cy.wait(150); // Wait for the focus to be set - stabilizes remote execution
+		cy.get("@mcb").realPress("ArrowLeft");
 
 		cy.get("@mcb")
 			.shadow()
@@ -262,7 +264,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.find("[ui5-token]")
 			.last()
 			.should("be.visible")
-			.should("have.focus");
+			.should("be.focused");
 	});
 
 	it("should not focus token when cursor is not at start of input in RTL mode", () => {
