@@ -113,6 +113,12 @@ type ListItemClickEventDetail = {
 
 type ListMoveEventDetail = MoveEventDetail;
 
+type ListAccessibilityAttributes = {
+	growingButton?: {
+		name?: string,
+	},
+}
+
 /**
  * @class
  *
@@ -403,15 +409,23 @@ class List extends UI5Element {
 	accessibleName?: string;
 
 	/**
- 	* Defines the accessible name for the growing button.
- 	* **Note:** If not specified, the growing button will use the `growingButtonText` as its accessible name.
- 	* This property allows providing a more descriptive accessible name without changing the visual button text.
- 	* @default undefined
- 	* @since 2.12.0
+	* Defines additional accessibility attributes on different areas of the component.
+ 	*
+	* The accessibilityAttributes object has the following field:
+	*
+	*  - **growingButton**: `growingButton.name`.
+	*
+ 	* The accessibility attributes support the following values:
+ 	*
+	* - **name**: Defines the accessible ARIA name of the growing button.
+	* Accepts any string.
+	*
+	* @default {}
  	* @public
+ 	* @since 2.13.0
  	*/
-	@property()
-	growingButtonAccessibleName?: string;
+	 @property({ type: Object })
+	 accessibilityAttributes: ListAccessibilityAttributes = {};
 
 	/**
 	 * Defines the IDs of the elements that label the component.
@@ -706,11 +720,11 @@ class List extends UI5Element {
 	}
 
 	get growingButtonAriaLabel() {
-		return this.growingButtonAccessibleName;
+		return this.accessibilityAttributes.growingButton?.name;
 	}
 
 	get growingButtonAriaLabelledBy() {
-		return this.growingButtonAccessibleName ? undefined : `${this._id}-growingButton-text`;
+		return this.accessibilityAttributes.growingButton?.name ? undefined : `${this._id}-growingButton-text`;
 	}
 
 	get scrollContainer() {

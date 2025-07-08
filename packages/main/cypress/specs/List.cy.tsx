@@ -154,7 +154,7 @@ describe("List Tests", () => {
 
 	it("tests growing button accessible name property", () => {
 		cy.mount(
-			<List growing="Button" growing-button-accessible-name="Load more products from catalog">
+			<List growing="Button">
 				<ListItemStandard>Laptop Lenovo</ListItemStandard>
 				<ListItemStandard>IPhone 3</ListItemStandard>
 				<ListItemStandard>HP Monitor 24</ListItemStandard>
@@ -164,6 +164,12 @@ describe("List Tests", () => {
 		cy.get("[ui5-list]")
 			.as("list");
 	
+		cy.get("@list").invoke('prop', 'accessibilityAttributes', {
+			growingButton: {
+				name: "Load more products from catalog"
+			}
+		});
+
 		cy.get("@list")
 			.shadow()
 			.find("[id$='growing-btn']")
