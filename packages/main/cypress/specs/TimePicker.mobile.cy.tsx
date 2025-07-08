@@ -82,6 +82,11 @@ describe("TimePicker on phone - general interactions", () => {
 			.ui5TimePickerGetInnerInput()
 			.realClick();
 
+		cy.get<TimePicker>("@timePicker")
+			.ui5TimePickerGetInputsMobile()
+			.first()
+			.should("be.focused");
+
 		cy.realType("082413")
 
 		cy.get<TimePicker>("@timePicker")
