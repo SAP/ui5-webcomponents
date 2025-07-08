@@ -1483,4 +1483,5 @@ export type {
 	ListItemToggleEventDetail,
 	ListSelectionChangeEventDetail,
 	ListMoveEventDetail,
+	ListAccessibilityAttributes,
 };
