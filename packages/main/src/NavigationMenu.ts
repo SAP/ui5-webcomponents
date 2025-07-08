@@ -67,10 +67,17 @@ class NavigationMenu extends Menu {
 	}
 
 	_itemMouseOver(e: MouseEvent) {
+		let opener;
 		if (isDesktop()) {
 			// respect mouseover only on desktop
-			const opener = e.target as OpenerStandardListItem;
-			let item = opener.associatedItem;
+			opener = e.target as OpenerStandardListItem;
+
+			// If the opener is a <ui5-icon> inside a StandardListItem, we need to get the parent StandardListItem
+			if (opener.tagName === "UI5-ICON" && opener.parentElement) {
+				opener = opener.parentElement;
+			}
+
+			let item = (opener as OpenerStandardListItem).associatedItem;
 
 			if (!item) {
 				// for nested <a>
