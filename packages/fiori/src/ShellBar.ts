@@ -12,6 +12,8 @@ import {
 	isEnter,
 	isLeft,
 	isRight,
+	isHome,
+	isEnd
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
@@ -675,7 +677,7 @@ class ShellBar extends UI5Element {
 	}
 
 	_onKeyDown(e: KeyboardEvent) {
-		if (!isLeft(e) && !isRight(e)) {
+		if (!isLeft(e) && !isRight(e) && !isHome(e) && !isEnd(e)) {
 			return;
 		}
 
@@ -707,6 +709,12 @@ class ShellBar extends UI5Element {
 				this._focusPreviousItem(items, currentIndex);
 			} else if (isRight(e)) {
 				this._focusNextItem(items, currentIndex);
+			} else if (isHome(e)) {
+				// Move focus to the first ShellBar item
+				items[0]?.focus();
+			} else if (isEnd(e)) {
+				// Move focus to the last ShellBar item
+				items[items.length - 1]?.focus();
 			}
 		}
 	}
