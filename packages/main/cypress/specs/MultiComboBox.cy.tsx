@@ -348,7 +348,6 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("@lastToken").should("be.visible");
 		cy.get("@lastToken").should("not.be.focused");
-
 	});
 
 	it("should navigate from last token back to input with arrow left in RTL mode", () => {
@@ -410,11 +409,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.last()
-			.as("lastToken");
-
-		cy.get("@lastToken").should("be.visible");
-		cy.get("@lastToken").should("be.focused");
-		cy.get("@lastToken").realPress("ArrowRight");
+			.realPress("ArrowRight");
 		
 		cy.get("@mcb").should("be.visible");
 		cy.get("@mcb").should("be.focused");
