@@ -208,3 +208,109 @@ describe("Tokenizer - multi-line and Clear All", () => {
 	});
 });
 
+describe("Tokenizer - Popover List Item Text Updates", () => {
+	it("updates list item text in popover when token text changes", () => {
+		cy.mount(
+			<Tokenizer id="test-token-text-update" style={{ width: "100px" }}>
+				<Token text="Original Text" id="token-to-modify"></Token>
+				<Token text="Bulgaria"></Token>
+				<Token text="Canada"></Token>
+				<Token text="Denmark"></Token>
+				<Token text="Estonia"></Token>
+				<Token text="Finland"></Token>
+				<Token text="Germany"></Token>
+			</Tokenizer>
+		);
+
+		cy.get("#test-token-text-update")
+			.shadow()
+			.find(".ui5-tokenizer-more-text")
+			.realClick();
+
+		cy.get("#test-token-text-update")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should("be.visible");
+
+		cy.get("#test-token-text-update")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(0)
+			.should("contain.text", "Original Text");
+
+		cy.get("#token-to-modify").then($token => {
+			const token = $token.get(0) as Token;
+			token.text = "Updated Text";
+		});
+
+		cy.get("#test-token-text-update")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(0)
+			.should("contain.text", "Updated Text");
+
+		cy.get("#test-token-text-update")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(0)
+			.should("not.contain.text", "Original Text");
+	});
+
+	it("updates multiple list items when multiple token texts change", () => {
+		cy.mount(
+			<Tokenizer id="test-multiple-token-updates" style={{ width: "100px" }}>
+				<Token text="Token 1" id="token-1"></Token>
+				<Token text="Token 2" id="token-2"></Token>
+				<Token text="Token 3" id="token-3"></Token>
+				<Token text="Denmark"></Token>
+				<Token text="Estonia"></Token>
+			</Tokenizer>
+		);
+
+		cy.get("#test-multiple-token-updates")
+			.shadow()
+			.find(".ui5-tokenizer-more-text")
+			.realClick();
+
+		cy.get("#test-multiple-token-updates")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(0)
+			.should("contain.text", "Token 1");
+
+		cy.get("#test-multiple-token-updates")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(1)
+			.should("contain.text", "Token 2");
+
+		cy.get("#token-1").then($token => {
+			const token = $token.get(0) as Token;
+			token.text = "Modified Token 1";
+		});
+
+		cy.get("#token-2").then($token => {
+			const token = $token.get(0) as Token;
+			token.text = "Modified Token 2";
+		});
+
+		cy.get("#test-multiple-token-updates")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(0)
+			.should("contain.text", "Modified Token 1");
+
+		cy.get("#test-multiple-token-updates")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(1)
+			.should("contain.text", "Modified Token 2");
+
+		// Verify unchanged token remains the same
+		cy.get("#test-multiple-token-updates")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(2)
+			.should("contain.text", "Token 3");
+	});
+});
