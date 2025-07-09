@@ -182,6 +182,292 @@ describe("Event firing", () => {
 	});
 });
 
+describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
+	it("should focus last token on arrow right in RTL mode when input is at start", () => {
+		cy.mount(
+			<div dir="rtl">
+				<MultiComboBox noValidation={true}>
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 3"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 4"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 5"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.then(($input) => {
+				($input[0] as HTMLInputElement).setSelectionRange(0, 0);
+			})
+			.should(($input) => {
+				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
+			});
+
+		cy.get("@mcb").realPress("ArrowRight");
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.last()
+			.should("be.visible")
+			.should("be.focused");
+		});
+
+	it("should focus last token on arrow left in LTR mode when input is at start", () => {
+		cy.mount(
+			<div dir="ltr">
+				<MultiComboBox noValidation={true}>
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 3"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 4"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 5"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+			
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.realClick()
+			.should("have.focus")
+			.then(($input) => {
+				($input[0] as HTMLInputElement).setSelectionRange(0, 0);
+			})
+			.should(($input) => {
+				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
+			});
+
+		cy.get("@mcb").realPress("ArrowLeft");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.last()
+			.should("be.visible")
+			.should("be.focused");
+	});
+
+	it("should not focus token when cursor is not at start of input in RTL mode", () => {
+		cy.mount(
+			<div dir="rtl">
+				<MultiComboBox noValidation={true} value="test text">
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 3"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb").should("be.focused");
+		
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.realClick()
+			.should("be.focused")
+			.then(($input) => {
+				($input[0] as HTMLInputElement).setSelectionRange(2, 2);
+			});
+
+		cy.get("@mcb").realPress("ArrowRight");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.realClick();
+
+		cy.get("@input")
+			.should("be.focused")
+			.should(($input) => {
+				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(3);
+			});
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.should("not.be.focused");
+	});
+
+	it("should not focus token when text is selected in RTL mode", () => {
+		cy.mount(
+			<div dir="rtl">
+				<MultiComboBox noValidation={true} value="test">
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 3"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+			
+		cy.get("@mcb").should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.realClick()
+			.realPress(["Control", "a"]);
+
+		cy.get("@input")
+			.should(($input) => {
+				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
+				expect(($input[0] as HTMLInputElement).selectionEnd).to.equal(4);
+			});
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.should("not.have.focus");
+	});
+
+	it("should navigate from last token back to input with arrow left in RTL mode", () => {
+		cy.mount(
+			<div dir="rtl">
+				<MultiComboBox noValidation={true}>
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 3"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 4"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick()
+			
+		cy.get("@mcb")
+			.should("be.focused")
+			.realPress("ArrowRight");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.last()
+			.as("lastToken")
+			.should("have.focus");
+
+		cy.get("@lastToken")
+			.should("be.focused")
+			.realPress("ArrowLeft");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.should("be.focused");
+	});
+
+	it("should navigate from last token back to input with arrow right in LTR mode", () => {
+		cy.mount(
+			<div dir="ltr">
+				<MultiComboBox noValidation={true}>
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 3"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 4"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+			
+		cy.get("@mcb")
+			.should("be.focused")
+			.realPress("ArrowLeft");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.last()
+			.as("lastToken")
+			.should("be.focused");
+
+		cy.get("@lastToken").realPress("ArrowRight");
+		
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.should("be.focused");
+	});
+
+	it("should handle empty input case in RTL mode", () => {
+		cy.mount(
+			<div dir="rtl">
+				<MultiComboBox noValidation={true}>
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 3"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb").should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.realClick()
+			.should("have.focus")
+		
+			cy.get("@input")
+			.should("have.value", "")
+			.should(($input) => {
+				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
+			});
+
+		cy.get("@mcb").realPress("ArrowRight");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.last()
+			.should("have.focus");
+	});
+});
+
 describe("Accessibility", () => {
 	it("should announce the associated label when MultiComboBox is focused", () => {
 		const label = "MultiComboBox aria-label";
