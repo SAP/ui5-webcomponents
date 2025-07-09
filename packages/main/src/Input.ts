@@ -1093,6 +1093,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return;
 		}
 
+		this.typedInValue = "";
+
 		if (!this._isPhone) {
 			this.fireResetSelectionChange();
 			this.focus();
