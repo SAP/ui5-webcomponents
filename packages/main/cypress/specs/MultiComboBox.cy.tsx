@@ -280,8 +280,10 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.realClick()
-			.should("be.focused");
+			.realClick();
+
+		cy.get("@mcb").should("be.focused");
+		
 
 		cy.get("@mcb")
 			.shadow()
@@ -299,7 +301,9 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.shadow()
 			.find("input")
 			.as("input")
-			.realClick()
+			.realClick();
+
+		cy.get("@input")
 			.should("be.focused")
 			.should(($input) => {
 				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(3);
@@ -325,8 +329,9 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.realClick()
-			.should("be.focused");
+			.realClick();
+			
+		cy.get("@mcb").should("be.focused");
 
 		cy.get("@mcb")
 			.shadow()
@@ -363,9 +368,10 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
 			.realClick()
-			.should("be.focused");
-
-		cy.get("@mcb").realPress("ArrowRight");
+			
+		cy.get("@mcb")
+			.should("be.focused")
+			.realPress("ArrowRight");
 
 		cy.get("@mcb")
 			.shadow()
@@ -375,11 +381,14 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.as("lastToken")
 			.should("have.focus");
 
-		cy.get("@lastToken").realPress("ArrowLeft");		
+		cy.get("@lastToken")
+			.should("be.focused")
+			.realPress("ArrowLeft");
+
 		cy.get("@mcb")
 			.shadow()
 			.find("input")
-			.should("have.focus");
+			.should("be.focused");
 	});
 
 	it("should navigate from last token back to input with arrow right in LTR mode", () => {
@@ -396,10 +405,11 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.realClick()
-			.should("be.focused");
-
-		cy.get("@mcb").realPress("ArrowLeft");
+			.realClick();
+			
+		cy.get("@mcb")
+			.should("be.focused")
+			.realPress("ArrowLeft");
 
 		cy.get("@mcb")
 			.shadow()
@@ -430,8 +440,9 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.realClick()
-			.should("be.focused");
+			.realClick();
+
+		cy.get("@mcb").should("be.focused");
 
 		cy.get("@mcb")
 			.shadow()
