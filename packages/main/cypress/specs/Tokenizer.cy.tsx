@@ -281,15 +281,8 @@ describe("Tokenizer - Popover List Item Text Updates", () => {
 			.eq(1)
 			.should("have.attr", "text", "Token 2");
 
-		cy.get<Token>("[ui5-token]").then($token => {
-			const token = $token.get(0) as Token;
-			token.text = "Modified Token 1";
-		});
-
-		cy.get<Token>("[ui5-token]").then($token => {
-			const token = $token.get(0) as Token;
-			token.text = "Modified Token 2";
-		});
+		cy.get<Token>("[ui5-token]").eq(0).invoke("prop", "text", "Modified Token 1");
+		cy.get<Token>("[ui5-token]").eq(1).invoke("prop", "text", "Modified Token 2");
 
 		cy.get<Tokenizer>("[ui5-tokenizer]")
 			.shadow()
