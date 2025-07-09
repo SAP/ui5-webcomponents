@@ -222,28 +222,25 @@ describe("Tokenizer - Popover List Item Text Updates", () => {
 			</Tokenizer>
 		);
 
-		cy.get("#test-token-text-update")
+		cy.get<Tokenizer>("[ui5-tokenizer]")
 			.shadow()
 			.find(".ui5-tokenizer-more-text")
 			.realClick();
 
-		cy.get("#test-token-text-update")
+		cy.get<Tokenizer>("[ui5-tokenizer]")
 			.shadow()
 			.find("[ui5-responsive-popover]")
 			.should("be.visible");
 
-		cy.get("#test-token-text-update")
+		cy.get<Tokenizer>("[ui5-tokenizer]")
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(0)
 			.should("have.attr", "text", "Original Text");
 
-		cy.get("#token-to-modify").then($token => {
-			const token = $token.get(0) as Token;
-			token.text = "Updated Text";
-		});
+		cy.get("#token-to-modify").invoke("prop", "text", "Updated Text");
 
-		cy.get("#test-token-text-update")
+		cy.get<Tokenizer>("[ui5-tokenizer]")
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(0)
@@ -267,47 +264,47 @@ describe("Tokenizer - Popover List Item Text Updates", () => {
 			</Tokenizer>
 		);
 
-		cy.get("#test-multiple-token-updates")
+		cy.get<Tokenizer>("[ui5-tokenizer]")
 			.shadow()
 			.find(".ui5-tokenizer-more-text")
 			.realClick();
 
-		cy.get("#test-multiple-token-updates")
+		cy.get<Tokenizer>("[ui5-tokenizer]")
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(0)
 			.should("have.attr", "text", "Token 1");
 
-		cy.get("#test-multiple-token-updates")
+		cy.get<Tokenizer>("[ui5-tokenizer]")
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(1)
 			.should("have.attr", "text", "Token 2");
 
-		cy.get("#token-1").then($token => {
+		cy.get<Token>("[ui5-token]").then($token => {
 			const token = $token.get(0) as Token;
 			token.text = "Modified Token 1";
 		});
 
-		cy.get("#token-2").then($token => {
+		cy.get<Token>("[ui5-token]").then($token => {
 			const token = $token.get(0) as Token;
 			token.text = "Modified Token 2";
 		});
 
-		cy.get("#test-multiple-token-updates")
+		cy.get<Tokenizer>("[ui5-tokenizer]")
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(0)
 			.should("have.attr", "text", "Modified Token 1");
 
-		cy.get("#test-multiple-token-updates")
+		cy.get<Tokenizer>("[ui5-tokenizer]")
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(1)
 			.should("have.attr", "text", "Modified Token 2");
 
 		// Verify unchanged token remains the same
-		cy.get("#test-multiple-token-updates")
+		cy.get<Tokenizer>("[ui5-tokenizer]")
 			.shadow()
 			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
 			.eq(2)
