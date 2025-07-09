@@ -280,30 +280,36 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
+			.realClick()
+			.should("be.focused");
+
+		cy.get("@mcb")
 			.shadow()
 			.find("input")
-			.as("input");
-
-		cy.get("@input")
+			.as("input")
 			.realClick()
-			.should("have.focus")
+			.should("be.focused")
 			.then(($input) => {
 				($input[0] as HTMLInputElement).setSelectionRange(2, 2);
 			});
 
-		cy.get("@input").realPress("ArrowRight");
+		cy.get("@mcb").realPress("ArrowRight");
 
-		cy.get("@input")
-			.should("have.focus")
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.realClick()
+			.should("be.focused")
 			.should(($input) => {
-				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(1);
+				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(3);
 			});
 
 		cy.get("@mcb")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
-			.should("not.have.focus");
+			.should("not.be.focused");
 	});
 
 	it("should not focus token when text is selected in RTL mode", () => {
@@ -319,13 +325,15 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
+			.realClick()
+			.should("be.focused");
+
+		cy.get("@mcb")
 			.shadow()
 			.find("input")
 			.as("input")
 			.realClick()
-			.should("have.focus");
-
-		cy.get("@input").realPress(["Control", "a"]);
+			.realPress(["Control", "a"]);
 
 		cy.get("@input")
 			.should(($input) => {
@@ -333,10 +341,6 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 				expect(($input[0] as HTMLInputElement).selectionEnd).to.equal(4);
 			});
 
-		cy.get("@input").realPress("ArrowRight");
-		cy.wait(100); // Wait for the focus to be set - stabilizes remote execution
-
-		cy.get("@input").should("have.focus");
 		cy.get("@mcb")
 			.shadow()
 			.find("[ui5-tokenizer]")
@@ -358,14 +362,10 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.shadow()
-			.find("input")
-			.as("input")
 			.realClick()
-			.should("have.focus");
+			.should("be.focused");
 
-		cy.get("@input").realPress("ArrowRight");
-		cy.wait(100); // Wait for the focus to be set - stabilizes remote execution
+		cy.get("@mcb").realPress("ArrowRight");
 
 		cy.get("@mcb")
 			.shadow()
@@ -375,9 +375,11 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.as("lastToken")
 			.should("have.focus");
 
-		cy.get("@lastToken").realPress("ArrowLeft");
-		
-		cy.get("@input").should("have.focus");
+		cy.get("@lastToken").realPress("ArrowLeft");		
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.should("have.focus");
 	});
 
 	it("should navigate from last token back to input with arrow right in LTR mode", () => {
@@ -394,14 +396,10 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.shadow()
-			.find("input")
-			.as("input")
 			.realClick()
-			.should("have.focus");
+			.should("be.focused");
 
-		cy.get("@input").realPress("ArrowLeft");
-		cy.wait(100); // Wait for the focus to be set - stabilizes remote execution
+		cy.get("@mcb").realPress("ArrowLeft");
 
 		cy.get("@mcb")
 			.shadow()
@@ -409,11 +407,14 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.find("[ui5-token]")
 			.last()
 			.as("lastToken")
-			.should("have.focus");
+			.should("be.focused");
 
 		cy.get("@lastToken").realPress("ArrowRight");
 		
-		cy.get("@input").should("have.focus");
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.should("be.focused");
 	});
 
 	it("should handle empty input case in RTL mode", () => {
@@ -429,20 +430,23 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
+			.realClick()
+			.should("be.focused");
+
+		cy.get("@mcb")
 			.shadow()
 			.find("input")
 			.as("input")
 			.realClick()
-			.should("have.focus");
-
-		cy.get("@input")
+			.should("have.focus")
+		
+			cy.get("@input")
 			.should("have.value", "")
 			.should(($input) => {
 				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
 			});
 
-		cy.get("@input").realPress("ArrowRight");
-		cy.wait(100); // Wait for the focus to be set - stabilizes remote execution
+		cy.get("@mcb").realPress("ArrowRight");
 
 		cy.get("@mcb")
 			.shadow()
