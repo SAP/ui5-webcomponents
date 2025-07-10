@@ -312,8 +312,8 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.last()
 			.as("lastToken");
 
-		cy.get("@lastToken").should("be.visible");
-		cy.get("@lastToken").should("be.focused");
+		cy.focused().should("have.class", "ui5-token--wrapper");
+
 		cy.get("@lastToken").realPress("ArrowLeft");
 
 		cy.focused().should("not.have.class", "ui5-token--wrapper");
