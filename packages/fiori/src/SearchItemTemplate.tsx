@@ -43,9 +43,7 @@ export default function SearchFieldTemplate(this: SearchItem) {
 
 						<span part="subtitle" class="ui5-search-item-description">{this.description}</span>
 					</div>
-					{this.deletable &&
-						<Button class="ui5-search-item-selected-delete" design={ButtonDesign.Transparent} icon={decline} onClick={this._onDeleteButtonClick}></Button>
-					}
+					<Button class="ui5-search-item-selected-delete" design={ButtonDesign.Transparent} icon={decline} onClick={this._onDeleteButtonClick}></Button>
 				</div>
 			</div>
 		</li >

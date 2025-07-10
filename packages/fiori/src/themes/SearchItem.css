@@ -28,8 +28,8 @@
 	display: none;
 }
 
-:host(:hover),
-:host(:focus-within) {
+:host([deletable]:hover),
+:host([deletable]:focus-within) {
 	.ui5-search-item-selected-delete {
 		display: inline-block;
 	}
