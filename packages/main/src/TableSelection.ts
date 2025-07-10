@@ -88,6 +88,17 @@ class TableSelection extends UI5Element implements ITableFeature {
 	_rowsLength = 0;
 	_rangeSelection?: {selected: boolean, isUp: boolean | null, rows: TableRow[], isMouse: boolean, shiftPressed: boolean} | null;
 
+	onKeyUpCaptureBound: (e: KeyboardEvent) => void;
+	onKeyDownCaptureBound: (e: KeyboardEvent) => void;
+	onClickCaptureBound: (e: MouseEvent) => void;
+
+	constructor() {
+		super();
+		this.onKeyUpCaptureBound = this._onKeyupCapture.bind(this);
+		this.onKeyDownCaptureBound = this._onKeydownCapture.bind(this);
+		this.onClickCaptureBound = this._onClickCapture.bind(this);
+	}
+
 	onTableActivate(table: Table) {
 		this._table = table;
 		this._invalidateTableAndRows();
@@ -101,6 +112,10 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 	onBeforeRendering() {
 		this._invalidateTableAndRows();
+
+		this._table?.removeEventListener("keydown", this.onKeyDownCaptureBound);
+		this._table?.removeEventListener("keyup", this.onKeyUpCaptureBound);
+		this._table?.removeEventListener("click", this.onClickCaptureBound);
 	}
 
 	onTableBeforeRendering() {
@@ -108,6 +123,10 @@ class TableSelection extends UI5Element implements ITableFeature {
 			this._rowsLength = this._table.rows.length;
 			this._table.headerRow[0]._invalidate++;
 		}
+
+		this._table?.addEventListener("keydown", this.onKeyDownCaptureBound, { capture: true });
+		this._table?.addEventListener("keyup", this.onKeyUpCaptureBound, { capture: true });
+		this._table?.addEventListener("click", this.onClickCaptureBound, { capture: true });
 	}
 
 	isSelectable(): boolean {
@@ -231,7 +250,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 		this._table.rows.forEach(row => row._invalidate++);
 	}
 
-	_onkeydown(e: KeyboardEvent) {
+	_onKeydownCapture(e: KeyboardEvent) {
 		if (!this.isMultiSelectable() || !this._table || !e.shiftKey) {
 			return;
 		}
@@ -248,7 +267,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			const row = focusedElement as TableRow;
 			this._startRangeSelection(row, this.isSelected(row));
 		} else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-			const change = isUpShift(e) ? -1 : 1;
+			const change = isUpShift(e) ? 1 : -1;
 			this._handleRangeSelection(focusedElement as TableRow, change);
 		}
 
@@ -257,11 +276,12 @@ class TableSelection extends UI5Element implements ITableFeature {
 		}
 	}
 
-	_onkeyup(e: KeyboardEvent, eventOrigin: HTMLElement) {
+	_onKeyupCapture(e: KeyboardEvent) {
 		if (!this._table) {
 			return;
 		}
 
+		const eventOrigin = e.composedPath()[0] as HTMLElement;
 		if (!eventOrigin.hasAttribute("ui5-table-row") || !this._rangeSelection || !e.shiftKey) {
 			// Stop range selection if a) Shift is relased or b) the event target is not a row
 			this._stopRangeSelection();
@@ -272,7 +292,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 		}
 	}
 
-	_onclick(e: MouseEvent) {
+	_onClickCapture(e: MouseEvent) {
 		if (!this._table || this.mode !== TableSelectionMode.Multiple) {
 			return;
 		}
@@ -294,11 +314,13 @@ class TableSelection extends UI5Element implements ITableFeature {
 			const startIndex = this._table.rows.indexOf(startRow);
 			const endIndex = this._table.rows.indexOf(row);
 
+			const selectionState = this.isSelected(startRow);
+
 			// When doing a range selection and clicking on an already selected row, the checked status should not change
 			// Therefore, we need to manually set the checked attribute again, as clicking it would deselect it and leads to
 			// a visual inconsistency.
-			row.shadowRoot?.querySelector("#selection-component")?.toggleAttribute("checked", true);
-			e.stopImmediatePropagation();
+			row.shadowRoot?.querySelector("#selection-component")?.toggleAttribute("checked", selectionState);
+			e.stopPropagation();
 
 			if (startIndex === -1 || endIndex === -1 || row.rowKey === startRow.rowKey || row.rowKey === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].rowKey) {
 				return;
