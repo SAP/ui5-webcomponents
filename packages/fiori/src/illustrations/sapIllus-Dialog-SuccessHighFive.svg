@@ -9,7 +9,7 @@
 <path fill-rule="evenodd" clip-rule="evenodd" d="M87.5647 17.7173C87.9553 17.7956 88.2087 18.1764 88.1305 18.5679L86.0081 29.2033C85.93 29.5948 85.55 29.8487 85.1593 29.7704C84.7687 29.6921 84.5154 29.3112 84.5935 28.9197L86.7159 18.2844C86.794 17.8929 87.1741 17.639 87.5647 17.7173Z" fill="var(--sapContent_Illustrative_Color15)"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M81.4309 9.50267C81.8273 9.54239 82.1165 9.89664 82.0769 10.2939L80.2577 28.5259C80.218 28.9232 79.8645 29.2131 79.4681 29.1733C79.0717 29.1336 78.7825 28.7793 78.8222 28.3821L80.6414 10.15C80.681 9.75278 81.0345 9.46294 81.4309 9.50267Z" fill="var(--sapContent_Illustrative_Color15)"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M74.4543 4.03265C74.8508 4.07076 75.1415 4.42382 75.1034 4.82124L72.981 27.0036C72.943 27.401 72.5907 27.6923 72.1941 27.6542C71.7976 27.616 71.5069 27.263 71.545 26.8656L73.6674 4.68324C73.7054 4.28582 74.0577 3.99454 74.4543 4.03265Z" fill="var(--sapContent_Illustrative_Color15)"/>
-<mask id="mask0_9780_15303" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="14" y="28" width="132" height="132">
+<mask id="mask0_9780_15303" class="sapIllus_MaskTypeAlpha" maskUnits="userSpaceOnUse" x="14" y="28" width="132" height="132">
 <circle cx="79.9794" cy="94.0204" r="65.9794" fill="var(--sapContent_Illustrative_Color7)"/>
 </mask>
 <g mask="url(#mask0_9780_15303)">

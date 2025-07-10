@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.3...v2.12.0) (2025-07-04)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** prevent layout issue ([#11805](https://github.com/SAP/ui5-webcomponents/issues/11805)) ([5b17cc8](https://github.com/SAP/ui5-webcomponents/commit/5b17cc8a4f3391b8b5735a9c679bc7fd48ae55ed))
+
+
+### Features
+
+* **ui5-shellbar-branding:** introduce new component ([#11320](https://github.com/SAP/ui5-webcomponents/issues/11320)) ([951aa44](https://github.com/SAP/ui5-webcomponents/commit/951aa446da159e466dc672cfd87a338380e62521))
+
+
+
+
+
+# [2.12.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.2...v2.12.0-rc.3) (2025-07-03)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** button styles for compact aligned ([#11801](https://github.com/SAP/ui5-webcomponents/issues/11801)) ([6cdc498](https://github.com/SAP/ui5-webcomponents/commit/6cdc498b9f7856f7c3e624906f8e6ce4eb7939eb))
+* **ui5-user-menu:** correct design inconsistencies ([#11829](https://github.com/SAP/ui5-webcomponents/issues/11829)) ([32e4284](https://github.com/SAP/ui5-webcomponents/commit/32e428440dcfa4416673d1a4dd461521e67b7ccb))
+* **ui5-view-settings-dialog:** change announce type for the screen reader when view settings are reset ([#11668](https://github.com/SAP/ui5-webcomponents/issues/11668)) ([6793d09](https://github.com/SAP/ui5-webcomponents/commit/6793d098bc9e8d242acbf4f8b23fb5af6f46ff77))
+
+
+### Features
+
+* **ui5-avatar-group, ui5-product-switch:** getFocusDomRef added ([#11762](https://github.com/SAP/ui5-webcomponents/issues/11762)) ([0954f33](https://github.com/SAP/ui5-webcomponents/commit/0954f331ee36eeea785347bfbede98f186fb04b0)), closes [#11483](https://github.com/SAP/ui5-webcomponents/issues/11483)
+* **ui5-user-menu:** add item groups with checkable menu items ([#11832](https://github.com/SAP/ui5-webcomponents/issues/11832)) ([d0758fd](https://github.com/SAP/ui5-webcomponents/commit/d0758fd8c7af19dc25c5463c2dd8bb57b7599f52))
+
+
+
+
+
 # [2.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.1...v2.12.0-rc.2) (2025-06-26)
 
 

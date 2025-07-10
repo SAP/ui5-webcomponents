@@ -38,14 +38,14 @@ describe("Toast general interaction", () => {
 			.invoke("prop", "open", true);
 
 		cy.get("[ui5-toast]")
-		.should("be.visible")
-		.and("have.attr", "placement", "MiddleEnd")
-		.should(($el) => {
-			const rect = $el[0].getBoundingClientRect();
+			.should("be.visible")
+			.and("have.attr", "placement", "MiddleEnd")
+			.should(($el) => {
+				const rect = $el[0].getBoundingClientRect();
 
-			expect(rect.top + rect.height / 2).to.be.closeTo(window.innerHeight / 2, 20);
-			expect(window.innerWidth - (rect.left + rect.width)).to.be.lessThan(50);
-		});
+				expect(rect.top + rect.height / 2).to.be.closeTo(window.innerHeight / 2, 20);
+				expect(window.innerWidth - (rect.left + rect.width)).to.be.lessThan(50);
+			});
 	});
 
 	it("tests shadow content div role", () => {
@@ -102,7 +102,7 @@ describe("Toast general interaction", () => {
 			.should("have.attr", "open");
 
 		//waiting the duration of the toast
-		cy.get("[ui5-toast]", {timeout: 3000});
+		cy.get("[ui5-toast]", { timeout: 3000 });
 
 		cy.get("[ui5-toast]")
 			.should("not.be.visible");
@@ -128,7 +128,7 @@ describe("Keyboard handling", () => {
 		);
 	});
 
-	it("toast should be closed on pressing esc key", async () => {
+	it("toast should be closed on pressing esc key", () => {
 		cy.get("[ui5-button]")
 			.realClick();
 
@@ -150,13 +150,13 @@ describe("Keyboard handling", () => {
 			.realPress("Escape");
 
 		// //waiting the duration of the toast
-		cy.get("[ui5-toast]", {timeout: 3000});
+		cy.get("[ui5-toast]", { timeout: 3000 });
 
 		cy.get("[ui5-toast]")
 			.should("not.have.attr", "open");
 	});
 
-	it("Opens two toasts in a row and focuses the last open", async () => {
+	it("Opens two toasts in a row and focuses the last open", () => {
 		cy.mount(
 			<>
 				<Button id="wcBtnShowToastTS">Show Toast TS</Button>
@@ -176,7 +176,7 @@ describe("Keyboard handling", () => {
 		cy.realPress(["Control", "Shift", "m"]);
 
 		//waiting the duration of the toast
-		cy.get("[ui5-toast]", {timeout: 3000});
+		cy.get("[ui5-toast]", { timeout: 3000 });
 
 		cy.get("#wcToastTC")
 			.should("be.visible");
@@ -287,7 +287,7 @@ describe("Toast - test popover API", () => {
 		cy.get("#toast")
 			.invoke("prop", "open", true);
 
-		cy.get("#toast", {timeout: 500});
+		cy.get("#toast", { timeout: 500 });
 
 		cy.get("@toastClose")
 			.should("be.calledOnce");
