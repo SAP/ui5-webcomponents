@@ -67,15 +67,11 @@ class TableSelectionMulti extends TableSelectionBase {
 		shiftPressed: boolean
 	} | null;
 
-	_onKeyDownCaptureBound: (e: KeyboardEvent) => void;
 	_onClickCaptureBound: (e: MouseEvent) => void;
-	_onKeyUpCaptureBound: (e: KeyboardEvent) => void;
 
 	constructor() {
 		super();
-		this._onKeyDownCaptureBound = this._onkeydownCapture.bind(this);
 		this._onClickCaptureBound = this._onclickCapture.bind(this);
-		this._onKeyUpCaptureBound = this._onkeyupCapture.bind(this);
 	}
 
 	onTableBeforeRendering() {
@@ -84,14 +80,10 @@ class TableSelectionMulti extends TableSelectionBase {
 			this._table.headerRow[0]._invalidate++;
 		}
 
-		this._table?.removeEventListener("keydown", this._onKeyDownCaptureBound);
-		this._table?.removeEventListener("keyup", this._onKeyUpCaptureBound);
 		this._table?.removeEventListener("click", this._onClickCaptureBound);
 	}
 
 	onTableAfterRendering() {
-		this._table?.addEventListener("keydown", this._onKeyDownCaptureBound, { capture: true });
-		this._table?.addEventListener("keyup", this._onKeyUpCaptureBound, { capture: true });
 		this._table?.addEventListener("click", this._onClickCaptureBound, { capture: true });
 	}
 
@@ -177,7 +169,7 @@ class TableSelectionMulti extends TableSelectionBase {
 		this.selected = [...selectedSet].join(" ");
 	}
 
-	_onkeydownCapture(e: KeyboardEvent) {
+	_onkeydown(e: KeyboardEvent) {
 		if (!this._table || !e.shiftKey) {
 			return;
 		}
@@ -194,7 +186,7 @@ class TableSelectionMulti extends TableSelectionBase {
 			const row = focusedElement as TableRow;
 			this._startRangeSelection(row, this.isSelected(row));
 		} else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-			const change = isUpShift(e) ? 1 : -1;
+			const change = isUpShift(e) ? -1 : 1;
 			this._handleRangeSelection(focusedElement as TableRow, change);
 		}
 
@@ -203,12 +195,11 @@ class TableSelectionMulti extends TableSelectionBase {
 		}
 	}
 
-	_onkeyupCapture(e: KeyboardEvent) {
+	_onkeyup(e: KeyboardEvent, eventOrigin: HTMLElement) {
 		if (!this._table) {
 			return;
 		}
 
-		const eventOrigin = e.composedPath()[0] as HTMLElement;
 		if (!eventOrigin.hasAttribute("ui5-table-row") || !this._rangeSelection || !e.shiftKey) {
 			// Stop range selection if a) Shift is relased or b) the event target is not a row
 			this._stopRangeSelection();

@@ -88,14 +88,10 @@ class TableSelection extends UI5Element implements ITableFeature {
 	_rowsLength = 0;
 	_rangeSelection?: {selected: boolean, isUp: boolean | null, rows: TableRow[], isMouse: boolean, shiftPressed: boolean} | null;
 
-	onKeyUpCaptureBound: (e: KeyboardEvent) => void;
-	onKeyDownCaptureBound: (e: KeyboardEvent) => void;
 	onClickCaptureBound: (e: MouseEvent) => void;
 
 	constructor() {
 		super();
-		this.onKeyUpCaptureBound = this._onKeyupCapture.bind(this);
-		this.onKeyDownCaptureBound = this._onKeydownCapture.bind(this);
 		this.onClickCaptureBound = this._onClickCapture.bind(this);
 	}
 
@@ -113,8 +109,6 @@ class TableSelection extends UI5Element implements ITableFeature {
 	onBeforeRendering() {
 		this._invalidateTableAndRows();
 
-		this._table?.removeEventListener("keydown", this.onKeyDownCaptureBound);
-		this._table?.removeEventListener("keyup", this.onKeyUpCaptureBound);
 		this._table?.removeEventListener("click", this.onClickCaptureBound);
 	}
 
@@ -124,8 +118,6 @@ class TableSelection extends UI5Element implements ITableFeature {
 			this._table.headerRow[0]._invalidate++;
 		}
 
-		this._table?.addEventListener("keydown", this.onKeyDownCaptureBound, { capture: true });
-		this._table?.addEventListener("keyup", this.onKeyUpCaptureBound, { capture: true });
 		this._table?.addEventListener("click", this.onClickCaptureBound, { capture: true });
 	}
 
@@ -250,7 +242,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 		this._table.rows.forEach(row => row._invalidate++);
 	}
 
-	_onKeydownCapture(e: KeyboardEvent) {
+	_onkeydown(e: KeyboardEvent) {
 		if (!this.isMultiSelectable() || !this._table || !e.shiftKey) {
 			return;
 		}
@@ -267,7 +259,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			const row = focusedElement as TableRow;
 			this._startRangeSelection(row, this.isSelected(row));
 		} else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-			const change = isUpShift(e) ? 1 : -1;
+			const change = isUpShift(e) ? -1 : 1;
 			this._handleRangeSelection(focusedElement as TableRow, change);
 		}
 
@@ -276,12 +268,11 @@ class TableSelection extends UI5Element implements ITableFeature {
 		}
 	}
 
-	_onKeyupCapture(e: KeyboardEvent) {
+	_onkeyup(e: KeyboardEvent, eventOrigin: HTMLElement) {
 		if (!this._table) {
 			return;
 		}
 
-		const eventOrigin = e.composedPath()[0] as HTMLElement;
 		if (!eventOrigin.hasAttribute("ui5-table-row") || !this._rangeSelection || !e.shiftKey) {
 			// Stop range selection if a) Shift is relased or b) the event target is not a row
 			this._stopRangeSelection();
