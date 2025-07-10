@@ -108,8 +108,6 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 	onBeforeRendering() {
 		this._invalidateTableAndRows();
-
-		this._table?.removeEventListener("click", this.onClickCaptureBound);
 	}
 
 	onTableBeforeRendering() {
@@ -118,6 +116,10 @@ class TableSelection extends UI5Element implements ITableFeature {
 			this._table.headerRow[0]._invalidate++;
 		}
 
+		this._table?.removeEventListener("click", this.onClickCaptureBound);
+	}
+
+	onTableAfterRendering(): void {
 		this._table?.addEventListener("click", this.onClickCaptureBound, { capture: true });
 	}
 
