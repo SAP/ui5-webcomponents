@@ -530,7 +530,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 		if (updateValue) {
 			this._dateTimeInput.value = value;
-			this.value = this.getValueFormat().format(this.getDisplayFormat().parse(value));
+			this.value = this.getValueFromDisplayValue(value);
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
 
@@ -564,6 +564,10 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		}
 	}
 
+	getValueFromDisplayValue(value: string): string {
+		return this.getValueFormat().format(this.getDisplayFormat().parse(value));
+	}
+
 	/**
 	 * The ui5-input "submit" event handler - fire change event when the user presses enter
 	 * @protected
@@ -595,7 +599,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		if (value === "") {
 			return true;
 		}
-		return this.isValid(value) && this.isInValidRange(value);
+		return this.isValidValue(value) && this.isInValidRange(value);
 	}
 
 	_click(e: MouseEvent) {

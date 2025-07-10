@@ -21,7 +21,6 @@ import type {
 } from "./DatePicker.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import type CalendarSelectionMode from "./types/CalendarSelectionMode.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 
 const DEFAULT_DELIMITER = "-";
 
@@ -237,6 +236,26 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	}
 
 	/**
+	 * Checks if a value is valid against the current date format of the DatePicker.
+	 * @public
+	 * @param value A value to be tested against the current date format
+	 */
+	isValidValue(value: string): boolean {
+		const parts = this._splitValueByDelimiter(value);
+		return parts.length <= 2 && parts.every(dateString => super.isValidValue(dateString)); // must be at most 2 dates and each must be valid
+	}
+
+	/**
+	 * Checks if a value is valid against the current date format of the DatePicker.
+	 * @public
+	 * @param value A value to be tested against the current date format
+	 */
+	isValidDisplayValue(value: string): boolean {
+		const parts = this._splitValueByDelimiter(value);
+		return parts.length <= 2 && parts.every(dateString => super.isValidDisplayValue(dateString)); // must be at most 2 dates and each must be valid
+	}
+
+	/**
 	 * Checks if a date is between the minimum and maximum date.
 	 * @public
 	 * @param value A value to be checked
@@ -256,6 +275,36 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 			return this._buildValue(lastDateTimestamp, firstDateTimestamp);
 		}
 		return this._buildValue(firstDateTimestamp, lastDateTimestamp);
+	}
+
+	/**
+	 * The parser understands many formats, but we need one format
+	 * @override
+	 * @protected
+	 */
+	normalizeDisplayValue(value: string) {
+		const firstDateTimestamp = this._extractFirstTimestamp(value);
+		const lastDateTimestamp = this._extractLastTimestamp(value);
+
+		if (firstDateTimestamp && lastDateTimestamp && firstDateTimestamp > lastDateTimestamp) { // if both are timestamps (not undefined), flip if necessary
+			return this._buildDisplayValue(lastDateTimestamp, firstDateTimestamp);
+		}
+
+		return this._buildDisplayValue(firstDateTimestamp, lastDateTimestamp);
+	}
+
+	/**
+	 * @override
+	 */
+	getValueFromDisplayValue(value: string): string {
+		const values = this._splitValueByDelimiter(value);
+		let firstDateString = "";
+		let lastDateString = "";
+
+		firstDateString = this._getValueStringFromTimestamp(this._exctractDisplayTimestamp(values[0]) as number);
+		lastDateString = this._getValueStringFromTimestamp(this._exctractDisplayTimestamp(values[1]) as number);
+
+		return `${firstDateString} ${this._effectiveDelimiter} ${lastDateString}`;
 	}
 
 	/**
@@ -317,7 +366,6 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	_splitValueByDelimiter(value: string) {
 		const valuesArray: Array<string> = [];
 		const partsArray = value.split(this._prevDelimiter || this._effectiveDelimiter);
-
 		// if format successfully parse the value, the value contains only single date
 		if (this.getValueFormat().parse(value)) {
 			valuesArray[0] = partsArray.join(this._effectiveDelimiter);
@@ -330,37 +378,37 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		return valuesArray;
 	}
 
-	getDisplayFormat() {
-		return this._isDisplayFormatPattern
-			? DateFormat.getDateInstance({
-				strictParsing: true,
-				pattern: this._displayFormat,
-				calendarType: this._primaryCalendarType,
-				interval: true,
-			})
-			: DateFormat.getDateInstance({
-				strictParsing: true,
-				style: this._displayFormat,
-				calendarType: this._primaryCalendarType,
-				interval: true,
-			});
-	}
+	// getDisplayFormat() {
+	// 	return this._isDisplayFormatPattern
+	// 		? DateFormat.getDateInstance({
+	// 			strictParsing: true,
+	// 			pattern: this._displayFormat,
+	// 			calendarType: this._primaryCalendarType,
+	// 			interval: true,
+	// 		})
+	// 		: DateFormat.getDateInstance({
+	// 			strictParsing: true,
+	// 			style: this._displayFormat,
+	// 			calendarType: this._primaryCalendarType,
+	// 			interval: true,
+	// 		});
+	// }
 
-	getValueFormat() {
-		return this._isValueFormatPattern
-			? DateFormat.getDateInstance({
-				strictParsing: true,
-				pattern: this._valueFormat,
-				calendarType: this._primaryCalendarType,
-				interval: true,
-			})
-			: DateFormat.getDateInstance({
-				strictParsing: true,
-				style: this._valueFormat,
-				calendarType: this._primaryCalendarType,
-				interval: true,
-			});
-	}
+	// getValueFormat() {
+	// 	return this._isValueFormatPattern
+	// 		? DateFormat.getDateInstance({
+	// 			strictParsing: true,
+	// 			pattern: this._valueFormat,
+	// 			calendarType: this._primaryCalendarType,
+	// 			interval: true,
+	// 		})
+	// 		: DateFormat.getDateInstance({
+	// 			strictParsing: true,
+	// 			style: this._valueFormat,
+	// 			calendarType: this._primaryCalendarType,
+	// 			interval: true,
+	// 		});
+	// }
 
 	/**
 	 * Returns a UTC timestamp, representing the first date in the value string or undefined if the value is empty
@@ -374,6 +422,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		const dateStrings = this._splitValueByDelimiter(value); // at least one item guaranteed due to the checks above (non-empty and valid)
 
 		const parsedDate = this.getValueFormat().parse(dateStrings[0], true) as Date;
+
 		return parsedDate.getTime() / 1000;
 	}
 
@@ -389,17 +438,30 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		const dateStrings = this._splitValueByDelimiter(value);
 		if (dateStrings[1]) {
 			const parsedDate = this.getValueFormat().parse(dateStrings[1], true) as Date;
+
 			return parsedDate.getTime() / 1000;
 		}
 
 		return undefined;
 	}
 
+	_exctractDisplayTimestamp(value: string) {
+		if (!value || !this._checkValueValidity(value)) {
+			return undefined;
+		}
+
+		if (value) {
+			const parsedDate = this.getDisplayFormat().parse(value, true) as Date;
+
+			return parsedDate.getTime() / 1000;
+		}
+	}
+
 	/**
 	 * Builds a string value out of two UTC timestamps - this method is the counterpart to _extractFirstTimestamp/_extractLastTimestamp
 	 * @private
 	 */
-	_buildValue(firstDateTimestamp: number | undefined, lastDateTimestamp: number | undefined) {
+	_buildValue(firstDateTimestamp: number | undefined, lastDateTimestamp: number | undefined): string {
 		this._prevDelimiter = this._effectiveDelimiter;
 		if (firstDateTimestamp) {
 			const firstDateString = this._getStringFromTimestamp(firstDateTimestamp * 1000);
@@ -409,6 +471,26 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 			}
 
 			const lastDateString = this._getStringFromTimestamp(lastDateTimestamp * 1000);
+			return `${firstDateString} ${this._effectiveDelimiter} ${lastDateString}`;
+		}
+
+		return "";
+	}
+
+	/**
+	 * Builds a string value out of two UTC timestamps - this method is the counterpart to _extractFirstTimestamp/_extractLastTimestamp
+	 * @private
+	 */
+	_buildDisplayValue(firstDateTimestamp: number | undefined, lastDateTimestamp: number | undefined) {
+		this._prevDelimiter = this._effectiveDelimiter;
+		if (firstDateTimestamp) {
+			const firstDateString = this._getDisplayStringFromTimestamp(firstDateTimestamp * 1000);
+
+			if (!lastDateTimestamp) {
+				return firstDateString;
+			}
+
+			const lastDateString = this._getDisplayStringFromTimestamp(lastDateTimestamp * 1000);
 			return `${firstDateString} ${this._effectiveDelimiter} ${lastDateString}`;
 		}
 
