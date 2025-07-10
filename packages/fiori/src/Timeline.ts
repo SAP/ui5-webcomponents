@@ -309,6 +309,8 @@ class Timeline extends UI5Element {
 			this.items[i].layout = this.layout;
 			if (this.hasGroupItems) {
 				this.items[i].effectiveRole = "treeitem";
+			} else {
+				this.items[i].effectiveRole = "listitem";
 			}
 
 			if (this.items[i + 1] && !!this.items[i + 1].icon) {
