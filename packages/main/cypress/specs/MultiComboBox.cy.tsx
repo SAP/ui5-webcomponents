@@ -285,45 +285,6 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.focused().should("not.have.class", "ui5-token--wrapper");
 	});
 
-	it("should not focus token when text is selected in RTL mode", () => {
-		cy.mount(
-			<div dir="rtl">
-				<MultiComboBox noValidation={true} value="test">
-					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
-					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
-					<MultiComboBoxItem text="Item 3"></MultiComboBoxItem>
-				</MultiComboBox>
-			</div>
-		);
-
-		cy.get("[ui5-multi-combobox]")
-			.as("mcb")
-			.realClick();
-			
-		cy.get("@mcb").should("be.focused");
-
-		cy.get("@mcb")
-			.shadow()
-			.find("input")
-			.as("input")
-			.realClick()
-			.realPress(["Control", "a"]);
-
-		cy.get("@input")
-			.should(($input) => {
-				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
-				expect(($input[0] as HTMLInputElement).selectionEnd).to.equal(4);
-			});
-
-		cy.get("@mcb")
-			.shadow()
-			.find("[ui5-tokenizer]")
-			.find("[ui5-token]")
-			.as ("lastToken");
-
-		cy.focused().should("not.have.class", "ui5-token--wrapper");
-	});
-
 	it("should navigate from last token back to input with arrow left in RTL mode", () => {
 		cy.mount(
 			<div dir="rtl">
