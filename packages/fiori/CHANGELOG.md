@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0...v2.13.0-rc.0) (2025-07-10)
+
+
+### Bug Fixes
+
+* **ui5-search:** show delete button on item hover ([#11850](https://github.com/SAP/ui5-webcomponents/issues/11850)) ([87cd3c7](https://github.com/SAP/ui5-webcomponents/commit/87cd3c7bf5eafa1b0c9eba16cc31f1d2478484f4))
+
+
+### Features
+
+* **ui5-breadcrumbs, ui5-meadia-gallery:** getFocusDomRef added ([#11869](https://github.com/SAP/ui5-webcomponents/issues/11869)) ([130e9c5](https://github.com/SAP/ui5-webcomponents/commit/130e9c5c60505c3c627620e377efdf80e1745d6d)), closes [#11483](https://github.com/SAP/ui5-webcomponents/issues/11483)
+
+
+
+
+
 # [2.12.0](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.3...v2.12.0) (2025-07-04)
 
 
