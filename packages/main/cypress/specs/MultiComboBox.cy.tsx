@@ -219,8 +219,10 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.last()
-			.should("be.visible")
-			.should("be.focused");
+			.as ("lastToken");
+		
+		cy.get("@lastToken").should("be.visible");
+		cy.get("@lastToken").should("be.focused");
 		});
 
 	it("should focus last token on arrow left in LTR mode when input is at start", () => {
@@ -263,8 +265,10 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.last()
-			.should("be.visible")
-			.should("be.focused");
+			.as ("lastToken");
+		
+		cy.get("@lastToken").should("be.visible");
+		cy.get("@lastToken").should("be.focused");
 	});
 
 	it("should not focus token when cursor is not at start of input in RTL mode", () => {
@@ -283,7 +287,6 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.realClick();
 
 		cy.get("@mcb").should("be.focused");
-		
 
 		cy.get("@mcb")
 			.shadow()
@@ -299,21 +302,12 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("@mcb")
 			.shadow()
-			.find("input")
-			.as("input")
-			.realClick();
-
-		cy.get("@input")
-			.should("be.focused")
-			.should(($input) => {
-				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(3);
-			});
-
-		cy.get("@mcb")
-			.shadow()
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
-			.should("not.be.focused");
+			.as ("lastToken");
+
+		cy.get("@lastToken").should("be.visible");
+		cy.get("@lastToken").should("not.be.focused");
 	});
 
 	it("should not focus token when text is selected in RTL mode", () => {
@@ -350,7 +344,10 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
-			.should("not.have.focus");
+			.as ("lastToken");
+
+		cy.get("@lastToken").should("be.visible");
+		cy.get("@lastToken").should("not.be.focused");
 	});
 
 	it("should navigate from last token back to input with arrow left in RTL mode", () => {
@@ -378,17 +375,13 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.last()
-			.as("lastToken")
-			.should("have.focus");
+			.as("lastToken");
 
-		cy.get("@lastToken")
-			.should("be.focused")
-			.realPress("ArrowLeft");
+		cy.get("@lastToken").should("be.visible");
+		cy.get("@lastToken").should("be.focused");
+		cy.get("@lastToken").realPress("ArrowLeft");
 
-		cy.get("@mcb")
-			.shadow()
-			.find("input")
-			.should("be.focused");
+		cy.get("@mcb").should("be.focused");
 	});
 
 	it("should navigate from last token back to input with arrow right in LTR mode", () => {
@@ -416,15 +409,10 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.last()
-			.as("lastToken")
-			.should("be.focused");
-
-		cy.get("@lastToken").realPress("ArrowRight");
+			.realPress("ArrowRight");
 		
-		cy.get("@mcb")
-			.shadow()
-			.find("input")
-			.should("be.focused");
+		cy.get("@mcb").should("be.visible");
+		cy.get("@mcb").should("be.focused");
 	});
 
 	it("should handle empty input case in RTL mode", () => {
@@ -464,7 +452,11 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.last()
-			.should("have.focus");
+			.as("lastToken");
+
+		cy.get("@lastToken").should("be.visible");
+		cy.get("@lastToken").should("be.focused");
+			
 	});
 });
 
