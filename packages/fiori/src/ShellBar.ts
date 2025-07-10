@@ -13,7 +13,7 @@ import {
 	isLeft,
 	isRight,
 	isHome,
-	isEnd
+	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
