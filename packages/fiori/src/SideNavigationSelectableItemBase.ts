@@ -178,7 +178,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	get _target() {
-		return (!this.effectiveDisabled && this.target) ? this.target : undefined;
+		return (!this.effectiveDisabled && this.href && this.target) ? this.target : undefined;
 	}
 
 	get isExternalLink() {
@@ -187,6 +187,10 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 
 	get _selected() {
 		return this.selected;
+	}
+
+	get _tag() {
+		return this._href ? "a" : "div";
 	}
 
 	get classesArray() {
