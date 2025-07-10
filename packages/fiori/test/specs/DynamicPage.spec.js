@@ -451,6 +451,8 @@ describe("ARIA attributes", () => {
         assert.strictEqual(await headerWrapper.getAttribute("aria-label"), "Header Snapped",
             "aria-label value is correct");
 
+        assert.strictEqual(await titleFocusArea.getAttribute("aria-expanded"), "false",
+            "aria-expanded value is correct");
         assert.strictEqual(await titleFocusArea.getAttribute("aria-describedby"), `${await title.getProperty("__id")}-toggle-description`,
             "aria-describedby is correct");
         assert.strictEqual(await titleFocusArea.getAttribute("role"), "button",
