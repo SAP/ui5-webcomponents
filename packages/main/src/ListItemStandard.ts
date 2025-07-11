@@ -42,14 +42,6 @@ type ExpandableTextTemplate = (this: ListItemStandard, params: ExpandableTextTem
  * @csspart delete-button - Used to style the button rendered when the list item is in delete mode
  * @csspart radio - Used to style the radio button rendered when the list item is in single selection mode
  * @csspart checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode
- * @slot {Node[]} default - Defines the custom formatted text of the component.
- *
- * **Note:** For optimal text wrapping and a consistent layout, it is strongly recommended to use the `text` property.
- *
- * Use the `default` slot only when custom formatting with HTML elements (e.g., `<b>`, `<i>`) is required.
- * Be aware that wrapping (via `wrappingType="Normal"`) may not function correctly with custom HTML content in the `default` slot.
- *
- * If both `text` and `default` slot are used, the `text` property takes precedence.
  * @constructor
  * @extends ListItem
  * @public
@@ -177,6 +169,20 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	expandableTextTemplate?: ExpandableTextTemplate;
 
 	/**
+	 * Defines the custom formatted text of the component.
+	 *
+	 * **Note:** For optimal text wrapping and a consistent layout, it is strongly recommended to use the `text` property.
+	 *
+	 * Use the `default` slot only when custom formatting with HTML elements (e.g., `<b>`, `<i>`) is required.
+	 * Be aware that wrapping (via `wrappingType="Normal"`) may not function correctly with custom HTML content in the `default` slot.
+	 *
+	 * If both `text` and `default` slot are used, the `text` property takes precedence.
+	 * @public
+	 */
+	@slot({ type: Node, "default": true })
+	content!: Array<Node>;
+
+	/**
 	 * **Note:** While the slot allows option for setting custom avatar, to match the
 	 * design guidelines, please use the `ui5-avatar` with it's default size - S.
 	 *
@@ -198,7 +204,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 			// If feature is already loaded (preloaded by the user via importing ListItemStandardExpandableText.js), the template is already available
 			if (ListItemStandard.ExpandableTextTemplate) {
 				this.expandableTextTemplate = ListItemStandard.ExpandableTextTemplate;
-			// If feature is not preloaded, load the template dynamically
+				// If feature is not preloaded, load the template dynamically
 			} else {
 				import("./features/ListItemStandardExpandableTextTemplate.js").then(module => {
 					this.expandableTextTemplate = module.default;
