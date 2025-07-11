@@ -12,10 +12,10 @@ export default function SideNavigationItemTemplate(this: SideNavigationItem) {
 }
 
 function MenuItemTemplate(this: SideNavigationItem) {
-	const Tag = this._tag;
+	const EffectiveTag = this._effectiveTag;
 
 	return (
-		<Tag id={this._id}
+		<EffectiveTag id={this._id}
 			 class={`ui5-sn-item ui5-sn-item-level1 ${this._classes}`}
 			 role={this.ariaRole}
 			 data-sap-focus-ref
@@ -29,6 +29,7 @@ function MenuItemTemplate(this: SideNavigationItem) {
 			 tabIndex={this.effectiveTabIndex !== undefined ? parseInt(this.effectiveTabIndex) : undefined}
 			 aria-haspopup={this._ariaHasPopup}
 			 aria-checked={this._ariaChecked}
+			 aria-owns={this._groupId}
 			 title={this._tooltip}
 			 href={this._href}
 			 target={this._target}
@@ -46,16 +47,16 @@ function MenuItemTemplate(this: SideNavigationItem) {
 					  name={arrowRight}
 				/>
 			}
-		</Tag>
+		</EffectiveTag>
 	);
 }
 
 function TreeItemTemplate(this: SideNavigationItem) {
-	const Tag = this._tag;
+	const EffectiveTag = this._effectiveTag;
 
 	return (
 		<li id={this._id} class="ui5-sn-list-li" role="none">
-			<Tag class={`ui5-sn-item ui5-sn-item-level1 ${this._classes}`}
+			<EffectiveTag class={`ui5-sn-item ui5-sn-item-level1 ${this._classes}`}
 				 role={this.ariaRole}
 				 data-sap-focus-ref
 				 onKeyDown={this._onkeydown}
@@ -88,7 +89,7 @@ function TreeItemTemplate(this: SideNavigationItem) {
 						  onClick={this._onToggleClick}
 					/>
 				}
-			</Tag>
+			</EffectiveTag>
 			{!!this.items.length &&
 				<ul id={this._groupId}
 					class="ui5-sn-item-ul"

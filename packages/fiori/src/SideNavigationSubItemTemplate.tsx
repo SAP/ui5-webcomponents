@@ -3,11 +3,11 @@ import arrowRight from "@ui5/webcomponents-icons/dist/arrow-right.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 
 export default function SideNavigationSubItemTemplate(this: SideNavigationSubItem) {
-	const Tag = this._tag;
+	const EffectiveTag = this._effectiveTag;
 
 	return (
 		<li id={this._id} class="ui5-sn-list-li" role="none">
-			<Tag class={`ui5-sn-item ui5-sn-item-level2 ${this._classes}`}
+			<EffectiveTag class={`ui5-sn-item ui5-sn-item-level2 ${this._classes}`}
 				 role="treeitem"
 				 data-sap-focus-ref
 				 onKeyDown={this._onkeydown}
@@ -32,7 +32,7 @@ export default function SideNavigationSubItemTemplate(this: SideNavigationSubIte
 						  name={arrowRight}
 					/>
 				}
-			</Tag>
+			</EffectiveTag>
 		</li>
 	);
 }

@@ -149,7 +149,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _ariaChecked() {
-		if (this.isOverflow || this.unselectable) {
+		if (this.isOverflow || this.unselectable || !this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -157,7 +157,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _groupId() {
-		if (!this.items.length) {
+		if (!this.items.length || this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -165,7 +165,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _expanded() {
-		if (!this.items.length) {
+		if (!this.items.length || this.sideNavCollapsed) {
 			return undefined;
 		}
 

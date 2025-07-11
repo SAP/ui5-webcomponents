@@ -189,7 +189,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		return this.selected;
 	}
 
-	get _tag() {
+	get _effectiveTag() {
 		return this._href ? "a" : "div";
 	}
 
@@ -212,7 +212,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	get _ariaCurrent() {
-		if (!this.selected) {
+		if (!this.sideNavCollapsed && !this.selected) {
 			return undefined;
 		}
 
