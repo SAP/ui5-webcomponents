@@ -11,7 +11,7 @@ export default function ColorPalettePopoverTemplate(this: ColorPalettePopover) {
 			contentOnlyOnDesktop={true}
 			placement="Bottom"
 			opener={this.opener}
-			open={this._open}
+			open={this.open}
 			onClose={this.onAfterClose}
 			onOpen={this.onAfterOpen}
 		>
