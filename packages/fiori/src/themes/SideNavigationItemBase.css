@@ -339,7 +339,11 @@ and there is an additional border that appears on hover. */
 	white-space: nowrap;
 }
 
-.ui5-sn-item-with-expander .ui5-sn-item-icon::after {
+:host(:not([side-nav-collapsed])) .ui5-sn-item:not(.ui5-sn-item-group):not(.ui5-sn-item-with-expander) .ui5-sn-item-text {
+	padding-inline-end: 0.375rem;
+}
+
+:host([side-nav-collapsed]) .ui5-sn-item-with-expander .ui5-sn-item-icon::after {
 	display: var(--_ui5_side_navigation_triangle_display);
 	content: "";
 	width: 0;
