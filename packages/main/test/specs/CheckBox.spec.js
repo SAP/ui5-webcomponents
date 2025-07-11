@@ -99,6 +99,15 @@ describe("CheckBox general interaction", () => {
 		assert.strictEqual(await accNameRefCheckBox.getAttribute("aria-label"), EXPECTED_ARIA_LABEL_NAME_REF, "aria-label is set");
 	});
 
+	it("tests _accInfo", async () => {
+		const cbCustomAria = await browser.$("#accCustomAria").shadow$(".ui5-checkbox-root");
+
+		const EXPECTED_ROLE = "presentation";
+
+		assert.strictEqual(await cbCustomAria.getAttribute("role"), EXPECTED_ROLE, "aria role is custom set");
+		assert.notOk(await cbCustomAria.getAttribute("aria-checked"), "aria-checked should not be rendered if not set in _accInfo");
+	});
+
 	it("tests ui5-icon", async () => {
 		const checkboxChecked = await browser.$("#checkboxChecked").shadow$(".ui5-checkbox-icon");
 
