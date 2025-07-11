@@ -407,7 +407,7 @@ describe("Toolbar Select", () => {
 		});
 	});
 
-	it.only("Should handle toolbar-select with width larger than the toolbar", async () => {
+	it("Should handle toolbar-select with width larger than the toolbar", async () => {
 		cy.mount(
 			<Toolbar id="otb_d">
 				<ToolbarSelect style="width: 201px;" id="toolbar-select">
