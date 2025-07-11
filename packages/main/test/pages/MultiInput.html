@@ -141,7 +141,7 @@
 			<ui5-token slot="tokens" text="eu"></ui5-token>
 			<ui5-token slot="tokens" text="amet"></ui5-token>
 			<ui5-token slot="tokens" text="do"></ui5-token>
-			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+			<div slot="valueStateMessage">Information message. This is a <ui5-link href="#">Link</ui5-link>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 		</ui5-multi-input>
 
 		<br>
@@ -277,7 +277,7 @@
 	<div class="sample-container">
 		<h1>Tokens + Suggestions</h1>
 
-		<ui5-multi-input show-suggestions show-value-help-icon id="suggestion-token">
+		<ui5-multi-input show-suggestions show-value-help-icon id="suggestion-token" value-state="Information">
 			<ui5-suggestion-item text="Aute"></ui5-suggestion-item>
 			<ui5-suggestion-item text="ad"></ui5-suggestion-item>
 			<ui5-suggestion-item text="exercitation"></ui5-suggestion-item>
@@ -286,6 +286,7 @@
 			<ui5-suggestion-item text="amet"></ui5-suggestion-item>
 			<ui5-suggestion-item text="aute"></ui5-suggestion-item>
 			<ui5-suggestion-item text="excepteur"></ui5-suggestion-item>
+			<div slot="valueStateMessage">Information message. This is a <ui5-link href="#">Link</ui5-link>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 		</ui5-multi-input>
 
 		<ui5-dialog id="dialog" header-text="Add Competency">

@@ -74,7 +74,7 @@
 	background: var(--sapInformationBackground);
 }
 
-.ui5-responsive-popover-header.ui5-responsive-popover-header--focused, .ui5-responsive-popover-header:focus {
+.ui5-responsive-popover-header:focus {
 	outline-offset: var(--_ui5_value_state_header_offset);
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 }
