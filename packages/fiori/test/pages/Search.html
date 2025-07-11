@@ -296,6 +296,7 @@
 				const searchItem = document.createElement('ui5-search-item');
 				searchItem.text = item.name;
 				searchItem.icon = 'search';
+                searchItem.deletable = true;
 				searchItem.addEventListener('ui5-delete', onDelete);
 				parent.appendChild(searchItem);
 			});
