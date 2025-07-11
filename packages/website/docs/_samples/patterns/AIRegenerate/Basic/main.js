@@ -5,6 +5,7 @@ import "@ui5/webcomponents-icons/dist/ai.js";
 import "@ui5/webcomponents-icons/dist/stop.js";
 import "@ui5/webcomponents-fiori/dist/Page.js";
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
+import "@ui5/webcomponents-fiori/dist/ShellBarBranding.js";
 import "@ui5/webcomponents-fiori/dist/DynamicPage.js";
 import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/BusyIndicator.js";
