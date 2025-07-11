@@ -178,7 +178,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	get _target() {
-		return (!this.effectiveDisabled && this.target) ? this.target : undefined;
+		return (!this.effectiveDisabled && this.href && this.target) ? this.target : undefined;
 	}
 
 	get isExternalLink() {
@@ -187,6 +187,10 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 
 	get _selected() {
 		return this.selected;
+	}
+
+	get _effectiveTag() {
+		return this._href ? "a" : "div";
 	}
 
 	get classesArray() {
@@ -208,11 +212,19 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	get _ariaCurrent() {
-		if (!this.selected) {
+		if (!this.sideNavCollapsed && !this.selected) {
 			return undefined;
 		}
 
 		return "page";
+	}
+
+	get _ariaSelected() {
+		if (!this.sideNavCollapsed) {
+			return undefined;
+		}
+
+		return this.selected;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
