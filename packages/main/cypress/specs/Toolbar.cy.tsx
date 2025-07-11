@@ -285,6 +285,71 @@ describe("Toolbar general interaction", () => {
 		cy.get("@popover")
 			.should("have.prop", "open", false);
 	});
+
+	it("Should render ui5-button by toolbar template, when slotting ui5-toolbar-button elements", () => {
+		cy.mount(
+			<Toolbar id="otb_c">
+				<ToolbarButton 
+					icon="decline" 
+					stableDomRef="tb-button-decline"
+					overflowPriority="NeverOverflow" 
+					text="Left 2" 
+				/>
+				<ToolbarButton 
+					icon="employee" 
+					overflowPriority="NeverOverflow"
+					text="Left 3" 
+				/>
+			</Toolbar>
+		);
+	
+		cy.get("#otb_c")
+			.find("[ui5-toolbar-button]")
+			.first()
+			.shadow()
+			.find("ui5-button")
+			.should("have.prop", "tagName", "UI5-BUTTON");
+	});
+
+	it("Should call child events only once", () => {
+		let clickCount = 0;
+		
+		const handleClick = () => {
+			clickCount++;
+		};
+	
+		cy.mount(
+			<>
+				<Toolbar id="clickCountToolbar" onClick={handleClick}>
+					<ToolbarButton icon="add" text="Left 1 (long)" id="clickCounter" />
+					<ToolbarButton icon="decline" text="Left 2" id="clearCounter" />
+				</Toolbar>
+				<input id="input" value="0" />
+			</>
+		);
+	
+		cy.get("#clickCountToolbar").then(($toolbar) => {
+			$toolbar[0].addEventListener("click", (e) => {
+				const input = document.getElementById("input") as HTMLInputElement;
+				const target = e.target as HTMLElement;
+				
+				if (target.id === "clearCounter") {
+					input.value = "0";
+				} else {
+					let currentValue = parseInt(input.value);
+					input.value = `${++currentValue}`;
+				}
+			});
+		});
+	
+		cy.get("#input").invoke("val", "0");
+	
+		cy.get("#clickCounter").realClick();
+	
+		cy.get("#input").should("have.prop", "value", "1");
+	
+		cy.get("#input").invoke("val", "0");
+	});
 });
 
 describe("Accessibility", () => {
