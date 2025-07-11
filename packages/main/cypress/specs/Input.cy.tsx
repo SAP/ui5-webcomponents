@@ -418,6 +418,30 @@ describe("Input general interaction", () => {
 
 		cy.get("@inputEvent").should("have.been.calledTwice");
 	});
+
+	it("Should updated typedInValue upon clear", () => {
+		cy.mount(
+			<Input showClearIcon></Input>
+		);
+
+		cy.get("[ui5-input]")
+			.as("input")
+			.realClick();
+
+		cy.get("@input")
+			.realType("C");
+
+		// click on the clear icon
+		cy.get("@input")
+			.shadow()
+			.find("[ui5-icon]")
+			.as("clearIcon")
+			.realClick();
+
+		// check typedInValue property
+		cy.get("@input")
+			.should("have.prop", "typedInValue", "");
+	});
 });
 
 describe("Input arrow navigation", () => {
