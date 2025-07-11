@@ -145,6 +145,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return "tree";
 		}
 
+		if (this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
+		}
+
 		return undefined;
 	}
 
