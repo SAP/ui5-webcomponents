@@ -163,6 +163,7 @@ class Toolbar extends UI5Element {
 	itemsToOverflow: Array<ToolbarItem> = [];
 	itemsWidth = 0;
 	minContentWidth = 0;
+	lastOffsetWidth = 0;
 
 	ITEMS_WIDTH_MAP: Map<string, number> = new Map();
 
@@ -293,8 +294,16 @@ class Toolbar extends UI5Element {
 	async onAfterRendering() {
 		await renderFinished();
 
+		const currentOffsetWidth = this.offsetWidth;
+		const wasZero = this.lastOffsetWidth === 0;
+		this.lastOffsetWidth = currentOffsetWidth;
+
 		this.storeItemsWidth();
 		this.processOverflowLayout();
+		// If previously hidden (width 0) and now visible, re-layout again
+		if (wasZero && currentOffsetWidth > 0) {
+			this.processOverflowLayout();
+		}
 		this.items.forEach(item => {
 			 item.isOverflowed = this.overflowItems.map(overflowItem => overflowItem).indexOf(item) !== -1;
 		});
