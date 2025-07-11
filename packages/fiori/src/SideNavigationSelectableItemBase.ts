@@ -219,6 +219,14 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		return "page";
 	}
 
+	get _ariaSelected() {
+		if (!this.sideNavCollapsed) {
+			return undefined;
+		}
+
+		return this.selected;
+	}
+
 	_onkeydown(e: KeyboardEvent) {
 		const isRTL = this.effectiveDir === "rtl";
 
