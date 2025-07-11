@@ -313,6 +313,26 @@ class Button extends UI5Element implements IButton {
 	nonInteractive = false;
 
 	/**
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed.
+	 *
+	 * **Note:** If set to `true` a busy indicator component will be displayed into the related button.
+	 * @default false
+	 * @public
+	 * @since 1.13.0
+	 */
+	@property({ type: Boolean })
+	loading = false;
+
+	/**
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the related button.
+	 * @default 1000
+	 * @public
+	 * @since 1.13.0
+	 */
+	@property({ type: Number })
+	loadingDelay = 1000;
+
+	/**
 	 * The current title of the button, either the tooltip property or the icons tooltip. The tooltip property with higher prio.
 	 * @private
 	 */

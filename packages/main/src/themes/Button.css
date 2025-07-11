@@ -338,3 +338,15 @@ bdi {
 	overflow: visible;
 	margin-inline-end: 0.3125rem;
 }
+
+:host([loading]){
+	pointer-events: unset;
+    cursor: default;
+	border-color: rgba(247, 247, 247, 0.4);
+}
+
+.ui5-button-busy-indicator {
+	background-color: rgba(247, 247, 247, 0.4);
+	height: 100%;
+	width: 100%;
+}
