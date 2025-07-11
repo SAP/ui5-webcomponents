@@ -145,9 +145,7 @@ const ICON_PER_STATUS_DESIGN = {
  * @param {HTMLElement} item the closed item.
  * @public
  */
-@event("close", {
-	bubbles: true,
-})
+@event("close")
 
 class NotificationListItem extends NotificationListItemBase {
 	eventDetails!: NotificationListItemBase["eventDetails"] & {
