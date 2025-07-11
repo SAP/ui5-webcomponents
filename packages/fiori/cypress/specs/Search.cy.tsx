@@ -389,6 +389,32 @@ describe("Properties", () => {
 			.find("ui5-avatar")
 			.should("be.visible");
 	});
+
+	it("displays item's delete button on hover", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="Item 1"/>
+				<SearchItem text="Item 2"/>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.realPress("I");
+
+		cy.get("[ui5-search-item]")
+			.eq(1)
+			.realHover();
+
+		cy.get("[ui5-search-item]")
+			.eq(1)
+			.shadow()
+			.find(".ui5-search-item-selected-delete")
+			.should("be.visible");
+	});
 });
 
 describe("Events", () => {
