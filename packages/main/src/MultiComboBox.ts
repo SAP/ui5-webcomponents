@@ -17,6 +17,7 @@ import {
 	isSpaceCtrl,
 	isSpaceShift,
 	isRight,
+	isLeft,
 	isHome,
 	isEnd,
 	isTabNext,
@@ -761,14 +762,28 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		return this.placeholder || "";
 	}
 
-	_handleArrowLeft() {
+	// If the input is focused and the cursor is at the beginning/end of the input,
+	// focus the last token if the direction is LTR/ RTL
+	get _shouldFocusLastToken(): boolean {
 		const inputDomRef = this._inputDom;
 		const cursorPosition = inputDomRef.selectionStart || 0;
 		const isTextSelected = ((inputDomRef.selectionEnd || 0) - cursorPosition) > 0;
 
-		if (cursorPosition === 0 && !isTextSelected) {
+		return cursorPosition === 0 && !isTextSelected;
+	}
+
+	_handleArrowKey(direction: string) {
+		if (this._shouldFocusLastToken && this.effectiveDir === direction) {
 			this._tokenizer._focusLastToken();
 		}
+	}
+
+	_handleArrowLeft() {
+		this._handleArrowKey("ltr");
+	}
+
+	_handleArrowRight() {
+		this._handleArrowKey("rtl");
 	}
 
 	_onPopoverFocusOut() {
@@ -860,6 +875,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 		if (
 			e.key === "ArrowLeft"
+			|| e.key === "ArrowRight"
 			|| e.key === "Show"
 			|| e.key === "PageUp"
 			|| e.key === "PageDown"
@@ -1360,7 +1376,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_onTokenizerKeydown(e: KeyboardEvent) {
-		if (isRight(e)) {
+		if ((isRight(e) && this.effectiveDir === "ltr") || (isLeft(e) && this.effectiveDir === "rtl")) {
 			const lastTokenIndex = this._tokenizer.tokens.length - this._tokenizer.overflownTokens.length - 1;
 
 			if (e.target === this._tokenizer.tokens[lastTokenIndex]) {

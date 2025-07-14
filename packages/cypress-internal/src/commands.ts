@@ -7,11 +7,18 @@ import "./helpers.js"
 const realEventCmdCallback = (originalFn: any, element: any, ...args: any) => {
 	cy.get(element)
 		.should($el => {
-			if ($el[0].tagName.includes("-") && $el[0].shadowRoot) {
-				expect($el[0].shadowRoot.hasChildNodes(), "Custom elements with shadow DOM have content in their shadow DOM").to.be.true;
+			const el = $el[0];
+
+			const isCustom = el.tagName.includes("-");
+			const isUI5Element = el.isUI5Element;
+			const isVisible = !Cypress.dom.isHidden(el);
+			const domRef = typeof el.getDomRef === "function" && el.getDomRef();
+
+			if (isCustom && isUI5Element) {
+				expect(domRef, "DOM Reference exists").to.exist;
+				expect(isVisible, "Be visible").to.be.true;
 			}
 		})
-		.and("be.visible")
 		.then(() => {
 			return originalFn(element, ...args)
 		});
