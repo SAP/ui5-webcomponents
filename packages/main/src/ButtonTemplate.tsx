@@ -67,7 +67,7 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 			}
 
 			{this.shouldRenderBadge &&
-					<slot name="badge"/>
+				<slot name="badge"/>
 			}
 		</button>
 		{this.loading &&
