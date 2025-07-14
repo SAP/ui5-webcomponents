@@ -318,19 +318,10 @@ class Button extends UI5Element implements IButton {
 	 * **Note:** If set to `true` a busy indicator component will be displayed into the related button.
 	 * @default false
 	 * @public
-	 * @since 1.13.0
+	 * @since 2.13.0
 	 */
 	@property({ type: Boolean })
 	loading = false;
-
-	/**
-	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the related button.
-	 * @default 1000
-	 * @public
-	 * @since 1.13.0
-	 */
-	@property({ type: Number })
-	loadingDelay = 1000;
 
 	/**
 	 * The current title of the button, either the tooltip property or the icons tooltip. The tooltip property with higher prio.
@@ -468,6 +459,11 @@ class Button extends UI5Element implements IButton {
 			return;
 		}
 
+		if (this.loading) {
+			e.preventDefault();
+			return;
+		}
+
 		const {
 			altKey,
 			ctrlKey,
@@ -502,7 +498,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	_onmousedown() {
-		if (this.nonInteractive) {
+		if (this.nonInteractive || this.loading) {
 			return;
 		}
 
@@ -511,7 +507,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	_ontouchend(e: TouchEvent) {
-		if (this.disabled) {
+		if (this.disabled || this.loading) {
 			e.preventDefault();
 			e.stopPropagation();
 		}
@@ -526,7 +522,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		this._cancelAction = isShift(e) || isEscape(e);
+		this._cancelAction = isShift(e) || isEscape(e) || this.loading;
 
 		if (isSpace(e) || isEnter(e)) {
 			this._setActiveState(true);
@@ -548,7 +544,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	_onfocusout() {
-		if (this.nonInteractive) {
+		if (this.nonInteractive || this.loading) {
 			return;
 		}
 
@@ -560,7 +556,7 @@ class Button extends UI5Element implements IButton {
 	_setActiveState(active: boolean) {
 		const eventPrevented = !this.fireDecoratorEvent("active-state-change");
 
-		if (eventPrevented) {
+		if (eventPrevented || this.loading) {
 			return;
 		}
 

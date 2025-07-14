@@ -52,8 +52,8 @@
 	user-select: none;
 }
 
-:host(:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
-:host(:not([hidden]):not([disabled]).ui5_hovered) {
+:host(:not([active]):not([loading]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host(:not([hidden]):not([loading]):not([disabled]).ui5_hovered) {
 	background: var(--sapButton_Hover_Background);
 	border: 1px solid var(--sapButton_Hover_BorderColor);
 	color: var(--sapButton_Hover_TextColor);
@@ -108,12 +108,12 @@
 	pointer-events: none;
 }
 
-:host([desktop]:not([active])) .ui5-button-root:focus-within:after,
-:host(:not([active])) .ui5-button-root:focus-visible:after,
-:host([desktop][active][design="Emphasized"]) .ui5-button-root:focus-within:after,
-:host([active][design="Emphasized"]) .ui5-button-root:focus-visible:after,
-:host([desktop][active]) .ui5-button-root:focus-within:before,
-:host([active]) .ui5-button-root:focus-visible:before {
+:host([desktop]:not([active]):not([loading])) .ui5-button-root:focus-within:after,
+:host(:not([active]):not([loading])) .ui5-button-root:focus-visible:after,
+:host([desktop][active][design="Emphasized"]:not([loading])) .ui5-button-root:focus-within:after,
+:host([active][design="Emphasized"]:not([loading])) .ui5-button-root:focus-visible:after,
+:host([desktop][active]:not([loading])) .ui5-button-root:focus-within:before,
+:host([active]:not([loading])) .ui5-button-root:focus-visible:before {
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
@@ -125,18 +125,18 @@
 	border-radius: var(--_ui5_button_focused_border_radius);
 }
 
-:host([desktop][active]) .ui5-button-root:focus-within:before,
-:host([active]) .ui5-button-root:focus-visible:before {
+:host([desktop][active]:not([loading])) .ui5-button-root:focus-within:before,
+:host([active]:not([loading])) .ui5-button-root:focus-visible:before {
 	border-color: var(--_ui5_button_pressed_focused_border_color);
 }
 
-:host([design="Emphasized"][desktop]) .ui5-button-root:focus-within:after,
-:host([design="Emphasized"]) .ui5-button-root:focus-visible:after {
+:host([design="Emphasized"][desktop]:not([loading])) .ui5-button-root:focus-within:after,
+:host([design="Emphasized"]:not([loading])) .ui5-button-root:focus-visible:after {
 	border-color: var(--_ui5_button_emphasized_focused_border_color);
 }
 
-:host([design="Emphasized"][desktop]) .ui5-button-root:focus-within:before,
-:host([design="Emphasized"]) .ui5-button-root:focus-visible:before {
+:host([design="Emphasized"][desktop]:not([loading])) .ui5-button-root:focus-within:before,
+:host([design="Emphasized"]:not([loading])) .ui5-button-root:focus-visible:before {
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
@@ -173,8 +173,8 @@ bdi {
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
-:host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
-:host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
+:host([design="Positive"]:not([active]):not([loading]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host([design="Positive"]:not([active]):not([loading]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Accept_Hover_Background);
 	border-color: var(--sapButton_Accept_Hover_BorderColor);
 	color: var(--sapButton_Accept_Hover_TextColor);
@@ -193,8 +193,8 @@ bdi {
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
-:host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
-:host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
+:host([design="Negative"]:not([active]):not([loading]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host([design="Negative"]:not([active]):not([loading]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Reject_Hover_Background);
 	border-color: var(--sapButton_Reject_Hover_BorderColor);
 	color: var(--sapButton_Reject_Hover_TextColor);
@@ -213,8 +213,8 @@ bdi {
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
-:host([design="Attention"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
-:host([design="Attention"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
+:host([design="Attention"]:not([active]):not([loading]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host([design="Attention"]:not([active]):not([loading]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Attention_Hover_Background);
 	border-color: var(--sapButton_Attention_Hover_BorderColor);
 	color: var(--sapButton_Attention_Hover_TextColor);
@@ -235,8 +235,8 @@ bdi {
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
-:host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
-:host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
+:host([design="Emphasized"]:not([active]):not([loading]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host([design="Emphasized"]:not([active]):not([loading]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Emphasized_Hover_Background);
 	border-color: var(--sapButton_Emphasized_Hover_BorderColor);
 	border-width: var(--_ui5_button_emphasized_border_width);
@@ -268,8 +268,8 @@ bdi {
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
-:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
-:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
+:host([design="Transparent"]:not([loading]):not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host([design="Transparent"]:not([loading]):not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Lite_Hover_Background);
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
 	color: var(--sapButton_Lite_Hover_TextColor);
@@ -340,12 +340,41 @@ bdi {
 }
 
 :host([loading]){
+	position: relative;
 	pointer-events: unset;
-	border-color:  rgba(255, 255, 255, 0.4);
+	border: inherit;
 }
 
+:host([loading]) .ui5-button-root {
+	opacity: var(--sapContent_DisabledOpacity);
+	border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
+	border-radius: var(--_ui5_button_border_radius);
+}
+
+:host([loading][design="Emphasized"]) {
+	background-color: inherit;
+	border: inherit;
+}
+
+:host([loading][design="Emphasized"]) .ui5-button-root {
+	background-color: var(--sapButton_Emphasized_Background);
+	border-color: var(--sapButton_Emphasized_BorderColor);
+}
+
+:host([loading][design="Positive"]) .ui5-button-root {
+	border-color: var(--sapButton_Accept_BorderColor);
+}
+
+:host([loading][design="Negative"]) .ui5-button-root {
+	border-color: var(--sapButton_Reject_BorderColor);
+}
+
+:host([loading][design="Attention"]) .ui5-button-root {
+	border-color: var(--sapButton_Attention_BorderColor);
+}
 .ui5-button-busy-indicator {
-	background-color: rgba(255, 255, 255, 0.4);
+	position: absolute;
 	height: 100%;
 	width: 100%;
+	top:0;
 }
