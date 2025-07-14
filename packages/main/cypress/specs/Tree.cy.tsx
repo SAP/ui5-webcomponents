@@ -550,7 +550,89 @@ describe("Tree slots", () => {
 });
 
 describe("Tree drag and drop tests", () => {
-	it("Moving item After another", () => {
+	const setupDragAndDrop = (tree: HTMLElement, options: {
+		allowBefore?: boolean;
+		allowAfter?: boolean;
+		allowOn?: boolean;
+		preventParentChildMove?: boolean;
+	} = {}) => {
+		const { allowBefore = true, allowAfter = true, allowOn = true, preventParentChildMove = false } = options;
+
+		tree.addEventListener("ui5-move-over", (e: CustomEvent) => {
+			const { destination, source } = e.detail;
+			
+			if (!tree.contains(source.element)) {
+				return;
+			}
+
+			// Prevent parent-child moves if specified
+			if (preventParentChildMove && source.element.contains(destination.element)) {
+				return;
+			}
+
+			// Check allowed placements
+			if (!allowBefore && destination.placement === "Before") {
+				return;
+			}
+			if (!allowAfter && destination.placement === "After") {
+				return;
+			}
+			if (!allowOn && destination.placement === "On") {
+				return;
+			}
+
+			// Special nesting rules
+			if (destination.placement === "On" && !("allowsNesting" in destination.element.dataset)) {
+				return;
+			}
+
+			e.preventDefault();
+		});
+
+		tree.addEventListener("ui5-move", (e: CustomEvent) => {
+			const { destination, source } = e.detail;
+
+			// Prevent self-moves
+			if (source.element === destination.element) {
+				return;
+			}
+
+			// Prevent parent-child moves if specified
+			if (preventParentChildMove && source.element.contains(destination.element)) {
+				return;
+			}
+
+			switch (destination.placement) {
+				case "Before":
+					destination.element.before(source.element);
+					break;
+				case "After":
+					destination.element.after(source.element);
+					break;
+				case "On":
+					destination.element.prepend(source.element);
+					break;
+			}
+		});
+	};
+
+	const dispatchMoveEvent = (sourceAlias: string, targetAlias: string, placement: string) => {
+		cy.get(sourceAlias).then($source => {
+			cy.get(targetAlias).then($target => {
+				const moveEvent = new CustomEvent("ui5-move", {
+					detail: {
+						source: { element: $source[0] },
+						destination: { element: $target[0], placement }
+					}
+				});
+				cy.get("[ui5-tree]").then($tree => {
+					$tree[0].dispatchEvent(moveEvent);
+				});
+			});
+		});
+	};
+
+	beforeEach(() => {
 		cy.mount(
 			<Tree selectionMode="Multiple" accessibleName="Tree with accessibleName">
 				<TreeItem movable text="Tree 1" icon="paste" additionalText="Available" indeterminate selected additionalTextState="Information">
@@ -559,7 +641,7 @@ describe("Tree drag and drop tests", () => {
 						<TreeItem movable text="Tree 1.1.2" additionalText="Available" additionalTextState="Positive"></TreeItem>
 					</TreeItem>
 				</TreeItem>
-				<TreeItem movable text="Tree 2 ALLOWS NESTING" icon="copy">
+				<TreeItem movable text="Tree 2 ALLOWS NESTING" icon="copy" data-allows-nesting>
 					<TreeItem movable text="Tree 2.1">
 						<TreeItem movable text="Tree 2.1.1"></TreeItem>
 						<TreeItem movable text="Tree 2.1.2">
@@ -575,521 +657,139 @@ describe("Tree drag and drop tests", () => {
 				<TreeItem movable text="Tree 3 (no icon)"></TreeItem>
 			</Tree>
 		);
+	});
 
-		// Add drag and drop event handlers
-		cy.get("[ui5-tree]").then(($tree) => {
-			const tree = $tree[0];
+	it("Moving item After another", () => {
+		cy.get("[ui5-tree]").then($tree => setupDragAndDrop($tree[0], { allowBefore: false }));
 
-			tree.addEventListener("ui5-move-over", (e: CustomEvent) => {
-				const { destination, source } = e.detail;
-				if (!tree.contains(source.element)) {
-					return;
-				}
-				// Allow "After" placement for this test
-				if (destination.placement === "Before") {
-					e.preventDefault();
-				}
-			});
-
-			tree.addEventListener("ui5-move", (e: CustomEvent) => {
-				const { destination, source } = e.detail;
-				switch (destination.placement) {
-					case "Before":
-						destination.element.before(source.element);
-						break;
-					case "After":
-						destination.element.after(source.element);
-						break;
-					case "On":
-						destination.element.prepend(source.element);
-						break;
-				}
-			});
-		});
-
-		// Use trigger to simulate drag and drop events instead of realMouse actions
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(0).as("firstItem");
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).as("secondItem");
-		cy.get("[ui5-tree] > [ui5-tree-item]").eq(2).as("thirdItem");
 
-		// Simulate moving first item after second item by triggering the move event directly
-		cy.get("@firstItem").then(($first) => {
-			cy.get("@secondItem").then(($second) => {
-				const moveEvent = new CustomEvent("ui5-move", {
-					detail: {
-						source: { element: $first[0] },
-						destination: { element: $second[0], placement: "After" }
-					}
-				});
-				cy.get("[ui5-tree]").then(($tree) => {
-					$tree[0].dispatchEvent(moveEvent);
-				});
-			});
-		});
+		dispatchMoveEvent("@firstItem", "@secondItem", "After");
 
-		// Verify new order: second, first, third
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(0).should("have.attr", "text", "Tree 2 ALLOWS NESTING");
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).should("have.attr", "text", "Tree 1");
-		cy.get("[ui5-tree] > [ui5-tree-item]").eq(2).should("have.attr", "text", "Tree 3 (no icon)");
 
-		// Move first item after third item
-		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).then(($first) => {
-			cy.get("[ui5-tree] > [ui5-tree-item]").eq(2).then(($third) => {
-				const moveEvent = new CustomEvent("ui5-move", {
-					detail: {
-						source: { element: $first[0] },
-						destination: { element: $third[0], placement: "After" }
-					}
-				});
-				cy.get("[ui5-tree]").then(($tree) => {
-					$tree[0].dispatchEvent(moveEvent);
-				});
-			});
-		});
+		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).as("movedFirst");
+		cy.get("[ui5-tree] > [ui5-tree-item]").eq(2).as("third");
 
-		// Verify final order: second, third, first
+		dispatchMoveEvent("@movedFirst", "@third", "After");
+
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(0).should("have.attr", "text", "Tree 2 ALLOWS NESTING");
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).should("have.attr", "text", "Tree 3 (no icon)");
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(2).should("have.attr", "text", "Tree 1");
 	});
 
 	it("Moving item Before another", () => {
-		cy.mount(
-			<Tree selectionMode="Multiple" accessibleName="Tree with accessibleName">
-				<TreeItem movable text="Tree 1" icon="paste" additionalText="Available" indeterminate selected additionalTextState="Information">
-					<TreeItem movable expanded text="Tree 1.1" additionalText="Re-stock" additionalTextState="Negative" indeterminate selected>
-						<TreeItem movable text="Tree 1.1.1" additionalText="Required" additionalTextState="Critical" selected></TreeItem>
-						<TreeItem movable text="Tree 1.1.2" additionalText="Available" additionalTextState="Positive"></TreeItem>
-					</TreeItem>
-				</TreeItem>
-				<TreeItem movable text="Tree 2 ALLOWS NESTING" icon="copy">
-					<TreeItem movable text="Tree 2.1">
-						<TreeItem movable text="Tree 2.1.1"></TreeItem>
-						<TreeItem movable text="Tree 2.1.2">
-							<TreeItem movable text="Tree 2.1.2.1"></TreeItem>
-							<TreeItem movable text="Tree 2.1.2.2"></TreeItem>
-							<TreeItem movable text="Tree 2.1.2.3"></TreeItem>
-							<TreeItem movable text="Tree 2.1.2.5"></TreeItem>
-						</TreeItem>
-					</TreeItem>
-					<TreeItem movable text="Tree 2.2"></TreeItem>
-					<TreeItem movable text="Tree 2.3"></TreeItem>
-				</TreeItem>
-				<TreeItem movable text="Tree 3 (no icon)"></TreeItem>
-			</Tree>
-		);
+		cy.get("[ui5-tree]").then($tree => setupDragAndDrop($tree[0], { allowAfter: false }));
 
-		// Add drag and drop event handlers
-		cy.get("[ui5-tree]").then(($tree) => {
-			const tree = $tree[0];
-
-			tree.addEventListener("ui5-move-over", (e: CustomEvent) => {
-				const { destination, source } = e.detail;
-				if (!tree.contains(source.element)) {
-					return;
-				}
-				// Allow "Before" placement for this test
-				if (destination.placement === "After") {
-					e.preventDefault();
-				}
-			});
-
-			tree.addEventListener("ui5-move", (e: CustomEvent) => {
-				const { destination, source } = e.detail;
-				switch (destination.placement) {
-					case "Before":
-						destination.element.before(source.element);
-						break;
-					case "After":
-						destination.element.after(source.element);
-						break;
-					case "On":
-						destination.element.prepend(source.element);
-						break;
-				}
-			});
-		});
-
-		// Get tree items - note the order matches WDIO test: [secondItem, thirdItem, firstItem]
-		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).as("secondItem");
-		cy.get("[ui5-tree] > [ui5-tree-item]").eq(2).as("thirdItem");
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(0).as("firstItem");
+		cy.get("[ui5-tree] > [ui5-tree-item]").eq(2).as("thirdItem");
 
-		// Move first item before third item
-		cy.get("@firstItem").then(($first) => {
-			cy.get("@thirdItem").then(($third) => {
-				const moveEvent = new CustomEvent("ui5-move", {
-					detail: {
-						source: { element: $first[0] },
-						destination: { element: $third[0], placement: "Before" }
-					}
-				});
-				cy.get("[ui5-tree]").then(($tree) => {
-					$tree[0].dispatchEvent(moveEvent);
-				});
-			});
-		});
+		dispatchMoveEvent("@firstItem", "@thirdItem", "Before");
 
-		// Verify new order: second, first, third
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(0).should("have.attr", "text", "Tree 2 ALLOWS NESTING");
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).should("have.attr", "text", "Tree 1");
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(2).should("have.attr", "text", "Tree 3 (no icon)");
 
-		// Move first item before second item
-		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).then(($first) => {
-			cy.get("[ui5-tree] > [ui5-tree-item]").eq(0).then(($second) => {
-				const moveEvent = new CustomEvent("ui5-move", {
-					detail: {
-						source: { element: $first[0] },
-						destination: { element: $second[0], placement: "Before" }
-					}
-				});
-				cy.get("[ui5-tree]").then(($tree) => {
-					$tree[0].dispatchEvent(moveEvent);
-				});
-			});
-		});
+		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).as("movedFirst");
+		cy.get("[ui5-tree] > [ui5-tree-item]").eq(0).as("second");
 
-		// Verify final order: first, second, third
+		dispatchMoveEvent("@movedFirst", "@second", "Before");
+
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(0).should("have.attr", "text", "Tree 1");
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).should("have.attr", "text", "Tree 2 ALLOWS NESTING");
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(2).should("have.attr", "text", "Tree 3 (no icon)");
 	});
 
 	it("Moving item ON another", () => {
-		cy.mount(
-			<Tree selectionMode="Multiple" accessibleName="Tree with accessibleName">
-				<TreeItem movable text="Tree 1" icon="paste" additionalText="Available" indeterminate selected additionalTextState="Information">
-					<TreeItem movable expanded text="Tree 1.1" additionalText="Re-stock" additionalTextState="Negative" indeterminate selected>
-						<TreeItem movable text="Tree 1.1.1" additionalText="Required" additionalTextState="Critical" selected></TreeItem>
-						<TreeItem movable text="Tree 1.1.2" additionalText="Available" additionalTextState="Positive"></TreeItem>
-					</TreeItem>
-				</TreeItem>
-				<TreeItem movable text="Tree 2 ALLOWS NESTING" icon="copy" data-allows-nesting>
-					<TreeItem movable text="Tree 2.1">
-						<TreeItem movable text="Tree 2.1.1"></TreeItem>
-						<TreeItem movable text="Tree 2.1.2">
-							<TreeItem movable text="Tree 2.1.2.1"></TreeItem>
-							<TreeItem movable text="Tree 2.1.2.2"></TreeItem>
-							<TreeItem movable text="Tree 2.1.2.3"></TreeItem>
-							<TreeItem movable text="Tree 2.1.2.5"></TreeItem>
-						</TreeItem>
-					</TreeItem>
-					<TreeItem movable text="Tree 2.2"></TreeItem>
-					<TreeItem movable text="Tree 2.3"></TreeItem>
-				</TreeItem>
-				<TreeItem movable text="Tree 3 (no icon)"></TreeItem>
-			</Tree>
-		);
+		cy.get("[ui5-tree]").then($tree => setupDragAndDrop($tree[0]));
 
-		// Add drag and drop event handlers
-		cy.get("[ui5-tree]").then(($tree) => {
-			const tree = $tree[0];
-
-			tree.addEventListener("ui5-move-over", (e: CustomEvent) => {
-				const { destination, source } = e.detail;
-				if (!tree.contains(source.element)) {
-					return;
-				}
-				// Allow "On" placement only for elements with data-allows-nesting
-				if (destination.placement === "On" && !("allowsNesting" in destination.element.dataset)) {
-					return;
-				}
-				e.preventDefault();
-			});
-
-			tree.addEventListener("ui5-move", (e: CustomEvent) => {
-				const { destination, source } = e.detail;
-
-				// Prevent moving element onto itself
-				if (source.element === destination.element) {
-					return;
-				}
-
-				switch (destination.placement) {
-					case "Before":
-						destination.element.before(source.element);
-						break;
-					case "After":
-						destination.element.after(source.element);
-						break;
-					case "On":
-						destination.element.prepend(source.element);
-						break;
-				}
-			});
-		});
-
-		// Get tree items
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(0).as("firstItem");
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).as("secondItem");
-		cy.get("[ui5-tree] > [ui5-tree-item]").eq(2).as("thirdItem");
 
-		// Test 1: Try to move first item ON itself (should not change order)
-		cy.get("@firstItem").then(($first) => {
-			const moveEvent = new CustomEvent("ui5-move", {
-				detail: {
-					source: { element: $first[0] },
-					destination: { element: $first[0], placement: "On" }
-				}
-			});
-			cy.get("[ui5-tree]").then(($tree) => {
-				$tree[0].dispatchEvent(moveEvent);
-			});
-		});
+		dispatchMoveEvent("@firstItem", "@firstItem", "On");
 
-		// Verify order has NOT changed
 		cy.get("[ui5-tree] > [ui5-tree-item]").should("have.length", 3);
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(0).should("have.attr", "text", "Tree 1");
-		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).should("have.attr", "text", "Tree 2 ALLOWS NESTING");
-		cy.get("[ui5-tree] > [ui5-tree-item]").eq(2).should("have.attr", "text", "Tree 3 (no icon)");
 
-		// Test 2: Move first item ON second item (nesting - should work)
-		cy.get("@firstItem").then(($first) => {
-			cy.get("@secondItem").then(($second) => {
-				const moveEvent = new CustomEvent("ui5-move", {
-					detail: {
-						source: { element: $first[0] },
-						destination: { element: $second[0], placement: "On" }
-					}
-				});
-				cy.get("[ui5-tree]").then(($tree) => {
-					$tree[0].dispatchEvent(moveEvent);
-				});
-			});
-		});
+		dispatchMoveEvent("@firstItem", "@secondItem", "On");
 
-		// Verify first item is nested in second (only 2 items at root level)
 		cy.get("[ui5-tree] > [ui5-tree-item]").should("have.length", 2);
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(0).should("have.attr", "text", "Tree 2 ALLOWS NESTING");
-		cy.get("[ui5-tree] > [ui5-tree-item]").eq(1).should("have.attr", "text", "Tree 3 (no icon)");
-
-		// Verify first item is nested inside second item
 		cy.get("[ui5-tree] > [ui5-tree-item]").eq(0).find("[ui5-tree-item]").first().should("have.attr", "text", "Tree 1");
 	});
 
 	it("Rearranging leafs", () => {
-		cy.mount(
-			<Tree selectionMode="Multiple" accessibleName="Tree with accessibleName">
-				<TreeItem movable text="Tree 1" icon="paste" additionalText="Available" indeterminate selected additionalTextState="Information">
-					<TreeItem movable expanded text="Tree 1.1" additionalText="Re-stock" additionalTextState="Negative" indeterminate selected>
-						<TreeItem movable text="Tree 1.1.1" additionalText="Required" additionalTextState="Critical" selected></TreeItem>
-						<TreeItem movable text="Tree 1.1.2" additionalText="Available" additionalTextState="Positive"></TreeItem>
-					</TreeItem>
-				</TreeItem>
-				<TreeItem movable text="Tree 2 ALLOWS NESTING" icon="copy" data-allows-nesting>
-					<TreeItem movable text="Tree 2.1">
-						<TreeItem movable text="Tree 2.1.1"></TreeItem>
-						<TreeItem movable text="Tree 2.1.2">
-							<TreeItem movable text="Tree 2.1.2.1"></TreeItem>
-							<TreeItem movable text="Tree 2.1.2.2"></TreeItem>
-							<TreeItem movable text="Tree 2.1.2.3"></TreeItem>
-							<TreeItem movable text="Tree 2.1.2.5"></TreeItem>
-						</TreeItem>
-					</TreeItem>
-					<TreeItem movable text="Tree 2.2"></TreeItem>
-					<TreeItem movable text="Tree 2.3"></TreeItem>
-				</TreeItem>
-				<TreeItem movable text="Tree 3 (no icon)"></TreeItem>
-			</Tree>
-		);
+		cy.get("[ui5-tree]").then($tree => setupDragAndDrop($tree[0]));
 
-		// Add drag and drop event handlers
-		cy.get("[ui5-tree]").then(($tree) => {
-			const tree = $tree[0];
+		cy.get("[ui5-tree-item]").shadow().find(".ui5-li-tree-toggle-icon").first().click();
 
-			tree.addEventListener("ui5-move-over", (e: CustomEvent) => {
-				const { destination, source } = e.detail;
-				if (!tree.contains(source.element)) {
-					return;
-				}
-				e.preventDefault();
-			});
-
-			tree.addEventListener("ui5-move", (e: CustomEvent) => {
-				const { destination, source } = e.detail;
-
-				if (source.element === destination.element) {
-					return;
-				}
-
-				switch (destination.placement) {
-					case "Before":
-						destination.element.before(source.element);
-						break;
-					case "After":
-						destination.element.after(source.element);
-						break;
-					case "On":
-						destination.element.prepend(source.element);
-						break;
-				}
-			});
-		});
-
-		// Click toggle button to expand items (similar to WDIO test)
-		cy.get("[ui5-tree-item]")
-			.shadow()
-			.find(".ui5-li-tree-toggle-icon")
-			.first()
-			.click();
-
-		// Get all tree items after expansion
-		cy.get("[ui5-tree] [ui5-tree-item]").then(($allItems) => {
-			const allItems = Array.from($allItems);
-			const secondToLastLeaf = allItems[12];
-			const lastLeaf = allItems[13];
-
-			// Move second-to-last leaf after last leaf
+		cy.get("[ui5-tree] [ui5-tree-item]").then($allItems => {
+			const items = Array.from($allItems);
+			
 			const moveEvent1 = new CustomEvent("ui5-move", {
 				detail: {
-					source: { element: secondToLastLeaf },
-					destination: { element: lastLeaf, placement: "After" }
+					source: { element: items[12] },
+					destination: { element: items[13], placement: "After" }
 				}
 			});
 
-			cy.get("[ui5-tree]").then(($tree) => {
+			cy.get("[ui5-tree]").then($tree => {
 				$tree[0].dispatchEvent(moveEvent1);
 			});
 
-			// Verify the order changed - swap positions in expected array
-			const expectedAfterFirst = [...allItems];
-			[expectedAfterFirst[12], expectedAfterFirst[13]] = [expectedAfterFirst[13], expectedAfterFirst[12]];
-
-			cy.get("[ui5-tree] [ui5-tree-item]").then(($newItems) => {
+			cy.get("[ui5-tree] [ui5-tree-item]").then($newItems => {
 				const newItems = Array.from($newItems);
-				expect(newItems[12]).to.equal(expectedAfterFirst[12]);
-				expect(newItems[13]).to.equal(expectedAfterFirst[13]);
+				expect(newItems[12]).to.equal(items[13]);
+				expect(newItems[13]).to.equal(items[12]);
 			});
 
-			// Move last leaf before second-to-last leaf (reverse the previous move)
-			cy.get("[ui5-tree] [ui5-tree-item]").then(($currentItems) => {
+			cy.get("[ui5-tree] [ui5-tree-item]").then($currentItems => {
 				const currentItems = Array.from($currentItems);
-				const currentSecondToLast = currentItems[12];
-				const currentLast = currentItems[13];
-
 				const moveEvent2 = new CustomEvent("ui5-move", {
 					detail: {
-						source: { element: currentLast },
-						destination: { element: currentSecondToLast, placement: "Before" }
+						source: { element: currentItems[13] },
+						destination: { element: currentItems[12], placement: "Before" }
 					}
 				});
 
-				cy.get("[ui5-tree]").then(($tree) => {
+				cy.get("[ui5-tree]").then($tree => {
 					$tree[0].dispatchEvent(moveEvent2);
 				});
 
-				// Verify the order is back to original
-				cy.get("[ui5-tree] [ui5-tree-item]").then(($finalItems) => {
+				cy.get("[ui5-tree] [ui5-tree-item]").then($finalItems => {
 					const finalItems = Array.from($finalItems);
-					expect(finalItems[12]).to.equal(allItems[12]);
-					expect(finalItems[13]).to.equal(allItems[13]);
+					expect(finalItems[12]).to.equal(items[12]);
+					expect(finalItems[13]).to.equal(items[13]);
 				});
 			});
 		});
 	});
 
 	it("Nesting parent among its children should be impossible", () => {
-		cy.mount(
-			<Tree selectionMode="Multiple" accessibleName="Tree with accessibleName">
-				<TreeItem movable text="Tree 1" icon="paste" additionalText="Available" indeterminate selected additionalTextState="Information">
-					<TreeItem movable expanded text="Tree 1.1" additionalText="Re-stock" additionalTextState="Negative" indeterminate selected>
-						<TreeItem movable text="Tree 1.1.1" additionalText="Required" additionalTextState="Critical" selected></TreeItem>
-						<TreeItem movable text="Tree 1.1.2" additionalText="Available" additionalTextState="Positive"></TreeItem>
-					</TreeItem>
-				</TreeItem>
-				<TreeItem movable text="Tree 2 ALLOWS NESTING" icon="copy" data-allows-nesting>
-					<TreeItem movable text="Tree 2.1">
-						<TreeItem movable text="Tree 2.1.1"></TreeItem>
-						<TreeItem movable text="Tree 2.1.2">
-							<TreeItem movable text="Tree 2.1.2.1"></TreeItem>
-							<TreeItem movable text="Tree 2.1.2.2"></TreeItem>
-							<TreeItem movable text="Tree 2.1.2.3"></TreeItem>
-							<TreeItem movable text="Tree 2.1.2.5"></TreeItem>
-						</TreeItem>
-					</TreeItem>
-					<TreeItem movable text="Tree 2.2"></TreeItem>
-					<TreeItem movable text="Tree 2.3"></TreeItem>
-				</TreeItem>
-				<TreeItem movable text="Tree 3 (no icon)"></TreeItem>
-			</Tree>
-		);
+		cy.get("[ui5-tree]").then($tree => setupDragAndDrop($tree[0], { preventParentChildMove: true }));
 
-		// Add drag and drop event handlers
-		cy.get("[ui5-tree]").then(($tree) => {
-			const tree = $tree[0];
+		cy.get("[ui5-tree] [ui5-tree-item]").then($allItems => {
+			const items = Array.from($allItems);
+			const originalOrder = items.map(item => item.getAttribute('text'));
 
-			tree.addEventListener("ui5-move-over", (e: CustomEvent) => {
-				const { destination, source } = e.detail;
-				if (!tree.contains(source.element)) {
-					return;
-				}
-
-				// Prevent moving parent among its children
-				if (source.element.contains(destination.element)) {
-					return;
-				}
-
-				e.preventDefault();
-			});
-
-			tree.addEventListener("ui5-move", (e: CustomEvent) => {
-				const { destination, source } = e.detail;
-
-				if (source.element === destination.element) {
-					return;
-				}
-
-				// Additional check: prevent moving parent among its children
-				if (source.element.contains(destination.element)) {
-					return;
-				}
-
-				switch (destination.placement) {
-					case "Before":
-						destination.element.before(source.element);
-						break;
-					case "After":
-						destination.element.after(source.element);
-						break;
-					case "On":
-						destination.element.prepend(source.element);
-						break;
-				}
-			});
-		});
-
-		// Get all tree items
-		cy.get("[ui5-tree] [ui5-tree-item]").then(($allItems) => {
-			const allItems = Array.from($allItems);
-			const parent = allItems[0];
-			const child = allItems[1];
-
-			// Store original order for comparison
-			const originalOrder = allItems.map(item => item.getAttribute('text'));
-
-			// Try to move parent after its child (should be prevented)
 			const moveEvent = new CustomEvent("ui5-move", {
 				detail: {
-					source: { element: parent },
-					destination: { element: child, placement: "After" }
+					source: { element: items[0] },
+					destination: { element: items[1], placement: "After" }
 				}
 			});
 
-			cy.get("[ui5-tree]").then(($tree) => {
+			cy.get("[ui5-tree]").then($tree => {
 				$tree[0].dispatchEvent(moveEvent);
 			});
 
-			// Verify order stays the same - parent not nested among its children
-			cy.get("[ui5-tree] [ui5-tree-item]").then(($newItems) => {
+			// Verify no change
+			cy.get("[ui5-tree] [ui5-tree-item]").then($newItems => {
 				const newItems = Array.from($newItems);
 				const newOrder = newItems.map(item => item.getAttribute('text'));
-
 				expect(newOrder).to.deep.equal(originalOrder);
-
-				// Specifically verify parent is still at position 0 and child at position 1
-				expect(newItems[0]).to.equal(parent);
-				expect(newItems[1]).to.equal(child);
 			});
 		});
 	});
