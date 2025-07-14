@@ -1,6 +1,5 @@
 import type { DynamicDateRangeValue, IDynamicDateRangeOption } from "../DynamicDateRange.js";
 import type StepInput from "../StepInput.js";
-import { toDatesLastNext } from "./toDates.js";
 
 /**
  * Parses a string value for Last/Next options
@@ -63,6 +62,3 @@ export function handleSelectionChangeLastNext(e: CustomEvent, option: IDynamicDa
 
 	return currentValue;
 }
-
-// Re-export toDatesLastNext for backward compatibility
-export { toDatesLastNext };

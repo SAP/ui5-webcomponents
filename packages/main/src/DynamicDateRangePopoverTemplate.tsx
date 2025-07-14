@@ -1,4 +1,4 @@
-import DynamicDateRange from "./DynamicDateRange.js";
+import type DynamicDateRange from "./DynamicDateRange.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import ListItemStandard from "./ListItemStandard.js";
@@ -41,35 +41,17 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 					selectionMode="Single"
 					onItemClick={this._selectOption}
 				>
-					{this.optionsObjects.map(option => {
-						// For grouped options, check if this option can handle the current value's operator
-						let isSelected = false;
-						if (this.value?.operator) {
-							if (option.operator === this.value.operator) {
-								// Direct match
-								isSelected = true;
-							} else {
-								// Check if this option can handle the current operator (for grouped options)
-								const currentOptions = this.options.split(",").map(s => s.trim());
-								const selectedConstructor = option.constructor;
-								const relatedOperators = currentOptions.filter(op => {
-									const OptionClass = DynamicDateRange.getOptionClass(op);
-									return OptionClass && new OptionClass().constructor === selectedConstructor;
-								});
-								isSelected = relatedOperators.includes(this.value.operator);
-							}
-						}
-
-						return <ListItemStandard
-							selected={isSelected}
+					{this.optionsObjects.map(option => (
+						<ListItemStandard
+							selected={this._isOptionSelected(option)}
 							iconEnd={true}
 							icon={option.icon}
 							wrappingType="Normal"
 							type={option.template ? ListItemType.Navigation : ListItemType.Active}
 						>
 							{option.text}
-						</ListItemStandard>;
-					})}
+						</ListItemStandard>
+					))}
 				</List>
 			</div>
 				:

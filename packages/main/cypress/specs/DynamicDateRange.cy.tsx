@@ -1,4 +1,4 @@
-import DynamicDateRange from '../../src/DynamicDateRange.js';
+import DynamicDateRange, { IDynamicDateRangeOption } from '../../src/DynamicDateRange.js';
 import SingleDate from '../../src/dynamic-date-range-options/SingleDate.js';
 import DateRange from '../../src/dynamic-date-range-options/DateRange.js';
 import Today from '../../src/dynamic-date-range-options/Today.js';
@@ -24,7 +24,7 @@ describe('DynamicDateRange Component', () => {
     });
 
     it('displays all options correctly', () => {
-        const mockOptions = [
+        const mockOptions: Array<IDynamicDateRangeOption> = [
             new Today(),
             new SingleDate(),
             new DateRange()
@@ -142,40 +142,68 @@ describe('DynamicDateRange Last/Next Options', () => {
     });
 
     it('selects Last X Days option with custom number input', () => {
-        const mockOptions = [
+        const mockOptions: Array<IDynamicDateRangeOption> = [
             new LastOptions.Days(),
             new NextOptions.Weeks(),
             new LastOptions.Months()
         ];
 
-        cy.get('[ui5-dynamic-date-range]').as("ddr");
-        cy.get("@ddr").shadow().find('[ui5-input]').as("input");
+        cy.get('[ui5-dynamic-date-range]')
+            .as("ddr")
+            .shadow()
+            .find('[ui5-input]')
+            .as("input");
 
-        cy.get("@input").find('[ui5-icon]').realClick();
+        cy.get("@input")
+            .find('[ui5-icon]')
+            .realClick();
 
-        cy.get("@ddr").shadow().find("[ui5-responsive-popover]").as("popover");
-        cy.get("@popover").should('exist');
+        cy.get("@ddr")
+            .shadow()
+            .find("[ui5-responsive-popover]")
+            .as("popover")
+            .should('exist');
 
-        cy.get("@popover").find("[ui5-list]").as("list");
-        cy.get('@list').find("[ui5-li]").as("listItems");
-        cy.get("@listItems").should('have.length', 2); // Since we unified the options, we only have 2 options
+        cy.get("@popover")
+            .find("[ui5-list]")
+            .as("list")
+            .find("[ui5-li]")
+            .as("listItems")
+            .should('have.length', 2); // Since we unified the options, we only have 2 options
 
-        cy.get("@listItems").contains(mockOptions[0].text).realClick();
+        cy.get("@listItems")
+            .contains(mockOptions[0].text)
+            .realClick();
 
-        cy.get("@popover").find("[slot='header']").should('contain.text', mockOptions[0].text);
+        cy.get("@popover")
+            .find("[slot='header']")
+            .should('contain.text', mockOptions[0].text);
 
-        cy.get("@popover").find("[ui5-step-input]").as("stepInput");
-        cy.get("@stepInput").should('exist');
+        cy.get("@popover")
+            .find("[ui5-step-input]")
+            .as("stepInput")
+            .should('exist');
 
-        cy.get("@stepInput").shadow().find("[ui5-input]").shadow().find("input").clear().realType('7');
+        cy.get("@stepInput")
+            .shadow()
+            .find("[ui5-input]")
+            .shadow()
+            .find("input")
+            .clear()
+            .realType('7');
 
-        cy.get("@popover").find("[ui5-button][design='Emphasized']").realClick();
+        cy.get("@popover")
+            .find("[ui5-button][design='Emphasized']")
+            .realClick();
 
-        cy.get("@input").shadow().find("input").should('have.value', 'Last 7 Days');
+        cy.get("@input")
+            .shadow()
+            .find("input")
+            .should('have.value', 'Last 7 Days');
     });
 
     it('handles Next X Weeks option and verifies date range calculation', () => {
-        const mockOptions = [
+        const mockOptions: Array<IDynamicDateRangeOption> = [
             new LastOptions.Days(),
             new NextOptions.Weeks(),
             new LastOptions.Months()
@@ -185,40 +213,95 @@ describe('DynamicDateRange Last/Next Options', () => {
             cy.stub(win.Date, 'now').returns(new Date(2025, 5, 15).getTime()); // June 15, 2025
         });
 
-        cy.get('[ui5-dynamic-date-range]').as("ddr");
-        cy.get("@ddr").shadow().find('[ui5-input]').as("input");
+        cy.get('[ui5-dynamic-date-range]')
+            .as("ddr");
 
-        cy.get("@input").find('[ui5-icon]').realClick();
+        cy.get("@ddr")
+            .shadow()
+            .find('[ui5-input]')
+            .as("input");
 
-        cy.get("@ddr").shadow().find("[ui5-responsive-popover]").as("popover");
+        cy.get("@input")
+            .find('[ui5-icon]')
+            .realClick();
 
-        cy.get("@popover").find("[ui5-list]").find("[ui5-li]").contains(mockOptions[1].text).realClick();
+        cy.get("@ddr")
+            .shadow()
+            .find("[ui5-responsive-popover]")
+            .as("popover");
 
-        cy.get("@popover").find("[slot='header']").should('contain.text', mockOptions[1].text);
+        cy.get("@popover")
+            .find("[ui5-list]")
+            .find("[ui5-li]")
+            .contains(mockOptions[1].text)
+            .realClick();
 
-        cy.get("@popover").find("[ui5-step-input]").as("stepInput");
-        cy.get("@stepInput").shadow().find("[ui5-input]").shadow().find("input").clear().realType('3');
+        cy.get("@popover")
+            .find("[slot='header']")
+            .should('contain.text', mockOptions[1].text);
 
-        cy.get("@popover").find(".ui5-ddr-current-value").should('contain.text', 'Selected:');
+        cy.get("@popover")
+            .find("[ui5-step-input]")
+            .as("stepInput");
 
-        cy.get("@popover").find("[ui5-button][design='Emphasized']").realClick();
+        cy.get("@stepInput")
+            .shadow()
+            .find("[ui5-input]")
+            .shadow()
+            .find("input")
+            .clear()
+            .realType('3');
 
-        cy.get("@input").shadow().find("input").should('have.value', 'Next 3 Weeks');
+        cy.get("@popover")
+            .find(".ui5-ddr-current-value")
+            .should('contain.text', 'Selected:');
+
+        cy.get("@popover")
+            .find("[ui5-button][design='Emphasized']")
+            .realClick();
+
+        cy.get("@input")
+            .shadow()
+            .find("input")
+            .should('have.value', 'Next 3 Weeks');
     });
 
     it('validates text input for Last X Months and parses correctly', () => {
 
-        cy.get('[ui5-dynamic-date-range]').as("ddr");
-        cy.get("@ddr").shadow().find('[ui5-input]').as("input");
+        cy.get('[ui5-dynamic-date-range]')
+            .as("ddr")
+            .shadow()
+            .find('[ui5-input]')
+            .as("input");
 
-        cy.get("@input").shadow().find("input").clear().realType('Last 6 Days');
-        cy.get("@input").shadow().find("input").realPress("Enter");
+        cy.get("@input")
+            .shadow()
+            .find("input")
+            .clear()
+            .realType('Last 6 Days');
+        cy.get("@input")
+            .shadow()
+            .find("input")
+            .realPress("Enter");
 
-        cy.get("@input").shadow().find("input").should('have.value', 'Last 6 Days');
+        cy.get("@input")
+            .shadow()
+            .find("input")
+            .should('have.value', 'Last 6 Days');
 
-        cy.get("@input").find('[ui5-icon]').realClick();
+        cy.get("@input")
+            .find('[ui5-icon]')
+            .realClick();
 
-        cy.get("@ddr").shadow().find("[ui5-responsive-popover]").as("popover");
-        cy.get("@popover").find("[ui5-list]").find("[ui5-li]").contains("Last X Days / Months").should('have.attr', 'selected');
+        cy.get("@ddr")
+            .shadow()
+            .find("[ui5-responsive-popover]")
+            .as("popover");
+
+        cy.get("@popover")
+            .find("[ui5-list]")
+            .find("[ui5-li]")
+            .contains("Last X Days / Months")
+            .should('have.attr', 'selected');
     });
 });

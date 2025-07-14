@@ -105,16 +105,8 @@ interface IDynamicDateRangeOption {
  * - "TOMORROW" - Represents the next date. An example value is `{ operator: "TOMORROW"}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/Tomorrow.js";`
  * - "DATE" - Represents a single date. An example value is `{ operator: "DATE", values: [new Date()]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/SingleDate.js";`
  * - "DATERANGE" - Represents a range of dates. An example value is `{ operator: "DATERANGE", values: [new Date(), new Date()]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/DateRange.js";`
- * - "LASTDAYS" - Represents last X days from today. An example value is `{ operator: "LASTDAYS", values: [new Date("2025-06-02"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastDays.js";`
- * - "NEXTDAYS" - Represents next X days from today. An example value is `{ operator: "NEXTDAYS", values: [new Date("2025-06-05"), new Date("2025-06-12")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextDays.js";`
- * - "LASTWEEKS" - Represents last X weeks from today. An example value is `{ operator: "LASTWEEKS", values: [new Date("2025-05-22"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastWeeks.js";`
- * - "NEXTWEEKS" - Represents next X weeks from today. An example value is `{ operator: "NEXTWEEKS", values: [new Date("2025-06-05"), new Date("2025-06-19")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextWeeks.js";`
- * - "LASTMONTHS" - Represents last X months from today. An example value is `{ operator: "LASTMONTHS", values: [new Date("2025-03-05"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastMonths.js";`
- * - "NEXTMONTHS" - Represents next X months from today. An example value is `{ operator: "NEXTMONTHS", values: [new Date("2025-06-05"), new Date("2025-09-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextMonths.js";`
- * - "LASTQUARTERS" - Represents last X quarters from today. An example value is `{ operator: "LASTQUARTERS", values: [new Date("2025-01-01"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastQuarters.js";`
- * - "NEXTQUARTERS" - Represents next X quarters from today. An example value is `{ operator: "NEXTQUARTERS", values: [new Date("2025-06-05"), new Date("2025-09-30")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextQuarters.js";`
- * - "LASTYEARS" - Represents last X years from today. An example value is `{ operator: "LASTYEARS", values: [new Date("2024-06-05"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastYears.js";`
- * - "NEXTYEARS" - Represents next X years from today. An example value is `{ operator: "NEXTYEARS", values: [new Date("2025-06-05"), new Date("2026-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextYears.js";`
+ * - "LASTOPTIONS" - Represents last X days / weeks / months / quarters / years from today. An example value is `{ operator: "LASTDAYS", values: [new Date("2025-06-02"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastOptions.js";`
+ * - "NEXTOPTIONS" - Represents next X days / weeks / months / quarters / years from today. An example value is `{ operator: "NEXTDAYS", values: [new Date("2025-06-05"), new Date("2025-06-12")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextOptions.js";`
  *
  * ### ES6 Module Import
  *
@@ -217,7 +209,7 @@ class DynamicDateRange extends UI5Element {
 	 * Creates and normalizes options from the options string
 	 */
 	_createNormalizedOptions(): Array<IDynamicDateRangeOption> {
-		const optionKeys = this.options.split(",").map(s => s.trim()).filter(Boolean);
+		const optionKeys = this.splitOptions(this.options).filter(Boolean);
 		const allOptions = optionKeys
 			.map(key => DynamicDateRange.getOptionClass(key))
 			.filter((OptionClass): OptionClass is new () => IDynamicDateRangeOption => OptionClass !== undefined)
@@ -247,8 +239,7 @@ class DynamicDateRange extends UI5Element {
 			return;
 		}
 
-		const option = this.optionsObjects.find(opt => opt.operator === this.value?.operator);
-		const listItem = option && this._list?.items.find(item => item.textContent === option.text);
+		const listItem = this._list?.items.find(item => (item as ListItem).selected === true);
 		if (listItem) {
 			this._list?.focusItem(listItem as ListItem);
 		}
@@ -293,13 +284,17 @@ class DynamicDateRange extends UI5Element {
 		}
 
 		// Check if current value belongs to same option family (e.g., Last* or Next*)
-		const optionKeys = this.options.split(",").map(s => s.trim());
+		const optionKeys = this.splitOptions(this.options);
 		const sameFamily = optionKeys.filter(key => {
 			const OptionClass = DynamicDateRange.getOptionClass(key);
 			return OptionClass && new OptionClass().constructor === selectedOption.constructor;
 		});
 
 		return sameFamily.includes(this.value.operator);
+	}
+
+	splitOptions(options: string): Array<string> {
+		return options.split(",").map(s => s.trim());
 	}
 
 	onButtonBackClick() {
@@ -374,13 +369,11 @@ class DynamicDateRange extends UI5Element {
 
 		const selectedText = DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_SELECTED_TEXT);
 
-		// For template options with numeric values, only show calculated date range if we have valid dates
-		if (this._currentOption.template
-			&& this.currentValue.values
-			&& typeof this.currentValue.values[0] === "number") {
+		// For template options, try to show calculated date range if possible
+		if (this._currentOption.template) {
 			try {
 				const dates = this._currentOption.toDates(this.currentValue);
-				if (dates.length > 0 && dates.every(date => date instanceof Date)) {
+				if (dates.length > 0 && dates.every(date => date instanceof Date && !Number.isNaN(date.getTime()))) {
 					const dateFormat = DateFormat.getDateInstance({
 						interval: dates.length === 2,
 						intervalDelimiter: " - ",
@@ -497,6 +490,26 @@ class DynamicDateRange extends UI5Element {
 			.map(key => DynamicDateRange.getOptionClass(key))
 			.filter((OptionClass): OptionClass is new () => IDynamicDateRangeOption => OptionClass !== undefined)
 			.map(OptionClass => new OptionClass());
+	}
+
+	/**
+	 * Determines if an option should be selected based on the current value
+	 * @private
+	 */
+	_isOptionSelected(option: IDynamicDateRangeOption): boolean {
+		if (!this.value?.operator) {
+			return false;
+		}
+
+		// Try to parse the current display value with this option
+		// If it can parse it AND the resulting operator matches the current value's operator,
+		// then this option should be selected
+		try {
+			const parsedValue = option.parse(this.displayValue);
+			return parsedValue?.operator === this.value.operator;
+		} catch {
+			return false;
+		}
 	}
 }
 

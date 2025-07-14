@@ -1,4 +1,4 @@
-import type DynamicDateRange from "../DynamicDateRange.js";
+import DynamicDateRange from "../DynamicDateRange.js";
 import type { DynamicDateRangeValue } from "../DynamicDateRange.js";
 import StepInput from "../StepInput.js";
 import Select from "../Select.js";
@@ -7,20 +7,21 @@ import Option from "../Option.js";
 import Label from "../Label.js";
 import type LastOptions from "./LastOptions.js";
 import type NextOptions from "./NextOptions.js";
+import {
+	DYNAMIC_DATE_RANGE_VALUE_LABEL_TEXT,
+	DYNAMIC_DATE_RANGE_UNIT_OF_TIME_LABEL_TEXT,
+} from "../generated/i18n/i18n-defaults.js";
 
 export default function LastNextTemplate(this: DynamicDateRange) {
 	const currentOption = this._currentOption;
-	if (!currentOption) {
-		return <div>No option selected</div>;
-	}
 
 	// Check if there are multiple options available (grouped)
 	const availableOptions = (currentOption as LastOptions | NextOptions).availableOptions;
-	const isGrouped = Boolean(availableOptions && availableOptions.length > 1);
+	const isGrouped = availableOptions && availableOptions.length > 1;
 
 	// Extract current values
 	const currentNumber = getCurrentNumber(this.currentValue);
-	const currentOperator = this.currentValue?.operator || currentOption.operator;
+	const currentOperator = this.currentValue?.operator || currentOption?.operator || "";
 
 	// Input handlers
 	const handleNumberChange = (e: CustomEvent) => {
@@ -42,7 +43,7 @@ export default function LastNextTemplate(this: DynamicDateRange) {
 	return (
 		<div class="ui5-last-next-container" style={{ padding: "0 1rem 0.5rem 1rem" }}>
 			<div class="ui5-ddr-input-container" style={{ textAlign: "right" }}>
-				<Label style={{ margin: "1rem 0 0.5rem 0", textAlign: "left" }}>Value for X</Label>
+				<Label style={{ margin: "1rem 0 0.5rem 0", textAlign: "left" }}>{DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_VALUE_LABEL_TEXT)}</Label>
 				<StepInput
 					value={currentNumber}
 					min={1}
@@ -52,7 +53,7 @@ export default function LastNextTemplate(this: DynamicDateRange) {
 
 				{isGrouped && (
 					<>
-						<Label style={{ margin: "1rem 0 0.5rem 0", textAlign: "left" }}>Unit of Time</Label>
+						<Label style={{ margin: "1rem 0 0.5rem 0", textAlign: "left" }}>{DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_UNIT_OF_TIME_LABEL_TEXT)}</Label>
 						<Select value={currentOperator} onChange={handleUnitChange}>
 							{availableOptions.map((option: any) => (
 								<Option value={option.operator}>

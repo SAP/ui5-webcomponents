@@ -3,8 +3,9 @@ import type { DynamicDateRangeValue, IDynamicDateRangeOption } from "../DynamicD
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
-	formatLastNext, handleSelectionChangeLastNext, isValidStringLastNext, toDatesLastNext, parseLastNext,
+	formatLastNext, handleSelectionChangeLastNext, isValidStringLastNext, parseLastNext,
 } from "./LastNextUtils.js";
+import { toDatesLastNext } from "./toDates.js";
 import DynamicDateRange from "../DynamicDateRange.js";
 import {
 	DYNAMIC_DATE_RANGE_NEXT_DAYS_TEXT,
@@ -116,8 +117,8 @@ class NextOptions implements IDynamicDateRangeOption {
 			if (value.operator.includes("DAYS")) {
 				const normalizedStart = new Date(startDate);
 				const normalizedEnd = new Date(endDate);
-				normalizedStart.setHours(0, 0, 0, 0);
-				normalizedEnd.setHours(0, 0, 0, 0);
+				normalizedStart.setUTCHours(0, 0, 0, 0);
+				normalizedEnd.setUTCHours(0, 0, 0, 0);
 
 				const diffInDays = Math.round((normalizedEnd.getTime() - normalizedStart.getTime()) / (1000 * 60 * 60 * 24));
 				return diffInDays + 1;
@@ -129,27 +130,27 @@ class NextOptions implements IDynamicDateRangeOption {
 			}
 
 			if (value.operator.includes("MONTHS")) {
-				const startYear = startDate.getFullYear();
-				const startMonth = startDate.getMonth();
-				const endYear = endDate.getFullYear();
-				const endMonth = endDate.getMonth();
+				const startYear = startDate.getUTCFullYear();
+				const startMonth = startDate.getUTCMonth();
+				const endYear = endDate.getUTCFullYear();
+				const endMonth = endDate.getUTCMonth();
 
 				const monthDiff = (endYear - startYear) * 12 + (endMonth - startMonth);
 				return Math.abs(monthDiff) + 1;
 			}
 
 			if (value.operator.includes("QUARTERS")) {
-				const startQuarter = Math.floor(startDate.getMonth() / 3);
-				const endQuarter = Math.floor(endDate.getMonth() / 3);
-				const startYear = startDate.getFullYear();
-				const endYear = endDate.getFullYear();
+				const startQuarter = Math.floor(startDate.getUTCMonth() / 3);
+				const endQuarter = Math.floor(endDate.getUTCMonth() / 3);
+				const startYear = startDate.getUTCFullYear();
+				const endYear = endDate.getUTCFullYear();
 
 				const quarterDiff = (endYear - startYear) * 4 + (endQuarter - startQuarter);
 				return Math.abs(quarterDiff) + 1;
 			}
 
 			if (value.operator.includes("YEARS")) {
-				const yearDiff = Math.abs(endDate.getFullYear() - startDate.getFullYear());
+				const yearDiff = Math.abs(endDate.getUTCFullYear() - startDate.getUTCFullYear());
 				return yearDiff + 1;
 			}
 		}
