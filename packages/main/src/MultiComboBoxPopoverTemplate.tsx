@@ -78,7 +78,7 @@ export default function MultiComboBoxPopoverTemplate(this: MultiComboBox) {
 
 			{!this._isPhone && <>
 				{this.hasValueStateMessage &&
-					<div slot="header" onKeyDown={this._onListHeaderKeydown} tabIndex={0} class={this.classes.responsivePopoverHeaderValueState} style={this.styles.popoverValueStateMessage}>
+					<div slot="header" onKeyDown={this._onListHeaderKeydown} class={this.classes.responsivePopoverHeaderValueState} style={this.styles.popoverValueStateMessage}>
 						<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}></Icon>
 						{this.open && valueStateMessage.call(this)}
 					</div>

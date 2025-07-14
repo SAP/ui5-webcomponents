@@ -819,7 +819,7 @@ describe("Side Navigation interaction", () => {
 			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='link']")
 			.realClick();
 
-			cy.url()
+		cy.url()
 			.should("not.include", "#test");
 
 		cy.get("#sideNav")
@@ -827,7 +827,7 @@ describe("Side Navigation interaction", () => {
 			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='item']")
 			.realClick();
 
-		cy.get("@selectionChangeHandler").should("not.have.been.called");
+		cy.get("@selectionChangeHandler", {timeout: 1000 }).should("not.have.been.called");
 	});
 
 	it("Tests preventDefault on child items in collapsed side navigation", () => {
@@ -963,7 +963,7 @@ describe("Side Navigation interaction", () => {
 			element.realClick();
 
 			// assert
-			cy.get("@selectionChangeHandler").should("have.callCount", expectedCallCount);
+			cy.get("@selectionChangeHandler", { timeout: 1000 }).should("have.callCount", expectedCallCount);
 		});
 	});
 
