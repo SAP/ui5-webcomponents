@@ -8,7 +8,7 @@ export default function SideNavigationSubItemTemplate(this: SideNavigationSubIte
 	return (
 		<li id={this._id} class="ui5-sn-list-li" role="none">
 			<EffectiveTag class={`ui5-sn-item ui5-sn-item-level2 ${this._classes}`}
-				 role="treeitem"
+				 role={this.ariaRole}
 				 data-sap-focus-ref
 				 onKeyDown={this._onkeydown}
 				 onKeyUp={this._onkeyup}
@@ -16,7 +16,7 @@ export default function SideNavigationSubItemTemplate(this: SideNavigationSubIte
 				 onFocusIn={this._onfocusin}
 				 tabIndex={this.effectiveTabIndex}
 				 aria-current={this._ariaCurrent}
-				 aria-selected={this.selected}
+				 aria-selected={this._ariaSelected}
 				 title={this._tooltip}
 				 aria-disabled={this.effectiveDisabled}
 				 href={this._href}
