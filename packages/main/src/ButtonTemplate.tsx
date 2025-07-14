@@ -43,12 +43,12 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 			role={this.effectiveAccRole}
 		>
 			{ this.icon &&
-					<Icon
-						class="ui5-button-icon"
-						name={this.icon}
-						mode="Decorative"
-						part="icon"
-					/>
+				<Icon
+					class="ui5-button-icon"
+					name={this.icon}
+					mode="Decorative"
+					part="icon"
+				/>
 			}
 
 			<span id={`${this._id}-content`} class="ui5-button-text">
