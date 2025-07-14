@@ -55,7 +55,7 @@ export default function LastNextTemplate(this: DynamicDateRange) {
 					<>
 						<Label style={{ margin: "1rem 0 0.5rem 0", textAlign: "left" }}>{DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_UNIT_OF_TIME_LABEL_TEXT)}</Label>
 						<Select value={currentOperator} onChange={handleUnitChange}>
-							{availableOptions.map((option: any) => (
+							{availableOptions.map(option => (
 								<Option value={option.operator}>
 									{option.unitText}
 								</Option>
@@ -68,7 +68,7 @@ export default function LastNextTemplate(this: DynamicDateRange) {
 	);
 }
 
-// Simple helper function - no complex date conversion, just get the number
+// Simple helper function - no complex date conversion
 function getCurrentNumber(currentValue: DynamicDateRangeValue | undefined): number {
 	// Default to 1
 	if (!currentValue?.values) {
