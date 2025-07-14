@@ -32,7 +32,7 @@ function ItemTemplate(this: SideNavigationItem) {
 				 onFocusOut={this._onfocusout}
 				 onMouseEnter={this._onmouseenter}
 				 onMouseLeave={this._onmouseleave}
-				 tabIndex={this.effectiveTabIndex !== undefined ? parseInt(this.effectiveTabIndex) : undefined}
+				 tabIndex={this.effectiveTabIndex}
 				 aria-haspopup={this._ariaHasPopup}
 				 aria-checked={this._ariaChecked}
 				 aria-owns={this._groupId}

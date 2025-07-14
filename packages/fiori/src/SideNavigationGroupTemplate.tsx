@@ -28,7 +28,7 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 				onKeyDown={this._onkeydown}
 				onClick={this._onclick}
 				onFocusIn={this._onfocusin}
-				tabIndex={this.effectiveTabIndex ? parseInt(this.effectiveTabIndex) : undefined}
+				tabIndex={this.effectiveTabIndex}
 				aria-expanded={this._expanded}
 				title={this._tooltip}
 				aria-owns={this._groupId}

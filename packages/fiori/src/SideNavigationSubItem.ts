@@ -60,6 +60,14 @@ class SideNavigationSubItem extends SideNavigationSelectableItemBase {
 		return this.disabled || this._parentDisabled;
 	}
 
+	get _ariaHasPopup() {
+		if (this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
+		}
+
+		return undefined;
+	}
+
 	get classesArray() {
 		const classes = super.classesArray;
 

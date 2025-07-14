@@ -14,14 +14,14 @@ export default function SideNavigationSubItemTemplate(this: SideNavigationSubIte
 				 onKeyUp={this._onkeyup}
 				 onClick={this._onclick}
 				 onFocusIn={this._onfocusin}
-				 tabIndex={this.effectiveTabIndex ? parseInt(this.effectiveTabIndex) : undefined}
+				 tabIndex={this.effectiveTabIndex}
 				 aria-current={this._ariaCurrent}
 				 aria-selected={this.selected}
 				 title={this._tooltip}
 				 aria-disabled={this.effectiveDisabled}
 				 href={this._href}
 				 target={this._target}
-				 aria-haspopup={this.accessibilityAttributes?.hasPopup}
+				 aria-haspopup={this._ariaHasPopup}
 			>
 				{this.icon &&
 					<Icon class="ui5-sn-item-icon" name={this.icon}/>
