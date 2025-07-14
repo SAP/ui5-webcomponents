@@ -245,6 +245,10 @@ class DynamicDateRange extends UI5Element {
 		}
 	}
 
+	/**
+	 * Defines whether the value help icon is hidden
+	 * @private
+	 */
 	get _iconMode() {
 		return isDesktop() ? IconMode.Decorative : IconMode.Interactive;
 	}
@@ -302,7 +306,7 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	/**
-	 * Converts a value into concrete `startDate` and `endDate` JavaScript `Date` objects.
+	 * Converts a `value` into concrete `startDate` and `endDate` JavaScript `Date` objects.
 	 *
 	 * @public
 	 * @param value The option to convert into an array of date ranges
@@ -423,6 +427,12 @@ class DynamicDateRange extends UI5Element {
 		}
 	}
 
+	/**
+	 * Registers a new dynamic date range option with a unique key.
+	 *
+	 * Example:
+	 * DynamicDateRange.register("LASTWEEK", LastWeek);
+	 */
 	static register(operator: string, option: new () => IDynamicDateRangeOption): void {
 		this.optionsClasses.set(operator.toUpperCase(), option);
 	}
