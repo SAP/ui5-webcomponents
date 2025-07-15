@@ -1466,11 +1466,6 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 			.find("input")
 			.as("innerInput");
 
-		cy.get("@multi-combobox")
-			.shadow()
-			.find("ui5-responsive-popover")
-			.as("popover");
-
 		// open the popover
 		cy.get("@multi-combobox")
 			.realClick()
@@ -1479,8 +1474,10 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 		// focus the fisrt item
 		cy.realPress("F4");
 
-		cy.get("@popover")
-			.should("have.attr", "open");
+		cy.get("@multi-combobox")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.ui5ResponsivePopoverOpened()
 
 		cy.get("ui5-mcb-item")
 			.eq(0)
@@ -1764,7 +1761,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 
 		cy.get("@mcb")
 			.should("be.focused");
-			
+
 		cy.get("@mcb")
 			.shadow()
 			.find("input")
@@ -1778,7 +1775,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
 			});
 
-		cy.get("@mcb").realPress("ArrowLeft");		
+		cy.get("@mcb").realPress("ArrowLeft");
 		cy.focused().should("have.class", "ui5-token--wrapper");
 	});
 
@@ -1828,7 +1825,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
 			.realClick()
-			
+
 		cy.get("@mcb")
 			.should("be.focused")
 			.realPress("ArrowRight");
@@ -1862,7 +1859,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
 			.realClick();
-			
+
 		cy.get("@mcb")
 			.should("be.focused")
 			.realPress("ArrowLeft");
@@ -1873,7 +1870,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.find("[ui5-token]")
 			.last()
 			.realPress("ArrowRight");
-		
+
 		cy.focused().should("not.have.class", "ui5-token--wrapper");
 	});
 
@@ -1900,7 +1897,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 			.as("input")
 			.realClick()
 			.should("have.focus")
-		
+
 			cy.get("@input")
 			.should("have.value", "")
 			.should(($input) => {
