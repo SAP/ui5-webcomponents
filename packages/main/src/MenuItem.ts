@@ -544,12 +544,12 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	_isSpace(e: KeyboardEvent) {
 		this._shiftPressed = this._isCheckable && isSpaceShift(e);
-		return isSpace(e) || this._shiftPressed || (!this._isCheckable && isSpaceShift(e));
+		return isSpace(e) || isSpaceShift(e);
 	}
 
 	_isEnter(e: KeyboardEvent) {
 		this._shiftPressed = this._isCheckable && isEnterShift(e);
-		return isEnter(e) || this._shiftPressed || (!this._isCheckable && isEnterShift(e));
+		return isEnter(e) || isEnterShift(e);
 	}
 
 	_onclick(e: MouseEvent) {
