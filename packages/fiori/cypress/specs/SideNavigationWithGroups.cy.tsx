@@ -29,7 +29,7 @@ describe("Component Behavior", () => {
 				.should("not.exist");
 		});
 
-		it("Tests that visualization is correct when two groups are next to each other", async () => {
+		it("Tests that visualization is correct when two groups are next to each other", () => {
 			cy.mount(
 				<SideNavigation id="sn1" collapsed={false}>
 					<SideNavigationGroup id="group1" text="Group 1">
@@ -42,9 +42,9 @@ describe("Component Behavior", () => {
 					<SideNavigationGroup id="group3" text="Group 3">
 						<SideNavigationItem text="Item 3.1" icon="locate-me"></SideNavigationItem>
 					</SideNavigationGroup>
-				</SideNavigation>	
+				</SideNavigation>
 			);
-		
+
 			cy.get("#group2")
 				.should("have.prop", "belowGroup", true);
 
@@ -55,7 +55,7 @@ describe("Component Behavior", () => {
 
 			cy.get("#group3")
 				.should("have.prop", "belowGroup", false);
-			
+
 			cy.get("#group3")
 				.shadow()
 				.find(".ui5-sn-item-separator").eq(0)
@@ -95,7 +95,7 @@ describe("Component Behavior", () => {
 				.realClick();
 			cy.get("#group1").should("have.prop", "expanded", true);
 		});
-		
+
 		it("Tests expanding of groups with ArrowRight", () => {
 			cy.mount(
 				<SideNavigation id="sn">
@@ -186,11 +186,11 @@ describe("Component Behavior", () => {
 				<SideNavigation id="sn">
 					<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
 					<SideNavigationGroup id="group1" text="Group">
-							<SideNavigationItem text="Home 1"
-								icon="home"
-								href="#home"
-								title="Home tooltip" />
-						</SideNavigationGroup>
+						<SideNavigationItem text="Home 1"
+							icon="home"
+							href="#home"
+							title="Home tooltip" />
+					</SideNavigationGroup>
 				</SideNavigation>
 			);
 
@@ -206,11 +206,11 @@ describe("Component Behavior", () => {
 				<SideNavigation id="sn">
 					<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
 					<SideNavigationGroup id="group1" expanded text="Group">
-							<SideNavigationItem text="Home 1"
-								icon="home"
-								href="#home"
-								title="Home tooltip" />
-						</SideNavigationGroup>
+						<SideNavigationItem text="Home 1"
+							icon="home"
+							href="#home"
+							title="Home tooltip" />
+					</SideNavigationGroup>
 				</SideNavigation>
 			);
 
