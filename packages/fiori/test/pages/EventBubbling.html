@@ -24,15 +24,27 @@
 
 <script>
 	app.addEventListener("close", function(e) {
-		console.log("App on close")
+		console.log("[X] App on close")
+	});
+
+		app.addEventListener("item-close", function(e) {
+		console.log("App on item-close")
 	});
 	
 	myDialog.addEventListener("close", function(e) {
-		console.log("Dialog on close")
+		console.log("[X] Dialog on close")
 	});
-	
+		
+	myDialog.addEventListener("item-close", function(e) {
+		console.log("Dialog on item-close")
+	});
+
 	myNotList.addEventListener("close", function(e) {
-		console.log("Notification List on close")
+		console.log("[X] Notification List on close")
+	});
+
+	myNotList.addEventListener("item-close", function(e) {
+		console.log("Notification List on item-close")
 	});
 
 	myNotItem.addEventListener("close", function(e) {

@@ -13,7 +13,7 @@ export default function ListTemplate(this: List) {
 			onDrop={this._ondrop}
 			onDragLeave={this._ondragleave}
 			// events bubbling from slotted items
-			onui5-close={this.onItemClose}
+			onui5-_close={this.onItemClose}
 			onui5-toggle={this.onItemToggle}
 			onui5-request-tabindex-change={this.onItemTabIndexChange}
 			onui5-_focused={this.onItemFocused}

@@ -147,10 +147,20 @@ const ICON_PER_STATUS_DESIGN = {
  */
 @event("close")
 
+/**
+ * Fired when the `Close` button is pressed.
+ * @param {HTMLElement} item the closed item.
+ * @private
+ */
+@event("_close", {
+	bubbles: true,
+})
+
 class NotificationListItem extends NotificationListItemBase {
 	eventDetails!: NotificationListItemBase["eventDetails"] & {
 		_press: NotificationListItemPressEventDetail,
 		close: NotificationListItemCloseEventDetail,
+		_close: NotificationListItemCloseEventDetail,
 	}
 	/**
 	* Defines if the `titleText` and `description` should wrap,
@@ -497,6 +507,7 @@ class NotificationListItem extends NotificationListItemBase {
 
 		if (isDelete(e)) {
 			this.fireDecoratorEvent("close", { item: this });
+			this.fireDecoratorEvent("_close", { item: this });
 		}
 
 		if (isF10Shift(e)) {
@@ -510,6 +521,7 @@ class NotificationListItem extends NotificationListItemBase {
 
 	_onBtnCloseClick() {
 		this.fireDecoratorEvent("close", { item: this });
+		this.fireDecoratorEvent("_close", { item: this });
 	}
 
 	_onBtnMenuClick() {
