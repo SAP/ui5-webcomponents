@@ -2190,9 +2190,7 @@ describe("Grouping", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.realClick();
-
-		cy.get("@mcb")
+			.realClick()
 			.should("be.focused");
 
 		cy.get("@mcb")
@@ -2235,8 +2233,15 @@ describe("Grouping", () => {
 			.ui5ResponsivePopoverOpened();
 
 		cy.get("@mcb")
-			.get("[ui5-mcb-item]")
+			.should("not.be.focused");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item-group]")
 			.eq(0)
+			.should("not.be.focused");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item][text='12']")
 			.should("be.focused");
 	});
 
@@ -2379,7 +2384,7 @@ describe("Grouping", () => {
 			.should("be.focused");
 	});
 
-	it("Tests group filtering", () => {
+	it("Selection of group header", () => {
 		cy.mount(
 			<MultiComboBox noValidation={true} onSelectionChange={cy.stub().as("selectionChangeEvent")} value="Group 1">
 				<MultiComboBoxItemGroup headerText="Group 1">
