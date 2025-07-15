@@ -56,6 +56,13 @@ type ColorChannelInput = {
 	showPercentSymbol?: boolean,
 }
 
+type MinMaxValues = {
+	min: number,
+	max: number,
+}
+
+type HSLandRGBValueLimits = Record<string, MinMaxValues>;
+
 /**
  * @class
  *
@@ -355,9 +362,31 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._displayHSL = !this._displayHSL;
 	}
 
+	_normalizeInputValue(stringValue: string, inputId: string): number {
+		const value = Number(stringValue);
+
+		const limits: HSLandRGBValueLimits = {
+			red: { min: 0, max: 255 },
+			green: { min: 0, max: 255 },
+			blue: { min: 0, max: 255 },
+			hue: { min: 0, max: 360 },
+			saturation: { min: 0, max: 100 },
+			light: { min: 0, max: 100 },
+		};
+
+		const limit = limits[inputId];
+		if (!limit) {
+			return value || 0;
+		}
+
+		// Return the value normalized to the limits
+		return Math.max(limit.min, Math.min(limit.max, value));
+	}
+
 	_handleColorInputChange(e: Event) {
 		const target = e.target as Input;
-		const targetValue = parseInt(target.value) || 0;
+		const targetValue = this._normalizeInputValue(target.value, target.id);
+		target.value = String(targetValue);
 
 		switch (target.id) {
 		case "red":
