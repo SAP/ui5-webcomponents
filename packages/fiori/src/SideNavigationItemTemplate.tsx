@@ -43,6 +43,7 @@ function ItemTemplate(this: SideNavigationItem) {
 				 aria-selected={this._ariaSelected}
 				 href={this._href}
 				 target={this._target}
+				 aria-disabled={this.effectiveDisabled}
 			>
 				{this.sideNavCollapsed ?
 					<Icon class="ui5-sn-item-icon" name={this.icon}/>
