@@ -270,9 +270,7 @@ describe("General interaction", () => {
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.as("tokenizer")
-			.then($tokenizer => {
-				$tokenizer[0].addEventListener("ui5-token-delete", cy.stub().as("tokenDelete"))
-			});
+			.invoke('on', 'ui5-token-delete', cy.spy().as('tokenDelete'));
 
 		cy.get("@tokenizer")
 			.find("[ui5-token]")
@@ -1499,9 +1497,7 @@ describe("Event firing", () => {
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.as("tokenizer")
-			.then($tokenizer => {
-				$tokenizer[0].addEventListener("ui5-token-delete", cy.stub().as("tokenDelete"))
-			});
+			.invoke('on', 'ui5-token-delete', cy.spy().as('tokenDelete'));
 
 		cy.get("@mcb")
 			.realClick();
