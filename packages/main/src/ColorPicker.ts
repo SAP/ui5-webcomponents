@@ -41,6 +41,15 @@ import {
 import ColorPickerCss from "./generated/themes/ColorPicker.css.js";
 import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/index.js";
 
+enum COLOR_CHANNEL {
+	Red = "red",
+	Green = "green",
+	Blue = "blue",
+	Hue = "hue",
+	Saturation = "saturation",
+	Light = "light",
+}
+
 const PICKER_POINTER_WIDTH = 6.5;
 
 type ColorCoordinates = {
@@ -61,7 +70,7 @@ type MinMaxValues = {
 	max: number,
 }
 
-type HSLandRGBValueLimits = Record<string, MinMaxValues>;
+type HSLandRGBValueLimits = Record<COLOR_CHANNEL, MinMaxValues>;
 
 /**
  * @class
@@ -374,7 +383,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			light: { min: 0, max: 100 },
 		};
 
-		const limit = limits[inputId];
+		const limit = limits[inputId as keyof HSLandRGBValueLimits];
 		if (!limit) {
 			return value || 0;
 		}
