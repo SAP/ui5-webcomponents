@@ -1004,1802 +1004,1802 @@ describe("MultiComboBox Truncated Tokens", () => {
 	});
 });
 
-// describe("Selection and filtering", () => {
-// 	it("Select and deselect first item", () => {
-// 		cy.mount(
-// 			<MultiComboBox onSelectionChange={cy.stub().as("selectionChangeEvent")}>
-// 				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".inputIcon")
-// 			.as("icon");
-
-// 		cy.get("@icon")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.find("[ui5-mcb-item]")
-// 			.eq(0)
-// 			.as("firstItem")
-// 			.should("not.have.attr", "selected");
-
-// 		cy.get("@firstItem")
-// 			.shadow()
-// 			.find("[ui5-checkbox]")
-// 			.as("checkbox")
-// 			.realClick();
-
-// 		cy.get("@firstItem")
-// 			.should("have.attr", "selected");
-
-// 		cy.get("@selectionChangeEvent")
-// 			.should("have.been.calledOnce");
-
-// 		cy.get("@selectionChangeEvent")
-// 			.should("have.been.calledWithMatch", Cypress.sinon.match(event => {
-// 				return event.detail.items[0].text === "Item 1";
-// 			}));
-
-// 		cy.get("@checkbox")
-// 			.realClick();
-
-// 		cy.get("@firstItem")
-// 			.should("not.have.attr", "selected");
-
-// 		cy.get("@selectionChangeEvent")
-// 			.should("have.been.calledTwice");
-
-// 		cy.get("@selectionChangeEvent")
-// 			.should("have.been.calledWithMatch", Cypress.sinon.match(event => {
-// 				return event.detail.items.length === 0;
-// 			}));
-// 	});
-
-// 	it("Focus restore after item click", () => {
-// 		cy.mount(
-// 			<MultiComboBox>
-// 				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".inputIcon")
-// 			.as("icon");
-
-// 		cy.get("@icon")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.find("[ui5-mcb-item]")
-// 			.eq(0)
-// 			.realClick();
-
-// 		cy.get<ResponsivePopover>("@popover")
-// 			.ui5ResponsivePopoverClosed();
-
-// 		cy.get("@mcb")
-// 			.should("have.attr", "focused");
-// 	});
-
-// 	it("Opens all items popover when start typing and filters items", () => {
-// 		cy.mount(
-// 			<MultiComboBox noTypeahead={true}>
-// 				<MultiComboBoxItem text="1"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="12"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="3"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realType("12");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@popover")
-// 			.find("[ui5-list] slot")
-// 			.should("have.length", 1);
-
-// 		cy.get("@mcb")
-// 			.realPress("Backspace");
-
-// 		cy.get("@popover")
-// 			.find("[ui5-list] slot")
-// 			.should("have.length", 2);
-// 	});
-
-// 	it("When item is clicked, the popover should be closed and the value in the input should be removed", () => {
-// 		cy.mount(
-// 			<MultiComboBox>
-// 				<MultiComboBoxItem text="Cosy"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="Compact"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realType("C");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.should("have.value", "Cosy");
-
-// 		cy.get("@mcb")
-// 			.find("[ui5-mcb-item]")
-// 			.eq(0)
-// 			.as("firstItem")
-// 			.realClick();
-
-// 		cy.get<ResponsivePopover>("@popover")
-// 			.ui5ResponsivePopoverClosed();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.should("have.value", "");
-
-// 		cy.get("@mcb")
-// 			.should("have.attr", "focused");
-// 	});
-
-// 	it("When item's checkbox is clicked, the popover should not be closed and the value in the input should be kept", () => {
-// 		cy.mount(
-// 			<MultiComboBox>
-// 				<MultiComboBoxItem text="Cosy"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="Compact"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realType("C");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.should("have.value", "Cosy");
-
-// 		cy.get("@mcb")
-// 			.find("[ui5-mcb-item]")
-// 			.eq(0)
-// 			.shadow()
-// 			.find("[ui5-checkbox]")
-// 			.as("checkbox")
-// 			.realClick();
-
-// 		cy.get<ResponsivePopover>("@popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@input")
-// 			.should("have.value", "C");
-// 	});
-
-// 	it("Clicking n more prefilters items before opening the popover", () => {
-// 		cy.mount(
-// 			<MultiComboBox noValidation={true} showSelectAll={true} style="width: 100px">
-// 				<MultiComboBoxItem selected={true} text="This is a token with ridicilously long long long text"></MultiComboBoxItem>
-// 				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.as("tokenizer")
-// 			.shadow()
-// 			.find(".ui5-tokenizer-more-text")
-// 			.as("moreButton");
-
-// 		cy.get("@moreButton")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@popover")
-// 			.find("[ui5-list] slot")
-// 			.should("have.length", 2);
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".inputIcon")
-// 			.as("icon");
-
-// 		cy.get("@icon")
-// 			.realClick();
-
-// 		cy.get<ResponsivePopover>("@popover")
-// 			.ui5ResponsivePopoverClosed();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".inputIcon")
-// 			.as("icon");
-
-// 		cy.get("@icon")
-// 			.realClick();
-
-// 		cy.get<ResponsivePopover>("@popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@popover")
-// 			.find("[ui5-list] slot")
-// 			.should("have.length", 3);
-// 	});
-
-// 	it("Filtering of items when nmore popover is open and user types in the input field", () => {
-// 		cy.mount(
-// 			<MultiComboBox style="width: 100px">
-// 				<MultiComboBoxItem selected={true} text="Ridicilously long long long text"></MultiComboBoxItem>
-// 				<MultiComboBoxItem selected={true} text="1"></MultiComboBoxItem>
-// 				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.shadow()
-// 			.find(".ui5-tokenizer-more-text")
-// 			.as("moreButton");
-
-// 		cy.get("@moreButton")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@popover")
-// 			.find("[ui5-list] slot")
-// 			.should("have.length", 3);
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@input")
-// 			.realType("I");
-
-// 		cy.get("@popover")
-// 			.find("[ui5-list] slot")
-// 			.should("have.length", 2);
-
-// 		cy.get("@popover")
-// 			.find("[ui5-list] slot")
-// 			.eq(1)
-// 			.should("not.have.attr", "selected");
-// 	});
-
-// 	it("Should make a selection on ENTER", () => {
-// 		cy.mount(
-// 			<MultiComboBox>
-// 				<MultiComboBoxItem text="Cosy"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="Compact"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realType("C");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.should("have.value", "Cosy");
-
-// 		cy.get("@mcb")
-// 			.realPress("Enter")
-
-// 		cy.get<ResponsivePopover>("@popover")
-// 			.ui5ResponsivePopoverClosed();
-
-// 		cy.get("@input")
-// 			.should("have.value", "");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.should("exist")
-// 			.and("have.length", 1);
-// 	});
-// });
-
-// describe("Validation & Value State", () => {
-// 	it("Should be able to change value states upon typing", () => {
-// 		cy.mount(
-// 			<MultiComboBox noValidation={true}>
-// 				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		// add event listener
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.then(mcb => {
-// 				mcb.get(0).addEventListener("input", e => {
-// 					(mcb.get(0) as MultiComboBox).valueState = (e.target as MultiComboBox).value.length ? "Negative" : "Information";
-// 				});
-// 			});
-
-// 		cy.get("@mcb")
-// 			.realClick()
-// 			.should("be.focused");
-
-// 		// type "f"
-// 		cy.realType("f");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".ui5-valuestatemessage--error")
-
-// 		cy.realPress("Backspace");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".ui5-valuestatemessage--information")
-
-// 		cy.realPress("f");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".ui5-valuestatemessage--information")
-// 			.should("not.exist");
-// 	});
-
-// 	it("Built in validation by typing a non existing option", () => {
-// 		cy.mount(
-// 			<MultiComboBox>
-// 				<MultiComboBoxItem text="112"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="12"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="3"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realType("1");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.should("have.value", "112");
-
-// 		cy.get("@mcb")
-// 			.realType("4");
-
-// 		cy.get("@input")
-// 			.should("have.value", "1");
-
-// 		cy.get("@mcb")
-// 			.should("have.attr", "value-state", "Negative");
-// 	});
-
-// 	it("Reset value state validation after 2500ms", () => {
-// 		cy.mount(
-// 			<MultiComboBox>
-// 				<MultiComboBoxItem text="112"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="12"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="3"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realType("4");
-
-// 		cy.get("@mcb")
-// 			.should("have.attr", "value-state", "Negative");
-
-// 		cy.wait(2500);
-
-// 		cy.get("@mcb")
-// 			.should("have.attr", "value-state", "None");
-// 	});
-
-// 	it("Built in validation by typing a non existing option", () => {
-// 		cy.mount(
-// 			<MultiComboBox>
-// 				<MultiComboBoxItem text="Cosy"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realType("CCo");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.should("have.value", "Cosy");
-// 	});
-
-// 	it("Tests if item is created when enter is pressed while validation is ongoing", () => {
-// 		cy.mount(
-// 			<MultiComboBox>
-// 				<MultiComboBoxItem text="Cosy"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realType("CC{enter}");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.should("not.exist")
-// 	});
-
-// 	it("Should remove value state header when value state is reset", () => {
-// 		cy.mount(
-// 			<MultiComboBox noValidation={true} valueState="Critical" open={true}>
-// 				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.then(mcb => {
-// 				mcb.get(0).addEventListener("ui5-selection-change", e => {
-// 					(mcb.get(0) as MultiComboBox).valueState = "None";
-// 				});
-// 			});
-
-// 		cy.get("@mcb")
-// 			.realClick()
-// 			.should("be.focused");
-
-// 		cy.realPress("ArrowDown");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item]")
-// 			.should("be.focused")
-// 			.realPress("Space");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".ui5-valuestatemessage--warning")
-// 			.should("not.exist");
-// 	});
-// });
-
-// describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", () => {
-// 	beforeEach(() => {
-// 		cy.mount(<>
-// 			<MultiComboBox valueState="Negative">
-// 				<div slot="valueStateMessage">
-// 					Custom error value state message with a <Link href="#">Link</Link>  <Link href="#">Second Link</Link>.
-// 				</div>
-// 				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 			<Input id="nextInput" class="input2auto" placeholder="Next input"></Input>
-// 		</>);
-// 	});
-
-// 	it("Should move the focus from the MultiComboBox to the first link in the value state message", () => {
-// 		cy.get("ui5-multi-combobox")
-// 			.shadow()
-// 			.find("input")
-// 			.as("innerInput");
-
-// 		cy.get("ui5-multi-combobox")
-// 			.as("multi-combobox");
-
-// 		cy.get("@innerInput")
-// 			.realClick()
-// 			.should("be.focused");
-
-// 		cy.realPress(["Control", "Alt", "F8"]);
-
-// 		cy.get("@multi-combobox")
-// 			.shadow()
-// 			.find("ui5-popover")
-// 			.as("popover")
-// 			.should("have.class", "ui5-valuestatemessage-popover");
-
-// 		cy.get("@popover")
-// 			.should("have.attr", "open")
-
-// 		cy.get("ui5-link")
-// 			.eq(0)
-// 			.should("have.focus");
-// 	});
-
-// 	it("When pressing [Tab], the focus moves to the next value state message link. Pressing [Tab] again closes the popup and moves the focus to the next input", () => {
-// 		cy.get("ui5-multi-combobox")
-// 			.as("multi-combobox");
-
-// 		cy.get("@multi-combobox")
-// 			.shadow()
-// 			.find("input")
-// 			.as("innerInput");
-
-// 		cy.get("@innerInput")
-// 			.realClick()
-// 			.should("be.focused");
-
-// 		cy.realPress(["Control", "Alt", "F8"]);
-
-// 		cy.get("@multi-combobox")
-// 			.shadow()
-// 			.find("ui5-popover")
-// 			.as("ui5-popover")
-// 			.should("have.attr", "open");
-
-// 		cy.get("ui5-link")
-// 			.eq(0)
-// 			.as("firstLink")
-// 			.should("have.focus");
-
-// 		cy.get("@firstLink")
-// 			.realPress("Tab");
-
-// 		cy.get("@firstLink")
-// 			.should("not.have.focus");
-
-// 		cy.get("ui5-link")
-// 			.eq(1)
-// 			.as("secondLink")
-// 			.should("have.focus");
-
-// 		cy.get("@secondLink")
-// 			.realPress("Tab");
-
-// 		cy.get("ui5-input")
-// 			.as("input");
-
-// 		cy.get("@input")
-// 			.should("have.focus");
-// 	});
-
-// 	it("Pressing [Shift + Tab] moves the focus from the second link in the value state message to the first one. Pressing it again shifts the focus to the MultiComboBox", () => {
-// 		cy.get("ui5-multi-combobox")
-// 			.shadow()
-// 			.find("input")
-// 			.as("innerInput");
-
-// 		cy.get("ui5-multi-combobox")
-// 			.as("multi-combobox");
-
-// 		cy.get("@innerInput")
-// 			.realClick()
-// 			.should("be.focused");
-
-// 		cy.realPress(["Control", "Alt", "F8"]);
-
-// 		cy.get("@multi-combobox")
-// 			.shadow()
-// 			.find("ui5-popover")
-// 			.as("ui5-popover")
-// 			.should("have.attr", "open");
-
-// 		cy.get("ui5-link")
-// 			.eq(0)
-// 			.as("firstLink")
-// 			.should("have.focus");
-
-// 		cy.get("@firstLink")
-// 			.realPress("Tab");
-
-// 		cy.get("@firstLink")
-// 			.should("not.have.focus");
-
-// 		cy.get("ui5-link")
-// 			.eq(1)
-// 			.as("secondLink")
-// 			.should("have.focus");
-
-// 		cy.get("@secondLink")
-// 			.realPress(["Shift", "Tab"]);
-
-// 		cy.get("@firstLink")
-// 			.should("have.focus");
-
-// 		cy.get("@firstLink")
-// 			.realPress(["Shift", "Tab"]);
-
-// 		cy.get("@innerInput")
-// 			.should("have.focus");
-
-// 	});
-
-// 	it("When list item is selected and pressing [Ctrl + Alt + F8], first link is focused. [Arrow Down] moves focus to the first list item", () => {
-// 		cy.get("ui5-multi-combobox")
-// 			.as("multi-combobox");
-
-// 		cy.get("@multi-combobox")
-// 			.shadow()
-// 			.find("input")
-// 			.as("innerInput");
-
-// 		// open the popover
-// 		cy.get("@multi-combobox")
-// 			.realClick()
-// 			.should("be.focused");
-
-// 		// focus the fisrt item
-// 		cy.realPress("F4");
-
-// 		cy.get("@multi-combobox")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.ui5ResponsivePopoverOpened()
-
-// 		cy.get("ui5-mcb-item")
-// 			.eq(0)
-// 			.realPress(["Control", "Alt", "F8"]);
-
-// 		cy.get("ui5-link")
-// 			.as("firstLink")
-// 			.should("have.focus");
-
-// 		cy.get("@firstLink")
-// 			.realPress("ArrowDown");
-
-// 		cy.get("ui5-mcb-item").eq(0).should("be.focused");
-// 	});
-// });
-
-// describe("Event firing", () => {
-// 	it("tests if open and close events are fired correctly", () => {
-// 		cy.mount(
-// 			<MultiComboBox onOpen={cy.stub().as("mcbOpened")} onClose={cy.stub().as("mcbClosed")}>
-// 				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="Bulgaria"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="England"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.then($mcb => {
-// 				$mcb[0].addEventListener("focusin", () => {
-// 					$mcb[0].setAttribute("open", "true");
-// 				});
-// 			});
-
-// 		cy.get("@mcb")
-// 			.realClick()
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.ui5ResponsivePopoverOpened()
-
-// 		cy.get("@mcbOpened")
-// 			.should("have.been.calledOnce");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("[ui5-icon]")
-// 			.as("icon");
-
-// 		cy.get("@icon")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.ui5ResponsivePopoverClosed();
-
-// 		cy.get("@icon")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.ui5ResponsivePopoverOpened()
-
-// 		cy.get("@mcbClosed")
-// 			.should("have.been.calledOnce");
-
-// 		cy.get("@mcbOpened")
-// 			.should("have.been.calledTwice");
-// 	});
-
-// 	it("Should prevent selection-change when clicking an item", () => {
-// 		cy.mount(
-// 			<MultiComboBox>
-// 				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
-// 				<MultiComboBoxItem selected={true} text="Bulgaria"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="England"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.then($mcb => {
-// 				$mcb.get(0).addEventListener("ui5-selection-change", e => {
-// 					e.preventDefault();
-// 				});
-// 			});
-
-// 		cy.get("@mcb")
-// 			.realClick();
+describe("Selection and filtering", () => {
+	it("Select and deselect first item", () => {
+		cy.mount(
+			<MultiComboBox onSelectionChange={cy.stub().as("selectionChangeEvent")}>
+				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find(".inputIcon")
+			.as("icon");
+
+		cy.get("@icon")
+			.realClick();
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.find("[ui5-mcb-item]")
+			.eq(0)
+			.as("firstItem")
+			.should("not.have.attr", "selected");
+
+		cy.get("@firstItem")
+			.shadow()
+			.find("[ui5-checkbox]")
+			.as("checkbox")
+			.realClick();
+
+		cy.get("@firstItem")
+			.should("have.attr", "selected");
+
+		cy.get("@selectionChangeEvent")
+			.should("have.been.calledOnce");
+
+		cy.get("@selectionChangeEvent")
+			.should("have.been.calledWithMatch", Cypress.sinon.match(event => {
+				return event.detail.items[0].text === "Item 1";
+			}));
+
+		cy.get("@checkbox")
+			.realClick();
+
+		cy.get("@firstItem")
+			.should("not.have.attr", "selected");
+
+		cy.get("@selectionChangeEvent")
+			.should("have.been.calledTwice");
+
+		cy.get("@selectionChangeEvent")
+			.should("have.been.calledWithMatch", Cypress.sinon.match(event => {
+				return event.detail.items.length === 0;
+			}));
+	});
+
+	it("Focus restore after item click", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find(".inputIcon")
+			.as("icon");
+
+		cy.get("@icon")
+			.realClick();
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.find("[ui5-mcb-item]")
+			.eq(0)
+			.realClick();
+
+		cy.get<ResponsivePopover>("@popover")
+			.ui5ResponsivePopoverClosed();
+
+		cy.get("@mcb")
+			.should("have.attr", "focused");
+	});
+
+	it("Opens all items popover when start typing and filters items", () => {
+		cy.mount(
+			<MultiComboBox noTypeahead={true}>
+				<MultiComboBoxItem text="1"></MultiComboBoxItem>
+				<MultiComboBoxItem text="12"></MultiComboBoxItem>
+				<MultiComboBoxItem text="3"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realType("12");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@popover")
+			.find("[ui5-list] slot")
+			.should("have.length", 1);
+
+		cy.get("@mcb")
+			.realPress("Backspace");
+
+		cy.get("@popover")
+			.find("[ui5-list] slot")
+			.should("have.length", 2);
+	});
+
+	it("When item is clicked, the popover should be closed and the value in the input should be removed", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="Cosy"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Compact"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realType("C");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.should("have.value", "Cosy");
+
+		cy.get("@mcb")
+			.find("[ui5-mcb-item]")
+			.eq(0)
+			.as("firstItem")
+			.realClick();
+
+		cy.get<ResponsivePopover>("@popover")
+			.ui5ResponsivePopoverClosed();
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.should("have.value", "");
+
+		cy.get("@mcb")
+			.should("have.attr", "focused");
+	});
+
+	it("When item's checkbox is clicked, the popover should not be closed and the value in the input should be kept", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="Cosy"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Compact"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realType("C");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.should("have.value", "Cosy");
+
+		cy.get("@mcb")
+			.find("[ui5-mcb-item]")
+			.eq(0)
+			.shadow()
+			.find("[ui5-checkbox]")
+			.as("checkbox")
+			.realClick();
+
+		cy.get<ResponsivePopover>("@popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@input")
+			.should("have.value", "C");
+	});
+
+	it("Clicking n more prefilters items before opening the popover", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true} showSelectAll={true} style="width: 100px">
+				<MultiComboBoxItem selected={true} text="This is a token with ridicilously long long long text"></MultiComboBoxItem>
+				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.as("tokenizer")
+			.shadow()
+			.find(".ui5-tokenizer-more-text")
+			.as("moreButton");
+
+		cy.get("@moreButton")
+			.realClick();
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@popover")
+			.find("[ui5-list] slot")
+			.should("have.length", 2);
+
+		cy.get("@mcb")
+			.shadow()
+			.find(".inputIcon")
+			.as("icon");
+
+		cy.get("@icon")
+			.realClick();
+
+		cy.get<ResponsivePopover>("@popover")
+			.ui5ResponsivePopoverClosed();
+
+		cy.get("@mcb")
+			.shadow()
+			.find(".inputIcon")
+			.as("icon");
+
+		cy.get("@icon")
+			.realClick();
+
+		cy.get<ResponsivePopover>("@popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@popover")
+			.find("[ui5-list] slot")
+			.should("have.length", 3);
+	});
+
+	it("Filtering of items when nmore popover is open and user types in the input field", () => {
+		cy.mount(
+			<MultiComboBox style="width: 100px">
+				<MultiComboBoxItem selected={true} text="Ridicilously long long long text"></MultiComboBoxItem>
+				<MultiComboBoxItem selected={true} text="1"></MultiComboBoxItem>
+				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.shadow()
+			.find(".ui5-tokenizer-more-text")
+			.as("moreButton");
+
+		cy.get("@moreButton")
+			.realClick();
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@popover")
+			.find("[ui5-list] slot")
+			.should("have.length", 3);
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@input")
+			.realType("I");
+
+		cy.get("@popover")
+			.find("[ui5-list] slot")
+			.should("have.length", 2);
+
+		cy.get("@popover")
+			.find("[ui5-list] slot")
+			.eq(1)
+			.should("not.have.attr", "selected");
+	});
+
+	it("Should make a selection on ENTER", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="Cosy"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Compact"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realType("C");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.should("have.value", "Cosy");
+
+		cy.get("@mcb")
+			.realPress("Enter")
+
+		cy.get<ResponsivePopover>("@popover")
+			.ui5ResponsivePopoverClosed();
+
+		cy.get("@input")
+			.should("have.value", "");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.should("exist")
+			.and("have.length", 1);
+	});
+});
+
+describe("Validation & Value State", () => {
+	it("Should be able to change value states upon typing", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true}>
+				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		// add event listener
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.then(mcb => {
+				mcb.get(0).addEventListener("input", e => {
+					(mcb.get(0) as MultiComboBox).valueState = (e.target as MultiComboBox).value.length ? "Negative" : "Information";
+				});
+			});
+
+		cy.get("@mcb")
+			.realClick()
+			.should("be.focused");
+
+		// type "f"
+		cy.realType("f");
+
+		cy.get("@mcb")
+			.shadow()
+			.find(".ui5-valuestatemessage--error")
+
+		cy.realPress("Backspace");
+
+		cy.get("@mcb")
+			.shadow()
+			.find(".ui5-valuestatemessage--information")
+
+		cy.realPress("f");
+
+		cy.get("@mcb")
+			.shadow()
+			.find(".ui5-valuestatemessage--information")
+			.should("not.exist");
+	});
+
+	it("Built in validation by typing a non existing option", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="112"></MultiComboBoxItem>
+				<MultiComboBoxItem text="12"></MultiComboBoxItem>
+				<MultiComboBoxItem text="3"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realType("1");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.should("have.value", "112");
+
+		cy.get("@mcb")
+			.realType("4");
+
+		cy.get("@input")
+			.should("have.value", "1");
+
+		cy.get("@mcb")
+			.should("have.attr", "value-state", "Negative");
+	});
+
+	it("Reset value state validation after 2500ms", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="112"></MultiComboBoxItem>
+				<MultiComboBoxItem text="12"></MultiComboBoxItem>
+				<MultiComboBoxItem text="3"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realType("4");
+
+		cy.get("@mcb")
+			.should("have.attr", "value-state", "Negative");
+
+		cy.wait(2500);
+
+		cy.get("@mcb")
+			.should("have.attr", "value-state", "None");
+	});
+
+	it("Built in validation by typing a non existing option", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="Cosy"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realType("CCo");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.should("have.value", "Cosy");
+	});
+
+	it("Tests if item is created when enter is pressed while validation is ongoing", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="Cosy"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realType("CC{enter}");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.should("not.exist")
+	});
+
+	it("Should remove value state header when value state is reset", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true} valueState="Critical" open={true}>
+				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.then(mcb => {
+				mcb.get(0).addEventListener("ui5-selection-change", e => {
+					(mcb.get(0) as MultiComboBox).valueState = "None";
+				});
+			});
+
+		cy.get("@mcb")
+			.realClick()
+			.should("be.focused");
+
+		cy.realPress("ArrowDown");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item]")
+			.should("be.focused")
+			.realPress("Space");
+
+		cy.get("@mcb")
+			.shadow()
+			.find(".ui5-valuestatemessage--warning")
+			.should("not.exist");
+	});
+});
+
+describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", () => {
+	beforeEach(() => {
+		cy.mount(<>
+			<MultiComboBox valueState="Negative">
+				<div slot="valueStateMessage">
+					Custom error value state message with a <Link href="#">Link</Link>  <Link href="#">Second Link</Link>.
+				</div>
+				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
+			</MultiComboBox>
+			<Input id="nextInput" class="input2auto" placeholder="Next input"></Input>
+		</>);
+	});
+
+	it("Should move the focus from the MultiComboBox to the first link in the value state message", () => {
+		cy.get("ui5-multi-combobox")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("ui5-multi-combobox")
+			.as("multi-combobox");
+
+		cy.get("@innerInput")
+			.realClick()
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
+
+		cy.get("@multi-combobox")
+			.shadow()
+			.find("ui5-popover")
+			.as("popover")
+			.should("have.class", "ui5-valuestatemessage-popover");
+
+		cy.get("@popover")
+			.should("have.attr", "open")
+
+		cy.get("ui5-link")
+			.eq(0)
+			.should("have.focus");
+	});
+
+	it("When pressing [Tab], the focus moves to the next value state message link. Pressing [Tab] again closes the popup and moves the focus to the next input", () => {
+		cy.get("ui5-multi-combobox")
+			.as("multi-combobox");
+
+		cy.get("@multi-combobox")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("@innerInput")
+			.realClick()
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
+
+		cy.get("@multi-combobox")
+			.shadow()
+			.find("ui5-popover")
+			.as("ui5-popover")
+			.should("have.attr", "open");
+
+		cy.get("ui5-link")
+			.eq(0)
+			.as("firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress("Tab");
+
+		cy.get("@firstLink")
+			.should("not.have.focus");
+
+		cy.get("ui5-link")
+			.eq(1)
+			.as("secondLink")
+			.should("have.focus");
+
+		cy.get("@secondLink")
+			.realPress("Tab");
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("@input")
+			.should("have.focus");
+	});
+
+	it("Pressing [Shift + Tab] moves the focus from the second link in the value state message to the first one. Pressing it again shifts the focus to the MultiComboBox", () => {
+		cy.get("ui5-multi-combobox")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("ui5-multi-combobox")
+			.as("multi-combobox");
+
+		cy.get("@innerInput")
+			.realClick()
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
+
+		cy.get("@multi-combobox")
+			.shadow()
+			.find("ui5-popover")
+			.as("ui5-popover")
+			.should("have.attr", "open");
+
+		cy.get("ui5-link")
+			.eq(0)
+			.as("firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress("Tab");
+
+		cy.get("@firstLink")
+			.should("not.have.focus");
+
+		cy.get("ui5-link")
+			.eq(1)
+			.as("secondLink")
+			.should("have.focus");
+
+		cy.get("@secondLink")
+			.realPress(["Shift", "Tab"]);
+
+		cy.get("@firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress(["Shift", "Tab"]);
+
+		cy.get("@innerInput")
+			.should("have.focus");
+
+	});
+
+	it("When list item is selected and pressing [Ctrl + Alt + F8], first link is focused. [Arrow Down] moves focus to the first list item", () => {
+		cy.get("ui5-multi-combobox")
+			.as("multi-combobox");
+
+		cy.get("@multi-combobox")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		// open the popover
+		cy.get("@multi-combobox")
+			.realClick()
+			.should("be.focused");
+
+		// focus the fisrt item
+		cy.realPress("F4");
+
+		cy.get("@multi-combobox")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.ui5ResponsivePopoverOpened()
+
+		cy.get("ui5-mcb-item")
+			.eq(0)
+			.realPress(["Control", "Alt", "F8"]);
+
+		cy.get("ui5-link")
+			.as("firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-mcb-item").eq(0).should("be.focused");
+	});
+});
+
+describe("Event firing", () => {
+	it("tests if open and close events are fired correctly", () => {
+		cy.mount(
+			<MultiComboBox onOpen={cy.stub().as("mcbOpened")} onClose={cy.stub().as("mcbClosed")}>
+				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
+				<MultiComboBoxItem text="Bulgaria"></MultiComboBoxItem>
+				<MultiComboBoxItem text="England"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.then($mcb => {
+				$mcb[0].addEventListener("focusin", () => {
+					$mcb[0].setAttribute("open", "true");
+				});
+			});
+
+		cy.get("@mcb")
+			.realClick()
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.ui5ResponsivePopoverOpened()
+
+		cy.get("@mcbOpened")
+			.should("have.been.calledOnce");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-icon]")
+			.as("icon");
+
+		cy.get("@icon")
+			.realClick();
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.ui5ResponsivePopoverClosed();
+
+		cy.get("@icon")
+			.realClick();
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.ui5ResponsivePopoverOpened()
+
+		cy.get("@mcbClosed")
+			.should("have.been.calledOnce");
+
+		cy.get("@mcbOpened")
+			.should("have.been.calledTwice");
+	});
+
+	it("Should prevent selection-change when clicking an item", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
+				<MultiComboBoxItem selected={true} text="Bulgaria"></MultiComboBoxItem>
+				<MultiComboBoxItem text="England"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.then($mcb => {
+				$mcb.get(0).addEventListener("ui5-selection-change", e => {
+					e.preventDefault();
+				});
+			});
+
+		cy.get("@mcb")
+			.realClick();
  
-// 		cy.get("@mcb")
-// 			.should("be.focused");
+		cy.get("@mcb")
+			.should("be.focused");
 
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".inputIcon")
-// 			.as("icon");
+		cy.get("@mcb")
+			.shadow()
+			.find(".inputIcon")
+			.as("icon");
 
-// 		cy.get("@icon")
-// 			.realClick();
+		cy.get("@icon")
+			.realClick();
 
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
 
-// 		cy.get("@mcb")
-// 			.find("[ui5-mcb-item]")
-// 			.eq(0)
-// 			.realClick();
+		cy.get("@mcb")
+			.find("[ui5-mcb-item]")
+			.eq(0)
+			.realClick();
 
-// 		cy.get<ResponsivePopover>("@popover")
-// 			.ui5ResponsivePopoverClosed();
+		cy.get<ResponsivePopover>("@popover")
+			.ui5ResponsivePopoverClosed();
 
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.should("have.length", 1);
-// 	});
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.should("have.length", 1);
+	});
 
-// 	it("Should prevent selection-change when deleting a token", () => {
-// 		cy.mount(
-// 			<MultiComboBox>
-// 				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
-// 				<MultiComboBoxItem selected={true} text="Bulgaria"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="England"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
+	it("Should prevent selection-change when deleting a token", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
+				<MultiComboBoxItem selected={true} text="Bulgaria"></MultiComboBoxItem>
+				<MultiComboBoxItem text="England"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
 
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.then($mcb => {
-// 				$mcb.get(0).addEventListener("ui5-selection-change", e => {
-// 					e.preventDefault();
-// 				});
-// 			});
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.then($mcb => {
+				$mcb.get(0).addEventListener("ui5-selection-change", e => {
+					e.preventDefault();
+				});
+			});
 
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.as("tokenizer")
-// 			.invoke('on', 'ui5-token-delete', cy.spy().as('tokenDelete'));
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.as("tokenizer")
+			.invoke('on', 'ui5-token-delete', cy.spy().as('tokenDelete'));
 
-// 		cy.get("@mcb")
-// 			.realClick();
+		cy.get("@mcb")
+			.realClick();
  
-// 		cy.get("@mcb")
-// 			.should("be.focused");
+		cy.get("@mcb")
+			.should("be.focused");
 
-// 		cy.get("@tokenizer")
-// 			.find("[ui5-token]")
-// 			.as("tokens")
-// 			.should("have.length", 1);
+		cy.get("@tokenizer")
+			.find("[ui5-token]")
+			.as("tokens")
+			.should("have.length", 1);
 
-// 		cy.get("@tokens")
-// 			.shadow()
-// 			.find("[ui5-icon]")
-// 			.realClick();
+		cy.get("@tokens")
+			.shadow()
+			.find("[ui5-icon]")
+			.realClick();
 
-// 		cy.get("@tokenDelete")
-// 			.should("have.been.called");
+		cy.get("@tokenDelete")
+			.should("have.been.called");
 
-// 		cy.get("@tokens")
-// 			.should("have.length", 1);
-// 	});
+		cy.get("@tokens")
+			.should("have.length", 1);
+	});
 
-// 	it("Should prevent selection-change on CTRL+A", () => {
-// 		cy.mount(
-// 			<MultiComboBox>
-// 				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
-// 				<MultiComboBoxItem selected={true} text="Bulgaria"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="England"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
+	it("Should prevent selection-change on CTRL+A", () => {
+		cy.mount(
+			<MultiComboBox>
+				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
+				<MultiComboBoxItem selected={true} text="Bulgaria"></MultiComboBoxItem>
+				<MultiComboBoxItem text="England"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
 
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.then($mcb => {
-// 				$mcb.get(0).addEventListener("ui5-selection-change", e => {
-// 					e.preventDefault();
-// 				});
-// 			});
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.then($mcb => {
+				$mcb.get(0).addEventListener("ui5-selection-change", e => {
+					e.preventDefault();
+				});
+			});
 
-// 		cy.get("@mcb")
-// 			.realClick();
+		cy.get("@mcb")
+			.realClick();
  
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".inputIcon")
-// 			.as("icon");
-
-// 		cy.get("@icon")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.realPress("ArrowDown");
-
-// 		cy.get("@mcb")
-// 			.find("[ui5-mcb-item]")
-// 			.eq(0)
-// 			.as("firstItem")
-// 			.should("be.focused");
-
-// 		cy.get("@firstItem")
-// 			.realPress(["Meta", "a"]);
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.should("have.length", 1);
-// 	});
-
-// 	it("Should fire events on clear icon click", () => {
-// 		cy.mount(
-// 			<MultiComboBox showClearIcon={true} onInput={cy.stub().as("inputEvent")} onChange={cy.stub().as("changeEvent")}>
-// 				<MultiComboBoxItem text="1"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="12"></MultiComboBoxItem>
-// 				<MultiComboBoxItem text="3"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realType("1");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.should("have.prop", "_effectiveShowClearIcon", true);
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".ui5-input-clear-icon-wrapper")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.should("have.value", "");
-
-// 		cy.get("@inputEvent")
-// 			.should("have.been.calledTwice");
-
-// 		cy.get("@changeEvent")
-// 			.should("not.have.been.called");
-// 	});
-
-// 	it("Should not fire submit, when an item is tokenized", () => {
-// 		cy.mount(
-// 			<>
-// 				<form id="form">
-// 					<MultiComboBox>
-// 						<MultiComboBoxItem text="1"></MultiComboBoxItem>
-// 						<MultiComboBoxItem text="12"></MultiComboBoxItem>
-// 						<MultiComboBoxItem text="3"></MultiComboBoxItem>
-// 					</MultiComboBox>
-// 				</form>
-// 			</>
-// 		);
-
-// 		cy.get("#form")
-// 			.then($form => {
-// 				$form.get(0).addEventListener("submit", e => e.preventDefault());
-// 				$form.get(0).addEventListener("submit", cy.stub().as("submitEvent"));
-// 			});
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realType("1");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.realPress("Enter");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverClosed();
-
-// 		cy.get("@submitEvent")
-// 			.should("not.have.been.called");
-
-// 		cy.get("@mcb")
-// 			.realPress("Enter");
-
-// 		cy.get("@submitEvent")
-// 			.should("have.been.called");
-// 	});
-// });
-
-// describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
-// 	it.skip("should focus last token on arrow right in RTL mode when input is at start", () => {
-// 		cy.mount(
-// 			<div dir="rtl">
-// 				<MultiComboBox noValidation={true}>
-// 					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
-// 					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
-// 					<MultiComboBoxItem selected text="Token 3"></MultiComboBoxItem>
-// 					<MultiComboBoxItem text="Item 4"></MultiComboBoxItem>
-// 					<MultiComboBoxItem text="Item 5"></MultiComboBoxItem>
-// 				</MultiComboBox>
-// 			</div>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.then(($input) => {
-// 				($input[0] as HTMLInputElement).setSelectionRange(0, 0);
-// 			})
-// 			.should(($input) => {
-// 				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
-// 			});
-
-// 		cy.get("@mcb").realPress("ArrowRight");
-// 		cy.focused().should("have.class", "ui5-token--wrapper");
-// 	});
-
-// 	it.skip("should focus last token on arrow left in LTR mode when input is at start", () => {
-// 		cy.mount(
-// 			<div dir="ltr">
-// 				<MultiComboBox noValidation={true}>
-// 					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
-// 					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
-// 					<MultiComboBoxItem selected text="Token 3"></MultiComboBoxItem>
-// 					<MultiComboBoxItem text="Item 4"></MultiComboBoxItem>
-// 					<MultiComboBoxItem text="Item 5"></MultiComboBoxItem>
-// 				</MultiComboBox>
-// 			</div>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.realClick()
-// 			.should("have.focus")
-// 			.then(($input) => {
-// 				($input[0] as HTMLInputElement).setSelectionRange(0, 0);
-// 			})
-// 			.should(($input) => {
-// 				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
-// 			});
-
-// 		cy.get("@mcb").realPress("ArrowLeft");
-// 		cy.focused().should("have.class", "ui5-token--wrapper");
-// 	});
-
-// 	it.skip("should not focus token when cursor is not at start of input in RTL mode", () => {
-// 		cy.mount(
-// 			<div dir="rtl">
-// 				<MultiComboBox noValidation={true} value="test text">
-// 					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
-// 					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
-// 					<MultiComboBoxItem text="Item 3"></MultiComboBoxItem>
-// 				</MultiComboBox>
-// 			</div>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb").should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.realClick()
-// 			.should("be.focused")
-// 			.then(($input) => {
-// 				($input[0] as HTMLInputElement).setSelectionRange(2, 2);
-// 			});
-
-// 		cy.get("@mcb").realPress("ArrowRight");
-// 		cy.focused().should("not.have.class", "ui5-token--wrapper");
-// 	});
-
-// 	it.skip("should navigate from last token back to input with arrow left in RTL mode", () => {
-// 		cy.mount(
-// 			<div dir="rtl">
-// 				<MultiComboBox noValidation={true}>
-// 					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
-// 					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
-// 					<MultiComboBoxItem selected text="Token 3"></MultiComboBoxItem>
-// 					<MultiComboBoxItem text="Item 4"></MultiComboBoxItem>
-// 				</MultiComboBox>
-// 			</div>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick()
-
-// 		cy.get("@mcb")
-// 			.should("be.focused")
-// 			.realPress("ArrowRight");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.last()
-// 			.as("lastToken");
-
-// 		cy.focused().should("have.class", "ui5-token--wrapper");
-
-// 		cy.get("@lastToken").realPress("ArrowLeft");
-
-// 		cy.focused().should("not.have.class", "ui5-token--wrapper");
-// 	});
-
-// 	it.skip("should navigate from last token back to input with arrow right in LTR mode", () => {
-// 		cy.mount(
-// 			<div dir="ltr">
-// 				<MultiComboBox noValidation={true}>
-// 					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
-// 					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
-// 					<MultiComboBoxItem selected text="Token 3"></MultiComboBoxItem>
-// 					<MultiComboBoxItem text="Item 4"></MultiComboBoxItem>
-// 				</MultiComboBox>
-// 			</div>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused")
-// 			.realPress("ArrowLeft");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.last()
-// 			.realPress("ArrowRight");
-
-// 		cy.focused().should("not.have.class", "ui5-token--wrapper");
-// 	});
-
-// 	it.skip("should handle empty input case in RTL mode", () => {
-// 		cy.mount(
-// 			<div dir="rtl">
-// 				<MultiComboBox noValidation={true}>
-// 					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
-// 					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
-// 					<MultiComboBoxItem text="Item 3"></MultiComboBoxItem>
-// 				</MultiComboBox>
-// 			</div>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb").should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.realClick()
-// 			.should("have.focus")
-
-// 			cy.get("@input")
-// 			.should("have.value", "")
-// 			.should(($input) => {
-// 				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
-// 			});
-
-// 		cy.get("@mcb").realPress("ArrowRight");		;
-// 		cy.focused().should("have.class", "ui5-token--wrapper");
-// 	});
-// });
-
-// describe("Accessibility", () => {
-// 	it("should announce the associated label when MultiComboBox is focused", () => {
-// 		const label = "MultiComboBox aria-label";
-
-// 		cy.mount(
-// 			<>
-// 				<label for="mcb">{label}</label>
-// 				<MultiComboBox id="mcb"></MultiComboBox>
-// 			</>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("input")
-// 			.should("have.attr", "aria-label", label);
-// 	});
-
-// 	it("aria-describedby value according to the tokens count and value state", () => {
-// 		cy.mount(
-// 			<MultiComboBox valueState="Critical" style="width: 100%">
-// 				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
-// 				<MultiComboBoxItem selected={true} text="Item 2"></MultiComboBoxItem>
-// 				<MultiComboBoxItem selected={true} text="Item 3"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		const tokensCountITextId = `ui5-multi-combobox-hiddenText-nMore`;
-// 		const valuestateITextId = `ui5-multi-combobox-valueStateDesc`;
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.should("have.length", 3);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.should("have.attr", "aria-describedby", `${tokensCountITextId} ${valuestateITextId}`);
-// 	});
-
-// 	it("aria-describedby value according to the tokens count", () => {
-// 		cy.mount(
-// 			<MultiComboBox style="width: 100%">
-// 				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
-// 				<MultiComboBoxItem selected={true} text="Item 2"></MultiComboBoxItem>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.realClick();
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.should("be.focused");
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.should("have.length", 2);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.then((mcb) => {
-// 				const el = mcb[0];
-// 				const resourceBundle = (el.constructor as any).i18nBundle;
-
-// 				cy.get("[ui5-multi-combobox]")
-// 				.shadow()
-// 				.find(".ui5-hidden-text")
-// 				.should("have.text", resourceBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS.defaultText, 2));
-// 			})
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.realPress("ArrowLeft");
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.last()
-// 			.should("be.focused");
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find(".inputIcon")
+			.as("icon");
+
+		cy.get("@icon")
+			.realClick();
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.realPress("ArrowDown");
+
+		cy.get("@mcb")
+			.find("[ui5-mcb-item]")
+			.eq(0)
+			.as("firstItem")
+			.should("be.focused");
+
+		cy.get("@firstItem")
+			.realPress(["Meta", "a"]);
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.should("have.length", 1);
+	});
+
+	it("Should fire events on clear icon click", () => {
+		cy.mount(
+			<MultiComboBox showClearIcon={true} onInput={cy.stub().as("inputEvent")} onChange={cy.stub().as("changeEvent")}>
+				<MultiComboBoxItem text="1"></MultiComboBoxItem>
+				<MultiComboBoxItem text="12"></MultiComboBoxItem>
+				<MultiComboBoxItem text="3"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realType("1");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.should("have.prop", "_effectiveShowClearIcon", true);
+
+		cy.get("@mcb")
+			.shadow()
+			.find(".ui5-input-clear-icon-wrapper")
+			.realClick();
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.should("have.value", "");
+
+		cy.get("@inputEvent")
+			.should("have.been.calledTwice");
+
+		cy.get("@changeEvent")
+			.should("not.have.been.called");
+	});
+
+	it("Should not fire submit, when an item is tokenized", () => {
+		cy.mount(
+			<>
+				<form id="form">
+					<MultiComboBox>
+						<MultiComboBoxItem text="1"></MultiComboBoxItem>
+						<MultiComboBoxItem text="12"></MultiComboBoxItem>
+						<MultiComboBoxItem text="3"></MultiComboBoxItem>
+					</MultiComboBox>
+				</form>
+			</>
+		);
+
+		cy.get("#form")
+			.then($form => {
+				$form.get(0).addEventListener("submit", e => e.preventDefault());
+				$form.get(0).addEventListener("submit", cy.stub().as("submitEvent"));
+			});
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realType("1");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.realPress("Enter");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverClosed();
+
+		cy.get("@submitEvent")
+			.should("not.have.been.called");
+
+		cy.get("@mcb")
+			.realPress("Enter");
+
+		cy.get("@submitEvent")
+			.should("have.been.called");
+	});
+});
+
+describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
+	it.skip("should focus last token on arrow right in RTL mode when input is at start", () => {
+		cy.mount(
+			<div dir="rtl">
+				<MultiComboBox noValidation={true}>
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 3"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 4"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 5"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.then(($input) => {
+				($input[0] as HTMLInputElement).setSelectionRange(0, 0);
+			})
+			.should(($input) => {
+				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
+			});
+
+		cy.get("@mcb").realPress("ArrowRight");
+		cy.focused().should("have.class", "ui5-token--wrapper");
+	});
+
+	it.skip("should focus last token on arrow left in LTR mode when input is at start", () => {
+		cy.mount(
+			<div dir="ltr">
+				<MultiComboBox noValidation={true}>
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 3"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 4"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 5"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.realClick()
+			.should("have.focus")
+			.then(($input) => {
+				($input[0] as HTMLInputElement).setSelectionRange(0, 0);
+			})
+			.should(($input) => {
+				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
+			});
+
+		cy.get("@mcb").realPress("ArrowLeft");
+		cy.focused().should("have.class", "ui5-token--wrapper");
+	});
+
+	it.skip("should not focus token when cursor is not at start of input in RTL mode", () => {
+		cy.mount(
+			<div dir="rtl">
+				<MultiComboBox noValidation={true} value="test text">
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 3"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb").should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.realClick()
+			.should("be.focused")
+			.then(($input) => {
+				($input[0] as HTMLInputElement).setSelectionRange(2, 2);
+			});
+
+		cy.get("@mcb").realPress("ArrowRight");
+		cy.focused().should("not.have.class", "ui5-token--wrapper");
+	});
+
+	it.skip("should navigate from last token back to input with arrow left in RTL mode", () => {
+		cy.mount(
+			<div dir="rtl">
+				<MultiComboBox noValidation={true}>
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 3"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 4"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick()
+
+		cy.get("@mcb")
+			.should("be.focused")
+			.realPress("ArrowRight");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.last()
+			.as("lastToken");
+
+		cy.focused().should("have.class", "ui5-token--wrapper");
+
+		cy.get("@lastToken").realPress("ArrowLeft");
+
+		cy.focused().should("not.have.class", "ui5-token--wrapper");
+	});
+
+	it.skip("should navigate from last token back to input with arrow right in LTR mode", () => {
+		cy.mount(
+			<div dir="ltr">
+				<MultiComboBox noValidation={true}>
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 3"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 4"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused")
+			.realPress("ArrowLeft");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.last()
+			.realPress("ArrowRight");
+
+		cy.focused().should("not.have.class", "ui5-token--wrapper");
+	});
+
+	it.skip("should handle empty input case in RTL mode", () => {
+		cy.mount(
+			<div dir="rtl">
+				<MultiComboBox noValidation={true}>
+					<MultiComboBoxItem selected text="Token 1"></MultiComboBoxItem>
+					<MultiComboBoxItem selected text="Token 2"></MultiComboBoxItem>
+					<MultiComboBoxItem text="Item 3"></MultiComboBoxItem>
+				</MultiComboBox>
+			</div>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb").should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.realClick()
+			.should("have.focus")
+
+			cy.get("@input")
+			.should("have.value", "")
+			.should(($input) => {
+				expect(($input[0] as HTMLInputElement).selectionStart).to.equal(0);
+			});
+
+		cy.get("@mcb").realPress("ArrowRight");		;
+		cy.focused().should("have.class", "ui5-token--wrapper");
+	});
+});
+
+describe("Accessibility", () => {
+	it("should announce the associated label when MultiComboBox is focused", () => {
+		const label = "MultiComboBox aria-label";
+
+		cy.mount(
+			<>
+				<label for="mcb">{label}</label>
+				<MultiComboBox id="mcb"></MultiComboBox>
+			</>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-label", label);
+	});
+
+	it("aria-describedby value according to the tokens count and value state", () => {
+		cy.mount(
+			<MultiComboBox valueState="Critical" style="width: 100%">
+				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
+				<MultiComboBoxItem selected={true} text="Item 2"></MultiComboBoxItem>
+				<MultiComboBoxItem selected={true} text="Item 3"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		const tokensCountITextId = `ui5-multi-combobox-hiddenText-nMore`;
+		const valuestateITextId = `ui5-multi-combobox-valueStateDesc`;
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.should("have.length", 3);
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.as("input")
+			.should("have.attr", "aria-describedby", `${tokensCountITextId} ${valuestateITextId}`);
+	});
+
+	it("aria-describedby value according to the tokens count", () => {
+		cy.mount(
+			<MultiComboBox style="width: 100%">
+				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
+				<MultiComboBoxItem selected={true} text="Item 2"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.realClick();
+
+		cy.get("[ui5-multi-combobox]")
+			.should("be.focused");
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.should("have.length", 2);
+
+		cy.get("[ui5-multi-combobox]")
+			.then((mcb) => {
+				const el = mcb[0];
+				const resourceBundle = (el.constructor as any).i18nBundle;
+
+				cy.get("[ui5-multi-combobox]")
+				.shadow()
+				.find(".ui5-hidden-text")
+				.should("have.text", resourceBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS.defaultText, 2));
+			})
+
+		cy.get("[ui5-multi-combobox]")
+			.realPress("ArrowLeft");
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.last()
+			.should("be.focused");
 		
-// 		cy.get("[ui5-multi-combobox]")
-// 			.realPress("Backspace");
+		cy.get("[ui5-multi-combobox]")
+			.realPress("Backspace");
 
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.should("have.length", 1);
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.should("have.length", 1);
 
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find(".ui5-hidden-text")
-// 			.should("have.text", TOKENIZER_ARIA_CONTAIN_ONE_TOKEN.defaultText);
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find(".ui5-hidden-text")
+			.should("have.text", TOKENIZER_ARIA_CONTAIN_ONE_TOKEN.defaultText);
 
-// 		cy.get("[ui5-multi-combobox]")
-// 			.realClick();
+		cy.get("[ui5-multi-combobox]")
+			.realClick();
 
-// 		cy.get("[ui5-multi-combobox]")
-// 			.should("be.focused");
+		cy.get("[ui5-multi-combobox]")
+			.should("be.focused");
 
-// 		cy.get("[ui5-multi-combobox]")
-// 			.realPress("Backspace");
+		cy.get("[ui5-multi-combobox]")
+			.realPress("Backspace");
 
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.last()
-// 			.should("be.focused");
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.last()
+			.should("be.focused");
 		
-// 		cy.get("[ui5-multi-combobox]")
-// 			.realPress("Backspace");
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.should("not.exist");
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find(".ui5-hidden-text")
-// 			.should("have.text", TOKENIZER_ARIA_CONTAIN_TOKEN.defaultText);
-// 	});
-
-// 	it("Should apply aria-label from the accessibleName property", () => {
-// 		const labelText = "Label";
-// 		cy.mount(
-// 			<MultiComboBox accessibleName={labelText} style="width: 100%">
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("input")
-// 			.should("have.attr", "aria-label", labelText);
-// 	});
-
-// 	it("Should apply aria-label from the accessibleNameRef property", () => {
-// 		const label = "MultiComboBox aria-label";
-// 		cy.mount(
-// 			<>
-// 				<label id="mcb-label">{label}</label>
-// 				<MultiComboBox accessibleNameRef="mcb-label"></MultiComboBox>
-// 			</>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("input")
-// 			.should("have.attr", "aria-label", label);
-// 	});
-
-// 	it("Should apply aria-controls and aria-haspopup", async () => {
-// 		cy.mount(<MultiComboBox></MultiComboBox>);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover");
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("input")
-// 			.should("have.attr", "aria-controls");
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.shadow()
-// 			.find("input")
-// 			.should("have.attr", "aria-haspopup", "dialog");
-// 	});
-
-// 	it("Value state type should be added to the screen readers default value states announcement", async () => {
-// 		cy.mount(
-// 			<>
-// 				<MultiComboBox id="positive-mcb" valueState="Positive"></MultiComboBox>
-// 				<MultiComboBox id="warning-mcb" valueState="Critical"></MultiComboBox>
-// 				<MultiComboBox id="error-mcb" valueState="Negative"></MultiComboBox>
-// 			</>
-// 		);
-
-// 		cy.get("#positive-mcb")
-// 			.shadow()
-// 			.find("#ui5-multi-combobox-valueStateDesc")
-// 			.should("have.text", VALUE_STATE_TYPE_SUCCESS.defaultText);
-
-// 		cy.get("#warning-mcb")
-// 			.shadow()
-// 			.find("#ui5-multi-combobox-valueStateDesc")
-// 			.should("have.text", VALUE_STATE_TYPE_WARNING.defaultText);
-
-// 		cy.get("#warning-mcb")
-// 			.shadow()
-// 			.find("[ui5-popover] div")
-// 			.should("have.text", VALUE_STATE_WARNING.defaultText);
-
-// 		cy.get("#error-mcb")
-// 			.shadow()
-// 			.find("#ui5-multi-combobox-valueStateDesc")
-// 			.should("have.text", VALUE_STATE_TYPE_ERROR.defaultText);
-
-// 		cy.get("#error-mcb")
-// 			.shadow()
-// 			.find("[ui5-popover] div")
-// 			.should("have.text", VALUE_STATE_ERROR.defaultText);
-// 	});
-// });
-
-// describe("Grouping", () => {
-// 	it("Tests group filtering", () => {
-// 		cy.mount(
-// 			<MultiComboBox noValidation={true}>
-// 				<MultiComboBoxItemGroup headerText="Group 1">
-// 					<MultiComboBoxItem text="12"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 				<MultiComboBoxItemGroup headerText="Group 2">
-// 					<MultiComboBoxItem text="2"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 				<MultiComboBoxItemGroup headerText="Group 3">
-// 					<MultiComboBoxItem text="11"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick()
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realType("1");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.should("have.value", "12");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item]")
-// 			.then(items => {
-// 				const itemArray = Array.from(items);
-// 				expect(itemArray.filter(item => (item as MultiComboBoxItem)._isVisible).length).to.equal(2);
-// 			}
-// 		);
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item-group]")
-// 			.then(items => {
-// 				const itemArray = Array.from(items);
-// 				expect(itemArray.filter(item => (item as MultiComboBoxItem).assignedSlot).length).to.equal(2);
-// 			}
-// 		);
-// 	});
-
-// 	it("Tests group item focusability", () => {
-// 		cy.mount(
-// 			<MultiComboBox noValidation={true} open={true}>
-// 				<MultiComboBoxItemGroup headerText="Group 1">
-// 					<MultiComboBoxItem text="12"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 				<MultiComboBoxItemGroup headerText="Group 2">
-// 					<MultiComboBoxItem text="2"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 				<MultiComboBoxItemGroup headerText="Group 3">
-// 					<MultiComboBoxItem text="11"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick()
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realPress("ArrowDown");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item-group]")
-// 			.should("be.focused");
-// 	});
-
-// 	it("Tests item focusability when grouping with F4 pressed", () => {
-// 		cy.mount(
-// 			<MultiComboBox noValidation={true}>
-// 				<MultiComboBoxItemGroup headerText="Group 1">
-// 					<MultiComboBoxItem text="12"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 				<MultiComboBoxItemGroup headerText="Group 2">
-// 					<MultiComboBoxItem text="2"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 				<MultiComboBoxItemGroup headerText="Group 3">
-// 					<MultiComboBoxItem text="11"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realPress("F4");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.should("not.be.focused");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item-group]")
-// 			.eq(0)
-// 			.should("not.be.focused");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item][text='12']")
-// 			.should("be.focused");
-// 	});
-
-// 	it("Tests group item on Enter press", () => {
-// 		cy.mount(
-// 			<MultiComboBox noValidation={true}>
-// 				<MultiComboBoxItemGroup headerText="Group 1">
-// 					<MultiComboBoxItem text="12"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 				<MultiComboBoxItemGroup headerText="Group 2">
-// 					<MultiComboBoxItem text="2"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 				<MultiComboBoxItemGroup headerText="Group 3">
-// 					<MultiComboBoxItem text="11"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".inputIcon")
-// 			.as("icon");
-
-// 		cy.get("@icon")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.realPress("ArrowDown");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item-group]")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item-group]")
-// 			.realPress("Enter");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item-group]")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.should("have.value", "");
-// 	});
-
-// 	it("Tests group item on Space and Arrow Up press", () => {
-// 		cy.mount(
-// 			<MultiComboBox noValidation={true}>
-// 				<MultiComboBoxItemGroup headerText="Group 1">
-// 					<MultiComboBoxItem text="12"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 				<MultiComboBoxItemGroup headerText="Group 2">
-// 					<MultiComboBoxItem text="2"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 				<MultiComboBoxItemGroup headerText="Group 3">
-// 					<MultiComboBoxItem text="11"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find(".inputIcon")
-// 			.as("icon");
-
-// 		cy.get("@icon")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.realPress("ArrowDown");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item-group]")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item-group]")
-// 			.realPress("Space");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item-group]")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find<ResponsivePopover>("ui5-responsive-popover")
-// 			.as("popover")
-// 			.ui5ResponsivePopoverOpened();
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.should("have.value", "");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item-group]")
-// 			.realPress("ArrowUp");
-
-// 		cy.get("@mcb")
-// 			.get("[ui5-mcb-item-group]")
-// 			.should("not.be.focused");
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-// 	});
-
-// 	it("Selection of group header", () => {
-// 		cy.mount(
-// 			<MultiComboBox noValidation={true} onSelectionChange={cy.stub().as("selectionChangeEvent")} value="Group 1">
-// 				<MultiComboBoxItemGroup headerText="Group 1">
-// 					<MultiComboBoxItem text="12"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 				<MultiComboBoxItemGroup headerText="Group 2">
-// 					<MultiComboBoxItem text="2"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 				<MultiComboBoxItemGroup headerText="Group 3">
-// 					<MultiComboBoxItem text="11"></MultiComboBoxItem>
-// 				</MultiComboBoxItemGroup>
-// 			</MultiComboBox>
-// 		);
-
-// 		cy.get("[ui5-multi-combobox]")
-// 			.as("mcb")
-// 			.realClick();
-
-// 		cy.get("@mcb")
-// 			.should("be.focused");
-
-// 		cy.get("@mcb")
-// 			.realPress("Enter")
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("input")
-// 			.as("input")
-// 			.should("have.value", "Group 1");
-
-// 		cy.get("@mcb")
-// 			.shadow()
-// 			.find("[ui5-tokenizer]")
-// 			.find("[ui5-token]")
-// 			.should("not.exist")
-
-// 		cy.get("@selectionChangeEvent")
-// 			.should("not.have.been.called");
-// 	});
-// });
+		cy.get("[ui5-multi-combobox]")
+			.realPress("Backspace");
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.should("not.exist");
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find(".ui5-hidden-text")
+			.should("have.text", TOKENIZER_ARIA_CONTAIN_TOKEN.defaultText);
+	});
+
+	it("Should apply aria-label from the accessibleName property", () => {
+		const labelText = "Label";
+		cy.mount(
+			<MultiComboBox accessibleName={labelText} style="width: 100%">
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-label", labelText);
+	});
+
+	it("Should apply aria-label from the accessibleNameRef property", () => {
+		const label = "MultiComboBox aria-label";
+		cy.mount(
+			<>
+				<label id="mcb-label">{label}</label>
+				<MultiComboBox accessibleNameRef="mcb-label"></MultiComboBox>
+			</>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-label", label);
+	});
+
+	it("Should apply aria-controls and aria-haspopup", async () => {
+		cy.mount(<MultiComboBox></MultiComboBox>);
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover");
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-controls");
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-haspopup", "dialog");
+	});
+
+	it("Value state type should be added to the screen readers default value states announcement", async () => {
+		cy.mount(
+			<>
+				<MultiComboBox id="positive-mcb" valueState="Positive"></MultiComboBox>
+				<MultiComboBox id="warning-mcb" valueState="Critical"></MultiComboBox>
+				<MultiComboBox id="error-mcb" valueState="Negative"></MultiComboBox>
+			</>
+		);
+
+		cy.get("#positive-mcb")
+			.shadow()
+			.find("#ui5-multi-combobox-valueStateDesc")
+			.should("have.text", VALUE_STATE_TYPE_SUCCESS.defaultText);
+
+		cy.get("#warning-mcb")
+			.shadow()
+			.find("#ui5-multi-combobox-valueStateDesc")
+			.should("have.text", VALUE_STATE_TYPE_WARNING.defaultText);
+
+		cy.get("#warning-mcb")
+			.shadow()
+			.find("[ui5-popover] div")
+			.should("have.text", VALUE_STATE_WARNING.defaultText);
+
+		cy.get("#error-mcb")
+			.shadow()
+			.find("#ui5-multi-combobox-valueStateDesc")
+			.should("have.text", VALUE_STATE_TYPE_ERROR.defaultText);
+
+		cy.get("#error-mcb")
+			.shadow()
+			.find("[ui5-popover] div")
+			.should("have.text", VALUE_STATE_ERROR.defaultText);
+	});
+});
+
+describe("Grouping", () => {
+	it("Tests group filtering", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true}>
+				<MultiComboBoxItemGroup headerText="Group 1">
+					<MultiComboBoxItem text="12"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+				<MultiComboBoxItemGroup headerText="Group 2">
+					<MultiComboBoxItem text="2"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+				<MultiComboBoxItemGroup headerText="Group 3">
+					<MultiComboBoxItem text="11"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick()
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realType("1");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.should("have.value", "12");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item]")
+			.then(items => {
+				const itemArray = Array.from(items);
+				expect(itemArray.filter(item => (item as MultiComboBoxItem)._isVisible).length).to.equal(2);
+			}
+		);
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item-group]")
+			.then(items => {
+				const itemArray = Array.from(items);
+				expect(itemArray.filter(item => (item as MultiComboBoxItem).assignedSlot).length).to.equal(2);
+			}
+		);
+	});
+
+	it("Tests group item focusability", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true} open={true}>
+				<MultiComboBoxItemGroup headerText="Group 1">
+					<MultiComboBoxItem text="12"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+				<MultiComboBoxItemGroup headerText="Group 2">
+					<MultiComboBoxItem text="2"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+				<MultiComboBoxItemGroup headerText="Group 3">
+					<MultiComboBoxItem text="11"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick()
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realPress("ArrowDown");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item-group]")
+			.should("be.focused");
+	});
+
+	it("Tests item focusability when grouping with F4 pressed", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true}>
+				<MultiComboBoxItemGroup headerText="Group 1">
+					<MultiComboBoxItem text="12"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+				<MultiComboBoxItemGroup headerText="Group 2">
+					<MultiComboBoxItem text="2"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+				<MultiComboBoxItemGroup headerText="Group 3">
+					<MultiComboBoxItem text="11"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realPress("F4");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.should("not.be.focused");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item-group]")
+			.eq(0)
+			.should("not.be.focused");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item][text='12']")
+			.should("be.focused");
+	});
+
+	it("Tests group item on Enter press", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true}>
+				<MultiComboBoxItemGroup headerText="Group 1">
+					<MultiComboBoxItem text="12"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+				<MultiComboBoxItemGroup headerText="Group 2">
+					<MultiComboBoxItem text="2"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+				<MultiComboBoxItemGroup headerText="Group 3">
+					<MultiComboBoxItem text="11"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find(".inputIcon")
+			.as("icon");
+
+		cy.get("@icon")
+			.realClick();
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.realPress("ArrowDown");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item-group]")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item-group]")
+			.realPress("Enter");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item-group]")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.should("have.value", "");
+	});
+
+	it("Tests group item on Space and Arrow Up press", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true}>
+				<MultiComboBoxItemGroup headerText="Group 1">
+					<MultiComboBoxItem text="12"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+				<MultiComboBoxItemGroup headerText="Group 2">
+					<MultiComboBoxItem text="2"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+				<MultiComboBoxItemGroup headerText="Group 3">
+					<MultiComboBoxItem text="11"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find(".inputIcon")
+			.as("icon");
+
+		cy.get("@icon")
+			.realClick();
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.realPress("ArrowDown");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item-group]")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item-group]")
+			.realPress("Space");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item-group]")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.should("have.value", "");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item-group]")
+			.realPress("ArrowUp");
+
+		cy.get("@mcb")
+			.get("[ui5-mcb-item-group]")
+			.should("not.be.focused");
+
+		cy.get("@mcb")
+			.should("be.focused");
+	});
+
+	it("Selection of group header", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true} onSelectionChange={cy.stub().as("selectionChangeEvent")} value="Group 1">
+				<MultiComboBoxItemGroup headerText="Group 1">
+					<MultiComboBoxItem text="12"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+				<MultiComboBoxItemGroup headerText="Group 2">
+					<MultiComboBoxItem text="2"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+				<MultiComboBoxItemGroup headerText="Group 3">
+					<MultiComboBoxItem text="11"></MultiComboBoxItem>
+				</MultiComboBoxItemGroup>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.as("mcb")
+			.realClick();
+
+		cy.get("@mcb")
+			.should("be.focused");
+
+		cy.get("@mcb")
+			.realPress("Enter")
+
+		cy.get("@mcb")
+			.shadow()
+			.find("input")
+			.as("input")
+			.should("have.value", "Group 1");
+
+		cy.get("@mcb")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.should("not.exist")
+
+		cy.get("@selectionChangeEvent")
+			.should("not.have.been.called");
+	});
+});
