@@ -33,7 +33,7 @@ function ItemTemplate(this: SideNavigationItem) {
 				onMouseEnter: this._onmouseenter,
 				onMouseLeave: this._onmouseleave,
 				tabIndex: this.effectiveTabIndex,
-				ariaHaspopup: this._ariaHasPopup,
+				ariaHasPopup: this._ariaHasPopup,
 				ariaChecked: this._ariaChecked,
 				ariaOwns: this._groupId,
 				title: this._tooltip,

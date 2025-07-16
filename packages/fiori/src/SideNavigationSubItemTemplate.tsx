@@ -21,7 +21,7 @@ export default function SideNavigationSubItemTemplate(this: SideNavigationSubIte
 				ariaDisabled: this.effectiveDisabled,
 				href: this._href,
 				target: this._target,
-				ariaHaspopup: this._ariaHasPopup
+				ariaHasPopup: this._ariaHasPopup
 			})}
 		</li>
 	);

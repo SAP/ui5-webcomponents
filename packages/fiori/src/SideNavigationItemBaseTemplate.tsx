@@ -1,29 +1,13 @@
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 
-// const sideNavItemAttributes = {
-// 	sClass: "ui5-sn-item ui5-sn-item-level2",
-// 	onKeyDown: this._onkeydown,
-// 	onKeyUp: this._onkeyup,
-// 	onClick: this._onclick,
-// 	onFocusIn: this._onfocusin,
-// 	tabIndex: this.effectiveTabIndex,
-// 	ariaCurrent: this._ariaCurrent,
-// 	ariaSelected: this._ariaSelected,
-// 	title: this._tooltip,
-// 	ariaDisabled: this.effectiveDisabled,
-// 	href: this._href,
-// 	target: this._target,
-// 	ariaHaspopup: this._ariaHasPopup
-// };
-
 export default function SideNavigationItemBaseTemplate(this: SideNavigationItemBase, tag?: string, itemContent?: () => void, injectedProps? : any) {
 	const EffectiveTag = tag || "div";
 
 	return (
 		<EffectiveTag id={this._id}
+					  data-sap-focus-ref
 					  class={`${injectedProps?.sClass} ${this._classes}`}
 					  role={injectedProps?.role}
-					  data-sap-focus-ref
 					  onKeyDown={injectedProps?.onKeyDown}
 					  onKeyUp={injectedProps?.onKeyUp}
 					  onClick={injectedProps?.onClick}
