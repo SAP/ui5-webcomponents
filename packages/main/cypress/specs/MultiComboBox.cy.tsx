@@ -283,22 +283,25 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 		cy.get("@multi-combobox")
 			.shadow()
 			.find<ResponsivePopover>("ui5-responsive-popover")
-			.ui5ResponsivePopoverOpened()
+			.ui5ResponsivePopoverOpened();
 
-		cy.get("[ui5-mcb-item]")
-			.eq(0)
-			.realPress(["Control", "Alt", "F8"]);
+		cy.get("[ui5-mcb-item]").eq(0).as("firstItem");
 
-		cy.focused().should("have.class", "ui5-link-root");
+		cy.get("@firstItem").should("be.focused");
+
+		// Focus moves from the first item to the link in the value state header
+		cy.get("@firstItem").realPress(["Control", "Alt", "F8"]);
 
 		cy.get("[ui5-link]")
 			.eq(0)
 			.as("firstLink");
 
-		cy.get("@firstLink")
-			.realPress("ArrowDown");
+		cy.focused().should("have.class", "ui5-link-root");
 
-		cy.get("[ui5-mcb-item]").eq(0).should("be.focused");
+		// Focus moves from the link to the first list item
+		cy.get("@firstLink").realPress("ArrowDown");
+
+		cy.get("@firstItem").should("be.focused");
 	});
 });
 
