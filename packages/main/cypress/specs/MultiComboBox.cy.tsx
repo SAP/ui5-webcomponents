@@ -347,8 +347,7 @@ describe("General", () => {
 		cy.get("@mcb")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("C");
+		cy.realType("C");
 
 		cy.get("@mcb")
 			.shadow()
@@ -384,8 +383,7 @@ describe("General", () => {
 		cy.get("@mcb")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("C");
+		cy.realType("C");
 
 		cy.get("@mcb")
 			.shadow()
@@ -423,8 +421,7 @@ describe("General", () => {
 		cy.get("@mcb")
 			.should("be.focused");
 		
-		cy.get("@mcb")
-			.realType("I");
+		cy.realType("I");
 
 		cy.get("@mcb")
 			.shadow()
@@ -650,6 +647,9 @@ describe("General", () => {
 			.ui5ResponsivePopoverClosed();
 
 		cy.get("@mcb")
+			.should("not.be.focused");
+
+		cy.get("@mcb")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.shadow()
@@ -769,8 +769,7 @@ describe("General", () => {
 		cy.get("@mcb")
 			.should("have.prop", "_effectiveShowClearIcon", false);
 
-		cy.get("@mcb")
-			.realType("1");
+		cy.realType("1");
 
 		cy.get("@mcb")
 			.shadow()
@@ -854,7 +853,6 @@ describe("MultiComboBox Truncated Tokens", () => {
 		);
 
 		cy.get("[ui5-multi-combobox]")
-			.as("mcb")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
@@ -872,7 +870,7 @@ describe("MultiComboBox Truncated Tokens", () => {
 		cy.get("@token")
 			.should("be.focused");
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.shadow()
@@ -888,7 +886,7 @@ describe("MultiComboBox Truncated Tokens", () => {
 		cy.get("@token")
 			.realClick();
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.shadow()
@@ -1123,8 +1121,7 @@ describe("Selection and filtering", () => {
 		cy.get("@mcb")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("12");
+		cy.realType("12");
 
 		cy.get("@mcb")
 			.shadow()
@@ -1159,8 +1156,7 @@ describe("Selection and filtering", () => {
 		cy.get("@mcb")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("C");
+		cy.realType("C");
 
 		cy.get("@mcb")
 			.shadow()
@@ -1206,8 +1202,7 @@ describe("Selection and filtering", () => {
 		cy.get("@mcb")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("C");
+		cy.realType("C");
 
 		cy.get("@mcb")
 			.shadow()
@@ -1336,8 +1331,7 @@ describe("Selection and filtering", () => {
 		cy.get("@mcb")
 			.should("be.focused");
 
-		cy.get("@input")
-			.realType("I");
+		cy.realType("I");
 
 		cy.get("@popover")
 			.find("[ui5-list] slot")
@@ -1364,8 +1358,7 @@ describe("Selection and filtering", () => {
 		cy.get("@mcb")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("C");
+		cy.realType("C");
 
 		cy.get("@mcb")
 			.shadow()
@@ -1452,8 +1445,7 @@ describe("Validation & Value State", () => {
 		cy.get("@mcb")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("1");
+		cy.realType("1");
 
 		cy.get("@mcb")
 			.shadow()
@@ -1467,8 +1459,7 @@ describe("Validation & Value State", () => {
 			.as("input")
 			.should("have.value", "112");
 
-		cy.get("@mcb")
-			.realType("4");
+		cy.realType("4");
 
 		cy.get("@input")
 			.should("have.value", "1");
@@ -1493,8 +1484,7 @@ describe("Validation & Value State", () => {
 		cy.get("@mcb")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("4");
+		cy.realType("4");
 
 		cy.get("@mcb")
 			.should("have.attr", "value-state", "Negative");
@@ -1519,8 +1509,7 @@ describe("Validation & Value State", () => {
 		cy.get("@mcb")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("CCo");
+		cy.realType("CCo");
 
 		cy.get("@mcb")
 			.shadow()
@@ -1542,8 +1531,7 @@ describe("Validation & Value State", () => {
 		cy.get("@mcb")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("CC{enter}");
+		cy.realType("CC{enter}");
 
 		cy.get("@mcb")
 			.shadow()
@@ -1572,6 +1560,7 @@ describe("Validation & Value State", () => {
 
 		cy.get("@mcb")
 			.get("[ui5-mcb-item]")
+			.first()
 			.should("be.focused")
 			.realPress("Space");
 
@@ -1962,7 +1951,7 @@ describe("Event firing", () => {
 
 	it("Should fire events on clear icon click", () => {
 		cy.mount(
-			<MultiComboBox showClearIcon={true} onInput={cy.stub().as("inputEvent")} onChange={cy.stub().as("changeEvent")}>
+			<MultiComboBox noTypeahead={true} showClearIcon={true} onInput={cy.stub().as("inputEvent")} onChange={cy.stub().as("changeEvent")}>
 				<MultiComboBoxItem text="1"></MultiComboBoxItem>
 				<MultiComboBoxItem text="12"></MultiComboBoxItem>
 				<MultiComboBoxItem text="3"></MultiComboBoxItem>
@@ -1970,30 +1959,30 @@ describe("Event firing", () => {
 		);
 
 		cy.get("[ui5-multi-combobox]")
-			.as("mcb")
 			.realClick();
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("1");
+		cy.realType("1");
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find<ResponsivePopover>("ui5-responsive-popover")
 			.as("popover")
 			.ui5ResponsivePopoverOpened();
 
-		cy.get("@mcb")
-			.should("have.prop", "_effectiveShowClearIcon", true);
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
+			.should("have.value", "1");
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find(".ui5-input-clear-icon-wrapper")
 			.realClick();
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("input")
 			.should("have.value", "");
@@ -2025,8 +2014,7 @@ describe("Event firing", () => {
 			.realClick()
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("1");
+		cy.realType("1");
 
 		cy.get("@mcb")
 			.shadow()
@@ -2488,8 +2476,7 @@ describe("Grouping", () => {
 			.realClick()
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realType("1");
+		cy.realType("1");
 
 		cy.get("@mcb")
 			.shadow()
@@ -2567,27 +2554,24 @@ describe("Grouping", () => {
 			.as("mcb")
 			.realClick();
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.realPress("F4");
+		cy.realPress("F4");
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find<ResponsivePopover>("ui5-responsive-popover")
 			.as("popover")
 			.ui5ResponsivePopoverOpened();
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
+			.find("[ui5-mcb-item-group]")
 			.should("not.be.focused");
 
-		cy.get("@mcb")
-			.get("[ui5-mcb-item-group]")
-			.should("not.be.focused");
-
-		cy.get("@mcb")
-			.get("[ui5-mcb-item][text='12']")
+		cy.get("[ui5-multi-combobox]")
+			.find("[ui5-mcb-item]")
+			.eq(0)
 			.should("be.focused");
 	});
 
@@ -2607,13 +2591,12 @@ describe("Grouping", () => {
 		);
 
 		cy.get("[ui5-multi-combobox]")
-			.as("mcb")
 			.realClick();
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find(".inputIcon")
 			.as("icon");
@@ -2621,34 +2604,34 @@ describe("Grouping", () => {
 		cy.get("@icon")
 			.realClick();
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find<ResponsivePopover>("ui5-responsive-popover")
 			.as("popover")
 			.ui5ResponsivePopoverOpened();
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.realPress("ArrowDown");
 
-		cy.get("@mcb")
-			.get("[ui5-mcb-item-group]")
+		cy.get("[ui5-multi-combobox]")
+			.find("[ui5-mcb-item-group]")
 			.should("be.focused");
 
-		cy.get("@mcb")
-			.get("[ui5-mcb-item-group]")
+		cy.get("[ui5-multi-combobox]")
+			.find("[ui5-mcb-item-group]")
 			.realPress("Enter");
 
-		cy.get("@mcb")
-			.get("[ui5-mcb-item-group]")
+		cy.get("[ui5-multi-combobox]")
+			.find("[ui5-mcb-item-group]")
 			.should("be.focused");
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find<ResponsivePopover>("ui5-responsive-popover")
 			.as("popover")
 			.ui5ResponsivePopoverOpened();
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("input")
 			.as("input")
@@ -2695,15 +2678,15 @@ describe("Grouping", () => {
 			.realPress("ArrowDown");
 
 		cy.get("@mcb")
-			.get("[ui5-mcb-item-group]")
+			.find("[ui5-mcb-item-group]")
 			.should("be.focused");
 
 		cy.get("@mcb")
-			.get("[ui5-mcb-item-group]")
+			.find("[ui5-mcb-item-group]")
 			.realPress("Space");
 
 		cy.get("@mcb")
-			.get("[ui5-mcb-item-group]")
+			.find("[ui5-mcb-item-group]")
 			.should("be.focused");
 
 		cy.get("@mcb")
@@ -2719,11 +2702,11 @@ describe("Grouping", () => {
 			.should("have.value", "");
 
 		cy.get("@mcb")
-			.get("[ui5-mcb-item-group]")
+			.find("[ui5-mcb-item-group]")
 			.realPress("ArrowUp");
 
 		cy.get("@mcb")
-			.get("[ui5-mcb-item-group]")
+			.find("[ui5-mcb-item-group]")
 			.should("not.be.focused");
 
 		cy.get("@mcb")
