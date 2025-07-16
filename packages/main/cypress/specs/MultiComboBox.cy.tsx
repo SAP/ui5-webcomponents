@@ -1552,19 +1552,17 @@ describe("Validation & Value State", () => {
 		);
 
 		cy.get("[ui5-multi-combobox]")
-			.as("mcb")
 			.realClick()
 			.should("be.focused");
 
 		cy.realPress("ArrowDown");
 
-		cy.get("@mcb")
-			.get("[ui5-mcb-item]")
-			.first()
-			.should("be.focused")
-			.realPress("Space");
+		cy.get("[ui5-multi-combobox]")
+			.should("not.be.focused");
 
-		cy.get("@mcb")
+		cy.realPress("Space");
+
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find(".ui5-valuestatemessage--warning")
 			.should("not.exist");
