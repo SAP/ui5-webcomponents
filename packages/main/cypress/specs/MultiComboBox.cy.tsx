@@ -278,9 +278,7 @@ describe("General", () => {
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.as("tokenizer")
-			.then($tokenizer => {
-				$tokenizer[0].addEventListener("ui5-token-delete", cy.stub().as("tokenDelete"))
-			});
+			.invoke('on', 'ui5-token-delete', cy.spy().as('tokenDelete'));
 
 		cy.get("@tokenizer")
 			.find("[ui5-token]")
@@ -515,9 +513,7 @@ describe("General", () => {
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.as("tokenizer")
-			.then($tokenizer => {
-				$tokenizer[0].addEventListener("ui5-token-delete", cy.stub().as("tokenDelete"))
-			});
+			.invoke('on', 'ui5-token-delete', cy.spy().as('tokenDelete'));
 
 		cy.get("@tokenizer")
 			.find("[ui5-token]")
@@ -553,9 +549,7 @@ describe("General", () => {
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.as("tokenizer")
-			.then($tokenizer => {
-				$tokenizer[0].addEventListener("ui5-token-delete", cy.stub().as("tokenDelete"))
-			});
+			.invoke('on', 'ui5-token-delete', cy.spy().as('tokenDelete'));
 
 		cy.get("@tokenizer")
 			.find("[ui5-token]")
@@ -1404,9 +1398,13 @@ describe("Selection and filtering", () => {
 });
 
 describe("Validation & Value State", () => {
+	const handleInput = (e:Event) => {
+		(e.target as MultiComboBox).valueState = (e.target as MultiComboBox).value.length ? "Negative" : "Information";
+	}
+
 	it("Should be able to change value states upon typing", () => {
 		cy.mount(
-			<MultiComboBox noValidation={true}>
+			<MultiComboBox noValidation={true} onInput={handleInput}>
 				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
 				<MultiComboBoxItem text="Item 2"></MultiComboBoxItem>
 			</MultiComboBox>
@@ -1415,17 +1413,9 @@ describe("Validation & Value State", () => {
 		// add event listener
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.then(mcb => {
-				mcb.get(0).addEventListener("input", e => {
-					(mcb.get(0) as MultiComboBox).valueState = (e.target as MultiComboBox).value.length ? "Negative" : "Information";
-				});
-			});
-
-		cy.get("@mcb")
 			.realClick()
 			.should("be.focused");
 
-		// type "f"
 		cy.realType("f");
 
 		cy.get("@mcb")
@@ -1563,21 +1553,18 @@ describe("Validation & Value State", () => {
 	});
 
 	it("Should remove value state header when value state is reset", () => {
+		const onSelectionChange = (e:Event) => {
+			(e.target as MultiComboBox).valueState = "None";
+		}
+
 		cy.mount(
-			<MultiComboBox noValidation={true} valueState="Critical" open={true}>
+			<MultiComboBox noValidation={true} valueState="Critical" open={true} onSelectionChange={onSelectionChange}>
 				<MultiComboBoxItem text="Item 1"></MultiComboBoxItem>
 			</MultiComboBox>
 		);
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.then(mcb => {
-				mcb.get(0).addEventListener("ui5-selection-change", e => {
-					(mcb.get(0) as MultiComboBox).valueState = "None";
-				});
-			});
-
-		cy.get("@mcb")
 			.realClick()
 			.should("be.focused");
 
@@ -1775,8 +1762,12 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 
 describe("Event firing", () => {
 	it("tests if open and close events are fired correctly", () => {
+		const onFocusIn = (e:Event) => {
+			(e.target as MultiComboBox).setAttribute("open", "true");
+		}
+
 		cy.mount(
-			<MultiComboBox onOpen={cy.stub().as("mcbOpened")} onClose={cy.stub().as("mcbClosed")}>
+			<MultiComboBox onOpen={cy.stub().as("mcbOpened")} onClose={cy.stub().as("mcbClosed")} onFocusIn={onFocusIn}>
 				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
 				<MultiComboBoxItem text="Bulgaria"></MultiComboBoxItem>
 				<MultiComboBoxItem text="England"></MultiComboBoxItem>
@@ -1785,13 +1776,6 @@ describe("Event firing", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.then($mcb => {
-				$mcb[0].addEventListener("focusin", () => {
-					$mcb[0].setAttribute("open", "true");
-				});
-			});
-
-		cy.get("@mcb")
 			.realClick()
 			.should("be.focused");
 
@@ -1832,25 +1816,22 @@ describe("Event firing", () => {
 	});
 
 	it("Should prevent selection-change when clicking an item", () => {
+		const onSelectionChange = (e:Event) => {
+			e.preventDefault();
+		}
+
 		cy.mount(
-			<MultiComboBox>
-				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
-				<MultiComboBoxItem selected={true} text="Bulgaria"></MultiComboBoxItem>
-				<MultiComboBoxItem text="England"></MultiComboBoxItem>
+			<MultiComboBox onSelectionChange={onSelectionChange}>
+				<MultiComboBoxItem text="Algeria" />
+				<MultiComboBoxItem selected={true} text="Bulgaria" />
+				<MultiComboBoxItem text="England" />
 			</MultiComboBox>
 		);
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.then($mcb => {
-				$mcb.get(0).addEventListener("ui5-selection-change", e => {
-					e.preventDefault();
-				});
-			});
-
-		cy.get("@mcb")
 			.realClick();
- 
+
 		cy.get("@mcb")
 			.should("be.focused");
 
@@ -1884,8 +1865,12 @@ describe("Event firing", () => {
 	});
 
 	it("Should prevent selection-change when deleting a token", () => {
+		const onSelectionChange = (e:Event) => {
+			e.preventDefault();
+		}
+
 		cy.mount(
-			<MultiComboBox>
+			<MultiComboBox onSelectionChange={onSelectionChange}>
 				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
 				<MultiComboBoxItem selected={true} text="Bulgaria"></MultiComboBoxItem>
 				<MultiComboBoxItem text="England"></MultiComboBoxItem>
@@ -1894,13 +1879,6 @@ describe("Event firing", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.then($mcb => {
-				$mcb.get(0).addEventListener("ui5-selection-change", e => {
-					e.preventDefault();
-				});
-			});
-
-		cy.get("@mcb")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.as("tokenizer")
@@ -1908,7 +1886,7 @@ describe("Event firing", () => {
 
 		cy.get("@mcb")
 			.realClick();
- 
+
 		cy.get("@mcb")
 			.should("be.focused");
 
@@ -1930,8 +1908,12 @@ describe("Event firing", () => {
 	});
 
 	it("Should prevent selection-change on CTRL+A", () => {
+		const onSelectionChange = (e:Event) => {
+			e.preventDefault();
+		} 
+
 		cy.mount(
-			<MultiComboBox>
+			<MultiComboBox onSelectionChange={onSelectionChange}>
 				<MultiComboBoxItem text="Algeria"></MultiComboBoxItem>
 				<MultiComboBoxItem selected={true} text="Bulgaria"></MultiComboBoxItem>
 				<MultiComboBoxItem text="England"></MultiComboBoxItem>
@@ -1940,15 +1922,8 @@ describe("Event firing", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.then($mcb => {
-				$mcb.get(0).addEventListener("ui5-selection-change", e => {
-					e.preventDefault();
-				});
-			});
-
-		cy.get("@mcb")
 			.realClick();
- 
+
 		cy.get("@mcb")
 			.should("be.focused");
 
@@ -2031,9 +2006,11 @@ describe("Event firing", () => {
 	});
 
 	it("Should not fire submit, when an item is tokenized", () => {
+		const onSubmit = cy.spy((e:Event) => e.preventDefault()).as("submitEvent");
+
 		cy.mount(
 			<>
-				<form id="form">
+				<form id="form" onSubmit={onSubmit}>
 					<MultiComboBox>
 						<MultiComboBoxItem text="1"></MultiComboBoxItem>
 						<MultiComboBoxItem text="12"></MultiComboBoxItem>
@@ -2043,17 +2020,9 @@ describe("Event firing", () => {
 			</>
 		);
 
-		cy.get("#form")
-			.then($form => {
-				$form.get(0).addEventListener("submit", e => e.preventDefault());
-				$form.get(0).addEventListener("submit", cy.stub().as("submitEvent"));
-			});
-
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
-			.realClick();
-
-		cy.get("@mcb")
+			.realClick()
 			.should("be.focused");
 
 		cy.get("@mcb")
@@ -2615,7 +2584,6 @@ describe("Grouping", () => {
 
 		cy.get("@mcb")
 			.get("[ui5-mcb-item-group]")
-			.eq(0)
 			.should("not.be.focused");
 
 		cy.get("@mcb")
