@@ -74,7 +74,8 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 			<BusyIndicator id={`${this._id}-button-busy-indicator`}
 				class="ui5-button-busy-indicator"
 				size={this.iconOnly ? "S" : "M"}
-				active={true}/>
+				active={true}
+				delay={this.loadingDelay}/>
 		}
 	</>);
 }

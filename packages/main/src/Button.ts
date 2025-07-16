@@ -324,6 +324,15 @@ Defines whether the button shows a loading indicator.
 	loading = false;
 
 	/**
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the related button.
+	 * @default 1000
+	 * @public
+	 * @since 2.13.0
+	 */
+	@property({ type: Number })
+	loadingDelay = 1000;
+
+	/**
 	 * The current title of the button, either the tooltip property or the icons tooltip. The tooltip property with higher prio.
 	 * @private
 	 */
