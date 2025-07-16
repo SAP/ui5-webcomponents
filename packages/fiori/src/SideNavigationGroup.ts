@@ -184,6 +184,20 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		}
 	}
 
+	get templateAttributes() {
+		return {
+			sClass: "ui5-sn-item ui5-sn-item-group",
+			role: "treeitem",
+			onKeyDown: this._onkeydown.bind(this),
+			onClick: this._onclick.bind(this),
+			onFocusIn: this._onfocusin.bind(this),
+			tabIndex: this.effectiveTabIndex,
+			ariaExpanded: this._expanded,
+			title: this._tooltip,
+			ariaOwns: this._groupId,
+		};
+	}
+
 	get isSideNavigationGroup() {
 		return true;
 	}

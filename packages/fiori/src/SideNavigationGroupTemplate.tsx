@@ -23,17 +23,7 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 			role="none"
 		>
 			<div class="ui5-sn-item-separator"></div>
-			{SideNavigationItemBaseTemplate.call(this, "div", itemContent, {
-				sClass: "ui5-sn-item ui5-sn-item-group",
-				role: "treeitem",
-				onKeyDown: this._onkeydown,
-				onClick: this._onclick,
-				onFocusIn: this._onfocusin,
-				tabIndex: this.effectiveTabIndex,
-				ariaExpanded: this._expanded,
-				title: this._tooltip,
-				ariaOwns: this._groupId
-			})}
+			{SideNavigationItemBaseTemplate.call(this, "div", itemContent, this.templateAttributes)}
 			{!!this.items.length &&
 				<ul id={this._groupId}
 					class="ui5-sn-item-ul"

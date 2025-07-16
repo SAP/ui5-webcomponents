@@ -317,14 +317,27 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		this.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	get isSideNavigationItem() {
-		return true;
+	get templateAttributes() {
+		return Object.assign(super.templateAttributes, {
+			sClass: "ui5-sn-item ui5-sn-item-level1",
+			onFocusOut: this._onfocusout.bind(this),
+			onMouseEnter: this._onmouseenter.bind(this),
+			onMouseLeave: this._onmouseleave.bind(this),
+			ariaChecked: this._ariaChecked,
+			ariaOwns: this._groupId,
+			ariaLabel: this._ariaLabel,
+			ariaExpanded: this._expanded,
+		});
 	}
 
 	_toggle() {
 		if (this.items.length && !this.effectiveDisabled) {
 			this.expanded = !this.expanded;
 		}
+	}
+
+	get isSideNavigationItem() {
+		return true;
 	}
 }
 

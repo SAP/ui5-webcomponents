@@ -45,6 +45,15 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	/**
+	 * Defines if the item's parent is disabled.
+	 * @private
+	 * @default false
+	 * @since 2.10.0
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_parentDisabled: boolean = false;
+
+	/**
 	 * Defines the icon of the item.
 	 *
 	 * The SAP-icons font provides numerous options.
@@ -193,6 +202,18 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		return this._href ? "a" : "div";
 	}
 
+	get effectiveDisabled() {
+		return this.disabled || this._parentDisabled;
+	}
+
+	get _ariaHasPopup() {
+		if (this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
+		}
+
+		return undefined;
+	}
+
 	get classesArray() {
 		const classes = [];
 
@@ -299,6 +320,24 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		} else {
 			this.sideNavigation?._handleItemClick(e, this);
 		}
+	}
+
+	get templateAttributes() {
+		return {
+			role: this.ariaRole,
+			onKeyDown: this._onkeydown.bind(this),
+			onKeyUp: this._onkeyup.bind(this),
+			onClick: this._onclick.bind(this),
+			onFocusIn: this._onfocusin.bind(this),
+			tabIndex: this.effectiveTabIndex,
+			ariaCurrent: this._ariaCurrent,
+			ariaSelected: this._ariaSelected,
+			title: this._tooltip,
+			ariaDisabled: this.effectiveDisabled,
+			href: this._href,
+			target: this._target,
+			ariaHasPopup: this._ariaHasPopup,
+		};
 	}
 
 	get isSideNavigationSelectableItemBase() {

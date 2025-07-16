@@ -8,21 +8,7 @@ export default function SideNavigationSubItemTemplate(this: SideNavigationSubIte
 
 	return (
 		<li id={this._id} class="ui5-sn-list-li" role="none">
-			{SideNavigationItemBaseTemplate.call(this, EffectiveTag, itemContent, {
-				sClass: "ui5-sn-item ui5-sn-item-level2",
-				onKeyDown: this._onkeydown,
-				onKeyUp: this._onkeyup,
-				onClick: this._onclick,
-				onFocusIn: this._onfocusin,
-				tabIndex: this.effectiveTabIndex,
-				ariaCurrent: this._ariaCurrent,
-				ariaSelected: this._ariaSelected,
-				title: this._tooltip,
-				ariaDisabled: this.effectiveDisabled,
-				href: this._href,
-				target: this._target,
-				ariaHasPopup: this._ariaHasPopup
-			})}
+			{SideNavigationItemBaseTemplate.call(this, EffectiveTag, itemContent, this.templateAttributes)}
 		</li>
 	);
 

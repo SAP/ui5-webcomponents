@@ -22,29 +22,7 @@ function ItemTemplate(this: SideNavigationItem) {
 
 	return (
 		<>
-			{SideNavigationItemBaseTemplate.call(this, EffectiveTag, itemContent, {
-				sClass: "ui5-sn-item ui5-sn-item-level1",
-				role: this.ariaRole,
-				onKeyDown: this._onkeydown,
-				onKeyUp: this._onkeyup,
-				onClick: this._onclick,
-				onFocusIn: this._onfocusin,
-				onFocusOut: this._onfocusout,
-				onMouseEnter: this._onmouseenter,
-				onMouseLeave: this._onmouseleave,
-				tabIndex: this.effectiveTabIndex,
-				ariaHasPopup: this._ariaHasPopup,
-				ariaChecked: this._ariaChecked,
-				ariaOwns: this._groupId,
-				title: this._tooltip,
-				ariaLabel: this._ariaLabel,
-				ariaExpanded: this._expanded,
-				ariaCurrent: this._ariaCurrent,
-				ariaSelected: this._ariaSelected,
-				href: this._href,
-				target: this._target,
-				ariaDisabled: this.effectiveDisabled
-			})}
+			{SideNavigationItemBaseTemplate.call(this, EffectiveTag, itemContent, this.templateAttributes)}
 			{!this.sideNavCollapsed && !!this.items.length &&
 				<ul id={this._groupId}
 					class="ui5-sn-item-ul"
