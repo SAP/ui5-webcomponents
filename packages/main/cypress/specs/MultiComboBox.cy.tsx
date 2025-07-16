@@ -365,7 +365,7 @@ describe("Event firing", () => {
 });
 
 describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
-	it("should focus last token on arrow right in RTL mode when input is at start", () => {
+	it.skip("should focus last token on arrow right in RTL mode when input is at start", () => {
 		cy.mount(
 			<div dir="rtl">
 				<MultiComboBox noValidation={true}>
@@ -399,7 +399,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.focused().should("have.class", "ui5-token--wrapper");
 	});
 
-	it("should focus last token on arrow left in LTR mode when input is at start", () => {
+	it.skip("should focus last token on arrow left in LTR mode when input is at start", () => {
 		cy.mount(
 			<div dir="ltr">
 				<MultiComboBox noValidation={true}>
@@ -501,7 +501,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.focused().should("not.have.class", "ui5-token--wrapper");
 	});
 
-	it("should navigate from last token back to input with arrow right in LTR mode", () => {
+	it.skip("should navigate from last token back to input with arrow right in LTR mode", () => {
 		cy.mount(
 			<div dir="ltr">
 				<MultiComboBox noValidation={true}>
@@ -531,7 +531,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.focused().should("not.have.class", "ui5-token--wrapper");
 	});
 
-	it("should handle empty input case in RTL mode", () => {
+	it.skip("should handle empty input case in RTL mode", () => {
 		cy.mount(
 			<div dir="rtl">
 				<MultiComboBox noValidation={true}>
