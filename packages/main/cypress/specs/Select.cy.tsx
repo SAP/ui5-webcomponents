@@ -203,6 +203,28 @@ describe("Select - Accessibility", () => {
 		cy.get("@select")
 			.should("have.attr", "title", "Go home");
 	});
+
+	it("should announce the associated label when Select is focused", () => {
+		cy.mount(
+			<>
+				<label for="sel">Should be the aria-label</label>
+				<Select id="sel">
+					<Option value="option1">Option 1</Option>
+					<Option value="option2">Option 2</Option>
+					<Option value="option3">Option 3</Option>
+				</Select>
+			</>
+		);
+
+		cy.get('label[for="sel"]')
+			.invoke('text')
+			.then((labelText) => {
+				cy.get("[ui5-select]")
+					.shadow()
+					.find(".ui5-select-label-root")
+					.should("have.attr", "aria-label", labelText);
+			});
+	});	
 });
 
 describe("Select - Popover", () => {
