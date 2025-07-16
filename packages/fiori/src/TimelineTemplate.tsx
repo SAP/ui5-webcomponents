@@ -2,9 +2,14 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import type Timeline from "./Timeline.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 
+enum TimelineListRole {
+	List = "list",
+	Tree = "tree"
+}
+
 export default function TimelineTemplate(this: Timeline) {
 	// Determine roles based on content structure
-	const listRole: "list" | "tree" = this.hasGroupItems ? "tree" : "list";
+	const listRole: `${TimelineListRole}` = this.hasGroupItems ? TimelineListRole.Tree : TimelineListRole.List;
 
 	return (
 		<div class="ui5-timeline-root"

@@ -23,6 +23,11 @@ import {
 
 import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
 
+enum TimelineItemRole {
+	ListItem = "listitem",
+	TreeItem = "treeitem"
+}
+
 /**
  * @class
  *
@@ -167,7 +172,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	effectiveRole: "listitem" | "treeitem" = "listitem";
+	effectiveRole: `${TimelineItemRole}` = TimelineItemRole.ListItem;
 
 	/**
 	 * Defines the position of the item in a group.
