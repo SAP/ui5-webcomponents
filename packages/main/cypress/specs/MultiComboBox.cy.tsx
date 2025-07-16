@@ -137,12 +137,12 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 	});
 
 	it("Should move the focus from the MultiComboBox to the first link in the value state message", () => {
-		cy.get("ui5-multi-combobox")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("input")
 			.as("innerInput");
 
-		cy.get("ui5-multi-combobox")
+		cy.get("[ui5-multi-combobox]")
 			.as("multi-combobox");
 
 		cy.get("@innerInput")
@@ -160,13 +160,13 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 		cy.get("@popover")
 			.should("have.attr", "open")
 
-		cy.get("ui5-link")
+		cy.get("[ui5-link]")
 			.eq(0)
 			.should("have.focus");
 	});
 
 	it("When pressing [Tab], the focus moves to the next value state message link. Pressing [Tab] again closes the popup and moves the focus to the next input", () => {
-		cy.get("ui5-multi-combobox")
+		cy.get("[ui5-multi-combobox]")
 			.as("multi-combobox");
 
 		cy.get("@multi-combobox")
@@ -186,7 +186,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 			.as("ui5-popover")
 			.should("have.attr", "open");
 
-		cy.get("ui5-link")
+		cy.get("[ui5-link]")
 			.eq(0)
 			.as("firstLink")
 			.should("have.focus");
@@ -197,7 +197,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 		cy.get("@firstLink")
 			.should("not.have.focus");
 
-		cy.get("ui5-link")
+		cy.get("[ui5-link]")
 			.eq(1)
 			.as("secondLink")
 			.should("have.focus");
@@ -205,7 +205,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 		cy.get("@secondLink")
 			.realPress("Tab");
 
-		cy.get("ui5-input")
+		cy.get("[ui5-input]")
 			.as("input");
 
 		cy.get("@input")
@@ -213,12 +213,12 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 	});
 
 	it("Pressing [Shift + Tab] moves the focus from the second link in the value state message to the first one. Pressing it again shifts the focus to the MultiComboBox", () => {
-		cy.get("ui5-multi-combobox")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("input")
 			.as("innerInput");
 
-		cy.get("ui5-multi-combobox")
+		cy.get("[ui5-multi-combobox]")
 			.as("multi-combobox");
 
 		cy.get("@innerInput")
@@ -233,7 +233,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 			.as("ui5-popover")
 			.should("have.attr", "open");
 
-		cy.get("ui5-link")
+		cy.get("[ui5-link]")
 			.eq(0)
 			.as("firstLink")
 			.should("have.focus");
@@ -244,7 +244,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 		cy.get("@firstLink")
 			.should("not.have.focus");
 
-		cy.get("ui5-link")
+		cy.get("[ui5-link]")
 			.eq(1)
 			.as("secondLink")
 			.should("have.focus");
@@ -264,7 +264,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 	});
 
 	it("When list item is selected and pressing [Ctrl + Alt + F8], first link is focused. [Arrow Down] moves focus to the first list item", () => {
-		cy.get("ui5-multi-combobox")
+		cy.get("[ui5-multi-combobox]")
 			.as("multi-combobox");
 
 		cy.get("@multi-combobox")
@@ -277,26 +277,31 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 			.realClick()
 			.should("be.focused");
 
-		// focus the fisrt item
+		// focuses the fisrt list item
 		cy.realPress("F4");
 
 		cy.get("@multi-combobox")
 			.shadow()
 			.find<ResponsivePopover>("ui5-responsive-popover")
-			.ui5ResponsivePopoverOpened()
+			.ui5ResponsivePopoverOpened();
 
-		cy.get("ui5-mcb-item")
+		cy.get("[ui5-mcb-item]").eq(0).as("firstItem");
+
+		cy.get("@firstItem").should("be.focused");
+
+		// Focus moves from the first item to the link in the value state header
+		cy.get("@firstItem").realPress(["Control", "Alt", "F8"]);
+
+		cy.get("[ui5-link]")
 			.eq(0)
-			.realPress(["Control", "Alt", "F8"]);
+			.as("firstLink");
 
-		cy.get("ui5-link")
-			.as("firstLink")
-			.should("have.focus");
+		cy.focused().should("have.class", "ui5-link-root");
 
-		cy.get("@firstLink")
-			.realPress("ArrowDown");
+		// Focus moves from the link to the first list item
+		cy.get("@firstLink").realPress("ArrowDown");
 
-		cy.get("ui5-mcb-item").eq(0).should("be.focused");
+		cy.get("@firstItem").should("be.focused");
 	});
 });
 
