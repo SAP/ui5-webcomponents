@@ -16,6 +16,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import type { AriaHasPopup, UI5CustomEvent } from "@ui5/webcomponents-base";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -34,6 +35,8 @@ import SplitButtonTemplate from "./SplitButtonTemplate.js";
 
 // Styles
 import SplitButtonCss from "./generated/themes/SplitButton.css.js";
+
+type SplitButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription">;
 
 /**
  * @class
@@ -157,6 +160,14 @@ class SplitButton extends UI5Element {
 	accessibleName?: string;
 
 	/**
+	 * Defines the tooltip text for the right button of the component.
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+	_leftButtonTooltipText?: string;
+
+	/**
 	 * Defines the tabIndex of the component.
 	 * @default "0"
 	 * @private
@@ -209,6 +220,10 @@ class SplitButton extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	_hideArrowButton = false;
+
+
+	@property({ type: Object })
+	accessibilityAttributes: SplitButtonAccessibilityAttributes = {};
 
 	/**
 	 * Defines the text of the component.

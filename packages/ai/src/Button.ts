@@ -9,12 +9,17 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
 import type ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import type ButtonState from "./ButtonState.js";
+import { BUTTON_TOOLTIP_TEXT } from "./generated/i18n/i18n-defaults.js";
 import "./ButtonState.js";
-
 import ButtonTemplate from "./ButtonTemplate.js";
 
 // Styles
 import ButtonCss from "./generated/themes/Button.css.js";
+import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { AccessibilityAttributes, AriaHasPopup } from "@ui5/webcomponents-base/dist/types.js";
+
+type SplitButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription">;
 
 /**
  * @class
@@ -150,6 +155,9 @@ class Button extends UI5Element {
 	@query(".ui5-ai-button-hidden[ui5-split-button]")
 	_hiddenSplitButton?: SplitButton;
 
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
 	get _hideArrowButton() {
 		return !this._effectiveStateObject?.showArrowButton;
 	}
@@ -181,6 +189,10 @@ class Button extends UI5Element {
 
 	get _hasText() {
 		return !!this._stateText;
+	}
+
+	get _getButtonTooltipText() {
+		return this._hasText ? Button.i18nBundle.getText(BUTTON_TOOLTIP_TEXT, this._stateText as string) : undefined;
 	}
 
 	onBeforeRendering(): void {
@@ -304,6 +316,22 @@ class Button extends UI5Element {
 	_onArrowClick(e: CustomEvent): void {
 		e.stopImmediatePropagation();
 		this.fireDecoratorEvent("arrow-button-click");
+	}
+
+	get accessibilityAttributes(): SplitButtonAccessibilityAttributes {
+		let roleDescription;
+		if(this._hideArrowButton && !this._stateEndIcon) {
+			roleDescription = "Button";
+		} else if (this._stateEndIcon) {
+			roleDescription = "Menu Button"
+		} else {
+			roleDescription = "Split Button"
+		}
+
+		return {
+			hasPopup: !this._hideArrowButton || this._stateEndIcon ? "menu" : "false",
+			ariaRoleDescription: roleDescription
+		}
 	}
 }
 

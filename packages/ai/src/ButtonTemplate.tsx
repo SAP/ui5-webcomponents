@@ -12,6 +12,8 @@ export default function ButtonTemplate(this: Button) {
 			_hideArrowButton={this._hideArrowButton}
 			onClick={this._onClick}
 			onArrowClick={this._onArrowClick}
+			_leftButtonTooltipText={this._getButtonTooltipText}
+			accessibilityAttributes={this.accessibilityAttributes}
 		>
 			{this._hasText && (
 				<div class="ui5-ai-button-text">{this._stateText}</div>
