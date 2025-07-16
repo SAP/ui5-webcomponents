@@ -289,10 +289,11 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 			.eq(0)
 			.realPress(["Control", "Alt", "F8"]);
 
+		cy.focused().should("have.class", "ui5-link-root");
+
 		cy.get("[ui5-link]")
 			.eq(0)
-			.as("firstLink")
-			.should("be.focused");
+			.as("firstLink");
 
 		cy.get("@firstLink")
 			.realPress("ArrowDown");
