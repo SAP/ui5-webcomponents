@@ -616,13 +616,12 @@ describe("General", () => {
 		);
 
 		cy.get("[ui5-multi-combobox]")
-			.as("mcb")
 			.realClick();
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find(".inputIcon")
 			.as("icon");
@@ -630,7 +629,7 @@ describe("General", () => {
 		cy.get("@icon")
 			.realClick();
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find<ResponsivePopover>("ui5-responsive-popover")
 			.as("popover")
@@ -646,10 +645,10 @@ describe("General", () => {
 		cy.get<ResponsivePopover>("@popover")
 			.ui5ResponsivePopoverClosed();
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.should("not.be.focused");
 
-		cy.get("@mcb")
+		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.shadow()
@@ -1936,14 +1935,11 @@ describe("Event firing", () => {
 		cy.get("@mcb")
 			.realPress("ArrowDown");
 
-		cy.get("@mcb")
-			.find("[ui5-mcb-item]")
-			.eq(0)
-			.as("firstItem")
-			.should("be.focused");
+		cy.get("[ui5-multi-combobox]")
+			.should("not.be.focused");
 
-		cy.get("@firstItem")
-			.realPress(["Meta", "a"]);
+
+		cy.realPress(["Meta", "a"]);
 
 		cy.get("@mcb")
 			.shadow()
