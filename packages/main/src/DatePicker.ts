@@ -520,6 +520,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		const valid = this._checkValueValidity(value);
 
 		if (valid && normalizeValue) {
+			value = this.getDisplayValueFromValue(value);
 			value = this.normalizeDisplayValue(value); // transform valid values (in any format) to the correct format
 		}
 
@@ -566,6 +567,10 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	getValueFromDisplayValue(value: string): string {
 		return this.getValueFormat().format(this.getDisplayFormat().parse(value));
+	}
+
+	getDisplayValueFromValue(value: string): string {
+		return this.getDisplayFormat().format(this.getValueFormat().parse(value));
 	}
 
 	/**

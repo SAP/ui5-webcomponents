@@ -361,6 +361,18 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
+	/**
+	 * Checks if the provided value is valid and within valid range.
+	 * @override
+	 * @param value
+	 */
+	_checkValueValidity(value: string): boolean {
+		if (value === "") {
+			return true;
+		}
+		return this.isValidValue(value);
+	}
+
 	getSelectedDateTime() {
 		const selectedDate = this.getValueFormat().parse(this._calendarSelectedDates[0]) as Date;
 		const selectedTime = this.getValueFormat().parse(this._timeSelectionValue) as Date;
