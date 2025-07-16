@@ -242,7 +242,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 *
 	 * **Note:** For best accessibility experience, set a `tabindex` of "-1" on your interactive element, or it will be set automatically.
 	 * This slot is intended for use cases where you want a button-only file uploader.
-	 * It is recommended to set the `hideInput` property to "true" when using this slot.
+	 * It is recommended to set `hideInput` property to "true" when using this slot.
 	 * Not setting `hideInput` may negatively impact the screen reader users.
 	 * @public
 	 */
