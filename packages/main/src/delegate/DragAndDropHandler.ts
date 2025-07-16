@@ -36,7 +36,7 @@ class DragAndDropHandler {
 	}
 
 	ondragleave(e: DragEvent) {
-		if (e.relatedTarget instanceof Node && this.component.shadowRoot!.contains(e.relatedTarget)) {
+		if (e.relatedTarget instanceof Node && this.component.shadowRoot?.contains(e.relatedTarget)) {
 			return;
 		}
 
