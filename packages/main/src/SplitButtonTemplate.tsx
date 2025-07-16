@@ -8,7 +8,7 @@ export default function SplitButtonTemplate(this: SplitButton) {
 			role={this._hideArrowButton ? "button" : "group"}
 			class="ui5-split-button-root"
 			tabindex={this._tabIndex}
-			aria-labelledby={`${this._id}-invisibleTextDefault ${this._id}}-invisibleText`}
+			aria-labelledby={`${this._id}-invisibleTextDefault ${this._id}-invisibleText`}
 			onFocusOut={this._onFocusOut}
 			onKeyDown={this._onKeyDown}
 			onKeyUp={this._onKeyUp}

@@ -281,7 +281,7 @@ describe("General interaction", () => {
 		assert.strictEqual(await counter.getText(), "0", "Call count should be 0");
 
 		// click on first item
-		const link = await combo.$("div[slot='valueStateMessage'] a");
+		const link = await combo.$("div[slot='valueStateMessage'] ui5-link");
 
 		await link.click();
 
@@ -777,24 +777,6 @@ describe("Accessibility", async () => {
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
 	});
 
-	it ("Announce value state header when on focus", async () => {
-		await browser.url(`test/pages/ComboBox.html`);
-
-		const combo = await browser.$("#value-state-error-text");
-		const arrow = await combo.shadow$(".inputIcon");
-		const input = await combo.shadow$("#ui5-combobox-input");
-		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
-		const itemAnnouncement1 = "Please choose a country";
-
-		await arrow.click();
-
-		assert.strictEqual(await invisibleMessageSpan.getHTML(false), "", "Span value should be empty.")
-
-		await input.keys("ArrowDown");
-
-		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "Value state message is announced on focus.")
-	});
-
 	it ("Announce item with additional text on selection", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
@@ -978,7 +960,7 @@ describe("Keyboard navigation", async () => {
 		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 	});
 
-	it ("Should focus the value state header and then the input", async () => {
+	it ("Should not focus the value state header", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await $("#value-state-grouping");
@@ -992,21 +974,15 @@ describe("Keyboard navigation", async () => {
 
 		valueStateHeader = await popover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
 
-		assert.strictEqual(await combo.getProperty("_isValueStateFocused"), true, "The value state header should be focused");
 		assert.strictEqual(await combo.getProperty("focused"), false, "The input should not be focused");
-		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), true, "The value state header should be focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "The value state header should not be focused");
+
+		groupItem = (await getVisibleGroupItems(combo))[0];
+		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 
 		await input.keys("ArrowUp");
 		assert.strictEqual(await combo.getProperty("focused"), true, "The input should be focused");
-		assert.strictEqual(await combo.getProperty("_isValueStateFocused"), false, "Value State should not be focused");
 		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "The value state header should not be focused");
-
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-
-		groupItem = (await getVisibleGroupItems(combo))[0];
-
-		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 	});
 
 	it ("Previous focus should not remain on the item after reopening the picker and choosing another one", async () => {
@@ -1343,7 +1319,7 @@ describe("Keyboard navigation", async () => {
 
 		const valueState = await comboBox.shadow$("ui5-popover");
 
-		await comboBox.$("div[slot='valueStateMessage'] a").click();
+		await comboBox.$("div[slot='valueStateMessage'] ui5-link").click();
 		await comboBox.keys("Tab");
 
 		assert.notOk(await valueState.isExisting(), "Value state message is closed.");
