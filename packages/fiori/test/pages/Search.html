@@ -43,6 +43,73 @@
 		</ui5-search>
 	</div>
 
+    <ui5-label>Search with Grouped Suggestions and Show More (N) item</ui5-label>
+    <ui5-search id="searchShowMore" show-clear-icon placeholder="Placeholder">
+        <ui5-search-message-area slot="messageArea" description="You can try the following" text="Oh, there are no results"></ui5-search-message-area>
+        <ui5-search-item-group id="group1" header-text="Group Header">
+        </ui5-search-item-group>
+		<ui5-search-item-group id="group2" header-text="Group Header">
+			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item text="List Item" icon="globe" ></ui5-search-item>
+        </ui5-search-item-group>
+    </ui5-search>
+
+<script>
+
+    const allItems = [
+        { text: "List Item 1", icon: "history" },
+        { text: "List Item 2", icon: "search" },
+        { text: "List Item 3", icon: "history" },
+        { text: "List Item 4", icon: "history" },
+        { text: "List Item 5", icon: "search" },
+        { text: "List Item 6", icon: "globe" }
+    ];
+
+    const group1 = document.getElementById("group1");
+
+    function renderItems(items) {
+        group1.innerHTML = "";
+        const visibleCount = 3;
+        items.slice(0, visibleCount).forEach(item => {
+            const el = document.createElement("ui5-search-item");
+				el.addEventListener("ui5-delete", (e) => {
+				const el = e.target;
+				el.remove();
+			});
+            el.setAttribute("text", item.text);
+            el.setAttribute("icon", item.icon);
+            group1.appendChild(el);
+        });
+        if (items.length > visibleCount) {
+            const showMoreLi = document.createElement("ui5-search-item-show-more");
+            showMoreLi.setAttribute("text", `Show more (${items.length - visibleCount})`);
+            group1.appendChild(showMoreLi);
+
+            showMoreLi.addEventListener("ui5-show-more", () => {
+				let first = null;
+						items.slice(visibleCount).forEach((item, index) => {
+							const el = document.createElement("ui5-search-item");
+							el.addEventListener("ui5-delete", (e) => {
+								const el = e.target;
+								el.remove();
+							});
+							el.setAttribute("text", item.text);
+                    el.setAttribute("icon", item.icon);
+                    group1.insertBefore(el, showMoreLi);
+					if(index === 0) {
+						first = el;
+					}
+                });
+				showMoreLi.remove();
+            });
+        }
+    }
+
+    renderItems(allItems);
+
+</script>
+
 	<div class="container" style="padding-top: 1rem;">
 		<ui5-label>Search - Initially collapsed with Busy State</ui5-label>
 		<div class="container" style="border: 1px solid black; display: flex; padding: 4px; justify-content: flex-end;">
@@ -174,7 +241,7 @@
 		filtering.addEventListener('ui5-input', (event) => {
 			const value = event.target.value.toLowerCase();
 			const filteredData = data.filter(item => item.name.toLowerCase().includes(value));
-			
+
 			// clear search items
 			filtering.innerHTML = '';
 
@@ -216,7 +283,7 @@
 		createScopeItems();
 		searchScope.addEventListener('ui5-scope-change', (event) => {
 			let scope = event.detail.scope.text === "All" ? "" : event.detail.scope.text.toLowerCase();
-			
+
 			searchScope.getSlottedNodes("items").forEach(item => {
 				item.remove();
 			});
@@ -240,7 +307,7 @@
 				});
 			});
 		}
-	
+
 		const filters = document.getElementById('filters');
 		filters.addEventListener('ui5-input', (event) => {
 			const value = event.target.value.toLowerCase();
