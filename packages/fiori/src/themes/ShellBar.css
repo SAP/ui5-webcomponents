@@ -283,14 +283,6 @@ slot[name="profile"] {
 	--_ui5_button_focused_border: var(--_ui5_shellbar_button_focused_border);
 }
 
-.ui5-shellbar-search-button {
-	--_ui5_button_focused_border_radius: var(--_ui5_shellbar_search_button_border_radius);
-	--_ui5_shellbar_button_border_radius: var(--_ui5_shellbar_search_button_border_radius);
-	height: var(--_ui5_shellbar_search_button_size);
-	width: var(--_ui5_shellbar_search_button_size);
-	min-width: var(--_ui5_shellbar_search_button_size);
-}
-
 .ui5-shellbar-image-button {
 	display: flex;
 	justify-content: center;
