@@ -313,7 +313,7 @@ class Button extends UI5Element implements IButton {
 	nonInteractive = false;
 
 	/**
-Defines whether the button shows a loading indicator.
+	 * Defines whether the button shows a loading indicator.
 	 *
 	 * **Note:** If set to `true` a busy indicator component will be displayed into the related button.
 	 * @default false
