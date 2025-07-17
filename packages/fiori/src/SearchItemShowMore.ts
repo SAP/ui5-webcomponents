@@ -7,12 +7,13 @@ import SearchItemCss from "./generated/themes/SearchItem.css.js";
 import SearchItemShowMoreCss from "./generated/themes/SearchItemShowMore.css.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import SearchItem from "./SearchItem.js";
 
 /**
  * @class
  * A suggestion item that acts as a "show more" button or group separator.
  * @constructor
- * @extends ListItemBase
+ * @extends SearchItem
  * @public
  */
 @customElement({
@@ -29,8 +30,8 @@ import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 /* could be removed */
 @event("show-more")
 
-class SearchItemShowMore extends ListItemBase {
-	eventDetails!: ListItemBase["eventDetails"] & {
+class SearchItemShowMore extends SearchItem {
+	eventDetails!: SearchItem["eventDetails"] & {
 		"show-more": void,
 	};
 	/**

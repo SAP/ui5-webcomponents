@@ -102,7 +102,11 @@
 					}
                 });
 				showMoreLi.remove();
-            });
+				//wait the new items to show
+				setTimeout(() => {
+					first.focus();
+				}, 0);
+			});
         }
     }
 
