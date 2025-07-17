@@ -41,6 +41,10 @@
 	pointer-events: none;
 }
 
+.ui5-avatar-group-overflow-btn {
+	overflow: visible;
+}
+
 .ui5-avatar-group-overflow-btn::part(button) {
 	min-width: auto;
 }
