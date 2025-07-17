@@ -94,32 +94,38 @@ class ColorValue {
 	}
 
 	set H(value: number) {
-		const normalizedValue = this.validateHValue(value);
+		const normalizedValue = this.normalizeHValue(value);
+		this._valid = true;
 		this._updateHSL({ h: normalizedValue, s: this.S, l: this.L });
 	}
 
 	set S(value: number) {
-		const normalizedValue = this.validateSLValue(value);
+		const normalizedValue = this.normalizeSLValue(value);
+		this._valid = true;
 		this._updateHSL({ h: this.H, s: normalizedValue, l: this.L });
 	}
 
 	set L(value: number) {
-		const normalizedValue = this.validateSLValue(value);
+		const normalizedValue = this.normalizeSLValue(value);
+		this._valid = true;
 		this._updateHSL({ h: this.H, s: this.S, l: normalizedValue });
 	}
 
 	set R(value: number) {
-		const normalizedValue = this.validateRGBValue(value);
+		const normalizedValue = this.normalizeRGBValue(value);
+		this._valid = true;
 		this._updateRGB({ r: normalizedValue, g: this.G, b: this.B });
 	}
 
 	set G(value: number) {
-		const normalizedValue = this.validateRGBValue(value);
+		const normalizedValue = this.normalizeRGBValue(value);
+		this._valid = true;
 		this._updateRGB({ r: this.R, g: normalizedValue, b: this.B });
 	}
 
 	set B(value: number) {
-		const normalizedValue = this.validateRGBValue(value);
+		const normalizedValue = this.normalizeRGBValue(value);
+		this._valid = true;
 		this._updateRGB({ r: this.R, g: this.G, b: normalizedValue });
 	}
 
@@ -131,8 +137,11 @@ class ColorValue {
 		return this._valid;
 	}
 
-	validateRGBValue(value: number): number {
-		this._valid = true;
+	validateRGBValue(value: number) {
+		this._valid = this._isValidRGBValue(value);
+	}
+
+	normalizeRGBValue(value: number): number {
 		if (this._isValidRGBValue(value)) {
 			return value;
 		}
@@ -147,16 +156,22 @@ class ColorValue {
 		this._valid = this._isValidHValue(color.h) && this._isValidSLValue(color.s) && this._isValidSLValue(color.l);
 	}
 
-	validateHValue(value: number): number {
-		this._valid = true;
+	validateHValue(value: number) {
+		this._valid = this._isValidHValue(value);
+	}
+
+	normalizeHValue(value: number): number {
 		if (this._isValidHValue(value)) {
 			return value;
 		}
 		return value < 0 ? 0 : 360;
 	}
 
-	validateSLValue(value: number): number {
-		this._valid = true;
+	validateSLValue(value: number) {
+		this._valid = this._isValidSLValue(value);
+	}
+
+	normalizeSLValue(value: number): number {
 		if (this._isValidSLValue(value)) {
 			return value;
 		}
