@@ -1,0 +1,7 @@
+:host {
+	display: flex;
+	align-items: center;
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+	color: var(--sapTextColor);
+}

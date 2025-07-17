@@ -29,6 +29,7 @@ import { getAllRegisteredTags } from "@ui5/webcomponents-base/dist/CustomElement
 // or for custom icon collection
 // setDefaultIconCollection("sap_fiori_3", "my-custom-icons");
 
+import AINoticeIndicator from "./AINoticeIndicator.js";
 import Avatar from "./Avatar.js";
 import AvatarGroup from "./AvatarGroup.js";
 import Bar from "./Bar.js";
