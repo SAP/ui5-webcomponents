@@ -41,15 +41,6 @@ import {
 import ColorPickerCss from "./generated/themes/ColorPicker.css.js";
 import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/index.js";
 
-enum COLOR_CHANNEL {
-	Red = "red",
-	Green = "green",
-	Blue = "blue",
-	Hue = "hue",
-	Saturation = "saturation",
-	Light = "light",
-}
-
 const PICKER_POINTER_WIDTH = 6.5;
 
 type ColorCoordinates = {
@@ -64,13 +55,6 @@ type ColorChannelInput = {
 	label: string,
 	showPercentSymbol?: boolean,
 }
-
-type MinMaxValues = {
-	min: number,
-	max: number,
-}
-
-type HSLandRGBValueLimits = Record<COLOR_CHANNEL, MinMaxValues>;
 
 /**
  * @class
@@ -371,25 +355,43 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._displayHSL = !this._displayHSL;
 	}
 
+	_normalizeRGBValue(value: number): number {
+		if (this._colorValue._isValidRGBValue(value)) {
+			return value;
+		}
+		return value < 0 ? 0 : 255;
+	}
+
+	_normalizeHValue(value: number): number {
+		if (this._colorValue._isValidHValue(value)) {
+			return value;
+		}
+		return value < 0 ? 0 : 360;
+	}
+
+	_normalizeSLValue(value: number): number {
+		if (this._colorValue._isValidSLValue(value)) {
+			return value;
+		}
+		return value < 0 ? 0 : 100;
+	}
+
 	_normalizeInputValue(stringValue: string, inputId: string): number {
 		const value = Number(stringValue);
 
-		const limits: HSLandRGBValueLimits = {
-			red: { min: 0, max: 255 },
-			green: { min: 0, max: 255 },
-			blue: { min: 0, max: 255 },
-			hue: { min: 0, max: 360 },
-			saturation: { min: 0, max: 100 },
-			light: { min: 0, max: 100 },
-		};
-
-		const limit = limits[inputId as keyof HSLandRGBValueLimits];
-		if (!limit) {
+		switch (inputId) {
+		case "red":
+		case "green":
+		case "blue":
+			return this._normalizeRGBValue(value);
+		case "hue":
+			return this._normalizeHValue(value);
+		case "saturation":
+		case "light":
+			return this._normalizeSLValue(value);
+		default:
 			return value || 0;
 		}
-
-		// Return the value normalized to the limits
-		return Math.max(limit.min, Math.min(limit.max, value));
 	}
 
 	_handleColorInputChange(e: Event) {
