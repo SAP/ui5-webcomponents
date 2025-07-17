@@ -849,7 +849,7 @@ describe("Date Picker Tests", () => {
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
-			.should("have.attr", "placeholder", "MMM d, y");
+			.should("have.attr", "placeholder", "e.g. Dec 31, 2025");
 
 		cy.get<DatePicker>("@datePicker")
 			.should("not.have.attr", "placeholder");

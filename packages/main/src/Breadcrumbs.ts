@@ -249,6 +249,10 @@ class Breadcrumbs extends UI5Element {
 		return items;
 	}
 
+	getFocusDomRef() {
+		return this._itemNavigation._getCurrentItem();
+	}
+
 	/**
 	 * Returns the translatable accessible name for the popover
 	 * @private
