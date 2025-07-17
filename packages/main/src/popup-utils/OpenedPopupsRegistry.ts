@@ -1,5 +1,7 @@
 import getSharedResource from "@ui5/webcomponents-base/dist/getSharedResource.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import type OpenUI5Support from "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
 import type Popup from "../Popup.js";
 
 type RegisteredPopup = {
@@ -8,6 +10,15 @@ type RegisteredPopup = {
 }
 
 const OpenedPopupsRegistry = getSharedResource<{ openedRegistry: Array<RegisteredPopup> }>("OpenedPopupsRegistry", { openedRegistry: [] });
+const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
+
+function addAnyPopup(popup: object) {
+	openUI5Support?.addOpenedPopup(popup);
+}
+
+function removeAnyPopup(popup: object) {
+	openUI5Support?.removeOpenedPopup(popup);
+}
 
 const addOpenedPopup = (instance: Popup, parentPopovers: Array<Popup> = []) => {
 	if (!OpenedPopupsRegistry.openedRegistry.some(popup => popup.instance === instance)) {
@@ -15,6 +26,8 @@ const addOpenedPopup = (instance: Popup, parentPopovers: Array<Popup> = []) => {
 			instance,
 			parentPopovers,
 		});
+
+		addAnyPopup(instance);
 	}
 
 	_updateTopModalPopup();
@@ -28,6 +41,8 @@ const removeOpenedPopup = (instance: Popup) => {
 	OpenedPopupsRegistry.openedRegistry = OpenedPopupsRegistry.openedRegistry.filter(el => {
 		return el.instance !== instance;
 	});
+
+	removeAnyPopup(instance);
 
 	_updateTopModalPopup();
 

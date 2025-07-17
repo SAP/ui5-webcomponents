@@ -1,4 +1,6 @@
 // OpenUI5's Control.js subset
+import getSharedResource from "../getSharedResource.js";
+
 type Control = {
 	getDomRef: () => HTMLElement | null,
 }
@@ -14,15 +16,34 @@ type OpenUI5Popup = {
 	}
 };
 
+const OpenedPopupsRegistry = getSharedResource<{ openedRegistry: Array<object> }>("OpenedAnyPopupsRegistry", { openedRegistry: [] });
+
+const addOpenedPopup = (popup: object) => {
+	OpenedPopupsRegistry.openedRegistry.push(popup);
+};
+
+const removeOpenedPopup = (popup: object) => {
+	const index = OpenedPopupsRegistry.openedRegistry.indexOf(popup);
+	if (index > -1) {
+		OpenedPopupsRegistry.openedRegistry.splice(index, 1);
+	}
+};
+
+const getTopMostPopup = () => {
+	return OpenedPopupsRegistry.openedRegistry[OpenedPopupsRegistry.openedRegistry.length - 1];
+};
+
 const openNativePopover = (domRef: HTMLElement) => {
 	domRef.setAttribute("popover", "manual");
 	domRef.showPopover();
+	addOpenedPopup(domRef);
 };
 
 const closeNativePopover = (domRef: HTMLElement) => {
 	if (domRef.hasAttribute("popover")) {
 		domRef.hidePopover();
 		domRef.removeAttribute("popover");
+		removeOpenedPopup(domRef);
 	}
 };
 
@@ -70,8 +91,7 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 const patchFocusEvent = (Popup: OpenUI5Popup) => {
 	const origFocusEvent = Popup.prototype.onFocusEvent;
 	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
-		const target = e.target as HTMLElement;
-		if (!target.closest("[ui5-popover],[ui5-responsive-popover],[ui5-dialog]")) {
+		if ((this.getContent() as any).getDomRef?.() === getTopMostPopup()) {
 			origFocusEvent.call(this, e);
 		}
 	};
@@ -90,5 +110,5 @@ const patchPopup = (Popup: OpenUI5Popup) => {
 	patchFocusEvent(Popup);// Popup.prototype.onFocusEvent
 };
 
-export default patchPopup;
+export { patchPopup, addOpenedPopup, removeOpenedPopup, getTopMostPopup };
 export type { OpenUI5Popup };

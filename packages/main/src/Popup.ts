@@ -29,6 +29,8 @@ import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseE
 import PopupTemplate from "./PopupTemplate.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import type OpenUI5Support from "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
 
 // Styles
 import popupStlyes from "./generated/themes/Popup.css.js";
@@ -546,6 +548,13 @@ abstract class Popup extends UI5Element {
 	closePopup(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
 		if (!this._opened) {
 			return;
+		}
+
+		if (escPressed) {
+			const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
+			if (openUI5Support && openUI5Support.getTopMostPopup() !== this) {
+				return;
+			}
 		}
 
 		const prevented = !this.fireDecoratorEvent("before-close", { escPressed });
