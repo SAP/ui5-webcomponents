@@ -40,6 +40,10 @@
 	pointer-events: none;
 }
 
+:host([type="Group"]) .ui5-avatar-group-overflow-btn {
+	pointer-events: none;
+}
+
 .ui5-avatar-group-overflow-btn {
 	overflow: visible;
 }
