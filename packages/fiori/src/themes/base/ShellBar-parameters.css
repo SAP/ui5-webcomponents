@@ -9,8 +9,6 @@
 	--_ui5_shellbar_button_border_radius: 0.25rem;
 	--_ui5_shellbar_button_focused_border: 0.0625rem dotted var(--sapContent_FocusColor);
 	--_ui5_shellbar_button_active_color: var(--sapShell_Active_TextColor);
-	--_ui5_shellbar_search_button_size: 2.25rem;
-	--_ui5_shellbar_search_button_border_radius: 0.25rem;
 	--_ui5_shellbar_search_field_background: var(--sapShellColor);
 	--_ui5_shellbar_search_field_border: 0.0625rem solid var(--sapShell_InteractiveBorderColor);
 	--_ui5_shellbar_search_field_box_shadow: none;
