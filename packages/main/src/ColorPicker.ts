@@ -355,76 +355,48 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._displayHSL = !this._displayHSL;
 	}
 
-	_normalizeRGBValue(value: number): number {
-		if (this._colorValue._isValidRGBValue(value)) {
-			return value;
-		}
-		return value < 0 ? 0 : 255;
-	}
-
-	_normalizeHValue(value: number): number {
-		if (this._colorValue._isValidHValue(value)) {
-			return value;
-		}
-		return value < 0 ? 0 : 360;
-	}
-
-	_normalizeSLValue(value: number): number {
-		if (this._colorValue._isValidSLValue(value)) {
-			return value;
-		}
-		return value < 0 ? 0 : 100;
-	}
-
-	_normalizeInputValue(stringValue: string, inputId: string): number {
-		const value = Number(stringValue);
-
-		switch (inputId) {
-		case "red":
-		case "green":
-		case "blue":
-			return this._normalizeRGBValue(value);
-		case "hue":
-			return this._normalizeHValue(value);
-		case "saturation":
-		case "light":
-			return this._normalizeSLValue(value);
-		default:
-			return value || 0;
-		}
-	}
-
 	_handleColorInputChange(e: Event) {
 		const target = e.target as Input;
-		const targetValue = this._normalizeInputValue(target.value, target.id);
-		target.value = String(targetValue);
+		const targetValue = parseInt(target.value) || 0;
+		let normalizedValue: number;
 
 		switch (target.id) {
 		case "red":
 			this._colorValue.R = targetValue;
+			normalizedValue = this._colorValue.R;
 			break;
 
 		case "green":
 			this._colorValue.G = targetValue;
+			normalizedValue = this._colorValue.G;
 			break;
 
 		case "blue":
 			this._colorValue.B = targetValue;
+			normalizedValue = this._colorValue.B;
 			break;
 
 		case "hue":
 			this._colorValue.H = targetValue;
+			normalizedValue = this._colorValue.H;
 			break;
 
 		case "saturation":
 			this._colorValue.S = targetValue;
+			normalizedValue = this._colorValue.S;
 			break;
 
 		case "light":
 			this._colorValue.L = targetValue;
+			normalizedValue = this._colorValue.L;
+			break;
+
+		default:
+			normalizedValue = targetValue;
 			break;
 		}
 
+		target.value = String(normalizedValue);
 		const color = this._colorValue.toRGBString();
 		this._setValue(color);
 		this._updateColorGrid();

@@ -94,33 +94,33 @@ class ColorValue {
 	}
 
 	set H(value: number) {
-		this.validateHValue(value);
-		this._updateHSL({ h: value, s: this.S, l: this.L });
+		const normalizedValue = this.validateHValue(value);
+		this._updateHSL({ h: normalizedValue, s: this.S, l: this.L });
 	}
 
 	set S(value: number) {
-		this.validateSLValue(value);
-		this._updateHSL({ h: this.H, s: value, l: this.L });
+		const normalizedValue = this.validateSLValue(value);
+		this._updateHSL({ h: this.H, s: normalizedValue, l: this.L });
 	}
 
 	set L(value: number) {
-		this.validateSLValue(value);
-		this._updateHSL({ h: this.H, s: this.S, l: value });
+		const normalizedValue = this.validateSLValue(value);
+		this._updateHSL({ h: this.H, s: this.S, l: normalizedValue });
 	}
 
 	set R(value: number) {
-		this.validateRGBValue(value);
-		this._updateRGB({ r: value, g: this.G, b: this.B });
+		const normalizedValue = this.validateRGBValue(value);
+		this._updateRGB({ r: normalizedValue, g: this.G, b: this.B });
 	}
 
 	set G(value: number) {
-		this.validateRGBValue(value);
-		this._updateRGB(this.RGB = { r: this.R, g: value, b: this.B });
+		const normalizedValue = this.validateRGBValue(value);
+		this._updateRGB({ r: this.R, g: normalizedValue, b: this.B });
 	}
 
 	set B(value: number) {
-		this.validateRGBValue(value);
-		this._updateRGB({ r: this.R, g: this.G, b: value });
+		const normalizedValue = this.validateRGBValue(value);
+		this._updateRGB({ r: this.R, g: this.G, b: normalizedValue });
 	}
 
 	set Alpha(value: number) {
@@ -131,8 +131,12 @@ class ColorValue {
 		return this._valid;
 	}
 
-	validateRGBValue(value: number) {
-		this._valid = this._isValidRGBValue(value);
+	validateRGBValue(value: number): number {
+		this._valid = true;
+		if (this._isValidRGBValue(value)) {
+			return value;
+		}
+		return value < 0 ? 0 : 255;
 	}
 
 	validateRGBColor(color: ColorRGB) {
@@ -143,12 +147,20 @@ class ColorValue {
 		this._valid = this._isValidHValue(color.h) && this._isValidSLValue(color.s) && this._isValidSLValue(color.l);
 	}
 
-	validateHValue(value: number) {
-		this._valid = this._isValidHValue(value);
+	validateHValue(value: number): number {
+		this._valid = true;
+		if (this._isValidHValue(value)) {
+			return value;
+		}
+		return value < 0 ? 0 : 360;
 	}
 
-	validateSLValue(value: number) {
-		this._valid = this._isValidSLValue(value);
+	validateSLValue(value: number): number {
+		this._valid = true;
+		if (this._isValidSLValue(value)) {
+			return value;
+		}
+		return value < 0 ? 0 : 100;
 	}
 
 	validateHEX(value: string) {
