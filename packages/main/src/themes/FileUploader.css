@@ -53,6 +53,7 @@
 	flex: 1;
 	display: flex;
 	position: relative;
+	box-sizing: border-box;
 }
 
 .ui5-file-uploader-tokenizer,
@@ -60,7 +61,7 @@
 	position: absolute;
 	top: 0;
 	inset-inline-start: 0;
-	height: inherit;
+	height: 100%;
 	border: none;
 	outline: none;
 	cursor: pointer;
@@ -91,26 +92,32 @@
 /* Input styles overrides */
 :host(:not([readonly])),
 :host([readonly][disabled]),
+:host([focused]:not([opened])),
 :host([value-state="None"]:not([readonly]):hover),
+:host([value-state="Negative"][focused]:not([opened]):not([readonly])),
 :host([value-state="Negative"]:not([readonly]):not([disabled])),
 :host([value-state="Negative"]:not([readonly])[focused][opened]:hover),
 :host([value-state="Negative"]:not([readonly]):not([focused]):hover),
+:host([value-state="Critical"][focused]:not([opened]):not([readonly])),
 :host([value-state="Critical"]:not([readonly]):not([disabled])),
 :host([value-state="Critical"]:not([readonly])[focused][opened]:hover),
 :host([value-state="Critical"]:not([readonly]):not([focused]):hover),
+:host([value-state="Positive"][focused]:not([opened]):not([readonly])),
 :host([value-state="Positive"]:not([readonly]):not([disabled])),
 :host([value-state="Positive"]:not([readonly])[focused][opened]:hover),
 :host([value-state="Positive"]:not([readonly]):not([focused]):hover),
+:host([value-state="Information"][focused]:not([opened]):not([readonly])),
 :host([value-state="Information"]:not([readonly]):not([disabled])),
 :host([value-state="Information"]:not([readonly])[focused][opened]:hover),
 :host([value-state="Information"]:not([readonly]):not([focused]):hover),
 :host(:not([value-state]):not([readonly]):hover) {
 	box-shadow: none;
 	background: none;
+	border: none;
 }
 
-:host([value-state="None"]:not([readonly])) .ui5-file-uploader-display-elements,
-:host(:not([value-state]):not([readonly])) .ui5-file-uploader-display-elements {
+:host(:not([readonly])) .ui5-file-uploader-display-elements,
+:host([readonly][disabled]) .ui5-file-uploader-display-elements {
 	box-shadow: var(--sapField_Shadow);
 	border: var(--_ui5-input-border);
 	border-radius: var(--_ui5_input_border_radius);
