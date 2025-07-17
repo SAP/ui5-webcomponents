@@ -1,6 +1,11 @@
 import patchPatcher from "./patchPatcher.js";
 import type { OpenUI5Patcher } from "./patchPatcher.js";
-import { patchPopup, addOpenedPopup, removeOpenedPopup, getTopMostPopup } from "./patchPopup.js";
+import {
+	patchPopup,
+	addOpenedPopup,
+	removeOpenedPopup,
+	getTopMostPopup,
+} from "./patchPopup.js";
 import type { OpenUI5Popup } from "./patchPopup.js";
 import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";

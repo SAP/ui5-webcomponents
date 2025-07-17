@@ -110,5 +110,11 @@ const patchPopup = (Popup: OpenUI5Popup) => {
 	patchFocusEvent(Popup);// Popup.prototype.onFocusEvent
 };
 
-export { patchPopup, addOpenedPopup, removeOpenedPopup, getTopMostPopup };
+export {
+	patchPopup,
+	addOpenedPopup,
+	removeOpenedPopup,
+	getTopMostPopup,
+};
+
 export type { OpenUI5Popup };
