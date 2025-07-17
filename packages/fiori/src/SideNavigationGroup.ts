@@ -186,7 +186,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 	get templateAttributes() {
 		return {
-			sClass: "ui5-sn-item ui5-sn-item-group",
+			classes: "ui5-sn-item ui5-sn-item-group",
 			role: "treeitem",
 			onKeyDown: this._onkeydown.bind(this),
 			onClick: this._onclick.bind(this),

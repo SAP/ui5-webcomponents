@@ -62,7 +62,7 @@ class SideNavigationSubItem extends SideNavigationSelectableItemBase {
 
 	get templateAttributes() {
 		return Object.assign(super.templateAttributes, {
-			sClass: "ui5-sn-item ui5-sn-item-level2",
+			classes: "ui5-sn-item ui5-sn-item-level2",
 		});
 	}
 }

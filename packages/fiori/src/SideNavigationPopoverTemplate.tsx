@@ -19,7 +19,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 			tooltip={item._tooltip}
 			ref={this.captureRef.bind(item)}
 		>
-			{(item instanceof SideNavigationItem) && item.items?.map(renderMenuItem)}
+			{(item as any).items?.map(renderMenuItem)}
 		</NavigationMenuItem>
 	);
 

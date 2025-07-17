@@ -6,7 +6,7 @@ export default function SideNavigationItemBaseTemplate(this: SideNavigationItemB
 	return (
 		<EffectiveTag id={this._id}
 					  data-sap-focus-ref
-					  class={`${injectedProps?.sClass} ${this._classes}`}
+					  class={`${injectedProps?.classes} ${this._classes}`}
 					  role={injectedProps?.role}
 					  onKeyDown={injectedProps?.onKeyDown}
 					  onKeyUp={injectedProps?.onKeyUp}

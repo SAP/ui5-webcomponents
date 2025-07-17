@@ -319,7 +319,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 
 	get templateAttributes() {
 		return Object.assign(super.templateAttributes, {
-			sClass: "ui5-sn-item ui5-sn-item-level1",
+			classes: "ui5-sn-item ui5-sn-item-level1",
 			onFocusOut: this._onfocusout.bind(this),
 			onMouseEnter: this._onmouseenter.bind(this),
 			onMouseLeave: this._onmouseleave.bind(this),
