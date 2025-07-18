@@ -61,8 +61,14 @@ const _keydownListener = (event: KeyboardEvent) => {
 	}
 
 	if (isEscape(event)) {
+		const topPopup = OpenedPopupsRegistry.openedRegistry[OpenedPopupsRegistry.openedRegistry.length - 1].instance;
+
+		if (openUI5Support && topPopup !== openUI5Support.getTopMostPopup()) {
+			return;
+		}
+
 		event.stopPropagation();
-		OpenedPopupsRegistry.openedRegistry[OpenedPopupsRegistry.openedRegistry.length - 1].instance.closePopup(true);
+		topPopup.closePopup(true);
 	}
 };
 

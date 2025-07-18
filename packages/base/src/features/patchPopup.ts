@@ -36,14 +36,12 @@ const getTopMostPopup = () => {
 const openNativePopover = (domRef: HTMLElement) => {
 	domRef.setAttribute("popover", "manual");
 	domRef.showPopover();
-	addOpenedPopup(domRef);
 };
 
 const closeNativePopover = (domRef: HTMLElement) => {
 	if (domRef.hasAttribute("popover")) {
 		domRef.hidePopover();
 		domRef.removeAttribute("popover");
-		removeOpenedPopup(domRef);
 	}
 };
 
@@ -73,6 +71,8 @@ const patchOpen = (Popup: OpenUI5Popup) => {
 				}
 			}
 		}
+
+		addOpenedPopup(this);
 	};
 };
 
@@ -85,13 +85,15 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 		if (domRef) {
 			closeNativePopover(domRef); // unset the popover attribute and close the native popover, but only if still in DOM
 		}
+
+		removeOpenedPopup(this);
 	};
 };
 
 const patchFocusEvent = (Popup: OpenUI5Popup) => {
 	const origFocusEvent = Popup.prototype.onFocusEvent;
 	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
-		if ((this.getContent() as any).getDomRef?.() === getTopMostPopup()) {
+		if (this === getTopMostPopup()) {
 			origFocusEvent.call(this, e);
 		}
 	};
