@@ -12,14 +12,19 @@ import type ButtonState from "./ButtonState.js";
 import { BUTTON_TOOLTIP_TEXT } from "./generated/i18n/i18n-defaults.js";
 import "./ButtonState.js";
 import ButtonTemplate from "./ButtonTemplate.js";
+import {
+	getEffectiveAriaLabelText,
+	getAssociatedLabelForTexts,
+	getAllAccessibleNameRefTexts,
+} from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 
 // Styles
 import ButtonCss from "./generated/themes/Button.css.js";
 import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { AccessibilityAttributes, AriaHasPopup } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
-type SplitButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription">;
+type AIButtonAccesibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription" | "ariaLabel">;
 
 /**
  * @class
@@ -125,6 +130,15 @@ class Button extends UI5Element {
 	arrowButtonPressed = false;
 
 	/**
+	 * Defines the accesibility attributes of the component.
+	 *
+	 * @default {}
+	 * @public
+	 */
+	@property({ type: Object })
+	accessibilityAttributes: AIButtonAccesibilityAttributes = {};
+
+	/**
 	 * Keeps the current state object of the component.
 	 * @private
 	 */
@@ -191,8 +205,8 @@ class Button extends UI5Element {
 		return !!this._stateText;
 	}
 
-	get _getButtonTooltipText() {
-		return this._hasText ? Button.i18nBundle.getText(BUTTON_TOOLTIP_TEXT, this._stateText as string) : undefined;
+	get _leftButtonTooltipText() {
+		return this._hasText ? Button.i18nBundle.getText(BUTTON_TOOLTIP_TEXT, this._stateText as string) : "";
 	}
 
 	onBeforeRendering(): void {
@@ -318,19 +332,14 @@ class Button extends UI5Element {
 		this.fireDecoratorEvent("arrow-button-click");
 	}
 
-	get accessibilityAttributes(): SplitButtonAccessibilityAttributes {
-		let roleDescription;
-		if(this._hideArrowButton && !this._stateEndIcon) {
-			roleDescription = "Button";
-		} else if (this._stateEndIcon) {
-			roleDescription = "Menu Button"
-		} else {
-			roleDescription = "Split Button"
-		}
+	get _computedAccessibilityAttributes(): AIButtonAccesibilityAttributes {
+		const labelRefTexts = getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || "";
+		const ariaLabel = this.accessibilityAttributes.ariaLabel?.concat(labelRefTexts) || "";
 
 		return {
-			hasPopup: !this._hideArrowButton || this._stateEndIcon ? "menu" : "false",
-			ariaRoleDescription: roleDescription
+			hasPopup: this.accessibilityAttributes.hasPopup ? this.accessibilityAttributes.hasPopup : (this._hideArrowButton ? "false" : "menu"),
+			ariaRoleDescription: this.accessibilityAttributes.ariaRoleDescription  ? this.accessibilityAttributes.ariaRoleDescription : (this._hideArrowButton ? "Button" : "Split Button"),
+			ariaLabel: `${this._leftButtonTooltipText} ${ariaLabel}`.trim()
 		}
 	}
 }

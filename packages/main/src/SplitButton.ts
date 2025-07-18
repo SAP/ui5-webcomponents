@@ -36,7 +36,7 @@ import SplitButtonTemplate from "./SplitButtonTemplate.js";
 // Styles
 import SplitButtonCss from "./generated/themes/SplitButton.css.js";
 
-type SplitButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription">;
+type SplitButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription" | "ariaLabel">;
 
 /**
  * @class
@@ -160,14 +160,6 @@ class SplitButton extends UI5Element {
 	accessibleName?: string;
 
 	/**
-	 * Defines the tooltip text for the right button of the component.
-	 * @default undefined
-	 * @public
-	 */
-	@property()
-	_leftButtonTooltipText?: string;
-
-	/**
 	 * Defines the tabIndex of the component.
 	 * @default "0"
 	 * @private
@@ -221,7 +213,12 @@ class SplitButton extends UI5Element {
 	@property({ type: Boolean })
 	_hideArrowButton = false;
 
-
+	/**
+	 * Defines the accesibility attributes of the component.
+	 *
+	 * @default false
+	 * @private
+	 */
 	@property({ type: Object })
 	accessibilityAttributes: SplitButtonAccessibilityAttributes = {};
 
