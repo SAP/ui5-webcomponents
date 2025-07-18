@@ -22,16 +22,23 @@
 	grid-column: span 6;
 }
 
+:host {
+	display: contents;
+}
+
 .ui5-form-item-root {
+	display: contents;
+	height: 100%;
 	container-type: inline-size;
 	background-color: inherit;
 	color: inherit;
 }
 
 .ui5-form-item-layout {
+	height: 100%;
 	display: grid;
-	grid-template-columns: var(--ui5-form-item-layout);
-	align-items: center;
+	grid-template-rows: subgrid;
+	grid-row: span 2;
 }
 
 .ui5-form-item-label {
@@ -71,7 +78,7 @@
 }
 
 /* M  - 1 column by default, up to 2 columns */
-@container (width > 600px) and (width <= 1024px) {
+@container (width > 600px) and (width <=1024px) {
 	:host {
 		order: var(--ui5-form-item-order-M, unset);
 	}
@@ -79,7 +86,7 @@
 }
 
 /* L - 2 columns by default, up to 3 columns */
-@container (width > 1024px) and (width <= 1440px) {
+@container (width > 1024px) and (width <=1440px) {
 	:host {
 		order: var(--ui5-form-item-order-L, unset);
 	}
