@@ -1,5 +1,6 @@
 @import "./FormLayout.css";
 @import "./FormItemSpan.css";
+@import "./FormItemLabelAlignment.css";
 
 :host {
 	display: block;

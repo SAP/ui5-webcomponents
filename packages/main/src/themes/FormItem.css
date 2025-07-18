@@ -23,24 +23,28 @@
 }
 
 .ui5-form-item-root {
+	height: 100%;
 	container-type: inline-size;
 	background-color: inherit;
 	color: inherit;
 }
 
 .ui5-form-item-layout {
+	height: 100%;
 	display: grid;
 	grid-template-columns: var(--ui5-form-item-layout);
 	align-items: center;
 }
 
 .ui5-form-item-label {
+	align-self: var(--ui5-form-item-label-alignment);
 	padding: var(--ui5-form-item-label-padding);
 	padding-inline-end: var(--ui5-form-item-label-padding-end);
 	justify-self: var(--ui5-form-item-label-justify);
 }
 
 .ui5-form-item-content {
+	align-self: var(--ui5-form-item-input-alignment);
 	overflow: hidden;
 	width: 100%;
 	display: flex;

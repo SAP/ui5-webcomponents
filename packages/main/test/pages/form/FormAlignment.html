@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<title>Form Basic</title>
+	<script src="../%VITE_BUNDLE_PATH%" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="../styles/FormLayout.css">
+</head>
+
+<body>
+	<div style="width: 700px;">
+		<h1>With group element</h1>
+		<ui5-form label-span="S12 M12 L12 XL12" layout="S1 M4 L4 XL4">
+			<ui5-form-group>
+				<ui5-form-item>
+					<ui5-label slot="labelContent" required>Number of Replicas</ui5-label>
+					<ui5-input type="Text" />
+				</ui5-form-item>
+				<ui5-form-item>
+					<ui5-label slot="labelContent" required>Request/Limit CPU</ui5-label>
+					<ui5-input type="Text" />
+				</ui5-form-item>
+				<ui5-form-item>
+					<ui5-label slot="labelContent" required> Maximum Java Memory (Gi)</ui5-label>
+					<ui5-input type="Text" />
+				</ui5-form-item>
+				<ui5-form-item>
+					<ui5-label slot="labelContent" required>Memory Scale Factor</ui5-label>
+					<ui5-input type="Text" />
+				</ui5-form-item>
+			</ui5-form-group>
+		</ui5-form>
+		<h1>Without group element</h1>
+		<ui5-form label-span="S12 M12 L12 XL12" layout="S1 M4 L4 XL4">
+				<ui5-form-item>
+					<ui5-label slot="labelContent" required>Number of Replicas</ui5-label>
+					<ui5-input type="Text" />
+				</ui5-form-item>
+				<ui5-form-item>
+					<ui5-label slot="labelContent" required>Request/Limit CPU</ui5-label>
+					<ui5-input type="Text" />
+				</ui5-form-item>
+				<ui5-form-item>
+					<ui5-label slot="labelContent" required> Maximum Java Memory (Gi)</ui5-label>
+					<ui5-input type="Text" />
+				</ui5-form-item>
+				<ui5-form-item>
+					<ui5-label slot="labelContent" required>Memory Scale Factor</ui5-label>
+					<ui5-input type="Text" />
+			</ui5-form-group>
+		</ui5-form>
+	</div>
+</body>
+
+</html>
