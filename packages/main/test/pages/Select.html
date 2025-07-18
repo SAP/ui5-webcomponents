@@ -244,6 +244,20 @@
 		</ui5-select>
 	</section>
 
+	<section>
+		<ui5-title>Form validation</ui5-title>
+		<form id="formValidation">
+			<ui5-message-strip id="formValidationMessage" hidden></ui5-message-strip>
+			<ui5-select id="selectInAForm" name="select2" required>
+				<ui5-option value="">Please choose an option from the list:</ui5-option>
+				<ui5-option value="Cozy">Cozy</ui5-option>
+				<ui5-option value="Compact">Compact</ui5-option>
+				<ui5-option value="Condensed">Condensed</ui5-option>
+			</ui5-select>
+			<br><br>
+			<ui5-button id="btnCheckFormValidity">Check Validity</ui5-button>
+		</form>
+	</section>
 </body>
 <script>
 	var countries =  [{ key: "Aus", text: "Australia" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }];
@@ -260,7 +274,10 @@
 	var select = document.getElementById('mySelect');
 	var select2 = document.getElementById('errorSelect');
 	var select3 = document.getElementById('warningSelect');
+	var selectInAForm = document.getElementById('selectInAForm');
 	var lbl = document.getElementById('lblResult');
+	var btnCheckFormValidity = document.getElementById('btnCheckFormValidity');
+	var formValidationMessage = document.getElementById('formValidationMessage');
 	var counter = 0;
 	var counterOpen = 0;
 	var counterClose = 0;
@@ -365,5 +382,27 @@
 	btnSetInvalidValue.addEventListener("click", function(e) {
 		mySelect7.value = "NAN";
 	});
+
+	btnCheckFormValidity.addEventListener('click', function() {
+		checkFormValidity('selectInAForm');
+	});
+
+	selectInAForm.addEventListener('ui5-change', function() {
+		setTimeout(() => {
+			checkFormValidity('selectInAForm', true);
+		}, 0);
+	});
+
+	function checkFormValidity(elementId, delayed = false) {
+		const element = document.getElementById(elementId);
+		const isValid = element.checkValidity();
+
+		element.reportValidity();
+
+		// Show result
+		formValidationMessage.hidden = false;
+		formValidationMessage.innerText = `checkValidity(): ${isValid} ${delayed ? '( Delayed check )' : ''}`;
+		formValidationMessage.design = isValid ? "Positive" : "Negative";
+	}
 </script>
 </html>
