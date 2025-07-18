@@ -94,6 +94,8 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 const patchFocusEvent = (Popup: OpenUI5Popup) => {
 	const origFocusEvent = Popup.prototype.onFocusEvent;
 	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
+		// If the popup is the topmost one, we call the original focus event handler from the OpenUI5 Popup,
+		// otherwise the focus event is handled by the Web Component Popup.
 		if (this === getTopMostPopup()) {
 			origFocusEvent.call(this, e);
 		}
