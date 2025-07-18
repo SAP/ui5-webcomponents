@@ -24,8 +24,8 @@ import {
 import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
 
 enum TimelineItemRole {
-	ListItem = "listitem",
-	TreeItem = "treeitem"
+	ListItem = "Listitem",
+	TreeItem = "Treeitem"
 }
 
 /**
