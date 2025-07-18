@@ -16,21 +16,22 @@ type OpenUI5Popup = {
 	}
 };
 
-const OpenedPopupsRegistry = getSharedResource<{ openedRegistry: Array<object> }>("OpenedAnyPopupsRegistry", { openedRegistry: [] });
+// contains all OpenUI5 and Web Component popups that are currently opened
+const AllOpenedPopupsRegistry = getSharedResource<{ openedRegistry: Array<object> }>("AllOpenedPopupsRegistry", { openedRegistry: [] });
 
 const addOpenedPopup = (popup: object) => {
-	OpenedPopupsRegistry.openedRegistry.push(popup);
+	AllOpenedPopupsRegistry.openedRegistry.push(popup);
 };
 
 const removeOpenedPopup = (popup: object) => {
-	const index = OpenedPopupsRegistry.openedRegistry.indexOf(popup);
+	const index = AllOpenedPopupsRegistry.openedRegistry.indexOf(popup);
 	if (index > -1) {
-		OpenedPopupsRegistry.openedRegistry.splice(index, 1);
+		AllOpenedPopupsRegistry.openedRegistry.splice(index, 1);
 	}
 };
 
 const getTopMostPopup = () => {
-	return OpenedPopupsRegistry.openedRegistry[OpenedPopupsRegistry.openedRegistry.length - 1];
+	return AllOpenedPopupsRegistry.openedRegistry[AllOpenedPopupsRegistry.openedRegistry.length - 1];
 };
 
 const openNativePopover = (domRef: HTMLElement) => {

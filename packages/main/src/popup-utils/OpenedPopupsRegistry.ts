@@ -12,11 +12,11 @@ type RegisteredPopup = {
 const OpenedPopupsRegistry = getSharedResource<{ openedRegistry: Array<RegisteredPopup> }>("OpenedPopupsRegistry", { openedRegistry: [] });
 const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
 
-function addAnyPopup(popup: object) {
+function registerPopupWithOpenUI5Support(popup: object) {
 	openUI5Support?.addOpenedPopup(popup);
 }
 
-function removeAnyPopup(popup: object) {
+function unregisterPopupWithOpenUI5Support(popup: object) {
 	openUI5Support?.removeOpenedPopup(popup);
 }
 
@@ -27,7 +27,7 @@ const addOpenedPopup = (instance: Popup, parentPopovers: Array<Popup> = []) => {
 			parentPopovers,
 		});
 
-		addAnyPopup(instance);
+		registerPopupWithOpenUI5Support(instance);
 	}
 
 	_updateTopModalPopup();
@@ -42,7 +42,7 @@ const removeOpenedPopup = (instance: Popup) => {
 		return el.instance !== instance;
 	});
 
-	removeAnyPopup(instance);
+	unregisterPopupWithOpenUI5Support(instance);
 
 	_updateTopModalPopup();
 
