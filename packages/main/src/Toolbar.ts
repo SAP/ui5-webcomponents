@@ -465,10 +465,6 @@ class Toolbar extends UI5Element {
 	}
 
 	onResize() {
-		if (!this.itemsWidth) {
-			return;
-		}
-
 		this.closeOverflow();
 		this.processOverflowLayout();
 	}

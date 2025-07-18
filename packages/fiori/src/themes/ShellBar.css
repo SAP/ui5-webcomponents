@@ -16,7 +16,11 @@
 	--_ui5_input_focus_outline_color: var(--_ui5_shellbar_input_focus_outline_color);
 	--_ui5_input_margin_top_bottom: 0;
 	box-shadow: inset 0 -0.0625rem 0 0 var(--sapPageHeader_BorderColor);
-
+	/* Overwrite the default button styles to fulfill no "compact" mode of ui5-shellbar */
+	--_ui5_button_base_min_width: 2.25rem;
+	--_ui5_button_base_padding: 0.5625rem;
+	--_ui5_button_base_height: var(--sapElement_Height);
+	--_ui5-button-badge-diameter: 0.75rem;
 }
 
 .ui5-shellbar-root {
@@ -218,7 +222,6 @@ slot[name="profile"] {
 	overflow: hidden;
 	cursor: pointer;
 	max-height: 2rem;
-	max-width: 3.75rem;
 }
 
 .ui5-shellbar-logo-area {
@@ -278,14 +281,6 @@ slot[name="profile"] {
 .ui5-shellbar-button,
 ::slotted([ui5-button][slot="startButton"]) {
 	--_ui5_button_focused_border: var(--_ui5_shellbar_button_focused_border);
-}
-
-.ui5-shellbar-search-button {
-	--_ui5_button_focused_border_radius: var(--_ui5_shellbar_search_button_border_radius);
-	--_ui5_shellbar_button_border_radius: var(--_ui5_shellbar_search_button_border_radius);
-	height: var(--_ui5_shellbar_search_button_size);
-	width: var(--_ui5_shellbar_search_button_size);
-	min-width: var(--_ui5_shellbar_search_button_size);
 }
 
 .ui5-shellbar-image-button {
@@ -484,7 +479,6 @@ slot[name="profile"] {
 
 ::slotted([slot="logo"]) {
 	max-height: 2rem;
-	max-width: 3.75rem;
 	pointer-events: none;
 }
 

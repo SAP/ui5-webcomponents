@@ -67,6 +67,8 @@ import {
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
 	TOKENIZER_SHOW_ALL_ITEMS,
 	TOKENIZER_CLEAR_ALL,
+	TOKENIZER_DIALOG_OK_BUTTON,
+	TOKENIZER_DIALOG_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -331,6 +333,10 @@ class Tokenizer extends UI5Element {
 		type: HTMLElement,
 		"default": true,
 		individualSlots: true,
+		invalidateOnChildChange: {
+			properties: ["text"],
+			slots: false,
+		},
 	})
 	tokens!: Array<Token>;
 
@@ -589,14 +595,6 @@ class Tokenizer extends UI5Element {
 	}
 
 	handleBeforeClose() {
-		const tokensArray = this._tokens;
-
-		if (isPhone()) {
-			tokensArray.forEach(token => {
-				token.selected = false;
-			});
-		}
-
 		if (!this._tokenDeleting && !this._preventCollapse) {
 			this._preventCollapse = false;
 			this.expanded = false;
@@ -1073,6 +1071,14 @@ class Tokenizer extends UI5Element {
 	get tokenizerLabel() {
 		const effectiveLabelText = getEffectiveAriaLabelText(this);
 		return effectiveLabelText || Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
+	}
+
+	get _okButtonText() {
+		return Tokenizer.i18nBundle.getText(TOKENIZER_DIALOG_OK_BUTTON);
+	}
+
+	get _cancelButtonText() {
+		return Tokenizer.i18nBundle.getText(TOKENIZER_DIALOG_CANCEL_BUTTON);
 	}
 
 	get tokenizerAriaDescription() {

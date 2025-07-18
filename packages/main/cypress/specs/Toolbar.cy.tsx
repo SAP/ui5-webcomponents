@@ -8,6 +8,8 @@ import type ToolbarItem from "../../src/ToolbarItem.js";
 import add from "@ui5/webcomponents-icons/dist/add.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import employee from "@ui5/webcomponents-icons/dist/employee.js";
+import Button from "../../src/Button.js";
+import Dialog from "../../src/Dialog.js";
 
 describe("Toolbar general interaction", () => {
 	it.skip("Should not return null upon calling getDomRef for all direct child items", () => {
@@ -440,4 +442,54 @@ describe("Toolbar Select", () => {
 			});
 		});
 	});
+
+	describe("Toolbar in Dialog", () => {
+	it("Should correctly process overflow layout when rendered inside a dialog", () => {
+		cy.viewport(400, 600);
+
+		cy.mount(
+			<div>
+				<Button id="open-dialog-button" onClick={() => {
+					const dialog = document.getElementById("dialog") as Dialog;
+					dialog.open = true;
+				}}>Open Dialog</Button>
+
+				<Dialog id="dialog">
+					<Toolbar id="toolbar-in-dialog">
+						<ToolbarButton icon={add} text="Plus" design="Default"></ToolbarButton>
+						<ToolbarButton icon={employee} text="Hire"></ToolbarButton>
+						<ToolbarSeparator></ToolbarSeparator>
+						<ToolbarButton icon={add} text="Add"></ToolbarButton>
+						<ToolbarButton icon={decline} text="Decline"></ToolbarButton>
+						<ToolbarSpacer></ToolbarSpacer>
+						<ToolbarButton icon={add} text="Append"></ToolbarButton>
+						<ToolbarButton icon={employee} text="More"></ToolbarButton>
+						<ToolbarButton icon={decline} text="Extra"></ToolbarButton>
+						<ToolbarButton icon={add} text="Final"></ToolbarButton>
+						<ToolbarButton icon={employee} text="Last"></ToolbarButton>
+						<ToolbarButton icon={decline} text="Final"></ToolbarButton>
+						<ToolbarButton icon={add} text="Plus"></ToolbarButton>
+					</Toolbar>
+				</Dialog>
+			</div>
+		);
+
+		// Open dialog
+		cy.get("#open-dialog-button").click();
+		cy.get<Dialog>("#dialog").ui5DialogOpened();
+
+		// Verify toolbar is rendered inside the dialog
+		cy.get("#toolbar-in-dialog")
+			.should("exist")
+			.should("be.visible");
+
+		// Check that overflow processing has occurred by verifying overflow button exists and is visible
+		// Since we have many items in a constrained width, some should overflow
+		cy.get("#toolbar-in-dialog")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.should("exist")
+			.should("not.have.class", "ui5-tb-overflow-btn-hidden");
+	});
+});
 });

@@ -77,7 +77,6 @@ export default function ComboBoxPopoverTemplate(this: ComboBox) {
 					slot="header"
 					class={{
 						"ui5-responsive-popover-header": true,
-						"ui5-responsive-popover-header--focused": this._isValueStateFocused,
 						...this.classes.popoverValueState,
 					}}
 					style={this.styles.suggestionPopoverHeader}
@@ -104,7 +103,7 @@ export default function ComboBoxPopoverTemplate(this: ComboBox) {
 				<Button
 					design="Transparent"
 					onClick={this._closeRespPopover}
-				>OK</Button>
+				>{this._dialogOkButtonText}</Button>
 			</div>
 				}
 			</ResponsivePopover>

@@ -34,3 +34,8 @@ const selectionBehavior = document.getElementById("selectionBehavior");
 selectionBehavior.addEventListener("change", (e) => {
 	selectionFeature.behavior = e.target.text;
 });
+
+const headerSelector = document.getElementById("headerSelector");
+headerSelector.addEventListener("change", (e) => {
+	selectionFeature.headerSelector = e.target.text;
+});
