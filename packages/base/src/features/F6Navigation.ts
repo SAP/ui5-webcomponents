@@ -1,6 +1,5 @@
 import { getFeature, registerFeature } from "../FeaturesRegistry.js";
 import { isF6Next, isF6Previous } from "../Keys.js";
-import { instanceOfUI5Element } from "../UI5Element.js";
 import { getFirstFocusableElement } from "../util/FocusableElements.js";
 import getFastNavigationGroups from "../util/getFastNavigationGroups.js";
 import isElementClickable from "../util/isElementClickable.js";
@@ -74,7 +73,6 @@ class F6Navigation {
 				nextElement = this.groups[currentIndex];
 			}
 
-			console.log(nextElement, "nextElement");
 			elementToFocus = await this.groupElementToFocus(nextElement);
 
 			if (elementToFocus) {
@@ -181,7 +179,6 @@ class F6Navigation {
 
 		this.setSelectedGroup();
 		this.groups = getFastNavigationGroups(container);
-		console.log("F6Navigation groups updated", this.groups);
 	}
 
 	findContainer() {
