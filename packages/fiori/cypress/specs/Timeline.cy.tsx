@@ -86,7 +86,7 @@ describe("Timeline general interaction", () => {
 		cy.mount(<Sample />);
 		cy.get("[ui5-timeline]")
 			.shadow()
-			.find("ul")
+			.find(".ui5-timeline-list")
 			.should("have.attr", "aria-label", "Timeline vertical");
 	});
 
