@@ -41,18 +41,12 @@ class F6Navigation {
 	}
 
 	async groupElementToFocus(nextElement: HTMLElement) {
-		let nextElementDomRef = nextElement;
-
-		if (instanceOfUI5Element(nextElement)) {
-			nextElementDomRef = nextElement.getDomRef() || nextElement.firstElementChild as HTMLElement;
-		}
-
-		if (nextElementDomRef) {
-			if (isElementClickable(nextElementDomRef)) {
-				return nextElementDomRef;
+		if (nextElement) {
+			if (isElementClickable(nextElement)) {
+				return nextElement;
 			}
 
-			const elementToFocus = await getFirstFocusableElement(nextElementDomRef);
+			const elementToFocus = await getFirstFocusableElement(nextElement);
 
 			if (elementToFocus) {
 				return elementToFocus;
@@ -80,6 +74,7 @@ class F6Navigation {
 				nextElement = this.groups[currentIndex];
 			}
 
+			console.log(nextElement, "nextElement");
 			elementToFocus = await this.groupElementToFocus(nextElement);
 
 			if (elementToFocus) {
@@ -186,6 +181,7 @@ class F6Navigation {
 
 		this.setSelectedGroup();
 		this.groups = getFastNavigationGroups(container);
+		console.log("F6Navigation groups updated", this.groups);
 	}
 
 	findContainer() {
