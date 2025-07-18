@@ -333,14 +333,25 @@ class Button extends UI5Element {
 	}
 
 	get _computedAccessibilityAttributes(): AIButtonAccesibilityAttributes {
-		const labelRefTexts = getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || "";
-		const ariaLabel = this.accessibilityAttributes.ariaLabel?.concat(labelRefTexts) || "";
+		const {
+			ariaLabel: attrLabel,
+			hasPopup,
+			ariaRoleDescription
+		} = this.accessibilityAttributes;
+
+		const labelRefTexts =
+			getAllAccessibleNameRefTexts(this) ||
+			getEffectiveAriaLabelText(this) ||
+			getAssociatedLabelForTexts(this) ||
+			"";
+
+		const ariaLabel = `${this._leftButtonTooltipText} ${(attrLabel?.concat(labelRefTexts) || "").trim()}`.trim();
 
 		return {
-			hasPopup: this.accessibilityAttributes.hasPopup ? this.accessibilityAttributes.hasPopup : (this._hideArrowButton ? "false" : "menu"),
-			ariaRoleDescription: this.accessibilityAttributes.ariaRoleDescription  ? this.accessibilityAttributes.ariaRoleDescription : (this._hideArrowButton ? "Button" : "Split Button"),
-			ariaLabel: `${this._leftButtonTooltipText} ${ariaLabel}`.trim()
-		}
+			hasPopup: hasPopup ?? (this._hideArrowButton ? "false" : "menu"),
+			ariaRoleDescription: ariaRoleDescription ?? (this._hideArrowButton ? "Button" : "Split Button"),
+			ariaLabel
+		};
 	}
 }
 
