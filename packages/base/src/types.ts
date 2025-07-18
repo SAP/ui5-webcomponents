@@ -19,7 +19,7 @@ export type PassiveEventListenerObject = EventListenerObject & { passive: boolea
 
 // Accessibility
 export type AriaRole = JSX.AriaRole;
-export type AriaHasPopup = "dialog" | "grid" | "listbox" | "menu" | "tree";
+export type AriaHasPopup = "dialog" | "grid" | "listbox" | "menu" | "tree" | "false";
 export type AriaCurrent = "page" | "step" | "location" | "date" | "time" | "true" | "false" | boolean | undefined;
 export type AriaAutoComplete = "list" | "none" | "inline" | "both" | undefined;
 export type AriaLandmarkRole = "none" | "banner" | "main" | "region" | "navigation" | "search" | "complementary" | "form" | "contentinfo"
@@ -61,4 +61,5 @@ export type AccessibilityAttributes = {
 	ariaKeyShortcuts?: string,
 	ariaCurrent?: AriaCurrent,
 	current?: AriaCurrent,
+	ariaRoleDescription?: string
 }

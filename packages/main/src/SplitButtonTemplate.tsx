@@ -9,6 +9,8 @@ export default function SplitButtonTemplate(this: SplitButton) {
 			class="ui5-split-button-root"
 			tabindex={this._tabIndex}
 			aria-labelledby={`${this._id}-invisibleTextDefault ${this._id}-invisibleText`}
+			aria-haspopup={this.accessibilityAttributes.hasPopup}
+			aria-roledescription={this.accessibilityAttributes.ariaRoleDescription}
 			onFocusOut={this._onFocusOut}
 			onKeyDown={this._onKeyDown}
 			onKeyUp={this._onKeyUp}
@@ -28,6 +30,7 @@ export default function SplitButtonTemplate(this: SplitButton) {
 				onMouseUp={this._textButtonRelease}
 				onFocusIn={this._onInnerButtonFocusIn}
 				onFocusOut={this._onFocusOut}
+				{...(this._leftButtonTooltipText ? { tooltip: this._leftButtonTooltipText } : {})}
 			>
 				{this.isTextButton && <slot></slot> }
 			</Button>
