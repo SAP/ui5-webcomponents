@@ -345,7 +345,7 @@ class Button extends UI5Element {
 			getAssociatedLabelForTexts(this) ||
 			"";
 
-		const ariaLabel = `${this._leftButtonTooltipText} ${(attrLabel?.concat(labelRefTexts) || "").trim()}`.trim();
+		const ariaLabel = `${this._leftButtonTooltipText} ${(attrLabel?.concat(labelRefTexts) || "")}`.trim();
 
 		return {
 			hasPopup: hasPopup ?? (this._hideArrowButton ? "false" : "menu"),
