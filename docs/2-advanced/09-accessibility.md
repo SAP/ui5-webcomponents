@@ -312,6 +312,7 @@ The `accessibilityAttributes` property is currently supported in:
 * [ShellBar](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBar/)
 * [ShellBarItem](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBarItem/)
 * [MenuItem](https://sap.github.io/ui5-webcomponents/nightly/components/MenuItem/)
+* [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
 
 ---
 
