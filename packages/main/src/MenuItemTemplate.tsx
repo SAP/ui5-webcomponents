@@ -138,6 +138,7 @@ function listItemPostContent(this: MenuItem) {
 						loadingDelay={this.loadingDelay}
 						onMouseOver={this._itemMouseOver}
 						onKeyDown={this._itemKeyDown}
+						onKeyUp={this._itemKeyUp}
 						// handles event from slotted children
 						onui5-close-menu={this._close}
 						onui5-exit-end-content={this._navigateOutOfEndContent}

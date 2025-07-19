@@ -10,6 +10,9 @@ import {
 	isRight,
 	isEnter,
 	isSpace,
+	isEnterShift,
+	isSpaceShift,
+	isShift,
 	isTabNext,
 	isTabPrevious,
 	isDown,
@@ -314,6 +317,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	static i18nBundle: I18nBundle;
 
 	_itemNavigation: ItemNavigation;
+	_shiftPressed: boolean = false;
 
 	constructor() {
 		super();
@@ -335,6 +339,10 @@ class MenuItem extends ListItem implements IMenuItem {
 			|| item.hasAttribute("ui5-link")
 			|| (item.hasAttribute("ui5-icon") && item.getAttribute("mode") === "Interactive");
 		});
+	}
+
+	get _isCheckable() {
+		return this._checkMode !== MenuItemGroupCheckMode.None;
 	}
 
 	_navigateToEndContent(shouldNavigateToPreviousItem: boolean) {
@@ -534,19 +542,37 @@ class MenuItem extends ListItem implements IMenuItem {
 		this._closeOtherSubMenus(item);
 	}
 
+	_isSpace(e: KeyboardEvent) {
+		this._shiftPressed = this._isCheckable && isSpaceShift(e);
+		return isSpace(e) || isSpaceShift(e);
+	}
+
+	_isEnter(e: KeyboardEvent) {
+		this._shiftPressed = this._isCheckable && isEnterShift(e);
+		return isEnter(e) || isEnterShift(e);
+	}
+
+	_onclick(e: MouseEvent) {
+		this._shiftPressed = this._isCheckable && e.shiftKey;
+		super._onclick(e);
+	}
+
 	_itemKeyDown(e: KeyboardEvent) {
 		const item = e.target as MenuItem;
 		const itemInMenuItems = this._allMenuItems.includes(item);
 		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
-		const isItemNavigation = isUp(e) || isDown(e);
-		const isItemSelection = isSpace(e) || isEnter(e);
-		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
-		const shouldCloseMenu = !(isItemNavigation || isItemSelection || shouldOpenMenu) || isTabNextPrevious;
+		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
 
-		if (itemInMenuItems && shouldCloseMenu) {
+		if (itemInMenuItems && (isTabNextPrevious || shouldCloseMenu)) {
 			this._close();
 			this.focus();
 			e.stopPropagation();
+		}
+	}
+
+	_itemKeyUp(e: KeyboardEvent) {
+		if (isShift(e)) {
+			this._shiftPressed = false;
 		}
 	}
 

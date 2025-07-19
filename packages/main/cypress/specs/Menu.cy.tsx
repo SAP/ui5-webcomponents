@@ -286,6 +286,68 @@ describe("Menu interaction", () => {
 			.should("be.focused");
 	});
 
+	it("should not close menu when selecting 'single' checkable menu item with 'Shift'", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open Menu</Button>
+				<Menu opener="btnOpen">
+					<MenuItemGroup checkMode="Single">
+						<MenuItem text="Single"></MenuItem>
+					</MenuItemGroup>
+				</Menu>
+			</>
+		);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuItemCheckShiftClickAndPress("[text='Single']", "have.attr");
+	});
+
+	it("should not close menu when selecting 'multi' checkable menu item with 'Shift'", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open Menu</Button>
+				<Menu opener="btnOpen">
+					<MenuItemGroup checkMode="Multiple">
+						<MenuItem text="Multiple"></MenuItem>
+					</MenuItemGroup>
+				</Menu>
+			</>
+		);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuItemCheckShiftClickAndPress("[text='Multiple']", "have.attr");
+	});
+
+	it("should close menu when selecting non checkable menu item with 'Shift'", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open Menu</Button>
+				<Menu opener="btnOpen">
+					<MenuItemGroup checkMode="None">
+						<MenuItem text="None"></MenuItem>
+					</MenuItemGroup>
+				</Menu>
+			</>
+		);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuItemCheckShiftClickAndPress("[text='None']", "not.have.attr");
+	});
+
+	it("should close menu when selecting menu item, not in a group, with 'Shift'", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open Menu</Button>
+				<Menu opener="btnOpen">
+					<MenuItem text="Outside"></MenuItem>
+				</Menu>
+			</>
+		);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuItemCheckShiftClickAndPress("[text='Outside']", "not.have.attr");
+	});
+
 	describe("Event firing", () => {
 		it("Event firing - 'ui5-item-click' after 'click' on menu item", () => {
 			cy.mount(

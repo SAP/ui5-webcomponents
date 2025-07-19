@@ -49,10 +49,6 @@
 	background-color: var(--sapList_Hover_Background);
 }
 
-:host(:not([is-phone]))::part(native-li) {
-	padding: var(--_ui5_menu_item_padding);
-}
-
 :host::part(additional-text) {
 	margin: unset;
 	margin-inline-start: 1rem;
@@ -84,6 +80,7 @@
 }
 
 :host(:not([is-phone]))::part(native-li) {
+	user-select: none;
 	padding: var(--_ui5_menu_item_padding);
 }
 
