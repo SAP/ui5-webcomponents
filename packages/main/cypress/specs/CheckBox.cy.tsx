@@ -19,3 +19,22 @@ describe('CheckBox Component', () => {
 
 });
 
+describe("Accessibility", () => {
+	it("should announce the associated label when CheckBox is focused", () => {
+		cy.mount(
+			<>
+				<label for="cb">Should be the aria-label</label>
+				<CheckBox id="cb"></CheckBox>
+			</>
+		);
+
+		cy.get('label[for="cb"]')
+			.invoke('text')
+			.then((labelText) => {
+				cy.get("[ui5-checkbox]")
+					.shadow()
+					.find(".ui5-checkbox-root")
+					.should("have.attr", "aria-label", labelText);
+			});
+	});
+});
