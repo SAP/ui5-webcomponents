@@ -145,11 +145,15 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return "tree";
 		}
 
+		if (this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
+		}
+
 		return undefined;
 	}
 
 	get _ariaChecked() {
-		if (this.isOverflow || this.unselectable) {
+		if (this.isOverflow || this.unselectable || !this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -157,7 +161,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _groupId() {
-		if (!this.items.length) {
+		if (!this.items.length || this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -165,7 +169,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _expanded() {
-		if (!this.items.length) {
+		if (!this.items.length || this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -313,14 +317,27 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		this.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	get isSideNavigationItem() {
-		return true;
+	get templateAttributes() {
+		return Object.assign(super.templateAttributes, {
+			classes: "ui5-sn-item ui5-sn-item-level1",
+			onFocusOut: this._onfocusout.bind(this),
+			onMouseEnter: this._onmouseenter.bind(this),
+			onMouseLeave: this._onmouseleave.bind(this),
+			ariaChecked: this._ariaChecked,
+			ariaOwns: this._groupId,
+			ariaLabel: this._ariaLabel,
+			ariaExpanded: this._expanded,
+		});
 	}
 
 	_toggle() {
 		if (this.items.length && !this.effectiveDisabled) {
 			this.expanded = !this.expanded;
 		}
+	}
+
+	get isSideNavigationItem() {
+		return true;
 	}
 }
 
