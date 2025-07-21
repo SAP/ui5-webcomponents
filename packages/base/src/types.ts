@@ -64,5 +64,6 @@ export type AccessibilityAttributes = {
 	ariaKeyShortcuts?: string,
 	ariaCurrent?: AriaCurrent,
 	current?: AriaCurrent,
-	ariaRoleDescription?: string
+	ariaRoleDescription?: string,
+	title?:string,
 }

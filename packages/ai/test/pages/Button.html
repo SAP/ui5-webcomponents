@@ -236,9 +236,11 @@
 			button.arrowButtonPressed = false;
 		});
 		myAiButton.accessibilityAttributes = {
-			"hasPopup": "Menu Button",
-			"ariaRoleDescription": "Custom Role Description",
-			"ariaLabel": "Custom Aria Label"
+			"root": {
+				"hasPopup": "Menu Button",
+				"ariaRoleDescription": "Custom Role Description"
+			}
+
 		};
 		myAiButton.addEventListener("click", aiButtonClickHandler);
 		myAiButtonSplit.addEventListener("click", aiButtonSplitClickHandler);

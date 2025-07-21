@@ -36,7 +36,9 @@ import SplitButtonTemplate from "./SplitButtonTemplate.js";
 // Styles
 import SplitButtonCss from "./generated/themes/SplitButton.css.js";
 
-type SplitButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription" | "ariaLabel">;
+type SplitButtonRootAccAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription" | "title">;
+type SplitButtonArrowButtonAccAtributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
+type SplitButtonAccessibilityAttributes = {root?: SplitButtonRootAccAttributes, arrowButton?: SplitButtonArrowButtonAccAtributes}
 
 /**
  * @class
@@ -216,8 +218,8 @@ class SplitButton extends UI5Element {
 	/**
 	 * Defines the accesibility attributes of the component.
 	 *
-	 * @default false
-	 * @private
+	 * @default {}
+	 * @public
 	 */
 	@property({ type: Object })
 	accessibilityAttributes: SplitButtonAccessibilityAttributes = {};
@@ -446,12 +448,17 @@ class SplitButton extends UI5Element {
 			root: {
 				"description": SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
 				"keyboardHint": SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
+				"accessibilityAttributes": {
+					"hasPopup": this.accessibilityAttributes?.root?.hasPopup,
+					"ariaRoleDescription": this.accessibilityAttributes?.root?.ariaRoleDescription,
+					"title": this.accessibilityAttributes?.root?.title
+				}
 			},
 			arrowButton: {
 				"title": this.arrowButtonTooltip,
 				"accessibilityAttributes": {
-					"hasPopup": "menu" as AriaHasPopup,
-					"expanded": this.effectiveActiveArrowButton,
+					"hasPopup": this.accessibilityAttributes?.arrowButton?.hasPopup || "menu" as AriaHasPopup,
+					"expanded": this.accessibilityAttributes?.arrowButton?.expanded || this.effectiveActiveArrowButton,
 				},
 			},
 		};

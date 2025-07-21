@@ -24,7 +24,10 @@ import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
-type AIButtonAccesibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription" | "ariaLabel">;
+type AIButtonRootAccAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription">;
+type AIButtonArrowButtonAccAtributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
+type AIButtonAccessibilityAttributes = { root?: AIButtonRootAccAttributes, arrowButton?: AIButtonArrowButtonAccAtributes}
+
 
 /**
  * @class
@@ -136,7 +139,7 @@ class Button extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: AIButtonAccesibilityAttributes = {};
+	accessibilityAttributes: AIButtonAccessibilityAttributes = {};
 
 	/**
 	 * Keeps the current state object of the component.
@@ -203,10 +206,6 @@ class Button extends UI5Element {
 
 	get _hasText() {
 		return !!this._stateText;
-	}
-
-	get _leftButtonTooltipText() {
-		return this._hasText ? Button.i18nBundle.getText(BUTTON_TOOLTIP_TEXT, this._stateText as string) : "";
 	}
 
 	onBeforeRendering(): void {
@@ -332,25 +331,26 @@ class Button extends UI5Element {
 		this.fireDecoratorEvent("arrow-button-click");
 	}
 
-	get _computedAccessibilityAttributes(): AIButtonAccesibilityAttributes {
-		const {
-			ariaLabel: attrLabel,
-			hasPopup,
-			ariaRoleDescription
-		} = this.accessibilityAttributes;
-
+	get _computedAccessibilityAttributes() {
 		const labelRefTexts =
 			getAllAccessibleNameRefTexts(this) ||
 			getEffectiveAriaLabelText(this) ||
 			getAssociatedLabelForTexts(this) ||
 			"";
 
-		const ariaLabel = `${this._leftButtonTooltipText} ${(attrLabel?.concat(labelRefTexts) || "")}`.trim();
+		const mainTitle = this._hasText ? Button.i18nBundle.getText(BUTTON_TOOLTIP_TEXT, this._stateText as string) : "";
+		const title = `${mainTitle} ${labelRefTexts}`.trim();
 
 		return {
-			hasPopup: hasPopup ?? (this._hideArrowButton ? "false" : "menu"),
-			ariaRoleDescription: ariaRoleDescription ?? (this._hideArrowButton ? "Button" : "Split Button"),
-			ariaLabel
+			root: {
+				hasPopup: this.accessibilityAttributes?.root?.hasPopup || "false",
+				ariaRoleDescription: this.accessibilityAttributes?.root?.ariaRoleDescription || (this._hideArrowButton ? "Button" : "Split Button"),
+				title
+			},
+			arrowButton: {
+				hasPopup: this.accessibilityAttributes?.arrowButton?.hasPopup,
+				expanded: this.accessibilityAttributes?.arrowButton?.expanded
+			}
 		};
 	}
 }
