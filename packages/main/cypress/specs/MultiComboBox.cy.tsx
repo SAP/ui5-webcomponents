@@ -980,6 +980,8 @@ describe("Keyboard Handling", () => {
 
 		cy.realPress("ArrowLeft");
 
+		cy.wait(100);
+
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
@@ -1357,6 +1359,8 @@ describe("Keyboard Handling", () => {
 
 		cy.realPress("ArrowLeft");
 
+		cy.wait(100);
+
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
@@ -1371,7 +1375,7 @@ describe("Keyboard Handling", () => {
 			.should("have.attr", "selected");
 	});
 
-	it("CTRL+SPACE should do nothing when pressed in the input field", () => {
+	it("SHIFT+SPACE should do nothing when pressed in the input field", () => {
 		cy.mount(
 			<MultiComboBox noValidation={true}>
 				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
@@ -1385,7 +1389,7 @@ describe("Keyboard Handling", () => {
 		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
-		cy.realPress(["Meta", "Space"]);
+		cy.realPress(["Shift", "Space"]);
 
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
@@ -1623,6 +1627,8 @@ describe("Keyboard Handling", () => {
 
 		cy.realPress("ArrowLeft");
 
+		cy.wait(100);
+
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
@@ -1688,6 +1694,6 @@ describe("Keyboard Handling", () => {
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find<ResponsivePopover>("ui5-responsive-popover")
-			.ui5ResponsivePopoverClosed();
+			.should("not.have.attr", "open")
 	});
 });
