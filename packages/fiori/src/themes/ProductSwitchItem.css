@@ -53,13 +53,9 @@
 	outline: none;
 	box-sizing: border-box;
 	padding: .5rem;
-	padding-top: 4rem;
+	padding-top: .5rem;
 	cursor: pointer;
 	border: var(--_ui5_product_switch_item_border);
-}
-
-:host([icon]) .ui5-product-switch-item-root {
-	padding-top: .5rem;
 }
 
 :host([selected]) .ui5-product-switch-item-root {
@@ -126,7 +122,7 @@
 		flex-direction: row;
 	}
 
-	:host([icon]) .ui5-product-switch-item-root {
+	.ui5-product-switch-item-root {
 		padding-top: 0;
 	}
 
@@ -141,7 +137,7 @@
 		max-width: 100%;
 	}
 
-	:host([icon]) .ui5-product-switch-item-root .ui5-product-switch-item-text-content {
+	.ui5-product-switch-item-root .ui5-product-switch-item-text-content {
 		max-width: calc(100% - 3.75rem); /* 100% width - (3rem for the icon + right margin)*/
 	}
 

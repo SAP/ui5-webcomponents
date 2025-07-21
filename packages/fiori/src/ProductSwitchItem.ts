@@ -5,6 +5,7 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ProductSwitchItemTemplate from "./ProductSwitchItemTemplate.js";
 import type { IProductSwitchItem } from "./ProductSwitch.js";
 
@@ -133,6 +134,16 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	 */
 	@property({ noAttribute: true })
 	forcedTabIndex?: string;
+
+	/**
+	 * Defines a custom image or icon to be displayed instead of the standard icon.
+	 * @since 2.14.0
+	 * @public
+	 * **Note:** The customImage slot takes precedence over the icon property.
+	 * **Note:** We recommend using ui5-avatar with size XS for best alignment.
+	 */
+	@slot({ type: HTMLElement })
+	customImage!: Array<HTMLElement>;
 
 	_deactivate: () => void;
 
