@@ -19,6 +19,9 @@ export type PassiveEventListenerObject = EventListenerObject & { passive: boolea
 
 // Accessibility
 export type AriaRole = JSX.AriaRole;
+export type AriaDisabled = JSX.AriaAttributes["aria-disabled"];
+export type AriaChecked = JSX.AriaAttributes["aria-checked"];
+export type AriaReadonly = JSX.AriaAttributes["aria-readonly"];
 export type AriaHasPopup = "dialog" | "grid" | "listbox" | "menu" | "tree" | "false";
 export type AriaCurrent = "page" | "step" | "location" | "date" | "time" | "true" | "false" | boolean | undefined;
 export type AriaAutoComplete = "list" | "none" | "inline" | "both" | undefined;

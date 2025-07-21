@@ -419,7 +419,7 @@ class Table extends UI5Element {
 	}
 
 	onEnterDOM() {
-		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound, { capture: true }));
+		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
 		this.features.forEach(feature => feature.onTableActivate?.(this));
 		this._tableNavigation = new TableNavigation(this);
 		this._tableDragAndDrop = new TableDragAndDrop(this);
