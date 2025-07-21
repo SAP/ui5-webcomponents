@@ -159,7 +159,7 @@ slot[name="profile"] {
 	justify-content: center;
 	height: 100%;
 	overflow: hidden;
-	margin-left: 0.25rem;
+	margin-inline-start: 0.25rem;
 }
 
 .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
