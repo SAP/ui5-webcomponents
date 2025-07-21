@@ -50,6 +50,9 @@ type SearchEventDetails = {
 	item?: ISearchSuggestionItem;
 }
 
+// // @ts-ignore
+// alert("test");
+
 /**
  * @class
  *
@@ -128,7 +131,7 @@ class Search extends SearchField {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
 	items!: Array<SearchItem | SearchItemGroup>;
 
 	/**
@@ -235,8 +238,8 @@ class Search extends SearchField {
 		const autoCompletedChars = innerInput && (innerInput.selectionEnd! - innerInput.selectionStart!);
 
 		// If there is already a selection the autocomplete has already been performed
-		if (this._shouldAutocomplete && !autoCompletedChars) {
-			const item = this._getFirstMatchingItem(this.value);
+		if (this._shouldAutocomplete) {
+			const item = this._getFirstMatchingItem(this._typedInValue);
 			this._proposedItem = item;
 
 			if (item) {
@@ -244,10 +247,10 @@ class Search extends SearchField {
 				this._deselectItems();
 				item.selected = true;
 			} else {
-				this._typedInValue = this.value;
+				// this._typedInValue = this.value;
 			}
 		} else {
-			this._typedInValue = this.value;
+			// this._typedInValue = this.value;
 		}
 
 		if (isPhone() && this.open) {
@@ -263,8 +266,6 @@ class Search extends SearchField {
 		this._flattenItems.forEach(item => {
 			(item as SearchItem).highlightText = this._typedInValue;
 		});
-
-		this._shouldAutocomplete = false;
 	}
 
 	onAfterRendering(): void {
@@ -283,6 +284,8 @@ class Search extends SearchField {
 		if (!this.collapsed) {
 			this.style.setProperty("--search_width", `${this.getBoundingClientRect().width}px`);
 		}
+
+		console.log('typedin: ', this._typedInValue);
 	}
 
 	_handleMobileInput(e: CustomEvent<InputEventDetail>) {
@@ -317,12 +320,11 @@ class Search extends SearchField {
 
 		if (!originalValue.toLowerCase().startsWith(this.value.toLowerCase())) {
 			this._matchedPerTerm = true;
-			displayValue = `${this.value} - ${originalValue}`;
 		} else {
 			this._matchedPerTerm = false;
 		}
 
-		this._typedInValue = this.value;
+		// this._typedInValue = this.value;
 		this._innerValue = displayValue;
 		this._performTextSelection = true;
 		this.value = displayValue;
@@ -432,6 +434,8 @@ class Search extends SearchField {
 			return;
 		}
 
+		this._typedInValue = ((e.target as HTMLInputElement).value);
+
 		this.open = ((e.currentTarget as HTMLInputElement).value.length > 0) && this._popoupHasAnyContent();
 	}
 
@@ -454,12 +458,14 @@ class Search extends SearchField {
 		const isArrowUp = isUp(e);
 		const isArrowDown = isDown(e);
 		const isTab = isTabNext(e);
+		const autocomplete = isFirstItem && isArrowUp;
 
 		e.preventDefault();
 
-		if (isFirstItem && isArrowUp) {
+		this._shouldAutocomplete = autocomplete;
+
+		if (autocomplete) {
 			this.nativeInput?.focus();
-			this._shouldAutocomplete = true;
 		}
 
 		if ((isLastItem && isArrowDown) || isTab) {
