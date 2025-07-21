@@ -54,7 +54,7 @@ function Banner() {
   return (
     <div className="alert alert--info" role="alert" style={{fontSize: "1.5rem", textAlign: "center"}}>
          Since 30 June 2025, UI5 Web Components 1.24 is <b>out of maintenance</b>.
-         <p>We recommend using <b><a href="https://github.com/SAP/ui5-webcomponents/releases/tag/v2.0.0">UI5 Web Components 2.0</a></b></p>
+         <p>We recommend using <b><a href="https://sap.github.io/ui5-webcomponents/">UI5 Web Components 2.0</a></b></p>
     </div>
   );
 }
