@@ -11,6 +11,12 @@ function startGeneration(button) {
 	generationId = setTimeout(function() {
 		console.warn("Generation completed");
 		button.state = "revise";
+		button.accessibilityAttributes = {
+				root: {
+					hasPopup: "menu",
+					ariaRoleDescription: "Menu Button"
+				}
+			}
 	}, 3000);
 }
 
