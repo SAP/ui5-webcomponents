@@ -15,16 +15,16 @@ export default function CheckBoxTemplate(this: CheckBox) {
 				"ui5-checkbox-root": true,
 				"ui5-checkbox--hoverable": !this.disabled && !this.readonly && isDesktop(),
 			}}
-			role="checkbox"
+			role={this.accInfo.role}
 			part="root"
-			aria-checked={this.effectiveAriaChecked}
-			aria-readonly={this.ariaReadonly}
-			aria-disabled={this.effectiveAriaDisabled}
+			aria-checked={this.accInfo.ariaChecked}
+			aria-readonly={this.accInfo.ariaReadonly}
+			aria-disabled={this.accInfo.ariaDisabled}
 			aria-label={this.ariaLabelText}
 			aria-labelledby={this.ariaLabelledBy}
 			aria-describedby={this.ariaDescribedBy}
-			aria-required={this.required}
-			tabindex={this.effectiveTabIndex}
+			aria-required={this.accInfo.ariaRequired}
+			tabindex={this.accInfo.tabindex}
 			onMouseDown={this._onmousedown}
 			onMouseUp={this._onmouseup}
 			onKeyDown={this._onkeydown}
@@ -45,6 +45,7 @@ export default function CheckBoxTemplate(this: CheckBox) {
 				</div>
 			}
 
+			{this.accInfo.role === "checkbox" &&
 			<input
 				id={`${this._id}-CB`}
 				type="checkbox"
@@ -56,6 +57,7 @@ export default function CheckBoxTemplate(this: CheckBox) {
 				aria-hidden="true"
 				data-sap-no-tab-ref
 			/>
+			}
 
 			{this.text &&
 			<Label
