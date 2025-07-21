@@ -62,6 +62,9 @@
 	<ui5-checkbox value-state="Positive" text="Long long long text" indeterminate checked></ui5-checkbox>
 	<ui5-checkbox value-state="Information" text="Long long long text" indeterminate checked></ui5-checkbox>
 
+	<ui5-title id="cb-label">ACC Test - custom acc</ui5-title>
+	<ui5-checkbox id="accCustomAria"></ui5-checkbox>
+
 	<br />
 	<ui5-checkbox id="checkboxChecked" checked></ui5-checkbox>
 
@@ -114,7 +117,12 @@
 		var cbFormSubmitted = document.querySelector("#cbFormSubmitted");
 		var btnCheckFormValidity = document.getElementById('btnCheckFormValidity');
 		var formValidationMessage = document.getElementById('formValidationMessage');
+		var cdCustomAria = document.querySelector("#accCustomAria");
 		var counter = 0;
+
+		cdCustomAria._accInfo = {
+			role: "presentation",
+		};
 
 		[checkBox1, checkBox2, displayOnlyCb].forEach(function(el) {
 			el.addEventListener("ui5-change", function(event) {
