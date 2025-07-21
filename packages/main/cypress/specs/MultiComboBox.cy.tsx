@@ -1057,8 +1057,6 @@ describe("Keyboard Handling", () => {
 
 		cy.realPress("Home");
 
-		cy.wait(100);
-
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
@@ -1090,8 +1088,6 @@ describe("Keyboard Handling", () => {
 			.should("be.focused");
 
 		cy.realPress("End");
-
-		cy.wait(100);
 
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
