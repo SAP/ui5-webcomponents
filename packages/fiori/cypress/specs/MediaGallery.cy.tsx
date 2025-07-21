@@ -88,6 +88,8 @@ describe("MediaGallery general interaction", () => {
 				gallery.appendChild(item);
 			}
 		});
+	
+		cy.wait(100);
 
 		cy.get("[ui5-media-gallery]")
 			.shadow()
