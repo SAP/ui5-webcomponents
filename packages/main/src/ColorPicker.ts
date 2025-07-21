@@ -358,7 +358,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	_handleColorInputChange(e: Event) {
 		const target = e.target as Input;
 		const targetValue = parseInt(target.value) || 0;
-		let normalizedValue: number;
+		let normalizedValue = targetValue;
 
 		switch (target.id) {
 		case "red":
@@ -389,10 +389,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		case "light":
 			this._colorValue.L = targetValue;
 			normalizedValue = this._colorValue.L;
-			break;
-
-		default:
-			normalizedValue = targetValue;
 			break;
 		}
 
