@@ -4,7 +4,7 @@ export default function MenuItemGroupTemplate(this: MenuItemGroup) {
 	return (
 		<div
 			role="group"
-			onui5-item-check={this._handleItemCheck}
+			onui5-check={this._handleItemCheck}
 		>
 			<slot></slot>
 		</div>

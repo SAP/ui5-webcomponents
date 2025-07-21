@@ -41,6 +41,21 @@ Cypress.Commands.add("ui5TimePickerGetClock", { prevSubject: true }, (subject, c
 		.find(`ui5-toggle-spin-button[data-ui5-clock="${clockType}"]`);
 });
 
+Cypress.Commands.add("ui5TimePickerGetInputsMobile", { prevSubject: true }, (subject) => {
+	cy.wrap(subject)
+		.as("timePicker");
+
+	cy.get("@timePicker")
+		.should("not.have.attr", "open");
+
+	return cy.get("@timePicker")
+		.shadow()
+		.find("[ui5-popover]")
+		.find("[ui5-time-selection-inputs]")
+		.shadow()
+		.find(`[ui5-input]`)
+});
+
 Cypress.Commands.add("ui5TimePickerGetSubmitButton", { prevSubject: true }, subject => {
 	cy.wrap(subject)
 		.as("timePicker");
@@ -67,9 +82,12 @@ declare global {
 				this: Chainable<JQuery<TimePicker>>,
 				clockType: string
 			): Chainable<JQuery<TimePicker>>;
+			ui5TimePickerGetInputsMobile(
+				this: Chainable<JQuery<TimePicker>>,
+			): Chainable<JQuery<TimePicker>>;
 			ui5TimePickerGetSubmitButton(
 				this: Chainable<JQuery<TimePicker>>
 			): Chainable<JQuery<Button>>;
 		}
 	}
-} 
+}

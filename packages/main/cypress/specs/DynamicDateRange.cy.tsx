@@ -156,6 +156,7 @@ describe('DynamicDateRange Component', () => {
             .should('have.value', 'Today');
     });
 
+    // Check why it fails remotely
     it.skip('selects the Date option and updates the current value', () => {
         cy.window().then((win) => {
             cy.stub(win.Date, 'now').returns(new Date(2025, 4, 15).getTime());
@@ -207,7 +208,56 @@ describe('DynamicDateRange Component', () => {
 
         cy.get("@calendar")
             .should('exist');
-    
+
+        cy.realPress("Tab");
+        cy.realPress("Tab");
+        cy.realPress("Tab");
+        
+        cy.get("@calendar")
+            .shadow()
+            .find("[data-ui5-cal-header-btn-year='true']")
+            .as("yearButton");
+
+        cy.get("@yearButton")
+            .should("be.focused");
+        
+        cy.realPress("Space");
+        
+        cy.get("@calendar")
+            .shadow()
+            .find("ui5-yearpicker")
+            .as("yearPicker");
+
+        cy.get("@yearPicker")
+            .shadow()
+            .find(".ui5-dp-yeartext")
+            .contains('2035')
+            .realClick();
+
+        cy.realPress("Tab");
+        cy.realPress("Tab");
+        
+        cy.get("@calendar")
+            .shadow()
+            .find("[data-ui5-cal-header-btn-month='true']")
+            .as("monthButton");
+
+        cy.get("@monthButton")
+            .should("be.focused");
+
+        cy.realPress("Space");
+
+        cy.get("@calendar")
+            .shadow()
+            .find("ui5-monthpicker")
+            .as("monthPicker");
+
+        cy.get("@monthPicker")
+            .shadow()
+            .find(".ui5-dp-monthtext")
+            .contains('May')
+            .realClick();
+
         cy.get("@calendar")
             .shadow()
             .find("ui5-daypicker")
@@ -215,7 +265,8 @@ describe('DynamicDateRange Component', () => {
 
         cy.get("@dayPicker")
             .shadow()
-            .find("div[data-sap-timestamp='1747785600']")
+            .find(".ui5-dp-daytext")
+            .eq(22) // May 21, 2035 is the 21st day
             .realClick();
 
         cy.get("@popover")
@@ -226,8 +277,10 @@ describe('DynamicDateRange Component', () => {
             .should('exist')
             .realClick();
 
-        cy.get("@innerInput")
-            .should('have.value', 'May 21, 2025');
+        cy.get("@input")
+            .shadow()
+            .find("input")
+            .should('have.value', 'May 21, 2035');
     });
 
     it.skip('writes a date in the input and verifies it is selected in the calendar for the Date option', () => {
@@ -304,7 +357,6 @@ describe('DynamicDateRange Last/Next Options', () => {
     });
 
     it('selects Last X Days option with custom number input', () => {
-        // Instantiate options to ensure they're registered with DynamicDateRange
         new LastOptions();
         new NextOptions();
 

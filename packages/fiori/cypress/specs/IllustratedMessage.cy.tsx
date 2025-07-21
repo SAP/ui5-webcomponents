@@ -78,3 +78,22 @@ describe("design", () => {
 	});
 
 });
+
+describe('SVG CSP Compliance', () => {
+  it('should verify all SVG files are CSP compliant', () => {
+    cy.task('findAndValidateSvgFiles').then((results: any[]) => {
+      // Check if there are any invalid SVG files
+      const invalidFiles = results.filter(result => !result.isValid);
+
+      if (invalidFiles.length > 0) {
+        const violationReport = invalidFiles
+          .map(v => `${v.file}: has violations`)
+          .join('\n')
+        
+        throw new Error(`Found ${invalidFiles.length} SVG files with CSP violations:\n${violationReport}`)
+      }
+
+      cy.log(`✅ Validated ${results.length} SVG files - all CSP compliant`);
+    })
+  })
+})
