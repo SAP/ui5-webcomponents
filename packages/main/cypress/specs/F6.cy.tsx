@@ -906,7 +906,7 @@ describe("F6 navigation", () => {
 	});
 
 
-	describe.only("Bypass groups", () => {
+	describe("Bypass groups", () => {
 		it("Custom defined groups", () => {
 			cy.mount(
 				<div>
