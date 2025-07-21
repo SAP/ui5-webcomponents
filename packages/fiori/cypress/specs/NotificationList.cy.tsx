@@ -311,7 +311,7 @@ describe("Notification List Item Tests", () => {
 			.should("not.exist");
 	});
 
-	it.skip("tests menu", () => {
+	it("tests menu", () => {
 		cy.mount(
 			<NotificationList>
 				<NotificationListGroupItem>
