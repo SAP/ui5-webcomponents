@@ -216,10 +216,26 @@ class SplitButton extends UI5Element {
 	_hideArrowButton = false;
 
 	/**
-	 * Defines the accesibility attributes of the component.
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The `accessibilityAttributes` property accepts an object with the following optional fields:
+	 *
+	 * - **root**: Attributes that will be applied to the main (text) button.
+	 *   - **hasPopup**: Indicates the presence and type of popup triggered by the button.
+	 *     Accepts string values: `"dialog"`, `"grid"`, `"listbox"`, `"menu"`, or `"tree"`.
+	 *   - **ariaRoleDescription**: Provides a human-readable description for the role of the button.
+	 *     Accepts any string value.
+	 *   - **title**: Specifies a tooltip or description for screen readers.
+	 *     Accepts any string value.
+	 *
+	 * - **arrowButton**: Attributes applied specifically to the arrow (split) button.
+	 *   - **hasPopup**: Indicates the presence and type of popup triggered by the arrow button.
+	 *     Accepts string values: `"dialog"`, `"grid"`, `"listbox"`, `"menu"`, or `"tree"`.
+	 *   - **expanded**: Indicates whether the popup triggered by the arrow button is currently expanded.
+	 *     Accepts boolean values: `true` or `false`.
 	 *
 	 * @default {}
 	 * @public
+	 * @since 2.6.0
 	 */
 	@property({ type: Object })
 	accessibilityAttributes: SplitButtonAccessibilityAttributes = {};
@@ -476,3 +492,6 @@ class SplitButton extends UI5Element {
 SplitButton.define();
 
 export default SplitButton;
+export type {
+	SplitButtonAccessibilityAttributes
+};

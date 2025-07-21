@@ -28,7 +28,6 @@ type AIButtonRootAccAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ari
 type AIButtonArrowButtonAccAtributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
 type AIButtonAccessibilityAttributes = { root?: AIButtonRootAccAttributes, arrowButton?: AIButtonArrowButtonAccAtributes}
 
-
 /**
  * @class
  *
@@ -133,11 +132,27 @@ class Button extends UI5Element {
 	arrowButtonPressed = false;
 
 	/**
-	 * Defines the accesibility attributes of the component.
+ 	 * Defines the additional accessibility attributes that will be applied to the component.
 	 *
-	 * @default {}
+	 * This property allows for fine-tuned control of ARIA attributes for screen reader support.
+	 * It accepts an object with the following optional fields:
+	 *
+	 * - **root**: Accessibility attributes that will be applied to the root element.
+	 *   - **hasPopup**: Indicates the availability and type of interactive popup element (such as a menu or dialog).
+	 *     Accepts string values: `"dialog"`, `"grid"`, `"listbox"`, `"menu"`, or `"tree"`.
+	 *   - **ariaRoleDescription**: Defines a human-readable description for the button's role.
+	 *     Accepts any string value.
+	 *
+	 * - **arrowButton**: Accessibility attributes that will be applied to the arrow (split) button element.
+	 *   - **hasPopup**: Indicates the type of popup triggered by the arrow button.
+	 *     Accepts string values: `"dialog"`, `"grid"`, `"listbox"`, `"menu"`, or `"tree"`.
+	 *   - **expanded**: Indicates whether the popup controlled by the arrow button is currently expanded.
+	 *     Accepts boolean values: `true` or `false`.
+	 *
 	 * @public
-	 */
+	 * @since 2.6.0
+	 * @default {}
+ 	*/
 	@property({ type: Object })
 	accessibilityAttributes: AIButtonAccessibilityAttributes = {};
 
@@ -332,11 +347,7 @@ class Button extends UI5Element {
 	}
 
 	get _computedAccessibilityAttributes() {
-		const labelRefTexts =
-			getAllAccessibleNameRefTexts(this) ||
-			getEffectiveAriaLabelText(this) ||
-			getAssociatedLabelForTexts(this) ||
-			"";
+		const labelRefTexts = getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || "";
 
 		const mainTitle = this._hasText ? Button.i18nBundle.getText(BUTTON_TOOLTIP_TEXT, this._stateText as string) : "";
 		const title = `${mainTitle} ${labelRefTexts}`.trim();
@@ -345,15 +356,18 @@ class Button extends UI5Element {
 			root: {
 				hasPopup: this.accessibilityAttributes?.root?.hasPopup || "false",
 				ariaRoleDescription: this.accessibilityAttributes?.root?.ariaRoleDescription || (this._hideArrowButton ? "Button" : "Split Button"),
-				title
+				title,
 			},
 			arrowButton: {
 				hasPopup: this.accessibilityAttributes?.arrowButton?.hasPopup,
-				expanded: this.accessibilityAttributes?.arrowButton?.expanded
-			}
+				expanded: this.accessibilityAttributes?.arrowButton?.expanded,
+			},
 		};
 	}
 }
 
 Button.define();
 export default Button;
+export type {
+	AIButtonAccessibilityAttributes,
+};
