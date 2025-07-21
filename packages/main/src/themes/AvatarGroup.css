@@ -36,7 +36,8 @@
 }
 
 :host([type="Group"]) ::slotted([ui5-button]),
-:host([type="Group"]) ::slotted([ui5-avatar]) {
+:host([type="Group"]) ::slotted([ui5-avatar]),
+:host([type="Group"]) .ui5-avatar-group-overflow-btn {
 	pointer-events: none;
 }
 
