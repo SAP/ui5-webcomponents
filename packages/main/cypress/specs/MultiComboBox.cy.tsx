@@ -973,20 +973,19 @@ describe("Keyboard Handling", () => {
 		);
 
 		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
 			.realClick();
 
 		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
 		cy.get("[ui5-multi-combobox]")
-			.realPress("ArrowLeft");
-
-		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.last()
-			.should("be.focused");
+			.realClick();
 
 		cy.realPress(["Shift", "ArrowLeft"]);
 
@@ -1209,19 +1208,19 @@ describe("Keyboard Handling", () => {
 		);
 
 		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
 			.realClick();
 
 		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
 		cy.get("[ui5-multi-combobox]")
-			.realPress("ArrowLeft");
-
-		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.last()
+			.realClick()
 			.should("be.focused");
 
 		cy.realPress("ArrowLeft");
@@ -1343,7 +1342,7 @@ describe("Keyboard Handling", () => {
 			.should("have.length", 3);
 	});
 
-	it("Should select a token with CTRL+SPACE", () => {
+	it("Should select/deselect a token with CTRL+SPACE", () => {
 		cy.mount(
 			<MultiComboBox noValidation={true}>
 				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
@@ -1352,25 +1351,33 @@ describe("Keyboard Handling", () => {
 		);
 
 		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
 			.realClick();
 
 		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
 		cy.get("[ui5-multi-combobox]")
-			.realPress("ArrowLeft");
-
-		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
-			.last()
-			.as("lastToken")
+			.first()
+			.as("firstToken")
+			.realClick()
 			.should("be.focused");
+
+		cy.get("@firstToken")
+			.should("have.attr", "selected");
 
 		cy.realPress(["Meta", "Space"]);
 
-		cy.get("@lastToken")
+		cy.get("@firstToken")
+			.should("not.have.attr", "selected");
+
+		cy.realPress(["Meta", "Space"]);
+
+		cy.get("@firstToken")
 			.should("have.attr", "selected");
 	});
 
@@ -1449,19 +1456,19 @@ describe("Keyboard Handling", () => {
 		);
 
 		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
 			.realClick();
 
 		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
 		cy.get("[ui5-multi-combobox]")
-			.realPress("ArrowLeft");
-
-		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.last()
+			.realClick()
 			.should("be.focused");
 
 		cy.realPress(["Alt", "ArrowDown"]);
@@ -1578,18 +1585,19 @@ describe("Keyboard Handling", () => {
 		);
 
 		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("input")
 			.realClick();
-
+		
 		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
-
-		cy.realPress("ArrowLeft");
 
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.last()
+			.realClick()
 			.should("be.focused");
 
 		cy.realPress("Backspace");
