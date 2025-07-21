@@ -445,6 +445,28 @@ describe("DateTimePicker general interaction", () => {
 			.should("have.attr", "value", "");
 	});
 
+	it("custom formatting", () => {
+		cy.mount(<DateTimePicker displayFormat="yyyy, dd/MM hh:mm:ss" valueFormat="yyyy-MM-dd hh:mm:ss"></DateTimePicker>);
+
+		cy.get("[ui5-datetime-picker]")
+			.as("dateTimePicker");
+
+		cy.get<DateTimePicker>("@dateTimePicker")
+			.ui5DatePickerGetInnerInput()
+			.realClick()
+			.should("be.focused")
+			.realType("2018, 05/05 12:00:00")
+			.realPress("Enter");
+
+		cy.get("@dateTimePicker")
+			.shadow()
+			.find("ui5-datetime-input")
+			.should("have.attr", "value", "2018, 05/05 12:00:00");
+
+		cy.get("@dateTimePicker")
+			.should("have.attr", "value", "2018-05-05 12:00:00");
+	});
+
 	it("Min and max dates are set, with no format pattern provided, using valid ISO format", () => {
 		cy.mount(
 			<DateTimePicker

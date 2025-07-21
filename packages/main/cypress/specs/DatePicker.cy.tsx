@@ -83,6 +83,28 @@ describe("Date Picker Tests", () => {
 			.should("have.attr", "value-state", "None");
 	});
 
+	it("custom formatting", () => {
+		cy.mount(<DatePicker displayFormat="yyyy, dd/MM" valueFormat="yyyy-MM-dd"></DatePicker>);
+
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetInnerInput()
+			.realClick()
+			.should("be.focused")
+			.realType("2018, 05/05")
+			.realPress("Enter");
+
+		cy.get("@datePicker")
+			.shadow()
+			.find("ui5-datetime-input")
+			.should("have.attr", "value", "2018, 05/05");
+
+		cy.get("@datePicker")
+			.should("have.attr", "value", "2018-05-05");
+	});
+
 	it("value state", () => {
 		cy.mount(<DatePicker></DatePicker>);
 		cy.get("[ui5-date-picker]")
