@@ -1008,7 +1008,7 @@ describe("Keyboard Handling", () => {
 			.should("be.focused");
 	});
 
-	it("First HOME should move caret to start of the input, second HOME should focus the first token, END should focus last token", () => {
+	it("HOME should move caret to start of the input if focus is in input", () => {
 		cy.mount(
 			<MultiComboBox noValidation={true}>
 				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
@@ -1031,6 +1031,29 @@ describe("Keyboard Handling", () => {
 				return input.get(0).selectionStart;
 			})
 			.should("be.equal", 0);
+	});
+
+	it("HOME should move focus to the first token, if focus is in the tokenizer", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true}>
+				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
+				<MultiComboBoxItem selected={true} text="Item 2"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.realClick();
+
+		cy.get("[ui5-multi-combobox]")
+			.should("be.focused");
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.last()
+			.realClick()
+			.should("be.focused");
 
 		cy.realPress("Home");
 
@@ -1042,6 +1065,29 @@ describe("Keyboard Handling", () => {
 			.find("[ui5-token]")
 			.first()
 			.should("be.focused");
+	});
+
+	it("END should focus last token, second END should move focus to the input", () => {
+		cy.mount(
+			<MultiComboBox noValidation={true}>
+				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
+				<MultiComboBoxItem selected={true} text="Item 2"></MultiComboBoxItem>
+			</MultiComboBox>
+		);
+
+		cy.get("[ui5-multi-combobox]")
+			.realClick();
+
+		cy.get("[ui5-multi-combobox]")
+			.should("be.focused");
+
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find("[ui5-tokenizer]")
+			.find("[ui5-token]")
+			.first()
+			.realClick()
+			.should("be.focused");
 
 		cy.realPress("End");
 
@@ -1052,6 +1098,11 @@ describe("Keyboard Handling", () => {
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.last()
+			.should("be.focused");
+
+		cy.realPress("End");
+
+		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 	});
 
