@@ -1,4 +1,6 @@
 import Icon from "./Icon.js";
+import valueHelp from "@ui5/webcomponents-icons/dist/value-help.js";
+import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import type FileUploader from "./FileUploader.js";
@@ -64,7 +66,7 @@ export default function FileUploaderTemplate(this: FileUploader) {
 										))}
 									</Tokenizer>
 									<Icon
-										name="decline"
+										name={decline}
 										class="ui5-file-uploader-clear-icon inputIcon"
 										onClick={this._onClearIconClick}
 										title={this.clearIconTitle}
@@ -83,7 +85,7 @@ export default function FileUploaderTemplate(this: FileUploader) {
 							)}
 
 							<Icon
-								name="value-help"
+								name={valueHelp}
 								class="ui5-file-uploader-value-help-icon inputIcon"
 								title={this.valueHelpTitle}
 							/>
