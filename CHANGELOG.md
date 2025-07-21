@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.24](https://github.com/SAP/ui5-webcomponents/compare/v1.24.23...v1.24.24) (2025-07-21)
+
+
+### Bug Fixes
+
+* **ui5-busy-indicator:** make text and circles determine indicator dimensions when there is no content ([#11881](https://github.com/SAP/ui5-webcomponents/issues/11881)) ([4dbce7b](https://github.com/SAP/ui5-webcomponents/commit/4dbce7b1aa87986aac9f5e98c362db7ed206c2d3))
+* **ui5-side-navigation:** ensure correct popover position when hovering the "arrow right" icon on subitems ([#11870](https://github.com/SAP/ui5-webcomponents/issues/11870)) ([0df6689](https://github.com/SAP/ui5-webcomponents/commit/0df6689bbf4d655a2c7717fe6fb01a3f5602c881)), closes [#11121](https://github.com/SAP/ui5-webcomponents/issues/11121)
+
+
+
+
+
 ## [1.24.23](https://github.com/SAP/ui5-webcomponents/compare/v1.24.22...v1.24.23) (2025-07-05)
 
 
