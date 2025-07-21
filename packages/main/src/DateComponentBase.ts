@@ -228,7 +228,11 @@ class DateComponentBase extends UI5Element {
 	}
 
 	get _displayFormat() {
-		return this.displayFormat || this._formatPattern;
+		if (this.displayFormat) {
+			return this.displayFormat;
+		}
+
+		return this._formatPattern;
 	}
 
 	get _valueFormat() {
@@ -236,7 +240,11 @@ class DateComponentBase extends UI5Element {
 			return this.valueFormat;
 		}
 
-		return this._formatPattern || "ISO";
+		if (this._formatPattern) {
+			return this._formatPattern;
+		}
+
+		return "";
 	}
 
 	getDisplayFormat() {
@@ -254,7 +262,7 @@ class DateComponentBase extends UI5Element {
 	}
 
 	getValueFormat() {
-		if (!this.valueFormat) {
+		if (!this._valueFormat) {
 			return this.getISOFormat();
 		}
 

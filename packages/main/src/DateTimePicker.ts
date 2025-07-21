@@ -414,7 +414,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	}
 
 	getValueFormat() {
-		if (!this.valueFormat) {
+		if (!this._valueFormat) {
 			return this.getISOFormat();
 		}
 
@@ -429,6 +429,17 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 				style: this._valueFormat,
 				calendarType: this._primaryCalendarType,
 			});
+	}
+
+	getISOFormat() {
+		if (!this._isoFormatInstance) {
+			this._isoFormatInstance = DateFormat.getDateTimeInstance({
+				strictParsing: true,
+				pattern: "YYYY-MM-dd hh:mm:ss",
+				calendarType: this._primaryCalendarType,
+			});
+		}
+		return this._isoFormatInstance;
 	}
 
 	/**

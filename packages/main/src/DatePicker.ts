@@ -607,6 +607,18 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return this.isValidValue(value) && this.isInValidRange(value);
 	}
 
+	/**
+	 * Checks if the provided value is valid and within valid range.
+	 * @protected
+	 * @param value
+	 */
+	_checkDisplayValueValidity(value: string): boolean {
+		if (value === "") {
+			return true;
+		}
+		return this.isValidDisplayValue(value) && this.isInValidRange(value);
+	}
+
 	_click(e: MouseEvent) {
 		if (isPhone()) {
 			this.responsivePopover!.opener = this;
@@ -690,6 +702,10 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @protected
 	 */
 	normalizeFormattedValue(value: string) {
+		if (!this.getValueFormat().parse(value, true)) {
+			return "";
+		}
+
 		if (value === "") {
 			return value;
 		}
@@ -729,6 +745,14 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	get displayValue() : string {
+		if (!this.getValueFormat().parse(this.value, true)) {
+			return "";
+		}
+
+		if (!this.value) {
+			return "";
+		}
+
 		return this.getDisplayFormat().format(this.getValueFormat().parse(this.value, true), true);
 	}
 
