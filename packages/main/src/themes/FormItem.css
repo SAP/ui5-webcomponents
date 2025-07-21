@@ -28,7 +28,6 @@
 
 .ui5-form-item-root {
 	display: contents;
-	height: 100%;
 	container-type: inline-size;
 	background-color: inherit;
 	color: inherit;
@@ -36,9 +35,14 @@
 
 .ui5-form-item-layout {
 	height: 100%;
+	background-color: var(--test-bg, inherit);
+	color: inherit;
+	height: 100%;
 	display: grid;
+	grid-template-columns: var(--ui5-form-item-layout);
 	grid-template-rows: subgrid;
-	grid-row: span 2;
+	grid-row: var(--ui5-grid-row, 1);
+	align-items: var(--ui5-grid-row-align, center);;
 }
 
 .ui5-form-item-label {
@@ -75,6 +79,11 @@
 	:host {
 		order: var(--ui5-form-item-order-S, unset);
 	}
+
+	:host([data-sap-ui5-label-span~="S12"]) .ui5-form-item-root {
+		--ui5-grid-row: span 2;
+		--ui5-grid-row-align: start;
+	}
 }
 
 /* M  - 1 column by default, up to 2 columns */
@@ -83,12 +92,21 @@
 		order: var(--ui5-form-item-order-M, unset);
 	}
 
+	:host([data-sap-ui5-label-span~="M12"]) .ui5-form-item-root {
+		--ui5-grid-row: span 2;
+		--ui5-grid-row-align: start;
+	}
 }
 
 /* L - 2 columns by default, up to 3 columns */
 @container (width > 1024px) and (width <=1440px) {
 	:host {
 		order: var(--ui5-form-item-order-L, unset);
+	}
+
+	:host([data-sap-ui5-label-span~="L12"]) .ui5-form-item-root {
+		--ui5-grid-row: span 2;
+		--ui5-grid-row-align: start;
 	}
 }
 
@@ -98,4 +116,8 @@
 		order: var(--ui5-form-item-order-Xl, unset);
 	}
 
+	:host([data-sap-ui5-label-span~="XL12"]) .ui5-form-item-root {
+		--ui5-grid-row: span 2;
+		--ui5-grid-row-align: start;
+	}
 }
