@@ -13,16 +13,48 @@ import {
 	DYNAMIC_DATE_RANGE_NEXT_MONTHS_TEXT,
 	DYNAMIC_DATE_RANGE_NEXT_QUARTERS_TEXT,
 	DYNAMIC_DATE_RANGE_NEXT_YEARS_TEXT,
+	DYNAMIC_DATE_RANGE_DAYS_UNIT_TEXT,
+	DYNAMIC_DATE_RANGE_WEEKS_UNIT_TEXT,
+	DYNAMIC_DATE_RANGE_MONTHS_UNIT_TEXT,
+	DYNAMIC_DATE_RANGE_QUARTERS_UNIT_TEXT,
+	DYNAMIC_DATE_RANGE_YEARS_UNIT_TEXT,
+	DYNAMIC_DATE_RANGE_NEXT_COMBINED_TEXT,
+	DYNAMIC_DATE_RANGE_INCLUDED_TEXT,
 } from "../generated/i18n/i18n-defaults.js";
 
+/**
+ * @class
+ * @constructor
+ * @public
+ * @since 2.14.0
+ */
 class NextOptions implements IDynamicDateRangeOption {
 	template: JsxTemplate = LastNextTemplate;
 	operator: string;
 	i18nKey: I18nText;
+	options: Array<string> = [];
 
-	constructor(operator: string, i18nKey: I18nText) {
-		this.operator = operator;
-		this.i18nKey = i18nKey;
+	constructor(operators?: Array<string>) {
+		this.options = operators || ["NEXTDAYS", "NEXTWEEKS", "NEXTMONTHS", "NEXTQUARTERS", "NEXTYEARS"];
+		this.operator = this.options[0];
+		this.i18nKey = this._getI18nKeyForOperator(this.operator);
+	}
+
+	_getI18nKeyForOperator(operator: string): I18nText {
+		switch (operator) {
+		case "NEXTDAYS":
+			return DYNAMIC_DATE_RANGE_NEXT_DAYS_TEXT;
+		case "NEXTWEEKS":
+			return DYNAMIC_DATE_RANGE_NEXT_WEEKS_TEXT;
+		case "NEXTMONTHS":
+			return DYNAMIC_DATE_RANGE_NEXT_MONTHS_TEXT;
+		case "NEXTQUARTERS":
+			return DYNAMIC_DATE_RANGE_NEXT_QUARTERS_TEXT;
+		case "NEXTYEARS":
+			return DYNAMIC_DATE_RANGE_NEXT_YEARS_TEXT;
+		default:
+			return DYNAMIC_DATE_RANGE_NEXT_DAYS_TEXT;
+		}
 	}
 
 	parse(value: string): DynamicDateRangeValue | undefined {
@@ -65,21 +97,17 @@ class NextOptions implements IDynamicDateRangeOption {
 	}
 
 	get text(): string {
-		const currentOptions = DynamicDateRange.getCurrentOptions();
-		if (currentOptions) {
-			const nextOptions = currentOptions.split(",")
-				.map(s => s.trim())
-				.filter(s => s.startsWith("NEXT"));
-
-			if (nextOptions.length > 1) {
-				const units = this.availableOptions
-					.filter(info => nextOptions.includes(info.operator))
-					.map(info => info.unitText);
-				return `Next X ${units.join(" / ")} (included)`;
-			}
+		if (this.options.length > 1) {
+			const units = this.availableOptions
+				.filter(info => this.options.includes(info.operator))
+				.map(info => info.unitText);
+			const unitsText = units.join(` / `);
+			return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_NEXT_COMBINED_TEXT, unitsText);
 		}
 
-		return `${DynamicDateRange.i18nBundle.getText(this.i18nKey)} (included)`;
+		const baseText = DynamicDateRange.i18nBundle.getText(this.i18nKey);
+		const includedText = DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_INCLUDED_TEXT);
+		return `${baseText} ${includedText}`;
 	}
 
 	get icon(): string {
@@ -89,23 +117,23 @@ class NextOptions implements IDynamicDateRangeOption {
 	// Simple getter that provides all available Next options based on current component options
 	get availableOptions() {
 		const allOptions = [
-			{ operator: "NEXTDAYS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_DAYS_TEXT, unitText: "Days" },
-			{ operator: "NEXTWEEKS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_WEEKS_TEXT, unitText: "Weeks" },
-			{ operator: "NEXTMONTHS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_MONTHS_TEXT, unitText: "Months" },
-			{ operator: "NEXTQUARTERS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_QUARTERS_TEXT, unitText: "Quarters" },
-			{ operator: "NEXTYEARS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_YEARS_TEXT, unitText: "Years" },
+			{ operator: "NEXTDAYS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_DAYS_TEXT, unitI18nKey: DYNAMIC_DATE_RANGE_DAYS_UNIT_TEXT },
+			{ operator: "NEXTWEEKS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_WEEKS_TEXT, unitI18nKey: DYNAMIC_DATE_RANGE_WEEKS_UNIT_TEXT },
+			{ operator: "NEXTMONTHS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_MONTHS_TEXT, unitI18nKey: DYNAMIC_DATE_RANGE_MONTHS_UNIT_TEXT },
+			{ operator: "NEXTQUARTERS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_QUARTERS_TEXT, unitI18nKey: DYNAMIC_DATE_RANGE_QUARTERS_UNIT_TEXT },
+			{ operator: "NEXTYEARS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_YEARS_TEXT, unitI18nKey: DYNAMIC_DATE_RANGE_YEARS_UNIT_TEXT },
 		];
 
 		// Always include all Next options - this ensures validation works for grouped options
 		// and individual validation during fallback. The component handles the actual filtering.
 		return allOptions.map(info => ({
 			operator: info.operator,
-			unitText: info.unitText,
+			unitText: DynamicDateRange.i18nBundle.getText(info.unitI18nKey),
 			text: DynamicDateRange.i18nBundle.getText(info.i18nKey),
 		}));
 	}
 
-	private _getNumberFromValue(value: DynamicDateRangeValue): number {
+	_getNumberFromValue(value: DynamicDateRangeValue): number {
 		if (value.values && typeof value.values[0] === "number") {
 			return value.values[0];
 		}
@@ -157,18 +185,12 @@ class NextOptions implements IDynamicDateRangeOption {
 
 		return 1;
 	}
-
-	static get Days() { return NextOptions.bind(null, "NEXTDAYS", DYNAMIC_DATE_RANGE_NEXT_DAYS_TEXT); }
-	static get Weeks() { return NextOptions.bind(null, "NEXTWEEKS", DYNAMIC_DATE_RANGE_NEXT_WEEKS_TEXT); }
-	static get Months() { return NextOptions.bind(null, "NEXTMONTHS", DYNAMIC_DATE_RANGE_NEXT_MONTHS_TEXT); }
-	static get Quarters() { return NextOptions.bind(null, "NEXTQUARTERS", DYNAMIC_DATE_RANGE_NEXT_QUARTERS_TEXT); }
-	static get Years() { return NextOptions.bind(null, "NEXTYEARS", DYNAMIC_DATE_RANGE_NEXT_YEARS_TEXT); }
 }
 
-DynamicDateRange.register("NEXTDAYS", NextOptions.Days);
-DynamicDateRange.register("NEXTWEEKS", NextOptions.Weeks);
-DynamicDateRange.register("NEXTMONTHS", NextOptions.Months);
-DynamicDateRange.register("NEXTQUARTERS", NextOptions.Quarters);
-DynamicDateRange.register("NEXTYEARS", NextOptions.Years);
+DynamicDateRange.register("NEXTDAYS", NextOptions);
+DynamicDateRange.register("NEXTWEEKS", NextOptions);
+DynamicDateRange.register("NEXTMONTHS", NextOptions);
+DynamicDateRange.register("NEXTQUARTERS", NextOptions);
+DynamicDateRange.register("NEXTYEARS", NextOptions);
 
 export default NextOptions;

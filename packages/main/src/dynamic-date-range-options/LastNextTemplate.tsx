@@ -13,15 +13,18 @@ import {
 } from "../generated/i18n/i18n-defaults.js";
 
 export default function LastNextTemplate(this: DynamicDateRange) {
-	const currentOption = this._currentOption;
+	const currentOption = this._currentOption as LastOptions | NextOptions;
 
-	// Check if there are multiple options available (grouped)
-	const availableOptions = (currentOption as LastOptions | NextOptions).availableOptions;
-	const isGrouped = availableOptions && availableOptions.length > 1;
+	const availableOptionInfos = currentOption.availableOptions;
 
-	// Extract current values
+	const filteredOptions = availableOptionInfos.filter(info => 
+		currentOption.options.includes(info.operator)
+	);
+
+	const isGrouped = filteredOptions.length > 1;
+
 	const currentNumber = getCurrentNumber(this.currentValue);
-	const currentOperator = this.currentValue?.operator || currentOption?.operator || "";
+	const currentOperator = this.currentValue?.operator || currentOption?.operator || filteredOptions[0]?.operator || "";
 
 	// Input handlers
 	const handleNumberChange = (e: CustomEvent) => {
@@ -55,8 +58,8 @@ export default function LastNextTemplate(this: DynamicDateRange) {
 					<>
 						<Label style={{ margin: "1rem 0 0.5rem 0", textAlign: "left" }}>{DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_UNIT_OF_TIME_LABEL_TEXT)}</Label>
 						<Select value={currentOperator} onChange={handleUnitChange}>
-							{availableOptions.map(option => (
-								<Option value={option.operator}>
+							{filteredOptions.map(option => (
+								<Option value={option.operator} key={option.operator}>
 									{option.unitText}
 								</Option>
 							))}

@@ -13,16 +13,48 @@ import {
 	DYNAMIC_DATE_RANGE_LAST_MONTHS_TEXT,
 	DYNAMIC_DATE_RANGE_LAST_QUARTERS_TEXT,
 	DYNAMIC_DATE_RANGE_LAST_YEARS_TEXT,
+	DYNAMIC_DATE_RANGE_DAYS_UNIT_TEXT,
+	DYNAMIC_DATE_RANGE_WEEKS_UNIT_TEXT,
+	DYNAMIC_DATE_RANGE_MONTHS_UNIT_TEXT,
+	DYNAMIC_DATE_RANGE_QUARTERS_UNIT_TEXT,
+	DYNAMIC_DATE_RANGE_YEARS_UNIT_TEXT,
+	DYNAMIC_DATE_RANGE_LAST_COMBINED_TEXT,
+	DYNAMIC_DATE_RANGE_INCLUDED_TEXT,
 } from "../generated/i18n/i18n-defaults.js";
 
+/**
+ * @class
+ * @constructor
+ * @public
+ * @since 2.14.0
+ */
 class LastOptions implements IDynamicDateRangeOption {
 	template: JsxTemplate = LastNextTemplate;
 	operator: string;
 	i18nKey: I18nText;
+	options: Array<string> = [];
 
-	constructor(operator: string, i18nKey: I18nText) {
-		this.operator = operator;
-		this.i18nKey = i18nKey;
+	constructor(operators?: Array<string>) {
+		this.options = operators || ["LASTDAYS", "LASTWEEKS", "LASTMONTHS", "LASTQUARTERS", "LASTYEARS"];
+		this.operator = this.options[0] || "LASTDAYS";
+		this.i18nKey = this._getI18nKeyForOperator(this.operator);
+	}
+
+	_getI18nKeyForOperator(operator: string): I18nText {
+		switch (operator) {
+		case "LASTDAYS":
+			return DYNAMIC_DATE_RANGE_LAST_DAYS_TEXT;
+		case "LASTWEEKS":
+			return DYNAMIC_DATE_RANGE_LAST_WEEKS_TEXT;
+		case "LASTMONTHS":
+			return DYNAMIC_DATE_RANGE_LAST_MONTHS_TEXT;
+		case "LASTQUARTERS":
+			return DYNAMIC_DATE_RANGE_LAST_QUARTERS_TEXT;
+		case "LASTYEARS":
+			return DYNAMIC_DATE_RANGE_LAST_YEARS_TEXT;
+		default:
+			return DYNAMIC_DATE_RANGE_LAST_DAYS_TEXT;
+		}
 	}
 
 	parse(value: string): DynamicDateRangeValue | undefined {
@@ -65,21 +97,17 @@ class LastOptions implements IDynamicDateRangeOption {
 	}
 
 	get text(): string {
-		const currentOptions = DynamicDateRange.getCurrentOptions();
-		if (currentOptions) {
-			const lastOptions = currentOptions.split(",")
-				.map(s => s.trim())
-				.filter(s => s.startsWith("LAST"));
-
-			if (lastOptions.length > 1) {
-				const units = this.availableOptions
-					.filter(info => lastOptions.includes(info.operator))
-					.map(info => info.unitText);
-				return `Last X ${units.join(" / ")} (included)`;
-			}
+		if (this.options.length > 1) {
+			const units = this.availableOptions
+				.filter(info => this.options.includes(info.operator))
+				.map(info => info.unitText);
+			const unitsText = units.join(` / `);
+			return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_LAST_COMBINED_TEXT, unitsText);
 		}
 
-		return `${DynamicDateRange.i18nBundle.getText(this.i18nKey)} (included)`;
+		const baseText = DynamicDateRange.i18nBundle.getText(this.i18nKey);
+		const includedText = DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_INCLUDED_TEXT);
+		return `${baseText} ${includedText}`;
 	}
 
 	get icon(): string {
@@ -89,23 +117,21 @@ class LastOptions implements IDynamicDateRangeOption {
 	// Simple getter that provides all available Last options based on current component options
 	get availableOptions() {
 		const allOptions = [
-			{ operator: "LASTDAYS", i18nKey: DYNAMIC_DATE_RANGE_LAST_DAYS_TEXT, unitText: "Days" },
-			{ operator: "LASTWEEKS", i18nKey: DYNAMIC_DATE_RANGE_LAST_WEEKS_TEXT, unitText: "Weeks" },
-			{ operator: "LASTMONTHS", i18nKey: DYNAMIC_DATE_RANGE_LAST_MONTHS_TEXT, unitText: "Months" },
-			{ operator: "LASTQUARTERS", i18nKey: DYNAMIC_DATE_RANGE_LAST_QUARTERS_TEXT, unitText: "Quarters" },
-			{ operator: "LASTYEARS", i18nKey: DYNAMIC_DATE_RANGE_LAST_YEARS_TEXT, unitText: "Years" },
+			{ operator: "LASTDAYS", i18nKey: DYNAMIC_DATE_RANGE_LAST_DAYS_TEXT, unitI18nKey: DYNAMIC_DATE_RANGE_DAYS_UNIT_TEXT },
+			{ operator: "LASTWEEKS", i18nKey: DYNAMIC_DATE_RANGE_LAST_WEEKS_TEXT, unitI18nKey: DYNAMIC_DATE_RANGE_WEEKS_UNIT_TEXT },
+			{ operator: "LASTMONTHS", i18nKey: DYNAMIC_DATE_RANGE_LAST_MONTHS_TEXT, unitI18nKey: DYNAMIC_DATE_RANGE_MONTHS_UNIT_TEXT },
+			{ operator: "LASTQUARTERS", i18nKey: DYNAMIC_DATE_RANGE_LAST_QUARTERS_TEXT, unitI18nKey: DYNAMIC_DATE_RANGE_QUARTERS_UNIT_TEXT },
+			{ operator: "LASTYEARS", i18nKey: DYNAMIC_DATE_RANGE_LAST_YEARS_TEXT, unitI18nKey: DYNAMIC_DATE_RANGE_YEARS_UNIT_TEXT },
 		];
 
-		// Always include all Last options - this ensures validation works for grouped options
-		// and individual validation during fallback. The component handles the actual filtering.
 		return allOptions.map(info => ({
 			operator: info.operator,
-			unitText: info.unitText,
+			unitText: DynamicDateRange.i18nBundle.getText(info.unitI18nKey),
 			text: DynamicDateRange.i18nBundle.getText(info.i18nKey),
 		}));
 	}
 
-	private _getNumberFromValue(value: DynamicDateRangeValue): number {
+	_getNumberFromValue(value: DynamicDateRangeValue): number {
 		if (value.values && typeof value.values[0] === "number") {
 			return value.values[0];
 		}
@@ -157,18 +183,11 @@ class LastOptions implements IDynamicDateRangeOption {
 
 		return 1;
 	}
-
-	static get Days() { return LastOptions.bind(null, "LASTDAYS", DYNAMIC_DATE_RANGE_LAST_DAYS_TEXT); }
-	static get Weeks() { return LastOptions.bind(null, "LASTWEEKS", DYNAMIC_DATE_RANGE_LAST_WEEKS_TEXT); }
-	static get Months() { return LastOptions.bind(null, "LASTMONTHS", DYNAMIC_DATE_RANGE_LAST_MONTHS_TEXT); }
-	static get Quarters() { return LastOptions.bind(null, "LASTQUARTERS", DYNAMIC_DATE_RANGE_LAST_QUARTERS_TEXT); }
-	static get Years() { return LastOptions.bind(null, "LASTYEARS", DYNAMIC_DATE_RANGE_LAST_YEARS_TEXT); }
 }
-
-DynamicDateRange.register("LASTDAYS", LastOptions.Days);
-DynamicDateRange.register("LASTWEEKS", LastOptions.Weeks);
-DynamicDateRange.register("LASTMONTHS", LastOptions.Months);
-DynamicDateRange.register("LASTQUARTERS", LastOptions.Quarters);
-DynamicDateRange.register("LASTYEARS", LastOptions.Years);
+DynamicDateRange.register("LASTDAYS", LastOptions);
+DynamicDateRange.register("LASTWEEKS", LastOptions);
+DynamicDateRange.register("LASTMONTHS", LastOptions);
+DynamicDateRange.register("LASTQUARTERS", LastOptions);
+DynamicDateRange.register("LASTYEARS", LastOptions);
 
 export default LastOptions;

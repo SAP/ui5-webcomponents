@@ -105,8 +105,8 @@ interface IDynamicDateRangeOption {
  * - "TOMORROW" - Represents the next date. An example value is `{ operator: "TOMORROW"}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/Tomorrow.js";`
  * - "DATE" - Represents a single date. An example value is `{ operator: "DATE", values: [new Date()]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/SingleDate.js";`
  * - "DATERANGE" - Represents a range of dates. An example value is `{ operator: "DATERANGE", values: [new Date(), new Date()]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/DateRange.js";`
- * - "LASTOPTIONS" - Represents last X days / weeks / months / quarters / years from today. An example value is `{ operator: "LASTDAYS", values: [new Date("2025-06-02"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastOptions.js";`
- * - "NEXTOPTIONS" - Represents next X days / weeks / months / quarters / years from today. An example value is `{ operator: "NEXTDAYS", values: [new Date("2025-06-05"), new Date("2025-06-12")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextOptions.js";`
+ * - "LASTOPTIONS" - Represents Last X Days / Weeks / Months / Quarters / Years from today. An example value is `{ operator: "LASTDAYS", values: [new Date("2025-06-02"), new Date("2025-06-05")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastOptions.js";`
+ * - "NEXTOPTIONS" - Represents Next X Days / Weeks / Months / Quarters / Years from today. An example value is `{ operator: "NEXTDAYS", values: [new Date("2025-06-05"), new Date("2025-06-12")]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/NextOptions.js";`
  *
  * ### ES6 Module Import
  *
@@ -186,23 +186,12 @@ class DynamicDateRange extends UI5Element {
 	@query("[ui5-list]")
 	_list?: List;
 
-	// Static reference to current instance for options to access context
-	static _currentInstance?: DynamicDateRange;
-
 	// Store last selected values for state restoration
 	_lastSelectedValue?: DynamicDateRangeValue;
 
 	onBeforeRendering() {
-		DynamicDateRange._currentInstance = this;
 		this.optionsObjects = this._createNormalizedOptions();
 		this._focusSelectedItem();
-	}
-
-	/**
-	 * Static method for options to get the current component's options string
-	 */
-	static getCurrentOptions(): string {
-		return DynamicDateRange._currentInstance?.options || "";
 	}
 
 	/**
@@ -210,28 +199,22 @@ class DynamicDateRange extends UI5Element {
 	 */
 	_createNormalizedOptions(): Array<IDynamicDateRangeOption> {
 		const optionKeys = this.splitOptions(this.options).filter(Boolean);
-		const allOptions = optionKeys
-			.map(key => DynamicDateRange.getOptionClass(key))
-			.filter((OptionClass): OptionClass is new () => IDynamicDateRangeOption => OptionClass !== undefined)
-			.map(OptionClass => new OptionClass());
 
-		return this._groupByConstructor(allOptions);
-	}
+		// Group option keys by their constructor class
+		const constructorGroups = new Map<new(operators?: string[]) => IDynamicDateRangeOption, Array<string>>();
 
-	/**
-	 * Groups options by constructor, keeping one representative per type
-	 */
-	_groupByConstructor(options: Array<IDynamicDateRangeOption>): Array<IDynamicDateRangeOption> {
-		const groups = new Map<new() => IDynamicDateRangeOption, IDynamicDateRangeOption>();
-
-		options.forEach(option => {
-			const constructor = option.constructor as new () => IDynamicDateRangeOption;
-			if (!groups.has(constructor)) {
-				groups.set(constructor, option);
+		optionKeys.forEach(key => {
+			const OptionClass = DynamicDateRange.getOptionClass(key);
+			if (OptionClass) {
+				const operators = constructorGroups.get(OptionClass) || [];
+				operators.push(key);
+				constructorGroups.set(OptionClass, operators);
 			}
 		});
 
-		return Array.from(groups.values());
+		return Array.from(constructorGroups.entries()).map(([Constructor, operators]) => {
+			return new Constructor(operators);
+		});
 	}
 
 	_focusSelectedItem() {
