@@ -701,6 +701,8 @@ describe("Popover opener", () => {
 
 		cy.get<Popover>("[ui5-popover]").ui5PopoverOpened();
 
+		cy.wait(100);
+
 		cy.get("#divContent").realClick();
 
 		cy.get("[ui5-popover]").should("be.focused");

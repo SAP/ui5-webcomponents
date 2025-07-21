@@ -12,6 +12,8 @@ import {
 	isEnter,
 	isLeft,
 	isRight,
+	isHome,
+	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
@@ -46,6 +48,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import type ShellBarItem from "./ShellBarItem.js";
 import type { ShellBarItemAccessibilityAttributes } from "./ShellBarItem.js";
+import type ShellBarBranding from "./ShellBarBranding.js";
 
 // Templates
 import ShellBarTemplate from "./ShellBarTemplate.js";
@@ -457,6 +460,19 @@ class ShellBar extends UI5Element {
 	assistant!: Array<IButton>;
 
 	/**
+	 * Defines the branding slot.
+	 * The `ui5-shellbar-branding` component is intended to be placed inside this slot.
+	 * Content placed here takes precedence over the `primaryTitle` property and the `logo` content slot.
+	 *
+	 * **Note:** The `branding` slot is in an experimental state and is a subject to change.
+	 *
+	 * @since 2.12.0
+	 * @public
+	 */
+	@slot()
+	branding!: Array<ShellBarBranding>;
+
+	/**
 	 * Defines the `ui5-shellbar` additional items.
 	 *
 	 * **Note:**
@@ -661,7 +677,7 @@ class ShellBar extends UI5Element {
 	}
 
 	_onKeyDown(e: KeyboardEvent) {
-		if (!isLeft(e) && !isRight(e)) {
+		if (!isLeft(e) && !isRight(e) && !isHome(e) && !isEnd(e)) {
 			return;
 		}
 
@@ -693,6 +709,12 @@ class ShellBar extends UI5Element {
 				this._focusPreviousItem(items, currentIndex);
 			} else if (isRight(e)) {
 				this._focusNextItem(items, currentIndex);
+			} else if (isHome(e)) {
+				// Move focus to the first ShellBar item
+				items[0]?.focus();
+			} else if (isEnd(e)) {
+				// Move focus to the last ShellBar item
+				items[items.length - 1]?.focus();
 			}
 		}
 	}
@@ -892,6 +914,10 @@ class ShellBar extends UI5Element {
 		if (this.breakpointSize !== mappedSize) {
 			this.breakpointSize = mappedSize;
 		}
+
+		this.branding.forEach(brandingEl => {
+			brandingEl._isSBreakPoint = this.isSBreakPoint;
+		});
 	}
 
 	_hideItems(items: IShellBarHidableItem[]) {
@@ -1456,6 +1482,10 @@ class ShellBar extends UI5Element {
 
 	get hasAssistant() {
 		return !!this.assistant.length;
+	}
+
+	get hasBranding() {
+		return !!this.branding.length;
 	}
 
 	get hasSearchField() {

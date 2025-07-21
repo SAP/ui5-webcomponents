@@ -16,6 +16,7 @@ import {
 
 // Styles
 import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
+import { patchScopingSuffix } from "./utils/CompatCustomElementsScope.js";
 
 /**
  * @class
@@ -108,6 +109,8 @@ class TableGroupRow extends UI5Element implements ITableRow {
 		this.fireDecoratorEvent("_focused", e);
 	}
 }
+
+patchScopingSuffix(TableGroupRow);
 
 TableGroupRow.define();
 

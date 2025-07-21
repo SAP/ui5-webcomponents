@@ -1164,6 +1164,18 @@ class FlexibleColumnLayout extends UI5Element {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-column--end")!;
 	}
 
+	get isStartColumnCollapsing() {
+		return this.startColumnDOM?.classList.contains("ui5-fcl-column-collapse-animation");
+	}
+
+	get isMidColumnCollapsing() {
+		return this.midColumnDOM?.classList.contains("ui5-fcl-column-collapse-animation");
+	}
+
+	get isEndColumnCollapsing() {
+		return this.endColumnDOM?.classList.contains("ui5-fcl-column-collapse-animation");
+	}
+
 	get accStartColumnText() {
 		return this.accessibilityAttributes.startColumn?.name || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
