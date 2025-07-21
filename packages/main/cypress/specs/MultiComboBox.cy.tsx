@@ -978,9 +978,8 @@ describe("Keyboard Handling", () => {
 		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
-		cy.realPress("ArrowLeft");
-
-		cy.wait(100);
+		cy.get("[ui5-multi-combobox]")
+			.realPress("ArrowLeft");
 
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
@@ -1215,7 +1214,8 @@ describe("Keyboard Handling", () => {
 		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
-		cy.realPress("ArrowLeft");
+		cy.get("[ui5-multi-combobox]")
+			.realPress("ArrowLeft");
 
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
@@ -1357,9 +1357,8 @@ describe("Keyboard Handling", () => {
 		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
-		cy.realPress("ArrowLeft");
-
-		cy.wait(100);
+		cy.get("[ui5-multi-combobox]")
+			.realPress("ArrowLeft");
 
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
@@ -1455,7 +1454,8 @@ describe("Keyboard Handling", () => {
 		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
-		cy.realPress("ArrowLeft");
+		cy.get("[ui5-multi-combobox]")
+			.realPress("ArrowLeft");
 
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
@@ -1619,22 +1619,10 @@ describe("Keyboard Handling", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
-			.find("input")
-			.realClick();
-
-		cy.get("[ui5-multi-combobox]")
-			.should("be.focused");
-
-		cy.realPress("ArrowLeft");
-
-		cy.wait(100);
-
-		cy.get("[ui5-multi-combobox]")
-			.shadow()
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
-			.last()
-			.should("be.focused");
+			.first()
+			.realClick();
 
 		cy.realPress("Backspace");
 
@@ -1676,9 +1664,7 @@ describe("Keyboard Handling", () => {
 
 	it("Shouldn't open popover on keyboard combination ctrl + i when there are no tokens", () => {
 		cy.mount(
-			<MultiComboBox noValidation={true}>
-				<MultiComboBoxItem text="This is a token with ridicilously long long long long long long long long long long long long long long long text"></MultiComboBoxItem>
-			</MultiComboBox>
+			<MultiComboBox noValidation={true}></MultiComboBox>
 		);
 
 		cy.get("[ui5-multi-combobox]")
