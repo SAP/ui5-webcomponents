@@ -6,7 +6,7 @@ import NotificationListItem from "../../src/NotificationListItem.js";
 function Sample() {
 	return <NotificationList id="nl1">
 		<NotificationListGroupItem
-			 titleText="Group 1"
+			titleText="Group 1"
 			id="group1"
 			growing="Button">
 			<NotificationListItem id="item11" showClose>
@@ -24,7 +24,7 @@ function Sample() {
 		</NotificationListGroupItem>
 		<NotificationListGroupItem
 			id="group2"
-			 titleText="Group 2">
+			titleText="Group 2">
 			<NotificationListItem id="item21" showClose>
 				Group 2 Item 1
 			</NotificationListItem>
@@ -40,7 +40,7 @@ function Sample() {
 		</NotificationListGroupItem>
 		<NotificationListGroupItem
 			growing="Button"
-			 titleText="Group 3">
+			titleText="Group 3">
 			<NotificationListItem showClose>
 				Group 3 Item 1
 			</NotificationListItem>
@@ -91,7 +91,7 @@ describe("Notification List Item Tests", () => {
 		cy.get("#nlgi3")
 			.shadow()
 			.find(".ui5-nli-group-root")
-			.should("have.attr", "tabindex");	
+			.should("have.attr", "tabindex");
 
 		cy.get("#nlgi3").realClick();
 		cy.get("#nlgi3").should("be.focused");
@@ -183,7 +183,7 @@ describe("Notification List Item Tests", () => {
 				<NotificationListItem
 					id="nli3a"
 					importance="Important"
-					 titleText="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
+					titleText="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
 					style="width: 25rem;" />
 			</NotificationList>
 		);
@@ -210,9 +210,9 @@ describe("Notification List Item Tests", () => {
 			.find('.ui5-nli-content')
 			.invoke('outerHeight')
 			.as("heightAfterContent");
-	
+
 		cy.get("@heightAfterContent")
-			.should(function(heightAfterContent) {
+			.should(function (heightAfterContent) {
 				expect(heightAfterContent).to.be.greaterThan(this.heightBeforeContent);
 			});
 
@@ -223,7 +223,7 @@ describe("Notification List Item Tests", () => {
 			.as("heightAfterTitle");
 
 		cy.get("@heightAfterTitle")
-			.should(function(heightAfterTitle) {
+			.should(function (heightAfterTitle) {
 				expect(heightAfterTitle).to.be.greaterThan(this.heightBeforeTitle);
 			});
 
@@ -234,7 +234,7 @@ describe("Notification List Item Tests", () => {
 			.shadow()
 			.find('.ui5-nli-content')
 			.invoke('outerHeight')
-			.should(function(heightAfterKeysContent) {
+			.should(function (heightAfterKeysContent) {
 				expect(this.heightAfterContent).to.be.greaterThan(heightAfterKeysContent);
 			});
 
@@ -242,7 +242,7 @@ describe("Notification List Item Tests", () => {
 			.shadow()
 			.find('.ui5-nli-title-text')
 			.invoke('outerHeight')
-			.then(function(heightAfterKeysTitle) {
+			.then(function (heightAfterKeysTitle) {
 				expect(this.heightAfterTitle).to.be.greaterThan(heightAfterKeysTitle);
 			});
 	});
@@ -251,7 +251,7 @@ describe("Notification List Item Tests", () => {
 		cy.mount(
 			<NotificationListItem
 				id="nli3"
-				 titleText="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
+				titleText="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 			</NotificationListItem>
@@ -331,7 +331,7 @@ describe("Notification List Item Tests", () => {
 
 		cy.get("#nli1")
 			.find("[ui5-menu]")
-			.should("have.attr", "open");
+			.ui5MenuOpened();
 
 		cy.get("#nli1")
 			.shadow()
@@ -348,7 +348,7 @@ describe("Notification List Item Tests", () => {
 		cy.realPress(["F10", "Shift"]);
 		cy.get("#nli1")
 			.find("[ui5-menu]")
-			.should("have.attr", "open");
+			.ui5MenuOpened();
 	});
 
 	// Accessibility tests follows
@@ -356,7 +356,7 @@ describe("Notification List Item Tests", () => {
 	it("tests List Item ACC ariaLabelledBy and ariaDescribedBy", () => {
 		cy.mount(
 			<NotificationListGroupItem>
-				<NotificationListItem id="nli1"  titleText="New order #2201">
+				<NotificationListItem id="nli1" titleText="New order #2201">
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 
 					<span slot="footnotes">Office Notifications</span>
@@ -366,7 +366,7 @@ describe("Notification List Item Tests", () => {
 				<NotificationListItem
 					id="nli3"
 					importance="Important"
-					 titleText="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
+					titleText="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
 				>
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 
@@ -523,7 +523,7 @@ describe("Notification List Item Tests", () => {
 	it("tests aria attributes click on ShowMore", () => {
 		cy.mount(
 			<NotificationListItem id="nli3a"
-				 titleText="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
+				titleText="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
 				style={{ width: '25rem' }} />
 		);
 
@@ -563,7 +563,7 @@ describe("Notification List Item Tests", () => {
 	it("tests Group List aria-labelledby", () => {
 		cy.mount(
 			<NotificationList>
-				<NotificationListGroupItem id="nlgi1"  titleText="Orders" />
+				<NotificationListGroupItem id="nlgi1" titleText="Orders" />
 
 				<NotificationListGroupItem id="nlgi4" loading />
 			</NotificationList>
