@@ -113,6 +113,12 @@ type ListItemClickEventDetail = {
 
 type ListMoveEventDetail = MoveEventDetail;
 
+type ListAccessibilityAttributes = {
+	growingButton?: {
+		name?: string,
+	},
+}
+
 /**
  * @class
  *
@@ -403,6 +409,26 @@ class List extends UI5Element {
 	accessibleName?: string;
 
 	/**
+	* Defines additional accessibility attributes on different areas of the component.
+ 	*
+	* The accessibilityAttributes object has the following field:
+	*
+	*  - **growingButton**: `growingButton.name`.
+	*
+ 	* The accessibility attributes support the following values:
+ 	*
+	* - **name**: Defines the accessible ARIA name of the growing button.
+	* Accepts any string.
+	*
+ 	* **Note:** The `accessibilityAttributes` property is in an experimental state and is a subject to change.
+	* @default {}
+ 	* @public
+ 	* @since 2.13.0
+ 	*/
+	 @property({ type: Object })
+	 accessibilityAttributes: ListAccessibilityAttributes = {};
+
+	/**
 	 * Defines the IDs of the elements that label the component.
 	 * @default undefined
 	 * @public
@@ -690,6 +716,14 @@ class List extends UI5Element {
 
 	get ariaDescriptionText() {
 		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this) || this._getDescriptionForGroups();
+	}
+
+	get growingButtonAriaLabel() {
+		return this.accessibilityAttributes.growingButton?.name;
+	}
+
+	get growingButtonAriaLabelledBy() {
+		return this.accessibilityAttributes.growingButton?.name ? undefined : `${this._id}-growingButton-text`;
 	}
 
 	get scrollContainer() {
@@ -1453,4 +1487,5 @@ export type {
 	ListItemToggleEventDetail,
 	ListSelectionChangeEventDetail,
 	ListMoveEventDetail,
+	ListAccessibilityAttributes,
 };
