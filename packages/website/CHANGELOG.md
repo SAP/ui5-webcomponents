@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.0...v2.13.0-rc.1) (2025-07-17)
+
+
+### Bug Fixes
+
+* **framework:** make "yarn start:website" script work with both node 20 and 24 ([#11889](https://github.com/SAP/ui5-webcomponents/issues/11889)) ([ea6faee](https://github.com/SAP/ui5-webcomponents/commit/ea6faee2c9a24480a56cf2ea7f3e3310a685cf6f))
+
+
+### Features
+
+* **ui5-file-uploader:** apply new design concept ([#11589](https://github.com/SAP/ui5-webcomponents/issues/11589)) ([6f61cad](https://github.com/SAP/ui5-webcomponents/commit/6f61cad96d03be2edeb8c61f587e050a1dd3c10e)), closes [#11578](https://github.com/SAP/ui5-webcomponents/issues/11578) [#11604](https://github.com/SAP/ui5-webcomponents/issues/11604) [#10549](https://github.com/SAP/ui5-webcomponents/issues/10549) [#11611](https://github.com/SAP/ui5-webcomponents/issues/11611) [#5893](https://github.com/SAP/ui5-webcomponents/issues/5893) [#10909](https://github.com/SAP/ui5-webcomponents/issues/10909) [#8395](https://github.com/SAP/ui5-webcomponents/issues/8395)
+
+
+
+
+
+# [2.13.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0...v2.13.0-rc.0) (2025-07-10)
+
+**Note:** Version bump only for package @ui5/webcomponents-website
+
+
+
+
+
+# [2.12.0](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.3...v2.12.0) (2025-07-04)
+
+
+### Features
+
+* **ui5-shellbar-branding:** introduce new component ([#11320](https://github.com/SAP/ui5-webcomponents/issues/11320)) ([951aa44](https://github.com/SAP/ui5-webcomponents/commit/951aa446da159e466dc672cfd87a338380e62521))
+
+
+
+
+
+# [2.12.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.2...v2.12.0-rc.3) (2025-07-03)
+
+
+### Features
+
+* **ui5-checkbox:** add value property ([#11775](https://github.com/SAP/ui5-webcomponents/issues/11775)) ([cc00019](https://github.com/SAP/ui5-webcomponents/commit/cc00019023a8ae90b2c45f4dc9e533ad536e8c4f))
+* **ui5-user-menu:** add item groups with checkable menu items ([#11832](https://github.com/SAP/ui5-webcomponents/issues/11832)) ([d0758fd](https://github.com/SAP/ui5-webcomponents/commit/d0758fd8c7af19dc25c5463c2dd8bb57b7599f52))
+
+
+
+
+
+# [2.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.1...v2.12.0-rc.2) (2025-06-26)
+
+
+### Features
+
+* **ui5-menu:** menu item groups with checkable menu items ([#10028](https://github.com/SAP/ui5-webcomponents/issues/10028)) ([161af0f](https://github.com/SAP/ui5-webcomponents/commit/161af0fe9912145ddd4fe19f4d71c8aa23db2e15))
+* **ui5-table-selection-multi:** headerSelector property added ([#11711](https://github.com/SAP/ui5-webcomponents/issues/11711)) ([6082798](https://github.com/SAP/ui5-webcomponents/commit/608279803c57e385af1d0d96fd031755e4d098c4)), closes [#5873](https://github.com/SAP/ui5-webcomponents/issues/5873) [#5873](https://github.com/SAP/ui5-webcomponents/issues/5873) [#5873](https://github.com/SAP/ui5-webcomponents/issues/5873) [#5873](https://github.com/SAP/ui5-webcomponents/issues/5873)
+
+
+
+
+
+# [2.12.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.12.0-rc.0...v2.12.0-rc.1) (2025-06-19)
+
+**Note:** Version bump only for package @ui5/webcomponents-website
+
+
+
+
+
 # [2.12.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.11.0...v2.12.0-rc.0) (2025-06-12)
 
 **Note:** Version bump only for package @ui5/webcomponents-website

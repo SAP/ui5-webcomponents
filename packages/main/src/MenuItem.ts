@@ -10,6 +10,9 @@ import {
 	isRight,
 	isEnter,
 	isSpace,
+	isEnterShift,
+	isSpaceShift,
+	isShift,
 	isTabNext,
 	isTabPrevious,
 	isDown,
@@ -22,10 +25,14 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
+import MenuItemGroupCheckMode from "./types/MenuItemGroupCheckMode.js";
 import type { ListItemAccessibilityAttributes } from "./ListItem.js";
+import type List from "./List.js";
 import ListItem from "./ListItem.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import type PopoverPlacement from "./types/PopoverPlacement.js";
+import { isInstanceOfMenuSeparator } from "./MenuSeparator.js";
+import { isInstanceOfMenuItemGroup } from "./MenuItemGroup.js";
 import MenuItemTemplate from "./MenuItemTemplate.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
@@ -80,7 +87,7 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
  * **Note:** Since 1.14.0 the event is also fired before a sub-menu opens.
  * @public
  * @since 1.10.0
- * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
+ * @param { HTMLElement } item The menu item that triggers opening of the sub-menu or undefined when fired upon root menu opening.
  */
 @event("before-open", {
 	cancelable: true,
@@ -124,15 +131,26 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
  * @since 1.10.0
  */
 @event("close")
+
+/**
+ * Fired when an item is checked or unchecked.
+ * @public
+ * @since 2.12.0
+ */
+@event("check", {
+	bubbles: true,
+})
 class MenuItem extends ListItem implements IMenuItem {
 	eventDetails!: ListItem["eventDetails"] & {
 		"before-open": MenuBeforeOpenEventDetail
 		"open": void
 		"before-close": MenuBeforeCloseEventDetail
 		"close": void
-		"close-menu": void,
-		"exit-end-content": MenuNavigateOutOfEndContentEventDetail,
+		"close-menu": void
+		"check": void
+		"exit-end-content": MenuNavigateOutOfEndContentEventDetail
 	}
+
 	/**
 	 * Defines the text of the tree item.
 	 * @default undefined
@@ -170,9 +188,9 @@ class MenuItem extends ListItem implements IMenuItem {
 	icon?: string;
 
 	/**
-	 * Defines whether `ui5-menu-item` is in disabled state.
+	 * Defines whether menu item is in disabled state.
 	 *
-	 * **Note:** A disabled `ui5-menu-item` is noninteractive.
+	 * **Note:** A disabled menu item is noninteractive.
 	 * @default false
 	 * @public
 	 */
@@ -180,9 +198,9 @@ class MenuItem extends ListItem implements IMenuItem {
 	disabled = false;
 
 	/**
-	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding menu popover.
 	 *
-	 * **Note:** If set to `true` a `ui5-busy-indicator` component will be displayed into the related one to the current `ui5-menu-item` sub-menu popover.
+	 * **Note:** If set to `true` a busy indicator component will be displayed into the related one to the current menu item sub-menu popover.
 	 * @default false
 	 * @public
 	 * @since 1.13.0
@@ -191,7 +209,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	loading = false;
 
 	/**
-	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding menu popover.
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
@@ -218,13 +236,26 @@ class MenuItem extends ListItem implements IMenuItem {
 	tooltip?: string;
 
 	/**
+	 * Defines whether menu item is in checked state.
+	 *
+	 * **Note:** checked state is only taken into account when menu item is added to menu item group
+	 * with `checkMode` other than `None`.
+	 *
+	 * **Note:** A checked menu item has a checkmark displayed at its end.
+	 * @default false
+	 * @public
+	 * @since 2.12.0
+	 */
+	@property({ type: Boolean })
+	checked = false;
+
+	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
 	 * The following fields are supported:
 	 *
 	 * - **ariaKeyShortcuts**: Indicated the availability of a keyboard shortcuts defined for the menu item.
 	 *
 	 * - **role**: Defines the role of the menu item. If not set, menu item will have default role="menuitem".
-	 *
 	 * @public
 	 * @since 2.1.0
 	 * @default {}
@@ -239,9 +270,17 @@ class MenuItem extends ListItem implements IMenuItem {
 	_siblingsWithIcon = false;
 
 	/**
+	 * Defines the component's check mode.
+	 * @default "None"
+	 * @private
+	 */
+	@property()
+	_checkMode: `${MenuItemGroupCheckMode}` = "None";
+
+	/**
 	 * Defines the items of this component.
 	 *
-	 * **Note:** The slot can hold `ui5-menu-item` and `ui5-menu-separator` items.
+	 * **Note:** The slot can hold menu item and menu separator items.
 	 *
 	 * If there are items added to this slot, an arrow will be displayed at the end
 	 * of the item in order to indicate that there are items added. In that case components added
@@ -264,6 +303,10 @@ class MenuItem extends ListItem implements IMenuItem {
 	 *
 	 * The priority of what will be displayed at the end of the menu item is as follows:
 	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
+	 *
+	 * Application developers are responsible for ensuring that interactive elements placed in the `endContent` slot
+	 * have the correct accessibility behaviour, including their enabled or disabled states.
+	 * The menu does not manage these aspects when the menu item state changes.
 	 * @public
 	 * @since 2.0.0
 	 */
@@ -274,6 +317,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	static i18nBundle: I18nBundle;
 
 	_itemNavigation: ItemNavigation;
+	_shiftPressed: boolean = false;
 
 	constructor() {
 		super();
@@ -285,12 +329,20 @@ class MenuItem extends ListItem implements IMenuItem {
 		});
 	}
 
+	get _list() {
+		return this.shadowRoot && this.shadowRoot.querySelector<List>("[ui5-list]")!;
+	}
+
 	get _navigableItems(): Array<HTMLElement> {
 		return [...this.endContent].filter(item => {
 			return item.hasAttribute("ui5-button")
 			|| item.hasAttribute("ui5-link")
 			|| (item.hasAttribute("ui5-icon") && item.getAttribute("mode") === "Interactive");
 		});
+	}
+
+	get _isCheckable() {
+		return this._checkMode !== MenuItemGroupCheckMode.None;
 	}
 
 	_navigateToEndContent(shouldNavigateToPreviousItem: boolean) {
@@ -349,15 +401,14 @@ class MenuItem extends ListItem implements IMenuItem {
 		return MenuItem.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
 	}
 
-	get isSeparator(): boolean {
-		return false;
-	}
-
 	onBeforeRendering() {
 		super.onBeforeRendering();
-		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
 
-		this._menuItems.forEach(item => {
+		const siblingsWithIcon = this._allMenuItems.some(menuItem => !!menuItem.icon);
+
+		this._setupItemNavigation();
+
+		this._allMenuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
 	}
@@ -366,7 +417,8 @@ class MenuItem extends ListItem implements IMenuItem {
 		await renderFinished();
 
 		if (this.hasSubmenu && this.isSubMenuOpen) {
-			return this._menuItems[0].focus(focusOptions);
+			const menuItems = this._allMenuItems;
+			return menuItems[0] && menuItems[0].focus(focusOptions);
 		}
 
 		return super.focus(focusOptions);
@@ -376,32 +428,95 @@ class MenuItem extends ListItem implements IMenuItem {
 		return true;
 	}
 
+	get _role() {
+		switch (this._checkMode) {
+		case MenuItemGroupCheckMode.Single:
+			return "menuitemradio";
+		case MenuItemGroupCheckMode.Multiple:
+			return "menuitemcheckbox";
+		default:
+			return "menuitem";
+		}
+	}
+
 	get _accInfo() {
 		const accInfoSettings: {
 			role: AriaRole;
 			ariaHaspopup?: `${AriaHasPopup}`;
 			ariaKeyShortcuts?: string;
+			ariaExpanded?: boolean;
 			ariaHidden?: boolean;
+			ariaChecked?: boolean;
 		} = {
-			role: this.accessibilityAttributes.role || "menuitem",
+			role: this.accessibilityAttributes.role || this._role,
 			ariaHaspopup: this.hasSubmenu ? "menu" : undefined,
 			ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
+			ariaExpanded: this.hasSubmenu ? this.isSubMenuOpen : undefined,
 			ariaHidden: !!this.additionalText && !!this.accessibilityAttributes.ariaKeyShortcuts ? true : undefined,
+			ariaChecked: this._markChecked ? true : undefined,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };
 	}
 
 	get _popover() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		return this.shadowRoot && this.shadowRoot.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
+	get _markChecked() {
+		return !this.hasSubmenu && this.checked && this._checkMode !== MenuItemGroupCheckMode.None;
+	}
+
+	/** Returns menu item groups */
+	get _menuItemGroups() {
+		return this.items.filter(isInstanceOfMenuItemGroup);
+	}
+
+	/** Returns menu items */
 	get _menuItems() {
-		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+		return this.items.filter(isInstanceOfMenuItem);
+	}
+
+	/** Returns all menu items (including those in groups */
+	get _allMenuItems() {
+		const items: MenuItem[] = [];
+
+		this.items.forEach(item => {
+			if (isInstanceOfMenuItemGroup(item)) {
+				items.push(...item._menuItems);
+			} else if (!isInstanceOfMenuSeparator(item)) {
+				items.push(item as MenuItem);
+			}
+		});
+
+		return items;
+	}
+
+	/** Returns menu items included in the ItemNavigation */
+	get _navigatableMenuItems() {
+		const items: MenuItem[] = [];
+		const slottedItems = this.getSlottedNodes<MenuItem>("items");
+
+		slottedItems.forEach(item => {
+			if (isInstanceOfMenuItemGroup(item)) {
+				const groupItems = item.getSlottedNodes<MenuItem>("items");
+				items.push(...groupItems);
+			} else if (!isInstanceOfMenuSeparator(item)) {
+				items.push(item);
+			}
+		});
+
+		return items;
+	}
+
+	_setupItemNavigation() {
+		if (this._list) {
+			this._list._itemNavigation._getItems = () => this._navigatableMenuItems;
+		}
 	}
 
 	_closeOtherSubMenus(item: MenuItem) {
-		const menuItems = this._menuItems;
+		const menuItems = this._allMenuItems;
 		if (!menuItems.includes(item)) {
 			return;
 		}
@@ -427,19 +542,37 @@ class MenuItem extends ListItem implements IMenuItem {
 		this._closeOtherSubMenus(item);
 	}
 
+	_isSpace(e: KeyboardEvent) {
+		this._shiftPressed = this._isCheckable && isSpaceShift(e);
+		return isSpace(e) || isSpaceShift(e);
+	}
+
+	_isEnter(e: KeyboardEvent) {
+		this._shiftPressed = this._isCheckable && isEnterShift(e);
+		return isEnter(e) || isEnterShift(e);
+	}
+
+	_onclick(e: MouseEvent) {
+		this._shiftPressed = this._isCheckable && e.shiftKey;
+		super._onclick(e);
+	}
+
 	_itemKeyDown(e: KeyboardEvent) {
 		const item = e.target as MenuItem;
-		const itemInMenuItems = this._menuItems.includes(item);
+		const itemInMenuItems = this._allMenuItems.includes(item);
 		const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
-		const isItemNavigation = isUp(e) || isDown(e);
-		const isItemSelection = isSpace(e) || isEnter(e);
-		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
-		const shouldCloseMenu = !(isItemNavigation || isItemSelection || shouldOpenMenu) || isTabNextPrevious;
+		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
 
-		if (itemInMenuItems && shouldCloseMenu) {
+		if (itemInMenuItems && (isTabNextPrevious || shouldCloseMenu)) {
 			this._close();
 			this.focus();
 			e.stopPropagation();
+		}
+	}
+
+	_itemKeyUp(e: KeyboardEvent) {
+		if (isShift(e)) {
+			this._shiftPressed = false;
 		}
 	}
 
@@ -454,7 +587,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	_navigateOutOfEndContent(e: CustomEvent) {
 		const item = e.target as MenuItem;
 		const shouldNavigateToNextItem = e.detail.shouldNavigateToNextItem;
-		const menuItems = this._menuItems;
+		const menuItems = this._allMenuItems;
 		const itemIndex = menuItems.indexOf(item);
 
 		if (itemIndex > -1) {
@@ -477,7 +610,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	_close() {
 		if (this._popover) {
 			this._popover.open = false;
-			this._menuItems.forEach(item => item._close());
+			this._allMenuItems.forEach(item => item._close());
 		}
 		this.selected = false;
 	}
@@ -491,7 +624,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	_afterPopoverOpen() {
-		this.items[0]?.focus();
+		this._allMenuItems[0]?.focus();
 		this.fireDecoratorEvent("open");
 	}
 
@@ -518,6 +651,17 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	get isMenuItem(): boolean {
 		return true;
+	}
+
+	_updateCheckedState() {
+		if (this._checkMode === MenuItemGroupCheckMode.None) {
+			return;
+		}
+
+		const newState = !this.checked;
+
+		this.checked = newState;
+		this.fireDecoratorEvent("check");
 	}
 }
 
