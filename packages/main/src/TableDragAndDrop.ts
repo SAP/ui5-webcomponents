@@ -12,7 +12,6 @@ export default class TableDragAndDrop extends TableExtension {
 	constructor(table: Table) {
 		super();
 		this._table = table;
-		DragRegistry.subscribe(this._table); // TODO: Where unsubscribe?
 	}
 
 	_ondragenter(e: DragEvent) {

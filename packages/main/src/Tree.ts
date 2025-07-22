@@ -311,14 +311,6 @@ class Tree extends UI5Element {
 	@slot()
 	header!: Array<HTMLElement>;
 
-	onEnterDOM() {
-		DragRegistry.subscribe(this);
-	}
-
-	onExitDOM() {
-		DragRegistry.unsubscribe(this);
-	}
-
 	onBeforeRendering() {
 		this._prepareTreeItems();
 	}
@@ -396,6 +388,7 @@ class Tree extends UI5Element {
 		}
 		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement);
 		this.dropIndicatorDOM.targetReference = null;
+		DragRegistry.clearDraggedElement();
 	}
 
 	_onListItemStepIn(e: CustomEvent<TreeItemBaseStepInEventDetail>) {

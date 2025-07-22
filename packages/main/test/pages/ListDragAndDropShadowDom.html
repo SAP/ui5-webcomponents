@@ -26,17 +26,6 @@
 				</ui5-list>
 			</template>
 		</div>
-		<br >
-		<br >
-		<br >
-
-		<div id="host2">
-			<template shadowrootmode="open">
-				<div id="div1" style=" width: 350px;  height: 70px;  padding: 10px; border: 1px solid #aaaaaa;" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)"></div>
-
-				<img id="img1" src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" draggable="true" ondragstart="dragstartHandler(event)" width="336" height="69">
-			</template>
-		</div>
 	</section>
 
 	<script>
@@ -94,22 +83,6 @@
 		reorderCb.addEventListener("ui5-change", e => {
 			list1.items.forEach((item) => item.movable = e.target.checked);
 		});
-
-		////////////////////
-
-		function dragstartHandler(ev) {
-			ev.dataTransfer.setData("text", ev.target.id);
-		}
-
-		function dragoverHandler(ev) {
-			ev.preventDefault();
-		}
-
-		function dropHandler(ev) {
-			ev.preventDefault();
-			const data = ev.dataTransfer.getData("text");
-			ev.target.appendChild(document.getElementById(data));
-		}
 	</script>
 </body>
 
