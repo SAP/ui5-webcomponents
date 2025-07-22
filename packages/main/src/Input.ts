@@ -161,6 +161,8 @@ type InputSuggestionScrollEventDetail = {
 	scrollContainer: HTMLElement;
 }
 
+type CompositionEventHandler = (e?: CompositionEvent) => void;
+
 /**
  * @class
  * ### Overview
@@ -567,6 +569,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_linksListenersArray: Array<(args: any) => void> = [];
 
 	/**
+	 * Indicates whether the input is currently being composed (e.g. during IME input).
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_isComposing = false;
+
+	/**
 	 * Defines the suggestion items.
 	 *
 	 * **Note:** The suggestions would be displayed only if the `showSuggestions`
@@ -606,6 +615,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	})
 	valueStateMessage!: Array<HTMLElement>;
 
+	_onCompositionStartBound: CompositionEventHandler;
+	_onCompositionEndBound: CompositionEventHandler;
 	hasSuggestionItemSelected: boolean;
 	valueBeforeItemSelection: string;
 	valueBeforeSelectionStart: string;
@@ -702,17 +713,43 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._keepInnerValue = false;
 		this._focusedAfterClear = false;
 		this._valueStateLinks = [];
+
+		this._onCompositionStartBound = this._onCompositionStart.bind(this);
+		this._onCompositionEndBound = this._onCompositionEnd.bind(this);
 	}
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
+		const input = this.nativeInput;
+		if (input) {
+			// Update to JSX bindings when Preact resolves bug with:
+			// https://github.com/preactjs/preact/issues/1978
+			input.addEventListener("compositionstart", this._onCompositionStartBound);
+			input.addEventListener("compositionend", this._onCompositionEndBound);
+		}
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResizeBound);
 		deregisterUI5Element(this);
 		this._removeLinksEventListeners();
+		const input = this.nativeInput;
+		if (input) {
+			input.removeEventListener("compositionstart", this._onCompositionStartBound);
+			input.removeEventListener("compositionend", this._onCompositionEndBound);
+		}
+	}
+
+	_onCompositionStart() {
+		this._isComposing = true;
+	}
+
+	_onCompositionEnd() {
+		//use requestAnimationFrame to defer the typeahead and autocomplete logic inside onBeforeRendering to ensure the input value is up-to-date after IME composition.
+		requestAnimationFrame(() => {
+			this._isComposing = false;
+		});
 	}
 
 	_highlightSuggestionItem(item: SuggestionItem) {
@@ -773,7 +810,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		// Typehead causes issues on Android devices, so we disable it for now
 		// If there is already a selection the autocomplete has already been performed
-		if (this._shouldAutocomplete && !isAndroid() && !autoCompletedChars && !this._isKeyNavigation) {
+		if (this._shouldAutocomplete && !isAndroid() && !autoCompletedChars && !this._isKeyNavigation && !this._isComposing) {
 			const item = this._getFirstMatchingItem(value);
 			if (item) {
 				this._handleTypeAhead(item);
