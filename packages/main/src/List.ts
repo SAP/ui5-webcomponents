@@ -420,6 +420,7 @@ class List extends UI5Element {
 	* - **name**: Defines the accessible ARIA name of the growing button.
 	* Accepts any string.
 	*
+ 	* **Note:** The `accessibilityAttributes` property is in an experimental state and is a subject to change.
 	* @default {}
  	* @public
  	* @since 2.13.0
