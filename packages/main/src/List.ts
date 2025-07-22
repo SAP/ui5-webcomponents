@@ -1275,6 +1275,10 @@ class List extends UI5Element {
 	}
 
 	onItemToggle(e: CustomEvent<ListItemToggleEventDetail>) {
+		if (!(e.target as any)?.isListItemBase) {
+			return;
+		}
+
 		this.fireDecoratorEvent("item-toggle", { item: e.detail.item });
 	}
 
