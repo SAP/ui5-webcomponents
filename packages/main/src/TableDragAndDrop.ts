@@ -1,3 +1,4 @@
+import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
@@ -23,6 +24,7 @@ export default class TableDragAndDrop extends TableExtension {
 		}
 
 		this._table.dropIndicatorDOM.targetReference = null;
+		DragRegistry.clearDraggedElement();
 	}
 
 	_ondragover(e: DragEvent) {
