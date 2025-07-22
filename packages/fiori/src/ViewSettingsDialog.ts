@@ -314,7 +314,6 @@ class ViewSettingsDialog extends UI5Element {
 
 		if (this.shouldBuildGroup) {
 			this._currentMode = ViewSettingsDialogMode.Group;
-			return;
 		}
 	}
 
