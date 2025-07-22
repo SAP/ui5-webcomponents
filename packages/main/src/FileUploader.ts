@@ -211,6 +211,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * Defines whether the component is required.
 	 * @default false
 	 * @public
+	 * @since 2.13.0
 	 */
 	@property({ type: Boolean })
 	required = false;
@@ -219,6 +220,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * Defines the accessible ARIA name of the component.
 	 * @default undefined
 	 * @public
+	 * @since 2.13.0
 	 */
 	@property()
 	accessibleName?: string;
@@ -227,6 +229,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * Receives id(or many ids) of the elements that label the input.
 	 * @default undefined
 	 * @public
+	 * @since 2.13.0
 	 */
 	@property()
 	accessibleNameRef?: string;
@@ -242,7 +245,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 *
 	 * **Note:** For best accessibility experience, set a `tabindex` of "-1" on your interactive element, or it will be set automatically.
 	 * This slot is intended for use cases where you want a button-only file uploader.
-	 * It is recommended to set the `hideInput` property to "true" when using this slot.
+	 * It is recommended to set `hideInput` property to "true" when using this slot.
 	 * Not setting `hideInput` may negatively impact the screen reader users.
 	 * @public
 	 */
