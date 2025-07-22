@@ -17,7 +17,7 @@ export default function LastNextTemplate(this: DynamicDateRange) {
 
 	const availableOptionInfos = currentOption.availableOptions;
 
-	const filteredOptions = availableOptionInfos.filter(info => 
+	const filteredOptions = availableOptionInfos.filter(info =>
 		currentOption.options.includes(info.operator)
 	);
 
