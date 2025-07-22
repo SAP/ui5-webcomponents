@@ -389,6 +389,42 @@ describe("Properties", () => {
 			.find("ui5-avatar")
 			.should("be.visible");
 	});
+
+	it("displays item's delete button on hover if deletable is true", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="Item 1" deletable/>
+				<SearchItem text="Item 2"/>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.realPress("I");
+       
+        cy.get("[ui5-search-item]")
+			.eq(0)
+			.realHover();
+
+		cy.get("[ui5-search-item]")
+			.eq(0)
+			.shadow()
+			.find(".ui5-search-item-selected-delete")
+			.should("be.visible");
+
+        cy.get("[ui5-search-item]")
+			.eq(1)
+			.realHover();
+
+		cy.get("[ui5-search-item]")
+			.eq(1)
+			.shadow()
+			.find(".ui5-search-item-selected-delete")
+			.should("not.exist");
+	});
 });
 
 describe("Events", () => {
@@ -785,7 +821,7 @@ describe("Events", () => {
 		}
 		cy.mount(
 			<Search>
-				<SearchItem text="Item 1" icon={history} onDelete={onDelete}/>
+				<SearchItem text="Item 1" icon={history} deletable onDelete={onDelete}/>
 			</Search>
 		);
 
