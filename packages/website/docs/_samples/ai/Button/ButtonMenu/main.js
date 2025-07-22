@@ -20,9 +20,15 @@ function startGeneration(button) {
 	}, 3000);
 }
 
-function stopGeneration() {
+function stopGeneration(button) {
 	console.warn("stopGeneration");
 	clearTimeout(generationId);
+	button.accessibilityAttributes = {
+				root: {
+					hasPopup: "false",
+					ariaRoleDescription: "Button"
+				}
+			};
 }
 
 function aiButtonClickHandler(evt) {
@@ -34,7 +40,7 @@ function aiButtonClickHandler(evt) {
 			break;
 		case "generating":
 			button.state = "generate";
-			stopGeneration();
+			stopGeneration(button);
 			break;
 		case "revise":
 			menu.opener = button;
