@@ -5,11 +5,6 @@ import DatePicker from "../../src/DatePicker.js";
 import Label from "../../src/Label.js";
 
 describe("Date Picker Tests", () => {
-	afterEach(() => {
-		// eslint-disable-next-line
-		cy.wait(200);
-	});
-
 	it("input renders", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
@@ -876,7 +871,7 @@ describe("Date Picker Tests", () => {
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
-			.should("have.attr", "placeholder", "MMM d, y");
+			.should("have.attr", "placeholder", "e.g. Dec 31, 2025");
 
 		cy.get<DatePicker>("@datePicker")
 			.should("not.have.attr", "placeholder");
@@ -1569,11 +1564,6 @@ describe("Date Picker Tests", () => {
 });
 
 describe("Legacy date customization and Islamic calendar type", () => {
-	afterEach(() => {
-		// eslint-disable-next-line
-		cy.wait(200);
-	});
-
 	const configurationObject = {
 		"formatSettings": {
 			"legacyDateCalendarCustomizing": [

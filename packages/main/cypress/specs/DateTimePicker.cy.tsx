@@ -1,44 +1,34 @@
 import DateTimePicker from "../../src/DateTimePicker.js";
 import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
-import type ResponsivePopover from "../../src/ResponsivePopover.js";
 
-function DefaultDateTimePicker() {
-	return (
-		<DateTimePicker id="dt" />
-	);
+type DateTimePickerTemplateOptions = Partial<{
+	formatPattern: string;
+	value: string;
+	onChange: (e?: Event) => void;
+	minDate: string;
+	maxDate: string;
+	valueState: "None" | "Positive" | "Critical" | "Negative" | "Information";
+}>;
+
+function DateTimePickerTemplate(options: DateTimePickerTemplateOptions) {
+	return <DateTimePicker {...options} />
 }
 
-function DateTimePickerWithMinutes() {
-	return <DateTimePicker
-		id="dtMinutes"
-		formatPattern="dd/MM/yyyy, hh:mm a"
-		value="13/04/2020, 09:16 AM" />;
-}
-
-function DateTimePickerWithSeconds({ initialValue }: { initialValue?: string }) {
-	return (
-		<DateTimePicker
-			id="dtSeconds"
-			formatPattern="dd/MM/yyyy, hh:mm:ss a"
-			value={initialValue || "13/04/2020, 03:16:16 AM"}
-		/>
-	);
-}
 describe("DateTimePicker general interaction", () => {
 	it("tests time controls adjustments", () => {
 		setAnimationMode(AnimationMode.None);
 		const PREVIOUS_VALUE = "13/04/2020, 03:16:16 AM";
 
-		cy.mount(<DateTimePicker id="dtSeconds" formatPattern="dd/MM/yyyy, hh:mm:ss a" value={PREVIOUS_VALUE} />);
+		cy.mount(<DateTimePickerTemplate formatPattern="dd/MM/yyyy, hh:mm:ss a" value={PREVIOUS_VALUE} />)
 
-		cy.get<DateTimePicker>("#dtSeconds")
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
 			.as("dtp")
 			.ui5DateTimePickerOpen();
 
 		cy.get("@dtp")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.should("have.value", PREVIOUS_VALUE);
 
 		cy.get<DateTimePicker>("@dtp")
@@ -82,54 +72,43 @@ describe("DateTimePicker general interaction", () => {
 				cy.get("#ok").realClick();
 			});
 
+		cy.get<DateTimePicker>("@dtp")
+			.ui5DateTimePickerExpectToBeClosed();
+
 		// Only the time parts have been updated.
 		cy.get<DateTimePicker>("@dtp")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.should("be.focused")
 			.should("have.attr", "value", "13/04/2020, 02:14:19 PM");
-
-		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerExpectToBeClosed();
 
 		setAnimationMode(AnimationMode.Full);
 	});
 
 	it("tests picker opens/closes programmatically", () => {
-		cy.mount(<DefaultDateTimePicker />);
+		cy.mount(<DateTimePickerTemplate />)
 
-		cy.get<DateTimePicker>("#dt")
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
 			.as("dtp")
 			.ui5DateTimePickerOpen();
 
 		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerExpectToBeOpen();
-
-		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerClose();
-
-		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerExpectToBeClosed();
 	});
 
-	// Unstable but valid test, needs to be individually observed
 	it("tests selection of new date", () => {
 		setAnimationMode(AnimationMode.None);
 		const PREVIOUS_VALUE = "13/04/2020, 03:16:16 AM";
 
-		cy.mount(<DateTimePicker id="dtSeconds" formatPattern="dd/MM/yyyy, hh:mm:ss a" value={PREVIOUS_VALUE} />);
+		cy.mount(<DateTimePickerTemplate formatPattern="dd/MM/yyyy, hh:mm:ss a" value={PREVIOUS_VALUE} />)
 
-		cy.get<DateTimePicker>("#dtSeconds")
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
 			.as("dtp")
 			.ui5DateTimePickerOpen();
 
-		cy.get("#dtSeconds")
-			.shadow()
-			.as("DateTimePicker");
-
 		cy.get("@dtp")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.should("have.value", PREVIOUS_VALUE);
 
 		cy.get<DateTimePicker>("@dtp")
@@ -141,11 +120,8 @@ describe("DateTimePicker general interaction", () => {
 					.as("calendar");
 
 				cy.get("@calendar")
-					.find("ui5-daypicker")
+					.find("[ui5-daypicker]")
 					.shadow()
-					.as("daypicker")
-
-				cy.get("@daypicker")
 					.find(".ui5-dp-item--selected")
 					.realClick()
 					.should("be.focused");
@@ -157,29 +133,32 @@ describe("DateTimePicker general interaction", () => {
 				cy.get("#ok").realClick();
 			});
 
+		cy.get<DateTimePicker>("@dtp").ui5DateTimePickerExpectToBeClosed();
+
 		// Only the date has changed; the time remains the same.
 		cy.get("@dtp")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.should("be.focused")
 			.should("have.attr", "value", "14/04/2020, 03:16:16 AM");
-
-		cy.get<DateTimePicker>("@dtp").ui5DateTimePickerExpectToBeClosed();
 
 		setAnimationMode(AnimationMode.Full);
 	});
 
-	// Unstable test, needs investigation
+	// Unstable test, needs investigation => https://github.com/SAP/ui5-webcomponents/issues/11376
 	it.skip("tests selection of new date without changing the time section", () => {
 		setAnimationMode(AnimationMode.None);
 
 		const PREVIOUS_VALUE = "14/04/2020, 02:14:19 PM";
 		cy.mount(<>
 			<button>before</button>
-			<DateTimePickerWithSeconds initialValue={PREVIOUS_VALUE} />
+			<DateTimePickerTemplate
+				formatPattern="dd/MM/yyyy, hh:mm:ss a"
+				value={PREVIOUS_VALUE}
+			/>
 		</>);
 
-		cy.get("#dtSeconds")
+		cy.get("[ui5-datetime-picker]")
 			.as("dtp")
 			.shadow()
 			.find("[ui5-datetime-input]")
@@ -207,9 +186,6 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerOpen();
-
-		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerExpectToBeOpen();
 
 		let selectedDate = "";
 
@@ -241,9 +217,13 @@ describe("DateTimePicker general interaction", () => {
 			.then(() => {
 				cy.get<DateTimePicker>("@dtp")
 					.ui5DateTimePickerGetSubmitButton()
+					.should("have.prop", "disabled", false);
+
+				cy.get<DateTimePicker>("@dtp")
+					.ui5DateTimePickerGetSubmitButton()
 					.realClick();
 
-				cy.get("#dtSeconds")
+				cy.get("[ui5-datetime-picker]")
 					.shadow()
 					.find("ui5-datetime-input")
 					.should("be.focused")
@@ -257,12 +237,11 @@ describe("DateTimePicker general interaction", () => {
 		const expectedClocksCount = 3;
 		const expectedPeriodCount = 1;
 
-		cy.mount(<DateTimePickerWithSeconds />);
+		cy.mount(<DateTimePickerTemplate formatPattern="dd/MM/yyyy, hh:mm:ss a" value="13/04/2020, 03:16:16 AM" />);
 
-		cy.get<DateTimePicker>("#dtSeconds")
+		cy.get<DateTimePicker>("[ui5-datetime-picker")
 			.as("dtp")
 			.ui5DateTimePickerOpen();
-
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerTimeSelectionClocksCount()
@@ -280,12 +259,11 @@ describe("DateTimePicker general interaction", () => {
 		const expectedClocksCount = 2;
 		const expectedPeriodCount = 1;
 
-		cy.mount(<DateTimePickerWithMinutes />);
+		cy.mount(<DateTimePickerTemplate formatPattern="dd/MM/yyyy, hh:mm a" value="13/04/2020, 09:16 AM" />);
 
-		cy.get<DateTimePicker>("#dtMinutes")
+		cy.get<DateTimePicker>("[ui5-datetime-picker")
 			.as("dtp")
 			.ui5DateTimePickerOpen();
-
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerTimeSelectionClocksCount()
@@ -300,9 +278,9 @@ describe("DateTimePicker general interaction", () => {
 	});
 
 	it("tests hours clock is active on picker open", () => {
-		cy.mount(<DefaultDateTimePicker />);
+		cy.mount(<DateTimePickerTemplate />);
 
-		cy.get<DateTimePicker>("#dt")
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
 			.as("dtp")
 			.ui5DateTimePickerOpen();
 
@@ -320,23 +298,17 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerClose();
-
-		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerExpectToBeClosed();
 	});
 
 	// Unstable test, needs investigation
 	it("tests selection of 12:34:56 AM", () => {
 		setAnimationMode(AnimationMode.None);
 
-		cy.mount(<DateTimePickerWithSeconds />);
+		cy.mount(<DateTimePickerTemplate formatPattern="dd/MM/yyyy, hh:mm:ss a" value="13/04/2020, 03:16:16 AM" />);
 
-		cy.get<DateTimePicker>("#dtSeconds")
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
 			.as("dtp")
 			.ui5DateTimePickerOpen();
-
-		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerExpectToBeOpen();
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetPopover()
@@ -381,11 +353,18 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetSubmitButton()
+			.should("have.prop", "disabled", false);
+
+		cy.get<DateTimePicker>("@dtp")
+			.ui5DateTimePickerGetSubmitButton()
 			.realClick();
 
-		cy.get("#dtSeconds")
+		cy.get<DateTimePicker>("@dtp")
+			.ui5DateTimePickerExpectToBeClosed();
+
+		cy.get("@dtp")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.should("be.focused")
 			.and("have.attr", "value", "13/04/2020, 12:34:56 AM");
 
@@ -393,7 +372,7 @@ describe("DateTimePicker general interaction", () => {
 	});
 
 	it("tests change event is prevented on submit when prevent default is called", () => {
-		cy.mount(<DefaultDateTimePicker />);
+		cy.mount(<DateTimePickerTemplate onChange={e => e.preventDefault()} />);
 
 		cy.get<DateTimePicker>("[ui5-datetime-picker]")
 			.as("dtp")
@@ -410,13 +389,6 @@ describe("DateTimePicker general interaction", () => {
 			.find("ui5-daypicker")
 			.as("daypicker");
 
-		cy.get<DateTimePicker>("@dtp")
-			.then($el => {
-				$el[0].addEventListener("ui5-change", (ev: Event) => {
-					ev.preventDefault();
-				});
-			});
-
 		// act: open the picker
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerOpen();
@@ -431,18 +403,19 @@ describe("DateTimePicker general interaction", () => {
 		// act: confirm selection
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetSubmitButton()
+			.should("have.prop", "disabled", false);
+
+		cy.get<DateTimePicker>("@dtp")
+			.ui5DateTimePickerGetSubmitButton()
 			.realClick();
 
-		// assert: the picker is closed
-		cy.get("@dtp")
-			.shadow()
-			.find<ResponsivePopover>("[ui5-responsive-popover]")
-			.ui5ResponsivePopoverClosed();
+		cy.get<DateTimePicker>("@dtp")
+			.ui5DateTimePickerExpectToBeClosed();
 
 		// assert: the value is not changed
 		cy.get("@input")
 			.should("be.focused")
-			.should("have.attr", "value", "");
+			.and("have.attr", "value", "");
 	});
 
 	it("custom formatting", () => {
@@ -469,14 +442,10 @@ describe("DateTimePicker general interaction", () => {
 
 	it("Min and max dates are set, with no format pattern provided, using valid ISO format", () => {
 		cy.mount(
-			<DateTimePicker
-				id="dtMinMaxDatesISO"
-				minDate="2023-05-01"
-				maxDate="2023-05-31"
-			></DateTimePicker>
+			<DateTimePickerTemplate minDate="2023-05-01" maxDate="2023-05-31" />
 		);
 
-		cy.get<DateTimePicker>("#dtMinMaxDatesISO")
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
 			.as("dtp")
 
 		cy.get<DateTimePicker>("@dtp")
@@ -488,9 +457,7 @@ describe("DateTimePicker general interaction", () => {
 				cy.get("[ui5-calendar]")
 					.shadow()
 					.find(".ui5-calheader")
-					.as("calHeader");
-
-				cy.get("@calHeader")
+					.as("calHeader")
 					.find("div[data-ui5-cal-header-btn-prev]")
 					.should("have.class", "ui5-calheader-arrowbtn-disabled");
 
@@ -501,21 +468,22 @@ describe("DateTimePicker general interaction", () => {
 	});
 
 	it("picker popover should have accessible name", () => {
-		cy.mount(<DefaultDateTimePicker />);
+		cy.mount(<DateTimePickerTemplate />);
 
-		cy.get<DateTimePicker>("#dt")
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
 			.ui5DateTimePickerGetPopover()
 			.should("have.attr", "accessible-name", "Choose Date and Time");
 	});
 
 	it("value state", () => {
-		cy.mount(<DateTimePicker id="dtpValueState" valueState="Negative"></DateTimePicker>);
+		cy.mount(<DateTimePickerTemplate valueState="Negative" />);
+
 		cy.get("[ui5-datetime-picker]")
 			.as("dtp");
 
 		cy.get<DateTimePicker>("@dtp")
 			.shadow()
-			.find("ui5-datetime-input")
+			.find("[ui5-datetime-input]")
 			.should("have.attr", "value-state", "Negative");
 
 		cy.get<DateTimePicker>("@dtp")
@@ -530,22 +498,11 @@ describe("DateTimePicker general interaction", () => {
 
 	// Unstable test, needs investigation
 	it("tests change event is fired on submit", () => {
-		cy.mount(<DefaultDateTimePicker />);
+		cy.mount(<DateTimePickerTemplate onChange={cy.stub().as("changeStub")} />);
 
-		const changeStub = cy.stub();
-
-		cy.get("#dt")
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
 			.as("dtp")
-			.then($el => {
-				$el[0].addEventListener("ui5-change", changeStub);
-			});
-
-		// Open the picker, select a date, and submit to fire the event
-		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerOpen();
-
-		cy.get<DateTimePicker>("@dtp")
-			.ui5DateTimePickerExpectToBeOpen();
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetPopover()
@@ -567,10 +524,17 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetSubmitButton()
+			.should("have.prop", "disabled", false);
+
+		cy.get<DateTimePicker>("@dtp")
+			.ui5DateTimePickerGetSubmitButton()
 			.realClick();
 
+		cy.get<DateTimePicker>("@dtp")
+			.ui5DateTimePickerExpectToBeClosed();
+
 		// Assert the change event was fired once
-		cy.wrap(changeStub).should("have.been.calledOnce");
+		cy.get("@changeStub").should("have.been.calledOnce");
 
 		// Re-open the picker and submit without making a change
 		cy.get<DateTimePicker>("@dtp")
@@ -578,13 +542,17 @@ describe("DateTimePicker general interaction", () => {
 
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerGetSubmitButton()
-			.realClick();
+			.should("have.prop", "disabled", false);
 
-		// The change event should not have been fired a second time.
-		cy.wrap(changeStub).should("have.been.calledOnce");
+		cy.get<DateTimePicker>("@dtp")
+			.ui5DateTimePickerGetSubmitButton()
+			.realClick();
 
 		// Verify the picker is closed
 		cy.get<DateTimePicker>("@dtp")
 			.ui5DateTimePickerExpectToBeClosed();
+
+		// The change event should not have been fired a second time.
+		cy.get("@changeStub").should("have.been.calledOnce");
 	});
 });
