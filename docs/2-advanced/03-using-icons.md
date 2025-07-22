@@ -110,6 +110,68 @@ After the SVG icons collection is registered, you can use the custom icons every
 
 ## Custom SVG icons
 
+### with JSX Templates
+
+In case you need to use a fully custom SVG, that can be used `ui5-icon`, `ui5-button` or any component that offers API to display an icon via icon name, you can provide a custom JSX template, rendering the custom SVG and register it under a custom name.
+
+
+#### 1. Create JSX template
+
+First, create a JSX template for the icon you need:
+
+```tsx
+// MyPensilSVGTemplate.tsx
+export default function MyPensilSVGTemplate() {
+    return (
+        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_2221_23716)"><path d="M11.3333 1.99998C11.503 1.79933 11.7131 1.63601 11.9499 1.52043C12.1868 1.40485 12.4453 1.33953 12.709 1.32865C12.9727 1.31777 13.2358 1.36156 13.4815 1.45723C13.7272 1.55291 13.9502 1.69836 14.1361 1.88432C14.3221 2.07029 14.467 2.29268 14.5616 2.53734C14.6562 2.78199 14.6985 3.04353 14.6857 3.3053C14.6728 3.56706 14.6052 3.8233 14.4872 4.05769C14.3691 4.29207 14.2032 4.49947 13.9999 4.66664L4.99992 13.6666L1.33325 14.6666L2.33325 11L11.3333 1.99998Z" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 3.33331L12.6667 5.99998" stroke-linecap="round" stroke-linejoin="round"/></g>
+            <defs>
+                <clipPath id="clip0_2221_23716"><rect width="16" height="16"/></clipPath>
+            </defs>
+        </svg>
+    )
+};
+```
+
+#### 2. Register the Custom Icon
+
+You can use the `registerIcon` to register the custom icon as follows:
+
+```js
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import myPensilSVGTemplate from "./MyPensilSVGTemplate.js";
+
+// create the icon data for registration
+const iconPensil = {
+    customTemplate: myPensilSVGTemplate,
+    collection: "custom",
+    viewBox: "0 0 24 24", // optional
+}
+
+// register the icon
+registerIcon("pensil", iconPensil);
+```
+
+#### 3. Use the Custom Icon
+
+Finally, the icon can be used anywhere.
+```html
+<ui5-icon name="custom/pensil"></ui5-icon>
+<ui5-button icon="custom/pensil"></ui5-button>
+<ui5-avatar icon="custom/pensil" size="XS"></ui5-avatar>
+```
+
+**Tip:** for multi-colored icons, you can specify multiple SVG elements and put a fill/color attribute with a specific value on each element.
+```html
+<g fill="none" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" fill="aqua"/>
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+</g>
+```
+
+
+
+### (deprecated) with HBS Templates
 In case you need to use a fully custom SVG with multiple SVG elements like `circle` and `rect` instead of only a custom `path`, you can provide a custom renderer and register it for usage in `<ui5-icon>`.
 
 First, create a template for the icon you need:
@@ -162,12 +224,4 @@ Finally, the icon can be used anywhere.
 ```html
 <ui5-icon name="custom/backery-dining"></ui5-icon>
 <ui5-avatar icon="custom/backery-dining" size="XS"></ui5-avatar>
-```
-
-Tip: for multi-colored icons, you can specify multiple SVG elements and put a fill/color attribute with a specific value on each element.
-```html
-<g fill="none" stroke="currentColor" stroke-width="2">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" fill="aqua"/>
-    <path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
-</g>
 ```

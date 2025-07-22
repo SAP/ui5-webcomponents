@@ -1,5 +1,10 @@
 import type Icon from "./Icon.js";
 
+type LegacySVGTemplate = {
+	strings: string[],
+	values?: Array<string | LegacySVGTemplate>
+}
+
 export default function IconTemplate(this: Icon) {
 	return (
 		<svg
@@ -22,9 +27,7 @@ export default function IconTemplate(this: Icon) {
 			}
 
 			<g role="presentation">
-				{this.customSvg &&
-                    <g dangerouslySetInnerHTML={{ __html: (this.customSvg as { strings?: string[] }).strings?.join("") ?? "" }}></g>
-				}
+				{this.customSvg && svgTemplate.call(this, this.customSvg)}
 
 				{this.pathData.map(path => (
 					<path d={path}></path>
@@ -32,4 +35,30 @@ export default function IconTemplate(this: Icon) {
 			</g>
 		</svg>
 	);
+}
+
+function svgTemplate(this: Icon, template: object | LegacySVGTemplate) {
+	if ((template as LegacySVGTemplate).strings) {
+		return <g dangerouslySetInnerHTML={{ __html: renderLegacySVGTemplate(this.customSvg as LegacySVGTemplate) ?? "" }}></g>;
+	}
+	return template;
+}
+
+// Renders legacy (lit) SVG template
+function renderLegacySVGTemplate(customTemplate: LegacySVGTemplate): string {
+	const { strings, values } = customTemplate;
+
+	return strings.map((str: string, i: number) => {
+		const value = values && values[i];
+		
+		if (typeof value === "string") {
+			return str + value;
+		}
+	
+		if (typeof value === "object" && value?.strings) {
+			return str + renderLegacySVGTemplate(value);
+		}
+
+		return str;
+	}).join("");
 }
