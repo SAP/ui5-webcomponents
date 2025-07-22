@@ -361,7 +361,7 @@ class Button extends UI5Element {
 			arrowButton: {
 				hasPopup: this.accessibilityAttributes?.arrowButton?.hasPopup,
 				expanded: this.accessibilityAttributes?.arrowButton?.expanded,
-				title: this.accessibilityAttributes?.arrowButton?.title
+				title: this.accessibilityAttributes?.arrowButton?.title,
 			},
 		};
 	}
