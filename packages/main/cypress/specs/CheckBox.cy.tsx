@@ -128,14 +128,6 @@ describe("CheckBox general interaction", () => {
             </div>
         );
 
-        let counter = 3;
-        cy.get("#cb2").then(($checkbox) => {
-            $checkbox[0].addEventListener("ui5-change", function () {
-                counter += 1;
-                (document.getElementById("field") as HTMLInputElement).value = `${counter}`;
-            });
-        });
-
         cy.get("#cb2").realClick();
         cy.get("#cb2").realPress("Space");
         cy.get("#cb2").realPress("Enter");
@@ -151,14 +143,6 @@ describe("CheckBox general interaction", () => {
                 <Input id="field" value="3"></Input>
             </div>
         );
-
-        let counter = 3;
-        cy.get("#displayOnlyCb").then(($checkbox) => {
-            $checkbox[0].addEventListener("ui5-change", function () {
-                counter += 1;
-                (document.getElementById("field") as HTMLInputElement).value = `${counter}`;
-            });
-        });
 
         cy.get("#displayOnlyCb").realClick();
         cy.get("#displayOnlyCb").realPress("Space");
@@ -239,7 +223,7 @@ describe("CheckBox general interaction", () => {
             .should("not.have.attr", "aria-checked");
     });
 
-    it("tests ui5-icon", () => {
+    it("tests ui5-icon has hidden='true'", () => {
         cy.mount(
             <CheckBox id="checkboxChecked" checked></CheckBox>
         );
@@ -307,13 +291,6 @@ describe("CheckBox general interaction", () => {
                 <input type="hidden" id="cbFormSubmitted" value="false" />
             </form>
         );
-
-        cy.get("#cbForm").then(($form) => {
-            $form[0].addEventListener("submit", function (event) {
-                event.preventDefault();
-                (document.getElementById("cbFormSubmitted") as HTMLInputElement).value = "true";
-            });
-        });
 
         cy.get("#cbSubmit").realClick();
 
