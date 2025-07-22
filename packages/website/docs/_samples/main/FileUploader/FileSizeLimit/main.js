@@ -4,7 +4,7 @@ import "@ui5/webcomponents/dist/MessageStrip.js";
 
 import "@ui5/webcomponents-icons/dist/upload.js";
 
-const fileUploader = document.querySelector("#fileuploader");
+const fileUploader = document.querySelector("#max-file-size-uploader");
 const resultDiv = document.querySelector("#file-exceed-result");
 
 fileUploader.addEventListener("file-size-exceed", function (event) {

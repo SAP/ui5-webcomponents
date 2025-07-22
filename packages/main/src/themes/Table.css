@@ -17,8 +17,6 @@
 :host([overflow-mode="Scroll"]) #table {
 	overflow-x: auto;
 	height: 100%;
-	height: -webkit-fill-available;
-	height: fill-available;
 }
 
 #rows, #spacer {
