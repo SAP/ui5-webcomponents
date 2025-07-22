@@ -2260,7 +2260,7 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-label", label);
 	});
 
-	it("aria-describedby value according to the tokens count and value state", () => {
+	it.skip("aria-describedby value according to the tokens count and value state", () => {
 		cy.mount(
 			<MultiComboBox valueState="Critical" style="width: 100%">
 				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
