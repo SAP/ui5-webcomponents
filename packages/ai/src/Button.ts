@@ -25,8 +25,8 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
 type AIButtonRootAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription">;
-type AIButtonArrowButtonAccessibilityAtributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
-type AIButtonAccessibilityAttributes = { root?: AIButtonRootAccessibilityAttributes, arrowButton?: AIButtonArrowButtonAccessibilityAtributes}
+type AIButtonArrowButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
+type AIButtonAccessibilityAttributes = { root?: AIButtonRootAccessibilityAttributes, arrowButton?: AIButtonArrowButtonAccessibilityAttributes}
 
 /**
  * @class
