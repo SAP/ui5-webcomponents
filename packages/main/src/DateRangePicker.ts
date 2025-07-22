@@ -23,7 +23,6 @@ import type {
 } from "./DatePicker.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import type CalendarSelectionMode from "./types/CalendarSelectionMode.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 
 const DEFAULT_DELIMITER = "-";
 
