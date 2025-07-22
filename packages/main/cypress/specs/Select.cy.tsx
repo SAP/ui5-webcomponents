@@ -288,6 +288,64 @@ describe("Select - Properties", () => {
 	});
 });
 
+describe("Select - Validation", () => {
+	it("has correct validity", () => {
+		cy.mount(
+			<form method="get">
+				<Select id="sel1" name="select1" required>
+					<Option value="">Select an option</Option>
+					<Option value="option1">Option 1</Option>
+					<Option value="option2">Option 2</Option>
+				</Select>
+				<button type="submit">Submit</button>
+			</form>
+		);
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("button")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("#sel1")
+			.then($el => {
+				const select = $el[0] as Select;
+				expect(select.formValidity.valueMissing, "Required Select with empty value should have formValidity with valueMissing=true").to.be.true;
+				expect(select.validity.valueMissing, "Required Select with empty value should have validity with valueMissing=true").to.be.true;
+				expect(select.validity.valid, "Required Select with empty value should have validity with valid=false").to.be.false;
+				expect(select.checkValidity(), "Required Select with empty value should fail validity check").to.be.false;
+				expect(select.reportValidity(), "Required Select with empty value should fail report validity").to.be.false;
+			});
+
+		cy.get("#sel1:invalid").should("exist", "Required Select with empty value should have :invalid CSS class");
+
+		// select an option with a non-empty value
+		// this should make the Select valid
+		cy.get("#sel1")
+			.realClick()
+			.get("[ui5-option]")
+			.eq(1)
+			.realClick();
+
+		cy.get("#sel1")
+			.then($el => {
+				const select = $el[0] as Select;
+				expect(select.formValidity.valueMissing, "Required Select with non-empty value should have formValidity with valueMissing=false").to.be.false;
+				expect(select.validity.valueMissing, "Required Select with non-empty value should have validity with valueMissing=false").to.be.false;
+				expect(select.validity.valid, "Required Select with non-empty value should have validity with valid=true").to.be.true;
+				expect(select.checkValidity(), "Required Select with non-empty value should pass validity check").to.be.true;
+				expect(select.reportValidity(), "Required Select with non-empty value should pass report validity").to.be.true;
+			});
+
+		cy.get("#sel1:invalid").should("not.exist", "Required Select with non-empty value should not have :invalid CSS class");
+	});
+});
+
 describe("Select general interaction", () => {
 	it("fires change on selection", () => {
 		const changeEvents = [];
