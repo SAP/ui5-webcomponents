@@ -50,11 +50,11 @@ function renderLegacySVGTemplate(customTemplate: LegacySVGTemplate): string {
 
 	return strings.map((str: string, i: number) => {
 		const value = values && values[i];
-		
+
 		if (typeof value === "string") {
 			return str + value;
 		}
-	
+
 		if (typeof value === "object" && value?.strings) {
 			return str + renderLegacySVGTemplate(value);
 		}

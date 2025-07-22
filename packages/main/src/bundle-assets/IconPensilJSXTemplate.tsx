@@ -6,5 +6,5 @@ export default function IconPensilJSXTemplate() {
 				<clipPath id="clip0_2221_23716"><rect width="16" height="16"/></clipPath>
 			</defs>
 		</svg>
-	)
-};
+	);
+}

@@ -128,6 +128,10 @@ import ListItemCustom from "./ListItemCustom.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ListItemGroup from "./ListItemGroup.js";
 
+// custom SVG template (Lit or JSX), registered as an icon
+import IconPensilJSXTemplate from "./bundle-assets/IconPensilJSXTemplate.js";
+import IconPensilLitTemplate from "./bundle-assets/IconPensilLitTemplate.js";
+
 const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon3d, icon3dv1, icon3dv2];
 
 const testAssets = {
@@ -215,24 +219,20 @@ registerIconLoader("my-icons", () => {
 	}]);
 });
 
-// custom SVG template (Lit or JSX), registered as an icon
-import IconPensilJSXTemplate from "./bundle-assets/IconPensilJSXTemplate.js";
-import IconPensilLitTemplate from "./bundle-assets/IconPensilLitTemplate.js";
-;	
-registerIcon('pencil', {
+registerIcon("pencil", {
 	customTemplate: IconPensilJSXTemplate,
-	viewBox       : "0 0 16 16",
-	packageName   : "custom-svg-icon",
-	collection    : "custom-svg-icons",
-	pathData      : "pencil",
+	viewBox: "0 0 16 16",
+	packageName: "custom-svg-icon",
+	collection: "custom-svg-icons",
+	pathData: "pencil",
 });
 
-registerIcon('pencil2', {
+registerIcon("pencil2", {
 	customTemplate: IconPensilLitTemplate,
-	viewBox       : "0 0 16 16",
-	packageName   : "custom-svg-icon",
-	collection    : "custom-svg-icons",
-	pathData      : "pencil2",
+	viewBox: "0 0 16 16",
+	packageName: "custom-svg-icon",
+	collection: "custom-svg-icons",
+	pathData: "pencil2",
 });
 
 // @ts-ignore
