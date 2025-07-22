@@ -8,9 +8,10 @@ export default function SplitButtonTemplate(this: SplitButton) {
 			role={this._hideArrowButton ? "button" : "group"}
 			class="ui5-split-button-root"
 			tabindex={this._tabIndex}
-			aria-labelledby={`${this._id}-invisibleTextDefault ${this._id}-invisibleText`}
-			aria-haspopup={this.accInfo?.root?.accessibilityAttributes?.hasPopup}
-			aria-roledescription={this.accInfo?.root?.accessibilityAttributes?.ariaRoleDescription}
+			aria-labelledby={this._hideArrowButton ? undefined : `${this._id}-invisibleTextDefault ${this._id}-invisibleText`}
+			aria-haspopup={this._computedAccessibilityAttributes?.root?.hasPopup}
+			aria-roledescription={this._computedAccessibilityAttributes?.root?.ariaRoleDescription}
+			aria-label={this._hideArrowButton ? this._computedAccessibilityAttributes?.root?.title : undefined}
 			onFocusOut={this._onFocusOut}
 			onKeyDown={this._onKeyDown}
 			onKeyUp={this._onKeyUp}
@@ -30,7 +31,7 @@ export default function SplitButtonTemplate(this: SplitButton) {
 				onMouseUp={this._textButtonRelease}
 				onFocusIn={this._onInnerButtonFocusIn}
 				onFocusOut={this._onFocusOut}
-				tooltip={this.accInfo?.root?.accessibilityAttributes?.title}
+				tooltip={this._computedAccessibilityAttributes?.root?.title}
 			>
 				{this.isTextButton && <slot></slot> }
 			</Button>
@@ -42,8 +43,8 @@ export default function SplitButtonTemplate(this: SplitButton) {
 						design={this.design}
 						icon={slimArrowDown}
 						tabindex={-1}
-						tooltip={this.accInfo.arrowButton.title}
-						accessibilityAttributes={this.accInfo.arrowButton.accessibilityAttributes}
+						tooltip={this._computedAccessibilityAttributes?.arrowButton?.title}
+						accessibilityAttributes={{ hasPopup: this._computedAccessibilityAttributes?.arrowButton?.hasPopup, expanded: this._computedAccessibilityAttributes?.arrowButton?.expanded }}
 						disabled={this.disabled}
 						active={this.effectiveActiveArrowButton}
 						part="arrowButton"
@@ -54,8 +55,8 @@ export default function SplitButtonTemplate(this: SplitButton) {
 						onActiveStateChange={this._onArrowButtonActiveStateChange}
 					>
 					</Button>
-					<span id={`${this._id}-invisibleText`} class="ui5-hidden-text">{this.accInfo.root.description} {this.accInfo.root.keyboardHint} {this.accessibleName}</span>
-					<span id={`${this._id}-invisibleTextDefault`} class="ui5-hidden-text">{this.textButtonAccText}</span>
+					<span id={`${this._id}-invisibleText`} class="ui5-hidden-text">{this.accInfo.keyboardHint} {this.accessibleName}</span>
+					<span id={`${this._id}-invisibleTextDefault`} class="ui5-hidden-text">{this._computedAccessibilityAttributes?.root?.title || this.textButtonAccText}</span>
 				</>
 			)}
 		</div>

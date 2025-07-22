@@ -153,7 +153,7 @@
 				button.accessibilityAttributes = {
 					root: {
 						hasPopup: "menu",
-						ariaRoleDescription: isSplitButton  ? "Split Button" : "Menu Button"
+						ariaRoleDescription: isSplitButton  ? undefined : "Menu Button"
 					}
 				};
 			}, 3000);
@@ -164,8 +164,7 @@
 			clearTimeout(generationId);
 			button.accessibilityAttributes = {
 					root: {
-						hasPopup: "false",
-						ariaRoleDescription: "Button"
+						hasPopup: "false"
 					}
 				};
 		}
@@ -304,8 +303,7 @@
 			output.disabled = false;
 			button.accessibilityAttributes = {
 				root: {
-					hasPopup: "false",
-					ariaRoleDescription: "Button"
+					hasPopup: "false"
 				}
 			};
 		}

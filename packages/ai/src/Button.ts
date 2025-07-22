@@ -24,8 +24,8 @@ import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
-type AIButtonRootAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription">;
-type AIButtonArrowButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
+type AIButtonRootAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription" | "title">;
+type AIButtonArrowButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded" | "title">;
 type AIButtonAccessibilityAttributes = { root?: AIButtonRootAccessibilityAttributes, arrowButton?: AIButtonArrowButtonAccessibilityAttributes}
 
 /**
@@ -346,7 +346,7 @@ class Button extends UI5Element {
 		this.fireDecoratorEvent("arrow-button-click");
 	}
 
-	get _computedAccessibilityAttributes() {
+	get _computedAccessibilityAttributes(): AIButtonAccessibilityAttributes {
 		const labelRefTexts = getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || "";
 
 		const mainTitle = this._hasText ? Button.i18nBundle.getText(BUTTON_TOOLTIP_TEXT, this._stateText as string) : "";
@@ -355,12 +355,13 @@ class Button extends UI5Element {
 		return {
 			root: {
 				hasPopup: this.accessibilityAttributes?.root?.hasPopup || "false",
-				ariaRoleDescription: this.accessibilityAttributes?.root?.ariaRoleDescription || (this._hideArrowButton ? "Button" : "Split Button"),
-				title,
+				ariaRoleDescription: this.accessibilityAttributes?.root?.ariaRoleDescription,
+				title: this.accessibilityAttributes?.root?.title || title,
 			},
 			arrowButton: {
 				hasPopup: this.accessibilityAttributes?.arrowButton?.hasPopup,
 				expanded: this.accessibilityAttributes?.arrowButton?.expanded,
+				title: this.accessibilityAttributes?.arrowButton?.title
 			},
 		};
 	}

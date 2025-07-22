@@ -37,7 +37,7 @@ import SplitButtonTemplate from "./SplitButtonTemplate.js";
 import SplitButtonCss from "./generated/themes/SplitButton.css.js";
 
 type SplitButtonRootAccAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription" | "title">;
-type SplitButtonArrowButtonAccAtributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
+type SplitButtonArrowButtonAccAtributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded" | "title">;
 type SplitButtonAccessibilityAttributes = {root?: SplitButtonRootAccAttributes, arrowButton?: SplitButtonArrowButtonAccAtributes}
 
 /**
@@ -459,24 +459,25 @@ class SplitButton extends UI5Element {
 		return this.getDomRef()?.querySelector<Button>(".ui5-split-arrow-button");
 	}
 
-	get accInfo() {
+	get _computedAccessibilityAttributes(): SplitButtonAccessibilityAttributes {
 		return {
 			root: {
-				"description": SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
-				"keyboardHint": SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
-				"accessibilityAttributes": {
-					"hasPopup": this.accessibilityAttributes?.root?.hasPopup,
-					"ariaRoleDescription": this.accessibilityAttributes?.root?.ariaRoleDescription,
-					"title": this.accessibilityAttributes?.root?.title
-				}
+				hasPopup: this.accessibilityAttributes?.root?.hasPopup,
+				ariaRoleDescription: this.accessibilityAttributes?.root?.ariaRoleDescription || (this._hideArrowButton ? undefined : SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION)),
+				title: this.accessibilityAttributes?.root?.title,
 			},
 			arrowButton: {
-				"title": this.arrowButtonTooltip,
-				"accessibilityAttributes": {
-					"hasPopup": this.accessibilityAttributes?.arrowButton?.hasPopup || "menu" as AriaHasPopup,
-					"expanded": this.accessibilityAttributes?.arrowButton?.expanded || this.effectiveActiveArrowButton,
-				},
+				hasPopup: this.accessibilityAttributes?.arrowButton?.hasPopup || "menu" as AriaHasPopup,
+				expanded: this.accessibilityAttributes?.arrowButton?.expanded || this.effectiveActiveArrowButton,
+				title: this.accessibilityAttributes?.arrowButton?.title || this.arrowButtonTooltip,
 			},
+		};
+	}
+
+	get accInfo() {
+		return {
+			"keyboardHint": SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
+			"description": SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
 		};
 	}
 
@@ -493,5 +494,5 @@ SplitButton.define();
 
 export default SplitButton;
 export type {
-	SplitButtonAccessibilityAttributes
+	SplitButtonAccessibilityAttributes,
 };
