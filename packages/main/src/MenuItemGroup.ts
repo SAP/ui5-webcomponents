@@ -2,12 +2,19 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type MenuItem from "./MenuItem.js";
 import { isInstanceOfMenuItem } from "./MenuItem.js";
 import MenuItemGroupTemplate from "./MenuItemGroupTemplate.js";
 import MenuItemGroupCheckMode from "./types/MenuItemGroupCheckMode.js";
 import type { IMenuItem } from "./Menu.js";
+import {
+	MENU_ITEM_GROUP_NONE_ACCESSIBLE_NAME,
+	MENU_ITEM_GROUP_SINGLE_ACCESSIBLE_NAME,
+	MENU_ITEM_GROUP_MULTI_ACCESSIBLE_NAME,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -61,6 +68,22 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<IMenuItem>;
+
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
+	get ariaLabelText(): string | undefined {
+		switch (this.checkMode) {
+		case MenuItemGroupCheckMode.None:
+			return MenuItemGroup.i18nBundle.getText(MENU_ITEM_GROUP_NONE_ACCESSIBLE_NAME);
+		case MenuItemGroupCheckMode.Single:
+			return MenuItemGroup.i18nBundle.getText(MENU_ITEM_GROUP_SINGLE_ACCESSIBLE_NAME);
+		case MenuItemGroupCheckMode.Multiple:
+			return MenuItemGroup.i18nBundle.getText(MENU_ITEM_GROUP_MULTI_ACCESSIBLE_NAME);
+		default:
+			return undefined;
+		}
+	}
 
 	get isGroup(): boolean {
 		return true;
