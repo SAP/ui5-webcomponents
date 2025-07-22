@@ -395,42 +395,6 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		return valuesArray;
 	}
 
-	// getDisplayRangeFormat() {
-	// 	return this._isDisplayFormatPattern
-	// 		? DateFormat.getDateInstance({
-	// 			strictParsing: true,
-	// 			pattern: this._displayFormat,
-	// 			calendarType: this._primaryCalendarType,
-	// 			interval: true,
-	// 			intervalDelimiter: this._effectiveDelimiter,
-	// 		})
-	// 		: DateFormat.getDateInstance({
-	// 			strictParsing: true,
-	// 			style: this._displayFormat,
-	// 			calendarType: this._primaryCalendarType,
-	// 			interval: true,
-	// 			intervalDelimiter: this._effectiveDelimiter,
-	// 		});
-	// }
-
-	// getValueRangeFormat() {
-	// 	return this._isValueFormatPattern
-	// 		? DateFormat.getDateInstance({
-	// 			strictParsing: true,
-	// 			pattern: this._valueFormat,
-	// 			calendarType: this._primaryCalendarType,
-	// 			interval: true,
-	// 			intervalDelimiter: this._effectiveDelimiter,
-	// 		})
-	// 		: DateFormat.getDateInstance({
-	// 			strictParsing: true,
-	// 			style: this._valueFormat,
-	// 			calendarType: this._primaryCalendarType,
-	// 			interval: true,
-	// 			intervalDelimiter: this._effectiveDelimiter,
-	// 		});
-	// }
-
 	/**
 	 * The parser understands many formats, but we need one format
 	 * @protected
@@ -443,11 +407,10 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		let firstDateString = "";
 		let lastDateString = "";
 
-		firstDateString = this._getStringFromTimestamp((this._extractFirstTimestamp(value) as number) * 1000);
-		lastDateString = this._getStringFromTimestamp((this._extractLastTimestamp(value) as number) * 1000);
+		firstDateString = this._getValueStringFromTimestamp((this._extractFirstTimestamp(value) as number) * 1000);
+		lastDateString = this._getValueStringFromTimestamp((this._extractLastTimestamp(value) as number) * 1000);
 
 		return `${firstDateString} ${this._effectiveDelimiter} ${lastDateString}`;
-		// return this.getValueFormat().format(this.getValueFormat().parse(value, true), true); // it is important to both parse and format the date as UTC
 	}
 
 	/**
