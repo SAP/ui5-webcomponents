@@ -35,14 +35,12 @@
 
 .ui5-form-item-layout {
 	height: 100%;
-	background-color: var(--test-bg, inherit);
 	color: inherit;
-	height: 100%;
 	display: grid;
 	grid-template-columns: var(--ui5-form-item-layout);
 	grid-template-rows: subgrid;
-	grid-row: var(--ui5-grid-row, 1);
-	align-items: var(--ui5-grid-row-align, center);;
+	grid-row: var(--ui5-grid-row, span 1);
+	align-items: var(--ui5-grid-row-align, center);
 }
 
 .ui5-form-item-label {
