@@ -24,9 +24,9 @@ import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
-type AIButtonRootAccAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription">;
-type AIButtonArrowButtonAccAtributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
-type AIButtonAccessibilityAttributes = { root?: AIButtonRootAccAttributes, arrowButton?: AIButtonArrowButtonAccAtributes}
+type AIButtonRootAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription">;
+type AIButtonArrowButtonAccessibilityAtributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
+type AIButtonAccessibilityAttributes = { root?: AIButtonRootAccessibilityAttributes, arrowButton?: AIButtonArrowButtonAccessibilityAtributes}
 
 /**
  * @class
