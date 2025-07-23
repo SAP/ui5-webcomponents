@@ -13,7 +13,7 @@
 <body class="list1auto">
 	<ui5-checkbox id="reorder" text="Movable items" checked></ui5-checkbox>
 	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
-	<a id="link" href="http://sap.com" draggable="true">http://sap.com</a>
+	<a id="link" href="http://sap.com" ondragstart="dragstartHandler(event)" draggable="true">http://sap.com</a>
 
 	<section>
 		<h2>Drag and drop</h2>
@@ -25,7 +25,10 @@
 	</section>
 
 	<section class="largeTopMargin">
-		<ui5-list id="listDnd2" header-text="List 2">
+		<ui5-list id="listDnd2"
+				  ondrop="dropHandler(event)"
+				  ondragover="dragoverHandler(event)"
+				  header-text="List 2">
 			<ui5-li id="bg2" movable>2. Bulgaria</ui5-li>
 			<ui5-li id="de2" movable data-allows-nesting>2. Germany (Allows nesting)</ui5-li>
 			<ui5-li id="es2" movable>2. Spain</ui5-li>
@@ -122,6 +125,20 @@
 			list2.items.forEach((item) => item.movable = e.target.checked);
 			list3.items.forEach((item) => item.movable = e.target.checked);
 		});
+
+		function dragstartHandler(ev) {
+			ev.dataTransfer.setData("text", ev.target.id);
+		}
+
+		function dragoverHandler(ev) {
+			ev.preventDefault();
+		}
+
+		function dropHandler(ev) {
+			ev.preventDefault();
+			const data = ev.dataTransfer.getData("text");
+			ev.target.appendChild(document.getElementById(data));
+		}
 	</script>
 </body>
 
