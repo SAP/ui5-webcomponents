@@ -402,7 +402,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	_onfocusout() {
 		this.focused = false;
 		if (this._tokenizer) {
-			this._tokenizer.expanded = this._tokenizerOpen || false;
+			this._tokenizer.expanded = this._tokenizerOpen;
 		}
 	}
 
