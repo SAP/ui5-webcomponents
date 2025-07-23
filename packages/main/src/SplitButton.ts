@@ -235,7 +235,7 @@ class SplitButton extends UI5Element {
 	 *
 	 * @default {}
 	 * @public
-	 * @since 2.6.0
+	 * @since 2.13.0
 	 */
 	@property({ type: Object })
 	accessibilityAttributes: SplitButtonAccessibilityAttributes = {};
