@@ -126,7 +126,7 @@ class Button extends UI5Element {
 	 * is opened by the arrow button. Set back to false when the menu is closed.
 	 * @default false
 	 * @public
-	 * @since 2.13.0
+	 * @since 2.6.0
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	arrowButtonPressed = false;
