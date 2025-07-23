@@ -28,13 +28,17 @@
 
 .ui5-form-item-root {
 	display: contents;
+	height: 100%;
 	container-type: inline-size;
 	background-color: inherit;
 	color: inherit;
+	order: inherit;
 }
 
 .ui5-form-item-layout {
-	height: 100%;
+	order: inherit;
+	background-color: inherit;
+	height: inherit;
 	color: inherit;
 	display: grid;
 	grid-template-columns: var(--ui5-form-item-layout);
@@ -74,7 +78,7 @@
 }
 
 @container (max-width: 600px) {
-	:host {
+	:host .ui5-form-item-layout {
 		order: var(--ui5-form-item-order-S, unset);
 	}
 
