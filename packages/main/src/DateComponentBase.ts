@@ -64,7 +64,7 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Determines the format, displayed in the input field.
 	 * @default undefined
-	 * @since 1.0.0-rc.6
+	 * @since 2.13.0
 	 * @public
 	 */
 	@property()
@@ -73,6 +73,7 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Determines the format, used for the value attribute.
 	 * @default undefined
+	 * @since 2.13.0
 	 * @public
 	 */
 	@property()
