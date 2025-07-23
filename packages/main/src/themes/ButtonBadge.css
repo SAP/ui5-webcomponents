@@ -6,6 +6,8 @@
 	color: var(--sapContent_BadgeTextColor);
 	height: 1rem;
 	border-radius: 0.5rem;
+	display: flex;
+	align-items: center;
 }
 
 :host([design="AttentionDot"]) [ui5-tag]::part(root) {

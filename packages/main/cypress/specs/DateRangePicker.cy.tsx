@@ -242,6 +242,8 @@ describe("DateRangePicker general interaction", () => {
 			.should("be.focused");
 
 		cy.realPress("End")
+		// TODO: Carret position need to be checked somehow before triggering next action
+		cy.wait(100);
 
 		cy.realPress("PageDown");
 
@@ -254,6 +256,8 @@ describe("DateRangePicker general interaction", () => {
 			.should("have.attr", "value", "Jul 16, 2020 @ Jul 29, 2020");
 
 		cy.realPress("Home");
+		// TODO: Carret position need to be checked somehow before triggering next action
+		cy.wait(100);
 
 		cy.realPress("PageDown");
 
@@ -528,7 +532,7 @@ describe("DateRangePicker general interaction", () => {
 			});
 	});
 
-	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", () => {
+	it("Min and max dates are set without format-pattern by using ISO (yyyy-MM-dd) format", () => {
 		cy.wrap({ setLanguage })
 			.then(api => {
 				return api.setLanguage("bg");
@@ -584,6 +588,9 @@ describe("DateRangePicker general interaction", () => {
 			})
 
 		cy.mount(<DateRangePickerTemplate formatPattern="MM.yyyy" />);
+
+		// TODO: Remove when focus is applied on month, day, year picker in their onAfterRendering method. It takes the focus one they are rendered even if not visible
+		cy.wait(500);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")

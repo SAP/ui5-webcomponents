@@ -51,6 +51,11 @@
 	margin: inherit;
 }
 
+:host([disabled]) .ui5-date-picker-input {
+	background-color: var(--_ui5-input_disabled_background);
+	opacity: var(--_ui5_input_disabled_opacity);
+}
+
 :host(:not([disabled]):not([readonly])) .ui5-date-picker-input[focused] {
 	background-color: var(--_ui5-datepicker-hover-background);
 }
