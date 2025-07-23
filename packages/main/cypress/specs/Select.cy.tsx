@@ -355,7 +355,7 @@ describe("Select general interaction", () => {
 		};
 
 		cy.mount(
-			<Select id="mySelect" onChange={handleChange}>
+			<Select onChange={handleChange}>
 				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
@@ -364,20 +364,20 @@ describe("Select general interaction", () => {
 
 		const EXPECTED_SELECTION_TEXT = "Cozy";
 
-		cy.get("#mySelect").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#mySelect").should("have.attr", "opened");
+		cy.get("[ui5-select]").should("have.attr", "opened");
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.find("[ui5-option]")
 			.eq(0)
 			.realClick();
 
 		cy.wrap(changeEvents).should("have.length", 1);
 
-		cy.get("#mySelect").should("have.prop", "value", EXPECTED_SELECTION_TEXT);
+		cy.get("[ui5-select]").should("have.prop", "value", EXPECTED_SELECTION_TEXT);
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
@@ -392,7 +392,7 @@ describe("Select general interaction", () => {
 		};
 
 		cy.mount(
-			<Select id="selectPrevent" onChange={handleChange}>
+			<Select onChange={handleChange}>
 				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
@@ -401,16 +401,16 @@ describe("Select general interaction", () => {
 
 		const EXPECTED_SELECTION_TEXT = "Condensed";
 
-		cy.get("#selectPrevent").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#selectPrevent")
+		cy.get("[ui5-select]")
 			.find("[ui5-option]")
 			.eq(1)
 			.realClick();
 
-		cy.get("#selectPrevent").should("have.prop", "value", EXPECTED_SELECTION_TEXT);
+		cy.get("[ui5-select]").should("have.prop", "value", EXPECTED_SELECTION_TEXT);
 
-		cy.get("#selectPrevent")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
@@ -424,16 +424,16 @@ describe("Select general interaction", () => {
 		};
 
 		cy.mount(
-			<Select id="mySelect" onChange={handleChange}>
+			<Select onChange={handleChange}>
 				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
 			</Select>
 		);
 
-		cy.get("#mySelect").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.find("[ui5-option]")
 			.eq(2)
 			.realClick();
@@ -449,14 +449,14 @@ describe("Select general interaction", () => {
 		};
 
 		cy.mount(
-			<Select id="mySelect" onOpen={handleOpen}>
+			<Select onOpen={handleOpen}>
 				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
 			</Select>
 		);
 
-		cy.get("#mySelect").realClick();
+		cy.get("[ui5-select]").realClick();
 
 		cy.wrap(openEvents).should("have.length", 1);
 	});
@@ -469,16 +469,16 @@ describe("Select general interaction", () => {
 		};
 
 		cy.mount(
-			<Select id="mySelect" onClose={handleClose}>
+			<Select onClose={handleClose}>
 				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
 			</Select>
 		);
 
-		cy.get("#mySelect").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#mySelect").realClick();
+		cy.get("[ui5-select]").realClick();
 
 		cy.wrap(closeEvents).should("have.length", 1);
 	});
@@ -491,7 +491,7 @@ describe("Select general interaction", () => {
 		};
 
 		cy.mount(
-			<Select id="errorSelect" valueState="Negative" onChange={handleChange}>
+			<Select valueState="Negative" onChange={handleChange}>
 				<Option value="Cozy" selected>Cozy</Option>
 				<Option value="Compact">Compact</Option>
 				<Option value="Condensed">Condensed</Option>
@@ -501,31 +501,31 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT1 = "Compact";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
-		cy.get("#errorSelect").realClick();
-		cy.get("#errorSelect").realPress("ArrowDown");
-		cy.get("#errorSelect").realPress("Enter");
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("Enter");
 
 		cy.wrap(changeEvents).should("have.length", 1);
 
-		cy.get("#errorSelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT1);
 
-		cy.get("#errorSelect").should("have.prop", "value", EXPECTED_SELECTION_TEXT1);
+		cy.get("[ui5-select]").should("have.prop", "value", EXPECTED_SELECTION_TEXT1);
 
-		cy.get("#errorSelect").realClick();
-		cy.get("#errorSelect").realPress("ArrowDown");
-		cy.get("#errorSelect").realPress("Space");
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("Space");
 
 		cy.wrap(changeEvents).should("have.length", 2);
 
-		cy.get("#errorSelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT2);
 
-		cy.get("#errorSelect").should("have.prop", "value", EXPECTED_SELECTION_TEXT2);
+		cy.get("[ui5-select]").should("have.prop", "value", EXPECTED_SELECTION_TEXT2);
 	});
 
 	it("doesn't changes selection while closed with Arrow Up/Down while at last item", () => {
@@ -536,15 +536,14 @@ describe("Select general interaction", () => {
 		};
 
 		cy.mount(
-			<Select id="errorSelect" valueState="Negative" onChange={handleChange}>
+			<Select valueState="Negative" onChange={handleChange}>
 				<Option value="Cozy" selected>Cozy</Option>
 				<Option value="Compact" selected>Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
 			</Select>
 		);
 
-
-		cy.get("#errorSelect").then(($select) => {
+		cy.get("[ui5-select]").then(($select) => {
 			const selectElement = $select[0];
 			selectElement.addEventListener("ui5-change", (e) => {
 				changeEvents.push(e);
@@ -553,17 +552,17 @@ describe("Select general interaction", () => {
 
 		const EXPECTED_SELECTION_TEXT1 = "Condensed";
 
-		cy.get("#errorSelect").realClick();
-		cy.get("#errorSelect").realPress("Escape");
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realPress("Escape");
 
-		cy.get("#errorSelect").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("ArrowDown");
 
-		cy.get("#errorSelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT1);
 
-		cy.get("#errorSelect").should("have.prop", "value", EXPECTED_SELECTION_TEXT1);
+		cy.get("[ui5-select]").should("have.prop", "value", EXPECTED_SELECTION_TEXT1);
 
 		cy.wrap(changeEvents).should("have.length", 0);
 	});
@@ -572,14 +571,14 @@ describe("Select general interaction", () => {
 		const changeEvents = [];
 
 		cy.mount(
-			<Select id="errorSelect" valueState="Negative">
+			<Select valueState="Negative">
 				<Option value="Cozy" selected>Cozy</Option>
 				<Option value="Compact" selected>Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
 			</Select>
 		);
 
-		cy.get("#errorSelect").then(($select) => {
+		cy.get("[ui5-select]").then(($select) => {
 			const selectElement = $select[0];
 			selectElement.addEventListener("ui5-change", (e) => {
 				changeEvents.push(e);
@@ -589,26 +588,26 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT1 = "Compact";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
-		cy.get("#errorSelect").realClick();
-		cy.get("#errorSelect").realPress("Escape");
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realPress("Escape");
 
-		cy.get("#errorSelect").realPress("ArrowUp");
+		cy.get("[ui5-select]").realPress("ArrowUp");
 
-		cy.get("#errorSelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT1);
 
-		cy.get("#errorSelect").should("have.prop", "value", EXPECTED_SELECTION_TEXT1);
+		cy.get("[ui5-select]").should("have.prop", "value", EXPECTED_SELECTION_TEXT1);
 
-		cy.get("#errorSelect").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("ArrowDown");
 
-		cy.get("#errorSelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT2);
 
-		cy.get("#errorSelect").should("have.prop", "value", EXPECTED_SELECTION_TEXT2);
+		cy.get("[ui5-select]").should("have.prop", "value", EXPECTED_SELECTION_TEXT2);
 
 		cy.wrap(changeEvents).should("have.length", 2);
 	});
@@ -618,16 +617,16 @@ describe("Select general interaction", () => {
 
 		cy.mount(
 			<>
-				<Select id="errorSelect" valueState="Negative">
+				<Select valueState="Negative">
 					<Option value="Cozy" selected>Cozy</Option>
 					<Option value="Compact" selected>Compact</Option>
 					<Option value="Condensed" selected>Condensed</Option>
 				</Select>
-				<button id="myBtn2">click</button>
+				<button>click</button>
 			</>
 		);
 
-		cy.get("#errorSelect").then(($select) => {
+		cy.get("[ui5-select]").then(($select) => {
 			const selectElement = $select[0];
 			selectElement.addEventListener("ui5-change", (e) => {
 				changeEvents.push(e);
@@ -637,38 +636,38 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT1 = "Compact";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
-		cy.get("#errorSelect").realClick();
-		cy.get("#errorSelect").realPress("Escape");
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realPress("Escape");
 
-		cy.get("#errorSelect").realPress("ArrowUp");
+		cy.get("[ui5-select]").realPress("ArrowUp");
 
 		cy.get(".ui5-invisiblemessage-polite").should("contain.text", EXPECTED_SELECTION_TEXT1);
 
-		cy.get("#errorSelect").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("ArrowDown");
 
 		cy.get(".ui5-invisiblemessage-polite").should("contain.text", EXPECTED_SELECTION_TEXT2);
 
-		cy.get("#errorSelect").realClick();
-		cy.get("#errorSelect").realPress("ArrowUp");
-		cy.get("#errorSelect").realPress("Escape");
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realPress("ArrowUp");
+		cy.get("[ui5-select]").realPress("Escape");
 
-		cy.get("#errorSelect").realClick();
-		cy.get("#errorSelect").realPress("ArrowUp");
-		cy.get("#errorSelect").realPress("Enter");
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realPress("ArrowUp");
+		cy.get("[ui5-select]").realPress("Enter");
 
-		cy.get("#errorSelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT1);
 
-		cy.get("#myBtn2").realClick();
+		cy.get("button").realClick();
 
 		cy.wrap(changeEvents).should("have.length", 3);
 	});
 
 	it("remains closed and unchanged when read-only", () => {
 		cy.mount(
-			<Select id="mySelectReadOnly" readonly>
+			<Select readonly>
 				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact" selected>Compact</Option>
 				<Option value="Condensed">Condensed</Option>
@@ -677,23 +676,23 @@ describe("Select general interaction", () => {
 
 		const EXPECTED_SELECTION_TEXT = "Compact";
 
-		cy.get("#mySelectReadOnly").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#mySelectReadOnly")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("not.have.prop", "open", true);
 
-		cy.get("#mySelectReadOnly").realPress("ArrowUp");
+		cy.get("[ui5-select]").realPress("ArrowUp");
 
-		cy.get("#mySelectReadOnly")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
 
-		cy.get("#mySelectReadOnly").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("ArrowDown");
 
-		cy.get("#mySelectReadOnly")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
@@ -701,16 +700,16 @@ describe("Select general interaction", () => {
 
 	it("announces the selected value once Select Popover is opened", () => {
 		cy.mount(
-			<Select id="mySelect">
-				<Option id="firstOption" value="Cozy">Cozy</Option>
+			<Select>
+				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
 			</Select>
 		);
 
-		cy.get("#mySelect").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#mySelect [ui5-option][selected]")
+		cy.get("[ui5-select] [ui5-option][selected]")
 			.invoke("text")
 			.then((selectedText) => {
 				cy.get(".ui5-invisiblemessage-polite").should("contain.text", selectedText);
@@ -720,42 +719,42 @@ describe("Select general interaction", () => {
 	it("changes selection on Tab", () => {
 		cy.mount(
 			<>
-				<Select id="keyboardHandling">
+				<Select>
 					<Option value="Banana">Banana</Option>
 					<Option value="Orange" selected>Orange</Option>
 					<Option value="Watermelon">Watermelon</Option>
 				</Select>
-				<input id="inputResult" />
+				<input />
 			</>
 		);
 
 		const EXPECTED_SELECTION_TEXT = "Banana";
 
-		cy.get("#keyboardHandling").realClick();
-		cy.get("#keyboardHandling").realClick();
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#keyboardHandling").realPress("Space");
+		cy.get("[ui5-select]").realPress("Space");
 
-		cy.get("#keyboardHandling").realPress("ArrowUp");
-		cy.get("#keyboardHandling").realPress("Tab");
+		cy.get("[ui5-select]").realPress("ArrowUp");
+		cy.get("[ui5-select]").realPress("Tab");
 
-		cy.get("#keyboardHandling")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
 
-		cy.get("#inputResult").should("be.focused");
+		cy.get("input").should("be.focused");
 	});
 
 	it("changes selection on Shift + Tab", () => {
 		cy.mount(
 			<>
-				<Select id="mySelectEsc">
+				<Select>
 					<Option value="Cozy">Cozy</Option>
 					<Option value="Compact" selected>Compact</Option>
 					<Option value="Condensed">Condensed</Option>
 				</Select>
-				<Select id="keyboardHandling">
+				<Select>
 					<Option value="Banana">Banana</Option>
 					<Option value="Orange" selected>Orange</Option>
 					<Option value="Watermelon">Watermelon</Option>
@@ -765,25 +764,25 @@ describe("Select general interaction", () => {
 
 		const EXPECTED_SELECTION_TEXT = "Watermelon";
 
-		cy.get("#keyboardHandling").realClick();
-		cy.get("#keyboardHandling").realClick();
+		cy.get("[ui5-select]").eq(1).realClick();
+		cy.get("[ui5-select]").eq(1).realClick();
 
-		cy.get("#keyboardHandling").realPress("Space");
+		cy.get("[ui5-select]").eq(1).realPress("Space");
 
-		cy.get("#keyboardHandling").realPress("ArrowDown");
-		cy.get("#keyboardHandling").realPress(["Shift", "Tab"]);
+		cy.get("[ui5-select]").eq(1).realPress("ArrowDown");
+		cy.get("[ui5-select]").eq(1).realPress(["Shift", "Tab"]);
 
-		cy.get("#keyboardHandling")
+		cy.get("[ui5-select]").eq(1)
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
 
-		cy.get("#mySelectEsc").should("be.focused");
+		cy.get("[ui5-select]").eq(0).should("be.focused");
 	});
 
 	it("tests selection does not cycle with ArrowDown", () => {
 		cy.mount(
-			<Select id="selectionNotCycling">
+			<Select>
 				<Option value="Opt1">Opt1</Option>
 				<Option value="Opt2">Opt2</Option>
 				<Option value="Opt3" selected>Opt3</Option>
@@ -792,26 +791,26 @@ describe("Select general interaction", () => {
 
 		const EXPECTED_SELECTION_TEXT = "Opt3";
 
-		cy.get("#selectionNotCycling").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#selectionNotCycling")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
 
-		cy.get("#selectionNotCycling").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("ArrowDown");
 
-		cy.get("#selectionNotCycling")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
 
-		cy.get("#selectionNotCycling").realPress("Escape");
+		cy.get("[ui5-select]").realPress("Escape");
 	});
 
 	it("tests selection does not cycle with ArrowUp", () => {
 		cy.mount(
-			<Select id="selectionNotCycling2">
+			<Select>
 				<Option value="Opt1" selected>Opt1</Option>
 				<Option value="Opt2">Opt2</Option>
 				<Option value="Opt3">Opt3</Option>
@@ -820,26 +819,26 @@ describe("Select general interaction", () => {
 
 		const EXPECTED_SELECTION_TEXT = "Opt1";
 
-		cy.get("#selectionNotCycling2").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#selectionNotCycling2")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
 
-		cy.get("#selectionNotCycling2").realPress("ArrowUp");
+		cy.get("[ui5-select]").realPress("ArrowUp");
 
-		cy.get("#selectionNotCycling2")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
 
-		cy.get("#selectionNotCycling2").realPress("Escape");
+		cy.get("[ui5-select]").realPress("Escape");
 	});
 
 	it("changes selection with typing single letter", () => {
 		cy.mount(
-			<Select id="keyboardHandling">
+			<Select>
 				<Option value="Banana">Banana</Option>
 				<Option value="Orange" selected>Orange</Option>
 				<Option value="Watermelon">Watermelon</Option>
@@ -848,11 +847,11 @@ describe("Select general interaction", () => {
 
 		const EXPECTED_SELECTION_TEXT = "Banana";
 
-		cy.get("#keyboardHandling").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#keyboardHandling").realPress("b");
+		cy.get("[ui5-select]").realPress("b");
 
-		cy.get("#keyboardHandling")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
@@ -860,7 +859,7 @@ describe("Select general interaction", () => {
 
 	it("changes selection with typing more letters", () => {
 		cy.mount(
-			<Select id="warningSelect" valueState="Critical">
+			<Select valueState="Critical">
 				<Option value="Australia">Australia</Option>
 				<Option value="Aruba">Aruba</Option>
 				<Option value="Antigua and Barbuda">Antigua and Barbuda</Option>
@@ -872,12 +871,12 @@ describe("Select general interaction", () => {
 
 		const EXPECTED_SELECTION_TEXT = "Brazil";
 
-		cy.get("#warningSelect").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#warningSelect").realPress("b");
-		cy.get("#warningSelect").realPress("r");
+		cy.get("[ui5-select]").realPress("b");
+		cy.get("[ui5-select]").realPress("r");
 
-		cy.get("#warningSelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
@@ -886,27 +885,27 @@ describe("Select general interaction", () => {
 	it("changes selection using 'value'", () => {
 		cy.mount(
 			<>
-				<Select id="mySelect7">
+				<Select>
 					<Option value="Item1">Item1</Option>
 					<Option value="Item2">Item2</Option>
 					<Option value="Item3" selected>Item3</Option>
 				</Select>
-				<button id="btnSetValue">select.value = "Item2"</button>
-				<button id="btnSetInvalidValue">select.value = "NAN"</button>
+				<button>select.value = "Item2"</button>
+				<button>select.value = "NAN"</button>
 			</>
 		);
 
 		// Set up button click handlers
-		cy.get("#btnSetValue").then(($btn) => {
+		cy.get("button").eq(0).then(($btn) => {
 			$btn[0].addEventListener("click", () => {
-				const select = document.getElementById("mySelect7") as Select;
+				const select = document.querySelector("[ui5-select]") as Select;
 				select.value = "Item2";
 			});
 		});
 
-		cy.get("#btnSetInvalidValue").then(($btn) => {
+		cy.get("button").eq(1).then(($btn) => {
 			$btn[0].addEventListener("click", () => {
-				const select = document.getElementById("mySelect7") as Select;
+				const select = document.querySelector("[ui5-select]") as Select;
 				select.value = "NAN";
 			});
 		});
@@ -915,18 +914,18 @@ describe("Select general interaction", () => {
 		const EMPTY_VALUE = "";
 		const EXPECTED_SELECTION_TEXT = "Item2";
 
-		cy.get("#btnSetValue").realClick();
+		cy.get("button").eq(0).realClick();
 
-		cy.get("#mySelect7").should("have.prop", "value", EXPECTED_SELECTION_TEXT);
-		cy.get("#mySelect7")
+		cy.get("[ui5-select]").should("have.prop", "value", EXPECTED_SELECTION_TEXT);
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
 
-		cy.get("#btnSetInvalidValue").realClick();
+		cy.get("button").eq(1).realClick();
 
-		cy.get("#mySelect7").should("have.prop", "value", INVALID_VALUE);
-		cy.get("#mySelect7")
+		cy.get("[ui5-select]").should("have.prop", "value", INVALID_VALUE);
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EMPTY_VALUE);
@@ -935,21 +934,21 @@ describe("Select general interaction", () => {
 	it("opens upon space", () => {
 		cy.mount(
 			<>
-				<button id="myBtn2">click</button>
-				<Select id="mySelect">
-					<Option id="firstOption" value="Cozy">Cozy</Option>
+				<button>click</button>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
 					<Option value="Compact">Compact</Option>
 					<Option value="Condensed" selected>Condensed</Option>
 				</Select>
 			</>
 		);
 
-		cy.get("#myBtn2").realClick();
-		cy.get("#myBtn2").realPress("Tab");
+		cy.get("button").realClick();
+		cy.get("button").realPress("Tab");
 
 		cy.realPress("Space");
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.prop", "open", true);
@@ -958,28 +957,28 @@ describe("Select general interaction", () => {
 	it("toggles upon F4", () => {
 		cy.mount(
 			<>
-				<button id="myBtn2">click</button>
-				<Select id="mySelect">
-					<Option id="firstOption" value="Cozy">Cozy</Option>
+				<button>click</button>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
 					<Option value="Compact">Compact</Option>
 					<Option value="Condensed" selected>Condensed</Option>
 				</Select>
 			</>
 		);
 
-		cy.get("#myBtn2").realClick();
-		cy.get("#myBtn2").realPress("Tab");
+		cy.get("button").realClick();
+		cy.get("button").realPress("Tab");
 
 		cy.realPress("F4");
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.prop", "open", true);
 
 		cy.realPress("F4");
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.prop", "open", false);
@@ -988,28 +987,28 @@ describe("Select general interaction", () => {
 	it("toggles upon ALT + UP", () => {
 		cy.mount(
 			<>
-				<button id="myBtn2">click</button>
-				<Select id="mySelect">
-					<Option id="firstOption" value="Cozy">Cozy</Option>
+				<button>click</button>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
 					<Option value="Compact">Compact</Option>
 					<Option value="Condensed" selected>Condensed</Option>
 				</Select>
 			</>
 		);
 
-		cy.get("#myBtn2").realClick();
-		cy.get("#myBtn2").realPress("Tab");
+		cy.get("button").realClick();
+		cy.get("button").realPress("Tab");
 
 		cy.realPress(["Alt", "ArrowUp"]);
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.prop", "open", true);
 
 		cy.realPress(["Alt", "ArrowUp"]);
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.prop", "open", false);
@@ -1018,28 +1017,28 @@ describe("Select general interaction", () => {
 	it("toggles upon ALT + DOWN", () => {
 		cy.mount(
 			<>
-				<button id="myBtn2">click</button>
-				<Select id="mySelect">
-					<Option id="firstOption" value="Cozy">Cozy</Option>
+				<button>click</button>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
 					<Option value="Compact">Compact</Option>
 					<Option value="Condensed" selected>Condensed</Option>
 				</Select>
 			</>
 		);
 
-		cy.get("#myBtn2").realClick();
-		cy.get("#myBtn2").realPress("Tab");
+		cy.get("button").realClick();
+		cy.get("button").realPress("Tab");
 
 		cy.realPress(["Alt", "ArrowDown"]);
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.prop", "open", true);
 
 		cy.realPress(["Alt", "ArrowDown"]);
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.prop", "open", false);
@@ -1050,19 +1049,19 @@ describe("Select general interaction", () => {
 
 		cy.mount(
 			<>
-				<Select id="mySelect">
-					<Option id="firstOption" value="Cozy">Cozy</Option>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
 					<Option value="Compact">Compact</Option>
 					<Option value="Condensed" selected>Condensed</Option>
 				</Select>
-				<button id="add-items-btn">Add new Items</button>
-				<button id="restore-items-btn">Restore Items</button>
+				<button>Add new Items</button>
+				<button>Restore Items</button>
 			</>
 		);
 
-		cy.get("#add-items-btn").then(($btn) => {
+		cy.get("button").eq(0).then(($btn) => {
 			$btn[0].addEventListener("click", () => {
-				const select = document.getElementById("mySelect") as Select;
+				const select = document.querySelector("[ui5-select]") as Select;
 				initialItemsHTML = select.innerHTML;
 
 				const newOption = document.createElement("ui5-option") as Option;
@@ -1073,34 +1072,34 @@ describe("Select general interaction", () => {
 			});
 		});
 
-		cy.get("#restore-items-btn").then(($btn) => {
+		cy.get("button").eq(1).then(($btn) => {
 			$btn[0].addEventListener("click", () => {
-				const select = document.getElementById("mySelect") as Select;
+				const select = document.querySelector("[ui5-select]") as Select;
 				select.innerHTML = initialItemsHTML;
 			});
 		});
 
-		cy.get("#add-items-btn").realClick();
+		cy.get("button").eq(0).realClick();
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.find("[ui5-option]:first-child")
 			.should("have.prop", "selected", true);
 
-		cy.get("#restore-items-btn").realClick();
+		cy.get("button").eq(1).realClick();
 	});
 
 	it("reverts value before open after clicking on escape", () => {
 		const changeEvents = [];
 
 		cy.mount(
-			<Select id="mySelect">
-				<Option id="firstOption" value="Cozy">Cozy</Option>
+			<Select>
+				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
 			</Select>
 		);
 
-		cy.get("#mySelect").then(($select) => {
+		cy.get("[ui5-select]").then(($select) => {
 			const selectElement = $select[0];
 			selectElement.addEventListener("ui5-change", (e) => {
 				changeEvents.push(e);
@@ -1108,24 +1107,24 @@ describe("Select general interaction", () => {
 		});
 
 		let initialSelectText = "";
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.then(($el) => {
 				initialSelectText = $el[0].innerHTML;
 			});
 
-		cy.get("#mySelect").realClick();
-		cy.get("#mySelect").realPress("ArrowDown");
-		cy.get("#mySelect").realPress("Escape");
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("Escape");
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.find("[ui5-option][selected]")
 			.should("have.prop", "selected", true);
 
 		cy.wrap(changeEvents).should("have.length", 0);
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.then(($el) => {
@@ -1138,26 +1137,26 @@ describe("Select general interaction", () => {
 
 		cy.mount(
 			<>
-				<Select id="mySelect">
-					<Option id="firstOption" value="Cozy">Cozy</Option>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
 					<Option value="Compact">Compact</Option>
 					<Option value="Condensed" selected>Condensed</Option>
 				</Select>
-				<button id="myBtn2">click</button>
+				<button>click</button>
 			</>
 		);
 
-		cy.get("#mySelect").then(($select) => {
+		cy.get("[ui5-select]").then(($select) => {
 			const selectElement = $select[0];
 			selectElement.addEventListener("ui5-change", (e) => {
 				changeEvents.push(e);
 			});
 		});
 
-		cy.get("#mySelect").realClick();
-		cy.get("#mySelect").realPress("ArrowUp");
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realPress("ArrowUp");
 
-		cy.get("#myBtn2").realClick();
+		cy.get("button").realClick();
 
 		cy.wrap(changeEvents).should("have.length", 1);
 	});
@@ -1166,27 +1165,27 @@ describe("Select general interaction", () => {
 		const changeEvents = [];
 
 		cy.mount(
-			<Select id="mySelect">
-				<Option id="firstOption" value="Cozy">Cozy</Option>
+			<Select>
+				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
 			</Select>
 		);
 
-		cy.get("#mySelect").then(($select) => {
+		cy.get("[ui5-select]").then(($select) => {
 			const selectElement = $select[0];
 			selectElement.addEventListener("ui5-change", (e) => {
 				changeEvents.push(e);
 			});
 		});
 
-		cy.get("#mySelect").realClick();
-		cy.get("#mySelect").realPress("ArrowDown");
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realPress("ArrowDown");
 
-		cy.get("#mySelect").realPress("Escape");
+		cy.get("[ui5-select]").realPress("Escape");
 
-		cy.get("#mySelect").realClick();
-		cy.get("#mySelect")
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]")
 			.find("[ui5-option]:first-child")
 			.realClick();
 
@@ -1195,7 +1194,7 @@ describe("Select general interaction", () => {
 
 	it("tests ESC on closed picker", () => {
 		cy.mount(
-			<Select id="mySelectEsc">
+			<Select>
 				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact" selected>Compact</Option>
 				<Option value="Condensed">Condensed</Option>
@@ -1205,25 +1204,25 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT = "Cozy";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
-		cy.get("#mySelectEsc").realClick();
-		cy.get("#mySelectEsc")
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]")
 			.find("[ui5-option]:first-child")
 			.realClick();
 
-		cy.get("#mySelectEsc")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT);
 
-		cy.get("#mySelectEsc").realPress("Escape");
+		cy.get("[ui5-select]").realPress("Escape");
 
-		cy.get("#mySelectEsc").realClick();
-		cy.get("#mySelectEsc")
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]")
 			.find("[ui5-option]")
 			.eq(2)
 			.realClick();
 
-		cy.get("#mySelectEsc")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", EXPECTED_SELECTION_TEXT2);
@@ -1232,22 +1231,22 @@ describe("Select general interaction", () => {
 	it("Tests value state type", () => {
 		cy.mount(
 			<>
-				<Select id="successSelect" valueState="Positive">
+				<Select valueState="Positive">
 					<Option value="Cozy" selected>Cozy</Option>
 					<Option value="Compact">Compact</Option>
 					<Option value="Condensed">Condensed</Option>
 				</Select>
-				<Select id="infoSelect" valueState="Information">
+				<Select valueState="Information">
 					<Option value="Cozy">Cozy</Option>
 					<Option value="Compact">Compact</Option>
 					<Option value="Condensed" selected>Condensed</Option>
 				</Select>
-				<Select id="errorSelect" valueState="Negative">
+				<Select valueState="Negative">
 					<Option value="Cozy" selected>Cozy</Option>
 					<Option value="Compact" selected>Compact</Option>
 					<Option value="Condensed" selected>Condensed</Option>
 				</Select>
-				<Select id="warningSelect" valueState="Critical">
+				<Select valueState="Critical">
 					<Option value="Australia" selected>Australia</Option>
 					<Option value="Aruba">Aruba</Option>
 					<Option value="Belgium">Belgium</Option>
@@ -1255,22 +1254,22 @@ describe("Select general interaction", () => {
 			</>
 		);
 
-		cy.get("#successSelect")
+		cy.get("[ui5-select]").eq(0)
 			.shadow()
 			.find("[id$='-valueStateDesc']")
 			.should("contain.text", "Success");
 
-		cy.get("#infoSelect")
+		cy.get("[ui5-select]").eq(1)
 			.shadow()
 			.find("[id$='-valueStateDesc']")
 			.should("contain.text", "Information");
 
-		cy.get("#errorSelect")
+		cy.get("[ui5-select]").eq(2)
 			.shadow()
 			.find("[id$='-valueStateDesc']")
 			.should("contain.text", "Error");
 
-		cy.get("#warningSelect")
+		cy.get("[ui5-select]").eq(3)
 			.shadow()
 			.find("[id$='-valueStateDesc']")
 			.should("contain.text", "Warning");
@@ -1278,39 +1277,39 @@ describe("Select general interaction", () => {
 
 	it("Tests that the picker is closed when the selected value is clicked", () => {
 		cy.mount(
-			<Select id="mySelect">
-				<Option id="firstOption" value="Cozy">Cozy</Option>
+			<Select>
+				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
 			</Select>
 		);
 
-		cy.get("#mySelect").realClick();
-		cy.get("#mySelect")
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.prop", "open", true);
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.find("[ui5-option]:first-child")
 			.realClick();
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.prop", "open", false);
 
-		cy.get("#mySelect").realClick();
-		cy.get("#mySelect")
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.prop", "open", true);
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.find("[ui5-option]:first-child")
 			.realClick();
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.prop", "open", false);
@@ -1320,7 +1319,7 @@ describe("Select general interaction", () => {
 		cy.viewport(600, 400);
 
 		cy.mount(
-			<Select id="warningSelect" valueState="Critical">
+			<Select valueState="Critical">
 				<Option value="Australia" selected>Australia</Option>
 				<Option value="Aruba">Aruba</Option>
 				<Option value="Belgium">Belgium</Option>
@@ -1329,48 +1328,48 @@ describe("Select general interaction", () => {
 			</Select>
 		);
 
-		cy.get("#warningSelect").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#warningSelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.should("have.prop", "open", true);
 
-		cy.get("#warningSelect").realPress("ArrowDown");
-		cy.get("#warningSelect").realPress("ArrowDown");
-		cy.get("#warningSelect").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("ArrowDown");
 
-		cy.get("#warningSelect")
+		cy.get("[ui5-select]")
 			.find("[ui5-option][selected]")
 			.should("be.visible");
 	});
 
 	it("clears typed characters after selection is changed", () => {
 		cy.mount(
-			<Select id="textAreaAriaLabel" accessibleName="Hello World">
+			<Select accessibleName="Hello World">
 				<Option value="First">First</Option>
 				<Option value="Second">Second</Option>
 				<Option value="Third" selected>Third</Option>
 			</Select>
 		);
 
-		cy.get("#textAreaAriaLabel").realClick();
-		cy.get("#textAreaAriaLabel").realPress("s");
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realPress("s");
 
-		cy.get("#textAreaAriaLabel")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", "Second");
 
-		cy.get("#textAreaAriaLabel").realPress("Enter");
+		cy.get("[ui5-select]").realPress("Enter");
 
-		cy.get("#textAreaAriaLabel").realPress("t");
+		cy.get("[ui5-select]").realPress("t");
 
-		cy.get("#textAreaAriaLabel")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", "Third");
 
-		cy.get("#textAreaAriaLabel").should("have.prop", "value", "Third");
+		cy.get("[ui5-select]").should("have.prop", "value", "Third");
 	});
 });
