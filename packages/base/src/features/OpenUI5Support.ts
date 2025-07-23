@@ -1,6 +1,11 @@
 import patchPatcher from "./patchPatcher.js";
 import type { OpenUI5Patcher } from "./patchPatcher.js";
-import patchPopup from "./patchPopup.js";
+import {
+	patchPopup,
+	addOpenedPopup,
+	removeOpenedPopup,
+	getTopmostPopup,
+} from "./patchPopup.js";
 import type { OpenUI5Popup } from "./patchPopup.js";
 import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
@@ -222,6 +227,18 @@ class OpenUI5Support {
 		}
 
 		return !!link.href.match(/\/css(-|_)variables\.css/);
+	}
+
+	static addOpenedPopup(popup: object) {
+		addOpenedPopup(popup);
+	}
+
+	static removeOpenedPopup(popup: object) {
+		removeOpenedPopup(popup);
+	}
+
+	static getTopmostPopup() {
+		return getTopmostPopup();
 	}
 }
 
