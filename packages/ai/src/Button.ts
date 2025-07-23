@@ -140,7 +140,7 @@ class Button extends UI5Element {
 	 * - **root**: Accessibility attributes that will be applied to the root element.
 	 *   - **hasPopup**: Indicates the availability and type of interactive popup element (such as a menu or dialog).
 	 *     Accepts string values: `"dialog"`, `"grid"`, `"listbox"`, `"menu"`, or `"tree"`.
-	 *   - **ariaRoleDescription**: Defines a human-readable description for the button's role.
+	 *   - **roleDescription**: Defines a human-readable description for the button's role.
 	 *     Accepts any string value.
 	 *
 	 * - **arrowButton**: Accessibility attributes that will be applied to the arrow (split) button element.
