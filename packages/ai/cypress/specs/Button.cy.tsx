@@ -39,7 +39,7 @@ describe("Accessibility", () => {
 
 	it("should set correct aria-roledescription to SplitButton root element", () => {
 		cy.mount(
-			<Button accessibilityAttributes={{ root: { ariaRoleDescription: "Open Menu" } }}>
+			<Button accessibilityAttributes={{ root: { roleDescription: "Open Menu" } }}>
 				<ButtonState name="generate" text="Generate" icon="ai">Click me</ButtonState>
 			</Button>
 		);

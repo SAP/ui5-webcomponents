@@ -14,7 +14,7 @@ function startGeneration(button) {
 		button.accessibilityAttributes = {
 			root: {
 				hasPopup: "menu",
-				ariaRoleDescription: "Menu Button"
+				roleDescription: "Menu Button"
 			}
 		};
 	}, 3000);
