@@ -12,32 +12,32 @@ describe("Select mobile general interaction", () => {
 		};
 
 		cy.mount(
-			<Select id="mySelect" onChange={handleChange}>
-				<Option id="firstOption" value="Cozy">Cozy</Option>
+			<Select onChange={handleChange}>
+				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
 			</Select>
 		);
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", "Condensed");
 
-		cy.get("#mySelect").realClick();
+		cy.get("[ui5-select]").realClick();
 
-		cy.get("#mySelect").realPress("ArrowUp");
-		cy.get("#mySelect").realPress("ArrowUp");
+		cy.get("[ui5-select]").realPress("ArrowUp");
+		cy.get("[ui5-select]").realPress("ArrowUp");
 
-		cy.get("#mySelect").realPress("Enter");
+		cy.get("[ui5-select]").realPress("Enter");
 
-		cy.get("#mySelect")
+		cy.get("[ui5-select]")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", "Cozy");
 
 		cy.wrap(changeEvents).should("have.length", 1);
 
-		cy.get("#mySelect").should("have.prop", "value", "Cozy");
+		cy.get("[ui5-select]").should("have.prop", "value", "Cozy");
 	});
 });
