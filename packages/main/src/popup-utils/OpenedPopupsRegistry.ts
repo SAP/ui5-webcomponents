@@ -61,14 +61,14 @@ const _keydownListener = (event: KeyboardEvent) => {
 	}
 
 	if (isEscape(event)) {
-		const topPopup = OpenedPopupsRegistry.openedRegistry[OpenedPopupsRegistry.openedRegistry.length - 1].instance;
+		const topmostPopup = OpenedPopupsRegistry.openedRegistry[OpenedPopupsRegistry.openedRegistry.length - 1].instance;
 
-		if (openUI5Support && topPopup !== openUI5Support.getTopMostPopup()) {
+		if (openUI5Support && topmostPopup !== openUI5Support.getTopmostPopup()) {
 			return;
 		}
 
 		event.stopPropagation();
-		topPopup.closePopup(true);
+		topmostPopup.closePopup(true);
 	}
 };
 

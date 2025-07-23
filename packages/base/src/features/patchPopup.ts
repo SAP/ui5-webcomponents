@@ -30,7 +30,7 @@ const removeOpenedPopup = (popup: object) => {
 	}
 };
 
-const getTopMostPopup = () => {
+const getTopmostPopup = () => {
 	return AllOpenedPopupsRegistry.openedRegistry[AllOpenedPopupsRegistry.openedRegistry.length - 1];
 };
 
@@ -96,7 +96,7 @@ const patchFocusEvent = (Popup: OpenUI5Popup) => {
 	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
 		// If the popup is the topmost one, we call the original focus event handler from the OpenUI5 Popup,
 		// otherwise the focus event is handled by the Web Component Popup.
-		if (this === getTopMostPopup()) {
+		if (this === getTopmostPopup()) {
 			origFocusEvent.call(this, e);
 		}
 	};
@@ -119,7 +119,7 @@ export {
 	patchPopup,
 	addOpenedPopup,
 	removeOpenedPopup,
-	getTopMostPopup,
+	getTopmostPopup,
 };
 
 export type { OpenUI5Popup };

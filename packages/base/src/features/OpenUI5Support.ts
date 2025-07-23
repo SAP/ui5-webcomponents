@@ -4,7 +4,7 @@ import {
 	patchPopup,
 	addOpenedPopup,
 	removeOpenedPopup,
-	getTopMostPopup,
+	getTopmostPopup,
 } from "./patchPopup.js";
 import type { OpenUI5Popup } from "./patchPopup.js";
 import { registerFeature } from "../FeaturesRegistry.js";
@@ -237,8 +237,8 @@ class OpenUI5Support {
 		removeOpenedPopup(popup);
 	}
 
-	static getTopMostPopup() {
-		return getTopMostPopup();
+	static getTopmostPopup() {
+		return getTopmostPopup();
 	}
 }
 
