@@ -36,7 +36,7 @@ import SplitButtonTemplate from "./SplitButtonTemplate.js";
 // Styles
 import SplitButtonCss from "./generated/themes/SplitButton.css.js";
 
-type SplitButtonRootAccAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaRoleDescription" | "title">;
+type SplitButtonRootAccAttributes = Pick<AccessibilityAttributes, "hasPopup" | "roleDescription" | "title">;
 type SplitButtonArrowButtonAccAtributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded" | "title">;
 type SplitButtonAccessibilityAttributes = {root?: SplitButtonRootAccAttributes, arrowButton?: SplitButtonArrowButtonAccAtributes}
 
@@ -463,7 +463,7 @@ class SplitButton extends UI5Element {
 		return {
 			root: {
 				hasPopup: this.accessibilityAttributes?.root?.hasPopup,
-				ariaRoleDescription: this.accessibilityAttributes?.root?.ariaRoleDescription || (this._hideArrowButton ? undefined : SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION)),
+				roleDescription: this.accessibilityAttributes?.root?.roleDescription || (this._hideArrowButton ? undefined : SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION)),
 				title: this.accessibilityAttributes?.root?.title,
 			},
 			arrowButton: {
