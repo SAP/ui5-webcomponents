@@ -67,11 +67,24 @@ class TableSelectionMulti extends TableSelectionBase {
 		shiftPressed: boolean
 	} | null;
 
+	_onClickCaptureBound: (e: MouseEvent) => void;
+
+	constructor() {
+		super();
+		this._onClickCaptureBound = this._onclickCapture.bind(this);
+	}
+
 	onTableBeforeRendering() {
 		if (this._table && this._table.headerRow[0] && this._rowsLength !== this._table.rows.length) {
 			this._rowsLength = this._table.rows.length;
 			this._table.headerRow[0]._invalidate++;
 		}
+
+		this._table?.removeEventListener("click", this._onClickCaptureBound);
+	}
+
+	onTableAfterRendering() {
+		this._table?.addEventListener("click", this._onClickCaptureBound, { capture: true });
 	}
 
 	isMultiSelectable(): boolean {
@@ -197,7 +210,7 @@ class TableSelectionMulti extends TableSelectionBase {
 		}
 	}
 
-	_onclick(e: MouseEvent) {
+	_onclickCapture(e: MouseEvent) {
 		if (!this._table) {
 			return;
 		}
@@ -219,11 +232,14 @@ class TableSelectionMulti extends TableSelectionBase {
 			const startIndex = this._table.rows.indexOf(startRow);
 			const endIndex = this._table.rows.indexOf(row);
 
+			// Set checkbox to the selection state of the start row (if it is selected)
+			const selectionState = this.isSelected(startRow);
+
 			// When doing a range selection and clicking on an already selected row, the checked status should not change
 			// Therefore, we need to manually set the checked attribute again, as clicking it would deselect it and leads to
 			// a visual inconsistency.
-			row.shadowRoot?.querySelector("#selection-component")?.toggleAttribute("checked", true);
-			e.stopImmediatePropagation();
+			row.shadowRoot?.querySelector("#selection-component")?.toggleAttribute("checked", selectionState);
+			e.stopPropagation();
 
 			if (startIndex === -1 || endIndex === -1 || row.rowKey === startRow.rowKey || row.rowKey === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].rowKey) {
 				return;
