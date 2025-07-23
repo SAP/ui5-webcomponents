@@ -10,7 +10,8 @@
 	overflow: hidden;
 	display: flex;
 	align-items: center;
-	padding: .25rem .5rem .25rem .25rem;
+	padding-block: 0.25rem;
+	padding-inline: 0.25rem 0.5rem;
 	box-sizing: border-box;
 	cursor: pointer;
 	background: var(--sapButton_Lite_Background);
@@ -18,7 +19,7 @@
 	color: var(--sapShell_TextColor);
 	/* fix cutting of the focus outline */
 	margin-inline-start: 0.125rem;
-	margin-right: 8px;
+	margin-inline-end: .5rem;
 }
 
 .ui5-shellbar-branding-root:focus {
@@ -46,6 +47,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	color: var(--sapShell_SubBrand_TextColor);
+	margin-inline-start: 0.25rem;
 }
 
 .ui5-shellbar-logo-area {
@@ -66,4 +68,5 @@
 	max-height: 2rem;
 	max-width: 3.75rem;
 	pointer-events: none;
+	padding-inline: 0.25rem;
 }
