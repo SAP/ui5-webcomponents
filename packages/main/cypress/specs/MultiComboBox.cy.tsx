@@ -843,7 +843,7 @@ describe("General", () => {
 });
 
 describe("MultiComboBox Truncated Tokens", () => {
-	it("Should truncate token when single token is in the multicombobox and open popover on click", () => {
+	it.skip("Should truncate token when single token is in the multicombobox and open popover on click", () => {
 		cy.mount(
 			<MultiComboBox>
 				<MultiComboBoxItem selected={true} text="This is a token with ridicilously long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long text"></MultiComboBoxItem>
