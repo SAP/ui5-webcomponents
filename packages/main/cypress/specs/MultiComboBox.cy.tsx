@@ -1974,17 +1974,16 @@ describe("Event firing", () => {
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("input")
-			.should("have.value", "1");
+			.as("input");
+
+		cy.get("@input").should("have.value", "1");
 
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find(".ui5-input-clear-icon-wrapper")
 			.realClick();
 
-		cy.get("[ui5-multi-combobox]")
-			.shadow()
-			.find("input")
-			.should("have.value", "");
+		cy.get("@input").should("have.value", "");
 
 		cy.get("@inputEvent")
 			.should("have.been.calledTwice");
