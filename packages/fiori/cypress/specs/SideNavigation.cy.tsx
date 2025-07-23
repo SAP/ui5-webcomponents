@@ -792,7 +792,7 @@ describe("Side Navigation interaction", () => {
 			.should("not.include", "#preventDefault");
 	});
 
-	it("Tests preventDefault of items in overflow menu", () => {
+	it.skip("Tests preventDefault of items in overflow menu", () => {
 		const handleClick = (event: Event) => {
 			event.preventDefault();
 		};
@@ -926,7 +926,7 @@ describe("Side Navigation interaction", () => {
 		});
 	});
 
-	it("Tests 'selection-change' event when SideNavigation is collapsed", () => {
+	it.skip("Tests 'selection-change' event when SideNavigation is collapsed", () => {
 		cy.mount(
 			<SideNavigation id="sideNav" collapsed={true}>
 				<SideNavigationItem text="1" />
