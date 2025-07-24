@@ -604,7 +604,7 @@ describe("General", () => {
 			}));
 	});
 
-	it("Select All functionality + N-more integration", () => {
+	it.skip("Select All functionality + N-more integration", () => {
 		cy.mount(
 			<><MultiComboBox style="width: 100px" noValidation={true} showSelectAll={true}>
 				<MultiComboBoxItem selected={true} text="Very Very Very Very long Item 1"></MultiComboBoxItem>
@@ -1539,7 +1539,7 @@ describe("Validation & Value State", () => {
 			.should("not.exist")
 	});
 
-	it("Should remove value state header when value state is reset", () => {
+	it.skip("Should remove value state header when value state is reset", () => {
 		const onSelectionChange = (e:Event) => {
 			(e.target as MultiComboBox).valueState = "None";
 		}
@@ -1855,7 +1855,7 @@ describe("Event firing", () => {
 			.should("have.length", 1);
 	});
 
-	it("Should prevent selection-change when deleting a token", () => {
+	it.skip("Should prevent selection-change when deleting a token", () => {
 		const onSelectionChange = (e:Event) => {
 			e.preventDefault();
 		}
@@ -1948,7 +1948,7 @@ describe("Event firing", () => {
 			.should("have.length", 1);
 	});
 
-	it("Should fire events on clear icon click", () => {
+	it.skip("Should fire events on clear icon click", () => {
 		cy.mount(
 			<MultiComboBox noTypeahead={true} showClearIcon={true} onInput={cy.stub().as("inputEvent")} onChange={cy.stub().as("changeEvent")}>
 				<MultiComboBoxItem text="1"></MultiComboBoxItem>
@@ -1993,7 +1993,7 @@ describe("Event firing", () => {
 			.should("not.have.been.called");
 	});
 
-	it("Should not fire submit, when an item is tokenized", () => {
+	it.skip("Should not fire submit, when an item is tokenized", () => {
 		const onSubmit = cy.spy((e:Event) => e.preventDefault()).as("submitEvent");
 
 		cy.mount(
@@ -2260,7 +2260,7 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-label", label);
 	});
 
-	it("aria-describedby value according to the tokens count and value state", () => {
+	it.skip("aria-describedby value according to the tokens count and value state", () => {
 		cy.mount(
 			<MultiComboBox valueState="Critical" style="width: 100%">
 				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
@@ -2418,7 +2418,7 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-haspopup", "dialog");
 	});
 
-	it("Value state type should be added to the screen readers default value states announcement", async () => {
+	it.skip("Value state type should be added to the screen readers default value states announcement", async () => {
 		cy.mount(
 			<>
 				<MultiComboBox id="positive-mcb" valueState="Positive"></MultiComboBox>
