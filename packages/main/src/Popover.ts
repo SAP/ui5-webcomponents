@@ -21,6 +21,8 @@ import PopoverTemplate from "./PopoverTemplate.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 
+type Opener = HTMLElement | string | null | undefined;
+
 const ARROW_SIZE = 8;
 
 type PopoverSize = {
@@ -190,7 +192,7 @@ class Popover extends Popup {
 	@slot({ type: HTMLElement })
 	footer!: Array<HTMLElement>;
 
-	_opener?: HTMLElement | string;
+	_opener?: Opener;
 	_openerRect?: DOMRect;
 	_preventRepositionAndClose?: boolean;
 	_top?: number;
@@ -216,7 +218,7 @@ class Popover extends Popup {
 	 * @since 1.2.0
 	 */
 	@property({ converter: DOMReferenceConverter })
-	set opener(value: HTMLElement | string) {
+	set opener(value: HTMLElement | string | null) {
 		if (this._opener === value) {
 			return;
 		}
@@ -228,7 +230,7 @@ class Popover extends Popup {
 		}
 	}
 
-	get opener(): HTMLElement | string | undefined {
+	get opener(): Opener {
 		return this._opener;
 	}
 
@@ -290,8 +292,8 @@ class Popover extends Popup {
 		removeOpenedPopover(this);
 	}
 
-	getOpenerHTMLElement(opener: HTMLElement | string | undefined): HTMLElement | null | undefined {
-		if (opener === undefined) {
+	getOpenerHTMLElement(opener: Opener): HTMLElement | null | undefined {
+		if (opener === undefined || opener === null) {
 			return opener;
 		}
 
@@ -375,6 +377,10 @@ class Popover extends Popup {
 
 		const opener = this.getOpenerHTMLElement(this.opener);
 
+		if (!opener) {
+			return;
+		}
+
 		if (opener && instanceOfUI5Element(opener) && !opener.getDomRef()) {
 			return;
 		}
@@ -393,7 +399,7 @@ class Popover extends Popup {
 
 		if (this.open) {
 			// update opener rect if it was changed during the popover being opened
-			this._openerRect = opener!.getBoundingClientRect();
+			this._openerRect = opener.getBoundingClientRect();
 		}
 
 		if (this._oldPlacement && this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin()) {
