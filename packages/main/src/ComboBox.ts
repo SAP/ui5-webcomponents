@@ -578,6 +578,15 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._iconPressed = true;
 		this.inner.focus();
 		this.fireDecoratorEvent("open");
+
+		const allItems = this._getItems();
+		const currentItem = allItems.find(item => {
+			return item.selected || item.focused;
+		});
+
+		if (currentItem) {
+			this._scrollToItem(allItems.indexOf(currentItem));
+		}
 	}
 
 	_afterClosePopover() {
