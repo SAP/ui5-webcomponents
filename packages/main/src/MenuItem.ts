@@ -424,6 +424,10 @@ class MenuItem extends ListItem implements IMenuItem {
 		return super.focus(focusOptions);
 	}
 
+	getFocusDomRef() {
+		return this._itemNavigation._getCurrentItem();
+	}
+
 	get _focusable() {
 		return true;
 	}
