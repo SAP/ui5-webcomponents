@@ -52,6 +52,19 @@
 				document.getElementById("dialog1").open = true;
 			});
 
+			sap.ui.require(["sap/m/Select", "sap/ui/core/Item"], (Select, Item) => {
+				new Select({
+					items: [
+						new Item({ text: "Item 1" }),
+						new Item({ text: "Item 2" }),
+						new Item({ text: "Item 3" })
+					],
+					change: function (oEvent) {
+						console.error("Selected item:", oEvent.getParameter("selectedItem").getText());
+					}
+				}).placeAt("dilog1content");
+			});
+
 			document.getElementById("dialogButton").addEventListener("click", function () {
 				sap.ui.require(["sap/m/Button", "sap/m/Dialog"], (Button, Dialog) => {
 					new Dialog({
@@ -81,6 +94,7 @@
 		<ui5-button id="myButton">Open WebC Dialog</ui5-button>
 	</div>
 	<ui5-dialog id="dialog1" header-text="This is an WebC Dialog 1">
+		<div id="dilog1content"></div>
 		<ui5-button id="dialogButton">Open UI5 dialog</ui5-button>
 	</ui5-dialog>
 	<ui5-dialog id="newDialog1" header-text="This is an WebC Dialog 2">
