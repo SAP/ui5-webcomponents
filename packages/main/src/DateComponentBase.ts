@@ -200,16 +200,28 @@ class DateComponentBase extends UI5Element {
 	}
 
 	_getStringFromTimestamp(timestamp: number) {
+		if (!timestamp) {
+			return "";
+		}
+
 		const localDate = UI5Date.getInstance(timestamp);
 		return this.getFormat().format(localDate, true);
 	}
 
 	_getDisplayStringFromTimestamp(timestamp: number) {
+		if (!timestamp) {
+			return "";
+		}
+
 		const localDate = UI5Date.getInstance(timestamp);
 		return this.getDisplayFormat().format(localDate, true);
 	}
 
 	_getValueStringFromTimestamp(timestamp: number) {
+		if (!timestamp) {
+			return "";
+		}
+
 		const localDate = UI5Date.getInstance(timestamp);
 		return this.getValueFormat().format(localDate, true);
 	}

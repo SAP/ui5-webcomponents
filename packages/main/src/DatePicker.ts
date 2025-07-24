@@ -568,10 +568,18 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	getValueFromDisplayValue(value: string): string {
+		if (!this.getDisplayFormat().parse(value)) {
+			return value;
+		}
+
 		return this.getValueFormat().format(this.getDisplayFormat().parse(value));
 	}
 
 	getDisplayValueFromValue(value: string): string {
+		if (!this.getValueFormat().parse(value)) {
+			return value;
+		}
+
 		return this.getDisplayFormat().format(this.getValueFormat().parse(value));
 	}
 
@@ -720,7 +728,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @protected
 	 */
 	normalizeDisplayValue(value: string) {
-		if (value === "") {
+		if (value === "" || !this.getDisplayFormat().parse(value, true)) {
 			return value;
 		}
 

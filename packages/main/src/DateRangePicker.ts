@@ -320,6 +320,10 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		firstDateString = this._getValueStringFromTimestamp((this._exctractDisplayTimestamp(values[0]) as number) * 1000);
 		lastDateString = this._getValueStringFromTimestamp((this._exctractDisplayTimestamp(values[1]) as number) * 1000);
 
+		if (!firstDateString && !lastDateString) {
+			return value;
+		}
+
 		return `${firstDateString} ${this._effectiveDelimiter} ${lastDateString}`;
 	}
 
@@ -408,6 +412,10 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 
 		firstDateString = this._getValueStringFromTimestamp((this._extractFirstTimestamp(value) as number) * 1000);
 		lastDateString = this._getValueStringFromTimestamp((this._extractLastTimestamp(value) as number) * 1000);
+
+		if (!firstDateString && !lastDateString) {
+			return value;
+		}
 
 		return `${firstDateString} ${this._effectiveDelimiter} ${lastDateString}`;
 	}
@@ -505,6 +513,10 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 
 		firstDateString = this._getDisplayStringFromTimestamp((this._extractFirstTimestamp(value) as number) * 1000);
 		lastDateString = this._getDisplayStringFromTimestamp((this._extractLastTimestamp(value) as number) * 1000);
+
+		if (!firstDateString && !lastDateString) {
+			return value;
+		}
 
 		return `${firstDateString} ${this._effectiveDelimiter} ${lastDateString}`;
 	}
