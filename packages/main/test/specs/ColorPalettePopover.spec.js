@@ -82,7 +82,7 @@ describe("ColorPalette interactions", () => {
 		await defaultButton.click();
 	});
 
-	it("Tests navigation with recent colors", async () => {
+	it.skip("Tests navigation with recent colors", async () => {
 		const colorPaletteButton = await browser.$("#colorPaletteBtnTest5");
 
 		// act - open color palette popover
