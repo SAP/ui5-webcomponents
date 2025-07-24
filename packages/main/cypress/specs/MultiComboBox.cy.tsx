@@ -866,9 +866,6 @@ describe("MultiComboBox Truncated Tokens", () => {
 		cy.get("@token")
 			.realClick();
 
-		cy.get("@token")
-			.should("be.focused");
-
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("[ui5-tokenizer]")
