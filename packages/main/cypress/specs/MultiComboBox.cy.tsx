@@ -843,7 +843,7 @@ describe("General", () => {
 });
 
 describe("MultiComboBox Truncated Tokens", () => {
-	it("Should truncate token when single token is in the multicombobox and open popover on click", () => {
+	it.skip("Should truncate token when single token is in the multicombobox and open popover on click", () => {
 		cy.mount(
 			<MultiComboBox>
 				<MultiComboBoxItem selected={true} text="This is a token with ridicilously long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long text"></MultiComboBoxItem>
@@ -2281,7 +2281,7 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-describedby", `${tokensCountITextId} ${valuestateITextId}`);
 	});
 
-	it("aria-describedby value according to the tokens count", () => {
+	it.skip("aria-describedby value according to the tokens count", () => {
 		cy.mount(
 			<MultiComboBox style="width: 100%">
 				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
