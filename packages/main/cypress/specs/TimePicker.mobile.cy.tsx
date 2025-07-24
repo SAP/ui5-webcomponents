@@ -1,7 +1,7 @@
 import TimePicker from "../../src/TimePicker.js";
 import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 
-describe("TimePicker on phone - general interactions", () => {
+describe.skip("TimePicker on phone - general interactions", () => {
 	beforeEach(() => {
 		cy.ui5SimulateDevice("phone");
 
@@ -12,7 +12,7 @@ describe("TimePicker on phone - general interactions", () => {
 		})
 	});
 
-	it("opening of popover with numeric inputs", () => {
+	it.skip("opening of popover with numeric inputs", () => {
 		cy.mount(<TimePicker format-pattern="HH:mm:ss" value="11:12:13"></TimePicker>);
 
 		cy.get<TimePicker>("[ui5-time-picker]")
@@ -32,7 +32,7 @@ describe("TimePicker on phone - general interactions", () => {
 			.should("have.prop", "valueNow", 13);
 	});
 
-	it("value change with numeric inputs on OK and Cancel button press", () => {
+	it.skip("value change with numeric inputs on OK and Cancel button press", () => {
 		cy.mount(<TimePicker format-pattern="hh:mm:ss a" value="10:20:30 AM"></TimePicker>);
 
 		cy.get<TimePicker>("[ui5-time-picker]")

@@ -20,6 +20,7 @@ import "@ui5/webcomponents/dist/CheckBox.js";
 import "@ui5/webcomponents/dist/Toast.js";
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
+import "@ui5/webcomponents-fiori/dist/ShellBarBranding.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarSearch.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarSpacer.js";
