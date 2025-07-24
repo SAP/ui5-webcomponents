@@ -486,7 +486,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			this._input.value = "";
 		}
 
-		this._tokenizerOpen = this._tokenizer?.open || false;
+		this._tokenizerOpen = this._tokenizer ? this._tokenizer.open : false;
 
 		if (this.hideInput && this.content.length > 0) {
 			this.content.forEach(element => {
