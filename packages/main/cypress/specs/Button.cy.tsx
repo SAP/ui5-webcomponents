@@ -476,6 +476,18 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-controls", "registration-dialog");
 	});
 
+	it("aria-busy is properly applied on the button with busy indicator", () => {
+		cy.mount(<Button loading></Button>);
+
+		cy.get("[ui5-button]")
+			.as("button");
+
+		cy.get("@button")
+			.shadow()
+			.find("button")
+			.should("have.attr", "aria-busy", "true");
+	});
+
 	it("setting accessible-description is applied to button tag", () => {
 		cy.mount(<Button accessibleDescription="A long description."></Button>);
 

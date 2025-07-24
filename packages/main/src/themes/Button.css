@@ -342,13 +342,10 @@ bdi {
 :host([loading]){
 	position: relative;
 	pointer-events: unset;
-	border: inherit;
 }
 
 :host([loading]) .ui5-button-root {
 	opacity: var(--sapContent_DisabledOpacity);
-	border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
-	border-radius: var(--_ui5_button_border_radius);
 }
 
 :host([loading][design="Emphasized"]) {
@@ -359,6 +356,12 @@ bdi {
 :host([design="Emphasized"][loading]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
 :host([design="Emphasized"][loading]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: inherit;
+	border: inherit;
+}
+
+:host([design="Emphasized"][loading]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover) .ui5-button-root,
+:host([design="Emphasized"][loading]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) .ui5-button-root {
+	background-color: var(--sapButton_Emphasized_Hover_Background);
 }
 
 :host([loading][design="Emphasized"]) .ui5-button-root {
@@ -366,20 +369,14 @@ bdi {
 	border-color: var(--sapButton_Emphasized_BorderColor);
 }
 
-:host([loading][design="Positive"]) .ui5-button-root {
-	border-color: var(--sapButton_Accept_BorderColor);
-}
-
-:host([loading][design="Negative"]) .ui5-button-root {
-	border-color: var(--sapButton_Reject_BorderColor);
-}
-
-:host([loading][design="Attention"]) .ui5-button-root {
-	border-color: var(--sapButton_Attention_BorderColor);
-}
 .ui5-button-busy-indicator {
 	position: absolute;
 	height: 100%;
 	width: 100%;
 	top:0;
 }
+
+
+
+
+

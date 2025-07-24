@@ -607,7 +607,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	get effectiveAccRole(): AriaRole {
-		return this.loading ? "progressbar" : toLowercaseEnumValue(this.accessibleRole);
+		return toLowercaseEnumValue(this.accessibleRole);
 	}
 
 	get tabIndexValue() {
