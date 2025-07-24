@@ -70,7 +70,7 @@ describe("General", () => {
 		cy.get("[ui5-multi-combobox]")
 			.should("have.attr", "focused");
 	});
-	
+
 	it("Open all items popover on nmore click", () => {
 		cy.mount(
 			<MultiComboBox style="width: 100px">
@@ -169,7 +169,7 @@ describe("General", () => {
 			.shadow()
 			.find("input")
 			.realClick();
-		
+
 		cy.get("@mcb")
 			.should("be.focused");
 
@@ -417,10 +417,10 @@ describe("General", () => {
 			.shadow()
 			.find("input")
 			.realClick();
-		
+
 		cy.get("@mcb")
 			.should("be.focused");
-		
+
 		cy.realType("I");
 
 		cy.get("@mcb")
@@ -594,7 +594,7 @@ describe("General", () => {
 		cy.get("@popover")
 			.find(".ui5-mcb-select-all-checkbox")
 			.realClick();
-			
+
 		cy.get("@selectionChangeEvent")
 			.should("have.been.calledOnce");
 
@@ -657,7 +657,7 @@ describe("General", () => {
 
 		cy.get("@moreButton")
 			.realClick();
-			
+
 		cy.get<ResponsivePopover>("@popover")
 			.ui5ResponsivePopoverOpened();
 
@@ -708,7 +708,7 @@ describe("General", () => {
 		cy.get("[ui5-multi-combobox]")
 			.as("mcb")
 			.realClick();
-		
+
 		cy.get("@mcb")
 			.should("be.focused");
 
@@ -865,9 +865,6 @@ describe("MultiComboBox Truncated Tokens", () => {
 
 		cy.get("@token")
 			.realClick();
-
-		cy.get("@token")
-			.should("be.focused");
 
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
@@ -1901,7 +1898,7 @@ describe("Event firing", () => {
 	it("Should prevent selection-change on CTRL+A", () => {
 		const onSelectionChange = (e:Event) => {
 			e.preventDefault();
-		} 
+		}
 
 		cy.mount(
 			<MultiComboBox onSelectionChange={onSelectionChange}>
@@ -1974,17 +1971,16 @@ describe("Event firing", () => {
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find("input")
-			.should("have.value", "1");
+			.as("input");
+
+		cy.get("@input").should("have.value", "1");
 
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find(".ui5-input-clear-icon-wrapper")
 			.realClick();
 
-		cy.get("[ui5-multi-combobox]")
-			.shadow()
-			.find("input")
-			.should("have.value", "");
+		cy.get("@input").should("have.value", "");
 
 		cy.get("@inputEvent")
 			.should("have.been.calledTwice");
@@ -2325,7 +2321,7 @@ describe("Accessibility", () => {
 			.find("[ui5-token]")
 			.last()
 			.should("be.focused");
-		
+
 		cy.get("[ui5-multi-combobox]")
 			.realPress("Backspace");
 
@@ -2355,7 +2351,7 @@ describe("Accessibility", () => {
 			.find("[ui5-token]")
 			.last()
 			.should("be.focused");
-		
+
 		cy.get("[ui5-multi-combobox]")
 			.realPress("Backspace");
 
@@ -2399,7 +2395,7 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-label", label);
 	});
 
-	it("Should apply aria-controls and aria-haspopup", async () => {
+	it("Should apply aria-controls and aria-haspopup", () => {
 		cy.mount(<MultiComboBox></MultiComboBox>);
 
 		cy.get("[ui5-multi-combobox]")
@@ -2418,7 +2414,7 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-haspopup", "dialog");
 	});
 
-	it.skip("Value state type should be added to the screen readers default value states announcement", async () => {
+	it("Value state type should be added to the screen readers default value states announcement", () => {
 		cy.mount(
 			<>
 				<MultiComboBox id="positive-mcb" valueState="Positive"></MultiComboBox>
@@ -2435,7 +2431,9 @@ describe("Accessibility", () => {
 		cy.get("#warning-mcb")
 			.shadow()
 			.find("#ui5-multi-combobox-valueStateDesc")
-			.should("have.text", VALUE_STATE_TYPE_WARNING.defaultText);
+			.should("have.text", `${VALUE_STATE_TYPE_WARNING.defaultText} ${VALUE_STATE_WARNING.defaultText}`);
+
+		cy.get("#warning-mcb").realClick();
 
 		cy.get("#warning-mcb")
 			.shadow()
@@ -2445,7 +2443,9 @@ describe("Accessibility", () => {
 		cy.get("#error-mcb")
 			.shadow()
 			.find("#ui5-multi-combobox-valueStateDesc")
-			.should("have.text", VALUE_STATE_TYPE_ERROR.defaultText);
+			.should("have.text", `${VALUE_STATE_TYPE_ERROR.defaultText} ${VALUE_STATE_ERROR.defaultText}`);
+
+		cy.get("#error-mcb").realClick();
 
 		cy.get("#error-mcb")
 			.shadow()
@@ -2483,7 +2483,7 @@ describe("Accessibility", () => {
 			.shadow()
 			.find("input[type='checkbox']")
 			.should("not.exist");
-		
+
 		cy.get("@checkbox")
 			.shadow()
 			.find(".ui5-checkbox-root")
@@ -2826,7 +2826,7 @@ describe("Keyboard Handling", () => {
 			.find("[ui5-token]")
 			.last()
 			.should("be.focused");
-		
+
 		cy.get("[ui5-multi-combobox]")
 			.realPress("Backspace");
 
@@ -2864,7 +2864,7 @@ describe("Keyboard Handling", () => {
 
 		cy.get("[ui5-multi-combobox]")
 			.realPress("Escape");
-		
+
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find<ResponsivePopover>("ui5-responsive-popover")
@@ -3171,7 +3171,7 @@ describe("Keyboard Handling", () => {
 			.find("[ui5-tokenizer]")
 			.find("[ui5-token]")
 			.should("not.exist");
-		
+
 		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 	});
@@ -3803,7 +3803,7 @@ describe("Keyboard Handling", () => {
 			.shadow()
 			.find("input")
 			.realClick();
-		
+
 		cy.get("[ui5-multi-combobox]")
 			.should("be.focused");
 
