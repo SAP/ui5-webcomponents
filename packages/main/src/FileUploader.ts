@@ -407,7 +407,11 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	get _tokenizerExpanded(): boolean {
-		return this._tokenizer?.expanded || true;
+		if (!this._tokenizer) {
+			return true;
+		}
+
+		return this._tokenizer.expanded;
 	}
 
 	_onTokenizerKeyUp(e: KeyboardEvent) {
