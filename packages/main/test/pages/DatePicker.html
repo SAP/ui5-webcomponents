@@ -30,15 +30,15 @@
 <body class="datepicker1auto">
 	<div style='width:600px;'>
 
-		<!-- <h3> DatePicker with value-state-change event prevented </h3>
-		<ui5-date-picker id="dpVsChangePrevented" value-state="Negative"></ui5-date-picker> -->
+		<h3> DatePicker with value-state-change event prevented </h3>
+		<ui5-date-picker id="dpVsChangePrevented" value-state="Negative"></ui5-date-picker>
 
 		<div>
 			<h3> DatePicker with no format pattern & min-max dates in ISO format</h3>
 			<ui5-date-picker id="dpMinMax-dates" min-date="2019-09-01" max-date="2019-11-01" value="Invalid"></ui5-date-picker>
 		</div>
 
-		<!-- <h3>Date picker with placeholder.</h3>
+		<h3>Date picker with placeholder.</h3>
 		<ui5-date-picker id='ui5-datepicker--startDate'
 			placeholder='Delivery Date...'>
 		</ui5-date-picker>
@@ -167,72 +167,72 @@
 			<ui5-title>DatePicker with CalendarWeekNumbering WesternTraditional</ui5-title>
 			<ui5-date-picker id="datepicker10" calendar-week-numbering="WesternTraditional">
 			</ui5-date-picker>
-		</section> -->
+		</section>
 
 	</div>
 	<script>
-	// 	var dp = document.getElementById('dp5');
-	// 	var labelChange = document.getElementById('lblChange');
-	// 	var labelLiveChange = document.getElementById('lblLiveChange');
+		var dp = document.getElementById('dp5');
+		var labelChange = document.getElementById('lblChange');
+		var labelLiveChange = document.getElementById('lblLiveChange');
 
-	// 	dp.addEventListener('click', function() { console.log('click')});
-	// 	dp.addEventListener('focus', function() {console.log('focus')});
-	// 	dp.addEventListener('dblclick', function() { console.log('dblclick')});
-	// 	dp.addEventListener('keydown', function() { console.log('keydown')});
-	// 	dp.addEventListener('blur', function() { console.log('blur')});
+		dp.addEventListener('click', function() { console.log('click')});
+		dp.addEventListener('focus', function() {console.log('focus')});
+		dp.addEventListener('dblclick', function() { console.log('dblclick')});
+		dp.addEventListener('keydown', function() { console.log('keydown')});
+		dp.addEventListener('blur', function() { console.log('blur')});
 
-	// 	dp.addEventListener('ui5-change', function(e) {
-	// 		console.log('change: ', e.detail);
-	// 		labelChange.innerHTML = 'change: ' + JSON.stringify(e.detail);
-	// 	});
-	// 	dp.addEventListener('ui5-input', function(e) {
-	// 		console.log('input: ', e.detail);
-	// 		labelLiveChange.innerHTML = 'input: ' + JSON.stringify(e.detail);
-	// 	});
+		dp.addEventListener('ui5-change', function(e) {
+			console.log('change: ', e.detail);
+			labelChange.innerHTML = 'change: ' + JSON.stringify(e.detail);
+		});
+		dp.addEventListener('ui5-input', function(e) {
+			console.log('input: ', e.detail);
+			labelLiveChange.innerHTML = 'input: ' + JSON.stringify(e.detail);
+		});
 
-	// 	var dpPrevent = document.getElementById('dpPrevent');
-	// 	var labelChangePrevent = document.getElementById('lblChangePrevent');
-	// 	var labelChangePreventTargetValue = document.getElementById('lblChangePreventTargetValue');
-	// 	var labelLiveChangePrevent = document.getElementById('lblLiveChangePrevent');
+		var dpPrevent = document.getElementById('dpPrevent');
+		var labelChangePrevent = document.getElementById('lblChangePrevent');
+		var labelChangePreventTargetValue = document.getElementById('lblChangePreventTargetValue');
+		var labelLiveChangePrevent = document.getElementById('lblLiveChangePrevent');
 
-	// 	dpPrevent.addEventListener('ui5-change', function(e) {
-	// 		e.preventDefault();
-	// 		console.log('change: ', e.detail);
-	// 		labelChangePreventTargetValue.innerHTML = 'target value on event fire: ' + e.target.value;
-	// 		labelChangePrevent.innerHTML = 'change: ' + JSON.stringify(e.detail);
-	// 	});
-	// 	dpPrevent.addEventListener('ui5-input', function(e) {
-	// 		console.log('input: ', e.detail);
-	// 		labelLiveChangePrevent.innerHTML = 'input: ' + JSON.stringify(e.detail);
-	// 	});
+		dpPrevent.addEventListener('ui5-change', function(e) {
+			e.preventDefault();
+			console.log('change: ', e.detail);
+			labelChangePreventTargetValue.innerHTML = 'target value on event fire: ' + e.target.value;
+			labelChangePrevent.innerHTML = 'change: ' + JSON.stringify(e.detail);
+		});
+		dpPrevent.addEventListener('ui5-input', function(e) {
+			console.log('input: ', e.detail);
+			labelLiveChangePrevent.innerHTML = 'input: ' + JSON.stringify(e.detail);
+		});
 
-	// 	function datePickerInputChangeHandler(e) {
-	// 		var dp = e.currentTarget;
-	// 		dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Negative');
-	// 	}
+		function datePickerInputChangeHandler(e) {
+			var dp = e.currentTarget;
+			dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Negative');
+		}
 
-	// 	document.getElementById('ui5-datepicker--startDate').addEventListener('ui5-input change', datePickerInputChangeHandler);
-	// 	document.getElementById('ui5-datepicker--startDate').addEventListener('change', datePickerInputChangeHandler);
+		document.getElementById('ui5-datepicker--startDate').addEventListener('ui5-input change', datePickerInputChangeHandler);
+		document.getElementById('ui5-datepicker--startDate').addEventListener('change', datePickerInputChangeHandler);
 
-	// 	var dp11 = document.getElementById('dp11');
+		var dp11 = document.getElementById('dp11');
 
-	// 	document.getElementById('b1').addEventListener("click", function(e) {
-	// 		dp11.setAttribute("value", dp11.formatValue(new Date(2018, 11, 11)));
-	// 	});
+		document.getElementById('b1').addEventListener("click", function(e) {
+			dp11.setAttribute("value", dp11.formatValue(new Date(2018, 11, 11)));
+		});
 
-	// 	const datePickerValueStateChangePrevented = document.getElementById("dpVsChangePrevented");
+		const datePickerValueStateChangePrevented = document.getElementById("dpVsChangePrevented");
 	
-	// 	datePickerValueStateChangePrevented.addEventListener("value-state-change", function(e) {
-	// 		e.preventDefault();
-	// });
+		datePickerValueStateChangePrevented.addEventListener("value-state-change", function(e) {
+			e.preventDefault();
+	});
 
-	// dpCalendarModeDays.addEventListener("ui5-open", function(e) {
-	// 	console.log("Picker is opened");
-	// });
+	dpCalendarModeDays.addEventListener("ui5-open", function(e) {
+		console.log("Picker is opened");
+	});
 
-	// dpCalendarModeDays.addEventListener("ui5-close", function(e) {
-	// 	console.log("Picker is closed");
-	// });
+	dpCalendarModeDays.addEventListener("ui5-close", function(e) {
+		console.log("Picker is closed");
+	});
 
 	</script>
 </body>
