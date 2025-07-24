@@ -38,6 +38,7 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 			aria-haspopup={this._hasPopup}
 			aria-label={this.ariaLabelText}
 			aria-description={this.ariaDescriptionText}
+			aria-busy={this.loading ? "true" : undefined}
 			title={this.buttonTitle}
 			part="button"
 			role={this.effectiveAccRole}
@@ -71,11 +72,14 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 			}
 		</button>
 		{this.loading &&
-			<BusyIndicator id={`${this._id}-button-busy-indicator`}
+			<BusyIndicator
+				id={`${this._id}-button-busy-indicator`}
 				class="ui5-button-busy-indicator"
 				size={this.iconOnly ? "S" : "M"}
 				active={true}
-				delay={this.loadingDelay}/>
+				delay={this.loadingDelay}
+				inert={this.loading}
+			/>
 		}
 	</>);
 }

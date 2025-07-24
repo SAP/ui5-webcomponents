@@ -508,7 +508,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	_onmousedown() {
-		if (this.nonInteractive || this.loading) {
+		if (this.nonInteractive) {
 			return;
 		}
 
@@ -532,7 +532,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		this._cancelAction = isShift(e) || isEscape(e) || this.loading;
+		this._cancelAction = isShift(e) || isEscape(e);
 
 		if (isSpace(e) || isEnter(e)) {
 			this._setActiveState(true);
@@ -554,7 +554,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	_onfocusout() {
-		if (this.nonInteractive || this.loading) {
+		if (this.nonInteractive) {
 			return;
 		}
 
@@ -607,7 +607,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	get effectiveAccRole(): AriaRole {
-		return toLowercaseEnumValue(this.accessibleRole);
+		return this.loading ? "progressbar" : toLowercaseEnumValue(this.accessibleRole);
 	}
 
 	get tabIndexValue() {
