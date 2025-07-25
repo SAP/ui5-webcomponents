@@ -41,15 +41,17 @@ export default function DynamicDateRangePopoverTemplate(this: DynamicDateRange) 
 					selectionMode="Single"
 					onItemClick={this._selectOption}
 				>
-					{this.optionsObjects.map(option => {
-						return <ListItemStandard
-							selected={option.operator === this.value?.operator}
+					{this.optionsObjects.map(option => (
+						<ListItemStandard
+							selected={this._isOptionSelected(option)}
 							iconEnd={true}
 							icon={option.icon}
-							type={!option.template ? ListItemType.Active : ListItemType.Navigation}>
+							wrappingType="Normal"
+							type={option.template ? ListItemType.Navigation : ListItemType.Active}
+						>
 							{option.text}
-						</ListItemStandard>;
-					})}
+						</ListItemStandard>
+					))}
 				</List>
 			</div>
 				:
