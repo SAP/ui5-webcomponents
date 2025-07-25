@@ -235,7 +235,7 @@ class Menu extends UI5Element {
 	 * @since 1.10.0
 	 */
 	@property({ converter: DOMReferenceConverter })
-	opener?: HTMLElement | string;
+	opener?: HTMLElement | string | null;
 
 	/**
 	 * Defines the items of this component.

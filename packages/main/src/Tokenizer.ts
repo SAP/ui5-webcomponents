@@ -282,7 +282,7 @@ class Tokenizer extends UI5Element {
 	@property({
 		converter: DOMReferenceConverter,
 	})
-	opener?: HTMLElement;
+	opener?: HTMLElement | string | null;
 
 	/**
 	 * Sets the min-width of the nMore Popover.
@@ -1032,7 +1032,7 @@ class Tokenizer extends UI5Element {
 		return this.getSlottedNodes<Token>("tokens");
 	}
 
-	get morePopoverOpener(): HTMLElement {
+	get morePopoverOpener(): HTMLElement | string | null {
 		// return this.opener ? this : this.opener;
 		if (this.opener) {
 			return this.opener;
