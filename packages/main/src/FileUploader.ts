@@ -211,6 +211,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * Defines whether the component is required.
 	 * @default false
 	 * @public
+	 * @since 2.13.0
 	 */
 	@property({ type: Boolean })
 	required = false;
@@ -219,6 +220,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * Defines the accessible ARIA name of the component.
 	 * @default undefined
 	 * @public
+	 * @since 2.13.0
 	 */
 	@property()
 	accessibleName?: string;
@@ -227,6 +229,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * Receives id(or many ids) of the elements that label the input.
 	 * @default undefined
 	 * @public
+	 * @since 2.13.0
 	 */
 	@property()
 	accessibleNameRef?: string;
@@ -242,7 +245,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 *
 	 * **Note:** For best accessibility experience, set a `tabindex` of "-1" on your interactive element, or it will be set automatically.
 	 * This slot is intended for use cases where you want a button-only file uploader.
-	 * It is recommended to set the `hideInput` property to "true" when using this slot.
+	 * It is recommended to set `hideInput` property to "true" when using this slot.
 	 * Not setting `hideInput` may negatively impact the screen reader users.
 	 * @public
 	 */
@@ -279,9 +282,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	@property({ type: Boolean, noAttribute: true })
 	_tokenizerOpen = false;
-
-	@property({ type: Boolean, noAttribute: true })
-	_tokenizerExpanded = true;
 
 	static emptyInput: HTMLInputElement;
 
@@ -394,12 +394,28 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	_onfocusin() {
 		this.focused = true;
-		this._tokenizerExpanded = true;
+		if (this._tokenizer) {
+			this._tokenizer.expanded = true;
+		}
 	}
 
 	_onfocusout() {
+		if (this.matches(":focus-within")) {
+			return;
+		}
+
 		this.focused = false;
-		this._tokenizerExpanded = this._tokenizerOpen || false;
+		if (this._tokenizer) {
+			this._tokenizer.expanded = this._tokenizerOpen;
+		}
+	}
+
+	get _tokenizerExpanded(): boolean {
+		if (!this._tokenizer) {
+			return true;
+		}
+
+		return this._tokenizer.expanded;
 	}
 
 	_onTokenizerKeyUp(e: KeyboardEvent) {
@@ -470,7 +486,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			this._input.value = "";
 		}
 
-		this._tokenizerOpen = this._tokenizer?.open || false;
+		this._tokenizerOpen = this._tokenizer ? this._tokenizer.open : false;
 
 		if (this.hideInput && this.content.length > 0) {
 			this.content.forEach(element => {
