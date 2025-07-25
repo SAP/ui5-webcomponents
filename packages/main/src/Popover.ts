@@ -378,6 +378,10 @@ class Popover extends Popup {
 		const opener = this.getOpenerHTMLElement(this.opener);
 
 		if (!opener) {
+			Object.assign(this.style, {
+				top: `0px`,
+				left: `0px`,
+			});
 			return;
 		}
 
