@@ -6,6 +6,7 @@ import Label from "../../src/Label.js";
 import List from "../../src/List.js";
 import ListItem from "../../src/ListItemStandard.js";
 import Input from "../../src/Input.js";
+import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 
 describe("Rendering", () => {
 	it("tests arrow positioning", () => {
@@ -331,6 +332,42 @@ describe("Accessibility", () => {
 			.shadow()
 			.find(".ui5-popup-root")
 			.should("not.have.attr", "aria-labelledby");
+	});
+
+	it("F6 navigation", () => {
+		cy.mount(
+			<>
+			<button data-sap-ui-fastnavgroup="true" id="test"> Test button</button>
+				<Popover opener="test">
+					<div data-sap-ui-fastnavgroup="true">
+						<Button id="first">First group focusable</Button>
+					</div>
+					<div data-sap-ui-fastnavgroup="true">
+						<Button id="second">Second group focusable</Button>
+					</div>
+				</Popover>
+				<button data-sap-ui-fastnavgroup="true">Test button 2</button>
+			</>
+		);
+
+		cy.get("[ui5-popover]")
+			.invoke("prop", "open", "true");
+
+		cy.get<Popover>("[ui5-popover]")
+			.ui5PopoverOpened();
+
+		cy.get("#first")
+			.should("be.focused");
+
+		cy.realPress("F6");
+
+		cy.get("#second")
+			.should("be.focused");
+
+		cy.realPress("F6");
+
+		cy.get("#first")
+			.should("be.focused");
 	});
 });
 
