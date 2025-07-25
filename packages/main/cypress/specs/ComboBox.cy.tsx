@@ -1,6 +1,7 @@
 import ComboBox from "../../src/ComboBox.js";
 import ComboBoxItem from "../../src/ComboBoxItem.js";
 import ComboBoxItemGroup from "../../src/ComboBoxItemGroup.js";
+import ResponsivePopover from "../../src/ResponsivePopover.js";
 import Link from "../../src/Link.js";
 import Input from "../../src/Input.js";
 import Button from "../../src/Button.js";
@@ -32,6 +33,11 @@ describe("General Interaction", () => {
 
 		cy.get("[ui5-combobox]")
 			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("[ui5-combobox]")
+			.shadow()
 			.find("[ui5-responsive-popover]")
 			.shadow()
 			.find(".ui5-popup-content")
@@ -55,6 +61,11 @@ describe("General Interaction", () => {
 
 		cy.get("@dropdownIcon")
 			.realClick();
+
+		cy.get("[ui5-combobox]")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.ui5ResponsivePopoverOpened();
 
 		cy.get("[ui5-cb-item]")
 			.eq(4)
