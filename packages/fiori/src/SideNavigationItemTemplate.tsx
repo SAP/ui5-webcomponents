@@ -3,7 +3,6 @@ import navRightArrow from "@ui5/webcomponents-icons/dist/navigation-right-arrow.
 import navDownArrow from "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import arrowRight from "@ui5/webcomponents-icons/dist/arrow-right.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
-import SideNavigationItemBaseTemplate from "./SideNavigationItemBaseTemplate.js";
 
 export default function SideNavigationItemTemplate(this: SideNavigationItem) {
 	if (this.sideNavCollapsed) {
@@ -22,22 +21,30 @@ function ItemTemplate(this: SideNavigationItem) {
 
 	return (
 		<>
-			{SideNavigationItemBaseTemplate.call(this, EffectiveTag, itemContent, this.templateAttributes)}
-			{!this.sideNavCollapsed && !!this.items.length &&
-				<ul id={this._groupId}
-					class="ui5-sn-item-ul"
-					aria-label={this.text}
-					role="group"
-				>
-					<slot></slot>
-				</ul>
-			}
-		</>
-	);
-
-	function itemContent(this: SideNavigationItem) {
-		return (
-			<>
+			<EffectiveTag id={this._id}
+						  data-sap-focus-ref
+						  class={`ui5-sn-item ui5-sn-item-level1 ${this._classes}`}
+						  role={this.ariaRole}
+						  onKeyDown={this._onkeydown}
+						  onKeyUp={this._onkeyup}
+						  onClick={this._onclick}
+						  onFocusIn={this._onfocusin}
+						  tabIndex={this.effectiveTabIndex}
+						  aria-current={this._ariaCurrent}
+						  aria-selected={this._ariaSelected}
+						  title={this._tooltip}
+						  aria-disabled={this.effectiveDisabled}
+						  href={this._href}
+						  target={this._target}
+						  aria-haspopup={this._ariaHasPopup}
+						  onFocusOut={this._onfocusout}
+						  onMouseEnter={this._onmouseenter}
+						  onMouseLeave={this._onmouseleave}
+						  aria-checked={this._ariaChecked}
+						  aria-owns={this._groupId}
+						  aria-label={this._ariaLabel}
+						  aria-expanded={this._expanded}
+			>
 				{this.sideNavCollapsed ?
 					<Icon class="ui5-sn-item-icon" name={this.icon}/>
 					:
@@ -63,7 +70,16 @@ function ItemTemplate(this: SideNavigationItem) {
 						  name={arrowRight}
 					/>
 				}
-			</>
-		);
-	}
+			</EffectiveTag>
+			{!this.sideNavCollapsed && !!this.items.length &&
+				<ul id={this._groupId}
+					class="ui5-sn-item-ul"
+					aria-label={this.text}
+					role="group"
+				>
+					<slot></slot>
+				</ul>
+			}
+		</>
+	);
 }
