@@ -115,7 +115,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	get effectiveTabIndex() {
-		return this.forcedTabIndex || undefined;
+		return this.forcedTabIndex !== undefined ? parseInt(this.forcedTabIndex) : undefined;
 	}
 
 	get sideNavigation() {
