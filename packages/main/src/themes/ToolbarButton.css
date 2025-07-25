@@ -1,3 +1,6 @@
+:host([disabled]:active) {
+	pointer-events: none;
+}
 .ui5-tb-popover-item.ui5-tb-button::part(button) {
 	justify-content: start;
 }

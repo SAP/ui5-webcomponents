@@ -459,3 +459,33 @@ describe("Toolbar Select", () => {
 		});
 	});
 });
+
+describe("Toolbar Button", () => {
+	it("Should not trigger click event on disabled button", () => {
+		// Use cy.mount to create the toolbar with buttons and input field
+		cy.mount(
+			<div>
+				<Toolbar id="test-toolbar">
+					<ToolbarButton disabled>Disabled Button</ToolbarButton>
+					<ToolbarButton
+						onClick={() => {
+							const input = document.getElementById("value-input") as HTMLInputElement;
+							input.value = (parseInt(input.value, 10) + 1).toString();
+						}}
+					>
+						Enabled Button
+					</ToolbarButton>
+					<input id="value-input" type="number" defaultValue="0" />
+				</Toolbar>
+			</div>
+		);
+
+		// Test clicking the disabled button
+		cy.get("ui5-toolbar-button[disabled]").realClick();
+		cy.get("#value-input").should("have.value", "0");
+
+		// Test clicking the non-disabled button
+		cy.get("ui5-toolbar-button:not([disabled])").realClick();
+		cy.get("#value-input").should("have.value", "1");
+	});
+});
