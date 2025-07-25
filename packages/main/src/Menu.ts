@@ -325,6 +325,10 @@ class Menu extends UI5Element {
 		});
 	}
 
+	getFocusDomRef(): HTMLElement | undefined {
+		return this._list?.getFocusDomRef();
+	}
+
 	_setupItemNavigation() {
 		if (this._list) {
 			this._list._itemNavigation._getItems = () => this._navigatableMenuItems;

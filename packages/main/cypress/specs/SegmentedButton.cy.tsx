@@ -1,5 +1,6 @@
 import SegmentedButton from "../../src/SegmentedButton.js";
 import SegmentedButtonItem from "../../src/SegmentedButtonItem.js";
+import type UI5Element from "@ui5/webcomponents-base";
 
 describe("SegmentedButton general interaction tests", () => {
 	it("should have first item selected by default", () => {
@@ -178,6 +179,54 @@ describe("SegmentedButton general interaction tests", () => {
 		// Second item is still selected
 		cy.get<SegmentedButtonItem>("@lastItem")
 			.should("have.attr", "selected");
+	});
+});
+
+describe("SegmentedButton - getFocusDomRef", () => {
+	it("should return undefined when the SegmentedButton is empty", () => {
+		cy.mount(<SegmentedButton></SegmentedButton>);
+
+		cy.get<SegmentedButton>("[ui5-segmented-button]")
+			.then(($el) => {
+				expect($el[0].getFocusDomRef()).to.be.undefined;
+			});
+	});
+
+	it("should return first item if no item was focused before", () => {
+		cy.mount(
+			<SegmentedButton>
+				<SegmentedButtonItem id="button1" title="Button 1"></SegmentedButtonItem>
+				<SegmentedButtonItem title="Button 2"></SegmentedButtonItem>
+			</SegmentedButton>
+		);
+
+		cy.get<UI5Element>("[ui5-segmented-button], #button1")
+			.then(($el) => {
+				const wrapper = $el[0],
+					firstButton = $el[1];
+
+				expect(wrapper.getFocusDomRef()).to.equal(firstButton.getFocusDomRef());
+			});
+	});
+
+	it("should return last focused item in the SegmentedButton", () => {
+		cy.mount(
+			<SegmentedButton>
+				<SegmentedButtonItem title="Button 1"></SegmentedButtonItem>
+				<SegmentedButtonItem id="button2" title="Button 2"></SegmentedButtonItem>
+			</SegmentedButton>
+		);
+
+		cy.get('#button2').realClick();
+		cy.get('#button2').should("be.focused");
+
+		cy.get<UI5Element>("[ui5-segmented-button], #button2")
+			.then(($el) => {
+				const wrapper = $el[0],
+					secondButton = $el[1];
+
+				expect(wrapper.getFocusDomRef()).to.equal(secondButton.getFocusDomRef());
+			});
 	});
 });
 

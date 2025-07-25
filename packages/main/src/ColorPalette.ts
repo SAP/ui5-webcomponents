@@ -352,6 +352,10 @@ class ColorPalette extends UI5Element {
 		this._ensureSingleSelectionOrDeselectAll();
 	}
 
+	getFocusDomRef(): HTMLElement | undefined {
+		return this._itemNavigation._getCurrentItem();
+	}
+
 	_handleDefaultColorClick(e: KeyboardEvent) {
 		e.preventDefault();
 		this._onDefaultColorClick();
