@@ -311,14 +311,6 @@ class Tree extends UI5Element {
 	@slot()
 	header!: Array<HTMLElement>;
 
-	onEnterDOM() {
-		DragRegistry.subscribe(this);
-	}
-
-	onExitDOM() {
-		DragRegistry.unsubscribe(this);
-	}
-
 	onBeforeRendering() {
 		this._prepareTreeItems();
 	}

@@ -127,14 +127,6 @@ class ListItemGroup extends UI5Element {
 	@slot({ type: HTMLElement })
 	header!: Array<ListItemBase>;
 
-	onEnterDOM() {
-		DragRegistry.subscribe(this);
-	}
-
-	onExitDOM() {
-		DragRegistry.unsubscribe(this);
-	}
-
 	get groupHeaderItem() {
 		return this.shadowRoot!.querySelector<ListItemGroupHeader>("[ui5-li-group-header]")!;
 	}

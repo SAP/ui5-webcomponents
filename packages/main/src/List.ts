@@ -591,7 +591,6 @@ class List extends UI5Element {
 
 	onEnterDOM() {
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
-		DragRegistry.subscribe(this);
 		ResizeHandler.register(this.getDomRef()!, this._handleResizeCallback);
 	}
 
@@ -599,7 +598,6 @@ class List extends UI5Element {
 		deregisterUI5Element(this);
 		this.unobserveListEnd();
 		ResizeHandler.deregister(this.getDomRef()!, this._handleResizeCallback);
-		DragRegistry.unsubscribe(this);
 	}
 
 	onBeforeRendering() {

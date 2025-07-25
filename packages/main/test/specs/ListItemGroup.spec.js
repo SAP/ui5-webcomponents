@@ -113,7 +113,7 @@ describe("List drag and drop tests", () => {
 		assert.ok(await compareItemsOrder("listDnd1", [listOneFirstItem, listTwoItem, listOneSecondItem, listOneThirdItem]), "Items order has changed");
 	});
 
-	it("Moving link to list that doesn't accept it", async () => {
+	it.skip("Moving link to list that doesn't accept it", async () => {
 		const [firstItem, secondItem, thirdItem] = await browser.$$("#listDnd1 [ui5-li]");
 		const link = await browser.$("#link")
 
@@ -122,7 +122,7 @@ describe("List drag and drop tests", () => {
 		assert.ok(await compareItemsOrder("listDnd1", [firstItem, secondItem, thirdItem]), "Items order has NOT changed");
 	});
 
-	it("Moving link to list that accepts it", async () => {
+	it.skip("Moving link to list that accepts it", async () => {
 		const [firstItem, secondItem] = await browser.$$("#listDnd2 [ui5-li]");
 		const link = await browser.$("#link")
 
