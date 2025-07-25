@@ -34,6 +34,7 @@ import type ToolbarSeparator from "./ToolbarSeparator.js";
 
 import type Button from "./Button.js";
 import type Popover from "./Popover.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 
 type ToolbarMinWidthChangeEventDetail = {
 	minWidth: number,
@@ -216,8 +217,8 @@ class Toolbar extends UI5Element {
 		return this.itemsToOverflow.filter(item => !(item.ignoreSpace || item.isSeparator)).length === 0;
 	}
 
-	get interactiveItemsCount() {
-		return this.items.filter((item: ToolbarItem) => item.isInteractive).length;
+	get interactiveItems() {
+		return this.items.filter((item: ToolbarItem) => item.isInteractive);
 	}
 
 	/**
@@ -225,7 +226,7 @@ class Toolbar extends UI5Element {
 	 */
 
 	get hasAriaSemantics() {
-		return this.interactiveItemsCount > 1;
+		return this.interactiveItems.length > 1;
 	}
 
 	get accessibleRole() {
@@ -288,6 +289,10 @@ class Toolbar extends UI5Element {
 	onBeforeRendering() {
 		this.detachListeners();
 		this.attachListeners();
+		if (getActiveElement() === this.overflowButtonDOM?.getFocusDomRef() && this.hideOverflowButton) {
+			const lastItem = this.interactiveItems.at(-1);
+			lastItem?.focus();
+		}
 	}
 
 	async onAfterRendering() {
