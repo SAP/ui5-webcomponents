@@ -29,6 +29,7 @@ import {
 
 // Styles
 import tableRowStyles from "./generated/themes/TableRow.css.js";
+import { patchScopingSuffix } from "./utils/CompatCustomElementsScope.js";
 
 type TableRowClickEventDetail = {
 	row: TableRow,
@@ -451,6 +452,8 @@ class TableRow extends UI5Element implements ITableRow {
 		return textContent.replace(/[\n\r\t]/g, "").trim();
 	}
 }
+
+patchScopingSuffix(TableRow);
 
 TableRow.define();
 

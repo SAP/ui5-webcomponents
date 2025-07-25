@@ -24,11 +24,11 @@
 	flex: 1;
 }
 
-.ui5-search-item-selected-delete {
+:host([desktop]) .ui5-search-item-selected-delete {
 	display: none;
 }
 
-:host([selected]:hover),
+:host(:hover),
 :host(:focus-within) {
 	.ui5-search-item-selected-delete {
 		display: inline-block;

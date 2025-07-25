@@ -30,7 +30,7 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 	tag: "ui5-toolbar-button",
 	template: ToolbarButtonTemplate,
 	renderer: jsxRenderer,
-	styles: ToolbarButtonCss,
+	styles: [ToolbarButtonCss],
 })
 
 /**
