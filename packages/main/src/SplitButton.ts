@@ -16,6 +16,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import type { AriaHasPopup, UI5CustomEvent } from "@ui5/webcomponents-base";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -34,6 +35,10 @@ import SplitButtonTemplate from "./SplitButtonTemplate.js";
 
 // Styles
 import SplitButtonCss from "./generated/themes/SplitButton.css.js";
+
+type SplitButtonRootAccAttributes = Pick<AccessibilityAttributes, "hasPopup" | "roleDescription" | "title">;
+type SplitButtonArrowButtonAccAtributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded" | "title">;
+type SplitButtonAccessibilityAttributes = {root?: SplitButtonRootAccAttributes, arrowButton?: SplitButtonArrowButtonAccAtributes}
 
 /**
  * @class
@@ -209,6 +214,31 @@ class SplitButton extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	_hideArrowButton = false;
+
+	/**
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The `accessibilityAttributes` property accepts an object with the following optional fields:
+	 *
+	 * - **root**: Attributes that will be applied to the main (text) button.
+	 *   - **hasPopup**: Indicates the presence and type of popup triggered by the button.
+	 *     Accepts string values: `"dialog"`, `"grid"`, `"listbox"`, `"menu"`, or `"tree"`.
+	 *   - **roleDescription**: Provides a human-readable description for the role of the button.
+	 *     Accepts any string value.
+	 *   - **title**: Specifies a tooltip or description for screen readers.
+	 *     Accepts any string value.
+	 *
+	 * - **arrowButton**: Attributes applied specifically to the arrow (split) button.
+	 *   - **hasPopup**: Indicates the presence and type of popup triggered by the arrow button.
+	 *     Accepts string values: `"dialog"`, `"grid"`, `"listbox"`, `"menu"`, or `"tree"`.
+	 *   - **expanded**: Indicates whether the popup triggered by the arrow button is currently expanded.
+	 *     Accepts boolean values: `true` or `false`.
+	 *
+	 * @default {}
+	 * @public
+	 * @since 2.13.0
+	 */
+	@property({ type: Object })
+	accessibilityAttributes: SplitButtonAccessibilityAttributes = {};
 
 	/**
 	 * Defines the text of the component.
@@ -429,19 +459,25 @@ class SplitButton extends UI5Element {
 		return this.getDomRef()?.querySelector<Button>(".ui5-split-arrow-button");
 	}
 
-	get accInfo() {
+	get _computedAccessibilityAttributes(): SplitButtonAccessibilityAttributes {
 		return {
 			root: {
-				"description": SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
-				"keyboardHint": SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
+				hasPopup: this.accessibilityAttributes?.root?.hasPopup,
+				roleDescription: this.accessibilityAttributes?.root?.roleDescription || (this._hideArrowButton ? undefined : SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION)),
+				title: this.accessibilityAttributes?.root?.title,
 			},
 			arrowButton: {
-				"title": this.arrowButtonTooltip,
-				"accessibilityAttributes": {
-					"hasPopup": "menu" as AriaHasPopup,
-					"expanded": this.effectiveActiveArrowButton,
-				},
+				hasPopup: this.accessibilityAttributes?.arrowButton?.hasPopup || "menu" as AriaHasPopup,
+				expanded: this.accessibilityAttributes?.arrowButton?.expanded || this.effectiveActiveArrowButton,
+				title: this.accessibilityAttributes?.arrowButton?.title || this.arrowButtonTooltip,
 			},
+		};
+	}
+
+	get accInfo() {
+		return {
+			"keyboardHint": SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
+			"description": SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
 		};
 	}
 
@@ -457,3 +493,6 @@ class SplitButton extends UI5Element {
 SplitButton.define();
 
 export default SplitButton;
+export type {
+	SplitButtonAccessibilityAttributes,
+};

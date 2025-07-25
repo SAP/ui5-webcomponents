@@ -9,12 +9,24 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
 import type ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import type ButtonState from "./ButtonState.js";
+import { BUTTON_TOOLTIP_TEXT } from "./generated/i18n/i18n-defaults.js";
 import "./ButtonState.js";
-
 import ButtonTemplate from "./ButtonTemplate.js";
+import {
+	getEffectiveAriaLabelText,
+	getAssociatedLabelForTexts,
+	getAllAccessibleNameRefTexts,
+} from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 
 // Styles
 import ButtonCss from "./generated/themes/Button.css.js";
+import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+
+type AIButtonRootAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "roleDescription" | "title">;
+type AIButtonArrowButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded" | "title">;
+type AIButtonAccessibilityAttributes = { root?: AIButtonRootAccessibilityAttributes, arrowButton?: AIButtonArrowButtonAccessibilityAttributes}
 
 /**
  * @class
@@ -120,6 +132,31 @@ class Button extends UI5Element {
 	arrowButtonPressed = false;
 
 	/**
+ 	 * Defines the additional accessibility attributes that will be applied to the component.
+	 *
+	 * This property allows for fine-tuned control of ARIA attributes for screen reader support.
+	 * It accepts an object with the following optional fields:
+	 *
+	 * - **root**: Accessibility attributes that will be applied to the root element.
+	 *   - **hasPopup**: Indicates the availability and type of interactive popup element (such as a menu or dialog).
+	 *     Accepts string values: `"dialog"`, `"grid"`, `"listbox"`, `"menu"`, or `"tree"`.
+	 *   - **roleDescription**: Defines a human-readable description for the button's role.
+	 *     Accepts any string value.
+	 *
+	 * - **arrowButton**: Accessibility attributes that will be applied to the arrow (split) button element.
+	 *   - **hasPopup**: Indicates the type of popup triggered by the arrow button.
+	 *     Accepts string values: `"dialog"`, `"grid"`, `"listbox"`, `"menu"`, or `"tree"`.
+	 *   - **expanded**: Indicates whether the popup controlled by the arrow button is currently expanded.
+	 *     Accepts boolean values: `true` or `false`.
+	 *
+	 * @public
+	 * @since 2.6.0
+	 * @default {}
+ 	*/
+	@property({ type: Object })
+	accessibilityAttributes: AIButtonAccessibilityAttributes = {};
+
+	/**
 	 * Keeps the current state object of the component.
 	 * @private
 	 */
@@ -149,6 +186,9 @@ class Button extends UI5Element {
 
 	@query(".ui5-ai-button-hidden[ui5-split-button]")
 	_hiddenSplitButton?: SplitButton;
+
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
 
 	get _hideArrowButton() {
 		return !this._effectiveStateObject?.showArrowButton;
@@ -305,7 +345,30 @@ class Button extends UI5Element {
 		e.stopImmediatePropagation();
 		this.fireDecoratorEvent("arrow-button-click");
 	}
+
+	get _computedAccessibilityAttributes(): AIButtonAccessibilityAttributes {
+		const labelRefTexts = getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || "";
+
+		const mainTitle = this._hasText ? Button.i18nBundle.getText(BUTTON_TOOLTIP_TEXT, this._stateText as string) : "";
+		const title = `${mainTitle} ${labelRefTexts}`.trim();
+
+		return {
+			root: {
+				hasPopup: this.accessibilityAttributes?.root?.hasPopup || "false",
+				roleDescription: this.accessibilityAttributes?.root?.roleDescription,
+				title: this.accessibilityAttributes?.root?.title || title,
+			},
+			arrowButton: {
+				hasPopup: this.accessibilityAttributes?.arrowButton?.hasPopup,
+				expanded: this.accessibilityAttributes?.arrowButton?.expanded,
+				title: this.accessibilityAttributes?.arrowButton?.title,
+			},
+		};
+	}
 }
 
 Button.define();
 export default Button;
+export type {
+	AIButtonAccessibilityAttributes,
+};
