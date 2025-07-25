@@ -7,11 +7,8 @@ import {
 	isLeft,
 	isRight,
 	isEnter,
-	isSpace,
 	isTabNext,
 	isTabPrevious,
-	isDown,
-	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	isPhone,
@@ -415,7 +412,7 @@ class Menu extends UI5Element {
 
 			if (!prevented) {
 				item._updateCheckedState();
-				this._popover && item.fireDecoratorEvent("close-menu");
+				this._popover && !item._shiftPressed && item.fireDecoratorEvent("close-menu");
 			}
 		} else {
 			this._openItemSubMenu(item);
@@ -430,12 +427,8 @@ class Menu extends UI5Element {
 			return;
 		}
 
-		const menuItemInMenu = this._allMenuItems.includes(item);
-		const isItemNavigation = isUp(e) || isDown(e);
-		const isItemSelection = isEnter(e) || isSpace(e);
 		const isEndContentNavigation = isRight(e) || isLeft(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
-		const shouldCloseMenu = menuItemInMenu && !(isItemNavigation || isItemSelection || isEndContentNavigation);
 
 		if (isEnter(e) || isTabNextPrevious) {
 			e.preventDefault();
@@ -447,7 +440,7 @@ class Menu extends UI5Element {
 
 		if (shouldOpenMenu) {
 			this._openItemSubMenu(item);
-		} else if ((shouldCloseMenu || isTabNextPrevious)) {
+		} else if (isTabNextPrevious) {
 			this._close();
 		}
 	}
