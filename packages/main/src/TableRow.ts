@@ -116,22 +116,26 @@ class TableRow extends TableRowBase {
 	movable = false;
 
 	_dragStartHandler: (e: DragEvent) => void;
+	_dragEndHandler: (e: DragEvent) => void;
 
 	constructor() {
 		super();
 		this._dragStartHandler = this._ondragstart.bind(this);
+		this._dragEndHandler = this._ondragend.bind(this);
 	}
 
 	onEnterDOM() {
 		super.onEnterDOM();
 
 		this.addEventListener("dragstart", this._dragStartHandler);
+		this.addEventListener("dragend", this._dragEndHandler);
 	}
 
 	onExitDOM() {
 		super.onExitDOM();
 
 		this.removeEventListener("dragstart", this._dragStartHandler);
+		this.removeEventListener("dragend", this._dragEndHandler);
 	}
 
 	onBeforeRendering() {
@@ -150,6 +154,10 @@ class TableRow extends TableRowBase {
 
 	_ondragstart() {
 		DragRegistry.setDraggedElement(this);
+	}
+
+	_ondragend() {
+		DragRegistry.clearDraggedElement();
 	}
 
 	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {

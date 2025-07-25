@@ -553,7 +553,6 @@ class TabContainer extends UI5Element {
 
 		handleDrop(e, this, (this.dropIndicatorDOM!.targetReference as TabInStrip).realTabReference, this.dropIndicatorDOM!.placement);
 		this.dropIndicatorDOM!.targetReference = null;
-		DragRegistry.clearDraggedElement();
 	}
 
 	_moveHeaderItem(tab: Tab, e: KeyboardEvent) {
@@ -705,7 +704,6 @@ class TabContainer extends UI5Element {
 		});
 
 		this.dropIndicatorDOM!.targetReference = null;
-		DragRegistry.clearDraggedElement();
 		draggedElement.focus();
 	}
 

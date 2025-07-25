@@ -1231,7 +1231,6 @@ class List extends UI5Element {
 
 		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement, { originalEvent: true });
 		this.dropIndicatorDOM.targetReference = null;
-		DragRegistry.clearDraggedElement();
 	}
 
 	isForwardElement(element: HTMLElement) {

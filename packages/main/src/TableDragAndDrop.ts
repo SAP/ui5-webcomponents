@@ -24,7 +24,6 @@ export default class TableDragAndDrop extends TableExtension {
 		}
 
 		this._table.dropIndicatorDOM.targetReference = null;
-		DragRegistry.clearDraggedElement();
 	}
 
 	_ondragover(e: DragEvent) {
