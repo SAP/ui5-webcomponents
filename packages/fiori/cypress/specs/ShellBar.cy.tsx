@@ -504,9 +504,9 @@ describe("Slots", () => {
 			cy.mount(
 				<ShellBar id="shellbar" primaryTitle="Product Title" showNotifications={true}></ShellBar>
 			);
-			
+
 			cy.get("#shellbar").as("shellbar");
-			
+
 			// Add search field after a timeout (simulating real-world scenario)
 			cy.get("@shellbar").then(shellbar => {
 				setTimeout(() => {
@@ -516,15 +516,15 @@ describe("Slots", () => {
 					shellbar.get(0).appendChild(searchField);
 				}, 100);
 			});
-			
+
 			// Wait for the search field to be added
 			cy.get("#delayed-search", { timeout: 1000 }).should("exist");
-			
+
 			// Search should now be visible and collapsed
 			cy.get("#shellbar [slot='searchField']")
 				.should("exist")
 				.should("have.prop", "collapsed", true);
-			
+
 			// click the searchField to expand it
 			cy.get("#shellbar [slot='searchField']")
 				.click()
@@ -788,6 +788,30 @@ describe("Keyboard Navigation", () => {
 		cy.get("@nativeInput").type("{rightArrow}");
 		cy.get("@nativeInput").should("be.focused");
 	});
+
+	it("Should focus the last ShellBar item on End key press", () => {
+		cy.mount(
+			<ShellBar id="shellbar" showSearchField={true}>
+				<Button slot="content">Test Button 1</Button>
+				<Button id="button" slot="content">Test Button 2</Button>
+				<ShellBarSearch id="sbSearch" slot="searchField" value="test value"></ShellBarSearch>
+			</ShellBar>
+		);
+		cy.get("#button").shadow().find("button").focus().type('{end}');
+		cy.get("#sbSearch").should("be.focused");
+	});
+
+	it("Should focus the first ShellBar item on Home key press", () => {
+		cy.mount(
+			<ShellBar id="shellbar" showSearchField={true}>
+				<Button id="button1" slot="content">Test Button 1</Button>
+				<Button id="button2" slot="content">Test Button 2</Button>
+				<ShellBarSearch slot="searchField" value="test value"></ShellBarSearch>
+			</ShellBar>
+		);
+		cy.get("#button2").shadow().find("button").focus().type('{home}');
+		cy.get("#button1").shadow().find("button").should("be.focused");
+	});
 });
 
 describe("Branding slot", () => {
@@ -796,7 +820,8 @@ describe("Branding slot", () => {
 			<ShellBar id="shellbar" primaryTitle="Primary Title">
 				<img id="mainLogo" slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
 
-				<ShellBarBranding brandingTitle="Branding Comp" href="https://www.w3schools.com" target="_blank" slot="branding">
+				<ShellBarBranding href="https://www.w3schools.com" target="_blank" slot="branding">
+					Branding Comp
 					<img id="brandingLogo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
 				</ShellBarBranding>
 			</ShellBar>
