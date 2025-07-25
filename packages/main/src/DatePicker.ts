@@ -626,7 +626,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		if (value === "") {
 			return true;
 		}
-		return this.isValidDisplayValue(value) && this.isInValidRange(value);
+		return this.isValidDisplayValue(value) && this.isInValidRangeDisplayValue(value);
 	}
 
 	_click(e: MouseEvent) {
@@ -687,6 +687,20 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		}
 
 		const calendarDate = this._getCalendarDateFromString(value);
+
+		if (!calendarDate || !this._minDate || !this._maxDate) {
+			return false;
+		}
+
+		return calendarDate.valueOf() >= this._minDate.valueOf() && calendarDate.valueOf() <= this._maxDate.valueOf();
+	}
+
+	isInValidRangeDisplayValue(value: string): boolean {
+		if (value === "" || value === undefined) {
+			return true;
+		}
+
+		const calendarDate = this._getCalendarDateFromStringDisplayValue(value);
 
 		if (!calendarDate || !this._minDate || !this._maxDate) {
 			return false;

@@ -186,7 +186,14 @@ class DateComponentBase extends UI5Element {
 	}
 
 	_getCalendarDateFromString(value: string) {
-		const jsDate = this.getFormat().parse(value) as Date;
+		const jsDate = this.getValueFormat().parse(value) as Date;
+		if (jsDate) {
+			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
+		}
+	}
+
+	_getCalendarDateFromStringDisplayValue(value: string) {
+		const jsDate = this.getDisplayFormat().parse(value) as Date;
 		if (jsDate) {
 			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
 		}
