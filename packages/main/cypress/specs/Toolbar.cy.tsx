@@ -458,4 +458,61 @@ describe("Toolbar Select", () => {
 			});
 		});
 	});
+
+	it("Should handle toolbar-select with width larger than the toolbar", async () => {
+		cy.mount(
+			<Toolbar id="otb_d">
+				<ToolbarSelect style="width: 201px;" id="toolbar-select">
+						<ToolbarSelectOption>1</ToolbarSelectOption>
+						<ToolbarSelectOption selected>2</ToolbarSelectOption>
+						<ToolbarSelectOption>3</ToolbarSelectOption>
+					</ToolbarSelect>
+			</Toolbar>
+		);
+		cy.viewport(220, 1080); // Set a small viewport width to trigger overflow
+
+		// Add a toolbar-select element with a large width
+		cy.get("#otb_d").shadow().within(() => {
+			cy.wait(2000);
+			// Click the overflow button
+			cy.get(".ui5-tb-overflow-btn").click();
+		});
+
+		// Verify the toolbar-select is rendered inside the popover
+		cy.get("ui5-toolbar-select").should("be.visible");
+	});
+
+	it("Should correctly handle the 'value' property and 'label' slot of ToolbarSelect", () => {
+		// Mount the Toolbar with a ToolbarSelect component
+		cy.mount(
+			<Toolbar>
+				<ToolbarSelect value="Option 2">
+					<span slot="label">Select an Option:</span>
+					<ToolbarSelectOption>Option 1</ToolbarSelectOption>
+					<ToolbarSelectOption>Option 2</ToolbarSelectOption>
+					<ToolbarSelectOption>Option 3</ToolbarSelectOption>
+				</ToolbarSelect>
+			</Toolbar>
+		);
+
+		// Verify the initial value of the ToolbarSelect
+		cy.get("ui5-select", { includeShadowDom: true })
+			.should("have.attr", "value", "Option 2");
+
+		// Verify the label slot content
+		cy.get("ui5-select", { includeShadowDom: true })
+			.find("span[slot='label']")
+			.should("contain.text", "Select an Option:");
+
+		// Change the value of the ToolbarSelect
+		cy.get("ui5-select", { includeShadowDom: true })
+			.click()
+			.find("ui5-option")
+			.contains("Option 3")
+			.click();
+
+		// Verify the updated value of the ToolbarSelect
+		cy.get("ui5-select", { includeShadowDom: true })
+			.should("have.attr", "value", "Option 3");
+	});
 });
