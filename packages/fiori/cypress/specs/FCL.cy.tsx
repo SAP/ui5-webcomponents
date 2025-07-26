@@ -144,7 +144,7 @@ describe("ACC", () => {
 			.find("slot[name=endColumn]")
 			.should("have.attr", "aria-hidden");
 	});
-	
+
 	it("verifies that aria-valuenow is set on separators", () => {
 		cy.mount(
 			<FlexibleColumnLayout id="fcl" style={{ height: "300px" }} layout="ThreeColumnsMidExpanded">
@@ -166,5 +166,960 @@ describe("ACC", () => {
 			.shadow()
 			.find(".ui5-fcl-separator-end")
 			.should("have.attr", "aria-valuenow");
+	});
+});
+
+before(() => {
+	cy.wrap({ setAnimationMode })
+		.then(api => {
+			return api.setAnimationMode("none");
+		});
+});
+
+describe("FlexibleColumnLayout Behavior", () => {
+	it("tests Desktop size 1400px", () => {
+		cy.viewport(1400, 1080);
+
+		cy.mount(
+			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsMidExpanded">
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.attr", "_visible-columns", "3");
+	});
+
+	it("tests Tablet Size 1000px", () => {
+		cy.viewport(1000, 1080);
+
+		cy.mount(
+			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsMidExpanded">
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.attr", "_visible-columns", "2");
+	});
+
+	it("tests Phone size 500px", () => {
+		cy.viewport(320, 1080);
+
+		cy.mount(
+			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsMidExpanded">
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.attr", "_visible-columns", "1");
+	});
+});
+
+describe("First column closing arrow behavior", () => {
+	it("should switch layout and update arrow icon on desktop", () => {
+		cy.viewport(1400, 1080)
+
+		cy.mount(
+			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsStartHiddenMidExpanded">
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-arrow--start")
+			.should("have.attr", "icon", "slim-arrow-right");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-arrow--start")
+			.click();
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.prop", "layout", "ThreeColumnsMidExpanded");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-arrow--start")
+			.should("have.attr", "icon", "slim-arrow-left");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-arrow--start")
+			.click();
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.prop", "layout", "ThreeColumnsStartHiddenMidExpanded");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-arrow--start")
+			.should("have.attr", "icon", "slim-arrow-right");
+	});
+});
+
+describe("Layout Change API", () => {
+	it("tests change layout with API", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="TwoColumnsStartExpanded"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Column 1 content</div>
+				<div slot="midColumn">Column 2 content</div>
+				<div slot="endColumn">Column 3 content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.attr", "_visible-columns", "2")
+			.should("have.prop", "layout", "TwoColumnsStartExpanded");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.invoke("prop", "layout", "ThreeColumnsMidExpanded");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.attr", "_visible-columns", "3")
+			.should("have.prop", "layout", "ThreeColumnsMidExpanded");
+	});
+
+	it("changes layout when dragging separator", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="TwoColumnsStartExpanded"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").then(($fcl) => {
+			const fcl = $fcl[0];
+			fcl.addEventListener("layout-change", cy.stub().as("layoutChanged"));
+		});
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "TwoColumnsStartExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(-400, 0)
+			.realMouseUp();
+
+		cy.get("@layoutChanged").should("have.been.calledOnce");
+		cy.get("@fcl").should("have.prop", "layout", "TwoColumnsMidExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.realMouseDown()
+			.realMouseMove(400, 0)
+			.realMouseUp();
+
+		cy.get("@layoutChanged").should("have.been.calledTwice");
+		cy.get("@fcl").should("have.prop", "layout", "TwoColumnsStartExpanded");
+	});
+});
+
+describe("Column Expansion Tests", () => {
+	beforeEach(() => {
+		cy.viewport(1600, 1080);
+	});
+
+	it("allows expand mid column from TwoColumnsStartExpanded to TwoColumnsMidExpanded", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="TwoColumnsStartExpanded"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "TwoColumnsStartExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(-400, 0)
+			.realMouseUp();
+
+		cy.get("@fcl").should("have.prop", "layout", "TwoColumnsMidExpanded");
+	});
+
+	it("allows hide end column from ThreeColumnsMidExpanded to ThreeColumnsMidExpandedEndHidden", () => {
+		cy.mount(
+			<FlexibleColumnLayout layout="ThreeColumnsMidExpanded" style={{ height: "300px" }}>
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.prop", "layout", "ThreeColumnsMidExpanded");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.invoke("prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+	});
+});
+
+describe("Start Column Expansion Test", () => {
+	beforeEach(() => {
+		cy.viewport(1600, 1080);
+	});
+
+	it("allows expand start column from TwoColumnsMidExpanded to TwoColumnsStartExpanded", () => {
+		cy.mount(
+			<FlexibleColumnLayout layout="TwoColumnsMidExpanded" style={{ height: "300px" }}>
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.prop", "layout", "TwoColumnsMidExpanded");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.invoke("prop", "layout", "TwoColumnsStartExpanded");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.prop", "layout", "TwoColumnsStartExpanded");
+	});
+
+	it("allows expand start column from ThreeColumnsMidExpandedEndHidden to ThreeColumnsStartExpandedEndHidden", () => {
+		cy.mount(
+			<FlexibleColumnLayout layout="ThreeColumnsMidExpandedEndHidden" style={{ height: "300px" }}>
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.invoke("prop", "layout", "ThreeColumnsStartExpandedEndHidden");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.prop", "layout", "ThreeColumnsStartExpandedEndHidden");
+	});
+
+	it("allows expand mid column from ThreeColumnsStartExpandedEndHidden to ThreeColumnsMidExpandedEndHidden", () => {
+		cy.mount(
+			<FlexibleColumnLayout layout="ThreeColumnsStartExpandedEndHidden" style={{ height: "300px" }}>
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.prop", "layout", "ThreeColumnsStartExpandedEndHidden");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.invoke("prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+	});
+
+	it("allows expand end column from ThreeColumnsMidExpandedEndHidden to ThreeColumnsMidExpanded", () => {
+		cy.mount(
+			<FlexibleColumnLayout layout="ThreeColumnsMidExpandedEndHidden" style={{ height: "300px" }}>
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.invoke("prop", "layout", "ThreeColumnsMidExpanded");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.should("have.prop", "layout", "ThreeColumnsMidExpanded");
+	});
+});
+
+describe("Layout change by dragging end-separator on desktop", () => {
+	it("allows expand end-column from ThreeColumnsMidExpandedEndHidden to ThreeColumnsMidExpanded", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="ThreeColumnsMidExpandedEndHidden"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-end")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(-400, 0)
+			.realMouseUp();
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpanded");
+	});
+
+	it("allows expand end-column from ThreeColumnsMidExpanded to ThreeColumnsEndExpanded", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="ThreeColumnsMidExpanded"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-end")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(-400, 0)
+			.realMouseUp();
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsEndExpanded");
+	});
+});
+
+describe("Layout change by dragging start-separator on tablet", () => {
+	beforeEach(() => {
+		cy.viewport(1000, 1080);
+	});
+
+	it("allows expand mid column from TwoColumnsStartExpanded to TwoColumnsMidExpanded", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="TwoColumnsStartExpanded"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "TwoColumnsStartExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(-400, 0)
+			.realMouseUp();
+
+		cy.get("@fcl").should("have.prop", "layout", "TwoColumnsMidExpanded");
+	});
+
+	it("allows expand start column from TwoColumnsMidExpanded to TwoColumnsStartExpanded", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="TwoColumnsMidExpanded"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "TwoColumnsMidExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(400, 0)
+			.realMouseUp();
+
+		cy.get("@fcl").should("have.prop", "layout", "TwoColumnsStartExpanded");
+	});
+
+	it("allows hide end column from ThreeColumnsMidExpanded to ThreeColumnsMidExpandedEndHidden", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="ThreeColumnsMidExpanded"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(300, 0)
+			.realMouseUp();
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+	});
+
+	it("allows expand start column from ThreeColumnsMidExpandedEndHidden to ThreeColumnsStartExpandedEndHidden", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="ThreeColumnsMidExpandedEndHidden"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(400, 0)
+			.realMouseUp();
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsStartExpandedEndHidden");
+	});
+
+	it("allows expand mid column from ThreeColumnsStartExpandedEndHidden to ThreeColumnsMidExpandedEndHidden", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="ThreeColumnsStartExpandedEndHidden"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsStartExpandedEndHidden");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(-400, 0)
+			.realMouseUp();
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+	});
+
+	it("preserves ThreeColumnsMidExpandedEndHidden on tiny start column drag", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="ThreeColumnsMidExpandedEndHidden"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(-100, 0)
+			.realMouseUp();
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+	});
+});
+
+describe("Layout change by dragging end-separator on tablet", () => {
+	beforeEach(() => {
+		cy.viewport(1000, 1080);
+	});
+
+	it("allows expand end-column from ThreeColumnsMidExpandedEndHidden to ThreeColumnsMidExpanded", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="ThreeColumnsMidExpandedEndHidden"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-end")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(-400, 0)
+			.realMouseUp();
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpanded");
+	});
+
+	it("allows expand end-column from ThreeColumnsMidExpanded to ThreeColumnsEndExpanded", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="ThreeColumnsMidExpanded"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-end")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(-300, 0)
+			.realMouseUp();
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsEndExpanded");
+	});
+});
+
+describe("Preserves column min-width", () => {
+	beforeEach(() => {
+		cy.viewport(1400, 1080);
+	});
+
+	it("complies with min-width requirement on smallest desktop", () => {
+		const smallestDesktopWidth = 1024;
+		const smallestColumnWidth = 248;
+
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="ThreeColumnsMidExpanded"
+				style={{ height: "300px", width: `${smallestDesktopWidth}px` }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpanded");
+
+		cy.get("@fcl").should("have.prop", "offsetWidth", smallestDesktopWidth);
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-column--start")
+			.should("have.prop", "offsetWidth", smallestColumnWidth);
+	});
+
+	it("preserves min-width of begin column", () => {
+		const smallestColumnWidth = 248;
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="TwoColumnsMidExpanded"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "TwoColumnsMidExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-column--start")
+			.invoke("width")
+			.then((initialStartWidth) => {
+				const differenceFromMin = initialStartWidth - smallestColumnWidth;
+				const testOffsetX = differenceFromMin + 10;
+
+				cy.get("@fcl")
+					.shadow()
+					.find(".ui5-fcl-separator-start")
+					.should("be.visible")
+					.realMouseDown()
+					.realMouseMove(-testOffsetX, 0)
+					.realMouseUp();
+
+				cy.get("@fcl").should("have.prop", "layout", "TwoColumnsMidExpanded");
+
+				cy.get("@fcl")
+					.shadow()
+					.find(".ui5-fcl-column--start")
+					.should("have.prop", "offsetWidth", smallestColumnWidth);
+			});
+	});
+
+	it("preserves min-width of mid column in 2-column layout", () => {
+		const smallestColumnWidth = 248;
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="TwoColumnsStartExpanded"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "TwoColumnsStartExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-column--middle")
+			.invoke("width")
+			.then((initialMidWidth) => {
+				const differenceFromMin = initialMidWidth - smallestColumnWidth;
+				const testOffsetX = differenceFromMin + 10;
+
+				cy.get("@fcl")
+					.shadow()
+					.find(".ui5-fcl-separator-start")
+					.should("be.visible")
+					.realMouseDown()
+					.realMouseMove(testOffsetX, 0)
+					.realMouseUp();
+
+				cy.get("@fcl").should("have.prop", "layout", "TwoColumnsStartExpanded");
+
+				cy.get("@fcl")
+					.shadow()
+					.find(".ui5-fcl-column--middle")
+					.should("have.prop", "offsetWidth", smallestColumnWidth);
+			});
+	});
+
+	it("preserves min-width of mid column in 3-column layout", () => {
+		const smallestColumnWidth = 248;
+
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="ThreeColumnsMidExpanded"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-column--middle")
+			.invoke("width")
+			.then((initialMidWidth) => {
+				const differenceFromMin = initialMidWidth - smallestColumnWidth;
+				const testOffsetX = differenceFromMin + 10;
+
+				cy.get("@fcl")
+					.shadow()
+					.find(".ui5-fcl-separator-end")
+					.should("be.visible")
+					.realMouseDown()
+					.realMouseMove(-testOffsetX, 0)
+					.realMouseUp();
+
+				cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsEndExpanded");
+
+				cy.get("@fcl")
+					.shadow()
+					.find(".ui5-fcl-column--middle")
+					.should("have.prop", "offsetWidth")
+					.and("be.closeTo", smallestColumnWidth, 1);
+			});
+	});
+
+	it("preserves min-width of end column", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="ThreeColumnsMidExpanded"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		const smallestColumnWidth = 248;
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-column--end")
+			.invoke("width")
+			.then((endColumnWidth) => {
+				const testOffsetX = endColumnWidth - smallestColumnWidth + 10;
+
+				cy.get("@fcl")
+					.shadow()
+					.find(".ui5-fcl-separator-end")
+					.should("be.visible")
+					.realMouseDown()
+					.realMouseMove(testOffsetX, 0)
+					.realMouseUp();
+
+				cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpanded");
+
+				cy.get("@fcl")
+					.shadow()
+					.find(".ui5-fcl-column--end")
+					.should("have.prop", "offsetWidth")
+					.and("be.closeTo", smallestColumnWidth, 1);
+			});
+	});
+
+	it("fully reveals the end-column on dragging the end-separator only few pixels", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				layout="ThreeColumnsMidExpandedEndHidden"
+				style={{ height: "300px" }}
+			>
+				<div slot="startColumn">Start</div>
+				<div slot="midColumn">Mid</div>
+				<div slot="endColumn">End</div>
+			</FlexibleColumnLayout>
+		);
+
+		const smallestColumnWidth = 248;
+
+		cy.get("[ui5-flexible-column-layout]").as("fcl");
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpandedEndHidden");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-separator-end")
+			.should("be.visible")
+			.realMouseDown()
+			.realMouseMove(-100, 0)
+			.realMouseUp();
+
+		cy.get("@fcl").should("have.prop", "layout", "ThreeColumnsMidExpanded");
+
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-column--end")
+			.should("have.prop", "offsetWidth")
+			.and("be.closeTo", smallestColumnWidth, 1);
+	});
+});
+
+describe("Accessibility with Animation Disabled", () => {
+	it("tests separator acc attrs", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				style={{ height: "300px" }}
+				layout="ThreeColumnsMidExpandedEndHidden"
+				accessibilityAttributes={{
+					startColumn: { role: "region", name: "Products list" },
+					midColumn: { role: "region", name: "Product information" },
+					endColumn: { role: "region", name: "Product detailed information" },
+					startSeparator: { role: "region", name: "Start Draggable Splitter" },
+					endSeparator: { role: "region", name: "End Draggable Splitter" }
+				}}
+			>
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		const startSeparatorText = "Start Draggable Splitter";
+		const endSeparatorText = "End Draggable Splitter";
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("have.attr", "title", startSeparatorText);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-separator-end")
+			.should("have.attr", "title", endSeparatorText);
+	});
+
+	it("tests acc default roles", () => {
+		cy.mount(
+			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsMidExpandedEndHidden">
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-column--start")
+			.should("have.attr", "role", "region");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-column--middle")
+			.should("have.attr", "role", "region");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-column--end")
+			.should("not.have.attr", "role");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("have.attr", "role", "separator");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-separator-end")
+			.should("have.attr", "role", "separator");
+	});
+
+	it("tests acc custom roles", () => {
+		cy.mount(
+			<FlexibleColumnLayout
+				style={{ height: "300px" }}
+				layout="ThreeColumnsMidExpanded"
+				accessibilityAttributes={{
+					startColumn: { role: "complementary", name: "Start column" },
+					startSeparator: { role: "region", name: "Start separator" },
+					midColumn: { role: "main", name: "Main column" },
+					endSeparator: { role: "region", name: "End separator" },
+					endColumn: { role: "complementary", name: "End column" }
+				}}
+			>
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-column--start")
+			.should("have.attr", "role", "complementary");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-column--middle")
+			.should("have.attr", "role", "main");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-column--end")
+			.should("have.attr", "role", "complementary");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.should("have.attr", "role", "region");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-separator-end")
+			.should("have.attr", "role", "region");
+	});
+
+	it("tests acc attrs", () => {
+		cy.mount(
+			<FlexibleColumnLayout style={{ height: "300px" }} layout="OneColumn">
+				<div slot="startColumn">some content</div>
+				<div slot="midColumn">some content</div>
+				<div slot="endColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-column--start")
+			.should("not.have.attr", "aria-hidden");
+
+		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-column--middle")
+			.should("have.attr", "aria-hidden", "true");
 	});
 });
