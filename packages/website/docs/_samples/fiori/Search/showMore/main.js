@@ -4,7 +4,6 @@ import "@ui5/webcomponents-icons/dist/history.js";
 import "@ui5/webcomponents-fiori/dist/SearchItem.js";
 import "@ui5/webcomponents-fiori/dist/SearchItemShowMore.js";
 import "@ui5/webcomponents-fiori/dist/SearchItemGroup.js";
-import "@ui5/webcomponents-icons/dist/customer-and-supplier.js";
 
 	const allItems = [
 		{ text: "List Item 1", icon: "history" },
