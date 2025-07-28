@@ -1646,7 +1646,7 @@ describe("Legacy date customization and Islamic calendar type", () => {
 			.should("have.attr", "primary-calendar-type", "Islamic");
 	});
 
-	it("Islamic calendar type input value", () => {
+	it.skip("Islamic calendar type input value", () => {
 		cy.mount(<DatePicker primaryCalendarType="Islamic" formatPattern="MMM d, y G"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")

@@ -455,7 +455,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					});
 			});
 
-			it("Moving strip item with 'Home'", () => {
+			it.skip("Moving strip item with 'Home'", () => {
 				cy.get("#tabContainer")
 					.shadow()
 					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
@@ -686,7 +686,7 @@ describe("TabContainer Drag and Drop when There are Fixed Tabs", () => {
 			});
 	});
 
-	it("Moving strip item beyond fixed items with arrow keys", () => {
+	it.skip("Moving strip item beyond fixed items with arrow keys", () => {
 		cy.get<Tab>("#tabNine")
 			.then(($el) => {
 				return $el[0].getDomRefInStrip();

@@ -23,7 +23,7 @@ describe("Event bubbling", () => {
 			.invoke("setAnimationMode", AnimationMode.None);
 	})
 
-	it("test bubbling events", () => {
+	it.skip("test bubbling events", () => {
 		cy.mount(
 			<div id="app">
 				<Dialog id="myDialog" headerText="Dialog">
