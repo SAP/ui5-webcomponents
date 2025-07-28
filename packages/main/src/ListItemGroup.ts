@@ -17,6 +17,7 @@ import ListItemGroupTemplate from "./ListItemGroupTemplate.js";
 // Styles
 import ListItemGroupCss from "./generated/themes/ListItemGroup.css.js";
 import type ListItemGroupHeader from "./ListItemGroupHeader.js";
+import type WrappingType from "./types/WrappingType.js";
 
 type ListItemGroupMoveEventDetail = {
 	source: {
@@ -112,11 +113,39 @@ class ListItemGroup extends UI5Element {
 	items!: Array<ListItemBase>;
 
 	/**
+	 * Defines if the text of the component should wrap when it's too long.
+	 * When set to "Normal", the content (title, description) will be wrapped
+	 * using the `ui5-expandable-text` component.<br/>
+	 *
+	 * The text can wrap up to 100 characters on small screens (size S) and
+	 * up to 300 characters on larger screens (size M and above). When text exceeds
+	 * these limits, it truncates with an ellipsis followed by a text expansion trigger.
+	 *
+	 * Available options are:
+	 * - `None` (default) - The text will truncate with an ellipsis.
+	 * - `Normal` - The text will wrap (without truncation).
+	 *
+	 * @default "None"
+	 * @public
+	 * @since 2.15.0
+	 */
+	@property()
+	wrappingType: `${WrappingType}` = "None";
+
+	/**
 	 * Indicates whether the header is focused
 	 * @private
 	 */
 	@property({ type: Boolean })
 	focused = false;
+
+	/**
+	 * Defines the current media query size.
+	 * @default "S"
+	 * @private
+	 */
+	@property()
+	mediaRange = "S";
 
 	/**
 	* Defines the header of the component.
