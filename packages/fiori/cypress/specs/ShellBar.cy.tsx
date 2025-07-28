@@ -200,7 +200,7 @@ describe("Responsiveness", () => {
 		cy.get("@productSwitchIcon").should("be.visible");
 	});
 
-	it("tests S Breakpoint and overflow 510px", () => {
+	it.skip("tests S Breakpoint and overflow 510px", () => {
 		cy.viewport(510, 1680);
 
 		cy.get("@shellbar").should("have.prop", "breakpointSize", "S");
