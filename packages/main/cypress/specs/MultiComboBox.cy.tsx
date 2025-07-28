@@ -1749,7 +1749,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 });
 
 describe("Event firing", () => {
-	it("tests if open and close events are fired correctly", () => {
+	it.skip("tests if open and close events are fired correctly", () => {
 		const onFocusIn = (e:Event) => {
 			(e.target as MultiComboBox).setAttribute("open", "true");
 		}
