@@ -43,9 +43,9 @@ export default function LastNextTemplate(this: DynamicDateRange) {
 	};
 
 	return (
-		<div class="ui5-last-next-container" style={{ padding: "0 1rem 0.5rem 1rem" }}>
-			<div class="ui5-ddr-input-container" style={{ textAlign: "right" }}>
-				<Label style={{ margin: "1rem 0 0.5rem 0", textAlign: "left" }}>{DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_VALUE_LABEL_TEXT)}</Label>
+		<div class="ui5-last-next-container ui5-last-next-container-padded">
+			<div class="ui5-ddr-input-container ui5-ddr-input-container-right-aligned">
+				<Label class="ui5-ddr-label">{DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_VALUE_LABEL_TEXT)}</Label>
 				<StepInput
 					value={currentNumber}
 					min={1}
@@ -55,7 +55,7 @@ export default function LastNextTemplate(this: DynamicDateRange) {
 
 				{isGrouped && (
 					<>
-						<Label style={{ margin: "1rem 0 0.5rem 0", textAlign: "left" }}>{DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_UNIT_OF_TIME_LABEL_TEXT)}</Label>
+						<Label class="ui5-ddr-label">{DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_UNIT_OF_TIME_LABEL_TEXT)}</Label>
 						<Select value={currentOperator} onChange={handleUnitChange}>
 							{filteredOptions.map(option => (
 								<Option value={option.operator} key={option.operator}>

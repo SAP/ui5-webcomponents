@@ -37,6 +37,10 @@
 	height: 100%;
 }
 
+.ui5-last-next-container-padded {
+	padding: 0 1rem 0.5rem 1rem;
+}
+
 .ui5-ddr-input-container {
 	display: flex;
 	flex-direction: column;
@@ -44,6 +48,15 @@
 	justify-content: flex-start;
 	gap: 0.25rem;
 	width: fit-content;
+}
+
+.ui5-ddr-input-container-right-aligned {
+	text-align: right;
+}
+
+.ui5-ddr-label {
+	margin: 1rem 0 0.5rem 0;
+	text-align: left;
 }
 
 .ui5-ddr-input-row {
