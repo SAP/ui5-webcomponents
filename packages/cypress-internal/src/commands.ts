@@ -6,6 +6,8 @@ import "./acc_report/support.js";
 import "./helpers.js";
 
 Cypress.Commands.add('waitRenderFinished', () => {
+	cy.wait(300);
+
 	return cy.wrap(renderFinished(), { log: false });
 });
 
