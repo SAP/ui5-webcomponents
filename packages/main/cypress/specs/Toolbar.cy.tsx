@@ -287,6 +287,40 @@ describe("Toolbar general interaction", () => {
 		cy.get("@popover")
 			.should("have.prop", "open", false);
 	});
+
+	it("Should focus on the last interactive element outside the overflow popover when overflow button disappears", () => {
+		// Mount the Toolbar with multiple buttons
+		cy.mount(
+			<Toolbar>
+				<ToolbarButton text="Button 1" />
+				<ToolbarButton text="Button 2" />
+				<ToolbarButton text="Button 3" />
+				<ToolbarButton text="Button 4" />
+				<ToolbarButton text="Button 5" />
+			</Toolbar>
+		);
+
+		// Set initial viewport size to ensure the overflow button is visible
+		cy.viewport(300, 1080);
+
+		// Focus on the overflow button
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.click()
+			.click()
+			.should("be.focused");
+
+		// Resize the viewport to make the overflow button disappear
+		cy.viewport(800, 1080);
+
+		// Verify the focus shifts to the last interactive element outside the overflow popover
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-tb-item")
+			.eq(3)
+			.should("be.focused");
+	});
 });
 
 describe("Accessibility", () => {
