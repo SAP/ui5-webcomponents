@@ -7,8 +7,7 @@ Cypress.Commands.add("ui5AIButtonCheckAttributeInTextButton", { prevSubject: tru
 		.shadow()
 		.find(".ui5-split-text-button")
         .should("be.visible")
-        .invoke("attr", attrName)
-		.should("eq", attrValue);
+        .should("have.attr", attrName, attrValue);
 });
 
 Cypress.Commands.add("ui5AIButtonCheckAttributeInArrowButton", { prevSubject: true }, (subject: JQuery<Button>,  attrName: string, attrValue: string) => {
@@ -20,8 +19,7 @@ Cypress.Commands.add("ui5AIButtonCheckAttributeInArrowButton", { prevSubject: tr
 		.shadow()
 		.find(".ui5-button-root")
         .should("be.visible")
-        .invoke("attr", attrName)
-		.should("eq", attrValue);
+		.should("have.attr", attrName, attrValue);
 });
 
 Cypress.Commands.add("ui5AIButtonCheckAttributeSplitButtonRoot", { prevSubject: true }, (subject: JQuery<Button>,  attrName: string, attrValue: string) => {
@@ -31,6 +29,5 @@ Cypress.Commands.add("ui5AIButtonCheckAttributeSplitButtonRoot", { prevSubject: 
 		.shadow()
 		.find(".ui5-split-button-root")
         .should("be.visible")
-        .invoke("attr", attrName)
-		.should("eq", attrValue);
+        .should("have.attr", attrName, attrValue);
 });
