@@ -539,7 +539,6 @@ describe("ToolbarButton", () => {
 				.should("deep.equal", { expanded: "true",
 					controls: "btn",
 					hasPopup: "dialog" });
-		});
 	});
 });
 
