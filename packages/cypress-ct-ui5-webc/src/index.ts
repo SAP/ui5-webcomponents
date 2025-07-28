@@ -2,6 +2,7 @@
 import { setupHooks, getContainerEl } from "@cypress/mount-utils";
 import { render } from '@ui5/webcomponents-base/dist/thirdparty/preact/preact.module.js';
 import type { JSX } from '@ui5/webcomponents-base/dist/thirdparty/preact/preact.module.js';
+import { renderFinished } from '@ui5/webcomponents-base/dist/Render.js';
 
 type Options = Record<string, any>;
 
