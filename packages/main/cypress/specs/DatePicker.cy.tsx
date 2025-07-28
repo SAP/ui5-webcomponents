@@ -94,7 +94,7 @@ describe("Date Picker Tests", () => {
 			.shadow()
 			.find("ui5-datetime-input")
 			.should("have.attr", "value-state", "Negative");
-		
+
 		cy.get("@datePicker")
 			.shadow()
 			.find("[slot='header']")
@@ -162,7 +162,7 @@ describe("Date Picker Tests", () => {
 			.should("have.attr", "placeholder", "test placeholder");
 	});
 
-	
+
 
 	it("Selected date from daypicker is the same as datepicker date", () => {
 		cy.mount(<DatePicker value="Jan 29, 2019" formatPattern="MMM d, y"></DatePicker>);
@@ -1451,7 +1451,7 @@ describe("Date Picker Tests", () => {
 			.should("have.class", "ui5-yp-item--disabled");
 	});
 
-	it.skip("Min and max dates are NOT set because no format pattern is provided & format used is not ISO", () => {
+	it("Min and max dates are NOT set because no format pattern is provided & format used is not ISO", () => {
 		cy.mount(<DatePicker minDate="22.10.2020" maxDate="22.10.2021"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
@@ -1646,7 +1646,7 @@ describe("Legacy date customization and Islamic calendar type", () => {
 			.should("have.attr", "primary-calendar-type", "Islamic");
 	});
 
-	it.skip("Islamic calendar type input value", () => {
+	it("Islamic calendar type input value", () => {
 		cy.mount(<DatePicker primaryCalendarType="Islamic" formatPattern="MMM d, y G"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
