@@ -19,6 +19,7 @@ const setDraggedElement = (element: HTMLElement | null) => {
 
 const clearDraggedElement = () => {
 	draggedElement = null;
+	customDragElementPromise = null;
 };
 
 const getDraggedElement = () => {
@@ -40,6 +41,22 @@ const createDefaultMultiDragElement = async (count: number): Promise<HTMLElement
 	return dragElement;
 };
 
+const handleMultipleDrag = async (e: DragEvent) => {
+	if (!customDragElementPromise || !e.dataTransfer) {
+		return;
+	}
+	const dragElement = await customDragElementPromise;
+	// Add to document body temporarily
+	document.body.appendChild(dragElement);
+
+	e.dataTransfer.setDragImage(dragElement, 0, 0);
+
+	// Clean up the temporary element after the drag operation starts
+	requestAnimationFrame(() => {
+		dragElement.remove();
+	});
+};
+
 /**
  * Starts a multiple drag operation by creating a drag ghost element.
  * The drag ghost will be displayed when dragging multiple items.
@@ -55,7 +72,6 @@ const startMultipleDrag = (count: number): void => {
 
 	customDragElementPromise = createDefaultMultiDragElement(count);
 };
-
 
 type DragAndDropSettings = {
 	/**
