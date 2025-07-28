@@ -26,7 +26,7 @@ describe("Event bubbling", () => {
 	it("test bubbling events", () => {
 		cy.mount(
 			<div id="app">
-				<Dialog id="myDialog" headerText="Dialog" >
+				<Dialog id="myDialog" headerText="Dialog">
 					<Input id="myInput" showSuggestions={true}>
 						<SuggestionItem text="Cozy"></SuggestionItem>
 						<SuggestionItem text="Compact"></SuggestionItem>
@@ -86,6 +86,8 @@ describe("Event bubbling", () => {
 
 		cy.get<Dialog>("@dialog")
 			.ui5DialogOpened()
+
+		cy.wait(200);
 
 		// act - toggle Input suggestions
 		cy.get("@input")
