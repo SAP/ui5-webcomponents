@@ -212,7 +212,6 @@
 .ui5-shell-search-field-button:not([design="Emphasized"]):hover {
 	background-color: var(--sapShell_Hover_Background);
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
-	border-radius: var(--_ui5_shellbar_button_border_radius);
 }
 
 /* copy paste all button styles - could be simplified */
