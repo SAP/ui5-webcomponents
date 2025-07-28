@@ -357,8 +357,6 @@ class Timeline extends UI5Element {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
-		const target = e.target as ITimelineItem;
-
 		if (isDown(e) || isRight(e)) {
 			this._handleDown();
 			e.preventDefault();
