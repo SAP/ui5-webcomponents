@@ -515,7 +515,6 @@ describe("Toolbar Select", () => {
 		cy.get("ui5-toolbar-select").should("be.visible");
 	});
 });
-});
 
 describe("Toolbar Button", () => {
 	it("Should not trigger click event on disabled button", () => {
