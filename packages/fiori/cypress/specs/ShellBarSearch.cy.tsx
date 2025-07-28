@@ -1,3 +1,4 @@
+import SearchItem from "../../src/SearchItem.js";
 import ShellBarSearch from "../../src/ShellBarSearch.js";
 import {
 	SHELLBAR_SEARCH_COLLAPSED,
@@ -60,5 +61,19 @@ describe("Behaviour", () => {
 
 		cy.get("@searchIcon")
 			.should("have.attr", "accessible-name", SEARCH_FIELD_SEARCH_ICON.defaultText);
+	});
+
+	it("Tests autoOpen property", () => {
+		cy.mount(
+			<ShellBarSearch autoOpen={true}>
+				<SearchItem text="Item 1"></SearchItem>
+			</ShellBarSearch>
+		);
+
+		cy.get("[ui5-shellbar-search]")
+			.realClick();
+
+		cy.get("[ui5-shellbar-search]")
+			.should("have.prop", "open", true);
 	});
 });
