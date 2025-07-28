@@ -1,4 +1,3 @@
-import type UI5Element from "../../UI5Element.js";
 import type MovePlacement from "../../types/MovePlacement.js";
 import MultipleDragGhostCss from "../../generated/css/MultipleDragGhost.css.js";
 
