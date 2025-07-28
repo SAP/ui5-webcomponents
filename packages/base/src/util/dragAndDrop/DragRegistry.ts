@@ -56,49 +56,6 @@ const startMultipleDrag = (count: number): void => {
 	customDragElementPromise = createDefaultMultiDragElement(count);
 };
 
-const attachGlobalHandlers = () => {
-	if (globalHandlersAttached) {
-		return;
-	}
-
-	document.body.addEventListener("dragstart", ondragstart);
-	document.body.addEventListener("dragend", ondragend);
-	document.body.addEventListener("drop", ondrop);
-	globalHandlersAttached = true;
-};
-
-const detachGlobalHandlers = () => {
-	document.body.removeEventListener("dragstart", ondragstart);
-	document.body.removeEventListener("dragend", ondragend);
-	document.body.removeEventListener("drop", ondrop);
-	globalHandlersAttached = false;
-};
-
-const subscribe = (subscriber: UI5Element) => {
-	subscribers.add(subscriber);
-
-	if (!globalHandlersAttached) {
-		attachGlobalHandlers();
-	}
-};
-
-const unsubscribe = (subscriber: UI5Element) => {
-	subscribers.delete(subscriber);
-
-	if (subscribers.size === 0 && globalHandlersAttached) {
-		detachGlobalHandlers();
-	}
-};
-
-const addSelfManagedArea = (area: HTMLElement | ShadowRoot) => {
-	selfManagedDragAreas.add(area);
-
-	return setDraggedElement;
-};
-
-const removeSelfManagedArea = (area: HTMLElement | ShadowRoot) => {
-	selfManagedDragAreas.delete(area);
-};
 
 type DragAndDropSettings = {
 	/**
@@ -135,7 +92,6 @@ export {
 };
 
 export type {
-	SetDraggedElementFunction,
 	DragAndDropSettings,
 	MoveEventDetail,
 };
