@@ -5,13 +5,11 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import SearchItemShowMoreTemplate from "./SearchItemShowMoreTemplate.js";
 import SearchItemCss from "./generated/themes/SearchItem.css.js";
 import SearchItemShowMoreCss from "./generated/themes/SearchItemShowMore.css.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import SearchItem from "./SearchItem.js";
 
 /**
  * @class
- * A suggestion item that acts as a "show more" button or group separator.
+ * A suggestion item that acts as a "show more" button.
  * @constructor
  * @extends SearchItem
  * @public
@@ -27,32 +25,14 @@ import SearchItem from "./SearchItem.js";
 	],
 })
 
-/* could be removed */
-@event("show-more")
-
 class SearchItemShowMore extends SearchItem {
-	eventDetails!: SearchItem["eventDetails"] & {
-		"show-more": void,
-	};
 	/**
 	 * Defines the heading text of the search item.
 	 * @public
+	 * @default undefined
 	 */
-
 	@property()
 	text?: string;
-
-	/* could be removed */
-	_onclick() {
-		this.fireDecoratorEvent("show-more");
-	}
-
-	/* could be removed */
-	_onkeydown(e: KeyboardEvent) {
-		if (isEnter(e) || isSpace(e)) {
-			this.fireDecoratorEvent("show-more");
-		}
-	}
 }
 
 SearchItemShowMore.define();

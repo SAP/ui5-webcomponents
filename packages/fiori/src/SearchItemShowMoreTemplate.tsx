@@ -8,8 +8,6 @@ export default function SearchItemShowMoreTemplate(this: SearchItemShowMore) {
 			role="option"
 			tabindex={this._effectiveTabIndex}
 			aria-selected={this.selected}
-			onKeyDown={this._onkeydown}
-			onClick={this._onclick}
 		>
 			<span class="ui5-search-item-show-more-text">{this.text}</span>
 		</li>
