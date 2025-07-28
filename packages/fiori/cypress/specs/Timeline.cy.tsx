@@ -7,6 +7,7 @@ import messageInformation from "@ui5/webcomponents-icons/dist/message-informatio
 import Label from "@ui5/webcomponents/dist/Label.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import UI5Element from "@ui5/webcomponents-base";
+import Button from "@ui5/webcomponents/dist/Button.js";
 
 function Sample() {
 	return <Timeline layout="Vertical" accessibleName="vertical" id="timelineAccName">
@@ -115,35 +116,6 @@ describe("Timeline with group items interactions", () => {
 			.eq(0)
 			.find("ui5-timeline-item")
 			.should("have.length", 4);
-	});
-
-	it("Group items are collapsed on button click", () => {
-		cy.mount(<GroupSample />);
-
-		cy.get("[ui5-timeline]")
-			.find("[ui5-timeline-group-item][group-name='Events']")
-			.as("currentGroup");
-
-		cy.get("@currentGroup")
-			.eq(0)
-			.shadow()
-			.find("[ui5-toggle-button]")
-			.as("currentGroupButton");
-
-		cy.get("@currentGroupButton")
-			.realClick();
-
-		cy.realPress("Tab");
-
-		cy.get("[ui5-timeline]")
-			.find("[ui5-timeline-group-item][group-name='Meetings']")
-			.as("nextGroup");
-
-		cy.get("@nextGroup")
-			.eq(0)
-			.shadow()
-			.find("[ui5-toggle-button]")
-			.should("be.focused");
 	});
 
 	it("Group items are navigable", () => {
@@ -259,6 +231,113 @@ describe("Timeline with growing mode", () => {
 		cy.get("@timeline")
 			.find("ui5-timeline-item")
 			.last()
+			.should("be.focused");
+	});
+});
+
+describe("Keyboard interactions", () => {
+	it("F2 should move the focus to interactive items and then should revert the focus to parent timeline item", () => {
+		cy.mount(
+			<Timeline>
+				<TimelineItem  titleText="first item" subtitleText="20.02.2017 11:30" >
+					<Button id="button" title="Click me"></Button>
+				</TimelineItem>
+				<TimelineItem titleText="coming up" subtitleText="20.02.2017 11:30"></TimelineItem>
+				<TimelineItem titleText="coming up" subtitleText="20.02.2017 11:30" ></TimelineItem>
+			</Timeline>
+		);
+
+		cy.get("[ui5-timeline]")
+			.as("timeline");
+
+		cy.get("@timeline")
+			.find("ui5-timeline-item")
+			.first()
+			.as("firstItem")
+			.realClick();
+
+		cy.get("@firstItem")
+			.should("be.focused");
+
+		cy.realPress("F2");
+
+		cy.get("#button")
+			.should("be.focused");
+
+		cy.realPress("F2");
+
+		cy.get("@firstItem")
+			.should("be.focused");
+	});
+
+	it("should move the focus to the next interactive item inside timeline item when Tab is pressed", () => {
+		cy.mount(
+			<Timeline>
+				<TimelineItem  titleText="first item" subtitleText="20.02.2017 11:30" >
+					<Button id="button1" title="Click me"></Button>
+					<Button id="button2" title="Click me"></Button>
+				</TimelineItem>
+				<TimelineItem titleText="coming up" subtitleText="20.02.2017 11:30"></TimelineItem>
+				<TimelineItem titleText="coming up" subtitleText="20.02.2017 11:30" ></TimelineItem>
+			</Timeline>
+		);
+
+		cy.get("[ui5-timeline]")
+			.as("timeline");
+
+		cy.get("@timeline")
+			.find("ui5-timeline-item")
+			.first()
+			.as("firstItem")
+			.realClick();
+
+		cy.get("@firstItem")
+			.should("be.focused");
+
+		cy.realPress("F2");
+
+		cy.get("#button1")
+			.should("be.focused");
+
+		cy.realPress("Tab");
+
+		cy.get("#button2")
+			.should("be.focused");
+	});
+
+	it("should move the focus to interactive element inside next timeline item with interactive elements when pressing Tab", () => {
+		cy.mount(
+			<Timeline>
+				<TimelineItem  titleText="first item" subtitleText="20.02.2017 11:30" >
+					<Button id="button1" title="Click me"></Button>
+				</TimelineItem>
+				<TimelineItem titleText="coming up" subtitleText="20.02.2017 11:30"></TimelineItem>
+				<TimelineItem titleText="coming up" subtitleText="20.02.2017 11:30">
+					<Button id="button2" title="Click me"></Button>
+				</TimelineItem>
+			</Timeline>
+		);
+
+		cy.get("[ui5-timeline]")
+			.as("timeline");
+
+		cy.get("@timeline")
+			.find("ui5-timeline-item")
+			.first()
+			.as("firstItem")
+			.realClick();
+
+		cy.get("@firstItem")
+			.should("be.focused");
+
+		cy.realPress("F2");
+
+		cy.get("#button1")
+			.should("be.focused");
+
+		cy.realPress("Tab");
+
+		cy.get("#button2")
 			.should("be.focused");
 	});
 });
