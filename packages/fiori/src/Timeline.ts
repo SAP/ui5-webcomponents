@@ -265,6 +265,10 @@ class Timeline extends UI5Element {
 		this.fireDecoratorEvent("load-more");
 	}
 
+	getFocusDomRef(): HTMLElement | undefined {
+		return this._itemNavigation._getCurrentItem();
+	}
+
 	_onLoadMoreKeydown(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
