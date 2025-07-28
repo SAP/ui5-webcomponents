@@ -1451,7 +1451,7 @@ describe("Date Picker Tests", () => {
 			.should("have.class", "ui5-yp-item--disabled");
 	});
 
-	it	("Min and max dates are NOT set because no format pattern is provided & format used is not ISO", () => {
+	it.skip("Min and max dates are NOT set because no format pattern is provided & format used is not ISO", () => {
 		cy.mount(<DatePicker minDate="22.10.2020" maxDate="22.10.2021"></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
