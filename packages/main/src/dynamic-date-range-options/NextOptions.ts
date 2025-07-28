@@ -102,7 +102,7 @@ class NextOptions implements IDynamicDateRangeOption {
 		// for numeric values
 		const optionInfo = this.availableOptions.find(info => info.operator === value.operator);
 		if (optionInfo) {
-			const numberValue = this._getNumberFromValue(value);
+			const numberValue = (value.values?.[0] as number) || 1;
 			return formatLastNext({ operator: value.operator, values: [numberValue] }, { text: optionInfo.text } as IDynamicDateRangeOption);
 		}
 
@@ -174,59 +174,6 @@ class NextOptions implements IDynamicDateRangeOption {
 		if (this.options?.includes(value)) {
 			this._operator = value;
 		}
-	}
-
-	_getNumberFromValue(value: DynamicDateRangeValue): number {
-		if (value.values && typeof value.values[0] === "number") {
-			return value.values[0];
-		}
-
-		if (value.values?.length === 2 && value.values[0] instanceof Date && value.values[1] instanceof Date) {
-			const startDate = value.values[0];
-			const endDate = value.values[1];
-
-			if (value.operator.includes("DAYS")) {
-				const normalizedStart = UI5Date.getInstance(startDate.getTime());
-				const normalizedEnd = UI5Date.getInstance(endDate.getTime());
-				normalizedStart.setUTCHours(0, 0, 0, 0);
-				normalizedEnd.setUTCHours(0, 0, 0, 0);
-
-				const diffInDays = Math.round((normalizedEnd.getTime() - normalizedStart.getTime()) / (1000 * 60 * 60 * 24));
-				return diffInDays + 1;
-			}
-
-			if (value.operator.includes("WEEKS")) {
-				const diffInDays = Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-				return Math.round((diffInDays + 1) / 7);
-			}
-
-			if (value.operator.includes("MONTHS")) {
-				const startYear = startDate.getUTCFullYear();
-				const startMonth = startDate.getUTCMonth();
-				const endYear = endDate.getUTCFullYear();
-				const endMonth = endDate.getUTCMonth();
-
-				const monthDiff = (endYear - startYear) * 12 + (endMonth - startMonth);
-				return Math.abs(monthDiff) + 1;
-			}
-
-			if (value.operator.includes("QUARTERS")) {
-				const startQuarter = Math.floor(startDate.getUTCMonth() / 3);
-				const endQuarter = Math.floor(endDate.getUTCMonth() / 3);
-				const startYear = startDate.getUTCFullYear();
-				const endYear = endDate.getUTCFullYear();
-
-				const quarterDiff = (endYear - startYear) * 4 + (endQuarter - startQuarter);
-				return Math.abs(quarterDiff) + 1;
-			}
-
-			if (value.operator.includes("YEARS")) {
-				const yearDiff = Math.abs(endDate.getUTCFullYear() - startDate.getUTCFullYear());
-				return yearDiff + 1;
-			}
-		}
-
-		return 1;
 	}
 }
 
