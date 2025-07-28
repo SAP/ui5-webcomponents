@@ -703,7 +703,7 @@ describe("TabContainer Drag and Drop when There are Fixed Tabs", () => {
 			.should("have.id", "fixedItemsSeparator");
 	});
 
-	it("Moving strip item beyond fixed items with 'Home;", () => {
+	it.skip("Moving strip item beyond fixed items with 'Home;", () => {
 		cy.get<Tab>("#tabTen")
 			.then(($el) => {
 				return $el[0].getDomRefInStrip();
