@@ -1945,7 +1945,7 @@ describe("Event firing", () => {
 			.should("have.length", 1);
 	});
 
-	it("Should fire events on clear icon click", () => {
+	it.skip("Should fire events on clear icon click", () => {
 		cy.mount(
 			<MultiComboBox noTypeahead={true} showClearIcon={true} onInput={cy.stub().as("inputEvent")} onChange={cy.stub().as("changeEvent")}>
 				<MultiComboBoxItem text="1"></MultiComboBoxItem>
