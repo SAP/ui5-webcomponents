@@ -1,8 +1,9 @@
 import type { DynamicDateRangeValue, IDynamicDateRangeOption } from "../DynamicDateRange.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 
 const dateOptionToDates = (value: DynamicDateRangeValue): Array<Date> => {
-	const startDate = value.values ? value.values[0] as Date : new Date();
-	const endDate = new Date(startDate);
+	const startDate = value.values ? value.values[0] as Date : UI5Date.getInstance();
+	const endDate = UI5Date.getInstance(startDate.getTime());
 
 	startDate?.setUTCHours(0, 0, 0, 0);
 	endDate?.setUTCHours(23, 59, 59, 999);
@@ -11,8 +12,8 @@ const dateOptionToDates = (value: DynamicDateRangeValue): Array<Date> => {
 };
 
 const dateRangeOptionToDates = (value: DynamicDateRangeValue): Array<Date> => {
-	const startDate = value.values ? value.values[0] as Date : new Date();
-	const endDate = value.values ? value.values[1] as Date : new Date();
+	const startDate = value.values ? value.values[0] as Date : UI5Date.getInstance();
+	const endDate = value.values ? value.values[1] as Date : UI5Date.getInstance();
 
 	startDate?.setUTCHours(0, 0, 0, 0);
 	endDate?.setUTCHours(23, 59, 59, 999);
@@ -21,48 +22,50 @@ const dateRangeOptionToDates = (value: DynamicDateRangeValue): Array<Date> => {
 };
 
 const todayToDates = (): Array<Date> => {
-	const startDate = new Date();
-	const endDate = new Date();
+	const startDate = UI5Date.getInstance();
+	const endDate = UI5Date.getInstance();
 
-	startDate?.setUTCHours(0, 0, 0, 0);
-	endDate?.setUTCHours(23, 59, 59, 999);
-
-	return [startDate, endDate];
-};
-
-const tomorrowToDates = (): Array<Date> => {
-	const startDate = new Date();
-	const endDate = new Date();
-
-	startDate.setUTCDate(startDate.getUTCDate() + 1);
-	endDate.setUTCDate(endDate.getUTCDate() + 1);
-	startDate?.setUTCHours(0, 0, 0, 0);
-	endDate?.setUTCHours(23, 59, 59, 999);
+	startDate.setUTCHours(0, 0, 0, 0);
+	endDate.setUTCHours(23, 59, 59, 999);
 
 	return [startDate, endDate];
 };
 
 const yesterdayToDates = (): Array<Date> => {
-	const startDate = new Date();
-	const endDate = new Date();
+	const startDate = UI5Date.getInstance();
+	const endDate = UI5Date.getInstance();
 
+	startDate.setUTCHours(0, 0, 0, 0);
 	startDate.setUTCDate(startDate.getUTCDate() - 1);
+
+	endDate.setUTCHours(23, 59, 59, 999);
 	endDate.setUTCDate(endDate.getUTCDate() - 1);
-	startDate?.setUTCHours(0, 0, 0, 0);
-	endDate?.setUTCHours(23, 59, 59, 999);
+
+	return [startDate, endDate];
+};
+
+const tomorrowToDates = (): Array<Date> => {
+	const startDate = UI5Date.getInstance();
+	const endDate = UI5Date.getInstance();
+
+	startDate.setUTCHours(0, 0, 0, 0);
+	startDate.setUTCDate(startDate.getUTCDate() + 1);
+
+	endDate.setUTCHours(23, 59, 59, 999);
+	endDate.setUTCDate(endDate.getUTCDate() + 1);
 
 	return [startDate, endDate];
 };
 
 const lastToDates = (value: DynamicDateRangeValue, unit: string): Array<Date> => {
-	const today = new Date();
-	const startDate = new Date(today);
-	const endDate = new Date(today);
+	const today = UI5Date.getInstance();
+	const startDate = UI5Date.getInstance(today.getTime());
+	const endDate = UI5Date.getInstance(today.getTime());
 	const amount = value.values?.[0] as number || 1;
 
 	switch (unit) {
 	case "days":
-		// For "Last X Days": start X-1 days before today, end today
+		// For "Last X Days": start X days before today (inclusive), end today
 		// "Last 1 Day" = today only, "Last 2 Days" = yesterday + today, etc.
 		startDate.setTime(today.getTime() - (amount - 1) * 24 * 60 * 60 * 1000);
 		break;
@@ -90,21 +93,18 @@ const lastToDates = (value: DynamicDateRangeValue, unit: string): Array<Date> =>
 		break;
 	}
 
-	startDate.setUTCHours(0, 0, 0, 0);
-	endDate.setUTCHours(23, 59, 59, 999);
-
 	return [startDate, endDate];
 };
 
 const nextToDates = (value: DynamicDateRangeValue, unit: string): Array<Date> => {
-	const today = new Date();
-	const startDate = new Date(today);
-	const endDate = new Date(today);
+	const today = UI5Date.getInstance();
+	const startDate = UI5Date.getInstance(today.getTime());
+	const endDate = UI5Date.getInstance(today.getTime());
 	const amount = value.values?.[0] as number || 1;
 
 	switch (unit) {
 	case "days":
-		// For "Next X Days": start today, end X-1 days after today
+		// For "Next X Days": start today, end X days from today (inclusive)
 		// "Next 1 Day" = today only, "Next 2 Days" = today + tomorrow, etc.
 		endDate.setTime(today.getTime() + (amount - 1) * 24 * 60 * 60 * 1000);
 		break;
@@ -131,9 +131,6 @@ const nextToDates = (value: DynamicDateRangeValue, unit: string): Array<Date> =>
 		endDate.setUTCDate(0); // Last day of December of the target year
 		break;
 	}
-
-	startDate.setUTCHours(0, 0, 0, 0);
-	endDate.setUTCHours(23, 59, 59, 999);
 
 	return [startDate, endDate];
 };

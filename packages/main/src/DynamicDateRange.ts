@@ -9,7 +9,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base";
 import { isF4, isShow } from "@ui5/webcomponents-base/dist/Keys.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import DynamicDateRangeTemplate from "./DynamicDateRangeTemplate.js";
 import IconMode from "./types/IconMode.js";
 import type Input from "./Input.js";
@@ -176,6 +175,8 @@ class DynamicDateRange extends UI5Element {
 	@property({ type: Object })
 	currentValue?: DynamicDateRangeValue;
 
+	_lastSelectedOption?: IDynamicDateRangeOption;
+
 	optionsObjects: Array<IDynamicDateRangeOption> = [];
 
 	static optionsClasses: Map<string, new () => IDynamicDateRangeOption> = new Map();
@@ -186,9 +187,6 @@ class DynamicDateRange extends UI5Element {
 	@query("[ui5-list]")
 	_list?: List;
 
-	// Store last selected values for state restoration
-	_lastSelectedValue?: DynamicDateRangeValue;
-
 	onBeforeRendering() {
 		this.optionsObjects = this._createNormalizedOptions();
 		this._focusSelectedItem();
@@ -198,23 +196,32 @@ class DynamicDateRange extends UI5Element {
 	 * Creates and normalizes options from the options string
 	 */
 	_createNormalizedOptions(): Array<IDynamicDateRangeOption> {
-		const optionKeys = this.splitOptions(this.options).filter(Boolean);
+		if (!this._lastSelectedOption) { // means we already built the optionsObjects once
+			const optionKeys = this.splitOptions(this.options).filter(Boolean);
+			const createdOptions: Array<IDynamicDateRangeOption> = [];
+			const classToOperators = new Map<new(operators?: string[]) => IDynamicDateRangeOption, Array<string>>();
 
-		// Group option keys by their constructor class
-		const constructorGroups = new Map<new(operators?: string[]) => IDynamicDateRangeOption, Array<string>>();
+			// Group operators by their class
+			optionKeys.forEach(option => {
+				const OptionClass = DynamicDateRange.getOptionClass(option);
+				if (OptionClass) {
+					const operators = classToOperators.get(OptionClass) || [];
+					operators.push(option);
+					classToOperators.set(OptionClass, operators);
+				}
+			});
 
-		optionKeys.forEach(key => {
-			const OptionClass = DynamicDateRange.getOptionClass(key);
-			if (OptionClass) {
-				const operators = constructorGroups.get(OptionClass) || [];
-				operators.push(key);
-				constructorGroups.set(OptionClass, operators);
-			}
-		});
+			classToOperators.forEach((operators, OptionClass) => {
+				createdOptions.push(new OptionClass(operators));
+			});
 
-		return Array.from(constructorGroups.entries()).map(([Constructor, operators]) => {
-			return new Constructor(operators);
-		});
+			return createdOptions;
+		}
+		return this.optionsObjects;
+	}
+
+	splitOptions(options: string): Array<string> {
+		return options.split(",").map(s => s.trim());
 	}
 
 	_focusSelectedItem() {
@@ -241,47 +248,77 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	_togglePicker(): void {
-		this.open = !this.open;
+		if (this.open) {
+			this.open = false;
+		} else {
+			this.open = true;
+		}
 	}
 
 	_selectOption(e: CustomEvent): void {
-		const selectedOption = this.optionsObjects.find(option => option.text === e.detail.item.textContent);
-		if (!selectedOption) {
+		this._currentOption = this.optionsObjects.find(option => option.text === e.detail.item.textContent);
+		this._lastSelectedOption = this._currentOption;
+
+		if (!this._currentOption?.template) {
+			this.currentValue = this._currentOption?.parse(this._currentOption.text);
+			this._submitValue();
+		} else if (!this.currentValue || this.currentValue.operator !== this._currentOption.operator) {
+			const defaultFormatted = this._currentOption.format({ operator: this._currentOption.operator, values: [] });
+			if (defaultFormatted && defaultFormatted.trim()) {
+				this.currentValue = this._currentOption.parse(defaultFormatted) || { operator: this._currentOption.operator, values: [1] };
+			}
+		}
+
+		if (this._currentOption?.operator === this.value?.operator) {
+			this.currentValue = this.value;
+		}
+	}
+
+	getOption(operator?: string) {
+		if (!operator) {
+			return this._currentOption;
+		}
+
+		const resultOption = this.optionsObjects.find(option => option.operator === operator);
+
+		if (!resultOption) {
+			const OptionClass = DynamicDateRange.getOptionClass(operator);
+
+			if (OptionClass) {
+				const existingOption = this.optionsObjects.find(option => option.constructor === OptionClass);
+
+				if (existingOption) {
+					existingOption.operator = operator;
+					return existingOption;
+				}
+
+				const optionObject = new OptionClass();
+				this.optionsObjects.push(optionObject);
+
+				return optionObject;
+			}
+		}
+
+		return resultOption;
+	}
+
+	onInputChange(e: Event): void {
+		const value = (e.target as Input)?.value;
+
+		if (!value) {
+			this.value = undefined;
+			this.fireDecoratorEvent("change");
+
 			return;
 		}
 
-		this._currentOption = selectedOption;
+		const currentOption = this.optionsObjects.find(option => option.isValidString(value));
 
-		if (this._shouldRestoreState(selectedOption)) {
-			this.currentValue = this._lastSelectedValue;
-		} else if (selectedOption.template) {
-			this.currentValue = { operator: selectedOption.operator, values: [1] };
-		} else {
-			this.currentValue = selectedOption.parse(selectedOption.text);
-			this._submitValue();
+		this.value = currentOption ? this.getOption(currentOption.operator)?.parse(value) : undefined;
+
+		if (this.value) {
+			this.fireDecoratorEvent("change");
 		}
-	}
-
-	_shouldRestoreState(selectedOption: IDynamicDateRangeOption): boolean {
-		if (!this.value || !this._lastSelectedValue) {
-			return false;
-		}
-		if (this.value.operator === selectedOption.operator) {
-			return true;
-		}
-
-		// Check if current value belongs to same option family (e.g., Last* or Next*)
-		const optionKeys = this.splitOptions(this.options);
-		const sameFamily = optionKeys.filter(key => {
-			const OptionClass = DynamicDateRange.getOptionClass(key);
-			return OptionClass && new OptionClass().constructor === selectedOption.constructor;
-		});
-
-		return sameFamily.includes(this.value.operator);
-	}
-
-	splitOptions(options: string): Array<string> {
-		return options.split(",").map(s => s.trim());
 	}
 
 	onButtonBackClick() {
@@ -296,19 +333,7 @@ class DynamicDateRange extends UI5Element {
 	 * @returns An array of two `Date` objects representing the start and end dates.
 	 */
 	toDates(value: DynamicDateRangeValue): Array<Date> {
-		const option = this.getOption(value.operator);
-		if (!option) {
-			return [];
-		}
-
-		// If already dates, return as-is
-		if (value.values?.length === 2
-			&& value.values[0] instanceof Date
-			&& value.values[1] instanceof Date) {
-			return value.values as Array<Date>;
-		}
-
-		return option.toDates(value);
+		return this.getOption(value.operator)?.toDates(value) as Array<Date>;
 	}
 
 	get _hasCurrentOptionTemplate(): boolean {
@@ -316,21 +341,14 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	_submitValue() {
-		if (!this._currentOption || !this.currentValue) {
-			return;
-		}
-
-		const stringValue = this._currentOption.format(this.currentValue);
-		const isValid = this._currentOption.isValidString(stringValue);
+		const stringValue = this._currentOption?.format(this.currentValue!) as string;
 
 		if (this._input) {
 			this._input.value = stringValue;
 		}
 
-		if (isValid) {
-			const dates = this._currentOption.toDates(this.currentValue);
-			this.value = { operator: this.currentValue.operator, values: dates };
-			this._lastSelectedValue = { ...this.currentValue };
+		if (this._currentOption?.isValidString(stringValue)) {
+			this.value = this.currentValue as DynamicDateRangeValue;
 			this.fireDecoratorEvent("change");
 		} else {
 			this.value = undefined;
@@ -346,7 +364,9 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	onPopoverOpen() {
-		this.currentValue = this.value && this._lastSelectedValue ? this._lastSelectedValue : this.value;
+		if (this.currentValue !== this.value) {
+			this.currentValue = this.value;
+		}
 	}
 
 	onPopoverClose() {
@@ -354,59 +374,60 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	get currentValueText() {
-		if (!this.currentValue || !this._currentOption) {
-			return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT);
+		if (this.currentValue && this.currentValue.operator === this._currentOption?.operator) {
+			const dates = this._currentOption.toDates(this.currentValue);
+			const displayValue = { ...this.currentValue, values: dates };
+			const displayText = this._currentOption.format(displayValue);
+			return `${DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_SELECTED_TEXT)}: ${displayText}`;
 		}
 
-		const selectedText = DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_SELECTED_TEXT);
-
-		// For template options, try to show calculated date range if possible
-		if (this._currentOption.template) {
-			try {
-				const dates = this._currentOption.toDates(this.currentValue);
-				if (dates.length > 0 && dates.every(date => date instanceof Date && !Number.isNaN(date.getTime()))) {
-					const dateFormat = DateFormat.getDateInstance({
-						interval: dates.length === 2,
-						intervalDelimiter: " - ",
-					});
-					return `${selectedText}: ${dateFormat.format(dates)}`;
-				}
-			} catch {
-				// If toDates fails (e.g., incomplete values), fall back to formatted text
+		if (this._currentOption) {
+			const defaultValue = this._currentOption.format({ operator: this._currentOption.operator, values: [] });
+			if (defaultValue && defaultValue.trim()) {
+				const defaultVal = { operator: this._currentOption.operator, values: [1] };
+				const dates = this._currentOption.toDates(defaultVal);
+				const displayValue = { ...defaultVal, values: dates };
+				const displayText = this._currentOption.format(displayValue);
+				return `${DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_SELECTED_TEXT)}: ${displayText}`;
 			}
 		}
 
-		return `${selectedText}: ${this._currentOption.format(this.currentValue)}`;
-	}
-
-	updateCurrentValue(newValue: DynamicDateRangeValue): void {
-		this.currentValue = newValue;
+		return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT);
 	}
 
 	handleSelectionChange(e: CustomEvent) {
-		const newValue = this._currentOption?.handleSelectionChange?.(e);
-		if (newValue) {
-			this.currentValue = newValue;
+		this.currentValue = this._currentOption?.handleSelectionChange && this._currentOption?.handleSelectionChange(e) as DynamicDateRangeValue;
+
+		// Update _currentOption if the operator changed
+		if (this.currentValue && this.currentValue.operator !== this._currentOption?.operator) {
+			this._currentOption = this.getOption(this.currentValue.operator);
 		}
 	}
 
 	onInputKeyDown(e: KeyboardEvent) {
 		if (isShow(e)) {
 			e.preventDefault();
-			this._togglePicker();
-			if (this.open && !isF4(e)) {
-				this._input?.focus();
+			if (this.open) {
+				if (!isF4(e)) {
+					this._toggleAndFocusInput();
+				}
+			} else {
+				this._toggleAndFocusInput();
 			}
+		}
+	}
+
+	_toggleAndFocusInput() {
+		this._togglePicker();
+		if (this.open) {
+			this._input?.focus();
 		}
 	}
 
 	onKeyDownPopover(e: KeyboardEvent) {
 		if (isShow(e)) {
-			e.preventDefault();
-			this._togglePicker();
-			if (this.open) {
-				this._input?.focus();
-			}
+			e.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
+			this._toggleAndFocusInput();
 		}
 	}
 
@@ -417,96 +438,15 @@ class DynamicDateRange extends UI5Element {
 	 * DynamicDateRange.register("LASTWEEK", LastWeek);
 	 */
 	static register(operator: string, option: new () => IDynamicDateRangeOption): void {
-		this.optionsClasses.set(operator.toUpperCase(), option);
+		operator = operator.toUpperCase();
+
+		if (!this.optionsClasses.has(operator)) {
+			this.optionsClasses.set(operator, option);
+		}
 	}
 
 	static getOptionClass(operator: string): (new () => IDynamicDateRangeOption) | undefined {
 		return this.optionsClasses.get(operator);
-	}
-
-	get displayValue(): string {
-		if (!this.value) {
-			return "";
-		}
-		const option = this.getOption(this.value.operator);
-		return option ? option.format(this.value) : "";
-	}
-
-	getOption(operator: string): IDynamicDateRangeOption | undefined {
-		const foundOption = this.optionsObjects.find(option => option.operator === operator);
-		if (foundOption) {
-			return foundOption;
-		}
-
-		const OptionClass = DynamicDateRange.getOptionClass(operator);
-		return OptionClass ? new OptionClass() : undefined;
-	}
-
-	onInputChange(e: Event): void {
-		const value = (e.target as Input)?.value;
-
-		if (!value) {
-			this.value = undefined;
-			this._lastSelectedValue = undefined;
-			this.fireDecoratorEvent("change");
-			return;
-		}
-
-		// Find option that can validate this input - try grouped options first, then individual options
-		const matchingOption = this._findOptionForInput(value);
-		const parsedValue = matchingOption?.parse(value);
-
-		if (parsedValue && matchingOption) {
-			this._lastSelectedValue = { ...parsedValue };
-			this.value = {
-				operator: parsedValue.operator,
-				values: matchingOption.toDates(parsedValue),
-			};
-			this.fireDecoratorEvent("change");
-		} else {
-			this.value = undefined;
-			this._lastSelectedValue = undefined;
-		}
-	}
-
-	_findOptionForInput(value: string): IDynamicDateRangeOption | undefined {
-		const groupedOption = this.optionsObjects.find(option => option.isValidString(value));
-		if (groupedOption) {
-			return groupedOption;
-		}
-
-		const individualOptions = this._createIndividualOptions();
-		return individualOptions.find(option => option.isValidString(value));
-	}
-
-	_createIndividualOptions(): Array<IDynamicDateRangeOption> {
-		return this.options
-			.split(",")
-			.map(key => key.trim())
-			.filter(Boolean)
-			.map(key => DynamicDateRange.getOptionClass(key))
-			.filter((OptionClass): OptionClass is new () => IDynamicDateRangeOption => OptionClass !== undefined)
-			.map(OptionClass => new OptionClass());
-	}
-
-	/**
-	 * Determines if an option should be selected based on the current value
-	 * @private
-	 */
-	_isOptionSelected(option: IDynamicDateRangeOption): boolean {
-		if (!this.value?.operator) {
-			return false;
-		}
-
-		// Try to parse the current display value with this option
-		// If it can parse it AND the resulting operator matches the current value's operator,
-		// then this option should be selected
-		try {
-			const parsedValue = option.parse(this.displayValue);
-			return parsedValue?.operator === this.value.operator;
-		} catch {
-			return false;
-		}
 	}
 }
 

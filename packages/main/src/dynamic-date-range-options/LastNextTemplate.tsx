@@ -1,5 +1,4 @@
 import DynamicDateRange from "../DynamicDateRange.js";
-import type { DynamicDateRangeValue } from "../DynamicDateRange.js";
 import StepInput from "../StepInput.js";
 import Select from "../Select.js";
 import type { SelectChangeEventDetail } from "../Select.js";
@@ -18,29 +17,29 @@ export default function LastNextTemplate(this: DynamicDateRange) {
 	const availableOptionInfos = currentOption.availableOptions;
 
 	const filteredOptions = availableOptionInfos.filter(info =>
-		currentOption.options.includes(info.operator)
+		currentOption.options?.includes(info.operator) || currentOption.operator === info.operator
 	);
 
 	const isGrouped = filteredOptions.length > 1;
 
-	const currentNumber = getCurrentNumber(this.currentValue);
-	const currentOperator = this.currentValue?.operator || currentOption?.operator || filteredOptions[0]?.operator || "";
+	const currentNumber = this.currentValue?.values ? typeof this.currentValue.values[0] === "number" ? this.currentValue.values[0] : 1 : 1;
+	const currentOperator = this.currentValue?.operator || filteredOptions[0]?.operator || "";
 
 	// Input handlers
 	const handleNumberChange = (e: CustomEvent) => {
 		const newValue = Number((e.target as StepInput).value);
-		this.updateCurrentValue({
+		this.currentValue = {
 			operator: currentOperator,
 			values: [newValue],
-		});
+		};
 	};
 
 	const handleUnitChange = (e: CustomEvent<SelectChangeEventDetail>) => {
 		const newOperator = String(e.detail.selectedOption.value);
-		this.updateCurrentValue({
+		this.currentValue = {
 			operator: newOperator,
 			values: [currentNumber],
-		});
+		};
 	};
 
 	return (
@@ -69,20 +68,4 @@ export default function LastNextTemplate(this: DynamicDateRange) {
 			</div>
 		</div>
 	);
-}
-
-// Simple helper function - no complex date conversion
-function getCurrentNumber(currentValue: DynamicDateRangeValue | undefined): number {
-	// Default to 1
-	if (!currentValue?.values) {
-		return 1;
-	}
-
-	// If it's already a number, return it
-	if (typeof currentValue.values[0] === "number") {
-		return currentValue.values[0];
-	}
-
-	// For any other case (like dates), just return 1 and let the option handle conversion
-	return 1;
 }

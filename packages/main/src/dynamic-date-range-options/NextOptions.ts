@@ -2,6 +2,8 @@ import LastNextTemplate from "./LastNextTemplate.js";
 import type { DynamicDateRangeValue, IDynamicDateRangeOption } from "../DynamicDateRange.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import {
 	formatLastNext, handleSelectionChangeLastNext, isValidStringLastNext, parseLastNext,
 } from "./LastNextUtils.js";
@@ -30,14 +32,14 @@ import {
  */
 class NextOptions implements IDynamicDateRangeOption {
 	template: JsxTemplate = LastNextTemplate;
-	operator: string;
+	_operator: string;
 	i18nKey: I18nText;
-	options: Array<string> = [];
+	options?: Array<string> = [];
 
 	constructor(operators?: Array<string>) {
-		this.options = operators || ["NEXTDAYS", "NEXTWEEKS", "NEXTMONTHS", "NEXTQUARTERS", "NEXTYEARS"];
-		this.operator = this.options[0];
-		this.i18nKey = this._getI18nKeyForOperator(this.operator);
+		this.options = operators;
+		this._operator = this.options?.[0] || "NEXTDAYS";
+		this.i18nKey = this._getI18nKeyForOperator(this._operator);
 	}
 
 	_getI18nKeyForOperator(operator: string): I18nText {
@@ -72,13 +74,46 @@ class NextOptions implements IDynamicDateRangeOption {
 	}
 
 	format(value: DynamicDateRangeValue): string {
+		// for empty/default values
+		if (!value.values || value.values.length === 0) {
+			const firstOption = this.availableOptions.find(info => this.options?.includes(info.operator) || info.operator === this._operator);
+			if (firstOption) {
+				return formatLastNext({ operator: firstOption.operator, values: [1] }, { text: firstOption.text } as IDynamicDateRangeOption);
+			}
+		}
+
+		// for date values
+		if (value.values && value.values.length >= 2 && value.values[0] instanceof Date && value.values[1] instanceof Date) {
+			const [startDate, endDate] = value.values;
+			const dateFormat = DateFormat.getDateInstance({ strictParsing: true });
+
+			// Single day check for DAYS operations
+			const isSingleDay = value.operator.includes("DAYS") && this._isSingleDayRange(startDate, endDate);
+			const isSameDay = startDate.getFullYear() === endDate.getFullYear()
+				&& startDate.getMonth() === endDate.getMonth()
+				&& startDate.getDate() === endDate.getDate();
+
+			if (isSingleDay || isSameDay) {
+				return dateFormat.format(startDate);
+			}
+			return `${dateFormat.format(startDate)} - ${dateFormat.format(endDate)}`;
+		}
+
+		// for numeric values
 		const optionInfo = this.availableOptions.find(info => info.operator === value.operator);
 		if (optionInfo) {
 			const numberValue = this._getNumberFromValue(value);
-			const tempValue = { operator: value.operator, values: [numberValue] };
-			return formatLastNext(tempValue, { text: optionInfo.text } as IDynamicDateRangeOption);
+			return formatLastNext({ operator: value.operator, values: [numberValue] }, { text: optionInfo.text } as IDynamicDateRangeOption);
 		}
+
 		return "";
+	}
+
+	_isSingleDayRange(startDate: Date, endDate: Date): boolean {
+		const normalizedStart = UI5Date.getInstance(startDate.getTime());
+		const normalizedEnd = UI5Date.getInstance(endDate.getTime());
+		const diffInDays = Math.round((normalizedEnd.getTime() - normalizedStart.getTime()) / (1000 * 60 * 60 * 24));
+		return diffInDays + 1 === 1;
 	}
 
 	toDates(value: DynamicDateRangeValue): Array<Date> {
@@ -97,9 +132,9 @@ class NextOptions implements IDynamicDateRangeOption {
 	}
 
 	get text(): string {
-		if (this.options.length > 1) {
+		if (this.options?.length && this.options.length > 1) {
 			const units = this.availableOptions
-				.filter(info => this.options.includes(info.operator))
+				.filter(info => this.options?.includes(info.operator))
 				.map(info => info.unitText);
 			const unitsText = units.join(` / `);
 			return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_NEXT_COMBINED_TEXT, unitsText);
@@ -124,13 +159,21 @@ class NextOptions implements IDynamicDateRangeOption {
 			{ operator: "NEXTYEARS", i18nKey: DYNAMIC_DATE_RANGE_NEXT_YEARS_TEXT, unitI18nKey: DYNAMIC_DATE_RANGE_YEARS_UNIT_TEXT },
 		];
 
-		// Always include all Next options - this ensures validation works for grouped options
-		// and individual validation during fallback. The component handles the actual filtering.
 		return allOptions.map(info => ({
 			operator: info.operator,
 			unitText: DynamicDateRange.i18nBundle.getText(info.unitI18nKey),
 			text: DynamicDateRange.i18nBundle.getText(info.i18nKey),
 		}));
+	}
+
+	get operator(): string {
+		return this._operator;
+	}
+
+	set operator(value: string) {
+		if (this.options?.includes(value)) {
+			this._operator = value;
+		}
 	}
 
 	_getNumberFromValue(value: DynamicDateRangeValue): number {
@@ -143,8 +186,8 @@ class NextOptions implements IDynamicDateRangeOption {
 			const endDate = value.values[1];
 
 			if (value.operator.includes("DAYS")) {
-				const normalizedStart = new Date(startDate);
-				const normalizedEnd = new Date(endDate);
+				const normalizedStart = UI5Date.getInstance(startDate.getTime());
+				const normalizedEnd = UI5Date.getInstance(endDate.getTime());
 				normalizedStart.setUTCHours(0, 0, 0, 0);
 				normalizedEnd.setUTCHours(0, 0, 0, 0);
 
