@@ -76,7 +76,7 @@ describe('DynamicDateRange Component', () => {
     });
 
     // Check why it fails remotely
-    it.skip('selects the Date option and updates the current value', () => {
+    it('selects the Date option and updates the current value', () => {
         cy.get('[ui5-dynamic-date-range]')
             .as("ddr");
 

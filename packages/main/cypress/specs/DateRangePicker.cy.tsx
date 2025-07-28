@@ -655,7 +655,7 @@ describe("DateRangePicker general interaction", () => {
 			.and("be.visible");
 	});
 
-	it.skip("Select year range in YearPicker", () => {
+	it("Select year range in YearPicker", () => {
 		cy.wrap({ setLanguage })
 			.then(api => {
 				return api.setLanguage("en");

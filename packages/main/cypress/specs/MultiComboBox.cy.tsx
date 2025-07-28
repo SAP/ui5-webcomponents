@@ -1749,7 +1749,7 @@ describe("Keyboard interaction when pressing Ctrl + Alt + F8 for navigation", ()
 });
 
 describe("Event firing", () => {
-	it.skip("tests if open and close events are fired correctly", () => {
+	it("tests if open and close events are fired correctly", () => {
 		const onFocusIn = (e:Event) => {
 			(e.target as MultiComboBox).setAttribute("open", "true");
 		}
@@ -1945,7 +1945,7 @@ describe("Event firing", () => {
 			.should("have.length", 1);
 	});
 
-	it.skip("Should fire events on clear icon click", () => {
+	it("Should fire events on clear icon click", () => {
 		cy.mount(
 			<MultiComboBox noTypeahead={true} showClearIcon={true} onInput={cy.stub().as("inputEvent")} onChange={cy.stub().as("changeEvent")}>
 				<MultiComboBoxItem text="1"></MultiComboBoxItem>
