@@ -126,7 +126,7 @@
 
             const currentSelected = getSelectedItems(lists[0]);
             if (currentSelected.length > 1) {
-                window["sap-ui-webcomponents-bundle"].startMultipleDrag(currentSelected.length);
+                window["sap-ui-webcomponents-bundle"].startMultipleDrag(currentSelected.length, e);
             }
         });
 
