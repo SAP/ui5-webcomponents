@@ -1,3 +1,4 @@
+import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import ToolbarButton from "../../src/ToolbarButton.js";
 import Toolbar from "../../src/Toolbar.js";
 import Popover from "../../src/Popover.js";
@@ -6,7 +7,6 @@ import Label from "../../src/Label.js";
 import List from "../../src/List.js";
 import ListItem from "../../src/ListItemStandard.js";
 import Input from "../../src/Input.js";
-import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 
 describe("Rendering", () => {
 	it("tests arrow positioning", () => {
@@ -340,10 +340,10 @@ describe("Accessibility", () => {
 			<button data-sap-ui-fastnavgroup="true" id="test"> Test button</button>
 				<Popover opener="test">
 					<div data-sap-ui-fastnavgroup="true">
-						<Button id="first">First group focusable</Button>
+						<button id="first">First group focusable</button>
 					</div>
 					<div data-sap-ui-fastnavgroup="true">
-						<Button id="second">Second group focusable</Button>
+						<button id="second">Second group focusable</button>
 					</div>
 				</Popover>
 				<button data-sap-ui-fastnavgroup="true">Test button 2</button>
