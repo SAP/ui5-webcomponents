@@ -61,7 +61,7 @@ import { sanitizeHTML, URLListValidator } from "@ui5/webcomponents-base/dist/uti
 
 import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
-import { getThemeRoot, setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
+import { getThemeRoot, setThemeRoot, allowThemeRootUrl } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
 import { getTimezone, setTimezone } from "@ui5/webcomponents-base/dist/config/Timezone.js";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import getEffectiveIconCollection from "@ui5/webcomponents-base/dist/asset-registries/util/getIconCollectionByTheme.js";
@@ -79,6 +79,8 @@ import getElementSelection from "@ui5/webcomponents-base/dist/util/SelectionAssi
 import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 
 setRuntimeAlias("UI5 Web Components Playground");
+
+allowThemeRootUrl(true);
 
 // @ts-ignore
 window.sanitizeHTML = sanitizeHTML;

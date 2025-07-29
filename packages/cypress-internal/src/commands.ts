@@ -1,10 +1,12 @@
 import { mount } from '@ui5/cypress-ct-ui5-webc';
+// @ts-ignore
 import { renderFinished } from '@ui5/webcomponents-base/dist/Render.js';
 import "cypress-real-events";
 import '@cypress/code-coverage/support';
 import "./acc_report/support.js";
 import "./helpers.js";
 
+// @ts-ignore
 Cypress.Commands.add('waitRenderFinished', () => {
 	return cy.wrap(renderFinished(), { log: false });
 });

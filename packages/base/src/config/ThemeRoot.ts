@@ -4,6 +4,7 @@ import { getThemeRoot as getConfiguredThemeRoot } from "../InitialConfiguration.
 import { getTheme } from "./Theme.js";
 import { attachConfigurationReset } from "./ConfigurationReset.js";
 
+let urlAllowed = false;
 let currThemeRoot: string | undefined;
 
 attachConfigurationReset(() => {
@@ -70,8 +71,18 @@ const attachCustomThemeStylesToHead = async (theme: string): Promise<void> => {
 	await createLinkInHead(formatThemeLink(theme), { "sap-ui-webcomponents-theme": theme });
 };
 
+const allowThemeRootUrl = (enable: boolean) => {
+	urlAllowed = enable;
+};
+
+const themeRootUrlAllowed = () => {
+	return urlAllowed;
+};
+
 export {
 	getThemeRoot,
 	setThemeRoot,
 	attachCustomThemeStylesToHead,
+	allowThemeRootUrl,
+	themeRootUrlAllowed,
 };
