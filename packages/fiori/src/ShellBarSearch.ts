@@ -1,3 +1,4 @@
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import Search from "./Search.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -21,7 +22,16 @@ import {
 	tag: "ui5-shellbar-search",
 	template: ShellBarSearchTemplate,
 })
+
 class ShellBarSearch extends Search {
+	/**
+	 * Indicates whether the suggestions popover should be opened on focus.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	autoOpen = false;
+
 	_handleSearchIconPress() {
 		super._handleSearchIconPress();
 
@@ -64,6 +74,15 @@ class ShellBarSearch extends Search {
 		const domRef = this.shadowRoot;
 
 		return isPhone() ? domRef?.querySelector<HTMLInputElement>(`[ui5-responsive-popover] input`) : super.nativeInput;
+	}
+
+	_onfocusin() {
+		super._onfocusin();
+
+		if (this.autoOpen) {
+			this.open = true;
+			this.fireDecoratorEvent("open");
+		}
 	}
 
 	onBeforeRendering(): void {

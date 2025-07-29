@@ -1,8 +1,77 @@
 import ComboBox from "../../src/ComboBox.js";
 import ComboBoxItem from "../../src/ComboBoxItem.js";
 import ComboBoxItemGroup from "../../src/ComboBoxItemGroup.js";
+import ResponsivePopover from "../../src/ResponsivePopover.js";
 import Link from "../../src/Link.js";
 import Input from "../../src/Input.js";
+import Button from "../../src/Button.js";
+
+describe("General Interaction", () => {
+	it("Scrolls the selected item into view after opening the popover", () => {
+		cy.mount(
+			<>
+			<ComboBox>
+				<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+				<ComboBoxItem text="Germany"></ComboBoxItem>
+				<ComboBoxItem text="Austria"></ComboBoxItem>
+				<ComboBoxItem text="Australia"></ComboBoxItem>
+				<ComboBoxItem text="Mexico"></ComboBoxItem>
+				<ComboBoxItem text="Brazil"></ComboBoxItem>
+			</ComboBox>
+			<Button>Dummy Button</Button>
+			</>
+		);
+		cy.viewport(500,200);
+
+		cy.get("[ui5-combobox]")
+			.shadow()
+			.find("[ui5-icon]")
+			.as("dropdownIcon");
+
+		cy.get("@dropdownIcon")
+			.realClick();
+
+		cy.get("[ui5-combobox]")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("[ui5-combobox]")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.shadow()
+			.find(".ui5-popup-content")
+			.as("scrollContainer");
+
+		cy.get("@scrollContainer")
+			.scrollTo("bottom");
+
+		cy.get("[ui5-cb-item")
+			.eq(4)
+			.realClick();
+
+		cy.get("@dropdownIcon")
+			.realClick();
+
+		cy.get("@scrollContainer")
+			.scrollTo("top");
+
+		cy.get("[ui5-button]")
+			.realClick();
+
+		cy.get("@dropdownIcon")
+			.realClick();
+
+		cy.get("[ui5-combobox]")
+			.shadow()
+			.find<ResponsivePopover>("ui5-responsive-popover")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("[ui5-cb-item]")
+			.eq(4)
+			.should("be.visible");
+	})
+})
 
 describe("Security", () => {
 	it("tests setting malicious text to items", () => {
