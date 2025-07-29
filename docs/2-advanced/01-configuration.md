@@ -283,6 +283,15 @@ Example:
 </script>
 ```
 
+*Important:* You must explicitly allow specific origins for this configuration setting to work:
+
+```html
+<head>
+	<meta name="sap-allowedThemeOrigins" content="https://my-example-host.com/,https://my-example-host2.com/">
+```
+
+Failing to do so will result in a warning in the console and the theme root will not be set.
+
 ## Configuration Script
 <a name="script"></a>
 
