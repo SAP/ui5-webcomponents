@@ -65,7 +65,7 @@ declare global {
 	namespace Cypress {
 		interface Chainable {
 			mount: typeof mount;
-			waitRenderFinished: () => Chainable<void>;
+			waitRenderFinished: () => Chainable<any>;
 		}
 	}
 }
