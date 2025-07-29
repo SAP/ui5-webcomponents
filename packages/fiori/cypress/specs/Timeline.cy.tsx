@@ -282,7 +282,7 @@ describe("Timeline with growing mode", () => {
 
 		cy.realPress("ArrowDown");
 
-		cy.get("#secondItem")
+		cy.get("#firstItem")
 			.should("not.be.focused");
 
 		cy.get("#input")
