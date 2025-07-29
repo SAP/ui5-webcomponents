@@ -1057,7 +1057,7 @@ describe("Menu interaction", () => {
 
 		/* The test is valid, but currently it is not stable. It will be reviewed further and stabilized afterwards. */
 
-		it.skip("Menu items - navigation in endContent", () => {
+		it("Menu items - navigation in endContent", () => {
 			cy.mount(
 				<>
 					<Button id="btnOpen">Open Menu</Button>

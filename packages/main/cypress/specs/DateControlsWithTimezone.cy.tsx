@@ -32,7 +32,7 @@ describe("Date related components in different timezone", () => {
 			.should("have.attr", "value", value);
 	});
 
-	it.skip("The time is with the correct offset in time picker", () => {
+	it("The time is with the correct offset in time picker", () => {
 		cy.mount(<TimePicker id="timePickerNow" value="now" formatPattern="HH:mm:ss"/>);
 
 		const now = new Date();

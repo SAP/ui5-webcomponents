@@ -30,6 +30,11 @@ const toggleDialog = (dialog, isOpen) => {
 };
 
 dialogCloser.addEventListener("click", () => toggleDialog(dialog, false));
+myAiButton.accessibilityAttributes = {
+	root: {
+		hasPopup: "dialog"
+	}
+};
 
 myAiButton.addEventListener("click", () => {
 	if (myAiButton.state === "generating") {
@@ -89,6 +94,11 @@ const setBusyIndicator = (isActive) => {
 const resetAfterGeneration = (button) => {
 	setBusyIndicator(false);
 	button.state = "regenerate";
+	button.accessibilityAttributes = {
+		root: {
+			hasPopup: "false"
+		}
+	};
 };
 
 const stopTextGeneration = () => {

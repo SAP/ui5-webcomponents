@@ -135,6 +135,14 @@ class TableSelection extends UI5Element implements ITableFeature {
 		return this.mode !== TableSelectionMode.None;
 	}
 
+	getAriaDescriptionForTable(): string | undefined {
+		return undefined;
+	}
+
+	getAriaDescriptionForColumnHeader(): string | undefined {
+		return undefined;
+	}
+
 	getRowKey(row: TableRow): string {
 		return row.rowKey || "";
 	}

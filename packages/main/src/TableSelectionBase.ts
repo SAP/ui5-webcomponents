@@ -6,6 +6,10 @@ import type TableRowBase from "./TableRowBase.js";
 import type TableRow from "./TableRow.js";
 import type { ITableFeature } from "./Table.js";
 import TableSelectionBehavior from "./types/TableSelectionBehavior.js";
+import {
+	TABLE_MULTI_SELECTABLE,
+	TABLE_SINGLE_SELECTABLE,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * Fired when selection is changed by user interaction.
@@ -92,6 +96,25 @@ abstract class TableSelectionBase extends UI5Element implements ITableFeature {
 	 */
 	isRowSelectorRequired(): boolean {
 		return this.behavior === TableSelectionBehavior.RowSelector;
+	}
+
+	/**
+	 * Returns the ARIA description of the Table as an alternative to aria-multiselectable.
+	 */
+	getAriaDescriptionForTable(): string | undefined {
+		if (!this._table || !this._table.rows.length) {
+			return undefined;
+		}
+
+		const i18nBundle = (this._table.constructor as typeof Table).i18nBundle;
+		return i18nBundle.getText(this.isMultiSelectable() ? TABLE_MULTI_SELECTABLE : TABLE_SINGLE_SELECTABLE);
+	}
+
+	/**
+	 * Returns the ARIA description of the selection component displayed in the column header.
+	 */
+	getAriaDescriptionForColumnHeader(): string | undefined {
+		return undefined;
 	}
 
 	/**
