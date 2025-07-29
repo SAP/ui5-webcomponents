@@ -77,7 +77,8 @@ class TableHeaderRow extends TableRowBase {
 
 	onEnterDOM(): void {
 		super.onEnterDOM();
-		this.setAttribute("aria-roledescription", TableRowBase.i18nBundle.getText(TABLE_COLUMN_HEADER_ROW));
+		this.ariaRowIndex = "1";
+		this.ariaRoleDescription = TableRowBase.i18nBundle.getText(TABLE_COLUMN_HEADER_ROW);
 	}
 
 	onBeforeRendering() {
@@ -101,6 +102,10 @@ class TableHeaderRow extends TableRowBase {
 
 	get _shouldRenderClearAll() {
 		return (this._tableSelection as TableSelectionMulti).headerSelector === "ClearAll";
+	}
+
+	get _selectionCellAriaDescription() {
+		return this._tableSelection?.getAriaDescriptionForColumnHeader();
 	}
 
 	get _i18nSelection() {
