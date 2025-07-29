@@ -240,7 +240,7 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 			.should("have.value", "12");
 	});
 
-	it.skip("Input tooltip value change should change the slider's value", () => {
+	it("Input tooltip value change should change the slider's value", () => {
 		cy.mount(<Slider editableTooltip min={-20} max={20} step={2} value={12} showTooltip labelInterval={2} showTickmarks />);
 
 		cy.get("[ui5-slider]").as("slider");
@@ -341,7 +341,7 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		cy.get("@sliderTooltipInput").should("have.attr", "value-state", "Negative");
 	});
 
-	it.skip("F2 should switch the focus between the handle and the tooltip input", () => {
+	it("F2 should switch the focus between the handle and the tooltip input", () => {
 		cy.mount(<Slider editableTooltip min={-20} max={20} step={2} value={12} showTooltip labelInterval={2} showTickmarks />);
 
 		cy.get("[ui5-slider]").as("slider");
@@ -960,7 +960,7 @@ describe("Testing resize handling and RTL support", () => {
 			.invoke('css', 'padding', '100px')
 	})
 
-	it.skip("Testing RTL support", () => {
+	it("Testing RTL support", () => {
 		cy.mount(
 			<div dir="rtl">
 				<Slider min={0} max={10} value={0} />
