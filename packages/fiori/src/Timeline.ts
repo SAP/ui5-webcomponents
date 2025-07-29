@@ -7,8 +7,6 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
-	isTabNext,
-	isTabPrevious,
 	isSpace,
 	isEnter,
 	isUp,
