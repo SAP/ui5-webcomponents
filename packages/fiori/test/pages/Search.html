@@ -33,9 +33,9 @@
 		<ui5-search show-clear-icon>
 			<ui5-search-message-area slot="messageArea" description="You can try the following" text="Oh, there are no results"></ui5-search-message-area>
 
+			<ui5-search-item text="List Item Deletable" icon="history" deletable></ui5-search-item>
 			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
-			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
-			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
+			<ui5-search-item text="List Item Deletable" icon="history" deletable></ui5-search-item>
 			<ui5-search-item text="List Item" icon="history" ></ui5-search-item>
 			<ui5-search-item text="List Item" icon="globe" ></ui5-search-item>
 			<ui5-search-item text="List Item" icon="globe" ></ui5-search-item>
@@ -385,6 +385,7 @@
 				const searchItem = document.createElement('ui5-search-item');
 				searchItem.text = item.name;
 				searchItem.icon = 'search';
+                searchItem.deletable = true;
 				searchItem.addEventListener('ui5-delete', onDelete);
 				parent.appendChild(searchItem);
 			});

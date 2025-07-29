@@ -413,10 +413,10 @@ describe("Properties", () => {
 			.should("be.visible");
 	});
 
-	it("displays item's delete button on hover", () => {
+	it("displays item's delete button on hover if deletable is true", () => {
 		cy.mount(
 			<Search>
-				<SearchItem text="Item 1"/>
+				<SearchItem text="Item 1" deletable/>
 				<SearchItem text="Item 2"/>
 			</Search>
 		);
@@ -427,8 +427,18 @@ describe("Properties", () => {
 			.realClick();
 
 		cy.realPress("I");
+       
+        cy.get("[ui5-search-item]")
+			.eq(0)
+			.realHover();
 
 		cy.get("[ui5-search-item]")
+			.eq(0)
+			.shadow()
+			.find(".ui5-search-item-selected-delete")
+			.should("be.visible");
+
+        cy.get("[ui5-search-item]")
 			.eq(1)
 			.realHover();
 
@@ -436,7 +446,7 @@ describe("Properties", () => {
 			.eq(1)
 			.shadow()
 			.find(".ui5-search-item-selected-delete")
-			.should("be.visible");
+			.should("not.exist");
 	});
 });
 
@@ -834,7 +844,7 @@ describe("Events", () => {
 		}
 		cy.mount(
 			<Search>
-				<SearchItem text="Item 1" icon={history} onDelete={onDelete}/>
+				<SearchItem text="Item 1" icon={history} deletable onDelete={onDelete}/>
 			</Search>
 		);
 

@@ -6,6 +6,7 @@ import calendar from "@ui5/webcomponents-icons/dist/calendar.js";
 import messageInformation from "@ui5/webcomponents-icons/dist/message-information.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
+import UI5Element from "@ui5/webcomponents-base";
 
 function Sample() {
 	return <Timeline layout="Vertical" accessibleName="vertical" id="timelineAccName">
@@ -86,7 +87,7 @@ describe("Timeline general interaction", () => {
 		cy.mount(<Sample />);
 		cy.get("[ui5-timeline]")
 			.shadow()
-			.find("ul")
+			.find(".ui5-timeline-list")
 			.should("have.attr", "aria-label", "Timeline vertical");
 	});
 
@@ -311,3 +312,58 @@ describe("Accessibility", () => {
 		});
 	});
 });
+
+describe("Timeline - getFocusDomRef", () => {
+	it("should return undefined when the Timeline is empty", () => {
+		cy.mount(<Timeline></Timeline>);
+
+		cy.get<Timeline>("[ui5-timeline]")
+			.then(($el) => {
+				expect($el[0].getFocusDomRef()).to.be.undefined;
+			});
+	});
+
+	it("should return first item if no item was focused before", () => {
+		cy.mount(
+			<Timeline growing="Button">
+				<TimelineItem id="firstItem" titleText="first item" subtitleText="20.02.2017 11:30" ></TimelineItem>
+				<TimelineItem titleText="coming up" subtitleText="20.02.2017 11:30"></TimelineItem>
+				<TimelineItem titleText="coming up" subtitleText="20.02.2017 11:30" ></TimelineItem>
+			</Timeline>
+		);
+
+		cy.get<UI5Element>("[ui5-timeline], #firstItem")
+			.then(($el) => {
+				const timeline = $el[0],
+					firstItem = $el[1];
+    				expect(timeline.getFocusDomRef()).to.equal(firstItem.getFocusDomRef());
+			});
+	});
+
+	it("should return last focused item in the Timeline", () => {
+		cy.mount(
+			<Timeline growing="Button">
+				<TimelineItem titleText="first item" subtitleText="20.02.2017 11:30" ></TimelineItem>
+				<TimelineItem titleText="coming up" subtitleText="20.02.2017 11:30"></TimelineItem>
+				<TimelineItem id="lastItem" titleText="coming up" subtitleText="20.02.2017 11:30" ></TimelineItem>
+			</Timeline>
+		);
+
+		cy.get("[ui5-timeline]")
+			.as("timeline");
+
+		cy.get("[ui5-timeline]")
+			.find("#lastItem")
+			.realClick();
+
+		cy.get<UI5Element>("[ui5-timeline], #lastItem")
+			.then(($el) => {
+				const timeline = $el[0],
+					lastItem = $el[1];
+    				expect(timeline.getFocusDomRef()).to.equal(lastItem.getFocusDomRef());
+			});
+	});
+});
+
+
+
