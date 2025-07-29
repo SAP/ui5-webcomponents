@@ -469,7 +469,7 @@ describe("Selection-change event", () => {
 			</ComboBox>
 		);
 
-		cy.get("ui5-combobox")
+		cy.get("[ui5-combobox]")
 			.as("combo")
 			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
 
@@ -499,7 +499,7 @@ describe("Selection-change event", () => {
 			</ComboBox>
 		);
 
-		cy.get("ui5-combobox")
+		cy.get("[ui5-combobox]")
 			.as("combo")
 			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
 
@@ -531,7 +531,7 @@ describe("Selection-change event", () => {
 			</ComboBox>
 		);
 
-		cy.get("ui5-combobox")
+		cy.get("[ui5-combobox]")
 			.as("combo")
 			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
 
@@ -565,7 +565,7 @@ describe("Selection-change event", () => {
 			</ComboBox>
 		);
 
-		cy.get("ui5-combobox")
+		cy.get("[ui5-combobox]")
 			.as("combo")
 			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
 
@@ -596,7 +596,7 @@ describe("Selection-change event", () => {
 			</ComboBox>
 		);
 
-		cy.get("ui5-combobox")
+		cy.get("[ui5-combobox]")
 			.as("combo")
 			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
 
@@ -622,7 +622,7 @@ describe("Selection-change event", () => {
 			</ComboBox>
 		);
 
-		cy.get("ui5-combobox")
+		cy.get("[ui5-combobox]")
 			.as("combo")
 			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
 
@@ -653,7 +653,7 @@ describe("Selection-change event", () => {
 			</ComboBox>
 		);
 
-		cy.get("ui5-combobox")
+		cy.get("[ui5-combobox]")
 			.as("combo")
 			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
 
@@ -682,7 +682,7 @@ describe("Selection-change event", () => {
 			</ComboBox>
 		);
 
-		cy.get("ui5-combobox")
+		cy.get("[ui5-combobox]")
 			.as("combo")
 			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
 
@@ -711,7 +711,7 @@ describe("Selection-change event", () => {
 			</ComboBox>
 		);
 
-		cy.get("ui5-combobox")
+		cy.get("[ui5-combobox]")
 			.as("combo");
 
 		cy.get("ui5-combobox")
