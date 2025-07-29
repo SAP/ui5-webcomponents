@@ -322,24 +322,6 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		}
 	}
 
-	get templateAttributes() {
-		return {
-			role: this.ariaRole,
-			onKeyDown: this._onkeydown.bind(this),
-			onKeyUp: this._onkeyup.bind(this),
-			onClick: this._onclick.bind(this),
-			onFocusIn: this._onfocusin.bind(this),
-			tabIndex: this.effectiveTabIndex,
-			ariaCurrent: this._ariaCurrent,
-			ariaSelected: this._ariaSelected,
-			title: this._tooltip,
-			ariaDisabled: this.effectiveDisabled,
-			href: this._href,
-			target: this._target,
-			ariaHasPopup: this._ariaHasPopup,
-		};
-	}
-
 	get isSideNavigationSelectableItemBase() {
 		return true;
 	}
