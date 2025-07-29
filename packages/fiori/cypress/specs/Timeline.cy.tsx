@@ -266,11 +266,11 @@ describe("Timeline with growing mode", () => {
 	it("Arrows navigation should work only on focused item", () => {
 		cy.mount(
 			<Timeline growing="Button">
-				<TimelineItem id="firstItem" titleText="first item"></TimelineItem>
+				<TimelineItem titleText="first item"></TimelineItem>
 				<TimelineItem titleText="second item">
 					<Input id="input" />
 				</TimelineItem>
-				<TimelineItem id="lastItem" titleText="last item"></TimelineItem>
+				<TimelineItem titleText="last item"></TimelineItem>
 			</Timeline>
 		);
 
@@ -282,7 +282,9 @@ describe("Timeline with growing mode", () => {
 
 		cy.realPress("ArrowDown");
 
-		cy.get("#firstItem")
+		cy.get("@timeline")
+			.find("ui5-timeline-item")
+			.last()
 			.should("not.be.focused");
 
 		cy.get("#input")
@@ -290,7 +292,9 @@ describe("Timeline with growing mode", () => {
 
 		cy.realPress("ArrowUp");
 
-		cy.get("#lastItem")
+		cy.get("@timeline")
+			.find("ui5-timeline-item")
+			.first()
 			.should("not.be.focused");
 	});
 });
