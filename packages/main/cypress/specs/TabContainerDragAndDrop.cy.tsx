@@ -385,7 +385,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					.should("have.id", "tabTwo");
 			});
 
-			it.skip("Moving strip item beyond the end using 'Arrow Right'", () => {
+			it("Moving strip item beyond the end using 'Arrow Right'", () => {
 				cy.get("#tabContainer")
 					.shadow()
 					.find(".ui5-tab-strip-item")
@@ -406,7 +406,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					});
 			});
 
-			it.skip("Moving strip item beyond the beginning with 'Arrow Left'", () => {
+			it("Moving strip item beyond the beginning with 'Arrow Left'", () => {
 				cy.get("#tabContainer")
 					.shadow()
 					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow]")
@@ -435,7 +435,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 					});
 			});
 
-			it.skip("Moving strip item with 'End'", () => {
+			it("Moving strip item with 'End'", () => {
 				cy.get("#tabContainer")
 					.shadow()
 					.find(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])")
@@ -686,7 +686,7 @@ describe("TabContainer Drag and Drop when There are Fixed Tabs", () => {
 			});
 	});
 
-	it.skip("Moving strip item beyond fixed items with arrow keys", () => {
+	it("Moving strip item beyond fixed items with arrow keys", () => {
 		cy.get<Tab>("#tabNine")
 			.then(($el) => {
 				return $el[0].getDomRefInStrip();
@@ -703,7 +703,7 @@ describe("TabContainer Drag and Drop when There are Fixed Tabs", () => {
 			.should("have.id", "fixedItemsSeparator");
 	});
 
-	it.skip("Moving strip item beyond fixed items with 'Home;", () => {
+	it("Moving strip item beyond fixed items with 'Home;", () => {
 		cy.get<Tab>("#tabTen")
 			.then(($el) => {
 				return $el[0].getDomRefInStrip();

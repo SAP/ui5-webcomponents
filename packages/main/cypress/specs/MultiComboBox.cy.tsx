@@ -604,7 +604,7 @@ describe("General", () => {
 			}));
 	});
 
-	it.skip("Select All functionality + N-more integration", () => {
+	it("Select All functionality + N-more integration", () => {
 		cy.mount(
 			<><MultiComboBox style="width: 100px" noValidation={true} showSelectAll={true}>
 				<MultiComboBoxItem selected={true} text="Very Very Very Very long Item 1"></MultiComboBoxItem>
@@ -843,7 +843,7 @@ describe("General", () => {
 });
 
 describe("MultiComboBox Truncated Tokens", () => {
-	it.skip("Should truncate token when single token is in the multicombobox and open popover on click", () => {
+	it("Should truncate token when single token is in the multicombobox and open popover on click", () => {
 		cy.mount(
 			<MultiComboBox>
 				<MultiComboBoxItem selected={true} text="This is a token with ridicilously long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long text"></MultiComboBoxItem>
@@ -1536,7 +1536,7 @@ describe("Validation & Value State", () => {
 			.should("not.exist")
 	});
 
-	it.skip("Should remove value state header when value state is reset", () => {
+	it("Should remove value state header when value state is reset", () => {
 		const onSelectionChange = (e:Event) => {
 			(e.target as MultiComboBox).valueState = "None";
 		}
@@ -1852,7 +1852,7 @@ describe("Event firing", () => {
 			.should("have.length", 1);
 	});
 
-	it.skip("Should prevent selection-change when deleting a token", () => {
+	it("Should prevent selection-change when deleting a token", () => {
 		const onSelectionChange = (e:Event) => {
 			e.preventDefault();
 		}
@@ -1945,7 +1945,7 @@ describe("Event firing", () => {
 			.should("have.length", 1);
 	});
 
-	it.skip("Should fire events on clear icon click", () => {
+	it("Should fire events on clear icon click", () => {
 		cy.mount(
 			<MultiComboBox noTypeahead={true} showClearIcon={true} onInput={cy.stub().as("inputEvent")} onChange={cy.stub().as("changeEvent")}>
 				<MultiComboBoxItem text="1"></MultiComboBoxItem>
@@ -1989,7 +1989,7 @@ describe("Event firing", () => {
 			.should("not.have.been.called");
 	});
 
-	it.skip("Should not fire submit, when an item is tokenized", () => {
+	it("Should not fire submit, when an item is tokenized", () => {
 		const onSubmit = cy.spy((e:Event) => e.preventDefault()).as("submitEvent");
 
 		cy.mount(
@@ -2038,7 +2038,7 @@ describe("Event firing", () => {
 });
 
 describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
-	it.skip("should focus last token on arrow right in RTL mode when input is at start", () => {
+	it("should focus last token on arrow right in RTL mode when input is at start", () => {
 		cy.mount(
 			<div dir="rtl">
 				<MultiComboBox noValidation={true}>
@@ -2072,7 +2072,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.focused().should("have.class", "ui5-token--wrapper");
 	});
 
-	it.skip("should focus last token on arrow left in LTR mode when input is at start", () => {
+	it("should focus last token on arrow left in LTR mode when input is at start", () => {
 		cy.mount(
 			<div dir="ltr">
 				<MultiComboBox noValidation={true}>
@@ -2109,7 +2109,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.focused().should("have.class", "ui5-token--wrapper");
 	});
 
-	it.skip("should not focus token when cursor is not at start of input in RTL mode", () => {
+	it("should not focus token when cursor is not at start of input in RTL mode", () => {
 		cy.mount(
 			<div dir="rtl">
 				<MultiComboBox noValidation={true} value="test text">
@@ -2140,7 +2140,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.focused().should("not.have.class", "ui5-token--wrapper");
 	});
 
-	it.skip("should navigate from last token back to input with arrow left in RTL mode", () => {
+	it("should navigate from last token back to input with arrow left in RTL mode", () => {
 		cy.mount(
 			<div dir="rtl">
 				<MultiComboBox noValidation={true}>
@@ -2174,7 +2174,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.focused().should("not.have.class", "ui5-token--wrapper");
 	});
 
-	it.skip("should navigate from last token back to input with arrow right in LTR mode", () => {
+	it("should navigate from last token back to input with arrow right in LTR mode", () => {
 		cy.mount(
 			<div dir="ltr">
 				<MultiComboBox noValidation={true}>
@@ -2204,7 +2204,7 @@ describe("MultiComboBox RTL/LTR Arrow Navigation", () => {
 		cy.focused().should("not.have.class", "ui5-token--wrapper");
 	});
 
-	it.skip("should handle empty input case in RTL mode", () => {
+	it("should handle empty input case in RTL mode", () => {
 		cy.mount(
 			<div dir="rtl">
 				<MultiComboBox noValidation={true}>
@@ -2256,7 +2256,7 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-label", label);
 	});
 
-	it.skip("aria-describedby value according to the tokens count and value state", () => {
+	it("aria-describedby value according to the tokens count and value state", () => {
 		cy.mount(
 			<MultiComboBox valueState="Critical" style="width: 100%">
 				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
@@ -2281,7 +2281,7 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-describedby", `${tokensCountITextId} ${valuestateITextId}`);
 	});
 
-	it.skip("aria-describedby value according to the tokens count", () => {
+	it("aria-describedby value according to the tokens count", () => {
 		cy.mount(
 			<MultiComboBox style="width: 100%">
 				<MultiComboBoxItem selected={true} text="Item 1"></MultiComboBoxItem>
