@@ -3,6 +3,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -289,10 +290,19 @@ class ViewSettingsDialog extends UI5Element {
 	@slot()
 	groupItems!: Array<GroupItem>;
 
+	@query("[ui5-dialog]")
 	_dialog?: Dialog;
+
+	@query("[ui5-list][sort-order]")
 	_sortOrder?: List;
+
+	@query("[ui5-list][sort-by]")
 	_sortBy?: List;
+
+	@query("[ui5-list][group-order]")
 	_groupOrder?: List;
+
+	@query("[ui5-list][group-by]")
 	_groupBy?: List;
 
 	@i18n("@ui5/webcomponents-fiori")
@@ -451,10 +461,10 @@ class ViewSettingsDialog extends UI5Element {
 	 * Determines disabled state of the `Reset` button.
 	 */
 	get _disableResetButton() {
-		return this._dialog && this._setttingsAreInitial && this._filteresAreInitial;
+		return this._dialog && this._settingsAreInitial && this._filteresAreInitial;
 	}
 
-	get _setttingsAreInitial() {
+	get _settingsAreInitial() {
 		let settingsAreInitial = true;
 		["sortBy", "sortOrder", "groupBy", "groupOrder"].forEach(settingsList => {
 			this._currentSettings[settingsList as keyof VSDInternalSettings].forEach((item, index) => {
@@ -570,43 +580,15 @@ class ViewSettingsDialog extends UI5Element {
 		return this.isModeFilter && this._filterStepTwo;
 	}
 
-	get _sortOrderListDomRef() {
-		return this.shadowRoot!.querySelector<List>("[ui5-list][sort-order]")!;
-	}
-
-	get _sortByList() {
-		return this.shadowRoot!.querySelector<List>("[ui5-list][sort-by]")!;
-	}
-
-	get _groupOrderListDomRef() {
-		return this.shadowRoot!.querySelector<List>("[ui5-list][group-order]")!;
-	}
-
-	get _groupByList() {
-		return this.shadowRoot!.querySelector<List>("[ui5-list][group-by]")!;
-	}
-
-	get _dialogDomRef() {
-		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
-	}
-
 	/**
 	 * Shows the dialog.
 	 */
 	beforeDialogOpen(): void {
-		if (!this._dialog) {
-			this._sortOrder = this._sortOrderListDomRef;
-			this._sortBy = this._sortByList;
-
-			this._groupOrder = this._groupOrderListDomRef;
-			this._groupBy = this._groupByList;
-
-			// Sorting
+		// first time opening - initialize settings
+		if (this._currentSettings.sortOrder.length === 0) {
 			this._initialSettings = this._settings;
 			this._currentSettings = this._settings;
 			this._confirmedSettings = this._settings;
-
-			this._dialog = this._dialogDomRef;
 		} else {
 			this._restoreSettings(this._confirmedSettings);
 		}
