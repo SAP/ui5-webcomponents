@@ -23,5 +23,8 @@
     "@cypress/code-coverage": "^3.13.11",
     "axe-core": "^4.10.2",
     "cypress-axe": "^1.6.0"
+  },
+  "peerDependencies": {
+    "@ui5/webcomponents-base": "2.13.0-rc.2"
   }
 }

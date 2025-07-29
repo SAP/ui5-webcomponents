@@ -88,11 +88,11 @@ describe("Toggle Button keyboard interaction tests", () => {
 		testKeyActionOnFocusedButton("Enter");
 	});
 
-	it.skip("should toggle button to pressed state on click with ctrl key pressed", () => {
+	it("should toggle button to pressed state on click with ctrl key pressed", () => {
 		testClick(false, "ctrlKey");
 	});
 
-	it.skip("should not toggle button to pressed state on click with ctrl key pressed when click is prevented", () => {
+	it("should not toggle button to pressed state on click with ctrl key pressed when click is prevented", () => {
 		testClick(true, "ctrlKey");
 	});
 
