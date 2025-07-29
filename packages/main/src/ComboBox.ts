@@ -845,7 +845,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 		// autocomplete
-		this._handleTypeAhead(this.value, this.open ? this._userTypedValue : "",);
+		this._handleTypeAhead(this.value, this.open ? this._userTypedValue : "");
 
 		this.fireDecoratorEvent("input");
 	}
