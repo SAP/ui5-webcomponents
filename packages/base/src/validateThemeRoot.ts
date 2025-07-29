@@ -10,7 +10,12 @@ const getMetaTagValue = (metaTagName: string) => {
 const validateThemeOrigin = (origin: string) => {
 	const allowedOrigins = getMetaTagValue("sap-allowedThemeOrigins");
 
-	return allowedOrigins && allowedOrigins.split(",").some(allowedOrigin => {
+	// If no allowed origins are specified, block.
+	if (!allowedOrigins) {
+		return false;
+	}
+
+	return allowedOrigins.split(",").some(allowedOrigin => {
 		return allowedOrigin === "*" || origin === allowedOrigin.trim();
 	});
 };
