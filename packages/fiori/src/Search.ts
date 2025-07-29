@@ -128,7 +128,11 @@ class Search extends SearchField {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({
+		type: HTMLElement,
+		"default": true,
+		invalidateOnChildChange: true,
+	})
 	items!: Array<SearchItem | SearchItemGroup>;
 
 	/**

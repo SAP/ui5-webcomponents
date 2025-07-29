@@ -5,14 +5,22 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import SearchItemShowMoreTemplate from "./SearchItemShowMoreTemplate.js";
 import SearchItemCss from "./generated/themes/SearchItem.css.js";
 import SearchItemShowMoreCss from "./generated/themes/SearchItemShowMore.css.js";
-import SearchItem from "./SearchItem.js";
 
 /**
  * @class
- * A suggestion item that acts as a "show more" button.
+ * ### Overview
+ *
+ *A `ui5-search-item-show-more` is a special type of ui5-list-item that acts as a button to progressively reveal additional (overflow) items within a group.
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents-fiori/dist/SearchItemShowMore.js";`
+ *
  * @constructor
- * @extends SearchItem
+ * @extends ListItemBase
  * @public
+ * @since 2.13.0
+ * @experimental
  */
 @customElement({
 	tag: "ui5-search-item-show-more",
@@ -25,7 +33,7 @@ import SearchItem from "./SearchItem.js";
 	],
 })
 
-class SearchItemShowMore extends SearchItem {
+class SearchItemShowMore extends ListItemBase {
 	/**
 	 * Defines the heading text of the search item.
 	 * @public
