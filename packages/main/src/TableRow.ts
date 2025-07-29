@@ -3,7 +3,6 @@ import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import { toggleAttribute } from "./TableUtils.js";
-import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import TableRowTemplate from "./TableRowTemplate.js";
 import TableRowBase from "./TableRowBase.js";
 import TableRowCss from "./generated/themes/TableRow.css.js";
@@ -115,29 +114,6 @@ class TableRow extends TableRowBase {
 	@property({ type: Boolean })
 	movable = false;
 
-	_dragStartHandler: (e: DragEvent) => void;
-	_dragEndHandler: (e: DragEvent) => void;
-
-	constructor() {
-		super();
-		this._dragStartHandler = this._ondragstart.bind(this);
-		this._dragEndHandler = this._ondragend.bind(this);
-	}
-
-	onEnterDOM() {
-		super.onEnterDOM();
-
-		this.addEventListener("dragstart", this._dragStartHandler);
-		this.addEventListener("dragend", this._dragEndHandler);
-	}
-
-	onExitDOM() {
-		super.onExitDOM();
-
-		this.removeEventListener("dragstart", this._dragStartHandler);
-		this.removeEventListener("dragend", this._dragEndHandler);
-	}
-
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		toggleAttribute(this, "aria-current", this._renderNavigated && this.navigated, "true");
@@ -150,14 +126,6 @@ class TableRow extends TableRowBase {
 		this.setAttribute("tabindex", "-1");
 		HTMLElement.prototype.focus.call(this, focusOptions);
 		return Promise.resolve();
-	}
-
-	_ondragstart() {
-		DragRegistry.setDraggedElement(this);
-	}
-
-	_ondragend() {
-		DragRegistry.clearDraggedElement();
 	}
 
 	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
