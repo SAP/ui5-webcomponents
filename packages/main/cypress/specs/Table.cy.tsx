@@ -445,8 +445,9 @@ describe("Table - Horizontal alignment of cells", () => {
 			.should("have.css", "justify-content", alignment)
 			.and($el => {
 				const style = $el.attr("style");
+				const headerCellId = $el.attr("id");
 				const variable = style?.match(/justify-content: ([^;]+)/)?.[1] ?? "";
-				expect(variable).to.equal(`var(--horizontal-align-default-${index})`);
+				expect(variable).to.equal(`var(--horizontal-align-${headerCellId})`);
 			});
 
 		cy.get("ui5-table-row")
