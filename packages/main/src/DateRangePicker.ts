@@ -246,7 +246,9 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * @param value A value to be tested against the current date format
 	 */
 	isValid(value: string): boolean {
-		const parts = this._splitValueByDelimiter(value).filter(str => str !== "");
+		let parts = this._splitValueByDelimiter(value).filter(str => str !== "");
+		parts = parts.filter(str => str !== " "); // remove empty strings
+
 		return parts.length <= 2 && parts.every(dateString => super.isValid(dateString)); // must be at most 2 dates and each must be valid
 	}
 
@@ -256,7 +258,9 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * @param value A value to be tested against the current date format
 	 */
 	isValidValue(value: string): boolean {
-		const parts = this._splitValueByDelimiter(value).filter(str => str !== "");
+		let parts = this._splitValueByDelimiter(value).filter(str => str !== "");
+		parts = parts.filter(str => str !== " "); // remove empty strings
+
 		return parts.length <= 2 && parts.every(dateString => super.isValidValue(dateString)); // must be at most 2 dates and each must be valid
 	}
 
@@ -266,7 +270,9 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * @param value A value to be tested against the current date format
 	 */
 	isValidDisplayValue(value: string): boolean {
-		const parts = this._splitValueByDelimiter(value).filter(str => str !== "");
+		let parts = this._splitValueByDelimiter(value).filter(str => str !== "");
+		parts = parts.filter(str => str !== " "); // remove empty strings
+
 		return parts.length <= 2 && parts.every(dateString => super.isValidDisplayValue(dateString)); // must be at most 2 dates and each must be valid
 	}
 
@@ -276,7 +282,10 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * @param value A value to be checked
 	 */
 	isInValidRange(value: string): boolean {
-		return this._splitValueByDelimiter(value).every(dateString => super.isInValidRange(dateString));
+		let parts = this._splitValueByDelimiter(value).filter(str => str !== "");
+		parts = parts.filter(str => str !== " "); // remove empty strings
+
+		return parts.length <= 2 && parts.every(dateString => super.isInValidRange(dateString));
 	}
 
 	/**
@@ -445,7 +454,8 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 			return undefined;
 		}
 
-		const dateStrings = this._splitValueByDelimiter(value);
+		let dateStrings = this._splitValueByDelimiter(value);
+		dateStrings = dateStrings.filter(str => str !== " "); // remove empty strings
 		if (dateStrings[1]) {
 			const parsedDate = this.getValueFormat().parse(dateStrings[1], true) as Date;
 
