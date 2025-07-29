@@ -354,15 +354,16 @@ class Timeline extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		const target = e.target as ITimelineItem;
+		const target = e.target as ITimelineItem,
+			isTagetTimeLineItem = target?.getFocusDomRef() === this.getFocusDomRef();
 
-		if (isDown(e) || isRight(e)) {
+		if (isTagetTimeLineItem && (isDown(e) || isRight(e))) {
 			this._handleDown();
 			e.preventDefault();
 			return;
 		}
 
-		if (isUp(e) || isLeft(e)) {
+		if (isTagetTimeLineItem && (isUp(e) || isLeft(e))) {
 			this._handleUp(e);
 			e.preventDefault();
 			return;
