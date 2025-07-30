@@ -509,7 +509,6 @@
 		});
 
 		document.getElementById("selection-change-cb").addEventListener("ui5-selection-change", function (event) {
-		debugger;
 			document.getElementById("selection-change-placeholder").innerHTML = event.detail.item?.text || "";
 			document.getElementById("selection-change-count").innerHTML = parseInt(document.getElementById("selection-change-count").innerHTML) + 1;
 		});
