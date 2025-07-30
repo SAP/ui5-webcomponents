@@ -1,4 +1,5 @@
 import List from "../../src/List.js";
+import ListItemGroup from "../../src/ListItemGroup.js";
 import ListItemStandard from "../../src/ListItemStandard.js";
 
 describe("List Mobile Tests", () => {
@@ -12,6 +13,9 @@ describe("List Mobile Tests", () => {
         cy.mount(
             <List>
                 <ListItemStandard id="wrapping-item" wrappingType="Normal" text={longText}></ListItemStandard>
+                <ListItemGroup id="lig" wrapping-type="Normal" header-text={longText}>
+                    <ListItemStandard>1. Bulgaria</ListItemStandard>
+                </ListItemGroup>
             </List>
         );
 
@@ -20,11 +24,25 @@ describe("List Mobile Tests", () => {
             .invoke('prop', 'mediaRange')
             .should('eq', 'S');
 
+        cy.get("#lig")
+            .shadow()
+            .find("ui5-li-group-header")
+            .invoke('prop', 'mediaRange')
+            .should('eq', 'S');
+
         // Check that ExpandableText is created with maxCharacters prop of 100
         cy.get("#wrapping-item")
             .shadow()
             .find("ui5-expandable-text")
             .first()
+            .invoke('prop', 'maxCharacters')
+            .should('eq', 100);
+
+        cy.get("#lig")
+            .shadow()
+            .find("ui5-li-group-header")
+            .shadow()
+            .find("ui5-expandable-text")
             .invoke('prop', 'maxCharacters')
             .should('eq', 100);
     });
