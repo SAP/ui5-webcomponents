@@ -60,7 +60,7 @@ export default function TableRowTemplate(this: TableRow) {
 			}
 
 			{ this._renderNavigated &&
-				<TableCell id="navigated-cell" data-excluded-from-navigation={true}>
+				<TableCell id="navigated-cell" data-excluded-from-navigation aria-hidden={true}>
 					<div id="navigated"></div>
 				</TableCell>
 			}

@@ -4,7 +4,7 @@
   "description": "Common testing configuration used internally inside the monorepo",
   "private": true,
   "scripts": {
-    "build": "tsc && node ./src/copy.js",
+    "build": "tsc -b && node ./src/copy.js",
     "generate": "node ./src/copy.js",
     "clean": "rimraf dist"
   },
@@ -23,5 +23,8 @@
     "@cypress/code-coverage": "^3.13.11",
     "axe-core": "^4.10.2",
     "cypress-axe": "^1.6.0"
+  },
+  "peerDependencies": {
+    "@ui5/webcomponents-base": "2.13.0-rc.2"
   }
 }
