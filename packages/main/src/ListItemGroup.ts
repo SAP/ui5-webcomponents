@@ -140,14 +140,6 @@ class ListItemGroup extends UI5Element {
 	focused = false;
 
 	/**
-	 * Defines the current media query size.
-	 * @default "S"
-	 * @private
-	 */
-	@property()
-	mediaRange = "S";
-
-	/**
 	* Defines the header of the component.
 	*
 	* **Note:** Using this slot, the default header text of group and the value of `headerText` property will be overwritten.
