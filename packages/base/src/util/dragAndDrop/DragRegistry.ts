@@ -9,7 +9,6 @@ import {
 
 const MIN_MULTI_DRAG_COUNT = 2;
 
-let customDragElementPromise: Promise<HTMLElement> | null = null;
 let draggedElement: HTMLElement | null = null;
 
 const setDraggedElement = (element: HTMLElement | null) => {
@@ -18,7 +17,6 @@ const setDraggedElement = (element: HTMLElement | null) => {
 
 const clearDraggedElement = () => {
 	draggedElement = null;
-	customDragElementPromise = null;
 };
 
 const getDraggedElement = () => {
@@ -40,23 +38,6 @@ const createDefaultMultiDragElement = async (count: number): Promise<HTMLElement
 	return dragElement;
 };
 
-const handleMultipleDrag = async (e: DragEvent) => {
-	if (!customDragElementPromise || !e.dataTransfer) {
-		return;
-	}
-
-	const dragElement = await customDragElementPromise;
-	// Add to document body temporarily
-	document.body.appendChild(dragElement);
-
-	e.dataTransfer.setDragImage(dragElement, 0, 0);
-
-	// Clean up the temporary element after the drag operation starts
-	requestAnimationFrame(() => {
-		dragElement.remove();
-	});
-};
-
 /**
  * Starts a multiple drag operation by creating a drag ghost element.
  * The drag ghost will be displayed when dragging multiple items.
@@ -65,14 +46,27 @@ const handleMultipleDrag = async (e: DragEvent) => {
  * @param {DragEvent} e - The drag event that triggered the operation.
  * @public
  */
-const startMultipleDrag = (count: number, e: DragEvent): void => {
+const startMultipleDrag = async (count: number, e: DragEvent) => {
 	if (count < MIN_MULTI_DRAG_COUNT) {
 		console.warn(`Cannot start multiple drag with count ${count}. Minimum is ${MIN_MULTI_DRAG_COUNT}.`); // eslint-disable-line
 		return;
 	}
 
-	customDragElementPromise = createDefaultMultiDragElement(count);
-	handleMultipleDrag(e);
+	if (!e.dataTransfer) {
+		return;
+	}
+
+	const customDragElement = await createDefaultMultiDragElement(count);
+
+	// Add to document body temporarily
+	document.body.appendChild(customDragElement);
+
+	e.dataTransfer.setDragImage(customDragElement, 0, 0);
+
+	// Clean up the temporary element after the drag operation starts
+	requestAnimationFrame(() => {
+		customDragElement.remove();
+	});
 };
 
 type DragAndDropSettings = {
