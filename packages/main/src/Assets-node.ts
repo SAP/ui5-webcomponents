@@ -11,6 +11,7 @@
  */
 
 // common assets
+import "@ui5/webcomponents-base/dist/Assets-node.js"; // Base i18n
 import "@ui5/webcomponents-localization/dist/Assets-node.js"; // CLDR
 import "@ui5/webcomponents-theming/dist/Assets-node.js"; // Theming
 import "@ui5/webcomponents-icons/dist/Assets-node.js"; // Icons texts

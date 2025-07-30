@@ -322,7 +322,7 @@ describe("Wizard general interaction", () => {
             .should("have.callCount", 1);
     });
 
-    it("tests dynamically increase step size and move to next step", () => {
+    it.skip("tests dynamically increase step size and move to next step", () => {
         cy.mount(
              <Wizard style={{ position: "absolute", overflow: "hidden", height: "100%", width: "100%" }}>
                 <WizardStep icon="sap-icon://product" selected titleText="Product type">

@@ -283,9 +283,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	@property({ type: Boolean, noAttribute: true })
 	_tokenizerOpen = false;
 
-	@property({ type: Boolean, noAttribute: true })
-	_tokenizerExpanded = true;
-
 	static emptyInput: HTMLInputElement;
 
 	@i18n("@ui5/webcomponents")
@@ -397,12 +394,28 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	_onfocusin() {
 		this.focused = true;
-		this._tokenizerExpanded = true;
+		if (this._tokenizer) {
+			this._tokenizer.expanded = true;
+		}
 	}
 
 	_onfocusout() {
+		if (this.matches(":focus-within")) {
+			return;
+		}
+
 		this.focused = false;
-		this._tokenizerExpanded = this._tokenizerOpen || false;
+		if (this._tokenizer) {
+			this._tokenizer.expanded = this._tokenizerOpen;
+		}
+	}
+
+	get _tokenizerExpanded(): boolean {
+		if (!this._tokenizer) {
+			return true;
+		}
+
+		return this._tokenizer.expanded;
 	}
 
 	_onTokenizerKeyUp(e: KeyboardEvent) {
@@ -473,7 +486,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			this._input.value = "";
 		}
 
-		this._tokenizerOpen = this._tokenizer?.open || false;
+		this._tokenizerOpen = this._tokenizer ? this._tokenizer.open : false;
 
 		if (this.hideInput && this.content.length > 0) {
 			this.content.forEach(element => {
