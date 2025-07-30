@@ -265,7 +265,7 @@ describe("Timeline with growing mode", () => {
 
 	it("Arrows navigation should work only on focused item", () => {
 		cy.mount(
-			<Timeline growing="Button">
+			<Timeline>
 				<TimelineItem titleText="first item"></TimelineItem>
 				<TimelineItem titleText="second item">
 					<Input id="input" />
