@@ -65,7 +65,7 @@ type ViewSettingsDialogCancelEventDetail = VSDSettings & {
 }
 
 // Common properties for several VSDInternalSettings fields
-type VSDItem = {text?: string, selected: boolean}
+type VSDItem = {text?: string, selected: boolean, focused?: boolean} // Used for sortOrder, sortBy and filterOptions
 
 // Used for the private properties _initialSettings, _confirmedSettings and _currentSettings
 type VSDInternalSettings = {
@@ -266,19 +266,19 @@ class ViewSettingsDialog extends UI5Element {
 		}
 	}
 
-	onAfterRendering() {
-		if (this._filterStepTwo) {
-			requestAnimationFrame(() => this._focusFirstFilterOptionItem());
-		}
-	}
+	// onAfterRendering() {
+	// 	if (this._filterStepTwo) {
+	// 		requestAnimationFrame(() => this._focusFirstFilterOptionItem());
+	// 	}
+	// }
 
-	_focusFirstFilterOptionItem() {
-		const filterList = this.shadowRoot?.querySelector<List>("[ui5-list]:not([sort-by]):not([sort-order])");
-		const firstItem = filterList?.getItems()[0];
-		if (firstItem) {
-			firstItem.focus();
-		}
-	}
+	// _focusFirstFilterOptionItem() {
+	// 	const filterList = this.shadowRoot?.querySelector<List>("[ui5-list]:not([sort-by]):not([sort-order])");
+	// 	const firstItem = filterList?.getItems()[0];
+	// 	if (firstItem) {
+	// 		firstItem.focus();
+	// 	}
+	// }
 
 	onInvalidation(changeInfo: ChangeInfo) {
 		if (changeInfo.type === "slot") {
@@ -544,9 +544,10 @@ class ViewSettingsDialog extends UI5Element {
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
 			if (filter.selected) {
 				filter.filterOptions.forEach(option => {
+					option.focused = false;
 					if (option.text === itemText) {
 						option.selected = !option.selected;
-						option.focused = true
+						option.focused = true;
 					}
 				});
 			}
