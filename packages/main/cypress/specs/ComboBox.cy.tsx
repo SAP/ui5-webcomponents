@@ -513,13 +513,13 @@ describe("Selection-change event", () => {
 			.focus()
 			.realType("Bulg")
 			.realPress("Backspace")
-			.realType("garia");
 
 		cy.get("@selectionChangeSpy")
 			.should("have.been.called");
 
-		cy.get("@selectionChangeSpy")
-			.should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("item")));
+		cy.get("@selectionChangeSpy").should("have.been.calledWithMatch", Cypress.sinon.match(event => {
+			return event.detail.item === null;
+		}));
 	});
 
 	it("should fire selection-change event when item is selected after delete key", () => {

@@ -118,7 +118,7 @@ enum ValueStateIconMapping {
 }
 
 type ComboBoxSelectionChangeEventDetail = {
-	item: ComboBoxItem,
+	item: ComboBoxItem | null,
 };
 
 /**
@@ -1194,9 +1194,9 @@ class ComboBox extends UI5Element implements IFormInputElement {
 					item: itemToBeSelected as ComboBoxItem,
 				});
 			} else if (previouslySelectedItem) {
-				// Selection cleared - fire event with the previously selected item
+				// Selection cleared - fire event with 'null'
 				this.fireDecoratorEvent("selection-change", {
-					item: previouslySelectedItem as ComboBoxItem,
+					item: null,
 				});
 			}
 		}
