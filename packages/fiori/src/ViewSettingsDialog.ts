@@ -251,6 +251,7 @@ class ViewSettingsDialog extends UI5Element {
 	_dialog?: Dialog;
 	_sortOrder?: List;
 	_sortBy?: List;
+	_focusedFilterOptionIndex: number = 0;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
@@ -262,6 +263,20 @@ class ViewSettingsDialog extends UI5Element {
 
 		if (!this.shouldBuildSort && this.shouldBuildFilter) {
 			this._currentMode = ViewSettingsDialogMode.Filter;
+		}
+	}
+
+	onAfterRendering() {
+		if (this._filterStepTwo) {
+			requestAnimationFrame(() => this._focusFirstFilterOptionItem());
+		}
+	}
+
+	_focusFirstFilterOptionItem() {
+		const filterList = this.shadowRoot?.querySelector<List>("[ui5-list]:not([sort-by]):not([sort-order])");
+		const firstItem = filterList?.getItems()[0];
+		if (firstItem) {
+			firstItem.focus();
 		}
 	}
 
@@ -531,6 +546,7 @@ class ViewSettingsDialog extends UI5Element {
 				filter.filterOptions.forEach(option => {
 					if (option.text === itemText) {
 						option.selected = !option.selected;
+						option.focused = true
 					}
 				});
 			}
@@ -568,9 +584,6 @@ class ViewSettingsDialog extends UI5Element {
 		});
 	}
 
-	/**
-	 * Sets focus on recently used control within the dialog.
-	 */
 	_focusRecentlyUsedControl() {
 		if (!this._recentlyFocused || !Object.keys(this._recentlyFocused).length) {
 			return;
