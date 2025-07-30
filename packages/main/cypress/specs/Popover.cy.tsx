@@ -1,3 +1,4 @@
+import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import ToolbarButton from "../../src/ToolbarButton.js";
 import Toolbar from "../../src/Toolbar.js";
 import Popover from "../../src/Popover.js";
@@ -331,6 +332,42 @@ describe("Accessibility", () => {
 			.shadow()
 			.find(".ui5-popup-root")
 			.should("not.have.attr", "aria-labelledby");
+	});
+
+	it("F6 navigation", () => {
+		cy.mount(
+			<>
+			<button data-sap-ui-fastnavgroup="true" id="test"> Test button</button>
+				<Popover opener="test">
+					<div data-sap-ui-fastnavgroup="true">
+						<button id="first">First group focusable</button>
+					</div>
+					<div data-sap-ui-fastnavgroup="true">
+						<button id="second">Second group focusable</button>
+					</div>
+				</Popover>
+				<button data-sap-ui-fastnavgroup="true">Test button 2</button>
+			</>
+		);
+
+		cy.get("[ui5-popover]")
+			.invoke("prop", "open", "true");
+
+		cy.get<Popover>("[ui5-popover]")
+			.ui5PopoverOpened();
+
+		cy.get("#first")
+			.should("be.focused");
+
+		cy.realPress("F6");
+
+		cy.get("#second")
+			.should("be.focused");
+
+		cy.realPress("F6");
+
+		cy.get("#first")
+			.should("be.focused");
 	});
 });
 
