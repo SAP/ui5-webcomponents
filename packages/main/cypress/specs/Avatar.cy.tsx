@@ -1,9 +1,11 @@
 import Avatar from "../../src/Avatar.js";
 import Tag from "../../src/Tag.js";
 import Icon from "../../src/Icon.js";
+import ShellBar from "../../../fiori/src/ShellBar.js";
 import "@ui5/webcomponents-icons/dist/supplier.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/person-placeholder.js";
+import React, { useEffect, useRef } from "react";
 
 describe("Accessibility", () => {
 	it("checks if initials of avatar are correctly announced", () => {
@@ -304,5 +306,34 @@ describe("Fallback Logic", () => {
 			.shadow()
 			.find(".ui5-avatar-icon-fallback")
 			.should("have.class", "ui5-avatar-fallback-icon-hidden");
+	});
+
+	it("forwards click from shellbar profile button to slotted avatar (mount pattern)", () => {
+		const clickSpy = cy.spy().as("avatarClickSpy");
+		const profileClickSpy = cy.spy().as("profileClickSpy");
+
+		cy.mount(
+			<div>
+				<ShellBar id="test-shellbar">
+					<Avatar
+						id="test-avatar"
+						slot="profile"
+						interactive
+						initials="XY"
+					/>
+				</ShellBar>
+			</div>
+		);
+
+		cy.get("#test-avatar").then($el => {
+			$el[0].addEventListener("ui5-click", clickSpy);
+		});
+		cy.get("#test-shellbar").then($el => {
+			$el[0].addEventListener("ui5-profile-click", profileClickSpy);
+		});
+
+		cy.get("#test-shellbar").shadow().find(".ui5-shellbar-image-button").realClick();
+		cy.get("@profileClickSpy").should("have.been.calledOnce");
+		cy.get("@avatarClickSpy").should("have.been.calledOnce");
 	});
 });
