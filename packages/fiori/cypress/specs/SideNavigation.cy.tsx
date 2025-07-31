@@ -825,11 +825,6 @@ describe("Side Navigation interaction", () => {
 
 		cy.get("#sideNav")
 			.shadow()
-			.find(".ui5-sn-item-overflow")
-			.realClick();
-
-		cy.get("#sideNav")
-			.shadow()
 			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='item']")
 			.realClick();
 
