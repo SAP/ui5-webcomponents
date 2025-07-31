@@ -7,7 +7,6 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import SideContentPosition from "./types/SideContentPosition.js";
 import SideContentVisibility from "./types/SideContentVisibility.js";
 import SideContentFallDown from "./types/SideContentFallDown.js";
@@ -236,32 +235,52 @@ class DynamicSideContent extends UI5Element {
 	_currentBreakpoint?: string;
 
 	/**
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_isSideBelow = false;
+
+	/**
 	 * Defines the side content.
 	 * @public
 	 */
 	@slot()
 	sideContent!: Array<HTMLElement>;
 
-	constructor() {
-		super();
-		this._handleResizeBound = this.handleResize.bind(this);
-	}
-
-	_handleResizeBound: () => void;
+ 	_resizeObserver?: ResizeObserver;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
-	onAfterRendering() {
-		this._resizeContents();
-	}
-
 	onEnterDOM() {
-		ResizeHandler.register(this, this._handleResizeBound);
+		this._resizeObserver = new ResizeObserver(entries => {
+			for (const entry of entries) {
+				const width = entry.contentRect.width;
+				let breakpoint: string;
+				if (width <= S_M_BREAKPOINT) breakpoint = "S";
+				else if (width <= M_L_BREAKPOINT) breakpoint = "M";
+				else if (width <= L_XL_BREAKPOINT) breakpoint = "L";
+				else breakpoint = "XL";
+
+				this._isSideBelow = this.isSideBelow
+
+				if (breakpoint !== this._currentBreakpoint) {
+					this.fireDecoratorEvent("layout-change", {
+						currentBreakpoint: breakpoint,
+						previousBreakpoint: this._currentBreakpoint,
+						mainContentVisible: true, // or calculate if needed
+						sideContentVisible: true, // or calculate if needed
+					});
+					this._currentBreakpoint = breakpoint;
+				}
+
+			}
+		});
+		this._resizeObserver.observe(this);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this, this._handleResizeBound);
+		this._resizeObserver?.disconnect();
 	}
 
 	/**
@@ -282,30 +301,44 @@ class DynamicSideContent extends UI5Element {
 		return {
 			main: {
 				"ui5-dsc-main": true,
-				[`${gridPrefix}-${mcSpan}`]: true,
 			},
 			side: {
 				"ui5-dsc-side": true,
-				[`${gridPrefix}-${scSpan}`]: true,
 			},
+			root: {
+				"ui5-dsc-root": true,
+				"ui5-dsc-toggled": this._toggled,
+			}
 		};
 	}
 
+	get isSideBelow() {
+		if (this.sideContentVisibility === "NeverShow") {
+			return false;
+		}
+		return (
+			(this.sideContentFallDown === "OnMinimumWidth" && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT) ||
+			(this.sideContentFallDown === "BelowM" && this._currentBreakpoint === this.sizeS) ||
+			(this.sideContentFallDown === "BelowL" && (this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS)) ||
+			(this.sideContentFallDown === "BelowXL" && (this._currentBreakpoint === this.sizeL || this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS) && this._currentBreakpoint !== this.sizeXL) ||
+			(this.sideContentVisibility === "AlwaysShow" && this._currentBreakpoint === this.sizeS && !this._toggled) ||
+			(this.sideContentVisibility === "AlwaysShow" && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT)
+		);
+	}
+
 	get styles() {
-		const isToggled = this.breakpoint === this.sizeS && this._toggled,
-			mcSpan = isToggled ? this._scSpan : this._mcSpan,
-			scSpan = isToggled ? this._mcSpan : this._scSpan,
-			contentHeight = this.breakpoint === this.sizeS && this.sideContentVisibility !== SideContentVisibility.AlwaysShow ? "100%" : "auto";
+		const isToggled = this._currentBreakpoint === this.sizeS && this._toggled;
+		this._isSideBelow = this.isSideBelow;
 
 		return {
 			root: {
-				"flex-wrap": this._mcSpan === "12" ? "wrap" : "nowrap",
+				"flex-wrap": "nowrap",
 			},
 			main: {
-				"height": mcSpan === this.span12 ? contentHeight : "100%",
+				"height": this._isSideBelow ? "auto" : "100%",
 			},
 			side: {
-				"height": scSpan === this.span12 ? contentHeight : "100%",
+				"height": this._isSideBelow ? "auto" : "100%",
 			},
 		};
 	}
@@ -337,40 +370,8 @@ class DynamicSideContent extends UI5Element {
 		return "XL";
 	}
 
-	get span0() {
-		return "0";
-	}
-
-	get span3() {
-		return "3";
-	}
-
-	get span4() {
-		return "4";
-	}
-
-	get span6() {
-		return "6";
-	}
-
-	get span8() {
-		return "8";
-	}
-
-	get span9() {
-		return "9";
-	}
-
-	get span12() {
-		return "12";
-	}
-
-	get spanFixed() {
-		return "fixed";
-	}
-
 	get containerWidth() {
-		return (this.parentElement as HTMLElement).getBoundingClientRect().width;
+		return this.clientWidth;
 	}
 
 	get breakpoint() {
@@ -393,98 +394,6 @@ class DynamicSideContent extends UI5Element {
 		return this.sideContentPosition === SideContentPosition.Start;
 	}
 
-	handleResize() {
-		this._resizeContents();
-	}
-
-	_resizeContents() {
-		let mainSize!: string,
-			sideSize!: string,
-			sideVisible = false;
-
-		// initial set contents sizes
-		switch (this.breakpoint) {
-		case this.sizeS:
-			mainSize = this.span12;
-			sideSize = this.span12;
-			break;
-		case this.sizeM:
-			if (this.sideContentFallDown === SideContentFallDown.BelowXL
-				|| this.sideContentFallDown === SideContentFallDown.BelowL
-				|| (this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT && this.sideContentFallDown === SideContentFallDown.OnMinimumWidth)) {
-				mainSize = this.span12;
-				sideSize = this.span12;
-			} else {
-				mainSize = this.equalSplit ? this.span6 : this.spanFixed;
-				sideSize = this.equalSplit ? this.span6 : this.spanFixed;
-			}
-			sideVisible = this.sideContentVisibility === SideContentVisibility.ShowAboveS
-				|| this.sideContentVisibility === SideContentVisibility.AlwaysShow;
-			break;
-		case this.sizeL:
-			if (this.sideContentFallDown === SideContentFallDown.BelowXL) {
-				mainSize = this.span12;
-				sideSize = this.span12;
-			} else {
-				mainSize = this.equalSplit ? this.span6 : this.span8;
-				sideSize = this.equalSplit ? this.span6 : this.span4;
-			}
-			sideVisible = this.sideContentVisibility === SideContentVisibility.ShowAboveS
-				|| this.sideContentVisibility === SideContentVisibility.ShowAboveM
-				|| this.sideContentVisibility === SideContentVisibility.AlwaysShow;
-			break;
-		case this.sizeXL:
-			mainSize = this.equalSplit ? this.span6 : this.span9;
-			sideSize = this.equalSplit ? this.span6 : this.span3;
-			sideVisible = this.sideContentVisibility !== SideContentVisibility.NeverShow;
-		}
-
-		if (this.sideContentVisibility === SideContentVisibility.AlwaysShow) {
-			sideVisible = true;
-		}
-
-		// modify sizes of the contents depending on hideMainContent and hideSideContent properties
-		if (this.hideSideContent) {
-			mainSize = this.hideMainContent ? this.span0 : this.span12;
-			sideSize = this.span0;
-			sideVisible = false;
-		}
-
-		if (this.hideMainContent) {
-			mainSize = this.span0;
-			sideSize = this.hideSideContent ? this.span0 : this.span12;
-			sideVisible = true;
-		}
-
-		// set final sizes of the contents
-		if (!sideVisible) {
-			mainSize = this.span12;
-			sideSize = this.span0;
-		}
-
-		// fire "layout-change" event
-		if (this._currentBreakpoint !== this.breakpoint) {
-			const eventParams = {
-				currentBreakpoint: this.breakpoint,
-				previousBreakpoint: this._currentBreakpoint,
-				mainContentVisible: mainSize !== this.span0,
-				sideContentVisible: sideSize !== this.span0,
-			};
-			this.fireDecoratorEvent("layout-change", eventParams);
-			this._currentBreakpoint = this.breakpoint;
-		}
-
-		// update contents sizes
-		this._setSpanSizes(mainSize, sideSize);
-	}
-
-	_setSpanSizes(mainSize: string, sideSize: string) {
-		this._mcSpan = mainSize;
-		this._scSpan = sideSize;
-		if (this.breakpoint !== this.sizeS) {
-			this._toggled = false;
-		}
-	}
 }
 
 DynamicSideContent.define();

@@ -3,6 +3,7 @@
 	width: 100%;
 	height: 100%;
 	position: relative;
+	container-type: inline-size; /* container queries */
 }
 
 .ui5-dsc-root {
@@ -24,43 +25,182 @@
 	flex: none;
 }
 
-.ui5-dsc-root > div[class^="ui5-dcs-span"],
-.ui5-dsc-root > aside[class^="ui5-dsc-span"] {
-	overflow: auto;
+/* container queries */
+
+/* XL: >1440px */
+@container (min-width: 1441px) {
+	.ui5-dsc-main { width: 75%; min-width: 320px; }
+	.ui5-dsc-side { width: 25%; min-width: 320px; }
 }
 
-.ui5-dsc-main.ui5-dsc-span-fixed {
-	width: calc(100% - 21.25rem);
+/* L: 1025px–1440px */
+@container (min-width: 1025px) and (max-width: 1440px) {
+	.ui5-dsc-main { width: 66.666%; min-width: 320px; }
+	.ui5-dsc-side { width: 33.333%; min-width: 320px; }
 }
 
-.ui5-dsc-side.ui5-dsc-span-fixed {
-	width: 21.25rem;
+/* M: 721px–1024px */
+@container (min-width: 721px) and (max-width: 1024px) {
+	.ui5-dsc-main { width: calc(100% - 340px); }
+	.ui5-dsc-side { width: 340px; }
 }
 
-.ui5-dsc-root > .ui5-dsc-span-0 {
-	display: none;
+/* S: <=720px */
+@container (max-width: 720px) {
+	.ui5-dsc-main, .ui5-dsc-side { width: 100%; }
 }
 
-.ui5-dsc-root > .ui5-dsc-span-3 {
-	width: 25%;
-}
-
-.ui5-dsc-root > .ui5-dsc-span-4 {
-	width: 33.333%;
-}
-
-.ui5-dsc-root > .ui5-dsc-span-6 {
+/* Equal Split: 50%/50% for main and side, except S breakpoint */
+:host([equal-split]) .ui5-dsc-main,
+:host([equal-split]) .ui5-dsc-side {
 	width: 50%;
+	min-width: 0;
 }
 
-.ui5-dsc-root > .ui5-dsc-span-8 {
-	width: 66.666%;
+/* On S breakpoint, still 100% width for both */
+@container (max-width: 720px) {
+	:host([equal-split]) .ui5-dsc-main,
+	:host([equal-split]) .ui5-dsc-side {
+		width: 100%;
+	}
 }
 
-.ui5-dsc-root > .ui5-dsc-span-9 {
-	width: 75%;
+/* OnMinimumWidth: fall down between 721px and 960px */
+@container (min-width: 721px) and (max-width: 960px) {
+    :host([side-content-fall-down="OnMinimumWidth"]) .ui5-dsc-root {
+        flex-direction: column;
+    }
+    :host([side-content-fall-down="OnMinimumWidth"]) .ui5-dsc-main,
+    :host([side-content-fall-down="OnMinimumWidth"]) .ui5-dsc-side {
+        width: 100%;
+    }
 }
 
-.ui5-dsc-root > .ui5-dsc-span-12 {
-	width: 100%;
+/* BelowL: fall down for widths 1024px and below */
+@container (max-width: 1024px) {
+    :host([side-content-fall-down="BelowL"]) .ui5-dsc-root {
+        flex-direction: column;
+    }
+    :host([side-content-fall-down="BelowL"]) .ui5-dsc-main,
+    :host([side-content-fall-down="BelowL"]) .ui5-dsc-side {
+        width: 100%;
+    }
+}
+
+/* BelowXL: fall down for any width below 1441px */
+@container (max-width: 1440px) {
+    :host([side-content-fall-down="BelowXL"]) .ui5-dsc-root {
+        flex-direction: column;
+    }
+    :host([side-content-fall-down="BelowXL"]) .ui5-dsc-main,
+    :host([side-content-fall-down="BelowXL"]) .ui5-dsc-side {
+        width: 100%;
+    }
+}
+
+/* hiding main or side content */
+:host([hide-main-content]) .ui5-dsc-main {
+    display: none;
+}
+
+:host([hide-main-content]) .ui5-dsc-side {
+    width: 100%;
+    min-width: 0;
+}
+
+:host([hide-side-content]) .ui5-dsc-side {
+    display: none;
+}
+
+:host([hide-side-content]) .ui5-dsc-main {
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* Never show side content (hide on all breakpoints) */
+:host([side-content-visibility="NeverShow"]:not([hide-main-content])) .ui5-dsc-side {
+    display: none;
+}
+
+/* S: <=720px */
+@container (max-width: 720px) {
+	:host([side-content-visibility="AlwaysShow"]:not([hide-side-content])) .ui5-dsc-side {
+		display: block;
+		width: 100%;
+	}
+    :host(:not([side-content-visibility="AlwaysShow"]):not([side-content-fall-down="BelowM"]):not([hide-main-content])) .ui5-dsc-root:not(.ui5-dsc-toggled) .ui5-dsc-side {
+        display: none;
+    }
+    :host([side-content-fall-down="BelowM"]) .ui5-dsc-root {
+        flex-direction: column;
+    }
+    .ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-main {
+        display: none;
+    }
+    .ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-side {
+        display: block;
+        width: 100%;
+    }
+    /* Toggling logic for all other visibilities */
+    :host(:not([side-content-visibility="NeverShow"])) .ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-main {
+        display: none;
+    }
+    :host(:not([side-content-visibility="NeverShow"]):not([hide-main-content])) .ui5-dsc-root:not(.ui5-dsc-toggled) .ui5-dsc-main {
+        display: block;
+        width: 100%;
+    }
+    :host(:not([side-content-visibility="NeverShow"]):not([side-content-visibility="AlwaysShow"])) .ui5-dsc-root:not(.ui5-dsc-toggled) .ui5-dsc-side {
+        display: none;
+    }
+}
+
+/* Never show side content (hide on all breakpoints > S)*/
+@container (min-width: 721px) {
+	:host([side-content-visibility="NeverShow"]:not([hide-main-content])) .ui5-dsc-main {
+		display: block;
+		width: 100%;
+		min-width: 0;
+	}
+    :host(:not([side-content-visibility="NeverShow"]):not([hide-main-content])) .ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-side {
+        display: block;
+        width: 100%;
+    }
+}
+
+@container (max-width: 960px) {
+    :host([side-content-visibility="AlwaysShow"]) .ui5-dsc-root {
+        flex-direction: column;
+    }
+    :host([side-content-visibility="AlwaysShow"]:not([side-content-fall-down="onMinimumWidth"])) .ui5-dsc-main,
+    :host([side-content-visibility="AlwaysShow"]:not([side-content-fall-down="onMinimumWidth"])) .ui5-dsc-side {
+        width: 100%;
+    }
+}
+
+/* Show side content only above M (L and XL: >1024px) */
+@container (max-width: 1024px) {
+    :host([side-content-visibility="ShowAboveM"]) .ui5-dsc-side {
+        display: none;
+    }
+	:host([side-content-visibility="ShowAboveM"]) .ui5-dsc-main {
+		width: 100%;
+		min-width: 0;
+	}
+}
+
+/* Show side content only above L (XL: >1440px) */
+@container (max-width: 1440px) {
+    :host([side-content-visibility="ShowAboveL"]) .ui5-dsc-side {
+        display: none;
+    }
+    :host([side-content-visibility="ShowAboveL"]) .ui5-dsc-main {
+        width: 100%;
+		min-width: 0;
+    }
+}
+@container (min-width: 1441px) {
+    :host([side-content-visibility="ShowAboveL"]) .ui5-dsc-side {
+        display: block;
+    }
 }
