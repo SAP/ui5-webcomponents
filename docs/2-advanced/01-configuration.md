@@ -287,7 +287,7 @@ Example:
 
 ```html
 <head>
-	<meta name="sap-allowedThemeOrigins" content="https://my-example-host.com/,https://my-example-host2.com/">
+	<meta name="sap-allowed-theme-origins" content="https://my-example-host.com/,https://my-example-host2.com/">
 ```
 
 Failing to do so will result in a warning in the console and the theme root will not be set.
