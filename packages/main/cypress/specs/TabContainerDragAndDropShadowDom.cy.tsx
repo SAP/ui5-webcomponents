@@ -156,7 +156,7 @@ describe("TabContainer Drag and Drop Generic Tests", () => {
 		);
 
 		cy.get("#customElId").then($customEl => {
-			const iconTabBar= document.querySelector("#tabContainer");
+			const iconTabBar = document.querySelector("#tabContainer");
 			$customEl.get(0).attachShadow({ mode: 'open' }).prepend(iconTabBar);
 		});
 

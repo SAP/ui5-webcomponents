@@ -148,7 +148,7 @@ list.addEventListener("dragstart", (event) => {
     
     // Start multiple drag if more than one item is selected
     if (currentSelected.length > 1) {
-        startMultipleDrag(currentSelected.length);
+        startMultipleDrag(currentSelected.length, event);
     }
 });
 ```
