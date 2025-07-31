@@ -458,3 +458,276 @@ describe("Accessibility", () => {
 			});
 	});
 });
+
+describe("Selection-change event", () => {
+	it("should fire selection-change event when item is selected", () => {
+		cy.mount(
+			<ComboBox>
+				<ComboBoxItem text="Argentina"></ComboBoxItem>
+				<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+				<ComboBoxItem text="Canada"></ComboBoxItem>
+			</ComboBox>
+		);
+
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
+
+		cy.get("@combo")
+			.shadow()
+			.find("input")
+			.as("input");
+
+		// Type to select an item
+		cy.get("@input")
+			.focus()
+			.realType("Bulgaria");
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.calledOnce");
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("item")));
+	});
+
+	it("should fire selection-change event when item is selected after backspace", () => {
+		cy.mount(
+			<ComboBox>
+				<ComboBoxItem text="Argentina"></ComboBoxItem>
+				<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+				<ComboBoxItem text="Canada"></ComboBoxItem>
+			</ComboBox>
+		);
+
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
+
+		cy.get("@combo")
+			.shadow()
+			.find("input")
+			.as("input");
+
+		// Type partial text, then backspace, then complete selection
+		cy.get("@input")
+			.focus()
+			.realType("Bulg")
+			.realPress("Backspace")
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.called");
+
+		cy.get("@selectionChangeSpy").should("have.been.calledWithMatch", Cypress.sinon.match(event => {
+			return event.detail.item === null;
+		}));
+	});
+
+	it("should fire selection-change event when item is selected after delete key", () => {
+		cy.mount(
+			<ComboBox>
+				<ComboBoxItem text="Argentina"></ComboBoxItem>
+				<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+				<ComboBoxItem text="Canada"></ComboBoxItem>
+			</ComboBox>
+		);
+
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
+
+		cy.get("@combo")
+			.shadow()
+			.find("input")
+			.as("input");
+
+		// Type text, position cursor, use delete key, then complete selection
+		cy.get("@input")
+			.focus()
+			.realType("Bulgxaria")
+			.realPress(["Home"])
+			.realPress(["ArrowRight", "ArrowRight", "ArrowRight", "ArrowRight"])
+			.realPress("Delete")
+			.realPress("End");
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.called");
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("item")));
+	});
+
+	it("should fire selection-change event when selection is cleared by typing non-matching text", () => {
+		cy.mount(
+			<ComboBox value="Bulgaria">
+				<ComboBoxItem text="Argentina"></ComboBoxItem>
+				<ComboBoxItem text="Bulgaria" selected></ComboBoxItem>
+				<ComboBoxItem text="Canada"></ComboBoxItem>
+			</ComboBox>
+		);
+
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
+
+		cy.get("@combo")
+			.shadow()
+			.find("input")
+			.as("input");
+
+		// Clear existing value and type non-matching text
+		cy.get("@input")
+			.focus()
+			.clear()
+			.realType("NonExistentCountry");
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.called");
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("item")));
+	});
+
+	it("should fire selection-change event when clear icon is clicked", () => {
+		cy.mount(
+			<ComboBox value="Bulgaria" showClearIcon>
+				<ComboBoxItem text="Argentina"></ComboBoxItem>
+				<ComboBoxItem text="Bulgaria" selected></ComboBoxItem>
+				<ComboBoxItem text="Canada"></ComboBoxItem>
+			</ComboBox>
+		);
+
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
+
+		// Click the clear icon
+		cy.get("@combo")
+			.shadow()
+			.find(".ui5-input-clear-icon-wrapper")
+			.click();
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.calledOnce");
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("item")));
+	});
+
+	it("should fire selection-change event when item is clicked from dropdown", () => {
+		cy.mount(
+			<ComboBox>
+				<ComboBoxItem text="Argentina"></ComboBoxItem>
+				<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+				<ComboBoxItem text="Canada"></ComboBoxItem>
+			</ComboBox>
+		);
+
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
+
+		// Open dropdown and click an item
+		cy.get("@combo")
+			.shadow()
+			.find("ui5-icon")
+			.click();
+
+		cy.get("@combo")
+			.find("ui5-cb-item")
+			.eq(1)
+			.click();
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.calledOnce");
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("item")));
+	});
+
+	it("should fire selection-change event when navigating with arrow keys and pressing Enter", () => {
+		cy.mount(
+			<ComboBox>
+				<ComboBoxItem text="Argentina"></ComboBoxItem>
+				<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+				<ComboBoxItem text="Canada"></ComboBoxItem>
+			</ComboBox>
+		);
+
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
+
+		cy.get("@combo")
+			.shadow()
+			.find("input")
+			.as("input");
+
+		// Open dropdown with F4, navigate with arrow keys, and select with Enter
+		cy.get("@input")
+			.focus()
+			.realPress("F4")
+			.realPress("ArrowDown")
+			.realPress("Enter");
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("item")));
+	});
+
+	it("should fire selection-change event with correct item data", () => {
+		cy.mount(
+			<ComboBox>
+				<ComboBoxItem text="Argentina"></ComboBoxItem>
+				<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+				<ComboBoxItem text="Canada"></ComboBoxItem>
+			</ComboBox>
+		);
+
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
+
+		cy.get("@combo")
+			.shadow()
+			.find("input")
+			.focus()
+			.realType("Bulgaria");
+
+		cy.get("@selectionChangeSpy").should("have.been.calledWithMatch", Cypress.sinon.match(event => {
+				return event.detail.item.text === "Bulgaria";
+	}));
+});
+
+	it("should work correctly with grouped items", () => {
+		cy.mount(
+			<ComboBox>
+				<ComboBoxItemGroup headerText="Europe">
+					<ComboBoxItem text="Bulgaria"></ComboBoxItem>
+					<ComboBoxItem text="Germany"></ComboBoxItem>
+				</ComboBoxItemGroup>
+				<ComboBoxItemGroup headerText="Americas">
+					<ComboBoxItem text="Argentina"></ComboBoxItem>
+					<ComboBoxItem text="Canada"></ComboBoxItem>
+				</ComboBoxItemGroup>
+			</ComboBox>
+		);
+
+		cy.get("[ui5-combobox]")
+			.as("combo");
+
+		cy.get("ui5-combobox")
+			.as("combo")
+			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
+
+		cy.get("@combo")
+			.shadow()
+			.find("input")
+			.focus()
+			.realType("Bulgaria");
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.calledOnce");
+
+		cy.get("@selectionChangeSpy")
+			.should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("item")));
+	});
+});
