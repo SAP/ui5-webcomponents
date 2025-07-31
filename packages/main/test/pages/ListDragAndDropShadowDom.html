@@ -13,6 +13,7 @@
 <body class="list1auto">
 <ui5-checkbox id="reorder" text="Movable items" checked></ui5-checkbox>
 <ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
+<a id="link" ondragstart="linkDragStart(event)" href="http://sap.com" draggable="true">http://sap.com</a>
 
 <section>
 	<h2>Drag and drop</h2>
@@ -133,6 +134,10 @@
 		list2.items.forEach((item) => item.movable = e.target.checked);
 		list3.items.forEach((item) => item.movable = e.target.checked);
 	});
+
+	function linkDragStart(event) {
+		window["sap-ui-webcomponents-bundle"].setDraggedElement(event.target);
+	}
 </script>
 </body>
 

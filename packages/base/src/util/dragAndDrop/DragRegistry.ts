@@ -101,6 +101,7 @@ const DragRegistry = {
 export default DragRegistry;
 export {
 	startMultipleDrag,
+	setDraggedElement,
 };
 
 export type {
