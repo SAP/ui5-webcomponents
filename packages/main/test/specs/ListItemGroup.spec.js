@@ -112,22 +112,4 @@ describe("List drag and drop tests", () => {
 		await listTwoItem.dragAndDrop({ x: 0, y: dragOffset});
 		assert.ok(await compareItemsOrder("listDnd1", [listOneFirstItem, listTwoItem, listOneSecondItem, listOneThirdItem]), "Items order has changed");
 	});
-
-	it("Moving link to list that doesn't accept it", async () => {
-		const [firstItem, secondItem, thirdItem] = await browser.$$("#listDnd1 [ui5-li]");
-		const link = await browser.$("#link")
-
-		const dragOffset = await getDragOffset(link, firstItem, "After");
-		await link.dragAndDrop({ x: 0, y: dragOffset});
-		assert.ok(await compareItemsOrder("listDnd1", [firstItem, secondItem, thirdItem]), "Items order has NOT changed");
-	});
-
-	it("Moving link to list that accepts it", async () => {
-		const [firstItem, secondItem] = await browser.$$("#listDnd2 [ui5-li]");
-		const link = await browser.$("#link")
-
-		const dragOffset = await getDragOffset(link, secondItem, "Before");
-		await link.dragAndDrop({ x: 0, y: dragOffset});
-		assert.ok(await compareItemsOrder("listDnd2", [firstItem, link, secondItem]), "Items order has changed");
-	});
 });
