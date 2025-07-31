@@ -35,7 +35,7 @@ const getThemeRoot = (): string | undefined => {
  * **Note:** Certain security restrictions will apply before fetching the theme assets.
  * Absolute URLs to a different origin than the current page will result in using the current page as an origin.
  *
- * **Important:** To use this feature you must explicitly allow specific origins by using &lt;meta name="sap-allowedThemeOrigins" content="https://my-example-host.com/"&gt; tag inside the &lt;head&gt; of the page.
+ * **Important:** To use this feature you must explicitly allow specific origins by using &lt;meta name="sap-allowed-theme-origins" content="https://my-example-host.com/"&gt; tag inside the &lt;head&gt; of the page.
  * Failing to do so will result in a warning in the console and the theme root will not be set.
  *
  * @public

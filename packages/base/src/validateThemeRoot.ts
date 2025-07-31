@@ -8,7 +8,7 @@ const getMetaTagValue = (metaTagName: string) => {
 };
 
 const validateThemeOrigin = (origin: string) => {
-	const allowedOrigins = getMetaTagValue("sap-allowedThemeOrigins");
+	const allowedOrigins = getMetaTagValue("sap-allowed-theme-origins") ?? getMetaTagValue("sap-allowedThemeOrigins"); // Prioritize the new meta tag name
 
 	// If no allowed origins are specified, block.
 	if (!allowedOrigins) {
