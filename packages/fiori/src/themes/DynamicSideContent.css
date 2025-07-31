@@ -67,60 +67,60 @@
 
 /* OnMinimumWidth: fall down between 721px and 960px */
 @container (min-width: 721px) and (max-width: 960px) {
-    :host([side-content-fall-down="OnMinimumWidth"]) .ui5-dsc-root {
-        flex-direction: column;
-    }
-    :host([side-content-fall-down="OnMinimumWidth"]) .ui5-dsc-main,
-    :host([side-content-fall-down="OnMinimumWidth"]) .ui5-dsc-side {
-        width: 100%;
-    }
+	:host([side-content-fall-down="OnMinimumWidth"]) .ui5-dsc-root {
+		flex-direction: column;
+	}
+	:host([side-content-fall-down="OnMinimumWidth"]) .ui5-dsc-main,
+	:host([side-content-fall-down="OnMinimumWidth"]) .ui5-dsc-side {
+		width: 100%;
+	}
 }
 
 /* BelowL: fall down for widths 1024px and below */
 @container (max-width: 1024px) {
-    :host([side-content-fall-down="BelowL"]) .ui5-dsc-root {
-        flex-direction: column;
-    }
-    :host([side-content-fall-down="BelowL"]) .ui5-dsc-main,
-    :host([side-content-fall-down="BelowL"]) .ui5-dsc-side {
-        width: 100%;
-    }
+	:host([side-content-fall-down="BelowL"]) .ui5-dsc-root {
+		flex-direction: column;
+	}
+	:host([side-content-fall-down="BelowL"]) .ui5-dsc-main,
+	:host([side-content-fall-down="BelowL"]) .ui5-dsc-side {
+		width: 100%;
+	}
 }
 
 /* BelowXL: fall down for any width below 1441px */
 @container (max-width: 1440px) {
-    :host([side-content-fall-down="BelowXL"]) .ui5-dsc-root {
-        flex-direction: column;
-    }
-    :host([side-content-fall-down="BelowXL"]) .ui5-dsc-main,
-    :host([side-content-fall-down="BelowXL"]) .ui5-dsc-side {
-        width: 100%;
-    }
+	:host([side-content-fall-down="BelowXL"]) .ui5-dsc-root {
+		flex-direction: column;
+	}
+	:host([side-content-fall-down="BelowXL"]) .ui5-dsc-main,
+	:host([side-content-fall-down="BelowXL"]) .ui5-dsc-side {
+		width: 100%;
+	}
 }
 
 /* hiding main or side content */
 :host([hide-main-content]) .ui5-dsc-main {
-    display: none;
+	display: none;
 }
 
 :host([hide-main-content]) .ui5-dsc-side {
-    width: 100%;
-    min-width: 0;
+	width: 100%;
+	min-width: 0;
 }
 
 :host([hide-side-content]) .ui5-dsc-side {
-    display: none;
+	display: none;
 }
 
 :host([hide-side-content]) .ui5-dsc-main {
-    width: 100%;
-    min-width: 0;
+	width: 100%;
+	min-width: 0;
 }
 
 
 /* Never show side content (hide on all breakpoints) */
 :host([side-content-visibility="NeverShow"]:not([hide-main-content])) .ui5-dsc-side {
-    display: none;
+	display: none;
 }
 
 /* S: <=720px */
@@ -129,30 +129,30 @@
 		display: block;
 		width: 100%;
 	}
-    :host(:not([side-content-visibility="AlwaysShow"]):not([side-content-fall-down="BelowM"]):not([hide-main-content])) .ui5-dsc-root:not(.ui5-dsc-toggled) .ui5-dsc-side {
-        display: none;
-    }
-    :host([side-content-fall-down="BelowM"]) .ui5-dsc-root {
-        flex-direction: column;
-    }
-    .ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-main {
-        display: none;
-    }
-    .ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-side {
-        display: block;
-        width: 100%;
-    }
-    /* Toggling logic for all other visibilities */
-    :host(:not([side-content-visibility="NeverShow"])) .ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-main {
-        display: none;
-    }
-    :host(:not([side-content-visibility="NeverShow"]):not([hide-main-content])) .ui5-dsc-root:not(.ui5-dsc-toggled) .ui5-dsc-main {
-        display: block;
-        width: 100%;
-    }
-    :host(:not([side-content-visibility="NeverShow"]):not([side-content-visibility="AlwaysShow"])) .ui5-dsc-root:not(.ui5-dsc-toggled) .ui5-dsc-side {
-        display: none;
-    }
+	:host(:not([side-content-visibility="AlwaysShow"]):not([side-content-fall-down="BelowM"]):not([hide-main-content])) .ui5-dsc-root:not(.ui5-dsc-toggled) .ui5-dsc-side {
+		display: none;
+	}
+	:host([side-content-fall-down="BelowM"]) .ui5-dsc-root {
+		flex-direction: column;
+	}
+	.ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-main {
+		display: none;
+	}
+	.ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-side {
+		display: block;
+		width: 100%;
+	}
+	/* Toggling logic for all other visibilities */
+	:host(:not([side-content-visibility="NeverShow"])) .ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-main {
+		display: none;
+	}
+	:host(:not([side-content-visibility="NeverShow"]):not([hide-main-content])) .ui5-dsc-root:not(.ui5-dsc-toggled) .ui5-dsc-main {
+		display: block;
+		width: 100%;
+	}
+	:host(:not([side-content-visibility="NeverShow"]):not([side-content-visibility="AlwaysShow"])) .ui5-dsc-root:not(.ui5-dsc-toggled) .ui5-dsc-side {
+		display: none;
+	}
 }
 
 /* Never show side content (hide on all breakpoints > S)*/
@@ -162,27 +162,27 @@
 		width: 100%;
 		min-width: 0;
 	}
-    :host(:not([side-content-visibility="NeverShow"]):not([hide-main-content])) .ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-side {
-        display: block;
-        width: 100%;
-    }
+	:host(:not([side-content-visibility="NeverShow"]):not([hide-main-content])) .ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-side {
+		display: block;
+		width: 100%;
+	}
 }
 
 @container (max-width: 960px) {
-    :host([side-content-visibility="AlwaysShow"]) .ui5-dsc-root {
-        flex-direction: column;
-    }
-    :host([side-content-visibility="AlwaysShow"]:not([side-content-fall-down="onMinimumWidth"])) .ui5-dsc-main,
-    :host([side-content-visibility="AlwaysShow"]:not([side-content-fall-down="onMinimumWidth"])) .ui5-dsc-side {
-        width: 100%;
-    }
+	:host([side-content-visibility="AlwaysShow"]) .ui5-dsc-root {
+		flex-direction: column;
+	}
+	:host([side-content-visibility="AlwaysShow"]:not([side-content-fall-down="onMinimumWidth"])) .ui5-dsc-main,
+	:host([side-content-visibility="AlwaysShow"]:not([side-content-fall-down="onMinimumWidth"])) .ui5-dsc-side {
+		width: 100%;
+	}
 }
 
 /* Show side content only above M (L and XL: >1024px) */
 @container (max-width: 1024px) {
-    :host([side-content-visibility="ShowAboveM"]) .ui5-dsc-side {
-        display: none;
-    }
+	:host([side-content-visibility="ShowAboveM"]) .ui5-dsc-side {
+		display: none;
+	}
 	:host([side-content-visibility="ShowAboveM"]) .ui5-dsc-main {
 		width: 100%;
 		min-width: 0;
@@ -191,16 +191,16 @@
 
 /* Show side content only above L (XL: >1440px) */
 @container (max-width: 1440px) {
-    :host([side-content-visibility="ShowAboveL"]) .ui5-dsc-side {
-        display: none;
-    }
-    :host([side-content-visibility="ShowAboveL"]) .ui5-dsc-main {
-        width: 100%;
+	:host([side-content-visibility="ShowAboveL"]) .ui5-dsc-side {
+		display: none;
+	}
+	:host([side-content-visibility="ShowAboveL"]) .ui5-dsc-main {
+		width: 100%;
 		min-width: 0;
-    }
+	}
 }
 @container (min-width: 1441px) {
-    :host([side-content-visibility="ShowAboveL"]) .ui5-dsc-side {
-        display: block;
-    }
+	:host([side-content-visibility="ShowAboveL"]) .ui5-dsc-side {
+		display: block;
+	}
 }

@@ -9,7 +9,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import SideContentPosition from "./types/SideContentPosition.js";
 import SideContentVisibility from "./types/SideContentVisibility.js";
-import SideContentFallDown from "./types/SideContentFallDown.js";
+import type SideContentFallDown from "./types/SideContentFallDown.js";
 import DynamicSideContentTemplate from "./DynamicSideContentTemplate.js";
 import type {
 	AccessibilityAttributes,
@@ -213,18 +213,6 @@ class DynamicSideContent extends UI5Element {
 	/**
 	 * @private
 	 */
-	@property({ noAttribute: true })
-	_mcSpan = "0";
-
-	/**
-	 * @private
-	 */
-	@property({ noAttribute: true })
-	_scSpan = "0";
-
-	/**
-	 * @private
-	 */
 	@property({ type: Boolean, noAttribute: true })
 	_toggled = false;
 
@@ -247,22 +235,27 @@ class DynamicSideContent extends UI5Element {
 	@slot()
 	sideContent!: Array<HTMLElement>;
 
- 	_resizeObserver?: ResizeObserver;
+	_resizeObserver?: ResizeObserver;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	onEnterDOM() {
 		this._resizeObserver = new ResizeObserver(entries => {
-			for (const entry of entries) {
+			entries.forEach(entry => {
 				const width = entry.contentRect.width;
 				let breakpoint: string;
-				if (width <= S_M_BREAKPOINT) breakpoint = "S";
-				else if (width <= M_L_BREAKPOINT) breakpoint = "M";
-				else if (width <= L_XL_BREAKPOINT) breakpoint = "L";
-				else breakpoint = "XL";
+				if (width <= S_M_BREAKPOINT) {
+					breakpoint = "S";
+				} else if (width <= M_L_BREAKPOINT) {
+					breakpoint = "M";
+				} else if (width <= L_XL_BREAKPOINT) {
+					breakpoint = "L";
+				} else {
+					breakpoint = "XL";
+				}
 
-				this._isSideBelow = this.isSideBelow
+				this._isSideBelow = this.isSideBelow;
 
 				if (breakpoint !== this._currentBreakpoint) {
 					this.fireDecoratorEvent("layout-change", {
@@ -273,8 +266,7 @@ class DynamicSideContent extends UI5Element {
 					});
 					this._currentBreakpoint = breakpoint;
 				}
-
-			}
+			});
 		});
 		this._resizeObserver.observe(this);
 	}
@@ -294,10 +286,6 @@ class DynamicSideContent extends UI5Element {
 	}
 
 	get classes() {
-		const gridPrefix = "ui5-dsc-span",
-			mcSpan = this._toggled ? this._scSpan : this._mcSpan,
-			scSpan = this._toggled ? this._mcSpan : this._scSpan;
-
 		return {
 			main: {
 				"ui5-dsc-main": true,
@@ -308,7 +296,7 @@ class DynamicSideContent extends UI5Element {
 			root: {
 				"ui5-dsc-root": true,
 				"ui5-dsc-toggled": this._toggled,
-			}
+			},
 		};
 	}
 
@@ -317,17 +305,16 @@ class DynamicSideContent extends UI5Element {
 			return false;
 		}
 		return (
-			(this.sideContentFallDown === "OnMinimumWidth" && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT) ||
-			(this.sideContentFallDown === "BelowM" && this._currentBreakpoint === this.sizeS) ||
-			(this.sideContentFallDown === "BelowL" && (this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS)) ||
-			(this.sideContentFallDown === "BelowXL" && (this._currentBreakpoint === this.sizeL || this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS) && this._currentBreakpoint !== this.sizeXL) ||
-			(this.sideContentVisibility === "AlwaysShow" && this._currentBreakpoint === this.sizeS && !this._toggled) ||
-			(this.sideContentVisibility === "AlwaysShow" && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT)
+			(this.sideContentFallDown === "OnMinimumWidth" && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT)
+			|| (this.sideContentFallDown === "BelowM" && this._currentBreakpoint === this.sizeS)
+			|| (this.sideContentFallDown === "BelowL" && (this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS))
+			|| (this.sideContentFallDown === "BelowXL" && (this._currentBreakpoint === this.sizeL || this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS) && this._currentBreakpoint !== this.sizeXL)
+			|| (this.sideContentVisibility === "AlwaysShow" && this._currentBreakpoint === this.sizeS && !this._toggled)
+			|| (this.sideContentVisibility === "AlwaysShow" && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT)
 		);
 	}
 
 	get styles() {
-		const isToggled = this._currentBreakpoint === this.sizeS && this._toggled;
 		this._isSideBelow = this.isSideBelow;
 
 		return {
@@ -393,7 +380,6 @@ class DynamicSideContent extends UI5Element {
 	get _isSideContentFirst() {
 		return this.sideContentPosition === SideContentPosition.Start;
 	}
-
 }
 
 DynamicSideContent.define();
