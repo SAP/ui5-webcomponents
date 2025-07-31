@@ -568,7 +568,6 @@ class ShellBar extends UI5Element {
 	_lastOffsetWidth = 0;
 	_observableContent: Array<HTMLElement> = [];
 	_autoRestoreSearchField = false;
-	_isForwardingProfileClick = false;
 
 	_onSearchOpenBound = this._onSearchOpen.bind(this);
 	_onSearchCloseBound = this._onSearchClose.bind(this);

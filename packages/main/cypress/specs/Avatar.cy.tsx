@@ -5,7 +5,6 @@ import ShellBar from "../../../fiori/src/ShellBar.js";
 import "@ui5/webcomponents-icons/dist/supplier.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/person-placeholder.js";
-import React, { useEffect, useRef } from "react";
 
 describe("Accessibility", () => {
 	it("checks if initials of avatar are correctly announced", () => {
