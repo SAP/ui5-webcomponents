@@ -417,7 +417,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			}
 		});
 
-		this.value = this.normalizeValue(this.value) || this.value;
+		this.value = this.normalizeFormattedValue(this.value) || this.value;
 		this.liveValue = this.value;
 	}
 
@@ -522,7 +522,8 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		const valid = this._checkValueValidity(value);
 
 		if (valid && normalizeValue) {
-			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
+			value = this.getDisplayValueFromValue(value);
+			value = this.normalizeDisplayValue(value); // transform valid values (in any format) to the correct format
 		}
 
 		let executeEvent = true;
@@ -532,7 +533,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 		if (updateValue) {
 			this._dateTimeInput.value = value;
-			this.value = value;
+			this.value = this.getValueFromDisplayValue(value);
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
 
@@ -566,6 +567,22 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		}
 	}
 
+	getValueFromDisplayValue(value: string): string {
+		if (!this.getDisplayFormat().parse(value)) {
+			return value;
+		}
+
+		return this.getValueFormat().format(this.getDisplayFormat().parse(value));
+	}
+
+	getDisplayValueFromValue(value: string): string {
+		if (!this.getValueFormat().parse(value)) {
+			return value;
+		}
+
+		return this.getDisplayFormat().format(this.getValueFormat().parse(value));
+	}
+
 	/**
 	 * The ui5-input "submit" event handler - fire change event when the user presses enter
 	 * @protected
@@ -597,7 +614,19 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		if (value === "") {
 			return true;
 		}
-		return this.isValid(value) && this.isInValidRange(value);
+		return this.isValidValue(value) && this.isInValidRange(value);
+	}
+
+	/**
+	 * Checks if the provided value is valid and within valid range.
+	 * @protected
+	 * @param value
+	 */
+	_checkDisplayValueValidity(value: string): boolean {
+		if (value === "") {
+			return true;
+		}
+		return this.isValidDisplayValue(value) && this.isInValidRangeDisplayValue(value);
 	}
 
 	_click(e: MouseEvent) {
@@ -622,6 +651,32 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	/**
+	 * Checks if a value is valid against the current date format of the DatePicker.
+	 * @public
+	 * @param value A value to be tested against the current date format
+	 */
+	isValidValue(value: string): boolean {
+		if (value === "" || value === undefined) {
+			return true;
+		}
+
+		return !!this.getValueFormat().parse(value);
+	}
+
+	/**
+	 * Checks if a value is valid against the current date format of the DatePicker.
+	 * @public
+	 * @param value A value to be tested against the current date format
+	 */
+	isValidDisplayValue(value: string): boolean {
+		if (value === "" || value === undefined) {
+			return true;
+		}
+
+		return !!this.getDisplayFormat().parse(value);
+	}
+
+	/**
 	 * Checks if a date is between the minimum and maximum date.
 	 * @public
 	 * @param value A value to be checked
@@ -632,6 +687,20 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		}
 
 		const calendarDate = this._getCalendarDateFromString(value);
+
+		if (!calendarDate || !this._minDate || !this._maxDate) {
+			return false;
+		}
+
+		return calendarDate.valueOf() >= this._minDate.valueOf() && calendarDate.valueOf() <= this._maxDate.valueOf();
+	}
+
+	isInValidRangeDisplayValue(value: string): boolean {
+		if (value === "" || value === undefined) {
+			return true;
+		}
+
+		const calendarDate = this._getCalendarDateFromStringDisplayValue(value);
 
 		if (!calendarDate || !this._minDate || !this._maxDate) {
 			return false;
@@ -652,9 +721,32 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return this.getFormat().format(this.getFormat().parse(value, true), true); // it is important to both parse and format the date as UTC
 	}
 
-	get _displayFormat(): string {
-		// @ts-ignore oFormatOptions is a private API of DateFormat
-		return this.getFormat().oFormatOptions.pattern as string;
+	/**
+	 * The parser understands many formats, but we need one format
+	 * @protected
+	 */
+	normalizeFormattedValue(value: string) {
+		if (!this.getValueFormat().parse(value, true)) {
+			return "";
+		}
+
+		if (value === "") {
+			return value;
+		}
+
+		return this.getValueFormat().format(this.getValueFormat().parse(value, true), true); // it is important to both parse and format the date as UTC
+	}
+
+	/**
+	 * The parser understands many formats, but we need one format
+	 * @protected
+	 */
+	normalizeDisplayValue(value: string) {
+		if (value === "" || !this.getDisplayFormat().parse(value, true)) {
+			return value;
+		}
+
+		return this.getDisplayFormat().format(this.getDisplayFormat().parse(value, true), true); // it is important to both parse and format the date as UTC
 	}
 
 	get _lastDayOfTheYear() {
@@ -685,6 +777,18 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	get showFooter() {
 		return isPhone();
+	}
+
+	get displayValue() : string {
+		if (!this.getValueFormat().parse(this.value, true)) {
+			return this.value;
+		}
+
+		if (!this.value) {
+			return "";
+		}
+
+		return this.getDisplayFormat().format(this.getValueFormat().parse(this.value, true), true);
 	}
 
 	get accInfo(): InputAccInfo {
@@ -829,7 +933,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @returns The date as string
 	 */
 	formatValue(date: Date): string {
-		return this.getFormat().format(date);
+		return this.getValueFormat().format(date);
 	}
 
 	_togglePicker(): void {
@@ -847,11 +951,11 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @default null
 	 */
 	get dateValue(): Date | null {
-		return this.liveValue ? this.getFormat().parse(this.liveValue) as Date : this.getFormat().parse(this.value) as Date;
+		return this.liveValue ? this.getValueFormat().parse(this.liveValue) as Date : this.getValueFormat().parse(this.value) as Date;
 	}
 
 	get dateValueUTC(): Date | null {
-		return this.liveValue ? this.getFormat().parse(this.liveValue, true) as Date : this.getFormat().parse(this.value) as Date;
+		return this.liveValue ? this.getValueFormat().parse(this.liveValue, true) as Date : this.getValueFormat().parse(this.value) as Date;
 	}
 
 	get styles() {

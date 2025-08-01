@@ -64,6 +64,28 @@ describe("DateRangePicker general interaction", () => {
 			.should("have.attr", "value-state", "None");
 	});
 
+	it("custom formatting", () => {
+		cy.mount(<DateRangePicker displayFormat="dd/MM/yyyy" valueFormat="yyyy-MM-dd"></DateRangePicker>);
+
+		cy.get("[ui5-daterange-picker]")
+			.as("dateRangePicker");
+
+		cy.get<DateRangePicker>("@dateRangePicker")
+			.ui5DatePickerGetInnerInput()
+			.realClick()
+			.should("be.focused")
+			.realType("05/05/2018 - 06/06/2018")
+			.realPress("Enter");
+
+		cy.get("@dateRangePicker")
+			.shadow()
+			.find("ui5-datetime-input")
+			.should("have.attr", "value", "05/05/2018 - 06/06/2018");
+
+		cy.get("@dateRangePicker")
+			.should("have.attr", "value", "2018-05-05 - 2018-06-06");
+	});
+
 	it("Selected dates are updated after value update in the input field", () => {
 		cy.mount(<DateRangePickerTemplate formatPattern="dd/MM/yyyy" />);
 
