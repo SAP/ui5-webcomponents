@@ -899,6 +899,10 @@ class Select extends UI5Element implements IFormInputElement {
 		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
 	}
 
+	get responsivePopoverId() {
+		return `${this._id}-popover`;
+	}
+
 	get isDisabled() {
 		return this.disabled || undefined;
 	}

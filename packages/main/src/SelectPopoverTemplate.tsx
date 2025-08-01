@@ -11,6 +11,7 @@ export default function SelectPopoverTemplate(this: Select) {
 		<>
 			{this.options.length > 0 &&
 				<ResponsivePopover
+					id={this.responsivePopoverId}
 					class={{
 						"ui5-select-popover": true,
 						...this.classes.popover
