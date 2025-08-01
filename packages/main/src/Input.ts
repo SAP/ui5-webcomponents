@@ -1728,7 +1728,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return this.valueStateText ? `${valueState} ${this.valueStateText}` : valueState;
 		}
 
-		return `${valueState}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
+		return this.valueStateMessage.length ? `${valueState} ${this.valueStateMessage.map(el => el.textContent).join(" ")}` : valueState;
 	}
 
 	get itemSelectionAnnounce() {
