@@ -41,12 +41,17 @@ export default function ProductSwitchItemTemplate(this: ProductSwitchItem) {
 function item(this: ProductSwitchItem) {
 	return (
 		<>
-			{this.icon &&
+			{this.customImage && this.customImage.length > 0 ? (
+				<span class="ui5-product-switch-item-icon">
+					<slot name="customImage"></slot>
+				</span>
+			) : (
+				this.icon &&
 				<Icon
 					class="ui5-product-switch-item-icon"
 					name={this.icon}
 				/>
-			}
+			)}
 
 			<span class="ui5-product-switch-item-text-content">
 				{this.titleText &&
