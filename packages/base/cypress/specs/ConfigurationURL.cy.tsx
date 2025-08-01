@@ -60,7 +60,7 @@ describe("Different themeRoot configurations", () => {
 		cy.window()
 			.then($el => {
 				const metaTag = document.createElement("meta");
-				metaTag.name = "sap-allowedThemeOrigins";
+				metaTag.name = "sap-allowed-theme-origins";
 				metaTag.content = "https://example.com";
 
 				$el.document.head.append(metaTag);
@@ -86,7 +86,7 @@ describe("Different themeRoot configurations", () => {
 		// All allowed theme roots need to be described inside the meta tag.
 		cy.window()
 			.then($el => {
-				const metaTag = $el.document.head.querySelector("[name='sap-allowedThemeOrigins']");
+				const metaTag = $el.document.head.querySelector("[name='sap-allowed-theme-origins']");
 
 				metaTag?.remove();
 			})
