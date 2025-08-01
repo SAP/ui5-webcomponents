@@ -8,6 +8,7 @@ import AnimationMode from "./types/AnimationMode.js";
 import type CalendarType from "./types/CalendarType.js";
 import { resetConfiguration as resetConfigurationFn } from "./config/ConfigurationReset.js";
 import { getLocationSearch } from "./Location.js";
+import { themeRootUrlAllowed } from "./config/ThemeRoot.js";
 
 let initialized = false;
 
@@ -56,6 +57,10 @@ const getTheme = () => {
 
 const getThemeRoot = () => {
 	initConfiguration();
+	if (!themeRootUrlAllowed() && initialConfig.themeRoot) {
+		console.warn("Setting sap-ui-themeRoot via URL must be explicitly allowed by calling allowThemeRootUrl(true); The provided sap-ui-themeRoot was ignored."); // eslint-disable-line
+		initialConfig.themeRoot = undefined;
+	}
 	return initialConfig.themeRoot;
 };
 

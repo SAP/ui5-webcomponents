@@ -283,6 +283,13 @@ Example:
 </script>
 ```
 
+*Note:* For security reasons, setting the `themeRoot` parameter via URL must be explicitly allowed by calling:
+
+```
+import { allowThemeRootUrl } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
+allowThemeRootUrl(true);
+```
+
 ## Configuration Script
 <a name="script"></a>
 
