@@ -1095,13 +1095,6 @@ class ShellBar extends UI5Element {
 		this.fireDecoratorEvent("profile-click", {
 			targetRef: this.shadowRoot!.querySelector<Button>(".ui5-shellbar-image-button")!,
 		});
-
-		if (this.profile && this.profile.length > 0) {
-			const avatar = this.profile[0];
-			// Forward the click event to the avatar
-			const mouseClickEvent = new MouseEvent("ui5-click");
-			avatar.dispatchEvent(mouseClickEvent);
-		}
 	}
 
 	_handleCancelButtonPress() {
