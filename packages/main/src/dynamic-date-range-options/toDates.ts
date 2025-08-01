@@ -5,8 +5,8 @@ const dateOptionToDates = (value: DynamicDateRangeValue): Array<Date> => {
 	const startDate = value.values ? value.values[0] as Date : UI5Date.getInstance();
 	const endDate = UI5Date.getInstance(startDate.getTime());
 
-	startDate?.setUTCHours(0, 0, 0, 0);
-	endDate?.setUTCHours(23, 59, 59, 999);
+	startDate?.setHours(0, 0, 0, 0);
+	endDate?.setHours(23, 59, 59, 999);
 
 	return [startDate, endDate];
 };
@@ -15,8 +15,8 @@ const dateRangeOptionToDates = (value: DynamicDateRangeValue): Array<Date> => {
 	const startDate = value.values ? value.values[0] as Date : UI5Date.getInstance();
 	const endDate = value.values ? value.values[1] as Date : UI5Date.getInstance();
 
-	startDate?.setUTCHours(0, 0, 0, 0);
-	endDate?.setUTCHours(23, 59, 59, 999);
+	startDate?.setHours(0, 0, 0, 0);
+	endDate?.setHours(23, 59, 59, 999);
 
 	return [startDate, endDate];
 };
@@ -25,8 +25,8 @@ const todayToDates = (): Array<Date> => {
 	const startDate = UI5Date.getInstance();
 	const endDate = UI5Date.getInstance();
 
-	startDate.setUTCHours(0, 0, 0, 0);
-	endDate.setUTCHours(23, 59, 59, 999);
+	startDate.setHours(0, 0, 0, 0);
+	endDate.setHours(23, 59, 59, 999);
 
 	return [startDate, endDate];
 };
@@ -35,11 +35,11 @@ const yesterdayToDates = (): Array<Date> => {
 	const startDate = UI5Date.getInstance();
 	const endDate = UI5Date.getInstance();
 
-	startDate.setUTCHours(0, 0, 0, 0);
-	startDate.setUTCDate(startDate.getUTCDate() - 1);
+	startDate.setHours(0, 0, 0, 0);
+	startDate.setDate(startDate.getDate() - 1);
 
-	endDate.setUTCHours(23, 59, 59, 999);
-	endDate.setUTCDate(endDate.getUTCDate() - 1);
+	endDate.setHours(23, 59, 59, 999);
+	endDate.setDate(endDate.getDate() - 1);
 
 	return [startDate, endDate];
 };
@@ -48,11 +48,11 @@ const tomorrowToDates = (): Array<Date> => {
 	const startDate = UI5Date.getInstance();
 	const endDate = UI5Date.getInstance();
 
-	startDate.setUTCHours(0, 0, 0, 0);
-	startDate.setUTCDate(startDate.getUTCDate() + 1);
+	startDate.setHours(0, 0, 0, 0);
+	startDate.setDate(startDate.getDate() + 1);
 
-	endDate.setUTCHours(23, 59, 59, 999);
-	endDate.setUTCDate(endDate.getUTCDate() + 1);
+	endDate.setHours(23, 59, 59, 999);
+	endDate.setDate(endDate.getDate() + 1);
 
 	return [startDate, endDate];
 };
@@ -70,26 +70,26 @@ const lastToDates = (value: DynamicDateRangeValue, unit: string): Array<Date> =>
 		startDate.setTime(today.getTime() - (amount - 1) * 24 * 60 * 60 * 1000);
 		break;
 	case "weeks": {
-		const currentDayOfWeek = today.getUTCDay();
+		const currentDayOfWeek = today.getDay();
 		const daysToStartOfWeek = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
-		startDate.setUTCDate(today.getUTCDate() - daysToStartOfWeek - ((amount - 1) * 7));
+		startDate.setDate(today.getDate() - daysToStartOfWeek - ((amount - 1) * 7));
 		break;
 	}
 	case "months":
-		startDate.setUTCMonth(today.getUTCMonth() - (amount - 1));
-		startDate.setUTCDate(1); // Start of the month
+		startDate.setMonth(today.getMonth() - (amount - 1));
+		startDate.setDate(1); // Start of the month
 		break;
 	case "quarters": {
-		const currentQuarter = Math.floor(today.getUTCMonth() / 3);
+		const currentQuarter = Math.floor(today.getMonth() / 3);
 		const quarterStartMonth = currentQuarter * 3 - ((amount - 1) * 3);
-		startDate.setUTCMonth(quarterStartMonth);
-		startDate.setUTCDate(1); // Start of the quarter
+		startDate.setMonth(quarterStartMonth);
+		startDate.setDate(1); // Start of the quarter
 		break;
 	}
 	case "years":
-		startDate.setUTCFullYear(today.getUTCFullYear() - (amount - 1));
-		startDate.setUTCMonth(0); // January
-		startDate.setUTCDate(1); // Start of the year
+		startDate.setFullYear(today.getFullYear() - (amount - 1));
+		startDate.setMonth(0); // January
+		startDate.setDate(1); // Start of the year
 		break;
 	}
 
@@ -109,26 +109,26 @@ const nextToDates = (value: DynamicDateRangeValue, unit: string): Array<Date> =>
 		endDate.setTime(today.getTime() + (amount - 1) * 24 * 60 * 60 * 1000);
 		break;
 	case "weeks": {
-		const currentDayOfWeek = today.getUTCDay();
+		const currentDayOfWeek = today.getDay();
 		const daysToEndOfWeek = currentDayOfWeek === 0 ? 0 : 7 - currentDayOfWeek;
-		endDate.setUTCDate(today.getUTCDate() + daysToEndOfWeek + ((amount - 1) * 7));
+		endDate.setDate(today.getDate() + daysToEndOfWeek + ((amount - 1) * 7));
 		break;
 	}
 	case "months":
-		endDate.setUTCMonth(today.getUTCMonth() + amount);
-		endDate.setUTCDate(0); // Last day of the previous month (the target month)
+		endDate.setMonth(today.getMonth() + amount);
+		endDate.setDate(0); // Last day of the previous month (the target month)
 		break;
 	case "quarters": {
-		const currentQuarter = Math.floor(today.getUTCMonth() / 3);
+		const currentQuarter = Math.floor(today.getMonth() / 3);
 		const quarterEndMonth = (currentQuarter + 1) * 3 - 1 + ((amount - 1) * 3);
-		endDate.setUTCMonth(quarterEndMonth + 1);
-		endDate.setUTCDate(0); // Last day of the quarter
+		endDate.setMonth(quarterEndMonth + 1);
+		endDate.setDate(0); // Last day of the quarter
 		break;
 	}
 	case "years":
-		endDate.setUTCFullYear(today.getUTCFullYear() + amount);
-		endDate.setUTCMonth(0); // January of the next year
-		endDate.setUTCDate(0); // Last day of December of the target year
+		endDate.setFullYear(today.getFullYear() + amount);
+		endDate.setMonth(0); // January of the next year
+		endDate.setDate(0); // Last day of December of the target year
 		break;
 	}
 

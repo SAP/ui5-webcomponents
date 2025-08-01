@@ -382,11 +382,14 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	get currentValueText() {
-		if (this.currentValue && this.currentValue.operator === this._currentOption?.operator) {
-			const dates = this._currentOption.toDates(this.currentValue);
-			const displayValue = { ...this.currentValue, values: dates };
-			const displayText = this._currentOption.format(displayValue);
-			return `${DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_SELECTED_TEXT)}: ${displayText}`;
+		if (this.currentValue) {
+			const correctOption = this.getOption(this.currentValue.operator);
+			if (correctOption) {
+				const dates = correctOption.toDates(this.currentValue);
+				const displayValue = { ...this.currentValue, values: dates };
+				const displayText = correctOption.format(displayValue);
+				return `${DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_SELECTED_TEXT)}: ${displayText}`;
+			}
 		}
 
 		if (this._currentOption) {
