@@ -141,7 +141,7 @@ class ListItemGroupHeader extends ListItemBase {
 				this.expandableTextTemplate = ListItemGroupHeader.ExpandableTextTemplate;
 				// If feature is not preloaded, load the template dynamically
 			} else {
-				import("./features/ListItemGroupHeaderExpandableTextTemplate.js").then(module => {
+				import("./features/ListItemStandardExpandableTextTemplate.js").then(module => {
 					this.expandableTextTemplate = module.default;
 				});
 			}

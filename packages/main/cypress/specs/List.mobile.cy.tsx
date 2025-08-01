@@ -43,6 +43,7 @@ describe("List Mobile Tests", () => {
             .find("ui5-li-group-header")
             .shadow()
             .find("ui5-expandable-text")
+            .should("exist")
             .invoke('prop', 'maxCharacters')
             .should('eq', 100);
     });
