@@ -1,5 +1,5 @@
 import ExpandableText from "../ExpandableText.js";
-import type ListItemStandard from "../ListItemStandard.js";
+import type ListItemBase from "../ListItemBase.js";
 import type { ExpandableTextTemplateParams } from "../types/ExpandableTextTemplateParams.js";
 
 /**
@@ -10,7 +10,7 @@ import type { ExpandableTextTemplateParams } from "../types/ExpandableTextTempla
  * @returns {JSX.Element} The rendered ExpandableText component
  */
 export default function ListItemStandardExpandableTextTemplate(
-	this: ListItemStandard,
+	this: ListItemBase,
 	injectedProps: ExpandableTextTemplateParams
 ): JSX.Element {
 	const {
