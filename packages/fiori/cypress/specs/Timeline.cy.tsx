@@ -118,6 +118,37 @@ describe("Timeline with group items interactions", () => {
 			.should("have.length", 4);
 	});
 
+	it("Group items are collapsed on button click", () => {
+		cy.mount(<GroupSample />);
+
+		cy.get("[ui5-timeline]")
+			.find("[ui5-timeline-group-item][group-name='Events']")
+			.as("currentGroup");
+
+		cy.get("@currentGroup")
+			.eq(0)
+			.shadow()
+			.find("[ui5-toggle-button]")
+			.as("currentGroupButton");
+
+		cy.get("@currentGroupButton")
+			.realClick();
+
+		cy.realPress("F2");
+
+		cy.realPress("ArrowDown");
+
+		cy.get("[ui5-timeline]")
+			.find("[ui5-timeline-group-item][group-name='Meetings']")
+			.as("nextGroup");
+
+		cy.get("@nextGroup")
+			.eq(0)
+			.shadow()
+			.find("[ui5-toggle-button]")
+			.should("be.focused");
+	});
+
 	it("Group items are navigable", () => {
 		cy.mount(<GroupSample />);
 
