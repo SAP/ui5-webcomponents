@@ -25,7 +25,6 @@ import {
 import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
 import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
-import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -591,7 +590,6 @@ class List extends UI5Element {
 
 	onEnterDOM() {
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
-		DragRegistry.subscribe(this);
 		ResizeHandler.register(this.getDomRef()!, this._handleResizeCallback);
 	}
 
@@ -599,7 +597,6 @@ class List extends UI5Element {
 		deregisterUI5Element(this);
 		this.unobserveListEnd();
 		ResizeHandler.deregister(this.getDomRef()!, this._handleResizeCallback);
-		DragRegistry.unsubscribe(this);
 	}
 
 	onBeforeRendering() {
