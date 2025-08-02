@@ -354,15 +354,17 @@ class Timeline extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		const target = e.target as ITimelineItem;
+		const target = e.target as ITimelineItem,
+			targetfocusDomRef = target?.getFocusDomRef(),
+			shouldHandleCustomArrowNavigation = targetfocusDomRef === this.getFocusDomRef() || target === this.growingButton;
 
-		if (isDown(e) || isRight(e)) {
+		if (shouldHandleCustomArrowNavigation && (isDown(e) || isRight(e))) {
 			this._handleDown();
 			e.preventDefault();
 			return;
 		}
 
-		if (isUp(e) || isLeft(e)) {
+		if (shouldHandleCustomArrowNavigation && (isUp(e) || isLeft(e))) {
 			this._handleUp(e);
 			e.preventDefault();
 			return;
