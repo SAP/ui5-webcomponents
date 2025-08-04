@@ -2,10 +2,9 @@ import LastNextTemplate from "./LastNextTemplate.js";
 import type { DynamicDateRangeValue, IDynamicDateRangeOption } from "../DynamicDateRange.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+
 import {
-	formatLastNext, handleSelectionChangeLastNext, isValidStringLastNext, parseLastNext,
+	handleSelectionChangeLastNext, isValidStringLastNext, parseLastNext, formatLastNextValue,
 } from "./LastNextUtils.js";
 import { toDatesLastNext } from "./toDates.js";
 import DynamicDateRange from "../DynamicDateRange.js";
@@ -74,46 +73,7 @@ class LastOptions implements IDynamicDateRangeOption {
 	}
 
 	format(value: DynamicDateRangeValue): string {
-		// for empty/default values
-		if (!value.values || value.values.length === 0) {
-			const firstOption = this.availableOptions.find(info => this.options?.includes(info.operator) || info.operator === this._operator);
-			if (firstOption) {
-				return formatLastNext({ operator: firstOption.operator, values: [1] }, { text: firstOption.text } as IDynamicDateRangeOption);
-			}
-		}
-
-		// for date values
-		if (value.values && value.values.length >= 2 && value.values[0] instanceof Date && value.values[1] instanceof Date) {
-			const [startDate, endDate] = value.values;
-			const dateFormat = DateFormat.getDateInstance({ strictParsing: true });
-
-			// Single day check for DAYS operations
-			const isSingleDay = value.operator.includes("DAYS") && this._isSingleDayRange(startDate, endDate);
-			const isSameDay = startDate.getFullYear() === endDate.getFullYear()
-				&& startDate.getMonth() === endDate.getMonth()
-				&& startDate.getDate() === endDate.getDate();
-
-			if (isSingleDay || isSameDay) {
-				return dateFormat.format(startDate);
-			}
-			return `${dateFormat.format(startDate)} - ${dateFormat.format(endDate)}`;
-		}
-
-		// for numeric values
-		const optionInfo = this.availableOptions.find(info => info.operator === value.operator);
-		if (optionInfo) {
-			const numberValue = (value.values?.[0] as number) || 1;
-			return formatLastNext({ operator: value.operator, values: [numberValue] }, { text: optionInfo.text } as IDynamicDateRangeOption);
-		}
-
-		return "";
-	}
-
-	_isSingleDayRange(startDate: Date, endDate: Date): boolean {
-		const normalizedStart = UI5Date.getInstance(startDate.getTime());
-		const normalizedEnd = UI5Date.getInstance(endDate.getTime());
-		const diffInDays = Math.round((normalizedEnd.getTime() - normalizedStart.getTime()) / (1000 * 60 * 60 * 24));
-		return diffInDays + 1 === 1;
+		return formatLastNextValue(value, this);
 	}
 
 	toDates(value: DynamicDateRangeValue): Array<Date> {
