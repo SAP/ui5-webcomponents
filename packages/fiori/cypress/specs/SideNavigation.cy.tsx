@@ -792,7 +792,7 @@ describe("Side Navigation interaction", () => {
 			.should("not.include", "#preventDefault");
 	});
 
-	it.skip("Tests preventDefault of items in overflow menu", () => {
+	it("Tests preventDefault of items in overflow menu", () => {
 		const handleClick = (event: Event) => {
 			event.preventDefault();
 		};
@@ -801,13 +801,14 @@ describe("Side Navigation interaction", () => {
 
 		cy.mount(
 			<SideNavigation id="sideNav" collapsed={true} onClick={handleClick} onSelectionChange={handleSelectionChange}>
+				<SideNavigationItem text="home"></SideNavigationItem>
 				<SideNavigationItem unselectable={true} href="#test" text="link"></SideNavigationItem>
 				<SideNavigationItem text="item"></SideNavigationItem>
 			</SideNavigation>
 		);
 
 		cy.get("#sideNav")
-			.invoke("attr", "style", "height: 50px");
+			.invoke("attr", "style", "height: 120px");
 
 		cy.get("#sideNav")
 			.shadow()
@@ -821,6 +822,11 @@ describe("Side Navigation interaction", () => {
 
 		cy.url()
 			.should("not.include", "#test");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-item-overflow")
+			.realClick();
 
 		cy.get("#sideNav")
 			.shadow()
@@ -926,7 +932,7 @@ describe("Side Navigation interaction", () => {
 		});
 	});
 
-	it.skip("Tests 'selection-change' event when SideNavigation is collapsed", () => {
+	it("Tests 'selection-change' event when SideNavigation is collapsed", () => {
 		cy.mount(
 			<SideNavigation id="sideNav" collapsed={true}>
 				<SideNavigationItem text="1" />
