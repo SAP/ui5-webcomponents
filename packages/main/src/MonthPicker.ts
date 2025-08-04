@@ -1,5 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
@@ -35,6 +36,7 @@ import MonthPickerTemplate from "./MonthPickerTemplate.js";
 // Styles
 import monthPickerStyles from "./generated/themes/MonthPicker.css.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 
 const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 const PAGE_SIZE = 12; // total months on a single page
@@ -132,6 +134,9 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	@property({ type: Number })
 	_secondTimestamp?: number;
 
+	@query("[data-sap-focus-ref]")
+	_focusableMonth!: HTMLElement;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -143,15 +148,24 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		this._buildMonths();
 	}
 
-	onAfterRendering() {
-		if (!this._hidden) {
-			this.focus();
-		}
-	}
-
 	get rowSize() {
 		return (this.secondaryCalendarType === CalendarType.Islamic && this.primaryCalendarType !== CalendarType.Islamic)
 			|| (this.secondaryCalendarType === CalendarType.Persian && this.primaryCalendarType !== CalendarType.Persian) ? 2 : 3;
+	}
+
+	_focusCorrectMonth() {
+		if (this._shouldFocusMonth) {
+			this._focusableMonth.focus();
+		}
+	}
+
+	get _shouldFocusMonth() {
+		return document.activeElement !== this._focusableMonth;
+	}
+
+	async _onfocusin() {
+		await renderFinished();
+		this._focusCorrectMonth();
 	}
 
 	_buildMonths() {
@@ -327,6 +341,21 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		const hoveredItem = target.closest(".ui5-mp-item") as HTMLElement;
 		if (hoveredItem && this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
 			this._secondTimestamp = this._getTimestampFromDom(hoveredItem);
+		}
+	}
+
+	/**
+	 * Sets the focus reference to the month that was clicked with mousedown.
+	 * @param e
+	 * @private
+	 */
+	_onmousedown(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+		const clickedItem = target.closest(".ui5-mp-item") as HTMLElement;
+
+		if (clickedItem) {
+			const timestamp = this._getTimestampFromDom(clickedItem);
+			this._setTimestamp(timestamp);
 		}
 	}
 
