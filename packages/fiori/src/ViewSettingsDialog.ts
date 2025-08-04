@@ -66,7 +66,7 @@ type ViewSettingsDialogCancelEventDetail = VSDSettings & {
 }
 
 // Common properties for several VSDInternalSettings fields
-type VSDItem = {text?: string, selected: boolean} // Used for sortOrder, sortBy and filterOptions
+type VSDItem = {text?: string, selected: boolean}
 
 // Used for the private properties _initialSettings, _confirmedSettings and _currentSettings
 type VSDInternalSettings = {
@@ -252,7 +252,6 @@ class ViewSettingsDialog extends UI5Element {
 	_dialog?: Dialog;
 	_sortOrder?: List;
 	_sortBy?: List;
-	_focusedFilterOptionIndex: number = 0;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
@@ -534,6 +533,7 @@ class ViewSettingsDialog extends UI5Element {
 
 	_handleFilterValueItemClick(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		const itemText = e.detail.targetItem.innerText;
+
 		// Update the component state
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
 			if (filter.selected) {
@@ -577,6 +577,9 @@ class ViewSettingsDialog extends UI5Element {
 		});
 	}
 
+	/**
+	 * Sets focus on recently used control within the dialog.
+	 */
 	_focusRecentlyUsedControl() {
 		if (!this._recentlyFocused || !Object.keys(this._recentlyFocused).length) {
 			return;
