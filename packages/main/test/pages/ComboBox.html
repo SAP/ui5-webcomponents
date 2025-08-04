@@ -176,6 +176,22 @@
 
 	</div>
 
+		<div class="demo-section">
+		<span>SelectionChange event testing</span>
+
+		<ui5-combobox id="selection-change-cb" show-clear-icon="">
+			<ui5-cb-item text="Argentina"></ui5-cb-item>
+			<ui5-cb-item text="Bulgaria"></ui5-cb-item>
+			<ui5-cb-item text="Canada"></ui5-cb-item>
+			<ui5-cb-item text="Germany"></ui5-cb-item>
+		</ui5-combobox>
+
+		<br>
+
+		Selected item: <span id="selection-change-placeholder"></span><br>
+		SelectionChange call count: <span id="selection-change-count">0</span><br>
+	</div>
+
 	<div class="demo-section">
 		<span>Lazy Loading - example does not work on IE11</span>
 
@@ -490,6 +506,11 @@
 		document.getElementById("change-cb").addEventListener("ui5-change", function (event) {
 			document.getElementById("change-placeholder").innerHTML = event.target.value;
 			document.getElementById("change-count").innerHTML = parseInt(document.getElementById("change-count").innerHTML) + 1;
+		});
+
+		document.getElementById("selection-change-cb").addEventListener("ui5-selection-change", function (event) {
+			document.getElementById("selection-change-placeholder").innerHTML = event.detail.item?.text || "";
+			document.getElementById("selection-change-count").innerHTML = parseInt(document.getElementById("selection-change-count").innerHTML) + 1;
 		});
 
 		document.getElementById("input-cb").addEventListener("ui5-input", function (event) {

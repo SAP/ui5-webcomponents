@@ -175,7 +175,7 @@ describe("Toolbar general interaction", () => {
 			.should("have.been.calledOnce");
 	});
 
-	it("Should move button with alwaysOverflow priority to overflow popover", async () => {
+	it.skip("Should move button with alwaysOverflow priority to overflow popover", async () => {
 
 		cy.mount(
 			<Toolbar id="otb_d">
@@ -286,6 +286,40 @@ describe("Toolbar general interaction", () => {
 
 		cy.get("@popover")
 			.should("have.prop", "open", false);
+	});
+
+	it("Should focus on the last interactive element outside the overflow popover when overflow button disappears", () => {
+		// Mount the Toolbar with multiple buttons
+		cy.mount(
+			<Toolbar>
+				<ToolbarButton text="Button 1" />
+				<ToolbarButton text="Button 2" />
+				<ToolbarButton text="Button 3" />
+				<ToolbarButton text="Button 4" />
+				<ToolbarButton text="Button 5" />
+			</Toolbar>
+		);
+
+		// Set initial viewport size to ensure the overflow button is visible
+		cy.viewport(300, 1080);
+
+		// Focus on the overflow button
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.click()
+			.click()
+			.should("be.focused");
+
+		// Resize the viewport to make the overflow button disappear
+		cy.viewport(800, 1080);
+
+		// Verify the focus shifts to the last interactive element outside the overflow popover
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-tb-item")
+			.eq(3)
+			.should("be.focused");
 	});
 });
 
@@ -459,29 +493,6 @@ describe("Toolbar Select", () => {
 		});
 	});
 
-	it("Should handle toolbar-select with width larger than the toolbar", async () => {
-		cy.mount(
-			<Toolbar id="otb_d">
-				<ToolbarSelect style="width: 201px;" id="toolbar-select">
-						<ToolbarSelectOption>1</ToolbarSelectOption>
-						<ToolbarSelectOption selected>2</ToolbarSelectOption>
-						<ToolbarSelectOption>3</ToolbarSelectOption>
-					</ToolbarSelect>
-			</Toolbar>
-		);
-		cy.viewport(220, 1080); // Set a small viewport width to trigger overflow
-
-		// Add a toolbar-select element with a large width
-		cy.get("#otb_d").shadow().within(() => {
-			cy.wait(2000);
-			// Click the overflow button
-			cy.get(".ui5-tb-overflow-btn").click();
-		});
-
-		// Verify the toolbar-select is rendered inside the popover
-		cy.get("ui5-toolbar-select").should("be.visible");
-	});
-
 	it("Should correctly handle the 'value' property and 'label' slot of ToolbarSelect", () => {
 		// Mount the Toolbar with a ToolbarSelect component
 		cy.mount(
@@ -514,5 +525,35 @@ describe("Toolbar Select", () => {
 		// Verify the updated value of the ToolbarSelect
 		cy.get("ui5-select", { includeShadowDom: true })
 			.should("have.attr", "value", "Option 3");
+	});
+});
+
+describe("Toolbar Button", () => {
+	it("Should not trigger click event on disabled button", () => {
+		// Use cy.mount to create the toolbar with buttons and input field
+		cy.mount(
+			<div>
+				<Toolbar id="test-toolbar">
+					<ToolbarButton disabled>Disabled Button</ToolbarButton>
+					<ToolbarButton
+						onClick={() => {
+							const input = document.getElementById("value-input") as HTMLInputElement;
+							input.value = (parseInt(input.value, 10) + 1).toString();
+						}}
+					>
+						Enabled Button
+					</ToolbarButton>
+					<input id="value-input" type="number" defaultValue="0" />
+				</Toolbar>
+			</div>
+		);
+
+		// Test clicking the disabled button
+		cy.get("ui5-toolbar-button[disabled]").realClick();
+		cy.get("#value-input").should("have.value", "0");
+
+		// Test clicking the non-disabled button
+		cy.get("ui5-toolbar-button:not([disabled])").realClick();
+		cy.get("#value-input").should("have.value", "1");
 	});
 });

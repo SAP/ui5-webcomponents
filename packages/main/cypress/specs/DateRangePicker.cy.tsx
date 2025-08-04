@@ -15,7 +15,6 @@ function DateRangePickerTemplate(options: DateTimePickerTemplateOptions) {
 	return <DateRangePicker {...options} />
 }
 
-
 describe("DateRangePicker general interaction", () => {
 	it("Custom Validation Error", () => {
 		cy.mount(<DateRangePickerTemplate formatPattern="dd/MM/yyyy" />);

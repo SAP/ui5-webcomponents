@@ -41,6 +41,15 @@ describe("Table - Rendering", () => {
 		cy.get("ui5-table-row").should("exist");
 		cy.get("ui5-table-header-cell").should("have.length", 2);
 		cy.get("ui5-table-header-row").should("have.attr", "aria-roledescription", "Column Header Row");
+		cy.get("ui5-table-header-row").should("have.attr", "aria-rowindex", "1");
+		cy.get("ui5-table-row").should("have.attr", "aria-rowindex", "2");
+		cy.get("ui5-table-header-cell").first().should("have.attr", "aria-colindex", "1");
+		cy.get("ui5-table-header-cell").last().should("have.attr", "aria-colindex", "2");
+
+		cy.get("#table").shadow().find("#table").as("innerTable");
+		cy.get("@innerTable").should("have.attr", "role", "grid");
+		cy.get("@innerTable").should("have.attr", "aria-colcount", "2");
+		cy.get("@innerTable").should("have.attr", "aria-rowcount", "2");
 	});
 
 	it("tests if initial empty table renders without errors", () => {
@@ -788,7 +797,9 @@ describe("Table - Horizontal Scrolling", () => {
 			.shadow()
 			.find("#navigated-cell")
 			.should("have.css", "position", "sticky")
-			.should("have.css", "right", "0px");
+			.should("have.css", "right", "0px")
+			.should("have.attr", "aria-hidden", "true")
+			.should("have.attr", "data-excluded-from-navigation");
 	});
 
 	it("selection column should be fixed to the left", () => {
