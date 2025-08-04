@@ -21,8 +21,6 @@ import PopoverTemplate from "./PopoverTemplate.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 
-type Opener = HTMLElement | string | null | undefined;
-
 const ARROW_SIZE = 8;
 
 type PopoverSize = {
@@ -192,7 +190,7 @@ class Popover extends Popup {
 	@slot({ type: HTMLElement })
 	footer!: Array<HTMLElement>;
 
-	_opener?: Opener;
+	_opener?: HTMLElement | string | null | undefined;
 	_openerRect?: DOMRect;
 	_preventRepositionAndClose?: boolean;
 	_top?: number;
@@ -230,7 +228,7 @@ class Popover extends Popup {
 		}
 	}
 
-	get opener(): Opener {
+	get opener(): HTMLElement | string | null | undefined {
 		return this._opener;
 	}
 
@@ -245,7 +243,7 @@ class Popover extends Popup {
 			return;
 		}
 
-		if (this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
+		if (!opener || this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
 			await renderFinished();
 			this.open = false;
 			this.fireDecoratorEvent("close");
@@ -292,7 +290,7 @@ class Popover extends Popup {
 		removeOpenedPopover(this);
 	}
 
-	getOpenerHTMLElement(opener: Opener): HTMLElement | null | undefined {
+	getOpenerHTMLElement(opener: HTMLElement | string | null | undefined): HTMLElement | null | undefined {
 		if (opener === undefined || opener === null) {
 			return opener;
 		}
