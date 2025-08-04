@@ -17,10 +17,10 @@ export default function ToolbarSelectTemplate(this: ToolbarSelect) {
 			onClose={(...args) => this.onClose(...args)}
 			onOpen={(...args) => this.onOpen(...args)}
 			onChange={(...args) => this.onChange(...args)}
-			label={this.label}
 		>
 			{this.hasCustomLabel &&
-				(<slot name="label" slot="label"></slot>)
+				<slot name="label" slot="label">
+				</slot>
 			}
 			{this.options.map((option, index) => (
 				<Option
@@ -30,6 +30,5 @@ export default function ToolbarSelectTemplate(this: ToolbarSelect) {
 					{option.textContent}
 				</Option>
 			))}
-		</Select>
-	);
-}
+		</Select>)
+};

@@ -11,6 +11,7 @@ import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
 import ToolbarItem from "./ToolbarItem.js";
 import type { ToolbarItemEventDetail } from "./ToolbarItem.js";
 import type ToolbarSelectOption from "./ToolbarSelectOption.js";
+import type OptionCustom from "./OptionCustom.js";
 import type { SelectChangeEventDetail } from "./Select.js";
 
 type ToolbarSelectChangeEventDetail = ToolbarItemEventDetail & SelectChangeEventDetail;
@@ -87,8 +88,13 @@ class ToolbarSelect extends ToolbarItem {
 	 * **Note:** Use the `ui5-toolbar-select-option` component to define the desired options.
 	 * @public
 	 */
-	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	options!: Array<ToolbarSelectOption>;
+	@slot({
+		"default": true,
+		type: HTMLElement,
+		invalidateOnChildChange: true,
+		individualSlots: true,
+	})
+	options!: Array<ToolbarSelectOption | OptionCustom>;
 
 	/**
 	 * Defines the HTML element that will be displayed in the component input part,
@@ -179,7 +185,7 @@ class ToolbarSelect extends ToolbarItem {
 
 	_syncOptions(selectedOption: HTMLElement): void {
 		const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
-		this.options.forEach((option: ToolbarSelectOption, index: number) => {
+		this.options.forEach((option: ToolbarSelectOption | OptionCustom, index: number) => {
 			if (index === selectedOptionIndex) {
 				option.setAttribute("selected", "");
 			} else {
