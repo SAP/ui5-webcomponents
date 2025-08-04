@@ -1495,12 +1495,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	get styles() {
 		const remSizeInPx = parseInt(getComputedStyle(document.documentElement).fontSize);
 		return {
-			popoverHeader: {
-				"width": `${this.offsetWidth}px`,
-			},
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth || ""}px`,
+				"max-width": "inherit",
 			},
 			suggestionsPopover: {
 				"min-width": `${this.offsetWidth || 0}px`,
