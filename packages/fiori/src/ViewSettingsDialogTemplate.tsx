@@ -110,18 +110,16 @@ function ViewSettingsDialogTemplateContent(this: ViewSettingsDialog) {
 				{this._filterStepTwo ? (
 					<List
 						selectionMode="Multiple"
-						onSelectionChange={this._handleFilterValueItemClick}
+						onSelectionChange={this._handleFilterValueItemClick} // checkboxes to select/deselect - use selectionChange
 						accessibleNameRef={`${this._id}-label`}
 					>
-						{this._currentSettings.filters
-							.filter(item => item.selected)
-							.flatMap(item => item.filterOptions.map(option => (
+						{this._currentSettings.filters.filter(item => item.selected).map(item => (<>
+							{item.filterOptions.map(option => (
 								<ListItemStandard
 									selected={option.selected}
-								>
-									{option.text}
-								</ListItemStandard>
-							)))}
+								>{option.text}</ListItemStandard>
+							))}
+						</>))}
 					</List>
 				) : ( // else
 					<List
