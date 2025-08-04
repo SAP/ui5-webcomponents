@@ -12,7 +12,9 @@ export default function TableTemplate(this: Table) {
 			<div id="table" role="grid"
 				style={this.styles.table}
 				aria-label={this._ariaLabel}
+				aria-description={this._ariaDescription}
 				aria-rowcount={this._ariaRowCount}
+				aria-colcount={this._ariaColCount}
 				aria-multiselectable={this._ariaMultiSelectable}
 			>
 				<slot name="headerRow"></slot>
@@ -68,7 +70,7 @@ export default function TableTemplate(this: Table) {
 
 function growingRow(this: Table) {
 	return (
-		<TableRow id="growing-row" ui5-growing-row>
+		<TableRow id="growing-row" ui5-growing-row aria-hidden={true}>
 			<TableCell id="growing-cell">
 				<slot name={this._getGrowing()?._individualSlot}></slot>
 			</TableCell>

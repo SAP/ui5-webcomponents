@@ -118,7 +118,7 @@ enum ValueStateIconMapping {
 }
 
 type ComboBoxSelectionChangeEventDetail = {
-	item: ComboBoxItem,
+	item: ComboBoxItem | null,
 };
 
 /**
@@ -578,6 +578,15 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._iconPressed = true;
 		this.inner.focus();
 		this.fireDecoratorEvent("open");
+
+		const allItems = this._getItems();
+		const currentItem = allItems.find(item => {
+			return item.selected || item.focused;
+		});
+
+		if (currentItem) {
+			this._scrollToItem(allItems.indexOf(currentItem));
+		}
 	}
 
 	_afterClosePopover() {
@@ -697,7 +706,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		// autocomplete
 		if (shouldAutocomplete && !isAndroid()) {
-			this._handleTypeAhead(value, value, true);
+			this._handleTypeAhead(value, value);
 		}
 
 		this.fireDecoratorEvent("input");
@@ -836,12 +845,12 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 		// autocomplete
-		this._handleTypeAhead(this.value, this.open ? this._userTypedValue : "", false);
+		this._handleTypeAhead(this.value, this.open ? this._userTypedValue : "");
 
 		this.fireDecoratorEvent("input");
 	}
 
-	_handleTypeAhead(value: string, filterValue: string, checkForGroupItem: boolean) {
+	_handleTypeAhead(value: string, filterValue: string) {
 		const item = this._getFirstMatchingItem(value);
 
 		if (!item) {
@@ -849,12 +858,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		this._applyAtomicValueAndSelection(item, filterValue);
-
-		if (value !== "" && !item.selected && (!checkForGroupItem || !item.isGroupItem)) {
-			this.fireDecoratorEvent("selection-change", {
-				item: item as ComboBoxItem,
-			});
-		}
 	}
 
 	_handleArrowDown(e: KeyboardEvent, indexOfItem: number) {
@@ -1148,6 +1151,21 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const currentlyFocusedItem = this.items.find(item => item.focused);
 		const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.isGroupItem;
 		let itemToBeSelected: IComboBoxItem | undefined;
+		let previouslySelectedItem: IComboBoxItem | undefined;
+
+		// Find previously selected item
+		this._filteredItems.forEach(item => {
+			if (!isInstanceOfComboBoxItemGroup(item)) {
+				if (item.selected) {
+					previouslySelectedItem = item;
+				}
+			} else {
+				const selectedGroupItem = item.items?.find(i => i.selected);
+				if (selectedGroupItem) {
+					previouslySelectedItem = selectedGroupItem;
+				}
+			}
+		});
 
 		this._filteredItems.forEach(item => {
 			if (!shouldSelectionBeCleared && !itemToBeSelected) {
@@ -1167,6 +1185,21 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 			return item;
 		});
+
+		// Fire selection-change event only when selection actually changes
+		if (previouslySelectedItem !== itemToBeSelected) {
+			if (itemToBeSelected) {
+				// New item selected
+				this.fireDecoratorEvent("selection-change", {
+					item: itemToBeSelected as ComboBoxItem,
+				});
+			} else if (previouslySelectedItem) {
+				// Selection cleared - fire event with 'null'
+				this.fireDecoratorEvent("selection-change", {
+					item: null,
+				});
+			}
+		}
 	}
 
 	_fireChangeEvent() {
@@ -1462,12 +1495,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	get styles() {
 		const remSizeInPx = parseInt(getComputedStyle(document.documentElement).fontSize);
 		return {
-			popoverHeader: {
-				"width": `${this.offsetWidth}px`,
-			},
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth || ""}px`,
+				"max-width": "inherit",
 			},
 			suggestionsPopover: {
 				"min-width": `${this.offsetWidth || 0}px`,
