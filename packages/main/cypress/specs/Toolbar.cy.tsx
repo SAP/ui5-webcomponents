@@ -144,7 +144,7 @@ describe("Toolbar general interaction", () => {
 			});
 
 		cy.get("ui5-button", { includeShadowDom: true }).contains("Button 1")
-			.click();
+			.realClick();
 
 		cy.get("@clicked")
 			.should("have.been.calledOnce");
@@ -158,7 +158,7 @@ describe("Toolbar general interaction", () => {
 			});
 
 		cy.get("ui5-select", { includeShadowDom: true })
-			.click();
+			.realClick();
 
 		cy.get("@clicked")
 			.should("have.been.calledOnce");
@@ -167,7 +167,7 @@ describe("Toolbar general interaction", () => {
 
 		cy.get("ui5-option", { includeShadowDom: true })
 			.first()
-			.click();
+			.realClick();
 
 		cy.get("@changed")
 			.should("have.been.calledOnce");
@@ -190,7 +190,7 @@ describe("Toolbar general interaction", () => {
 		cy.get("ui5-toolbar")
 			.shadow()
 			.find(".ui5-tb-overflow-btn")
-			.click();
+			.realClick();
 
 		// Verify the overflow popover is open
 		cy.get("ui5-toolbar")
@@ -234,11 +234,11 @@ describe("Toolbar general interaction", () => {
 		cy.get("#testEventpreventClosing-toolbar")
 			.shadow()
 			.find(".ui5-tb-overflow-btn")
-			.click();
+			.realClick();
 		cy.get("[ui5-toolbar-select]")
 			.shadow()
 			.find("[ui5-select]")
-			.click();
+			.realClick();
 
 		cy.get("#testEventpreventClosing-toolbar")
 			.shadow()
@@ -269,7 +269,7 @@ describe("Toolbar general interaction", () => {
 			.should("exist");
 
 		cy.get("@overflowButton")
-			.click();
+			.realClick();
 
 		cy.get("ui5-toolbar")
 			.shadow()
@@ -283,7 +283,7 @@ describe("Toolbar general interaction", () => {
 			.first()
 			.shadow()
 			.find("[ui5-button]")
-			.click();
+			.realClick();
 
 		cy.get("@popover")
 			.should("have.prop", "open", false);
@@ -308,8 +308,8 @@ describe("Toolbar general interaction", () => {
 		cy.get("ui5-toolbar")
 			.shadow()
 			.find(".ui5-tb-overflow-btn")
-			.click()
-			.click()
+			.realClick()
+			.realClick()
 			.should("be.focused");
 
 		// Resize the viewport to make the overflow button disappear
@@ -379,7 +379,7 @@ describe("Toolbar in Dialog", () => {
 		);
 
 		// Open dialog
-		cy.get("#open-dialog-button").click();
+		cy.get("#open-dialog-button").realClick();
 		cy.get<Dialog>("#dialog").ui5DialogOpened();
 
 		// Verify toolbar is rendered inside the dialog
@@ -424,14 +424,14 @@ describe("Toolbar Select", () => {
 		cy.get("@otb")
 			.shadow()
 			.find(".ui5-tb-overflow-btn")
-			.click();
+			.realClick();
 		const overflowButton = otb.shadow().find(".ui5-tb-overflow-btn");
 
 		cy.get("@otb")
 			.shadow()
 			.find(".ui5-overflow-popover").as("popover")
 			.should("have.attr", "open", "open");
-		overflowButton.click();
+		overflowButton.realClick();
 		cy.wait(500);
 
 		cy.get("@otb")
@@ -497,7 +497,7 @@ describe("ToolbarButton", () => {
 		cy.viewport(200, 1080);
 
 		cy.get("#otb_d").within(() => {
-			cy.get(".ui5-tb-overflow-btn").click();
+			cy.get(".ui5-tb-overflow-btn").realClick();
 			cy.get("ui5-popover").shadow().within(() => {
 				cy.get("ui5-toolbar-button").shadow().within(() => {
 					cy.get("ui5-button").then($button => {
