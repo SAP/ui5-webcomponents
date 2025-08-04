@@ -163,6 +163,35 @@ describe("List Tests", () => {
 			.find("[id$='growing-btn']")
 			.should("be.focused");
 	});
+
+	it("tests growing button accessible name property", () => {
+		cy.mount(
+			<List growing="Button">
+				<ListItemStandard>Laptop Lenovo</ListItemStandard>
+				<ListItemStandard>IPhone 3</ListItemStandard>
+				<ListItemStandard>HP Monitor 24</ListItemStandard>
+			</List>
+		);
+	
+		cy.get("[ui5-list]")
+			.as("list");
+	
+		cy.get("@list").invoke('prop', 'accessibilityAttributes', {
+			growingButton: {
+				name: "Load more products from catalog"
+			}
+		});
+
+		cy.get("@list")
+			.shadow()
+			.find("[id$='growing-btn']")
+			.should("have.attr", "aria-label", "Load more products from catalog");
+	
+		cy.get("@list")
+			.shadow()
+			.find("[id$='growing-btn']")
+			.should("not.have.attr", "aria-labelledby");
+	});
 });
 
 describe("List - Accessibility", () => {
@@ -199,6 +228,9 @@ describe("List - Wrapping Behavior", () => {
 		cy.mount(
 			<List>
 				<ListItemStandard id="wrapping-item" wrappingType="Normal" text={longText} description={longDescription}></ListItemStandard>
+				<ListItemGroup id="lig" wrapping-type="Normal" header-text={longText}>
+					<ListItemStandard>1. Bulgaria</ListItemStandard>
+				</ListItemGroup>
 			</List>
 		);
 
@@ -212,6 +244,17 @@ describe("List - Wrapping Behavior", () => {
 			.find("ui5-expandable-text")
 			.should("exist")
 			.and("have.length", 2);
+
+		cy.get("#lig")
+			.should("have.attr", "wrapping-type", "Normal")
+			.shadow()
+			.find("ui5-li-group-header")
+			.should("have.attr", "wrapping-type", "Normal")
+			.shadow()
+			.find("ui5-expandable-text")
+			.should("exist")
+			.and("have.length", 1);
+
 	});
 
 	it("uses maxCharacters of 300 on desktop viewport for wrapping list items", () => {
@@ -220,6 +263,9 @@ describe("List - Wrapping Behavior", () => {
 		cy.mount(
 			<List>
 				<ListItemStandard id="wrapping-item" wrappingType="Normal" text={longText}></ListItemStandard>
+				<ListItemGroup id="lig" wrapping-type="Normal" header-text={longText}>
+					<ListItemStandard>1. Bulgaria</ListItemStandard>
+				</ListItemGroup>
 			</List>
 		);
 
@@ -228,6 +274,14 @@ describe("List - Wrapping Behavior", () => {
 			.shadow()
 			.find("ui5-expandable-text")
 			.first()
+			.invoke('prop', 'maxCharacters')
+			.should('eq', 300);
+
+		cy.get("#lig")
+			.shadow()
+			.find("ui5-li-group-header")
+			.shadow()
+			.find("ui5-expandable-text")
 			.invoke('prop', 'maxCharacters')
 			.should('eq', 300);
 	});

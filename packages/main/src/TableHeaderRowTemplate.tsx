@@ -6,13 +6,15 @@ import ClearAll from "@ui5/webcomponents-icons/dist/clear-all.js";
 import IconDesign from "./types/IconDesign.js";
 import type TableHeaderRow from "./TableHeaderRow.js";
 
-export default function TableHeaderRowTemplate(this: TableHeaderRow) {
+export default function TableHeaderRowTemplate(this: TableHeaderRow, ariaColIndex: number = 1) {
 	return (
 		<>
 			{ this._hasSelector &&
 				<TableHeaderCell id="selection-cell"
 					aria-selected={this._isSelected}
 					aria-label={this._i18nSelection}
+					aria-description={this._selectionCellAriaDescription}
+					aria-colindex={ariaColIndex++}
 					data-ui5-table-cell-fixed
 					data-ui5-table-selection-component
 				>
@@ -40,12 +42,14 @@ export default function TableHeaderRowTemplate(this: TableHeaderRow) {
 				</TableHeaderCell>
 			}
 
-			{ this._visibleCells.map(cell => (
-				<slot name={cell._individualSlot} key={cell._individualSlot}></slot>
-			))}
+			{ this._visibleCells.map(cell => {
+				cell.ariaColIndex = `${ariaColIndex++}`;
+				return <slot name={cell._individualSlot} key={cell._individualSlot}></slot>;
+			})}
 
 			{ this._rowActionCount > 0 &&
 				<TableHeaderCell id="actions-cell"
+					aria-colindex={ariaColIndex++}
 					aria-label={this._i18nRowActions}
 				></TableHeaderCell>
 			}
