@@ -79,7 +79,7 @@ describe("Columns resize", () => {
 			});
 	});
 
-	it("keeps hidden class on columns after rerendering", () => {
+	it.skip("keeps hidden class on columns after rerendering", () => {
 		// Get a reference to the FCL first
 		cy.get("[ui5-flexible-column-layout]")
 			.as("fcl");

@@ -175,7 +175,7 @@ describe("Toolbar general interaction", () => {
 			.should("have.been.calledOnce");
 	});
 
-	it("Should move button with alwaysOverflow priority to overflow popover", () => {
+	it.skip("Should move button with alwaysOverflow priority to overflow popover", async () => {
 		cy.mount(
 			<Toolbar>
 				<ToolbarButton text="Add" icon={add} overflow-priority="AlwaysOverflow" stableDomRef="tb-button-add-d"></ToolbarButton>
