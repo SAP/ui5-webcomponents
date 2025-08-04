@@ -5,14 +5,8 @@ describe("Select mobile general interaction", () => {
 	it("Changes selection in Dialog", () => {
 		cy.get("html").viewport("iphone-x");
 
-		const changeEvents = [];
-
-		const handleChange = (e) => {
-			changeEvents.push(e);
-		};
-
 		cy.mount(
-			<Select onChange={handleChange}>
+			<Select>
 				<Option value="Cozy">Cozy</Option>
 				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
@@ -20,24 +14,30 @@ describe("Select mobile general interaction", () => {
 		);
 
 		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-change", cy.stub().as("changeStub"));
+			});
+
+		cy.get("@select")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", "Condensed");
 
-		cy.get("[ui5-select]").realClick();
+		cy.get("@select").realClick();
 
-		cy.get("[ui5-select]").realPress("ArrowUp");
-		cy.get("[ui5-select]").realPress("ArrowUp");
+		cy.get("@select").realPress("ArrowUp");
+		cy.get("@select").realPress("ArrowUp");
 
-		cy.get("[ui5-select]").realPress("Enter");
+		cy.get("@select").realPress("Enter");
 
-		cy.get("[ui5-select]")
+		cy.get("@select")
 			.shadow()
 			.find(".ui5-select-label-root")
 			.should("contain.text", "Cozy");
 
-		cy.wrap(changeEvents).should("have.length", 1);
+		cy.get("@changeStub").should("have.been.calledOnce");
 
-		cy.get("[ui5-select]").should("have.prop", "value", "Cozy");
+		cy.get("@select").should("have.prop", "value", "Cozy");
 	});
 });
