@@ -148,7 +148,7 @@ list.addEventListener("dragstart", (event) => {
     
     // Start multiple drag if more than one item is selected
     if (currentSelected.length > 1) {
-        startMultipleDrag(currentSelected.length);
+        startMultipleDrag(currentSelected.length, event);
     }
 });
 ```
@@ -297,12 +297,12 @@ For advanced cases, use the DragRegistry API to control multiple drag operations
 import { startMultipleDrag } from "@ui5/webcomponents-base/dist/DragAndDrop.js";
 
 // Start a multiple drag operation
-startMultipleDrag(itemCount);
+startMultipleDrag(itemCount, dragEvent);
 ```
 
 ### DragRegistry Methods
 
-- **`startMultipleDrag(count: number)`**: Starts a multiple drag operation with a custom ghost showing the item count
+- **`startMultipleDrag(count: number, e: DragEvent)`**: Starts a multiple drag operation with a custom ghost showing the item count
 
 ## Best Practices
 

@@ -2182,7 +2182,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 			},
 			popoverHeader: {
-				"max-width": isPhone() ? "100%" : `${this._inputWidth}px`,
+				"max-width": isPhone() ? "100%" : `22rem`,
 			},
 			suggestionsPopover: {
 				"min-width": `${this._inputWidth}px`,
