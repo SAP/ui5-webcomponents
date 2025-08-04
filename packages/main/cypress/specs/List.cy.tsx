@@ -1,6 +1,7 @@
 import type UI5Element from "@ui5/webcomponents-base";
 import List from "../../src/List.js";
 import ListItemStandard from "../../src/ListItemStandard.js";
+import ListItemGroup from "../../src/ListItemGroup.js";
 
 describe("List Tests", () => {
 	it("tests 'loadMore' event fired upon infinite scroll", () => {
@@ -216,6 +217,9 @@ describe("List - Wrapping Behavior", () => {
 		cy.mount(
 			<List>
 				<ListItemStandard id="wrapping-item" wrappingType="Normal" text={longText} description={longDescription}></ListItemStandard>
+				<ListItemGroup id="lig" wrapping-type="Normal" header-text={longText}>
+					<ListItemStandard>1. Bulgaria</ListItemStandard>
+				</ListItemGroup>
 			</List>
 		);
 
@@ -229,6 +233,17 @@ describe("List - Wrapping Behavior", () => {
 			.find("ui5-expandable-text")
 			.should("exist")
 			.and("have.length", 2);
+
+		cy.get("#lig")
+			.should("have.attr", "wrapping-type", "Normal")
+			.shadow()
+			.find("ui5-li-group-header")
+			.should("have.attr", "wrapping-type", "Normal")
+			.shadow()
+			.find("ui5-expandable-text")
+			.should("exist")
+			.and("have.length", 1);
+
 	});
 
 	it("uses maxCharacters of 300 on desktop viewport for wrapping list items", () => {
@@ -237,6 +252,9 @@ describe("List - Wrapping Behavior", () => {
 		cy.mount(
 			<List>
 				<ListItemStandard id="wrapping-item" wrappingType="Normal" text={longText}></ListItemStandard>
+				<ListItemGroup id="lig" wrapping-type="Normal" header-text={longText}>
+					<ListItemStandard>1. Bulgaria</ListItemStandard>
+				</ListItemGroup>
 			</List>
 		);
 
@@ -245,6 +263,14 @@ describe("List - Wrapping Behavior", () => {
 			.shadow()
 			.find("ui5-expandable-text")
 			.first()
+			.invoke('prop', 'maxCharacters')
+			.should('eq', 300);
+
+		cy.get("#lig")
+			.shadow()
+			.find("ui5-li-group-header")
+			.shadow()
+			.find("ui5-expandable-text")
 			.invoke('prop', 'maxCharacters')
 			.should('eq', 300);
 	});
