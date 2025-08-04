@@ -128,13 +128,10 @@ describe("Vertical responsiveness", () => {
 		const expectedMedia = "dialog";
 
 		cy.mount(
-			<div>
+			<div style={{ height: "300px" }}>
 				<IllustratedMessage />
 			</div>
 		);
-
-		cy.get("div")
-			.invoke("css", "height", "300px");
 
 		cy.get("[ui5-illustrated-message]")
 			.shadow()
@@ -155,13 +152,10 @@ describe("Vertical responsiveness", () => {
 		const expectedMedia = "scene";
 
 		cy.mount(
-			<div>
+			<div style={{ height: "500px" }}>
 				<IllustratedMessage />
 			</div>
 		);
-
-		cy.get("div")
-			.invoke("css", "height", "500px");
 
 		cy.get("[ui5-illustrated-message]")
 			.shadow()
