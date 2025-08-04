@@ -13,6 +13,7 @@ import type List from "@ui5/webcomponents/dist/List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 
 import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
 import "@ui5/webcomponents-icons/dist/sort.js";
@@ -65,7 +66,7 @@ type ViewSettingsDialogCancelEventDetail = VSDSettings & {
 }
 
 // Common properties for several VSDInternalSettings fields
-type VSDItem = {text?: string, selected: boolean, focused?: boolean} // Used for sortOrder, sortBy and filterOptions
+type VSDItem = {text?: string, selected: boolean} // Used for sortOrder, sortBy and filterOptions
 
 // Used for the private properties _initialSettings, _confirmedSettings and _currentSettings
 type VSDInternalSettings = {
@@ -266,19 +267,13 @@ class ViewSettingsDialog extends UI5Element {
 		}
 	}
 
-	// onAfterRendering() {
-	// 	if (this._filterStepTwo) {
-	// 		requestAnimationFrame(() => this._focusFirstFilterOptionItem());
-	// 	}
-	// }
-
-	// _focusFirstFilterOptionItem() {
-	// 	const filterList = this.shadowRoot?.querySelector<List>("[ui5-list]:not([sort-by]):not([sort-order])");
-	// 	const firstItem = filterList?.getItems()[0];
-	// 	if (firstItem) {
-	// 		firstItem.focus();
-	// 	}
-	// }
+	onAfterRendering() {
+		if (this.isModeFilter && this._filterStepTwo) {
+			renderFinished().then(() => {
+				this._dialog?.querySelector<List>("[ui5-list]")?.focusFirstItem();
+			});
+		}
+	}
 
 	onInvalidation(changeInfo: ChangeInfo) {
 		if (changeInfo.type === "slot") {
@@ -539,15 +534,12 @@ class ViewSettingsDialog extends UI5Element {
 
 	_handleFilterValueItemClick(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		const itemText = e.detail.targetItem.innerText;
-
 		// Update the component state
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
 			if (filter.selected) {
 				filter.filterOptions.forEach(option => {
-					option.focused = false;
 					if (option.text === itemText) {
 						option.selected = !option.selected;
-						option.focused = true;
 					}
 				});
 			}

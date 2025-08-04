@@ -118,7 +118,6 @@ function ViewSettingsDialogTemplateContent(this: ViewSettingsDialog) {
 							.flatMap(item => item.filterOptions.map(option => (
 								<ListItemStandard
 									selected={option.selected}
-									focused={option.focused}
 								>
 									{option.text}
 								</ListItemStandard>
