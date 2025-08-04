@@ -93,12 +93,6 @@ class ToolbarSelect extends ToolbarItem {
 	/**
 	 * Defines the HTML element that will be displayed in the component input part,
 	 * representing the selected option.
-	 *
-	 * **Note:** If not specified and `ui5-option-custom` is used,
-	 * either the option's `display-text` or its textContent will be displayed.
-	 *
-	 * **Note:** If not specified and `ui5-option` is used,
-	 * the option's textContent will be displayed.
 	 * @public
 	 * @since 2.13.0
 	*/
@@ -142,19 +136,9 @@ class ToolbarSelect extends ToolbarItem {
 	/**
 	 * Defines the value of the component:
 	 *
-	 * - when get - returns the value of the component or the value/text content of the selected option.
-	 * - when set - selects the option with matching `value` property or text content.
-	 *
-	 * **Note:** Use either the Select's value or the Options' selected property.
-	 * Mixed usage could result in unexpected behavior.
-	 *
-	 * **Note:** If the given value does not match any existing option,
-	 * no option will be selected and the Select component will be displayed as empty.
 	 * @public
 	 * @default ""
 	 * @since 2.13.0
-	 * @formProperty
-	 * @formEvents change liveChange
 	 */
 	@property()
 	value?: string;
