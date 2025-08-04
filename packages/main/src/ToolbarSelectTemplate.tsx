@@ -3,7 +3,6 @@ import Select from "./Select.js";
 import Option from "./Option.js";
 
 export default function ToolbarSelectTemplate(this: ToolbarSelect) {
-	const HTMLElementForLabel = this.hasCustomLabel ? this.label[0]?.tagName?.toLowerCase() : "span";
 	return (
 		<Select
 			class={this.classes.root}
@@ -21,9 +20,7 @@ export default function ToolbarSelectTemplate(this: ToolbarSelect) {
 			label={this.label}
 		>
 			{this.hasCustomLabel &&
-				<HTMLElementForLabel slot="label">
-					{this.label[0].innerHTML}
-				</HTMLElementForLabel>
+				(<slot name="label" slot="label"></slot>)
 			}
 			{this.options.map((option, index) => (
 				<Option

@@ -511,16 +511,16 @@ describe("Toolbar Select", () => {
 			.should("have.attr", "value", "Option 2");
 
 		// Verify the label slot content
-		cy.get("ui5-select", { includeShadowDom: true })
+		cy.get("ui5-toolbar-select")
 			.find("span[slot='label']")
 			.should("contain.text", "Select an Option:");
 
 		// Change the value of the ToolbarSelect
 		cy.get("ui5-select", { includeShadowDom: true })
-			.click()
+			.realClick()
 			.find("ui5-option")
 			.contains("Option 3")
-			.click();
+			.realClick();
 
 		// Verify the updated value of the ToolbarSelect
 		cy.get("ui5-select", { includeShadowDom: true })
