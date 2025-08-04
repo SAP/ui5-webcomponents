@@ -7,6 +7,7 @@ import openFolder from "@ui5/webcomponents-icons/dist/open-folder.js";
 import addFolder from "@ui5/webcomponents-icons/dist/add-folder.js";
 import locked from "@ui5/webcomponents-icons/dist/locked.js";
 import favorite from "@ui5/webcomponents-icons/dist/favorite.js";
+import UI5Element from "@ui5/webcomponents-base";
 
 describe("Menu interaction", () => {
 	it("Menu opens after button click", () => {
@@ -1056,7 +1057,7 @@ describe("Menu interaction", () => {
 
 		/* The test is valid, but currently it is not stable. It will be reviewed further and stabilized afterwards. */
 
-		it.skip("Menu items - navigation in endContent", () => {
+		it("Menu items - navigation in endContent", () => {
 			cy.mount(
 				<>
 					<Button id="btnOpen">Open Menu</Button>
@@ -1098,5 +1099,67 @@ describe("Menu interaction", () => {
 			cy.realPress("ArrowDown");
 			cy.get("@items").last().should("be.focused");
 		});
+	});
+});
+
+describe("Menu - getFocusDomRef", () => {
+	it("should return undefined when the Menu is empty", () => {
+		cy.mount(<Menu></Menu>);
+
+		cy.get<Menu>("[ui5-menu]")
+			.then(($el) => {
+				expect($el[0].getFocusDomRef()).to.be.undefined;
+			});
+	});
+
+	it("should return first item if no item was focused before", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open Menu</Button>
+				<Menu id="menu" opener="btnOpen">
+					<MenuItem id="item1" text="Item 1"/>
+					<MenuItem text="Item2"/>
+				</Menu>
+			</>
+		);
+
+		cy.get("[ui5-menu]")
+				.ui5MenuOpen();
+
+		cy.get<UI5Element>("[ui5-menu], #item1")
+			.then(($el) => {
+				const menu = $el[0],
+					firstItem = $el[1];
+				expect(menu.getFocusDomRef()).equal(firstItem.getFocusDomRef());
+			});
+	});
+
+	it("should return last focused item in the Menu", () => {
+		cy.mount(
+			<>
+				<Button id="btnOpen">Open Menu</Button>
+				<Menu id="menu" opener="btnOpen">
+					<MenuItem text="Item 1"/>
+					<MenuItem text="Item 2" id="item2"/>
+				</Menu>
+			</>
+		);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuOpen();
+
+		cy.get("[ui5-menu-item][text='Item 2']")
+			.as("item")
+			.ui5MenuItemClick();
+
+		cy.get("[ui5-menu-item][text='Item 2']")
+			.should("be.focused");
+
+		cy.get<UI5Element>("[ui5-menu], #item2")
+			.then(($el) => {
+				const menu = $el[0],
+					clickedItem = $el[1];
+				expect(menu.getFocusDomRef()).equal(clickedItem.getFocusDomRef());
+			});
 	});
 });

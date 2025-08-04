@@ -1945,11 +1945,15 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			return `${text} ${this.valueStateDefaultText || ""}`;
 		}
 
+		let valueStateInnerText = this.valueStateMessage.map(el => el.textContent).join(" ");
+		// append space before the value state message text if it is not empty
+		valueStateInnerText = valueStateInnerText.trim().length ? ` ${valueStateInnerText}` : "";
+
 		if (this.getValueStateLinksShortcutsTextAcc) {
-			return `${text}`.concat(" ", this.getValueStateLinksShortcutsTextAcc, " ", this.valueStateMessage.map(el => el.textContent).join(" "));
+			return `${text} ${this.getValueStateLinksShortcutsTextAcc}${valueStateInnerText}`;
 		}
 
-		return `${text}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
+		return `${text}${valueStateInnerText}`;
 	}
 
 	get valueStateDefaultText(): string {
@@ -2178,7 +2182,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 			},
 			popoverHeader: {
-				"max-width": isPhone() ? "100%" : `${this._inputWidth}px`,
+				"max-width": isPhone() ? "100%" : `22rem`,
 			},
 			suggestionsPopover: {
 				"min-width": `${this._inputWidth}px`,
