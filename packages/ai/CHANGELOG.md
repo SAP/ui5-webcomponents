@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.3...v2.13.0) (2025-08-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-ai
+
+
+
+
+
+# [2.13.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.2...v2.13.0-rc.3) (2025-07-31)
+
+
+### Features
+
+* **ui5-ai-button:** add customizable accessibility attributes to AI Button and SplitButton ([#11929](https://github.com/SAP/ui5-webcomponents/issues/11929)) ([30777dc](https://github.com/SAP/ui5-webcomponents/commit/30777dc9b0548260c2d88094e924efdbed6642c1))
+
+
+
+
+
 # [2.13.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.1...v2.13.0-rc.2) (2025-07-24)
 
 **Note:** Version bump only for package @ui5/webcomponents-ai
