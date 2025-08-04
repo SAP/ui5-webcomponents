@@ -35,35 +35,6 @@ describe("Accessibility", () => {
 			.should("not.have.attr", "aria-label");
 
 	});
-
-	it("content with auto design shrinks to fit the parent container", () => {
-		const newContainerHeight = 300;
-		const expectedMedia = "dialog";
-
-		cy.mount(
-			<div id="container" style={{ border: "1px solid #ccc" }}>
-				<IllustratedMessage id="illustratedMsg5" class="border contentBox">
-					<button>Action 1</button>
-				</IllustratedMessage>
-			</div>
-		);
-
-		cy.get("#container")
-			.invoke("css", "height", `${newContainerHeight}px`);
-
-		cy.get("#illustratedMsg5")
-			.shadow()
-			.find(".ui5-illustrated-message-root")
-			.should(($contents) => {
-				const scrollHeight = $contents[0].scrollHeight;
-				const offsetHeight = $contents[0].offsetHeight;
-				expect(scrollHeight).to.be.lessThan(newContainerHeight);
-				expect(scrollHeight).to.equal(offsetHeight);
-			});
-
-		cy.get("#illustratedMsg5")
-			.should("have.prop", "media", expectedMedia);
-	});
 });
 
 describe("design", () => {
@@ -154,6 +125,8 @@ describe("IllustratedMessage 'design' property", () => {
 
 describe("Vertical responsiveness", () => {
 	it("content with auto design shrinks to fit the parent container", () => {
+		const expectedMedia = "dialog";
+
 		cy.mount(
 			<div>
 				<IllustratedMessage />
@@ -173,9 +146,14 @@ describe("Vertical responsiveness", () => {
 				expect(scrollHeight).to.be.lessThan(300);
 				expect(scrollHeight).to.equal(offsetHeight);
 			});
+
+		cy.get("[ui5-illustrated-message]")
+			.should("have.prop", "media", expectedMedia);
 	});
 
 	it("content with auto design expands to fit the parent container", () => {
+		const expectedMedia = "scene";
+
 		cy.mount(
 			<div>
 				<IllustratedMessage />
@@ -194,6 +172,9 @@ describe("Vertical responsiveness", () => {
 				expect(scrollHeight).to.be.lessThan(500);
 				expect(scrollHeight).to.equal(offsetHeight);
 			});
+	
+		cy.get("[ui5-illustrated-message]")
+			.should("have.prop", "media", expectedMedia);
 	});
 
 	it("content with fixed design fits the parent container", () => {
@@ -219,7 +200,7 @@ describe("Vertical responsiveness", () => {
 
 	it("shows image with unconstrained height when container has auto height", () => {
 		cy.mount(
-			<div>
+			<div style={{ width: "400px" }}>
 				<IllustratedMessage />
 			</div>
 		);
@@ -230,7 +211,7 @@ describe("Vertical responsiveness", () => {
 		cy.get("[ui5-illustrated-message]")
 			.shadow()
 			.find(".ui5-illustrated-message-illustration svg")
-			.should("have.css", "height", "240px");
+			.should("have.css", "height", "160px");
 	});
 
 	it("Illustration visible, when container fit content height", () => {
