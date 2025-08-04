@@ -559,8 +559,8 @@ describe("Select general interaction", () => {
 
 		cy.mount(
 			<Select valueState="Negative" onChange={handleChange}>
-				<Option value="Cozy" selected>Cozy</Option>
-				<Option value="Compact" selected>Compact</Option>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
 			</Select>
 		);
@@ -594,8 +594,8 @@ describe("Select general interaction", () => {
 
 		cy.mount(
 			<Select valueState="Negative">
-				<Option value="Cozy" selected>Cozy</Option>
-				<Option value="Compact" selected>Compact</Option>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
 				<Option value="Condensed" selected>Condensed</Option>
 			</Select>
 		);
@@ -640,8 +640,8 @@ describe("Select general interaction", () => {
 		cy.mount(
 			<>
 				<Select valueState="Negative">
-					<Option value="Cozy" selected>Cozy</Option>
-					<Option value="Compact" selected>Compact</Option>
+					<Option value="Cozy">Cozy</Option>
+					<Option value="Compact">Compact</Option>
 					<Option value="Condensed" selected>Condensed</Option>
 				</Select>
 				<button>click</button>
