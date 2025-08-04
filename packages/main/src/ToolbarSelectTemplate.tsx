@@ -30,5 +30,5 @@ export default function ToolbarSelectTemplate(this: ToolbarSelect) {
 					{option.textContent}
 				</Option>
 			))}
-		</Select>)
-};
+		</Select>);
+}
