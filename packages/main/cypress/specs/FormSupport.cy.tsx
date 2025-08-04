@@ -423,7 +423,7 @@ describe("Form support", () => {
 			.should("be.equal", "multi_input5=&multi_input6=ok&multi_input7=&multi_input7=ok&multi_input8=ok&multi_input8=ok&multi_input9=ok&multi_input10=ok&multi_input11=&multi_input11=ok&multi_input12=ok&multi_input12=ok");
 	});
 
-	it.skip("ui5-radio-button in form 1", () => {
+	it("ui5-radio-button in form 1", () => {
 		cy.mount(<form method="get">
 			<RadioButton id="rb_1" required name="rb1"></RadioButton>
 			<button type="submit">Submits forms</button>
