@@ -157,13 +157,7 @@ class ListItemGroup extends UI5Element {
 		this._dragAndDropHandler = new DragAndDropHandler(this, {
 			getItems: () => this.items,
 			getDropIndicator: () => this.dropIndicatorDOM,
-			filterPlacements: (placements, draggedElement, targetElement) => {
-				// Filter out MovePlacement.On when dragged element is the same as target
-				if (targetElement === draggedElement) {
-					return placements.filter(placement => placement !== MovePlacement.On);
-				}
-				return placements;
-			},
+			filterPlacements: this._filterPlacements.bind(this),
 		});
 	}
 
@@ -209,6 +203,14 @@ class ListItemGroup extends UI5Element {
 
 	_ondrop(e: DragEvent) {
 		this._dragAndDropHandler.ondrop(e);
+	}
+
+	_filterPlacements(placements: MovePlacement[], draggedElement: HTMLElement, targetElement: HTMLElement): MovePlacement[] {
+		// Filter out MovePlacement.On when dragged element is the same as target
+		if (targetElement === draggedElement) {
+			return placements.filter(placement => placement !== MovePlacement.On);
+		}
+		return placements;
 	}
 }
 

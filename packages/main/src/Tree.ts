@@ -316,29 +316,11 @@ class Tree extends UI5Element {
 		// Initialize the DragAndDropHandler with the necessary configurations
 		// The handler will manage the drag and drop operations for the tree items.
 		this._dragAndDropHandler = new DragAndDropHandler(this, {
-			getItems: () => {
-				const allLiNodesTraversed: Array<HTMLElement> = [];
-				this.walk(item => {
-					allLiNodesTraversed.push(item.shadowRoot!.querySelector("li")!);
-				});
-				return allLiNodesTraversed;
-			},
+			getItems: this._getItems.bind(this),
 			getDropIndicator: () => this.dropIndicatorDOM,
-			transformElement: (element: HTMLElement) => {
-				// Get the host element from shadow DOM
-				return <HTMLElement>(<ShadowRoot>element.getRootNode()).host;
-			},
-			filterDraggedElement: (draggedElement: HTMLElement, targetElement: HTMLElement) => {
-				// Don't allow dropping on itself or its children
-				return !draggedElement.contains(targetElement);
-			},
-			filterPlacements: (placements, draggedElement, targetElement) => {
-				// Filter out MovePlacement.On when dragged element is the same as target
-				if (targetElement === draggedElement) {
-					return placements.filter(placement => placement !== MovePlacement.On);
-				}
-				return placements;
-			},
+			transformElement: this._transformElement.bind(this),
+			filterDraggedElement: this._filterDraggedElement.bind(this),
+			filterPlacements: this._filterPlacements.bind(this),
 		});
 	}
 
@@ -523,6 +505,32 @@ class Tree extends UI5Element {
 	 */
 	walk(callback: WalkCallback): void {
 		walkTree(this, 1, callback);
+	}
+
+	_getItems(): Array<HTMLElement> {
+		const allLiNodesTraversed: Array<HTMLElement> = [];
+		this.walk(item => {
+			allLiNodesTraversed.push(item.shadowRoot!.querySelector("li")!);
+		});
+		return allLiNodesTraversed;
+	}
+
+	_transformElement(element: HTMLElement): HTMLElement {
+		// Get the host element from shadow DOM
+		return <HTMLElement>(<ShadowRoot>element.getRootNode()).host;
+	}
+
+	_filterDraggedElement(draggedElement: HTMLElement, targetElement: HTMLElement): boolean {
+		// Don't allow dropping on itself or its children
+		return !draggedElement.contains(targetElement);
+	}
+
+	_filterPlacements(placements: MovePlacement[], draggedElement: HTMLElement, targetElement: HTMLElement): MovePlacement[] {
+		// Filter out MovePlacement.On when dragged element is the same as target
+		if (targetElement === draggedElement) {
+			return placements.filter(placement => placement !== MovePlacement.On);
+		}
+		return placements;
 	}
 
 	_isInstanceOfTreeItemBase(object: any): object is TreeItemBase {
