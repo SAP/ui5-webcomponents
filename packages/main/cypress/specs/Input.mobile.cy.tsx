@@ -53,8 +53,6 @@ describe("Basic mobile picker rendering and interaction", () => {
 		.find<ResponsivePopover>("[ui5-responsive-popover]")
 		.as("popover")
 		.ui5ResponsivePopoverOpened();
-
-		cy.get("#myInput2").shadow().find("ui5-responsive-popover").should("have.attr", "open");
 		cy.get("#myInput2").shadow().find(".ui5-input-inner-phone").should("be.visible");
 		cy.get("#myInput2").shadow().find(".ui5-responsive-popover-close-btn").should("be.visible");
 		cy.get("#myInput2").shadow().find(".ui5-responsive-popover-footer ui5-button").should("be.visible");
@@ -86,9 +84,15 @@ describe("Basic mobile picker rendering and interaction", () => {
 		);
 
 		cy.get("#myInput2").realClick();
-		cy.get("#myInput2").shadow().find("ui5-responsive-popover").should("have.attr", "open");
+		cy.get("#myInput2")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
 		cy.get("#myInput2").shadow().find(".ui5-responsive-popover-close-btn").realClick();
-		cy.get("#myInput2").shadow().find("ui5-responsive-popover").should("not.have.attr", "open");
+		cy.get("#myInput2")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverClosed();
 	});
 
 	it("Should close the mobile picker dialog when pressing the OK button", () => {
@@ -100,9 +104,15 @@ describe("Basic mobile picker rendering and interaction", () => {
 		);
 
 		cy.get("#myInput2").realClick();
-		cy.get("#myInput2").shadow().find("ui5-responsive-popover").should("have.attr", "open");
+		cy.get("#myInput2")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
 		cy.get("#myInput2").shadow().find(".ui5-responsive-popover-footer ui5-button").realClick();
-		cy.get("#myInput2").shadow().find("ui5-responsive-popover").should("not.have.attr", "open");
+		cy.get("#myInput2")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverClosed();
 	});
 
 	it("Should propagate the placeholder to the internal input", () => {
@@ -351,7 +361,10 @@ describe("Property open", () => {
 			</Input>
 		);
 
-		cy.get("#input-suggestions-open").shadow().find("ui5-responsive-popover").should("have.attr", "open");
+		cy.get("#input-suggestions-open")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
 		cy.get("#input-suggestions-open").find("ui5-suggestion-item").should("have.length", 3);
 	});
 
@@ -364,6 +377,9 @@ describe("Property open", () => {
 			</Input>
 		);
 
-		cy.get("#input-suggestions-open").shadow().find("ui5-responsive-popover").should("not.have.attr", "open");
+		cy.get("#input-suggestions-open")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverClosed();
 	});
 });

@@ -1904,7 +1904,7 @@ describe("Input general interaction", () => {
 
 		cy.get("#inputPreview2").shadow().find("input").realPress("ArrowDown");
 
-		cy.get("#inputPreview2").shadow().find("ui5-responsive-popover").should("have.attr", "open");
+		cy.get("#inputPreview2").shadow().find<ResponsivePopover>("ui5-responsive-popover").ui5ResponsivePopoverOpened();
 		cy.get("@onSelectionChange").should("have.been.calledOnce");
 	});
 
@@ -1923,7 +1923,7 @@ describe("Input general interaction", () => {
 		.find<ResponsivePopover>("[ui5-responsive-popover]")
 		.ui5ResponsivePopoverOpened();
 
-		cy.get("#myInput").shadow().find("ui5-responsive-popover").should("have.attr", "open");
+		cy.get("#myInput").shadow().find<ResponsivePopover>("ui5-responsive-popover").ui5ResponsivePopoverOpened();
 		cy.get("@onOpen").should("have.been.calledOnce");
 	});
 
@@ -1959,11 +1959,14 @@ describe("Input general interaction", () => {
 		.shadow()
 		.find<ResponsivePopover>("[ui5-responsive-popover]")
 		.ui5ResponsivePopoverOpened();
-		cy.get("#inputInDialog").shadow().find("ui5-responsive-popover").should("have.attr", "open");
+		cy.get("#inputInDialog").shadow().find<ResponsivePopover>("ui5-responsive-popover").ui5ResponsivePopoverOpened();
 
 		cy.get("#inputInDialog").shadow().find("input").realPress("ArrowDown");
 		cy.get("#inputInDialog").shadow().find("input").realPress("Escape");
-		cy.get("#inputInDialog").shadow().find("ui5-responsive-popover").should("not.have.attr", "open");
+		cy.get("#inputInDialog")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverClosed();
 		cy.get("#dialog").should("have.attr", "open");
 	});
 
@@ -2393,7 +2396,10 @@ describe("Lazy loading", () => {
 		);
 
 		cy.get("#field").shadow().find("input").click().realType("a");
-		cy.get("#field").shadow().find("ui5-responsive-popover").should("have.attr", "open");
+		cy.get("#field")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
 	});
 
 	it("Does not reopen picker on focus in", () => {
@@ -2408,7 +2414,10 @@ describe("Lazy loading", () => {
 		cy.get("#field").shadow().find("input").realPress("Tab");
 		cy.get("#field").shadow().find("input").realPress("Tab");
 		cy.wait(3000);
-		cy.get("#field").shadow().find("ui5-responsive-popover").should("not.have.attr", "open");
+		cy.get("#field")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverClosed();
 	});
 
 	it("Should not close picker when items are updated", () => {
@@ -2420,9 +2429,15 @@ describe("Lazy loading", () => {
 		);
 
 		cy.get("#field1").shadow().find("input").click().realType("S");
-		cy.get("#field1").shadow().find("ui5-responsive-popover").should("have.attr", "open");
+		cy.get("#field1")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
 		cy.get("#field1").shadow().find("input").realType("b");
-		cy.get("#field1").shadow().find("ui5-responsive-popover").should("have.attr", "open");
+		cy.get("#field1")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
 	});
 });
 
@@ -2492,7 +2507,10 @@ describe("Property open", () => {
 			</Input>
 		);
 
-		cy.get("#input-suggestions-open").shadow().find("ui5-responsive-popover").should("have.attr", "open");
+		cy.get("#input-suggestions-open")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
 		cy.get("#input-suggestions-open").find("ui5-suggestion-item").should("have.length", 3);
 	});
 
@@ -2505,6 +2523,9 @@ describe("Property open", () => {
 			</Input>
 		);
 
-		cy.get("#input-suggestions-open").shadow().find("ui5-responsive-popover").should("not.have.attr", "open");
+		cy.get("#input-suggestions-open")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverClosed();
 	});
 });
