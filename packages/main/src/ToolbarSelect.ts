@@ -100,7 +100,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * **Note:** If not specified and `ui5-option` is used,
 	 * the option's textContent will be displayed.
 	 * @public
-	 * @since 1.17.0
+	 * @since 2.13.0
 	*/
 	@slot()
 	label!: Array<HTMLElement>;
@@ -152,7 +152,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * no option will be selected and the Select component will be displayed as empty.
 	 * @public
 	 * @default ""
-	 * @since
+	 * @since 2.13.0
 	 * @formProperty
 	 * @formEvents change liveChange
 	 */
