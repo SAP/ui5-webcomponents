@@ -7,6 +7,7 @@ import type ButtonDesign from "./types/ButtonDesign.js";
 
 import ToolbarItem from "./ToolbarItem.js";
 import ToolbarButtonTemplate from "./ToolbarButtonTemplate.js";
+import ToolbarButtonCss from "./generated/themes/ToolbarButton.css.js";
 
 type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 
@@ -29,6 +30,7 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 	tag: "ui5-toolbar-button",
 	template: ToolbarButtonTemplate,
 	renderer: jsxRenderer,
+	styles: [ToolbarButtonCss],
 })
 
 /**

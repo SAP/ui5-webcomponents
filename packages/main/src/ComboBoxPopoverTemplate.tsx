@@ -77,7 +77,6 @@ export default function ComboBoxPopoverTemplate(this: ComboBox) {
 					slot="header"
 					class={{
 						"ui5-responsive-popover-header": true,
-						"ui5-responsive-popover-header--focused": this._isValueStateFocused,
 						...this.classes.popoverValueState,
 					}}
 					style={this.styles.suggestionPopoverHeader}
@@ -123,7 +122,7 @@ export default function ComboBoxPopoverTemplate(this: ComboBox) {
 			onClose={this._handleValueStatePopoverAfterClose}
 			onFocusOut={this._handleValueStatePopoverFocusout}
 		>
-			<div slot="header" class={this.classes.popoverValueState} style={this.styles.popoverHeader}>
+			<div slot="header" class={this.classes.popoverValueState}>
 				<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}/>
 				{ valueStateMessage.call(this) }
 			</div>
