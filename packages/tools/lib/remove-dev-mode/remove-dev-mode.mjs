@@ -27,7 +27,7 @@ const getConfig = async () => {
         outbase: 'src',
         plugins: [
             customPlugin,
-      ]
+        ]
     };
     return config;
 }
