@@ -1,5 +1,6 @@
 import { globby } from "globby";
 import * as esbuild from 'esbuild'
+import { copy } from 'esbuild-plugin-copy';
 import * as fs from "fs";
 
 let customPlugin = {
@@ -27,7 +28,15 @@ const getConfig = async () => {
         outbase: 'src',
         plugins: [
             customPlugin,
-        ]
+            copy({
+              assets: [
+                  {
+                      from: "./dist/generated/assets/i18n/*.json",
+                      to: "./generated/assets/i18n", 
+                  }
+              ],
+          })
+      ]
     };
     return config;
 }
