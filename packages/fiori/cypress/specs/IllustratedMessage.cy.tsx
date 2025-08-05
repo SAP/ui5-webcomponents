@@ -2,7 +2,6 @@ import IllustratedMessage from "../../src/IllustratedMessage.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js"
 import Panel from "@ui5/webcomponents/dist/Panel.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
 
 describe("Accessibility", () => {
 	it("should add aria-hidden and role=presetation to the SVG when decorative is true", () => {
