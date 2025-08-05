@@ -157,7 +157,7 @@ class UserMenu extends UI5Element {
 	 * @default undefined
 	 */
 	@property({ converter: DOMReferenceConverter })
-	opener?: HTMLElement | string;
+	opener?: HTMLElement | string | null;
 
 	/**
 	 * Defines if the User Menu shows the Manage Account option.

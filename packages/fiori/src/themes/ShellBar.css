@@ -159,7 +159,7 @@ slot[name="profile"] {
 	justify-content: center;
 	height: 100%;
 	overflow: hidden;
-	margin-left: 0.25rem;
+	margin-inline-start: 0.25rem;
 }
 
 .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
@@ -372,9 +372,9 @@ slot[name="profile"] {
 .ui5-shellbar-separator {
 	flex-grow: 0;
 	flex-shrink: 0;
-	height: 1rem;
+	height: var(--_ui5-shellbar-separator-height);
 	width: 1px;
-	background-color: var(--sapToolbar_SeparatorColor);
+	background-color: var(--_ui5-shellbar_separator-color);
 }
 
 .ui5-shellbar-separator-end {
