@@ -380,7 +380,8 @@ class Timeline extends UI5Element {
 				const firstFocusable = await getFirstFocusableElement(focusDomRef);
 				firstFocusable?.focus();
 			} else {
-				(e.target as HTMLElement).parentElement?.focus();
+				const parentItem = (e.target as HTMLElement)?.closest("ui5-timeline-item") as HTMLElement;
+				parentItem?.focus();
 			}
 		}
 	}
