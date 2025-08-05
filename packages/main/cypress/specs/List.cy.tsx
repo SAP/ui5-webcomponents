@@ -12,7 +12,6 @@ import ResponsivePopover from "../../src/ResponsivePopover.js";
 import Select from "../../src/Select.js";
 import Option from "../../src/Option.js";
 import CheckBox from "../../src/CheckBox.js";
-import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 
 describe("List Tests", () => {
 	it("tests 'loadMore' event fired upon infinite scroll", () => {
