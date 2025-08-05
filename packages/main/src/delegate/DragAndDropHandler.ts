@@ -14,7 +14,7 @@ type DragAndDropConfig = {
 	useOriginalEvent?: boolean;
 	clientCoordinate?: "clientX" | "clientY";
 	transformElement?: (element: HTMLElement) => HTMLElement;
-	filterDraggedElement?: (draggedElement: HTMLElement, targetElement: HTMLElement) => boolean;
+	validateDraggedElement?: (draggedElement: HTMLElement, targetElement: HTMLElement) => boolean;
 	filterPlacements?: (placements: MovePlacement[], draggedElement: HTMLElement, targetElement: HTMLElement) => MovePlacement[];
 };
 
@@ -123,8 +123,8 @@ class DragAndDropHandler {
 	}
 
 	_isValidDragTarget(draggedElement: HTMLElement, targetElement: HTMLElement): boolean {
-		if (this.config.filterDraggedElement) {
-			return this.config.filterDraggedElement(draggedElement, targetElement);
+		if (this.config.validateDraggedElement) {
+			return this.config.validateDraggedElement(draggedElement, targetElement);
 		}
 		return true;
 	}

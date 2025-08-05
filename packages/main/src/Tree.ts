@@ -319,7 +319,7 @@ class Tree extends UI5Element {
 			getItems: this._getItems.bind(this),
 			getDropIndicator: () => this.dropIndicatorDOM,
 			transformElement: this._transformElement.bind(this),
-			filterDraggedElement: this._filterDraggedElement.bind(this),
+			validateDraggedElement: this._validateDraggedElement.bind(this),
 			filterPlacements: this._filterPlacements.bind(this),
 		});
 	}
@@ -520,7 +520,7 @@ class Tree extends UI5Element {
 		return <HTMLElement>(<ShadowRoot>element.getRootNode()).host;
 	}
 
-	_filterDraggedElement(draggedElement: HTMLElement, targetElement: HTMLElement): boolean {
+	_validateDraggedElement(draggedElement: HTMLElement, targetElement: HTMLElement): boolean {
 		// Don't allow dropping on itself or its children
 		return !draggedElement.contains(targetElement);
 	}
