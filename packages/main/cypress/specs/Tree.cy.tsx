@@ -226,56 +226,40 @@ describe("Tree general interaction", () => {
 describe("Tree proxies properties to list", () => {
 	it("Mouseover/mouseout events", () => {
 		cy.mount(
-			<>
-				<Tree>
-					<TreeItem text="Tree 1" expanded>
-						<TreeItem text="Tree 1.1">
-							<TreeItem text="Tree 1.1.1"></TreeItem>
-							<TreeItem text="Tree 1.1.2"></TreeItem>
-						</TreeItem>
+			<Tree>
+				<TreeItem text="Tree 1" expanded>
+					<TreeItem text="Tree 1.1">
+						<TreeItem text="Tree 1.1.1"></TreeItem>
+						<TreeItem text="Tree 1.1.2"></TreeItem>
 					</TreeItem>
-					<TreeItem text="Tree 2"></TreeItem>
-				</Tree>
-				<input id="mouseover-counter" value="0" />
-				<input id="mouseout-counter" value="0" />
-			</>
+				</TreeItem>
+				<TreeItem text="Tree 2"></TreeItem>
+			</Tree>
 		);
-
-		cy.window().then((win) => {
-			let mouseoverCount = 0;
-			let mouseoutCount = 0;
-
-			cy.get("[ui5-tree]").then(($tree) => {
-				$tree[0].addEventListener("ui5-item-mouseover", () => {
-					mouseoverCount++;
-					cy.get("#mouseover-counter").invoke("val", mouseoverCount.toString());
-				});
-
-				$tree[0].addEventListener("ui5-item-mouseout", () => {
-					mouseoutCount++;
-					cy.get("#mouseout-counter").invoke("val", mouseoutCount.toString());
-				});
-			});
+	
+		cy.get("[ui5-tree]").then($tree => {
+			$tree[0].addEventListener("ui5-item-mouseover", cy.stub().as("mouseoverStub"));
+			$tree[0].addEventListener("ui5-item-mouseout", cy.stub().as("mouseoutStub"));
 		});
-
+	
 		cy.get("[ui5-tree-item]:first")
 			.shadow()
 			.find(".ui5-li-root-tree")
 			.realHover();
-
-		cy.get("#mouseover-counter")
-			.should("have.value", "1");
-
+	
+		cy.get("@mouseoverStub")
+			.should("have.been.calledOnce");
+	
 		cy.get("[ui5-tree-item]:eq(1)")
 			.shadow()
 			.find(".ui5-li-root-tree")
 			.realHover();
-
-		cy.get("#mouseover-counter")
-			.should("have.value", "2");
-
-		cy.get("#mouseout-counter")
-			.should("have.value", "1");
+	
+		cy.get("@mouseoverStub")
+			.should("have.been.calledTwice");
+	
+		cy.get("@mouseoutStub")
+			.should("have.been.calledOnce");
 	});
 
 	it("SelectionMode works", () => {
@@ -374,43 +358,45 @@ describe("Tree proxies properties to list", () => {
 				</TreeItem>
 			</Tree>
 		);
-
-		cy.get("[ui5-tree]").then(($tree) => {
-			$tree[0].addEventListener("ui5-item-click", (event) => {
+	
+		cy.get("[ui5-tree]").then($tree => {
+			$tree[0].addEventListener("ui5-item-click", cy.stub().as("itemClickStub").callsFake((event) => {
 				event.preventDefault();
-			});
+			}));
 		});
-
+	
 		cy.get("[ui5-tree-item]:first")
 			.click()
 			.should("not.have.attr", "selected");
+	
+		cy.get("@itemClickStub")
+			.should("have.been.calledOnce");
 	});
 
 	it("selectionChange event provides targetItem parameter", () => {
 		cy.mount(
-			<>
-				<Tree selectionMode="Multiple">
-					<TreeItem text="Item 1" indeterminate selected></TreeItem>
-					<TreeItem text="Item 2" indeterminate selected></TreeItem>
-					<TreeItem text="Item 3"></TreeItem>
-					<TreeItem text="Item 4" indeterminate selected></TreeItem>
-				</Tree>
-				<input id="selectionChangeTargetItemResult" placeholder="selectionChange targetItem result" />
-			</>
+			<Tree selectionMode="Multiple">
+				<TreeItem text="Item 1" indeterminate selected></TreeItem>
+				<TreeItem text="Item 2" indeterminate selected></TreeItem>
+				<TreeItem text="Item 3"></TreeItem>
+				<TreeItem text="Item 4" indeterminate selected></TreeItem>
+			</Tree>
 		);
-
-		cy.get("[ui5-tree]").then(($tree) => {
-			$tree[0].addEventListener("ui5-selection-change", (event: CustomEvent) => {
-				cy.get("#selectionChangeTargetItemResult").invoke("val", event.detail.targetItem.id || "no-id");
-			});
+	
+		let selectionChangeStub;
+	
+		cy.get("[ui5-tree]").then($tree => {
+			selectionChangeStub = cy.stub().as("selectionChangeStub");
+			$tree[0].addEventListener("ui5-selection-change", selectionChangeStub);
 		});
-
+	
 		cy.get("[ui5-tree-item]:first")
 			.invoke("attr", "id", "item1")
-			.click();
-
-		cy.get("#selectionChangeTargetItemResult")
-			.should("have.value", "item1");
+			.click()
+			.then(() => {
+				expect(selectionChangeStub).to.have.been.calledOnce;
+				expect(selectionChangeStub.getCall(0).args[0].detail.targetItem.id).to.equal("item1");
+			});
 	});
 });
 
