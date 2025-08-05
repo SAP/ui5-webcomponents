@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.1](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0...v2.13.1) (2025-08-05)
+
+
+### Bug Fixes
+
+* **framework:** copy "base" pkg i18n assets to `dist/prod` ([#12072](https://github.com/SAP/ui5-webcomponents/issues/12072)) ([4724943](https://github.com/SAP/ui5-webcomponents/commit/4724943118881c6a6d67d2075431229ee66e57dc))
+
+
+
+
+
 # [2.13.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.3...v2.13.0) (2025-08-04)
 
 **Note:** Version bump only for package @ui5/webcomponents-base
