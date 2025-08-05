@@ -2,7 +2,7 @@ import ListItemGroup from "../../src/ListItemGroup.js";
 
 describe("ListItemGroup Tests", () => {
 	it("ListGroup is rendered", () => {
-		cy.mount(<ListItemGroup headerText="New Items"></ListItemGroup>);
+		cy.mount(<ListItemGroup headerText="New Items" />);
 
 		cy.get("[ui5-li-group]").should("exist");
 		
@@ -13,7 +13,7 @@ describe("ListItemGroup Tests", () => {
 	});
 
 	it("ListGroup renders header-text property correctly", () => {
-		cy.mount(<ListItemGroup headerText="New Items"></ListItemGroup>);
+		cy.mount(<ListItemGroup headerText="New Items" />);
 
 		cy.get("[ui5-li-group]")
 			.shadow()
@@ -22,7 +22,7 @@ describe("ListItemGroup Tests", () => {
 	});
 
 	it("ListGroup propagates focused property to header item", () => {
-		cy.mount(<ListItemGroup headerText="New Items"></ListItemGroup>);
+		cy.mount(<ListItemGroup headerText="New Items" />);
 
 		cy.get("[ui5-li-group]")
 			.invoke("prop", "focused", true);
@@ -43,11 +43,11 @@ describe("ListItemGroup Tests", () => {
 });
 
 describe("List drag and drop tests", () => {
-	const setupDragAndDrop = (listId: string, acceptExternal = false) => {
-		cy.get(`#${listId}`).then(($list) => {
+	const setupDragAndDrop = (listSelector, acceptExternal = false) => {
+		cy.get(listSelector).then(($list) => {
 			const list = $list[0];
 
-			list.addEventListener("ui5-move-over", (e: CustomEvent) => {
+			list.addEventListener("ui5-move-over", cy.stub().as("moveOverStub").callsFake((e) => {
 				const { destination, source } = e.detail;
 
 				if (!acceptExternal && !list.contains(source.element)) {
@@ -61,9 +61,9 @@ describe("List drag and drop tests", () => {
 				if (destination.placement === "On" && "allowsNesting" in destination.element.dataset) {
 					e.preventDefault();
 				}
-			});
+			}));
 
-			list.addEventListener("ui5-move", (e: CustomEvent) => {
+			list.addEventListener("ui5-move", cy.stub().as("moveStub").callsFake((e) => {
 				const { destination, source } = e.detail;
 
 				if (source.element === destination.element) return;
@@ -80,7 +80,7 @@ describe("List drag and drop tests", () => {
 				} else if (destination.placement === "On") {
 					destination.element.prepend(source.element);
 				}
-			});
+			}));
 		});
 	};
 
@@ -102,117 +102,210 @@ describe("List drag and drop tests", () => {
 		});
 	};
 
-	beforeEach(() => {
+	it("Moving item After another", () => {
 		cy.mount(
 			<div>
-				<a id="link" href="http://sap.com" draggable={true}>http://sap.com</a>
-				<ListItemGroup id="listDnd1" headerText="List 1"></ListItemGroup>
-				<ListItemGroup id="listDnd2" headerText="List 2"></ListItemGroup>
+				<ListItemGroup headerText="List 1" />
 			</div>
 		);
 
-		// Set up both lists
-		setupDragAndDrop("listDnd1", false);
-		setupDragAndDrop("listDnd2", true);
+		cy.get("[ui5-li-group]").eq(0).as("list1").should("exist");
+		setupDragAndDrop("@list1", false);
 
-		// Create items for list1
-		cy.get("#listDnd1").then($list => {
+		cy.get("@list1").then($list => {
 			$list[0].innerHTML = `
-				<ui5-li id="bg1" movable>1. Bulgaria</ui5-li>
-				<ui5-li id="de1" movable>1. Germany</ui5-li>
-				<ui5-li id="es1" movable>1. Spain</ui5-li>
+				<ui5-li movable>1. Bulgaria</ui5-li>
+				<ui5-li movable>1. Germany</ui5-li>
+				<ui5-li movable>1. Spain</ui5-li>
 			`;
 		});
 
-		// Create items for list2
-		cy.get("#listDnd2").then($list => {
-			$list[0].innerHTML = `
-				<ui5-li id="bg2" movable>2. Bulgaria</ui5-li>
-				<ui5-li id="de2" movable data-allows-nesting>2. Germany (Allows nesting)</ui5-li>
-				<ui5-li id="es2" movable>2. Spain</ui5-li>
-			`;
-		});
-
-		cy.get("#listDnd1 ui5-li").should("have.length", 3);
-		cy.get("#listDnd2 ui5-li").should("have.length", 3);
-	});
-
-	it("Moving item After another", () => {
-		cy.get("#listDnd1 ui5-li").eq(0).as("first");
-		cy.get("#listDnd1 ui5-li").eq(1).as("second");
+		cy.get("@list1").find("ui5-li").should("have.length", 3);
+		cy.get("@list1").find("ui5-li").eq(0).as("first").should("contain.text", "1. Bulgaria");
+		cy.get("@list1").find("ui5-li").eq(1).as("second").should("contain.text", "1. Germany");
 
 		dispatchMoveEvent("@first", "@second", "After");
 
-		cy.get("#listDnd1 ui5-li").eq(0).should("contain.text", "1. Germany");
-		cy.get("#listDnd1 ui5-li").eq(1).should("contain.text", "1. Bulgaria");
+		cy.get("@list1").find("ui5-li").eq(0).should("contain.text", "1. Germany");
+		cy.get("@list1").find("ui5-li").eq(1).should("contain.text", "1. Bulgaria");
 
-		cy.get("#listDnd1 ui5-li").eq(1).as("currentFirst");
-		cy.get("#listDnd1 ui5-li").eq(2).as("currentThird");
+		cy.get("@list1").find("ui5-li").eq(1).as("currentFirst").should("contain.text", "1. Bulgaria");
+		cy.get("@list1").find("ui5-li").eq(2).as("currentThird").should("contain.text", "1. Spain");
 
 		dispatchMoveEvent("@currentFirst", "@currentThird", "After");
 
-		cy.get("#listDnd1 ui5-li").eq(0).should("contain.text", "1. Germany");
-		cy.get("#listDnd1 ui5-li").eq(1).should("contain.text", "1. Spain");
-		cy.get("#listDnd1 ui5-li").eq(2).should("contain.text", "1. Bulgaria");
+		cy.get("@list1").find("ui5-li").eq(0).should("contain.text", "1. Germany");
+		cy.get("@list1").find("ui5-li").eq(1).should("contain.text", "1. Spain");
+		cy.get("@list1").find("ui5-li").eq(2).should("contain.text", "1. Bulgaria");
 	});
 
 	it("Moving item Before another", () => {
-		cy.get("#listDnd1 ui5-li").eq(0).as("first");
-		cy.get("#listDnd1 ui5-li").eq(2).as("third");
+		cy.mount(
+			<div>
+				<ListItemGroup headerText="List 1" />
+			</div>
+		);
+
+		cy.get("[ui5-li-group]").eq(0).as("list1").should("exist");
+		setupDragAndDrop("@list1", false);
+
+		cy.get("@list1").then($list => {
+			$list[0].innerHTML = `
+				<ui5-li movable>1. Bulgaria</ui5-li>
+				<ui5-li movable>1. Germany</ui5-li>
+				<ui5-li movable>1. Spain</ui5-li>
+			`;
+		});
+
+		cy.get("@list1").find("ui5-li").should("have.length", 3);
+		cy.get("@list1").find("ui5-li").eq(0).as("first").should("contain.text", "1. Bulgaria");
+		cy.get("@list1").find("ui5-li").eq(2).as("third").should("contain.text", "1. Spain");
 
 		dispatchMoveEvent("@first", "@third", "Before");
 
-		cy.get("#listDnd1 ui5-li").eq(0).should("contain.text", "1. Germany");
-		cy.get("#listDnd1 ui5-li").eq(1).should("contain.text", "1. Bulgaria");
-		cy.get("#listDnd1 ui5-li").eq(2).should("contain.text", "1. Spain");
+		cy.get("@list1").find("ui5-li").eq(0).should("contain.text", "1. Germany");
+		cy.get("@list1").find("ui5-li").eq(1).should("contain.text", "1. Bulgaria");
+		cy.get("@list1").find("ui5-li").eq(2).should("contain.text", "1. Spain");
 
-		cy.get("#listDnd1 ui5-li").eq(1).as("currentFirst");
-		cy.get("#listDnd1 ui5-li").eq(0).as("currentSecond");
+		cy.get("@list1").find("ui5-li").eq(1).as("currentFirst").should("contain.text", "1. Bulgaria");
+		cy.get("@list1").find("ui5-li").eq(0).as("currentSecond").should("contain.text", "1. Germany");
 
 		dispatchMoveEvent("@currentFirst", "@currentSecond", "Before");
 
-		cy.get("#listDnd1 ui5-li").eq(0).should("contain.text", "1. Bulgaria");
-		cy.get("#listDnd1 ui5-li").eq(1).should("contain.text", "1. Germany");
-		cy.get("#listDnd1 ui5-li").eq(2).should("contain.text", "1. Spain");
+		cy.get("@list1").find("ui5-li").eq(0).should("contain.text", "1. Bulgaria");
+		cy.get("@list1").find("ui5-li").eq(1).should("contain.text", "1. Germany");
+		cy.get("@list1").find("ui5-li").eq(2).should("contain.text", "1. Spain");
 	});
 
 	it("Moving item ON another", () => {
-		cy.get("#listDnd2 ui5-li").eq(0).as("first");
-		cy.get("#listDnd2 ui5-li").eq(1).as("second");
+		cy.mount(
+			<div>
+				<ListItemGroup headerText="List 2" />
+			</div>
+		);
+
+		cy.get("[ui5-li-group]").eq(0).as("list2").should("exist");
+		setupDragAndDrop("@list2", true);
+
+		cy.get("@list2").then($list => {
+			$list[0].innerHTML = `
+				<ui5-li movable>2. Bulgaria</ui5-li>
+				<ui5-li movable data-allows-nesting>2. Germany (Allows nesting)</ui5-li>
+				<ui5-li movable>2. Spain</ui5-li>
+			`;
+		});
+
+		cy.get("@list2").find("ui5-li").should("have.length", 3);
+		cy.get("@list2").find("ui5-li").eq(0).as("first").should("contain.text", "2. Bulgaria");
+		cy.get("@list2").find("ui5-li").eq(1).as("second").should("contain.text", "2. Germany (Allows nesting)");
 
 		dispatchMoveEvent("@first", "@second", "On");
 
-		cy.get("#listDnd2 > ui5-li").should("have.length", 2);
-		cy.get("#listDnd2 > ui5-li").eq(0).find("ui5-li").should("contain.text", "2. Bulgaria");
+		cy.get("@list2").children("ui5-li").should("have.length", 2);
+		cy.get("@list2").children("ui5-li").eq(0).find("ui5-li").should("contain.text", "2. Bulgaria");
 	});
 
 	it("Moving item from one list to another", () => {
-		cy.get("#bg2").as("listTwoItem");
-		cy.get("#listDnd1 ui5-li").eq(0).as("listOneFirst");
+		cy.mount(
+			<div>
+				<ListItemGroup headerText="List 1" />
+				<ListItemGroup headerText="List 2" />
+			</div>
+		);
+
+		cy.get("[ui5-li-group]").eq(0).as("list1").should("exist");
+		cy.get("[ui5-li-group]").eq(1).as("list2").should("exist");
+
+		setupDragAndDrop("@list1", false);
+		setupDragAndDrop("@list2", true);
+
+		cy.get("@list1").then($list => {
+			$list[0].innerHTML = `
+				<ui5-li movable>1. Bulgaria</ui5-li>
+				<ui5-li movable>1. Germany</ui5-li>
+				<ui5-li movable>1. Spain</ui5-li>
+			`;
+		});
+
+		cy.get("@list2").then($list => {
+			$list[0].innerHTML = `
+				<ui5-li movable>2. Bulgaria</ui5-li>
+				<ui5-li movable data-allows-nesting>2. Germany (Allows nesting)</ui5-li>
+				<ui5-li movable>2. Spain</ui5-li>
+			`;
+		});
+
+		cy.get("@list1").find("ui5-li").should("have.length", 3);
+		cy.get("@list2").find("ui5-li").should("have.length", 3);
+
+		cy.get("@list2").find("ui5-li").eq(0).as("listTwoItem").should("contain.text", "2. Bulgaria");
+		cy.get("@list1").find("ui5-li").eq(0).as("listOneFirst").should("contain.text", "1. Bulgaria");
 
 		dispatchMoveEvent("@listTwoItem", "@listOneFirst", "After");
 
-		cy.get("#listDnd1 ui5-li").should("have.length", 4);
-		cy.get("#listDnd2 ui5-li").should("have.length", 2);
+		cy.get("@list1").find("ui5-li").should("have.length", 4);
+		cy.get("@list2").find("ui5-li").should("have.length", 2);
 	});
 
 	it("Moving link to list that doesn't accept it", () => {
-		cy.get("#link").as("link");
-		cy.get("#listDnd1 ui5-li").eq(0).as("first");
+		cy.mount(
+			<div>
+				<a draggable={true} style={{ display: "block", marginBottom: "10px" }}>
+					http://sap.com
+				</a>
+				<ListItemGroup headerText="List 1" />
+			</div>
+		);
+
+		cy.get("[ui5-li-group]").eq(0).as("list1").should("exist");
+		setupDragAndDrop("@list1", false);
+
+		cy.get("@list1").then($list => {
+			$list[0].innerHTML = `
+				<ui5-li movable>1. Bulgaria</ui5-li>
+				<ui5-li movable>1. Germany</ui5-li>
+				<ui5-li movable>1. Spain</ui5-li>
+			`;
+		});
+
+		cy.get("@list1").find("ui5-li").should("have.length", 3);
+		cy.get("a").as("link").should("contain.text", "http://sap.com");
+		cy.get("@list1").find("ui5-li").eq(0).as("first").should("contain.text", "1. Bulgaria");
 
 		dispatchMoveEvent("@link", "@first", "After");
 
-		cy.get("#listDnd1 ui5-li").should("have.length", 3);
-		cy.get("#link").should("exist");
+		cy.get("@list1").find("ui5-li").should("have.length", 3);
+		cy.get("a").should("exist").and("contain.text", "http://sap.com");
 	});
 
 	it("Moving link to list that accepts it", () => {
-		cy.get("#link").as("link");
-		cy.get("#listDnd2 ui5-li").eq(1).as("second");
+		cy.mount(
+			<div>
+				<a draggable={true} style={{ display: "block", marginBottom: "10px" }}>
+					http://sap.com
+				</a>
+				<ListItemGroup headerText="List 2" />
+			</div>
+		);
+
+		cy.get("[ui5-li-group]").eq(0).as("list2").should("exist");
+		setupDragAndDrop("@list2", true);
+
+		cy.get("@list2").then($list => {
+			$list[0].innerHTML = `
+				<ui5-li movable>2. Bulgaria</ui5-li>
+				<ui5-li movable data-allows-nesting>2. Germany (Allows nesting)</ui5-li>
+				<ui5-li movable>2. Spain</ui5-li>
+			`;
+		});
+
+		cy.get("@list2").find("ui5-li").should("have.length", 3);
+		cy.get("a").as("link").should("contain.text", "http://sap.com");
+		cy.get("@list2").find("ui5-li").eq(1).as("second").should("contain.text", "2. Germany (Allows nesting)");
 
 		dispatchMoveEvent("@link", "@second", "Before");
 
-		cy.get("#listDnd2").children().should("have.length", 4);
-		cy.get("#listDnd2 #link").should("exist");
+		cy.get("@list2").children().should("have.length", 4);
+		cy.get("@list2").find("a").should("exist").and("contain.text", "http://sap.com");
 	});
 });
