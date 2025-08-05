@@ -372,9 +372,9 @@ slot[name="profile"] {
 .ui5-shellbar-separator {
 	flex-grow: 0;
 	flex-shrink: 0;
-	height: 1rem;
+	height: var(--_ui5-shellbar-separator-height);
 	width: 1px;
-	background-color: var(--sapToolbar_SeparatorColor);
+	background-color: var(--_ui5-shellbar_separator-color);
 }
 
 .ui5-shellbar-separator-end {

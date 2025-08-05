@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.3...v2.13.0) (2025-08-04)
+
+
+### Features
+
+* **ui5-li-group:** introduced wrappingType prop ([#12022](https://github.com/SAP/ui5-webcomponents/issues/12022)) ([4c1a506](https://github.com/SAP/ui5-webcomponents/commit/4c1a50661fdc349682ff4c8fc1bb28d9eb43f5b2))
+
+
+
+
+
 # [2.13.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.2...v2.13.0-rc.3) (2025-07-31)
 
 
