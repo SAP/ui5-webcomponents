@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.3...v2.13.0) (2025-08-04)
+
+
+### Features
+
+* **ui5-popover:** support setting "null" for opener ([#11995](https://github.com/SAP/ui5-webcomponents/issues/11995)) ([7d012aa](https://github.com/SAP/ui5-webcomponents/commit/7d012aa5667143f4bbdbb9310771dc296de12cbe))
+
+
+
+
+
+# [2.13.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.2...v2.13.0-rc.3) (2025-07-31)
+
+
+### Bug Fixes
+
+* **ui5-search:** fix focus on collapsed search button ([#12020](https://github.com/SAP/ui5-webcomponents/issues/12020)) ([1956ddd](https://github.com/SAP/ui5-webcomponents/commit/1956ddd8da4ab9d1417fe7919b7c2a794961846b))
+* **ui5-shellbar-search:** consistent touch target size ([#11974](https://github.com/SAP/ui5-webcomponents/issues/11974)) ([37deaba](https://github.com/SAP/ui5-webcomponents/commit/37deaba7d54cd0f0ad15dd7e5ab4ce2d72bae06e))
+
+
+### Features
+
+* **ui5-menu, ui5-timeline, ui5-calendar-legend, ui5-color-palette:** add getFocusDomRef ([#11997](https://github.com/SAP/ui5-webcomponents/issues/11997)) ([a9b3c69](https://github.com/SAP/ui5-webcomponents/commit/a9b3c6980647a8c84dd32c2500743285e789b3a0)), closes [#11490](https://github.com/SAP/ui5-webcomponents/issues/11490)
+* **ui5-shellbar-search:** auto-open property introduced ([#11961](https://github.com/SAP/ui5-webcomponents/issues/11961)) ([702150b](https://github.com/SAP/ui5-webcomponents/commit/702150bc30fabf579800a2526b4385d365667bee))
+
+
+
+
+
 # [2.13.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.1...v2.13.0-rc.2) (2025-07-24)
 
 

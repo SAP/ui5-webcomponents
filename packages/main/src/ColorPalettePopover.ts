@@ -132,7 +132,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @since 1.21.0
 	 */
 	@property({ converter: DOMReferenceConverter })
-	opener?: HTMLElement | string;
+	opener?: HTMLElement | string | null;
 
 	/**
 	 * Defines the content of the component.

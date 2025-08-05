@@ -1,6 +1,5 @@
 import { getFeature, registerFeature } from "../FeaturesRegistry.js";
 import { isF6Next, isF6Previous } from "../Keys.js";
-import { instanceOfUI5Element } from "../UI5Element.js";
 import { getFirstFocusableElement } from "../util/FocusableElements.js";
 import getFastNavigationGroups from "../util/getFastNavigationGroups.js";
 import isElementClickable from "../util/isElementClickable.js";
@@ -41,18 +40,12 @@ class F6Navigation {
 	}
 
 	async groupElementToFocus(nextElement: HTMLElement) {
-		let nextElementDomRef = nextElement;
-
-		if (instanceOfUI5Element(nextElement)) {
-			nextElementDomRef = nextElement.getDomRef() || nextElement.firstElementChild as HTMLElement;
-		}
-
-		if (nextElementDomRef) {
-			if (isElementClickable(nextElementDomRef)) {
-				return nextElementDomRef;
+		if (nextElement) {
+			if (isElementClickable(nextElement)) {
+				return nextElement;
 			}
 
-			const elementToFocus = await getFirstFocusableElement(nextElementDomRef);
+			const elementToFocus = await getFirstFocusableElement(nextElement);
 
 			if (elementToFocus) {
 				return elementToFocus;
