@@ -12,7 +12,6 @@ export default function CalendarTemplate(this: Calendar) {
 			<div
 				class="ui5-cal-root"
 				onKeyDown={this._onkeydown}
-				onFocusIn={this._onfocusin}
 			>
 				<div id={`${this._id}-content`} class="ui5-cal-content">
 					<DayPicker

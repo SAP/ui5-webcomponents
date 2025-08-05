@@ -339,10 +339,6 @@ class Calendar extends CalendarPart {
 		this._currentPickerDOM.focus();
 	}
 
-	async _onfocusin() {
-		await this._focusCurrentPicker();
-	}
-
 	/**
 	 * @private
 	 */
@@ -749,6 +745,7 @@ class Calendar extends CalendarPart {
 		if (isF4(e) && this._currentPicker !== "month") {
 			this._currentPicker = "month";
 			this.fireDecoratorEvent("show-month-view");
+			this._focusCurrentPicker();
 		}
 
 		if (!isF4Shift(e)) {
@@ -758,9 +755,11 @@ class Calendar extends CalendarPart {
 		if (this._currentPicker !== "year") {
 			this._currentPicker = "year";
 			this.fireDecoratorEvent("show-year-view");
+			this._focusCurrentPicker();
 		} else {
 			this._currentPicker = "yearrange";
 			this.fireDecoratorEvent("show-year-range-view");
+			this._focusCurrentPicker();
 		}
 	}
 
