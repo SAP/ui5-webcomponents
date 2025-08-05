@@ -401,10 +401,6 @@ describe("List Tests", () => {
 	});
 
 	it("itemClick and selectionChange events are fired in Single selection", () => {
-		let itemClickCounter = 0;
-		let selectionChangeCounter = 0;
-		let selectionComponentPressed = false;
-
 		cy.mount(
 			<div>
 				<List selectionMode="SingleEnd">
@@ -418,40 +414,28 @@ describe("List Tests", () => {
 				<input placeholder="selectionComponentPressed result" />
 			</div>
 		);
-
+	
 		cy.get("[ui5-list]").then(($list) => {
-			$list[0].addEventListener("ui5-item-click", () => {
-				itemClickCounter++;
-				cy.get("input").eq(0).invoke("val", itemClickCounter.toString());
-			});
-
-			$list[0].addEventListener("ui5-selection-change", (event: any) => {
-				selectionChangeCounter++;
-				selectionComponentPressed = event.detail.selectionComponentPressed;
-				cy.get("input").eq(1).invoke("val", selectionChangeCounter.toString());
-				cy.get("input").eq(2).invoke("val", selectionComponentPressed.toString());
-			});
+			$list[0].addEventListener("ui5-item-click", cy.stub().as("itemClickStub"));
+			$list[0].addEventListener("ui5-selection-change", cy.stub().as("selectionChangeStub"));
 		});
-
+	
 		cy.get("[ui5-li]").first().click();
-
-		cy.get("input").eq(0).should("have.value", "1");
-		cy.get("input").eq(1).should("have.value", "1");
-
+	
+		cy.get("@itemClickStub").should("have.been.calledOnce");
+		cy.get("@selectionChangeStub").should("have.been.calledOnce");
+	
 		cy.get("[ui5-li]").eq(1)
 			.shadow()
 			.find("ui5-radio-button")
 			.click();
-
-		cy.get("input").eq(0).should("have.value", "1");
-		cy.get("input").eq(1).should("have.value", "2");
-		cy.get("input").eq(2).should("have.value", "true");
+	
+		cy.get("@itemClickStub").should("have.been.calledOnce");
+		cy.get("@selectionChangeStub").should("have.been.calledTwice");
+		cy.get("@selectionChangeStub").should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("selectionComponentPressed", true)));
 	});
 
 	it("itemClick and selectionChange events are fired in Multi selection", () => {
-		let itemClickCounter2 = 0;
-		let selectionChangeCounter2 = 0;
-
 		cy.mount(
 			<div>
 				<List selectionMode="Multiple">
@@ -464,28 +448,19 @@ describe("List Tests", () => {
 				<input placeholder="selectionChange result" />
 			</div>
 		);
-
+	
 		cy.get("[ui5-list]").then(($list) => {
-			$list[0].addEventListener("ui5-item-click", () => {
-				itemClickCounter2++;
-				cy.get("input").eq(0).invoke("val", itemClickCounter2.toString());
-			});
-
-			$list[0].addEventListener("ui5-selection-change", () => {
-				selectionChangeCounter2++;
-				cy.get("input").eq(1).invoke("val", selectionChangeCounter2.toString());
-			});
+			$list[0].addEventListener("ui5-item-click", cy.stub().as("itemClickStub"));
+			$list[0].addEventListener("ui5-selection-change", cy.stub().as("selectionChangeStub"));
 		});
-
+	
 		cy.get("[ui5-li]").first().click();
-
-		cy.get("input").eq(0).should("have.value", "1");
-		cy.get("input").eq(1).should("have.value", "1");
+	
+		cy.get("@itemClickStub").should("have.been.calledOnce");
+		cy.get("@selectionChangeStub").should("have.been.calledOnce");
 	});
 
 	it("selectionChange events provides previousSelection item", () => {
-		let previousItemId = "";
-
 		cy.mount(
 			<div>
 				<List selectionMode="SingleEnd">
@@ -497,22 +472,15 @@ describe("List Tests", () => {
 				<input placeholder="selectionChange previousSelection result" />
 			</div>
 		);
-
+	
 		cy.get("[ui5-list]").then(($list) => {
-			$list[0].addEventListener("ui5-selection-change", (event: CustomEvent) => {
-				if (event.detail.previouslySelectedItems && event.detail.previouslySelectedItems.length > 0) {
-					previousItemId = event.detail.previouslySelectedItems[0].id;
-					cy.get("input").invoke("val", previousItemId);
-				}
-			});
+			$list[0].addEventListener("ui5-selection-change", cy.stub().as("selectionChangeStub"));
 		});
-
+	
 		cy.get("[ui5-li]").first().click();
-
-		cy.get("input").should(($input) => {
-			const value = $input.val();
-			expect(value).to.be.a('string');
-		});
+	
+		cy.get("@selectionChangeStub").should("have.been.calledOnce");
+		cy.get("@selectionChangeStub").should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("previouslySelectedItems")));
 		cy.get("[ui5-li]").eq(1).should("exist");
 	});
 
@@ -524,17 +492,20 @@ describe("List Tests", () => {
 				<ListItemStandard selected>China</ListItemStandard>
 			</List>
 		);
-
+	
 		cy.get("[ui5-list]").then(($list) => {
-			$list[0].addEventListener("ui5-selection-change", (event: CustomEvent) => {
+			const stub = cy.stub().as("selectionChangeStub");
+			stub.callsFake((event) => {
 				event.preventDefault();
 			});
+			$list[0].addEventListener("ui5-selection-change", stub);
 		});
-
+	
 		cy.get("[ui5-li]").eq(2).should("have.attr", "selected");
-
+	
 		cy.get("[ui5-li]").first().click();
-
+	
+		cy.get("@selectionChangeStub").should("have.been.calledOnce");
 		cy.get("[ui5-li]").first().should("not.have.attr", "selected");
 		cy.get("[ui5-li]").eq(2).should("have.attr", "selected");
 	});
@@ -547,19 +518,22 @@ describe("List Tests", () => {
 				<ListItemStandard selected>China</ListItemStandard>
 			</List>
 		);
-
+	
 		cy.get("[ui5-list]").then(($list) => {
-			$list[0].addEventListener("ui5-selection-change", (event: CustomEvent) => {
+			const stub = cy.stub().as("selectionChangeStub");
+			stub.callsFake((event) => {
 				event.preventDefault();
 			});
+			$list[0].addEventListener("ui5-selection-change", stub);
 		});
-
+	
 		cy.get("[ui5-li]").first().should("not.have.attr", "selected");
 		cy.get("[ui5-li]").eq(1).should("have.attr", "selected");
 		cy.get("[ui5-li]").eq(2).should("have.attr", "selected");
-
+	
 		cy.get("[ui5-li]").first().click();
-
+	
+		cy.get("@selectionChangeStub").should("have.been.calledOnce");
 		cy.get("[ui5-li]").first().should("not.have.attr", "selected");
 		cy.get("[ui5-li]").eq(1).should("have.attr", "selected");
 		cy.get("[ui5-li]").eq(2).should("have.attr", "selected");
@@ -900,8 +874,6 @@ describe("List Tests", () => {
 	});
 
 	it("selectionMode: delete. items have X buttons which delete them", () => {
-		let itemDeleteCounter = 0;
-
 		cy.mount(
 			<div>
 				<List selectionMode="Delete" headerText="API: ListItemGroupHeader">
@@ -919,45 +891,40 @@ describe("List Tests", () => {
 				<label>0</label>
 			</div>
 		);
-
+	
 		cy.get("[ui5-list]").then(($list) => {
-			$list[0].addEventListener("ui5-item-delete", (event: any) => {
-				itemDeleteCounter++;
-				cy.get("label").invoke("text", `${event.detail.item.innerHTML}: ${itemDeleteCounter}`);
-			});
+			$list[0].addEventListener("ui5-item-delete", cy.stub().as("itemDeleteStub"));
 		});
-
+	
 		cy.get("[ui5-list]")
 			.find("ui5-li")
 			.first()
 			.click();
-
+	
 		cy.get("[ui5-list]")
 			.find("ui5-li")
 			.first()
 			.should("not.have.attr", "selected");
-
+	
 		cy.get("[ui5-list]")
 			.find("ui5-li")
 			.first()
 			.shadow()
 			.find("ui5-button")
 			.should("exist");
-
+	
 		cy.get("[ui5-list]")
 			.find("ui5-li")
 			.first()
 			.shadow()
 			.find("ui5-button")
 			.click();
-
-		cy.get("label")
-			.should("contain.text", "Laptop HP: 1");
+	
+		cy.get("@itemDeleteStub").should("have.been.calledOnce");
+		cy.get("@itemDeleteStub").should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("item")));
 	});
 
 	it("selectionMode: delete. DELETE key press - deletes item", () => {
-		let itemDeleteCounter = 0;
-
 		cy.mount(
 			<div>
 				<List selectionMode="Delete" headerText="API: ListItemGroupHeader">
@@ -975,28 +942,25 @@ describe("List Tests", () => {
 				<label>0</label>
 			</div>
 		);
-
+	
 		cy.get("[ui5-list]").then(($list) => {
-			$list[0].addEventListener("ui5-item-delete", (event: any) => {
-				itemDeleteCounter++;
-				cy.get("label").invoke("text", `${event.detail.item.innerHTML}: ${itemDeleteCounter}`);
-			});
+			$list[0].addEventListener("ui5-item-delete", cy.stub().as("itemDeleteStub"));
 		});
-
+	
 		cy.get("[ui5-list]")
 			.find("ui5-li")
 			.first()
 			.click();
-
+	
 		cy.get("[ui5-list]")
 			.find("ui5-li")
 			.first()
 			.should("not.have.attr", "selected");
-
+	
 		cy.realPress("Delete");
-
-		cy.get("label")
-			.should("contain.text", "Laptop HP: 1");
+	
+		cy.get("@itemDeleteStub").should("have.been.calledOnce");
+		cy.get("@itemDeleteStub").should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("item")));
 	});
 
 	it("item size and classes, when an item has both text and description", () => {
@@ -1231,8 +1195,6 @@ describe("List Tests", () => {
 	});
 
 	it("detailPress event is fired", () => {
-		let detailPressCounter = 0;
-
 		cy.mount(
 			<div>
 				<span>0</span>
@@ -1242,20 +1204,17 @@ describe("List Tests", () => {
 				</List>
 			</div>
 		);
-
+	
 		cy.get("[ui5-li]").first().then(($item) => {
-			$item[0].addEventListener("ui5-detail-click", () => {
-				detailPressCounter++;
-				cy.get("span").last().invoke("text", detailPressCounter.toString());
-			});
+			$item[0].addEventListener("ui5-detail-click", cy.stub().as("detailClickStub"));
 		});
-
+	
 		cy.get("[ui5-li]").first()
 			.shadow()
 			.find(".ui5-li-detailbtn")
 			.click();
-
-		cy.get("span").last().should("have.text", "1");
+	
+		cy.get("@detailClickStub").should("have.been.calledOnce");
 	});
 
 	it("tests aria-labelledby", () => {
@@ -1401,12 +1360,12 @@ describe("List Tests", () => {
 				<Button>Change empty item text</Button>
 			</div>
 		);
-
+	
 		const NEW_TEXT = "updated";
-
+	
 		cy.get("[ui5-li]").first()
 			.should("have.prop", "innerHTML", "");
-
+	
 		cy.get("[ui5-li]").first()
 			.shadow()
 			.find("slot")
@@ -1414,21 +1373,24 @@ describe("List Tests", () => {
 				const assignedNodes = ($slot[0] as any).assignedNodes();
 				expect(assignedNodes.length).to.equal(0);
 			});
-
+	
 		cy.get("[ui5-button]").then(($btn) => {
-			$btn[0].addEventListener("click", () => {
+			const stub = cy.stub().as("buttonClickStub");
+			stub.callsFake(() => {
 				const emptyItem = document.querySelector("ui5-li");
 				if (emptyItem) {
 					emptyItem.textContent = NEW_TEXT;
 				}
 			});
+			$btn[0].addEventListener("click", stub);
 		});
-
+	
 		cy.get("[ui5-button]").click();
-
+	
+		cy.get("@buttonClickStub").should("have.been.calledOnce");
 		cy.get("[ui5-li]").first()
 			.should("have.prop", "innerHTML", NEW_TEXT);
-
+	
 		cy.get("[ui5-li]").first()
 			.shadow()
 			.find("slot")
@@ -1448,21 +1410,19 @@ describe("List Tests", () => {
 				<input placeholder="itemClick prevented result" />
 			</div>
 		);
-
+	
 		cy.get("[ui5-list]").then(($list) => {
-			$list[0].addEventListener("ui5-item-click", (event: any) => {
+			const stub = cy.stub().as("itemClickStub");
+			stub.callsFake((event) => {
 				event.preventDefault();
-				cy.get("input").invoke("val", "prevented");
 			});
+			$list[0].addEventListener("ui5-item-click", stub);
 		});
-
+	
 		cy.get("[ui5-li]").first().click();
-
-		cy.get("[ui5-li]").first()
-			.should("not.have.attr", "selected");
-
-		cy.get("input")
-			.should("have.value", "prevented");
+	
+		cy.get("@itemClickStub").should("have.been.calledOnce");
+		cy.get("[ui5-li]").first().should("not.have.attr", "selected");
 	});
 
 	it("Popover with List opens without errors", () => {
@@ -1629,8 +1589,6 @@ describe("List Tests", () => {
 	});
 
 	it('should not try to fire item-close if a select is closed from custom list item', () => {
-		let customListItemSelectResult = 0;
-
 		cy.mount(
 			<div>
 				<List>
@@ -1645,23 +1603,19 @@ describe("List Tests", () => {
 				<input value="0" />
 			</div>
 		);
-
+	
 		cy.get("[ui5-select]").then(($select) => {
 			const listItem = $select.closest("ui5-li-custom")[0];
 			if (listItem) {
-				listItem.addEventListener("ui5-item-close", () => {
-					customListItemSelectResult++;
-					cy.get("input").invoke("val", customListItemSelectResult.toString());
-				});
+				listItem.addEventListener("ui5-item-close", cy.stub().as("itemCloseStub"));
 			}
 		});
-
+	
 		cy.get("[ui5-select]").click();
-
+	
 		cy.realPress("Escape");
-
-		cy.get("input")
-			.should("have.value", "0");
+	
+		cy.get("@itemCloseStub").should("not.have.been.called");
 	});
 
 	it("List item fires request-tabindex-change event and updates tabindex when inner element receives focus", () => {
