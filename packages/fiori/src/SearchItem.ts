@@ -7,6 +7,9 @@ import SearchItemCss from "./generated/themes/SearchItem.css.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import { SEARCH_ITEM_DELETE_BUTTON } from "./generated/i18n/i18n-defaults.js";
+import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 /**
  * @class
@@ -112,6 +115,9 @@ class SearchItem extends ListItemBase {
 
 	_markupText = "";
 
+	@i18n("@ui5/webcomponents-fiori")
+	static i18nBundle: I18nBundle;
+
 	_onfocusin(e: FocusEvent) {
 		super._onfocusin(e);
 
@@ -131,6 +137,10 @@ class SearchItem extends ListItemBase {
 
 		// bold the matched text
 		this._markupText = this.highlightText ? generateHighlightedMarkup((this.text || ""), this.highlightText) : (this.text || "");
+	}
+
+	get _deleteButtonTooltip() {
+		return SearchItem.i18nBundle.getText(SEARCH_ITEM_DELETE_BUTTON);
 	}
 }
 
