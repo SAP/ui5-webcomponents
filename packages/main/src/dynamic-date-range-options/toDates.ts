@@ -67,7 +67,7 @@ const lastToDates = (value: DynamicDateRangeValue, unit: string): Array<Date> =>
 	case "days":
 		// For "Last X Days": start X days before today (inclusive), end today
 		// "Last 1 Day" = today only, "Last 2 Days" = yesterday + today, etc.
-		startDate.setTime(today.getTime() - (amount - 1) * 24 * 60 * 60 * 1000);
+		startDate.setDate(today.getDate() - (amount - 1));
 		break;
 	case "weeks": {
 		const currentDayOfWeek = today.getDay();
