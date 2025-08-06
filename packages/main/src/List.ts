@@ -22,11 +22,9 @@ import {
 	isDown,
 	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
-import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
-import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import DragAndDropHandler from "./delegate/DragAndDropHandler.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
 	getAllAccessibleDescriptionRefTexts,
@@ -542,6 +540,8 @@ class List extends UI5Element {
 	onForwardBeforeBound: (e: CustomEvent) => void;
 	onItemTabIndexChangeBound: (e: CustomEvent) => void;
 
+	_dragAndDropHandler: DragAndDropHandler;
+
 	constructor() {
 		super();
 
@@ -571,6 +571,14 @@ class List extends UI5Element {
 		this.onForwardAfterBound = this.onForwardAfter.bind(this);
 		this.onForwardBeforeBound = this.onForwardBefore.bind(this);
 		this.onItemTabIndexChangeBound = this.onItemTabIndexChange.bind(this);
+
+		// Initialize the DragAndDropHandler with the necessary configurations
+		// The handler will manage the drag and drop operations for the list items.
+		this._dragAndDropHandler = new DragAndDropHandler(this, {
+			getItems: () => this.items,
+			getDropIndicator: () => this.dropIndicatorDOM,
+			useOriginalEvent: true,
+		});
 	}
 
 	/**
@@ -1190,46 +1198,19 @@ class List extends UI5Element {
 	}
 
 	_ondragenter(e: DragEvent) {
-		e.preventDefault();
+		this._dragAndDropHandler.ondragenter(e);
 	}
 
 	_ondragleave(e: DragEvent) {
-		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
-			return;
-		}
-
-		this.dropIndicatorDOM!.targetReference = null;
+		this._dragAndDropHandler.ondragleave(e);
 	}
 
 	_ondragover(e: DragEvent) {
-		if (!(e.target instanceof HTMLElement)) {
-			return;
-		}
-
-		const closestPosition = findClosestPosition(
-			this.items,
-			e.clientY,
-			Orientation.Vertical,
-		);
-
-		if (!closestPosition) {
-			this.dropIndicatorDOM!.targetReference = null;
-			return;
-		}
-
-		const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element, { originalEvent: true });
-		this.dropIndicatorDOM!.targetReference = targetReference;
-		this.dropIndicatorDOM!.placement = placement;
+		this._dragAndDropHandler.ondragover(e);
 	}
 
 	_ondrop(e: DragEvent) {
-		if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
-			e.preventDefault();
-			return;
-		}
-
-		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement, { originalEvent: true });
-		this.dropIndicatorDOM.targetReference = null;
+		this._dragAndDropHandler.ondrop(e);
 	}
 
 	isForwardElement(element: HTMLElement) {
