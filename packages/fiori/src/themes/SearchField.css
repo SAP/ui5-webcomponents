@@ -97,10 +97,6 @@
 	color: var(--sapShell_InteractiveTextColor);
 }
 
-[ui5-select]::part(icon):hover {
-	background-color: var(--sapShell_Hover_Background);
-}
-
 [ui5-select]::part(popover) {
 	background-color: var(--sapShellColor);
 }
@@ -196,8 +192,6 @@
 	min-width: var(--_ui5_search_icon_size);
 	height: var(--_ui5_search_icon_size);
 	border-radius: var(--_ui5_search_icon_border_radius);
-	margin-inline-end: 0.25rem;
-	margin-inline-start: 0.1875rem;
 	box-sizing: border-box;
 	cursor: pointer;
 }
@@ -207,6 +201,7 @@
 	background-color: var(--_ui5-search-elements-background);
 	min-width: var(--_ui5_search_icon_size_default);
 	height: var(--_ui5_search_icon_size_default);
+	border-radius: var(--_ui5_shellbar_button_border_radius);
 }
 
 .ui5-shell-search-field-button:not([design="Emphasized"]):hover {
@@ -224,7 +219,7 @@
 .ui5-shell-search-field-button[active]::part(button):focus-visible:before,
 .ui5-shell-search-field-button[design="Emphasized"][desktop]::part(button):focus-within:before,
 .ui5-shell-search-field-button[design="Emphasized"]::part(button):focus-visible:before {
-	border-radius: var(--_ui5_search_icon_border_radius);
+	border-radius: var(--_ui5_shellbar_button_border_radius);
 }
 
 
@@ -274,4 +269,31 @@
 
 .ui5-search-field-select {
 	--_ui5_input_focus_border_radius: var(--_ui5_search_input_border_radius);
+}
+
+.ui5-search-field-select:hover,
+.ui5-search-field-select[focused] {
+	background: var(--_ui5-search-wrapper-hover-background-color);
+}
+
+.ui5-search-field-select::part(icon-wrapper) {
+	border-radius: var(--_ui5_search_input_border_radius);
+	height: 100%;
+}
+
+.ui5-search-field-select[focused]::part(icon-wrapper) {
+	box-shadow: var(--sapField_Hover_Shadow);
+}
+
+:host(:not([collapsed]):hover):has([ui5-select]:hover) {
+	background: var(--_ui5-search-wrapper-background);
+}
+
+:host(:not([collapsed])):has([ui5-select][focused]) {
+	background: var(--_ui5-search-wrapper-background);
+}
+
+.ui5-search-field-inner-input::selection {
+	background: var(--sapSelectedColor);
+	color: var(--sapContent_ContrastTextColor);
 }
