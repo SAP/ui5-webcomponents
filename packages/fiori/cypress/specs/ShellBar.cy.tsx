@@ -611,6 +611,385 @@ describe("Events", () => {
 		cy.get("@logoClickSmall")
 			.should("have.been.calledOnce");
 	});
+
+	describe("Big screen", () => {
+		beforeEach(() => {
+			cy.viewport(1920, 1680);
+		});
+
+		it("tests opening of menu", () => {
+			cy.mount(
+				<ShellBar primaryTitle="Product Title">
+					<ListItemStandard slot="menuItems">Menu Item 1</ListItemStandard>
+					<ListItemStandard slot="menuItems">Menu Item 2</ListItemStandard>
+					<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+				</ShellBar>
+			);
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-menu-button")
+				.click();
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-menu-popover")
+				.should("have.prop", "open", true);
+		});
+
+		it("tests notificationsClick event", () => {
+			cy.mount(
+				<div>
+					<input id="press-input" />
+					<ShellBar showNotifications={true}>
+						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					</ShellBar>
+				</div>
+			);
+
+			cy.get("[ui5-shellbar]").then($shellbar => {
+				const shellbar = $shellbar[0];
+				shellbar.addEventListener("ui5-notifications-click", () => {
+					(document.getElementById("press-input") as HTMLInputElement).value = "Notifications";
+				});
+			});
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-bell-button")
+				.click();
+
+			cy.get("#press-input").should("have.value", "Notifications");
+		});
+
+		it("tests profileClick event", () => {
+			cy.mount(
+				<div>
+					<input id="press-input" />
+					<ShellBar>
+						<Avatar slot="profile">
+							<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
+						</Avatar>
+						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					</ShellBar>
+				</div>
+			);
+
+			cy.get("[ui5-shellbar]").then($shellbar => {
+				const shellbar = $shellbar[0];
+				shellbar.addEventListener("ui5-profile-click", () => {
+					(document.getElementById("press-input") as HTMLInputElement).value = "Profile";
+				});
+			});
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find("[data-profile-btn]")
+				.click();
+
+			cy.get("#press-input").should("have.value", "Profile");
+		});
+
+		it("tests productSwitchClick event", () => {
+			cy.mount(
+				<div>
+					<input id="press-input" />
+					<ShellBar showProductSwitch={true}>
+						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					</ShellBar>
+				</div>
+			);
+
+			cy.get("[ui5-shellbar]").then($shellbar => {
+				const shellbar = $shellbar[0];
+				shellbar.addEventListener("ui5-product-switch-click", () => {
+					(document.getElementById("press-input") as HTMLInputElement).value = "Product Switch";
+				});
+			});
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-button-product-switch")
+				.click();
+
+			cy.get("#press-input").should("have.value", "Product Switch");
+		});
+
+		it("tests logoClick event", () => {
+			cy.mount(
+				<div>
+					<input id="press-input" />
+					<ShellBar>
+						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					</ShellBar>
+				</div>
+			);
+
+			cy.get("[ui5-shellbar]").then($shellbar => {
+				const shellbar = $shellbar[0];
+				shellbar.addEventListener("ui5-logo-click", () => {
+					(document.getElementById("press-input") as HTMLInputElement).value = "Logo";
+				});
+			});
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-logo")
+				.click();
+
+			cy.get("#press-input").should("have.value", "Logo");
+		});
+
+		it("tests search-button-click event", () => {
+			cy.viewport(870, 1680);
+
+			cy.mount(
+				<div>
+					<input id="press-input" />
+					<ShellBar>
+						<Input slot="searchField" placeholder="Search" />
+						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					</ShellBar>
+				</div>
+			);
+
+			cy.get("[ui5-shellbar]").then($shellbar => {
+				const shellbar = $shellbar[0];
+				shellbar.addEventListener("ui5-search-button-click", (e) => {
+					e.preventDefault();
+					(document.getElementById("press-input") as HTMLInputElement).value = "Search clicked";
+				});
+			});
+
+			cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", false);
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-search-button")
+				.click();
+
+			cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", false);
+
+			cy.get("#press-input").should("have.value", "Search clicked");
+		});
+
+		it("tests menuItemClick event", () => {
+			cy.mount(
+				<div>
+					<input id="press-input" />
+					<input id="press-data" />
+					<ShellBar primaryTitle="Product Title">
+						<ListItemStandard slot="menuItems" data-key="key1">Application 1</ListItemStandard>
+						<ListItemStandard slot="menuItems" data-key="key2">Application 2</ListItemStandard>
+						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					</ShellBar>
+				</div>
+			);
+
+			cy.get("[ui5-li][slot='menuItems']").each(($item) => {
+				const item = $item[0];
+				item.addEventListener("click", () => {
+					(document.getElementById("press-input") as HTMLInputElement).value = item.textContent.trim();
+					(document.getElementById("press-data") as HTMLInputElement).value = item.getAttribute("data-key") || "";
+				});
+			});
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-menu-button")
+				.click();
+
+			cy.get("[ui5-li][slot='menuItems']").first().click();
+
+			cy.get("#press-input").should("have.value", "Application 1");
+			cy.get("#press-data").should("have.value", "key1");
+
+			cy.get("#press-input").invoke("prop", "value", "");
+			cy.get("#press-data").invoke("prop", "value", "");
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-menu-button")
+				.click();
+
+			cy.get("[ui5-li][slot='menuItems']").eq(1).click();
+
+			cy.get("#press-input").should("have.value", "Application 2");
+			cy.get("#press-data").should("have.value", "key2");
+		});
+
+		it("tests if searchfield toggles when altering the showSearchField property", () => {
+			cy.mount(
+				<ShellBar showSearchField={true}>
+					<Input slot="searchField" placeholder="Search" />
+					<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+				</ShellBar>
+			);
+
+			cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", true);
+
+			cy.get("[ui5-shellbar]").invoke("prop", "showSearchField", false);
+
+			cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", false);
+
+			cy.get("[ui5-shellbar]").invoke("prop", "showSearchField", true);
+			cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", true);
+		});
+	});
+
+	describe("Small screen", () => {
+		beforeEach(() => {
+			cy.viewport(510, 1680);
+		});
+
+		it("tests logoClick event", () => {
+			cy.mount(
+				<div>
+					<input id="press-input2" />
+					<ShellBar showSearchField={false}>
+						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					</ShellBar>
+				</div>
+			);
+
+			const title = "SAPLabsBulgaria";
+
+			cy.get("[ui5-shellbar]").then($shellbar => {
+				const shellbar = $shellbar[0];
+				shellbar.addEventListener("ui5-logo-click", () => {
+					(document.getElementById("press-input2") as HTMLInputElement).value = title;
+				});
+			});
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-logo")
+				.click();
+
+			cy.get("#press-input2").should("have.value", title);
+		});
+
+		it("tests opening of menu", () => {
+			cy.mount(
+				<ShellBar primaryTitle="Product Title" showSearchField={false}>
+					<ListItemStandard slot="menuItems">Menu Item 1</ListItemStandard>
+					<ListItemStandard slot="menuItems">Menu Item 2</ListItemStandard>
+					<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+				</ShellBar>
+			);
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-menu-button")
+				.click();
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-menu-popover")
+				.should("have.prop", "open", true);
+		});
+
+		it("tests profileClick event", () => {
+			cy.mount(
+				<div>
+					<input id="press-input" />
+					<ShellBar showSearchField={false}>
+						<Avatar slot="profile">
+							<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
+						</Avatar>
+						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					</ShellBar>
+				</div>
+			);
+
+			cy.get("[ui5-shellbar]").then($shellbar => {
+				const shellbar = $shellbar[0];
+				shellbar.addEventListener("ui5-profile-click", () => {
+					(document.getElementById("press-input") as HTMLInputElement).value = "Profile";
+				});
+			});
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find("[data-profile-btn]")
+				.click();
+
+			cy.get("#press-input").should("have.value", "Profile");
+		});
+
+		it("tests productSwitchClick event", () => {
+			cy.mount(
+				<div>
+					<input id="press-input" />
+					<ShellBar showSearchField={false} showProductSwitch={true}>
+						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					</ShellBar>
+				</div>
+			);
+
+			cy.get("[ui5-shellbar]").then($shellbar => {
+				const shellbar = $shellbar[0];
+				shellbar.addEventListener("ui5-product-switch-click", () => {
+					(document.getElementById("press-input") as HTMLInputElement).value = "Product Switch";
+				});
+			});
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-button-product-switch")
+				.click();
+
+			cy.get("#press-input").should("have.value", "Product Switch");
+		});
+
+		it("tests preventDefault of click on a button with default behavior prevented", () => {
+			cy.mount(
+				<ShellBar
+					primaryTitle="Product Title"
+					secondaryTitle="Second title"
+					notificationsCount="99+"
+					showNotifications
+					showProductSwitch
+					showSearchField={false}
+				>
+					<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+					<Button slot="content">Button 1</Button>
+					<Button slot="content">Button 2</Button>
+					<ToggleButton icon="sap-icon://da" slot="assistant" />
+					<Button icon="nav-back" slot="startButton" />
+					<ShellBarItem icon="disconnected" text="Disconnect" />
+					<ShellBarItem icon="incoming-call" text="Incoming Calls" />
+				</ShellBar>
+			);
+		
+			cy.get<ShellBar>("[ui5-shellbar]").then(($shellbar) => {
+				const shellbar = $shellbar[0] as HTMLElement;
+				shellbar.addEventListener("ui5-notifications-click", (e: Event) => {
+					e.preventDefault();
+				});
+			});
+		
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-overflow-button")
+				.realClick();
+		
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-overflow-popover")
+				.should("be.visible");
+		
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-overflow-popover [ui5-list] [ui5-li]:nth-child(3)")
+				.realClick();
+		
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-overflow-popover")
+				.should("be.visible");
+		});
+	});
 });
 
 describe("ButtonBadge in ShellBar", () => {
@@ -828,8 +1207,8 @@ describe("Component Behavior", () => {
 				</ShellBar>
 			);
 
-			cy.get("[ui5-shellbar]").then(($shellbar) => {
-				($shellbar[0] as any).accessibilityAttributes = {
+			cy.get<ShellBar>("[ui5-shellbar]").then(($shellbar) => {
+				$shellbar[0].accessibilityAttributes = {
 					profile: {
 						name: PROFILE_BTN_CUSTOM_TOOLTIP,
 					},
@@ -845,19 +1224,6 @@ describe("Component Behavior", () => {
 		});
 
 		it("tests acc default roles", () => {
-			cy.mount(
-				<ShellBar>
-					<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo" />
-				</ShellBar>
-			);
-
-			cy.get("[ui5-shellbar]")
-				.shadow()
-				.find(".ui5-shellbar-logo-area")
-				.should("have.attr", "role", "link");
-		});
-
-		it("tests acc custom roles", () => {
 			cy.mount(
 				<ShellBar>
 					<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo" />
@@ -886,8 +1252,8 @@ describe("Component Behavior", () => {
 				</ShellBar>
 			);
 
-			cy.get("[ui5-shellbar]").then(($shellbar) => {
-				($shellbar[0] as any).accessibilityAttributes = {
+			cy.get<ShellBar>("[ui5-shellbar]").then(($shellbar) => {
+				$shellbar[0].accessibilityAttributes = {
 					notifications: {
 						hasPopup: NOTIFICATIONS_BTN_ARIA_HASPOPUP
 					},
@@ -998,421 +1364,40 @@ describe("Component Behavior", () => {
 				.find(`[data-ui5-stable="schedule"]`)
 				.should("exist");
 		});
-	});
 
-	it("tests 'click' on custom action", () => {
-		cy.mount(
-			<div>
-				<input id="press-input3" />
-				<ShellBar>
-					<ShellBarItem icon="accept" text="Accept" />
-					<ShellBarItem icon="alert" text="Alert" />
-				</ShellBar>
-			</div>
-		);
-
-		cy.get("[ui5-shellbar-item]").each(($item) => {
-			const item = $item[0];
-			item.addEventListener("click", () => {
-				const icon = item.getAttribute("icon");
-				const value = icon === "accept" ? "accept" : "warning";
-				(document.getElementById("press-input3") as HTMLInputElement).value = value;
-			});
-		});
-
-		cy.get("[ui5-shellbar]")
-			.shadow()
-			.find(`.ui5-shellbar-custom-item[icon="accept"]`)
-			.click();
-
-		cy.get("#press-input3").should("have.value", "accept");
-
-		cy.get("[ui5-shellbar]")
-			.shadow()
-			.find(`.ui5-shellbar-custom-item[icon="alert"]`)
-			.click();
-
-		cy.get("#press-input3").should("have.value", "warning");
-	});
-
-	describe("Events", () => {
-		describe("Big screen", () => {
-			beforeEach(() => {
-				cy.viewport(1920, 1680);
-			});
-
-			it("tests opening of menu", () => {
-				cy.mount(
-					<ShellBar primaryTitle="Product Title">
-						<ListItemStandard slot="menuItems">Menu Item 1</ListItemStandard>
-						<ListItemStandard slot="menuItems">Menu Item 2</ListItemStandard>
-						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+		it("tests 'click' on custom action", () => {
+			cy.mount(
+				<div>
+					<input id="press-input3" />
+					<ShellBar>
+						<ShellBarItem icon="accept" text="Accept" />
+						<ShellBarItem icon="alert" text="Alert" />
 					</ShellBar>
-				);
+				</div>
+			);
 
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-menu-button")
-					.click();
-
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-menu-popover")
-					.should("have.prop", "open", true);
-			});
-
-			it("tests notificationsClick event", () => {
-				cy.mount(
-					<div>
-						<input id="press-input" />
-						<ShellBar showNotifications={true}>
-							<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-						</ShellBar>
-					</div>
-				);
-
-				cy.get("[ui5-shellbar]").then($shellbar => {
-					const shellbar = $shellbar[0];
-					shellbar.addEventListener("ui5-notifications-click", () => {
-						(document.getElementById("press-input") as HTMLInputElement).value = "Notifications";
-					});
+			cy.get("[ui5-shellbar-item]").each(($item) => {
+				const item = $item[0];
+				item.addEventListener("click", () => {
+					const icon = item.getAttribute("icon");
+					const value = icon === "accept" ? "accept" : "warning";
+					(document.getElementById("press-input3") as HTMLInputElement).value = value;
 				});
-
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-bell-button")
-					.click();
-
-				cy.get("#press-input").should("have.value", "Notifications");
 			});
 
-			it("tests profileClick event", () => {
-				cy.mount(
-					<div>
-						<input id="press-input" />
-						<ShellBar>
-							<Avatar slot="profile">
-								<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
-							</Avatar>
-							<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-						</ShellBar>
-					</div>
-				);
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(`.ui5-shellbar-custom-item[icon="accept"]`)
+				.click();
 
-				cy.get("[ui5-shellbar]").then($shellbar => {
-					const shellbar = $shellbar[0];
-					shellbar.addEventListener("ui5-profile-click", () => {
-						(document.getElementById("press-input") as HTMLInputElement).value = "Profile";
-					});
-				});
+			cy.get("#press-input3").should("have.value", "accept");
 
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find("[data-profile-btn]")
-					.click();
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(`.ui5-shellbar-custom-item[icon="alert"]`)
+				.click();
 
-				cy.get("#press-input").should("have.value", "Profile");
-			});
-
-			it("tests productSwitchClick event", () => {
-				cy.mount(
-					<div>
-						<input id="press-input" />
-						<ShellBar showProductSwitch={true}>
-							<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-						</ShellBar>
-					</div>
-				);
-
-				cy.get("[ui5-shellbar]").then($shellbar => {
-					const shellbar = $shellbar[0];
-					shellbar.addEventListener("ui5-product-switch-click", () => {
-						(document.getElementById("press-input") as HTMLInputElement).value = "Product Switch";
-					});
-				});
-
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-button-product-switch")
-					.click();
-
-				cy.get("#press-input").should("have.value", "Product Switch");
-			});
-
-			it("tests logoClick event", () => {
-				cy.mount(
-					<div>
-						<input id="press-input" />
-						<ShellBar>
-							<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-						</ShellBar>
-					</div>
-				);
-
-				cy.get("[ui5-shellbar]").then($shellbar => {
-					const shellbar = $shellbar[0];
-					shellbar.addEventListener("ui5-logo-click", () => {
-						(document.getElementById("press-input") as HTMLInputElement).value = "Logo";
-					});
-				});
-
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-logo")
-					.click();
-
-				cy.get("#press-input").should("have.value", "Logo");
-			});
-
-			it("tests search-button-click event", () => {
-				cy.viewport(870, 1680);
-
-				cy.mount(
-					<div>
-						<input id="press-input" />
-						<ShellBar>
-							<Input slot="searchField" placeholder="Search" />
-							<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-						</ShellBar>
-					</div>
-				);
-
-				cy.get("[ui5-shellbar]").then($shellbar => {
-					const shellbar = $shellbar[0];
-					shellbar.addEventListener("ui5-search-button-click", (e) => {
-						e.preventDefault();
-						(document.getElementById("press-input") as HTMLInputElement).value = "Search clicked";
-					});
-				});
-
-				cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", false);
-
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-search-button")
-					.click();
-
-				cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", false);
-
-				cy.get("#press-input").should("have.value", "Search clicked");
-			});
-
-			it("tests menuItemClick event", () => {
-				cy.mount(
-					<div>
-						<input id="press-input" />
-						<input id="press-data" />
-						<ShellBar primaryTitle="Product Title">
-							<ListItemStandard slot="menuItems" data-key="key1">Application 1</ListItemStandard>
-							<ListItemStandard slot="menuItems" data-key="key2">Application 2</ListItemStandard>
-							<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-						</ShellBar>
-					</div>
-				);
-
-				cy.get("[ui5-li][slot='menuItems']").each(($item) => {
-					const item = $item[0];
-					item.addEventListener("click", () => {
-						(document.getElementById("press-input") as HTMLInputElement).value = item.textContent.trim();
-						(document.getElementById("press-data") as HTMLInputElement).value = item.getAttribute("data-key") || "";
-					});
-				});
-
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-menu-button")
-					.click();
-
-				cy.get("[ui5-li][slot='menuItems']").first().click();
-
-				cy.get("#press-input").should("have.value", "Application 1");
-				cy.get("#press-data").should("have.value", "key1");
-
-				cy.get("#press-input").invoke("prop", "value", "");
-				cy.get("#press-data").invoke("prop", "value", "");
-
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-menu-button")
-					.click();
-
-				cy.get("[ui5-li][slot='menuItems']").eq(1).click();
-
-				cy.get("#press-input").should("have.value", "Application 2");
-				cy.get("#press-data").should("have.value", "key2");
-			});
-
-			it("tests if searchfield toggles when altering the showSearchField property", () => {
-				cy.mount(
-					<ShellBar showSearchField={true}>
-						<Input slot="searchField" placeholder="Search" />
-						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-					</ShellBar>
-				);
-
-				cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", true);
-
-				cy.get("[ui5-shellbar]").invoke("prop", "showSearchField", false);
-
-				cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", false);
-
-				cy.get("[ui5-shellbar]").invoke("prop", "showSearchField", true);
-				cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", true);
-			});
-		});
-
-		describe("Small screen", () => {
-			beforeEach(() => {
-				cy.viewport(510, 1680);
-			});
-
-			it("tests logoClick event", () => {
-				cy.mount(
-					<div>
-						<input id="press-input2" />
-						<ShellBar showSearchField={false}>
-							<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-						</ShellBar>
-					</div>
-				);
-
-				const title = "SAPLabsBulgaria";
-
-				cy.get("[ui5-shellbar]").then($shellbar => {
-					const shellbar = $shellbar[0];
-					shellbar.addEventListener("ui5-logo-click", () => {
-						(document.getElementById("press-input2") as HTMLInputElement).value = title;
-					});
-				});
-
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-logo")
-					.click();
-
-				cy.get("#press-input2").should("have.value", title);
-			});
-
-			it("tests opening of menu", () => {
-				cy.mount(
-					<ShellBar primaryTitle="Product Title" showSearchField={false}>
-						<ListItemStandard slot="menuItems">Menu Item 1</ListItemStandard>
-						<ListItemStandard slot="menuItems">Menu Item 2</ListItemStandard>
-						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-					</ShellBar>
-				);
-
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-menu-button")
-					.click();
-
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-menu-popover")
-					.should("have.prop", "open", true);
-			});
-
-			it("tests profileClick event", () => {
-				cy.mount(
-					<div>
-						<input id="press-input" />
-						<ShellBar showSearchField={false}>
-							<Avatar slot="profile">
-								<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
-							</Avatar>
-							<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-						</ShellBar>
-					</div>
-				);
-
-				cy.get("[ui5-shellbar]").then($shellbar => {
-					const shellbar = $shellbar[0];
-					shellbar.addEventListener("ui5-profile-click", () => {
-						(document.getElementById("press-input") as HTMLInputElement).value = "Profile";
-					});
-				});
-
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find("[data-profile-btn]")
-					.click();
-
-				cy.get("#press-input").should("have.value", "Profile");
-			});
-
-			it("tests productSwitchClick event", () => {
-				cy.mount(
-					<div>
-						<input id="press-input" />
-						<ShellBar showSearchField={false} showProductSwitch={true}>
-							<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-						</ShellBar>
-					</div>
-				);
-
-				cy.get("[ui5-shellbar]").then($shellbar => {
-					const shellbar = $shellbar[0];
-					shellbar.addEventListener("ui5-product-switch-click", () => {
-						(document.getElementById("press-input") as HTMLInputElement).value = "Product Switch";
-					});
-				});
-
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-button-product-switch")
-					.click();
-
-				cy.get("#press-input").should("have.value", "Product Switch");
-			});
-
-			it("tests preventDefault of click on a button with default behavior prevented", () => {
-				cy.mount(
-					<ShellBar
-						primaryTitle="Product Title"
-						secondaryTitle="Second title"
-						notificationsCount="99+"
-						showNotifications
-						showProductSwitch
-						showSearchField={false}
-					>
-						<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-						<Button slot="content">Button 1</Button>
-						<Button slot="content">Button 2</Button>
-						<ToggleButton icon="sap-icon://da" slot="assistant" />
-						<Button icon="nav-back" slot="startButton" />
-						<ShellBarItem icon="disconnected" text="Disconnect" />
-						<ShellBarItem icon="incoming-call" text="Incoming Calls" />
-					</ShellBar>
-				);
-			
-				cy.get("[ui5-shellbar]").then(($shellbar) => {
-					const shellbar = $shellbar[0] as HTMLElement;
-					shellbar.addEventListener("ui5-notifications-click", (e: Event) => {
-						e.preventDefault();
-					});
-				});
-			
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-overflow-button")
-					.realClick();
-			
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-overflow-popover")
-					.should("be.visible");
-			
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-overflow-popover ui5-list ui5-li:nth-child(3)")
-					.realClick();
-			
-				cy.get("[ui5-shellbar]")
-					.shadow()
-					.find(".ui5-shellbar-overflow-popover")
-					.should("be.visible");
-			});
+			cy.get("#press-input3").should("have.value", "warning");
 		});
 	});
 });
