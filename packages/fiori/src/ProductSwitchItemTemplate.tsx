@@ -41,8 +41,8 @@ export default function ProductSwitchItemTemplate(this: ProductSwitchItem) {
 function item(this: ProductSwitchItem) {
 	return (
 		<>
-			{this.customImage && this.customImage.length > 0 ? (
-				<slot name="customImage"></slot>
+			{this.image && this.image.length > 0 ? (
+				<slot name="image"></slot>
 			) : (
 				this.icon &&
 				<Icon

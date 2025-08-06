@@ -50,15 +50,15 @@ describe("List - getFocusDomRef Method", () => {
 			});
 	});
 
-	describe("customImage slot", () => {
-		it("should render custom content in the customImage slot and not render the icon", () => {
+	describe("image slot", () => {
+		it("should render custom content in the image slot and not render the icon", () => {
 			cy.mount(
 				<ProductSwitch>
 					<ProductSwitchItem
 						titleText="With Avatar"
 						icon="file"
 					>
-						<Avatar slot="customImage" size="XS" />
+						<Avatar slot="image" size="XS" />
 					</ProductSwitchItem>
 				</ProductSwitch>
 			);
