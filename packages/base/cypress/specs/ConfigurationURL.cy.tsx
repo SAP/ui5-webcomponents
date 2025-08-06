@@ -1,6 +1,7 @@
 import { internals } from "../../src/Location.js";
 import TestGeneric from "../../test/test-elements/Generic.js";
 import { resetConfiguration } from "../../src/InitialConfiguration.js";
+import { allowThemeRootUrl } from "../../src/config/ThemeRoot.js";
 import { getLanguage } from "../../src/config/Language.js";
 import { getCalendarType } from "../../src/config/CalendarType.js";
 import { getTheme } from "../../src/config/Theme.js";
@@ -14,6 +15,10 @@ describe("Some settings can be set via SAP UI URL params", () => {
 
 		cy.stub(internals, "search", () => {
 			return searchParams;
+		});
+
+		cy.then(() => {
+			return allowThemeRootUrl(true);
 		});
 
 		cy.then(() => {
