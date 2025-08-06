@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.2](https://github.com/SAP/ui5-webcomponents/compare/v2.13.1...v2.13.2) (2025-08-06)
+
+
+### Bug Fixes
+
+* **framework:** sap-ui-themeRoot block all origins by defaultTheme root disallow default ([#12035](https://github.com/SAP/ui5-webcomponents/issues/12035)) ([0824f8c](https://github.com/SAP/ui5-webcomponents/commit/0824f8c59f1c7c906c5c4334d83ca2f0000ae888))
+
+
+
+
+
 ## [2.13.1](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0...v2.13.1) (2025-08-05)
 
 
