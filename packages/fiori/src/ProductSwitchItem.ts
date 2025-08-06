@@ -139,7 +139,7 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	 * Defines a custom image or icon to be displayed instead of the standard icon.
 	 *
 	 * **Note:** The customImage slot takes precedence over the icon property.
-	 * **Note:** We recommend using ui5-avatar with size XS for best alignment.
+	 * **Note:** We recommend using non-interactive ui5-avatar with size S and Square shape for best alignment.
 	 * @public
 	 * @since 2.14.0
 	 */
