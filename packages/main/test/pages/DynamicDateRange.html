@@ -8,10 +8,6 @@
 		/>
 		<title>DynamicDateRange test page</title>
 
-		<script>
-			// delete Document.prototype.adoptedStyleSheets;
-		</script>
-
 		<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
 		<script data-ui5-config type="application/json">
@@ -58,8 +54,6 @@
 		<script>
 			const lastNext = document.getElementById("last-next");
 			lastNext.addEventListener("ui5-change", (event) => {
-				console.log(event.detail);
-
 				const selectedValue = event.target.value;
 
 				const dates = lastNext.toDates(selectedValue);

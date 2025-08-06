@@ -106,7 +106,7 @@ const nextToDates = (value: DynamicDateRangeValue, unit: string): Array<Date> =>
 	case "days":
 		// For "Next X Days": start today, end X days from today (inclusive)
 		// "Next 1 Day" = today only, "Next 2 Days" = today + tomorrow, etc.
-		endDate.setTime(today.getTime() + (amount - 1) * 24 * 60 * 60 * 1000);
+		endDate.setDate(today.getDate() + (amount - 1));
 		break;
 	case "weeks": {
 		const currentDayOfWeek = today.getDay();
