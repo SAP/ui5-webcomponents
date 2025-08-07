@@ -185,7 +185,7 @@ class DynamicDateRange extends UI5Element {
 
 	optionsObjects: Array<IDynamicDateRangeOption> = [];
 
-	static optionsClasses: Map<string, new () => IDynamicDateRangeOption> = new Map();
+	static optionsClasses: Map<string, new (operators?: Array<string>) => IDynamicDateRangeOption> = new Map();
 
 	@query("[ui5-input]")
 	_input?: Input;
@@ -202,10 +202,10 @@ class DynamicDateRange extends UI5Element {
 	 * Creates and normalizes options from the options string
 	 */
 	_createNormalizedOptions(): Array<IDynamicDateRangeOption> {
-		if (!this.optionsObjects.length) { // means we already built the optionsObjects once
+		if (!this.optionsObjects.length) { // initialize options on first use
 			const optionKeys = this.splitOptions(this.options).filter(Boolean);
 			const createdOptions: Array<IDynamicDateRangeOption> = [];
-			const classToOperators = new Map<new(operators?: string[]) => IDynamicDateRangeOption, Array<string>>();
+			const classToOperators = new Map<new(operators?: Array<string>) => IDynamicDateRangeOption, Array<string>>();
 
 			// Group operators by their class
 			optionKeys.forEach(option => {
@@ -343,16 +343,20 @@ class DynamicDateRange extends UI5Element {
 	}
 
 	_submitValue() {
-		const valueToFormat = this.currentValue || { operator: this._currentOption?.operator || "", values: [] };
-		const stringValue = this._currentOption?.format(valueToFormat) as string;
+		const valueToSubmit = this.currentValue || { operator: this._currentOption?.operator || "", values: [] };
+		const displayString = this._currentOption?.format(valueToSubmit) || "";
 
 		if (this._input) {
-			this._input.value = stringValue;
+			this._input.value = displayString;
 		}
 
-		if (this._currentOption?.isValidString(stringValue)) {
-			this.value = this._currentOption.parse(stringValue) || valueToFormat;
-			this.fireDecoratorEvent("change");
+		if (this._currentOption && valueToSubmit.operator) {
+			if (this._currentOption.isValidString(displayString)) {
+				this.value = valueToSubmit;
+				this.fireDecoratorEvent("change");
+			} else {
+				this.value = undefined;
+			}
 		} else {
 			this.value = undefined;
 		}
