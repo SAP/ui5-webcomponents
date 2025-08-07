@@ -82,12 +82,22 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
+	onBeforeRendering() {
+		this.items.forEach(item => {
+			item._parentDisabled = this.effectiveDisabled;
+		});
+	}
+
 	get overflowItems() : Array<SideNavigationItem> {
 		return [this];
 	}
 
 	get hasSubItems() {
 		return this.items.length > 0;
+	}
+
+	get effectiveDisabled() {
+		return this.disabled || this._groupDisabled;
 	}
 
 	get selectableItems() : Array<SideNavigationSelectableItemBase> {
@@ -131,15 +141,19 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return this.accessibilityAttributes.hasPopup;
 		}
 
-		if (!this.disabled && this.sideNavCollapsed && this.items.length) {
+		if (!this.effectiveDisabled && this.sideNavCollapsed && this.items.length) {
 			return "tree";
+		}
+
+		if (this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
 		}
 
 		return undefined;
 	}
 
 	get _ariaChecked() {
-		if (this.isOverflow || this.unselectable) {
+		if (this.isOverflow || this.unselectable || !this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -147,7 +161,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _groupId() {
-		if (!this.items.length) {
+		if (!this.items.length || this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -155,7 +169,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _expanded() {
-		if (!this.items.length) {
+		if (!this.items.length || this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -165,7 +179,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	get classesArray() {
 		const classes = super.classesArray;
 
-		if (!this.disabled && this.sideNavigation?.collapsed && this.items.length) {
+		if (!this.effectiveDisabled && this.items.length) {
 			classes.push("ui5-sn-item-with-expander");
 		}
 
@@ -212,6 +226,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (this.effectiveDisabled) {
+			return;
+		}
+
 		const isRTL = this.effectiveDir === "rtl";
 
 		if (this.sideNavigation.classList.contains("ui5-side-navigation-in-popover") || this.sideNavCollapsed) {
@@ -299,14 +317,14 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		this.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	get isSideNavigationItem() {
-		return true;
-	}
-
 	_toggle() {
-		if (this.items.length) {
+		if (this.items.length && !this.effectiveDisabled) {
 			this.expanded = !this.expanded;
 		}
+	}
+
+	get isSideNavigationItem() {
+		return true;
 	}
 }
 

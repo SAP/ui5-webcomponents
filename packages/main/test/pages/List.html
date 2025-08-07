@@ -650,6 +650,32 @@
 		</ui5-li>
 	</ui5-list>
 
+	<br/><br/>
+
+	<ui5-title size="H2">ListItemCustom with ExpandableText for Wrapping</ui5-title>
+
+	<br/>
+
+	<ui5-list header-text="Custom wrapping with ExpandableText component">
+		<ui5-li-custom>
+			<div class="product-item">
+				<ui5-avatar initials="JD" color-scheme="Accent1"></ui5-avatar>
+				<div class="product-details">
+					<ui5-title size="H5">Product with Long Description</ui5-title>
+					<ui5-expandable-text 
+						max-characters="200"
+						text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.">
+					</ui5-expandable-text>
+					<ui5-label>Product ID: #12345</ui5-label>
+				</div>
+				<div class="product-price">
+					<ui5-label>€1,299.00</ui5-label>
+					<ui5-label>In Stock</ui5-label>
+				</div>
+			</div>
+		</ui5-li-custom>
+	</ui5-list>
+
 	<script>
 		'use strict';
 

@@ -210,6 +210,9 @@ The `accessibleDescription` property is currently supported in:
 * [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
 * [Tree](https://sap.github.io/ui5-webcomponents/nightly/components/Tree/)
 * [Input](https://sap.github.io/ui5-webcomponents/nightly/components/Input/)
+* [Popover](https://sap.github.io/ui5-webcomponents/nightly/components/Popover/)
+* [ResponsivePopover](https://sap.github.io/ui5-webcomponents/nightly/components/ResponsivePopover/)
+* [Dialog](https://sap.github.io/ui5-webcomponents/nightly/components/Dialog/)
 
 ---
 
@@ -235,6 +238,9 @@ The `accessibleDescriptionRef` property is currently supported in:
 * [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
 * [Tree](https://sap.github.io/ui5-webcomponents/nightly/components/Tree/)
 * [Input](https://sap.github.io/ui5-webcomponents/nightly/components/Input/)
+* [Popover](https://sap.github.io/ui5-webcomponents/nightly/components/Popover/)
+* [ResponsivePopover](https://sap.github.io/ui5-webcomponents/nightly/components/ResponsivePopover/)
+* [Dialog](https://sap.github.io/ui5-webcomponents/nightly/components/Dialog/)
 
 ---
 
@@ -306,6 +312,7 @@ The `accessibilityAttributes` property is currently supported in:
 * [ShellBar](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBar/)
 * [ShellBarItem](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBarItem/)
 * [MenuItem](https://sap.github.io/ui5-webcomponents/nightly/components/MenuItem/)
+* [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
 
 ---
 

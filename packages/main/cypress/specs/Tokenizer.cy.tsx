@@ -207,3 +207,100 @@ describe("Tokenizer - multi-line and Clear All", () => {
 			.should("be.visible");
 	});
 });
+
+describe("Tokenizer - Popover List Item Text Updates", () => {
+	it("updates list item text in popover when token text changes", () => {
+		cy.mount(
+			<Tokenizer id="test-token-text-update" style={{ width: "100px" }}>
+				<Token text="Original Text" id="token-to-modify"></Token>
+				<Token text="Bulgaria"></Token>
+				<Token text="Canada"></Token>
+				<Token text="Denmark"></Token>
+				<Token text="Estonia"></Token>
+				<Token text="Finland"></Token>
+				<Token text="Germany"></Token>
+			</Tokenizer>
+		);
+
+		cy.get<Tokenizer>("[ui5-tokenizer]")
+			.shadow()
+			.find(".ui5-tokenizer-more-text")
+			.realClick();
+
+		cy.get<Tokenizer>("[ui5-tokenizer]")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should("be.visible");
+
+		cy.get<Tokenizer>("[ui5-tokenizer]")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(0)
+			.should("have.attr", "text", "Original Text");
+
+		cy.get("#token-to-modify").invoke("prop", "text", "Updated Text");
+
+		cy.get<Tokenizer>("[ui5-tokenizer]")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(0)
+			.should("have.attr", "text", "Updated Text");
+
+		cy.get("#test-token-text-update")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(0)
+			.should("not.have.attr", "text", "Original Text");
+	});
+
+	it("updates multiple list items when multiple token texts change", () => {
+		cy.mount(
+			<Tokenizer id="test-multiple-token-updates" style={{ width: "100px" }}>
+				<Token text="Token 1" id="token-1"></Token>
+				<Token text="Token 2" id="token-2"></Token>
+				<Token text="Token 3" id="token-3"></Token>
+				<Token text="Denmark"></Token>
+				<Token text="Estonia"></Token>
+			</Tokenizer>
+		);
+
+		cy.get<Tokenizer>("[ui5-tokenizer]")
+			.shadow()
+			.find(".ui5-tokenizer-more-text")
+			.realClick();
+
+		cy.get<Tokenizer>("[ui5-tokenizer]")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(0)
+			.should("have.attr", "text", "Token 1");
+
+		cy.get<Tokenizer>("[ui5-tokenizer]")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(1)
+			.should("have.attr", "text", "Token 2");
+
+		cy.get<Token>("[ui5-token]").eq(0).invoke("prop", "text", "Modified Token 1");
+		cy.get<Token>("[ui5-token]").eq(1).invoke("prop", "text", "Modified Token 2");
+
+		cy.get<Tokenizer>("[ui5-tokenizer]")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(0)
+			.should("have.attr", "text", "Modified Token 1");
+
+		cy.get<Tokenizer>("[ui5-tokenizer]")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(1)
+			.should("have.attr", "text", "Modified Token 2");
+
+		// Verify unchanged token remains the same
+		cy.get<Tokenizer>("[ui5-tokenizer]")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
+			.eq(2)
+			.should("have.attr", "text", "Token 3");
+	});
+});

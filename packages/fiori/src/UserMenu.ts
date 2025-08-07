@@ -157,7 +157,7 @@ class UserMenu extends UI5Element {
 	 * @default undefined
 	 */
 	@property({ converter: DOMReferenceConverter })
-	opener?: HTMLElement | string;
+	opener?: HTMLElement | string | null;
 
 	/**
 	 * Defines if the User Menu shows the Manage Account option.
@@ -353,6 +353,8 @@ class UserMenu extends UI5Element {
 
 	_handleMenuItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as UserMenuItem; // imrove: improve this ideally without "as" cating
+
+		item._updateCheckedState();
 
 		if (!item._popover) {
 			const eventPrevented = !this.fireDecoratorEvent("item-click", {

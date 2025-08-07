@@ -3,6 +3,8 @@ import SideNavigationItem from "../../src/SideNavigationItem.js";
 import SideNavigationGroup from "../../src/SideNavigationGroup.js";
 import SideNavigationSubItem from "../../src/SideNavigationSubItem.js";
 import group from "@ui5/webcomponents-icons/dist/group.js";
+import home from "@ui5/webcomponents-icons/dist/home.js";
+import employeeApprovals from "@ui5/webcomponents-icons/dist/employee-approvals.js";
 import { NAVIGATION_MENU_POPOVER_HIDDEN_TEXT } from "../../src/generated/i18n/i18n-defaults.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
@@ -103,11 +105,11 @@ describe("Side Navigation Rendering", () => {
 		const TOOLTIP_TEXT = "From My Team tooltip";
 		cy.mount(
 			<SideNavigation id="sn1" accessibleName="Main" collapsed={false}>
-				<SideNavigationItem id="item1" text="People" icon="group" expanded={true}>
-					<SideNavigationSubItem id="item11" text="From My Team" icon="employee-approvals" tooltip={TOOLTIP_TEXT}></SideNavigationSubItem>
-					<SideNavigationSubItem id="item21" text="From My Team" icon="employee-approvals"></SideNavigationSubItem>
+				<SideNavigationItem id="item1" text="People" icon="{group}" expanded={true}>
+					<SideNavigationSubItem id="item11" text="From My Team" icon="{employeeApprovals}" tooltip={TOOLTIP_TEXT}></SideNavigationSubItem>
+					<SideNavigationSubItem id="item21" text="From My Team" icon="{employeeApprovals}"></SideNavigationSubItem>
 				</SideNavigationItem>
-				<SideNavigationItem id="item2" text="People" expanded icon="group" tooltip={TOOLTIP_TEXT} />
+				<SideNavigationItem id="item2" text="People" expanded icon="{group}" tooltip={TOOLTIP_TEXT} />
 			</SideNavigation>);
 
 		cy.get("#item1").should("not.have.attr", "tooltip");
@@ -116,6 +118,26 @@ describe("Side Navigation Rendering", () => {
 		cy.get("#item11").should("have.attr", "tooltip", TOOLTIP_TEXT);
 		cy.get("#item21").should("not.have.attr", "tooltip");
 	});
+
+	it("Tests disabled parent item", () => {
+		cy.mount(
+			<SideNavigation id="sn1">
+				<SideNavigationItem id="parent" expanded={true} text="Group 1">
+					<SideNavigationSubItem text="child 1" />
+					<SideNavigationSubItem disabled={true} text="child 2" />
+				</SideNavigationItem>
+			</SideNavigation>);
+
+		cy.get("#parent").invoke("prop", "disabled", true);
+
+		cy.get<SideNavigationItem>("#parent").then(($itemRef) => {
+			const item = $itemRef[0];
+			cy.wrap(item.items).each((item) => {
+				cy.wrap(item).should("have.prop", "effectiveDisabled", true);
+			});
+		});
+	});
+
 });
 
 describe("Side Navigation interaction", () => {
@@ -272,7 +294,7 @@ describe("Side Navigation interaction", () => {
 		cy.get("#sn")
 			.shadow()
 			.find(`[ui5-side-navigation-item][text="1"]`)
-			.should('be.focused'); 
+			.should('be.focused');
 
 		cy.realPress("ArrowLeft");
 		cy.get("#unselectableItem").should('be.focused');
@@ -371,9 +393,9 @@ describe("Side Navigation interaction", () => {
 		cy.get("#sn")
 			.shadow()
 			.find(`[ui5-side-navigation-item][text="1"]`)
-			.should('be.focused'); 
+			.should('be.focused');
 
-		cy.realPress("ArrowRight"); 
+		cy.realPress("ArrowRight");
 
 		cy.get("#unselectableItem").should('be.focused');
 
@@ -741,22 +763,22 @@ describe("Side Navigation interaction", () => {
 		const handleClick = (event: Event) => {
 			event.preventDefault();
 		};
-	
+
 		const handleSelectionChange = cy.stub().as("selectionChangeHandler");
-	
+
 		cy.mount(
 			<SideNavigation id="sideNav" onClick={handleClick} onSelectionChange={handleSelectionChange}>
 				<SideNavigationItem id="linkItem" text="external link" unselectable={true} href="#preventDefault" />
 				<SideNavigationItem id="item" text="item"/>
 			</SideNavigation>
 		);
-	
+
 		cy.url()
 			.should("not.include", "#preventDefault");
 
 		// Act
 		cy.get("#linkItem").realClick();
-	
+
 		// Assert
 		cy.get("@selectionChangeHandler").should("not.have.been.called");
 		cy.url()
@@ -774,18 +796,19 @@ describe("Side Navigation interaction", () => {
 		const handleClick = (event: Event) => {
 			event.preventDefault();
 		};
-	
+
 		const handleSelectionChange = cy.stub().as("selectionChangeHandler");
 
 		cy.mount(
 			<SideNavigation id="sideNav" collapsed={true} onClick={handleClick} onSelectionChange={handleSelectionChange}>
+				<SideNavigationItem text="home"></SideNavigationItem>
 				<SideNavigationItem unselectable={true} href="#test" text="link"></SideNavigationItem>
 				<SideNavigationItem text="item"></SideNavigationItem>
 			</SideNavigation>
 		);
 
 		cy.get("#sideNav")
-			.invoke("attr", "style", "height: 50px");
+			.invoke("attr", "style", "height: 120px");
 
 		cy.get("#sideNav")
 			.shadow()
@@ -797,22 +820,27 @@ describe("Side Navigation interaction", () => {
 			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='link']")
 			.realClick();
 
-			cy.url()
+		cy.url()
 			.should("not.include", "#test");
-			
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-item-overflow")
+			.realClick();
+
 		cy.get("#sideNav")
 			.shadow()
 			.find(".ui5-side-navigation-overflow-menu [ui5-navigation-menu-item][text='item']")
 			.realClick();
-		
-		cy.get("@selectionChangeHandler").should("not.have.been.called");
+
+		cy.get("@selectionChangeHandler", {timeout: 1000 }).should("not.have.been.called");
 	});
 
 	it("Tests preventDefault on child items in collapsed side navigation", () => {
 		const handleClick = (event: Event) => {
 			event.preventDefault();
 		};
-	
+
 		const handleSelectionChange = cy.stub().as("selectionChangeHandler");
 
 		cy.mount(
@@ -860,7 +888,7 @@ describe("Side Navigation interaction", () => {
 			{ key: "altKey", options: { altKey: true } },
 			{ key: "shiftKey", options: { shiftKey: true } },
 		];
-	
+
 		keyModifiers.forEach(({ key, options }) => {
 			cy.get("#sideNav").realClick(options);
 			cy.get("@clickHandler").should("be.calledWithMatch", { detail: { [key]: true } });
@@ -941,7 +969,7 @@ describe("Side Navigation interaction", () => {
 			element.realClick();
 
 			// assert
-			cy.get("@selectionChangeHandler").should("have.callCount", expectedCallCount);
+			cy.get("@selectionChangeHandler", { timeout: 1000 }).should("have.callCount", expectedCallCount);
 		});
 	});
 
@@ -957,6 +985,62 @@ describe("Side Navigation interaction", () => {
 		cy.get("#item").realClick();
 
 		cy.get("@selectionChangeHandler").should("have.been.calledOnce");
+	});
+
+	it("tests selecting items in overflow menu", () => {
+		cy.mount(
+			<SideNavigation style="height: 200px" id="sideNav" collapsed={true}>
+				<SideNavigationItem icon={home} text="Home"></SideNavigationItem>
+				<SideNavigationItem icon={home} text="Home 1"></SideNavigationItem>
+				<SideNavigationItem icon={home} text="Home 2"></SideNavigationItem>
+				<SideNavigationItem icon={home} text="Home 3"></SideNavigationItem>
+				<SideNavigationItem icon={home} text="Home 4"></SideNavigationItem>
+				<SideNavigationItem icon={home} text="Home 5"></SideNavigationItem>
+				<SideNavigationItem id="home6" icon={home} text="Home 6"></SideNavigationItem>
+				<SideNavigationItem id="home7" icon={home} text="Home 7" unselectable></SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-item-overflow")
+			.as("itemOverflow");
+
+		cy.get("@itemOverflow")
+			.should("be.visible");
+
+		cy.get("@itemOverflow")
+			.realClick()
+			.realClick();
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-side-navigation-overflow-menu")
+			.as("overflowMenu");
+
+		cy.get("@overflowMenu")
+			.should("be.visible");
+
+		cy.get("@overflowMenu")
+			.find("[ui5-navigation-menu-item][text='Home 6']")
+			.realClick();
+
+		cy.get("@overflowMenu")
+			.should("be.not.visible");
+
+		cy.get("[ui5-side-navigation-item][text='Home 6']")
+			.should("be.focused");
+
+		cy.get("@itemOverflow")
+			.realClick()
+			.realClick();
+
+		cy.get("@overflowMenu")
+			.find("[ui5-navigation-menu-item][text='Home 7']")
+			.realClick();
+
+		cy.get("@itemOverflow")
+			.should("be.focused");
 	});
 });
 
@@ -1268,7 +1352,8 @@ describe("Side Navigation Accessibility", () => {
 		cy.get("#group")
 			.shadow()
 			.find(".ui5-sn-item-ul")
-			.should("have.attr", "role", "group");
+			.should("have.attr", "role", "group")
+			.should("have.attr", "aria-label", "Group");
 	});
 
 	it("Tests Primary and Footer Navigation Lists accessibility", () => {
@@ -1325,7 +1410,45 @@ describe("Focusable items", () => {
 			.find("[ui5-responsive-popover] [ui5-side-navigation-sub-item][text='1.2']")
 			.shadow()
 			.find(".ui5-sn-item")
-			.should("not.have.attr", "tabindex");
+			.should("have.attr", "tabindex", "-1");
+	});
+
+	it("Tests focus of disabled items", () => {
+		cy.mount(
+			<SideNavigation id="sideNav">
+				<SideNavigationItem id="item" text="1"></SideNavigationItem>
+				<SideNavigationItem disabled={true} id="parentItem" expanded={true} text="2">
+					<SideNavigationSubItem id="childItem" text="2.1" disabled={true} />
+				</SideNavigationItem>
+			</SideNavigation>
+		);
+
+		cy.get("#item").realClick();
+
+		cy.get("#item")
+			.should("be.focused")
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "0");
+
+		cy.realPress("ArrowDown");
+
+		cy.get("#parentItem")
+			.should("be.focused")
+		cy.get("#parentItem")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "0");
+
+		cy.realPress("ArrowDown");
+
+		cy.get("#childItem")
+			.should("be.focused")
+		cy.get("#childItem")
+			.shadow()
+			.find(".ui5-sn-item")
+			.should("have.attr", "tabindex", "0");
 	});
 
 	it("Tests focusable items in popover of unselectable parent", () => {
@@ -1356,7 +1479,7 @@ describe("Focusable items", () => {
 	it("Tests external link items", () => {
 		cy.mount(
 			<SideNavigation>
-				<SideNavigationItem id="externalLinkItem" text="External Link Unselectable" icon="chain-link" href="https://sap.com" unselectable target="_blank" />
+				<SideNavigationItem id="externalLinkItem" text="External Link Unselectable" icon="{home}" href="https://sap.com" unselectable target="_blank" />
 			</SideNavigation>);
 
 		cy.get("#externalLinkItem")

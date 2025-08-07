@@ -153,7 +153,7 @@ describe("Page general interaction", () => {
 
     it("allows toggle the footer", async () => {
         const footer = await browser.$("#page").shadow$(".ui5-dynamic-page-footer");
-        const toggleFooterButton = await browser.$("#actionsToolbar").shadow$("#toggleFooterBtn");
+        const toggleFooterButton = await browser.$("#actionsToolbar").$("#toggleFooterBtn");
 
         assert.ok(await footer.isDisplayedInViewport(), "Footer should be visible.");
 
@@ -417,8 +417,6 @@ describe("ARIA attributes", () => {
         // check ARIA attribute values
         assert.strictEqual(await headerWrapper.getAttribute("aria-label"), "Header Expanded",
             "aria-label value is correct");
-        assert.strictEqual(await headerWrapper.getAttribute("aria-expanded"), "true",
-            "aria-expanded value is correct");
         assert.strictEqual(await headerRoot.getAttribute("role"), "region",
             "header role is correct");
 
@@ -452,8 +450,6 @@ describe("ARIA attributes", () => {
         // check ARIA attribute values
         assert.strictEqual(await headerWrapper.getAttribute("aria-label"), "Header Snapped",
             "aria-label value is correct");
-        assert.strictEqual(await headerWrapper.getAttribute("aria-expanded"), "false",
-            "aria-expanded value is correct");
 
         assert.strictEqual(await titleFocusArea.getAttribute("aria-expanded"), "false",
             "aria-expanded value is correct");
