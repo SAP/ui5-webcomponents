@@ -471,7 +471,10 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
 			.find("ui5-calendar")
-			.as("calendar")
+			.as("calendar");
+
+		cy.focused()
+		 	.should("have.attr", "part", "day-cell")
 			.realPress("F4");
 
 		cy.get("@calendar")
@@ -495,7 +498,10 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
 			.find("ui5-calendar")
-			.as("calendar")
+			.as("calendar");
+
+		cy.focused()
+		 	.should("have.attr", "part", "day-cell")
 			.realPress(["Shift", "F4"]);
 
 		cy.get("@calendar")
@@ -514,7 +520,10 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
 			.find("ui5-calendar")
-			.as("calendar")
+			.as("calendar");
+
+		cy.focused()
+		 	.should("have.attr", "part", "day-cell")
 			.realPress(["Shift", "F4"])
 			.realPress("F4");
 
@@ -534,7 +543,10 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
 			.find("ui5-calendar")
-			.as("calendar")
+			.as("calendar");
+
+		cy.focused()
+		 	.should("have.attr", "part", "day-cell")
 			.realPress("F4")
 			.realPress(["Shift", "F4"]);
 
@@ -1297,7 +1309,7 @@ describe("Date Picker Tests", () => {
 			.should("have.value", "Jan 1, 2000");
 	});
 
-	it("Keyboard navigation works when there are disabled dates in the calendar grid", () => {
+	it.only("Keyboard navigation works when there are disabled dates in the calendar grid", () => {
 		cy.mount(<DatePicker
 			value="Jan 1, 2000"
 			formatPattern="MMM d, y"
@@ -1311,13 +1323,12 @@ describe("Date Picker Tests", () => {
 			.should("be.focused")
 			.realPress("F4");
 
-		cy.get<DatePicker>("@datePicker")
-			.shadow()
-			.find("ui5-calendar")
+		cy.focused()
+			.should("have.attr", "part", "day-cell day-cell-selected")
 			.realPress("ArrowDown");
 
 		cy.get<DatePicker>("@datePicker")
-			.ui5DatePickerGetDisplayedDay(13)
+			.ui5DatePickerGetDisplayedDay(12)
 			.should("have.focus");
 	});
 

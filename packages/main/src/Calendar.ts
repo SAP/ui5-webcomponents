@@ -907,7 +907,7 @@ class Calendar extends CalendarPart {
 	 */
 	getFocusDomRef(): HTMLElement | undefined {
 		const currentPicker = this._currentPickerDOM;
-		return currentPicker ? currentPicker.getFocusDomRef() : this.getDomRef();
+		return currentPicker?.getFocusDomRef() || this.getDomRef();
 	}
 }
 
