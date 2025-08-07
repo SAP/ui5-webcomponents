@@ -5,6 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ToolbarSelectCss from "./generated/themes/ToolbarSelect.css.js";
+import type Select from "./Select.js";
 
 // Templates
 import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
@@ -91,7 +92,6 @@ class ToolbarSelect extends ToolbarItem {
 		"default": true,
 		type: HTMLElement,
 		invalidateOnChildChange: true,
-		individualSlots: true,
 	})
 	options!: Array<ToolbarSelectOption>;
 
@@ -146,7 +146,25 @@ class ToolbarSelect extends ToolbarItem {
 	 * @since 2.13.0
 	 */
 	@property()
-	value?: string;
+	set value(newValue: string) {
+		if (this.select && this.select.value !== newValue) {
+			const selectedOption = this.select.options.find(option => option.textContent === newValue);
+			this.select.value = newValue;
+			selectedOption && this.fireDecoratorEvent("change", { targetRef: this.select, selectedOption });
+		}
+		this._value = newValue;
+	}
+
+	get value(): string | undefined {
+		return this.select ? this.select.value : this._value;
+	}
+
+	get select(): Select | null {
+		return this.shadowRoot!.querySelector<Select>("[ui5-select]");
+	}
+
+	// Internal value storage, in case the composite select is not rendered on the the assignment happens
+	_value: string = "";
 
 	onClick(e: Event): void {
 		e.stopImmediatePropagation();
