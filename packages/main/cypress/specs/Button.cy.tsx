@@ -342,7 +342,10 @@ describe("Accessibility", () => {
 		cy.get("[ui5-button]")
 			.shadow()
 			.find("button")
-			.should("have.attr", "aria-label", "Action");
+			.as("button");
+			
+		cy.get("@button")
+			.should("have.attr", "aria-label", "Action Emphasized");
 	});
 
 	it("aria-expanded is properly applied on the button tag", () => {
