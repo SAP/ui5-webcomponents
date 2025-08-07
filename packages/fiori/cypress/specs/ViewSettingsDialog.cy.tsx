@@ -396,7 +396,7 @@ describe("ViewSettingsDialog Tests", () => {
 		cy.get("@vsd")
 			.shadow()
 			.find("[ui5-li]")
-			.eq(0)
+			.first()
 			.shadow()
 			.find("span[part=title]")
 			.realClick();
@@ -404,7 +404,7 @@ describe("ViewSettingsDialog Tests", () => {
 		cy.get("@vsd")
 			.shadow()
 			.find("[ui5-li]")
-			.eq(0)
+			.first()
 			.should("be.focused");
 	});
 });
