@@ -150,8 +150,8 @@ describe("Select - value handling", () => {
 
 		// assert: value is updated after ArrowDown + Enter
 		cy.get("#sel")
-		.should("have.attr", "value", "option2")
-		.invoke("prop", "value", "option2");
+			.should("have.attr", "value", "option2")
+			.invoke("prop", "value", "option2");
 	});
 });
 
@@ -245,6 +245,43 @@ describe("Select - Accessibility", () => {
 					.find(".ui5-select-label-root")
 					.should("have.attr", "aria-controls", popoverId);
 			});
+	});	
+
+	it("Tests accessibility", () => {
+		cy.mount(
+			<>
+				<span id="infoText">info text</span>
+				<Select id="textAreaAriaLabel" accessibleName="Hello World">
+					<Option value="First">First</Option>
+					<Option value="Second">Second</Option>
+					<Option value="Third" selected>Third</Option>
+				</Select>
+				<Select id="textAreaAriaLabelledBy" accessibleNameRef="infoText">
+					<Option value="One">One</Option>
+					<Option value="Two">Two</Option>
+					<Option value="Three" selected>Three</Option>
+				</Select>
+			</>
+		);
+
+		const EXPECTED_ARIA_LABEL1 = "Hello World";
+		const EXPECTED_ARIA_LABEL2 = "info text";
+		const EXPECTED_ARIA_ROLEDESCRIPTION = "Listbox";
+
+		// Test first select with accessibleName
+		cy.get("#textAreaAriaLabel")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("have.attr", "aria-label", EXPECTED_ARIA_LABEL1)
+			.should("have.attr", "aria-expanded", "false");
+
+		// Test second select with accessibleNameRef
+		cy.get("#textAreaAriaLabelledBy")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("have.attr", "aria-label", EXPECTED_ARIA_LABEL2)
+			.should("have.attr", "aria-expanded", "false")
+			.should("have.attr", "aria-roledescription", EXPECTED_ARIA_ROLEDESCRIPTION);
 	});
 });
 
@@ -288,7 +325,7 @@ describe("Select - Properties", () => {
 				<Option selected value="">Phone</Option>
 				<Option>Tablet</Option>
 				<Option>Desktop</Option>
-			</Select>		);
+			</Select>);
 
 		cy.get("[ui5-select]").should("have.prop", "formFormattedValue", "");
 	});
@@ -349,5 +386,1011 @@ describe("Select - Validation", () => {
 			});
 
 		cy.get("#sel1:invalid").should("not.exist", "Required Select with non-empty value should not have :invalid CSS class");
+	});
+});
+
+describe("Select general interaction", () => {
+	it("fires change on selection", () => {
+		cy.mount(
+			<Select>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
+				<Option value="Condensed" selected>Condensed</Option>
+			</Select>
+		);
+	
+		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-change", cy.stub().as("changeStub"));
+			});
+	
+		const EXPECTED_SELECTION_TEXT = "Cozy";
+	
+		cy.get("@select").realClick();
+		cy.get("@select").should("have.attr", "opened");
+	
+		cy.get("@select")
+			.find("[ui5-option]")
+			.eq(0)
+			.realClick();
+	
+		cy.get("@changeStub").should("have.been.calledOnce");
+	
+		cy.get("@select").should("have.prop", "value", EXPECTED_SELECTION_TEXT);
+		cy.get("@select")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+	});
+
+	it("prevents change on selection", () => {
+		cy.mount(
+			<Select>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
+				<Option value="Condensed" selected>Condensed</Option>
+			</Select>
+		);
+	
+		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-change", cy.stub().as("changeStub").callsFake((e) => {
+					e.preventDefault();
+				}));
+			});
+	
+		const EXPECTED_SELECTION_TEXT = "Condensed";
+	
+		cy.get("@select").realClick();
+	
+		cy.get("@select")
+			.find("[ui5-option]")
+			.eq(1)
+			.realClick();
+	
+		cy.get("@changeStub").should("have.been.calledOnce");
+	
+		cy.get("@select").should("have.prop", "value", EXPECTED_SELECTION_TEXT);
+		cy.get("@select")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+	});
+
+	it("does not fire change, when clicking on selected item", () => {
+		cy.mount(
+			<Select>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
+				<Option value="Condensed" selected>Condensed</Option>
+			</Select>
+		);
+	
+		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-change", cy.stub().as("changeStub"));
+			});
+	
+		cy.get("@select").realClick();
+	
+		cy.get("@select")
+			.find("[ui5-option]")
+			.eq(2)
+			.realClick();
+	
+		cy.get("@changeStub").should("not.have.been.called");
+	});
+
+	it("fire open, when clicking on selected item", () => {
+		cy.mount(
+			<Select>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
+				<Option value="Condensed" selected>Condensed</Option>
+			</Select>
+		);
+	
+		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-open", cy.stub().as("openStub"));
+			});
+	
+		cy.get("@select").realClick();
+	
+		cy.get("@openStub").should("have.been.calledOnce");
+	});
+
+	it("fire close, when clicking on selected item", () => {
+		cy.mount(
+			<Select>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
+				<Option value="Condensed" selected>Condensed</Option>
+			</Select>
+		);
+	
+		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-close", cy.stub().as("closeStub"));
+			});
+	
+		cy.get("@select").realClick();
+		cy.get("@select").realClick();
+	
+		cy.get("@closeStub").should("have.been.calledOnce");
+	});
+
+	it("fires change on selection with keyboard handling", () => {
+		cy.mount(
+			<Select valueState="Negative">
+				<Option value="Cozy" selected>Cozy</Option>
+				<Option value="Compact">Compact</Option>
+				<Option value="Condensed">Condensed</Option>
+			</Select>
+		);
+	
+		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-change", cy.stub().as("changeStub"));
+			});
+	
+		const EXPECTED_SELECTION_TEXT1 = "Compact";
+		const EXPECTED_SELECTION_TEXT2 = "Condensed";
+	
+		cy.get("@select").realClick();
+		cy.get("@select").realPress("ArrowDown");
+		cy.get("@select").realPress("Enter");
+	
+		cy.get("@changeStub").should("have.been.calledOnce");
+	
+		cy.get("@select")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT1);
+	
+		cy.get("@select").should("have.prop", "value", EXPECTED_SELECTION_TEXT1);
+	
+		cy.get("@select").realClick();
+		cy.get("@select").realPress("ArrowDown");
+		cy.get("@select").realPress("Space");
+	
+		cy.get("@changeStub").should("have.been.calledTwice");
+	
+		cy.get("@select")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT2);
+	
+		cy.get("@select").should("have.prop", "value", EXPECTED_SELECTION_TEXT2);
+	});
+
+	it("doesn't changes selection while closed with Arrow Up/Down while at last item", () => {
+		cy.mount(
+			<Select valueState="Negative">
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
+				<Option value="Condensed" selected>Condensed</Option>
+			</Select>
+		);
+	
+		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-change", cy.stub().as("changeStub"));
+			});
+	
+		const EXPECTED_SELECTION_TEXT1 = "Condensed";
+	
+		cy.get("@select").realClick();
+		cy.get("@select").realPress("Escape");
+	
+		cy.get("@select").realPress("ArrowDown");
+	
+		cy.get("@select")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT1);
+	
+		cy.get("@select").should("have.prop", "value", EXPECTED_SELECTION_TEXT1);
+	
+		cy.get("@changeStub").should("not.have.been.called");
+	});
+
+	it("changes selection while closed with Arrow Up/Down", () => {
+		cy.mount(
+			<Select valueState="Negative">
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
+				<Option value="Condensed" selected>Condensed</Option>
+			</Select>
+		);
+	
+		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-change", cy.stub().as("changeStub"));
+			});
+	
+		const EXPECTED_SELECTION_TEXT1 = "Compact";
+		const EXPECTED_SELECTION_TEXT2 = "Condensed";
+	
+		cy.get("@select").realClick();
+		cy.get("@select").realPress("Escape");
+	
+		cy.get("@select").realPress("ArrowUp");
+	
+		cy.get("@select")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT1);
+	
+		cy.get("@select").should("have.prop", "value", EXPECTED_SELECTION_TEXT1);
+	
+		cy.get("@select").realPress("ArrowDown");
+	
+		cy.get("@select")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT2);
+	
+		cy.get("@select").should("have.prop", "value", EXPECTED_SELECTION_TEXT2);
+	
+		cy.get("@changeStub").should("have.been.calledTwice");
+	});
+	
+	it("changes selection sync with selection announcement", () => {
+		cy.mount(
+			<>
+				<Select valueState="Negative">
+					<Option value="Cozy">Cozy</Option>
+					<Option value="Compact">Compact</Option>
+					<Option value="Condensed" selected>Condensed</Option>
+				</Select>
+				<button>click</button>
+			</>
+		);
+	
+		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-change", cy.stub().as("changeStub"));
+			});
+	
+		const EXPECTED_SELECTION_TEXT1 = "Compact";
+		const EXPECTED_SELECTION_TEXT2 = "Condensed";
+	
+		cy.get("@select").realClick();
+		cy.get("@select").realPress("Escape");
+	
+		cy.get("@select").realPress("ArrowUp");
+	
+		cy.get(".ui5-invisiblemessage-polite").should("contain.text", EXPECTED_SELECTION_TEXT1);
+	
+		cy.get("@select").realPress("ArrowDown");
+	
+		cy.get(".ui5-invisiblemessage-polite").should("contain.text", EXPECTED_SELECTION_TEXT2);
+	
+		cy.get("@select").realClick();
+		cy.get("@select").realPress("ArrowUp");
+		cy.get("@select").realPress("Escape");
+	
+		cy.get("@select").realClick();
+		cy.get("@select").realPress("ArrowUp");
+		cy.get("@select").realPress("Enter");
+	
+		cy.get("@select")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT1);
+	
+		cy.get("button").realClick();
+	
+		cy.get("@changeStub").should("have.been.calledThrice");
+	});
+	
+
+	it("remains closed and unchanged when read-only", () => {
+		cy.mount(
+			<Select readonly>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact" selected>Compact</Option>
+				<Option value="Condensed">Condensed</Option>
+			</Select>
+		);
+
+		const EXPECTED_SELECTION_TEXT = "Compact";
+
+		cy.get("[ui5-select]").realClick();
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("not.have.prop", "open", true);
+
+		cy.get("[ui5-select]").realPress("ArrowUp");
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+
+		cy.get("[ui5-select]").realPress("ArrowDown");
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+	});
+
+	it("announces the selected value once Select Popover is opened", () => {
+		cy.mount(
+			<Select>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
+				<Option value="Condensed" selected>Condensed</Option>
+			</Select>
+		);
+
+		cy.get("[ui5-select]").realClick();
+
+		cy.get("[ui5-select] [ui5-option][selected]")
+			.invoke("text")
+			.then((selectedText) => {
+				cy.get(".ui5-invisiblemessage-polite").should("contain.text", selectedText);
+			});
+	});
+
+	it("changes selection on Tab", () => {
+		cy.mount(
+			<>
+				<Select>
+					<Option value="Banana">Banana</Option>
+					<Option value="Orange" selected>Orange</Option>
+					<Option value="Watermelon">Watermelon</Option>
+				</Select>
+				<input />
+			</>
+		);
+
+		const EXPECTED_SELECTION_TEXT = "Banana";
+
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realClick();
+
+		cy.get("[ui5-select]").realPress("Space");
+
+		cy.get("[ui5-select]").realPress("ArrowUp");
+		cy.get("[ui5-select]").realPress("Tab");
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+
+		cy.get("input").should("be.focused");
+	});
+
+	it("changes selection on Shift + Tab", () => {
+		cy.mount(
+			<>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
+					<Option value="Compact" selected>Compact</Option>
+					<Option value="Condensed">Condensed</Option>
+				</Select>
+				<Select>
+					<Option value="Banana">Banana</Option>
+					<Option value="Orange" selected>Orange</Option>
+					<Option value="Watermelon">Watermelon</Option>
+				</Select>
+			</>
+		);
+
+		const EXPECTED_SELECTION_TEXT = "Watermelon";
+
+		cy.get("[ui5-select]").eq(1).realClick();
+		cy.get("[ui5-select]").eq(1).realClick();
+
+		cy.get("[ui5-select]").eq(1).realPress("Space");
+
+		cy.get("[ui5-select]").eq(1).realPress("ArrowDown");
+		cy.get("[ui5-select]").eq(1).realPress(["Shift", "Tab"]);
+
+		cy.get("[ui5-select]").eq(1)
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+
+		cy.get("[ui5-select]").eq(0).should("be.focused");
+	});
+
+	it("tests selection does not cycle with ArrowDown", () => {
+		cy.mount(
+			<Select>
+				<Option value="Opt1">Opt1</Option>
+				<Option value="Opt2">Opt2</Option>
+				<Option value="Opt3" selected>Opt3</Option>
+			</Select>
+		);
+
+		const EXPECTED_SELECTION_TEXT = "Opt3";
+
+		cy.get("[ui5-select]").realClick();
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+
+		cy.get("[ui5-select]").realPress("ArrowDown");
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+
+		cy.get("[ui5-select]").realPress("Escape");
+	});
+
+	it("tests selection does not cycle with ArrowUp", () => {
+		cy.mount(
+			<Select>
+				<Option value="Opt1" selected>Opt1</Option>
+				<Option value="Opt2">Opt2</Option>
+				<Option value="Opt3">Opt3</Option>
+			</Select>
+		);
+
+		const EXPECTED_SELECTION_TEXT = "Opt1";
+
+		cy.get("[ui5-select]").realClick();
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+
+		cy.get("[ui5-select]").realPress("ArrowUp");
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+
+		cy.get("[ui5-select]").realPress("Escape");
+	});
+
+	it("changes selection with typing single letter", () => {
+		cy.mount(
+			<Select>
+				<Option value="Banana">Banana</Option>
+				<Option value="Orange" selected>Orange</Option>
+				<Option value="Watermelon">Watermelon</Option>
+			</Select>
+		);
+
+		const EXPECTED_SELECTION_TEXT = "Banana";
+
+		cy.get("[ui5-select]").realClick();
+
+		cy.get("[ui5-select]").realPress("b");
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+	});
+
+	it("changes selection with typing more letters", () => {
+		cy.mount(
+			<Select valueState="Critical">
+				<Option value="Australia">Australia</Option>
+				<Option value="Aruba">Aruba</Option>
+				<Option value="Antigua and Barbuda">Antigua and Barbuda</Option>
+				<Option value="Belgium">Belgium</Option>
+				<Option value="Bulgaria">Bulgaria</Option>
+				<Option value="Brazil" selected>Brazil</Option>
+			</Select>
+		);
+
+		const EXPECTED_SELECTION_TEXT = "Brazil";
+
+		cy.get("[ui5-select]").realClick();
+
+		cy.get("[ui5-select]").realPress("b");
+		cy.get("[ui5-select]").realPress("r");
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+	});
+
+	it("changes selection using 'value'", () => {
+		cy.mount(
+			<>
+				<Select>
+					<Option value="Item1">Item1</Option>
+					<Option value="Item2">Item2</Option>
+					<Option value="Item3" selected>Item3</Option>
+				</Select>
+				<button>select.value = "Item2"</button>
+				<button>select.value = "NAN"</button>
+			</>
+		);
+
+		// Set up button click handlers
+		cy.get("button").eq(0).then(($btn) => {
+			$btn[0].addEventListener("click", () => {
+				const select = document.querySelector("[ui5-select]") as Select;
+				select.value = "Item2";
+			});
+		});
+
+		cy.get("button").eq(1).then(($btn) => {
+			$btn[0].addEventListener("click", () => {
+				const select = document.querySelector("[ui5-select]") as Select;
+				select.value = "NAN";
+			});
+		});
+
+		const INVALID_VALUE = "NAN";
+		const EMPTY_VALUE = "";
+		const EXPECTED_SELECTION_TEXT = "Item2";
+
+		cy.get("button").eq(0).realClick();
+
+		cy.get("[ui5-select]").should("have.prop", "value", EXPECTED_SELECTION_TEXT);
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+
+		cy.get("button").eq(1).realClick();
+
+		cy.get("[ui5-select]").should("have.prop", "value", INVALID_VALUE);
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EMPTY_VALUE);
+	});
+
+	it("opens upon space", () => {
+		cy.mount(
+			<>
+				<button>click</button>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
+					<Option value="Compact">Compact</Option>
+					<Option value="Condensed" selected>Condensed</Option>
+				</Select>
+			</>
+		);
+
+		cy.get("button").realClick();
+		cy.get("button").realPress("Tab");
+
+		cy.realPress("Space");
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.prop", "open", true);
+	});
+
+	it("toggles upon F4", () => {
+		cy.mount(
+			<>
+				<button>click</button>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
+					<Option value="Compact">Compact</Option>
+					<Option value="Condensed" selected>Condensed</Option>
+				</Select>
+			</>
+		);
+
+		cy.get("button").realClick();
+		cy.get("button").realPress("Tab");
+
+		cy.realPress("F4");
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.prop", "open", true);
+
+		cy.realPress("F4");
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.prop", "open", false);
+	});
+
+	it("toggles upon ALT + UP", () => {
+		cy.mount(
+			<>
+				<button>click</button>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
+					<Option value="Compact">Compact</Option>
+					<Option value="Condensed" selected>Condensed</Option>
+				</Select>
+			</>
+		);
+
+		cy.get("button").realClick();
+		cy.get("button").realPress("Tab");
+
+		cy.realPress(["Alt", "ArrowUp"]);
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.prop", "open", true);
+
+		cy.realPress(["Alt", "ArrowUp"]);
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.prop", "open", false);
+	});
+
+	it("toggles upon ALT + DOWN", () => {
+		cy.mount(
+			<>
+				<button>click</button>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
+					<Option value="Compact">Compact</Option>
+					<Option value="Condensed" selected>Condensed</Option>
+				</Select>
+			</>
+		);
+
+		cy.get("button").realClick();
+		cy.get("button").realPress("Tab");
+
+		cy.realPress(["Alt", "ArrowDown"]);
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.prop", "open", true);
+
+		cy.realPress(["Alt", "ArrowDown"]);
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.prop", "open", false);
+	});
+
+	it("adds unselected only items to select", () => {
+		let initialItemsHTML = "";
+
+		cy.mount(
+			<>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
+					<Option value="Compact">Compact</Option>
+					<Option value="Condensed" selected>Condensed</Option>
+				</Select>
+				<button>Add new Items</button>
+				<button>Restore Items</button>
+			</>
+		);
+
+		cy.get("button").eq(0).then(($btn) => {
+			$btn[0].addEventListener("click", () => {
+				const select = document.querySelector("[ui5-select]") as Select;
+				initialItemsHTML = select.innerHTML;
+
+				const newOption = document.createElement("ui5-option") as Option;
+				newOption.textContent = "New";
+
+				select.innerHTML = "";
+				select.appendChild(newOption);
+			});
+		});
+
+		cy.get("button").eq(1).then(($btn) => {
+			$btn[0].addEventListener("click", () => {
+				const select = document.querySelector("[ui5-select]") as Select;
+				select.innerHTML = initialItemsHTML;
+			});
+		});
+
+		cy.get("button").eq(0).realClick();
+
+		cy.get("[ui5-select]")
+			.find("[ui5-option]:first-child")
+			.should("have.prop", "selected", true);
+
+		cy.get("button").eq(1).realClick();
+	});
+
+	it("reverts value before open after clicking on escape", () => {
+		cy.mount(
+			<Select>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
+				<Option value="Condensed" selected>Condensed</Option>
+			</Select>
+		);
+	
+		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-change", cy.stub().as("changeStub"));
+			});
+	
+		let initialSelectText = "";
+		cy.get("@select")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.then(($el) => {
+				initialSelectText = $el[0].innerHTML;
+			});
+	
+		cy.get("@select").realClick();
+		cy.get("@select").realPress("ArrowDown");
+		cy.get("@select").realPress("Escape");
+	
+		cy.get("@select")
+			.find("[ui5-option][selected]")
+			.should("have.prop", "selected", true);
+	
+		cy.get("@changeStub").should("not.have.been.called");
+	
+		cy.get("@select")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.then(($el) => {
+				expect($el[0].innerHTML).to.equal(initialSelectText);
+			});
+	});
+
+	it("fires change event after selection is change and picker if focussed out", () => {
+		cy.mount(
+			<>
+				<Select>
+					<Option value="Cozy">Cozy</Option>
+					<Option value="Compact">Compact</Option>
+					<Option value="Condensed" selected>Condensed</Option>
+				</Select>
+				<button>click</button>
+			</>
+		);
+	
+		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-change", cy.stub().as("changeStub"));
+			});
+	
+		cy.get("@select").realClick();
+		cy.get("@select").realPress("ArrowUp");
+	
+		cy.get("button").realClick();
+	
+		cy.get("@changeStub").should("have.been.calledOnce");
+	});
+
+	it("fires change event after selecting a previewed item", () => {
+		cy.mount(
+			<Select>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
+				<Option value="Condensed" selected>Condensed</Option>
+			</Select>
+		);
+	
+		cy.get("[ui5-select]")
+			.as("select")
+			.then(($select) => {
+				$select[0].addEventListener("ui5-change", cy.stub().as("changeStub"));
+			});
+	
+		cy.get("@select").realClick();
+		cy.get("@select").realPress("ArrowDown");
+	
+		cy.get("@select").realPress("Escape");
+	
+		cy.get("@select").realClick();
+		cy.get("@select")
+			.find("[ui5-option]:first-child")
+			.realClick();
+	
+		cy.get("@changeStub").should("have.been.calledOnce");
+	});
+
+	it("tests ESC on closed picker", () => {
+		cy.mount(
+			<Select>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact" selected>Compact</Option>
+				<Option value="Condensed">Condensed</Option>
+			</Select>
+		);
+
+		const EXPECTED_SELECTION_TEXT = "Cozy";
+		const EXPECTED_SELECTION_TEXT2 = "Condensed";
+
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]")
+			.find("[ui5-option]:first-child")
+			.realClick();
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT);
+
+		cy.get("[ui5-select]").realPress("Escape");
+
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]")
+			.find("[ui5-option]")
+			.eq(2)
+			.realClick();
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", EXPECTED_SELECTION_TEXT2);
+	});
+
+	it("Tests value state type", () => {
+		cy.mount(
+			<>
+				<Select valueState="Positive">
+					<Option value="Cozy" selected>Cozy</Option>
+					<Option value="Compact">Compact</Option>
+					<Option value="Condensed">Condensed</Option>
+				</Select>
+				<Select valueState="Information">
+					<Option value="Cozy">Cozy</Option>
+					<Option value="Compact">Compact</Option>
+					<Option value="Condensed" selected>Condensed</Option>
+				</Select>
+				<Select valueState="Negative">
+					<Option value="Cozy" selected>Cozy</Option>
+					<Option value="Compact" selected>Compact</Option>
+					<Option value="Condensed" selected>Condensed</Option>
+				</Select>
+				<Select valueState="Critical">
+					<Option value="Australia" selected>Australia</Option>
+					<Option value="Aruba">Aruba</Option>
+					<Option value="Belgium">Belgium</Option>
+				</Select>
+			</>
+		);
+
+		cy.get("[ui5-select]").eq(0)
+			.shadow()
+			.find("[id$='-valueStateDesc']")
+			.should("contain.text", "Success");
+
+		cy.get("[ui5-select]").eq(1)
+			.shadow()
+			.find("[id$='-valueStateDesc']")
+			.should("contain.text", "Information");
+
+		cy.get("[ui5-select]").eq(2)
+			.shadow()
+			.find("[id$='-valueStateDesc']")
+			.should("contain.text", "Error");
+
+		cy.get("[ui5-select]").eq(3)
+			.shadow()
+			.find("[id$='-valueStateDesc']")
+			.should("contain.text", "Warning");
+	});
+
+	it("Tests that the picker is closed when the selected value is clicked", () => {
+		cy.mount(
+			<Select>
+				<Option value="Cozy">Cozy</Option>
+				<Option value="Compact">Compact</Option>
+				<Option value="Condensed" selected>Condensed</Option>
+			</Select>
+		);
+
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.prop", "open", true);
+
+		cy.get("[ui5-select]")
+			.find("[ui5-option]:first-child")
+			.realClick();
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.prop", "open", false);
+
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.prop", "open", true);
+
+		cy.get("[ui5-select]")
+			.find("[ui5-option]:first-child")
+			.realClick();
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.prop", "open", false);
+	});
+
+	it("Tests if currently selected option is visible in the viewport when keyboard navigation is used", () => {
+		cy.viewport(600, 400);
+
+		cy.mount(
+			<Select valueState="Critical">
+				<Option value="Australia" selected>Australia</Option>
+				<Option value="Aruba">Aruba</Option>
+				<Option value="Belgium">Belgium</Option>
+				<Option value="Bulgaria">Bulgaria</Option>
+				<Option value="Brazil">Brazil</Option>
+			</Select>
+		);
+
+		cy.get("[ui5-select]").realClick();
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.prop", "open", true);
+
+		cy.get("[ui5-select]").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("ArrowDown");
+		cy.get("[ui5-select]").realPress("ArrowDown");
+
+		cy.get("[ui5-select]")
+			.find("[ui5-option][selected]")
+			.should("be.visible");
+	});
+
+	it("clears typed characters after selection is changed", () => {
+		cy.mount(
+			<Select accessibleName="Hello World">
+				<Option value="First">First</Option>
+				<Option value="Second">Second</Option>
+				<Option value="Third" selected>Third</Option>
+			</Select>
+		);
+
+		cy.get("[ui5-select]").realClick();
+		cy.get("[ui5-select]").realPress("s");
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", "Second");
+
+		cy.get("[ui5-select]").realPress("Enter");
+
+		cy.get("[ui5-select]").realPress("t");
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("contain.text", "Third");
+
+		cy.get("[ui5-select]").should("have.prop", "value", "Third");
 	});
 });

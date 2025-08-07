@@ -63,11 +63,12 @@ export default function SelectTemplate(this: Select) {
 				}
 
 				{!this.icon && !this.readonly &&
-					<div class={{
-						"ui5-select-icon-root": true,
-						"inputIcon": true,
-						"inputIcon--pressed": this._iconPressed,
-					}}>
+					<div part="icon-wrapper"
+						class={{
+							"ui5-select-icon-root": true,
+							"inputIcon": true,
+							"inputIcon--pressed": this._iconPressed,
+						}}>
 						<Icon
 							part="icon"
 							name={slimArrowDown}
