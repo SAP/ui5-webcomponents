@@ -350,13 +350,11 @@ class DynamicDateRange extends UI5Element {
 			this._input.value = displayString;
 		}
 
-		if (this._currentOption && valueToSubmit.operator) {
-			if (this._currentOption.isValidString(displayString)) {
-				this.value = valueToSubmit;
-				this.fireDecoratorEvent("change");
-			} else {
-				this.value = undefined;
-			}
+		if (!this._currentOption || !valueToSubmit.operator) {
+			this.value = undefined;
+		} else if (this._currentOption.isValidString(displayString)) {
+			this.value = valueToSubmit;
+			this.fireDecoratorEvent("change");
 		} else {
 			this.value = undefined;
 		}
