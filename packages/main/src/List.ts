@@ -75,7 +75,6 @@ import type CheckBox from "./CheckBox.js";
 import type RadioButton from "./RadioButton.js";
 import { isInstanceOfListItemGroup } from "./ListItemGroup.js";
 import type ListItemGroup from "./ListItemGroup.js";
-import { findVerticalScrollContainer } from "./TableUtils.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -527,17 +526,17 @@ class List extends UI5Element {
 	static i18nBundle: I18nBundle;
 	_previouslyFocusedItem: ListItemBase | null;
 	_forwardingFocus: boolean;
-	listEndObserved: boolean;
-	_handleResizeCallback: ResizeObserverCallback;
-	initialIntersection: boolean;
 	_selectionRequested?: boolean;
 	_groupCount: number;
 	_groupItemCount: number;
-	growingIntersectionObserver?: IntersectionObserver | null;
+	_endIntersectionObserver?: IntersectionObserver | null;
+	_startIntersectionObserver?: IntersectionObserver | null;
 	_itemNavigation: ItemNavigation;
 	_beforeElement?: HTMLElement | null;
 	_afterElement?: HTMLElement | null;
+	_startMarkerOutOfView: boolean = false;
 
+	handleResizeCallback: ResizeObserverCallback;
 	onItemFocusedBound: (e: CustomEvent) => void;
 	onForwardAfterBound: (e: CustomEvent) => void;
 	onForwardBeforeBound: (e: CustomEvent) => void;
@@ -551,20 +550,14 @@ class List extends UI5Element {
 		// Indicates that the List is forwarding the focus before or after the internal ul.
 		this._forwardingFocus = false;
 
-		// Indicates if the IntersectionObserver started observing the List
-		this.listEndObserved = false;
-
 		this._itemNavigation = new ItemNavigation(this, {
 			skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
 			navigationMode: NavigationMode.Vertical,
 			getItemsCallback: () => this.getEnabledItems(),
 		});
 
-		this._handleResizeCallback = this._handleResize.bind(this);
+		this.handleResizeCallback = this._handleResize.bind(this);
 
-		// Indicates the List bottom most part has been detected by the IntersectionObserver
-		// for the first time.
-		this.initialIntersection = true;
 		this._groupCount = 0;
 		this._groupItemCount = 0;
 
@@ -592,13 +585,14 @@ class List extends UI5Element {
 	onEnterDOM() {
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
 		DragRegistry.subscribe(this);
-		ResizeHandler.register(this.getDomRef()!, this._handleResizeCallback);
+		ResizeHandler.register(this.getDomRef()!, this.handleResizeCallback);
 	}
 
 	onExitDOM() {
 		deregisterUI5Element(this);
 		this.unobserveListEnd();
-		ResizeHandler.deregister(this.getDomRef()!, this._handleResizeCallback);
+		this.unobserveListStart();
+		ResizeHandler.deregister(this.getDomRef()!, this.handleResizeCallback);
 		DragRegistry.unsubscribe(this);
 	}
 
@@ -609,11 +603,10 @@ class List extends UI5Element {
 
 	onAfterRendering() {
 		this.attachGroupHeaderEvents();
-		if (this.growsOnScroll) {
-			this.observeListEnd();
-		} else if (this.listEndObserved) {
-			this.unobserveListEnd();
-		}
+		this.unobserveListEnd();
+		this.unobserveListStart();
+		this.observeListEnd();
+		this.observeListStart();
 
 		if (this.grows) {
 			this.checkListInViewport();
@@ -660,6 +653,10 @@ class List extends UI5Element {
 
 	get listEndDOM() {
 		return this.shadowRoot!.querySelector(".ui5-list-end-marker");
+	}
+
+	get listStartDOM() {
+		return this.shadowRoot!.querySelector(".ui5-list-start-marker");
 	}
 
 	get dropIndicatorDOM(): DropIndicator | null {
@@ -728,13 +725,9 @@ class List extends UI5Element {
 		return this.accessibilityAttributes.growingButton?.name ? undefined : `${this._id}-growingButton-text`;
 	}
 
-	get scrollContainer() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-list-scroll-container");
-	}
-
 	hasGrowingComponent(): boolean {
-		if (this.growsOnScroll && this.scrollContainer) {
-			return this.scrollContainer.clientHeight !== this.scrollContainer.scrollHeight;
+		if (this.growsOnScroll) {
+			return this._startMarkerOutOfView;
 		}
 
 		return this.growsWithButton;
@@ -816,30 +809,40 @@ class List extends UI5Element {
 	}
 
 	async observeListEnd() {
-		if (!this.listEndObserved) {
-			await renderFinished();
-			this.getIntersectionObserver().observe(this.listEndDOM!);
-			this.listEndObserved = true;
-		}
+		await renderFinished();
+		this.getIntersectionObserver().observe(this.listEndDOM!);
 	}
 
 	unobserveListEnd() {
-		if (this.growingIntersectionObserver) {
-			this.growingIntersectionObserver.disconnect();
-			this.growingIntersectionObserver = null;
-			this.listEndObserved = false;
+		if (this._endIntersectionObserver) {
+			this._endIntersectionObserver.disconnect();
+			this._endIntersectionObserver = null;
 		}
 	}
 
-	onInteresection(entries: Array<IntersectionObserverEntry>) {
-		if (this.initialIntersection) {
-			this.initialIntersection = false;
-			return;
+	async observeListStart() {
+		await renderFinished();
+		this.get_StartIntersectionObserver().observe(this.listStartDOM!);
+	}
+
+	unobserveListStart() {
+		if (this._startIntersectionObserver) {
+			this._startIntersectionObserver.disconnect();
+			this._startIntersectionObserver = null;
 		}
+	}
+
+	onEndIntersection(entries: Array<IntersectionObserverEntry>) {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
 				debounce(this.loadMore.bind(this), INFINITE_SCROLL_DEBOUNCE_RATE);
 			}
+		});
+	}
+
+	onStartIntersection(entries: Array<IntersectionObserverEntry>) {
+		entries.forEach(entry => {
+			this._startMarkerOutOfView = !entry.isIntersecting;
 		});
 	}
 
@@ -1463,17 +1466,27 @@ class List extends UI5Element {
 	}
 
 	getIntersectionObserver() {
-		if (!this.growingIntersectionObserver) {
-			const scrollContainer = this.scrollContainer || findVerticalScrollContainer(this.getDomRef()!);
-
-			this.growingIntersectionObserver = new IntersectionObserver(this.onInteresection.bind(this), {
-				root: scrollContainer,
-				rootMargin: "5px",
+		if (!this._endIntersectionObserver) {
+			this._endIntersectionObserver = new IntersectionObserver(this.onEndIntersection.bind(this), {
+				root: null, // null means the viewport
+				rootMargin: "0px",
 				threshold: 1.0,
 			});
 		}
 
-		return this.growingIntersectionObserver;
+		return this._endIntersectionObserver;
+	}
+
+	get_StartIntersectionObserver() {
+		if (!this._startIntersectionObserver) {
+			this._startIntersectionObserver = new IntersectionObserver(this.onStartIntersection.bind(this), {
+				root: null, // null means the viewport
+				rootMargin: "0px",
+				threshold: 1.0,
+			});
+		}
+
+		return this._startIntersectionObserver;
 	}
 }
 
