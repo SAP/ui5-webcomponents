@@ -17,7 +17,14 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import {
+	getEffectiveAriaLabelText,
+	getAssociatedLabelForTexts,
+	registerUI5Element,
+	deregisterUI5Element,
+	getAllAccessibleDescriptionRefTexts,
+	getEffectiveAriaDescriptionText,
+} from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
@@ -304,6 +311,24 @@ class Select extends UI5Element implements IFormInputElement {
 	accessibleNameRef?: string;
 
 	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.14.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that describe the select.
+	 * @default undefined
+	 * @public
+	 * @since 2.14.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
+
+	/**
 	 * Defines the tooltip of the select.
 	 * @default undefined
 	 * @public
@@ -311,6 +336,13 @@ class Select extends UI5Element implements IFormInputElement {
 	 */
 	@property()
 	tooltip?: string;
+
+	/**
+	 * Constantly updated value of texts collected from the associated description texts
+	 * @private
+	 */
+	@property({ type: String, noAttribute: true })
+	_associatedDescriptionRefTexts?: string;
 
 	/**
 	 * @private
@@ -413,6 +445,14 @@ class Select extends UI5Element implements IFormInputElement {
 			return selectedOption.hasAttribute("value") ? selectedOption.getAttribute("value") : selectedOption.textContent;
 		}
 		return "";
+	}
+
+	onEnterDOM() {
+		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
+	}
+
+	onExitDOM() {
+		deregisterUI5Element(this);
 	}
 
 	onBeforeRendering() {
@@ -1040,6 +1080,22 @@ class Select extends UI5Element implements IFormInputElement {
 
 	get selectedOptionIcon() {
 		return this.selectedOption && this.selectedOption.icon;
+	}
+
+	get ariaDescriptionText() {
+		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this);
+	}
+
+	get ariaDescriptionTextId() {
+		return this.ariaDescriptionText ? "accessibleDescription" : "";
+	}
+
+	get ariaDescribedByIds() {
+		return [this.valueStateTextId, this.ariaDescriptionTextId].filter(Boolean).join(" ");
+	}
+
+	_updateAssociatedLabelsTexts() {
+		this._associatedDescriptionRefTexts = getAllAccessibleDescriptionRefTexts(this);
 	}
 
 	_getPopover() {
