@@ -37,6 +37,7 @@ describe("TableRowActions", () => {
 		cy.get("@table").then($table => {
 			$table[0].addEventListener("row-action-click", cy.stub().as("rowActionClick"));
 		});
+		cy.get("@innerTable").should("have.attr", "aria-colcount", "1");
 	}
 
 	function checkTemplateColumn(expectedWidth: string) {

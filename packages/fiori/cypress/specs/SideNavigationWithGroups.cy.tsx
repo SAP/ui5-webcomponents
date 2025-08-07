@@ -29,7 +29,7 @@ describe("Component Behavior", () => {
 				.should("not.exist");
 		});
 
-		it("Tests that visualization is correct when two groups are next to each other", async () => {
+		it("Tests that visualization is correct when two groups are next to each other", () => {
 			cy.mount(
 				<SideNavigation id="sn1" collapsed={false}>
 					<SideNavigationGroup id="group1" text="Group 1">
@@ -42,9 +42,9 @@ describe("Component Behavior", () => {
 					<SideNavigationGroup id="group3" text="Group 3">
 						<SideNavigationItem text="Item 3.1" icon="locate-me"></SideNavigationItem>
 					</SideNavigationGroup>
-				</SideNavigation>	
+				</SideNavigation>
 			);
-		
+
 			cy.get("#group2")
 				.should("have.prop", "belowGroup", true);
 
@@ -55,7 +55,7 @@ describe("Component Behavior", () => {
 
 			cy.get("#group3")
 				.should("have.prop", "belowGroup", false);
-			
+
 			cy.get("#group3")
 				.shadow()
 				.find(".ui5-sn-item-separator").eq(0)
@@ -95,7 +95,7 @@ describe("Component Behavior", () => {
 				.realClick();
 			cy.get("#group1").should("have.prop", "expanded", true);
 		});
-		
+
 		it("Tests expanding of groups with ArrowRight", () => {
 			cy.mount(
 				<SideNavigation id="sn">
@@ -186,11 +186,11 @@ describe("Component Behavior", () => {
 				<SideNavigation id="sn">
 					<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
 					<SideNavigationGroup id="group1" text="Group">
-							<SideNavigationItem text="Home 1"
-								icon="home"
-								href="#home"
-								title="Home tooltip" />
-						</SideNavigationGroup>
+						<SideNavigationItem text="Home 1"
+							icon="home"
+							href="#home"
+							title="Home tooltip" />
+					</SideNavigationGroup>
 				</SideNavigation>
 			);
 
@@ -206,11 +206,11 @@ describe("Component Behavior", () => {
 				<SideNavigation id="sn">
 					<SideNavigationItem id="focusStart" text="focus start"></SideNavigationItem>
 					<SideNavigationGroup id="group1" expanded text="Group">
-							<SideNavigationItem text="Home 1"
-								icon="home"
-								href="#home"
-								title="Home tooltip" />
-						</SideNavigationGroup>
+						<SideNavigationItem text="Home 1"
+							icon="home"
+							href="#home"
+							title="Home tooltip" />
+					</SideNavigationGroup>
 				</SideNavigation>
 			);
 
@@ -265,6 +265,56 @@ describe("Component Behavior", () => {
 
 			cy.get("#group1").should("not.have.attr", "expanded");
 
+		});
+
+		it("Tests disabled group items", () => {
+			cy.mount(
+				<SideNavigation id="sn1">
+					<SideNavigationGroup id="group1" expanded text="Group">
+						<SideNavigationItem text="Home 1"
+							icon="home"
+							href="#home"
+							title="Home tooltip" />
+					</SideNavigationGroup>
+				</SideNavigation>);
+
+			cy.get("#group1").invoke("prop", "disabled", true);
+
+			cy.get<SideNavigationGroup>("#group1").then(($itemRef) => {
+				const item = $itemRef[0];
+				cy.wrap(item.items).each((item) => {
+					cy.wrap(item).should("have.prop", "effectiveDisabled", true);
+				});
+			});
+		});
+
+		it("Tests focus of disabled groups", () => {
+			cy.mount(
+				<SideNavigation id="sideNav">
+					<SideNavigationItem id="item" text="1"></SideNavigationItem>
+					<SideNavigationGroup id="group1" disabled={true} text="Group">
+						<SideNavigationItem id="item" text="1"></SideNavigationItem>
+					</SideNavigationGroup>
+				</SideNavigation>
+			);
+
+			cy.get("#item").realClick();
+
+			cy.get("#item")
+				.should("be.focused")
+			cy.get("#item")
+				.shadow()
+				.find(".ui5-sn-item")
+				.should("have.attr", "tabindex", "0");
+
+			cy.realPress("ArrowDown");
+
+			cy.get("#group1")
+				.should("be.focused")
+			cy.get("#group1")
+				.shadow()
+				.find(".ui5-sn-item.ui5-sn-item-group")
+				.should("have.attr", "tabindex", "0");
 		});
 	});
 });

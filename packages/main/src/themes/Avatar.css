@@ -277,8 +277,8 @@
 
 :host([_has-image]) {
 	color: var(--ui5-avatar-accent10-color);
+	border: var(--ui5-avatar-optional-border);
 	background-color: transparent;
-	vertical-align: middle;
 }
 
 .ui5-avatar-initials {

@@ -618,40 +618,75 @@
 	<br>
 	<br>
 	<ui5-button id="btnConfirmationDialog">Confirmation dialog with Toolbar</ui5-button>
-    <ui5-dialog id="confirmationDialog" draggable resizable header-text="Register Form">
-        <section style="display: flex;flex-direction: column;justify-content: space-evenly;	align-items: center;margin: 3rem 6rem;">
-            <div style="display: grid;width: 15rem;margin-bottom: .5rem;">
-                <ui5-label for="username" required show-colon>Username</ui5-label>
-                <ui5-input id="username"></ui5-input>
-            </div>
-            <div style="display: grid;width: 15rem;margin-bottom: .5rem;">
-                <ui5-label for="password" required show-colon>Password</ui5-label>
-                <ui5-input id="password" type="Password" value-state="Negative"></ui5-input>
-            </div>
-            <div style="display: grid;width: 15rem;margin-bottom: .5rem;">
-                <ui5-label for="email" type="Email" required show-colon>Email</ui5-label>
-                <ui5-input id="email"></ui5-input>
-            </div>
-            <div style="display: grid;width: 15rem;margin-bottom: .5rem;">
-                <ui5-label for="address" show-colon>Address</ui5-label>
-                <ui5-input id="address"></ui5-input>
-            </div>
-        </section>
+	<ui5-dialog id="confirmationDialog" draggable resizable header-text="Register Form">
+		<section style="display: flex;flex-direction: column;justify-content: space-evenly;	align-items: center;margin: 3rem 6rem;">
+			<div style="display: grid;width: 15rem;margin-bottom: .5rem;">
+				<ui5-label for="username" required show-colon>Username</ui5-label>
+				<ui5-input id="username"></ui5-input>
+			</div>
+			<div style="display: grid;width: 15rem;margin-bottom: .5rem;">
+				<ui5-label for="password" required show-colon>Password</ui5-label>
+				<ui5-input id="password" type="Password" value-state="Negative"></ui5-input>
+			</div>
+			<div style="display: grid;width: 15rem;margin-bottom: .5rem;">
+				<ui5-label for="email" type="Email" required show-colon>Email</ui5-label>
+				<ui5-input id="email"></ui5-input>
+			</div>
+			<div style="display: grid;width: 15rem;margin-bottom: .5rem;">
+				<ui5-label for="address" show-colon>Address</ui5-label>
+				<ui5-input id="address"></ui5-input>
+			</div>
+		</section>
 		<ui5-toolbar slot="footer">
-            <ui5-toolbar-button
-                id="btnConfirmationDialogSubmit"
-                design="Emphasized"
-                text="SubmitSubmitSubmitSubmitSubmit"
-            >
-            </ui5-toolbar-button>
-            <ui5-toolbar-button
-                id="btnConfirmationDialogCancel"
-                text="CancelCancelCancelCancelCancelCancel"
-                design="Transparent"
-            >
-            </ui5-toolbar-button>
-        </ui5-toolbar>
-    </ui5-dialog>
+			<ui5-toolbar-button
+				id="btnConfirmationDialogSubmit"
+				design="Emphasized"
+				text="SubmitSubmitSubmitSubmitSubmit"
+			>
+			</ui5-toolbar-button>
+			<ui5-toolbar-button
+				id="btnConfirmationDialogCancel"
+				text="CancelCancelCancelCancelCancelCancel"
+				design="Transparent"
+			>
+			</ui5-toolbar-button>
+		</ui5-toolbar>
+	</ui5-dialog>
+	<br>
+	<br>
+	<ui5-button id="btnAccessibleDescrRefDialog">Accessible Description Ref</ui5-button>
+	<ui5-dialog id="accessibleDescrRefDialog" draggable resizable header-text="Accessible dialog" accessible-description-ref="btnAccessibleDescrRefDialog">
+		<ui5-title level="H3">Hello World!</ui5-title>
+		<ui5-toolbar slot="footer">
+			<ui5-toolbar-button
+				id="btnAccessibleDescrRefDialogSubmit"
+				design="Emphasized"
+				text="Close"
+			/>
+		</ui5-toolbar>
+	</ui5-dialog>
+	<br>
+	<br>
+	<ui5-button id="btnAccessibleDescrDialog">Accessible Description</ui5-button>
+	<ui5-dialog id="accessibleDescrDialog" draggable resizable header-text="Accessible dialog" accessible-description="Accessible Description">
+		<ui5-title level="H3">Hello World!</ui5-title>
+		<ui5-toolbar slot="footer">
+			<ui5-toolbar-button
+				id="btnAccessibleDescrDialogSubmit"
+				design="Emphasized"
+				text="Close"
+			/>
+		</ui5-toolbar>
+	</ui5-dialog>
+	<br>
+	<br>
+	<ui5-button onclick="dialogWithTokenizer.open = true;">Open Dialog With Tokenizer</ui5-button>
+	<ui5-dialog id="dialogWithTokenizer" header-text="Tokens">
+		<ui5-tokenizer id="tokenizer">
+			<ui5-token text="Token 1"></ui5-token>
+			<ui5-token text="Token 2"></ui5-token>
+		</ui5-tokenizer>
+	</ui5-dialog>
 	<br>
 	<br>
 	<div>
@@ -902,6 +937,22 @@
 
 		window["btnConfirmationDialog"].addEventListener("click", function () {
 			window["confirmationDialog"].open = true;
+		});
+
+		window["btnAccessibleDescrRefDialog"].addEventListener("click", function () {
+			window["accessibleDescrRefDialog"].open = true;
+		});
+
+		window["btnAccessibleDescrRefDialogSubmit"].addEventListener("click", function () {
+			window["accessibleDescrRefDialog"].open = false;
+		});
+
+		window["btnAccessibleDescrDialog"].addEventListener("click", function () {
+			window["accessibleDescrDialog"].open = true;
+		});
+
+		window["btnAccessibleDescrDialogSubmit"].addEventListener("click", function () {
+			window["accessibleDescrDialog"].open = false;
 		});
 
 		window["btnConfirmationDialogSubmit"].addEventListener("click", function () {

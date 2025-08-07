@@ -8,7 +8,7 @@ import type TableRow from "./TableRow.js";
 export default function TableRowTemplate(this: TableRow) {
 	return (
 		<>
-			{ this._hasRowSelector &&
+			{ this._hasSelector &&
 				<TableCell
 					id="selection-cell"
 					aria-selected={this._isSelected}
@@ -60,7 +60,7 @@ export default function TableRowTemplate(this: TableRow) {
 			}
 
 			{ this._renderNavigated &&
-				<TableCell id="navigated-cell" data-excluded-from-navigation={true}>
+				<TableCell id="navigated-cell" data-excluded-from-navigation aria-hidden={true}>
 					<div id="navigated"></div>
 				</TableCell>
 			}

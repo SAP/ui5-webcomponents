@@ -1,23 +1,13 @@
-import "@ui5/webcomponents/dist/Select.js";
-import "@ui5/webcomponents/dist/Option.js";
 import UploadCollection from "../../src/UploadCollection.js";
 import UploadCollectionItem from "../../src/UploadCollectionItem.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import FileUploader from "@ui5/webcomponents/dist/FileUploader.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import documentTextIcon from "@ui5/webcomponents-icons/dist/document-text.js";
 
 function UploadCollectionSample() {
 	return <UploadCollection id="uploadCollection" accessibleName="Uploaded (4)">
-		<div slot="header" class="header">
+		<div slot="header">
 			<Title id="uploadCollectionTitle">Uploaded (4)</Title>
-			<Label>Add new files and press to start uploading pending files:</Label>
-			<Button id="startUploading">Start</Button>
-			<div class="spacer"></div>
-			<FileUploader id="fileUploader" hideInput={true} multiple={true}>
-				<Button icon="add" design="Transparent"></Button>
-			</FileUploader>
 		</div>
 		<UploadCollectionItem
 			id="firstItem"
@@ -25,16 +15,16 @@ function UploadCollectionSample() {
 			fileNameClickable={true}
 			uploadState="Complete"
 		>
-			<img src="./img/HT-1000.jpg" slot="thumbnail" />
+			<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 			File name is clickable.
 		</UploadCollectionItem>
 		<UploadCollectionItem
 			id="secondItem"
 			fileName=".gitignore"
-			disable-delete-button
+			disableDeleteButton={true}
 			uploadState="Complete"
 		>
-			<Icon name="customize" slot="thumbnail"></Icon>
+			<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 			You cannot delete this file.
 		</UploadCollectionItem>
 		<UploadCollectionItem
@@ -42,7 +32,7 @@ function UploadCollectionSample() {
 			fileName="latest.reports.pdf"
 			uploadState="Complete"
 		>
-			<Icon name="document-text" slot="thumbnail"></Icon>
+			<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 			Some description.
 		</UploadCollectionItem>
 		<UploadCollectionItem
@@ -50,7 +40,7 @@ function UploadCollectionSample() {
 			fileName="report.pdf"
 			uploadState="Complete"
 		>
-			<Icon name="document-text" slot="thumbnail"></Icon>
+			<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 			Some description.
 		</UploadCollectionItem>
 		<UploadCollectionItem
@@ -59,7 +49,7 @@ function UploadCollectionSample() {
 			uploadState="Complete"
 			disabled={true}
 		>
-			<Icon name="document-text" slot="thumbnail"></Icon>
+			<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 			Some description.
 		</UploadCollectionItem>
 		<UploadCollectionItem
@@ -67,7 +57,7 @@ function UploadCollectionSample() {
 			fileName="noextension"
 			uploadState="Complete"
 		>
-			<Icon name="document-text" slot="thumbnail"></Icon>
+			<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 		</UploadCollectionItem>
 		<UploadCollectionItem
 			id="keyboardNavigation"
@@ -75,14 +65,14 @@ function UploadCollectionSample() {
 			hideDeleteButton={true}
 			uploadState="Complete"
 		>
-			<Icon name="document-text" slot="thumbnail"></Icon>
+			<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 		</UploadCollectionItem>
 	</UploadCollection>;
 }
 
 function UploadCollectionStatesSample() {
 	return <UploadCollection id="uploadCollectionStates">
-		<div class="header" slot="header">
+		<div slot="header">
 			<Title>Upload States</Title>
 		</div>
 		<UploadCollectionItem
@@ -91,7 +81,6 @@ function UploadCollectionStatesSample() {
 			fileNameClickable={true}
 			uploadState="Complete"
 		>
-			<img src="./img/HT-1000.jpg" slot="thumbnail" />
 			uploadState="Complete"
 		</UploadCollectionItem>
 
@@ -103,7 +92,6 @@ function UploadCollectionStatesSample() {
 			uploadState="Uploading"
 			progress={37}
 		>
-			<img src="./img/HT-1000.jpg" slot="thumbnail" />
 			uploadState="Uploading"
 		</UploadCollectionItem>
 
@@ -115,7 +103,6 @@ function UploadCollectionStatesSample() {
 			uploadState="Error"
 			progress={89}
 		>
-			<img src="./img/HT-1000.jpg" slot="thumbnail" />
 			uploadState="Uploading" with hidden terminate button
 		</UploadCollectionItem>
 
@@ -126,7 +113,6 @@ function UploadCollectionStatesSample() {
 			uploadState="Uploading"
 			progress={89}
 		>
-			<img src="./img/HT-1000.jpg" slot="thumbnail" />
 			uploadState="Uploading" with hidden terminate button
 		</UploadCollectionItem>
 
@@ -137,7 +123,7 @@ function UploadCollectionStatesSample() {
 			uploadState="Error"
 			progress={59}
 		>
-			<Icon name="document-text" slot="thumbnail"></Icon>
+			<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 			uploadState="Error"
 		</UploadCollectionItem>
 
@@ -146,7 +132,7 @@ function UploadCollectionStatesSample() {
 			fileName="noextension"
 			type="Detail"
 		>
-			<Icon name="document-text" slot="thumbnail"></Icon>
+			<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 			uploadState="Ready" (default)
 		</UploadCollectionItem>
 	</UploadCollection>;
@@ -203,37 +189,37 @@ describe("UploadCollection Rendering", () => {
 	it("Tests the visibility of buttons", () => {
 		cy.mount(
 			<UploadCollection id="uploadCollection3">
-				<div class="header" slot="header">
+				<div slot="header">
 					<Title>Hidden buttons</Title>
 				</div>
 
 				<UploadCollectionItem id="uc3-default" fileName="File name">
-					<Icon name="document-text" slot="thumbnail"></Icon>
+					<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 					Default, delete button always visible
 				</UploadCollectionItem>
 
 				<UploadCollectionItem id="uc3-default-hidden-delete" fileName="File name" hideDeleteButton={true}>
-					<Icon name="document-text" slot="thumbnail"></Icon>
+					<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 					Default, delete button hidden
 				</UploadCollectionItem>
 
 				<UploadCollectionItem id="uc3-error" fileName="File name" uploadState="Error">
-					<Icon name="document-text" slot="thumbnail"></Icon>
+					<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 					uploadState="Error" with retry button visible by default
 				</UploadCollectionItem>
 
 				<UploadCollectionItem id="uc3-error-hidden-retry" fileName="File name" uploadState="Error" hideRetryButton>
-					<Icon name="document-text" slot="thumbnail"></Icon>
+					<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 					uploadState="Error" with hidden retry button
 				</UploadCollectionItem>
 
 				<UploadCollectionItem id="uc3-uploading" fileName="File name" uploadState="Uploading">
-					<Icon name="document-text" slot="thumbnail"></Icon>
+					<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 					uploadState="Uploading" with terminate button visible by default
 				</UploadCollectionItem>
 
 				<UploadCollectionItem id="uc3-uploading-hidden-terminate" fileName="File name" uploadState="Uploading" hideTerminateButton={true}>
-					<Icon name="document-text" slot="thumbnail"></Icon>
+					<Icon name={documentTextIcon} slot="thumbnail"></Icon>
 					uploadState="Uploading" with hidden terminate button
 				</UploadCollectionItem>
 			</UploadCollection>
@@ -387,6 +373,42 @@ describe("Events", () => {
 			.should("not.exist");
 	});
 
+	it("Tests that 'item-delete' is NOT fired when 'DELETE' key is pressed during rename", () => {
+		const itemDeleteStub = cy.stub();
+
+		cy.mount(
+			<UploadCollection id="uploadCollection" onItemDelete={itemDeleteStub}>
+				<UploadCollectionItem id="item" fileName="File name" type="Detail"/>
+			</UploadCollection>
+		);
+
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-uci-root")
+			.should("have.attr", "tabindex", "0");
+			
+		cy.get("#item")
+			.shadow()
+			.find(".ui5-uci-root")
+			.realClick();
+
+		cy.get("#item")
+			.should("have.focus");
+
+		cy.realPress("F2");
+		cy.realPress("Enter");
+
+		cy.get("#item")
+			.shadow()
+			.find("#ui5-uci-edit-input")
+			.should("be.focused");
+
+		cy.realPress("Delete");
+
+		cy.wrap(itemDeleteStub)
+			.should("not.have.been.called");
+	});
+
 	it("Tests that item fires 'retry'", () => {
 		const retryEventStub = cy.stub();
 
@@ -488,7 +510,7 @@ describe("Edit - various file names", () => {
 	it("Tests that dots are preserved in the file name", () => {
 		cy.mount(
 			<UploadCollection id="uploadCollection">
-				<UploadCollectionItem id="item" fileName="File name" type="Detail" upload-state="Error" />
+				<UploadCollectionItem id="item" fileName="File name" type="Detail" uploadState="Error" />
 			</UploadCollection>);
 
 		cy.get("#item")

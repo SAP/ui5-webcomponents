@@ -3,7 +3,7 @@
 // eslint-disable-next-line
 import testAssetsCommon from "./bundle.common.bootstrap.js"; // code that needs to be executed before other modules
 
-import { registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import { registerIconLoader, registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 // SAP Icons
 import accept, { getPathData } from "@ui5/webcomponents-icons/dist/accept.js";
@@ -50,6 +50,12 @@ import DatePicker from "./DatePicker.js";
 import DateRangePicker from "./DateRangePicker.js";
 import DateTimePicker from "./DateTimePicker.js";
 import Dialog from "./Dialog.js";
+import DynamicDateRange from "./DynamicDateRange.js";
+import Today from "./dynamic-date-range-options/Today.js";
+import Yesterday from "./dynamic-date-range-options/Yesterday.js";
+import Tomorrow from "./dynamic-date-range-options/Tomorrow.js";
+import SingleDate from "./dynamic-date-range-options/SingleDate.js";
+import DateRange from "./dynamic-date-range-options/DateRange.js";
 import ExpandableText from "./ExpandableText.js";
 import Form from "./Form.js";
 import FormItem from "./FormItem.js";
@@ -75,6 +81,7 @@ import Link from "./Link.js";
 import Menu from "./Menu.js";
 import MenuItem from "./MenuItem.js";
 import MenuSeparator from "./MenuSeparator.js";
+import MenuItemGroup from "./MenuItemGroup.js";
 import Popover from "./Popover.js";
 import Panel from "./Panel.js";
 import RadioButton from "./RadioButton.js";
@@ -120,6 +127,10 @@ import ListItemStandard from "./ListItemStandard.js";
 import ListItemCustom from "./ListItemCustom.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ListItemGroup from "./ListItemGroup.js";
+
+// custom SVG template (Lit or JSX), registered as an icon
+import IconPensilJSXTemplate from "./bundle-assets/IconPensilJSXTemplate.js";
+import IconPensilLitTemplate from "./bundle-assets/IconPensilLitTemplate.js";
 
 const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon3d, icon3dv1, icon3dv2];
 
@@ -206,6 +217,22 @@ registerIconLoader("my-icons", () => {
 			},
 		},
 	}]);
+});
+
+registerIcon("pencil", {
+	customTemplate: IconPensilJSXTemplate,
+	viewBox: "0 0 16 16",
+	packageName: "custom-svg-icon",
+	collection: "custom-svg-icons",
+	pathData: "pencil",
+});
+
+registerIcon("pencil2", {
+	customTemplate: IconPensilLitTemplate,
+	viewBox: "0 0 16 16",
+	packageName: "custom-svg-icon",
+	collection: "custom-svg-icons",
+	pathData: "pencil2",
 });
 
 // @ts-ignore

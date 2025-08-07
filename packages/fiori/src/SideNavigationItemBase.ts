@@ -73,6 +73,15 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 
 	_sideNavigation!: SideNavigation;
 
+	/**
+	 * Defines if the item's group is disabled.
+	 * @private
+	 * @default false
+	 * @since 2.10.0
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_groupDisabled: boolean = false;
+
 	onEnterDOM() {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
@@ -87,10 +96,14 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		return false;
 	}
 
+	get effectiveDisabled() {
+		return this.disabled;
+	}
+
 	get classesArray() {
 		const classes = [];
 
-		if (this.disabled) {
+		if (this.effectiveDisabled) {
 			classes.push("ui5-sn-item-disabled");
 		}
 
@@ -102,11 +115,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	get effectiveTabIndex() {
-		if (this.disabled) {
-			return undefined;
-		}
-
-		return this.forcedTabIndex;
+		return this.forcedTabIndex !== undefined ? parseInt(this.forcedTabIndex) : undefined;
 	}
 
 	get sideNavigation() {

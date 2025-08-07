@@ -263,6 +263,10 @@ class UploadCollectionItem extends ListItem {
 	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
+			return;
+		}
+
 		if (isDelete(e) && !this.disableDeleteButton && !this.hideDeleteButton && !this.disabled) {
 			this._onDelete();
 		}
