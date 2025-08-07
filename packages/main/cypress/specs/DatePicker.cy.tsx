@@ -102,6 +102,10 @@ describe("Date Picker Tests", () => {
 
 	it("value state", () => {
 		cy.mount(<DatePicker></DatePicker>);
+
+		cy.wrap({ setLanguage })
+			.invoke("setLanguage", "en");
+
 		cy.get("[ui5-date-picker]")
 			.as("datePicker");
 
@@ -1309,7 +1313,7 @@ describe("Date Picker Tests", () => {
 			.should("have.value", "Jan 1, 2000");
 	});
 
-	it.only("Keyboard navigation works when there are disabled dates in the calendar grid", () => {
+	it("Keyboard navigation works when there are disabled dates in the calendar grid", () => {
 		cy.mount(<DatePicker
 			value="Jan 1, 2000"
 			formatPattern="MMM d, y"
@@ -1328,7 +1332,7 @@ describe("Date Picker Tests", () => {
 			.realPress("ArrowDown");
 
 		cy.get<DatePicker>("@datePicker")
-			.ui5DatePickerGetDisplayedDay(12)
+			.ui5DatePickerGetDisplayedDay(13)
 			.should("have.focus");
 	});
 
