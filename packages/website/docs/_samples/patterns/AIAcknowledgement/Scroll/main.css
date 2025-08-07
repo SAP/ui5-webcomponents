@@ -1,0 +1,39 @@
+body {
+    background-color: var(--sapBackgroundColor);
+    height: 800px;
+}
+
+[ui5-panel]::part(content) {
+    background-color: #EAECEE;
+}
+
+[ui5-checkbox] {
+    margin-inline-start: -0.625rem;
+}
+
+#termsPanel {
+    max-height: 400px;
+    overflow: auto;
+    border: 1px dashed #000;
+    border-radius: 0.25rem;
+    background-color: #EAECEE;
+}
+
+.scroll-wrapper {
+  max-height: 200px; /* or whatever makes sense for your UI */
+  overflow-y: auto;
+  padding-right: 1rem; /* for scroll bar spacing */
+}
+
+.text {
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    align-items: center;
+    gap: 0.25rem;
+}
