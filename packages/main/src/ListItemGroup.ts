@@ -232,6 +232,10 @@ class ListItemGroup extends UI5Element {
 
 		this.dropIndicatorDOM!.targetReference = null;
 	}
+
+	getFocusDomRef() {
+		return this.groupHeaderItem || this.items[0];
+	}
 }
 
 ListItemGroup.define();
