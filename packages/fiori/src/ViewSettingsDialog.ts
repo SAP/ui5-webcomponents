@@ -3,6 +3,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -249,6 +250,9 @@ class ViewSettingsDialog extends UI5Element {
 	@slot()
 	filterItems!: Array<FilterItem>;
 
+	@query("[ui5-list]")
+	_list!: List;
+
 	_dialog?: Dialog;
 	_sortOrder?: List;
 	_sortBy?: List;
@@ -267,9 +271,9 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this.isModeFilter && this._filterStepTwo) {
+		if (this.isModeFilter) {
 			renderFinished().then(() => {
-				this._dialog?.querySelector<List>("[ui5-list]")?.focusFirstItem();
+				this._list?.focusFirstItem();
 			});
 		}
 	}
@@ -515,7 +519,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	afterDialogOpen(): void {
-		this._dialog?.querySelector<List>("[ui5-list]")?.focusFirstItem();
+		this._list?.focusFirstItem();
 
 		this._focusRecentlyUsedControl();
 
