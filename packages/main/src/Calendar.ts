@@ -49,12 +49,11 @@ import CalendarHeaderCss from "./generated/themes/CalendarHeader.css.js";
 import { CALENDAR_HEADER_NEXT_BUTTON, CALENDAR_HEADER_PREVIOUS_BUTTON } from "./generated/i18n/i18n-defaults.js";
 import type { YearRangePickerChangeEventDetail } from "./YearRangePicker.js";
 
-interface ICalendarPicker {
-	_showPreviousPage: () => void,
-	_showNextPage: () => void,
+interface ICalendarPicker extends HTMLElement {
+	_showPreviousPage: () => void | Promise<void>,
+	_showNextPage: () => void | Promise<void>,
 	_hasPreviousPage: () => boolean,
 	_hasNextPage: () => boolean,
-	_autoFocus?: boolean,
 	_currentYearRange?: CalendarYearRangeT,
 }
 
@@ -335,6 +334,11 @@ class Calendar extends CalendarPart {
 		this._valueIsProcessed = false;
 	}
 
+	async _focusCurrentPicker() {
+		await renderFinished();
+		this._currentPickerDOM.focus();
+	}
+
 	/**
 	 * @private
 	 */
@@ -465,7 +469,6 @@ class Calendar extends CalendarPart {
 		if (defaultTypes.includes(this._selectedItemType)) {
 			this._selectedItemType = "None"; // In order to avoid filtering of default types
 		}
-		this._currentPickerDOM._autoFocus = false;
 	}
 
 	/**
@@ -524,40 +527,40 @@ class Calendar extends CalendarPart {
 	/**
 	 * The user clicked the "month" button in the header
 	 */
-	onHeaderShowMonthPress() {
-		this.showMonth();
+	async onHeaderShowMonthPress() {
+		await this.showMonth();
 		this.fireDecoratorEvent("show-month-view");
 	}
 
-	showMonth() {
-		this._currentPickerDOM._autoFocus = false;
+	async showMonth() {
 		this._currentPicker = "month";
+		await this._focusCurrentPicker();
 	}
 
 	/**
 	 * The user clicked the "year" button in the header
 	 */
-	onHeaderShowYearPress() {
-		this.showYear();
+	async onHeaderShowYearPress() {
+		await this.showYear();
 		this.fireDecoratorEvent("show-year-view");
 	}
 
-	showYear() {
-		this._currentPickerDOM._autoFocus = false;
+	async showYear() {
 		this._currentPicker = "year";
+		await this._focusCurrentPicker();
 	}
 
 	/**
 	 * The user clicked the "year range" button in the YearPicker header
 	 */
-	onHeaderShowYearRangePress() {
-		this.showYearRange();
+	async onHeaderShowYearRangePress() {
+		await this.showYearRange();
 		this.fireDecoratorEvent("show-year-range-view");
 	}
 
-	showYearRange() {
-		this._currentPickerDOM._autoFocus = false;
+	async showYearRange() {
 		this._currentPicker = "yearrange";
+		await this._focusCurrentPicker();
 	}
 
 	get _currentPickerDOM() {
@@ -570,10 +573,6 @@ class Calendar extends CalendarPart {
 	 */
 	onHeaderPreviousPress() {
 		this._currentPickerDOM._showPreviousPage();
-
-		if (this.calendarLegend) {
-			this._currentPickerDOM._autoFocus = true;
-		}
 	}
 
 	/**
@@ -581,10 +580,6 @@ class Calendar extends CalendarPart {
 	 */
 	onHeaderNextPress() {
 		this._currentPickerDOM._showNextPage();
-
-		if (this.calendarLegend) {
-			this._currentPickerDOM._autoFocus = true;
-		}
 	}
 
 	_setSecondaryCalendarTypeButtonText() {
@@ -710,46 +705,47 @@ class Calendar extends CalendarPart {
 		this._fireEventAndUpdateSelectedDates(e.detail.dates);
 	}
 
-	onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
+	async onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 
 		if (this._pickersMode === CalendarPickersMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
+			await this._focusCurrentPicker();
 		} else {
 			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
-
-		this._currentPickerDOM._autoFocus = true;
 	}
 
-	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
+	async onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 
 		if (this._pickersMode === CalendarPickersMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
+			await this._focusCurrentPicker();
 		} else if (this._pickersMode === CalendarPickersMode.MONTH_YEAR) {
 			this._currentPicker = "month";
+			await this._focusCurrentPicker();
 		} else {
 			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
-
-		this._currentPickerDOM._autoFocus = true;
 	}
 
-	onSelectedYearRangeChange(e: CustomEvent<YearRangePickerChangeEventDetail>) {
+	async onSelectedYearRangeChange(e: CustomEvent<YearRangePickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 		this._currentPicker = "year";
-		this._currentPickerDOM._autoFocus = true;
+		await this._focusCurrentPicker();
 	}
 
 	onNavigate(e: CustomEvent) {
 		this.timestamp = e.detail.timestamp;
+		this._focusCurrentPicker();
 	}
 
 	_onkeydown(e: KeyboardEvent) {
 		if (isF4(e) && this._currentPicker !== "month") {
 			this._currentPicker = "month";
 			this.fireDecoratorEvent("show-month-view");
+			this._focusCurrentPicker();
 		}
 
 		if (!isF4Shift(e)) {
@@ -759,9 +755,11 @@ class Calendar extends CalendarPart {
 		if (this._currentPicker !== "year") {
 			this._currentPicker = "year";
 			this.fireDecoratorEvent("show-year-view");
+			this._focusCurrentPicker();
 		} else {
 			this._currentPicker = "yearrange";
 			this.fireDecoratorEvent("show-year-range-view");
+			this._focusCurrentPicker();
 		}
 	}
 

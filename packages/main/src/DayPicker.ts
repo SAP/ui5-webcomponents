@@ -8,6 +8,7 @@ import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js"
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
@@ -194,8 +195,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	@query("[data-sap-focus-ref]")
 	_focusableDay!: HTMLElement;
-
-	_autoFocus?: boolean;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -404,12 +403,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		return dayNames.some(dayName => dayName.length > 4);
 	}
 
-	onAfterRendering() {
-		if (this._autoFocus && !this._hidden) {
-			this.focus();
-		}
-	}
-
 	_focusCorrectDay() {
 		if (this._shouldFocusDay) {
 			this._focusableDay.focus();
@@ -420,13 +413,9 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		return document.activeElement !== this._focusableDay && this._specialCalendarDates.length === 0;
 	}
 
-	_onfocusin() {
-		this._autoFocus = true;
+	async _onfocusin() {
+		await renderFinished();
 		this._focusCorrectDay();
-	}
-
-	_onfocusout() {
-		this._autoFocus = false;
 	}
 
 	/**
@@ -618,6 +607,21 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		}
 	}
 
+	/**
+	 * Sets the focus reference to the day that was clicked with mousedown.
+	 * @param e
+	 * @private
+	 */
+	_onmousedown(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+		const clickedItem = target.closest(".ui5-dp-item") as HTMLElement;
+
+		if (clickedItem && this._isDayPressed(clickedItem)) {
+			const timestamp = this._getTimestampFromDom(clickedItem);
+			this._setTimestamp(timestamp);
+		}
+	}
+
 	_onkeydown(e: KeyboardEvent) {
 		let preventDefault = true;
 
@@ -723,16 +727,20 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * Called by the Calendar component.
 	 * @protected
 	 */
-	_showPreviousPage() {
+	async _showPreviousPage() {
 		this._modifyTimestampBy(-1, "month", false);
+		await renderFinished();
+		this._focusCorrectDay();
 	}
 
 	/**
 	 * Called by the Calendar component.
 	 * @protected
 	 */
-	_showNextPage() {
+	async _showNextPage() {
 		this._modifyTimestampBy(1, "month", false);
+		await renderFinished();
+		this._focusCorrectDay();
 	}
 
 	/**
@@ -742,13 +750,16 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
-	_modifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {
+	async _modifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, unit, preserveDate);
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
 		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
+
+		await renderFinished();
+		this._focusCorrectDay();
 	}
 
 	/**
