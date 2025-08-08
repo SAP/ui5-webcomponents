@@ -3,7 +3,15 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import {
 	isSpace,
+	isSpaceAlt,
+	isSpaceCtrl,
+	isSpaceShift,
+	isSpaceMeta,
 	isEnter,
+	isEnterShift,
+	isEnterCtrl,
+	isEnterAlt,
+	isEnterMeta,
 	isLeft,
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -255,7 +263,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 			e.preventDefault();
 		}
 
-		if (isEnter(e)) {
+		if (isEnter(e) || isEnterShift(e) || isEnterCtrl(e) || isEnterAlt(e) || isEnterMeta(e)) {
 			this._activate(e);
 		}
 
@@ -269,7 +277,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
-		if (isSpace(e)) {
+		if (isSpace(e) || isSpaceShift(e) || isSpaceCtrl(e) || isSpaceAlt(e) || isSpaceMeta(e)) {
 			this._activate(e);
 
 			if (this.href && !e.defaultPrevented) {

@@ -106,7 +106,13 @@ type KeyCodes = typeof KeyCodes[keyof typeof KeyCodes];
 
 const isEnter = (event: KeyboardEvent): boolean => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && !hasModifierKeys(event);
 
+const isEnterCtrl = (event: KeyboardEvent): boolean => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && checkModifierKeys(event, true, false, false);
+
+const isEnterAlt = (event: KeyboardEvent): boolean => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && checkModifierKeys(event, false, true, false);
+
 const isEnterShift = (event: KeyboardEvent): boolean => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && checkModifierKeys(event, false, false, true);
+
+const isEnterMeta = (event: KeyboardEvent): boolean => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && !!event.metaKey;
 
 const isCtrl = (event: KeyboardEvent): boolean => checkModifierKeys(event, true, false, false);
 
@@ -114,7 +120,11 @@ const isSpace = (event: KeyboardEvent): boolean => (event.key ? (event.key === "
 
 const isSpaceShift = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, false, false, true);
 
+const isSpaceAlt = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, false, true, false);
+
 const isSpaceCtrl = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, true, false, false);
+
+const isSpaceMeta = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && !!event.metaKey;
 
 const isLeft = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && !hasModifierKeys(event);
 
@@ -256,11 +266,16 @@ const isColon = (event: KeyboardEvent): boolean => ((event.key ? event.key === "
 
 export {
 	isEnter,
+	isEnterCtrl,
+	isEnterAlt,
 	isEnterShift,
+	isEnterMeta,
 	isCtrl,
 	isSpace,
 	isSpaceShift,
+	isSpaceAlt,
 	isSpaceCtrl,
+	isSpaceMeta,
 	isLeft,
 	isRight,
 	isUp,
