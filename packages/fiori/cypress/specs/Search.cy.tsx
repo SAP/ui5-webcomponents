@@ -2,6 +2,7 @@ import Title from "@ui5/webcomponents/dist/Title.js";
 import Search from "../../src/Search.js";
 import SearchItem from "../../src/SearchItem.js";
 import SearchItemGroup from "../../src/SearchItemGroup.js";
+import SearchItemShowMore from "../../src/SearchItemShowMore.js";
 import history from "@ui5/webcomponents-icons/dist/history.js";
 import IllustratedMessage from "../../src/IllustratedMessage.js";
 import searchIcon from "@ui5/webcomponents-icons/dist/search.js";
@@ -108,6 +109,28 @@ describe("Properties", () => {
 			.find("slot[name='illustration']")
 			.should("not.exist");
 	});
+
+	it("tests show more item", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="List Item"></SearchItem>
+				<SearchItemShowMore text="Show More"></SearchItemShowMore>
+			</Search>
+		);
+
+		cy.get("ui5-search")
+			.realClick()
+			.realType("s");
+
+		cy.get("ui5-search-item-show-more")
+			.should("be.visible");
+
+		cy.get("ui5-search-item-show-more")
+			.shadow()
+			.find("span")
+			.should("have.class", "ui5-search-item-show-more-text");
+
+	})
 
 	it("tests loading property", () => {
 		cy.mount(
