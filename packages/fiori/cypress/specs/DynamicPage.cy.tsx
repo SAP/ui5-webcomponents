@@ -35,4 +35,38 @@ describe("DynamicPage", () => {
       .invoke("prop", "headerPinned")
       .should("be.false");
   });
+
+  it("should show correct tooltip for pin button based on pinned state", () => {
+    // Initially the header should not be pinned, so tooltip should be "Pin Header"
+    cy.get("@dynamicPage")
+      .shadow()
+      .find("ui5-dynamic-page-header-actions")
+      .shadow()
+      .find(".ui5-dynamic-page-header-action-pin")
+      .should("have.attr", "tooltip", "Pin Header");
+
+    // Pin the header
+    cy.get("@dynamicPage")
+      .invoke("prop", "headerPinned", true);
+
+    // After pinning, tooltip should change to "Unpin Header"
+    cy.get("@dynamicPage")
+      .shadow()
+      .find("ui5-dynamic-page-header-actions")
+      .shadow()
+      .find(".ui5-dynamic-page-header-action-pin")
+      .should("have.attr", "tooltip", "Unpin Header");
+
+    // Unpin the header
+    cy.get("@dynamicPage")
+      .invoke("prop", "headerPinned", false);
+
+    // After unpinning, tooltip should change back to "Pin Header"
+    cy.get("@dynamicPage")
+      .shadow()
+      .find("ui5-dynamic-page-header-actions")
+      .shadow()
+      .find(".ui5-dynamic-page-header-action-pin")
+      .should("have.attr", "tooltip", "Pin Header");
+  });
 });
