@@ -26,10 +26,6 @@ class SearchItemGroup extends ListItemGroup {
 	get isGroupItem(): boolean {
 		return true;
 	}
-
-	getFocusDomRef() {
-		return this.shadowRoot!.querySelector("[ui5-li-group-header]") as ListItemGroupHeader;
-	}
 }
 
 SearchItemGroup.define();

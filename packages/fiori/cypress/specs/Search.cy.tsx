@@ -88,6 +88,76 @@ describe("Properties", () => {
 			.should("be.focused");
 	});
 
+	it("items slot arrow down navigation with groups and headerText", () => {
+		cy.mount(
+			<Search>
+				<SearchItemGroup headerText="Group Header 1">
+					<SearchItem text="List Item" icon={history}></SearchItem>
+					<SearchItem text="List Item" icon={searchIcon}></SearchItem>
+				</SearchItemGroup>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.realPress("L");
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+
+		cy.get("[ui5-search]")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-search-item-group")
+			.shadow()
+			.find("ui5-li-group-header")
+			.should("be.focused");
+
+		cy.get("[ui5-search]")
+			.realPress("ArrowUp");
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+	});
+
+	it.only("items slot arrow down navigation with groups and no headerText", () => {
+		cy.mount(
+			<Search>
+				<SearchItemGroup>
+					<SearchItem text="List Item" icon={history}></SearchItem>
+					<SearchItem text="List Item" icon={searchIcon}></SearchItem>
+				</SearchItemGroup>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.realPress("L");
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+
+		cy.get("[ui5-search]")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-search-item").eq(0)
+			.should("be.focused");
+
+		cy.get("[ui5-search]")
+			.realPress("ArrowUp");
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+	})
+
 	it("items should be shown instead of illustration of both present ", () => {
 		cy.mount(
 			<Search>

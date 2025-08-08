@@ -354,7 +354,7 @@ class Search extends SearchField {
 	}
 
 	_handleArrowDown() {
-		const firstListItem = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[0];
+		const firstListItem = this._getItemsList()?.listItems?.[0];
 
 		if (this.open) {
 			this._deselectItems();
