@@ -12,7 +12,7 @@
 	<ui5-dialog id="dialog" state="Information" header-text="Information">
 		<br>
 		<ui5-text>
-			Please read the following information carefully and accept these terms and conditions. You can revisit your choices at any time in the settings.
+			Please read the following information carefully and accept these terms and conditions:
 		</ui5-text>
 		<br>
 		<ui5-title level="H5">Terms of use</ui5-title>
@@ -36,14 +36,14 @@
 			<ui5-text class="text">(f) Distribute malware or spam;</ui5-text>
 			<ui5-text class="text">(g) Contravene regulatory safety policies;</ui5-text>
 			<ui5-text class="text">(h) Track people without consent;</ui5-text>
-			<ui5-text class="text">Falsely impersonate an individual; or</ui5-text>
+			<ui5-text class="text"><ui5-icon name="information" accessible-name="Info" title="More info"/> Falsely impersonate an individual; or</ui5-text>
 			<ui5-text class="text">(j) Mine cryptocurrency.</ui5-text>
 			<ui5-text class="text">1.2. SAP may limit or suspend access to Output or AI Technology in the event these Terms are violated or for</ui5-text>
 			<ui5-text class="text">non-compliance with Documentation.</ui5-text>
 			<ui5-text class="text">1.3. Customer will not circumvent or bypass protective measures made available by SAP or a third-party,</ui5-text>
 			<ui5-text class="text">including, but not limited to, those intended to help prevent copyright infringement, data breaches, or</ui5-text>
 			<ui5-text class="text">security incidents.</ui5-text>
-			<ui5-text class="text">1.4. Customer will not  use AI Technology or Output to develop, train, or improve other AI services or AI</ui5-text>
+			<ui5-text class="text">1.4. Customer will not <ui5-icon name="information" accessible-name="Info" title="More info"/> use AI Technology or Output to develop, train, or improve other AI services or AI</ui5-text>
 			<ui5-text class="text">models, unless explicitly permitted by SAP, or (ii) use web scraping, web harvesting, or web data extraction</ui5-text>
 			<ui5-text class="text">methods to extract data from AI Technology or Output.</ui5-text>
 			<ui5-text class="text">2. <strong>OUTPUT</strong></ui5-text>
@@ -63,7 +63,7 @@
 			<ui5-text class="text">3. <strong>ADDITIONAL TERMS</strong></ui5-text>
 			<ui5-text class="text">The legal framework applicable to and the interpretation of competent courts and authorities regarding the</ui5-text>
 			<ui5-text class="text">use of AI technologies is evolving. If a change in law or the interpretation of a competent court or authority</div>
-			<ui5-text class="text">results in  SAP’s inability to offer an AI Technology or (ii) Customer’s inability to use an AI Technology</ui5-text>
+			<ui5-text class="text">results in <ui5-icon name="information" accessible-name="Info" title="More info"/> SAP’s inability to offer an AI Technology or (ii) Customer’s inability to use an AI Technology</ui5-text>
 			<ui5-text class="text">in a legally compliant manner, SAP may reduce the scope of use (e.g., if the use of an AI Technology</ui5-text>
 			<ui5-text class="text">becomes prohibited, SAP may cease offering such AI Technology in a given country ) or remove such AI</ui5-text>
 			<ui5-text class="text">Technology altogether. The same applies where SAP can no longer provide an AI Technology provided</ui5-text>
@@ -84,14 +84,18 @@
 			<ui5-text class="text">remove, or exchange AI models, in its sole discretion, at any time.</ui5-text>
 		</ui5-panel>
 		<br>
-		<ui5-title level="H5">Disclaimer</ui5-title>
+		<div class="checkbox-wrapper">
+			<ui5-checkbox id="termsCheck"></ui5-checkbox>
+			<ui5-text>
+				I hereby confirm I have read and agreed to
+				<ui5-link href="https://www.sap.com" target="_blank">&lt;document link 1&gt;</ui5-link> and
+				<ui5-link href="https://www.sap.com" target="_blank">&lt;document link 2&gt;</ui5-link>.
+			</ui5-text>
+		</div>
 		<br>
-		<ui5-text>Artificial Intelligence (AI) generates results based on multiple sources. Outputs may contain errors and inaccuracies. Consider reviewing all generated results and adjust as necessary.</ui5-text>
-		<br>
-		<ui5-checkbox text="Don't show this message again"></ui5-checkbox>
 		<div slot="footer" class="footer">
-			<ui5-button design="Emphasized" class="dialogCloser" id="okButton">OK</ui5-button>
-			<ui5-button class="dialogCloser">Cancel</ui5-button>
+			<ui5-button design="Emphasized" class="dialogCloser" id="acceptButton">Accept</ui5-button>
+			<ui5-button class="dialogCloser">Dismiss</ui5-button>
 		</div>
 	</ui5-dialog>
 
