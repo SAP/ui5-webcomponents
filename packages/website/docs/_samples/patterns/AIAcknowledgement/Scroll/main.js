@@ -34,18 +34,20 @@ checkbox.addEventListener("mousedown", (event) => {
 		}
 	});
 
+checkbox.addEventListener("change", () => {
+		acceptButton.disabled = !(hasScrolledToBottom && checkbox.checked);
+	});
+
 termsPanel.addEventListener("scroll", function () {
 	const scrollTop = termsPanel.scrollTop,
 		clientHeight = termsPanel.clientHeight,
-		scrollHeight = termsPanel.scrollHeight;
-
-	const atBottom = scrollTop + clientHeight >= scrollHeight - 1;
+		scrollHeight = termsPanel.scrollHeight,
+		atBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
 	hasScrolledToBottom = false;
 	acceptButton.disabled = true;
 
 	if (atBottom) {
 		hasScrolledToBottom = true;
-		acceptButton.disabled = false;
 	}
 });
