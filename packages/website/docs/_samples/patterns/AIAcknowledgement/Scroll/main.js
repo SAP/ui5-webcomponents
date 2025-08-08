@@ -6,15 +6,15 @@ import "@ui5/webcomponents/dist/Link.js";
 import "@ui5/webcomponents/dist/Panel.js";
 import "@ui5/webcomponents/dist/Icon.js";
 
-const dialog = document.getElementById("dialog");
-dialog.open = true;
-
-const acceptButotn = document.getElementById("acceptButton");
-const termsPanel = document.getElementById("termsPanel");
-const checkbox = document.getElementById("termsCheck");
+const dialog = document.getElementById("dialog"),
+	acceptButton = document.getElementById("acceptButton"),
+	termsPanel = document.getElementById("termsPanel"),
+	checkbox = document.getElementById("termsCheck");
 let hasScrolledToBottom = false;
 
-acceptButotn.addEventListener("click", function (event) {
+dialog.open = true;
+
+acceptButton.addEventListener("click", function (event) {
 	if (!hasScrolledToBottom) {
 		event.preventDefault();
 		alert("Please scroll to the end of the terms before continuing.");
@@ -27,18 +27,25 @@ acceptButotn.addEventListener("click", function (event) {
 	}
 });
 
+checkbox.addEventListener("mousedown", (event) => {
+		if (!hasScrolledToBottom) {
+			event.preventDefault();
+			alert("Please scroll to the end of the terms before accepting them.");
+		}
+	});
+
 termsPanel.addEventListener("scroll", function () {
-	const scrollTop = termsPanel.scrollTop;
-	const clientHeight = termsPanel.clientHeight;
-	const scrollHeight = termsPanel.scrollHeight;
+	const scrollTop = termsPanel.scrollTop,
+		clientHeight = termsPanel.clientHeight,
+		scrollHeight = termsPanel.scrollHeight;
 
 	const atBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
 	hasScrolledToBottom = false;
-	checkbox.checked = false;
+	acceptButton.disabled = true;
 
 	if (atBottom) {
 		hasScrolledToBottom = true;
-		checkbox.checked = true;
+		acceptButton.disabled = false;
 	}
 });
