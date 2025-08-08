@@ -8,6 +8,7 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import UI5Element from "@ui5/webcomponents-base";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import Input from "@ui5/webcomponents/dist/Input.js";
 
 function Sample() {
 	return <Timeline layout="Vertical" accessibleName="vertical" id="timelineAccName">
@@ -263,6 +264,41 @@ describe("Timeline with growing mode", () => {
 			.find("ui5-timeline-item")
 			.last()
 			.should("be.focused");
+	});
+
+	it("Arrows navigation should work only on focused item", () => {
+		cy.mount(
+			<Timeline>
+				<TimelineItem titleText="first item"></TimelineItem>
+				<TimelineItem titleText="second item">
+					<Input id="input" />
+				</TimelineItem>
+				<TimelineItem titleText="last item"></TimelineItem>
+			</Timeline>
+		);
+
+		cy.get("[ui5-timeline]")
+			.as("timeline");
+
+		cy.get("#input")
+			.realClick();
+
+		cy.realPress("ArrowDown");
+
+		cy.get("@timeline")
+			.find("ui5-timeline-item")
+			.last()
+			.should("not.be.focused");
+
+		cy.get("#input")
+			.realClick();
+
+		cy.realPress("ArrowUp");
+
+		cy.get("@timeline")
+			.find("ui5-timeline-item")
+			.first()
+			.should("not.be.focused");
 	});
 });
 
