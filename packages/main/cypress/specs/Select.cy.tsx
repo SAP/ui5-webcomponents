@@ -224,6 +224,27 @@ describe("Select - Accessibility", () => {
 					.find(".ui5-select-label-root")
 					.should("have.attr", "aria-label", labelText);
 			});
+	});
+
+	it("should have aria-controls pointing to the responsive popover", () => {
+		cy.mount(
+			<Select>
+				<Option value="option1">Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="option3">Option 3</Option>
+			</Select>
+		);
+
+		cy.get("[ui5-select]")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.invoke("attr", "id")
+			.then((popoverId) => {
+				cy.get("[ui5-select]")
+					.shadow()
+					.find(".ui5-select-label-root")
+					.should("have.attr", "aria-controls", popoverId);
+			});
 	});	
 
 	it("Tests accessibility", () => {
