@@ -366,13 +366,16 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
-	_modifyTimestampBy(amount: number, preserveDate?: boolean) {
+	async _modifyTimestampBy(amount: number, preserveDate?: boolean) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, "month", preserveDate);
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
 		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
+
+		await renderFinished();
+		this._focusCorrectMonth();
 	}
 
 	_onkeyup(e: KeyboardEvent) {
