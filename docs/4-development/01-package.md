@@ -91,6 +91,13 @@ The initialization script will create several NPM scripts for you in `package.js
 | test               | Run the dev server and execute the specs from the `test/specs/` directory.   |
 | create-ui5-element | Create an empty Web Component with the given name.                           |
 
+
+**Note**: The `create-ui5-element` command supports two optional environment variables that customize the output when used in a specific component package:
+
+* **UI5_TAG_NAME_PREFIX** - sets the tag name prefix for the generated Web Component. The resulting tag will follow the format: `{UI5_TAG_NAME_PREFIX}-component-name`. Defaults to `my` if not specified.
+
+* **UI5_TEMPLATE_FILENAME_SUFFIX** - sets the suffix for the generated template filename. The resulting filename will follow the format: `ComponentName{UI5_TEMPLATE_FILENAME_SUFFIX}.tsx`. Defaults to `Template` if not specified.
+
 ### Files in the main directory
 
 The initialization script will create several files in your package's main directory.
