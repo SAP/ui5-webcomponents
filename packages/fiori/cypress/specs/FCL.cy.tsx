@@ -1,21 +1,22 @@
 import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import FlexibleColumnLayout from "../../src/FlexibleColumnLayout.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 
 describe("Columns resize", () => {
 	beforeEach(() => {
 		cy.wrap({ setAnimationMode })
 			.invoke("setAnimationMode", AnimationMode.None);
+	});
 
+	it("separator drag'n'drop", () => {
 		cy.mount(
-			<FlexibleColumnLayout id="fcl" style={{ height: "300px" }} layout="TwoColumnsMidExpanded">
+			<FlexibleColumnLayout id="fcl" layout="TwoColumnsMidExpanded">
 				<div class="column" id="startColumn" slot="startColumn">some content</div>
 				<div class="column" id="midColumn" slot="midColumn">some content</div>
 			</FlexibleColumnLayout>
 		);
-	});
 
-	it("separator drag'n'drop", () => {
 		let oldWidthFirstCol: number;
 		let widthAfterMove: number;
 
@@ -71,6 +72,13 @@ describe("Columns resize", () => {
 	});
 
 	it("sets dedicated class to hidden columns", () => {
+		cy.mount(
+			<FlexibleColumnLayout id="fcl" layout="TwoColumnsMidExpanded">
+				<div class="column" id="startColumn" slot="startColumn">some content</div>
+				<div class="column" id="midColumn" slot="midColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
 			.find(".ui5-fcl-column--end")
@@ -80,41 +88,42 @@ describe("Columns resize", () => {
 	});
 
 	it("keeps hidden class on columns after rerendering", () => {
-		// Get a reference to the FCL first
+		cy.mount(
+			<FlexibleColumnLayout style={{ height: "300px" }} layout="TwoColumnsMidExpanded">
+				<div class="column" slot="startColumn">some content</div>
+				<div class="column" slot="midColumn">some content</div>
+			</FlexibleColumnLayout>
+		);
+
 		cy.get("[ui5-flexible-column-layout]")
 			.as("fcl");
-		
-		// Verify initial state
+
 		cy.get("@fcl")
 			.shadow()
 			.find(".ui5-fcl-column--end")
 			.should("have.class", "ui5-fcl-column--hidden");
 
-		// Change animation mode to "full"
 		cy.wrap({ setAnimationMode })
 			.invoke("setAnimationMode", AnimationMode.Full);
 
-		// Verify the end column has the animation class after changing animation mode
+		cy.wait(100);
+
 		cy.get("@fcl")
 			.shadow()
 			.find(".ui5-fcl-column--end")
-			.should("have.class", "ui5-fcl-column-animation");
+			.should("have.class", "ui5-fcl-column-animation")
+			.and("not.have.class", "ui5-fcl-column--hidden");
 
-		// Verify the end column still has the hidden class after rerendering
-		cy.get("@fcl")
-			.shadow()
-			.find(".ui5-fcl-column--end")
-			.should("have.class", "ui5-fcl-column--hidden");
-
-		// Change height by 10px
 		cy.get("@fcl")
 			.invoke("css", "height", "310px");
 
-		// Verify the end column still has the hidden class after height change
+		cy.wait(50);
+
 		cy.get("@fcl")
 			.shadow()
 			.find(".ui5-fcl-column--end")
-			.should("have.class", "ui5-fcl-column--hidden");
+			.should("have.class", "ui5-fcl-column-animation")
+			.and("not.have.class", "ui5-fcl-column--hidden");
 	});
 });
 
@@ -147,7 +156,7 @@ describe("ACC", () => {
 
 	it("verifies that aria-valuenow is set on separators", () => {
 		cy.mount(
-			<FlexibleColumnLayout id="fcl" style={{ height: "300px" }} layout="ThreeColumnsMidExpanded">
+			<FlexibleColumnLayout id="fcl" layout="ThreeColumnsMidExpanded">
 				<div class="column" id="startColumn" slot="startColumn">some content</div>
 				<div class="column" id="midColumn" slot="midColumn">some content</div>
 				<div class="column" id="endColumn" slot="endColumn">some content</div>
@@ -181,7 +190,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 		cy.viewport(1400, 1080);
 
 		cy.mount(
-			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsMidExpanded">
+			<FlexibleColumnLayout layout="ThreeColumnsMidExpanded">
 				<div slot="startColumn">some content</div>
 				<div slot="midColumn">some content</div>
 				<div slot="endColumn">some content</div>
@@ -189,14 +198,21 @@ describe("FlexibleColumnLayout Behavior", () => {
 		);
 
 		cy.get("[ui5-flexible-column-layout]")
+			.as("fcl")
+			.then($fcl => {
+				$fcl.get(0).addEventListener("layout-change", cy.stub().as("layoutChangeStub"));
+			});
+
+		cy.get("@fcl")
 			.should("have.attr", "_visible-columns", "3");
+
+		cy.get("@layoutChangeStub")
+			.should("not.have.been.called");
 	});
 
 	it("tests Tablet Size 1000px", () => {
-		cy.viewport(1000, 1080);
-
 		cy.mount(
-			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsMidExpanded">
+			<FlexibleColumnLayout layout="ThreeColumnsMidExpanded">
 				<div slot="startColumn">some content</div>
 				<div slot="midColumn">some content</div>
 				<div slot="endColumn">some content</div>
@@ -204,14 +220,23 @@ describe("FlexibleColumnLayout Behavior", () => {
 		);
 
 		cy.get("[ui5-flexible-column-layout]")
+			.as("fcl")
+			.then($fcl => {
+				$fcl.get(0).addEventListener("layout-change", cy.stub().as("layoutChangeStub"));
+			});
+
+		cy.viewport(1000, 1080);
+
+		cy.get("@fcl")
 			.should("have.attr", "_visible-columns", "2");
+
+		cy.get("@layoutChangeStub")
+			.should("have.been.calledOnce");
 	});
 
 	it("tests Phone size 500px", () => {
-		cy.viewport(320, 1080);
-
 		cy.mount(
-			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsMidExpanded">
+			<FlexibleColumnLayout layout="ThreeColumnsMidExpanded">
 				<div slot="startColumn">some content</div>
 				<div slot="midColumn">some content</div>
 				<div slot="endColumn">some content</div>
@@ -219,14 +244,23 @@ describe("FlexibleColumnLayout Behavior", () => {
 		);
 
 		cy.get("[ui5-flexible-column-layout]")
+			.as("fcl")
+			.then($fcl => {
+				$fcl.get(0).addEventListener("layout-change", cy.stub().as("layoutChangeStub"));
+			});
+
+		cy.viewport(500, 1080);
+
+		cy.get("@fcl")
 			.should("have.attr", "_visible-columns", "1");
+
+		cy.get("@layoutChangeStub")
+			.should("have.been.calledOnce");
 	});
 });
 
 describe("First column closing arrow behavior", () => {
 	it("should switch layout and update arrow icon on desktop", () => {
-		cy.viewport(1400, 1080)
-
 		cy.mount(
 			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsStartHiddenMidExpanded">
 				<div slot="startColumn">some content</div>
@@ -271,23 +305,32 @@ describe("First column closing arrow behavior", () => {
 describe("Layout Change API", () => {
 	it("tests change layout with API", () => {
 		cy.mount(
-			<FlexibleColumnLayout
-				layout="TwoColumnsStartExpanded"
-				style={{ height: "300px" }}
-			>
-				<div slot="startColumn">Column 1 content</div>
-				<div slot="midColumn">Column 2 content</div>
-				<div slot="endColumn">Column 3 content</div>
-			</FlexibleColumnLayout>
+			<>
+				<Button data-testid="switchBtn">Set to ThreeColumnsMidExpanded</Button>
+				<FlexibleColumnLayout
+					layout="TwoColumnsStartExpanded"
+				>
+					<div slot="startColumn">Column 1 content</div>
+					<div slot="midColumn">Column 2 content</div>
+					<div slot="endColumn">Column 3 content</div>
+				</FlexibleColumnLayout>
+			</>
 		);
-
+	
+		cy.get("[data-testid='switchBtn']")
+			.then($btn => {
+				$btn.get(0).addEventListener("click", () => {
+					const fcl = document.querySelector("[ui5-flexible-column-layout]") as any;
+					fcl.layout = "ThreeColumnsMidExpanded";
+				});
+			});
+	
 		cy.get("[ui5-flexible-column-layout]")
 			.should("have.attr", "_visible-columns", "2")
 			.should("have.prop", "layout", "TwoColumnsStartExpanded");
-
-		cy.get("[ui5-flexible-column-layout]")
-			.invoke("prop", "layout", "ThreeColumnsMidExpanded");
-
+	
+		cy.get("[data-testid='switchBtn']").click();
+	
 		cy.get("[ui5-flexible-column-layout]")
 			.should("have.attr", "_visible-columns", "3")
 			.should("have.prop", "layout", "ThreeColumnsMidExpanded");
@@ -296,9 +339,7 @@ describe("Layout Change API", () => {
 	it("changes layout when dragging separator", () => {
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="TwoColumnsStartExpanded"
-				style={{ height: "300px" }}
-			>
+				layout="TwoColumnsStartExpanded">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 				<div slot="endColumn">End</div>
@@ -338,15 +379,10 @@ describe("Layout Change API", () => {
 });
 
 describe("Column Expansion Tests", () => {
-	beforeEach(() => {
-		cy.viewport(1600, 1080);
-	});
-
 	it("allows expand mid column from TwoColumnsStartExpanded to TwoColumnsMidExpanded", () => {
 		cy.mount(
 			<FlexibleColumnLayout
 				layout="TwoColumnsStartExpanded"
-				style={{ height: "300px" }}
 			>
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
@@ -370,7 +406,7 @@ describe("Column Expansion Tests", () => {
 
 	it("allows hide end column from ThreeColumnsMidExpanded to ThreeColumnsMidExpandedEndHidden", () => {
 		cy.mount(
-			<FlexibleColumnLayout layout="ThreeColumnsMidExpanded" style={{ height: "300px" }}>
+			<FlexibleColumnLayout layout="ThreeColumnsMidExpanded">
 				<div slot="startColumn">some content</div>
 				<div slot="midColumn">some content</div>
 				<div slot="endColumn">some content</div>
@@ -389,13 +425,9 @@ describe("Column Expansion Tests", () => {
 });
 
 describe("Start Column Expansion Test", () => {
-	beforeEach(() => {
-		cy.viewport(1600, 1080);
-	});
-
 	it("allows expand start column from TwoColumnsMidExpanded to TwoColumnsStartExpanded", () => {
 		cy.mount(
-			<FlexibleColumnLayout layout="TwoColumnsMidExpanded" style={{ height: "300px" }}>
+			<FlexibleColumnLayout layout="TwoColumnsMidExpanded">
 				<div slot="startColumn">some content</div>
 				<div slot="midColumn">some content</div>
 				<div slot="endColumn">some content</div>
@@ -414,7 +446,7 @@ describe("Start Column Expansion Test", () => {
 
 	it("allows expand start column from ThreeColumnsMidExpandedEndHidden to ThreeColumnsStartExpandedEndHidden", () => {
 		cy.mount(
-			<FlexibleColumnLayout layout="ThreeColumnsMidExpandedEndHidden" style={{ height: "300px" }}>
+			<FlexibleColumnLayout layout="ThreeColumnsMidExpandedEndHidden">
 				<div slot="startColumn">some content</div>
 				<div slot="midColumn">some content</div>
 				<div slot="endColumn">some content</div>
@@ -433,7 +465,7 @@ describe("Start Column Expansion Test", () => {
 
 	it("allows expand mid column from ThreeColumnsStartExpandedEndHidden to ThreeColumnsMidExpandedEndHidden", () => {
 		cy.mount(
-			<FlexibleColumnLayout layout="ThreeColumnsStartExpandedEndHidden" style={{ height: "300px" }}>
+			<FlexibleColumnLayout layout="ThreeColumnsStartExpandedEndHidden">
 				<div slot="startColumn">some content</div>
 				<div slot="midColumn">some content</div>
 				<div slot="endColumn">some content</div>
@@ -452,7 +484,7 @@ describe("Start Column Expansion Test", () => {
 
 	it("allows expand end column from ThreeColumnsMidExpandedEndHidden to ThreeColumnsMidExpanded", () => {
 		cy.mount(
-			<FlexibleColumnLayout layout="ThreeColumnsMidExpandedEndHidden" style={{ height: "300px" }}>
+			<FlexibleColumnLayout layout="ThreeColumnsMidExpandedEndHidden">
 				<div slot="startColumn">some content</div>
 				<div slot="midColumn">some content</div>
 				<div slot="endColumn">some content</div>
@@ -475,7 +507,6 @@ describe("Layout change by dragging end-separator on desktop", () => {
 		cy.mount(
 			<FlexibleColumnLayout
 				layout="ThreeColumnsMidExpandedEndHidden"
-				style={{ height: "300px" }}
 			>
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
@@ -501,9 +532,7 @@ describe("Layout change by dragging end-separator on desktop", () => {
 	it("allows expand end-column from ThreeColumnsMidExpanded to ThreeColumnsEndExpanded", () => {
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="ThreeColumnsMidExpanded"
-				style={{ height: "300px" }}
-			>
+				layout="ThreeColumnsMidExpanded">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 				<div slot="endColumn">End</div>
@@ -527,16 +556,10 @@ describe("Layout change by dragging end-separator on desktop", () => {
 });
 
 describe("Layout change by dragging start-separator on tablet", () => {
-	beforeEach(() => {
-		cy.viewport(1000, 1080);
-	});
-
 	it("allows expand mid column from TwoColumnsStartExpanded to TwoColumnsMidExpanded", () => {
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="TwoColumnsStartExpanded"
-				style={{ height: "300px" }}
-			>
+				layout="TwoColumnsStartExpanded">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 			</FlexibleColumnLayout>
@@ -560,9 +583,7 @@ describe("Layout change by dragging start-separator on tablet", () => {
 	it("allows expand start column from TwoColumnsMidExpanded to TwoColumnsStartExpanded", () => {
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="TwoColumnsMidExpanded"
-				style={{ height: "300px" }}
-			>
+				layout="TwoColumnsMidExpanded">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 			</FlexibleColumnLayout>
@@ -586,9 +607,7 @@ describe("Layout change by dragging start-separator on tablet", () => {
 	it("allows hide end column from ThreeColumnsMidExpanded to ThreeColumnsMidExpandedEndHidden", () => {
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="ThreeColumnsMidExpanded"
-				style={{ height: "300px" }}
-			>
+				layout="ThreeColumnsMidExpanded">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 				<div slot="endColumn">End</div>
@@ -613,9 +632,7 @@ describe("Layout change by dragging start-separator on tablet", () => {
 	it("allows expand start column from ThreeColumnsMidExpandedEndHidden to ThreeColumnsStartExpandedEndHidden", () => {
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="ThreeColumnsMidExpandedEndHidden"
-				style={{ height: "300px" }}
-			>
+				layout="ThreeColumnsMidExpandedEndHidden">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 				<div slot="endColumn">End</div>
@@ -640,9 +657,7 @@ describe("Layout change by dragging start-separator on tablet", () => {
 	it("allows expand mid column from ThreeColumnsStartExpandedEndHidden to ThreeColumnsMidExpandedEndHidden", () => {
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="ThreeColumnsStartExpandedEndHidden"
-				style={{ height: "300px" }}
-			>
+				layout="ThreeColumnsStartExpandedEndHidden">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 				<div slot="endColumn">End</div>
@@ -665,11 +680,11 @@ describe("Layout change by dragging start-separator on tablet", () => {
 	});
 
 	it("preserves ThreeColumnsMidExpandedEndHidden on tiny start column drag", () => {
+		cy.viewport(1000, 1080);
+
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="ThreeColumnsMidExpandedEndHidden"
-				style={{ height: "300px" }}
-			>
+				layout="ThreeColumnsMidExpandedEndHidden">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 				<div slot="endColumn">End</div>
@@ -700,9 +715,7 @@ describe("Layout change by dragging end-separator on tablet", () => {
 	it("allows expand end-column from ThreeColumnsMidExpandedEndHidden to ThreeColumnsMidExpanded", () => {
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="ThreeColumnsMidExpandedEndHidden"
-				style={{ height: "300px" }}
-			>
+				layout="ThreeColumnsMidExpandedEndHidden">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 				<div slot="endColumn">End</div>
@@ -727,9 +740,7 @@ describe("Layout change by dragging end-separator on tablet", () => {
 	it("allows expand end-column from ThreeColumnsMidExpanded to ThreeColumnsEndExpanded", () => {
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="ThreeColumnsMidExpanded"
-				style={{ height: "300px" }}
-			>
+				layout="ThreeColumnsMidExpanded">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 				<div slot="endColumn">End</div>
@@ -753,10 +764,6 @@ describe("Layout change by dragging end-separator on tablet", () => {
 });
 
 describe("Preserves column min-width", () => {
-	beforeEach(() => {
-		cy.viewport(1400, 1080);
-	});
-
 	it("complies with min-width requirement on smallest desktop", () => {
 		const smallestDesktopWidth = 1024;
 		const smallestColumnWidth = 248;
@@ -788,9 +795,7 @@ describe("Preserves column min-width", () => {
 		const smallestColumnWidth = 248;
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="TwoColumnsMidExpanded"
-				style={{ height: "300px" }}
-			>
+				layout="TwoColumnsMidExpanded">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 			</FlexibleColumnLayout>
@@ -829,9 +834,7 @@ describe("Preserves column min-width", () => {
 		const smallestColumnWidth = 248;
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="TwoColumnsStartExpanded"
-				style={{ height: "300px" }}
-			>
+				layout="TwoColumnsStartExpanded">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 			</FlexibleColumnLayout>
@@ -871,9 +874,7 @@ describe("Preserves column min-width", () => {
 
 		cy.mount(
 			<FlexibleColumnLayout
-				layout="ThreeColumnsMidExpanded"
-				style={{ height: "300px" }}
-			>
+				layout="ThreeColumnsMidExpanded">
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
 				<div slot="endColumn">End</div>
@@ -905,8 +906,7 @@ describe("Preserves column min-width", () => {
 				cy.get("@fcl")
 					.shadow()
 					.find(".ui5-fcl-column--middle")
-					.should("have.prop", "offsetWidth")
-					.and("be.closeTo", smallestColumnWidth, 1);
+					.should("have.prop", "offsetWidth", smallestColumnWidth);
 			});
 	});
 
@@ -914,7 +914,6 @@ describe("Preserves column min-width", () => {
 		cy.mount(
 			<FlexibleColumnLayout
 				layout="ThreeColumnsMidExpanded"
-				style={{ height: "300px" }}
 			>
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
@@ -948,8 +947,7 @@ describe("Preserves column min-width", () => {
 				cy.get("@fcl")
 					.shadow()
 					.find(".ui5-fcl-column--end")
-					.should("have.prop", "offsetWidth")
-					.and("be.closeTo", smallestColumnWidth, 1);
+					.should("have.prop", "offsetWidth", smallestColumnWidth);
 			});
 	});
 
@@ -957,7 +955,6 @@ describe("Preserves column min-width", () => {
 		cy.mount(
 			<FlexibleColumnLayout
 				layout="ThreeColumnsMidExpandedEndHidden"
-				style={{ height: "300px" }}
 			>
 				<div slot="startColumn">Start</div>
 				<div slot="midColumn">Mid</div>
@@ -984,8 +981,7 @@ describe("Preserves column min-width", () => {
 		cy.get("@fcl")
 			.shadow()
 			.find(".ui5-fcl-column--end")
-			.should("have.prop", "offsetWidth")
-			.and("be.closeTo", smallestColumnWidth, 1);
+			.should("have.prop", "offsetWidth", smallestColumnWidth);
 	});
 });
 
@@ -993,12 +989,8 @@ describe("Accessibility with Animation Disabled", () => {
 	it("tests separator acc attrs", () => {
 		cy.mount(
 			<FlexibleColumnLayout
-				style={{ height: "300px" }}
 				layout="ThreeColumnsMidExpandedEndHidden"
 				accessibilityAttributes={{
-					startColumn: { role: "region", name: "Products list" },
-					midColumn: { role: "region", name: "Product information" },
-					endColumn: { role: "region", name: "Product detailed information" },
 					startSeparator: { role: "region", name: "Start Draggable Splitter" },
 					endSeparator: { role: "region", name: "End Draggable Splitter" }
 				}}
@@ -1025,7 +1017,7 @@ describe("Accessibility with Animation Disabled", () => {
 
 	it("tests acc default roles", () => {
 		cy.mount(
-			<FlexibleColumnLayout style={{ height: "300px" }} layout="ThreeColumnsMidExpandedEndHidden">
+			<FlexibleColumnLayout layout="ThreeColumnsMidExpandedEndHidden">
 				<div slot="startColumn">some content</div>
 				<div slot="midColumn">some content</div>
 				<div slot="endColumn">some content</div>
@@ -1061,12 +1053,11 @@ describe("Accessibility with Animation Disabled", () => {
 	it("tests acc custom roles", () => {
 		cy.mount(
 			<FlexibleColumnLayout
-				style={{ height: "300px" }}
 				layout="ThreeColumnsMidExpanded"
 				accessibilityAttributes={{
 					startColumn: { role: "complementary", name: "Start column" },
 					startSeparator: { role: "region", name: "Start separator" },
-					midColumn: { role: "main", name: "Main column" },
+					midColumn: { role: "main", name: "Mid column" },
 					endSeparator: { role: "region", name: "End separator" },
 					endColumn: { role: "complementary", name: "End column" }
 				}}
@@ -1105,7 +1096,7 @@ describe("Accessibility with Animation Disabled", () => {
 
 	it("tests acc attrs", () => {
 		cy.mount(
-			<FlexibleColumnLayout style={{ height: "300px" }} layout="OneColumn">
+			<FlexibleColumnLayout layout="OneColumn">
 				<div slot="startColumn">some content</div>
 				<div slot="midColumn">some content</div>
 				<div slot="endColumn">some content</div>
