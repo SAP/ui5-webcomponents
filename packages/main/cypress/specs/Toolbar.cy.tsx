@@ -324,7 +324,7 @@ describe("Toolbar general interaction", () => {
 
 	it("Should render ui5-button by toolbar template, when slotting ui5-toolbar-button elements", () => {
 		cy.mount(
-			<Toolbar id="otb_c">
+			<Toolbar>
 				<ToolbarButton 
 					icon="decline" 
 					stableDomRef="tb-button-decline"
@@ -339,52 +339,77 @@ describe("Toolbar general interaction", () => {
 			</Toolbar>
 		);
 	
-		cy.get("#otb_c")
+		cy.get("[ui5-toolbar]")
 			.find("[ui5-toolbar-button]")
 			.first()
 			.shadow()
 			.find("ui5-button")
 			.should("have.prop", "tagName", "UI5-BUTTON");
 	});
-
-	it("Should call child events only once", () => {
-		let clickCount = 0;
-		
-		const handleClick = () => {
-			clickCount++;
-		};
 	
+	it("Should call child events only once", () => {
 		cy.mount(
 			<>
-				<Toolbar id="clickCountToolbar" onClick={handleClick}>
-					<ToolbarButton icon="add" text="Left 1 (long)" id="clickCounter" />
-					<ToolbarButton icon="decline" text="Left 2" id="clearCounter" />
+				<Toolbar data-testid="clickCountToolbar">
+					<ToolbarButton 
+						icon="add" 
+						text="Left 1 (long)" 
+						data-testid="clickCounter"
+					/>
+					<ToolbarButton 
+						icon="decline" 
+						text="Left 2" 
+						data-testid="clearCounter"
+					/>
 				</Toolbar>
-				<input id="input" value="0" />
+				<input data-testid="input" defaultValue="0" />
 			</>
 		);
 	
-		cy.get("#clickCountToolbar").then(($toolbar) => {
-			$toolbar[0].addEventListener("click", (e) => {
-				const input = document.getElementById("input") as HTMLInputElement;
+		// Create stubs for event tracking
+		cy.get("[data-testid='clickCountToolbar']")
+			.as("toolbar")
+			.then($toolbar => {
+				$toolbar.get(0).addEventListener("click", cy.stub().as("toolbarClickStub"));
+			});
+	
+		cy.get("[data-testid='clickCounter']")
+			.as("clickCounter")
+			.then($button => {
+				$button.get(0).addEventListener("click", cy.stub().as("counterClickStub"));
+			});
+	
+		cy.get("[data-testid='clearCounter']")
+			.as("clearCounter")
+			.then($button => {
+				$button.get(0).addEventListener("click", cy.stub().as("clearClickStub"));
+			});
+	
+		// Set up input manipulation logic
+		cy.get("@toolbar").then($toolbar => {
+			$toolbar.get(0).addEventListener("click", (e) => {
+				const input = document.querySelector("[data-testid='input']") as HTMLInputElement;
 				const target = e.target as HTMLElement;
 				
-				if (target.id === "clearCounter") {
+				if (target.dataset.testid === "clearCounter") {
 					input.value = "0";
-				} else {
+				} else if (target.dataset.testid === "clickCounter") {
 					let currentValue = parseInt(input.value);
 					input.value = `${++currentValue}`;
 				}
 			});
 		});
 	
-		cy.get("#input").invoke("val", "0");
+		cy.get("[data-testid='input']").invoke("val", "0");
 	
-		cy.get("#clickCounter").realClick();
+		cy.get("@clickCounter").realClick();
 	
-		cy.get("#input").should("have.prop", "value", "1");
+		cy.get("[data-testid='input']").should("have.prop", "value", "1");
 	
-		cy.get("#input").invoke("val", "0");
+		cy.get("@toolbarClickStub").should("have.been.calledOnce");
+		cy.get("@counterClickStub").should("have.been.calledOnce");
+	
+		cy.get("[data-testid='input']").invoke("val", "0");
 	});
 });
 

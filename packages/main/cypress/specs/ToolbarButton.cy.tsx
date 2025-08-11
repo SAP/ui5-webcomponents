@@ -18,10 +18,10 @@ describe("Toolbar general interaction", () => {
             </Toolbar>
         );
     
-        cy.get("ui5-toolbar")
-            .find("ui5-toolbar-button")
+        cy.get("[ui5-toolbar]")
+            .find("[ui5-toolbar-button]")
             .shadow()
-            .find("ui5-button")
+            .find("[ui5-button]")
             .should("contain.text", "Back")
             .should("have.attr", "design", "Emphasized")
             .should("have.attr", "disabled", "disabled")
@@ -41,10 +41,10 @@ describe("Toolbar general interaction", () => {
             </Toolbar>
         );
     
-        cy.get("ui5-toolbar")
-            .find("ui5-toolbar-button[accessible-name]")
+        cy.get("[ui5-toolbar]")
+            .find("[ui5-toolbar-button][accessible-name]")
             .shadow()
-            .find("ui5-button")
+            .find("[ui5-button]")
             .should("have.prop", "accessibleName", "Add")
             .should("have.attr", "accessible-name-ref", "btn");
     });
@@ -58,10 +58,10 @@ describe("Toolbar general interaction", () => {
             </Toolbar>
         );
     
-        cy.get("ui5-toolbar")
-            .find("ui5-toolbar-button[accessible-name]")
+        cy.get("[ui5-toolbar]")
+            .find("[ui5-toolbar-button][accessible-name]")
             .shadow()
-            .find("ui5-button")
+            .find("[ui5-button]")
             .should("have.prop", "accessibilityAttributes")
             .and("be.an", "object");
     });
