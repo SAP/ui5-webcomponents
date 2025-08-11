@@ -662,8 +662,28 @@ class Table extends UI5Element {
 		return getEffectiveAriaLabelText(this) || undefined;
 	}
 
+	get _ariaDescription() {
+		return this._getSelection()?.getAriaDescriptionForTable();
+	}
+
 	get _ariaRowCount() {
-		return this._getVirtualizer()?.rowCount || undefined;
+		return this._getVirtualizer()?.rowCount || this.rows.length + 1;
+	}
+
+	get _ariaColCount() {
+		if (!this.headerRow[0]) {
+			return 0;
+		}
+
+		let ariaColCount = this.headerRow[0]._visibleCells.length;
+		if (this._isRowSelectorRequired) {
+			ariaColCount++;
+		}
+		if (this.rowActionCount > 0) {
+			ariaColCount++;
+		}
+
+		return ariaColCount;
 	}
 
 	get _ariaMultiSelectable() {
