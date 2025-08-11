@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0...v2.14.0-rc.0) (2025-08-07)
+
+
+### Features
+
+* **ui5-date-picker:** add valueFormat and displayFormat ([#11751](https://github.com/SAP/ui5-webcomponents/issues/11751)) ([2acdbcc](https://github.com/SAP/ui5-webcomponents/commit/2acdbcc4f6e59b01987c7a9456d455bccecf3a8e)), closes [#1957](https://github.com/SAP/ui5-webcomponents/issues/1957)
+
+
+
+
+
 # [2.13.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.3...v2.13.0) (2025-08-04)
 
 

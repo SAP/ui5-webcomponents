@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0...v2.14.0-rc.0) (2025-08-07)
+
+
+### Bug Fixes
+
+* **framework:** copy "base" pkg i18n assets to `dist/prod` ([#12072](https://github.com/SAP/ui5-webcomponents/issues/12072)) ([7460a76](https://github.com/SAP/ui5-webcomponents/commit/7460a76a803dc12ce92574472084a0c202d984a3))
+* **framework:** sap-ui-themeRoot block all origins by defaultTheme root disallow default ([#12035](https://github.com/SAP/ui5-webcomponents/issues/12035)) ([8fa82da](https://github.com/SAP/ui5-webcomponents/commit/8fa82da97756e1eb146cabadd75065a1ba2695f5))
+* **ui5-search:** visual issues ([#12061](https://github.com/SAP/ui5-webcomponents/issues/12061)) ([6aab670](https://github.com/SAP/ui5-webcomponents/commit/6aab670027a9ea08b01f42b2a8467499966990d2)), closes [#11982](https://github.com/SAP/ui5-webcomponents/issues/11982) [#11964](https://github.com/SAP/ui5-webcomponents/issues/11964) [#11981](https://github.com/SAP/ui5-webcomponents/issues/11981) [#11999](https://github.com/SAP/ui5-webcomponents/issues/11999) [#12042](https://github.com/SAP/ui5-webcomponents/issues/12042) [#11955](https://github.com/SAP/ui5-webcomponents/issues/11955)
+* **ui5-shellbar:** separator height is fixed ([#12056](https://github.com/SAP/ui5-webcomponents/issues/12056)) ([0995652](https://github.com/SAP/ui5-webcomponents/commit/0995652783f2abd8afad99610213866d2881b261))
+
+
+### Features
+
+* **ui5-date-picker:** add valueFormat and displayFormat ([#11751](https://github.com/SAP/ui5-webcomponents/issues/11751)) ([2acdbcc](https://github.com/SAP/ui5-webcomponents/commit/2acdbcc4f6e59b01987c7a9456d455bccecf3a8e)), closes [#1957](https://github.com/SAP/ui5-webcomponents/issues/1957)
+
+
+
+
+
 # [2.13.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.3...v2.13.0) (2025-08-04)
 
 
