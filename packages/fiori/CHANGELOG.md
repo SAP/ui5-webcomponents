@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0...v2.14.0-rc.0) (2025-08-07)
+
+
+### Bug Fixes
+
+* **ui5-search:** visual issues ([#12061](https://github.com/SAP/ui5-webcomponents/issues/12061)) ([6aab670](https://github.com/SAP/ui5-webcomponents/commit/6aab670027a9ea08b01f42b2a8467499966990d2)), closes [#11982](https://github.com/SAP/ui5-webcomponents/issues/11982) [#11964](https://github.com/SAP/ui5-webcomponents/issues/11964) [#11981](https://github.com/SAP/ui5-webcomponents/issues/11981) [#11999](https://github.com/SAP/ui5-webcomponents/issues/11999) [#12042](https://github.com/SAP/ui5-webcomponents/issues/12042) [#11955](https://github.com/SAP/ui5-webcomponents/issues/11955)
+* **ui5-shellbar:** separator height is fixed ([#12056](https://github.com/SAP/ui5-webcomponents/issues/12056)) ([0995652](https://github.com/SAP/ui5-webcomponents/commit/0995652783f2abd8afad99610213866d2881b261))
+
+
+
+
+
 # [2.13.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.3...v2.13.0) (2025-08-04)
 
 
