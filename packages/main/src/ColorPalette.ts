@@ -465,6 +465,8 @@ class ColorPalette extends UI5Element {
 	_onColorContainerKeyDown(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
 		const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
+		const isInLastRow = this.colorPaletteNavigationElements.indexOf(target)
+			>= this.colorPaletteNavigationElements.length - (this.colorPaletteNavigationElements.length % this.rowSize);
 
 		if (this._isUpOrDownNavigatableColorPaletteItem(e)) {
 			this._currentlySelected = undefined;
@@ -497,13 +499,13 @@ class ColorPalette extends UI5Element {
 			} else if (!this.showDefaultColor && this.showMoreColors) {
 				this.colorPaletteNavigationElements[1].focus();
 			}
-		} else if (isHome(e) && (target === this.displayedColors[0])) {
+		} else if (isHome(e) && this.showDefaultColor && (target === this.displayedColors[0])) {
 			e.stopPropagation();
 			this._defaultColorButton?.focus();
-		} else if (isEnd(e) && (target === this.displayedColors[this.displayedColors.length - 1])) {
+		} else if (isEnd(e) && this.showMoreColors && (target === this.displayedColors[this.displayedColors.length - 1])) {
 			e.stopPropagation();
 			this._moreColorsButton?.focus();
-		} else if (isEnd(e) && (this.displayedColors.indexOf(target) >= this.displayedColors.length - (this.displayedColors.length % this.rowSize))) {
+		} else if (isEnd(e) && isInLastRow) {
 			e.stopPropagation();
 			this.focusColorElement(this.displayedColors[this.displayedColors.length - 1], this._itemNavigation);
 		}
