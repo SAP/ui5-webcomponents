@@ -272,11 +272,17 @@ abstract class Popup extends UI5Element {
 		renderFinished().then(() => {
 			this._updateMediaRange();
 		});
+
+		ResizeHandler.deregister(this, this._resizeHandler);
+
+		if (this._opened) {
+			ResizeHandler.register(this, this._resizeHandler);
+		}
 	}
 
 	onEnterDOM() {
 		this.setAttribute("popover", "manual");
-		ResizeHandler.register(this, this._resizeHandler);
+
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
