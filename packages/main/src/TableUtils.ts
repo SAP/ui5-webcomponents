@@ -87,6 +87,30 @@ const throttle = (callback: () => void) => {
 	};
 };
 
+const toggleAttribute = (element: HTMLElement, attribute: string, condition: boolean | undefined, value?: string) => {
+	if (condition) {
+		if (value === undefined) {
+			element.toggleAttribute(attribute, true);
+		} else {
+			element.setAttribute(attribute, value);
+		}
+	} else if (element.hasAttribute(attribute)) {
+		element.removeAttribute(attribute);
+	}
+};
+
+/**
+ * Checks if a given width is valid for a column.
+ *
+ * @param width Width string to check
+ * @returns {boolean} true if the width is valid, false otherwise
+ */
+const isValidColumnWidth = (width: string | undefined): width is string => {
+	const element = document.createElement("div");
+	element.style.width = `max(3rem, ${width})`;
+	return element.style.width !== "";
+};
+
 export {
 	isInstanceOfTable,
 	isSelectionCheckbox,
@@ -96,4 +120,6 @@ export {
 	scrollElementIntoView,
 	isFeature,
 	throttle,
+	toggleAttribute,
+	isValidColumnWidth,
 };

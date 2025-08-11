@@ -89,23 +89,6 @@ describe("Component Behavior", () => {
 			assert.ok(await innerButtonWithStableDomRef.isExisting(), "There is indeed an element in the Shellbar's shadow root with an attribute, matching the stable dom ref");
 		});
 
-		it("tests count property", async () => {
-			const shellbar = await browser.$("#shellbarwithitems");
-			const icon = await shellbar.shadow$("ui5-button[data-count]");
-
-			assert.strictEqual(await icon.getAttribute("data-count"), '42', "Count property propagates to ui5-button");
-		});
-
-		it("tests if shellbar item invalidates the shellbar", async () => {
-			const shellbar = await browser.$("#test-invalidation");
-			const item = await browser.$("#test-invalidation-item");
-
-			await item.setProperty("count", "3");
-
-			assert.strictEqual(await shellbar.shadow$(".ui5-shellbar-custom-item").getAttribute("data-count"), "3");
-
-		});
-
 		it("tests 'click' on custom action", async () => {
 			const shellbar = await browser.$("#shellbarwithitems");
 			const resultInput = await browser.$("#press-input3");
@@ -167,17 +150,6 @@ describe("Component Behavior", () => {
 
 				await logo.click();
 				assert.strictEqual(await input.getValue(), "Logo", "Input value is set by click event of Logo");
-			});
-
-			it("tests search-button-click event", async () => {
-				await browser.setWindowSize(870, 1680); // search icon is not visible on XXL breakpoint
-				await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
-
-				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-				const input = await browser.$("#press-input");
-
-				await searchIcon.click();
-				assert.strictEqual(await input.getValue(), "Search Button", "Input value is set by click event of Search Button");
 			});
 
 			it("tests search-button-click event", async () => {

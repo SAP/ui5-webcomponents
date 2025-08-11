@@ -1,14 +1,15 @@
 /* container */
-:host {
-	--_ui5_input_focus_border_radius: var(--_ui5_search_input_border_radius);
-	--_ui5_input_focus_outline_color: var(--sapContent_FocusColor);
+:host,
+.ui5-shellbar-search-field-wrapper {
 	height: 2.25rem;
 	display: flex;
 	align-items: center;
 }
 
-:host([expanded]) {
+:host(:not([collapsed])),
+.ui5-shellbar-search-field-wrapper {
 	min-width: 18rem;
+	max-width: 36rem;
 	margin: 0;
 	height: 2.25rem;
 	color: var(--sapShell_TextColor);
@@ -24,8 +25,14 @@
 	position: relative;
 }
 
-:host([expanded]:hover),
-:host([expanded]:focus-within) {
+.ui5-shellbar-search-field-wrapper {
+	flex: 1;
+	min-width: auto;
+}
+
+:host(:not([collapsed]):hover),
+:host(:not([collapsed]):focus-within),
+.ui5-shellbar-search-field-wrapper:focus-within {
 	box-shadow: var(--sapField_Hover_Shadow);
 	background: var(--_ui5-search-wrapper-hover-background);
 	background-color: var(--_ui5-search-wrapper-hover-background-color);
@@ -90,12 +97,36 @@
 	color: var(--sapShell_InteractiveTextColor);
 }
 
-[ui5-select]::part(icon):hover {
-	background-color: var(--sapShell_Hover_Background);
-}
-
 [ui5-select]::part(popover) {
 	background-color: var(--sapShellColor);
+}
+
+.ui5-filter-wrapper {
+	--_ui5_button_focused_border_radius: var(--_ui5_search_filter_button_border_radius);
+}
+
+/*filter button slot */
+::slotted([slot="filterButton"]) {
+	min-width: var(--_ui5_search_icon_size);
+	height: var(--_ui5_search_icon_size);
+	border: var(--_ui5_search_filter_button_border);
+	border-radius: var(--_ui5_search_filter_button_border_radius);
+	color: var(--sapShell_InteractiveTextColor);
+	outline: none;
+	background: var(--_ui5-search-filter_button_background_color);
+	box-sizing: border-box;
+	margin-inline-end: 0.1875rem;
+	margin-inline-start: 0.25rem;
+}
+
+::slotted([slot="filterButton"]:focus-within) {
+	background-color: var(--ui5_search_filter_button_background_active);
+	border: var(--_ui5_search_filter_button_border);
+}
+
+::slotted([slot="filterButton"]:hover) {
+	background-color: var(--sapShell_Hover_Background);
+	border: var(--_ui5_seach_filter_button_border_hover);
 }
 
 /* input */
@@ -121,7 +152,7 @@
 	outline-offset: -0.3125rem;
 }
 
-:host(:not([show-scope])) .ui5-search-field-inner-input {
+:host(:not([mode="Scoped"])) .ui5-search-field-inner-input {
 	padding-inline-start: 0.875rem;
 }
 
@@ -142,7 +173,7 @@
 	padding-inline-start: 0.125rem;
 }
 
-:host([show-scope]) .ui5-search-field-inner-input {
+:host([mode="Scoped"]) .ui5-search-field-inner-input {
 	margin-inline-start: var(--_ui5_search_input_start_margin);
 }
 
@@ -161,8 +192,6 @@
 	min-width: var(--_ui5_search_icon_size);
 	height: var(--_ui5_search_icon_size);
 	border-radius: var(--_ui5_search_icon_border_radius);
-	margin-inline-end: 0.25rem;
-	margin-inline-start: 0.1875rem;
 	box-sizing: border-box;
 	cursor: pointer;
 }
@@ -170,22 +199,27 @@
 .ui5-shell-search-field-button:not([design="Emphasized"]) {
 	color: var(--sapShell_InteractiveTextColor);
 	background-color: var(--_ui5-search-elements-background);
+	min-width: var(--_ui5_search_icon_size_default);
+	height: var(--_ui5_search_icon_size_default);
+	border-radius: var(--_ui5_shellbar_button_border_radius);
 }
 
 .ui5-shell-search-field-button:not([design="Emphasized"]):hover {
 	background-color: var(--sapShell_Hover_Background);
+	border-color: var(--sapButton_Lite_Hover_BorderColor);
+	border-radius: var(--_ui5_shellbar_button_border_radius);
 }
 
 /* copy paste all button styles - could be simplified */
-[ui5-button][desktop]:not([active])::part(button):after,
-[ui5-button]:not([active])::part(button):focus-visible:after,
-[ui5-button][desktop][active][design="Emphasized"]::part(button):focus-within:after,
-[ui5-button][active][design="Emphasized"]::part(button):focus-visible:after,
-[ui5-button][desktop][active]::part(button):focus-within:before,
-[ui5-button][active]::part(button):focus-visible:before,
-[ui5-button][design="Emphasized"][desktop]::part(button):focus-within:before,
-[ui5-button][design="Emphasized"]::part(button):focus-visible:before {
-	border-radius: var(--_ui5_search_icon_border_radius);
+.ui5-shell-search-field-button[desktop]:not([active])::part(button):after,
+.ui5-shell-search-field-button:not([active])::part(button):focus-visible:after,
+.ui5-shell-search-field-button[desktop][active][design="Emphasized"]::part(button):focus-within:after,
+.ui5-shell-search-field-button[active][design="Emphasized"]::part(button):focus-visible:after,
+.ui5-shell-search-field-button[desktop][active]::part(button):focus-within:before,
+.ui5-shell-search-field-button[active]::part(button):focus-visible:before,
+.ui5-shell-search-field-button[design="Emphasized"][desktop]::part(button):focus-within:before,
+.ui5-shell-search-field-button[design="Emphasized"]::part(button):focus-visible:before {
+	border-radius: var(--_ui5_shellbar_button_border_radius);
 }
 
 
@@ -231,4 +265,35 @@
 	background-color: var(--sapButton_Emphasized_Background);
 	border-color: var(--sapButton_Emphasized_BorderColor);
 	color: var(--sapButton_Emphasized_TextColor);
+}
+
+.ui5-search-field-select {
+	--_ui5_input_focus_border_radius: var(--_ui5_search_input_border_radius);
+}
+
+.ui5-search-field-select:hover,
+.ui5-search-field-select[focused] {
+	background: var(--_ui5-search-wrapper-hover-background-color);
+}
+
+.ui5-search-field-select::part(icon-wrapper) {
+	border-radius: var(--_ui5_search_input_border_radius);
+	height: 100%;
+}
+
+.ui5-search-field-select[focused]::part(icon-wrapper) {
+	box-shadow: var(--sapField_Hover_Shadow);
+}
+
+:host(:not([collapsed]):hover):has([ui5-select]:hover) {
+	background: var(--_ui5-search-wrapper-background);
+}
+
+:host(:not([collapsed])):has([ui5-select][focused]) {
+	background: var(--_ui5-search-wrapper-background);
+}
+
+.ui5-search-field-inner-input::selection {
+	background: var(--sapSelectedColor);
+	color: var(--sapContent_ContrastTextColor);
 }

@@ -42,6 +42,9 @@
 			value="13/04/2020, 09:16 AM"
 		></ui5-datetime-picker>
 
+		<h3>display-fomat='medium' value-fomat='yyyy-MM-dd'</h3>
+		<ui5-datetime-picker id='dp12' display-format='medium' value-format='yyyy-MM-dd HH:mm:ss'></ui5-datetime-picker>
+
 		<br>
 
 		<br><ui5-label>d/MM/yyyy, hh:mm:ss a</ui5-label><br>
@@ -143,6 +146,9 @@
 		<ui5-datetime-picker value-state="Critical"></ui5-datetime-picker>
 		<ui5-datetime-picker value-state="Information"></ui5-datetime-picker>
 		<ui5-datetime-picker value-state="Positive"></ui5-datetime-picker>
+		<ui5-datetime-picker value-state="Negative">
+			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		</ui5-datetime-picker>
 		<br><br>
 		<ui5-datetime-picker readonly></ui5-datetime-picker>
 		<ui5-datetime-picker disabled></ui5-datetime-picker>

@@ -1,58 +1,109 @@
 # Cypress Component Testing for UI5 Web Components
 
-This package provides configuration to test UI5 Web Components with TSX.
+This package provides configuration to test UI5 Web Components using TSX with Cypress.
 
-## Getting started
+## Adding to an Existing UI5 Web Components Project
 
-To install, run:
+### 1. Install Dependencies
+To enable Cypress for component testing in your project, install the required dependencies:
 
 ```bash
-npm install -D @ui5/cypress-ct-ui5-webc
+npm install -D cypress @ui5/cypress-ct-ui5-webc
 ```
 
-Once you have the package installed alongside Cypress, you can run `npx cypress open`, choose "Component Testing", and "UI5 Web Components with JSX" should appear in the list of frameworks available.
+Once installed, run the following command to open Cypress:
 
-Learn more about [third-party definitions](https://docs.cypress.io/guides/component-testing/third-party-definitions)
+```bash
+npx cypress open
+```
 
-## Configuration
+Select "Component Testing" from the UI, and "UI5 Web Components" should appear in the list of available frameworks.
 
-Add `@ui5/cypress-ct-ui5-webc` framework to your `cypress.config.{ts,js}` file
+### 2. Configure Cypress (If Not Automatically Configured)
+If Cypress does not automatically detect the framework or it was not configured previously, update your cypress.config.{ts,js} file to include @ui5/cypress-ct-ui5-webc and set vite as the bundler. 
 
 ```ts
+import { defineConfig } from 'cypress';
+
 export default defineConfig({
   component: {
     devServer: {
       framework: '@ui5/cypress-ct-ui5-webc',
       bundler: 'vite',
-      // more config here
-    }
-  }
-})
+    },
+  },
+});
 ```
-If you're using TypeScript, you may get a type error when setting the framework property. If so, you'll need to typecast it as `any`
+
+**Note: Additionally, if a Vite configuration file does not exist at the root level of your project, you may need to provide it explicitly by importing and using it here, or specify its path in the configuration.**
+
+#### TypeScript Compatibility
+If you encounter a type error when setting the `framework` property, typecast it as `any`:
 
 ```ts
 framework: '@ui5/cypress-ct-ui5-webc' as any,
 ```
-## Adding mount Command
 
-Next, add the following lines to your `component.ts`
+### 3. Add Cypress Custom Commands (If Not Automatically Configured)
+If Cypress does not automatically configure this, add the following lines to your `component.ts` file:
 
 ```ts
-import { mount } from '@ui5/cypress-ct-ui5-webc'
+import { mount } from '@ui5/cypress-ct-ui5-webc';
 
 declare global {
   namespace Cypress {
     interface Chainable {
       /**
-       * Mount your template/component into Cypress sandbox
-       * @param template
-       * @param options render options for custom rendering
+       * Mount a template/component in Cypress sandbox
+       * @param template The component template
+       * @param options Custom rendering options
        */
       mount: typeof mount;
     }
   }
 }
 
-Cypress.Commands.add('mount', mount)
+Cypress.Commands.add('mount', mount);
 ```
+
+### 4. Configure TypeScript for TSX Support in Cypress
+Since Cypress test files can use TSX, update your TypeScript configuration to enable proper support.
+
+Create a new `cypress/tsconfig.json` file with the following configuration:
+
+```json
+{
+  "include": [
+    "./**/*"
+  ],
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@ui5/webcomponents-base",
+    "types": [
+      "cypress"
+    ]
+  },
+  "references": [
+    {
+      "path": "../"
+    }
+  ]
+}
+```
+
+### 5. Update Root TypeScript Configuration
+Since references are used to make components available in Cypress tests, update the root `tsconfig.json` file by adding the following settings:
+
+```json
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
+    "rootDir": "src",
+    "composite": true
+  }
+}
+```
+
+This ensures TypeScript correctly resolves dependencies when running Cypress tests.

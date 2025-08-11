@@ -83,7 +83,7 @@ const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)").matche
 setTheme(darkColorScheme ? "sap_horizon_dark" : "sap_horizon");
 ```
 
-#### Contrast 
+#### Contrast
 
 To switch to a high contrast theme when the OS does, you can use [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) and  [prefers-contrast](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast) (detecting MacOS contrast preferences and Windows high contrast themes) CSS features, as shown in the next example:
 
@@ -143,7 +143,7 @@ The mapping of the accessibility APIs to ARIA attributes is described in the fol
 | `accessibleNameRef`            | `aria-label`                                      | Alternative for `aria-labelledby`. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the `aria-label` attribute. |
 | `accessibleDescription`        | `aria-description`                                | Defines the description of the component.                                                                                                                                                           |
 | `accessibleDescriptionRef`     | `aria-description`                                | Alternative for `aria-describedby`. Receives ID (or many IDs) of the elements that serve as descriptions of the component. Those descriptions are passed as a concatenated string to the `aria-describedby` attribute. |
-| `accessibleRole`               | `role`                                            | Sets the accessible aria role of the component.                                                                                                                                                     |                                                                          
+| `accessibleRole`               | `role`                                            | Sets the accessible aria role of the component.                                                                                                                                                     |
 | `accessibilityAttributes`      | `aria-expanded`, `aria-haspopup`, `aria-controls`, etc. | An object of strings that defines several additional accessibility attribute values for customization depending on the use case. <br/> For composite components the object provides a way to enrich the accessibility of the different elements inside the component (for example in the `ui5-shellbar`).                                                                   |                                                                                          |
 | `required`                     | `aria-required`                                   | Defines whether the component is required.                                                                                                                                                          |
 | `readonly`                     | `aria-readonly`                                   | Defines whether the component is read-only.                                                                                                                                                         |
@@ -209,6 +209,10 @@ Will result in the shadow DOM as:
 The `accessibleDescription` property is currently supported in:
 * [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
 * [Tree](https://sap.github.io/ui5-webcomponents/nightly/components/Tree/)
+* [Input](https://sap.github.io/ui5-webcomponents/nightly/components/Input/)
+* [Popover](https://sap.github.io/ui5-webcomponents/nightly/components/Popover/)
+* [ResponsivePopover](https://sap.github.io/ui5-webcomponents/nightly/components/ResponsivePopover/)
+* [Dialog](https://sap.github.io/ui5-webcomponents/nightly/components/Dialog/)
 
 ---
 
@@ -233,6 +237,10 @@ Will result in the shadow DOM as:
 The `accessibleDescriptionRef` property is currently supported in:
 * [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
 * [Tree](https://sap.github.io/ui5-webcomponents/nightly/components/Tree/)
+* [Input](https://sap.github.io/ui5-webcomponents/nightly/components/Input/)
+* [Popover](https://sap.github.io/ui5-webcomponents/nightly/components/Popover/)
+* [ResponsivePopover](https://sap.github.io/ui5-webcomponents/nightly/components/ResponsivePopover/)
+* [Dialog](https://sap.github.io/ui5-webcomponents/nightly/components/Dialog/)
 
 ---
 
@@ -302,7 +310,9 @@ The `accessibilityAttributes` property is currently supported in:
 `accessibilityAttributes` is also supported for composite components, where the application can enrich the accessibility of elements inside the component. For a more detailed information check the documentation of the property in:
 * [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/FlexibleColumnLayout/)
 * [ShellBar](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBar/)
+* [ShellBarItem](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBarItem/)
 * [MenuItem](https://sap.github.io/ui5-webcomponents/nightly/components/MenuItem/)
+* [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
 
 ---
 
@@ -409,9 +419,9 @@ Will result in the shadow DOM as:
 
 ## Testing Accessibility
 
-UI5 Web Components provide the prerequisites for screen reader support based on the HTML, ARIA, and WCAG standards. All screen readers that follow those standards should work fine. Nevertheless, there are deviations in the interpretation depending on the combination of browser and screen reader. UI5 Web Components focus on compliance with the standards by performing automated checks for accessibility and manual tests with reference testing environments.
+UI5 Web Components provide the prerequisites for screen reader support based on the HTML, ARIA 1.2, and WCAG 2.2 standards. All screen readers that follow those standards should work fine. Nevertheless, there are deviations in the interpretation depending on the combination of browser and screen reader. UI5 Web Components focus on compliance with the standards by performing automated checks for accessibility and manual tests with reference testing environments.
 
-For Screen Reader Support, we recommend using JAWS 2024 + Chrome (latest), and for HTML/ARIA validation the recommended testing tool is Access Assistant. UI5 Web Components support other environments to the extent of providing a valid HTML and ARIA implementation following the WCAG standards.
+For Screen Reader Support, we recommend using JAWS 2025 + Chrome (latest), and for HTML/ARIA validation the recommended testing tool is Access Assistant. UI5 Web Components support other environments to the extent of providing a valid HTML and ARIA 1.2 implementation following the WCAG 2.2 standards.
 
 Please note that reference testing environments may change over time to reflect changes in the usage of different browsers, their maintenance period, and increased accessibility compliance.
 

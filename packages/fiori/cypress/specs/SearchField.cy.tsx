@@ -1,20 +1,19 @@
+import Button from "@ui5/webcomponents/dist/Button.js";
 import SearchField from "../../src/SearchField.js";
-import SearchFieldScopeOption from "../../src/SearchFieldScopeOption.js";
+import SearchScope from "../../src/SearchScope.js";
 import {
 	SEARCH_FIELD_SCOPE_SELECT_LABEL,
 	SEARCH_FIELD_CLEAR_ICON,
 	SEARCH_FIELD_SEARCH_ICON,
-	SEARCH_FIELD_SEARCH_COLLAPSED,
-	SEARCH_FIELD_SEARCH_EXPANDED,
+	SEARCH_FIELD_LABEL
 } from "../../src/generated/i18n/i18n-defaults.js";
-import SearchMode from "../../src/types/SearchMode.js";
 
 describe("SearchField general interaction", () => {
 	describe("Attribute propagation", () => {
 		it("should pass placeholder to inner input", () => {
 			const attributeValue = "test";
 
-			cy.mount(<SearchField placeholder={attributeValue} expanded={true}></SearchField>);
+			cy.mount(<SearchField placeholder={attributeValue}></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
@@ -25,7 +24,7 @@ describe("SearchField general interaction", () => {
 		it("Value attribute is propagated properly", () => {
 			const attributeValue = "test";
 
-			cy.mount(<SearchField value={attributeValue} expanded={true}></SearchField>);
+			cy.mount(<SearchField value={attributeValue}></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
@@ -36,32 +35,36 @@ describe("SearchField general interaction", () => {
 		it("accessibleName to aria-label", () => {
 			const attributeValue = "test";
 
-			cy.mount(<SearchField accessibleName={attributeValue} expanded={true}></SearchField>);
+			cy.mount(<SearchField accessibleName={attributeValue}></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
 				.find("input")
 				.should("have.attr", "aria-label", attributeValue);
 		});
-	});
 
-	describe("Collapsed Search Field", () => {
-		it("icon only button should be rendered as a collapsed search field", () => {
-			cy.mount(<SearchField placeholder="test"></SearchField>);
-
-			cy.get("[ui5-search-field]")
-				.shadow()
-				.find("[ui5-button]")
-				.should("exist");
+		it("accessibleName should have default value if not set", () => {
+			cy.mount(<SearchField></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
 				.find("input")
-				.should("not.exist");
+				.should("have.attr", "aria-label", SEARCH_FIELD_LABEL.defaultText);
 		});
 
+		it("accessibleDescription should propagate if set", () => {
+			cy.mount(<SearchField accessibleDescription="Test"></SearchField>);
+
+			cy.get("[ui5-search-field]")
+				.shadow()
+				.find("input")
+				.should("have.attr", "aria-description", "Test");
+		});
+	});
+
+	describe("Collapsed Search Field", () => {
 		it("collapsed search field button accessibility", () => {
-			cy.mount(<SearchField placeholder="test"></SearchField>);
+			cy.mount(<SearchField collapsed={true} placeholder="test"></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
@@ -74,31 +77,37 @@ describe("SearchField general interaction", () => {
 				.should("have.attr", "aria-expanded", "false");
 
 			cy.get("@inner-button")
-				.should("have.attr", "title", SEARCH_FIELD_SEARCH_COLLAPSED.defaultText);
-
+				.should("have.attr", "title", SEARCH_FIELD_SEARCH_ICON.defaultText);
 			cy.get("@inner-button")
-				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_COLLAPSED.defaultText);
+				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_ICON.defaultText);
 		});
 
-		it("should expand search field on search icon click", () => {
-			cy.mount(<SearchField></SearchField>);
+		it("should fire search search on search icon click", () => {
+			cy.mount(<SearchField value="test"></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.as("searchfield");
 
 			cy.get("@searchfield")
+				.then(searchfield => {
+					searchfield.get(0).addEventListener("ui5-search", cy.stub().as("searched"));
+				});
+
+			// click on search icon
+			cy.get("@searchfield")
 				.shadow()
-				.find("[ui5-button]")
+				.find("[ui5-icon][name='search']")
 				.realClick();
 
-			cy.get("@searchfield")
-				.should("have.attr", "expanded");
+			// search should be called
+			cy.get("@searched")
+				.should("have.been.calledOnce");
 		});
 	});
 
 	describe("Expanded Search Field", () => {
 		it("input field should be rendered as an expanded search field", () => {
-			cy.mount(<SearchField placeholder="test" expanded={true}></SearchField>);
+			cy.mount(<SearchField placeholder="test"></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
@@ -112,7 +121,7 @@ describe("SearchField general interaction", () => {
 		});
 
 		it("expanded empty search field button accessibility", () => {
-			cy.mount(<SearchField placeholder="test" expanded={true}></SearchField>);
+			cy.mount(<SearchField placeholder="test"></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
@@ -123,10 +132,9 @@ describe("SearchField general interaction", () => {
 
 			cy.get("@search-icon")
 				.find("title")
-				.should("contain.text", SEARCH_FIELD_SEARCH_EXPANDED.defaultText);
-
+				.should("contain.text", SEARCH_FIELD_SEARCH_ICON.defaultText);
 			cy.get("@search-icon")
-				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_EXPANDED.defaultText);
+				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_ICON.defaultText);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
@@ -140,7 +148,7 @@ describe("SearchField general interaction", () => {
 		});
 
 		it("expanded search field button accessibility", () => {
-			cy.mount(<SearchField value="text" expanded={true}></SearchField>);
+			cy.mount(<SearchField value="text"></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
@@ -157,30 +165,14 @@ describe("SearchField general interaction", () => {
 			cy.get("@search-icon")
 				.find("title")
 				.should("contain.text", SEARCH_FIELD_SEARCH_ICON.defaultText);
-
 			cy.get("@search-icon")
 				.should("have.attr", "aria-label", SEARCH_FIELD_SEARCH_ICON.defaultText);
-		});
-
-		it("should collapse empty search field on search icon click", () => {
-			cy.mount(<SearchField expanded={true}></SearchField>);
-
-			cy.get("[ui5-search-field]")
-				.as("searchfield");
-
-			cy.get("@searchfield")
-				.shadow()
-				.find("[ui5-icon][name='search']")
-				.realClick();
-
-			cy.get("@searchfield")
-				.should("not.have.attr", "expanded");
 		});
 	});
 
 	describe("Expanded Search Field with clear icon", () => {
 		it("clear icon should not be visible when input value is empty", () => {
-			cy.mount(<SearchField placeholder="test" expanded={true} showClearIcon={true}></SearchField>);
+			cy.mount(<SearchField placeholder="test" showClearIcon={true}></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
@@ -194,7 +186,7 @@ describe("SearchField general interaction", () => {
 		});
 
 		it("clear icon should be visible when input value is not empty", () => {
-			cy.mount(<SearchField value="test" expanded={true} showClearIcon={true}></SearchField>);
+			cy.mount(<SearchField value="test" showClearIcon={true}></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
@@ -208,7 +200,7 @@ describe("SearchField general interaction", () => {
 		});
 
 		it("clear icon accessibility", () => {
-			cy.mount(<SearchField value="test" expanded={true} showClearIcon={true}></SearchField>);
+			cy.mount(<SearchField value="test" showClearIcon={true}></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
@@ -225,7 +217,6 @@ describe("SearchField general interaction", () => {
 			cy.get("@clear-icon")
 				.find("title")
 				.should("contain.text", SEARCH_FIELD_CLEAR_ICON.defaultText);
-
 			cy.get("@clear-icon")
 				.should("have.attr", "aria-label", SEARCH_FIELD_CLEAR_ICON.defaultText);
 		});
@@ -233,7 +224,7 @@ describe("SearchField general interaction", () => {
 
 	describe("Events", () => {
 		it("fires search event on Enter", () => {
-			cy.mount(<SearchField value="test" expanded={true}></SearchField>);
+			cy.mount(<SearchField value="test"></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.as("searchfield");
@@ -259,7 +250,7 @@ describe("SearchField general interaction", () => {
 		});
 
 		it("fires search event search icon click", () => {
-			cy.mount(<SearchField value="test" expanded={true}></SearchField>);
+			cy.mount(<SearchField value="test"></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.as("searchfield");
@@ -279,7 +270,7 @@ describe("SearchField general interaction", () => {
 		});
 
 		it("should not fire search event when value is empty", () => {
-			cy.mount(<SearchField expanded={true}></SearchField>);
+			cy.mount(<SearchField></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.as("searchfield");
@@ -305,7 +296,7 @@ describe("SearchField general interaction", () => {
 		});
 
 		it("fires input event on typing", () => {
-			cy.mount(<SearchField expanded={true}></SearchField>);
+			cy.mount(<SearchField></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.as("searchfield");
@@ -333,7 +324,7 @@ describe("SearchField general interaction", () => {
 		});
 
 		it("fires input event on clear icon press", () => {
-			cy.mount(<SearchField value="test" expanded={true} showClearIcon={true}></SearchField>);
+			cy.mount(<SearchField value="test" showClearIcon={true}></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.as("searchfield");
@@ -355,7 +346,7 @@ describe("SearchField general interaction", () => {
 
 	describe("Scoped Search Field", () => {
 		it("ui5-select should not be rendered on Default Search Field", () => {
-			cy.mount(<SearchField value="test" expanded={true}></SearchField>);
+			cy.mount(<SearchField value="test"></SearchField>);
 
 			cy.get("[ui5-search-field]")
 				.as("searchfield");
@@ -366,20 +357,12 @@ describe("SearchField general interaction", () => {
 				.should("not.exist");
 		});
 
-		it("ui5-select should be rendered on Scoped Search Field", () => {
-			cy.mount(<SearchField value="test" expanded={true} mode={SearchMode.Scoped}></SearchField>);
-
-			cy.get("[ui5-search-field]")
-				.as("searchfield");
-
-			cy.get("@searchfield")
-				.shadow()
-				.find("[ui5-select]")
-				.should("exist");
-		});
-
 		it("ui5-select accessibility", () => {
-			cy.mount(<SearchField value="test" expanded={true} mode={SearchMode.Scoped}></SearchField>);
+			cy.mount(
+				<SearchField value="test">
+					<SearchScope text="Apps" slot="scopes"></SearchScope>
+				</SearchField>
+			);
 
 			cy.get("[ui5-search-field]")
 				.shadow()
@@ -398,9 +381,9 @@ describe("SearchField general interaction", () => {
 		});
 
 		it("Two options should be rendered in the scope", () => {
-			cy.mount(<SearchField value="test" expanded={true} mode={SearchMode.Scoped}>
-				<SearchFieldScopeOption text="Apps" slot="scopeOptions"></SearchFieldScopeOption>
-				<SearchFieldScopeOption text="Products" slot="scopeOptions"></SearchFieldScopeOption>
+			cy.mount(<SearchField value="test">
+				<SearchScope text="Apps" slot="scopes"></SearchScope>
+				<SearchScope text="Products" slot="scopes"></SearchScope>
 			</SearchField>);
 
 			cy.get("[ui5-search-field]")
@@ -414,9 +397,9 @@ describe("SearchField general interaction", () => {
 		});
 
 		it("scope-change event should be fired, when a scope option is selected", () => {
-			cy.mount(<SearchField value="test" expanded={true} mode={SearchMode.Scoped}>
-				<SearchFieldScopeOption text="Apps" slot="scopeOptions"></SearchFieldScopeOption>
-				<SearchFieldScopeOption text="Products" slot="scopeOptions"></SearchFieldScopeOption>
+			cy.mount(<SearchField value="test">
+				<SearchScope text="Apps" slot="scopes"></SearchScope>
+				<SearchScope text="Products" slot="scopes"></SearchScope>
 			</SearchField>);
 
 			cy.get("[ui5-search-field]")
@@ -440,6 +423,46 @@ describe("SearchField general interaction", () => {
 
 			cy.get("@scopeChanged")
 				.should("have.been.calledOnce");
+		});
+	});
+
+	describe("SearchField - Filter button and Scope Slot Rendering", () => {
+		it("renders the filter button slot content when only advanced filtering is provided", () => {
+			cy.mount(
+				<SearchField value="test">
+					<Button slot="filterButton" icon="filter"></Button>
+				</SearchField>
+			);
+
+			cy.get("[ui5-search-field]").as("searchField");
+
+			cy.get("@searchField")
+				.shadow()
+				.find('slot[name="filterButton"]')
+				.should("exist");
+		});
+
+		it("renders the scope selector and omits advanced fliter button slot when both are provided", () => {
+			cy.mount(
+				<SearchField>
+					<Button slot="filterButton" icon="filter"></Button>
+					<SearchScope text="All" slot="scopes"></SearchScope>
+					<SearchScope text="Apps" selected slot="scopes"></SearchScope>
+				</SearchField>
+			);
+
+			cy.get("[ui5-search-field]")
+				.as("searchField");
+
+			cy.get("@searchField")
+				.shadow()
+				.find("[ui5-select]")
+				.should("exist");
+
+			cy.get("@searchField")
+				.shadow()
+				.find('slot[name="filterButton"]')
+				.should("not.exist");
 		});
 	});
 });

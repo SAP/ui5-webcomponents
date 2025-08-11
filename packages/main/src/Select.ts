@@ -17,7 +17,7 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
@@ -93,17 +93,31 @@ type SelectLiveChangeEventDetail = {
  *
  * There are two main usages of the `ui5-select>`.
  *
- * 1. With Option (`ui5-option`) web component:
+ * - With Option (`ui5-option`) web component:
  *
  * The available options of the Select are defined by using the Option component.
  * The Option comes with predefined design and layout, including `icon`, `text` and `additional-text`.
  *
- * 2. With OptionCustom (`ui5-option-custom`) web component.
+ * - With OptionCustom (`ui5-option-custom`) web component.
  *
- * Options with custom content are defined by using the OptionCustom component
+ * Options with custom content are defined by using the OptionCustom component.
  * The OptionCustom component comes with no predefined layout and it expects consumers to define it.
  *
+ * ### Selection
+ *
+ * The options can be selected via user interaction (click or with the use of the Space and Enter keys)
+ * and programmatically - the Select component supports two distinct selection APIs, though mixing them is not supported:
+ * - The "value" property of the Select component
+ * - The "selected" property on individual options
+ *
+ * **Note:** If the "value" property is set but does not match any option,
+ * no option will be selected and the Select component will be displayed as empty.
+ *
+ * **Note:** when both "value" and "selected" are both used (although discouraged),
+ * the "value" property will take precedence.
+ *
  * ### Keyboard Handling
+ *
  * The `ui5-select` provides advanced keyboard handling.
  *
  * - [F4] / [Alt] + [Up] / [Alt] + [Down] / [Space] or [Enter] - Opens/closes the drop-down.
@@ -114,6 +128,7 @@ type SelectLiveChangeEventDetail = {
  * - [End] - Navigates to the last option
  *
  * ### ES6 Module Import
+ *
  * `import "@ui5/webcomponents/dist/Select";`
  *
  * `import "@ui5/webcomponents/dist/Option";`
@@ -215,6 +230,23 @@ class Select extends UI5Element implements IFormInputElement {
 	disabled = false;
 
 	/**
+	 * Defines the icon, displayed as graphical element within the component.
+	 * When set, the component will display the icon only - the selected option's text,
+	 * the Select's "label" slot (if present) and the dropdown arrow won't be displayed.
+	 *
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * Example:
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 *
+	 * **Note:** When using this property with a valid icon, Select will be rendered as icon only button and the label and the default arrow down won't be visible.
+	 * @default undefined
+	 * @private
+	 */
+	@property()
+	icon?: string;
+
+	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
@@ -312,6 +344,8 @@ class Select extends UI5Element implements IFormInputElement {
 	responsivePopover!: ResponsivePopover;
 	valueStatePopover?: Popover;
 
+	_valueStorage: string | undefined;
+
 	/**
 	 * Defines the component options.
 	 *
@@ -359,9 +393,7 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	get formValidity(): ValidityStateFlags {
-		const selectedOption = this.selectedOption;
-
-		return { valueMissing: this.required && (selectedOption && selectedOption.getAttribute("value") === "") };
+		return { valueMissing: this.required && (this.selectedOption?.getAttribute("value") === "") };
 	}
 
 	async formElementAnchor() {
@@ -369,21 +401,22 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	get formFormattedValue() {
-		const selectedOption = this.selectedOption;
-
-		if (selectedOption) {
-			if ("value" in selectedOption && selectedOption.value) {
-				return selectedOption.value;
-			}
-
-			return selectedOption.hasAttribute("value") ? selectedOption.getAttribute("value") : selectedOption.textContent;
+		if (this._valueStorage !== undefined) {
+			return this._valueStorage;
 		}
 
+		const selectedOption = this.selectedOption;
+		if (selectedOption) {
+			if ("value" in selectedOption && selectedOption.value !== undefined) {
+				return selectedOption.value;
+			}
+			return selectedOption.hasAttribute("value") ? selectedOption.getAttribute("value") : selectedOption.textContent;
+		}
 		return "";
 	}
 
 	onBeforeRendering() {
-		this._ensureSingleSelection();
+		this._applySelection();
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 	}
@@ -398,9 +431,38 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_ensureSingleSelection() {
-		// if no item is selected => select the first one
-		// if multiple items are selected => select the last selected one
+	/**
+	 * Selects an option, based on the Select's "value" property,
+	 * or the options' "selected" property.
+	 */
+	_applySelection() {
+		// Flow 1: "value" has not been used
+		if (this._valueStorage === undefined) {
+			this._applyAutoSelection();
+			return;
+		}
+
+		// Flow 2: "value" has been used - select the option by value or apply auto selection
+		this._applySelectionByValue(this._valueStorage);
+	}
+
+	/**
+	 * Selects an option by given value.
+	 */
+	_applySelectionByValue(value: string) {
+		if (value !== (this.selectedOption?.value || this.selectedOption?.textContent)) {
+			const options = Array.from(this.children) as Array<IOption>;
+			options.forEach(option => {
+				option.selected = !!((option.getAttribute("value") || option.textContent) === value);
+			});
+		}
+	}
+
+	/**
+	 * Selects the first option if no option is selected,
+	 * or selects the last option if multiple options are selected.
+	 */
+	_applyAutoSelection() {
 		let selectedIndex = this.options.findLastIndex(option => option.selected);
 		selectedIndex = selectedIndex === -1 ? 0 : selectedIndex;
 		for (let i = 0; i < this.options.length; i++) {
@@ -409,6 +471,13 @@ class Select extends UI5Element implements IFormInputElement {
 				break;
 			}
 		}
+	}
+
+	/**
+	 * Sets value by given option.
+	 */
+	_setValueByOption(option: IOption) {
+		this.value = option.value || option.textContent || "";
 	}
 
 	_applyFocus() {
@@ -434,29 +503,30 @@ class Select extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the value of the component:
 	 *
-	 * - when get - returns the value of the component, e.g. the `value` property of the selected option or its text content.
-	 *
+	 * - when get - returns the value of the component or the value/text content of the selected option.
 	 * - when set - selects the option with matching `value` property or text content.
 	 *
+	 * **Note:** Use either the Select's value or the Options' selected property.
+	 * Mixed usage could result in unexpected behavior.
+	 *
 	 * **Note:** If the given value does not match any existing option,
-	 * the first option will get selected.
+	 * no option will be selected and the Select component will be displayed as empty.
 	 * @public
 	 * @default ""
 	 * @since 1.20.0
 	 * @formProperty
 	 * @formEvents change liveChange
 	 */
-	@property({ noAttribute: true })
+	@property()
 	set value(newValue: string) {
-		const options = Array.from(this.children) as Array<IOption>;
-
-		options.forEach(option => {
-			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
-		});
+		this._valueStorage = newValue;
 	}
 
 	get value(): string {
-		return this.selectedOption?.value || this.selectedOption?.textContent || "";
+		if (this._valueStorage !== undefined) {
+			return this._valueStorage;
+		}
+		return this.selectedOption?.value === undefined ? (this.selectedOption?.textContent || "") : this.selectedOption?.value;
 	}
 
 	get _selectedIndex() {
@@ -610,11 +680,15 @@ class Select extends UI5Element implements IFormInputElement {
 			this.options[selectedIndex].selected = false;
 		}
 
+		const selectedOption = this.options[index];
 		if (selectedIndex !== index) {
-			this.fireDecoratorEvent("live-change", { selectedOption: this.options[index] });
+			this.fireDecoratorEvent("live-change", { selectedOption });
 		}
 
-		this.options[index].selected = true;
+		selectedOption.selected = true;
+		if (this._valueStorage !== undefined) {
+			this._setValueByOption(selectedOption);
+		}
 	}
 
 	/**
@@ -706,6 +780,10 @@ class Select extends UI5Element implements IFormInputElement {
 
 		nextOption.selected = true;
 		nextOption.focused = true;
+
+		if (this._valueStorage !== undefined) {
+			this._setValueByOption(nextOption);
+		}
 
 		this.fireDecoratorEvent("live-change", { selectedOption: nextOption });
 
@@ -821,6 +899,10 @@ class Select extends UI5Element implements IFormInputElement {
 		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
 	}
 
+	get responsivePopoverId() {
+		return `${this._id}-popover`;
+	}
+
 	get isDisabled() {
 		return this.disabled || undefined;
 	}
@@ -888,7 +970,7 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
+		return getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {

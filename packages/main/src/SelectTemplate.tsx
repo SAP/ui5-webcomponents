@@ -15,7 +15,7 @@ export default function SelectTemplate(this: Select) {
 				onClick={this._onclick}
 				title={this.tooltip}
 			>
-				{this.selectedOptionIcon &&
+				{!this.icon && this.selectedOptionIcon &&
 					<Icon
 						mode="Decorative"
 						class="ui5-select-option-icon"
@@ -40,6 +40,7 @@ export default function SelectTemplate(this: Select) {
 					onKeyUp={this._onkeyup}
 					onFocusIn={this._onfocusin}
 					onFocusOut={this._onfocusout}
+					aria-controls={this.responsivePopoverId}
 				>
 					{this.hasCustomLabel
 						? <slot name="label"></slot>
@@ -47,14 +48,34 @@ export default function SelectTemplate(this: Select) {
 					}
 				</div>
 
-				{!this.readonly &&
-					<Icon
-						part="icon"
-						name={slimArrowDown}
+				{this.icon &&
+					<div class={{
+						"ui5-select-icon-root": true,
+						"inputIcon": true,
+						"inputIcon--pressed": this._iconPressed,
+					}}>
+						<Icon
+							name={this.icon}
+							class={{
+								"ui5-select-icon": true,
+							}} />
+					</div>
+				}
+
+				{!this.icon && !this.readonly &&
+					<div part="icon-wrapper"
 						class={{
+							"ui5-select-icon-root": true,
 							"inputIcon": true,
 							"inputIcon--pressed": this._iconPressed,
-						}} />
+						}}>
+						<Icon
+							part="icon"
+							name={slimArrowDown}
+							class={{
+								"ui5-select-icon": true,
+							}} />
+					</div>
 				}
 
 				{this.hasValueState &&
@@ -63,7 +84,6 @@ export default function SelectTemplate(this: Select) {
 					</span>
 				}
 			</div>
-
 			{SelectPopoverTemplate.call(this)}
 		</>
 	);

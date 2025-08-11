@@ -24,6 +24,7 @@ import {
 	DELETE,
 	ARIA_LABEL_LIST_ITEM_CHECKBOX,
 	ARIA_LABEL_LIST_ITEM_RADIO_BUTTON,
+	LIST_ITEM_ACTIVE,
 	LIST_ITEM_SELECTED,
 	LIST_ITEM_NOT_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
@@ -189,6 +190,14 @@ abstract class ListItem extends ListItemBase {
 
 	@property()
 	_selectionMode: `${ListSelectionMode}` = "None";
+
+	/**
+	 * Defines the current media query size.
+	 * @default "S"
+	 * @private
+	 */
+	@property()
+	mediaRange = "S";
 
 	/**
 	 * Defines the delete button, displayed in "Delete" mode.
@@ -468,6 +477,16 @@ abstract class ListItem extends ListItemBase {
 
 		// accessibleName is not set - return _accInfo.listItemAriaLabel including content
 		return `${this._id}-content ${this._id}-invisibleText`;
+	}
+
+	get ariaLabelledByText() {
+		const texts = [
+			this._accInfo.listItemAriaLabel,
+			this.accessibleName,
+			this.typeActive ? ListItem.i18nBundle.getText(LIST_ITEM_ACTIVE) : undefined,
+		].filter(Boolean);
+
+		return texts.join(" ");
 	}
 
 	get _accInfo(): AccInfo {

@@ -24,6 +24,7 @@ export default function CalendarTemplate(this: Calendar) {
 				<div
 					data-ui5-cal-header-btn-month
 					class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
+					part="calendar-header-middle-button"
 					hidden={this._isHeaderMonthButtonHidden}
 					tabindex={0}
 					role="button"
@@ -41,6 +42,7 @@ export default function CalendarTemplate(this: Calendar) {
 				<div
 					data-ui5-cal-header-btn-year
 					class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
+					part="calendar-header-middle-button"
 					hidden={this._isHeaderYearButtonHidden}
 					tabindex={0}
 					role="button"
@@ -51,6 +53,22 @@ export default function CalendarTemplate(this: Calendar) {
 					<span>{this._headerYearButtonText}</span>
 					{this.hasSecondaryCalendarType &&
 						<span class="ui5-calheader-btn-sectext">{this._headerYearButtonTextSecType}</span>
+					}
+				</div>
+				<div
+					data-ui5-cal-header-btn-year-range
+					class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
+					part="calendar-header-middle-button"
+					hidden={this._isHeaderYearRangeButtonHidden}
+					tabindex={0}
+					role="button"
+					onClick={this.onHeaderShowYearRangePress}
+					onKeyDown={this.onYearRangeButtonKeyDown}
+					onKeyUp={this.onYearRangeButtonKeyUp}
+				>
+					<span>{this._headerYearRangeButtonText}</span>
+					{this.hasSecondaryCalendarType &&
+						<span class="ui5-calheader-btn-sectext">{this._headerYearRangeButtonTextSecType}</span>
 					}
 				</div>
 			</div>

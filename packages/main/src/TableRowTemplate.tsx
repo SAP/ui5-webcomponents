@@ -1,13 +1,14 @@
-import type TableRow from "./TableRow.js";
 import TableCell from "./TableCell.js";
 import CheckBox from "./CheckBox.js";
 import RadioButton from "./RadioButton.js";
 import Button from "./Button.js";
+import ButtonDesign from "./types/ButtonDesign.js";
+import type TableRow from "./TableRow.js";
 
 export default function TableRowTemplate(this: TableRow) {
 	return (
 		<>
-			{ this._hasRowSelector &&
+			{ this._hasSelector &&
 				<TableCell
 					id="selection-cell"
 					aria-selected={this._isSelected}
@@ -37,7 +38,7 @@ export default function TableRowTemplate(this: TableRow) {
 				<slot name={cell._individualSlot}></slot>
 			))}
 
-			{ this._hasRowActions &&
+			{ this._rowActionCount > 0 &&
 				<TableCell id="actions-cell">
 					{ this._flexibleActions.map(action => (
 						<slot name={action._individualSlot}></slot>
@@ -47,7 +48,7 @@ export default function TableRowTemplate(this: TableRow) {
 						<Button
 							id="overflow"
 							icon="overflow"
-							design="Transparent"
+							design={ButtonDesign.Transparent}
 							onClick={this._onOverflowButtonClick}
 						></Button>
 					}
@@ -59,7 +60,7 @@ export default function TableRowTemplate(this: TableRow) {
 			}
 
 			{ this._renderNavigated &&
-				<TableCell id="navigated-cell" data-excluded-from-navigation={true}>
+				<TableCell id="navigated-cell" data-excluded-from-navigation aria-hidden={true}>
 					<div id="navigated"></div>
 				</TableCell>
 			}

@@ -45,6 +45,7 @@ import {
 	TIMEPICKER_CANCEL_BUTTON,
 	TIMEPICKER_INPUT_DESCRIPTION,
 	TIMEPICKER_POPOVER_ACCESSIBLE_NAME,
+	DATETIME_COMPONENTS_PLACEHOLDER_PREFIX,
 	FORM_TEXTFIELD_REQUIRED,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_INFORMATION,
@@ -374,11 +375,22 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return this.getFormat().parse(this._effectiveValue) as Date;
 	}
 
+	get _lastAvailableTime() {
+		const date = UI5Date.getInstance();
+		date.setHours(23, 59, 59, 999);
+		return this.getFormat().format(date);
+	}
+
 	/**
 	 * @protected
 	 */
 	get _placeholder() {
-		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
+		if (this.placeholder) {
+			return this.placeholder;
+		}
+
+		// translatable placeholder – for example "e.g. 23:59:59"
+		return `${TimePicker.i18nBundle.getText(DATETIME_COMPONENTS_PLACEHOLDER_PREFIX)} ${this._lastAvailableTime}`;
 	}
 
 	/**
@@ -756,24 +768,6 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	get shouldDisplayValueStateMessageOnDesktop() {
 		return this.valueStateMessage.length > 0 && !this.open && !this._isMobileDevice;
-	}
-
-	get classes() {
-		return {
-			popover: {
-				"ui5-suggestions-popover": true,
-				"ui5-popover-with-value-state-header-phone": this._isPhone && this.hasValueStateText,
-				"ui5-popover-with-value-state-header": !this._isPhone && this.hasValueStateText,
-			},
-			popoverValueState: {
-				"ui5-valuestatemessage-header": true,
-				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
-				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
-			},
-		};
 	}
 
 	/**

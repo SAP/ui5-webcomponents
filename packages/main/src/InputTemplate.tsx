@@ -29,13 +29,14 @@ export default function InputTemplate(this: Input, hooks?: { preContent: Templat
 						style={this.styles.innerInput}
 						type={this.inputNativeType}
 						inner-input
-						inner-input-with-icon={this.icon.length}
+						inner-input-with-icon={!!this.icon.length}
 						disabled={this.disabled}
 						readonly={this._readonly}
 						value={this._innerValue}
 						placeholder={this._placeholder}
 						maxlength={this.maxlength}
 						role={this.accInfo.role}
+						enterkeyhint={this.hint}
 						aria-controls={this.accInfo.ariaControls}
 						aria-invalid={this.accInfo.ariaInvalid}
 						aria-haspopup={this.accInfo.ariaHasPopup}
@@ -63,6 +64,7 @@ export default function InputTemplate(this: Input, hooks?: { preContent: Templat
 						<div
 							tabindex={-1}
 							class="ui5-input-clear-icon-wrapper inputIcon"
+							part="clear-icon-wrapper"
 							onClick={this._clear}
 							onMouseDown={this._iconMouseDown}
 						>
@@ -100,6 +102,14 @@ export default function InputTemplate(this: Input, hooks?: { preContent: Templat
 
 					{this.accInfo.ariaDescription &&
 						<span id="descr" class="ui5-hidden-text">{this.accInfo.ariaDescription}</span>
+					}
+
+					{this.accInfo.accessibleDescription &&
+						<span id="accessibleDescription" class="ui5-hidden-text">{this.accInfo.accessibleDescription}</span>
+					}
+
+					{this.linksInAriaValueStateHiddenText.length > 0 &&
+						<span id="hiddenText-value-state-link-shortcut" class="ui5-hidden-text">{this.valueStateLinksShortcutsTextAcc}</span>
 					}
 
 					{this.hasValueState &&

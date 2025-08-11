@@ -1,4 +1,3 @@
-import type { JsxTemplate } from "@ui5/webcomponents-base";
 import type MenuItem from "./MenuItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Button from "./Button.js";
@@ -6,21 +5,18 @@ import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import navBackIcon from "@ui5/webcomponents-icons/dist/nav-back.js";
 import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
+import checkIcon from "@ui5/webcomponents-icons/dist/accept.js";
 import slimArrowRight from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Icon from "./Icon.js";
 import ListItemTemplate from "./ListItemTemplate.js";
 import type { ListItemHooks } from "./ListItemTemplate.js";
 
-export type MenuItemHooks = ListItemHooks & {
-	listItemPostContent: JsxTemplate,
-}
-
-const predefinedHooks: Partial<MenuItemHooks> = {
+const predefinedHooks: Partial<ListItemHooks> = {
 	listItemContent,
 	iconBegin,
 };
 
-export default function MenuItemTemplate(this: MenuItem, hooks?: Partial<MenuItemHooks>) {
+export default function MenuItemTemplate(this: MenuItem, hooks?: Partial<ListItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return <>
@@ -35,7 +31,19 @@ function listItemContent(this: MenuItem) {
 		{this.text && <div class="ui5-menu-item-text">{this.text}</div>}
 
 		{rightContent.call(this)}
+		{checkmarkContent.call(this)}
 	</>);
+}
+
+function checkmarkContent(this: MenuItem) {
+	return !this._markChecked ? "" : (
+		<div class="ui5-menu-item-checked">
+			<Icon
+				name={checkIcon}
+				class="ui5-menu-item-icon-checked"
+			/>
+		</div>
+	);
 }
 
 function rightContent(this: MenuItem) {
@@ -51,7 +59,7 @@ function rightContent(this: MenuItem) {
 			</div>
 		);
 	case this.hasEndContent:
-		return <slot name="endContent"></slot>;
+		return <slot name="endContent" onKeyDown={this._endContentKeyDown}></slot>;
 	case !!this.additionalText:
 		return (
 			<span
@@ -78,7 +86,7 @@ function iconBegin(this: MenuItem) {
 function listItemPostContent(this: MenuItem) {
 	return this.hasSubmenu && <ResponsivePopover
 		id={`${this._id}-menu-rp`}
-		class="ui5-menu-rp .ui5-menu-rp-sub-menu"
+		class="ui5-menu-rp ui5-menu-rp-sub-menu"
 		preventInitialFocus={true}
 		preventFocusRestore={true}
 		hideArrow={true}
@@ -128,8 +136,12 @@ function listItemPostContent(this: MenuItem) {
 						accessibleRole="Menu"
 						loading={this.loading}
 						loadingDelay={this.loadingDelay}
+						onMouseOver={this._itemMouseOver}
+						onKeyDown={this._itemKeyDown}
+						onKeyUp={this._itemKeyUp}
 						// handles event from slotted children
 						onui5-close-menu={this._close}
+						onui5-exit-end-content={this._navigateOutOfEndContent}
 					>
 						<slot></slot>
 					</List>

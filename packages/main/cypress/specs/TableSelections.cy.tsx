@@ -59,8 +59,9 @@ function mountTestpage(selectionMode: string) {
 	);
 
 	cy.get("#table0").children("ui5-table-header-row").first().as("headerRow");
-	cy.get("#table0").children("ui5-table-row").get("[row-key=\"0\"]").as("row0");
-	cy.get("#table0").children("ui5-table-row").get("[row-key=\"4\"]").as("row4");
+	[0, 1, 2, 4].forEach(key => {
+		cy.get(`#table0`).children(`ui5-table-row[row-key="${key}"]`).as(`row${key}`);
+	});
 }
 
 describe("Mode - None", () => {
@@ -82,6 +83,7 @@ const testConfig = {
 			"mode": "Single",
 		},
 		"cases": {
+			"ARIA_DESCRIPTION": "Single Selection Table",
 			"BOXES": {
 				"header": {
 					"exists": true,
@@ -115,13 +117,19 @@ const testConfig = {
 				"block_1": "0",
 				"block_2": "3",
 			},
-		},
+			"ROWONLY": {
+				"click": "0",
+				"space": "1",
+				"enter": "2"
+			}
+		}
 	},
 	"Multiple": {
 		"config": {
 			"mode": "Multiple",
 		},
 		"cases": {
+			"ARIA_DESCRIPTION": "Multi Selection Table",
 			"BOXES": {
 				"header": {
 					"exists": true,
@@ -154,6 +162,11 @@ const testConfig = {
 				"initial": "0",
 				"block_1": "0 1",
 				"block_2": "0 1 3 4"
+			},
+			"ROWONLY": {
+				"click": "0",
+				"space": "0 1",
+				"enter": "0 1 2"
 			}
 		}
 	}
@@ -180,14 +193,30 @@ function checkSelection(expectedSelected: string) {
 	});
 }
 
+function checkSelectionChangeSpy(expectedCalls: number) {
+	cy.get("@selectionChangeSpy").should("have.callCount", expectedCalls);
+}
+
 Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 	describe(`Mode - ${mode}`, () => {
 		beforeEach(() => {
 			mountTestpage(testConfigEntry.config.mode);
+			cy.get("#selection").as("selection");
+			cy.get("@selection").then($selection => {
+				$selection.get(0)?.addEventListener("change", cy.stub().as("selectionChangeSpy"));
+			});
+			cy.get("#table0").shadow().find("#table").as("innerTable");
+			cy.get("@innerTable").should("have.attr", "aria-colcount", "5");
+		});
+
+		it("sets the correct aria-description", () => {
+			cy.get("@innerTable").should("have.attr", "aria-description", testConfigEntry.cases.ARIA_DESCRIPTION);
 		});
 
 		it("Correct boxes are shown", () => {
 			cy.get("@headerRow").shadow().find("#selection-cell")
+				.should("have.attr", "aria-colindex", "1")
+				.should("have.attr", "aria-label", "Selection")
 				.should(testConfigEntry.cases.BOXES.header.exists ? "exist" : "not.exist");
 			cy.get("@row0").shadow().find("#selection-cell")
 				.should(testConfigEntry.cases.BOXES.row.exists ? "exist" : "not.exist");
@@ -199,67 +228,136 @@ Object.entries(testConfig).forEach(([mode, testConfigEntry]) => {
 		});
 
 		it("select row via SPACE", () => {
-			cy.get("@row0").realClick({ position: "left" });
+			cy.get("@row0").realClick();
 			cy.get("@row0").realPress("Space");
 			checkSelection(testConfigEntry.cases.SPACE.space_0);
+			checkSelectionChangeSpy(1);
 
 			cy.get("@row4").realClick();
 			cy.get("@row4").realPress("Space");
 			checkSelection(testConfigEntry.cases.SPACE.space_4);
+			checkSelectionChangeSpy(2);
 		});
 
 		it("select row via arrows (radio focus)", () => {
 			cy.get("@row0").shadow().find("#selection-component").realClick();
 			checkSelection(testConfigEntry.cases.ARROWS_BOX.arrow_initial);
+			checkSelectionChangeSpy(1);
 
 			cy.realPress("ArrowDown");
 			checkSelection(testConfigEntry.cases.ARROWS_BOX.arrow_down);
+			let callCount = mode === "Single" ? 2 : 1;
+			checkSelectionChangeSpy(callCount);
 
 			cy.realPress("ArrowUp");
 			checkSelection(testConfigEntry.cases.ARROWS_BOX.arrow_up);
+			callCount = mode === "Single" ? 3 : 1;
+			checkSelectionChangeSpy(callCount);
 		});
 
 		it("select row via mouse", () => {
 			cy.get("@row0").shadow().find("#selection-component").realClick();
 			checkSelection(testConfigEntry.cases.MOUSE.mouse_0);
+			checkSelectionChangeSpy(1);
 
 			cy.get("@row4").shadow().find("#selection-component").realClick();
 			checkSelection(testConfigEntry.cases.MOUSE.mouse_4);
+			checkSelectionChangeSpy(2);
 		});
 
 		it("range selection with mouse", () => {
 			cy.get("@row0").shadow().find("#selection-component").realClick();
 			checkSelection(testConfigEntry.cases.RANGE_MOUSE.range_mouse_initial);
+			checkSelectionChangeSpy(1);
 
-			// Need to simulate keydown with SHIFT key to set range selection flag shiftKeyPressed
-			// Cypress does not trigger keydown when just calling realClick with shiftKey: true
-			// That is why selection of the row is not supressed, and we end up with 0 4 1 2 3
-			cy.get("@row4").trigger("keydown", { bubbles: true, key: "Shift", shiftKey: true });
 			cy.get("@row4").shadow().find("#selection-component").realClick({ shiftKey: true });
 			checkSelection(testConfigEntry.cases.RANGE_MOUSE.range_mouse_final);
+			checkSelectionChangeSpy(2);
 
-			cy.get("@row4").trigger("keydown", { bubbles: true, key: "Shift", shiftKey: true });
-			cy.get("@row0").shadow().find("#selection-component").realClick();
+			cy.get("@row0").shadow().find("#selection-component").realClick({ shiftKey: true });
 			checkSelection(testConfigEntry.cases.RANGE_MOUSE.range_mouse_edge);
+			let callCount = mode === "Single" ? 3 : 2;
+			checkSelectionChangeSpy(callCount);
+		});
+
+		it("range selection with mouse with SHIFT constantly pressed", () => {
+			cy.get("@row0").shadow().find("#selection-component").realClick({ shiftKey: true });
+			checkSelection(testConfigEntry.cases.RANGE_MOUSE.range_mouse_initial);
+			checkSelectionChangeSpy(1);
+
+			cy.get("@row4").shadow().find("#selection-component").realClick({ shiftKey: true });
+			checkSelection(testConfigEntry.cases.RANGE_MOUSE.range_mouse_final);
+			checkSelectionChangeSpy(2);
+
+			cy.get("@row0").shadow().find("#selection-component").realClick({ shiftKey: true });
+			checkSelection(testConfigEntry.cases.RANGE_MOUSE.range_mouse_edge);
+			let callCount = mode === "Single" ? 3 : 2;
+			checkSelectionChangeSpy(callCount);
 		});
 
 		it("range selection with keyboard", () => {
 			cy.get("@row0").realClick({ position: "center" });
 			cy.get("@row0").realPress("Space");
 			checkSelection(testConfigEntry.cases.RANGE_KEYBOARD.initial);
+			checkSelectionChangeSpy(1);
 
 			cy.realPress(["Shift", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowUp", "ArrowUp"]);
 			checkSelection(testConfigEntry.cases.RANGE_KEYBOARD.block_1);
+			let callCount = mode === "Single" ? 1 : 6;
+			checkSelectionChangeSpy(callCount);
 
 			cy.realPress(["ArrowDown", "ArrowDown", "Space"]);
 			cy.realPress(["Shift", "ArrowDown"]);
 			checkSelection(testConfigEntry.cases.RANGE_KEYBOARD.block_2);
+			callCount = mode === "Single" ? 2 : 8;
+			checkSelectionChangeSpy(callCount);
 		});
 	});
+
+	describe(`Behavior - ${mode}`, () => {
+        beforeEach(() => {
+            mountTestpage(testConfigEntry.config.mode);
+
+			cy.get("@row0").invoke("prop", "interactive", true);
+			cy.get("@row1").invoke("prop", "interactive", true);
+			cy.get("@row2").invoke("prop", "interactive", true);
+			cy.get("#selection").invoke("attr", "behavior", "RowWÓnly");
+			cy.get("#table0").invoke("on", "row-click", cy.stub().as("rowClickSpy"));
+			cy.get("#selection").invoke("on", "change", cy.stub().as("selectionChangeSpy"));
+			cy.get("#table0").shadow().find("#table").should("have.attr", "aria-colcount", "4");
+        });
+
+		it("renders neither selection cell nor selection component", () => {
+			cy.get("@headerRow").shadow().find("#selection-cell").should("not.exist");
+			cy.get("@row0").shadow().find("#selection-cell").should("not.exist");
+
+			cy.get("@headerRow").shadow().find("#selection-component").should("not.exist");
+			cy.get("@row0").shadow().find("#selection-component").should("not.exist");
+		});
+
+		it("selects row via click, space or enter", () => {
+			cy.get("@row0").realClick();
+			checkSelection(testConfigEntry.cases.ROWONLY.click);
+			checkSelectionChangeSpy(1);
+
+			cy.get("@row0").realPress("ArrowDown");
+			cy.get("@row1").realPress("Space");
+			checkSelection(testConfigEntry.cases.ROWONLY.space);
+			checkSelectionChangeSpy(2);
+
+			cy.get("@row1").realPress("ArrowDown");
+			cy.get("@row2").realPress("Enter");
+			checkSelection(testConfigEntry.cases.ROWONLY.enter);
+			checkSelectionChangeSpy(3);
+
+			cy.get("@rowClickSpy").should("not.have.callCount");
+		});
+    });
+
 });
 
 describe("TableSelectionMulti", () => {
-	it("updates the header row checkbox when rows are added or removed", () => {
+	beforeEach(() => {
 		cy.mount(
 			<Table id="table1">
 				<TableSelectionMulti id="selection" selected="1 2" slot="features"></TableSelectionMulti>
@@ -274,10 +372,15 @@ describe("TableSelectionMulti", () => {
 				</TableRow>
 			</Table>
 		);
-
 		cy.get("#headerRow").shadow().find("#selection-cell").as("headerRowSelectionCell");
-		cy.get("@headerRowSelectionCell").find("#selection-component").as("headerRowCheckBox");
+		cy.get("#selection").invoke("on", "change", cy.stub().as("selectionChangeSpy"));
+	});
+
+	it("updates the header row checkbox when rows are added or removed", () => {
+		cy.get("@headerRowSelectionCell").should("have.attr", "aria-description", "Contains Select All Checkbox . Checked");
+		cy.get("@headerRowSelectionCell").children().first().as("headerRowCheckBox");
 		cy.get("@headerRowCheckBox").should("have.attr", "checked");
+		cy.get("@headerRowCheckBox").should("have.attr", "title", "Deselect All Rows");
 		cy.get("#table1").then($table => {
 			$table.append(
 				`<ui5-table-row id="row3" row-key="3">
@@ -286,11 +389,56 @@ describe("TableSelectionMulti", () => {
 				</ui5-table-row>`
 			);
 		});
+		cy.get("@headerRowSelectionCell").should("have.attr", "aria-description", "Contains Select All Checkbox . Not Checked");
 		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
+		cy.get("@headerRowCheckBox").should("have.attr", "title", "Select All Rows");
 		cy.get("#row3").invoke("remove");
+		cy.get("@headerRowSelectionCell").should("have.attr", "aria-description", "Contains Select All Checkbox . Checked");
 		cy.get("@headerRowCheckBox").should("have.attr", "checked");
+		cy.get("@headerRowCheckBox").should("have.attr", "title", "Deselect All Rows");
+		cy.get("#row2").invoke("remove");
+		cy.get("@headerRowCheckBox").should("have.attr", "checked");
+		cy.get("#row1").invoke("remove");
+		cy.get("#headerRow").shadow().find("#selection-cell").should("not.exist");
+	});
+
+	it("should handle header-selector=ClearAll", () => {
+		cy.get("@headerRowSelectionCell").children().first().as("headerRowIcon");
+		function checkClearAll(hasSelection: boolean) {
+			cy.get("@headerRowIcon").should("have.attr", "name", "clear-all");
+			cy.get("@headerRowIcon").should("have.attr", "mode", "Decorative");
+			cy.get("@headerRowIcon").should("have.attr", "show-tooltip");
+			cy.get("@headerRowIcon").should("have.attr", "accessible-name", "Deselect All Rows");
+			cy.get("@headerRowIcon").should("have.attr", "design", hasSelection ? "Default" : "NonInteractive");
+			cy.get("@headerRowSelectionCell").should("have.attr", "aria-description", hasSelection ? "Contains Clear All Button" : "Contains Clear All Button . Disabled");
+		}
+
+		cy.get("#selection").invoke("attr", "header-selector", "ClearAll");
+		checkClearAll(true);
+		checkSelectionChangeSpy(0);
+
+		cy.get("@headerRowIcon").realClick();
+		checkClearAll(false)
+		checkSelection("");
+		checkSelectionChangeSpy(1);
+
+		cy.get("@headerRowIcon").realClick();
+		checkClearAll(false)
+		checkSelection("");
+		checkSelectionChangeSpy(1);
+
+		cy.get("#row1").shadow().find("#selection-component").realClick();
+		checkClearAll(true);
+		checkSelection("1");
+		checkSelectionChangeSpy(2);
+
+		cy.get("@headerRowIcon").realPress("Space");
+		checkClearAll(false)
+		checkSelection("");
+		checkSelectionChangeSpy(3);
+
 		cy.get("#row2").invoke("remove");
 		cy.get("#row1").invoke("remove");
-		cy.get("@headerRowCheckBox").should("not.have.attr", "checked");
+		cy.get("#headerRow").shadow().find("#selection-cell").should("not.exist");
 	});
 });

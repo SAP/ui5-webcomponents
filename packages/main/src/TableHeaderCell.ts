@@ -1,4 +1,5 @@
 import { customElement, property, slot } from "@ui5/webcomponents-base/dist/decorators.js";
+import { toggleAttribute } from "./TableUtils.js";
 import TableCellBase from "./TableCellBase.js";
 import TableHeaderCellTemplate from "./TableHeaderCellTemplate.js";
 import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
@@ -23,7 +24,6 @@ import type TableHeaderCellActionBase from "./TableHeaderCellActionBase.js";
  * @extends TableCellBase
  * @since 2.0.0
  * @public
- * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 @customElement({
 	tag: "ui5-table-header-cell",
@@ -32,13 +32,19 @@ import type TableHeaderCellActionBase from "./TableHeaderCellActionBase.js";
 })
 class TableHeaderCell extends TableCellBase {
 	/**
-	 * Defines the width of column.
+	 * Defines the width of the column.
 	 *
-	 * @default "auto"
+	 * By default, the column will grow and shrink according to the available space.
+	 * This will distribute the space proportionally among all columns with no specific width set.
+	 *
+	 * See [\<length\>](https://developer.mozilla.org/en-US/docs/Web/CSS/length) and
+	 * [\<percentage\>](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) for possible width values.
+	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	width = "auto";
+	width?: string;
 
 	/**
  	 * Defines the minimum width of the column.
@@ -46,22 +52,17 @@ class TableHeaderCell extends TableCellBase {
 	 * If the table is in `Popin` mode and the minimum width does not fit anymore,
 	 * the column will move into the popin.
 	 *
-	 * **Note:** If `minWidth` has the `auto` value, the table ensures that the column is wider than at least `3rem`.
+	 * By default, the table prevents the column from becoming too small.
+	 * Changing this value to a small value might lead to accessibility issues.
 	 *
-	 * @default "auto"
+	 * **Note:** This property only takes effect for columns with a [\<percentage\>](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) value
+	 * or the default width.
+	 *
 	 * @public
+	 * @default undefined
 	 */
 	@property()
-	minWidth = "auto";
-
-	/**
-	 * Defines the maximum width of the column.
-	 *
-	 * @default "auto"
-	 * @public
-	 */
-	@property()
-	maxWidth = "auto";
+	minWidth?: string;
 
 	/**
 	 * Defines the importance of the column.
@@ -126,24 +127,13 @@ class TableHeaderCell extends TableCellBase {
 	protected ariaRole: string = "columnheader";
 	_popinWidth: number = 0;
 
-	onEnterDOM() {
-		super.onEnterDOM();
-		this.style.minWidth = this.minWidth;
-		this.style.maxWidth = this.maxWidth;
-		this.style.width = this.width;
-	}
-
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		if (this._individualSlot) {
 			// overwrite setting of TableCellBase so that the TableHeaderCell always uses the slot variable
 			this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
 		}
-		if (this.sortIndicator !== SortOrder.None) {
-			this.setAttribute("aria-sort", this.sortIndicator.toLowerCase());
-		} else if (this.hasAttribute("aria-sort")) {
-			this.removeAttribute("aria-sort");
-		}
+		toggleAttribute(this, "aria-sort", this.sortIndicator !== SortOrder.None, this.sortIndicator.toLowerCase());
 	}
 }
 
