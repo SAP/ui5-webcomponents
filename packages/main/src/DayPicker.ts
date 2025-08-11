@@ -403,7 +403,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		return dayNames.some(dayName => dayName.length > 4);
 	}
 
-	_focusCorrectDay() {
+	async _focusCorrectDay() {
+		await renderFinished();
 		if (this._shouldFocusDay) {
 			this._focusableDay.focus();
 		}
@@ -413,8 +414,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		return document.activeElement !== this._focusableDay && this._specialCalendarDates.length === 0;
 	}
 
-	async _onfocusin() {
-		await renderFinished();
+	_onfocusin() {
 		this._focusCorrectDay();
 	}
 
@@ -727,9 +727,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * Called by the Calendar component.
 	 * @protected
 	 */
-	async _showPreviousPage() {
+	_showPreviousPage() {
 		this._modifyTimestampBy(-1, "month", false);
-		await renderFinished();
 		this._focusCorrectDay();
 	}
 
@@ -737,9 +736,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * Called by the Calendar component.
 	 * @protected
 	 */
-	async _showNextPage() {
+	_showNextPage() {
 		this._modifyTimestampBy(1, "month", false);
-		await renderFinished();
 		this._focusCorrectDay();
 	}
 
@@ -750,7 +748,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
-	async _modifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {
+	_modifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, unit, preserveDate);
 		this._updateSecondTimestamp();
@@ -758,7 +756,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		// Notify the calendar to update its timestamp
 		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 
-		await renderFinished();
 		this._focusCorrectDay();
 	}
 

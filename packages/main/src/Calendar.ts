@@ -755,12 +755,12 @@ class Calendar extends CalendarPart {
 		if (this._currentPicker !== "year") {
 			this._currentPicker = "year";
 			this.fireDecoratorEvent("show-year-view");
-			this._focusCurrentPicker();
 		} else {
 			this._currentPicker = "yearrange";
 			this.fireDecoratorEvent("show-year-range-view");
-			this._focusCurrentPicker();
 		}
+
+		this._focusCurrentPicker();
 	}
 
 	_onLegendFocusOut() {

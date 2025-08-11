@@ -138,8 +138,6 @@ describe("Calendar general interaction", () => {
 
 		cy.focused().realPress("Tab");
 		cy.focused().realPress("Tab");
-		cy.focused().realPress("Tab");
-		cy.focused().realPress("Tab");
 		cy.focused().realPress("Space");
 
 		cy.get<Calendar>("#calendar1")
