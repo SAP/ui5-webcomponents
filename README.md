@@ -24,7 +24,7 @@
 ## More Resources
 - [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
 - [Configuring UI5 Web Components](https://sap.github.io/ui5-webcomponents/docs/advanced/configuration/)
-- [Customizing with `UI Theme Designer`](https://github.com/SAP/ui5-webcomponents/blob/main/docs/2-advanced/12-theming.md)
+- [Customizing with `UI Theme Designer`](https://sap.github.io/ui5-webcomponents/docs/advanced/theming/)
 - [Creating a Custom UI5 Web Components Package](https://sap.github.io/ui5-webcomponents/docs/development/package/)
 - [Developing Custom UI5 Web Components](https://sap.github.io/ui5-webcomponents/docs/development/component/)
 - [Micro-Frontends and Custom Elements Scoping](https://sap.github.io/ui5-webcomponents/docs/advanced/scoping/)
