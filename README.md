@@ -23,13 +23,13 @@
 
 ## More Resources
 - [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
-- [Configuring UI5 Web Components](https://sap.github.io/ui5-webcomponents/docs/advanced/configuration/)
-- [Customizing with `UI Theme Designer`](https://sap.github.io/ui5-webcomponents/docs/advanced/theming/)
-- [Creating a Custom UI5 Web Components Package](https://sap.github.io/ui5-webcomponents/docs/development/package/)
-- [Developing Custom UI5 Web Components](https://sap.github.io/ui5-webcomponents/docs/development/component/)
-- [Micro-Frontends and Custom Elements Scoping](https://sap.github.io/ui5-webcomponents/docs/advanced/scoping/)
-- [Release Management](https://sap.github.io/ui5-webcomponents/docs/Releases/)
-- [F.A.Q.](https://sap.github.io/ui5-webcomponents/docs/FAQ/)
+- [Configuring UI5 Web Components](./docs/2-advanced/01-configuration.md)
+- [Customizing with `UI Theme Designer`](./docs/2-advanced/12-theming.md)
+- [Creating a Custom UI5 Web Components Package](docs/4-development/01-package.md)
+- [Developing Custom UI5 Web Components](docs/4-development/02-component.md)
+- [Micro-Frontends and Custom Elements Scoping](./docs/2-advanced/06-scoping.md)
+- [Release Management](./docs/Release%20Management.md)
+- [F.A.Q.](./docs/FAQ.md)
 
 ## Related Projects
 
