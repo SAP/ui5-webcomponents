@@ -465,8 +465,6 @@ class ColorPalette extends UI5Element {
 	_onColorContainerKeyDown(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
 		const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
-		const isInLastRow = this.colorPaletteNavigationElements.indexOf(target)
-			>= this.colorPaletteNavigationElements.length - (this.colorPaletteNavigationElements.length % this.rowSize);
 
 		if (this._isUpOrDownNavigatableColorPaletteItem(e)) {
 			this._currentlySelected = undefined;
@@ -505,7 +503,7 @@ class ColorPalette extends UI5Element {
 		} else if (isEnd(e) && this.showMoreColors && this._isLastDisplayedSwatch(target)) {
 			e.stopPropagation();
 			this._moreColorsButton?.focus();
-		} else if (isEnd(e) && isInLastRow) {
+		} else if (isEnd(e) && this._isElementInLastRow(target)) {
 			e.stopPropagation();
 			this.focusColorElement(this.displayedColors[this.displayedColors.length - 1], this._itemNavigation);
 		}
@@ -517,6 +515,11 @@ class ColorPalette extends UI5Element {
 
 	_isLastDisplayedSwatch(target: ColorPaletteItem) {
 		return this.displayedColors[this.displayedColors.length - 1] === target;
+	}
+
+	_isElementInLastRow(target: ColorPaletteItem) {
+		const index = this.colorPaletteNavigationElements.indexOf(target);
+		return index >= this.colorPaletteNavigationElements.length - (this.colorPaletteNavigationElements.length % this.rowSize);
 	}
 
 	_onRecentColorsContainerKeyDown(e: KeyboardEvent) {
