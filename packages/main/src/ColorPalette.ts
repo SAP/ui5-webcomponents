@@ -420,8 +420,8 @@ class ColorPalette extends UI5Element {
 		} else if (isEnd(e)) {
 			e.stopPropagation();
 
-			if (this.showMoreColors && this._moreColorsButton) {
-				this._moreColorsButton.focus();
+			if (this.showMoreColors) {
+				this._moreColorsButton?.focus();
 			} else if (this.displayedColors.length) {
 				this.focusColorElement(this.displayedColors[this.displayedColors.length - 1], this._itemNavigation);
 			}
@@ -450,8 +450,8 @@ class ColorPalette extends UI5Element {
 		} else if (isHome(e)) {
 			e.stopPropagation();
 
-			if (this.showDefaultColor && this._defaultColorButton) {
-				this._defaultColorButton.focus();
+			if (this.showDefaultColor) {
+				this._defaultColorButton?.focus();
 			} else if (this.displayedColors.length) {
 				this.focusColorElement(this.displayedColors[0], this._itemNavigation);
 			}
@@ -477,7 +477,7 @@ class ColorPalette extends UI5Element {
 			this.selectColor(target);
 		}
 
-		if (isUp(e) && target === this.displayedColors[0] && this.colorPaletteNavigationElements.length > 1) {
+		if (isUp(e) && this._isFirstDisplayedSwatch(target) && this.colorPaletteNavigationElements.length > 1) {
 			e.stopPropagation();
 			if (this.showDefaultColor) {
 				this.firstFocusableElement.focus();
@@ -486,7 +486,7 @@ class ColorPalette extends UI5Element {
 			} else if (!this.showDefaultColor && this.showMoreColors) {
 				lastElementInNavigation.focus();
 			}
-		} else if (isDown(e) && target === this.displayedColors[this.displayedColors.length - 1] && this.colorPaletteNavigationElements.length > 1) {
+		} else if (isDown(e) && this._isLastDisplayedSwatch(target) && this.colorPaletteNavigationElements.length > 1) {
 			e.stopPropagation();
 			const isRecentColorsNextElement = (this.showDefaultColor && !this.showMoreColors && this.hasRecentColors) || (!this.showDefaultColor && !this.showMoreColors && this.hasRecentColors);
 
@@ -499,16 +499,24 @@ class ColorPalette extends UI5Element {
 			} else if (!this.showDefaultColor && this.showMoreColors) {
 				this.colorPaletteNavigationElements[1].focus();
 			}
-		} else if (isHome(e) && this.showDefaultColor && (target === this.displayedColors[0])) {
+		} else if (isHome(e) && this.showDefaultColor && this._isFirstDisplayedSwatch(target)) {
 			e.stopPropagation();
 			this._defaultColorButton?.focus();
-		} else if (isEnd(e) && this.showMoreColors && (target === this.displayedColors[this.displayedColors.length - 1])) {
+		} else if (isEnd(e) && this.showMoreColors && this._isLastDisplayedSwatch(target)) {
 			e.stopPropagation();
 			this._moreColorsButton?.focus();
 		} else if (isEnd(e) && isInLastRow) {
 			e.stopPropagation();
 			this.focusColorElement(this.displayedColors[this.displayedColors.length - 1], this._itemNavigation);
 		}
+	}
+
+	_isFirstDisplayedSwatch(target: ColorPaletteItem) {
+		return this.displayedColors[0] === target;
+	}
+
+	_isLastDisplayedSwatch(target: ColorPaletteItem) {
+		return this.displayedColors[this.displayedColors.length - 1] === target;
 	}
 
 	_onRecentColorsContainerKeyDown(e: KeyboardEvent) {
