@@ -1,7 +1,7 @@
 import Link from "../../src/Link.js";
 
 describe("Eventing", () => {
-	it.only("Default prevented", () => {
+	it("Default prevented", () => {
 		cy.mount(
 			<Link
 				href="#newPrevented"
@@ -21,7 +21,7 @@ describe("Eventing", () => {
 			.should("not.include", "#newPrevented");
 	});
 
-	it.only("Default not prevented", () => {
+	it("Default not prevented", () => {
 		cy.mount(
 			<Link href="#newNotPrevented">
 				Normal link
