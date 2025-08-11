@@ -22,12 +22,10 @@ import {
 	isDown,
 	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
-import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
-import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import DragAndDropHandler from "./delegate/DragAndDropHandler.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
 	getAllAccessibleDescriptionRefTexts,
@@ -112,6 +110,12 @@ type ListItemClickEventDetail = {
 }
 
 type ListMoveEventDetail = MoveEventDetail;
+
+type ListAccessibilityAttributes = {
+	growingButton?: {
+		name?: string,
+	},
+}
 
 /**
  * @class
@@ -403,6 +407,26 @@ class List extends UI5Element {
 	accessibleName?: string;
 
 	/**
+	* Defines additional accessibility attributes on different areas of the component.
+ 	*
+	* The accessibilityAttributes object has the following field:
+	*
+	*  - **growingButton**: `growingButton.name`.
+	*
+ 	* The accessibility attributes support the following values:
+ 	*
+	* - **name**: Defines the accessible ARIA name of the growing button.
+	* Accepts any string.
+	*
+ 	* **Note:** The `accessibilityAttributes` property is in an experimental state and is a subject to change.
+	* @default {}
+ 	* @public
+ 	* @since 2.13.0
+ 	*/
+	 @property({ type: Object })
+	 accessibilityAttributes: ListAccessibilityAttributes = {};
+
+	/**
 	 * Defines the IDs of the elements that label the component.
 	 * @default undefined
 	 * @public
@@ -517,6 +541,8 @@ class List extends UI5Element {
 	onForwardBeforeBound: (e: CustomEvent) => void;
 	onItemTabIndexChangeBound: (e: CustomEvent) => void;
 
+	_dragAndDropHandler: DragAndDropHandler;
+
 	constructor() {
 		super();
 
@@ -546,6 +572,14 @@ class List extends UI5Element {
 		this.onForwardAfterBound = this.onForwardAfter.bind(this);
 		this.onForwardBeforeBound = this.onForwardBefore.bind(this);
 		this.onItemTabIndexChangeBound = this.onItemTabIndexChange.bind(this);
+
+		// Initialize the DragAndDropHandler with the necessary configurations
+		// The handler will manage the drag and drop operations for the list items.
+		this._dragAndDropHandler = new DragAndDropHandler(this, {
+			getItems: () => this.items,
+			getDropIndicator: () => this.dropIndicatorDOM,
+			useOriginalEvent: true,
+		});
 	}
 
 	/**
@@ -692,6 +726,14 @@ class List extends UI5Element {
 
 	get ariaDescriptionText() {
 		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this) || this._getDescriptionForGroups();
+	}
+
+	get growingButtonAriaLabel() {
+		return this.accessibilityAttributes.growingButton?.name;
+	}
+
+	get growingButtonAriaLabelledBy() {
+		return this.accessibilityAttributes.growingButton?.name ? undefined : `${this._id}-growingButton-text`;
 	}
 
 	get scrollContainer() {
@@ -1159,46 +1201,19 @@ class List extends UI5Element {
 	}
 
 	_ondragenter(e: DragEvent) {
-		e.preventDefault();
+		this._dragAndDropHandler.ondragenter(e);
 	}
 
 	_ondragleave(e: DragEvent) {
-		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
-			return;
-		}
-
-		this.dropIndicatorDOM!.targetReference = null;
+		this._dragAndDropHandler.ondragleave(e);
 	}
 
 	_ondragover(e: DragEvent) {
-		if (!(e.target instanceof HTMLElement)) {
-			return;
-		}
-
-		const closestPosition = findClosestPosition(
-			this.items,
-			e.clientY,
-			Orientation.Vertical,
-		);
-
-		if (!closestPosition) {
-			this.dropIndicatorDOM!.targetReference = null;
-			return;
-		}
-
-		const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element, { originalEvent: true });
-		this.dropIndicatorDOM!.targetReference = targetReference;
-		this.dropIndicatorDOM!.placement = placement;
+		this._dragAndDropHandler.ondragover(e);
 	}
 
 	_ondrop(e: DragEvent) {
-		if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
-			e.preventDefault();
-			return;
-		}
-
-		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement, { originalEvent: true });
-		this.dropIndicatorDOM.targetReference = null;
+		this._dragAndDropHandler.ondrop(e);
 	}
 
 	isForwardElement(element: HTMLElement) {
@@ -1454,4 +1469,5 @@ export type {
 	ListItemToggleEventDetail,
 	ListSelectionChangeEventDetail,
 	ListMoveEventDetail,
+	ListAccessibilityAttributes,
 };
