@@ -96,7 +96,7 @@
 
 			if (hiddenItems.length) {
 				const showMoreEl = document.createElement("ui5-search-item-show-more");
-				showMoreEl.setAttribute("text", `Show more (${hiddenItems.length})`);
+				showMoreEl.setAttribute("items-to-show-count", 3);
 				group1.appendChild(showMoreEl);
 
 				function expandHiddenItems({ focusFirst = false } = {}) {

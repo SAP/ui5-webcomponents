@@ -46,7 +46,7 @@ import "@ui5/webcomponents-fiori/dist/SearchItemGroup.js";
 
 			if (hiddenItems.length) {
 				const showMoreEl = document.createElement("ui5-search-item-show-more");
-				showMoreEl.setAttribute("text", `Show more (${hiddenItems.length})`);
+				showMoreEl.setAttribute("items-to-show-count", hiddenItems.length);
 				group1.appendChild(showMoreEl);
 
 				function expandHiddenItems({ focusFirst = false } = {}) {
