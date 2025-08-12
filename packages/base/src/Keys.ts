@@ -112,15 +112,11 @@ const isEnterAlt = (event: KeyboardEvent): boolean => (event.key ? event.key ===
 
 const isEnterShift = (event: KeyboardEvent): boolean => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && checkModifierKeys(event, false, false, true);
 
-const isEnterMeta = (event: KeyboardEvent): boolean => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && !!event.metaKey;
-
 const isCtrl = (event: KeyboardEvent): boolean => checkModifierKeys(event, true, false, false);
 
 const isSpace = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && !hasModifierKeys(event);
 
 const isSpaceShift = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, false, false, true);
-
-const isSpaceAlt = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, false, true, false);
 
 const isSpaceCtrl = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, true, false, false);
 
@@ -269,11 +265,9 @@ export {
 	isEnterCtrl,
 	isEnterAlt,
 	isEnterShift,
-	isEnterMeta,
 	isCtrl,
 	isSpace,
 	isSpaceShift,
-	isSpaceAlt,
 	isSpaceCtrl,
 	isSpaceMeta,
 	isLeft,
