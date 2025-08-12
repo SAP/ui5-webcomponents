@@ -51,7 +51,8 @@ describe("TableGrowing - Button", () => {
 			cy.get("[ui5-table")
 				.shadow()
 				.find("#growing-row")
-				.should("exist");
+				.should("exist")
+				.should("have.attr", "aria-hidden", "true");
 
 			cy.get("[ui5-table-growing]")
 				.shadow()

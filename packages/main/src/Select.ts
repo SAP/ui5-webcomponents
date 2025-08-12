@@ -17,7 +17,7 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
@@ -407,7 +407,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 		const selectedOption = this.selectedOption;
 		if (selectedOption) {
-			if ("value" in selectedOption && selectedOption.value) {
+			if ("value" in selectedOption && selectedOption.value !== undefined) {
 				return selectedOption.value;
 			}
 			return selectedOption.hasAttribute("value") ? selectedOption.getAttribute("value") : selectedOption.textContent;
@@ -526,7 +526,7 @@ class Select extends UI5Element implements IFormInputElement {
 		if (this._valueStorage !== undefined) {
 			return this._valueStorage;
 		}
-		return this.selectedOption?.value || this.selectedOption?.textContent || "";
+		return this.selectedOption?.value === undefined ? (this.selectedOption?.textContent || "") : this.selectedOption?.value;
 	}
 
 	get _selectedIndex() {
@@ -899,6 +899,10 @@ class Select extends UI5Element implements IFormInputElement {
 		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
 	}
 
+	get responsivePopoverId() {
+		return `${this._id}-popover`;
+	}
+
 	get isDisabled() {
 		return this.disabled || undefined;
 	}
@@ -966,7 +970,7 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
+		return getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {

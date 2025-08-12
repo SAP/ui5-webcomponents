@@ -89,9 +89,10 @@ describe("Columns resize", () => {
 
 	it("keeps hidden class on columns after rerendering", () => {
 		cy.mount(
-			<FlexibleColumnLayout style={{ height: "300px" }} layout="TwoColumnsMidExpanded">
+			<FlexibleColumnLayout layout="TwoColumnsStartExpanded">
 				<div class="column" slot="startColumn">some content</div>
 				<div class="column" slot="midColumn">some content</div>
+				<div class="column" slot="endColumn">some content</div>
 			</FlexibleColumnLayout>
 		);
 
@@ -106,24 +107,23 @@ describe("Columns resize", () => {
 		cy.wrap({ setAnimationMode })
 			.invoke("setAnimationMode", AnimationMode.Full);
 
-		cy.wait(100);
+		cy.get("@fcl")
+			.shadow()
+			.find(".ui5-fcl-column--end")
+			.should("have.class", "ui5-fcl-column-animation");
 
 		cy.get("@fcl")
 			.shadow()
 			.find(".ui5-fcl-column--end")
-			.should("have.class", "ui5-fcl-column-animation")
-			.and("not.have.class", "ui5-fcl-column--hidden");
+			.should("have.class", "ui5-fcl-column--hidden");
 
 		cy.get("@fcl")
 			.invoke("css", "height", "310px");
 
-		cy.wait(50);
-
 		cy.get("@fcl")
 			.shadow()
 			.find(".ui5-fcl-column--end")
-			.should("have.class", "ui5-fcl-column-animation")
-			.and("not.have.class", "ui5-fcl-column--hidden");
+			.should("have.class", "ui5-fcl-column--hidden");
 	});
 });
 
@@ -316,7 +316,7 @@ describe("Layout Change API", () => {
 				</FlexibleColumnLayout>
 			</>
 		);
-	
+
 		cy.get("[data-testid='switchBtn']")
 			.then($btn => {
 				$btn.get(0).addEventListener("click", () => {
@@ -324,13 +324,13 @@ describe("Layout Change API", () => {
 					fcl.layout = "ThreeColumnsMidExpanded";
 				});
 			});
-	
+
 		cy.get("[ui5-flexible-column-layout]")
 			.should("have.attr", "_visible-columns", "2")
 			.should("have.prop", "layout", "TwoColumnsStartExpanded");
-	
+
 		cy.get("[data-testid='switchBtn']").click();
-	
+
 		cy.get("[ui5-flexible-column-layout]")
 			.should("have.attr", "_visible-columns", "3")
 			.should("have.prop", "layout", "ThreeColumnsMidExpanded");

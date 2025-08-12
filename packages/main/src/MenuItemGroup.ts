@@ -2,15 +2,19 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type MenuItem from "./MenuItem.js";
 import { isInstanceOfMenuItem } from "./MenuItem.js";
 import MenuItemGroupTemplate from "./MenuItemGroupTemplate.js";
 import MenuItemGroupCheckMode from "./types/MenuItemGroupCheckMode.js";
 import type { IMenuItem } from "./Menu.js";
-
-type MenuItemGroupCheckChangeEventDetail = { checkedItems: Array<MenuItem>; }
+import {
+	MENU_ITEM_GROUP_NONE_ACCESSIBLE_NAME,
+	MENU_ITEM_GROUP_SINGLE_ACCESSIBLE_NAME,
+	MENU_ITEM_GROUP_MULTI_ACCESSIBLE_NAME,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -48,19 +52,7 @@ type MenuItemGroupCheckChangeEventDetail = { checkedItems: Array<MenuItem>; }
 	template: MenuItemGroupTemplate,
 })
 
-/**
- * Fired when an item in the group is checked or unchecked.
- * @public
- * @since 2.12.0
- */
-@event("check-change", {
-	bubbles: true,
-})
 class MenuItemGroup extends UI5Element implements IMenuItem {
-	eventDetails!: UI5Element["eventDetails"] & {
-		"check-change": MenuItemGroupCheckChangeEventDetail
-	}
-
 	/**
 	 * Defines the component's check mode.
 	 * @default "None"
@@ -76,6 +68,22 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<IMenuItem>;
+
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
+	get ariaLabelText(): string | undefined {
+		switch (this.checkMode) {
+		case MenuItemGroupCheckMode.None:
+			return MenuItemGroup.i18nBundle.getText(MENU_ITEM_GROUP_NONE_ACCESSIBLE_NAME);
+		case MenuItemGroupCheckMode.Single:
+			return MenuItemGroup.i18nBundle.getText(MENU_ITEM_GROUP_SINGLE_ACCESSIBLE_NAME);
+		case MenuItemGroupCheckMode.Multiple:
+			return MenuItemGroup.i18nBundle.getText(MENU_ITEM_GROUP_MULTI_ACCESSIBLE_NAME);
+		default:
+			return undefined;
+		}
+	}
 
 	get isGroup(): boolean {
 		return true;
@@ -137,10 +145,6 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 			this._clearCheckedItems();
 			clickedItem.checked = isChecked;
 		}
-
-		this.fireDecoratorEvent("check-change", {
-			checkedItems: this._menuItems.filter((item: MenuItem) => item.checked),
-		});
 	}
 }
 

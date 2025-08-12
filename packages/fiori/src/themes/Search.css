@@ -97,11 +97,6 @@
 	border-radius: var(--_ui5_popup_border_radius);
 }
 
-.ui5-search-list {
-	margin: .25rem;
-	width: calc(100% - 0.5rem);
-}
-
 .ui5-search-popover-phone .ui5-search-popover-content {
 	position: relative;
 	width: 100%;

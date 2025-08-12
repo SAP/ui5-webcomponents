@@ -57,6 +57,7 @@ import "./commands/Switch.commands.js";
 import "./commands/TabContainer.commands.js";
 import "./commands/TimeSelectionClocks.commands.js";
 import "./commands/ToggleButton.commands.js";
+import "./commands/TimePicker.commands.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import type MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 
@@ -66,11 +67,7 @@ declare global {
 	namespace Cypress {
 		interface Chainable {
 			ui5SimulateDevice(device?: SimulationDevices): Chainable<void>
-			ui5MenuOpen(options?: { opener?: string }): Chainable<void>
-			ui5MenuOpened(): Chainable<void>
-			ui5MenuItemClick(): Chainable<void>
 			ui5DOMRef(): Chainable<void>
-			ui5MenuItemPress(key: any): Chainable<void>
 			ui5CalendarGetDay(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
 			ui5CalendarGetMonth(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
 			ui5CalendarShowYearRangePicker(): Chainable<void>
