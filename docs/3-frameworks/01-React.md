@@ -77,6 +77,31 @@ For boolean properties like ```collapsed```  in ```ui5-panel```, instead of sett
 </ui5-panel>
 ```
 
+### Using UI5 Web Components in TSX
+
+When using UI5 Web Components like `<ui5-input>` in a `.tsx` file, you may encounter the following TypeScript error:
+
+```ts
+Property 'ui5-input' does not exist on type 'JSX.IntrinsicElements'. ts(2339)
+```
+
+This happens because **TypeScript’s `JSX.IntrinsicElements` only includes standard HTML tags by default** (`<div>`, `<span>`, etc.).
+Custom elements, such as those from UI5, are not recognized unless you explicitly declare them.
+
+To make TypeScript aware of your UI5 Web Components, you need to **extend the `JSX.IntrinsicElements` interface** with the custom tags you plan to use.
+
+```ts
+declare namespace JSX {
+  interface IntrinsicElements {
+    'ui5-input': any; // Replace `any` with a proper type
+    // Add more UI5 web components here...
+  }
+}
+```
+
+Please refer to the [UI5 Web Components React sample](https://github.com/SAP-samples/ui5-webcomponents-sample-react/) for a complete example of using web components in React.
+
+
 ### UI5 Web Components for React
 
-As mentioned above, for a better development experience (and to elegantly work around these 2 React limitations), check out UI5 Web Components for React, [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) and [this tutorial](https://developers.sap.com/mission.react-spa.html).
+As mentioned above, for a better development experience (and to elegantly work around these 3 React limitations), check out UI5 Web Components for React, [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) and [this tutorial](https://developers.sap.com/mission.react-spa.html).
