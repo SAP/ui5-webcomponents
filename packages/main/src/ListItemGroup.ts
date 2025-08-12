@@ -234,7 +234,7 @@ class ListItemGroup extends UI5Element {
 	}
 
 	getFocusDomRef() {
-		return this.groupHeaderItem || this.items[0];
+		return this.groupHeaderItem || this.items.at(0);
 	}
 }
 

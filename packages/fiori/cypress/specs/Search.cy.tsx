@@ -88,7 +88,7 @@ describe("Properties", () => {
 			.should("be.focused");
 	});
 
-	it("items slot arrow down navigation with groups and headerText", () => {
+	it("items slot arrow navigation with groups and headerText", () => {
 		cy.mount(
 			<Search>
 				<SearchItemGroup headerText="Group Header 1">
@@ -114,7 +114,7 @@ describe("Properties", () => {
 
 		cy.get("ui5-search-item-group")
 			.shadow()
-			.find("ui5-li-group-header")
+			.find("[ui5-li-group-header]")
 			.should("be.focused");
 
 		cy.get("[ui5-search]")
@@ -124,7 +124,7 @@ describe("Properties", () => {
 			.should("be.focused");
 	});
 
-	it.only("items slot arrow down navigation with groups and no headerText", () => {
+	it("items slot arrow navigation with groups and no headerText", () => {
 		cy.mount(
 			<Search>
 				<SearchItemGroup>
