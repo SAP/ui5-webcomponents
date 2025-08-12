@@ -11,19 +11,17 @@ import {
 const MIN_MULTI_DRAG_COUNT = 2;
 
 let customDragElementPromise: Promise<HTMLElement> | null = null;
-let draggedElement: HTMLElement | null = null;
 let globalHandlersAttached = false;
 const subscribers = new Set<UI5Element>();
 const selfManagedDragAreas = new Set<HTMLElement | ShadowRoot>();
+let draggedElements: Array<EventTarget> = [];
 
 const ondragstart = (e: DragEvent) => {
 	if (!e.dataTransfer || !(e.target instanceof HTMLElement)) {
 		return;
 	}
 
-	if (!selfManagedDragAreas.has(e.target)) {
-		draggedElement = e.target;
-	}
+	draggedElements = e.composedPath();
 
 	handleMultipleDrag(e);
 };
@@ -45,22 +43,29 @@ const handleMultipleDrag = async (e: DragEvent) => {
 };
 
 const ondragend = () => {
-	draggedElement = null;
+	draggedElements = [];
 	customDragElementPromise = null;
 };
 
 const ondrop = () => {
-	draggedElement = null;
+	draggedElements = [];
 	customDragElementPromise = null;
 };
 
-const setDraggedElement = (element: HTMLElement | null) => {
-	draggedElement = element;
-};
-type SetDraggedElementFunction = typeof setDraggedElement;
+const getDraggedElement = (rootNode: Node) => {
+	// get only elements that are part of the current rootNode
+	const _draggedElements = draggedElements.filter((el): el is HTMLElement => el instanceof HTMLElement && el.getRootNode() === rootNode);
 
-const getDraggedElement = () => {
-	return draggedElement;
+	if (_draggedElements.length === 0) {
+		return null;
+	}
+
+	// special handling for TabContainer. Maybe add generic method to UI5Element and override it in TabContainer
+	if (_draggedElements[0].hasAttribute("ui5-tabcontainer")) {
+		return ((_draggedElements[0] as unknown) as { _getDraggedElement: () => HTMLElement | null })._getDraggedElement();
+	}
+
+	return _draggedElements[0];
 };
 
 const createDefaultMultiDragElement = async (count: number): Promise<HTMLElement> => {
@@ -130,16 +135,6 @@ const unsubscribe = (subscriber: UI5Element) => {
 	}
 };
 
-const addSelfManagedArea = (area: HTMLElement | ShadowRoot) => {
-	selfManagedDragAreas.add(area);
-
-	return setDraggedElement;
-};
-
-const removeSelfManagedArea = (area: HTMLElement | ShadowRoot) => {
-	selfManagedDragAreas.delete(area);
-};
-
 type DragAndDropSettings = {
 	/**
 	 * Allow cross-browser and file drag and drop.
@@ -165,8 +160,6 @@ type MoveEventDetail = {
 const DragRegistry = {
 	subscribe,
 	unsubscribe,
-	addSelfManagedArea,
-	removeSelfManagedArea,
 	getDraggedElement,
 	startMultipleDrag,
 };
@@ -176,7 +169,6 @@ export {
 	startMultipleDrag,
 };
 export type {
-	SetDraggedElementFunction,
 	DragAndDropSettings,
 	MoveEventDetail,
 };

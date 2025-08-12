@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Drag and Drop in Shadow DOM</title>
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+</head>
+
+<body>
+	<section>
+		<div id="host1">
+			<template shadowrootmode="open">
+				<section>
+					<h2>#host1 - move-over</h2>
+					<div>
+						<ui5-label show-colon>source.element</ui5-label>
+						<ui5-text id="sourceElement"></ui5-text>
+					</div>
+					<div>
+						<ui5-label show-colon>destination.element</ui5-label>
+						<ui5-text id="destinationElement"></ui5-text>
+					</div>
+				</section>
+				<ui5-list id="listDnd1" header-text="List 1">
+					<ui5-li id="bg" movable>Bulgaria</ui5-li>
+					<ui5-li id="de" movable>Germany</ui5-li>
+					<ui5-li id="es" movable>Spain</ui5-li>
+				</ui5-list>
+				<div id="host2">
+					<template shadowrootmode="open">
+						<section>
+							<h2>#host2 - move-over</h2>
+							<ui5-label show-colon>source.element</ui5-label>
+							<ui5-text id="sourceElement"></ui5-text>
+							<ui5-label show-colon>destination.element</ui5-label>
+							<ui5-text id="destinationElement"></ui5-text>
+						</section>
+						<ui5-list id="listDnd2" header-text="List 2">
+							<ui5-li id="gr" movable>Greece</ui5-li>
+							<ui5-li id="ro" movable>Romania</ui5-li>
+							<ui5-li id="srb" movable>Serbia</ui5-li>
+						</ui5-list>
+					</template>
+				</div>
+			</template>
+		</div>
+	</section>
+
+	<script>
+		const host1 = document.querySelector("#host1");
+		const host2 = host1.shadowRoot.querySelector("#host2");
+
+		function applyStyles() {
+			const sheet = new CSSStyleSheet();
+
+			sheet.replaceSync(`
+				:host {
+					display: block;
+					padding: 0.5rem;
+				}
+
+				:host(#host1) {
+					border: 2px solid red;
+				}
+
+				:host(#host2) {
+					border: 2px solid green;
+				}
+
+				[ui5-text] {
+					display: inline-block;
+				}
+			`);
+
+			host1.shadowRoot.adoptedStyleSheets = [sheet];
+			host2.shadowRoot.adoptedStyleSheets = [sheet];
+		}
+
+		applyStyles();
+
+		document.getElementById("host1").addEventListener("ui5-move-over", (e) => {
+			const { destination, source } = e.detail;
+
+			document.getElementById("sourceElement").textContent = source.element.id;
+			document.getElementById("destinationElement").textContent = destination.element.id;
+		});
+
+		host1.shadowRoot.getElementById("listDnd1").addEventListener("ui5-move-over", (e) => {
+			const { destination, source } = e.detail;
+
+			host1.shadowRoot.getElementById("sourceElement").textContent = source.element.id;
+			host1.shadowRoot.getElementById("destinationElement").textContent = destination.element.id;
+		});
+
+		host2.shadowRoot.getElementById("listDnd2").addEventListener("ui5-move-over", (e) => {
+			const { destination, source } = e.detail;
+
+			host2.shadowRoot.getElementById("destinationElement").textContent = destination.element.id;
+			host2.shadowRoot.getElementById("sourceElement").textContent = source.element.id;
+		});
+	</script>
+</body>
+
+</html>
