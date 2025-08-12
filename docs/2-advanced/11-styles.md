@@ -21,7 +21,7 @@ You can try this yourself using the Input [sample](https://sap.github.io/ui5-web
 
 Unfortunately, this can't be done for all components because it depends on the complexity of the DOM structure.
 
-**Note:** It's strongly recommended to be used for basic sizing properties (e.g., margin, padding, width, height), applying styles directly at the tag level is recommended to avoid design inconsistencies across the page. For other style changes, consider using the **UI Theme Designer** to ensure consistency. For details, see the [UI Theme Designer](./12-theming.md) article.
+**Note:** It’s strongly recommended to apply styles directly at the tag level for basic sizing properties (e.g., margin, padding, width, height) to avoid design inconsistencies across the page. For other style changes, consider using the **UI Theme Designer** to ensure consistency. For details, see the [UI Theme Designer](./12-theming.md) article.
 
 ## Usage of CSS Shadow Parts
 
