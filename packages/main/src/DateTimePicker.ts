@@ -74,7 +74,7 @@ type PreviewValues = {
  * The value entered by typing into the input field must fit to the used date/time format.
  *
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see [UTS #35: Unicode Locale Data Markup Language](https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table).
+ * For more information, see [UTS #35: Unicode Locale Data Markup Language](https://unicode.org/reports/tr35/tr35-dates.html#table-date-field-symbol-table).
  *
  * **Example:** the following format `dd/MM/yyyy, hh:mm:ss aa`
  * corresponds the `13/04/2020, 03:16:16 AM` value.
