@@ -230,7 +230,11 @@
 		});
 
 		document.getElementById('textarea-prevent-escape').addEventListener("ui5-input", function (event) {
+<<<<<<< HEAD
 			if (event.detail.escapePressed) {
+=======
+			if (event.detail.inputType === "escapePressed") {
+>>>>>>> 4b324692e76864dcb001129d00de1c19b56fbfb9
 				event.preventDefault();
 			}
 		});
