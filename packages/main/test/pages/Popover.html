@@ -641,7 +641,23 @@ z-index: 1;
 
 	<div style="height: 100px;"></div>
 
+	<button data-sap-ui-fastnavgroup="true" id="test"> Test button</button>
+	<ui5-popover id="groupPop" opener="test">
+		<div data-sap-ui-fastnavgroup="true">
+			<Button id="first">First group focusable</Button>
+		</div>
+		<div data-sap-ui-fastnavgroup="true">
+			<Button id="second">Second group focusable</Button>
+		</div>
+	</ui5-popover>
+	<button data-sap-ui-fastnavgroup="true">Test button 2</button>
+
 	<script>
+
+		test.addEventListener("click", function (event) {
+			groupPop.open = true;
+		});
+
 		btn.addEventListener("click", function (event) {
 			pop.opener = btn;
 			pop.open = true;
