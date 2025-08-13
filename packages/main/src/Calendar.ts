@@ -46,7 +46,17 @@ import CalendarTemplate from "./CalendarTemplate.js";
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";
 import CalendarHeaderCss from "./generated/themes/CalendarHeader.css.js";
-import { CALENDAR_HEADER_NEXT_BUTTON, CALENDAR_HEADER_PREVIOUS_BUTTON } from "./generated/i18n/i18n-defaults.js";
+import {
+	CALENDAR_HEADER_NEXT_MONTH_BUTTON,
+	CALENDAR_HEADER_PREVIOUS_MONTH_BUTTON,
+	CALENDAR_HEADER_NEXT_YEAR_BUTTON,
+	CALENDAR_HEADER_PREVIOUS_YEAR_BUTTON,
+	CALENDAR_HEADER_NEXT_YEAR_RANGE_BUTTON,
+	CALENDAR_HEADER_PREVIOUS_YEAR_RANGE_BUTTON,
+	CALENDAR_HEADER_MONTH_BUTTON,
+	CALENDAR_HEADER_YEAR_BUTTON,
+	CALENDAR_HEADER_YEAR_RANGE_BUTTON,
+} from "./generated/i18n/i18n-defaults.js";
 import type { YearRangePickerChangeEventDetail } from "./YearRangePicker.js";
 
 interface ICalendarPicker {
@@ -787,18 +797,46 @@ class Calendar extends CalendarPart {
 	}
 
 	get accInfo() {
+		const currentYearRange = this._currentYearRange;
+		const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
+		const rangeEnd = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
+		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
+
+		rangeStart.setYear(currentYearRange.startYear);
+		rangeEnd.setYear(currentYearRange.endYear);
+
+		const rangeStartText = yearFormat.format(rangeStart.toLocalJSDate());
+		const rangeEndText = yearFormat.format(rangeEnd.toLocalJSDate());
+
+		const ariaLabelMonthButtonText = this.hasSecondaryCalendarType
+			? `${this._headerMonthButtonText}, ${this.secondMonthButtonText}` : `${this._headerMonthButtonText}`;
 		return {
-			ariaLabelMonthButton: this.hasSecondaryCalendarType
-				? `${this._headerMonthButtonText}, ${this.secondMonthButtonText}` : `${this._headerMonthButtonText}`,
+			ariaLabelMonthButton: Calendar.i18nBundle?.getText(CALENDAR_HEADER_MONTH_BUTTON, ariaLabelMonthButtonText),
+			ariaLabelYearButton: Calendar.i18nBundle?.getText(CALENDAR_HEADER_YEAR_BUTTON, this._headerYearButtonText as string),
+			ariaLabelYearRangeButton: Calendar.i18nBundle?.getText(CALENDAR_HEADER_YEAR_RANGE_BUTTON, rangeStartText, rangeEndText),
 		};
 	}
 
-	get headerPreviousButtonText() {
-		return Calendar.i18nBundle?.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
+	get headerPreviousButtonTitle() {
+		switch (this._currentPicker) {
+		case "day":
+			return Calendar.i18nBundle?.getText(CALENDAR_HEADER_PREVIOUS_MONTH_BUTTON);
+		case "month":
+			return Calendar.i18nBundle?.getText(CALENDAR_HEADER_PREVIOUS_YEAR_BUTTON);
+		case "year":
+			return Calendar.i18nBundle?.getText(CALENDAR_HEADER_PREVIOUS_YEAR_RANGE_BUTTON);
+		}
 	}
 
-	get headerNextButtonText() {
-		return Calendar.i18nBundle?.getText(CALENDAR_HEADER_NEXT_BUTTON);
+	get headerNextButtonTitle() {
+		switch (this._currentPicker) {
+		case "day":
+			return Calendar.i18nBundle?.getText(CALENDAR_HEADER_NEXT_MONTH_BUTTON);
+		case "month":
+			return Calendar.i18nBundle?.getText(CALENDAR_HEADER_NEXT_YEAR_BUTTON);
+		case "year":
+			return Calendar.i18nBundle?.getText(CALENDAR_HEADER_NEXT_YEAR_RANGE_BUTTON);
+		}
 	}
 
 	get secondMonthButtonText() {
