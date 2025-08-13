@@ -542,11 +542,7 @@ describe("TextArea general interaction", () => {
 			cy.get("@textarea")
 				.then(textarea => {
 					textarea.get(0).addEventListener("ui5-input", (event: CustomEvent) => {
-<<<<<<< HEAD
 						if (event.detail && event.detail.escapePressed) {
-=======
-						if (event.detail && event.detail.inputType === "escapePressed") {
->>>>>>> 4b324692e76864dcb001129d00de1c19b56fbfb9
 							event.preventDefault();
 						}
 					});

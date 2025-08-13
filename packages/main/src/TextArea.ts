@@ -49,11 +49,7 @@ type ExceededText = {
 };
 
 type TextAreaInputEventDetail = {
-<<<<<<< HEAD
 	escapePressed?: boolean;
-=======
-	inputType?: string;
->>>>>>> 4b324692e76864dcb001129d00de1c19b56fbfb9
 };
 
 /**
@@ -403,11 +399,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 			const nativeTextArea = this.getInputDomRef();
 
 			const prevented = !this.fireDecoratorEvent("input", {
-<<<<<<< HEAD
 				escapePressed: true,
-=======
-				inputType: "escapePressed",
->>>>>>> 4b324692e76864dcb001129d00de1c19b56fbfb9
 			});
 
 			if (!prevented) {
