@@ -451,6 +451,8 @@ class Search extends SearchField {
 
 	_onItemKeydown(e: KeyboardEvent) {
 		const target = e.target as HTMLElement;
+		// if focus is on the group header (in group's shadow dom) the target is the group itself,
+		// if so using getFocusDomRef ensures the actual focused element is used
 		const focusedItem = this._isGroupItem(target) ? target?.getFocusDomRef() : target;
 		const focusableItems = this._getItemsList().listItems;
 		const isFirstItem = focusableItems.at(0) === focusedItem;
