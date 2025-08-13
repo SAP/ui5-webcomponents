@@ -48,6 +48,10 @@ type ExceededText = {
 	calcedMaxLength?: number;
 };
 
+type TextAreaInputEventDetail = {
+	escapePressed?: boolean;
+};
+
 /**
  * @class
  *
@@ -101,6 +105,7 @@ type ExceededText = {
  */
 @event("input", {
 	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -126,7 +131,7 @@ type ExceededText = {
 class TextArea extends UI5Element implements IFormInputElement {
 	eventDetails!: {
 		"change": void;
-		"input": void;
+		"input": TextAreaInputEventDetail;
 		"select": void;
 		"scroll": void;
 		"value-changed": void;
@@ -393,9 +398,14 @@ class TextArea extends UI5Element implements IFormInputElement {
 		if (isEscape(e)) {
 			const nativeTextArea = this.getInputDomRef();
 
-			this.value = this.previousValue;
-			nativeTextArea.value = this.value;
-			this.fireDecoratorEvent("input");
+			const prevented = !this.fireDecoratorEvent("input", {
+				escapePressed: true,
+			});
+
+			if (!prevented) {
+				this.value = this.previousValue;
+				nativeTextArea.value = this.value;
+			}
 		}
 	}
 
