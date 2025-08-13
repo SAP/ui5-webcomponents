@@ -101,6 +101,7 @@ type TextAreaInputEventDetail = {
  * Fired when the value of the component changes at each keystroke or when
  * something is pasted.
  * @since 1.0.0-rc.5
+ * @param {boolean} escapePressed Indicates whether the Escape key was pressed, which triggers a revert to the previous value
  * @public
  */
 @event("input", {
