@@ -935,7 +935,11 @@ describe("Keyboard Handling", () => {
 			.find("[ui5-token]")
 			.should("have.length", 1);
 
-		//TODO: check remaining token/s
+		cy.get("@firstToken")
+			.shadow()
+			.find(".ui5-token--text")
+			.should("have.text", "Canada");
+
 	});
 
 	it("should delete first and second token with [Backspace] when focus is on second", () => {
@@ -962,7 +966,10 @@ describe("Keyboard Handling", () => {
 			.find("[ui5-token]")
 			.should("have.length", 1);
 
-		//TODO: check remaining token/s
+		cy.get("@firstToken")
+			.shadow()
+			.find(".ui5-token--text")
+			.should("have.text", "Canada");
 	});
 
 	it("should delete first and third token with [Backspace] when focus is on second", () => {
@@ -991,9 +998,10 @@ describe("Keyboard Handling", () => {
 			.find("[ui5-token]")
 			.should("have.length", 1);
 
-		//TODO: check remaining tokens
-		// cy.get("@secondToken")
-			// .should("have.text", "Bulgaria")
+		cy.get("@firstToken")
+			.shadow()
+			.find(".ui5-token--text")
+			.should("have.text", "Bulgaria");
 	});
 
 	it("should delete first and third token with [Backspace] when focus is on fourth", () => {
@@ -1034,7 +1042,10 @@ describe("Keyboard Handling", () => {
 			.find("[ui5-token]")
 			.should("have.length", 2);
 
-		//TODO: check remaining tokens
+		cy.get("@firstToken")
+			.shadow()
+			.find(".ui5-token--text")
+			.should("have.text", "Bulgaria");
 	});
 
 	it("should delete second token on [Delete]", () => {
@@ -1060,7 +1071,10 @@ describe("Keyboard Handling", () => {
 			.find("[ui5-token]")
 			.should("have.length", 2);
 
-		//TODO: check remaining token/s
+		cy.get("@firstToken")
+			.shadow()
+			.find(".ui5-token--text")
+			.should("have.text", "Bulgaria");
 	});
 
 	it("should delete first and second token with [Delete] when focus is on third", () => {
@@ -1089,7 +1103,10 @@ describe("Keyboard Handling", () => {
 			.find("[ui5-token]")
 			.should("have.length", 1);
 
-		//TODO: check remaining token/s
+		cy.get("@firstToken")
+			.shadow()
+			.find(".ui5-token--text")
+			.should("have.text", "Canada");
 	});
 
 	it("should open popover on keyboard combination [Ctrl] + [I]", () => {
