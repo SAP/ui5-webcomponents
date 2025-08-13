@@ -1,0 +1,13 @@
+/**
+* Copyright (c) 2012-2020 SAP SE or an SAP affiliate company. All rights reserved.
+*
+* Theming Engine 1.60.0
+* data:{"Path": "Base.baseLib.redfish.css_variables", "PathPattern": "/%frameworkId%/%libId%/%themeId%/%fileId%.css", "Extends": ["sap_horizon","sap_base_fiori","baseTheme"], "Tags": ["Horizon","LightColorScheme"], "Version": { "Build":"11.1.27.20210312160011", "Source": "11.1.27", "Engine": "1.60.0"}}
+*/
+.sapThemeMetaData-Base-baseLib{background-image: url('data:text/plain;utf-8,{"Path": "Base.baseLib.redfish.css_variables", "PathPattern": "/%frameworkId%/%libId%/%themeId%/%fileId%.css", "Extends": ["sap_horizon","sap_base_fiori","baseTheme"], "Tags": ["Horizon","LightColorScheme"], "Version": { "Build":"11.1.27.20210312160011", "Source": "11.1.27", "Engine": "1.60.0"}}');}
+:root {
+  --sapBrandColor: #f42015;
+  --sapBaseColor: #fff;
+  --sapBackgroundColor: #f7f7f7;
+  --sapTextColor: #000;
+}

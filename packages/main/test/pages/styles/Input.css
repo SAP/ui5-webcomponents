@@ -47,7 +47,7 @@
 .titles-wrapper {
 	margin-inline-start: 1rem;
 	margin-inline-end: 1rem;
-	width: 10rem;
+	flex: 1;
 }
 
 .status ui5-text {

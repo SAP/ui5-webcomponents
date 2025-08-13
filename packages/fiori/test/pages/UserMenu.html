@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>User Menu</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
+
+	</script>
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+	<style>
+		#btnOpenUserMenu {
+			float: right;
+		}
+	</style>
+</head>
+
+<body>
+
+<ui5-shellbar id="shellbar">
+	<ui5-shellbar-branding slot="branding">
+		Corporate Portal
+		<img slot="logo" src="./img/sap-logo-svg.svg" />
+	</ui5-shellbar-branding>
+	<ui5-avatar slot="profile">
+		<img src="./img/man_avatar_1.png"/>
+	</ui5-avatar>
+</ui5-shellbar>
+<ui5-user-menu id="userMenuShellBar" show-manage-account show-other-accounts show-edit-accounts show-edit-button>
+	<ui5-user-menu-account slot="accounts"
+						   avatar-src="./img/man_avatar_1.png"
+						   title-text="Alain Chevalier 1"
+						   subtitle-text="alian.chevalier@sap.com"
+						   description="Delivery Manager, SAP SE"
+						   selected>
+	</ui5-user-menu-account>
+	<ui5-user-menu-account slot="accounts"
+						   avatar-initials="AC"
+						   title-text="Alain Chevalier 2"
+						   subtitle-text="test.alian.chevalier@sap.com">
+	</ui5-user-menu-account>
+	<ui5-user-menu-account slot="accounts"
+						   title-text="Alain Chevalier 3"
+						   subtitle-text="alian.chevalier@ariba.com"
+						   description="Account Manager">
+	</ui5-user-menu-account>
+	<ui5-user-menu-item icon="action-settings" text="Setting" data-id="setting"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="globe" text="Product-specific account action" data-id="account-action1"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="collaborate" text="Product-specific account action" data-id="account-action2"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="official-service" text="Legal Information">
+		<ui5-user-menu-item icon="private" text="Private Policy" data-id="privacy-policy"></ui5-user-menu-item>
+		<ui5-user-menu-item icon="accelerated" text="Terms of Use" data-id="terms-of-use"></ui5-user-menu-item>
+	</ui5-user-menu-item>
+	<ui5-user-menu-item icon="select" text="Multiple Select" data-id="multiple-select">
+		<ui5-user-menu-item-group check-mode="Multiple">
+			<ui5-user-menu-item icon="private" text="Item 1" data-id="multi-select-item1"></ui5-user-menu-item>
+			<ui5-user-menu-item icon="accelerated" text="Item 2" data-id="multi-select-item2"></ui5-user-menu-item>
+		</ui5-user-menu-item-group>
+	</ui5-user-menu-item>
+	<ui5-user-menu-item icon="select" text="Single Select" data-id="single-select">
+		<ui5-user-menu-item-group check-mode="Single">
+			<ui5-user-menu-item icon="private" text="Item 1" data-id="single-select"></ui5-user-menu-item>
+			<ui5-user-menu-item icon="accelerated" text="Item 2" data-id="single-select-item2"></ui5-user-menu-item>
+		</ui5-user-menu-item-group>
+	</ui5-user-menu-item>
+</ui5-user-menu>
+
+<div style="border:1px solid black"></div>
+
+<ui5-button id="btnOpenUserMenu">User menu</ui5-button>
+<ui5-user-menu id="userMenu" opener="btnOpenUserMenu">
+	<ui5-user-menu-account slot="accounts"
+						   avatar-src="./img/man_avatar_1.png"
+						   title-text="Alain Chevalier 1"
+						   subtitle-text="alian.chevalier@sap.com"
+						   description="Delivery Manager, SAP SE"
+						   selected>
+	</ui5-user-menu-account>
+	<ui5-user-menu-item icon="action-settings" text="Setting" data-id="setting"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="globe" text="Product-specific account action" data-id="account-action1"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="collaborate" text="Product-specific account action" data-id="account-action2"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="official-service" text="Legal Information">
+		<ui5-user-menu-item icon="private" text="Private Policy" data-id="privacy-policy"></ui5-user-menu-item>
+		<ui5-user-menu-item icon="accelerated" text="Terms of Use" data-id="terms-of-use"></ui5-user-menu-item>
+	</ui5-user-menu-item>
+</ui5-user-menu>
+<ui5-title level="H5" class="header-title">Text Direction</ui5-title>
+<ui5-switch id="direction" text-on="RTL" text-off="LTR"></ui5-switch>
+
+<script>
+	const direction = document.getElementById("direction");
+
+	direction.addEventListener("ui5-change", function() {
+		document.body.setAttribute("dir", direction.checked ? "rtl" : "ltr");
+		window["sap-ui-webcomponents-bundle"].applyDirection();
+	});
+	const menu = document.getElementById("userMenu");
+	document.getElementById("btnOpenUserMenu").addEventListener("click", function () {
+		if(menu.open){
+			menu.open = false;
+		} else {
+			menu.open = true;
+		}
+	});
+
+	const shellbar = document.getElementById("shellbar");
+	const menuShellBar = document.getElementById("userMenuShellBar");
+
+	shellbar.addEventListener("ui5-profile-click", (event) => {
+		menuShellBar.opener = event.detail.targetRef;
+		if(menuShellBar.open){
+			menuShellBar.open = false;
+		} else {
+			menuShellBar.open = true;
+		}
+	});
+
+	menu.addEventListener("item-click", function (event) {
+		const item = event.detail.item.getAttribute("data-id");
+
+		switch (item) {
+			case "setting":
+			console.log("Open Setting Dialog");
+				break;
+			case "privacy-policy":
+				console.log("Privacy Policy");
+				break;
+			case "terms-of-use":
+				console.log("Terms of Use");
+				break;
+			case "account-action1":
+				console.log("Product-specific account action 1");
+				break;
+			case "account-action2":
+				console.log("Product-specific account action 2");
+				break;
+			default:
+				console.log("Default");
+		}
+	});
+
+	menu.addEventListener("avatar-click", function () {
+		console.log("Avatar clicked");
+	});
+
+	menu.addEventListener("manage-account-click", function () {
+		console.log("Manage account clicked");
+	});
+
+	menu.addEventListener("edit-accounts-click", function () {
+		console.log("Edit accounts clicked");
+	});
+
+	menu.addEventListener("open", function (event) {
+		console.log("Change user menu open");
+	});
+
+	menu.addEventListener("close", function (event) {
+		console.log("Change user menu close");
+	});
+
+	menu.addEventListener("sign-out-click", function (event) {
+		console.log("Sign Out clicked");
+
+		const result = prompt("Sign Out", "Are you sure you want to sign out?");
+		if (result) {
+			menu.open = false;
+		}
+		event.preventDefault();
+	});
+
+	menuShellBar.addEventListener("item-click", function (event) {
+		const item = event.detail.item.getAttribute("data-id");
+
+		switch (item) {
+			case "setting":
+				console.log("Open Setting Dialog");
+				break;
+			case "privacy-policy":
+				console.log("Privacy Policy");
+				break;
+			case "terms-of-use":
+				console.log("Terms of Use");
+				break;
+			case "account-action1":
+				console.log("Product-specific account action 1");
+				break;
+			case "account-action2":
+				console.log("Product-specific account action 2");
+				break;
+			default:
+				console.log("Default");
+		}
+	});
+
+	menuShellBar.addEventListener("ui5-check", function (event) {
+		console.log("Check event fired for item: " + event.target.text);
+		console.log("Checked state: " + event.target.checked);
+		console.log(event.target);	
+	});
+
+	menuShellBar.addEventListener("avatar-click", function () {
+		console.log("Avatar clicked");
+	});
+
+	menuShellBar.addEventListener("manage-account-click", function () {
+		console.log("Manage account clicked");
+	});
+
+	menuShellBar.addEventListener("edit-accounts-click", function () {
+		console.log("Edit accounts clicked");
+	});
+
+	menuShellBar.addEventListener("change-account", function (event) {
+		console.log("Change account account", event.detail);
+		event.detail.selectedAccount.loading=true;
+		setTimeout(function(){
+			event.detail.selectedAccount.loading=false;
+		}, 1000);	});
+
+	menuShellBar.addEventListener("sign-out-click", function (event) {
+		console.log("Sign Out clicked");
+
+		const result = prompt("Sign Out", "Are you sure you want to sign out?");
+		if (result) {
+			menuShellBar.open = false;
+		}
+		event.preventDefault();
+	});
+
+	menuShellBar.addEventListener("open", function (event) {
+		console.log("Change user menu open");
+	});
+
+	menuShellBar.addEventListener("close", function (event) {
+		console.log("Change user menu close");
+	});
+</script>
+</body>
+</html>

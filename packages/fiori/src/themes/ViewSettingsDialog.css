@@ -3,7 +3,7 @@
 	min-width: 350px;
 }
 
-[on-desktop] [expand-content].ui5-vsd-content {
+[on-desktop] .ui5-vsd-content.ui5-vsd-content-expand {
 	height: var(--_ui5_vsd_expand_content_height);
 	min-width: 350px;
 }

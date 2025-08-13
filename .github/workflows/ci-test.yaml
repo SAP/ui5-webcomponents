@@ -5,24 +5,25 @@ on:
   push:
     branches:
       - 'main'
+
 jobs:
   check:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        suite: ['base', 'compat', 'ai', 'main:suite-1', 'main:suite-2', 'fiori']
+        suite: ['base', 'compat', 'ai', 'main:suite-1', 'main:cy:suite-1', 'main:suite-2', 'main:cy:suite-2', 'fiori']
+      fail-fast: false
     steps:
     - uses: actions/checkout@v4
-
-    - uses: actions/setup-node@v4.0.1
+    - uses: actions/setup-node@v4.1.0
       with:
-        node-version: 18
+        node-version: 22
         cache: 'yarn'
 
-    - name: Install Dependencies
+    - name: Install
       run: yarn --frozen-lockfile
 
-    - name: Test Build
+    - name: Build
       run: yarn ci:testbuild
 
     - name: Test

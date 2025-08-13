@@ -6,6 +6,13 @@ import {
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type SideNavigation from "./SideNavigation.js";
 
+type SideNavigationItemClickEventDetail = {
+	altKey: boolean;
+	ctrlKey: boolean;
+	metaKey: boolean;
+	shiftKey: boolean;
+}
+
 /**
  * @class
  * Base class for the items that are accepted by the `ui5-side-navigation` component.
@@ -17,6 +24,10 @@ import type SideNavigation from "./SideNavigation.js";
  * @since 1.19.0
  */
 class SideNavigationItemBase extends UI5Element implements ITabbable {
+	eventDetails!: {
+		click: SideNavigationItemClickEventDetail
+	}
+
 	/**
 	 * Defines the text of the item.
 	 *
@@ -41,7 +52,9 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	/**
 	 * Defines the tooltip of the component.
 	 *
-	 * A tooltip attribute should be provided, in order to represent meaning/function, when the component is collapsed(icon only is visualized).
+	 * A tooltip attribute should be provided, in order to represent meaning/function,
+	 * when the component is collapsed ("icon only" design is visualized) or the item text is truncated.
+	 *
 	 * @default undefined
 	 * @public
 	 * @since 2.0.0
@@ -50,7 +63,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	tooltip?: string;
 
 	@property({ noAttribute: true })
-	forcedTabIndex?: string
+	forcedTabIndex = "-1";
 
 	@property({ type: Boolean })
 	sideNavCollapsed = false;
@@ -59,6 +72,15 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	inPopover = false;
 
 	_sideNavigation!: SideNavigation;
+
+	/**
+	 * Defines if the item's group is disabled.
+	 * @private
+	 * @default false
+	 * @since 2.10.0
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_groupDisabled: boolean = false;
 
 	onEnterDOM() {
 		if (isDesktop()) {
@@ -70,10 +92,18 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		return this.tooltip || undefined;
 	}
 
+	get hasSubItems() {
+		return false;
+	}
+
+	get effectiveDisabled() {
+		return this.disabled;
+	}
+
 	get classesArray() {
 		const classes = [];
 
-		if (this.disabled) {
+		if (this.effectiveDisabled) {
 			classes.push("ui5-sn-item-disabled");
 		}
 
@@ -85,11 +115,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	get effectiveTabIndex() {
-		if (this.disabled) {
-			return undefined;
-		}
-
-		return this.forcedTabIndex;
+		return this.forcedTabIndex !== undefined ? parseInt(this.forcedTabIndex) : undefined;
 	}
 
 	get sideNavigation() {
@@ -119,6 +145,13 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	get isSideNavigationItemBase() {
 		return true;
 	}
+
+	/**
+	 * @private
+	 */
+	applyInitialFocusInPopover() {
+
+	}
 }
 
 const isInstanceOfSideNavigationItemBase = (object: any): object is SideNavigationItemBase => {
@@ -126,4 +159,7 @@ const isInstanceOfSideNavigationItemBase = (object: any): object is SideNavigati
 };
 
 export default SideNavigationItemBase;
+export type {
+	SideNavigationItemClickEventDetail,
+};
 export { isInstanceOfSideNavigationItemBase };

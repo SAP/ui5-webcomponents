@@ -35,6 +35,11 @@
     box-shadow: var(--sapContent_HeaderShadow);
 }
 
+:host([has-snapped-title-on-mobile]) {
+	min-height: var(--_ui5_dynamic_page_snapped_title_on_mobile_min_height);
+	line-height: var(--_ui5_dynamic_page_snapped_title_on_mobile_line_height);
+}
+
 /* breadcrumbs */
 ::slotted([ui5-breadcrumbs][slot="breadcrumbs"]) {
     padding: var(--_ui5_dynamic_page_title_breadcrumbs_padding_top) 0
@@ -50,12 +55,12 @@
     margin: var(--_ui5_dynamic_page_title_heading_margin);
 }
 
-::slotted([ui5-title][slot="heading"]) {
+::slotted([ui5-title][size="H5"][slot="heading"]) {
     font-size: var(--sapObjectHeader_Title_FontSize);
 }
 
-::slotted([ui5-title][slot="snappedHeading"]),
-:host([snapped]) ::slotted([ui5-title][slot="heading"]) {
+::slotted([ui5-title][size="H5"][slot="snappedHeading"]),
+:host([snapped]) ::slotted([ui5-title][size="H5"][slot="heading"]) {
     font-size: var(--sapObjectHeader_Title_SnappedFontSize);
     text-overflow: ellipsis;
 }
@@ -80,7 +85,6 @@
 
 .ui5-dynamic-page-title--wrapper {
     display: flex;
-    align-items: center;
 }
 
 .ui5-dynamic-page-title--heading {
@@ -88,11 +92,19 @@
     min-width: 1px;
 }
 
+.ui5-dynamic-page--snapped-title-on-mobile {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	pointer-events: none;
+}
+
 .ui5-dynamic-page-title--content {
-    padding: 0 0 0 1rem;
+    padding: 0.6rem 0 0 1rem;
     flex-shrink: 1.6;
     min-width: 3rem;
     flex-grow: 1;
+    display: flex;
 }
 
 .ui5-dynamic-page-title--actions {
@@ -100,7 +112,6 @@
     min-width: 3rem;
     flex-grow: 1;
     display: flex;
-    align-items: center;
 }
 
 .ui5-dynamic-page-title--actions ::slotted([slot="actionsBar"]) {
@@ -118,7 +129,7 @@
         width: 0.0625rem;
         vertical-align: middle;
         background: var(--sapToolbar_SeparatorColor);
-        margin: 0 0.5rem 0 0.25rem;
+        margin: 0.5rem 0.5rem 0 0.25rem;
     }
 }
 
@@ -130,10 +141,19 @@
     padding-right: 0;
 }
 
+.ui5-dynamic-page-title--top-area ::slotted([slot="navigationBar"]) {
+    flex: 0 1.6 auto;
+}
+
 .ui5-dynamic-page-title--top-area {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.ui5-dynamic-page-title--subheading{
+    max-width: fit-content;
+    z-index: 1;
 }
 
 /* focus */

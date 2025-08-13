@@ -1,11 +1,11 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "2.1.0-rc.2",
+  "version": "2.14.0-rc.0",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "type": "module",
-  "module": "index.js",
+  "module": "./dist/index.js",
   "keywords": [
     "openui5",
     "sapui5",
@@ -16,14 +16,18 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git",
     "directory": "packages/base"
   },
-  "types": "./dist",
   "exports": {
+    "./jsx-runtime": "./dist/jsx-runtime.js",
+    "./jsx-dev-runtime": "./dist/jsx-dev-runtime.js",
     "./dist/ssr-dom.js": {
       "browser": "./dist/ssr-dom.js",
       "node": "./dist/ssr-dom-shim.js",
       "default": "./dist/ssr-dom.js"
     },
-    ".": "./index.js",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
     "./dist/*": {
       "production": "./dist/prod/*",
       "development": "./dist/*",
@@ -31,8 +35,13 @@
     },
     "./package.json": "./package.json",
     "./bundle.esm.js": "./bundle.esm.js",
-    "./*": "./dist/*"
+    "./*": {
+      "production": "./dist/prod/*",
+      "development": "./dist/*",
+      "default": "./dist/*"
+    }
   },
+  "types": "./dist",
   "scripts": {
     "clean": "nps clean",
     "lint": "nps lint",
@@ -43,6 +52,7 @@
     "generateProd": "nps generateProd",
     "bundle": "nps build.bundle",
     "test": "nps test",
+    "test:cypress:open": "nps test.test-cy-open",
     "prepublishOnly": "tsc -b"
   },
   "dependencies": {
@@ -51,8 +61,9 @@
   },
   "devDependencies": {
     "@openui5/sap.ui.core": "1.120.17",
-    "@ui5/webcomponents-tools": "2.1.0-rc.2",
-    "chromedriver": "^125.0.0",
+    "@ui5/cypress-internal": "0.0.0",
+    "@ui5/webcomponents-tools": "2.14.0-rc.0",
+    "chromedriver": "^137.0.4",
     "clean-css": "^5.2.2",
     "copy-and-watch": "^0.1.5",
     "cross-env": "^7.0.3",

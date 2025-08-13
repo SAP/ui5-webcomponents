@@ -1,21 +1,22 @@
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isDesktop, isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import {
 	isShow,
 	isEnter,
@@ -30,16 +31,13 @@ import {
 	isF6Next,
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
-import Icon from "./Icon.js";
-import Popover from "./Popover.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
-import Input from "./Input.js";
-import Button from "./Button.js";
-import TimeSelectionClocks from "./TimeSelectionClocks.js";
-import TimeSelectionInputs from "./TimeSelectionInputs.js";
+import type Popover from "./Popover.js";
+import TimePickerTemplate from "./TimePickerTemplate.js";
+import type DateTimeInput from "./DateTimeInput.js";
+import type { InputAccInfo } from "./Input.js";
+import type TimeSelectionInputs from "./TimeSelectionInputs.js";
+import type TimeSelectionClocks from "./TimeSelectionClocks.js";
 import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
 
 import {
@@ -47,13 +45,21 @@ import {
 	TIMEPICKER_CANCEL_BUTTON,
 	TIMEPICKER_INPUT_DESCRIPTION,
 	TIMEPICKER_POPOVER_ACCESSIBLE_NAME,
+	DATETIME_COMPONENTS_PLACEHOLDER_PREFIX,
 	FORM_TEXTFIELD_REQUIRED,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_INFORMATION,
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_WARNING,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+
+type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 
 type TimePickerChangeInputEventDetail = {
 	value: string,
@@ -128,22 +134,15 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 @customElement({
 	tag: "ui5-time-picker",
 	languageAware: true,
+	cldr: true,
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TimePickerTemplate,
 	styles: [
 		TimePickerCss,
 		ResponsivePopoverCommonCss,
 		TimePickerPopoverCss,
-	],
-	dependencies: [
-		Icon,
-		Popover,
-		ResponsivePopover,
-		TimeSelectionClocks,
-		TimeSelectionInputs,
-		Input,
-		Button,
+		ValueStateMessageCss,
 	],
 })
 /**
@@ -153,21 +152,8 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
-@event<TimePickerChangeEventDetail>("change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		value: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
+@event("change", {
+	bubbles: true,
 })
 
 /**
@@ -176,35 +162,33 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
  * @param {string} value The current value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
-@event<TimePickerInputEventDetail>("input", {
-	detail: {
-		/**
-		 * @public
-		 */
-		value: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
+@event("input", {
+	bubbles: true,
 })
 /**
  * Fired after the value-help dialog of the component is opened.
  * @since 2.0.0
  * @public
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
 /**
  * Fired after the value-help dialog of the component is closed.
  * @since 2.0.0
  * @public
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 class TimePicker extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: TimePickerChangeEventDetail;
+		"value-changed": TimePickerChangeEventDetail;
+		input: TimePickerInputEventDetail;
+		open: void;
+		close: void;
+	}
 	/**
 	 * Defines a formatted time value.
 	 * @default ""
@@ -327,16 +311,20 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
+	@query("[ui5-time-selection-clocks]")
+	_timeSelectionClocks?: TimeSelectionClocks;
+
+	@query("[ui5-popover]")
+	_inputsPopover!: Popover;
+
+	@query("[ui5-datetime-input]")
+	_dateTimeInput!: DateTimeInput;
+
 	tempValue?: string;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-	static async onDefine() {
-		[TimePicker.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
-			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-		]);
-	}
 	get formValidityMessage() {
 		return TimePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
 	}
@@ -369,7 +357,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return TimePicker.i18nBundle.getText(TIMEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
-	get accInfo() {
+	get accInfo(): InputAccInfo {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "dialog",
@@ -387,11 +375,22 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return this.getFormat().parse(this._effectiveValue) as Date;
 	}
 
+	get _lastAvailableTime() {
+		const date = UI5Date.getInstance();
+		date.setHours(23, 59, 59, 999);
+		return this.getFormat().format(date);
+	}
+
 	/**
 	 * @protected
 	 */
 	get _placeholder() {
-		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
+		if (this.placeholder) {
+			return this.placeholder;
+		}
+
+		// translatable placeholder – for example "e.g. 23:59:59"
+		return `${TimePicker.i18nBundle.getText(DATETIME_COMPONENTS_PLACEHOLDER_PREFIX)} ${this._lastAvailableTime}`;
 	}
 
 	/**
@@ -422,12 +421,23 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return isPhone();
 	}
 
+	get _isMobileDevice() {
+		return !isDesktop() && (isPhone() || isTablet());
+	}
+
+	get shouldDisplayValueStateMessageInResponsivePopover() {
+		return this.hasValueStateText && !this._inputsPopover?.open;
+	}
+
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
 		this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
 	}
 
 	_togglePicker() {
 		this.open = !this.open;
+		if (this._isMobileDevice) {
+			this._inputsPopover.open = false;
+		}
 	}
 
 	submitPickers() {
@@ -437,11 +447,19 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	onResponsivePopoverAfterClose() {
 		this.open = false;
-		this.fireEvent("close");
+		this.fireDecoratorEvent("close");
+	}
+
+	onResponsivePopoverBeforeOpen() {
+		const clocks = this._timeSelectionClocks;
+		if (clocks) {
+			clocks._activeIndex = 0;
+			clocks._skipAnimation = true;
+		}
 	}
 
 	onResponsivePopoverAfterOpen() {
-		this.fireEvent("open");
+		this.fireDecoratorEvent("open");
 	}
 
 	/**
@@ -451,7 +469,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 */
 	openInputsPopover() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
-		const popover = this._getInputsPopover();
+		const popover = this._inputsPopover;
 		popover.opener = this;
 		popover.open = true;
 		this._isInputsPopoverOpen = true;
@@ -463,7 +481,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @returns Resolves when the Inputs popover is closed
 	 */
 	closeInputsPopover() {
-		const popover = this._getInputsPopover();
+		const popover = this._inputsPopover;
 		popover.open = false;
 	}
 
@@ -489,7 +507,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	onInputsPopoverAfterOpen() {
-		const popover = this._getInputsPopover();
+		const popover = this._inputsPopover;
 		popover.querySelector<TimeSelectionInputs>("[ui5-time-selection-inputs]")!._addNumericAttributes();
 	}
 
@@ -503,7 +521,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		if (this._isPhone && target && !target.hasAttribute("ui5-icon")) {
+		if (this._isMobileDevice && target && !target.hasAttribute("ui5-icon")) {
 			this.toggleInputsPopover();
 		}
 
@@ -514,7 +532,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_updateValueAndFireEvents(value: string, normalizeValue: boolean, eventsNames: Array<string>) {
+	_updateValueAndFireEvents(value: string, normalizeValue: boolean, eventsNames: Array<"input" | "change" | "value-changed">) {
 		if (value === this.value) {
 			return;
 		}
@@ -531,7 +549,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		this.tempValue = value; // if the picker is open, sync it
 		this._updateValueState(); // Change the value state to Error/None, but only if needed
 		eventsNames.forEach(eventName => {
-			this.fireEvent<TimePickerChangeInputEventDetail>(eventName, { value, valid });
+			this.fireDecoratorEvent(eventName, { value, valid });
 		});
 	}
 
@@ -545,12 +563,16 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_handleInputChange(e: CustomEvent) {
-		const target = e.target as Input;
+		const target = e.target as DateTimeInput;
 		this._updateValueAndFireEvents(target.value, true, ["change", "value-changed"]);
 	}
 
 	_handleInputLiveChange(e: CustomEvent) {
-		const target = e.target as Input;
+		if (this._isPhone) {
+			e.preventDefault();
+		}
+
+		const target = e.target as DateTimeInput;
 		this._updateValueAndFireEvents(target.value, false, ["input"]);
 	}
 
@@ -559,28 +581,16 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_canOpenInputsPopover() {
-		return !this.disabled && this._isPhone;
-	}
-
-	_getPopover() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
-	}
-
-	_getInputsPopover() {
-		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
-	}
-
-	_getInput(): Input {
-		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
+		return !this.disabled && this._isMobileDevice;
 	}
 
 	_getInputField() {
-		const input = this._getInput();
+		const input = this._dateTimeInput;
 		return input && input.getInputDOMRef();
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (this._isPhone && !this.isInputsPopoverOpen()) {
+		if (this._isMobileDevice && !this.isInputsPopoverOpen()) {
 			e.preventDefault();
 		}
 		if (isShow(e)) {
@@ -590,7 +600,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 		const target = e.target as HTMLElement;
 
-		if (target && this.open && this._getInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+		if (target && this.open && this._dateTimeInput.id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this._togglePicker();
 		}
 		if (this.open) {
@@ -598,7 +608,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		}
 
 		if (isEnter(e)) {
-			if (this._internals?.form) {
+			if (this._internals.form) {
 				submitForm(this);
 			}
 		} else if (isPageUpShiftCtrl(e)) {
@@ -705,33 +715,59 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * Hides mobile device keyboard by temporary setting the input to readonly state.
 	 */
 	_hideMobileKeyboard() {
-		this._getInput().readonly = true;
-		setTimeout(() => { this._getInput().readonly = false; }, 0);
+		this._dateTimeInput.readonly = true;
+		setTimeout(() => { this._dateTimeInput.readonly = false; }, 0);
 	}
 
 	_onfocusin(e: FocusEvent) {
-		if (this._isPhone) {
+		if (this._isMobileDevice) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
-				const popover = this._getInputsPopover();
+				const popover = this._inputsPopover;
 				popover.applyFocus();
 			}
 			e.preventDefault();
 		}
 	}
 
-	_oninput(e: CustomEvent) {
-		if (this._isPhone) {
-			e.preventDefault();
+	get valueStateDefaultText(): string | undefined {
+		if (this.valueState === ValueState.None) {
+			return;
 		}
+
+		return this.valueStateTextMappings[this.valueState];
 	}
 
+	get valueStateTextMappings(): ValueStateAnnouncement {
+		return {
+			[ValueState.Positive]: TimePicker.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			[ValueState.Negative]: TimePicker.i18nBundle.getText(VALUE_STATE_ERROR),
+			[ValueState.Critical]: TimePicker.i18nBundle.getText(VALUE_STATE_WARNING),
+			[ValueState.Information]: TimePicker.i18nBundle.getText(VALUE_STATE_INFORMATION),
+		};
+	}
+
+	get shouldDisplayDefaultValueStateMessage(): boolean {
+		return !willShowContent(this.valueStateMessage) && this.hasValueStateText;
+	}
 	get submitButtonLabel() {
 		return TimePicker.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
 	}
 
 	get cancelButtonLabel() {
 		return TimePicker.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
+	}
+
+	get hasValueStateText(): boolean {
+		return this.hasValueState && this.valueState !== ValueState.Positive;
+	}
+
+	get hasValueState(): boolean {
+		return this.valueState !== ValueState.None;
+	}
+
+	get shouldDisplayValueStateMessageOnDesktop() {
+		return this.valueStateMessage.length > 0 && !this.open && !this._isMobileDevice;
 	}
 
 	/**

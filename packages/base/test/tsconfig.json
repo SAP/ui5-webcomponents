@@ -1,0 +1,19 @@
+{
+	"extends": "@ui5/webcomponents-tools/tsconfig.json",
+	"include": [
+		"./**/*"
+	],
+	"compilerOptions": {
+		"outDir": "dist",
+		"composite": true,
+		"experimentalDecorators": true,
+		"tsBuildInfoFile": "dist/.tsbuildinfobuild",
+		"module": "NodeNext",
+		"moduleResolution": "nodenext",
+	},
+	"references": [
+		{
+			"path": "../"
+		},
+	]
+}

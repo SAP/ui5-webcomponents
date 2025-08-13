@@ -85,3 +85,25 @@ ui5-button:not(:defined), ui5-label:not(:defined) {
 ``` 
 
 Please note that the `:defined` CSS pseudo-selector is not supported by the Edge and Internet Explorer 11 browsers.
+
+**Q: How can opt out of forced colors mode. How to avoid Web Components from being adjusted by the user agent forced colors mode?**
+
+**A:** You can use the following CSS rule, based on the `forced-color-adjust` CSS prop:
+
+```CSS
+html {
+    forced-color-adjust: none;
+}
+``` 
+
+or to be more precise, you can apply the CSS rule when `forced-colors` mode is `active`:
+
+```CSS
+@media (forced-colors: active) {
+  .html {
+    forced-color-adjust: none;
+  }
+}
+``` 
+
+By setting `forced-color-adjust` to `none`, the element's colors will not be automatically adjusted by the user agent in forced colors mode.

@@ -1,23 +1,27 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import SideContentPosition from "./types/SideContentPosition.js";
 import SideContentVisibility from "./types/SideContentVisibility.js";
 import SideContentFallDown from "./types/SideContentFallDown.js";
-import DynamicSideContentTemplate from "./generated/templates/DynamicSideContentTemplate.lit.js";
+import DynamicSideContentTemplate from "./DynamicSideContentTemplate.js";
+import type {
+	AccessibilityAttributes,
+} from "@ui5/webcomponents-base";
 
 // Styles
 import DynamicSideContentCss from "./generated/themes/DynamicSideContent.css.js";
 
 // Texts
 import {
+	DSC_MAIN_ARIA_LABEL,
 	DSC_SIDE_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -32,6 +36,12 @@ type DynamicSideContentLayoutChangeEventDetail = {
 	previousBreakpoint: string | undefined,
 	mainContentVisible: boolean,
 	sideContentVisible: boolean,
+}
+
+type DynamicSideContentAriaAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaLabel">;
+type DynamicSideContentAccessibilityAttributes = {
+	mainContent?: DynamicSideContentAriaAccessibilityAttributes,
+	sideContent?: DynamicSideContentAriaAccessibilityAttributes,
 }
 
 /**
@@ -108,8 +118,8 @@ type DynamicSideContentLayoutChangeEventDetail = {
  */
 @customElement({
 	tag: "ui5-dynamic-side-content",
-	renderer: litRender,
-	styles: DynamicSideContentCss,
+	renderer: jsxRenderer,
+	styles: [DynamicSideContentCss, getEffectiveScrollbarStyle()],
 	template: DynamicSideContentTemplate,
 })
 /**
@@ -120,35 +130,13 @@ type DynamicSideContentLayoutChangeEventDetail = {
  * @param {boolean} sideContentVisible visibility of the side content.
  * @public
  */
-@event<DynamicSideContentLayoutChangeEventDetail>("layout-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		currentBreakpoint: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		previousBreakpoint: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		mainContentVisible: {
-			type: Boolean,
-		},
-		/**
-		 * @public
-		 */
-		sideContentVisible: {
-			type: Boolean,
-		},
-	},
+@event("layout-change", {
+	bubbles: true,
 })
 class DynamicSideContent extends UI5Element {
+	eventDetails!: {
+		"layout-change": DynamicSideContentLayoutChangeEventDetail
+	}
 	/**
 	 * Defines the visibility of the main content.
 	 * @default false
@@ -209,6 +197,21 @@ class DynamicSideContent extends UI5Element {
 	equalSplit = false;
 
 	/**
+	* Defines additional accessibility attributes on different areas of the component.
+	*
+	* The accessibilityAttributes object has the following fields:
+	*
+	*  - **mainContent**: `mainContent.ariaLabel` defines the aria-label of the main content area. Accepts any string.
+	*  - **sideContent**: `sideContent.ariaLabel` defines the aria-label of the side content area. Accepts any string.
+	*
+	* @default {}
+	* @public
+	* @since 2.6.0
+	*/
+	@property({ type: Object })
+	accessibilityAttributes: DynamicSideContentAccessibilityAttributes = {};
+
+	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
@@ -246,11 +249,8 @@ class DynamicSideContent extends UI5Element {
 
 	_handleResizeBound: () => void;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		DynamicSideContent.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
 
 	onAfterRendering() {
 		this._resizeContents();
@@ -274,23 +274,21 @@ class DynamicSideContent extends UI5Element {
 		}
 	}
 
-	get classes(): ClassMap {
+	get classes() {
 		const gridPrefix = "ui5-dsc-span",
 			mcSpan = this._toggled ? this._scSpan : this._mcSpan,
-			scSpan = this._toggled ? this._mcSpan : this._scSpan,
-			classes: ClassMap = {
-				main: {
-					"ui5-dsc-main": true,
-				},
-				side: {
-					"ui5-dsc-side": true,
-				},
-			};
+			scSpan = this._toggled ? this._mcSpan : this._scSpan;
 
-		classes.main[`${gridPrefix}-${mcSpan}`] = true;
-		classes.side[`${gridPrefix}-${scSpan}`] = true;
-
-		return classes;
+		return {
+			main: {
+				"ui5-dsc-main": true,
+				[`${gridPrefix}-${mcSpan}`]: true,
+			},
+			side: {
+				"ui5-dsc-side": true,
+				[`${gridPrefix}-${scSpan}`]: true,
+			},
+		};
 	}
 
 	get styles() {
@@ -312,9 +310,14 @@ class DynamicSideContent extends UI5Element {
 		};
 	}
 
-	get accInfo() {
+	get accInfo(): DynamicSideContentAccessibilityAttributes {
 		return {
-			"label": DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL),
+			mainContent: {
+				ariaLabel: this.accessibilityAttributes.mainContent?.ariaLabel || DynamicSideContent.i18nBundle.getText(DSC_MAIN_ARIA_LABEL),
+			},
+			sideContent: {
+				ariaLabel: this.accessibilityAttributes.sideContent?.ariaLabel || DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL),
+			},
 		};
 	}
 
@@ -367,7 +370,7 @@ class DynamicSideContent extends UI5Element {
 	}
 
 	get containerWidth() {
-		return (this.parentElement as HTMLElement).clientWidth;
+		return (this.parentElement as HTMLElement).getBoundingClientRect().width;
 	}
 
 	get breakpoint() {
@@ -467,7 +470,7 @@ class DynamicSideContent extends UI5Element {
 				mainContentVisible: mainSize !== this.span0,
 				sideContentVisible: sideSize !== this.span0,
 			};
-			this.fireEvent<DynamicSideContentLayoutChangeEventDetail>("layout-change", eventParams);
+			this.fireDecoratorEvent("layout-change", eventParams);
 			this._currentBreakpoint = this.breakpoint;
 		}
 
@@ -489,4 +492,5 @@ DynamicSideContent.define();
 export default DynamicSideContent;
 export type {
 	DynamicSideContentLayoutChangeEventDetail,
+	DynamicSideContentAccessibilityAttributes,
 };

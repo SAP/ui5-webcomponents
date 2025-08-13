@@ -93,16 +93,14 @@
 
 .ui5-slider-tickmarks li {
 	height: var(--_ui5_slider_tickmark_height);
-	border-inline-start: 1px solid var(--_ui5_slider_tickmark_bg);
+	border-inline-start: 0.0625rem solid var(--_ui5_slider_tickmark_bg);
 }
 
 .ui5-slider-handle {
 	background: var(--_ui5_slider_handle_background);
 	border: var(--_ui5_slider_handle_border);
 	border-radius: var(--_ui5_slider_handle_border_radius);
-	margin-inline-start: calc(-1 * var(--_ui5_slider_handle_width) / 2);
-	top: var(--_ui5_slider_handle_top);
-	position: absolute;
+	position: relative;
 	outline: none;
 	height: var(--_ui5_slider_handle_height);
 	width: var(--_ui5_slider_handle_width);
@@ -148,13 +146,18 @@
 	border: var(--_ui5_slider_handle_focus_border);
 }
 
-.ui5-slider-tooltip {
+.ui5-slider-handle-container {
+	position: absolute;
+	margin-inline-start: calc(-1 * var(--_ui5_slider_handle_width) / 2);
+	top: var(--_ui5_slider_handle_top);
+}
+
+:host(:not([hidden])) .ui5-slider-handle-container .ui5-slider-tooltip {
 	display: flex;
+	font-family: var(--sapFontFamily);
 	justify-content: center;
 	align-items: center;
 	visibility: hidden;
-	pointer-events: none;
-	line-height: 1rem;
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%);
@@ -171,6 +174,22 @@
 	box-sizing: var(--_ui5_slider_tooltip_border_box);
 }
 
+:host(:not([hidden])):host([editable-tooltip]) .ui5-slider-handle-container .ui5-slider-tooltip {
+	border: none;
+	background: none;
+	box-shadow: none;
+}
+
+:host([editable-tooltip]) .ui5-slider-tooltip {
+	padding: 0;
+	box-shadow: none;
+}
+
+.ui5-slider-tooltip [ui5-input] {
+	width: 100%;
+	text-align: center;
+}
+
 .ui5-slider-tooltip-value {
 	position: relative;
 	display: flex;
@@ -184,27 +203,38 @@
 	margin: 0;
 	padding: 0;
 	white-space: nowrap;
+    height: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .ui5-slider-labels li {
-	position: relative;
+    position: relative;
 	list-style: none;
-	padding-top: 0.3125rem;
-	height: 1rem;
 	margin: 0;
 	text-align: center;
 	display: inline-block;
-	color: var(--_ui5_slider_label_color);
+	font-family: var(--sapFontFamily);
 	font-size: var(--_ui5_slider_label_fontsize);
 	padding-top: 0;
 	box-sizing: border-box;
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	vertical-align: top;
+    width: 0.0625rem;
+    visibility: hidden;
 }
 
-.ui5-slider-hidden-labels li:not(:first-child):not(:last-child) {
+.ui5-slider-labels li::after {
+	content: attr(data-counter);
+	position: absolute;
+	top: 0;
+	visibility: visible;
+    display: inline-block;
+    width: 2rem;
+	color: var(--_ui5_slider_label_color);
+    transform: translateX(-50%);
+}
+
+.ui5-slider-hidden-labels li:not(:first-child):not(:last-child)::after {
 	visibility: hidden;
 }
 

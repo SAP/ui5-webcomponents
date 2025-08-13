@@ -14,15 +14,17 @@ tabContainer.addEventListener("move-over", (event) => {
 
 tabContainer.addEventListener("move", (event) => {
 	const { source, destination } = event.detail;
-	const currentParent = destination.element.parentElement;
 
-	if (destination.placement === MovePlacement.Before) {
-		currentParent.insertBefore(source.element, destination.element);
-	} else if (destination.placement === MovePlacement.After) {
-		const nextElement = Array.from(currentParent.children).at(Array.from(currentParent.children).indexOf(destination.element) + 1);
-		currentParent.insertBefore(source.element, nextElement);
-	} else if (destination.placement === MovePlacement.On) {
-		destination.element.prepend(source.element);
+	switch (destination.placement) {
+		case MovePlacement.Before:
+			destination.element.before(source.element);
+			break;
+		case MovePlacement.After:
+			destination.element.after(source.element);
+			break;
+		case MovePlacement.On:
+			destination.element.prepend(source.element);
+			break;
 	}
 
 	const newParent = source.element.parentElement;

@@ -28,3 +28,8 @@ Due to legal reasons, contributors will be asked to accept a DCO before they sub
     - Note that the UI5 Web Components developers have many duties. So, depending on the required effort for reviewing, testing, and clarification, this may take a while.
 1. Once the change has been approved and merged, we will inform you in a comment.
 1. Celebrate!
+
+### Contributing with AI-generated code
+As artificial intelligence evolves, AI-generated code is becoming valuable for many software projects, including open-source initiatives. While we recognize the potential benefits of incorporating AI-generated content into our open-source projects there are certain requirements that need to be reflected and adhered to when making contributions.
+
+Please see our [guideline for AI-generated code contributions to SAP Open Source Software Projects](https://github.com/SAP/.github/blob/main/CONTRIBUTING_USING_GENAI.md) for these requirements.

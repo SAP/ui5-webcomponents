@@ -1,21 +1,21 @@
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
 import {
 	isDown,
 	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
-import ProductSwitchTemplate from "./generated/templates/ProductSwitchTemplate.lit.js";
+import ProductSwitchTemplate from "./ProductSwitchTemplate.js";
 
 import {
 	PRODUCT_SWITCH_CONTAINER_LABEL,
@@ -64,7 +64,7 @@ interface IProductSwitchItem extends HTMLElement, ITabbable {
  */
 @customElement({
 	tag: "ui5-product-switch",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: ProductSwitchCss,
 	template: ProductSwitchTemplate,
 })
@@ -102,6 +102,7 @@ class ProductSwitch extends UI5Element {
 		this._handleResizeBound = this._handleResize.bind(this);
 	}
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	static get ROW_MIN_WIDTH() {
@@ -109,10 +110,6 @@ class ProductSwitch extends UI5Element {
 			ONE_COLUMN: 600,
 			THREE_COLUMN: 900,
 		};
-	}
-
-	static async onDefine() {
-		ProductSwitch.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	get _ariaLabelText() {
@@ -179,6 +176,10 @@ class ProductSwitch extends UI5Element {
 		if (this._currentIndex - this._rowSize < 0) { // border reached, do nothing
 			e.stopPropagation();
 		}
+	}
+
+	getFocusDomRef() {
+		return this._itemNavigation._getCurrentItem();
 	}
 }
 

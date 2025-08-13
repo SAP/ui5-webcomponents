@@ -1,5 +1,5 @@
-const getParentElement = (el: HTMLElement) => {
-	return (el.parentElement ? el.parentNode : (el.parentNode as ShadowRoot).host) as HTMLElement;
+const getParentElement = (element: Element) : Element | null => {
+	return element.parentElement ? element.parentElement : (element.parentNode as ShadowRoot).host;
 };
 
 export default getParentElement;

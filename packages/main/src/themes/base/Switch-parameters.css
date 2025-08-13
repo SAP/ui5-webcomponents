@@ -20,7 +20,6 @@
 	--_ui5-switch-root-box-shadow: none;
 	--_ui5_switch_root_after_outline: none;
 
-	--_ui5-switch-focus: "";
 	--_ui5_switch_disabled_opacity: .4;
 
 	--_ui5_switch_transform: translateX(100%) translateX(-1.875rem);
@@ -100,7 +99,6 @@
 	--_ui5_switch_handle_semantic_on_hover_box_shadow: var(--sapContent_Informative_Shadow);
 	--_ui5_switch_handle_semantic_off_hover_box_shadow: var(--sapContent_Negative_Shadow);
 
-	--_ui5-switch-handle-icon-display: none;
 	--_ui5_switch_handle_left: -0.0625rem;
 	--_ui5-switch-slider-texts-display: inline;
 
@@ -121,7 +119,6 @@
 	--_ui5_switch_text_inactive_right_alternate: 0.125rem;
 	--_ui5_switch_text_active_left: calc(-100% + 2rem);
 	--_ui5_switch_text_active_left_alternate: calc(-100% + 2rem);
-	--_ui5_switch_text_active_right: auto;
 
 	--_ui5_switch_text_active_color: var(--sapButton_Track_Selected_TextColor);
 	--_ui5_switch_text_inactive_color: var(--sapTextColor);

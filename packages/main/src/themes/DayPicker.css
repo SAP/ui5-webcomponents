@@ -39,6 +39,11 @@
 	border-radius: var(--_ui5_daypicker_item_border_radius);
 }
 
+.ui5-dp-weekname,
+.ui5-dp-dayname {
+	cursor: default;
+}
+
 .ui5-dp-weekname {
 	color: var(--_ui5_daypicker_weekname_color);
 }
@@ -87,6 +92,7 @@
 	font-size: var(--sapFontSize);
 	border: var(--_ui5_daypicker_item_border);
 	border-radius: var(--_ui5_daypicker_item_border_radius);
+	cursor: pointer;
 }
 
 .ui5-dp-item:hover {
@@ -107,7 +113,7 @@
 	height: 100%;
 }
 
-.ui5-dp-item.ui5-dp-item--weeekend {
+.ui5-dp-item.ui5-dp-item--weekend {
 	background: var(--sapLegend_NonWorkingBackground);
 }
 
@@ -117,7 +123,7 @@
 }
 
 
-.ui5-dp-item.ui5-dp-item--weeekend:hover {
+.ui5-dp-item.ui5-dp-item--weekend:hover {
 	background: var(--sapList_Hover_Background);
 	filter: var(--_ui5_daypicker_item_weeekend_filter);
 }
@@ -129,7 +135,7 @@
 }
 
 .ui5-dp-item.ui5-dp-item--othermonth:hover,
-.ui5-dp-item.ui5-dp-item--weeekend.ui5-dp-item--othermonth:hover {
+.ui5-dp-item.ui5-dp-item--weekend.ui5-dp-item--othermonth:hover {
 	color: var(--_ui5_daypicker_item_othermonth_hover_color);
 	background: var(--sapList_Hover_Background);
 }
@@ -210,7 +216,7 @@
 }
 
 .ui5-dp-item.ui5-dp-item--selected:hover {
-	background: var( --_ui5_daypicker_item_selected_hover);
+	background: var(--_ui5_daypicker_item_selected_hover);
 	color: var(--sapContent_ContrastTextColor);
 }
 
@@ -328,6 +334,11 @@
 	border-block-start: var(--_ui5_daypicker_special_day_border_top);
 }
 
+.ui5-dp-specialday.NonWorking,
+.ui5-dp-specialday.Working {
+	border-block-start: none;
+}
+
 .ui5-dp-item--selected .ui5-dp-specialday {
 	width: var(--_ui5_daypicker_selected_item_special_day_width);
 }
@@ -349,7 +360,7 @@
 }
 
 .ui5-dp-item:not(:focus).ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-specialday {
-	border-end-end-radius: var(--_ui5_daypicker_special_day_selected_border_radius_bottom); 
+	border-end-end-radius: var(--_ui5_daypicker_special_day_selected_border_radius_bottom);
 	border-end-start-radius: var(--_ui5_daypicker_special_day_selected_border_radius_bottom);
 }
 
@@ -358,12 +369,12 @@
 	inset-block-start: var(--_ui5_daypicker_selected_item_now_special_day_top);
 }
 
-.ui5-dp-item[special-day].ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-daytext {
+.ui5-dp-item[data-ui5-special-day].ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-daytext {
 	border-radius: var(--_ui5-daypicker_item_selected_now_border_radius);
 }
 
-.ui5-dp-item[special-day].ui5-dp-item--selected.ui5-dp-item--now:focus::after,
-.ui5-dp-item[special-day].ui5-dp-item--now:focus::after {
+.ui5-dp-item[data-ui5-special-day].ui5-dp-item--selected.ui5-dp-item--now:focus::after,
+.ui5-dp-item[data-ui5-special-day].ui5-dp-item--now:focus::after {
 	margin: var(--_ui5_daypicker_item_now_focus_margin);
 }
 
@@ -378,15 +389,15 @@
 
 /* Styles for calendar with secondary calendar type and special dates */
 
-.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[special-day].ui5-dp-item--selected.ui5-dp-item--now::after,
-.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[special-day].ui5-dp-item--now::after {
+.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[data-ui5-special-day].ui5-dp-item--selected.ui5-dp-item--now::after,
+.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[data-ui5-special-day].ui5-dp-item--now::after {
 	inset: var(--_ui5_daypicker_twocalendar_item_special_day_now_inset);
 	border-radius: var(--_ui5_daypicker_twocalendar_item_special_day_now_border_radius);
 	border-width: var(--_ui5_daypicker_twocalendar_item_special_day_after_border_width);
 	border-color: var(--_ui5_daypicker_item_selected_focus_color);
 }
 
-.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[special-day].ui5-dp-item--now:not(.ui5-dp-item--selected)::after {
+.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[data-ui5-special-day].ui5-dp-item--now:not(.ui5-dp-item--selected)::after {
 	inset: 0.1875rem;
 }
 

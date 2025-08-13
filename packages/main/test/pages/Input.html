@@ -15,6 +15,7 @@
 </head>
 
 <body class="input1auto">
+	<form id="content"></form>
 	<h3> Input with suggestions: type 'a'</h3>
 	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br />
 	<ui5-label id="myLabelInputChange">Event [input] :: N/A</ui5-label><br />
@@ -120,7 +121,7 @@
 	<h3>Input with valueState and Dynamic suggestions</h3>
 	<ui5-input id="inputError" class="input2auto" show-suggestions value-state="Negative"
 		placeholder="Search for a country ...">
-		<div slot="valueStateMessage">Custom error value state message with a <a href="#">Link</a>.</div>
+		<div slot="valueStateMessage">Custom error value state message with a <ui5-link href="#">Link</ui5-link>.</div>
 	</ui5-input>
 
 	<h3>Input with long suggestions with valueState and ui5-li</h3>
@@ -158,7 +159,7 @@
 
 	<h3> Test 'input' event</h3>
 	<ui5-input id="input2" value-state="Negative" placeholder="Negative state ...">
-		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an
+		<div slot="valueStateMessage">Information message. This is a <ui5-link href="#">Link</ui5-link>. Extra long text used as an
 			information message. Extra long text used as an information message - 2. Extra long text used as an information
 			message - 3.</div>
 	</ui5-input>
@@ -366,6 +367,7 @@
 
 	<h3>Test Backspace</h3>
 	<ui5-input id="input-number3" type="Number" value="4"></ui5-input><br>
+	<ui5-input id="input-number3-change-count" type="Number" value="0"></ui5-input><br />
 	<ui5-button id="input-number3-focusout">Click</ui5-button>
 
 	<ui5-input id="input-number31" type="Number" value="4.333"></ui5-input><br>
@@ -516,6 +518,23 @@
 	<br />
 
 	<ui5-button id="dynamic-value-state-trigger">Trigger dynamic value state</ui5-button>
+
+	<br>
+
+	<ui5-input id="prevent-input-event"></ui5-input>
+	<ui5-input id="prevent-input-event-clear-icon" value="Test" show-clear-icon></ui5-input>
+
+	<br>
+
+	<ui5-label id="description">Input with accessible description ref</ui5-label>
+	<ui5-input accessible-description-ref="description"></ui5-input>
+
+	<br>
+
+	<ui5-label id="description">Input with just accessible description</ui5-label>
+	<ui5-input accessible-description="Accessible description works"></ui5-input>
+
+	<br>
 
 	<script>
 		const dynamicValueState = document.getElementById("dynamic-value-state");
@@ -1049,6 +1068,21 @@
 
 			invisibleMessage.announce(text, "Polite");
 		})
+
+		document.getElementById("input-number3").addEventListener("ui5-input", () => {
+			const inputNumber3ChangeCount = document.getElementById("input-number3-change-count");
+			inputNumber3ChangeCount.value = (parseInt(inputNumber3ChangeCount.value) + 1).toString();
+		});
+
+		document.getElementById("prevent-input-event").addEventListener("ui5-input", event => {
+			if (event.target.value.length > 3) {
+				event.preventDefault();
+			}
+		});
+
+		document.getElementById("prevent-input-event-clear-icon").addEventListener("ui5-input", event => {
+			event.preventDefault();
+		});
 	</script>
 </body>
 

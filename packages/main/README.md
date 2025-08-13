@@ -10,22 +10,26 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 |--------------------------|-----------------------------|------------------------------------------------------------|
 | Avatar                   | `ui5-avatar`                | `import "@ui5/webcomponents/dist/Avatar.js";`              |
 | Avatar Group             | `ui5-avatar-group`          | `import "@ui5/webcomponents/dist/AvatarGroup.js";`         |
-| Tag                    | `ui5-tag`                 | `import "@ui5/webcomponents/dist/Tag.js";`               |
 | Bar                      | `ui5-bar`                   | `import "@ui5/webcomponents/dist/Bar.js";`                 |
 | Breadcrumbs              | `ui5-breadcrumbs`           | `import "@ui5/webcomponents/dist/Breadcrumbs.js";`         |
 | Breadcrumbs Item         | `ui5-breadcrumbs-item`      | comes with `ui5-breadcrumbs`                               |
-| Tag                    | `ui5-tag`                 | `import "@ui5/webcomponents/dist/Tag.js";`               |
+| Tag                      | `ui5-tag`                   | `import "@ui5/webcomponents/dist/Tag.js";`                 |
 | Busy Indicator           | `ui5-busy-indicator`        | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
 | Button                   | `ui5-button`                | `import "@ui5/webcomponents/dist/Button.js";`              |
+| ButtonBadge              | `ui5-button-badge`          | `import "@ui5/webcomponents/dist/ButtonBadge.js";`         |
 | Calendar                 | `ui5-calendar`              | `import "@ui5/webcomponents/dist/Calendar.js";`            |
-| Calendar Date            | `ui5-calendar-date`         | comes with `ui5-calendar`                                  |
+| Calendar Date            | `ui5-date`                  | comes with `ui5-calendar`                                  |
+| Calendar Date Range      | `ui5-date-range`            | comes with `ui5-calendar`                                  |
+| Calendar Special Date    | `ui5-date-special`          | comes with `ui5-calendar`                                  |
+| Calendar Legend          | `ui5-calendar-legend`       | `import "@ui5/webcomponents/dist/CalendarLegend.js";`      |
+| Calendar Legend Item     | `ui5-calendar-legend-item`  | comes with `ui5-calendar-legend`                           |
 | Card                     | `ui5-card`                  | `import "@ui5/webcomponents/dist/Card.js";`                |
 | CardHeader               | `ui5-card-header`           | `import "@ui5/webcomponents/dist/CardHeader.js";`          |
 | Carousel                 | `ui5-carousel`              | `import "@ui5/webcomponents/dist/Carousel.js";`            |
 | Checkbox                 | `ui5-checkbox`              | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
 | Color Palette            | `ui5-color-palette`         | `import "@ui5/webcomponents/dist/ColorPalette.js";`        |
 | Color Palette Item       | `ui5-color-palette-item`    | comes with `ui5-color-palette`                             |
-| Color Palette Popover    | `ui5-color-palette-popover` | comes with `ui5-color-palette-popover`                     |
+| Color Palette Popover    | `ui5-color-palette-popover` | `import "@ui5/webcomponents/dist/ColorPalettePopover.js";` |
 | Color Picker             | `ui5-color-picker`          | `import "@ui5/webcomponents/dist/ComboPicker.js";`         |
 | ComboBox                 | `ui5-combobox`              | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
 | ComboBox Item            | `ui5-cb-item`               | comes with `ui5-combobox`                                  |
@@ -43,7 +47,9 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | List - Standard Item     | `ui5-li`                    | `import "@ui5/webcomponents/dist/ListItemStandard.js";`    |
 | List - Custom Item       | `ui5-li-custom`             | `import "@ui5/webcomponents/dist/ListItemCustom.js";`      |
 | List - Group Item        | `ui5-li-group`              | `import "@ui5/webcomponents/dist/ListItemGroup.js";`       |
-| Menu                     | `ui5-menu        `          | `import "@ui5/webcomponents/dist/Menu.js";`                |
+| Menu                     | `ui5-menu`                  | `import "@ui5/webcomponents/dist/Menu.js";`                |
+| Menu Item                | `ui5-menu-item`             | comes with `ui5-menu`                                      |
+| Menu Separator           | `ui5-menu-separator`        | comes with `ui5-menu`                                      |
 | Message Strip            | `ui5-message-strip`         | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
 | Multi ComboBox           | `ui5-multi-combobox`        | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
 | Multi ComboBox Item      | `ui5-mcb-item`              | comes with `ui5-multi-combobox`                            |
@@ -76,6 +82,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Token                    | `ui5-token`                 | comes with `ui5-multi-input`                               |
 | Tree                     | `ui5-tree`                  | `import "@ui5/webcomponents/dist/Tree.js";`                |
 | Tree Item                | `ui5-tree-item`             | comes with `ui5-tree`                                      |
+| Tree Item Custom         | `ui5-tree-item-custom`      | comes with `ui5-tree`                                      |
 
 ## Provided assets
 
@@ -87,37 +94,41 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 
 ## Provided features
 
-```js
-import "@ui5/webcomponents/dist/features/<FEATURE-NAME>.js
-```
-
-| Affects                                           | Feature Import                                                       | Description                                                                                             |
-|---------------------------------------------------|----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| `ui5-color-palette`                               | `@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js`         | Support for "more colors dialog" for the color palette component                                        |
-| `ui5-input`                                       | `@ui5/webcomponents/dist/features/InputSuggestions.js`               | Support for input suggestions while typing                                                              |
+| Feature name             | Affects                                               | Triggered by                            | Description                                                                                             |
+|--------------------------|-------------------------------------------------------|-----------------------------------------|---------------------------------------------------------------------------------------------------------|
+| More Colors Dialog       | `ui5-color-palette`, `ui5-color-palette-popover`      | Setting `showMoreColors` to `true`      | Support for "more colors dialog" for the color palette component                                        |
+| Input Suggestions        | `ui5-input`, `ui5-multi-input`                        | Setting `showSuggestions` to `true`     | Support for input suggestions while typing                                                              |
 
 ### Color Palette "More Colors" Feature
+
+The `ui5-color-palette` component has a `showMoreColors` property, that, when set to `true`, enables a "More colors" dialog.
+Since this functionality is not always needed, the "More colors" dialog and its children are not direct dependencies of the component by default,
+and are only loaded dynamically when `showMoreColors` is set to `true`.
+
+Feature import (optional as of `2.7.0`): 
 
 ```js
 import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js";
 ```
 
-The `ui5-color-palette` component has a `showMoreColors` property, that, when set to `true`, enables a "More colors" dialog.
-Since this is not always needed, in order to use this dialog, you must import the above feature.
+You can optionally pre-load the feature (thus avoiding the dynamic import), if you prefer so. 
 
 ### Input Suggestions Feature
-
-```js
-import "@ui5/webcomponents/dist/features/InputSuggestions.js";
-```
 
 The `<ui5-input>` element acts as an `<input>` with the Fiori design and added functionality, such as value state.
 
 The so-called "input suggestions" is an advanced feature that allows the user to choose from a list of predefined options while typing.
 Since input suggestions may not always be needed, they do not come as part of the `<ui5-input>` itself.
 
-To enable the functionality, import the above module into your app. This will also automatically import `ui5-suggestion-item`
-for your convenience.
+Setting the `showSuggestions` property to `true` loads the suggestions feature dynamically (as well as the `ui5-suggestion-item` component) for your convenience.
+
+Feature import (optional as of `2.7.0`):  
+
+```js
+import "@ui5/webcomponents/dist/features/InputSuggestions.js";
+```
+
+You can optionally pre-load the feature (thus avoiding the dynamic import), if you prefer so.
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/main/README.md)

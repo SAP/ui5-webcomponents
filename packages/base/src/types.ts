@@ -1,34 +1,35 @@
-import type AriaHasPopup from "./types/AriaHasPopup.js";
-import type AriaRole from "./types/AriaRole.js";
+import type { JSX } from "./jsx-runtime.d.ts";
 
-type PromiseResolve = (value: void | PromiseLike<void>) => void;
-type Timeout = ReturnType<typeof setTimeout>;
-type Interval = ReturnType<typeof setInterval>;
+// General utils
+export type LowercaseString<T> = T extends string ? Lowercase<T> : never;
 
-type StyleDataCSP = {
-	content: string,
-	packageName: string,
-	fileName: string,
-};
+// Core Framework types
+export type PromiseResolve = (value: void | PromiseLike<void>) => void;
+export type Timeout = ReturnType<typeof setTimeout>;
+export type Interval = ReturnType<typeof setInterval>;
 
-type StyleData = StyleDataCSP | string;
+export type StyleData = string;
 
-type ComponentStylesData = Array<ComponentStylesData> | Array<StyleData> | StyleData;
+export type ComponentStylesData = Array<ComponentStylesData> | string;
+export type ClassMapValue = Record<string, boolean>
 
-type ClassMapValue = Record<string, boolean>
+export type ClassMap = { [x: string] : ClassMapValue | ClassMap };
 
-type ClassMap = { [x: string] : ClassMapValue | ClassMap };
+export type PassiveEventListenerObject = EventListenerObject & { passive: boolean };
 
-type PassiveEventListenerObject = EventListenerObject & { passive: boolean };
+// Accessibility
+export type AriaRole = JSX.AriaRole;
+export type AriaDisabled = JSX.AriaAttributes["aria-disabled"];
+export type AriaChecked = JSX.AriaAttributes["aria-checked"];
+export type AriaReadonly = JSX.AriaAttributes["aria-readonly"];
+export type AriaHasPopup = "dialog" | "grid" | "listbox" | "menu" | "tree" | "false";
+export type AriaCurrent = "page" | "step" | "location" | "date" | "time" | "true" | "false" | boolean | undefined;
+export type AriaAutoComplete = "list" | "none" | "inline" | "both" | undefined;
+export type AriaLandmarkRole = "none" | "banner" | "main" | "region" | "navigation" | "search" | "complementary" | "form" | "contentinfo"
 
-type LowercaseString<T> = T extends string ? Lowercase<T> : never;
-
-type ARIARoles = LowercaseString<AriaRole>;
-type ARIAHasPopup = LowercaseString<AriaHasPopup>;
-
-type AccessibilityInfo = {
+export type AccessibilityInfo = {
 	// The WAI-ARIA role of the component.
-	role?: ARIARoles,
+	role?: AriaRole,
 
 	// A translated text that represents the component type. Used when several components share same role,
 	// f.e. Select and ComboBox both have role="combobox".
@@ -51,27 +52,18 @@ type AccessibilityInfo = {
 	children?: Array<HTMLElement>,
 }
 
-type AccessibilityAttributes = {
+export type AccessibilityAttributes = {
 	ariaSetsize?: number,
 	ariaPosinset?: number,
+	ariaLabel?: string,
 	controls?: LowercaseString<string>
 	expanded?: "true" | "false" | boolean,
-	hasPopup?: ARIAHasPopup,
+	hasPopup?: AriaHasPopup,
 	name?: string,
-	role?: ARIARoles,
+	role?: AriaRole,
 	ariaKeyShortcuts?: string,
+	ariaCurrent?: AriaCurrent,
+	current?: AriaCurrent,
+	roleDescription?: string,
+	title?: string,
 }
-
-export type {
-	AccessibilityInfo,
-	AccessibilityAttributes,
-	PromiseResolve,
-	Timeout,
-	Interval,
-	StyleData,
-	StyleDataCSP,
-	ComponentStylesData,
-	ClassMap,
-	ClassMapValue,
-	PassiveEventListenerObject,
-};

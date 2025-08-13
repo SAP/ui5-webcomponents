@@ -1,4 +1,4 @@
-[growing-button] {
+.ui5-growing-button {
 	display: flex;
 	align-items: center;
 	padding: var(--_ui5_load_more_padding);
@@ -9,11 +9,11 @@
 	outline: none;
 }
 
-[growing-button-inner] {
+.ui5-growing-button-inner {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	flex-direction: column;
+	flex-direction: row;
 	min-height: var(--_ui5_load_more_text_height);
 	width: 100%;
 	color: var(--sapButton_TextColor);
@@ -23,30 +23,28 @@
 	box-sizing: border-box;
 }
 
-[growing-button-inner]:focus-visible {
+.ui5-growing-button-inner:focus-visible {
 	outline: var(--_ui5_load_more_outline_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	outline-offset: -0.125rem;
 	border-color: transparent;
 }
 
-[growing-button-inner]:hover {
+.ui5-growing-button-inner:hover {
 	background-color: var(--sapList_Hover_Background);
 }
 
-[growing-button-inner]:active,
-[growing-button-inner][active] {
+.ui5-growing-button-inner:active,
+.ui5-growing-button-inner.ui5-growing-button-inner--active {
 	background-color: var(--sapList_Active_Background);
 	border-color: var(--sapList_Active_Background);
 }
 
-[growing-button-inner]:active > *,
-[growing-button-inner][active] > * {
+.ui5-growing-button-inner:active > *,
+.ui5-growing-button-inner.ui5-growing-button-inner--active > * {
 	color: var(--sapList_Active_TextColor);
 }
 
-[growing-button-text],
-[growing-button-subtext] {
-	width: 100%;
+.ui5-growing-button-text {
 	text-align: center;
 	font-family: "72override", var(--sapFontFamily);
 	white-space: nowrap;
@@ -55,14 +53,17 @@
 	box-sizing: border-box;
 }
 
-[growing-button-text] {
+.ui5-growing-button-text {
 	height: var(--_ui5_load_more_text_height);
-	padding: 0.875rem 1rem 0 1rem;
+	padding: 0.875rem 1rem 1rem;
 	font-size: var(--_ui5_load_more_text_font_size);
 	font-weight: bold;
 }
 
-[growing-button-subtext] {
-	font-size: var(--sapFontSize);
-	padding: var(--_ui5_load_more_desc_padding);
+:host([loading]) .ui5-list-growing-button-busy-indicator:not([_is-busy]) {
+	display: none;
+}
+
+:host([loading]) .ui5-list-growing-button-busy-indicator[_is-busy] + .ui5-growing-button-text {
+	padding-left: 0.5rem;
 }

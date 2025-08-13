@@ -631,7 +631,7 @@
 							<ui5-segmented-button id="sb2">
 								<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
 								<ui5-toggle-button>Medium</ui5-toggle-button>
-								<ui5-toggle-button>Largr</ui5-toggle-button>
+								<ui5-toggle-button>Large</ui5-toggle-button>
 							</ui5-segmented-button>
 						</div>
 					</div>
@@ -673,6 +673,80 @@
 		</ui5-wizard>
 	</ui5-dialog>
 
+	<h2>Wizard steps with long titles</h2>
+	<ui5-wizard id="wiz3">
+		<ui5-wizard-step icon="product" title-text="Product type">
+		  <div>
+			Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus
+			sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet,
+			feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie
+			neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris
+			vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor,
+			nec dignissim quam convallis ut. Praesent vitae commodo felis, ut
+			iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh.
+			Suspendisse est velit, scelerisque ut commodo eget, dignissim quis
+			metus. Cras faucibus consequat gravida. Curabitur vitae quam felis.
+			Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam
+			erat volutpat.
+		  </div>
+		</ui5-wizard-step>
+		<ui5-wizard-step icon="product" title-text="Overview">
+		  <div>Content for Overview step.</div>
+		</ui5-wizard-step>
+
+		<ui5-wizard-step icon="product" title-text="Details">
+		  <div>Content for Details step.</div>
+		</ui5-wizard-step>
+
+		<ui5-wizard-step
+		  icon="product"
+		  title-text="Specifications and Requirements"
+		  subtitle-text="(Optional)"
+		>
+		  <div>Content for Specifications and Requirements step.</div>
+		</ui5-wizard-step>
+
+		<ui5-wizard-step
+		  icon="product"
+		  title-text="User Instructions and Guidelines for Installation"
+		>
+		  <div>
+			Content for User Instructions and Guidelines for Installation step.
+		  </div>
+		</ui5-wizard-step>
+
+		<ui5-wizard-step icon="product" title-text="Testing">
+		  <div>Content for Testing step.</div>
+		</ui5-wizard-step>
+
+		<ui5-wizard-step icon="product" title-text="Validation">
+		  <div>Content for Validation step.</div>
+		</ui5-wizard-step>
+
+		<ui5-wizard-step icon="product" title-text="Deployment Plan">
+		  <div>Content for Deployment Plan step.</div>
+		</ui5-wizard-step>
+
+		<ui5-wizard-step
+		  icon="product"
+		  title-text="Maintenance and Support Overview"
+		>
+		  <div>Content for Maintenance and Support Overview step.</div>
+		</ui5-wizard-step>
+
+		<ui5-wizard-step icon="product" title-text="Feedback and Improvements">
+		  <div>Content for Feedback and Improvements step.</div>
+		</ui5-wizard-step>
+
+		<ui5-wizard-step
+		  icon="product"
+		  title-text="Final Review and Conclusion for the Entire Process"
+		>
+		  <div>
+			Content for Final Review and Conclusion for the Entire Process step.
+		  </div>
+		</ui5-wizard-step>
+	  </ui5-wizard>
 	<script>
 		var wiz = document.getElementById("wiz");
 

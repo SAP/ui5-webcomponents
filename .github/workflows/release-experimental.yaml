@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4.0.1
+    - uses: actions/setup-node@v4.1.0
       with:
-        node-version: 18
+        node-version: 22
         cache: 'yarn'
 
     - name: Install
@@ -23,4 +23,4 @@ jobs:
       env:
         NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
       run: |
-        node ./.github/actions/release.js
+        node ./.github/actions/release.cjs

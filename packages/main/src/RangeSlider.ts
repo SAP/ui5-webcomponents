@@ -1,22 +1,25 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isEscape,
+	isEnter,
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
-import Icon from "./Icon.js";
-import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
+import RangeSliderTemplate from "./RangeSliderTemplate.js";
+import type SliderTooltip from "./SliderTooltip.js";
 
 // Texts
 import {
 	RANGE_SLIDER_ARIA_DESCRIPTION,
 	RANGE_SLIDER_START_HANDLE_DESCRIPTION,
 	RANGE_SLIDER_END_HANDLE_DESCRIPTION,
+	SLIDER_TOOLTIP_INPUT_LABEL,
+	SLIDER_TOOLTIP_INPUT_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -88,7 +91,6 @@ type AffectedValue = "startValue" | "endValue";
 	languageAware: true,
 	formAssociated: true,
 	template: RangeSliderTemplate,
-	dependencies: [Icon],
 	styles: [SliderBase.styles, rangeSliderStyles],
 })
 class RangeSlider extends SliderBase implements IFormInputElement {
@@ -115,6 +117,12 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	@property({ type: Boolean })
 	rangePressed = false;
 
+	@property({ type: Boolean })
+	_isStartValueValid = false;
+
+	@property({ type: Boolean })
+	_isEndValueValid = false;
+
 	_startValueInitial?: number;
 	_endValueInitial?: number;
 	_valueAffected?: AffectedValue;
@@ -128,7 +136,11 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	_secondHandlePositionFromStart?: number;
 	_selectedRange?: number;
 	_reversedValues = false;
+	_lastValidStartValue: string;
+	_lastValidEndValue: string;
+	_areInputValuesSwapped = false;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get formFormattedValue() {
@@ -148,6 +160,8 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		super();
 		this._stateStorage.startValue = undefined;
 		this._stateStorage.endValue = undefined;
+		this._lastValidStartValue = this.min.toString();
+		this._lastValidEndValue = this.max.toString();
 	}
 
 	get tooltipStartValue() {
@@ -216,6 +230,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this.notResized = true;
 		this.syncUIAndState();
 		this._updateHandlesAndRange(0);
+		this.update(this._valueAffected, this.startValue, this.endValue);
 	}
 
 	syncUIAndState() {
@@ -262,9 +277,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 			this._endValueInitial = this.endValue;
 		}
 
-		if (this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.VISIBLE;
-		}
+		this._tooltipsOpen = this.showTooltip;
 	}
 
 	/**
@@ -278,7 +291,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 * Resets the stored Range Slider's initial values saved when it was first focused
 	 * @private
 	 */
-	_onfocusout() {
+	_onfocusout(e: FocusEvent) {
 		if (this._isFocusing()) {
 			this._preventFocusOut();
 			return;
@@ -288,8 +301,8 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this._startValueInitial = undefined;
 		this._endValueInitial = undefined;
 
-		if (this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
+		if (this.showTooltip && !(e.relatedTarget as HTMLInputElement)?.hasAttribute("ui5-slider-tooltip")) {
+			this._tooltipsOpen = false;
 		}
 	}
 
@@ -299,12 +312,15 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	* user interaction.
 	* @private
 	*/
-	_onkeyup() {
-		super._onkeyup();
-		this._setAffectedValue(undefined);
+	_onkeyup(e: KeyboardEvent) {
+		super._onKeyupBase();
+
+		if (!isEnter(e)) {
+			this._setAffectedValue(undefined);
+		}
 
 		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 
 		this._startValueAtBeginningOfAction = undefined;
@@ -426,9 +442,13 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 * @private
 	 */
 	_onmousedown(e: TouchEvent | MouseEvent) {
+		if ((e as MouseEvent)?.button && (e as MouseEvent)?.button !== 0) {
+			return;
+		}
+
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
-		if (this.disabled || this._effectiveStep === 0) {
+		if (this.disabled || this._effectiveStep === 0 || (e.target as HTMLElement).hasAttribute("ui5-slider-tooltip")) {
 			return;
 		}
 
@@ -529,7 +549,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this._setAffectedValue(undefined);
 
 		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 
 		this._setIsPressInCurrentRange(false);
@@ -643,10 +663,12 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 		if ((affectedValue === "startValue" && !isReversed) || (affectedValue === "endValue" && isReversed)) {
 			this._startHandle.focus();
+			this.bringToFrontTooltip("start");
 		}
 
 		if ((affectedValue === "endValue" && !isReversed) || (affectedValue === "startValue" && isReversed)) {
 			this._endHandle.focus();
+			this.bringToFrontTooltip("end");
 		}
 	}
 
@@ -749,6 +771,74 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		}
 	}
 
+	bringToFrontTooltip(handle: "start" | "end") {
+		const tooltipSelector = handle === "start"
+			? "[data-sap-ui-start-value]"
+			: "[data-sap-ui-end-value]";
+
+		const tooltip = this.shadowRoot!.querySelector(tooltipSelector) as SliderTooltip;
+
+		if (tooltip?.hidePopover && tooltip?.showPopover) {
+			requestAnimationFrame(() => {
+				tooltip.hidePopover();
+				tooltip.showPopover();
+			});
+		}
+	}
+
+	_onTooltopForwardFocus(e: CustomEvent) {
+		const tooltip = e.target as SliderTooltip;
+
+		tooltip.followRef?.focus();
+	}
+
+	_onTooltipChange(e: CustomEvent) {
+		const tooltip = e.target as SliderTooltip;
+		const isStart = tooltip.hasAttribute("data-sap-ui-start-value");
+		const inputValue = parseFloat(e.detail.value as string);
+
+		const clampedValue = Math.min(this.max, Math.max(this.min, inputValue));
+
+		if (isStart) {
+			this.startValue = clampedValue;
+			this._lastValidStartValue = clampedValue.toString();
+		} else {
+			this.endValue = clampedValue;
+			this._lastValidEndValue = clampedValue.toString();
+		}
+
+		if (this.startValue > this.endValue) {
+			this._areInputValuesSwapped = true;
+
+			const temp = this.startValue;
+			this.startValue = this.endValue;
+			this.endValue = temp;
+
+			const tempValid = this._lastValidStartValue;
+			this._lastValidStartValue = this._lastValidEndValue;
+			this._lastValidEndValue = tempValid;
+
+			const oppositeSelector = isStart
+				? "[data-sap-ui-end-value]"
+				: "[data-sap-ui-start-value]";
+
+			const oppositeInput = this.shadowRoot!.querySelector(oppositeSelector) as SliderTooltip;
+			oppositeInput?.focus();
+		}
+
+		this.bringToFrontTooltip(isStart ? "start" : "end");
+		this.update("value", this.startValue, this.endValue);
+		this.fireDecoratorEvent("change");
+	}
+
+	_getFormattedValue(value: string) {
+		const valueNumber = parseFloat(value);
+		const ctor = this.constructor as typeof RangeSlider;
+		const stepPrecision = ctor._getDecimalPrecisionOfNumber(this._effectiveStep);
+
+		return valueNumber.toFixed(stepPrecision).toString();
+	}
+
 	/**
 	 * Swaps the start and end values of the handles if one came accros the other:
 	 * - If the start value is greater than the endValue swap them and their handles
@@ -780,8 +870,13 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 		this._setValuesAreReversed();
 		this._updateHandlesAndRange(this[affectedValue]);
-		this.focusInnerElement();
+
+		if (!this._areInputValuesSwapped) {
+			this.focusInnerElement();
+		}
+
 		this.syncUIAndState();
+		this._areInputValuesSwapped = false;
 	}
 
 	/**
@@ -793,9 +888,9 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 */
 	_setValuesAreReversed() {
 		this._reversedValues = !this._reversedValues;
-	 }
+	}
 
-	 _areValuesReversed() {
+	_areValuesReversed() {
 		return this._reversedValues;
 	}
 
@@ -829,16 +924,20 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-slider-progress")!;
 	}
 
-	get _ariaLabelledByStartHandleRefs() {
-		return [`${this._id}-accName`, `${this._id}-startHandleDesc`].join(" ").trim();
+	get _ariaLabelledByStartHandleText() {
+		return this.accessibleName ? ["ui5-slider-accName", "ui5-slider-startHandleDesc"].join(" ").trim() : "ui5-slider-startHandleDesc";
 	}
 
-	get _ariaLabelledByEndHandleRefs() {
-		return [`${this._id}-accName`, `${this._id}-endHandleDesc`].join(" ").trim();
+	get _ariaLabelledByEndHandleText() {
+		return this.accessibleName ? ["ui5-slider-accName", "ui5-slider-endHandleDesc"].join(" ").trim() : "ui5-slider-endHandleDesc";
 	}
 
-	get _ariaLabelledByProgressBarRefs() {
-		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
+	get _ariaLabelledByInputText() {
+		return RangeSlider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_LABEL);
+	}
+
+	get _ariaDescribedByInputText() {
+		return RangeSlider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_DESCRIPTION);
 	}
 
 	get styles() {
@@ -854,21 +953,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 			endHandle: {
 				[this.directionStart]: `${this._secondHandlePositionFromStart!}%`,
 			},
-			label: {
-				"width": `${this._labelWidth}%`,
-			},
-			labelContainer: {
-				"width": `100%`,
-				[this.directionStart]: `-${this._labelWidth / 2}%`,
-			},
-			tooltip: {
-				"visibility": `${this._tooltipVisibility}`,
-			},
 		};
-	}
-
-	static async onDefine() {
-		RangeSlider.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

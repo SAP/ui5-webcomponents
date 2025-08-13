@@ -15,7 +15,7 @@
 }
 
 /* actionable (type="Active" + desktop) */
-:host([actionable]:not([disabled])) {
+:host([actionable]:not([disabled]):not([ui5-li-group-header])) {
 	cursor: pointer;
 }
 
@@ -29,9 +29,17 @@
 	border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
+:host([selected]) .ui5-li-additional-text {
+	text-shadow: var(--sapContent_TextShadow);
+}
+
 /* hovered */
-:host([actionable]:not([active], [selected]):hover) {
-	background-color: var(--sapList_Hover_Background);
+:host([actionable]:not([active]):not([selected]):not([ui5-li-group-header]):hover) {
+    background-color: var(--sapList_Hover_Background);
+}
+
+:host([actionable]:not([active]):not([selected]):not([ui5-li-group-header]):hover) .ui5-li-additional-text {
+	text-shadow: var(--sapContent_TextShadow);
 }
 
 /* selected and hovered */

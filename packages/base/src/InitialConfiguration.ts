@@ -6,6 +6,8 @@ import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type { FormatSettings } from "./config/FormatSettings.js";
 import AnimationMode from "./types/AnimationMode.js";
 import type CalendarType from "./types/CalendarType.js";
+import { resetConfiguration as resetConfigurationFn } from "./config/ConfigurationReset.js";
+import { getLocationSearch } from "./Location.js";
 
 let initialized = false;
 
@@ -22,6 +24,7 @@ type InitialConfig = {
 	formatSettings: FormatSettings,
 	fetchDefaultLanguage: boolean,
 	defaultFontLoading: boolean,
+	enableDefaultTooltips: boolean,
 };
 
 let initialConfig: InitialConfig = {
@@ -37,6 +40,7 @@ let initialConfig: InitialConfig = {
 	formatSettings: {},
 	fetchDefaultLanguage: false,
 	defaultFontLoading: true,
+	enableDefaultTooltips: true,
 };
 
 /* General settings */
@@ -52,6 +56,16 @@ const getTheme = () => {
 
 const getThemeRoot = () => {
 	initConfiguration();
+
+	if (initialConfig.themeRoot === undefined) {
+		return;
+	}
+
+	if (!validateThemeRoot(initialConfig.themeRoot)) {
+		console.warn(`The ${initialConfig.themeRoot} is not valid. Check the allowed origins as suggested in the "setThemeRoot" description.`); // eslint-disable-line
+		return;
+	}
+
 	return initialConfig.themeRoot;
 };
 
@@ -78,6 +92,11 @@ const getNoConflict = () => {
 const getDefaultFontLoading = () => {
 	initConfiguration();
 	return initialConfig.defaultFontLoading;
+};
+
+const getEnableDefaultTooltips = () => {
+	initConfiguration();
+	return initialConfig.enableDefaultTooltips;
 };
 
 /**
@@ -131,7 +150,7 @@ const parseConfigurationScript = () => {
 };
 
 const parseURLParameters = () => {
-	const params = new URLSearchParams(window.location.search);
+	const params = new URLSearchParams(getLocationSearch());
 
 	// Process "sap-*" params first
 	params.forEach((value, key) => {
@@ -201,6 +220,19 @@ const initConfiguration = () => {
 		return;
 	}
 
+	resetConfiguration();
+
+	initialized = true;
+};
+
+/**
+ * Internaly exposed method to enable configurations in tests.
+ * @private
+ */
+const resetConfiguration = (testEnv?: boolean) => {
+	if (testEnv) {
+		resetConfigurationFn();
+	}
 	// 1. Lowest priority - configuration script
 	parseConfigurationScript();
 
@@ -209,8 +241,6 @@ const initConfiguration = () => {
 
 	// 3. If OpenUI5 is detected, it has the highest priority
 	applyOpenUI5Configuration();
-
-	initialized = true;
 };
 
 export {
@@ -225,4 +255,6 @@ export {
 	getTimezone,
 	getFormatSettings,
 	getDefaultFontLoading,
+	resetConfiguration,
+	getEnableDefaultTooltips,
 };

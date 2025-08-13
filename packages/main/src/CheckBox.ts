@@ -2,21 +2,21 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/accept.js";
-import "@ui5/webcomponents-icons/dist/complete.js";
-import "@ui5/webcomponents-icons/dist/border.js";
-import "@ui5/webcomponents-icons/dist/tri-state.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import Icon from "./Icon.js";
-import Label from "./Label.js";
 import type WrappingType from "./types/WrappingType.js";
+import type {
+	AriaRole,
+	AriaChecked,
+	AriaDisabled,
+	AriaReadonly,
+} from "@ui5/webcomponents-base/dist/types.js";
 import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
@@ -28,10 +28,19 @@ import {
 import checkboxCss from "./generated/themes/CheckBox.css.js";
 
 // Template
-import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
+import CheckBoxTemplate from "./CheckBoxTemplate.js";
 
 let isGlobalHandlerAttached = false;
 let activeCb: CheckBox;
+
+type CheckBoxAccInfo = {
+	role?: AriaRole,
+	ariaChecked?: AriaChecked,
+	ariaReadonly?: AriaReadonly,
+	ariaDisabled?: AriaDisabled,
+	ariaRequired?: boolean,
+	tabindex?: number | undefined,
+}
 
 /**
  * @class
@@ -79,22 +88,32 @@ let activeCb: CheckBox;
 	tag: "ui5-checkbox",
 	languageAware: true,
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: CheckBoxTemplate,
 	styles: checkboxCss,
-	dependencies: [
-		Label,
-		Icon,
-	],
 })
 /**
  * Fired when the component checked state changes.
  * @public
- * @allowPreventDefault
  */
-@event("change")
-
+@event("change", {
+	bubbles: true,
+	cancelable: true,
+})
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed", {
+	bubbles: true,
+	cancelable: true,
+})
 class CheckBox extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		"change": void,
+		"value-changed": void,
+	};
+
 	/**
 	 * Receives id(or many ids) of the elements that label the component
 	 * @default undefined
@@ -150,6 +169,9 @@ class CheckBox extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Defines whether the component is required.
+	 *
+	 * **Note:** We advise against using the text property of the checkbox when there is a
+	 * label associated with it to avoid having two required asterisks.
 	 * @default false
 	 * @public
 	 * @since 1.3.0
@@ -226,12 +248,35 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	name?: string;
 
 	/**
+	 * Defines the form value of the component that is submitted when the checkbox is checked.
+	 *
+	 * When a form containing `ui5-checkbox` elements is submitted, only the values of the
+	 * **checked** checkboxes are included in the form data sent to the server. Unchecked
+	 * checkboxes do not contribute any data to the form submission.
+	 *
+	 * This property is particularly useful for **checkbox groups**, where multiple checkboxes with the same `name` but different `value` properties can be used to represent a set of related options.
+	 *
+	 * @default "on"
+	 * @public
+	 */
+	@property()
+	value = "on";
+
+	/**
 	 * Defines the active state (pressed or not) of the component.
 	 * @private
 	 */
 	@property({ type: Boolean })
 	active = false;
 
+	/**
+	 * Defines custom aria implementation object.
+	 * @private
+	 */
+	@property({ type: Object })
+	_accInfo?: CheckBoxAccInfo;
+
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	_deactivate: () => void;
 
@@ -248,7 +293,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	}
 
 	get formFormattedValue() {
-		return this.checked ? "on" : null;
+		return this.checked ? this.value : null;
 	}
 
 	constructor() {
@@ -330,11 +375,11 @@ class CheckBox extends UI5Element implements IFormInputElement {
 				this.checked = !this.checked;
 			}
 
-			const changePrevented = !this.fireEvent("change", null, true);
+			const changePrevented = !this.fireDecoratorEvent("change");
 			// Angular two way data binding
-			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
+			const valueChangePrevented = !this.fireDecoratorEvent("value-changed");
 
-			if (changePrevented || valueChagnePrevented) {
+			if (changePrevented || valueChangePrevented) {
 				this.checked = lastState.checked;
 				this.indeterminate = lastState.indeterminate;
 			}
@@ -355,7 +400,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	}
 
 	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
+		return getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
 	}
 
 	get classes() {
@@ -402,7 +447,14 @@ class CheckBox extends UI5Element implements IFormInputElement {
 
 	get effectiveTabIndex() {
 		const tabindex = this.getAttribute("tabindex");
-		return this.disabled || this.displayOnly ? undefined : tabindex || "0";
+
+		if (this.tabbable) {
+			return tabindex ? parseInt(tabindex) : 0;
+		}
+	}
+
+	get tabbable() {
+		return !this.disabled && !this.displayOnly;
 	}
 
 	get isCompletelyChecked() {
@@ -413,18 +465,15 @@ class CheckBox extends UI5Element implements IFormInputElement {
 		return this.displayOnly && !this.disabled;
 	}
 
-	get displayOnlyIcon() {
-		if (this.isCompletelyChecked) {
-			return "complete";
-		}
-		if (this.checked && this.indeterminate) {
-			return "tri-state";
-		}
-		return "border";
-	}
-
-	static async onDefine() {
-		CheckBox.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	get accInfo() {
+		return {
+			"role": this._accInfo ? this._accInfo.role : "checkbox" as AriaRole,
+			"ariaChecked": this._accInfo ? this._accInfo.ariaChecked : this.effectiveAriaChecked as AriaChecked,
+			"ariaReadonly": this._accInfo ? this._accInfo.ariaReadonly : this.ariaReadonly as AriaReadonly,
+			"ariaDisabled": this._accInfo ? this._accInfo.ariaDisabled : this.effectiveAriaDisabled as AriaDisabled,
+			"ariaRequired": this._accInfo ? this._accInfo.ariaRequired : this.required,
+			"tabindex": this._accInfo ? this._accInfo.tabindex : this.effectiveTabIndex,
+		};
 	}
 }
 

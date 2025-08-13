@@ -1,5 +1,5 @@
 /**
- * Base class for the extensions of <code>ui5-table</code> components.
+ * Base class for the extensions of `ui5-table` components.
  * @private
  */
 export default abstract class TableExtension {}

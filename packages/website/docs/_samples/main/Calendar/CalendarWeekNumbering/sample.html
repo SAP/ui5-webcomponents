@@ -1,0 +1,31 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar with a selection of calendarWeekNumbering</title>
+
+    <script data-ui5-config type="application/json">
+        {
+            "language": "EN"
+        }
+    </script>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor); height: 450px;">
+    <!-- playground-fold-end -->
+
+    <ui5-select id="sel" style="width: 300px">
+        <ui5-option data-calendar-week-numbering="ISO_8601" selected>ISO_8601</ui5-option>
+        <ui5-option data-calendar-week-numbering="MiddleEastern">MiddleEastern</ui5-option>
+        <ui5-option data-calendar-week-numbering="WesternTraditional">WesternTraditional</ui5-option>
+    </ui5-select>
+    <ui5-calendar id="cal"></ui5-calendar>
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

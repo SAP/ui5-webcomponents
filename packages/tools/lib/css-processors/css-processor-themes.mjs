@@ -42,16 +42,11 @@ let scopingPlugin = {
                 // JSON
                 const jsonPath = f.path.replace(/dist[\/\\]css/, "dist/generated/assets").replace(".css", ".css.json");
                 await mkdir(path.dirname(jsonPath), {recursive: true});
-                const data = {
-                    packageName: packageJSON.name,
-                    fileName: jsonPath.substr(jsonPath.lastIndexOf("themes")),
-                    content: newText,
-                };
-                writeFileIfChanged(jsonPath, JSON.stringify({_: data}));
+                writeFileIfChanged(jsonPath, JSON.stringify(newText));
 
                 // JS/TS
                 const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", extension);
-                const jsContent = getFileContent(tsMode, jsPath, packageJSON.name, "\`" + newText + "\`");
+                const jsContent = getFileContent(packageJSON.name, "\`" + newText + "\`");
                 writeFileIfChanged(jsPath, jsContent);
             });
         })

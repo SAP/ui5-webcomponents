@@ -1,5 +1,7 @@
-// OpenUI5's Element.js subset
-type Element = {
+// OpenUI5's Control.js subset
+import getSharedResource from "../getSharedResource.js";
+
+type Control = {
 	getDomRef: () => HTMLElement | null,
 }
 
@@ -9,9 +11,27 @@ type OpenUI5Popup = {
 		open: (...args: any[]) => void,
 		_closed: (...args: any[]) => void,
 		getOpenState: () => "CLOSED" | "CLOSING" | "OPEN" | "OPENING",
-		getContent: () => Element, // this is the OpenUI5 Element/Control instance that opens the Popup (usually sap.m.Popover/sap.m.Dialog)
+		getContent: () => Control | HTMLElement | null, // this is the OpenUI5 Element/Control instance that opens the Popup (usually sap.m.Popover/sap.m.Dialog)
 		onFocusEvent: (e: FocusEvent) => void,
 	}
+};
+
+// contains all OpenUI5 and Web Component popups that are currently opened
+const AllOpenedPopupsRegistry = getSharedResource<{ openedRegistry: Array<object> }>("AllOpenedPopupsRegistry", { openedRegistry: [] });
+
+const addOpenedPopup = (popup: object) => {
+	AllOpenedPopupsRegistry.openedRegistry.push(popup);
+};
+
+const removeOpenedPopup = (popup: object) => {
+	const index = AllOpenedPopupsRegistry.openedRegistry.indexOf(popup);
+	if (index > -1) {
+		AllOpenedPopupsRegistry.openedRegistry.splice(index, 1);
+	}
+};
+
+const getTopmostPopup = () => {
+	return AllOpenedPopupsRegistry.openedRegistry[AllOpenedPopupsRegistry.openedRegistry.length - 1];
 };
 
 const openNativePopover = (domRef: HTMLElement) => {
@@ -26,21 +46,34 @@ const closeNativePopover = (domRef: HTMLElement) => {
 	}
 };
 
+const isNativePopoverOpen = (root: Document | ShadowRoot = document): boolean => {
+	if (root.querySelector(":popover-open")) {
+		return true;
+	}
+
+	return Array.from(root.querySelectorAll("*")).some(element => {
+		const shadowRoot = element.shadowRoot;
+		return shadowRoot && isNativePopoverOpen(shadowRoot);
+	});
+};
+
 const patchOpen = (Popup: OpenUI5Popup) => {
 	const origOpen = Popup.prototype.open;
 	Popup.prototype.open = function open(...args: any[]) {
 		origOpen.apply(this, args); // call open first to initiate opening
-		const topLayerAlreadyInUse = !!document.body.querySelector(":popover-open"); // check if there is already something in the top layer
+		const topLayerAlreadyInUse = isNativePopoverOpen();
 		const openingInitiated = ["OPENING", "OPEN"].includes(this.getOpenState());
 		if (openingInitiated && topLayerAlreadyInUse) {
 			const element = this.getContent();
 			if (element) {
-				const domRef = element.getDomRef();
+				const domRef = element instanceof HTMLElement ? element : element?.getDomRef();
 				if (domRef) {
 					openNativePopover(domRef);
 				}
 			}
 		}
+
+		addOpenedPopup(this);
 	};
 };
 
@@ -48,20 +81,22 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 	const _origClosed = Popup.prototype._closed;
 	Popup.prototype._closed = function _closed(...args: any[]) {
 		const element = this.getContent();
-		const domRef = element.getDomRef();
+		const domRef = element instanceof HTMLElement ? element : element?.getDomRef();
 		_origClosed.apply(this, args); // only then call _close
 		if (domRef) {
 			closeNativePopover(domRef); // unset the popover attribute and close the native popover, but only if still in DOM
 		}
+
+		removeOpenedPopup(this);
 	};
 };
 
 const patchFocusEvent = (Popup: OpenUI5Popup) => {
 	const origFocusEvent = Popup.prototype.onFocusEvent;
 	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
-		const isTypeFocus = e.type === "focus" || e.type === "activate";
-		const target = e.target as HTMLElement;
-		if (!isTypeFocus || !target.closest("[ui5-popover],[ui5-responsive-popover],[ui5-dialog]")) {
+		// If the popup is the topmost one, we call the original focus event handler from the OpenUI5 Popup,
+		// otherwise the focus event is handled by the Web Component Popup.
+		if (this === getTopmostPopup()) {
 			origFocusEvent.call(this, e);
 		}
 	};
@@ -80,5 +115,11 @@ const patchPopup = (Popup: OpenUI5Popup) => {
 	patchFocusEvent(Popup);// Popup.prototype.onFocusEvent
 };
 
-export default patchPopup;
+export {
+	patchPopup,
+	addOpenedPopup,
+	removeOpenedPopup,
+	getTopmostPopup,
+};
+
 export type { OpenUI5Popup };

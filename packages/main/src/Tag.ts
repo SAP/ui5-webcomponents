@@ -1,17 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import {
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type { IIcon } from "./Icon.js";
-import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/sys-help-2.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/error.js";
@@ -21,7 +20,7 @@ import type WrappingType from "./types/WrappingType.js";
 import TagDesign from "./types/TagDesign.js";
 import type TagSize from "./types/TagSize.js";
 // Template
-import TagTemplate from "./generated/templates/TagTemplate.lit.js";
+import TagTemplate from "./TagTemplate.js";
 
 import {
 	TAG_DESCRIPTION_TAG,
@@ -52,6 +51,7 @@ import tagCss from "./generated/themes/Tag.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Tag.js";`
+ * @csspart root - Used to style the root element.
  * @constructor
  * @extends UI5Element
  * @since 2.0.0
@@ -60,12 +60,9 @@ import tagCss from "./generated/themes/Tag.css.js";
 @customElement({
 	tag: "ui5-tag",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TagTemplate,
 	styles: tagCss,
-	dependencies: [
-		Icon,
-	],
 })
 
 /**
@@ -75,8 +72,13 @@ import tagCss from "./generated/themes/Tag.css.js";
  * @public
  * @since 1.22.0
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 class Tag extends UI5Element {
+	eventDetails!: {
+		click: void;
+	}
 	/**
 	 * Defines the design type of the component.
 	 * @default "Neutral"
@@ -166,11 +168,8 @@ class Tag extends UI5Element {
 	@slot()
 	icon!: Array<IIcon>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		Tag.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	onEnterDOM() {
 		if (isDesktop()) {
@@ -254,8 +253,9 @@ class Tag extends UI5Element {
 		}
 	}
 
-	_onclick() {
-		this.fireEvent("click");
+	_onclick(e: Event) {
+		e.stopPropagation();
+		this.fireDecoratorEvent("click");
 	}
 }
 

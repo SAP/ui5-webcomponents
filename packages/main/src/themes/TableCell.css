@@ -1,9 +1,17 @@
 :host([_popin]) {
-    padding-inline-start: 0;
-    padding-inline-end: 0;
-    align-items: center;
+	padding-inline-start: 0;
+	padding-inline-end: 0;
+	align-items: center;
+}
+
+:host([_popin]) .popin-header {
+	color: var(--sapContent_LabelColor);
 }
 
 .popin-colon {
-    padding-inline-end: 0.5rem;
+	padding-inline-end: 0.5rem;
+}
+
+.popin-header {
+	display: contents;
 }

@@ -1,12 +1,20 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 
 import type ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
 type IEventOptions = {
 	preventClosing: boolean;
 }
+
+type ToolbarItemEventDetail = {
+	targetRef: HTMLElement;
+}
+
+@event("close-overflow", {
+	bubbles: true,
+})
 
 /**
  * @class
@@ -19,6 +27,11 @@ type IEventOptions = {
  * @since 1.17.0
  */
 class ToolbarItem extends UI5Element {
+	// strictEvents: needed for parent class
+	eventDetails!: {
+		click: ToolbarItemEventDetail,
+		"close-overflow": void;
+	}
 	/**
 	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
 	 * the item never goes in the Popover, if "AlwaysOverflow" - it never comes out of it.
@@ -38,19 +51,20 @@ class ToolbarItem extends UI5Element {
 	preventOverflowClosing = false;
 
 	/**
+	 * Defines if the toolbar item is overflowed.
+	 * @default false
+	 * @protected
+	 * @since 2.11.0
+	 */
+
+	@property({ type: Boolean })
+	isOverflowed: boolean = false;
+
+	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
 	* @protected
 	*/
 	get ignoreSpace(): boolean {
-		return false;
-	}
-
-	/**
-	 * Returns if the item contains text. Used to position the text properly inside the popover.
-	 * Aligned left if the item has text, default aligned otherwise.
-	 * @protected
-	 */
-	get containsText(): boolean {
 		return false;
 	}
 
@@ -81,34 +95,22 @@ class ToolbarItem extends UI5Element {
 		return false;
 	}
 
-	/**
-	 * Returns the template for the toolbar item.
-	 * @protected
-	 */
-	static get toolbarTemplate(): TemplateFunction {
-		throw new Error("Template must be defined");
-	}
-
-	/**
-	 * Returns the template for the toolbar item popover.
-	 * @protected
-	 */
-	static get toolbarPopoverTemplate(): TemplateFunction {
-		throw new Error("Popover template must be defined");
-	}
-
-	/**
-	 * Returns the events that the item is subscribed to.
-	 * @protected
-	 */
-	get subscribedEvents(): Map<string, IEventOptions> {
-		return new Map();
-	}
-
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
+
+	get classes() {
+		return {
+			root: {
+				"ui5-tb-popover-item": this.isOverflowed,
+				"ui5-tb-item": true,
+			},
+		};
+	}
 }
 
-export type { IEventOptions };
+export type {
+	IEventOptions,
+	ToolbarItemEventDetail,
+};
 export default ToolbarItem;

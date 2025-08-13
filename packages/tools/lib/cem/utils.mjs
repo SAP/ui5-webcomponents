@@ -3,6 +3,8 @@ import path from "path";
 
 let documentationErrors = new Map();
 
+const packageRegex = /^((@([a-z0-9._-]+)\/)?([a-z0-9._-]+))/;
+
 const getDeprecatedStatus = (jsdocComment) => {
     const deprecatedTag = findTag(jsdocComment, "deprecated");
     return deprecatedTag?.name
@@ -30,7 +32,7 @@ const toKebabCase = str => {
 }
 
 const normalizeDescription = (description) => {
-	return typeof description === 'string' ? description.replaceAll(/^-\s+|^(\n)+|(\n)+$/g, ""): description;
+    return typeof description === 'string' ? description.replaceAll(/^-\s+|^(\n)+|(\n)+$/g, "") : description;
 }
 
 const getTypeRefs = (ts, node, member) => {
@@ -111,10 +113,22 @@ const findPackageName = (ts, sourceFile, typeName) => {
         if (currentModuleSpecifier?.text?.startsWith(".")) {
             return packageJSON?.name;
         } else {
-            return Object.keys(packageJSON?.dependencies || {}).find(
-                (dependency) =>
-                    currentModuleSpecifier?.text?.startsWith(`${dependency}/`)
-            );
+            // my-package/test
+            // my-package
+            // @scope/my-package
+            // my.package
+            // _mypackage
+            // mypackage-
+            // scope/my-package/test
+            // @scope/my-package/test
+            const match = currentModuleSpecifier?.text.match(packageRegex);
+            let packageName;
+
+            if (match) {
+                packageName = match[1];
+            }
+
+            return packageName || undefined;
         }
     }
 };
@@ -156,23 +170,24 @@ const findImportPath = (ts, sourceFile, typeName, modulePath) => {
                     ?.replace("src", "dist")?.replace(".ts", ".js") || undefined
             );
         } else {
-            const packageName = Object.keys(packageJSON?.dependencies || {}).find(
-                (dependency) =>
-                    currentModuleSpecifier?.text?.startsWith(dependency)
-            );
-            return currentModuleSpecifier?.text
-                ?.replace(`${packageName}/`, "") || undefined;
+            let packageName = currentModuleSpecifier?.text?.replace(packageRegex, "") || undefined;
+
+            if (packageName?.startsWith("/")) {
+                packageName = packageName.replace("/", "");
+            }
+
+            return packageName;
         }
     }
 };
 
 
 const isClass = text => {
-	return text.includes("@abstract") || text.includes("@class") || text.includes("@constructor");
+    return text.includes("@abstract") || text.includes("@class") || text.includes("@constructor");
 };
 
 const normalizeTagType = (type) => {
-	return type?.trim();
+    return type?.trim();
 }
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
@@ -222,11 +237,11 @@ const commonTags = ["public", "protected", "private", "since", "deprecated"];
 const allowedTags = {
     field: [...commonTags, "formEvents", "formProperty", "default"],
     slot: [...commonTags, "default"],
-    event: [...commonTags, "param", "allowPreventDefault", "native"],
+    event: [...commonTags, "param", "native", "allowPreventDefault"],
     eventParam: [...commonTags],
     method: [...commonTags, "param", "returns", "override"],
     class: [...commonTags, "constructor", "class", "abstract", "experimental", "implements", "extends", "slot", "csspart"],
-    enum: [...commonTags],
+    enum: [...commonTags, "experimental",],
     enumMember: [...commonTags, "experimental",],
     interface: [...commonTags, "experimental",],
 };
@@ -241,19 +256,29 @@ const tagMatchCallback = (tag, tagName) => {
 };
 
 const findDecorator = (node, decoratorName) => {
-    return node?.decorators?.find(
+    return (node?.modifiers || node?.decorators)?.find(
         (decorator) =>
             decorator?.expression?.expression?.text === decoratorName
     );
 };
 
 const findAllDecorators = (node, decoratorName) => {
-    return (
-        node?.decorators?.filter(
-            (decorator) =>
-                decorator?.expression?.expression?.text === decoratorName
-        ) || []
-    );
+    if (typeof decoratorName === "string") {
+        return (node?.modifiers || node?.decorators)?.filter(decorator => decorator?.expression?.expression?.text === decoratorName) || [];
+    }
+
+    if (Array.isArray(decoratorName)) {
+        return (node?.modifiers || node?.decorators)?.filter(decorator => {
+            if (decorator?.expression?.expression?.text) {
+                return decoratorName.includes(decorator.expression.expression.text);
+            }
+
+            return false;
+        }
+        ) || [];
+    }
+
+    return [];
 };
 
 const hasTag = (jsDoc, tagName) => {
@@ -283,7 +308,7 @@ const findAllTags = (jsDoc, tagName) => {
 };
 
 const validateJSDocTag = (tag) => {
-    const booleanTags = ["private", "protected", "public", "abstract", "allowPreventDefault", "native", "formProperty", "constructor", "override"];
+    const booleanTags = ["private", "protected", "public", "abstract", "native", "allowPreventDefault", "formProperty", "constructor", "override"];
     let tagName = tag.tag;
 
     if (booleanTags.includes(tag.tag)) {
@@ -329,7 +354,7 @@ const validateJSDocComment = (fieldType, jsdocComment, node, moduleDoc) => {
         let isValid = false
 
         if (fieldType === "event" && tag?.tag === "param") {
-            isValid = allowedTags[fieldType]?.includes(tag.tag) && validateJSDocTag({...tag, tag: "eventparam"});
+            isValid = allowedTags[fieldType]?.includes(tag.tag) && validateJSDocTag({ ...tag, tag: "eventparam" });
         } else {
             isValid = allowedTags[fieldType]?.includes(tag.tag) && validateJSDocTag(tag);
         }
@@ -358,20 +383,20 @@ const displayDocumentationErrors = () => {
     [...documentationErrors.keys()].forEach(modulePath => {
         const moduleErrors = documentationErrors.get(modulePath);
 
-        console.log(`=== ERROR: ${moduleErrors.length > 1 ? `${moduleErrors.length} problems` :  "Problem"} found in file: ${modulePath}:`)
+        console.log(`=== ERROR: ${moduleErrors.length > 1 ? `${moduleErrors.length} problems` : "Problem"} found in file: ${modulePath}:`)
         moduleErrors.forEach(moduleError => {
             errorsCount++;
             console.log(`\t- ${moduleError}`)
         })
     })
 
-    if(errorsCount) {
+    if (errorsCount) {
         throw new Error(`Found ${errorsCount} errors in the description of the public API.`);
     }
 }
 
 const formatArrays = (typeText) => {
-	return typeText?.replaceAll(/(\S+)\[\]/g, "Array<$1>")
+    return typeText?.replaceAll(/(\S+)\[\]/g, "Array<$1>")
 }
 
 export {

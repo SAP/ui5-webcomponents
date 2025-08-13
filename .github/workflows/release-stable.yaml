@@ -16,14 +16,18 @@ on:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      issues: write
     steps:
     - uses: actions/checkout@v4
       with:
         token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
         fetch-depth: 0
-    - uses: actions/setup-node@v4.0.1
+    - uses: actions/setup-node@v4.1.0
       with:
-        node-version: 18
+        node-version: 22
         cache: 'yarn'
 
     - name: Install
@@ -53,3 +57,26 @@ jobs:
         NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
         GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
       run: yarn lerna publish from-git --yes
+
+    - name: Publish Release Comments
+      uses: actions/github-script@v7
+      env:
+          NODE_OPTIONS: '--max-old-space-size=12096'
+          GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+      with:
+          github-token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+          script: |
+            const commentOnFixedIssues = (await import('${{ github.workspace }}/.github/actions/commentOnFixedIssues.mjs')).default;
+
+            await commentOnFixedIssues({ github, context });
+
+    - name: Merge Release Changelog
+      uses: actions/github-script@v7
+      env:
+          GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+      with:
+          github-token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+          script: |
+            const mergeReleaseChangelog = (await import('${{ github.workspace }}/.github/actions/mergeReleaseChangelog.mjs')).default;
+
+            await mergeReleaseChangelog({ github , context });

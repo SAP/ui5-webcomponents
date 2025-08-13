@@ -11,9 +11,12 @@ The `scoping` feature lets you add an arbitrary suffix to the names of all UI5 W
 Example:
 
 ```js
+// scoping-config.js
 import { setCustomElementsScopingSuffix } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 setCustomElementsScopingSuffix("demo");
 ```
+
+** NOTE: ** Setting the scoping suffix should be done before importing any components, as they use the suffix at the top-level of the module - meaning when a component is imported, the suffix has to be known. For this to work, calling the method should be done in a separate module (`scoping-config.js` in the example above) and this module should be imported before any components are imported.
 
 Then all names can only be used with the supplied suffix:
 
@@ -34,7 +37,7 @@ will not have any effect.
 
 ## When do I need to use the `scoping` feature?
 
-The `scoping` feature is completely optional. It is not needed for application development, but it is strongly recommended when building **libraries** and **micro-frontends**. 
+The `scoping` feature is completely optional. It is not needed for application development, but it is strongly recommended when building **libraries** and **micro-frontends**.
 It ensures that the custom elements that your code uses have not already been reserved by another library or an older version of UI5 Web Components.
 
 If, for example, your code may be loaded on demand by unknown applications as a third-party service, there is always the risk that the app

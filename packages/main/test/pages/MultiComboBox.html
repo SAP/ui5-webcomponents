@@ -145,7 +145,7 @@
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Longest word in the world"></ui5-mcb-item>
-			<div slot="valueStateMessage">Information message. This is a <a href="#" target="_blank">Link</a>. Extra long text used as
+			<div slot="valueStateMessage">Information message. This is a <ui5-link href="#" target="_blank">Link</ui5-link><ui5-link href="#" target="_blank">second Link</ui5-link> Extra long text used as
 				an information message. Extra long text used as an information message - 2. Extra long text used as an
 				information message - 3.</div>
 		</ui5-multi-combobox>
@@ -233,11 +233,12 @@
 			<ui5-mcb-item text="est"></ui5-mcb-item>
 		</ui5-multi-combobox>
 
+		<ui5-button id="btnAfter">Press</ui5-button>
 		<br>
 
 		<div class="demo-section">
 			<span>Select all with groups</span>
-	
+
 			<br>
 			<ui5-multi-combobox show-select-all id="mcb-select-all-grouping" value-state="Critical">
 				<ui5-mcb-item-group header-text="Asia">
@@ -259,7 +260,7 @@
 					<ui5-mcb-item text="United States"></ui5-mcb-item>
 				</ui5-mcb-item-group>
 			</ui5-multi-combobox>
-	
+
 			<br>
 
 		<ui5-multi-combobox show-select-all id="mcb-select-all">
@@ -297,9 +298,13 @@
 		<span id="select-all-event">Selected items count: <span>0</span></span>
 
 		<script>
-			document.getElementById("mcb-select-all-vs").addEventListener("ui5-selectionChange", e => {
+			document.getElementById("mcb-select-all-vs").addEventListener("ui5-selection-change", e => {
 				console.log("selection change")
 				document.querySelector("#select-all-event span").textContent = e.detail.items.length;
+			});
+
+			document.getElementById("mcb-error").addEventListener("ui5-selection-change", e => {
+				event.target.valueState = "None";
 			});
 		</script>
 	</div>
@@ -587,6 +592,26 @@
 		</script>
 	</div>
 
+	<div class="sample-container">
+		<form id="form">
+			<ui5-multi-combobox
+			  no-validation
+			  id="mcb-form"
+			  placeholder="Type your value"
+			>
+			  <ui5-mcb-item text="Albania"></ui5-mcb-item>
+			  <ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
+			  <ui5-mcb-item text="Denmark"></ui5-mcb-item>
+			  <ui5-mcb-item text="England"></ui5-mcb-item>
+			  <ui5-mcb-item text="Germany"></ui5-mcb-item>
+			  <ui5-mcb-item text="Philippines"></ui5-mcb-item>
+			  <ui5-mcb-item text="Portugal"></ui5-mcb-item>
+			</ui5-multi-combobox>
+		</form>
+		<br>
+		<span>Submit event calls: <span id="mcb-form-submit">0</span></span>
+	</div>
+
 	<script>
 		let selectionChangeEventsFired = 0;
 		var eventNameInput = document.getElementById("events-input");
@@ -594,11 +619,12 @@
 		var callCountInput = document.getElementById("events-call-count");
 		var resetBtn = document.getElementById("reset-btn");
 		var selectionChangeCounter = 0;
+		var submitCounter = 0;
 		var openCounter = 0;
 		var closeCounter = 0;
 		const multiComboBox = document.querySelector("#mcb-prevent");
 
-		document.getElementById("mcb").addEventListener("ui5-selectionChange", function (event) {
+		document.getElementById("mcb").addEventListener("ui5-selection-change", function (event) {
 			selectionChangeCounter += 1;
 			eventNameInput.value = "selectionChange";
 			eventParamsInput.value = event.detail.items.length;
@@ -677,6 +703,11 @@
 
 		multiComboBox.addEventListener("ui5-selection-change", function (event) {
 			event.preventDefault();
+		});
+
+		document.getElementById('form').addEventListener('submit', (e) => {
+			e.preventDefault();
+			document.getElementById("mcb-form-submit").textContent = ++submitCounter;
 		});
 	</script>
 

@@ -61,6 +61,7 @@ exports.config = {
 			// (see https://developers.google.com/web/updates/2017/04/headless-chrome)
 			args: [
 				'--headless',
+				'--disable-search-engine-choice-screen',
 				'--start-maximized',
 				'--no-sandbox',
 				'--disable-gpu',

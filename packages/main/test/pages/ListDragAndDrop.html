@@ -32,9 +32,24 @@
 		</ui5-list>
 	</section>
 
+	<section class="largeTopMargin">
+		<ui5-list id="listDnd3" header-text="List 3 with Fixed Items">
+			<ui5-li id="item1" data-fixed="true">Item 1 (fixed)</ui5-li>
+			<ui5-li id="item2" data-fixed="true">Item 2 (fixed)</ui5-li>
+			<ui5-li id="item3" data-fixed="true">Item 3 (fixed)</ui5-li>
+			<ui5-li id="item4" movable>Item 4</ui5-li>
+			<ui5-li id="item5" movable>Item 5</ui5-li>
+			<ui5-li id="item6" movable>Item 6</ui5-li>
+			<ui5-li id="item7" movable>Item 7</ui5-li>
+			<ui5-li id="item8" movable>Item 8</ui5-li>
+			<ui5-li id="item9" movable>Item 9</ui5-li>
+		</ui5-list>
+	</section>
+
 	<script>
 		const list1 = document.getElementById("listDnd1");
 		const list2 = document.getElementById("listDnd2");
+		const list3 = document.getElementById("listDnd3");
 		const handleBeforeItemMove = (e) => {
 			const { destination, source } = e.detail;
 
@@ -48,7 +63,7 @@
 
 			console.log(`Moving "${source.element.id}" ${destination.placement.toLowerCase()} "${destination.element.id}"`);
 		};
-	
+
 		const list1HandleMoveOver = (e) => {
 			const { destination, source } = e.detail;
 
@@ -63,24 +78,29 @@
 			handleBeforeItemMove(e);
 		};
 
+		const list3HandleMoveOver = (e) => {
+			const { destination, source } = e.detail;
+
+			if (destination.element.dataset.fixed) {
+				return;
+			}
+
+			handleBeforeItemMove(e);
+		};
+
 		const handleMove = (e) => {
 			const { destination, source } = e.detail;
-			const parent = destination.element.closest("[ui5-list]");
 
-			if (destination.placement === "Before") {
-				parent.insertBefore(
-					source.element,
-					destination.element
-				);
-			} else if (destination.placement === "After") {
-				const nextElement = Array.from(parent.children).at(Array.from(parent.children).indexOf(destination.element) + 1);
-
-				parent.insertBefore(
-					source.element,
-					nextElement,
-				);
-			} else if (destination.placement === "On") {
+			switch (destination.placement) {
+			case "Before":
+				destination.element.before(source.element);
+				break;
+			case "After":
+				destination.element.after(source.element);
+				break;
+			case "On":
 				destination.element.prepend(source.element);
+				break;
 			}
 		};
 
@@ -88,6 +108,8 @@
 		list1.addEventListener("ui5-move", handleMove);
 		list2.addEventListener("ui5-move-over", list2HandleMoveOver);
 		list2.addEventListener("ui5-move", handleMove);
+		list3.addEventListener("ui5-move-over", list3HandleMoveOver);
+		list3.addEventListener("ui5-move", handleMove);
 
 		const densityCb = document.getElementById("density");
 		densityCb.addEventListener("ui5-change", e => {
@@ -98,6 +120,7 @@
 		reorderCb.addEventListener("ui5-change", e => {
 			list1.items.forEach((item) => item.movable = e.target.checked);
 			list2.items.forEach((item) => item.movable = e.target.checked);
+			list3.items.forEach((item) => item.movable = e.target.checked);
 		});
 	</script>
 </body>

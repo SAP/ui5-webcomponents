@@ -126,6 +126,15 @@
 			mainVisible.value = event.detail.mainContentVisible ? "1" : "0"
 			sideVisible.value = event.detail.sideContentVisible ? "1" : "0"
 		});
+
+		dynamicSideContent.accessibilityAttributes = {
+			mainContent: {
+				ariaLabel: "Main Content Area",
+			},
+			sideContent: {
+				ariaLabel: "Side Content Area",
+			}
+		};
 	</script>
 
 </body>

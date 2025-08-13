@@ -2,7 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isUp,
 	isDown,
@@ -17,20 +18,19 @@ import {
 	isEscape,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import StepInputTemplate from "./generated/templates/StepInputTemplate.lit.js";
+import StepInputTemplate from "./StepInputTemplate.js";
 import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/i18n/i18n-defaults.js";
 import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
 
-import Icon from "./Icon.js";
-import Input from "./Input.js";
+import type Input from "./Input.js";
+import type { InputAccInfo, InputEventDetail } from "./Input.js";
 import InputType from "./types/InputType.js";
 
 // Styles
@@ -91,46 +91,46 @@ type StepInputValueStateChangeEventDetail = {
 @customElement({
 	tag: "ui5-step-input",
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: StepInputCss,
 	template: StepInputTemplate,
-	dependencies: [
-		Icon,
-		Input,
-	],
 })
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
+/**
+ * Fired when the value of the component changes at each keystroke.
+ * @public
+ * @since 2.6.0
+ */
+@event("input", {
+	cancelable: true,
+	bubbles: true,
+})
 /**
  * Fired before the value state of the component is updated internally.
  * The event is preventable, meaning that if it's default action is
  * prevented, the component will not update the value state.
- * @allowPreventDefault
  * @since 1.23.0
  * @public
  * @param {string} valueState The new `valueState` that will be set.
  * @param {boolean} valid Indicator if the value is in between the min and max value.
  */
-@event<StepInputValueStateChangeEventDetail>("value-state-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		valueState: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
+@event("value-state-change", {
+	bubbles: true,
+	cancelable: true,
 })
 class StepInput extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: void
+		input: InputEventDetail
+		"value-state-change": StepInputValueStateChangeEventDetail
+	}
+
 	/**
 	 * Defines a value of the component.
 	 * @default 0
@@ -256,7 +256,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	_inputFocused = false;
 
 	@property({ noAttribute: true })
-	_previousValue: number = this.value;
+	_previousValue: number | undefined;
 
 	@property({ noAttribute: true })
 	_waitTimeout: number = INITIAL_WAIT_TIMEOUT;
@@ -287,6 +287,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	_initialValueState?: `${ValueState}`;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	async formElementAnchor() {
@@ -295,10 +296,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	get formFormattedValue(): FormData | string | null {
 		return this.value.toString();
-	}
-
-	static async onDefine() {
-		StepInput.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get type() {
@@ -311,16 +308,8 @@ class StepInput extends UI5Element implements IFormInputElement {
 		return StepInput.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE);
 	}
 
-	get decIconName() {
-		return "less";
-	}
-
 	get incIconTitle() {
 		return StepInput.i18nBundle.getText(STEPINPUT_INC_ICON_TITLE);
-	}
-
-	get incIconName() {
-		return "add";
 	}
 
 	get _decIconClickable() {
@@ -347,7 +336,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 		return this.value.toString();
 	}
 
-	get accInfo() {
+	get accInfo(): InputAccInfo {
 		return {
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
@@ -364,9 +353,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	onBeforeRendering() {
 		this._setButtonState();
-		if (this._previousValue === undefined) {
-			this._previousValue = this.value;
-		}
 	}
 
 	get input(): Input {
@@ -389,11 +375,16 @@ class StepInput extends UI5Element implements IFormInputElement {
 		}, 0);
 	}
 
+	_onInput(e: CustomEvent<InputEventDetail>) {
+		const prevented = !this.fireDecoratorEvent("input", { inputType: e.detail.inputType });
+
+		if (prevented) {
+			e.preventDefault();
+		}
+	}
+
 	_onInputFocusIn() {
 		this._inputFocused = true;
-		if (this.value !== this._previousValue) {
-			this._previousValue = this.value;
-		}
 	}
 
 	_onInputFocusOut() {
@@ -423,10 +414,10 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 		this.valueState = isValid ? ValueState.None : ValueState.Negative;
 
-		const eventPrevented = !this.fireEvent<StepInputValueStateChangeEventDetail>("value-state-change", {
+		const eventPrevented = !this.fireDecoratorEvent("value-state-change", {
 			valueState: this.valueState,
 			valid: isValid,
-		}, true);
+		});
 
 		if (eventPrevented) {
 			this.valueState = previousValueState;
@@ -441,7 +432,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	_fireChangeEvent() {
 		if (this._previousValue !== this.value) {
 			this._previousValue = this.value;
-			this.fireEvent("change", { value: this.value });
+			this.fireDecoratorEvent("change");
 		}
 	}
 
@@ -477,15 +468,15 @@ class StepInput extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_incValue(e: CustomEvent) {
-		if (this._incIconClickable && e.isTrusted && !this.disabled && !this.readonly) {
+	_incValue() {
+		if (this._incIconClickable && !this.disabled && !this.readonly) {
 			this._modifyValue(this.step, true);
 			this._previousValue = this.value;
 		}
 	}
 
-	_decValue(e: CustomEvent) {
-		if (this._decIconClickable && e.isTrusted && !this.disabled && !this.readonly) {
+	_decValue() {
+		if (this._decIconClickable && !this.disabled && !this.readonly) {
 			this._modifyValue(-this.step, true);
 			this._previousValue = this.value;
 		}
@@ -539,10 +530,12 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	_onfocusin() {
 		this.focused = true;
+		this._previousValue = this.value;
 	}
 
 	_onfocusout() {
 		this.focused = false;
+		this._previousValue = undefined;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -564,6 +557,9 @@ class StepInput extends UI5Element implements IFormInputElement {
 			this._modifyValue(-this.step);
 		} else if (isEscape(e)) {
 			// return previous value
+			if (this._previousValue === undefined) {
+				this._previousValue = this.value;
+			}
 			this.value = this._previousValue;
 			this.input.value = this.value.toFixed(this.valuePrecision);
 		} else if (this.max !== undefined && (isPageUpShift(e) || isUpShiftCtrl(e))) {

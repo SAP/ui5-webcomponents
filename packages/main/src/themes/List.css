@@ -86,15 +86,26 @@
 	background-color: var(--sapList_Background);
 	border-bottom: 1px solid var(--sapList_BorderColor);
 	padding: 0 1rem !important;
-	height: var(--_ui5_list_no_data_height);
+	outline: none;
+    min-height: var(--_ui5_list_no_data_height);
 	font-size: var(--_ui5_list_no_data_font_size);
 	font-family: "72override", var(--sapFontFamily);
+	position: relative;
+}
+
+.ui5-list-nodata:focus::after {
+	content: "";
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	position: absolute;
+	inset: 0.125rem;
+	pointer-events: none;
 }
 
 .ui5-list-nodata-text {
 	overflow: hidden;
 	text-overflow: ellipsis;
-	white-space: nowrap;
+	white-space: normal;
+    margin: var(--_ui5_list_item_content_vertical_offset) 0;
 }
 
 :host([growing="Scroll"]) .ui5-list-end-marker {

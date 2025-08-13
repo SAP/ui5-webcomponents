@@ -23,23 +23,24 @@
 }
 
 .ui5-tb-items-full-width {
-    width: 100%;
+	width: 100%;
 }
 
 .ui5-tb-item {
-    flex-shrink: 0;
+	flex-shrink: 0;
 }
 
-.ui5-tb-item:not(:last-child) {
+.ui5-tb-item {
 	margin-inline-end: var(--_ui5-toolbar-item-margin-right);
 	margin-inline-start: var(--_ui5-toolbar-item-margin-left);
 }
 
-.ui5-tb-separator {
-	height: var(--_ui5-toolbar-separator-height);
-	width: 0.0625rem;
-	background: var(--sapToolbar_SeparatorColor);
-	box-sizing: border-box;
+/* Last visible element should not have margins.
+Last element is: overflow button or tb-item when overflow button is hidden */
+.ui5-tb-overflow-btn,
+.ui5-tb-items:has(.ui5-tb-overflow-btn-hidden) .ui5-tb-item:nth-last-child(2) {
+	margin-inline-end: 0;
+	margin-inline-start: 0;
 }
 
 .ui5-tb-overflow-btn-hidden {

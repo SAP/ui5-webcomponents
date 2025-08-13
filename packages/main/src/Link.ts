@@ -1,27 +1,29 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
+import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
 import type WrappingType from "./types/WrappingType.js";
 import type LinkAccessibleRole from "./types/LinkAccessibleRole.js";
+import type InteractiveAreaSize from "./types/InteractiveAreaSize.js";
 // Template
-import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
+import LinkTemplate from "./LinkTemplate.js";
 
 import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import linkCss from "./generated/themes/Link.css.js";
-import Icon from "./Icon.js";
 
 type LinkClickEventDetail = {
 	altKey: boolean;
@@ -30,7 +32,7 @@ type LinkClickEventDetail = {
 	shiftKey: boolean;
 }
 
-type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup">;
+type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "current">;
 
 /**
  * @class
@@ -75,42 +77,27 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
 @customElement({
 	tag: "ui5-link",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: LinkTemplate,
 	styles: linkCss,
-	dependencies: [Icon],
 })
 /**
  * Fired when the component is triggered either with a mouse/tap
  * or by using the Enter key.
  * @public
- * @allowPreventDefault
  * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
  * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
  * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
  * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
-@event<LinkClickEventDetail>("click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		altKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		ctrlKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		metaKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		shiftKey: { type: Boolean },
-	},
+@event("click", {
+	bubbles: true,
+	cancelable: true,
 })
 class Link extends UI5Element implements ITabbable {
+	eventDetails!: {
+		click: LinkClickEventDetail;
+	}
 	/**
 	 * Defines whether the component is disabled.
 	 *
@@ -169,6 +156,22 @@ class Link extends UI5Element implements ITabbable {
 	design: `${LinkDesign}` = "Default";
 
 	/**
+	 * Defines the target area size of the link:
+	 * - **InteractiveAreaSize.Normal**: The default target area size.
+	 * - **InteractiveAreaSize.Large**: The target area size is enlarged to 24px in height.
+	 *
+	 * **Note:**The property is designed to make links easier to activate and helps meet the WCAG 2.2 Target Size requirement. It is applicable only for the SAP Horizon themes.
+	 * **Note:**To improve <code>ui5-link</code>'s reliability and usability, it is recommended to use the <code>InteractiveAreaSize.Large</code> value in scenarios where the <code>ui5-link</code> component is placed inside another interactive component, such as a list item or a table cell.
+	 * Setting the <code>interactiveAreaSize</code> property to <code>InteractiveAreaSize.Large</code> increases the <code>ui5-link</code>'s invisible touch area. As a result, the user's intended one-time selection command is more likely to activate the desired <code>ui5-link</code>, with minimal chance of unintentionally activating the underlying component.
+	 *
+	 * @public
+	 * @since 2.8.0
+	 * @default "Normal"
+	 */
+	@property()
+	interactiveAreaSize: `${InteractiveAreaSize}` = "Normal";
+
+	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 *
 	 * **Note:** By default the text will wrap. If "None" is set - the text will truncate.
@@ -225,6 +228,15 @@ class Link extends UI5Element implements ITabbable {
 	accessibilityAttributes: LinkAccessibilityAttributes = {};
 
 	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
 	 * Defines the icon, displayed as graphical element within the component before the link's text.
 	 * The SAP-icons font provides numerous options.
 	 *
@@ -262,20 +274,20 @@ class Link extends UI5Element implements ITabbable {
 	@property({ noAttribute: true })
 	forcedTabIndex?: string;
 
-	/**
-	 * Indicates if the element is on focus.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused = false;
-
 	_dummyAnchor: HTMLAnchorElement;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
+	}
+
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onBeforeRendering() {
@@ -287,19 +299,19 @@ class Link extends UI5Element implements ITabbable {
 	}
 
 	_isCrossOrigin(href: string) {
-		const loc = window.location;
 		this._dummyAnchor.href = href;
 
-		return !(this._dummyAnchor.hostname === loc.hostname
-			&& this._dummyAnchor.port === loc.port
-			&& this._dummyAnchor.protocol === loc.protocol);
+		return !(this._dummyAnchor.hostname === getLocationHostname()
+			&& this._dummyAnchor.port === getLocationPort()
+			&& this._dummyAnchor.protocol === getLocationProtocol());
 	}
 
 	get effectiveTabIndex() {
 		if (this.forcedTabIndex) {
-			return this.forcedTabIndex;
+			return Number.parseInt(this.forcedTabIndex);
 		}
-		return (this.disabled || !this.textContent?.length) ? "-1" : "0";
+
+		return (this.disabled || !this.textContent?.length) ? -1 : 0;
 	}
 
 	get ariaLabelText() {
@@ -326,15 +338,15 @@ class Link extends UI5Element implements ITabbable {
 	}
 
 	get effectiveAccRole() {
-		return this.accessibleRole.toLowerCase();
+		return toLowercaseEnumValue(this.accessibleRole);
+	}
+
+	get ariaDescriptionText() {
+		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
 	}
 
 	get _hasPopup() {
 		return this.accessibilityAttributes.hasPopup;
-	}
-
-	static async onDefine() {
-		Link.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	_onclick(e: MouseEvent | KeyboardEvent) {
@@ -346,42 +358,30 @@ class Link extends UI5Element implements ITabbable {
 		} = e;
 
 		e.stopImmediatePropagation();
-		markEvent(e, "link");
 
-		const executeEvent = this.fireEvent<LinkClickEventDetail>("click", {
+		const executeEvent = this.fireDecoratorEvent("click", {
 			altKey,
 			ctrlKey,
 			metaKey,
 			shiftKey,
-		}, true);
+		});
 
 		if (!executeEvent) {
 			e.preventDefault();
 		}
 	}
 
-	_onfocusin(e: FocusEvent) {
-		markEvent(e, "link");
-		this.focused = true;
-	}
-
-	_onfocusout() {
-		this.focused = false;
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e) && !this.href) {
 			this._onclick(e);
+			e.preventDefault();
 		} else if (isSpace(e)) {
 			e.preventDefault();
 		}
-
-		markEvent(e, "link");
 	}
 
 	_onkeyup(e: KeyboardEvent) {
 		if (!isSpace(e)) {
-			markEvent(e, "link");
 			return;
 		}
 

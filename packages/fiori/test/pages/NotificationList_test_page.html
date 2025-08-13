@@ -218,15 +218,15 @@
 	<br >
 	<ui5-button>Some button</ui5-button>
 	<script>
-		notificationList.addEventListener("ui5-itemClick", function(event) {
+		notificationList.addEventListener("ui5-item-click", function(event) {
 			clickInput.value = event.detail.item.titleText;
 		});
 
-		notificationList.addEventListener("ui5-itemClose", function(event) {
+		notificationList.addEventListener("ui5-item-close", function(event) {
 			closeInput.value = event.detail.item.titleText;
 		});
 
-		notificationList.addEventListener("ui5-itemToggle", function(event) {
+		notificationList.addEventListener("ui5-item-toggle", function(event) {
 			toggleInput.value = event.detail.item.titleText;
 		});
 

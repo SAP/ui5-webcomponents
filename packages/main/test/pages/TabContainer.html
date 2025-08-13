@@ -8,7 +8,7 @@
 
 	<script data-ui5-config type="application/json">
 		{
-			"theme": "sap_fiori_3",
+			"theme": "sap_horizon",
 			"language": "EN"
 		}
 	</script>
@@ -190,6 +190,64 @@
 			<ui5-tab text="Twenty Eight"></ui5-tab>
 			<ui5-tab text="Twenty Nine"></ui5-tab>
 			<ui5-tab text="Thirty"></ui5-tab>
+		</ui5-tabcontainer>
+	</section>
+
+	<section>
+		<h2>Semantic States Overflow</h2>
+		<ui5-tabcontainer id="semanticOverflow">
+			<ui5-tab design="Positive" text="Home">
+				<ui5-tab slot="items" design="Negative" text="Home 1"></ui5-tab>	
+				<ui5-tab slot="items" design="Positive" text="Home 2">
+					<ui5-tab slot="items" design="Positive" text="Home 2.1">
+					   <ui5-tab slot="items" text="Home 2.1.1"></ui5-tab>
+					   <ui5-tab slot="items" design="Positive" text="Home 2.1.2"></ui5-tab>
+					</ui5-tab>
+					<ui5-tab slot="items" design="Critical" text="Home 2.2"></ui5-tab>
+				</ui5-tab>
+				
+				<ui5-tab slot="items" design="Negative" text="Home 3"></ui5-tab>		  
+			</ui5-tab>
+
+			<ui5-tab design="Critical" text="Filter">
+				<ui5-tab slot="items" text="1.1.Filter"></ui5-tab>
+				<ui5-tab slot="items" design="Critical" text="1.2.Filter">
+					<ui5-tab slot="items" text="1.2.1.Filter">
+						<ui5-tab slot="items" design="Positive" text="1.2.1.1.Filter"></ui5-tab>
+						<ui5-tab slot="items" design="Negative" text="1.2.1.2.Filter"></ui5-tab>
+						<ui5-tab slot="items" text="1.2.1.3.Filter"></ui5-tab>
+					</ui5-tab>
+					<ui5-tab slot="items" text="1.2.2.Filter"></ui5-tab>
+				</ui5-tab>
+				<ui5-tab slot="items" design="Negative" text="1.3.Filter"></ui5-tab>
+			</ui5-tab>
+			<ui5-tab design="Negative" text="Settings"></ui5-tab>
+			<ui5-tab design="Positive" text="One"></ui5-tab>
+
+			<ui5-tab design="Critical" text="Two">
+				<ui5-tab design="Positive" slot="items" text="nested one"></ui5-tab>
+				<ui5-tab design="Positive" slot="items" text="nested two"></ui5-tab>
+			</ui5-tab>
+
+			<ui5-tab text="Three"></ui5-tab>
+			<ui5-tab design="Negative" text="Four">
+				<ui5-tab slot="items" text="4.1"></ui5-tab>
+				<ui5-tab design="Critical" slot="items" text="4.2">
+					<ui5-tab slot="items" text="4.2.1."></ui5-tab>
+					<ui5-tab slot="items" text="4.2.2.">
+						<ui5-tab slot="items" design="Critical" text="4.2.2.1"></ui5-tab>
+						<ui5-tab slot="items" text="4.2.2.2"></ui5-tab>
+					</ui5-tab>
+					<ui5-tab design="Critical" slot="items" text="4.2.3.">
+						<ui5-tab slot="items" text="4.2.3.1"></ui5-tab>
+						<ui5-tab slot="items" text="4.2.3.2"></ui5-tab>
+					</ui5-tab>
+				</ui5-tab>
+				<ui5-tab slot="items" text="4.3"></ui5-tab>
+				<ui5-tab design="Critical" slot="items" text="4.4."></ui5-tab>
+			</ui5-tab>
+
+			<ui5-tab design="Negative" text="Five"></ui5-tab>
 		</ui5-tabcontainer>
 	</section>
 
@@ -699,6 +757,28 @@
 	</section>
 
 	<section>
+		<h2>Transparent TabContainer in Content</h2>
+		<ui5-tabcontainer id="tabContainerTransparentContent" header-background-design="Solid" content-background-design="Transparent">
+			<ui5-tab text="Tab 1" selected>
+				<ui5-tabcontainer id="tabContainerBackgroundDesign" header-background-design="Transparent" content-background-design="Transparent">
+					<ui5-tab text="Tab 1" selected>
+						<ui5-label>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita voluptates accusamus est quibusdam inventore ipsam?</ui5-label>
+					</ui5-tab>
+					<ui5-tab text="Tab 2">
+						<ui5-label>Accusamus minus aperiam sunt ipsam eos quos et maxime facilis tempora neque ratione nemo laborum expedita aliquid officiis nisi, necessitatibus quasi distinctio?</ui5-label>
+					</ui5-tab>
+					<ui5-tab text="Tab 3">
+						<ui5-label>Dolores totam perferendis numquam incidunt obcaecati, id quo at alias rem deserunt praesentium repellat ipsum commodi consequuntur veniam et ducimus animi qui nobis accusantium tenetur eveniet culpa non!</ui5-label>
+					</ui5-tab>
+				</ui5-tabcontainer>
+			</ui5-tab>
+			<ui5-tab text="Tab 2">
+				<ui5-label>Accusamus minus aperiam sunt ipsam eos quos et maxime facilis tempora neque ratione nemo laborum expedita aliquid officiis nisi, necessitatibus quasi distinctio?</ui5-label>
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</section>
+
+	<section>
 		<h2>Text only Start And End Overflow Custom Overflow Buttons</h2>
 		<ui5-tabcontainer id="tabContainerCustomOverflowButtons" overflow-mode="StartAndEnd" collapsed>
 				<ui5-button slot="startOverflowButton" id="startOverflowButton">Start</ui5-button>
@@ -740,13 +820,13 @@
 				<ui5-button>Button 1</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Second tab" design="Critical" additional-text="2">
-				<ui5-button>Button 1</ui5-button>
+				<ui5-button>Button 2</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Third tab" design="Negative" additional-text="3">
-				<ui5-button>Button 1</ui5-button>
+				<ui5-button>Button 3</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Fourth tab" design="Neutral" additional-text="4">
-				<ui5-button>Button 1</ui5-button>
+				<ui5-button>Button 4</ui5-button>
 			</ui5-tab>
 		</ui5-tabcontainer>
 
@@ -863,6 +943,50 @@
 		</ui5-tabcontainer>
 	</section>
 
+	<section>
+		<h2>No Auto Selection</h2>
+		<ui5-tabcontainer no-auto-selection id="tcNoAuto">
+			<ui5-tab text="Products ID">
+				<ui5-button>Button 11</ui5-button>
+				<ui5-button>Button 12</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Availability">
+				<ui5-button>Button 2</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Expiration Date">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Date of Delivery">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Date of Manufacture">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Value">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Price">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Net Profit">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Company Name">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Warehouse Location">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Address">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Country">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
+		<ui5-button id="resetBtn">Reset tab selection</ui5-button>
+	</section>
+
 	<script>
 		document.getElementById("tabContainer1").addEventListener("ui5-tab-select", async function (event) {
 			result.innerHTML = event.detail.tab.text;
@@ -965,6 +1089,10 @@
 			tab.text = "New Tab";
 			document.getElementById("testFocusedTabAfterInsertion").appendChild(tab);
 			tab.focus();
+		});
+
+		resetBtn.addEventListener("click", () => {
+			tcNoAuto.allItems.forEach(tab => tab.selected = false);
 		});
 
 	</script>

@@ -7,7 +7,7 @@ const Input = ({ sidebar, updateItems }) => {
         <input
           className="filter"
           type='search'
-          autocomplete='off'
+          autoComplete='off'
           onChange={(e) => {
             const coppiedArray = filter(JSON.parse(JSON.stringify(sidebar)), e.target.value);
 

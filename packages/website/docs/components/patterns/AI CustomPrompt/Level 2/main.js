@@ -1,0 +1,11 @@
+import '@ui5/webcomponents/dist/Avatar.js';
+import '@ui5/webcomponents-icons/dist/background.js';
+import '@ui5/webcomponents-icons/dist/doc-attachment.js';
+import '@ui5/webcomponents-icons/dist/sound-loud.js';
+import '@ui5/webcomponents-icons/dist/history.js';
+import '@ui5/webcomponents-icons/dist/favorite.js';
+import '@ui5/webcomponents-ai/dist/PromptInput.js';
+import '@ui5/webcomponents/dist/Toolbar.js';
+import '@ui5/webcomponents/dist/ToolbarButton.js';
+import '@ui5/webcomponents/dist/ToolbarSeparator.js';
+import '@ui5/webcomponents/dist/Panel.js';

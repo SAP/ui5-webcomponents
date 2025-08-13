@@ -160,19 +160,25 @@
 		></ui5-step-input>
 	</div>
 
+	<h3> 'input' event prevented</h3>
+	<ui5-step-input id="stepInputPreventedInput"
+		class="stepinput2auto"
+	></ui5-step-input>
+
 	<h3> 'change' event result</h3>
 	<ui5-input id="changeResult"></ui5-input>
 
 	<script>
-		var labelChange = document.getElementById('myLabelChange');
-		var siCozy = document.getElementById('stepInputCozy');
-		var siCompact = document.getElementById('stepInputCompact');
-		var siMinMax = document.getElementById('stepInputMinMax');
-		var siPrecision = document.getElementById('stepInputPrecision');
-		var changeResult = document.getElementById('changeResult');
-		var changeCount = 0;
-		var displayChange = function (event) {
-			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.detail.value;
+		const labelChange = document.getElementById('myLabelChange');
+		const siCozy = document.getElementById('stepInputCozy');
+		const siCompact = document.getElementById('stepInputCompact');
+		const siMinMax = document.getElementById('stepInputMinMax');
+		const siPrecision = document.getElementById('stepInputPrecision');
+		const changeResult = document.getElementById('changeResult');
+		const preventedInput = document.getElementById('stepInputPreventedInput');
+		let changeCount = 0;
+		const displayChange = function (event) {
+			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.target.value;
 			changeCount++;
 			changeResult.value = `${changeCount}`;
 		}
@@ -184,13 +190,17 @@
 
 		stepInputChange1.addEventListener('ui5-change', function(e) {
 			const val = Number.parseInt(e.target.value, 10);
-			stepInputChange2.value = `${val + 999}`;
+			stepInputChange2.value = val + 999;
 			displayChange(e);
 		});
 
 		stepInputChange2.addEventListener('ui5-change', displayChange);
 
 		stepInputValueStateChange.addEventListener("value-state-change", function(e) {
+			e.preventDefault();
+		});
+
+		preventedInput.addEventListener("input", function(e) {
 			e.preventDefault();
 		});
 	</script>

@@ -1,7 +1,8 @@
 :root {
 	--_ui5-notification_item-border-radius: 0px;
 	--_ui5-notification_group_header-border-bottom-width: 0.0625rem;
-	--_ui5-notification_group_header-margin: 0;
+	--_ui5-notification_group_header-margin: 0px;
+	--_ui5-notification_group_header-margin-expanded: 0.5rem;
 	--_ui5-notification_group_header-padding: 1rem 0.5rem;
 	--_ui5-notification_item-state-icon-padding: 0.625rem;
 	--_ui5-notification_item-border-bottom: var(--ui5-listitem-border-bottom);
@@ -18,6 +19,8 @@
 	--_ui5-notification_item-description-margin-top: 0.75rem;
 	--_ui5-notification_item-footer-margin-top: 0.75rem;
 	--_ui5-notification_item-focus-offset: 0;
+	--_ui5-notification_item-outline-offset: 0;
+	--_ui5-notification_item-growing-btn-background-color-active: var(--sapList_Active_Background);
 }
 
 [data-ui5-compact-size],

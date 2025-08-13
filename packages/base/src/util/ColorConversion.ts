@@ -196,6 +196,19 @@ const getRGBColor = (color: string): ColorRGB => {
 	return HEXToRGB(color);
 };
 
+const getAlpha = (color: string): number => {
+	let alpha = 1;
+
+	if (color.startsWith("rgba") || color.startsWith("hsla")) {
+		const parts = color.split(",");
+		if (parts.length === 4) {
+			alpha = parseFloat(parts[3].replace(")", "").trim());
+		}
+	}
+
+	return alpha;
+};
+
 /**
  * Return an object with the properties for each of the main colors(red, green, blue)
  * @param {String} color Receives a color in the following format: "rgba(0, 0, 0, 1)
@@ -241,8 +254,8 @@ const RGBStringToRGBObject = (color: string): ColorRGB => {
 
 const HSLToRGB = (color: ColorHSL): ColorRGB => {
 	// Formula taken from https://www.rapidtables.com/convert/color/hsl-to-rgb.html
-	let saturation = color.s * 100,
-		lightness = color.l * 100,
+	let saturation = color.s,
+		lightness = color.l,
 		red,
 		green,
 		blue;
@@ -263,7 +276,7 @@ const HSLToRGB = (color: ColorHSL): ColorRGB => {
 		lightness /= 100;
 	}
 
-	const hue = color.h,
+	const hue = ((color.h % 360) + 360) % 360,
 		d = saturation * (1 - Math.abs(2 * lightness - 1)),
 		m = 255 * (lightness - 0.5 * d),
 		x = d * (1 - Math.abs(((hue / 60) % 2) - 1)),
@@ -332,8 +345,8 @@ const HEXToRGB = (hex: string): ColorRGB => {
  * @param {Object} color Receives an object with the properties for each of the main colors(r, g, b)
  */
 const RGBtoHEX = (color: ColorRGB): string => {
-	const hexMap = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E"];
-	let hexValue = "#";
+	const hexMap = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+	let hexValue = "";
 
 	let divisionNumber = color.r / 16;
 	let remainder = color.r % 16;
@@ -361,29 +374,34 @@ const RGBToHSL = (color: ColorRGB): ColorHSL => {
 		min = Math.min(R, G, B),
 		delta = max - min;
 
-	let h = 0,
-		s;
+	let h = (max + min) / 2;
+	let s = (max + min) / 2;
+	let l = (max + min) / 2;
 
-	// Hue calculation
-	if (delta === 0) {
+	if (max === min) {
 		h = 0;
-	} else if (max === R) {
-		h = 60 * (((G - B) / delta) % 6);
-	} else if (max === G) {
-		h = 60 * (((B - R) / delta) + 2);
-	} else if (max === B) {
-		h = 60 * (((R - G) / delta) + 4);
-	}
-
-	// Lightness calculation
-	const l = (max + min) / 2;
-
-	// Saturation calculation
-	if (delta === 0) {
 		s = 0;
 	} else {
-		s = delta / (1 - Math.abs(2 * l - 1));
+		s = l > 0.5 ? delta / (2 - max - min) : delta / (max + min);
+
+		switch (max) {
+		case R:
+			h = (G - B) / delta + (G < B ? 6 : 0);
+			break;
+		case G:
+			h = (B - R) / delta + 2;
+			break;
+		case B:
+			h = (R - G) / delta + 4;
+			break;
+		}
+
+		h /= 6;
 	}
+
+	h = Math.round(h * 360);
+	s = Math.round(s * 100);
+	l = Math.round(l * 100);
 
 	return {
 		h,
@@ -394,6 +412,7 @@ const RGBToHSL = (color: ColorRGB): ColorHSL => {
 
 export {
 	getRGBColor,
+	getAlpha,
 	HSLToRGB,
 	HEXToRGB,
 	RGBToHSL,

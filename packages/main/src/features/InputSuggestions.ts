@@ -1,26 +1,25 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
-import List from "../List.js";
+import type List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
 import type ResponsivePopover from "../ResponsivePopover.js";
-import SuggestionItem from "../SuggestionItem.js";
-import Button from "../Button.js";
-import Icon from "../Icon.js";
+import "../SuggestionItem.js";
+import "../SuggestionItemGroup.js";
+import type SuggestionItem from "../SuggestionItem.js";
 import type ListItemGroupHeader from "../ListItemGroupHeader.js";
+import InputSuggestionsTemplate from "./InputSuggestionsTemplate.js";
+import Input from "../Input.js";
 
 import {
 	LIST_ITEM_POSITION,
 	LIST_ITEM_GROUP_HEADER,
 } from "../generated/i18n/i18n-defaults.js";
 import type ListItemBase from "../ListItemBase.js";
-import SuggestionItemGroup from "../SuggestionItemGroup.js";
+import type SuggestionItemGroup from "../SuggestionItemGroup.js";
 import type { IInputSuggestionItem, IInputSuggestionItemSelectable } from "../Input.js";
 
 interface SuggestionComponent extends UI5Element {
-	_isValueStateFocused: boolean;
 	focused: boolean;
 	hasSuggestionItemSelected: boolean;
 	value: string;
@@ -45,7 +44,7 @@ type SuggestionsAccInfo = {
  * @class
  * @private
  */
-class Suggestions extends ComponentFeature {
+class Suggestions {
 	component: SuggestionComponent;
 	slotName: string;
 	handleFocus: boolean;
@@ -59,8 +58,11 @@ class Suggestions extends ComponentFeature {
 	static i18nBundle: I18nBundle;
 	static SCROLL_STEP = 60;
 
+	get template() {
+		return InputSuggestionsTemplate;
+	}
+
 	constructor(component: SuggestionComponent, slotName: string, highlight: boolean, handleFocus: boolean) {
-		super();
 		// The component, that the suggestion would plug into.
 		this.component = component;
 
@@ -78,15 +80,17 @@ class Suggestions extends ComponentFeature {
 		this.selectedItemIndex = -1;
 	}
 
-	onUp(e: KeyboardEvent) {
+	onUp(e: KeyboardEvent, indexOfItem: number) {
 		e.preventDefault();
-		this._handleItemNavigation(false /* forward */);
+		const index = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+		this._handleItemNavigation(false /* forward */, index);
 		return true;
 	}
 
-	onDown(e: KeyboardEvent) {
+	onDown(e: KeyboardEvent, indexOfItem: number) {
 		e.preventDefault();
-		this._handleItemNavigation(true /* forward */);
+		const index = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+		this._handleItemNavigation(true /* forward */, index);
 		return true;
 	}
 
@@ -118,11 +122,6 @@ class Suggestions extends ComponentFeature {
 
 		const isItemIndexValid = this.selectedItemIndex - 10 > -1;
 
-		if (this._hasValueState && !isItemIndexValid) {
-			this._focusValueState();
-			return true;
-		}
-
 		this._moveItemSelection(this.selectedItemIndex,
 			isItemIndexValid ? this.selectedItemIndex -= 10 : this.selectedItemIndex = 0);
 		return true;
@@ -132,13 +131,13 @@ class Suggestions extends ComponentFeature {
 		e.preventDefault();
 
 		const items = this._getItems();
-		const lastItemIndex = items.length - 1;
-		const isItemIndexValid = this.selectedItemIndex + 10 <= lastItemIndex;
 
-		if (this._hasValueState && !items) {
-			this._focusValueState();
+		if (!items) {
 			return true;
 		}
+
+		const lastItemIndex = items.length - 1;
+		const isItemIndexValid = this.selectedItemIndex + 10 <= lastItemIndex;
 
 		this._moveItemSelection(this.selectedItemIndex,
 			isItemIndexValid ? this.selectedItemIndex += 10 : this.selectedItemIndex = lastItemIndex);
@@ -147,11 +146,6 @@ class Suggestions extends ComponentFeature {
 
 	onHome(e: KeyboardEvent) {
 		e.preventDefault();
-
-		if (this._hasValueState) {
-			this._focusValueState();
-			return true;
-		}
 
 		this._moveItemSelection(this.selectedItemIndex, this.selectedItemIndex = 0);
 		return true;
@@ -162,8 +156,7 @@ class Suggestions extends ComponentFeature {
 
 		const lastItemIndex = this._getItems().length - 1;
 
-		if (this._hasValueState && !lastItemIndex) {
-			this._focusValueState();
+		if (!lastItemIndex) {
 			return true;
 		}
 
@@ -232,8 +225,6 @@ class Suggestions extends ComponentFeature {
 		};
 
 		this._getComponent().onItemSelected(item, keyboardUsed);
-		item.selected = false;
-		item.focused = false;
 		this._getComponent().open = false;
 	}
 
@@ -263,18 +254,8 @@ class Suggestions extends ComponentFeature {
 		this.onItemSelected(pressedItem as SuggestionItem, false /* keyboardUsed */);
 	}
 
-	_onOpen() {
-		this._applyFocus();
-	}
-
 	_onClose() {
 		this._handledPress = false;
-	}
-
-	_applyFocus() {
-		if (this.selectedItemIndex) {
-			this._getItems()[this.selectedItemIndex]?.focus();
-		}
 	}
 
 	_isItemOnTarget() {
@@ -295,11 +276,12 @@ class Suggestions extends ComponentFeature {
 		return !!(this._getPicker()?.open);
 	}
 
-	_handleItemNavigation(forward: boolean) {
+	_handleItemNavigation(forward: boolean, index: number) {
+		this.selectedItemIndex = index;
+
 		if (!this._getItems().length) {
 			return;
 		}
-
 		if (forward) {
 			this._selectNextItem();
 		} else {
@@ -309,17 +291,8 @@ class Suggestions extends ComponentFeature {
 
 	_selectNextItem() {
 		const itemsCount = this._getItems().length;
+
 		const previousSelectedIdx = this.selectedItemIndex;
-
-		if (this._hasValueState && previousSelectedIdx === -1 && !this.component._isValueStateFocused) {
-			this._focusValueState();
-			return;
-		}
-
-		if ((previousSelectedIdx === -1 && !this._hasValueState) || this.component._isValueStateFocused) {
-			this._clearValueStateFocus();
-			this.selectedItemIndex = -1;
-		}
 
 		if (previousSelectedIdx !== -1 && previousSelectedIdx + 1 > itemsCount - 1) {
 			return;
@@ -331,28 +304,6 @@ class Suggestions extends ComponentFeature {
 	_selectPreviousItem() {
 		const items = this._getItems();
 		const previousSelectedIdx = this.selectedItemIndex;
-
-		if (this._hasValueState && previousSelectedIdx === 0 && !this.component._isValueStateFocused) {
-			this.component.hasSuggestionItemSelected = false;
-			this.component._isValueStateFocused = true;
-			this.selectedItemIndex = 0;
-
-			items[0].focused = false;
-
-			if (items[0].hasAttribute("ui5-suggestion-item")) {
-				(items[0] as SuggestionItem).selected = false;
-			}
-
-			return;
-		}
-
-		if (this.component._isValueStateFocused) {
-			this.component.focused = true;
-			this.component._isValueStateFocused = false;
-			this.selectedItemIndex = 0;
-
-			return;
-		}
 
 		if (previousSelectedIdx === -1 || previousSelectedIdx === null) {
 			return;
@@ -386,7 +337,6 @@ class Suggestions extends ComponentFeature {
 		}
 
 		this.component.focused = false;
-		this._clearValueStateFocus();
 
 		const selectedItem = this._getItems()[this.selectedItemIndex];
 
@@ -453,8 +403,14 @@ class Suggestions extends ComponentFeature {
 		const rectItem = item.getDomRef()!.getBoundingClientRect();
 		const rectInput = this._getComponent().getDomRef()!.getBoundingClientRect();
 		const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+		let headerHeight = 0;
 
-		return (rectItem.top + Suggestions.SCROLL_STEP <= windowHeight) && (rectItem.top >= rectInput.top);
+		if (this._hasValueState) {
+			const valueStateHeader = this._getPicker().querySelector("[slot=header]")!;
+			headerHeight = valueStateHeader.getBoundingClientRect().height;
+		}
+
+		return (rectItem.top + Suggestions.SCROLL_STEP <= windowHeight) && (rectItem.top >= rectInput.top + headerHeight);
 	}
 
 	_scrollItemIntoView(item: IInputSuggestionItem) {
@@ -527,42 +483,13 @@ class Suggestions extends ComponentFeature {
 		return this.component.hasValueStateMessage;
 	}
 
-	_focusValueState() {
-		this.component._isValueStateFocused = true;
-		this.component.focused = false;
-		this.component.hasSuggestionItemSelected = false;
-		this.selectedItemIndex = 0;
-		this.component.value = this.component.typedInValue;
-
-		this._deselectItems();
-	}
-
-	_clearValueStateFocus() {
-		this.component._isValueStateFocused = false;
-	}
-
 	_clearSelectedSuggestionAndaccInfo() {
 		this.accInfo = undefined;
 		this.selectedItemIndex = 0;
 	}
-
-	static get dependencies() {
-		return [
-			SuggestionItem,
-			SuggestionItemGroup,
-			List,
-			Button,
-			Icon,
-		];
-	}
-
-	static async define() {
-		Suggestions.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 }
 
-// Add suggestions support to the global features registry so that Input.js can use it
-registerComponentFeature("InputSuggestions", Suggestions);
+Input.SuggestionsClass = Suggestions;
 
 export default Suggestions;
 

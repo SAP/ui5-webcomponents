@@ -12,6 +12,7 @@
 
 :host {
 	min-width: calc(var(--_ui5_input_min_width) + var(--_ui5_input_icon_width));
+	height: var(--_ui5_input_height);
 	color: var(--sapField_TextColor);
 	background-color: var(--sapField_Background);
 	border-radius: var(--_ui5-time_picker_border_radius);
@@ -26,7 +27,7 @@
 	background-color: var(--sapField_InvalidBackground);
 }
 
-:host(:not([disabled]):hover) {
+:host(:not([disabled]):not([readonly]):hover) {
 	background: var(--sapField_Hover_Background);
 }
 
@@ -34,6 +35,7 @@
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+	height: inherit;
 }
 
 :host .ui5-time-picker-input {
@@ -44,4 +46,14 @@
 	letter-spacing: inherit;
 	word-spacing: inherit;
 	margin: inherit;
+	height: inherit;
+}
+
+:host([disabled]) .ui5-time-picker-input {
+	background-color: var(--_ui5-input_disabled_background);
+	opacity: var(--_ui5_input_disabled_opacity);
+}
+
+.ui5-time-picker-popover::part(header) {
+	padding: 0;
 }

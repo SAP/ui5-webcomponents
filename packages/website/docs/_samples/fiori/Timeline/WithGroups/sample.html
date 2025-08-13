@@ -1,0 +1,41 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-fold-end -->
+
+    <ui5-timeline layout="Vertical" id="testTimeline">
+
+        <ui5-timeline-group-item group-name="Events">
+            <ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="18.06.2024 11:30" name="SAP D-com"></ui5-timeline-item>
+            <ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="19.06.2024 12:30" icon="calendar" name="SAP Talk"></ui5-timeline-item>
+            <ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="21.06.2024 18:30" name="SAP iXP Summer Party"></ui5-timeline-item>
+        </ui5-timeline-group-item>
+
+        <ui5-timeline-group-item group-name="Meetings">
+            <ui5-timeline-item id="testItem" class="group-item" title-text="coming up" subtitle-text="10.07.2024 11:30" icon="calendar" name="Team Balkan Meeting"></ui5-timeline-item>
+            <ui5-timeline-item id="testItem" class="group-item" title-text="coming up" subtitle-text="20.08.2024 12:30" icon="calendar" name="Team Balkan Planning"></ui5-timeline-item>
+            <ui5-timeline-item id="testItem" class="group-item" title-text="coming up" subtitle-text="22.08.2024 14:30" icon="calendar" name="Team Balkan Retrospective"></ui5-timeline-item>
+        </ui5-timeline-group-item>
+
+        <ui5-timeline-group-item group-name="Calls">
+            <ui5-timeline-item id="testItem" class="group-item" title-text="made group call" subtitle-text="20.09.2024 11:30" icon="calendar" name="John Doe" name-clickable></ui5-timeline-item>
+            <ui5-timeline-item id="testItem" class="group-item" subtitle-text="20.09.2024 12:30" name="John Doe" name-clickable>
+                <ui5-avatar initials="JD"></ui5-avatar>
+                <ui5-label>Has ended the call</ui5-label>
+            </ui5-timeline-item>
+        </ui5-timeline-group-item>
+    </ui5-timeline>
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

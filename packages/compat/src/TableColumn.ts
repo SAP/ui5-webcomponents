@@ -1,12 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import TableColumnTemplate from "./TableColumnTemplate.js";
 import type TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
 
 // Styles
 import tableColumnStyles from "./generated/themes/TableColumn.css.js";
+import { patchScopingSuffix } from "./utils/CompatCustomElementsScope.js";
 
 /**
  * @class
@@ -20,11 +21,12 @@ import tableColumnStyles from "./generated/themes/TableColumn.css.js";
  * @public
  * @slot {Node[]} default - Defines the content of the column header
  * @csspart column - Used to style the native `th` element
+ * @deprecated Deprecated as of version 2.12.0, use `@ui5/webcomponents/dist/Table.js` instead.
  */
 @customElement({
 	tag: "ui5-table-column",
 	styles: tableColumnStyles,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TableColumnTemplate,
 })
 class TableColumn extends UI5Element {
@@ -85,6 +87,8 @@ class TableColumn extends UI5Element {
 	@property({ type: Boolean })
 	last = false;
 }
+
+patchScopingSuffix(TableColumn);
 
 TableColumn.define();
 

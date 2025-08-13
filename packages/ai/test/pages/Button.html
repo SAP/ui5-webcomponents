@@ -11,6 +11,8 @@
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
+	<link rel="stylesheet" type="text/css" href="./styles/Button.css">
+
 </head>
 
 <body>
@@ -19,8 +21,19 @@
 
 	<ui5-ai-button id="myAiButton" state="generate">
 		<ui5-ai-button-state name="generate" text="Generate" icon="ai"></ui5-ai-button-state>
-		<ui5-ai-button-state name="generating" text="Stop Generation" icon="stop"></ui5-ai-button-state>
+		<ui5-ai-button-state name="generating" text="Stop Generating" icon="stop"></ui5-ai-button-state>
 		<ui5-ai-button-state name="revise" text="Revise" icon="ai" end-icon="navigation-down-arrow"></ui5-ai-button-state>
+	</ui5-ai-button>
+	<br/>
+	<br/>
+
+	<ui5-title level="H3">AI Button with split mode state</ui5-title>
+	<br/>
+
+	<ui5-ai-button id="myAiButtonSplit" state="generate">
+		<ui5-ai-button-state name="generate" text="Regenerate" icon="ai"></ui5-ai-button-state>
+		<ui5-ai-button-state name="generating" text="Stop Generating" icon="stop"></ui5-ai-button-state>
+		<ui5-ai-button-state name="revise" text="Regenerate" icon="ai" show-arrow-button></ui5-ai-button-state>
 	</ui5-ai-button>
 	<br/>
 	<br/>
@@ -28,7 +41,7 @@
 	<ui5-title level="H3">Icon-only AI Button with Menu</ui5-title>
 	<br/>
 
-	<ui5-ai-button id="myAiButtonIconOnly" state="revise">
+	<ui5-ai-button id="myAiButtonIconOnly" state="generate">
 		<ui5-ai-button-state name="generate" icon="ai"></ui5-ai-button-state>
 		<ui5-ai-button-state name="generating" icon="stop"></ui5-ai-button-state>
 		<ui5-ai-button-state name="revise" icon="ai" end-icon="navigation-down-arrow"></ui5-ai-button-state>
@@ -42,10 +55,9 @@
 			<ui5-menu-item text="Option 2"></ui5-menu-item>
 			<ui5-menu-item text="Option 3"></ui5-menu-item>
 		</ui5-menu-item>
-		<ui5-menu-item text="Text Length">
-			<ui5-menu-item text="Short"></ui5-menu-item>
-			<ui5-menu-item text="Medium"></ui5-menu-item>
-			<ui5-menu-item text="Long"></ui5-menu-item>
+		<ui5-menu-item text="Adjust Length">
+			<ui5-menu-item text="Shorten text"></ui5-menu-item>
+			<ui5-menu-item text="Lengthen text"></ui5-menu-item>
 		</ui5-menu-item>
 		<ui5-menu-item text="Bulleted List"></ui5-menu-item>
 		<ui5-menu-item text="Translate">
@@ -55,20 +67,106 @@
 		</ui5-menu-item>
 	</ui5-menu>
 
-	<script>
-		var generationId;
+	<ui5-menu id="menuReg">
+		<ui5-menu-item text="Edit Prompt"></ui5-menu-item>
+		<ui5-menu-item text="Change Tone"></ui5-menu-item>
+	</ui5-menu>
 
-		function startGeneration(button) {
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
+	<!-- QUICK PROMPT PATTERNS SCENARIO -->
+
+	<ui5-title size="H2">Quick Prompt Pattern</ui5-title>
+	<ui5-card>
+		<ui5-card-header slot="header" title-text="Stoyan Kralimarkov" subtitle-text="Senior Sales Executive">
+			<img src="https://sap.github.io/ui5-webcomponents/images/avatars/man_avatar_1.png" slot="avatar">
+		</ui5-card-header>
+		<section class="quickPromptSection">
+			<ui5-label required>To: </ui5-label>
+			<div style="display: flex; gap: 0.125rem;">
+				<ui5-token selected text="Diana Mihaylova" style="width: fit-content; margin-block-end: 1rem;"></ui5-token>
+				<ui5-token selected text="DL Marketing Sector SAP" style="width: fit-content; margin-block-end: 1rem;"></ui5-token>
+			</div>
+			<div class="quickPromptLblBtn">
+				<ui5-label style="align-self: flex-end;" required>Offer: </ui5-label>
+				<ui5-ai-button id="quickPromptAiButton" class="quickPromptAiButton" state="generate">
+					<ui5-ai-button-state name="generate" text="Generate" icon="ai"></ui5-ai-button-state>
+					<ui5-ai-button-state name="generating" text="Stop Generating" icon="stop"></ui5-ai-button-state>
+					<ui5-ai-button-state name="reviseGenerating" text="Stop Generating" icon="stop"></ui5-ai-button-state>
+					<ui5-ai-button-state name="revise" text="Revise" icon="ai" end-icon="navigation-down-arrow"></ui5-ai-button-state>
+				</ui5-ai-button>
+			</div>
+			<ui5-textarea id="output" style="height: 100%;"></ui5-textarea>
+		</section>
+		<div class="quickPromptCardFooter">
+			<ui5-button id="footerBtnSend" design="Emphasized">Send</ui5-button>
+			<ui5-button id="footerBtnCancel" design="Transparent">Cancel</ui5-button>
+		</div>
+		<ui5-toast placement="MiddleCenter" id="quickPromptToast" duration="3000">Your message was sent successfully!</ui5-toast>
+	</ui5-card>
+
+	<ui5-menu id="menu1">
+		<ui5-menu-item text="Regenerate"></ui5-menu-item>
+		<ui5-menu-separator></ui5-menu-separator>
+		<ui5-menu-item text="Fix Spelling & Grammar"></ui5-menu-item>
+		<ui5-menu-item text="Rewrite Text">
+			<ui5-menu-item text="Simplify"></ui5-menu-item>
+			<ui5-menu-item text="Expand"></ui5-menu-item>
+			<ui5-menu-item text="Rephrase"></ui5-menu-item>
+			<ui5-menu-item text="Summarize"></ui5-menu-item>
+		</ui5-menu-item>
+		<ui5-menu-item text="Make Bulleted List"></ui5-menu-item>
+		<ui5-menu-item text="Translate">
+			<ui5-menu-item text="Bulgarian"></ui5-menu-item>
+			<ui5-menu-item text="English"></ui5-menu-item>
+			<ui5-menu-item text="German"></ui5-menu-item>
+		</ui5-menu-item>
+		<ui5-menu-separator></ui5-menu-separator>
+		<ui5-menu-item text="Generate Error"></ui5-menu-item>
+		<ui5-menu-item text="Clear Error"></ui5-menu-item>
+	</ui5-menu>
+
+	<script type="module">
+		import data from "./js/Button.js";
+		var generationId;
+		var generationStopped = false;
+		var currentTextKey;
+		var translationKey = "en";
+		var prevTriggerState = "generate";
+		const sendButton = document.getElementById("footerBtnSend");
+		const toast = document.getElementById("quickPromptToast");
+		const predefinedTexts = data.predefinedTexts;
+		const predefinedTextsBulleted = data.predefinedTextsBulleted;
+		const predefinedTextsExpanded = data.predefinedTextsExpanded;
+		const predefinedTextsRephrased = data.predefinedTextsRephrased;
+		const predefinedTextsSimplified = data.predefinedTextsSimplified;
+		const predefinedTextsSummarized = data.predefinedTextsSummarized;
+
+		function startGeneration(button, isSplitButton = false) {
 			console.warn("startGeneration");
 			generationId = setTimeout(function() {
 				console.warn("Generation completed");
 				button.state = "revise";
+				button.accessibilityAttributes = {
+					root: {
+						hasPopup: "menu",
+						roleDescription: isSplitButton  ? undefined : "Menu Button"
+					}
+				};
 			}, 3000);
 		}
 
-		function stopGeneration() {
+		function stopGeneration(button) {
 			console.warn("stopGeneration");
 			clearTimeout(generationId);
+			button.accessibilityAttributes = {
+					root: {
+						hasPopup: "false"
+					}
+				};
 		}
 
 		function aiButtonClickHandler(evt) {
@@ -81,7 +179,7 @@
 					break;
 				case "generating":
 					button.state = "generate";
-					stopGeneration();
+					stopGeneration(button);
 					break;
 				case "revise":
 					menu.opener = button;
@@ -90,17 +188,273 @@
 			}
 		}
 
-		myAiButton.addEventListener("click", aiButtonClickHandler);
+		function aiButtonSplitClickHandler(evt) {
+			var button = evt.target;
 
-		myAiButtonIconOnly.addEventListener("click", aiButtonClickHandler);
+			switch(button.state) {
+				case "":
+				case "generate":
+					prevTriggerState = "generate";
+					button.state = "generating";
+					startGeneration(button, true);
+					break;
+				case "generating":
+					button.state = prevTriggerState;
+					stopGeneration(button);
+					break;
+				case "revise":
+					menuReg.open = false;
+					prevTriggerState = "revise";
+					button.state = "generating";
+					startGeneration(button, true);
+					break;
+			}
+		}
+
+		function aiButtonSplitArrowClickHandler(evt) {
+			var button = evt.target;
+
+			menuReg.opener = button;
+			menuReg.open = true;
+		}
 
 		menu.addEventListener("item-click", function(evt) {
 			var button = menu.opener;
+
 			if (evt.detail.text === "Regenerate") {
 				button.state = "generating";
 				startGeneration(button);
 			}
 		});
+
+		menuReg.addEventListener("item-click", function(evt) {
+			var button = menuReg.opener;
+
+			prevTriggerState = "revise";
+			button.state = "generating";
+			startGeneration(button);
+		});
+
+		menuReg.addEventListener("open", function(evt) {
+			var button = menuReg.opener;
+
+			button.arrowButtonPressed = true;
+		});
+
+		menuReg.addEventListener("close", function(evt) {
+			var button = menuReg.opener;
+
+			button.arrowButtonPressed = false;
+		});
+		myAiButton.addEventListener("click", aiButtonClickHandler);
+		myAiButtonSplit.addEventListener("click", aiButtonSplitClickHandler);
+		myAiButtonSplit.addEventListener("arrow-button-click", aiButtonSplitArrowClickHandler);
+		myAiButtonIconOnly.addEventListener("click", aiButtonClickHandler);
+
+		function aiQuickPromptButtonClickHandler(e) {
+			var button = e.target;
+
+			switch(button.state) {
+				case "":
+				case "generate":
+					button.state = "generating";
+					sendButton.disabled = true;
+					startQuickPromptGeneration(button);
+					const keys = Object.keys(predefinedTexts[translationKey]);
+					const randomKey = keys[Math.floor(Math.random() * keys.length)];
+					currentTextKey = randomKey;
+					generateText(predefinedTexts[translationKey][currentTextKey], button);
+					break;
+				case "generating":
+					button.state = "revise";
+					stopQuickPromptGeneration(button);
+					break;
+				case "revise":
+					menu1.opener = button;
+					menu1.open = true;
+					break;
+				case "reviseGenerating":
+					button.state = "revise";
+					stopQuickPromptGeneration(button);
+					break;
+			}
+		}
+
+		function startQuickPromptGeneration(button) {
+			console.warn("startGeneration");
+			generationStopped = false;
+			generationId = setTimeout(function() {
+				console.warn("Generation completed");
+				button.state = "revise";
+				button.accessibilityAttributes = {
+					root: {
+						hasPopup: "menu",
+						roleDescription: "Menu Button"
+					}
+				};
+			}, 2000);
+		}
+
+		function stopQuickPromptGeneration(button) {
+			console.warn("stopGeneration");
+			clearInterval(generationId);
+			generationStopped = true;
+			sendButton.disabled = false;
+			output.disabled = false;
+			button.accessibilityAttributes = {
+				root: {
+					hasPopup: "false"
+				}
+			};
+		}
+
+		sendButton.addEventListener("click", function() {
+			const output = document.getElementById("output");
+
+			if (output.value) {
+				toast.open = true;
+				output.valueState = "None";
+				output.value = "";
+			}
+		});
+
+		function isTextWrong() {
+				return output.value.trim(" ") !== predefinedTexts[translationKey][currentTextKey]
+					&& output.value.trim(" ") !== predefinedTextsExpanded[translationKey][currentTextKey]
+					&& output.value.trim(" ") !== predefinedTextsBulleted[translationKey][currentTextKey]
+					&& output.value.trim(" ") !== predefinedTextsRephrased[translationKey][currentTextKey]
+					&& output.value.trim(" ") !== predefinedTextsSimplified[translationKey][currentTextKey];
+			}
+
+			menu1.addEventListener("item-click", function (e) {
+			const button = menu1.opener;
+			const output = document.getElementById("output");
+
+			switch (e.detail.text) {
+				case "Regenerate":
+					const keys = Object.keys(predefinedTexts[translationKey]);
+					const randomKey = keys[Math.floor(Math.random() * keys.length)];
+
+					currentTextKey = randomKey;
+					setStateAndGenerate(button, "generating", randomKey, predefinedTexts);
+					break;
+				case "Make Bulleted List":
+					startTextGeneration(button, "reviseGenerating", predefinedTextsBulleted);
+					break;
+				case "Clear Error":
+					clearValueState(output);
+					break;
+				case "Fix Spelling & Grammar":
+					fixSpellingAndGrammar(button, output);
+					break;
+				case "Generate Error":
+					setNegativeValueState(output);
+					break;
+				case "Simplify":
+					startTextGeneration(button, "reviseGenerating", predefinedTextsSimplified);
+					break;
+				case "Expand":
+					startTextGeneration(button, "reviseGenerating", predefinedTextsExpanded);
+					break;
+				case "Rephrase":
+					startTextGeneration(button, "reviseGenerating", predefinedTextsRephrased);
+					break;
+				case "Summarize":
+					startTextGeneration(button, "reviseGenerating", predefinedTextsSummarized);
+					break;
+				case "Bulgarian":
+					translationKey = "bg";
+					startTextGeneration(button, "reviseGenerating", predefinedTexts);
+					break;
+				case "English":
+					translationKey = "en";
+					startTextGeneration(button, "reviseGenerating", predefinedTexts);
+					break;
+				case "German":
+					translationKey = "de";
+					startTextGeneration(button, "reviseGenerating", predefinedTexts);
+					break;
+				default:
+					return "";
+			}
+		});
+
+		function setStateAndGenerate(button, state, textKey, predefinedTexts) {
+			button.state = state;
+			startQuickPromptGeneration(button);
+			generateText(predefinedTexts[translationKey][textKey], button);
+		}
+
+		function startTextGeneration(button, state, predefinedTexts) {
+			button.state = state;
+			startQuickPromptGeneration(button);
+			generateText(predefinedTexts[translationKey][currentTextKey], button);
+		}
+
+		function clearValueState(output) {
+			output.valueState = "None";
+		}
+
+		function setNegativeValueState(output) {
+			const div = document.createElement("div");
+
+			output.valueState = "Negative";
+			div.setAttribute("slot", "valueStateMessage");
+			div.textContent = "Spelling or grammar issues found, please try again!";
+
+			if (!output.querySelector("[slot='valueStateMessage']")) {
+				output.appendChild(div);
+			}
+		}
+
+		function fixSpellingAndGrammar(button, output) {
+			if (isTextWrong()) {
+				setStateAndGenerate(button, "generating", currentTextKey, predefinedTexts);
+				setNegativeValueState(output);
+			} else {
+				output.valueState = "Positive";
+				setTimeout(() => {
+					output.valueState = "None";
+				}, 3000);
+			}
+		}
+
+		quickPromptAiButton.addEventListener("click", aiQuickPromptButtonClickHandler);
+
+		function generateText(text, button) {
+			if (generationId) {
+				clearInterval(generationId);
+			}
+
+			const output = document.getElementById("output");
+			const words = text.split(" ");
+			let currentWordIndex = 0;
+
+			output.value = "";
+			generationId = setInterval(() => {
+				if (currentWordIndex < words.length) {
+					output.value += words[currentWordIndex] + " ";
+					currentWordIndex++;
+					sendButton.disabled = true;
+					output.disabled = true;
+				} else {
+					if (!generationStopped) {
+						button.state = "revise";
+						output.valueState = "None";
+						button.accessibilityAttributes = {
+							root: {
+								hasPopup: "menu",
+								roleDescription: "Menu Button"
+							}
+						};
+
+					}
+					clearInterval(generationId);
+					sendButton.disabled = false;
+					output.disabled = false;
+				}
+			}, 75);
+		}
 	</script>
 
 </body>

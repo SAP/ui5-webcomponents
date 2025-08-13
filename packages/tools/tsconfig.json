@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"target": "ES2021",
+		"lib": [
+			"DOM",
+			"DOM.Iterable",
+			"ES2023"
+		],
+		"declaration": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"inlineSources": true,
+		"strict": true,
+		"moduleResolution": "node",
+		"jsx": "react-jsx",
+		"jsxImportSource": "@ui5/webcomponents-base",
+	}
+}

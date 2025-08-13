@@ -767,8 +767,6 @@
 		var loadMoreTracker = 1;
 
 		function init(tbl, rows) {
-			tbl.busy = true;
-
 			var html = '';
 			products.ProductCollection.slice(0, ROWS).forEach(function (product, index, arr) {
 				var test = "<ui5-table-row><ui5-table-cell><ui5-label>".concat(product.Name, "</ui5-label><ui5-label>").concat(product.ProductId, "</ui5-label></ui5-table-cell><ui5-table-cell><ui5-label>").concat(product.SupplierName, "</ui5-label></ui5-table-cell><ui5-table-cell><ui5-label >").concat(product.Width, " x ").concat(product.Depth, " x ").concat(product.Height, " ").concat(product.DimUnit, "</ui5-label></ui5-table-cell><ui5-table-cell><ui5-label>").concat(product.WeightMeasure, "</b> ").concat(product.WeightUnit, "</ui5-label></ui5-table-cell><ui5-table-cell><ui5-label>").concat(product.Price, "</b> ").concat(product.CurrencyCode, "</ui5-label></ui5-table-cell></ui5-table-row>");
@@ -779,10 +777,6 @@
 
 			tbl.setAttribute("growing-button-subtext", "[" + loadMoreTracker * ROWS + " / 123]");
 			inputLoadMoreCounter.value = `${loadMoreTracker - 1}`;
-
-			setTimeout(function() {
-				tbl.busy = false;
-			}, 1500);
 		}
 
 		function loadMore() {

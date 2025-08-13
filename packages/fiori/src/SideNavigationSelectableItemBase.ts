@@ -1,16 +1,32 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import {
+	isSpace,
+	isEnter,
+	isLeft,
+	isRight,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import type { SideNavigationItemClickEventDetail } from "./SideNavigationItemBase.js";
+
+type SideNavigationItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
 /**
- * Fired when the component is activated either with a
- * click/tap or by using the [Enter] or [Space] keys.
+ * Fired when the component is activated either with a click/tap or by using the [Enter] or [Space] keys.
  *
  * @public
+ * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+ * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+ * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+ * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+	cancelable: true,
+})
 
 /**
  * @class
@@ -24,6 +40,19 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  */
 @customElement()
 class SideNavigationSelectableItemBase extends SideNavigationItemBase {
+	eventDetails!: SideNavigationItemBase["eventDetails"] & {
+		"click": SideNavigationItemClickEventDetail
+	}
+
+	/**
+	 * Defines if the item's parent is disabled.
+	 * @private
+	 * @default false
+	 * @since 2.10.0
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_parentDisabled: boolean = false;
+
 	/**
 	 * Defines the icon of the item.
 	 *
@@ -37,7 +66,9 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	icon?: string;
 
 	/**
-	 * Defines whether the item is selected
+	 * Defines whether the item is selected.
+	 *
+	 * **Note:** Items that have a set `href` and `target` set to `_blank` should not be selectable.
 	 *
 	 * @public
 	 * @default false
@@ -61,15 +92,16 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	/**
 	 * Defines the component target.
 	 *
-	 * **Notes:**
+	 * Possible values:
 	 *
 	 * - `_self`
 	 * - `_top`
 	 * - `_blank`
 	 * - `_parent`
-	 * - `_search`
+	 * - `framename`
 	 *
-	 * **This property must only be used when the `href` property is set.**
+	 * **Note:** Items that have a defined `href` and `target`
+	 * attribute set to `_blank` should not be selectable.
 	 *
 	 * @public
 	 * @default undefined
@@ -79,26 +111,83 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	target?: string;
 
 	/**
+	 * Item design.
+	 *
+	 * **Note:** Items with "Action" design must not have sub-items.
+	 *
+	 * @public
+	 * @default "Default"
+	 * @since 2.7.0
+	 */
+	@property()
+	design: `${SideNavigationItemDesign}` = "Default";
+
+	/**
+	 * Indicates whether the navigation item is selectable. By default, all items are selectable unless specifically marked as unselectable.
+	 *
+	 * When a parent item is marked as unselectable, selecting it will only expand or collapse its sub-items.
+	 * To improve user experience do not mix unselectable parent items with selectable parent items in a single side navigation.
+	 *
+	 *
+	 * **Guidelines**:
+	 * - Items with an assigned `href` and a target of `_blank` should be marked as unselectable.
+	 * - Items that trigger actions (with design "Action") should be marked as unselectable.
+	 *
+	 * @public
+	 * @default false
+	 * @since 2.7.0
+	 */
+	@property({ type: Boolean })
+	unselectable = false;
+
+	/**
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following fields are supported:
+	 *
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
+	 *
+	 * **Note:** Do not use it on parent items, as it will be overridden if the item is in the overflow menu.
+	 *
+	 * @public
+	 * @default {}
+	 * @since 2.7.0
+	 */
+	@property({ type: Object })
+	accessibilityAttributes: SideNavigationItemAccessibilityAttributes = {};
+
+	/**
 	 * @private
 	 * @default false
 	 */
 	@property({ type: Boolean })
 	isOverflow = false;
 
+	/**
+	 * Reference to the original side navigation item that opened the popover.
+	 *
+	 * @private
+	 */
+	associatedItem?: SideNavigationItemBase;
+
 	get ariaRole() {
 		if (this.sideNavCollapsed) {
-			return this.isOverflow ? "menuitem" : "menuitemradio";
+			return this.isOverflow || this.unselectable ? "menuitem" : "menuitemradio";
 		}
 
 		return "treeitem";
 	}
 
+	get isSelectable() {
+		return !this.unselectable && !this.effectiveDisabled;
+	}
+
 	get _href() {
-		return (!this.disabled && this.href) ? this.href : undefined;
+		return (!this.effectiveDisabled && this.href) ? this.href : undefined;
 	}
 
 	get _target() {
-		return (!this.disabled && this.target) ? this.target : undefined;
+		return (!this.effectiveDisabled && this.href && this.target) ? this.target : undefined;
 	}
 
 	get isExternalLink() {
@@ -109,10 +198,26 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		return this.selected;
 	}
 
+	get _effectiveTag() {
+		return this._href ? "a" : "div";
+	}
+
+	get effectiveDisabled() {
+		return this.disabled || this._parentDisabled;
+	}
+
+	get _ariaHasPopup() {
+		if (this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
+		}
+
+		return undefined;
+	}
+
 	get classesArray() {
 		const classes = [];
 
-		if (this.disabled) {
+		if (this.effectiveDisabled) {
 			classes.push("ui5-sn-item-disabled");
 		}
 
@@ -128,30 +233,60 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	get _ariaCurrent() {
-		if (!this.selected) {
+		if (!this.sideNavCollapsed && !this.selected) {
 			return undefined;
 		}
 
 		return "page";
 	}
 
+	get _ariaSelected() {
+		if (!this.sideNavCollapsed) {
+			return undefined;
+		}
+
+		return this.selected;
+	}
+
 	_onkeydown(e: KeyboardEvent) {
-		if (isSpace(e)) {
+		const isRTL = this.effectiveDir === "rtl";
+
+		if (isSpace(e) || isRight(e) || isLeft(e)) {
 			e.preventDefault();
 		}
 
 		if (isEnter(e)) {
 			this._activate(e);
 		}
+
+		if ((isRTL ? isLeft(e) : isRight(e)) && this.sideNavCollapsed && this.hasSubItems) {
+			this._activate(e);
+		}
+
+		if ((isRTL ? isRight(e) : isLeft(e)) && this.inPopover) {
+			this.associatedItem?.sideNavigation?.closePicker();
+		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._activate(e);
+
+			if (this.href && !e.defaultPrevented) {
+				const customEvent = new MouseEvent("click");
+
+				customEvent.stopImmediatePropagation();
+				if (this.getDomRef()!.querySelector("a")) {
+					this.getDomRef()!.querySelector("a")!.dispatchEvent(customEvent);
+				} else {
+					// when Side Navigation is collapsed and it is first level item we have directly <a> element
+					this.getDomRef()!.dispatchEvent(customEvent);
+				}
+			}
 		}
 	}
 
-	_onclick(e: PointerEvent) {
+	_onclick(e: MouseEvent) {
 		this._activate(e);
 	}
 
@@ -161,11 +296,27 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		this.sideNavigation?.focusItem(this);
 	}
 
-	_activate(e: KeyboardEvent | PointerEvent) {
+	_activate(e: KeyboardEvent | MouseEvent) {
+		const {
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		} = e;
+
 		e.stopPropagation();
 
 		if (this.isOverflow) {
-			this.fireEvent("click");
+			const executeEvent = this.fireDecoratorEvent("click", {
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			});
+
+			if (!executeEvent) {
+				e.preventDefault();
+			}
 		} else {
 			this.sideNavigation?._handleItemClick(e, this);
 		}
@@ -181,4 +332,9 @@ const isInstanceOfSideNavigationSelectableItemBase = (object: any): object is Si
 };
 
 export default SideNavigationSelectableItemBase;
-export { isInstanceOfSideNavigationSelectableItemBase };
+export {
+	isInstanceOfSideNavigationSelectableItemBase,
+};
+export type {
+	SideNavigationItemAccessibilityAttributes,
+};

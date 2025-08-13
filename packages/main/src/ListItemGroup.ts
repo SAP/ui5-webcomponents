@@ -1,23 +1,22 @@
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
-import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import DragAndDropHandler from "./delegate/DragAndDropHandler.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
-import DropIndicator from "./DropIndicator.js";
+import type DropIndicator from "./DropIndicator.js";
 import type ListItemBase from "./ListItemBase.js";
 
 // Template
-import ListItemGroupTemplate from "./generated/templates/ListItemGroupTemplate.lit.js";
+import ListItemGroupTemplate from "./ListItemGroupTemplate.js";
 
 // Styles
 import ListItemGroupCss from "./generated/themes/ListItemGroup.css.js";
-import ListItemStandard from "./ListItemStandard.js";
-import ListItemGroupHeader from "./ListItemGroupHeader.js";
+import type ListItemGroupHeader from "./ListItemGroupHeader.js";
+import type WrappingType from "./types/WrappingType.js";
 
 type ListItemGroupMoveEventDetail = {
 	source: {
@@ -46,11 +45,10 @@ type ListItemGroupMoveEventDetail = {
  */
 @customElement({
 	tag: "ui5-li-group",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	languageAware: true,
 	template: ListItemGroupTemplate,
 	styles: [ListItemGroupCss],
-	dependencies: [ListItemStandard, ListItemGroupHeader, DropIndicator],
 })
 
 /**
@@ -61,20 +59,11 @@ type ListItemGroupMoveEventDetail = {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  * @since 2.1.0
- * @allowPreventDefault
  */
 
-@event<ListItemGroupMoveEventDetail>("move-over", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move-over", {
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -85,22 +74,16 @@ type ListItemGroupMoveEventDetail = {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  * @since 2.1.0
- * @allowPreventDefault
  */
-@event<ListItemGroupMoveEventDetail>("move", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move", {
+	bubbles: true,
 })
 
 class ListItemGroup extends UI5Element {
+	eventDetails!: {
+		"move-over": ListItemGroupMoveEventDetail,
+		"move": ListItemGroupMoveEventDetail,
+	}
 	/**
 	 * Defines the header text of the <code>ui5-li-group</code>.
 	 * @public
@@ -129,6 +112,26 @@ class ListItemGroup extends UI5Element {
 	items!: Array<ListItemBase>;
 
 	/**
+	 * Defines if the text of the component should wrap when it's too long.
+	 * When set to "Normal", the content (title, description) will be wrapped
+	 * using the `ui5-expandable-text` component.<br/>
+	 *
+	 * The text can wrap up to 100 characters on small screens (size S) and
+	 * up to 300 characters on larger screens (size M and above). When text exceeds
+	 * these limits, it truncates with an ellipsis followed by a text expansion trigger.
+	 *
+	 * Available options are:
+	 * - `None` (default) - The text will truncate with an ellipsis.
+	 * - `Normal` - The text will wrap (without truncation).
+	 *
+	 * @default "None"
+	 * @public
+	 * @since 2.15.0
+	 */
+	@property()
+	wrappingType: `${WrappingType}` = "None";
+
+	/**
 	 * Indicates whether the header is focused
 	 * @private
 	 */
@@ -143,6 +146,20 @@ class ListItemGroup extends UI5Element {
 	*/
 	@slot({ type: HTMLElement })
 	header!: Array<ListItemBase>;
+
+	_dragAndDropHandler: DragAndDropHandler;
+
+	constructor() {
+		super();
+
+		// Initialize the DragAndDropHandler with the necessary configurations
+		// The handler will manage the drag and drop operations for the list items.
+		this._dragAndDropHandler = new DragAndDropHandler(this, {
+			getItems: () => this.items,
+			getDropIndicator: () => this.dropIndicatorDOM,
+			filterPlacements: this._filterPlacements.bind(this),
+		});
+	}
 
 	onEnterDOM() {
 		DragRegistry.subscribe(this);
@@ -173,81 +190,27 @@ class ListItemGroup extends UI5Element {
 	}
 
 	_ondragenter(e: DragEvent) {
-		e.preventDefault();
+		this._dragAndDropHandler.ondragenter(e);
 	}
 
 	_ondragleave(e: DragEvent) {
-		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
-			return;
-		}
-
-		this.dropIndicatorDOM!.targetReference = null;
+		this._dragAndDropHandler.ondragleave(e);
 	}
 
 	_ondragover(e: DragEvent) {
-		const draggedElement = DragRegistry.getDraggedElement();
-
-		if (!(e.target instanceof HTMLElement) || !draggedElement) {
-			return;
-		}
-
-		const closestPosition = findClosestPosition(
-			this.items,
-			e.clientY,
-			Orientation.Vertical,
-		);
-
-		if (!closestPosition) {
-			this.dropIndicatorDOM!.targetReference = null;
-			return;
-		}
-
-		let placements = closestPosition.placements;
-
-		if (closestPosition.element === draggedElement) {
-			placements = placements.filter(placement => placement !== MovePlacement.On);
-		}
-
-		const placementAccepted = placements.some(placement => {
-			const beforeItemMovePrevented = !this.fireEvent<ListItemGroupMoveEventDetail>("move-over", {
-				source: {
-					element: draggedElement,
-				},
-				destination: {
-					element: closestPosition.element,
-					placement,
-				},
-			}, true);
-
-			if (beforeItemMovePrevented) {
-				e.preventDefault();
-				this.dropIndicatorDOM!.targetReference = closestPosition.element;
-				this.dropIndicatorDOM!.placement = placement;
-				return true;
-			}
-
-			return false;
-		});
-
-		if (!placementAccepted) {
-			this.dropIndicatorDOM!.targetReference = null;
-		}
+		this._dragAndDropHandler.ondragover(e);
 	}
 
 	_ondrop(e: DragEvent) {
-		e.preventDefault();
+		this._dragAndDropHandler.ondrop(e);
+	}
 
-		this.fireEvent<ListItemGroupMoveEventDetail>("move", {
-			source: {
-				element: DragRegistry.getDraggedElement()!,
-			},
-			destination: {
-				element: this.dropIndicatorDOM!.targetReference!,
-				placement: this.dropIndicatorDOM!.placement,
-			},
-		});
-
-		this.dropIndicatorDOM!.targetReference = null;
+	_filterPlacements(placements: MovePlacement[], draggedElement: HTMLElement, targetElement: HTMLElement): MovePlacement[] {
+		// Filter out MovePlacement.On when dragged element is the same as target
+		if (targetElement === draggedElement) {
+			return placements.filter(placement => placement !== MovePlacement.On);
+		}
+		return placements;
 	}
 }
 

@@ -6,7 +6,7 @@
 	white-space: pre-line;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	cursor: default;
+	cursor: pointer;
 	margin: 0.0625rem 0;
 }
 
@@ -33,7 +33,6 @@
 	white-space: pre-line;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	cursor: default;
 }
 
 :host([type="Today"]) .ui5-calendar-legend-item-box {
@@ -43,7 +42,20 @@
 
 :host([type="Selected"]) .ui5-calendar-legend-item-box {
 	background: var(--sapContent_Selected_Background);
-	border: 0.0625rem solid var(--sapContent_FocusColor);
+	border: 0.0625rem solid var(--sapList_SelectionBorderColor);
+}
+
+/* Dot in the middle of the box */
+:host([type="Selected"]) .ui5-calendar-legend-item-box::after {
+	content: "";
+	display: var(--_ui5-calendar-legend-item-box-dot-display); /* Dot should be visible only in sap_horizon and sap_horizon_dark themes */
+	width: 0.25rem;
+	height: 0.25rem;
+	background: var(--sapContent_Selected_TextColor);
+	border-radius: 50%;
+	position: relative;
+	inset-block-start: 0.3125rem;
+	inset-inline-end: -0.3125rem;
 }
 
 :host([type="NonWorking"]) .ui5-calendar-legend-item-box {

@@ -7,7 +7,7 @@ describe("Testing Range Slider interactions", () => {
 		await browser.setWindowSize(1257, 2000);
 
 		const rangeSlider = await browser.$("#range-slider-tickmarks");
-		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle-container");
 
 		assert.strictEqual((await startHandle.getAttribute("style")).replace(" ", ""), "left:0%;", "Initially if no value is set, the Range Slider start-handle is at the beginning of the Range Slider");
 
@@ -28,7 +28,7 @@ describe("Testing Range Slider interactions", () => {
 
 	it("Changing the endValue is reflected", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks");
-		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
+		const endHandle = await rangeSlider.shadow$$(".ui5-slider-inner .ui5-slider-handle-container")[1];
 
 		assert.strictEqual((await endHandle.getAttribute("style")).replace(" ", ""), "left:50%;", "Range Slider end-handle is should be 50% from the start the Range Slider");
 		await rangeSlider.setProperty("endValue", 10);
@@ -67,9 +67,6 @@ describe("Testing Range Slider interactions", () => {
 
 	it("Dragging the selected range should change both values and handles", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks");
-		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
-		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
-
 		await rangeSlider.dragAndDrop({ x: 90, y: 1 });
 
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 8, "startValue should be 8");
@@ -124,77 +121,6 @@ describe("Testing Range Slider interactions", () => {
 });
 
 describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
-	it("Range Slider tooltips are displayed showing the current value", async () => {
-		await browser.url(`test/pages/RangeSlider.html`);
-
-		const rangeSlider = await browser.$("#basic-range-slider-with-tooltip");
-		const rangeSliderStartTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--start");
-		const rangeSliderStartTooltipValue = await rangeSliderStartTooltip.shadow$(".ui5-slider-tooltip-value");
-		const rangeSliderEndTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--end");
-		const rangeSliderEndTooltipValue = await rangeSliderEndTooltip.shadow$(".ui5-slider-tooltip-value");
-		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
-		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
-
-		await rangeSlider.moveTo();
-
-		assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "visible", "Range Slider tooltips visibility property should be 'visible'");
-		assert.strictEqual(await rangeSliderStartTooltip.getAttribute("style"), "visibility: visible;", "Range Slider start tooltip should be shown");
-		assert.strictEqual(await rangeSliderEndTooltip.getAttribute("style"), "visibility: visible;", "Range Slider end tooltip should be shown");
-
-		await rangeSlider.setProperty("startValue", 65);
-		await rangeSlider.moveTo();
-
-		assert.strictEqual(await rangeSliderStartTooltipValue.getText(), "65", "Range Slider start tooltip should display value of 65");
-
-		await rangeSlider.setProperty("endValue", 115);
-		await rangeSlider.moveTo();
-
-		assert.strictEqual(await rangeSliderEndTooltipValue.getText(), "115", "Range Slider end tooltip should display value of 65");
-	});
-
-	it("Range Slider tooltips should become visible when range slider is focused", async () => {
-		const rangeSlider = await browser.$("#basic-range-slider-with-tooltip");
-		const rangeSliderStartTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--start");
-		const rangeSliderEndTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--end");
-		const otherRangeSlider = await browser.$("#basic-range-slider");
-
-		await otherRangeSlider.moveTo();
-		await otherRangeSlider.click();
-		await browser.keys("Tab");
-
-		assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "visible", "Range Slider tooltips visibility property should be 'visible'");
-		assert.strictEqual(await rangeSliderStartTooltip.getAttribute("style"), "visibility: visible;", "Range Slider start tooltip should be shown");
-		assert.strictEqual(await rangeSliderEndTooltip.getAttribute("style"), "visibility: visible;", "Range Slider end tooltip should be shown");
-	});
-
-	it("Range Slider tooltips should stay visible when mouse is moved out but range slider is still focused", async () => {
-		const rangeSlider = await browser.$("#basic-range-slider-with-tooltip");
-		const rangeSliderStartTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--start");
-		const rangeSliderEndTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--end");
-		const otherRangeSlider = await browser.$("#basic-range-slider");
-
-		await rangeSlider.moveTo();
-		await otherRangeSlider.moveTo();
-
-		assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "visible", "Range Slider tooltips visibility property should be 'visible'");
-		assert.strictEqual(await rangeSliderStartTooltip.getAttribute("style"), "visibility: visible;", "Range Slider start tooltip should be shown");
-		assert.strictEqual(await rangeSliderEndTooltip.getAttribute("style"), "visibility: visible;", "Range Slider end tooltip should be shown");
-	});
-
-	it("Range Slider tooltips should become hidden if the range slider looses the focus", async () => {
-		const rangeSlider = await browser.$("#basic-range-slider-with-tooltip");
-		const rangeSliderStartTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--start");
-		const rangeSliderEndTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--end");
-		const otherRangeSlider = await browser.$("#basic-range-slider");
-
-		await otherRangeSlider.moveTo();
-		await otherRangeSlider.click();
-
-		assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "hidden", "Range Slider tooltips visibility property should be 'hidden'");
-		assert.strictEqual(await rangeSliderStartTooltip.getAttribute("style"), "visibility: hidden;", "Range Slider start tooltip should be hidden");
-		assert.strictEqual(await rangeSliderEndTooltip.getAttribute("style"), "visibility: hidden;", "Range Slider end tooltip should be hidden");
-
-	});
 
 	it("Range Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
@@ -283,6 +209,9 @@ describe("Testing events", () => {
 		const rangeSlider = await browser.$("#test-slider");
 		const eventResultRangeSlider = await browser.$("#test-result-slider");
 
+		await eventResultRangeSlider.setProperty("startValue", 1);
+		await eventResultRangeSlider.setProperty("endValue", 2);
+
 		await rangeSlider.click();
 
 		assert.strictEqual(await eventResultRangeSlider.getProperty("endValue") , 4, "Both input event and change event are fired after user interaction");
@@ -353,29 +282,13 @@ describe("Testing events", () => {
 });
 
 describe("Accessibility", async () => {
-	it("Aria attributes of the progress bar are set correctly", async () => {
-		const rangeSlider = await browser.$("#range-slider-tickmarks");
-		const rangeSliderProgressBar = await rangeSlider.shadow$(".ui5-slider-progress");
-		const rangeSliderId = await rangeSlider.getProperty("_id");
-
-		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-labelledby"),
-			`${rangeSliderId}-accName ${rangeSliderId}-sliderDesc`, "aria-labelledby is set correctly");
-		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuemin"),
-			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
-		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuemax"),
-			`${await rangeSlider.getProperty("max")}`, "aria-valuemax is set correctly");
-		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuetext"),
-			`From ${await rangeSlider.getProperty("startValue")} to ${await rangeSlider.getProperty("endValue")}`, "aria-valuetext is set correctly");
-		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuenow"), "20", "aria-valuenow is set correctly");
-	});
-
 	it("Aria attributes of the start handle are set correctly", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks");
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await startHandle.getAttribute("aria-labelledby"),
-			`${rangeSliderId}-accName ${rangeSliderId}-startHandleDesc`, "aria-labelledby is set correctly");
+			"ui5-slider-startHandleDesc", "aria-labelledby is set correctly");
 		assert.strictEqual(await startHandle.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await startHandle.getAttribute("aria-valuemax"),
@@ -387,10 +300,9 @@ describe("Accessibility", async () => {
 	it("Aria attributes of the end handle are set correctly", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks");
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
-		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await endHandle.getAttribute("aria-labelledby"),
-			`${rangeSliderId}-accName ${rangeSliderId}-endHandleDesc`, "aria-labelledby is set correctly");
+			"ui5-slider-endHandleDesc", "aria-labelledby is set correctly");
 		assert.strictEqual(await endHandle.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await endHandle.getAttribute("aria-valuemax"),
@@ -403,8 +315,8 @@ describe("Accessibility", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks");
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
-		const rangeSliderStartHandleSpan = await rangeSlider.shadow$(`#${rangeSliderId}-startHandleDesc`);
-		const rangeSliderEndHandleSpan = await rangeSlider.shadow$(`#${rangeSliderId}-endHandleDesc`);
+		const rangeSliderStartHandleSpan = await rangeSlider.shadow$(`#ui5-slider-startHandleDesc`);
+		const rangeSliderEndHandleSpan = await rangeSlider.shadow$(`#ui5-slider-endHandleDesc`);
 
 		await rangeSlider.setProperty("endValue", 9);
 		await startHandle.dragAndDrop({ x: 100, y: 1 });
@@ -956,8 +868,8 @@ describe("Accessibility: Testing keyboard handling", async () => {
 describe("Testing resize handling and RTL support", () => {
 	it("Testing RTL support", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
-		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
-		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
+		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle-container");
+		const endHandle = await rangeSlider.shadow$$(".ui5-slider-inner .ui5-slider-handle-container")[1];
 
 		await rangeSlider.setAttribute("dir", "rtl");
 		await rangeSlider.setProperty("min", 0);
@@ -995,12 +907,16 @@ describe("Testing resize handling and RTL support", () => {
 	});
 
 	it("Testing RTL KBH support", async () => {
+		await browser.url(`test/pages/RangeSlider.html`);
+
 		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
-		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
-		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
+		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle-container");
+		const endHandle = await rangeSlider.shadow$$(".ui5-slider-inner .ui5-slider-handle-container")[1];
 		const rangeSliderSelection = await rangeSlider.shadow$(".ui5-slider-progress");
 
 		await rangeSlider.setAttribute("dir", "rtl");
+		await rangeSlider.scrollIntoView();
+
 		await rangeSlider.setProperty("min", 0);
 		await rangeSlider.setProperty("max", 10);
 		await rangeSlider.setProperty("step", 1);

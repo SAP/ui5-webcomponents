@@ -13,7 +13,7 @@
 	flex-direction: column;
 	width: 100%;
 	height: 100%;
-	font-family: "72override", var(--sapFontFamily);
+	font-family: "72override", var(--sapFontHeaderFamily);
 	font-size: 1rem;
 }
 
@@ -35,6 +35,8 @@
 :host([header-background-design="Transparent"]) .ui5-tc__header {
 	background-color: transparent;
 	--ui5_tc_header_active_background_color: transparent;
+	box-shadow: none;
+	border-bottom: 0.0625rem solid var(--sapObjectHeader_BorderColor);
 }
 
 :host([header-background-design="Translucent"]) .ui5-tc__header {
@@ -126,6 +128,10 @@
 	background-color: var(--_ui5_tc_content_background_translucent);
 }
 
+:host([header-background-design="Transparent"]) .ui5-tc__content {
+	border-bottom: none;
+}
+
 .ui5-tc__content--collapsed {
 	display: none;
 }
@@ -170,4 +176,8 @@
 
 :host([media-range="XL"]) .ui5-tc__content {
 	padding: 1rem 3rem;
+}
+
+.ui5-tc-root.ui5-tc--noTabSelected .ui5-tc__content {
+	padding: 0;
 }

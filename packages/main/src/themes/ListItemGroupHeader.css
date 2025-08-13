@@ -6,8 +6,16 @@
 	color: var(--sapList_TableGroupHeaderTextColor);
 }
 
+:host([wrapping-type="Normal"]) {
+	height: auto;
+}
+
 :host([has-border]) {
 	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);
+}
+
+:host([actionable]:not([disabled])) {
+	cursor: default;
 }
 
 .ui5-li-root.ui5-ghli-root {

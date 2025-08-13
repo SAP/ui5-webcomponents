@@ -1,16 +1,19 @@
 const fs = require("fs");
 const prompts = require("prompts");
-const tsFileContentTemplate = require("./tsFileContentTemplate.js");
+const Component = require("./Component.js");
+const ComponentTemplate= require("./ComponentTemplate.js");
+const dotenv = require('dotenv');
+dotenv.config();
 
 /**
- * Hyphanates the given PascalCase string, f.e.:
- * Foo -> "my-foo" (adds preffix)
- * FooBar -> "foo-bar"
+ * Hyphanates the given PascalCase string and adds prefix, f.e.:
+ * Foo -> "my-foo"
+ * FooBar -> "my-foo-bar"
  */
 const hyphaneteComponentName = (componentName) => {
 	const result = componentName.replace(/([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
 
-	return result.includes("-") ? result : `my-${result}`;
+	return `${process.env.UI5_TAG_NAME_PREFIX ?? "my"}-${result}`;
 };
 
 /**
@@ -61,12 +64,12 @@ const generateFiles = (componentName, tagName, library, packageName) => {
 	const filePaths = {
 		"main": `./src/${componentName}.ts`,
 		"css": `./src/themes/${componentName}.css`,
-		"template": `./src/${componentName}.hbs`,
+		"template": `./src/${componentName}${process.env.UI5_TEMPLATE_FILENAME_SUFFIX ?? "Template"}.tsx`,
 	};
 
-	fs.writeFileSync(filePaths.main, tsFileContentTemplate(componentName, tagName, library, packageName), { flag: "wx+" });
+	fs.writeFileSync(filePaths.main, Component(componentName, tagName, library, packageName), { flag: "wx+" });
 	fs.writeFileSync(filePaths.css, "", { flag: "wx+" });
-	fs.writeFileSync(filePaths.template, "<div>Hello World</div>", { flag: "wx+" });
+	fs.writeFileSync(filePaths.template, ComponentTemplate(componentName), { flag: "wx+" });
 
 	console.log(`Successfully generated ${filePaths.main}`);
 	console.log(`Successfully generated ${filePaths.css}`);
@@ -74,8 +77,8 @@ const generateFiles = (componentName, tagName, library, packageName) => {
 
 	// Change the color of the output
 	console.warn('\x1b[33m%s\x1b[0m', `
-	Make sure to import the component in your bundle by using:
-	import "./dist/${componentName}.js";`);
+Now, import the component in "src/bundle.esm.ts" via: import "./${componentName}.js";
+And, add it to your HTML: <${tagName}></${tagName}>.`);
 }
 
 // Main function

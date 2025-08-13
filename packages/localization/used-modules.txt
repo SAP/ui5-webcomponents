@@ -2,7 +2,6 @@
 
 # ./ui5loader-autoconfig.js
 # sap/base/Log.js
-sap/base/i18n/Formatting.js
 sap/base/assert.js
 # sap/base/config.js
 sap/base/config/MemoryConfigurationProvider.js

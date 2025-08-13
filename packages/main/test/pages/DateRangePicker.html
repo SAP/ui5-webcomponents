@@ -33,6 +33,8 @@
 		<ui5-daterange-picker id="daterange-picker1"></ui5-daterange-picker>
 		<h3>daterange-picker with delimiter @</h3>
 		<ui5-daterange-picker id="daterange-picker2" delimiter="@"></ui5-daterange-picker>
+		<h3>display-fomat='medium' value-fomat='yyyy-MM-dd'</h3>
+		<ui5-daterange-picker id='dp12' display-format='dd/MM/yyyy' value-format='yyyy-MM-dd'></ui5-daterange-picker>
 		<h3>daterange-picker with format pattern dd/MM/yyyy</h3>
 		<ui5-daterange-picker id="daterange-picker3" format-pattern="dd/MM/yyyy"></ui5-daterange-picker>
 		<h3>daterange-picker with minDate 01/09/2019 and maxDate 01/11/2019</h3>
@@ -50,7 +52,31 @@
 		<h3>DateRange Picker with no format pattern & min-max dates in ISO format</h3>
 		<ui5-daterange-picker id="daterange-picker8" min-date="2023-02-10" max-date="2023-07-22"></ui5-daterange-picker>
 
+		<h3>daterange-picker with format pattern MM.yyyy</h3>
+		<ui5-daterange-picker id="daterange-picker9" format-pattern="MM.yyyy"></ui5-daterange-picker>
+		<h3>daterange-picker with format pattern yyyy</h3>
+		<ui5-daterange-picker id="daterange-picker10" format-pattern="yyyy"></ui5-daterange-picker>
 
+		<h3>daterange-picker with format pattern MM.yyyy islamic</h3>
+		<ui5-daterange-picker id="daterange-picker11" secondary-calendar-type="Islamic" format-pattern="MM.yyyy"></ui5-daterange-picker>
+		<h3>daterange-picker with format pattern yyyy islamic</h3>
+		<ui5-daterange-picker id="daterange-picker12" secondary-calendar-type="Islamic" format-pattern="yyyy"></ui5-daterange-picker>
+
+		<section>
+			<ui5-title>DateRangePicker with CalendarWeekNumbering ISO_8601</ui5-title>
+			<ui5-daterange-picker id="daterange-picker13" calendar-week-numbering="ISO_8601"></ui5-daterange-picker>
+
+			<ui5-title>DateRangePicker with CalendarWeekNumbering MiddleEastern</ui5-title>
+			<ui5-daterange-picker id="daterange-picker14" calendar-week-numbering="MiddleEastern"></ui5-daterange-picker>
+
+			<ui5-title>DateRangePicker with CalendarWeekNumbering WesternTraditional</ui5-title>
+			<ui5-daterange-picker id="daterange-picker15" calendar-week-numbering="WesternTraditional"></ui5-daterange-picker>
+		</section>
+
+		<h3>daterange-picker with value state</h3>
+		<ui5-daterange-picker id="daterange-picker16" value-state="Negative">
+			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		</ui5-daterange-picker>
 	</div>
 	<script>
 		document.getElementById('daterange-picker1').addEventListener('ui5-change', function(e) {

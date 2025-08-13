@@ -2,28 +2,27 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 
 // Template
-import DynamicPageTemplate from "./generated/templates/DynamicPageTemplate.lit.js";
+import DynamicPageTemplate from "./DynamicPageTemplate.js";
 
 // Styles
 import DynamicPageCss from "./generated/themes/DynamicPage.css.js";
 
 import DynamicPageHeader from "./DynamicPageHeader.js";
 import DynamicPageTitle from "./DynamicPageTitle.js";
-import DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
+import type DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
 
 // Texts
 import {
@@ -96,10 +95,9 @@ const SCROLL_THRESHOLD = 10; // px
  */
 @customElement({
 	tag: "ui5-dynamic-page",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: DynamicPageCss,
 	template: DynamicPageTemplate,
-	dependencies: [DynamicPageHeaderActions],
 })
 
 /**
@@ -107,16 +105,24 @@ const SCROLL_THRESHOLD = 10; // px
  *
  * @public
  */
-@event("pin-button-toggle")
+@event("pin-button-toggle", {
+	bubbles: true,
+})
 
 /**
  * Fired when the expand/collapse area of the title is toggled.
  *
  * @public
  */
-@event("title-toggle")
+@event("title-toggle", {
+	bubbles: true,
+})
 
 class DynamicPage extends UI5Element {
+	eventDetails!: {
+		"pin-button-toggle": void;
+		"title-toggle": void;
+	}
 	/**
 	 * Defines if the pin button is hidden.
 	 *
@@ -143,14 +149,6 @@ class DynamicPage extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	showFooter = false;
-
-	/**
-	 * Defines the current media query size.
-	 *
-	 * @private
-	 */
-	@property()
-	mediaRange?: string;
 
 	/**
 	 * Defines the content of the Dynamic Page.
@@ -184,38 +182,45 @@ class DynamicPage extends UI5Element {
 	@slot({ type: HTMLElement })
 	footerArea!: HTMLElement[];
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	skipSnapOnScroll = false;
 	showHeaderInStickArea = false;
+	isToggled = false;
 
 	@property({ type: Boolean })
 	_headerSnapped = false;
 
-	_updateMediaRange: ResizeObserverCallback;
+	@query(".ui5-dynamic-page-scroll-container")
+	scrollContainer?: HTMLElement;
+
+	@query("[ui5-dynamic-page-header-actions]")
+	headerActions?: DynamicPageHeaderActions;
 
 	constructor() {
 		super();
-
-		this._updateMediaRange = this.updateMediaRange.bind(this);
-	}
-
-	static async onDefine() {
-		DynamicPage.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
-
-	onEnterDOM() {
-		ResizeHandler.register(this, this._updateMediaRange);
-	}
-
-	onExitDOM() {
-		ResizeHandler.deregister(this, this._updateMediaRange);
 	}
 
 	onBeforeRendering() {
 		if (this.dynamicPageTitle) {
 			this.dynamicPageTitle.snapped = this._headerSnapped;
 			this.dynamicPageTitle.interactive = this.hasHeading;
+			this.dynamicPageTitle.hasSnappedTitleOnMobile = !!this.hasSnappedTitleOnMobile;
+			this.dynamicPageTitle.removeAttribute("hovered");
+		}
+		const titleHeight = this.dynamicPageTitle?.getBoundingClientRect().height || 0;
+		const headerHeight = this.dynamicPageHeader?.getBoundingClientRect().height || 0;
+		const footerHeight = this.showFooter ? this.footerWrapper?.getBoundingClientRect().height : 0;
+
+		if (this.scrollContainer) {
+			this.scrollContainer.style.setProperty("scroll-padding-block-end", `${footerHeight}px`);
+
+			if (this._headerSnapped) {
+			  this.scrollContainer.style.setProperty("scroll-padding-block-start", `${titleHeight}px`);
+			} else {
+			  this.scrollContainer.style.setProperty("scroll-padding-block-start", `${headerHeight + titleHeight}px`);
+			}
 		}
 	}
 
@@ -227,12 +232,8 @@ class DynamicPage extends UI5Element {
 		return this.querySelector<DynamicPageHeader>("[ui5-dynamic-page-header]");
 	}
 
-	get scrollContainer(): HTMLElement | null {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-dynamic-page-scroll-container");
-	}
-
-	get headerActions(): DynamicPageHeaderActions | null {
-		return this.shadowRoot!.querySelector<DynamicPageHeaderActions>("ui5-dynamic-page-header-actions");
+	get footerWrapper() {
+		return this.shadowRoot?.querySelector(".ui5-dynamic-page-footer");
 	}
 
 	get actionsInTitle(): boolean {
@@ -244,7 +245,7 @@ class DynamicPage extends UI5Element {
 	}
 
 	get headerInContent(): boolean {
-		return !this.showHeaderInStickArea && !this.headerInTitle;
+		return !this.showHeaderInStickArea && !this.headerInTitle && !this.hasSnappedTitleOnMobile;
 	}
 
 	get _headerLabel() {
@@ -255,12 +256,6 @@ class DynamicPage extends UI5Element {
 
 	get _headerExpanded() {
 		return !this._headerSnapped;
-	}
-
-	get _accAttributesForHeaderActions() {
-		return {
-			controls: `${this._id}-header`,
-		};
 	}
 
 	get headerTabIndex() {
@@ -277,6 +272,14 @@ class DynamicPage extends UI5Element {
 
 	get headerSnapped(): boolean {
 		return this._headerSnapped;
+	}
+
+	get hasSnappedTitleOnMobile() {
+		return isPhone() && this.headerSnapped && this.dynamicPageTitle?.snappedTitleOnMobile.length;
+	}
+
+	get headerAriaLabel() {
+		return this.hasHeading ? this._headerLabel : undefined;
 	}
 
 	/**
@@ -301,39 +304,72 @@ class DynamicPage extends UI5Element {
 			return;
 		}
 
-		const scrollTop = this.scrollContainer!.scrollTop;
-		const lastHeaderSnapped = this._headerSnapped;
+		if (this.isToggled) {
+			this.isToggled = false;
+			return;
+		}
 
 		if (this.skipSnapOnScroll) {
 			this.skipSnapOnScroll = false;
 			return;
 		}
 
-		if (scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
+		const scrollTop = this.scrollContainer!.scrollTop;
+		const headerHeight = this.dynamicPageHeader.getBoundingClientRect().height;
+		const lastHeaderSnapped = this._headerSnapped;
+
+		if (this._headerSnapped && scrollTop > headerHeight) {
+			this.showHeaderInStickArea = false;
+		}
+
+		const shouldSnap = !this._headerSnapped && scrollTop > headerHeight + SCROLL_THRESHOLD;
+		const shouldExpand = this._headerSnapped && (scrollTop < headerHeight - SCROLL_THRESHOLD
+			|| (!scrollTop && !headerHeight));
+
+		if (shouldSnap) {
 			this.showHeaderInStickArea = false;
 			this._headerSnapped = true;
-		} else {
+
+			//* snappedTitleOnMobile
+			// If the header is snapped and the scroll is at the top, scroll down a bit
+			// to avoid ending in an endless loop of snapping and unsnapping
+			requestAnimationFrame(() => {
+				if (this.scrollContainer!.scrollTop === 0) {
+					this.scrollContainer!.scrollTop = SCROLL_THRESHOLD;
+				}
+			});
+		} else if (shouldExpand) {
 			this._headerSnapped = false;
 		}
 
+		// Fire event if snapped state changed
 		if (lastHeaderSnapped !== this._headerSnapped) {
-			this.fireEvent("title-toggle");
+			this.fireDecoratorEvent("title-toggle");
 		}
-
-		this.dynamicPageTitle.snapped = this._headerSnapped;
 	}
 
 	async onExpandClick() {
+		this.isToggled = true;
 		this._toggleHeader();
-		this.fireEvent("title-toggle");
+		this.fireDecoratorEvent("title-toggle");
 		await renderFinished();
 		this.headerActions?.focusExpandButton();
+
+		if (this.hasSnappedTitleOnMobile) {
+			this.dynamicPageTitle?.focus();
+		}
+
 		announce(this._headerLabel, InvisibleMessageMode.Polite);
 	}
 
 	async onPinClick() {
 		this.headerPinned = !this.headerPinned;
-		this.fireEvent("pin-button-toggle");
+		if (this.headerPinned) {
+			this.showHeaderInStickArea = true;
+		} else if (this.scrollContainer!.scrollTop === 0) {
+			this.showHeaderInStickArea = false;
+		}
+		this.fireDecoratorEvent("pin-button-toggle");
 		await renderFinished();
 		this.headerActions?.focusPinButton();
 	}
@@ -342,13 +378,40 @@ class DynamicPage extends UI5Element {
 		if (!this.hasHeading) {
 			return;
 		}
+		this.isToggled = true;
 		this._toggleHeader();
-		this.fireEvent("title-toggle");
+		this.fireDecoratorEvent("title-toggle");
 		await renderFinished();
 		this.dynamicPageTitle!.focus();
 	}
 
 	async _toggleHeader() {
+		const headerHeight = this.dynamicPageHeader?.getBoundingClientRect().height || 0;
+		const currentScrollTop = this.scrollContainer!.scrollTop;
+
+		if (!this._headerSnapped && this.headerPinned) {
+			this.headerPinned = false;
+			this.fireDecoratorEvent("pin-button-toggle");
+		}
+
+		if (currentScrollTop <= SCROLL_THRESHOLD) {
+			this._headerSnapped = !this._headerSnapped;
+			this.showHeaderInStickArea = this._headerSnapped;
+			return;
+		}
+
+		if (currentScrollTop > SCROLL_THRESHOLD && currentScrollTop < headerHeight) {
+			if (!this._headerSnapped) {
+				this._headerSnapped = true;
+				this.showHeaderInStickArea = true;
+				this.scrollContainer!.scrollTop = 0;
+			} else {
+				this.showHeaderInStickArea = false;
+				this._headerSnapped = false;
+			}
+			return;
+		}
+
 		if (this.scrollContainer!.scrollTop === SCROLL_THRESHOLD) {
 			this.scrollContainer!.scrollTop = 0;
 		}
@@ -372,10 +435,6 @@ class DynamicPage extends UI5Element {
 	async onExpandHoverOut() {
 		this.dynamicPageTitle?.removeAttribute("hovered");
 		await renderFinished();
-	}
-
-	updateMediaRange() {
-		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
 	}
 }
 

@@ -108,7 +108,6 @@
 	-moz-appearance: textfield;
 	padding: var(--_ui5_input_inner_padding);
 	box-sizing: border-box;
-	min-width: var(--_ui5_input_min_width);
 	width: 100%;
 	text-align: inherit;
 	text-overflow: ellipsis;
@@ -129,8 +128,13 @@
 [inner-input][type="search"]::-webkit-search-decoration,
 [inner-input][type="search"]::-webkit-search-cancel-button,
 [inner-input][type="search"]::-webkit-search-results-button,
-[inner-input][type="search"]::-webkit-search-results-decoration { 
-	display: none; 
+[inner-input][type="search"]::-webkit-search-results-decoration {
+	display: none;
+}
+
+[inner-input]::-ms-reveal,
+[inner-input]::-ms-clear {
+	display: none;
 }
 
 .ui5-input-value-state-icon {
@@ -227,7 +231,7 @@
 }
 
 :host([readonly]:not([disabled])) {
-	border-color: var(--_ui5_input_readonly_border_color);
+	border: var(--_ui5_input_readonly_border);
 	background: var(--sapField_ReadOnly_BackgroundStyle);
 	background-color: var(--_ui5_input_readonly_background);
 }
@@ -435,42 +439,42 @@
 }
 
 :host([value-state="Negative"]) .inputIcon:active,
-:host([value-state="Negative"]) .inputIcon[pressed] {
+:host([value-state="Negative"]) .inputIcon.inputIcon--pressed {
 	box-shadow: var(--_ui5_input_error_icon_box_shadow);
 	color: var(--_ui5_input_icon_error_pressed_color);
 }
 
-:host([value-state="Negative"]) .inputIcon:not([pressed]):not(:active):hover {
+:host([value-state="Negative"]) .inputIcon:not(.inputIcon--pressed):not(:active):hover {
 	box-shadow: var(--_ui5_input_error_icon_box_shadow);
 }
 
 :host([value-state="Critical"]) .inputIcon:active,
-:host([value-state="Critical"]) .inputIcon[pressed] {
+:host([value-state="Critical"]) .inputIcon.inputIcon--pressed {
 	box-shadow: var(--_ui5_input_warning_icon_box_shadow);
 	color: var(--_ui5_input_icon_warning_pressed_color);
 }
 
-:host([value-state="Critical"]) .inputIcon:not([pressed]):not(:active):hover {
+:host([value-state="Critical"]) .inputIcon:not(.inputIcon--pressed):not(:active):hover {
 	box-shadow: var(--_ui5_input_warning_icon_box_shadow);
 }
 
 :host([value-state="Information"]) .inputIcon:active,
-:host([value-state="Information"]) .inputIcon[pressed] {
+:host([value-state="Information"]) .inputIcon.inputIcon--pressed {
 	box-shadow: var(--_ui5_input_information_icon_box_shadow);
 	color: var(--_ui5_input_icon_information_pressed_color);
 }
 
-:host([value-state="Information"]) .inputIcon:not([pressed]):not(:active):hover {
+:host([value-state="Information"]) .inputIcon:not(.inputIcon--pressed):not(:active):hover {
 	box-shadow: var(--_ui5_input_information_icon_box_shadow);
 }
 
 :host([value-state="Positive"]) .inputIcon:active,
-:host([value-state="Positive"]) .inputIcon[pressed] {
+:host([value-state="Positive"]) .inputIcon.inputIcon--pressed {
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 	color: var(--_ui5_input_icon_success_pressed_color);
 }
 
-:host([value-state="Positive"]) .inputIcon:not([pressed]):not(:active):hover {
+:host([value-state="Positive"]) .inputIcon:not(.inputIcon--pressed):not(:active):hover {
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 }
 

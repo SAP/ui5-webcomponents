@@ -23,6 +23,7 @@
 	align-items: center;
 	justify-content: center;
 	border-radius: var(--ui5_upload_collection_drag_overlay_border_radius);
+	container-type: size;
 }
 
 .uc-drag-overlay {
@@ -64,6 +65,14 @@
 	height: 4rem;
 	margin-bottom: 1rem;
 	color: var(--ui5_upload_collection_drag_overlay_icon_color);
+}
+
+/* Hide the icon when the container is too small */
+@container (max-height: 10rem) {
+	.uc-dnd-overlay [ui5-icon] {
+		display: none;
+
+	}
 }
 
 .uc-dnd-overlay .dnd-overlay-text {

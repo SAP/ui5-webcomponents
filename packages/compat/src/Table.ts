@@ -2,9 +2,10 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -16,6 +17,7 @@ import {
 	isTabPrevious,
 	isSpace,
 	isEnter,
+	isDown,
 	isCtrlA,
 	isUpAlt,
 	isDownAlt,
@@ -29,12 +31,8 @@ import {
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getLastTabbableElement, getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
-import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import type {
 	TableRowClickEventDetail,
@@ -57,16 +55,17 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import TableTemplate from "./generated/templates/TableTemplate.lit.js";
+import TableTemplate from "./TableTemplate.js";
 
 // Styles
 import tableStyles from "./generated/themes/Table.css.js";
+import { patchScopingSuffix } from "./utils/CompatCustomElementsScope.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-table` as rows
  * @public
  */
-interface ITableRow extends HTMLElement, ITabbable {
+interface ITableRow extends UI5Element, ITabbable {
 	mode: `${TableMode}`,
 	selected: boolean,
 	forcedBusy: boolean,
@@ -170,26 +169,21 @@ enum TableFocusTargetElement {
  * @constructor
  * @extends UI5Element
  * @public
+ * @deprecated Deprecated as of version 2.12.0, use `@ui5/webcomponents/dist/Table.js` instead.
  */
 @customElement({
 	tag: "ui5-table",
 	fastNavigation: true,
 	styles: tableStyles,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TableTemplate,
-	dependencies: [BusyIndicator, CheckBox],
 })
 /** Fired when a row in `Active` mode is clicked or `Enter` key is pressed.
  * @param {HTMLElement} row the activated row.
  * @public
  */
-@event<TableRowClickEventDetail>("row-click", {
-	detail: {
-		/**
-		* @public
-		*/
-		row: { type: HTMLElement },
-	},
+@event("row-click", {
+	bubbles: true,
 })
 
 /**
@@ -198,15 +192,8 @@ enum TableFocusTargetElement {
  * @since 2.0.0
  * @public
  */
-@event<TablePopinChangeEventDetail>("popin-change", {
-	detail: {
-		/**
-		* @public
-		*/
-		poppedColumns: {
-			type: Array,
-		},
-	},
+@event("popin-change", {
+	bubbles: true,
 })
 
 /**
@@ -216,7 +203,9 @@ enum TableFocusTargetElement {
  * @public
  * @since 2.0.0
  */
-@event("load-more")
+@event("load-more", {
+	bubbles: true,
+})
 
 /**
  * Fired when selection is changed by user interaction
@@ -226,19 +215,17 @@ enum TableFocusTargetElement {
  * @public
  * @since 2.0.0
  */
-@event<TableSelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedRows: { type: Array },
-		/**
-		 * @public
-		 */
-		previouslySelectedRows: { type: Array },
-	},
+@event("selection-change", {
+	bubbles: true,
 })
 class Table extends UI5Element {
+	eventDetails!: {
+		"row-click": TableRowClickEventDetail,
+		"popin-change": TablePopinChangeEventDetail,
+		"load-more": void,
+		"selection-change": TableSelectionChangeEventDetail,
+	}
+
 	/**
 	 * Defines the text that will be displayed when there is no data and `hideNoData` is not present.
 	 * @default undefined
@@ -393,13 +380,6 @@ class Table extends UI5Element {
 	_columnHeader: TableColumnHeaderInfo;
 
 	/**
-	 * Defines if the entire table is in view port.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_inViewport = false;
-
-	/**
 	 * Defines whether all rows are selected or not when table is in MultiSelect mode.
 	 * @default false
 	 * @since 2.0.0
@@ -438,17 +418,13 @@ class Table extends UI5Element {
 	})
 	columns!: Array<TableColumn>;
 
-	static async onDefine() {
-		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
-
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	fnHandleF7: (e: CustomEvent) => void;
 	fnOnRowFocused: (e: CustomEvent) => void;
 	_handleResize: ResizeObserverCallback;
 
-	moreDataText?: string;
 	tableEndObserved: boolean;
 	visibleColumns: Array<TableColumn>;
 	visibleColumnsCount?: number;
@@ -543,8 +519,6 @@ class Table extends UI5Element {
 		if (this.growsOnScroll) {
 			this.observeTableEnd();
 		}
-
-		this.checkTableInViewport();
 	}
 
 	onEnterDOM() {
@@ -682,7 +656,7 @@ class Table extends UI5Element {
 
 		const selectedRows = this.selectedRows;
 
-		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -714,7 +688,7 @@ class Table extends UI5Element {
 
 		const selectedRows: Array<ITableRow> = this.selectedRows;
 
-		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -885,6 +859,12 @@ class Table extends UI5Element {
 		this._itemNavigation.setCurrentItem(e.target as ITableRow);
 	}
 
+	onRowKeyDown(e: KeyboardEvent) {
+		if (this.growing === "Scroll" && isDown(e) && this.currentItemIdx === this.rows.length - 1) {
+			debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
+		}
+	}
+
 	_onColumnHeaderFocused() {
 		this._itemNavigation.setCurrentItem(this._columnHeader);
 	}
@@ -936,7 +916,7 @@ class Table extends UI5Element {
 	}
 
 	_onLoadMoreClick() {
-		this.fireEvent("load-more");
+		this.fireDecoratorEvent("load-more");
 	}
 
 	observeTableEnd() {
@@ -958,7 +938,7 @@ class Table extends UI5Element {
 	}
 
 	loadMore() {
-		this.fireEvent("load-more");
+		this.fireDecoratorEvent("load-more");
 	}
 
 	_handleSingleSelect(e: CustomEvent<TableRowSelectionRequestedEventDetail>) {
@@ -976,7 +956,7 @@ class Table extends UI5Element {
 				}
 			});
 			row.selected = true;
-			this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent("selection-change", {
 				selectedRows: [row],
 				previouslySelectedRows,
 			});
@@ -1001,7 +981,7 @@ class Table extends UI5Element {
 			this._allRowsSelected = false;
 		}
 
-		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -1030,7 +1010,7 @@ class Table extends UI5Element {
 
 		const selectedRows = bAllSelected ? this.rows : [];
 
-		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -1070,13 +1050,9 @@ class Table extends UI5Element {
 	}
 
 	handleResize() {
-		this.checkTableInViewport();
 		this.popinContent();
 	}
 
-	checkTableInViewport() {
-		this._inViewport = isElementInView(this.getDomRef()!);
-	}
 	popinContent() {
 		const clientRect: DOMRect = this.getDomRef()!.getBoundingClientRect();
 		const tableWidth: number = clientRect.width;
@@ -1109,7 +1085,7 @@ class Table extends UI5Element {
 		// invalidate if hidden columns count has changed or columns are shown
 		if (hiddenColumnsChange || shownColumnsChange) {
 			this._hiddenColumns = hiddenColumns;
-			this.fireEvent<TablePopinChangeEventDetail>("popin-change", {
+			this.fireDecoratorEvent("popin-change", {
 				poppedColumns: this._hiddenColumns,
 			});
 		}
@@ -1144,14 +1120,6 @@ class Table extends UI5Element {
 		return this.growingIntersectionObserver;
 	}
 
-	get styles() {
-		return {
-			busy: {
-				position: this.busyIndPosition,
-			},
-		};
-	}
-
 	get growsWithButton(): boolean {
 		return this.growing === TableGrowingMode.Button;
 	}
@@ -1183,7 +1151,7 @@ class Table extends UI5Element {
 	}
 
 	get loadMoreAriaLabelledBy(): string {
-		if (this.moreDataText) {
+		if (this.growingButtonSubtext) {
 			return `${this._id}-growingButton-text ${this._id}-growingButton-subtext`;
 		}
 
@@ -1192,10 +1160,6 @@ class Table extends UI5Element {
 
 	get tableEndDOM(): Element {
 		return this.shadowRoot!.querySelector(".ui5-table-end-marker")!;
-	}
-
-	get busyIndPosition(): string {
-		return this._inViewport ? "absolute" : "sticky";
 	}
 
 	get isMultiSelect(): boolean {
@@ -1230,6 +1194,8 @@ class Table extends UI5Element {
 		return this.columnHeader && getLastTabbableElement(this.columnHeader);
 	}
 }
+
+patchScopingSuffix(Table);
 
 Table.define();
 

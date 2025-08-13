@@ -1,0 +1,11 @@
+:host {
+    height: 40px;
+}
+
+:host(:last-of-type) {
+    margin-bottom: 0;
+}
+
+:host(:first-of-type) {
+    margin-top: 0;
+}

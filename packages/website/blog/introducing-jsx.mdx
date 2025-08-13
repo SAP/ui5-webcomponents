@@ -1,0 +1,64 @@
+---
+title: Introducing JSX for web component templates
+tags: [jsx, template]
+slug: /introducing-jsx
+date: 2025-01-07T10:00
+---
+
+# Introducing JSX for web component templates
+
+We are proud to announce that the 2.6.0 release of the web components adds support for using [JSX templates](https://github.com/SAP/ui5-webcomponents/pull/10046).
+
+Until now, Handlebars was the only templating language that could be used. The main goal of the project since the beginning was to have declarative renderers, and Handlebars served this purpose well. There were some drawbacks however.
+
+## Own HBS compiler
+Since handlebars originally works with strings only and cannot update the DOM effectively, we had to build our own HBS -> lit-html compiler. This added some technical debt, as not all features from Handlebars were implemented. It also added maintenance effort for a tool we had to update and evolve, when switching to TypeScript for example, or when encountering edge cases not previously considered.
+
+## Development experience
+All templating languages are by default not understood by IDEs out of the box.
+
+Code completion is the biggest gap we were seeing - there was simply no way to tell the IDE what to do without writing a plugin, which would be further development effort.
+
+While we added type checking (the compiled HBS code is in a `.ts` file so there is some typechecking), it was never complete - type errors are shown in the console, not in the IDE. They were also only top level property type checks - no typechecks inside loops, no typechecks for events and event handlers.
+
+Code navigation was also missing - you could not click on a property in a HBS template to navigate to the property definition in the component itself.
+
+## JSX
+
+JSX is an embeddable HTML-like syntax that gets transformed into JavaScript. It is written inside JavaScript and transformed to JavaScript, which means the TypeScript compiler can do all of the things it does out of the box - not only typechecking, but also provide code completion suggestions and do the code transformation. IDEs also have TypeScript integration, so nothing additional is required.
+
+## JSX benefits compared to HBS templates
+
+What follows is a quick summary of all improvements offered by JSX.
+
+### Declarative ↔️
+No change here, both are declarative.
+
+### Type checking ↗️
+Full type checking - not only top-level properties, but also loops, events, event handlers, and code in the template as well.
+
+### Code completion ↗️
+Full code completion - TypeScript knows exactly what properties are available for each tag, and what their respective values are. Type errors are shown in the IDE and quick fixes also work out of the box.
+
+### Code navigation ↗️
+Using Cmd-Click on a property name or an event handler directly jumps to the code location in the component. This was not possible before.
+
+### Debugging templates ↗️
+While it was possible to debug lit-html templates, they were big horizontal lines of template literal code and actually kind of hard to debug. JSX templates look like function calls with whitespaces and show a much better structure that is easier to debug.
+
+### No IDE plugin needed ↗️
+All of the benefits above come without the need to write a plugin - IDEs are already integrated with TypeScript that provides all of the above features for free.
+
+### No new tooling ↗️
+Transforming the template to JavaScript code is handled by the TypeScript compiler. There is absolutely no new code for the transformation step.
+
+### Smaller template size ↗️
+Converting all of the `main` and `fiori` components (~140) reduced the gzip size of the bundle by roughly 20 kB.
+
+## Technical aspects
+The JSX transformation creates a Virtual DOM, and the actual DOM updates are handled by [Preact](https://preactjs.com/). Preact has a big focus on performance and is very fast and small. Virtual DOM is theoretically slower when updating big lists (as their templates have to be rendered and the diff has to be run), but for the web components, this is not a problem, since the items of the components are coming from the applications and the component only renders a slot where the items will appear.
+
+## Summary
+The switch to JSX improves the web component development experience immensely. Not only is the development experience better, but in the process of migrating the existing components, a lot of bugs were caught that were simply missed in HBS. Size improvements and the good performance make this a real good step for the framework and for component developers.
+
+For more implementation details, you can check the [template docs](https://sap.github.io/ui5-webcomponents/docs/development/templates/) and the [PR](https://github.com/SAP/ui5-webcomponents/pull/10046)

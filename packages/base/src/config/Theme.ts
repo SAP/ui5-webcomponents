@@ -4,8 +4,13 @@ import applyTheme from "../theming/applyTheme.js";
 import getThemeDesignerTheme from "../theming/getThemeDesignerTheme.js";
 import { DEFAULT_THEME, SUPPORTED_THEMES } from "../generated/AssetParameters.js";
 import { boot, isBooted } from "../Boot.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
-let curTheme: string;
+let curTheme: string | undefined;
+
+attachConfigurationReset(() => {
+	curTheme = undefined;
+});
 
 /**
  * Returns the current theme.
@@ -59,8 +64,7 @@ const getDefaultTheme = (): string => {
  * @returns {boolean}
  */
 const isTheme = (theme: string) => {
-	const currentTheme = getTheme();
-	return currentTheme === theme || currentTheme === `${theme}_exp`;
+	return getTheme() === theme;
 };
 
 /**

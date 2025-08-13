@@ -49,7 +49,6 @@
 	border-radius: inherit;
 	border-color: inherit;
 	position: relative;
-	outline: none;
 }
 
 .ui5-textarea-wrapper {
@@ -93,7 +92,6 @@
 	content: var(--_ui5_textarea_focus_pseudo_element_content);
 	position: absolute;
 	pointer-events: none;
-	z-index: 2;
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--_ui5_textarea_focus_outline_color);
 	border-radius: var(--_ui5_textarea_focus_border_radius);
 	top: var(--_ui5_textarea_focus_offset);
@@ -141,11 +139,15 @@
 
 :host([growing]) .ui5-textarea-inner {
 	box-sizing: border-box;
-	height: 100%;
-  	position: absolute;
-	top: 0;
-	left: 0;
+	height: calc(100% - (2 * var(--_ui5_textarea_wrapper_padding)));
+	width: calc(100% - (2 * var(--_ui5_textarea_wrapper_padding)));
+	position: absolute;
 }
+
+:host([growing]:not([growing-max-rows])) .ui5-textarea-inner {
+	overflow: hidden;
+}
+
 
 .ui5-textarea-mirror {
 	box-sizing: border-box;
@@ -153,10 +155,9 @@
 	visibility: hidden;
 	width: 100%;
 	max-height: 94vh;
+	word-break: break-word;
 	min-height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
-	word-break: break-all;
-	padding-top: var(--_ui5_textarea_padding_top);
-	padding-bottom: var(--_ui5_textarea_padding_bottom);
+	padding: var(--_ui5_textarea_padding_top) var(--_ui5_textarea_padding_right_and_left) var(--_ui5_textarea_padding_bottom);
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
 	white-space: pre-wrap;
@@ -183,34 +184,28 @@
 }
 
 :host([growing-max-rows]:not([growing-max-rows="0"])) .ui5-textarea-mirror {
-	max-height: calc((var(--_textarea_growing_max_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+	max-height: calc((var(--_textarea_growing_max_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
 :host([rows="1"]) .ui5-textarea-inner {
-	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
 :host([growing-max-rows="1"]) .ui5-textarea-inner, :host([growing-max-rows="1"]) .ui5-textarea-mirror {
-	max-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
-	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+	max-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
 :host([rows="1"][growing-max-rows]) .ui5-textarea-inner, :host([rows="1"][growing-max-rows]) .ui5-textarea-mirror {
-	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
-	max-height: calc((var(--_textarea_growing_max_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
-}
-
-:host([rows="1"][value-state="Negative"]:not([readonly]):not([disabled])) .ui5-textarea-inner,
-:host([rows="1"][value-state="Critical"]:not([readonly]):not([disabled])) .ui5-textarea-inner {
-	height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
-	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
+	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+	max-height: calc((var(--_textarea_growing_max_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
 :host([value-state="Negative"]) .ui5-textarea-mirror,
 :host([value-state="Critical"]) .ui5-textarea-mirror {
 	padding-top: var(--_ui5_textarea_padding_top_error_warning);
 	padding-bottom: var(--_ui5_textarea_padding_bottom_error_warning);
-	min-height: calc(var(--_textarea_rows) * var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
+	min-height: calc(var(--_textarea_rows) * var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
 }
 
 :host([growing-max-rows="1"][value-state="Negative"]) .ui5-textarea-inner, :host([growing-max-rows="1"][value-state="Negative"]) .ui5-textarea-mirror
@@ -222,12 +217,7 @@
 :host([value-state="Information"]) .ui5-textarea-mirror {
 	padding-top: var(--_ui5_textarea_padding_top_information);
 	padding-bottom: var(--_ui5_textarea_padding_bottom_information);
-	min-height: calc(var(--_textarea_rows) * var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top_information) + var(--_ui5_textarea_padding_bottom_information));
-}
-
-:host([rows="1"][value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-inner {
-	height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top_information) + var(--_ui5_textarea_padding_bottom_information));
-	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top_information) + var(--_ui5_textarea_padding_bottom_information));
+	min-height: calc(var(--_textarea_rows) * var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_information) + var(--_ui5_textarea_padding_bottom_information));
 }
 
 :host([growing-max-rows="1"][value-state="Information"]) .ui5-textarea-inner, :host([growing-max-rows="1"][value-state="Information"]) .ui5-textarea-mirror {
@@ -401,16 +391,13 @@
 	border-color: var(--sapField_InformationColor);
 	box-shadow: var(--sapField_InformationShadow);
 	padding: var(--_ui5_textarea_information_wrapper_padding);
+	border-width: var(--_ui5_textarea_information_border_width);
+	border-style: var(--_ui5_textarea_error_warning_border_style);
 }
 
 :host([value-state="Information"][focused]:not([readonly])) .ui5-textarea-wrapper {
 	background-color: var(--_ui5_textarea_focused_value_state_information_background);
 	border-color: var(--sapField_InformationColor);
-}
-
-:host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
-	border-width: var(--_ui5_textarea_information_border_width);
-	border-style: var(--_ui5_textarea_error_warning_border_style);
 }
 
 :host([value-state="Information"]:not([readonly]):not([disabled]):not([focused]):hover) .ui5-textarea-wrapper {
@@ -430,27 +417,11 @@
 	display: none;
 }
 
-:host :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	border-top-right-radius: var(--sapField_BorderCornerRadius);
 	border-bottom-right-radius: var(--sapField_BorderCornerRadius);
 }
 
-:host([value-state="Negative"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
-	background-color: var(--sapScrollBar_TrackColor);
-}
-
-:host([value-state="Critical"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
-	background-color: var(--sapScrollBar_TrackColor);
-}
-
-:host([value-state="Information"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
-	background-color: var(--sapScrollBar_TrackColor);
-}
-
-:host([value-state="Positive"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
-	background-color: var(--sapScrollBar_TrackColor);
-}
-
-:host([focused]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host([focused]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	background-image: none;
 }

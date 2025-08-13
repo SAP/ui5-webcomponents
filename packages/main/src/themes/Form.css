@@ -1,5 +1,5 @@
 @import "./FormLayout.css";
-@import "./FormLabelSpan.css";
+@import "./FormItemSpan.css";
 
 :host {
 	display: block;
@@ -15,10 +15,11 @@
 
 .ui5-form-header {
 	display: flex;
-	height: 2.75rem;
+	min-height: 2.75rem;
 	align-items: center;
 	border-bottom: 1px solid var(--sapGroup_TitleBorderColor);
-	padding: 0 1rem 0 1rem;
+	padding: 0.875rem 1rem;
+	box-sizing: border-box;
 }
 
 .ui5-form-layout {

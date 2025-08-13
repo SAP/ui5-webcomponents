@@ -14,11 +14,6 @@
 	display: none;
 }
 
-.ui5-tab-semantic-icon {
-	position: absolute;
-	inset-inline-start: -0.25rem;
-}
-
 .ui5-tab-overflow-item--positive:not(.ui5-tab-overflow-item--disabled) .ui5-tab-overflow-itemContent {
 	color: var(--_ui5_tc_overflowItem_positive_color);
 }
@@ -45,8 +40,13 @@
 }
 
 .ui5-tab-overflow-itemContent-wrapper {
-	padding-inline-start: calc(var(--_ui5-tab-indentation-level) * 0.5rem + var(--_ui5-tab-extra-indent, 0) * var(--_ui5_tc_overflowItem_extraIndent));
+	padding-inline-start: calc((calc(var(--_ui5-tab-indentation-level) + var(--_ui5-tab-level-has-icon) * var(--_ui5_tc_overflowItem_additional, 0))) * (var(--_ui5_tc_overflowItem_indent) + var(--_ui5_tc_overflowItem_extra_indent)));
 }
+
+.ui5-tab-overflow-item  .ui5-tab-semantic-icon {
+	position: absolute;
+	inset-inline-start: -1.25rem;
+} 
 
 .ui5-tab-overflow-item--selectedSubTab {
 	background-color: var(--sapList_SelectionBackgroundColor);

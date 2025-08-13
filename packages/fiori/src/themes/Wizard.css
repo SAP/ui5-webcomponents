@@ -5,30 +5,43 @@
 	height: 100%;
 	width: 100%;
 	overflow: auto;
+	container-type: inline-size;
 }
 
-:host([_breakpoint="S"])::part(navigator),
-:host([_breakpoint="S"])::part(step-content) {
-	padding-left: 1rem;
-	padding-right: 1rem;
+/* S Size */
+@container (max-width: 599px) {
+	:host::part(navigator),
+	:host::part(step-content) {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
 }
 
-:host([_breakpoint="M"])::part(navigator),
-:host([_breakpoint="M"])::part(step-content) {
-	padding-left: 2rem;
-	padding-right: 2rem;
+/* M Size */
+@container (min-width: 600px) and (max-width: 1023px) {
+	:host::part(navigator),
+	:host::part(step-content) {
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
 }
 
-:host([_breakpoint="L"])::part(navigator),
-:host([_breakpoint="L"])::part(step-content) {
-	padding-left: 2rem;
-	padding-right: 2rem;
+/* L Size */
+@container (min-width: 1024px) and (max-width: 1439px) {
+	:host::part(navigator),
+	:host::part(step-content) {
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
 }
 
-:host([_breakpoint="XL"])::part(navigator),
-:host([_breakpoint="XL"])::part(step-content) {
-	padding-left: 3rem;
-	padding-right: 3rem;
+/* XL Size */
+@container (min-width: 1440px) {
+	:host::part(navigator),
+	:host::part(step-content) {
+		padding-left: 3rem;
+		padding-right: 3rem;
+	}
 }
 
 .ui5-wiz-root {
@@ -52,7 +65,7 @@
 	padding-bottom: 1rem;
 }
 
-:host([content-layout="SingleStep"]) .ui5-wiz-content-item:not([selected]) {
+:host([content-layout="SingleStep"]) .ui5-wiz-content-item:not(.ui5-wiz-content-item-selected) {
 	display: none;
 }
 
@@ -67,7 +80,7 @@
 	display: none;
 }
 
-.ui5-wiz-content-item[stretch] {
+.ui5-wiz-content-item.ui5-wiz-content-item-stretch {
 	/* Add 2rem to ensure there is enough scroll height to reach the last step */
 	min-height: 100%;
 }
@@ -112,6 +125,7 @@
 	outline: none;
 	display: flex;
 	align-items: center;
+	transform: scale(1);
 }
 
 [ui5-wizard-tab][data-ui5-wizard-expanded-tab="false"] + [ui5-wizard-tab][data-ui5-wizard-expanded-tab="false"] {

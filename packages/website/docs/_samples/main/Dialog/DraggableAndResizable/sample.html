@@ -17,9 +17,9 @@
         <p>Move this dialog around the screen by dragging it by its header.</p>
         <p>Resize this dialog by dragging it by its resize handle.</p>
         <p>These features are available only on Desktop.</p>
-        <div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
-            <ui5-button class="dialogCloser" design="Emphasized">OK</ui5-button>
-        </div>
+        <ui5-toolbar slot="footer">
+            <ui5-toolbar-button class="dialogCloser" design="Emphasized" text="OK"></ui5-toolbar-button>
+        </ui5-toolbar>
     </ui5-dialog>
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>

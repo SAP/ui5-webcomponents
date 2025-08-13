@@ -1,13 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Icon from "./Icon.js";
 import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
@@ -16,7 +15,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import ProgressIndicatorTemplate from "./generated/templates/ProgressIndicatorTemplate.lit.js";
+import ProgressIndicatorTemplate from "./ProgressIndicatorTemplate.js";
 
 // Styles
 import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
@@ -43,10 +42,9 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
  */
 @customElement({
 	tag: "ui5-progress-indicator",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: ProgressIndicatorCss,
 	template: ProgressIndicatorTemplate,
-	dependencies: [Icon],
 })
 
 class ProgressIndicator extends UI5Element {
@@ -99,6 +97,7 @@ class ProgressIndicator extends UI5Element {
 	@property()
 	valueState: `${ValueState}` = "None";
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	_previousValue: number;
 	_transitionDuration: number;
@@ -121,33 +120,6 @@ class ProgressIndicator extends UI5Element {
 			"Critical": ProgressIndicator.i18nBundle.getText(VALUE_STATE_WARNING),
 			"Positive": ProgressIndicator.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": ProgressIndicator.i18nBundle.getText(VALUE_STATE_INFORMATION),
-		};
-	}
-
-	valueStateIconMappings(): Record<string, string> {
-		return {
-			"Negative": "status-negative",
-			"Critical": "status-critical",
-			"Positive": "status-positive",
-			"Information": "information",
-		};
-	}
-
-	get styles() {
-		return {
-			bar: {
-				"width": `${this.validatedValue}%`,
-				"transition-duration": this.shouldAnimate ? `${this._transitionDuration}ms` : "none",
-			},
-		};
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-progress-indicator-max-value": this.validatedValue === 100,
-				"ui5-progress-indicator-min-value": this.validatedValue === 0,
-			},
 		};
 	}
 
@@ -180,14 +152,6 @@ class ProgressIndicator extends UI5Element {
 
 	get showIcon() {
 		return this.valueState !== ValueState.None;
-	}
-
-	get valueStateIcon() {
-		return this.valueStateIconMappings()[this.valueState];
-	}
-
-	static async onDefine() {
-		ProgressIndicator.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

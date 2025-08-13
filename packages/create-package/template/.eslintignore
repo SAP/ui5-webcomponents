@@ -2,4 +2,6 @@
 dist
 test
 src/generated
-.eslintrc.js
+.eslintrc.cjs
+
+{{INIT_PACKAGE_CYPRESS_ESLINT_IGNORES}}

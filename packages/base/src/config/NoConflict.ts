@@ -1,4 +1,5 @@
 import { getNoConflict as getConfiguredNoConflict } from "../InitialConfiguration.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
 // Fire these events even with noConflict: true
 const excludeList = [
@@ -8,7 +9,11 @@ const excludeList = [
 
 type NoConflictData = boolean | { events: Array<string>};
 
-let noConflict: NoConflictData;
+let noConflict: NoConflictData | undefined;
+
+attachConfigurationReset(() => {
+	noConflict = undefined;
+});
 
 const shouldFireOriginalEvent = (eventName: string) => {
 	return excludeList.includes(eventName);

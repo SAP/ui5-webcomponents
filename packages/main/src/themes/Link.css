@@ -103,21 +103,34 @@
 	text-overflow: ellipsis;
 }
 
-:host([focused]) .ui5-link-root,
-:host([design="Subtle"][focused]) .ui5-link-root {
+.ui5-link-root:focus-visible,
+:host([desktop]) .ui5-link-root:focus-within,
+:host([design="Subtle"]) .ui5-link-root:focus-visible,
+:host([design="Subtle"][desktop]) .ui5-link-root:focus-within {
 	background-color: var(--_ui5_link_focus_background_color);
 	outline: var(--_ui5_link_outline);
 	border-radius: var(--_ui5_link_focus_border-radius);
 	text-shadow: none;
+	color: var(--_ui5_link_focus_color);
 }
 
-:host([focused]),
-:host([design="Subtle"][focused]) {
-	color:  var(--_ui5_link_focus_color);
+:host(:not([desktop])) .ui5-link-root:focus-visible,
+:host([desktop]:focus-within),
+:host([design="Subtle"][desktop]:focus-within) {
 	text-decoration: var(--_ui5_link_focus_text_decoration);
 }
 
-:host([focused]:hover:not(:active)) {
+:host([desktop]:hover:not(:active):focus-within),
+:host([design="Subtle"][desktop]:hover:not(:active):focus-within) {
 	color: var(--_ui5_link_focused_hover_text_color);
 	text-decoration: var(--_ui5_link_focused_hover_text_decoration);
+}
+
+:host([interactive-area-size="Large"]) .ui5-link-root {
+	line-height: var(--_ui5_link_large_interactive_area_height);
+}
+
+:host([interactive-area-size="Large"])::part(icon), 
+:host([interactive-area-size="Large"])::part(endIcon) {
+	height: var(--_ui5_link_large_interactive_area_height);
 }

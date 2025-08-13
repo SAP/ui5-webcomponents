@@ -27,6 +27,18 @@
 	<ui5-title level="H3">Calendar Legend with All types of Calendar Legend Items</ui5-title>
 
 	<ui5-calendar id="calendar1">
+		<ui5-date value="Mar 31, 2024"></ui5-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
 		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
 		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
 		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
@@ -82,7 +94,7 @@
 	<script>
 		// Function which maps special dates to the current month
 		function updateSpecialDates() {
-			const currentDate = new Date();
+			const currentDate = new Date(2024, 2, 31);
 			const month = currentDate.getMonth() + 1;
 			const year = currentDate.getFullYear();
 	
@@ -94,13 +106,17 @@
 				const formattedDay = day < 10 ? "0" + day : day.toString();
 				const newValue = year + "-" + formattedMonth + "-" + formattedDay;
 				specDate.setAttribute("value", newValue);
-				specDate.setAttribute("type", `Type${formattedDay}`);
+				
+				if (day <= 20) {
+					specDate.setAttribute("type", `Type${formattedDay}`);
+				} else {
+					specDate.setAttribute("type", "NonWorking");
+				}
 			});
 		}
 	
 		updateSpecialDates();
 	</script>
-	
 
 </body>
 </html>

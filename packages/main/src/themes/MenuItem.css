@@ -1,11 +1,11 @@
 @import "./Menu.css";
 
-.ui5-menu-rp[sub-menu] {
+.ui5-menu-rp.ui5-menu-rp-sub-menu {
 	margin-top: 0.25rem;
 	margin-inline: var(--_ui5_menu_submenu_margin_offset);
 }
 
-.ui5-menu-rp[sub-menu][actual-placement="Start"] {
+.ui5-menu-rp.ui5-menu-rp-sub-menu[actual-placement="Start"] {
 	margin-top: 0.25rem;
 	margin-inline: var(--_ui5_menu_submenu_placement_type_left_margin_offset);
 }
@@ -25,22 +25,28 @@
 	background: var(--ui5-listitem-background-color);
 }
 
+:host([active]:not([disabled])),
+:host([active]:not([disabled])):hover {
+	background-color: var(--sapList_Active_Background);
+}
+
+:host(:not([active]):not([selected]):not([disabled]):hover) {
+	background-color: var(--sapList_Hover_Background);
+}
+
 /* active */
 :host([disabled][active][actionable]) .ui5-li-root .ui5-li-icon {
 	color: var(--sapContent_NonInteractiveIconColor);
 }
 
-:host([active][actionable]:not([disabled]))::part(content),
-:host([active][actionable]:not([disabled]))::part(additional-text)  {
+:host([active]:not([disabled]))::part(content),
+:host([active]:not([disabled]))::part(additional-text),
+:host([active]:not([disabled])) .ui5-li-root .ui5-li-icon {
 	color: var(--sapList_Active_TextColor);
 }
 
 :host([focused]:not([active]):not([disabled])) {
 	background-color: var(--sapList_Hover_Background);
-}
-
-:host(:not([is-phone]))::part(native-li) {
-	padding: var(--_ui5_menu_item_padding);
 }
 
 :host::part(additional-text) {
@@ -74,6 +80,7 @@
 }
 
 :host(:not([is-phone]))::part(native-li) {
+	user-select: none;
 	padding: var(--_ui5_menu_item_padding);
 }
 
@@ -98,11 +105,27 @@
 	inset-inline-end: var(--_ui5_menu_item_submenu_icon_right);
 }
 
+.ui5-menu-item-submenu-icon .ui5-menu-item-icon-end {
+	color: var(--sapContent_NonInteractiveIconColor);
+}
+
 .ui5-menu-item-dummy-icon {
 	min-width: var(--_ui5_list_item_icon_size);
 	min-height: var(--_ui5_list_item_icon_size);
 	display: inline-block;
 	vertical-align: middle;
-	padding-inline-end: 0.5rem;
+	padding-inline-end: 0.75rem;
 	pointer-events: none;
+}
+
+.ui5-menu-item-checked {
+	padding-inline-start: 0.5rem;
+	padding-inline-end: 0;
+	font-weight: normal;
+	text-align: center;
+}
+
+.ui5-menu-item-icon-checked {
+	color: var(--sapContent_BusyColor);
+	padding-top: 0.25rem;
 }

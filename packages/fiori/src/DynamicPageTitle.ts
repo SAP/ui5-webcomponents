@@ -2,9 +2,9 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -13,9 +13,10 @@ import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
 import type { ToolbarMinWidthChangeEventDetail } from "@ui5/webcomponents/dist/Toolbar.js";
 import ToolbarItemOverflowBehavior from "@ui5/webcomponents/dist/types/ToolbarItemOverflowBehavior.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import type Title from "@ui5/webcomponents/dist/Title.js";
 
 // Template
-import DynamicPageTitleTemplate from "./generated/templates/DynamicPageTitleTemplate.lit.js";
+import DynamicPageTitleTemplate from "./DynamicPageTitleTemplate.js";
 
 // Styles
 import DynamicPageTitleCss from "./generated/themes/DynamicPageTitle.css.js";
@@ -60,7 +61,7 @@ import {
 @customElement({
 	tag: "ui5-dynamic-page-title",
 	fastNavigation: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: DynamicPageTitleCss,
 	template: DynamicPageTitleTemplate,
 })
@@ -69,9 +70,14 @@ import {
  * Event is fired when the title is toggled.
  * @private
  */
-@event("_toggle-title")
+@event("toggle-title", {
+	bubbles: true,
+})
 
 class DynamicPageTitle extends UI5Element {
+	eventDetails!: {
+		"toggle-title": void;
+	}
 	/**
 	 * Defines if the title is snapped.
 	 *
@@ -111,6 +117,13 @@ class DynamicPageTitle extends UI5Element {
 	minActionsWidth?: number;
 
 	/**
+	 * Indicates whether the title has snapped on mobile devices.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hasSnappedTitleOnMobile = false;
+
+	/**
 	 * Defines the content of the Heading of the Dynamic Page.
 	 *
 	 * The font size of the title within the `heading` slot can be adjusted to the recommended values using the following CSS variables:
@@ -131,6 +144,22 @@ class DynamicPageTitle extends UI5Element {
 	 */
 	@slot({ type: HTMLElement })
 	snappedHeading!: HTMLElement[];
+
+	/**
+	 * Defines the content of the snapped title on mobile devices.
+	 *
+	 * This slot is displayed only when the `DynamicPageTitle` is in the snapped state on mobile devices.
+	 * It should be used to provide a simplified, single-line title that takes up less space on smaller screens.
+	 *
+	 * **Note:**
+	 * - The content set in this slot **overrides** all other content set in the `DynamicPageTitle` slots when displayed.
+	 * - The slot is intended for a single `ui5-title` component.
+	 *
+	 * @public
+	 * @since 2.3.0
+	 */
+	@slot({ type: HTMLElement })
+	snappedTitleOnMobile!: Array<Title>;
 
 	/**
 	 * Defines the bar with actions in the Dynamic page title.
@@ -186,6 +215,7 @@ class DynamicPageTitle extends UI5Element {
 	@property({ type: Boolean })
 	interactive = false;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	_handleResize: ResizeObserverCallback;
@@ -193,10 +223,6 @@ class DynamicPageTitle extends UI5Element {
 	constructor() {
 		super();
 		this._handleResize = this.handleResize.bind(this);
-	}
-
-	static async onDefine() {
-		DynamicPageTitle.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	onEnterDOM() {
@@ -212,17 +238,6 @@ class DynamicPageTitle extends UI5Element {
 
 	onBeforeRendering() {
 		this.prepareLayoutActions();
-	}
-
-	get styles() {
-		return {
-			content: {
-				"min-width": this.minContentWidth ? `${this.minContentWidth || 0}px` : undefined,
-			},
-			actions: {
-				"min-width": this.minActionsWidth ? `${this.minActionsWidth || 0}px` : undefined,
-			},
-		};
 	}
 
 	get hasContent() {
@@ -241,7 +256,7 @@ class DynamicPageTitle extends UI5Element {
 	}
 
 	get _tabIndex() {
-		return this.interactive ? "0" : undefined;
+		return this.interactive ? 0 : undefined;
 	}
 
 	get _headerExpanded() {
@@ -259,14 +274,26 @@ class DynamicPageTitle extends UI5Element {
 		}
 	}
 
+	get _needsSeparator(): boolean {
+		return (this.navigationBar.length > 0 && this.actionsBar.length > 0);
+	}
+
+	get forAriaExpanded() {
+		return this.interactive ? this._headerExpanded : undefined;
+	}
+
 	prepareLayoutActions() {
-		// all navigation/layout actions should have the NeverOverflow behavior
-		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']");
+		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']"),
+			isWideScreen = this.offsetWidth >= 1280;
+
 		if (!navigationBar) {
 			return;
 		}
+
 		navigationBar.items.forEach(action => {
-			action.overflowPriority = ToolbarItemOverflowBehavior.NeverOverflow;
+			action.overflowPriority = isWideScreen
+				? ToolbarItemOverflowBehavior.NeverOverflow
+				: ToolbarItemOverflowBehavior.Default;
 		});
 	}
 
@@ -284,13 +311,13 @@ class DynamicPageTitle extends UI5Element {
 	}
 
 	onTitleClick() {
-		this.fireEvent("_toggle-title");
+		this.fireDecoratorEvent("toggle-title");
 	}
 
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e) || isSpace(e)) {
 			e.preventDefault();
-			this.fireEvent("_toggle-title");
+			this.fireDecoratorEvent("toggle-title");
 		}
 	}
 }

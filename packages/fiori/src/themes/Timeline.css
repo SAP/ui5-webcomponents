@@ -14,6 +14,30 @@
 	padding: 0;
 }
 
+:host([layout="Horizontal"]) .ui5-timeline-list-item.ui5-timeline-list-growing {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-inline-start: 0.625rem;
+	align-items: center;
+	min-width: 3.375rem;
+}
+:host([layout="Vertical"]) .ui5-timeline-list-item.ui5-timeline-list-growing {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: center;
+	align-items: center;
+}
+
+:host([layout="Horizontal"]) .ui5-timeline-end-marker {
+	margin: -0.625rem;
+}
+
+:host([layout="Vertical"]) .ui5-timeline-list {
+	display: flex;
+	flex-direction: column;
+}
+
 .ui5-timeline-list-item {
 	margin-bottom: var(--_ui5_tl_li_margin_bottom);
 }
@@ -27,6 +51,7 @@
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	display: flex;
 }
 
 :host([layout="Horizontal"]) .ui5-timeline-list-item {
@@ -38,4 +63,26 @@
 	overflow: auto;
 	/* The padding values of the parent container are added to the size of scroll container */
 	width: calc(100% + var(--_ui5_timeline_scroll_container_offset));
+}
+
+:host([loading]) .ui5-timeline-growing-button-busy-indicator:not([_is-busy]) {
+	display: none;
+}
+
+.ui5-timeline-root,
+.ui5-timeline-busy-indicator {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	box-sizing: border-box;
+}
+
+:host([layout="Vertical"]) .ui5-timeline-scroll-container {
+	height: 100%;
+	width: 100%;
+}
+
+:host([growing="Scroll"]) .ui5-timeline-end-marker {
+	/* Ensure the list-end-marker has a block property to always be stretched and "visible" on the screen */
+	display: inline-block;
 }

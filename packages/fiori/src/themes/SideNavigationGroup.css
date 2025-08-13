@@ -2,19 +2,14 @@
 
 :host {
 	font-size: var(--sapFontSmallSize);
-	font-family: var(--sapFontSemiboldFamily);
 	color: var(--sapContent_LabelColor);
 }
 
 .ui5-sn-item.ui5-sn-item-group {
-	height: 2rem;
 	min-height: 2rem;
-	padding-inline-start: 0.5rem;
-	gap: 0.4375rem;
-}
-
-.ui5-sn-item.ui5-sn-item-group .ui5-sn-item-toggle-icon {
-	display: none;
+	padding-inline-start: var(--_ui5_side_navigation_group_padding);;
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontSize);
 }
 
 .ui5-sn-item.ui5-sn-item-group:hover .ui5-sn-item-toggle-icon,
@@ -27,4 +22,16 @@
 .ui5-sn-item-group-below-group.ui5-sn-item-separator,
 .ui5-sn-item-group-below-group .ui5-sn-item-separator:first-child {
 	display: none;
+}
+
+.ui5-sn-spacer {
+	margin: var(--_ui5_side_navigation_navigation_separator_margin);
+	height: var(--_ui5_side_navigation_navigation_separator_height);
+	min-height: var(--_ui5_side_navigation_navigation_separator_height);
+	background-color: var(--_ui5_side_navigation_navigation_separator_background_color);
+	border-radius: var(--_ui5_side_navigation_navigation_separator_radius);
+}
+
+.ui5-sn-collapsed .ui5-sn-spacer {
+	margin: var(--_ui5_side_navigation_navigation_separator_margin_collapsed);
 }

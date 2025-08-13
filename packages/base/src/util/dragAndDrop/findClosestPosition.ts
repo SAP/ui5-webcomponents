@@ -74,4 +74,69 @@ const findClosestPosition = (elements: Array<HTMLElement>, point: number, layout
 	};
 };
 
-export default findClosestPosition;
+const _moveBackward = (elements: Array<HTMLElement>, index: number) => {
+	index--;
+
+	if (index < 0) {
+		return [];
+	}
+
+	return [{
+		element: elements[index],
+		placement: MovePlacement.Before,
+	}];
+};
+
+const _moveForward = (elements: Array<HTMLElement>, index: number) => {
+	index++;
+
+	if (index >= elements.length) {
+		return [];
+	}
+
+	return [{
+		element: elements[index],
+		placement: MovePlacement.After,
+	}];
+};
+
+const keyToPlacement: { [key: string]: (arg1: Array<HTMLElement>, arg2: number) => Array<{element: HTMLElement, placement: MovePlacement}>} = {
+	ArrowLeft: _moveBackward,
+	ArrowUp: _moveBackward,
+	ArrowRight: _moveForward,
+	ArrowDown: _moveForward,
+	Home: (elements, index) => {
+		return elements.slice(0, index).map(el => (
+			{
+				element: el,
+				placement: MovePlacement.Before,
+			}
+		));
+	},
+	End: (elements, index) => {
+		return elements.slice(index + 1, elements.length).reverse().map(el => (
+			{
+				element: el,
+				placement: MovePlacement.After,
+			}
+		));
+	},
+};
+
+const findClosestPositionsByKey = (elements: Array<HTMLElement>, element: HTMLElement, e: KeyboardEvent) => {
+	if (isMovingKey(e.key)) {
+		return keyToPlacement[e.key](elements, elements.indexOf(element));
+	}
+
+	return [];
+};
+
+const isMovingKey = (key: string) => {
+	return key in keyToPlacement;
+};
+
+export {
+	findClosestPosition,
+	findClosestPositionsByKey,
+	isMovingKey,
+};

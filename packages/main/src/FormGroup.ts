@@ -6,6 +6,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type FormItem from "./FormItem.js";
 import type { IFormItem } from "./Form.js";
 import type FormItemSpacing from "./types/FormItemSpacing.js";
+import type TitleLevel from "./types/TitleLevel.js";
 
 /**
  * @class
@@ -31,10 +32,12 @@ import type FormItemSpacing from "./types/FormItemSpacing.js";
  * @public
  * @implements {IFormItem}
  * @since 2.0.0
- * @experimental This component is availabe since 2.0 under an experimental flag and its API and behaviour are subject to change.
  * @extends UI5Element
  */
-@customElement("ui5-form-group")
+@customElement({
+	tag: "ui5-form-group",
+	fastNavigation: true,
+})
 class FormGroup extends UI5Element implements IFormItem {
 	/**
 	 * Defines header text of the component.
@@ -44,6 +47,16 @@ class FormGroup extends UI5Element implements IFormItem {
 	 */
 	@property()
 	headerText?: string;
+
+	/**
+	 * Defines the compoennt heading level,
+	 * set by the `headerText`.
+	 * @default "H3"
+	 * @public
+	 * @since 2.10.0
+	*/
+	@property()
+	headerLevel: `${TitleLevel}` = "H3";
 
 	/**
 	 * Defines column span of the component,
@@ -83,15 +96,12 @@ class FormGroup extends UI5Element implements IFormItem {
 	@property()
 	itemSpacing: `${FormItemSpacing}` = "Normal";
 
-	labelSpan = "S12 M4 L4 XL4";
-
 	onBeforeRendering() {
 		this.processFormItems();
 	}
 
 	processFormItems() {
 		this.items.forEach((item: FormItem) => {
-			item.labelSpan = this.labelSpan;
 			item.itemSpacing = this.itemSpacing;
 		});
 	}

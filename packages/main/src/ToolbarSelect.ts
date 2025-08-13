@@ -1,22 +1,19 @@
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-
-import { registerToolbarItem } from "./ToolbarRegistry.js";
+import ToolbarSelectCss from "./generated/themes/ToolbarSelect.css.js";
 
 // Templates
-
-import ToolbarSelectTemplate from "./generated/templates/ToolbarSelectTemplate.lit.js";
-import ToolbarPopoverSelectTemplate from "./generated/templates/ToolbarPopoverSelectTemplate.lit.js";
+import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
 import ToolbarItem from "./ToolbarItem.js";
-import Select from "./Select.js";
-import Option from "./Option.js";
+import type { ToolbarItemEventDetail } from "./ToolbarItem.js";
 import type ToolbarSelectOption from "./ToolbarSelectOption.js";
 import type { SelectChangeEventDetail } from "./Select.js";
 
-type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
+type ToolbarSelectChangeEventDetail = ToolbarItemEventDetail & SelectChangeEventDetail;
 
 /**
  * @class
@@ -37,36 +34,40 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  */
 @customElement({
 	tag: "ui5-toolbar-select",
-	dependencies: [Select, Option],
+	template: ToolbarSelectTemplate,
+	renderer: jsxRenderer,
+	styles: ToolbarSelectCss,
 })
 
 /**
  * Fired when the selected option changes.
- * @allowPreventDefault
  * @param {HTMLElement} selectedOption the selected option.
  * @public
  */
-@event<ToolbarSelectChangeEventDetail>("change", {
-	detail: {
-		/**
-		* @public
-		*/
-		selectedOption: { type: HTMLElement },
-	},
+@event("change", {
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
  * Fired after the component's dropdown menu opens.
  * @public
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
+
 /**
  * Fired after the component's dropdown menu closes.
  * @public
  */
 @event("close")
-
 class ToolbarSelect extends ToolbarItem {
+	eventDetails!: ToolbarItem["eventDetails"] & {
+		change: ToolbarSelectChangeEventDetail;
+		open: ToolbarItemEventDetail;
+		close: ToolbarItemEventDetail;
+	}
 	/**
 	 * Defines the width of the select.
 	 *
@@ -123,66 +124,49 @@ class ToolbarSelect extends ToolbarItem {
 	@property()
 	accessibleNameRef?: string;
 
-	_onEvent: EventListener
-
-	static get toolbarTemplate() {
-		return ToolbarSelectTemplate;
-	}
-
-	static get toolbarPopoverTemplate() {
-		return ToolbarPopoverSelectTemplate;
-	}
-
-	get subscribedEvents() {
-		const map = new Map();
-
-		map.set("click", { preventClosing: true });
-		map.set("ui5-change", { preventClosing: false });
-		map.set("ui5-open", { preventClosing: true });
-		map.set("ui5-close", { preventClosing: true });
-
-		return map;
-	}
-
-	constructor() {
-		super();
-
-		this._onEvent = this._onEventHandler.bind(this);
-	}
-
-	onEnterDOM(): void {
-		this.attachEventListeners();
-	}
-
-	onExitDOM(): void {
-		this.detachEventListeners();
-	}
-
-	attachEventListeners(): void {
-		[...this.subscribedEvents.keys()].forEach(e => {
-			this.addEventListener(e, this._onEvent);
-		});
-	}
-
-	detachEventListeners(): void {
-		[...this.subscribedEvents.keys()].forEach(e => {
-			this.removeEventListener(e, this._onEvent);
-		});
-	}
-
-	_onEventHandler(e: Event): void {
-		if (e.type === "ui5-change") {
-			// update options
-			const selectedOption = (e as CustomEvent<ToolbarSelectChangeEventDetail>).detail.selectedOption;
-			const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
-			this.options.forEach((option: ToolbarSelectOption, index: number) => {
-				if (index === selectedOptionIndex) {
-					option.setAttribute("selected", "");
-				} else {
-					option.removeAttribute("selected");
-				}
-			});
+	onClick(e: Event): void {
+		e.stopImmediatePropagation();
+		const prevented = !this.fireDecoratorEvent("click", { targetRef: e.target as HTMLElement });
+		if (prevented && !this.preventOverflowClosing) {
+			this.fireDecoratorEvent("close-overflow");
 		}
+	}
+
+	onOpen(e: Event): void {
+		e.stopImmediatePropagation();
+		const prevented = !this.fireDecoratorEvent("open", { targetRef: e.target as HTMLElement });
+		if (prevented) {
+			this.fireDecoratorEvent("close-overflow");
+		}
+	}
+
+	onClose(e: Event): void {
+		e.stopImmediatePropagation();
+		const prevented = !this.fireDecoratorEvent("close", { targetRef: e.target as HTMLElement });
+		if (prevented) {
+			this.fireDecoratorEvent("close-overflow");
+		}
+	}
+
+	onChange(e: CustomEvent<SelectChangeEventDetail>): void {
+		e.stopImmediatePropagation();
+		const prevented = !this.fireDecoratorEvent("change", { ...e.detail, targetRef: e.target as HTMLElement });
+		if (!prevented) {
+			this.fireDecoratorEvent("close-overflow");
+		}
+
+		this._syncOptions(e.detail.selectedOption);
+	}
+
+	_syncOptions(selectedOption: HTMLElement): void {
+		const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
+		this.options.forEach((option: ToolbarSelectOption, index: number) => {
+			if (index === selectedOptionIndex) {
+				option.setAttribute("selected", "");
+			} else {
+				option.removeAttribute("selected");
+			}
+		});
 	}
 
 	get styles() {
@@ -191,8 +175,6 @@ class ToolbarSelect extends ToolbarItem {
 		};
 	}
 }
-
-registerToolbarItem(ToolbarSelect);
 
 ToolbarSelect.define();
 

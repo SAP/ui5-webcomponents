@@ -11,7 +11,7 @@
 .ui5-responsive-popover-header {
 	height: var(--_ui5-responsive_popover_header_height);
 	display: flex;
-	justify-content: space-between;
+	justify-content: var(--_ui5_popup_header_prop_header_text_alignment);
 	align-items: center;
 	width: 100%;
 }

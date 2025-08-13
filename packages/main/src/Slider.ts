@@ -1,18 +1,21 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import SliderBase from "./SliderBase.js";
-import Icon from "./Icon.js";
+import type SliderTooltip from "./SliderTooltip.js";
 
 // Template
-import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
+import SliderTemplate from "./SliderTemplate.js";
 
 // Texts
 import {
 	SLIDER_ARIA_DESCRIPTION,
+	SLIDER_TOOLTIP_INPUT_DESCRIPTION,
+	SLIDER_TOOLTIP_INPUT_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -74,7 +77,6 @@ import {
 	languageAware: true,
 	formAssociated: true,
 	template: SliderTemplate,
-	dependencies: [Icon],
 })
 class Slider extends SliderBase implements IFormInputElement {
 	/**
@@ -91,16 +93,21 @@ class Slider extends SliderBase implements IFormInputElement {
 	_valueOnInteractionStart?: number;
 	_progressPercentage = 0;
 	_handlePositionFromStart = 0;
+	_lastValidInputValue: string;
+	_tooltipInputValue: string = this.value.toString();
+	_tooltipInputValueState: `${ValueState}` = "None";
 
 	get formFormattedValue() {
 		return this.value.toString();
 	}
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
 		this._stateStorage.value = undefined;
+		this._lastValidInputValue = this.min.toString();
 	}
 
 	/**
@@ -161,7 +168,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	_onmousedown(e: TouchEvent | MouseEvent) {
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
-		if (this.disabled || this.step === 0) {
+		if (this.disabled || this.step === 0 || (e.target as HTMLElement).hasAttribute("ui5-slider-tooltip")) {
 			return;
 		}
 
@@ -191,11 +198,11 @@ class Slider extends SliderBase implements IFormInputElement {
 		}
 
 		if (this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.VISIBLE;
+			this._tooltipsOpen = true;
 		}
 	}
 
-	_onfocusout() {
+	_onfocusout(e: FocusEvent) {
 		// Prevent focusout when the focus is getting set within the slider internal
 		// element (on the handle), before the Slider' customElement itself is finished focusing
 		if (this._isFocusing()) {
@@ -207,8 +214,8 @@ class Slider extends SliderBase implements IFormInputElement {
 		// value that was saved when it was first focused in
 		this._valueInitial = undefined;
 
-		if (this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
+		if (this.showTooltip && !(e.relatedTarget as HTMLElement)?.hasAttribute("ui5-slider-tooltip")) {
+			this._tooltipsOpen = false;
 		}
 	}
 
@@ -238,11 +245,23 @@ class Slider extends SliderBase implements IFormInputElement {
 	 */
 	_handleUp() {
 		if (this._valueOnInteractionStart !== this.value) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 
 		this.handleUpBase();
 		this._valueOnInteractionStart = undefined;
+	}
+
+	_onkeyup(e: KeyboardEvent) {
+		const isActionKey = SliderBase._isActionKey(e);
+
+		this._onKeyupBase();
+
+		if (isActionKey && this._valueOnInteractionStart !== this.value) {
+			this.fireDecoratorEvent("change");
+		}
+
+		this._valueOnInteractionStart = this.value;
 	}
 
 	/** Determines if the press is over the handle
@@ -280,6 +299,16 @@ class Slider extends SliderBase implements IFormInputElement {
 		}
 	}
 
+	_onTooltopForwardFocus(e: CustomEvent) {
+		const tooltip = e.target as SliderTooltip;
+
+		tooltip.followRef?.focus();
+	}
+
+	get inputValue() {
+		return this.value.toString();
+	}
+
 	get styles() {
 		return {
 			progress: {
@@ -288,16 +317,6 @@ class Slider extends SliderBase implements IFormInputElement {
 			},
 			handle: {
 				[this.directionStart]: `${this._handlePositionFromStart}%`,
-			},
-			label: {
-				"width": `${this._labelWidth}%`,
-			},
-			labelContainer: {
-				"width": `100%`,
-				[this.directionStart]: `-${this._labelWidth / 2}%`,
-			},
-			tooltip: {
-				"visibility": `${this._tooltipVisibility}`,
 			},
 		};
 	}
@@ -320,8 +339,12 @@ class Slider extends SliderBase implements IFormInputElement {
 		return Slider.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION);
 	}
 
-	static async onDefine() {
-		Slider.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	get _ariaDescribedByInputText() {
+		return Slider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_DESCRIPTION);
+	}
+
+	get _ariaLabelledByInputText() {
+		return Slider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_LABEL);
 	}
 
 	get tickmarksObject() {

@@ -1,9 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isLeft,
 	isRight,
@@ -11,7 +11,8 @@ import {
 	isUp,
 	isF7,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import type { ScrollEnablementEventListenerParam } from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
@@ -21,29 +22,37 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import {
 	CAROUSEL_OF_TEXT,
 	CAROUSEL_DOT_TEXT,
 	CAROUSEL_PREVIOUS_ARROW_TEXT,
 	CAROUSEL_NEXT_ARROW_TEXT,
+	CAROUSEL_ARIA_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorType from "./types/CarouselPageIndicatorType.js";
 import type BackgroundDesign from "./types/BackgroundDesign.js";
 import type BorderDesign from "./types/BorderDesign.js";
-import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import CarouselTemplate from "./CarouselTemplate.js";
 
-import Button from "./Button.js";
-import Label from "./Label.js";
+import type Button from "./Button.js";
 
 // Styles
 import CarouselCss from "./generated/themes/Carousel.css.js";
 
 type CarouselNavigateEventDetail = {
 	selectedIndex: number;
+}
+
+type ItemsInfo = {
+	id: string,
+	item: HTMLElement & { _individualSlot?: string },
+	tabIndex: number,
+	posinset: number,
+	setsize: number,
+	selected: boolean,
+	_individualSlot?: string,
 }
 
 /**
@@ -56,7 +65,7 @@ type CarouselNavigateEventDetail = {
  * There are several ways to perform navigation:
  *
  * - on desktop - the user can navigate using the navigation arrows or with keyboard shortcuts.
- * - on mobile - the user can use swipe gestures.
+ * - on touch devices - the user can navigate using the navigation arrows (always visible) or can use swipe gestures.
  *
  * ### Usage
  *
@@ -98,13 +107,9 @@ type CarouselNavigateEventDetail = {
 	tag: "ui5-carousel",
 	languageAware: true,
 	fastNavigation: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: CarouselCss,
 	template: CarouselTemplate,
-	dependencies: [
-		Button,
-		Label,
-	],
 })
 /**
  * Fired whenever the page changes due to user interaction,
@@ -114,16 +119,14 @@ type CarouselNavigateEventDetail = {
  * @public
  * @since 1.0.0-rc.7
  */
-@event<CarouselNavigateEventDetail>("navigate", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedIndex: { type: Number },
-	},
+@event("navigate", {
+	bubbles: true,
 })
 
 class Carousel extends UI5Element {
+	eventDetails!: {
+		navigate: CarouselNavigateEventDetail;
+	}
 	/**
 	 * Defines the accessible name of the component.
 	 * @default undefined
@@ -169,8 +172,6 @@ class Carousel extends UI5Element {
 	 * Defines the visibility of the navigation arrows.
 	 * If set to true the navigation arrows will be hidden.
 	 *
-	 * **Note:** The navigation arrows are never displayed on touch devices.
-	 * In this case, the user can swipe to navigate through the items.
 	 * @since 1.0.0-rc.15
 	 * @default false
 	 * @public
@@ -284,6 +285,7 @@ class Carousel extends UI5Element {
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
 	content!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	static get pageTypeLimit() {
@@ -305,7 +307,7 @@ class Carousel extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation) {
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation || !isDesktop()) {
 			this._visibleNavigationArrows = true;
 		}
 
@@ -352,7 +354,7 @@ class Carousel extends UI5Element {
 
 		if (this._selectedIndex > this.pagesCount - 1) {
 			this._selectedIndex = this.pagesCount - 1;
-			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -471,7 +473,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -491,13 +493,13 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
-	_navButtonClick(e: MouseEvent) {
+	_navButtonClick(e: UI5CustomEvent<Button, "click">) {
 		const button = e.target as Button;
-		if (button.hasAttribute("arrow-forward")) {
+		if (button.hasAttribute("data-ui5-arrow-forward")) {
 			this.navigateRight();
 		} else {
 			this.navigateLeft();
@@ -521,19 +523,15 @@ class Carousel extends UI5Element {
 	 * Assuming that all items have the same width
 	 * @private
 	 */
-	get items() {
+	get items(): Array<ItemsInfo> {
 		return this.content.map((item, idx) => {
 			const visible = this.isItemInViewport(idx);
 			return {
 				id: `${this._id}-carousel-item-${idx + 1}`,
 				item,
-				tabIndex: visible ? "0" : "-1",
-				posinset: `${idx + 1}`,
-				setsize: `${this.content.length}`,
-				styles: {
-					width: `${this._itemWidth || 0}px`,
-				},
-				classes: visible ? "" : "ui5-carousel-item--hidden",
+				tabIndex: visible ? 0 : -1,
+				posinset: idx + 1,
+				setsize: this.content.length,
 				selected: visible,
 			};
 		});
@@ -608,15 +606,6 @@ class Carousel extends UI5Element {
 		return this.pagesCount > 1;
 	}
 
-	get styles() {
-		const items = this._itemWidth || 0;
-		return {
-			content: {
-				transform: `translateX(${this._isRTL ? "" : "-"}${this._selectedIndex * items}px`,
-			},
-		};
-	}
-
 	get classes() {
 		return {
 			viewport: {
@@ -634,12 +623,6 @@ class Carousel extends UI5Element {
 				"ui5-carousel-navigation-with-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
 				[`ui5-carousel-navigation-wrapper-bg-${this.pageIndicatorBackgroundDesign.toLowerCase()}`]: true,
 				[`ui5-carousel-navigation-wrapper-border-${this.pageIndicatorBorderDesign.toLowerCase()}`]: true,
-			},
-			navPrevButton: {
-				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
-			},
-			navNextButton: {
-				"ui5-carousel-navigation-button--hidden": !this.hasNext,
 			},
 		};
 	}
@@ -672,8 +655,7 @@ class Carousel extends UI5Element {
 	}
 
 	get showArrows() {
-		const displayArrows = this._visibleNavigationArrows && this.hasManyPages && isDesktop();
-
+		const displayArrows = this._visibleNavigationArrows && this.hasManyPages;
 		return {
 			content: !this.hideNavigationArrows && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
 			navigation: !this.hideNavigationArrows && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
@@ -720,6 +702,10 @@ class Carousel extends UI5Element {
 		return Carousel.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
 	}
 
+	get _roleDescription() {
+		return Carousel.i18nBundle.getText(CAROUSEL_ARIA_ROLE_DESCRIPTION);
+	}
+
 	/**
 	 * The indices of the currently visible items of the component.
 	 * @public
@@ -736,10 +722,6 @@ class Carousel extends UI5Element {
 		});
 
 		return visibleItemsIndices;
-	}
-
-	static async onDefine() {
-		Carousel.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

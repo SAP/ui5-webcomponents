@@ -1,24 +1,25 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION, SEGMENTEDBUTTON_ARIA_DESCRIBEDBY } from "./generated/i18n/i18n-defaults.js";
-import SegmentedButtonItem from "./SegmentedButtonItem.js";
+import "./SegmentedButtonItem.js";
+import type SegmentedButtonItem from "./SegmentedButtonItem.js";
 import SegmentedButtonSelectionMode from "./types/SegmentedButtonSelectionMode.js";
 
 // Template
-import SegmentedButtonTemplate from "./generated/templates/SegmentedButtonTemplate.lit.js";
+import SegmentedButtonTemplate from "./SegmentedButtonTemplate.js";
 
 // Styles
 import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
@@ -57,27 +58,23 @@ type SegmentedButtonSelectionChangeEventDetail = {
 @customElement({
 	tag: "ui5-segmented-button",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: SegmentedButtonTemplate,
 	styles: SegmentedButtonCss,
-	dependencies: [SegmentedButtonItem],
 })
 /**
  * Fired when the selected item changes.
- * @param {Array<ISegmentedButtonItem>} selectedItems an array of selected items.
+ * @param {Array<ISegmentedButtonItem>} selectedItems an array of selected items. Since: 1.14.0
  * @public
  */
-@event<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 * @since 1.14.0
-		 */
-		selectedItems: { type: Array },
-	},
+@event("selection-change", {
+	bubbles: true,
 })
 
 class SegmentedButton extends UI5Element {
+	eventDetails!: {
+		"selection-change": SegmentedButtonSelectionChangeEventDetail,
+	}
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 * @default undefined
@@ -107,6 +104,7 @@ class SegmentedButton extends UI5Element {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<ISegmentedButtonItem>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	_itemNavigation: ItemNavigation;
@@ -114,10 +112,6 @@ class SegmentedButton extends UI5Element {
 	hasPreviouslyFocusedItem: boolean;
 
 	_selectedItem?: ISegmentedButtonItem;
-
-	static async onDefine() {
-		SegmentedButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	constructor() {
 		super();
@@ -161,6 +155,10 @@ class SegmentedButton extends UI5Element {
 		}
 	}
 
+	getFocusDomRef(): HTMLElement | undefined {
+		return this._itemNavigation._getCurrentItem();
+	}
+
 	_selectItem(e: MouseEvent | KeyboardEvent) {
 		const target = e.target as SegmentedButtonItem;
 		const isTargetSegmentedButtonItem = target.hasAttribute("ui5-segmented-button-item");
@@ -179,7 +177,7 @@ class SegmentedButton extends UI5Element {
 			this._applySingleSelection(target);
 		}
 
-		this.fireEvent<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent("selection-change", {
 			selectedItems: this.selectedItems,
 		});
 

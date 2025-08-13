@@ -16,6 +16,8 @@ type ExtendedLayoutConfiguration = {
 			separators: Array<{
 				visible: boolean;
 				gripVisible?: boolean;
+				arrowVisible?: boolean;
+				arrowDirection?: "forward" | "backward";
 			}>;
 		};
 	};
@@ -48,14 +50,24 @@ const getDefaultLayoutsByMedia = (): ExtendedLayoutConfiguration => {
 			"ThreeColumnsMidExpanded": {
 				layout: ["25%", "50%", "25%"],
 				separators:	[
-					{ visible: true, gripVisible: true },
+					{
+						visible: true,
+						gripVisible: true,
+						arrowVisible: true,
+						arrowDirection: "backward",
+					},
 					{ visible: true, gripVisible: true },
 				],
 			},
 			"ThreeColumnsEndExpanded": {
 				layout: ["25%", "25%", "50%"],
 				separators: [
-					{ visible: true, gripVisible: false },
+					{
+						visible: true,
+						gripVisible: false,
+						arrowVisible: true,
+						arrowDirection: "backward",
+					},
 					{ visible: true, gripVisible: true },
 				],
 			},
@@ -70,6 +82,30 @@ const getDefaultLayoutsByMedia = (): ExtendedLayoutConfiguration => {
 				layout: ["33%", "67%", "0px"],
 				separators: [
 					{ visible: true, gripVisible: true },
+					{ visible: true, gripVisible: true },
+				],
+			},
+			"ThreeColumnsStartHiddenMidExpanded": {
+				layout: ["0px", "33%", "67%"],
+				separators: [
+					{
+						visible: true,
+						gripVisible: true,
+						arrowVisible: true,
+						arrowDirection: "forward",
+					},
+					{ visible: true, gripVisible: true },
+				],
+			},
+			"ThreeColumnsStartHiddenEndExpanded": {
+				layout: ["0px", "33%", "67%"],
+				separators: [
+					{
+						visible: true,
+						gripVisible: false,
+						arrowVisible: true,
+						arrowDirection: "forward",
+					},
 					{ visible: true, gripVisible: true },
 				],
 			},
@@ -138,6 +174,20 @@ const getDefaultLayoutsByMedia = (): ExtendedLayoutConfiguration => {
 					{ visible: true, gripVisible: true },
 				],
 			},
+			"ThreeColumnsStartHiddenMidExpanded": {
+				layout: ["0px", "67%", "33%"],
+				separators: [
+					{ visible: true, gripVisible: true },
+					{ visible: true, gripVisible: true },
+				],
+			},
+			"ThreeColumnsStartHiddenEndExpanded": {
+				layout: ["0px", "33%", "67%"],
+				separators: [
+					{ visible: false },
+					{ visible: true, gripVisible: true },
+				],
+			},
 			"MidColumnFullScreen": {
 				layout: ["0px", "100%", "0px"],
 				separators: [
@@ -203,6 +253,20 @@ const getDefaultLayoutsByMedia = (): ExtendedLayoutConfiguration => {
 					{ visible: false },
 				],
 			},
+			"ThreeColumnsStartHiddenMidExpanded": {
+				layout: ["0px", "0px", "100%"],
+				separators: [
+					{ visible: false },
+					{ visible: false },
+				],
+			},
+			"ThreeColumnsStartHiddenEndExpanded": {
+				layout: ["0px", "0px", "100%"],
+				separators: [
+					{ visible: false },
+					{ visible: false },
+				],
+			},
 			"MidColumnFullScreen": {
 				layout: ["0px", "100%", "0px"],
 				separators: [
@@ -221,8 +285,18 @@ const getDefaultLayoutsByMedia = (): ExtendedLayoutConfiguration => {
 	};
 };
 
+const getNextLayoutByArrowPress = () => {
+	return {
+		"ThreeColumnsMidExpanded": "ThreeColumnsStartHiddenMidExpanded",
+		"ThreeColumnsEndExpanded": "ThreeColumnsStartHiddenEndExpanded",
+		"ThreeColumnsStartHiddenMidExpanded": "ThreeColumnsMidExpanded",
+		"ThreeColumnsStartHiddenEndExpanded": "ThreeColumnsEndExpanded",
+	};
+};
+
 export {
 	getDefaultLayoutsByMedia,
+	getNextLayoutByArrowPress,
 };
 
 export type {

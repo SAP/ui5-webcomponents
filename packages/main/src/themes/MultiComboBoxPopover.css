@@ -32,3 +32,11 @@
 .ui5-mcb-select-all-checkbox::part(label) {
 	font-family: var(--sapFontBoldFamily);
 }
+
+:host([readonly]) ::slotted([ui5-mcb-item]) {
+	cursor: auto;
+}
+
+[ui5-responsive-popover] .ui5-valuestatemessage-header, [ui5-popover] .ui5-valuestatemessage-header  {
+	max-width: inherit;
+}

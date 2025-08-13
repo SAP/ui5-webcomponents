@@ -3,10 +3,29 @@ const fs = require("fs");
 const LIB = path.join(__dirname, `../lib/`);
 let websiteBaseUrl = "/";
 
-if (process.env.DEPOY) {
+if (process.env.DEPLOY) {
 	websiteBaseUrl = "/ui5-webcomponents/";
 } else if (process.env.DEPLOY_NIGHTLY) {
 	websiteBaseUrl = "/ui5-webcomponents/nightly/";
+}
+
+const cypressEnvVariables = (options, predefinedVars) => {
+	let variables = [];
+	const { cypress_code_coverage, cypress_acc_tests } = options.internal ?? {};
+
+	// Handle environment variables like TEST_SUITE  
+	if (predefinedVars) {
+		variables = [...predefinedVars];
+	}
+
+	// The coverage task is always registered and requires an explicit variable whether to generate a report or not
+	variables.push(`CYPRESS_COVERAGE=${!!cypress_code_coverage}`);
+
+	if (cypress_acc_tests) {
+		variables.push("CYPRESS_UI5_ACC=true");
+	}
+
+	return variables.length ? `cross-env ${variables.join(" ")}` : "";
 }
 
 const getScripts = (options) => {
@@ -17,9 +36,9 @@ const getScripts = (options) => {
 	const createIllustrationsJSImportsScript = illustrations.join(" && ");
 
 	// The script creates the "src/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
-    const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.set} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
+	const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.set} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
 
-	const tsOption = !options.legacy;
+	const tsOption = !options.legacy || options.jsx;
 	const tsCommandOld = tsOption ? "tsc" : "";
 	let tsWatchCommandStandalone = tsOption ? "tsc --watch" : "";
 	// this command is only used for standalone projects. monorepo projects get their watch from vite, so opt-out here
@@ -31,7 +50,7 @@ const getScripts = (options) => {
 	if (tsOption) {
 		try {
 			require("typescript");
-		} catch(e) {
+		} catch (e) {
 			console.error(`TypeScript is not found. Try to install it by running \`npm install --save-dev typescript\` if you are using npm or by running \`yarn add --dev typescript\` if you are using yarn.`);
 			process.exit(e.code);
 		}
@@ -64,11 +83,11 @@ const getScripts = (options) => {
 		lintfix: `eslint . ${eslintConfig} --fix`,
 		generate: {
 			default: `${tsCrossEnv} nps prepare.all`,
-			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copyProps" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		prepare: {
-			default: `${tsCrossEnv} nps clean prepare.all copy prepare.typescript generateAPI`,
+			default: `${tsCrossEnv} nps clean prepare.all ${options.legacy ? "copy" : ""} copyProps prepare.typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 			typescript: tsCommandOld,
@@ -99,19 +118,19 @@ const getScripts = (options) => {
 			bundle2: ``,
 			illustrations: createIllustrationsJSImportsScript,
 		},
+		copyProps: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
 		copy: {
 			default: "nps copy.src copy.props",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/`,
-			// srcGenerated2: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
 		},
 		watch: {
-			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
+			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" ${options.legacy ? '"nps watch.src"' : ""} "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			typescript: tsWatchCommandStandalone,
-			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
-			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
+			props: 'nps "copyProps --watch --safe --skip-initial-copy"',
+			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
@@ -122,8 +141,10 @@ const getScripts = (options) => {
 		},
 		start: "nps prepare watch.devServer",
 		test: `node "${LIB}/test-runner/test-runner.js"`,
-		"test-cy-ci": `yarn cypress run --component --browser chrome --config-file config/cypress.config.js`,
-		"test-cy-open": `yarn cypress open --component --browser chrome --config-file config/cypress.config.js`,
+		"test-cy-ci": `${cypressEnvVariables(options)} yarn cypress run --component --browser chrome`,
+		"test-cy-ci-suite-1": `${cypressEnvVariables(options, ["TEST_SUITE=SUITE1"])} yarn cypress run --component --browser chrome`,
+		"test-cy-ci-suite-2": `${cypressEnvVariables(options, ["TEST_SUITE=SUITE2"])} yarn cypress run --component --browser chrome`,
+		"test-cy-open": `${cypressEnvVariables(options)} yarn cypress open --component --browser chrome`,
 		"test-suite-1": `node "${LIB}/test-runner/test-runner.js" --suite suite1`,
 		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
 		startWithScope: "nps scope.prepare scope.watchWithBundle",
@@ -137,13 +158,13 @@ const getScripts = (options) => {
 				replace: `node "${LIB}/scoping/scope-test-pages.js" test/pages/scoped demo`,
 			},
 			watchWithBundle: 'concurrently "nps scope.watch" "nps scope.bundle" ',
-			watch: 'concurrently "nps watch.templates" "nps watch.src" "nps watch.props" "nps watch.styles"',
-			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
+			watch: 'concurrently "nps watch.templates" "nps watch.props" "nps watch.styles"',
+			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 		},
 		generateAPI: {
 			default: tsOption ? "nps generateAPI.generateCEM generateAPI.validateCEM" : "",
-			generateCEM: `cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs" ${ options.dev ? "--dev" : "" }`,
-			validateCEM: `node "${LIB}/cem/validate.js" ${ options.dev ? "--dev" : "" }`,
+			generateCEM: `${options.dev ? "cross-env UI5_CEM_MODE='dev'" : ""} cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs"`,
+			validateCEM: `${options.dev ? "cross-env UI5_CEM_MODE='dev'" : ""} node "${LIB}/cem/validate.js"`,
 		},
 	};
 

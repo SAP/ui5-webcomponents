@@ -1,25 +1,21 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/information.js";
-import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
-import "@ui5/webcomponents-icons/dist/error.js";
-import "@ui5/webcomponents-icons/dist/alert.js";
-import MessageStripDesign from "./types/MessageStripDesign.js";
-import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import type MessageStripDesign from "./types/MessageStripDesign.js";
+import MessageStripTemplate from "./MessageStripTemplate.js";
 import type { IIcon } from "./Icon.js";
-import Icon from "./Icon.js";
-import Button from "./Button.js";
 import {
-	MESSAGE_STRIP_CLOSE_BUTTON,
+	MESSAGE_STRIP_CLOSE_BUTTON_INFORMATION,
+	MESSAGE_STRIP_CLOSE_BUTTON_POSITIVE,
+	MESSAGE_STRIP_CLOSE_BUTTON_NEGATIVE,
+	MESSAGE_STRIP_CLOSE_BUTTON_CRITICAL,
+	MESSAGE_STRIP_CLOSE_BUTTON_CUSTOM,
 	MESSAGE_STRIP_CLOSABLE,
 	MESSAGE_STRIP_ERROR,
 	MESSAGE_STRIP_WARNING,
@@ -41,6 +37,8 @@ enum DesignClassesMapping {
 }
 
 type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
+
+type DesignCloseButtonTooltip = Record<MessageStripDesign, string>;
 
 /**
  * @class
@@ -80,10 +78,9 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 @customElement({
 	tag: "ui5-message-strip",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: MessageStripTemplate,
 	styles: messageStripCss,
-	dependencies: [Icon, Button],
 })
 /**
  * Fired when the close button is pressed either with a
@@ -93,6 +90,9 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 @event("close")
 
 class MessageStrip extends UI5Element {
+	eventDetails!: {
+		close: void;
+	}
 	/**
 	 * Defines the component type.
 	 * @default "Information"
@@ -147,14 +147,11 @@ class MessageStrip extends UI5Element {
 	@slot()
 	icon!: Array<IIcon>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	_closeClick() {
-		this.fireEvent("close");
-	}
-
-	static async onDefine() {
-		MessageStrip.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		this.fireDecoratorEvent("close");
 	}
 
 	static designAnnouncementMappings(): DesignTypeAnnouncemnt {
@@ -184,42 +181,31 @@ class MessageStrip extends UI5Element {
 		return this.hideIcon;
 	}
 
+	static closeButtonMappings(): DesignCloseButtonTooltip {
+		const getTranslation = (text:I18nText): string => {
+			return MessageStrip.i18nBundle.getText(text);
+		};
+
+		return {
+			Information: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_INFORMATION),
+			Positive: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_POSITIVE),
+			Negative: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_NEGATIVE),
+			Critical: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_CRITICAL),
+			ColorSet1: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_CUSTOM),
+			ColorSet2: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_CUSTOM),
+		};
+	}
+
 	get _closeButtonText() {
-		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
+		return MessageStrip.closeButtonMappings()[this.design];
 	}
 
 	get _closableText() {
 		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSABLE);
 	}
 
-	get classes(): ClassMap {
-		return {
-			root: {
-				"ui5-message-strip-root": true,
-				"ui5-message-strip-root-hide-icon": this.shouldHideIcon,
-				"ui5-message-strip-root-hide-close-button": this.hideCloseButton,
-				[this.designClasses]: true,
-			},
-		};
-	}
-
 	get iconProvided() {
 		return this.icon.length > 0;
-	}
-
-	get standardIconName() {
-		switch (this.design) {
-		case MessageStripDesign.Critical:
-			return "alert";
-		case MessageStripDesign.Positive:
-			return "sys-enter-2";
-		case MessageStripDesign.Negative:
-			return "error";
-		case MessageStripDesign.Information:
-			return "information";
-		default:
-			return null;
-		}
 	}
 
 	get designClasses() {

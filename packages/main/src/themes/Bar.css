@@ -10,19 +10,37 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: inherit;
-	width: inherit;
+	height: 100%;
+	width: 100%;
 	background-color: inherit;
 	box-shadow: inherit;
 	border-radius: inherit;
+	min-width: 0;
+	overflow: hidden;
+}
+
+.ui5-bar-root .ui5-bar-startcontent-container,
+.ui5-bar-root .ui5-bar-endcontent-container,
+.ui5-bar-root .ui5-bar-midcontent-container {
+	display: flex;
+	align-items: center;
+}
+
+.ui5-bar-root .ui5-bar-startcontent-container,
+.ui5-bar-root .ui5-bar-endcontent-container {
+	flex: 0 0 auto;
+}
+
+.ui5-bar-root .ui5-bar-midcontent-container {
+	justify-content: center;
+	flex: 1 1 auto;
+	padding: 0 var(--_ui5_bar-mid-container-padding-start-end);
+	min-width: 0;
+	overflow: hidden;
 }
 
 .ui5-bar-root .ui5-bar-startcontent-container {
 	padding-inline-start: var(--_ui5_bar-start-container-padding-start);
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-start;
 }
 
 .ui5-bar-root .ui5-bar-content-container {
@@ -39,17 +57,6 @@
 
 .ui5-bar-root .ui5-bar-endcontent-container {
 	padding-inline-end: var(--_ui5_bar-end-container-padding-end);
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-end;
-}
-.ui5-bar-root .ui5-bar-midcontent-container {
-	padding: 0 var(--_ui5_bar-mid-container-padding-start-end);
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
 }
 
 :host([design="Footer"]){

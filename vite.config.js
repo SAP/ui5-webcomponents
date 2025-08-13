@@ -1,12 +1,10 @@
-const { defineConfig } = require('vite');
-const virtualIndex = require("@ui5/webcomponents-tools/lib/dev-server/virtual-index-html-plugin.js");
-const customHotUpdate = require("@ui5/webcomponents-tools/lib/dev-server/custom-hot-update-plugin.js");
-const ssrDomShimLoader = require("@ui5/webcomponents-tools/lib/dev-server/ssr-dom-shim-loader.js");
-const { existsSync } = require('fs');
-const { dirname, join, resolve } = require('path');
-const path = require('path');
-const tsconfigPaths = require('vite-tsconfig-paths').default;
-const {checker} = require('vite-plugin-checker');
+import { defineConfig } from 'vite';
+import virtualIndex from "@ui5/webcomponents-tools/lib/dev-server/virtual-index-html-plugin.js";
+import customHotUpdate from "@ui5/webcomponents-tools/lib/dev-server/custom-hot-update-plugin.js";
+import path, { dirname, join, resolve } from 'path';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import { checker } from 'vite-plugin-checker';
+import istanbul from 'vite-plugin-istanbul';
 
 // use after path.join and path.resolve as they turn paths to windows separators and comparisons and replacements stop working
 const toPosixPath = (pathStr) => {
@@ -14,6 +12,12 @@ const toPosixPath = (pathStr) => {
 }
 
 const customResolver = (id, source, options) => {
+	// jsx-dev-runtime should be resolved as a .ts file so all of its imports are also fetched as .ts files
+	if (id === "@ui5/webcomponents-base/jsx-dev-runtime") {
+		const importerRoot = source.replace(/packages\/.*/, "packages");
+		const resolved = join(importerRoot, "base/src", "jsx-dev-runtime.ts");
+		return resolved;
+	}
 	const isIconImporter = source.includes("packages/icons") || source.includes("packages/icons-tnt/") || source.includes("packages/icons-business-suite/")
 	if (isIconImporter && id.startsWith("@ui5/webcomponents-base/dist")) {
 		const importerRoot = source.replace(/packages\/icons.*/, "packages");
@@ -95,22 +99,30 @@ const customResolver = (id, source, options) => {
 		return resolved;
 	}
 }
-
-module.exports = defineConfig(async () => {
+export default defineConfig(async () => {
 	return {
 		build: {
 			emptyOutDir: false,
 		},
-		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(), ssrDomShimLoader(),
-			checker({
+		plugins: [
+			await virtualIndex(),
+			tsconfigPaths(),
+			customHotUpdate(),
+			!process.env.UI5_BASE && checker({
 				// e.g. use TypeScript check
 				typescript: {
 					tsconfigPath: "packages/fiori/tsconfig.json",
 					buildMode: true,
-				},
-		  	}),
+				}
+			}),
+			istanbul({
+				include: ['packages/**/src/*','src/*'],
+				exclude: ['node_modules', 'test/'],
+				extension: ['.js', '.ts', '.tsx'],
+				requireEnv: true,
+				cypress: true,
+			}),
 		],
-
 		resolve: {
 			alias: [
 				// { find: /\@ui5\/webcomponents-base\/dist\/(.*)/, replacement: "../base/src/$1" },

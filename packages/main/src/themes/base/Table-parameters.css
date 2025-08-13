@@ -1,14 +1,9 @@
 :root {
 	--_ui5_table_cell_valign: center;
 	--_ui5_table_cell_min_width: 2.75rem;
-	--_ui5_table_navigated_cell_width: 0.1875rem;
-	--_ui5_table_shadow_border_left: inset var(--sapContent_FocusWidth) 0 var(--sapContent_FocusColor);
-	--_ui5_table_shadow_border_right: inset calc(-1 * var(--sapContent_FocusWidth)) 0 var(--sapContent_FocusColor);
-	--_ui5_table_shadow_border_top: inset 0 var(--sapContent_FocusWidth) var(--sapContent_FocusColor);
-	--_ui5_table_shadow_border_bottom: inset 0 -1px var(--sapContent_FocusColor);
-}
-
-[dir="rtl"] {
-	--_ui5_table_shadow_border_left:  inset calc(-1 * var(--sapContent_FocusWidth)) 0 var(--sapContent_FocusColor);
-	--_ui5_table_shadow_border_right: inset var(--sapContent_FocusWidth) 0 var(--sapContent_FocusColor);
+	--_ui5_table_navigated_cell_width: 0.25rem;
+	--_ui5_first_table_cell_horizontal_padding: 1rem;
+	--_ui5_table_cell_horizontal_padding: 0.5rem;
+	--_ui5_table_cell_vertical_padding: 0.25rem;
+	--_ui5_table_row_actions_gap: 0.25rem;
 }

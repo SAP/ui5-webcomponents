@@ -19,6 +19,10 @@ const isTagRegistered = (tag: string) => {
 	return Definitions.has(tag);
 };
 
+const hasRegisteredTags = () => {
+	return Definitions.size > 0;
+};
+
 const getAllRegisteredTags = () => {
 	return [...Definitions.values()];
 };
@@ -85,7 +89,7 @@ const displayFailedRegistrations = () => {
 		}
 	});
 
-	message = `${message}\n\nTo prevent other runtimes from defining tags that you use, consider using scoping or have third-party libraries use scoping: https://github.com/SAP/ui5-webcomponents/blob/main/docs/2-advanced/03-scoping.md.`;
+	message = `${message}\n\nTo prevent other runtimes from defining tags that you use, consider using scoping or have third-party libraries use scoping: https://github.com/SAP/ui5-webcomponents/blob/main/docs/2-advanced/06-scoping.md.`;
 
 	console.warn(message); // eslint-disable-line
 };
@@ -93,6 +97,7 @@ const displayFailedRegistrations = () => {
 export {
 	registerTag,
 	isTagRegistered,
+	hasRegisteredTags,
 	getAllRegisteredTags,
 	recordTagRegistrationFailure,
 };

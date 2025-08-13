@@ -4,33 +4,31 @@
 	- readonly and disabled states
 */
 
+:host([disabled]) {
+	cursor: default;
+	pointer-events: none;
+	background: none;
+}
+
 :host([readonly]:not([disabled])) {
 	border-color: var(--_ui5_input_readonly_border_color);
 	background: var(--sapField_ReadOnly_BackgroundStyle);
 	background-color: var(--_ui5_input_readonly_background);
 }
 
-:host([disabled]) {
-	opacity: var(--_ui5_input_disabled_opacity);
-	cursor: default;
-	pointer-events: none;
-	background-color: var(--_ui5-input_disabled_background);
-	border-color: var(--_ui5_input_disabled_border_color);
-}
-
-:host([value-state="Negative"]) .inputIcon:not([pressed]):not(:active):hover {
+:host([value-state="Negative"]) .inputIcon:not(.inputIcon--pressed):not(:active):hover {
 	box-shadow: var(--_ui5_input_error_icon_box_shadow);
 }
 
-:host([value-state="Critical"]) .inputIcon:not([pressed]):not(:active):hover {
+:host([value-state="Critical"]) .inputIcon:not(.inputIcon--pressed):not(:active):hover {
 	box-shadow: var(--_ui5_input_warning_icon_box_shadow);
 }
 
-:host([value-state="Information"]) .inputIcon:not([pressed]):not(:active):hover {
+:host([value-state="Information"]) .inputIcon:not(.inputIcon--pressed):not(:active):hover {
 	box-shadow: var(--_ui5_input_information_icon_box_shadow);
 }
 
-:host([value-state="Positive"]) .inputIcon:not([pressed]):not(:active):hover {
+:host([value-state="Positive"]) .inputIcon:not(.inputIcon--pressed):not(:active):hover {
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 }
 
@@ -65,25 +63,25 @@
 }
 
 :host([value-state="Negative"]) .inputIcon:active,
-:host([value-state="Negative"]) .inputIcon[pressed] {
+:host([value-state="Negative"]) .inputIcon.inputIcon--pressed {
 	box-shadow: var(--_ui5_input_error_icon_box_shadow);
 	color: var(--_ui5_input_icon_error_pressed_color);
 }
 
 :host([value-state="Critical"]) .inputIcon:active,
-:host([value-state="Critical"]) .inputIcon[pressed] {
+:host([value-state="Critical"]) .inputIcon.inputIcon--pressed {
 	box-shadow: var(--_ui5_input_warning_icon_box_shadow);
 	color: var(--_ui5_input_icon_warning_pressed_color);
 }
 
 :host([value-state="Information"]) .inputIcon:active,
-:host([value-state="Information"]) .inputIcon[pressed] {
+:host([value-state="Information"]) .inputIcon.inputIcon--pressed {
 	box-shadow: var(--_ui5_input_information_icon_box_shadow);
 	color: var(--_ui5_input_icon_information_pressed_color);
 }
 
 :host([value-state="Positive"]) .inputIcon:active,
-:host([value-state="Positive"]) .inputIcon[pressed] {
+:host([value-state="Positive"]) .inputIcon.inputIcon--pressed {
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 	color: var(--_ui5_input_icon_success_pressed_color);
 }

@@ -1,6 +1,5 @@
 ---
 slug: ../../Table
-sidebar_class_name: newComponentBadge expComponentBadge
 ---
 
 import Basic from "../../../_samples/main/Table/Basic/Basic.md";
@@ -10,6 +9,7 @@ import StickyHeader from "../../../_samples/main/Table/StickyHeader/StickyHeader
 import StickyHeaderContainer from "../../../_samples/main/Table/StickyHeaderContainer/StickyHeaderContainer.md";
 import NoDataSlot from "../../../_samples/main/Table/NoDataSlot/NoDataSlot.md";
 import Interactive from "../../../_samples/main/Table/Interactive/Interactive.md";
+import DragAndDrop from "../../../_samples/main/Table/DragAndDrop/DragAndDrop.md";
 
 <%COMPONENT_OVERVIEW%>
 
@@ -46,7 +46,7 @@ Enable a sticky header by utilizing the properties `sticky` and `sticky-top` of 
 
 ### No Data
 
-You can provide an illustration or a custom text, that is shown when the table has no data using the `nodata` slot.
+You can provide an illustration or a custom text, that is shown when the table has no data using the `noData` slot.
 
 <NoDataSlot />
 
@@ -56,3 +56,10 @@ Create an interactive table by marking `ui5-table-row` components as `interactiv
 will fire the `row-click` event.
 
 <Interactive />
+
+### Drag and Drop
+
+Enable Drag and Drop by using the `move-over` and `move` event in combination with the `movable` property on the
+`ui5-table-row`.
+
+<DragAndDrop />

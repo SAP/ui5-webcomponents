@@ -17,6 +17,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 | [formatSettings](#formatSettings)             | See the [Format settings](#formatSettings) section below                                                                                                                                                                                                                                       | `{}`                  | Allows to override locale-specific configuration                       | Date/time components (`ui5-date-picker`, etc.)                 |
 | [fetchDefaultLanguage](#fetchDefaultLanguage) | `true`, `false`                                                                                                                                                                                                                                                                                | `false`               | Whether to fetch assets even for the default language                  | Framework                                                      |
 | [defaultFontLoading](#defaultFontLoading) | `true`, `false`                                                                                                                                                                                                                                                                                | `true`               | Whether to fetch default font faces                  | Framework                                                      |
+| [enableDefaultTooltips](#enableDefaultTooltips) | `true`, `false`                                                                                                                                                                                                                                                                                | `true`               | Whether to display default tooltips                     | Components (Icon, Button, RatingIndicator, etc.)                                                      |
 | [timezone](#timezone)                         | `Asia/Tokyo`, `Pacific/Apia`, `Asia/Kolkata`, `Europe/Sofia` and etc.                                                                                                                                                                                                                          | Your local time zone. | Allows to override your local time zone.                               | Date/time components (`ui5-date-picker`, etc.)                 |
 | [themeRoot](#themeRoot)                       | String to a URL - see the [themeRoot](#themeRoot) section below                                                                                                                                                                                                                                | N/A                   | Allows to set a URL to a Theme-designer-created custom theme.          | All components                                                 |
 
@@ -233,6 +234,25 @@ Example:
 }
 </script>
 ```
+
+### enableDefaultTooltips
+<a name="enableDefaultTooltips"></a>
+
+This configuration option controls whether components will display default tooltips in specific cases.
+
+Default tooltips are generally recommended to cover accessibility standards and typically you would not need to modify this setting.
+However, in rare cases you may want to implement custom tooltip visualization and turn off the default tooltips.
+To do so, set `enableDefaultTooltips` to `false`.
+
+Example:
+```html
+<script data-ui5-config type="application/json">
+{
+	"enableDefaultTooltips": false
+}
+</script>
+```
+
 ### timezone
 <a name="timezone"></a>
 
@@ -250,6 +270,8 @@ Example:
 ### themeRoot
 <a name="themeRoot"></a>
 
+**Deprecated:** Please use the `theme` setting to pass both the theme and theme root, in the `theme@themeRoot` format instead
+
 Allows you to set a URL, from which the framework will fetch the theme styles (CSS variables).
 
 *Note:* This configuration setting is only applicable to custom themes, created with SAP Theme Designer.
@@ -262,6 +284,25 @@ Example:
 }
 </script>
 ```
+
+or, the preferred new format:
+
+```html
+<script data-ui5-config type="application/json">
+{
+	"theme": "sap_horizon@https://my-example-host.com/"
+}
+</script>
+```
+
+*Important:* You must explicitly allow specific origins for this configuration setting to work:
+
+```html
+<head>
+	<meta name="sap-allowed-theme-origins" content="https://my-example-host.com/,https://my-example-host2.com/">
+```
+
+Failing to do so will result in a warning in the console and the theme root will not be set.
 
 ## Configuration Script
 <a name="script"></a>
@@ -349,6 +390,13 @@ import { getFetchDefaultLanguage, setFetchDefaultLanguage } from "@ui5/webcompon
 ```js
 import { getDefaultFontLoading, setDefaultFontLoading } from "@ui5/webcomponents-base/dist/config/Fonts.js";
 ```
+
+ - `enableDefaultTooltips`
+
+```js
+import { getEnableDefaultTooltips, setEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
+```
+
  - `timezone` - can only be set initially in the configuration script.
 
 ```js

@@ -37,6 +37,23 @@
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
+	<script type="module">
+		const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
+		const prefersContrastMore = window.matchMedia("(prefers-contrast: more)");
+
+		const applyOSThemePreferences = () => {
+			if (prefersContrastMore.matches) {
+				window["sap-ui-webcomponents-bundle"].configuration.setTheme(darkColorScheme.matches ? "sap_horizon_hcb" : "sap_horizon_hcw");
+			} else {
+				window["sap-ui-webcomponents-bundle"].configuration.setTheme(darkColorScheme.matches ? "sap_horizon_dark" : "sap_horizon");
+			}
+		}
+
+		darkColorScheme.onchange = applyOSThemePreferences;
+		prefersContrastMore.onchange = applyOSThemePreferences;
+
+		applyOSThemePreferences();
+	</script>
 
 	<!-- <script>delete Document.prototype.adoptedStyleSheets;</script> -->
 </head>

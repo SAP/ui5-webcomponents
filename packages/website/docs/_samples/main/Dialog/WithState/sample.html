@@ -15,9 +15,9 @@
 
     <ui5-dialog id="dialog" state="Negative" header-text="State :: Negative">
         <ui5-text>Dialog with state</ui5-text>
-        <div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
-            <ui5-button class="dialogCloser">Close</ui5-button>
-        </div>
+        <ui5-toolbar slot="footer">
+            <ui5-toolbar-button class="dialogCloser" text="Close"></ui5-toolbar-button>
+        </ui5-toolbar>
     </ui5-dialog>
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>

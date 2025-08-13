@@ -1,3 +1,5 @@
+@import "./InvisibleTextStyles.css";
+
 :host {
     position: fixed;
     background: var(--sapGroup_ContentBackground);
@@ -23,7 +25,6 @@
 }
 
 .ui5-popup-root .ui5-popup-header-root {
-    color: var(--sapPageHeader_TextColor);
     box-shadow: var(--_ui5_popup_header_shadow);
     border-bottom: var(--_ui5_popup_header_border);
 }
@@ -31,6 +32,13 @@
 .ui5-popup-content {
     color: var(--sapTextColor);
     flex: auto;
+}
+
+/* when the content is keyboard focusable scroll container */
+.ui5-popup-content:focus {
+    outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+    outline-offset: calc(-1 * var(--sapContent_FocusWidth));
+    border-radius: var(--_ui5_popup_border_radius);
 }
 
 .ui5-popup-footer-root {
@@ -49,7 +57,9 @@
 }
 
 .ui5-popup-header-root .ui5-popup-header-text {
-	font-weight: var(--_ui5_popup_header_font_weight);
+	font-weight: var(--sapFontHeaderFamily);
+	font-size: var(--sapFontHeader5Size);
+	color: var(--sapPageHeader_TextColor);
 }
 
 .ui5-popup-content {
@@ -60,7 +70,6 @@
 }
 
 :host([header-text]) .ui5-popup-header-text {
-    text-align: center;
     min-height: var(--_ui5_popup_default_header_height);
     max-height: var(--_ui5_popup_default_header_height);
     line-height: var(--_ui5_popup_default_header_height);
@@ -68,7 +77,8 @@
     overflow: hidden;
     white-space: nowrap;
     max-width: 100%;
-    display: inline-block;
+    display: inline-flex;
+    justify-content: var(--_ui5_popup_header_prop_header_text_alignment);
 }
 
 :host([header-text]) .ui5-popup-header-root {
@@ -77,10 +87,6 @@
 
 :host(:not([header-text])) .ui5-popup-header-text {
     display: none;
-}
-
-:host([no-scrolling]) .ui5-popup-content {
-    overflow: hidden;
 }
 
 /*** Responsive paddings for the content***/

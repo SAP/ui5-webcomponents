@@ -1,6 +1,8 @@
 import "@ui5/webcomponents/dist/Dialog.js";
 import "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents/dist/Text.js";
+import "@ui5/webcomponents/dist/Toolbar.js";
+import "@ui5/webcomponents/dist/ToolbarButton.js";
 
 var dialogOpener = document.getElementById("dialogOpener");
 var dialog = document.getElementById("dialog"); 

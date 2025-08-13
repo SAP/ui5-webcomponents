@@ -1,0 +1,83 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./main.css">
+	<title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor); height: fit-content;">
+
+	<div id="app">
+ 
+		<ui5-title>AI Pattern / Level 3</ui5-title>
+		
+		<ui5-panel>
+			<div slot="header" id="panelHeader">
+	
+				<ui5-button id="aiModelSelector" end-icon="slim-arrow-down">AI Model</ui5-button> <br>
+	
+				<ui5-menu id="aiModelMenu" opener="aiModelSelector">
+					<ui5-menu-item text="Accent1"></ui5-menu-item>
+					<ui5-menu-item text="Accent2"></ui5-menu-item>
+					<ui5-menu-item text="Accent9"></ui5-menu-item>
+				</ui5-menu>
+	
+				<div id="promptCountWrapper">
+					<ui5-label id="label-for-ui5-text" for="promptCount" wrapping-type="None">Prompt count:</ui5-label>
+					<ui5-text id="promptCount">0</ui5-text>
+				</div>
+	
+				<ui5-ai-button id="myAiButtonIconOnly" state="revise">
+					<ui5-ai-button-state name="generate" icon="ai"></ui5-ai-button-state>
+					<ui5-ai-button-state name="generating" icon="stop"></ui5-ai-button-state>
+					<ui5-ai-button-state name="revise" icon="ai" end-icon="navigation-down-arrow"></ui5-ai-button-state>
+				</ui5-ai-button>
+			
+				<ui5-menu id="menu">
+					<ui5-menu-item text="Regenerate"></ui5-menu-item>
+					<ui5-menu-item text="Fix Spelling & Grammar" starts-section></ui5-menu-item>
+					<ui5-menu-item text="Change Tone">
+						<ui5-menu-item text="Option 1"></ui5-menu-item>
+						<ui5-menu-item text="Option 2"></ui5-menu-item>
+						<ui5-menu-item text="Option 3"></ui5-menu-item>
+					</ui5-menu-item>
+					<ui5-menu-item text="Adjust Length">
+						<ui5-menu-item text="Shorten text"></ui5-menu-item>
+						<ui5-menu-item text="Lengthen text"></ui5-menu-item>
+					</ui5-menu-item>
+					<ui5-menu-item text="Bulleted List"></ui5-menu-item>
+					<ui5-menu-item text="Translate">
+						<ui5-menu-item text="English"></ui5-menu-item>
+						<ui5-menu-item text="German"></ui5-menu-item>
+						<ui5-menu-item text="Spanish"></ui5-menu-item>
+					</ui5-menu-item>
+				</ui5-menu>
+			</div>
+			<div id="panelContent">
+				<div id="panelContentFirstRow">
+					<ui5-avatar id="myAvatar" size="XS" shape="Square"></ui5-avatar>
+					<ui5-ai-prompt-input id="promptInput" show-clear-icon placeholder="Ask me anything..." label="User prompt:" maxlength="10" show-exceeded-text></ui5-ai-prompt-input>
+				</div>
+	
+				<ui5-toolbar align-content="Start">
+					<ui5-toolbar-button icon="doc-attachment" text="Attach file"></ui5-toolbar-button>
+					<ui5-toolbar-button icon="background" text="Add image"></ui5-toolbar-button>
+					<ui5-toolbar-button icon="sound-loud" text="Insert audio"></ui5-toolbar-button>
+					<ui5-toolbar-separator></ui5-toolbar-separator>
+					<ui5-toolbar-button icon="history" text="History"></ui5-toolbar-button>
+					<ui5-toolbar-button icon="favorite" text="Favorite prompts"></ui5-toolbar-button>
+				</ui5-toolbar>
+			</div>
+		</ui5-panel>
+	</div>	
+
+	<!-- playground-fold -->
+	<script type="module" src="main.js"></script>
+</body>
+	
+</html>
+<!-- playground-fold-end -->

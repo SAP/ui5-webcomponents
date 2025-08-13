@@ -3,8 +3,9 @@
 	grid-template-columns: subgrid;
 	grid-column: 1 / -1;
 	min-height: var(--_ui5_list_item_base_height);
-	box-sizing: border-box;
+	box-sizing: content-box;
 	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
+	overflow: clip;
 }
 
 :host([tabindex]:focus) {
@@ -12,7 +13,26 @@
 	outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
 
+:host([tabindex]:focus) #selection-cell,
+:host([tabindex]:focus) #actions-cell {
+	clip-path: inset(var(--sapContent_FocusWidth)); /* focus outline should not overlap sticky cells */
+}
+
+::slotted([ui5-table-cell]:first-of-type),
+::slotted([ui5-table-header-cell]:first-of-type),
+#popin-cell {
+	padding-inline-start: var(--_ui5_first_table_cell_horizontal_padding);
+}
+
+#selection-cell + ::slotted([ui5-table-cell-base]:first-of-type),
+#selection-cell ~ #popin-cell {
+	padding-inline-start: var(--_ui5_table_cell_horizontal_padding);
+}
+
 #selection-cell {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	padding: 0;
 	left: 0;
 }
@@ -25,10 +45,13 @@
 	vertical-align: middle;
 }
 
-/** Focus outline for the selection cell */
-:host([tabindex]:focus) #selection-cell {
-    outline: none;
-    box-shadow: var(--_ui5_table_shadow_border_top),
-				var(--_ui5_table_shadow_border_left),
-				var(--_ui5_table_shadow_border_bottom); /* There is a 1px difference between row and cell, therefore the outline is also 1px difference between their outline offsets */
+#actions-cell {
+	position: sticky;
+	right: 0;
+	background-color: inherit;
+	flex-wrap: nowrap;
+}
+
+:dir(rtl)#actions-cell {
+	left: 0;
 }

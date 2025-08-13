@@ -3,118 +3,173 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample</title>
-    <link rel="stylesheet" href="main.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sample</title>
+	<link rel="stylesheet" href="main.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor); height: 350px;">
-    <!-- playground-fold-end -->
+<body style="background-color: var(--sapBackgroundColor); height: 50rem;">
+	<!-- playground-fold-end -->
+	<ui5-shellbar
+		logo="../assets/images/sap-logo-svg.svg"
+		show-notifications
+		notifications-count="10"
+	>
+		<ui5-shellbar-branding slot="branding">Corporate Portal</ui5-shellbar-branding>
+	</ui5-shellbar>
+	<ui5-popover
+		id="popover-with-notifications"
+		placement="Bottom"
+		class="notificationsPopover"
+		horizontal-align="End">
+		<div class="notificationsPopoverHeader" slot="header">
+			<ui5-bar class="notificationsPopoverBar"
+					 design="Header">
+				<ui5-title level="H5" slot="startContent">Notifications</ui5-title>
+				<ui5-button id="show-message-strip" design="Emphasized" slot="endContent">Show M. Strip</ui5-button>
+				<ui5-button id="clear-all" design="Transparent" slot="endContent">Clear All</ui5-button>
+				<ui5-button id="btn-sort" design="Transparent" icon="sort" tooltip="Sort" slot="endContent"></ui5-button>
+				<ui5-button design="Transparent" icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
+			</ui5-bar>
 
-    <ui5-shellbar
-	primary-title="Corporate Portal"
-	logo="../assets/images/sap-logo-svg.svg"
-	show-notifications
-	notifications-count="6"
-></ui5-shellbar>
-<ui5-popover
-	placement="Bottom"
-	horizontal-align="End"
-	id="popover-with-notifications"
->
-<ui5-bar id="notificationsPopoverBar" design="Header">
-    <ui5-title level="H5" slot="startContent">Notifications</ui5-title>
-    <ui5-button design="Transparent" slot="endContent">Clear All</ui5-button>
-    <ui5-button design="Transparent" icon="sort" tooltip="Sort" slot="endContent"></ui5-button>
-    <ui5-button design="Transparent" icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
-</ui5-bar>
-<ui5-notification-list>
-    <ui5-li-notification-group title-text="Orders" >
-        <ui5-li-notification show-close
-            title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-            state="Positive">
-            <ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-            <span slot="footnotes">Office Notifications</span>
-            <span slot="footnotes">3 Days</span>
-            <ui5-menu slot="menu">
-                <ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
-                <ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
-            </ui5-menu>
-            And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor,
-            nec elementum lectus turpis at nunc.
-        </ui5-li-notification>
+			<ui5-message-strip id="message-strip-error"
+							   class="notificationsMessageStrip"
+							   design="Negative">Something went wrong.</ui5-message-strip>
+		</div>
 
-        <ui5-li-notification show-close
-            title-text="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-            state="Critical">
-            <ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-            <span slot="footnotes">Office Notifications</span>
-            <span slot="footnotes">3 Days</span>
-            <ui5-menu slot="menu">
-                <ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
-                <ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
-            </ui5-menu>
-            And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor,
-            nec elementum lectus turpis at nunc.
-        </ui5-li-notification>
-    </ui5-li-notification-group>
-    <ui5-li-notification-group title-text="Deliveries" collapsed>
-        <ui5-li-notification show-close
-            title-text="New Delivery (#2900) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-            state="Information">
-            <ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-            <span slot="footnotes">Office Notifications</span>
-            <span slot="footnotes">3 Days</span>
-            <ui5-menu slot="menu">
-                <ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
-            </ui5-menu>
-            And with a very long description - Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor,
-            nec elementum lectus turpis at nunc.
-        </ui5-li-notification>
+		<ui5-notification-list class="notificationsPopoverList">
+			<ui5-li-notification-group id="notificationsListGroupGrowing"
+									   title-text="Today"
+									   loading-delay="0"
+									   growing="Button">
+				<ui5-li-notification title-text="Start Your Day with Your Sales Target!"
+									 show-close>
+					<ui5-avatar icon="crm-sales" color-scheme="Accent10" shape="Square" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Sales</span>
+					<span slot="footnotes">11:13</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item text="Unsubscribe"></ui5-menu-item>
+					</ui5-menu>
+					Good morning! Don’t forget your daily sales target is $2,000, which needs to be fulfilled by the end of the business day. Let’s make it a great sales day!
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Upcoming Client Meeting Reminder"
+									importance="Important"
+									show-close>
+					<ui5-avatar icon="crm-sales" color-scheme="Accent10" shape="Square" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Sales</span>
+					<span slot="footnotes">11:05</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item text="Open in calendar"></ui5-menu-item>
+						<ui5-menu-item text="Unsubscribe"></ui5-menu-item>
+					</ui5-menu>
+					You have a client meeting scheduled at 3 PM today with Acme Corp. Location: Zoom - link in calendar.
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Follow-Up Needed for Prospect"
+									 show-close>
+					<ui5-avatar icon="crm-sales" color-scheme="Accent10" shape="Square" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Sales</span>
+					<span slot="footnotes">11:00</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item text="Follow-up meeting"></ui5-menu-item>
+						<ui5-menu-item text="Unsubscribe"></ui5-menu-item>
+					</ui5-menu>
+					Reminder to follow up with John Doe from XYZ Ltd. Discuss the proposal sent last week.
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Budget Report Submission Deadline Approaching"
+									importance="Important"
+									show-close>
+					<ui5-avatar icon="expense-report" color-scheme="Accent1" shape="Square" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Accountant</span>
+					<span slot="footnotes">10:15</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item text="Unsubscribe"></ui5-menu-item>
+					</ui5-menu>
+					Reminder: The deadline to submit this quarter’s budget report is this Friday.
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Urgent: Expense Claims Pending Your Approval"
+									importance="Important"
+									show-close>
+					<ui5-avatar icon="expense-report" color-scheme="Accent1" shape="Square" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">09:30</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item text="Unsubscribe"></ui5-menu-item>
+					</ui5-menu>
+					You have 5 pending expense claims awaiting your approval. Please review them by EOD.
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Monthly Reconciliation Process Begins Next Week"
+									 show-close>
+					<ui5-avatar icon="expense-report" color-scheme="Accent1" shape="Square" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Accountant</span>
+					<span slot="footnotes">09:30</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item text="Unsubscribe"></ui5-menu-item>
+					</ui5-menu>
+					Just a heads-up that we will begin the financial reconciliation process for this month next Monday.
+				</ui5-li-notification>
+			</ui5-li-notification-group>
 
-        <ui5-li-notification show-close
-            title-text="New Delivery (#29001) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-            state="None">
-            <ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-            <span slot="footnotes">Office Notifications</span>
-            <span slot="footnotes">3 Days</span>
-            <ui5-menu slot="menu">
-                <ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
-            </ui5-menu>
-            And with a very long description - Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor,
-            nec elementum lectus turpis at nunc.
-        </ui5-li-notification>
-    </ui5-li-notification-group>
+			<ui5-li-notification-group title-text="Yesterday" collapsed>
+				<ui5-li-notification title-text="New Sales Lead Assigned"
+									 show-close>
+					<ui5-avatar icon="crm-sales" color-scheme="Accent10" shape="Square" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Sales</span>
+					<span slot="footnotes">1 Day</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item text="Unsubscribe"></ui5-menu-item>
+					</ui5-menu>
+					A new lead, Jane Smith from Innovative Tech, has been assigned to you. Contact details in CRM.
+				</ui5-li-notification>
+				<ui5-li-notification title-text=" Reminder: Submit Your EOD Sales Report"
+									 show-close>
+					<ui5-avatar icon="crm-sales" color-scheme="Accent10" shape="Square" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Sales</span>
+					<span slot="footnotes">1 Day</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item text="Unsubscribe"></ui5-menu-item>
+					</ui5-menu>
+					Please submit your end-of-day sales report through the portal before logging off today.
+			</ui5-li-notification>
+			<ui5-li-notification title-text="Tax Filing Deadline Reminder"
+								 show-close>
+				<ui5-avatar icon="expense-report" color-scheme="Accent1" shape="Square" size="XS" slot="avatar"></ui5-avatar>
+				<span slot="footnotes">Accountant</span>
+				<span slot="footnotes">1 Day</span>
+				<ui5-menu slot="menu">
+					<ui5-menu-item text="Unsubscribe"></ui5-menu-item>
+				</ui5-menu>
+				Reminder: The tax filing deadline for this quarter is approaching in two weeks.
+			</ui5-li-notification>
+			<ui5-li-notification title-text=" Invoice Processing Completed"
+								 show-close>
+				<ui5-avatar icon="expense-report" color-scheme="Accent1" shape="Square" size="XS" slot="avatar"></ui5-avatar>
+				<span slot="footnotes">Notification</span>
+				<span slot="footnotes">1 Day</span>
+				<ui5-menu slot="menu">
+					<ui5-menu-item text="Unsubscribe"></ui5-menu-item>
+				</ui5-menu>
+				All invoices for this month have been successfully processed and payments scheduled.
+			</ui5-li-notification>
+			</ui5-li-notification-group>
+		</ui5-notification-list>
+	</ui5-popover>
+	<ui5-menu header-text="Sort By" id="sort-menu">
+		<ui5-menu-item text="Date"></ui5-menu-item>
+		<ui5-menu-item text="Importance"></ui5-menu-item>
+	</ui5-menu>
 
-    <ui5-li-notification-group collapsed
-        title-text="Meetings With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.">
-        <ui5-li-notification show-close title-text="New meeting at Building (#35001)" state="Positive" read>
-            <ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-            <span slot="footnotes">Office Notifications</span>
-            <span slot="footnotes">3 Days</span>
-            And with a very long description - Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor,
-            nec elementum lectus turpis at nunc.
-        </ui5-li-notification>
-
-        <ui5-li-notification show-close title-text="New meeting at Building (#35001)" state="Negative"read>
-            <ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-            <span slot="footnotes">Office Notifications</span>
-            <span slot="footnotes">3 Days</span>
-            And with a very long description - Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor,
-            nec elementum lectus turpis at nunc.
-        </ui5-li-notification>
-    </ui5-li-notification-group>
-</ui5-notification-list>
-</ui5-popover>
-    <!-- playground-fold -->
-    <script type="module" src="main.js"></script>
+	<ui5-dialog id="clear-all-dialog" header-text="Clear All Notifications">
+		<ui5-text>Are you sure you want to clear all the notifications?</ui5-text>
+		<ui5-bar slot="footer" design="Footer">
+			<ui5-button id="clear-all-action" class="dialogCloser" design="Emphasized" slot="endContent"
+				style="min-width: 4rem;">OK</ui5-button>
+			<ui5-button class="dialogCloser" slot="endContent"
+				style="min-width: 4rem;">Cancel</ui5-button>
+		</ui5-bar>
+	</ui5-dialog>
+	<!-- playground-fold -->
+	<script type="module" src="main.js"></script>
 </body>
 
 </html>

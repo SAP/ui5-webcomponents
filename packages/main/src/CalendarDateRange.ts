@@ -39,4 +39,8 @@ class CalendarDateRange extends UI5Element implements ICalendarSelectedDates {
 
 CalendarDateRange.define();
 
+// type t = typeof CalendarDateRange.prototype._jsxProps;
+// let a: t;
+// a.value =
+
 export default CalendarDateRange;

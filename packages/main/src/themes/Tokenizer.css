@@ -7,6 +7,28 @@
 	height: 2.25rem;
 }
 
+:host([multi-line]) {
+	height: auto;
+}
+
+:host([multi-line]) .ui5-tokenizer--content {
+	display: flex;
+	align-content: baseline;
+	flex-wrap: wrap;
+	padding: .25rem;
+	box-sizing: border-box;
+	gap: var(--_ui5_tokenizer_gap);
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+:host([multi-line])::slotted([ui5-token]) {
+	margin: 0;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	max-width: 100%;
+}
+
 :host([disabled]) {
 	opacity: 40%;
 	pointer-events: none;
@@ -52,6 +74,10 @@
 	box-sizing: border-box;
 }
 
+.ui5-tokenizer--list{
+	display: contents;
+}
+
 :host([_tokens-count="1"]) .ui5-tokenizer--content {
 	padding-inline-end: 4px;
 	box-sizing: border-box;
@@ -76,4 +102,22 @@
 /* Underline needs to be removed on mousedown. */
 .ui5-tokenizer-more-text:active {
 	text-decoration: none;
+}
+
+.ui5-tokenizer--clear-all {
+	color: var(--sapLinkColor);
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+	cursor: pointer;
+	outline: none;
+}
+
+.ui5-tokenizer--clear-all:hover {
+	color: var(--sapLink_Hover_Color);
+	text-decoration: var(--_ui5_link_hover_text_decoration);
+}
+
+.ui5-tokenizer--clear-all:active {
+	color: var(--sapLink_Active_Color);
+	text-decoration: var(--_ui5_link_active_text_decoration);
 }

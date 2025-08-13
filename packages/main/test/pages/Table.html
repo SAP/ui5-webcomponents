@@ -19,19 +19,34 @@
 	<!-- toolbar with ui5-bar -->
 	<ui5-bar design="Header" accessible-name-ref="title" style="position: sticky; top: 0; z-index: 2; height: 50px;">
 		<ui5-title tabindex="0" level="H3" id="title" slot="startContent">My Selectable Products (3)</ui5-title>
-		<ui5-slider id="slider" min="0" max="100" step="1" value="100"
-			label-interval="0"></ui5-slider>
+		<ui5-segmented-button id="sizeBtn" accessible-name="Switch Table Size">
+			<ui5-segmented-button-item>25%</ui5-segmented-button-item>
+			<ui5-segmented-button-item>50%</ui5-segmented-button-item>
+			<ui5-segmented-button-item>75%</ui5-segmented-button-item>
+			<ui5-segmented-button-item selected>100%</ui5-segmented-button-item>
+		</ui5-segmented-button>
+		<ui5-segmented-button id="showHideDetails" slot="endContent">
+			<ui5-segmented-button-item tooltip="Show Details" icon="detail-more"></ui5-segmented-button-item>
+			<ui5-segmented-button-item tooltip="Hide Details" icon="detail-less" selected></ui5-segmented-button-item>
+		</ui5-segmented-button>
 	</ui5-bar>
 
-	<ui5-table id="table" overflow-mode="Scroll" accessible-name-ref="title">
+	<ui5-table id="table" overflow-mode="Popin" accessible-name-ref="title" style="height: 400px">
 		<ui5-table-growing id="growing" type="Scroll" slot="features"></ui5-table-growing>
-		<ui5-table-selection id="selection" selected="0 2" slot="features"></ui5-table-selection>
+		<ui5-table-selection-multi id="selection" selected="1 3" slot="features"></ui5-table-selection-multi>
+		<!-- <ui5-table-selection-single id="selection" selected="1" slot="features"></ui5-table-selection-single> -->
 		<ui5-table-header-row slot="headerRow" sticky>
-			<ui5-table-header-cell id="produtCol" width="300px"><span>Product</span></ui5-table-header-cell>
+			<ui5-table-header-cell id="produtCol" width="300px" sort-indicator="Descending" horizontal-align="Center">
+				<ui5-label required>Text</ui5-label>
+				<ui5-table-header-cell-action-ai slot="action" id="ai1"></ui5-table-header-cell-action-ai>
+			</ui5-table-header-cell>
 			<ui5-table-header-cell id="supplierCol" width="400px">Supplier</ui5-table-header-cell>
-			<ui5-table-header-cell id="dimensionsCol" importance="-1" min-width="300px">Dimensions</ui5-table-header-cell>
-			<ui5-table-header-cell id="weightCol" popin-text="Weight">Weight</ui5-table-header-cell>
-			<ui5-table-header-cell id="priceCol" min-width="220px">Price</ui5-table-header-cell>
+			<ui5-table-header-cell id="dimensionsCol" importance="-1" min-width="300px" popin-hidden><div style="display: flex; flex-direction: column;"><span>Dimensions</span><span>in cm</span></div></ui5-table-header-cell>
+			<ui5-table-header-cell id="weightCol" popin-text="Weight" popin-hidden>Weight</ui5-table-header-cell>
+			<ui5-table-header-cell id="priceCol"  min-width="220px" horizontal-align="End" popin-text="Price" sort-indicator="Ascending">
+				<ui5-label wrapping-type="None">This is a long column header for the Price column</ui5-label>
+				<ui5-table-header-cell-action-ai slot="action" id="ai2"></ui5-table-header-cell-action-ai>
+			</ui5-table-header-cell>
 		</ui5-table-header-row>
 		<ui5-table-row row-key="0" navigated>
 			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
@@ -47,52 +62,25 @@
 			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.5</b> KG</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label><b>1249</b> EUR</ui5-label></ui5-table-cell>
 		</ui5-table-row>
-		<ui5-table-row row-key="2" interactive>
-			<ui5-table-cell><ui5-label><b>Notebook Basic 17</b><br><a href="#">HT-1002</a></ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
-		</ui5-table-row>
-		<ui5-table-row row-key="3">
-			<ui5-table-cell><ui5-label><b>Notebook Basic 18</b><br><a href="#">HT-1003</a></ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
-		</ui5-table-row>
-		<ui5-table-row row-key="4">
-			<ui5-table-cell><ui5-label><b>Notebook Basic 19</b><br><a href="#">HT-1004</a></ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
-		</ui5-table-row>
-		<ui5-table-row row-key="5">
-			<ui5-table-cell><ui5-label><b>Notebook Basic 20</b><br><a href="#">HT-1005</a></ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
-		</ui5-table-row>
-		<ui5-table-row row-key="6" interactive>
-			<ui5-table-cell><ui5-label><b>Notebook Basic 21</b><br><a href="#">HT-1006</a></ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
-		</ui5-table-row>
 	</ui5-table>
 
 	<ui5-input value="after table" data-sap-ui-fastnavgroup="true"></ui5-input>
 	<script>
-		const slider = document.getElementById("slider");
+		document.getElementById("ai1").addEventListener("click", (e) => {
+			console.log("ai1 clicked");
+		});
+		document.getElementById("ai2").addEventListener("click", (e) => {
+			console.log("ai2 clicked");
+		});
+
+		const sizeBtn = document.getElementById("sizeBtn");
 		const table = document.getElementById("table");
-		slider.addEventListener("input", (e) => {
-			table.style.width = `${e.target.value}%`;
+		sizeBtn.addEventListener("selection-change", (e) => {
+			const selectedItem = e.detail.selectedItems[0];
+			table.style.width = selectedItem.textContent;
 		});
 		table.addEventListener("row-click", (e) => {
-			console.log(`${Date.now()}: Row with the row-key ${e.detail.row.row-key} is clicked`);
+			console.log(`${Date.now()}: Row with the row-key ${e.detail.row.rowKey} is clicked`);
 		});
 
 		const growing = document.getElementById("growing");
@@ -120,6 +108,20 @@
 		const selection = document.getElementById("selection");
 		selection.addEventListener("change", (e) => {
 			console.log(e.target.selected);
+		});
+
+		const HIDDEN_COLUMNS = ["dimensionsCol", "weightCol"];
+		function setPopinState(hideDetails) {
+			HIDDEN_COLUMNS.forEach((columnId) => {
+				const headerCell = document.getElementById(columnId);
+				headerCell.popinHidden = hideDetails;
+			});
+		}
+
+		const showHideDetails = document.getElementById("showHideDetails");
+		showHideDetails.addEventListener("selection-change", (e) => {
+			const selectedItem = e.detail.selectedItems[0];
+			setPopinState(selectedItem.tooltip === "Hide Details");
 		});
 	</script>
 </body>

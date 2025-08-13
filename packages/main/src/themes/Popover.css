@@ -8,19 +8,11 @@
 	box-shadow: var(--_ui5_popover_no_arrow_box_shadow);
 }
 
-:host([opened][actual-placement="Top"]) {
-	margin-top: var(--_ui5-popover-margin-bottom);
-}
-
-:host([opened][actual-placement="Bottom"]) {
-	margin-top: var(--_ui5-popover-margin-top);
-}
-
 /* pointing upward arrow */
 :host([actual-placement="Bottom"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
 	top: -0.5rem;
-	height: 0.5625rem;
+	height: 0.5rem;
 }
 
 :host([actual-placement="Bottom"]) .ui5-popover-arrow:after {
@@ -92,6 +84,7 @@
 
 :host([modal])::backdrop {
 	background-color: var(--_ui5_popup_block_layer_background);
+	opacity: var(--_ui5_popup_block_layer_opacity);
 }
 
 :host([modal]) .ui5-block-layer {

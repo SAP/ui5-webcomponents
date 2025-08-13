@@ -24,57 +24,66 @@
 </head>
 
 <body>
-	<ui5-checkbox text="Compact size" id="cbCompact"></ui5-checkbox>
-	<ui5-checkbox text="Scrollable page" id="cbScrollable"></ui5-checkbox>
-	<br>
-	<br>
-	<ui5-button id="btnOpenDialogWithInput">Open Dialog with Input</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="btnOpenDialog">Open Stretched Dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="btnOpenDialogNoPaddings">Open Stretched Dialog - no paddings</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="btnOpenDialogWithAttr">Open with Attribute</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="message">Open Message Dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="prevent">Open Prevent closing Dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="modals-open">Open Multiple modals</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="empty-open">Open empty dialog (no focusable element)</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="wide-open">Open wide dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="wide-open2">Open wide dialog 2</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="draggable-open">Open draggable dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="resizable-open">Open resizable dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="resizable-custom-header-open">Open resizable dialog with custom header</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="draggable-and-resizable-open">Open draggable & resizable dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="dynamic-open">Open dialog which is created dynamically</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="multiple-show">Open dialog calling ".open = true" multiple times</ui5-button>
-
+	<div class="wrapper">
+		<div>
+			<ui5-segmented-button id="theme-switch">
+				<ui5-segmented-button-item data-ui5-theme-name="sap_horizon" selected>Morning</ui5-segmented-button-item>
+				<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_dark">Evening</ui5-segmented-button-item>
+				<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_hcb">HCB</ui5-segmented-button-item>
+				<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_hcw">HCW</ui5-segmented-button-item>
+			</ui5-segmented-button>
+		</div>
+		<ui5-checkbox text="Compact size" id="cbCompact"></ui5-checkbox>
+		<ui5-checkbox text="Scrollable page" id="cbScrollable"></ui5-checkbox>
+		<br>
+		<br>
+		<ui5-button id="btnOpenDialogWithInput">Open Dialog with Input</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="btnOpenDialog">Open Stretched Dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="btnOpenDialogNoPaddings">Open Stretched Dialog - no paddings</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="btnOpenDialogWithAttr">Open with Attribute</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="message">Open Message Dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="prevent">Open Prevent closing Dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="modals-open">Open Multiple modals</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="empty-open">Open empty dialog (no focusable element)</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="wide-open">Open wide dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="wide-open2">Open wide dialog 2</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="draggable-open">Open draggable dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="resizable-open">Open resizable dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="resizable-custom-header-open">Open resizable dialog with custom header</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="draggable-and-resizable-open">Open draggable & resizable dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="dynamic-open">Open dialog which is created dynamically</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="multiple-show">Open dialog calling ".open = true" multiple times</ui5-button>
+	</div>
 	<ui5-block-layer></ui5-block-layer>
 
 	<ui5-dialog id="dialogInput" header-text="Dialog">
@@ -608,6 +617,78 @@
 	</ui5-dialog>
 	<br>
 	<br>
+	<ui5-button id="btnConfirmationDialog">Confirmation dialog with Toolbar</ui5-button>
+	<ui5-dialog id="confirmationDialog" draggable resizable header-text="Register Form">
+		<section style="display: flex;flex-direction: column;justify-content: space-evenly;	align-items: center;margin: 3rem 6rem;">
+			<div style="display: grid;width: 15rem;margin-bottom: .5rem;">
+				<ui5-label for="username" required show-colon>Username</ui5-label>
+				<ui5-input id="username"></ui5-input>
+			</div>
+			<div style="display: grid;width: 15rem;margin-bottom: .5rem;">
+				<ui5-label for="password" required show-colon>Password</ui5-label>
+				<ui5-input id="password" type="Password" value-state="Negative"></ui5-input>
+			</div>
+			<div style="display: grid;width: 15rem;margin-bottom: .5rem;">
+				<ui5-label for="email" type="Email" required show-colon>Email</ui5-label>
+				<ui5-input id="email"></ui5-input>
+			</div>
+			<div style="display: grid;width: 15rem;margin-bottom: .5rem;">
+				<ui5-label for="address" show-colon>Address</ui5-label>
+				<ui5-input id="address"></ui5-input>
+			</div>
+		</section>
+		<ui5-toolbar slot="footer">
+			<ui5-toolbar-button
+				id="btnConfirmationDialogSubmit"
+				design="Emphasized"
+				text="SubmitSubmitSubmitSubmitSubmit"
+			>
+			</ui5-toolbar-button>
+			<ui5-toolbar-button
+				id="btnConfirmationDialogCancel"
+				text="CancelCancelCancelCancelCancelCancel"
+				design="Transparent"
+			>
+			</ui5-toolbar-button>
+		</ui5-toolbar>
+	</ui5-dialog>
+	<br>
+	<br>
+	<ui5-button id="btnAccessibleDescrRefDialog">Accessible Description Ref</ui5-button>
+	<ui5-dialog id="accessibleDescrRefDialog" draggable resizable header-text="Accessible dialog" accessible-description-ref="btnAccessibleDescrRefDialog">
+		<ui5-title level="H3">Hello World!</ui5-title>
+		<ui5-toolbar slot="footer">
+			<ui5-toolbar-button
+				id="btnAccessibleDescrRefDialogSubmit"
+				design="Emphasized"
+				text="Close"
+			/>
+		</ui5-toolbar>
+	</ui5-dialog>
+	<br>
+	<br>
+	<ui5-button id="btnAccessibleDescrDialog">Accessible Description</ui5-button>
+	<ui5-dialog id="accessibleDescrDialog" draggable resizable header-text="Accessible dialog" accessible-description="Accessible Description">
+		<ui5-title level="H3">Hello World!</ui5-title>
+		<ui5-toolbar slot="footer">
+			<ui5-toolbar-button
+				id="btnAccessibleDescrDialogSubmit"
+				design="Emphasized"
+				text="Close"
+			/>
+		</ui5-toolbar>
+	</ui5-dialog>
+	<br>
+	<br>
+	<ui5-button onclick="dialogWithTokenizer.open = true;">Open Dialog With Tokenizer</ui5-button>
+	<ui5-dialog id="dialogWithTokenizer" header-text="Tokens">
+		<ui5-tokenizer id="tokenizer">
+			<ui5-token text="Token 1"></ui5-token>
+			<ui5-token text="Token 2"></ui5-token>
+		</ui5-tokenizer>
+	</ui5-dialog>
+	<br>
+	<br>
 	<div>
 		<ui5-title level="H3">Open Dialog from list</ui5-title>
 		<ui5-list id="listContainerId" selection-mode="Single">
@@ -623,7 +704,7 @@
 			const listContainerDialog = document.getElementById("listContainerDialogId");
 			const listContainerDialogCloseBtn = document.getElementById("listContainerDialogCloseBtnId");
 
-			listContainer.addEventListener("ui5-selectionChange", function (event) {
+			listContainer.addEventListener("ui5-selection-change", function (event) {
 				listContainerDialog.open = true;
 			});
 
@@ -700,7 +781,7 @@
 			window["msg-dialog"].open = true;
 		});
 
-		window["prevent-dialog"].addEventListener("ui5-beforeClose", function (event) {
+		window["prevent-dialog"].addEventListener("ui5-before-close", function (event) {
 			if (preventClosing) {
 				event.preventDefault();
 				window["confirm-dialog"].open = true;
@@ -854,6 +935,37 @@
 			window["dialogAutofocus"].open = false;
 		});
 
+		window["btnConfirmationDialog"].addEventListener("click", function () {
+			window["confirmationDialog"].open = true;
+		});
+
+		window["btnAccessibleDescrRefDialog"].addEventListener("click", function () {
+			window["accessibleDescrRefDialog"].open = true;
+		});
+
+		window["btnAccessibleDescrRefDialogSubmit"].addEventListener("click", function () {
+			window["accessibleDescrRefDialog"].open = false;
+		});
+
+		window["btnAccessibleDescrDialog"].addEventListener("click", function () {
+			window["accessibleDescrDialog"].open = true;
+		});
+
+		window["btnAccessibleDescrDialogSubmit"].addEventListener("click", function () {
+			window["accessibleDescrDialog"].open = false;
+		});
+
+		window["btnConfirmationDialogSubmit"].addEventListener("click", function () {
+			window["confirmationDialog"].open = false;
+		})
+
+		window["btnConfirmationDialogCancel"].addEventListener("click", function () {
+			window["confirmationDialog"].open = false;
+		})
+
+		document.getElementById("theme-switch").addEventListener("ui5-selection-change", event => {
+			window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItems[0].getAttribute("data-ui5-theme-name"));
+		});
 	</script>
 </body>
 

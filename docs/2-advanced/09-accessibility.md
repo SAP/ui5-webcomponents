@@ -63,6 +63,74 @@ Theming is an important aspect when it comes to a UI5 Web Components application
 
 For more information regarding the available themes and how to use them, see the [Configuration](../2-advanced/01-configuration.md) section.
 
+### Theme Selection According to OS Settings
+
+The UI5 Web Components framework does not offer a built-in mechanism for selecting themes based on the users' OS settings. However, we recommend using standard APIs to implement OS-based theme selection in applications built with UI5 Web Components.
+
+In the next sections, we will demonstrate one of the possible approaches to detect and apply a theme that aligns with the user's OS preferences. However, you are free to explore and develop your own detection and matching algorithm.
+
+#### Light | Dark
+
+To synchronize theme switching with the OS's light or dark mode, you can use the [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) CSS Media feature, as shown in the next example:
+
+Check `prefers-color-scheme` for `dark` or `light` and apply one of the availabe light/dark themes (Horizon Morning, Horizon Evening, ect.)
+
+```ts
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+
+const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+setTheme(darkColorScheme ? "sap_horizon_dark" : "sap_horizon");
+```
+
+#### Contrast
+
+To switch to a high contrast theme when the OS does, you can use [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) and  [prefers-contrast](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast) (detecting MacOS contrast preferences and Windows high contrast themes) CSS features, as shown in the next example:
+
+Check `prefers-color-scheme` for `dark` or `light` and `prefers-contrast` for `more`, and apply one of the available high contrast themes (Horizon High Contrast White or Horizon High Contrast Black)
+
+```ts
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+
+const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+const prefersContrastMore = window.matchMedia("(prefers-contrast: more)").matches;
+const prefersContrastCustom = window.matchMedia("(prefers-contrast: custom)").matches;
+const prefersContrast = prefersContrastMore || prefersContrastCustom;
+
+if (prefersContrast) {
+	setTheme(darkColorScheme ? "sap_horizon_hcb" : "sap_horizon_hcw");
+}
+```
+
+**Note:** In addition to detecting contrast mode, you need to check for light and dark modes via `prefers-color-scheme` to pick between the High Contrast Black and High Contrast White themes.
+
+The examples above will work for initial loading. However, to react on dynamic changes of the user preferences, you need to attach for the media query `change` event, fired when the status of media query support changes.
+
+Here is the full solution, listening for changes of the OS settings and considering light, dark and contrast preferences:
+
+```ts
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+
+const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
+const prefersContrastMore = window.matchMedia("(prefers-contrast: more)");
+const prefersContrastCustom = window.matchMedia("(prefers-contrast: custom)");
+
+const applyOSThemePreferences = () => {
+	if (prefersContrastMore.matches || prefersContrastCustom.matches) {
+		setTheme(darkColorScheme.matches ? "sap_horizon_hcb" : "sap_horizon_hcw");
+	} else {
+		setTheme(darkColorScheme.matches ? "sap_horizon_dark" : "sap_horizon");
+	}
+}
+
+darkColorScheme.onchange = applyOSThemePreferences;
+prefersContrastMore.onchange = applyOSThemePreferences;
+prefersContrastCustom.onchange = applyOSThemePreferences;
+
+applyOSThemePreferences();
+```
+
+Although you've learned how to detect OS settings and apply the corresponding theme, we recommend allowing users to decide whether the theme should always match the OS setting OS settings by providing application settings and not forcing the OS settings by default.
 
 ## Accessibility APIs
 
@@ -73,7 +141,9 @@ The mapping of the accessibility APIs to ARIA attributes is described in the fol
 | ------------------------------ | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `accessibleName`               | `aria-label`                                      | Defines the text alternative of the component. If not provided, a default text alternative is set, if present.                                                                                      |
 | `accessibleNameRef`            | `aria-label`                                      | Alternative for `aria-labelledby`. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the `aria-label` attribute. |
-| `accessibleRole`               | `role`                                            | Sets the accessible aria role of the component.                                                                                                                                                     |                                                                          
+| `accessibleDescription`        | `aria-description`                                | Defines the description of the component.                                                                                                                                                           |
+| `accessibleDescriptionRef`     | `aria-description`                                | Alternative for `aria-describedby`. Receives ID (or many IDs) of the elements that serve as descriptions of the component. Those descriptions are passed as a concatenated string to the `aria-describedby` attribute. |
+| `accessibleRole`               | `role`                                            | Sets the accessible aria role of the component.                                                                                                                                                     |
 | `accessibilityAttributes`      | `aria-expanded`, `aria-haspopup`, `aria-controls`, etc. | An object of strings that defines several additional accessibility attribute values for customization depending on the use case. <br/> For composite components the object provides a way to enrich the accessibility of the different elements inside the component (for example in the `ui5-shellbar`).                                                                   |                                                                                          |
 | `required`                     | `aria-required`                                   | Defines whether the component is required.                                                                                                                                                          |
 | `readonly`                     | `aria-readonly`                                   | Defines whether the component is read-only.                                                                                                                                                         |
@@ -116,6 +186,61 @@ Will result in the shadow DOM as:
 ```
 
 The `accessibleNameRef` property is currently supported in most of the available components.
+
+---
+
+### accessibleDescription
+
+Setting the property on the custom element as:
+```html
+<ui5-list accessible-description="List of items">
+    <ui5-li>Item 1</ui5-li>
+    <ui5-li>Item 2</ui5-li>
+</ui5-list>
+```
+
+Will result in the shadow DOM as:
+```html
+<ul role="list" aria-description="List of items" ... >
+    ...
+</ul>
+```
+
+The `accessibleDescription` property is currently supported in:
+* [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
+* [Tree](https://sap.github.io/ui5-webcomponents/nightly/components/Tree/)
+* [Input](https://sap.github.io/ui5-webcomponents/nightly/components/Input/)
+* [Popover](https://sap.github.io/ui5-webcomponents/nightly/components/Popover/)
+* [ResponsivePopover](https://sap.github.io/ui5-webcomponents/nightly/components/ResponsivePopover/)
+* [Dialog](https://sap.github.io/ui5-webcomponents/nightly/components/Dialog/)
+
+---
+
+### accessibleDescriptionRef
+
+Setting the property on the custom element as:
+```html
+<p id="description">List of items</p>
+<ui5-list accessible-description-ref="description">
+    <ui5-li>Item 1</ui5-li>
+    <ui5-li>Item 2</ui5-li>
+</ui5-list>
+```
+
+Will result in the shadow DOM as:
+```html
+<ul role="list" aria-description="List of items" ... >
+    ...
+</ul>
+```
+
+The `accessibleDescriptionRef` property is currently supported in:
+* [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
+* [Tree](https://sap.github.io/ui5-webcomponents/nightly/components/Tree/)
+* [Input](https://sap.github.io/ui5-webcomponents/nightly/components/Input/)
+* [Popover](https://sap.github.io/ui5-webcomponents/nightly/components/Popover/)
+* [ResponsivePopover](https://sap.github.io/ui5-webcomponents/nightly/components/ResponsivePopover/)
+* [Dialog](https://sap.github.io/ui5-webcomponents/nightly/components/Dialog/)
 
 ---
 
@@ -185,7 +310,9 @@ The `accessibilityAttributes` property is currently supported in:
 `accessibilityAttributes` is also supported for composite components, where the application can enrich the accessibility of elements inside the component. For a more detailed information check the documentation of the property in:
 * [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/FlexibleColumnLayout/)
 * [ShellBar](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBar/)
+* [ShellBarItem](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBarItem/)
 * [MenuItem](https://sap.github.io/ui5-webcomponents/nightly/components/MenuItem/)
+* [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
 
 ---
 
@@ -292,9 +419,9 @@ Will result in the shadow DOM as:
 
 ## Testing Accessibility
 
-UI5 Web Components provide the prerequisites for screen reader support based on the HTML, ARIA, and WCAG standards. All screen readers that follow those standards should work fine. Nevertheless, there are deviations in the interpretation depending on the combination of browser and screen reader. UI5 Web Components focus on compliance with the standards by performing automated checks for accessibility and manual tests with reference testing environments.
+UI5 Web Components provide the prerequisites for screen reader support based on the HTML, ARIA 1.2, and WCAG 2.2 standards. All screen readers that follow those standards should work fine. Nevertheless, there are deviations in the interpretation depending on the combination of browser and screen reader. UI5 Web Components focus on compliance with the standards by performing automated checks for accessibility and manual tests with reference testing environments.
 
-For Screen Reader Support, we recommend using JAWS 2024 + Chrome (latest), and for HTML/ARIA validation the recommended testing tool is Access Assistant. UI5 Web Components support other environments to the extent of providing a valid HTML and ARIA implementation following the WCAG standards.
+For Screen Reader Support, we recommend using JAWS 2025 + Chrome (latest), and for HTML/ARIA validation the recommended testing tool is Access Assistant. UI5 Web Components support other environments to the extent of providing a valid HTML and ARIA 1.2 implementation following the WCAG 2.2 standards.
 
 Please note that reference testing environments may change over time to reflect changes in the usage of different browsers, their maintenance period, and increased accessibility compliance.
 

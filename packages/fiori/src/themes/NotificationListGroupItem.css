@@ -27,16 +27,23 @@
 
 .ui5-nli-group-header {
 	height: 2.75rem;
-	position: relative;
+	position: sticky;
+	top: 0;
+	z-index: 90; /* the z-index of the busy-indicator is 99 and the header shouldn't be over it */
 	background: var(--sapList_GroupHeaderBackground);
 	display: flex;
 	align-items: center;
-	margin-block: var(--_ui5-notification_group_header-margin);
+
 	padding-inline: var(--_ui5-notification_group_header-padding);
 	width: 100%;
 	border-bottom: var(--_ui5-notification_group_header-border-bottom-width) solid var(--sapList_GroupHeaderBorderColor);
 	box-sizing: border-box;
 	cursor: pointer;
+	margin-bottom: var(--_ui5-notification_group_header-margin);
+}
+
+.ui5-nli-group-header-expanded {
+	margin-bottom: var(--_ui5-notification_group_header-margin-expanded);
 }
 
 /* The focus is on the whole group but should be visualized on the Group Header */
@@ -45,10 +52,10 @@
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
+	top: var(--_ui5-notification_group_header-margin);
+	bottom: var(--_ui5-notification_group_header-margin);
 	left: 0;
+	right: 0;
 	pointer-events: none;
 }
 
@@ -79,3 +86,37 @@
 :host([ui5-li-notification-group]) {
 	-webkit-tap-highlight-color: transparent;
 }
+
+/* "More" button overrides follows */
+[ui5-notification-group-list]::part(growing-button) {
+	border: none;
+}
+
+[ui5-notification-group-list]::part(growing-button-inner) {
+	margin: var(--_ui5-notification_item-margin);
+	border: var(--_ui5-notification_item-border-top-left-right);
+	border-radius: var(--_ui5-notification_item-border-radius);
+}
+
+[ui5-notification-group-list]::part(growing-button-inner) {
+	border-radius: var(--_ui5-notification_item-border-radius);
+	height: 3.125rem;
+}
+
+[ui5-notification-group-list]::part(growing-button-inner):focus,
+[ui5-notification-group-list]::part(growing-button-inner):focus-visible {
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);;
+	outline-offset: var(--_ui5-notification_item-outline-offset);
+}
+
+[ui5-notification-group-list]::part(growing-button-inner):focus:active,
+[ui5-notification-group-list]::part(growing-button-inner):focus-visible:active {
+	background-color: var(--_ui5-notification_item-growing-btn-background-color-active);
+	border-radius: var(--_ui5-notification_item-border-radius);
+	border: var(--_ui5-notification_item-border-active);
+}
+
+[ui5-notification-group-list]::part(growing-button-busy-indicator) {
+	padding: 0.875rem 0 1rem 0;
+}
+

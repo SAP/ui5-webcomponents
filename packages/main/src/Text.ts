@@ -1,8 +1,20 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import renderer, { html } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import TextEmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
+// Template
+import TextTemplate2 from "./TextTemplate.js";
+
+import {
+	EMPTY_INDICATOR_SYMBOL,
+	EMPTY_INDICATOR_ACCESSIBLE_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/Text.css.js";
@@ -33,15 +45,12 @@ import styles from "./generated/themes/Text.css.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @slot {Array<Node>} default - Defines the text of the component.
  * @since 2.0.0
  */
 @customElement({
 	tag: "ui5-text",
-	renderer,
-	template: () => {
-		return html`<span><slot></slot></span>`;
-	},
+	renderer: jsxRenderer,
+	template: TextTemplate2,
 	styles,
 })
 class Text extends UI5Element {
@@ -53,8 +62,43 @@ class Text extends UI5Element {
 	@property({ type: Number })
 	maxLines: number = Infinity;
 
+	/**
+	 * Specifies if an empty indicator should be displayed when there is no text.
+	 * @default "Off"
+	 * @since 2.2.0
+	 * @public
+	 */
+	@property()
+	emptyIndicatorMode: `${TextEmptyIndicatorMode}` = "Off";
+
+	/**
+	 * Defines the text of the component.
+	 * @public
+	 */
+	@slot({ type: Node, "default": true })
+	text!: Array<Node>;
+
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
 	onBeforeRendering() {
 		this.style.setProperty(getScopedVarName("--_ui5_text_max_lines"), `${this.maxLines}`);
+	}
+
+	get hasText() {
+		return willShowContent(this.text);
+	}
+
+	get _renderEmptyIndicator() {
+		return !this.hasText && this.emptyIndicatorMode === TextEmptyIndicatorMode.On;
+	}
+
+	get _emptyIndicatorAriaLabel() {
+		return Text.i18nBundle.getText(EMPTY_INDICATOR_ACCESSIBLE_TEXT);
+	}
+
+	get _emptyIndicatorSymbol() {
+		return Text.i18nBundle.getText(EMPTY_INDICATOR_SYMBOL);
 	}
 }
 

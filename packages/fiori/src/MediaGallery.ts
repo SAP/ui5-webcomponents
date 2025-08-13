@@ -2,7 +2,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -11,7 +11,7 @@ import Carousel from "@ui5/webcomponents/dist/Carousel.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import MediaGalleryItem from "./MediaGalleryItem.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
@@ -23,13 +23,13 @@ import type MediaGalleryMenuVerticalAlign from "./types/MediaGalleryMenuVertical
 import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
 
 // Template
-import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit.js";
+import MediaGalleryTemplate from "./MediaGalleryTemplate.js";
 
 /**
  * Interface for components that can be slotted inside `ui5-media-gallery` as items.
  * @public
  */
-interface IMediaGalleryItem extends HTMLElement, ITabbable {
+interface IMediaGalleryItem extends UI5Element, ITabbable {
 	selected: boolean,
 	disabled: boolean,
 	displayedContent: HTMLElement | null;
@@ -86,7 +86,7 @@ const COLUMNS_COUNT: Record<string, number> = {
  */
 @customElement({
 	tag: "ui5-media-gallery",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [MediaGalleryCss],
 	template: MediaGalleryTemplate,
 	dependencies: [
@@ -101,20 +101,17 @@ const COLUMNS_COUNT: Record<string, number> = {
  * @param {HTMLElement} item the selected item.
  * @public
  */
-@event<MediaGallerySelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
+@event("selection-change", {
+	bubbles: true,
 })
 
 /**
  * Fired when the thumbnails overflow button is clicked.
  * @public
  */
-@event("overflow-click")
+@event("overflow-click", {
+	bubbles: true,
+})
 
 /**
  * Fired when the display area is clicked.
@@ -122,9 +119,16 @@ const COLUMNS_COUNT: Record<string, number> = {
  * the enlarged content of the currently selected item.
  * @public
  */
-@event("display-area-click")
+@event("display-area-click", {
+	bubbles: true,
+})
 
 class MediaGallery extends UI5Element {
+	eventDetails!: {
+		"selection-change": MediaGallerySelectionChangeEventDetail,
+		"overflow-click": void,
+		"display-area-click": void,
+	}
 	/**
 	 * If set to `true`, all thumbnails are rendered in a scrollable container.
 	 * If `false`, only up to five thumbnails are rendered, followed by
@@ -241,6 +245,14 @@ class MediaGallery extends UI5Element {
 	}
 
 	_updateSelection() {
+		if (this.items.length === 0) {
+			this._selectedItem = undefined;
+			if (this._mainItem) {
+				const oldContent = this._mainItem.displayedContent;
+				oldContent?.remove();
+			}
+			return;
+		}
 		let itemToSelect = this.items.find(item => item.selected);
 		if (!itemToSelect || !this._isSelectableItem(itemToSelect)) {
 			itemToSelect = this._findSelectableItem();
@@ -365,6 +377,10 @@ class MediaGallery extends UI5Element {
 		return items;
 	}
 
+	getFocusDomRef() {
+		return this._itemNavigation._getCurrentItem();
+	}
+
 	_selectItem(item: IMediaGalleryItem, userInteraction = false) {
 		if (item === this._selectedItem) {
 			return;
@@ -375,7 +391,7 @@ class MediaGallery extends UI5Element {
 		this._itemNavigation.setCurrentItem(item);
 
 		if (userInteraction) {
-			this.fireEvent<MediaGallerySelectionChangeEventDetail>("selection-change", { item });
+			this.fireDecoratorEvent("selection-change", { item });
 		}
 
 		if (isPhone()) {
@@ -425,7 +441,7 @@ class MediaGallery extends UI5Element {
 	}
 
 	_onOverflowBtnClick() {
-		this.fireEvent("overflow-click");
+		this.fireDecoratorEvent("overflow-click");
 	}
 
 	_onDisplayAreaClick() {
@@ -433,14 +449,14 @@ class MediaGallery extends UI5Element {
 			return;
 		}
 
-		this.fireEvent("display-area-click");
+		this.fireDecoratorEvent("display-area-click");
 	}
 
 	_onCarouselNavigate(e: CustomEvent<CarouselNavigateEventDetail>) {
 		const selectedIndex = e.detail.selectedIndex,
 			item = this._selectableItems[selectedIndex];
 
-		this.fireEvent<MediaGallerySelectionChangeEventDetail>("selection-change", { item });
+		this.fireDecoratorEvent("selection-change", { item });
 	}
 
 	get _mainItemTabIndex() {

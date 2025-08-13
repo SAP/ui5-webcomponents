@@ -1,3 +1,3 @@
 ui5-form::part(column) {
-	background: #eef9fc;
+	background: var(--sapHoverColor);
 }

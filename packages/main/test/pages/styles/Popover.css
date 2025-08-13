@@ -92,3 +92,10 @@ ui5-date-picker,
 #divOpenAndScroll > div {
     height: 2000px;
 }
+
+.centered-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}

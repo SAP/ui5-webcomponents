@@ -10,6 +10,7 @@ import "@ui5/webcomponents/dist/TabSeparator.js";
 import "@ui5/webcomponents/dist/ToggleButton.js";
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
+import "@ui5/webcomponents-fiori/dist/ShellBarBranding.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";
 import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";
 
@@ -27,6 +28,8 @@ import "@ui5/webcomponents-icons/dist/ipad.js";
 import "@ui5/webcomponents-icons/dist/menu2.js";
 import "@ui5/webcomponents-icons/dist/menu.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import "@ui5/webcomponents-icons/dist/full-screen.js";
+import "@ui5/webcomponents-icons/dist/add.js";
 
 let midFullScreen = false;
 let endFullScreen = false;

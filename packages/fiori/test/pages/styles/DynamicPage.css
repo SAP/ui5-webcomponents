@@ -20,6 +20,10 @@ html, body {
     margin: 0;
 }
 
+.text:nth-of-type(2) {
+    margin-left: 4rem;
+}
+
 .product-info {
     display: flex;
     flex-wrap: wrap;
@@ -55,9 +59,11 @@ html, body {
 .snapped-title-heading {
     display: flex;
     align-items: center;
+    position: relative;
 }
 .snapped-title-heading [ui5-avatar] {
-    margin-right: 1rem;
+    position: absolute;
+    top: 0;
 }
 .snapped-title-heading [ui5-title] {
     font-family: var(--sapObjectHeader_Title_FontFamily);
@@ -66,4 +72,5 @@ html, body {
     font-size: var(--sapObjectHeader_Title_SnappedFontSize);
     text-overflow: ellipsis;
     min-width: 0;
+    margin-left: 4rem;
 }

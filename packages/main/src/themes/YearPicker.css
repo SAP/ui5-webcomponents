@@ -30,14 +30,14 @@
 	width: calc(25% - 0.125rem);
 	height: var(--_ui5_year_picker_item_height);
 	color: var(--sapButton_Lite_TextColor);
-	background-color: var(--sapLegend_WorkingBackground);
+	background-color: var(--sapButton_Lite_Background);
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
-	cursor: default;
+	cursor: pointer;
 	outline: none;
 	position: relative;
 	border: var(--_ui5_yearpicker_item_border);
@@ -49,21 +49,53 @@
 	width: calc(50% - 0.125rem);
 }
 
-.ui5-yp-item-sec-type{
+.ui5-yp-item-sec-type {
 	font-size: 0.75rem;
 	color: var(--sapNeutralElementColor);
 }
 
-.ui5-yp-item:hover {
-	background-color: var(--sapList_Hover_Background);
+.ui5-yp-item.ui5-yp-item--selected,
+.ui5-yp-item.ui5-yp-item--selected-between {
+	background: var(--sapButton_Selected_Background);
+	border: var(--_ui5_yearpicker_item_selected_border);
+	color: var(--sapButton_Selected_TextColor);
 }
 
-.ui5-yp-item.ui5-yp-item--selected,
-.ui5-yp-item.ui5-yp-item--selected .ui5-yp-item-sec-type {
-	background-color: var(--_ui5_yearpicker_item_selected_background_color);
-	color: var(--_ui5_yearpicker_item_selected_text_color);
-	box-shadow: var(--_ui5_yearpicker_item_selected_box_shadow);
-	font-weight: bold;
+.ui5-yp-item.ui5-yp-item--selected .ui5-yp-item-sec-type,
+.ui5-yp-item.ui5-yp-item--selected-between .ui5-yp-item-sec-type {
+	color: var(--sapButton_Selected_TextColor);
+}
+
+.ui5-yp-item:hover {
+	background: var(--sapButton_Lite_Hover_Background);
+	border: var(--_ui5_yearpicker_item_hover_border);
+	color: var(--sapButton_Lite_Hover_TextColor);
+}
+
+.ui5-yp-item.ui5-yp-item--selected:hover,
+.ui5-yp-item.ui5-yp-item--selected-between:hover {
+	background: var(--sapButton_Selected_Hover_Background);
+	border: var(--_ui5_yearpicker_item_selected_hover_border);
+	color: var(--sapButton_Selected_TextColor);
+}
+
+.ui5-yp-item.ui5-yp-item--selected:hover .ui5-yp-item-sec-type,
+.ui5-yp-item.ui5-yp-item--selected-between:hover .ui5-yp-item-sec-type {
+	color: var(--sapButton_Selected_TextColor);
+}
+
+.ui5-yp-item:active,
+.ui5-yp-item.ui5-yp-item--selected:active,
+.ui5-yp-item.ui5-yp-item--selected-between:active {
+	background: var(--sapButton_Active_Background);
+	border: var(--_ui5_monthpicker_item_active_border);
+	color: var(--sapButton_Active_TextColor);
+}
+
+.ui5-yp-item:active .ui5-yp-item-sec-type,
+.ui5-yp-item.ui5-yp-item--selected:active .ui5-yp-item-sec-type,
+.ui5-yp-item.ui5-yp-item--selected-between:active .ui5-yp-item-sec-type  {
+	color: var(--sapButton_Active_TextColor);
 }
 
 .ui5-yp-item.ui5-yp-item--disabled {
@@ -71,23 +103,10 @@
 	opacity: 0.5;
 }
 
-.ui5-yp-item.ui5-yp-item--selected:focus {
-	background-color: var(--_ui5_yearpicker_item_selected_focus);
-}
-
-.ui5-yp-item.ui5-yp-item--selected:focus::after {
-	border-color: var(--_ui5_yearpicker_item_focus_after_border);
-}
-
-.ui5-yp-item.ui5-yp-item--selected:hover {
-	background-color: var(--_ui5_yearpicker_item_selected_hover_color);
-}
-
 .ui5-yp-item:focus::after {
 	content: "";
 	position: absolute;
-	border: var(--_ui5_yearpicker_item_focus_after_border);
-	inset: 0;
-	border-radius: var(--_ui5_yearpicker_item_focus_after_border_radius);
-	outline: var(--_ui5_yearpicker_item_focus_after_outline);
+	inset: 0.0625rem;
+	border: var(--_ui5_button_focused_border);
+	border-radius: var(--_ui5_button_focused_border_radius);
 }

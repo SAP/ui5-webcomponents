@@ -1,12 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTemplate.lit.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import ProductSwitchItemTemplate from "./ProductSwitchItemTemplate.js";
 import type { IProductSwitchItem } from "./ProductSwitch.js";
 
 // Styles
@@ -37,19 +37,26 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  */
 @customElement({
 	tag: "ui5-product-switch-item",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: ProductSwitchItemCss,
 	template: ProductSwitchItemTemplate,
-	dependencies: [Icon],
 })
 /**
  * Fired when the `ui5-product-switch-item` is activated either with a
  * click/tap or by using the Enter or Space key.
  * @public
  */
-@event("click")
-@event("_focused")
+@event("click", {
+	bubbles: true,
+})
+@event("_focused", {
+	bubbles: true,
+})
 class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
+	eventDetails!: {
+		click: { item: ProductSwitchItem },
+		_focused: void,
+	}
 	/**
 	 * Defines the title of the component.
 	 * @default undefined
@@ -128,6 +135,17 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	@property({ noAttribute: true })
 	forcedTabIndex?: string;
 
+	/**
+	 * Defines an image to be displayed instead of the standard icon.
+	 *
+	 * **Note:** The image slot takes precedence over the icon property.
+	 * **Note:** We recommend using non-interactive ui5-avatar with size S, Square shape and Transparent colorScheme for best alignment.
+	 * @public
+	 * @since 2.14.0
+	 */
+	@slot({ type: HTMLElement })
+	image!: Array<HTMLElement>;
+
 	_deactivate: () => void;
 
 	constructor() {
@@ -191,12 +209,12 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 		this.active = false;
 	}
 
-	_onfocusin(e: FocusEvent) {
-		this.fireEvent("_focused", e);
+	_onfocusin() {
+		this.fireDecoratorEvent("_focused");
 	}
 
 	_fireItemClick() {
-		this.fireEvent("click", { item: this });
+		this.fireDecoratorEvent("click", { item: this });
 	}
 }
 
