@@ -41,6 +41,7 @@
     "concurrently": "^6.0.0",
     "cross-env": "^7.0.3",
     "custom-element-jet-brains-integration": "^1.4.4",
+    "dotenv": "^16.5.0",
     "escodegen": "^2.0.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",
