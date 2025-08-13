@@ -42,7 +42,9 @@ function item(this: ProductSwitchItem) {
 	return (
 		<>
 			{this.image && this.image.length > 0 ? (
-				<slot name="image"></slot>
+				<span class="ui5-product-switch-item-image-placeholder">
+					<slot name="image"></slot>
+				</span>
 			) : (
 				this.icon &&
 				<Icon

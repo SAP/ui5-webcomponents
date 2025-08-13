@@ -72,6 +72,12 @@
 	pointer-events: none;
 }
 
+.ui5-product-switch-item-root .ui5-product-switch-item-image-placeholder {
+	width: 3rem;
+	height: 3rem;
+	margin-bottom: .5rem;
+}
+
 .ui5-product-switch-item-root .ui5-product-switch-item-text-content {
 	display: flex;
 	align-items: center;
@@ -129,6 +135,10 @@
 	.ui5-product-switch-item-root .ui5-product-switch-item-icon {
 		padding: .875rem;
 		color: var(--sapContent_NonInteractiveIconColor);
+		margin: 0 .75rem 0 0;
+	}
+
+	.ui5-product-switch-item-root .ui5-product-switch-item-image-placeholder {
 		margin: 0 .75rem 0 0;
 	}
 
