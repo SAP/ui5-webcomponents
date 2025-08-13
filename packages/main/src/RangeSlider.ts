@@ -219,13 +219,21 @@ class RangeSlider extends SliderBase {
 			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
 			// min and max bounderies and update the previous state reference.
 			const normalizedStartValue = SliderBase.clipValue(this.startValue, this._effectiveMin, this._effectiveMax);
-			this.startValue = normalizedStartValue;
-			this.updateStateStorageAndFireInputEvent("startValue");
+
+			if (normalizedStartValue !== this.startValue) {
+				this._state.startValue = normalizedStartValue;
+				this.updateStateStorageAndFireInputEvent("startValue");
+				this._updateAttribute("startValue", normalizedStartValue);
+			}
 			this.storePropertyState("startValue");
 
 			const normalizedEndValue = SliderBase.clipValue(this.endValue, this._effectiveMin, this._effectiveMax);
-			this.endValue = normalizedEndValue;
-			this.updateStateStorageAndFireInputEvent("endValue");
+
+			if (normalizedEndValue !== this.endValue) {
+				this._state.endValue = normalizedEndValue;
+				this.updateStateStorageAndFireInputEvent("endValue");
+				this._updateAttribute("endValue", normalizedEndValue);
+			}
 			this.storePropertyState("endValue");
 		}
 
