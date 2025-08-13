@@ -3,7 +3,7 @@
 // eslint-disable-next-line
 import testAssetsCommon from "./bundle.common.bootstrap.js"; // code that needs to be executed before other modules
 
-import { registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import { registerIconLoader, registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 // SAP Icons
 import accept, { getPathData } from "@ui5/webcomponents-icons/dist/accept.js";
@@ -77,10 +77,12 @@ import Input from "./Input.js";
 import SuggestionItemCustom from "./SuggestionItemCustom.js";
 import MultiInput from "./MultiInput.js";
 import Label from "./Label.js";
+import LastOptions from "./dynamic-date-range-options/LastOptions.js";
 import Link from "./Link.js";
 import Menu from "./Menu.js";
 import MenuItem from "./MenuItem.js";
 import MenuSeparator from "./MenuSeparator.js";
+import NextOptions from "./dynamic-date-range-options/NextOptions.js";
 import MenuItemGroup from "./MenuItemGroup.js";
 import Popover from "./Popover.js";
 import Panel from "./Panel.js";
@@ -127,6 +129,10 @@ import ListItemStandard from "./ListItemStandard.js";
 import ListItemCustom from "./ListItemCustom.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ListItemGroup from "./ListItemGroup.js";
+
+// custom SVG template (Lit or JSX), registered as an icon
+import IconPensilJSXTemplate from "./bundle-assets/IconPensilJSXTemplate.js";
+import IconPensilLitTemplate from "./bundle-assets/IconPensilLitTemplate.js";
 
 const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon3d, icon3dv1, icon3dv2];
 
@@ -213,6 +219,22 @@ registerIconLoader("my-icons", () => {
 			},
 		},
 	}]);
+});
+
+registerIcon("pencil", {
+	customTemplate: IconPensilJSXTemplate,
+	viewBox: "0 0 16 16",
+	packageName: "custom-svg-icon",
+	collection: "custom-svg-icons",
+	pathData: "pencil",
+});
+
+registerIcon("pencil2", {
+	customTemplate: IconPensilLitTemplate,
+	viewBox: "0 0 16 16",
+	packageName: "custom-svg-icon",
+	collection: "custom-svg-icons",
+	pathData: "pencil2",
 });
 
 // @ts-ignore
