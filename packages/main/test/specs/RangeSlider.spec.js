@@ -207,6 +207,19 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 describe("Properties synchronization and normalization", () => {
 
+	it("Should handle effective min/max when min > max", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+
+		await rangeSlider.setProperty("min", 50);
+		await rangeSlider.setProperty("max", 10);
+
+		await rangeSlider.setProperty("startValue", 5);
+		await rangeSlider.setProperty("endValue", 60);
+
+		assert.strictEqual(await rangeSlider.getProperty("startValue"), 10, "startValue should be clipped to effective min");
+		assert.strictEqual(await rangeSlider.getProperty("endValue"), 50, "endValue should be clipped to effective max");
+	});
+
 	it("Should fallback to default value of 1 if step property is not a valid number", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
 
