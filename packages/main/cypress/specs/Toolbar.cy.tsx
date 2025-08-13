@@ -144,7 +144,7 @@ describe("Toolbar general interaction", () => {
 			});
 
 		cy.get("ui5-button", { includeShadowDom: true }).contains("Button 1")
-			.realClick();
+			.click();
 
 		cy.get("@clicked")
 			.should("have.been.calledOnce");
@@ -158,7 +158,7 @@ describe("Toolbar general interaction", () => {
 			});
 
 		cy.get("ui5-select", { includeShadowDom: true })
-			.realClick();
+			.click();
 
 		cy.get("@clicked")
 			.should("have.been.calledOnce");
@@ -167,7 +167,7 @@ describe("Toolbar general interaction", () => {
 
 		cy.get("ui5-option", { includeShadowDom: true })
 			.first()
-			.realClick();
+			.click();
 
 		cy.get("@changed")
 			.should("have.been.calledOnce");
@@ -175,7 +175,7 @@ describe("Toolbar general interaction", () => {
 			.should("have.been.calledOnce");
 	});
 
-	it.skip("Should move button with alwaysOverflow priority to overflow popover", async () => {
+	it("Should move button with alwaysOverflow priority to overflow popover", () => {
 		cy.mount(
 			<Toolbar>
 				<ToolbarButton text="Add" icon={add} overflow-priority="AlwaysOverflow" stableDomRef="tb-button-add-d"></ToolbarButton>
@@ -190,7 +190,7 @@ describe("Toolbar general interaction", () => {
 		cy.get("ui5-toolbar")
 			.shadow()
 			.find(".ui5-tb-overflow-btn")
-			.realClick();
+			.click();
 
 		// Verify the overflow popover is open
 		cy.get("ui5-toolbar")
@@ -234,11 +234,11 @@ describe("Toolbar general interaction", () => {
 		cy.get("#testEventpreventClosing-toolbar")
 			.shadow()
 			.find(".ui5-tb-overflow-btn")
-			.realClick();
+			.click();
 		cy.get("[ui5-toolbar-select]")
 			.shadow()
 			.find("[ui5-select]")
-			.realClick();
+			.click();
 
 		cy.get("#testEventpreventClosing-toolbar")
 			.shadow()
@@ -269,7 +269,7 @@ describe("Toolbar general interaction", () => {
 			.should("exist");
 
 		cy.get("@overflowButton")
-			.realClick();
+			.click();
 
 		cy.get("ui5-toolbar")
 			.shadow()
@@ -283,7 +283,7 @@ describe("Toolbar general interaction", () => {
 			.first()
 			.shadow()
 			.find("[ui5-button]")
-			.realClick();
+			.click();
 
 		cy.get("@popover")
 			.should("have.prop", "open", false);
@@ -308,8 +308,8 @@ describe("Toolbar general interaction", () => {
 		cy.get("ui5-toolbar")
 			.shadow()
 			.find(".ui5-tb-overflow-btn")
-			.realClick()
-			.realClick()
+			.click()
+			.click()
 			.should("be.focused");
 
 		// Resize the viewport to make the overflow button disappear
@@ -379,7 +379,7 @@ describe("Toolbar in Dialog", () => {
 		);
 
 		// Open dialog
-		cy.get("#open-dialog-button").realClick();
+		cy.get("#open-dialog-button").click();
 		cy.get<Dialog>("#dialog").ui5DialogOpened();
 
 		// Verify toolbar is rendered inside the dialog
@@ -424,14 +424,14 @@ describe("Toolbar Select", () => {
 		cy.get("@otb")
 			.shadow()
 			.find(".ui5-tb-overflow-btn")
-			.realClick();
+			.click();
 		const overflowButton = otb.shadow().find(".ui5-tb-overflow-btn");
 
 		cy.get("@otb")
 			.shadow()
 			.find(".ui5-overflow-popover").as("popover")
 			.should("have.attr", "open", "open");
-		overflowButton.realClick();
+		overflowButton.click();
 		cy.wait(500);
 
 		cy.get("@otb")
@@ -449,31 +449,31 @@ describe("Toolbar Select", () => {
 	});
 });
 
-//ToolbarButton
-describe("ToolbarButton", () => {
-	beforeEach(() => {
+	//ToolbarButton
 
-		cy.mount(
-			<Toolbar>
-            <ToolbarButton
-                text="Back"
-                design="Emphasized"
-                disabled
-                icon="sap-icon://add"
-                endIcon="sap-icon://employee"
-                tooltip="Add"
-            ></ToolbarButton>
+	describe("ToolbarButton", () => {
+		beforeEach(() => {
 
-            <ToolbarButton
-                icon="sap-icon://add"
-                accessible-name="Add"
-                accessible-name-ref="btn"
-				accessibilityAttributes={{ expanded: "true", controls: "btn", hasPopup: "dialog" }}
-            ></ToolbarButton>
-        </Toolbar>
-		);
-	})
+			cy.mount(
+				<Toolbar>
+				<ToolbarButton
+					text="Back"
+					design="Emphasized"
+					disabled
+					icon="sap-icon://add"
+					endIcon="sap-icon://employee"
+					tooltip="Add"
+				></ToolbarButton>
 
+				<ToolbarButton
+					icon="sap-icon://add"
+					accessible-name="Add"
+					accessible-name-ref="btn"
+					accessibilityAttributes={{ expanded: "true", controls: "btn", hasPopup: "dialog" }}
+				></ToolbarButton>
+			</Toolbar>
+			);
+		})
 
 	it("Should render the button with the correct text inside the popover", () => {
 		cy.viewport(100, 1080);
@@ -492,28 +492,7 @@ describe("ToolbarButton", () => {
 			.should("have.attr", "tooltip", "Add");
 	});
 
-	//ToolbarButton
-	it.skip("Should render the button with the correct text inside the popover", async () => {
-		cy.viewport(200, 1080);
-
-		cy.get("#otb_d").within(() => {
-			cy.get(".ui5-tb-overflow-btn").realClick();
-			cy.get("ui5-popover").shadow().within(() => {
-				cy.get("ui5-toolbar-button").shadow().within(() => {
-					cy.get("ui5-button").then($button => {
-						expect($button).to.have.text("Back");
-						expect($button).to.have.attr("design", "Emphasized");
-						expect($button).to.have.attr("disabled", "true");
-						expect($button).to.have.attr("icon", "sap-icon://add");
-						expect($button).to.have.attr("end-icon", "sap-icon://employee");
-						expect($button).to.have.attr("tooltip", "Add");
-					});
-				});
-			});
-		});
-	});
-
-	it.skip("Should render the button with the correct accessible name inside the popover", async () => {
+	it("Should render the button with the correct accessible name inside the popover", () => {
 		cy.viewport(100, 1080);
 
 		cy.get("[ui5-toolbar]")
@@ -526,7 +505,7 @@ describe("ToolbarButton", () => {
 				.should("have.attr", "accessible-name-ref", "btn");
 	});
 
-	it.skip("Should render the button with the correct accessibilityAttributes inside the popover", async () => {
+	it("Should render the button with the correct accessibilityAttributes inside the popover", () => {
 		cy.viewport(100, 1080);
 
 		cy.get("[ui5-toolbar]")
@@ -539,7 +518,7 @@ describe("ToolbarButton", () => {
 				.should("deep.equal", { expanded: "true",
 					controls: "btn",
 					hasPopup: "dialog" });
-	});
+		});
 });
 
 describe("Toolbar Button", () => {
