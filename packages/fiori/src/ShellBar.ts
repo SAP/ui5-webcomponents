@@ -655,7 +655,11 @@ class ShellBar extends UI5Element {
 			this._detachSearchFieldListeners(e.target as HTMLElement);
 			return;
 		}
-		if (!isPhone() && !this.search?.value) {
+		if (this.showSearchField && this.search?.value) {
+			// return if trying to collapse search field with value
+			return;
+		}
+		if (!isPhone()) {
 			this.setSearchState(!this.showSearchField);
 		}
 	}
@@ -874,7 +878,10 @@ class ShellBar extends UI5Element {
 		}
 		this.showSearchField = expanded;
 		await renderFinished();
-		this.fireDecoratorEvent("search-field-toggle", { expanded });
+		const prevented = !this.fireDecoratorEvent("search-field-toggle", { expanded });
+		if (!prevented && this.search && !expanded) {
+			this.search.value = "";
+		}
 	}
 
 	onAfterRendering() {
