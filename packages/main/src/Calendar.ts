@@ -527,40 +527,40 @@ class Calendar extends CalendarPart {
 	/**
 	 * The user clicked the "month" button in the header
 	 */
-	async onHeaderShowMonthPress() {
-		await this.showMonth();
+	onHeaderShowMonthPress() {
+		this.showMonth();
 		this.fireDecoratorEvent("show-month-view");
 	}
 
-	async showMonth() {
+	showMonth() {
 		this._currentPicker = "month";
-		await this._focusCurrentPicker();
+		this._focusCurrentPicker();
 	}
 
 	/**
 	 * The user clicked the "year" button in the header
 	 */
-	async onHeaderShowYearPress() {
-		await this.showYear();
+	onHeaderShowYearPress() {
+		this.showYear();
 		this.fireDecoratorEvent("show-year-view");
 	}
 
-	async showYear() {
+	showYear() {
 		this._currentPicker = "year";
-		await this._focusCurrentPicker();
+		this._focusCurrentPicker();
 	}
 
 	/**
 	 * The user clicked the "year range" button in the YearPicker header
 	 */
-	async onHeaderShowYearRangePress() {
-		await this.showYearRange();
+	onHeaderShowYearRangePress() {
+		this.showYearRange();
 		this.fireDecoratorEvent("show-year-range-view");
 	}
 
-	async showYearRange() {
+	showYearRange() {
 		this._currentPicker = "yearrange";
-		await this._focusCurrentPicker();
+		this._focusCurrentPicker();
 	}
 
 	get _currentPickerDOM() {
@@ -705,35 +705,35 @@ class Calendar extends CalendarPart {
 		this._fireEventAndUpdateSelectedDates(e.detail.dates);
 	}
 
-	async onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
+	onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 
 		if (this._pickersMode === CalendarPickersMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
-			await this._focusCurrentPicker();
+			this._focusCurrentPicker();
 		} else {
 			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
 	}
 
-	async onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
+	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 
 		if (this._pickersMode === CalendarPickersMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
-			await this._focusCurrentPicker();
+			this._focusCurrentPicker();
 		} else if (this._pickersMode === CalendarPickersMode.MONTH_YEAR) {
 			this._currentPicker = "month";
-			await this._focusCurrentPicker();
+			this._focusCurrentPicker();
 		} else {
 			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
 	}
 
-	async onSelectedYearRangeChange(e: CustomEvent<YearRangePickerChangeEventDetail>) {
+	onSelectedYearRangeChange(e: CustomEvent<YearRangePickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 		this._currentPicker = "year";
-		await this._focusCurrentPicker();
+		this._focusCurrentPicker();
 	}
 
 	onNavigate(e: CustomEvent) {

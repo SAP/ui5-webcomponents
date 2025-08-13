@@ -153,7 +153,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 			|| (this.secondaryCalendarType === CalendarType.Persian && this.primaryCalendarType !== CalendarType.Persian) ? 2 : 3;
 	}
 
-	_focusCorrectMonth() {
+	async _focusCorrectMonth() {
+		await renderFinished();
 		if (this._shouldFocusMonth) {
 			this._focusableMonth.focus();
 		}
@@ -163,8 +164,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		return document.activeElement !== this._focusableMonth;
 	}
 
-	async _onfocusin() {
-		await renderFinished();
+	_onfocusin() {
 		this._focusCorrectMonth();
 	}
 
@@ -366,7 +366,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
-	async _modifyTimestampBy(amount: number, preserveDate?: boolean) {
+	_modifyTimestampBy(amount: number, preserveDate?: boolean) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, "month", preserveDate);
 		this._updateSecondTimestamp();
@@ -374,7 +374,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		// Notify the calendar to update its timestamp
 		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 
-		await renderFinished();
 		this._focusCorrectMonth();
 	}
 

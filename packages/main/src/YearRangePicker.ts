@@ -140,9 +140,19 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 		return YearRangePicker.i18nBundle.getText(YEAR_RANGE_PICKER_DESCRIPTION);
 	}
 
-	async _onfocusin() {
+	async _focusCorrectYearRange() {
 		await renderFinished();
-		this._focusableYearRange.focus();
+		if (this._shouldFocusYearRange) {
+			this._focusableYearRange.focus();
+		}
+	}
+
+	get _shouldFocusYearRange() {
+		return document.activeElement !== this._focusableYearRange;
+	}
+
+	_onfocusin() {
+		this._focusCorrectYearRange();
 	}
 
 	onBeforeRendering() {
