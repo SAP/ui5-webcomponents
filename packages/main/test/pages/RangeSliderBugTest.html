@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>UI5 Range Slider Bug Test - End Value Exceeds Max</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+</head>
+
+<body>
+	<section class="group">
+		<h2>Bug Test: End Value Exceeds Max</h2>
+		<p>This should cause "Maximum call stack size exceeded" error in console</p>
+
+		<!-- This should trigger the infinite loop bug -->
+		<ui5-range-slider id="bug-test-slider" min="0" max="100" start-value="10" end-value="150"></ui5-range-slider>
+
+		<h2>Normal Range Slider (for comparison)</h2>
+		<ui5-range-slider id="normal-slider" min="0" max="100" start-value="10" end-value="50"></ui5-range-slider>
+	</section>
+
+	<script>
+		console.log("Testing RangeSlider with end-value exceeding max...");
+
+		// Try to reproduce the bug programmatically as well
+		setTimeout(() => {
+			const slider = document.getElementById('normal-slider');
+			console.log("Setting end-value to 150 (exceeds max of 100)...");
+			slider.endValue = 150; // This should also trigger the bug
+		}, 1000);
+	</script>
+</body>
+</html>
