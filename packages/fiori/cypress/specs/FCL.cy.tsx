@@ -95,6 +95,7 @@ describe("Columns resize", () => {
 			<FlexibleColumnLayout layout="TwoColumnsStartExpanded">
 				<div class="column" slot="startColumn">some content</div>
 				<div class="column" slot="midColumn">some content</div>
+				<div class="column" slot="endColumn">some content</div>
 			</FlexibleColumnLayout>
 		);
 
