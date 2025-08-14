@@ -28,8 +28,8 @@
 - [Creating a Custom UI5 Web Components Package](docs/4-development/01-package.md)
 - [Developing Custom UI5 Web Components](docs/4-development/02-component.md)
 - [Micro-Frontends and Custom Elements Scoping](./docs/2-advanced/06-scoping.md)
-- [Release Management](./docs/Release%20Management.md)
-- [F.A.Q.](./docs/FAQ.md)
+- [Release Management](./docs/08-Releases.md)
+- [F.A.Q.](./docs/09-FAQ.md)
 
 ## Related Projects
 
