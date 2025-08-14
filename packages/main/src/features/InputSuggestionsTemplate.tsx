@@ -72,7 +72,6 @@ export default function InputSuggestionsTemplate(this: Input, hooks?: { suggesti
 						slot="header"
 						class={{
 							"ui5-responsive-popover-header": true,
-							"ui5-responsive-popover-header--focused": this._isValueStateFocused,
 							...this.classes.popoverValueState,
 						}}
 						style={this.styles.suggestionPopoverHeader}

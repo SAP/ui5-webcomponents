@@ -67,11 +67,7 @@ declare global {
 	namespace Cypress {
 		interface Chainable {
 			ui5SimulateDevice(device?: SimulationDevices): Chainable<void>
-			ui5MenuOpen(options?: { opener?: string }): Chainable<void>
-			ui5MenuOpened(): Chainable<void>
-			ui5MenuItemClick(): Chainable<void>
 			ui5DOMRef(): Chainable<void>
-			ui5MenuItemPress(key: any): Chainable<void>
 			ui5CalendarGetDay(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
 			ui5CalendarGetMonth(calendarSelector: string, timestamp: string): Chainable<JQuery<HTMLElement>>
 			ui5CalendarShowYearRangePicker(): Chainable<void>

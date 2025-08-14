@@ -145,11 +145,15 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return "tree";
 		}
 
+		if (this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
+		}
+
 		return undefined;
 	}
 
 	get _ariaChecked() {
-		if (this.isOverflow || this.unselectable) {
+		if (this.isOverflow || this.unselectable || !this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -157,7 +161,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _groupId() {
-		if (!this.items.length) {
+		if (!this.items.length || this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -165,7 +169,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _expanded() {
-		if (!this.items.length) {
+		if (!this.items.length || this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -175,7 +179,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	get classesArray() {
 		const classes = super.classesArray;
 
-		if (!this.effectiveDisabled && this.sideNavigation?.collapsed && this.items.length) {
+		if (!this.effectiveDisabled && this.items.length) {
 			classes.push("ui5-sn-item-with-expander");
 		}
 
@@ -313,14 +317,14 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		this.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	get isSideNavigationItem() {
-		return true;
-	}
-
 	_toggle() {
 		if (this.items.length && !this.effectiveDisabled) {
 			this.expanded = !this.expanded;
 		}
+	}
+
+	get isSideNavigationItem() {
+		return true;
 	}
 }
 

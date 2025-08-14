@@ -205,6 +205,29 @@ describe("Button general interaction", () => {
 			.should("not.called");
 	});
 
+	it("tests clicking on button with busy indicator", () => {
+		cy.mount(<Button loading></Button>);
+
+		cy.get("[ui5-button]")
+			.as("button");
+
+		cy.get("@button")
+			.then(button => {
+				button.get(0).addEventListener("click", cy.stub().as("clicked"));
+			});
+
+		cy.get("@button")
+			.shadow()
+			.find("[ui5-busy-indicator]")
+			.should("be.visible");
+
+		cy.get("@button")
+			.realClick();
+
+		cy.get("@clicked")
+			.should("not.called");
+	});
+
 	it("tests button with text icon role", () => {
 		cy.mount(<Button design="Attention" icon="message-warning">Warning</Button>);
 
@@ -311,6 +334,18 @@ describe("Accessibility", () => {
 
 		cy.get("[ui5-button]")
 			.should("not.have.attr", "title");
+	});
+
+	it("aria-label is properly applied on the button tag", () => {
+		cy.mount(<Button design="Emphasized">Action</Button>);
+
+		cy.get("[ui5-button]")
+			.shadow()
+			.find("button")
+			.as("button");
+			
+		cy.get("@button")
+			.should("have.attr", "aria-label", "Action Emphasized");
 	});
 
 	it("aria-expanded is properly applied on the button tag", () => {
@@ -451,6 +486,18 @@ describe("Accessibility", () => {
 			.shadow()
 			.find("button")
 			.should("have.attr", "aria-controls", "registration-dialog");
+	});
+
+	it("aria-busy is properly applied on the button with busy indicator", () => {
+		cy.mount(<Button loading></Button>);
+
+		cy.get("[ui5-button]")
+			.as("button");
+
+		cy.get("@button")
+			.shadow()
+			.find("button")
+			.should("have.attr", "aria-busy", "true");
 	});
 
 	it("setting accessible-description is applied to button tag", () => {

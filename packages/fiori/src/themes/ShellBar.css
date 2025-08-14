@@ -159,7 +159,7 @@ slot[name="profile"] {
 	justify-content: center;
 	height: 100%;
 	overflow: hidden;
-	margin-left: 0.25rem;
+	margin-inline-start: 0.25rem;
 }
 
 .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
@@ -283,12 +283,12 @@ slot[name="profile"] {
 	--_ui5_button_focused_border: var(--_ui5_shellbar_button_focused_border);
 }
 
-.ui5-shellbar-search-button {
-	--_ui5_button_focused_border_radius: var(--_ui5_shellbar_search_button_border_radius);
-	--_ui5_shellbar_button_border_radius: var(--_ui5_shellbar_search_button_border_radius);
-	height: var(--_ui5_shellbar_search_button_size);
-	width: var(--_ui5_shellbar_search_button_size);
-	min-width: var(--_ui5_shellbar_search_button_size);
+.ui5-shellbar-cancel-button{
+	color: var(--_ui5-shellbar_cancel-button-color);
+}
+
+.ui5-shellbar-cancel-button:hover{
+	color: var(--_ui5-shellbar_cancel-button-color);
 }
 
 .ui5-shellbar-image-button {
@@ -380,9 +380,9 @@ slot[name="profile"] {
 .ui5-shellbar-separator {
 	flex-grow: 0;
 	flex-shrink: 0;
-	height: 1rem;
+	height: var(--_ui5-shellbar-separator-height);
 	width: 1px;
-	background-color: var(--sapToolbar_SeparatorColor);
+	background-color: var(--_ui5-shellbar_separator-color);
 }
 
 .ui5-shellbar-separator-end {
