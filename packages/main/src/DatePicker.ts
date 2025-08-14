@@ -13,7 +13,13 @@ import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateB
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText, getAssociatedLabelForTexts, getAllAccessibleNameRefTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import {
+	getEffectiveAriaLabelText,
+	getAssociatedLabelForTexts,
+	getAllAccessibleNameRefTexts,
+	getEffectiveAriaDescriptionText,
+	getAllAccessibleDescriptionRefTexts,
+} from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -336,6 +342,24 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 */
 	@property()
 	accessibleNameRef?: string;
+
+	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.14.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that describe the input.
+	 * @default undefined
+	 * @public
+	 * @since 2.14.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
 
 	@property({ type: Object })
 	_respPopoverConfig?: object;
@@ -768,7 +792,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	get _headerTitleText() {
-		return this._inputLabelTexts || DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return this.ariaLabelText || DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get showHeader() {
@@ -793,14 +817,15 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	get accInfo(): InputAccInfo {
 		return {
-			"ariaRoledescription": this.dateAriaDescription,
+			"ariaRoledescription": this.roleDescription,
 			"ariaHasPopup": "grid",
 			"ariaRequired": this.required,
-			"ariaLabel": this._inputLabelTexts || undefined,
+			"ariaLabel": this.ariaLabelText || undefined,
+			"ariaDescription": getAllAccessibleDescriptionRefTexts(this) || getEffectiveAriaDescriptionText(this) || undefined,
 		};
 	}
 
-	get _inputLabelTexts() {
+	get ariaLabelText() {
 		return getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || "";
 	}
 
@@ -841,12 +866,12 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return "appointment-2";
 	}
 
-	get dateAriaDescription() {
+	get roleDescription() {
 		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
 	}
 
 	get pickerAccessibleName() {
-		return `${this._inputLabelTexts} ${DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME)}`.trim();
+		return DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME, this.ariaLabelText);
 	}
 
 	/**
