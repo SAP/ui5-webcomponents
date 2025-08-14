@@ -4,7 +4,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import {
 	isSpace,
 	isSpaceCtrl,
-	isSpaceShift,
 	isSpaceMeta,
 	isEnter,
 	isEnterShift,
@@ -277,7 +276,8 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 
 	_onkeyup(e: KeyboardEvent) {
 		// "Space" + "Alt" is missing since it opens the window menu — this is a global system shortcut
-		if (isSpace(e) || isSpaceShift(e) || isSpaceCtrl(e) || isSpaceMeta(e)) {
+		// "Space" + "Shift" is missing since in mot browsers it scrolls the page up by one full page
+		if (isSpace(e) || isSpaceCtrl(e) || isSpaceMeta(e)) {
 			this._activate(e);
 
 			if (this.href && !e.defaultPrevented) {

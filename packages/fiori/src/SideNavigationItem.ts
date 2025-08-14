@@ -8,7 +8,12 @@ import {
 	isLeft,
 	isRight,
 	isSpace,
+	isSpaceCtrl,
+	isSpaceMeta,
 	isEnter,
+	isEnterShift,
+	isEnterCtrl,
+	isEnterAlt,
 	isMinus,
 	isPlus,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -261,12 +266,15 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
-		if (this.unselectable && isSpace(e)) {
+		// "Space" + "Alt" is missing since it opens the window menu — this is a global system shortcut
+		// "Space" + "Shift" is missing since in mot browsers it scrolls the page up by one full page
+		if (this.unselectable && (isSpace(e) || isSpaceCtrl(e) || isSpaceMeta(e))) {
 			this._toggle();
 			return;
 		}
 
-		if (this.unselectable && isEnter(e)) {
+		// "Enter" + "Meta" is missing since it is often reserved by the operating system or window manager
+		if (this.unselectable && (isEnter(e) || isEnterShift(e) || isEnterCtrl(e) || isEnterAlt(e))) {
 			this._toggle();
 		}
 

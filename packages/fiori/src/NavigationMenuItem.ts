@@ -5,7 +5,15 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
 import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 import NavigationMenu from "./NavigationMenu.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isSpaceCtrl,
+	isSpaceMeta,
+	isEnter,
+	isEnterShift,
+	isEnterCtrl,
+	isEnterAlt,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 
 // Templates
@@ -163,11 +171,12 @@ class NavigationMenuItem extends MenuItem {
 	}
 
 	async _onkeydown(e: KeyboardEvent): Promise<void> {
-		if (isSpace(e)) {
+		if (isSpace(e) || isSpaceCtrl(e) || isSpaceMeta(e)) {
 			e.preventDefault();
 		}
 
-		if (isEnter(e)) {
+		// "Enter" + "Meta" is missing since it is often reserved by the operating system or window manager
+		if (isEnter(e) || isEnterShift(e) || isEnterCtrl(e) || isEnterAlt(e)) {
 			this._activate(e);
 		}
 
@@ -175,7 +184,10 @@ class NavigationMenuItem extends MenuItem {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
-		if (isSpace(e)) {
+		// "Space" + "Alt" is missing since it opens the window menu — this is a global system shortcut
+		// "Space" + "Shift" is missing since in mot browsers it scrolls the page up by one full page
+		if (isSpace(e) || isSpaceCtrl(e) || isSpaceMeta(e)) {
+			e.preventDefault();
 			this._activate(e);
 
 			if (this.href && !e.defaultPrevented) {

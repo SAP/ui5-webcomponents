@@ -17,10 +17,7 @@ import {
 	isTablet,
 	isCombi,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import {
-	isSpace,
-	isEnter,
-} from "@ui5/webcomponents-base/dist/Keys.js";
+
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import { isInstanceOfSideNavigationSelectableItemBase } from "./SideNavigationSelectableItemBase.js";
@@ -714,22 +711,6 @@ class SideNavigation extends UI5Element {
 
 	get isOverflow() {
 		return this._isOverflow;
-	}
-
-	_onkeydownOverflow(e: KeyboardEvent) {
-		if (isSpace(e)) {
-			e.preventDefault();
-		}
-
-		if (isEnter(e)) {
-			this._handleOverflowClick();
-		}
-	}
-
-	_onkeyupOverflow(e: KeyboardEvent) {
-		if (isSpace(e)) {
-			this._handleOverflowClick();
-		}
 	}
 
 	captureRef(ref: HTMLElement & { associatedItem?: UI5Element} | null) {
