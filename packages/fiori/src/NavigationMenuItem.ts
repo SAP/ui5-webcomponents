@@ -184,7 +184,6 @@ class NavigationMenuItem extends MenuItem {
 	_onkeyup(e: KeyboardEvent) {
 		// "Space" + modifier is often reserved by the operating system or window manager
 		if (isSpace(e)) {
-			e.preventDefault();
 			this._activate(e);
 
 			if (this.href && !e.defaultPrevented) {

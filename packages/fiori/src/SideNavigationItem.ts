@@ -263,7 +263,8 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			this.expanded = true;
 			return;
 		}
-// "Space" + modifier is often reserved by the operating system or window manager
+
+		// "Space" + modifier is often reserved by the operating system or window manager
 		if (this.unselectable && isSpace(e)) {
 			this._toggle();
 			return;
