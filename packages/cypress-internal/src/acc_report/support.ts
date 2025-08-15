@@ -49,10 +49,15 @@ declare global {
 }
 
 Cypress.Commands.add("ui5CheckA11y", (context?: string | Node | undefined, options?: Options | undefined) => {
-    return cy.checkA11y(context || "[data-cy-root]", options, checkA11TerminalLog, false)
+    if (Cypress.env('ui5AccTasksRegistered') === "axe") {
+        return cy.checkA11y(context || "[data-cy-root]", options, checkA11TerminalLog, false)
+    } else if (Cypress.env('ui5AccTasksRegistered') === "continuum") {
+        return cy.runAllTestsForAssertions();
+    }
+
 })
 
-if (Cypress.env('ui5AccTasksRegistered') === true) {
+if (Cypress.env('ui5AccTasksRegistered') === "axe") {
     before(() => {
         cy.task('ui5ReportA11yReset', Cypress.spec.relative);
     })

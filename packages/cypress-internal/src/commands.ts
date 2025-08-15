@@ -3,6 +3,7 @@ import { renderFinished } from '@ui5/webcomponents-base/dist/Render.js';
 import "cypress-real-events";
 import '@cypress/code-coverage/support';
 import "./acc_report/support.js";
+import "./acc_report/support_continuum.js";
 import "./helpers.js";
 
 Cypress.Commands.add('waitRenderFinished', () => {
