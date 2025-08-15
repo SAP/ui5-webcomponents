@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.0...v2.14.0-rc.1) (2025-08-14)
+
+
+### Features
+
+* **ui5-dynamic-date-range:** introduce last/next X options ([#11621](https://github.com/SAP/ui5-webcomponents/issues/11621)) ([50fd58d](https://github.com/SAP/ui5-webcomponents/commit/50fd58d734a2bfda646d79eb099172121a3635d7))
+* **ui5-product-switch-item:** added image slot ([#11965](https://github.com/SAP/ui5-webcomponents/issues/11965)) ([79903f4](https://github.com/SAP/ui5-webcomponents/commit/79903f4fbc83a9a67ee851b175c04b9eaf533cdb))
+
+
+
+
+
+# [2.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0...v2.14.0-rc.0) (2025-08-07)
+
+
+### Features
+
+* **ui5-date-picker:** add valueFormat and displayFormat ([#11751](https://github.com/SAP/ui5-webcomponents/issues/11751)) ([2acdbcc](https://github.com/SAP/ui5-webcomponents/commit/2acdbcc4f6e59b01987c7a9456d455bccecf3a8e)), closes [#1957](https://github.com/SAP/ui5-webcomponents/issues/1957)
+
+
+
+
+
+# [2.13.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.3...v2.13.0) (2025-08-04)
+
+
+### Features
+
+* **ui5-li-group:** introduced wrappingType prop ([#12022](https://github.com/SAP/ui5-webcomponents/issues/12022)) ([4c1a506](https://github.com/SAP/ui5-webcomponents/commit/4c1a50661fdc349682ff4c8fc1bb28d9eb43f5b2))
+
+
+
+
+
 # [2.13.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0-rc.2...v2.13.0-rc.3) (2025-07-31)
 
 
