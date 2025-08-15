@@ -1396,47 +1396,47 @@ describe("Select general interaction", () => {
 
 	it("navigates with ArrowDown when initial value does not match any option", () => {
 		cy.mount(
-			<Select id="sel-down" value="missing">
+			<Select value="missing">
 				<Option value="A">A</Option>
 				<Option value="B">B</Option>
 				<Option value="C">C</Option>
 			</Select>
 		);
 
-		cy.get("#sel-down")
-			.should("have.attr", "value", "missing")
+		cy.get("[ui5-select]")
+			.should("have.prop", "value", "missing")
 			.find("[ui5-option][selected]")
 			.should("not.exist");
 
-		cy.get("#sel-down").realClick().realPress("ArrowDown");
+		cy.get("[ui5-select]").realClick().realPress("ArrowDown");
 
-		cy.get("#sel-down")
+		cy.get("[ui5-select]")
 			.find("[ui5-option]")
 			.eq(0)
 			.should("have.attr", "selected");
-		cy.get("#sel-down").should("have.prop", "value", "A");
+		cy.get("[ui5-select]").should("have.prop", "value", "A");
 	});
 
 	it("navigates with ArrowUp when initial value does not match any option", () => {
 		cy.mount(
-			<Select id="sel-up" value="missing">
+			<Select value="missing">
 				<Option value="A">A</Option>
 				<Option value="B">B</Option>
 				<Option value="C">C</Option>
 			</Select>
 		);
 
-		cy.get("#sel-up")
-			.should("have.attr", "value", "missing")
+		cy.get("[ui5-select]")
+			.should("have.prop", "value", "missing")
 			.find("[ui5-option][selected]")
 			.should("not.exist");
 
-		cy.get("#sel-up").realClick().realPress("ArrowUp");
+		cy.get("[ui5-select]").realClick().realPress("ArrowUp");
 
-		cy.get("#sel-up")
+		cy.get("[ui5-select]")
 			.find("[ui5-option]")
 			.eq(2)
 			.should("have.attr", "selected");
-		cy.get("#sel-up").should("have.prop", "value", "C");
+		cy.get("[ui5-select]").should("have.prop", "value", "C");
 	});
 });
