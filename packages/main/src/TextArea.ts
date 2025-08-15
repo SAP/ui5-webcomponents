@@ -373,8 +373,8 @@ class TextArea extends UI5Element implements IFormInputElement {
 	onAfterRendering() {
 		const nativeTextArea = this.getInputDomRef()!;
 
-		if (this.rows === 1) {
-			nativeTextArea.setAttribute("rows", "1");
+		if (this.rows > 0) {
+			nativeTextArea.setAttribute("rows", String(this.rows));
 		} else {
 			nativeTextArea.removeAttribute("rows");
 		}
