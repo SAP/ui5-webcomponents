@@ -21,8 +21,17 @@ describe("Icon general interaction", () => {
             .shadow()
             .find(".ui5-icon-root")
             .should("exist");
-
-        cy.get("[ui5-icon][show-tooltip]").should("have.prop", "showTooltip", true);
+    
+        cy.get("[ui5-icon][show-tooltip]").then(($icon) => {
+            cy.wrap($icon[0])
+                .invoke("prop", "_id")
+                .then((iconId) => {
+                    cy.get("[ui5-icon][show-tooltip]")
+                        .shadow()
+                        .find(`#${iconId}-tooltip`)
+                        .should("contain.text", "Save");
+                });
+        });
     });
 
     it("Tests events 'click' and 'ui5-click' events", () => {
