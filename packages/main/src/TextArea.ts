@@ -48,6 +48,10 @@ type ExceededText = {
 	calcedMaxLength?: number;
 };
 
+type TextAreaInputEventDetail = {
+	escapePressed?: boolean;
+};
+
 /**
  * @class
  *
@@ -97,10 +101,12 @@ type ExceededText = {
  * Fired when the value of the component changes at each keystroke or when
  * something is pasted.
  * @since 1.0.0-rc.5
+ * @param {boolean} escapePressed Indicates whether the Escape key was pressed, which triggers a revert to the previous value
  * @public
  */
 @event("input", {
 	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -126,7 +132,7 @@ type ExceededText = {
 class TextArea extends UI5Element implements IFormInputElement {
 	eventDetails!: {
 		"change": void;
-		"input": void;
+		"input": TextAreaInputEventDetail;
 		"select": void;
 		"scroll": void;
 		"value-changed": void;
@@ -393,9 +399,14 @@ class TextArea extends UI5Element implements IFormInputElement {
 		if (isEscape(e)) {
 			const nativeTextArea = this.getInputDomRef();
 
-			this.value = this.previousValue;
-			nativeTextArea.value = this.value;
-			this.fireDecoratorEvent("input");
+			const prevented = !this.fireDecoratorEvent("input", {
+				escapePressed: true,
+			});
+
+			if (!prevented) {
+				this.value = this.previousValue;
+				nativeTextArea.value = this.value;
+			}
 		}
 	}
 
@@ -641,3 +652,4 @@ class TextArea extends UI5Element implements IFormInputElement {
 TextArea.define();
 
 export default TextArea;
+export type { TextAreaInputEventDetail };

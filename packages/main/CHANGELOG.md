@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.0...v2.14.0-rc.1) (2025-08-14)
+
+
+### Bug Fixes
+
+* **ui5-button:** announce the text node properly ([#12077](https://github.com/SAP/ui5-webcomponents/issues/12077)) ([684f1fc](https://github.com/SAP/ui5-webcomponents/commit/684f1fc60e20ae5a33784399f91fc1533f14afba))
+* **ui5-list-item:** adjust line height for byline ([#12063](https://github.com/SAP/ui5-webcomponents/issues/12063)) ([191b700](https://github.com/SAP/ui5-webcomponents/commit/191b700cbe707b0155b97cead1bb7dd7e930c1ee))
+* **ui5-select:** aria-controls attr added ([#12050](https://github.com/SAP/ui5-webcomponents/issues/12050)) ([39f8e66](https://github.com/SAP/ui5-webcomponents/commit/39f8e664d6a02a4675ff79ff44ca7c231c998cce)), closes [#12018](https://github.com/SAP/ui5-webcomponents/issues/12018)
+
+
+### Features
+
+* **ui5-dynamic-date-range:** introduce last/next X options ([#11621](https://github.com/SAP/ui5-webcomponents/issues/11621)) ([50fd58d](https://github.com/SAP/ui5-webcomponents/commit/50fd58d734a2bfda646d79eb099172121a3635d7))
+* **ui5-product-switch-item:** added image slot ([#11965](https://github.com/SAP/ui5-webcomponents/issues/11965)) ([79903f4](https://github.com/SAP/ui5-webcomponents/commit/79903f4fbc83a9a67ee851b175c04b9eaf533cdb))
+
+
+
+
+
 # [2.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0...v2.14.0-rc.0) (2025-08-07)
 
 
