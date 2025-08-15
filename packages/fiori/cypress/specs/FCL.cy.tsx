@@ -108,6 +108,9 @@ describe("Columns resize", () => {
 			.should("have.class", "ui5-fcl-column--hidden");
 
 		cy.get("@fcl")
+			.invoke("prop", "layout", "TwoColumnsMidExpanded");
+
+		cy.get("@fcl")
 			.shadow()
 			.find(".ui5-fcl-column--end")
 			.should("have.class", "ui5-fcl-column-animation");
