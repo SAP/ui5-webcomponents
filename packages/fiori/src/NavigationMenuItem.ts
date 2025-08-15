@@ -7,8 +7,6 @@ import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 import NavigationMenu from "./NavigationMenu.js";
 import {
 	isSpace,
-	isSpaceCtrl,
-	isSpaceMeta,
 	isEnter,
 	isEnterShift,
 	isEnterCtrl,
@@ -171,7 +169,7 @@ class NavigationMenuItem extends MenuItem {
 	}
 
 	async _onkeydown(e: KeyboardEvent): Promise<void> {
-		if (isSpace(e) || isSpaceCtrl(e) || isSpaceMeta(e)) {
+		if (isSpace(e)) {
 			e.preventDefault();
 		}
 
@@ -184,9 +182,8 @@ class NavigationMenuItem extends MenuItem {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
-		// "Space" + "Alt" is missing since it opens the window menu — this is a global system shortcut
-		// "Space" + "Shift" is missing since in mot browsers it scrolls the page up by one full page
-		if (isSpace(e) || isSpaceCtrl(e) || isSpaceMeta(e)) {
+		// "Space" + modifier is often reserved by the operating system or window manager
+		if (isSpace(e)) {
 			e.preventDefault();
 			this._activate(e);
 

@@ -8,8 +8,6 @@ import {
 	isLeft,
 	isRight,
 	isSpace,
-	isSpaceCtrl,
-	isSpaceMeta,
 	isEnter,
 	isEnterShift,
 	isEnterCtrl,
@@ -265,10 +263,8 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			this.expanded = true;
 			return;
 		}
-
-		// "Space" + "Alt" is missing since it opens the window menu — this is a global system shortcut
-		// "Space" + "Shift" is missing since in mot browsers it scrolls the page up by one full page
-		if (this.unselectable && (isSpace(e) || isSpaceCtrl(e) || isSpaceMeta(e))) {
+// "Space" + modifier is often reserved by the operating system or window manager
+		if (this.unselectable && isSpace(e)) {
 			this._toggle();
 			return;
 		}
