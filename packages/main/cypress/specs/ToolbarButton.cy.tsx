@@ -54,6 +54,7 @@ describe("Toolbar general interaction", () => {
             <Toolbar>
                 <ToolbarButton 
                     accessibleName="Add"
+                    accessibilityAttributes={{ expanded: "true", controls: "btn", hasPopup: "dialog" }}
                 />
             </Toolbar>
         );
@@ -62,7 +63,9 @@ describe("Toolbar general interaction", () => {
             .find("[ui5-toolbar-button][accessible-name]")
             .shadow()
             .find("[ui5-button]")
-            .should("have.prop", "accessibilityAttributes")
-            .and("be.an", "object");
+            .invoke("prop", "accessibilityAttributes")
+            .then((accessibilityAttributes) => {
+                expect(accessibilityAttributes).to.have.property("expanded", "true");
+            });
     });
 });

@@ -345,6 +345,13 @@ describe("Toolbar general interaction", () => {
 			.shadow()
 			.find("ui5-button")
 			.should("have.prop", "tagName", "UI5-BUTTON");
+
+		cy.viewport(200, 400);
+
+		cy.get("[ui5-toolbar]")
+			.find("[ui5-toolbar-button][overflow-priority='NeverOverflow']")
+			.should("be.visible")
+			.should("have.length", 2);
 	});
 	
 	it("Should call child events only once", () => {
