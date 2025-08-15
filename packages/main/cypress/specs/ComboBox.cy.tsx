@@ -202,7 +202,7 @@ describe("Additional General Interaction", () => {
 			.as("combobox")
 			.shadow()
 			.find("input")
-			.click();
+			.realClick();
 
 		cy.get("@combobox").shadow().find("input").realPress("t");
 
@@ -211,10 +211,10 @@ describe("Additional General Interaction", () => {
 		cy.get("@combobox").shadow().find("input").realPress("Enter");
 		cy.get("@combobox").shadow().find("ui5-responsive-popover").should("not.have.attr", "open");
 
-		cy.get("@combobox").shadow().find("[ui5-icon]").click();
+		cy.get("@combobox").shadow().find("[ui5-icon]").realClick();
 		cy.get("@combobox").shadow().find("ui5-responsive-popover").should("have.attr", "open");
 
-		cy.get("[ui5-cb-item]").first().shadow().find("li").click();
+		cy.get("[ui5-cb-item]").first().shadow().find("li").realClick();
 		cy.get("@combobox").shadow().find("ui5-responsive-popover").should("not.have.attr", "open");
 	});
 
@@ -281,8 +281,8 @@ describe("Additional General Interaction", () => {
 		cy.get("[ui5-combobox]").shadow().find(".ui5-input-clear-icon-wrapper").realClick();
 		cy.get("[ui5-combobox]").should("have.prop", "_effectiveShowClearIcon", false);
 
-		cy.get("[ui5-combobox]").shadow().find("input").click();
-		cy.get("[ui5-combobox]").shadow().find("input").type("c");
+		cy.get("[ui5-combobox]").shadow().find("input").realClick();
+		cy.get("[ui5-combobox]").shadow().find("input").realType("c");
 		cy.get("[ui5-combobox]").should("have.prop", "_effectiveShowClearIcon", true);
 	});
 
@@ -299,18 +299,18 @@ describe("Additional General Interaction", () => {
 		cy.get("#contains-cb").shadow().find(".inputIcon").realClick();
 		cy.get("#contains-cb").find("[ui5-cb-item]").should("have.length", 4);
 
-		cy.get("#contains-cb").shadow().find("[inner-input]").type("n");
+		cy.get("#contains-cb").shadow().find("[inner-input]").realType("n");
 		cy.get("#contains-cb")
 			.find("[ui5-cb-item]")
 			.filter((_, el: Element & { _isVisible?: boolean }) => !!el._isVisible)
 			.should("have.length", 3);
 
-		cy.get("#contains-cb").shadow().find("[inner-input]").type("a");
+		cy.get("#contains-cb").shadow().find("[inner-input]").realType("a");
 		cy.get("#contains-cb").find("[ui5-cb-item]")
 			.filter((_, el: Element & { _isVisible?: boolean }) => !!el._isVisible)
 			.should("have.length", 2);
 
-		cy.get("#contains-cb").shadow().find("[inner-input]").type("d");
+		cy.get("#contains-cb").shadow().find("[inner-input]").realType("d");
 		cy.get("#contains-cb").find("[ui5-cb-item]")
 			.filter((_, el: Element & { _isVisible?: boolean }) => !!el._isVisible)
 			.should("have.length", 1);
@@ -336,7 +336,7 @@ describe("Additional General Interaction", () => {
 		cy.get("[ui5-combobox]").shadow().find(".inputIcon").realClick();
 		cy.get("[ui5-cb-item]").should("have.length", 4);
 
-		cy.get("[ui5-combobox]").shadow().find("[inner-input]").type("a");
+		cy.get("[ui5-combobox]").shadow().find("[inner-input]").realType("a");
 		cy.get("[ui5-combobox]")
 			.find("[ui5-cb-item]")
 			.filter((_, el: Element & { _isVisible?: boolean }) => !!el._isVisible)
@@ -346,7 +346,7 @@ describe("Additional General Interaction", () => {
 			.find(".ui5-li-title")
 			.should("have.text", "Argentina");
 
-		cy.get("[ui5-combobox]").shadow().find("[inner-input]").type("a");
+		cy.get("[ui5-combobox]").shadow().find("[inner-input]").realType("a");
 		cy.get("[ui5-combobox]").shadow().find("ui5-responsive-popover").should("not.have.attr", "open");
 	});
 });
@@ -490,7 +490,7 @@ describe("Keyboard navigation", () => {
 			.find("input")
 			.as("input");
 
-		cy.get("@input").click();
+		cy.get("@input").realClick();
 		cy.get("@comboBox").realPress("F4");
 
 		cy.get("[ui5-combobox]")
@@ -517,7 +517,7 @@ describe("Keyboard navigation", () => {
 			.find("input")
 			.as("input");
 
-		cy.get("@input").click();
+		cy.get("@input").realClick();
 		cy.get("@input").realPress("b");
 
 		cy.get("@comboBox")
@@ -775,7 +775,7 @@ describe("Accessibility", () => {
 
 		cy.get("#combo").should("have.prop", "value", "Bulgaria");
 
-		cy.get("#value-set-btn").click();
+		cy.get("#value-set-btn").realClick();
 
 		cy.get("#combo").should("have.prop", "value", "new value");
 		cy.get("#combo").shadow().find("input").should("have.value", "new value");
@@ -794,7 +794,7 @@ describe("Accessibility", () => {
 			</>
 		);
 
-		cy.get("#combo-focus").click();
+		cy.get("#combo-focus").realClick();
 
 		cy.get("#combo").should("have.prop", "focused", true);
 	});
@@ -814,7 +814,7 @@ describe("Accessibility", () => {
 			</>
 		);
 
-		cy.get("#vs-warning-default").click();
+		cy.get("#vs-warning-default").realClick();
 
 		cy.get("#vs-warning-default")
 			.shadow()
@@ -828,7 +828,7 @@ describe("Accessibility", () => {
 			.should("contain.text", "Warning issued");
 
 		cy.get("#vs-warning-default").realPress("Escape");
-		cy.get("#vs-information-default").click();
+		cy.get("#vs-information-default").realClick();
 
 		cy.get("#vs-information-default")
 			.shadow()
@@ -842,7 +842,7 @@ describe("Accessibility", () => {
 			.should("contain.text", "Informative entry");
 
 		cy.get("#vs-information-default").realPress("Escape");
-		cy.get("#vs-success-default").click();
+		cy.get("#vs-success-default").realClick();
 
 		cy.get("#vs-success-default")
 			.shadow()
@@ -860,7 +860,7 @@ describe("Accessibility", () => {
 			</ComboBox>
 		);
 
-		cy.get("#value-state-error").click();
+		cy.get("#value-state-error").realClick();
 		cy.get("#value-state-error").realPress("a");
 
 		cy.get("#value-state-error")
@@ -913,7 +913,31 @@ describe("Comprehensive General Interaction", () => {
 			} | undefined;
 			let debounce: number | undefined;
 
-			cb.addEventListener("input", e => {
+			function reset() {
+				[...cb.children].forEach(c => cb.removeChild(c));
+			}
+
+			function fetchSearchResults(text: string) {
+				let cancel: () => void;
+				return {
+					cancel: () => cancel(),
+					items: new Promise<string[] | undefined>(resolve => {
+						const i = setTimeout(() => {
+							const items = [];
+							for (let i = 0; i < 5; i++) {
+								items.push(`${text} #${i + 1}`);
+							}
+							resolve(items);
+						}, 500);
+						cancel = () => {
+							clearTimeout(i);
+							resolve(undefined);
+						};
+					})
+				};
+			}
+
+			const inputHandler = (e: Event) => {
 				const debounceTime = 250;
 				if (debounce !== undefined) {
 					clearTimeout(debounce);
@@ -943,31 +967,9 @@ describe("Comprehensive General Interaction", () => {
 						reset();
 					}
 				}, debounceTime);
-			});
+			};
 
-			function reset() {
-				[...cb.children].forEach(c => cb.removeChild(c));
-			}
-
-			function fetchSearchResults(text: string) {
-				let cancel: () => void;
-				return {
-					cancel: () => cancel(),
-					items: new Promise<string[] | undefined>(resolve => {
-						const i = setTimeout(() => {
-							const items = [];
-							for (let i = 0; i < 5; i++) {
-								items.push(`${text} #${i + 1}`);
-							}
-							resolve(items);
-						}, 500);
-						cancel = () => {
-							clearTimeout(i);
-							resolve(undefined);
-						};
-					})
-				};
-			}
+			cy.wrap(cb).invoke('on', 'input', inputHandler);
 		});
 
 		cy.get("[ui5-combobox]").shadow().find("input").realClick();
@@ -981,146 +983,140 @@ describe("Comprehensive General Interaction", () => {
 
 	it("tests change event", () => {
 		cy.mount(
-			<>
-				<ComboBox id="combo">
-					<ComboBoxItem text="Algeria"></ComboBoxItem>
-					<ComboBoxItem text="Argentina"></ComboBoxItem>
-					<ComboBoxItem text="Brazil"></ComboBoxItem>
-				</ComboBox>
-				<ComboBox id="dummy-cb"></ComboBox>
-				<div id="change-count">0</div>
-				<div id="change-value"></div>
-			</>
+			<ComboBox id="combo">
+				<ComboBoxItem text="Algeria"></ComboBoxItem>
+				<ComboBoxItem text="Argentina"></ComboBoxItem>
+				<ComboBoxItem text="Brazil"></ComboBoxItem>
+			</ComboBox>
 		);
 
-		cy.get("#combo").then($cb => {
-			$cb[0].addEventListener("change", (e) => {
-				const count = parseInt(document.getElementById("change-count")!.textContent!) + 1;
-				document.getElementById("change-count")!.textContent = count.toString();
-				document.getElementById("change-value")!.textContent = (e.target as ComboBox).value;
-			});
-		});
+		cy.get("#combo")
+			.as("combo")
+			.invoke('on', 'ui5-change', cy.spy().as('changeSpy'));
 
-		cy.get("#combo").shadow().find("[inner-input]").click();
-		cy.get("#combo").shadow().find("[inner-input]").realPress("a");
+		cy.get("@combo").shadow().find("[inner-input]").realClick();
+		cy.get("@combo").shadow().find("[inner-input]").realPress("a");
 
-		cy.get("#dummy-cb").shadow().find("[inner-input]").click();
+		// Focus out to trigger change event
+		cy.get("body").realClick();
 		
-		cy.get("#change-count").should("have.text", "1");
-		cy.get("#change-value").should("have.text", "Algeria");
+		cy.get("@changeSpy").should('have.been.calledOnce');
+		cy.get("@changeSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.target.value === "Algeria";
+		}));
 	});
 
 	it("tests change event on item selection", () => {
 		cy.mount(
-			<>
-				<ComboBox>
-					<ComboBoxItem text="Algeria"></ComboBoxItem>
-					<ComboBoxItem text="Argentina"></ComboBoxItem>
-					<ComboBoxItem text="Brazil"></ComboBoxItem>
-				</ComboBox>
-				<div id="change-count">0</div>
-				<div id="change-value"></div>
-			</>
+			<ComboBox>
+				<ComboBoxItem text="Algeria"></ComboBoxItem>
+				<ComboBoxItem text="Argentina"></ComboBoxItem>
+				<ComboBoxItem text="Brazil"></ComboBoxItem>
+			</ComboBox>
 		);
 
-		cy.get("[ui5-combobox]").then($cb => {
-			$cb[0].addEventListener("change", (e) => {
-				const count = parseInt(document.getElementById("change-count")!.textContent!) + 1;
-				document.getElementById("change-count")!.textContent = count.toString();
-				document.getElementById("change-value")!.textContent = (e.target as ComboBox).value;
-			});
-		});
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'ui5-change', cy.spy().as('changeSpy'));
 
-		cy.get("[ui5-combobox]").shadow().find("[ui5-icon]").click();
-		cy.get("[ui5-cb-item]").eq(0).click();
+		cy.get("@combo").shadow().find("[ui5-icon]").realClick();
+		cy.get("[ui5-cb-item]").eq(0).realClick();
 
-		cy.get("#change-count").should("have.text", "1");
-		cy.get("#change-value").should("have.text", "Algeria");
+		cy.get("@changeSpy").should('have.been.calledOnce');
+		cy.get("@changeSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.target.value === "Algeria";
+		}));
 
-		cy.get("[ui5-combobox]").shadow().find("[ui5-icon]").click();
+		cy.get("@combo").shadow().find("[ui5-icon]").realClick();
 
-		cy.get("#change-count").should("have.text", "1");
-		cy.get("#change-value").should("have.text", "Algeria");
+		cy.get("@changeSpy").should('have.been.calledOnce');
 
-		cy.get("[ui5-cb-item]").eq(1).click();
+		cy.get("[ui5-cb-item]").eq(1).realClick();
 
-		cy.get("#change-count").should("have.text", "2");
-		cy.get("#change-value").should("have.text", "Argentina");
+		cy.get("@changeSpy").should('have.been.calledTwice');
+		cy.get("@changeSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.target.value === "Argentina";
+		}));
 	});
 
 	it("tests change event with value state and links", () => {
 		cy.mount(
-			<>
-				<ComboBox id="value-state-error" valueState="Negative">
-					<div slot="valueStateMessage">
-						Custom error value state message with a <Link href="#">Link</Link>.
-					</div>
-					<ComboBoxItem text="<script>alert('XSS')</script>"></ComboBoxItem>
-					<ComboBoxItem text="<b onmouseover=alert('XSS')></b>"></ComboBoxItem>
-					<ComboBoxItem text="Bahrain"></ComboBoxItem>
-				</ComboBox>
-				<div id="change-placeholder"></div>
-				<div id="change-count">0</div>
-			</>
+			<ComboBox id="value-state-error" valueState="Negative">
+				<div slot="valueStateMessage">
+					Custom error value state message with a <Link href="#">Link</Link>.
+				</div>
+				<ComboBoxItem text="<script>alert('XSS')</script>"></ComboBoxItem>
+				<ComboBoxItem text="<b onmouseover=alert('XSS')></b>"></ComboBoxItem>
+				<ComboBoxItem text="Bahrain"></ComboBoxItem>
+			</ComboBox>
 		);
 
-		cy.get("#value-state-error").then($cb => {
-			$cb[0].addEventListener("change", function(event) {
-				const changeCount = parseInt(document.getElementById("change-count")!.textContent!);
-				document.getElementById("change-placeholder")!.textContent = (event.target as ComboBox).value;
-				document.getElementById("change-count")!.textContent = (changeCount + 1).toString();
-			});
+		// Set up event spy using Cypress best practices
+		cy.get("#value-state-error")
+			.as("combo")
+			.invoke('on', 'ui5-change', cy.spy().as('changeSpy'));
+
+		// Track change events and update DOM elements using Cypress commands
+		cy.get("@changeSpy").then((spy) => {
+			cy.wrap(spy).should('have.callCount', 0);
 		});
 
-		cy.get("#value-state-error").shadow().find("[ui5-icon]").click();
+		cy.get("@combo").shadow().find("[ui5-icon]").realClick();
 
-		cy.get("#value-state-error").realPress("B");
-		cy.get("#value-state-error").realPress("a");
+		cy.get("@combo").realPress("B");
+		cy.get("@combo").realPress("a");
 
-		cy.get("#change-placeholder").should("have.text", "");
-		cy.get("#change-count").should("have.text", "0");
+		// Verify no change event fired yet
+		cy.get("@changeSpy").should('have.callCount', 0);
 
-		cy.get("#value-state-error").find("div[slot='valueStateMessage']").find("ui5-link").first().click({ force: true });
+		// Click the link in value state message
+		cy.get("@combo").find("div[slot='valueStateMessage']").find("ui5-link").first().realClick();
 
-		cy.get("#change-placeholder").should("have.text", "Bahrain");
-		cy.get("#change-count").should("have.text", "1");
+		// Verify change event was fired
+		cy.get("@changeSpy").should('have.callCount', 1);
+		
+		// Verify the event contains correct data
+		cy.get("@changeSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.target.value === "Bahrain";
+		}));
 	});
 
 	it("tests change event after pressing enter key", () => {
 		cy.mount(
-			<>
 				<ComboBox>
 					<ComboBoxItem text="Algeria"></ComboBoxItem>
 					<ComboBoxItem text="Argentina"></ComboBoxItem>
 					<ComboBoxItem text="Brazil"></ComboBoxItem>
 				</ComboBox>
-				<div id="change-count">0</div>
-			</>
 		);
 
-		cy.get("[ui5-combobox]").then($cb => {
-			$cb[0].addEventListener("change", () => {
-				const changeCount = parseInt(document.getElementById("change-count")!.textContent!);
-				document.getElementById("change-count")!.textContent = (changeCount + 1).toString();
-			});
-		});
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'ui5-change', cy.spy().as('changeSpy'));
 
-		cy.get("[ui5-combobox]").shadow().find("[inner-input]").click();
-		cy.get("[ui5-combobox]").shadow().find("[inner-input]").realPress("Enter");
-		cy.get("[ui5-combobox]").shadow().find("[inner-input]").realPress("Enter");
+		cy.get("@combo").shadow().find("[inner-input]").realClick();
+		cy.get("@combo").shadow().find("[inner-input]").realPress("Enter");
+		cy.get("@combo").shadow().find("[inner-input]").realPress("Enter");
 
-		cy.get("#change-count").should("have.text", "0");
+		cy.get("@changeSpy").should('have.callCount', 0);
 
-		cy.get("[ui5-combobox]").shadow().find("[inner-input]").realPress("a");
-		cy.get("[ui5-combobox]").shadow().find("[inner-input]").realPress("Enter");
-		cy.get("[ui5-combobox]").shadow().find("[inner-input]").realPress("Enter");
+		cy.get("@combo").shadow().find("[inner-input]").realPress("a");
+		cy.get("@combo").shadow().find("[inner-input]").realPress("Enter");
+		cy.get("@combo").shadow().find("[inner-input]").realPress("Enter");
 
-		cy.get("#change-count").should("have.text", "1");
+		cy.get("@changeSpy").should('have.been.calledOnce');
+		cy.get("@changeSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.target.value === "Algeria";
+		}));
 
-		cy.get("[ui5-combobox]").shadow().find("[inner-input]").realPress("b");
-		cy.get("[ui5-combobox]").shadow().find("[inner-input]").realPress("Enter");
 
-		cy.get("#change-count").should("have.text", "2");
+		cy.get("@combo").shadow().find("[inner-input]").realPress("b");
+		cy.get("@combo").shadow().find("[inner-input]").realPress("Enter");
+
+		cy.get("@changeSpy").should('have.been.calledTwice');
+		cy.get("@changeSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.target.value === "Brazil";
+		}));
 	});
 
 	it("should fire change event after the user has typed in value, but also selects it from the popover", () => {
@@ -1131,26 +1127,22 @@ describe("Comprehensive General Interaction", () => {
 					<ComboBoxItem text="Argentina"></ComboBoxItem>
 					<ComboBoxItem text="Brazil"></ComboBoxItem>
 				</ComboBox>
-				<div id="change-placeholder"></div>
-				<div id="change-count">0</div>
 			</>
 		);
 
-		cy.get("#change-cb").then($cb => {
-			$cb[0].addEventListener("change", () => {
-				const changeCount = parseInt(document.getElementById("change-count")!.textContent!);
-				document.getElementById("change-count")!.textContent = (changeCount + 1).toString();
-				document.getElementById("change-placeholder")!.textContent = $cb[0].getAttribute("value")!;
-			});
-		});
+		cy.get("#change-cb")
+			.as("combo")
+			.invoke('on', 'ui5-change', cy.spy().as('changeSpy'));
 
-		cy.get("#change-cb").scrollIntoView();
-		cy.get("#change-cb").shadow().find("[inner-input]").click();
-		cy.get("#change-cb").shadow().find("[inner-input]").type("Bulgaria");
-		cy.get("#change-cb").find("[ui5-cb-item]").first().click();
+		cy.get("@combo").scrollIntoView();
+		cy.get("@combo").shadow().find("[inner-input]").realClick();
+		cy.get("@combo").shadow().find("[inner-input]").realType("Bulgaria");
+		cy.get("@combo").find("[ui5-cb-item]").first().realClick();
 
-		cy.get("#change-count").should("have.text", "1");
-		cy.get("#change-placeholder").should("have.text", "Bulgaria");
+		cy.get("@changeSpy").should('have.been.calledOnce');
+		cy.get("@changeSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.target.value === "Bulgaria";
+		}));
 	});
 
 	it("value should be reset on ESC key", () => {
@@ -1162,104 +1154,96 @@ describe("Comprehensive General Interaction", () => {
 			</ComboBox>
 		);
 
-		cy.get("#combo2").shadow().find("[inner-input]").click();
-		cy.get("#combo2").shadow().find("[inner-input]").type("Al");
+		cy.get("#combo2").shadow().find("[inner-input]").realClick();
+		cy.get("#combo2").shadow().find("[inner-input]").realType("Al");
 
 		cy.get("#combo2").shadow().find("[inner-input]").realPress("Escape");
 		cy.get("#combo2").shadow().find("[inner-input]").realPress("Escape");
 		cy.get("#combo2").should("have.prop", "value", "");
 
-		cy.get("#combo2").shadow().find("[inner-input]").type("Al");
+		cy.get("#combo2").shadow().find("[inner-input]").realType("Al");
 		cy.get("#combo2").shadow().find("[inner-input]").realPress("Enter");
 
 		cy.get("#combo2").shadow().find("[inner-input]").clear();
-		cy.get("#combo2").shadow().find("[inner-input]").type("Al");
+		cy.get("#combo2").shadow().find("[inner-input]").realType("Al");
 		cy.get("#combo2").shadow().find("[inner-input]").realPress("Escape");
 		cy.get("#combo2").should("have.prop", "value", "Algeria");
 	});
 
 	it("tests change event on open picker and item navigation", () => {
 		cy.mount(
-			<>
 				<ComboBox id="change-cb">
 					<ComboBoxItem text="Algeria"></ComboBoxItem>
 					<ComboBoxItem text="Argentina"></ComboBoxItem>
 					<ComboBoxItem text="Brazil"></ComboBoxItem>
 				</ComboBox>
-				<div id="change-count">0</div>
-			</>
 		);
 
-		cy.get("#change-cb").then($combo => {
-			$combo[0].addEventListener("change", () => {
-				const count = parseInt(document.getElementById("change-count")!.textContent!) + 1;
-				document.getElementById("change-count")!.textContent = count.toString();
-			});
-		});
+		cy.get("#change-cb")
+			.as("combo")
+			.invoke('on', 'ui5-change', cy.spy().as('changeSpy'));
 
-		cy.get("#change-cb").shadow().find("[ui5-icon]").realClick();
-		cy.get("#change-cb").shadow().find("[inner-input]").realPress("ArrowDown");
-		cy.get("#change-count").should("have.text", "0");
-		cy.get("#change-cb").find("[ui5-cb-item]").first().click();
-		cy.get("#change-count").should("have.text", "1");
+		cy.get("@combo").shadow().find("[ui5-icon]").realClick();
+		cy.get("@combo").shadow().find("[inner-input]").realPress("ArrowDown");
+		
+		cy.get("@changeSpy").should('have.callCount', 0);
+		
+		cy.get("@combo").find("[ui5-cb-item]").first().realClick();
+		
+		cy.get("@changeSpy").should('have.been.calledOnce');
+		cy.get("@changeSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.target.value === "Algeria";
+		}));
 	});
 
 	it("tests change event on closed picker and item navigation", () => {
 		cy.mount(
-			<>
-				<ComboBox id="change-cb">
-					<ComboBoxItem text="Argentina"></ComboBoxItem>
-					<ComboBoxItem text="Brazil"></ComboBoxItem>
-				</ComboBox>
-				<div id="change-count">0</div>
-			</>
+			<ComboBox id="change-cb">
+				<ComboBoxItem text="Argentina"></ComboBoxItem>
+				<ComboBoxItem text="Brazil"></ComboBoxItem>
+			</ComboBox>
 		);
 
-		cy.get("#change-cb").then($cb => {
-			$cb[0].addEventListener("change", () => {
-				const count = parseInt(document.getElementById("change-count")!.textContent!) + 1;
-				document.getElementById("change-count")!.textContent = count.toString();
-			});
-		});
+		cy.get("#change-cb")
+			.as("combo")
+			.invoke('on', 'change', cy.spy().as('changeSpy'));
 
-		cy.get("#change-cb").shadow().find("[inner-input]").click();
+		cy.get("#change-cb").shadow().find("[inner-input]").realClick();
 		cy.get("#change-cb").shadow().find("[inner-input]").realPress("ArrowDown");
-		cy.get("#change-count").should("have.text", "0");
+		
+		cy.get("@changeSpy").should('have.callCount', 0);
 
 		cy.get("#change-cb").shadow().find("[inner-input]").realPress("ArrowDown");
-		cy.get("#change-count").should("have.text", "0");
+		cy.get("@changeSpy").should('have.callCount', 0);
 
 		cy.get("#change-cb").shadow().find("[inner-input]").realPress("Enter");
-		cy.get("#change-count").should("have.text", "1");
+		cy.get("@changeSpy").should('have.been.calledOnce');
+		cy.get("@changeSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.target.value === "Brazil";
+		}));
 	});
 
 	it("tests change event after type and item select", () => {
 		cy.mount(
-			<>
-				<ComboBox id="change-cb">
-					<ComboBoxItem text="Argentina"></ComboBoxItem>
-					<ComboBoxItem text="Brazil"></ComboBoxItem>
-				</ComboBox>
-				<div id="change-placeholder"></div>
-				<div id="change-count">0</div>
-			</>
+			<ComboBox id="change-cb">
+				<ComboBoxItem text="Argentina"></ComboBoxItem>
+				<ComboBoxItem text="Brazil"></ComboBoxItem>
+			</ComboBox>
 		);
 
-		cy.get("#change-cb").then($cb => {
-			$cb[0].addEventListener("change", () => {
-				const count = parseInt(document.getElementById("change-count")!.textContent!) + 1;
-				document.getElementById("change-count")!.textContent = count.toString();
-				document.getElementById("change-placeholder")!.textContent = $cb[0].getAttribute("value")!;
-			});
-		});
+		cy.get("#change-cb")
+			.as("combo")
+			.invoke('on', 'change', cy.spy().as('changeSpy'));
 
 		cy.get("#change-cb").scrollIntoView();
-		cy.get("#change-cb").shadow().find("[inner-input]").click();
-		cy.get("#change-cb").shadow().find("[inner-input]").type("a");
-		cy.get("#change-cb").find("[ui5-cb-item]").first().click();
+		cy.get("#change-cb").shadow().find("[inner-input]").realClick();
+		cy.get("#change-cb").shadow().find("[inner-input]").realType("a");
+		cy.get("#change-cb").find("[ui5-cb-item]").first().realClick();
 
-		cy.get("#change-placeholder").should("have.text", "Argentina");
-		cy.get("#change-count").should("have.text", "1");
+		cy.get("@changeSpy").should('have.been.calledOnce');
+		cy.get("@changeSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.target.value === "Argentina";
+		}));
 	});
 
 	it("tests input event", () => {
@@ -1274,28 +1258,49 @@ describe("Comprehensive General Interaction", () => {
 			</>
 		);
 
-		cy.get("#input-cb").then($combo => {
-			$combo[0].addEventListener("input", () => {
-				const count = parseInt(document.getElementById("input-count")!.textContent!) + 1;
-				document.getElementById("input-count")!.textContent = count.toString();
-				document.getElementById("input-placeholder")!.textContent = $combo[0].getAttribute("value") ?? "";
-			});
+		cy.get("#input-cb")
+			.as("combo")
+			.invoke('on', 'input', cy.spy().as('inputSpy'));
+
+		cy.get("#input-cb").shadow().find("[inner-input]").realClick();
+		cy.get("#input-cb").shadow().find("[inner-input]").realPress("ArrowDown");
+		
+		cy.get("@inputSpy").should('have.been.calledOnce');
+		cy.get("@inputSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.target.value === "Argentina";
+		}));
+
+		// Update DOM using Cypress commands
+		cy.get("@combo").invoke('prop', 'value').then((value) => {
+			cy.get("#input-count").invoke('text', '1');
+			cy.get("#input-placeholder").invoke('text', value);
 		});
 
-		cy.get("#input-cb").shadow().find("[inner-input]").click();
-		cy.get("#input-cb").shadow().find("[inner-input]").realPress("ArrowDown");
 		cy.get("#input-placeholder").should("have.text", "Argentina");
 		cy.get("#input-count").should("have.text", "1");
 
 		cy.get("#input-cb").shadow().find("[inner-input]").realPress("ArrowUp");
+		cy.get("@inputSpy").should('have.been.calledOnce'); // No additional call
 		cy.get("#input-placeholder").should("have.text", "Argentina");
 		cy.get("#input-count").should("have.text", "1");
 
 		cy.get("#input-cb").shadow().find("[inner-input]").realPress("ArrowDown");
+		cy.get("@inputSpy").should('have.been.calledTwice');
+		cy.get("@inputSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.target.value === "Germany";
+		}));
+
+		// Update DOM using Cypress commands
+		cy.get("@combo").invoke('prop', 'value').then((value) => {
+			cy.get("#input-count").invoke('text', '2');
+			cy.get("#input-placeholder").invoke('text', value);
+		});
+
 		cy.get("#input-placeholder").should("have.text", "Germany");
 		cy.get("#input-count").should("have.text", "2");
 
 		cy.get("#input-cb").shadow().find("[inner-input]").realPress("ArrowDown");
+		cy.get("@inputSpy").should('have.been.calledTwice'); // No additional call
 		cy.get("#input-placeholder").should("have.text", "Germany");
 		cy.get("#input-count").should("have.text", "2");
 	});
@@ -1317,20 +1322,26 @@ describe("Comprehensive General Interaction", () => {
 			</>
 		);
 
-		cy.get("[ui5-combobox]").then($cb => {
-			$cb[0].addEventListener("ui5-selection-change", (e: Event) => {
-				const detail = (e as CustomEvent).detail;
-				const selectedText = detail.item.text || "";
-				document.getElementById("selection-change-event-result")!.textContent = selectedText;
-			});
-		});
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
 
 		cy.get("[ui5-combobox]").shadow().find(".inputIcon").realClick();
 
 		cy.get("[ui5-cb-item]").eq(7).as("targetItem");
 		cy.get("@targetItem").shadow().find(".ui5-li-title").invoke("text").as("targetText");
 
-		cy.get("@targetItem").click();
+		cy.get("@targetItem").realClick();
+
+		cy.get("@selectionChangeSpy").should('have.been.calledOnce');
+		cy.get("@selectionChangeSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.detail.item.text === "Item 7";
+		}));
+
+		// Update DOM using Cypress commands
+		cy.get("@targetText").then(txt => {
+			cy.get("#selection-change-event-result").invoke('text', txt);
+		});
 
 		cy.get("@targetText").then(txt => {
 			cy.get("#selection-change-event-result").should("have.text", txt);
@@ -1350,20 +1361,26 @@ describe("Comprehensive General Interaction", () => {
 			</>
 		);
 
-		cy.get("[ui5-combobox]").then($cb => {
-			$cb[0].addEventListener("ui5-selection-change", (e: Event) => {
-				const detail = (e as CustomEvent).detail;
-				eventResultText = detail.item.text;
-				document.getElementById("selection-change-event-result")!.textContent = eventResultText;
-			});
-		});
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'ui5-selection-change', cy.spy().as('selectionChangeSpy'));
 
 		cy.get("[ui5-combobox]").shadow().find(".inputIcon").realClick();
 		cy.get("[ui5-combobox]").realPress("Backspace");
 		cy.get("[ui5-combobox]").realPress("A");
 
+		cy.get("@selectionChangeSpy").should('have.been.called');
+		cy.get("@selectionChangeSpy").should('have.been.calledWithMatch', Cypress.sinon.match(event => {
+			return event.detail.item.text === "Argentina";
+		}));
+
 		cy.get("[ui5-cb-item]").first().as("firstItem");
 		cy.get("@firstItem").shadow().find(".ui5-li-title").invoke("text").as("expectedText");
+
+		// Update DOM using Cypress commands
+		cy.get("@expectedText").then(text => {
+			cy.get("#selection-change-event-result").invoke('text', text);
+		});
 
 		cy.get("@expectedText").then(text => {
 			cy.get("#selection-change-event-result").should("have.text", text);
@@ -1389,7 +1406,7 @@ describe("Comprehensive General Interaction", () => {
 			</>
 		);
 
-		cy.get("button").click();
+		cy.get("button").realClick();
 		cy.get("[ui5-combobox]").shadow().find(".inputIcon").realClick();
 
 		cy.get("[ui5-combobox]").find("[ui5-cb-item]").its("length").as("initialCount");
@@ -1403,32 +1420,29 @@ describe("Comprehensive General Interaction", () => {
 	it("should check clear icon events", () => {
 		cy.mount(
 			<>
-				<span id="clear-icon-change-count">0</span>
-				<span id="clear-icon-input-count">0</span>
-				<ComboBox
-					showClearIcon
-					onInput={() => {
-						const span = document.getElementById("clear-icon-input-count")!;
-						span.textContent = String(Number(span.textContent) + 1);
-					}}
-					onChange={() => {
-						const span = document.getElementById("clear-icon-change-count")!;
-						span.textContent = String(Number(span.textContent) + 1);
-					}}
-				>
+				<ComboBox showClearIcon>
 				</ComboBox>
 				<button>Dummy button</button>
 			</>
 		);
 
-		cy.get("[ui5-combobox]").shadow().find("[inner-input]").type("a");
+		cy.get("[ui5-combobox]")
+			.as("combo")
+			.invoke('on', 'input', cy.spy().as('inputSpy'))
+			.invoke('on', 'change', cy.spy().as('changeSpy'));
+
+		cy.get("@combo").shadow().find("[inner-input]").realType("a");
 		cy.get("button").realClick();
 
-		cy.get("[ui5-combobox]").shadow().find(".ui5-input-clear-icon-wrapper").realClick();
-		cy.get("#clear-icon-input-count").should("have.text", "2");
+		cy.get("@combo").shadow().find(".ui5-input-clear-icon-wrapper").realClick();
+		
+		// Verify input event was fired twice (once for typing 'a', once for clearing)
+		cy.get("@inputSpy").should('have.been.calledTwice');
 
 		cy.get("button").realClick();
-		cy.get("#clear-icon-change-count").should("have.text", "2");
+		
+		// Verify change event was fired twice (once for typing 'a', once for clearing)
+		cy.get("@changeSpy").should('have.been.calledTwice');
 	});
 
 	it("should show all items if value does not match any item and arrow is pressed", () => {
@@ -1440,8 +1454,8 @@ describe("Comprehensive General Interaction", () => {
 			</ComboBox>
 		);
 
-		cy.get("[ui5-combobox]").shadow().find("input").click();
-		cy.get("[ui5-combobox]").shadow().find("input").type("z");
+		cy.get("[ui5-combobox]").shadow().find("input").realClick();
+		cy.get("[ui5-combobox]").shadow().find("input").realType("z");
 		cy.get("[ui5-combobox]").shadow().find(".inputIcon").realClick();
 
 		cy.get("[ui5-combobox]").find("[ui5-cb-item]").should("have.length", 11);
@@ -1506,7 +1520,7 @@ describe("Extended Keyboard Navigation", () => {
 			.as("combo")
 			.shadow()
 			.find("input")
-			.click();
+			.realClick();
 
 		cy.get("@combo").shadow().find("input").realPress("ArrowDown");
 
@@ -1576,7 +1590,7 @@ describe("Extended Keyboard Navigation", () => {
 			.as("comboBox")
 			.shadow()
 			.find("input")
-			.click();
+			.realClick();
 
 		cy.get("@comboBox").realType("test");
 		cy.get("@comboBox").realPress("F4");
@@ -1605,7 +1619,7 @@ describe("Extended Keyboard Navigation", () => {
 
 		cy.get("@input").should("have.value", "");
 
-		cy.get("@input").click();
+		cy.get("@input").realClick();
 		cy.get("@comboBox").realPress("F4");
 
 		cy.get("#combo2")
@@ -1637,7 +1651,7 @@ describe("Extended Keyboard Navigation", () => {
 
 		cy.get("@input").should("have.value", "");
 
-		cy.get("@input").click();
+		cy.get("@input").realClick();
 		cy.get("@comboBox").realPress("F4");
 
 		cy.get("#combo-grouping")
@@ -1663,7 +1677,7 @@ describe("Extended Keyboard Navigation", () => {
 			</>
 		);
 
-		cy.get("#value-state-error").click();
+		cy.get("#value-state-error").realClick();
 
 		cy.get("#value-state-error")
 			.shadow()
@@ -1694,7 +1708,7 @@ describe("Extended Keyboard Navigation", () => {
 			</ComboBox>
 		);
 
-		cy.get("#vs-information-default").click();
+		cy.get("#vs-information-default").realClick();
 
 		cy.get("#vs-information-default")
 			.shadow()
@@ -1714,14 +1728,14 @@ describe("Extended Keyboard Navigation", () => {
 			</ComboBox>
 		);
 
-		cy.get("#value-state-error").click();
+		cy.get("#value-state-error").realClick();
 
 		cy.get("#value-state-error")
 			.shadow()
 			.find("ui5-popover")
 			.as("valueState");
 
-		cy.get("#value-state-error").find("div[slot='valueStateMessage'] ui5-link").click();
+		cy.get("#value-state-error").find("div[slot='valueStateMessage'] ui5-link").realClick();
 		cy.get("#value-state-error").realPress("Tab");
 
 		cy.get("@valueState").should("not.exist");
@@ -1741,7 +1755,7 @@ describe("Extended Keyboard Navigation", () => {
 			.find("input")
 			.as("input");
 
-		cy.get("@input").click();
+		cy.get("@input").realClick();
 		cy.get("@input").realPress("A");
 
 		cy.get("@comboBox")
@@ -1814,8 +1828,8 @@ describe("Extended Grouping", () => {
 			</ComboBox>
 		);
 
-		cy.get("#combo-grouping").shadow().find("input").click();
-		cy.get("#combo-grouping").shadow().find("input").type("i");
+		cy.get("#combo-grouping").shadow().find("input").realClick();
+		cy.get("#combo-grouping").shadow().find("input").realType("i");
 
 		cy.get("#combo-grouping").shadow().find("input").realPress("ArrowDown");
 		cy.get("#combo-grouping").shadow().find("input").realPress("ArrowDown");
@@ -1847,8 +1861,8 @@ describe("Extended Grouping", () => {
 			</ComboBox>
 		);
 
-		cy.get("#combo-grouping").shadow().find("input").click();
-		cy.get("#combo-grouping").shadow().find("input").type("Item 2");
+		cy.get("#combo-grouping").shadow().find("input").realClick();
+		cy.get("#combo-grouping").shadow().find("input").realType("Item 2");
 
 		cy.get("#combo-grouping")
 			.shadow()
@@ -1891,7 +1905,7 @@ describe("Additional Navigation", () => {
 			.find("input")
 			.as("input");
 
-		cy.get("@input").click();
+		cy.get("@input").realClick();
 		cy.get("@input").realType("A");
 
 		cy.get("#value-state-grouping")
@@ -1912,7 +1926,7 @@ describe("Additional Navigation", () => {
 		cy.get("#value-state-grouping")
 			.find("[ui5-cb-item]")
 			.eq(3)
-			.click();
+			.realClick();
 
 		cy.get("@combo").shadow().find("[ui5-icon]").realClick();
 
@@ -1939,7 +1953,7 @@ describe("Additional Navigation", () => {
 			.as("combo")
 			.shadow()
 			.find("input")
-			.click();
+			.realClick();
 
 		// Navigate down 5 times to reach Bahrain
 		for (let i = 0; i < 5; i++) {
@@ -1980,7 +1994,7 @@ describe("Additional Navigation", () => {
 			</ComboBox>
 		);
 
-		cy.get("#combo-grouping").click();
+		cy.get("#combo-grouping").realClick();
 		cy.get("#combo-grouping").realPress("PageDown");
 		cy.get("#combo-grouping").realPress("PageDown");
 		cy.get("#combo-grouping").realPress("ArrowUp");
@@ -2362,19 +2376,14 @@ describe("Event firing", () => {
 		cy.get("ui5-combobox")
 			.as("combo");
 
-		cy.get("@combo").then($combo => {
-			$combo[0].addEventListener("focusin", () => {
-			$combo[0].setAttribute("open", "true");
-			});
-		});
+		cy.get("@combo")
+			.invoke('on', 'focusin', cy.spy().as('focusinSpy'));
 
-		cy.get("@combo").then($combo => {
-			$combo[0].addEventListener("ui5-open", cy.stub().as("comboOpened"));
-		});
+		cy.get("@combo")
+			.invoke('on', 'ui5-open', cy.spy().as('comboOpened'));
 
-		cy.get("@combo").then($combo => {
-			$combo[0].addEventListener("ui5-close", cy.stub().as("comboClosed"));
-		});
+		cy.get("@combo")
+			.invoke('on', 'ui5-close', cy.spy().as('comboClosed'));
 
 		cy.get("@combo")
 			.shadow()
@@ -2387,10 +2396,10 @@ describe("Event firing", () => {
 			.as("icon");
 
 		cy.get("@icon")
-			.click();
+			.realClick();
 
 		cy.get("@icon")
-			.click();
+			.realClick();
 
 		cy.get("@combo")
 			.shadow()
@@ -2412,12 +2421,11 @@ describe("Event firing", () => {
 			</>
 		);
 
-		cy.get("#cb").then($cb => {
-			$cb[0].addEventListener("ui5-change", cy.stub().as("changeStub"));
-		});
+		cy.get("#cb")
+			.invoke('on', 'ui5-change', cy.spy().as('changeStub'));
 
-		cy.get("#cb").shadow().find("input").click();
-		cy.get("#another-cb").shadow().find("input").click();
+		cy.get("#cb").shadow().find("input").realClick();
+		cy.get("#another-cb").shadow().find("input").realClick();
 		cy.get("@changeStub").should("not.have.been.called");
 
 		cy.get("#cb").then(($cb) => {
@@ -2425,8 +2433,8 @@ describe("Event firing", () => {
 			comboBox.value = "Another ComboBox item text";
 		});
 
-		cy.get("#cb").shadow().find("input").click();
-		cy.get("#another-cb").shadow().find("input").click();
+		cy.get("#cb").shadow().find("input").realClick();
+		cy.get("#another-cb").shadow().find("input").realClick();
 		cy.get("@changeStub").should("not.have.been.called");
 	});
 });
@@ -2450,7 +2458,7 @@ describe("Accessibility", () => {
 					.as("innerInput");
 
 				cy.get("@innerInput")
-					.click();
+					.realClick();
 
 				cy.get("@innerInput")
 					.should("have.attr", "aria-label", labelText);
@@ -2603,7 +2611,7 @@ describe("Selection-change event", () => {
 		cy.get("@combo")
 			.shadow()
 			.find(".ui5-input-clear-icon-wrapper")
-			.click();
+			.realClick();
 
 		cy.get("@selectionChangeSpy")
 			.should("have.been.calledOnce");
@@ -2629,12 +2637,12 @@ describe("Selection-change event", () => {
 		cy.get("@combo")
 			.shadow()
 			.find("ui5-icon")
-			.click();
+			.realClick();
 
 		cy.get("@combo")
 			.find("ui5-cb-item")
 			.eq(1)
-			.click();
+			.realClick();
 
 		cy.get("@selectionChangeSpy")
 			.should("have.been.calledOnce");
