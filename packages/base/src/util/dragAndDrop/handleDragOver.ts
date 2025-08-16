@@ -17,7 +17,7 @@ type DragPosition = {
  * Handles the dragover event.
  */
 function handleDragOver<T extends UI5Element>(e: DragEvent, component: T, position: DragPosition, target: HTMLElement, settings: DragAndDropSettings = {}): DragOverResult {
-	const draggedElement = DragRegistry.getDraggedElement();
+	const draggedElement = DragRegistry.getDraggedElement(component.getRootNode());
 	const dragOverResult: DragOverResult = {
 		targetReference: null,
 		placement: null,
