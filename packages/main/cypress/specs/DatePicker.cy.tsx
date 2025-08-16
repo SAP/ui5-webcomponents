@@ -102,6 +102,10 @@ describe("Date Picker Tests", () => {
 
 	it("value state", () => {
 		cy.mount(<DatePicker></DatePicker>);
+
+		cy.wrap({ setLanguage })
+			.invoke("setLanguage", "en");
+
 		cy.get("[ui5-date-picker]")
 			.as("datePicker");
 
@@ -471,7 +475,10 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
 			.find("ui5-calendar")
-			.as("calendar")
+			.as("calendar");
+
+		cy.focused()
+		 	.should("have.attr", "part", "day-cell")
 			.realPress("F4");
 
 		cy.get("@calendar")
@@ -495,7 +502,10 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
 			.find("ui5-calendar")
-			.as("calendar")
+			.as("calendar");
+
+		cy.focused()
+		 	.should("have.attr", "part", "day-cell")
 			.realPress(["Shift", "F4"]);
 
 		cy.get("@calendar")
@@ -514,7 +524,10 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
 			.find("ui5-calendar")
-			.as("calendar")
+			.as("calendar");
+
+		cy.focused()
+		 	.should("have.attr", "part", "day-cell")
 			.realPress(["Shift", "F4"])
 			.realPress("F4");
 
@@ -534,7 +547,10 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
 			.find("ui5-calendar")
-			.as("calendar")
+			.as("calendar");
+
+		cy.focused()
+		 	.should("have.attr", "part", "day-cell")
 			.realPress("F4")
 			.realPress(["Shift", "F4"]);
 
@@ -1311,9 +1327,8 @@ describe("Date Picker Tests", () => {
 			.should("be.focused")
 			.realPress("F4");
 
-		cy.get<DatePicker>("@datePicker")
-			.shadow()
-			.find("ui5-calendar")
+		cy.focused()
+			.should("have.attr", "part", "day-cell day-cell-selected")
 			.realPress("ArrowDown");
 
 		cy.get<DatePicker>("@datePicker")
