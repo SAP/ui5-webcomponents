@@ -24,16 +24,6 @@ const writeFileIfChanged = async (fileName, content) => {
     }
 }
 
-// strips the unnecessary theming data coming from @sap-theming/theming-base-content and leaves only the css parameters
-const stripThemingBaseContent = css => {
-	css = css.replace(/\.sapThemeMeta[\s\S]*?:root/, ":root");
-	css = css.replace(/\.background-image.*{.*}/, "");
-	css = css.replace(/\.sapContrast[ ]*:root[\s\S]*?}/, "");
-	css = css.replace(/--sapFontUrl.*\);?/, "");
-	return css;
-}
-
-
 const DEFAULT_THEME = assets.themes.default;
 
 const getDefaultThemeCode = packageName => {
@@ -53,4 +43,4 @@ const getFileContent = (packageName, css, includeDefaultTheme) => {
 }
 
 
-export { writeFileIfChanged, stripThemingBaseContent, getFileContent}
+export { writeFileIfChanged, getFileContent}
