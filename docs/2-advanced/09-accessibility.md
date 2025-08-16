@@ -213,6 +213,11 @@ The `accessibleDescription` property is currently supported in:
 * [Popover](https://sap.github.io/ui5-webcomponents/nightly/components/Popover/)
 * [ResponsivePopover](https://sap.github.io/ui5-webcomponents/nightly/components/ResponsivePopover/)
 * [Dialog](https://sap.github.io/ui5-webcomponents/nightly/components/Dialog/)
+* [DatePicker](https://sap.github.io/ui5-webcomponents/nightly/components/DatePicker/)
+* [DateRangePicker](https://sap.github.io/ui5-webcomponents/nightly/components/DateRangePicker/)
+* [DateTimePicker](https://sap.github.io/ui5-webcomponents/nightly/components/DateTimePicker/)
+* [TimePicker](https://sap.github.io/ui5-webcomponents/nightly/components/TimePicker/)
+* [FileUploader](https://sap.github.io/ui5-webcomponents/nightly/components/FileUploader/)
 
 ---
 
@@ -241,6 +246,11 @@ The `accessibleDescriptionRef` property is currently supported in:
 * [Popover](https://sap.github.io/ui5-webcomponents/nightly/components/Popover/)
 * [ResponsivePopover](https://sap.github.io/ui5-webcomponents/nightly/components/ResponsivePopover/)
 * [Dialog](https://sap.github.io/ui5-webcomponents/nightly/components/Dialog/)
+* [DatePicker](https://sap.github.io/ui5-webcomponents/nightly/components/DatePicker/)
+* [DateRangePicker](https://sap.github.io/ui5-webcomponents/nightly/components/DateRangePicker/)
+* [DateTimePicker](https://sap.github.io/ui5-webcomponents/nightly/components/DateTimePicker/)
+* [TimePicker](https://sap.github.io/ui5-webcomponents/nightly/components/TimePicker/)
+* [FileUploader](https://sap.github.io/ui5-webcomponents/nightly/components/FileUploader/)
 
 ---
 
@@ -302,6 +312,7 @@ The `accessibilityAttributes` property is currently supported in:
 * [Avatar](https://sap.github.io/ui5-webcomponents/nightly/components/Avatar/)
 * [AvatarGroup](https://sap.github.io/ui5-webcomponents/nightly/components/AvatarGroup/)
 * [Button](https://sap.github.io/ui5-webcomponents/nightly/components/Button/)
+* [Button](https://sap.github.io/ui5-webcomponents/nightly/components/ai/Button/)
 * [Link](https://sap.github.io/ui5-webcomponents/nightly/components/Link/)
 * [ToggleButton](https://sap.github.io/ui5-webcomponents/nightly/components/ToggleButton/)
 * [Link](https://sap.github.io/ui5-webcomponents/nightly/components/Link/)
@@ -311,6 +322,7 @@ The `accessibilityAttributes` property is currently supported in:
 * [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/FlexibleColumnLayout/)
 * [ShellBar](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBar/)
 * [ShellBarItem](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBarItem/)
+* [SplitButton](https://sap.github.io/ui5-webcomponents/nightly/components/SplitButton/)
 * [MenuItem](https://sap.github.io/ui5-webcomponents/nightly/components/MenuItem/)
 * [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
 
