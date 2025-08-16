@@ -1,0 +1,5 @@
+import"../../bundle.esm-46toWFpQ.js";const c=[document.getElementById("list1"),document.getElementById("list2")],l=[document.getElementById("count1"),document.getElementById("count2")];function r(e){return e.getItems().filter(t=>t.selected)}function a(e){const t=r(c[e]);l[e].textContent=t.length}function o(e){c[e].addEventListener("ui5-selection-change",()=>{a(e)})}function i(e){const t=document.createElement("div");return t.innerHTML=`
+                <div class="direct-drag-image">
+                    ${e} Direct Items
+                </div>
+            `,document.body.appendChild(t),t}o(0);c[0].addEventListener("dragstart",e=>{const t=r(c[0]),d=e.target;d.selected||(t.forEach(n=>n.selected=!1),d.selected=!0,a(0));const s=r(c[0]);s.length>1&&window["sap-ui-webcomponents-bundle"].startMultipleDrag(s.length,e)});o(1);c[1].addEventListener("dragstart",e=>{const t=r(c[1]),d=e.target;d.selected||(t.forEach(n=>n.selected=!1),d.selected=!0,a(1));const s=r(c[1]);if(s.length>1){const n=i(s.length);e.dataTransfer.setDragImage(n,30,15),requestAnimationFrame(()=>{n.parentNode&&n.parentNode.removeChild(n)})}});[0,1].forEach(a);
