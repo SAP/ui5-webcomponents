@@ -366,7 +366,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
-	_modifyTimestampBy(amount: number, preserveDate?: boolean) {
+	async _modifyTimestampBy(amount: number, preserveDate?: boolean) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, "month", preserveDate);
 		this._updateSecondTimestamp();
@@ -374,7 +374,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		// Notify the calendar to update its timestamp
 		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 
-		this._focusCorrectMonth();
+		await this._focusCorrectMonth();
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -438,8 +438,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * **Note:** when the user presses the "<" button in the calendar header (same as "PageUp")
 	 * @protected
 	 */
-	_showPreviousPage() {
-		this._modifyTimestampBy(-PAGE_SIZE, true);
+	async _showPreviousPage() {
+		await this._modifyTimestampBy(-PAGE_SIZE, true);
 	}
 
 	/**
@@ -447,8 +447,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * **Note:** when the user presses the ">" button in the calendar header (same as "PageDown")
 	 * @protected
 	 */
-	_showNextPage() {
-		this._modifyTimestampBy(PAGE_SIZE, true);
+	async _showNextPage() {
+		await this._modifyTimestampBy(PAGE_SIZE, true);
 	}
 
 	_isOutOfSelectableRange(date: CalendarDate, minDate: CalendarDate, maxDate: CalendarDate): boolean {

@@ -482,9 +482,9 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 	 * **Note:** when the user presses the "<" button in the calendar header (same as "PageUp")
 	 * @protected
 	 */
-	_showPreviousPage() {
+	async _showPreviousPage() {
 		const pageSize = this._getPageSize();
-		this._modifyTimestampBy(-pageSize);
+		await this._modifyTimestampBy(-pageSize);
 
 		const amountInYears = pageSize * this._getRangeSize();
 		this._modifyGridStartBy(-amountInYears);
@@ -495,9 +495,9 @@ class YearRangePicker extends CalendarPart implements ICalendarPicker {
 	 * **Note:** when the user presses the ">" button in the calendar header (same as "PageDown")
 	 * @protected
 	 */
-	_showNextPage() {
+	async _showNextPage() {
 		const pageSize = this._getPageSize();
-		this._modifyTimestampBy(pageSize);
+		await this._modifyTimestampBy(pageSize);
 
 		const amountInYears = pageSize * this._getRangeSize();
 		this._modifyGridStartBy(amountInYears);

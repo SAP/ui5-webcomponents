@@ -434,9 +434,9 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * **Note:** when the user presses the "<" button in the calendar header (same as "PageUp")
 	 * @protected
 	 */
-	_showPreviousPage() {
+	async _showPreviousPage() {
 		const pageSize = this._getPageSize();
-		this._modifyTimestampBy(-pageSize);
+		await this._modifyTimestampBy(-pageSize);
 	}
 
 	/**
@@ -444,8 +444,8 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * **Note:** when the user presses the ">" button in the calendar header (same as "PageDown")
 	 * @protected
 	 */
-	_showNextPage() {
-		this._modifyTimestampBy(this._getPageSize());
+	async _showNextPage() {
+		await this._modifyTimestampBy(this._getPageSize());
 	}
 }
 

@@ -727,18 +727,16 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * Called by the Calendar component.
 	 * @protected
 	 */
-	_showPreviousPage() {
-		this._modifyTimestampBy(-1, "month", false);
-		this._focusCorrectDay();
+	async _showPreviousPage() {
+		await this._modifyTimestampBy(-1, "month", false);
 	}
 
 	/**
 	 * Called by the Calendar component.
 	 * @protected
 	 */
-	_showNextPage() {
-		this._modifyTimestampBy(1, "month", false);
-		this._focusCorrectDay();
+	async _showNextPage() {
+		await this._modifyTimestampBy(1, "month", false);
 	}
 
 	/**
@@ -748,7 +746,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
-	_modifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {
+	async _modifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, unit, preserveDate);
 		this._updateSecondTimestamp();
@@ -756,7 +754,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		// Notify the calendar to update its timestamp
 		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 
-		this._focusCorrectDay();
+		await this._focusCorrectDay();
 	}
 
 	/**
