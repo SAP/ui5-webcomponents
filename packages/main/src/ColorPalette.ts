@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -17,6 +18,8 @@ import {
 	isDown,
 	isUp,
 	isTabNext,
+	isHome,
+	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import ColorPaletteTemplate from "./ColorPaletteTemplate.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
@@ -187,6 +190,12 @@ class ColorPalette extends UI5Element {
 	_currentlySelected?: ColorPaletteItem;
 	_shouldFocusRecentColors = false;
 
+	@query(".ui5-cp-default-color-button")
+	_defaultColorButton!: Button;
+
+	@query(".ui5-cp-more-colors")
+	_moreColorsButton!: Button;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -309,6 +318,16 @@ class ColorPalette extends UI5Element {
 		this.handleSelection(e.target as ColorPaletteItem);
 	}
 
+	_onmousedown(e: MouseEvent) {
+		const target = e.target as ColorPaletteItem;
+
+		if (this.displayedColors.includes(target)) {
+			this._itemNavigation.setCurrentItem(target);
+		} else if (this.recentColorsElements.includes(target)) {
+			this._itemNavigationRecentColors.setCurrentItem(target);
+		}
+	}
+
 	_onkeyup(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
 		if (isSpace(e)) {
@@ -325,6 +344,11 @@ class ColorPalette extends UI5Element {
 
 		if (isSpace(e)) {
 			e.preventDefault();
+		}
+
+		if (!this.popupMode && (isHome(e) || isEnd(e))) {
+			e.preventDefault();
+			e.stopPropagation();
 		}
 	}
 
@@ -393,6 +417,14 @@ class ColorPalette extends UI5Element {
 
 				this.focusColorElement(this.displayedColors[colorPaletteFocusIndex], this._itemNavigation);
 			}
+		} else if (isEnd(e)) {
+			e.stopPropagation();
+
+			if (this.showMoreColors) {
+				this._moreColorsButton?.focus();
+			} else if (this.displayedColors.length) {
+				this.focusColorElement(this.displayedColors[this.displayedColors.length - 1], this._itemNavigation);
+			}
 		}
 	}
 
@@ -415,6 +447,14 @@ class ColorPalette extends UI5Element {
 			} else {
 				this.focusColorElement(this.displayedColors[0], this._itemNavigation);
 			}
+		} else if (isHome(e)) {
+			e.stopPropagation();
+
+			if (this.showDefaultColor) {
+				this._defaultColorButton?.focus();
+			} else if (this.displayedColors.length) {
+				this.focusColorElement(this.displayedColors[0], this._itemNavigation);
+			}
 		}
 	}
 
@@ -435,7 +475,7 @@ class ColorPalette extends UI5Element {
 			this.selectColor(target);
 		}
 
-		if (isUp(e) && target === this.displayedColors[0] && this.colorPaletteNavigationElements.length > 1) {
+		if (isUp(e) && this._isFirstDisplayedSwatch(target) && this.colorPaletteNavigationElements.length > 1) {
 			e.stopPropagation();
 			if (this.showDefaultColor) {
 				this.firstFocusableElement.focus();
@@ -444,7 +484,7 @@ class ColorPalette extends UI5Element {
 			} else if (!this.showDefaultColor && this.showMoreColors) {
 				lastElementInNavigation.focus();
 			}
-		} else if (isDown(e) && target === this.displayedColors[this.displayedColors.length - 1] && this.colorPaletteNavigationElements.length > 1) {
+		} else if (isDown(e) && this._isLastDisplayedSwatch(target) && this.colorPaletteNavigationElements.length > 1) {
 			e.stopPropagation();
 			const isRecentColorsNextElement = (this.showDefaultColor && !this.showMoreColors && this.hasRecentColors) || (!this.showDefaultColor && !this.showMoreColors && this.hasRecentColors);
 
@@ -457,7 +497,30 @@ class ColorPalette extends UI5Element {
 			} else if (!this.showDefaultColor && this.showMoreColors) {
 				this.colorPaletteNavigationElements[1].focus();
 			}
+		} else if (isHome(e) && this.showDefaultColor && this._isFirstDisplayedSwatch(target)) {
+			e.stopPropagation();
+			this._defaultColorButton?.focus();
+		} else if (isEnd(e) && this.showMoreColors && this._isLastDisplayedSwatch(target)) {
+			e.stopPropagation();
+			this._moreColorsButton?.focus();
+		} else if (isEnd(e) && this._isElementInLastRow(target)) {
+			e.stopPropagation();
+			this.focusColorElement(this.displayedColors[this.displayedColors.length - 1], this._itemNavigation);
 		}
+	}
+
+	_isFirstDisplayedSwatch(target: ColorPaletteItem) {
+		return this.displayedColors[0] === target;
+	}
+
+	_isLastDisplayedSwatch(target: ColorPaletteItem) {
+		return this.displayedColors[this.displayedColors.length - 1] === target;
+	}
+
+	_isElementInLastRow(target: ColorPaletteItem) {
+		const index = this.displayedColors.indexOf(target);
+		const length = this.displayedColors.length;
+		return index >= length - (length % this.rowSize);
 	}
 
 	_onRecentColorsContainerKeyDown(e: KeyboardEvent) {
