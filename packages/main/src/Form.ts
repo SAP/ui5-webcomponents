@@ -595,6 +595,8 @@ class Form extends UI5Element {
 
 	getItemsInfo(items?: Array<IFormItem>): Array<ItemsInfo> {
 		return (items || this.items).map((item: IFormItem) => {
+			item.setAttribute("data-sap-ui5-label-span", this.labelSpan);
+
 			return {
 				item,
 				// eslint-disable-next-line
