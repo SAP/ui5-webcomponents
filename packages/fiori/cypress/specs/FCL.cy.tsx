@@ -88,6 +88,9 @@ describe("Columns resize", () => {
 	});
 
 	it("keeps hidden class on columns after rerendering", () => {
+		cy.wrap({ setAnimationMode })
+			.invoke("setAnimationMode", AnimationMode.Full);
+
 		cy.mount(
 			<FlexibleColumnLayout layout="TwoColumnsStartExpanded">
 				<div class="column" slot="startColumn">some content</div>
@@ -104,8 +107,8 @@ describe("Columns resize", () => {
 			.find(".ui5-fcl-column--end")
 			.should("have.class", "ui5-fcl-column--hidden");
 
-		cy.wrap({ setAnimationMode })
-			.invoke("setAnimationMode", AnimationMode.Full);
+		cy.get("@fcl")
+			.invoke("prop", "layout", "TwoColumnsMidExpanded");
 
 		cy.get("@fcl")
 			.shadow()
