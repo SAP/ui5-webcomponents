@@ -1193,7 +1193,6 @@ describe("Additional Navigation", () => {
 		// Navigate to last item
 		for (let i = 0; i < 16; i++) {
 			cy.get("@combo").realPress("ArrowDown");
-			debugger;
 		}
 		cy.wait(300)
 		// Check if last item is now visible
@@ -2212,7 +2211,6 @@ describe("Event firing", () => {
 	});
 
 	it("tests selection-change event when type text after selection", () => {
-		let eventResultText = "";
 		cy.mount(
 			<>
 				<ComboBox>
@@ -2250,7 +2248,7 @@ describe("Event firing", () => {
 		});
 	});
 
-		it("should fire selection-change event when item is selected", () => {
+	it("should fire selection-change event when item is selected", () => {
 		cy.mount(
 			<ComboBox>
 				<ComboBoxItem text="Argentina"></ComboBoxItem>
@@ -2484,7 +2482,8 @@ describe("Event firing", () => {
 
 		cy.get("@selectionChangeSpy").should("have.been.calledWithMatch", Cypress.sinon.match(event => {
 				return event.detail.item.text === "Bulgaria";
-	}));
+		}));
+	});
 
 	it("should check clear icon events", () => {
 		cy.mount(
@@ -2610,10 +2609,6 @@ describe("Event firing", () => {
 		cy.get("#another-cb").shadow().find("input").realClick();
 		cy.get("@changeStub").should("not.have.been.called");
 	});
-});
-
-
-});
 
 	it("should work correctly with grouped items", () => {
 		cy.mount(
@@ -2648,6 +2643,7 @@ describe("Event firing", () => {
 		cy.get("@selectionChangeSpy")
 			.should("have.been.calledWith", Cypress.sinon.match.has("detail", Cypress.sinon.match.has("item")));
 	});
+});
 
 describe("Scrolling", () => {
 	it("Scrolls the selected item into view after opening the popover", () => {
@@ -2718,5 +2714,5 @@ describe("Scrolling", () => {
 		cy.get("[ui5-cb-item]")
 			.eq(4)
 			.should("be.visible");
-	})
+	});
 });
