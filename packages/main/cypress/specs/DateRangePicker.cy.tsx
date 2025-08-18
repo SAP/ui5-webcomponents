@@ -1,6 +1,7 @@
 import "../../dist/Assets.js";
 import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import DateRangePicker from "../../src/DateRangePicker.js";
+import Label from "../../src/Label.js";
 
 type DateTimePickerTemplateOptions = Partial<{
 	formatPattern: string;
@@ -487,8 +488,9 @@ describe("DateRangePicker general interaction", () => {
 			});
 	});
 
-	it("Picker popover should have accessible name", () => {
-		cy.mount(<DateRangePicker></DateRangePicker>);
+	it("Picker popover accessible name", () => {
+		const LABEL = "Deadline";
+		cy.mount(<DateRangePicker accessible-name={LABEL}></DateRangePicker>);
 
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
@@ -505,7 +507,68 @@ describe("DateRangePicker general interaction", () => {
 		cy.get("@dateRangePicker")
 			.shadow()
 			.find("[ui5-responsive-popover]")
-			.should("have.attr", "accessible-name", "Choose Date Range");
+			.should("have.attr", "accessible-name", `Choose Date Range for ${LABEL}`);
+	});
+
+	it("Picker popover accessible name with external label", () => {
+		const LABEL = "Deadline";
+		cy.mount(<>
+			<Label for="dateRangePicker">{LABEL}</Label>
+			<DateRangePicker id="dateRangePicker"></DateRangePicker>
+		</>);
+
+		cy.get<DateRangePicker>("[ui5-daterange-picker]")
+			.as("dateRangePicker")
+			.shadow()
+			.find("[ui5-datetime-input]")
+			.realClick()
+			.should("be.focused");
+
+		cy.realPress("F4");
+
+		cy.get<DateRangePicker>("@dateRangePicker")
+			.ui5DateRangePickerExpectToBeOpen()
+
+		cy.get("@dateRangePicker")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should("have.attr", "accessible-name", `Choose Date Range for ${LABEL}`);
+	});
+
+	it("accessibleDescription property", () => {
+		const DESCRIPTION = "Some description";
+		cy.mount(<DateRangePicker accessibleDescription={DESCRIPTION}></DateRangePicker>);
+
+		cy.get<DateRangePicker>("[ui5-daterange-picker]")
+			.ui5DatePickerGetInnerInput()
+			.should("have.attr", "aria-describedby", "descr");
+
+		cy.get<DateRangePicker>("[ui5-daterange-picker]")
+			.shadow()
+			.find("[ui5-datetime-input]")
+			.shadow()
+			.find("span#descr")
+			.should("have.text", DESCRIPTION);
+	});
+
+	it("accessibleDescriptionRef property", () => {
+		const DESCRIPTION = "External description";
+		cy.mount(
+			<>
+				<p id="descr">{DESCRIPTION}</p>
+				<DateRangePicker accessibleDescriptionRef="descr"></DateRangePicker>
+			</>
+		);
+
+		cy.get<DateRangePicker>("[ui5-daterange-picker]")
+			.shadow()
+			.find("[ui5-datetime-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-describedby")
+			.and("contain", "descr");
+
+		cy.get("#descr").should("have.text", DESCRIPTION);
 	});
 
 	it("Selected days: accessibility semantics", () => {

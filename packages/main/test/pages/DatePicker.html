@@ -30,42 +30,10 @@
 <body class="datepicker1auto">
 	<div style='width:600px;'>
 
-		<!-- <h3> DatePicker with value-state-change event prevented </h3> -->
-		<ui5-label for="pickerId">Deadline</ui5-label>
-		<ui5-date-picker id="pickerId"></ui5-date-picker>
+		<h3> DatePicker with value-state-change event prevented </h3>
+		<ui5-date-picker id="dpVsChangePrevented" value-state="Negative"></ui5-date-picker>
 
-		<ui5-label for="pickerId1">Application context announcement</ui5-label>
-		<ui5-date-picker accessible-name="Application context announcement" id="pickerId1"></ui5-date-picker>
-		<br>
-		<ui5-label for="pickerId2" id="labelId2">Application context ONE announcement</ui5-label>
-		<br>
-		<ui5-label for="pickerId2" id="labelId3">Application context TWO announcement</ui5-label>
-		<br>
-		<ui5-date-picker id="pickerId2" accessible-name-ref="labelId2 labelId3"></ui5-date-picker>
-		<br>
-		<ui5-label for="inputId">Application context announcement</ui5-label>
-		<br>
-		<ui5-input id="inputId"></ui5-input>
-<br>
-		<ui5-label for="dtp1">Application context announcement</ui5-label><br>
-		<ui5-datetime-picker id="dtp1"></ui5-datetime-picker>
-<br>
-		<ui5-label for="tp1">Application context announcement</ui5-label><br>
-		<ui5-time-picker id="tp1"></ui5-time-picker>
-<br>
-
-		<ui5-label for="drp1">Application context announcement</ui5-label><br>
-		<ui5-daterange-picker id="drp1"></ui5-daterange-picker><br>
-
-		<br>
-		<ui5-label id="labelId5">Application context TWO announcement</ui5-label>
-		<br>
-		<ui5-date-picker accessible-description-ref="labelId5"></ui5-date-picker>
-
-		<br>
-		<ui5-date-picker accessible-description="na baba far4iloto"></ui5-date-picker>
-
-		<!-- <div>
+		<div>
 			<h3> DatePicker with no format pattern & min-max dates in ISO format</h3>
 			<ui5-date-picker id="dpMinMax-dates" min-date="2019-09-01" max-date="2019-11-01" value="Invalid"></ui5-date-picker>
 		</div>
@@ -199,72 +167,72 @@
 			<ui5-title>DatePicker with CalendarWeekNumbering WesternTraditional</ui5-title>
 			<ui5-date-picker id="datepicker10" calendar-week-numbering="WesternTraditional">
 			</ui5-date-picker>
-		</section> -->
+		</section>
 
 	</div>
 	<script>
-	// 	var dp = document.getElementById('dp5');
-	// 	var labelChange = document.getElementById('lblChange');
-	// 	var labelLiveChange = document.getElementById('lblLiveChange');
+		var dp = document.getElementById('dp5');
+		var labelChange = document.getElementById('lblChange');
+		var labelLiveChange = document.getElementById('lblLiveChange');
 
-	// 	dp.addEventListener('click', function() { console.log('click')});
-	// 	dp.addEventListener('focus', function() {console.log('focus')});
-	// 	dp.addEventListener('dblclick', function() { console.log('dblclick')});
-	// 	dp.addEventListener('keydown', function() { console.log('keydown')});
-	// 	dp.addEventListener('blur', function() { console.log('blur')});
+		dp.addEventListener('click', function() { console.log('click')});
+		dp.addEventListener('focus', function() {console.log('focus')});
+		dp.addEventListener('dblclick', function() { console.log('dblclick')});
+		dp.addEventListener('keydown', function() { console.log('keydown')});
+		dp.addEventListener('blur', function() { console.log('blur')});
 
-	// 	dp.addEventListener('ui5-change', function(e) {
-	// 		console.log('change: ', e.detail);
-	// 		labelChange.innerHTML = 'change: ' + JSON.stringify(e.detail);
-	// 	});
-	// 	dp.addEventListener('ui5-input', function(e) {
-	// 		console.log('input: ', e.detail);
-	// 		labelLiveChange.innerHTML = 'input: ' + JSON.stringify(e.detail);
-	// 	});
+		dp.addEventListener('ui5-change', function(e) {
+			console.log('change: ', e.detail);
+			labelChange.innerHTML = 'change: ' + JSON.stringify(e.detail);
+		});
+		dp.addEventListener('ui5-input', function(e) {
+			console.log('input: ', e.detail);
+			labelLiveChange.innerHTML = 'input: ' + JSON.stringify(e.detail);
+		});
 
-	// 	var dpPrevent = document.getElementById('dpPrevent');
-	// 	var labelChangePrevent = document.getElementById('lblChangePrevent');
-	// 	var labelChangePreventTargetValue = document.getElementById('lblChangePreventTargetValue');
-	// 	var labelLiveChangePrevent = document.getElementById('lblLiveChangePrevent');
+		var dpPrevent = document.getElementById('dpPrevent');
+		var labelChangePrevent = document.getElementById('lblChangePrevent');
+		var labelChangePreventTargetValue = document.getElementById('lblChangePreventTargetValue');
+		var labelLiveChangePrevent = document.getElementById('lblLiveChangePrevent');
 
-	// 	dpPrevent.addEventListener('ui5-change', function(e) {
-	// 		e.preventDefault();
-	// 		console.log('change: ', e.detail);
-	// 		labelChangePreventTargetValue.innerHTML = 'target value on event fire: ' + e.target.value;
-	// 		labelChangePrevent.innerHTML = 'change: ' + JSON.stringify(e.detail);
-	// 	});
-	// 	dpPrevent.addEventListener('ui5-input', function(e) {
-	// 		console.log('input: ', e.detail);
-	// 		labelLiveChangePrevent.innerHTML = 'input: ' + JSON.stringify(e.detail);
-	// 	});
+		dpPrevent.addEventListener('ui5-change', function(e) {
+			e.preventDefault();
+			console.log('change: ', e.detail);
+			labelChangePreventTargetValue.innerHTML = 'target value on event fire: ' + e.target.value;
+			labelChangePrevent.innerHTML = 'change: ' + JSON.stringify(e.detail);
+		});
+		dpPrevent.addEventListener('ui5-input', function(e) {
+			console.log('input: ', e.detail);
+			labelLiveChangePrevent.innerHTML = 'input: ' + JSON.stringify(e.detail);
+		});
 
-	// 	function datePickerInputChangeHandler(e) {
-	// 		var dp = e.currentTarget;
-	// 		dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Negative');
-	// 	}
+		function datePickerInputChangeHandler(e) {
+			var dp = e.currentTarget;
+			dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Negative');
+		}
 
-	// 	document.getElementById('ui5-datepicker--startDate').addEventListener('ui5-input change', datePickerInputChangeHandler);
-	// 	document.getElementById('ui5-datepicker--startDate').addEventListener('change', datePickerInputChangeHandler);
+		document.getElementById('ui5-datepicker--startDate').addEventListener('ui5-input change', datePickerInputChangeHandler);
+		document.getElementById('ui5-datepicker--startDate').addEventListener('change', datePickerInputChangeHandler);
 
-	// 	var dp11 = document.getElementById('dp11');
+		var dp11 = document.getElementById('dp11');
 
-	// 	document.getElementById('b1').addEventListener("click", function(e) {
-	// 		dp11.setAttribute("value", dp11.formatValue(new Date(2018, 11, 11)));
-	// 	});
+		document.getElementById('b1').addEventListener("click", function(e) {
+			dp11.setAttribute("value", dp11.formatValue(new Date(2018, 11, 11)));
+		});
 
-	// 	const datePickerValueStateChangePrevented = document.getElementById("dpVsChangePrevented");
+		const datePickerValueStateChangePrevented = document.getElementById("dpVsChangePrevented");
 	
-	// 	datePickerValueStateChangePrevented.addEventListener("value-state-change", function(e) {
-	// 		e.preventDefault();
-	// });
+		datePickerValueStateChangePrevented.addEventListener("value-state-change", function(e) {
+			e.preventDefault();
+	});
 
-	// dpCalendarModeDays.addEventListener("ui5-open", function(e) {
-	// 	console.log("Picker is opened");
-	// });
+	dpCalendarModeDays.addEventListener("ui5-open", function(e) {
+		console.log("Picker is opened");
+	});
 
-	// dpCalendarModeDays.addEventListener("ui5-close", function(e) {
-	// 	console.log("Picker is closed");
-	// });
+	dpCalendarModeDays.addEventListener("ui5-close", function(e) {
+		console.log("Picker is closed");
+	});
 
 	</script>
 </body>

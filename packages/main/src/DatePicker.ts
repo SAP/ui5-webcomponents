@@ -871,9 +871,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	get pickerAccessibleName() {
-		return isPhone()
-			? DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME)
-			: DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME, this.ariaLabelText);
+		return DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME, this.ariaLabelText);
 	}
 
 	/**
