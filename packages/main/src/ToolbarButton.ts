@@ -155,6 +155,9 @@ class ToolbarButton extends ToolbarItem {
 	@property()
 	width?: string;
 
+	@property({ type: Boolean })
+	iconOnly?: boolean;
+
 	get styles() {
 		return {
 			width: this.width,
@@ -180,6 +183,10 @@ class ToolbarButton extends ToolbarItem {
 				"ui5-tb-button": true,
 			},
 		};
+	}
+
+	get displayIconOnly() {
+		return !this.isOverflowed && this.iconOnly;
 	}
 }
 

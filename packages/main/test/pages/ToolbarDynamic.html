@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Toolbar Dynamic</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="./styles/ToolbarDynamic.css">
+</head>
+
+<body>
+	<div class="page-container">
+		<ui5-title level="H2">Dynamic Toolbar Sample</ui5-title>
+		
+		<div class="controls">
+			<ui5-label>Container Width:</ui5-label>
+			<ui5-slider id="widthSlider" min="300" max="800" value="800" step="1" show-tooltip></ui5-slider>
+			<ui5-text id="widthText">800px</ui5-text>
+		</div>
+
+		<!-- Toolbar -->
+		<div class="toolbar-container" id="toolbarContainer">
+			<ui5-toolbar id="dynamicToolbar">
+				<ui5-toolbar-button icon="add" text="Add"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="edit" text="Edit"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="delete" text="Delete"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="copy" text="Copy"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="save" text="Save"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="add" text="Add"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="edit" text="Edit"></ui5-toolbar-button>
+				<ui5-toolbar-button icon-only icon="delete" text="Delete"></ui5-toolbar-button>
+				<ui5-toolbar-button icon-only icon="copy" text="Copy"></ui5-toolbar-button>
+				<ui5-toolbar-button icon-only icon="save" text="Save"></ui5-toolbar-button>
+			</ui5-toolbar>
+		</div>
+	</div>
+
+	<script>
+		const widthSlider = document.getElementById('widthSlider');
+		const widthText = document.getElementById('widthText');
+		const toolbarContainer = document.getElementById('toolbarContainer');
+
+		// Update container width
+		function updateWidth() {
+			const width = parseInt(widthSlider.value);
+			toolbarContainer.style.width = width + 'px';
+			widthText.textContent = width + 'px';
+		}
+
+		widthSlider.addEventListener('input', updateWidth);
+
+		// Initialize
+		document.addEventListener('DOMContentLoaded', function() {
+			updateWidth();
+		});
+	</script>
+</body>
+
+</html>

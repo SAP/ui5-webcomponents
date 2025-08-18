@@ -1,0 +1,37 @@
+body {
+    background-color: var(--sapBackgroundColor);
+    padding: 20px;
+}
+
+.page-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.controls ui5-label {
+    font-weight: 600;
+}
+
+.controls ui5-slider {
+    flex: 1;
+    min-width: 200px;
+}
+
+.controls ui5-input {
+    width: 80px;
+}
+
+.toolbar-container {
+    border: 1px solid var(--sapNeutralBorderColor);
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px 0;
+}

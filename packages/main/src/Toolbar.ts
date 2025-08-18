@@ -5,8 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import type { UI5CustomEvent } from "@ui5/webcomponents-base";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import { renderFinished, type UI5CustomEvent } from "@ui5/webcomponents-base";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
@@ -297,12 +296,7 @@ class Toolbar extends UI5Element {
 
 	async onAfterRendering() {
 		await renderFinished();
-
-		this.storeItemsWidth();
 		this.processOverflowLayout();
-		this.items.forEach(item => {
-			 item.isOverflowed = this.overflowItems.map(overflowItem => overflowItem).indexOf(item) !== -1;
-		});
 	}
 
 	/**
@@ -343,6 +337,10 @@ class Toolbar extends UI5Element {
 	 */
 
 	processOverflowLayout() {
+		this.items.forEach(item => {
+			 item.isOverflowed = this.overflowItems.map(overflowItem => overflowItem).indexOf(item) !== -1;
+		});
+		this.storeItemsWidth();
 		if (this.offsetWidth === 0) {
 			return;
 		}
@@ -369,12 +367,14 @@ class Toolbar extends UI5Element {
 			minWidth = 0;
 
 		this.items.forEach((item: ToolbarItem) => {
-			const itemWidth = this.getItemWidth(item);
+			const itemWidth = item.isOverflowed ? this.getCachedItemWidth(item._id) : this.getItemWidth(item);
 			totalWidth += itemWidth;
 			if (item.overflowPriority === ToolbarItemOverflowBehavior.NeverOverflow) {
 				minWidth += itemWidth;
 			}
-			this.ITEMS_WIDTH_MAP.set(item._id, itemWidth);
+			if (!item.isOverflowed) {
+				this.ITEMS_WIDTH_MAP.set(item._id, itemWidth);
+			}
 		});
 
 		if (minWidth !== this.minContentWidth) {
@@ -499,7 +499,7 @@ class Toolbar extends UI5Element {
 
 		let itemWidth = 0;
 
-		if (renderedItem && renderedItem.offsetWidth) {
+		if (renderedItem && renderedItem.offsetWidth && !item.isOverflowed) {
 			const ItemCSSStyleSet = getComputedStyle(renderedItem);
 			itemWidth = renderedItem.offsetWidth + parsePxValue(ItemCSSStyleSet, "margin-inline-end")
 				+ parsePxValue(ItemCSSStyleSet, "margin-inline-start");
@@ -511,7 +511,7 @@ class Toolbar extends UI5Element {
 	}
 
 	getCachedItemWidth(id: string) {
-		return this.ITEMS_WIDTH_MAP.get(id);
+		return this.ITEMS_WIDTH_MAP.get(id) || 0;
 	}
 }
 
