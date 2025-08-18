@@ -175,7 +175,7 @@
 }
 
 /* If the 'rows' property is not set it defaults to 2 in the native TextArea element */
-:host:not([rows]) .ui5-textarea-inner {
+:host(:not([rows])) .ui5-textarea-inner  {
 	min-height: calc(2 * var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
