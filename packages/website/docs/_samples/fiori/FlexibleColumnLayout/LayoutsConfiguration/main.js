@@ -52,3 +52,8 @@ fcl.layoutsConfiguration = {
 selectLayout.addEventListener("ui5-change", (e) => {
     fcl.layout = e.detail.selectedOption.textContent;
 });
+
+fcl.addEventListener("layout-configuration-change", (e) => {
+    console.log("Layout configuration change:", e.detail);
+    console.log("Layout configuration object:", fcl.layoutsConfiguration);
+});

@@ -103,6 +103,7 @@ type FlexibleColumnLayoutLayoutChangeEventDetail = {
 
 type FlexibleColumnLayoutLayoutConfigurationChangeEventDetail = {
 	layout: `${FCLLayout}`,
+	media: `${MEDIA}`,
 	columnLayout: FlexibleColumnLayoutColumnLayout,
 };
 
@@ -208,7 +209,8 @@ type FCLAccessibilityAttributes = {
 /**
  * Fired when the `layoutConfiguration` changes via user interaction by dragging the separators.
  * @param {FCLLayout} layout The current layout
- * @param {array} columnLayout The effective column layout, f.e [67%, 33%, 0]
+ * @param {MEDIA} media The current media type
+ * @param {array} columnLayout The effective column layout, f.e ["67%", "33%", "0px"]
  * @public
  */
 @event("layout-configuration-change", {
@@ -313,8 +315,8 @@ class FlexibleColumnLayout extends UI5Element {
 	* - The proportions should add up to 100%.
 	* - Hidden columns are marked as "0px", e.g. ["0px", "70%", "30%"]. Specifying 0 or "0%" for hidden columns is also valid.
 	* - If the proportions do not match the layout (e.g. if provided proportions ["70%", "30%", "0px"] for "OneColumn" layout), then the default proportions will be used instead.
-	* - If the user drags the columns separator to resize the columns, the `layoutsConfiguration` object will be updated with the user-specified proportions for the given layout.
-	* - No custom configuration available for the phone screen size, as the default of 100% column width is always used there. Any custom configuration for the phone screen size will be ignored.
+	* - Whenever the user drags the columns separator to resize the columns, the `layoutsConfiguration` object will be updated with the user-specified proportions for the given layout (and the `layout-configuration-change` event will be fired).
+	* - No custom configuration available for the phone screen size, as the default of 100% column width is always used there.
 	* @public
 	* @since 2.0.0
 	* @default {}
@@ -573,6 +575,7 @@ class FlexibleColumnLayout extends UI5Element {
 		const columnLayout = [...this._columnLayout!] as string[]; // do not leak reference to the private _columnLayout array to prevent apps modifying its content
 		this.fireDecoratorEvent("layout-configuration-change", {
 			layout: this.layout,
+			media: this.media,
 			columnLayout,
 		});
 	}
