@@ -26,7 +26,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { PassiveEventListenerObject, AriaLandmarkRole } from "@ui5/webcomponents-base";
 import FCLLayout from "./types/FCLLayout.js";
-import type { LayoutConfiguration } from "./fcl-utils/FCLLayout.js";
 import {
 	getDefaultLayoutsByMedia,
 	getNextLayoutByArrowPress,
@@ -77,7 +76,20 @@ type SeparatorMovementSession = {
 	tmpFCLLayout: FCLLayout, // the layout that corresponds to the latest separator position
 };
 
-type FlexibleColumnLayoutColumnLayout = Array<string | number>;
+type FlexibleColumnLayoutColumnLayout = Array<string | 0>;
+
+type LayoutConfiguration = {
+	"tablet"?: {
+		[layoutName in FCLLayout]?: {
+			layout: FlexibleColumnLayoutColumnLayout,
+		}
+	},
+	"desktop"?: {
+		[layoutName in FCLLayout]?: {
+			layout: FlexibleColumnLayoutColumnLayout,
+		}
+	},
+}
 
 type FlexibleColumnLayoutLayoutChangeEventDetail = {
 	layout: `${FCLLayout}`,
@@ -513,7 +525,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	getCustomColumnLayout(layout: `${FCLLayout}`) {
-		if (this.mediaAllowsCustomConfiguration()) {
+		if (this.mediaAllowsCustomConfiguration(this.media)) {
 			const customLayout = this.layoutsConfiguration[this.media]?.[layout]?.layout;
 			if (customLayout) {
 				const normalizedWidths = this.normalizeColumnWidths(customLayout); // satisfy min-width constraint
@@ -525,7 +537,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	setCustomColumnLayout(layout: `${FCLLayout}`, columnLayout: string[]) {
-		if (this.mediaAllowsCustomConfiguration()) {
+		if (this.mediaAllowsCustomConfiguration(this.media)) {
 			this.layoutsConfiguration[this.media] ??= {};
 			this.layoutsConfiguration[this.media]![layout] ??= { layout: columnLayout };
 			this.layoutsConfiguration[this.media]![layout]!.layout = columnLayout;
@@ -536,8 +548,8 @@ class FlexibleColumnLayout extends UI5Element {
 		return getDefaultLayoutsByMedia()[this.media][layout].layout;
 	}
 
-	mediaAllowsCustomConfiguration() {
-		return this.media !== MEDIA.PHONE;
+	mediaAllowsCustomConfiguration(media: MEDIA) {
+		return media !== MEDIA.PHONE;
 	}
 
 	calcVisibleColumns(colLayout: FlexibleColumnLayoutColumnLayout) {
@@ -559,7 +571,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 	fireLayoutConfigurationChange() {
 		const columnLayout = [...this._columnLayout!] as string[]; // do not leak reference to the private _columnLayout array to prevent apps modifying its content
-		this.fireEvent<FlexibleColumnLayoutLayoutConfigurationChangeEventDetail>("layout-configuration-change", {
+		this.fireDecoratorEvent("layout-configuration-change", {
 			layout: this.layout,
 			columnLayout,
 		});
