@@ -261,8 +261,8 @@ class DynamicSideContent extends UI5Element {
 					this.fireDecoratorEvent("layout-change", {
 						currentBreakpoint: breakpoint,
 						previousBreakpoint: this._currentBreakpoint,
-						mainContentVisible: true, // or calculate if needed
-						sideContentVisible: true, // or calculate if needed
+						mainContentVisible: this._getMainContentVisibility(),
+						sideContentVisible: this._getSideContentVisibility(),
 					});
 					this._currentBreakpoint = breakpoint;
 				}
@@ -280,9 +280,33 @@ class DynamicSideContent extends UI5Element {
 	 * @public
 	 */
 	toggleContents(): void {
-		if (this.breakpoint === this.sizeS && this.sideContentVisibility !== SideContentVisibility.AlwaysShow) {
+		if (this._isToggleEnabled) {
 			this._toggled = !this._toggled;
 		}
+	}
+
+	/**
+	 * Gets main content visibility by checking CSS display property
+	 * @private
+	 */
+	_getMainContentVisibility(): boolean {
+		const mainElement = this.shadowRoot?.querySelector(".ui5-dsc-main") as HTMLElement;
+		if (!mainElement) return false;
+
+		const computedStyle = getComputedStyle(mainElement);
+		return computedStyle.display !== "none";
+	}
+
+	/**
+	 * Gets side content visibility by checking CSS display property
+	 * @private
+	 */
+	_getSideContentVisibility(): boolean {
+		const sideElement = this.shadowRoot?.querySelector(".ui5-dsc-side") as HTMLElement;
+		if (!sideElement) return false;
+
+		const computedStyle = getComputedStyle(sideElement);
+		return computedStyle.display !== "none";
 	}
 
 	get classes() {
@@ -306,10 +330,11 @@ class DynamicSideContent extends UI5Element {
 		}
 		return (
 			(this.sideContentFallDown === "OnMinimumWidth" && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT)
+			|| (this.sideContentFallDown === "BelowM" && this._currentBreakpoint === this.sizeM)
 			|| (this.sideContentFallDown === "BelowM" && this._currentBreakpoint === this.sizeS)
 			|| (this.sideContentFallDown === "BelowL" && (this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS))
 			|| (this.sideContentFallDown === "BelowXL" && (this._currentBreakpoint === this.sizeL || this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS) && this._currentBreakpoint !== this.sizeXL)
-			|| (this.sideContentVisibility === "AlwaysShow" && this._currentBreakpoint === this.sizeS && !this._toggled)
+			|| (this.sideContentVisibility === "AlwaysShow" && this._currentBreakpoint === this.sizeS)
 			|| (this.sideContentVisibility === "AlwaysShow" && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT)
 		);
 	}
@@ -361,24 +386,48 @@ class DynamicSideContent extends UI5Element {
 		return this.clientWidth;
 	}
 
-	get breakpoint() {
-		let size;
+	get breakpoint(): string {
+		const width = this.containerWidth;
 
-		if (this.containerWidth <= S_M_BREAKPOINT) {
-			size = this.sizeS;
-		} else if (this.containerWidth > S_M_BREAKPOINT && this.containerWidth <= M_L_BREAKPOINT) {
-			size = this.sizeM;
-		} else if (this.containerWidth > M_L_BREAKPOINT && this.containerWidth <= L_XL_BREAKPOINT) {
-			size = this.sizeL;
-		} else {
-			size = this.sizeXL;
-		}
-
-		return size;
+		if (width <= S_M_BREAKPOINT) return this.sizeS;
+		if (width <= M_L_BREAKPOINT) return this.sizeM;
+		if (width <= L_XL_BREAKPOINT) return this.sizeL;
+		return this.sizeXL;
 	}
 
 	get _isSideContentFirst() {
 		return this.sideContentPosition === SideContentPosition.Start;
+	}
+
+	/**
+	 * Returns true when the toggleContents functionality should be enabled.
+	 * Toggle is available when side content would normally be hidden in the current breakpoint
+	 * but can be shown via the toggle mechanism.
+	 * @private
+	 */
+	get _isToggleEnabled(): boolean {
+		// Never allow toggle when NeverShow is set or content is explicitly hidden
+		if (this.sideContentVisibility === SideContentVisibility.NeverShow ||
+			this.hideMainContent ||
+			this.hideSideContent) {
+			return false;
+		}
+
+		const currentBreakpoint = this.breakpoint;
+
+		// S breakpoint: toggle available unless AlwaysShow
+		if (currentBreakpoint === this.sizeS) {
+			return this.sideContentVisibility !== SideContentVisibility.AlwaysShow;
+		}
+
+		// For other breakpoints, check if side content would be hidden based on visibility setting
+		const breakpointHierarchy = {
+			[this.sizeM]: [SideContentVisibility.ShowAboveM, SideContentVisibility.ShowAboveL],
+			[this.sizeL]: [SideContentVisibility.ShowAboveL],
+		};
+
+		const hiddenVisibilities = breakpointHierarchy[currentBreakpoint];
+		return hiddenVisibilities?.includes(this.sideContentVisibility as SideContentVisibility) ?? false;
 	}
 }
 
