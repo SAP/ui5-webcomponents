@@ -148,6 +148,178 @@ describe("Tokenizer nMore Popover", () => {
 		cy.get("@deleteButton")
 			.should("not.be.focused");
 	});
+
+	it("tests item deletion via mouse", () => {
+		cy.mount(
+			<Tokenizer id="test-token-delete" style={{ width: "100px" }} onTokenDelete={onTokenDelete}>
+				<Token text="aute"></Token>
+				<Token text="ad"></Token>
+				<Token text="exercitation"></Token>
+				<Token text="esse"></Token>
+				<Token text="labore"></Token>
+				<Token text="amet"></Token>
+				<Token text="excepteur"></Token>
+			</Tokenizer>
+		);
+
+		cy.get("#test-token-delete")
+			.find("[ui5-token]")
+			.should("have.length", 7);
+
+		cy.get("#test-token-delete")
+			.shadow()
+			.find(".ui5-tokenizer-more-text")
+			.realClick();
+
+		cy.get("#test-token-delete")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should("be.visible");
+
+		cy.get("#test-token-delete")
+			.shadow()
+			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]").eq(0)
+			.shadow()
+			.find(".ui5-li-deletebtn [ui5-button]")
+			.realClick();
+
+		cy.get("#test-token-delete")
+			.find("[ui5-token]")
+			.should("have.length", 6);
+	});
+
+	it("tests item deletion via keyboard", () => {
+		cy.mount(
+			<div style={{display: "flex", flexDirection: "column", width: "240px"}}>
+				<Tokenizer id="nmore-tokenizer">
+					<Token text="Andora"></Token>
+					<Token text="Bulgaria"></Token>
+					<Token text="Canada"></Token>
+					<Token text="Denmark"></Token>
+					<Token text="Estonia"></Token>
+				</Tokenizer>
+			</div>
+		);
+
+		cy.get("[ui5-tokenizer]")
+			.shadow()
+			.find(".ui5-tokenizer-more-text")
+			.as("nMoreLabel");
+
+		cy.get("@nMoreLabel")
+			.realClick();
+
+		cy.get("[ui5-tokenizer]")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should("have.attr", "open");
+
+		cy.get("[ui5-tokenizer]")
+			.shadow()
+			.find("ui5-li")
+			.eq(0)
+			.should("be.focused");
+
+		cy.get("[ui5-tokenizer]")
+			.shadow()
+			.find("ui5-li")
+			.eq(1)
+			.as("secondListItem");
+
+		cy.realPress("Delete");
+
+		cy.get("@secondListItem")
+			.should("be.focused");
+	});
+});
+
+describe("Disabled", () => {
+	it("Disabled Tokenizer should not be interactive", () => {
+		cy.mount(
+			<Tokenizer disabled>
+				<Token text="Test Token"></Token>
+
+			</Tokenizer>
+		);
+
+		cy.get("[ui5-tokenizer]")
+			.should("have.attr", "disabled");
+
+		// Verify tokenizer is not interactive by checking that clicking doesn't expand it
+		cy.get("[ui5-token]")
+			.realClick();
+
+		cy.get("[ui5-tokenizer]")
+			.should("not.have.attr", "expanded");
+	});
+
+	it("should not fire events when disabled", () => {
+		cy.mount(
+			<Tokenizer disabled onTokenDelete={cy.stub().as("tokenDelete")}>
+				<Token text="Test Token"></Token>
+			</Tokenizer>
+		);
+
+		cy.get("[ui5-token]")
+			.realClick();
+
+		cy.realPress("Backspace");
+		cy.realPress("Delete");
+
+		cy.get("@tokenDelete")
+			.should("not.have.been.called");
+
+		cy.get("[ui5-token]")
+			.should("have.length", 1);
+	});
+});
+
+describe("Single token", () => {
+	it("should open popover on click of single token", () => {
+		cy.mount(
+			<Tokenizer style={{ width: "150px" }}>
+				<Token text="This is a very long token text that should be truncated"></Token>
+			</Tokenizer>
+		);
+
+		cy.get("[ui5-token]")
+			.eq(0)
+			.as("singleToken");
+
+		cy.get("@singleToken")
+			.should("have.prop", "singleToken", true);
+
+		cy.get("@singleToken")
+			.realClick();
+
+		cy.get("[ui5-tokenizer]")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should("have.attr", "open");
+
+		cy.get("@singleToken")
+			.should("have.attr", "selected");
+
+		cy.get("[ui5-tokenizer]")
+			.shadow()
+			.find("ui5-li")
+			.eq(0)
+			.should("be.focused");
+
+		cy.get("@singleToken")
+			.realClick();
+
+		cy.get("[ui5-tokenizer]")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should("not.have.attr", "open");
+
+		cy.get("@singleToken")
+			.should("not.have.attr", "selected");
+
+		cy.get("@singleToken")
+			.should("have.attr", "focused");
+	});
 });
 
 describe("Readonly", () => {
