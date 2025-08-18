@@ -132,17 +132,6 @@ class Page extends UI5Element {
 	get _contentTop() {
 		return this.header.length ? "2.75rem" : "0rem";
 	}
-
-	get styles() {
-		return {
-			content: {
-				"padding-bottom": this.footer.length && this._contentPaddingBottom,
-				"scroll-padding-bottom": this.footer.length && this._contentPaddingBottom,
-				"bottom": this.footer.length && this._contentBottom,
-				"top": this._contentTop,
-			},
-		};
-	}
 }
 
 Page.define();

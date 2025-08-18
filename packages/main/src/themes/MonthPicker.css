@@ -40,7 +40,7 @@
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
-	cursor: default;
+	cursor: pointer;
 	outline: none;
 	position: relative;
 	border: var(--_ui5_monthpicker_item_border);
