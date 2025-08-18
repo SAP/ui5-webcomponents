@@ -768,6 +768,16 @@ class Select extends UI5Element implements IFormInputElement {
 	_changeSelectedItem(oldIndex: number, newIndex: number) {
 		const options: Array<IOption> = this.options;
 
+		// Normalize: first navigation with Up when nothing selected -> last item
+		if (oldIndex === -1 && newIndex < 0 && options.length) {
+			newIndex = options.length - 1;
+		}
+
+		// Abort on invalid target
+		if (newIndex < 0 || newIndex >= options.length) {
+			return;
+		}
+
 		const previousOption = options[oldIndex];
 		const nextOption = options[newIndex];
 
@@ -775,8 +785,10 @@ class Select extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		previousOption.selected = false;
-		previousOption.focused = false;
+		if (previousOption) {
+			previousOption.selected = false;
+			previousOption.focused = false;
+		}
 
 		nextOption.selected = true;
 		nextOption.focused = true;
@@ -897,6 +909,10 @@ class Select extends UI5Element implements IFormInputElement {
 
 	get valueStateTextId() {
 		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
+	get responsivePopoverId() {
+		return `${this._id}-popover`;
 	}
 
 	get isDisabled() {
