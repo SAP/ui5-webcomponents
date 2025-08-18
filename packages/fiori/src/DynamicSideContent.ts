@@ -291,7 +291,9 @@ class DynamicSideContent extends UI5Element {
 	 */
 	_getMainContentVisibility(): boolean {
 		const mainElement = this.shadowRoot?.querySelector(".ui5-dsc-main") as HTMLElement;
-		if (!mainElement) return false;
+		if (!mainElement) {
+			return false;
+		}
 
 		const computedStyle = getComputedStyle(mainElement);
 		return computedStyle.display !== "none";
@@ -303,7 +305,9 @@ class DynamicSideContent extends UI5Element {
 	 */
 	_getSideContentVisibility(): boolean {
 		const sideElement = this.shadowRoot?.querySelector(".ui5-dsc-side") as HTMLElement;
-		if (!sideElement) return false;
+		if (!sideElement) {
+			return false;
+		}
 
 		const computedStyle = getComputedStyle(sideElement);
 		return computedStyle.display !== "none";
@@ -389,9 +393,15 @@ class DynamicSideContent extends UI5Element {
 	get breakpoint(): string {
 		const width = this.containerWidth;
 
-		if (width <= S_M_BREAKPOINT) return this.sizeS;
-		if (width <= M_L_BREAKPOINT) return this.sizeM;
-		if (width <= L_XL_BREAKPOINT) return this.sizeL;
+		if (width <= S_M_BREAKPOINT) {
+			return this.sizeS;
+		}
+		if (width <= M_L_BREAKPOINT) {
+			return this.sizeM;
+		}
+		if (width <= L_XL_BREAKPOINT) {
+			return this.sizeL;
+		}
 		return this.sizeXL;
 	}
 
@@ -407,9 +417,9 @@ class DynamicSideContent extends UI5Element {
 	 */
 	get _isToggleEnabled(): boolean {
 		// Never allow toggle when NeverShow is set or content is explicitly hidden
-		if (this.sideContentVisibility === SideContentVisibility.NeverShow ||
-			this.hideMainContent ||
-			this.hideSideContent) {
+		if (this.sideContentVisibility === SideContentVisibility.NeverShow
+			|| this.hideMainContent
+			|| this.hideSideContent) {
 			return false;
 		}
 
