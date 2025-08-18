@@ -97,7 +97,7 @@ describe("General Interaction", () => {
 		}).should("contains", "ne");
 	});
 
-	it("should filter items based on input", () => {
+	it("check that popover closes when there are no matches", () => {
 		cy.mount(
 			<ComboBox>
 				<ComboBoxItem text="Algeria" id="cbi"></ComboBoxItem>
@@ -1194,7 +1194,7 @@ describe("Additional Navigation", () => {
 		for (let i = 0; i < 16; i++) {
 			cy.get("@combo").realPress("ArrowDown");
 		}
-		cy.wait(300)
+
 		// Check if last item is now visible
 		cy.window().then(win => {
 			const combobox = win.document.getElementById("combo-grouping") as any;
@@ -1342,15 +1342,20 @@ describe("Keyboard interaction", () => {
 			</>
 		);
 
-		cy.get("#combo-grouping").shadow().find("[ui5-icon]").realClick();
+		cy.get("#combo-grouping").shadow().find("input").realClick();
+		cy.get("#combo-grouping").should("be.focused");
+		
+		cy.get("#combo-grouping").shadow().find("input").realClick();
+		cy.get("#combo-grouping").should("be.focused");
+
 		cy.get("#combo-grouping").realPress("Tab");
+		cy.get("#next-combo").should("be.focused");
 
-		cy.get("#next-combo").should("have.prop", "focused", true);
+		cy.get("#combo-grouping").shadow().find("input").realClick();
+		cy.get("#combo-grouping").should("be.focused");
 
-		cy.get("#combo-grouping").shadow().find("[ui5-icon]").realClick();
 		cy.get("#combo-grouping").realPress(["Shift", "Tab"]);
-
-		cy.get("#prev-combo").should("have.prop", "focused", true);
+		cy.get("#prev-combo").should("be.focused");
 	});
 
 	it("should not select an item when input value does not match any item and F4 is pressed", () => {
