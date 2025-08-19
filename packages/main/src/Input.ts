@@ -135,6 +135,8 @@ type InputAccInfo = {
 	ariaInvalid?: boolean,
 }
 
+type CompositionEventHandler = (e?: CompositionEvent) => void;
+
 // all sementic events
 enum INPUT_EVENTS {
 	CHANGE = "change",
@@ -567,6 +569,14 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_linksListenersArray: Array<(args: any) => void> = [];
 
 	/**
+	 * Indicates whether IME composition is currently active
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_isComposing = false;
+
+	/**
 	 * Defines the suggestion items.
 	 *
 	 * **Note:** The suggestions would be displayed only if the `showSuggestions`
@@ -628,6 +638,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_isLatestValueFromSuggestions: boolean;
 	_isChangeTriggeredBySuggestion: boolean;
 	_valueStateLinks: Array<HTMLElement>;
+	_onCompositionStartBound: CompositionEventHandler;
+	_onCompositionEndBound: CompositionEventHandler;
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -702,17 +714,22 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._keepInnerValue = false;
 		this._focusedAfterClear = false;
 		this._valueStateLinks = [];
+
+		this._onCompositionStartBound = this._onCompositionStart.bind(this);
+		this._onCompositionEndBound = this._onCompositionEnd.bind(this);
 	}
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
+		this._addCompositionEventListeners();
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResizeBound);
 		deregisterUI5Element(this);
 		this._removeLinksEventListeners();
+		this._removeCompositionEventListeners();
 	}
 
 	_highlightSuggestionItem(item: SuggestionItem) {
@@ -776,7 +793,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		if (this._shouldAutocomplete && !isAndroid() && !autoCompletedChars && !this._isKeyNavigation) {
 			const item = this._getFirstMatchingItem(value);
 			if (item) {
-				this._handleTypeAhead(item);
+				if (!this._isComposing) {
+					this._handleTypeAhead(item);
+				}
 				this._selectMatchingItem(item);
 			}
 		}
@@ -1117,6 +1136,32 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		if ((this.value !== this.previousValue) && this.showClearIcon) {
 			this._clearIconClicked = false;
 		}
+	}
+
+	_addCompositionEventListeners() {
+		const input = this.getInputDOMRefSync();
+		if (!input) { return; }
+
+		this._removeCompositionEventListeners();
+
+		input.addEventListener("compositionstart", this._onCompositionStartBound);
+		input.addEventListener("compositionend", this._onCompositionEndBound);
+	}
+
+	_removeCompositionEventListeners() {
+		const input = this.getInputDOMRefSync();
+		if (!input) { return; }
+
+		input.removeEventListener("compositionstart", this._onCompositionStartBound);
+		input.removeEventListener("compositionend", this._onCompositionEndBound);
+	}
+
+	_onCompositionStart() {
+		this._isComposing = true;
+	}
+
+	_onCompositionEnd() {
+		this._isComposing = false;
 	}
 
 	_clearPopoverFocusAndSelection() {

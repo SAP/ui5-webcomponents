@@ -58,6 +58,9 @@ export default function InputTemplate(this: Input, hooks?: { preContent: Templat
 						onKeyUp={this._onkeyup}
 						onClick={this._click}
 						onFocusIn={this.innerFocusIn}
+						// uncomment after preact version in updated
+						// onCompositionStart={this._onCompositionStart}
+						// onCompositionEnd={this._onCompositionEnd}
 					/>
 
 					{this._effectiveShowClearIcon &&
