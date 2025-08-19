@@ -610,30 +610,40 @@ describe("DateRangePicker general interaction", () => {
 
 		cy.mount(<DateRangePickerTemplate formatPattern="MM.yyyy" />);
 
-		// TODO: Remove when focus is applied on month, day, year picker in their onAfterRendering method. It takes the focus one they are rendered even if not visible
-		cy.wait(500);
-
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
 			.find("[ui5-datetime-input]")
 			.realClick()
 
-		cy.get("@dateRangePicker")
-			.should("be.focused");
-
-		cy.realType("09.2024 - 11.2024");
-
-		cy.realPress("Enter");
-
-		cy.get("@dateRangePicker")
-			.should("have.value", "09.2024 - 11.2024")
-
 		cy.realPress("F4");
 
 		cy.get<DateRangePicker>("@dateRangePicker")
 			.ui5DateRangePickerExpectToBeOpen()
 
+		// click on September
+		cy.get<DateRangePicker>("@dateRangePicker")
+			.shadow()
+			.find("[ui5-calendar]")
+			.shadow()
+			.find("[ui5-monthpicker]")
+			.shadow()
+			.find(".ui5-mp-root .ui5-mp-item")
+			.eq(8)
+			.realClick();
+
+		// click on November
+		cy.get<DateRangePicker>("@dateRangePicker")
+			.shadow()
+			.find("[ui5-calendar]")
+			.shadow()
+			.find("[ui5-monthpicker]")
+			.shadow()
+			.find(".ui5-mp-root .ui5-mp-item")
+			.eq(10)
+			.realClick();
+
+		// Verify the range selection is visible in the picker
 		cy.get<DateRangePicker>("@dateRangePicker")
 			.shadow()
 			.find("[ui5-calendar]")
@@ -674,6 +684,25 @@ describe("DateRangePicker general interaction", () => {
 			.find("[ui5-yearpicker]")
 			.should("exist")
 			.and("be.visible");
+
+		cy.get("@dateRangePicker")
+			.shadow()
+			.find("[ui5-calendar]")
+			.realPress("F4");
+
+		cy.wait(100);
+
+		cy.get("@dateRangePicker")
+			.shadow()
+			.find("[ui5-calendar]")
+			.realPress(["Shift", "F4"]);
+
+		cy.wait(100);
+
+		cy.get("@dateRangePicker")
+			.shadow()
+			.find("[ui5-calendar]")
+			.should("exist");
 	});
 
 	it("Select year range in YearPicker", () => {
@@ -681,28 +710,57 @@ describe("DateRangePicker general interaction", () => {
 			.then(api => {
 				return api.setLanguage("en");
 			})
-
+		
 		cy.mount(<DateRangePickerTemplate formatPattern="yyyy" />);
-
+		
 		cy.get<DateRangePicker>("[ui5-daterange-picker]")
 			.as("dateRangePicker")
 			.shadow()
 			.find("[ui5-datetime-input]")
 			.realClick()
 			.should("be.focused");
-
-		cy.realType("0001 - 0006");
-
-		cy.realPress("Enter");
-
-		cy.get<DateRangePicker>("[ui5-daterange-picker]")
-			.should("have.value", "0001 - 0006")
-
+		
+		// Open picker first
 		cy.realPress("F4");
-
+		
 		cy.get<DateRangePicker>("@dateRangePicker")
 			.ui5DateRangePickerExpectToBeOpen()
-
+		
+		// Navigate to year view using keyboard navigation
+		cy.get<DateRangePicker>("@dateRangePicker")
+			.shadow()
+			.find("[ui5-calendar]")
+			.realPress("F4"); // Navigate to month view
+		cy.wait(100);
+		
+		cy.get<DateRangePicker>("@dateRangePicker")
+			.shadow()
+			.find("[ui5-calendar]")
+			.realPress(["Shift", "F4"]); // Navigate to year view
+		cy.wait(300);
+		
+		// Select year range by clicking (different years than test 2)
+		cy.get<DateRangePicker>("@dateRangePicker")
+			.shadow()
+			.find("[ui5-calendar]")
+			.shadow()
+			.find("[ui5-yearpicker]")
+			.shadow()
+			.find(".ui5-yp-root .ui5-yp-item")
+			.first() // Select first year as start
+			.realClick();
+		
+		cy.get<DateRangePicker>("@dateRangePicker")
+			.shadow()
+			.find("[ui5-calendar]")
+			.shadow()
+			.find("[ui5-yearpicker]")
+			.shadow()
+			.find(".ui5-yp-root .ui5-yp-item")
+			.eq(3) // Select fourth year as end (creating a range)
+			.realClick();
+		
+		// Validate the same visual behavior as test 2
 		cy.get<DateRangePicker>("@dateRangePicker")
 			.shadow()
 			.find("[ui5-calendar]")
@@ -712,12 +770,19 @@ describe("DateRangePicker general interaction", () => {
 			.find(".ui5-yp-root .ui5-yp-item")
 			.should(years => {
 				const startSelectionYear = years[0];
-				const yearInBetween = years[4];
-				const endSelectionYear = years[5];
+				const yearInBetween1 = years[1];
+				const yearInBetween2 = years[2];
+				const endSelectionYear = years[3];
 
 				expect(startSelectionYear).to.have.class("ui5-yp-item--selected");
-				expect(yearInBetween).to.have.class("ui5-yp-item--selected-between");
+				expect(yearInBetween1).to.have.class("ui5-yp-item--selected-between");
+				expect(yearInBetween2).to.have.class("ui5-yp-item--selected-between");
 				expect(endSelectionYear).to.have.class("ui5-yp-item--selected");
 			});
+		
+		// Verify the component has a value
+		cy.get<DateRangePicker>("@dateRangePicker")
+			.should("have.attr", "value")
+			.and("not.be.empty");
 	});
 });

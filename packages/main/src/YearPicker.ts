@@ -362,7 +362,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * @param amount
 	 * @private
 	 */
-	async _modifyTimestampBy(amount: number) {
+	_modifyTimestampBy(amount: number) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, "year");
 		this._updateSecondTimestamp();
@@ -370,8 +370,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		// Notify the calendar to update its timestamp
 		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 
-		await renderFinished();
-		this._focusableYear.focus();
+		this._focusCorrectYear();
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -434,9 +433,9 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * **Note:** when the user presses the "<" button in the calendar header (same as "PageUp")
 	 * @protected
 	 */
-	async _showPreviousPage() {
+	_showPreviousPage() {
 		const pageSize = this._getPageSize();
-		await this._modifyTimestampBy(-pageSize);
+		this._modifyTimestampBy(-pageSize);
 	}
 
 	/**
@@ -444,8 +443,8 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * **Note:** when the user presses the ">" button in the calendar header (same as "PageDown")
 	 * @protected
 	 */
-	async _showNextPage() {
-		await this._modifyTimestampBy(this._getPageSize());
+	_showNextPage() {
+		this._modifyTimestampBy(this._getPageSize());
 	}
 }
 
