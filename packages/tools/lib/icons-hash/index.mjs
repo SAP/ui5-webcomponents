@@ -91,6 +91,7 @@ async function saveHashes(repoPath, ig) {
 	await fs.mkdir(distPath, { recursive: true });
 	const ui5iconsHashPath = path.join(distPath, ".ui5iconsHash");
 
+	// Cache the hashes for both the icons and tools packages, since the output depends on the content of both.
 	const hashes = {
 		...(await computeHashes(repoPath, ig)),
 		...(await computeHashes(path.resolve(__dirname, "../../"), ig)),
@@ -111,6 +112,7 @@ async function checkHashes(repoPath, ig) {
 		process.exit(1);
 	}
 
+	// Compare the hashes for both the icons and tools packages, since the output depends on the content of both.
 	const newHashes = {
 		...(await computeHashes(repoPath, ig)),
 		...(await computeHashes(path.resolve(__dirname, "../../"), ig)),
