@@ -222,9 +222,12 @@ const getIconAccessibleName = async (name: string | undefined): Promise<string |
 		iconData = await getIconData(name);
 	}
 
-	if (iconData && iconData !== ICON_NOT_FOUND && iconData.accData && iconData.packageName) {
-		const i18nBundle = await getI18nBundle(iconData.packageName);
-		return i18nBundle.getText(iconData.accData);
+	if (iconData && iconData !== ICON_NOT_FOUND && iconData.accData) {
+		if (iconData.packageName) {
+			const i18nBundle = await getI18nBundle(iconData.packageName);
+			return i18nBundle.getText(iconData.accData);
+		}
+		return iconData.accData?.defaultText || "";
 	}
 };
 

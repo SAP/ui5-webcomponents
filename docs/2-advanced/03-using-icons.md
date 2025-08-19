@@ -133,7 +133,7 @@ registerIcon("myIconName", {
 Alternatively, you can use `registerIcon` and provide not the entire SVG, but its `pathData`.
 
 ```js
-import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registriesIcons.js";
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 registerIcon("myIconName", {
     collection: "my-custom-icons",

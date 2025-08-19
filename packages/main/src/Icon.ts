@@ -312,9 +312,13 @@ class Icon extends UI5Element implements IIcon {
 
 		if (this.accessibleName) {
 			this.effectiveAccessibleName = this.accessibleName;
-		} else if (this.accData && this.packageName) {
-			const i18nBundle = await getI18nBundle(this.packageName);
-			this.effectiveAccessibleName = i18nBundle.getText(this.accData) || undefined;
+		} else if (this.accData) {
+			if (this.packageName) {
+				const i18nBundle = await getI18nBundle(this.packageName);
+				this.effectiveAccessibleName = i18nBundle.getText(this.accData) || undefined;
+			} else {
+				this.effectiveAccessibleName = this.accData?.defaultText || undefined;
+			}
 		} else {
 			this.effectiveAccessibleName = undefined;
 		}
