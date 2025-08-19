@@ -1091,7 +1091,8 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	get ariaDescribedByIds() {
-		return [this.valueStateTextId, this.ariaDescriptionTextId].filter(Boolean).join(" ");
+		const ids = [this.valueStateTextId, this.ariaDescriptionTextId].filter(Boolean);
+		return ids.length ? ids.join(" ") : undefined;
 	}
 
 	_updateAssociatedLabelsTexts() {

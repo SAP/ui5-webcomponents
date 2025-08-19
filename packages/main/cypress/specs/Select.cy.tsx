@@ -321,6 +321,11 @@ describe("Select - Accessibility", () => {
 					<Option value="Two">Two</Option>
 					<Option value="Three" selected>Three</Option>
 				</Select>
+				<Select id="selectWithoutDescription">
+					<Option value="A">A</Option>
+					<Option value="B">B</Option>
+					<Option value="C" selected>C</Option>
+				</Select>
 			</>
 		);
 
@@ -350,6 +355,12 @@ describe("Select - Accessibility", () => {
 			.find(".ui5-select-label-root")
 			.should("have.attr", "aria-describedby")
 			.and("contain", "accessibleDescription");
+
+		// Test select without description should not have aria-describedby
+		cy.get("#selectWithoutDescription")
+			.shadow()
+			.find(".ui5-select-label-root")
+			.should("not.have.attr", "aria-describedby");
 
 		// Test that changing the referenced element updates the description
 		cy.get("#descText")

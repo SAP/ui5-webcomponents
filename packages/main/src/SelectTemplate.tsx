@@ -29,7 +29,9 @@ export default function SelectTemplate(this: Select) {
 					role="combobox"
 					aria-haspopup="listbox"
 					aria-label={this.ariaLabelText}
-					aria-describedby={this.ariaDescribedByIds}
+					{...this.ariaDescribedByIds && {
+						"aria-describedby": this.ariaDescribedByIds
+					}}
 					aria-disabled={this.isDisabled}
 					aria-required={this.required}
 					aria-readonly={this.readonly}
