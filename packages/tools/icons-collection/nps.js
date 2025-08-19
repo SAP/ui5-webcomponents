@@ -21,7 +21,7 @@ const copyIconAssetsCommand = (options) => {
 		return 	{
 			default: "nps copy.json-imports copy.icon-collection",
 			"json-imports": `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
-			"icon-collection": `node "${LIB}/copy-and-watch/index.js" --silent "src/*.json" src/generated/assets/`,
+			"icon-collection": `node "${LIB}/copy-and-watch/index.js" --silent "src/*.json" "!src/${v}/messagebundle_*.json" src/generated/assets/`,
 		}
 	}
 
@@ -32,7 +32,7 @@ const copyIconAssetsCommand = (options) => {
 
 	options.versions.forEach((v) => {
 		command.default += ` copy.icon-collection${v}`;
-		command[`icon-collection${v}`] = `node "${LIB}/copy-and-watch/index.js" --silent "src/${v}/*.json" src/generated/assets/${v}/`;
+		command[`icon-collection${v}`] = `node "${LIB}/copy-and-watch/index.js" --silent "src/${v}/*.json" "!src/${v}/messagebundle_*.json" src/generated/assets/${v}/`;
 	});
 
 	return command;
@@ -53,12 +53,12 @@ const getScripts = (options) => {
 			default: `${tsCrossEnv} nps clean copy build.i18n typescript build.icons build.jsonImports`,
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
-				defaultsjs: `mkdirp dist/generated/i18n && node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
-				json: `mkdirp src/generated/assets/i18n && node "${LIB}/i18n/toJSON.js" src/i18n src/generated/assets/i18n`,
+				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
+				json: `node "${LIB}/i18n/toJSON.js" src/i18n src/generated/assets/i18n`,
 			},
 			jsonImports: {
-				default: "mkdirp src/generated/json-imports && nps build.jsonImports.i18n",
-				i18n: `node "${LIB}/generate-json-imports/i18n.js" src/generated/assets/i18n src/generated/json-imports`,
+				default: "nps build.jsonImports.i18n",
+				i18n: `node "${LIB}/generate-json-imports/i18n.js" src/i18n src/generated/json-imports`,
 			},
 			icons: createJSImportsCmd,
 		},

@@ -39,8 +39,8 @@ const scripts = {
 			json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
 		},
 		jsonImports: {
-			default: "mkdirp src/generated/json-imports && nps build.jsonImports.i18n",
-			i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n src/generated/json-imports`,
+			default: "nps build.jsonImports.i18n",
+			i18n: `node "${LIB}/generate-json-imports/i18n.js" src/i18n src/generated/json-imports`,
 		},
 	},
 	copy: {

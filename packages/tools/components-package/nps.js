@@ -13,7 +13,7 @@ const cypressEnvVariables = (options, predefinedVars) => {
 	let variables = [];
 	const { cypress_code_coverage, cypress_acc_tests } = options.internal ?? {};
 
-	// Handle environment variables like TEST_SUITE  
+	// Handle environment variables like TEST_SUITE
 	if (predefinedVars) {
 		variables = [...predefinedVars];
 	}
@@ -83,11 +83,11 @@ const getScripts = (options) => {
 		lintfix: `eslint . ${eslintConfig} --fix`,
 		generate: {
 			default: `${tsCrossEnv} nps prepare.all`,
-			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copyProps" "nps build.illustrations"',
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		prepare: {
-			default: `${tsCrossEnv} nps clean prepare.all ${options.legacy ? "copy" : ""} copyProps prepare.typescript generateAPI`,
+			default: `${tsCrossEnv} nps clean prepare.all ${options.legacy ? "copy" : ""} prepare.typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 			typescript: tsCommandOld,
@@ -108,7 +108,7 @@ const getScripts = (options) => {
 			jsonImports: {
 				default: "mkdirp src/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
 				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes src/generated/json-imports`,
-				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n src/generated/json-imports`,
+				i18n: `node "${LIB}/generate-json-imports/i18n.js" src/i18n src/generated/json-imports`,
 			},
 			jsImports: {
 				default: "mkdirp src/generated/js-imports && nps build.jsImports.illustrationsLoaders",
@@ -118,18 +118,15 @@ const getScripts = (options) => {
 			bundle2: ``,
 			illustrations: createIllustrationsJSImportsScript,
 		},
-		copyProps: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
 		copy: {
-			default: "nps copy.src copy.props",
-			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/`,
-			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
+			default: "nps copy.src",
+			src: `node "${LIB}/copy-and-watch/index.js" "src/**/*.{js,json}" dist/`,
 		},
 		watch: {
-			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" ${options.legacy ? '"nps watch.src"' : ""} "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
+			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" ${options.legacy ? '"nps watch.src"' : ""} "nps watch.styles" "nps watch.i18n"`,
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			typescript: tsWatchCommandStandalone,
-			props: 'nps "copyProps --watch --safe --skip-initial-copy"',
 			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
@@ -158,7 +155,7 @@ const getScripts = (options) => {
 				replace: `node "${LIB}/scoping/scope-test-pages.js" test/pages/scoped demo`,
 			},
 			watchWithBundle: 'concurrently "nps scope.watch" "nps scope.bundle" ',
-			watch: 'concurrently "nps watch.templates" "nps watch.props" "nps watch.styles"',
+			watch: 'concurrently "nps watch.templates" "nps watch.styles"',
 			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 		},
 		generateAPI: {
