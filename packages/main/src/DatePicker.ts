@@ -401,6 +401,8 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	onResponsivePopoverAfterOpen() {
 		this.fireDecoratorEvent("open");
+
+		this._calendar?.getFocusDomRef()?.focus();
 	}
 
 	onResponsivePopoverBeforeOpen() {
