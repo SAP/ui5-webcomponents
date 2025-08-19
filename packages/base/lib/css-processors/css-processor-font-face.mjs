@@ -21,7 +21,7 @@ const processFontFace = (text) => {
     fontFaceDeclarations = fontFaceDeclarations.map(decl => {
         // @font-face {
         //     src: url(../baseTheme/fonts/72-Semibold.woff2) format("woff2"), url(../baseTheme/fonts/72-Semibold.woff) format("woff"), local("72-Semibold");
-        return decl.replace(/,\url\(([^)]+)\.woff\)\ format\("woff"\)/, '');
+        return decl.replace(/,url\(([^)]+)\.woff\)\ format\("woff"\)/, '');
     });
 
     return fontFaceDeclarations.join("\n");
