@@ -5,7 +5,7 @@
 }
 
 :host {
-	font-family: "72override", var(--sapFontFamily);
+	font-family: var(--sapFontFamily);
 	background-color: var(--sapGroup_TitleBackground);
 	border-radius: var(--_ui5_panel_border_radius);
 }
