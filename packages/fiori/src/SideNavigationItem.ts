@@ -262,12 +262,11 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		}
 
 		if (this.unselectable && isSpace(e)) {
-			this._toggle();
 			return;
 		}
 
 		if (this.unselectable && isEnter(e)) {
-			this._toggle();
+			return;
 		}
 
 		super._onkeydown(e);
