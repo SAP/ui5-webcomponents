@@ -257,7 +257,7 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("updates layout on resize of content outside overflow", () => {
 		cy.mount(
-			<div id="wrapper" style={{ width: '400px' }}>
+			<div style={{ width: '400px' }}>
 				<Breadcrumbs>
 					<BreadcrumbsItem href="#">Link1</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">Link2</BreadcrumbsItem>
@@ -265,22 +265,22 @@ describe("Breadcrumbs general interaction", () => {
 					<BreadcrumbsItem href="#">Link4</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">Link5</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">Link6</BreadcrumbsItem>
-					<BreadcrumbsItem id="item7" href="#">aaaa</BreadcrumbsItem>
+					<BreadcrumbsItem href="#">aaaa</BreadcrumbsItem>
 					<BreadcrumbsItem>Location</BreadcrumbsItem>
 				</Breadcrumbs>
-				<button id="extendLinkTextBtn" onClick={() => updateLinkContent("#item7", true)}>Extend Link</button>
+				<button onClick={() => updateLinkContent("[ui5-breadcrumbs-item]:nth-of-type(7)", true)}>Extend Link</button>
 			</div>
 		);
-
+	
 		cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
 			const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 			const countItemsInOverflowBefore = breadcrumbsElement._overflowSize || 0;
 			const expectedCountItemsInOverflowAfter = countItemsInOverflowBefore + 1;
-
-			cy.get("#extendLinkTextBtn").realClick();
-
+	
+			cy.get("button").realClick();
+	
 			cy.wait(300);
-
+	
 			cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
 				const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 				expect(breadcrumbsElement._overflowSize || 0,
@@ -291,7 +291,7 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("updates layout on resize of content inside overflow", () => {
 		cy.mount(
-			<div id="wrapper" style={{ width: '200px' }}>
+			<div style={{ width: '200px' }}>
 				<Breadcrumbs>
 					<BreadcrumbsItem href="#">VeryLongLinkName1</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">VeryLongLinkName2</BreadcrumbsItem>
@@ -299,10 +299,10 @@ describe("Breadcrumbs general interaction", () => {
 					<BreadcrumbsItem href="#">VeryLongLinkName4</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">VeryLongLinkName5</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">VeryLongLinkName6</BreadcrumbsItem>
-					<BreadcrumbsItem id="item7" href="#">aaaaaaaaaaaaaaa</BreadcrumbsItem>
+					<BreadcrumbsItem href="#">aaaaaaaaaaaaaaa</BreadcrumbsItem>
 					<BreadcrumbsItem>Location</BreadcrumbsItem>
 				</Breadcrumbs>
-				<button id="shortenLinkTextBtn" onClick={() => updateLinkContent("#item7", false)}>Shorten Link</button>
+				<button onClick={() => updateLinkContent("[ui5-breadcrumbs-item]:nth-of-type(7)", false)}>Shorten Link</button>
 			</div>
 		);
 
@@ -313,7 +313,7 @@ describe("Breadcrumbs general interaction", () => {
 			const countItemsInOverflowBefore = breadcrumbsElement._overflowSize;
 			const expectedCountItemsInOverflowAfter = countItemsInOverflowBefore - 1;
 
-			cy.get("#shortenLinkTextBtn").realClick();
+			cy.get("button").realClick();
 
 			cy.wait(500);
 
@@ -326,7 +326,7 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("updates layout when link content removed", () => {
 		cy.mount(
-			<div id="wrapper" style={{ width: '300px' }}>
+			<div style={{ width: '300px' }}>
 				<Breadcrumbs>
 					<BreadcrumbsItem href="#">Link1</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">Link2</BreadcrumbsItem>
@@ -334,10 +334,10 @@ describe("Breadcrumbs general interaction", () => {
 					<BreadcrumbsItem href="#">Link4</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">Link5</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">Link6</BreadcrumbsItem>
-					<BreadcrumbsItem id="item7" href="#">aaaaa</BreadcrumbsItem>
+					<BreadcrumbsItem href="#">aaaaa</BreadcrumbsItem>
 					<BreadcrumbsItem>Location</BreadcrumbsItem>
 				</Breadcrumbs>
-				<button id="shortenLinkTextBtn" onClick={() => updateLinkContent("#item7", false)}>Shorten Link</button>
+				<button onClick={() => updateLinkContent("[ui5-breadcrumbs-item]:nth-of-type(7)", false)}>Shorten Link</button>
 			</div>
 		);
 
@@ -354,7 +354,7 @@ describe("Breadcrumbs general interaction", () => {
 					const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 					const countItemsInOverflowBefore = breadcrumbsElement._overflowSize || 0;
 
-					cy.get("#shortenLinkTextBtn").realClick();
+					cy.get("button").realClick();
 
 					cy.wait(300);
 
@@ -382,7 +382,7 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("updates layout when content added to empty link", () => {
 		cy.mount(
-			<div id="wrapper" style={{ width: '250px' }}>
+			<div style={{ width: '250px' }}>
 				<Breadcrumbs>
 					<BreadcrumbsItem href="#">VeryLongLinkName1</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">VeryLongLinkName2</BreadcrumbsItem>
@@ -390,16 +390,16 @@ describe("Breadcrumbs general interaction", () => {
 					<BreadcrumbsItem href="#">VeryLongLinkName4</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">VeryLongLinkName5</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">VeryLongLinkName6</BreadcrumbsItem>
-					<BreadcrumbsItem id="item7" href="#"></BreadcrumbsItem>
+					<BreadcrumbsItem href="#"></BreadcrumbsItem>
 					<BreadcrumbsItem>Location</BreadcrumbsItem>
 				</Breadcrumbs>
-				<button id="extendLinkTextBtn" onClick={() => updateLinkContent("#item7", true)}>Extend Link</button>
+				<button onClick={() => updateLinkContent("[ui5-breadcrumbs-item]:nth-of-type(7)", true)}>Extend Link</button>
 			</div>
 		);
 
 		cy.wait(300);
 
-		cy.get("#item7").then(($lastItem) => {
+		cy.get("[ui5-breadcrumbs-item]").eq(6).then(($lastItem) => {
 			const lastItem = $lastItem[0] as Breadcrumbs;
 			const lastLinkId = lastItem._id + "-link";
 
@@ -414,7 +414,7 @@ describe("Breadcrumbs general interaction", () => {
 					.find(`#${lastLinkId}`)
 					.should('have.length', 0);
 
-				cy.get("#extendLinkTextBtn").realClick();
+				cy.get("button").realClick();
 
 				cy.wait(300);
 
