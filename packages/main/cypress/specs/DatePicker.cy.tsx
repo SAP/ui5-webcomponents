@@ -5,11 +5,6 @@ import DatePicker from "../../src/DatePicker.js";
 import Label from "../../src/Label.js";
 
 describe("Date Picker Tests", () => {
-	afterEach(() => {
-		// eslint-disable-next-line
-		cy.wait(200);
-	});
-
 	it("input renders", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
@@ -83,6 +78,28 @@ describe("Date Picker Tests", () => {
 			.should("have.attr", "value-state", "None");
 	});
 
+	it("custom formatting", () => {
+		cy.mount(<DatePicker displayFormat="yyyy, dd/MM" valueFormat="yyyy-MM-dd"></DatePicker>);
+
+		cy.get("[ui5-date-picker]")
+			.as("datePicker");
+
+		cy.get<DatePicker>("@datePicker")
+			.ui5DatePickerGetInnerInput()
+			.realClick()
+			.should("be.focused")
+			.realType("2018, 05/05")
+			.realPress("Enter");
+
+		cy.get("@datePicker")
+			.shadow()
+			.find("ui5-datetime-input")
+			.should("have.attr", "value", "2018, 05/05");
+
+		cy.get("@datePicker")
+			.should("have.attr", "value", "2018-05-05");
+	});
+
 	it("value state", () => {
 		cy.mount(<DatePicker></DatePicker>);
 		cy.get("[ui5-date-picker]")
@@ -99,7 +116,7 @@ describe("Date Picker Tests", () => {
 			.shadow()
 			.find("ui5-datetime-input")
 			.should("have.attr", "value-state", "Negative");
-		
+
 		cy.get("@datePicker")
 			.shadow()
 			.find("[slot='header']")
@@ -167,7 +184,7 @@ describe("Date Picker Tests", () => {
 			.should("have.attr", "placeholder", "test placeholder");
 	});
 
-	
+
 
 	it("Selected date from daypicker is the same as datepicker date", () => {
 		cy.mount(<DatePicker value="Jan 29, 2019" formatPattern="MMM d, y"></DatePicker>);
@@ -854,7 +871,7 @@ describe("Date Picker Tests", () => {
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
-			.should("have.attr", "placeholder", "MMM d, y");
+			.should("have.attr", "placeholder", "e.g. Dec 31, 2025");
 
 		cy.get<DatePicker>("@datePicker")
 			.should("not.have.attr", "placeholder");
@@ -1547,11 +1564,6 @@ describe("Date Picker Tests", () => {
 });
 
 describe("Legacy date customization and Islamic calendar type", () => {
-	afterEach(() => {
-		// eslint-disable-next-line
-		cy.wait(200);
-	});
-
 	const configurationObject = {
 		"formatSettings": {
 			"legacyDateCalendarCustomizing": [

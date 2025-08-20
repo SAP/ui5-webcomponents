@@ -290,6 +290,7 @@ abstract class Popup extends UI5Element {
 			this.openPopup();
 		}
 
+		this.setAttribute("data-sap-ui-fastnavgroup-container", "true");
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
 	}
 

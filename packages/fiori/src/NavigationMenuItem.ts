@@ -5,7 +5,13 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
 import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 import NavigationMenu from "./NavigationMenu.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter,
+	isEnterShift,
+	isEnterCtrl,
+	isEnterAlt,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 
 // Templates
@@ -17,7 +23,6 @@ import navigationMenuItemCss from "./generated/themes/NavigationMenuItem.css.js"
 import {
 	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
-import type SideNavigationItem from "./SideNavigationItem.js";
 
 /**
  * @class
@@ -159,21 +164,7 @@ class NavigationMenuItem extends MenuItem {
 		}
 
 		if (!this.hasSubmenu) {
-			sideNav?.closeMenu();
-			this._handleFocus(item);
-		}
-	}
-
-	_handleFocus(associatedItem: SideNavigationSelectableItemBase) {
-		const sideNavigation = associatedItem.sideNavigation;
-
-		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
-			const parent = associatedItem.parentElement as SideNavigationItem;
-			sideNavigation?.focusItem(parent);
-			parent?.focus();
-		} else {
-			sideNavigation?.focusItem(associatedItem);
-			associatedItem?.focus();
+			sideNav?.closeMenu(shouldSelect);
 		}
 	}
 
@@ -182,7 +173,8 @@ class NavigationMenuItem extends MenuItem {
 			e.preventDefault();
 		}
 
-		if (isEnter(e)) {
+		// "Enter" + "Meta" is missing since it is often reserved by the operating system or window manager
+		if (isEnter(e) || isEnterShift(e) || isEnterCtrl(e) || isEnterAlt(e)) {
 			this._activate(e);
 		}
 
@@ -190,6 +182,7 @@ class NavigationMenuItem extends MenuItem {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
+		// "Space" + modifier is often reserved by the operating system or window manager
 		if (isSpace(e)) {
 			this._activate(e);
 

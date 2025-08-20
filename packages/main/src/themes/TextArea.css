@@ -11,7 +11,7 @@
 	color: var(--sapField_TextColor);
 	min-height: var(--_ui5_textarea_min_height);
 	font-size: var(--sapFontSize);
-	font-family: "72override", var(--sapFontFamily);
+	font-family: var(--sapFontFamily);
 	font-style: normal;
 	box-sizing: border-box;
 	line-height: var(--_ui5_textarea_line_height);
@@ -159,7 +159,7 @@
 	min-height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 	padding: var(--_ui5_textarea_padding_top) var(--_ui5_textarea_padding_right_and_left) var(--_ui5_textarea_padding_bottom);
 	font-size: var(--sapFontSize);
-	font-family: "72override", var(--sapFontFamily);
+	font-family: var(--sapFontFamily);
 	white-space: pre-wrap;
 	overflow-y: auto;
 }
@@ -175,7 +175,7 @@
 }
 
 /* If the 'rows' property is not set it defaults to 2 in the native TextArea element */
-:host:not([rows]) .ui5-textarea-inner {
+:host(:not([rows])) .ui5-textarea-inner  {
 	min-height: calc(2 * var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
@@ -409,7 +409,7 @@
 	align-self: flex-end;
 	padding: 0.125rem 0.125rem 0.5rem;
 	color: var(--sapContent_LabelColor);
-	font-family: "72override", var(--sapFontFamily);
+	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
 }
 

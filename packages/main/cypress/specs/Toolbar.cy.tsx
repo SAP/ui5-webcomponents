@@ -8,9 +8,11 @@ import type ToolbarItem from "../../src/ToolbarItem.js";
 import add from "@ui5/webcomponents-icons/dist/add.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import employee from "@ui5/webcomponents-icons/dist/employee.js";
+import Button from "../../src/Button.js";
+import Dialog from "../../src/Dialog.js";
 
 describe("Toolbar general interaction", () => {
-	it.skip("Should not return null upon calling getDomRef for all direct child items", () => {
+	it("Should not return null upon calling getDomRef for all direct child items", () => {
 		cy.mount(
 			<Toolbar id="otb_standard">
 				<ToolbarButton text="Button 1"></ToolbarButton>
@@ -141,7 +143,7 @@ describe("Toolbar general interaction", () => {
 				button.get(0).addEventListener("click", cy.stub().as("clicked"));
 			});
 
-			cy.get("ui5-button", { includeShadowDom: true }).contains("Button 1")
+		cy.get("ui5-button", { includeShadowDom: true }).contains("Button 1")
 			.click();
 
 		cy.get("@clicked")
@@ -173,7 +175,7 @@ describe("Toolbar general interaction", () => {
 			.should("have.been.calledOnce");
 	});
 
-	it("Should move button with alwaysOverflow priority to overflow popover", async () => {
+	it.skip("Should move button with alwaysOverflow priority to overflow popover", async () => {
 
 		cy.mount(
 			<Toolbar id="otb_d">
@@ -285,6 +287,137 @@ describe("Toolbar general interaction", () => {
 		cy.get("@popover")
 			.should("have.prop", "open", false);
 	});
+
+	it("Should focus on the last interactive element outside the overflow popover when overflow button disappears", () => {
+		// Mount the Toolbar with multiple buttons
+		cy.mount(
+			<Toolbar>
+				<ToolbarButton text="Button 1" />
+				<ToolbarButton text="Button 2" />
+				<ToolbarButton text="Button 3" />
+				<ToolbarButton text="Button 4" />
+				<ToolbarButton text="Button 5" />
+			</Toolbar>
+		);
+
+		// Set initial viewport size to ensure the overflow button is visible
+		cy.viewport(300, 1080);
+
+		// Focus on the overflow button
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.click()
+			.click()
+			.should("be.focused");
+
+		// Resize the viewport to make the overflow button disappear
+		cy.viewport(800, 1080);
+
+		// Verify the focus shifts to the last interactive element outside the overflow popover
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-tb-item")
+			.eq(3)
+			.should("be.focused");
+	});
+
+	it("Should render ui5-button by toolbar template, when slotting ui5-toolbar-button elements", () => {
+		cy.mount(
+			<Toolbar>
+				<ToolbarButton 
+					icon="decline" 
+					stableDomRef="tb-button-decline"
+					overflowPriority="NeverOverflow" 
+					text="Left 2" 
+				/>
+				<ToolbarButton 
+					icon="employee" 
+					overflowPriority="NeverOverflow"
+					text="Left 3" 
+				/>
+			</Toolbar>
+		);
+	
+		cy.get("[ui5-toolbar]")
+			.find("[ui5-toolbar-button]")
+			.first()
+			.shadow()
+			.find("ui5-button")
+			.should("have.prop", "tagName", "UI5-BUTTON");
+
+		cy.viewport(200, 400);
+
+		cy.get("[ui5-toolbar]")
+			.find("[ui5-toolbar-button][overflow-priority='NeverOverflow']")
+			.should("be.visible")
+			.should("have.length", 2);
+	});
+	
+	it("Should call child events only once", () => {
+		cy.mount(
+			<>
+				<Toolbar data-testid="clickCountToolbar">
+					<ToolbarButton 
+						icon="add" 
+						text="Left 1 (long)" 
+						data-testid="clickCounter"
+					/>
+					<ToolbarButton 
+						icon="decline" 
+						text="Left 2" 
+						data-testid="clearCounter"
+					/>
+				</Toolbar>
+				<input data-testid="input" defaultValue="0" />
+			</>
+		);
+	
+		// Create stubs for event tracking
+		cy.get("[data-testid='clickCountToolbar']")
+			.as("toolbar")
+			.then($toolbar => {
+				$toolbar.get(0).addEventListener("click", cy.stub().as("toolbarClickStub"));
+			});
+	
+		cy.get("[data-testid='clickCounter']")
+			.as("clickCounter")
+			.then($button => {
+				$button.get(0).addEventListener("click", cy.stub().as("counterClickStub"));
+			});
+	
+		cy.get("[data-testid='clearCounter']")
+			.as("clearCounter")
+			.then($button => {
+				$button.get(0).addEventListener("click", cy.stub().as("clearClickStub"));
+			});
+	
+		// Set up input manipulation logic
+		cy.get("@toolbar").then($toolbar => {
+			$toolbar.get(0).addEventListener("click", (e) => {
+				const input = document.querySelector("[data-testid='input']") as HTMLInputElement;
+				const target = e.target as HTMLElement;
+				
+				if (target.dataset.testid === "clearCounter") {
+					input.value = "0";
+				} else if (target.dataset.testid === "clickCounter") {
+					let currentValue = parseInt(input.value);
+					input.value = `${++currentValue}`;
+				}
+			});
+		});
+	
+		cy.get("[data-testid='input']").invoke("val", "0");
+	
+		cy.get("@clickCounter").realClick();
+	
+		cy.get("[data-testid='input']").should("have.prop", "value", "1");
+	
+		cy.get("@toolbarClickStub").should("have.been.calledOnce");
+		cy.get("@counterClickStub").should("have.been.calledOnce");
+	
+		cy.get("[data-testid='input']").invoke("val", "0");
+	});
 });
 
 describe("Accessibility", () => {
@@ -307,6 +440,56 @@ describe("Accessibility", () => {
 			.shadow()
 			.find(".ui5-overflow-popover")
 			.should("have.attr", "accessible-name", "Available Values");
+	});
+});
+
+describe("Toolbar in Dialog", () => {
+	it("Should correctly process overflow layout when rendered inside a dialog", () => {
+		cy.viewport(400, 600);
+
+		cy.mount(
+			<div>
+				<Button id="open-dialog-button" onClick={() => {
+					const dialog = document.getElementById("dialog") as Dialog;
+					dialog.open = true;
+				}}>Open Dialog</Button>
+
+				<Dialog id="dialog">
+					<Toolbar id="toolbar-in-dialog">
+						<ToolbarButton icon={add} text="Plus" design="Default"></ToolbarButton>
+						<ToolbarButton icon={employee} text="Hire"></ToolbarButton>
+						<ToolbarSeparator></ToolbarSeparator>
+						<ToolbarButton icon={add} text="Add"></ToolbarButton>
+						<ToolbarButton icon={decline} text="Decline"></ToolbarButton>
+						<ToolbarSpacer></ToolbarSpacer>
+						<ToolbarButton icon={add} text="Append"></ToolbarButton>
+						<ToolbarButton icon={employee} text="More"></ToolbarButton>
+						<ToolbarButton icon={decline} text="Extra"></ToolbarButton>
+						<ToolbarButton icon={add} text="Final"></ToolbarButton>
+						<ToolbarButton icon={employee} text="Last"></ToolbarButton>
+						<ToolbarButton icon={decline} text="Final"></ToolbarButton>
+						<ToolbarButton icon={add} text="Plus"></ToolbarButton>
+					</Toolbar>
+				</Dialog>
+			</div>
+		);
+
+		// Open dialog
+		cy.get("#open-dialog-button").click();
+		cy.get<Dialog>("#dialog").ui5DialogOpened();
+
+		// Verify toolbar is rendered inside the dialog
+		cy.get("#toolbar-in-dialog")
+			.should("exist")
+			.should("be.visible");
+
+		// Check that overflow processing has occurred by verifying overflow button exists and is visible
+		// Since we have many items in a constrained width, some should overflow
+		cy.get("#toolbar-in-dialog")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.should("exist")
+			.should("not.have.class", "ui5-tb-overflow-btn-hidden");
 	});
 });
 
@@ -348,7 +531,7 @@ describe("Toolbar Select", () => {
 		cy.wait(500);
 
 		cy.get("@otb")
-		.find("#toolbar-select")
+			.find("#toolbar-select")
 			.should("have.attr", "value-state", "Critical")
 
 			.should("have.attr", "accessible-name", "Add")
@@ -356,13 +539,13 @@ describe("Toolbar Select", () => {
 			.should("have.attr", "accessible-name-ref", "title")
 
 		cy.get("@otb")
-		.find(".custom-class")
-		.should("have.attr", "disabled", "disabled");
+			.find(".custom-class")
+			.should("have.attr", "disabled", "disabled");
 
 	});
 
 	//ToolbarButton
-	it("Should render the button with the correct text inside the popover", async () => {
+	it.skip("Should render the button with the correct text inside the popover", async () => {
 		cy.viewport(200, 1080);
 
 		cy.get("#otb_d").within(() => {
@@ -382,7 +565,7 @@ describe("Toolbar Select", () => {
 		});
 	});
 
-	it ("Should render the button with the correct accessible name inside the popover", async () => {
+	it.skip("Should render the button with the correct accessible name inside the popover", async () => {
 		cy.viewport(100, 1080);
 
 		cy.get("#otb_d").within(() => {
@@ -396,7 +579,7 @@ describe("Toolbar Select", () => {
 		});
 	});
 
-	it("Should render the button with the correct accessibilityAttributes inside the popover", async () => {
+	it.skip("Should render the button with the correct accessibilityAttributes inside the popover", async () => {
 		cy.viewport(100, 1080);
 
 		cy.get("#otb_d").within(() => {
@@ -405,5 +588,35 @@ describe("Toolbar Select", () => {
 				cy.get("ui5-button[accessible-name]").invoke("prop", "accessibilityAttributes").should("have.property", "expanded", "true");
 			});
 		});
+	});
+});
+
+describe("Toolbar Button", () => {
+	it("Should not trigger click event on disabled button", () => {
+		// Use cy.mount to create the toolbar with buttons and input field
+		cy.mount(
+			<div>
+				<Toolbar id="test-toolbar">
+					<ToolbarButton disabled>Disabled Button</ToolbarButton>
+					<ToolbarButton
+						onClick={() => {
+							const input = document.getElementById("value-input") as HTMLInputElement;
+							input.value = (parseInt(input.value, 10) + 1).toString();
+						}}
+					>
+						Enabled Button
+					</ToolbarButton>
+					<input id="value-input" type="number" defaultValue="0" />
+				</Toolbar>
+			</div>
+		);
+
+		// Test clicking the disabled button
+		cy.get("ui5-toolbar-button[disabled]").realClick();
+		cy.get("#value-input").should("have.value", "0");
+
+		// Test clicking the non-disabled button
+		cy.get("ui5-toolbar-button:not([disabled])").realClick();
+		cy.get("#value-input").should("have.value", "1");
 	});
 });

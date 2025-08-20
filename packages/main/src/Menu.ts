@@ -7,11 +7,8 @@ import {
 	isLeft,
 	isRight,
 	isEnter,
-	isSpace,
 	isTabNext,
 	isTabPrevious,
-	isDown,
-	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	isPhone,
@@ -24,12 +21,14 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
+import type List from "./List.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import type MenuItem from "./MenuItem.js";
 // The import below should be kept, as MenuItem is part of the Menu component.
 import { isInstanceOfMenuItem } from "./MenuItem.js";
+import { isInstanceOfMenuItemGroup } from "./MenuItemGroup.js";
+import { isInstanceOfMenuSeparator } from "./MenuSeparator.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-import "./MenuSeparator.js";
 import type {
 	ListItemClickEventDetail,
 } from "./List.js";
@@ -51,7 +50,9 @@ const MENU_OPEN_DELAY = 300;
  * @public
  */
 interface IMenuItem extends UI5Element {
-	isSeparator: boolean;
+	isMenuItem?: boolean;
+	isSeparator?: boolean;
+	isGroup?: boolean;
 }
 
 type MenuItemClickEventDetail = {
@@ -92,7 +93,11 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * - `Arrow Left` or `ArrowRight` - Navigate between the menu item actions and the menu item itself
  * - `Arrow Up` / `Arrow Down` - Navigates up and down the currently visible menu items
  *
- * Note: if the text ditrection is set to Right-to-left (RTL), `Arrow Right` and `Arrow Left` functionality is swapped.
+ * **Note:** If the text direction is set to Right-to-left (RTL), `Arrow Right` and `Arrow Left` functionality is swapped.
+ *
+ * Application developers are responsible for ensuring that interactive elements placed in the `endContent` slot
+ * have the correct accessibility behaviour, including their enabled or disabled states.
+ * The menu does not manage these aspects when the menu item state changes.
  *
  * ### ES6 Module Import
  *
@@ -230,7 +235,7 @@ class Menu extends UI5Element {
 	 * @since 1.10.0
 	 */
 	@property({ converter: DOMReferenceConverter })
-	opener?: HTMLElement | string;
+	opener?: HTMLElement | string | null;
 
 	/**
 	 * Defines the items of this component.
@@ -260,9 +265,50 @@ class Menu extends UI5Element {
 	get _popover() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
+	get _list() {
+		return this.shadowRoot!.querySelector<List>("[ui5-list]");
+	}
 
+	/** Returns menu item groups */
+	get _menuItemGroups() {
+		return this.items.filter(isInstanceOfMenuItemGroup);
+	}
+
+	/** Returns menu items */
 	get _menuItems() {
-		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+		return this.items.filter(isInstanceOfMenuItem);
+	}
+
+	/** Returns all menu items (including those in groups */
+	get _allMenuItems() {
+		const items: MenuItem[] = [];
+
+		this.items.forEach(item => {
+			if (isInstanceOfMenuItemGroup(item)) {
+				items.push(...item._menuItems);
+			} else if (!isInstanceOfMenuSeparator(item)) {
+				items.push(item as MenuItem);
+			}
+		});
+
+		return items;
+	}
+
+	/** Returns menu items included in the ItemNavigation */
+	get _navigatableMenuItems() {
+		const items: MenuItem[] = [];
+		const slottedItems = this.getSlottedNodes<MenuItem>("items");
+
+		slottedItems.forEach(item => {
+			if (isInstanceOfMenuItemGroup(item)) {
+				const groupItems = item.getSlottedNodes<MenuItem>("items");
+				items.push(...groupItems);
+			} else if (!isInstanceOfMenuSeparator(item)) {
+				items.push(item);
+			}
+		});
+
+		return items;
 	}
 
 	get acessibleNameText() {
@@ -270,11 +316,23 @@ class Menu extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
+		const siblingsWithIcon = this._allMenuItems.some(menuItem => !!menuItem.icon);
 
-		this._menuItems.forEach(item => {
+		this._setupItemNavigation();
+
+		this._allMenuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
+	}
+
+	getFocusDomRef(): HTMLElement | undefined {
+		return this._list?.getFocusDomRef();
+	}
+
+	_setupItemNavigation() {
+		if (this._list) {
+			this._list._itemNavigation._getItems = () => this._navigatableMenuItems;
+		}
 	}
 
 	_close() {
@@ -291,6 +349,7 @@ class Menu extends UI5Element {
 		this.fireDecoratorEvent("before-open", {
 			item,
 		});
+
 		item._popover.opener = item;
 		item._popover.open = true;
 		item.selected = true;
@@ -314,7 +373,7 @@ class Menu extends UI5Element {
 
 	async focus(focusOptions?: FocusOptions): Promise<void> {
 		await renderFinished();
-		const firstMenuItem = this._menuItems[0];
+		const firstMenuItem = this._allMenuItems[0];
 
 		if (firstMenuItem) {
 			return firstMenuItem.focus(focusOptions);
@@ -324,7 +383,7 @@ class Menu extends UI5Element {
 	}
 
 	_closeOtherSubMenus(item: MenuItem) {
-		const menuItems = this._menuItems;
+		const menuItems = this._allMenuItems;
 		if (!menuItems.includes(item)) {
 			return;
 		}
@@ -355,8 +414,9 @@ class Menu extends UI5Element {
 				"text": item.text || "",
 			});
 
-			if (!prevented && this._popover) {
-				item.fireDecoratorEvent("close-menu");
+			if (!prevented) {
+				item._updateCheckedState();
+				this._popover && !item._shiftPressed && item.fireDecoratorEvent("close-menu");
 			}
 		} else {
 			this._openItemSubMenu(item);
@@ -371,12 +431,8 @@ class Menu extends UI5Element {
 			return;
 		}
 
-		const menuItemInMenu = this._menuItems.includes(item);
-		const isItemNavigation = isUp(e) || isDown(e);
-		const isItemSelection = isEnter(e) || isSpace(e);
 		const isEndContentNavigation = isRight(e) || isLeft(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
-		const shouldCloseMenu = menuItemInMenu && !(isItemNavigation || isItemSelection || isEndContentNavigation);
 
 		if (isEnter(e) || isTabNextPrevious) {
 			e.preventDefault();
@@ -388,7 +444,7 @@ class Menu extends UI5Element {
 
 		if (shouldOpenMenu) {
 			this._openItemSubMenu(item);
-		} else if ((shouldCloseMenu || isTabNextPrevious)) {
+		} else if (isTabNextPrevious) {
 			this._close();
 		}
 	}
@@ -396,7 +452,7 @@ class Menu extends UI5Element {
 	_navigateOutOfEndContent(e: CustomEvent) {
 		const item = e.target as MenuItem;
 		const shouldNavigateToNextItem = e.detail.shouldNavigateToNextItem;
-		const menuItems = this._menuItems;
+		const menuItems = this._allMenuItems;
 		const itemIndex = menuItems.indexOf(item);
 
 		if (itemIndex > -1) {
@@ -418,7 +474,7 @@ class Menu extends UI5Element {
 	}
 
 	_afterPopoverOpen() {
-		this._menuItems[0]?.focus();
+		this._allMenuItems[0]?.focus();
 		this.fireDecoratorEvent("open");
 	}
 

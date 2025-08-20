@@ -4,6 +4,9 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import {
 	isSpace,
 	isEnter,
+	isEnterShift,
+	isEnterCtrl,
+	isEnterAlt,
 	isLeft,
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -45,6 +48,15 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	/**
+	 * Defines if the item's parent is disabled.
+	 * @private
+	 * @default false
+	 * @since 2.10.0
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_parentDisabled: boolean = false;
+
+	/**
 	 * Defines the icon of the item.
 	 *
 	 * The SAP-icons font provides numerous options.
@@ -57,7 +69,9 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	icon?: string;
 
 	/**
-	 * Defines whether the item is selected
+	 * Defines whether the item is selected.
+	 *
+	 * **Note:** Items that have a set `href` and `target` set to `_blank` should not be selectable.
 	 *
 	 * @public
 	 * @default false
@@ -81,15 +95,16 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	/**
 	 * Defines the component target.
 	 *
-	 * **Notes:**
+	 * Possible values:
 	 *
 	 * - `_self`
 	 * - `_top`
 	 * - `_blank`
 	 * - `_parent`
-	 * - `_search`
+	 * - `framename`
 	 *
-	 * **This property must only be used when the `href` property is set.**
+	 * **Note:** Items that have a defined `href` and `target`
+	 * attribute set to `_blank` should not be selectable.
 	 *
 	 * @public
 	 * @default undefined
@@ -111,15 +126,15 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	design: `${SideNavigationItemDesign}` = "Default";
 
 	/**
-	 * Indicates whether the navigation item is selectable. By default all items are selectable unless specifically marked as unselectable.
+	 * Indicates whether the navigation item is selectable. By default, all items are selectable unless specifically marked as unselectable.
 	 *
 	 * When a parent item is marked as unselectable, selecting it will only expand or collapse its sub-items.
 	 * To improve user experience do not mix unselectable parent items with selectable parent items in a single side navigation.
 	 *
 	 *
 	 * **Guidelines**:
-	 * - External links should be unselectable.
-	 * - Items that trigger actions (with design "Action") should be unselectable.
+	 * - Items with an assigned `href` and a target of `_blank` should be marked as unselectable.
+	 * - Items that trigger actions (with design "Action") should be marked as unselectable.
 	 *
 	 * @public
 	 * @default false
@@ -175,7 +190,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	get _target() {
-		return (!this.effectiveDisabled && this.target) ? this.target : undefined;
+		return (!this.effectiveDisabled && this.href && this.target) ? this.target : undefined;
 	}
 
 	get isExternalLink() {
@@ -184,6 +199,22 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 
 	get _selected() {
 		return this.selected;
+	}
+
+	get _effectiveTag() {
+		return this._href ? "a" : "div";
+	}
+
+	get effectiveDisabled() {
+		return this.disabled || this._parentDisabled;
+	}
+
+	get _ariaHasPopup() {
+		if (this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
+		}
+
+		return undefined;
 	}
 
 	get classesArray() {
@@ -205,11 +236,19 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	get _ariaCurrent() {
-		if (!this.selected) {
+		if (!this.sideNavCollapsed && !this.selected) {
 			return undefined;
 		}
 
 		return "page";
+	}
+
+	get _ariaSelected() {
+		if (!this.sideNavCollapsed) {
+			return undefined;
+		}
+
+		return this.selected;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -219,7 +258,8 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 			e.preventDefault();
 		}
 
-		if (isEnter(e)) {
+		// "Enter" + "Meta" is missing since it is often reserved by the operating system or window manager
+		if (isEnter(e) || isEnterShift(e) || isEnterCtrl(e) || isEnterAlt(e)) {
 			this._activate(e);
 		}
 
@@ -233,6 +273,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
+		// "Space" + modifier is often reserved by the operating system or window manager
 		if (isSpace(e)) {
 			this._activate(e);
 

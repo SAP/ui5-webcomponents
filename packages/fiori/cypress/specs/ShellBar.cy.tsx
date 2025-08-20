@@ -11,6 +11,7 @@ import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Switch from "@ui5/webcomponents/dist/Switch.js";
+import ShellBarBranding from "@ui5/webcomponents-fiori/dist/ShellBarBranding.js"
 import ShellBarSearch from "../../src/ShellBarSearch.js";
 
 const RESIZE_THROTTLE_RATE = 300; // ms
@@ -498,6 +499,39 @@ describe("Slots", () => {
 			);
 			cy.get("#shellbar").invoke("prop", "showSearchField").should("equal", false);
 		});
+
+		it("Test search field added after delay still works with events", () => {
+			cy.mount(
+				<ShellBar id="shellbar" primaryTitle="Product Title" showNotifications={true}></ShellBar>
+			);
+
+			cy.get("#shellbar").as("shellbar");
+
+			// Add search field after a timeout (simulating real-world scenario)
+			cy.get("@shellbar").then(shellbar => {
+				setTimeout(() => {
+					const searchField = document.createElement("ui5-shellbar-search");
+					searchField.setAttribute("slot", "searchField");
+					searchField.setAttribute("id", "delayed-search");
+					shellbar.get(0).appendChild(searchField);
+				}, 100);
+			});
+
+			// Wait for the search field to be added
+			cy.get("#delayed-search", { timeout: 1000 }).should("exist");
+
+			// Search should now be visible and collapsed
+			cy.get("#shellbar [slot='searchField']")
+				.should("exist")
+				.should("have.prop", "collapsed", true);
+
+			// click the searchField to expand it
+			cy.get("#shellbar [slot='searchField']")
+				.click()
+				.should("have.prop", "collapsed", false);
+			// check shellbar's showSearchField property is also updated
+			cy.get("@shellbar").invoke("prop", "showSearchField").should("equal", true);
+		});
 	});
 });
 
@@ -520,7 +554,7 @@ describe("Events", () => {
 			.shadow()
 			.find(".ui5-shellbar-search-button")
 			.as("searchButton");
-		
+
 		cy.get("@searchButton")
 			.click();
 
@@ -534,7 +568,7 @@ describe("Events", () => {
 				<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
 			</ShellBar>
 		);
-		
+
 		cy.get("[ui5-shellbar]")
 			.as("shellbar");
 
@@ -581,96 +615,96 @@ describe("Events", () => {
 
 describe("ButtonBadge in ShellBar", () => {
 	it("Test if ShellBarItem count appears in ButtonBadge", () => {
-	  cy.mount(
-		<ShellBar id="shellbarwithitems">
-		  <ShellBarItem id="test-item" icon="accept" text="Item" count="42" />
-		</ShellBar>
-	  );
-	  
-	  cy.get("#shellbarwithitems")
-		.shadow()
-		.find(".ui5-shellbar-custom-item ui5-button-badge[slot='badge']")
-		.should("exist")
-		.should("have.attr", "text", "42");
+		cy.mount(
+			<ShellBar id="shellbarwithitems">
+				<ShellBarItem id="test-item" icon="accept" text="Item" count="42" />
+			</ShellBar>
+		);
+
+		cy.get("#shellbarwithitems")
+			.shadow()
+			.find(".ui5-shellbar-custom-item ui5-button-badge[slot='badge']")
+			.should("exist")
+			.should("have.attr", "text", "42");
 	});
-  
+
 	it("Test count updates propagate to ButtonBadge", () => {
-	  cy.mount(
-		<ShellBar id="test-invalidation">
-		  <ShellBarItem id="test-invalidation-item" icon="accept" text="Item" count="1" />
-		</ShellBar>
-	  );
-	  
-	  cy.get("#test-invalidation-item").invoke("attr", "count", "3");
-	  
-	  cy.get("#test-invalidation")
-		.shadow()
-		.find(".ui5-shellbar-custom-item ui5-button-badge[slot='badge']")
-		.should("have.attr", "text", "3");
+		cy.mount(
+			<ShellBar id="test-invalidation">
+				<ShellBarItem id="test-invalidation-item" icon="accept" text="Item" count="1" />
+			</ShellBar>
+		);
+
+		cy.get("#test-invalidation-item").invoke("attr", "count", "3");
+
+		cy.get("#test-invalidation")
+			.shadow()
+			.find(".ui5-shellbar-custom-item ui5-button-badge[slot='badge']")
+			.should("have.attr", "text", "3");
 	});
 
 	it("Test if overflow button shows appropriate badge when items are overflowed", () => {
 		cy.mount(
-		  <ShellBar id="shellbar-with-overflow" 
-			primaryTitle="Product Title"
-			secondaryTitle="Secondary Title"
-			showNotifications={true}
-			showProductSwitch={true}
-			notificationsCount="10">
-			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-			<Button icon="nav-back" slot="startButton"></Button>
-			<ShellBarItem id="item1" icon="accept" text="Item 1" count="42" />
-			<ShellBarItem id="item2" icon="alert" text="Item 2" count="5" />
-			<ShellBarItem id="item3" icon="attachment" text="Item 3" />
-			<ShellBarItem id="item4" icon="bell" text="Item 4" />
-			<Avatar slot="profile">
-			  <img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
-			</Avatar>
-			<Input placeholder="Search" slot="searchField" />
-		  </ShellBar>
+			<ShellBar id="shellbar-with-overflow"
+				primaryTitle="Product Title"
+				secondaryTitle="Secondary Title"
+				showNotifications={true}
+				showProductSwitch={true}
+				notificationsCount="10">
+				<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+				<Button icon="nav-back" slot="startButton"></Button>
+				<ShellBarItem id="item1" icon="accept" text="Item 1" count="42" />
+				<ShellBarItem id="item2" icon="alert" text="Item 2" count="5" />
+				<ShellBarItem id="item3" icon="attachment" text="Item 3" />
+				<ShellBarItem id="item4" icon="bell" text="Item 4" />
+				<Avatar slot="profile">
+					<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
+				</Avatar>
+				<Input placeholder="Search" slot="searchField" />
+			</ShellBar>
 		);
-		
+
 		cy.viewport(320, 800);
-		
+
 		cy.get("#shellbar-with-overflow")
-		  .shadow()
-		  .find(".ui5-shellbar-overflow-button")
-		  .should("be.visible");
-		
+			.shadow()
+			.find(".ui5-shellbar-overflow-button")
+			.should("be.visible");
+
 		cy.get("#shellbar-with-overflow")
-		  .shadow()
-		  .find(".ui5-shellbar-overflow-button ui5-button-badge[slot='badge']")
-		  .should("exist")
-		  .should("have.attr", "design", "AttentionDot");
-		
+			.shadow()
+			.find(".ui5-shellbar-overflow-button ui5-button-badge[slot='badge']")
+			.should("exist")
+			.should("have.attr", "design", "AttentionDot");
+
 		cy.mount(
-		  <ShellBar id="shellbar-with-single-overflow"
-			primaryTitle="Product Title" 
-			secondaryTitle="Secondary Title"
-			showProductSwitch={true}>
-			<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
-			<Button icon="nav-back" slot="startButton"></Button>
-			<ShellBarItem id="single-item" icon="accept" text="Item" count="42" />
-			<ShellBarItem id="item3" icon="attachment" text="Item 3" />
-			<ShellBarItem id="item4" icon="bell" text="Item 4" />
-			<Avatar slot="profile">
-			  <img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
-			</Avatar>
-		  </ShellBar>
+			<ShellBar id="shellbar-with-single-overflow"
+				primaryTitle="Product Title"
+				secondaryTitle="Secondary Title"
+				showProductSwitch={true}>
+				<img slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+				<Button icon="nav-back" slot="startButton"></Button>
+				<ShellBarItem id="single-item" icon="accept" text="Item" count="42" />
+				<ShellBarItem id="item3" icon="attachment" text="Item 3" />
+				<ShellBarItem id="item4" icon="bell" text="Item 4" />
+				<Avatar slot="profile">
+					<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
+				</Avatar>
+			</ShellBar>
 		);
-		
+
 		cy.viewport(320, 800);
-		
+
 		cy.get("#shellbar-with-single-overflow")
-		  .shadow()
-		  .find(".ui5-shellbar-overflow-button")
-		  .should("be.visible");
-		
+			.shadow()
+			.find(".ui5-shellbar-overflow-button")
+			.should("be.visible");
+
 		cy.get("#shellbar-with-single-overflow")
-		  .shadow()
-		  .find(".ui5-shellbar-overflow-button ui5-button-badge[slot='badge']")
-		  .should("exist")
-		  .should("have.attr", "text", "42");
+			.shadow()
+			.find(".ui5-shellbar-overflow-button ui5-button-badge[slot='badge']")
+			.should("exist")
+			.should("have.attr", "text", "42");
 	});
 });
 
@@ -683,5 +717,125 @@ describe("Keyboard Navigation", () => {
 			.shadow()
 			.find(".ui5-shellbar-logo-area")
 			.should("not.exist");
+	});
+
+	it("Test arrow navigation within search input respects cursor position", () => {
+		cy.mount(
+			<ShellBar showSearchField={true}>
+				<Button id="button" slot="content">Test Button</Button>
+				<ShellBarSearch slot="searchField" value="test value"></ShellBarSearch>
+				<ShellBarItem icon={activities} text="Action 1"></ShellBarItem>
+			</ShellBar>
+		);
+		cy.wait(RESIZE_THROTTLE_RATE);
+
+		function placeAtStartOfInput() {
+			cy.get("[ui5-shellbar] [slot='searchField']")
+				.shadow()
+				.find("input")
+				.then($input => {
+					$input[0].setSelectionRange(0, 0);
+				});
+		}
+		function placeAtEndOfInput() {
+			cy.get("[ui5-shellbar] [slot='searchField']")
+				.shadow()
+				.find("input")
+				.then($input => {
+					const inputLength = $input.val().toString().length;
+					$input[0].setSelectionRange(inputLength, inputLength);
+				});
+		}
+		function placeInMiddleOfInput() {
+			cy.get("[ui5-shellbar] [slot='searchField']")
+				.shadow()
+				.find("input")
+				.then($input => {
+					const inputLength = $input.val().toString().length;
+					const middlePosition = Math.floor(inputLength / 2);
+					$input[0].setSelectionRange(middlePosition, middlePosition);
+				});
+		}
+
+		// Focus the search input
+		cy.get("[ui5-shellbar] [slot='searchField']")
+			.realClick()
+			.shadow()
+			.find("input")
+			.as("nativeInput");
+
+		placeAtStartOfInput();
+		// Press left arrow - should move focus away from input since cursor is at start
+		cy.get("@nativeInput").type("{leftArrow}");
+		// Verify focus is now on the button
+		cy.get("[ui5-shellbar] [ui5-button]").should("be.focused");
+
+
+		placeAtEndOfInput();
+		// Press right arrow - should move focus away from input since cursor is at end
+		cy.get("@nativeInput").type("{rightArrow}");
+		// Verify focus is now on the ShellBarItem
+		cy.get("[ui5-shellbar]")
+			.shadow()
+			.find(".ui5-shellbar-custom-item")
+			.should("be.focused");
+
+		placeInMiddleOfInput();
+		// Press left arrow - should stay focused on input since cursor is in the middle
+		cy.get("@nativeInput").type("{leftArrow}");
+		cy.get("@nativeInput").should("be.focused");
+		// Press right arrow - should stay focused on input since cursor is in the middle
+		cy.get("@nativeInput").type("{rightArrow}");
+		cy.get("@nativeInput").should("be.focused");
+	});
+
+	it("Should focus the last ShellBar item on End key press", () => {
+		cy.mount(
+			<ShellBar id="shellbar" showSearchField={true}>
+				<Button slot="content">Test Button 1</Button>
+				<Button id="button" slot="content">Test Button 2</Button>
+				<ShellBarSearch id="sbSearch" slot="searchField" value="test value"></ShellBarSearch>
+			</ShellBar>
+		);
+		cy.get("#button").shadow().find("button").focus().type('{end}');
+		cy.get("#sbSearch").should("be.focused");
+	});
+
+	it("Should focus the first ShellBar item on Home key press", () => {
+		cy.mount(
+			<ShellBar id="shellbar" showSearchField={true}>
+				<Button id="button1" slot="content">Test Button 1</Button>
+				<Button id="button2" slot="content">Test Button 2</Button>
+				<ShellBarSearch slot="searchField" value="test value"></ShellBarSearch>
+			</ShellBar>
+		);
+		cy.get("#button2").shadow().find("button").focus().type('{home}');
+		cy.get("#button1").shadow().find("button").should("be.focused");
+	});
+});
+
+describe("Branding slot", () => {
+	it("Test branding slot priority over logo", () => {
+		cy.mount(
+			<ShellBar id="shellbar" primaryTitle="Primary Title">
+				<img id="mainLogo" slot="logo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" />
+
+				<ShellBarBranding href="https://www.w3schools.com" target="_blank" slot="branding">
+					Branding Comp
+					<img id="brandingLogo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo" />
+				</ShellBarBranding>
+			</ShellBar>
+		)
+
+		cy.get("#shellbar")
+			.find("#mainLogo")
+			.should('exist')
+			.should('not.be.visible');
+
+		cy.get("#shellbar")
+			.find("#brandingLogo")
+			.should('exist')
+			.should('be.visible');
+
 	});
 });

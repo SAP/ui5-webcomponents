@@ -336,7 +336,7 @@ class Search extends SearchField {
 		return StartsWithPerTerm(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "text");
 	}
 
-	_isGroupItem(item: ISearchSuggestionItem) {
+	_isGroupItem(item: HTMLElement): item is SearchItemGroup {
 		return item.hasAttribute("ui5-search-item-group");
 	}
 
@@ -354,7 +354,8 @@ class Search extends SearchField {
 	}
 
 	_handleArrowDown() {
-		const firstListItem = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[0];
+		const focusableItems = this._getItemsList().listItems;
+		const firstListItem = focusableItems.at(0);
 
 		if (this.open) {
 			this._deselectItems();
@@ -449,8 +450,13 @@ class Search extends SearchField {
 	}
 
 	_onItemKeydown(e: KeyboardEvent) {
-		const isFirstItem = this._flattenItems[0] === e.target;
-		const isLastItem = this._flattenItems[this._flattenItems.length - 1] === e.target;
+		const target = e.target as HTMLElement;
+		// if focus is on the group header (in group's shadow dom) the target is the group itself,
+		// if so using getFocusDomRef ensures the actual focused element is used
+		const focusedItem = this._isGroupItem(target) ? target?.getFocusDomRef() : target;
+		const focusableItems = this._getItemsList().listItems;
+		const isFirstItem = focusableItems.at(0) === focusedItem;
+		const isLastItem = focusableItems.at(-1) === focusedItem;
 		const isArrowUp = isUp(e);
 		const isArrowDown = isDown(e);
 		const isTab = isTabNext(e);
@@ -602,7 +608,7 @@ class Search extends SearchField {
 
 	get _flattenItems(): Array<ISearchSuggestionItem> {
 		return this.getSlottedNodes<ISearchSuggestionItem>("items").flatMap(item => {
-			return this._isGroupItem(item) ? [item, ...item.items!] : [item];
+			return this._isGroupItem(item) ? [item, ...item.items] : [item];
 		});
 	}
 

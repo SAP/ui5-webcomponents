@@ -13,6 +13,7 @@ export default function CalendarTemplate(this: Calendar) {
 					"ui5-calheader-arrowbtn": true,
 					"ui5-calheader-arrowbtn-disabled": this._previousButtonDisabled,
 				}}
+				part="calendar-header-arrow-button"
 				role="button"
 				onMouseDown={this.onPrevButtonClick}
 				title={this.headerPreviousButtonText}
@@ -24,6 +25,7 @@ export default function CalendarTemplate(this: Calendar) {
 				<div
 					data-ui5-cal-header-btn-month
 					class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
+					part="calendar-header-middle-button"
 					hidden={this._isHeaderMonthButtonHidden}
 					tabindex={0}
 					role="button"
@@ -41,6 +43,7 @@ export default function CalendarTemplate(this: Calendar) {
 				<div
 					data-ui5-cal-header-btn-year
 					class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
+					part="calendar-header-middle-button"
 					hidden={this._isHeaderYearButtonHidden}
 					tabindex={0}
 					role="button"
@@ -56,6 +59,7 @@ export default function CalendarTemplate(this: Calendar) {
 				<div
 					data-ui5-cal-header-btn-year-range
 					class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
+					part="calendar-header-middle-button"
 					hidden={this._isHeaderYearRangeButtonHidden}
 					tabindex={0}
 					role="button"
@@ -76,6 +80,7 @@ export default function CalendarTemplate(this: Calendar) {
 					"ui5-calheader-arrowbtn": true,
 					"ui5-calheader-arrowbtn-disabled": this._nextButtonDisabled,
 				}}
+				part="calendar-header-arrow-button"
 				role="button"
 				onMouseDown={this.onNextButtonClick}
 				title={this.headerNextButtonText}

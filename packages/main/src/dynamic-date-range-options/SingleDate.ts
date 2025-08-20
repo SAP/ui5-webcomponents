@@ -12,7 +12,7 @@ import DynamicDateRange from "../DynamicDateRange.js";
  * @class
  * @constructor
  * @public
- * @since 2.0.0
+ * @since 2.11.0
  */
 
 class SingleDate implements IDynamicDateRangeOption {
@@ -32,9 +32,9 @@ class SingleDate implements IDynamicDateRangeOption {
 	}
 
 	format(value: DynamicDateRangeValue) {
-		const valuesArray = value?.values as Date[];
+		const valuesArray = value?.values as Array<Date>;
 
-		if (!valuesArray || valuesArray.length !== 1) {
+		if (!valuesArray) {
 			return "";
 		}
 
@@ -43,7 +43,7 @@ class SingleDate implements IDynamicDateRangeOption {
 		return this.getFormat().format(date);
 	}
 
-	toDates(value: DynamicDateRangeValue): Date[] {
+	toDates(value: DynamicDateRangeValue): Array<Date> {
 		return dateOptionToDates(value);
 	}
 
@@ -69,7 +69,7 @@ class SingleDate implements IDynamicDateRangeOption {
 		return "appointment-2";
 	}
 
-	handleSelectionChange(e: CustomEvent) : DynamicDateRangeValue | undefined {
+	handleSelectionChange(e: CustomEvent): DynamicDateRangeValue | undefined {
 		const currentValue = { operator: "", values: [] } as DynamicDateRangeValue;
 		currentValue.values = [];
 		currentValue.operator = this.operator;

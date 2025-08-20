@@ -9,39 +9,39 @@ import DynamicDateRange from "../DynamicDateRange.js";
  * @class
  * @constructor
  * @public
- * @since 2.0.0
+ * @since 2.11.0
  */
 
 class Yesterday implements IDynamicDateRangeOption {
 	parse(): DynamicDateRangeValue {
-	    const returnValue = { operator: "" };
-	    returnValue.operator = this.operator;
+		const returnValue = { operator: "" };
+		returnValue.operator = this.operator;
 
-	    return returnValue;
+		return returnValue;
 	}
 
 	format(): string {
-	    return "Yesterday";
+		return "Yesterday";
 	}
 
-	toDates() : Date[] {
-	    return yesterdayToDates();
+	toDates() : Array<Date> {
+		return yesterdayToDates();
 	}
 
 	isValidString(value: string): boolean {
-	    return value === this.text;
+		return value === this.text;
 	}
 
 	get text(): string {
-	    return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_YESTERDAY_TEXT);
+		return DynamicDateRange.i18nBundle.getText(DYNAMIC_DATE_RANGE_YESTERDAY_TEXT);
 	}
 
 	get operator() {
-	    return "YESTERDAY";
+		return "YESTERDAY";
 	}
 
 	get icon() {
-	    return "";
+		return "";
 	}
 }
 
