@@ -21,7 +21,7 @@ const copyIconAssetsCommand = (options) => {
 		return 	{
 			default: "nps copy.json-imports copy.icon-collection",
 			"json-imports": `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
-			"icon-collection": `node "${LIB}/copy-and-watch/index.js" --silent "src/*.json" "!src/${v}/messagebundle_*.json" src/generated/assets/`,
+			"icon-collection": `node "${LIB}/copy-and-watch/index.js" --silent "src/*.json" src/generated/assets/`,
 		}
 	}
 
@@ -32,7 +32,7 @@ const copyIconAssetsCommand = (options) => {
 
 	options.versions.forEach((v) => {
 		command.default += ` copy.icon-collection${v}`;
-		command[`icon-collection${v}`] = `node "${LIB}/copy-and-watch/index.js" --silent "src/${v}/*.json" "!src/${v}/messagebundle_*.json" src/generated/assets/${v}/`;
+		command[`icon-collection${v}`] = `node "${LIB}/copy-and-watch/index.js" --silent "src/${v}/*.json" src/generated/assets/${v}/`;
 	});
 
 	return command;
