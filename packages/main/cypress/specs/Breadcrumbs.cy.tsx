@@ -12,7 +12,6 @@ function resizeContainer(wrapperId: string, extendSize?: boolean) {
 		const newWidth = Math.max(wrapperWidth + amount, 0);
 		wrapper.style.width = newWidth + "px";
 
-		// Trigger resize event
 		window.dispatchEvent(new Event('resize'));
 	});
 }
@@ -57,14 +56,14 @@ describe("breadcrumbs navigation", () => {
 		cy.get("ui5-breadcrumbs").invoke("prop", "_itemNavigation").then(_itemNavigation => {
 			return _itemNavigation._currentIndex;
 		})
-			.should("equal", 1); // index is 1 after arrow right
+			.should("equal", 1);
 
 		cy.realPress("ArrowUp");
 
 		cy.get("ui5-breadcrumbs").invoke("prop", "_itemNavigation").then(_itemNavigation => {
 			return _itemNavigation._currentIndex;
 		})
-			.should("equal", 0); // index is back to 0 after arrow up
+			.should("equal", 0);
 	});
 });
 
@@ -140,7 +139,7 @@ describe("Breadcrumbs general interaction", () => {
 		);
 
 		cy.get("[ui5-breadcrumbs-item]").then(($breadcrumbItem) => {
-			const breadcrumbItemElement = $breadcrumbItem[0] as any;
+			const breadcrumbItemElement = $breadcrumbItem[0] as Breadcrumbs;
 			const domRef = breadcrumbItemElement.getDomRef();
 
 			expect(domRef).to.exist;
@@ -167,7 +166,6 @@ describe("Breadcrumbs general interaction", () => {
 			</div>
 		);
 
-		// Get breadcrumbs, go to shadow DOM, find second ui5-link, click it
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-link")
@@ -176,7 +174,6 @@ describe("Breadcrumbs general interaction", () => {
 				const linkText = $link.text();
 				cy.wrap($link).realClick();
 
-				// Check that result has text and matches the clicked link
 				cy.then(() => {
 					expect(resultText, 'label should have a value').to.not.be.empty;
 					expect(resultText, 'label for pressed link is correct').to.equal(linkText);
@@ -203,14 +200,12 @@ describe("Breadcrumbs general interaction", () => {
 			</div>
 		);
 
-		// Click the overflow arrow (first ui5-link)
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-link")
 			.first()
 			.realClick();
 
-		// Click the first item in the overflow popover
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-li")
@@ -219,7 +214,6 @@ describe("Breadcrumbs general interaction", () => {
 				const itemText = $firstItem.prop('innerText');
 				cy.wrap($firstItem).realClick();
 
-				// Verify the event fired with correct data
 				cy.then(() => {
 					expect(resultText, 'label should have a value').to.not.be.empty;
 					expect(resultText, 'label for pressed link is correct').to.equal(itemText);
@@ -244,21 +238,17 @@ describe("Breadcrumbs general interaction", () => {
 			</div>
 		);
 
-		// Get initial overflow size
 		cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-			const breadcrumbsElement = $breadcrumbs[0] as any;
+			const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 			const countItemsInOverflowBefore = breadcrumbsElement._overflowSize || 0;
 			const expectedCountLinksInOverflowAfter = countItemsInOverflowBefore + 1;
 
-			// Click shrink button (uses our resizeContainer function)
 			cy.get("#shrinkSizeBtn").realClick();
 
-			// Wait for layout update
 			cy.wait(300);
 
-			// Check that overflow size increased
 			cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-				const breadcrumbsElement = $breadcrumbs[0] as any;
+				const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 				expect(breadcrumbsElement._overflowSize || 0,
 					"one link is added to the overflow").to.equal(expectedCountLinksInOverflowAfter);
 			});
@@ -282,21 +272,17 @@ describe("Breadcrumbs general interaction", () => {
 			</div>
 		);
 
-		// Get initial overflow size
 		cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-			const breadcrumbsElement = $breadcrumbs[0] as any;
+			const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 			const countItemsInOverflowBefore = breadcrumbsElement._overflowSize || 0;
 			const expectedCountItemsInOverflowAfter = countItemsInOverflowBefore + 1;
 
-			// Click extend button to make the last link text longer
 			cy.get("#extendLinkTextBtn").realClick();
 
-			// Wait for layout update
 			cy.wait(300);
 
-			// Check that overflow size increased
 			cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-				const breadcrumbsElement = $breadcrumbs[0] as any;
+				const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 				expect(breadcrumbsElement._overflowSize || 0,
 					"the link is added to the overflow").to.equal(expectedCountItemsInOverflowAfter);
 			});
@@ -323,7 +309,7 @@ describe("Breadcrumbs general interaction", () => {
 		cy.wait(500);
 
 		cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-			const breadcrumbsElement = $breadcrumbs[0] as any;
+			const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 			const countItemsInOverflowBefore = breadcrumbsElement._overflowSize;
 			const expectedCountItemsInOverflowAfter = countItemsInOverflowBefore - 1;
 
@@ -332,7 +318,7 @@ describe("Breadcrumbs general interaction", () => {
 			cy.wait(500);
 
 			cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-				const breadcrumbsElement = $breadcrumbs[0] as any;
+				const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 				expect(breadcrumbsElement._overflowSize, "the link is taken out of the overflow").to.equal(expectedCountItemsInOverflowAfter);
 			});
 		});
@@ -355,10 +341,8 @@ describe("Breadcrumbs general interaction", () => {
 			</div>
 		);
 
-		// Wait for initial layout
 		cy.wait(300);
 
-		// Get initial state
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-link")
@@ -367,16 +351,13 @@ describe("Breadcrumbs general interaction", () => {
 				const initialLinkId = $initialLink.prop('id');
 
 				cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-					const breadcrumbsElement = $breadcrumbs[0] as any;
+					const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 					const countItemsInOverflowBefore = breadcrumbsElement._overflowSize || 0;
 
-					// Click shorten button to remove content
 					cy.get("#shortenLinkTextBtn").realClick();
 
-					// Wait for layout update
 					cy.wait(300);
 
-					// Check that a different link is now in position 1 (core behavior)
 					cy.get("[ui5-breadcrumbs]")
 						.shadow()
 						.find("ui5-link")
@@ -385,17 +366,14 @@ describe("Breadcrumbs general interaction", () => {
 							const newLinkId = $newLink.prop('id');
 							const newLinkText = $newLink.text();
 
-							// Verify different link is in position (Link2 → Link3)
 							expect(newLinkId, "another link is rendered in the place of the empty item").to.not.equal(initialLinkId);
 							expect(newLinkText, "the new link is non-empty").to.not.be.empty;
 						});
 
-					// Verify that layout has changed (more flexible)
 					cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-						const breadcrumbsElement = $breadcrumbs[0] as any;
+						const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 						const finalOverflowSize = breadcrumbsElement._overflowSize || 0;
 
-						// Layout should have changed when content was removed
 						expect(finalOverflowSize, "layout changed when content removed").to.not.equal(countItemsInOverflowBefore);
 					});
 				});
@@ -419,44 +397,36 @@ describe("Breadcrumbs general interaction", () => {
 			</div>
 		);
 
-		// Wait for initial layout
 		cy.wait(300);
 
-		// Get initial state
 		cy.get("#item7").then(($lastItem) => {
-			const lastItem = $lastItem[0] as any;
+			const lastItem = $lastItem[0] as Breadcrumbs;
 			const lastLinkId = lastItem._id + "-link";
 
 			cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-				const breadcrumbsElement = $breadcrumbs[0] as any;
+				const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 				const countItemsInOverflowBefore = breadcrumbsElement._overflowSize || 0;
 
-				// Check initial state
 				expect($lastItem.text(), "the item has no text").to.equal("");
 
 				cy.get("[ui5-breadcrumbs]")
 					.shadow()
 					.find(`#${lastLinkId}`)
-					.should('have.length', 0); // "the link for empty item is not rendered"
+					.should('have.length', 0);
 
-				// Act: add text of the last link to make it non-empty
 				cy.get("#extendLinkTextBtn").realClick();
 
-				// Wait for layout update
 				cy.wait(300);
 
-				// Check: link is now rendered
 				cy.get("[ui5-breadcrumbs]")
 					.shadow()
 					.find(`#${lastLinkId}`)
-					.should('have.length', 1); // "the link for non-empty item is rendered"
+					.should('have.length', 1);
 
-				// Check overflow behavior (more flexible)
 				cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-					const breadcrumbsElement = $breadcrumbs[0] as any;
+					const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 					const finalOverflowSize = breadcrumbsElement._overflowSize || 0;
 
-					// The overflow should increase or at least not decrease when content is added
 					expect(finalOverflowSize,
 						"overflow should increase when content added").to.be.at.least(countItemsInOverflowBefore);
 				});
@@ -471,13 +441,11 @@ describe("Breadcrumbs general interaction", () => {
 			</Breadcrumbs>
 		);
 
-		// Get the second link (equivalent to [1] in WDIO)
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-link")
 			.eq(1)
 			.then(($link) => {
-				// Check that label is displayed
 				expect($link.text(), "label is displayed").to.equal("Location");
 			});
 	});
@@ -508,10 +476,8 @@ describe("Breadcrumbs general interaction", () => {
 			</div>
 		);
 
-		// Wait for layout and ensure overflow
 		cy.wait(300);
 
-		// Click external element
 		cy.get("[ui5-breadcrumbs]")
 			.first()
 			.shadow()
@@ -519,27 +485,23 @@ describe("Breadcrumbs general interaction", () => {
 			.eq(3)
 			.realClick();
 
-		// Tab to move focus 
 		cy.realPress("Tab");
 
-		// Focus the overflow breadcrumbs properly and press Space
 		cy.get("[ui5-breadcrumbs]").last().then(($breadcrumbs) => {
-			const breadcrumbsElement = $breadcrumbs[0] as any;
+			const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 			const focusDomRef = breadcrumbsElement.getFocusDomRef();
 			if (focusDomRef) {
 				focusDomRef.focus();
 
-				// Add a small delay to ensure focus is set
 				cy.wait(100);
 				cy.realPress("Space");
 
-				// Check that popover is opened
 				cy.get("[ui5-breadcrumbs]")
 					.last()
 					.shadow()
 					.find("ui5-responsive-popover")
 					.then(($popover) => {
-						const popover = $popover[0] as any;
+						const popover = $popover[0] as HTMLElement & { open: boolean };
 						expect(popover.open, "Dropdown is opened.").to.be.true;
 					});
 			}
@@ -548,7 +510,7 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("toggles upon F4", () => {
 		cy.mount(
-			<div style={{ width: '150px' }}> {/* Much smaller to force overflow */}
+			<div style={{ width: '150px' }}>
 				<Breadcrumbs>
 					<BreadcrumbsItem href="#">VeryLongLinkName1</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">VeryLongLinkName2</BreadcrumbsItem>
@@ -562,39 +524,33 @@ describe("Breadcrumbs general interaction", () => {
 			</div>
 		);
 
-		// Wait for layout and ensure overflow occurs
 		cy.wait(300);
 
-		// Get the breadcrumbs component and use its getFocusDomRef method to focus properly
 		cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-			const breadcrumbsElement = $breadcrumbs[0] as any;
+			const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 			const focusDomRef = breadcrumbsElement.getFocusDomRef();
 			if (focusDomRef) {
 				focusDomRef.focus();
 			}
 		});
 
-		// Press F4 to open popover
 		cy.realPress("F4");
 
-		// Check that popover is opened
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.then(($popover) => {
-				const popover = $popover[0] as any;
+				const popover = $popover[0] as HTMLElement & { open: boolean };
 				expect(popover.open, "Dropdown is opened.").to.be.true;
 			});
 
-		// Press F4 again to close popover
 		cy.realPress("F4");
 
-		// Check that popover is closed
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.then(($popover) => {
-				const popover = $popover[0] as any;
+				const popover = $popover[0] as HTMLElement & { open: boolean };
 				expect(popover.open, "Dropdown is closed.").to.be.false;
 			});
 	});
@@ -615,39 +571,33 @@ describe("Breadcrumbs general interaction", () => {
 			</div>
 		);
 
-		// Wait for layout and ensure overflow occurs
 		cy.wait(300);
 
-		// Focus the breadcrumbs component properly
 		cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-			const breadcrumbsElement = $breadcrumbs[0] as any;
+			const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 			const focusDomRef = breadcrumbsElement.getFocusDomRef();
 			if (focusDomRef) {
 				focusDomRef.focus();
 			}
 		});
 
-		// Press Alt+ArrowDown to open popover
 		cy.realPress(["Alt", "ArrowDown"]);
 
-		// Check that popover is opened
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.then(($popover) => {
-				const popover = $popover[0] as any;
+				const popover = $popover[0] as HTMLElement & { open: boolean };
 				expect(popover.open, "Dropdown is opened.").to.be.true;
 			});
 
-		// Press Alt+ArrowDown again to close popover
 		cy.realPress(["Alt", "ArrowDown"]);
 
-		// Check that popover is closed
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-responsive-popover")
 			.then(($popover) => {
-				const popover = $popover[0] as any;
+				const popover = $popover[0] as HTMLElement & { open: boolean };
 				expect(popover.open, "Dropdown is closed.").to.be.false;
 			});
 	});
@@ -665,26 +615,22 @@ describe("Breadcrumbs general interaction", () => {
 			</div>
 		);
 
-		// Wait for layout and ensure overflow occurs
 		cy.wait(300);
 
-		// Open the overflow popover by clicking the overflow button
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-link")
 			.first()
 			.realClick();
 
-		// Get the second ui5-li item (index 1) from the popover
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-li")
 			.eq(1)
 			.then(($listItem) => {
-				const listItem = $listItem[0] as any;
+				const listItem = $listItem[0] as HTMLElement & { accessibleName: string };
 				const expectedAriaLabel = "first link acc name";
 
-				// Check that accessible name is preserved in overflow
 				expect(listItem.accessibleName, "label for first link is correct").to.equal(expectedAriaLabel);
 			});
 	});
@@ -700,30 +646,13 @@ describe("Breadcrumbs general interaction", () => {
 			</Breadcrumbs>
 		);
 
-		// Debug: log all links to understand the structure
-		cy.get("[ui5-breadcrumbs]")
-			.shadow()
-			.find("ui5-link")
-			.then(($links) => {
-				console.log("Total links found:", $links.length);
-				$links.each((index, link) => {
-					console.log(`Link ${index}:`, {
-						textContent: link.textContent,
-						accessibleName: (link as any).accessibleName
-					});
-				});
-			});
-
-		// Get the actual last link (not index 3)
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-link")
 			.last()
 			.then(($link) => {
-				const link = $link[0] as any;
-				console.log("Last link accessible name:", link.accessibleName);
+				const link = $link[0] as HTMLElement & { accessibleName: string };
 
-				// The expected format should match what we actually get
 				expect(link.accessibleName, "label for last link is correct").to.contain("Link5");
 				expect(link.accessibleName, "label for last link is correct").to.contain("last link acc name");
 			});
@@ -732,7 +661,6 @@ describe("Breadcrumbs general interaction", () => {
 	it("renders accessible name of popover", () => {
 		cy.mount(
 			<div>
-				{/* breadcrumbsWithAccName equivalent */}
 				<Breadcrumbs design="NoCurrentPage">
 					<BreadcrumbsItem href="#" accessible-name="first link acc name">Link1</BreadcrumbsItem>
 					<BreadcrumbsItem href="#">Link2</BreadcrumbsItem>
@@ -741,7 +669,6 @@ describe("Breadcrumbs general interaction", () => {
 					<BreadcrumbsItem href="#" accessible-name="last link acc name">Link5</BreadcrumbsItem>
 				</Breadcrumbs>
 
-				{/* breadcrumbs1 equivalent with overflow */}
 				<div style={{ width: '200px' }}>
 					<Breadcrumbs>
 						<BreadcrumbsItem href="#">Link1</BreadcrumbsItem>
@@ -759,7 +686,6 @@ describe("Breadcrumbs general interaction", () => {
 
 		const expectedAriaLabel = "Available Values";
 
-		// Click external element (4th link from breadcrumbsWithAccName)
 		cy.get("[ui5-breadcrumbs]")
 			.first()
 			.shadow()
@@ -767,7 +693,6 @@ describe("Breadcrumbs general interaction", () => {
 			.eq(3)
 			.realClick();
 
-		// Check popover's aria-label from breadcrumbs1
 		cy.get("[ui5-breadcrumbs]")
 			.last()
 			.shadow()
@@ -785,7 +710,6 @@ describe("Breadcrumbs general interaction", () => {
 		let preventDefaultCalled = false;
 
 		const onItemClick = (event: any) => {
-			// Capture modifier keys like the HTML does
 			let keyText = '';
 			if (event.detail.ctrlKey) keyText += 'CTRL:';
 			if (event.detail.altKey) keyText += 'ALT:';
@@ -807,9 +731,7 @@ describe("Breadcrumbs general interaction", () => {
 			</Breadcrumbs>
 		);
 
-		// Get initial URL
 		cy.url().then((initialUrl) => {
-			// Click the second link
 			cy.get("[ui5-breadcrumbs]")
 				.shadow()
 				.find("ui5-link")
@@ -818,13 +740,11 @@ describe("Breadcrumbs general interaction", () => {
 					const linkText = $link.text();
 					cy.wrap($link).realClick();
 
-					// Check that preventDefault worked and event fired
 					cy.then(() => {
 						expect(preventDefaultCalled, "preventDefault was called").to.be.true;
 						expect(resultText, "label for pressed link is correct").to.equal(linkText);
 					});
 
-					// Check that URL hasn't changed
 					cy.url().should('equal', initialUrl);
 				});
 		});
@@ -834,7 +754,6 @@ describe("Breadcrumbs general interaction", () => {
 		let resultText = '';
 
 		const onItemClick = (event: any) => {
-			// Capture modifier keys like the HTML does
 			let keyText = '';
 			if (event.detail.ctrlKey) keyText += 'CTRL:';
 			if (event.detail.altKey) keyText += 'ALT:';
@@ -855,7 +774,6 @@ describe("Breadcrumbs general interaction", () => {
 			</Breadcrumbs>
 		);
 
-		// Test META key
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-link")
@@ -863,15 +781,12 @@ describe("Breadcrumbs general interaction", () => {
 			.then(($link) => {
 				const linkText = $link.text();
 
-				// Click with META key held down
 				cy.wrap($link).realClick({ metaKey: true });
 
 				cy.then(() => {
 					expect(resultText, "META key captured correctly").to.equal('META:' + linkText);
 				});
 			});
-
-		// Test ALT key
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-link")
@@ -879,7 +794,6 @@ describe("Breadcrumbs general interaction", () => {
 			.then(($link) => {
 				const linkText = $link.text();
 
-				// Click with ALT key held down
 				cy.wrap($link).realClick({ altKey: true });
 
 				cy.then(() => {
@@ -887,7 +801,6 @@ describe("Breadcrumbs general interaction", () => {
 				});
 			});
 
-		// Test SHIFT key
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("ui5-link")
@@ -895,7 +808,6 @@ describe("Breadcrumbs general interaction", () => {
 			.then(($link) => {
 				const linkText = $link.text();
 
-				// Click with SHIFT key held down
 				cy.wrap($link).realClick({ shiftKey: true });
 
 				cy.then(() => {
@@ -935,21 +847,18 @@ describe("Breadcrumbs general interaction", () => {
 			.then(($link) => {
 				const linkText = $link.text();
 
-				// Test META key
 				resultText = '';
 				cy.wrap($link).realClick({ metaKey: true });
 				cy.then(() => {
 					expect(resultText, "META label for pressed link is correct").to.equal('META:' + linkText);
 				});
 
-				// Test ALT key
 				resultText = '';
 				cy.wrap($link).realClick({ altKey: true });
 				cy.then(() => {
 					expect(resultText, "ALT label for pressed link is correct").to.equal('ALT:' + linkText);
 				});
 
-				// Test SHIFT key
 				resultText = '';
 				cy.wrap($link).realClick({ shiftKey: true });
 				cy.then(() => {
@@ -957,8 +866,7 @@ describe("Breadcrumbs general interaction", () => {
 				});
 
 				// Note: CTRL key testing is skipped due to cypress-real-events compatibility issues
-				// The functionality works in the actual application but cannot be reliably tested
-				// in the component testing environment
+				// The functionality works in the actual application but cannot be reliably tested in the component testing environment
 			});
 	});
 
@@ -970,12 +878,10 @@ describe("Breadcrumbs general interaction", () => {
 			</Breadcrumbs>
 		);
 
-		// Wait for layout to settle
 		cy.wait(300);
 
-		// Check that overflow size is exactly 1 and component is stable
 		cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
-			const breadcrumbsElement = $breadcrumbs[0] as any;
+			const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 			expect(breadcrumbsElement._overflowSize,
 				"Max stack of calling not hit for invalidation of control").to.equal(1);
 		});
@@ -998,12 +904,10 @@ describe("Breadcrumbs with item for current page", () => {
 			</Breadcrumbs>
 		);
 
-		// Find the last li containing ui5-link (current page item)
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("li:last-child ui5-link")
 			.then(($link) => {
-				// Assert link exists and has correct text
 				expect($link.length, "item for current page is a link").to.be.greaterThan(0);
 				expect($link.text(), "item for current page has correct text").to.equal("Location");
 			});
@@ -1023,18 +927,16 @@ describe("Breadcrumbs with item for current page", () => {
 			</Breadcrumbs>
 		);
 
-		// Find the last li containing ui5-link and check its design
 		cy.get("[ui5-breadcrumbs]")
 			.shadow()
 			.find("li:last-child ui5-link")
 			.then(($link) => {
-				const link = $link[0] as any;
+				const link = $link[0] as Breadcrumbs;
 				expect(link.design, "link has correct design").to.equal("Emphasized");
 			});
 	});
 
 	it("does not render separator after link to current page", () => {
-		// Mount breadcrumbs with current page
 		cy.mount(
 			<div>
 				<Breadcrumbs>
@@ -1060,14 +962,12 @@ describe("Breadcrumbs with item for current page", () => {
 			</div>
 		);
 
-		// Check separator after non-current page link (second breadcrumbs)
 		cy.get("[ui5-breadcrumbs]")
 			.eq(1)
 			.shadow()
 			.find("li:last-child span.ui5-breadcrumbs-separator")
 			.should('exist')
 			.then(() => {
-				// Check separator after current page link (first breadcrumbs)
 				cy.get("[ui5-breadcrumbs]")
 					.first()
 					.shadow()
