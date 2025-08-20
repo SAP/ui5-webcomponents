@@ -1,14 +1,13 @@
-import type TextArea from "./TextArea.js";
-import BusyIndicator from "./BusyIndicator.js";
-import TextAreaPopoverTemplate from "./TextAreaPopoverTemplate.js";
-import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
+import type AITextArea from "./AITextArea.js";
+import AiWritingAssistantToolbar from "./AiWritingAssistantToolbar.js";
+import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
+import TextAreaPopoverTemplate from "@ui5/webcomponents/dist/TextAreaPopoverTemplate.js";
 
-export default function TextAreaTemplate(this: TextArea, hooks?: {
-	footer?: JsxTemplate,
-	busy?: boolean,
-}) {
+export default function AITextAreaTemplate(this: AITextArea) {
+	const isBusy = this.assistantState === "Loading";
+
 	return (
-		<>
+		<div class="ui5-ai-textarea-root">
 			<div
 				class={this.classes.root}
 				onFocusIn={this._onfocusin}
@@ -29,7 +28,7 @@ export default function TextAreaTemplate(this: TextArea, hooks?: {
 					}
 					<BusyIndicator
 						id={`${this._id}-busyIndicator`}
-						active={hooks?.busy}
+						active={isBusy}
 						class="ui5-textarea-busy-indicator"
 					>
 						<textarea
@@ -56,12 +55,19 @@ export default function TextAreaTemplate(this: TextArea, hooks?: {
 					</BusyIndicator>
 					<div part="footer">
 						<slot name="footer">
-							{(hooks?.footer || defaultFooter).call(this)}
+							<AiWritingAssistantToolbar
+								assistantState={this.assistantState}
+								currentVersionIndex={this.currentVersionIndex}
+								totalVersions={this.totalVersions}
+								actionText={this.actionText}
+								onGenerateClick={this.handleGenerateClick}
+								onStopGeneration={this.handleStopGeneration}
+								onPreviousVersionClick={this._handlePreviousVersionClick}
+								onNextVersionClick={this._handleNextVersionClick}
+							/>
 						</slot>
 					</div>
 				</div>
-
-				{ afterTextarea.call(this) }
 
 				{this.showExceededText &&
 				<span class="ui5-textarea-exceeded-text">{this._exceededTextProps.exceededText}</span>
@@ -73,9 +79,10 @@ export default function TextAreaTemplate(this: TextArea, hooks?: {
 			</div>
 
 			{TextAreaPopoverTemplate.call(this)}
-		</>
+
+			<div id="ai-menu-wrapper">
+				<slot name="menu"></slot>
+			</div>
+		</div>
 	);
 }
-
-export function afterTextarea(this: TextArea) {}
-export function defaultFooter(this: TextArea) {}
