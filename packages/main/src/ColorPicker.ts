@@ -39,6 +39,7 @@ import {
 
 // Styles
 import ColorPickerCss from "./generated/themes/ColorPicker.css.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/index.js";
 
 const PICKER_POINTER_WIDTH = 6.5;
 
@@ -298,8 +299,8 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._changeSelectedColor(e.offsetX, e.offsetY);
 	}
 
-	_handleAlphaInput(e: CustomEvent) {
-		const aphaInputValue: string = (e.target as Input).value;
+	_handleAlphaInput(e: UI5CustomEvent<Input, "input"> | UI5CustomEvent<Slider, "input">) {
+		const aphaInputValue = String(e.currentTarget.value);
 		this._alpha = parseFloat(aphaInputValue);
 		if (Number.isNaN(this._alpha)) {
 			this._alpha = 1;
@@ -357,33 +358,41 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	_handleColorInputChange(e: Event) {
 		const target = e.target as Input;
 		const targetValue = parseInt(target.value) || 0;
+		let normalizedValue = targetValue;
 
 		switch (target.id) {
 		case "red":
 			this._colorValue.R = targetValue;
+			normalizedValue = this._colorValue.R;
 			break;
 
 		case "green":
 			this._colorValue.G = targetValue;
+			normalizedValue = this._colorValue.G;
 			break;
 
 		case "blue":
 			this._colorValue.B = targetValue;
+			normalizedValue = this._colorValue.B;
 			break;
 
 		case "hue":
 			this._colorValue.H = targetValue;
+			normalizedValue = this._colorValue.H;
 			break;
 
 		case "saturation":
 			this._colorValue.S = targetValue;
+			normalizedValue = this._colorValue.S;
 			break;
 
 		case "light":
 			this._colorValue.L = targetValue;
+			normalizedValue = this._colorValue.L;
 			break;
 		}
 
+		target.value = String(normalizedValue);
 		const color = this._colorValue.toRGBString();
 		this._setValue(color);
 		this._updateColorGrid();

@@ -1,3 +1,4 @@
+import type { JsxTemplateResult } from "@ui5/webcomponents-base/dist/index.js";
 import type Input from "./Input.js";
 import Icon from "./Icon.js";
 import error from "@ui5/webcomponents-icons/dist/error.js";
@@ -8,10 +9,12 @@ import information from "@ui5/webcomponents-icons/dist/information.js";
 import Popover from "./Popover.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
-export default function InputPopoverTemplate(this: Input) {
+export default function InputPopoverTemplate(this: Input, hooks?: { suggestionsList?: (this: Input) => JsxTemplateResult }) {
+	const suggestionsList = hooks?.suggestionsList;
+
 	return (
 		<>
-			{this._effectiveShowSuggestions && this.Suggestions?.template.call(this, valueStateMessage, valueStateMessageInputIcon) }
+			{this._effectiveShowSuggestions && this.Suggestions?.template.call(this, { suggestionsList, valueStateMessage, valueStateMessageInputIcon }) }
 
 			{this.hasValueStateMessage &&
 				<Popover
@@ -26,7 +29,7 @@ export default function InputPopoverTemplate(this: Input) {
 					open={this.valueStateOpen}
 					onClose={this._handleValueStatePopoverAfterClose}
 				>
-					<div slot="header" class={this.classes.popoverValueState} style={this.styles.popoverHeader}>
+					<div slot="header" class={this.classes.popoverValueState}>
 						<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)} />
 						{ this.valueStateOpen && valueStateMessage.call(this) }
 					</div>

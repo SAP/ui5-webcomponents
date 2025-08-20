@@ -65,10 +65,10 @@
 
 	<section class="group">
 		<h2>Links with icon and end-icon</h2>
-		<ui5-link id="wrapping-link" wrapping-type="Normal" icon="employee">View employee profile</ui5-link> <br>
-		<ui5-link id="linkWithIcon" design="Subtle" icon="employee">View employee profile</ui5-link> <br> <br>
-		<ui5-link id="non-wrapping-link" end-icon="cloud">Weather today</ui5-link> <br>
-		<ui5-link class="link2auto" id="linkWithEndIcon" end-icon="cloud" wrapping-type="None">Weather today</ui5-link>
+		<ui5-link id="wrapping-link" wrapping-type="Normal" icon="employee" interactive-area-size="Large">View employee profile</ui5-link> <br>
+		<ui5-link id="linkWithIcon" design="Subtle" icon="employee" interactive-area-size="Large">View employee profile</ui5-link> <br> <br>
+		<ui5-link id="non-wrapping-link" end-icon="cloud" interactive-area-size="Large">Weather today</ui5-link> <br>
+		<ui5-link class="link2auto" id="linkWithEndIcon" end-icon="cloud" wrapping-type="None" interactive-area-size="Large">Weather today</ui5-link>
 
 		<h2>Wrapping link with end-icon</h2>
 		<ui5-link class="link2auto" end-icon="cloud" id="wrapping-link">Eu enim consectetur do amet elit Lorem ipsum dolor, sit amet consectetur adipisicing elit adipisicing.</ui5-link>
@@ -113,6 +113,11 @@
 		<h2>Link opens a dialog</h2>
 		<ui5-link accessible-role="button" id="signInLink">Sign in</ui5-link>
 		<ui5-dialog id="signInDialog" header-text="Sign in form">
+			<ui5-bar slot="header" design="Header">
+				<ui5-title level="H5" slot="startContent">Bar used in Header and Footer</ui5-title>
+				<ui5-button class="dialogCloser" design="Transparent" id="closeDialogButton" slot="endContent"
+					icon="decline"></ui5-button>
+			</ui5-bar>
 			<section class="login-form">
 				<div>
 					<ui5-label for="email" type="Email" required>Email: </ui5-label>

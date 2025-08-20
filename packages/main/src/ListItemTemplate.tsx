@@ -99,8 +99,7 @@ export default function ListItemTemplate(this: ListItem, hooks?: Partial<ListIte
 		<span
 			id={`${this._id}-invisibleText`}
 			class="ui5-hidden-text">
-			{this._accInfo.listItemAriaLabel}
-			{this.accessibleName}
+			{this.ariaLabelledByText}
 		</span>
 		<span
 			id={`${this._id}-invisibleText-describedby`}
@@ -145,7 +144,7 @@ function selectionElement(this: ListItem) {
 				onChange={this.onMultiSelectionComponentPress}
 			/>
 		);
-	case this.renderDeleteButton:
+	case this.modeDelete:
 		return (
 			<div class="ui5-li-deletebtn">
 				{
@@ -160,7 +159,6 @@ function selectionElement(this: ListItem) {
 								id={`${this._id}-deleteSelectionElement`}
 								design="Transparent"
 								icon={declineIcon}
-								disabled={this.disableDeleteButton}
 								onClick={this.onDelete}
 								tooltip={this.deleteText}
 							/>

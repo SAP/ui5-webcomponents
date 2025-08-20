@@ -11,6 +11,7 @@ import {
 	isUp,
 	isF7,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
@@ -27,6 +28,7 @@ import {
 	CAROUSEL_DOT_TEXT,
 	CAROUSEL_PREVIOUS_ARROW_TEXT,
 	CAROUSEL_NEXT_ARROW_TEXT,
+	CAROUSEL_ARIA_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorType from "./types/CarouselPageIndicatorType.js";
@@ -495,7 +497,7 @@ class Carousel extends UI5Element {
 		}
 	}
 
-	_navButtonClick(e: MouseEvent) {
+	_navButtonClick(e: UI5CustomEvent<Button, "click">) {
 		const button = e.target as Button;
 		if (button.hasAttribute("data-ui5-arrow-forward")) {
 			this.navigateRight();
@@ -698,6 +700,10 @@ class Carousel extends UI5Element {
 
 	get previousPageText() {
 		return Carousel.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
+	}
+
+	get _roleDescription() {
+		return Carousel.i18nBundle.getText(CAROUSEL_ARIA_ROLE_DESCRIPTION);
 	}
 
 	/**

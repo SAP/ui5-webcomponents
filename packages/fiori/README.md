@@ -2,10 +2,10 @@
 
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
-Provides essential building blocks, necessary to implement the Fiori UX concept, 
+Provides essential building blocks, necessary to implement the Fiori UX concept,
 such as a common header (ShellBar).
 
-## Provided components 
+## Provided components
 
 | Web Component                             | Tag name                       | Module import                                                         |
 |-------------------------------------------|--------------------------------|-----------------------------------------------------------------------|
@@ -30,11 +30,16 @@ such as a common header (ShellBar).
 | Side Navigation Group                     | `ui5-side-navigation-group`    | `import "@ui5/webcomponents-fiori/dist/SideNavigationGroup.js";`      |
 | Timeline                                  | `ui5-timeline`                 | `import "@ui5/webcomponents-fiori/dist/Timeline.js";`                 |
 | Timeline Item                             | `ui5-timeline-item`            | comes with `ui5-timeline`                                             |
+| Timeline Group Item                       | `ui5-timeline-group-item`      | `import "@ui5/webcomponents-fiori/dist/TimelineGroupItem.js";`        |
 | Upload Collection                         | `ui5-upload-collection`        | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`         |
 | Upload Collection Item                    | `ui5-upload-collection-item`   | `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`     |
 | User Menu                                 | `ui5-user-menu`                | `import "@ui5/webcomponents-fiori/dist/UserMenu.js";`                 |
 | User Menu Account                         | `ui5-user-menu-account`        | `import "@ui5/webcomponents-fiori/dist/UserMenuAccount.js";`          |
 | User Menu Item                            | `ui5-user-menu-item`           | `import "@ui5/webcomponents-fiori/dist/UserMenuItem.js";`             |
+| User Menu Item Group                      | `ui5-user-menu-item-group`     | `import "@ui5/webcomponents-fiori/dist/UserMenuItemGroup.js";`        |
+| User Settings Dialog                      | `ui5-user-settings-dialog`     | `import "@ui5/webcomponents-fiori/dist/UserSettingsDialog.js";`       |
+| User Settings Item                        | `ui5-user-settings-item`       | `import "@ui5/webcomponents-fiori/dist/UserSettingsItem.js";`         |
+| User Settings View                        | `ui5-user-settings-view`       | `import "@ui5/webcomponents-fiori/dist/UserSettingsView.js";`         |
 | View Settings Dialog                      | `ui5-view-settings-dialog`     | `import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";`       |
 | View Settings Dialog - Sort Item          | `ui5-sort-item`                | `import "@ui5/webcomponents-fiori/dist/SortItem.js";`                 |
 | View Settings Dialog - Filter Item        | `ui5-filter-item`              | `import "@ui5/webcomponents-fiori/dist/FilterItem.js";`               |

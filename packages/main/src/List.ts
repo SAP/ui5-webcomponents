@@ -22,12 +22,10 @@ import {
 	isDown,
 	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
-import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
-import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import DragAndDropHandler from "./delegate/DragAndDropHandler.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
 	getAllAccessibleDescriptionRefTexts,
@@ -44,7 +42,7 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
-import type ListAccessibleRole from "./types/ListAccessibleRole.js";
+import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import type ListItemBase from "./ListItemBase.js";
 import type {
 	ListItemBasePressEventDetail,
@@ -55,6 +53,7 @@ import type {
 	SelectionRequestEventDetail,
 } from "./ListItem.js";
 import ListSeparator from "./types/ListSeparator.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 
 // Template
 import ListTemplate from "./ListTemplate.js";
@@ -64,6 +63,8 @@ import listCss from "./generated/themes/List.css.js";
 
 // Texts
 import {
+	LIST_ROLE_LIST_GROUP_DESCRIPTION,
+	LIST_ROLE_LISTBOX_GROUP_DESCRIPTION,
 	LOAD_MORE_TEXT, ARIA_LABEL_LIST_SELECTABLE,
 	ARIA_LABEL_LIST_MULTISELECTABLE,
 	ARIA_LABEL_LIST_DELETABLE,
@@ -72,6 +73,7 @@ import type CheckBox from "./CheckBox.js";
 import type RadioButton from "./RadioButton.js";
 import { isInstanceOfListItemGroup } from "./ListItemGroup.js";
 import type ListItemGroup from "./ListItemGroup.js";
+import { findVerticalScrollContainer } from "./TableUtils.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -108,6 +110,12 @@ type ListItemClickEventDetail = {
 }
 
 type ListMoveEventDetail = MoveEventDetail;
+
+type ListAccessibilityAttributes = {
+	growingButton?: {
+		name?: string,
+	},
+}
 
 /**
  * @class
@@ -399,6 +407,26 @@ class List extends UI5Element {
 	accessibleName?: string;
 
 	/**
+	* Defines additional accessibility attributes on different areas of the component.
+ 	*
+	* The accessibilityAttributes object has the following field:
+	*
+	*  - **growingButton**: `growingButton.name`.
+	*
+ 	* The accessibility attributes support the following values:
+ 	*
+	* - **name**: Defines the accessible ARIA name of the growing button.
+	* Accepts any string.
+	*
+ 	* **Note:** The `accessibilityAttributes` property is in an experimental state and is a subject to change.
+	* @default {}
+ 	* @public
+ 	* @since 2.13.0
+ 	*/
+	 @property({ type: Object })
+	 accessibilityAttributes: ListAccessibilityAttributes = {};
+
+	/**
 	 * Defines the IDs of the elements that label the component.
 	 * @default undefined
 	 * @public
@@ -463,6 +491,14 @@ class List extends UI5Element {
 	_loadMoreActive = false;
 
 	/**
+	 * Defines the current media query size.
+	 * @default "S"
+	 * @private
+	 */
+	@property()
+	mediaRange = "S";
+
+	/**
 	 * Defines the items of the component.
 	 *
 	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
@@ -489,11 +525,12 @@ class List extends UI5Element {
 	static i18nBundle: I18nBundle;
 	_previouslyFocusedItem: ListItemBase | null;
 	_forwardingFocus: boolean;
-	resizeListenerAttached: boolean;
 	listEndObserved: boolean;
-	_handleResize: ResizeObserverCallback;
+	_handleResizeCallback: ResizeObserverCallback;
 	initialIntersection: boolean;
 	_selectionRequested?: boolean;
+	_groupCount: number;
+	_groupItemCount: number;
 	growingIntersectionObserver?: IntersectionObserver | null;
 	_itemNavigation: ItemNavigation;
 	_beforeElement?: HTMLElement | null;
@@ -504,6 +541,8 @@ class List extends UI5Element {
 	onForwardBeforeBound: (e: CustomEvent) => void;
 	onItemTabIndexChangeBound: (e: CustomEvent) => void;
 
+	_dragAndDropHandler: DragAndDropHandler;
+
 	constructor() {
 		super();
 
@@ -511,9 +550,6 @@ class List extends UI5Element {
 
 		// Indicates that the List is forwarding the focus before or after the internal ul.
 		this._forwardingFocus = false;
-
-		// Indicates that the List has already subscribed for resize.
-		this.resizeListenerAttached = false;
 
 		// Indicates if the IntersectionObserver started observing the List
 		this.listEndObserved = false;
@@ -524,18 +560,26 @@ class List extends UI5Element {
 			getItemsCallback: () => this.getEnabledItems(),
 		});
 
-		this._handleResize = this.checkListInViewport.bind(this);
-
-		this._handleResize = this.checkListInViewport.bind(this);
+		this._handleResizeCallback = this._handleResize.bind(this);
 
 		// Indicates the List bottom most part has been detected by the IntersectionObserver
 		// for the first time.
 		this.initialIntersection = true;
+		this._groupCount = 0;
+		this._groupItemCount = 0;
 
 		this.onItemFocusedBound = this.onItemFocused.bind(this);
 		this.onForwardAfterBound = this.onForwardAfter.bind(this);
 		this.onForwardBeforeBound = this.onForwardBefore.bind(this);
 		this.onItemTabIndexChangeBound = this.onItemTabIndexChange.bind(this);
+
+		// Initialize the DragAndDropHandler with the necessary configurations
+		// The handler will manage the drag and drop operations for the list items.
+		this._dragAndDropHandler = new DragAndDropHandler(this, {
+			getItems: () => this.items,
+			getDropIndicator: () => this.dropIndicatorDOM,
+			useOriginalEvent: true,
+		});
 	}
 
 	/**
@@ -556,13 +600,13 @@ class List extends UI5Element {
 	onEnterDOM() {
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
 		DragRegistry.subscribe(this);
+		ResizeHandler.register(this.getDomRef()!, this._handleResizeCallback);
 	}
 
 	onExitDOM() {
 		deregisterUI5Element(this);
 		this.unobserveListEnd();
-		this.resizeListenerAttached = false;
-		ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
+		ResizeHandler.deregister(this.getDomRef()!, this._handleResizeCallback);
 		DragRegistry.unsubscribe(this);
 	}
 
@@ -581,7 +625,6 @@ class List extends UI5Element {
 
 		if (this.grows) {
 			this.checkListInViewport();
-			this.attachForResize();
 		}
 	}
 
@@ -607,11 +650,8 @@ class List extends UI5Element {
 		});
 	}
 
-	attachForResize() {
-		if (!this.resizeListenerAttached) {
-			this.resizeListenerAttached = true;
-			ResizeHandler.register(this.getDomRef()!, this._handleResize);
-		}
+	getFocusDomRef() {
+		return this._itemNavigation._getCurrentItem();
 	}
 
 	get shouldRenderH1() {
@@ -685,7 +725,41 @@ class List extends UI5Element {
 	}
 
 	get ariaDescriptionText() {
-		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this);
+		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this) || this._getDescriptionForGroups();
+	}
+
+	get growingButtonAriaLabel() {
+		return this.accessibilityAttributes.growingButton?.name;
+	}
+
+	get growingButtonAriaLabelledBy() {
+		return this.accessibilityAttributes.growingButton?.name ? undefined : `${this._id}-growingButton-text`;
+	}
+
+	get scrollContainer() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-list-scroll-container");
+	}
+
+	hasGrowingComponent(): boolean {
+		if (this.growsOnScroll && this.scrollContainer) {
+			return this.scrollContainer.clientHeight !== this.scrollContainer.scrollHeight;
+		}
+
+		return this.growsWithButton;
+	}
+
+	_getDescriptionForGroups(): string {
+		let description = "";
+
+		if (this._groupCount > 0) {
+			if (this.accessibleRole === ListAccessibleRole.List) {
+				description = List.i18nBundle.getText(LIST_ROLE_LIST_GROUP_DESCRIPTION, this._groupCount, this._groupItemCount);
+			} else if (this.accessibleRole === ListAccessibleRole.ListBox) {
+				description = List.i18nBundle.getText(LIST_ROLE_LISTBOX_GROUP_DESCRIPTION, this._groupCount);
+			}
+		}
+
+		return description;
 	}
 
 	get ariaLabelModeText(): string {
@@ -744,6 +818,8 @@ class List extends UI5Element {
 				(item as ListItem)._selectionMode = this.selectionMode;
 			}
 			item.hasBorder = showBottomBorder;
+
+			(item as ListItem).mediaRange = this.mediaRange;
 		});
 	}
 
@@ -850,15 +926,23 @@ class List extends UI5Element {
 		// drill down when we see ui5-li-group and get the items
 		const items: ListItemBase[] = [];
 		const slottedItems = this.getSlottedNodes<ListItemBase>("items");
+		let groupCount = 0;
+		let groupItemCount = 0;
 
 		slottedItems.forEach(item => {
 			if (isInstanceOfListItemGroup(item)) {
 				const groupItems = [item.groupHeaderItem, ...item.items.filter(listItem => listItem.assignedSlot)].filter(Boolean);
 				items.push(...groupItems);
+				groupCount++;
+				// subtract group itself for proper group header item count
+				groupItemCount += groupItems.length - 1;
 			} else {
 				item.assignedSlot && items.push(item);
 			}
 		});
+
+		this._groupCount = groupCount;
+		this._groupItemCount = groupItemCount;
 
 		return items;
 	}
@@ -1020,10 +1104,16 @@ class List extends UI5Element {
 	}
 
 	loadMore() {
-		// don't fire load-more on initial mount
-		if (this.children.length > 0) {
+		if (this.hasGrowingComponent()) {
 			this.fireDecoratorEvent("load-more");
 		}
+	}
+
+	_handleResize() {
+		this.checkListInViewport();
+
+		const width = this.getBoundingClientRect().width;
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
 	/*
@@ -1111,46 +1201,19 @@ class List extends UI5Element {
 	}
 
 	_ondragenter(e: DragEvent) {
-		e.preventDefault();
+		this._dragAndDropHandler.ondragenter(e);
 	}
 
 	_ondragleave(e: DragEvent) {
-		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
-			return;
-		}
-
-		this.dropIndicatorDOM!.targetReference = null;
+		this._dragAndDropHandler.ondragleave(e);
 	}
 
 	_ondragover(e: DragEvent) {
-		if (!(e.target instanceof HTMLElement)) {
-			return;
-		}
-
-		const closestPosition = findClosestPosition(
-			this.items,
-			e.clientY,
-			Orientation.Vertical,
-		);
-
-		if (!closestPosition) {
-			this.dropIndicatorDOM!.targetReference = null;
-			return;
-		}
-
-		const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element, { originalEvent: true });
-		this.dropIndicatorDOM!.targetReference = targetReference;
-		this.dropIndicatorDOM!.placement = placement;
+		this._dragAndDropHandler.ondragover(e);
 	}
 
 	_ondrop(e: DragEvent) {
-		if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
-			e.preventDefault();
-			return;
-		}
-
-		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement, { originalEvent: true });
-		this.dropIndicatorDOM.targetReference = null;
+		this._dragAndDropHandler.ondrop(e);
 	}
 
 	isForwardElement(element: HTMLElement) {
@@ -1227,6 +1290,10 @@ class List extends UI5Element {
 	}
 
 	onItemToggle(e: CustomEvent<ListItemToggleEventDetail>) {
+		if (!(e.target as any)?.isListItemBase) {
+			return;
+		}
+
 		this.fireDecoratorEvent("item-toggle", { item: e.detail.item });
 	}
 
@@ -1378,9 +1445,11 @@ class List extends UI5Element {
 
 	getIntersectionObserver() {
 		if (!this.growingIntersectionObserver) {
+			const scrollContainer = this.scrollContainer || findVerticalScrollContainer(this.getDomRef()!);
+
 			this.growingIntersectionObserver = new IntersectionObserver(this.onInteresection.bind(this), {
-				root: null,
-				rootMargin: "0px",
+				root: scrollContainer,
+				rootMargin: "5px",
 				threshold: 1.0,
 			});
 		}
@@ -1400,4 +1469,5 @@ export type {
 	ListItemToggleEventDetail,
 	ListSelectionChangeEventDetail,
 	ListMoveEventDetail,
+	ListAccessibilityAttributes,
 };

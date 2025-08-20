@@ -13,7 +13,7 @@ export default function ListTemplate(this: List) {
 			onDrop={this._ondrop}
 			onDragLeave={this._ondragleave}
 			// events bubbling from slotted items
-			onui5-close={this.onItemClose}
+			onui5-_close={this.onItemClose}
 			onui5-toggle={this.onItemToggle}
 			onui5-request-tabindex-change={this.onItemTabIndexChange}
 			onui5-_focused={this.onItemFocused}
@@ -54,7 +54,7 @@ export default function ListTemplate(this: List) {
 						<slot></slot>
 
 						{this.showNoDataText &&
-							<li tabindex={0} id={`${this._id}-nodata`} class="ui5-list-nodata">
+							<li tabindex={0} id={`${this._id}-nodata`} class="ui5-list-nodata" role="listitem">
 								<div id={`${this._id}-nodata-text`} class="ui5-list-nodata-text">
 									{this.noDataText}
 								</div>
@@ -92,7 +92,8 @@ function moreRow(this: List) {
 					"ui5-growing-button-inner": true,
 					"ui5-growing-button-inner-active": this._loadMoreActive,
 				}}
-				aria-labelledby={`${this._id}-growingButton-text`}
+				aria-label={this.growingButtonAriaLabel}
+				aria-labelledby={this.growingButtonAriaLabelledBy}
 				onClick={this._onLoadMoreClick}
 				onKeyDown={this._onLoadMoreKeydown}
 				onKeyUp={this._onLoadMoreKeyup}
@@ -102,6 +103,7 @@ function moreRow(this: List) {
 				{this.loading &&
 					<BusyIndicator
 						delay={this.loadingDelay}
+						part="growing-button-busy-indicator"
 						class="ui5-list-growing-button-busy-indicator"
 						active>
 					</BusyIndicator>

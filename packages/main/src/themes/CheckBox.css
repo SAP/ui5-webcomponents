@@ -5,6 +5,10 @@
 	display: inline-block;
 }
 
+:host([required]) {
+	vertical-align: middle;
+}
+
 :host {
 	overflow: hidden;
 	max-width: 100%;
@@ -115,7 +119,7 @@
 	position: relative;
 	display: inline-flex;
 	align-items: center;
-	width: 100%;
+	max-width: 100%;
 	min-height: var(--_ui5_checkbox_width_height);
 	min-width: var(--_ui5_checkbox_width_height);
 	padding: 0 var(--_ui5_checkbox_wrapper_padding);

@@ -12,11 +12,12 @@
 <body style="background-color: var(--sapBackgroundColor); height: 50rem;">
 	<!-- playground-fold-end -->
 	<ui5-shellbar
-		primary-title="Corporate Portal"
 		logo="../assets/images/sap-logo-svg.svg"
 		show-notifications
 		notifications-count="10"
-	></ui5-shellbar>
+	>
+		<ui5-shellbar-branding slot="branding">Corporate Portal</ui5-shellbar-branding>
+	</ui5-shellbar>
 	<ui5-popover
 		id="popover-with-notifications"
 		placement="Bottom"
@@ -29,7 +30,7 @@
 				<ui5-button id="show-message-strip" design="Emphasized" slot="endContent">Show M. Strip</ui5-button>
 				<ui5-button id="clear-all" design="Transparent" slot="endContent">Clear All</ui5-button>
 				<ui5-button id="btn-sort" design="Transparent" icon="sort" tooltip="Sort" slot="endContent"></ui5-button>
-				<ui5-button design="Transparent" icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>	
+				<ui5-button design="Transparent" icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
 			</ui5-bar>
 
 			<ui5-message-strip id="message-strip-error"
@@ -40,6 +41,7 @@
 		<ui5-notification-list class="notificationsPopoverList">
 			<ui5-li-notification-group id="notificationsListGroupGrowing"
 									   title-text="Today"
+									   loading-delay="0"
 									   growing="Button">
 				<ui5-li-notification title-text="Start Your Day with Your Sales Target!"
 									 show-close>
@@ -51,8 +53,8 @@
 					</ui5-menu>
 					Good morning! Don’t forget your daily sales target is $2,000, which needs to be fulfilled by the end of the business day. Let’s make it a great sales day!
 				</ui5-li-notification>
-				<ui5-li-notification title-text="Upcoming Client Meeting Reminder" 
-									importance="Important" 
+				<ui5-li-notification title-text="Upcoming Client Meeting Reminder"
+									importance="Important"
 									show-close>
 					<ui5-avatar icon="crm-sales" color-scheme="Accent10" shape="Square" size="XS" slot="avatar"></ui5-avatar>
 					<span slot="footnotes">Sales</span>
@@ -63,7 +65,7 @@
 					</ui5-menu>
 					You have a client meeting scheduled at 3 PM today with Acme Corp. Location: Zoom - link in calendar.
 				</ui5-li-notification>
-				<ui5-li-notification title-text="Follow-Up Needed for Prospect""
+				<ui5-li-notification title-text="Follow-Up Needed for Prospect"
 									 show-close>
 					<ui5-avatar icon="crm-sales" color-scheme="Accent10" shape="Square" size="XS" slot="avatar"></ui5-avatar>
 					<span slot="footnotes">Sales</span>
@@ -74,8 +76,8 @@
 					</ui5-menu>
 					Reminder to follow up with John Doe from XYZ Ltd. Discuss the proposal sent last week.
 				</ui5-li-notification>
-				<ui5-li-notification title-text="Budget Report Submission Deadline Approaching" 
-									importance="Important" 
+				<ui5-li-notification title-text="Budget Report Submission Deadline Approaching"
+									importance="Important"
 									show-close>
 					<ui5-avatar icon="expense-report" color-scheme="Accent1" shape="Square" size="XS" slot="avatar"></ui5-avatar>
 					<span slot="footnotes">Accountant</span>
@@ -85,8 +87,8 @@
 					</ui5-menu>
 					Reminder: The deadline to submit this quarter’s budget report is this Friday.
 				</ui5-li-notification>
-				<ui5-li-notification title-text="Urgent: Expense Claims Pending Your Approval" 
-									importance="Important" 
+				<ui5-li-notification title-text="Urgent: Expense Claims Pending Your Approval"
+									importance="Important"
 									show-close>
 					<ui5-avatar icon="expense-report" color-scheme="Accent1" shape="Square" size="XS" slot="avatar"></ui5-avatar>
 					<span slot="footnotes">Notification</span>
@@ -105,6 +107,7 @@
 						<ui5-menu-item text="Unsubscribe"></ui5-menu-item>
 					</ui5-menu>
 					Just a heads-up that we will begin the financial reconciliation process for this month next Monday.
+				</ui5-li-notification>
 			</ui5-li-notification-group>
 
 			<ui5-li-notification-group title-text="Yesterday" collapsed>
@@ -127,7 +130,6 @@
 						<ui5-menu-item text="Unsubscribe"></ui5-menu-item>
 					</ui5-menu>
 					Please submit your end-of-day sales report through the portal before logging off today.
-				</ui5-li-notification>
 			</ui5-li-notification>
 			<ui5-li-notification title-text="Tax Filing Deadline Reminder"
 								 show-close>
@@ -156,7 +158,7 @@
 		<ui5-menu-item text="Date"></ui5-menu-item>
 		<ui5-menu-item text="Importance"></ui5-menu-item>
 	</ui5-menu>
-	
+
 	<ui5-dialog id="clear-all-dialog" header-text="Clear All Notifications">
 		<ui5-text>Are you sure you want to clear all the notifications?</ui5-text>
 		<ui5-bar slot="footer" design="Footer">

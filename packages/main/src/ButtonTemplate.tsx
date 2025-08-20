@@ -1,5 +1,7 @@
 import type Button from "./Button.js";
 import Icon from "./Icon.js";
+import BusyIndicator from "./BusyIndicator.js";
+import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 
 export default function ButtonTemplate(this: Button, injectedProps?: {
 		ariaPressed?: boolean,
@@ -15,7 +17,7 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 				"ui5-button-root": true,
 				"ui5-button-badge-placement-end": this.badge[0]?.design === "InlineText",
 				"ui5-button-badge-placement-end-top": this.badge[0]?.design === "OverlayText",
-				"ui5-button-badge-dot": this.badge[0]?.design === "AttentionDot",
+				"ui5-button-badge-dot": this.badge[0]?.design === "AttentionDot"
 			}}
 			disabled={this.disabled}
 			data-sap-focus-ref
@@ -36,8 +38,8 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 			aria-controls={this.accessibilityAttributes.controls}
 			aria-haspopup={this._hasPopup}
 			aria-label={this.ariaLabelText}
-			aria-describedby={this.ariaDescribedbyText}
 			aria-description={this.ariaDescriptionText}
+			aria-busy={this.loading ? "true" : undefined}
 			title={this.buttonTitle}
 			part="button"
 			role={this.effectiveAccRole}
@@ -48,7 +50,6 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 					name={this.icon}
 					mode="Decorative"
 					part="icon"
-					showTooltip={this.showIconTooltip}
 				/>
 			}
 
@@ -67,13 +68,19 @@ export default function ButtonTemplate(this: Button, injectedProps?: {
 				/>
 			}
 
-			{this.hasButtonType &&
-				<span id="ui5-button-hiddenText-type" aria-hidden="true" class="ui5-hidden-text">{this.buttonTypeText}</span>
-			}
-
 			{this.shouldRenderBadge &&
 				<slot name="badge"/>
 			}
 		</button>
+		{this.loading &&
+			<BusyIndicator
+				id={`${this._id}-button-busy-indicator`}
+				class="ui5-button-busy-indicator"
+				size={this.iconOnly ? BusyIndicatorSize.S : BusyIndicatorSize.M}
+				active={true}
+				delay={this.loadingDelay}
+				inert={this.loading}
+			/>
+		}
 	</>);
 }

@@ -33,7 +33,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import type Popover from "./Popover.js";
-import type ResponsivePopover from "./ResponsivePopover.js";
 import TimePickerTemplate from "./TimePickerTemplate.js";
 import type DateTimeInput from "./DateTimeInput.js";
 import type { InputAccInfo } from "./Input.js";
@@ -46,6 +45,7 @@ import {
 	TIMEPICKER_CANCEL_BUTTON,
 	TIMEPICKER_INPUT_DESCRIPTION,
 	TIMEPICKER_POPOVER_ACCESSIBLE_NAME,
+	DATETIME_COMPONENTS_PLACEHOLDER_PREFIX,
 	FORM_TEXTFIELD_REQUIRED,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_INFORMATION,
@@ -93,7 +93,7 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
  * the input field, it must fit to the used time format.
  *
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see [UTS #35: Unicode Locale Data Markup Language](http://unicode.org/reports/tr35/#Date_Field_Symbol_Table).
+ * For more information, see [UTS #35: Unicode Locale Data Markup Language](https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table).
  *
  * For example, if the `format-pattern` is "HH:mm:ss",
  * a valid value string is "11:42:35" and the same is displayed in the input.
@@ -314,6 +314,12 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	@query("[ui5-time-selection-clocks]")
 	_timeSelectionClocks?: TimeSelectionClocks;
 
+	@query("[ui5-popover]")
+	_inputsPopover!: Popover;
+
+	@query("[ui5-datetime-input]")
+	_dateTimeInput!: DateTimeInput;
+
 	tempValue?: string;
 
 	@i18n("@ui5/webcomponents")
@@ -369,11 +375,22 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return this.getFormat().parse(this._effectiveValue) as Date;
 	}
 
+	get _lastAvailableTime() {
+		const date = UI5Date.getInstance();
+		date.setHours(23, 59, 59, 999);
+		return this.getFormat().format(date);
+	}
+
 	/**
 	 * @protected
 	 */
 	get _placeholder() {
-		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
+		if (this.placeholder) {
+			return this.placeholder;
+		}
+
+		// translatable placeholder – for example "e.g. 23:59:59"
+		return `${TimePicker.i18nBundle.getText(DATETIME_COMPONENTS_PLACEHOLDER_PREFIX)} ${this._lastAvailableTime}`;
 	}
 
 	/**
@@ -408,12 +425,19 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return !isDesktop() && (isPhone() || isTablet());
 	}
 
+	get shouldDisplayValueStateMessageInResponsivePopover() {
+		return this.hasValueStateText && !this._inputsPopover?.open;
+	}
+
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
 		this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
 	}
 
 	_togglePicker() {
 		this.open = !this.open;
+		if (this._isMobileDevice) {
+			this._inputsPopover.open = false;
+		}
 	}
 
 	submitPickers() {
@@ -445,7 +469,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 */
 	openInputsPopover() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
-		const popover = this._getInputsPopover();
+		const popover = this._inputsPopover;
 		popover.opener = this;
 		popover.open = true;
 		this._isInputsPopoverOpen = true;
@@ -457,7 +481,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @returns Resolves when the Inputs popover is closed
 	 */
 	closeInputsPopover() {
-		const popover = this._getInputsPopover();
+		const popover = this._inputsPopover;
 		popover.open = false;
 	}
 
@@ -483,7 +507,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	onInputsPopoverAfterOpen() {
-		const popover = this._getInputsPopover();
+		const popover = this._inputsPopover;
 		popover.querySelector<TimeSelectionInputs>("[ui5-time-selection-inputs]")!._addNumericAttributes();
 	}
 
@@ -560,20 +584,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return !this.disabled && this._isMobileDevice;
 	}
 
-	_getPopover() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
-	}
-
-	_getInputsPopover() {
-		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
-	}
-
-	_getDateTimeInput(): DateTimeInput {
-		return this.shadowRoot!.querySelector<DateTimeInput>("[ui5-datetime-input]")!;
-	}
-
 	_getInputField() {
-		const input = this._getDateTimeInput();
+		const input = this._dateTimeInput;
 		return input && input.getInputDOMRef();
 	}
 
@@ -588,7 +600,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 		const target = e.target as HTMLElement;
 
-		if (target && this.open && this._getDateTimeInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+		if (target && this.open && this._dateTimeInput.id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this._togglePicker();
 		}
 		if (this.open) {
@@ -703,15 +715,15 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * Hides mobile device keyboard by temporary setting the input to readonly state.
 	 */
 	_hideMobileKeyboard() {
-		this._getDateTimeInput().readonly = true;
-		setTimeout(() => { this._getDateTimeInput().readonly = false; }, 0);
+		this._dateTimeInput.readonly = true;
+		setTimeout(() => { this._dateTimeInput.readonly = false; }, 0);
 	}
 
 	_onfocusin(e: FocusEvent) {
 		if (this._isMobileDevice) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
-				const popover = this._getInputsPopover();
+				const popover = this._inputsPopover;
 				popover.applyFocus();
 			}
 			e.preventDefault();
@@ -754,22 +766,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return this.valueState !== ValueState.None;
 	}
 
-	get classes() {
-		return {
-			popover: {
-				"ui5-suggestions-popover": true,
-				"ui5-popover-with-value-state-header-phone": this._isPhone && this.hasValueStateText,
-				"ui5-popover-with-value-state-header": !this._isPhone && this.hasValueStateText,
-			},
-			popoverValueState: {
-				"ui5-valuestatemessage-header": true,
-				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
-				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
-			},
-		};
+	get shouldDisplayValueStateMessageOnDesktop() {
+		return this.valueStateMessage.length > 0 && !this.open && !this._isMobileDevice;
 	}
 
 	/**

@@ -68,7 +68,7 @@
 
 .ui5-nli-group-title-text {
 	color: var(--sapGroup_TitleTextColor);
-	font-family: "72override", var(--sapFontFamily);
+	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontHeader5Size);
 	font-weight: bold;
 	white-space: nowrap;
@@ -100,6 +100,7 @@
 
 [ui5-notification-group-list]::part(growing-button-inner) {
 	border-radius: var(--_ui5-notification_item-border-radius);
+	height: 3.125rem;
 }
 
 [ui5-notification-group-list]::part(growing-button-inner):focus,
@@ -113,5 +114,9 @@
 	background-color: var(--_ui5-notification_item-growing-btn-background-color-active);
 	border-radius: var(--_ui5-notification_item-border-radius);
 	border: var(--_ui5-notification_item-border-active);
+}
+
+[ui5-notification-group-list]::part(growing-button-busy-indicator) {
+	padding: 0.875rem 0 1rem 0;
 }
 

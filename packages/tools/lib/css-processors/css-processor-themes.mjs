@@ -21,6 +21,13 @@ const removeDuplicateSelectors = async (text) => {
     return result.css;
 }
 
+const processFontFace = (text) => {
+    const declarationExpr = /@font-face\s*{[^}]*}/g;
+
+    // remove declarations from source, they are extracted in base package
+    return text.replaceAll(declarationExpr, '');
+}
+
 let scopingPlugin = {
     name: 'scoping',
     setup(build) {
@@ -28,8 +35,11 @@ let scopingPlugin = {
 
         build.onEnd(result => {
             result.outputFiles.forEach(async f => {
+                // remove font-face declarations
+                let newText = processFontFace(f.text);
+
                 // remove duplicate selectors
-                let newText = await removeDuplicateSelectors(f.text);
+                newText = await removeDuplicateSelectors(newText);
 
                 // strip unnecessary theming-base-content
                 newText = stripThemingBaseContent(newText);

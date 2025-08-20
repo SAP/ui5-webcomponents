@@ -19,6 +19,10 @@ const isTagRegistered = (tag: string) => {
 	return Definitions.has(tag);
 };
 
+const hasRegisteredTags = () => {
+	return Definitions.size > 0;
+};
+
 const getAllRegisteredTags = () => {
 	return [...Definitions.values()];
 };
@@ -93,6 +97,7 @@ const displayFailedRegistrations = () => {
 export {
 	registerTag,
 	isTagRegistered,
+	hasRegisteredTags,
 	getAllRegisteredTags,
 	recordTagRegistrationFailure,
 };

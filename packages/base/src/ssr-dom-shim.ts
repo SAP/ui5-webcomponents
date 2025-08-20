@@ -1,5 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import { HTMLElement, Element, customElements } from "@lit-labs/ssr-dom-shim";
+import { HTMLElement, Element, customElements, ElementInternals } from "@lit-labs/ssr-dom-shim";
 
 globalThis.HTMLElement ??= HTMLElement;
 globalThis.Element ??= Element;
@@ -61,5 +61,11 @@ globalThis.ResizeObserver = class ResizeObserver {
     }
 };
 
-// empty showPopover method
+// empty showPopover & hidePopover method
 globalThis.HTMLElement.prototype.showPopover = function () {};
+globalThis.HTMLElement.prototype.hidePopover = function () {};
+
+//  ElementInternals
+globalThis.HTMLElement.prototype.attachInternals = function() {
+    return new ElementInternals();
+}

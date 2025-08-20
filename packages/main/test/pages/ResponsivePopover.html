@@ -218,6 +218,43 @@
 		<span>Hello World!</span>
 	</ui5-responsive-popover>
 
+	<ui5-button id="btn">Open Responsive Popover With Inner Popover</ui5-button>
+
+	<ui5-responsive-popover id="responsivPopover1" opener="btn">
+		<div slot="header">
+			<ui5-bar>
+				<ui5-button id="btnInner">Open inner popover</ui5-button>
+			</ui5-bar>
+		</div>
+		<span>Content</span>
+	</ui5-responsive-popover>
+
+	<ui5-responsive-popover id="responsivPopover2" opener="btnInner">
+		<span>Content Inner</span>
+	</ui5-responsive-popover>
+
+	<br>
+	<br>
+	<ui5-button id="btnAccessibleDescrRefPopover">Accessible Description Ref</ui5-button>
+	<ui5-responsive-popover id="accessibleDescrRefPopover" initial-focus="focusMe" header-text="Popover header"  accessible-description-ref="btnAccessibleDescrRefPopover">
+		<ui5-title level="H3">Hello World!</ui5-title>
+
+		<div slot="footer">
+			<ui5-button id="btnAccessibleDescrRefPopoverSubmit">Close</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
+	<br>
+	<br>
+	<ui5-button id="btnAccessibleDescrPopover">Accessible Description</ui5-button>
+	<ui5-responsive-popover id="accessibleDescrPopover" initial-focus="focusMe" header-text="Popover header" accessible-description="Accessible Description">
+		<ui5-title level="H3">Hello World!</ui5-title>
+
+		<div slot="footer">
+			<ui5-button id="btnAccessibleDescrPopoverSubmit">Close</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
 	<script>
 		btnOpen.addEventListener("click", function(event) {
 			respPopover.opener = btnOpen;
@@ -323,6 +360,37 @@
 		btnRoleNone.addEventListener("click", function () {
 			rPNoneRole.opener = btnRoleNone;
 			rPNoneRole.open = true;
+		});
+
+		const btn = document.getElementById("btn");
+		const respPopoverNested = document.getElementById("responsivPopover1");;
+		const btnInner = document.getElementById("btnInner");
+		const respPopoverInner2 = document.getElementById("responsivPopover2");
+
+		btn.addEventListener("click", () => {
+			respPopoverNested.open = !respPopoverNested.open;
+		});
+
+		btnInner.addEventListener("click", () => {
+			respPopoverInner2.open = !respPopoverInner2.open;
+		});
+
+		btnAccessibleDescrRefPopover.addEventListener("click", function (event) {
+			accessibleDescrRefPopover.opener = btnAccessibleDescrRefPopover;
+			accessibleDescrRefPopover.open = true;
+		});
+
+		btnAccessibleDescrRefPopoverSubmit.addEventListener("click", function (event) {
+			accessibleDescrRefPopover.open = false;
+		});
+
+		btnAccessibleDescrPopover.addEventListener("click", function (event) {
+			accessibleDescrPopover.opener = btnAccessibleDescrPopover;
+			accessibleDescrPopover.open = true;
+		});
+
+		btnAccessibleDescrPopoverSubmit.addEventListener("click", function (event) {
+			accessibleDescrPopover.open = false;
 		});
 	</script>
 </body>

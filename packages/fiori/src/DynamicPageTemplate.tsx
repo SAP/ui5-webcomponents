@@ -10,8 +10,7 @@ export default function DynamicPageTemplate(this: DynamicPage) {
 				<header
 					class="ui5-dynamic-page-title-header-wrapper"
 					id={`${this._id}-header`}
-					aria-label={this._headerLabel}
-					aria-expanded={this._headerExpanded}
+					aria-label={this.headerAriaLabel}
 					onui5-toggle-title={this.onToggleTitle}
 				>
 					<slot name="titleArea"></slot>
@@ -58,7 +57,6 @@ function headerActions(this: DynamicPage) {
 				snapped={this.headerSnapped}
 				pinned={this.headerPinned}
 				hidePinButton={this.hidePinButton}
-				accessibilityAttributes={this._accAttributesForHeaderActions}
 				onui5-expand-button-click={this.onExpandClick}
 				onui5-pin-button-click={this.onPinClick}
 				onui5-expand-button-hover-in={this.onExpandHoverIn}

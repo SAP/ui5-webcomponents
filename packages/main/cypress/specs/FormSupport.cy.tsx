@@ -32,10 +32,11 @@ describe("Form support", () => {
 	it("ui5-checkbox in form", () => {
 		cy.mount(<form method="get">
 			<CheckBox id="cb1" text="ui5-checkbox without name" > </CheckBox>
-			<CheckBox id="cb2" text="ui5-checkbox without name and value" checked > </CheckBox>
-			<CheckBox id="cb3" name="checkbox3" text="ui5-checkbox with name and without value" > </CheckBox>
-			<CheckBox id="cb4" name="checkbox4" checked text="ui5-checkbox with name and value" > </CheckBox>
-			<CheckBox id="cb5" name="checkbox5" required text="ui5-checkbox with name, value and required" > </CheckBox>
+			<CheckBox id="cb2" text="checked ui5-checkbox without name" checked > </CheckBox>
+			<CheckBox id="cb3" name="checkbox3" text="unchecked ui5-checkbox with name" > </CheckBox>
+			<CheckBox id="cb4" name="checkbox4" checked text="checked ui5-checkbox with name" > </CheckBox>
+			<CheckBox id="cb5" name="checkbox5" required text="unchecked ui5-checkbox with name and required" > </CheckBox>
+			<CheckBox id="cb6" name="checkbox6" checked required value="checkbox6Value" text="checked ui5-checkbox with name and value and required" > </CheckBox>
 			<button type="submit" > Submits forms </button>
 		</form>);
 
@@ -64,7 +65,7 @@ describe("Form support", () => {
 			.then($el => {
 				return getFormData($el.get(0));
 			})
-			.should("be.equal", "checkbox4=on&checkbox5=on");
+			.should("be.equal", "checkbox4=on&checkbox5=on&checkbox6=checkbox6Value");
 	});
 
 	it("ui5-color-picker in form", () => {
@@ -318,7 +319,7 @@ describe("Form support", () => {
 			<MultiComboBox id="multi_combobox8" name="multi_combobox8" value="ok">
 				<MultiComboBoxItem selected text="ok"></MultiComboBoxItem>
 			</MultiComboBox>
-			<MultiComboBox id="multi_combobox9" no-validation required
+			<MultiComboBox id="multi_combobox9" noValidation required
 				name="multi_combobox9"></MultiComboBox>
 			<MultiComboBox id="multi_combobox10" required name="multi_combobox10" value="ok"></MultiComboBox>
 			<MultiComboBox id="multi_combobox11" required name="multi_combobox11">
@@ -380,7 +381,7 @@ describe("Form support", () => {
 				<Token slot="tokens" text="ok"></Token>
 			</MultiInput>
 
-			<MultiInput id="multi_input9" allow-custom-values required name="multi_input9"></MultiInput>
+			<MultiInput id="multi_input9" required name="multi_input9"></MultiInput>
 			<MultiInput id="multi_input10" required name="multi_input10" value="ok"></MultiInput>
 			<MultiInput id="multi_input11" required name="multi_input11">
 				<Token slot="tokens" text="ok"></Token>
@@ -520,9 +521,9 @@ describe("Form support", () => {
 	it("ui5-range-slider in form", () => {
 		cy.mount(<form method="get">
 			<RangeSlider id="range_slider1"></RangeSlider>
-			<RangeSlider id="range_slider2" start-value="25" end-value="75"></RangeSlider>
+			<RangeSlider id="range_slider2" startValue={25} endValue={75}></RangeSlider>
 			<RangeSlider id="range_slider3" name="range_slider3"></RangeSlider>
-			<RangeSlider id="range_slider4" name="range_slider4" start-value="25" end-value="75"></RangeSlider>
+			<RangeSlider id="range_slider4" name="range_slider4" startValue={25} endValue={75}></RangeSlider>
 			<button type="submit">Submits forms</button>
 		</form>);
 
@@ -563,16 +564,46 @@ describe("Form support", () => {
 				<Option value="" selected>Option 3</Option>
 			</Select>
 
+			<Select value="Option 1">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+
+			<Select value="option2">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+			<Select value="Option 3">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+
 			<Select id="select4" name="select4">
 				<Option selected>Option 1</Option>
 				<Option value="option2">Option 2</Option>
 				<Option value="">Option 3</Option>
 			</Select>
+
+			<Select id="select44" name="select44" value="Option 1">
+				<Option selected>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+
 			<Select id="select5" name="select5">
 				<Option>Option 1</Option>
 				<Option value="option2" selected>Option 2</Option>
 				<Option value="">Option 3</Option>
 			</Select>
+			<Select id="select55" name="select55" value="option2">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+
 			<Select id="select7" name="select7" required>
 				<Option selected>Option 1</Option>
 				<Option value="option2">Option 2</Option>
@@ -587,6 +618,22 @@ describe("Form support", () => {
 				<Option>Option 1</Option>
 				<Option value="option2">Option 2</Option>
 				<Option value="" selected>Option 3</Option>
+			</Select>
+
+			<Select id="select77" name="select77" required value="Option 1">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+			<Select id="select88" name="select88" required value="option2">
+				<Option>Option 1</Option>
+				<Option value="option2" selected>Option 2</Option>
+				<Option value="">Option 3</Option>
+			</Select>
+			<Select id="select99" name="select99" required value="Option 3">
+				<Option>Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="">Option 3</Option>
 			</Select>
 
 			<button type="submit">Submits forms</button>
@@ -630,6 +677,17 @@ describe("Form support", () => {
 			.eq(1)
 			.realClick();
 
+		cy.get("#select99")
+			.realClick();
+
+		cy.get("#select99")
+			.should("have.attr", "opened");
+
+		cy.get("#select99")
+			.find("[ui5-option]")
+			.eq(1)
+			.realClick();
+
 		cy.get("button")
 			.realClick();
 
@@ -640,7 +698,7 @@ describe("Form support", () => {
 			.then($el => {
 				return getFormData($el.get(0));
 			})
-			.should("be.equal", "select4=Option 1&select5=option2&select6=&select7=Option 1&select8=option2&select9=option2");
+			.should("be.equal", "select4=Option 1&select44=Option 1&select5=option2&select55=option2&select6=&select7=Option 1&select8=option2&select9=option2&select77=Option 1&select88=option2&select99=option2");
 	});
 
 	it("ui5-slider in form", () => {
@@ -705,6 +763,7 @@ describe("Form support", () => {
 			<Switch id="switch2" textOn="ui5-switch without name and value" checked></Switch>
 			<Switch id="switch3" name="switch3" textOn="ui5-switch with name and without value"></Switch>
 			<Switch id="switch4" name="switch4" checked textOn="ui5-switch with name and value"></Switch>
+			<Switch id="switch6" name="switch6" value="test"></Switch>
 			<Switch id="switch5" name="switch5" required textOn="ui5-switch with name, value and required"></Switch>
 			<button type="submit">Submits forms</button>
 		</form>);
@@ -721,6 +780,9 @@ describe("Form support", () => {
 		cy.get("@submit")
 			.should("have.not.been.called");
 
+		cy.get("#switch6")
+			.realClick();
+
 		cy.get("#switch5")
 			.realClick();
 
@@ -734,7 +796,7 @@ describe("Form support", () => {
 			.then($el => {
 				return getFormData($el.get(0));
 			})
-			.should("be.equal", "switch4=on&switch5=on");
+			.should("be.equal", "switch4=on&switch6=test&switch5=on");
 	});
 
 	it("ui5-textarea in form", () => {
@@ -816,6 +878,39 @@ describe("Form support", () => {
 				return getFormData($el.get(0));
 			})
 			.should("be.equal", "time_picker3=ok&time_picker4=1:10:10 PM");
+	});
+
+	it("Button's click doesn't submit form on prevent default", () => {
+		cy.mount(<form method="get">
+			<Button id="b1" type="Submit">Preventable button</Button>
+		</form>);
+
+		cy.get("#b1")
+			.then($item => {
+				$item.get(0).addEventListener("ui5-click", e => e.preventDefault());
+				$item.get(0).addEventListener("ui5-click", cy.stub().as("click"));
+			});
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", e => e.preventDefault());
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("#b1")
+			.realClick();
+
+		cy.get("#b1")
+			.realPress("Enter");
+
+		cy.get("#b1")
+			.realPress("Space");
+
+		cy.get("@click")
+			.should("have.been.calledThrice");
+
+		cy.get("@submit")
+			.should("have.not.been.called");
 	});
 
 	it("Normal button does not submit forms", () => {

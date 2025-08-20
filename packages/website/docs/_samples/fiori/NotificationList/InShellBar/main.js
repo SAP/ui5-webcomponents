@@ -15,6 +15,7 @@ import "@ui5/webcomponents-icons/dist/expense-report.js";
 import "@ui5/webcomponents/dist/Link.js";
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
+import "@ui5/webcomponents-fiori/dist/ShellBarBranding.js";
 import "@ui5/webcomponents-fiori/dist/NotificationList.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListGroupItem.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
@@ -82,7 +83,6 @@ notificationsListGroupGrowing.addEventListener("load-more", (e) => {
 	const focusIndex = notificationsListGroupGrowing.items.length;
 
 	notificationsListGroupGrowing.loading = true;
-	notificationsListGroupGrowing.loadingDelay = 0;
 	setTimeout(() => {
 		insertItems(notificationsListGroupGrowing);
 		notificationsListGroupGrowing.loading = false;
@@ -90,7 +90,7 @@ notificationsListGroupGrowing.addEventListener("load-more", (e) => {
 		setTimeout(() => {
 			notificationsListGroupGrowing.items[focusIndex].focus();
 		}, 500);
-	}, 500);
+	}, 2000);
 });
 
 btnShowMessageStrip.addEventListener("click", function() {

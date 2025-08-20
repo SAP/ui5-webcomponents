@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
+import TableCellTemplate from "./TableCellTemplate.js";
 import TableCellStyles from "./generated/themes/TableCell.css.js";
 import TableCellBase from "./TableCellBase.js";
 import type TableRow from "./TableRow.js";
@@ -22,7 +22,6 @@ import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
  * @extends TableCellBase
  * @since 2.0.0
  * @public
- * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 @customElement({
 	tag: "ui5-table-cell",
@@ -39,6 +38,12 @@ class TableCell extends TableCellBase {
 		}
 	}
 
+	injectHeaderNodes(ref: HTMLElement | null) {
+		if (ref && !ref.hasChildNodes()) {
+			ref.replaceChildren(...this._popinHeaderNodes);
+		}
+	}
+
 	get _headerCell() {
 		const row = this.parentElement as TableRow;
 		const table = row.parentElement as Table;
@@ -46,12 +51,18 @@ class TableCell extends TableCellBase {
 		return table.headerRow[0].cells[index];
 	}
 
-	get _popinText() {
-		return this._headerCell?.popinText;
-	}
-
-	get _popinHeader() {
-		return this._headerCell?.content[0]?.cloneNode(true);
+	get _popinHeaderNodes() {
+		const nodes = [];
+		const headerCell = this._headerCell;
+		if (headerCell.popinText) {
+			nodes.push(headerCell.popinText);
+		} else {
+			nodes.push(...this._headerCell.content.map(node => node.cloneNode(true)));
+		}
+		if (headerCell.action[0]) {
+			nodes.push(headerCell.action[0].cloneNode(true));
+		}
+		return nodes;
 	}
 
 	get _i18nPopinColon() {

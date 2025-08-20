@@ -9,7 +9,7 @@ import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site
 import { encodeToBase64, decodeFromBase64 } from "./share.js";
 import clsx from "clsx";
 import ShareIcon from "@ui5/webcomponents-icons/dist/v5/share-2.svg";
-import { Splitter } from 'react-splitter-light';
+import Splitter from './Splitter.js';
 import DownloadIcon from "@ui5/webcomponents-icons/dist/v5/download-from-cloud.svg";
 import EditIcon from "@ui5/webcomponents-icons/dist/v5/edit.svg";
 import ActionIcon from "@ui5/webcomponents-icons/dist/v5/action.svg";
@@ -40,10 +40,10 @@ const getProjectFromPool = () => {
 
 // return a project element to the pool for reuse
 const returnProjectToPool = (project) => {
-    projectPool.push(project);
+  projectPool.push(project);
 }
 
-export default function Editor({html, js, css, mainFile = "main.js", canShare = false, standalone = false, mainFileSelected = false }) {
+export default function Editor({ html, js, css, mainFile = "main.js", canShare = false, standalone = false, mainFileSelected = false }) {
   const projectContainerRef = useRef(null);
   const projectRef = useRef(null);
   const previewRef = useRef(null);
@@ -54,12 +54,12 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
   // name is set on iframe so it can be passed back in resize message to identify which iframe is resized
   const iframeId = useId();
   const [editorVisible, setEditorVisible] = useState(false);
-  const {siteConfig, siteMetadata} = useDocusaurusContext();
+  const { siteConfig, siteMetadata } = useDocusaurusContext();
   const { theme, setTheme } = useContext(ThemeContext);
   const { contentDensity, setContentDensity } = useContext(ContentDensityContext);
   const { textDirection, setTextDirection } = useContext(TextDirectionContext);
   const [copied, setCopied] = useState(false);
-  const [ activeExample, setActiveExample ] = useState("");
+  const [activeExample, setActiveExample] = useState("");
 
   function calcImports() {
     if (process.env.NODE_ENV === 'development' || siteConfig.customFields.ui5DeploymentType === "nightly") {
@@ -240,7 +240,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
           content: addHeadContent(fixAssetPaths(_html)),
         },
         "playground-support.js": {
-          content: playgroundSupport({theme, textDirection, contentDensity, iframeId}),
+          content: playgroundSupport({ theme, textDirection, contentDensity, iframeId }),
           hidden: true,
         },
         [mainFile]: {
@@ -275,7 +275,7 @@ ${fixAssetPaths(_js)}`,
             // if the saved project has a main from an old default, and the default project has a main.tsx file, restore the saved one
             delete newConfig.files["main.tsx"];
           }
-          newConfig.files = {...newConfig.files, ...savedConfig};
+          newConfig.files = { ...newConfig.files, ...savedConfig };
         } catch (e) {
           console.log(e);
         }
@@ -289,10 +289,10 @@ ${fixAssetPaths(_js)}`,
         sharedConfig["index.html"].content = addHeadContent(fixAssetPaths(sharedConfig["index.html"].content));
         const oldMainFile = sharedConfig["main.js"] || sharedConfig["main.ts"];
         if (oldMainFile && newConfig.files["main.tsx"]) {
-            // if the shared project has a main from an old default, and the default project has a main.tsx file, restore the saved one
+          // if the shared project has a main from an old default, and the default project has a main.tsx file, restore the saved one
           delete newConfig.files["main.tsx"];
         }
-        newConfig.files = {...newConfig.files, ...sharedConfig};
+        newConfig.files = { ...newConfig.files, ...sharedConfig };
       } catch (e) {
         console.log(e);
       }
@@ -306,7 +306,9 @@ ${fixAssetPaths(_js)}`,
         previewRef.current.iframe.style.height = `${event.data.height}px`;
       }
     }
-    window.addEventListener("message", messageHandler);
+    if (!standalone) {
+      window.addEventListener("message", messageHandler);
+    }
 
     tabBarRef.current.project = projectRef.current;
     fileEditorRef.current.project = projectRef.current;
@@ -314,10 +316,10 @@ ${fixAssetPaths(_js)}`,
 
     // algolia search opens the search on key `/` because this custom element is the event target but has no `isContentEditable`
     Object.defineProperty(fileEditorRef.current, "isContentEditable", {
-        configurable: true,
-        get() {
-            return true;
-        },
+      configurable: true,
+      get() {
+        return true;
+      },
     });
 
     tabBarRef.current.editor = fileEditorRef.current;
@@ -328,8 +330,10 @@ ${fixAssetPaths(_js)}`,
     }
 
     return function () {
-      // component cleanup
-      window.removeEventListener("message", messageHandler);
+      if (!standalone) {
+        // component cleanup
+        window.removeEventListener("message", messageHandler);
+      }
       projectRef.current.removeEventListener("compileStart", saveProject);
       returnProjectToPool(projectRef.current);
     }
@@ -343,7 +347,7 @@ ${fixAssetPaths(_js)}`,
     // setting has changed but exising project config is there
     // update the playground-support.js only with the new settings so refresh works correctly
     const newConfig = JSON.parse(JSON.stringify(projectRef.current.config));
-    newConfig.files["playground-support.js"].content = playgroundSupport({theme, textDirection, contentDensity, iframeId});
+    newConfig.files["playground-support.js"].content = playgroundSupport({ theme, textDirection, contentDensity, iframeId });
     projectRef.current.config = newConfig;
   }, [theme, contentDensity, textDirection]);
 
@@ -358,19 +362,16 @@ ${fixAssetPaths(_js)}`,
   function optionalSplitter(editor, preview) {
     return (
       <>
-        { standalone
+        {standalone
           ?
-            <div style={{width: "100%"}}>
-              <Splitter>
-                {preview}
-                {editor}
-              </Splitter>
-            </div>
+          <div>
+            <Splitter preview={preview} editor={editor}></Splitter>
+          </div>
           :
-            <div>
-              {editor}
-              {preview}
-            </div>
+          <div>
+            {editor}
+            {preview}
+          </div>
         }
       </>
     )
@@ -380,10 +381,10 @@ ${fixAssetPaths(_js)}`,
     return (
       <>
         <playground-preview class={clsx(styles.previewResultHidden, {
-            [styles['preview-standalone']]: standalone,
-            [styles['preview-sample']]: !standalone,
-          })}
-          style={{ height: "unset", minHeight: "7rem" }} ref={previewRef}
+          [styles['preview-standalone']]: standalone,
+          [styles['preview-sample']]: !standalone,
+        })}
+          style={standalone ? undefined : { height: "unset", minHeight: "7rem" }} ref={previewRef}
         ></playground-preview>
       </>
     )
@@ -397,7 +398,7 @@ ${fixAssetPaths(_js)}`,
             [styles['editor-standalone']]: standalone,
             [styles['editor-sample']]: !standalone,
           })}
-          style={{display: editorVisible | standalone ? "block" : "none"}}>
+          style={{ display: editorVisible | standalone ? "block" : "none" }}>
           <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
           <playground-file-editor line-numbers ref={fileEditorRef}></playground-file-editor>
         </div>
@@ -432,37 +433,37 @@ ${fixAssetPaths(_js)}`,
 
       {canShare
         ?
-          <>
-            <div className={`${styles.editor__toolbar}`}>
-              <ExamplesMenu loadHelloWorld={loadHelloWorld} loadCounter={loadCounter} initialActiveState={getExampleMenuInitialState()}/>
-              <div>
-                <button
-                  className={`button button--secondary ${styles.previewResult__download}`}
-                  onClick={ download }
-                >
-                <DownloadIcon className={`${styles.btn__icon}`}/>
-                  Download
-                  { copied
-                  ? <div style={ {position: "absolute"} }>
-                      <span className={styles["copy-status"]}>&#x2714; Link copied</span>
-                    </div>
+        <>
+          <div className={`${styles.editor__toolbar}`}>
+            <ExamplesMenu loadHelloWorld={loadHelloWorld} loadCounter={loadCounter} initialActiveState={getExampleMenuInitialState()} />
+            <div>
+              <button
+                className={`button button--secondary ${styles.previewResult__download}`}
+                onClick={download}
+              >
+                <DownloadIcon className={`${styles.btn__icon}`} />
+                Download
+                {copied
+                  ? <div style={{ position: "absolute" }}>
+                    <span className={styles["copy-status"]}>&#x2714; Link copied</span>
+                  </div>
                   : <></>
-                  }
-                </button>
+                }
+              </button>
 
-                <button
-                  className={`button button--secondary ${styles.previewResult__share}`}
-                  onClick={ share }
-                >
-                <ShareIcon className={`${styles.btn__icon}`}/>
-                  Share
-                </button>
+              <button
+                className={`button button--secondary ${styles.previewResult__share}`}
+                onClick={share}
+              >
+                <ShareIcon className={`${styles.btn__icon}`} />
+                Share
+              </button>
 
-              </div>
             </div>
-          </>
+          </div>
+        </>
         :
-          <></>
+        <></>
       }
 
       <div
@@ -473,37 +474,37 @@ ${fixAssetPaths(_js)}`,
         style={{ border: "1px solid hsla(203, 50%, 30%, 0.15)", boxShadow: "var(--ifm-color-secondary) 0 0 3px 0", borderRadius: "0.5rem", overflow: "hidden" }}
       >
         {optionalSplitter(preview(), editor())}
-        <div className={ `${styles.previewResult__actions}  ${(canShare ? styles.previewResult__hasShare : "")} `}>
-        { standalone
-          ?
+        <div className={`${styles.previewResult__actions}  ${(canShare ? styles.previewResult__hasShare : "")} `}>
+          {standalone
+            ?
             <></>
-          :
-          <>
-            <button
-              className={`button button--secondary ${styles.previewResult__downloadSample}`}
-              onClick={ download }
-            >
-              <DownloadIcon className={`${styles["btn__icon--edit"]} `}/>
-              Download
-            </button>
+            :
+            <>
+              <button
+                className={`button button--secondary ${styles.previewResult__downloadSample}`}
+                onClick={download}
+              >
+                <DownloadIcon className={`${styles["btn__icon--edit"]} `} />
+                Download
+              </button>
 
-            <button
-              className={`button button--secondary ${styles.previewResult__downloadSample}`}
-              onClick={ openInNewTab }
-            >
-              <ActionIcon className={`${styles["btn__icon--edit"]} `}/>
-              Open in Playground
-            </button>
+              <button
+                className={`button button--secondary ${styles.previewResult__downloadSample}`}
+                onClick={openInNewTab}
+              >
+                <ActionIcon className={`${styles["btn__icon--edit"]} `} />
+                Open in Playground
+              </button>
 
-            <button
-              className={`button ${(editorVisible ? "button--secondary" : "button--secondary")} ${styles.previewResult__toggleCodeEditor} ${(canShare ? styles.previewResult__hasShare : "")}` }
-              onClick={ toggleEditor }
-            >
-              {editorVisible ? <HideIcon className={`${styles["btn__icon--edit"]} `}/> : <EditIcon className={`${styles["btn__icon--edit"]}`}/>}
-              {editorVisible ? "Hide code" : "Edit"}
-            </button>
-          </>
-        }
+              <button
+                className={`button ${(editorVisible ? "button--secondary" : "button--secondary")} ${styles.previewResult__toggleCodeEditor} ${(canShare ? styles.previewResult__hasShare : "")}`}
+                onClick={toggleEditor}
+              >
+                {editorVisible ? <HideIcon className={`${styles["btn__icon--edit"]} `} /> : <EditIcon className={`${styles["btn__icon--edit"]}`} />}
+                {editorVisible ? "Hide code" : "Edit"}
+              </button>
+            </>
+          }
         </div>
 
       </div>

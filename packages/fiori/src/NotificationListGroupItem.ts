@@ -214,14 +214,18 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		this.fireDecoratorEvent("load-more");
 	}
 
-	get loadMoreButton() {
+	getGrowingButton() {
 		const innerList = this.getDomRef()?.querySelector("[ui5-notification-group-list]") as NotificationListGroupList;
-		return innerList.getDomRef()?.querySelector(".ui5-growing-button-inner") as HTMLElement;
+		return innerList.getGrowingButton();
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
 		const isFocused = this.matches(":focus");
 		if (!isFocused) {
+			return;
+		}
+
+		if (this.getGrowingButton()?.matches(":focus")) {
 			return;
 		}
 
