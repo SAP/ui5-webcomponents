@@ -20,7 +20,7 @@ const restArgs = process.argv.slice(2);
 
 const processThemingPackageFile = async (f) => {
     const selector = ':root';
-    const result = await postcss(combineDuplicatedSelectors).process(f.text);
+    const result = await postcss().process(f.text);
 
     const newRule = postcss.rule({ selector });
 
