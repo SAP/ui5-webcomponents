@@ -2,9 +2,9 @@ import RangeSlider from "../../src/RangeSlider.js";
 
 describe("Testing Range Slider interactions", () => {
 	it("Changing the current startValue is reflected", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks" min={0} max={40} step={1} showTickmarks></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={40} step={1} showTickmarks></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle-container")
@@ -30,9 +30,9 @@ describe("Testing Range Slider interactions", () => {
 	});
 
 	it("Changing the endValue is reflected", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks" min={0} max={40} step={1} showTickmarks></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={40} step={1} showTickmarks></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-inner .ui5-slider-handle-container")
@@ -57,9 +57,9 @@ describe("Testing Range Slider interactions", () => {
 	});
 
 	it("Click within the selected range should not change any value", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks" min={0} max={40} step={1} startValue={5} endValue={30} showTickmarks></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={40} step={1} startValue={5} endValue={30} showTickmarks></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-progress")
@@ -76,9 +76,9 @@ describe("Testing Range Slider interactions", () => {
 	});
 
 	it("Dragging the selected range should change both values and handles", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks" min={0} max={40} step={1} startValue={5} endValue={30} showTickmarks></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={40} step={1} startValue={5} endValue={30} showTickmarks></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-progress")
@@ -107,9 +107,9 @@ describe("Testing Range Slider interactions", () => {
 	});
 
 	it("Dragging the start-handle past the end-handle should swap the values", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks" min={0} max={40} step={1} startValue={8} endValue={9} showTickmarks></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={40} step={1} startValue={8} endValue={9} showTickmarks></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--start")
@@ -134,9 +134,9 @@ describe("Testing Range Slider interactions", () => {
 	});
 
 	it("Dragging the whole range selection should always keep the initially selected range and be within min/max values", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks" min={0} max={40} step={1} startValue={9} endValue={30} showTickmarks></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={40} step={1} startValue={9} endValue={30} showTickmarks></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-progress")
@@ -159,16 +159,16 @@ describe("Testing Range Slider interactions", () => {
 			.realMouseMove(600, 0)
 			.realMouseUp();
 
-		// startValue should be 19 and no more, the initially selected range should be preserved
+		// startValue should be 7 and no more, the initially selected range should be preserved
 		cy.get("@rangeSlider").should("have.attr", "start-value", "7");
-		// endValue should be 40 as the selected range has reached the end of the Range Slider
+		// endValue should be 28 as the selected range has reached the end of the Range Slider
 		cy.get("@rangeSlider").should("have.attr", "end-value", "28");
 	});
 
 	it("Range Slider should not be interactive if the step property is 0", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} step={0}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} step={0}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.get("@rangeSlider").realClick();
 
@@ -177,9 +177,9 @@ describe("Testing Range Slider interactions", () => {
 	});
 
 	it("Disabled Range Slider is not interactive", () => {
-		cy.mount(<RangeSlider id="disabled-range-slider" min={0} max={100} disabled></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} disabled></RangeSlider>);
 
-		cy.get("#disabled-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Range Slider should be disabled
 		cy.get("@rangeSlider").should("have.attr", "disabled");
@@ -188,9 +188,9 @@ describe("Testing Range Slider interactions", () => {
 
 describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 	it("Range Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks-labels" min={0} max={44} step={1} labelInterval={2} showTickmarks></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={44} step={1} labelInterval={2} showTickmarks></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-labels")
@@ -212,9 +212,9 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 		cy.get('[data-cy-root]')
 			.invoke('css', 'padding', '100px')
 
-		cy.mount(<RangeSlider id="basic-range-slider-with-tooltip" min={50} max={200} showTooltip></RangeSlider>);
+		cy.mount(<RangeSlider min={50} max={200} showTooltip></RangeSlider>);
 
-		cy.get("ui5-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.get("@rangeSlider").realClick();
 
@@ -238,10 +238,10 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 	it("Tooltip input is displayed showing the current value", () => {
 		cy.mount(
-			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={8} endValue={12} showTooltip editableTooltip></RangeSlider>
+			<RangeSlider min={0} max={20} startValue={8} endValue={12} showTooltip editableTooltip></RangeSlider>
 		);
 
-		cy.get("ui5-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.get("@rangeSlider").realClick();
 
@@ -268,10 +268,10 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 	it("Input tooltips value change should change the range slider's value", () => {
 		cy.mount(
-			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={4} showTooltip editableTooltip></RangeSlider>
+			<RangeSlider min={0} max={20} startValue={4} showTooltip editableTooltip></RangeSlider>
 		);
 
-		cy.get("ui5-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.get("@rangeSlider").realClick();
 
@@ -294,18 +294,13 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 	it("Input tooltip value change should fire change event", () => {
 		cy.mount(
-			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={1} showTooltip editableTooltip></RangeSlider>
+			<RangeSlider min={0} max={20} startValue={1} showTooltip editableTooltip></RangeSlider>
 		);
 
-		let changeCount = 0;
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
-		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
-
-		cy.get("ui5-range-slider").then($slider => {
-			$slider[0].addEventListener("ui5-change", () => {
-				changeCount++;
-			});
-		});
+		cy.get("@rangeSlider")
+			.invoke('on', 'ui5-change', cy.spy().as('changeEventSpy'));
 
 		cy.get("@rangeSlider").realClick();
 
@@ -323,17 +318,15 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 		cy.get("@startTooltipInput").realPress("Enter");
 
-		cy.then(() => {
-			expect(changeCount).to.equal(1);
-		});
+		cy.get("@changeEventSpy").should('have.been.calledOnce');
 	});
 
 	it("Input tooltips value state should change to 'Negative' if value is invalid", () => {
 		cy.mount(
-			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={1} showTooltip editableTooltip></RangeSlider>
+			<RangeSlider min={0} max={20} startValue={1} showTooltip editableTooltip></RangeSlider>
 		);
 
-		cy.get("ui5-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.get("@rangeSlider").realClick();
 
@@ -382,10 +375,10 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 	it("F2 should switch the focus between the handle and the tooltip input", () => {
 		cy.mount(
-			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={5} showTooltip editableTooltip></RangeSlider>
+			<RangeSlider min={0} max={20} startValue={5} showTooltip editableTooltip></RangeSlider>
 		);
 
-		cy.get("ui5-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.get("@rangeSlider")
 			.shadow()
@@ -411,10 +404,10 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 	it("Arrow up/down should not increase/decrease the value of the input", () => {
 		cy.mount(
-			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={1} endValue={10} showTooltip editableTooltip></RangeSlider>
+			<RangeSlider min={0} max={20} startValue={1} endValue={10} showTooltip editableTooltip></RangeSlider>
 		);
 
-		cy.get("ui5-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.get("@rangeSlider")
 			.shadow()
@@ -464,11 +457,11 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 	it("Tab on slider handle should not move the focus to the tooltip input", () => {
 		cy.mount(
 			<>
-				<RangeSlider id="slider-tickmarks-labels" editableTooltip min={0} max={20} />
+				<RangeSlider editableTooltip min={0} max={20} />
 			</>
 		);
 
-		cy.get("ui5-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Start value handle and input
 		cy.get("@rangeSlider")
@@ -491,10 +484,10 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 	it("Focus out with invalid value should reset it", () => {
 		cy.mount(
-			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={2} showTooltip editableTooltip></RangeSlider>
+			<RangeSlider min={0} max={20} startValue={2} showTooltip editableTooltip></RangeSlider>
 		);
 
-		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.get("@rangeSlider")
 			.shadow()
@@ -514,10 +507,10 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 	it("Input values should be swapped if the start value is bigger than the end value", () => {
 		cy.mount(
-			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={0} endValue={1} showTooltip editableTooltip></RangeSlider>
+			<RangeSlider min={0} max={20} startValue={0} endValue={1} showTooltip editableTooltip></RangeSlider>
 		);
 
-		cy.get("ui5-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Start value handle and input
 		cy.get("@rangeSlider")
@@ -557,10 +550,10 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 	it("Input values should be swapped if the end value is lower than the start value", () => {
 		cy.mount(
-			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} startValue={2} endValue={3} showTooltip editableTooltip></RangeSlider>
+			<RangeSlider min={0} max={20} startValue={2} endValue={3} showTooltip editableTooltip></RangeSlider>
 		);
 
-		cy.get("ui5-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Start value input
 		cy.get("@rangeSlider")
@@ -596,10 +589,10 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 	it("Invalid tooltip value should not be changed on 'Enter'", () => {
 		cy.mount(
-			<RangeSlider id="range-slider-tickmarks-labels" min={0} max={20} endValue={12} showTooltip editableTooltip></RangeSlider>
+			<RangeSlider min={0} max={20} endValue={12} showTooltip editableTooltip></RangeSlider>
 		);
 
-		cy.get("ui5-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.get("@rangeSlider")
 			.shadow()
@@ -657,9 +650,9 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 describe("Properties synchronization and normalization", () => {
 	it("If a negative number is set to the step property its positive equivalent should be used as effective value", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks-labels" min={0} max={44} step={-7}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={44} step={-7}></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--end")
@@ -679,9 +672,9 @@ describe("Properties synchronization and normalization", () => {
 	});
 
 	it("If min property is set to a greater number than the max property their effective values should be swapped, their real ones - not", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks-labels" min={100} max={10} startValue={2}></RangeSlider>);
+		cy.mount(<RangeSlider min={100} max={10} startValue={2}></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Properties themselves should not be normalized
 		cy.get("@rangeSlider").should("have.attr", "min", "100");
@@ -692,9 +685,9 @@ describe("Properties synchronization and normalization", () => {
 	});
 
 	it("Should keep the current values between the boundaries of min and max properties", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks-labels" min={100} max={200}></RangeSlider>);
+		cy.mount(<RangeSlider min={100} max={200}></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Set endValue to 300 (above max)
 		cy.get("@rangeSlider").invoke("attr", "end-value", "300");
@@ -706,9 +699,9 @@ describe("Properties synchronization and normalization", () => {
 	});
 
 	it("Should not 'stepify' current value if it is not in result of user interaction", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks-labels" min={0} max={44} step={1.25}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={44} step={1.25}></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Set values programmatically
 		cy.get("@rangeSlider").invoke("attr", "start-value", "14");
@@ -720,9 +713,9 @@ describe("Properties synchronization and normalization", () => {
 	});
 
 	it("If the step property or the labelInterval are changed, the tickmarks and labels must be updated also", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks-labels" min={0} max={40} step={1} labelInterval={2} showTickmarks></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={40} step={1} labelInterval={2} showTickmarks></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Change step to 2
 		cy.get("@rangeSlider").invoke("attr", "step", "2");
@@ -740,20 +733,13 @@ describe("Properties synchronization and normalization", () => {
 
 describe("Testing events", () => {
 	it("Should fire input event on user interaction and change event after user interaction finish", () => {
-		cy.mount(<RangeSlider id="test-slider" min={0} max={10}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={10}></RangeSlider>);
 
-		cy.get("#test-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
-		let inputCount = 0;
-		let changeCount = 0;
-		cy.get("@rangeSlider").then($slider => {
-			$slider[0].addEventListener('ui5-input', () => {
-				inputCount++;
-			});
-			$slider[0].addEventListener('ui5-change', () => {
-				changeCount++;
-			});
-		});
+		cy.get("@rangeSlider")
+			.invoke('on', 'ui5-input', cy.spy().as('inputEventSpy'))
+			.invoke('on', 'ui5-change', cy.spy().as('changeEventSpy'));
 
 		// Start value handle and input
 		cy.get("@rangeSlider")
@@ -769,45 +755,33 @@ describe("Testing events", () => {
 		// Click on the slider to trigger both events
 		cy.get("@rangeSlider").realClick();
 
-		cy.then(() => {
-			// Both input event and change event should be fired after user interaction
-			expect(inputCount).to.be.greaterThan(0);
-			expect(changeCount).to.be.greaterThan(0);
-		});
+		// Both input event and change event should be fired after user interaction
+		cy.get("@inputEventSpy").should('have.been.called');
+		cy.get("@changeEventSpy").should('have.been.called');
 	});
 
 	it("Should not fire change event if the values are the same after interaction", () => {
-		let changeCount = 0;
+		cy.mount(<RangeSlider min={0} max={10} startValue={0}></RangeSlider>);
 
-		cy.mount(<RangeSlider id="test-slider" min={0} max={10} startValue={0}></RangeSlider>);
-
-		cy.get("#test-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--start")
 			.as("firstHandle");
 
-		cy.get("@rangeSlider").then($slider => {
-			$slider[0].addEventListener("ui5-change", () => {
-				changeCount++;
-			});
-		});
+		cy.get("@rangeSlider")
+			.invoke('on', 'ui5-change', cy.spy().as('changeEventSpy'));
 
 		cy.get("@firstHandle").realClick();
 		cy.get("@firstHandle").realPress("Home");
 
-		cy.then(() => {
-			expect(changeCount).to.equal(0);
-		});
+		cy.get("@changeEventSpy").should('not.have.been.called');
 	});
 
 	it("Should fire input event with correctly swapped values", () => {
-		let inputEventStartValue = "";
-		let inputEventEndValue = "";
+		cy.mount(<RangeSlider min={0} max={10} startValue={1} endValue={2}></RangeSlider>);
 
-		cy.mount(<RangeSlider id="test-slider" min={0} max={10} startValue={1} endValue={2}></RangeSlider>);
-
-		cy.get("#test-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-progress")
@@ -817,12 +791,8 @@ describe("Testing events", () => {
 			.find(".ui5-slider-handle--start")
 			.as("firstHandle");
 
-		cy.get("@rangeSlider").then($slider => {
-			$slider[0].addEventListener("ui5-input", (e: any) => {
-				inputEventStartValue = e.target.startValue.toString();
-				inputEventEndValue = e.target.endValue.toString();
-			});
-		});
+		cy.get("@rangeSlider")
+			.invoke('on', 'ui5-input', cy.spy().as('inputEventSpy'));
 
 		// Use keyboard navigation to move start handle past end handle
 		cy.get("@firstHandle").realClick();
@@ -830,55 +800,38 @@ describe("Testing events", () => {
 		cy.get("@firstHandle").realPress("ArrowRight");
 		cy.get("@firstHandle").realPress("ArrowRight");
 
-		cy.wait(100);
-
-		cy.then(() => {
-			expect(inputEventStartValue).to.equal("2");
-			expect(inputEventEndValue).to.equal("4");
-		});
-
 		cy.get("@rangeSliderProgressBar").should("have.attr", "aria-valuenow", "2");
+
+		cy.get("@rangeSlider").should("have.attr", "start-value", "2");
+		cy.get("@rangeSlider").should("have.attr", "end-value", "4");
+		cy.get("@inputEventSpy").should('have.been.called');
 	});
 
 	it("Should not fire change event after user interaction is finished if the current value is the same as the one at the start of the action", () => {
-		let changeCount = 0;
+		cy.mount(<RangeSlider min={0} max={10}></RangeSlider>);
 
-		cy.mount(<RangeSlider id="test-slider" min={0} max={10}></RangeSlider>);
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
-		cy.get("#test-slider").as("rangeSlider");
-
-		cy.get("@rangeSlider").then($slider => {
-			$slider[0].addEventListener("ui5-change", () => {
-				changeCount++;
-			});
-		});
+		cy.get("@rangeSlider")
+			.invoke('on', 'ui5-change', cy.spy().as('changeEventSpy'));
 
 		// Click on the same position (should not change value)
 		cy.get("@rangeSlider").realClick();
 
-		cy.then(() => {
-			expect(changeCount).to.equal(0);
-		});
+		cy.get("@changeEventSpy").should('not.have.been.called');
 	});
 
 	it("Should fire change event after swapping the values", () => {
-		let changeEventStartValue = 0;
-		let changeEventEndValue = 0;
+		cy.mount(<RangeSlider min={0} max={100} startValue={1} endValue={2}></RangeSlider>);
 
-		cy.mount(<RangeSlider id="test-slider" min={0} max={100} startValue={1} endValue={2}></RangeSlider>);
-
-		cy.get("#test-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--start")
 			.as("startHandle");
 
-		cy.get("@rangeSlider").then($slider => {
-			$slider[0].addEventListener("ui5-change", (e: any) => {
-				changeEventStartValue = e.target.startValue;
-				changeEventEndValue = e.target.endValue;
-			});
-		});
+		cy.get("@rangeSlider")
+			.invoke('on', 'ui5-change', cy.spy().as('changeEventSpy'));
 
 		// Drag start handle past end handle to swap values
 		cy.get("@startHandle")
@@ -886,16 +839,17 @@ describe("Testing events", () => {
 			.realMouseMove(100, 0)
 			.realMouseUp();
 
-		cy.then(() => {
-			expect(changeEventStartValue).to.equal(2);
-			expect(changeEventEndValue).to.be.greaterThan(2);
+		cy.get("@rangeSlider").should("have.attr", "start-value", "2");
+		cy.get("@rangeSlider").invoke("attr", "end-value").then((endValue: string) => {
+			expect(parseInt(endValue)).to.be.greaterThan(2);
 		});
+		cy.get("@changeEventSpy").should('have.been.called');
 	});
 
 	it("Aria attributes of the start handle are set correctly", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks" min={0} max={40} step={1} showTickmarks></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={40} step={1} showTickmarks></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--start")
@@ -922,9 +876,9 @@ describe("Testing events", () => {
 	});
 
 	it("Aria attributes of the end handle are set correctly", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks" min={0} max={40} step={1} showTickmarks></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={40} step={1} showTickmarks></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--end")
@@ -951,9 +905,9 @@ describe("Testing events", () => {
 	});
 
 	it("Aria-labelledby text is mapped correctly when values are swapped", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks" min={0} max={40} step={1} startValue={8} endValue={9} showTickmarks></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={40} step={1} startValue={8} endValue={9} showTickmarks></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--start")
@@ -978,9 +932,9 @@ describe("Testing events", () => {
 	});
 
 	it("Click anywhere in the Range Slider should focus the closest handle", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Test that clicking on the slider focuses some element (either handle or progress bar)
 		cy.get("@rangeSlider").realClick();
@@ -1003,9 +957,9 @@ describe("Testing events", () => {
 	});
 
 	it("Click currently selected range should focus it", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} endValue={60}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} endValue={60}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-progress")
@@ -1018,9 +972,9 @@ describe("Testing events", () => {
 	});
 
 	it("When not yet focused, 'Tab' should focus the Range Slider and move the focus to the progress bar", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-progress")
@@ -1033,9 +987,9 @@ describe("Testing events", () => {
 	});
 
 	it("When progress bar has the focus, 'Tab' should move the focus to the first handle", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--start")
@@ -1049,9 +1003,9 @@ describe("Testing events", () => {
 	});
 
 	it("When the first handle has the focus, 'Tab' should focus the second handle", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--end")
@@ -1120,9 +1074,9 @@ describe("Testing events", () => {
 	});
 
 	it("When the second handle has the focus, 'Shift' + 'Tab' should move the focus to the first handle", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--start")
@@ -1139,9 +1093,9 @@ describe("Testing events", () => {
 	});
 
 	it("When the first handle has the focus, 'Shift' + 'Tab' should move the focus to the progress bar", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-progress")
@@ -1180,9 +1134,9 @@ describe("Testing events", () => {
 	});
 
 	it("When one handle comes across the other and the values are swapped the focus must be switched between the handles", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={20}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={20}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle--start")
@@ -1212,9 +1166,9 @@ describe("Testing events", () => {
 
 describe("Accessibility: Testing keyboard handling", () => {
 	it("When progress bar is focused 'Right Arrow' key should increase both values of the Range Slider with a small increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-progress")
@@ -1233,9 +1187,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused 'Left Arrow' key should decrease both values of the Range Slider with a small increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress("ArrowLeft");
@@ -1245,9 +1199,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused 'Up Arrow' key should increase both values of the Range Slider with a small increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress("ArrowUp");
@@ -1257,9 +1211,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused 'Down' key should decrease both values of the Range Slider with a small increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress("ArrowDown");
@@ -1269,9 +1223,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused 'Control' + 'Right Arrow' key should increase both values of the Range Slider with a big increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress(["Control", "ArrowRight"]);
@@ -1281,9 +1235,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused 'Control' + 'Left Arrow' key should decrease both values of the Range Slider with a big increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={20} endValue={40}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={20} endValue={40}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress(["Control", "ArrowLeft"]);
@@ -1293,9 +1247,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused 'Control' + 'Up Arrow' key should increase both values of the Range Slider with a big increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress(["Control", "ArrowUp"]);
@@ -1305,9 +1259,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused 'Control' + 'Down' key should decrease both values of the Range Slider with a big increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={20} endValue={40}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={20} endValue={40}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress(["Control", "ArrowDown"]);
@@ -1317,9 +1271,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused 'Page Up' key should increase both values of the Range Slider with a big increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress("PageUp");
@@ -1329,9 +1283,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused 'Page Down' key should decrease both values of the Range Slider with a big increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={20} endValue={40}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={20} endValue={40}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress("PageDown");
@@ -1341,9 +1295,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused the '+' key should increase both values of the Range Slider with a small increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress("+");
@@ -1359,9 +1313,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused the '-' key should decrease both values of the Range Slider with a small increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={12} endValue={32}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={12} endValue={32}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress("-");
@@ -1377,9 +1331,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused an 'End' key press should offset the selected range to the end of the Range Slider", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress("End");
@@ -1389,9 +1343,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When progress bar is focused a 'Home' key press should offset the selected range to the start of the Range Slider", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={80} endValue={100}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={80} endValue={100}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress("Home");
@@ -1401,9 +1355,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("A 'Esc' key press should return the values of the Range Slider at their initial point at the time of its focusing", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={24} endValue={42}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={24} endValue={42}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		cy.realPress("Tab");
 		cy.realPress("Escape");
@@ -1413,9 +1367,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle is focused 'Right Arrow' key should increase its value with a small increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus start handle
 		cy.realPress("Tab");
@@ -1432,9 +1386,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle is focused 'Left Arrow' key should decrease its value with a small increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus end handle first
 		cy.realPress("Tab");
@@ -1452,9 +1406,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle is focused 'Up Arrow' key should increase its value with a small increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus start handle
 		cy.realPress("Tab");
@@ -1471,9 +1425,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle is focused 'Down' key should decrease its value with a small increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus start handle
 		cy.realPress("Tab");
@@ -1490,9 +1444,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle is focused 'Control' + 'Right Arrow' key should increase its value with a big increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus start handle
 		cy.realPress("Tab");
@@ -1509,9 +1463,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle is focused 'Control' + 'Left Arrow' key should decrease its value with a big increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={20} endValue={40}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={20} endValue={40}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus start handle
 		cy.realPress("Tab");
@@ -1528,9 +1482,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle is focused 'Control' + 'Up Arrow' key should increase its value with a big increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus start handle
 		cy.realPress("Tab");
@@ -1547,9 +1501,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When handle is focused 'Control' + 'Down' key should decrease its value with a big increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={20} endValue={40}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={20} endValue={40}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus start handle
 		cy.realPress("Tab");
@@ -1566,9 +1520,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle is focused 'Page Down' key should decrease its value with a big increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={20} endValue={40}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={20} endValue={40}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus start handle
 		cy.realPress("Tab");
@@ -1585,9 +1539,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle focused the '+' key should increase its value with a small increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus start handle
 		cy.realPress("Tab");
@@ -1612,9 +1566,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle focused the '-' key should decrease its value with a small increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={12} endValue={32}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={12} endValue={32}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus start handle
 		cy.realPress("Tab");
@@ -1639,9 +1593,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle is focused 'Page Up' key should increase its value with a big increment step", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus start handle
 		cy.realPress("Tab");
@@ -1658,9 +1612,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle is focused an 'End' key press should set its value to the maximum allowed", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus end handle
 		cy.realPress("Tab");
@@ -1672,9 +1626,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle is focused a 'Home' key press should set its value to the start of the Range Slider", () => {
-		cy.mount(<RangeSlider id="basic-range-slider" min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={100} startValue={10} endValue={30}></RangeSlider>);
 
-		cy.get("#basic-range-slider").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Focus start handle
 		cy.realPress("Tab");
@@ -1687,9 +1641,9 @@ describe("Accessibility: Testing keyboard handling", () => {
 
 describe("Testing resize handling and RTL support", () => {
 	it("Testing RTL support", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks-labels" min={0} max={10} step={1} startValue={0} endValue={4} dir="rtl"></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={10} step={1} startValue={0} endValue={4} dir="rtl"></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle-container")
@@ -1717,9 +1671,9 @@ describe("Testing resize handling and RTL support", () => {
 	});
 
 	it("Testing RTL KBH support", () => {
-		cy.mount(<RangeSlider id="range-slider-tickmarks-labels" min={0} max={10} step={1} startValue={3} endValue={7} dir="rtl"></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={10} step={1} startValue={3} endValue={7} dir="rtl"></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 		cy.get("@rangeSlider")
 			.shadow()
 			.find(".ui5-slider-handle-container")
@@ -1787,25 +1741,23 @@ describe("Testing resize handling and RTL support", () => {
 		// Set small viewport first
 		cy.viewport(400, 600);
 
-		cy.mount(<RangeSlider id="range-slider-tickmarks-labels" min={0} max={44} step={1.25} showTickmarks></RangeSlider>);
+		cy.mount(<RangeSlider min={0} max={44} step={1.25} showTickmarks></RangeSlider>);
 
-		cy.get("#range-slider-tickmarks-labels").as("rangeSlider");
+		cy.get("[ui5-range-slider]").as("rangeSlider");
 
 		// Wait for the component to render and calculate overlapping
-		cy.wait(200);
+		cy.get("@rangeSlider").should(($el) => {
+			const rangeSlider = $el[0] as RangeSlider;
+			expect(rangeSlider._labelsOverlapping || rangeSlider._hiddenTickmarks).to.be.true;
+		});
 
 		// Trigger a resize event to force recalculation
 		cy.window().trigger('resize');
 
 		// Wait for the resize handling to complete
-		cy.wait(200);
-
-		// Check if labels are hidden when there's not enough space
-		cy.get("@rangeSlider").then(($el) => {
+		cy.get("@rangeSlider").should(($el) => {
 			const rangeSlider = $el[0] as RangeSlider;
-			// At least one of these should be true in a small viewport
-			const hasOverlapping = rangeSlider._labelsOverlapping || rangeSlider._hiddenTickmarks;
-			expect(hasOverlapping).to.be.true;
+			expect(rangeSlider._labelsOverlapping || rangeSlider._hiddenTickmarks).to.be.true;
 		});
 	});
 });
@@ -1828,15 +1780,15 @@ describe("Accessibility", () => {
 
 	it("Aria attributes of the progress bar are set correctly", () => {
 		cy.mount(
-			<RangeSlider id="range-slider-tickmarks" min={0} max={40} step={1} end-value={20} show-tickmarks></RangeSlider>
+			<RangeSlider min={0} max={40} step={1} end-value={20} show-tickmarks></RangeSlider>
 		);
 
-		cy.get("#range-slider-tickmarks")
+		cy.get("[ui5-range-slider]")
 			.shadow()
 			.find(".ui5-slider-progress")
 			.as("sliderProgress");
 
-		cy.get("ui5-range-slider").then(($el) => {
+		cy.get("[ui5-range-slider]").then(($el) => {
 			const rangeSlider = $el[0] as RangeSlider;
 			const minValue = rangeSlider.min;
 			const maxValue = rangeSlider.max;
