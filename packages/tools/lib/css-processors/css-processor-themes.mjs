@@ -5,7 +5,7 @@ import * as path from "path";
 import { writeFile, mkdir } from "fs/promises";
 import postcss from "postcss";
 import combineDuplicatedSelectors from "../postcss-combine-duplicated-selectors/index.js"
-import { writeFileIfChanged, stripThemingBaseContent, getFileContent } from "./shared.mjs";
+import { writeFileIfChanged, getFileContent } from "./shared.mjs";
 import scopeVariables from "./scope-variables.mjs";
 
 const tsMode = process.env.UI5_TS === "true";
@@ -13,19 +13,32 @@ const extension = tsMode ? ".css.ts" : ".css.js";
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"))
 
-let inputFiles = await globby("src/**/parameters-bundle.css");
+const inputFiles = await globby([
+    "src/**/parameters-bundle.css",
+]);
 const restArgs = process.argv.slice(2);
 
-const removeDuplicateSelectors = async (text) => {
-    const result = await postcss(combineDuplicatedSelectors).process(text);
-    return result.css;
-}
+const processThemingPackageFile = async (f) => {
+    const selector = ':root';
+    const result = await postcss().process(f.text);
 
-const processFontFace = (text) => {
-    const declarationExpr = /@font-face\s*{[^}]*}/g;
+    const newRule = postcss.rule({ selector });
 
-    // remove declarations from source, they are extracted in base package
-    return text.replaceAll(declarationExpr, '');
+    result.root.walkRules(selector, rule => {
+        rule.walkDecls(decl => {
+            if (!decl.prop.startsWith('--sapFontUrl')) {
+                newRule.append(decl.clone());
+            }
+        });
+    });
+
+    return newRule.toString();
+};
+
+const processComponentPackageFile = async (f) => {
+    const result = await postcss(combineDuplicatedSelectors).process(f.text);
+
+    return scopeVariables(result.css, packageJSON, f.path);
 }
 
 let scopingPlugin = {
@@ -35,23 +48,14 @@ let scopingPlugin = {
 
         build.onEnd(result => {
             result.outputFiles.forEach(async f => {
-                // remove font-face declarations
-                let newText = processFontFace(f.text);
+                let newText = f.path.includes("packages/theming") ? await processThemingPackageFile(f) : await processComponentPackageFile(f);
 
-                // remove duplicate selectors
-                newText = await removeDuplicateSelectors(newText);
-
-                // strip unnecessary theming-base-content
-                newText = stripThemingBaseContent(newText);
-
-                // scoping
-                newText = scopeVariables(newText, packageJSON, f.path);
-                await mkdir(path.dirname(f.path), {recursive: true});
+                await mkdir(path.dirname(f.path), { recursive: true });
                 writeFile(f.path, newText);
 
                 // JSON
                 const jsonPath = f.path.replace(/dist[\/\\]css/, "dist/generated/assets").replace(".css", ".css.json");
-                await mkdir(path.dirname(jsonPath), {recursive: true});
+                await mkdir(path.dirname(jsonPath), { recursive: true });
                 writeFileIfChanged(jsonPath, JSON.stringify(newText));
 
                 // JS/TS
