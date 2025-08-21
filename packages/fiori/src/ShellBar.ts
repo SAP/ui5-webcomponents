@@ -1774,4 +1774,5 @@ export type {
 	ShellBarSearchButtonEventDetail,
 	ShellBarSearchFieldToggleEventDetail,
 	IShellBarSelfCollapsibleSearch,
+	IShellBarSearchField,
 };
