@@ -49,6 +49,7 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 import type ShellBarItem from "./ShellBarItem.js";
 import type { ShellBarItemAccessibilityAttributes } from "./ShellBarItem.js";
 import type ShellBarBranding from "./ShellBarBranding.js";
+import type ShellBarSearch from "./ShellBarSearch.js";
 
 // Templates
 import ShellBarTemplate from "./ShellBarTemplate.js";
@@ -521,7 +522,7 @@ class ShellBar extends UI5Element {
 		type: HTMLElement,
 		invalidateOnChildChange: true,
 	})
-	searchField!: Array<Input>;
+	searchField!: Array<Input | ShellBarSearch>;
 
 	/**
 	 * Defines a `ui5-button` in the bar that will be placed in the beginning.
