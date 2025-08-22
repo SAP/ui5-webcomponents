@@ -11,7 +11,7 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import AvatarSize from "@ui5/webcomponents/dist/types/AvatarSize.js";
-import { SEARCH_ITEM_SHOW_MORE } from "../../src/generated/i18n/i18n-defaults.js";
+import { SEARCH_ITEM_SHOW_MORE_COUNT, SEARCH_ITEM_SHOW_MORE_NO_COUNT } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("Properties", () => {
 	it("items slot with groups", () => {
@@ -111,7 +111,7 @@ describe("Properties", () => {
 			.should("not.exist");
 	});
 
-	it("tests show more item", () => {
+	it("tests show more item text with counter", () => {
 		cy.mount(
 			<Search>
 				<SearchItem text="List Item"></SearchItem>
@@ -137,12 +137,45 @@ describe("Properties", () => {
 				const resourceBundle = (item.constructor as any).i18nBundle;
 
 				cy.get("@itemText")
-					.should("have.text", resourceBundle.getText(SEARCH_ITEM_SHOW_MORE.defaultText, 3));
+					.should("have.text", resourceBundle.getText(SEARCH_ITEM_SHOW_MORE_COUNT.defaultText, 3));
 			});
 
 		cy.get("@itemText")
 			.should("have.class", "ui5-search-item-show-more-text");
 
+	});
+
+	it("tests show more item with no counter", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="List Item"></SearchItem>
+				<SearchItemShowMore></SearchItemShowMore>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.realClick()
+			.realType("s");
+
+		cy.get("[ui5-search-item-show-more]")
+			.should("be.visible");
+
+		cy.get("[ui5-search-item-show-more]")
+			.shadow()
+			.find("span")
+			.as("itemText");
+
+		cy.get("[ui5-search-item-show-more]")
+			.then($item => {
+				const item = $item[0];
+				const resourceBundle = (item.constructor as any).i18nBundle;
+
+				cy.get("@itemText")
+					.should("have.text", resourceBundle.getText(SEARCH_ITEM_SHOW_MORE_NO_COUNT.defaultText));
+			});
+
+		cy.get("@itemText")
+			.should("have.class", "ui5-search-item-show-more-text");
 	});
 
 	it("test show more item accessibility attributes", () => {

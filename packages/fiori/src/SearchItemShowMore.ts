@@ -7,13 +7,13 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import SearchItemShowMoreTemplate from "./SearchItemShowMoreTemplate.js";
 import SearchItemCss from "./generated/themes/SearchItem.css.js";
 import SearchItemShowMoreCss from "./generated/themes/SearchItemShowMore.css.js";
-import { SEARCH_ITEM_SHOW_MORE } from "./generated/i18n/i18n-defaults.js";
+import { SEARCH_ITEM_SHOW_MORE_COUNT, SEARCH_ITEM_SHOW_MORE_NO_COUNT } from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
  * ### Overview
  *
- * A `ui5-search-item-show-more` is a special type of ui5-list-item that acts as a button to progressively reveal additional (overflow) items within a group.
+ * A `ui5-search-item-show-more` is a special type of ui5-li that acts as a button to progressively reveal additional (overflow) items within a group.
  *
  * ### ES6 Module Import
  *
@@ -61,8 +61,11 @@ class SearchItemShowMore extends ListItemBase {
 	static i18nBundle: I18nBundle;
 
 	get showMoreTextCount() {
-		const countValue = this.itemsToShowCount ?? "N";
-		return SearchItemShowMore.i18nBundle.getText(SEARCH_ITEM_SHOW_MORE, countValue);
+		if (this.itemsToShowCount) {
+			return SearchItemShowMore.i18nBundle.getText(SEARCH_ITEM_SHOW_MORE_COUNT, this.itemsToShowCount);
+		}
+
+		return SearchItemShowMore.i18nBundle.getText(SEARCH_ITEM_SHOW_MORE_NO_COUNT);
 	}
 
 	_onfocusin(e: FocusEvent) {
