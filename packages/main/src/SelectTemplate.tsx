@@ -40,6 +40,7 @@ export default function SelectTemplate(this: Select) {
 					onKeyUp={this._onkeyup}
 					onFocusIn={this._onfocusin}
 					onFocusOut={this._onfocusout}
+					aria-controls={this.responsivePopoverId}
 				>
 					{this.hasCustomLabel
 						? <slot name="label"></slot>
@@ -62,11 +63,12 @@ export default function SelectTemplate(this: Select) {
 				}
 
 				{!this.icon && !this.readonly &&
-					<div class={{
-						"ui5-select-icon-root": true,
-						"inputIcon": true,
-						"inputIcon--pressed": this._iconPressed,
-					}}>
+					<div part="icon-wrapper"
+						class={{
+							"ui5-select-icon-root": true,
+							"inputIcon": true,
+							"inputIcon--pressed": this._iconPressed,
+						}}>
 						<Icon
 							part="icon"
 							name={slimArrowDown}

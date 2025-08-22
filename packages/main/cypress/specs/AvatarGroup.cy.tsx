@@ -172,3 +172,377 @@ describe("Accessibility", () => {
 	});
 });
 });
+
+describe("AvatarGroup Rendering and Events", () => {
+	it("tests if web component is correctly rendered", () => {
+		cy.mount(
+			<div style={{width: "400px"}}>
+				<AvatarGroup type="Individual">
+					<Avatar size="XL" interactive icon="home" initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+				</AvatarGroup>
+				<AvatarGroup type="Group">
+					<Avatar size="M" initials="M"></Avatar>
+					<Avatar size="M" initials="M"></Avatar>
+					<Avatar size="M" icon="home"></Avatar>
+				</AvatarGroup>
+			</div>
+		);
+
+		cy.get("[ui5-avatar-group]").eq(0)
+			.shadow()
+			.find("div")
+			.should("exist");
+
+		cy.get("[ui5-avatar-group]").eq(1)
+			.shadow()
+			.find("div")
+			.should("exist");
+	});
+
+	it("tests click event when avatar is clicked", () => {
+		cy.mount(
+			<div style={{width: "400px"}}>
+				<AvatarGroup type="Individual">
+					<Avatar size="XL" interactive icon="home" initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+				</AvatarGroup>
+			</div>
+		);
+
+		cy.get("[ui5-avatar-group]")
+			.as("avatarGroup")
+			.then(($avatarGroup) => {
+				$avatarGroup[0].addEventListener("ui5-click", cy.stub().as("clickStub"));
+			});
+
+		cy.get("[ui5-avatar]").first().realClick();
+
+		cy.get("@clickStub")
+			.should("have.been.calledOnce")
+			.its("firstCall.args.0.detail")
+			.should("deep.include", {
+				overflowButtonClicked: false
+			})
+			.its("targetRef.tagName")
+			.should("equal", "UI5-AVATAR");
+	});
+
+	it("tests click event when overflow button is clicked", () => {
+		cy.mount(
+			<div style={{width: "200px"}}>
+				<AvatarGroup type="Individual">
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+				</AvatarGroup>
+			</div>
+		);
+
+		cy.get("[ui5-avatar-group]")
+			.as("avatarGroup")
+			.then(($avatarGroup) => {
+				$avatarGroup[0].addEventListener("ui5-click", cy.stub().as("clickStub"));
+			});
+		
+		cy.get("@avatarGroup")
+			.shadow()
+			.find("ui5-button")
+			.realClick();
+
+		cy.get("@clickStub")
+			.should("have.been.calledOnce")
+			.its("firstCall.args.0.detail")
+			.should("deep.include", {
+				overflowButtonClicked: true
+			})
+			.its("targetRef.tagName")
+			.should("equal", "UI5-BUTTON");
+	});
+
+	it("tests click event avatar group with type group is clicked", () => {
+		cy.mount(
+			<AvatarGroup type="Group">
+				<Avatar size="M" initials="M"></Avatar>
+				<Avatar size="M" initials="M"></Avatar>
+				<Avatar size="M" icon="home"></Avatar>
+			</AvatarGroup>
+		);
+
+		cy.get("[ui5-avatar-group]")
+			.as("avatarGroup")
+			.then(($avatarGroup) => {
+				$avatarGroup[0].addEventListener("ui5-click", cy.stub().as("clickStub"));
+			});
+		
+		cy.get("@avatarGroup")
+			.shadow()
+			.find(".ui5-avatar-group-items")
+			.realClick();
+
+		cy.get("@clickStub")
+			.should("have.been.calledOnce")
+			.its("firstCall.args.0.detail")
+			.should("deep.include", {
+				overflowButtonClicked: false
+			})
+			.its("targetRef")
+			.then((targetRef) => {
+				expect(targetRef.tagName + "." + targetRef.className).to.equal("DIV.ui5-avatar-group-items");
+			});
+	});
+
+	it("tests if hiddenItems is correctly displayed in the overflow button", () => {
+		cy.viewport(200, 1080);
+
+		cy.mount(
+			<div style={{width: "400px"}}>
+				<AvatarGroup type="Individual">
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+				</AvatarGroup>
+			</div>
+		);
+	
+		cy.get("[ui5-avatar-group]")
+			.shadow()
+			.find("ui5-button")
+			.should("not.have.text", "")
+			.invoke("text")
+			.then((buttonText) => {
+				cy.get("[ui5-avatar-group]")
+					.then(($avatarGroup) => {
+						const avatarGroup = $avatarGroup[0] as AvatarGroup;
+						const hiddenItemsCount = avatarGroup.hiddenItems.length;
+						expect(buttonText).to.equal(`+${hiddenItemsCount}`);
+					});
+			});
+	});
+
+	it("tests if click event is firing only once", () => {
+		cy.mount(
+			<div style={{width: "400px"}}>
+				<AvatarGroup type="Individual">
+					<Avatar size="XL" interactive icon="home" initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive icon="home"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+				</AvatarGroup>
+				<AvatarGroup type="Group">
+					<Avatar size="XL" interactive icon="home" initials="XL"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+					<Avatar size="XL" interactive icon="home"></Avatar>
+					<Avatar size="XL" interactive initials="XL"></Avatar>
+				</AvatarGroup>
+			</div>
+		);
+
+		cy.get("[ui5-avatar-group]").eq(0)
+			.as("individualGroup")
+			.then(($avatarGroup) => {
+				$avatarGroup[0].addEventListener("ui5-click", cy.stub().as("individualClickStub"));
+			});
+
+		cy.get("[ui5-avatar-group]").eq(1)
+			.as("groupType")
+			.then(($avatarGroup) => {
+				$avatarGroup[0].addEventListener("ui5-click", cy.stub().as("groupClickStub"));
+			});
+
+		// Test individual avatar clicks
+		cy.get("[ui5-avatar]").first().realClick();
+		cy.get("@individualClickStub").should("have.been.calledOnce");
+
+		cy.get("[ui5-avatar]").first().realPress("Enter");
+		cy.get("@individualClickStub").should("have.been.calledTwice");
+
+		cy.get("[ui5-avatar]").first().realPress("Space");
+		cy.get("@individualClickStub").should("have.been.calledThrice");
+
+		// Test overflow button clicks
+		cy.get("@individualGroup")
+			.shadow()
+			.find("ui5-button")
+			.realClick();
+		cy.get("@individualClickStub").should("have.callCount", 4);
+
+		cy.get("@individualGroup")
+			.shadow()
+			.find("ui5-button")
+			.realPress("Enter");
+		cy.get("@individualClickStub").should("have.callCount", 5);
+
+		cy.get("@individualGroup")
+			.shadow()
+			.find("ui5-button")
+			.realPress("Space");
+		cy.get("@individualClickStub").should("have.callCount", 6);
+
+		// Test group avatar clicks
+		cy.get("@groupType").realClick();
+		cy.get("@groupClickStub").should("have.been.calledOnce");
+
+		cy.get("@groupType").realPress("Enter");
+		cy.get("@groupClickStub").should("have.been.calledTwice");
+
+		cy.get("@groupType").realPress("Space");
+		cy.get("@groupClickStub").should("have.been.calledThrice");
+	});
+});
+
+describe("AvatarGroup ARIA Attributes", () => {
+	describe("Type Individual", () => {
+		it("role is correct", () => {
+			cy.mount(
+				<div style={{width: "200px"}}>
+					<AvatarGroup type="Individual">
+						<Avatar size="XL" interactive icon="home" initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+					</AvatarGroup>
+				</div>
+			);
+
+			cy.get("[ui5-avatar-group]")
+				.should("have.prop", "_role", "group");
+		});
+
+		it("aria-haspopup is correct", () => {
+			cy.mount(
+				<div style={{width: "200px"}}>
+					<AvatarGroup type="Individual">
+						<Avatar size="XL" interactive icon="home" initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+					</AvatarGroup>
+				</div>
+			);
+
+			cy.get("[ui5-avatar-group]").then(($avatarGroup) => {
+				($avatarGroup[0] as any).accessibilityAttributes = { hasPopup: "menu" };
+			});
+
+			cy.get("[ui5-avatar-group]")
+				.then(($avatarGroup) => {
+					const avatarGroup = $avatarGroup[0] as AvatarGroup;
+					
+					expect(avatarGroup._containerAriaHasPopup).to.be.undefined;
+					
+					expect(avatarGroup._overflowButtonAccAttributes).to.exist;
+					expect(avatarGroup._overflowButtonAccAttributes.hasPopup).to.equal("menu");
+				});
+		});
+
+		it("aria-label is correct", () => {
+			cy.mount(
+				<div style={{width: "200px"}}>
+					<AvatarGroup type="Individual">
+						<Avatar size="XL" interactive icon="home" initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+						<Avatar size="XL" interactive initials="XL"></Avatar>
+					</AvatarGroup>
+				</div>
+			);
+
+			cy.get("[ui5-avatar-group]")
+				.then(($avatarGroup) => {
+					const ariaLabel = ($avatarGroup[0] as AvatarGroup)._ariaLabelText;
+					expect(ariaLabel).to.include("Individual avatars");
+					expect(ariaLabel).to.not.include("Show complete list");
+					expect(ariaLabel).to.include("Press ARROW keys");
+				});
+
+			cy.get("[ui5-avatar-group]")
+				.then(($avatarGroup) => {
+					const overflowButtonLabel = ($avatarGroup[0] as AvatarGroup)._overflowButtonAriaLabelText;
+					expect(overflowButtonLabel).to.include("Activate for complete list");
+				});
+		});
+	});
+
+	describe("Type Group", () => {
+		it("role is correct", () => {
+			cy.mount(
+				<AvatarGroup type="Group">
+					<Avatar size="M" initials="M"></Avatar>
+					<Avatar size="M" initials="M"></Avatar>
+					<Avatar size="M" initials="M"></Avatar>
+				</AvatarGroup>
+			);
+
+			cy.get("[ui5-avatar-group]")
+				.should("have.prop", "_role", "button");
+		});
+
+		it("aria-haspopup is correct", () => {
+			cy.mount(
+				<AvatarGroup type="Group">
+					<Avatar size="M" initials="M"></Avatar>
+					<Avatar size="M" initials="M"></Avatar>
+					<Avatar size="M" initials="M"></Avatar>
+				</AvatarGroup>
+			);
+
+			cy.get("[ui5-avatar-group]").then(($avatarGroup) => {
+				($avatarGroup[0] as AvatarGroup).accessibilityAttributes = { hasPopup: "menu" };
+			});
+
+			cy.get("[ui5-avatar-group]")
+				.then(($avatarGroup) => {
+					const avatarGroup = $avatarGroup[0] as AvatarGroup;
+					
+					expect(avatarGroup._containerAriaHasPopup).to.equal("menu");
+					
+					if (avatarGroup._overflowButtonAccAttributes) {
+						expect(avatarGroup._overflowButtonAccAttributes.hasPopup).to.be.undefined;
+					}
+				});
+		});
+
+		it("aria-label is correct", () => {
+			cy.mount(
+				<AvatarGroup type="Group">
+					<Avatar size="M" initials="M"></Avatar>
+					<Avatar size="M" initials="M"></Avatar>
+					<Avatar size="M" initials="M"></Avatar>
+				</AvatarGroup>
+			);
+
+			cy.get("[ui5-avatar-group]")
+				.then(($avatarGroup) => {
+					const avatarGroup = $avatarGroup[0] as AvatarGroup;
+					const ariaLabel = avatarGroup._ariaLabelText;
+					const overflowButtonLabel = avatarGroup._overflowButtonAriaLabelText;
+
+					expect(ariaLabel).to.include("Conjoined avatars");
+					expect(ariaLabel).to.include("Activate for complete list");
+					expect(ariaLabel).to.not.include("Press ARROW keys");
+					
+					expect(overflowButtonLabel).to.be.undefined;
+				});
+		});
+	});
+});
