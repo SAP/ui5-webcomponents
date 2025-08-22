@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.3](https://github.com/SAP/ui5-webcomponents/compare/v2.13.2...v2.13.3) (2025-08-22)
+
+
+### Bug Fixes
+
+* **framework:** improve CSS variables from OpenUI5 detection ([#12177](https://github.com/SAP/ui5-webcomponents/issues/12177)) ([ea5fb6e](https://github.com/SAP/ui5-webcomponents/commit/ea5fb6e4e4fdf567d15df27040189ba03a023394))
+
+
+
+
+
 ## [2.13.2](https://github.com/SAP/ui5-webcomponents/compare/v2.13.1...v2.13.2) (2025-08-06)
 
 
