@@ -306,7 +306,7 @@ describe("Events", () => {
 
 		cy.get("#dialogId")
 			.invoke("prop", "open", true);
-			
+
 		cy.get<Dialog>("#dialogId").ui5DialogOpened();;
 	});
 
@@ -1454,5 +1454,46 @@ describe("Dialog initially open", () => {
 
 		// Assert dialog matches :popover-open selector
 		cy.get("#dialogOpen").should("match", ":popover-open");
+	});
+
+	it("initial focus", () => {
+		cy.mount(
+			<>
+				<Dialog id="dialogId"
+						headerText="Dialog Header"
+						open>
+					<div>
+						<input id="innerInput" />
+					</div>
+				</Dialog>
+			</>
+		);
+
+		cy.get("#dialogId")
+			.should("be.visible");
+
+		cy.get("#innerInput")
+			.should("be.focused");
+	});
+
+	it("initial focus prevented", () => {
+		cy.mount(
+			<>
+				<Dialog id="dialogId"
+						headerText="Dialog Header"
+						open
+						preventInitialFocus>
+					<div>
+						<input id="innerInput" />
+					</div>
+				</Dialog>
+			</>
+		);
+
+		cy.get("#dialogId")
+			.should("be.visible");
+
+		cy.get("#innerInput")
+			.should("not.be.focused");
 	});
 });
