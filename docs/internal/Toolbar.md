@@ -64,10 +64,10 @@ export default function ToolbarButtonTemplate(this: ToolbarButton) {
 	return (
 		<div>
 			<Button
-			  class="ui5-tb-item"
-			  disabled={this.disabled}
-			  data-ui5-external-action-item-id={this._id}
-			  data-ui5-stable={this.stableDomRef}
+				 class="ui5-tb-item"
+				 disabled={this.disabled}
+				 data-ui5-external-action-item-id={this._id}
+				 data-ui5-stable={this.stableDomRef}
 			>
 			  {this.text}
 			</Button>
