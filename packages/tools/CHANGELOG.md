@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.1...v2.14.0-rc.2) (2025-08-21)
+
+
+### Bug Fixes
+
+* **framework:** use font-face declarations from theming-base-content ([#12144](https://github.com/SAP/ui5-webcomponents/issues/12144)) ([50deee9](https://github.com/SAP/ui5-webcomponents/commit/50deee9b9f512d3bd506de1648d3dc8f145a7d88))
+
+
+
+
+
+# [2.14.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.0...v2.14.0-rc.1) (2025-08-14)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
 # [2.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0...v2.14.0-rc.0) (2025-08-07)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools
