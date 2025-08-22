@@ -519,8 +519,8 @@ class ColorPalette extends UI5Element {
 
 	_isElementInLastRow(target: ColorPaletteItem) {
 		const index = this.displayedColors.indexOf(target);
-		const length = this.displayedColors.length;
-		return index >= length - (length % this.rowSize);
+		const swatchesPerRow = this.displayedColors.length % this.rowSize;
+		return index >= this.displayedColors.length - swatchesPerRow;
 	}
 
 	_onRecentColorsContainerKeyDown(e: KeyboardEvent) {
