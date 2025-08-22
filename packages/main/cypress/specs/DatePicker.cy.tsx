@@ -3,7 +3,6 @@ import "../../src/Assets.js";
 import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import DatePicker from "../../src/DatePicker.js";
 import Label from "../../src/Label.js";
-import Input from "../../src/Input.js";
 
 describe("Date Picker Tests", () => {
 	it("input renders", () => {
@@ -269,35 +268,6 @@ describe("Date Picker Tests", () => {
 			.should("have.value", "");
 	});
 
-	it("change fires when we change the input back to its original value", () => {
-		cy.mount(<DatePicker value="2015" valueFormat="y" displayFormat="y"></DatePicker>);
-
-		cy.get("[ui5-date-picker]")
-			.as("datePicker")
-			.ui5DatePickerGetInnerInput()
-			.as("input")
-			.realClick()
-			.should("be.focused");
-
-		cy.get("@input")
-			.realPress("Backspace")
-			.realPress("Backspace")
-			.realPress("Backspace")
-			.realPress("Backspace")
-			.realPress("Enter");
-
-		cy.get<DatePicker>("@datePicker")
-			.should("have.value", "");
-
-		cy.get("@input")
-			.should("be.focused")
-			.realType("2015")
-			.realPress("Enter");
-
-		cy.get<DatePicker>("@datePicker")
-			.should("have.value", "2015");
-	});
-
 	it("respect first day of the week - monday", () => {
 		cy.wrap({ setLanguage })
 			.invoke("setLanguage", "bg");
@@ -356,6 +326,35 @@ describe("Date Picker Tests", () => {
 			.should("have.attr", "open");
 	});
 
+	it("change fires when we change the input back to its original value", () => {
+		cy.mount(<DatePicker value="2015" formatPattern="y"></DatePicker>);
+
+		cy.get("[ui5-date-picker]")
+			.as("datePicker")
+			.ui5DatePickerGetInnerInput()
+			.as("input")
+			.realClick()
+			.should("be.focused");
+
+		cy.get("@input")
+			.realPress("Backspace")
+			.realPress("Backspace")
+			.realPress("Backspace")
+			.realPress("Backspace")
+			.realPress("Enter");
+
+		cy.get<DatePicker>("@datePicker")
+			.should("have.value", "");
+
+		cy.get("@input")
+			.should("be.focused")
+			.realType("2015")
+			.realPress("Enter");
+
+		cy.get<DatePicker>("@datePicker")
+			.should("have.value", "2015");
+	});
+
 	it("change fires every time tomorrow is typed and normalized", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
@@ -391,25 +390,6 @@ describe("Date Picker Tests", () => {
 		cy.get<DatePicker>("@datePicker")
 			.ui5DatePickerGetPopoverDate(timestampToday)
 			.should("have.class", "ui5-dp-item--selected");
-	});
-
-	it("[Shift] + [F4] shows year picker after date picker is open", () => {
-		cy.mount(<DatePicker></DatePicker>);
-
-		cy.get("[ui5-date-picker]")
-			.as("datePicker")
-			.ui5DatePickerValueHelpIconPress();
-
-		cy.get<DatePicker>("@datePicker")
-			.shadow()
-			.find("ui5-calendar")
-			.as("calendar")
-			.realPress(["Shift", "F4"]);
-
-		cy.get("@calendar")
-			.shadow()
-			.find("ui5-yearpicker")
-			.should("be.visible");
 	});
 
 	it("[F4] toggles the calendar", () => {
@@ -505,14 +485,12 @@ describe("Date Picker Tests", () => {
 			.should("be.visible");
 	});
 
-	it("[F4] shows month picker after year picker is open", () => {
+	it("[Shift] + [F4] shows year picker after date picker is open", () => {
 		cy.mount(<DatePicker></DatePicker>);
 
 		cy.get("[ui5-date-picker]")
 			.as("datePicker")
 			.ui5DatePickerValueHelpIconPress();
-
-		cy.wait(150)
 
 		cy.get<DatePicker>("@datePicker")
 			.shadow()
@@ -521,6 +499,23 @@ describe("Date Picker Tests", () => {
 			.realPress(["Shift", "F4"]);
 
 		cy.get("@calendar")
+			.shadow()
+			.find("ui5-yearpicker")
+			.should("be.visible");
+	});
+
+	it("[F4] shows month picker after year picker is open", () => {
+		cy.mount(<DatePicker></DatePicker>);
+
+		cy.get("[ui5-date-picker]")
+			.as("datePicker")
+			.ui5DatePickerValueHelpIconPress();
+
+		cy.get<DatePicker>("@datePicker")
+			.shadow()
+			.find("ui5-calendar")
+			.as("calendar")
+			.realPress(["Shift", "F4"])
 			.realPress("F4");
 
 		cy.get("@calendar")
@@ -540,11 +535,7 @@ describe("Date Picker Tests", () => {
 			.shadow()
 			.find("ui5-calendar")
 			.as("calendar")
-			.realPress("F4");
-
-		cy.wait(50);
-
-		cy.get("@calendar")
+			.realPress("F4")
 			.realPress(["Shift", "F4"]);
 
 		cy.get("@calendar")
@@ -1678,28 +1669,17 @@ describe("Legacy date customization and Islamic calendar type", () => {
 	});
 
 	it("Islamic calendar type input value", () => {
-		cy.mount(
-			<>
-				<Input id="sourceInput" value="Rab. I 6, 1440 AH"></Input>
-				<DatePicker primaryCalendarType="Islamic" formatPattern="MMM d, y G"></DatePicker>
-			</>
-		);
+		cy.mount(<DatePicker primaryCalendarType="Islamic" formatPattern="MMM d, y G"></DatePicker>);
 
-		cy.get("[ui5-input]") // get the value from the input
-			.invoke("attr", "value")
-			.then((value) => {
-				cy.get("[ui5-date-picker]") // manually enter the value from the input to the date picker
-					.as("datePicker")
-					.ui5DatePickerGetInnerInput()
-					.as("input")
-					.realClick()
-					.should("be.focused")
-					.realPress(["Control", "a"]) // clear existing content
-					.realType(value as string, { delay: 25 }) // type the value
-					.realPress("Enter");
-			});
+		cy.get("[ui5-date-picker]")
+			.as("datePicker")
+			.ui5DatePickerGetInnerInput()
+			.as("input")
+			.realClick()
+			.should("be.focused")
+			.realType("Rab. I 6, 1440 AH")
+			.realPress("Enter");
 
-		cy.wait("Rab. I 6, 1440 AH".length * 26); // the delay from above +1ms buffer
 		cy.get("@datePicker")
 			.should("have.value", "Rab. I 6, 1440 AH");
 
