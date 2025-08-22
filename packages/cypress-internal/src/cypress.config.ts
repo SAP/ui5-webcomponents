@@ -7,6 +7,7 @@ import svgTask from "./svg_validation/task.js";
 
 
 export default defineConfig({
+	e2e: {},
 	component: {
 		setupNodeEvents(on, config) {
 			coverageTask(on, config);

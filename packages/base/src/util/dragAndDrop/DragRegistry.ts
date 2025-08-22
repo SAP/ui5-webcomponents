@@ -101,16 +101,16 @@ const attachGlobalHandlers = () => {
 		return;
 	}
 
-	document.body.addEventListener("dragstart", ondragstart);
-	document.body.addEventListener("dragend", ondragend);
-	document.body.addEventListener("drop", ondrop);
+	document.body?.addEventListener("dragstart", ondragstart);
+	document.body?.addEventListener("dragend", ondragend);
+	document.body?.addEventListener("drop", ondrop);
 	globalHandlersAttached = true;
 };
 
 const detachGlobalHandlers = () => {
-	document.body.removeEventListener("dragstart", ondragstart);
-	document.body.removeEventListener("dragend", ondragend);
-	document.body.removeEventListener("drop", ondrop);
+	document.body?.removeEventListener("dragstart", ondragstart);
+	document.body?.removeEventListener("dragend", ondragend);
+	document.body?.removeEventListener("drop", ondrop);
 	globalHandlersAttached = false;
 };
 
