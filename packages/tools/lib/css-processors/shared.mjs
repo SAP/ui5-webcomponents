@@ -42,8 +42,8 @@ const getDefaultThemeCode = packageName => {
 import defaultThemeBase from "@ui5/webcomponents-theming/dist/generated/themes/${DEFAULT_THEME}/parameters-bundle.css.js";
 import defaultTheme from "./${DEFAULT_THEME}/parameters-bundle.css.js";
 
-registerThemePropertiesLoader("@ui5/webcomponents-theming", "${DEFAULT_THEME}", async () => defaultThemeBase);
-registerThemePropertiesLoader("${packageName}", "${DEFAULT_THEME}", async () => defaultTheme);
+registerThemePropertiesLoader("@" + "ui5" + "/" + "webcomponents-theming", "${DEFAULT_THEME}", async () => defaultThemeBase);
+registerThemePropertiesLoader(${ packageName.split("").map(c => `"${c}"`).join (" + ") }, "${DEFAULT_THEME}", async () => defaultTheme);
 `;
 };
 
