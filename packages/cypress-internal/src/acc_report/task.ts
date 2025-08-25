@@ -102,7 +102,7 @@ function accTask(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) 
 			}
 		})
 
-		config.env.ui5AccTasksRegistered = true
+		config.env.ui5AccTasksRegistered = "axe"
 	}
 
 	return config
