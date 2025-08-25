@@ -113,7 +113,7 @@ type Picker = "day" | "month" | "year";
  * the input field, it must fit to the used date format.
  *
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see [UTS #35: Unicode Locale Data Markup Language](http://unicode.org/reports/tr35/#Date_Field_Symbol_Table).
+ * For more information, see [UTS #35: Unicode Locale Data Markup Language](https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table).
  *
  * For example, if the `format-pattern` is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
