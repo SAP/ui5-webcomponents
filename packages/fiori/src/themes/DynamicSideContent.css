@@ -215,22 +215,6 @@
 		display: block;
 	}
 
-	/* Toggling logic - works for any visibility mode except NeverShow */
-	/*
-	:host(:not([side-content-visibility="NeverShow"]):not([hide-main-content])) .ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-main {
-		display: none;
-	}
-	:host(:not([side-content-visibility="NeverShow"]):not([hide-side-content])) .ui5-dsc-root.ui5-dsc-toggled .ui5-dsc-side {
-		display: block;
-	}
-	:host(:not([side-content-visibility="NeverShow"]):not([hide-main-content])) .ui5-dsc-root:not(.ui5-dsc-toggled) .ui5-dsc-main {
-		display: block;
-	}
-	:host(:not([side-content-visibility="NeverShow"]):not([side-content-visibility="AlwaysShow"]):not([hide-side-content])) .ui5-dsc-root:not(.ui5-dsc-toggled) .ui5-dsc-side {
-		display: none;
-	}
-	*/
-
 	/* Hide rules in S breakpoint */
 	:host([hide-main-content]) .ui5-dsc-side,
 	:host([hide-side-content]) .ui5-dsc-main {

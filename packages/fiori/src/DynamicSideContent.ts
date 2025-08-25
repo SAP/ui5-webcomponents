@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -235,6 +236,10 @@ class DynamicSideContent extends UI5Element {
 	@slot()
 	sideContent!: Array<HTMLElement>;
 
+	@query(".ui5-dsc-main") _mainContent!: HTMLElement;
+
+	@query(".ui5-dsc-side") _sideContent!: HTMLElement;
+
 	_resizeObserver?: ResizeObserver;
 
 	@i18n("@ui5/webcomponents-fiori")
@@ -290,12 +295,11 @@ class DynamicSideContent extends UI5Element {
 	 * @private
 	 */
 	_getMainContentVisibility(): boolean {
-		const mainElement = this.shadowRoot?.querySelector(".ui5-dsc-main") as HTMLElement;
-		if (!mainElement) {
+		if (!this._mainContent) {
 			return false;
 		}
 
-		const computedStyle = getComputedStyle(mainElement);
+		const computedStyle = getComputedStyle(this._mainContent);
 		return computedStyle.display !== "none";
 	}
 
@@ -304,12 +308,11 @@ class DynamicSideContent extends UI5Element {
 	 * @private
 	 */
 	_getSideContentVisibility(): boolean {
-		const sideElement = this.shadowRoot?.querySelector(".ui5-dsc-side") as HTMLElement;
-		if (!sideElement) {
+		if (!this._sideContent) {
 			return false;
 		}
 
-		const computedStyle = getComputedStyle(sideElement);
+		const computedStyle = getComputedStyle(this._sideContent);
 		return computedStyle.display !== "none";
 	}
 
