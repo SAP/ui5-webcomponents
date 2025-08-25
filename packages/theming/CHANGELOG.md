@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.2...v2.14.0-rc.3) (2025-08-22)
+
+
+### Bug Fixes
+
+* **tools:** correct strip unused theming base content ([#12133](https://github.com/SAP/ui5-webcomponents/issues/12133)) ([a97901d](https://github.com/SAP/ui5-webcomponents/commit/a97901da861836a5567cd4076a34bb07522ef7ba))
+
+
+
+
+
 # [2.14.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.1...v2.14.0-rc.2) (2025-08-21)
 
 **Note:** Version bump only for package @ui5/webcomponents-theming

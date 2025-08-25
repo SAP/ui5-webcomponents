@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.2...v2.14.0-rc.3) (2025-08-22)
+
+
+### Bug Fixes
+
+* **ui5-toolbar:** extend search field type to ShellBarSearch  ([#12172](https://github.com/SAP/ui5-webcomponents/issues/12172)) ([6bf6727](https://github.com/SAP/ui5-webcomponents/commit/6bf6727e3421edc201b3288478144cd4575fcdae))
+
+
+
+
+
 # [2.14.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.1...v2.14.0-rc.2) (2025-08-21)
 
 

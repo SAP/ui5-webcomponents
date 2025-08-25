@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.2...v2.14.0-rc.3) (2025-08-22)
+
+
+### Bug Fixes
+
+* **f6navigation:** skip non-element nodes when resolving groups ([#12174](https://github.com/SAP/ui5-webcomponents/issues/12174)) ([060af95](https://github.com/SAP/ui5-webcomponents/commit/060af95baf3273a8dc09460122e3dc76bf5f5a1c))
+* **framework:** improve CSS variables from OpenUI5 detection ([#12177](https://github.com/SAP/ui5-webcomponents/issues/12177)) ([9199825](https://github.com/SAP/ui5-webcomponents/commit/9199825e6aecb9c407f6e67d8768025233e10f16))
+* **ui5-select-popover:** align title in header on phone ([#12085](https://github.com/SAP/ui5-webcomponents/issues/12085)) ([843152e](https://github.com/SAP/ui5-webcomponents/commit/843152e410d2deee9b8b39786602b7340d3884db)), closes [#11956](https://github.com/SAP/ui5-webcomponents/issues/11956)
+* **ui5-toast:** fix toast spacing in safari ([79a784b](https://github.com/SAP/ui5-webcomponents/commit/79a784b21da0681899711c7140f1cc3ae346d665))
+
+
+
+
+
 # [2.14.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.1...v2.14.0-rc.2) (2025-08-21)
 
 
