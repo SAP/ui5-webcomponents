@@ -589,6 +589,40 @@ describe("Toolbar Select", () => {
 			});
 		});
 	});
+
+	it("Should correctly handle the 'value' property and 'label' slot of ToolbarSelect", () => {
+		// Mount the Toolbar with a ToolbarSelect component
+		cy.mount(
+			<Toolbar>
+				<ToolbarSelect value="Option 2">
+					<span slot="label">Select an Option:</span>
+					<ToolbarSelectOption>Option 1</ToolbarSelectOption>
+					<ToolbarSelectOption>Option 2</ToolbarSelectOption>
+					<ToolbarSelectOption>Option 3</ToolbarSelectOption>
+				</ToolbarSelect>
+			</Toolbar>
+		);
+
+		// Verify the initial value of the ToolbarSelect
+		cy.get("ui5-select", { includeShadowDom: true })
+			.should("have.attr", "value", "Option 2");
+
+		// Verify the label slot content
+		cy.get("ui5-toolbar-select")
+			.find("span[slot='label']")
+			.should("contain.text", "Select an Option:");
+
+		// Change the value of the ToolbarSelect
+		cy.get("ui5-select", { includeShadowDom: true })
+			.realClick()
+			.find("ui5-option")
+			.contains("Option 3")
+			.realClick();
+
+		// Verify the updated value of the ToolbarSelect
+		cy.get("ui5-select", { includeShadowDom: true })
+			.should("have.attr", "value", "Option 3");
+	});
 });
 
 describe("Toolbar Button", () => {
