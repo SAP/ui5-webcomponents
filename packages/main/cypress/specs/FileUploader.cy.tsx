@@ -467,4 +467,29 @@ describe("Accessibility", () => {
 			.find("input[type='file']")
 			.should("have.attr", "aria-label", "Application context");
 	});
+
+	it("accessibleDescription", () => {
+		const DESCRIPTION = "File uploader description";
+		cy.mount(<FileUploader accessibleDescription={DESCRIPTION}></FileUploader>);
+
+		cy.get("[ui5-file-uploader]")
+			.shadow()
+			.find("input[type='file']")
+			.should("have.attr", "aria-description", DESCRIPTION)
+	});
+
+	it("accessibleDescriptionRef", () => {
+		const DESCRIPTION = "External file uploader description";
+		cy.mount(
+			<>
+				<p id="accessibleDescription">{DESCRIPTION}</p>
+				<FileUploader accessibleDescriptionRef="accessibleDescription"></FileUploader>
+			</>
+		);
+
+		cy.get("[ui5-file-uploader]")
+			.shadow()
+			.find("input[type='file']")
+			.should("have.attr", "aria-description", DESCRIPTION)
+	});
 });

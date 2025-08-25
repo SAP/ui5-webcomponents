@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.3...v2.14.0-rc.4) (2025-08-25)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** change content slot type ([#12186](https://github.com/SAP/ui5-webcomponents/issues/12186)) ([25b2f3b](https://github.com/SAP/ui5-webcomponents/commit/25b2f3b71e8f0518369987766da4596ca8a2dd98))
+
+
+
+
+
 # [2.14.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.2...v2.14.0-rc.3) (2025-08-22)
 
 
