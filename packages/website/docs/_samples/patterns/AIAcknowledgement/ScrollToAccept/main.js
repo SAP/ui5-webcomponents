@@ -17,20 +17,17 @@ dialog.open = true;
 acceptButton.addEventListener("click", function (event) {
 	if (!hasScrolledToBottom) {
 		event.preventDefault();
-		alert("Please scroll to the end of the terms before continuing.");
 		return;
 	}
 
 	if (!checkbox.checked) {
 		event.preventDefault();
-		alert("Please accept the terms and conditions to continue.");
 	}
 });
 
 checkbox.addEventListener("mousedown", (event) => {
 		if (!hasScrolledToBottom) {
 			event.preventDefault();
-			alert("Please scroll to the end of the terms before accepting them.");
 		}
 	});
 
@@ -49,5 +46,6 @@ termsPanel.addEventListener("scroll", function () {
 
 	if (atBottom) {
 		hasScrolledToBottom = true;
+		acceptButton.disabled = !checkbox.checked;
 	}
 });
