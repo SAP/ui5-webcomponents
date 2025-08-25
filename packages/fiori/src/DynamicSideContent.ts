@@ -227,7 +227,7 @@ class DynamicSideContent extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_isSideBelow = false;
+	_isSideContentBelowMainContent = false;
 
 	/**
 	 * Defines the side content.
@@ -236,9 +236,11 @@ class DynamicSideContent extends UI5Element {
 	@slot()
 	sideContent!: Array<HTMLElement>;
 
-	@query(".ui5-dsc-main") _mainContent!: HTMLElement;
+	@query(".ui5-dsc-main")
+	_mainContent!: HTMLElement;
 
-	@query(".ui5-dsc-side") _sideContent!: HTMLElement;
+	@query(".ui5-dsc-side")
+	_sideContent!: HTMLElement;
 
 	_resizeObserver?: ResizeObserver;
 
@@ -260,7 +262,7 @@ class DynamicSideContent extends UI5Element {
 					breakpoint = "XL";
 				}
 
-				this._isSideBelow = this.isSideBelow;
+				this._isSideContentBelowMainContent = this.isSideContentBelowMainContent;
 
 				if (breakpoint !== this._currentBreakpoint) {
 					this.fireDecoratorEvent("layout-change", {
@@ -331,33 +333,38 @@ class DynamicSideContent extends UI5Element {
 		};
 	}
 
-	get isSideBelow() {
+	get isSideContentBelowMainContent() {
 		if (this.sideContentVisibility === "NeverShow") {
 			return false;
 		}
-		return (
-			(this.sideContentFallDown === "OnMinimumWidth" && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT)
-			|| (this.sideContentFallDown === "BelowM" && this._currentBreakpoint === this.sizeM)
-			|| (this.sideContentFallDown === "BelowM" && this._currentBreakpoint === this.sizeS)
-			|| (this.sideContentFallDown === "BelowL" && (this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS))
-			|| (this.sideContentFallDown === "BelowXL" && (this._currentBreakpoint === this.sizeL || this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS) && this._currentBreakpoint !== this.sizeXL)
-			|| (this.sideContentVisibility === "AlwaysShow" && this._currentBreakpoint === this.sizeS)
-			|| (this.sideContentVisibility === "AlwaysShow" && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT)
+
+		// Cases when side content falls below main content
+		const fallOnMinimumWidth = this.sideContentFallDown === "OnMinimumWidth" && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT;
+		const fallBelowM = this.sideContentFallDown === "BelowM" && (this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS);
+		const fallBelowL = this.sideContentFallDown === "BelowL" && (this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS);
+		const fallBelowXL = this.sideContentFallDown === "BelowXL"
+			&& (this._currentBreakpoint === this.sizeL || this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS)
+			&& this._currentBreakpoint !== this.sizeXL;
+		const fallWhenAlwaysShow = this.sideContentVisibility === "AlwaysShow" && (
+			this._currentBreakpoint === this.sizeS
+			|| (this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT)
 		);
+
+		return fallOnMinimumWidth || fallBelowM || fallBelowL || fallBelowXL || fallWhenAlwaysShow;
 	}
 
 	get styles() {
-		this._isSideBelow = this.isSideBelow;
+		this._isSideContentBelowMainContent = this.isSideContentBelowMainContent;
 
 		return {
 			root: {
 				"flex-wrap": "nowrap",
 			},
 			main: {
-				"height": this._isSideBelow ? "auto" : "100%",
+				"height": this._isSideContentBelowMainContent ? "auto" : "100%",
 			},
 			side: {
-				"height": this._isSideBelow ? "auto" : "100%",
+				"height": this._isSideContentBelowMainContent ? "auto" : "100%",
 			},
 		};
 	}

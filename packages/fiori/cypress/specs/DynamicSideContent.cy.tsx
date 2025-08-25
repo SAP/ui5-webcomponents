@@ -200,6 +200,9 @@ describe("'layout-change' event:", () => {
 		// Change to > 1024 and < 1440 (L) to ensure previous breakpoint for the next event
 		cy.viewport(1300, 500);
 
+		cy.get("@layoutChange")
+			.should("be.called");
+
 		// Change to M
 		cy.viewport(900, 500);
 
