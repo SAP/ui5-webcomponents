@@ -1803,7 +1803,7 @@ describe("Event firing", () => {
 			.should("have.been.calledTwice");
 	});
 
-	it.skip("Should prevent selection-change when clicking an item", () => {
+	it("Should prevent selection-change when clicking an item", () => {
 		const onSelectionChange = (e:Event) => {
 			e.preventDefault();
 		}
