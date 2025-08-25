@@ -252,6 +252,7 @@ abstract class Popup extends UI5Element {
 	_focusedElementBeforeOpen?: HTMLElement | null;
 	_opened = false;
 	_open = false;
+	_resizeHandlerRegistered = false;
 
 	constructor() {
 		super();
@@ -273,10 +274,10 @@ abstract class Popup extends UI5Element {
 			this._updateMediaRange();
 		});
 
-		ResizeHandler.deregister(this, this._resizeHandler);
-
-		if (this._opened) {
-			ResizeHandler.register(this, this._resizeHandler);
+		if (this.open) {
+			this._registerResizeHandler();
+		} else {
+			this._deregisterResizeHandler();
 		}
 	}
 
@@ -606,6 +607,20 @@ abstract class Popup extends UI5Element {
 		if (this.isConnected) {
 			this.setAttribute("popover", "manual");
 			this.showPopover();
+		}
+	}
+
+	_registerResizeHandler() {
+		if (!this._resizeHandlerRegistered) {
+			ResizeHandler.register(this, this._resizeHandler);
+			this._resizeHandlerRegistered = true;
+		}
+	}
+
+	_deregisterResizeHandler() {
+		if (this._resizeHandlerRegistered) {
+			ResizeHandler.deregister(this, this._resizeHandler);
+			this._resizeHandlerRegistered = false;
 		}
 	}
 
