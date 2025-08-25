@@ -18,7 +18,6 @@ import {
 	isPageDown,
 	isHome,
 	isEnd,
-	isRight,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
@@ -205,12 +204,6 @@ class Search extends SearchField {
 	_valueBeforeOpen: string;
 
 	/**
-	 * True if the first matching item is matched by starts with per term, rather than by starts with.
-	 * @private
-	 */
-	_matchedPerTerm: boolean;
-
-	/**
 	 * Holds the currently proposed item which will be selected if the user presses Enter.
 	 * @private
 	 */
@@ -224,7 +217,6 @@ class Search extends SearchField {
 
 		// The typed in value.
 		this._typedInValue = "";
-		this._matchedPerTerm = false;
 		this._valueBeforeOpen = this.getAttribute("value") || "";
 	}
 
@@ -313,27 +305,15 @@ class Search extends SearchField {
 
 	_handleTypeAhead(item: ISearchSuggestionItem) {
 		const originalValue = item.text || "";
-		let displayValue = originalValue;
-
-		if (!originalValue.toLowerCase().startsWith(this.value.toLowerCase())) {
-			this._matchedPerTerm = true;
-			displayValue = `${this.value} - ${originalValue}`;
-		} else {
-			this._matchedPerTerm = false;
-		}
 
 		this._typedInValue = this.value;
-		this._innerValue = displayValue;
+		this._innerValue = originalValue;
 		this._performTextSelection = true;
-		this.value = displayValue;
+		this.value = originalValue;
 	}
 
 	_startsWithMatchingItems(str: string): Array<ISearchSuggestionItem> {
 		return StartsWith(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "text");
-	}
-
-	_startsWithPerTermMatchingItems(str: string): Array<ISearchSuggestionItem> {
-		return StartsWithPerTerm(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "text");
 	}
 
 	_isGroupItem(item: HTMLElement): item is SearchItemGroup {
@@ -366,15 +346,6 @@ class Search extends SearchField {
 		}
 	}
 
-	_handleRight(e: KeyboardEvent) {
-		if (this._matchedPerTerm) {
-			e.preventDefault();
-			this.value = this._typedInValue;
-			this._innerValue = this._typedInValue;
-			this._proposedItem = undefined;
-		}
-	}
-
 	_handleInnerClick() {
 		if (isPhone()) {
 			this.open = true;
@@ -397,12 +368,6 @@ class Search extends SearchField {
 		}
 
 		const innerInput = this.nativeInput!;
-		if (this._matchedPerTerm) {
-			this.value = this._proposedItem?.text || this.value;
-			this._innerValue = this.value;
-			this._typedInValue = this.value;
-			this._matchedPerTerm = false;
-		}
 
 		innerInput.setSelectionRange(this.value.length, this.value.length);
 		this.open = false;
@@ -502,10 +467,6 @@ class Search extends SearchField {
 		this._shouldAutocomplete = !this.noTypeahead
 			&& !(isBackSpace(e) || isDelete(e) || isEscape(e) || isUp(e) || isDown(e) || isTabNext(e) || isEnter(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e) || isEscape(e));
 
-		if (isRight(e)) {
-			this._handleRight(e);
-		}
-
 		if (isDown(e)) {
 			this._handleDown(e);
 		}
@@ -513,15 +474,6 @@ class Search extends SearchField {
 		if (isEscape(e)) {
 			this._handleEscape();
 		}
-	}
-
-	_onfocusout() {
-		super._onfocusout();
-		if (this._matchedPerTerm) {
-			this.value = this._typedInValue;
-			this._innerValue = this._typedInValue;
-		}
-		this._matchedPerTerm = false;
 	}
 
 	_onFocusOutSearch(e:FocusEvent) {
@@ -579,19 +531,12 @@ class Search extends SearchField {
 		}
 
 		const startsWithMatches = this._startsWithMatchingItems(current);
-		const partialMatches = this._startsWithPerTermMatchingItems(current);
 
 		if (!startsWithMatches.length) {
-			return partialMatches[0] ?? undefined;
+			return undefined;
 		}
 
-		if (!partialMatches.length) {
-			return startsWithMatches[0];
-		}
-
-		return this._flattenItems.indexOf(startsWithMatches[0]) <= this._flattenItems.indexOf(partialMatches[0])
-			? startsWithMatches[0]
-			: partialMatches[0];
+		return startsWithMatches[0];
 	}
 
 	_getPicker() {
