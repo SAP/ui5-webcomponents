@@ -152,7 +152,7 @@ describe("General interactions in form", () => {
 			});
 
 		cy.get("#requiredTestSwitch:invalid")
-			.should("exist", "Unchecked required switch should have :invalid CSS class");
+			.should("exist", "Unchecked required Switch should have :invalid CSS class");
 
 		cy.get("#requiredTestSwitch")
 			.realClick();

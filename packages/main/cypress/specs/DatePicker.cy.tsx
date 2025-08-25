@@ -1681,7 +1681,7 @@ describe("Legacy date customization and Islamic calendar type", () => {
 describe("Validation inside a form", () => {
 	it("has correct validity", () => {
 		cy.mount(<form method="get">
-			<DatePicker id="dp" name="checkbox5" required={true}></DatePicker>
+			<DatePicker id="datePicker" required={true}></DatePicker>
 			<button type="submit" id="submitBtn" > Submits forms </button>
 		</form>);
 
@@ -1696,20 +1696,20 @@ describe("Validation inside a form", () => {
 		cy.get("@submit")
 			.should("have.not.been.called");
 
-		cy.get("#dp")
+		cy.get("#datePicker")
 			.then($el => {
 				const datePicker = $el[0] as DatePicker;
-				expect(datePicker.formValidity.valueMissing, "Required datepicker without value should have formValidity with valueMissing=true").to.be.true;
-				expect(datePicker.validity.valueMissing, "Required datepicker without value should have validity with valueMissing=true").to.be.true;
-				expect(datePicker.validity.valid, "Required datepicker without value should have validity with valid=false").to.be.false;
-				expect(datePicker.checkValidity(), "Required datepicker without value fail validity check").to.be.false;
-				expect(datePicker.reportValidity(), "Required datepicker without value should fail report validity").to.be.false;
+				expect(datePicker.formValidity.valueMissing, "Required DatePicker without value should have formValidity with valueMissing=true").to.be.true;
+				expect(datePicker.validity.valueMissing, "Required DatePicker without value should have validity with valueMissing=true").to.be.true;
+				expect(datePicker.validity.valid, "Required DatePicker without value should have validity with valid=false").to.be.false;
+				expect(datePicker.checkValidity(), "Required DatePicker without value fail validity check").to.be.false;
+				expect(datePicker.reportValidity(), "Required DatePicker without value should fail report validity").to.be.false;
 			});
 
-		cy.get("#dp:invalid") // select using :invalid CSS pseudo-class
-			.should("exist", "Required datepicker without value should have :invalid CSS class");
+		cy.get("#datePicker:invalid") // select using :invalid CSS pseudo-class
+			.should("exist", "Required DatePicker without value should have :invalid CSS class");
 
-		cy.get("#dp")
+		cy.get("#datePicker")
 			.as("datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
@@ -1717,17 +1717,17 @@ describe("Validation inside a form", () => {
 			.realType("Apr 12, 2024")
 			.realPress("Enter");
 
-		cy.get("dp")
+		cy.get("datePicker")
 			.then($el => {
 				const datePicker = $el[0] as DatePicker;
-				expect(datePicker.formValidity.valueMissing, "Required datepicker with value should have formValidity with valueMissing=false").to.be.false;
-				expect(datePicker.validity.valueMissing, "Required datepicker with value should have validity with valueMissing=false").to.be.false;
-				expect(datePicker.validity.valid, "Required datepicker with value have validity with valid=true").to.be.true;
-				expect(datePicker.checkValidity(), "Required datepicker with value pass validity check").to.be.true;
-				expect(datePicker.reportValidity(), "Required datepicker with value pass report validity").to.be.true;
+				expect(datePicker.formValidity.valueMissing, "Required DatePicker with value should have formValidity with valueMissing=false").to.be.false;
+				expect(datePicker.validity.valueMissing, "Required DatePicker with value should have validity with valueMissing=false").to.be.false;
+				expect(datePicker.validity.valid, "Required DatePicker with value have validity with valid=true").to.be.true;
+				expect(datePicker.checkValidity(), "Required DatePicker with value pass validity check").to.be.true;
+				expect(datePicker.reportValidity(), "Required DatePicker with value pass report validity").to.be.true;
 			});
 
-		cy.get("#dp:invalid").should("not.exist", "Required datepicker with value should not have :invalid CSS class");
+		cy.get("#dp:invalid").should("not.exist", "Required DatePicker with value should not have :invalid CSS class");
 	});
 });
 
