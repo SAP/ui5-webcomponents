@@ -94,7 +94,7 @@
 	<div class="container" style="padding-top: 1rem;">
 		<ui5-label>Search with Suggestions - Filter by typing</ui5-label>
 		<ui5-search id="filtering" show-clear-icon placeholder="Start typing ..."></ui5-search>
-		<ui5-text style="padding-top: 0.25rem; font-style: italic;">The examples shows filtering per user input, highlighting user input and showcases "contains" and "starts with" typeahead. Type "a" to see "contains typeahead" or "t" to see "starts with typeahead"</ui5-text>
+		<ui5-text style="padding-top: 0.25rem; font-style: italic;">The examples shows filtering per user input and highlighting user input. Type "a" to see highlighting. Type "t" to see "typeahead"</ui5-text>
 	</div>
 
 	<div class="container" style="padding-top: 1rem;">
@@ -174,7 +174,7 @@
 		filtering.addEventListener('ui5-input', (event) => {
 			const value = event.target.value.toLowerCase();
 			const filteredData = data.filter(item => item.name.toLowerCase().includes(value));
-			
+
 			// clear search items
 			filtering.innerHTML = '';
 
@@ -216,7 +216,7 @@
 		createScopeItems();
 		searchScope.addEventListener('ui5-scope-change', (event) => {
 			let scope = event.detail.scope.text === "All" ? "" : event.detail.scope.text.toLowerCase();
-			
+
 			searchScope.getSlottedNodes("items").forEach(item => {
 				item.remove();
 			});
@@ -240,7 +240,7 @@
 				});
 			});
 		}
-	
+
 		const filters = document.getElementById('filters');
 		filters.addEventListener('ui5-input', (event) => {
 			const value = event.target.value.toLowerCase();
