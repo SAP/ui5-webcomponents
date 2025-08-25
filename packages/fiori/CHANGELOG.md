@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.2...v2.14.0-rc.3) (2025-08-22)
+
+
+### Bug Fixes
+
+* **ui5-toolbar:** extend search field type to ShellBarSearch  ([#12172](https://github.com/SAP/ui5-webcomponents/issues/12172)) ([6bf6727](https://github.com/SAP/ui5-webcomponents/commit/6bf6727e3421edc201b3288478144cd4575fcdae))
+
+
+
+
+
+# [2.14.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.1...v2.14.0-rc.2) (2025-08-21)
+
+
+### Bug Fixes
+
+* **u5-search-item:** encode markup ([#12140](https://github.com/SAP/ui5-webcomponents/issues/12140)) ([005f17e](https://github.com/SAP/ui5-webcomponents/commit/005f17efc4e966882cb28acc0edd2bfba87f71a3))
+* **ui5-page:** correct content overlap with shellbar header ([#12124](https://github.com/SAP/ui5-webcomponents/issues/12124)) ([2313daa](https://github.com/SAP/ui5-webcomponents/commit/2313daa098c86a8b6417fb651c496bb360768041))
+* **ui5-search:** improve arrow navigation with grouping  ([#12083](https://github.com/SAP/ui5-webcomponents/issues/12083)) ([c428f77](https://github.com/SAP/ui5-webcomponents/commit/c428f77f65967813baa607a379175836c35040a4))
+* **ui5-side-navigation:** expand SideNavigation item activation to Enter with modifier keys ([d660c37](https://github.com/SAP/ui5-webcomponents/commit/d660c37a81c9a6a6c73715ee9889e6ee140d08d2))
+
+
+
+
+
+# [2.14.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.0...v2.14.0-rc.1) (2025-08-14)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** correct pin button tooltip based on pinned state ([#12086](https://github.com/SAP/ui5-webcomponents/issues/12086)) ([b392d46](https://github.com/SAP/ui5-webcomponents/commit/b392d46c349c9e884f54c1a95c506abd8734d514)), closes [#12064](https://github.com/SAP/ui5-webcomponents/issues/12064)
+* **ui5-search-field:** show separator only when needed ([#12113](https://github.com/SAP/ui5-webcomponents/issues/12113)) ([7566649](https://github.com/SAP/ui5-webcomponents/commit/7566649466b23ace65c7d023c38f3712526aace9))
+* **ui5-shellbar:** apply tertiary button color to cancel button ([#12082](https://github.com/SAP/ui5-webcomponents/issues/12082)) ([2d2d673](https://github.com/SAP/ui5-webcomponents/commit/2d2d673508c4ae133710ad3a312c28836297532a)), closes [#11957](https://github.com/SAP/ui5-webcomponents/issues/11957)
+* **ui5-timeline:** implement arrows navigation for inner elements ([#12033](https://github.com/SAP/ui5-webcomponents/issues/12033)) ([f1ce974](https://github.com/SAP/ui5-webcomponents/commit/f1ce97439adb61f13bd8ad9e652488862d96fb8f)), closes [#11785](https://github.com/SAP/ui5-webcomponents/issues/11785)
+* **ui5-wizard:** create a stacking context for wiz-nav ([#12120](https://github.com/SAP/ui5-webcomponents/issues/12120)) ([29dffba](https://github.com/SAP/ui5-webcomponents/commit/29dffba67fe48ee2ad761aef53c8c9ffdf10dbcd))
+
+
+### Features
+
+* **ui5-illustrated-message:** updated horizon tnt illustrations ([#12084](https://github.com/SAP/ui5-webcomponents/issues/12084)) ([2a87850](https://github.com/SAP/ui5-webcomponents/commit/2a878504c68773d506711364c1693f5b0a3331f5))
+* **ui5-product-switch-item:** added image slot ([#11965](https://github.com/SAP/ui5-webcomponents/issues/11965)) ([79903f4](https://github.com/SAP/ui5-webcomponents/commit/79903f4fbc83a9a67ee851b175c04b9eaf533cdb))
+* **ui5-timeline:** improve keyboard handling ([#12021](https://github.com/SAP/ui5-webcomponents/issues/12021)) ([de3ab96](https://github.com/SAP/ui5-webcomponents/commit/de3ab969e63c870737b58325a7c87c7a82d1952b))
+
+
+
+
+
 # [2.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.13.0...v2.14.0-rc.0) (2025-08-07)
 
 
