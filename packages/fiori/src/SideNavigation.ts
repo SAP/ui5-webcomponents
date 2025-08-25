@@ -75,9 +75,8 @@ type PopupSideNavigationItem = SideNavigationItem & { associatedItem: SideNaviga
  * The items can consist of text only or an icon with text. The use or non-use of icons must be consistent for all items on one level.
  * You must not combine entries with and without icons on the same level. We strongly recommend that you do not use icons on the second level.
  *
- * The `ui5-side-navigation` component is intended for use within an `ui5-navigation-layout` component.
- * While it can function independently, it is recommended to use it with
- * the `ui5-navigation-layout` for optimal user experience.
+ * The `ui5-side-navigation` component is intended for use within an `ui5-navigation-layout` component  for optimal user experience.
+ * Using it standalone may not match the desired design and functionality.
  *
  * ### Keyboard Handling
  *
