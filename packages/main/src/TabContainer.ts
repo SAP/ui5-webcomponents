@@ -34,7 +34,6 @@ import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
 import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
-import type { SetDraggedElementFunction } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import {
@@ -354,7 +353,6 @@ class TabContainer extends UI5Element {
 	responsivePopover?: ResponsivePopover;
 	_hasScheduledPopoverOpen = false;
 	_handleResizeBound: () => void;
-	_setDraggedElement?: SetDraggedElementFunction;
 
 	static registerTabStyles(styles: string) {
 		tabStyles.push(styles);
@@ -434,7 +432,7 @@ class TabContainer extends UI5Element {
 	onEnterDOM() {
 		ResizeHandler.register(this._getHeader(), this._handleResizeBound);
 		DragRegistry.subscribe(this);
-		this._setDraggedElement = DragRegistry.addSelfManagedArea(this);
+
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
@@ -443,8 +441,6 @@ class TabContainer extends UI5Element {
 	onExitDOM() {
 		ResizeHandler.deregister(this._getHeader(), this._handleResizeBound);
 		DragRegistry.unsubscribe(this);
-		DragRegistry.removeSelfManagedArea(this);
-		this._setDraggedElement = undefined;
 	}
 
 	_handleResize() {
@@ -495,6 +491,11 @@ class TabContainer extends UI5Element {
 		}
 	}
 
+	_getDraggedElement() {
+		return this.shadowRoot?.querySelector<TabInStrip>("[data-moving]")?.realTabReference
+			|| this.shadowRoot?.querySelector<TabInOverflow>(`#${this._id}-overflowMenu [data-moving]`);
+	}
+
 	_onDragStart(e: DragEvent) {
 		if (!e.dataTransfer || !(e.target instanceof HTMLElement)) {
 			return;
@@ -502,8 +503,6 @@ class TabContainer extends UI5Element {
 
 		e.dataTransfer.dropEffect = "move";
 		e.dataTransfer.effectAllowed = "move";
-
-		this._setDraggedElement!((e.target as TabInStrip).realTabReference);
 	}
 
 	_onHeaderDragEnter(e: DragEvent) {
@@ -517,7 +516,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const draggedElement = DragRegistry.getDraggedElement();
+		const draggedElement = DragRegistry.getDraggedElement(this.getRootNode());
 		const closestPosition = findClosestPosition(
 			[...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)],
 			e.clientX,
@@ -625,7 +624,7 @@ class TabContainer extends UI5Element {
 
 	_onPopoverListMoveOver(e: CustomEvent<ListMoveEventDetail>) {
 		const { destination, source } = e.detail;
-		const draggedElement = DragRegistry.getDraggedElement()!;
+		const draggedElement = DragRegistry.getDraggedElement(this.getRootNode())!;
 		let destinationElement: HTMLElement = (destination.element as TabInStrip | TabSeparatorInStrip).realTabReference;
 
 		// workaround to simulate tree behavior
@@ -675,7 +674,7 @@ class TabContainer extends UI5Element {
 
 	_onPopoverListMove(e: CustomEvent<ListMoveEventDetail>) {
 		const { destination, source } = e.detail;
-		const draggedElement = DragRegistry.getDraggedElement()!;
+		const draggedElement = DragRegistry.getDraggedElement(this.getRootNode())!;
 		let destinationElement: HTMLElement = (destination.element as TabInStrip).realTabReference;
 
 		// Workaround to simulate tree behavior
@@ -715,9 +714,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_onPopoverListKeyDown(e: KeyboardEvent) {
-		if (isCtrl(e)) {
-			this._setDraggedElement!((e.target as TabInOverflow).realTabReference);
-		}
+		// TODO
 	}
 
 	async _onTabStripClick(e: Event) {

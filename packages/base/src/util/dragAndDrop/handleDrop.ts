@@ -5,7 +5,7 @@ import DragRegistry from "./DragRegistry.js";
 
 function handleDrop<T extends UI5Element>(e: DragEvent, component: T, target: HTMLElement, placement: `${MovePlacement}`, settings: DragAndDropSettings = {}): void {
 	e.preventDefault();
-	const draggedElement = DragRegistry.getDraggedElement();
+	const draggedElement = DragRegistry.getDraggedElement(component.getRootNode());
 
 	if (!draggedElement && settings?.crossDnD) {
 		return;

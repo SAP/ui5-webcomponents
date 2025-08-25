@@ -51,7 +51,7 @@ class DragAndDropHandler {
 			return;
 		}
 
-		const draggedElement = DragRegistry.getDraggedElement()!;
+		const draggedElement = DragRegistry.getDraggedElement(this.component.getRootNode())!;
 		const dropIndicator = this.config.getDropIndicator()!;
 		const closestPosition = this._findClosestPosition(e);
 
@@ -98,7 +98,7 @@ class DragAndDropHandler {
 			return false;
 		}
 
-		const draggedElement = DragRegistry.getDraggedElement();
+		const draggedElement = DragRegistry.getDraggedElement(this.component.getRootNode());
 		const dropIndicator = this.config.getDropIndicator();
 
 		return !!(draggedElement && dropIndicator);
