@@ -22,7 +22,6 @@
 	--_ui5_side_navigation_item_bottom_margin: 0.25rem;
 	--_ui5_side_navigation_item_padding_start_in_popup: 1rem;
 	--_ui5_side_navigation_item_padding_start_in_overflow_popup: 1rem;
-	--_ui5_side_navigation_item_transition: background-color 0.3s ease-in-out;
 	--_ui5_side_navigation_item_padding_left: 1rem;
 	--_ui5_side_navigation_item_focus_border_offset: calc(-1 * var(--sapContent_FocusWidth));
 	--_ui5_side_navigation_item_focus_border_radius: calc(var(--_ui5_side_navigation_item_border_radius) + var(--sapContent_FocusWidth));
@@ -33,7 +32,7 @@
 	--_ui5_side_navigation_group_icon_width: 2.5rem;
 	--_ui5_side_navigation_icon_padding_inline_end: 0.5rem;
 	--_ui5_side_navigation_group_padding: 1rem;
-	--_ui5_side_navigation_padding-flexible: 0.5rem 0.5rem 0 0.5rem; 
+	--_ui5_side_navigation_padding-flexible: 0.5rem 0.5rem 0 0.5rem;
 	--_ui5_side_navigation_padding-fixed: 0 0.5rem 0.5rem 0.5rem;
 	--_ui5_side_navigation_popup_padding: 0.5rem;
 	--_ui5_side_navigation_popup_title_line_height: 1.5rem;
