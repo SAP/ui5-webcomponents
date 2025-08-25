@@ -603,8 +603,8 @@ class TabContainer extends UI5Element {
 					placement: acceptedPosition.placement,
 				},
 			});
-
-			tab.focus();
+	
+			acceptedPosition.element.focus();		
 		}
 	}
 
