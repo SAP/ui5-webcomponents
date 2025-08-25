@@ -1717,7 +1717,7 @@ describe("Validation inside a form", () => {
 			.realType("Apr 12, 2024")
 			.realPress("Enter");
 
-		cy.get("datePicker")
+		cy.get("#datePicker")
 			.then($el => {
 				const datePicker = $el[0] as DatePicker;
 				expect(datePicker.formValidity.valueMissing, "Required DatePicker with value should have formValidity with valueMissing=false").to.be.false;
@@ -1727,7 +1727,7 @@ describe("Validation inside a form", () => {
 				expect(datePicker.reportValidity(), "Required DatePicker with value pass report validity").to.be.true;
 			});
 
-		cy.get("#dp:invalid").should("not.exist", "Required DatePicker with value should not have :invalid CSS class");
+		cy.get("#datePicker:invalid").should("not.exist", "Required DatePicker with value should not have :invalid CSS class");
 	});
 });
 
