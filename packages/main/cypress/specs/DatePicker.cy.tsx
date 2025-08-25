@@ -1678,6 +1678,59 @@ describe("Legacy date customization and Islamic calendar type", () => {
 	});
 });
 
+describe("Validation inside a form", () => {
+	it("has correct validity", () => {
+		cy.mount(<form method="get">
+			<DatePicker id="datePicker" required={true}></DatePicker>
+			<button type="submit" id="submitBtn" > Submits forms </button>
+		</form>);
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("#submitBtn")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("#datePicker")
+			.then($el => {
+				const datePicker = $el[0] as DatePicker;
+				expect(datePicker.formValidity.valueMissing, "Required DatePicker without value should have formValidity with valueMissing=true").to.be.true;
+				expect(datePicker.validity.valueMissing, "Required DatePicker without value should have validity with valueMissing=true").to.be.true;
+				expect(datePicker.validity.valid, "Required DatePicker without value should have validity with valid=false").to.be.false;
+				expect(datePicker.checkValidity(), "Required DatePicker without value fail validity check").to.be.false;
+				expect(datePicker.reportValidity(), "Required DatePicker without value should fail report validity").to.be.false;
+			});
+
+		cy.get("#datePicker:invalid") // select using :invalid CSS pseudo-class
+			.should("exist", "Required DatePicker without value should have :invalid CSS class");
+
+		cy.get("#datePicker")
+			.as("datePicker")
+			.ui5DatePickerGetInnerInput()
+			.realClick()
+			.should("be.focused")
+			.realType("Apr 12, 2024")
+			.realPress("Enter");
+
+		cy.get("#datePicker")
+			.then($el => {
+				const datePicker = $el[0] as DatePicker;
+				expect(datePicker.formValidity.valueMissing, "Required DatePicker with value should have formValidity with valueMissing=false").to.be.false;
+				expect(datePicker.validity.valueMissing, "Required DatePicker with value should have validity with valueMissing=false").to.be.false;
+				expect(datePicker.validity.valid, "Required DatePicker with value have validity with valid=true").to.be.true;
+				expect(datePicker.checkValidity(), "Required DatePicker with value pass validity check").to.be.true;
+				expect(datePicker.reportValidity(), "Required DatePicker with value pass report validity").to.be.true;
+			});
+
+		cy.get("#datePicker:invalid").should("not.exist", "Required DatePicker with value should not have :invalid CSS class");
+	});
+});
+
 describe("Accessibility", () => {
 	it("picker popover accessible name with external label", () => {
 		const LABEL = "Deadline";
