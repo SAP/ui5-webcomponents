@@ -3,11 +3,12 @@ import ColorPalettePopover from "../../src/ColorPalettePopover.js";
 import ColorPaletteItem from "../../src/ColorPaletteItem.js";
 
 describe("Color Popover Palette tests", () => {
-    describe("Home and End keyboard navigation", () => {
-        it("showDefaultColor & showMoreColors", () => {
+
+    describe("Arrow keys navigation", () => {
+        it("Arrow down", () => {
             cy.mount(<>
                 <Button id="btnPalette">Open Palette</Button>
-                <ColorPalettePopover opener="btnPalette" showDefaultColor={true} showMoreColors={true}>
+                <ColorPalettePopover opener="btnPalette" showDefaultColor={true}>
                     <ColorPaletteItem value="cyan"></ColorPaletteItem>
                     <ColorPaletteItem value="orange"></ColorPaletteItem>
                     <ColorPaletteItem value="blue"></ColorPaletteItem>
@@ -19,21 +20,44 @@ describe("Color Popover Palette tests", () => {
                 .ui5PaletteOpen();
 
             cy.focused()
-                .should("have.attr", "aria-label", "Default Color");
-
-            cy.focused()
                 .realPress("End");
 
             cy.focused()
-                .should("have.attr", "aria-label", "More Colors...");
+                .should("have.attr", "aria-label", "Color - 4: red");
 
             cy.focused()
-                .realPress("Home");
+                .realPress("ArrowUp");
 
             cy.focused()
                 .should("have.attr", "aria-label", "Default Color");
         });
 
+        it("Arrow down", () => {
+            cy.mount(<>
+                <Button id="btnPalette">Open Palette</Button>
+                <ColorPalettePopover opener="btnPalette" showMoreColors={true}>
+                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
+                    <ColorPaletteItem value="orange"></ColorPaletteItem>
+                    <ColorPaletteItem value="blue"></ColorPaletteItem>
+                    <ColorPaletteItem value="red"></ColorPaletteItem>
+                </ColorPalettePopover>
+            </>);
+
+            cy.get("[ui5-color-palette-popover]")
+                .ui5PaletteOpen();
+
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 1: cyan");
+
+            cy.focused()
+                .realPress("ArrowDown");
+
+            cy.focused()
+                .should("have.attr", "aria-label", "More Colors...");
+        });
+    });
+
+    describe("Home and End keyboard navigation", () => {
         it("showDefaultColor", () => {
             cy.mount(<>
                 <Button id="btnPalette">Open Palette</Button>
@@ -95,6 +119,36 @@ describe("Color Popover Palette tests", () => {
 
             cy.focused()
                 .should("have.attr", "aria-label", "More Colors...");
+        });
+
+        it("showDefaultColor & showMoreColors", () => {
+            cy.mount(<>
+                <Button id="btnPalette">Open Palette</Button>
+                <ColorPalettePopover opener="btnPalette" showDefaultColor={true} showMoreColors={true}>
+                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
+                    <ColorPaletteItem value="orange"></ColorPaletteItem>
+                    <ColorPaletteItem value="blue"></ColorPaletteItem>
+                    <ColorPaletteItem value="red"></ColorPaletteItem>
+                </ColorPalettePopover>
+            </>);
+
+            cy.get("[ui5-color-palette-popover]")
+                .ui5PaletteOpen();
+
+            cy.focused()
+                .should("have.attr", "aria-label", "Default Color");
+
+            cy.focused()
+                .realPress("End");
+
+            cy.focused()
+                .should("have.attr", "aria-label", "More Colors...");
+
+            cy.focused()
+                .realPress("Home");
+
+            cy.focused()
+                .should("have.attr", "aria-label", "Default Color");
         });
 
         it("Item navigation End", () => {
