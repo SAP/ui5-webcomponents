@@ -76,6 +76,12 @@ class NavigationLayout extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
+	hasSideNavigation = false;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
 	isPhone = isPhone();
 
 	/**
@@ -122,6 +128,7 @@ class NavigationLayout extends UI5Element {
 		}
 
 		const sideNavigation = this.sideContent[0];
+		this.hasSideNavigation = !!sideNavigation;
 
 		if (sideNavigation) {
 			sideNavigation.collapsed = this.isSideCollapsed();
