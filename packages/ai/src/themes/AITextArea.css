@@ -1,0 +1,52 @@
+/* AI TextArea Root Container */
+.ui5-ai-textarea-root {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+}
+
+/* Textarea wrapper modifications for AI component */
+.ui5-ai-textarea-root .ui5-textarea-wrapper {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	position: relative;
+}
+
+/* Footer container for the toolbar */
+.ui5-ai-textarea-root [part="footer"] {
+	position: relative;
+	width: 100%;
+	margin-top: auto;
+	flex-shrink: 0;
+}
+
+/* AI Writing Assistant Toolbar */
+.ui5-ai-writing-assistant-footer-bar {
+	background: var(--_ui5_texteditor_toolbar_background, var(--sapPageFooter_Background));
+	width: 100%;
+	box-sizing: border-box;
+	box-shadow: none;
+	border-bottom: none;
+	position: relative;
+	margin: 0;
+	padding: 0;
+}
+
+/* Ensure toolbar appears at the bottom with proper border */
+.ui5-ai-writing-assistant-footer-bar {
+	border-top: 1px solid var(--sapPageFooter_BorderColor);
+}
+
+/* Hide border when in default state */
+:host([assistant-state="Default"]) .ui5-ai-writing-assistant-footer-bar {
+	border-top: none;
+}
+
+/* Menu wrapper positioning */
+#ai-menu-wrapper {
+	position: relative;
+	z-index: 1000;
+}
