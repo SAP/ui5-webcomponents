@@ -168,12 +168,45 @@
 			<ui5-date-picker id="datepicker10" calendar-week-numbering="WesternTraditional">
 			</ui5-date-picker>
 		</section>
-
+		<section>
+			<ui5-title>Form validation</ui5-title>
+			<form id="formValidation">
+				<ui5-message-strip id="formValidationMessage" hidden></ui5-message-strip>
+				<ui5-date-picker min-date="1/1/2021" max-date="31/1/2021" required id="formDatepicker"></ui5-date-picker>
+				<br><br>
+				<ui5-button id="btnCheckFormValidity">Check Validity</ui5-button>
+			</form>
+		</section>
 	</div>
 	<script>
 		var dp = document.getElementById('dp5');
 		var labelChange = document.getElementById('lblChange');
 		var labelLiveChange = document.getElementById('lblLiveChange');
+		var btnCheckFormValidity = document.getElementById('btnCheckFormValidity');
+		var formValidationMessage = document.getElementById('formValidationMessage');
+		var formDatepicker = document.getElementById('formDatepicker');
+
+		btnCheckFormValidity.addEventListener('click', function() {
+			checkFormValidity('formDatepicker');
+		});
+
+		formDatepicker.addEventListener('ui5-change', function() {
+			setTimeout(() => {
+				checkFormValidity('formDatepicker', true);
+			}, 0);
+		});
+
+		function checkFormValidity(elementId, delayed = false) {
+			const element = document.getElementById(elementId);
+			const isValid = element.checkValidity();
+
+			element.reportValidity();
+
+			// Show result
+			formValidationMessage.hidden = false;
+			formValidationMessage.innerText = `checkValidity(): ${isValid} ${delayed ? '( Delayed check )' : ''}`;
+			formValidationMessage.design = isValid ? "Positive" : "Negative";
+		}
 
 		dp.addEventListener('click', function() { console.log('click')});
 		dp.addEventListener('focus', function() {console.log('focus')});
@@ -221,7 +254,7 @@
 		});
 
 		const datePickerValueStateChangePrevented = document.getElementById("dpVsChangePrevented");
-	
+
 		datePickerValueStateChangePrevented.addEventListener("value-state-change", function(e) {
 			e.preventDefault();
 	});

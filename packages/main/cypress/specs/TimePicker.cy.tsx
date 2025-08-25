@@ -389,4 +389,57 @@ describe("TimePicker Tests", () => {
 			.should("exist")
 			.and("have.class", "ui5-valuestatemessage--error");
 	});
-}); 
+});
+
+describe("Validation inside a form", () => {
+	it("has correct validity", () => {
+		cy.mount(<form method="get">
+			<TimePicker id="tp" required={true}></TimePicker>
+			<button type="submit" id="submitBtn" > Submits forms </button>
+		</form>);
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("#submitBtn")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("#tp")
+			.then($el => {
+				const timepicker = $el[0] as TimePicker;
+				expect(timepicker.formValidity.valueMissing, "Required timepicker without value should have formValidity with valueMissing=true").to.be.true;
+				expect(timepicker.validity.valueMissing, "Required timepicker without value should have validity with valueMissing=true").to.be.true;
+				expect(timepicker.validity.valid, "Required timepicker without value should have validity with valid=false").to.be.false;
+				expect(timepicker.checkValidity(), "Required timepicker without value fail validity check").to.be.false;
+				expect(timepicker.reportValidity(), "Required timepicker without value should fail report validity").to.be.false;
+			});
+
+		cy.get("#tp:invalid") // select using :invalid CSS pseudo-class
+			.should("exist", "Required timepicker without value should have :invalid CSS class");
+
+		cy.get<TimePicker>("[ui5-time-picker]")
+			.as("timePicker")
+			.ui5TimePickerGetInnerInput()
+			.realClick()
+			.should("be.focused")
+			.realType("now")
+			.realPress("Enter");
+
+		cy.get("@timePicker")
+			.then($el => {
+				const timepicker = $el[0] as TimePicker;
+				expect(timepicker.formValidity.valueMissing, "Required timepicker with value should have formValidity with valueMissing=false").to.be.false;
+				expect(timepicker.validity.valueMissing, "Required timepicker with value should have validity with valueMissing=false").to.be.false;
+				expect(timepicker.validity.valid, "Required timepicker with value have validity with valid=true").to.be.true;
+				expect(timepicker.checkValidity(), "Required timepicker with value pass validity check").to.be.true;
+				expect(timepicker.reportValidity(), "Required timepicker with value pass report validity").to.be.true;
+			});
+
+		cy.get("#tp:invalid").should("not.exist", "Required timepicker with value should not have :invalid CSS class");
+	});
+});
