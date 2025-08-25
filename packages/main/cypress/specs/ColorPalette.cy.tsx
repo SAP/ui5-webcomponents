@@ -103,7 +103,7 @@ describe("Color Palette tests", () => {
 		cy.ui5ColorPaletteNavigateAndCheckSelectedColor("#cp1", 0, "ArrowRight", "pink");
 		cy.ui5ColorPaletteNavigateAndCheckSelectedColor("#cp1", 0, "ArrowLeft", "#ff6699");
 		cy.ui5ColorPaletteNavigateAndCheckSelectedColor("#cp1", 0, "ArrowUp", "orange");
-		cy.ui5ColorPaletteNavigateAndCheckSelectedColor("#cp1", 9, "ArrowDown", "darkblue");
+		cy.ui5ColorPaletteNavigateAndCheckSelectedColor("#cp1", 9, "ArrowDown", "#ff6699");
 	});
 
 	it("Tests show-recent-colors functionality", () => {
