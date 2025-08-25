@@ -2,43 +2,12 @@ import MultipleDragGhostCss from "../../generated/css/MultipleDragGhost.css.js";
 import { getI18nBundle } from "../../i18nBundle.js";
 import { DRAG_DROP_MULTIPLE_TEXT, } from "../../generated/i18n/i18n-defaults.js";
 const MIN_MULTI_DRAG_COUNT = 2;
-let customDragElementPromise = null;
 let draggedElement = null;
-let globalHandlersAttached = false;
-const subscribers = new Set();
-const selfManagedDragAreas = new Set();
-const ondragstart = (e) => {
-    if (!e.dataTransfer || !(e.target instanceof HTMLElement)) {
-        return;
-    }
-    if (!selfManagedDragAreas.has(e.target)) {
-        draggedElement = e.target;
-    }
-    handleMultipleDrag(e);
-};
-const handleMultipleDrag = async (e) => {
-    if (!customDragElementPromise || !e.dataTransfer) {
-        return;
-    }
-    const dragElement = await customDragElementPromise;
-    // Add to document body temporarily
-    document.body.appendChild(dragElement);
-    e.dataTransfer.setDragImage(dragElement, 0, 0);
-    // Clean up the temporary element after the drag operation starts
-    requestAnimationFrame(() => {
-        dragElement.remove();
-    });
-};
-const ondragend = () => {
-    draggedElement = null;
-    customDragElementPromise = null;
-};
-const ondrop = () => {
-    draggedElement = null;
-    customDragElementPromise = null;
-};
 const setDraggedElement = (element) => {
     draggedElement = element;
+};
+const clearDraggedElement = () => {
+    draggedElement = null;
 };
 const getDraggedElement = () => {
     return draggedElement;
@@ -61,53 +30,26 @@ const createDefaultMultiDragElement = async (count) => {
  * @param {DragEvent} e - The drag event that triggered the operation.
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const startMultipleDrag = (count, e) => {
+const startMultipleDrag = async (count, e) => {
     if (count < MIN_MULTI_DRAG_COUNT) {
         console.warn(`Cannot start multiple drag with count ${count}. Minimum is ${MIN_MULTI_DRAG_COUNT}.`); // eslint-disable-line
         return;
     }
-    customDragElementPromise = createDefaultMultiDragElement(count);
-};
-const attachGlobalHandlers = () => {
-    if (globalHandlersAttached) {
+    if (!e.dataTransfer) {
         return;
     }
-    document.body.addEventListener("dragstart", ondragstart);
-    document.body.addEventListener("dragend", ondragend);
-    document.body.addEventListener("drop", ondrop);
-    globalHandlersAttached = true;
-};
-const detachGlobalHandlers = () => {
-    document.body.removeEventListener("dragstart", ondragstart);
-    document.body.removeEventListener("dragend", ondragend);
-    document.body.removeEventListener("drop", ondrop);
-    globalHandlersAttached = false;
-};
-const subscribe = (subscriber) => {
-    subscribers.add(subscriber);
-    if (!globalHandlersAttached) {
-        attachGlobalHandlers();
-    }
-};
-const unsubscribe = (subscriber) => {
-    subscribers.delete(subscriber);
-    if (subscribers.size === 0 && globalHandlersAttached) {
-        detachGlobalHandlers();
-    }
-};
-const addSelfManagedArea = (area) => {
-    selfManagedDragAreas.add(area);
-    return setDraggedElement;
-};
-const removeSelfManagedArea = (area) => {
-    selfManagedDragAreas.delete(area);
+    const customDragElement = await createDefaultMultiDragElement(count);
+    // Add to document body temporarily
+    document.body.appendChild(customDragElement);
+    e.dataTransfer.setDragImage(customDragElement, 0, 0);
+    // Clean up the temporary element after the drag operation starts
+    requestAnimationFrame(() => {
+        customDragElement.remove();
+    });
 };
 const DragRegistry = {
-    subscribe,
-    unsubscribe,
-    addSelfManagedArea,
-    removeSelfManagedArea,
+    setDraggedElement,
+    clearDraggedElement,
     getDraggedElement,
     startMultipleDrag,
 };

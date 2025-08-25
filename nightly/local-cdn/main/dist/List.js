@@ -17,7 +17,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isTabNext, isSpace, isEnter, isTabPrevious, isCtrl, isEnd, isHome, isDown, isUp, } from "@ui5/webcomponents-base/dist/Keys.js";
-import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import DragAndDropHandler from "./delegate/DragAndDropHandler.js";
 import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -227,14 +226,12 @@ let List = List_1 = class List extends UI5Element {
     }
     onEnterDOM() {
         registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
-        DragRegistry.subscribe(this);
         ResizeHandler.register(this.getDomRef(), this._handleResizeCallback);
     }
     onExitDOM() {
         deregisterUI5Element(this);
         this.unobserveListEnd();
         ResizeHandler.deregister(this.getDomRef(), this._handleResizeCallback);
-        DragRegistry.unsubscribe(this);
     }
     onBeforeRendering() {
         this.detachGroupHeaderEvents();

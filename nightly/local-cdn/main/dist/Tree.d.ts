@@ -161,8 +161,6 @@ declare class Tree extends UI5Element {
     header: Array<HTMLElement>;
     _dragAndDropHandler: DragAndDropHandler;
     constructor();
-    onEnterDOM(): void;
-    onExitDOM(): void;
     onBeforeRendering(): void;
     onAfterRendering(): void;
     get dropIndicatorDOM(): DropIndicator | null;

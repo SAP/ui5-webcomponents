@@ -83,8 +83,6 @@ declare class ListItemGroup extends UI5Element {
     header: Array<ListItemBase>;
     _dragAndDropHandler: DragAndDropHandler;
     constructor();
-    onEnterDOM(): void;
-    onExitDOM(): void;
     get groupHeaderItem(): ListItemGroupHeader;
     get hasHeader(): boolean;
     get hasFormattedHeader(): boolean;

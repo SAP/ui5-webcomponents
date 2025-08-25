@@ -103,6 +103,7 @@ let Popup = Popup_1 = class Popup extends UI5Element {
         this.onDesktop = false;
         this._opened = false;
         this._open = false;
+        this._resizeHandlerRegistered = false;
         this._resizeHandler = this._resize.bind(this);
         this._getRealDomRef = () => {
             return this.shadowRoot.querySelector("[root-element]");
@@ -116,10 +117,15 @@ let Popup = Popup_1 = class Popup extends UI5Element {
         renderFinished().then(() => {
             this._updateMediaRange();
         });
+        if (this.open) {
+            this._registerResizeHandler();
+        }
+        else {
+            this._deregisterResizeHandler();
+        }
     }
     onEnterDOM() {
         this.setAttribute("popover", "manual");
-        ResizeHandler.register(this, this._resizeHandler);
         if (isDesktop()) {
             this.setAttribute("desktop", "");
         }
@@ -384,6 +390,18 @@ let Popup = Popup_1 = class Popup extends UI5Element {
         if (this.isConnected) {
             this.setAttribute("popover", "manual");
             this.showPopover();
+        }
+    }
+    _registerResizeHandler() {
+        if (!this._resizeHandlerRegistered) {
+            ResizeHandler.register(this, this._resizeHandler);
+            this._resizeHandlerRegistered = true;
+        }
+    }
+    _deregisterResizeHandler() {
+        if (this._resizeHandlerRegistered) {
+            ResizeHandler.deregister(this, this._resizeHandler);
+            this._resizeHandlerRegistered = false;
         }
     }
     /**

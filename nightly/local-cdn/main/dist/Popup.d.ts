@@ -137,6 +137,7 @@ declare abstract class Popup extends UI5Element {
     _focusedElementBeforeOpen?: HTMLElement | null;
     _opened: boolean;
     _open: boolean;
+    _resizeHandlerRegistered: boolean;
     constructor();
     onBeforeRendering(): void;
     onAfterRendering(): void;
@@ -221,6 +222,8 @@ declare abstract class Popup extends UI5Element {
      * @protected
      */
     _show(): void;
+    _registerResizeHandler(): void;
+    _deregisterResizeHandler(): void;
     /**
      * Sets "none" display to the popup
      * @protected

@@ -313,7 +313,7 @@ declare class ShellBar extends UI5Element {
      * @public
      * @since 2.7.0
      */
-    content: Array<UI5Element>;
+    content: Array<HTMLElement>;
     static i18nBundle: I18nBundle;
     overflowPopover?: Popover | null;
     menuPopover?: Popover | null;
@@ -445,7 +445,7 @@ declare class ShellBar extends UI5Element {
     _getMenuPopover(): Popover;
     isIconHidden(name: string): boolean;
     get hasMatchingContent(): boolean;
-    get contentItemsSorted(): UI5Element[];
+    get contentItemsSorted(): HTMLElement[];
     get contentItemsWrappersSorted(): HTMLElement[];
     get autoSearchField(): boolean;
     get startContentInfoSorted(): IShellBarContentItem[];
@@ -479,9 +479,9 @@ declare class ShellBar extends UI5Element {
     get _searchFieldDescription(): string;
     get _contentItemsRole(): "group" | undefined;
     get _enableContentAreaAccessibility(): boolean;
-    get contentItems(): UI5Element[];
-    get startContent(): UI5Element[];
-    get endContent(): UI5Element[];
+    get contentItems(): HTMLElement[];
+    get startContent(): HTMLElement[];
+    get endContent(): HTMLElement[];
     get _rightChildRole(): "toolbar" | undefined;
     get _searchFieldText(): string;
     get _searchBtnOpen(): string;

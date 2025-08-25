@@ -216,17 +216,12 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
     }
     onEnterDOM() {
         ResizeHandler.register(this._getHeader(), this._handleResizeBound);
-        DragRegistry.subscribe(this);
-        this._setDraggedElement = DragRegistry.addSelfManagedArea(this);
         if (isDesktop()) {
             this.setAttribute("desktop", "");
         }
     }
     onExitDOM() {
         ResizeHandler.deregister(this._getHeader(), this._handleResizeBound);
-        DragRegistry.unsubscribe(this);
-        DragRegistry.removeSelfManagedArea(this);
-        this._setDraggedElement = undefined;
     }
     _handleResize() {
         if (this.responsivePopover && this.responsivePopover.open) {
@@ -272,7 +267,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         }
         e.dataTransfer.dropEffect = "move";
         e.dataTransfer.effectAllowed = "move";
-        this._setDraggedElement(e.target.realTabReference);
+        DragRegistry.setDraggedElement(e.target.realTabReference);
     }
     _onHeaderDragEnter(e) {
         e.preventDefault();
@@ -447,7 +442,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
     }
     _onPopoverListKeyDown(e) {
         if (isCtrl(e)) {
-            this._setDraggedElement(e.target.realTabReference);
+            DragRegistry.setDraggedElement(e.target.realTabReference);
         }
     }
     async _onTabStripClick(e) {

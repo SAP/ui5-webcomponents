@@ -60,6 +60,6 @@ declare const testAssets: {
     getEffectiveIconCollection: (collectionName?: import("@ui5/webcomponents-base/dist/config/Icons.js").IconCollection) => import("@ui5/webcomponents-base/dist/config/Icons.js").IconCollection;
     ignoreCustomElements: (tagPrefix: string) => void;
     shouldIgnoreCustomElement: (tag: string) => boolean;
-    startMultipleDrag: (count: number, e: DragEvent) => void;
+    startMultipleDrag: (count: number, e: DragEvent) => Promise<void>;
 };
 export default testAssets;

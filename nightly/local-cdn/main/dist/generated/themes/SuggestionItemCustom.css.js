@@ -3,6 +3,6 @@ import defaultThemeBase from "@ui5/webcomponents-theming/dist/generated/themes/s
 import defaultTheme from "./sap_horizon/parameters-bundle.css.js";
 registerThemePropertiesLoader("@" + "ui5" + "/" + "webcomponents-theming", "sap_horizon", async () => defaultThemeBase);
 registerThemePropertiesLoader("@" + "u" + "i" + "5" + "/" + "w" + "e" + "b" + "c" + "o" + "m" + "p" + "o" + "n" + "e" + "n" + "t" + "s", "sap_horizon", async () => defaultTheme);
-export default `:host{height:var(--_ui5-v2-14-0-rc-3_list_item_dropdown_base_height)}
+export default `:host{height:var(--_ui5-v2-14-0-rc-4_list_item_dropdown_base_height)}
 `;
 //# sourceMappingURL=SuggestionItemCustom.css.js.map

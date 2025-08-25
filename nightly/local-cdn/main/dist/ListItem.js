@@ -16,6 +16,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
+import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import Highlight from "./types/Highlight.js";
 import ListItemType from "./types/ListItemType.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
@@ -184,6 +185,7 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
             return;
         }
         if (e.target === this._listItem) {
+            DragRegistry.setDraggedElement(this);
             this.setAttribute("data-moving", "");
             e.dataTransfer.dropEffect = "move";
             e.dataTransfer.effectAllowed = "move";
@@ -191,6 +193,7 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
     }
     _ondragend(e) {
         if (e.target === this._listItem) {
+            DragRegistry.clearDraggedElement();
             this.removeAttribute("data-moving");
         }
     }
