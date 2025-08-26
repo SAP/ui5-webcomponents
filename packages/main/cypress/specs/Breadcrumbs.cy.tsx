@@ -139,7 +139,7 @@ describe("Breadcrumbs general interaction", () => {
 		);
 
 		cy.get("[ui5-breadcrumbs-item]").then(($breadcrumbItem) => {
-			const breadcrumbItemElement = $breadcrumbItem[0] as Breadcrumbs;
+			const breadcrumbItemElement = $breadcrumbItem[0] as BreadcrumbsItem;
 			const domRef = breadcrumbItemElement.getDomRef();
 
 			expect(domRef).to.exist;
@@ -271,16 +271,16 @@ describe("Breadcrumbs general interaction", () => {
 				<button onClick={() => updateLinkContent("[ui5-breadcrumbs-item]:nth-of-type(7)", true)}>Extend Link</button>
 			</div>
 		);
-	
+
 		cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
 			const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 			const countItemsInOverflowBefore = breadcrumbsElement._overflowSize || 0;
 			const expectedCountItemsInOverflowAfter = countItemsInOverflowBefore + 1;
-	
+
 			cy.get("button").realClick();
-	
+
 			cy.wait(300);
-	
+
 			cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
 				const breadcrumbsElement = $breadcrumbs[0] as Breadcrumbs;
 				expect(breadcrumbsElement._overflowSize || 0,
@@ -400,7 +400,7 @@ describe("Breadcrumbs general interaction", () => {
 		cy.wait(300);
 
 		cy.get("[ui5-breadcrumbs-item]").eq(6).then(($lastItem) => {
-			const lastItem = $lastItem[0] as Breadcrumbs;
+			const lastItem = $lastItem[0] as BreadcrumbsItem;
 			const lastLinkId = lastItem._id + "-link";
 
 			cy.get("[ui5-breadcrumbs]").then(($breadcrumbs) => {
@@ -931,7 +931,7 @@ describe("Breadcrumbs with item for current page", () => {
 			.shadow()
 			.find("li:last-child ui5-link")
 			.then(($link) => {
-				const link = $link[0] as Breadcrumbs;
+				const link = $link[0] as HTMLElement & { design: string };
 				expect(link.design, "link has correct design").to.equal("Emphasized");
 			});
 	});
