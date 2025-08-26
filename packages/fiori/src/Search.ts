@@ -128,7 +128,11 @@ class Search extends SearchField {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({
+		type: HTMLElement,
+		"default": true,
+		invalidateOnChildChange: true,
+	})
 	items!: Array<SearchItem | SearchItemGroup>;
 
 	/**
@@ -329,15 +333,19 @@ class Search extends SearchField {
 	}
 
 	_startsWithMatchingItems(str: string): Array<ISearchSuggestionItem> {
-		return StartsWith(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "text");
+		return StartsWith(str, this._flattenItems.filter(item => !this._isGroupItem(item) && !this._isShowMoreItem(item)), "text");
 	}
 
 	_startsWithPerTermMatchingItems(str: string): Array<ISearchSuggestionItem> {
-		return StartsWithPerTerm(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "text");
+		return StartsWithPerTerm(str, this._flattenItems.filter(item => !this._isGroupItem(item) && !this._isShowMoreItem(item)), "text");
 	}
 
 	_isGroupItem(item: HTMLElement): item is SearchItemGroup {
 		return item.hasAttribute("ui5-search-item-group");
+	}
+
+	_isShowMoreItem(item: ISearchSuggestionItem) {
+		return item.hasAttribute("ui5-search-item-show-more");
 	}
 
 	_deselectItems() {
