@@ -197,8 +197,8 @@ describe("'layout-change' event:", () => {
 				.as("layoutChange"));
 		});
 
-		// Change to > 1024 and < 1440 (L) to ensure previous breakpoint for the next event
-		cy.viewport(1300, 500);
+		// Change to S to ensure previous breakpoint for the next event
+		cy.viewport(400, 500);
 
 		cy.get("@layoutChange")
 			.should("be.called");
@@ -211,7 +211,7 @@ describe("'layout-change' event:", () => {
 			.should("be.calledWithMatch", {
 				detail: {
 					currentBreakpoint: "M",
-					previousBreakpoint: "L",
+					previousBreakpoint: "S",
 					mainContentVisible: true,
 					sideContentVisible: true
 				},
