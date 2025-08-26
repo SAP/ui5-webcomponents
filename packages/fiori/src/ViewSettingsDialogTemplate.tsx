@@ -119,19 +119,19 @@ function ViewSettingsDialogTemplateContent(this: ViewSettingsDialog) {
 	);
 }
 
-function ViewSettingsDialogSortAndGroupTemplate(this: ViewSettingsDialog, sortMode: boolean) {
-	const currentSettingsOrder = sortMode ? this._currentSettings.sortOrder : this._currentSettings.groupOrder;
-	const currentSettingsBy = sortMode ? this._currentSettings.sortBy : this._currentSettings.groupBy;
+function ViewSettingsDialogSortAndGroupTemplate(this: ViewSettingsDialog, isSortTemplate: boolean) {
+	const currentSettingsOrder = isSortTemplate ? this._currentSettings.sortOrder : this._currentSettings.groupOrder;
+	const currentSettingsBy = isSortTemplate ? this._currentSettings.sortBy : this._currentSettings.groupBy;
 
 	return (
-		<div class={sortMode ? "ui5-vsd-sort" : "ui5-vsd-group"}>
+		<div class={isSortTemplate ? "ui5-vsd-sort" : "ui5-vsd-group"}>
 			<List
 				selectionMode="SingleStart"
-				onSelectionChange={sortMode ? this._onSortOrderChange : this._onGroupOrderChange} // radio button - use selectionChange
-				{...(sortMode ? { "sort-order": "" } : { "group-order": "" })}
+				onSelectionChange={isSortTemplate ? this._onSortOrderChange : this._onGroupOrderChange} // radio button - use selectionChange
+				{...(isSortTemplate ? { "sort-order": "" } : { "group-order": "" })}
 				accessibleNameRef={`${this._id}-label`}
 			>
-				<ListItemGroup headerText={sortMode ? this._sortOrderLabel : this._groupOrderLabel}>
+				<ListItemGroup headerText={isSortTemplate ? this._sortOrderLabel : this._groupOrderLabel}>
 					{currentSettingsOrder.map(item => (
 						<ListItemStandard
 							selected={item.selected}
@@ -141,10 +141,10 @@ function ViewSettingsDialogSortAndGroupTemplate(this: ViewSettingsDialog, sortMo
 			</List>
 			<List
 				selectionMode="SingleStart"
-				onSelectionChange={sortMode ? this._onSortByChange : this._onGroupByChange} // radio button - use selectionChange
-				{...(sortMode ? { "sort-by": "" } : { "group-by": "" })}
+				onSelectionChange={isSortTemplate ? this._onSortByChange : this._onGroupByChange} // radio button - use selectionChange
+				{...(isSortTemplate ? { "sort-by": "" } : { "group-by": "" })}
 			>
-				<ListItemGroup headerText={ sortMode ? this._sortByLabel : this._groupByLabel}>
+				<ListItemGroup headerText={ isSortTemplate ? this._sortByLabel : this._groupByLabel}>
 					{currentSettingsBy.map((item, index) => (
 						<ListItemStandard
 							data-ui5-external-action-item-index={index}
