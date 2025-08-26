@@ -9,6 +9,8 @@ import {
 	getEffectiveAriaLabelText,
 	getAssociatedLabelForTexts,
 	getAllAccessibleNameRefTexts,
+	getEffectiveAriaDescriptionText,
+	getAllAccessibleDescriptionRefTexts,
 } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -233,6 +235,24 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 */
 	@property()
 	accessibleNameRef?: string;
+
+	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.14.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that describe the input.
+	 * @default undefined
+	 * @public
+	 * @since 2.14.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
 
 	/**
 	 * @private
@@ -603,6 +623,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			"ariaInvalid": this.valueState === ValueState.Negative || undefined,
 			"ariaHasPopup": "dialog",
 			"ariaLabel": getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || undefined,
+			"ariaDescription": getAllAccessibleDescriptionRefTexts(this) || getEffectiveAriaDescriptionText(this) || undefined,
 		};
 	}
 

@@ -48,7 +48,7 @@ const themeBaseFile = fileURLToPath(import.meta.resolve("@sap-theming/theming-ba
 
 const config = {
     stdin: {
-        contents: `@import "${themeBaseFile}";`,
+        contents: `@import ${JSON.stringify(themeBaseFile)};`, // windows paths contain a backslash which has to be escaped because this will be treated as a string
         resolveDir: './',
         sourcefile: 'virtual-font-face.css',
         loader: 'css',

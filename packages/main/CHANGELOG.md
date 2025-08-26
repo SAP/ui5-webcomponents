@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.3...v2.14.0-rc.4) (2025-08-25)
+
+
+### Bug Fixes
+
+* **DnD:** fix drag and drop in Shadow DOM ([#11975](https://github.com/SAP/ui5-webcomponents/issues/11975)) ([fb561aa](https://github.com/SAP/ui5-webcomponents/commit/fb561aa92fdc2d9dddfab9d5ec15bf90ff3a979c))
+* **ui5-dialog:** initial dimensions are now calculated at once ([#12108](https://github.com/SAP/ui5-webcomponents/issues/12108)) ([2c97806](https://github.com/SAP/ui5-webcomponents/commit/2c97806e85c0ec5b130df14cab7981c10dd35f19))
+
+
+
+
+
+# [2.14.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.2...v2.14.0-rc.3) (2025-08-22)
+
+
+### Bug Fixes
+
+* **f6navigation:** skip non-element nodes when resolving groups ([#12174](https://github.com/SAP/ui5-webcomponents/issues/12174)) ([060af95](https://github.com/SAP/ui5-webcomponents/commit/060af95baf3273a8dc09460122e3dc76bf5f5a1c))
+* **framework:** improve CSS variables from OpenUI5 detection ([#12177](https://github.com/SAP/ui5-webcomponents/issues/12177)) ([9199825](https://github.com/SAP/ui5-webcomponents/commit/9199825e6aecb9c407f6e67d8768025233e10f16))
+* **ui5-select-popover:** align title in header on phone ([#12085](https://github.com/SAP/ui5-webcomponents/issues/12085)) ([843152e](https://github.com/SAP/ui5-webcomponents/commit/843152e410d2deee9b8b39786602b7340d3884db)), closes [#11956](https://github.com/SAP/ui5-webcomponents/issues/11956)
+* **ui5-toast:** fix toast spacing in safari ([79a784b](https://github.com/SAP/ui5-webcomponents/commit/79a784b21da0681899711c7140f1cc3ae346d665))
+
+
+
+
+
+# [2.14.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.1...v2.14.0-rc.2) (2025-08-21)
+
+
+### Bug Fixes
+
+* **ui5-checkbox:** fix focus spacing ([#12100](https://github.com/SAP/ui5-webcomponents/issues/12100)) ([a8e8dd1](https://github.com/SAP/ui5-webcomponents/commit/a8e8dd1bf9b21448a3e2fa991704522d1a3bc6c1))
+* **ui5-message-strip:** align message strip announcements with latest figma ([#12135](https://github.com/SAP/ui5-webcomponents/issues/12135)) ([176a02a](https://github.com/SAP/ui5-webcomponents/commit/176a02afe5164dcf1b64303114b4f01df7a960fa))
+* **ui5-search:** improve arrow navigation with grouping  ([#12083](https://github.com/SAP/ui5-webcomponents/issues/12083)) ([c428f77](https://github.com/SAP/ui5-webcomponents/commit/c428f77f65967813baa607a379175836c35040a4))
+* **ui5-select:** prevent crash on ArrowUp/Down when value matches no option ([#12094](https://github.com/SAP/ui5-webcomponents/issues/12094)) ([c15bcc9](https://github.com/SAP/ui5-webcomponents/commit/c15bcc9f475db9297fa0c450f54164eee7d6549e)), closes [#12093](https://github.com/SAP/ui5-webcomponents/issues/12093)
+* **ui5-textarea:** correct row behavior in MS Edge ([#12136](https://github.com/SAP/ui5-webcomponents/issues/12136)) ([b3abf2d](https://github.com/SAP/ui5-webcomponents/commit/b3abf2db3f565ff4bf373d2402677eba83f84ba3))
+* **ui5-textarea:** escape interaction can now be prevented ([#12122](https://github.com/SAP/ui5-webcomponents/issues/12122)) ([e548778](https://github.com/SAP/ui5-webcomponents/commit/e548778eee78165a492557dff34575dd9d3d8840))
+
+
+### Features
+
+* **framework:** adds `unsafeRegisterIcon` base method for custom SVG icons ([#12145](https://github.com/SAP/ui5-webcomponents/issues/12145)) ([3b67132](https://github.com/SAP/ui5-webcomponents/commit/3b67132f6293a76b3bbc10f5fb3080d75fba10e5)), closes [#clip0_2221_23716](https://github.com/SAP/ui5-webcomponents/issues/clip0_2221_23716)
+* **ui5-calendar:** expose shadow parts for YearRangePicker and CalendarHeader arrows ([#12114](https://github.com/SAP/ui5-webcomponents/issues/12114)) ([ada0d1a](https://github.com/SAP/ui5-webcomponents/commit/ada0d1abddc4cce6fb2f45855475b8811dcd380c)), closes [#0070f2](https://github.com/SAP/ui5-webcomponents/issues/0070f2) [#0070f2](https://github.com/SAP/ui5-webcomponents/issues/0070f2) [#e5e5e5](https://github.com/SAP/ui5-webcomponents/issues/e5e5e5)
+* **ui5-select:** add accessibleDescription and accessibleDescriptionRef ([#12081](https://github.com/SAP/ui5-webcomponents/issues/12081)) ([7152726](https://github.com/SAP/ui5-webcomponents/commit/71527260db9abf8b0f9737421672b96aa737c3e9)), closes [#12004](https://github.com/SAP/ui5-webcomponents/issues/12004)
+
+
+
+
+
 # [2.14.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.0...v2.14.0-rc.1) (2025-08-14)
 
 

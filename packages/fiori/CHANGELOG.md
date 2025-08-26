@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.3...v2.14.0-rc.4) (2025-08-25)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** change content slot type ([#12186](https://github.com/SAP/ui5-webcomponents/issues/12186)) ([25b2f3b](https://github.com/SAP/ui5-webcomponents/commit/25b2f3b71e8f0518369987766da4596ca8a2dd98))
+
+
+
+
+
+# [2.14.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.2...v2.14.0-rc.3) (2025-08-22)
+
+
+### Bug Fixes
+
+* **ui5-toolbar:** extend search field type to ShellBarSearch  ([#12172](https://github.com/SAP/ui5-webcomponents/issues/12172)) ([6bf6727](https://github.com/SAP/ui5-webcomponents/commit/6bf6727e3421edc201b3288478144cd4575fcdae))
+
+
+
+
+
+# [2.14.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.1...v2.14.0-rc.2) (2025-08-21)
+
+
+### Bug Fixes
+
+* **u5-search-item:** encode markup ([#12140](https://github.com/SAP/ui5-webcomponents/issues/12140)) ([005f17e](https://github.com/SAP/ui5-webcomponents/commit/005f17efc4e966882cb28acc0edd2bfba87f71a3))
+* **ui5-page:** correct content overlap with shellbar header ([#12124](https://github.com/SAP/ui5-webcomponents/issues/12124)) ([2313daa](https://github.com/SAP/ui5-webcomponents/commit/2313daa098c86a8b6417fb651c496bb360768041))
+* **ui5-search:** improve arrow navigation with grouping  ([#12083](https://github.com/SAP/ui5-webcomponents/issues/12083)) ([c428f77](https://github.com/SAP/ui5-webcomponents/commit/c428f77f65967813baa607a379175836c35040a4))
+* **ui5-side-navigation:** expand SideNavigation item activation to Enter with modifier keys ([d660c37](https://github.com/SAP/ui5-webcomponents/commit/d660c37a81c9a6a6c73715ee9889e6ee140d08d2))
+
+
+
+
+
 # [2.14.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.0...v2.14.0-rc.1) (2025-08-14)
 
 
