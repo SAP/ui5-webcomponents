@@ -24,7 +24,7 @@ import {
 import SearchTemplate from "./SearchTemplate.js";
 import SearchCss from "./generated/themes/Search.css.js";
 import SearchField from "./SearchField.js";
-import { StartsWith, StartsWithPerTerm } from "@ui5/webcomponents/dist/Filters.js";
+import { StartsWith } from "@ui5/webcomponents/dist/Filters.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type SearchItem from "./SearchItem.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
