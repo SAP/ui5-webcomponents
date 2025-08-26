@@ -1,6 +1,8 @@
 import SegmentedButton from "../../src/SegmentedButton.js";
+import Label from "../../src/Label.js";
 import SegmentedButtonItem from "../../src/SegmentedButtonItem.js";
 import type UI5Element from "@ui5/webcomponents-base";
+import { SEGMENTEDBUTTON_ARIA_DESCRIBEDBY } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("SegmentedButton general interaction tests", () => {
 	it("should have first item selected by default", () => {
@@ -231,7 +233,7 @@ describe("SegmentedButton - getFocusDomRef", () => {
 });
 
 describe("Accessibility", () => {
-	it("should have correct aria labels", () => {
+	it("segmented button items should have correct aria labels", () => {
 		cy.mount(
 			<>
 				<SegmentedButton selectionMode="Multiple">
@@ -260,5 +262,109 @@ describe("Accessibility", () => {
 			.shadow()
 			.find("li")
 			.should("have.attr", "aria-label", "accessible ref text");
+	});
+
+	it("segmented button should have correct aria label when accessibleName is set", () => {
+		const LABEL = "Label";
+		cy.mount(
+			<>
+				<SegmentedButton accessibleName={LABEL}>
+					<SegmentedButtonItem>First</SegmentedButtonItem>
+					<SegmentedButtonItem>Second</SegmentedButtonItem>
+				</SegmentedButton>
+			</>
+		);
+
+		cy.get("[ui5-segmented-button]")
+			.shadow()
+			.find(".ui5-segmented-button-root")
+			.should("have.attr", "aria-label", LABEL);
+	});
+
+	it("segmented button should have correct aria label when external label is set", () => {
+		const LABEL = "External label";
+		cy.mount(
+			<>
+				<Label for="segBtn">{LABEL}</Label>
+				<SegmentedButton id="segBtn">
+					<SegmentedButtonItem>First</SegmentedButtonItem>
+					<SegmentedButtonItem>Second</SegmentedButtonItem>
+				</SegmentedButton>
+			</>
+		);
+
+		cy.get("[ui5-segmented-button]")
+			.shadow()
+			.find(".ui5-segmented-button-root")
+			.should("have.attr", "aria-label", LABEL);
+	});
+
+	it("segmented button should have correct aria label when accessibleNameRef is set", () => {
+		const LABEL = "External label";
+		cy.mount(
+			<>
+				<p id="accessibleLabel">{LABEL}</p>
+				<SegmentedButton accessibleNameRef="accessibleLabel">
+					<SegmentedButtonItem>First</SegmentedButtonItem>
+					<SegmentedButtonItem>Second</SegmentedButtonItem>
+				</SegmentedButton>
+			</>
+		);
+
+		cy.get("[ui5-segmented-button]")
+			.shadow()
+			.find(".ui5-segmented-button-root")
+			.should("have.attr", "aria-label", LABEL);
+	});
+
+	it("segmented button should have correct aria description when neither accessibleDescription nor accessibleDescriptionRef are set", () => {
+		cy.mount(
+			<>
+				<SegmentedButton>
+					<SegmentedButtonItem>First</SegmentedButtonItem>
+					<SegmentedButtonItem>Second</SegmentedButtonItem>
+				</SegmentedButton>
+			</>
+		);
+
+		cy.get("[ui5-segmented-button]")
+			.shadow()
+			.find(".ui5-segmented-button-root")
+			.should("have.attr", "aria-description", SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY));
+	});
+
+	it("segmented button should have correct aria description when accessibleDescription is set", () => {
+		const DESCRIPTION = "Description";
+		cy.mount(
+			<>
+				<SegmentedButton accessibleDescription={DESCRIPTION}>
+					<SegmentedButtonItem>First</SegmentedButtonItem>
+					<SegmentedButtonItem>Second</SegmentedButtonItem>
+				</SegmentedButton>
+			</>
+		);
+
+		cy.get("[ui5-segmented-button]")
+			.shadow()
+			.find(".ui5-segmented-button-root")
+			.should("have.attr", "aria-description", `${DESCRIPTION} ${SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY)}`);
+	});
+
+	it("segmented button should have correct aria description when accessibleDescriptionRef is set", () => {
+		const DESCRIPTION = "External description";
+		cy.mount(
+			<>
+				<p id="accessibleDescription">{DESCRIPTION}</p>
+				<SegmentedButton accessibleDescriptionRef="accessibleDescription">
+					<SegmentedButtonItem>First</SegmentedButtonItem>
+					<SegmentedButtonItem>Second</SegmentedButtonItem>
+				</SegmentedButton>
+			</>
+		);
+
+		cy.get("[ui5-segmented-button]")
+			.shadow()
+			.find(".ui5-segmented-button-root")
+			.should("have.attr", "aria-description", `${DESCRIPTION} ${SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY)}`);
 	});
 });
