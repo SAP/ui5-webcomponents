@@ -253,7 +253,7 @@ describe("'layout-change' event:", () => {
 			.should("be.calledWithMatch", {
 				detail: {
 					currentBreakpoint: "XL",
-					previousBreakpoint: "S",
+					previousBreakpoint: "L",
 					mainContentVisible: true,
 					sideContentVisible: true
 				},
