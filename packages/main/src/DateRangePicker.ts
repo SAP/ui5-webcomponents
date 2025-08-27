@@ -10,6 +10,7 @@ import {
 	DATERANGE_DESCRIPTION,
 	DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME,
 	DATETIME_COMPONENTS_PLACEHOLDER_PREFIX,
+	FORM_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 import DateRangePickerTemplate from "./DateRangePickerTemplate.js";
 
@@ -81,6 +82,33 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	_tempValue?: string;
 
 	private _prevDelimiter: string | null;
+
+	get formValidityMessage() {
+		const validity = this.formValidity;
+
+		if (validity.valueMissing) {
+			return DatePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+		}
+		if (validity.patternMismatch) {
+			return DatePicker.i18nBundle.getText("DATEPICKER_PATTERN_MISMATCH"); //TODO: add key
+		}
+		if (validity.rangeUnderflow) {
+			return DatePicker.i18nBundle.getText("DATEPICKER_RANGE_UNDERFLOW"); //TODO: add key
+		}
+		if (validity.rangeOverflow) {
+			return DatePicker.i18nBundle.getText("DATEPICKER_RANGE_OVERFLOW"); //TODO: add key
+		}
+		return ""; // No error
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return {
+			valueMissing: this.required && !this.value,
+			patternMismatch: !this.isValidValue(this.value),
+			//rangeUnderflow: !this._isValidMin(this.value),
+			//rangeOverflow: !this._isValidMax(this.value),
+		};
+	}
 
 	get formFormattedValue() {
 		const values = this._splitValueByDelimiter(this.value || "").filter(Boolean);

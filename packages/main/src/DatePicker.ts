@@ -394,11 +394,31 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
-		return DatePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+		const validity = this.formValidity;
+
+		if (validity.valueMissing) {
+			return DatePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+		}
+		if (validity.patternMismatch) {
+			return DatePicker.i18nBundle.getText("DATEPICKER_PATTERN_MISMATCH"); // TODO: add key
+		}
+		if (validity.rangeUnderflow) {
+			return DatePicker.i18nBundle.getText("DATEPICKER_RANGE_UNDERFLOW"); // TODO: add key
+		}
+		if (validity.rangeOverflow) {
+			return DatePicker.i18nBundle.getText("DATEPICKER_RANGE_OVERFLOW"); // TODO: add key
+		}
+
+		return ""; // No error
 	}
 
 	get formValidity(): ValidityStateFlags {
-		return { valueMissing: this.required && !this.value };
+		return {
+			valueMissing: this.required && !this.value,
+			patternMismatch: !this.isValidValue(this.value),
+			rangeUnderflow: !this._isValidMin(this.value),
+			rangeOverflow: !this._isValidMax(this.value),
+		};
 	}
 
 	async formElementAnchor() {
@@ -611,7 +631,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * The ui5-input "submit" event handler - fire change event when the user presses enter
 	 * @protected
 	 */
-	_onInputSubmit() {}
+	_onInputSubmit() { }
 
 	/**
 	 * The ui5-input "change" event handler - fire change event when the user focuses out of the input
@@ -719,6 +739,34 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return calendarDate.valueOf() >= this._minDate.valueOf() && calendarDate.valueOf() <= this._maxDate.valueOf();
 	}
 
+	_isValidMin(value: string): boolean {
+		if (value === "" || value === undefined) {
+			return true;
+		}
+
+		const calendarDate = this._getCalendarDateFromString(value);
+
+		if (!calendarDate || !this._minDate) {
+			return false;
+		}
+
+		return calendarDate.valueOf() >= this._minDate.valueOf();
+	}
+
+	_isValidMax(value: string): boolean {
+		if (value === "" || value === undefined) {
+			return true;
+		}
+
+		const calendarDate = this._getCalendarDateFromString(value);
+
+		if (!calendarDate || !this._maxDate) {
+			return false;
+		}
+
+		return calendarDate.valueOf() <= this._maxDate.valueOf();
+	}
+
 	isInValidRangeDisplayValue(value: string): boolean {
 		if (value === "" || value === undefined) {
 			return true;
@@ -803,7 +851,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return isPhone();
 	}
 
-	get displayValue() : string {
+	get displayValue(): string {
 		if (!this.getValueFormat().parse(this.value, true)) {
 			return this.value;
 		}
@@ -911,7 +959,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	get _calendarPickersMode() {
-		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
+		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{ type: string }> };
 		const patternSymbolTypes = format.aFormatArray.map(patternSymbolSettings => {
 			return patternSymbolSettings.type.toLowerCase();
 		});
