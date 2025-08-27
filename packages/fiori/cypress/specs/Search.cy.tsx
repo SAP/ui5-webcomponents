@@ -488,8 +488,6 @@ describe("Properties", () => {
 
 		cy.realPress("I");
 
-        cy.get("[ui5-search-item]")
-
 		cy.get("[ui5-search-item]")
 			.eq(0)
 			.realHover();
