@@ -7,10 +7,10 @@ const options = {
 
 const scripts = getScripts(options);
 
-scripts.emptyTask("build:i18n", scripts.constructor.BUILD_RUNNER_CONSTANTS.PRINT, {
+scripts.emptyTask("build:i18n", {
 	skip: true,
 });
-scripts.emptyTask("build:jsonImports", scripts.constructor.BUILD_RUNNER_CONSTANTS.PRINT, {
+scripts.emptyTask("build:jsonImports", {
 	skip: true,
 });
 

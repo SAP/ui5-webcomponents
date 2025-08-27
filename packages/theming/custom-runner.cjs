@@ -1,23 +1,20 @@
 const path = require('path');
 const BuildRunner = require('@ui5/webcomponents-tools/task-runner/build-runner');
+const buildJsonImportsThemes = require("@ui5/webcomponents-tools/lib/generate-json-imports/themes");
+const generateReport = require("./lib/generate-css-vars-usage-report/index.cjs");
+const cssProcessorThemes = require("@ui5/webcomponents-tools/lib/css-processors/css-processor-themes.mjs").processThemes;
+const copyAndWatch = require("@ui5/webcomponents-tools/lib/copy-and-watch/index.js").copyAndWatch;
 
 const runner = new BuildRunner();
 
-
-const CURRENT_LIB = path.join(__dirname, `./lib/`);
-const TOOLS_LIB = path.join(__dirname, `../tools/lib/`);
-
-const jsonImportsScript = path.join(TOOLS_LIB, "./generate-json-imports/themes.js");
-const generateReportScript = path.join(CURRENT_LIB, "./generate-css-vars-usage-report/index.js");
-
-runner.addTask("clean", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
+runner.addTask("clean", {
 	dependencies: [
 		"rimraf dist",
 		"rimraf src/generated",
 	]
 });
 
-runner.addTask("generate", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
+runner.addTask("generate", {
 	dependencies: [
 		"build:postcss",
 		"build:jsonImports",
@@ -25,10 +22,9 @@ runner.addTask("generate", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
 	crossEnv: {
 		UI5_TS: true,
 	},
-	parallel: true,
 });
 
-runner.addTask("build", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
+runner.addTask("build", {
 	dependencies: [
 		"clean",
 		"build:src",
@@ -42,34 +38,40 @@ runner.addTask("build", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
 	}
 });
 
-runner.addTask("build:src", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
-	dependencies: [
-		`copy-and-watch "src/**/*.{json}" dist/`
-	]
+runner.addTask("build:src", {
+	callback: async () => {
+		await copyAndWatch("src/**/*.{json}", "dist/", { silent: true });
+		return "Source files copied.";
+	}
 });
 
-runner.addTask("build:typescript", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
+runner.addTask("build:typescript", {
 	dependencies: [
 		"tsc"
 	]
 });
 
-runner.addTask("build:postcss", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
-	dependencies: [
-		`node "${TOOLS_LIB}/css-processors/css-processor-themes.mjs"`
-	]
+runner.addTask("build:postcss", {
+	callback: async () => {
+		await cssProcessorThemes({ tsMode: true });
+		return ""
+	}
 });
 
-runner.addTask("build:jsonImports", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
-	dependencies: [
-		`node "${jsonImportsScript}" dist/generated/assets/themes src/generated/json-imports`
-	]
+runner.addTask("build:jsonImports", {
+	callback: async () => {
+		await buildJsonImportsThemes("dist/generated/assets/themes", "src/generated/json-imports", true);
+		console.log("Generated themes JSON imports.");
+		return "Generated themes JSON imports.";
+	},
 });
 
-runner.addTask("generateReport", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
-	dependencies: [
-		`node "${generateReportScript}"`
-	]
+runner.addTask("generateReport", {
+	callback: async () => {
+		await generateReport();
+		console.log("CSS Vars usage report generated.");
+		return "CSS Vars usage report generated.";
+	},
 });
 
 

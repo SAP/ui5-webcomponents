@@ -2,14 +2,13 @@ const fs = require("fs").promises;
 const path = require('path');
 const assets = require("../../assets-meta.js");
 
-const isTypeScript = process.env.UI5_TS;
-const ext = isTypeScript ? 'ts' : 'js';
+const generate = async (inputFolder, distFolder, isTypeScript) => {
+	const ext = isTypeScript ? 'ts' : 'js';
 
-const generate = async () => {
-	const inputFolder = path.normalize(process.argv[2]);
-	const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes.${ext}`);
-	const outputFileDynamicImportJSONAttr = path.normalize(`${process.argv[3]}/Themes-node.${ext}`);
-	const outputFileFetchMetaResolve = path.normalize(`${process.argv[3]}/Themes-fetch.${ext}`);
+	inputFolder = path.normalize(inputFolder);
+	const outputFileDynamic = path.normalize(`${distFolder}/Themes.${ext}`);
+	const outputFileDynamicImportJSONAttr = path.normalize(`${distFolder}/Themes-node.${ext}`);
+	const outputFileFetchMetaResolve = path.normalize(`${distFolder}/Themes-fetch.${ext}`);
 
 	// All supported optional themes
 	const allThemes = assets.themes.all;
@@ -49,7 +48,7 @@ const loadAndCheck = async (themeName) => {
 };
 
 ${availableThemesArray}
-  .forEach(themeName => registerThemePropertiesLoader(${ packageName.split("").map(c => `"${c}"`).join (" + ") }, themeName, loadAndCheck));
+  .forEach(themeName => registerThemePropertiesLoader(${packageName.split("").map(c => `"${c}"`).join(" + ")}, themeName, loadAndCheck));
 `;
 	}
 
@@ -61,6 +60,8 @@ ${availableThemesArray}
 	]);
 };
 
-generate().then(() => {
-	console.log("Generated themes JSON imports.");
-});
+// generate().then(() => {
+// 	console.log("Generated themes JSON imports.");
+// });
+
+module.exports = generate;

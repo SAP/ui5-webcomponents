@@ -1,11 +1,12 @@
 const fs = require("fs").promises;
 const path = require("path");
 
-if (process.argv.length < 7) {
-	throw new Error("Not enough arguments");
-}
-
-const generate = async () => {
+const generate = async (srcPath,
+	defaultText,
+	illustrationsPrefix,
+	illustrationSet,
+	destPath,
+	collection) => {
 
 	const ORIGINAL_TEXTS = {
 		UnableToLoad: "UnableToLoad",
@@ -70,12 +71,6 @@ const generate = async () => {
 		SuccessHighFive: ORIGINAL_TEXTS.BalloonSky
 	};
 
-	const srcPath = process.argv[2];
-	const defaultText = process.argv[3] === "true";
-	const illustrationsPrefix = process.argv[4];
-	const illustrationSet = process.argv[5];
-	const destPath = process.argv[6];
-	const collection = process.argv[7];
 	const fileNamePattern = new RegExp(`${illustrationsPrefix}-.+-(.+).svg`);
 	// collect each illustration name because each one should have Sample.js file
 	const fileNames = new Set();
@@ -126,8 +121,7 @@ const generate = async () => {
 import dialogSvg from "./${illustrationsPrefix}-Dialog-${illustrationName}.js";
 import sceneSvg from "./${illustrationsPrefix}-Scene-${illustrationName}.js";
 import spotSvg from "./${illustrationsPrefix}-Spot-${illustrationName}.js";
-import dotSvg from "./${illustrationsPrefix}-${hasDot}-${illustrationName}.js";${
-	defaultText ? `import {
+import dotSvg from "./${illustrationsPrefix}-${hasDot}-${illustrationName}.js";${defaultText ? `import {
 	IM_TITLE_${illustrationNameUpperCase},
 	IM_SUBTITLE_${illustrationNameUpperCase},
 } from "../generated/i18n/i18n-defaults.js";` : ``}
@@ -195,6 +189,8 @@ export { dialogSvg, sceneSvg, spotSvg, dotSvg };`
 	});
 };
 
-generate().then(() => {
-	console.log("Illustrations generated.");
-});
+// generate().then(() => {
+// 	console.log("Illustrations generated.");
+// });
+
+module.exports = generate;

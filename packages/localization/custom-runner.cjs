@@ -1,26 +1,27 @@
 const resolve = require("resolve");
 const BuildRunner = require("@ui5/webcomponents-tools/task-runner/build-runner");
+const amdToES6 = require("@ui5/webcomponents-tools/lib/amd-to-es6/index");
+const noRequire = require("@ui5/webcomponents-tools/lib/amd-to-es6/no-remaining-require");
+const cldr = require("./lib/generate-json-imports/cldr").default;
+const copyUsedModules = require("@ui5/webcomponents-tools/lib/copy-list/index.js");
+const copyAndWatch = require("@ui5/webcomponents-tools/lib/copy-and-watch/index.js").copyAndWatch;
 
 const runner = new BuildRunner();
 
-const copyUsedModules = resolve.sync("@ui5/webcomponents-tools/lib/copy-list/index.js");
-const amdToES6 = resolve.sync("@ui5/webcomponents-tools/lib/amd-to-es6/index.js");
-const noRequire = resolve.sync("@ui5/webcomponents-tools/lib/amd-to-es6/no-remaining-require.js");
-
-runner.addTask("clean", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
+runner.addTask("clean", {
 	dependencies: [
 		"rimraf src/generated",
 		"rimraf dist",
 	],
 });
 
-runner.addTask("lint", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
+runner.addTask("lint", {
 	dependencies: [
 		"eslint .",
 	],
 });
 
-runner.addTask("generate", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
+runner.addTask("generate", {
 	dependencies: [
 		"clean",
 		"copy",
@@ -29,7 +30,7 @@ runner.addTask("generate", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
 	],
 });
 
-runner.addTask("build", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
+runner.addTask("build", {
 	dependencies: [
 		"clean",
 		"copy",
@@ -40,35 +41,44 @@ runner.addTask("build", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
 	],
 });
 
-runner.addTask("build:amd-to-es6", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
-	dependencies: [
-		`node "${amdToES6}" dist/`,
-	],
+runner.addTask("build:amd-to-es6", {
+	callback: async () => {
+		await amdToES6("dist/");
+		// console.log("i18n default file generated.");
+		// return "i18n default file generated."
+		return "";
+	},
 });
 
-runner.addTask("build:no-remaining-require", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
-	dependencies: [
-		`node "${noRequire}" dist/`,
-	],
+runner.addTask("build:no-remaining-require", {
+	callback: async () => {
+		await noRequire("dist/");
+		// console.log("i18n default file generated.");
+		// return "i18n default file generated."
+		return "";
+	},
 });
 
-runner.addTask("build:typescript", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
+runner.addTask("build:typescript", {
 	dependencies: "tsc --build",
 });
 
-runner.addTask("build:jsonImports", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
-	dependencies: [
-		"node ./lib/generate-json-imports/cldr.js",
-	],
+runner.addTask("build:jsonImports", {
+	callback: async () => {
+		await cldr();
+		// console.log("i18n default file generated.");
+		// return "i18n default file generated."
+		return "";
+	},
 });
 
-runner.addTask("typescript", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
+runner.addTask("typescript", {
 	dependencies: [
 		"tsc --build",
 	],
 });
 
-runner.addTask("copy", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
+runner.addTask("copy", {
 	dependencies: [
 		"copy:used-modules",
 		"copy:cldr",
@@ -77,22 +87,26 @@ runner.addTask("copy", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
 	parallel: true,
 });
 
-runner.addTask("copy:used-modules", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
-	dependencies: [
-		`node "${copyUsedModules}" ./used-modules.txt dist/`,
-	],
+runner.addTask("copy:used-modules", {
+	callback: async () => {
+		const dest = "dist/";
+		await copyUsedModules("./used-modules.txt", dest);
+		return "Used modules copied.";
+	},
 });
 
-runner.addTask("copy:cldr", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
-	dependencies: [
-		`copy-and-watch "../../node_modules/@openui5/sap.ui.core/src/sap/ui/core/cldr/*" dist/generated/assets/cldr/`,
-	],
+runner.addTask("copy:cldr", {
+	callback: async () => {
+		await copyAndWatch("../../node_modules/@openui5/sap.ui.core/src/sap/ui/core/cldr/*", "dist/generated/assets/cldr/", { silent: true });
+		return "CLDR JSON files generated.";
+	}
 });
 
-runner.addTask("copy:overlay", BuildRunner.BUILD_RUNNER_CONSTANTS.PRINT, {
-	dependencies: [
-		`copy-and-watch "overlay/**/*.js" dist/`,
-	],
+runner.addTask("copy:overlay", {
+	callback: async () => {
+		await copyAndWatch("overlay/**/*.js", "dist/", { silent: true });
+		return "Overlay files copied.";
+	}
 });
 
 // Export for CLI usage

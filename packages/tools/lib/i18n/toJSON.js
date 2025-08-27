@@ -14,10 +14,7 @@ const assets = require('../../assets-meta.js');
 
 const allLanguages = assets.languages.all;
 
-const messagesBundles = path.normalize(`${process.argv[2]}/messagebundle_*.properties`);
-const messagesJSONDist = path.normalize(`${process.argv[3]}`);
-
-const convertToJSON = async (file) => {
+const convertToJSON = async (file, messagesJSONDist) => {
 	const properties = PropertiesReader(file)._properties;
 	const filename = path.basename(file, path.extname(file));
 	const language = filename.match(/^messagebundle_(.*?)$/)[1];
@@ -31,13 +28,16 @@ const convertToJSON = async (file) => {
 	// console.log(`[i18n]: "${filename}.json" has been generated!`);
 };
 
-const generate = async () => {
+const generate = async (inputFolder, distFolder) => {
 	const { globby } = await import("globby");
+	const messagesBundles = path.normalize(`${inputFolder}/messagebundle_*.properties`);
+	const messagesJSONDist = path.normalize(`${distFolder}`);
 	await fs.mkdir(messagesJSONDist, { recursive: true });
 	const files = await globby(messagesBundles.replace(/\\/g, "/"));
-	return Promise.all(files.map(convertToJSON));
+	return Promise.all(files.map((file => convertToJSON(file, messagesJSONDist))));
 };
 
-generate().then(() => {
-	console.log("Message bundle JSON files generated.");
-});
+// generate().then(() => {
+// 	console.log("Message bundle JSON files generated.");
+// });
+module.exports = generate;

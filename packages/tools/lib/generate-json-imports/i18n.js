@@ -1,11 +1,7 @@
 const fs = require("fs").promises;
 const path = require('path');
 
-const isTypeScript = process.env.UI5_TS;
-const ext = isTypeScript ? 'ts' : 'js';
-
-
-const getContent = function(caseLines, languagesKeysStringArray, packageName) {
+const getContent = function (caseLines, languagesKeysStringArray, packageName) {
 	return `// @ts-nocheck
 import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 
@@ -27,19 +23,19 @@ const importAndCheck = async (localeId) => {
 const localeIds = [${languagesKeysStringArray}];
 
 localeIds.forEach(localeId => {
-	registerI18nLoader(${ packageName.split("").map(c => `"${c}"`).join (" + ") }, localeId, importAndCheck);
+	registerI18nLoader(${packageName.split("").map(c => `"${c}"`).join(" + ")}, localeId, importAndCheck);
 });
 `;
 }
 
-const generate = async () => {
-
+const generate = async (inputFolder, distFolder, isTypeScript) => {
+	const ext = isTypeScript ? 'ts' : 'js';
 	const packageName = JSON.parse(await fs.readFile("package.json")).name;
 
-	const inputFolder = path.normalize(process.argv[2]);
-	const outputFileDynamic = path.normalize(`${process.argv[3]}/i18n.${ext}`);
-	const outputFileFetchMetaResolve = path.normalize(`${process.argv[3]}/i18n-fetch.${ext}`);
-	const outputFileDynamicImportJSONImport = path.normalize(`${process.argv[3]}/i18n-node.${ext}`);
+	inputFolder = path.normalize(inputFolder);
+	const outputFileDynamic = path.normalize(`${distFolder}/i18n.${ext}`);
+	const outputFileFetchMetaResolve = path.normalize(`${distFolder}/i18n-fetch.${ext}`);
+	const outputFileDynamicImportJSONImport = path.normalize(`${distFolder}/i18n-node.${ext}`);
 
 	// All languages present in the file system
 	const files = await fs.readdir(inputFolder);
@@ -57,7 +53,7 @@ const generate = async () => {
 		contentDynamic = "";
 		contentFetchMetaResolve = "";
 		contentDynamicImportJSONAttr = "";
-	// There is i18n - generate the full file
+		// There is i18n - generate the full file
 	} else {
 		// Keys for the array
 		const languagesKeysStringArray = languages.map(key => `"${key}",`).join("\n\t");
@@ -82,6 +78,8 @@ const generate = async () => {
 	]);
 }
 
-generate().then(() => {
-	console.log("Generated i18n JSON imports.");
-});
+// generate().then(() => {
+// 	console.log("Generated i18n JSON imports.");
+// });
+
+module.exports = generate

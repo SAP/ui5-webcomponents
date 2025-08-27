@@ -1,20 +1,10 @@
 const fs = require('fs');
 const Ajv = require('ajv');
 const path = require('path');
+
 // Load your JSON schema
-const extenalSchema = require('./schema.json');
+const externalSchema = require('./schema.json');
 const internalSchema = require('./schema-internal.json');
-
-// Load your JSON data from the input file
-const inputFilePath = path.join(process.cwd(), "dist/custom-elements.json"); // Update with your file path
-const customManifest = fs.readFileSync(inputFilePath, 'utf8');
-const inputDataInternal = JSON.parse(customManifest);
-const devMode = process.env.UI5_CEM_MODE === "dev";
-
-inputDataInternal.modules.forEach(moduleDoc => {
-	moduleDoc.exports = moduleDoc.exports.
-		filter(e => moduleDoc.declarations.find(d => d.name === e.declaration.name && ["class", "function", "variable", "enum"].includes(d.kind)) || e.name === "default");
-})
 
 const clearProps = (data) => {
 	if (Array.isArray(data)) {
@@ -39,29 +29,82 @@ const clearProps = (data) => {
 	}
 
 	return data;
-}
+};
 
-const ajv = new Ajv({ allowUnionTypes: true, allError: true })
-let validate = ajv.compile(internalSchema)
+const filterExports = (moduleDoc) => {
+	moduleDoc.exports = moduleDoc.exports
+		.filter(e => moduleDoc.declarations.find(d => d.name === e.declaration.name && ["class", "function", "variable", "enum"].includes(d.kind)) || e.name === "default");
+};
 
-// Validate the JSON data against the schema
-if (devMode) {
-	if (validate(inputDataInternal)) {
-		console.log('Internal custom  element manifest is validated successfully');
+const validateCEM = (options = {}) => {
+	const {
+		inputFilePath = path.join(process.cwd(), "dist/custom-elements.json"),
+		devMode = "",
+		writeFiles = true,
+		silent = false
+	} = options;
+
+	// Load your JSON data from the input file
+	const customManifest = fs.readFileSync(inputFilePath, 'utf8');
+	const inputDataInternal = JSON.parse(customManifest);
+
+	// Filter exports
+	inputDataInternal.modules.forEach(filterExports);
+
+	const ajv = new Ajv({ allowUnionTypes: true, allError: true });
+	let validate = ajv.compile(internalSchema);
+
+	// Validate the JSON data against the internal schema
+	if (devMode) {
+		if (validate(inputDataInternal)) {
+			!silent && console.log('Internal custom element manifest is validated successfully');
+		} else {
+			console.log(validate.errors);
+			throw new Error(`Validation of internal custom elements manifest failed: ${validate.errors}`);
+		}
+	}
+
+	// Create external data by clearing internal properties
+	const inputDataExternal = clearProps(JSON.parse(JSON.stringify(inputDataInternal)));
+	validate = ajv.compile(externalSchema);
+
+	// Validate the JSON data against the external schema
+	if (validate(inputDataExternal)) {
+		!silent && console.log('Custom element manifest is validated successfully');
+
+		if (writeFiles) {
+			fs.writeFileSync(inputFilePath, JSON.stringify(inputDataExternal, null, 2), 'utf8');
+			fs.writeFileSync(inputFilePath.replace("custom-elements", "custom-elements-internal"), JSON.stringify(inputDataInternal, null, 2), 'utf8');
+		}
+
+		return {
+			external: inputDataExternal,
+			internal: inputDataInternal,
+			valid: true
+		};
+	} else if (devMode) {
+		throw new Error(`Validation of public custom elements manifest failed: ${validate.errors}`);
 	} else {
-		console.log(validate.errors)
-		throw new Error(`Validation of internal custom elements manifest failed: ${validate.errors}`);
+		return {
+			external: inputDataExternal,
+			internal: inputDataInternal,
+			valid: false,
+			errors: validate.errors
+		};
+	}
+};
+
+// If this file is run directly (not required as a module)
+if (require.main === module) {
+	try {
+		validateCEM();
+	} catch (error) {
+		console.error('Validation failed:', error.message);
+		process.exit(1);
 	}
 }
 
-const inputDataExternal = clearProps(JSON.parse(JSON.stringify(inputDataInternal)));
-validate = ajv.compile(extenalSchema)
-
-// Validate the JSON data against the schema
-if (validate(inputDataExternal)) {
-	console.log('Custom element manifest is validated successfully');
-	fs.writeFileSync(inputFilePath, JSON.stringify(inputDataExternal, null, 2), 'utf8');
-	fs.writeFileSync(inputFilePath.replace("custom-elements", "custom-elements-internal"), JSON.stringify(inputDataInternal, null, 2), 'utf8');
-} else if (devMode) {
-	throw new Error(`Validation of public custom elements manifest failed: ${validate.errors}`);
-}
+module.exports = validateCEM;
+module.exports.validateCEM = validateCEM;
+module.exports.clearProps = clearProps;
+module.exports.filterExports = filterExports;
