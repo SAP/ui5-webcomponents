@@ -276,7 +276,7 @@ describe("RatingIndicator", () => {
 			cy.get("@changeEvent").should("have.callCount", 17);
 		});
 
-		it("Tests reducing value on star click", () => {
+		it("Second click on same star clears the RatingIndicator value", () => {
 			cy.mount(
 				<RatingIndicator></RatingIndicator>
 			);
