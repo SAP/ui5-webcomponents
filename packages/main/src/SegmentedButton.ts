@@ -8,7 +8,6 @@ import {
 	getAssociatedLabelForTexts,
 	getAllAccessibleNameRefTexts,
 	getEffectiveAriaDescriptionText,
-	getAllAccessibleDescriptionRefTexts,
 } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
