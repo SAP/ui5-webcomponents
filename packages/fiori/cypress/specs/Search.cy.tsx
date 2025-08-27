@@ -924,3 +924,125 @@ describe("Accessibility", () => {
 			.should("be.focused");
 	});
 });
+
+describe("Lazy loaded items and autocomplete", () => {
+	it("Should mount search component with no items, load items onInput and properly autocomplete to a newly added item", () => {
+		const searchItems = [
+			{ text: "Banana" },
+			{ text: "Apple" },
+			{ text: "Orange"}
+		];
+
+		let searchComponent: any;
+
+		const handleInput = () => {
+			searchItems.forEach(data => {
+				const item = document.createElement("ui5-search-item");
+				item.setAttribute("text", data.text);
+				searchComponent.appendChild(item);
+			});
+		};
+
+		cy.mount(
+			<Search ref={(el: any) => { searchComponent = el; }} onInput={handleInput}>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.then(search => {
+				search.get(0).addEventListener("ui5-open", cy.stub().as("opened"));
+			});
+
+		cy.get("ui5-search-item")
+			.should("not.exist");
+
+		// Click on the search input to focus it
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+
+		// Type "a" to trigger the onInput event
+		cy.get("[ui5-search]")
+			.realPress("a");
+
+		// Verify that suggestions are now open and items are added
+		cy.get("@opened")
+			.should("have.been.calledOnce");
+
+		// Verify all 3 items are present
+		cy.get("ui5-search-item")
+			.should("have.length", 3);
+
+		// Verify the second item is "Apple"
+		cy.get("ui5-search-item")
+			.eq(1)
+			.should("have.attr", "text", "Apple");
+
+		// Verify that the input text is autocompleted to "Apple" (first match starting with "a")
+		cy.get("[ui5-search]")
+			.should("have.value", "Apple");
+	});
+
+	it("Should mount search component with no items, load items onInput with a delay and properly autocomplete to a newly added item", () => {
+		const searchItems = [
+			{ text: "Banana" },
+			{ text: "Apple" },
+			{ text: "Orange"}
+		];
+
+		let searchComponent: any;
+
+		const handleInput = () => {
+			setTimeout(() =>
+				searchItems.forEach(data => {
+					const item = document.createElement("ui5-search-item");
+					item.setAttribute("text", data.text);
+					searchComponent.appendChild(item);
+				}),
+			1000)
+		};
+
+		cy.mount(
+			<Search ref={(el: any) => { searchComponent = el; }} onInput={handleInput}>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.then(search => {
+				search.get(0).addEventListener("ui5-open", cy.stub().as("opened"));
+			});
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+
+		// Type "a" to trigger the onInput event
+		cy.get("[ui5-search]")
+			.realPress("a");
+
+		// Verify that suggestions are now open and items are added
+		cy.get("@opened")
+			.should("have.been.calledOnce");
+
+		// Verify all 3 items are present
+		cy.get("ui5-search-item")
+			.should("have.length", 3);
+
+		// Verify the second item is "Apple"
+		cy.get("ui5-search-item")
+			.eq(1)
+			.should("have.attr", "text", "Apple");
+
+		// Verify that the input text is autocompleted to "Apple" (first match starting with "a")
+		cy.get("[ui5-search]")
+			.should("have.value", "Apple");
+	});
+});

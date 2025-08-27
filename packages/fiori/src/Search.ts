@@ -234,25 +234,20 @@ class Search extends SearchField {
 		if (this._shouldAutocomplete && !autoCompletedChars) {
 			const item = this._getFirstMatchingItem(this.value);
 			this._proposedItem = item;
+			this.open = this._popoupHasAnyContent();
 
 			if (item) {
 				this._handleTypeAhead(item);
-				this._deselectItems();
-				item.selected = true;
-			} else {
-				this._typedInValue = this.value;
+				this._selectMatchingItem(item);
 			}
-		} else {
-			this._typedInValue = this.value;
 		}
 
 		if (isPhone() && this.open) {
 			const item = this._getFirstMatchingItem(this.value);
 			this._proposedItem = item;
-			this._deselectItems();
 
 			if (item && this._performItemSelectionOnMobile) {
-				item.selected = true;
+				this._selectMatchingItem(item);
 			}
 		}
 
@@ -260,7 +255,6 @@ class Search extends SearchField {
 			(item as SearchItem).highlightText = this._typedInValue;
 		});
 
-		this._shouldAutocomplete = false;
 	}
 
 	onAfterRendering(): void {
@@ -314,6 +308,8 @@ class Search extends SearchField {
 		this._innerValue = originalValue;
 		this._performTextSelection = true;
 		this.value = originalValue;
+
+		this._shouldAutocomplete = false;
 	}
 
 	_startsWithMatchingItems(str: string): Array<ISearchSuggestionItem> {
@@ -332,6 +328,11 @@ class Search extends SearchField {
 		this._flattenItems.forEach(item => {
 			item.selected = false;
 		});
+	}
+
+	_selectMatchingItem(item: ISearchSuggestionItem){
+		this._deselectItems();
+		item.selected = true;
 	}
 
 	_handleDown(e: KeyboardEvent) {
@@ -401,6 +402,7 @@ class Search extends SearchField {
 
 	_handleInput(e: InputEvent) {
 		super._handleInput(e);
+		this._typedInValue = this.value;
 
 		if (isPhone()) {
 			return;
