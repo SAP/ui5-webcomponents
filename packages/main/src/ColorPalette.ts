@@ -16,7 +16,9 @@ import {
 	isSpace,
 	isEnter,
 	isDown,
+	isRight,
 	isUp,
+	isLeft,
 	isTabNext,
 	isHome,
 	isEnd,
@@ -400,7 +402,7 @@ class ColorPalette extends UI5Element {
 			this._handleDefaultColorClick(e);
 		}
 
-		if (isDown(e)) {
+		if (isDown(e) || isRight(e)) {
 			e.stopPropagation();
 
 			this.focusColorElement(this.colorPaletteNavigationElements[1], this._itemNavigation);
@@ -432,7 +434,7 @@ class ColorPalette extends UI5Element {
 		const target = e.target as ColorPaletteItem;
 		const index = this.colorPaletteNavigationElements.indexOf(target);
 
-		if (isUp(e)) {
+		if (isUp(e) || isLeft(e)) {
 			e.stopPropagation();
 
 			this.focusColorElement(this.displayedColors[this.displayedColors.length - 1], this._itemNavigation);
@@ -474,7 +476,7 @@ class ColorPalette extends UI5Element {
 			this.selectColor(target);
 		}
 
-		if (isUp(e) && this._isSwatchInFirstRow(target) && this.colorPaletteNavigationElements.length > 1) {
+		if (isUp(e) && this._isFirstDisplayedSwatch(target) && this.colorPaletteNavigationElements.length > 1) {
 			e.stopPropagation();
 			if (this.showDefaultColor) {
 				this.firstFocusableElement.focus();
@@ -483,7 +485,7 @@ class ColorPalette extends UI5Element {
 			} else if (!this.showDefaultColor && this.showMoreColors) {
 				lastElementInNavigation.focus();
 			}
-		} else if (isDown(e) && this._isSwatchInLastRow(target) && this.colorPaletteNavigationElements.length > 1) {
+		} else if (isDown(e) && this._isLastDisplayedSwatch(target) && this.colorPaletteNavigationElements.length > 1) {
 			e.stopPropagation();
 			const isRecentColorsNextElement = (this.showDefaultColor && !this.showMoreColors && this.hasRecentColors) || (!this.showDefaultColor && !this.showMoreColors && this.hasRecentColors);
 
@@ -499,10 +501,10 @@ class ColorPalette extends UI5Element {
 		} else if (isDown(e) && this._isFromLowestSwatchesNotInLastRow(target)) {
 			e.stopPropagation();
 			this.focusColorElement(this.displayedColors[this.displayedColors.length - 1], this._itemNavigation);
-		} else if (isHome(e) && this.showDefaultColor && this._isFirstDisplayedSwatch(target)) {
+		} else if ((isLeft(e) || isHome(e)) && this.showDefaultColor && this._isFirstDisplayedSwatch(target)) {
 			e.stopPropagation();
 			this._defaultColorButton?.focus();
-		} else if (isEnd(e) && this.showMoreColors && this._isLastDisplayedSwatch(target)) {
+		} else if ((isEnd(e) || isRight(e)) && this.showMoreColors && this._isLastDisplayedSwatch(target)) {
 			e.stopPropagation();
 			this._moreColorsButton?.focus();
 		} else if (isEnd(e) && this._isSwatchInLastRow(target)) {
@@ -517,11 +519,6 @@ class ColorPalette extends UI5Element {
 
 	_isLastDisplayedSwatch(target: ColorPaletteItem) {
 		return this.displayedColors[this.displayedColors.length - 1] === target;
-	}
-
-	_isSwatchInFirstRow(target: ColorPaletteItem) {
-		const index = this.displayedColors.indexOf(target);
-		return index < this.rowSize;
 	}
 
 	_isSwatchInLastRow(target: ColorPaletteItem) {
