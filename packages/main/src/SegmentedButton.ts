@@ -6,7 +6,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import {
 	getEffectiveAriaLabelText,
 	getAssociatedLabelForTexts,
-	getAllAccessibleNameRefTexts,
 	getEffectiveAriaDescriptionText,
 } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -289,7 +288,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		return getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || undefined;
+		return getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || undefined;
 	}
 
 	get ariaDescriptionText() {
