@@ -319,6 +319,84 @@ describe("Properties", () => {
 			.should("have.value", "I");
 	});
 
+	it("typeahead and value confirmation - autocomplete by starts with", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+
+		cy.get("[ui5-search]")
+			.realPress("I");
+
+		cy.get("[ui5-search]")
+			.realPress("Enter");
+
+		cy.get("[ui5-search]")
+			.should("have.value", "Item 1");
+	});
+
+	it("typeahead and Arrow Right - autocomplete by starts with", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+
+		cy.get("[ui5-search]")
+			.realPress("I");
+
+		cy.get("[ui5-search]")
+			.realPress("ArrowRight");
+
+		cy.get("[ui5-search]")
+			.should("have.value", "Item 1");
+	});
+
+	it("typeahead and Escape - autocomplete by starts with", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem scopeName="Items" text="Item 2" selected />
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+
+		cy.get("[ui5-search]")
+			.realPress("I");
+
+		cy.get("[ui5-search]")
+			.realPress("Escape");
+
+		cy.get("[ui5-search]")
+			.should("have.value", "I");
+	});
+
 	it("Popup properties", () => {
 		cy.mount(
 			<Search>
