@@ -254,7 +254,6 @@ class Search extends SearchField {
 		this._flattenItems.forEach(item => {
 			(item as SearchItem).highlightText = this._typedInValue;
 		});
-
 	}
 
 	onAfterRendering(): void {
@@ -330,7 +329,7 @@ class Search extends SearchField {
 		});
 	}
 
-	_selectMatchingItem(item: ISearchSuggestionItem){
+	_selectMatchingItem(item: ISearchSuggestionItem) {
 		this._deselectItems();
 		item.selected = true;
 	}
