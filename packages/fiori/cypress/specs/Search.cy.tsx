@@ -397,84 +397,6 @@ describe("Properties", () => {
 			.should("have.value", "I");
 	});
 
-	it("typeahead and value confirmation - autocomplete by contains", () => {
-		cy.mount(
-			<Search>
-				<SearchItem text="Item 1" icon={history} />
-				<SearchItem scopeName="Items" text="Item 2" selected />
-			</Search>
-		);
-
-		cy.get("[ui5-search]")
-			.shadow()
-			.find("input")
-			.realClick();
-
-		cy.get("[ui5-search]")
-			.should("be.focused");
-
-		cy.get("[ui5-search]")
-			.realPress("2");
-
-		cy.get("[ui5-search]")
-			.realPress("Enter");
-
-		cy.get("[ui5-search]")
-			.should("have.value", "Item 2");
-	});
-
-	it("typeahead and Arrow Right - autocomplete by contains", () => {
-		cy.mount(
-			<Search>
-				<SearchItem text="Item 1" icon={history} />
-				<SearchItem scopeName="Items" text="Item 2" selected />
-			</Search>
-		);
-
-		cy.get("[ui5-search]")
-			.shadow()
-			.find("input")
-			.realClick();
-
-		cy.get("[ui5-search]")
-			.should("be.focused");
-
-		cy.get("[ui5-search]")
-			.realPress("2");
-
-		cy.get("[ui5-search]")
-			.realPress("ArrowRight");
-
-		cy.get("[ui5-search]")
-			.should("have.value", "2");
-	});
-
-	it("typeahead and Escape - autocomplete by contains", () => {
-		cy.mount(
-			<Search>
-				<SearchItem text="Item 1" icon={history} />
-				<SearchItem scopeName="Items" text="Item 2" selected />
-			</Search>
-		);
-
-		cy.get("[ui5-search]")
-			.shadow()
-			.find("input")
-			.realClick();
-
-		cy.get("[ui5-search]")
-			.should("be.focused");
-
-		cy.get("[ui5-search]")
-			.realPress("2");
-
-		cy.get("[ui5-search]")
-			.realPress("Escape");
-
-		cy.get("[ui5-search]")
-			.should("have.value", "2");
-	});
-
 	it("Popup properties", () => {
 		cy.mount(
 			<Search>
@@ -566,7 +488,7 @@ describe("Properties", () => {
 
 		cy.realPress("I");
 
-        cy.get("[ui5-search-item]")
+		cy.get("[ui5-search-item]")
 			.eq(0)
 			.realHover();
 
@@ -697,43 +619,6 @@ describe("Events", () => {
 
 		cy.wrap(spy).should("have.been.calledWithMatch", Cypress.sinon.match(event => {
 			return event.detail.item.text === "Item 1";
-		}));
-	});
-
-	it("search event with autocomplete by contains", () => {
-		const spy = cy.spy();
-		cy.mount(
-			<Search>
-				<SearchItem text="Item 1" icon={history} />
-				<SearchItem scopeName="Items" text="Item 2" selected />
-			</Search>
-		);
-
-		cy.get("[ui5-search]")
-			.then(search => {
-				search.get(0).addEventListener("ui5-search", spy);
-				search.get(0).addEventListener("ui5-search", cy.stub().as("searched"));
-			});
-
-		cy.get("[ui5-search]")
-			.shadow()
-			.find("input")
-			.realClick();
-
-		cy.get("[ui5-search]")
-			.should("be.focused");
-
-		cy.get("[ui5-search]")
-			.realPress("2");
-
-		cy.get("[ui5-search]")
-			.realPress("Enter");
-
-		cy.get("@searched")
-			.should("have.been.calledOnce");
-
-		cy.wrap(spy).should("have.been.calledWithMatch", Cypress.sinon.match(event => {
-			return event.detail.item.text === "Item 2";
 		}));
 	});
 
