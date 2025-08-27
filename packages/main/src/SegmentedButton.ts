@@ -294,7 +294,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	get ariaDescriptionText() {
-		return `${getAllAccessibleDescriptionRefTexts(this) || getEffectiveAriaDescriptionText(this)} ${SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY)}`.trim();
+		return `${(getEffectiveAriaDescriptionText(this) || "")} ${SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY)}`.trim();
 	}
 
 	get ariaRoleDescription() {
