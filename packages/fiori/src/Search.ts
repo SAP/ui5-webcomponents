@@ -234,7 +234,10 @@ class Search extends SearchField {
 		if (this._shouldAutocomplete && !autoCompletedChars) {
 			const item = this._getFirstMatchingItem(this.value);
 			this._proposedItem = item;
-			this.open = this._popoupHasAnyContent();
+
+			if (!isPhone()) {
+				this.open = this._popoupHasAnyContent();
+			}
 
 			if (item) {
 				this._handleTypeAhead(item);
@@ -280,6 +283,7 @@ class Search extends SearchField {
 
 		this.fireDecoratorEvent("input");
 	}
+
 	_shouldPerformSelectionOnMobile(inputType: string): boolean {
 		const allowedEventTypes = [
 			"deleteWordBackward",
