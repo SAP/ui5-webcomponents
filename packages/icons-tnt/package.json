@@ -17,9 +17,9 @@
     "./*": "./dist/*"
   },
   "scripts": {
-    "clean": "wc-dev clean",
-    "build": "wc-dev build",
-    "generate": "nps generate",
+    "clean": "node ./custom-runner.cjs clean",
+    "build": "node ./custom-runner.cjs build",
+    "generate": "node ./custom-runner.cjs generate",
     "prepublishOnly": "tsc -b"
   },
   "repository": {
