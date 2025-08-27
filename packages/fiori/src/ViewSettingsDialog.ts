@@ -14,6 +14,7 @@ import type List from "@ui5/webcomponents/dist/List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 
 import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
 import "@ui5/webcomponents-icons/dist/sort.js";
@@ -290,6 +291,9 @@ class ViewSettingsDialog extends UI5Element {
 	@slot()
 	groupItems!: Array<GroupItem>;
 
+	@query("[ui5-list]")
+	_list!: List;
+
 	@query("[ui5-dialog]")
 	_dialog?: Dialog;
 
@@ -324,6 +328,14 @@ class ViewSettingsDialog extends UI5Element {
 
 		if (this.shouldBuildGroup) {
 			this._currentMode = ViewSettingsDialogMode.Group;
+		}
+	}
+
+	onAfterRendering() {
+		if (this.isModeFilter) {
+			renderFinished().then(() => {
+				this._list?.focusFirstItem();
+			});
 		}
 	}
 
@@ -597,7 +609,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	afterDialogOpen(): void {
-		this._dialog?.querySelector<List>("[ui5-list]")?.focusFirstItem();
+		this._list?.focusFirstItem();
 
 		this._focusRecentlyUsedControl();
 

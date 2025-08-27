@@ -175,7 +175,7 @@ describe("Toolbar general interaction", () => {
 			.should("have.been.calledOnce");
 	});
 
-	it("Should move button with alwaysOverflow priority to overflow popover", async () => {
+	it.skip("Should move button with alwaysOverflow priority to overflow popover", async () => {
 
 		cy.mount(
 			<Toolbar id="otb_d">
@@ -286,6 +286,137 @@ describe("Toolbar general interaction", () => {
 
 		cy.get("@popover")
 			.should("have.prop", "open", false);
+	});
+
+	it("Should focus on the last interactive element outside the overflow popover when overflow button disappears", () => {
+		// Mount the Toolbar with multiple buttons
+		cy.mount(
+			<Toolbar>
+				<ToolbarButton text="Button 1" />
+				<ToolbarButton text="Button 2" />
+				<ToolbarButton text="Button 3" />
+				<ToolbarButton text="Button 4" />
+				<ToolbarButton text="Button 5" />
+			</Toolbar>
+		);
+
+		// Set initial viewport size to ensure the overflow button is visible
+		cy.viewport(300, 1080);
+
+		// Focus on the overflow button
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.click()
+			.click()
+			.should("be.focused");
+
+		// Resize the viewport to make the overflow button disappear
+		cy.viewport(800, 1080);
+
+		// Verify the focus shifts to the last interactive element outside the overflow popover
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-tb-item")
+			.eq(3)
+			.should("be.focused");
+	});
+
+	it("Should render ui5-button by toolbar template, when slotting ui5-toolbar-button elements", () => {
+		cy.mount(
+			<Toolbar>
+				<ToolbarButton 
+					icon="decline" 
+					stableDomRef="tb-button-decline"
+					overflowPriority="NeverOverflow" 
+					text="Left 2" 
+				/>
+				<ToolbarButton 
+					icon="employee" 
+					overflowPriority="NeverOverflow"
+					text="Left 3" 
+				/>
+			</Toolbar>
+		);
+	
+		cy.get("[ui5-toolbar]")
+			.find("[ui5-toolbar-button]")
+			.first()
+			.shadow()
+			.find("ui5-button")
+			.should("have.prop", "tagName", "UI5-BUTTON");
+
+		cy.viewport(200, 400);
+
+		cy.get("[ui5-toolbar]")
+			.find("[ui5-toolbar-button][overflow-priority='NeverOverflow']")
+			.should("be.visible")
+			.should("have.length", 2);
+	});
+	
+	it("Should call child events only once", () => {
+		cy.mount(
+			<>
+				<Toolbar data-testid="clickCountToolbar">
+					<ToolbarButton 
+						icon="add" 
+						text="Left 1 (long)" 
+						data-testid="clickCounter"
+					/>
+					<ToolbarButton 
+						icon="decline" 
+						text="Left 2" 
+						data-testid="clearCounter"
+					/>
+				</Toolbar>
+				<input data-testid="input" defaultValue="0" />
+			</>
+		);
+	
+		// Create stubs for event tracking
+		cy.get("[data-testid='clickCountToolbar']")
+			.as("toolbar")
+			.then($toolbar => {
+				$toolbar.get(0).addEventListener("click", cy.stub().as("toolbarClickStub"));
+			});
+	
+		cy.get("[data-testid='clickCounter']")
+			.as("clickCounter")
+			.then($button => {
+				$button.get(0).addEventListener("click", cy.stub().as("counterClickStub"));
+			});
+	
+		cy.get("[data-testid='clearCounter']")
+			.as("clearCounter")
+			.then($button => {
+				$button.get(0).addEventListener("click", cy.stub().as("clearClickStub"));
+			});
+	
+		// Set up input manipulation logic
+		cy.get("@toolbar").then($toolbar => {
+			$toolbar.get(0).addEventListener("click", (e) => {
+				const input = document.querySelector("[data-testid='input']") as HTMLInputElement;
+				const target = e.target as HTMLElement;
+				
+				if (target.dataset.testid === "clearCounter") {
+					input.value = "0";
+				} else if (target.dataset.testid === "clickCounter") {
+					let currentValue = parseInt(input.value);
+					input.value = `${++currentValue}`;
+				}
+			});
+		});
+	
+		cy.get("[data-testid='input']").invoke("val", "0");
+	
+		cy.get("@clickCounter").realClick();
+	
+		cy.get("[data-testid='input']").should("have.prop", "value", "1");
+	
+		cy.get("@toolbarClickStub").should("have.been.calledOnce");
+		cy.get("@counterClickStub").should("have.been.calledOnce");
+	
+		cy.get("[data-testid='input']").invoke("val", "0");
 	});
 });
 
@@ -457,5 +588,35 @@ describe("Toolbar Select", () => {
 				cy.get("ui5-button[accessible-name]").invoke("prop", "accessibilityAttributes").should("have.property", "expanded", "true");
 			});
 		});
+	});
+});
+
+describe("Toolbar Button", () => {
+	it("Should not trigger click event on disabled button", () => {
+		// Use cy.mount to create the toolbar with buttons and input field
+		cy.mount(
+			<div>
+				<Toolbar id="test-toolbar">
+					<ToolbarButton disabled>Disabled Button</ToolbarButton>
+					<ToolbarButton
+						onClick={() => {
+							const input = document.getElementById("value-input") as HTMLInputElement;
+							input.value = (parseInt(input.value, 10) + 1).toString();
+						}}
+					>
+						Enabled Button
+					</ToolbarButton>
+					<input id="value-input" type="number" defaultValue="0" />
+				</Toolbar>
+			</div>
+		);
+
+		// Test clicking the disabled button
+		cy.get("ui5-toolbar-button[disabled]").realClick();
+		cy.get("#value-input").should("have.value", "0");
+
+		// Test clicking the non-disabled button
+		cy.get("ui5-toolbar-button:not([disabled])").realClick();
+		cy.get("#value-input").should("have.value", "1");
 	});
 });

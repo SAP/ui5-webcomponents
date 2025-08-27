@@ -235,7 +235,7 @@ class Menu extends UI5Element {
 	 * @since 1.10.0
 	 */
 	@property({ converter: DOMReferenceConverter })
-	opener?: HTMLElement | string;
+	opener?: HTMLElement | string | null;
 
 	/**
 	 * Defines the items of this component.
@@ -323,6 +323,10 @@ class Menu extends UI5Element {
 		this._allMenuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
+	}
+
+	getFocusDomRef(): HTMLElement | undefined {
+		return this._list?.getFocusDomRef();
 	}
 
 	_setupItemNavigation() {

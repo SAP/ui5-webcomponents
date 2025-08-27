@@ -9,6 +9,8 @@ import {
 	getEffectiveAriaLabelText,
 	getAssociatedLabelForTexts,
 	getAllAccessibleNameRefTexts,
+	getEffectiveAriaDescriptionText,
+	getAllAccessibleDescriptionRefTexts,
 } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -235,6 +237,24 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	accessibleNameRef?: string;
 
 	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.14.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that describe the input.
+	 * @default undefined
+	 * @public
+	 * @since 2.14.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
+
+	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -282,9 +302,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	@property({ type: Boolean, noAttribute: true })
 	_tokenizerOpen = false;
-
-	@property({ type: Boolean, noAttribute: true })
-	_tokenizerExpanded = true;
 
 	static emptyInput: HTMLInputElement;
 
@@ -397,12 +414,28 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	_onfocusin() {
 		this.focused = true;
-		this._tokenizerExpanded = true;
+		if (this._tokenizer) {
+			this._tokenizer.expanded = true;
+		}
 	}
 
 	_onfocusout() {
+		if (this.matches(":focus-within")) {
+			return;
+		}
+
 		this.focused = false;
-		this._tokenizerExpanded = this._tokenizerOpen || false;
+		if (this._tokenizer) {
+			this._tokenizer.expanded = this._tokenizerOpen;
+		}
+	}
+
+	get _tokenizerExpanded(): boolean {
+		if (!this._tokenizer) {
+			return true;
+		}
+
+		return this._tokenizer.expanded;
 	}
 
 	_onTokenizerKeyUp(e: KeyboardEvent) {
@@ -473,7 +506,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			this._input.value = "";
 		}
 
-		this._tokenizerOpen = this._tokenizer?.open || false;
+		this._tokenizerOpen = this._tokenizer ? this._tokenizer.open : false;
 
 		if (this.hideInput && this.content.length > 0) {
 			this.content.forEach(element => {
@@ -590,6 +623,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			"ariaInvalid": this.valueState === ValueState.Negative || undefined,
 			"ariaHasPopup": "dialog",
 			"ariaLabel": getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || undefined,
+			"ariaDescription": getAllAccessibleDescriptionRefTexts(this) || getEffectiveAriaDescriptionText(this) || undefined,
 		};
 	}
 

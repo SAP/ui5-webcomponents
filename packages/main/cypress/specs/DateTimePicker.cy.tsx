@@ -1,6 +1,7 @@
 import DateTimePicker from "../../src/DateTimePicker.js";
 import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import Label from "../../src/Label.js";
 
 type DateTimePickerTemplateOptions = Partial<{
 	formatPattern: string;
@@ -418,6 +419,28 @@ describe("DateTimePicker general interaction", () => {
 			.and("have.attr", "value", "");
 	});
 
+	it("custom formatting", () => {
+		cy.mount(<DateTimePicker displayFormat="yyyy, dd/MM hh:mm:ss" valueFormat="yyyy-MM-dd hh:mm:ss"></DateTimePicker>);
+
+		cy.get("[ui5-datetime-picker]")
+			.as("dateTimePicker");
+
+		cy.get<DateTimePicker>("@dateTimePicker")
+			.ui5DatePickerGetInnerInput()
+			.realClick()
+			.should("be.focused")
+			.realType("2018, 05/05 12:00:00")
+			.realPress("Enter");
+
+		cy.get("@dateTimePicker")
+			.shadow()
+			.find("ui5-datetime-input")
+			.should("have.attr", "value", "2018, 05/05 12:00:00");
+
+		cy.get("@dateTimePicker")
+			.should("have.attr", "value", "2018-05-05 12:00:00");
+	});
+
 	it("Min and max dates are set, with no format pattern provided, using valid ISO format", () => {
 		cy.mount(
 			<DateTimePickerTemplate minDate="2023-05-01" maxDate="2023-05-31" />
@@ -443,14 +466,6 @@ describe("DateTimePicker general interaction", () => {
 					.find("div[data-ui5-cal-header-btn-next]")
 					.should("have.class", "ui5-calheader-arrowbtn-disabled");
 			});
-	});
-
-	it("picker popover should have accessible name", () => {
-		cy.mount(<DateTimePickerTemplate />);
-
-		cy.get<DateTimePicker>("[ui5-datetime-picker]")
-			.ui5DateTimePickerGetPopover()
-			.should("have.attr", "accessible-name", "Choose Date and Time");
 	});
 
 	it("value state", () => {
@@ -532,5 +547,66 @@ describe("DateTimePicker general interaction", () => {
 
 		// The change event should not have been fired a second time.
 		cy.get("@changeStub").should("have.been.calledOnce");
+	});
+});
+
+describe("Accessibility", () => {
+	it("picker popover accessible name", () => {
+		const LABEL = "Deadline";
+		cy.mount(<DateTimePicker accessible-name={LABEL}/>);
+
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
+			.ui5DateTimePickerGetPopover()
+			.should("have.attr", "accessible-name", `Choose Date and Time for ${LABEL}`);
+	});
+
+	it("picker popover accessible name with external label", () => {
+		const LABEL = "Deadline";
+		cy.mount(
+			<>
+				<Label for="dateTimePicker">{LABEL}</Label>
+				<DateTimePicker id="dateTimePicker" />
+			</>
+		);
+
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
+			.ui5DateTimePickerGetPopover()
+			.should("have.attr", "accessible-name", `Choose Date and Time for ${LABEL}`);
+	});
+
+	it("accessibleDescription property", () => {
+		const DESCRIPTION = "Some description";
+		cy.mount(<DateTimePicker accessibleDescription={DESCRIPTION}></DateTimePicker>);
+
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
+			.ui5DatePickerGetInnerInput()
+			.should("have.attr", "aria-describedby", "descr");
+
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
+			.shadow()
+			.find("[ui5-datetime-input]")
+			.shadow()
+			.find("span#descr")
+			.should("have.text", DESCRIPTION);
+	});
+
+	it("accessibleDescriptionRef property", () => {
+		const DESCRIPTION = "External description";
+		cy.mount(
+			<>
+				<p id="descr">{DESCRIPTION}</p>
+				<DateTimePicker accessibleDescriptionRef="descr"></DateTimePicker>
+			</>
+		);
+
+		cy.get<DateTimePicker>("[ui5-datetime-picker]")
+			.shadow()
+			.find("[ui5-datetime-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-describedby")
+			.and("contain", "descr");
+
+		cy.get("#descr").should("have.text", DESCRIPTION);
 	});
 });

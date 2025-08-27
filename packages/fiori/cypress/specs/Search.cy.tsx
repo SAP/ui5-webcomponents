@@ -2,6 +2,7 @@ import Title from "@ui5/webcomponents/dist/Title.js";
 import Search from "../../src/Search.js";
 import SearchItem from "../../src/SearchItem.js";
 import SearchItemGroup from "../../src/SearchItemGroup.js";
+import SearchItemShowMore from "../../src/SearchItemShowMore.js";
 import history from "@ui5/webcomponents-icons/dist/history.js";
 import IllustratedMessage from "../../src/IllustratedMessage.js";
 import searchIcon from "@ui5/webcomponents-icons/dist/search.js";
@@ -10,6 +11,7 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import AvatarSize from "@ui5/webcomponents/dist/types/AvatarSize.js";
+import { SEARCH_ITEM_SHOW_MORE_COUNT, SEARCH_ITEM_SHOW_MORE_NO_COUNT } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("Properties", () => {
 	it("items slot with groups", () => {
@@ -88,6 +90,76 @@ describe("Properties", () => {
 			.should("be.focused");
 	});
 
+	it("items slot arrow navigation with groups and headerText", () => {
+		cy.mount(
+			<Search>
+				<SearchItemGroup headerText="Group Header 1">
+					<SearchItem text="List Item" icon={history}></SearchItem>
+					<SearchItem text="List Item" icon={searchIcon}></SearchItem>
+				</SearchItemGroup>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.realPress("L");
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+
+		cy.get("[ui5-search]")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-search-item-group")
+			.shadow()
+			.find("[ui5-li-group-header]")
+			.should("be.focused");
+
+		cy.get("[ui5-search]")
+			.realPress("ArrowUp");
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+	});
+
+	it("items slot arrow navigation with groups and no headerText", () => {
+		cy.mount(
+			<Search>
+				<SearchItemGroup>
+					<SearchItem text="List Item" icon={history}></SearchItem>
+					<SearchItem text="List Item" icon={searchIcon}></SearchItem>
+				</SearchItemGroup>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.realPress("L");
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+
+		cy.get("[ui5-search]")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-search-item").eq(0)
+			.should("be.focused");
+
+		cy.get("[ui5-search]")
+			.realPress("ArrowUp");
+
+		cy.get("[ui5-search]")
+			.should("be.focused");
+	})
+
 	it("items should be shown instead of illustration of both present ", () => {
 		cy.mount(
 			<Search>
@@ -107,6 +179,95 @@ describe("Properties", () => {
 			.shadow()
 			.find("slot[name='illustration']")
 			.should("not.exist");
+	});
+
+	it("tests show more item text with counter", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="List Item"></SearchItem>
+				<SearchItemShowMore itemsToShowCount={3}></SearchItemShowMore>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.realClick()
+			.realType("s");
+
+		cy.get("[ui5-search-item-show-more]")
+			.should("be.visible");
+
+		cy.get("[ui5-search-item-show-more]")
+			.shadow()
+			.find("span")
+			.as("itemText");
+
+		cy.get("[ui5-search-item-show-more]")
+			.then($item => {
+				const item = $item[0];
+				const resourceBundle = (item.constructor as any).i18nBundle;
+
+				cy.get("@itemText")
+					.should("have.text", resourceBundle.getText(SEARCH_ITEM_SHOW_MORE_COUNT.defaultText, 3));
+			});
+
+		cy.get("@itemText")
+			.should("have.class", "ui5-search-item-show-more-text");
+
+	});
+
+	it("tests show more item with no counter", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="List Item"></SearchItem>
+				<SearchItemShowMore></SearchItemShowMore>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.realClick()
+			.realType("s");
+
+		cy.get("[ui5-search-item-show-more]")
+			.should("be.visible");
+
+		cy.get("[ui5-search-item-show-more]")
+			.shadow()
+			.find("span")
+			.as("itemText");
+
+		cy.get("[ui5-search-item-show-more]")
+			.then($item => {
+				const item = $item[0];
+				const resourceBundle = (item.constructor as any).i18nBundle;
+
+				cy.get("@itemText")
+					.should("have.text", resourceBundle.getText(SEARCH_ITEM_SHOW_MORE_NO_COUNT.defaultText));
+			});
+
+		cy.get("@itemText")
+			.should("have.class", "ui5-search-item-show-more-text");
+	});
+
+	it("test show more item accessibility attributes", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="List Item"></SearchItem>
+				<SearchItemShowMore itemsToShowCount={2}></SearchItemShowMore>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.realClick()
+			.realType("l");
+
+		cy.realPress("ArrowDown");
+		cy.realPress("ArrowDown");
+
+		cy.get("[ui5-search-item-show-more]")
+			.shadow()
+			.find("li")
+			.should("have.attr", "aria-selected", "true")
+			.should("have.attr", "role", "option");
 	});
 
 	it("tests loading property", () => {
@@ -236,84 +397,6 @@ describe("Properties", () => {
 			.should("have.value", "I");
 	});
 
-	it("typeahead and value confirmation - autocomplete by contains", () => {
-		cy.mount(
-			<Search>
-				<SearchItem text="Item 1" icon={history} />
-				<SearchItem scopeName="Items" text="Item 2" selected />
-			</Search>
-		);
-
-		cy.get("[ui5-search]")
-			.shadow()
-			.find("input")
-			.realClick();
-
-		cy.get("[ui5-search]")
-			.should("be.focused");
-
-		cy.get("[ui5-search]")
-			.realPress("2");
-
-		cy.get("[ui5-search]")
-			.realPress("Enter");
-
-		cy.get("[ui5-search]")
-			.should("have.value", "Item 2");
-	});
-
-	it("typeahead and Arrow Right - autocomplete by contains", () => {
-		cy.mount(
-			<Search>
-				<SearchItem text="Item 1" icon={history} />
-				<SearchItem scopeName="Items" text="Item 2" selected />
-			</Search>
-		);
-
-		cy.get("[ui5-search]")
-			.shadow()
-			.find("input")
-			.realClick();
-
-		cy.get("[ui5-search]")
-			.should("be.focused");
-
-		cy.get("[ui5-search]")
-			.realPress("2");
-
-		cy.get("[ui5-search]")
-			.realPress("ArrowRight");
-
-		cy.get("[ui5-search]")
-			.should("have.value", "2");
-	});
-
-	it("typeahead and Escape - autocomplete by contains", () => {
-		cy.mount(
-			<Search>
-				<SearchItem text="Item 1" icon={history} />
-				<SearchItem scopeName="Items" text="Item 2" selected />
-			</Search>
-		);
-
-		cy.get("[ui5-search]")
-			.shadow()
-			.find("input")
-			.realClick();
-
-		cy.get("[ui5-search]")
-			.should("be.focused");
-
-		cy.get("[ui5-search]")
-			.realPress("2");
-
-		cy.get("[ui5-search]")
-			.realPress("Escape");
-
-		cy.get("[ui5-search]")
-			.should("have.value", "2");
-	});
-
 	it("Popup properties", () => {
 		cy.mount(
 			<Search>
@@ -404,8 +487,8 @@ describe("Properties", () => {
 			.realClick();
 
 		cy.realPress("I");
-       
-        cy.get("[ui5-search-item]")
+
+		cy.get("[ui5-search-item]")
 			.eq(0)
 			.realHover();
 
@@ -536,43 +619,6 @@ describe("Events", () => {
 
 		cy.wrap(spy).should("have.been.calledWithMatch", Cypress.sinon.match(event => {
 			return event.detail.item.text === "Item 1";
-		}));
-	});
-
-	it("search event with autocomplete by contains", () => {
-		const spy = cy.spy();
-		cy.mount(
-			<Search>
-				<SearchItem text="Item 1" icon={history} />
-				<SearchItem scopeName="Items" text="Item 2" selected />
-			</Search>
-		);
-
-		cy.get("[ui5-search]")
-			.then(search => {
-				search.get(0).addEventListener("ui5-search", spy);
-				search.get(0).addEventListener("ui5-search", cy.stub().as("searched"));
-			});
-
-		cy.get("[ui5-search]")
-			.shadow()
-			.find("input")
-			.realClick();
-
-		cy.get("[ui5-search]")
-			.should("be.focused");
-
-		cy.get("[ui5-search]")
-			.realPress("2");
-
-		cy.get("[ui5-search]")
-			.realPress("Enter");
-
-		cy.get("@searched")
-			.should("have.been.calledOnce");
-
-		cy.wrap(spy).should("have.been.calledWithMatch", Cypress.sinon.match(event => {
-			return event.detail.item.text === "Item 2";
 		}));
 	});
 

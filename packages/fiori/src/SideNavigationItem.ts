@@ -9,6 +9,9 @@ import {
 	isRight,
 	isSpace,
 	isEnter,
+	isEnterShift,
+	isEnterCtrl,
+	isEnterAlt,
 	isMinus,
 	isPlus,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -145,11 +148,15 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return "tree";
 		}
 
+		if (this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
+		}
+
 		return undefined;
 	}
 
 	get _ariaChecked() {
-		if (this.isOverflow || this.unselectable) {
+		if (this.isOverflow || this.unselectable || !this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -157,7 +164,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _groupId() {
-		if (!this.items.length) {
+		if (!this.items.length || this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -165,7 +172,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _expanded() {
-		if (!this.items.length) {
+		if (!this.items.length || this.sideNavCollapsed) {
 			return undefined;
 		}
 
@@ -257,12 +264,14 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
+		// "Space" + modifier is often reserved by the operating system or window manager
 		if (this.unselectable && isSpace(e)) {
 			this._toggle();
 			return;
 		}
 
-		if (this.unselectable && isEnter(e)) {
+		// "Enter" + "Meta" is missing since it is often reserved by the operating system or window manager
+		if (this.unselectable && (isEnter(e) || isEnterShift(e) || isEnterCtrl(e) || isEnterAlt(e))) {
 			this._toggle();
 		}
 
@@ -313,14 +322,14 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		this.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	get isSideNavigationItem() {
-		return true;
-	}
-
 	_toggle() {
 		if (this.items.length && !this.effectiveDisabled) {
 			this.expanded = !this.expanded;
 		}
+	}
+
+	get isSideNavigationItem() {
+		return true;
 	}
 }
 
