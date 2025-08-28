@@ -85,7 +85,7 @@
 			<ui5-title>Form validation</ui5-title>
 			<form id="formValidation">
 				<ui5-message-strip id="formValidationMessage" hidden></ui5-message-strip>
-				<ui5-daterange-picker min-date="6/1/2020" max-date="5/1/2021" format-pattern="dd/MM/yyyy" required id="formDateRangePicker"></ui5-daterange-picker>
+				<ui5-daterange-picker min-date="06/01/2020" max-date="05/01/2021" format-pattern="dd/MM/yyyy" required id="formDateRangePicker"></ui5-daterange-picker>
 				<br><br>
 				<ui5-button id="btnCheckFormValidity">Check Validity</ui5-button>
 			</form>
@@ -117,6 +117,7 @@
 			formValidationMessage.innerText = `checkValidity(): ${isValid} ${delayed ? '( Delayed check )' : ''}`;
 			formValidationMessage.design = isValid ? "Positive" : "Negative";
 		}
+
 		document.getElementById('daterange-picker1').addEventListener('ui5-change', function(e) {
 			document.getElementById("labelChange").innerHTML = Number(document.getElementById("labelChange").innerHTML) + 1;
 		});

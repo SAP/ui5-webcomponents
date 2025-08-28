@@ -25,7 +25,7 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Acc
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import StepInputTemplate from "./StepInputTemplate.js";
-import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/i18n/i18n-defaults.js";
+import { FORM_TEXTFIELD_REQUIRED, STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/i18n/i18n-defaults.js";
 import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
 
@@ -292,6 +292,30 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	async formElementAnchor() {
 		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
+	}
+
+	get formValidityMessage() {
+		const validity = this.formValidity;
+
+		if (validity.patternMismatch) {
+			return StepInput.i18nBundle.getText("DATEPICKER_PATTERN_MISMATCH"); // TODO: add key
+		}
+		if (validity.rangeUnderflow) {
+			return StepInput.i18nBundle.getText("DATEPICKER_RANGE_UNDERFLOW"); // TODO: add key
+		}
+		if (validity.rangeOverflow) {
+			return StepInput.i18nBundle.getText("DATEPICKER_RANGE_OVERFLOW"); // TODO: add key
+		}
+
+		return ""; // No error
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return {
+			patternMismatch: this.value !== 0 && !this._isValueWithCorrectPrecision,
+			rangeOverflow: this.max !== undefined && this.value >= this.max,
+			rangeUnderflow: this.min !== undefined && this.value <= this.min,
+		};
 	}
 
 	get formFormattedValue(): FormData | string | null {

@@ -104,9 +104,9 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	get formValidity(): ValidityStateFlags {
 		return {
 			valueMissing: this.required && !this.value,
-			patternMismatch: !this.isValidValue(this.value),
-			//rangeUnderflow: !this._isValidMin(this.value),
-			//rangeOverflow: !this._isValidMax(this.value),
+			patternMismatch: !!this.value && !this.isValidValue(this.value),
+			rangeUnderflow: !!this.value && !this.isValidMin(this.value),
+			rangeOverflow: !!this.value && !this.isValidMax(this.value),
 		};
 	}
 
@@ -314,6 +314,20 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		parts = parts.filter(str => str !== " "); // remove empty strings
 
 		return parts.length <= 2 && parts.every(dateString => super.isInValidRange(dateString));
+	}
+
+	isValidMin(value: string): boolean {
+		let parts = this._splitValueByDelimiter(value).filter(str => str !== "");
+		parts = parts.filter(str => str !== " "); // remove empty strings
+
+		return parts.length <= 2 && parts.every(dateString => super.isValidMin(dateString));
+	}
+
+	isValidMax(value: string): boolean {
+		let parts = this._splitValueByDelimiter(value).filter(str => str !== "");
+		parts = parts.filter(str => str !== " "); // remove empty strings
+
+		return parts.length <= 2 && parts.every(dateString => super.isValidMax(dateString));
 	}
 
 	/**

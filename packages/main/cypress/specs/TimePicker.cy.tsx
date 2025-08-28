@@ -453,7 +453,7 @@ describe("Accessibility", () => {
 });
 
 describe("Validation inside a form", () => {
-	it("has correct validity", () => {
+	it("has correct validity for valueMissing", () => {
 		cy.mount(<form method="get">
 			<TimePicker id="timePicker" required={true}></TimePicker>
 			<button type="submit" id="submitBtn" > Submits forms </button>
@@ -480,7 +480,7 @@ describe("Validation inside a form", () => {
 				expect(timepicker.reportValidity(), "Required TimePicker without value should fail report validity").to.be.false;
 			});
 
-		cy.get("#timePicker:invalid") // select using :invalid CSS pseudo-class
+		cy.get("#timePicker:invalid")
 			.should("exist", "Required timepicker without value should have :invalid CSS class");
 
 		cy.get<TimePicker>("[ui5-time-picker]")
@@ -501,5 +501,64 @@ describe("Validation inside a form", () => {
 			});
 
 		cy.get("#timePicker:invalid").should("not.exist", "Required TimePicker with value should not have :invalid CSS class");
+	});
+
+	it("has correct validity for patternMismatch", () => {
+		cy.mount(
+			<form>
+				<TimePicker id="timePicker" required format-pattern="HH:mm:ss"></TimePicker>
+				<button type="submit" id="submitBtn" > Submits forms </button>
+			</form>
+		);
+
+		cy.get("#timePicker").as("timePicker");
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get<TimePicker>("@timePicker")
+			.ui5TimePickerGetInnerInput()
+			.realClick()
+			.should("be.focused")
+			.realType("invalid")
+			.realPress("Enter");
+
+		cy.get("#submitBtn").click();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("@timePicker").then($el => {
+			const tp = $el[0] as TimePicker;
+			expect(tp.formValidity.patternMismatch).to.be.true;
+			expect(tp.validity.patternMismatch).to.be.true;
+			expect(tp.validity.valid).to.be.false;
+			expect(tp.checkValidity()).to.be.false;
+			expect(tp.reportValidity()).to.be.false;
+		});
+
+		cy.get("#timePicker:invalid")
+			.should("exist", "Timepicker without correct formatted value should have :invalid CSS class");
+
+		cy.get<TimePicker>("@timePicker")
+			.ui5TimePickerGetInnerInput()
+			.realClick()
+			.should("be.focused")
+			.realType("14:00:00")
+			.realPress("Enter");
+
+		cy.get("@timePicker").then($el => {
+			const tp = $el[0] as TimePicker;
+			expect(tp.formValidity.patternMismatch).to.be.false;
+			expect(tp.validity.patternMismatch).to.be.false;
+			expect(tp.validity.valid).to.be.true;
+			expect(tp.checkValidity()).to.be.true;
+			expect(tp.reportValidity()).to.be.true;
+		});
+
+		cy.get("#timePicker:invalid")
+			.should("not.exist", "Timepicker with correct formatted value should not have :invalid CSS class");
 	});
 });

@@ -1678,10 +1678,10 @@ describe("Legacy date customization and Islamic calendar type", () => {
 	});
 });
 
-describe("Validation inside a form", () => {
-	it("has correct validity", () => {
+describe("Validation inside a form ", () => {
+	it("has correct validity for valueMissing", () => {
 		cy.mount(<form method="get">
-			<DatePicker id="datePicker" required={true}></DatePicker>
+			<DatePicker id="datePicker1" required={true}></DatePicker>
 			<button type="submit" id="submitBtn" > Submits forms </button>
 		</form>);
 
@@ -1696,7 +1696,8 @@ describe("Validation inside a form", () => {
 		cy.get("@submit")
 			.should("have.not.been.called");
 
-		cy.get("#datePicker")
+		cy.get("[ui5-date-picker]")
+			.as("datePicker")
 			.then($el => {
 				const datePicker = $el[0] as DatePicker;
 				expect(datePicker.formValidity.valueMissing, "Required DatePicker without value should have formValidity with valueMissing=true").to.be.true;
@@ -1706,18 +1707,17 @@ describe("Validation inside a form", () => {
 				expect(datePicker.reportValidity(), "Required DatePicker without value should fail report validity").to.be.false;
 			});
 
-		cy.get("#datePicker:invalid") // select using :invalid CSS pseudo-class
+		cy.get("#datePicker1:invalid")
 			.should("exist", "Required DatePicker without value should have :invalid CSS class");
 
-		cy.get("#datePicker")
-			.as("datePicker")
+		cy.get("@datePicker")
 			.ui5DatePickerGetInnerInput()
 			.realClick()
 			.should("be.focused")
 			.realType("Apr 12, 2024")
 			.realPress("Enter");
 
-		cy.get("#datePicker")
+		cy.get("@datePicker")
 			.then($el => {
 				const datePicker = $el[0] as DatePicker;
 				expect(datePicker.formValidity.valueMissing, "Required DatePicker with value should have formValidity with valueMissing=false").to.be.false;
@@ -1727,8 +1727,196 @@ describe("Validation inside a form", () => {
 				expect(datePicker.reportValidity(), "Required DatePicker with value pass report validity").to.be.true;
 			});
 
-		cy.get("#datePicker:invalid").should("not.exist", "Required DatePicker with value should not have :invalid CSS class");
+		cy.get("#datePicker1:invalid").should("not.exist", "Required DatePicker with value should not have :invalid CSS class");
 	});
+
+	it("has correct validity for patternMismatch", () => {
+		cy.mount(
+			<form method="get">
+				<DatePicker id="datePicker2" required={true} formatPattern="MMM d, y"></DatePicker>
+				<button type="submit" id="submitBtn" > Submits forms </button>
+			</form>
+		);
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("#datePicker2")
+			.as("datePicker")
+			.ui5DatePickerGetInnerInput()
+			.realClick()
+			.should("be.focused")
+			.realType("Test 33, 2024")
+			.realPress("Enter");
+
+		cy.get("#submitBtn")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("@datePicker")
+			.then($el => {
+				const datePicker = $el[0] as DatePicker;
+				expect(datePicker.formValidity.patternMismatch, "DatePicker without correct formatted value should have formValidity with patternMismatch=true").to.be.true;
+				expect(datePicker.validity.patternMismatch, "DatePicker without correct formatted value should have validity with patternMismatch=true").to.be.true;
+				expect(datePicker.validity.valid, "DatePicker without correct formatted value should have validity with valid=false").to.be.false;
+				expect(datePicker.checkValidity(), "DatePicker without correct formatted value fail validity check").to.be.false;
+				expect(datePicker.reportValidity(), "DatePicker without correct formatted value should fail report validity").to.be.false;
+			});
+
+		cy.get("#datePicker2:invalid")
+			.should("exist", "DatePicker without correct formatted value should have :invalid CSS class");
+
+		cy.get("@datePicker")
+			.ui5DatePickerGetInnerInput()
+			.realClick()
+			.should("be.focused")
+			.clear()
+			.realType("Apr 12, 2024")
+			.realPress("Enter");
+
+		cy.get("@datePicker")
+			.then($el => {
+				const datePicker = $el[0] as DatePicker;
+				expect(datePicker.formValidity.patternMismatch, "DatePicker with correct formatted value should have formValidity with patternMismatch=false").to.be.false;
+				expect(datePicker.validity.patternMismatch, "DatePicker with correct formatted value should have validity with patternMismatch=false").to.be.false;
+				expect(datePicker.validity.valid, "DatePicker with correct formatted value have validity with valid=true").to.be.true;
+				expect(datePicker.checkValidity(), "DatePicker with correct formatted value pass validity check").to.be.true;
+				expect(datePicker.reportValidity(), "DatePicker with correct formatted value pass report validity").to.be.true;
+			});
+
+		cy.get("#datePicker2:invalid")
+			.should("not.exist", "DatePicker with correct formatted value should not have :invalid CSS class");
+	});
+
+	// it("has correct validity for rangeUnderflow", () => {
+	// 	cy.mount(
+	// 		<form method="get">
+	// 			<DatePicker id="datePicker3" minDate="Jan 10, 2024" formatPattern="MMM d, y"></DatePicker>
+	// 			<button type="submit" id="submitBtn">Submits forms</button>
+	// 		</form>
+	// 	);
+
+	// 	cy.get("form")
+	// 		.then($item => {
+	// 			$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+	// 		});
+
+	// 	cy.get("#datePicker3")
+	// 		.as("datePicker")
+	// 		.ui5DatePickerGetInnerInput()
+	// 		.realClick()
+	// 		.should("be.focused")
+	// 		.realType("Apr 10, 2020")
+	// 		.realPress("Enter");
+
+	// 	cy.get("#submitBtn")
+	// 		.realClick();
+
+	// 	cy.get("@submit")
+	// 		.should("have.not.been.called");
+
+	// 	cy.get("@datePicker")
+	// 		.then($el => {
+	// 			const datePicker = $el[0] as DatePicker;
+	// 			expect(datePicker.formValidity.rangeUnderflow, "DatePicker with value below minDate should have formValidity with rangeUnderflow=true").to.be.true;
+	// 			expect(datePicker.validity.rangeUnderflow, "DatePicker with value below minDate should have validity with rangeUnderflow=true").to.be.true;
+	// 			expect(datePicker.validity.valid, "DatePicker with value below minDate should have validity with valid=false").to.be.false;
+	// 			expect(datePicker.checkValidity(), "DatePicker with value below minDate should fail validity check").to.be.false;
+	// 			expect(datePicker.reportValidity(), "DatePicker with value below minDate should fail report validity").to.be.false;
+	// 		});
+
+	// 	cy.get("#datePicker3:invalid")
+	// 		.should("exist", "DatePicker with value below minDate should have :invalid CSS class");
+
+	// 	cy.get("@datePicker")
+	// 		.ui5DatePickerGetInnerInput()
+	// 		.realClick()
+	// 		.should("be.focused")
+	// 		.clear()
+	// 		.realType("Jan 20, 2024")
+	// 		.realPress("Enter");
+
+	// 	cy.get("@datePicker")
+	// 		.then($el => {
+	// 			const datePicker = $el[0] as DatePicker;
+	// 			expect(datePicker.formValidity.rangeUnderflow, "DatePicker with value above minDate should have formValidity with rangeUnderflow=false").to.be.false;
+	// 			expect(datePicker.validity.rangeUnderflow, "DatePicker with value above minDate should have validity with rangeUnderflow=false").to.be.false;
+	// 			expect(datePicker.validity.valid, "DatePicker with value above minDate should have validity with valid=true").to.be.true;
+	// 			expect(datePicker.checkValidity(), "DatePicker with value above minDate should pass validity check").to.be.true;
+	// 			expect(datePicker.reportValidity(), "DatePicker with value above minDate should pass report validity").to.be.true;
+	// 		});
+
+	// 	cy.get("#datePicker3:invalid")
+	// 		.should("not.exist", "DatePicker with value above minDate should not have :invalid CSS class");
+	// });
+
+
+	// it("has correct validity for rangeOverflow", () => {
+	// 	cy.mount(
+	// 		<form method="get">
+	// 			<DatePicker id="datePicker3" maxDate="Jan 10, 2024" formatPattern="MMM d, y"></DatePicker>
+	// 			<button type="submit" id="submitBtn">Submits forms</button>
+	// 		</form>
+	// 	);
+
+	// 	cy.get("form")
+	// 		.then($item => {
+	// 			$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+	// 		});
+
+	// 	cy.get("#datePicker3")
+	// 		.as("datePicker")
+	// 		.ui5DatePickerGetInnerInput()
+	// 		.realClick()
+	// 		.should("be.focused")
+	// 		.realType("Jan 8, 2024")
+	// 		.realPress("Enter");
+
+	// 	cy.get("#submitBtn")
+	// 		.realClick();
+
+	// 	cy.get("@submit")
+	// 		.should("have.not.been.called");
+
+	// 	cy.get("@datePicker")
+	// 		.then($el => {
+	// 			const datePicker = $el[0] as DatePicker;
+	// 			debugger;
+	// 			expect(datePicker.formValidity.rangeOverflow, "DatePicker with value above maxDate should have formValidity with rangeOverflow=true").to.be.true;
+	// 			expect(datePicker.validity.rangeOverflow, "DatePicker with value above maxDate should have validity with rangeOverflow=true").to.be.true;
+	// 			expect(datePicker.validity.valid, "DatePicker with value above maxDate should have validity with valid=false").to.be.false;
+	// 			expect(datePicker.checkValidity(), "DatePicker with value above maxDate should fail validity check").to.be.false;
+	// 			expect(datePicker.reportValidity(), "DatePicker with value above maxDate should fail report validity").to.be.false;
+	// 		});
+
+	// 	cy.get("#datePicker3:invalid")
+	// 		.should("exist", "DatePicker with value above maxDate should have :invalid CSS class");
+
+	// 	cy.get("@datePicker")
+	// 		.ui5DatePickerGetInnerInput()
+	// 		.realClick()
+	// 		.should("be.focused")
+	// 		.clear()
+	// 		.realType("Jan 5, 2024")
+	// 		.realPress("Enter");
+
+	// 	cy.get("@datePicker")
+	// 		.then($el => {
+	// 			const datePicker = $el[0] as DatePicker;
+	// 			expect(datePicker.formValidity.rangeOverflow, "DatePicker with value below maxDate should have formValidity with rangeOverflow=false").to.be.false;
+	// 			expect(datePicker.validity.rangeOverflow, "DatePicker with value below maxDate should have validity with rangeOverflow=false").to.be.false;
+	// 			expect(datePicker.validity.valid, "DatePicker with value below maxDate should have validity with valid=true").to.be.true;
+	// 			expect(datePicker.checkValidity(), "DatePicker with value below maxDate should pass validity check").to.be.true;
+	// 			expect(datePicker.reportValidity(), "DatePicker with value below maxDate should pass report validity").to.be.true;
+	// 		});
+
+	// 	cy.get("#datePicker3:invalid")
+	// 		.should("not.exist", "DatePicker with value below maxDate should not have :invalid CSS class");
+	// });
 });
 
 describe("Accessibility", () => {

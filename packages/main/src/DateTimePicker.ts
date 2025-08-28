@@ -28,6 +28,7 @@ import {
 	DATETIME_PICKER_DATE_BUTTON,
 	DATETIME_PICKER_TIME_BUTTON,
 	DATETIMEPICKER_POPOVER_ACCESSIBLE_NAME,
+	FORM_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -194,6 +195,34 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 				timeSelectionValue: this.value || this.getValueFormat().format(UI5Date.getInstance()),
 			};
 		}
+	}
+
+	get formValidityMessage() {
+		const validity = this.formValidity;
+
+		if (validity.valueMissing) {
+			return DatePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+		}
+		if (validity.patternMismatch) {
+			return DatePicker.i18nBundle.getText("DATEPICKER_PATTERN_MISMATCH"); // TODO: add key
+		}
+		if (validity.rangeUnderflow) {
+			return DatePicker.i18nBundle.getText("DATEPICKER_RANGE_UNDERFLOW"); // TODO: add key
+		}
+		if (validity.rangeOverflow) {
+			return DatePicker.i18nBundle.getText("DATEPICKER_RANGE_OVERFLOW"); // TODO: add key
+		}
+
+		return ""; // No error
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return {
+			valueMissing: this.required && !this.value,
+			patternMismatch: !this.isValidValue(this.value),
+			rangeUnderflow: !this.isValidMin(this.value),
+			rangeOverflow: !this.isValidMax(this.value),
+		};
 	}
 
 	get _formatPattern() {

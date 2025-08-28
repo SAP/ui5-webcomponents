@@ -350,11 +350,23 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
-		return TimePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+		const validity = this.formValidity;
+
+		if (validity.valueMissing) {
+			return TimePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+		}
+		if (validity.patternMismatch) {
+			return TimePicker.i18nBundle.getText("DATEPICKER_PATTERN_MISMATCH"); // TODO: add key
+		}
+
+		return ""; // No error
 	}
 
 	get formValidity(): ValidityStateFlags {
-		return { valueMissing: this.required && !this.value };
+		return {
+			valueMissing: this.required && !this.value,
+			patternMismatch: !this.isValid(this.value),
+		};
 	}
 
 	async formElementAnchor() {
