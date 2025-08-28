@@ -68,15 +68,14 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 
 	let focusableDescendant;
 
-	
 	/* eslint-disable no-await-in-loop */
-	
+
 	while (child) {
 		const originalChild: HTMLElement | undefined = child;
-		let ui5Element = instanceOfUI5Element(originalChild);
-		let ui5ElementWithNegativeTabIndex = isUI5ElementWithNegativeTabIndex(originalChild);
-		let hiddenElement = isElementHidden(originalChild);
-		let skipElementChildren = isSafariBrowser ? (hiddenElement || ui5ElementWithNegativeTabIndex) && !ui5Element : hiddenElement || ui5ElementWithNegativeTabIndex;
+		const ui5Element = instanceOfUI5Element(originalChild);
+		const ui5ElementWithNegativeTabIndex = isUI5ElementWithNegativeTabIndex(originalChild);
+		const hiddenElement = isElementHidden(originalChild);
+		const skipElementChildren = isSafariBrowser ? (hiddenElement || ui5ElementWithNegativeTabIndex) && !ui5Element : hiddenElement || ui5ElementWithNegativeTabIndex;
 
 		if (!skipElementChildren) {
 			if (ui5Element) {
