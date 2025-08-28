@@ -10,7 +10,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import SideContentPosition from "./types/SideContentPosition.js";
 import SideContentVisibility from "./types/SideContentVisibility.js";
-import type SideContentFallDown from "./types/SideContentFallDown.js";
+import SideContentFallDown from "./types/SideContentFallDown.js";
 import DynamicSideContentTemplate from "./DynamicSideContentTemplate.js";
 import type {
 	AccessibilityAttributes,
@@ -334,18 +334,18 @@ class DynamicSideContent extends UI5Element {
 	}
 
 	get isSideContentBelowMainContent() {
-		if (this.sideContentVisibility === "NeverShow") {
+		if (this.sideContentVisibility === SideContentVisibility.NeverShow) {
 			return false;
 		}
 
 		// Cases when side content falls below main content
-		const fallOnMinimumWidth = this.sideContentFallDown === "OnMinimumWidth" && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT;
-		const fallBelowM = this.sideContentFallDown === "BelowM" && (this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS);
-		const fallBelowL = this.sideContentFallDown === "BelowL" && (this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS);
-		const fallBelowXL = this.sideContentFallDown === "BelowXL"
+		const fallOnMinimumWidth = this.sideContentFallDown === SideContentFallDown.OnMinimumWidth && this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT;
+		const fallBelowM = this.sideContentFallDown === SideContentFallDown.BelowM && (this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS);
+		const fallBelowL = this.sideContentFallDown === SideContentFallDown.BelowL && (this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS);
+		const fallBelowXL = this.sideContentFallDown === SideContentFallDown.BelowXL
 			&& (this._currentBreakpoint === this.sizeL || this._currentBreakpoint === this.sizeM || this._currentBreakpoint === this.sizeS)
 			&& this._currentBreakpoint !== this.sizeXL;
-		const fallWhenAlwaysShow = this.sideContentVisibility === "AlwaysShow" && (
+		const fallWhenAlwaysShow = this.sideContentVisibility === SideContentVisibility.AlwaysShow && (
 			this._currentBreakpoint === this.sizeS
 			|| (this._currentBreakpoint === this.sizeM && this.containerWidth <= MINIMUM_WIDTH_BREAKPOINT)
 		);
