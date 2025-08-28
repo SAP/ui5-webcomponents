@@ -242,7 +242,7 @@ describe("StepInput misc interaction tests", () => {
 		cy.realType("23.034");
 
 		cy.realPress("Enter");
-	
+
 		cy.get<StepInput>("@stepInput")
 			.should("have.prop", "valueState", "Negative");
 	});
@@ -684,5 +684,175 @@ describe("StepInput property propagation", () => {
 
 		cy.get("[ui5-step-input]")
 			.ui5StepInputCheckInnerInputProperty("value", "5");
+	});
+});
+
+describe("Validation inside form", () => {
+	it("has correct validity for patternMissmatch", () => {
+		cy.mount(
+			<form>
+				<StepInput id="stepInput" valuePrecision={3}></StepInput>
+				<button type="submit" id="submitBtn"> Submits forms </button>
+			</form>
+		);
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", (e) => e.preventDefault());
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("[ui5-step-input]")
+			.as("stepInput");
+
+		cy.get<StepInput>("@stepInput")
+			.ui5StepInputTypeNumber(2.34);
+
+		cy.get("#submitBtn")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("@stepInput")
+			.then($el => {
+				const stepInput = $el[0] as StepInput;
+				expect(stepInput.formValidity.patternMismatch, "StepInput without formatted value should have formValidity with patternMismatch=true").to.be.true;
+				expect(stepInput.validity.patternMismatch, "StepInput without formatted value should have validity with patternMismatch=true").to.be.true;
+				expect(stepInput.validity.valid, "StepInput without formatted value should have validity with valid=false").to.be.false;
+				expect(stepInput.checkValidity(), "StepInput without formatted value fail validity check").to.be.false;
+				expect(stepInput.reportValidity(), "StepInput without formatted value should fail report validity").to.be.false;
+			});
+
+		cy.get("#stepInput:invalid")
+			.should("exist", "StepInput without formatted value should have :invalid CSS class");
+
+		cy.get<StepInput>("@stepInput")
+			.ui5StepInputTypeNumber(2.345);
+
+		cy.get("@stepInput")
+			.then($el => {
+				const stepInput = $el[0] as StepInput;
+				expect(stepInput.formValidity.patternMismatch, "StepInput with formatted value should have formValidity with patternMismatch=false").to.be.false;
+				expect(stepInput.validity.patternMismatch, "StepInput with formatted value should have validity with patternMismatch=true").to.be.false;
+				expect(stepInput.validity.valid, "StepInput with formatted value should have validity with valid=true").to.be.true;
+				expect(stepInput.checkValidity(), "StepInput with formatted value pass validity check").to.be.true;
+				expect(stepInput.reportValidity(), "StepInput with formatted value should pass report validity").to.be.true;
+			});
+
+		cy.get("#stepInput:invalid")
+			.should("not.exist", "StepInput with formatted value should not have :invalid CSS class");
+	});
+
+	it("has correct validity for rangeUnderflow", () => {
+		cy.mount(
+			<form>
+				<StepInput id="stepInput" min={3}></StepInput>
+				<button type="submit" id="submitBtn"> Submits forms </button>
+			</form>
+		);
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", (e) => e.preventDefault());
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("[ui5-step-input]")
+			.as("stepInput");
+
+		cy.get<StepInput>("@stepInput")
+			.ui5StepInputTypeNumber(2);
+
+		cy.get("#submitBtn")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("@stepInput")
+			.then($el => {
+				const stepInput = $el[0] as StepInput;
+				expect(stepInput.formValidity.rangeUnderflow, "StepInput without value lower than min should have formValidity with rangeUnderflow=true").to.be.true;
+				expect(stepInput.validity.rangeUnderflow, "StepInput without value lower than min should have validity with rangeUnderflow=true").to.be.true;
+				expect(stepInput.validity.valid, "StepInput without value lower than min should have validity with valid=false").to.be.false;
+				expect(stepInput.checkValidity(), "StepInput without value lower than min should fail validity check").to.be.false;
+				expect(stepInput.reportValidity(), "StepInput without value lower than min fail should report validity").to.be.false;
+			});
+
+		cy.get("#stepInput:invalid")
+			.should("exist", "StepInput with value lower than min should have :invalid CSS class");
+
+		cy.get<StepInput>("@stepInput")
+			.ui5StepInputTypeNumber(4);
+
+		cy.get("@stepInput")
+			.then($el => {
+				const stepInput = $el[0] as StepInput;
+				expect(stepInput.formValidity.rangeUnderflow, "StepInput with value higher than min should have formValidity with rangeUnderflow=false").to.be.false;
+				expect(stepInput.validity.rangeUnderflow, "StepInput with value higher than min should have validity with rangeUnderflow=true").to.be.false;
+				expect(stepInput.validity.valid, "StepInput with value higher than min should have validity with valid=true").to.be.true;
+				expect(stepInput.checkValidity(), "StepInput with value higher than min pass validity check").to.be.true;
+				expect(stepInput.reportValidity(), "StepInput with value higher than min should pass report validity").to.be.true;
+			});
+
+		cy.get("#stepInput:invalid")
+			.should("not.exist", "StepInput with value higher than min should not have :invalid CSS class");
+	});
+
+	it("has correct validity for rangeOverflow", () => {
+		cy.mount(
+			<form>
+				<StepInput id="stepInput" max={3}></StepInput>
+				<button type="submit" id="submitBtn"> Submits forms </button>
+			</form>
+		);
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", (e) => e.preventDefault());
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("[ui5-step-input]")
+			.as("stepInput");
+
+		cy.get<StepInput>("@stepInput")
+			.ui5StepInputTypeNumber(4);
+
+		cy.get("#submitBtn")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("@stepInput")
+			.then($el => {
+				const stepInput = $el[0] as StepInput;
+				expect(stepInput.formValidity.rangeOverflow, "StepInput with value higher than max should have formValidity with rangeOverflow=true").to.be.true;
+				expect(stepInput.validity.rangeOverflow, "StepInput with value higher than max should have validity with rangeOverflow=true").to.be.true;
+				expect(stepInput.validity.valid, "StepInput with value higher than max should have validity with valid=false").to.be.false;
+				expect(stepInput.checkValidity(), "StepInput with value higher than max should fail validity check").to.be.false;
+				expect(stepInput.reportValidity(), "StepInput with value higher than max fail should report validity").to.be.false;
+			});
+
+		cy.get("#stepInput:invalid")
+			.should("exist", "StepInput without value lower than min should have :invalid CSS class");
+
+		cy.get<StepInput>("@stepInput")
+			.ui5StepInputTypeNumber(2);
+
+		cy.get("@stepInput")
+			.then($el => {
+				const stepInput = $el[0] as StepInput;
+				expect(stepInput.formValidity.rangeOverflow, "StepInput with value lower than max should have formValidity with rangeOverflow=false").to.be.false;
+				expect(stepInput.validity.rangeOverflow, "StepInput with value lower than max should have validity with rangeOverflow=true").to.be.false;
+				expect(stepInput.validity.valid, "StepInput with value lower than max should have validity with valid=true").to.be.true;
+				expect(stepInput.checkValidity(), "StepInput with value lower than max pass validity check").to.be.true;
+				expect(stepInput.reportValidity(), "StepInput with value lower than max should pass report validity").to.be.true;
+			});
+
+		cy.get("#stepInput:invalid")
+			.should("not.exist", "StepInput with value lower than max should not have :invalid CSS class");
 	});
 });

@@ -266,3 +266,18 @@ Cypress.Commands.add("ui5DatePickerValueHelpIconPress", { prevSubject: true }, s
 		.find("ui5-icon")
 		.realClick();
 });
+
+Cypress.Commands.add("ui5DatePickerTypeDate", { prevSubject: true }, (subject: string, date: string) => {
+	cy.wrap(subject)
+		.as("datePicker");
+
+	cy.get("@datePicker")
+		.ui5DatePickerGetInnerInput()
+		.realClick()
+		.should("be.focused")
+		.clear()
+		.realType(date)
+		.realPress("Enter");
+});
+
+
