@@ -890,6 +890,160 @@ describe("Events", () => {
 		cy.get("ui5-search-item")
 			.should("not.exist")
 	});
+
+	it("should deselect items when backspace or delete key is pressed", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem text="Item 2" icon={searchIcon} />
+				<SearchItem text="Item 3" icon={history} />
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.realPress("I");
+
+		// Navigate to first item and verify it's selected
+		cy.get("[ui5-search]")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-search-item").eq(0)
+			.should("be.focused")
+			.should("have.attr", "selected", "true");
+
+		// Press backspace and verify item is deselected
+		cy.get("[ui5-search]")
+			.realPress("Backspace");
+
+		cy.get("ui5-search-item").eq(0)
+			.should("not.have.attr", "selected", "true");
+
+		// Navigate to second item and verify it's selected
+		cy.get("[ui5-search]")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-search-item").eq(1)
+			.should("be.focused")
+			.should("have.attr", "selected", "true");
+
+		// Press delete key and verify item is deselected
+		cy.get("[ui5-search]")
+			.realPress("Delete");
+
+		cy.get("ui5-search-item").eq(1)
+			.should("not.have.attr", "selected", "true");
+	});
+
+	it("should handle backspace and delete keys with grouped items", () => {
+		cy.mount(
+			<Search>
+				<SearchItemGroup headerText="Group 1">
+					<SearchItem text="Group 1 Item 1" icon={history} />
+					<SearchItem text="Group 1 Item 2" icon={searchIcon} />
+				</SearchItemGroup>
+				<SearchItemGroup headerText="Group 2">
+					<SearchItem text="Group 2 Item 1" icon={history} />
+					<SearchItem text="Group 2 Item 2" icon={searchIcon} />
+				</SearchItemGroup>
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.realPress("G");
+
+		// Navigate to first group item and verify it's selected
+		cy.get("[ui5-search]")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-search-item").eq(0)
+			.should("be.focused")
+			.should("have.attr", "selected", "true");
+
+		// Press backspace and verify item is deselected
+		cy.get("[ui5-search]")
+			.realPress("Backspace");
+
+		cy.get("ui5-search-item").eq(0)
+			.should("not.have.attr", "selected", "true");
+
+		// Navigate to second group and select an item
+		cy.get("[ui5-search]")
+			.realPress("ArrowDown")
+			.realPress("ArrowDown")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-search-item").eq(2)
+			.should("be.focused")
+			.should("have.attr", "selected", "true");
+
+		// Press delete key and verify item is deselected
+		cy.get("[ui5-search]")
+			.realPress("Delete");
+
+		cy.get("ui5-search-item").eq(2)
+			.should("not.have.attr", "selected", "true");
+	});
+
+	it("should maintain focus on input after deselecting items with backspace/delete", () => {
+		cy.mount(
+			<Search>
+				<SearchItem text="Item 1" icon={history} />
+				<SearchItem text="Item 2" icon={searchIcon} />
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-search]")
+			.realPress("I");
+
+		// Navigate to item and verify it's selected
+		cy.get("[ui5-search]")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-search-item").eq(0)
+			.should("be.focused")
+			.should("have.attr", "selected", "true");
+
+		// Press backspace and verify focus returns to input
+		cy.get("[ui5-search]")
+			.realPress("Backspace");
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.should("be.focused");
+
+		// Navigate to item again and verify it's selected
+		cy.get("[ui5-search]")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-search-item").eq(0)
+			.should("be.focused")
+			.should("have.attr", "selected", "true");
+
+		// Press delete key and verify focus returns to input
+		cy.get("[ui5-search]")
+			.realPress("Delete");
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find("input")
+			.should("be.focused");
+	});
 });
 
 describe("Accessibility", () => {
