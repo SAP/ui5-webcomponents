@@ -1,9 +1,11 @@
 import isElementHidden from "./isElementHidden.js";
 import isElementClickable from "./isElementClickable.js";
 import { instanceOfUI5Element } from "../UI5Element.js";
+import type UI5Element from "../UI5Element.js";
 import { isSafari } from "../Device.js";
 
 type FocusableElementPromise = Promise<HTMLElement | null>;
+const isSafariBrowser = isSafari();
 
 const isFocusTrap = (el: HTMLElement) => {
 	return el.hasAttribute("data-ui5-focus-trap");
@@ -66,21 +68,26 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 
 	let focusableDescendant;
 
+	
 	/* eslint-disable no-await-in-loop */
-
+	
 	while (child) {
 		const originalChild: HTMLElement | undefined = child;
+		let ui5Element = instanceOfUI5Element(originalChild);
+		let ui5ElementWithNegativeTabIndex = isUI5ElementWithNegativeTabIndex(originalChild);
+		let hiddenElement = isElementHidden(originalChild);
+		let skipElementChildren = isSafariBrowser ? (hiddenElement || ui5ElementWithNegativeTabIndex) && !ui5Element : hiddenElement || ui5ElementWithNegativeTabIndex;
 
-		if (!isElementHidden(originalChild) && !isUI5ElementWithNegativeTabIndex(originalChild)) {
-			if (instanceOfUI5Element(child)) {
+		if (!skipElementChildren) {
+			if (ui5Element) {
 				// getDomRef is used because some components mark their focusable ref in an inner
 				// html but there might also be focusable targets outside of it
 				// as an example - TreeItemBase
 				// div - root of the component returned by getDomRef()
 				// 	li.ui5-li-tree - returned by getFocusDomRef() and may not be focusable (ItemNavigation manages tabindex)
 				// 	ul.subtree - may still contain focusable targets (sub nodes of the tree item)
-				await child._waitForDomRef();
-				child = child.getDomRef();
+				await (child as UI5Element)._waitForDomRef();
+				child = (child as UI5Element).getDomRef();
 			}
 
 			if (!child || isElementHidden(child)) {
@@ -95,7 +102,7 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 				focusableDescendant = await findFocusableElement(child, forward);
 
 				// check if it is a keyboard focusable scroll container
-				if (!isSafari() && !focusableDescendant && isScrollable(child)) {
+				if (!isSafariBrowser && !focusableDescendant && isScrollable(child)) {
 					return (child && typeof child.focus === "function") ? child : null;
 				}
 
