@@ -3,6 +3,11 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import {
+	getEffectiveAriaLabelText,
+	getAssociatedLabelForTexts,
+	getEffectiveAriaDescriptionText,
+} from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -83,6 +88,33 @@ class SegmentedButton extends UI5Element {
 	 */
 	@property()
 	accessibleName?: string;
+
+	/**
+	 * Defines the IDs of the HTML Elements that label the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.15.0
+	 */
+	@property()
+	accessibleNameRef?: string;
+
+	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.15.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Defines the IDs of the HTML Elements that describe the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.15.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
 
 	/**
 	 * Defines the component selection mode.
@@ -255,11 +287,15 @@ class SegmentedButton extends UI5Element {
 		});
 	}
 
-	get ariaDescribedBy() {
-		return SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY);
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || undefined;
 	}
 
-	get ariaDescription() {
+	get ariaDescriptionText() {
+		return `${(getEffectiveAriaDescriptionText(this) || "")} ${SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY)}`.trim();
+	}
+
+	get ariaRoleDescription() {
 		return SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIPTION);
 	}
 }
