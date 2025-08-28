@@ -130,7 +130,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @private
 	 */
 	@property({ type: Number })
-	posInSet = 0;
+	posInSet? = 0;
 
 	/**
 	 * Defines how many items are inside of the SegmentedButton.
@@ -138,7 +138,13 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @private
 	 */
 	@property({ type: Number })
-	sizeOfSet = 0;
+	sizeOfSet? = 0;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hidden = false;
 
 	/**
 	 * Defines the text of the component.
