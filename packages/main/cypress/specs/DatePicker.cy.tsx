@@ -1731,7 +1731,7 @@ describe("Validation inside a form ", () => {
 	it("has correct validity for patternMismatch", () => {
 		cy.mount(
 			<form>
-				<DatePicker id="datePicker2" required={true} formatPattern="MMM d, y"></DatePicker>
+				<DatePicker id="datePicker2" required={true} valueFormat="MMM d, y"></DatePicker>
 				<button type="submit" id="submitBtn" > Submits forms </button>
 			</form>
 		);
@@ -1784,7 +1784,7 @@ describe("Validation inside a form ", () => {
 	it("has correct validity for rangeUnderflow", () => {
 		cy.mount(
 			<form method="get">
-				<DatePicker id="datePicker3" minDate="Jan 10, 2024" formatPattern="MMM d, y"></DatePicker>
+				<DatePicker id="datePicker3" minDate="Jan 10, 2024" valueFormat="MMM d, y"></DatePicker>
 				<button type="submit" id="submitBtn">Submits forms</button>
 			</form>
 		);
@@ -1832,7 +1832,7 @@ describe("Validation inside a form ", () => {
 	it("has correct validity for rangeOverflow", () => {
 		cy.mount(
 			<form>
-				<DatePicker id="datePicker3" maxDate="Jan 10, 2024" formatPattern="MMM d, y"></DatePicker>
+				<DatePicker id="datePicker3" maxDate="Jan 10, 2024" valueFormat="MMM d, y"></DatePicker>
 				<button type="submit" id="submitBtn">Submits forms</button>
 			</form>
 		);
