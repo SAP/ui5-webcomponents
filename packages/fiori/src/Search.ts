@@ -487,6 +487,11 @@ class Search extends SearchField {
 		if (isEscape(e)) {
 			this._handleEscape();
 		}
+
+		// deselect item on backspace or delete
+		if (isBackSpace(e) || isDelete(e)) {
+			this._deselectItems();
+		}
 	}
 
 	_onFocusOutSearch(e:FocusEvent) {
