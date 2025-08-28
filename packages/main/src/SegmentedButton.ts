@@ -124,10 +124,10 @@ class SegmentedButton extends UI5Element {
 
 	onBeforeRendering() {
 		const items = this.getSlottedNodes<SegmentedButtonItem>("items");
-    	const visibleItems = items.filter(item => !item.hidden);
+		const visibleItems = items.filter(item => !item.hidden);
 		let index = 1;
 
-		items.forEach((item) => {
+		items.forEach(item => {
 			item.posInSet = item.hidden ? undefined : index++;
 			item.sizeOfSet = item.hidden ? undefined : visibleItems.length;
 		});
