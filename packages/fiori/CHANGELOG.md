@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.4...v2.14.0-rc.5) (2025-08-28)
+
+
+### Bug Fixes
+
+* **ui5-search:** align autocomplete with ui5-combobox ([#12189](https://github.com/SAP/ui5-webcomponents/issues/12189)) ([178f869](https://github.com/SAP/ui5-webcomponents/commit/178f86952490199f5a900ae8be5544dbe1762efd))
+* **ui5-view-settings-dialog:** initially focus first item in filter options ([f25d80e](https://github.com/SAP/ui5-webcomponents/commit/f25d80ee2ccb101392239c8f7d695c30d147eb4b)), closes [#10555](https://github.com/SAP/ui5-webcomponents/issues/10555)
+
+
+### Features
+
+* **ui5-navigation-layout:** adjust shellbar padding when side navigation is present ([#12175](https://github.com/SAP/ui5-webcomponents/issues/12175)) ([723493f](https://github.com/SAP/ui5-webcomponents/commit/723493f97a763fab456c9d648531ab46ae84f668))
+* **ui5-search-item-show-more:** introduce new show more item ([#11931](https://github.com/SAP/ui5-webcomponents/issues/11931)) ([f133a70](https://github.com/SAP/ui5-webcomponents/commit/f133a709a578155bbc235c275135a9145d0e891d))
+
+
+
+
+
 # [2.14.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.3...v2.14.0-rc.4) (2025-08-25)
 
 
