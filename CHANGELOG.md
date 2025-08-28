@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.4...v2.14.0-rc.5) (2025-08-28)
+
+
+### Bug Fixes
+
+* **ui5-search:** align autocomplete with ui5-combobox ([#12189](https://github.com/SAP/ui5-webcomponents/issues/12189)) ([178f869](https://github.com/SAP/ui5-webcomponents/commit/178f86952490199f5a900ae8be5544dbe1762efd))
+* **ui5-tabcontainer:** update tabs in strip properly ([#12190](https://github.com/SAP/ui5-webcomponents/issues/12190)) ([7a966ef](https://github.com/SAP/ui5-webcomponents/commit/7a966ef7df6980c90f7390c79ba9e36b6851caca)), closes [#11087](https://github.com/SAP/ui5-webcomponents/issues/11087)
+* **ui5-view-settings-dialog:** initially focus first item in filter options ([f25d80e](https://github.com/SAP/ui5-webcomponents/commit/f25d80ee2ccb101392239c8f7d695c30d147eb4b)), closes [#10555](https://github.com/SAP/ui5-webcomponents/issues/10555)
+
+
+### Features
+
+* **ui5-date-picker:** provide accessible description API ([#11831](https://github.com/SAP/ui5-webcomponents/issues/11831)) ([df8804a](https://github.com/SAP/ui5-webcomponents/commit/df8804a347ec30fc2d6faa2b4c1a5ba229273f6c)), closes [#12004](https://github.com/SAP/ui5-webcomponents/issues/12004)
+* **ui5-navigation-layout:** adjust shellbar padding when side navigation is present ([#12175](https://github.com/SAP/ui5-webcomponents/issues/12175)) ([723493f](https://github.com/SAP/ui5-webcomponents/commit/723493f97a763fab456c9d648531ab46ae84f668))
+* **ui5-search-item-show-more:** introduce new show more item ([#11931](https://github.com/SAP/ui5-webcomponents/issues/11931)) ([f133a70](https://github.com/SAP/ui5-webcomponents/commit/f133a709a578155bbc235c275135a9145d0e891d))
+
+
+
+
+
+# [2.14.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.3...v2.14.0-rc.4) (2025-08-25)
+
+
+### Bug Fixes
+
+* **DnD:** fix drag and drop in Shadow DOM ([#11975](https://github.com/SAP/ui5-webcomponents/issues/11975)) ([fb561aa](https://github.com/SAP/ui5-webcomponents/commit/fb561aa92fdc2d9dddfab9d5ec15bf90ff3a979c))
+* **ui5-dialog:** initial dimensions are now calculated at once ([#12108](https://github.com/SAP/ui5-webcomponents/issues/12108)) ([2c97806](https://github.com/SAP/ui5-webcomponents/commit/2c97806e85c0ec5b130df14cab7981c10dd35f19))
+* **ui5-shellbar:** change content slot type ([#12186](https://github.com/SAP/ui5-webcomponents/issues/12186)) ([25b2f3b](https://github.com/SAP/ui5-webcomponents/commit/25b2f3b71e8f0518369987766da4596ca8a2dd98))
+
+
+
+
+
 # [2.14.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.2...v2.14.0-rc.3) (2025-08-22)
 
 
