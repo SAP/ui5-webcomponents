@@ -1,6 +1,5 @@
 const path = require("path");
 const BuildRunner = require('../task-runner/build-runner');
-const LIB = path.join(__dirname, `../lib/`);
 const buildI18nJson = require("../lib/i18n/toJSON");
 const buildI18nDefaultsjs = require("../lib/i18n/defaults");
 const buildJsonImportsI18n = require("../lib/generate-json-imports/i18n");
@@ -12,7 +11,6 @@ const createIconImportsCommand = (options, runner) => {
 		runner.addTask("build:icons", {
 			callback: async () => {
 				await buildIcons(options.collectionName);
-				console.log("Icons created.");
 				return "Icons created."
 			}
 		})
@@ -27,7 +25,6 @@ const createIconImportsCommand = (options, runner) => {
 		runner.addTask(`build:icons:create${v}`, {
 			callback: async () => {
 				await buildIcons(options.collectionName, v);
-				console.log("Icons created.");
 				return "Icons created."
 			}
 		})
@@ -98,9 +95,6 @@ const getScripts = (options) => {
 	createIconImportsCommand(options, runner);
 	copyIconAssetsCommand(options, runner);
 
-	const tsCommand = !options.legacy ? "tsc --build" : "";
-	const tsCrossEnv = !options.legacy ? true : false;
-
 	runner.addTask("clean", "rimraf dist && rimraf src/generated");
 
 	runner.addTask("generate", {
@@ -111,15 +105,12 @@ const getScripts = (options) => {
 			"build:icons",
 			"build:jsonImports",
 			"copyjson"
-		],
-		crossEnv: {
-			UI5_TS: tsCrossEnv
-		}
+		]
 	})
 
 	runner.addTask("copyjson", {
 		callback: async () => {
-			await copyAndWatch("src/**/*.json", "dist/", { silent: true });
+			await copyAndWatch("src/**/*.json", "dist/generated/", { silent: true });
 			return "JSON files copied.";
 		},
 	});
@@ -132,10 +123,7 @@ const getScripts = (options) => {
 			"typescript",
 			"build:icons",
 			"build:jsonImports",
-		],
-		crossEnv: {
-			UI5_TS: tsCrossEnv
-		}
+		]
 	})
 
 	runner.addTask("build:i18n", {
@@ -148,8 +136,7 @@ const getScripts = (options) => {
 
 	runner.addTask("build:i18n:defaultsjs", {
 		callback: async () => {
-			await buildI18nDefaultsjs("src/i18n", "src/generated/i18n", !options.legacy);
-			console.log("i18n default file generated.");
+			await buildI18nDefaultsjs("src/i18n", "src/generated/i18n", true);
 			return "i18n default file generated."
 		}
 	});
@@ -157,7 +144,6 @@ const getScripts = (options) => {
 	runner.addTask("build:i18n:json", {
 		callback: async () => {
 			await buildI18nJson("src/i18n", "dist/generated/assets/i18n");
-			console.log("Message bundle JSON files generated.");
 			return "Message bundle JSON files generated."
 		},
 	});
@@ -171,15 +157,14 @@ const getScripts = (options) => {
 
 	runner.addTask("build:jsonImports:i18n", {
 		callback: async () => {
-			await buildJsonImportsI18n("src/generated/assets/i18n", "src/generated/json-imports", !options.legacy);
-			console.log("Generated i18n JSON imports.");
+			await buildJsonImportsI18n("src/generated/assets/i18n", "src/generated/json-imports", true);
 			return "Generated i18n JSON imports.";
 		},
 	});
 
 	runner.addTask("typescript", {
 		dependencies: [
-			tsCommand,
+			"tsc --build",
 		]
 	});
 

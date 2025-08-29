@@ -18,10 +18,7 @@ runner.addTask("generate", {
 	dependencies: [
 		"build:postcss",
 		"build:jsonImports",
-	],
-	crossEnv: {
-		UI5_TS: true,
-	},
+	]
 });
 
 runner.addTask("build", {
@@ -32,10 +29,7 @@ runner.addTask("build", {
 		"build:jsonImports",
 		"build:typescript",
 		"generateReport",
-	],
-	crossEnv: {
-		UI5_TS: true,
-	}
+	]
 });
 
 runner.addTask("build:src", {
@@ -61,7 +55,6 @@ runner.addTask("build:postcss", {
 runner.addTask("build:jsonImports", {
 	callback: async () => {
 		await buildJsonImportsThemes("dist/generated/assets/themes", "src/generated/json-imports", true);
-		console.log("Generated themes JSON imports.");
 		return "Generated themes JSON imports.";
 	},
 });
@@ -69,7 +62,6 @@ runner.addTask("build:jsonImports", {
 runner.addTask("generateReport", {
 	callback: async () => {
 		await generateReport();
-		console.log("CSS Vars usage report generated.");
 		return "CSS Vars usage report generated.";
 	},
 });

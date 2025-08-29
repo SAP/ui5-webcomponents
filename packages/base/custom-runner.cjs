@@ -45,7 +45,6 @@ runner.addTask("generate", {
 		"generateVersionInfo",
 		"generateStyles",
 		"generateFontFace",
-		"generateTemplates",
 		"build:jsonImports",
 	],
 	crossEnv: {
@@ -63,7 +62,6 @@ runner.addTask("prepare", {
 		"generateVersionInfo",
 		"generateStyles",
 		"generateFontFace",
-		"generateTemplates",
 		"typescript",
 		"integrate:no-remaining-require",
 		"build:jsonImports",
@@ -91,8 +89,7 @@ runner.addTask("integrate", {
 
 runner.addTask("integrate:copy-used-modules", {
 	callback: async () => {
-		const dest = "dist/";
-		await copyUsedModules("./used-modules.txt", dest);
+		await copyUsedModules("./used-modules.txt", "dist/");
 		return "Used modules copied.";
 	},
 });
@@ -100,8 +97,6 @@ runner.addTask("integrate:copy-used-modules", {
 runner.addTask("integrate:amd-to-es6", {
 	callback: async () => {
 		await amdToES6("dist/");
-		// console.log("i18n default file generated.");
-		// return "i18n default file generated."
 		return "";
 	},
 });
@@ -109,8 +104,6 @@ runner.addTask("integrate:amd-to-es6", {
 runner.addTask("integrate:no-remaining-require", {
 	callback: async () => {
 		await noRequire("dist/");
-		// console.log("i18n default file generated.");
-		// return "i18n default file generated."
 		return "";
 	},
 });
@@ -159,15 +152,13 @@ runner.addTask("build:i18n", {
 runner.addTask("build:i18n:defaultsjs", {
 	callback: async () => {
 		await buildI18nDefaultsjs("src/i18n", "src/generated/i18n", true);
-		console.log("i18n default file generated.");
-		return "i18n default file generated."
-	}
+		return "i18n default file generated.";
+	},
 });
 
 runner.addTask("build:i18n:json", {
 	callback: async () => {
 		await buildI18nJson("src/i18n", "dist/generated/assets/i18n");
-		console.log("Message bundle JSON files generated.");
 		return "Message bundle JSON files generated.";
 	},
 });
@@ -181,7 +172,6 @@ runner.addTask("build:jsonImports", {
 runner.addTask("build:jsonImports:i18n", {
 	callback: async () => {
 		await buildJsonImportsI18n("dist/generated/assets/i18n", "src/generated/json-imports", true);
-		console.log("Generated i18n JSON imports.");
 		return "Generated i18n JSON imports.";
 	},
 });
@@ -194,18 +184,14 @@ runner.addTask("copy", {
 
 runner.addTask("copy:src", {
 	callback: async () => {
-		await copyAndWatch("src/**/*.{js,json}", "dist/", { silent: true });
+		await copyAndWatch("src/**/*.{js,css,d.ts}", "dist/", { silent: true });
 		return "Source files copied.";
-		// console.log("Source files copied.");
-		// return "Source files copied.";
-		// return "";
 	},
 });
 
 runner.addTask("generateAssetParameters", {
 	callback: async () => {
-		await assetParametersScript("dist/");
-		console.log("Assets parameters generated.");
+		await assetParametersScript();
 		return "Assets parameters generated.";
 	},
 });
@@ -213,7 +199,6 @@ runner.addTask("generateAssetParameters", {
 runner.addTask("generateVersionInfo", {
 	callback: async () => {
 		await versionScript();
-		console.log("Version info file generated.");
 		return "Version info file generated.";
 	},
 });
@@ -221,7 +206,6 @@ runner.addTask("generateVersionInfo", {
 runner.addTask("generateStyles", {
 	callback: async () => {
 		await stylesScript();
-		console.log("Styles files generated.");
 		return "Styles files generated.";
 	},
 });
@@ -229,15 +213,8 @@ runner.addTask("generateStyles", {
 runner.addTask("generateFontFace", {
 	callback: async () => {
 		await fontFaceScript();
-		console.log("FontFace CSS generated.");
 		return "FontFace CSS generated.";
 	},
-});
-
-runner.addTask("generateTemplates", {
-	dependencies: [
-		``,
-	],
 });
 
 runner.addTask("generateProd", {
@@ -287,27 +264,6 @@ runner.addTask("generateAPI:validateCEM", {
 		await validate({ devMode: "dev" });
 		return "CEM validation completed.";
 	}
-});
-
-runner.addTask("watch", {
-	dependencies: [
-		"watch:src",
-		"watch:styles",
-	],
-	parallel: true,
-});
-
-runner.addTask("watch:src", {
-	callback: async () => {
-		await copyAndWatch("src/**/*.{js,json}", "dist/", { silent: true });
-		return "Source files copied.";
-	},
-});
-
-runner.addTask("watch:styles", {
-	dependencies: [
-		`chokidar "src/css/*.css" -c "nps generateStyles"`
-	],
 });
 
 // Export for CLI usage

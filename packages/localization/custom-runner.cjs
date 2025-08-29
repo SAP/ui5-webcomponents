@@ -44,8 +44,6 @@ runner.addTask("build", {
 runner.addTask("build:amd-to-es6", {
 	callback: async () => {
 		await amdToES6("dist/");
-		// console.log("i18n default file generated.");
-		// return "i18n default file generated."
 		return "";
 	},
 });
@@ -53,8 +51,6 @@ runner.addTask("build:amd-to-es6", {
 runner.addTask("build:no-remaining-require", {
 	callback: async () => {
 		await noRequire("dist/");
-		// console.log("i18n default file generated.");
-		// return "i18n default file generated."
 		return "";
 	},
 });
@@ -66,8 +62,6 @@ runner.addTask("build:typescript", {
 runner.addTask("build:jsonImports", {
 	callback: async () => {
 		await cldr();
-		// console.log("i18n default file generated.");
-		// return "i18n default file generated."
 		return "";
 	},
 });
@@ -89,8 +83,7 @@ runner.addTask("copy", {
 
 runner.addTask("copy:used-modules", {
 	callback: async () => {
-		const dest = "dist/";
-		await copyUsedModules("./used-modules.txt", dest);
+		await copyUsedModules("./used-modules.txt", "dist/");
 		return "Used modules copied.";
 	},
 });
