@@ -64,6 +64,149 @@ describe("Color Popover Palette tests", () => {
             cy.focused()
                 .should("have.attr", "aria-label", "Default Color");
         });
+
+        it("Should cycle through colors horizontally with left/right arrows", () => {
+            cy.mount(<>
+                <Button id="btnPalette">Open Palette</Button>
+                <ColorPalettePopover opener="btnPalette">
+                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
+                    <ColorPaletteItem value="orange"></ColorPaletteItem>
+                    <ColorPaletteItem value="blue"></ColorPaletteItem>
+                    <ColorPaletteItem value="red"></ColorPaletteItem>
+                </ColorPalettePopover>
+            </>);
+
+            cy.get("[ui5-color-palette-popover]")
+                .ui5PaletteOpen();
+
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 1: cyan");
+
+            cy.focused()
+                .realPress("ArrowRight");
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 2: orange");
+
+            cy.focused()
+                .realPress("ArrowRight");
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 3: blue");
+
+            cy.focused()
+                .realPress("ArrowRight");
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 4: red");
+
+            cy.focused()
+                .realPress("ArrowRight");
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 1: cyan");
+
+            cy.focused()
+                .realPress("ArrowLeft");
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 4: red");
+        });
+
+        it("Should cycle through colors vertically with up/down arrows", () => {
+            cy.mount(<>
+                <Button id="btnPalette">Open Palette</Button>
+                <ColorPalettePopover opener="btnPalette">
+                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
+                    <ColorPaletteItem value="orange"></ColorPaletteItem>
+                    <ColorPaletteItem value="blue"></ColorPaletteItem>
+                    <ColorPaletteItem value="red"></ColorPaletteItem>
+                    <ColorPaletteItem value="green"></ColorPaletteItem>
+                    <ColorPaletteItem value="yellow"></ColorPaletteItem>
+                    <ColorPaletteItem value="purple"></ColorPaletteItem>
+                    <ColorPaletteItem value="pink"></ColorPaletteItem>
+                    <ColorPaletteItem value="black"></ColorPaletteItem>
+                    <ColorPaletteItem value="white"></ColorPaletteItem>
+                </ColorPalettePopover>
+            </>);
+
+            cy.get("[ui5-color-palette-popover]")
+                .ui5PaletteOpen();
+
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 1: cyan");
+
+            cy.focused()
+                .realPress("ArrowDown");
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 6: yellow");
+
+            cy.focused()
+                .realPress("ArrowDown");
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 2: orange");
+
+            cy.focused()
+                .realPress("ArrowUp");
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 6: yellow");
+        });
+
+        it("Should navigate to More Colors from colors grid", () => {
+            cy.mount(<>
+                <Button id="btnPalette">Open Palette</Button>
+                <ColorPalettePopover opener="btnPalette" showMoreColors={true}>
+                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
+                    <ColorPaletteItem value="orange"></ColorPaletteItem>
+                    <ColorPaletteItem value="blue"></ColorPaletteItem>
+                    <ColorPaletteItem value="red"></ColorPaletteItem>
+                    <ColorPaletteItem value="green"></ColorPaletteItem>
+                    <ColorPaletteItem value="yellow"></ColorPaletteItem>
+                    <ColorPaletteItem value="purple"></ColorPaletteItem>
+                </ColorPalettePopover>
+            </>);
+
+            cy.get("[ui5-color-palette-popover]")
+                .ui5PaletteOpen();
+
+            cy.focused()
+                .realPress("End");
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 5: green");
+
+            cy.focused()
+                .realPress("ArrowDown");
+            cy.focused()
+                .should("have.attr", "aria-label", "More Colors...");
+
+            cy.focused()
+                .realPress("ArrowLeft");
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 7: purple");
+        });
+
+        it("Should handle incomplete row navigation correctly", () => {
+            cy.mount(<>
+                <Button id="btnPalette">Open Palette</Button>
+                <ColorPalettePopover opener="btnPalette">
+                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
+                    <ColorPaletteItem value="orange"></ColorPaletteItem>
+                    <ColorPaletteItem value="blue"></ColorPaletteItem>
+                    <ColorPaletteItem value="red"></ColorPaletteItem>
+                    <ColorPaletteItem value="green"></ColorPaletteItem>
+                    <ColorPaletteItem value="yellow"></ColorPaletteItem>
+                    <ColorPaletteItem value="purple"></ColorPaletteItem>
+                </ColorPalettePopover>
+            </>);
+
+            cy.get("[ui5-color-palette-popover]")
+                .ui5PaletteOpen();
+
+            cy.focused()
+                .realPress("End");
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 5: green");
+
+            cy.focused()
+                .realPress("ArrowUp");
+            cy.focused()
+                .should("have.attr", "aria-label", "Color - 4: red");
+        });
     });
 
     describe("Home and End keyboard navigation", () => {
