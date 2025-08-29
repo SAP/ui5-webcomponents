@@ -45,7 +45,6 @@ const createScopingPlugin = (packageJSON, tsMode = false) => {
 
                     // JSON
                     const jsonPath = f.path.replace(/dist[\/\\]css/, "dist/generated/assets").replace(".css", ".css.json");
-                    await writeFileIfChanged(jsonPath, JSON.stringify(newText));
 
                     // JS/TS
                     const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", extension);
