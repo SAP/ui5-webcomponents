@@ -608,15 +608,14 @@ class ColorPalette extends UI5Element {
 	 * This method implements a fallback chain pattern for keyboard navigation in the color palette.
 	 * It attempts to execute focus actions in priority order, stopping at the first successful one.
 	 *
-	 * @example
-	 * // When navigating left from the default color button, try these options in order:
+	 * For example when navigating left from the default color button, try these options in order:
 	 * this._focusFirstAvailable(
 	 *   () => this._focusLastRecentColor(),    // 1st choice: focus last recent color if available
 	 *   () => this._focusMoreColors(),         // 2nd choice: focus "More Colors" button if available
 	 *   () => this._focusLastDisplayedColor()  // 3rd choice: focus last color in the main palette
 	 * );
 	 *
-	 * @param {Array<() => boolean>} candidates - Functions that attempt to focus an element.
+	 * @param {Array} candidates - Functions that attempt to focus an element.
 	 *                    Each function should return true if focus was successful, false otherwise.
 	 * @returns True if any candidate successfully focused an element, false if all failed.
 	 * @private
