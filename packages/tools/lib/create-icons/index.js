@@ -107,7 +107,7 @@ export { getPathData, ltr, accData };`
 			}
 		}
 
-		return Promise.all(promises);
+		return Promise.allSettled(promises);
 	};
 
 	const isDefaultCollection = collectionName => collectionName === "SAP-icons-v4" || collectionName === "SAP-icons-v5";

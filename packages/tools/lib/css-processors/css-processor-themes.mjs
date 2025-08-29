@@ -62,7 +62,7 @@ const createScopingPlugin = (packageJSON, tsMode = false) => {
                     ])
                 });
 
-                await Promise.all(fileProcessingPromises);
+                await Promise.allSettled(fileProcessingPromises);
             })
         },
     };
