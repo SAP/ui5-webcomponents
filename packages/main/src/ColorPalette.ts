@@ -321,12 +321,18 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onmousedown(e: MouseEvent) {
-		const target = e.target as ColorPaletteItem;
+		const target = e.target as HTMLElement;
 
-		if (this.displayedColors.includes(target)) {
-			this._itemNavigation.setCurrentItem(target);
-		} else if (this.recentColorsElements.includes(target)) {
-			this._itemNavigationRecentColors.setCurrentItem(target);
+		if (!target.hasAttribute("ui5-color-palette-item")) {
+			return;
+		}
+
+		const colorItem = target as ColorPaletteItem;
+
+		if (this.displayedColors.includes(colorItem)) {
+			this._itemNavigation.setCurrentItem(colorItem);
+		} else if (this.recentColorsElements.includes(colorItem)) {
+			this._itemNavigationRecentColors.setCurrentItem(colorItem);
 		}
 	}
 
@@ -578,8 +584,8 @@ class ColorPalette extends UI5Element {
 		const index = this.displayedColors.indexOf(target);
 		const rowSize = this.rowSize;
 		const total = this.displayedColors.length;
-		const lastFullRowEndIndex = Math.floor(total / rowSize) * rowSize - 1;
-		return index >= 0 && index === lastFullRowEndIndex;
+		const lastCompleteRowEndIndex = this._getLastCompleteRowEndIndex(total, rowSize);
+		return index >= 0 && index === lastCompleteRowEndIndex;
 	}
 
 	_isSwatchInLastRow(target: ColorPaletteItem): boolean {
@@ -674,15 +680,23 @@ class ColorPalette extends UI5Element {
 	_focusLastSwatchOfLastFullRow(): boolean {
 		const rowSize = this.rowSize;
 		const total = this.displayedColors.length;
-		const lastFullRowEndIndex = Math.floor(total / rowSize) * rowSize - 1;
+		const lastCompleteRowEndIndex = this._getLastCompleteRowEndIndex(total, rowSize);
 
 		// Return false if there are no full rows (less than one complete row)
-		if (lastFullRowEndIndex < 0 || !this.displayedColors[lastFullRowEndIndex]) {
+		if (lastCompleteRowEndIndex < 0 || !this.displayedColors[lastCompleteRowEndIndex]) {
 			return false;
 		}
 
-		this.focusColorElement(this.displayedColors[lastFullRowEndIndex], this._itemNavigation);
+		this.focusColorElement(this.displayedColors[lastCompleteRowEndIndex], this._itemNavigation);
 		return true;
+	}
+
+	/**
+	 * Returns the index of the last swatch in the last complete row.
+	 * @private
+	 */
+	_getLastCompleteRowEndIndex(total: number, rowSize: number): number {
+		return Math.floor(total / rowSize) * rowSize - 1;
 	}
 
 	/**
