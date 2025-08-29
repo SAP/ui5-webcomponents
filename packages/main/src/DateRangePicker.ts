@@ -105,8 +105,8 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		return {
 			valueMissing: this.required && !this.value,
 			patternMismatch: !!this.value && !this.isValidValue(this.value),
-			rangeUnderflow: !!this.value && !this.isValidMin(this.value),
-			rangeOverflow: !!this.value && !this.isValidMax(this.value),
+			rangeUnderflow: !!this.value && this.isValidMin(this.value),
+			rangeOverflow: !!this.value && this.isValidMax(this.value),
 		};
 	}
 

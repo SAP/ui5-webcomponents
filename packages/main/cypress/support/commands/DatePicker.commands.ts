@@ -274,10 +274,11 @@ Cypress.Commands.add("ui5DatePickerTypeDate", { prevSubject: true }, (subject: s
 	cy.get("@datePicker")
 		.ui5DatePickerGetInnerInput()
 		.realClick()
-		.should("be.focused")
 		.clear()
-		.realType(date)
-		.realPress("Enter");
+		.should("be.focused");
+
+	cy.realType(date);
+	cy.realPress("Enter");
 });
 
 
