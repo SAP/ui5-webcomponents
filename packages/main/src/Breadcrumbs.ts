@@ -137,7 +137,7 @@ class Breadcrumbs extends UI5Element {
 	/**
 	 * Defines how the text of breadcrumb items will be displayed when there is not enough space.
 	 *
-	 * **Note:** By default the text will wrap. If "None" is set - the text will truncate.
+	 * **Note:** By default the text will truncate. If "Normal" is set - the text will wrap.
 	 * @default "None"
 	 * @public
 	 */
