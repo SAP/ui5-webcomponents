@@ -35,6 +35,10 @@
     border-radius: var(--_ui5_breadcrumbs_current_location_focus_border_radius);
 }
 
+.ui5-breadcrumbs-current-location [ui5-label] {
+    font-size: var(--sapFontSize);
+}
+
 .ui5-breadcrumbs-dropdown-arrow-link-wrapper[hidden] {
     display: none
 }
