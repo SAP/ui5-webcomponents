@@ -33,7 +33,7 @@ const createCustomPlugin = (packageJSON, tsMode = false) => {
 					]);
 				});
 
-				await Promise.allSettled(fileProcessingPromises);
+				await Promise.all(fileProcessingPromises);
 			})
 		},
 	};

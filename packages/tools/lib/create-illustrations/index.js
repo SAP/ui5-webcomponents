@@ -172,14 +172,14 @@ export { dialogSvg, sceneSvg, spotSvg, dotSvg };`
 		}
 	});
 
-	return Promise.allSettled(promises).then(() => {
+	return Promise.all(promises).then(() => {
 		const nestedPromises = [];
 		for (let illustrationName of fileNames) {
 			nestedPromises.push(fs.writeFile(path.join(destPath, `${illustrationName}.js`), illustrationImportTemplate(illustrationName)));
 			nestedPromises.push(fs.writeFile(path.join(destPath, `${illustrationName}.d.ts`), illustrationTypeDefinition(illustrationName)));
 		}
 
-		return Promise.allSettled(nestedPromises);
+		return Promise.all(nestedPromises);
 	});
 };
 
