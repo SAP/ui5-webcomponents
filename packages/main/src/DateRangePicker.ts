@@ -90,13 +90,13 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 			return DatePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
 		}
 		if (validity.patternMismatch) {
-			return DatePicker.i18nBundle.getText("DATEPICKER_PATTERN_MISMATCH"); //TODO: add key
+			return DatePicker.i18nBundle.getText("DATEPICKER_PATTERN_MISMATCH"); // TODO: add key
 		}
 		if (validity.rangeUnderflow) {
-			return DatePicker.i18nBundle.getText("DATEPICKER_RANGE_UNDERFLOW"); //TODO: add key
+			return DatePicker.i18nBundle.getText("DATEPICKER_RANGE_UNDERFLOW"); // TODO: add key
 		}
 		if (validity.rangeOverflow) {
-			return DatePicker.i18nBundle.getText("DATEPICKER_RANGE_OVERFLOW"); //TODO: add key
+			return DatePicker.i18nBundle.getText("DATEPICKER_RANGE_OVERFLOW"); // TODO: add key
 		}
 		return ""; // No error
 	}

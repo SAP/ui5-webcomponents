@@ -493,3 +493,60 @@ describe("Accessibility", () => {
 			.should("have.attr", "aria-description", DESCRIPTION)
 	});
 });
+
+describe("Validation inside form", () => {
+	it("has correct validity for valueMissing", () => {
+		cy.mount(
+			<form>
+				<FileUploader id="uploader" required></FileUploader>
+				<button type="submit" id="submitBtn">Submit</button>
+			</form>
+		);
+
+		cy.get("form").then($form => {
+			$form.get(0).addEventListener("submit", cy.stub().as("submit"));
+		});
+
+		cy.get("#submitBtn")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("#uploader").as("uploader").then($el => {
+			const picker = $el[0] as any;
+			expect(picker.formValidity.valueMissing).to.be.true;
+			expect(picker.validity.valueMissing).to.be.true;
+			expect(picker.validity.valid).to.be.false;
+			expect(picker.checkValidity()).to.be.false;
+			expect(picker.reportValidity()).to.be.false;
+		});
+
+		cy.get("#uploader:invalid")
+			.should("exist");
+
+		cy.get("@uploader")
+			.shadow()
+			.find("input[type='file']")
+			.selectFile([
+				{
+					contents: new Uint8Array(1 * 1024 * 1024), // 2 MB buffer
+					fileName: "one.txt",
+					mimeType: "text/plain"
+				}
+			], { force: true });
+
+		cy.get("@uploader").then($el => {
+			const picker = $el[0] as any;
+			expect(picker.formValidity.valueMissing).to.be.false;
+			expect(picker.validity.valueMissing).to.be.false;
+			expect(picker.validity.valid).to.be.true;
+			expect(picker.checkValidity()).to.be.true;
+			expect(picker.reportValidity()).to.be.true;
+		});
+
+		cy.get("#uploader:invalid")
+			.should("not.exist");
+	});
+
+});
