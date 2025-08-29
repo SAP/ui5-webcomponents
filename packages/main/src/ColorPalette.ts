@@ -615,10 +615,9 @@ class ColorPalette extends UI5Element {
 	 *   () => this._focusLastDisplayedColor()  // 3rd choice: focus last color in the main palette
 	 * );
 	 *
-	 * @param {Array} candidates - Functions that attempt to focus an element.
-	 *                    Each function should return true if focus was successful, false otherwise.
-	 * @returns True if any candidate successfully focused an element, false if all failed.
 	 * @private
+	 * @param candidates - Functions that attempt to focus an element. Each function should return true if focus was successful, false otherwise.
+	 * @returns True if any candidate successfully focused an element, false if all failed.
 	 */
 	_focusFirstAvailable(...candidates: Array<() => boolean>): boolean {
 		return candidates.some(focusAction => focusAction());
