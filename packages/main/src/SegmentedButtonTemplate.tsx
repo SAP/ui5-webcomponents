@@ -11,12 +11,11 @@ export default function SegmentedButtonTemplate(this: SegmentedButton) {
 			onKeyUp={this._onkeyup}
 			onFocusIn={this._onfocusin}
 			aria-multiselectable="true"
-			aria-describedby={`${this._id}-invisibleText`}
-			aria-roledescription={this.ariaDescription}
-			aria-label={this.accessibleName}
+			aria-description={this.ariaDescriptionText}
+			aria-label={this.ariaLabelText}
+			aria-roledescription={this.ariaRoleDescription}
 		>
 			<slot></slot>
-			<span id={`${this._id}-invisibleText`} class="ui5-hidden-text">{this.ariaDescribedBy}</span>
 		</ul>
 	);
 }

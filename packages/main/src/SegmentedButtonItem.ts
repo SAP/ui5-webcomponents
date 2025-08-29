@@ -6,7 +6,11 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import {
+	getEffectiveAriaLabelText,
+	getAssociatedLabelForTexts,
+	getEffectiveAriaDescriptionText,
+} from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -90,6 +94,24 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 */
 	@property()
 	accessibleNameRef?: string;
+
+	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.15.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Defines the IDs of the HTML Elements that describe the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.15.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component.
@@ -200,7 +222,11 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	}
 
 	get ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
+		return getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || undefined;
+	}
+
+	get ariaDescriptionText() {
+		return getEffectiveAriaDescriptionText(this) || undefined;
 	}
 
 	get showIconTooltip() {
