@@ -40,17 +40,17 @@ Cypress.Commands.add("ui5GetColorPaletteInPopover", { prevSubject: true }, subje
 	cy.get("@colorPalettePopover")
 		.shadow()
 		.find("[ui5-responsive-popover]")
-		.as("popover")
+		.as("popover");
 
 	return cy.get("@popover")
-		.find("[ui5-color-palette]")
+		.find("[ui5-color-palette]");
 });
 
 Cypress.Commands.add("ui5GetColorPaletteDefaultButton", { prevSubject: true }, subject => {
 	return cy.wrap(subject)
 		.shadow()
 		.find(".ui5-cp-default-color-button")
-		.should("be.visible")
+		.should("be.visible");
 });
 
 /* Returns the color palette item at the specified index, or the first one if no index is provided. */

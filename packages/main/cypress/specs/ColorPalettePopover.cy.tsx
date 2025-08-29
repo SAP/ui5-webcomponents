@@ -57,7 +57,7 @@ describe("Color Palette Popover general interaction tests", () => {
 			.as("defaultColorButton");
 
 		cy.get("@defaultColorButton")
-			.should("have.focus")
+			.should("have.focus");
 	});
 
 	it("should focus first swatch on initial open (when there is only a color palette)", () => {
@@ -79,7 +79,7 @@ describe("Color Palette Popover general interaction tests", () => {
 
 		cy.get("@firstItem")
 			.should("have.attr", "value", "violet")
-			.should("have.focus")
+			.should("have.focus");
 	});
 
 	it("should focus on last selected color swatch when popover is re-opened", () => {
@@ -107,7 +107,7 @@ describe("Color Palette Popover general interaction tests", () => {
 			.ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
 
 		cy.get("@sixthItem")
-			.should("have.focus")
+			.should("have.focus");
 	});
 
 	it("should focus on Default Color button when popover is re-opened if Default Color ha been selected", () => {
@@ -137,7 +137,7 @@ describe("Color Palette Popover general interaction tests", () => {
 			.ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
 
 		cy.get("@defaultColorButton")
-			.should("have.focus")
+			.should("have.focus");
 	});
 });
 
@@ -164,10 +164,10 @@ describe("Color Palette Popover keyboard navigation tests", () => {
 
 		cy.get("@firstItem")
 			.should("have.attr", "value", "violet")
-			.should("have.focus")
+			.should("have.focus");
 		
 		cy.realPress("ArrowRight");
-		cy.realPress("Enter")
+		cy.realPress("Enter");
 
 		cy.get("@colorPalette")
 			.should("have.attr", "_selected-color", "hotpink");
@@ -258,7 +258,7 @@ describe("Color Palette Popover events tests", () => {
 			.as("fourthItem");
 
 		cy.get("@fourthItem")
-			.realClick()
+			.realClick();
 
 		cy.get("@itemClick")
 			.should("be.calledOnce")
@@ -286,13 +286,13 @@ describe("Color Palette Popover events tests", () => {
 			.as("firstItem");
 
 		cy.get("@firstItem")
-			.realClick()
+			.realClick();
 
 		cy.get("@colorPalettePopover")
 			.should("not.have.attr", "open");
 
 		cy.get("@popoverClose")
-			.should("be.calledOnce")
+			.should("be.calledOnce");
 	});
 
 	it("should fire close event when popover is closed by pressing Escape", () => {
@@ -307,9 +307,9 @@ describe("Color Palette Popover events tests", () => {
 			.ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
 
 		cy.get<ColorPalette>("@colorPalettePopover")
-			.ui5ColorPalettePopoverClose()
+			.ui5ColorPalettePopoverClose();
 
 		cy.get("@popoverClose")
-			.should("be.calledOnce")
+			.should("be.calledOnce");
 	});
 });
