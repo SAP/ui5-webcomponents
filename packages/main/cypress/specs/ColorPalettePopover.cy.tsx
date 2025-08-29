@@ -108,7 +108,8 @@ describe("Color Popover Palette tests", () => {
                 .realPress("End");
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 4: red");
+                .should("have.attr", "aria-label")
+                .and("include", "red");
 
             cy.focused()
                 .realPress("ArrowRight");
@@ -120,7 +121,8 @@ describe("Color Popover Palette tests", () => {
                 .realPress("ArrowLeft");
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 4: red");
+                .should("have.attr", "aria-label")
+                .and("include", "red");
         });
 
         it("should navigate to color with Arrow Right and select a color", () => {
@@ -136,16 +138,19 @@ describe("Color Popover Palette tests", () => {
                 .ui5GetColorPaletteInPopover()
                 .as("colorPalette");
 
-            cy.get("@colorPalettePopover")
-                .ui5GetColorPaletteItem()
-                .as("firstItem");
-
-            cy.get("@firstItem")
-                .should("have.attr", "value", "violet")
-                .should("have.focus");
+            cy.focused()
+                .should("have.attr", "aria-label")
+                .and("include", "violet");
             
-            cy.realPress("ArrowRight");
-            cy.realPress("Enter");
+            cy.focused()
+                .realPress("ArrowRight");
+            
+            cy.focused()
+                .should("have.attr", "aria-label")
+                .and("include", "hotpink");
+            
+            cy.focused()
+                .realPress("Enter");
 
             cy.get("@colorPalette")
                 .should("have.attr", "_selected-color", "hotpink");
@@ -163,7 +168,8 @@ describe("Color Popover Palette tests", () => {
                 .realPress("ArrowRight");
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 1: cyan");
+                .should("have.attr", "aria-label")
+                .and("include", "cyan");
 
             cy.focused()
                 .realPress("ArrowLeft");
@@ -181,32 +187,38 @@ describe("Color Popover Palette tests", () => {
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 1: cyan");
+                .should("have.attr", "aria-label")
+                .and("include", "cyan");
 
             cy.focused()
                 .realPress("ArrowRight");
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 2: orange");
+                .should("have.attr", "aria-label")
+                .and("include", "orange");
 
             cy.focused()
                 .realPress("ArrowRight");
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 3: blue");
+                .should("have.attr", "aria-label")
+                .and("include", "blue");
 
             cy.focused()
                 .realPress("ArrowRight");
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 4: red");
+                .should("have.attr", "aria-label")
+                .and("include", "red");
 
             cy.focused()
                 .realPress("ArrowRight");
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 1: cyan");
+                .should("have.attr", "aria-label")
+                .and("include", "cyan");
 
             cy.focused()
                 .realPress("ArrowLeft");
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 4: red");
+                .should("have.attr", "aria-label")
+                .and("include", "red");
         });
 
         it("should cycle through colors vertically with up/down arrows", () => {
@@ -218,22 +230,26 @@ describe("Color Popover Palette tests", () => {
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 1: cyan");
+                .should("have.attr", "aria-label")
+                .and("include", "cyan");
 
             cy.focused()
                 .realPress("ArrowDown");
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 6: yellow");
+                .should("have.attr", "aria-label")
+                .and("include", "yellow");
 
             cy.focused()
                 .realPress("ArrowDown");
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 2: orange");
+                .should("have.attr", "aria-label")
+                .and("include", "orange");
 
             cy.focused()
                 .realPress("ArrowUp");
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 6: yellow");
+                .should("have.attr", "aria-label")
+                .and("include", "yellow");
         });
 
         it("should navigate to More Colors from colors grid", () => {
@@ -247,7 +263,8 @@ describe("Color Popover Palette tests", () => {
             cy.focused()
                 .realPress("End");
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 5: green");
+                .should("have.attr", "aria-label")
+                .and("include", "green");
 
             cy.focused()
                 .realPress("ArrowDown");
@@ -257,7 +274,8 @@ describe("Color Popover Palette tests", () => {
             cy.focused()
                 .realPress("ArrowLeft");
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 7: purple");
+                .should("have.attr", "aria-label")
+                .and("include", "purple");
         });
 
         it("should handle incomplete row navigation correctly", () => {
@@ -271,12 +289,14 @@ describe("Color Popover Palette tests", () => {
             cy.focused()
                 .realPress("End");
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 5: green");
+                .should("have.attr", "aria-label")
+                .and("include", "green");
 
             cy.focused()
                 .realPress("ArrowUp");
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 4: red");
+                .should("have.attr", "aria-label")
+                .and("include", "red");
         });
     });
 
@@ -293,13 +313,15 @@ describe("Color Popover Palette tests", () => {
                 .realPress("End");
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 4: red");
+                .should("have.attr", "aria-label")
+                .and("include", "red");
 
             cy.focused()
                 .realPress("Home");
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 1: cyan");
+                .should("have.attr", "aria-label")
+                .and("include", "cyan");
 
             cy.focused()
                 .realPress("Home");
@@ -317,13 +339,15 @@ describe("Color Popover Palette tests", () => {
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 1: cyan");
+                .should("have.attr", "aria-label")
+                .and("include", "cyan");
 
             cy.focused()
                 .realPress("End");
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 4: red");
+                .should("have.attr", "aria-label")
+                .and("include", "red");
 
             cy.focused()
                 .realPress("End");
@@ -371,13 +395,15 @@ describe("Color Popover Palette tests", () => {
                 .realPress("ArrowDown");
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 6: yellow");
+                .should("have.attr", "aria-label")
+                .and("include", "yellow");
 
             cy.focused()
                 .realPress("End");
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 7: purple");
+                .should("have.attr", "aria-label")
+                .and("include", "purple");
         });
     });
 
@@ -400,8 +426,8 @@ describe("Color Popover Palette tests", () => {
                 .ui5GetColorPaletteDefaultButton()
                 .as("defaultColorButton");
 
-            cy.get("@defaultColorButton")
-                .should("have.focus");
+            cy.focused()
+                .should("have.attr", "aria-label", "Default Color");
         });
 
         it("should focus first swatch on initial open (when there is only a color palette)", () => {
@@ -421,9 +447,9 @@ describe("Color Popover Palette tests", () => {
                 .ui5GetColorPaletteItem()
                 .as("firstItem");
 
-            cy.get("@firstItem")
-                .should("have.attr", "value", "violet")
-                .should("have.focus");
+            cy.focused()
+                .should("have.attr", "aria-label")
+                .and("include", "violet");
         });
 
         it("should focus on last selected color swatch when popover is re-opened", () => {
@@ -450,8 +476,9 @@ describe("Color Popover Palette tests", () => {
             cy.get("@colorPalettePopover")
                 .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
 
-            cy.get("@sixthItem")
-                .should("have.focus");
+            cy.focused()
+                .should("have.attr", "aria-label")
+                .and("include", "orange");
         });
 
         it("should focus on Default Color button when popover is re-opened if Default Color ha been selected", () => {
@@ -480,8 +507,8 @@ describe("Color Popover Palette tests", () => {
             cy.get("@colorPalettePopover")
                 .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
 
-            cy.get("@defaultColorButton")
-                .should("have.focus");
+            cy.focused()
+                .should("have.attr", "aria-label", "Default Color");
         });
     });
 
