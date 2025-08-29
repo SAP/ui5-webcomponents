@@ -2,7 +2,7 @@ const path = require('path');
 const BuildRunner = require('@ui5/webcomponents-tools/task-runner/build-runner');
 const buildJsonImportsThemes = require("@ui5/webcomponents-tools/lib/generate-json-imports/themes");
 const generateReport = require("./lib/generate-css-vars-usage-report/index.cjs");
-const cssProcessorThemes = require("@ui5/webcomponents-tools/lib/css-processors/css-processor-themes.mjs").processThemes;
+const cssProcessorThemes = require("@ui5/webcomponents-tools/lib/css-processors/css-processor-themes.mjs").default;
 const copyAndWatch = require("@ui5/webcomponents-tools/lib/copy-and-watch/index.js").copyAndWatch;
 
 const runner = new BuildRunner();

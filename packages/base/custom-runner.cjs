@@ -11,7 +11,7 @@ const assetParametersScript = require("./lib/generate-asset-parameters/index.cjs
 const copyAndWatch = require("@ui5/webcomponents-tools/lib/copy-and-watch/index.js").copyAndWatch;
 const validate = require("@ui5/webcomponents-tools/lib/cem/validate");
 const copyUsedModules = require("@ui5/webcomponents-tools/lib/copy-list/index.js");
-const removeDevMode = require("@ui5/webcomponents-tools/lib/remove-dev-mode/remove-dev-mode.mjs").removeDevMode; //
+const removeDevMode = require("@ui5/webcomponents-tools/lib/remove-dev-mode/remove-dev-mode.mjs").default;
 const stylesScript = require("./lib/generate-styles/index.js").default; //
 const fontFaceScript = require("./lib/css-processors/css-processor-font-face.mjs").default; //
 

@@ -78,8 +78,4 @@ const generate = async (inputFolder, distFolder, isTypeScript) => {
 	]);
 }
 
-// generate().then(() => {
-// 	console.log("Generated i18n JSON imports.");
-// });
-
 module.exports = generate

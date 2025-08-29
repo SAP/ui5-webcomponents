@@ -146,56 +146,6 @@ const copyAndWatch = (sources, target, options = {}) => {
 	return null;
 };
 
-// If this file is run directly (not required as a module)
-if (require.main === module) {
-	const args = process.argv.slice(2);
-	const options = {};
-
-	['watch', 'clean', 'skip-initial-copy', 'safe', 'silent'].forEach(key => {
-		const index = args.indexOf(`--${key}`);
-		if (index >= 0) {
-			options[key] = true;
-			args.splice(index, 1);
-		}
-	});
-
-	if (args.length < 2) {
-		console.error('Not enough arguments: copy-and-watch [options] <sources> <target>'.red);
-		process.exit(1);
-	}
-
-	if (options['skip-initial-copy'] && !options['watch']) {
-		console.error('--skip-initial-copy argument is meant to be used with --watch, otherwise no files will be copied'.red);
-		process.exit(1);
-	}
-
-	const target = args.pop();
-	const sources = args;
-
-	const cliOptions = {
-		watch: options.watch,
-		clean: options.clean,
-		skipInitialCopy: options['skip-initial-copy'],
-		safe: options.safe,
-		silent: options.silent
-	};
-
-	try {
-		const watcher = copyAndWatch(sources, target, cliOptions);
-		if (watcher) {
-			// Keep the process alive when watching
-			process.on('SIGINT', () => {
-				console.log('\nStopping watcher...');
-				watcher.close();
-				process.exit(0);
-			});
-		}
-	} catch (error) {
-		console.error('Error:', error.message);
-		process.exit(1);
-	}
-}
-
 module.exports = copyAndWatch;
 module.exports.copyAndWatch = copyAndWatch;
 module.exports.rimraf = rimraf;

@@ -124,8 +124,4 @@ export { getPathData, ltr, accData };`
 	await createIcons(srcFile)
 }
 
-// generate.then(() => {
-// 	console.log("Icons created.");
-// });
-
 module.exports = generate;

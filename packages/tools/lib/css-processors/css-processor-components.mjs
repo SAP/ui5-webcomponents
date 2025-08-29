@@ -38,9 +38,11 @@ const createCustomPlugin = (packageJSON, tsMode = false) => {
     };
 };
 
-const getConfig = async (inputFilesGlob, packageJSON, tsMode) => {
+const getConfig = async (inputFilesGlob, tsMode) => {
+    const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
+
     const config = {
-        entryPoints: await globby(inputFilesGlob),
+        entryPoints: await globby([inputFilesGlob]),
         bundle: true,
         minify: true,
         outdir: 'dist/css',
@@ -55,18 +57,14 @@ const getConfig = async (inputFilesGlob, packageJSON, tsMode) => {
 const processComponents = async (options = {}) => {
     const {
         watch = false,
-        packagePath = "./package.json",
-        inputFilesGlob = "src/themes/*.css",
-        outdir = 'dist/css',
-        outbase = 'src',
         tsMode = false
     } = options;
 
-    const packageJSON = JSON.parse(fs.readFileSync(packagePath));
+    const inputFilesGlob = "src/themes/*.css";
 
     if (watch) {
         let ready;
-        let config = await getConfig(inputFilesGlob, packageJSON, tsMode);
+        let config = await getConfig(inputFilesGlob, tsMode);
         let ctx = await esbuild.context(config);
         await ctx.watch();
         console.log('watching...');
@@ -81,7 +79,7 @@ const processComponents = async (options = {}) => {
             if (ready) {
                 // new file
                 ctx.dispose();
-                config = await getConfig(inputFilesGlob, packageJSON, tsMode);
+                config = await getConfig(inputFilesGlob, tsMode);
                 ctx = await esbuild.context(config);
                 ctx.watch();
             }
@@ -89,25 +87,10 @@ const processComponents = async (options = {}) => {
 
         return { ctx, watcher };
     } else {
-        const config = await getConfig(inputFilesGlob, packageJSON, tsMode);
+        const config = await getConfig(inputFilesGlob, tsMode);
         const result = await esbuild.build(config);
         return result;
     }
 };
 
-// If this file is run directly (not imported as a module)
-if (import.meta.url === `file://${process.argv[1]}`) {
-    const restArgs = process.argv.slice(2);
-    const watchMode = restArgs.includes("-w");
-
-    processComponents({ watch: watchMode })
-        .then(() => {
-            if (!watchMode) {
-                console.log('Component processing completed.');
-            }
-        })
-        .catch(console.error);
-}
-
 export default processComponents;
-export { processComponents, createCustomPlugin, getConfig };

@@ -51,12 +51,7 @@ const getMatchingFiles = async (folder, pattern) => {
 	return dir.filter((fileName) => fileName.match(pattern));
 };
 
-const generateIllustrations = async (inputFolder,
-	outputFile,
-	set,
-	collection,
-	location,
-	filterOut) => {
+const generateIllustrations = async (inputFolder, outputFile, set, collection, location, filterOut) => {
 
 	const normalizedInputFolder = path.normalize(inputFolder);
 	const normalizedOutputFile = path.normalize(outputFile);
@@ -66,17 +61,12 @@ const generateIllustrations = async (inputFolder,
 	const dynamicImports = await generateDynamicImportLines(illustrations, location, filterOut);
 	const availableIllustrations = generateAvailableIllustrationsArray(illustrations, filterOut);
 
-	const contentDynamic = generateDynamicImportsFileContent(dynamicImports, availableIllustrations, collection, set, undefined);
+	const contentDynamic = generateDynamicImportsFileContent(dynamicImports, availableIllustrations, collection, set);
 
 	await fs.mkdir(path.dirname(normalizedOutputFile), { recursive: true });
 	await fs.writeFile(normalizedOutputFile, contentDynamic);
 
 	console.log(`Generated ${normalizedOutputFile}`);
 };
-
-// // Run the generation process
-// generateIllustrations(config).catch((error) => {
-// 	console.error("Error generating illustrations:", error);
-// });
 
 module.exports = generateIllustrations;

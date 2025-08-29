@@ -72,22 +72,18 @@ const createScopingPlugin = (packageJSON, tsMode = false) => {
 const processThemes = async (options = {}) => {
     const {
         watch = false,
-        packagePath = "./package.json",
-        inputPattern = "src/**/parameters-bundle.css",
-        outdir = 'dist/css',
-        outbase = 'src',
         tsMode = false,
     } = options;
 
-    const packageJSON = JSON.parse(fs.readFileSync(packagePath));
-    const inputFiles = await globby([inputPattern]);
+    const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
+    const inputFiles = await globby(["src/**/parameters-bundle.css"]);
 
     const config = {
         entryPoints: inputFiles,
         bundle: true,
         minify: true,
-        outdir,
-        outbase,
+        outdir: 'dist/css',
+        outbase: 'src',
         plugins: [
             createScopingPlugin(packageJSON, tsMode),
         ],
@@ -105,19 +101,4 @@ const processThemes = async (options = {}) => {
     }
 };
 
-// If this file is run directly (not imported as a module)
-if (import.meta.url === `file://${process.argv[1]}`) {
-    const restArgs = process.argv.slice(2);
-    const watchMode = restArgs.includes("-w");
-
-    processThemes({ watch: watchMode })
-        .then(() => {
-            if (!watchMode) {
-                console.log('Theme processing completed.');
-            }
-        })
-        .catch(console.error);
-}
-
 export default processThemes;
-export { processThemes, createScopingPlugin, processThemingPackageFile, processComponentPackageFile };

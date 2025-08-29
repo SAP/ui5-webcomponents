@@ -37,7 +37,4 @@ const generate = async (inputFolder, distFolder) => {
 	return Promise.all(files.map((file => convertToJSON(file, messagesJSONDist))));
 };
 
-// generate().then(() => {
-// 	console.log("Message bundle JSON files generated.");
-// });
 module.exports = generate;

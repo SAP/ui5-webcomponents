@@ -21,8 +21,4 @@ const generate = async (fileList, dest) => {
 	});
 };
 
-// generate().then(() => {
-// 	console.log("Files copied.");
-// });
-
 module.exports = generate;

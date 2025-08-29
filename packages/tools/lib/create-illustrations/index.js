@@ -1,13 +1,7 @@
 const fs = require("fs").promises;
 const path = require("path");
 
-const generate = async (srcPath,
-	defaultText,
-	illustrationsPrefix,
-	illustrationSet,
-	destPath,
-	collection) => {
-
+const generate = async (srcPath, defaultText, illustrationsPrefix, illustrationSet, destPath, collection) => {
 	const ORIGINAL_TEXTS = {
 		UnableToLoad: "UnableToLoad",
 		UnableToUpload: "UnableToUpload",
@@ -188,9 +182,5 @@ export { dialogSvg, sceneSvg, spotSvg, dotSvg };`
 		return Promise.all(nestedPromises);
 	});
 };
-
-// generate().then(() => {
-// 	console.log("Illustrations generated.");
-// });
 
 module.exports = generate;

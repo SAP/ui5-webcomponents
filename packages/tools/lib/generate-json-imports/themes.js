@@ -60,8 +60,4 @@ ${availableThemesArray}
 	]);
 };
 
-// generate().then(() => {
-// 	console.log("Generated themes JSON imports.");
-// });
-
 module.exports = generate;

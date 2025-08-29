@@ -78,8 +78,4 @@ export {${textKeys.join()}};`;
 	await fs.writeFile(outputFile, getOutputFileContent(properties, defaultLanguageProperties));
 };
 
-// generate().then(() => {
-// 	console.log("i18n default file generated.");
-// });
-
 module.exports = generate
