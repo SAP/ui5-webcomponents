@@ -886,6 +886,45 @@ describe("Breadcrumbs general interaction", () => {
 				"Max stack of calling not hit for invalidation of control").to.equal(1);
 		});
 	});
+
+	it("truncates current location text instead of wrapping", () => {
+		cy.mount(
+			<div style={{ width: '300px' }}>
+				<Breadcrumbs>
+					<BreadcrumbsItem href="#">Home</BreadcrumbsItem>
+					<BreadcrumbsItem href="#">Products</BreadcrumbsItem>
+					<BreadcrumbsItem>This is a very long current location text that should be truncated with ellipsis when the available width is limited</BreadcrumbsItem>
+				</Breadcrumbs>
+			</div>
+		);
+
+		cy.get("[ui5-breadcrumbs]")
+			.shadow()
+			.find(".ui5-breadcrumbs-current-location ui5-label")
+			.then(($label) => {
+				const label = $label[0] as HTMLElement & { wrappingType: string };
+				
+				// Verify that the current location label has wrappingType="None" to enable truncation
+				expect(label.wrappingType, "current location should have wrappingType None for truncation").to.equal("None");
+				
+				// Check that the label element has the expected CSS for text truncation
+				const labelStyle = window.getComputedStyle($label[0]);
+				expect(labelStyle.overflow, "should have overflow hidden").to.equal("hidden");
+				expect(labelStyle.textOverflow, "should have ellipsis text overflow").to.equal("ellipsis");
+				expect(labelStyle.whiteSpace, "should prevent wrapping").to.equal("nowrap");
+			});
+
+		// Also verify that breadcrumb links consistently use wrappingType="None"
+		cy.get("[ui5-breadcrumbs]")
+			.shadow()
+			.find("ui5-link")
+			.then(($links) => {
+				$links.each((index, link) => {
+					const linkElement = link as HTMLElement & { wrappingType: string };
+					expect(linkElement.wrappingType, `breadcrumb link ${index + 1} should have wrappingType None`).to.equal("None");
+				});
+			});
+	});
 });
 
 describe("Breadcrumbs with item for current page", () => {
