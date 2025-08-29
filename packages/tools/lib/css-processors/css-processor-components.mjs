@@ -19,7 +19,6 @@ const createCustomPlugin = (packageJSON, tsMode = false) => {
 				const fileProcessingPromises = result.outputFiles.map(async (f) => {
 					let newText = scopeVariables(f.text, packageJSON);
 					newText = newText.replaceAll(/\\/g, "\\\\"); // Escape backslashes as they might appear in css rules
-					writeFile(f.path, newText);
 
 					// JS/TS
 					const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", extension);
