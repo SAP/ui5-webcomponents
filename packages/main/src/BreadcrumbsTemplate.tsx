@@ -36,7 +36,7 @@ export default function BreadcrumbsTemplate(this: Breadcrumbs) {
 								accessibleName={linkData._accessibleNameText}
 								accessibilityAttributes={linkData.accessibilityAttributes}
 								data-ui5-stable={linkData.stableDomRef}
-								wrappingType="None"
+								wrappingType={this.wrappingType}
 								onClick={this._onLinkPress}
 							>
 								{linkData.innerText}
@@ -56,7 +56,7 @@ export default function BreadcrumbsTemplate(this: Breadcrumbs) {
 							aria-current="page"
 							aria-label={this._currentLocationAccName}
 						>
-							<Label>
+							<Label wrappingType={this.wrappingType}>
 								{this._currentLocationText}
 							</Label>
 						</span>

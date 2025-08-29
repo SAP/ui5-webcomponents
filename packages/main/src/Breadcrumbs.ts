@@ -24,6 +24,7 @@ import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
 import "./BreadcrumbsItem.js";
 import type BreadcrumbsItem from "./BreadcrumbsItem.js";
 import type BreadcrumbsSeparator from "./types/BreadcrumbsSeparator.js";
+import type WrappingType from "./types/WrappingType.js";
 
 import {
 	BREADCRUMB_ITEM_POS,
@@ -132,6 +133,16 @@ class Breadcrumbs extends UI5Element {
 	 */
 	@property()
 	separators: `${BreadcrumbsSeparator}` = "Slash";
+
+	/**
+	 * Defines how the text of breadcrumb items will be displayed when there is not enough space.
+	 *
+	 * **Note:** By default the text will wrap. If "None" is set - the text will truncate.
+	 * @default "None"
+	 * @public
+	 */
+	@property()
+	wrappingType: `${WrappingType}` = "None";
 
 	/**
 	 * Holds the number of items in the overflow.

@@ -886,6 +886,66 @@ describe("Breadcrumbs general interaction", () => {
 				"Max stack of calling not hit for invalidation of control").to.equal(1);
 		});
 	});
+
+	it("applies wrappingType to breadcrumb items", () => {
+		cy.mount(
+			<div style={{ width: '200px' }}>
+				<Breadcrumbs wrappingType="None">
+					<BreadcrumbsItem href="#">VeryLongBreadcrumbItemName1</BreadcrumbsItem>
+					<BreadcrumbsItem href="#">VeryLongBreadcrumbItemName2</BreadcrumbsItem>
+					<BreadcrumbsItem>VeryLongCurrentLocationName</BreadcrumbsItem>
+				</Breadcrumbs>
+			</div>
+		);
+
+		// Check that link has correct wrappingType
+		cy.get("[ui5-breadcrumbs]")
+			.shadow()
+			.find("ui5-link")
+			.last()
+			.then(($link) => {
+				const link = $link[0] as HTMLElement & { wrappingType: string };
+				expect(link.wrappingType, "link has correct wrappingType").to.equal("None");
+			});
+
+		// Check that current location label has correct wrappingType
+		cy.get("[ui5-breadcrumbs]")
+			.shadow()
+			.find("ui5-label")
+			.then(($label) => {
+				const label = $label[0] as HTMLElement & { wrappingType: string };
+				expect(label.wrappingType, "label has correct wrappingType").to.equal("None");
+			});
+	});
+
+	it("applies different wrappingType values correctly", () => {
+		cy.mount(
+			<div style={{ width: '200px' }}>
+				<Breadcrumbs wrappingType="Normal">
+					<BreadcrumbsItem href="#">VeryLongBreadcrumbItemName1</BreadcrumbsItem>
+					<BreadcrumbsItem>VeryLongCurrentLocationName</BreadcrumbsItem>
+				</Breadcrumbs>
+			</div>
+		);
+
+		// Check that link has correct wrappingType set to Normal
+		cy.get("[ui5-breadcrumbs]")
+			.shadow()
+			.find("ui5-link")
+			.then(($link) => {
+				const link = $link[0] as HTMLElement & { wrappingType: string };
+				expect(link.wrappingType, "link has Normal wrappingType").to.equal("Normal");
+			});
+
+		// Check that current location label has correct wrappingType set to Normal
+		cy.get("[ui5-breadcrumbs]")
+			.shadow()
+			.find("ui5-label")
+			.then(($label) => {
+				const label = $label[0] as HTMLElement & { wrappingType: string };
+				expect(label.wrappingType, "label has Normal wrappingType").to.equal("Normal");
+			});
+	});
 });
 
 describe("Breadcrumbs with item for current page", () => {
