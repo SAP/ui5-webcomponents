@@ -10,6 +10,7 @@ type ColorPalettePopoverTemplateOptions = Partial<{
 	defaultColor: string;
 	onItemClick: () => void;
 	onClose: () => void;
+	buttonId: string;
 }>
 
 function ColorPalettePopoverSample(options: ColorPalettePopoverTemplateOptions) {
@@ -38,19 +39,67 @@ function ColorPalettePopoverSample(options: ColorPalettePopoverTemplateOptions) 
 	);
 }
 
+function SimplePalettePopover(options: ColorPalettePopoverTemplateOptions & { buttonId?: string }) {
+	const buttonId = options.buttonId || "btnPalette";
+	return (
+		<>
+		<Button id={buttonId}>Open Palette</Button>
+		<ColorPalettePopover opener={buttonId} {...options}>
+			<ColorPaletteItem value="cyan"></ColorPaletteItem>
+			<ColorPaletteItem value="orange"></ColorPaletteItem>
+			<ColorPaletteItem value="blue"></ColorPaletteItem>
+			<ColorPaletteItem value="red"></ColorPaletteItem>
+		</ColorPalettePopover>
+		</>
+	);
+}
+
+function MultiRowPalettePopover(options: ColorPalettePopoverTemplateOptions & { buttonId?: string }) {
+	const buttonId = options.buttonId || "btnPalette";
+	return (
+		<>
+		<Button id={buttonId}>Open Palette</Button>
+		<ColorPalettePopover opener={buttonId} {...options}>
+			<ColorPaletteItem value="cyan"></ColorPaletteItem>
+			<ColorPaletteItem value="orange"></ColorPaletteItem>
+			<ColorPaletteItem value="blue"></ColorPaletteItem>
+			<ColorPaletteItem value="red"></ColorPaletteItem>
+			<ColorPaletteItem value="green"></ColorPaletteItem>
+			<ColorPaletteItem value="yellow"></ColorPaletteItem>
+			<ColorPaletteItem value="purple"></ColorPaletteItem>
+			<ColorPaletteItem value="pink"></ColorPaletteItem>
+			<ColorPaletteItem value="black"></ColorPaletteItem>
+			<ColorPaletteItem value="white"></ColorPaletteItem>
+		</ColorPalettePopover>
+		</>
+	);
+}
+
+function IncompleteRowPalettePopover(options: ColorPalettePopoverTemplateOptions & { buttonId?: string }) {
+	const buttonId = options.buttonId || "btnPalette";
+	return (
+		<>
+		<Button id={buttonId}>Open Palette</Button>
+		<ColorPalettePopover opener={buttonId} {...options}>
+			<ColorPaletteItem value="cyan"></ColorPaletteItem>
+			<ColorPaletteItem value="orange"></ColorPaletteItem>
+			<ColorPaletteItem value="blue"></ColorPaletteItem>
+			<ColorPaletteItem value="red"></ColorPaletteItem>
+			<ColorPaletteItem value="green"></ColorPaletteItem>
+			<ColorPaletteItem value="yellow"></ColorPaletteItem>
+			<ColorPaletteItem value="purple"></ColorPaletteItem>
+		</ColorPalettePopover>
+		</>
+	);
+}
+
 describe("Color Popover Palette tests", () => {
 
     describe("Arrow keys navigation", () => {
         it("should navigate with Arrow right", () => {
-            cy.mount(<>
-                <Button id="btnPalette">Open Palette</Button>
-                <ColorPalettePopover opener="btnPalette" showMoreColors={true}>
-                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
-                    <ColorPaletteItem value="orange"></ColorPaletteItem>
-                    <ColorPaletteItem value="blue"></ColorPaletteItem>
-                    <ColorPaletteItem value="red"></ColorPaletteItem>
-                </ColorPalettePopover>
-            </>);
+            cy.mount(
+                <SimplePalettePopover showMoreColors={true} />
+            );
 
             cy.get("[ui5-color-palette-popover]")
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
@@ -103,15 +152,9 @@ describe("Color Popover Palette tests", () => {
         });
 
         it("should navigate with Arrow left", () => {
-            cy.mount(<>
-                <Button id="btnPalette">Open Palette</Button>
-                <ColorPalettePopover opener="btnPalette" showDefaultColor={true}>
-                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
-                    <ColorPaletteItem value="orange"></ColorPaletteItem>
-                    <ColorPaletteItem value="blue"></ColorPaletteItem>
-                    <ColorPaletteItem value="red"></ColorPaletteItem>
-                </ColorPalettePopover>
-            </>);
+            cy.mount(
+                <SimplePalettePopover showDefaultColor={true} />
+            );
 
             cy.get("[ui5-color-palette-popover]")
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
@@ -130,15 +173,9 @@ describe("Color Popover Palette tests", () => {
         });
 
         it("should cycle through colors horizontally with left/right arrows", () => {
-            cy.mount(<>
-                <Button id="btnPalette">Open Palette</Button>
-                <ColorPalettePopover opener="btnPalette">
-                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
-                    <ColorPaletteItem value="orange"></ColorPaletteItem>
-                    <ColorPaletteItem value="blue"></ColorPaletteItem>
-                    <ColorPaletteItem value="red"></ColorPaletteItem>
-                </ColorPalettePopover>
-            </>);
+            cy.mount(
+                <SimplePalettePopover />
+            );
 
             cy.get("[ui5-color-palette-popover]")
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
@@ -173,21 +210,9 @@ describe("Color Popover Palette tests", () => {
         });
 
         it("should cycle through colors vertically with up/down arrows", () => {
-            cy.mount(<>
-                <Button id="btnPalette">Open Palette</Button>
-                <ColorPalettePopover opener="btnPalette">
-                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
-                    <ColorPaletteItem value="orange"></ColorPaletteItem>
-                    <ColorPaletteItem value="blue"></ColorPaletteItem>
-                    <ColorPaletteItem value="red"></ColorPaletteItem>
-                    <ColorPaletteItem value="green"></ColorPaletteItem>
-                    <ColorPaletteItem value="yellow"></ColorPaletteItem>
-                    <ColorPaletteItem value="purple"></ColorPaletteItem>
-                    <ColorPaletteItem value="pink"></ColorPaletteItem>
-                    <ColorPaletteItem value="black"></ColorPaletteItem>
-                    <ColorPaletteItem value="white"></ColorPaletteItem>
-                </ColorPalettePopover>
-            </>);
+            cy.mount(
+                <MultiRowPalettePopover />
+            );
 
             cy.get("[ui5-color-palette-popover]")
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
@@ -212,18 +237,9 @@ describe("Color Popover Palette tests", () => {
         });
 
         it("should navigate to More Colors from colors grid", () => {
-            cy.mount(<>
-                <Button id="btnPalette">Open Palette</Button>
-                <ColorPalettePopover opener="btnPalette" showMoreColors={true}>
-                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
-                    <ColorPaletteItem value="orange"></ColorPaletteItem>
-                    <ColorPaletteItem value="blue"></ColorPaletteItem>
-                    <ColorPaletteItem value="red"></ColorPaletteItem>
-                    <ColorPaletteItem value="green"></ColorPaletteItem>
-                    <ColorPaletteItem value="yellow"></ColorPaletteItem>
-                    <ColorPaletteItem value="purple"></ColorPaletteItem>
-                </ColorPalettePopover>
-            </>);
+            cy.mount(
+                <IncompleteRowPalettePopover showMoreColors={true} />
+            );
 
             cy.get("[ui5-color-palette-popover]")
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
@@ -245,18 +261,9 @@ describe("Color Popover Palette tests", () => {
         });
 
         it("should handle incomplete row navigation correctly", () => {
-            cy.mount(<>
-                <Button id="btnPalette">Open Palette</Button>
-                <ColorPalettePopover opener="btnPalette">
-                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
-                    <ColorPaletteItem value="orange"></ColorPaletteItem>
-                    <ColorPaletteItem value="blue"></ColorPaletteItem>
-                    <ColorPaletteItem value="red"></ColorPaletteItem>
-                    <ColorPaletteItem value="green"></ColorPaletteItem>
-                    <ColorPaletteItem value="yellow"></ColorPaletteItem>
-                    <ColorPaletteItem value="purple"></ColorPaletteItem>
-                </ColorPalettePopover>
-            </>);
+            cy.mount(
+                <IncompleteRowPalettePopover />
+            );
 
             cy.get("[ui5-color-palette-popover]")
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
@@ -275,15 +282,9 @@ describe("Color Popover Palette tests", () => {
 
     describe("Home and End keyboard navigation", () => {
         it("should navigate with Home/End when showDefaultColor is set", () => {
-            cy.mount(<>
-                <Button id="btnPalette">Open Palette</Button>
-                <ColorPalettePopover opener="btnPalette" showDefaultColor={true}>
-                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
-                    <ColorPaletteItem value="orange"></ColorPaletteItem>
-                    <ColorPaletteItem value="blue"></ColorPaletteItem>
-                    <ColorPaletteItem value="red"></ColorPaletteItem>
-                </ColorPalettePopover>
-            </>);
+            cy.mount(
+                <SimplePalettePopover showDefaultColor={true} />
+            );
 
             cy.get("[ui5-color-palette-popover]")
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
@@ -308,15 +309,9 @@ describe("Color Popover Palette tests", () => {
         });
 
         it("should navigate with Home/End keys when showMoreColors is set", () => {
-            cy.mount(<>
-                <Button id="btnPalette">Open Palette</Button>
-                <ColorPalettePopover opener="btnPalette" showMoreColors={true}>
-                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
-                    <ColorPaletteItem value="orange"></ColorPaletteItem>
-                    <ColorPaletteItem value="blue"></ColorPaletteItem>
-                    <ColorPaletteItem value="red"></ColorPaletteItem>
-                </ColorPalettePopover>
-            </>);
+            cy.mount(
+                <SimplePalettePopover showMoreColors={true} />
+            );
 
             cy.get("[ui5-color-palette-popover]")
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
@@ -338,15 +333,9 @@ describe("Color Popover Palette tests", () => {
         });
 
         it("should navigate with Home/End when showDefaultColor & showMoreColors are set", () => {
-            cy.mount(<>
-                <Button id="btnPalette">Open Palette</Button>
-                <ColorPalettePopover opener="btnPalette" showDefaultColor={true} showMoreColors={true}>
-                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
-                    <ColorPaletteItem value="orange"></ColorPaletteItem>
-                    <ColorPaletteItem value="blue"></ColorPaletteItem>
-                    <ColorPaletteItem value="red"></ColorPaletteItem>
-                </ColorPalettePopover>
-            </>);
+            cy.mount(
+                <SimplePalettePopover showDefaultColor={true} showMoreColors={true} />
+            );
 
             cy.get("[ui5-color-palette-popover]")
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
@@ -368,18 +357,9 @@ describe("Color Popover Palette tests", () => {
         });
 
         it("should navigate with End key", () => {
-            cy.mount(<>
-                <Button id="btnPalette">Open Palette</Button>
-                <ColorPalettePopover opener="btnPalette">
-                    <ColorPaletteItem value="cyan"></ColorPaletteItem>
-                    <ColorPaletteItem value="orange"></ColorPaletteItem>
-                    <ColorPaletteItem value="blue"></ColorPaletteItem>
-                    <ColorPaletteItem value="yellow"></ColorPaletteItem>
-                    <ColorPaletteItem value="green"></ColorPaletteItem>
-                    <ColorPaletteItem value="purple"></ColorPaletteItem>
-                    <ColorPaletteItem value="red"></ColorPaletteItem>
-                </ColorPalettePopover>
-            </>);
+            cy.mount(
+                <IncompleteRowPalettePopover />
+            );
 
             cy.get("[ui5-color-palette-popover]")
                 .ui5ColorPalettePopoverOpen({ opener: "btnPalette" });
@@ -391,13 +371,13 @@ describe("Color Popover Palette tests", () => {
                 .realPress("ArrowDown");
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 6: purple");
+                .should("have.attr", "aria-label", "Color - 6: yellow");
 
             cy.focused()
                 .realPress("End");
 
             cy.focused()
-                .should("have.attr", "aria-label", "Color - 7: red");
+                .should("have.attr", "aria-label", "Color - 7: purple");
         });
     });
 
