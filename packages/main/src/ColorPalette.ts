@@ -348,6 +348,7 @@ class ColorPalette extends UI5Element {
 			e.preventDefault();
 		}
 
+		// Prevent Home/End keys from working in embedded mode - they only work in popup mode as per design
 		if (!this.popupMode && (isHome(e) || isEnd(e))) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -533,8 +534,17 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
-	_isUpOrDownNavigatableColorPaletteItem(e: KeyboardEvent) {
-		return (isUp(e) || isDown(e)) && this._currentlySelected && this.allColorsInPalette.includes(this._currentlySelected);
+	/**
+	 * Checks if the keyboard event is up/down navigation on a displayed color palette item
+	 * @private
+	 */
+	_isUpOrDownNavigatableColorPaletteItem(e: KeyboardEvent): boolean {
+		if (!(isUp(e) || isDown(e)) || !this._currentlySelected) {
+			return false;
+		}
+
+		return this.displayedColors.includes(this._currentlySelected)
+			|| this.recentColorsElements.includes(this._currentlySelected);
 	}
 
 	_isPrevious(e: KeyboardEvent): boolean {
@@ -587,7 +597,22 @@ class ColorPalette extends UI5Element {
 	}
 
 	/**
-	 * Helper to focus the first available element from a list of candidates
+	 * Helper to focus the first available element from a list of candidates.
+	 *
+	 * This method implements a fallback chain pattern for keyboard navigation in the color palette.
+	 * It attempts to execute focus actions in priority order, stopping at the first successful one.
+	 *
+	 * @example
+	 * // When navigating left from the default color button, try these options in order:
+	 * this._focusFirstAvailable(
+	 *   () => this._focusLastRecentColor(),    // 1st choice: focus last recent color if available
+	 *   () => this._focusMoreColors(),         // 2nd choice: focus "More Colors" button if available
+	 *   () => this._focusLastDisplayedColor()  // 3rd choice: focus last color in the main palette
+	 * );
+	 *
+	 * @param candidates - Array of functions that attempt to focus an element.
+	 *                    Each function should return true if focus was successful, false otherwise.
+	 * @returns True if any candidate successfully focused an element, false if all failed.
 	 * @private
 	 */
 	_focusFirstAvailable(...candidates: Array<() => boolean>): boolean {
