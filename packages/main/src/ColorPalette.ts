@@ -546,11 +546,11 @@ class ColorPalette extends UI5Element {
 	}
 
 	_isFirstSwatch(target: ColorPaletteItem, swatches: Array<IColorPaletteItem>): boolean {
-		return swatches[0] === target;
+		return swatches && Boolean(swatches.length) && swatches[0] === target;
 	}
 
 	_isLastSwatch(target: ColorPaletteItem, swatches: Array<IColorPaletteItem>): boolean {
-		return swatches[swatches.length - 1] === target;
+		return swatches && Boolean(swatches.length) && swatches[swatches.length - 1] === target;
 	}
 
 	/**
@@ -569,13 +569,13 @@ class ColorPalette extends UI5Element {
 		const rowSize = this.rowSize;
 		const total = this.displayedColors.length;
 		const lastFullRowEndIndex = Math.floor(total / rowSize) * rowSize - 1;
-		return index === lastFullRowEndIndex;
+		return index >= 0 && index === lastFullRowEndIndex;
 	}
 
 	_isSwatchInLastRow(target: ColorPaletteItem): boolean {
 		const index = this.displayedColors.indexOf(target);
 		const lastRowSwatchesCount = this.displayedColors.length % this.rowSize;
-		return index >= this.displayedColors.length - lastRowSwatchesCount;
+		return index >= 0 && index >= this.displayedColors.length - lastRowSwatchesCount;
 	}
 
 	/**
