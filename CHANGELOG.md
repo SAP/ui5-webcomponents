@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.5...v2.14.0-rc.6) (2025-08-29)
+
+
+### Bug Fixes
+
+* **create-package:** add `npmignore` to ensure `dist` is published ([#12199](https://github.com/SAP/ui5-webcomponents/issues/12199)) ([b00bd17](https://github.com/SAP/ui5-webcomponents/commit/b00bd17f4d6dadfbc4ad9bd0c8374225813cb605)), closes [#12196](https://github.com/SAP/ui5-webcomponents/issues/12196)
+* **icons:** fix status-completed icon in RTL ([#12216](https://github.com/SAP/ui5-webcomponents/issues/12216)) ([e76b9f7](https://github.com/SAP/ui5-webcomponents/commit/e76b9f7c29c8a8c4fdc2f7d73f486d31760067bc)), closes [#12195](https://github.com/SAP/ui5-webcomponents/issues/12195)
+* **ui5-color-picker:** sanitize input by removing '#' from hex value ([#12185](https://github.com/SAP/ui5-webcomponents/issues/12185)) ([ea60f3a](https://github.com/SAP/ui5-webcomponents/commit/ea60f3aa436157763bdea35ffabbdc6892ef2f5f)), closes [#11417](https://github.com/SAP/ui5-webcomponents/issues/11417)
+* **ui5-dynamic-page-title:** conditionally apply ARIA attributes based on interactivity ([#12141](https://github.com/SAP/ui5-webcomponents/issues/12141)) ([ea23724](https://github.com/SAP/ui5-webcomponents/commit/ea237242f10162c664384f6aa59974b7e44b6b81)), closes [#12053](https://github.com/SAP/ui5-webcomponents/issues/12053)
+* **ui5-search:** autocomplete for items loaded with delay ([#12204](https://github.com/SAP/ui5-webcomponents/issues/12204)) ([5af304b](https://github.com/SAP/ui5-webcomponents/commit/5af304bf494badc397372eba6c809e6c10777e99)), closes [#11959](https://github.com/SAP/ui5-webcomponents/issues/11959)
+* **ui5-search:** deselect item on delete/backspace ([#12215](https://github.com/SAP/ui5-webcomponents/issues/12215)) ([6b098cc](https://github.com/SAP/ui5-webcomponents/commit/6b098ccacf76e82370da59115eab88b3d41a1407))
+* **ui5-segmented-button:** fix action cancellation with Shift or Esc ([#12176](https://github.com/SAP/ui5-webcomponents/issues/12176)) ([5521ab6](https://github.com/SAP/ui5-webcomponents/commit/5521ab644a31e5aa944b465473acb7db9c8076f9))
+* **ui5-shellbar-search:** correct min-width ([#12203](https://github.com/SAP/ui5-webcomponents/issues/12203)) ([8231383](https://github.com/SAP/ui5-webcomponents/commit/8231383616e7c86dda91c9638983dbbd804658d2))
+* **ui5-slider:** fire uphandler when mouse leaves the window ([#12192](https://github.com/SAP/ui5-webcomponents/issues/12192)) ([ba2b7d0](https://github.com/SAP/ui5-webcomponents/commit/ba2b7d00a40eedfa58911d4ff6cdf3d3b323bf35)), closes [#11460](https://github.com/SAP/ui5-webcomponents/issues/11460)
+* **ui5-upload-collection:** truncate long file names ([#12211](https://github.com/SAP/ui5-webcomponents/issues/12211)) ([d13ca50](https://github.com/SAP/ui5-webcomponents/commit/d13ca5024d4f80e893f54d17f3a2c4e54224e2cb)), closes [#12166](https://github.com/SAP/ui5-webcomponents/issues/12166)
+
+
+### Features
+
+* **ui5-segmented-button:** improve component accessibility ([#12198](https://github.com/SAP/ui5-webcomponents/issues/12198)) ([bf232e9](https://github.com/SAP/ui5-webcomponents/commit/bf232e94c64fa933c868262e412ea31791567bc0))
+
+
+
+
+
 # [2.14.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.4...v2.14.0-rc.5) (2025-08-28)
 
 
