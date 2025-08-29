@@ -212,7 +212,6 @@ const getScripts = (options) => {
 
 	runner.addTask("build:jsImports", {
 		dependencies: [
-			"mkdir -p src/generated/js-imports",
 			"build:jsImports:illustrationsLoaders"
 		],
 		parallel: false, // ???
