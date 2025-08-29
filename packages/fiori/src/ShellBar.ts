@@ -559,7 +559,7 @@ class ShellBar extends UI5Element {
 	 * @since 2.7.0
 	 */
 	@slot({ type: HTMLElement, individualSlots: true })
-	content!: Array<UI5Element>;
+	content!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
