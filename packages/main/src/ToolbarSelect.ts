@@ -5,6 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ToolbarSelectCss from "./generated/themes/ToolbarSelect.css.js";
+import type Select from "./Select.js";
 
 // Templates
 import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
@@ -87,8 +88,21 @@ class ToolbarSelect extends ToolbarItem {
 	 * **Note:** Use the `ui5-toolbar-select-option` component to define the desired options.
 	 * @public
 	 */
-	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	@slot({
+		"default": true,
+		type: HTMLElement,
+		invalidateOnChildChange: true,
+	})
 	options!: Array<ToolbarSelectOption>;
+
+	/**
+	 * Defines the HTML element that will be displayed in the component input part,
+	 * representing the selected option.
+	 * @public
+	 * @since 2.13.0
+	*/
+	@slot()
+	label!: Array<HTMLElement>;
 
 	/**
 	 * Defines the value state of the component.
@@ -123,6 +137,34 @@ class ToolbarSelect extends ToolbarItem {
 	 */
 	@property()
 	accessibleNameRef?: string;
+
+	/**
+	 * Defines the value of the component:
+	 *
+	 * @public
+	 * @default ""
+	 * @since 2.13.0
+	 */
+	@property()
+	set value(newValue: string) {
+		if (this.select && this.select.value !== newValue) {
+			const selectedOption = this.select.options.find(option => option.textContent === newValue);
+			this.select.value = newValue;
+			selectedOption && this.fireDecoratorEvent("change", { targetRef: this.select, selectedOption });
+		}
+		this._value = newValue;
+	}
+
+	get value(): string | undefined {
+		return this.select ? this.select.value : this._value;
+	}
+
+	get select(): Select | null {
+		return this.shadowRoot!.querySelector<Select>("[ui5-select]");
+	}
+
+	// Internal value storage, in case the composite select is not rendered on the the assignment happens
+	_value: string = "";
 
 	onClick(e: Event): void {
 		e.stopImmediatePropagation();
@@ -173,6 +215,10 @@ class ToolbarSelect extends ToolbarItem {
 		return {
 			width: this.width,
 		};
+	}
+
+	get hasCustomLabel() {
+		return !!this.label.length;
 	}
 }
 
