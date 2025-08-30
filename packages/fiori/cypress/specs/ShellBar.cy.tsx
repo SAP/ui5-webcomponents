@@ -611,6 +611,90 @@ describe("Events", () => {
 		cy.get("@logoClickSmall")
 			.should("have.been.calledOnce");
 	});
+
+	it("Test search field clear event default behavior", () => {
+		cy.mount(
+			<ShellBar showSearchField={true}>
+				<Input id="searchInput" slot="searchField" value="test search text"></Input>
+			</ShellBar>
+		);
+
+		cy.get("[ui5-shellbar]")
+			.as("shellbar");
+
+		// Set up event listener without preventing default
+		cy.get("@shellbar")
+			.then(shellbar => {
+				shellbar.get(0).addEventListener("ui5-search-field-clear", cy.stub().as("searchFieldClear"));
+			});
+
+		// Trigger full width search mode by reducing viewport
+		cy.viewport(400, 800);
+
+		// Click the cancel button
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-cancel-button")
+			.click();
+
+		// Verify the event was fired
+		cy.get("@searchFieldClear")
+			.should("have.been.calledOnce");
+
+		// Verify search field value is cleared (default behavior)
+		cy.get("#searchInput")
+			.should("have.value", "");
+
+		// Verify search is closed
+		cy.get("@shellbar")
+			.should("have.prop", "showSearchField", false);
+	});
+
+	it("Test search field clear event can be prevented", () => {
+		cy.mount(
+			<ShellBar showSearchField={true}>
+				<Input id="searchInput" slot="searchField" value="test search text"></Input>
+			</ShellBar>
+		);
+
+		cy.get("[ui5-shellbar]")
+			.as("shellbar");
+
+		// Set up event listener that prevents default
+		cy.get("@shellbar")
+			.then(shellbar => {
+				shellbar.get(0).addEventListener("ui5-search-field-clear", (event) => {
+					event.preventDefault();
+				});
+				shellbar.get(0).addEventListener("ui5-search-field-clear", cy.stub().as("searchFieldClear"));
+			});
+
+		// Trigger full width search mode by reducing viewport
+		cy.viewport(400, 800);
+
+		// The cancel button should be visible in full width search mode
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-cancel-button")
+			.as("cancelButton")
+			.should("be.visible");
+
+		// Click the cancel button
+		cy.get("@cancelButton")
+			.click();
+
+		// Verify the event was fired
+		cy.get("@searchFieldClear")
+			.should("have.been.calledOnce");
+
+		// Verify search field value is preserved (due to preventDefault)
+		cy.get("#searchInput")
+			.should("have.value", "test search text");
+
+		// Verify search is closed (this behavior cannot be prevented)
+		cy.get("@shellbar")
+			.should("have.prop", "showSearchField", false);
+	});
 });
 
 describe("ButtonBadge in ShellBar", () => {
