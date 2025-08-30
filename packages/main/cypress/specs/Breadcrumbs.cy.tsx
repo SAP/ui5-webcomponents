@@ -886,6 +886,28 @@ describe("Breadcrumbs general interaction", () => {
 				"Max stack of calling not hit for invalidation of control").to.equal(1);
 		});
 	});
+
+	it("link wrapper shrinks properly with min-width: 0", () => {
+		cy.mount(
+			<div style={{ width: '300px' }}>
+				<Breadcrumbs>
+					<BreadcrumbsItem href="#">Home</BreadcrumbsItem>
+					<BreadcrumbsItem href="#">Products</BreadcrumbsItem>
+					<BreadcrumbsItem>This is a very long current location text that should be truncated</BreadcrumbsItem>
+				</Breadcrumbs>
+			</div>
+		);
+
+		cy.get("[ui5-breadcrumbs]")
+			.shadow()
+			.find(".ui5-breadcrumbs-link-wrapper")
+			.then(($linkWrapper) => {
+				const wrapperRect = $linkWrapper[0].getBoundingClientRect();
+				const maxExpectedWidth = 300 + wrapperRect.height;
+				
+				expect(wrapperRect.width, "link wrapper should be shrinkable and less than parent width + height").to.be.lessThan(maxExpectedWidth);
+			});
+	});
 });
 
 describe("Breadcrumbs with item for current page", () => {
