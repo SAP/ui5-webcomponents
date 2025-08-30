@@ -1424,10 +1424,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return;
 		}
 
-		const value = this.typedInValue || this.value;
 		const itemText = item.text || "";
 		const fireChange = keyboardUsed
-			? this.valueBeforeItemSelection !== itemText : value !== itemText;
+			? this.valueBeforeItemSelection !== itemText : this.previousValue !== itemText;
 
 		this.hasSuggestionItemSelected = true;
 		this.value = itemText;

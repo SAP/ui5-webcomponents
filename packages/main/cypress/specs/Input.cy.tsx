@@ -2529,3 +2529,41 @@ describe("Property open", () => {
 		.ui5ResponsivePopoverClosed();
 	});
 });
+
+describe("Suggestion click", () => {
+	it("Fires change once when clicking a suggestion equal to the typed value", () => {
+		const onChange = cy.spy().as("onChange");
+		const onSelectionChange = cy.spy().as("onSelectionChange");
+
+		cy.mount(
+			<Input
+				id="input-equal-click"
+				showSuggestions
+				noTypeahead
+				onChange={onChange}
+				onSelectionChange={onSelectionChange}
+			>
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+			</Input>
+		);
+
+		cy.get("#input-equal-click")
+		.shadow()
+		.find("input")
+		.click()
+		.realType("Cozy");
+
+		cy.get("#input-equal-click")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
+
+		cy.get('#input-equal-click')
+		.find('ui5-suggestion-item[text="Cozy"]')
+		.click();
+
+		cy.get("#input-equal-click").should("have.value", "Cozy");
+		cy.get("@onChange").should("have.been.calledOnce");
+	});
+});
