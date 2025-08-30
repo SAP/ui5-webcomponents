@@ -294,6 +294,30 @@ class StepInput extends UI5Element implements IFormInputElement {
 		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
 	}
 
+	get formValidityMessage() {
+		const validity = this.formValidity;
+
+		if (validity.patternMismatch) {
+			return StepInput.i18nBundle.getText("DATEPICKER_PATTERN_MISMATCH"); // TODO: add key
+		}
+		if (validity.rangeUnderflow) {
+			return StepInput.i18nBundle.getText("DATEPICKER_RANGE_UNDERFLOW"); // TODO: add key
+		}
+		if (validity.rangeOverflow) {
+			return StepInput.i18nBundle.getText("DATEPICKER_RANGE_OVERFLOW"); // TODO: add key
+		}
+
+		return ""; // No error
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return {
+			patternMismatch: this.value !== 0 && !this._isValueWithCorrectPrecision,
+			rangeOverflow: this.max !== undefined && this.value >= this.max,
+			rangeUnderflow: this.min !== undefined && this.value <= this.min,
+		};
+	}
+
 	get formFormattedValue(): FormData | string | null {
 		return this.value.toString();
 	}
@@ -484,9 +508,9 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	get _isValueWithCorrectPrecision() {
 		// gets either "." or "," as delimiter which is based on locale, and splits the number by it
-		const delimiter = this.input.value.includes(".") ? "." : ",";
-		const numberParts = this.input.value.split(delimiter);
-		const decimalPartLength = numberParts.length > 1 ? numberParts[1].length : 0;
+		const delimiter = this.input?.value?.includes(".") ? "." : ",";
+		const numberParts = this.input?.value?.split(delimiter);
+		const decimalPartLength = numberParts?.length > 1 ? numberParts[1].length : 0;
 
 		return decimalPartLength === this.valuePrecision;
 	}
