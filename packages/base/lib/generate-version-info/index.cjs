@@ -1,4 +1,4 @@
-import fs from "fs/promises";
+const fs = require("fs").promises;
 
 const generate = async () => {
 	const version = JSON.parse(await fs.readFile("package.json")).version;
@@ -27,6 +27,8 @@ export default VersionInfo;`;
 	await fs.writeFile("src/generated/VersionInfo.ts", fileContent);
 }
 
-generate().then(() => {
-	console.log("Version info file generated.");
-});
+// generate().then(() => {
+// 	console.log("Version info file generated.");
+// });
+
+module.exports = generate

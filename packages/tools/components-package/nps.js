@@ -13,7 +13,7 @@ const cypressEnvVariables = (options, predefinedVars) => {
 	let variables = [];
 	const { cypress_code_coverage, cypress_acc_tests } = options.internal ?? {};
 
-	// Handle environment variables like TEST_SUITE  
+	// Handle environment variables like TEST_SUITE
 	if (predefinedVars) {
 		variables = [...predefinedVars];
 	}

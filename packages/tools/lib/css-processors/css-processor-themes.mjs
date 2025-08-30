@@ -8,16 +8,6 @@ import combineDuplicatedSelectors from "../postcss-combine-duplicated-selectors/
 import { writeFileIfChanged, getFileContent } from "./shared.mjs";
 import scopeVariables from "./scope-variables.mjs";
 
-const tsMode = process.env.UI5_TS === "true";
-const extension = tsMode ? ".css.ts" : ".css.js";
-
-const packageJSON = JSON.parse(fs.readFileSync("./package.json"))
-
-const inputFiles = await globby([
-    "src/**/parameters-bundle.css",
-]);
-const restArgs = process.argv.slice(2);
-
 const processThemingPackageFile = async (f) => {
     const selector = ':root';
     const result = await postcss().process(f.text);
@@ -35,54 +25,79 @@ const processThemingPackageFile = async (f) => {
     return newRule.toString();
 };
 
-const processComponentPackageFile = async (f) => {
+const processComponentPackageFile = async (f, packageJSON) => {
     const result = await postcss(combineDuplicatedSelectors).process(f.text);
 
     return scopeVariables(result.css, packageJSON, f.path);
 }
 
-let scopingPlugin = {
-    name: 'scoping',
-    setup(build) {
-        build.initialOptions.write = false;
+const createScopingPlugin = (packageJSON, tsMode = false) => {
+    const extension = tsMode ? ".css.ts" : ".css.js";
 
-        build.onEnd(result => {
-            result.outputFiles.forEach(async f => {
-                let newText = f.path.includes("packages/theming") ? await processThemingPackageFile(f) : await processComponentPackageFile(f);
+    return {
+        name: 'scoping',
+        setup(build) {
+            build.initialOptions.write = false;
 
-                await mkdir(path.dirname(f.path), { recursive: true });
-                writeFile(f.path, newText);
+            build.onEnd(async (result) => {
+                const fileProcessingPromises = result.outputFiles.map(async (f) => {
+                    let newText = f.path.includes("packages/theming") ? await processThemingPackageFile(f) : await processComponentPackageFile(f, packageJSON);
 
-                // JSON
-                const jsonPath = f.path.replace(/dist[\/\\]css/, "dist/generated/assets").replace(".css", ".css.json");
-                await mkdir(path.dirname(jsonPath), { recursive: true });
-                writeFileIfChanged(jsonPath, JSON.stringify(newText));
+                    // JSON
+                    const jsonPath = f.path.replace(/dist[\/\\]css/, "dist/generated/assets").replace(".css", ".css.json");
 
-                // JS/TS
-                const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", extension);
-                const jsContent = getFileContent(packageJSON.name, "\`" + newText + "\`");
-                writeFileIfChanged(jsPath, jsContent);
-            });
-        })
-    },
-}
+                    // JS/TS
+                    const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", extension);
+                    const jsContent = getFileContent(packageJSON.name, "\`" + newText + "\`");
 
-const config = {
-    entryPoints: inputFiles,
-    bundle: true,
-    minify: true,
-    outdir: 'dist/css',
-    outbase: 'src',
-    plugins: [
-        scopingPlugin,
-    ],
-    external: ["*.ttf", "*.woff", "*.woff2"],
+                    await Promise.all([
+                        await mkdir(path.dirname(f.path), { recursive: true }),
+                        await mkdir(path.dirname(jsonPath), { recursive: true })
+                    ]);
+
+                    await Promise.all([
+                        await writeFile(f.path, newText),
+                        await writeFileIfChanged(jsonPath, JSON.stringify(newText)),
+                        await writeFileIfChanged(jsPath, jsContent),
+                    ])
+                });
+
+                await Promise.all(fileProcessingPromises);
+            })
+        },
+    };
 };
 
-if (restArgs.includes("-w")) {
-    let ctx = await esbuild.context(config);
-    await ctx.watch()
-    console.log('watching...')
-} else {
-    const result = await esbuild.build(config);
-}
+const processThemes = async (options = {}) => {
+    const {
+        watch = false,
+        tsMode = false,
+    } = options;
+
+    const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
+    const inputFiles = await globby(["src/**/parameters-bundle.css"]);
+
+    const config = {
+        entryPoints: inputFiles,
+        bundle: true,
+        minify: true,
+        outdir: 'dist/css',
+        outbase: 'src',
+        plugins: [
+            createScopingPlugin(packageJSON, tsMode),
+        ],
+        external: ["*.ttf", "*.woff", "*.woff2"],
+    };
+
+    if (watch) {
+        let ctx = await esbuild.context(config);
+        await ctx.watch();
+        console.log('watching...');
+        return ctx;
+    } else {
+        const result = await esbuild.build(config);
+        return result;
+    }
+};
+
+export default processThemes;
