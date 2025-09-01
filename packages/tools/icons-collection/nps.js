@@ -7,7 +7,7 @@ const createIconImportsCommand = (options) => {
 		return `node "${LIB}/create-icons/index.js" "${options.collectionName}"`;
 	}
 
-	const command  = { default: "nps" };
+	const command = { default: "ui5nps" };
 	options.versions.forEach((v) => {
 		command.default += ` build.icons.create${v}`;
 		command[`create${v}`] = `node "${LIB}/create-icons/index.js" "${options.collectionName}" "${v}"`;
@@ -18,15 +18,15 @@ const createIconImportsCommand = (options) => {
 
 const copyIconAssetsCommand = (options) => {
 	if (!options.versions) {
-		return 	{
-			default: "nps copy.json-imports copy.icon-collection",
+		return {
+			default: "ui5nps copy.json-imports copy.icon-collection",
 			"json-imports": `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
 			"icon-collection": `node "${LIB}/copy-and-watch/index.js" --silent "src/*.json" src/generated/assets/`,
 		}
 	}
 
-	const command  = {
-		default: "nps copy.json-imports ",
+	const command = {
+		default: "ui5nps copy.json-imports ",
 		"json-imports": `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
 	};
 
@@ -47,17 +47,17 @@ const getScripts = (options) => {
 	const scripts = {
 		clean: "rimraf dist && rimraf src/generated",
 		copy: copyAssetsCmd,
-		generate: `${tsCrossEnv} nps clean copy build.i18n build.icons build.jsonImports copyjson`,
+		generate: `${tsCrossEnv} ui5nps clean copy build.i18n build.icons build.jsonImports copyjson`,
 		copyjson: "copy-and-watch \"src/generated/**/*.json\" dist/generated/",
 		build: {
-			default: `${tsCrossEnv} nps clean copy build.i18n typescript build.icons build.jsonImports`,
+			default: `${tsCrossEnv} ui5nps clean copy build.i18n typescript build.icons build.jsonImports`,
 			i18n: {
-				default: "nps build.i18n.defaultsjs build.i18n.json",
-				defaultsjs: `mkdirp dist/generated/i18n && node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
-				json: `mkdirp src/generated/assets/i18n && node "${LIB}/i18n/toJSON.js" src/i18n src/generated/assets/i18n`,
+				default: "ui5nps build.i18n.defaultsjs build.i18n.json",
+				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
+				json: `node "${LIB}/i18n/toJSON.js" src/i18n src/generated/assets/i18n`,
 			},
 			jsonImports: {
-				default: "mkdirp src/generated/json-imports && nps build.jsonImports.i18n",
+				default: "ui5nps build.jsonImports.i18n",
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" src/generated/assets/i18n src/generated/json-imports`,
 			},
 			icons: createJSImportsCmd,
