@@ -16,16 +16,16 @@ type OpenUI5Popup = {
 	}
 };
 
-type PopupType = {
+type PopupInfo = {
 	type: "OpenUI5" | "WebComponent";
 	instance: object;
 };
 
 // contains all OpenUI5 and Web Component popups that are currently opened
-const AllOpenedPopupsRegistry = getSharedResource<{ openedRegistry: Array<PopupType> }>("AllOpenedPopupsRegistry", { openedRegistry: [] });
+const AllOpenedPopupsRegistry = getSharedResource<{ openedRegistry: Array<PopupInfo> }>("AllOpenedPopupsRegistry", { openedRegistry: [] });
 
-const addOpenedPopup = (popup: PopupType) => {
-	AllOpenedPopupsRegistry.openedRegistry.push(popup);
+const addOpenedPopup = (popupInfo: PopupInfo) => {
+	AllOpenedPopupsRegistry.openedRegistry.push(popupInfo);
 };
 
 const removeOpenedPopup = (popup: object) => {
@@ -146,4 +146,4 @@ export {
 	getTopmostPopup,
 };
 
-export type { OpenUI5Popup, PopupType };
+export type { OpenUI5Popup, PopupInfo };
