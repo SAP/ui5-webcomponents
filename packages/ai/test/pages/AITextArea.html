@@ -48,68 +48,11 @@
 			width: 800px;
 			margin: 0 auto;
 		}
-
-		sap-ai-rich-text-editor {
-			width: var(--editor-width);
-			height: var(--editor-height);
-			display: block;
-		}
-
 		.character-count {
 			margin-top: var(--spacing-small);
 			text-align: right;
 			color: var(--color-text-secondary);
 			font-size: var(--font-size-small);
-		}
-
-		/* Debug/logging area - only for development */
-		.logging-area {
-			border: 1px dashed var(--color-border-debug);
-			border-radius: var(--border-radius);
-			padding: var(--spacing-medium);
-			margin-top: var(--spacing-medium);
-			font-family: monospace;
-			font-size: var(--font-size-small);
-			background-color: var(--sapGroup_ContentBackground, #f7f7f7);
-		}
-
-		.logging-area h3 {
-			margin-top: 0;
-			color: var(--color-border-debug);
-		}
-
-		.log-entry {
-			margin-bottom: var(--spacing-small);
-		}
-
-		.log-label {
-			font-weight: bold;
-			display: inline-block;
-			min-width: 120px;
-		}
-
-		/* Accessibility improvements */
-		.sr-only {
-			position: absolute;
-			width: 1px;
-			height: 1px;
-			padding: 0;
-			margin: -1px;
-			overflow: hidden;
-			clip: rect(0, 0, 0, 0);
-			white-space: nowrap;
-			border: 0;
-		}
-
-		/* Responsive design */
-		@media (max-width: 768px) {
-			body {
-				padding: var(--spacing-small);
-			}
-
-			sap-ai-rich-text-editor {
-				height: 280px;
-			}
 		}
 	</style>
 </head>
@@ -145,7 +88,7 @@
 
 		const UI_TEXTS = {
 			PLACEHOLDERS: {
-				loading: "<p style='color: #556b82; font-style: italic;'>Analyzing request...</p>",
+				loading: "Analyzing request...",
 				default: "Write your message here"
 			},
 			ARIA_MESSAGES: {
@@ -159,15 +102,7 @@
 			en: "Innovation managers operate with both creativity and business acumen, driving initiatives that cultivate an innovation-friendly culture, streamline the execution of new ideas, and ultimately unlock value for the organization and its customers.",
 			bg: "Мениджърите на иновации работят както с креативност, така и с бизнес проницателност.",
 			de: "Innovationsmanager arbeiten sowohl mit Kreativität als auch mit Geschäftssinn.",
-			bulleted: `
-				<p>Innovation managers: </p>
-				<ul>
-					<li>Operate with creativity and business acumen</li>
-					<li>Drive initiatives that cultivate an innovation-friendly culture</li>
-					<li>Streamline the execution of new ideas</li>
-					<li>Unlock value for the organization and its customers</li>
-				</ul>
-			`,
+			bulleted: "Innovation managers:\n• Operate with creativity and business acumen\n• Drive initiatives that cultivate an innovation-friendly culture\n• Streamline the execution of new ideas\n• Unlock value for the organization and its customers",
 			expanded: "Innovation managers play a pivotal role in organizations by blending creativity with strategic business acumen. They are not just responsible for generating innovative ideas but also for fostering a culture that encourages experimentation, collaboration, and out-of-the-box thinking among teams. These professionals work tirelessly to identify opportunities for improvement, anticipate market trends, and develop solutions that align with the organization's goals and customer needs. In their efforts to promote an innovation-friendly environment, they implement frameworks and processes that remove barriers to creativity, making it easier for teams to brainstorm, prototype, and refine new concepts. Beyond idea generation, innovation managers ensure that these ideas are systematically evaluated and effectively executed, transforming them into tangible value propositions. This requires them to bridge the gap between visionary thinking and practical implementation, often by collaborating with cross-functional teams, securing resources, and navigating organizational dynamics. Ultimately, the work of innovation managers unlocks significant value, driving growth, enhancing customer satisfaction, and ensuring the organization remains competitive in a rapidly evolving landscape.",
 			rephrased: "Innovation managers leverage creativity and business expertise to foster a culture of innovation, simplify the process of implementing new ideas, and create value for both the organization and its customers.",
 			simplified: "Innovation managers use creativity and business skills to promote innovation, simplify the development of new ideas, and deliver value to the organization and its customers.",

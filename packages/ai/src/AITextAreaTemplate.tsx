@@ -1,5 +1,5 @@
 import type AITextArea from "./AITextArea.js";
-import AiWritingAssistantToolbar from "./AiWritingAssistantToolbar.js";
+import AITextAreaToolbar from "./AITextAreaToolbar.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import TextAreaPopoverTemplate from "@ui5/webcomponents/dist/TextAreaPopoverTemplate.js";
 
@@ -53,9 +53,9 @@ export default function AITextAreaTemplate(this: AITextArea) {
 							onScroll={this._onscroll}>
 						</textarea>
 					</BusyIndicator>
-			<div part="footer"class={`ui5-ai-writing-assistant-footer-bar ${this.assistantState !== "Initial" ? "ui5-ai-writing-assistant-footer-bar--with-border" : ""}`}>
+			<div part="footer" class={`ui5-ai-writing-assistant-footer-bar ${this.assistantState !== "Initial" ? "ui5-ai-writing-assistant-footer-bar--with-border" : ""}`}>
 						<slot name="footer">
-							<AiWritingAssistantToolbar
+							<AITextAreaToolbar
 								assistantState={this.assistantState}
 								currentVersionIndex={this.currentVersionIndex}
 								totalVersions={this.totalVersions}

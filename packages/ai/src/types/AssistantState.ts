@@ -7,40 +7,33 @@
  * @experimental
  */
 enum AssistantState {
-    /**
-     * The initial state.
-     * Shows only the initial toolbar button.
-     * @public
-     */
-    Initial = "Initial",
+	/**
+	 * The initial state.
+	 * Shows only the initial toolbar button.
+	 * @public
+	 */
+	Initial = "Initial",
 
-    /**
-     * The default state.
-     * Shows only the initial toolbar button.
-     * @public
-     */
-    Default = "Default",
+	/**
+	 * The loading state.
+	 * Indicates an action (e.g., generation) is in progress.
+	 * @public
+	 */
+	Loading = "Loading",
 
-    /**
-     * The loading state.
-     * Indicates an action (e.g., generation) is in progress.
-     * @public
-     */
-    Loading = "Loading",
+	/**
+	 * The result state.
+	 * Displayed after a successful AI response is generated.
+	 * @public
+	 */
+	SingleResult = "SingleResult",
 
-    /**
-     * The result state.
-     * Displayed after a successful AI response is generated.
-     * @public
-     */
-    SingleResult = "SingleResult",
-
-    /**
-     * The result state.
-     * Displayed after a successful AI response is generated.
-     * @public
-     */
-    MultipleResults = "MultipleResults",
+	/**
+	 * The result state.
+	 * Displayed after a successful AI response is generated.
+	 * @public
+	 */
+	MultipleResults = "MultipleResults",
 }
 
 export default AssistantState;

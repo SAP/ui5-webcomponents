@@ -16,7 +16,7 @@ import valueStateMessageStyles from "@ui5/webcomponents/dist/generated/themes/Va
 
 // Templates
 import AITextAreaTemplate from "./AITextAreaTemplate.js";
-import AiWritingAssistantToolbar from "./AiWritingAssistantToolbar.js";
+import AITextAreaToolbar from "./AITextAreaToolbar.js";
 import Versioning from "./Versioning.js";
 
 type VersionClickEventDetail = {
@@ -75,7 +75,7 @@ type VersionClickEventDetail = {
 		AITextAreaCss,
 	],
 	dependencies: [
-		AiWritingAssistantToolbar,
+		AITextAreaToolbar,
 		Versioning,
 		BusyIndicator,
 	],
@@ -204,7 +204,7 @@ class AITextArea extends TextArea {
 		const isShift = keyboardEvent.shiftKey;
 		
 		if (isShift && keyboardEvent.key.toLowerCase() === "f4") {
-			const toolbar = this.shadowRoot?.querySelector("sap-ai-rich-text-editor-toolbar") as HTMLElement;
+			const toolbar = this.shadowRoot?.querySelector("ui5-ai-textarea-toolbar") as HTMLElement;
 			const aiButton = toolbar?.shadowRoot?.querySelector("#ai-menu-btn") as HTMLElement;
 
 			if (aiButton) {
@@ -235,7 +235,7 @@ class AITextArea extends TextArea {
 		const menuNodes = this.getSlottedNodes("menu");
 		if (menuNodes.length > 0) {
 			const menu = menuNodes[0] as HTMLElement & { opener?: HTMLElement; open?: boolean };
-			const toolbar = this.shadowRoot?.querySelector("sap-ai-rich-text-editor-toolbar") as HTMLElement;
+			const toolbar = this.shadowRoot?.querySelector("ui5-ai-textarea-toolbar") as HTMLElement;
 			const aiButton = toolbar?.shadowRoot?.querySelector("#ai-menu-btn") as HTMLElement;
 
 			if (aiButton) {

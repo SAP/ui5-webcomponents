@@ -23,26 +23,31 @@
 	flex-shrink: 0;
 }
 
-/* AI Writing Assistant Toolbar */
+/* AI Writing Assistant Footer Bar */
 .ui5-ai-writing-assistant-footer-bar {
 	background: var(--_ui5_texteditor_toolbar_background, var(--sapPageFooter_Background));
 	width: 100%;
 	box-sizing: border-box;
 	box-shadow: none;
 	border-bottom: none;
-	position: relative;
-	margin: 0;
-	padding: 0;
+	border-top: none;
 }
 
-/* Ensure toolbar appears at the bottom with proper border */
-.ui5-ai-writing-assistant-footer-bar {
+/* Only show border when not in Initial state */
+.ui5-ai-writing-assistant-footer-bar--with-border {
 	border-top: 1px solid var(--sapPageFooter_BorderColor);
 }
 
-/* Hide border when in default state */
-:host([assistant-state="Default"]) .ui5-ai-writing-assistant-footer-bar {
+/* Ensure no border in Initial state */
+:host([assistant-state="Initial"]) .ui5-ai-writing-assistant-footer-bar {
 	border-top: none;
+}
+
+/* Action Label */
+.ui5-ai-writing-assistant-action-label {
+	margin-left: 0.5rem;
+	color: var(--sapContent_LabelColor);
+	font-size: var(--sapFontSmallSize);
 }
 
 /* Menu wrapper positioning */

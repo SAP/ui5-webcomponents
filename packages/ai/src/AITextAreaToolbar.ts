@@ -6,11 +6,11 @@ import UI5Element from "@ui5/webcomponents-base";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 
 // Styles
-import AiWritingAssistantCss from "./generated/themes/AITextArea.css.js";
+import AITextAreaCss from "./generated/themes/AITextArea.css.js";
 
 // Templates
-import AiWritingAssistantToolbarTemplate from "./AiWritingAssistantToolbarTemplate.js";
-import Version from "./Versioning.js";
+import AITextAreaToolbarTemplate from "./AITextAreaToolbarTemplate.js";
+import Versioning from "./Versioning.js";
 import type AssistantState from "./types/AssistantState.js";
 
 // Icons
@@ -22,18 +22,18 @@ import "@ui5/webcomponents-icons/dist/stop.js";
  *
  * ### Overview
  *
- * The `ui5-writing-assistant-toolbar` component provides a specialized toolbar for AI Writing Assistant functionality.
+ * The `ui5-ai-textarea-toolbar` component provides a specialized toolbar for AI TextArea functionality.
  * It manages different states of the AI assistant and provides version navigation capabilities.
  *
  * ### Structure
- * The `ui5-writing-assistant-toolbar` consists of the following elements:
+ * The `ui5-ai-textarea-toolbar` consists of the following elements:
  * - AI Generate Button: Triggers AI text generation or stops ongoing generation
  * - Version Navigation: Allows navigation between multiple AI-generated results
  * - Action Label: Displays the current AI action being performed
  *
  * ### ES6 Module Import
  *
- * `import "@sap-webcomponents/rich-text-editor/dist/AiWritingAssistantToolbar.js";`
+ * `import "@sap-webcomponents/ai/dist/AITextAreaToolbar.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -41,13 +41,13 @@ import "@ui5/webcomponents-icons/dist/stop.js";
  * @private
  */
 @customElement({
-	tag: "ui5-writing-assistant-toolbar",
+	tag: "ui5-ai-textarea-toolbar",
 	languageAware: true,
 	renderer: jsxRenderer,
-	template: AiWritingAssistantToolbarTemplate,
-	styles: [AiWritingAssistantCss],
+	template: AITextAreaToolbarTemplate,
+	styles: [AITextAreaCss],
 	dependencies: [
-		Version,
+		Versioning,
 	],
 })
 
@@ -79,7 +79,7 @@ import "@ui5/webcomponents-icons/dist/stop.js";
  */
 @event("stop-generation")
 
-class AiWritingAssistantToolbar extends UI5Element {
+class AITextAreaToolbar extends UI5Element {
 	eventDetails!: {
 		"previous-version-click": object;
 		"next-version-click": object;
@@ -88,21 +88,21 @@ class AiWritingAssistantToolbar extends UI5Element {
 	};
 
 	/**
-	 * Defines the current state of the AI Writing Assistant.
+	 * Defines the current state of the AI TextArea.
 	 *
 	 * Available values are:
-	 * - `"Default"`: Shows only the main toolbar button.
+	 * - `"Initial"`: Shows only the main toolbar button.
 	 * - `"Loading"`: Indicates that an action is in progress.
 	 * - `"SingleResult"`: A single result is displayed.
 	 * - `"MultipleResults"`: Multiple results are displayed.
 	 *
-	 * @default "Default"
+	 * @default "Initial"
 	 * @public
 	 */
 	@property()
-	assistantState: `${AssistantState}` = "Default";
+	assistantState: `${AssistantState}` = "Initial";
 	/**
-	 * Defines the action text of the `sap-writing-asstistant-editor`.
+	 * Defines the action text of the `ui5-ai-textarea`.
 	 *
 	 * @default ""
 	 * @public
@@ -168,6 +168,6 @@ class AiWritingAssistantToolbar extends UI5Element {
 	}
 }
 
-AiWritingAssistantToolbar.define();
+AITextAreaToolbar.define();
 
-export default AiWritingAssistantToolbar;
+export default AITextAreaToolbar;
