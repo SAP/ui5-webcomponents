@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.5...v2.14.0-rc.6) (2025-08-29)
+
+
+### Bug Fixes
+
+* **ui5-color-picker:** sanitize input by removing '#' from hex value ([#12185](https://github.com/SAP/ui5-webcomponents/issues/12185)) ([ea60f3a](https://github.com/SAP/ui5-webcomponents/commit/ea60f3aa436157763bdea35ffabbdc6892ef2f5f)), closes [#11417](https://github.com/SAP/ui5-webcomponents/issues/11417)
+* **ui5-segmented-button:** fix action cancellation with Shift or Esc ([#12176](https://github.com/SAP/ui5-webcomponents/issues/12176)) ([5521ab6](https://github.com/SAP/ui5-webcomponents/commit/5521ab644a31e5aa944b465473acb7db9c8076f9))
+* **ui5-slider:** fire uphandler when mouse leaves the window ([#12192](https://github.com/SAP/ui5-webcomponents/issues/12192)) ([ba2b7d0](https://github.com/SAP/ui5-webcomponents/commit/ba2b7d00a40eedfa58911d4ff6cdf3d3b323bf35)), closes [#11460](https://github.com/SAP/ui5-webcomponents/issues/11460)
+
+
+### Features
+
+* **ui5-segmented-button:** improve component accessibility ([#12198](https://github.com/SAP/ui5-webcomponents/issues/12198)) ([bf232e9](https://github.com/SAP/ui5-webcomponents/commit/bf232e94c64fa933c868262e412ea31791567bc0))
+
+
+
+
+
 # [2.14.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.4...v2.14.0-rc.5) (2025-08-28)
 
 
