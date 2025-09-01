@@ -53,7 +53,7 @@ export default function AITextAreaTemplate(this: AITextArea) {
 							onScroll={this._onscroll}>
 						</textarea>
 					</BusyIndicator>
-					<div part="footer">
+			<div part="footer"class={`ui5-ai-writing-assistant-footer-bar ${this.assistantState !== "Initial" ? "ui5-ai-writing-assistant-footer-bar--with-border" : ""}`}>
 						<slot name="footer">
 							<AiWritingAssistantToolbar
 								assistantState={this.assistantState}

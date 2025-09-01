@@ -124,7 +124,7 @@
 		current-version-index="1"
 		total-versions="0"
 		rows="12"
-		assistant-state="Default"
+		assistant-state="Initial"
 		aria-label="AI-powered textarea">
 
 		<!-- Dynamic menu that changes content based on state -->
@@ -336,7 +336,7 @@
 			} else if (promptHistory.length > 0) {
 				editor.assistantState = "SingleResult";
 			} else {
-				editor.assistantState = "Default";
+				editor.assistantState = "Initial";
 			}
 		}
 
@@ -451,7 +451,7 @@
 			stopTypingAnimation();
 			isGenerating = false;
 			currentActionInProgress = null;
-			editor.assistantState = promptHistory.length > 0 ? "SingleResult" : "Default";
+			editor.assistantState = promptHistory.length > 0 ? "SingleResult" : "Initial";
 		}
 
 		async function executeAction(action) {

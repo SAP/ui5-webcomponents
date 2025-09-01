@@ -1,4 +1,4 @@
-import Version from "./Version.js";
+import Version from "./Versioning.js";
 import type AiWritingAssistantToolbar from "./AiWritingAssistantToolbar.js";
 
 import Toolbar from "@ui5/webcomponents/dist/Toolbar.js";

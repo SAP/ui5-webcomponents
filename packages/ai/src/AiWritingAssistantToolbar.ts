@@ -10,7 +10,7 @@ import AiWritingAssistantCss from "./generated/themes/AITextArea.css.js";
 
 // Templates
 import AiWritingAssistantToolbarTemplate from "./AiWritingAssistantToolbarTemplate.js";
-import Version from "./Version.js";
+import Version from "./Versioning.js";
 import type AssistantState from "./types/AssistantState.js";
 
 // Icons

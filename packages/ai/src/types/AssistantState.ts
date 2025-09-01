@@ -8,6 +8,13 @@
  */
 enum AssistantState {
     /**
+     * The initial state.
+     * Shows only the initial toolbar button.
+     * @public
+     */
+    Initial = "Initial",
+
+    /**
      * The default state.
      * Shows only the initial toolbar button.
      * @public

@@ -17,7 +17,19 @@ import valueStateMessageStyles from "@ui5/webcomponents/dist/generated/themes/Va
 // Templates
 import AITextAreaTemplate from "./AITextAreaTemplate.js";
 import AiWritingAssistantToolbar from "./AiWritingAssistantToolbar.js";
-import Version from "./Version.js";
+import Versioning from "./Versioning.js";
+
+type VersionClickEventDetail = {
+	/**
+	 * The current version index (1-based).
+	 */
+	currentIndex: number;
+	
+	/**
+	 * The total number of versions available.
+	 */
+	totalVersions: number;
+}
 
 /**
  * @class
@@ -36,7 +48,7 @@ import Version from "./Version.js";
  *
  * ### States
  * The `ui5-ai-textarea` supports multiple states:
- * - Default: Shows only the AI button
+ * - Initial: Shows only the AI button
  * - Loading: Indicates AI generation in progress
  * - SingleResult: Shows result with action label
  * - MultipleResults: Shows result with version navigation
@@ -64,7 +76,7 @@ import Version from "./Version.js";
 	],
 	dependencies: [
 		AiWritingAssistantToolbar,
-		Version,
+		Versioning,
 		BusyIndicator,
 	],
 })
@@ -92,25 +104,25 @@ import Version from "./Version.js";
 
 class AITextArea extends TextArea {
 	eventDetails!: TextArea["eventDetails"] & {
-		"previous-version-click": object;
-		"next-version-click": object;
-		"stop-generation": object;
+		"previous-version-click": VersionClickEventDetail;
+		"next-version-click": VersionClickEventDetail;
+		"stop-generation": null;
 	};
 
 	/**
 	 * Defines the current state of the AI Writing Assistant.
 	 *
 	 * Available values are:
-	 * - `"Default"`: Shows only the main toolbar button.
+	 * - `"Initial"`: Shows only the main toolbar button.
 	 * - `"Loading"`: Indicates that an action is in progress.
 	 * - `"SingleResult"`: A single result is displayed.
 	 * - `"MultipleResults"`: Multiple results are displayed.
 	 *
-	 * @default "Default"
+	 * @default "Initial"
 	 * @public
 	 */
 	@property()
-	assistantState: `${AssistantState}` = "Default";
+	assistantState: `${AssistantState}` = "Initial";
 
 	/**
 	 * Defines the action text of the AI Writing Assistant.
@@ -148,16 +160,103 @@ class AITextArea extends TextArea {
 
 	/**
 	 * Handles the click event for the "Previous Version" button.
+	 * Updates the current version index and syncs content.
 	 */
 	_handlePreviousVersionClick() {
-		this.fireDecoratorEvent("previous-version-click");
+		this.fireDecoratorEvent("previous-version-click", {
+			currentIndex: this.currentVersionIndex,
+			totalVersions: this.totalVersions
+		});
+		this._syncContent();
 	}
 
 	/**
 	 * Handles the click event for the "Next Version" button.
+	 * Updates the current version index and syncs content.
 	 */
 	_handleNextVersionClick() {
-		this.fireDecoratorEvent("next-version-click");
+		this.fireDecoratorEvent("next-version-click", {
+			currentIndex: this.currentVersionIndex,
+			totalVersions: this.totalVersions
+		});
+		this._syncContent();
+	}
+
+	/**
+	 * Forces the textarea content to sync with the current value.
+	 * @private
+	 */
+	_syncContent() {
+		setTimeout(() => {
+			const textarea = this.shadowRoot?.querySelector("textarea");
+			if (textarea && textarea.value !== this.value) {
+				textarea.value = this.value;
+			}
+		}, 0);
+	}
+
+	/**
+	 * Handles keydown events for keyboard shortcuts.
+	 * @private
+	 */
+	_handleKeydown(keyboardEvent: KeyboardEvent) {
+		const isCtrlOrCmd = keyboardEvent.ctrlKey || keyboardEvent.metaKey;
+		const isShift = keyboardEvent.shiftKey;
+		
+		if (isShift && keyboardEvent.key.toLowerCase() === "f4") {
+			const toolbar = this.shadowRoot?.querySelector("sap-ai-rich-text-editor-toolbar") as HTMLElement;
+			const aiButton = toolbar?.shadowRoot?.querySelector("#ai-menu-btn") as HTMLElement;
+
+			if (aiButton) {
+				aiButton.focus();
+			}
+			return;
+		}
+
+		if (this.assistantState === "MultipleResults") {
+			if (isCtrlOrCmd && isShift && keyboardEvent.key.toLowerCase() === "z") {
+				keyboardEvent.preventDefault();
+				this._handlePreviousVersionClick();
+				return;
+			}
+
+			if (isCtrlOrCmd && isShift && keyboardEvent.key.toLowerCase() === "y") {
+				keyboardEvent.preventDefault();
+				this._handleNextVersionClick();
+			}
+		}
+	}
+
+	/**
+	 * Opens the AI menu.
+	 * @private
+	 */
+	_openMenu() {
+		const menuNodes = this.getSlottedNodes("menu");
+		if (menuNodes.length > 0) {
+			const menu = menuNodes[0] as HTMLElement & { opener?: HTMLElement; open?: boolean };
+			const toolbar = this.shadowRoot?.querySelector("sap-ai-rich-text-editor-toolbar") as HTMLElement;
+			const aiButton = toolbar?.shadowRoot?.querySelector("#ai-menu-btn") as HTMLElement;
+
+			if (aiButton) {
+				menu.opener = aiButton;
+				menu.open = true;
+			}
+		}
+	}
+
+	/**
+	 * Overrides the parent's onAfterRendering to add keydown handler.
+	 * @private
+	 */
+	onAfterRendering() {
+		super.onAfterRendering();
+		
+		// Add keydown event listener to the textarea
+		const textarea = this.shadowRoot?.querySelector("textarea");
+		if (textarea) {
+			textarea.addEventListener("keydown", this._handleKeydown.bind(this));
+		}
 	}
 
 	/**
