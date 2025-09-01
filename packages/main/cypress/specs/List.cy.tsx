@@ -1869,7 +1869,6 @@ describe("List - Drag and Drop", () => {
 			<div>
 				<CheckBox text="Movable items" checked />
 				<CheckBox text="Compact density" />
-				<a href="http://sap.com" draggable={true}>http://sap.com</a>
 
 				<section>
 					<h2>Drag and drop</h2>
@@ -2072,38 +2071,6 @@ describe("List - Drag and Drop", () => {
 
 		cy.get("[ui5-list]").first().find("[ui5-li]").should("have.length.at.least", 3);
 		cy.get("[ui5-list]").eq(1).find("[ui5-li]").should("have.length.at.least", 2);
-	});
-
-	it("Moving link to list that doesn't accept it", () => {
-		const dataTransfer = new DataTransfer();
-
-		cy.get("a[href='http://sap.com']")
-			.trigger("dragstart", { dataTransfer });
-
-		cy.get("[ui5-list]").first().find("[ui5-li]").first()
-			.trigger("dragover", { dataTransfer })
-			.trigger("drop", { dataTransfer });
-
-		cy.get("a[href='http://sap.com']")
-			.trigger("dragend", { dataTransfer });
-
-		cy.get("[ui5-list]").first().find("[ui5-li]").should("have.length", 3);
-	});
-
-	it("Moving link to list that accepts it", () => {
-		const dataTransfer = new DataTransfer();
-
-		cy.get("a[href='http://sap.com']")
-			.trigger("dragstart", { dataTransfer });
-
-		cy.get("[ui5-list]").eq(1).find("[ui5-li]").eq(1)
-			.trigger("dragover", { dataTransfer })
-			.trigger("drop", { dataTransfer });
-
-		cy.get("a[href='http://sap.com']")
-			.trigger("dragend", { dataTransfer });
-
-		cy.get("[ui5-list]").eq(1).find("[ui5-li]").should("have.length.at.least", 3);
 	});
 });
 
