@@ -39,22 +39,26 @@ const getTopmostPopup = () => {
 	return AllOpenedPopupsRegistry.openedRegistry[AllOpenedPopupsRegistry.openedRegistry.length - 1].instance;
 };
 
-const shouldCallFocusEvent = (instance: object) => {
-	let shouldCall = true;
-
+/**
+ * Original OpenUI5 popup focus event is called
+ * only if there are no Web Component popups opened on top of it.
+ *
+ * @param {object} popup - The popup instance to check.
+ * @returns {boolean} True if the focus event should be called, false otherwise.
+ */
+const shouldCallOpenUI5FocusEvent = (popup: object) => {
 	for (let i = AllOpenedPopupsRegistry.openedRegistry.length - 1; i >= 0; i--) {
-		const popup = AllOpenedPopupsRegistry.openedRegistry[i];
-		if (popup.type !== "OpenUI5") {
-			shouldCall = false;
-			break;
+		const popupInfo = AllOpenedPopupsRegistry.openedRegistry[i];
+		if (popupInfo.type !== "OpenUI5") {
+			return false;
 		}
 
-		if (popup.instance === instance) {
+		if (popupInfo.instance === popup) {
 			break;
 		}
 	}
 
-	return shouldCall;
+	return true;
 };
 
 const openNativePopover = (domRef: HTMLElement) => {
@@ -120,7 +124,7 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 const patchFocusEvent = (Popup: OpenUI5Popup) => {
 	const origFocusEvent = Popup.prototype.onFocusEvent;
 	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
-		if (shouldCallFocusEvent(this)) {
+		if (shouldCallOpenUI5FocusEvent(this)) {
 			origFocusEvent.call(this, e);
 		}
 	};
