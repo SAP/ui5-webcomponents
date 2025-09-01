@@ -299,6 +299,7 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
  * Fired, when the search cancel button is activated.
  *
  * **Note:** You can prevent the default behavior (clearing the search field value) by calling `event.preventDefault()`. The search will still be closed.
+ * **Note:** The `search-field-clear` event is in an experimental state and is a subject to change.
  * @param {HTMLElement} targetRef dom ref of the cancel button element
  * @since 2.14.0
  * @public
@@ -679,7 +680,7 @@ class ShellBar extends UI5Element {
 			this._detachSearchFieldListeners(e.target as HTMLElement);
 			return;
 		}
-		if (!isPhone() && !this.search?.value) {
+		if (!isPhone()) {
 			this.setSearchState(!this.showSearchField);
 		}
 	}

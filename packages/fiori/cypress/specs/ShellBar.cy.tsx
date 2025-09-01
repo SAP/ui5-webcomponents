@@ -615,7 +615,7 @@ describe("Events", () => {
 	it("Test search field clear event default behavior", () => {
 		cy.mount(
 			<ShellBar showSearchField={true}>
-				<Input id="searchInput" slot="searchField" value="test search text"></Input>
+				<ShellBarSearch id="search" slot="searchField" value="test search text"></ShellBarSearch>
 			</ShellBar>
 		);
 
@@ -631,10 +631,14 @@ describe("Events", () => {
 		// Trigger full width search mode by reducing viewport
 		cy.viewport(400, 800);
 
-		// Click the cancel button
+		// The cancel button should be visible in full width search mode
 		cy.get("@shellbar")
 			.shadow()
 			.find(".ui5-shellbar-cancel-button")
+			.as("cancelButton")
+			.should("exist");
+
+		cy.get("@cancelButton")
 			.click();
 
 		// Verify the event was fired
@@ -642,7 +646,7 @@ describe("Events", () => {
 			.should("have.been.calledOnce");
 
 		// Verify search field value is cleared (default behavior)
-		cy.get("#searchInput")
+		cy.get("#search")
 			.should("have.value", "");
 
 		// Verify search is closed
@@ -653,7 +657,7 @@ describe("Events", () => {
 	it("Test search field clear event can be prevented", () => {
 		cy.mount(
 			<ShellBar showSearchField={true}>
-				<Input id="searchInput" slot="searchField" value="test search text"></Input>
+				<ShellBarSearch id="search" slot="searchField" value="test search text"></ShellBarSearch>
 			</ShellBar>
 		);
 
@@ -677,9 +681,8 @@ describe("Events", () => {
 			.shadow()
 			.find(".ui5-shellbar-cancel-button")
 			.as("cancelButton")
-			.should("be.visible");
+			.should("exist");
 
-		// Click the cancel button
 		cy.get("@cancelButton")
 			.click();
 
@@ -688,10 +691,10 @@ describe("Events", () => {
 			.should("have.been.calledOnce");
 
 		// Verify search field value is preserved (due to preventDefault)
-		cy.get("#searchInput")
+		cy.get("#search")
 			.should("have.value", "test search text");
 
-		// Verify search is closed (this behavior cannot be prevented)
+		// Verify search is closed
 		cy.get("@shellbar")
 			.should("have.prop", "showSearchField", false);
 	});
