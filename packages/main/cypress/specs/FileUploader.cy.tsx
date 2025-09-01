@@ -514,12 +514,12 @@ describe("Validation inside form", () => {
 			.should("have.not.been.called");
 
 		cy.get("#uploader").as("uploader").then($el => {
-			const picker = $el[0] as any;
-			expect(picker.formValidity.valueMissing).to.be.true;
-			expect(picker.validity.valueMissing).to.be.true;
-			expect(picker.validity.valid).to.be.false;
-			expect(picker.checkValidity()).to.be.false;
-			expect(picker.reportValidity()).to.be.false;
+			const uploader = $el[0] as any;
+			expect(uploader.formValidity.valueMissing).to.be.true;
+			expect(uploader.validity.valueMissing).to.be.true;
+			expect(uploader.validity.valid).to.be.false;
+			expect(uploader.checkValidity()).to.be.false;
+			expect(uploader.reportValidity()).to.be.false;
 		});
 
 		cy.get("#uploader:invalid")
@@ -531,22 +531,21 @@ describe("Validation inside form", () => {
 			.selectFile([
 				{
 					contents: new Uint8Array(1 * 1024 * 1024), // 2 MB buffer
-					fileName: "one.txt",
+					fileName: "text.txt",
 					mimeType: "text/plain"
 				}
 			], { force: true });
 
 		cy.get("@uploader").then($el => {
-			const picker = $el[0] as any;
-			expect(picker.formValidity.valueMissing).to.be.false;
-			expect(picker.validity.valueMissing).to.be.false;
-			expect(picker.validity.valid).to.be.true;
-			expect(picker.checkValidity()).to.be.true;
-			expect(picker.reportValidity()).to.be.true;
+			const uploader = $el[0] as any;
+			expect(uploader.formValidity.valueMissing).to.be.false;
+			expect(uploader.validity.valueMissing).to.be.false;
+			expect(uploader.validity.valid).to.be.true;
+			expect(uploader.checkValidity()).to.be.true;
+			expect(uploader.reportValidity()).to.be.true;
 		});
 
 		cy.get("#uploader:invalid")
 			.should("not.exist");
 	});
-
 });

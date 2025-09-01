@@ -37,7 +37,7 @@ import {
 	FILEUPLOADER_DEFAULT_PLACEHOLDER,
 	FILEUPLOADER_DEFAULT_MULTIPLE_PLACEHOLDER,
 	FILEUPLOADER_ROLE_DESCRIPTION,
-	FORM_TEXTFIELD_REQUIRED,
+	FILEUPLOAER_VALUE_MISSING,
 } from "./generated/i18n/i18n-defaults.js";
 
 import type { InputAccInfo } from "./Input.js";
@@ -313,7 +313,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		const validity = this.formValidity;
 
 		if (validity.valueMissing) {
-			return FileUploader.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+			return FileUploader.i18nBundle.getText(FILEUPLOAER_VALUE_MISSING);
 		}
 
 		return ""; // No error

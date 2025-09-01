@@ -10,7 +10,10 @@ import {
 	DATERANGE_DESCRIPTION,
 	DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME,
 	DATETIME_COMPONENTS_PLACEHOLDER_PREFIX,
-	FORM_TEXTFIELD_REQUIRED,
+	DATERANGE_VALUE_MISSING,
+	DATERANGE_PATTERN_MISMATCH,
+	DATERANGE_UNDERFLOW,
+	DATERANGE_OVERFLOW,
 } from "./generated/i18n/i18n-defaults.js";
 import DateRangePickerTemplate from "./DateRangePickerTemplate.js";
 
@@ -87,16 +90,18 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		const validity = this.formValidity;
 
 		if (validity.valueMissing) {
-			return DatePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+			// @ts-ignore oFormatOptions is a private API of DateFormat
+			return DateRangePicker.i18nBundle.getText(DATERANGE_VALUE_MISSING, this.getFormat().oFormatOptions.pattern as string);
 		}
 		if (validity.patternMismatch) {
-			return DatePicker.i18nBundle.getText("DATEPICKER_PATTERN_MISMATCH"); // TODO: add key
+			// @ts-ignore oFormatOptions is a private API of DateFormat
+			return DateRangePicker.i18nBundle.getText(DATERANGE_PATTERN_MISMATCH, this.getFormat().oFormatOptions.pattern as string);
 		}
 		if (validity.rangeUnderflow) {
-			return DatePicker.i18nBundle.getText("DATEPICKER_RANGE_UNDERFLOW"); // TODO: add key
+			return DateRangePicker.i18nBundle.getText(DATERANGE_UNDERFLOW, this.minDate);
 		}
 		if (validity.rangeOverflow) {
-			return DatePicker.i18nBundle.getText("DATEPICKER_RANGE_OVERFLOW"); // TODO: add key
+			return DateRangePicker.i18nBundle.getText(DATERANGE_OVERFLOW, this.maxDate);
 		}
 		return ""; // No error
 	}
