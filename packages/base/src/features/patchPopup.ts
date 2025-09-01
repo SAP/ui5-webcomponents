@@ -16,22 +16,45 @@ type OpenUI5Popup = {
 	}
 };
 
-// contains all OpenUI5 and Web Component popups that are currently opened
-const AllOpenedPopupsRegistry = getSharedResource<{ openedRegistry: Array<object> }>("AllOpenedPopupsRegistry", { openedRegistry: [] });
+type PopupType = {
+	type: "OpenUI5" | "WebComponent";
+	instance: object;
+};
 
-const addOpenedPopup = (popup: object) => {
+// contains all OpenUI5 and Web Component popups that are currently opened
+const AllOpenedPopupsRegistry = getSharedResource<{ openedRegistry: Array<PopupType> }>("AllOpenedPopupsRegistry", { openedRegistry: [] });
+
+const addOpenedPopup = (popup: PopupType) => {
 	AllOpenedPopupsRegistry.openedRegistry.push(popup);
 };
 
 const removeOpenedPopup = (popup: object) => {
-	const index = AllOpenedPopupsRegistry.openedRegistry.indexOf(popup);
+	const index = AllOpenedPopupsRegistry.openedRegistry.findIndex(el => el.instance === popup);
 	if (index > -1) {
 		AllOpenedPopupsRegistry.openedRegistry.splice(index, 1);
 	}
 };
 
 const getTopmostPopup = () => {
-	return AllOpenedPopupsRegistry.openedRegistry[AllOpenedPopupsRegistry.openedRegistry.length - 1];
+	return AllOpenedPopupsRegistry.openedRegistry[AllOpenedPopupsRegistry.openedRegistry.length - 1].instance;
+};
+
+const shouldCallFocusEvent = (instance: object) => {
+	let shouldCall = true;
+
+	for (let i = AllOpenedPopupsRegistry.openedRegistry.length - 1; i >= 0; i--) {
+		const popup = AllOpenedPopupsRegistry.openedRegistry[i];
+		if (popup.type !== "OpenUI5") {
+			shouldCall = false;
+			break;
+		}
+
+		if (popup.instance === instance) {
+			break;
+		}
+	}
+
+	return shouldCall;
 };
 
 const openNativePopover = (domRef: HTMLElement) => {
@@ -73,7 +96,10 @@ const patchOpen = (Popup: OpenUI5Popup) => {
 			}
 		}
 
-		addOpenedPopup(this);
+		addOpenedPopup({
+			type: "OpenUI5",
+			instance: this,
+		});
 	};
 };
 
@@ -94,9 +120,7 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 const patchFocusEvent = (Popup: OpenUI5Popup) => {
 	const origFocusEvent = Popup.prototype.onFocusEvent;
 	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
-		// If the popup is the topmost one, we call the original focus event handler from the OpenUI5 Popup,
-		// otherwise the focus event is handled by the Web Component Popup.
-		if (this === getTopmostPopup()) {
+		if (shouldCallFocusEvent(this)) {
 			origFocusEvent.call(this, e);
 		}
 	};
@@ -122,4 +146,4 @@ export {
 	getTopmostPopup,
 };
 
-export type { OpenUI5Popup };
+export type { OpenUI5Popup, PopupType };

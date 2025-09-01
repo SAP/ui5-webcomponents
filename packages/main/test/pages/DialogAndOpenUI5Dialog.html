@@ -47,12 +47,41 @@
 			});
 		}
 
+		function openUI5Dialog() {
+			sap.ui.require(["sap/m/Button", "sap/m/Dialog"], (Button, Dialog) => {
+				new Dialog({
+					title: "OpenUI5 Dialog",
+					content: [
+						new Button({
+							text: "Focus stop"
+						}),
+						new Button("openUI5DialogButton", {
+							text: "Open WebC Dialog",
+							press: function () {
+								document.getElementById("newDialog1").open = true;
+							}
+						})
+					],
+					afterClose: function () {
+						this.destroy();
+					}
+				}).open();
+			});
+		}
+
 		function init() {
 			document.getElementById("myButton").addEventListener("click", function() {
 				document.getElementById("dialog1").open = true;
 			});
 
-			sap.ui.require(["sap/m/Select", "sap/ui/core/Item"], (Select, Item) => {
+			sap.ui.require(["sap/m/Select",
+					"sap/m/Button",
+					"sap/ui/core/Item",
+					"sap/ui/core/ShortcutHintsMixin"],
+				(Select,
+				 Button,
+				 Item,
+				 ShortcutHintsMixin) => {
 				new Select({
 					items: [
 						new Item({ text: "Item 1" }),
@@ -63,28 +92,25 @@
 						console.error("Selected item:", oEvent.getParameter("selectedItem").getText());
 					}
 				}).placeAt("dilog1content");
+
+				const button = new Button({
+					text: "OpenUI5 with Shortcut (Ctrl+S)",
+					press: function () {
+						openUI5Dialog();
+					}
+				}).placeAt("dilog1content");
+
+
+				ShortcutHintsMixin.addConfig(button, {
+					event: "press",
+					position: "0 0",
+					addAccessibilityLabel: true,
+					message: "Save"
+				}, button);
 			});
 
 			document.getElementById("dialogButton").addEventListener("click", function () {
-				sap.ui.require(["sap/m/Button", "sap/m/Dialog"], (Button, Dialog) => {
-					new Dialog({
-						title: "OpenUI5 Dialog",
-						content: [
-							new Button({
-								text: "Focus stop"
-							}),
-							new Button("openUI5DialogButton", {
-								text: "Open WebC Dialog",
-								press: function () {
-									document.getElementById("newDialog1").open = true;
-								}
-							})
-						],
-						afterClose: function () {
-							this.destroy();
-						}
-					}).open();
-				});
+				openUI5Dialog();
 			});
 		}
 	</script>
@@ -101,10 +127,11 @@
 		<ui5-button id="someButton">Some button</ui5-button>
 	</ui5-dialog>
 	<div id="content"></div>
-	<ui5-responsive-popover id="respPopover"
+	<ui5-popover id="respPopover"
+							prevent-initial-focus
 							opener="openResPopoverButton"
 							header-text="This is an WebC Responsive Popover">
 		<ui5-button>Some button</ui5-button>
-	</ui5-responsive-popover>
+	</ui5-popover>
 </body>
 </html>
