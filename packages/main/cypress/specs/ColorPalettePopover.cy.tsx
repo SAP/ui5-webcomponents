@@ -93,6 +93,216 @@ function IncompleteRowPalettePopover(options: ColorPalettePopoverTemplateOptions
 	);
 }
 
+describe("Color Popover Palette general interaction tests", () => {
+    it("should focus first element on initial open (default color)", () => {
+        cy.mount(
+            <ColorPalettePopoverSample showDefaultColor={true} defaultColor="floralwhite"/>
+        );
+
+        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
+            .as("colorPalettePopover")
+            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
+
+        cy.get<ColorPalette>("@colorPalettePopover")
+            .ui5GetColorPaletteInPopover()
+            .as("colorPalette");
+
+        cy.get("@colorPalette")
+            .ui5GetColorPaletteDefaultButton()
+            .as("defaultColorButton");
+
+        cy.focused()
+            .should("have.attr", "aria-label", "Default Color");
+    });
+
+    it("should focus first swatch on initial open (when there is only a color palette)", () => {
+        cy.mount(
+            <ColorPalettePopoverSample/>
+        );
+
+        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
+            .as("colorPalettePopover")
+            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
+
+        cy.get<ColorPalette>("@colorPalettePopover")
+            .ui5GetColorPaletteInPopover()
+            .as("colorPalette");
+
+        cy.get("@colorPalettePopover")
+            .ui5GetColorPaletteItem()
+            .as("firstItem");
+
+        cy.focused()
+            .should("have.attr", "aria-label")
+            .and("include", "violet");
+    });
+
+    it("should focus on last selected color swatch when popover is re-opened", () => {
+        cy.mount(
+            <ColorPalettePopoverSample/>
+        );
+
+        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
+            .as("colorPalettePopover")
+            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
+
+        cy.get<ColorPalette>("@colorPalettePopover")
+            .ui5GetColorPaletteInPopover()
+            .as("colorPalette");
+
+        cy.get("@colorPalettePopover")
+            .ui5GetColorPaletteItem(5)
+            .as("sixthItem");
+
+        cy.get("@sixthItem")
+            .should("have.attr", "value", "orange")
+            .realClick();
+
+        cy.get("@colorPalettePopover")
+            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
+
+        cy.focused()
+            .should("have.attr", "aria-label")
+            .and("include", "orange");
+    });
+
+    it("should focus on Default Color button when popover is re-opened if Default Color ha been selected", () => {
+        cy.mount(
+            <ColorPalettePopoverSample
+                showDefaultColor={true}
+                defaultColor="lightsalmon"
+            />
+        );
+
+        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
+            .as("colorPalettePopover")
+            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
+
+        cy.get<ColorPalette>("@colorPalettePopover")
+            .ui5GetColorPaletteInPopover()
+            .as("colorPalette");
+        
+        cy.get("@colorPalette")
+            .ui5GetColorPaletteDefaultButton()
+            .as("defaultColorButton");
+
+        cy.get("@defaultColorButton")
+            .realClick();
+
+        cy.get("@colorPalettePopover")
+            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
+
+        cy.focused()
+            .should("have.attr", "aria-label", "Default Color");
+    });
+});
+
+describe("Color Popover Palette events tests", () => {
+    it("should fire itemClick with correct color when selecting 'Default Color'", () => {
+        cy.mount(
+            <ColorPalettePopoverSample 
+                showDefaultColor={true}
+                defaultColor="lightsalmon"
+                onItemClick={cy.stub().as("itemClick")}
+            />
+        );
+
+        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
+            .as("colorPalettePopover")
+            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
+
+        cy.get<ColorPalette>("@colorPalettePopover")
+            .ui5GetColorPaletteInPopover()
+            .as("colorPalette");
+
+        cy.get("@colorPalette")
+            .ui5GetColorPaletteDefaultButton()
+            .as("defaultColorButton");
+
+        cy.get("@defaultColorButton")
+            .realClick();
+
+        cy.get("@itemClick")
+            .should("be.calledOnce")
+            .and("be.calledWithMatch", { detail: { color: "lightsalmon" } });
+    });
+
+    it("should fire itemClick when selecting a color from the ColorPalette", () => {
+        cy.mount(
+            <ColorPalettePopoverSample 
+                onItemClick={cy.stub().as("itemClick")}
+            />
+        );
+
+        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
+            .as("colorPalettePopover")
+            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
+
+        cy.get<ColorPalette>("@colorPalettePopover")
+            .ui5GetColorPaletteInPopover()
+            .as("colorPalette");
+
+        cy.get("@colorPalettePopover")
+            .ui5GetColorPaletteItem(7)
+            .as("fourthItem");
+
+        cy.get("@fourthItem")
+            .realClick();
+
+        cy.get("@itemClick")
+            .should("be.calledOnce")
+            .and("be.calledWithMatch", { detail: { color: "springgreen" } });
+
+    });
+
+    it("should fire close event when popover is closed after color selection", () => {
+        cy.mount(
+            <ColorPalettePopoverSample 
+                onClose={cy.stub().as("popoverClose")}
+            />
+        );
+
+        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
+            .as("colorPalettePopover")
+            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
+
+        cy.get<ColorPalette>("@colorPalettePopover")
+            .ui5GetColorPaletteInPopover()
+            .as("colorPalette");
+
+        cy.get("@colorPalettePopover")
+            .ui5GetColorPaletteItem()
+            .as("firstItem");
+
+        cy.get("@firstItem")
+            .realClick();
+
+        cy.get("@colorPalettePopover")
+            .should("not.have.attr", "open");
+
+        cy.get("@popoverClose")
+            .should("be.calledOnce");
+    });
+
+    it("should fire close event when popover is closed by pressing Escape", () => {
+        cy.mount(
+            <ColorPalettePopoverSample 
+                onClose={cy.stub().as("popoverClose")}
+            />
+        );
+
+        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
+            .as("colorPalettePopover")
+            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
+
+        cy.get<ColorPalette>("@colorPalettePopover")
+            .ui5ColorPalettePopoverClose();
+
+        cy.get("@popoverClose")
+            .should("be.calledOnce");
+    });
+});
+
 describe("Color Popover Palette arrow keys navigation", () => {
     it("should navigate with Arrow right", () => {
         cy.mount(
@@ -402,216 +612,5 @@ describe("Color Popover Palette Home and End keyboard navigation", () => {
         cy.focused()
             .should("have.attr", "aria-label")
             .and("include", "purple");
-    });
-});
-
-
-describe("Color Popover Palette general interaction tests", () => {
-    it("should focus first element on initial open (default color)", () => {
-        cy.mount(
-            <ColorPalettePopoverSample showDefaultColor={true} defaultColor="floralwhite"/>
-        );
-
-        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
-            .as("colorPalettePopover")
-            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
-
-        cy.get<ColorPalette>("@colorPalettePopover")
-            .ui5GetColorPaletteInPopover()
-            .as("colorPalette");
-
-        cy.get("@colorPalette")
-            .ui5GetColorPaletteDefaultButton()
-            .as("defaultColorButton");
-
-        cy.focused()
-            .should("have.attr", "aria-label", "Default Color");
-    });
-
-    it("should focus first swatch on initial open (when there is only a color palette)", () => {
-        cy.mount(
-            <ColorPalettePopoverSample/>
-        );
-
-        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
-            .as("colorPalettePopover")
-            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
-
-        cy.get<ColorPalette>("@colorPalettePopover")
-            .ui5GetColorPaletteInPopover()
-            .as("colorPalette");
-
-        cy.get("@colorPalettePopover")
-            .ui5GetColorPaletteItem()
-            .as("firstItem");
-
-        cy.focused()
-            .should("have.attr", "aria-label")
-            .and("include", "violet");
-    });
-
-    it("should focus on last selected color swatch when popover is re-opened", () => {
-        cy.mount(
-            <ColorPalettePopoverSample/>
-        );
-
-        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
-            .as("colorPalettePopover")
-            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
-
-        cy.get<ColorPalette>("@colorPalettePopover")
-            .ui5GetColorPaletteInPopover()
-            .as("colorPalette");
-
-        cy.get("@colorPalettePopover")
-            .ui5GetColorPaletteItem(5)
-            .as("sixthItem");
-
-        cy.get("@sixthItem")
-            .should("have.attr", "value", "orange")
-            .realClick();
-
-        cy.get("@colorPalettePopover")
-            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
-
-        cy.focused()
-            .should("have.attr", "aria-label")
-            .and("include", "orange");
-    });
-
-    it("should focus on Default Color button when popover is re-opened if Default Color ha been selected", () => {
-        cy.mount(
-            <ColorPalettePopoverSample
-                showDefaultColor={true}
-                defaultColor="lightsalmon"
-            />
-        );
-
-        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
-            .as("colorPalettePopover")
-            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
-
-        cy.get<ColorPalette>("@colorPalettePopover")
-            .ui5GetColorPaletteInPopover()
-            .as("colorPalette");
-        
-        cy.get("@colorPalette")
-            .ui5GetColorPaletteDefaultButton()
-            .as("defaultColorButton");
-
-        cy.get("@defaultColorButton")
-            .realClick();
-
-        cy.get("@colorPalettePopover")
-            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
-
-        cy.focused()
-            .should("have.attr", "aria-label", "Default Color");
-    });
-});
-
-describe("Color Popover Palette Events tests", () => {
-    it("should fire itemClick with correct color when selecting 'Default Color'", () => {
-        cy.mount(
-            <ColorPalettePopoverSample 
-                showDefaultColor={true}
-                defaultColor="lightsalmon"
-                onItemClick={cy.stub().as("itemClick")}
-            />
-        );
-
-        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
-            .as("colorPalettePopover")
-            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
-
-        cy.get<ColorPalette>("@colorPalettePopover")
-            .ui5GetColorPaletteInPopover()
-            .as("colorPalette");
-
-        cy.get("@colorPalette")
-            .ui5GetColorPaletteDefaultButton()
-            .as("defaultColorButton");
-
-        cy.get("@defaultColorButton")
-            .realClick();
-
-        cy.get("@itemClick")
-            .should("be.calledOnce")
-            .and("be.calledWithMatch", { detail: { color: "lightsalmon" } });
-    });
-
-    it("should fire itemClick when selecting a color from the ColorPalette", () => {
-        cy.mount(
-            <ColorPalettePopoverSample 
-                onItemClick={cy.stub().as("itemClick")}
-            />
-        );
-
-        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
-            .as("colorPalettePopover")
-            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
-
-        cy.get<ColorPalette>("@colorPalettePopover")
-            .ui5GetColorPaletteInPopover()
-            .as("colorPalette");
-
-        cy.get("@colorPalettePopover")
-            .ui5GetColorPaletteItem(7)
-            .as("fourthItem");
-
-        cy.get("@fourthItem")
-            .realClick();
-
-        cy.get("@itemClick")
-            .should("be.calledOnce")
-            .and("be.calledWithMatch", { detail: { color: "springgreen" } });
-
-    });
-
-    it("should fire close event when popover is closed after color selection", () => {
-        cy.mount(
-            <ColorPalettePopoverSample 
-                onClose={cy.stub().as("popoverClose")}
-            />
-        );
-
-        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
-            .as("colorPalettePopover")
-            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
-
-        cy.get<ColorPalette>("@colorPalettePopover")
-            .ui5GetColorPaletteInPopover()
-            .as("colorPalette");
-
-        cy.get("@colorPalettePopover")
-            .ui5GetColorPaletteItem()
-            .as("firstItem");
-
-        cy.get("@firstItem")
-            .realClick();
-
-        cy.get("@colorPalettePopover")
-            .should("not.have.attr", "open");
-
-        cy.get("@popoverClose")
-            .should("be.calledOnce");
-    });
-
-    it("should fire close event when popover is closed by pressing Escape", () => {
-        cy.mount(
-            <ColorPalettePopoverSample 
-                onClose={cy.stub().as("popoverClose")}
-            />
-        );
-
-        cy.get<ColorPalettePopover>("[ui5-color-palette-popover]")
-            .as("colorPalettePopover")
-            .ui5ColorPalettePopoverOpen({ opener: "btnOpen" });
-
-        cy.get<ColorPalette>("@colorPalettePopover")
-            .ui5ColorPalettePopoverClose();
-
-        cy.get("@popoverClose")
-            .should("be.calledOnce");
     });
 });
