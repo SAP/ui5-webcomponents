@@ -610,8 +610,10 @@ class List extends UI5Element {
 		this.attachGroupHeaderEvents();
 		this.unobserveListEnd();
 		this.unobserveListStart();
-		this.observeListEnd();
-		this.observeListStart();
+		if (this.growsOnScroll) {
+			this.observeListEnd();
+			this.observeListStart();
+		}
 
 		if (this.grows) {
 			this.checkListInViewport();
