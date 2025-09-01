@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.5...v2.14.0-rc.6) (2025-08-29)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page-title:** conditionally apply ARIA attributes based on interactivity ([#12141](https://github.com/SAP/ui5-webcomponents/issues/12141)) ([ea23724](https://github.com/SAP/ui5-webcomponents/commit/ea237242f10162c664384f6aa59974b7e44b6b81)), closes [#12053](https://github.com/SAP/ui5-webcomponents/issues/12053)
+* **ui5-search:** autocomplete for items loaded with delay ([#12204](https://github.com/SAP/ui5-webcomponents/issues/12204)) ([5af304b](https://github.com/SAP/ui5-webcomponents/commit/5af304bf494badc397372eba6c809e6c10777e99)), closes [#11959](https://github.com/SAP/ui5-webcomponents/issues/11959)
+* **ui5-search:** deselect item on delete/backspace ([#12215](https://github.com/SAP/ui5-webcomponents/issues/12215)) ([6b098cc](https://github.com/SAP/ui5-webcomponents/commit/6b098ccacf76e82370da59115eab88b3d41a1407))
+* **ui5-shellbar-search:** correct min-width ([#12203](https://github.com/SAP/ui5-webcomponents/issues/12203)) ([8231383](https://github.com/SAP/ui5-webcomponents/commit/8231383616e7c86dda91c9638983dbbd804658d2))
+* **ui5-upload-collection:** truncate long file names ([#12211](https://github.com/SAP/ui5-webcomponents/issues/12211)) ([d13ca50](https://github.com/SAP/ui5-webcomponents/commit/d13ca5024d4f80e893f54d17f3a2c4e54224e2cb)), closes [#12166](https://github.com/SAP/ui5-webcomponents/issues/12166)
+
+
+
+
+
 # [2.14.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.4...v2.14.0-rc.5) (2025-08-28)
 
 

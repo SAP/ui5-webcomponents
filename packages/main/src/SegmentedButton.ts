@@ -17,6 +17,8 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import {
 	isSpace,
 	isEnter,
+	isShift,
+	isEscape,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION, SEGMENTEDBUTTON_ARIA_DESCRIBEDBY } from "./generated/i18n/i18n-defaults.js";
 import "./SegmentedButtonItem.js";
@@ -145,6 +147,8 @@ class SegmentedButton extends UI5Element {
 
 	_selectedItem?: ISegmentedButtonItem;
 
+	_actionCanceled: boolean;
+
 	constructor() {
 		super();
 
@@ -152,6 +156,7 @@ class SegmentedButton extends UI5Element {
 			getItemsCallback: () => this.navigatableItems,
 		});
 		this.hasPreviouslyFocusedItem = false;
+		this._actionCanceled = false;
 	}
 
 	onBeforeRendering() {
@@ -232,15 +237,22 @@ class SegmentedButton extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
-			this._selectItem(e);
+			this._selectItem(e); // Enter key behavior remains unaffected
 		} else if (isSpace(e)) {
-			e.preventDefault();
+			e.preventDefault(); // Prevent scrolling
+			this._actionCanceled = false; // Reset the action cancellation flag
+		} else if (isShift(e) || isEscape(e)) {
+			this._actionCanceled = true; // Set the flag to cancel the action
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
-			this._selectItem(e);
+			// Only select if the action was not canceled
+			if (!this._actionCanceled) {
+				this._selectItem(e);
+			}
+			this._actionCanceled = false; // Reset the flag after handling
 		}
 	}
 
