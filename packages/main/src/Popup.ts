@@ -290,7 +290,7 @@ abstract class Popup extends UI5Element {
 
 		this.tabIndex = -1;
 
-		if (this.open) {
+		if (this.open && !this.onPhone) {
 			this.showPopover();
 			this.openPopup();
 		}
